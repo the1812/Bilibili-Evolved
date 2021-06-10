@@ -1,0 +1,54 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Build
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the v2 branch
+on:
+  push:
+    branches: [ v2 ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v2
+
+    - name: Install dependencies
+      uses: bahmutov/npm-install@v1
+
+    - name: Run type check
+      run: yarn type
+
+    - name: Run ESLint
+      run: yarn lint
+
+    - name: Run build
+      run: yarn build
+
+    - name: Git commit
+      id: commit
+      run: |
+        git config --local user.email "the1812@outlook.com"
+        git config --local user.name "the1812"
+        git config --global core.autocrlf true
+        git config --global core.safecrlf false
+        git commit -m "CI build" -a
+      continue-on-error: true
+
+    - name: Git push
+      uses: ad-m/github-push-action@master
+      if: ${{ steps.commit.outcome == 'success' }}
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: 'v2'
+
+    - name: Log
+      if: ${{ steps.commit.outcome != 'success' }}
+      run: echo Nothing to commit.

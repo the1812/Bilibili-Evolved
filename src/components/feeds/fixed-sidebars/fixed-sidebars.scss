@@ -1,0 +1,27 @@
+.custom-navbar {
+  position: fixed !important;
+}
+.sticky-bar {
+  display: none !important;
+}
+.left-panel, .right-panel {
+  position: fixed !important;
+}
+.center-panel {
+  margin-left: calc(244px + 8px) !important;
+}
+.right-panel {
+  margin-left: calc(244px + 16px + 632px) !important;
+}
+.live-panel .live-up-list {
+  max-height: calc(100vh - 320px);
+  overflow: auto;
+  scrollbar-width: none !important;
+}
+.live-panel .live-up-list::-webkit-scrollbar {
+  height: 0 !important;
+  width: 0 !important;
+}
+.adaptive-scroll {
+  min-height: unset !important;
+}

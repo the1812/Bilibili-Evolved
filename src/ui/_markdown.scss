@@ -1,0 +1,80 @@
+@import "common";
+@mixin markdown {
+  line-height: normal;
+  ul,
+  ul li {
+    list-style: disc;
+  }
+  ol,
+  ol li {
+    list-style: decimal;
+  }
+  ul,
+  ol {
+    padding-left: 16px;
+    li {
+      line-height: 1.5;
+    }
+  }
+  p {
+    margin: 0;
+  }
+  > p {
+    line-height: 1.5;
+  }
+  pre {
+    white-space: pre-wrap;
+  }
+  code {
+    display: inline-block;
+    padding: 0 4px;
+    margin: 1px 2px;
+    border-radius: 4px;
+    background-color: #8882;
+    line-height: normal;
+  }
+  kbd {
+    font-family: monospace;
+    border: 1px solid #ccc;
+    display: inline-block;
+    border-radius: 4px;
+    padding: 0 4px;
+    margin: 1px 2px;
+    line-height: 1.1;
+    body.dark & {
+      border-color: #666;
+    }
+  }
+  blockquote {
+    border-radius: 4px;
+    padding: 4px;
+    padding-left: 12px;
+    background-color: #8881;
+    box-sizing: border-box;
+    position: relative;
+    @include text-color();
+    body.dark & * {
+      // 需要覆盖夜间模式
+      color: #eee !important;
+    }
+    &::before {
+      content: "";
+      position: absolute;
+      display: block;
+      width: 3px;
+      height: calc(100% - 8px);
+      top: 4px;
+      left: 0;
+      border-radius: 2px;
+      background-color: var(--theme-color);
+    }
+  }
+  a,
+  a:focus-within,
+  a:hover {
+    color: var(--theme-color);
+  }
+  > :last-child {
+    margin-bottom: 0;
+  }
+}

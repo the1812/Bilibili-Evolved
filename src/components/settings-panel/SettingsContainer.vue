@@ -1,0 +1,199 @@
+<template>
+  <div class="be-settings">
+    <div class="sidebar">
+      <div
+        ref="widgetsIcon"
+        title="功能"
+        :class="{ open: widgetsOpened }"
+        @click="widgetsOpened = !widgetsOpened"
+        @mouseover="loadPanel('widgetsPanelPopup')"
+      >
+        <VIcon icon="widgets" :size="26"></VIcon>
+      </div>
+      <div
+        ref="settingsIcon"
+        title="设置"
+        :class="{ open: settingsOpened }"
+        @click="settingsOpened = !settingsOpened"
+        @mouseover="loadPanel('settingsPanelPopup')"
+      >
+        <VIcon icon="settings-outline" :size="26"></VIcon>
+      </div>
+    </div>
+    <VPopup
+      ref="widgetsPanelPopup"
+      v-model="widgetsOpened"
+      class="widgets-panel-popup"
+      :trigger-element="$refs.widgetsIcon"
+      :fixed="true"
+    >
+      <WidgetsPanel />
+    </VPopup>
+    <VPopup
+      ref="settingsPanelPopup"
+      v-model="settingsOpened"
+      class="settings-panel-popup"
+      :trigger-element="$refs.settingsIcon"
+      :auto-close-predicate="settingsPanalClosePredicate"
+      :fixed="true"
+    >
+      <SettingsPanel @close="settingsOpened = false" />
+    </VPopup>
+  </div>
+</template>
+
+<script lang="ts">
+import { dqa } from '@/core/utils'
+
+export default {
+  name: 'SettingsContainer',
+  components: {
+    VPopup: () => import('@/ui/VPopup.vue').then(m => m.default),
+    SettingsPanel: () => import('./SettingsPanel.vue').then(m => m.default),
+    WidgetsPanel: () => import('./WidgetsPanel.vue').then(m => m.default),
+    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
+  },
+  data() {
+    return {
+      settingsOpened: false,
+      widgetsOpened: false,
+    }
+  },
+  methods: {
+    settingsPanalClosePredicate(data: {
+      target: HTMLElement
+      element: HTMLElement
+      trigger: HTMLElement
+    }) {
+      if (
+        dqa('.be-settings-extra-options').some(
+          c => c === data.target || c.contains(data.target),
+        )
+      ) {
+        return false
+      }
+      return true
+    },
+    loadPanel(refName: string) {
+      const popup = this.$refs[refName]
+      if (!popup) {
+        return
+      }
+      if (!(popup?.loaded ?? true)) {
+        popup.loaded = true
+      }
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+@import "common";
+.contact-help {
+  display: none !important;
+}
+.be-settings {
+  line-height: normal;
+  --panel-height: calc(100vh - 120px);
+  // &,
+  // & *,
+  // & *::before,
+  // & *::after {
+  //   transition: 0.3s ease-in-out;
+  // }
+  & > .sidebar {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    z-index: 99999;
+    transform: translateX(-50%) translateY(-50%);
+    & > * {
+      transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+      // transition: none;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      $size: 26px;
+      width: $size;
+      height: $size;
+      padding: 8px;
+      box-sizing: content-box;
+      background-color: #fffa;
+      border-radius: 50%;
+      position: relative;
+      body.dark & {
+        background-color: #333a;
+      }
+      &:not(:last-child) {
+        margin-bottom: $size;
+      }
+      &::after {
+        content: "";
+        width: 140%;
+        height: 140%;
+        position: absolute;
+        top: -20%;
+        left: -20%;
+        background: transparent;
+      }
+      .be-icon {
+        font-size: $size;
+        color: #888;
+        fill: #888;
+        transition: fill 0.3s ease-out;
+      }
+      &:hover {
+        transform: translateX(60%) scale(1.1);
+        background-color: #fff;
+        body.dark & {
+          background-color: #333;
+        }
+        .be-icon {
+          color: #222;
+          fill: #222;
+          body.dark & {
+            color: #eee;
+            fill: #eee;
+          }
+        }
+      }
+      &.open {
+        transform: translateX(100%) scale(1.25);
+        opacity: 0;
+      }
+    }
+  }
+  .settings-panel-popup {
+    transition: transform 0.15s ease-out, opacity 0.15s ease-out;
+    // transition-duration: 0.15s;
+    // left: 50%;
+    top: 50%;
+    z-index: 100001;
+    // transform: translateX(-50%) translateY(-50%);
+    // &.close {
+    //   transform: translateX(-50%) translateY(-50%) scale(0.95);
+    // }
+    // &.open {
+    //   transform: translateX(-50%) translateY(-50%) scale(1);
+    // }
+    &.close {
+      transform: translateZ(0) translateY(-50%) translateX(-12px);
+    }
+    &.open {
+      transform: translateZ(0) translateY(-50%) translateX(0);
+    }
+  }
+  .widgets-panel-popup {
+    top: 50%;
+    z-index: 100001;
+    transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+    &.close {
+      transform: translateZ(0)translateY(-50%) translateX(-12px);
+    }
+    &.open {
+      transform: translateZ(0) translateY(-50%) translateX(0);
+    }
+  }
+}
+@import "./dock/center";
+@import "./dock/left";
+</style>

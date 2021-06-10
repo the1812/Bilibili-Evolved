@@ -1,0 +1,24 @@
+body:not(.disable-video-control-background) {
+  .bilibili-player-video-control {
+    &-mask {
+      background: transparent !important;
+    }
+    .bilibili-player-video-control-bottom,
+    .bui-slider .bui-track.bui-track-video-progress .bui-bar-wrap {
+      background: rgba(0, 0, 0, var(--video-control-opacity)) !important;
+    }
+    .bilibili-player-video-control-bottom {
+      margin: 6px 0 0 0 !important;
+      padding: 8px 0 0 !important;
+      height: 30px !important;
+    }
+  }
+  &.player-mode-fullscreen,
+  &.player-mode-webfullscreen {
+    .bilibili-player-video-control-bottom {
+      margin: -1px 0 0 0 !important;
+      padding: 12px 0 0 !important;
+      height: 45px !important;
+    }
+  }
+}

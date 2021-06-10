@@ -1,0 +1,6 @@
+webpack/
+packages/
+typings/
+dist/
+*.config.*
+.eslintrc.*

@@ -1,0 +1,10 @@
+.card .main-content {
+  .expand-btn,
+  .content-ellipsis {
+    display: none !important;
+  }
+  .content-full {
+    display: block !important;
+    height: auto !important;
+  }
+}

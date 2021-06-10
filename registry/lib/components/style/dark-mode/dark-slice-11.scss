@@ -1,0 +1,1107 @@
+@import "./dark-definitions";
+#app {
+  .header {
+    .left-block {
+      .logo {
+        @include theme-color();
+      }
+      .main-site {
+        @include color("e");
+      }
+    }
+    .right-block {
+      @include color("e");
+      .i-frame::before {
+        @include background-color();
+      }
+    }
+  }
+  .cc-nav-wrp {
+    @include background-color();
+    .slider-bar .bar-item .bcc-nav-slider {
+      &-sub-menu {
+        & > span,
+        a {
+          @include color("e");
+        }
+        .router {
+          &-item.active {
+            @include theme-color();
+            i {
+              @include theme-color();
+            }
+          }
+          &_wrap {
+            i {
+              @include color("a");
+            }
+            &.active {
+              @include theme-color();
+              i {
+                @include theme-color();
+              }
+            }
+          }
+        }
+        &:hover {
+          @include background();
+        }
+        &__group {
+          .router-item,
+          a {
+            @include color("a");
+          }
+        }
+      }
+      &-item__wrap {
+        .router {
+          &-item.active {
+            @include theme-color();
+            i {
+              @include theme-color();
+            }
+          }
+          &_wrap {
+            i {
+              @include color("a");
+            }
+          }
+        }
+        &:hover {
+          @include background();
+        }
+      }
+    }
+  }
+  .cc-body {
+    @include background-color();
+    .message-notice_wrap .tips-item_wrap {
+      @include background-color("4");
+    }
+    .chief-recommend-module .carousel-box,
+    .data-card {
+      @include background-color();
+    }
+    .new-calendar-wrap {
+      @include background-color("2");
+      .calendarEntry_box .calendarEntry_content {
+        @include color("e");
+        .luck_wrap .luck_title {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+      .headerClass {
+        @include color("e");
+      }
+      .calendar-header {
+        @include border-color("4");
+      }
+      .calendar-body {
+        .date-wrap {
+          @include color("a");
+          .wrap-content .today {
+            @include theme-color();
+          }
+        }
+        .date-desc_wrap {
+          @include background();
+          .item-desc_card {
+            @include background-color("3");
+            .item-desc_title .item-title {
+              @include color("e");
+            }
+            .item-desc_body .item-desc__content {
+              @include color("e");
+              @include border-color();
+              .nothing-wrap {
+                @include background();
+                .release-link {
+                  @include theme-color();
+                }
+              }
+            }
+          }
+        }
+        .calendar-box {
+          @include border-color();
+        }
+      }
+    }
+    .notice_wrap {
+      @include background-color("4");
+      .notice_title .notice-txt {
+        @include color("e");
+      }
+      .notice_body .hot-item {
+        .item-left p,
+        .item-right {
+          @include color("a");
+        }
+      }
+    }
+    .academy-wrap {
+      @include background-color();
+      .header .academy-tag {
+        @include color("e");
+      }
+      .content {
+        .tabs .tabs__header {
+          @include border-color("4");
+          .tabs__header-item {
+            @include color("a");
+            &.is-active {
+              @include theme-color();
+              &:after {
+                @include theme-background-color();
+              }
+            }
+          }
+        }
+        .list-item {
+          .title {
+            @include color("e");
+          }
+          .view {
+            @include color("a");
+          }
+        }
+      }
+    }
+    .side-utils .feedback-container {
+      .item-desc {
+        @include color("e");
+      }
+      .bcc-popover {
+        @include background-color("4");
+        @include color("e");
+        @include border-color();
+        box-shadow: 0 7px 11px 0 rgba(0, 0, 0, 0.18) !important;
+        .help-wrap li {
+          .title {
+            @include color("e");
+            .bcc-icon-ic_enter {
+              @include color("e");
+            }
+          }
+          &:hover {
+            @include background-color("3");
+          }
+        }
+        &[x-placement^="left"] .popper__arrow {
+          @include border-color();
+          &:after {
+            @include border-color();
+          }
+        }
+      }
+    }
+    .dc-section1-body {
+      @include background-color();
+      .dc-section-item1_title_name p {
+        @include color("e");
+      }
+    }
+    .lab-wrap {
+      @include background-color();
+      .lab-guide img {
+        filter: brightness(0.5) contrast(3) !important;
+      }
+      .lab-title {
+        @include color("a");
+      }
+      .lab-item {
+        @include border-color("4");
+        .lab-item-header {
+          .item-info .item-title {
+            .title {
+              @include color("e");
+            }
+            .desc {
+              @include color("a");
+            }
+          }
+          .item-operate span {
+            @include color("e");
+          }
+        }
+        .lab-item-content {
+          @include background-color();
+          .divide-line {
+            @include background-color("4");
+          }
+          .content-detail {
+            p {
+              @include color("e");
+            }
+            .detail-desc,
+            .feedback {
+              @include color("a");
+              a {
+                @include theme-color();
+              }
+            }
+            .carousel-wrapper .panel .pic .card-img img {
+              filter: brightness(0.5) contrast(3) !important;
+            }
+          }
+        }
+      }
+    }
+    .cc-article-wrp .article {
+      &-header .search-wrp {
+        @include border-color();
+      }
+      &-card {
+        .meta-status .status {
+          @include theme-color();
+        }
+        .select-box .select-item.is-disabled {
+          @include background-color();
+        }
+      }
+    }
+  }
+  .detail {
+    @include background-color();
+  }
+  .category {
+    @include background-color("4");
+  }
+}
+.el-popover {
+  @include background-color("2");
+  @include border-color();
+  &.header-popover-download .link {
+    div p:first-child {
+      @include color("e");
+    }
+    &:hover {
+      @include background-color("4");
+    }
+  }
+}
+.round-corner {
+  .international-header .mini-type {
+    @include background-color("2");
+    box-shadow: rgba(0, 0, 0, 0.4) 0 2px 10px 1px !important;
+    .nav-link .nav-link-ul {
+      .nav-link-item .link .bili-Navbar_logo,
+      &.mini .bili-icon_dingdao_xiazaiapp {
+        @include color("e");
+      }
+    }
+    .nav-user-center .user-con .item .name {
+      @include color("e");
+    }
+  }
+  .channel-menu-mini {
+    @include background-color("2");
+    box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px !important;
+    .r-box {
+      @include border-color("4");
+    }
+    .box a:hover {
+      @include background-color("0001");
+    }
+  }
+  .van-popper {
+    &-avatar {
+      .nickname:not([style*="rgb(251, 114, 153)"]),
+      .level-info .grade {
+        @include color("e");
+      }
+      .coins,
+      .counts {
+        @include border-color("4");
+      }
+      .coins .contact {
+        .email,
+        .phone {
+          &-icon--bind {
+            @include theme-color();
+          }
+        }
+      }
+      .count-item .item {
+        &-key,
+        &-value {
+          color: inherit !important;
+        }
+      }
+      .links {
+        @include border-color("4");
+        .link-title {
+          @include color("e");
+        }
+        .link-item:hover {
+          @include background-color("3");
+        }
+      }
+    }
+    &-favorite {
+      .tab-item--normal,
+      .video-info .line-2 {
+        @include color("e");
+      }
+      .tab-item--active {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      .tabs-panel {
+        @include border-color("4");
+      }
+      .video-card:hover,
+      .tab-item--normal:hover {
+        @include background-color("3");
+      }
+      .play-all {
+        @include background-color();
+        @include border-color("4");
+      }
+    }
+    &-history {
+      .tab-header {
+        @include border-color("4");
+        .tab-item {
+          @include color("e");
+          &--active {
+            @include theme-background-color();
+            @include foreground-color();
+          }
+        }
+      }
+      .panel {
+        .video-card:hover {
+          @include background-color("3");
+        }
+        .progress {
+          @include theme-background-color();
+        }
+        .video-info {
+          span.date {
+            @include background-color();
+          }
+          .line-2 {
+            @include color("e");
+          }
+        }
+      }
+    }
+  }
+  .page-container {
+    @include background-color();
+    .bangumi-spoiler-container {
+      @include background-color("4");
+      @include color("e");
+    }
+    .tag-container {
+      .tag-item {
+        span {
+          @include color("e");
+        }
+        .tag-border .tag-border-inner {
+          display: none;
+        }
+        .tag-content {
+          @include background-color("4");
+          @include border-color();
+        }
+        &:hover .tag-content {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+    .publish-panel {
+      .core-style {
+        @include background-color();
+        @include color("e");
+        @include border-color();
+        &:hover,
+        &:focus-within,
+        &:active {
+          @include theme-border-color();
+        }
+      }
+      .publish-btn {
+        @include background-color("2");
+        @include color("e");
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+        }
+      }
+    }
+  }
+  .container-body {
+    .b-head.topic {
+      @include border-color();
+    }
+    .art_list li {
+      @include background-color();
+      @include border-color();
+      h2 a {
+        @include color("e");
+      }
+      .info,
+      .artInfo {
+        @include color("a");
+      }
+    }
+  }
+}
+.canary-container {
+  .file-list-v2-container {
+    .file-title h1,
+    .normal-v2-container .normal-title-wrp > h1,
+    .fans-dynamic-v2-container .fans-dynamic-v2-title-wrp > h1 {
+      @include color("e");
+    }
+    .upload-v2-sortable {
+      &-chosen,
+      &-ghost {
+        @include background-color("4");
+      }
+    }
+    .input-box-v2-3-container {
+      @include background-color("4");
+      @include border-color();
+      & > input {
+        @include color("e");
+      }
+      &.input-box-v2-3-active,
+      &:hover {
+        @include theme-border-color();
+      }
+    }
+  }
+  .file-content-v2-container {
+    .normal-v2-container .normal-title-wrp > h1 {
+      @include color("e");
+    }
+    .cover-v2-detail-wrp .cover-v2-selector {
+      @include border-color("4");
+      .cover-v2-selector-deg {
+        @include background-color("4");
+        @include border-color();
+      }
+    }
+    .cover-preview-modal-container .cover-preview-modal-content {
+      @include background-color("4");
+      .cover-preview-modal-head {
+        @include color("e");
+        @include border-color();
+      }
+      .cover-preview-modal-body .cover-preview-modal-body-item-selected {
+        @include theme-border-color();
+        &-icon {
+          @include to-theme("blue");
+        }
+      }
+      .cover-preview-modal-foot div:first-child {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+  .upload-step-3-container-v2 {
+    @include background-color();
+    .step-controller-v2-container .step-ctrl {
+      &-complete-content,
+      &-wait-content {
+        @include color("a");
+      }
+      &-active-content {
+        @include color("e");
+      }
+      &-complete-icon {
+        @include theme-color();
+        @include theme-border-color();
+      }
+      &-line-active {
+        @include theme-background-color();
+      }
+      &-active-icon {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      &-line.step-ctrl-line-wait {
+        @include background-color("4");
+      }
+      &-wait-icon {
+        @include color("4");
+        @include border-color("4");
+      }
+    }
+    .upload-3-v2-success {
+      &-split {
+        @include background-color("4");
+      }
+      &-go-url a {
+        @include background-color("4");
+        @include color("e");
+        @include border-color();
+        &:hover {
+          @include theme-background-color();
+          @include foreground-color();
+          @include border-color();
+        }
+      }
+      &-hint-2 {
+        @include color("a");
+      }
+    }
+    .upload-3-v2-follow {
+      @include background-color();
+      &-title,
+      &-name {
+        @include color("a");
+      }
+      &-btn.follow {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+.room-feed .tabs .item > span:after {
+  @include theme-background-color();
+}
+.customer-service {
+  .self-panel .scroll-container .item > span,
+  .panel-title {
+    @include color("e");
+  }
+  .customer-card {
+    @include border-color("4");
+    .card-header {
+      @include background-color("4");
+      .name {
+        @include color("e");
+      }
+    }
+    .card-content > a {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .guess-panel {
+    .panel-header .title {
+      @include color("e");
+    }
+    .question-container {
+      @include border-color("4");
+      .title {
+        .circle {
+          @include theme-background-color();
+        }
+        & > p {
+          @include color("e");
+        }
+      }
+      .answer {
+        @include color("a");
+        & > a {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .other-panel .card {
+    .title {
+      @include color("e");
+      @include border-color();
+    }
+    .detail {
+      &-text,
+      p {
+        @include color("e");
+        & > a {
+          @include theme-color();
+        }
+      }
+      .ask-btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+}
+#app-body {
+  #player-and-interaction-area {
+    #head-info,
+    .gift-control-panel,
+    .aside-area {
+      @include background-color("4");
+    }
+    #gift-control-area {
+      @include border-color();
+    }
+  }
+  #section-ctnr .header {
+    @include background-color();
+  }
+}
+.imagesbox .boost-slider-wrap .boost-slider-border {
+  @include theme-border-color();
+}
+.superchat-content {
+  @include background-color("4");
+  .home-page {
+    background-image: none !important;
+    .introduction {
+      @include color("e");
+      &:before {
+        @include to-white();
+      }
+    }
+    .close {
+      @include to-white();
+    }
+    .superchat-textarea {
+      .base-info {
+        @include background-color();
+        .duration-tip {
+          @include color("e");
+          .time-icon {
+            @include to-white();
+          }
+        }
+      }
+      .user-info {
+        @include color("e");
+      }
+      .text-ctnr,
+      .textarea,
+      .textarea:hover {
+        @include background-color();
+      }
+    }
+    .trans-btn {
+      @include theme-color();
+      @include theme-border-color();
+    }
+    .price-options {
+      .price-option {
+        @include color("e");
+        &.selected {
+          @include theme-color();
+          @include theme-border-color();
+        }
+      }
+      .other {
+        @include color("e");
+        .input {
+          @include background-color();
+          @include color("e");
+        }
+      }
+    }
+  }
+  .buy-btn {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+  .super-rank {
+    @include background-color("4");
+    .top {
+      .header-title {
+        @include color("e");
+      }
+      .nav {
+        @include background-color("2");
+        .nav-item {
+          &-1,
+          &-2 {
+            @include color("e");
+            &.active {
+              @include theme-background-color();
+              @include foreground-color();
+            }
+          }
+        }
+      }
+    }
+    .list-box {
+      .empty>.box {
+        @include background-color();
+        .h2>.special {
+          @include theme-color();
+        }
+      }
+      .message-item {
+        &-info {
+          .rank-icon>.num {
+            @include background-color("2");
+            @include color("e");
+          }
+          &>.user-info .publish-date,
+          &>.amount {
+            @include color("a");
+          }
+        }
+        &-context {
+          @include color("e");
+        }
+      }
+      .anchor-item {
+        &-info {
+          &>.user-info {
+            .amount,
+            .room,
+            .message-info {
+              @include color("a");
+            }
+            .user-name {
+              @include color("e");
+            }
+          }
+          .rank-icon>.num {
+            @include background-color("2");
+            @include color("e");
+          }
+        }
+        &-assists>.sub-tit {
+          @include color("e");
+        }
+      }
+      .keep-text {
+        @include color("a");
+      }
+    }
+    .on-list-anchor>.right {
+      @include theme-color();
+    }
+    .not-list {
+      &>.left {
+        &>.rank,
+        &>.aside {
+          @include color("a");
+          .special {
+            @include theme-color();
+          }
+        }
+      }
+      &>.right {
+        @include theme-color();
+      }
+    }
+  }
+}
+.rank-item {
+  @include border-color("4");
+  .other {
+    @include border-color("4");
+    span {
+      @include color("a");
+    }
+    .other-link {
+      .title {
+        @include color("e");
+      }
+      &:hover .title {
+        @include theme-color();
+      }
+    }
+  }
+}
+.card-content .tag {
+  @include theme-background-color();
+  @include foreground-color();
+}
+.wide-members .avatar {
+  &-list {
+    i {
+      @include background-color("2");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .van-icon-general {
+      &_back_s:after {
+        background: linear-gradient(-270deg,#222,hsla(0,0%,100%,0)) !important;
+      }
+      &_enter_s:after {
+        background: linear-gradient(270deg,#222,hsla(0,0%,100%,0)) !important;
+      }
+    }
+  }
+  .tag {
+    @include background-color("2");
+    @include color("e");
+    @include theme-border-color();
+  }
+  .up-name {
+    @include color("e");
+  }
+}
+.router-view {
+  .list .top {
+    @include background-color("3");
+  }
+  .config {
+    @include background-color("4");
+    @include color("e");
+    .css-o1815x {
+      @include to-theme("blue");
+    }
+    .config-item {
+      &:not(:first-child)::before {
+        @include background-color("5");
+      }
+      .radio-selector {
+        @include color("e");
+      }
+    }
+  }
+}
+.message-list {
+  .share-card .footer {
+    @include color("a");
+    @include border-color("4");
+  }
+  .msg-push {
+    @include background-color("2");
+    hr {
+      @include background-color("4");
+    }
+  }
+}
+.live-skin-coloration-area .rank-cntr {
+  .daily-text {
+    @include color("e");
+  }
+}
+.guard-rank-cntr .rank-cntr .btn-box {
+  &.btn-hundreds {
+    display: none !important;
+  }
+  .daily-record-title {
+    @include background-color("2");
+    @include color("e");
+  }
+  .l-line,
+  .r-line {
+    @include border-color();
+  }
+  .guard-daily-record .daily-text {
+    @include color("e");
+  }
+}
+.live-record-list {
+  .live-record-list-cntr {
+    @include background-color("4");
+    @include border-color();
+    .record-title {
+      @include color("e");
+    }
+    .pagination {
+      @include background-color();
+      .jumping-ctnr .jumping-input {
+        @include background-color("2");
+      }
+    }
+  }
+}
+.bp-svg-icon.taobao-link {
+  @include to-theme("blue");
+}
+.home-page {
+  .fixed-bg,
+  .fixed-bg-cover {
+    background-image: none !important;
+  }
+}
+
+.cinema-movie-wrapper {
+  .title {
+    @include color("e");
+  }
+  .preview-item {
+    .title:hover {
+      @include theme-color();
+    }
+    .cover {
+      @include background();
+    }
+  }
+  div[name="web_tag"] {
+    a {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  div[name="web_rank"] {
+    .more {
+      @at-root #icon_操作_前往 {
+        @include fill("e");
+      }
+    }
+  }
+  div[name="web_index"] {
+    .card {
+      z-index: 0;
+    }
+  }
+  .coming-soon-wrapper .mine {
+    @include color("e");
+    @include background-color("4");
+    @include border-color();
+    &:hover {
+      @include background-color("3");
+    }
+  }
+  .card-wrapper .card-item {
+    .time-line-wrapper.empty .date {
+      @include color("a");
+    }
+    .follow-btn.followed {
+      @include background-color("3");
+      @include color("a");
+    }
+    .title:hover {
+      @include theme-color();
+    }
+  }
+  .banner-wrapper .side-list .side-item.selected:hover .title {
+      @include theme-color();
+    }
+  .filter-wrapper .filter-block {
+    .filter-block-title span {
+      @include color("e");
+    }
+    .filter-list a.filter-item {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .hot-recom-wrapper {
+    .hot-title {
+      @include color("e");
+    }
+    .hot-trailer .player-list {
+      @include background-color("4");
+      .list-count {
+        @include color("a");
+        .num {
+          @include theme-color();
+        }
+      }
+      .list-item-wrap .list-item {
+        .list-desc {
+          @include color("e");
+        }
+        &.selected {
+          @include background-color("2");
+          .list-cover {
+            @include theme-border-color();
+            &:after {
+              @include to-theme("pink");
+            }
+          }
+        }
+      }
+    }
+  }
+  .activity-wrap .title {
+    @include color("e");
+  }
+  .pindan-wrap,
+  .rank-wrap {
+    .slider-contro span {
+      @include background-color("4");
+    }
+    .head-section .title,
+    .preview-item .text .title {
+      @include color("e");
+    }
+  }
+  .hot-wrapper {
+    .title,
+    .right .recent-item a {
+      @include color("e");
+    }
+  }
+  .rank-wrap .head-section .more span {
+    @include foreground-color();
+    @include border-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+}
+.popup-card {
+  @include background();
+  .info {
+    @include background-color("4");
+    .title {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .style .style-item {
+      @include background-color("2");
+      @include color("a");
+    }
+    .time {
+      @include color("a");
+      .split-line {
+        @include background-color("a");
+      }
+    }
+    .desc {
+      @include color("a");
+    }
+    .action-group .follow-btn {
+      @include theme-border-color();
+      .follow-icon g#方案1 {
+        @include fill("e");
+      }
+      &.followed {
+        @include background-color("3");
+        @include border-color("3");
+        @include color("a");
+      }
+    }
+  }
+}
+.live-up {
+  .live-detail {
+    .up-name {
+      @include color("e");
+    }
+    .live-name {
+      @include color("a");
+    }
+  }
+  .live-up-img {
+    @include border-color();
+    box-shadow: 0 0 0 1px var(--theme-color) !important;
+  }
+}
+.most-viewed-panel {
+  @include background-color("4");
+  .list-content .most-viewed-item {
+    .name {
+      @include color("a");
+      &.active {
+        @include theme-color();
+      }
+    }
+    &:hover .name {
+      @include theme-color();
+    }
+    .section .avatar .red-dot {
+      @include theme-background-color();
+      @include border-color("4");
+    }
+  }
+}

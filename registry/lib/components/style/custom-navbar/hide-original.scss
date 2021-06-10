@@ -1,0 +1,35 @@
+$height: 50px;
+
+body.no-banner #banner_link,
+body.no-banner .z-top-container.has-banner > .header,
+.bili-header-m > #banner_link .search,
+li.nav-item[report-id="playpage_dynamic"] iframe,
+li.nav-item[report-id="playpage_dynamic"] .i-frame,
+.z-top-container > .header .search,
+.i_menu_login,
+.international-header .b-logo,
+.bili-banner .taper-line,
+.international-header .mini-header,
+.bili-header-m .head-banner .head-content .head-logo,
+#biliMainHeader .mini-header,
+#biliMainHeader .base-mini-header {
+  display: none !important;
+}
+.van-popover {
+  z-index: 10002 !important;
+}
+.international-header {
+  min-height: $height !important;
+}
+.bili-header-m .head-banner {
+  margin-top: calc(-1 * $height) !important;
+}
+
+.bili-header-m > .nav-menu,
+.z_top {
+  visibility: hidden !important;
+  height: $height !important;
+}
+.link-top-container#tab-container {
+  top: $height !important;
+}

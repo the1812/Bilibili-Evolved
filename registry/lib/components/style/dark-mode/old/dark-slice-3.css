@@ -1,0 +1,1123 @@
+/* spell-checker: disable */
+.bilibili-player-video-sendbar,
+.medal-up-trueLove,
+.el-date-table td,
+.el-date-table td.in-range:hover,
+.el-pagination__editor,
+.el-pagination button.disabled,
+.el-pagination .btn-next,
+.el-pagination .btn-prev,
+.el-pager li,
+.nav-guide-container .nav-guide-tip,
+.guide-card.card,
+.data-card.card,
+.notice-card.card,
+.notice-card .notice-list .notice-item,
+.income-card.card,
+.academy-card.card,
+.dc-section-body,
+.audioplayer .ap-playlist,
+.audioplayer .ap-playlist .ap-playlist-body,
+.audioplayer .ap-controller,
+.cc-content-body .setting,
+.setting .watermark-setting .watermark-wrp .watermark-modal,
+.bili-switcher,
+.grid .banner,
+.bui-sns-info a .bd,
+.search-module .search-block .search-word-panel,
+.search-module .search-block .search-word-panel .panel-title p span,
+div#square.container,
+#rankList .list-wrap .list .switch-day .switch-list:hover,
+.bili-header-m .head-banner,
+.link-navbar-ctnr,
+.uploader-info .info .follow .num,
+.app .module-card.comment,
+.rank-item .content,
+.rank-tab-wrap,
+.area-item-ctnr .area-item:hover,
+.bili-radio+span::before,
+#page-channel-detail .watch-later-btn,
+.error-body,
+.footer .text-layout,
+.chatPanelBody .chatPanel,
+.chatPanelBody .chatPanel .chatPanelList,
+.leaveMsg .leaveMsgHeader,
+.mainBox .leaveMsg,
+.leaveMsg .leaveMsgBody .classDropdown-menus li a:hover,
+.leaveMsg .leaveMsgBody .classDropdown-menus li:hover,
+.mainBox .sureWindow,
+.js-evaluateArea .evaluateDialog,
+.live-ctn .item-live,
+.live-status.offline,
+.banner-wrapper .swiper-pagination-bullet,
+.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
+.project-list .project-list-item .project-list-item-img,
+.download-video-panel,
+.medal-popup,
+.article-action .ops .share-container .weixin-holder,
+.coin-wrap,
+.bilibili-evolved-about,
+.uns_box li .i_menu,
+.user-info .user-info-desc,
+#community_msg,
+.gui-settings-dropdown>ul,
+.toast-card,
+.gui-settings-widgets-box,
+.user-panel-ctnr .user-avatar,
+.link-popover-ctnr .link-popover,
+.medal-get-box,
+.medal-message-box,
+.main-container .plp-l .player-mask .bar-wrapper .left-bar,
+.main-container .plp-l .player-mask .bar-wrapper .right-bar,
+.twp-mask .twp-wrapper,
+.open-dialog-masker .open-dialog-content,
+.bnj-comment .page-comment,
+.play-options .play-options-more .play-options-content .play-option,
+.play-options .share-box,
+.gui-settings-flat-button .popup,
+.h5share-container .image-area .share-img,
+.notice-panel .img-container .notice-img,
+.withdraw-wrapper .withdraw-text,
+.sch-pub-tips,
+.sch-pub-tips::after,
+.input-section .schedule-panel .s-input,
+.input-section .schedule-panel .s-panel,
+.date-input > input,
+.date-input .date-panel,
+.bb-comment .comment-emoji
+{
+    background-color: #222 !important;
+}
+.article-holder .error-card .video-holder .video-cover,
+.article-holder .error-card .video-holder p,
+.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control
+{
+    background-color: #333 !important;
+}
+.main-container .title>span,
+.content-panel .title span,
+.face-g-list .mp-block .right ul li.base .round,
+.security-list .child-list li a:hover,
+.el-select-dropdown.is-multiple .el-select-dropdown__item.selected.hover,
+.el-select-dropdown__item.hover,
+.el-select-dropdown__item:hover,
+.el-picker-panel__shortcut:hover,
+.el-date-table td.in-range,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-right,
+.guide-card .guide-box a,
+.footer-content .social-item,
+.audioplayer .ap-controller .ap-controller-right .ap-volume-bar-wrap,
+.audioplayer .ap-controller .ap-controller-center .ap-play-bar-wrap,
+.audioplayer .ap-controller .ap-controller-right .ap-playlist-button-bg,
+.pie-empty-wrapper,
+.audioplayer .ap-playlist .ap-playlist-body li.ap-playlist-line-active,
+.audioplayer .ap-playlist .ap-playlist-body li:hover,
+.canvas-card dt .img-contain,
+.article-item .item-holder .article-title-holder .list-mark,
+.search-module .search-block .search-word-panel .history-item:hover,
+.search-module .search-block .search-word-panel .suggest-item:hover,
+.rank-module .rank-list .item .rank-index,
+.page-content .right-side .rank-module .complete-rank,
+.page-content .right-side .up-list .fresh-btn,
+body>div.to-top.on,
+.s-lineMore-more,
+.slide-controller .slide-btn,
+.s-rank.gray,
+#rankList .list-wrap .list .switch-day,
+.index-nav .n-i.gotop .btn_gotop,
+.list-wrap .s-showMore,
+#activeCenter .s-imgUnit .s-imgUnit-img,
+.guide .old-btn a,
+.app .module-card,
+.nav-panel-vc,
+.container .song-list .song-li .song-img,
+.audioplayer .ap-controller .ap-controller-left .ap-cover,
+.container .host-list-layout .hot-list-wrap .bg-wrap,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div,
+.error-container,
+.magBox .msgDiv,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router,
+.leaveMsg .leaveMsgBody .classDropdown-menus,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed,
+.sureWindow .btngroup span,
+.evaluateWether .evaluate-btn,
+.evaluate .situation span,
+.up-info .u-face .up-face,
+.main_body .future .next_button,
+.user-info .points-wrp .bar,
+.list.main_body .list_box .next_button,
+.user-hd,
+.progress-tv .progress-img,
+.progress-tv,
+.dynamic-list-item-wrap .send-bg,
+.bili-share-pc,
+.bili-share-pc .share-weixin-qr,
+.bili-share-pc .weixin-hover .qr-before,
+.form-login .input-box .item input,
+.form-login .input-box .btn-box .btn,
+.main-container .plp-l .player-mask .bar-wrapper,
+.open-dialog-masker .btn-normal,
+.play-up-info .play-up-intro .play-up-follow .play-up-followed,
+.play-options .play-options-more .play-options-content .play-option:hover,
+.player-auxiliary-area .player-auxiliary-collapse-playlist .bui-collapse-body,
+.share-box .share-popup .share-address ul li input,
+.bilibili-live-player-ending-panel-recommend-card,
+.card-timing-module .r-text .update a,
+.card .user-face,
+.result-list .user-face,
+.card .img-box,
+.act-card-wrap .act-card .type
+{
+    background-color: #444 !important;
+}
+.bilibili-player-video-time-seek
+{
+    background-color: #fff1 !important;
+}
+.blp-ui-slider-container
+{
+    background-color: rgba(0,0,0,0.1) !important;
+}
+.mainBox .sureWindowlayer,
+.medal-mask,
+.qrcode-login .qrcode-con .qrcode-box .status
+{
+    background-color: rgba(0,0,0,.5) !important;
+}
+#mp-mine-header,
+#mp-mine-header.active,
+.fans-icon,
+.guide-card .guide-box a,
+.rank-list .canvas-card:nth-child(-n+3)::after
+{
+    background-image: none !important;
+}
+.mode-fullscreen .bilibili-player-video-btn-widescreen,
+.mode-webfullscreen .bilibili-player-video-sendbar,
+.mode-fullscreen .bilibili-player-video-sendbar,
+.bilibili-player-video-bottom-area::before,
+.live-sidebar-ctnr,
+.pagelistbox .custom-right .custom-right-inner,
+#app>div>.container,
+.article-list-holder .article-item,
+.search-module .search-block input,
+.rank-module .rank-list .item,
+.chat-history-panel .chat-history-list .chat-item.system-msg .msg-icon,
+.page-content .right-side .up-list,
+#rankList .list-wrap .list .switch-day .switch-list,
+.index-nav .n-i .name:hover,
+.singlePage .mainBox,
+.leaveMsg .leaveMsgBody .email,
+.leaveMsg .leaveMsgBody .telephone,
+.leaveMsg .submitArea,
+#announcement-area .more-link:hover,
+.idol-show .section-title .more,
+.idol-show .section-title .more:hover,
+.area-section .card-ctnr .more,
+.area-section .card-ctnr .more:hover,
+.link-panigation-ctnr .pagination,
+.link-progress-tv,
+#song_detail_click_upper~div .pager .pages .page-item.active button,
+#song_detail_click_upper~div .pager .pages .page-item button,
+.filter-wrap .sub-filter,
+.title-line .tit,
+.popularize-module .online,
+.main-container .review-module .module-title .more-link,
+.i-frame,
+.create-vote .bg-color,
+#app>div>div>div.container,
+.play-options .play-options-more .play-options-content,
+.player-auxiliary-area,
+.bilibili-player-danmaku-report-panel .bui-radio-input:checked+.bui-radio-label,
+.rank-list-ctnr,
+.input-section,
+.input-section .schedule-panel,
+.date-input,
+.bb-comment .con,
+.bb-comment .list-item:hover,
+.bb-comment .hot-line span,
+.bb-comment .more-link:hover,
+.bb-comment .result,
+.result .card,
+.bili-header-m.report-wrap-module
+{
+    background-color: transparent !important;
+}
+.coin-wrap .coin-nav .coin-checkbox
+{
+    background: #fff !important;
+}
+.bottom-actions .action-item {
+    color: #222 !important;
+}
+.date-input .date-panel .day.disabled
+{
+    color: #444 !important;
+}
+.scroll-loading,
+.room-card-item .info .s-info,
+.fans-no-data::after,
+.fans-no-data-wear::after,
+.record-item-line .comment-floor,
+.record-item-line .comment-location,
+.record-item-line .comment-time,
+.record-item-line .good,
+.no-data-integrity,
+.nav-guide-container .nav-guide-tip .guide-tip-content-main p,
+.nav-guide-container .nav-guide-tip .guide-tip-content-main h3 span,
+.footer-content .social-item,
+.dc-section-item_title_time,
+.setting .watermark-switcher .switcher-tip,
+.setting .section-title span,
+.setting .watermark-setting .tooltip,
+.article-item .item-holder .article-desc,
+.article-item .item-holder .article-info-bar .up-content .nick-name,
+.article-item .item-holder .article-info-bar .category,
+.article-item .item-holder .article-info-bar .like,
+.article-item .item-holder .article-info-bar .reply,
+.article-item .item-holder .article-info-bar .view,
+.search-module .search-block .search-word-panel .panel-title p span,
+.rank-module .rank-tabs-bar .rank-tabs-list li,
+.up-list .up-item .info-holder .dynamic,
+.more .help .info,
+.more .link .info,
+.s-imgUnit-text p,
+.box .content .item,
+.uploader-info .info .follow .num,
+.video-list-wrapper .title .text .num,
+.danmu-hot .tab-list .tab,
+.rank-item .content .info .bangumi-info,
+.container .hot-list .music-menu-list .menu-type,
+.elec .elec-monthly-count,
+.announcement-cntr .header p .icon-edit,
+.announcement-cntr .header p span,
+.channel-info .meta,
+.magBox .leftName,
+.chatPanelList .msgData,
+.chatPanel .historyTrigger,
+.leaveMsg .leaveMsgBody .guide,
+.leaveMsg .leaveMsgBody .questionClassify .classText,
+.questionClassify .classDropdownAreaFixed .router .routerDeep,
+.leaveMsg .leaveMsgBody .infoArea .infoAreaTitle,
+.leaveMsgUpload .btnarea span.btareatxt,
+.evaluate .h2,
+.hot-list .card-ctnr .room-count .icon-font,
+.article-action .ops i,
+.page-container .article-action,
+.article-action .ops .share-container .weixin-holder p,
+.coin-wrap .coin-tips,
+.up-feedback .up-fb-btn,
+.user-info .user-info-desc,
+.qrcode-login .qrcode-footer .app-link,
+.qrcode-login .qrcode-footer .suc-txt,
+.form-login .input-box .sns .btn,
+.open-dialog-masker .open-body ul li i,
+.open-dialog-masker .open-footer .open-agree,
+.small-item .meta,
+.bangumi-rating-container .bangumi-rating-subtitle,
+.s_tag .nothing,
+.article-holder .music-card .container,
+.play-up-introduction .play-up-sign,
+.container .left-container .play-up-info .play-up-self-btn,
+.play-options .share-box .share-btn ul .bili-share,
+.container a,
+.container .left-container .play-options,
+.twp-mask .twp-wrapper .twp-container .twp-text .twp-desc,
+.video-toolbar .appeal-text,
+.date-input .date-panel .week,
+.bb-comment .bottom-page.center,
+.bui-button.bui-button-gray3,
+.dynamic-m .dyn_list_wrapper .dyn_list li.loading,
+.elec-message-wrp .elec-count-wrp
+{
+    color: #aaa !important;
+}
+.main-container .title>span,
+.content-panel .title span em,
+.medal-up-trueLove,
+.u-info .u-name,
+.el-pagination__editor,
+.el-pagination .btn-next,
+.el-pagination .btn-prev,
+.el-pager li.btn-quicknext,
+.el-pager li.btn-quickprev,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-right,
+.guide-card .guide-box a,
+.setting .watermark-switcher span,
+.bili-btn.plain,
+.pgc-rank-dropdown .selected,
+.article-item .item-holder .article-title-holder .list-mark,
+.search-module .search-block input,
+.rank-module .rank-tabs-bar label,
+.rank-module .rank-list .item .rank-index,
+.rank-module .rank-list .item a,
+.rank-module .complete-rank,
+.up-list .title,
+.up-list .fresh-btn,
+.up-list .up-item .info-holder .head .nick-name,
+.up-list .up-item .info-holder .dynamic .arc-title,
+.more .top-bar,
+.more .help .title,
+.more .link .title,
+.page-content .left-side .partitio-name,
+.s-lineMore-more,
+#mangoTv .mango-rank .text-list a,
+.s-imgUnit-text a,
+.s-rank.gray,
+#rankList .list-wrap .text-list a,
+#rankList .list-wrap .list .bar .text,
+#rankList .list-wrap .list .switch-day,
+.list-wrap .s-showMore,
+.footer .boston-postcards li .tips,
+.guide .old-btn a,
+.gift-box>.num,
+.base-info .btn-wrapper,
+.video-list-wrapper .title .text,
+.video-list-wrapper .title .more .text,
+.danmu-hot .video-list .video-wrapper .video .title,
+.blink-qrcode .title,
+.rank-item .content .info .title,
+.container .hot-list .menu-title,
+.announcement-cntr .header p,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+.notify-v2-container>div>span,
+.notify-v2-container>div a,
+.notify-v2-container>div .notify-v2-close,
+.channel-detail .content .breadcrumb .item,
+#page-channel-detail .watch-later-btn,
+.error-container .error-text,
+.magBox .msgDiv .msgText,
+.leaveMsg .leaveMsgHeader .title,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitle,
+.leaveMsg .leaveMsgBody .classDropdown-menus li,
+.leaveMsg .leaveMsgBody .email,
+.leaveMsg .leaveMsgBody .telephone,
+.sureWindow .title,
+.sureWindow .btngroup span,
+.evaluateWether .evaluateTitle,
+.evaluateWether .evaluate-btn,
+.evaluate .situation span,
+#announcement-area .news-ctnr .icon-arrow-right,
+#announcement-area .news-ctnr .more-link,
+#announcement-area .rank-ctnr .icon-arrow-right,
+#announcement-area .rank-ctnr .more-link,
+.jumping-ctnr .jumping-input,
+.banner-wrapper .swiper-pagination-bullet,
+.nav-header-wrapper .nav-header .user-panel,
+.nav-header-wrapper .nav-header .user-panel a,
+.similar-song-menu .similar-right .title,
+.gridview-sidebar .album-title,
+.article-holder .bangumi-card a .container .title,
+.article-holder .card-container .container .title,
+.coin-wrap .coin-title,
+.main_body .future .next_button,
+#i_menu_profile .info .coin .outside,
+#i_menu_profile .info a.linkToCurrency,
+.user-info .user-info-hd .t,
+.user-info .points-wrp .points-schedule .now-points,
+#community_msg .dyn_menu li a,
+.list.main_body .list_box .next_button,
+.gui-settings-dropdown input,
+.bilibili-player-video-control .bilibili-player-video-volume-num,
+.gui-settings-widgets-box>.widgets-container>*,
+.gui-settings-widgets-box,
+.link-popover-ctnr .link-popover,
+.details-up-name,
+.bili-share-pc .title,
+.bili-share-pc .share-weixin-qr h4,
+.form-login .input-box .remember,
+.form-login .input-box .item input,
+.form-login .input-box .btn-box .btn,
+.popularize-module .online a,
+.twp-mask .twp-wrapper .twp-container .twp-text .twp-title,
+.main-container .tool-bar .share-info i,
+.open-dialog-masker .__dialog-header p,
+.open-dialog-masker .open-body p,
+.open-dialog-masker .open-body ul li span,
+.open-dialog-masker .btn-normal,
+.bangumi-rating-container .bangumi-rating-title,
+.block-effect-ctnr .item,
+.super-gift-item .gift-info .user-name,
+.super-gift-item .gift-info .user-name:hover,
+.article-holder .music-card .container .title,
+.history-dlg .hsbtn .cancel,
+.play-title .play-title-location,
+.play-up-introduction .play-up-name a,
+.play-up-info .play-up-self .play-up-self-content,
+.play-up-info .play-up-intro .play-up-follow .play-up-followed,
+.play-options .play-options-more .play-options-content .play-option,
+.media-upper .media-upper-info .media-upper-name,
+.media-info .media-content .media-title a,
+.share-box .share-popup .share-address ul li input,
+.link-progress-tv,
+.card-timing-module .r-text .update a,
+.sch-pub-tips,
+.input-section .schedule-panel .dp-label,
+.input-section .schedule-panel .s-label,
+.input-section .schedule-panel .s-input,
+.input-section .schedule-panel .s-item,
+.date-input > input,
+.date-input .date-panel .ym,
+.date-input,
+.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control-title,
+#page-playlist-wrap .breadcrumb .item,
+.act-card-wrap .act-card .type,
+.act-card-wrap .act-card .title,
+.rec-list .info .title
+{
+    color: #eee !important;
+}
+.list.main_body .right_box .select_box .select .option_block .option.selected,
+.toast-card-title,
+.toast-card-message,
+.toast-card span,
+.toast-card .link
+{
+    color: #fff !important;
+}
+.content-panel .title span,
+.medal-up-trueLove,
+.el-picker-panel,
+.el-time-range-picker__body,
+.el-autocomplete-suggestion__wrap,
+.el-pager li,
+.el-pager li:last-child,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-right,
+.grid .banner,
+.article-item .item-holder .article-title-holder .list-mark,
+.search-module .search-block .search-word-panel,
+.rank-module .rank-tabs-bar,
+.up-list .title,
+.up-list .fresh-btn,
+.more .top-bar,
+body>div.to-top.on,
+.s-lineMore-more,
+#rankList .list-wrap .list,
+#rankList .list-wrap .list .switch-day,
+.index-nav .n-i.gotop .btn_gotop,
+.list-wrap .s-showMore,
+.guide .old-btn a,
+.guide .feedback-btn a,
+.app .module-card,
+.uploader-info .info .follow .num,
+.danmu-hot .tab-list,
+.announcement-cntr .content,
+.upload-v2-step1-container .upload-btn,
+.upload-v2-step1-container .video-jam .video-jam-comment,
+#page-channel-detail .watch-later-btn,
+#page-channel-detail .filter,
+.leaveMsg .leaveMsgBody .questionClassify .classDropdownAreaFixed .router,
+.evaluateWether .okactive,
+.evaluateWether .evaluate-btn,
+.evaluateWether .noactive,
+.evaluate .situation span,
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.nav-header-wrapper .nav-header .nav-header-search-bar-wrapper .suggestion-list,
+.article-holder .bangumi-card a .container,
+.article-action .ops .share-container .weixin-holder,
+.coin-wrap .coin-sure,
+.filter-wrap .sub-filter,
+.list.main_body .list_box .block .cover,
+.link-popover::after,
+.link-popover::before,
+.medal-get-box, .medal-message-box,
+.detail-card .card,
+.bili-share-pc,
+.title-line,
+.form-login .input-box .item input,
+.form-login .input-box .btn-box .btn-login,
+.form-login .input-box .btn-box .btn,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.open-dialog-masker .btn-normal,
+.review-module .review-list .empty-wrapper .btn-go-write,
+.article-holder .music-card,
+.bp-input .content-box::before,
+.container .left-container .play-up-info,
+.container .left-container .media-comment,
+.play-options .play-options-more .play-options-content,
+.play-options .play-options-more .play-options-content .play-option,
+.container .right-container .media-theme,
+.play-options .share-box,
+.share-box .share-popup .share-address ul li input,
+.input-section,
+.input-section .schedule-panel .s-input,
+.input-section .schedule-panel .s-panel,
+.date-input > input,
+.date-input .date-panel,
+.bb-comment .hot-line,
+.bb-comment .bottom-page.center,
+.act-card-wrap .act-card .type
+{
+    border-color: transparent !important;
+}
+.bili-radio+span::before,
+.channel-info .c-count,
+.popularize-module .online em,
+.open-dialog-masker .open-body ul li i
+{
+    border-color: #aaa !important;
+}
+.up-info-holder .fixed-box .up-article-list-block .block-title,
+.up-info-holder .fixed-box .more .top-bar,
+.el-date-range-picker__content.is-left,
+.el-picker-panel [slot=sidebar],
+.el-picker-panel__sidebar,
+.bili-switcher,
+.bui-sns-info a .bd,
+.pagelistbox .custom-right .custom-right-inner.custompage,
+.article-list-holder .article-item,
+.search-module .search-block,
+.search-module .search-block .search-word-panel .panel-title .split-line,
+.chatPanelBody .footer,
+.leftMsg .msgDiv:before,
+.leaveMsg .leaveMsgHeader,
+.medal-receive-title,
+.login-box .line,
+.open-dialog-masker .__dialog-header,
+.date-input .date-panel .ym,
+.act-card-wrap .act-card
+{
+    border-color: #444 !important
+}
+.singlePage .mainBox
+{
+    border: 1px solid #444 !important;
+}
+i.settings-category-arrow::after,
+.gui-settings-dropdown::after
+{
+    border-color: white !important;
+}
+.player-area-ctnr .bg-image,
+#player-header .bg-image
+{
+    transition: all .2s .5s !important;
+}
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a,
+.player-auxiliary-btn-playlist-order path
+{
+    fill: #aaa !important;
+}
+.toast-card-dismiss path,
+.audioplayer .ap-play-button svg path
+{
+    fill: #fff !important;
+}
+.security-list .first-level .m-arrow,
+.page-content .right-side .up-list .fresh-btn:before,
+.s-lineMore-more .icon-right,
+.slide-controller .slide-btn .icon,
+#rankList .list-wrap .list .switch-day .icon-bottom,
+.list-wrap .s-showMore .icon-right,
+.breadcrumb .arrow,
+.error-container .error.split,
+.leaveMsg .leaveMsgBody .questionClassify .classIfyTitleArea .classIfyTitleIcn,
+.nav-header-wrapper .nav-header .user-panel .panel-list .icon,
+[class^=icon-]::after,
+.compact .primary-menu .nav-menu>li.home>a,
+.compact .primary-menu .nav-menu .side-nav .side-link i.square,
+.compact .primary-menu .nav-menu .side-nav .side-link i.zhuanlan,
+.compact .primary-menu .nav-menu .side-nav .side-link i.live,
+.compact .primary-menu .nav-menu .side-nav .side-link i.blackroom,
+.change-push .icon
+{
+    filter: brightness(0) invert(1) !important;
+}
+.tool-box-v2-container .icon-tv,
+.tool-box-v2-container .icon-download,
+.funcPanel .addFace,
+.funcPanel .capture,
+.funcPanel .evaluate,
+.funcPanel .leaveMessage,
+.funcPanel .zhichiClose
+{
+    filter: brightness(0) invert(.7) !important;
+}
+.bp-svg-icon.link,
+.face-g-list .mp-block .right ul li.reach::after,
+.cc-nav-wrp .logo,
+.prize-item .prize-img,
+.el-carousel .el-carousel__indicators .el-carousel__indicator.is-active,
+.banner .slides-pagination li.selected,
+.bui-sns-info>a>img,
+.slideshow .slides-next:hover,
+.slideshow .slides-prev:hover,
+.slideshow .slides-pagination li.selected,
+.mainmenu ul.grid li a.yxlb:hover,
+.mainmenu ul.grid li.hover a.yxlb,
+.mainmenu ul.grid li a.lbzx:hover,
+.mainmenu ul.grid li.hover a.lbzx,
+.carousel .indicator .indicator-btn-holder .indicator-btn.on,
+#page-channel-detail .watch-later-btn:hover,
+.error-body .error-msg .error-img,
+.leaveMsgUpload .btnarea .btnareaIcon,
+.coin-operated-m .like-checkbox input[type=checkbox]:checked+i,
+.video-list .vl-hd .display-tab li.on,
+.i-watchlater.has-select,
+.block-effect-ctnr .item .cb-icon,
+.small-item.new .new-icon,
+#article-list-index .title-holder .icon-close,
+#article-list-index .index-holder .article-item.on .point,
+.bui-radio-icon.bui-radio-icon-selected,
+.vote-create-btn:hover,
+.vote-create-btn.active
+{
+    filter: var(--blue-image-filter) !important;
+}
+.svg-icon.good-6-click,
+.article-holder .music-card .container .col-3 .card-label
+{
+    filter: var(--pink-image-filter) !important;
+}
+.article-item .item-holder .article-info-bar .like:before,
+.article-item .item-holder .article-info-bar .reply:before,
+.article-item .item-holder .article-info-bar .view:before,
+.search-module .search-block .search-icon,
+.search-module .search-block .search-word-panel .history-item .cancel,
+.rank-module .complete-rank::after,
+body>div.to-top.on,
+.rank-item .content .info .detail .b-icon.view,
+.rank-item .content .info .detail .b-icon.author,
+.leaveMsg .leaveMsgHeader .close,
+.sureWindow .close,
+.evaluateWether .evaluateno i,
+.evaluateWether .evaluateok i,
+.evaluateWether .operateType .unsolveActive span,
+.video-list .vl-hd .display-tab li
+{
+    filter: grayscale(1) !important;
+}
+.player-area-ctnr .bg-image:hover,
+#player-header .bg-image:hover
+{
+    filter: brightness(0.7) !important;
+}
+.player-area-ctnr .bg-image,
+#player-header .bg-image
+{
+    filter: brightness(0.2) !important;
+}
+.up-feedback .icon-beta
+{
+    filter: brightness(0.5) !important;
+}
+.tab-mk2.active,
+.face-g-more,
+.bangumi-player,
+.record-nav .on,
+.m-help .m-arrow
+{
+    background-image: none !important;
+}
+.bangumi-player,
+.live-sidebar-ctnr,
+.el-picker-panel,
+.cc-article-wrp .info-wrp .cc-btn,
+.media-sponsor-wrapper .sponsor-right-area .sponsor-btn,
+.canvas-card dd .icon-contain .support,
+.bui-sns-info a .bd,
+.guide .old-btn a,
+.link-navbar-ctnr,
+.rank-item:hover,
+.singlePage .mainBox,
+.selector-wrapper,
+.nav-header-wrapper .nav-header .user-panel .user-uname,
+.nav-header-wrapper .nav-header .user-panel .panel-list,
+.demo-app .detail .category,
+.main_body .pick_up .pick_list .pick_block .pic,
+.main-container .entry-old .btn-old
+{
+    box-shadow: none !important;
+}
+body>.player #bilibiliPlayer
+{
+    box-shadow: none !important;
+}
+.guide .feedback-btn a,
+.mainBox .leaveMsg,
+.js-evaluateArea .evaluateDialog,
+.project-list .project-list-item:hover,
+#app .toolbar-wrapper,
+.article-action .ops .share-container .weixin-holder,
+#article-list-index,
+.sch-pub-tips
+{
+    box-shadow: 0px 1px 10px 0px var(--theme-color-30) !important;
+}
+.main-container .title span::before,
+.top-banner,
+.nav-guide-container .nav-guide-tip .guide-tip-triangle,
+.canvas-card dd .icon-contain .support::after,
+.nav-bar .sub-nav::after,
+.bui-sns-info a .bd::after,
+.more .help .icon,
+.more .link .icon,
+.filter-wrap .icon-tid2-arr,
+.user-info .user-info-desc .arrow-left,
+.side-bar-popup-cntr:after,
+.date-input > img
+{
+    display: none !important;
+}
+@supports (backdrop-filter: blur(24px)) or (-webkit-backdrop-filter: blur(24px))
+{
+    .gui-settings-box.blur li.category,
+    .gui-settings-box.blur .gui-settings-header,
+    .gui-settings-box.blur .gui-settings-footer,
+    .gui-settings-box.blur .gui-settings-content
+    {
+        background: transparent !important;
+    }
+}
+.face-g-list .mp-block .right ul li.base .round
+{
+    z-index: 100 !important;
+}
+.more .help,
+.more .link
+{
+    padding-left: 0 !important;
+}
+body>div.to-top.on
+{
+    background-repeat: no-repeat !important;
+}
+.article-action .ops .share-container .weixin-holder p
+{
+    margin-bottom: 10px !important;
+}
+#jfContent
+{
+    filter: invert(1);
+}
+.input-section:focus-within
+{
+    outline: none !important;
+}
+.input-section .textarea
+{
+    border-radius: 4px !important;
+    border: 1px solid transparent !important;
+}
+.input-section .textarea:focus-within
+{
+    border: 1px solid var(--theme-color) !important;
+}
+.activity.topic-preview-wrapper .s-bottom
+{
+    border-radius: 0 !important;
+}
+.qrcode-login .qrcode-con .qrcode-box .qrcode-img
+{
+    border: 10px solid white !important;
+}
+.qrcode-login .qrcode-con .qrcode-box .status
+{
+    border: 10px solid transparent !important;
+}
+.card-list .card
+{
+    border: none !important;
+    border-radius: 4px !important;
+}
+.list-filter-bar .sort-box .item.active,
+.list-filter-bar .sort-box .item:hover,
+.data-card .tab .data-tab.current:after,
+.audioplayer .ap-playlist .ap-playlist-body .ap-playlist-column-name-value:hover,
+.bili-switcher.checked,
+.pagelistbox .custom-right .custom-right-inner.custompage:focus,
+.sort-item.on i.active,
+.rank-module .rank-tabs-bar .rank-tabs-list li.on,
+.up-list .up-item .info-holder .head .follow,
+#rankList .list-wrap .list .switch.active,
+#rankList .list-wrap .list .switch:hover,
+#rankList .list-wrap .list .switch.active.active:after,
+#rankList .list-wrap .list .switch:hover.active:after,
+.danmu-hot .tab-list .tab.active,
+.container .hot-list .music-menu-list .choose-menu,
+.container .hot-list .music-menu-list .menu-type .type-triangle,
+.bili-radio:checked+span::before,
+.rightMsg .msgDiv::before,
+#index-player-vm .item-border,
+.open-dialog-masker .open-body ul li i.icon-complete,
+.input-section:focus,
+.arrow-down.active,
+.input-section .s-input:focus,
+.date-input > input.active
+.date-input > input:focus,
+.date-input .date-panel .day.active
+{
+    border-color: var(--theme-color) !important;
+}
+.blp-ui-slider-hover-container::before
+{
+    border-top-color: var(--theme-color) !important;
+}
+.blp-ui-slider-hover-container::after
+{
+    border-bottom-color: var(--theme-color) !important;
+}
+#index-player-vm .aside-item:after
+{
+    border-right-color: var(--theme-color) !important;
+}
+.audioplayer .ap-controller,
+.audioplayer .ap-playlist,
+.form-login .input-box .item input:focus
+{
+    border: 1px solid var(--theme-color) !important;
+}
+.medal-progress>i,
+.gift-item-wrap .expiration,
+.el-date-table td.in-range.start-date:hover,
+.el-date-table td.in-range.end-date:hover,
+.el-date-table td.in-range.start-date,
+.el-date-table td.in-range.end-date,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-left,
+.audioplayer .ap-controller .ap-controller-center .ap-progress-bar,
+.audioplayer .ap-controller .ap-controller-right .ap-volume-bar,
+.bili-switcher.checked,
+.rank-list .canvas-card:nth-child(-n+3)::after,
+.rank-list .item:nth-child(-n+3) .rank-index,
+.s-lineMore-more:hover,
+.s-rank.pink,
+.index-nav .n-i.gotop .btn_gotop:hover,
+.guide .feedback-btn a,
+.gift>.expires,
+.blp-ui-slider-process,
+.uploader-info .info .follow .btn,
+.bili-radio:checked+span::after,
+.upload-v2-step1-container .upload-btn,
+.error-container .big-btn,
+.zcChat .header,
+.rightMsg .msgDiv,
+.leaveMsg .submitArea .submit,
+.sureWindow .btngroup .leavesure,
+.evaluateWether .okactive,
+.evaluateWether .noactive,
+.evaluate .situation span.active,
+.evaluateSubmitArea .submit,
+.bilibili-live-player .blpui-btn.default-btn.btn-blue,
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.banner-wrapper .swiper-pagination-bullet-active,
+.nav-header-wrapper .nav-header .profile-img.active::before,
+.coin-wrap .coin-sure,
+.up-feedback .up-fb-btn:hover,
+.draft-holder-block .draft-holder .panel .btn.on,
+.follow-dialog-wrap .follow-dialog-window .bottom .btn,
+.follow-dialog-wrap .follow-dialog-window .bottom .btn:hover,
+.progress-bar-ctnr .bar-body .progress-bar,
+.user-info > .uid,
+.receive-list-prev i,
+.receive-list-next i,
+.receive-list-page,
+.form-login .input-box .btn-box .btn-login,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.main-container .pay-bar .vip .btn-pay,
+.open-dialog-masker .btn-normal.confirm,
+.review-module .review-list .empty-wrapper .btn-go-write,
+.be-tags-container .tag.new-tag,
+.share-box .share-popup .share-address ul li .btn,
+.play-up-intro .play-up-follow .play-up-not-follow,
+.card-timing-module .r-text .update .published,
+.sch-pub-btn
+{
+    background-color: var(--theme-color) !important;
+}
+.audioplayer .ap-play-button svg,
+.audioplayer .ap-controller .ap-controller-center .ap-buffer-bar,
+.blp-ui-slider-buffer-container
+{
+    background-color: var(--theme-color-60) !important;
+}
+.audioplayer .ap-play-button:hover svg
+{
+    background-color: var(--theme-color-90) !important;
+}
+.face-g-more,
+.room-card-item:hover .room-name,
+.content-panel .title span:hover,
+.list-filter-bar .sort-box .item.active,
+.list-filter-bar .sort-box .item:hover,
+.list-filter-bar .pic-type-box .item.active,
+.list-filter-bar .pic-type-box .item:hover,
+.content-panel .title span:hover em,
+.medal-up-name>a,
+.list-link a,
+.record-nav .on,
+.noHover-link,
+.my-moral i,
+.viphelp span,
+.el-pager li:hover,
+.audioplayer .ap-playlist .ap-playlist-body li.ap-playlist-line-active,
+.audioplayer .ap-playlist .ap-playlist-body li:hover,
+.audioplayer .ap-button:hover,
+.bilibili-player-video-subtitle-setting-left-more:hover,
+.bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
+.bilibili-player-video-subtitle-setting-right-more:hover,
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
+.setting .watermark-setting .watermark-wrp .is-selected,
+.search-module .search-block .search-word-panel .suggest_high_light,
+.rank-module .rank-tabs-bar .rank-tabs-list li.on,
+.rank-module .rank-list .item:hover a,
+.rank-module .complete-rank:hover,
+.up-list .up-item .info-holder .head .follow,
+.up-list .up-item .info-holder .head .nick-name:hover,
+.more .help .title:hover,
+.more .link .title:hover,
+.s-imgUnit-text a:hover,
+#mangoTv .mango-rank .text-list a:hover,
+#rankList .list-wrap .list .bar .text:hover,
+#rankList .list-wrap .list .switch.active,
+#rankList .list-wrap .list .switch:hover,
+#rankList .list-wrap .text-list a:hover,
+.list-wrap .s-showMore:hover,
+#activeCenter .s-imgUnit-img .overlay .des,
+.common-popup-wrap header,
+.gift-box:hover>.num,
+.blp-ui-button:hover > i,
+.base-info .desc .tag,
+.base-info .btn-wrapper .btn:active .icon-font,
+.base-info .btn-wrapper .btn:active,
+.base-info .btn-wrapper .btn:hover .icon-font,
+.base-info .btn-wrapper .btn:hover,
+.video-list-wrapper .video-list .icon-font:hover,
+.danmu-hot .tab-list .tab.active,
+.danmu-hot .video-list .video-wrapper .video:hover .title,
+.rank-item .content .info .title:hover,
+.rank-item .content .info .bangumi-num,
+.upload-agreement a,
+.channel-detail .content .breadcrumb .item:hover,
+.leaveMsgUpload .btnarea .btareatxt1,
+.hot-list .card-ctnr .room-count .amount,
+.hot-list .card-ctnr .room-count:hover .amount,
+.hot-list .card-ctnr .room-count:hover .icon-font,
+.hot-list .card-ctnr .room-count:hover,
+.panel-list .order-center-item:hover a,
+.similar-song-menu .similar-right .title:hover,
+#song_detail_click_upper~div .pager .pages .page-item.active button,
+#song_detail_click_upper~div .pager .pages .page-item button:hover,
+.article-action .coin-btn.on,
+.article-action .coin-btn.on i,
+.article-action .coin-btn:hover,
+.article-action .coin-btn:hover i,
+.article-action .fav-btn.on,
+.article-action .fav-btn.on i,
+.article-action .fav-btn:hover,
+.article-action .fav-btn:hover i,
+.article-action .like-btn.on,
+.article-action .like-btn.on i,
+.article-action .like-btn:hover,
+.article-action .like-btn:hover i,
+.article-action .ops i:hover,
+.coin-wrap .coin-title i,
+.coin-wrap .coin-nav .coin-checkbox.on .lable,
+#community_msg .dyn_menu li a:hover,
+.form-login .remember a,
+.app-link a,
+.popularize-module .online a:hover,
+.open-dialog-masker .__dialog-header .mr-close:hover,
+.open-dialog-masker .open-body ul li i.icon-complete,
+.open-dialog-masker .open-footer .open-agree i.icon-chk-full,
+.open-dialog-masker .open-footer .open-agree a,
+.main-container .review-module .module-title .more-link:hover,
+.bilibili-player-video-toast-top-lower-quality,
+.i-pin-reason,
+.container .left-container .play-up-info .play-up-self-btn:hover,
+.play-options .share-box .share-btn ul .bili-share:hover,
+.comment-list a,
+.bilibili-player-context-menu-container.black ul>li a>.active,
+.video-toolbar .appeal-text:hover,
+.input-section .schedule-panel .s-item:hover,
+.date-input .date-panel .day.active,
+.bb-comment .more-link:hover
+{
+    color: var(--theme-color) !important;
+}
+.gift-item-wrap .expiration,
+.el-date-table td.in-range.start-date:hover,
+.el-date-table td.in-range.end-date:hover,
+.el-date-table td.in-range.start-date,
+.el-date-table td.in-range.end-date,
+.nav-guide-container .guide-tip-btn .guide-tip-btn-left,
+.rank-list .item:nth-child(-n+3) .rank-index,
+.s-lineMore-more:hover,
+.s-rank.pink,
+.index-nav .n-i .name:hover,
+.guide .feedback-btn a,
+.gift>.expires,
+.uploader-info .info .follow .btn,
+.error-container .big-btn,
+.infoBarName .inputIng,
+.infoBarName .titleName,
+.infoBar .infoBarText,
+.magBox .msgDiv .msgText,
+.leaveMsg .submitArea .submit,
+.sureWindow .btngroup .leavesure,
+.evaluateWether .okactive,
+.evaluateWether .noactive,
+.evaluate .situation span.active,
+.evaluateSubmitArea .submit,
+.bilibili-live-player .blpui-btn.default-btn.btn-blue,
+.bilibili-live-player .bilibili-live-player-enter-tips,
+.banner-wrapper .swiper-pagination-bullet-active,
+.coin-wrap .coin-sure,
+.up-feedback .up-fb-btn:hover,
+.user-info > .uid,
+.form-login .input-box .btn-box .btn-login,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.confrim,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.ticket,
+.twp-mask .twp-wrapper .twp-container .twp-btns .twp-btn.vip,
+.main-container .pay-bar .vip .btn-pay,
+.open-dialog-masker .btn-normal.confirm,
+.review-module .review-list .empty-wrapper .btn-go-write,
+.be-tags-container .tag.new-tag,
+.share-box .share-popup .share-address ul li .btn,
+.play-up-intro .play-up-follow .play-up-not-follow,
+.card-timing-module .r-text .update .published,
+.sch-pub-btn
+{
+    color: var(--foreground-color) !important;
+}
+.bilibili-player-video-danmaku-setting-left-more:hover .bp-svgicon,
+.bilibili-player-video-danmaku-setting-right-more:hover .bp-svgicon,
+.audioplayer .ap-progress-thumb svg path:first-child,
+.audioplayer .ap-progress-thumb svg path:nth-child(2),
+.bilibili-player-video-subtitle-setting-left-more:hover,
+.bilibili-player-video-subtitle-setting-left-more:hover .bp-svgicon,
+.bilibili-player-video-subtitle-setting-right-more:hover,
+.bilibili-player-video-subtitle-setting-right-more:hover .bp-svgicon,
+.bilibili-player-video-sendbar .bilibili-player-video-inputbar .bilibili-player-video-hint a:hover,
+.receive-list-page,
+.bilibili-player-video-toast-item-close:hover,
+.player-auxiliary-btn-playlist-order:hover path
+{
+    fill: var(--theme-color) !important;
+}
+.leftMsg .msgDiv:before,
+.rightMsg .msgDiv::before
+{
+    border-top-color: transparent !important;
+    border-bottom-color: transparent !important;
+}
+i.settings-category-arrow::after,
+.gui-settings-dropdown::after
+{
+    border-top-color: transparent !important;
+    border-left-color: transparent !important;
+}
+.data-card .tab .data-tab.current:after,
+.sort-item.on i.active,
+#rankList .list-wrap .list .switch.active.active:after,
+#rankList .list-wrap .list .switch:hover.active:after,
+.container .hot-list .music-menu-list .menu-type .type-triangle
+{
+    border-left-color: transparent !important;
+    border-right-color: transparent !important;
+}

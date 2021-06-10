@@ -1,0 +1,543 @@
+@import "./dark-definitions";
+
+.van-popper-login .container {
+  @include border-color("4");
+}
+.dynamic-link-hover-bg .bp-img-icon {
+  @include to-theme("blue");
+}
+.bp-right {
+  .confirm-container {
+    @include background-color("4");
+    .content-text {
+      @include color("e");
+    }
+    .msg-group {
+      @include border-color("a");
+      .msg-input {
+        @include color("e");
+        &::placeholder {
+          @include color("a");
+        }
+      }
+      .msg-btn {
+        @include color("e");
+        &::before {
+          @include background-color("a");
+        }
+        &.msg-btn-unable {
+          @include color("a");
+        }
+      }
+    }
+    .btn-group {
+      .btn-common {
+        @include theme-border-color();
+        @include theme-color();
+        @include background-color("4");
+      }
+      .btn-active {
+        @include theme-background-color();
+      }
+    }
+  }
+}
+.rcmd-list {
+  .rcmd-list-title {
+    @include color("e");
+  }
+  .remd-video-card .title {
+    @include color("e");
+  }
+}
+.bilibili-player .bui-button.bui-button-border:hover {
+  @include theme-color();
+  @include theme-border-color();
+}
+.van-popover.van-followed .follow_dropdown li {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+    @include background-color("4");
+  }
+}
+.filter-wrap .filter-wrap_bottom,
+.recommend-list .split-line {
+  @include background-color("4");
+}
+#app .collection-m .add-group .input-group .submit {
+  @include theme-background-color("20");
+  border-left-color: var(--theme-color) !important;
+}
+.b-info .balance-name {
+  @include theme-color();
+}
+.bilibili-player-video-state-buff-icon {
+  path[fill="rgb(0,161,214)"] {
+    @include theme-fill();
+  }
+  path[stroke="rgb(0,161,214)"] {
+    @include theme-stroke();
+  }
+}
+.b-head-search {
+  @include border-color("4");
+  &.input-active {
+    @include theme-border-color();
+  }
+  .b-head-search_input {
+    @include background-color();
+    @include color("e");
+  }
+  .search-icon,
+  .show-icon {
+    @include to-theme("blue");
+  }
+}
+.multi-page .cur-list .list-box li .link-content img {
+  @include to-theme("blue");
+}
+.next-button .switch-button.on {
+  @include theme-background-color();
+  @include theme-border-color();
+}
+.video-sections {
+  @include background-color("4");
+  &-head {
+    &_first-line {
+      .first-line {
+        &-left {
+          span:not(.cur-page) {
+            @include color("e");
+          }
+        }
+      }
+    }
+    &_second-line {
+      .second-line_right {
+        @include theme-border-color();
+        @include background-color("4");
+        @include theme-color();
+        &.already-fav {
+          @include background-color("6");
+          @include color("9");
+        }
+      }
+    }
+    &_desc {
+      @include background-color("6");
+      @include color("e");
+    }
+    .border-bottom-line {
+      @include background-color("6");
+    }
+  }
+  &-content-list {
+    .video-sections-item {
+      @include set-color("border-bottom-color", "6");
+    }
+    .video-section {
+      &-title {
+        @include background-color("4");
+        span {
+          @include color("e");
+        }
+      }
+      &-list {
+        .video-episode-card {
+          &__info {
+            &-title {
+              @include color("e");
+            }
+            &-title-playing {
+              @include theme-color();
+              .cur-play-icon {
+                @include to-theme("blue");
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+#page-fav {
+  .favList-info {
+    .shadow-first {
+      @include background-color("2");
+    }
+    .shadow-second {
+      @include background-color("3");
+    }
+    .collection-details {
+      .title .iconfont {
+        @include color("a");
+      }
+      .collection-btn {
+        @include theme-background-color();
+        @include color("e");
+      }
+    }
+  }
+}
+.international-header .user-con.signin .item .notify-float {
+  &::before {
+    @include background-color("4");
+  }
+  .float_msg {
+    @include background-color("4");
+    div {
+      @include color("e");
+      span {
+        @include theme-color();
+      }
+    }
+  }
+}
+.container .left-container .play-up-info {
+  .play-up-intro {
+    .play-up-cover-loading,
+    .play-up-introduction-loading p {
+      @include background-color("4");
+    }
+  }
+  .play-up-self .play-up-self-content a {
+    @include theme-color();
+  }
+}
+
+.player-auxiliary {
+  &-btn-playlist-order:hover path {
+    @include theme-stroke();
+  }
+  &-playlist-item-img {
+    @include no-image;
+  }
+  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix {
+    @include to-theme("blue");
+  }
+}
+.remd-video-card .card-box .pic-box {
+  @include background-color("4");
+}
+.next-button .switch-button {
+  @include border-color("6");
+  @include background-color("6");
+}
+.video-info .video-title .tit {
+  @include color("e");
+}
+a {
+  &.name[style*="color:#FB7299"],
+  &.name[style*="color: #FB7299"],
+  &.name[style*="color: rgb(251, 114, 153)"],
+  &.username.is_vip[style*="color:#FB7299"],
+  &.c-pointer[style*="color: rgb(251, 114, 153)"] {
+    @include vip-color();
+  }
+}
+.bili-search {
+  .video-item.list {
+    @include set-color("border-bottom-color", "4");
+    .headline {
+      .type {
+        @include border-color();
+        @include background-color("4");
+        @include color("e");
+      }
+      .title {
+        @include color("e");
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+    .des {
+      @include color("a");
+    }
+  }
+}
+.main-container .tool-bar {
+  .watch-info {
+    > span {
+      @include color("a");
+    }
+    #watch-together-icon-1 {
+      @include fill("a");
+    }
+    &:hover {
+      > span {
+        @include theme-color();
+      }
+      #watch-together-icon-1 {
+        @include theme-fill();
+      }
+    }
+    .watch-more {
+      @include no-shadow();
+      @include background-color("4");
+      @include border-color();
+      .title {
+        @include color("e");
+      }
+    }
+  }
+}
+.error-container .error-404 img {
+  @include to-theme("blue");
+}
+.popular-video-container {
+  @include back-top-btn();
+}
+.m-layer .b-btn-cancel {
+  @include color("e");
+  &:hover {
+    @include theme-color();
+  }
+}
+.follow-btn.followed {
+  @include border-color("");
+  @include background-color("4");
+  @include color("a");
+}
+#article-list-index .index-holder {
+  .article-item:not(.on) {
+    .point {
+      @include background-color("6");
+    }
+  }
+  .article-item {
+    .title {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+}
+.main-container .bottom-brief-introduction {
+  @include background-color("2");
+}
+.fullscreen-loading .tv-bg + .container {
+  @include background-color();
+  .retry-btn {
+    @include theme-background-color();
+  }
+}
+[style*="color: #00A1D6"] {
+  @include theme-color();
+}
+.main-show-c {
+  .film-change-page {
+    .search {
+      .append {
+        @include theme-background-color();
+      }
+    }
+    .list-container {
+      .season-item {
+        .change-btn {
+          @include theme-border-color();
+          @include theme-color();
+          &:hover {
+            @include theme-background-color();
+            @include color("f");
+          }
+        }
+      }
+    }
+  }
+  .plp-r {
+    .tab {
+      .title-active {
+        @include theme-color();
+      }
+    }
+    .chat-container {
+      .user-guide {
+        .top-c {
+          .l .switch-c.checked {
+            @include theme-background-color();
+          }
+          .r:hover {
+            @include theme-color();
+            svg g g {
+              @include theme-fill();
+            }
+          }
+        }
+        .user-share {
+          @include background-color("2");
+          .share-content {
+            @include background-color("2");
+            .left {
+              .share-btn {
+                &:hover {
+                  span,
+                  i {
+                    @include theme-color();
+                  }
+                }
+                span,
+                i {
+                  @include color("a");
+                }
+              }
+              .copy-action {
+                .copy-title {
+                  @include color("a");
+                }
+                input[type="text"] {
+                  @include background-color();
+                  @include color("e");
+                  @include border-color("4");
+                }
+                .copy-btn {
+                  @include theme-background-color();
+                }
+              }
+            }
+            .right {
+              ::after {
+                @include background-color("6");
+              }
+            }
+          }
+        }
+      }
+      .input-area {
+        .text-c {
+          @include set-theme-color("caret-color");
+        }
+        .input-c.border {
+          @include theme-border-color();
+        }
+      }
+      .static-popup {
+        @include border-color();
+        @include background-color("4");
+        .emoji {
+          @include background-color("4");
+          &:hover {
+            @include background-color("2");
+          }
+        }
+      }
+    }
+    .play-list {
+      .header {
+        .change-film {
+          @include theme-background-color();
+        }
+      }
+      .other-item {
+        .current-play {
+          @include to-theme("blue");
+        }
+      }
+    }
+  }
+}
+#user-card-container {
+  @include theme-border-color();
+  @include background-color("4");
+  .face-cc {
+    @include border-color("4");
+  }
+  .info .name.vip-red-name {
+    @include vip-color();
+  }
+}
+.dialog-base-wrapper .popup-content .ogv-dialog-confirm {
+  @include background-color("4");
+  .close .icon:hover {
+    @include theme-color();
+    svg path {
+      @include theme-fill();
+    }
+  }
+  .title {
+    @include set-color("border-bottom-color", "6");
+  }
+  .short-msg .content {
+    @include color("a");
+  }
+  .bottom-oper {
+    .btn.cancel {
+      @include border-color();
+      @include background-color("6");
+      @include color("e");
+    }
+    .btn.submit {
+      @include theme-background-color();
+    }
+  }
+}
+.bb-comment {
+  .comment-emoji {
+    @include no-shadow();
+  }
+  .comment-send-lite {
+    @include background-color("2");
+  }
+  .loading-state {
+    @include color("a");
+  }
+}
+.emoji-box.top:after {
+  @include no-image();
+}
+.video-desc .desc-info {
+  @include color("e");
+  & + .toggle-btn {
+    @include color("a");
+    &:hover {
+      @include theme-color();
+    }
+  }
+}
+
+body:not(.simplify-comment) .bb-comment {
+  .comment-send-lite {
+    @include background-color("2");
+  }
+  .comment-list .list-item .info {
+    .like {
+      &:hover i,
+      &.liked i,
+      &.liked:hover i {
+        @include to-theme("blue");
+      }
+    }
+    .hate {
+      &:hover i,
+      &.hated i,
+      &.hated:hover i {
+        @include to-theme("blue");
+      }
+    }
+  }
+}
+body:not(.simplify-comment) .panel-area .bb-comment {
+  .comment-send-lite {
+    @include background-color("4");
+  }
+}
+
+.toolbar-box {
+  .emoji-btn.active,
+  .emoji-btn:hover,
+  .pic-box.active,
+  .pic-box:hover,
+  .at-icon:hover,
+  .icon-topic:hover,
+  .icon-vote.active,
+  .icon-vote:hover,
+  .icon-schedule.active,
+  .icon-schedule:hover {
+    @include to-theme("blue");
+  }
+  .static-popup .bp-arrow {
+    background: none !important;
+  }
+}

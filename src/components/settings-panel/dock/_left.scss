@@ -1,0 +1,14 @@
+.widgets-panel-popup,
+.settings-panel-popup {
+  left: 12px;
+  transform-origin: left;
+}
+.settings-panel-popup {
+  // .component-detail-panel {
+  //   border-top-left-radius: 0 !important;
+  //   border-bottom-left-radius: 0 !important;
+  // }
+  .component-tags {
+    border-bottom-left-radius: 8px;
+  }
+}

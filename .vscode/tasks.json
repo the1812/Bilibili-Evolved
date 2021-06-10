@@ -1,0 +1,137 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./webpack/webpack.dev.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "编译开发版 dev:build"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --watch --config ./webpack/webpack.dev.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "监视开发版 dev:watch"
+    },
+    {
+      "type": "shell",
+      "command": "yarn serve dist",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "启动服务器(本体) dev:serve"
+    },
+    {
+      "type": "shell",
+      "command": "yarn serve registry/dist",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "启动服务器(组件) dev:serve components"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --watch --config ./registry/webpack/components.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "监视组件 dev:components"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --watch --config ./registry/webpack/plugins.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "监视插件 dev:plugins"
+    },
+    {
+      "type": "shell",
+      "command": "yarn tsc -p ./tsconfig.types.json --watch",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "监视类型定义 dev:typings"
+    },
+    // {
+    //   "type": "shell",
+    //   "command": "yarn webpack --config ./webpack/webpack.measure.js --progress",
+    //   "problemMatcher": [],
+    //   "label": "打包分析 dev:measure"
+    // },
+    // {
+    //   "type": "shell",
+    //   "command": "./dist/stats.html",
+    //   "problemMatcher": [],
+    //   "dependsOn": "打包分析 dev:measure",
+    //   "label": "查看打包分析 dev:stats"
+    // },
+    {
+      "type": "shell",
+      "command": "yarn eslint -f html -o dev/eslint.html --cache --cache-location node_modules/.cache/eslint/ 'src/**/*.@(js|ts|vue)' 'registry/lib/**/*.@(js|ts|vue)'",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "代码检查 prod:lint"
+    },
+    {
+      "type": "shell",
+      "command": "yarn eslint -f html -o dev/eslint.html --cache --cache-location node_modules/.cache/eslint/ --fix 'src/**/*.@(js|ts|vue)' 'registry/lib/**/*.@(js|ts|vue)'",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "代码修复 prod:lint & fix"
+    },
+    {
+      "type": "shell",
+      "command": "yarn tsc -p ./tsconfig.types.json",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "生成类型定义 prod:typings"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./webpack/webpack.prod.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "全部编译 prod:build"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./registry/webpack/components.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "编译组件 prod:components"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./registry/webpack/plugins.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "编译插件 prod:plugins"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./webpack/webpack.test.js --progress",
+      "group": "test",
+      "problemMatcher": [],
+      "label": "编译测试 test:build"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --watch --config ./webpack/webpack.test.js --progress",
+      "group": "test",
+      "problemMatcher": [],
+      "label": "监视测试 test:watch"
+    },
+    {
+      "type": "shell",
+      "command": "rm -r ./node_modules/.cache/webpack/",
+      "label": "清除打包缓存 cache:clean",
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "command": "rm -r ./node_modules/.cache/",
+      "label": "清除全部缓存 cache:clear all",
+      "problemMatcher": []
+    }
+  ]
+}

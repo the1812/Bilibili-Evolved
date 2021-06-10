@@ -1,0 +1,1082 @@
+@import "./dark-definitions";
+@mixin level-badge($levels, $color) {
+  @each $num in $levels {
+    .level-#{$num} {
+      border-color: $color !important;
+    }
+    .level-#{$num} .label {
+      background-color: $color !important;
+    }
+    .level-#{$num} .level {
+      color: $color !important;
+    }
+  }
+}
+@include level-badge(1 2 3 4, #44b0a0);
+@include level-badge(5 6 7 8, #74b0f6);
+@include level-badge(9 10 11 12, #ba94f2);
+
+.van-popover .level-bar .level-progress {
+  background-color: #ffae00 !important;
+}
+
+#biliAppHomeSetting > div,
+.app-layout .manga-navbar,
+.manga-navbar .drop-list,
+.hover-panel-wrap,
+.hover-panel-wrapper,
+.van-popover .container,
+.container .play-all,
+.container .split-line .history-tip,
+.lang-change .lang-intro,
+#gift-package-item-box .panel-wrapper,
+.title-renew-panel .actions,
+.user-title-using-cntr .panel,
+.international-home {
+  @include background-color("2");
+}
+.manga-navbar {
+  .search-bar .search-bar-bg,
+  .user-panel .drop-list .logout-btn-container,
+  .drop-list .more-btn-container {
+    @include background-color("3");
+  }
+}
+.skeleton {
+  .skeleton-head,
+  .skeleton-focusbtn,
+  .skeleton-user-name,
+  .skeleton-time,
+  .skeleton-content {
+    @include background-color("3");
+  }
+}
+.yzly-content-ctnr .btn,
+.recommend-area-ctnr .rec-area-item,
+.container .level-intro,
+.van-popover .upload-item:hover,
+.container .play-all:hover,
+.van-popover .btn-box .btn.reg-btn:hover,
+.international-header .bili-banner,
+.message-list-content .notify-wrapper .notify-text,
+.user-title-using-cntr .user-title-box {
+  @include background-color("3");
+}
+.up-info .u-face .fa {
+  @include background-color("4");
+}
+.share-step {
+  .core-style {
+    @include color("e");
+    @include border-color("4");
+    @include background-color();
+    &:hover,
+    &:focus-within {
+      @include background-color();
+      @include theme-border-color();
+    }
+  }
+}
+
+.grid-area-ctnr {
+  .hab-ctnr,
+  .news-ctnr,
+  .rank-ctnr {
+    @include background-color("4");
+  }
+}
+.confirmorder-container {
+  @include background-color("4");
+  @include no-shadow();
+  h1 {
+    @include color("e");
+    span {
+      @include color("a");
+    }
+  }
+  .card {
+    .card-bottom .delete {
+      @include to-gray();
+      &:hover {
+        @include to-theme("pink");
+      }
+    }
+    &.active {
+      @include theme-border-color();
+      &::before {
+        @include to-theme("pink");
+      }
+    }
+  }
+  .discounts {
+    @include border-color("5");
+    .discounts-list p {
+      @include border-color();
+      @include background-color("1");
+      @include color("6");
+    }
+  }
+  .total-container div span {
+    @include color("e");
+    &.total {
+      @include theme-color();
+    }
+  }
+  .confirm-bottom .confirm-paybtn.active {
+    @include to-theme("pink");
+  }
+  .confirm-bottom .service-term {
+    @include color("a");
+    .check-icon,
+    .check-icon.checked {
+      @include to-theme("pink");
+    }
+    .term-content {
+      @include theme-color();
+    }
+  }
+}
+.eticket-container {
+  .top-box .header {
+    @include border-color();
+    @include background-color("3");
+    .header-back {
+      @include to-white();
+    }
+    h1 {
+      @include color("e");
+    }
+    &::after {
+      @include border-color();
+    }
+  }
+  .eticket-info-container {
+    @include background-color("4");
+    @include no-shadow();
+  }
+  .eticket-info-right {
+    div {
+      @include color("e");
+    }
+    p {
+      @include color("a");
+    }
+  }
+  .qrcode-container {
+    @include background-color("4");
+    .qrcode-tip {
+      @include background-color();
+      @include color("e");
+    }
+    .qrcode-container-item .qrcode-hide-tip {
+      @include color("e");
+    }
+    .ticket-code,
+    .ticket-type {
+      &,
+      .color-gray-light {
+        @include color("a");
+      }
+      span {
+        @include color("e");
+      }
+    }
+    .addr-map {
+      @include background-color("38");
+      h1 {
+        @include color("e");
+      }
+      p {
+        @include color("a");
+      }
+      .map-icon {
+        @include to-theme("pink");
+      }
+    }
+  }
+}
+.orderdetail-container {
+  .orderdetail-wrapper {
+    @include color("a");
+    .wrapper-ticket {
+      @include color("e");
+      .tip {
+        @include theme-color();
+      }
+    }
+  }
+  .total-container div span {
+    @include color("e");
+    &.total {
+      @include theme-color();
+    }
+  }
+}
+.s_tag .btn-add,
+#biliAppHomeSetting select,
+#biliAppHomeSetting input,
+.highlight-areas-ctnr .highlight-area-item,
+.van-popover .level-bar,
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all,
+.share-content .video-card,
+.section-block .flip-view {
+  @include background-color("4");
+}
+.love-card .header::after {
+  @include background-color("5");
+}
+.s_tag .btn-add span {
+  @include background-color("e");
+}
+.coin-dialog-mask .coin-operated .mc .mc-box {
+  @include background-color("f");
+}
+.card .risk-tip-content {
+  background-color: #624f27 !important;
+}
+/* a
+{
+  background-image: none !important;
+} */
+.manga-navbar .nav-list,
+.text-info-ctnr,
+.news-ctnr .more-link:hover,
+.news-ctnr .more-link,
+.news-content,
+.live-room-app .aside-area .chat-history-panel-top,
+.title-renew-panel .card,
+.publish-panel .editor:hover,
+.publish-panel .editor:focus,
+.publish-panel .editor:focus-within,
+.page-container {
+  @include background-color();
+}
+.manga-navbar .search-bar .placeholder-list .placeholder-item {
+  @include color("8");
+}
+
+.manga-navbar .data-list .list-container {
+  .empty-hinter,
+  .failure-hinter,
+  .loading-hinter {
+    @include color("a");
+  }
+}
+#biliAppHomeSetting label ~ span,
+.video-container .text-area .view-danmaku,
+.follow-dialog-wrap .special-tip,
+.center-box .line-3 .action-button,
+.highlight-areas-ctnr .area-desc,
+.rank-item .room-title,
+.bb-comment .comment-list .list-item .blacklist-font-color,
+.container .split-line .history-tip,
+.comment-bilibili-fold .comment-list .list-item .blacklist-font-color,
+.list-item .publish-time,
+.share-content .video-card .up-info .tip,
+.live-panel .title .count,
+.video-desc .reprint {
+  @include color("a");
+}
+#biliAppHomeSetting {
+  select,
+  input,
+  a {
+    @include color("e");
+  }
+}
+
+.manga-navbar {
+  .search-bar .search-input,
+  .user-info-panel .user-name,
+  .user-info-panel .info-item,
+  .user-panel .drop-list .logout-btn-container .logout-button,
+  .drop-list .more-btn-container .more-button {
+    @include color("e");
+  }
+}
+.medal-ctnr {
+  .fans-medal-item.special-medal .label .content {
+    background-color: inherit !important;
+  }
+}
+
+.reply {
+  .divider {
+    @include border-color("5");
+  }
+  .divider-last {
+    &::before,
+    &::after {
+      @include background-color("5");
+    }
+    span {
+      @include color("a");
+    }
+  }
+}
+.share-success {
+  .success-text {
+    @include color("e");
+  }
+  .success-link {
+    @include theme-color();
+  }
+  .success-btn {
+    @include border-color();
+    @include background-color("4");
+    @include color("e");
+  }
+}
+.center-box {
+  .line-1 {
+    .name-field {
+      @include color("e");
+      a {
+        @include color("e");
+      }
+    }
+    .like-item {
+      @include color("e");
+    }
+  }
+  .line-2 {
+    .im-dynamic-link {
+      @include theme-color();
+    }
+  }
+}
+.bb-comment,
+.comment-bilibili-fold {
+  .comment-send .dynamic-repost {
+    @include color("c");
+  }
+}
+.manga-navbar-history-list .action-button,
+.manga-navbar-favourite-manga .action-button,
+.love-card .header,
+.banner-ctnr .banner-title,
+.item-ctnr .item-title,
+.tab-ctnr .tab-item,
+.rank-item .room-anchor,
+.area-detail-ctnr .area-title,
+.yzly-ctnr .yzly-title,
+.recommend-area-ctnr .title-text,
+.recommend-area-ctnr .area-name,
+.more-ctnr,
+.news-ctnr .more-link,
+.van-popover .coins .info a,
+.van-popper-login .title,
+.van-popover .btn-box .btn.reg-btn,
+.van-popper-history .view-all,
+.van-popper-upload .upload-item .bilifont,
+.news-content,
+.bilibili-player-video-danmaku-setting-left-block-word,
+.share-content .video-card .up-info .name,
+.user-title-using-cntr .user-title-box .name,
+.bilibili-player-video-control .bilibili-player-video-btn-pagelist,
+.bilibili-player-video-control .bilibili-player-video-btn-speed,
+.gridview-content-container .song-intro,
+.song-padding .song-intro {
+  @include color("e");
+}
+.van-popover .vip:hover,
+.international-header .mini-upload:hover {
+  @include color("f");
+}
+.superChat-card-detail {
+  .card-item-middle-top .name,
+  .card-item-top-right {
+    @include color("e");
+  }
+}
+
+$rankColors: (
+  #61c05a: #44b0a0,
+  #5896de: #74b0f6,
+  #a068f1: #ba94f2,
+  #ff86b2: #ff86b2,
+  #ff9f3d: #f6be18,
+  #1a544b: #f6be18,
+  #414967: #f6be18,
+  #2d0855: #f6be18,
+);
+@each $current, $original in $rankColors {
+  $rgb: "rgb(" + red($current) + ", " + green($current) + ", " + blue($current) + ")";
+  .fans-medal-item:not(.medal-guard) {
+    &[style*="border-color: #{$rgb}"],
+    &[style*="border-color: #{$current}"] {
+      border-color: $original !important;
+      .label {
+        background-color: $original !important;
+      }
+      .fans-medal-label {
+        @include no-image();
+        @include color("2");
+        background-color: $original !important;
+      }
+      .level {
+        color: $original !important;
+      }
+      .fans-medal-level {
+        @include background-color("2");
+        color: $original !important;
+      }
+    }
+  }
+}
+.fans-medal-item.medal-guard {
+  .fans-medal-level {
+    @include background-color("2");
+    @include color("e");
+  }
+}
+
+$highlight-map: (
+  1: #a0a7dc,
+  2: #c7aade,
+  3: #deb29c,
+  4: #afb7e8,
+  5: #dcbf94,
+  6: #95c5a8,
+);
+.highlight-areas-ctnr .highlight-area-item {
+  @each $nth, $color in $highlight-map {
+    &:nth-child(#{$nth}) .area-name {
+      color: $color !important;
+    }
+  }
+}
+.card-content .like-users-panel {
+  &::before {
+    @include background-color("6");
+  }
+  .users-box {
+    @include color("e");
+    .like-users-list {
+      &,
+      &:active,
+      &:link,
+      &:visited {
+        @include color("e");
+      }
+    }
+  }
+  .suffix-text {
+    @include color("a");
+  }
+}
+.live-room-app .aside-area .chat-control-panel {
+  @include no-image();
+}
+.charge-container {
+  @include background-color();
+  .charge-header-close {
+    @include to-white();
+  }
+  .charge-header-bg {
+    @include no-image();
+  }
+  .charge-header {
+    .user-link {
+      @include background-color("3");
+      @include border-color();
+      .user-name {
+        @include color("e");
+      }
+      &:hover .user-name {
+        @include theme-color();
+      }
+    }
+  }
+  .battery-item {
+    .battery-bg {
+      @include background-color("3");
+      @include border-color();
+    }
+    .battery-tool input {
+      @include background-color();
+      @include border-color("4");
+      @include color("e");
+    }
+    &.active {
+      .battery-bg {
+        @include background-color("4");
+        @include theme-border-color();
+      }
+      .battery-text {
+        @include theme-color();
+      }
+      .battery-tool input {
+        @include theme-border-color();
+      }
+    }
+  }
+  .charge-info {
+    @include color("e");
+    span {
+      @include theme-color();
+    }
+  }
+  .split-line {
+    @include background-color("4");
+  }
+  .battery-pay-info {
+    @include color("e");
+    span {
+      @include theme-color();
+    }
+    .battery-pay-tips span {
+      @include color("a");
+    }
+  }
+  .battery-tips {
+    @include color("a");
+    a,
+    a:hover {
+      @include theme-color();
+    }
+  }
+  .checkbox-bwxr.active {
+    @include to-theme("blue");
+  }
+  .btn-default {
+    @include theme-background-color("80");
+    @include foreground-color();
+    @include border-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+  .charge-success-content {
+    > p {
+      @include color("e");
+      span,
+      i {
+        @include theme-color();
+      }
+    }
+    > .charge-success-message {
+      @include theme-border-color();
+      .charge-success-message-tool span {
+        @include color("a");
+      }
+    }
+  }
+}
+.activity-m {
+  .inside-wrp {
+    @include border-color("4");
+    .right .inside-bg::before {
+      background-image: linear-gradient(90deg, #222, transparent 30%) !important;
+    }
+  }
+  .hinter-msg {
+    @include color("e");
+  }
+  .b-btn-praise {
+    @include theme-background-color();
+    @include foreground-color();
+    &.voted {
+      @include color("a");
+      @include border-color();
+      @include background-color("3");
+    }
+  }
+}
+.bui-switch {
+  .bui-switch-name {
+    .bui-switch-reddot {
+      @include theme-background-color();
+    }
+  }
+  .bui-switch-input {
+    &:checked + .bui-switch-label .bui-switch-body {
+      @include theme-background-color();
+      .bui-switch-dot {
+        @include theme-fill();
+      }
+    }
+  }
+  &:hover {
+    .bui-switch-name {
+      @include theme-color();
+    }
+  }
+}
+.bilibili-player-video-control .bilibili-player-video-btn-setting-left-more:hover {
+  &,
+  .bp-svgicon {
+    @include theme-color();
+    @include theme-fill();
+  }
+}
+.june-activity-entry .progress-bar {
+  @include color("a");
+  @include background-color();
+  @include border-color("37a29c");
+}
+.focus-us .text {
+  @include color("6d757a");
+}
+.main-wrap {
+  .container {
+    @include no-shadow();
+  }
+  .bg-circle {
+    @include background-color("4");
+  }
+  .version-date,
+  .text-wrap {
+    @include color("a");
+  }
+  .info-title {
+    @include color("e");
+  }
+  .info-select {
+    @include border-color("5");
+    li {
+      @include color("e");
+      &.active {
+        @include foreground-color();
+        @include theme-background-color();
+      }
+    }
+  }
+}
+.channel-sidebar {
+  @include background-color("2");
+  @include border-color("4");
+  .sidebar-search-bar {
+    @include border-color("3");
+    .inner-input {
+      @include color("e");
+      @include background-color();
+    }
+  }
+  .discovery-panel {
+    @include border-color("4");
+    &__title {
+      @include color("e");
+      &.discovery-panel__title--active {
+        @include background-color("3");
+      }
+      &:hover {
+        @include background-color("4");
+      }
+      .iconfont {
+        @include color("e");
+      }
+    }
+    .content-item {
+      &__name {
+        @include color("e");
+      }
+      &__count {
+        @include color("a");
+      }
+      &.content-item--active {
+        @include background-color("3");
+      }
+      &:hover {
+        @include background-color("4");
+      }
+    }
+    &__toggle {
+      @include background-color();
+      @include color("a");
+    }
+  }
+  .subscribe-panel {
+    @include background-color();
+    &__title {
+      .text {
+        @include color("e");
+      }
+      .count,
+      .btn {
+        @include color("a");
+      }
+    }
+    &__login {
+      .hint {
+        @include color("a");
+      }
+      .login-btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+    .subscribe-item--active {
+      @include background-color("3");
+    }
+    .subscribe-item {
+      &:hover {
+        @include background-color("4");
+      }
+      .cover {
+        @include background-color("4");
+      }
+      .name {
+        @include color("e");
+      }
+    }
+  }
+  &::-webkit-scrollbar {
+    @include background-color();
+  }
+}
+.discovery-container {
+  .type-header {
+    .header-info {
+      .title {
+        @include color("e");
+      }
+      .count {
+        @include color("a");
+      }
+    }
+  }
+  .slide-channel-panel {
+    .arrow-btn .iconfont {
+      @include color("a");
+    }
+    .slide {
+      .mini-channel-card {
+        @include background-color("3");
+        @include color("e");
+        .cover {
+          @include background-color("28");
+        }
+        .label {
+          @include color("a");
+        }
+      }
+    }
+  }
+  .hot-channel-panel {
+    .change-btn {
+      @include border-color();
+      @include color("e");
+      @include background-color("3");
+      img {
+        @include to-white();
+      }
+    }
+    .list {
+      .card {
+        @include background-color();
+        .title {
+          @include color("e");
+        }
+      }
+    }
+  }
+}
+.detail-page-container {
+  .detail-banner {
+    &:not([style*="background-color"]) {
+      @include background-color("4");
+    }
+    .mini-channel-card .cover {
+      @include background-color();
+    }
+    #app & .relative-panel .header {
+      @include background-color();
+    }
+    &-title {
+      .cover::before {
+        @include background-color();
+      }
+    }
+  }
+  .detail-panels {
+    .van-tabs-bar::after {
+      @include background-color();
+    }
+    .van-tabs-wrap .van-tabs-tab:not(.van-tabs-tab-active) {
+      @include color("e");
+    }
+    .year-selector,
+    .play-selector {
+      &__item {
+        @include background-color();
+        &:not([style*="border"]) {
+          @include color("a");
+          @include border-color("4");
+        }
+      }
+    }
+    .rank-card-panel {
+      .header {
+        .title {
+          @include color("e");
+        }
+        .desc {
+          @include color("a");
+        }
+      }
+      .toggle {
+        > span {
+          @include background-color("2");
+          @include color("a");
+        }
+        &::before {
+          @include background-color("4");
+        }
+      }
+    }
+  }
+}
+.category-container {
+  .inner-container {
+    &__header {
+      .title {
+        @include color("e");
+      }
+      .count {
+        @include color("a");
+      }
+    }
+  }
+}
+.detail-page-container,
+.discovery-container,
+.category-container {
+  @include background-color("2");
+  &::-webkit-scrollbar-track {
+    @include border-color();
+  }
+  .video-card {
+    &__content {
+      .cover-picture {
+        @include background-color("4");
+      }
+    }
+    .video-name {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .up-name {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .channel-list-preview {
+    .header-info {
+      .title {
+        @include color("e");
+      }
+      .header-desc {
+        @include color("a");
+      }
+    }
+    .channel-btns {
+      > [class*="btn"] {
+        @include theme-border-color();
+        @include theme-color();
+      }
+    }
+  }
+  @include back-top-btn();
+}
+.international-home .contact-help {
+  @include color("9");
+  @include background-color("3");
+  @include border-color();
+  box-shadow: 0 6px 10px 0 #111 !important;
+}
+.bili-header-m,
+.international-header,
+.van-popover {
+  .mini-type .nav-search {
+    #nav_searchform {
+      @include background-color("3");
+      @include border-color();
+      .nav-search-keyword {
+        @include color("a");
+        &:focus {
+          @include color("e");
+        }
+      }
+    }
+    .nav-search-btn {
+      @include background-color("4");
+      .nav-search-submit {
+        @include color("e");
+      }
+      &:hover .nav-search-submit {
+        @include theme-color();
+      }
+    }
+  }
+}
+.most-viewed-panel {
+  > .icon {
+    @include fill("6");
+    &.active {
+      @include fill("a");
+      &:hover {
+        @include theme-fill();
+      }
+    }
+  }
+  .most-viewed-item {
+    .section {
+      .avatar {
+        @include border-color("4");
+        box-shadow: 0 0 0 1px transparent !important;
+        &.active {
+          box-shadow: 0 0 0 1px var(--theme-color) !important;
+        }
+      }
+      .icon-all {
+        @include theme-background-color("30");
+        @include border-color("4");
+        box-shadow: 0 0 0 1px transparent !important;
+        &.active {
+          box-shadow: 0 0 0 1px var(--theme-color) !important;
+        }
+        .icon {
+          @include theme-fill();
+        }
+      }
+    }
+    .icon-bg-1 {
+      .icon-bg-2 {
+        @include theme-background-color("10");
+        @include border-color("4");
+      }
+      .icon {
+        @include theme-fill();
+      }
+      .avatar {
+        @include background-color("2");
+        @include border-color("4");
+      }
+
+      &.active {
+        @include theme-background-color();
+        .icon-bg-2 {
+          background-color: rgba(64, 64, 64, 0.875) !important;
+        }
+      }
+    }
+  }
+}
+.live-up .live-up-img {
+  box-shadow: 0 0 0 1px var(--theme-color) !important;
+  @include border-color("4");
+  @include background-color("2");
+}
+.bilibili-search-suggest,
+.bilibili-search-history {
+  @include background-color("3");
+  @include border-color();
+}
+.module-game .rule .detail .content {
+  @include color("0");
+}
+#biliAppHomeSetting {
+  select,
+  input {
+    @include border-color();
+    border-radius: 4px;
+  }
+}
+.hover-panel-wrap,
+.recommend-area-ctnr .rec-area-item,
+.hover-panel-wrapper,
+.van-popper-login .btn-box .btn,
+.van-popper-history .view-all,
+.at-popup,
+.chat-popups-section .draw-full-ctnr,
+#gift-package-item-box .panel-wrapper::before,
+.title-renew-panel .actions {
+  @include border-color();
+}
+.wide-members .avatar {
+  @include border-color("3");
+}
+.manga-navbar .search-bar .confirm-btn .search-icon,
+.container .level-intro .svg-icon,
+#page-fav .fav-sidenav .icon:not(.icon-cursor) {
+  @include to-white();
+}
+.side-bar-btn .size-bar-text {
+  filter: brightness(0.6) invert(1) hue-rotate(180deg) !important;
+  text-shadow: 0 0 0px;
+}
+#link-message-container .config {
+  @include no-shadow();
+}
+.confirmorder-container .confirm-bottom .confirm-paybtn.active,
+.whole-detail-info-wrapper .product-buy-wrapper .unsale-btn {
+  box-shadow: 0 3px 4px 0 #6e4752 !important;
+}
+.app-layout .manga-navbar {
+  box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px !important;
+}
+.highlight-areas-ctnr .highlight-area-item.hover {
+  box-shadow: 0 7px 11px 0 rgba(0, 0, 0, 0.18) !important;
+}
+.hover-panel-wrap {
+  box-shadow: 0 13px 20px 0 rgba(0, 0, 0, 0.22) !important;
+}
+.van-popper .popper__arrow {
+  @include hide();
+}
+.nav-tab-bar .tab-item[data-tab-id="1"]:not(.on)::before {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAQAAAACj/OVAAAD00lEQVRYw+2YbWhVdRzHb2aWsILo4UVC5Pd3drfdIZNW1sRod7eW1gSxLIxo5aWgB1GHbkNaDILoAaJYtKQNRDHQTcp6McQoISusXuSLZTXXICVoa3Nmtu0+nE8vdtzd1T3c7dzzzu/31b2X+//w+//+5/y+54RCVzSLKq+zqD1t9driPB4uCxjm3G+f6ILI2E7bu+ElgcB0u3UJIXcd23mT19jMqnHsiF6vXJjv2iqtX5S5HzDAZHWzFbnCjjq35BFnK21UxBlmKv3ESlfoRKQgf5vZL17F9QBDfMkRkpOQf1ON0Of5qm+/iHu4f2jEQYhDWVWeptwVzmN5wIVXiFL3LwB6qEAYMRou6SXsR1jvhqv919cq3gIgyVpEDT9P2UmXGMKiPnFcpT/FLwC0Ie5hiOn0DsJafAKLbhMrvAUfRbQxvX5A2Dd+O3i3WOcteC/ixxmAZxDq89vBKvGUt+Au6iYujak0jNCg3ztMRDxEbvoNYd1+gTfILXHHcgJ2IazL/2XxnTiSE3AbwqnzD9whanPA9RNxRdFS38BlN2pQfDUrsB5hB/Jz894qyt0/ZsQdQNhoofICbF6gz0SUnmlxnYRdYc/kbR5GCnRcLHP3kboMNkAjQjjNeY5O2itElBa6GfNG1VGaiLhCI1ab/0wTEzYRnpYTyUSpzqKiAEKU7RJvJz5idQZ1VsetySkNJo0utAHxKwCfIuzrisXBJtJqUe0dk+cQeiHgCKw28Z53VIpRym4NFFd+jQbFKQAOIuyLgOuzNWKNt6GbEPZ80MDd4n1vyFrCkuGbA8VFFums6Ju4Z+pwwPUV1ogab0NrEc6mvCPCZc5L1qp2zz1iOTFixHBQWnvVrnZrceJ5mQ6RAmuVO/kZcHrbmL3iO2vbx6KUnYl9dNBBB7tpyHKL9/0etiSUFtbkD7dalLl9Oea0b91CLGGOH+AesYonc/ZdiKU75/2cZMdy691lvTzo2Dwyto2JZTzAxjlU+ASVlCBsoDg8t+qW2DnR9N8Ic9cQ8YSw3sii2UbOtU6FnnXiTtyJO4dEufvycD3zcR02IuzD8bWsquj6qWq6T7/Pr2M5eEgbL+2YY+dFdbqBRuqTm89FU9FkllNV6ap0VTrmXnTm0/gvWf9IRVPRVHVy2/kdifrU+qSQW/hg9kDtFNtnfPjyo1aETk7CVSzWvw6DBKcKRGFJ5risFesJUg0INWZFvpZAgYcRdiwDPCO6AwVeoBilim8a39BScSen6A3Uj4wKZ0MoFAqFiu/Idd759sMXD82LOqGTAft7543mBVfeoAeg/wFlFeKImou+wAAAAABJRU5ErkJggg==") !important;
+}
+.aside-item.active .item-border,
+.aside-item:hover .item-border {
+  @include theme-border-color();
+}
+.aside-item::after {
+  border-right-color: var(--theme-color) !important;
+}
+#bilibili_pbp,
+#bilibili_pbp_canvas {
+  @include to-theme("blue");
+}
+.interact-dialog .btn,
+.rookie-guide .close-button,
+#biliAppHomeSetting button,
+.van-popover .btn-box .btn,
+.van-popper-history .view-all:hover,
+.bui-button.bui-button-gray:hover,
+.live-up .live-up-img-box,
+.shortcuts-ctnr .hinter,
+.shortcuts-ctnr .num-hinter,
+.user-panel-ctnr .msg-hinter,
+.user-panel-ctnr .msg-count {
+  @include theme-background-color();
+}
+#biliAppHomeSetting h2,
+.video-desc .subtitle a,
+.tab-ctnr .tab-item:hover,
+.tab-ctnr .tab-item.activated,
+.more-ctnr:hover,
+.news-ctnr .more-link:hover,
+.van-popover .coins .info a:hover,
+.van-popper-upload .upload-item:hover .bilifont,
+.bilibili-search-suggest .suggest-item .suggest_high_light,
+.new-topic-panel .tag-item .content:hover,
+.bilibili-player-video-toast-item .video-float-hint-btn.hint-red,
+.bilibili-player-video-btn-speed-menu-list.bilibili-player-active {
+  @include theme-color();
+}
+.interact-dialog .btn,
+.rookie-guide .close-button,
+#biliAppHomeSetting button,
+.van-popover .btn-box .btn,
+.van-popper-history .view-all:hover,
+.bui-button.bui-button-gray:hover,
+.user-panel-ctnr .msg-count {
+  @include foreground-color();
+}

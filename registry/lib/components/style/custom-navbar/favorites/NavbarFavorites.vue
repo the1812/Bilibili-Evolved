@@ -1,0 +1,440 @@
+<template>
+  <div class="favorites-list">
+    <div class="header">
+      <FavoritesFolderSelect v-model="folder"></FavoritesFolderSelect>
+      <div class="search">
+        <TextBox v-model="search" linear placeholder="搜索"></TextBox>
+      </div>
+      <a class="operation" :href="playLink" title="播放全部" target="_blank">
+        <VButton round class="play-all">
+          <VIcon icon="mdi-play" :size="18"></VIcon>
+        </VButton>
+      </a>
+      <a class="operation" :href="moreLink" title="查看更多" target="_blank">
+        <VButton round class="more-info">
+          <VIcon icon="mdi-dots-horizontal" :size="18"></VIcon>
+        </VButton>
+      </a>
+    </div>
+    <div class="content">
+      <VLoading v-if="loading"></VLoading>
+      <VEmpty v-else-if="!loading && filteredCards.length === 0"></VEmpty>
+      <transition-group v-else name="cards" tag="div" class="cards">
+        <div v-for="card of filteredCards" :key="card.id" class="favorite-card">
+          <a
+            class="cover-container"
+            target="_blank"
+            :href="'https://www.bilibili.com/video/av' + card.aid"
+          >
+            <DpiImage
+              class="cover"
+              :src="card.coverUrl"
+              :size="{ width: 130, height: 85 }"
+            ></DpiImage>
+            <div class="floating duration">{{ card.durationText }}</div>
+            <div class="floating favorite-time">{{ card.favoriteTime }}</div>
+          </a>
+          <a
+            class="title"
+            target="_blank"
+            :href="'https://www.bilibili.com/video/av' + card.aid"
+            :title="card.title"
+          >{{ card.title }}</a>
+          <a
+            class="up"
+            target="_blank"
+            :href="'https://space.bilibili.com/' + card.upID"
+            :title="card.upName"
+          >
+            <DpiImage
+              placeholder-image
+              class="face"
+              :src="card.upFaceUrl"
+              :size="20"
+            ></DpiImage>
+            <div class="name">{{ card.upName }}</div>
+          </a>
+        </div>
+        <ScrollTrigger
+          v-if="!loading && (searching ? hasMoreSearchPage : hasMorePage)"
+          key="scroll-trigger"
+          @trigger="scrollTrigger()"
+        ></ScrollTrigger>
+      </transition-group>
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import {
+  VLoading,
+  VEmpty,
+  VIcon,
+  VButton,
+  TextBox,
+  DpiImage,
+  ScrollTrigger,
+} from '@/ui'
+import { formatDate, formatDuration } from '@/core/utils/formatters'
+import { getUID } from '@/core/utils'
+import { getJsonWithCredentials } from '@/core/ajax'
+import { logError } from '@/core/utils/log'
+import { VideoCard } from '@/components/feeds/video-card'
+import { notSelectedFolder } from './favorites-folder'
+import FavoritesFolderSelect from './FavoritesFolderSelect.vue'
+import { popperMixin } from '../mixins'
+
+interface FavoritesItemInfo extends VideoCard {
+  favoriteTimestamp: number
+  favoriteTime: string
+}
+const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
+  id: item.id,
+  aid: item.id,
+  coverUrl: item.cover.replace('http:', 'https:'),
+  favoriteTimestamp: item.fav_time * 1000,
+  favoriteTime: formatDate(new Date(item.fav_time * 1000)),
+  title: item.title,
+  description: item.intro,
+  duration: item.duration,
+  durationText: formatDuration(item.duration),
+  playCount: item.cnt_info.play,
+  danmakuCount: item.cnt_info.danmaku,
+  upName: item.upper.name,
+  upFaceUrl: item.upper.face.replace('http:', 'https:'),
+  upID: item.upper.mid,
+})
+async function searchAllList() {
+  if (!this.searching) {
+    return
+  }
+  try {
+    const json = await getJsonWithCredentials(
+      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`,
+    )
+    if (json.code !== 0) {
+      return
+    }
+    this.searchPage++
+    const items = lodash.get(json, 'data.medias', []) as any[]
+    if (items === null) {
+      this.hasMoreSearchPage = false
+      return
+    }
+    const results = lodash.uniqBy(
+      this.filteredCards.concat(items.map(favoriteItemMapper)),
+      (card: FavoritesItemInfo) => card.id,
+    )
+    this.filteredCards = results
+  } catch (error) {
+    console.error(error)
+  }
+}
+export default Vue.extend({
+  components: {
+    FavoritesFolderSelect,
+    VLoading,
+    VEmpty,
+    VIcon,
+    VButton,
+    TextBox,
+    DpiImage,
+    ScrollTrigger,
+  },
+  mixins: [popperMixin],
+  data() {
+    return {
+      loading: true,
+      cards: [],
+      filteredCards: [],
+      page: 1,
+      hasMorePage: true,
+      searchPage: 1,
+      hasMoreSearchPage: true,
+      search: '',
+      folder: notSelectedFolder,
+    }
+  },
+  computed: {
+    searching() {
+      return this.search !== ''
+    },
+    moreLink() {
+      const { id } = this.folder
+      if (id === 0) {
+        return `https://space.bilibili.com/${getUID()}/favlist`
+      }
+      return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}`
+    },
+    playLink() {
+      const { id } = this.folder
+      if (id === 0) {
+        return undefined
+      }
+      return `https://www.bilibili.com/medialist/play/ml${id}`
+    },
+  },
+  watch: {
+    folder() {
+      this.changeList()
+    },
+    search(keyword: string) {
+      if (keyword === '') {
+        this.filteredCards = this.cards
+        return
+      }
+      keyword = keyword.toLowerCase()
+      this.hasMoreSearchPage = true
+      this.searchPage = 1
+      this.filteredCards = (this.cards as FavoritesItemInfo[]).filter(
+        it => it.title.toLowerCase().includes(keyword)
+          || it.upName.toLowerCase().includes(keyword),
+      )
+      // this.debounceSearchAllList()
+    },
+  },
+  methods: {
+    async getCards() {
+      const url = `https://api.bilibili.com/medialist/gateway/base/spaceDetail?media_id=${this.folder.id}&pn=${this.page}&ps=20`
+      const json = await getJsonWithCredentials(url)
+      if (json.code !== 0) {
+        throw new Error(`加载收藏夹内容失败: ${json.message}`)
+      }
+      if (!json.data.medias) {
+        // 超过最后一页后返回空数组
+        return []
+      }
+      return json.data.medias
+        .filter(
+          (item: any) => item.attr !== 9, // 过滤掉已失效视频
+        )
+        .map(favoriteItemMapper)
+    },
+    async changeList() {
+      if (this.folder.id === 0) {
+        return
+      }
+      try {
+        this.search = ''
+        this.cards = []
+        this.loading = true
+        this.searchPage = 1
+        this.hasMoreSearchPage = true
+        this.page = 1
+        this.hasMorePage = true
+        this.cards = await this.getCards()
+        this.filteredCards = this.cards
+      } catch (error) {
+        logError(error)
+      } finally {
+        this.loading = false
+      }
+    },
+    async loadNextPage() {
+      try {
+        this.page++
+        const cards = await this.getCards()
+        this.cards.push(...cards)
+        this.hasMorePage = cards.length === 0 || this.cards.length < this.folder.count
+      } catch (error) {
+        logError(error)
+      }
+    },
+    /** 搜索当前收藏夹所有的视频 */
+    debounceSearchAllList: lodash.debounce(searchAllList, 200),
+    searchAllList,
+    scrollTrigger() {
+      if (this.searching) {
+        this.searchAllList()
+      } else {
+        this.loadNextPage()
+      }
+    },
+  },
+})
+</script>
+<style lang="scss">
+@import "common";
+.custom-navbar .favorites-list {
+  width: 380px;
+  height: 600px;
+  font-size: 12px;
+  @include v-stretch();
+  justify-content: center;
+  .be-empty,
+  .be-loading {
+    align-self: center;
+    flex: 1;
+  }
+  .be-scroll-trigger {
+    text-align: center;
+  }
+  .header {
+    @include h-center();
+    justify-content: space-between;
+    margin: 16px 12px;
+    .search {
+      flex: 1;
+      margin-left: 8px;
+    }
+    .list-select {
+      flex-shrink: 0;
+      height: 26px;
+    }
+    .dropdown-popup {
+      max-height: 300px;
+      overflow: auto;
+      @include no-scrollbar();
+    }
+    .operation {
+      margin-left: 8px;
+    }
+    .more-info {
+      @include h-center();
+      @include round-bar(26);
+      padding: 4px;
+    }
+    .play-all {
+      @include h-center();
+      @include round-bar(26);
+      padding: 4px;
+    }
+  }
+  .content {
+    @include v-stretch();
+    @include no-scrollbar();
+    justify-content: space-between;
+    flex-grow: 1;
+    overflow: auto;
+    .floating {
+      @include round-bar(20);
+      @include h-center();
+      background-color: #000c;
+      color: white;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .cards {
+      flex: 1;
+      overflow: auto;
+      scroll-behavior: smooth;
+      position: relative;
+      @include no-scrollbar();
+      padding: 0 12px;
+      padding-bottom: 12px;
+      &-enter,
+      &-leave-to {
+        opacity: 0;
+        transform: translateY(-16px) scale(0.9);
+      }
+      &-leave-active {
+        transition: 0.24s cubic-bezier(0.22, 0.61, 0.36, 1);
+        position: absolute;
+        &.be-scroll-trigger {
+          width: 100%;
+          padding-bottom: 12px;
+        }
+      }
+      .favorite-card {
+        cursor: pointer;
+        flex-shrink: 0;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+        border: 1px solid #8882;
+        color: black;
+        background-color: #fff;
+        display: grid;
+        grid-template:
+          'cover title' 2fr
+          'cover info' 1fr / 130px 1fr;
+        height: 85px;
+        body.dark & {
+          background-color: #282828;
+          color: #eee;
+        }
+        &:not(:last-child) {
+          margin-bottom: 12px;
+        }
+        &:hover .cover {
+          transform: scale(1.05);
+        }
+        .cover-container {
+          grid-area: cover;
+          overflow: hidden;
+          border-radius: 8px 0 0 8px;
+          position: relative;
+          $padding: 6px;
+          .favorite-time {
+            top: $padding;
+            left: $padding;
+            padding: 0 6px;
+          }
+          .duration {
+            left: $padding;
+            bottom: $padding;
+            padding: 0 6px;
+          }
+          .floating {
+            position: absolute;
+            opacity: 0;
+            font-size: 11px;
+          }
+          .cover {
+            object-fit: cover;
+          }
+        }
+        &:hover {
+          .floating {
+            opacity: 1;
+          }
+        }
+        .title {
+          grid-area: title;
+          font-size: 13px;
+          font-weight: bold;
+          @include max-line(2);
+          -webkit-box-align: start;
+          margin: 0;
+          margin-top: 8px;
+          padding: 0 10px;
+          &:hover {
+            color: var(--theme-color) !important;
+          }
+        }
+        .up {
+          flex: 0 1 auto;
+          padding: 2px 10px 2px 2px;
+          margin: 0 8px 6px;
+          justify-self: start;
+          align-self: center;
+          max-width: calc(100% - 16px);
+          @include h-center();
+          @include round-bar(24);
+          background-color: #8882;
+          &:hover {
+            background-color: #8884;
+          }
+          .face {
+            border-radius: 50%;
+            margin-right: 6px;
+            height: 20px;
+            width: 20px;
+            object-fit: cover;
+            body.dark &.placeholder {
+              filter: invert(0.9);
+            }
+          }
+          .name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 11px;
+          }
+          &:hover .name {
+            color: var(--theme-color);
+          }
+        }
+      }
+    }
+  }
+}
+</style>

@@ -1,0 +1,31 @@
+@media screen and (min-width: 750px) {
+  .player .bilibili-player.mode-fullscreen,
+  .player .bilibili-player.mode-webfullscreen {
+    .disable-original-hover {
+      .bilibili-player-video-control-top {
+        left: 0 !important;
+        right: 0 !important;
+        bottom: -6px !important;
+      }
+      &.touch-video-control-show {
+        .bilibili-player-video-control-top {
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 49px !important;
+        }
+      }
+    }
+    .bilibili-player-area {
+      &.video-control-show:not(.disable-original-hover),
+      &.mouse-hover:not(.disable-original-hover),
+      &.video-control-show:not(.disable-original-hover),
+      &.mouse-hover:not(.disable-original-hover) {
+        .bilibili-player-video-control-top {
+          left: 0 !important;
+          right: 0 !important;
+          bottom: 49px !important;
+        }
+      }
+    }
+  }
+}
