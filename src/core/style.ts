@@ -11,7 +11,7 @@ export const getDefaultStyleID = (name: string) => name.replace(/([a-z][A-Z])/g,
  * @returns 创建得到的样式元素
  */
 export const addStyle = (text: string, name?: string, container?: HTMLElement) => {
-  const id = name ? getDefaultStyleID(name) : undefined
+  const id = name ? getDefaultStyleID(name) : null
   const existing = dq(`#${id}`)
   if (!existing || !name) {
     const style = document.createElement('style')

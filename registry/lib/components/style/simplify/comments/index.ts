@@ -1,11 +1,14 @@
 import { ComponentMetadata, componentsTags } from '@/components/component'
-import { none } from '@/core/utils'
 import { toggleStyle } from '@/components/styled-component'
 
 export const component: ComponentMetadata = {
-  name: 'simplifyComments',
+  ...toggleStyle('simplifyComments', () => import('./comments.scss'), async ({ metadata }) => {
+    const { addComponentListener } = await import('@/core/settings')
+    addComponentListener(metadata.name, (value: boolean) => {
+      document.body.classList.toggle('simplify-comment', value)
+    })
+  }),
   displayName: '简化评论区',
-  entry: none,
   description: {
     'zh-CN': `
 - 删除热评头像下方的关注按钮
@@ -23,5 +26,4 @@ export const component: ComponentMetadata = {
     componentsTags.style,
   ],
   enabledByDefault: true,
-  ...toggleStyle(() => import('./comments.scss')),
 }

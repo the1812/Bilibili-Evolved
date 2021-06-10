@@ -24,9 +24,10 @@ export const styledComponentEntry = (
  * @param entry 组件入口函数
  */
 export const toggleStyle = (
+  name = '',
   styleImport: () => Promise<{ default: string }>,
   entry: ComponentEntry = none,
-): Partial<ComponentMetadata> => {
+): Pick<ComponentMetadata, 'name' | 'entry' | 'reload' | 'unload'> => {
   let styleElement: HTMLStyleElement = null
   const styleEntry = async () => {
     if (styleElement) {
@@ -34,9 +35,10 @@ export const toggleStyle = (
     }
     const { default: style } = await styleImport()
     const { addStyle } = await import('@/core/style')
-    styleElement = addStyle(style)
+    styleElement = addStyle(style, name)
   }
   return {
+    name,
     entry: context => (
       styleEntry().then(() => entry(context))
     ),

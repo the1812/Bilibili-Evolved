@@ -1,3 +1,19 @@
+@mixin mdi($content) {
+  background: none !important;
+  color: #000;
+  body.dark & {
+    color: #eee;
+  }
+  &::before {
+    content: $content;
+    display: inline-block;
+    font: normal normal normal 24px/1 "Material Design Icons";
+    font-size: 16px;
+    line-height: 1;
+    width: 16px;
+    height: 16px;
+  }
+}
 @mixin orders {
   display: flex;
   align-items: center;
@@ -26,6 +42,8 @@
     flex-grow: 1;
     display: flex !important;
     justify-content: flex-end;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 }
 @mixin time {
@@ -56,24 +74,35 @@
   width: 16px !important;
   background-position: center !important;
   opacity: 0.4;
+  display: inline-flex !important;
 }
 @mixin like-icon {
-  background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="16" viewBox="0 0 24 24"><path fill="black" d="M5,9V21H1V9H5M9,21A2,2 0 0,1 7,19V9C7,8.45 7.22,7.95 7.59,7.59L14.17,1L15.23,2.06C15.5,2.33 15.67,2.7 15.67,3.11L15.64,3.43L14.69,8H21C22.11,8 23,8.9 23,10V12C23,12.26 22.95,12.5 22.86,12.73L19.84,19.78C19.54,20.5 18.83,21 18,21H9M9,19H18.03L21,12V10H12.21L13.34,4.68L9,9.03V19Z" /></svg>') !important;
+  @include mdi("\F0514");
 }
 @mixin liked-icon {
-  background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="16" viewBox="0 0 24 24"><path fill="black" d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z" /></svg>') !important;
+  @include mdi("\F0513");
+  &,
+  & + span,
+  body.dark & {
+    color: var(--theme-color) !important;
+  }
 }
 @mixin hate-icon {
-  background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="16" viewBox="0 0 24 24"><path fill="black" d="M19,15V3H23V15H19M15,3A2,2 0 0,1 17,5V15C17,15.55 16.78,16.05 16.41,16.41L9.83,23L8.77,21.94C8.5,21.67 8.33,21.3 8.33,20.88L8.36,20.57L9.31,16H3C1.89,16 1,15.1 1,14V12C1,11.74 1.05,11.5 1.14,11.27L4.16,4.22C4.46,3.5 5.17,3 6,3H15M15,5H5.97L3,12V14H11.78L10.65,19.32L15,14.97V5Z" /></svg>') !important;
+  @include mdi("\F0512");
 }
 @mixin hated-icon {
-  background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="16" viewBox="0 0 24 24"><path fill="black" d="M19,15H23V3H19M15,3H6C5.17,3 4.46,3.5 4.16,4.22L1.14,11.27C1.05,11.5 1,11.74 1,12V14A2,2 0 0,0 3,16H9.31L8.36,20.57C8.34,20.67 8.33,20.77 8.33,20.88C8.33,21.3 8.5,21.67 8.77,21.94L9.83,23L16.41,16.41C16.78,16.05 17,15.55 17,15V5C17,3.89 16.1,3 15,3Z" /></svg>') !important;
+  @include mdi("\F0511");
+  &,
+  & + span,
+  body.dark & {
+    color: var(--theme-color) !important;
+  }
 }
 @mixin spot-icon {
-  background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="16" viewBox="0 0 24 24"><path fill="black" d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" /></svg>') !important;
+  @include mdi("\F01D9");
 }
 @mixin face-icon {
-  background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="16" height="16" viewBox="0 0 24 24"><path fill="black" d="M12,17.5C14.33,17.5 16.3,16.04 17.11,14H6.89C7.69,16.04 9.67,17.5 12,17.5M8.5,11A1.5,1.5 0 0,0 10,9.5A1.5,1.5 0 0,0 8.5,8A1.5,1.5 0 0,0 7,9.5A1.5,1.5 0 0,0 8.5,11M15.5,11A1.5,1.5 0 0,0 17,9.5A1.5,1.5 0 0,0 15.5,8A1.5,1.5 0 0,0 14,9.5A1.5,1.5 0 0,0 15.5,11M12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20M12,2C6.47,2 2,6.5 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" /></svg>') !important;
+  @include mdi("\F01F5");
 }
 @mixin invert-on-dark {
   body.dark & {
@@ -86,18 +115,105 @@
     color: #eee !important;
   }
 }
+@mixin emoji-position-fix {
+  .comment-send:not(.no-login) {
+    position: relative !important;
+  }
+  .comment-send-lite:not(.no-login),
+  .comment-send:not(.no-login) {
+    padding-top: 15px !important;
+    .dynamic-repost {
+      margin-left: 85px !important;
+      margin-top: 4px;
+    }
+    .comment-emoji {
+      position: absolute !important;
+      right: 0;
+      top: 51px;
+      width: 68px !important;
+      background: #fff;
+    }
+    .comment-submit {
+      height: 34px !important;
+      font-size: 0;
+      body.dark {
+        color: var(--theme-color) !important;
+      }
+      &::after {
+        content: "发表";
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        body.dark & {
+          color: var(--foreground-color);
+        }
+      }
+    }
+  }
+}
 
 .bb-comment {
+  // 兼容 b 站的 lite 版发评论(2021-04-20全量), 细节做的是真烂
+  .comment-send-lite {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    bottom: 0 !important;
+    background: linear-gradient(to top, #fff, rgba(255, 255, 255, 0)) !important;
+    pointer-events: none;
+    width: calc(100% + 12px) !important;
+    margin: 0 0 0 -12px !important;
+    padding-left: 97px !important;
+    body.dark & {
+      background: linear-gradient(to top, #222, rgba(255, 255, 255, 0)) !important;
+    }
+    .comment-emoji-lite {
+      background-color: #fff;
+    }
+    .comment-submit {
+      padding: 4px 15px !important;
+      position: relative !important;
+      right: 0 !important;
+      margin-left: 10px !important;
+    }
+    // .comment-submit,
+    .textarea-container .ipt-txt {
+      height: 65px !important;
+      width: calc(100% - 80px) !important;
+    }
+    > * {
+      pointer-events: initial;
+    }
+  }
+  .loading-state {
+    font-size: 14px !important;
+    height: 1.4em !important;
+    line-height: 1.4 !important;
+    margin: 12px 0 !important;
+    // #1789
+    // &:empty {
+    //   margin: 0 !important;
+    // }
+  }
+  .loading-state + .bottom-page {
+    margin: 0 !important;
+  }
+
   .nameplate,
   .comment-header .tabs-order li.on::after,
   .true-love,
+  .medal-level,
   .reply-notice,
   .sailing {
     @include hide();
   }
+  .comment-send-lite .comment-emoji,
   .comment-send .comment-emoji {
+    box-shadow: none !important;
     span {
-      opacity: 0.5;
+      opacity: 0.4;
       color: black;
     }
     .face {
@@ -106,13 +222,14 @@
       @include face-icon();
     }
     .text {
+      @include transition();
       @include invert-on-dark();
     }
     &.open,
     &:hover {
-      .face,
-      span {
-        opacity: 0.6;
+      span,
+      .face {
+        opacity: 1;
       }
     }
   }
@@ -126,26 +243,24 @@
           i {
             @include transition();
             @include icon();
-            @include invert-on-dark();
+            // @include invert-on-dark();
           }
           span {
-            opacity: 0.5;
+            opacity: 0.4;
+            @include transition();
             @include white-text-on-dark();
           }
-          &.liked,
-          &.hated {
-            > i {
-              @include invert-on-dark();
-            }
-          }
+          // &.liked,
+          // &.hated {
+          //   > i {
+          //     @include invert-on-dark();
+          //   }
+          // }
           &.liked,
           &.hated,
           &:hover {
-            span {
-              @include white-text-on-dark();
-            }
             > * {
-              opacity: 0.6;
+              opacity: 1;
             }
           }
         }
@@ -171,13 +286,18 @@
             }
           }
         }
-        .operation .spot {
-          @include transition();
-          @include icon();
-          @include spot-icon();
-          @include invert-on-dark();
-          :hover {
-            opacity: 0.6;
+        .operation {
+          &:hover {
+            background: transparent !important;
+          }
+          .spot {
+            @include transition();
+            @include icon();
+            @include spot-icon();
+            @include invert-on-dark();
+            &:hover {
+              opacity: 1;
+            }
           }
         }
       }
@@ -274,8 +394,15 @@
       height: 18px;
       width: 18px;
       background-position: center !important;
-      opacity: 0.6;
+      opacity: 0.4;
     }
+  }
+
+  @include emoji-position-fix();
+}
+body.dark .panel-area .bb-comment {
+  .comment-send-lite {
+    background: linear-gradient(to top, #444 30%, transparent) !important;
   }
 }
 .dynamic-list-item-wrap {
@@ -315,7 +442,7 @@
 .dynamic-hate {
   i {
     @include transition();
-    @include invert-on-dark();
+    // @include invert-on-dark();
   }
 }
 .dynamic-like {
@@ -323,14 +450,14 @@
     @include like-icon();
   }
   &:hover i {
-    @include invert-on-dark();
+    // @include invert-on-dark();
     @include liked-icon();
   }
 }
 .dynamic-liked {
   &:hover i,
   i {
-    @include invert-on-dark();
+    // @include invert-on-dark();
     @include liked-icon();
   }
 }
@@ -339,14 +466,14 @@
     @include hate-icon();
   }
   &:hover i {
-    @include invert-on-dark();
+    // @include invert-on-dark();
     @include hated-icon();
   }
 }
 .dynamic-hated {
   &:hover i,
   i {
-    @include invert-on-dark();
+    // @include invert-on-dark();
     @include hated-icon();
   }
 }
@@ -365,4 +492,7 @@
 .comment-list .opera-list {
   right: 20px !important;
   top: -72px !important;
+}
+.v-wrap #comment {
+  z-index: 1 !important;
 }
