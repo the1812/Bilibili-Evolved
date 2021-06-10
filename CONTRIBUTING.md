@@ -6,7 +6,7 @@
 - 将项目 Fork 至自己账户后, 克隆至本地
 
 ```powershell
-git clone https://github.com/{{your-name}}/Bilibili-Evolved.git
+git clone https://github.com/{{your-name}}/Bilibili-Evolved.git -b v2 --single-branch
 cd Bilibili-Evolved
 ```
 - 安装依赖
