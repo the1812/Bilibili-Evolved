@@ -1,7 +1,7 @@
 # 更新日志
 
 ## v2.0.0-tp1
-`v2.0.0 Technical Preview 1` `2021-06-10`
+`v2.0.0 Technical Preview 1` `2021-06-11`
 
 此次 Release 为 v2.0.0 Technical Preview 1 (技术预览版), 请注意:
 - 技术预览版仅供开发者或对此项目非常熟悉的用户体验, 如果你只对日常使用感兴趣, 请继续等待 v1 的后续更新.
