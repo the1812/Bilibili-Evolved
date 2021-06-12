@@ -1,12 +1,9 @@
 import { ComponentMetadata } from '@/components/types'
-import { select } from '@/core/spin-query'
+import { select, hasVideo } from '@/core/spin-query'
 
 let videoEl: HTMLVideoElement
 const initLights = async () => {
   const settingsButton = await select('.bilibili-player-video-btn-setting')
-  if (!settingsButton) {
-    return
-  }
   const mouseEvent = new Event('mouseover')
   const mouseOut = new Event('mouseout')
   settingsButton.dispatchEvent(mouseEvent)
@@ -39,9 +36,11 @@ const unload = () => {
   videoEl.removeEventListener('ended', LightOn)
   videoEl = null
 }
-const entry = async () => {
-  await initLights()
-  reload()
+const entry = () => {
+  hasVideo().then(async () => {
+    await initLights()
+    reload()
+  })
 }
 
 export const component: ComponentMetadata = {
