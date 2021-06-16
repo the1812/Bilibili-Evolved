@@ -32,6 +32,7 @@ const loadSettings = () => {
   const fixedNotSupported = [
     // 'https://search.bilibili.com/all',
     'https://space.bilibili.com',
+    'https://www.bilibili.com/read',
   ]
   if (!fixedNotSupported.some(url => document.URL.startsWith(url))) {
     addSettingsListener('customNavbarGlobalFixed', value => {
