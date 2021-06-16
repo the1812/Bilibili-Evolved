@@ -545,3 +545,81 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     background: none !important;
   }
 }
+
+.article-detail {
+  .fixed-top-header {
+    @include background-color("2");
+    @include color("a");
+
+    .inner {
+      .inner-title,
+      .inner-right > .up-info {
+        @include color("f");
+      }
+    }
+  }
+
+  .article-container >.article-container__content {
+    .article-up-info {
+      @include background-color("2");
+    }
+    .banner-container > a > .info > .title {
+      @include color("f");
+    }
+
+    .title-container > .article-read-panel > .article-read-info > span.spoiler{
+      @include background-color("2a");
+    }
+
+    .article-content{
+      .read-article-holder > p{
+        @include color("f");
+      }
+    }
+  }
+
+  .article-breadcrumb > a,
+  .article-breadcrumb > span {
+    @include color("f");
+  }
+
+  .recommend-list{
+    @include background-color("2");
+    .recommend-header{
+      .title{
+        @include color("f");
+      }
+    }
+  }
+
+  .comment-wrapper > .comment-m{
+    @include background-color("2");
+  }
+}
+
+.right-side-bar {
+  .to-top,
+  .side-toolbar,
+  .catalog:hover:after{
+    @include background-color("2");
+  }
+  .catalog{
+    @include background-color("29");
+
+    .catalog-panel{
+      @include background-color("2");
+      .catalog-item:hover{
+        @include background-color("29");
+      }
+      .catalog-item > .catalog-item__text{
+        color:#FFFFFF;
+      }
+      .catalog-panel__title{
+        @include color("f");
+      }
+    }
+  }
+  .to-top > .iconfont{
+    @include color("50");
+  }
+}
