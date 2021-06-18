@@ -462,6 +462,18 @@
 隐藏番剧页面下方的承包榜, 以及右边的承包按钮.
 
 </details>
+<details>
+<summary><strong>禁用高赞弹幕样式</strong></summary>
+
+禁用高赞弹幕的样式, 使弹幕观感更统一.
+
+</details>
+<details>
+<summary><strong>禁用UP主弹幕样式</strong></summary>
+
+禁用UP主弹幕的样式, 使弹幕观感更统一.
+
+</details>
 
 <h2 align="center">动态</h2>
 <div align="center">改善动态体验</div>
@@ -733,13 +745,6 @@
 自动删除链接中的多余跟踪参数, 例如`spm_id_from`, `from_source`, `share_source`等.
 
 </details>
-<details>
-<summary><strong>网址AV号转换</strong></summary>
-
-当视频的链接是BV号时, 自动转换为AV号.
-
-</details>
-
 <details>
 <summary><strong>评论链接复制</strong></summary>
 
