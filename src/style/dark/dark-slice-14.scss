@@ -816,3 +816,9 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include theme-background-color();
   }
 }
+.link-navbar .main-ctnr .nav-items-ctnr.over-width {
+  @include background-color("3");
+}
+.content-scorller-inner .living-icon-col {
+  @include theme-background-color();
+}
