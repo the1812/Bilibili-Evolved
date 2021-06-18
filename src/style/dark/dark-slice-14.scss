@@ -822,3 +822,33 @@ body:not(.simplify-comment) .panel-area .bb-comment {
 .content-scorller-inner .living-icon-col {
   @include theme-background-color();
 }
+#App .rank-module {
+  .tab-bar {
+    @include background-color("2");
+    .tab-item {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+      &.on {
+        @include theme-border-color();
+        @include theme-color();
+      }
+    }
+  }
+  .tips {
+    @include background-color("3");
+    @include color("a");
+  }
+  .article-list .article-item .item-holder {
+    @include background-color("2");
+    .article-content .article-title:hover,
+    .score-module .score {
+      @include theme-color();
+    }
+    .article-content .article-left-block .article-info-bar .reply:hover {
+      @include theme-color();
+      @include background-color();
+    }
+  }
+}
