@@ -242,7 +242,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`scrollOutPlayer`, /*html*/`当播放器被移出页面时触发动作.`],
   [`scrollOutPlayerAutoPause`, /*html*/`当播放器的<span>选定触发位置</span>被移出页面时自动暂停播放, 且当播放器回来时恢复播放.`],
   [`scrollOutPlayerAutoLightOn`, /*html*/`在没有开启自动暂停, 且开启了播放时自动关灯, 那么该功能会在播放器的<span>选定触发位置</span>被移出页面时自动开灯, 当播放器回来时自动关灯.
-  <b>注: 在自动暂停开启时, 该功能会被忽略</b>`]
+  <b>注: 在自动暂停开启时, 该功能会被忽略</b>`],
+  [`disableDanmakuHighlights`, /*html*/`禁用高赞弹幕的样式, 使弹幕观感更统一.`],
+  [`disableUpDanmakuStyle`, /*html*/`禁用UP主弹幕的样式, 使弹幕观感更统一.`],
 ]);
 export default {
   export: { toolTips },
