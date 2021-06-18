@@ -852,3 +852,18 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     }
   }
 }
+#page-index .video .section-title .play-all-channel,
+#page-index .channel .section-right-options .play-all-channel,
+#page-video .play-all-btn,
+#page-channel-detail .paly-all-btn {
+  @include background-color("3");
+  @include color("e");
+  @include border-color("3");
+  &:hover {
+    @include theme-color();
+    @include theme-border-color();
+    .video-commonplayer_play {
+      @include theme-color();
+    }
+  }
+}
