@@ -499,6 +499,9 @@ a {
       @include theme-color();
     }
   }
+  a {
+    @include theme-color();
+  }
 }
 
 body:not(.simplify-comment) .bb-comment {
@@ -799,5 +802,17 @@ body:not(.simplify-comment) .panel-area .bb-comment {
         @include to-theme("blue");
       }
     }
+  }
+}
+.bui-precision-slider .bui-track .bui-schedule-wrap .bui-schedule-current {
+  @include theme-background-color();
+}
+.bl-audio-panel {
+  &-right-return:hover,
+  &-left-show-more:hover {
+    @include theme-color();
+  }
+  &-preset-btn.bl-audio-active {
+    @include theme-background-color();
   }
 }
