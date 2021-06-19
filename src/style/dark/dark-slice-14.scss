@@ -721,7 +721,24 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include background-color();
   }
 }
-
+.z-top-container {
+  @include background-color("3");
+}
+.coin-dialog-wrapper {
+  @include background-color("2");
+  .van-icon-guanbi {
+    @include color("a");
+  }
+  .coin-title {
+    @include color("e");
+  }
+  .coin-bottom .tips {
+    @include color("a");
+  }
+  .coin-card-box {
+    @include background-color("f");
+  }
+}
 .right-side-bar {
   .catalog {
     @include background-color("3");
