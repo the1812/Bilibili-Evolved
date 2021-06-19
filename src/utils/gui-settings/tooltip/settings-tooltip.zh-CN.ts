@@ -74,7 +74,6 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
 每一项都可以在<span>附加功能</span>中单独选择是否隐藏.`],
   //["overrideNavBar", /*html*/`开启后, 在主站中总是把搜索框置于顶栏, 如果页面里没有搜索栏则不会显示.`],
   //["showBanner", /*html*/`控制是否显示主站顶部的横幅`],
-  ["preserveRank", /*html*/`控制是否在搜索框左侧显示排行榜图标.`],
   ["blurVideoControl", /*html*/`模糊视频控制栏背景, 原版的阴影效果将无效.`],
   ["customControlBackground", /*html*/`给视频控制栏附上半透明的黑色, 代替原来的阴影.`],
   ["customControlBackgroundOpacity", /*html*/`设置控制栏着色的黑色不透明度(0~1), 数值越大黑色越浓.`],
@@ -242,7 +241,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`scrollOutPlayer`, /*html*/`当播放器被移出页面时触发动作.`],
   [`scrollOutPlayerAutoPause`, /*html*/`当播放器的<span>选定触发位置</span>被移出页面时自动暂停播放, 且当播放器回来时恢复播放.`],
   [`scrollOutPlayerAutoLightOn`, /*html*/`在没有开启自动暂停, 且开启了播放时自动关灯, 那么该功能会在播放器的<span>选定触发位置</span>被移出页面时自动开灯, 当播放器回来时自动关灯.
-  <b>注: 在自动暂停开启时, 该功能会被忽略</b>`]
+  <b>注: 在自动暂停开启时, 该功能会被忽略</b>`],
+  [`disableDanmakuHighlights`, /*html*/`禁用高赞弹幕的样式, 使弹幕观感更统一.`],
+  [`disableUpDanmakuStyle`, /*html*/`禁用UP主弹幕的样式, 使弹幕观感更统一.`],
 ]);
 export default {
   export: { toolTips },

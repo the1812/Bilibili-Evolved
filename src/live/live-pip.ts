@@ -12,10 +12,10 @@ export default {
     },
     success: () => {
       (dq('#live-pip') as HTMLButtonElement).addEventListener('click', () => {
-        if (document.pictureInPictureElement === dq('video')) {
+        if (document.pictureInPictureElement) {
           document.exitPictureInPicture()
         } else {
-          (dq('video') as HTMLVideoElement).requestPictureInPicture()
+          (dq('video') as HTMLVideoElement)?.requestPictureInPicture()
         }
       })
     }

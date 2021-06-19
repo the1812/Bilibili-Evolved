@@ -688,6 +688,18 @@ Resource.manifest = {
       key: 'scrollOutPlayerTriggerPlace',
       items: ['视频顶部' ,'视频中间', '视频底部']
     }
-  }
+  },
+  disableDanmakuHighlights: {
+    displayNames: {
+      disableDanmakuHighlights: '禁用高赞弹幕样式',
+    },
+    reloadable: true,
+  },
+  disableUpDanmakuStyle: {
+    displayNames: {
+      disableUpDanmakuStyle: '禁用UP主弹幕样式',
+    },
+    reloadable: true,
+  },
 }
 export const resourceManifest = Resource.manifest

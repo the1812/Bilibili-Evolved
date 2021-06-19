@@ -78,7 +78,6 @@ export const settings = {
   hideTopSearch: false,
   touchVideoPlayerDoubleTapControl: false,
   customStyleColor: '#00A0D8',
-  preserveRank: true,
   blurBackgroundOpacity: 0.382,
   useDefaultPlayerMode: false,
   applyPlayerModeOnPlay: true,
@@ -253,11 +252,13 @@ export const settings = {
   liveSpeedBoost: false,
   checkInCenter: false,
   fullscreenGiftBox: false,
-  autoPlayControl: false,
+  autoPlayControl: true,
   scrollOutPlayer: false,
   scrollOutPlayerTriggerPlace: '视频中间',
   scrollOutPlayerAutoPause: true,
   scrollOutPlayerAutoLightOn: true,
+  disableDanmakuHighlights: false,
+  disableUpDanmakuStyle: false,
   cache: {},
 }
 const fixedSettings = {

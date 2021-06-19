@@ -15,7 +15,7 @@ export default {
           text.textContent = '下载中...'
           const images: { name: string; extension: string; url: string }[] = []
           const title = document.title.replace(/ - 哔哩哔哩$/, '')
-          const bannerElement = dq('.banner-img-holder') as HTMLDivElement
+          const bannerElement = dq('.banner-image .card-image__image') as HTMLDivElement
           const bannerUrl = retrieveImageUrl(bannerElement)
           if (bannerUrl) {
             images.push({
@@ -23,7 +23,7 @@ export default {
               name: `${title}-banner${bannerUrl.extension}`,
             })
           }
-          const articleImages = dqa('.article-holder img:not([class*="cut-off-"])')
+          const articleImages = dqa('.article-content .img-box img:not([class*="cut-off-"])')
           articleImages.forEach(image => {
             const url = retrieveImageUrl(image)
             if (url) {

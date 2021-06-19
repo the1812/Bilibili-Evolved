@@ -194,6 +194,8 @@ Additional variables:
   [`autoPlayControl`, `Auto play episodes of current video / videos of current playlist, but stop playing related videos.`],
   [`scrollOutPlayer`, `Run actions when player goes out of view.`],
   [`scrollOutPlayerAutoLightOn`, `Auto turn on light, only works when <span>Auto pause</span> is turned off and <span>Default player mode - Turn off light when playing</span> is turned on.`],
+  [`disableDanmakuHighlights`, `Disable highlighted (most-liked) danmaku style.`],
+  [`disableUpDanmakuStyle`, `Disable author (sent from video author) danmaku style.`],
 ]);
 export default {
   export: { toolTips },

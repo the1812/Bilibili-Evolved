@@ -161,13 +161,13 @@
     position: -webkit-sticky !important;
     position: sticky !important;
     bottom: 0 !important;
-    background: linear-gradient(to top, #fff, transparent) !important;
+    background: linear-gradient(to top, #fff, rgba(255, 255, 255, 0)) !important;
     pointer-events: none;
     width: calc(100% + 12px) !important;
     margin: 0 0 0 -12px !important;
     padding-left: 97px !important;
     body.dark & {
-      background: linear-gradient(to top, #222, transparent) !important;
+      background: linear-gradient(to top, #222, rgba(255, 255, 255, 0)) !important;
     }
     .comment-emoji-lite {
       background-color: #fff;
@@ -204,6 +204,7 @@
   .nameplate,
   .comment-header .tabs-order li.on::after,
   .true-love,
+  .medal-level,
   .reply-notice,
   .sailing {
     @include hide();

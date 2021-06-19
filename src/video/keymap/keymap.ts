@@ -27,9 +27,17 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
   const changeVideoTime = (delta: number) => {
     return () => {
       const video = dq('.bilibili-player-video video') as HTMLVideoElement
-      if (!video || !unsafeWindow.player) {
+      console.log(`[keymap] requested video time change, delta = ${delta}`)
+      if (!video) {
+        console.log('[keymap] video element not found')
         return
       }
+      if (!unsafeWindow.player) {
+        // fallback
+        console.log('[keymap] fallback')
+        video.currentTime += delta
+      }
+      console.log('[keymap] player API seek')
       unsafeWindow.player.seek(video.currentTime + delta, video.paused)
     }
   }

@@ -996,6 +996,8 @@ export const map = new Map([
   [`的文章`, ``],
   [`的投稿视频`, ``],
   [`赞了`, `Liked`],
+  [`禁用高赞弹幕样式`, `Disable highlighted danmaku style`],
+  [`禁用UP主弹幕样式`, `Disable author danmaku style`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,

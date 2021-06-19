@@ -191,6 +191,9 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   body.fixed-navbar & {
     position: fixed;
   }
+  body.player-mode-blackmask & {
+    visibility: hidden;
+  }
   top: 0;
   left: 0;
   height: var(--navbar-height);

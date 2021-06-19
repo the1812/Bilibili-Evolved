@@ -5,7 +5,10 @@
     flex-wrap: wrap;
     max-width: 180px;
     left: -24px;
-    transform: none;
+    transform: translateY(-8px);
+    &.opened {
+      transform: translateY(0);
+    }
   }
   &-item {
     padding: 4px 12px;

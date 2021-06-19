@@ -228,7 +228,9 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
     [`scrollOutPlayer`, /*html*/`プレーヤーがページから削除されたときのアクションをトリガーする.`],
     [`scrollOutPlayerAutoPause`, /*html*/`プレイヤーの<span>选定触发位置</span>がページにない場合は、再生が自動的に一時停止され、プレーヤーが戻ってきたときに再生を復元する.`],
     [`scrollOutPlayerAutoLightOn`, /*html*/`自動一時停止がオンになっていないし、再生中に自動的にライトがオフになっている場合、この機能は、プレーヤーがページにないときに自動的に点灯し、プレーヤーが戻ってきたときに自動的にオフになります.
-  <b>注: この機能は自動的に一時停止されると無視されます</b>`]
+  <b>注: この機能は自動的に一時停止されると無視されます</b>`],
+    [`disableDanmakuHighlights`, /*html*/`高い評価の弾幕のスタイルを無効にします.弾幕の見通しをより統一する.`],
+    [`disableUpDanmakuStyle`, /*html*/`動画作者の弾幕のスタイルを無効にします.弾幕の見通しをより統一する.`],
 ]);
 export default {
     export: { toolTips },

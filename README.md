@@ -76,7 +76,7 @@
 完全兼容, 但在较旧的浏览器中 Violentmonkey 可能无法运行此脚本.
 
 ### [Greasemonkey](https://www.greasespot.net/)
-可以安装, 但是由于 Greasemonkey 4 只允许脚本在页面完全加载后运行, 样式相关功能体验会比较糟糕, 比如打开夜间模式后每个页面在完全加载之前都是亮色的. 所以还是强烈建议您使用上述的两种脚本管理器.
+不兼容.
 
 ### [AdGuard](https://adguard.com/zh_cn/adguard-windows/overview.html)
 ~~不兼容~~

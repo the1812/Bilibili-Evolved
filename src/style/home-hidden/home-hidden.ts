@@ -4,13 +4,11 @@ type HomeHiddenOption = Readonly<{
   style?: string
 }>
 const isHome = () => {
-  return !settings.simplifyHome && document.URL.includes('https://www.bilibili.com/')
+  if (document.URL === 'https://www.bilibili.com/') {
+    return !settings.simplifyHome
+  }
+  return document.URL.includes('https://www.bilibili.com/')
 }
-const generatedOptions: HomeHiddenOption[] = dqa('.proxy-box > div')
-  .map(it => ({
-    name: it.id.replace(/^bili_/, ''),
-    displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
-  }))
 const homeHiddenOptions: HomeHiddenOption[] = [
   {
     name: 'categories', displayName: '分区栏', style: `
@@ -41,7 +39,8 @@ const homeHiddenOptions: HomeHiddenOption[] = [
   },
   {
     name: 'ext-box', displayName: '电竞赛事', style: `
-      .first-screen #reportFirst3 { display: none !important; } `, },
+      .first-screen #reportFirst3 { display: none !important; } `,
+  },
   {
     name: 'special', displayName: '特别推荐', style: `
       #bili_report_spe_rec { display: none !important; }
@@ -57,7 +56,6 @@ const homeHiddenOptions: HomeHiddenOption[] = [
       .storey-box .elevator { display: none !important; }
     `,
   },
-  ...generatedOptions,
 ]
 const syncState = (item: HomeHiddenOption) => {
   if (!settings.homeHiddenItems.includes(item.name)) {
@@ -74,7 +72,18 @@ const syncState = (item: HomeHiddenOption) => {
     }
   }
 }
-if (isHome()) {
+;(async () => {
+  if (!isHome()) {
+    return
+  }
+  const generatedOptions: HomeHiddenOption[] = (await SpinQuery.condition(
+    () => dqa('.proxy-box > div'),
+    elements => elements.length > 0 || document.URL !== 'https://www.bilibili.com/',
+  )).map(it => ({
+    name: it.id.replace(/^bili_/, ''),
+    displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
+  }))
+  homeHiddenOptions.push(...generatedOptions)
   homeHiddenOptions.forEach(syncState)
   const generatedStyles = generatedOptions.map(({ name }) => {
     return `
@@ -85,7 +94,7 @@ body.home-hidden-${name} .storey-box .proxy-box #bili_${name} {
   }).join('\n')
   const fixedStyles: string = resources.import('homeHiddenStyle')
   resources.applyImportantStyleFromText(generatedStyles + fixedStyles, 'home-hidden-style')
-}
+})()
 
 export default {
   widget: {

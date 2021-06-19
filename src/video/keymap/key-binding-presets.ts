@@ -1,7 +1,7 @@
 export const presets: Record<typeof settings['keymapPreset'], Record<string, string>> = {
   Default: {},
   YouTube: {
-    like: 'shift l',
+    like: '',
     pause: 'space k',
     longJumpForward: 'l',
     longJumpBackward: 'j',

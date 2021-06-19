@@ -16,14 +16,15 @@
     "clean-css-cli": "^4.3.0",
     "html-minifier": "^4.0.0",
     "jszip": "^3.5.0",
+    "koa": "^2.13.1",
     "sass": "^1.22.10",
     "terser": "^5.3.8",
     "typescript": "^4.0.5",
-    "vue": "^2.6.10",
+    "vue": "^2.6.12",
     "vuex": "^3.1.2"
   },
   "scripts": {
-    "postinstall": "node postinstall.js"
+    "serve": "node script/server.js"
   },
   "repository": {
     "type": "git",
