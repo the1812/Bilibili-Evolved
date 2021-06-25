@@ -1,6 +1,6 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
-import { feedsUrls } from '../feeds-urls'
-import { FeedsCard } from '../api'
+import { ComponentMetadata } from '@/components/component'
+import { FeedsCard } from '@/components/feeds/api'
+import { feedsUrls } from '@/core/utils/urls'
 
 let enabled = true
 const id = 'disable-feeds-details-style'
@@ -11,8 +11,7 @@ const addStyle = async () => {
 }
 const entry = async () => {
   const { addImportantStyle } = await import('@/core/style')
-  const { forEachFeedsCard } = await import('../api')
-  const { dq, dqa } = await import('@/core/utils')
+  const { forEachFeedsCard } = await import('@/components/feeds/api')
   const { default: initStyle } = await import('./init.scss')
 
   addImportantStyle(initStyle, 'disable-feeds-details-init-style')

@@ -24,7 +24,7 @@ export const styledComponentEntry = (
  * @param entry 组件入口函数
  */
 export const toggleStyle = (
-  name = '',
+  name: string,
   styleImport: () => Promise<{ default: string }>,
   entry: ComponentEntry = none,
 ): Pick<ComponentMetadata, 'name' | 'entry' | 'reload' | 'unload'> => {

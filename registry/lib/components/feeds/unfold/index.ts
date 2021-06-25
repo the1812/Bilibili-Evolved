@@ -1,0 +1,22 @@
+import { ComponentMetadata } from '@/components/types'
+import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
+
+export const component: ComponentMetadata = {
+  name: 'unfoldFeeds',
+  displayName: '动态反折叠',
+  tags: [componentsTags.feeds],
+  enabledByDefault: true,
+  description: {
+    'zh-CN': '自动展开被折叠的动态.',
+  },
+  urlInclude: feedsUrlsWithoutDetail,
+  entry: async () => {
+    const { forEachFeedsCard } = await import('@/components/feeds/api')
+    forEachFeedsCard({
+      added: card => {
+        const foldButton = dq(card.element, '.fold-hoverable') as HTMLElement
+        foldButton?.click()
+      },
+    })
+  }
+}

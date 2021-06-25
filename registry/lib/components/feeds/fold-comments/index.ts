@@ -1,9 +1,9 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/component'
 import { styledComponentEntry } from '@/components/styled-component'
-import { feedsUrlsWithoutDetail } from '../feeds-urls'
+import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 
 const entry = async () => {
-  const { forEachFeedsCard } = await import('../api')
+  const { forEachFeedsCard } = await import('@/components/feeds/api')
   const { childList } = await import('@/core/observer')
   const injectButton = (card: HTMLElement) => {
     const injectToComment = (panelArea: HTMLDivElement) => {
@@ -49,7 +49,7 @@ const entry = async () => {
 }
 
 export const component: ComponentMetadata = {
-  name: 'foldComment',
+  name: 'foldComments',
   displayName: '快速收起评论',
   description: {
     'zh-CN': '动态里查看评论区时, 在底部添加一个<span>收起评论</span>按钮, 这样就不用再回到上面收起了.',
