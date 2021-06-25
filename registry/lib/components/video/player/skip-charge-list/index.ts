@@ -1,6 +1,6 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/component'
 import { styledComponentEntry } from '@/components/styled-component'
-import { playerUrls } from '../player-urls'
+import { playerUrls } from '@/core/utils/urls'
 
 export const SkipChargeListDisabledClass = 'skip-charge-list-disable'
 const entry = styledComponentEntry(() => import('./charge-list.scss'), async () => {
@@ -10,7 +10,6 @@ const entry = styledComponentEntry(() => import('./charge-list.scss'), async () 
   videoChange(async () => {
     const video = await select('video')
     video?.addEventListener('ended', async () => {
-      console.log('skip charge')
       if (document.body.classList.contains(SkipChargeListDisabledClass)) {
         return
       }

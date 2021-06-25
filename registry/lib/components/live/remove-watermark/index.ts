@@ -1,11 +1,10 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/component'
 import { toggleStyle } from '@/components/styled-component'
-import { liveUrls } from '../live-urls'
+import { liveUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
-  name: 'removeLiveWatermark',
+  ...toggleStyle('removeLiveWatermark', () => import('./remove-watermark.scss')),
   displayName: '删除直播水印',
-  ...toggleStyle(() => import('./remove-watermark.scss')),
   tags: [
     componentsTags.live,
     componentsTags.style,
