@@ -8,7 +8,7 @@
     :trigger-element="triggerElement"
   >
     <div class="navbar-settings-header">
-      <VIcon class="title-icon" icon="mdi-grid-large" :size="24"></VIcon>
+      <VIcon class="title-icon" icon="mdi-sort" :size="24"></VIcon>
       <div class="title">
         顶栏布局设置
       </div>
