@@ -2,15 +2,23 @@ import { mountVueComponent } from '@/core/utils'
 import { LoadingMode } from '@/core/loading-mode'
 import { TextColor } from '@/core/text-color'
 import { CdnTypes } from '@/core/cdn-types'
-import { ComponentMetadata, componentsTags } from '../types'
+import { addComponentListener } from '@/core/settings'
+import { ComponentEntry, ComponentMetadata, componentsTags } from '../types'
 import { addI18nData } from '../i18n/helpers'
 
 export const WidgetsPlugin = 'widgets'
-const entry = async () => {
+export enum SettingsPanelDockSide {
+  Left = '左侧',
+  Right = '右侧',
+}
+const entry: ComponentEntry = async ({ metadata }) => {
   const { isIframe } = await import('@/core/utils')
   if (isIframe()) {
     return
   }
+  addComponentListener(`${metadata.name}.dockSide`, (value: SettingsPanelDockSide) => {
+    document.body.classList.toggle('settings-panel-dock-right', value === SettingsPanelDockSide.Right)
+  }, true)
   requestIdleCallback(async () => {
     const Container = await import('./SettingsContainer.vue')
     const instance = mountVueComponent(Container)
@@ -54,6 +62,11 @@ export const component: ComponentMetadata = {
       defaultValue: CdnTypes.jsDelivr,
       displayName: '更新源',
       dropdownEnum: CdnTypes,
+    },
+    dockSide: {
+      defaultValue: SettingsPanelDockSide.Left,
+      displayName: '设置面板停靠',
+      dropdownEnum: SettingsPanelDockSide,
     },
     filenameFormat: {
       defaultValue: '[title][ - ep]',

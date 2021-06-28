@@ -148,9 +148,8 @@ export default Vue.extend({
   .settings-panel-sub-page {
     font-size: 13px;
     top: 12px;
-    left: 53px;
     transition: .15s cubic-bezier(0.22, 0.61, 0.36, 1);
-    transform: translateX(-12px);
+    transform: translateX(calc(-12px * var(--direction)));
     min-width: 372px;
     padding: 12px;
     box-sizing: border-box;
@@ -189,9 +188,6 @@ export default Vue.extend({
     &.selected {
       background-color: #8882;
     }
-    &:last-child {
-      border-bottom-left-radius: 7px;
-    }
   }
   .icon-list,
   .component-tags {
@@ -211,7 +207,6 @@ export default Vue.extend({
     height: 100%;
     width: auto;
     position: absolute;
-    left: 0;
     top: 0;
     opacity: 0;
     transition: .2s ease-out;

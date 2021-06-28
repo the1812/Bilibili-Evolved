@@ -150,6 +150,8 @@ export default Vue.extend({
   }
   .details-arrow {
     opacity: 0.75;
+    width: 32px;
+    justify-content: flex-end;
   }
   // .description {
   //   @include max-line(2);

@@ -64,6 +64,7 @@ import {
 } from '@/ui'
 import { createPopper } from '@popperjs/core'
 import { dq } from '@/core/utils'
+import { addComponentListener } from '@/core/settings'
 import ComponentSettings from './ComponentSettings.vue'
 import {
   ComponentMetadata, ComponentTag, components,
@@ -131,6 +132,11 @@ export default {
         this.selectedComponent = null
       }
     },
+  },
+  mounted() {
+    addComponentListener('settingsPanel.dockSide', () => {
+      activePopper?.update()
+    })
   },
   methods: {
     closePopper() {
@@ -261,7 +267,6 @@ export default {
       .sidebar {
         display: flex;
         flex-direction: column;
-        border-right: 1px solid #8882;
         z-index: 1;
       }
       .main {
