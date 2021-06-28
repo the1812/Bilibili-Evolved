@@ -11,9 +11,14 @@ body.settings-panel-dock-right {
     transform-origin: right;
   }
   .settings-panel-popup {
-    .settings-panel-content .sidebar {
-      order: 1;
-      border-left: 1px solid #8882;
+    .settings-panel-content {
+      .sidebar {
+        order: 1;
+        border-left: 1px solid #8882;
+      }
+      .main {
+        border-bottom-left-radius: 7px;
+      }
     }
     .component-tags {
       border-bottom-right-radius: 8px;

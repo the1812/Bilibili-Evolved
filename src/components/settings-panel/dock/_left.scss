@@ -11,8 +11,13 @@ body:not(.settings-panel-dock-right) {
     transform-origin: left;
   }
   .settings-panel-popup {
-    .settings-panel-content .sidebar {
-      border-right: 1px solid #8882;
+    .settings-panel-content {
+      .sidebar {
+        border-right: 1px solid #8882;
+      }
+      .main {
+        border-bottom-right-radius: 7px;
+      }
     }
     .component-tags {
       border-bottom-left-radius: 8px;
