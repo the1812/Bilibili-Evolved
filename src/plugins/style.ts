@@ -1,4 +1,5 @@
 import { settings } from '@/core/settings'
+import { deleteValue } from '@/core/utils'
 
 /** 自定义样式注入模式 */
 export enum UserStyleMode {
@@ -28,8 +29,9 @@ export const styles: Required<UserStyle>[] = Object.values(settings.userStyles)
 export const installStyle = async (input: UserStyle | string) => {
   try {
     let userStyle: UserStyle
+    const { parseExternalInput } = await import('../core/external-input')
     if (typeof input === 'string') {
-      userStyle = JSON.parse(input)
+      userStyle = await parseExternalInput<UserStyle>(input)
     } else {
       userStyle = input
     }
@@ -81,7 +83,8 @@ export const uninstallStyle = async (nameOrDisplayName: string) => {
   const { removeStyle } = await import('@/core/style')
   const [name, { displayName }] = existingStyle
   removeStyle(name)
-  lodash.pullAllBy(styles, name, (it: Required<UserStyle>) => it.name === name)
+  delete settings.userStyles[name]
+  deleteValue(styles, it => it.name === name)
   return {
     metadata: existingStyle,
     message: `已卸载样式'${displayName}'`,

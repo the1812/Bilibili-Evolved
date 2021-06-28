@@ -112,7 +112,16 @@ export const preloadStyles = lodash.once(async () => {
 export const loadAllCustomStyles = async () => {
   const { settings } = await import('./settings')
   const { UserStyleMode: CustomStyleMode } = await import('@/plugins/style')
-  Object.values(settings.userStyles).filter(c => c.mode !== CustomStyleMode.instant).forEach(c => {
-    addStyle(c.name, c.style, c.mode === CustomStyleMode.important ? document.body : document.head)
+  contentLoaded(() => {
+    Object.values(settings.userStyles)
+      .filter(c => c.mode === CustomStyleMode.important)
+      .forEach(c => {
+        addStyle(c.style, c.name, document.body)
+      })
   })
+  Object.values(settings.userStyles)
+    .filter(c => c.mode === CustomStyleMode.default)
+    .forEach(c => {
+      addStyle(c.style, c.name, document.head)
+    })
 }
