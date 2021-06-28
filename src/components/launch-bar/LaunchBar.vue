@@ -8,7 +8,7 @@
           class="input"
           type="text"
           autocomplete="off"
-          :placeholder="recommendedWord"
+          :placeholder="recommended.word"
           @keydown.enter="handleEnter"
           @keydown.down.prevent="$refs.list.querySelector('.suggest-item').focus()"
         />
@@ -90,8 +90,6 @@
   </div>
 </template>
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
-import { getJson } from '@/core/ajax'
 import { registerAndGetData } from '@/plugins/data'
 import { dqa } from '@/core/utils'
 import {
@@ -124,6 +122,11 @@ async function getActions() {
   )
   this.noActions = actions.length === 0
 }
+
+const [recommended] = registerAndGetData('launchBar.recommended', {
+  word: '搜索',
+  href: 'https://search.bilibili.com/',
+})
 export default Vue.extend({
   components: {
     VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
@@ -132,8 +135,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      recommendedWord: '搜索',
-      recommendedHref: 'https://search.bilibili.com/',
+      recommended,
       actions: [],
       keyword: '',
       noActions: false,
@@ -155,25 +157,25 @@ export default Vue.extend({
   },
   async mounted() {
     this.getActions()
-    if (!getComponentSettings('hideSearchRecommendations').enabled) {
-      const json = await getJson(
-        'https://api.bilibili.com/x/web-interface/search/default',
-      )
-      if (json.code === 0) {
-        this.recommendedWord = json.data.show_name
-        let href: string
-        if (json.data.url !== '') {
-          href = json.data.url
-        } else if (json.data.name.startsWith('av')) {
-          href = `https://www.bilibili.com/${json.data.name}`
-        } else {
-          href = `https://search.bilibili.com/all?keyword=${json.data.name}`
-        }
-        this.recommendedHref = href
-      } else {
-        console.error('获取搜索推荐词失败')
-      }
-    }
+    // if (!getComponentSettings('hideSearchRecommendations').enabled) {
+    //   const json = await getJson(
+    //     'https://api.bilibili.com/x/web-interface/search/default',
+    //   )
+    //   if (json.code === 0) {
+    //     this.recommended.word = json.data.show_name
+    //     let href: string
+    //     if (json.data.url !== '') {
+    //       href = json.data.url
+    //     } else if (json.data.name.startsWith('av')) {
+    //       href = `https://www.bilibili.com/${json.data.name}`
+    //     } else {
+    //       href = `https://search.bilibili.com/all?keyword=${json.data.name}`
+    //     }
+    //     this.recommended.href = href
+    //   } else {
+    //     console.error('获取搜索推荐词失败')
+    //   }
+    // }
   },
   methods: {
     debounceGetActions: lodash.debounce(getActions, 200),
@@ -191,7 +193,7 @@ export default Vue.extend({
           }
         }
       } else {
-        window.open(this.recommendedHref, '_blank')
+        window.open(this.recommended.href, '_blank')
       }
     },
     previousItem(e: KeyboardEvent, index: number) {

@@ -10,7 +10,7 @@ export interface LaunchBarAction {
   action: Executable
 }
 /** LaunchBar 动作提供者的插件key, 可注入其他提供者 */
-export const LaunchBarActionProviders = 'launch-bat-action-providers'
+export const LaunchBarActionProviders = 'launchBar.actions'
 /** 表示 LaunchBar 动作提供者, LaunchBar 在搜索时会遍历所有提供者 */
 export interface LaunchBarActionProvider {
   /** 名称 */
