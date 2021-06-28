@@ -148,8 +148,8 @@ export default Vue.extend({
   .settings-panel-sub-page {
     font-size: 13px;
     top: 12px;
-    transition: .15s cubic-bezier(0.22, 0.61, 0.36, 1);
-    transform: translateX(calc(-12px * var(--direction)));
+    transition: .3s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transform: translateX(calc(-12.5% * var(--direction)));
     min-width: 372px;
     padding: 12px;
     box-sizing: border-box;
