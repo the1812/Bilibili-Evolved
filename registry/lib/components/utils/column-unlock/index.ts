@@ -1,4 +1,4 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/component'
 
 let eventInjected = false
 let enable = true

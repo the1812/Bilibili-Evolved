@@ -1,7 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/component'
 
-export const UrlParamsClean = 'url-params-clean'
 const entry = async () => {
   const builtInBlockParams = [
     'spm_id_from',
@@ -30,12 +29,38 @@ const entry = async () => {
     'network_status',
     'platform_network_status',
     'p2p_type',
+    'referfrom',
+    'visit_id',
+    'bsource',
+    'spm',
+    'hotRank',
   ]
-  const blockParams: string[] = registerAndGetData(UrlParamsClean, builtInBlockParams)[0]
+  const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
+  const builtInSiteSpecifiedParams = [
+    {
+      match: /\/\/www\.bilibili\.com\/audio\/(au[\d]+|mycollection)/,
+      param: 'type',
+    },
+    {
+      match: /\/\/live\.bilibili\.com\//,
+      param: 'session_id',
+    },
+    {
+      match: /\/\/www\.bilibili\.com\/bangumi\//,
+      param: 'theme',
+    },
+  ]
+  const [siteSpecifiedParams] = registerAndGetData('urlParamsClean.siteSpecifiedParams', builtInSiteSpecifiedParams)
+
   const clean = () => {
     const urlParams = window.location.search.substring(1).split('&')
     const filteredParams = urlParams.filter(p => {
       if (blockParams.some(b => p.startsWith(`${b}=`))) {
+        return false
+      }
+      if (siteSpecifiedParams.some(({ match, param }) => (
+        document.URL.match(match) && p.startsWith(`${param}=`)
+      ))) {
         return false
       }
       return true
@@ -69,6 +94,9 @@ export const component: ComponentMetadata = {
   },
   tags: [
     componentsTags.utils,
+  ],
+  urlExclude: [
+    /game\.bilibili\.com\/fgo/,
   ],
   enabledByDefault: true,
 }
