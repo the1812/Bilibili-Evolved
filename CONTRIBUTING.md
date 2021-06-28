@@ -105,6 +105,8 @@ bilibiliEvolved.componentApis.importComponent('autoUpdate').checkUpdatesAndReloa
 ### 组件
 在 `registry/lib/components` 中是所有组件的源代码.
 
+> 你可能还发现 `src/components` 中也有大量组件, 除了几个内置组件, 其他是在 v1.10.20 (commit `855bb6f`) 时做的迁移测试留下的, 我以后会迁移到  `registry/lib/components` 中, 所以就当没看见好了.
+
 1. 根据类别进入对应的子文件夹, 如样式修改的功能就是 `style/`
 2. 新建文件夹, 名称为组件名, 单词短横线分隔
 3. 新建文件 `index.ts` 作为组件入口点
