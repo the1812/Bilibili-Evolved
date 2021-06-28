@@ -62,9 +62,8 @@ const idMatches = [
   },
 ]
 export const plugin: PluginMetadata = {
-  name: 'launchBarIDSearch',
+  name: 'launchBar.actions.IDSearch',
   displayName: 'ID搜索快速跳转',
-  enabledByDefault: true,
   async setup() {
     const { addData } = await import('../data')
     const { LaunchBarActionProviders } = await import('@/components/launch-bar/launch-bar-action')
