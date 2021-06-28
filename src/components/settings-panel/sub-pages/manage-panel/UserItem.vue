@@ -3,12 +3,10 @@
     <div class="user-item-display-name">
       {{ config.item.displayName }}
     </div>
-    <div v-if="config.item.configurable === true && config.getSettings" class="user-item-toggle">
-      <SwitchBox v-model="settings.enabled" />
-    </div>
     <div class="user-item-name">
       {{ config.item.name }}
     </div>
+    <div v-if="config.isUserItem" class="user-item-line"></div>
     <div v-if="config.isUserItem" class="user-item-remove">
       <VIcon
         v-if="!removeConfirm"
@@ -31,12 +29,10 @@
   </div>
 </template>
 <script lang="ts">
-import VIcon from '@/ui/icon/VIcon.vue'
-import SwitchBox from '@/ui/SwitchBox.vue'
+import { VIcon } from '@/ui'
 
 export default Vue.extend({
   components: {
-    SwitchBox,
     VIcon,
   },
   props: {
@@ -79,16 +75,26 @@ export default Vue.extend({
 .manage-panel .user-item {
   display: grid;
   gap: 6px;
-  grid-template: 'displayName toggle' auto 'name remove' auto / 1fr auto;
+  grid-template: 'displayName name line remove' / auto auto 1fr auto;
   align-items: center;
+  padding: 6px 0;
 
   .user-item-display-name {
     grid-area: displayName;
-    font-size: 15px;
   }
   .user-item-name {
     grid-area: name;
     opacity: .5;
+  }
+  .user-item-line {
+    grid-area: line;
+    justify-self: stretch;
+    transition: .2s ease-out;
+    opacity: 0;
+    height: 0;
+    width: 100%;
+    border-bottom: 1px dashed;
+    box-sizing: border-box;
   }
   .user-item-toggle {
     grid-area: toggle;
@@ -102,12 +108,20 @@ export default Vue.extend({
     justify-self: end;
     display: flex;
     align-items: center;
-    opacity: .75;
+    opacity: 0.1;
     transition: .2s ease-out;
     cursor: pointer;
     &:hover {
       opacity: 1;
       color: #E54E4E;
+    }
+  }
+  &:hover {
+    .user-item-remove:not(:hover) {
+      opacity: .75;
+    }
+    .user-item-line {
+      opacity: .5;
     }
   }
 }
