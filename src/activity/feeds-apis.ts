@@ -207,7 +207,7 @@ class FeedsCardsManager extends EventTarget {
     }
   }
   async parseCard(element: HTMLElement): Promise<FeedsCard> {
-    const getVueData = (el: any) => el.parentElement.__vue__
+    const getVueData = (el: any) => el.__vue__ || el.parentElement.__vue__
     const getSimpleText = async (selector: string) => {
       const subElement = await SpinQuery.condition(
         () => element.querySelector(selector),
