@@ -916,7 +916,7 @@ a.bp_box_bot_click {
 .header-video-card:hover {
   @include background-color("3");
 }
-.video-toolbar .note-btn__pink {
+.video-toolbar .note-btn {
   @include theme-color();
   @include theme-border-color();
   &:hover {
