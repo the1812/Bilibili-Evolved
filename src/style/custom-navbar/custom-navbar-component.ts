@@ -22,9 +22,6 @@ export class NavbarComponent {
     return 'blank1'
   }
   static cleanUpOrders() {
-    if ((settings.customNavbarOrder as any).bangumiLink) {
-      settings.customNavbarOrder = _.omit(settings.customNavbarOrder, 'bangumiLink')
-    }
     const sortByOrder = _.sortBy(Object.entries(settings.customNavbarOrder), ([, order]) => order)
     console.log(sortByOrder)
     settings.customNavbarOrder = _.fromPairs(sortByOrder.map(([name], index) => [name, index])) as CustomNavbarOrders

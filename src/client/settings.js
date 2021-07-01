@@ -4,24 +4,25 @@ export const customNavbarDefaultOrders = {
   category: 2,
   rankingLink: 3,
   drawingLink: 4,
-  musicLink: 5,
-  gamesIframe: 6,
-  livesIframe: 7,
-  matchLink: 8,
-  shopLink: 9,
-  mangaLink: 10,
-  blank2: 11,
-  search: 12,
-  blank3: 13,
-  userInfo: 14,
-  messages: 15,
-  activities: 16,
-  bangumi: 17,
-  watchlaterList: 18,
-  favoritesList: 19,
-  historyList: 20,
-  upload: 21,
-  darkMode: 22,
+  bangumiLink: 5,
+  musicLink: 6,
+  gamesIframe: 7,
+  livesIframe: 8,
+  matchLink: 9,
+  shopLink: 10,
+  mangaIframe: 11,
+  blank2: 12,
+  search: 13,
+  blank3: 14,
+  userInfo: 15,
+  messages: 16,
+  activities: 17,
+  bangumi: 18,
+  watchlaterList: 19,
+  favoritesList: 20,
+  historyList: 21,
+  upload: 22,
+  darkMode: 23,
 }
 export const simpleHomeCategoryDefaultOrders = {
   anime: 0,
@@ -281,11 +282,12 @@ const fixedSettings = {
   downloadLiveRecords: true,
   medalHelper: true,
   customNavbarCompact: false,
-  latestVersionLink: 'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js',
+  latestVersionLink:
+    'https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js',
   currentVersion: GM.info.script.version,
 }
 export const settingsChangeHandlers = {}
-export function addSettingsListener (key, handler, initCall) {
+export function addSettingsListener(key, handler, initCall) {
   if (!settingsChangeHandlers[key]) {
     settingsChangeHandlers[key] = [handler]
   } else {
@@ -296,14 +298,14 @@ export function addSettingsListener (key, handler, initCall) {
     handler(value, value)
   }
 }
-export function removeSettingsListener (key, handler) {
+export function removeSettingsListener(key, handler) {
   const handlers = settingsChangeHandlers[key]
   if (!handlers) {
     return
   }
   handlers.splice(handlers.indexOf(handler), 1)
 }
-export async function loadSettings () {
+export async function loadSettings() {
   for (const key in fixedSettings) {
     settings[key] = fixedSettings[key]
     await GM.setValue(key, fixedSettings[key])
@@ -325,10 +327,10 @@ export async function loadSettings () {
       value = Object.assign(settings[key], value)
     }
     Object.defineProperty(settings, key, {
-      get () {
+      get() {
         return value
       },
-      set (newValue) {
+      set(newValue) {
         value = newValue
         GM.setValue(key, newValue)
 
@@ -344,11 +346,14 @@ export async function loadSettings () {
         if (input !== null) {
           if (input.type === 'checkbox') {
             input.checked = newValue
-          } else if (input.type === 'text' && !input.parentElement.classList.contains('gui-settings-dropdown')) {
+          } else if (
+            input.type === 'text' &&
+            !input.parentElement.classList.contains('gui-settings-dropdown')
+          ) {
             input.value = newValue
           }
         }
-      }
+      },
     })
   }
 }

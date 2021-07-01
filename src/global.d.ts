@@ -129,13 +129,14 @@ declare global {
     logo: number
     category: number
     rankingLink: number
+    bangumiLink: number
     drawingLink: number
     musicLink: number
     gamesIframe: number
     livesIframe: number
     matchLink: number
     shopLink: number
-    mangaLink: number
+    mangaIframe: number
     blank2: number
     search: number
     userInfo: number

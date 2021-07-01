@@ -116,6 +116,7 @@ export default (() => {
         new Category(),
         new Rank(),
         new SimpleLink('相簿', 'https://h.bilibili.com', 'drawing'),
+        new SimpleLink('番剧', 'https://www.bilibili.com/anime/', 'bangumi'),
         new SimpleLink('音频', 'https://www.bilibili.com/audio/home/', 'music'),
         new Iframe('游戏中心', 'https://game.bilibili.com/', {
           src: `https://www.bilibili.com/page-proxy/game-nav.html`,
@@ -133,7 +134,13 @@ export default (() => {
         }),
         new SimpleLink('赛事', 'https://www.bilibili.com/v/game/match/', 'match'),
         new SimpleLink('会员购', 'https://show.bilibili.com', 'shop'),
-        new SimpleLink('漫画', 'https://manga.bilibili.com', 'manga'),
+        new Iframe('漫画', 'https://manga.bilibili.com', {
+          src: 'https://manga.bilibili.com/eden/bilibili-nav-panel.html',
+          width: '720px',
+          height: '266px',
+          lazy: true,
+          iframeName: 'manga',
+        }),
         new Blank(2),
         new SearchBox(),
         new UserInfo(),
