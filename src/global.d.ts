@@ -158,8 +158,8 @@ declare global {
     music: number
     dance: number
     game: number
+    knowledge: number
     tech: number
-    digital: number
     life: number
     kichiku: number
     fashion: number
