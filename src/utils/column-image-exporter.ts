@@ -29,7 +29,7 @@ export default {
             if (url) {
               images.push({
                 ...url,
-                name: `${title}-${images.length - 1}${url.extension}`,
+                name: `${title}-${images.length}${url.extension}`,
               })
             }
           })
