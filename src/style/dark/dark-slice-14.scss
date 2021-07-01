@@ -609,6 +609,7 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     }
 
     .read-article-holder {
+      .color-default,
       h1,
       h2,
       h3,
@@ -624,6 +625,18 @@ body:not(.simplify-comment) .panel-area .bb-comment {
         @include theme-color();
         &[disabled] {
           @include color("9");
+        }
+      }
+      [class*='color-'][class*='-03'] {
+        @include brightness(6 / 5);
+        > * {
+          @include brightness(5 / 6);
+        }
+      }
+      [class*='color-'][class*='-04'] {
+        @include brightness(4 / 3);
+        > * {
+          @include brightness(3 / 4);
         }
       }
       caption {
