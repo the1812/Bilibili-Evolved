@@ -10,8 +10,12 @@ const checkInItems: CheckInItem[] = [
     icon: 'mdi-seed-outline',
     name: '瓜子换硬币',
     action: async () => {
-      const seedsToCoinsApi = 'https://api.live.bilibili.com/pay/v1/Exchange/silver2coin'
-      const json = await Ajax.getJsonWithCredentials(seedsToCoinsApi) as {
+      const seedsToCoinsApi = 'https://api.live.bilibili.com/xlive/revenue/v1/wallet/silver2coin'
+      const text = await Ajax.postTextWithCredentials(seedsToCoinsApi, formData({
+        csrf: getCsrf(),
+        csrf_token: getCsrf(),
+      }))
+      const json = JSON.parse(text) as {
         code: number
         message: string
         data: {
