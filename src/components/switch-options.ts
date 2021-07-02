@@ -10,6 +10,12 @@ export interface SwitchOptions {
   name: string
   switches: Switches
   radio?: boolean
+  dimAt?: 'checked' | 'notChecked'
+  switchProps?: {
+    checkedIcon?: string
+    notCheckedIcon?: string
+    iconPosition?: 'left' | 'right'
+  }
 }
 export const createSwitchOptions = (options: SwitchOptions) => {
   if (options.radio === undefined) {

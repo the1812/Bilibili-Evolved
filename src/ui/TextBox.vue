@@ -64,6 +64,7 @@ export default Vue.extend({
     }
   }
   input[type='text'] {
+    line-height: normal;
     padding: 4px 6px;
     border-radius: 4px;
     flex: 1 0 0;

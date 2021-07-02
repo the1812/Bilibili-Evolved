@@ -16,8 +16,24 @@ $prefix: "simplifyLiveroom-switch";
   &-eventsBanner .z-section-blocks .left-container .flip-view,
   &-eventsBanner .activity-pushing-out,
   &-userEffect .live-room-app .aside-area .activity-welcome-section,
-  &-kanban .live-haruna-ctnr {
+  &-kanban .live-haruna-ctnr,
+  &-enterPrompt .chat-item.important-prompt-item,
+  &-enterPrompt .chat-history-panel .brush-prompt,
+  &-pk .chaos-pk,
+  &-topRank .chat-item.top3-notice,
+  &-topRank .chat-item .rank-icon {
     display: none !important;
+  }
+}
+
+.#{$prefix}-enterPrompt {
+  .chat-history-list.with-brush-prompt {
+    &:not(.with-penury-gift) {
+      height: calc(100%) !important;
+    }
+    &.with-penury-gift {
+      height: calc(100% - 32px) !important;
+    }
   }
 }
 .#{$prefix}-rankList {
@@ -124,6 +140,20 @@ $prefix: "simplifyLiveroom-switch";
   }
 }
 .#{$prefix}-skin {
+  &:not(.dark) {
+    .player-ctnr {
+      #head-info-vm,
+      #gift-control-vm {
+        box-sizing: content-box !important;
+        border: 1px solid #e9eaec !important;
+      }
+    }
+    .player-and-aside-area #aside-area-vm {
+      border: 1px solid #e9eaec !important;
+      width: 302px !important;
+    }
+  }
+  .control-panel-ctnr,
   #head-info-vm,
   #gift-control-vm,
   #rank-list-ctnr-box {
@@ -148,5 +178,14 @@ $prefix: "simplifyLiveroom-switch";
     &::after {
       display: none !important;
     }
+  }
+  .chat-history-panel .chat-colorful-bubble {
+    margin: 0 !important;
+    display: block !important;
+    border-radius: 0 !important;
+    background-color: transparent !important;
+  }
+  .fans-medal-item.medal-guard {
+    margin-left: 0 !important;
   }
 }

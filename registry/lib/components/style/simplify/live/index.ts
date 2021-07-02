@@ -1,49 +1,22 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
 import { createSwitchOptions } from '@/components/switch-options'
 import { styledComponentEntry } from '@/components/styled-component'
+import { liveUrls } from '@/core/utils/urls'
 
-const c: ComponentMetadata = {
-  name: 'simplifyLiveroom',
-  displayName: '简化直播间',
-  entry: styledComponentEntry(() => import('./live.scss'), async () => {
-    const { setupSkinSimplify } = await import('./skin')
-    setupSkinSimplify()
-  }),
-  description: {
-    'zh-CN': `
-- 隐藏老爷图标
-- 隐藏粉丝勋章
-- 隐藏活动头衔
-- 隐藏用户等级
-- 隐藏舰长图标
-- 隐藏全区广播
-- 隐藏欢迎信息 (xxx老爷进入直播间)
-- 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
-- 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
-- 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
-- 隐藏入场特效
-- 隐藏看板娘
-- 隐藏活动横幅
-- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
-- 禁用直播间皮肤
-
-> 每一项都可以在<span>功能</span>中单独选择是否隐藏.`.trim(),
-  },
-  tags: [
-    componentsTags.live,
-    componentsTags.style,
-  ],
-  urlInclude: [
-    '//live.bilibili.com/',
-  ],
-  enabledByDefault: false,
-}
 export const component = createSwitchOptions({
   name: 'simplifyOptions',
+  dimAt: 'checked',
+  switchProps: {
+    checkedIcon: 'mdi-eye-off-outline',
+    notCheckedIcon: 'mdi-eye-outline',
+  },
   switches: {
     vip: {
       defaultValue: true,
       displayName: '老爷图标',
+    },
+    enterPrompt: {
+      defaultValue: true,
+      displayName: '入场通知',
     },
     fansMedal: {
       defaultValue: true,
@@ -52,10 +25,6 @@ export const component = createSwitchOptions({
     title: {
       defaultValue: true,
       displayName: '活动头衔',
-    },
-    userLevel: {
-      defaultValue: true,
-      displayName: '用户等级',
     },
     guard: {
       defaultValue: true,
@@ -77,6 +46,10 @@ export const component = createSwitchOptions({
       defaultValue: true,
       displayName: '上舰提示',
     },
+    giftPanel: {
+      defaultValue: true,
+      displayName: '付费礼物',
+    },
     userEffect: {
       defaultValue: true,
       displayName: '入场特效',
@@ -84,10 +57,6 @@ export const component = createSwitchOptions({
     kanban: {
       defaultValue: true,
       displayName: '看板娘',
-    },
-    giftPanel: {
-      defaultValue: true,
-      displayName: '付费礼物',
     },
     eventsBanner: {
       defaultValue: false,
@@ -101,9 +70,52 @@ export const component = createSwitchOptions({
       defaultValue: false,
       displayName: '抽奖提示',
     },
+    pk: {
+      defaultValue: false,
+      displayName: 'PK浮窗',
+    },
+    topRank: {
+      defaultValue: false,
+      displayName: '高能榜提示',
+    },
     skin: {
       defaultValue: false,
       displayName: '房间皮肤',
     },
   },
-})(c)
+})(
+  {
+    name: 'simplifyLiveroom',
+    displayName: '简化直播间',
+    entry: styledComponentEntry(() => import('./live.scss'), async () => {
+      const { setupSkinSimplify } = await import('./skin')
+      setupSkinSimplify()
+    }),
+    description: {
+      'zh-CN': `
+- 隐藏老爷图标
+- 隐藏粉丝勋章
+- 隐藏活动头衔
+- 隐藏用户等级
+- 隐藏舰长图标
+- 隐藏全区广播
+- 隐藏欢迎信息 (xxx老爷进入直播间)
+- 隐藏礼物弹幕 (仅弹幕列表, 特殊效果如节奏风暴不受影响)
+- 隐藏上舰提示 (弹幕列表里的 xxx开通了舰长)
+- 隐藏付费礼物 (播放器下面的各种金瓜子礼物, 以及许愿瓶, 上舰等)
+- 隐藏入场特效
+- 隐藏看板娘
+- 隐藏活动横幅
+- 隐藏抽奖提示 (开通舰长, 小飞船抽奖等)
+- 禁用直播间皮肤
+
+> 每一项都可以在<span>功能</span>中单独选择是否隐藏.`.trim(),
+    },
+    tags: [
+      componentsTags.live,
+      componentsTags.style,
+    ],
+    urlInclude: liveUrls,
+    enabledByDefault: true,
+  },
+)

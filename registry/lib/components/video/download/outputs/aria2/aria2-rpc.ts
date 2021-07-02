@@ -1,4 +1,4 @@
-import { getJson, postJson } from '@/core/ajax'
+import { getJson, monkey, postJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { UserAgent } from '@/core/utils/constants'
 import { logError } from '@/core/utils/log'
@@ -66,14 +66,10 @@ const getRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
     const url = `${host}:${option.port}/jsonrpc?method=${methodName}&id=${rpcParam.id}&params=${base64Params}`
     console.log(`RPC request: ${url}`)
     if (url.startsWith('http:')) {
-      return new Promise((resolve, reject) => {
-        GM_xmlhttpRequest({
-          method: 'GET',
-          url,
-          responseType: 'json',
-          onload: r => resolve(r.response),
-          onerror: r => reject(r),
-        })
+      return monkey({
+        method: 'GET',
+        url,
+        responseType: 'json',
       })
     }
     return getJson(url)
@@ -89,15 +85,11 @@ const postRpc = async (profile: Aria2RpcProfile, rpcParam: RpcParam) => {
       params: rpcParam.params,
     }
     if (url.startsWith('http:')) {
-      return new Promise((resolve, reject) => {
-        GM_xmlhttpRequest({
-          method: 'POST',
-          url,
-          responseType: 'json',
-          data: JSON.stringify(data),
-          onload: r => resolve(r.response),
-          onerror: r => reject(r),
-        })
+      return monkey({
+        method: 'POST',
+        url,
+        responseType: 'json',
+        data: JSON.stringify(data),
       })
     }
     return postJson(url, data)

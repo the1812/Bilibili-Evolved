@@ -36,7 +36,7 @@ export const parseExternalInput = async <T>(input: ExternalInput<T>): Promise<T>
       /** eval magic variable */
       const exports = {}
       const result = eval(input) as T
-      console.log(exports)
+      // console.log(exports)
       if (Object.values(exports).length > 0) {
         const value = Object.values(exports)[0]
         if (typeof value === 'function') {

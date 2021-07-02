@@ -15,16 +15,32 @@ export const installComponent = async (code: string) => {
   if (component === null) {
     throw new Error('无效的组件代码')
   }
-  console.log(component)
   const { settings } = await import('@/core/settings')
   const isBuiltInComponent = getBuiltInComponents().some(it => it.name === component.name)
   if (isBuiltInComponent) {
     throw new Error(`不能覆盖内置组件'${component.name}', 请更换名称`)
   }
+  const userMetadata = {
+    ...lodash.omit(
+      component,
+      'entry',
+      'widget',
+      'instantStyles',
+      'reload',
+      'unload',
+      'plugin',
+      'urlInclude',
+      'urlExclude',
+    ),
+  }
   const existingComponent = settings.userComponents[component.name]
   if (existingComponent) {
     existingComponent.code = code
-    // Object.assign(existingComponent.metadata, withFunction(component))
+    existingComponent.metadata = userMetadata
+    existingComponent.settings = lodash.defaultsDeep(
+      existingComponent.settings,
+      componentToSettings(component),
+    )
     return {
       metadata: component,
       message: `已更新组件'${component.displayName}', 刷新后生效`,
@@ -32,19 +48,7 @@ export const installComponent = async (code: string) => {
   }
   settings.userComponents[component.name] = {
     code,
-    metadata: {
-      ...lodash.omit(
-        component,
-        'entry',
-        'widget',
-        'instantStyles',
-        'reload',
-        'unload',
-        'plugin',
-        'urlInclude',
-        'urlExclude',
-      ),
-    },
+    metadata: userMetadata,
     settings: componentToSettings(component),
   }
   // 同步到 components 数组

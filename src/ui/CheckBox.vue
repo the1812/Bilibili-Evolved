@@ -12,8 +12,8 @@
       <slot>CheckBox</slot>
     </div>
     <div class="icon-container">
-      <VIcon :size="20" class="not-checked" :icon="notCheckedIcon"></VIcon>
-      <VIcon :size="20" class="checked" :icon="checkedIcon"></VIcon>
+      <VIcon :size="16" class="not-checked" :icon="notCheckedIcon"></VIcon>
+      <VIcon :size="16" class="checked" :icon="checkedIcon"></VIcon>
     </div>
   </VButton>
 </template>
@@ -36,7 +36,7 @@ export default Vue.extend({
     },
     iconPosition: {
       type: String,
-      default: 'right',
+      default: 'left',
     },
     checkedIcon: {
       type: String,

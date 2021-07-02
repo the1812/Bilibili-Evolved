@@ -9,6 +9,7 @@ import ColumnCard from './feeds/ColumnCard.vue'
 import * as disableProfilePopup from './feeds/disable-profile-popup'
 import * as notify from './feeds/notify'
 import * as videoDanmaku from './video/video-danmaku'
+import * as switchOptions from './switch-options'
 import LaunchBar from './launch-bar/LaunchBar.vue'
 
 export const componentApis = {
@@ -16,6 +17,7 @@ export const componentApis = {
   userComponent,
   styledComponent,
   description,
+  switchOptions,
   launchBar: {
     LaunchBar,
   },

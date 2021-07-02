@@ -19,7 +19,11 @@
 
 <script lang="ts">
 import { Widget } from '@/widgets/widget'
-import { matchUrlPattern } from '@/core/utils'
+import { deleteValue, matchUrlPattern } from '@/core/utils'
+import {
+  VIcon,
+  VEmpty,
+} from '@/ui'
 import { registerAndGetData } from '../../plugins/data'
 import { WidgetsPlugin } from '.'
 
@@ -45,10 +49,11 @@ const widgetFilter = async (w: Widget) => {
 }
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
-    VEmpty: () => import('@/ui/VEmpty.vue').then(m => m.default),
+    VIcon,
+    VEmpty,
   },
   data() {
+    unsafeWindow.allWidgets = allWidgets
     return {
       allWidgets,
       widgets: [],
@@ -56,17 +61,15 @@ export default Vue.extend({
     }
   },
   watch: {
-    async allWidgets() {
-      const widgets = []
-      await Promise.all(
-        this.allWidgets.map(async (w: Widget) => {
-          if (await widgetFilter(w)) {
-            widgets.push(w)
-          }
-        }),
-      )
-      this.widgets = widgets
-      console.log(this.allWidgets, widgets)
+    allWidgets() {
+      this.allWidgets.forEach(async (w: Widget) => {
+        const add = await widgetFilter(w)
+        if (add) {
+          this.widgets.push(w)
+        } else {
+          deleteValue(this.widgets, (widget: Widget) => widget.name === w.name)
+        }
+      })
     },
   },
   created() {

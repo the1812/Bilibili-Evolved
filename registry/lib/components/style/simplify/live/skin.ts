@@ -4,13 +4,15 @@ import { attributes } from '@/core/observer'
 
 class SkinManager {
   skinDisabled = getComponentSettings('simplifyLiveroom').options.skin
-  skinSelectors: string[]
-  skinClass: string
-  constructor(skinSelectors: string[], skinClass: string) {
-    this.skinSelectors = skinSelectors
-    this.skinClass = skinClass
+  constructor(
+    public skinSelectors: string[],
+    public skinClass: string,
+  ) {
     skinSelectors.forEach(selector => {
       select(selector).then(skin => {
+        if (!skin) {
+          return
+        }
         attributes(selector, records => {
           records.forEach(record => {
             if (record.attributeName === 'class') {
@@ -46,6 +48,7 @@ const skins = [
     '.gift-section>div:last-child',
     '.z-gift-package>div>div',
     '.right-action',
+    '.control-panel-ctnr',
   ], 'live-skin-coloration-area'),
   new SkinManager([
     '.rank-list-ctnr .tabs',

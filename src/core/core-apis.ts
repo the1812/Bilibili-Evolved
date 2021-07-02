@@ -117,5 +117,16 @@ export const externalApis = {
     ...pluginApis.data,
     ...pluginApis.hook,
   },
+  monkeyApis: {
+    GM_setValue,
+    GM_getValue,
+    GM_deleteValue,
+    GM_setClipboard,
+    GM_xmlhttpRequest,
+    GM_info,
+  },
+  lodash,
+  Vue,
+  JSZip,
 }
 export type ExternalApis = typeof externalApis
