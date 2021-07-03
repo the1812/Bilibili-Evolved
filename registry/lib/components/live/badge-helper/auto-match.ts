@@ -6,11 +6,11 @@ export const autoMatchMedal = async () => {
   if (!options.autoMatchMedal) {
     return
   }
-  const match = document.URL.match(/live\.bilibili\.com\/(\d+)/)
+  const match = document.URL.match(/^https:\/\/live\.bilibili\.com\/(blanc\/)?([\d]+)/)
   if (!match) {
     return
   }
-  const roomID = parseInt(match[1])
+  const roomID = parseInt(match[2])
   if (Number.isNaN(roomID)) {
     console.warn('roomID not found')
     return

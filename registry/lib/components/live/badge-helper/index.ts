@@ -1,4 +1,4 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/component'
 import { getUID, none } from '@/core/utils'
 import { autoMatchMedal } from './auto-match'
 
@@ -6,7 +6,7 @@ export const component: ComponentMetadata = {
   name: 'badgeHelper',
   displayName: '直播勋章快速更换',
   description: {
-    'zh-CN': '在直播区(live.bilibili.com)中, 可从功能面板中直接切换勋章和头衔.',
+    'zh-CN': '在直播区中, 可从功能面板中直接切换勋章和头衔.',
   },
   enabledByDefault: true,
   entry: () => autoMatchMedal(),

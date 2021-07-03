@@ -10,7 +10,7 @@
           v-for="medal of medalList"
           :key="medal.id"
           :data-id="medal.id"
-          :class="{ active: medal.isActive }"
+          :class="{ active: medal.isActive, gray: !medal.isLighted }"
           :title="medal.upName"
           @click="toggleBadge(medal, medalList)"
         >
@@ -27,7 +27,6 @@
       @click="medalOpen = !medalOpen"
     >
       <span>更换勋章</span>
-      <VIcon icon="right-arrow" :size="20"></VIcon>
     </DefaultWidget>
 
     <VPopup
@@ -53,21 +52,23 @@
       @click="titleOpen = !titleOpen"
     >
       <span>更换头衔</span>
-      <VIcon icon="right-arrow" :size="20"></VIcon>
     </DefaultWidget>
   </div>
 </template>
 
 <script lang="ts">
 import {
+  DefaultWidget,
+  VPopup,
+} from '@/ui'
+import {
   Medal, Title, Badge, getMedalList, getTitleList,
 } from './badge'
 
 export default Vue.extend({
   components: {
-    DefaultWidget: () => import('@/widgets/DefaultWidget.vue').then(m => m.default),
-    VPopup: () => import('@/ui/VPopup.vue').then(m => m.default),
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
+    DefaultWidget,
+    VPopup,
   },
   data() {
     return {
@@ -151,13 +152,16 @@ export default Vue.extend({
       &.active {
         box-shadow: 0 0 0px 1px var(--theme-color), 0 0 0px 3px var(--theme-color-20);
       }
+      &.gray:not(:hover) {
+        filter: grayscale(1);
+      }
       .title-image {
         display: inline-block;
         vertical-align: middle;
         height: 20px;
       }
       $rankColors: (
-        0: #61decb,
+        0: #48b6a5,
         1: #5896de,
         2: #a068f1,
         3: #ff86b2,
@@ -180,12 +184,14 @@ export default Vue.extend({
           text-align: center;
           padding: 0 2px;
           color: #fff;
+          border-radius: 1px 0 0 1px;
         }
         .level {
           width: 16px;
           background-color: #fff;
           text-align: center;
           color: map-get($rankColors, 0);
+          border-radius: 0 1px 1px 0;
         }
         .label,
         .level {
@@ -200,6 +206,7 @@ export default Vue.extend({
           $color: map-get($rankColors, $rank);
           .level-#{$rank * 4 + $level} {
             border-color: $color;
+            background-color: $color;
             .label {
               background-color: $color;
             }

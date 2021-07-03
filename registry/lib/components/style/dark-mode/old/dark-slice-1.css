@@ -201,7 +201,8 @@ div.con,
 #app .header,
 #app .submit,
 .appeal-box,
-.fans-medal-item:not(.medal-guard) .fans-medal-level
+.fans-medal-item:not(.medal-guard) .fans-medal-level,
+.fans-medal-item .level
 {
     background-color: #222 !important;
 }
@@ -471,7 +472,6 @@ body,
 .right-part .user-panel,
 .side-bar-cntr,
 .shortcut-item .list-item:hover,
-.fans-medal-item .level,
 .divider,
 .fjw-point .line,
 font>span,

@@ -1,5 +1,5 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
-import { liveUrls } from '../live-urls'
+import { ComponentMetadata } from '@/components/component'
+import { liveUrls } from '@/core/utils/urls'
 
 const id = 'dpi-live-showgirl'
 const entry = async () => {
@@ -16,8 +16,8 @@ const entry = async () => {
 }
 export const component: ComponentMetadata = {
   name: 'dpiLiveShowgirl',
-  displayName: '看板娘高DPI适配',
-  enabledByDefault: false,
+  displayName: '直播看板娘高DPI适配',
+  enabledByDefault: window.devicePixelRatio > 1,
   description: {
     'zh-CN': '根据屏幕DPI缩放直播看板娘的大小, 避免像素锯齿.',
   },

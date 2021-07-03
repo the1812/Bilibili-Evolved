@@ -5,14 +5,11 @@
       @click="popupOpen = !popupOpen"
     >
       <VIcon
-        v-if="!arrowDown"
         class="switch-icon"
         icon="mdi-checkbox-marked-circle-outline"
         :size="22"
       ></VIcon>
       {{ options.optionDisplayName }}
-      <VIcon v-if="!arrowDown" icon="right-arrow" :size="16"></VIcon>
-      <VIcon v-else style="margin-left: 2px" icon="down-arrow" :size="16"></VIcon>
     </VButton>
     <VPopup
       v-model="popupOpen"

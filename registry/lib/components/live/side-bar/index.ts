@@ -1,15 +1,14 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/component'
 import { toggleStyle } from '@/components/styled-component'
-import { liveUrls } from '../live-urls'
+import { liveUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
-  name: 'collapseLiveSideBar',
+  ...toggleStyle('collapseLiveSideBar', () => import('./side-bar.scss')),
   displayName: '自动收起直播侧栏',
-  ...toggleStyle(() => import('./side-bar.scss')),
   tags: [
     componentsTags.live,
     componentsTags.style,
   ],
-  enabledByDefault: false,
+  enabledByDefault: true,
   urlInclude: liveUrls,
 }
