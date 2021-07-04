@@ -1,5 +1,5 @@
 <template>
-  <div class="switch-options" :class="{ down: arrowDown }">
+  <div class="switch-options" :class="{ 'small-size': smallSize }">
     <VButton
       ref="button"
       @click="popupOpen = !popupOpen"
@@ -7,7 +7,7 @@
       <VIcon
         class="switch-icon"
         icon="mdi-checkbox-marked-circle-outline"
-        :size="22"
+        :size="smallSize ? 16 : 22"
       ></VIcon>
       {{ options.optionDisplayName }}
     </VButton>
@@ -53,7 +53,7 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
-    arrowDown: {
+    smallSize: {
       type: Boolean,
       default: false,
     },
@@ -118,8 +118,13 @@ export default Vue.extend({
     .dim {
       opacity: .5;
     }
+    body.settings-panel-dock-right & {
+      right: calc(100% + 8px);
+      left: unset;
+      transform-origin: right;
+    }
   }
-  &.down .switch-options-popup {
+  &.small-size .switch-options-popup {
     transform-origin: top;
     top: calc(100% + 8px);
     left: 50%;

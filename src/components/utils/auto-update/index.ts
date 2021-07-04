@@ -111,13 +111,25 @@ export const component: ComponentMetadata = {
         await checkUpdates()
         window.location.reload()
       },
+      updateSingleComponent: async (itemName: string) => {
+        const pickedItems = lodash.pick(components, itemName)
+        if (Object.keys(pickedItems).length === 0) {
+          console.log(`[${itemName}] 没有记录更新链接`)
+        }
+        const { installComponent } = await import('@/components/user-component')
+        console.log(await checkUpdate(
+          lodash.pick(components, itemName),
+          name => settings.userComponents[name] !== undefined,
+          installComponent,
+        ))
+        window.location.reload()
+      },
     }
   },
   plugin: {
     setup: ({ addHook, coreApis: { settings: { getComponentSettings } } }) => {
       const types = ['components', 'plugins', 'styles']
       types.forEach(type => {
-        console.log(`user${lodash.startCase(type)}.add`)
         addHook(`user${lodash.startCase(type)}.add`, {
           after: (_, url: string, metadata: { name: string }) => {
             console.log('hook', `user${lodash.startCase(type)}.add`, metadata.name, url)

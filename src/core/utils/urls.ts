@@ -1,5 +1,12 @@
+export const watchlaterUrls = [
+  '//www.bilibili.com/medialist/play/watchlater/',
+]
+export const favoriteListUrls = [
+  '//www.bilibili.com/medialist/play/ml',
+]
 export const mediaListUrls = [
-  '//www.bilibili.com/medialist/play/',
+  ...watchlaterUrls,
+  ...favoriteListUrls,
 ]
 export const videoUrls = [
   '//www.bilibili.com/video/',
@@ -7,6 +14,9 @@ export const videoUrls = [
 ]
 export const bangumiUrls = [
   '//www.bilibili.com/bangumi/',
+]
+export const cheeseUrls = [
+  '//www.bilibili.com/cheese/',
 ]
 export const videoAndBangumiUrls = [
   ...videoUrls,
@@ -44,4 +54,5 @@ export const playerUrls = [
   '//www.bilibili.com/html/player.html',
   ...videoUrls,
   ...bangumiUrls,
+  ...cheeseUrls,
 ]

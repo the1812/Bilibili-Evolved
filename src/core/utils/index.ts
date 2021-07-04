@@ -236,3 +236,51 @@ export class DoubleClickEvent {
     })
   }
 }
+/** 等待播放器准备好, 如果过早注入 DOM 元素可能会导致爆炸
+ *
+ * https://github.com/the1812/Bilibili-Evolved/issues/1076
+ * https://github.com/the1812/Bilibili-Evolved/issues/770
+ */
+export const playerReady = async () => {
+  const { sq } = await import('../spin-query')
+  const { logError } = await import('./log')
+  await sq(
+    () => unsafeWindow,
+    () => unsafeWindow.onLoginInfoLoaded !== undefined,
+  )
+  return new Promise<void>((resolve, reject) => {
+    if (unsafeWindow.onLoginInfoLoaded) {
+      unsafeWindow.onLoginInfoLoaded(resolve)
+    } else {
+      logError(new Error('utils.playerReady 失败'))
+      console.error(`typeof onLoginInfoLoaded === ${typeof unsafeWindow.onLoginInfoLoaded}`)
+      reject()
+    }
+  })
+}
+/**
+ * 等待视频页面的 aid, 如果是合集类页面, 会从 player API 中获取 aid 并赋值到 window 上
+ */
+export const aidReady = async () => {
+  if (unsafeWindow.aid) {
+    return unsafeWindow.aid
+  }
+  const { sq } = await import('../spin-query')
+  const info = await sq(
+    () => unsafeWindow?.player?.getVideoMessage?.() as { aid?: string },
+    it => it?.aid !== undefined,
+  ).catch(() => { throw new Error('Cannot find aid') })
+  unsafeWindow.aid = info.aid
+  return info.aid as string
+}
+/** 是否正在打字 */
+export const isTyping = () => {
+  const { activeElement } = document
+  if (!activeElement) {
+    return false
+  }
+  if (activeElement.hasAttribute('contenteditable')) {
+    return true
+  }
+  return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
+}

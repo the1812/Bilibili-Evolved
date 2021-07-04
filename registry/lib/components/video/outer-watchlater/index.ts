@@ -1,8 +1,9 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
+import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   const {
-    dq, mountVueComponent, getUID, playerReady,
+    mountVueComponent, getUID, playerReady,
   } = await import('@/core/utils')
   if (!getUID()) {
     return
@@ -33,16 +34,15 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '将视频页面菜单里的\`稍后再看\`移到外面.',
   },
-  urlInclude: [
-    '//www.bilibili.com/video/',
-  ],
+  urlInclude: videoUrls,
+  urlExclude: watchlaterUrls,
   reload: () => {
-    document.querySelectorAll('.ops .watchlater').forEach((it: HTMLElement) => {
+    dqa('.ops .watchlater').forEach((it: HTMLElement) => {
       it.style.display = 'inline-block'
     })
   },
   unload: () => {
-    document.querySelectorAll('.ops .watchlater').forEach((it: HTMLElement) => {
+    dqa('.ops .watchlater').forEach((it: HTMLElement) => {
       it.style.display = 'none'
     })
   },

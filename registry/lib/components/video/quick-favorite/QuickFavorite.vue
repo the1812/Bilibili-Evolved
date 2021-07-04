@@ -6,12 +6,11 @@
     @click.left.self="toggle()"
     @click.right.prevent.self="listShowing = !listShowing"
   >
-    <VIcon
-      icon="favorites"
-      :size="28"
+    <i
+      class="quick-favorite-icon"
       @click.left="toggle()"
       @click.right.prevent="listShowing = !listShowing"
-    ></VIcon>
+    ></i>
     <div
       style="display: inline"
       @click.left="toggle()"
@@ -25,7 +24,12 @@
         <VDropdown
           v-model="selectedFavorite"
           :items="lists.map(it => it.title)"
-        ></VDropdown>
+          :key-mapper="it => it"
+        >
+          <template #item="{ item }">
+            {{ item }}
+          </template>
+        </VDropdown>
       </div>
     </div>
     <div class="lists-tip" :class="{ show: listShowing }">
@@ -40,12 +44,14 @@ import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUID, getCsrf } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { Toast } from '@/core/toast'
+import {
+  VDropdown,
+} from '@/ui'
 
 const { options } = getComponentSettings('quickFavorite')
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
-    VDropdown: () => import('@/ui/VDropdown.vue').then(m => m.default),
+    VDropdown,
   },
   data() {
     return {
@@ -163,16 +169,26 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
+@import "./font";
+
 .video-toolbar .ops {
   .quick-favorite {
     margin-right: 28px !important;
     position: relative;
     font-size: 0;
-    > :not(.be-icon) {
-      font-size: 14px;
-    }
-    .be-icon {
+    font-size: 14px;
+    &-icon {
+      font-family: "quick-favorite" !important;
       display: inline-block;
+      font-style: normal;
+      text-align: center;
+      text-transform: none;
+      line-height: 1;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      &:after {
+        content: "\ea01";
+      }
     }
     .tip,
     .select-list,

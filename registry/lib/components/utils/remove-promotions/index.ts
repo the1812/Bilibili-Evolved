@@ -1,4 +1,4 @@
-import { ComponentEntry, ComponentMetadata } from '@/components/component'
+import { ComponentEntry, ComponentMetadata } from '@/components/types'
 import { styledComponentEntry } from '@/components/styled-component'
 
 const entry: ComponentEntry = async ({ settings, metadata }) => {

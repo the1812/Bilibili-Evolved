@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { liveUrls } from '@/core/utils/urls'
 
 const id = 'dpi-live-showgirl'

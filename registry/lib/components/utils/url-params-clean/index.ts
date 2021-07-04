@@ -1,5 +1,5 @@
 import { registerAndGetData } from '@/plugins/data'
-import { ComponentMetadata } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 
 const entry = async () => {
   const builtInBlockParams = [

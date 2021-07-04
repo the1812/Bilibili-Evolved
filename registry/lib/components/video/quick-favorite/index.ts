@@ -1,9 +1,10 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
-import { videoUrls } from '../video-urls'
+import { ComponentMetadata } from '@/components/types'
+import { favoriteListUrls, videoUrls } from '@/core/utils/urls'
 
 const entry = async () => {
-  const { playerReady, dq, mountVueComponent } = await import('@/core/utils')
+  const { playerReady, aidReady, mountVueComponent } = await import('@/core/utils')
   await playerReady()
+  await aidReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {
     return
@@ -27,12 +28,13 @@ export const component: ComponentMetadata = {
   enabledByDefault: false,
   entry,
   unload: () => {
-    document.querySelectorAll('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'none'))
+    dqa('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'none'))
   },
   reload: () => {
-    document.querySelectorAll('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'inline-block'))
+    dqa('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'inline-block'))
   },
   urlInclude: videoUrls,
+  urlExclude: favoriteListUrls,
   tags: [
     componentsTags.video,
   ],

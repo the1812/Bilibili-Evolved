@@ -155,14 +155,6 @@ export default {
         this.$refs.detailsPopup.$el,
         {
           placement: 'right',
-          // modifiers: [
-          //   {
-          //     name: 'offset',
-          //     options: {
-          //       offset: [0, 4],
-          //     },
-          //   },
-          // ],
         },
       )
     },

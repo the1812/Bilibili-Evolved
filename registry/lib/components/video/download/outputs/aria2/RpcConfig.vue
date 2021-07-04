@@ -148,7 +148,7 @@ export default Vue.extend({
       this.profileRename = this.selectedRpcProfile.name
       this.isRenaming = true
       await this.$nextTick()
-      this.$refs.renameInput?.$el.focus()
+      this.$refs.renameInput?.focus()
     },
     endRename() {
       const newName: string = this.profileRename

@@ -57,5 +57,8 @@ export const textControlMixin = Vue.extend({
       this.composing = false
       this.input()
     },
+    focus() {
+      this.$refs.input.focus()
+    },
   },
 })

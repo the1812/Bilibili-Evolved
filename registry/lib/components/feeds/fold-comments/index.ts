@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { styledComponentEntry } from '@/components/styled-component'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 

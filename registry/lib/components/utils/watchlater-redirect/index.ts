@@ -1,4 +1,4 @@
-import { ComponentMetadata, ComponentEntry } from '@/components/component'
+import { ComponentMetadata, ComponentEntry } from '@/components/types'
 
 const entry: ComponentEntry = async ({ settings }) => {
   if (settings.options.page) {

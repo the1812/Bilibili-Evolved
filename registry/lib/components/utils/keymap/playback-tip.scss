@@ -1,4 +1,5 @@
-.keymap-playback-tip-container {
+// 自定义提示框
+.keymap-tip-container {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -22,4 +23,12 @@
     margin-right: 8px;
     font-size: 18pt;
   }
+}
+// b 站的提示框
+.bilibili-player .bilibili-player-area .bilibili-player-video-wrap .bilibili-player-volumeHint {
+  &-icon {
+    line-height: 1;
+  }
+  background-color: #000a;
+  color: white;
 }

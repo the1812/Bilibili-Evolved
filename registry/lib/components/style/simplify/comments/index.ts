@@ -1,4 +1,4 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { toggleStyle } from '@/components/styled-component'
 
 export const component: ComponentMetadata = {

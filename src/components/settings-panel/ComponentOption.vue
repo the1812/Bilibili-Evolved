@@ -47,7 +47,7 @@
     </VDropdown>
     <SwitchOptions
       v-if="type === 'switch'"
-      arrow-down
+      small-size
       :options="option.defaultValue"
     ></SwitchOptions>
     <div v-if="type === 'unknown'" class="unknown-option-type">

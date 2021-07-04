@@ -2,7 +2,7 @@
   <span
     title="稍后再看"
     class="watchlater"
-    :class="{ on: isInWatchlater }"
+    :class="{ on }"
     @click="toggle()"
   >
     <VIcon :size="28" icon="mdi-timetable"></VIcon>稍后再看
@@ -11,30 +11,30 @@
 </template>
 
 <script lang="ts">
-import { store } from '@/core/store'
+import { VIcon } from '@/ui'
+import { watchlaterList, toggleWatchlater } from '@/core/watchlater'
 
-const { mapState, mapActions } = Vuex
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
+    VIcon,
   },
-  store,
   data() {
     return {
+      watchlaterList,
       aid: unsafeWindow.aid,
       tipText: '',
       tipShowing: false,
       tipHandle: 0,
+      on: false,
     }
   },
-  computed: {
-    ...mapState(['watchlaterList']),
+  created() {
+    this.on = this.isInWatchlater()
+  },
+  methods: {
     isInWatchlater() {
       return this.watchlaterList.includes(parseInt(this.aid))
     },
-  },
-  methods: {
-    ...mapActions(['toggleWatchlater']),
     showTip(text: string) {
       this.tipText = text
       this.tipShowing = true
@@ -46,9 +46,10 @@ export default Vue.extend({
       }, 2000)
     },
     async toggle() {
-      await this.toggleWatchlater(this.aid)
+      await toggleWatchlater(this.aid)
+      this.on = this.isInWatchlater()
       this.showTip(
-        this.isInWatchlater ? '已添加至稍后再看' : '已从稍后再看移除',
+        this.on ? '已添加至稍后再看' : '已从稍后再看移除',
       )
     },
   },

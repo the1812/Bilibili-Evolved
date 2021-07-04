@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { FeedsCard } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
 

@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { getUID, none } from '@/core/utils'
 import { autoMatchMedal } from './auto-match'
 

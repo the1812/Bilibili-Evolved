@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { styledComponentEntry } from '@/components/styled-component'
 import { playerUrls } from '@/core/utils/urls'
 

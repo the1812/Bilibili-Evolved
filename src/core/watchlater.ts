@@ -114,7 +114,14 @@ export async function getWatchlaterList(raw = false): Promise<number[] | RawWatc
  * @param aid av号
  * @param add 添加/删除
  */
-export const toggleWatchlater = async (aid: string | number, add: boolean) => {
+export const toggleWatchlater = async (aid: string | number, add?: boolean | undefined) => {
+  const id = parseInt(aid.toString())
+  if (Number.isNaN(id)) {
+    return
+  }
+  if (add === undefined) {
+    add = !watchlaterList.includes(id)
+  }
   const api = add ? 'https://api.bilibili.com/x/v2/history/toview/add' : 'https://api.bilibili.com/x/v2/history/toview/del'
   const { getCsrf } = await import('./utils')
   const csrf = getCsrf()
@@ -126,10 +133,6 @@ export const toggleWatchlater = async (aid: string | number, add: boolean) => {
   }
   if (response.code !== 0) {
     throw new Error(`稍后再看操作失败: ${response.message}`)
-  }
-  const id = parseInt(aid.toString())
-  if (Number.isNaN(id)) {
-    return
   }
   if (add) {
     watchlaterList.push(id)

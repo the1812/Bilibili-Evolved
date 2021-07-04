@@ -1,6 +1,7 @@
 <template>
   <div class="multiple-widgets">
     <VPopup
+      ref="medalPopup"
       v-model="medalOpen"
       class="badge-popup medal"
       :trigger-element="$refs.medalButton"
@@ -30,6 +31,7 @@
     </DefaultWidget>
 
     <VPopup
+      ref="titlePopup"
       v-model="titleOpen"
       class="badge-popup title"
       :trigger-element="$refs.titleButton"
@@ -61,6 +63,7 @@ import {
   DefaultWidget,
   VPopup,
 } from '@/ui'
+import { createPopper } from '@popperjs/core'
 import {
   Medal, Title, Badge, getMedalList, getTitleList,
 } from './badge'
@@ -79,6 +82,29 @@ export default Vue.extend({
     }
   },
   async mounted() {
+    createPopper(this.$refs.medalButton.$el, this.$refs.medalPopup.$el, {
+      placement: 'right',
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    })
+    createPopper(this.$refs.titleButton.$el, this.$refs.titlePopup.$el, {
+      placement: 'right',
+      modifiers: [
+        {
+          name: 'offset',
+          options: {
+            offset: [0, 8],
+          },
+        },
+      ],
+    })
+
     this.loadMedalList()
     await Title.getImageMap()
     this.loadTitleList()
@@ -117,7 +143,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "common";
 .badge-popup {
   top: 50%;
@@ -129,6 +155,11 @@ export default Vue.extend({
   @include round-corner(4px);
   &.open {
     transform: scale(1) translateY(-50%);
+  }
+  body.settings-panel-dock-right & {
+    right: calc(100% + 8px);
+    left: unset;
+    transform-origin: right;
   }
   &,
   & * {
