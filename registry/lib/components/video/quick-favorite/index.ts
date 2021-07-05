@@ -1,5 +1,6 @@
 import { ComponentMetadata } from '@/components/types'
 import { favoriteListUrls, videoUrls } from '@/core/utils/urls'
+import { KeyBindingAction } from '../../utils/keymap/bindings'
 
 const entry = async () => {
   const { playerReady, aidReady, mountVueComponent } = await import('@/core/utils')
@@ -43,6 +44,23 @@ export const component: ComponentMetadata = {
       defaultValue: 0,
       displayName: '快速收藏夹ID',
       hidden: true,
+    },
+  },
+  plugin: {
+    displayName: '快速收藏 - 快捷键支持',
+    setup: ({ addData }) => {
+      addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
+        actions.quickFavorite = {
+          displayName: '快速收藏',
+          run: context => {
+            const { clickElement } = context
+            clickElement('.quick-favorite', context)
+          },
+        }
+      })
+      addData('keymap.presets', (presetBase: Record<string, string>) => {
+        presetBase.quickFavorite = 'shift s'
+      })
     },
   },
 }

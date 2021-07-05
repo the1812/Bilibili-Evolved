@@ -1,11 +1,15 @@
 import { isTyping, matchUrlPattern } from '@/core/utils'
 import { mediaListUrls, watchlaterUrls } from '@/core/utils/urls'
+import { clickElement, changeVideoTime, showTip } from './actions'
 
 export interface KeyBindingActionContext {
   binding: KeyBinding
   event: KeyboardEvent
   isWatchlater: boolean
   isMediaList: boolean
+  clickElement: typeof clickElement
+  changeVideoTime: typeof changeVideoTime
+  showTip: typeof showTip
 }
 export interface KeyBindingAction {
   displayName: string
@@ -79,6 +83,9 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         isWatchlater,
         isMediaList,
         event: e,
+        clickElement,
+        changeVideoTime,
+        showTip,
       })
     })
   })

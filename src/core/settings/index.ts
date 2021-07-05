@@ -46,7 +46,12 @@ let internalSettings: Settings = {
 }
 let settingsLoaded = false
 
-type ValueChangeListener<T = any> = (value: T, oldValue: T) => void
+type ValueChangeListener<T = any> = (
+  value: T,
+  oldValue: T,
+  prop: Property,
+  propPath?: Property[],
+) => void
 const registeredListeners = new Map<string, ValueChangeListener[]>()
 const settingsChangedHandler = (
   value: any,
@@ -64,16 +69,16 @@ const settingsChangedHandler = (
       const notifyParent = Array.isArray(parent) || lodash.isPlainObject(parent)
       if (notifyParent) {
         const handlers = registeredListeners.get(parentPath)
-        handlers?.forEach(h => h(parent, null))
+        handlers?.forEach(h => h(parent, null, prop, propPath))
       }
     }
     const handlers = registeredListeners.get(path)
-    handlers?.forEach(h => h(value, oldValue))
+    handlers?.forEach(h => h(value, oldValue, prop, propPath))
   }
 }
 
-// 建立设置的 Proxy
-const createSettingsProxy = (targetObj: any) => {
+// 建立 Proxy
+export const createProxy = (targetObj: any, valueChangeListener: ValueChangeListener) => {
   const applyProxy = (obj: any, rootProp?: Property, propPath: Property[] = []) => {
     for (const [key, value] of Object.entries(obj)) {
       if (typeof value === 'object' && !(value instanceof RegExp)) {
@@ -90,13 +95,13 @@ const createSettingsProxy = (targetObj: any) => {
         }
         const oldValue = o[prop]
         o[prop] = value
-        settingsChangedHandler(value, oldValue, rootProp || prop, [...propPath, prop])
+        valueChangeListener(value, oldValue, rootProp || prop, [...propPath, prop])
         return true
       },
       deleteProperty(o, prop) {
         const oldValue = o[prop]
         delete o[prop]
-        settingsChangedHandler(undefined, oldValue, rootProp || prop, [...propPath, prop])
+        valueChangeListener(undefined, oldValue, rootProp || prop, [...propPath, prop])
         return true
       },
     })
@@ -130,7 +135,7 @@ const readSettings = (obj: any) => {
 }
 /** 默认设置 */
 export const defaultSettings = lodash.cloneDeep(internalSettings)
-internalSettings = createSettingsProxy(readSettings(internalSettings))
+internalSettings = createProxy(readSettings(internalSettings), settingsChangedHandler)
 for (const [key, value] of Object.entries(internalSettings)) {
   GM_setValue(key, value)
 }
@@ -154,7 +159,7 @@ export const addSettingsChangeListener = <T = any>(
   }
   if (initCall) {
     const value = lodash.get(internalSettings, path)
-    listener(value, value)
+    listener(value, value, '', [])
   }
 }
 /**

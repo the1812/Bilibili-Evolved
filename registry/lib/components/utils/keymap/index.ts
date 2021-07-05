@@ -24,6 +24,7 @@ const entry: ComponentEntry = styledComponentEntry(() => import('./playback-tip.
     const bindings = parseBindings(
       { ...presetBase, ...preset, ...settings.options.customKeyBindings },
     )
+    console.log('update keymap', bindings, presetBase, preset, settings.options.customKeyBindings)
     if (config) {
       config.bindings = bindings
     } else {
@@ -33,6 +34,9 @@ const entry: ComponentEntry = styledComponentEntry(() => import('./playback-tip.
 
   addComponentListener('keymap.preset', update, true)
   addComponentListener('keymap.customKeyBindings', update)
+  // createProxy(actions, () => update())
+  // createProxy(presets, () => update())
+  // createProxy(presetBase, () => update())
 })
 export const component: ComponentMetadata = {
   name: 'keymap',

@@ -1,5 +1,6 @@
 import { ComponentMetadata } from '@/components/types'
 import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
+import { KeyBindingAction } from '../../utils/keymap/bindings'
 
 const entry = async () => {
   const {
@@ -45,5 +46,22 @@ export const component: ComponentMetadata = {
     dqa('.ops .watchlater').forEach((it: HTMLElement) => {
       it.style.display = 'none'
     })
+  },
+  plugin: {
+    displayName: '稍后再看 - 快捷键支持',
+    setup: ({ addData }) => {
+      addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
+        actions.watchlater = {
+          displayName: '稍后再看',
+          run: context => {
+            const { clickElement } = context
+            clickElement('.video-toolbar .ops .watchlater, .more-ops-list .ops-watch-later, .video-toolbar-module .see-later-box', context)
+          },
+        }
+      })
+      addData('keymap.presets', (presetBase: Record<string, string>) => {
+        presetBase.watchlater = 'shift w'
+      })
+    },
   },
 }

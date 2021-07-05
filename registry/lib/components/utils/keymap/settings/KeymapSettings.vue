@@ -74,7 +74,7 @@ import {
 import KeymapSettingsRow from './KeymapSettingsRow.vue'
 import { actions } from '../actions'
 import { KeyBindingAction } from '../bindings'
-import { presetBase, presets } from '../presets'
+import { presets } from '../presets'
 
 const keymapOptions = getComponentSettings('keymap').options
 console.log(presets, actions, keymapOptions.preset, keymapOptions.customKeyBindings)
@@ -95,7 +95,6 @@ export default Vue.extend({
     return {
       popupOpen: false,
       actions,
-      presetBase,
       presets,
       customKeyBindings: keymapOptions.customKeyBindings,
     }

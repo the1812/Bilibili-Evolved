@@ -48,4 +48,4 @@ export const builtInPresets: Record<string, Record<string, string>> = {
     seekBegin: 'backspace',
   },
 }
-export const [presets] = registerAndGetData('keymap.presets', builtInPresets)
+export const [, presets] = registerAndGetData('keymap.presets', presetBase, builtInPresets)

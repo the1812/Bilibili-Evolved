@@ -111,17 +111,21 @@ export const component: ComponentMetadata = {
         await checkUpdates()
         window.location.reload()
       },
-      updateSingleComponent: async (itemName: string) => {
-        const pickedItems = lodash.pick(components, itemName)
-        if (Object.keys(pickedItems).length === 0) {
-          console.log(`[${itemName}] 没有记录更新链接`)
-        }
-        const { installComponent } = await import('@/components/user-component')
-        console.log(await checkUpdate(
-          lodash.pick(components, itemName),
-          name => settings.userComponents[name] !== undefined,
-          installComponent,
-        ))
+      updateSingleComponent: async (...itemNames: string[]) => {
+        await Promise.all(
+          itemNames.map(async itemName => {
+            const pickedItems = lodash.pick(components, itemName)
+            if (Object.keys(pickedItems).length === 0) {
+              console.log(`[${itemName}] 没有记录更新链接`)
+            }
+            const { installComponent } = await import('@/components/user-component')
+            console.log(await checkUpdate(
+              lodash.pick(components, itemName),
+              name => settings.userComponents[name] !== undefined,
+              installComponent,
+            ))
+          }),
+        )
         window.location.reload()
       },
     }

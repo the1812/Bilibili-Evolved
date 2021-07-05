@@ -3,17 +3,19 @@ import { raiseEvent } from '@/core/utils'
 import { registerAndGetData } from '@/plugins/data'
 import { KeyBindingAction, KeyBindingActionContext } from './bindings'
 
-export const clickElement = (target: string | HTMLElement) => (
-  ({ event }: KeyBindingActionContext) => {
-    const mouseEvent = new MouseEvent('click', {
-      ..._.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
-    })
-    if (typeof target === 'string') {
-      (dq(target) as HTMLElement)?.dispatchEvent(mouseEvent)
-    } else {
-      target.dispatchEvent(mouseEvent)
-    }
+export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
+  const { event } = context
+  const mouseEvent = new MouseEvent('click', {
+    ..._.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
+  })
+  if (typeof target === 'string') {
+    (dq(target) as HTMLElement)?.dispatchEvent(mouseEvent)
+  } else {
+    target.dispatchEvent(mouseEvent)
   }
+}
+export const useClickElement = (target: string | HTMLElement) => (
+  (context: KeyBindingActionContext) => clickElement(target, context)
 )
 export const changeVideoTime = (delta: number | (() => number)) => () => {
   const video = dq('.bilibili-player-video video') as HTMLVideoElement
@@ -69,15 +71,15 @@ export const showTip = (text: string, icon: string) => {
 export const builtInActions: Record<string, KeyBindingAction> = {
   fullscreen: {
     displayName: '全屏',
-    run: clickElement('.bilibili-player-video-btn-fullscreen'),
+    run: useClickElement('.bilibili-player-video-btn-fullscreen'),
   },
   webFullscreen: {
     displayName: '网页全屏',
-    run: clickElement('.bilibili-player-video-web-fullscreen'),
+    run: useClickElement('.bilibili-player-video-web-fullscreen'),
   },
   wideScreen: {
     displayName: '宽屏',
-    run: clickElement('.bilibili-player-video-btn-widescreen'),
+    run: useClickElement('.bilibili-player-video-btn-widescreen'),
   },
   volumeUp: {
     displayName: '增加音量',
@@ -103,7 +105,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   mute: {
     displayName: '静音',
     run: context => {
-      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')(context)
+      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', context)
       const isMute = unsafeWindow.player.isMute()
       if (isMute) {
         showTip('已静音', 'mdi-volume-off')
@@ -114,19 +116,19 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   pictureInPicture: {
     displayName: '画中画',
-    run: clickElement('.bilibili-player-video-btn-pip'),
+    run: useClickElement('.bilibili-player-video-btn-pip'),
   },
   coin: {
     displayName: '投币',
-    run: clickElement('.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2)'),
+    run: useClickElement('.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2)'),
   },
   favorite: {
     displayName: '收藏',
-    run: clickElement('.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3)'),
+    run: useClickElement('.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3)'),
   },
   pause: {
     displayName: '暂停/播放',
-    run: clickElement('.bilibili-player-video-btn-start'),
+    run: useClickElement('.bilibili-player-video-btn-start'),
   },
   like: {
     displayName: '点赞',
