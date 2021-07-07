@@ -109,6 +109,13 @@
     },
     {
       "type": "shell",
+      "command": "yarn webpack --config ./registry/webpack/docs.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "编译功能文档 prod:doc"
+    },
+    {
+      "type": "shell",
       "command": "yarn webpack --config ./webpack/webpack.test.js --progress",
       "group": "test",
       "problemMatcher": [],

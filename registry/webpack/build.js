@@ -1,20 +1,27 @@
-module.exports = Object.fromEntries(['component', 'plugin'].map(type => {
+module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
   return [type, async () => {
     const src = `./registry/lib/${type}s/`
     const glob = require('glob')
     const entries = glob.sync(src + '**/index.ts')
 
-    const { AutoComplete } = require('enquirer')
-    const prompt = new AutoComplete({
-      name: 'path',
-      message: 'Select build target',
-      choices: entries,
-    })
-    const entry = await prompt.run()
+    let entry
+    if (entries.length > 1) {
+      const { AutoComplete } = require('enquirer')
+      const prompt = new AutoComplete({
+        name: 'path',
+        message: 'Select build target',
+        choices: entries,
+      })
+      entry = await prompt.run()
+    } else {
+      [entry] = entries
+      console.log(`Build target · ${entry}`)
+    }
     const path = require('path')
-    const id = path.dirname(path.relative(src, entry)).replace(/\\/g, '/')
+    const { getId } = require('./id')
+    const id = getId(src, entry)
     const { getDefaultConfig } = require('../../webpack/webpack.config')
-    const config = Object.assign(getDefaultConfig(path.resolve(src)), {
+    const config = Object.assign(getDefaultConfig(path.resolve('./registry/lib/')), {
       mode: 'production',
       entry: {
         [id]: entry,

@@ -128,5 +128,6 @@ export const externalApis = {
   lodash,
   Vue,
   JSZip,
+  sandboxWindow: window,
 }
 export type ExternalApis = typeof externalApis

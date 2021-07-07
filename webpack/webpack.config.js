@@ -21,14 +21,14 @@ const getDefaultConfig = (srcFolder) => {
     externals: [
       {
         vue: 'Vue',
-        lodash: '_',
+        lodash: 'lodash',
         jszip: 'JSZip',
       },
     ],
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.vue', '.json'],
       alias: {
-        '@': src,
+        '@': relativePath('src'),
       },
     },
     performance: {
