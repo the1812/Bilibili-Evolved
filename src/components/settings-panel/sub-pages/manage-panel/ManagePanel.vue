@@ -18,14 +18,42 @@
       </div>
     </div>
     <div v-if="config.description" class="sub-page-row separator"></div>
-    <div class="sub-page-row">
+    <div class="sub-page-row add-item-row">
       <div class="title-text">
         添加{{ config.title }}:
       </div>
-      <VButton @click="browse()">
-        <VIcon :size="18" icon="mdi-folder-open-outline" />
-        浏览本地
-      </VButton>
+      <div class="item-actions">
+        <VButton ref="batchAddButton" @click="showBatchAddPopup()">
+          <VIcon :size="18" icon="mdi-download-multiple" />
+          批量
+        </VButton>
+        <VButton @click="browse()">
+          <VIcon :size="18" icon="mdi-folder-open-outline" />
+          浏览
+        </VButton>
+      </div>
+      <VPopup
+        v-model="batchAddShow"
+        :trigger-element="$refs.batchAddButton"
+        class="batch-add-popup"
+      >
+        <TextArea
+          ref="batchAddTextArea"
+          v-model="batchUrl"
+          class="batch-add-textarea"
+          :placeholder="'批量粘贴' + config.title + '链接'"
+        />
+        <div class="batch-add-actions">
+          <VButton @click="batchAddShow = false">
+            <VIcon :size="12" icon="close" />
+            取消
+          </VButton>
+          <VButton type="primary" :disabled="!batchUrl" @click="batchAddItem()">
+            <VIcon :size="18" icon="mdi-plus" />
+            添加
+          </VButton>
+        </div>
+      </VPopup>
     </div>
     <div class="sub-page-row">
       <TextBox
@@ -38,11 +66,6 @@
         <VIcon :size="18" icon="mdi-plus" />
         添加
       </VButton>
-    </div>
-    <div v-if="result" class="sub-page-row">
-      <div class="item-url-result">
-        {{ result }}
-      </div>
     </div>
     <div class="sub-page-row separator"></div>
     <div class="sub-page-row">
@@ -73,13 +96,18 @@
 <script lang="ts">
 import { monkey } from '@/core/ajax'
 import { pickFile } from '@/core/file-picker'
+import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import VIcon from '@/ui/icon/VIcon.vue'
-import VButton from '@/ui/VButton.vue'
-import TextBox from '@/ui/TextBox.vue'
-import VEmpty from '@/ui/VEmpty.vue'
-import VLoading from '@/ui/VLoading.vue'
-import SwitchBox from '@/ui/SwitchBox.vue'
+import {
+  VIcon,
+  VButton,
+  TextBox,
+  VEmpty,
+  VLoading,
+  VPopup,
+  TextArea,
+  SwitchBox,
+} from '@/ui'
 import ManageItem from './ManageItem.vue'
 
 export default Vue.extend({
@@ -89,8 +117,10 @@ export default Vue.extend({
     TextBox,
     VEmpty,
     VLoading,
-    ManageItem,
+    VPopup,
+    TextArea,
     SwitchBox,
+    ManageItem,
   },
   props: {
     config: {
@@ -102,8 +132,9 @@ export default Vue.extend({
     return {
       search: '',
       url: '',
-      result: '',
       loaded: false,
+      batchAddShow: false,
+      batchUrl: '',
       excludeBuiltIn: true,
       debouncedList: [],
     }
@@ -131,40 +162,69 @@ export default Vue.extend({
     })
   },
   methods: {
-    async handleCode(code: string) {
-      try {
-        this.result = '获取中...'
-        this.result = await this.config.onItemAdd?.(code, this.url)
-      } catch (error) {
-        logError(error)
-        this.result = ''
-      }
-    },
     async browse() {
-      const codes = await pickFile({ accept: '*.json,*.js' })
+      const codes = await pickFile({ accept: '*.js' })
       if (codes.length === 0) {
         return
       }
       const [codeFile] = codes
       const code = await codeFile.text()
-      await this.handleCode(code)
+      try {
+        Toast.info(await this.config.onItemAdd?.(code, ''), `添加${this.config.title}`)
+      } catch (error) {
+        logError(error)
+      }
+    },
+    async showBatchAddPopup() {
+      this.batchAddShow = !this.batchAddShow
+      if (this.batchAddShow) {
+        await this.$nextTick()
+        this.$refs.batchAddTextArea?.focus()
+      }
     },
     async addItem() {
       if (!this.url) {
         return
       }
+      const toast = Toast.info('获取中...', `添加${this.config.title}`)
       try {
         const code = await monkey({
           url: this.url,
           method: 'GET',
         })
-        console.log(code)
-        await this.handleCode(code)
+        toast.message = await this.config.onItemAdd?.(code, this.url)
         this.url = ''
       } catch (error) {
-        logError(error)
-        this.result = ''
+        console.error(error)
+        toast.type = ToastType.Error
+        toast.message = error
       }
+    },
+    async batchAddItem() {
+      if (!this.batchUrl) {
+        return
+      }
+      const urls = (this.batchUrl as string).split('\n')
+        .map(it => it.trim())
+        .filter(it => it !== '')
+      const toast = Toast.info('获取中...', '批量添加')
+      const results = await Promise.allSettled(urls.map(async url => {
+        const code = await monkey({
+          url,
+          method: 'GET',
+        })
+        return this.config.onItemAdd?.(code, url)
+      }))
+      const resultsText = results.map((r, index) => {
+        const suffix = urls[index]
+        if (r.status === 'fulfilled') {
+          return `${r.value} ${suffix}`
+        }
+        console.error(r.reason, suffix)
+        return `${r.reason} ${suffix}`
+      }).join('\n')
+      toast.message = resultsText
+      this.batchUrl = ''
     },
   },
 })
@@ -199,8 +259,11 @@ export default Vue.extend({
   .manage-item-list {
     @include v-center();
     @include no-scrollbar();
-    overflow: auto;
     flex-shrink: 1;
+  }
+  .item-actions {
+    @include h-center();
+    gap: 12px;
   }
   .exclude-built-in {
     @include h-center();
@@ -211,6 +274,35 @@ export default Vue.extend({
   }
   .description-text {
     opacity: .75;
+  }
+  .add-item-row {
+    position: relative;
+  }
+  .batch-add-popup {
+    top: calc(100% + 8px);
+    left: 50%;
+    transition: .2s ease-out;
+    transform: translateX(-50%) translateY(-8px);
+    padding: 8px;
+    width: 100%;
+    min-height: calc(var(--panel-height) / 2);
+    @include popup();
+    @include v-stretch(8px);
+    &.open {
+      transform: translateX(-50%) translateY(0px);
+    }
+    .be-text-area {
+      flex: 1 0 auto;
+    }
+    .batch-add-actions {
+      @include h-center(8px);
+      .be-button {
+        flex: 1 0 0;
+      }
+      .be-icon {
+        margin-right: 6px;
+      }
+    }
   }
   &-title {
     .be-icon {
