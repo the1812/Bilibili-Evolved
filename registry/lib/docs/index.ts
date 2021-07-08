@@ -4,10 +4,11 @@ import { getId } from '../../webpack/id'
 const entry = () => {
   unsafeWindow.generateDocs = async () => {
     const { getDescriptionMarkdown } = await import('@/components/description')
+    const { cdnRoots } = await import('@/core/cdn-types')
     const rootPath = '../registry/dist/'
     const componentsContext = require.context('../components', true, /index\.ts$/)
-    const componentsPaths = componentsContext.keys()
-    const componentsTexts = componentsPaths
+    const componentsPaths = componentsContext
+      .keys()
       .map(path => {
         const module = componentsContext(path)
         if ('component' in module) {
@@ -18,33 +19,57 @@ const entry = () => {
           }
         }
         return undefined
-      }).filter(it => it !== undefined)
+      })
+      .filter(it => it !== undefined)
       .map(it => {
         const root = `${rootPath}components/`
-        const fullPath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
+        const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
+        const fullAbsolutePath = fullRelativePath.replace(/^\.\.\//, '')
         const {
           name,
           displayName,
         } = it.component
-
-        const item = `
-## [${displayName}](${fullPath})
+        const description = getDescriptionMarkdown(it.component)
+        return {
+          name,
+          displayName,
+          description,
+          fullRelativePath,
+          fullAbsolutePath,
+        }
+      })
+    const componentsTexts = componentsPaths.map(it => {
+      const {
+        name,
+        displayName,
+        description,
+        fullAbsolutePath,
+        fullRelativePath,
+      } = it
+      const item = `
+## [${displayName}](${fullRelativePath})
 \`${name}\`
 
-${getDescriptionMarkdown(it.component)}
-    `.trim()
-        return item
-      })
+**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr('v2')}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr('preview')}${fullAbsolutePath})
+
+**GitHub:** [\`Stable\`](${cdnRoots.GitHub('v2')}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub('preview')}${fullAbsolutePath})
+
+${description}
+        `.trim()
+      return item
+    })
 
     const markdown = `
 # 可安装功能
-在标题右键可以复制安装链接.
 
 ${componentsTexts.join('\n\n')}
 `.trim()
 
     const { DownloadPackage } = await import('@/core/download')
-    DownloadPackage.single('registry.md', markdown)
+    const pack = new DownloadPackage()
+    pack.add('features.md', markdown)
+    pack.add('features.json', JSON.stringify(componentsPaths, undefined, 2))
+    await pack.emit('features.zip')
   }
 }
 export const doc: ComponentMetadata = {

@@ -1,4 +1,4 @@
-import { cdnRoot, meta, defaultBranch } from './meta'
+import { meta, defaultBranch } from './meta'
 import { monkey } from './ajax'
 import { Version } from './version'
 import { settings } from './settings'
@@ -20,7 +20,10 @@ const installPackageUpdate = (packageCodes: string) => {
 export const checkUpdate = (() => {
   const update = async () => {
     console.log('Checking for update...')
-    const updateUrl = `${cdnRoot}dist/package.js`
+    const { getGeneralSettings } = await import('./settings')
+    const { cdnRoots } = await import('./cdn-types')
+    const { cdnRoot } = getGeneralSettings()
+    const updateUrl = `${cdnRoots[cdnRoot]}dist/package.js`
     const packageCodes = await monkey({
       url: updateUrl,
     })

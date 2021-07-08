@@ -3,15 +3,15 @@ import commonMeta from '@/client/common.meta.json'
 commonMeta.copyright = commonMeta.copyright.replace(/\[year\]/g, new Date().getFullYear().toString())
 /** 默认分支 */
 export const defaultBranch = 'master'
-const branch = (() => {
+export const branch = (() => {
   const match = GM_info.script.name.match(/\(.+\)$/)
   if (match) {
     return match[0].toLowerCase()
   }
   return defaultBranch
 })()
-/** CDN 根目录 URL */
-export const cdnRoot = `https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@${branch}/`
+/** 元数据 CDN 根目录 URL */
+export const metaCdnRoot = `https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@${branch}/`
 /**
  * 脚本元数据
  */
@@ -31,7 +31,7 @@ export const meta = {
   },
   /** 检查更新的链接 */
   get updateURL(): string {
-    return `${cdnRoot}dist/${this.originalFilename}`
+    return `${metaCdnRoot}dist/${this.originalFilename}`
   },
   /** 下载更新的链接 */
   get downloadURL(): string {
@@ -39,11 +39,11 @@ export const meta = {
   },
   /** 图标 */
   get icon() {
-    return `${cdnRoot}images/logo-small.png`
+    return `${metaCdnRoot}images/logo-small.png`
   },
   /** 在 Tampermonkey 中进入编辑模式时显示的大图标 */
   get icon64() {
-    return `${cdnRoot}images/logo.png`
+    return `${metaCdnRoot}images/logo.png`
   },
   ...lodash.omit(commonMeta, 'icon', 'icon64'),
 }
