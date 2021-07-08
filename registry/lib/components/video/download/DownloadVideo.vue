@@ -121,7 +121,6 @@
 <script lang="ts">
 import { TestPattern } from '@/core/common-types'
 import { getComponentSettings } from '@/core/settings'
-import { Toast } from '@/core/toast'
 import { matchUrlPattern } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { formatFileSize } from '@/core/utils/formatters'
@@ -135,6 +134,7 @@ import { videoBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
 import { videoDashAVC, videoDashHEVC } from './apis/dash'
 import { videoFlv } from './apis/flv'
+import { toastOutput } from './outputs/toast'
 import {
   DownloadVideoAction,
   DownloadVideoApi,
@@ -163,20 +163,7 @@ const [assets] = registerAndGetData(
 )
 const [outputs] = registerAndGetData(
   'downloadVideo.outputs', [
-    {
-      name: 'consoleLogDemo',
-      displayName: 'Toast',
-      runAction: async action => {
-        const fragments = action.infos.flatMap(it => it.titledFragments)
-        const urls = fragments.map(f => f.url).join('\n')
-        Toast.show(
-          fragments.map(f => `<a class="link" href="${f.url}" download="${f.title}">${f.title}</a>`).join('\n'),
-          'download video',
-        )
-        console.log(urls)
-        console.log(action)
-      },
-    },
+    toastOutput,
   ] as DownloadVideoOutput[],
 )
 const { basicConfig } = getComponentSettings('downloadVideo').options as {

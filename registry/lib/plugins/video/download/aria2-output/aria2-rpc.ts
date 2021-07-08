@@ -2,7 +2,7 @@ import { getJson, monkey, postJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { UserAgent } from '@/core/utils/constants'
 import { logError } from '@/core/utils/log'
-import { DownloadVideoOutput } from '../../types'
+import { DownloadVideoOutput } from '../../../../components/video/download/types'
 import { Aria2RpcProfile } from './rpc-profiles'
 
 interface RpcParam {

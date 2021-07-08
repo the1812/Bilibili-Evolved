@@ -13,6 +13,8 @@ export const formatTitle = (
   const data: StringMap = {
     title: document.title
       .replace(/：([^：]+?)_.+?_bilibili_哔哩哔哩$/, '')
+      .replace(/_哔哩哔哩_bilibili$/, '')
+      // b站不再有干杯了吗...
       .replace(/_哔哩哔哩 \(゜-゜\)つロ 干杯~-bilibili$/, '')
       .replace(/(.*?) - (.*?) - 哔哩哔哩直播，二次元弹幕直播平台$/, '$1')
       .trim(),
