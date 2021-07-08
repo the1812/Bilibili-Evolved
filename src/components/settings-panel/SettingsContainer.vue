@@ -94,6 +94,7 @@ export default {
 }
 .be-settings {
   line-height: normal;
+  font-size: 12px;
   --panel-height: calc(100vh - 120px);
   // &,
   // & *,
