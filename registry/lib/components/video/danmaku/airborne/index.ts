@@ -1,3 +1,5 @@
+/* Original author: kdxcxs (https://github.com/kdxcxs) */
+
 import { toggleStyle } from '@/components/styled-component'
 import { ComponentMetadata } from '@/components/types'
 import { DanmakuRecord, forEachVideoDanmaku } from '@/components/video/video-danmaku'

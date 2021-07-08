@@ -1,17 +1,17 @@
-export const logError = async (error: Error | string) => {
-  let finalError: string
+export const logError = async (error: Error | string, duration?: number) => {
+  let finalMessage: string
   if (typeof error === 'string') {
-    finalError = error
-    console.error(finalError)
+    finalMessage = error
+    console.error(finalMessage)
   } else {
     const { getGeneralSettings } = await import('../settings')
     if (getGeneralSettings().devMode) {
-      finalError = error.stack
+      finalMessage = error.stack
     } else {
-      finalError = error.message
+      finalMessage = error.message
     }
     console.error(error)
   }
   const { Toast } = await import('../toast')
-  Toast.error(finalError, '错误')
+  Toast.error(finalMessage, '错误', duration)
 }

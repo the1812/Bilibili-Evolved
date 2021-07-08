@@ -78,6 +78,7 @@ const settingsChangedHandler = (
 }
 
 // 建立 Proxy
+export const isProxy = Symbol('isProxy')
 export const createProxy = (targetObj: any, valueChangeListener: ValueChangeListener) => {
   const applyProxy = (obj: any, rootProp?: Property, propPath: Property[] = []) => {
     for (const [key, value] of Object.entries(obj)) {
@@ -87,10 +88,16 @@ export const createProxy = (targetObj: any, valueChangeListener: ValueChangeList
     }
     const proxy = new Proxy(obj, {
       get(o, prop) {
+        if (prop === isProxy) {
+          return true
+        }
         return o[prop]
       },
       set(o, prop, value) {
-        if (!(prop in o) && typeof value === 'object' && !(value instanceof RegExp)) {
+        if (/* !(prop in o) &&  */typeof value === 'object'
+          && !(value instanceof RegExp)
+          && !(value[isProxy] === true)
+        ) {
           value = applyProxy(value, rootProp || prop, [...propPath, prop])
         }
         const oldValue = o[prop]

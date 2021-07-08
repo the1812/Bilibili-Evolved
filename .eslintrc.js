@@ -74,7 +74,18 @@ module.exports = {
     'radix': ['error', 'as-needed'],
     'max-len': 'warn',
     'max-classes-per-file': 'off',
-    'prefer-destructuring': ['error', { 'object': true, 'array': false }],
+    'prefer-destructuring': ['error',
+      {
+        'VariableDeclarator': {
+          'array': false,
+          'object': true
+        },
+        'AssignmentExpression': {
+          'array': false,
+          'object': false
+        }
+      },
+    ],
     'curly': ['error', 'all'],
   },
   overrides: [
