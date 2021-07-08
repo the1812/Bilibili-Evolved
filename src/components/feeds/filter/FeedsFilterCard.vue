@@ -329,7 +329,6 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   box-sizing: border-box;
   display: none;
   flex-direction: column;
-  overflow: auto;
   max-height: 80vh;
   @include no-scrollbar();
 

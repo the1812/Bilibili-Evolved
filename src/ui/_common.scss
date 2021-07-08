@@ -2,23 +2,27 @@
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   // box-shadow: #0002 0 1px 10px 1px;
 }
-@mixin h-center {
+@mixin h-center($gap: 0) {
   display: flex;
   align-items: center;
+  gap: $gap;
 }
-@mixin v-center {
+@mixin v-center($gap: 0) {
   display: flex;
   align-items: center;
   flex-direction: column;
+  gap: $gap;
 }
-@mixin h-stretch {
+@mixin h-stretch($gap: 0) {
   display: flex;
   align-items: stretch;
+  gap: $gap;
 }
-@mixin v-stretch {
+@mixin v-stretch($gap: 0) {
   display: flex;
   align-items: stretch;
   flex-direction: column;
+  gap: $gap;
 }
 @mixin round-bar($height) {
   box-sizing: border-box;
@@ -26,6 +30,7 @@
   border-radius: #{$height / 2}px;
 }
 @mixin no-scrollbar {
+  overflow: auto;
   scrollbar-width: none !important;
   overscroll-behavior: contain;
   &::-webkit-scrollbar {

@@ -109,7 +109,6 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  overflow: auto;
   @include no-scrollbar();
   .infinite-scroll-item {
     @include text-color();

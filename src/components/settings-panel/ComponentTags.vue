@@ -192,6 +192,8 @@ export default Vue.extend({
   .icon-list,
   .component-tags {
     flex-grow: 1;
+    max-height: calc(var(--panel-height) - var(--header-height));
+    @include no-scrollbar();
     background-color: transparent;
     width: 40px;
     display: flex;

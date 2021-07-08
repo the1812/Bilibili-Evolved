@@ -270,7 +270,6 @@ export default Vue.extend({
   &-content {
     flex: 1;
     align-self: stretch;
-    overflow: auto;
     scroll-behavior: smooth;
     position: relative;
     @include no-scrollbar();

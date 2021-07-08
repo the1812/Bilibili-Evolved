@@ -225,7 +225,6 @@ export default Vue.extend({
     }
     .images {
       max-height: 240px;
-      overflow: auto;
       @include no-scrollbar();
       outline: none !important;
       display: flex;

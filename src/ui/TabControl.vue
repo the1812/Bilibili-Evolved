@@ -194,7 +194,6 @@ export default Vue.extend({
       padding: 6px 0;
       position: relative;
       max-height: 100%;
-      overflow: auto;
       @include no-scrollbar();
       .content-transition {
         &-enter,

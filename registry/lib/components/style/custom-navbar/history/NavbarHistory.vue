@@ -265,7 +265,6 @@ export default Vue.extend({
     @include no-scrollbar();
     justify-content: space-between;
     flex-grow: 1;
-    overflow: auto;
     .be-scroll-trigger,
     .be-empty,
     .be-loading {
@@ -276,7 +275,6 @@ export default Vue.extend({
     .cards {
       @include items-animation();
       flex: 1;
-      overflow: auto;
       scroll-behavior: smooth;
       position: relative;
       @include no-scrollbar();

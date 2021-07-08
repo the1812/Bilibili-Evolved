@@ -282,7 +282,6 @@ export default Vue.extend({
     }
     .dropdown-popup {
       max-height: 300px;
-      overflow: auto;
       @include no-scrollbar();
     }
     .operation {
@@ -304,7 +303,6 @@ export default Vue.extend({
     @include no-scrollbar();
     justify-content: space-between;
     flex-grow: 1;
-    overflow: auto;
     .floating {
       @include round-bar(20);
       @include h-center();
@@ -315,7 +313,6 @@ export default Vue.extend({
     }
     .cards {
       flex: 1;
-      overflow: auto;
       scroll-behavior: smooth;
       position: relative;
       @include no-scrollbar();

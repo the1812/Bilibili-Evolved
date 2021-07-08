@@ -127,7 +127,6 @@ export default Vue.extend({
   .row-default-binding,
   .row-preset-binding {
     @include single-line();
-    overflow: auto;
     @include no-scrollbar();
     &.not-set,
     &.overwritten {

@@ -265,7 +265,6 @@ export default {
       .main {
         flex: 1;
         padding: 0;
-        overflow: auto;
         position: relative;
         @include no-scrollbar();
         .component-list {
