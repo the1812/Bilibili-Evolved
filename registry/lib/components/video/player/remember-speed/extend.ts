@@ -55,25 +55,25 @@ export const getExtraSpeedMenuItemElements = async () => {
     input.setAttribute('type', 'number')
     input.setAttribute('max', maxValue.toString())
     input.setAttribute('step', stepValue.toString())
-    input.setAttribute('title', '增加新的倍数值')
+    input.setAttribute('title', '增加新的倍速值')
     updateInput(input)
     input.addEventListener('keydown', ev => {
       if (ev.key === 'Enter') {
         const value = parseFloat(input.value)
         if (!isFinite(value)) {
-          logError('无效的倍数值', errorMessageDuration)
+          logError('无效的倍速值', errorMessageDuration)
           return false
         }
         if (value < minValue) {
-          logError('倍数值太小了', errorMessageDuration)
+          logError('倍速值太小了', errorMessageDuration)
           return false
         }
         if (value > maxValue) {
-          logError('倍数值太大了', errorMessageDuration)
+          logError('倍速值太大了', errorMessageDuration)
           return false
         }
         if (VideoSpeedController.supportedRates.includes(value)) {
-          logError('不能重复添加已有的倍数值', errorMessageDuration)
+          logError('不能重复添加已有的倍速值', errorMessageDuration)
           return false
         }
         extendList.push(value)

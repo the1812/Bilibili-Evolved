@@ -21,7 +21,7 @@ const config: ManagePanelConfig<PluginMetadata> = {
   key: 'userPlugins',
   icon: 'mdi-puzzle-outline',
   title: '插件',
-  description: '可以在此处管理插件, 插件能够增强现有组件的功能',
+  description: '可以在此处管理插件, 插件能够增强现有组件的功能. 内置插件包括脚本本体包含的插件和组件自带的插件, 组件自带的插件会自动随组件卸载而卸载.',
   list: plugins,
   listFilter: (item, search, excludeBuiltIn) => {
     if (search && !`${item.name}\n${item.displayName}`.toLowerCase().includes(search.toLowerCase())) {

@@ -160,6 +160,7 @@ export default Vue.extend({
       padding: 6px;
       cursor: pointer;
       transition: .2s ease-out;
+      color: inherit;
       &:hover {
         color: var(--theme-color);
       }

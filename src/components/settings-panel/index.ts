@@ -83,6 +83,7 @@ export const component: ComponentMetadata = {
   },
   tags: [componentsTags.general],
   plugin: {
+    displayName: '通用设置 - 多语言',
     setup: () => {
       addI18nData(
         'en-US',

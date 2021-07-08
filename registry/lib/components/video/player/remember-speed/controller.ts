@@ -57,7 +57,7 @@ export class VideoSpeedController {
    * 获取后备默认速度
    */
   static get fallbackVideoSpeed() {
-    // 向下兼容，原本 settings.defaultVideoSpeed 被设计为 string 类型，用于存储全局倍数
+    // 向下兼容，原本 settings.defaultVideoSpeed 被设计为 string 类型，用于存储全局倍速
     if (rememberVideoSpeed.enabled) {
       return parseFloat(options.speed)
     }
@@ -66,7 +66,7 @@ export class VideoSpeedController {
 
   static formatSpeedText(speed: number) {
     if (speed === 1) {
-      return '倍数'
+      return '倍速'
     }
     return Math.trunc(speed) === speed ? `${speed}.0x` : `${speed}x`
   }
@@ -101,10 +101,10 @@ export class VideoSpeedController {
   }
 
   /**
-   * 为指定 aid 记忆指定倍数
+   * 为指定 aid 记忆指定倍速
    *
-   * @param speed 要记忆的倍数
-   * @param force 对于之前没有被记忆的 aid，**如果不将此参数设置为 `true`，调用完成也不会将相应的倍数记忆到设置中的**
+   * @param speed 要记忆的倍速
+   * @param force 对于之前没有被记忆的 aid，**如果不将此参数设置为 `true`，调用完成也不会将相应的倍速记忆到设置中的**
    * @param aid 要记忆的 aid，若不指定则从页面中自动获取
    */
   static rememberSpeed(speed: number, force = false, aid?: string) {
@@ -137,7 +137,7 @@ export class VideoSpeedController {
   }
 
   static init = lodash.once(() => {
-    // 分 P 切换时共享同一个倍数，这里指定初始倍数可以是 undefined，不需要是 1
+    // 分 P 切换时共享同一个倍速，这里指定初始倍速可以是 undefined，不需要是 1
     let sharedSpeed: number
     // 分 P 切换时共享同一个原生倍速值，初始值设置为 1
     let sharedNativeSpeed = 1
@@ -146,7 +146,7 @@ export class VideoSpeedController {
 
     videoChange(async () => {
       const { getExtraSpeedMenuItemElements } = await import('./extend')
-      // 有必要传递之前的 nativeSpeedVal，跨分 P 时原生倍数将保持一样
+      // 有必要传递之前的 nativeSpeedVal，跨分 P 时原生倍速将保持一样
       const controller = await VideoSpeedController.getInstance(sharedSpeed, sharedNativeSpeed)
       containerElement = controller.containerElement
       if (containerElement.classList.contains('extended')) {
@@ -158,18 +158,18 @@ export class VideoSpeedController {
         controller.menuListElement.querySelectorAll(`.${VideoSpeedController.classNameMap.speedMenuItem}[data-value]:not(.extended)`).forEach(
           (it: HTMLLIElement) => { it.style.order = calcOrder(parseFloat(it.getAttribute('data-value'))) },
         )
-        // 如果开启了扩展倍数，存在一种场景使倍数设置会失效：
-        //   1. 用户从原生支持的倍数切换到扩展倍数
-        //   2. 用户从扩展倍数切换到之前选中的原生倍数
-        // 这是因为播放器内部实现维护了一个速度值，但是在切换到扩展倍数时没法更新，因此切换回来的时候被判定没有发生变化
-        // 为了解决这个问题，需要通过 forceUpdate 方法替官方更新元素，并为视频设置正确的倍数，并关闭菜单
+        // 如果开启了扩展倍速，存在一种场景使倍速设置会失效：
+        //   1. 用户从原生支持的倍速切换到扩展倍速
+        //   2. 用户从扩展倍速切换到之前选中的原生倍速
+        // 这是因为播放器内部实现维护了一个速度值，但是在切换到扩展倍速时没法更新，因此切换回来的时候被判定没有发生变化
+        // 为了解决这个问题，需要通过 forceUpdate 方法替官方更新元素，并为视频设置正确的倍速，并关闭菜单
         controller.menuListElement.addEventListener('click', ev => {
           const option = (ev.target as HTMLElement)
           const value = parseFloat(option.dataset.value as string)
           if ((ev.target as HTMLElement).classList.contains('extended')) {
             controller.setExtendedVideoSpeed(value)
           }
-          // 从扩展倍数切换到之前选中的原生倍数
+          // 从扩展倍速切换到之前选中的原生倍速
           if (
             VideoSpeedController.extendedSupportedRates.includes(controller.playbackRate)
             && controller.nativeSpeedVal === value
@@ -203,9 +203,9 @@ export class VideoSpeedController {
 
   public readonly menuListElement: HTMLElement
   private nameBtn: HTMLButtonElement
-  // 这个值模拟原生内部记录的速度倍数，它不应该被赋值成扩展倍数的值
+  // 这个值模拟原生内部记录的速度倍速，它不应该被赋值成扩展倍速的值
   private nativeSpeedVal: number
-  // 这个值用于表示上一次（上一P）的倍数值，如果是首次播放第一P，则为 undefined
+  // 这个值用于表示上一次（上一P）的倍速值，如果是首次播放第一P，则为 undefined
   private previousSpeedVal?: number
 
   constructor(
@@ -248,7 +248,7 @@ export class VideoSpeedController {
   observe() {
     allMutationsOn(this.menuListElement, mutations => {
       let [previousSpeed, currentSpeed]: [number?, number?] = [undefined, undefined]
-      // 遍历所有的 mutations，获取上一个倍数值和当前倍数值（真正意义上的）
+      // 遍历所有的 mutations，获取上一个倍速值和当前倍速值（真正意义上的）
       mutations.forEach(mutation => {
         const selectedSpeedOption = mutation.target as HTMLLIElement
 
@@ -266,7 +266,7 @@ export class VideoSpeedController {
         }
 
         this.containerElement.dispatchEvent(new CustomEvent('changed', { detail: { speed: currentSpeed, isNativeSpeed, previousSpeed: this.previousSpeedVal } }))
-        // 原生支持倍数的应用后，有必要清除扩展倍数选项上的样式
+        // 原生支持倍速的应用后，有必要清除扩展倍速选项上的样式
         if (
           options.extend
           && VideoSpeedController.nativeSupportedRates.includes(currentSpeed)
@@ -288,7 +288,7 @@ export class VideoSpeedController {
         }
       })
       // 刷新 this._previousSpeedVal
-      // - 用户可以通过倍数菜单或者倍数快捷键造成类似 1.5x 2.0x 2.0x... 这样的倍数设定序列
+      // - 用户可以通过倍速菜单或者倍速快捷键造成类似 1.5x 2.0x 2.0x... 这样的倍速设定序列
       //   我们不希望在第二个 2.0x 的时候刷新 this._previousSpeedVal，这样会比较死板
       //   判定依据在于 previousSpeed !== currentSpeed
       if (previousSpeed && previousSpeed !== currentSpeed) {
@@ -298,16 +298,16 @@ export class VideoSpeedController {
   }
 
   /**
-   * 切换当前倍数
+   * 切换当前倍速
    *
    * 根据`mode`参数的不同有着不同的行为：
    *
-   * - `mode === "smart"`（默认）：当前倍数等于 1.0x 时，切换到上次不同的视频倍数，否则重置倍数为 1.0x
-   * - `mode === "classic"`：无论当前倍数如何，均切换到上次不同的视频倍数
+   * - `mode === "smart"`（默认）：当前倍速等于 1.0x 时，切换到上次不同的视频倍速，否则重置倍速为 1.0x
+   * - `mode === "classic"`：无论当前倍速如何，均切换到上次不同的视频倍速
    *
-   * 重置倍数的行为可由 `reset()` 方法同款参数 `forget` 来控制
+   * 重置倍速的行为可由 `reset()` 方法同款参数 `forget` 来控制
    *
-   * @param forget 指示是否为清除视频记忆的重置倍数操作
+   * @param forget 指示是否为清除视频记忆的重置倍速操作
    */
   toggleVideoSpeed(mode: 'smart' | 'classic' = 'smart', forget = false) {
     switch (mode) {
@@ -323,16 +323,16 @@ export class VideoSpeedController {
   }
 
   /**
-   * 重置视频倍数
+   * 重置视频倍速
    *
-   * @param forget 指示是否为清除视频记忆的重置倍数操作
+   * @param forget 指示是否为清除视频记忆的重置倍速操作
    */
   reset(forget = false) {
     if (forget) {
       const { fallbackVideoSpeed } = VideoSpeedController
-      // 如果 fallbackVideoSpeed 是 undefined，那么意味着没有开启记忆倍数功能
-      // 考虑到与清除视频级别的倍数记忆功能的相关性，这里会忽略设定
-      // 简单地说，如果没有开启记忆倍数的功能，就无法清除视频级别的倍数记忆
+      // 如果 fallbackVideoSpeed 是 undefined，那么意味着没有开启记忆倍速功能
+      // 考虑到与清除视频级别的倍速记忆功能的相关性，这里会忽略设定
+      // 简单地说，如果没有开启记忆倍速的功能，就无法清除视频级别的倍速记忆
       if (!fallbackVideoSpeed) {
         return
       }

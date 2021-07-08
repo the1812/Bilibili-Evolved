@@ -131,6 +131,7 @@ export const component: ComponentMetadata = {
     }
   },
   plugin: {
+    displayName: '自动更新器 - 安装/卸载记录',
     setup: ({ addHook, coreApis: { settings: { getComponentSettings } } }) => {
       const types = ['components', 'plugins', 'styles']
       types.forEach(type => {

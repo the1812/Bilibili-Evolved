@@ -1,9 +1,10 @@
 import { ComponentMetadata } from '@/components/types'
 import { playerUrls } from '@/core/utils/urls'
+import { KeyBindingAction, KeyBindingActionContext } from 'registry/lib/components/utils/keymap/bindings'
 
 export const component: ComponentMetadata = {
   name: 'rememberVideoSpeed',
-  displayName: '记忆上次播放速度',
+  displayName: '倍速记忆',
   description: {
     'zh-CN': '记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.',
   },
@@ -14,6 +15,71 @@ export const component: ComponentMetadata = {
     const { VideoSpeedController } = await import('./controller')
     VideoSpeedController.init()
     return VideoSpeedController
+  },
+  plugin: {
+    displayName: '倍速记忆 - 快捷键支持',
+    setup: async ({ addData }) => {
+      const { getComponentSettings } = await import('@/core/settings')
+      const { VideoSpeedController } = await import('./controller')
+      const videoSpeed = async (
+        context: KeyBindingActionContext,
+        controllerAction: (
+          controller: InstanceType<typeof VideoSpeedController>, rates: number[]
+        ) => void,
+      ) => {
+        const controller = await VideoSpeedController.getInstance()
+        controllerAction(controller, VideoSpeedController.supportedRates)
+        context.showTip(`${controller.playbackRate}x`, 'mdi-fast-forward')
+      }
+      addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
+        actions.videoSpeedIncrease = {
+          displayName: '提高倍速',
+          run: context => {
+            videoSpeed(context, (controller, rates) => {
+              controller.setVideoSpeed(
+                rates.find(it => it > controller.playbackRate)
+                || rates[rates.length - 1],
+              )
+            })
+          },
+        }
+        actions.videoSpeedDecrease = {
+          displayName: '降低倍速',
+          run: context => {
+            videoSpeed(context, (controller, rates) => {
+              controller.setVideoSpeed(
+                [...rates].reverse().find(it => it < controller.playbackRate)
+                || rates[0],
+              )
+            })
+          },
+        }
+        actions.videoSpeedReset = {
+          displayName: '重置倍速',
+          run: context => {
+            videoSpeed(context, controller => {
+              controller.toggleVideoSpeed()
+            })
+          },
+        }
+        if (getComponentSettings('rememberVideoSpeed').options.individualRemember) {
+          actions.videoSpeedForget = {
+            displayName: '清除当前倍速记忆',
+            run: context => {
+              videoSpeed(context, controller => {
+                controller.reset(true)
+              })
+            },
+          }
+        }
+      })
+      addData('keymap.presets', (presetBase: Record<string, string>) => {
+        presetBase.videoSpeedIncrease = 'shift > 》 arrowUp'
+        presetBase.videoSpeedDecrease = 'shift < 《 arrowDown'
+        presetBase.videoSpeedReset = 'shift ? ？'
+        presetBase.videoSpeedForget = 'shift : ：'
+      })
+    },
   },
   options: {
     speed: {

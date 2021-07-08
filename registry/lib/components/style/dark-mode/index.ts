@@ -48,6 +48,7 @@ export const component: ComponentMetadata = {
     },
   ],
   plugin: {
+    displayName: '夜间模式 - 提前注入 class',
     async setup() {
       const { contentLoaded } = await import('@/core/life-cycle')
       const { isComponentEnabled } = await import('@/core/settings')
