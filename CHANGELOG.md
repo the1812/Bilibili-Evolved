@@ -1,5 +1,32 @@
 # 更新日志
 
+## v2.0.0-tp3
+`v2.0.0 Technical Preview 3` `2021-07-09`
+
+- 设置面板更新:
+  - 修复高度过小时侧栏图标溢出面板
+  - 支持批量安装功能
+  - 支持设置导入/导出 (在关于面板中, 与 v1 不同的是导入后会自动刷新页面)
+- 组件迁移:
+  - 展开动态内容
+  - 简化直播间
+  - 直播勋章快速更换
+  - 直播看板娘高DPI适配
+  - 自动收起直播侧栏
+  - 倍速记忆
+  - 删除视频弹窗
+  - 展开视频简介
+  - 外置稍后再看
+  - 启用快速收藏
+  - 快捷键扩展
+- 插件新增:
+  - 下载视频 - aria2 输出支持
+- 修复无法更新现有样式.
+- 引入了 CSS `gap` 属性, 浏览器版本要求提高至 Chrome 84 / Firefox 80 / Safari 14.1
+- 主脚本名称变动 (`Bilibili Evolved II`变为`Bilibili Evolved (v2)`), 更新时请多加注意.
+- 生成了[功能列表文档](https://github.com/the1812/Bilibili-Evolved/blob/v2/doc/features/features.md).
+> 好像只能装 GitHub 源的, jsDelivr 不知道为啥 Failed to fetch 了. 另外目前只能用 Stable 的版本, Preview 分支上还没有 v2 的文件.
+
 ## v2.0.0-tp2
 `v2.0.0 Technical Preview 2` `2021-06-28`
 
