@@ -102,6 +102,7 @@
     },
     "search.exclude": {
         "**/dev": true,
-        "**/dist": true
+        "**/dist": true,
+        "**/yarn.lock": true
     }
 }

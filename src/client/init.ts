@@ -3,6 +3,16 @@ import { none } from '@/core/utils'
 
 /** 初始化脚本 */
 export const init = async () => {
+  const { initVue } = await import('./init-vue')
+  initVue()
+
+  // 跳过对多余<iframe>的加载
+  // const { checkIframes } = await import('./check-iframes')
+  // const skip = !checkIframes()
+  // if (skip) {
+  //   return
+  // }
+
   const { raiseLifeCycleEvent, LifeCycleEventTypes } = await import('@/core/life-cycle')
   raiseLifeCycleEvent(LifeCycleEventTypes.Start)
 
@@ -17,24 +27,10 @@ export const init = async () => {
   window.none = coreApis.utils.none
   window.componentsTags = coreApis.componentApis.component.componentsTags
 
-  await promiseLoadTrace('Vue init', async () => {
-    const { initVue } = await import('./init-vue')
-    initVue()
-  })
-
   await promiseLoadTrace('wait for <head>', async () => {
     // 等待<head>元素
     await headLoaded(none)
   })
-
-  const skip = await promiseLoadTrace('<iframes> checks', async () => {
-    // 跳过对多余<iframe>的加载
-    const { checkIframes } = await import('./check-iframes')
-    return !checkIframes()
-  })
-  if (skip) {
-    return
-  }
 
   await promiseLoadTrace('compatibility patch', async () => {
     // 兼容性补丁

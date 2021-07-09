@@ -6,7 +6,7 @@ declare global {
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
   const JSZip: typeof import('jszip')
-  const VueMarkdown: import('vue').PluginObject<any>
+  // const VueMarkdown: import('vue').PluginObject<any>
 
   type PackageUpdate = typeof import('@/components/package')
   interface Document {
