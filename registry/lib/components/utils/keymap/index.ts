@@ -5,7 +5,6 @@ import { addComponentListener } from '@/core/settings'
 import { actions } from './actions'
 import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
 import { presetBase, presets } from './presets'
-import description from './desc.md'
 
 let config: KeyBindingConfig = null
 const parseBindings = (bindings: Record<string, string>) => (
@@ -55,7 +54,7 @@ export const component: ComponentMetadata = {
   reload: () => { config && (config.enable = true) },
   enabledByDefault: true,
   description: {
-    'zh-CN': description,
+    'zh-CN': '为视频播放器启用更多的快捷键, 快捷键列表可在`快捷键设置`中查看和配置.',
   },
   extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
   options: {

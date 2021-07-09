@@ -56,7 +56,7 @@ export const component: ComponentMetadata = {
   name: 'extendFeedsLive',
   displayName: '直播信息扩充',
   description: {
-    'zh-CN': '在动态的<span>正在直播</span>中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.',
+    'zh-CN': '在动态的`正在直播`中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.',
   },
   entry: styledComponentEntry(() => import('./extend-feeds-live.scss'), entry),
   enabledByDefault: true,

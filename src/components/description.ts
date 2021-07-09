@@ -10,7 +10,7 @@ export const getDescriptionMarkdown = (component: ComponentMetadata) => {
     //   const count = Object.keys(options).length
     //   return `${count}个选项`
     // }
-    return '暂无描述'
+    return '暂无描述.'
     // return ''
   }
   if (typeof description === 'string') {

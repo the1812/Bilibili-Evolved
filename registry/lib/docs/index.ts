@@ -1,74 +1,68 @@
 import { ComponentMetadata } from '@/components/types'
-import { getId } from '../../webpack/id'
+import { cdnRoots } from '@/core/cdn-types'
+import { getComponentsDoc } from './components-doc'
+import { getPluginsDoc } from './plugins-doc'
+
+export interface DocSourceItem {
+  type: string
+  name: string
+  displayName: string
+  description?: string
+  fullAbsolutePath: string
+  fullRelativePath: string
+}
+export type DocSource = (rootPath: string) => Promise<{
+  title: string
+  items: DocSourceItem[]
+}>
 
 const entry = () => {
   unsafeWindow.generateDocs = async () => {
-    const { getDescriptionMarkdown } = await import('@/components/description')
-    const { cdnRoots } = await import('@/core/cdn-types')
     const rootPath = '../registry/dist/'
-    const componentsContext = require.context('../components', true, /index\.ts$/)
-    const componentsPaths = componentsContext
-      .keys()
-      .map(path => {
-        const module = componentsContext(path)
-        if ('component' in module) {
-          const component = module.component as ComponentMetadata
-          return {
-            component,
-            path,
-          }
-        }
-        return undefined
-      })
-      .filter(it => it !== undefined)
-      .map(it => {
-        const root = `${rootPath}components/`
-        const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
-        const fullAbsolutePath = fullRelativePath.replace(/^\.\.\//, '')
+    const getDocText = (title: string, items: DocSourceItem[]) => {
+      const docText = items.map(it => {
         const {
           name,
           displayName,
-        } = it.component
-        const description = getDescriptionMarkdown(it.component)
-        return {
-          name,
-          displayName,
           description,
-          fullRelativePath,
           fullAbsolutePath,
-        }
-      })
-    const componentsTexts = componentsPaths.map(it => {
-      const {
-        name,
-        displayName,
-        description,
-        fullAbsolutePath,
-        fullRelativePath,
-      } = it
-      const item = `
-## [${displayName}](${fullRelativePath})
+          fullRelativePath,
+        } = it
+        const item = `
+### [${displayName}](${fullRelativePath})
 \`${name}\`
 
 **jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr('v2')}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr('preview')}${fullAbsolutePath})
 
 **GitHub:** [\`Stable\`](${cdnRoots.GitHub('v2')}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub('preview')}${fullAbsolutePath})
 
-${description}
+${description || ''}
         `.trim()
-      return item
-    })
+        return item
+      })
+      return `
+## ${title}
 
+${docText.join('\n\n')}
+      `.trim()
+    }
+    const componentsDoc = await getComponentsDoc(rootPath)
+    const pluginsDoc = await getPluginsDoc(rootPath)
     const markdown = `
 # 可安装功能
 
-${componentsTexts.join('\n\n')}
+${getDocText(componentsDoc.title, componentsDoc.items)}
+${getDocText(pluginsDoc.title, pluginsDoc.items)}
+
 `.trim()
 
     const { DownloadPackage } = await import('@/core/download')
     const pack = new DownloadPackage()
     pack.add('features.md', markdown)
-    pack.add('features.json', JSON.stringify(componentsPaths, undefined, 2))
+    pack.add('features.json', JSON.stringify([
+      ...componentsDoc.items,
+      ...pluginsDoc.items,
+    ], undefined, 2))
     await pack.emit('features.zip')
   }
 }
