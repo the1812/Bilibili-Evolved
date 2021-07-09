@@ -18,7 +18,7 @@ export type DocSource = (rootPath: string) => Promise<{
 
 const entry = () => {
   unsafeWindow.generateDocs = async () => {
-    const rootPath = '../registry/dist/'
+    const rootPath = '../../registry/dist/'
     const getDocText = (title: string, items: DocSourceItem[]) => {
       const docText = items.map(it => {
         const {

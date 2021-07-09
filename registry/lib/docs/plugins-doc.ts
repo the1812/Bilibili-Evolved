@@ -21,7 +21,7 @@ export const getPluginsDoc: DocSource = async rootPath => {
     .map(it => {
       const root = `${rootPath}plugins/`
       const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
-      const fullAbsolutePath = fullRelativePath.replace(/^\.\.\//, '')
+      const fullAbsolutePath = fullRelativePath.replace(/^(\.\.?\/)*/, '')
       const {
         name,
         displayName,

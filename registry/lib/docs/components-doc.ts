@@ -22,7 +22,7 @@ export const getComponentsDoc: DocSource = async rootPath => {
     .map(it => {
       const root = `${rootPath}components/`
       const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
-      const fullAbsolutePath = fullRelativePath.replace(/^\.\.\//, '')
+      const fullAbsolutePath = fullRelativePath.replace(/^(\.\.?\/)*/, '')
       const {
         name,
         displayName,
