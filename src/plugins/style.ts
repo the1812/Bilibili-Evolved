@@ -41,7 +41,7 @@ export const installStyle = async (input: UserStyle | string) => {
     const { removeStyle, addImportantStyle, addStyle } = await import('@/core/style')
     const existingStyle = settings.userStyles[name]
     if (existingStyle) {
-      Object.assign(existingStyle, style)
+      Object.assign(existingStyle, userStyle)
       removeStyle(name)
     } else {
       const newStyle = {
