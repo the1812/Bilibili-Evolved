@@ -12,7 +12,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '自动检查组件, 插件和样式的更新. (仅限从设置面板中安装的)',
   },
-  enabledByDefault: true,
   tags: [componentsTags.utils],
   options: {
     lastUpdateCheck: {
@@ -54,7 +53,7 @@ export const component: ComponentMetadata = {
         delete items[key]
       })
       const results = await Promise.allSettled(
-        Object.entries(items).map(async ([name, item]) => {
+        Object.entries(items).filter(([, item]) => Boolean(item.url)).map(async ([name, item]) => {
           const { url, lastUpdateCheck, alwaysUpdate } = item
           const isDebugItem = alwaysUpdate && devMode
           if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration) {
