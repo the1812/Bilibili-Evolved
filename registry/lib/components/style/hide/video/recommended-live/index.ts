@@ -1,18 +1,16 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { toggleStyle } from '@/components/styled-component'
+import { videoUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
-  name: 'hideRecommendedLive',
+  ...toggleStyle('hideRecommendedLive', () => import('./recommended-live.scss')),
   displayName: '隐藏推荐直播',
-  ...toggleStyle(() => import('./recommended-live.scss')),
   tags: [
     componentsTags.style,
+    componentsTags.video,
   ],
-  enabledByDefault: true,
   description: {
     'zh-CN': '隐藏视频页面右侧下方的推荐直播.',
   },
-  urlInclude: [
-    '//www.bilibili.com/video/',
-  ],
+  urlInclude: videoUrls,
 }

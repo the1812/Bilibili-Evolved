@@ -5,7 +5,6 @@ import { hasVideo } from '@/core/spin-query'
 export const component: ComponentMetadata = {
   name: 'downloadSubtitle',
   displayName: '下载字幕',
-  enabledByDefault: true,
   description: {
     'zh-CN': '启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.',
   },

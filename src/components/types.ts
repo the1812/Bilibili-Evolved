@@ -169,8 +169,8 @@ export interface ComponentMetadata extends FunctionalMetadata {
   displayName: string
   /** 标签 */
   tags: ComponentTag[]
-  /** 是否默认开启 */
-  enabledByDefault: boolean
+  /** 是否默认开启, 省略时为 true */
+  enabledByDefault?: boolean
   /** 是否可更改, 不可更改时启用状态固定为 `enabledByDefault` 的值 */
   configurable?: boolean
   /**  是否在设置界面中隐藏 (代码仍可操作) */

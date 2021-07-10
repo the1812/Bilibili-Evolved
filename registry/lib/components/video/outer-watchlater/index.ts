@@ -27,7 +27,6 @@ const entry = async () => {
 export const component: ComponentMetadata = {
   name: 'outerWatchlater',
   displayName: '外置稍后再看',
-  enabledByDefault: true,
   entry,
   tags: [
     componentsTags.video,

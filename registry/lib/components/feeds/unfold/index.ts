@@ -5,7 +5,6 @@ export const component: ComponentMetadata = {
   name: 'unfoldFeeds',
   displayName: '动态反折叠',
   tags: [componentsTags.feeds],
-  enabledByDefault: true,
   description: {
     'zh-CN': '自动展开被折叠的动态.',
   },

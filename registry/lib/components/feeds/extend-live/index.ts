@@ -59,7 +59,6 @@ export const component: ComponentMetadata = {
     'zh-CN': '在动态的`正在直播`中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.',
   },
   entry: styledComponentEntry(() => import('./extend-feeds-live.scss'), entry),
-  enabledByDefault: true,
   tags: [
     componentsTags.feeds,
     componentsTags.live,

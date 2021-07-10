@@ -54,7 +54,6 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.utils,
   ],
-  enabledByDefault: true,
   description: {
     'zh-CN': `
 删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.

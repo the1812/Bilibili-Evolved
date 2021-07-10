@@ -9,7 +9,6 @@ export const component: ComponentMetadata = {
     componentsTags.live,
     componentsTags.style,
   ],
-  enabledByDefault: true,
   description: {
     'zh-CN': '删除观看直播时角落的水印.',
   },

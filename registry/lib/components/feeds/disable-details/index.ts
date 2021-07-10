@@ -65,7 +65,6 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.feeds,
   ],
-  enabledByDefault: true,
   urlInclude: feedsUrls,
   description: {
     'zh-CN': '禁止动态点击后跳转详情页, 方便选择其中的文字.',

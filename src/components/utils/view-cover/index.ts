@@ -11,7 +11,6 @@ export const component: ComponentMetadata = {
     componentsTags.video,
     componentsTags.live,
   ],
-  enabledByDefault: true,
   entry: none,
   widget: {
     component: () => import('./ViewCover.vue').then(m => m.default),

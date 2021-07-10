@@ -20,7 +20,6 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.video,
   ],
-  enabledByDefault: true,
   description: {
     'zh-CN': desc,
   },

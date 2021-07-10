@@ -6,7 +6,6 @@ export const component: ComponentMetadata = {
   name: 'bvidConvert',
   displayName: 'BV号转换',
   entry: none,
-  enabledByDefault: true,
   description: {
     'zh-CN': '在功能面板中显示视频的AV号和BV号.',
   },

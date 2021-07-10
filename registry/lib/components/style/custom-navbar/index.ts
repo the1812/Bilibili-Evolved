@@ -11,7 +11,6 @@ export const component: ComponentMetadata = {
     componentsTags.style,
     componentsTags.general,
   ],
-  enabledByDefault: true,
   options: {
     hidden: {
       hidden: true,

@@ -8,7 +8,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '在直播间的功能中启用画中画支持.',
   },
-  enabledByDefault: true,
   entry: none,
   tags: [
     componentsTags.live,

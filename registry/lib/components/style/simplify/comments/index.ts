@@ -25,5 +25,4 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.style,
   ],
-  enabledByDefault: true,
 }

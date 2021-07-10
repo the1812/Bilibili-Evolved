@@ -28,7 +28,6 @@ const entry: ComponentEntry = async ({ metadata }) => {
 export const component: ComponentMetadata = {
   name: 'settingsPanel',
   displayName: '通用设置',
-  enabledByDefault: true,
   configurable: false,
   // hidden: true,
   entry,

@@ -8,7 +8,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '不管内容多长, 总是完全展开动态的内容.',
   },
-  enabledByDefault: true,
   tags: [
     componentsTags.style,
     componentsTags.feeds,

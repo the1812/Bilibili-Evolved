@@ -29,7 +29,6 @@ export const component: ComponentMetadata = {
     componentsTags.video,
     componentsTags.style,
   ],
-  enabledByDefault: true,
   description: {
     'zh-CN': '总是展开完整的视频简介.',
   },

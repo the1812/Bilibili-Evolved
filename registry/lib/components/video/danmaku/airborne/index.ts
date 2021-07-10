@@ -10,7 +10,6 @@ import { playerUrls } from '@/core/utils/urls'
 export const component: ComponentMetadata = {
   displayName: '启用弹幕空降',
   tags: [componentsTags.video],
-  enabledByDefault: true,
   urlInclude: playerUrls,
   ...toggleStyle('danmakuAirborne', () => import('./airborne.scss'), async ({ settings }) => {
     const { enabled } = settings

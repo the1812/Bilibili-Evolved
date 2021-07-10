@@ -11,7 +11,6 @@ export const component: ComponentMetadata = {
     component: () => import('./Widget.vue').then(m => m.default),
     condition: () => hasVideo(),
   },
-  enabledByDefault: true,
   tags: [
     componentsTags.video,
   ],

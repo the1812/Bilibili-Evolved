@@ -19,7 +19,6 @@ const entry = async () => {
 export const component: ComponentMetadata = {
   name: 'columnUnlock',
   displayName: '专栏文字选择',
-  enabledByDefault: true,
   entry,
   reload: entry,
   unload: async () => {

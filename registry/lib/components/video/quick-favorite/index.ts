@@ -3,7 +3,16 @@ import { favoriteListUrls, videoUrls } from '@/core/utils/urls'
 import { KeyBindingAction } from '../../utils/keymap/bindings'
 
 const entry = async () => {
-  const { playerReady, aidReady, mountVueComponent } = await import('@/core/utils')
+  const {
+    playerReady,
+    aidReady,
+    mountVueComponent,
+    getUID,
+  } = await import('@/core/utils')
+  if (!getUID()) {
+    return
+  }
+
   await playerReady()
   await aidReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
@@ -26,7 +35,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.',
   },
-  enabledByDefault: false,
   entry,
   unload: () => {
     dqa('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'none'))

@@ -52,7 +52,6 @@ export const component: ComponentMetadata = {
   entry,
   unload: () => { config && (config.enable = false) },
   reload: () => { config && (config.enable = true) },
-  enabledByDefault: true,
   description: {
     'zh-CN': '为视频播放器启用更多的快捷键, 快捷键列表可在`快捷键设置`中查看和配置.',
   },

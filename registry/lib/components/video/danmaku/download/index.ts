@@ -9,7 +9,6 @@ import { DanmakuDownloadType } from './utils'
 export const component: ComponentMetadata = {
   name: 'downloadDanmaku',
   displayName: '下载弹幕',
-  enabledByDefault: true,
   description: {
     'zh-CN': '启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕.',
   },

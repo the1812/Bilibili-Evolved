@@ -4,7 +4,6 @@ import { ComponentMetadata, componentsTags } from '../types'
 export const component: ComponentMetadata = {
   name: 'launchBar',
   displayName: 'Launch Bar',
-  enabledByDefault: true,
   configurable: false,
   entry: none,
   hidden: true,

@@ -8,5 +8,4 @@ export const component: ComponentMetadata = {
     'zh-CN': '在顶栏的视频动态中, 无论标题多长总是完全展开.',
   },
   tags: [componentsTags.feeds, componentsTags.style],
-  enabledByDefault: false,
 }

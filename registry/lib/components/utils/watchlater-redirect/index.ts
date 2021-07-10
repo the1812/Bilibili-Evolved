@@ -70,5 +70,4 @@ export const component: ComponentMetadata = {
     componentsTags.utils,
     componentsTags.video,
   ],
-  enabledByDefault: true,
 }

@@ -9,7 +9,6 @@ export const component: ComponentMetadata = {
     componentsTags.video,
     componentsTags.live,
   ],
-  enabledByDefault: true,
   entry: () => {
     console.log('ok')
     return { foo: () => console.log('hello world') }

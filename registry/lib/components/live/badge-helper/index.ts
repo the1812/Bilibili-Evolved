@@ -8,7 +8,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '在直播区中, 可从功能面板中直接切换勋章和头衔.',
   },
-  enabledByDefault: true,
   entry: () => autoMatchMedal(),
   reload: none,
   unload: none,

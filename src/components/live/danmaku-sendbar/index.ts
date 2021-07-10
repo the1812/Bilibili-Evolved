@@ -25,7 +25,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.',
   },
-  enabledByDefault: true,
   entry,
   reload: () => document.body.classList.remove('danmaku-send-bar-unloaded'),
   unload: () => document.body.classList.add('danmaku-send-bar-unloaded'),

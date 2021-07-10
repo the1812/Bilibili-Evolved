@@ -25,7 +25,6 @@ export const component: ComponentMetadata = {
     componentsTags.video,
   ],
   entry,
-  enabledByDefault: true,
   description: {
     'zh-CN': '自动跳过视频结尾的充电鸣谢.',
   },

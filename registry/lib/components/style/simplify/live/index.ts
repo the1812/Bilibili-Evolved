@@ -99,6 +99,5 @@ export const component = createSwitchOptions({
       componentsTags.style,
     ],
     urlInclude: liveUrls,
-    enabledByDefault: true,
   },
 )

@@ -9,7 +9,6 @@ export const component: ComponentMetadata = {
     'zh-CN': '记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.',
   },
   tags: [componentsTags.video],
-  enabledByDefault: true,
   urlInclude: playerUrls,
   entry: async () => {
     const { VideoSpeedController } = await import('./controller')

@@ -3,7 +3,6 @@ import { ComponentMetadata, componentsTags } from '@/components/component'
 export const component: ComponentMetadata = {
   name: 'seoRedirect',
   displayName: 'SEO页面重定向',
-  enabledByDefault: true,
   entry: () => {
     window.location.assign(document.URL.replace('/s', ''))
   },

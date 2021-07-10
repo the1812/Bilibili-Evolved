@@ -5,7 +5,6 @@ import { startTranslate } from './translator'
 export const component: ComponentMetadata = {
   name: 'i18n',
   displayName: '多语言',
-  enabledByDefault: true,
   configurable: false,
   entry: startTranslate,
   tags: [

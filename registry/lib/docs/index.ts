@@ -73,5 +73,4 @@ export const doc: ComponentMetadata = {
   reload: entry,
   unload: () => { delete unsafeWindow.generateDocs },
   tags: [componentsTags.utils],
-  enabledByDefault: true,
 }

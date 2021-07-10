@@ -1,9 +1,8 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
-import { liveUrls } from '../live-urls'
+import { ComponentMetadata } from '@/components/types'
+import { liveUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   const { sq } = await import('@/core/spin-query')
-  const { dq } = await import('@/core/utils')
   const { childListSubtree, attributes } = await import('@/core/observer')
   const popupContainer = await sq(
     () => dq('.chat-popups-section'),
@@ -33,7 +32,7 @@ const entry = async () => {
   })
 }
 export const component: ComponentMetadata = {
-  name: 'autoDraw',
+  name: 'liveAutoDraw',
   displayName: '直播间自动抽奖',
   description: {
     'zh-CN': '在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(',
@@ -41,7 +40,6 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.live,
   ],
-  enabledByDefault: true,
   entry,
   urlInclude: liveUrls,
 }

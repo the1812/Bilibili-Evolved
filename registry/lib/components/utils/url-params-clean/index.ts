@@ -98,5 +98,4 @@ export const component: ComponentMetadata = {
   urlExclude: [
     /game\.bilibili\.com\/fgo/,
   ],
-  enabledByDefault: true,
 }

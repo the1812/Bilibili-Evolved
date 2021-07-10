@@ -8,7 +8,6 @@ export const component: ComponentMetadata = {
     componentsTags.style,
     componentsTags.general,
   ],
-  enabledByDefault: true,
   ...toggleStyle(() => import('./scrollbar.scss')),
   instantStyles: [
     {

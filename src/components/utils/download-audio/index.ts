@@ -4,7 +4,6 @@ import { none } from '@/core/utils'
 export const component: ComponentMetadata = {
   name: 'download-audio',
   displayName: '下载音频',
-  enabledByDefault: true,
   entry: none,
   tags: [
     componentsTags.utils,

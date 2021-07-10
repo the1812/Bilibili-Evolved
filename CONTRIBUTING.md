@@ -46,6 +46,9 @@ yarn
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
 // @exclude      *://www.bilibili.com/h5/*
 // @exclude      *://www.bilibili.com/*/h5/*
+// @exclude      *://message.bilibili.com/pages/nav/index_new_sync
+// @exclude      *://message.bilibili.com/pages/nav/index_new_pc_sync
+// @exclude      *://t.bilibili.com/h5/dynamic/specification
 // @run-at       document-start
 // @grant        unsafeWindow
 // @grant        GM_getValue
@@ -64,7 +67,6 @@ yarn
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js
 // @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js
-// @require      https://cdn.jsdelivr.net/npm/vue-markdown-v2@0.1.7/dist/vue-markdown.js
 // @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
 // @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==

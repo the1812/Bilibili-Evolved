@@ -9,7 +9,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': desc,
   },
-  enabledByDefault: true,
   configurable: false,
   entry: none,
   options: {

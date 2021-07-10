@@ -9,6 +9,5 @@ export const component: ComponentMetadata = {
     componentsTags.live,
     componentsTags.style,
   ],
-  enabledByDefault: true,
   urlInclude: liveUrls,
 }

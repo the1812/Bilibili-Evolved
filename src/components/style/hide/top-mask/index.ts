@@ -9,7 +9,6 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.style,
   ],
-  enabledByDefault: true,
   description: {
     'zh-CN': '隐藏视频里鼠标经过时出现在右上角的覆盖层.',
   },

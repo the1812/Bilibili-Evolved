@@ -1,0 +1,42 @@
+import { ComponentMetadata } from '@/components/types'
+import { addComponentListener } from '@/core/settings'
+import { addStyle, removeStyle } from '@/core/style'
+
+export const component: ComponentMetadata = {
+  name: 'liveHomeMute',
+  displayName: '直播首页静音',
+  tags: [
+    componentsTags.live,
+  ],
+  description: {
+    'zh-CN': '禁止直播首页的推荐直播间自动开始播放.',
+  },
+  entry: async ({ metadata }) => {
+    const styleID = 'hide-home-live'
+    addComponentListener(`${metadata.name}.hide`, (value: boolean) => {
+      if (value) {
+        addStyle('.player-area-ctnr,#player-header { display: none !important }', styleID)
+      } else {
+        removeStyle(styleID)
+      }
+    }, true)
+  },
+  options: {
+    hide: {
+      displayName: '隐藏首页直播板块',
+      defaultValue: false,
+    },
+  },
+  urlInclude: [
+    /^https:\/\/live\.bilibili\.com\/(index\.html)?$/,
+  ],
+  plugin: {
+    displayName: '直播首页静音',
+    async setup() {
+      const { select } = await import('@/core/spin-query')
+      select('video').then((video: HTMLVideoElement) => {
+        video.muted = true
+      })
+    },
+  },
+}

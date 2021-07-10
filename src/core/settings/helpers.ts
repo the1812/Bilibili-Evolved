@@ -18,7 +18,7 @@ export const componentOptionsToSettings = (options: ComponentOptions) => (
  */
 export const componentToSettings = (component: ComponentMetadata): ComponentSettings => (
   {
-    enabled: component.enabledByDefault,
+    enabled: component.enabledByDefault ?? true,
     options: component.options ? componentOptionsToSettings(component.options) : {},
   }
 )
@@ -91,7 +91,7 @@ export const isComponentEnabled = (component: ComponentMetadata | string) => {
   }
   // 不可更改的组件永远返回默认值
   if (component.configurable === false) {
-    return component.enabledByDefault
+    return component.enabledByDefault ?? true
   }
   return getComponentSettings(component).enabled
 }
