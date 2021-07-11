@@ -2,6 +2,7 @@ import { ComponentMetadata } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 import { addStyle, removeStyle } from '@/core/style'
 
+const liveHome = /^https:\/\/live\.bilibili\.com\/(index\.html)?$/
 export const component: ComponentMetadata = {
   name: 'liveHomeMute',
   displayName: '直播首页静音',
@@ -28,11 +29,15 @@ export const component: ComponentMetadata = {
     },
   },
   urlInclude: [
-    /^https:\/\/live\.bilibili\.com\/(index\.html)?$/,
+    liveHome,
   ],
   plugin: {
     displayName: '直播首页静音',
     async setup() {
+      const { matchUrlPattern } = await import('@/core/utils')
+      if (!matchUrlPattern(liveHome)) {
+        return
+      }
       const { select } = await import('@/core/spin-query')
       select('video').then((video: HTMLVideoElement) => {
         video.muted = true

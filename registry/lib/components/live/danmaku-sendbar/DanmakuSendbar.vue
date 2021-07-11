@@ -11,19 +11,29 @@
   </div>
 </template>
 <script lang="ts">
-import { dq, raiseEvent } from '@/core/utils'
+import { select } from '@/core/spin-query'
+import { raiseEvent } from '@/core/utils'
 import { originalTextAreaSelector, sendButtonSelector } from './original-elements'
 
-const originalTextArea = dq(originalTextAreaSelector) as HTMLTextAreaElement
-const sendButton = dq(sendButtonSelector) as HTMLButtonElement
 let changeEventHook = false
 export default Vue.extend({
   data() {
     return {
-      value: originalTextArea.value,
+      originalTextArea: null,
+      sendButton: null,
+      value: '',
     }
   },
-  mounted() {
+  async mounted() {
+    const originalTextArea = await select(originalTextAreaSelector) as HTMLTextAreaElement
+    const sendButton = await select(sendButtonSelector) as HTMLButtonElement
+    if (!originalTextArea || !sendButton) {
+      throw new Error(`[danmakuSendBar] ref elements not found. originalTextArea = ${originalTextArea === null} sendButton = ${sendButton === null}`)
+    }
+    // console.log(originalTextArea, sendButton)
+    this.originalTextArea = originalTextArea
+    this.sendButton = sendButton
+    this.value = originalTextArea.value
     originalTextArea.addEventListener('input', this.listenChange)
     originalTextArea.addEventListener('change', this.listenChange)
     if (!changeEventHook) {
@@ -41,18 +51,18 @@ export default Vue.extend({
     }
   },
   beforeDestroy() {
-    originalTextArea.removeEventListener('input', this.listenChange)
-    originalTextArea.removeEventListener('change', this.listenChange)
+    this.originalTextArea.removeEventListener('input', this.listenChange)
+    this.originalTextArea.removeEventListener('change', this.listenChange)
   },
   methods: {
     updateValue(newValue: string) {
-      originalTextArea.value = newValue
-      raiseEvent(originalTextArea, 'input')
+      this.originalTextArea.value = newValue
+      raiseEvent(this.originalTextArea, 'input')
     },
     send() {
-      if (!sendButton.disabled) {
+      if (!this.sendButton.disabled) {
         this.value = ''
-        sendButton.click()
+        this.sendButton.click()
       }
     },
     listenChange(e: InputEvent) {
@@ -62,31 +72,19 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-.bilibili-live-player-video-controller-content {
+.live-web-player-controller {
   .danmaku-send-bar {
     display: none;
   }
 }
-.bilibili-live-player-video-controller-container {
-  background-image: linear-gradient(
-    to bottom,
-    transparent 20%,
-    rgba(0, 0, 0, 0.9)
-  );
+.live-web-player-controller {
+  background-image: linear-gradient(to bottom, transparent 20%, rgba(0, 0, 0, 0.9));
 }
 @media screen and (min-width: 1038px) {
   .player-full-win,
   .fullscreen-fix {
     &:not(.danmaku-send-bar-unloaded) {
-      .bilibili-live-player-video-controller-content {
-        // 不准 float 布局
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        &::before,
-        &::after {
-          content: none !important;
-        }
+      .live-web-player-controller .control-area {
         .danmaku-send-bar {
           display: flex;
           margin: 0 24px;
@@ -95,11 +93,13 @@ export default Vue.extend({
           justify-content: center;
           align-items: center;
           input {
+            outline: none !important;
             border: none;
             border-bottom: 2px solid #fff8;
             background-color: transparent;
             color: #fff;
             padding: 4px;
+            line-height: normal;
             flex: 1;
             width: 0;
             max-width: 400px;
@@ -111,6 +111,9 @@ export default Vue.extend({
               color: #fff8 !important;
             }
           }
+        }
+        .right-area {
+          flex: 0 0 auto !important;
         }
       }
     }

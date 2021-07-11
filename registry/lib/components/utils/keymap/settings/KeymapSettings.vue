@@ -14,6 +14,7 @@
         <a
           class="keymap-settings-header-help"
           href="https://github.com/the1812/Bilibili-Evolved/blob/v2/registry/lib/components/utils/keymap/help.md"
+          target="_blank"
           title="查看帮助"
         >
           <VIcon

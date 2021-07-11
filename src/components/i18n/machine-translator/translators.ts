@@ -2,12 +2,9 @@ import { monkey } from '@/core/ajax'
 import { UserAgent } from '@/core/utils/constants'
 import { getComponentSettings } from '@/core/settings'
 import { languageNameToCode } from '@/core/utils/i18n'
-import { BuiltInTranslators } from './built-in-translators'
+import { registerAndGetData } from '@/plugins/data'
+import { formData } from '@/core/utils'
 
-/* eslint-disable */
-// export interface TranslateConfig {
-//   targetLanguage?: string
-// }
 export abstract class MachineTranslateProvider {
   abstract translate(text: string): Promise<string>
   abstract name: string
@@ -20,7 +17,11 @@ export abstract class MachineTranslateProvider {
     }
     return this.defaultLanguage
   }
+  toString() {
+    return this.name
+  }
 }
+/** @deprecated API needs auth now */
 export class BingTranslate extends MachineTranslateProvider {
   name = 'Bing'
   link = 'https://translate.bing.com/'
@@ -37,17 +38,18 @@ export class BingTranslate extends MachineTranslateProvider {
       const response = await monkey({
         url: 'https://cn.bing.com/ttranslatev3',
         method: 'POST',
-        data: Object.entries({
+        data: formData({
           fromLang: 'auto-detect',
           to: targetLanguage,
           text,
-        }).map(([key, value]) => `${key}=${value}`).join('&'),
+        }),
         headers: {
           'User-Agent': UserAgent,
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         responseType: 'json',
       })
+      console.log(response)
       const [result] = response
       if (result.translations) {
         return (result.translations as any[]).map(t => t.text as string).join('\n')
@@ -73,13 +75,13 @@ export class GoogleTranslate extends MachineTranslateProvider {
     }
     try {
       const response = await monkey({
-        url: `${this.apiUrl}?${Object.entries({
+        url: `${this.apiUrl}?${formData({
           client: 'gtx',
           sl: 'auto',
           tl: targetLanguage,
           dt: 't',
           q: encodeURIComponent(text),
-        }).map(([key, value]) => `${key}=${value}`).join('&')}`,
+        })}`,
         method: 'GET',
         headers: {
           'User-Agent': UserAgent,
@@ -95,21 +97,19 @@ export class GoogleTranslate extends MachineTranslateProvider {
   }
 }
 export class GoogleCNTranslate extends GoogleTranslate {
+  name = 'GoogleCN'
   link = 'https://translate.google.cn/'
   protected apiUrl = 'https://translate.google.cn/translate_a/single'
 }
 
-export const MachineTranslateProviderPlugin = 'MachineTranslateProvider'
-const extraProviders = new Map<string, (new () => MachineTranslateProvider)>()
+export const [translateProviders] = registerAndGetData('i18n.machineTranslators', {
+  // Bing: new BingTranslate(),
+  GoogleCN: new GoogleCNTranslate(),
+  Google: new GoogleTranslate(),
+} as Record<string, MachineTranslateProvider>)
+export const translateProviderNames = Object.keys(translateProviders)
 export const getTranslator = (): MachineTranslateProvider => {
-  const { options: { translator } } = getComponentSettings('machineTranslator')
-  if (extraProviders.has(translator)) {
-    return new (extraProviders.get(translator))()
-  }
-  switch (translator) {
-    default: // fallthrough
-    case BuiltInTranslators.Bing: return new BingTranslate()
-    case BuiltInTranslators.Google: return new GoogleTranslate()
-    case BuiltInTranslators.GoogleCN: return new GoogleCNTranslate()
-  }
+  const { options: { translator } } = getComponentSettings('i18n')
+  const provider = translateProviders[translator] || translateProviders.GoogleCN
+  return provider
 }

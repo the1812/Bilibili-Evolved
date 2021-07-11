@@ -58,10 +58,6 @@ export default Vue.extend({
   },
   async mounted() {
     await checkTransparentFill(this)
-    const { items } = this.items as {
-      items: CustomNavbarItem[]
-    }
-    console.log(items)
   },
   methods: {
     toggleStyle(value: boolean, style: string) {

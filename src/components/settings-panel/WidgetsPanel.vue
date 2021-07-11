@@ -99,7 +99,6 @@ export default Vue.extend({
   // box-sizing: content-box;
   // overflow: auto;
   @include popup();
-  @include no-scrollbar();
   @include text-color();
   // @include shadow();
   // body.dark & {

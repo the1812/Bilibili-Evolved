@@ -109,7 +109,7 @@ export const externalApis = {
     ...componentApis.userComponent,
     ...componentApis.styledComponent,
     ...componentApis.launchBar,
-    feeds: componentApis.feeds,
+    ...(lodash.omit(componentApis, 'component', 'userComponent', 'styledComponent', 'launchBar')),
   },
   pluginApis: {
     ...pluginApis.style,

@@ -1,27 +1,43 @@
 <template>
   <div class="translate-container">
     <div v-if="!working && !translated" class="translate" @click="translate()">
-      <i class="mdi mdi-earth"></i>翻译
+      <VIcon :size="14" icon="mdi-earth" />翻译
     </div>
-    <i v-if="working" class="translating mdi mdi-18px mdi-loading mdi-spin"></i>
     <div v-if="translated" class="translated">
-      翻译自
-      <a
+      <a :href="activeTranslator && activeTranslator.link" target="_blank">
+        翻译自
+      </a>
+      <VDropdown
+        :items="Object.values(translateProviders)"
+        :value="activeTranslator"
+        :key-mapper="it => it.name"
+        @change="changeTranslator($event)"
+      >
+        <template #item="{ item }">
+          {{ item.name }}
+        </template>
+      </VDropdown>
+      <!-- <a
         :href="activeTranslator.link"
         target="_blank"
-      >{{ activeTranslator.name }}</a>:
+      >{{ activeTranslator.name }}</a>: -->
     </div>
-    <div v-if="translated" class="translate-result">
-      {{ result }}
-    </div>
+    <VIcon v-if="working" :size="18" icon="mdi-loading" class="translating mdi-spin" />
+    <div v-if="!working && translated" class="translate-result" v-text="result"></div>
   </div>
 </template>
 
 <script lang="ts">
+import { getComponentSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import { getTranslator, MachineTranslateProvider } from './translators'
+import { VDropdown, VIcon } from '@/ui'
+import { getTranslator, translateProviders, MachineTranslateProvider } from './translators'
 
 export default Vue.extend({
+  components: {
+    VDropdown,
+    VIcon,
+  },
   props: {
     text: {
       type: String,
@@ -32,6 +48,7 @@ export default Vue.extend({
     return {
       result: '',
       working: false,
+      translateProviders,
       activeTranslator: {},
     }
   },
@@ -41,6 +58,10 @@ export default Vue.extend({
     },
   },
   methods: {
+    changeTranslator(translator: MachineTranslateProvider) {
+      getComponentSettings('i18n').options.translator = translator.name
+      this.translate()
+    },
     async translate() {
       try {
         this.working = true
@@ -60,38 +81,38 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import "common";
+
 .bb-comment .translate-container,
 .card-content .translate-container {
-  margin-top: 10px;
+  margin: 4px 0 2px 0;
+  display: inline-block;
+  font-weight: normal;
+  font-size: 14px;
   .translated {
     font-size: 12px;
-    color: #aaa;
+    @include h-center(8px);
     a {
-      color: var(--theme-color);
+      color: #aaa;
+      &:hover {
+        color: var(--theme-color);
+      }
     }
   }
   .translate {
-    display: flex;
-    align-items: center;
+    @include h-center(2px);
     font-size: 12px;
+    height: 18px;
     color: #aaa;
     cursor: pointer;
     &:hover {
       color: var(--theme-color);
     }
-    .mdi {
-      font-size: 14px;
-      margin-right: 2px;
-    }
-  }
-  .translating {
-    font-size: 18px;
   }
   .translate-result {
-    padding-top: 10px;
-    padding-right: 10px;
+    padding-top: 6px;
     white-space: pre-wrap;
-    line-height: 22px;
+    line-height: 20px;
     word-break: break-all;
     overflow-wrap: break-word;
     body.dark & {
@@ -99,9 +120,7 @@ export default Vue.extend({
     }
   }
 }
-.bb-comment .translate-container {
-  margin-top: 6px;
-  font-weight: normal;
-  font-size: 14px;
+.bb-comment .reply-con .text-con {
+  display: block;
 }
 </style>

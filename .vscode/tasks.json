@@ -19,14 +19,14 @@
     },
     {
       "type": "shell",
-      "command": "yarn serve dist",
+      "command": "yarn serve dist -p ${input:serverPort}",
       "group": "build",
       "problemMatcher": [],
       "label": "启动服务器(本体) dev:serve"
     },
     {
       "type": "shell",
-      "command": "yarn serve registry/dist",
+      "command": "yarn serve registry/dist -p ${input:serverPort}",
       "group": "build",
       "problemMatcher": [],
       "label": "启动服务器(组件) dev:serve components"
@@ -139,6 +139,14 @@
       "command": "rm -r ./node_modules/.cache/",
       "label": "清除全部缓存 cache:clear all",
       "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "serverPort",
+      "type": "promptString",
+      "description": "Specify server port:",
+      "default": "5000"
     }
   ]
 }

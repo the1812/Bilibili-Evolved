@@ -1,6 +1,10 @@
 import { getMedalList } from './badge'
 
 export const autoMatchMedal = async () => {
+  const { getUID } = await import('@/core/utils')
+  if (!getUID()) {
+    return
+  }
   const { getComponentSettings } = await import('@/core/settings')
   const { options } = getComponentSettings('badgeHelper')
   if (!options.autoMatchMedal) {

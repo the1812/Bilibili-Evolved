@@ -6,6 +6,7 @@ interface UpdateCheckItem {
   installTime: number
   alwaysUpdate?: boolean
 }
+const localhost = /^http:\/\/localhost/
 export const component: ComponentMetadata = {
   name: 'autoUpdate',
   displayName: '自动更新器',
@@ -17,6 +18,11 @@ export const component: ComponentMetadata = {
     lastUpdateCheck: {
       displayName: '最后检查更新日期',
       defaultValue: 0,
+      hidden: true,
+    },
+    localPortOverride: {
+      displayName: '本地组件链接端口',
+      defaultValue: '',
       hidden: true,
     },
     minimumDuration: {
@@ -59,7 +65,11 @@ export const component: ComponentMetadata = {
           if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration) {
             return `[${name}] 未超过更新间隔期, 已跳过`
           }
-          const response: string = await coreApis.ajax.monkey({ url })
+          let finalUrl = url
+          if (localhost.test(url) && options.localPortOverride) {
+            finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
+          }
+          const response: string = await coreApis.ajax.monkey({ url: finalUrl })
           // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
           if (!(name in items)) {
             return `[${name}] 已被卸载, 取消更新`
@@ -136,7 +146,7 @@ export const component: ComponentMetadata = {
       types.forEach(type => {
         addHook(`user${lodash.startCase(type)}.add`, {
           after: (_, url: string, metadata: { name: string }) => {
-            console.log('hook', `user${lodash.startCase(type)}.add`, metadata.name, url)
+            // console.log('hook', `user${lodash.startCase(type)}.add`, metadata.name, url)
             const { options } = getComponentSettings('autoUpdate')
             const existingItem = options.urls[type][metadata.name] as UpdateCheckItem
             if (!existingItem) {
@@ -144,12 +154,12 @@ export const component: ComponentMetadata = {
                 url,
                 lastUpdateCheck: Number(new Date()),
                 installTime: Number(new Date()),
-                alwaysUpdate: url.startsWith('http://localhost'),
+                alwaysUpdate: localhost.test(url),
               } as UpdateCheckItem
             } else {
               existingItem.url = url
               existingItem.lastUpdateCheck = Number(new Date())
-              existingItem.alwaysUpdate = url.startsWith('http://localhost')
+              existingItem.alwaysUpdate = localhost.test(url)
               // keep install time
             }
           },

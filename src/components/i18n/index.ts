@@ -1,6 +1,7 @@
 import { defaultLanguageCode, languageCodeToName } from '@/core/utils/i18n'
 import { ComponentMetadata, componentsTags } from '../types'
-import { startTranslate } from './translator'
+import { translateProviderNames, translateProviders } from './machine-translator/translators'
+import { startTranslate } from './dom-translator'
 
 export const component: ComponentMetadata = {
   name: 'i18n',
@@ -13,14 +14,18 @@ export const component: ComponentMetadata = {
     componentsTags.general,
   ],
   description: {
-    'zh-CN': '为界面上的常见文本提供翻译.',
-    'en-US': 'Change UI language.',
+    'zh-CN': '安装其他语言包可以更换界面语言, 机器翻译选择可以设定其他一些功能如`动态翻译`, `评论翻译`使用的翻译器. 机器翻译的选择不影响界面语言.',
   },
   options: {
     language: {
       defaultValue: languageCodeToName[defaultLanguageCode],
-      displayName: '语言选择',
+      displayName: '界面语言选择',
       dropdownEnum: languageCodeToName,
+    },
+    translator: {
+      defaultValue: Object.keys(translateProviders)[0],
+      displayName: '机器翻译选择',
+      dropdownEnum: translateProviderNames,
     },
   },
 }

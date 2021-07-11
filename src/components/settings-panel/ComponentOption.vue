@@ -158,6 +158,7 @@ export default {
   display: flex;
   align-items: center;
   min-height: 24px;
+  .unknown-option-type,
   .be-range-input,
   .be-text-box {
     flex: 1 0 0;

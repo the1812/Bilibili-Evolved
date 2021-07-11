@@ -1,19 +1,15 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
+import MachineTranslator from '@/components/i18n/machine-translator/MachineTranslator.vue'
 
 const entry = async () => {
-  const { dqa } = await import('@/core/utils')
-  const { default: MachineTranslator } = await import('@/components/i18n/machine-translator/MachineTranslator.vue')
-
   const injectButton = (element: HTMLElement) => {
+    console.log('inject', element)
     const textElements = dqa(element, '.text, .text-con')
     if (textElements.length === 0) {
       return
     }
     textElements.forEach((textElement: HTMLElement) => {
-      if (
-        textElement.nextElementSibling
-        && textElement.nextElementSibling.classList.contains('translate-container')
-      ) {
+      if (textElement.nextElementSibling?.classList.contains('translate-container')) {
         return
       }
       const translator = new MachineTranslator({
@@ -24,10 +20,11 @@ const entry = async () => {
       textElement.insertAdjacentElement('afterend', translator.$el)
     })
   }
-  const { forEachCommentItem } = await import('../api')
+  const { forEachCommentItem } = await import('@/components/utils/comment-apis')
   forEachCommentItem({
     added: item => {
       const { element } = item
+      item.onRepliesUpdate = replies => replies.forEach(r => injectButton(r.element))
       injectButton(element)
     },
   })
@@ -42,6 +39,5 @@ export const component: ComponentMetadata = {
     componentsTags.utils,
     componentsTags.feeds,
   ],
-  enabledByDefault: false,
   entry,
 }
