@@ -36,8 +36,9 @@
         .fullscreen-gift-box {
           display: flex;
           align-self: center;
-          margin: 0 4px;
-          padding: 0 4px;
+          margin: 0 3px;
+          padding: 0 3px;
+          line-height: 36px;
           cursor: pointer;
           color: #FDFDFD;
           &:hover {
