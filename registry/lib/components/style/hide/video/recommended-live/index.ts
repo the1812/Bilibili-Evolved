@@ -1,9 +1,15 @@
 import { ComponentMetadata } from '@/components/types'
-import { toggleStyle } from '@/components/styled-component'
 import { videoUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
-  ...toggleStyle('hideRecommendedLive', () => import('./recommended-live.scss')),
+  name: 'hideRecommendedLive',
+  entry: none,
+  instantStyles: [
+    {
+      name: 'hideRecommendedLive',
+      style: () => import('./recommended-live.scss'),
+    },
+  ],
   displayName: '隐藏推荐直播',
   tags: [
     componentsTags.style,

@@ -3,7 +3,6 @@ import MachineTranslator from '@/components/i18n/machine-translator/MachineTrans
 
 const entry = async () => {
   const injectButton = (element: HTMLElement) => {
-    console.log('inject', element)
     const textElements = dqa(element, '.text, .text-con')
     if (textElements.length === 0) {
       return

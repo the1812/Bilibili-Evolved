@@ -68,14 +68,14 @@ export const component: ComponentMetadata = {
   unload: async () => {
     const navbar = document.querySelectorAll('.custom-navbar,.custom-navbar-settings')
     navbar.forEach((it: HTMLElement) => (it.style.display = 'none'))
-    document.getElementById(styleID)?.remove()
+    // document.getElementById(styleID)?.remove()
   },
   reload: async () => {
     const navbar = document.querySelectorAll('.custom-navbar,.custom-navbar-settings')
     navbar.forEach((it: HTMLElement) => (it.style.display = 'flex'))
-    const { default: style } = await import('./hide-original.scss')
-    const { addImportantStyle } = await import('@/core/style')
-    addImportantStyle(style, styleID)
+    // const { default: style } = await import('./hide-original.scss')
+    // const { addImportantStyle } = await import('@/core/style')
+    // addImportantStyle(style, styleID)
   },
   extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
 }

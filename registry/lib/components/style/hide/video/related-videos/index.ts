@@ -1,10 +1,16 @@
 import { ComponentMetadata } from '@/components/types'
-import { toggleStyle } from '@/components/styled-component'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
-  ...toggleStyle('hideRelatedVideos', () => import('./related-videos.scss')),
+  name: 'hideRelatedVideos',
   displayName: '隐藏视频推荐',
+  entry: none,
+  instantStyles: [
+    {
+      name: 'hideRelatedVideos',
+      style: () => import('./related-videos.scss'),
+    },
+  ],
   tags: [
     componentsTags.style,
     componentsTags.video,

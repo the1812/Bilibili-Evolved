@@ -49,24 +49,21 @@ export const loadInstantStyle = async (component: ComponentMetadata, fragments: 
   head: Node
   body: Node
 } = { head: document.head, body: document.body }) => {
-  const { isComponentEnabled } = await import('./settings')
-  if (isComponentEnabled(component) && component.instantStyles) {
-    component.instantStyles.forEach(async it => {
-      const style = document.createElement('style')
-      style.id = getDefaultStyleID(it.name)
-      if (typeof it.style === 'string') {
-        style.textContent = it.style
-      } else {
-        const { default: styleContent } = await it.style()
-        style.textContent = styleContent
-      }
-      if (it.important) {
-        fragments.body.appendChild(style)
-      } else {
-        fragments.head.appendChild(style)
-      }
-    })
-  }
+  component.instantStyles?.forEach(async it => {
+    const style = document.createElement('style')
+    style.id = getDefaultStyleID(it.name)
+    if (typeof it.style === 'string') {
+      style.textContent = it.style
+    } else {
+      const { default: styleContent } = await it.style()
+      style.textContent = styleContent
+    }
+    if (it.important) {
+      fragments.body.appendChild(style)
+    } else {
+      fragments.head.appendChild(style)
+    }
+  })
 }
 /**
  * 注入组件中定义的首屏样式, MDI图标样式, 以及主题颜色样式
@@ -75,14 +72,41 @@ export const loadInstantStyle = async (component: ComponentMetadata, fragments: 
  */
 export const preloadStyles = lodash.once(async () => {
   const { LoadingMode } = await import('./loading-mode')
-  const { getGeneralSettings, settings } = await import('./settings')
+  const { addHook } = await import('../plugins/hook')
+  const {
+    getGeneralSettings,
+    settings,
+    isComponentEnabled,
+    isUserComponent,
+    addComponentListener,
+    removeComponentListener,
+  } = await import('./settings')
   const load = async () => {
     const { components } = await import('@/components/component')
     const fragment = document.createDocumentFragment()
     const bodyFragment = document.createDocumentFragment()
-    await Promise.all(components.map(component => (
-      loadInstantStyle(component, { head: fragment, body: bodyFragment })
-    )))
+    await Promise.all(components.map(component => {
+      const listener = (enabled: boolean) => {
+        if (enabled) {
+          return loadInstantStyle(component)
+        }
+        return component.instantStyles?.forEach(style => removeStyle(style.name))
+      }
+      addComponentListener(component.name, listener)
+      if (isUserComponent(component)) {
+        addHook('userComponents.remove', {
+          after: (metadata: ComponentMetadata) => {
+            if (metadata.name === component.name) {
+              removeComponentListener(component.name, listener)
+            }
+          },
+        })
+      }
+      if (!isComponentEnabled(component)) {
+        return undefined
+      }
+      return loadInstantStyle(component, { head: fragment, body: bodyFragment })
+    }))
     const { UserStyleMode: CustomStyleMode } = await import('@/plugins/style')
     Object.values(settings.userStyles)
       .filter(c => c.mode === CustomStyleMode.instant)

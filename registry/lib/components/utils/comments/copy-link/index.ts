@@ -23,7 +23,6 @@ const entry = async () => {
     return ''
   }
   const addCopyLinkButton = (comment: CommentItem) => {
-    console.log('addCopyLinkButton', comment)
     const processItems = (items: CommentReplyItem[]) => {
       items.forEach(item => {
         addMenuItem(item, {

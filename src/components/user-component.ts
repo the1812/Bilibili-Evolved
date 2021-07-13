@@ -92,13 +92,11 @@ export const uninstallComponent = async (nameOrDisplayName: string) => {
   // 如果已加载
   const index = components.findIndex(it => it.name === name)
   if (index !== -1) {
-    const { instantStyles } = components[index]
     // 移除可能的 instantStyles
+    const { instantStyles } = components[index]
     if (instantStyles) {
-      const { getDefaultStyleID } = await import('@/core/style')
-      instantStyles.forEach(s => {
-        document.getElementById(getDefaultStyleID(s.name))?.remove()
-      })
+      const { removeStyle } = await import('@/core/style')
+      instantStyles.forEach(s => removeStyle(s.name))
     }
     // 移除可能的 widgets
     componentSettings.enabled = false

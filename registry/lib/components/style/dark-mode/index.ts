@@ -3,18 +3,18 @@ import { darkExcludes } from './dark-urls'
 
 const changeDelay = 200
 const add = async () => {
-  const { addStyle, addImportantStyle } = await import('@/core/style')
-  const { default: darkStyle } = await import('./dark-mode.scss')
-  const { default: importantStyle } = await import('./dark-mode.important.scss')
+  // const { addStyle, addImportantStyle } = await import('@/core/style')
+  // const { default: darkStyle } = await import('./dark-mode.scss')
+  // const { default: importantStyle } = await import('./dark-mode.important.scss')
   document.body.classList.add('dark')
   localStorage.setItem('pbp_theme_v4', 'b')
-  addStyle(darkStyle, 'darkMode')
-  addImportantStyle(importantStyle, 'darkModeImportant')
+  // addStyle(darkStyle, 'darkMode')
+  // addImportantStyle(importantStyle, 'darkModeImportant')
 }
 const remove = async () => {
-  const { removeStyle } = await import('@/core/style')
+  // const { removeStyle } = await import('@/core/style')
   document.body.classList.remove('dark')
-  removeStyle('darkMode', 'darkModeImportant')
+  // removeStyle('darkMode', 'darkModeImportant')
 }
 
 export const component: ComponentMetadata = {
