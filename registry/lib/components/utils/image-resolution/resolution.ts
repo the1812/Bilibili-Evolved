@@ -1,7 +1,6 @@
 import { styledComponentEntry } from '@/components/styled-component'
-import { ComponentSettings } from '@/core/settings'
 
-const regex = /@(\d+)[Ww]_(\d+)[Hh]/
+const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
 const excludeSelectors = [
   '#certify-img1',
   '#certify-img2',
@@ -32,7 +31,7 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     if (excludeSelectors.some(it => element.matches(it))) {
       return
     }
-    const match = value.match(regex)
+    const match = value.match(resizeRegex)
     if (!match) {
       return
     }
@@ -42,12 +41,18 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
       return
     }
     if (element.getAttribute('width') === null && element.getAttribute('height') === null) {
-      element.setAttribute('width', width)
+      if (element.classList.contains('bili-avatar-img')) {
+        // 动态头像框必须设高度
+        // https://github.com/the1812/Bilibili-Evolved/issues/2030
+        element.setAttribute('height', height)
+      } else {
+        element.setAttribute('width', width)
+      }
     }
     width = Math.round(dpi * parseInt(width)).toString()
     height = Math.round(dpi * parseInt(height)).toString()
     element.setAttribute('data-resolution-width', width)
-    setValue(element, value.replace(regex, `@${width}w_${height}h`))
+    setValue(element, value.replace(resizeRegex, `@${width}w_${height}h`))
   }
   attributes(element, () => {
     replaceSource(e => e.getAttribute('src'), (e, v) => e.setAttribute('src', v))
@@ -55,22 +60,20 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
   })
 }
 export const startResolution = styledComponentEntry(() => import('./fix.scss'),
-  async (settings: ComponentSettings) => {
+  async ({ settings }) => {
     const { allMutations } = await import('@/core/observer')
     const dpi = settings.options.scale === 'auto'
       ? window.devicePixelRatio
       : parseFloat(settings.options.scale)
     walk(document.body, it => imageResolution(dpi, it))
     allMutations(records => {
-      for (const record of records) {
-        for (const node of record.addedNodes) {
-          if (node instanceof HTMLElement) {
-            imageResolution(dpi, node)
-            if (node.nodeName.toUpperCase() !== 'IMG') {
-              walk(node, it => imageResolution(dpi, it))
-            }
+      records.forEach(record => record.addedNodes.forEach(node => {
+        if (node instanceof HTMLElement) {
+          imageResolution(dpi, node)
+          if (node.nodeName.toUpperCase() !== 'IMG') {
+            walk(node, it => imageResolution(dpi, it))
           }
         }
-      }
+      }))
     })
   })

@@ -1,3 +1,4 @@
+import { getComponentSettings, addComponentListener } from '@/core/settings'
 import { ComponentMetadata, ComponentOptions } from './component'
 
 type Switches = {
@@ -35,22 +36,22 @@ export const createSwitchOptions = (options: SwitchOptions) => {
     const selfOption = {
       componentName: component.name,
       optionDisplayName,
-      ...options,
     }
+    Object.assign(options, selfOption)
     extendComponentOptions[optionName] = {
-      defaultValue: selfOption,
+      defaultValue: options,
       displayName: optionDisplayName,
     }
     component.options = { ...component.options, ...extendComponentOptions }
     if (!component.widget) {
       component.widget = {
         component: () => import('./SwitchOptions.vue').then(m => m.default),
-        options: selfOption,
+        options,
       }
     }
     const originalEntry = component.entry
     component.entry = async (...args) => {
-      const { getComponentSettings, addComponentListener } = await import('@/core/settings')
+      originalEntry?.(...args)
       const { name } = component
       const componentOptions = getComponentSettings(name).options
       Object.keys(componentOptions).forEach(key => {
@@ -64,7 +65,6 @@ export const createSwitchOptions = (options: SwitchOptions) => {
           )
         }
       })
-      originalEntry(...args)
     }
     return component
   }

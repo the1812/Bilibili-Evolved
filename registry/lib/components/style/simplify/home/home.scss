@@ -1,0 +1,49 @@
+body.simplifyHome-switch {
+  &-categories {
+    .bili-header-m > .bili-wrapper {
+      visibility: hidden !important;
+      height: 18px !important;
+    }
+    .primary-menu-itnl {
+      visibility: hidden !important;
+      height: 24px !important;
+      padding: 0 !important;
+    }
+  }
+  &-trends {
+    .first-screen #reportFirst1 {
+      display: none !important;
+    }
+    .first-screen .space-between {
+      margin-bottom: 0 !important;
+    }
+    .rcmd-box-wrap {
+      display: none !important;
+    }
+  }
+  &-online {
+    .first-screen #reportFirst2 {
+      display: none !important;
+    }
+  }
+  &-ext-box {
+    .first-screen #reportFirst3 {
+      display: none !important;
+    }
+  }
+  &-special {
+    #bili_report_spe_rec {
+      display: none !important;
+    }
+  }
+  &-contact {
+    .international-footer {
+      display: none !important;
+    }
+  }
+  &-elevator {
+    .storey-box .elevator {
+      display: none !important;
+    }
+  }
+}

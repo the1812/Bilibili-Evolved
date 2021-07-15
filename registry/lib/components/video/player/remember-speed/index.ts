@@ -19,13 +19,13 @@ export const component: ComponentMetadata = {
     displayName: '倍速记忆 - 快捷键支持',
     setup: async ({ addData }) => {
       const { getComponentSettings } = await import('@/core/settings')
-      const { VideoSpeedController } = await import('./controller')
       const videoSpeed = async (
         context: KeyBindingActionContext,
         controllerAction: (
-          controller: InstanceType<typeof VideoSpeedController>, rates: number[]
+          controller: InstanceType<typeof import('./controller')['VideoSpeedController']>, rates: number[]
         ) => void,
       ) => {
+        const { VideoSpeedController } = await import('./controller')
         const controller = await VideoSpeedController.getInstance()
         controllerAction(controller, VideoSpeedController.supportedRates)
         context.showTip(`${controller.playbackRate}x`, 'mdi-fast-forward')

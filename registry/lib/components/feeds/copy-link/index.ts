@@ -1,0 +1,32 @@
+import { ComponentMetadata } from '@/components/types'
+import { FeedsCard } from '@/components/feeds/api'
+import { feedsUrls } from '@/core/utils/urls'
+
+const entry = async () => {
+  const { forEachFeedsCard, addMenuItem } = await import('@/components/feeds/api')
+  const addCopyLinkButton = (card: FeedsCard) => {
+    addMenuItem(card, {
+      className: 'copy-link',
+      text: '复制链接',
+      action: () => {
+        GM_setClipboard(`https://t.bilibili.com/${card.id}`, 'text')
+      },
+    })
+  }
+  forEachFeedsCard({
+    added: addCopyLinkButton,
+  })
+}
+export const component: ComponentMetadata = {
+  name: 'copyFeedsLink',
+  displayName: '复制动态链接',
+  description: {
+    'zh-CN': '开启后, 可在每条动态的菜单中选择复制链接.',
+  },
+  entry,
+  urlInclude: feedsUrls,
+  tags: [
+    componentsTags.feeds,
+    componentsTags.utils,
+  ],
+}

@@ -24,8 +24,8 @@
         :key="name"
         :class="{ dim: isDim(name) }"
         v-bind="options.switchProps || {}"
-        :checked="componentOptions['switch-' + name]"
-        @change="componentOptions['switch-' + name] = $event"
+        :checked="componentOptions[`switch-${name}`]"
+        @change="componentOptions[`switch-${name}`] = $event"
       >
         {{ options.switches[name].displayName }}
       </component>
@@ -73,7 +73,6 @@ export default Vue.extend({
   },
   mounted() {
     this.updateColumnsCount()
-    console.log(Object.keys(this.options.switches).map(key => `${key} : ${this.componentOptions[`switch-${key}`]}`))
   },
   methods: {
     updateColumnsCount() {

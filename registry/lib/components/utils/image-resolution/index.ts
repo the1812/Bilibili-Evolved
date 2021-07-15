@@ -1,4 +1,4 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { startResolution } from './resolution'
 
 export const component: ComponentMetadata = {
@@ -7,10 +7,10 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.utils,
   ],
-  enabledByDefault: false,
+  enabledByDefault: window.devicePixelRatio > 1,
   entry: startResolution,
   description: {
-    'zh-CN': '根据屏幕DPI请求更高分辨率的图片, 例如DPI缩放200%则请求2倍的分辨率, 加载时间也会相应变长一些.',
+    'zh-CN': '根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些.',
   },
   options: {
     scale: {

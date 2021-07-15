@@ -118,7 +118,7 @@ const selectAllCache = new Map<string, Promise<unknown>>()
 const selectAllPromise = <T extends { length: number } = Element[]>(
   query: string | (() => T),
   getPromise: (realQuery: () => T) => Promise<T>,
-) => {
+): Promise<T> => {
   let realQuery: () => T
   if (typeof query === 'string') {
     if (selectAllCache.has(query)) {

@@ -1,14 +1,13 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
-import { toggleStyle } from '@/components/styled-component'
+import { ComponentMetadata } from '@/components/types'
 
 export const component: ComponentMetadata = {
   name: 'elegantScrollbar',
+  entry: none,
   displayName: '使用细滚动条',
   tags: [
     componentsTags.style,
     componentsTags.general,
   ],
-  ...toggleStyle(() => import('./scrollbar.scss')),
   instantStyles: [
     {
       name: 'elegant-scrollbar',

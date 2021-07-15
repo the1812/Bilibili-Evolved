@@ -284,3 +284,44 @@ export const isTyping = () => {
   }
   return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
 }
+/**
+ * 提取元素中的可能的图片信息 (src, data-src, background-image 等). 如果是经过缩放的图, 会自动去除缩放参数返回原图链接
+ * @param element 元素
+ * @returns 图片的链接和扩展名
+ */
+export const retrieveImageUrl = (element: HTMLElement) => {
+  if (!(element instanceof HTMLElement)) {
+    return null
+  }
+  let url: string
+  if (element.hasAttribute('data-src')) {
+    url = element.getAttribute('data-src')
+  } else if (element instanceof HTMLImageElement) {
+    url = element.src
+  } else {
+    const { backgroundImage } = element.style
+    if (!backgroundImage) {
+      return null
+    }
+    const match = backgroundImage.match(/url\("(.+)"\)/)
+    if (!match) {
+      return null
+    }
+    url = match[1]
+  }
+  const thumbMatch = url.match(/^(.+)(\..+?)(@.+)$/)
+  if (thumbMatch) {
+    return {
+      url: thumbMatch[1] + thumbMatch[2],
+      extension: thumbMatch[2],
+    }
+  }
+  const noThumbMatch = url.match(/^(.+)(\..+?)$/)
+  if (!noThumbMatch) {
+    return null
+  }
+  return {
+    url: noThumbMatch[1] + noThumbMatch[2],
+    extension: noThumbMatch[2],
+  }
+}
