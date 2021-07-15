@@ -8,6 +8,7 @@ export const unload = () => {
   resources.removeStyle('darkStyleImportant')
 }
 const notSupported: (string | RegExp)[] = [
+  /\/\/member\.bilibili\.com\/platform\/(upload|allowance)\//,
   '//member.bilibili.com/v2',
   '//member.bilibili.com/video/upload.html',
   '//member.bilibili.com/article-text/home',

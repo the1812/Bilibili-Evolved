@@ -207,6 +207,7 @@
 }
 
 .player-auxiliary {
+  @include background-color();
   &-btn-playlist-order:hover path {
     @include theme-stroke();
   }
@@ -911,4 +912,26 @@ body:not(.simplify-comment) .panel-area .bb-comment {
   &::before {
     @include theme-border-color();
   }
+}
+.bui-progress-bar {
+  &, &::before {
+    @include theme-background-color();
+  }
+  .bui-progress-dot {
+    @include theme-background-color();
+  }
+}
+#page-404 {
+  @include background-color();
+  .error {
+    @include color("e");
+  }
+  .back-btn {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
+.bilibili-player-video-btn-viewpointlist * {
+  @include color("e");
+  @include fill("e");
 }
