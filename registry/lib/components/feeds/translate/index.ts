@@ -1,14 +1,14 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
-import { FeedsCard } from '../api'
-import { feedsUrls } from '../feeds-urls'
+import { ComponentMetadata } from '@/components/types'
+import { FeedsCard } from '@/components/feeds/api'
+import { feedsUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   const { default: MachineTranslator } = await import('@/components/i18n/machine-translator/MachineTranslator.vue')
-  const { dq } = await import('@/core/utils')
-  const { forEachFeedsCard } = await import('../api')
+  const { forEachFeedsCard } = await import('@/components/feeds/api')
 
   const injectButton = (card: FeedsCard) => {
-    if (card.text.replace(/#(.+?)#/g, '') === '') {
+    const text = card.text.replace(/#(.+?)#/g, '')
+    if (text === '') {
       return
     }
     if (dq(card.element, '.translate-container')) {
@@ -17,7 +17,7 @@ const entry = async () => {
     const cardContent = card.element.querySelector('.card-content') as HTMLElement
     const translator = new MachineTranslator({
       propsData: {
-        text: card.text,
+        text,
       },
     }).$mount()
     cardContent.insertAdjacentElement('beforeend', translator.$el)
@@ -33,7 +33,6 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '在每条动态下方添加翻译按钮.',
   },
-  enabledByDefault: false,
   tags: [
     componentsTags.utils,
     componentsTags.feeds,

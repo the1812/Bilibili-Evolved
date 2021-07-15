@@ -93,9 +93,9 @@ export default Vue.extend({
     font-size: 12px;
     @include h-center(8px);
     a {
-      color: #aaa;
+      color: #aaa !important; // 不然会被夜间盖掉
       &:hover {
-        color: var(--theme-color);
+        color: var(--theme-color) !important;
       }
     }
   }
@@ -122,5 +122,8 @@ export default Vue.extend({
 }
 .bb-comment .reply-con .text-con {
   display: block;
+}
+.card-content .translate-container {
+  margin: 13px 0 2px 0;
 }
 </style>

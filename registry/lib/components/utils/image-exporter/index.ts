@@ -6,6 +6,9 @@ import { setupFeedImageExporter } from './feed'
 export const component: ComponentMetadata = {
   name: 'imageExporter',
   displayName: '图片批量导出',
+  description: {
+    'zh-CN': '可以批量导出某个地方的图片, 目前支持动态和专栏. TODO: 补充文件名变量说明',
+  },
   tags: [
     componentsTags.feeds,
     componentsTags.utils,

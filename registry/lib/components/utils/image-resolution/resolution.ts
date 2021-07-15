@@ -35,24 +35,24 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     if (!match) {
       return
     }
-    let [, width, height] = match
+    const [, currentWidth, currentHeight] = match
     const lastWidth = parseInt(element.getAttribute('data-resolution-width') || '0')
-    if (parseInt(width) >= lastWidth && lastWidth !== 0) {
+    if (parseInt(currentWidth) >= lastWidth && lastWidth !== 0) {
       return
     }
     if (element.getAttribute('width') === null && element.getAttribute('height') === null) {
       if (element.classList.contains('bili-avatar-img')) {
         // 动态头像框必须设高度
         // https://github.com/the1812/Bilibili-Evolved/issues/2030
-        element.setAttribute('height', height)
+        element.setAttribute('height', currentHeight)
       } else {
-        element.setAttribute('width', width)
+        element.setAttribute('width', currentWidth)
       }
     }
-    width = Math.round(dpi * parseInt(width)).toString()
-    height = Math.round(dpi * parseInt(height)).toString()
-    element.setAttribute('data-resolution-width', width)
-    setValue(element, value.replace(resizeRegex, `@${width}w_${height}h`))
+    const newWidth = Math.round(dpi * parseInt(currentWidth)).toString()
+    const newHeight = Math.round(dpi * parseInt(currentHeight)).toString()
+    element.setAttribute('data-resolution-width', newWidth)
+    setValue(element, value.replace(resizeRegex, `@${newWidth}w_${newHeight}h`))
   }
   attributes(element, () => {
     replaceSource(e => e.getAttribute('src'), (e, v) => e.setAttribute('src', v))
