@@ -371,6 +371,7 @@ declare global {
       giftMessage: boolean,
       guardPurchase: boolean,
       giftPanel: boolean,
+      headerPanel: boolean,
       userEffect: boolean,
       kanban: boolean,
       eventsBanner: boolean,
