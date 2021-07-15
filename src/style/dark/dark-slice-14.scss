@@ -906,3 +906,9 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     stroke: #aaa !important;
   }
 }
+.shop-desc .desc-box .prize-text {
+  @include theme-color();
+  &::before {
+    @include theme-border-color();
+  }
+}
