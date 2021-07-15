@@ -8,6 +8,7 @@ const {
   cssStyleLoaders, sassStyleLoaders
 } = require('./style-loaders')
 const tsLoader = require('./ts-loader')
+const { compilationInfo } = require('./compilation-info')
 
 const relativePath = p => path.join(process.cwd(), p)
 const getDefaultConfig = (srcFolder) => {
@@ -126,6 +127,9 @@ const getDefaultConfig = (srcFolder) => {
     },
     plugins: [
       new VueLoaderPlugin(),
+      new webpack.DefinePlugin({
+        webpackCompilationInfo: JSON.stringify(compilationInfo),
+      }),
       // new WebpackBar(),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,

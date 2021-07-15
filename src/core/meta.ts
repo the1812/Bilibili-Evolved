@@ -16,6 +16,8 @@ export const metaCdnRoot = `https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved
  * 脚本元数据
  */
 export const meta = {
+  /** 编译时数据 */
+  compilationInfo: webpackCompilationInfo,
   /** 名称 */
   name: GM_info.script.name,
   /** 描述 */

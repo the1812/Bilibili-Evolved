@@ -83,6 +83,16 @@ export const formatNumber = (number: number, total: number) => {
  * @param date 日期对象
  */
 export const formatDate = (date: Date) => `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate()).toString().padStart(2, '0')}`
+/**
+ * 格式化时间为`HH:mm:ss`
+ * @param date 日期对象
+ */
+export const formatTime = (date: Date) => `${(date.getHours()).toString().padStart(2, '0')}:${(date.getMinutes()).toString().padStart(2, '0')}:${(date.getSeconds()).toString().padStart(2, '0')}`
+/**
+ * 格式化时间为`YYYY-MM-DD HH:mm:ss`
+ * @param date 日期对象
+ */
+export const formatDateTime = (date: Date) => `${formatDate(date)} ${formatTime(date)}`
 /** 格式化文件名, 过滤掉 Windows 不允许的字符
  * @param filename 文件名
  * @param replacement 填充字符, 被过滤掉的字符将用此填充字符替代, 默认为空

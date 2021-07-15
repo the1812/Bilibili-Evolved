@@ -17,6 +17,12 @@
         <div class="meta-info-description">
           {{ meta.description }}
         </div>
+        <div class="meta-info-commit">
+          Commit Hash: {{ meta.compilationInfo.commitHash.substring(0, 10) }}
+        </div>
+        <div class="meta-info-build-time">
+          Build Time: {{ formatDateTime(new Date(meta.compilationInfo.buildTime)) }}
+        </div>
       </div>
       <div class="about-page-actions">
         <VButton
@@ -36,6 +42,7 @@
 
 <script lang="ts">
 import { meta } from '@/core/meta'
+import { formatDateTime } from '@/core/utils/formatters'
 import {
   VButton,
   VIcon,
@@ -54,6 +61,7 @@ export default Vue.extend({
     }
   },
   methods: {
+    formatDateTime,
     async runAction(action: AboutPageAction, event: MouseEvent) {
       action.disabled = true
       try {

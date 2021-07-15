@@ -8,7 +8,13 @@ declare global {
   const JSZip: typeof import('jszip')
   // const VueMarkdown: import('vue').PluginObject<any>
 
-  type PackageUpdate = typeof import('@/components/package')
+  interface CompilationInfo {
+    commitHash: string
+    buildTime: number
+    branch: string
+  }
+  const webpackCompilationInfo: CompilationInfo
+
   interface Document {
     pictureInPictureElement: HTMLElement | null
     exitPictureInPicture: () => void
@@ -20,7 +26,6 @@ declare global {
     aid: string | undefined
     cid: string | undefined
     pageno: string | number | undefined
-    bilibiliEvolvedUpdate: PackageUpdate
     bilibiliEvolved: ExternalApis
     [key: string]: any
   }

@@ -21,16 +21,7 @@ const previewConfig = require('./webpack.dev')
 
 previewConfig.output.filename = 'bilibili-evolved.preview.user.js'
 previewConfig.mode = 'production'
-const packageConfig = Object.assign(getDefaultConfig(), {
-  mode: 'production',
-  entry: './src/components/package.ts',
-  output: {
-    filename: 'package.js',
-    library: 'bilibiliEvolvedUpdate',
-    libraryTarget: 'window',
-  },
-})
-const targets = [mainConfig, previewConfig, packageConfig].map(config => {
+const targets = [mainConfig, previewConfig].map(config => {
   config.cache = { type: 'memory' }
   config.devtool = false
   return config
