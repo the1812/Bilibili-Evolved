@@ -918,3 +918,30 @@ body:not(.simplify-comment) .panel-area .bb-comment {
 #page-dynamic .col-2 .section-title {
   @include border-color("5");
 }
+.msg-notify {
+  .modules .module .detail {
+    @include color("a");
+  }
+  .notifier {
+    .name {
+      @include color("e");
+    }
+    &:hover > {
+      @include theme-color();
+    }
+  }
+}
+.auto-reply-push {
+  @include background-color("2");
+  &__desc {
+    @include color("e");
+  }
+  .ar-recommend-item__info {
+    &--title {
+      @include color("e");
+    }
+    &--desc .time {
+      @include color("a");
+    }
+  }
+}
