@@ -915,3 +915,6 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include color("e");
   }
 }
+#page-dynamic .col-2 .section-title {
+  @include border-color("5");
+}
