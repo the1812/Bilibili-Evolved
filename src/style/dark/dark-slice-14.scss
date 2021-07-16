@@ -903,3 +903,15 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include theme-border-color();
   }
 }
+.subscribe-list li {
+  .subscribe-title {
+    @include color("e");
+  }
+  .subscribe-tips {
+    @include color("a");
+  }
+  .btn-subscribe {
+    @include theme-background-color();
+    @include color("e");
+  }
+}
