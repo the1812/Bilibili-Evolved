@@ -955,3 +955,25 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include foreground-color();
   }
 }
+.lottery-result__content {
+  @include background-color("2");
+  .winners .winner {
+    &__prize {
+      .prize-picture {
+        @include border-color("4");
+        &.default {
+          @include to-theme("blue");
+        }
+      }
+      &__title {
+        @include color("e");
+      }
+      &__desc {
+        @include color("a");
+      }
+    }
+    &__list:before {
+      @include background-color("4");
+    }
+  }
+}
