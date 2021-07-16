@@ -912,7 +912,7 @@ body:not(.simplify-comment) .panel-area .bb-comment {
   }
   .btn-subscribe {
     @include theme-background-color();
-    @include color("e");
+    @include foreground-color();
   }
 }
 #page-dynamic .col-2 .section-title {
@@ -943,5 +943,15 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     &--desc .time {
       @include color("a");
     }
+  }
+}
+#page-404 {
+  @include background-color("4");
+  .p404 .error {
+    @include color("a");
+  }
+  .back-btn {
+    @include theme-background-color();
+    @include foreground-color();
   }
 }
