@@ -2,26 +2,31 @@
   <div class="be-loading">
     <slot>
       <template
-        v-if="typeof content === 'string' && content.length > 0"
+        v-if="typeof config.content === 'string' && config.content.length > 0"
       >
-        {{ content }}
+        {{ config.content }}
       </template>
-      <component :is="content" v-if="typeof content !== 'string'"></component>
+      <component :is="config.content" v-if="typeof config.content !== 'string'"></component>
     </slot>
   </div>
 </template>
 <script lang="ts">
-import { getLoadingContent } from './v-loading'
+import { loadingContent } from './v-loading'
 
 export default Vue.extend({
   name: 'VLoading',
   data() {
     return {
-      content: '',
+      config: loadingContent,
     }
-  },
-  async created() {
-    this.content = await getLoadingContent()
   },
 })
 </script>
+<style lang="scss">
+@import "common";
+.be-loading {
+  flex-grow: 1;
+  @include h-center();
+  justify-content: center;
+}
+</style>

@@ -1,15 +1,6 @@
-import { getHook } from '@/plugins/hook'
+import { registerAndGetData } from '@/plugins/data'
 
-export const LoadingContentHook = 'v-loading-content'
-const DefaultLoadingContent = '加载中...'
-const LoadingContent = {
-  content: DefaultLoadingContent,
-}
-export const getLoadingContent = async () => {
-  const { after } = getHook(LoadingContentHook, LoadingContent)
-  const refused = await after()
-  if (refused) {
-    LoadingContent.content = DefaultLoadingContent
-  }
-  return LoadingContent.content
-}
+const defaultLoadingContent = '加载中...'
+export const [loadingContent] = registerAndGetData('vLoading', {
+  content: defaultLoadingContent,
+})

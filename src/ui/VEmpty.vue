@@ -2,26 +2,31 @@
   <div class="be-empty">
     <slot>
       <template
-        v-if="typeof content === 'string' && content.length > 0"
+        v-if="typeof config.content === 'string' && config.content.length > 0"
       >
-        {{ content }}
+        {{ config.content }}
       </template>
-      <component :is="content" v-if="typeof content !== 'string'"></component>
+      <component :is="config.content" v-if="typeof config.content !== 'string'"></component>
     </slot>
   </div>
 </template>
 <script lang="ts">
-import { getEmptyContent } from './v-empty'
+import { emptyContent } from './v-empty'
 
 export default Vue.extend({
   name: 'VEmpty',
   data() {
     return {
-      content: '',
+      config: emptyContent,
     }
-  },
-  async created() {
-    this.content = await getEmptyContent()
   },
 })
 </script>
+<style lang="scss">
+@import "common";
+.be-empty {
+  flex-grow: 1;
+  @include h-center();
+  justify-content: center;
+}
+</style>

@@ -1,15 +1,6 @@
-import { getHook } from '@/plugins/hook'
+import { registerAndGetData } from '@/plugins/data'
 
-export const EmptyContentHook = 'v-loading-content'
-const DefaultEmptyContent = '空空如也哦 =￣ω￣='
-const EmptyContent = {
-  content: DefaultEmptyContent,
-}
-export const getEmptyContent = async () => {
-  const { after } = getHook(EmptyContentHook, EmptyContent)
-  const refused = await after()
-  if (refused) {
-    EmptyContent.content = DefaultEmptyContent
-  }
-  return EmptyContent.content
-}
+const defaultEmptyContent = '空空如也哦 =￣ω￣='
+export const [emptyContent] = registerAndGetData('vEmpty', {
+  content: defaultEmptyContent,
+})

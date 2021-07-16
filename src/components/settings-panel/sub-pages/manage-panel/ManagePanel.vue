@@ -78,10 +78,10 @@
       </div>
     </div>
     <div v-if="!loaded" class="sub-page-row">
-      <VLoading />
+      <VLoading key="loading" />
     </div>
     <div v-if="loaded" class="manage-item-list">
-      <VEmpty v-if="debouncedList.length === 0" />
+      <VEmpty v-if="debouncedList.length === 0" key="empty" />
       <ManageItem
         v-for="item of debouncedList"
         :key="item.name"
