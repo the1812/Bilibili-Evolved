@@ -69,7 +69,8 @@
   @include theme-background-color("20");
   border-left-color: var(--theme-color) !important;
 }
-.b-info .balance-name {
+.b-info .balance-name,
+.shop-desc .desc-box .sub-title.reserve span.highlight {
   @include theme-color();
 }
 .bilibili-player-video-state-buff-icon {
