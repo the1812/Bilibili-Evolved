@@ -559,6 +559,7 @@ declare global {
   function isEmbeddedPlayer(): boolean
   function isIframe(): boolean
   function getI18nKey(): string
+  function bwpVideoFilter(selector: string): string
   function dq(selector: string): Element | null
   function dq(element: Element, selector: string): Element | null
   function dqa(selector: string): Element[]
