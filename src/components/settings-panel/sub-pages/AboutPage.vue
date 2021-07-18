@@ -18,10 +18,7 @@
           {{ meta.description }}
         </div>
         <div class="meta-info-commit">
-          Commit Hash: {{ meta.compilationInfo.commitHash.substring(0, 10) }}
-        </div>
-        <div class="meta-info-build-time">
-          Build Time: {{ formatDateTime(new Date(meta.compilationInfo.buildTime)) }}
+          Commit Hash: {{ meta.compilationInfo.commitHash.substring(0, 8) }}
         </div>
       </div>
       <div class="about-page-actions">

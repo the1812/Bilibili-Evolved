@@ -2,12 +2,13 @@ import { ComponentMetadata } from '@/components/types'
 import { matchUrlPattern } from '@/core/utils'
 import { columnUrls, feedsUrls } from '@/core/utils/urls'
 import { setupFeedImageExporter } from './feed'
+import desc from './desc.md'
 
 export const component: ComponentMetadata = {
   name: 'imageExporter',
   displayName: '图片批量导出',
   description: {
-    'zh-CN': '可以批量导出某个地方的图片, 目前支持动态和专栏. TODO: 补充文件名变量说明',
+    'zh-CN': desc,
   },
   tags: [
     componentsTags.feeds,

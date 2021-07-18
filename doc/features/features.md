@@ -2,6 +2,15 @@
 
 ## 组件
 
+### [复制动态链接](../../registry/dist/components/feeds/copy-link.js)
+`copyFeedsLink`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/copy-link.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/copy-link.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/copy-link.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/copy-link.js)
+
+开启后, 可在每条动态的菜单中选择复制链接.
+
 ### [禁止跳转动态详情](../../registry/dist/components/feeds/disable-details.js)
 `disableFeedsDetails`
 
@@ -47,6 +56,15 @@
 
 在顶栏的视频动态中, 无论标题多长总是完全展开.
 
+### [动态翻译](../../registry/dist/components/feeds/translate.js)
+`feedsTranslate`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/translate.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/translate.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/translate.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/translate.js)
+
+在每条动态下方添加翻译按钮.
+
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
 
@@ -56,6 +74,15 @@
 
 自动展开被折叠的动态.
 
+### [直播间自动抽奖](../../registry/dist/components/live/auto-draw.js)
+`liveAutoDraw`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/live/auto-draw.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/auto-draw.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/live/auto-draw.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/live/auto-draw.js)
+
+在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(
+
 ### [直播勋章快速更换](../../registry/dist/components/live/badge-helper.js)
 `badgeHelper`
 
@@ -64,6 +91,33 @@
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/live/badge-helper.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/live/badge-helper.js)
 
 在直播区中, 可从功能面板中直接切换勋章和头衔.
+
+### [直播弹幕发送栏](../../registry/dist/components/live/danmaku-sendbar.js)
+`liveDanmakuSendbar`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/live/danmaku-sendbar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/danmaku-sendbar.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/live/danmaku-sendbar.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/live/danmaku-sendbar.js)
+
+在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
+
+### [直播全屏包裹](../../registry/dist/components/live/gift-box.js)
+`liveGiftBox`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/live/gift-box.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/gift-box.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/live/gift-box.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/live/gift-box.js)
+
+在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮
+
+### [直播首页静音](../../registry/dist/components/live/home-mute.js)
+`liveHomeMute`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/live/home-mute.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/home-mute.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/live/home-mute.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/live/home-mute.js)
+
+禁止直播首页的推荐直播间自动开始播放.
 
 ### [删除直播水印](../../registry/dist/components/live/remove-watermark.js)
 `removeLiveWatermark`
@@ -128,6 +182,33 @@
 
 设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式. 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.
 
+### [隐藏推荐直播](../../registry/dist/components/style/hide/video/recommended-live.js)
+`hideRecommendedLive`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/hide/video/recommended-live.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/recommended-live.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/hide/video/recommended-live.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/hide/video/recommended-live.js)
+
+隐藏视频页面右侧下方的推荐直播.
+
+### [隐藏视频推荐](../../registry/dist/components/style/hide/video/related-videos.js)
+`hideRelatedVideos`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/related-videos.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/hide/video/related-videos.js)
+
+隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏视频推荐才能看到开关.
+
+### [使用细滚动条](../../registry/dist/components/style/scrollbar.js)
+`elegantScrollbar`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/scrollbar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/scrollbar.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/scrollbar.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/scrollbar.js)
+
+暂无描述.
+
 ### [简化评论区](../../registry/dist/components/style/simplify/comments.js)
 `simplifyComments`
 
@@ -146,6 +227,15 @@
 
 > 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.
 
+### [简化首页](../../registry/dist/components/style/simplify/home.js)
+`simplifyHome`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/simplify/home.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/home.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/simplify/home.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/simplify/home.js)
+
+隐藏原版首页不需要的元素/分区.
+
 ### [简化直播间](../../registry/dist/components/style/simplify/live.js)
 `simplifyLiveroom`
 
@@ -163,6 +253,51 @@
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/column-unlock.js)
 
 使专栏的文字可以选择.
+
+### [复制评论链接](../../registry/dist/components/utils/comments/copy-link.js)
+`copyCommentsLink`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/comments/copy-link.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/copy-link.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/comments/copy-link.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/comments/copy-link.js)
+
+开启后, 可在每条评论的菜单中选择复制链接.
+
+### [评论翻译](../../registry/dist/components/utils/comments/translate.js)
+`commentsTranslate`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/comments/translate.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/translate.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/comments/translate.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/comments/translate.js)
+
+在每条评论下方添加翻译按钮.
+
+### [图片批量导出](../../registry/dist/components/utils/image-exporter.js)
+`imageExporter`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/image-exporter.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-exporter.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/image-exporter.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/image-exporter.js)
+
+可以批量导出某个地方的图片, 目前支持动态和专栏.
+
+动态文件名变量:
+`user`: 用户名
+`id`: 动态 ID
+`n`: 第 n 张图
+
+专栏文件名变量:
+`title`: 专栏标题
+`n`: 第 n 张图
+
+### [高分辨率图片](../../registry/dist/components/utils/image-resolution.js)
+`imageResolution`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/image-resolution.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-resolution.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/image-resolution.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/image-resolution.js)
+
+根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些.
 
 ### [快捷键扩展](../../registry/dist/components/utils/keymap.js)
 `keymap`
@@ -212,6 +347,15 @@
 
 将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.
 
+### [BiliPlus跳转支持](../../registry/dist/components/video/biliplus-redirect.js)
+`biliplusRedirect`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/biliplus-redirect.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/biliplus-redirect.js)
+
+在视频/番剧/空间中, 可以从功能中的按钮点击转到BiliPlus上对应的页面.
+
 ### [启用弹幕空降](../../registry/dist/components/video/danmaku/airborne.js)
 `danmakuAirborne`
 
@@ -229,6 +373,15 @@
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/danmaku/download.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/danmaku/download.js)
 
 启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕.
+
+### [展开弹幕列表](../../registry/dist/components/video/danmaku/expand.js)
+`expandDanmakuList`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/expand.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/danmaku/expand.js)
+
+每次加载视频时自动展开弹幕列表.
 
 ### [下载视频](../../registry/dist/components/video/download.js)
 `downloadVideo`
@@ -256,6 +409,15 @@
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/outer-watchlater.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/outer-watchlater.js)
 
 将视频页面菜单里的`稍后再看`移到外面.
+
+### [强制保留弹幕发送栏](../../registry/dist/components/video/player/preserve-danmaku-input.js)
+`preserveDanmakuInput`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/player/preserve-danmaku-input.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/preserve-danmaku-input.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/player/preserve-danmaku-input.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/player/preserve-danmaku-input.js)
+
+在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
 ### [倍速记忆](../../registry/dist/components/video/player/remember-speed.js)
 `rememberVideoSpeed`
@@ -308,12 +470,26 @@
 
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/i18n/ja-JP.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/i18n/ja-JP.js)
 
+### [设置面板 - "最近使用"类别](../../registry/dist/plugins/settings-panel/recent-components.js)
+`settingsPanel.tagFilters.recentComponents`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/settings-panel/recent-components.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/settings-panel/recent-components.js)
+
 ### [自定义顶栏 - 夜间模式开关](../../registry/dist/plugins/style/custom-navbar-dark-mode.js)
 `customNavbar.items.darkMode`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/style/custom-navbar-dark-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-dark-mode.js)
 
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/style/custom-navbar-dark-mode.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/style/custom-navbar-dark-mode.js)
+
+### [加载提示 - 灵梦油库里](../../registry/dist/plugins/v-loading/reimu.js)
+`vLoading.reimu`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/v-loading/reimu.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/v-loading/reimu.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/v-loading/reimu.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/v-loading/reimu.js)
 
 ### [下载视频 - aria2 输出支持](../../registry/dist/plugins/video/download/aria2-output.js)
 `downloadVideo.outputs.aria2`

@@ -1,6 +1,14 @@
 [
   {
     "type": "component",
+    "name": "copyFeedsLink",
+    "displayName": "复制动态链接",
+    "description": "开启后, 可在每条动态的菜单中选择复制链接.",
+    "fullRelativePath": "../../registry/dist/components/feeds/copy-link.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/copy-link.js"
+  },
+  {
+    "type": "component",
     "name": "disableFeedsDetails",
     "displayName": "禁止跳转动态详情",
     "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
@@ -41,6 +49,14 @@
   },
   {
     "type": "component",
+    "name": "feedsTranslate",
+    "displayName": "动态翻译",
+    "description": "在每条动态下方添加翻译按钮.",
+    "fullRelativePath": "../../registry/dist/components/feeds/translate.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/translate.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "自动展开被折叠的动态.",
@@ -49,11 +65,43 @@
   },
   {
     "type": "component",
+    "name": "liveAutoDraw",
+    "displayName": "直播间自动抽奖",
+    "description": "在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(",
+    "fullRelativePath": "../../registry/dist/components/live/auto-draw.js",
+    "fullAbsolutePath": "registry/dist/components/live/auto-draw.js"
+  },
+  {
+    "type": "component",
     "name": "badgeHelper",
     "displayName": "直播勋章快速更换",
     "description": "在直播区中, 可从功能面板中直接切换勋章和头衔.",
     "fullRelativePath": "../../registry/dist/components/live/badge-helper.js",
     "fullAbsolutePath": "registry/dist/components/live/badge-helper.js"
+  },
+  {
+    "type": "component",
+    "name": "liveDanmakuSendbar",
+    "displayName": "直播弹幕发送栏",
+    "description": "在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.",
+    "fullRelativePath": "../../registry/dist/components/live/danmaku-sendbar.js",
+    "fullAbsolutePath": "registry/dist/components/live/danmaku-sendbar.js"
+  },
+  {
+    "type": "component",
+    "name": "liveGiftBox",
+    "displayName": "直播全屏包裹",
+    "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮",
+    "fullRelativePath": "../../registry/dist/components/live/gift-box.js",
+    "fullAbsolutePath": "registry/dist/components/live/gift-box.js"
+  },
+  {
+    "type": "component",
+    "name": "liveHomeMute",
+    "displayName": "直播首页静音",
+    "description": "禁止直播首页的推荐直播间自动开始播放.",
+    "fullRelativePath": "../../registry/dist/components/live/home-mute.js",
+    "fullAbsolutePath": "registry/dist/components/live/home-mute.js"
   },
   {
     "type": "component",
@@ -113,11 +161,43 @@
   },
   {
     "type": "component",
+    "name": "hideRecommendedLive",
+    "displayName": "隐藏推荐直播",
+    "description": "隐藏视频页面右侧下方的推荐直播.",
+    "fullRelativePath": "../../registry/dist/components/style/hide/video/recommended-live.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/video/recommended-live.js"
+  },
+  {
+    "type": "component",
+    "name": "hideRelatedVideos",
+    "displayName": "隐藏视频推荐",
+    "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏视频推荐才能看到开关.",
+    "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
+  },
+  {
+    "type": "component",
+    "name": "elegantScrollbar",
+    "displayName": "使用细滚动条",
+    "description": "暂无描述.",
+    "fullRelativePath": "../../registry/dist/components/style/scrollbar.js",
+    "fullAbsolutePath": "registry/dist/components/style/scrollbar.js"
+  },
+  {
+    "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
     "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端`这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
     "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
+  },
+  {
+    "type": "component",
+    "name": "simplifyHome",
+    "displayName": "简化首页",
+    "description": "隐藏原版首页不需要的元素/分区.",
+    "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
+    "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
   },
   {
     "type": "component",
@@ -134,6 +214,38 @@
     "description": "使专栏的文字可以选择.",
     "fullRelativePath": "../../registry/dist/components/utils/column-unlock.js",
     "fullAbsolutePath": "registry/dist/components/utils/column-unlock.js"
+  },
+  {
+    "type": "component",
+    "name": "copyCommentsLink",
+    "displayName": "复制评论链接",
+    "description": "开启后, 可在每条评论的菜单中选择复制链接.",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/copy-link.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/copy-link.js"
+  },
+  {
+    "type": "component",
+    "name": "commentsTranslate",
+    "displayName": "评论翻译",
+    "description": "在每条评论下方添加翻译按钮.",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/translate.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/translate.js"
+  },
+  {
+    "type": "component",
+    "name": "imageExporter",
+    "displayName": "图片批量导出",
+    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n`user`: 用户名\r\n`id`: 动态 ID\r\n`n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n`title`: 专栏标题\r\n`n`: 第 n 张图",
+    "fullRelativePath": "../../registry/dist/components/utils/image-exporter.js",
+    "fullAbsolutePath": "registry/dist/components/utils/image-exporter.js"
+  },
+  {
+    "type": "component",
+    "name": "imageResolution",
+    "displayName": "高分辨率图片",
+    "description": "根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些.",
+    "fullRelativePath": "../../registry/dist/components/utils/image-resolution.js",
+    "fullAbsolutePath": "registry/dist/components/utils/image-resolution.js"
   },
   {
     "type": "component",
@@ -177,6 +289,14 @@
   },
   {
     "type": "component",
+    "name": "biliplusRedirect",
+    "displayName": "BiliPlus跳转支持",
+    "description": "在视频/番剧/空间中, 可以从功能中的按钮点击转到BiliPlus上对应的页面.",
+    "fullRelativePath": "../../registry/dist/components/video/biliplus-redirect.js",
+    "fullAbsolutePath": "registry/dist/components/video/biliplus-redirect.js"
+  },
+  {
+    "type": "component",
     "name": "danmakuAirborne",
     "displayName": "启用弹幕空降",
     "description": "暂无描述.",
@@ -190,6 +310,14 @@
     "description": "启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕.",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/download.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/download.js"
+  },
+  {
+    "type": "component",
+    "name": "expandDanmakuList",
+    "displayName": "展开弹幕列表",
+    "description": "每次加载视频时自动展开弹幕列表.",
+    "fullRelativePath": "../../registry/dist/components/video/danmaku/expand.js",
+    "fullAbsolutePath": "registry/dist/components/video/danmaku/expand.js"
   },
   {
     "type": "component",
@@ -214,6 +342,14 @@
     "description": "将视频页面菜单里的`稍后再看`移到外面.",
     "fullRelativePath": "../../registry/dist/components/video/outer-watchlater.js",
     "fullAbsolutePath": "registry/dist/components/video/outer-watchlater.js"
+  },
+  {
+    "type": "component",
+    "name": "preserveDanmakuInput",
+    "displayName": "强制保留弹幕发送栏",
+    "description": "在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.",
+    "fullRelativePath": "../../registry/dist/components/video/player/preserve-danmaku-input.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/preserve-danmaku-input.js"
   },
   {
     "type": "component",
@@ -263,10 +399,24 @@
   },
   {
     "type": "plugin",
+    "name": "settingsPanel.tagFilters.recentComponents",
+    "displayName": "设置面板 - \"最近使用\"类别",
+    "fullRelativePath": "../../registry/dist/plugins/settings-panel/recent-components.js",
+    "fullAbsolutePath": "registry/dist/plugins/settings-panel/recent-components.js"
+  },
+  {
+    "type": "plugin",
     "name": "customNavbar.items.darkMode",
     "displayName": "自定义顶栏 - 夜间模式开关",
     "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-dark-mode.js",
     "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-dark-mode.js"
+  },
+  {
+    "type": "plugin",
+    "name": "vLoading.reimu",
+    "displayName": "加载提示 - 灵梦油库里",
+    "fullRelativePath": "../../registry/dist/plugins/v-loading/reimu.js",
+    "fullAbsolutePath": "registry/dist/plugins/v-loading/reimu.js"
   },
   {
     "type": "plugin",

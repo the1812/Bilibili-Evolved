@@ -11,7 +11,7 @@ const branch = process
 const compilationInfo = {
   commitHash,
   branch,
-  buildTime: Number(new Date()),
+  // buildTime: Number(new Date()),
 }
 module.exports = {
   compilationInfo,
