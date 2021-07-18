@@ -69,7 +69,8 @@
   @include theme-background-color("20");
   border-left-color: var(--theme-color) !important;
 }
-.b-info .balance-name {
+.b-info .balance-name,
+.shop-desc .desc-box .sub-title.reserve span.highlight {
   @include theme-color();
 }
 .bilibili-player-video-state-buff-icon {
@@ -913,6 +914,48 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include theme-border-color();
   }
 }
+.subscribe-list li {
+  .subscribe-title {
+    @include color("e");
+  }
+  .subscribe-tips {
+    @include color("a");
+  }
+  .btn-subscribe {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
+#page-dynamic .col-2 .section-title {
+  @include border-color("5");
+}
+.msg-notify {
+  .modules .module .detail {
+    @include color("a");
+  }
+  .notifier {
+    .name {
+      @include color("e");
+    }
+    &:hover > {
+      @include theme-color();
+    }
+  }
+}
+.auto-reply-push {
+  @include background-color("2");
+  &__desc {
+    @include color("e");
+  }
+  .ar-recommend-item__info {
+    &--title {
+      @include color("e");
+    }
+    &--desc .time {
+      @include color("a");
+    }
+  }
+}
 .bui-progress-bar {
   &, &::before {
     @include theme-background-color();
@@ -940,5 +983,27 @@ body:not(.simplify-comment) .panel-area .bb-comment {
   @include foreground-color();
   &:hover {
     @include theme-background-color();
+  }
+}
+.lottery-result__content {
+  @include background-color("2");
+  .winners .winner {
+    &__prize {
+      .prize-picture {
+        @include border-color("4");
+        &.default {
+          @include to-theme("blue");
+        }
+      }
+      &__title {
+        @include color("e");
+      }
+      &__desc {
+        @include color("a");
+      }
+    }
+    &__list:before {
+      @include background-color("4");
+    }
   }
 }
