@@ -65,6 +65,7 @@ import {
 import { createPopper } from '@popperjs/core'
 import { dq } from '@/core/utils'
 import { addComponentListener } from '@/core/settings'
+import { getHook } from '@/plugins/hook'
 import ComponentSettings from './ComponentSettings.vue'
 import {
   ComponentMetadata, ComponentTag, components,
@@ -74,7 +75,7 @@ import ComponentTags from './ComponentTags.vue'
 import { getDescriptionText } from '../description'
 
 let activePopper: ReturnType<typeof createPopper>
-const defaultSearchFilter = () => true
+const defaultSearchFilter = (items: ComponentMetadata[]) => items
 export default {
   name: 'SettingsPanel',
   components: {
@@ -144,11 +145,17 @@ export default {
       this.selectedComponent = null
     },
     selectComponent(component: ComponentMetadata) {
-      const isAlreadySelected = this.selectedComponent?.name === component.name
+      const closeHooks = getHook('settingsPanel.componentDetail.close')
+      const openHooks = getHook('settingsPanel.componentDetail.open')
+      const selectedName = this.selectedComponent?.name
+      const isAlreadySelected = selectedName === component.name
+      closeHooks.before(selectedName)
       this.closePopper()
+      closeHooks.after(selectedName)
       if (isAlreadySelected) {
         return
       }
+      openHooks.before(component.name)
       this.selectedComponent = component
       activePopper = createPopper(
         dq(`.component-settings[data-name=${component.name}]`),
@@ -157,9 +164,11 @@ export default {
           placement: 'right',
         },
       )
+      openHooks.after(component.name)
     },
     updateRenderedComponents() {
-      this.renderedComponents = components.filter(c => {
+      console.log('updateRenderedComponents')
+      const internalFiltered = components.filter(c => {
         if (c.hidden) {
           return false
         }
@@ -170,10 +179,11 @@ export default {
             c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
             getDescriptionText(c),
           ]
-          return text.join('\n').toLowerCase().includes(this.searchKeyword.toLowerCase()) && this.searchFilter(c)
+          return text.join('\n').toLowerCase().includes(this.searchKeyword.toLowerCase())
         }
-        return this.searchFilter(c)
+        return true
       })
+      this.renderedComponents = this.searchFilter(internalFiltered)
     },
   },
 }

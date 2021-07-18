@@ -66,22 +66,16 @@ import { Executable, VueModule } from '@/core/common-types'
 import { ascendingSort } from '@/core/utils/sort'
 import VIcon from '@/ui/icon/VIcon.vue'
 import VPopup from '@/ui/VPopup.vue'
-import { ComponentMetadata, components, ComponentTag } from '../component'
+import { components, ComponentTag } from '../component'
 import { subPages } from './sub-pages'
+import { SettingsTag, tagFilters } from './tag-filter'
 
 export default Vue.extend({
   components: { VIcon, VPopup },
-  // props: {
-  //   components: {
-  //     type: Array,
-  //     required: true,
-  //     default: () => [],
-  //   },
-  // },
   data() {
     return {
       tags: [],
-      selectedTagName: 'all',
+      selectedTagName: '',
       subPages,
       selectedSubPage: null,
       selectedSubPageOpen: false,
@@ -90,37 +84,29 @@ export default Vue.extend({
   },
   created() {
     this.refreshTags()
+    this.reset()
+  },
+  mounted() {
+    this.selectTag(this.tags[0])
   },
   methods: {
     refreshTags() {
-      let tags = [] as (ComponentTag & { count: number })[]
       const renderedComponents = components.filter(c => !c.hidden)
-      renderedComponents.forEach(it => it.tags.forEach(t => {
-        tags.push({ count: 0, ...t })
-      }))
-      const counts = lodash.countBy(tags, (t: ComponentTag) => t.name)
-      tags = lodash.uniqBy(tags, t => t.name)
-      tags.forEach(t => (t.count = counts[t.name]))
-      this.tags = [{
-        name: 'all',
-        displayName: '全部',
-        color: 'inherit',
-        icon: 'mdi-shape-outline',
-        order: 0,
-        count: renderedComponents.length,
-      } as ComponentTag, ...tags].sort(ascendingSort(it => it.order))
+      const tags = tagFilters.flatMap(f => {
+        if (typeof f === 'function') {
+          return f({ components, renderedComponents })
+        }
+        return f
+      })
+      this.tags = tags.sort(ascendingSort(it => it.order))
     },
     reset() {
-      this.selectedTagName = 'all'
+      this.selectedTagName = this.tags[0].name
     },
     selectTag(tag: ComponentTag) {
       this.selectedTagName = tag.name
-      this.$emit('change', (c: ComponentMetadata) => {
-        if (tag.name === 'all') {
-          return true
-        }
-        return c.tags.some(t => t.name === tag.name)
-      })
+      const { filter } = (this.tags as SettingsTag[]).find(t => t.name === tag.name)
+      this.$emit('change', filter)
     },
     async openSubPage(e: MouseEvent, component: Executable<VueModule>) {
       if (this.selectedSubPage === component) {
