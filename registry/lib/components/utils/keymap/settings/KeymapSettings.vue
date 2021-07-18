@@ -140,6 +140,7 @@ export default Vue.extend({
   }
 }
 .keymap-settings {
+  font-size: 12px;
   display: flex;
   flex-direction: column;
   padding: 12px 12px 12px 18px;
