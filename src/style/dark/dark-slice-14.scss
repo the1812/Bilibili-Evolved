@@ -935,3 +935,10 @@ body:not(.simplify-comment) .panel-area .bb-comment {
   @include color("e");
   @include fill("e");
 }
+.hot-not-rank .hot-not-rank-text {
+  @include theme-background-color("80");
+  @include foreground-color();
+  &:hover {
+    @include theme-background-color();
+  }
+}
