@@ -1,3 +1,5 @@
+import { getJson, getText } from '@/core/ajax'
+
 export class VideoInfo {
   aid: string
   cid: number
@@ -34,7 +36,6 @@ export class VideoInfo {
     } else {
       url = `https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`
     }
-    const { getJson } = await import('@/core/ajax')
     const json = await getJson(url)
     if (json.code !== 0) {
       throw new Error(json.message)
@@ -84,7 +85,6 @@ export class BangumiInfo {
     this.videos = []
   }
   async fetchInfo() {
-    const { getText } = await import('@/core/ajax')
     const data = await getText(`https://www.bilibili.com/bangumi/play/ep${this.ep}/`)
     const json = JSON.parse(data.match(/window\.__INITIAL_STATE__=(.*);\(function\(\){/)[1])
     this.title = json.mediaInfo.title

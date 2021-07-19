@@ -1,0 +1,12 @@
+.multi-page .cur-list {
+  ul {
+    max-height: none !important;
+  }
+  li {
+    height: auto !important;
+    a {
+      overflow: visible !important;
+      white-space: normal !important;
+    }
+  }
+}

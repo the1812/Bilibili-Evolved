@@ -11,7 +11,7 @@ export const mediaListUrls = [
   ...watchlaterUrls,
   ...favoriteListUrls,
 ]
-/** 含有视频的页面 */
+/** 含有普通视频的页面 */
 export const videoUrls = [
   '//www.bilibili.com/video/',
   ...mediaListUrls,
@@ -28,6 +28,11 @@ export const cheeseUrls = [
 export const videoAndBangumiUrls = [
   ...videoUrls,
   ...bangumiUrls,
+]
+/** 含有所有类型视频(包括番剧和课程)的页面 */
+export const allVideoUrls = [
+  ...videoAndBangumiUrls,
+  ...cheeseUrls,
 ]
 /** 主站及各分区页面 */
 export const mainSiteUrls = [

@@ -9,6 +9,8 @@ import ColumnCard from './feeds/ColumnCard.vue'
 import * as disableProfilePopup from './feeds/disable-profile-popup'
 import * as notify from './feeds/notify'
 import * as videoDanmaku from './video/video-danmaku'
+import * as videoInfo from './video/video-info'
+import * as playerLight from './video/player-light'
 import * as liveControlBar from './live/live-control-bar'
 import * as commentApis from './utils/comment-apis'
 import MachineTranslator from './i18n/machine-translator/MachineTranslator.vue'
@@ -34,6 +36,8 @@ export const componentApis = {
   },
   video: {
     videoDanmaku,
+    videoInfo,
+    playerLight,
   },
   live: {
     liveControlBar,

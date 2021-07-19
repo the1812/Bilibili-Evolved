@@ -159,6 +159,7 @@ export default Vue.extend({
   }
 
   .main-content {
+    transition: none;
     font-size: 10pt;
     height: 100%;
     display: flex;

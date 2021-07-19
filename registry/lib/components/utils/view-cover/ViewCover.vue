@@ -14,7 +14,7 @@ import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { logError } from '@/core/utils/log'
 import { showImage, DefaultWidget } from '@/ui'
-import { VideoInfo } from '../../video/video-info'
+import { VideoInfo } from '@/components/video/video-info'
 
 export default Vue.extend({
   components: {

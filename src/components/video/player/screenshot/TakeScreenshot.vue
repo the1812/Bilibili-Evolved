@@ -21,7 +21,7 @@ export default Vue.extend({
   methods: {
     async takeScreenshot(e: MouseEvent) {
       const { select } = await import('@/core/spin-query')
-      const video = (await select('#bofqi video')) as HTMLVideoElement
+      const video = (await select('.bilibili-player-video video')) as HTMLVideoElement
       const screenshot = takeScreenshot(video, e.shiftKey)
       if (!screenShotsList) {
         screenShotsList = mountVueComponent(ScreenshotContainer)

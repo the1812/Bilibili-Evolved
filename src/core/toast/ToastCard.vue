@@ -33,7 +33,7 @@ export default Vue.extend({
   background: #fff;
   min-width: var(--card-min-width);
   max-width: 60vw;
-  min-height: 96px;
+  min-height: 87px;
   margin: 8px 0;
   @include shadow();
   box-sizing: border-box;
@@ -63,7 +63,7 @@ export default Vue.extend({
     font-size: 18px;
     color: #444;
     opacity: 0.5;
-    margin: 16px;
+    margin: 12px;
     font-weight: bold;
     flex: 1 1 auto;
     body.dark & {
@@ -71,8 +71,8 @@ export default Vue.extend({
     }
   }
   &-dismiss {
-    height: 24px;
-    width: 24px;
+    height: 20px;
+    width: 20px;
     @include h-center();
     flex: 0 0 auto;
     padding: 16px;
@@ -92,8 +92,7 @@ export default Vue.extend({
   &-message {
     color: #000;
     font-size: 14px;
-    margin: 16px;
-    margin-top: 0;
+    margin: 0 16px 12px 12px;
     white-space: pre-wrap;
     display: flex;
     align-items: center;

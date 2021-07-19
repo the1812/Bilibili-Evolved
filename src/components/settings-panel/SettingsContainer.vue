@@ -186,6 +186,9 @@ export default {
     }
   }
 }
+.bilibili-player-dm-tip-wrap {
+  pointer-events: none !important;
+}
 @import "./dock/center";
 @import "./dock/left";
 @import "./dock/right";

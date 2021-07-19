@@ -34,7 +34,7 @@ export const getSubtitleConfig = async (): Promise<[
   SubtitleConverterConfig,
   string,
 ]> => {
-  const { getFriendlyTitle } = await import('../../title')
+  const { getFriendlyTitle } = await import('@/core/utils/title')
   const {
     SubtitleConverter,
     SubtitleSize,
@@ -108,7 +108,7 @@ export const getSubtitleConfig = async (): Promise<[
   return [config, language]
 }
 export const getSubtitleList = async (aid: string, cid: string | number) => {
-  const { VideoInfo } = await import('../../video-info')
+  const { VideoInfo } = await import('@/components/video/video-info')
   const info = new VideoInfo(aid)
   info.cid = typeof cid === 'string' ? parseInt(cid) : cid
   await info.fetchInfo()

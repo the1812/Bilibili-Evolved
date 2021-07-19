@@ -20,7 +20,7 @@ export const loadLazyPanel = async (selector: string, params: LazyPanelParameter
   if (!panel) {
     throw new Error(`lazy panel failed! selector = ${selector}`)
   }
-  let tempStyle: HTMLStyleElement | null = null
+  let tempStyle: HTMLStyleElement
   if (style !== undefined) {
     tempStyle = document.createElement('style')
     tempStyle.textContent = style
@@ -29,8 +29,7 @@ export const loadLazyPanel = async (selector: string, params: LazyPanelParameter
   raiseEvent(panel, 'mouseover')
   await delay(enterDelay)
   raiseEvent(panel, 'mouseout')
-  await delay(leaveDelay)
-  tempStyle?.remove()
+  setTimeout(() => tempStyle?.remove(), leaveDelay)
   return panel
 }
 /**

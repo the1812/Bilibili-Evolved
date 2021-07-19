@@ -49,6 +49,7 @@ export default Vue.extend({
   background-color: #8884;
   border-radius: 2px;
   min-width: 24px;
+  overflow: hidden;
   .progress {
     border-radius: 2px;
     background-color: var(--theme-color);

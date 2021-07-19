@@ -1,0 +1,11 @@
+#bilibili-player.mini-player {
+  .drag-bar {
+    touch-action: none !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    top: -40px !important;
+    i:last-child {
+      margin: 10px !important;
+    }
+  }
+}

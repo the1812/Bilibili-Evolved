@@ -14,7 +14,7 @@
 <script lang="ts">
 import { videoChange } from '@/core/observer'
 import { logError } from '@/core/utils/log'
-import { VideoInfo } from '../../../video-info'
+import { VideoInfo } from '@/components/video/video-info'
 
 export default Vue.extend({
   data() {
