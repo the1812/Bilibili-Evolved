@@ -6,7 +6,7 @@
 
 [⚙ 设置](#设置)
 
-[📚 功能] TODO
+[📚 功能](doc/features/features.md)
 
 [👻 兼容性](#兼容性)
 
@@ -31,7 +31,7 @@
 ## 推荐配置
 - 操作系统: 64-bit Windows 10 / macOS 10.15+
 - 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 80+ / Firefox 65+ / Edge 80+ / Safari 14+
+- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+ / Safari 14.1+
 - 处理器: Intel Core i7 / AMD Ryzen 5
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
