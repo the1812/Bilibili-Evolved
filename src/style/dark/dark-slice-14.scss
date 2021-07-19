@@ -215,7 +215,8 @@
   &-playlist-item-img {
     @include no-image;
   }
-  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix {
+  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix,
+  &-viewpointlist-item.active .player-auxiliary-viewpointlist-item-title-prefix {
     @include to-theme("blue");
   }
   &-area .player-auxiliary-collapse-viewpointlist {
@@ -232,6 +233,7 @@
     }
   }
 }
+
 .remd-video-card .card-box .pic-box {
   @include background-color("4");
 }
