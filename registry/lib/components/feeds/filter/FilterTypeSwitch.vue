@@ -1,7 +1,7 @@
 <template>
   <div class="filter-type-switch feeds-filter-swtich">
-    <label :class="{disabled}">
-      <span class="name" :class="{disabled}">{{ type.name }}</span>
+    <label :class="{ disabled }">
+      <span class="name" :class="{ disabled }">{{ type.name }}</span>
       <input v-model="disabled" type="checkbox" />
       <VIcon v-if="disabled" :size="16" class="disabled" icon="mdi-cancel"></VIcon>
       <VIcon v-else :size="16" icon="mdi-check"></VIcon>
@@ -11,11 +11,14 @@
 
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
+import {
+  VIcon,
+} from '@/ui'
 
 const { options } = getComponentSettings('feedsFilter')
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue'),
+    VIcon,
   },
   props: {
     name: {
@@ -71,13 +74,12 @@ export default Vue.extend({
   label {
     cursor: pointer;
     margin: 0;
-    padding: 4px 8px;
+    padding: 4px 6px;
     border-radius: 4px;
-    background-color: #0001;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid transparent;
+    border: 1px solid #8884;
 
     .name {
       font-size: 12px;
@@ -86,7 +88,7 @@ export default Vue.extend({
       color: var(--theme-color) !important;
     }
     &:hover {
-      background-color: #0002;
+      background-color: #8882;
     }
     input {
       display: none;

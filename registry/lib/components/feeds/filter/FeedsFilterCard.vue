@@ -1,8 +1,8 @@
 <template>
-  <div class="feeds-filter" :class="{collapse}">
+  <div class="feeds-filter" :class="{ collapse }">
     <div class="feeds-filter-header" @click="collapse = !collapse">
       <h1>动态过滤</h1>
-      <VIcon icon="mdi-chevron-up"></VIcon>
+      <VIcon icon="mdi-chevron-up" />
     </div>
     <h2>类型</h2>
     <div class="filter-types">
@@ -11,7 +11,7 @@
         :key="type.id"
         :name="name"
         :type="type"
-      ></FilterTypeSwitch>
+      />
     </div>
     <h2>关键词</h2>
     <div class="filter-patterns">
@@ -20,9 +20,9 @@
         <VIcon
           title="删除"
           icon="mdi-trash-can-outline"
-          :size="18"
+          :size="16"
           @click.native="deletePattern(p)"
-        ></VIcon>
+        />
       </div>
     </div>
     <div class="add-pattern">
@@ -33,7 +33,7 @@
         @keydown.enter="addPattern(newPattern)"
       />
       <VButton type="transparent" @click.native="addPattern(newPattern)">
-        <VIcon title="添加" icon="mdi-plus" :size="18"></VIcon>
+        <VIcon title="添加" icon="mdi-plus" :size="18" />
       </VButton>
     </div>
     <h2>侧边栏</h2>
@@ -44,10 +44,10 @@
         class="filter-side-card-switch feeds-filter-swtich"
         @click="toggleBlockSide(id)"
       >
-        <label :class="{disabled: sideDisabled(id)}">
+        <label :class="{ disabled: sideDisabled(id) }">
           <span
             class="name"
-            :class="{disabled: sideDisabled(id)}"
+            :class="{ disabled: sideDisabled(id) }"
           >{{ type.displayName }}</span>
           <VIcon :size="16" class="disabled" icon="mdi-cancel"></VIcon>
           <VIcon :size="16" icon="mdi-check"></VIcon>
@@ -58,14 +58,18 @@
 </template>
 
 <script lang="ts">
+import { FeedsCard, FeedsCardType } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { attributes } from '@/core/observer'
+import {
+  VIcon,
+  TextBox,
+  VButton,
+} from '@/ui'
 import { FeedsFilterOptions } from '.'
-import { FeedsCard, FeedsCardType } from '../api'
 
-const options = getComponentSettings('feedsFilter')
-  .options as FeedsFilterOptions
+const options = getComponentSettings('feedsFilter').options as FeedsFilterOptions
 interface SideCardType {
   className: string
   displayName: string
@@ -96,15 +100,15 @@ const sideCards: { [id: number]: SideCardType } = {
     displayName: '关注栏',
   },
 }
-let cardsManager: typeof import('../api').feedsCardsManager
+let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 
 export default Vue.extend({
   components: {
     FilterTypeSwitch: () => import('./FilterTypeSwitch.vue'),
-    VIcon: () => import('@/ui/icon/VIcon.vue'),
-    TextBox: () => import('@/ui/TextBox.vue'),
-    VButton: () => import('@/ui/VButton.vue'),
+    VIcon,
+    TextBox,
+    VButton,
   },
   data() {
     return {
@@ -142,7 +146,7 @@ export default Vue.extend({
       )
     })
     document.body.classList.add('enable-feeds-filter')
-    const { feedsCardsManager, feedsCardTypes } = await import('../api')
+    const { feedsCardsManager, feedsCardTypes } = await import('@/components/feeds/api')
     const success = await feedsCardsManager.startWatching()
     if (!success) {
       console.error('feedsCardsManager.startWatching() failed')
@@ -242,6 +246,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
         'column': 64,
         'audio': 256,
         'bangumi': 512,
+        'liveRecord': 2047,
         'share': 2048
       )
   {
@@ -310,18 +315,19 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
     display: none !important;
   }
 }
-.adaptive-scroll {
-  > div:first-child:empty {
-    display: none !important;
-  }
-  .scroll-content {
-    position: static !important;
-    top: unset !important;
-    bottom: unset !important;
-  }
-}
+// .adaptive-scroll {
+//   > div:first-child:empty {
+//     display: none !important;
+//   }
+//   .scroll-content {
+//     position: static !important;
+//     top: unset !important;
+//     bottom: unset !important;
+//   }
+// }
 .feeds-filter {
   background-color: white;
+  font-size: 12px;
   width: 100%;
   padding: 12px 16px;
   // float: left;
@@ -393,21 +399,20 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   }
   .filter-patterns {
     &:not(:empty) {
-      margin-bottom: 8px;
+      margin-bottom: 4px;
     }
     .pattern {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 4px 8px;
+      padding: 4px 6px;
       border-radius: 4px;
-      background-color: #0001;
       font-size: 12px;
+      border: 1px solid #8884;
       &:not(:last-child) {
         margin-bottom: 4px;
       }
       .be-icon {
-        font-size: 18px;
         cursor: pointer;
       }
     }
@@ -420,8 +425,8 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
       font-size: 12px;
     }
     .be-button {
-      margin-left: 8px;
-      padding: 4px;
+      margin-left: 6px;
+      padding: 4px 6px;
     }
   }
 }

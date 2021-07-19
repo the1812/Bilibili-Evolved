@@ -1,9 +1,13 @@
 import { select } from '@/core/spin-query'
-import { raiseEvent } from '@/core/utils'
+import { matchUrlPattern, raiseEvent, none } from '@/core/utils'
 import { loadLazyPlayerSettingsPanel } from '@/core/utils/lazy-panel'
+import { playerUrls } from '@/core/utils/urls'
 
 let initialized = false
 const setLight = (on: boolean) => {
+  if (!playerUrls.some(url => matchUrlPattern(url))) {
+    return none
+  }
   if (!initialized) {
     console.log('initialized')
     loadLazyPlayerSettingsPanel(

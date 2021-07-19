@@ -157,25 +157,6 @@ export default Vue.extend({
   },
   async mounted() {
     this.getActions()
-    // if (!getComponentSettings('hideSearchRecommendations').enabled) {
-    //   const json = await getJson(
-    //     'https://api.bilibili.com/x/web-interface/search/default',
-    //   )
-    //   if (json.code === 0) {
-    //     this.recommended.word = json.data.show_name
-    //     let href: string
-    //     if (json.data.url !== '') {
-    //       href = json.data.url
-    //     } else if (json.data.name.startsWith('av')) {
-    //       href = `https://www.bilibili.com/${json.data.name}`
-    //     } else {
-    //       href = `https://search.bilibili.com/all?keyword=${json.data.name}`
-    //     }
-    //     this.recommended.href = href
-    //   } else {
-    //     console.error('获取搜索推荐词失败')
-    //   }
-    // }
   },
   methods: {
     debounceGetActions: lodash.debounce(getActions, 200),

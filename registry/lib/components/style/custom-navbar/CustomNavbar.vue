@@ -72,8 +72,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+$navbar-height: 50px;
 html {
-  --navbar-height: 50px;
+  --navbar-height: #{$navbar-height};
   --navbar-foreground: #555;
   --navbar-background: white;
   --navbar-bounds-padding: 10%;
@@ -93,6 +94,19 @@ body.custom-navbar-loading::after {
 }
 body.dark.custom-navbar-loading::after {
   background-color: #333;
+}
+body.fixed-navbar {
+  .left-panel {
+    .adaptive-scroll .scroll-content {
+      top: $navbar-height !important;
+    }
+  }
+  &.enable-feeds-filter .left-panel,
+  .right-panel {
+    .adaptive-scroll .scroll-content {
+      top: #{$navbar-height + 8px} !important;
+    }
+  }
 }
 
 .custom-navbar *,

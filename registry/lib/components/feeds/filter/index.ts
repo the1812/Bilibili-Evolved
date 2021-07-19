@@ -1,4 +1,4 @@
-import { ComponentMetadata, componentsTags, ComponentOptions } from '@/components/component'
+import { ComponentMetadata, ComponentOptions } from '@/components/types'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
@@ -35,7 +35,7 @@ const options: ComponentOptions = {
 export type FeedsFilterOptions = {
   types: number[]
   patterns: string[]
-  /** 虽然代码里按照`number[]`, 但其实存进去的是`string[]`, 不过问题不大( */
+  /** FIXME: 虽然代码里按照`number[]`, 但其实存进去的是`string[]`? */
   sideCards: number[]
   specialTypes: number[]
 }
@@ -46,7 +46,6 @@ export const component: ComponentMetadata = {
     'zh-CN': '按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.',
   },
   entry,
-  enabledByDefault: false,
   tags: [
     componentsTags.feeds,
   ],
@@ -54,6 +53,7 @@ export const component: ComponentMetadata = {
   reload: () => document.body.classList.remove('disable-feeds-filter'),
   unload: () => document.body.classList.add('disable-feeds-filter'),
   urlInclude: [
+    // 仅动态首页
     /^https:\/\/t\.bilibili\.com\/$/,
   ],
 }
