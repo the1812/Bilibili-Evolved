@@ -1022,3 +1022,50 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     }
   }
 }
+.resizable-component .publish-btn {
+  @include theme-background-color();
+  @include foreground-color();
+}
+.note-list {
+  @include background-color("4");
+  &-header {
+    @include color("e");
+    @include border-color("5");
+  }
+  &-nickname>a,
+  &-summary {
+    @include color("e");
+  }
+  &-time {
+    @include color("a");
+  }
+  &-detail {
+    @include theme-color("80");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  &-card:not(:last-of-type) {
+    @include border-color("5");
+  }
+  &-btn {
+    @include theme-background-color("80");
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+}
+.bili-view-note {
+  .note-view-drag-bar {
+    @include background-color("4");
+  }
+  .close-btn {
+    @include background-color("3");
+    @include color("e");
+    &:hover {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+}
