@@ -218,6 +218,19 @@
   &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix {
     @include to-theme("blue");
   }
+  &-area .player-auxiliary-collapse-viewpointlist {
+    @include background-color("4");
+  }
+  &-viewpointlist {
+    @include background-color("3");
+    &-content {
+      @include color("e");
+    }
+    &-item.active .player-auxiliary-viewpointlist-content,
+    &-item:hover .player-auxiliary-viewpointlist-content {
+      @include theme-color();
+    }
+  }
 }
 .remd-video-card .card-box .pic-box {
   @include background-color("4");
