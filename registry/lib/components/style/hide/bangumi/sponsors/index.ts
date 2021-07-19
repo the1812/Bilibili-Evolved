@@ -1,14 +1,13 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
+import { ComponentMetadata } from '@/components/types'
 import { toggleStyle } from '@/components/styled-component'
-import { bangumiUrls } from '@/components/video/video-urls'
+import { bangumiUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
-  name: 'hideBangumiSponsors',
   displayName: '隐藏番剧承包',
   tags: [
     componentsTags.style,
   ],
-  ...toggleStyle(() => import('./sponsors.scss')),
+  ...toggleStyle('hideBangumiSponsors', () => import('./sponsors.scss')),
   enabledByDefault: false,
   urlInclude: bangumiUrls,
   description: {
