@@ -4,6 +4,7 @@
   ============
 */
 
+import { getComponentSettings } from '@/core/settings'
 import { ProgressSeekMode } from './gesture-preview'
 
 const getPosition = (element: HTMLElement) => {
@@ -28,7 +29,7 @@ type Position = { x: number, y: number, width: number, height: number }
  * - `cancel`: 请求取消调整
  */
 export class SwipeAction extends EventTarget {
-  minSwipeDistance = 20
+  minSwipeDistance = getComponentSettings('touchPlayerGestures').options.swiperDistance
   touchStart = false
   startPosition: Position = null
   lastAction: {

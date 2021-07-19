@@ -27,4 +27,11 @@ export const component: ComponentMetadata = {
   entry: () => setTouch(true),
   reload: () => setTouch(true),
   unload: () => setTouch(false),
+  options: {
+    touchMoveDistance: {
+      displayName: '拖动触发最小距离',
+      defaultValue: 10,
+      hidden: true,
+    },
+  },
 }

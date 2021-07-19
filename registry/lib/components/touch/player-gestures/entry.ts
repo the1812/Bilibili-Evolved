@@ -58,7 +58,6 @@ export const entry = async () => {
     }>) => {
       const { progress, mode } = e.detail
       gestureVM.preview.seekMode = mode
-      console.log('startPreview', progress)
       gestureVM.startPreview({
         progress,
       })

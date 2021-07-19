@@ -280,9 +280,11 @@ export default Vue.extend({
         height: 70px;
         width: 120px;
         margin-bottom: 8px;
+        border-radius: 4px;
       }
       .name {
         color: #aaa;
+        padding: 4px 6px;
         margin-bottom: 6px;
       }
       .progress-label {

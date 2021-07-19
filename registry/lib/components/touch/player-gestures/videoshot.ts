@@ -1,3 +1,17 @@
+const supportWebp = lodash.once(() => {
+  try {
+    const canvas = document.createElement('canvas')
+    if (canvas.getContext && canvas.getContext('2d')) {
+      try {
+        return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
+      } catch (ex) {
+        return false
+      }
+    } else { return false }
+  } catch (ex) {
+    return false
+  }
+})
 /** 处理视频缩略图的style */
 export class Videoshot {
   aid = unsafeWindow.aid
@@ -45,7 +59,7 @@ export class Videoshot {
     if (imageData === null) {
       return null
     }
-    if (Videoshot.supportWebp) {
+    if (supportWebp()) {
       imageData = imageData.map(url => url.replace('.jpg', '.jpg@.webp'))
     }
     const xLength = parseInt(data.pv_x_len) || 10
@@ -59,20 +73,6 @@ export class Videoshot {
       height: ySize,
       backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
       backgroundPosition: `${x}px ${y}px`,
-    }
-  }
-  static get supportWebp() {
-    try {
-      const canvas = document.createElement('canvas')
-      if (canvas.getContext && canvas.getContext('2d')) {
-        try {
-          return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
-        } catch (ex) {
-          return false
-        }
-      } else { return false }
-    } catch (ex) {
-      return false
     }
   }
 }

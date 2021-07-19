@@ -15,9 +15,10 @@ body.touch-player-control {
         padding: 0 !important;
         .bilibili-player-video-btn {
           height: 100% !important;
-          padding: 0 2px !important;
+          padding-left: 2px !important;
+          padding-right: 2px !important;
           &.bilibili-player-video-btn-start {
-            padding-left: 18px !important;
+            padding-left: 22px !important;
           }
           &.bilibili-player-video-btn-fullscreen {
             padding-right: 18px !important;
@@ -51,6 +52,11 @@ body.touch-player-control {
     &.mode-fullscreen,
     &.mode-webfullscreen {
       .bilibili-player-area {
+        .bilibili-player-video-btn {
+          flex-shrink: 0 !important;
+          flex-basis: 48px !important;
+        }
+        .bilibili-player-video-btn-speed,
         .bilibili-player-video-btn-pagelist {
           width: 54px !important;
           &::before {
@@ -58,18 +64,12 @@ body.touch-player-control {
             font-size: 26px;
           }
         }
-        .bilibili-player-video-btn-speed {
-          width: 54px !important;
-          &::before {
-            width: 50px;
-            font-size: 26px;
-          }
-        }
-        .bilibili-player-video-btn-start .bp-svgicon {
-          height: 32px !important;
+        .bilibili-player-video-btn-start {
+          padding-top: 0 !important;
+          // height: 32px !important;
         }
         .bilibili-player-video-danmaku-switch {
-          width: 20px !important;
+          // width: 20px !important;
           padding-left: 0 !important;
         }
       }

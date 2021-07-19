@@ -1,3 +1,5 @@
+import { getComponentSettings } from '@/core/settings'
+
 interface Point {
   x: number
   y: number
@@ -65,7 +67,7 @@ export const enableTouchMove = (element: HTMLElement, options?: TouchMoveOptions
   // let startTouch: Touch
   let lastTouch: Touch
   let move: boolean
-  const minMoveDistance = lodash.get(options, 'minMoveDistance', 20)
+  const minMoveDistance = lodash.get(options, 'minMoveDistance', getComponentSettings('touchMiniPlayer').options.touchMoveDistance)
   // const scroll = lodash.get(options, 'scroll', false)
   const touchstart = (e: TouchEvent) => {
     if (e.touches.length < 1) {

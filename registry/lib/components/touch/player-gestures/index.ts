@@ -15,4 +15,11 @@ export const component: ComponentMetadata = {
   },
   entry,
   urlInclude: playerUrls,
+  options: {
+    swiperDistance: {
+      displayName: '手势触发最小距离',
+      defaultValue: 10,
+      hidden: true,
+    },
+  },
 }
