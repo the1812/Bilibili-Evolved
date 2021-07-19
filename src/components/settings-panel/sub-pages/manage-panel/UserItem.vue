@@ -74,8 +74,8 @@ export default Vue.extend({
 
 .manage-panel .user-item {
   display: grid;
-  gap: 6px;
-  grid-template: 'displayName name line remove' / auto auto 1fr auto;
+  column-gap: 6px;
+  grid-template: 'displayName line remove' auto 'name line remove' auto / auto 1fr auto;
   align-items: center;
   padding: 6px 0;
 
@@ -85,6 +85,7 @@ export default Vue.extend({
   .user-item-name {
     grid-area: name;
     opacity: .5;
+    font-size: 11px;
   }
   .user-item-line {
     grid-area: line;

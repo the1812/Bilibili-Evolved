@@ -36,6 +36,7 @@
             @click.native="selectComponent(c)"
           >
           </ComponentSettings>
+          <VEmpty v-if="renderedComponents.length === 0" />
         </div>
       </div>
       <VPopup
@@ -61,6 +62,7 @@ import {
   VIcon,
   TextBox,
   VPopup,
+  VEmpty,
 } from '@/ui'
 import { createPopper } from '@popperjs/core'
 import { dq } from '@/core/utils'
@@ -82,6 +84,7 @@ export default {
     VIcon,
     TextBox,
     VPopup,
+    VEmpty,
     ComponentSettings,
     ComponentDetail,
     ComponentTags,
@@ -112,16 +115,15 @@ export default {
   },
   watch: {
     searchKeyword: lodash.debounce(function searchKeywordWatch() {
-      if (this.searchKeyword !== '') {
-        this.searchFilter = defaultSearchFilter
-        this.$refs.componentTags?.reset()
-      }
+      // if (this.searchKeyword !== '') {
+      //   this.$refs.componentTags?.reset()
+      // }
       this.updateRenderedComponents()
     }, 200),
     searchFilter() {
-      if (this.searchFilter !== defaultSearchFilter) {
-        this.searchKeyword = ''
-      }
+      // if (this.searchFilter !== defaultSearchFilter) {
+      this.searchKeyword = ''
+      // }
       this.updateRenderedComponents()
     },
     components() {
@@ -167,7 +169,6 @@ export default {
       openHooks.after(component.name)
     },
     updateRenderedComponents() {
-      console.log('updateRenderedComponents')
       const internalFiltered = components.filter(c => {
         if (c.hidden) {
           return false
@@ -183,6 +184,12 @@ export default {
         }
         return true
       })
+      // if (this.searchKeyword) {
+      //   console.log('updateRenderedComponents', this.searchKeyword)
+      //   this.renderedComponents = internalFiltered
+      //   return
+      // }
+      console.log('updateRenderedComponents', this.searchKeyword)
       this.renderedComponents = this.searchFilter(internalFiltered)
     },
   },
@@ -277,6 +284,10 @@ export default {
         padding: 0;
         position: relative;
         @include no-scrollbar();
+        .be-empty {
+          min-height: 36px;
+          padding: 7px;
+        }
         .component-list {
           display: grid;
           grid-template-columns: auto;
