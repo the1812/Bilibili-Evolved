@@ -86,9 +86,9 @@ export default Vue.extend({
         const eventTypes = ['mousedown', 'touchstart']
         eventTypes.forEach(type => {
           if (value) {
-            document.body.addEventListener(type, this.openHandler)
+            document.documentElement.addEventListener(type, this.openHandler)
           } else {
-            document.body.removeEventListener(type, this.openHandler)
+            document.documentElement.removeEventListener(type, this.openHandler)
           }
         })
       }

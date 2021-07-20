@@ -15,7 +15,7 @@ export const convertHexColorForDialogue = (hexColor: string) => {
 }
 export const convertHexColorForStyle = (hexColor: string, opacity = 1) => {
   const { red, green, blue } = parseHexColor(hexColor)
-  const hexOpacity = Math.round(255 * (1 - opacity)).toString(16)
+  const hexOpacity = Math.round(255 * (1 - opacity)).toString(16).padStart(2, '0')
   return `&H${hexOpacity}${blue}${green}${red}`.toUpperCase()
 }
 const round = (number: number) => {

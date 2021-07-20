@@ -121,7 +121,7 @@ export default Vue.extend({
   }
   .widget-items {
     position: relative;
-    @include v-stretch();
+    @include v-stretch(8px);
     align-items: flex-start;
     .widget-item {
       font-size: 14px;
@@ -137,17 +137,11 @@ export default Vue.extend({
         position: absolute;
         white-space: nowrap;
       }
-      &:not(:last-child) {
-        margin-bottom: 8px;
-      }
     }
     .multiple-widgets {
-      @include v-center();
+      @include v-stretch(8px);
       align-items: flex-start;
       position: relative;
-      > .default-widget:not(:last-child) {
-        margin-bottom: 8px;
-      }
     }
   }
 }

@@ -1,7 +1,7 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formData } from '@/core/utils'
 import { ascendingSort, descendingSort } from '@/core/utils/sort'
-import { allQualities, VideoQuality } from '../../video-quality'
+import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi, DownloadVideoFragment, DownloadVideoInfo, DownloadVideoInputItem,

@@ -30,7 +30,7 @@ import { DefaultWidget } from '@/ui'
 import danmakuIcon from './danmaku.svg'
 import { DanmakuDownloadType, getBlobByType } from './utils'
 
-addData('custom-icons', (icons: { [key: string]: string }) => {
+addData('ui.icons', (icons: { [key: string]: string }) => {
   icons.danmaku = danmakuIcon
 })
 

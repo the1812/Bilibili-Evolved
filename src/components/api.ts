@@ -8,10 +8,13 @@ import VideoCard from './feeds/VideoCard.vue'
 import ColumnCard from './feeds/ColumnCard.vue'
 import * as disableProfilePopup from './feeds/disable-profile-popup'
 import * as notify from './feeds/notify'
+import * as assUtils from './video/ass-utils'
+import * as playerLight from './video/player-light'
 import * as videoDanmaku from './video/video-danmaku'
 import * as videoInfo from './video/video-info'
-import * as playerLight from './video/player-light'
+import * as videoQuality from './video/video-quality'
 import * as liveControlBar from './live/live-control-bar'
+import * as liveSocket from './live/live-socket'
 import * as commentApis from './utils/comment-apis'
 import MachineTranslator from './i18n/machine-translator/MachineTranslator.vue'
 import * as switchOptions from './switch-options'
@@ -35,12 +38,15 @@ export const componentApis = {
     notify,
   },
   video: {
+    assUtils,
+    playerLight,
     videoDanmaku,
     videoInfo,
-    playerLight,
+    videoQuality,
   },
   live: {
     liveControlBar,
+    liveSocket,
   },
   utils: {
     commentApis,

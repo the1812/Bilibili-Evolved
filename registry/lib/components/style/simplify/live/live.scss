@@ -26,6 +26,74 @@ $prefix: "simplifyLiveroom-switch";
   }
 }
 
+.#{$prefix}-headerPanel {
+  .player-ctnr .room-info-ctnr {
+    display: inline-flex !important;
+    flex: 1 0 auto;
+    align-items: center !important;
+    margin-left: 12px !important;
+  }
+  .head-info-section {
+    height: 52px !important;
+    box-sizing: content-box !important;
+  }
+  .header-info-ctnr {
+    display: flex !important;
+    padding: 10px 24px 10px 12px !important;
+    height: auto !important;
+    .face-pendants {
+      display: none !important;
+    }
+  }
+  .room-cover {
+    width: 32px !important;
+    height: 32px !important;
+    border-radius: 50% !important;
+  }
+  .room-info-upper-row {
+    display: flex !important;
+    align-items: center !important;
+    flex: 1 0 auto !important;
+    flex-direction: row-reverse !important;
+    position: static !important;
+
+    .normal-mode {
+      position: absolute !important;
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+    }
+    .area-text {
+      display: inline-flex !important;
+    }
+    .upper-right-ctnr {
+      position: static !important;
+      transform: none !important;
+    }
+    .room-title {
+      display: flex !important;
+      align-items: center !important;
+
+      @media screen and (max-width: 1750px) {
+        & .title-length-limit {
+          max-width: 250px !important;
+        }
+      }
+    }
+  }
+  .room-info-down-row {
+    margin: 0 !important;
+    order: -1;
+    > :nth-child(n + 3) {
+      display: none !important;
+    }
+  }
+  .room-owner-username {
+    max-width: 150px !important;
+  }
+  .live-status-label {
+    display: none !important;
+  }
+}
 .#{$prefix}-enterPrompt {
   .chat-history-list.with-brush-prompt {
     &:not(.with-penury-gift) {

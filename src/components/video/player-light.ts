@@ -14,8 +14,6 @@ const setLight = (on: boolean) => {
       '.bilibili-player-video-btn-setting',
       '.bilibili-player-video-btn-setting-wrap',
       {
-        enterDelay: 1000,
-        leaveDelay: 1000,
         style: '.bilibili-player-video-btn-setting-wrap { display: none !important }',
       },
     )

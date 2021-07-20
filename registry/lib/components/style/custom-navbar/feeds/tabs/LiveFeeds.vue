@@ -25,8 +25,8 @@ import {
   VEmpty,
   DpiImage,
 } from '@/ui'
-import { LiveFeedItem } from '@/components/feeds/live-feed-item'
 import { responsiveGetPages, getJsonWithCredentials } from '@/core/ajax'
+import { LiveFeedItem } from './live-feed-item'
 
 export default Vue.extend({
   components: {

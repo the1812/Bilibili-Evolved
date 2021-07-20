@@ -50,6 +50,10 @@ export const component = createSwitchOptions({
       defaultValue: true,
       displayName: '付费礼物',
     },
+    headerPanel: {
+      defaultValue: false,
+      displayName: '标题栏活动',
+    },
     userEffect: {
       defaultValue: true,
       displayName: '入场特效',

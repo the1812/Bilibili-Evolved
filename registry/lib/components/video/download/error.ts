@@ -1,4 +1,4 @@
-import { loginRequiredQualities, vipRequiredQualities } from '../video-quality'
+import { loginRequiredQualities, vipRequiredQualities } from '@/components/video/video-quality'
 import { DownloadVideoInfo, DownloadVideoInputItem } from './types'
 
 export const throwQualityError = (value: number) => {
