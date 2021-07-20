@@ -60,7 +60,7 @@ export interface FeedsCardsListAdaptor {
    */
   watchCardsList: (manager: FeedsCardsManager) => Promise<boolean>
 }
-const ListAdaptorKey = 'feeds.api.manager.listAdaptors'
+const ListAdaptorKey = 'feeds.manager.listAdaptors'
 addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
   adaptors.push(
     {
@@ -228,7 +228,7 @@ class FeedsCardsManager extends EventTarget {
       return
     }
     if (node instanceof HTMLElement && node.classList.contains('card')) {
-      const { id } = await FeedsCardsManager.parseCard(node)
+      const id = node.getAttribute('data-did') as string
       const index = this.cards.findIndex(c => c.id === id)
       if (index === -1) {
         return
@@ -250,6 +250,7 @@ class FeedsCardsManager extends EventTarget {
       const subElement = await sq(
         () => element.querySelector(selector),
         it => it !== null || element.parentNode === null,
+        { queryInterval: 100 },
       ) as HTMLElement
       if (element.parentNode === null) {
         // console.log('skip detached node:', element)
@@ -288,6 +289,7 @@ class FeedsCardsManager extends EventTarget {
       const el = await sq(
         () => element,
         (it: any) => Boolean(getVueData(it) || !element.parentNode),
+        { queryInterval: 100 },
       )
       if (element.parentNode === null) {
         // console.log('skip detached node:', element)
@@ -329,7 +331,7 @@ class FeedsCardsManager extends EventTarget {
       likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
       element,
       type: getFeedsCardType(element),
-      presented: true,
+      get presented() { return element.parentNode !== null },
       async getText() {
         const result = await getComplexText(this.type)
         this.text = result
@@ -338,7 +340,6 @@ class FeedsCardsManager extends EventTarget {
       },
     }
     await card.getText()
-    card.presented = element.parentNode !== null
     element.setAttribute('data-type', card.type.id.toString())
     if (isRepostType(card)) {
       const currentUsername = card.username
@@ -373,7 +374,7 @@ class FeedsCardsManager extends EventTarget {
       }
       return undefined
     }
-    const cards = [...cardsList.querySelectorAll('.card[data-did]')]
+    const cards = [...cardsList.querySelectorAll(selector)]
     cards.forEach(it => this.addCard(it))
     return childList(cardsList, records => {
       records.forEach(record => {

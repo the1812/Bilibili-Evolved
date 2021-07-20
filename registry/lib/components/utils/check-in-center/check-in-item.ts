@@ -1,6 +1,6 @@
 import { postTextWithCredentials, getJsonWithCredentials } from '@/core/ajax'
 import { Toast } from '@/core/toast'
-import { delay, formData, getCsrf } from '@/core/utils'
+import { formData, getCsrf } from '@/core/utils'
 import { registerAndGetData } from '@/plugins/data'
 
 export interface CheckInItem {
@@ -11,12 +11,6 @@ export interface CheckInItem {
   disabled?: boolean
 }
 const builtInItems: CheckInItem[] = [
-  {
-    name: 'test',
-    displayName: 'test',
-    icon: 'mdi-seed-outline',
-    action: () => delay(3000),
-  },
   {
     name: 'seeds-to-coins',
     displayName: '瓜子换硬币',

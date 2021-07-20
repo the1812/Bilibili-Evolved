@@ -1,4 +1,4 @@
-import { getFeeds, FeedsCardType } from '@/components/feeds/api'
+import { getFeeds, FeedsCardType, applyContentFilter } from '@/components/feeds/api'
 import { descendingStringSort } from '@/core/utils/sort'
 import { logError } from '@/core/utils/log'
 import { setLatestID } from '@/components/feeds/notify'
@@ -56,9 +56,9 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
           }
           const jsonCards = lodash.get(json, 'data.cards', []).map(jsonMapper) as MappedItem[]
 
-          let concatCards = cards.concat(jsonCards).sort(
+          let concatCards = applyContentFilter(cards.concat(jsonCards).sort(
             descendingStringSort(it => it.id),
-          )
+          ))
 
           if (concatCards.length > 0 && this.onCardsUpdate) {
             concatCards = this.onCardsUpdate(concatCards)

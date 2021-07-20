@@ -2,6 +2,7 @@ import { getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
 import { watchlaterList } from '@/core/watchlater'
+import { getData, registerData } from '@/plugins/data'
 import { descendingStringSort } from '@/core/utils/sort'
 import { VideoCard } from '../video-card'
 import { FeedsCard, FeedsCardType } from './types'
@@ -41,78 +42,96 @@ export const groupVideoFeeds = (cards: VideoCard[]) => {
  * > 比如传参番剧类型结果依然混入的预约视频, 导致数据混乱. 不知道之后有没有修复, 目前是使用此方法过滤掉预约类卡片.
  */
 export const isPreOrderedVideo = (card: any) => _.get(card, 'extra.is_reserve_recall', 0) === 1
-export const getVideoFeeds = async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCard[]> => {
-  if (!getUID()) {
-    return []
-  }
-  const json = await getJsonWithCredentials(
-    `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type === 'video' ? 8 : 512}`,
-  )
-  if (json.code !== 0) {
-    throw new Error(json.message)
-  }
-  const dataCards = json.data.cards as any[]
-  const dataCardsWithoutPreOrder = dataCards.filter(it => !isPreOrderedVideo(JSON.parse(it.card)))
-  if (type === 'video') {
-    return groupVideoFeeds(dataCards.map(
-      (c: any): VideoCard => {
-        const card = JSON.parse(c.card)
-        const topics = lodash.get(c, 'display.topic_info.topic_details', []).map(
-          (it: any) => ({
-            id: it.topic_id,
-            name: it.topic_name,
-          }),
-        )
-        return {
-          id: c.desc.dynamic_id_str,
-          aid: card.aid,
-          bvid: c.desc.bvid || card.bvid,
-          title: card.title,
-          upID: c.desc.user_profile.info.uid,
-          upName: c.desc.user_profile.info.uname,
-          upFaceUrl: c.desc.user_profile.info.face,
-          coverUrl: card.pic,
-          description: card.desc,
-          timestamp: c.timestamp,
-          time: new Date(c.timestamp * 1000),
-          topics,
-          dynamic: card.dynamic,
-          like: formatCount(c.desc.like),
-          duration: card.duration,
-          durationText: formatDuration(card.duration, 0),
-          playCount: formatCount(card.stat.view),
-          danmakuCount: formatCount(card.stat.danmaku),
-          watchlater: watchlaterList.includes(card.aid),
-        }
-      },
-    ))
-  } if (type === 'bangumi') {
-    return dataCardsWithoutPreOrder.map(
-      (c: any): VideoCard => {
-        const card = JSON.parse(c.card)
-        return {
-          id: c.desc.dynamic_id_str,
-          aid: card.aid,
-          bvid: c.desc.bvid || card.bvid,
-          epID: card.episode_id,
-          title: card.new_desc,
-          upName: card.apiSeasonInfo.title,
-          upFaceUrl: card.apiSeasonInfo.cover,
-          coverUrl: card.cover,
-          description: '',
-          timestamp: c.timestamp,
-          time: new Date(c.timestamp * 1000),
-          like: formatCount(c.desc.like),
-          durationText: '',
-          playCount: formatCount(card.play_count),
-          danmakuCount: formatCount(card.bullet_count),
-          watchlater: false,
-        }
-      },
-    )
-  }
-  return []
+
+export interface FeedsContentFilter {
+  filter: <T> (items: T[]) => T[]
 }
+const contentFiltersKey = 'feeds.contentFilters'
+registerData(contentFiltersKey, [] as FeedsContentFilter[])
+/** 对动态内容进行过滤 */
+export const applyContentFilter = <T> (items: T[]) => {
+  const [contentFilters] = getData(contentFiltersKey) as [FeedsContentFilter[]]
+  const result = contentFilters.reduce((acc, it) => (acc = it.filter(acc)), items)
+  return result
+}
+/** 对异步获取动态内容的函数进行包装, 将返回值套用 `applyContentFilter` */
+export const withContentFilter = <Args extends any[], Item> (
+  func: (...args: Args) => Promise<Item[]>,
+) => (...args: Args) => func(...args).then(items => applyContentFilter(items))
+export const getVideoFeeds = withContentFilter(
+  async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCard[]> => {
+    if (!getUID()) {
+      return []
+    }
+    const json = await getJsonWithCredentials(
+      `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type === 'video' ? 8 : 512}`,
+    )
+    if (json.code !== 0) {
+      throw new Error(json.message)
+    }
+    const dataCards = json.data.cards as any[]
+    const dataCardsWithoutPreOrder = dataCards.filter(it => !isPreOrderedVideo(JSON.parse(it.card)))
+    if (type === 'video') {
+      return groupVideoFeeds(dataCards.map(
+        (c: any): VideoCard => {
+          const card = JSON.parse(c.card)
+          const topics = lodash.get(c, 'display.topic_info.topic_details', []).map(
+            (it: any) => ({
+              id: it.topic_id,
+              name: it.topic_name,
+            }),
+          )
+          return {
+            id: c.desc.dynamic_id_str,
+            aid: card.aid,
+            bvid: c.desc.bvid || card.bvid,
+            title: card.title,
+            upID: c.desc.user_profile.info.uid,
+            upName: c.desc.user_profile.info.uname,
+            upFaceUrl: c.desc.user_profile.info.face,
+            coverUrl: card.pic,
+            description: card.desc,
+            timestamp: c.timestamp,
+            time: new Date(c.timestamp * 1000),
+            topics,
+            dynamic: card.dynamic,
+            like: formatCount(c.desc.like),
+            duration: card.duration,
+            durationText: formatDuration(card.duration, 0),
+            playCount: formatCount(card.stat.view),
+            danmakuCount: formatCount(card.stat.danmaku),
+            watchlater: watchlaterList.includes(card.aid),
+          }
+        },
+      ))
+    } if (type === 'bangumi') {
+      return dataCardsWithoutPreOrder.map(
+        (c: any): VideoCard => {
+          const card = JSON.parse(c.card)
+          return {
+            id: c.desc.dynamic_id_str,
+            aid: card.aid,
+            bvid: c.desc.bvid || card.bvid,
+            epID: card.episode_id,
+            title: card.new_desc,
+            upName: card.apiSeasonInfo.title,
+            upFaceUrl: card.apiSeasonInfo.cover,
+            coverUrl: card.cover,
+            description: '',
+            timestamp: c.timestamp,
+            time: new Date(c.timestamp * 1000),
+            like: formatCount(c.desc.like),
+            durationText: '',
+            playCount: formatCount(card.play_count),
+            danmakuCount: formatCount(card.bullet_count),
+            watchlater: false,
+          }
+        },
+      )
+    }
+    return []
+  },
+)
 
 // let mockupCalled = false
 /**

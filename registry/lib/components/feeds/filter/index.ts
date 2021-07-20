@@ -1,4 +1,5 @@
 import { ComponentMetadata, ComponentOptions } from '@/components/types'
+import { feedsFilterPlugin } from './plugin'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
@@ -56,4 +57,5 @@ export const component: ComponentMetadata = {
     // 仅动态首页
     /^https:\/\/t\.bilibili\.com\/$/,
   ],
+  plugin: feedsFilterPlugin,
 }

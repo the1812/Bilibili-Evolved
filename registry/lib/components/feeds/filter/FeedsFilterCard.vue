@@ -68,6 +68,7 @@ import {
   VButton,
 } from '@/ui'
 import { FeedsFilterOptions } from '.'
+import { hasBlockedPattern } from './pattern'
 
 const options = getComponentSettings('feedsFilter').options as FeedsFilterOptions
 interface SideCardType {
@@ -171,22 +172,7 @@ export default Vue.extend({
   },
   methods: {
     updateCard(card: FeedsCard) {
-      const testPattern = (pattern: string, text: string) => {
-        if (pattern.startsWith('/') && pattern.endsWith('/')) {
-          return new RegExp(pattern.slice(1, pattern.length - 1)).test(text)
-        }
-        return text.includes(pattern)
-      }
-      const block: boolean = (() => options.patterns.some(pattern => {
-        const upNameMatch = pattern.match(/(.+) up:([^ ]+)/)
-        if (upNameMatch) {
-          return (
-            testPattern(upNameMatch[1], card.text)
-              && testPattern(upNameMatch[2], card.username)
-          )
-        }
-        return testPattern(pattern, card.text)
-      }))()
+      const block = options.patterns.some(p => hasBlockedPattern(p, card))
       if (block) {
         card.element.classList.add('pattern-block')
       } else {

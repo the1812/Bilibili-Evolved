@@ -234,7 +234,7 @@ export default {
       }
     }
     .cooperation {
-      margin: 0 11px 8px 11px;
+      margin: 0 12px 8px 8px;
     }
     .stats {
       align-self: end;
@@ -431,13 +431,21 @@ export default {
       justify-content: flex-start;
       .cooperation-up {
         @include face-image();
-        flex: 0 0 12px;
-        width: 12px;
+        flex: 0 0 15px;
+        width: 15px;
         display: flex;
+        .face {
+          border: 1px solid #8882;
+          padding: 2px;
+          background-color: #fff;
+          body.dark & {
+            background-color: #282828;
+          }
+        }
       }
       &:hover .cooperation-up {
         flex-basis: auto;
-        width: 24px;
+        width: 30px;
         margin-right: 4px;
       }
     }
