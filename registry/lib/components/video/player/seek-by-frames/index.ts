@@ -4,6 +4,7 @@ import { attributesSubtree } from '@/core/observer'
 import { playerReady } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
+import { KeyBindingAction } from '../../../utils/keymap/bindings'
 import desc from './desc.md'
 import seekLeft from './seek-left.svg'
 import seekRight from './seek-right.svg'
@@ -76,4 +77,29 @@ export const component: ComponentMetadata = {
   reload: () => document.body.classList.remove(SeekByFramesDisabledClass),
   unload: () => document.body.classList.add(SeekByFramesDisabledClass),
   urlInclude: playerUrls,
+  plugin: {
+    displayName: '逐帧调整 - 快捷键支持',
+    setup: () => {
+      addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
+        actions.previousFrame = {
+          displayName: '上一帧',
+          run: context => {
+            const { clickElement } = context
+            clickElement('.be-video-control-bar-extend [data-name="seekPrevFrame"]', context)
+          },
+        }
+        actions.nextFrame = {
+          displayName: '下一帧',
+          run: context => {
+            const { clickElement } = context
+            clickElement('.be-video-control-bar-extend [data-name="seekNextFrame"]', context)
+          },
+        }
+      })
+      addData('keymap.presets', (presetBase: Record<string, string>) => {
+        presetBase.previousFrame = 'shift arrowLeft'
+        presetBase.nextFrame = 'shift arrowRight'
+      })
+    },
+  },
 }

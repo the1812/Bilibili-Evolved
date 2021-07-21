@@ -3,7 +3,7 @@ import { ComponentMetadata, componentsTags } from '../types'
 
 export const component: ComponentMetadata = {
   name: 'launchBar',
-  displayName: 'Launch Bar',
+  displayName: '搜索栏',
   configurable: false,
   entry: none,
   hidden: true,
