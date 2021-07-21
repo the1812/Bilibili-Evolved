@@ -180,7 +180,9 @@ blockquote {
 .round-corner .van-popper-favorite .play-all .bilifont,
 .rank-item .content .info:hover .title,
 .rank-list .rank-item .content .info:hover .title,
-.rank-list .rank-item .content .info .up-name:hover {
+.rank-list .rank-item .content .info .up-name:hover,
+.n .n-fs:hover p,
+.n .n-gz:hover p {
   @include theme-color();
 }
 
@@ -283,4 +285,12 @@ blockquote {
 .members-info .wide-members .avatar .is-vip,
 .up-info .up-info_right .name .username.is-vip {
   color: #fb7299 !important;
+}
+.bilibili-player .bilibili-player-video-danmaku-setting-left-block-content .bilibili-player-block-filter-type.disabled {
+  .bilibili-player-block-filter-image {
+    @include theme-fill();
+  }
+  .bilibili-player-block-filter-label {
+    @include theme-color();
+  }
 }
