@@ -24,7 +24,7 @@
           <a
             class="cover-container"
             target="_blank"
-            :href="'https://www.bilibili.com/video/av' + card.aid"
+            :href="'https://www.bilibili.com/video/' + card.bvid"
           >
             <DpiImage
               class="cover"
@@ -37,7 +37,7 @@
           <a
             class="title"
             target="_blank"
-            :href="'https://www.bilibili.com/video/av' + card.aid"
+            :href="'https://www.bilibili.com/video/' + card.bvid"
             :title="card.title"
           >{{ card.title }}</a>
           <a
@@ -90,6 +90,7 @@ interface FavoritesItemInfo extends VideoCard {
 const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
   id: item.id,
   aid: item.id,
+  bvid: item.bvid,
   coverUrl: item.cover.replace('http:', 'https:'),
   favoriteTimestamp: item.fav_time * 1000,
   favoriteTime: formatDate(new Date(item.fav_time * 1000)),
