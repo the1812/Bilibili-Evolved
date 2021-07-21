@@ -55,6 +55,9 @@ body.touch-player-control {
     &.mode-fullscreen,
     &.mode-webfullscreen {
       .bilibili-player-area {
+        .bilibili-player-video-control-bottom-center {
+          padding: 0 12px !important;
+        }
         .bilibili-player-video-btn {
           flex-shrink: 0 !important;
           flex-basis: 48px !important;
