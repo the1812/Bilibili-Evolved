@@ -76,6 +76,7 @@ export default Vue.extend({
     .cover {
       flex: 1 0 0;
       height: 120px;
+      width: 0;
       object-fit: cover;
     }
   }
@@ -93,6 +94,7 @@ export default Vue.extend({
     .face {
       border-radius: 50%;
       height: 24px;
+      width: 24px;
     }
     .name {
       margin: 0 6px;
@@ -101,6 +103,7 @@ export default Vue.extend({
   }
   .title {
     padding: 10px 10px 0;
+    margin: 0;
     font-size: 11pt;
     font-weight: bold;
     color: inherit;

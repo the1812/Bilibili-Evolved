@@ -15,7 +15,6 @@
       ></VideoScreenshot>
     </transition-group>
     <div v-show="showBatch" class="video-screenshot-batch">
-      <a class="batch-link" style="display:none" :download="batchFilename"></a>
       <button @click="saveAll">
         <VIcon :size="18" icon="mdi-content-save"></VIcon>全部保存
       </button>
@@ -27,6 +26,7 @@
 </template>
 <script lang="ts">
 import { getFriendlyTitle } from '@/core/utils/title'
+import { DownloadPackage } from '@/core/download'
 import { VIcon } from '@/ui'
 import VideoScreenshot from './VideoScreenshot.vue'
 import { Screenshot } from './screenshot'
@@ -39,7 +39,6 @@ export default Vue.extend({
   data() {
     return {
       screenshots: [],
-      batchFilename: `${getFriendlyTitle()}.zip`,
     }
   },
   computed: {
@@ -53,18 +52,13 @@ export default Vue.extend({
       screenshot.revoke()
     },
     async saveAll() {
-      const zip = new JSZip()
+      const pack = new DownloadPackage()
       this.screenshots.forEach((it: Screenshot) => {
-        zip.file(it.filename, it.blob, {
+        pack.add(it.filename, it.blob, {
           date: new Date(it.timeStamp),
         })
       })
-      const blob = await zip.generateAsync({ type: 'blob' })
-      const link = this.$el.querySelector('.batch-link')
-      link.href = URL.createObjectURL(blob)
-      link.click()
-      URL.revokeObjectURL(link.href)
-      link.href = ''
+      await pack.emit(`${getFriendlyTitle()}.zip`)
       this.discardAll()
     },
     discardAll() {
@@ -74,14 +68,16 @@ export default Vue.extend({
   },
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
+@import "common";
+
 .video-screenshot-container {
   position: relative;
   --screenshot-width: 240px;
   --screenshot-width-negative: calc(0px - var(--screenshot-width));
   --screenshot-height: 135px;
   --thumbnail-margin-vertical: 12px;
-  --thumbnail-margin-horizontal: 24px;
+  --thumbnail-margin-horizontal: 12px;
   --screenshot-list-width: calc(
     2 * var(--thumbnail-margin-horizontal) + var(--screenshot-width)
   );
@@ -90,25 +86,25 @@ export default Vue.extend({
   }
   .video-screenshot-batch {
     position: fixed;
-    bottom: 0;
-    right: 0;
+    bottom: var(--thumbnail-margin-vertical);
+    right: var(--thumbnail-margin-horizontal);
     z-index: 20000;
-    display: flex;
     width: var(--screenshot-list-width);
-    align-items: center;
-    justify-content: space-evenly;
+    @include h-center(16px);
+    justify-content: space-between;
+
     button {
       background: #000c;
       color: #fff;
       border: none;
-      border-radius: 10px 10px 0 0;
-      font-size: 11pt;
+      border-radius: 8px;
+      font-size: 14px;
       cursor: pointer;
       outline: 0 !important;
       padding: 8px 12px;
-      display: flex;
+      @include h-center(8px);
       justify-content: center;
-      align-items: center;
+      flex-grow: 1;
       .be-icon {
         margin-right: 4px;
       }
@@ -119,11 +115,13 @@ export default Vue.extend({
     top: 0;
     right: 0;
     z-index: 20000;
-    padding: var(--thumbnail-margin-vertical) 0;
-    pointer-events: none;
-    height: calc(100% - 2 * var(--thumbnail-margin-vertical) - 48px);
+    margin: var(--thumbnail-margin-vertical) var(--thumbnail-margin-horizontal);
+    max-height: calc(100% - 3 * var(--thumbnail-margin-vertical) - 37px);
     width: var(--screenshot-list-width);
-    overflow: auto;
+    background-color: #000c;
+    border-radius: 8px;
+    @include no-scrollbar();
+
     * {
       pointer-events: initial;
     }

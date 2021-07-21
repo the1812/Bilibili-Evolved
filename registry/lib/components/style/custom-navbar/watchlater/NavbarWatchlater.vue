@@ -4,7 +4,7 @@
       <div class="search">
         <TextBox v-model="search" linear placeholder="搜索"></TextBox>
       </div>
-      <a class="operation" target="_blank" href="https://www.bilibili.com/watchlater/#">
+      <a class="operation" target="_blank" href="https://www.bilibili.com/medialist/play/watchlater">
         <VButton class="round-button" title="播放全部" round>
           <VIcon icon="mdi-play" :size="18"></VIcon>
         </VButton>
@@ -137,12 +137,9 @@ export default Vue.extend({
       }
       const getLink = (item: RawWatchlaterItem) => {
         if (this.redirect) {
-          return `https://www.bilibili.com/video/av${item.aid}`
+          return `https://www.bilibili.com/video/${item.bvid}`
         }
-        if (item.bvid) {
-          return `https://www.bilibili.com/watchlater/#/${item.bvid}`
-        }
-        return `https://www.bilibili.com/watchlater/#/av${item.aid}`
+        return `https://www.bilibili.com/medialist/play/watchlater/${item.bvid}`
       }
       const cards = rawList.map(item => {
         const href = (() => {

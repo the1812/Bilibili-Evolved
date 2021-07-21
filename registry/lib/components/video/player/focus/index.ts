@@ -9,7 +9,7 @@ export const component: ComponentMetadata = {
     componentsTags.video,
   ],
   entry: async ({ settings: { options } }) => {
-    const target = document.URL.includes('bangumi') ? '#bilibili-player' : '.video-info .video-title .tit'
+    const target = document.URL.includes('bangumi') ? '.bilibili-player' : '.video-info .video-title .tit'
     const { select } = await import('@/core/spin-query')
     const { playerReady } = await import('@/core/utils')
     const element = await select(target) as HTMLElement

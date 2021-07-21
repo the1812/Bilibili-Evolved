@@ -13,18 +13,22 @@ export class Screenshot {
     this.createUrl()
   }
   async createUrl() {
-    const { dq } = await import('@/core/utils')
     const { logError } = await import('@/core/utils/log')
-    const videoWrapper = dq('.bilibili-player-video-wrap') as HTMLElement
-    const rect = videoWrapper.getBoundingClientRect()
-    const playerRatio = rect.width / rect.height
-    const videoRatio = this.video.videoWidth / this.video.videoHeight
-    if (playerRatio >= videoRatio) { // 竖屏视频(两侧黑边)
-      canvas.height = this.video.videoHeight
-      canvas.width = this.video.videoHeight * playerRatio
-    } else { // 横屏视频(上下黑边)
+    if (this.withDanmaku) {
+      const videoWrapper = dq('.bilibili-player-video-wrap') as HTMLElement
+      const rect = videoWrapper.getBoundingClientRect()
+      const playerRatio = rect.width / rect.height
+      const videoRatio = this.video.videoWidth / this.video.videoHeight
+      if (playerRatio >= videoRatio) { // 竖屏视频(两侧黑边)
+        canvas.height = this.video.videoHeight
+        canvas.width = this.video.videoHeight * playerRatio
+      } else { // 横屏视频(上下黑边)
+        canvas.width = this.video.videoWidth
+        canvas.height = this.video.videoWidth / playerRatio
+      }
+    } else {
       canvas.width = this.video.videoWidth
-      canvas.height = this.video.videoWidth / playerRatio
+      canvas.height = this.video.videoHeight
     }
     const context = canvas.getContext('2d')
     if (context === null) {
@@ -35,7 +39,7 @@ export class Screenshot {
     const videoTop = (canvas.height - this.video.videoHeight) / 2
     context.drawImage(this.video, videoLeft, videoTop)
     if (this.withDanmaku) {
-      const danmakuCanvas = dq('canvas.bilibili-player-video-danmaku') as HTMLCanvasElement
+      const danmakuCanvas = dq('canvas.bilibili-player-video-danmaku, canvas.dm-canvas') as HTMLCanvasElement
       if (danmakuCanvas !== null) {
         context.drawImage(danmakuCanvas, 0, 0, canvas.width, canvas.height)
       }

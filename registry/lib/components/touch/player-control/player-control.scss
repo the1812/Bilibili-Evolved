@@ -10,6 +10,9 @@
 }
 body.touch-player-control {
   .bilibili-player {
+    * {
+      -webkit-tap-highlight-color: transparent !important;
+    }
     .bilibili-player-area {
       .bilibili-player-video-control-wrap {
         padding: 0 !important;

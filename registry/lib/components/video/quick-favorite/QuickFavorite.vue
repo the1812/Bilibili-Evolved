@@ -12,7 +12,7 @@
       @click.right.prevent="listShowing = !listShowing"
     ></i>
     <div
-      style="display: inline"
+      class="text"
       @click.left="toggle()"
       @click.right.prevent="listShowing = !listShowing"
     >
@@ -177,6 +177,16 @@ export default Vue.extend({
     position: relative;
     font-size: 0;
     font-size: 14px;
+    width: auto !important;
+    .text {
+      display: inline;
+    }
+    @media screen and (max-width: 1320px), (max-height: 750px) {
+      margin-right: max(calc(min(11vw, 11vh) - 117.2px),6px) !important;
+      .text {
+        display: none;
+      }
+    }
     &-icon {
       font-family: "quick-favorite" !important;
       display: inline-block;

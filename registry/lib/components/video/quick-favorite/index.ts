@@ -22,11 +22,13 @@ const entry = async () => {
   const QuickFavorite = await import('./QuickFavorite.vue')
   const vm: Vue & {
     aid: string
+    syncFavoriteState: () => Promise<void>
   } = mountVueComponent(QuickFavorite)
   favoriteButton.insertAdjacentElement('afterend', vm.$el)
   const { videoChange } = await import('@/core/observer')
   videoChange(() => {
     vm.aid = unsafeWindow.aid
+    vm.syncFavoriteState()
   })
 }
 export const component: ComponentMetadata = {

@@ -125,6 +125,9 @@ body.fixed-navbar {
   body.fixed-navbar & {
     position: fixed;
   }
+  body.player-mode-blackmask & {
+    visibility: hidden;
+  }
   top: 0;
   left: 0;
   height: var(--navbar-height);

@@ -33,7 +33,6 @@ export const component: ComponentMetadata = {
       const shouldChecked = autoPlayControls.enable.some(selector => element.matches(selector))
         && disableConditions.every(condition => !condition())
       const checked = isChecked(element)
-      console.log(checked, shouldChecked, element)
       if (shouldChecked !== checked) {
         element.click()
       }

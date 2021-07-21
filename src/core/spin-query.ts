@@ -1,4 +1,5 @@
 import { allMutations } from './observer'
+import { bwpVideoFilter } from './utils'
 
 /** 轮询设置 */
 export interface SpinQueryConfig {
@@ -72,7 +73,7 @@ const selectPromise = <T = Element>(
     if (selectCache.has(query)) {
       return selectCache.get(query) as Promise<T>
     }
-    realQuery = () => document.querySelector(query) as any
+    realQuery = () => document.querySelector(bwpVideoFilter(query)) as any
   } else {
     realQuery = query
   }
@@ -124,7 +125,7 @@ const selectAllPromise = <T extends { length: number } = Element[]>(
     if (selectAllCache.has(query)) {
       return selectAllCache.get(query) as Promise<T>
     }
-    realQuery = () => Array.from(document.querySelectorAll(query)) as any
+    realQuery = () => Array.from(document.querySelectorAll(bwpVideoFilter(query))) as any
   } else {
     realQuery = query
   }

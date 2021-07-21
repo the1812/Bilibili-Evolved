@@ -13,6 +13,7 @@ import * as playerLight from './video/player-light'
 import * as videoDanmaku from './video/video-danmaku'
 import * as videoInfo from './video/video-info'
 import * as videoQuality from './video/video-quality'
+import * as videoContextMenu from './video/video-context-menu'
 import * as videoControlBar from './video/video-control-bar'
 import * as liveControlBar from './live/live-control-bar'
 import * as liveSocket from './live/live-socket'
@@ -44,6 +45,7 @@ export const componentApis = {
     videoDanmaku,
     videoInfo,
     videoQuality,
+    videoContextMenu,
     videoControlBar,
   },
   live: {

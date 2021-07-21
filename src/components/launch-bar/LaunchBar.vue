@@ -9,8 +9,8 @@
           type="text"
           autocomplete="off"
           :placeholder="recommended.word"
-          @keydown.enter="handleEnter"
-          @keydown.down.prevent="$refs.list.querySelector('.suggest-item').focus()"
+          @keydown.enter.stop="handleEnter"
+          @keydown.down.stop.prevent="$refs.list.querySelector('.suggest-item').focus()"
         />
         <button class="submit" title="执行" tabindex="-1" @click="handleEnter">
           <VIcon icon="right-arrow" :size="20"></VIcon>
@@ -30,10 +30,10 @@
           class="history-item suggest-item"
           :title="a.name"
           @click="a.action()"
-          @keydown.enter="a.action()"
-          @keydown.shift.delete="deleteHistory($event, index)"
-          @keydown.up.prevent="previousItem($event, index)"
-          @keydown.down.prevent="nextItem($event, index)"
+          @keydown.enter.stop="a.action()"
+          @keydown.shift.delete.stop="deleteHistory($event, index)"
+          @keydown.up.stop.prevent="previousItem($event, index)"
+          @keydown.down.stop.prevent="nextItem($event, index)"
         >
           <div class="name">
             {{ a.name }}
@@ -51,9 +51,9 @@
           class="clear-history suggest-item"
           tabindex="0"
           @click="clearHistory()"
-          @keydown.enter="clearHistory()"
-          @keydown.up.prevent="previousItem($event, actions.length)"
-          @keydown.down.prevent="nextItem($event, actions.length)"
+          @keydown.enter.stop="clearHistory()"
+          @keydown.up.prevent.stop="previousItem($event, actions.length)"
+          @keydown.down.prevent.stop="nextItem($event, actions.length)"
         >
           <VIcon icon="mdi-trash-can-outline" :size="18"></VIcon>清除搜索历史
         </div>

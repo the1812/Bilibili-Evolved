@@ -14,7 +14,7 @@ export const component: ComponentMetadata = {
   options: {
     hidden: {
       hidden: true,
-      defaultValue: ['blank1', 'blank4', 'drawing', 'music', 'gamesIframe'],
+      defaultValue: ['blank1', 'blank4', 'drawing', 'music', 'gamesIframe', 'bangumi', 'match'],
       displayName: '隐藏的元素',
     },
     order: {

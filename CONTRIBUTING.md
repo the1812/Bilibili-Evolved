@@ -63,6 +63,7 @@ yarn
 // @connect      www.bing.com
 // @connect      translate.google.cn
 // @connect      translate.google.com
+// @connect      localhost
 // @connect      *
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
 // @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js

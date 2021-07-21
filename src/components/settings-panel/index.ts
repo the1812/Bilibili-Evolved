@@ -3,6 +3,7 @@ import { LoadingMode } from '@/core/loading-mode'
 import { TextColor } from '@/core/text-color'
 import { CdnTypes } from '@/core/cdn-types'
 import { addComponentListener } from '@/core/settings'
+import { DownloadPackageEmitMode } from '@/core/download-mode'
 import { ComponentEntry, ComponentMetadata, componentsTags } from '../types'
 import { addI18nData } from '../i18n/helpers'
 
@@ -74,6 +75,11 @@ export const component: ComponentMetadata = {
     batchFilenameFormat: {
       defaultValue: '[n - ][ep]',
       displayName: '批量命名格式',
+    },
+    downloadPackageEmitMode: {
+      defaultValue: DownloadPackageEmitMode.packed,
+      displayName: '文件下载模式',
+      dropdownEnum: DownloadPackageEmitMode,
     },
     devMode: {
       defaultValue: false,

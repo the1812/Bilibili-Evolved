@@ -5,7 +5,8 @@
     :class="{ on }"
     @click="toggle()"
   >
-    <VIcon :size="28" icon="mdi-timetable"></VIcon>稍后再看
+    <VIcon :size="28" icon="mdi-timetable"></VIcon>
+    <span class="text">稍后再看</span>
     <div class="tip" :class="{ show: tipShowing }">{{ tipText }}</div>
   </span>
 </template>
@@ -61,6 +62,13 @@ export default Vue.extend({
   .watchlater {
     margin-right: 28px !important;
     position: relative;
+    width: auto !important;
+    @media screen and (max-width: 1320px), (max-height: 750px) {
+      margin-right: max(calc(min(11vw, 11vh) - 117.2px),6px) !important;
+      .text {
+        display: none;
+      }
+    }
     .tip {
       position: absolute;
       top: calc(100% + 8px);

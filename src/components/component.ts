@@ -153,12 +153,14 @@ export const loadAllComponents = async () => {
         logStats('components resolve', componentResolveTime)
       }
     })
-  if (generalSettings.scriptLoadingMode === LoadingMode.Delay) {
-    // requestIdleCallback(() => loadComponents())
-    fullyLoaded(loadComponents)
-  } else if (generalSettings.scriptLoadingMode === LoadingMode.Race) {
-    contentLoaded(loadComponents)
-  }
+  return new Promise(resolve => {
+    if (generalSettings.scriptLoadingMode === LoadingMode.Delay) {
+      // requestIdleCallback(() => loadComponents())
+      fullyLoaded(() => loadComponents().then(resolve))
+    } else if (generalSettings.scriptLoadingMode === LoadingMode.Race) {
+      contentLoaded(() => loadComponents().then(resolve))
+    }
+  })
 }
 
 export * from './types'

@@ -14,7 +14,12 @@ const getSimpleLinkItem = (config: SimpleLinkConfig): SimpleLinkConfig & CustomN
 export const ranking = getSimpleLinkItem({
   name: 'ranking',
   displayName: '排行',
-  href: 'https://www.bilibili.com/ranking',
+  href: 'https://www.bilibili.com/v/popular/rank/all',
+})
+export const bangumi = getSimpleLinkItem({
+  name: 'bangumi',
+  displayName: '番剧',
+  href: 'https://www.bilibili.com/anime/',
 })
 export const drawing = getSimpleLinkItem({
   name: 'drawing',
@@ -30,6 +35,11 @@ export const shop = getSimpleLinkItem({
   name: 'shop',
   displayName: '会员购',
   href: 'https://show.bilibili.com',
+})
+export const match = getSimpleLinkItem({
+  name: 'match',
+  displayName: '赛事',
+  href: 'https://www.bilibili.com/v/game/match/',
 })
 export const manga = getSimpleLinkItem({
   name: 'manga',

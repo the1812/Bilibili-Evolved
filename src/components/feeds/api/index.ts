@@ -41,7 +41,7 @@ export const groupVideoFeeds = (cards: VideoCard[]) => {
  * > 在预约功能刚上线时, 无论使用什么参数请求动态流, 预约过的东西都会插入到其中.
  * > 比如传参番剧类型结果依然混入的预约视频, 导致数据混乱. 不知道之后有没有修复, 目前是使用此方法过滤掉预约类卡片.
  */
-export const isPreOrderedVideo = (card: any) => _.get(card, 'extra.is_reserve_recall', 0) === 1
+export const isPreOrderedVideo = (card: any) => lodash.get(card, 'extra.is_reserve_recall', 0) === 1
 
 export interface FeedsContentFilter {
   filter: <T> (items: T[]) => T[]

@@ -1,38 +1,56 @@
 import { VueModule } from '../common-types'
 
 /**
- * `document.querySelector`
+ * 当查询 video 元素且被灰度了 WasmPlayer 时, 更换为对 bwp-video 的查询, 否则会找不到 video 元素
+ * @param selector 选择器
+ */
+export const bwpVideoFilter = (selector: string) => {
+  // if (!unsafeWindow.__ENABLE_WASM_PLAYER__) {
+  //   return selector
+  // }
+  const map = {
+    video: ', bwp-video',
+    '.bilibili-player-video video': ', .bilibili-player-video bwp-video',
+  }
+  const suffix = map[selector]
+  if (suffix) {
+    return selector + suffix
+  }
+  return selector
+}
+/**
+ * 同 `document.querySelector`, 对 `<bwp-video>` 有额外处理
  * @param selector 选择器
  */
 export function dq(selector: string): Element | null
 /**
- * 在指定元素上进行`querySelector`
+ * 在指定元素上进行 `querySelector`, 对 `<bwp-video>` 有额外处理
  * @param selector 元素
  * @param scopedSelector 选择器
  */
 export function dq(element: Element, scopedSelector: string): Element | null
 export function dq(selectorOrElement: Element | string, scopedSelector?: string): Element | null {
   if (!scopedSelector) {
-    return document.querySelector(selectorOrElement as string)
+    return document.querySelector(bwpVideoFilter(selectorOrElement as string))
   }
-  return (selectorOrElement as Element).querySelector(scopedSelector)
+  return (selectorOrElement as Element).querySelector(bwpVideoFilter(scopedSelector))
 }
 /**
- * `document.querySelectorAll` (返回转换过的真数组)
+ * 同 `document.querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
  * @param selector 选择器
  */
 export function dqa(selector: string): Element[]
 /**
- * 在指定元素上进行`querySelectorAll` (返回转换过的真数组)
+ * 在指定元素上进行`querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
  * @param selector 元素
  * @param scopedSelector 选择器
  */
 export function dqa(element: Element, scopedSelector: string): Element[]
 export function dqa(selectorOrElement: Element | string, scopedSelector?: string): Element[] {
   if (!scopedSelector) {
-    return Array.from(document.querySelectorAll(selectorOrElement as string))
+    return Array.from(document.querySelectorAll(bwpVideoFilter(selectorOrElement as string)))
   }
-  return Array.from((selectorOrElement as Element).querySelectorAll(scopedSelector))
+  return Array.from((selectorOrElement as Element).querySelectorAll(bwpVideoFilter(scopedSelector)))
 }
 /** 空函数 */
 export const none = () => {

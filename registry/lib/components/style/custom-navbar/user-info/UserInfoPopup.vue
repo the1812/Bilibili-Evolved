@@ -151,10 +151,12 @@
       >
         <VIcon icon="course"></VIcon>我的课程
       </a>
-      <a
+      <div
         class="logout grey-button"
-        href="https://account.bilibili.com/login?act=exit"
-      >退出登录</a>
+        @click="logout()"
+      >
+        退出登录
+      </div>
     </div>
     <div v-if="!isLogin" class="not-logged-in">
       <h1 class="welcome">
@@ -173,10 +175,10 @@
 </template>
 
 <script lang="ts">
-import { getUID, getCsrf } from '@/core/utils'
+import { getUID, getCsrf, formData } from '@/core/utils'
 import { formatCount } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
-import { getJsonWithCredentials } from '@/core/ajax'
+import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUserInfo } from '@/core/user-info'
 import { popperMixin } from '../mixins'
 
@@ -294,6 +296,48 @@ export default Vue.extend({
       } else {
         this.privileges[typeMapping[type]].received = false
         logError(result.message)
+      }
+    },
+    async logout() {
+      /** b 站 源 码
+       *
+       * ```js
+       * export const postLogout = () => {
+       *   const Cookie = require('js-cookie')
+       *   const qs = require('qs')
+       *   return axios({
+       *     method: 'post',
+       *     url: '//passport.bilibili.com/login/exit/v2',
+       *     withCredentials: true,
+       *     headers: {
+       *       'Content-type': 'application/x-www-form-urlencoded',
+       *     },
+       *     data: qs.stringify({
+       *       biliCSRF: Cookie.get('bili_jct')
+       *     }),
+       *   })
+       * }
+       * // ...
+       * async logout() {
+       *   try {
+       *     const { data } = await postLogout()
+       *     if(data && data.data.redirectUrl) {
+       *       window.location = data.data.redirectUrl
+       *     }
+       *   } catch (_) {
+       *   }
+       * }
+       * ```
+       */
+      const response = await postTextWithCredentials(
+        'https://passport.bilibili.com/login/exit/v2',
+        formData({
+          biliCSRF: getCsrf(),
+        }),
+      )
+      const url = lodash.get(JSON.parse(response), 'data.redirectUrl', '')
+      if (url) {
+        window.location.assign(url)
       }
     },
   },
@@ -496,6 +540,7 @@ export default Vue.extend({
     &.logout {
       font-size: 12px;
       height: 32px;
+      cursor: pointer;
       &:hover {
         color: inherit !important;
       }

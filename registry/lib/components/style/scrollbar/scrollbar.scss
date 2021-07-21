@@ -15,6 +15,7 @@ html {
   ::-webkit-scrollbar-thumb:hover {
     background: #888;
   }
+  &,
   * {
     scrollbar-color: #aaa transparent;
     scrollbar-width: thin !important;

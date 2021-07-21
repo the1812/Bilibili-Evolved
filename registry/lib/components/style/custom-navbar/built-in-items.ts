@@ -6,7 +6,13 @@ import { home } from './home/home'
 import { gamesIframe, livesIframe } from './iframe/iframe'
 import { blanks } from './flexible-blank/flexible-blank'
 import {
-  ranking, music, drawing, shop, manga,
+  ranking,
+  bangumi,
+  music,
+  drawing,
+  shop,
+  match,
+  manga,
 } from './simple-links/simple-links'
 import { upload } from './upload/upload'
 import { search } from './search/search'
@@ -21,12 +27,14 @@ export const getBuiltInItems = (): CustomNavbarItemInit[] => [
   blank1,
   logo,
   home,
+  bangumi,
   ranking,
   drawing,
   music,
   gamesIframe,
   livesIframe,
   shop,
+  match,
   manga,
   blank2,
   search,

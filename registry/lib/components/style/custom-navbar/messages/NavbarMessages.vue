@@ -66,23 +66,32 @@ export default Vue.extend({
         e.count = 0
         return e
       }),
+      settings: {
+        notify: true,
+        hideNotFollowedCount: false,
+        json: {},
+      },
     }
   },
   async created() {
-    const shouldNotify = await this.fetchSettings()
-    if (shouldNotify) {
+    await this.fetchSettings()
+    if (this.settings.notify) {
       this.notify()
     }
   },
   methods: {
     async fetchSettings() {
       const json = await getJsonWithCredentials(
-        'https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1',
+        'https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1&show_unfollowed_msg=1',
       )
       if (json.code !== 0) {
-        return true
+        return
       }
-      return lodash.get(json, 'data.msg_notify', 0) !== 3
+      this.settings = {
+        notify: json.data.msg_notify !== 3,
+        hideNotFollowedCount: json.data.show_unfollowed_msg === 1,
+        json: json.data,
+      }
     },
     async notify() {
       const mainJson = await getJsonWithCredentials(
@@ -91,7 +100,10 @@ export default Vue.extend({
       const messageJson = await getJsonWithCredentials(
         'https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread',
       )
-      mainJson.data.user_msg = messageJson.data.unfollow_unread + messageJson.data.follow_unread
+      mainJson.data.user_msg = messageJson.data.follow_unread
+      if (!this.settings.hideNotFollowedCount) {
+        mainJson.data.user_msg += messageJson.data.unfollow_unread
+      }
 
       this.item.notifyCount = entries.reduce(
         (acc, it) => acc + (it.prop ? mainJson.data[it.prop] : 0),

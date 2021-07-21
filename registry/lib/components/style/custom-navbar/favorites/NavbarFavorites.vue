@@ -108,20 +108,23 @@ async function searchAllList() {
     return
   }
   try {
-    const json = await getJsonWithCredentials(
-      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`,
-    )
-    if (json.code !== 0) {
+    const jsonCurrent = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=${this.searchPage}&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`)
+    const jsonAll = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.selectedListId}&pn=${this.searchPage}&ps=20&keyword=${this.search}&order=mtime&type=1&tid=0`)
+    if (jsonCurrent.code !== 0 && jsonAll.code !== 0) {
       return
     }
+    const currentItems = lodash.get(jsonCurrent, 'data.medias', []) || []
+    const allItems = lodash.get(jsonAll, 'data.medias', []) || []
     this.searchPage++
-    const items = lodash.get(json, 'data.medias', []) as any[]
-    if (items === null) {
+    if (currentItems.length + allItems.length === 0) {
       this.hasMoreSearchPage = false
       return
     }
     const results = lodash.uniqBy(
-      this.filteredCards.concat(items.map(favoriteItemMapper)),
+      this.filteredCards.concat(
+        currentItems.map(favoriteItemMapper),
+        allItems.map(favoriteItemMapper),
+      ),
       (card: FavoritesItemInfo) => card.id,
     )
     this.filteredCards = results

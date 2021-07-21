@@ -1,3 +1,6 @@
+import { JSZipFileOptions } from 'jszip'
+import { DownloadPackageEmitMode } from './download-mode'
+import { getGeneralSettings } from './settings'
 import { formatFilename } from './utils/formatters'
 
 /** 表示`DownloadPackage`中的一个文件 */
@@ -6,6 +9,8 @@ export interface PackageEntry {
   name: string
   /** 文件内容 */
   data: Blob | string
+  /** 其他文件属性 */
+  options: JSZipFileOptions
 }
 /** 打包下载多个文件 */
 export class DownloadPackage {
@@ -19,11 +24,11 @@ export class DownloadPackage {
    * @param name 文件名
    * @param data 文件内容
    */
-  add(name: string, data: string | Blob | null | undefined) {
+  add(name: string, data: string | Blob, options: JSZipFileOptions = {}) {
     if (data === null || data === undefined) {
       return
     }
-    this.entries.push({ name: formatFilename(name), data })
+    this.entries.push({ name: formatFilename(name), data, options })
   }
   /** 获取打包后的Blob数据 */
   async blob(): Promise<Blob | null> {
@@ -35,8 +40,8 @@ export class DownloadPackage {
       return typeof data === 'string' ? new Blob([data]) : data
     }
     const zip = new JSZip()
-    this.entries.forEach(({ name, data }) => {
-      zip.file(name, data)
+    this.entries.forEach(({ name, data, options }) => {
+      zip.file(name, data, options)
     })
     return zip.generateAsync({ type: 'blob' })
   }
@@ -50,6 +55,13 @@ export class DownloadPackage {
     }
     if (!filename || this.entries.length === 1) {
       filename = this.entries[0].name
+    }
+    const isIndividualMode = (
+      getGeneralSettings().downloadPackageEmitMode === DownloadPackageEmitMode.individual
+    )
+    if (isIndividualMode && this.entries.length > 1) {
+      await Promise.all(this.entries.map(e => DownloadPackage.single(e.name, e.data, e.options)))
+      return
     }
     const blob = await this.blob()
     if (!blob) {
@@ -77,9 +89,9 @@ export class DownloadPackage {
    * @param filename 文件名
    * @param data 文件内容
    */
-  static async single(filename: string, data: string | Blob) {
+  static async single(filename: string, data: string | Blob, options: JSZipFileOptions = {}) {
     const pack = new DownloadPackage()
-    pack.add(filename, data)
+    pack.add(filename, data, options)
     return pack.emit()
   }
 }

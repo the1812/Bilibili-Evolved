@@ -52,7 +52,7 @@ export default Vue.extend({
   },
 })
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .video-screenshot-thumbnail {
   margin: var(--thumbnail-margin-vertical) var(--thumbnail-margin-horizontal);
   position: relative;

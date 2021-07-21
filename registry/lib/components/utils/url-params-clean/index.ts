@@ -1,7 +1,15 @@
 import { registerAndGetData } from '@/plugins/data'
 import { ComponentMetadata } from '@/components/types'
+import { isNotHtml } from '@/core/utils'
 
 const entry = async () => {
+  if (isNotHtml()) {
+    return
+  }
+  const builtInNoClean = [
+    'videocard_series',
+  ]
+  const [noClean] = registerAndGetData('urlParamsClean.noClean', builtInNoClean)
   const builtInBlockParams = [
     'spm_id_from',
     'from_source',
@@ -54,6 +62,9 @@ const entry = async () => {
 
   const clean = () => {
     const urlParams = window.location.search.substring(1).split('&')
+    if (urlParams.some(param => noClean.some(it => param.includes(it)))) {
+      return
+    }
     const filteredParams = urlParams.filter(p => {
       if (blockParams.some(b => p.startsWith(`${b}=`))) {
         return false

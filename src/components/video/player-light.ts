@@ -8,18 +8,17 @@ const setLight = (on: boolean) => {
   if (!playerUrls.some(url => matchUrlPattern(url))) {
     return none
   }
-  if (!initialized) {
-    console.log('initialized')
-    loadLazyPlayerSettingsPanel(
-      '.bilibili-player-video-btn-setting',
-      '.bilibili-player-video-btn-setting-wrap',
-      {
-        style: '.bilibili-player-video-btn-setting-wrap { display: none !important }',
-      },
-    )
-    initialized = true
-  }
   return async () => {
+    if (!initialized) {
+      loadLazyPlayerSettingsPanel(
+        '.bilibili-player-video-btn-setting',
+        '.bilibili-player-video-btn-setting-wrap',
+        {
+          style: '.bilibili-player-video-btn-setting-wrap { display: none !important }',
+        },
+      )
+      initialized = true
+    }
     const checkbox = await select('.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input') as HTMLInputElement
     checkbox.checked = !on
     raiseEvent(checkbox, 'change')

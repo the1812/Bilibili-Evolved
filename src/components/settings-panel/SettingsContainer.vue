@@ -93,6 +93,9 @@ export default {
   display: none !important;
 }
 .be-settings {
+  body.player-mode-blackmask & {
+    visibility: hidden;
+  }
   line-height: normal;
   font-size: 12px;
   --panel-height: calc(100vh - 120px);

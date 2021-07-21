@@ -11,6 +11,6 @@ export const messages: CustomNavbarItemInit = {
   loginRequired: true,
   touch: true,
 
-  popupContent: () => import('./MessagesPopup.vue').then(m => m.default),
+  popupContent: () => import('./NavbarMessages.vue').then(m => m.default),
   lazy: false,
 }

@@ -54,8 +54,8 @@ export const allQualities: VideoQuality[] = [
     value: 32,
   },
   {
-    name: '320P',
-    displayName: '流畅 320P',
+    name: '360P',
+    displayName: '流畅 360P',
     value: 16,
   },
 ].sort(descendingSort(q => q.value))

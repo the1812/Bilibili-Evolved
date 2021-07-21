@@ -38,7 +38,7 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
       return
     }
     // 打字时无视快捷键
-    if (document.activeElement && isTyping()) {
+    if (isTyping()) {
       return
     }
     const key = e.key.toLowerCase()

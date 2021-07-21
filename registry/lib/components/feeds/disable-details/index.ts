@@ -27,6 +27,10 @@ const entry = async () => {
       if (target.hasAttribute('click-title')) {
         return
       }
+      const popups = dqa(element, '.im-popup')
+      if (popups.some(p => p.contains(target))) {
+        return
+      }
       if (contents.some(c => c === target || c.contains(target))) {
         e.stopImmediatePropagation()
       }
@@ -35,7 +39,9 @@ const entry = async () => {
     if (!postContent) {
       return
     }
-    if (dq(postContent, '.video-container') || dq(postContent, '.bangumi-container')) {
+    const hasCardContainer = ['.video-container', '.bangumi-container', '.media-list', '.article-container']
+      .some(type => dq(postContent, type))
+    if (hasCardContainer) {
       return
     }
     if (dq(postContent, '.details')) {
