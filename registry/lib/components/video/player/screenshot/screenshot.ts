@@ -1,4 +1,4 @@
-import { getFriendlyTitle } from '../../title'
+import { getFriendlyTitle } from '@/core/utils/title'
 
 const canvas = document.createElement('canvas')
 export class Screenshot {

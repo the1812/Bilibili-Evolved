@@ -26,13 +26,15 @@
   </div>
 </template>
 <script lang="ts">
-import { getFriendlyTitle } from '../../title'
+import { getFriendlyTitle } from '@/core/utils/title'
+import { VIcon } from '@/ui'
+import VideoScreenshot from './VideoScreenshot.vue'
 import { Screenshot } from './screenshot'
 
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
-    VideoScreenshot: () => import('./VideoScreenshot.vue').then(m => m.default),
+    VIcon,
+    VideoScreenshot,
   },
   data() {
     return {

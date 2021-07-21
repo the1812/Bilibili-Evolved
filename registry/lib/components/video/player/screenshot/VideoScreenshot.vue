@@ -21,9 +21,11 @@
   </div>
 </template>
 <script lang="ts">
+import { VIcon } from '@/ui'
+
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
+    VIcon,
   },
   props: {
     objectUrl: {

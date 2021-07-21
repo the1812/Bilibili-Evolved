@@ -1,8 +1,7 @@
-import { ComponentMetadata, componentsTags } from '@/components/component'
-import { none } from '@/core/utils'
+import { ComponentMetadata } from '@/components/types'
 
 export const component: ComponentMetadata = {
-  name: 'download-audio',
+  name: 'downloadAudio',
   displayName: '下载音频',
   entry: none,
   tags: [

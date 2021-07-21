@@ -1,6 +1,6 @@
 <template>
   <DefaultWidget
-    :disabled="disabled"
+    :disabled="disabled || downloading"
     :name="progress || '下载音频'"
     icon="mdi-download"
     @click="download()"
@@ -11,11 +11,12 @@
 import { select } from '@/core/spin-query'
 import { childList } from '@/core/observer'
 import { DownloadPackage } from '@/core/download'
+import { DefaultWidget } from '@/ui'
 import { AudioDownloader } from './audio-downloader'
 
 export default Vue.extend({
   components: {
-    DefaultWidget: () => import('@/widgets/DefaultWidget.vue').then(m => m.default),
+    DefaultWidget,
   },
   data() {
     return {

@@ -10,6 +10,5 @@ export const setProgress = (video: HTMLVideoElement, progress: number) => {
   } else if (p < 0) {
     p = 0
   }
-
-  video.currentTime = p
+  unsafeWindow.player.seek(p, video.paused)
 }

@@ -47,9 +47,7 @@ export const component: ComponentMetadata = {
       }
       const time = getAirborneTime(target.textContent)
       if (!Number.isNaN(time)) {
-        const video = dq('video') as HTMLVideoElement
-        video.currentTime = time
-        video.play()
+        unsafeWindow.player.seek(time, false)
       }
     }
     const addAirborneStyle = (danmaku: DanmakuRecord) => {
