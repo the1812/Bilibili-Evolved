@@ -215,10 +215,25 @@
   &-playlist-item-img {
     @include no-image;
   }
-  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix {
+  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix,
+  &-viewpointlist-item.active .player-auxiliary-viewpointlist-item-title-prefix {
     @include to-theme("blue");
   }
+  &-area .player-auxiliary-collapse-viewpointlist {
+    @include background-color("4");
+  }
+  &-viewpointlist {
+    @include background-color("3");
+    &-content {
+      @include color("e");
+    }
+    &-item.active .player-auxiliary-viewpointlist-content,
+    &-item:hover .player-auxiliary-viewpointlist-content {
+      @include theme-color();
+    }
+  }
 }
+
 .remd-video-card .card-box .pic-box {
   @include background-color("4");
 }
@@ -1004,6 +1019,53 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     }
     &__list:before {
       @include background-color("4");
+    }
+  }
+}
+.resizable-component .publish-btn {
+  @include theme-background-color();
+  @include foreground-color();
+}
+.note-list {
+  @include background-color("4");
+  &-header {
+    @include color("e");
+    @include border-color("5");
+  }
+  &-nickname>a,
+  &-summary {
+    @include color("e");
+  }
+  &-time {
+    @include color("a");
+  }
+  &-detail {
+    @include theme-color("80");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  &-card:not(:last-of-type) {
+    @include border-color("5");
+  }
+  &-btn {
+    @include theme-background-color("80");
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+}
+.bili-view-note {
+  .note-view-drag-bar {
+    @include background-color("4");
+  }
+  .close-btn {
+    @include background-color("3");
+    @include color("e");
+    &:hover {
+      @include theme-background-color();
+      @include foreground-color();
     }
   }
 }
