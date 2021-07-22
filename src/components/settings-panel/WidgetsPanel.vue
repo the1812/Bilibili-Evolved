@@ -5,7 +5,7 @@
     </div>
     <!-- <div class="widgets-loading" v-if="loading">加载中...</div> -->
     <VEmpty v-if="!loading && widgets.length === 0" class="widgets-empty"></VEmpty>
-    <transition-group name="widget-item" tag="div" class="widget-items">
+    <div class="widget-items">
       <component
         :is="w.component"
         v-for="w of widgets"
@@ -13,7 +13,7 @@
         class="widget-item"
         :options="w.options"
       ></component>
-    </transition-group>
+    </div>
   </div>
 </template>
 
@@ -70,6 +70,7 @@ export default Vue.extend({
           deleteValue(this.widgets, (widget: Widget) => widget.name === w.name)
         }
       })
+      console.log('updated widgets', this.widgets)
     },
   },
   created() {

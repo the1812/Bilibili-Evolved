@@ -203,6 +203,9 @@ export const videoChange = async (callback: VideoChangeCallback) => {
         if (!unsafeWindow.aid && info.aid) {
           unsafeWindow.aid = info.aid.toString()
         }
+        if (!unsafeWindow.bvid && info.bvid) {
+          unsafeWindow.bvid = info.bvid
+        }
         return info.cid.toString()
       }
       return null

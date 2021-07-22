@@ -5,7 +5,6 @@ import { KeyBindingAction } from '../../utils/keymap/bindings'
 const entry = async () => {
   const {
     playerReady,
-    aidReady,
     mountVueComponent,
     getUID,
   } = await import('@/core/utils')
@@ -14,19 +13,21 @@ const entry = async () => {
   }
 
   await playerReady()
-  await aidReady()
   const favoriteButton = dq('.video-toolbar .ops .collect')
   if (!favoriteButton) {
     return
   }
   const QuickFavorite = await import('./QuickFavorite.vue')
-  const vm: Vue & {
+  let vm: Vue & {
     aid: string
     syncFavoriteState: () => Promise<void>
-  } = mountVueComponent(QuickFavorite)
-  favoriteButton.insertAdjacentElement('afterend', vm.$el)
+  }
   const { videoChange } = await import('@/core/observer')
   videoChange(() => {
+    if (!vm) {
+      vm = mountVueComponent(QuickFavorite)
+      favoriteButton.insertAdjacentElement('afterend', vm.$el)
+    }
     vm.aid = unsafeWindow.aid
     vm.syncFavoriteState()
   })

@@ -150,7 +150,7 @@ export default Vue.extend({
           const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
           return this.redirect
             ? `${getLink(item)}?p=${page}`
-            : `${getLink(item)}/p${page}`
+            : getLink(item)
         })()
         const percent = Math.round((1000 * item.progress) / item.duration) / 1000
         return {

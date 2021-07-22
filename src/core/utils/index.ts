@@ -279,18 +279,21 @@ export const playerReady = async () => {
 /**
  * 等待视频页面的 aid, 如果是合集类页面, 会从 player API 中获取 aid 并赋值到 window 上
  */
-export const aidReady = async () => {
-  if (unsafeWindow.aid) {
-    return unsafeWindow.aid
-  }
-  const { sq } = await import('../spin-query')
-  const info = await sq(
-    () => unsafeWindow?.player?.getVideoMessage?.() as { aid?: string },
-    it => it?.aid !== undefined,
-  ).catch(() => { throw new Error('Cannot find aid') })
-  unsafeWindow.aid = info.aid
-  return info.aid as string
-}
+// export const aidReady = async () => {
+//   if (unsafeWindow.aid) {
+//     return unsafeWindow.aid
+//   }
+//   const { sq } = await import('../spin-query')
+//   const info = await sq(
+//     () => unsafeWindow?.player?.getVideoMessage?.() as { aid?: string },
+//     it => it?.aid !== undefined,
+//   )
+//   if (!info) {
+//     return null
+//   }
+//   unsafeWindow.aid = info.aid.toString()
+//   return info.aid as string
+// }
 /** 是否正在打字 */
 export const isTyping = () => {
   const { activeElement } = document

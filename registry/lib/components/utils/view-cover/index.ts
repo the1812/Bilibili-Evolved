@@ -9,10 +9,7 @@ export const component: ComponentMetadata = {
     componentsTags.video,
     componentsTags.live,
   ],
-  entry: () => {
-    console.log('ok')
-    return { foo: () => console.log('hello world') }
-  },
+  entry: none,
   reload: none,
   unload: none,
   widget: {
