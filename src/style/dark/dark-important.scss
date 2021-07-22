@@ -294,3 +294,12 @@ blockquote {
     @include theme-color();
   }
 }
+.bpx-player-auxiliary {
+  .bpx-player-dm-wrap .bscroll-vertical-scrollbar.mousedown,
+  .bpx-player-dm-wrap:hover .bscroll-vertical-scrollbar {
+    @include background-color();
+  }
+  .bscroll-indicator {
+    @include background-color("5");
+  }
+}

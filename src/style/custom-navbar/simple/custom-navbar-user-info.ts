@@ -36,7 +36,7 @@ export class UserInfo extends NavbarComponent {
         <div v-if="isLogin" class="logged-in">
           <a class="name" target="_blank" href="https://space.bilibili.com/">{{uname}}</a>
           <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{userType}}</a>
-          <div class="privileges row" v-if="this.vipType === 2">
+          <div class="privileges row" v-if="this.vipStatus === 1 && this.vipType === 2">
             <div class="b-coin" :class="{received: privileges.bCoin.received}" @click="privilegeReceive(1)" :title="'有效期限: ' + privileges.bCoin.expire">
               {{privileges.bCoin.received ? '已领取B币' : '领取B币'}}
             </div>

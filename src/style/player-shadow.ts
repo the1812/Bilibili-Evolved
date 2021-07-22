@@ -1,11 +1,13 @@
 const style = `
   #bilibiliPlayer,
-  #bilibili-player.mini-player:before
+  #bilibili-player.mini-player:before,
+  .bpx-player-container
   {
     box-shadow: 0px 2px 8px 0px var(--theme-color-30) !important;
   }
   body.dark #bilibiliPlayer,
-  body.dark #bilibili-player.mini-player::before
+  body.dark #bilibili-player.mini-player::before,
+  body.dark .bpx-player-container
   {
     box-shadow: 0px 2px 8px 0px var(--theme-color-20) !important;
   }
