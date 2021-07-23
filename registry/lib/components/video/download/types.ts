@@ -95,4 +95,5 @@ export class DownloadVideoAction {
 /** 下载视频的最终输出处理 */
 export interface DownloadVideoOutput<OutputParameter = any> extends VueInstanceInput, WithName {
   runAction: (action: DownloadVideoAction, instance: OutputParameter) => Promise<void>
+  description?: string
 }

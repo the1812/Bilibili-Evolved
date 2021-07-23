@@ -100,6 +100,12 @@
         :items="outputs"
       />
     </div>
+    <div
+      v-if="selectedOutput && selectedOutput.description"
+      class="download-video-config-description"
+    >
+      {{ selectedOutput.description }}
+    </div>
     <component
       :is="selectedOutput.component"
       v-if="selectedOutput && selectedOutput.component"
@@ -129,6 +135,7 @@ import {
 } from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
 import { allQualities, VideoQuality } from '@/components/video/video-quality'
+import { Toast } from '@/core/toast'
 import { bangumiBatchInput } from './inputs/bangumi/batch'
 import { videoBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
@@ -312,6 +319,10 @@ export default Vue.extend({
         const input = this.selectedInput as DownloadVideoInput
         const api = this.selectedApi as DownloadVideoApi
         const videoInputs = await input.getInputs(this.$refs.inputOptions)
+        if (videoInputs.length === 0) {
+          Toast.info('未接收到视频, 如果输入源支持批量, 请至少选择一个视频.', '下载视频', 3000)
+          return
+        }
         videoInputs.forEach(item => {
           item.quality = this.selectedQuality
         })

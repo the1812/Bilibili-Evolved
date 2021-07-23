@@ -127,6 +127,7 @@ const parseRpcOptions = (option: string): Record<string, string> => {
 export const aria2Rpc: DownloadVideoOutput = {
   name: 'aria2Rpc',
   displayName: 'aria2 RPC',
+  description: '使用 aria2 RPC 功能发送下载请求.',
   runAction: async (action, instance: Vue & {
     selectedRpcProfile: Aria2RpcProfile
   }) => {

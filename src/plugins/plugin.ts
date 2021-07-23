@@ -71,15 +71,15 @@ export const installPlugin = async (code: string) => {
   }
   settings.userPlugins[plugin.name] = newPlugin
   plugins.push(newPlugin)
-  const { coreApis } = await import('../core/core-apis')
-  plugin.setup({
-    coreApis,
-    addData,
-    addHook,
-    registerData,
-    registerAndGetData,
-    getHook,
-  })
+  // const { coreApis } = await import('../core/core-apis')
+  // plugin.setup({
+  //   coreApis,
+  //   addData,
+  //   addHook,
+  //   registerData,
+  //   registerAndGetData,
+  //   getHook,
+  // })
   return {
     metadata: plugin,
     message: `已安装插件'${plugin.displayName || plugin.name}', 刷新后生效`,

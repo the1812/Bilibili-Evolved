@@ -35,8 +35,12 @@
       </div>
     </div>
     <div class="episodes-picker-items">
-      <div v-for="item of episodeItems" :key="item.key" class="episodes-picker-item">
-        <CheckBox v-model="item.isChecked" icon-position="left">
+      <div v-for="(item, index) of episodeItems" :key="item.key" class="episodes-picker-item">
+        <CheckBox
+          v-model="item.isChecked"
+          icon-position="left"
+          @click="shiftSelect($event, item, index)"
+        >
           <span class="episode-title">
             {{ item.title }}
           </span>
@@ -72,6 +76,7 @@ export default Vue.extend({
     return {
       episodeItems: [],
       maxCheckedItems: 32,
+      lastCheckedEpisodeIndex: -1,
     }
   },
   computed: {
@@ -91,6 +96,30 @@ export default Vue.extend({
     this.getEpisodeItems()
   },
   methods: {
+    shiftSelect(e: MouseEvent, item: EpisodeItem, index: number) {
+      if (!e.shiftKey || this.lastCheckedEpisodeIndex === -1) {
+        console.log('set lastCheckedEpisodeIndex', index)
+        this.lastCheckedEpisodeIndex = index
+        return
+      }
+      if (e.shiftKey && this.lastCheckedEpisodeIndex !== -1) {
+        (this.episodeItems as EpisodeItem[])
+          .slice(
+            Math.min(this.lastCheckedEpisodeIndex, index) + 1,
+            Math.max(this.lastCheckedEpisodeIndex, index),
+          )
+          .forEach(it => {
+            it.isChecked = !it.isChecked
+          })
+        console.log(
+          'shift toggle',
+          Math.min(this.lastCheckedEpisodeIndex, index) + 1,
+          Math.max(this.lastCheckedEpisodeIndex, index),
+        )
+        this.lastCheckedEpisodeIndex = index
+        e.preventDefault()
+      }
+    },
     forEachItem(action: (item: EpisodeItem, index: number) => void) {
       const items: EpisodeItem[] = this.episodeItems
       items.forEach(action)

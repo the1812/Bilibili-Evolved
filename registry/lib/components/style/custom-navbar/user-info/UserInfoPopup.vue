@@ -11,7 +11,7 @@
         target="_blank"
         href="https://account.bilibili.com/account/big"
       >{{ userType }}</a>
-      <div v-if="userInfo.vipType === 2" class="privileges row">
+      <div v-if="userInfo.vipStatus ===1 && userInfo.vipType === 2" class="privileges row">
         <div
           class="b-coin"
           :class="{ received: privileges.bCoin.received }"

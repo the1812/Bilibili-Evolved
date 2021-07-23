@@ -32,5 +32,9 @@ export const component: ComponentMetadata = {
       defaultValue: true,
       displayName: '关注/三连',
     },
+    rates: {
+      defaultValue: true,
+      displayName: '评分',
+    },
   },
 }

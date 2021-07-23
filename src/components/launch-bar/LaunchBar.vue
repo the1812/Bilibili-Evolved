@@ -209,8 +209,7 @@ export default Vue.extend({
   --color: black;
   color: var(--color);
   position: relative;
-  display: flex;
-  align-items: center;
+  @include h-center();
   .input-area {
     display: flex;
     flex-direction: column;
@@ -277,7 +276,7 @@ export default Vue.extend({
       font-style: normal;
     }
     .suggest-item {
-      padding: 6px 14px;
+      padding: 6px 6px 6px 10px;
       cursor: pointer;
       &.disabled {
         cursor: default;
@@ -289,21 +288,19 @@ export default Vue.extend({
         background-color: #8882;
       }
       &:first-child {
-        margin-top: 6px;
-        border-radius: 2px 2px 0 0;
+        padding-top: 8px;
+        border-radius: 7px 7px 0 0;
       }
       &:last-child {
-        margin-bottom: 6px;
-        border-radius: 0 0 2px 2px;
+        padding-bottom: 8px;
+        border-radius: 0 0 7px 7px;
       }
       .badge-item {
-        display: flex;
-        align-items: center;
+        @include h-center(6px);
         .badge {
           padding: 2px 6px;
           border-radius: 4px;
           background-color: #8882;
-          margin-right: 6px;
         }
       }
     }
@@ -314,14 +311,12 @@ export default Vue.extend({
       }
     }
     .history-item {
-      display: flex;
-      align-items: center;
+      @include h-center(8px);
       .name {
         flex: 1 0 auto;
         max-width: calc(100% - 28px);
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-right: 8px;
       }
       .delete-history {
         opacity: 0.5;
@@ -331,11 +326,12 @@ export default Vue.extend({
       }
     }
     .clear-history {
-      display: flex;
-      align-items: center;
+      @include h-center(6px);
+      opacity: 0.5;
       justify-content: center;
-      .be-icon {
-        margin-right: 6px;
+      &:hover,
+      &:focus-within {
+        opacity: 1;
       }
     }
   }

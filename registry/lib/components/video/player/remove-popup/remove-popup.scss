@@ -19,5 +19,10 @@ body {
         display: none !important;
       }
     }
+    &-rates {
+      .bilibili-player-score {
+        display: none !important;
+      }
+    }
   }
 }

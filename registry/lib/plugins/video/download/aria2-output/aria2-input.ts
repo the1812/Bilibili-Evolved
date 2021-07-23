@@ -6,6 +6,7 @@ import { DownloadVideoOutput } from '../../../../components/video/download/types
 export const aria2Input: DownloadVideoOutput = {
   name: 'aria2',
   displayName: 'aria2 Input',
+  description: '使用 aria2 命令行输入文件开始下载. (aria2c -i xxx.txt)',
   runAction: async action => {
     const { infos } = action
     const referer = document.URL.replace(window.location.search, '')

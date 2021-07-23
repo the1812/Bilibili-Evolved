@@ -9,6 +9,7 @@ import {
  * @param code 组件代码
  */
 export const installComponent = async (code: string) => {
+  const { components } = await import('./component')
   const { parseExternalInput } = await import('../core/external-input')
   const component = await parseExternalInput<ComponentMetadata>(code)
   if (component === null) {
@@ -50,6 +51,8 @@ export const installComponent = async (code: string) => {
     metadata: userMetadata,
     settings: componentToSettings(component),
   }
+  components.push(component)
+  componentsMap[component.name] = component
   return {
     metadata: component,
     message: `已安装组件'${component.displayName}', 刷新后生效`,
