@@ -7,7 +7,12 @@ const testPattern = (pattern: string, text: string) => {
   }
   return text.includes(pattern)
 }
-export const hasBlockedPattern = (pattern: string, card: { text: string; username: string }) => {
+export interface BlockableCard {
+  text: string
+  username: string
+  [key: string]: string
+}
+export const hasBlockedPattern = (pattern: string, card: BlockableCard) => {
   const upNameMatch = pattern.match(/(.+) up:([^ ]+)/)
   if (upNameMatch) {
     return (

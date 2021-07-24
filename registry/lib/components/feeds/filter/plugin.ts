@@ -1,5 +1,6 @@
 import { FeedsContentFilter } from '@/components/feeds/api'
 import { PluginMetadata } from '@/plugins/plugin'
+import { BlockableCard } from './pattern'
 
 const bangumiFields = {
   username: 'title',
@@ -47,7 +48,7 @@ export const feedsFilterPlugin: PluginMetadata = {
                 return [key, item[value].trim() as string]
               }),
             )
-            return patterns.every(p => !hasBlockedPattern(p, card))
+            return patterns.every(p => !hasBlockedPattern(p, card as BlockableCard))
           })
         },
       })
