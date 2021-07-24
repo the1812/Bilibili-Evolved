@@ -39,7 +39,7 @@
         <CheckBox
           v-model="item.isChecked"
           icon-position="left"
-          @click="shiftSelect($event, item, index)"
+          @click.native="shiftSelect($event, item, index)"
         >
           <span class="episode-title">
             {{ item.title }}
@@ -98,7 +98,7 @@ export default Vue.extend({
   methods: {
     shiftSelect(e: MouseEvent, item: EpisodeItem, index: number) {
       if (!e.shiftKey || this.lastCheckedEpisodeIndex === -1) {
-        console.log('set lastCheckedEpisodeIndex', index)
+        // console.log('set lastCheckedEpisodeIndex', index)
         this.lastCheckedEpisodeIndex = index
         return
       }
@@ -111,11 +111,11 @@ export default Vue.extend({
           .forEach(it => {
             it.isChecked = !it.isChecked
           })
-        console.log(
-          'shift toggle',
-          Math.min(this.lastCheckedEpisodeIndex, index) + 1,
-          Math.max(this.lastCheckedEpisodeIndex, index),
-        )
+        // console.log(
+        //   'shift toggle',
+        //   Math.min(this.lastCheckedEpisodeIndex, index) + 1,
+        //   Math.max(this.lastCheckedEpisodeIndex, index),
+        // )
         this.lastCheckedEpisodeIndex = index
         e.preventDefault()
       }
