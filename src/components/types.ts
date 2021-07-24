@@ -1,12 +1,15 @@
-import { TestPattern, Executable, VueModule } from '@/core/common-types'
+import {
+  TestPattern,
+  Executable,
+  VueModule,
+  I18nDescription,
+} from '@/core/common-types'
 import { ComponentSettings } from '@/core/settings'
 import { CoreApis } from '@/core/core-apis'
 import { PluginSetupParameters } from '@/plugins/plugin'
 import { Range } from '@/ui/range'
 import { Widget } from '@/widgets/widget'
 
-/** 组件描述, 不同的属性对应不同语言 */
-export type ComponentDescription = string | { 'zh-CN': string;[key: string]: string }
 /** 组件标签 */
 export interface ComponentTag {
   /** 标签的名称 */
@@ -179,7 +182,7 @@ export interface ComponentMetadata extends FunctionalMetadata {
    * 组件描述 (可使用HTML), 可以设置为对象提供多语言的描述 (`key: 语言代码`)
    * @todo 应使用Markdown
   */
-  description?: ComponentDescription
+  description?: I18nDescription
   /** 组件子选项 */
   options?: ComponentOptions
 }
