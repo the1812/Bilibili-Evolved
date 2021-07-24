@@ -29,13 +29,16 @@
           tabindex="0"
           class="history-item suggest-item"
           :title="a.name"
-          @click="a.action()"
+          @click.self="a.action()"
           @keydown.enter.stop="a.action()"
           @keydown.shift.delete.stop="deleteHistory($event, index)"
           @keydown.up.stop.prevent="previousItem($event, index)"
           @keydown.down.stop.prevent="nextItem($event, index)"
         >
-          <div class="name">
+          <div
+            class="name"
+            @click="a.action()"
+          >
             {{ a.name }}
           </div>
           <div
@@ -90,6 +93,11 @@
   </div>
 </template>
 <script lang="ts">
+import {
+  VIcon,
+  VLoading,
+  VEmpty,
+} from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
 import { dqa } from '@/core/utils'
 import {
@@ -100,13 +108,21 @@ import {
 import { searchProvider, search } from './search-provider'
 import {
   historyProvider,
-  deleteHistory as del,
-  clearHistory as clear,
+  deleteHistoryItem as del,
+  clearHistoryItems as clear,
 } from './history-provider'
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
 ]) as [LaunchBarActionProvider[]]
+async function getOnlineActions() {
+  await Promise.all(
+    actionProviders.map(async provider => {
+      this.actions.push(...(await provider.getActions(this.keyword)))
+    }),
+  )
+  this.noActions = this.actions.length === 0
+}
 async function getActions() {
   this.noActions = false
   if (this.isHistory) {
@@ -115,12 +131,7 @@ async function getActions() {
   }
   const actions: LaunchBarAction[] = []
   this.actions = actions
-  await Promise.all(
-    actionProviders.map(async provider => {
-      actions.push(...(await provider.getActions(this.keyword)))
-    }),
-  )
-  this.noActions = actions.length === 0
+  this.getOnlineActions()
 }
 
 const [recommended] = registerAndGetData('launchBar.recommended', {
@@ -129,9 +140,9 @@ const [recommended] = registerAndGetData('launchBar.recommended', {
 })
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
-    VLoading: () => import('@/ui/VLoading.vue').then(m => m.default),
-    VEmpty: () => import('@/ui/VEmpty.vue').then(m => m.default),
+    VIcon,
+    VLoading,
+    VEmpty,
   },
   data() {
     return {
@@ -147,19 +158,15 @@ export default Vue.extend({
     },
   },
   watch: {
-    keyword(input: string) {
-      if (input.length === 0) {
-        this.getActions()
-      } else {
-        this.debounceGetActions()
-      }
+    keyword() {
+      this.getActions()
     },
   },
   async mounted() {
     this.getActions()
   },
   methods: {
-    debounceGetActions: lodash.debounce(getActions, 200),
+    getOnlineActions: lodash.debounce(getOnlineActions, 200),
     getActions,
     async handleEnter() {
       if (this.keyword.length > 0) {

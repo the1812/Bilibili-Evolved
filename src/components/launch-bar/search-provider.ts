@@ -1,13 +1,13 @@
 import { formData, getUID } from '@/core/utils'
 import { getJson } from '@/core/ajax'
 import { LaunchBarActionProvider } from './launch-bar-action'
-import { updateHistory } from './history-provider'
+import { addHistoryItem } from './history-provider'
 
 export const search = (keyword: string) => {
   if (!keyword) {
     return
   }
-  updateHistory(keyword)
+  addHistoryItem(keyword)
   const params = {
     keyword,
     from_source: 'nav_suggest_new',
