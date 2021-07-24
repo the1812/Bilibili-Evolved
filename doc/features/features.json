@@ -25,6 +25,22 @@
   },
   {
     "type": "component",
+    "name": "feedsFilter",
+    "displayName": "动态过滤器",
+    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.",
+    "fullRelativePath": "../../registry/dist/components/feeds/filter.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/filter.js"
+  },
+  {
+    "type": "component",
+    "name": "fixedFeedsSidebars",
+    "displayName": "强制固定动态侧栏",
+    "description": "强制固定动态主页的顶栏和所有侧栏.",
+    "fullRelativePath": "../../registry/dist/components/feeds/fixed-sidebars.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/fixed-sidebars.js"
+  },
+  {
+    "type": "component",
     "name": "foldComments",
     "displayName": "快速收起评论",
     "description": "动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.",
@@ -89,6 +105,14 @@
   },
   {
     "type": "component",
+    "name": "downloadLiveRecords",
+    "displayName": "直播录像下载",
+    "description": "在直播录像页面 `live.bilibili.com/record/` 中添加下载支持.",
+    "fullRelativePath": "../../registry/dist/components/live/download-records.js",
+    "fullAbsolutePath": "registry/dist/components/live/download-records.js"
+  },
+  {
+    "type": "component",
     "name": "liveGiftBox",
     "displayName": "直播全屏包裹",
     "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮",
@@ -102,6 +126,14 @@
     "description": "禁止直播首页的推荐直播间自动开始播放.",
     "fullRelativePath": "../../registry/dist/components/live/home-mute.js",
     "fullAbsolutePath": "registry/dist/components/live/home-mute.js"
+  },
+  {
+    "type": "component",
+    "name": "livePip",
+    "displayName": "直播画中画",
+    "description": "在直播间的功能中启用画中画支持.",
+    "fullRelativePath": "../../registry/dist/components/live/pip.js",
+    "fullAbsolutePath": "registry/dist/components/live/pip.js"
   },
   {
     "type": "component",
@@ -126,6 +158,22 @@
     "description": "暂无描述.",
     "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
     "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
+  },
+  {
+    "type": "component",
+    "name": "alwaysShowDuration",
+    "displayName": "总是显示视频时长",
+    "description": "使脚本展示的各种视频卡片中的时长无需鼠标经过也能一直显示.",
+    "fullRelativePath": "../../registry/dist/components/style/always-show-duration.js",
+    "fullAbsolutePath": "registry/dist/components/style/always-show-duration.js"
+  },
+  {
+    "type": "component",
+    "name": "autoHideSidebar",
+    "displayName": "自动隐藏侧栏",
+    "description": "自动隐藏脚本的侧栏(功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.",
+    "fullRelativePath": "../../registry/dist/components/style/auto-hide-sidebar.js",
+    "fullAbsolutePath": "registry/dist/components/style/auto-hide-sidebar.js"
   },
   {
     "type": "component",
@@ -161,6 +209,30 @@
   },
   {
     "type": "component",
+    "name": "hideBangumiReviews",
+    "displayName": "隐藏番剧点评",
+    "description": "隐藏番剧播放页面里的点评板块.",
+    "fullRelativePath": "../../registry/dist/components/style/hide/bangumi/reviews.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/bangumi/reviews.js"
+  },
+  {
+    "type": "component",
+    "name": "hideBangumiSponsors",
+    "displayName": "隐藏番剧承包",
+    "description": "隐藏番剧页面下方的承包榜, 以及右边的承包按钮.",
+    "fullRelativePath": "../../registry/dist/components/style/hide/bangumi/sponsors.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/bangumi/sponsors.js"
+  },
+  {
+    "type": "component",
+    "name": "hideBanner",
+    "displayName": "隐藏顶部横幅",
+    "description": "隐藏首页顶部横幅.",
+    "fullRelativePath": "../../registry/dist/components/style/hide/banner.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/banner.js"
+  },
+  {
+    "type": "component",
     "name": "hideRecommendedLive",
     "displayName": "隐藏推荐直播",
     "description": "隐藏视频页面右侧下方的推荐直播.",
@@ -174,6 +246,30 @@
     "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏视频推荐才能看到开关.",
     "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
+  },
+  {
+    "type": "component",
+    "name": "hideVideoTopMask",
+    "displayName": "隐藏视频标题层",
+    "description": "隐藏视频里鼠标经过时出现在右上角的覆盖层.",
+    "fullRelativePath": "../../registry/dist/components/style/hide/video/top-mask.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/video/top-mask.js"
+  },
+  {
+    "type": "component",
+    "name": "playerOnTop",
+    "displayName": "播放器置顶",
+    "description": "在视频页面中将播放器放在页面最上方.",
+    "fullRelativePath": "../../registry/dist/components/style/player-on-top.js",
+    "fullAbsolutePath": "registry/dist/components/style/player-on-top.js"
+  },
+  {
+    "type": "component",
+    "name": "playerShadow",
+    "displayName": "播放器投影",
+    "description": "为播放器添加主题色投影.",
+    "fullRelativePath": "../../registry/dist/components/style/player-shadow.js",
+    "fullAbsolutePath": "registry/dist/components/style/player-shadow.js"
   },
   {
     "type": "component",
@@ -209,6 +305,62 @@
   },
   {
     "type": "component",
+    "name": "disableSpecialDanmaku",
+    "displayName": "禁用特殊弹幕样式",
+    "description": "移除高赞弹幕或UP主弹幕的特殊样式, 弹幕内容不会移除.",
+    "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
+    "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
+  },
+  {
+    "type": "component",
+    "name": "touchComboLike",
+    "displayName": "三连触摸支持",
+    "description": "为视频页面中的三连操作(长按点赞)启用触摸支持.",
+    "fullRelativePath": "../../registry/dist/components/touch/combo-like.js",
+    "fullAbsolutePath": "registry/dist/components/touch/combo-like.js"
+  },
+  {
+    "type": "component",
+    "name": "doubleClickControl",
+    "displayName": "启用双击控制",
+    "description": "将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.",
+    "fullRelativePath": "../../registry/dist/components/touch/double-click-control.js",
+    "fullAbsolutePath": "registry/dist/components/touch/double-click-control.js"
+  },
+  {
+    "type": "component",
+    "name": "touchMiniPlayer",
+    "displayName": "迷你播放器触摸拖动",
+    "description": "使迷你播放器的拖动条可以触摸拖动.",
+    "fullRelativePath": "../../registry/dist/components/touch/mini-player.js",
+    "fullAbsolutePath": "registry/dist/components/touch/mini-player.js"
+  },
+  {
+    "type": "component",
+    "name": "touchPlayerControl",
+    "displayName": "控制栏触摸优化",
+    "description": "增大播放器控制栏里按钮的间距, 方便触屏使用.",
+    "fullRelativePath": "../../registry/dist/components/touch/player-control.js",
+    "fullAbsolutePath": "registry/dist/components/touch/player-control.js"
+  },
+  {
+    "type": "component",
+    "name": "touchPlayerGestures",
+    "displayName": "播放器触摸手势",
+    "description": "为播放器启用触摸手势支持:\r\n- 左右滑动可调整进度\r\n- 上下滑动可调整音量\r\n- 进度调整可在左上角和右上角取消\r\n- 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.",
+    "fullRelativePath": "../../registry/dist/components/touch/player-gestures.js",
+    "fullAbsolutePath": "registry/dist/components/touch/player-gestures.js"
+  },
+  {
+    "type": "component",
+    "name": "checkInCenter",
+    "displayName": "签到助手",
+    "description": "在功能面板中提供一些可以每日进行的操作.",
+    "fullRelativePath": "../../registry/dist/components/utils/check-in-center.js",
+    "fullAbsolutePath": "registry/dist/components/utils/check-in-center.js"
+  },
+  {
+    "type": "component",
     "name": "columnUnlock",
     "displayName": "专栏文字选择",
     "description": "使专栏的文字可以选择.",
@@ -230,6 +382,14 @@
     "description": "在每条评论下方添加翻译按钮.",
     "fullRelativePath": "../../registry/dist/components/utils/comments/translate.js",
     "fullAbsolutePath": "registry/dist/components/utils/comments/translate.js"
+  },
+  {
+    "type": "component",
+    "name": "downloadAudio",
+    "displayName": "下载音频",
+    "description": "开启音频下载支持, 音频页面中可以在功能面板中下载当前音频.\n\n> 需要进入音频的详细信息页面才能下载, 在其他页面中此按钮将不可点击.",
+    "fullRelativePath": "../../registry/dist/components/utils/download-audio.js",
+    "fullAbsolutePath": "registry/dist/components/utils/download-audio.js"
   },
   {
     "type": "component",
@@ -297,6 +457,14 @@
   },
   {
     "type": "component",
+    "name": "bvidConvert",
+    "displayName": "BV号转换",
+    "description": "在功能面板中显示视频的AV号和BV号.",
+    "fullRelativePath": "../../registry/dist/components/video/bvid-convert.js",
+    "fullAbsolutePath": "registry/dist/components/video/bvid-convert.js"
+  },
+  {
+    "type": "component",
     "name": "danmakuAirborne",
     "displayName": "启用弹幕空降",
     "description": "暂无描述.",
@@ -337,11 +505,75 @@
   },
   {
     "type": "component",
+    "name": "fullEpisodeTitle",
+    "displayName": "展开选集标题",
+    "description": "总是完全展开视频选集列表的标题, 注意对番剧无效.",
+    "fullRelativePath": "../../registry/dist/components/video/full-episode-title.js",
+    "fullAbsolutePath": "registry/dist/components/video/full-episode-title.js"
+  },
+  {
+    "type": "component",
     "name": "outerWatchlater",
     "displayName": "外置稍后再看",
     "description": "将视频页面菜单里的`稍后再看`移到外面.",
     "fullRelativePath": "../../registry/dist/components/video/outer-watchlater.js",
     "fullAbsolutePath": "registry/dist/components/video/outer-watchlater.js"
+  },
+  {
+    "type": "component",
+    "name": "playerAutoLight",
+    "displayName": "播放时自动关灯",
+    "description": "在视频播放时自动关灯, 暂停或结束时再自动打开.",
+    "fullRelativePath": "../../registry/dist/components/video/player/auto-light.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/auto-light.js"
+  },
+  {
+    "type": "component",
+    "name": "playerControlBackground",
+    "displayName": "播放器控制栏背景色",
+    "description": "给视频播放器控制栏附上半透明的黑色, 代替原来的阴影.",
+    "fullRelativePath": "../../registry/dist/components/video/player/control-background.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/control-background.js"
+  },
+  {
+    "type": "component",
+    "name": "defaultPlayerMode",
+    "displayName": "默认播放器模式",
+    "description": "控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`.",
+    "fullRelativePath": "../../registry/dist/components/video/player/default-mode.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/default-mode.js"
+  },
+  {
+    "type": "component",
+    "name": "doubleClickFullscreen",
+    "displayName": "双击全屏",
+    "description": "暂无描述.",
+    "fullRelativePath": "../../registry/dist/components/video/player/double-click-fullscreen.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/double-click-fullscreen.js"
+  },
+  {
+    "type": "component",
+    "name": "playerFocus",
+    "displayName": "播放器定位",
+    "description": "进入视频/番剧页面时, 自动定位到播放器.\r\n\r\n可设置定位时的竖直偏移量, 单位为像素(px).",
+    "fullRelativePath": "../../registry/dist/components/video/player/focus.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/focus.js"
+  },
+  {
+    "type": "component",
+    "name": "playerIntersectionActions",
+    "displayName": "播放器位置动作",
+    "description": "设置当播放器移出视图的位置变化时执行的动作.",
+    "fullRelativePath": "../../registry/dist/components/video/player/intersection-actions.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/intersection-actions.js"
+  },
+  {
+    "type": "component",
+    "name": "legacyAutoPlay",
+    "displayName": "传统连播模式",
+    "description": "暂无描述.",
+    "fullRelativePath": "../../registry/dist/components/video/player/legacy-auto-play.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/legacy-auto-play.js"
   },
   {
     "type": "component",
@@ -369,6 +601,30 @@
   },
   {
     "type": "component",
+    "name": "videoScreenshot",
+    "displayName": "启用视频截图",
+    "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.\r\n\r\n如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为\"按住<kbd>Shift</kbd>点击截图按钮\", 键盘操作为\"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>\".",
+    "fullRelativePath": "../../registry/dist/components/video/player/screenshot.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/screenshot.js"
+  },
+  {
+    "type": "component",
+    "name": "seekByFrames",
+    "displayName": "启用逐帧调整",
+    "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\r\n\r\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
+    "fullRelativePath": "../../registry/dist/components/video/player/seek-by-frames.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/seek-by-frames.js"
+  },
+  {
+    "type": "component",
+    "name": "showCoverBeforePlay",
+    "displayName": "播放前显示封面",
+    "description": "在视频开始播放前, 在播放器中显示封面.",
+    "fullRelativePath": "../../registry/dist/components/video/player/show-cover.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/show-cover.js"
+  },
+  {
+    "type": "component",
     "name": "skipChargeList",
     "displayName": "跳过充电鸣谢",
     "description": "自动跳过视频结尾的充电鸣谢.",
@@ -384,6 +640,22 @@
     "fullAbsolutePath": "registry/dist/components/video/quick-favorite.js"
   },
   {
+    "type": "component",
+    "name": "seoRedirect",
+    "displayName": "SEO页面重定向",
+    "description": "进入SEO视频页面时 (`https://www.bilibili.com/s/video/`) 自动跳转到原视频页面.",
+    "fullRelativePath": "../../registry/dist/components/video/seo-redirect.js",
+    "fullAbsolutePath": "registry/dist/components/video/seo-redirect.js"
+  },
+  {
+    "type": "component",
+    "name": "downloadSubtitle",
+    "displayName": "下载字幕",
+    "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
+    "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
+    "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
+  },
+  {
     "type": "plugin",
     "name": "i18n.language.english",
     "displayName": "英语语言包",
@@ -396,6 +668,13 @@
     "displayName": "日语语言包",
     "fullRelativePath": "../../registry/dist/plugins/i18n/ja-JP.js",
     "fullAbsolutePath": "registry/dist/plugins/i18n/ja-JP.js"
+  },
+  {
+    "type": "plugin",
+    "name": "launchBar.trendingSearch",
+    "displayName": "搜索栏 - 搜索推荐",
+    "fullRelativePath": "../../registry/dist/plugins/launch-bar/trending-search.js",
+    "fullAbsolutePath": "registry/dist/plugins/launch-bar/trending-search.js"
   },
   {
     "type": "plugin",
@@ -424,5 +703,12 @@
     "displayName": "下载视频 - aria2 输出支持",
     "fullRelativePath": "../../registry/dist/plugins/video/download/aria2-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/aria2-output.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.idm",
+    "displayName": "下载视频 - IDM 输出支持",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/idm-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/idm-output.js"
   }
 ]
