@@ -30,15 +30,7 @@ Warning: Some features won't work on old layout.`],
 - Move post time to upper right.
 - Use vector icons
 Tip: You can still access the removed "Follow" and level badge by hovering on their avatars.`],
-  ["simplifyLiveroom", `- Hide master icon
-- Hide fan badge
-- Hide event title
-- Hide user level
-- Hide captain icon
-- Hide global notice
-- Hide welcome message (xxx master entered room)
-- Hide lottery draw notifications
-- Disable room skin
+  ["simplifyLiveroom", `Hide unnecessary contents in live room
 Tip: Every item can be toggled individually in Add-ons.`],
   ["blurVideoControl", `Use background blur effect for video controls.`],
   ["customControlBackground", `Use a filled black rectangle as background of video controls instead of the original shadow effect.`],
