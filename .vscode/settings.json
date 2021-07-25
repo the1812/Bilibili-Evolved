@@ -75,6 +75,7 @@
     ],
     "javascript.validate.enable": true,
     "files.associations": {
-        "*.user.js": "plain"
+        "*.user.js": "plain",
+        "*.dev.js": "plain"
     }
 }

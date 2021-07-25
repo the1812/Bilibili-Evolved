@@ -261,7 +261,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     color: #eee;
     background: #222;
   }
-  &.dark .popup iframe {
+  &.dark .popup:not(.transparent) iframe {
     box-shadow: rgba(0, 0, 0, 0.2) 0 4px 8px 0px;
   }
   &.fill:not(.transparent) {
@@ -377,7 +377,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
     left: 100%;
     transform: translateY(-6px) translateX(-90%);
   }
-  &.dark .popup {
+  &.dark .popup:not(.transparent) {
     box-shadow: rgba(0, 0, 0, 0.3) 0 4px 8px 0px;
   }
   a,

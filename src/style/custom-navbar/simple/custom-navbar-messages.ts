@@ -1,6 +1,11 @@
 import { NavbarComponent } from '../custom-navbar-component'
 export class Messages extends NavbarComponent {
   totalCount: number
+  settings: {
+    notify: boolean
+    hideNotFollowedCount: boolean
+    json: any
+  }
   constructor() {
     super()
     this.href = 'https://message.bilibili.com/'
@@ -28,11 +33,16 @@ export class Messages extends NavbarComponent {
     return 'messages'
   }
   async fetchSettings() {
-    const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1`)
+    const json = await Ajax.getJsonWithCredentials(`https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1&show_unfollowed_msg=1`)
     if (json.code !== 0) {
       return
     }
     await this.setNotifyStyle(json.data.msg_notify)
+    this.settings = {
+      notify: json.data.msg_notify !== 3,
+      hideNotFollowedCount: json.data.show_unfollowed_msg === 1,
+      json: json.data,
+    }
     return json.data.msg_notify !== 3
   }
   async setupEvents() {
@@ -64,7 +74,10 @@ export class Messages extends NavbarComponent {
     if (mainJson.code !== 0 || messageJson.code !== 0) {
       return
     }
-    mainJson.data['user_msg'] = messageJson.data.unfollow_unread + messageJson.data.follow_unread
+    mainJson.data['user_msg'] = messageJson.data.follow_unread
+    if (!this.settings.hideNotFollowedCount) {
+      mainJson.data['user_msg'] += messageJson.data.unfollow_unread
+    }
     this.totalCount = names.reduce((acc, it) => acc + mainJson.data[it], 0)
     if (!this.totalCount) {
       return

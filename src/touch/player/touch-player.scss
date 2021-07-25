@@ -30,7 +30,7 @@ div.bilibili-player-video-control {
   align-items: center !important;
 }
 .bilibili-player-video-btn {
-  flex-grow: 1 !important;
+  // flex-grow: 1 !important;
   height: 100% !important;
   display: flex !important;
   align-items: center !important;
@@ -180,8 +180,8 @@ div.bilibili-player-video-control {
           padding-right: 8px !important;
         }
         &.bilibili-player-video-btn-start {
+          width: 64px !important;
           padding-left: 8px !important;
-          flex-grow: 1.2 !important;
           margin-right: 0px !important;
           margin-left: 0 !important;
         }
@@ -220,6 +220,16 @@ div.bilibili-player-video-control {
 @media screen and (min-width: 750px) {
   .bilibili-player.mode-fullscreen,
   .bilibili-player.mode-webfullscreen {
+    .bilibili-player-area .bilibili-player-video-btn {
+      padding: 0 !important;
+      width: 50px !important;
+      flex-shrink: 0 !important;
+
+      &.bilibili-player-video-btn-quality {
+        width: auto !important;
+      }
+    }
+
     .bilibili-player-video-btn-speed::before,
     .bilibili-player-video-btn-pagelist::before {
       font-size: 26px;
@@ -245,7 +255,7 @@ div.bilibili-player-video-control {
     }
   }
   .bilibili-player-video-btn.bilibili-player-video-btn-start {
-    flex-grow: 0.5 !important;
+    width: 72px !important;
   }
 }
 @import "./disable-original-hover";

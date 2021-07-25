@@ -69,7 +69,8 @@
   @include theme-background-color("20");
   border-left-color: var(--theme-color) !important;
 }
-.b-info .balance-name {
+.b-info .balance-name,
+.shop-desc .desc-box .sub-title.reserve span.highlight {
   @include theme-color();
 }
 .bilibili-player-video-state-buff-icon {
@@ -207,16 +208,32 @@
 }
 
 .player-auxiliary {
+  @include background-color();
   &-btn-playlist-order:hover path {
     @include theme-stroke();
   }
   &-playlist-item-img {
     @include no-image;
   }
-  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix {
+  &-playlist-item.player-auxiliary-playlist-item-active .player-auxiliary-playlist-item-title-prefix,
+  &-viewpointlist-item.active .player-auxiliary-viewpointlist-item-title-prefix {
     @include to-theme("blue");
   }
+  &-area .player-auxiliary-collapse-viewpointlist {
+    @include background-color("4");
+  }
+  &-viewpointlist {
+    @include background-color("3");
+    &-content {
+      @include color("e");
+    }
+    &-item.active .player-auxiliary-viewpointlist-content,
+    &-item:hover .player-auxiliary-viewpointlist-content {
+      @include theme-color();
+    }
+  }
 }
+
 .remd-video-card .card-box .pic-box {
   @include background-color("4");
 }
@@ -609,6 +626,7 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     }
 
     .read-article-holder {
+      .color-default,
       h1,
       h2,
       h3,
@@ -624,6 +642,18 @@ body:not(.simplify-comment) .panel-area .bb-comment {
         @include theme-color();
         &[disabled] {
           @include color("9");
+        }
+      }
+      [class*='color-'][class*='-03'] {
+        @include brightness(6 / 5);
+        > * {
+          @include brightness(5 / 6);
+        }
+      }
+      [class*='color-'][class*='-04'] {
+        @include brightness(4 / 3);
+        > * {
+          @include brightness(3 / 4);
         }
       }
       caption {
@@ -881,6 +911,161 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include theme-border-color();
     .video-commonplayer_play {
       @include theme-color();
+    }
+  }
+}
+.bilibili-player-video-info-tips {
+  path {
+    stroke: #aaa !important;
+    fill: #aaa !important;
+  }
+  circle {
+    stroke: #aaa !important;
+  }
+}
+.shop-desc .desc-box .prize-text {
+  @include theme-color();
+  &::before {
+    @include theme-border-color();
+  }
+}
+.subscribe-list li {
+  .subscribe-title {
+    @include color("e");
+  }
+  .subscribe-tips {
+    @include color("a");
+  }
+  .btn-subscribe {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
+#page-dynamic .col-2 .section-title {
+  @include border-color("5");
+}
+.msg-notify {
+  .modules .module .detail {
+    @include color("a");
+  }
+  .notifier {
+    .name {
+      @include color("e");
+    }
+    &:hover > {
+      @include theme-color();
+    }
+  }
+}
+.auto-reply-push {
+  @include background-color("2");
+  &__desc {
+    @include color("e");
+  }
+  .ar-recommend-item__info {
+    &--title {
+      @include color("e");
+    }
+    &--desc .time {
+      @include color("a");
+    }
+  }
+}
+.bui-progress-bar {
+  &, &::before {
+    @include theme-background-color();
+  }
+  .bui-progress-dot {
+    @include theme-background-color();
+  }
+}
+#page-404 {
+  @include background-color();
+  .error {
+    @include color("e");
+  }
+  .back-btn {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
+.bilibili-player-video-btn-viewpointlist * {
+  @include color("e");
+  @include fill("e");
+}
+.hot-not-rank .hot-not-rank-text {
+  @include theme-background-color("80");
+  @include foreground-color();
+  &:hover {
+    @include theme-background-color();
+  }
+}
+.lottery-result__content {
+  @include background-color("2");
+  .winners .winner {
+    &__prize {
+      .prize-picture {
+        @include border-color("4");
+        &.default {
+          @include to-theme("blue");
+        }
+      }
+      &__title {
+        @include color("e");
+      }
+      &__desc {
+        @include color("a");
+      }
+    }
+    &__list:before {
+      @include background-color("4");
+    }
+  }
+}
+.resizable-component .publish-btn {
+  @include theme-background-color();
+  @include foreground-color();
+}
+.note-list {
+  @include background-color("4");
+  &-header {
+    @include color("e");
+    @include border-color("5");
+  }
+  &-nickname>a,
+  &-summary {
+    @include color("e");
+  }
+  &-time {
+    @include color("a");
+  }
+  &-detail {
+    @include theme-color("80");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  &-card:not(:last-of-type) {
+    @include border-color("5");
+  }
+  &-btn {
+    @include theme-background-color("80");
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
+}
+.bili-view-note {
+  .note-view-drag-bar {
+    @include background-color("4");
+  }
+  .close-btn {
+    @include background-color("3");
+    @include color("e");
+    &:hover {
+      @include theme-background-color();
+      @include foreground-color();
     }
   }
 }

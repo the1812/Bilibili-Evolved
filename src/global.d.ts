@@ -129,13 +129,14 @@ declare global {
     logo: number
     category: number
     rankingLink: number
+    bangumiLink: number
     drawingLink: number
     musicLink: number
     gamesIframe: number
     livesIframe: number
     matchLink: number
     shopLink: number
-    mangaLink: number
+    mangaIframe: number
     blank2: number
     search: number
     userInfo: number
@@ -158,8 +159,8 @@ declare global {
     music: number
     dance: number
     game: number
+    knowledge: number
     tech: number
-    digital: number
     life: number
     kichiku: number
     fashion: number
@@ -370,6 +371,7 @@ declare global {
       giftMessage: boolean,
       guardPurchase: boolean,
       giftPanel: boolean,
+      headerPanel: boolean,
       userEffect: boolean,
       kanban: boolean,
       eventsBanner: boolean,
@@ -557,6 +559,7 @@ declare global {
   function isEmbeddedPlayer(): boolean
   function isIframe(): boolean
   function getI18nKey(): string
+  function bwpVideoFilter(selector: string): string
   function dq(selector: string): Element | null
   function dq(element: Element, selector: string): Element | null
   function dqa(selector: string): Element[]

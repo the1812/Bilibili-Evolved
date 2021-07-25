@@ -108,13 +108,13 @@ export class Observer {
       })
       cidHooked = true
     }
-    // callback();
-    const videoContainer = await SpinQuery.select('.bilibili-player-video video')
-    if (videoContainer) {
-      Observer.childList(videoContainer, callback)
-    } else {
-      callback()
-    }
+    callback()
+    // const videoContainer = await SpinQuery.select('.bilibili-player-video video')
+    // if (videoContainer) {
+    //   Observer.childList(videoContainer, callback)
+    // } else {
+    //   callback()
+    // }
     videoChangeCallbacks.push(callback)
   }
 }

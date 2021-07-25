@@ -1,8 +1,8 @@
 const regex = /@(\d+)[Ww]_(\d+)[Hh]/
-const dpi = settings.imageResolutionScale === "auto" ? window.devicePixelRatio : parseFloat(settings.imageResolutionScale)
+const dpi = settings.imageResolutionScale === 'auto' ? window.devicePixelRatio : parseFloat(settings.imageResolutionScale)
 const excludeSelectors = [
-  "#certify-img1",
-  "#certify-img2",
+  '#certify-img1',
+  '#certify-img2',
 ]
 const walk = (rootElement: Node, action: (node: HTMLElement) => void) => {
   const walker = document.createNodeIterator(rootElement, NodeFilter.SHOW_ELEMENT, null)
@@ -28,20 +28,26 @@ export async function imageResolution(element: HTMLElement) {
       return
     }
     let [, width, height] = match
-    let lastWidth = parseInt(element.getAttribute("data-resolution-width") || "0")
+    let lastWidth = parseInt(element.getAttribute('data-resolution-width') || '0')
     if (parseInt(width) >= lastWidth && lastWidth !== 0) {
       return
     }
-    if (element.getAttribute("width") === null && element.getAttribute("height") === null) {
-      element.setAttribute("width", width)
+    if (element.getAttribute('width') === null && element.getAttribute('height') === null) {
+      if (element.classList.contains('bili-avatar-img')) {
+        // 动态头像框必须设高度
+        // https://github.com/the1812/Bilibili-Evolved/issues/2030
+        element.setAttribute('height', height)
+      } else {
+        element.setAttribute('width', width)
+      }
     }
     width = Math.round(dpi * parseInt(width)).toString()
     height = Math.round(dpi * parseInt(height)).toString()
-    element.setAttribute("data-resolution-width", width)
+    element.setAttribute('data-resolution-width', width)
     setValue(element, value.replace(regex, `@${width}w_${height}h`))
   }
   Observer.attributes(element, () => {
-    replaceSource(e => e.getAttribute("src"), (e, v) => e.setAttribute("src", v))
+    replaceSource(e => e.getAttribute('src'), (e, v) => e.setAttribute('src', v))
     replaceSource(e => e.style.backgroundImage, (e, v) => e.style.backgroundImage = v)
   })
 }
@@ -52,7 +58,7 @@ const startResolution = async () => {
       for (const node of record.addedNodes) {
         if (node instanceof HTMLElement) {
           imageResolution(node)
-          if (node.nodeName.toUpperCase() !== "IMG") {
+          if (node.nodeName.toUpperCase() !== 'IMG') {
             walk(node, it => imageResolution(it))
           }
         }
@@ -65,9 +71,6 @@ resources.applyStyleFromText(`
 .favInfo-box .favInfo-cover img {
   width: 100% !important;
   object-position: left !important;
-}
-.bili-avatar-img {
-  width: 100% !important;
 }
 .bb-comment .sailing .sailing-img,
 .comment-bilibili-fold .sailing .sailing-img {

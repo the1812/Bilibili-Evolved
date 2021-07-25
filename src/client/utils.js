@@ -92,15 +92,30 @@ export const languageCodeToName = {
 export function getI18nKey () {
   return settings.i18n ? languageNameToCode[settings.i18nLanguage] : 'zh-CN'
 }
+/** 当查询 video 元素且被灰度了 WasmPlayer 时, 更换为对 bwp-video 的查询, 否则会找不到 video 元素 */
+export const bwpVideoFilter = (selector) => {
+  // if (!unsafeWindow.__ENABLE_WASM_PLAYER__) {
+  //   return selector
+  // }
+  const map = {
+    video: ', bwp-video',
+    '.bilibili-player-video video': ', .bilibili-player-video bwp-video',
+  }
+  const suffix = map[selector]
+  if (suffix) {
+    return selector + suffix
+  }
+  return selector
+}
 export const dq = (selector, scopedSelector) => {
   if (!scopedSelector) {
-    return document.querySelector(selector)
+    return document.querySelector(bwpVideoFilter(selector))
   }
   return selector.querySelector(scopedSelector)
 }
 export const dqa = (selector, scopedSelector) => {
   if (!scopedSelector) {
-    return [...document.querySelectorAll(selector)]
+    return [...document.querySelectorAll(bwpVideoFilter(selector))]
   }
   return [...selector.querySelectorAll(scopedSelector)]
 }

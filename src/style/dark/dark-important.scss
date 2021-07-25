@@ -180,7 +180,9 @@ blockquote {
 .round-corner .van-popper-favorite .play-all .bilifont,
 .rank-item .content .info:hover .title,
 .rank-list .rank-item .content .info:hover .title,
-.rank-list .rank-item .content .info .up-name:hover {
+.rank-list .rank-item .content .info .up-name:hover,
+.n .n-fs:hover p,
+.n .n-gz:hover p {
   @include theme-color();
 }
 
@@ -290,5 +292,14 @@ blockquote {
   }
   .bilibili-player-block-filter-label {
     @include theme-color();
+  }
+}
+.bpx-player-auxiliary {
+  .bpx-player-dm-wrap .bscroll-vertical-scrollbar.mousedown,
+  .bpx-player-dm-wrap:hover .bscroll-vertical-scrollbar {
+    @include background-color();
+  }
+  .bscroll-indicator {
+    @include background-color("5");
   }
 }

@@ -439,7 +439,6 @@ li.context-menu-descipline a,
 {
     background-color: #555 !important;
 }
-.bui-bar-wrap,
 .bui-step-dot,
 .ps>.ps__scrollbar-y-rail>.ps__scrollbar-y,
 .ps>.ps__scrollbar-x-rail>.ps__scrollbar-x
@@ -1694,11 +1693,6 @@ canvas.cliper.is-img,
 {
     opacity: 0 !important;
 }
-.bui-bar.bui-bar-buffer,
-.bilibili-player-video-progress-buffer-range
-{
-    opacity: 0.382 !important;
-}
 .vote-user-face.opacity
 {
     opacity: 1 !important;
@@ -1897,7 +1891,7 @@ a.btn-more:hover,
 .opera-list li:hover,
 .bui-radio-input:checked+.bui-radio-label,
 .bui-thumb-dot,
-.bui-bar,
+.bui-bar-normal,
 .bpui-button.bpui-button-type-small:hover,
 .fontsize .selection-span.active,
 .bui-switch .bui-checkbox:checked+.bui-body,

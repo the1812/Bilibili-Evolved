@@ -63,7 +63,7 @@ async function main () {
     () => $('.bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area'),
     it => it.length === 3 && $('video').length > 0 && $('video').prop('duration'))
 
-  const video = document.querySelector('video')
+  const video = dq('video')
   if (!video) {
     return
   }
