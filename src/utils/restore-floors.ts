@@ -17,7 +17,7 @@ const getOid = async (commentContainer: HTMLElement) => {
 }
 const restore = async (commentContainer: HTMLElement) => {
   const oid = await getOid(commentContainer)
-  if (oid === undefined) {
+  if (!oid) {
     return
   }
   const mode = dq(commentContainer, '.hot-sort.on') !== null ? CommentSortOrder.ByLikes : CommentSortOrder.ByTime

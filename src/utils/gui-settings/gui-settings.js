@@ -173,6 +173,9 @@ function setDisplayNames () {
 }
 
 (async () => {
+  import('../bpx-player-adaptor/bpx-player-adaptor').then(({ bpxPlayerPolyfill }) => {
+    bpxPlayerPolyfill()
+  })
   resources.applyStyle('guiSettingsStyle')
   // resources.applyStyle('scrollbarStyle')
   resources.applyImportantStyle('iconsStyle')
