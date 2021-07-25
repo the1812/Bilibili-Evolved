@@ -12,16 +12,20 @@ const playerModePolyfill = async () => {
   })
 }
 const idPolyfill = async () => {
-  const ep = await SpinQuery.select(() => unsafeWindow.ep)
-  if (!ep) {
-    console.warn('[bpx player polyfill] ep not found')
+  const pbp = await SpinQuery.select(() => unsafeWindow.$pbp)
+  if (!pbp) {
+    console.warn('[bpx player polyfill] pbp not found')
     return
   }
-  Object.assign(unsafeWindow, {
-    aid: ep.aid.toString(),
-    cid: ep.cid.toString(),
-    bvid: ep.bvid,
-  })
+  const idData = {
+    aid: pbp.options.aid.toString(),
+    cid: pbp.options.cid.toString(),
+    bvid: pbp.options.bvid,
+  }
+  if (Object.values(idData).some(it => it === '' || parseInt(it) <= 0)) {
+    console.warn('[bpx player polyfill] invalid pbp data')
+  }
+  Object.assign(unsafeWindow, idData)
 }
 export const bpxPlayerPolyfill = async () => {
   if (!document.URL.startsWith('https://www.bilibili.com/bangumi/play/')) {
