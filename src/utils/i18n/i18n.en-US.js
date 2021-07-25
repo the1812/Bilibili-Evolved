@@ -998,6 +998,11 @@ export const map = new Map([
   [`赞了`, `Liked`],
   [`禁用高赞弹幕样式`, `Disable highlighted danmaku style`],
   [`禁用UP主弹幕样式`, `Disable author danmaku style`],
+  [`入场通知`, `Entrance Messages`],
+  [`弹幕特效`, `Danmaku Effects`],
+  [`标题栏活动`, `Header Panel`],
+  [`PK浮窗`, `PK Popups`],
+  [`高能榜提示`, `Ranking Messages`],
   [`*`, [
     {
       selector: `.gui-settings-widgets-box .widgets-container .empty-tip`,
