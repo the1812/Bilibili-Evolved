@@ -1,6 +1,5 @@
 import { styledComponentEntry } from '@/components/styled-component'
 import { ComponentEntry, ComponentMetadata } from '@/components/types'
-import { cheeseUrls, mediaListUrls, videoAndBangumiUrls } from '@/core/utils/urls'
 import { addComponentListener } from '@/core/settings'
 import { actions } from './actions'
 import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
@@ -40,11 +39,11 @@ export const component: ComponentMetadata = {
     componentsTags.video,
     componentsTags.utils,
   ],
-  urlInclude: [
-    ...videoAndBangumiUrls,
-    ...cheeseUrls,
-    ...mediaListUrls,
-  ],
+  // urlInclude: [
+  //   ...videoAndBangumiUrls,
+  //   ...cheeseUrls,
+  //   ...mediaListUrls,
+  // ],
   entry,
   unload: () => { config && (config.enable = false) },
   reload: () => { config && (config.enable = true) },

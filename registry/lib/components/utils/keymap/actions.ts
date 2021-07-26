@@ -84,6 +84,9 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   volumeUp: {
     displayName: '增加音量',
     run: () => {
+      if (!unsafeWindow.player) {
+        return
+      }
       const current = unsafeWindow.player.volume()
       unsafeWindow.player.volume(current + 0.1)
       showTip(`${Math.round(unsafeWindow.player.volume() * 100)}%`, 'mdi-volume-high')
@@ -92,6 +95,9 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   volumeDown: {
     displayName: '降低音量',
     run: () => {
+      if (!unsafeWindow.player) {
+        return
+      }
       const current = unsafeWindow.player.volume()
       unsafeWindow.player.volume(current - 0.1)
       const after = Math.round(unsafeWindow.player.volume() * 100)
@@ -105,6 +111,9 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   mute: {
     displayName: '静音',
     run: context => {
+      if (!unsafeWindow.player) {
+        return
+      }
       clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', context)
       const isMute = unsafeWindow.player.isMute()
       if (isMute) {
@@ -138,6 +147,9 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       return ((context: KeyBindingActionContext) => {
         const { event } = context
         const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
+        if (!likeButton) {
+          return
+        }
         event.preventDefault()
         const fireEvent = (name: string, args: Event) => {
           const customEvent = new CustomEvent(name, args)

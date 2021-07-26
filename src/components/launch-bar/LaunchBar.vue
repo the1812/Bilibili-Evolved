@@ -10,7 +10,7 @@
           autocomplete="off"
           :placeholder="recommended.word"
           @keydown.enter.stop="handleEnter"
-          @keydown.down.stop.prevent="$refs.list.querySelector('.suggest-item').focus()"
+          @keydown.down.prevent.stop="$refs.list.querySelector('.suggest-item').focus()"
         />
         <button class="submit" title="执行" tabindex="-1" @click="handleEnter">
           <VIcon icon="right-arrow" :size="20"></VIcon>
@@ -79,9 +79,9 @@
           class="action-item suggest-item"
           :title="a.name"
           @click="a.action()"
-          @keydown.enter="a.action()"
-          @keydown.up.prevent="previousItem($event, index)"
-          @keydown.down.prevent="nextItem($event, index)"
+          @keydown.enter.stop="a.action()"
+          @keydown.up.prevent.stop="previousItem($event, index)"
+          @keydown.down.prevent.stop="nextItem($event, index)"
         >
           <component :is="a.content" v-if="a.content" :name="a.name"></component>
           <template v-else>
@@ -99,7 +99,6 @@ import {
   VEmpty,
 } from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
-import { dqa } from '@/core/utils'
 import {
   LaunchBarActionProviders,
   LaunchBarActionProvider,
@@ -186,26 +185,30 @@ export default Vue.extend({
     },
     previousItem(e: KeyboardEvent, index: number) {
       if (index === 0) {
-        this.$refs.input.focus()
+        this.focus()
       } else {
         ((e.target as HTMLElement).previousElementSibling as HTMLElement).focus()
       }
     },
     nextItem(e: KeyboardEvent, index: number) {
-      if (index !== dqa('.launch-bar .suggest-item').length - 1) {
+      const lastItemIndex = this.actions.length - (this.isHistory ? 0 : 1)
+      if (index !== lastItemIndex) {
         ((e.target as HTMLElement).nextElementSibling as HTMLElement).focus()
       }
     },
     search,
     deleteHistory(e: Event, index: number) {
-      del(this.actions[index].name)
       this.previousItem(e, index)
+      del(this.actions[index].name)
       this.getActions()
     },
     clearHistory() {
+      this.focus()
       clear()
-      this.$refs.input.focus()
       this.getActions()
+    },
+    focus() {
+      this.$refs.input.focus()
     },
   },
 })
@@ -220,6 +223,7 @@ export default Vue.extend({
   .input-area {
     display: flex;
     flex-direction: column;
+    flex: 1;
     .recommended-target {
       display: none;
     }
@@ -235,6 +239,7 @@ export default Vue.extend({
         color: inherit;
         box-sizing: border-box;
         width: 15vw;
+        font-size: inherit;
         &::placeholder {
           color: inherit !important;
           opacity: 0.8;
@@ -283,6 +288,7 @@ export default Vue.extend({
       font-style: normal;
     }
     .suggest-item {
+      outline: none !important;
       padding: 6px 6px 6px 10px;
       cursor: pointer;
       &.disabled {

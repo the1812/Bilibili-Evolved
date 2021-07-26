@@ -82,7 +82,7 @@ export default Vue.extend({
       if (this.lazy && !this.loaded) {
         this.loaded = true
       }
-      if (this.autoClose && this.trigger !== null) {
+      if (this.autoClose/*  && this.trigger !== null */) {
         const eventTypes = ['mousedown', 'touchstart']
         eventTypes.forEach(type => {
           if (value) {
@@ -116,7 +116,7 @@ export default Vue.extend({
       const targetElement = e.target as HTMLElement
       const toastContainer = document.querySelector('.toast-card-container')
       let isOutside = targetElement !== this.trigger
-        && !this.trigger.contains(targetElement)
+        && !this.trigger?.contains(targetElement)
         && targetElement !== this.$el
         && !this.$el.contains(targetElement)
         && !toastContainer?.contains(targetElement)
