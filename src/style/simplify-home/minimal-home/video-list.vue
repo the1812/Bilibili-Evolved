@@ -51,7 +51,7 @@ export default {
       //   this.cards.push(...cards)
       // }
       // await Promise.all([1].map(getRankListByDays))
-      this.cards = getTrendingVideos()
+      this.cards = await getTrendingVideos()
       this.hasMoreContent = false
     },
     async getActivityVideos() {

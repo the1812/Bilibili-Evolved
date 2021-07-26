@@ -1,5 +1,7 @@
 import { VideoCardInfo } from './video-card-info'
-export const getTrendingVideos = (): VideoCardInfo[] => {
+
+export const getTrendingVideos = async () => {
+  const { isVideoCardBlocked } = await import('../../activity/feeds-apis')
   // const json = await Ajax.getJsonWithCredentials(
   //   `https://api.bilibili.com/x/web-interface/ranking/index?day=${days}`
   // )
@@ -33,8 +35,8 @@ export const getTrendingVideos = (): VideoCardInfo[] => {
     throw new Error('unsafeWindow.__INITIAL_STATE__ not available')
   }
   if (unsafeWindow.__INITIAL_STATE__.recommendData) {
-    return unsafeWindow.__INITIAL_STATE__.recommendData.item.map(
-      (it: any) => {
+    return (unsafeWindow.__INITIAL_STATE__.recommendData.item as any[]).map(
+      it => {
         return {
           id: it.id,
           aid: it.id,
@@ -55,10 +57,10 @@ export const getTrendingVideos = (): VideoCardInfo[] => {
           upFaceUrl: it.owner.face.replace('http:', 'https:'),
         } as VideoCardInfo
       },
-    )
+    ).filter(it => !isVideoCardBlocked(it))
   }
-  return unsafeWindow.__INITIAL_STATE__.recommendList.map(
-    (it: any) => {
+  return (unsafeWindow.__INITIAL_STATE__.recommendList as any[]).map(
+    it => {
       return {
         id: it.aid,
         aid: it.aid,
@@ -79,7 +81,7 @@ export const getTrendingVideos = (): VideoCardInfo[] => {
         upFaceUrl: it.owner.face.replace('http:', 'https:'),
       } as VideoCardInfo
     },
-  )
+  ).filter(it => !isVideoCardBlocked(it))
 }
 export default {
   export: {

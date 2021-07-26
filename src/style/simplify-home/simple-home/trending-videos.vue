@@ -96,7 +96,7 @@ export default {
   },
   async created() {
     const { getTrendingVideos } = await import('../trending-videos')
-    this.trendingCards = getTrendingVideos()
+    this.trendingCards = await getTrendingVideos()
   },
   async mounted() {
     let cancelHorizontalScroll: () => void
