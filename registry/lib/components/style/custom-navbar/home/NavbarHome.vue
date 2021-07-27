@@ -74,11 +74,11 @@ export default Vue.extend({
 <style lang="scss">
 @import '../nav-link';
 .custom-navbar .home-popup {
-  max-height: 80vh;
+  max-height: 66vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  width: 350px;
+  width: 300px;
 
   .category-item {
     border-radius: 8px;
@@ -136,10 +136,9 @@ export default Vue.extend({
       opacity: 0.5;
     }
   }
-  @media screen and (min-height: 1000px) {
+  @media screen and (max-height: 600px) {
     & {
-      flex-wrap: nowrap;
-      width: 250px;
+      width: 450px;
     }
   }
 }

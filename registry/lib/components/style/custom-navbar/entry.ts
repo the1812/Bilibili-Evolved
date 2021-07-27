@@ -1,6 +1,11 @@
 import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
-import { isIframe, isNotHtml, mountVueComponent } from '@/core/utils'
+import {
+  isIframe,
+  isNotHtml,
+  matchUrlPattern,
+  mountVueComponent,
+} from '@/core/utils'
 
 export const entry: ComponentEntry = async ({ metadata: { name } }) => {
   // const url = document.URL.replace(location.search, '')
@@ -16,7 +21,11 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
   addComponentListener(`${name}.padding`, value => {
     document.documentElement.style.setProperty('--navbar-bounds-padding', `${value}%`)
   }, true)
-  if (!document.URL.startsWith('https://space.bilibili.com')) {
+  const globalFixedExclude = [
+    'https://space.bilibili.com',
+    'https://www.bilibili.com/read',
+  ]
+  if (!globalFixedExclude.some(p => matchUrlPattern(p))) {
     addComponentListener(`${name}.globalFixed`, value => {
       document.body.classList.toggle('fixed-navbar', value)
     }, true)

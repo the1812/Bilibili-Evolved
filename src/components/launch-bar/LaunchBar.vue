@@ -99,6 +99,7 @@ import {
   VEmpty,
 } from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
+import { select } from '@/core/spin-query'
 import {
   LaunchBarActionProviders,
   LaunchBarActionProvider,
@@ -163,6 +164,17 @@ export default Vue.extend({
   },
   async mounted() {
     this.getActions()
+    select('#search-keyword').then((input: HTMLInputElement) => {
+      this.keyword = input.value
+      document.addEventListener('change', e => {
+        if (!(e.target instanceof HTMLInputElement)) {
+          return
+        }
+        if (e.target.id === 'search-keyword') {
+          this.keyword = e.target.value
+        }
+      })
+    })
   },
   methods: {
     getOnlineActions: lodash.debounce(getOnlineActions, 200),
@@ -187,13 +199,13 @@ export default Vue.extend({
       if (index === 0) {
         this.focus()
       } else {
-        ((e.target as HTMLElement).previousElementSibling as HTMLElement).focus()
+        ((e.currentTarget as HTMLElement).previousElementSibling as HTMLElement).focus()
       }
     },
     nextItem(e: KeyboardEvent, index: number) {
       const lastItemIndex = this.actions.length - (this.isHistory ? 0 : 1)
       if (index !== lastItemIndex) {
-        ((e.target as HTMLElement).nextElementSibling as HTMLElement).focus()
+        ((e.currentTarget as HTMLElement).nextElementSibling as HTMLElement).focus()
       }
     },
     search,

@@ -209,11 +209,10 @@ export default Vue.extend({
       }
       .info {
         padding: 2px;
-        background-color: #8882;
         border-radius: 14px;
         line-height: 1;
         &:hover {
-          background-color: #8884;
+          background-color: #8882;
         }
       }
       .progress-row {
@@ -226,10 +225,12 @@ export default Vue.extend({
       .status {
         padding: 0 4px;
         background-color: #8882;
+        border: 1px solid #8884;
         border-radius: 4px;
         opacity: 0.75;
         &.status-2 {
           background-color: var(--theme-color-10);
+          border-color: var(--theme-color-30);
           opacity: 1;
         }
       }

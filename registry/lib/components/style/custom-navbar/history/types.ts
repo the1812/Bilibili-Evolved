@@ -37,6 +37,8 @@ export interface HistoryItem {
   durationText: string
   /** 视频的分P */
   page?: number
+  /** 直播状态: 0 未开播 1 直播中 2 轮播中 (似乎新 API 不会返回 2) */
+  liveStatus?: number
   /** 视频的tag/直播的分区名 */
   tagName?: string
 }
@@ -128,7 +130,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
       ...commonInfo,
       id: epid,
       url: `https://www.bilibili.com/bangumi/play/ep${epid}?${progressParam}`,
-      title: item.show_title,
+      title: item.show_title || item.title,
       upName: item.title,
       type: HistoryType.bangumi,
     }
@@ -154,6 +156,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
       ...commonInfo,
       id: oid,
       url: `https://live.bilibili.com/${oid}`,
+      liveStatus: item.live_status,
       type: HistoryType.live,
     }
   }

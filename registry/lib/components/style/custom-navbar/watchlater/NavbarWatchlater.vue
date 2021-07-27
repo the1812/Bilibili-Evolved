@@ -209,12 +209,6 @@ export default Vue.extend({
   justify-content: space-between;
   align-items: center;
 
-  @mixin button-background {
-    background-color: #8882;
-    &:hover {
-      background-color: #8884;
-    }
-  }
   @mixin floating-button-background {
     background-color: #000c;
   }
@@ -371,8 +365,11 @@ export default Vue.extend({
         align-self: center;
         max-width: calc(100% - 16px);
         @include h-center();
-        @include button-background();
         @include round-bar(24);
+        border: 1px solid #8882;
+        &:hover {
+          background-color: #8882;
+        }
         .face {
           border-radius: 50%;
           margin-right: 6px;

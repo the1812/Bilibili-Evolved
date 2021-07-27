@@ -10,7 +10,6 @@ export const plugin: PluginMetadata = {
       actions.showLaunchBar = {
         displayName: '显示搜索栏',
         run: () => {
-          console.log('run')
           toggleLaunchBar()
         },
       }

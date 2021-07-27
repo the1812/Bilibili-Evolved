@@ -39,3 +39,12 @@ export const livesIframe = getIframeItem({
   displayName: '直播',
   iframeName: 'lives',
 })
+export const mangaIframe = getIframeItem({
+  src: 'https://manga.bilibili.com/eden/bilibili-nav-panel.html',
+  href: 'https://manga.bilibili.com',
+  width: 720,
+  height: 266,
+  lazy: true,
+  displayName: '漫画',
+  iframeName: 'manga',
+})

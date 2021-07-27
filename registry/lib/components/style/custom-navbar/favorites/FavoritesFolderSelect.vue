@@ -5,7 +5,7 @@
     :items="folders"
     :key-mapper="f => f.id"
     :value="folder"
-    @change="$emit('change', $event)"
+    @change="change($event)"
   >
     <template #item="{ item }">
       {{ item.name }}
@@ -18,8 +18,10 @@ import {
 } from '@/ui'
 import { getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
+import { getComponentSettings } from '@/core/settings'
 import { FavoritesFolder, notSelectedFolder } from './favorites-folder'
 
+const navbarOptions = getComponentSettings('customNavbar').options
 export default Vue.extend({
   components: {
     VDropdown,
@@ -61,8 +63,20 @@ export default Vue.extend({
       } as FavoritesFolder
     ))
     if (this.folders.length > 0 && this.folder.id === notSelectedFolder.id) {
-      this.$emit('change', this.folders[0])
+      const { lastFavoriteFolder } = navbarOptions
+      const folder = this.folders.find((f: FavoritesFolder) => f.id === lastFavoriteFolder)
+      if (folder) {
+        this.$emit('change', folder)
+      } else {
+        this.$emit('change', this.folders[0])
+      }
     }
+  },
+  methods: {
+    change(folder: FavoritesFolder) {
+      navbarOptions.lastFavoriteFolder = folder.id
+      this.$emit('change', folder)
+    },
   },
 })
 </script>

@@ -55,6 +55,11 @@ export const component: ComponentMetadata = {
       defaultValue: false,
       displayName: '触摸模式',
     },
+    showDeadVideos: {
+      defaultValue: false,
+      displayName: '显示已失效视频',
+      hidden: true,
+    },
   },
   urlInclude,
   urlExclude,

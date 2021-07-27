@@ -37,6 +37,43 @@ import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { nextPageMixin } from './next-page'
 
+const formatPubTime = (pubTime: number) => {
+  const now = Number(new Date())
+  const pubDate = new Date(pubTime)
+  const time = [pubDate.getHours(), pubDate.getMinutes(), pubDate.getSeconds()]
+    .map(it => it.toString().padStart(2, '0'))
+    .join(':')
+  let date: number[]
+  if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+    date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+  } else {
+    date = [pubDate.getMonth() + 1, pubDate.getDate()]
+  }
+  return `${date.map(it => it.toString().padStart(2, '0')).join('-')} ${time}`
+}
+const formatPubTimeText = (pubTime: number) => {
+  const now = Number(new Date())
+  const oneDayBefore = now - 1000 * 3600 * 24
+  if (oneDayBefore < pubTime) {
+    const diffHours = Math.round((now - pubTime) / 1000 / 3600)
+    if (diffHours === 0) {
+      const diffMinutes = Math.round((now - pubTime) / 1000 / 60)
+      if (diffMinutes === 0) {
+        return '刚刚'
+      }
+      return `${diffMinutes}分钟前`
+    }
+    return `${diffHours}小时前`
+  }
+  const pubDate = new Date(pubTime)
+  let date: number[]
+  if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+    date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+  } else {
+    date = [pubDate.getMonth() + 1, pubDate.getDate()]
+  }
+  return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
+}
 export default Vue.extend({
   components: {
     VideoCard: VideoCardComponent,
@@ -54,6 +91,8 @@ export default Vue.extend({
         duration: cardJson.duration,
         durationText: formatDuration(cardJson.duration),
         description: cardJson.desc,
+        pubTime: formatPubTime(cardJson.pubdate * 1000),
+        pubTimeText: formatPubTimeText(cardJson.pubdate * 1000),
         upFaceUrl: card.desc.user_profile.info.face,
         upName: card.desc.user_profile.info.uname,
         upID: card.desc.user_profile.info.uid,

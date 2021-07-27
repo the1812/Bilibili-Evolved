@@ -44,25 +44,6 @@ export default Vue.extend({
   &:focus-within {
     box-shadow: 0 0 0 1px var(--theme-color), 0 0 0 3px var(--theme-color-20);
   }
-  &.linear {
-    box-shadow: none;
-    .linear-bar {
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 1px;
-      height: 2px;
-      width: 100%;
-      background-color: #8884;
-    }
-    &:focus-within {
-      box-shadow: none;
-      .linear-bar {
-        background-color: var(--theme-color);
-      }
-    }
-  }
   input[type='text'] {
     line-height: normal;
     padding: 4px 6px;
@@ -83,6 +64,28 @@ export default Vue.extend({
     }
     &::-webkit-input-placeholder {
       color: #888;
+    }
+  }
+  &.linear {
+    box-shadow: none;
+    input[type='text'] {
+      padding: 4px;
+    }
+    .linear-bar {
+      position: absolute;
+      top: calc(100% - 1px);
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 1px;
+      height: 1px;
+      width: 100%;
+      background-color: #8884;
+    }
+    &:focus-within {
+      box-shadow: none;
+      .linear-bar {
+        background-color: var(--theme-color);
+      }
     }
   }
 }

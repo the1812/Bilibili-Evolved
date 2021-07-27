@@ -58,8 +58,7 @@ mainCategories.forEach(it => {
     link: mainUrl,
     subCategories: it.sub ? Object.fromEntries(
       it.sub.map(sub => {
-        const isFallback = !sub.url || sub.url === '#'
-        const subUrl = urlNormalize(isFallback ? `${mainUrl}${sub.route}/` : sub.url)
+        const subUrl = urlNormalize(`${mainUrl}${sub.route}/`)
         return [sub.name, subUrl]
       }),
     ) : null,

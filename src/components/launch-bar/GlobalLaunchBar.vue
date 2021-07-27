@@ -54,12 +54,16 @@ export default Vue.extend({
 .global-launch-bar-container {
   display: flex;
   top: 20vh;
-  left: 20vw;
-  width: 60vw;
+  left: 50%;
+  width: 40vw;
+  max-width: 650px;
   height: 50px;
   padding: 0 8px;
   @include popup();
   border: 1px solid #8882;
+  font-size: 16px;
+  transform: translateX(-50%);
+  transition: opacity .2s ease-out;
 
   .launch-bar {
     flex: 1;
@@ -69,6 +73,7 @@ export default Vue.extend({
     .launch-bar-suggest-list {
       transition: .2s ease-out;
       top: calc(100% + 8px);
+      font-size: 14px;
     }
   }
 }

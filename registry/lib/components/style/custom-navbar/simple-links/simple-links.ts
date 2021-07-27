@@ -41,8 +41,3 @@ export const match = getSimpleLinkItem({
   displayName: '赛事',
   href: 'https://www.bilibili.com/v/game/match/',
 })
-export const manga = getSimpleLinkItem({
-  name: 'manga',
-  displayName: '漫画',
-  href: 'https://manga.bilibili.com',
-})

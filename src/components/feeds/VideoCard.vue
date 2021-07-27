@@ -8,6 +8,14 @@
     <div class="cover-container">
       <DpiImage class="cover" :src="coverUrl" :size="{ height: 120, width: 200 }"></DpiImage>
       <div v-if="isNew" class="new">NEW</div>
+      <template v-if="pubTime && pubTimeText">
+        <div class="publish-time-summary">
+          {{ pubTimeText }}
+        </div>
+        <div class="publish-time-detail">
+          {{ pubTime }}
+        </div>
+      </template>
       <div v-if="durationText" class="duration">{{ durationText }}</div>
       <div
         v-if="durationText && watchlater !== null && watchlater !== undefined"
@@ -247,19 +255,28 @@ export default {
     justify-self: self-start;
     align-self: center;
   }
+  .publish-time-summary,
+  .publish-time-detail,
+  .duration,
+  .watchlater {
+    opacity: 0;
+  }
   &:hover {
     .cover {
       transform: scale(1.05);
       transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
     }
+    .publish-time-summary,
     .duration,
     .watchlater {
       opacity: 1;
     }
   }
-  .duration,
-  .watchlater {
+  .publish-time-summary:hover {
     opacity: 0;
+    & ~ .publish-time-detail {
+      opacity: 1;
+    }
   }
 
   .cover-container {
@@ -277,6 +294,8 @@ export default {
     & > :not(.cover) {
       position: absolute;
     }
+    .publish-time-detail,
+    .publish-time-summary,
     .duration,
     .watchlater {
       bottom: 6px;
@@ -302,6 +321,17 @@ export default {
       border-radius: 10px;
       height: 20px;
       box-sizing: border-box;
+    }
+    .publish-time-detail {
+      z-index: 0;
+    }
+    .publish-time-summary {
+      z-index: 1;
+    }
+    .publish-time-detail,
+    .publish-time-summary {
+      top: 6px;
+      right: 6px;
     }
     .duration {
       left: 6px;
