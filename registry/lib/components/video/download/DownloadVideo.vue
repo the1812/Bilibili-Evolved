@@ -349,6 +349,7 @@ export default Vue.extend({
 <style lang="scss">
 @import "common";
 .download-video-panel {
+  font-size: 12px;
   top: 100px;
   left: 50%;
   transform: translateX(-50%) scale(0.95);

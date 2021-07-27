@@ -190,6 +190,8 @@ let cidPromise: Promise<string>
  * @returns 是否有视频存在
  */
 export const videoChange = async (callback: VideoChangeCallback) => {
+  const { bpxPlayerPolyfill } = await import('./bpx-player-adaptor')
+  bpxPlayerPolyfill()
   if (!cidPromise) {
     cidPromise = select(() => {
       if (unsafeWindow.cid) {
@@ -233,18 +235,18 @@ export const videoChange = async (callback: VideoChangeCallback) => {
     })
     cidHooked = true
   }
-  const videoContainer = await select('.bilibili-player-video video')
-  if (videoContainer) {
-    childList(videoContainer, () => callback({
-      aid: unsafeWindow.aid,
-      cid: unsafeWindow.cid,
-    }))
-  } else {
-    callback({
-      aid: unsafeWindow.aid,
-      cid: unsafeWindow.cid,
-    })
-  }
+  // const videoContainer = await select('.bilibili-player-video video')
+  // if (videoContainer) {
+  //   childList(videoContainer, () => callback({
+  //     aid: unsafeWindow.aid,
+  //     cid: unsafeWindow.cid,
+  //   }))
+  // } else {
+  callback({
+    aid: unsafeWindow.aid,
+    cid: unsafeWindow.cid,
+  })
+  // }
   videoChangeCallbacks.push(callback)
   return true
 }

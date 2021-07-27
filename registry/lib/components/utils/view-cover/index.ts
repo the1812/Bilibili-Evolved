@@ -1,4 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
+import { hasVideo } from '@/core/spin-query'
 import { videoAndBangumiUrls, liveUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
@@ -14,6 +15,7 @@ export const component: ComponentMetadata = {
   unload: none,
   widget: {
     component: () => import('./ViewCover.vue').then(m => m.default),
+    condition: hasVideo,
   },
   description: {
     'zh-CN': '在视频和直播页面中, 可从功能面板中查看封面.',

@@ -165,6 +165,9 @@ export default Vue.extend({
   async mounted() {
     this.getActions()
     select('#search-keyword').then((input: HTMLInputElement) => {
+      if (!input) {
+        return
+      }
       this.keyword = input.value
       document.addEventListener('change', e => {
         if (!(e.target instanceof HTMLInputElement)) {
