@@ -19,9 +19,9 @@
           <template v-if="data.count !== null">{{ data.count }}</template>
         </span>
       </a>
-      <div v-if="data.subRegions" class="sub-regions-popup popup">
+      <div v-if="data.subCategories" class="sub-regions-popup popup">
         <a
-          v-for="[regionName, url] of Object.entries(data.subRegions)"
+          v-for="[regionName, url] of Object.entries(data.subCategories)"
           :key="regionName"
           class="sub-region"
           :href="url"
@@ -32,8 +32,8 @@
   </div>
 </template>
 <script lang="ts">
+import { categories, Category } from '@/components/utils/categories/data'
 import { popperMixin } from '../mixins'
-import { categories } from './categories'
 
 const clone = lodash.cloneDeep(categories)
 Object.values(clone).forEach((data: any) => {
@@ -53,13 +53,13 @@ export default Vue.extend({
     }
     regionCountFetched = true
     const { bilibiliApi, getJson } = await import('@/core/ajax')
-    const { addCategoryIcons } = await import('./category-icons')
+    const { addCategoryIcons } = await import('@/components/utils/categories/data')
     addCategoryIcons()
     const { region_count = {} } = await bilibiliApi(
       getJson('https://api.bilibili.com/x/web-interface/online'),
       '[自定义顶栏] 分区投稿信息获取失败',
     )
-    Object.values(this.categories).forEach((data: any) => {
+    Object.values(this.categories).forEach((data: Category) => {
       if (data.code) {
         if (Array.isArray(data.code)) {
           data.count = lodash.sum(data.code.map(c => region_count[c]))
@@ -83,7 +83,6 @@ export default Vue.extend({
   .category-item {
     border-radius: 8px;
     font-size: 12pt;
-    padding: 8px 16px;
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
@@ -101,6 +100,7 @@ export default Vue.extend({
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 6px 8px;
       &.sub-region {
         @include nav-link();
       }
@@ -122,7 +122,7 @@ export default Vue.extend({
       width: max-content;
       transform: scaleX(0);
       transform-origin: left;
-      padding: 8px;
+      padding: 6px;
       left: 100%;
       top: 0;
       transition-delay: 0.3s;

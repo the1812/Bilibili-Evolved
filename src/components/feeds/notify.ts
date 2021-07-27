@@ -1,11 +1,9 @@
-import { getUID } from '@/core/utils'
+import { getCookieValue, getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { navbarFeedsTypeList } from './api'
 
 export const updateInterval = 5 * 60 * 1000 // 每5分钟更新1次动态提醒数字
-export const getLatestID = () => document.cookie.replace(new RegExp(
-  `(?:(?:^|.*;\\s*)bp_t_offset_${getUID()}\\s*\\=\\s*([^;]*).*$)|^.*$`,
-), '$1')
+export const getLatestID = () => getCookieValue(`bp_t_offset_${getUID()}`)
 export const compareID = (a: string, b: string) => {
   if (a === b) {
     return 0

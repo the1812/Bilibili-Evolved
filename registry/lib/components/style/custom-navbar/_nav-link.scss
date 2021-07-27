@@ -1,11 +1,11 @@
 @mixin nav-link {
   position: relative;
-  padding: 8px;
+  padding: 6px 8px;
   display: flex;
   justify-content: flex-start;
   border-bottom: 2px solid transparent;
-  font-size: 11pt;
-  line-height: 16pt;
+  font-size: 15px;
+  line-height: normal;
   &::before {
     content: "";
     position: absolute;

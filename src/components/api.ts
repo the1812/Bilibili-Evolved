@@ -18,6 +18,8 @@ import * as videoControlBar from './video/video-control-bar'
 import * as liveControlBar from './live/live-control-bar'
 import * as liveSocket from './live/live-socket'
 import * as commentApis from './utils/comment-apis'
+import * as categoriesUpdater from './utils/categories/updater'
+import * as categoriesData from './utils/categories/data'
 import MachineTranslator from './i18n/machine-translator/MachineTranslator.vue'
 import * as switchOptions from './switch-options'
 import LaunchBar from './launch-bar/LaunchBar.vue'
@@ -54,6 +56,10 @@ export const componentApis = {
   },
   utils: {
     commentApis,
+    categories: {
+      updater: categoriesUpdater,
+      data: categoriesData,
+    },
   },
   // lodash.camelCase('i18n') === 'i18N'
   i18N: {
