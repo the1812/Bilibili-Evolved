@@ -1,6 +1,62 @@
 [
   {
     "type": "component",
+    "name": "autoContinue",
+    "displayName": "历史记录点自动播放",
+    "description": "播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.",
+    "fullRelativePath": "../../registry/dist/components/deprecated/auto-continue.js",
+    "fullAbsolutePath": "registry/dist/components/deprecated/auto-continue.js"
+  },
+  {
+    "type": "component",
+    "name": "avUrl",
+    "displayName": "网址AV号转换",
+    "description": "当视频的链接是BV号时, 自动转换为AV号.",
+    "fullRelativePath": "../../registry/dist/components/deprecated/av-url.js",
+    "fullAbsolutePath": "registry/dist/components/deprecated/av-url.js"
+  },
+  {
+    "type": "component",
+    "name": "defaultLiveQuality",
+    "displayName": "默认直播画质",
+    "description": "暂无描述.",
+    "fullRelativePath": "../../registry/dist/components/deprecated/live-default-quality.js",
+    "fullAbsolutePath": "registry/dist/components/deprecated/live-default-quality.js"
+  },
+  {
+    "type": "component",
+    "name": "recordLiveDanmaku",
+    "displayName": "直播弹幕记录器",
+    "description": "在功能中添加直播弹幕记录器, 可以记录直播弹幕并导出XML.",
+    "fullRelativePath": "../../registry/dist/components/deprecated/record-danmaku.js",
+    "fullAbsolutePath": "registry/dist/components/deprecated/record-danmaku.js"
+  },
+  {
+    "type": "component",
+    "name": "restoreFloors",
+    "displayName": "评论楼层显示",
+    "description": "恢复按热度排序时评论楼层, 按时间排序只能恢复第一页, 仅对普通视频页有效.",
+    "fullRelativePath": "../../registry/dist/components/deprecated/restore-floors.js",
+    "fullAbsolutePath": "registry/dist/components/deprecated/restore-floors.js"
+  },
+  {
+    "type": "component",
+    "name": "turnOffDanmaku",
+    "displayName": "默认关闭弹幕",
+    "description": "暂无描述.",
+    "fullRelativePath": "../../registry/dist/components/deprecated/turn-off-danmaku.js",
+    "fullAbsolutePath": "registry/dist/components/deprecated/turn-off-danmaku.js"
+  },
+  {
+    "type": "component",
+    "name": "defaultVideoQuality",
+    "displayName": "默认视频画质",
+    "description": "暂无描述.",
+    "fullRelativePath": "../../registry/dist/components/deprecated/video-default-quality.js",
+    "fullAbsolutePath": "registry/dist/components/deprecated/video-default-quality.js"
+  },
+  {
+    "type": "component",
     "name": "copyFeedsLink",
     "displayName": "复制动态链接",
     "description": "开启后, 可在每条动态的菜单中选择复制链接.",
@@ -281,6 +337,14 @@
   },
   {
     "type": "component",
+    "name": "sidebarOffset",
+    "displayName": "侧栏垂直偏移",
+    "description": "给脚本的侧栏设置垂直偏移量, 范围为 -40% ~ 40%",
+    "fullRelativePath": "../../registry/dist/components/style/sidebar-offset.js",
+    "fullAbsolutePath": "registry/dist/components/style/sidebar-offset.js"
+  },
+  {
+    "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
     "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端`这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
@@ -430,6 +494,14 @@
     "description": "自动删除网址中的多余跟踪参数.",
     "fullRelativePath": "../../registry/dist/components/utils/url-params-clean.js",
     "fullAbsolutePath": "registry/dist/components/utils/url-params-clean.js"
+  },
+  {
+    "type": "component",
+    "name": "v1Migrate",
+    "displayName": "v1 设置迁移",
+    "description": "在设置的 `关于` 面板中添加 `导入 v1 设置` 按钮, 点击导入可以导入 v1 的设置, 并根据打开的选项自动下载安装 v2 中对应的功能.",
+    "fullRelativePath": "../../registry/dist/components/utils/v1-migrate.js",
+    "fullAbsolutePath": "registry/dist/components/utils/v1-migrate.js"
   },
   {
     "type": "component",
