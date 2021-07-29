@@ -5,7 +5,6 @@ import { darkExcludes } from '../dark-urls'
 export const component: ComponentMetadata = {
   name: 'darkModeFollowSystem',
   displayName: '夜间模式跟随系统',
-  enabledByDefault: false,
   entry: () => {
     unsafeWindow.addEventListener(LifeCycleEventTypes.End, async () => {
       const { getComponentSettings } = await import('@/core/settings')

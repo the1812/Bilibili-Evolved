@@ -37,7 +37,6 @@ export const getHook = (key: string, ...fixedArgs: any[]) => {
   if (pluginHookMap.has(key)) {
     const item = pluginHookMap.get(key)
     const { providers } = item
-    console.log('hook get key = ', key, providers)
     return {
       before: async (...args: any[]) => Promise.all(
         providers.map(p => p.before?.(...fixedArgs.concat(args))),

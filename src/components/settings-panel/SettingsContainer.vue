@@ -43,15 +43,18 @@
 </template>
 
 <script lang="ts">
-import { dqa } from '@/core/utils'
+import {
+  VPopup,
+  VIcon,
+} from '@/ui'
 
 export default {
   name: 'SettingsContainer',
   components: {
-    VPopup: () => import('@/ui/VPopup.vue').then(m => m.default),
+    VPopup,
+    VIcon,
     SettingsPanel: () => import('./SettingsPanel.vue').then(m => m.default),
     WidgetsPanel: () => import('./WidgetsPanel.vue').then(m => m.default),
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
   },
   data() {
     return {

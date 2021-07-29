@@ -34,7 +34,6 @@ export const component: ComponentMetadata = {
     componentsTags.style,
     componentsTags.general,
   ],
-  enabledByDefault: false,
   instantStyles: [
     {
       name: 'dark-mode',

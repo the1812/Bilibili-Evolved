@@ -54,7 +54,7 @@ export const getComponentSettings = (component: ComponentMetadata | string): Com
   if (typeof component === 'string') {
     const componentMetadata = componentsMap[component]
     if (componentMetadata === undefined) {
-      if (componentsMap.settingsPanel.options.devMode) {
+      if (settings.components.settingsPanel.options.devMode) {
         console.warn('No settings found for component:', component)
       }
       return emptySettings

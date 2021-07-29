@@ -118,7 +118,6 @@ export const component: ComponentMetadata = {
     componentsTags.style,
     componentsTags.general,
   ],
-  enabledByDefault: false,
   entry: ({ settings }) => fullyLoaded(() => checkTime(settings)),
   urlExclude: darkExcludes,
   options: {

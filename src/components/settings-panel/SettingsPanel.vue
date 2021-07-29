@@ -189,7 +189,7 @@ export default {
       //   this.renderedComponents = internalFiltered
       //   return
       // }
-      console.log('updateRenderedComponents', this.searchKeyword)
+      // console.log('updateRenderedComponents', this.searchKeyword)
       this.renderedComponents = this.searchFilter(internalFiltered)
     },
   },

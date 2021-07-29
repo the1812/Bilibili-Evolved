@@ -106,10 +106,10 @@ export default Vue.extend({
       }
     }
     .about-page-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      @include h-stretch(8px);
+      flex-wrap: wrap;
       .about-page-action {
+        flex: 1 0 calc(50% - 4px);
         .be-icon {
           margin-right: 6px;
         }
