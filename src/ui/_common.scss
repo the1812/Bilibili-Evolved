@@ -1,5 +1,3 @@
-@use "sass:math";
-
 @mixin shadow {
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   // box-shadow: #0002 0 1px 10px 1px;
@@ -29,7 +27,7 @@
 @mixin round-bar($height) {
   box-sizing: border-box;
   height: #{$height}px;
-  border-radius: #{math.div($height, 2)}px;
+  border-radius: #{$height / 2}px;
 }
 @mixin no-scrollbar {
   overflow: auto;
