@@ -1,0 +1,339 @@
+[
+  {
+    "name": "cleaner",
+    "displayName": "简洁至上",
+    "description": "简化各种多余界面元素, 专注于内容本身.",
+    "components": [
+      "removePromotions",
+      "removeLiveWatermark",
+      "removePlayerPopup",
+      "disableSpecialDanmaku",
+      "simplifyComments",
+      "simplifyLiveroom",
+      "simplifyHome",
+      "collapseLiveSideBar",
+      "hideRelatedVideos",
+      "hideRecommendedLive",
+      "hideVideoTopMask",
+      "autoHideSidebar"
+    ],
+    "items": [
+      {
+        "type": "component",
+        "name": "removePromotions",
+        "displayName": "删除广告",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
+        "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
+        "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
+      },
+      {
+        "type": "component",
+        "name": "removeLiveWatermark",
+        "displayName": "删除直播水印",
+        "description": "删除观看直播时角落的水印.",
+        "fullRelativePath": "../../registry/dist/components/live/remove-watermark.js",
+        "fullAbsolutePath": "registry/dist/components/live/remove-watermark.js"
+      },
+      {
+        "type": "component",
+        "name": "removePlayerPopup",
+        "displayName": "删除视频弹窗",
+        "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.",
+        "fullRelativePath": "../../registry/dist/components/video/player/remove-popup.js",
+        "fullAbsolutePath": "registry/dist/components/video/player/remove-popup.js"
+      },
+      {
+        "type": "component",
+        "name": "disableSpecialDanmaku",
+        "displayName": "禁用特殊弹幕样式",
+        "description": "移除高赞弹幕或UP主弹幕的特殊样式, 弹幕内容不会移除.",
+        "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
+        "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
+      },
+      {
+        "type": "component",
+        "name": "simplifyComments",
+        "displayName": "简化评论区",
+        "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端`这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
+        "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
+        "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
+      },
+      {
+        "type": "component",
+        "name": "simplifyLiveroom",
+        "displayName": "简化直播间",
+        "description": "隐藏直播间中各种不需要的内容.",
+        "fullRelativePath": "../../registry/dist/components/style/simplify/live.js",
+        "fullAbsolutePath": "registry/dist/components/style/simplify/live.js"
+      },
+      {
+        "type": "component",
+        "name": "simplifyHome",
+        "displayName": "简化首页",
+        "description": "隐藏原版首页不需要的元素/分区.",
+        "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
+        "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
+      },
+      {
+        "type": "component",
+        "name": "collapseLiveSideBar",
+        "displayName": "自动收起直播侧栏",
+        "description": "暂无描述.",
+        "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
+        "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
+      },
+      {
+        "type": "component",
+        "name": "hideRelatedVideos",
+        "displayName": "隐藏视频推荐",
+        "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏视频推荐才能看到开关.",
+        "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
+        "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
+      },
+      {
+        "type": "component",
+        "name": "hideRecommendedLive",
+        "displayName": "隐藏推荐直播",
+        "description": "隐藏视频页面右侧下方的推荐直播.",
+        "fullRelativePath": "../../registry/dist/components/style/hide/video/recommended-live.js",
+        "fullAbsolutePath": "registry/dist/components/style/hide/video/recommended-live.js"
+      },
+      {
+        "type": "component",
+        "name": "hideVideoTopMask",
+        "displayName": "隐藏视频标题层",
+        "description": "隐藏视频里鼠标经过时出现在右上角的覆盖层.",
+        "fullRelativePath": "../../registry/dist/components/style/hide/video/top-mask.js",
+        "fullAbsolutePath": "registry/dist/components/style/hide/video/top-mask.js"
+      },
+      {
+        "type": "component",
+        "name": "autoHideSidebar",
+        "displayName": "自动隐藏侧栏",
+        "description": "自动隐藏脚本的侧栏(功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.",
+        "fullRelativePath": "../../registry/dist/components/style/auto-hide-sidebar.js",
+        "fullAbsolutePath": "registry/dist/components/style/auto-hide-sidebar.js"
+      }
+    ],
+    "path": "./cleaner.ts"
+  },
+  {
+    "name": "downloader",
+    "displayName": "下载器",
+    "description": "包含下载各种内容的功能.",
+    "components": [
+      "downloadVideo",
+      "downloadSubtitle",
+      "downloadDanmaku",
+      "downloadAudio",
+      "downloadLiveRecords"
+    ],
+    "items": [
+      {
+        "type": "component",
+        "name": "downloadVideo",
+        "displayName": "下载视频",
+        "description": "暂无描述.",
+        "fullRelativePath": "../../registry/dist/components/video/download.js",
+        "fullAbsolutePath": "registry/dist/components/video/download.js"
+      },
+      {
+        "type": "component",
+        "name": "downloadSubtitle",
+        "displayName": "下载字幕",
+        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
+        "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
+        "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
+      },
+      {
+        "type": "component",
+        "name": "downloadDanmaku",
+        "displayName": "下载弹幕",
+        "description": "启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕.",
+        "fullRelativePath": "../../registry/dist/components/video/danmaku/download.js",
+        "fullAbsolutePath": "registry/dist/components/video/danmaku/download.js"
+      },
+      {
+        "type": "component",
+        "name": "downloadAudio",
+        "displayName": "下载音频",
+        "description": "开启音频下载支持, 音频页面中可以在功能面板中下载当前音频.\n\n> 需要进入音频的详细信息页面才能下载, 在其他页面中此按钮将不可点击.",
+        "fullRelativePath": "../../registry/dist/components/utils/download-audio.js",
+        "fullAbsolutePath": "registry/dist/components/utils/download-audio.js"
+      },
+      {
+        "type": "component",
+        "name": "downloadLiveRecords",
+        "displayName": "直播录像下载",
+        "description": "在直播录像页面 `live.bilibili.com/record/` 中添加下载支持.",
+        "fullRelativePath": "../../registry/dist/components/live/download-records.js",
+        "fullAbsolutePath": "registry/dist/components/live/download-records.js"
+      }
+    ],
+    "path": "./downloader.ts"
+  },
+  {
+    "name": "starter",
+    "displayName": "常用功能包",
+    "description": "包含一些常用功能.",
+    "components": [
+      "elegantScrollbar",
+      "customNavbar",
+      "removePromotions",
+      "columnUnlock",
+      "urlParamsClean",
+      "keymap",
+      "viewCover",
+      "bvidConvert",
+      "removeLiveWatermark",
+      "liveDanmakuSendbar",
+      "liveGiftBox",
+      "fullFeedsContent",
+      "unfoldFeeds",
+      "foldComments",
+      "disableFeedsDetails",
+      "fullVideoDescription"
+    ],
+    "plugins": [
+      "settingsPanel.tagFilters.recentComponents"
+    ],
+    "items": [
+      {
+        "type": "component",
+        "name": "elegantScrollbar",
+        "displayName": "使用细滚动条",
+        "description": "暂无描述.",
+        "fullRelativePath": "../../registry/dist/components/style/scrollbar.js",
+        "fullAbsolutePath": "registry/dist/components/style/scrollbar.js"
+      },
+      {
+        "type": "component",
+        "name": "customNavbar",
+        "displayName": "自定义顶栏",
+        "description": "暂无描述.",
+        "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
+        "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
+      },
+      {
+        "type": "component",
+        "name": "removePromotions",
+        "displayName": "删除广告",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
+        "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
+        "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
+      },
+      {
+        "type": "component",
+        "name": "columnUnlock",
+        "displayName": "专栏文字选择",
+        "description": "使专栏的文字可以选择.",
+        "fullRelativePath": "../../registry/dist/components/utils/column-unlock.js",
+        "fullAbsolutePath": "registry/dist/components/utils/column-unlock.js"
+      },
+      {
+        "type": "component",
+        "name": "urlParamsClean",
+        "displayName": "网址参数清理",
+        "description": "自动删除网址中的多余跟踪参数.",
+        "fullRelativePath": "../../registry/dist/components/utils/url-params-clean.js",
+        "fullAbsolutePath": "registry/dist/components/utils/url-params-clean.js"
+      },
+      {
+        "type": "component",
+        "name": "keymap",
+        "displayName": "快捷键扩展",
+        "description": "为视频播放器启用更多的快捷键, 快捷键列表可在`快捷键设置`中查看和配置.",
+        "fullRelativePath": "../../registry/dist/components/utils/keymap.js",
+        "fullAbsolutePath": "registry/dist/components/utils/keymap.js"
+      },
+      {
+        "type": "component",
+        "name": "viewCover",
+        "displayName": "查看封面",
+        "description": "在视频和直播页面中, 可从功能面板中查看封面.",
+        "fullRelativePath": "../../registry/dist/components/utils/view-cover.js",
+        "fullAbsolutePath": "registry/dist/components/utils/view-cover.js"
+      },
+      {
+        "type": "component",
+        "name": "bvidConvert",
+        "displayName": "BV号转换",
+        "description": "在功能面板中显示视频的AV号和BV号.",
+        "fullRelativePath": "../../registry/dist/components/video/bvid-convert.js",
+        "fullAbsolutePath": "registry/dist/components/video/bvid-convert.js"
+      },
+      {
+        "type": "component",
+        "name": "removeLiveWatermark",
+        "displayName": "删除直播水印",
+        "description": "删除观看直播时角落的水印.",
+        "fullRelativePath": "../../registry/dist/components/live/remove-watermark.js",
+        "fullAbsolutePath": "registry/dist/components/live/remove-watermark.js"
+      },
+      {
+        "type": "component",
+        "name": "liveDanmakuSendbar",
+        "displayName": "直播弹幕发送栏",
+        "description": "在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.",
+        "fullRelativePath": "../../registry/dist/components/live/danmaku-sendbar.js",
+        "fullAbsolutePath": "registry/dist/components/live/danmaku-sendbar.js"
+      },
+      {
+        "type": "component",
+        "name": "liveGiftBox",
+        "displayName": "直播全屏包裹",
+        "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮",
+        "fullRelativePath": "../../registry/dist/components/live/gift-box.js",
+        "fullAbsolutePath": "registry/dist/components/live/gift-box.js"
+      },
+      {
+        "type": "component",
+        "name": "fullFeedsContent",
+        "displayName": "展开动态内容",
+        "description": "不管内容多长, 总是完全展开动态的内容.",
+        "fullRelativePath": "../../registry/dist/components/feeds/full-content.js",
+        "fullAbsolutePath": "registry/dist/components/feeds/full-content.js"
+      },
+      {
+        "type": "component",
+        "name": "unfoldFeeds",
+        "displayName": "动态反折叠",
+        "description": "自动展开被折叠的动态.",
+        "fullRelativePath": "../../registry/dist/components/feeds/unfold.js",
+        "fullAbsolutePath": "registry/dist/components/feeds/unfold.js"
+      },
+      {
+        "type": "component",
+        "name": "foldComments",
+        "displayName": "快速收起评论",
+        "description": "动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.",
+        "fullRelativePath": "../../registry/dist/components/feeds/fold-comments.js",
+        "fullAbsolutePath": "registry/dist/components/feeds/fold-comments.js"
+      },
+      {
+        "type": "component",
+        "name": "disableFeedsDetails",
+        "displayName": "禁止跳转动态详情",
+        "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
+        "fullRelativePath": "../../registry/dist/components/feeds/disable-details.js",
+        "fullAbsolutePath": "registry/dist/components/feeds/disable-details.js"
+      },
+      {
+        "type": "component",
+        "name": "fullVideoDescription",
+        "displayName": "展开视频简介",
+        "description": "总是展开完整的视频简介.",
+        "fullRelativePath": "../../registry/dist/components/video/full-description.js",
+        "fullAbsolutePath": "registry/dist/components/video/full-description.js"
+      },
+      {
+        "type": "plugin",
+        "name": "settingsPanel.tagFilters.recentComponents",
+        "displayName": "设置面板 - \"最近使用\"类别",
+        "fullRelativePath": "../../registry/dist/plugins/settings-panel/recent-components.js",
+        "fullAbsolutePath": "registry/dist/plugins/settings-panel/recent-components.js"
+      }
+    ],
+    "path": "./starter.ts"
+  }
+]

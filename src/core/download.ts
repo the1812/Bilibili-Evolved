@@ -14,6 +14,8 @@ export interface PackageEntry {
 }
 /** 打包下载多个文件 */
 export class DownloadPackage {
+  /** 不对文件名进行过滤 (方便使用`/`添加多层目录) */
+  noEscape = false
   static lastPackageUrl = ''
   constructor(
     /** 已添加的文件 */
@@ -28,7 +30,7 @@ export class DownloadPackage {
     if (data === null || data === undefined) {
       return
     }
-    this.entries.push({ name: formatFilename(name), data, options })
+    this.entries.push({ name: this.noEscape ? name : formatFilename(name), data, options })
   }
   /** 获取打包后的Blob数据 */
   async blob(): Promise<Blob | null> {
