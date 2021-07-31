@@ -12,14 +12,14 @@
           {{ meta.name }}
         </div>
         <div class="meta-info-version">
-          v{{ meta.version }}
+          {{ meta.compilationInfo.versionWithTag }}
         </div>
         <div class="meta-info-description">
           {{ meta.description }}
         </div>
-        <div class="meta-info-commit">
+        <!-- <div class="meta-info-commit">
           Commit Hash: {{ meta.compilationInfo.commitHash.substring(0, 8) }}
-        </div>
+        </div> -->
       </div>
       <div class="script-links">
         <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/tree/v2/" class="homepage script-link">

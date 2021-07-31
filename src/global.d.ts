@@ -10,8 +10,10 @@ declare global {
 
   interface CompilationInfo {
     commitHash: string
-    buildTime: number
     branch: string
+    nearestTag: string
+    versionWithTag: string
+    // buildTime: number
   }
   const webpackCompilationInfo: CompilationInfo
 
