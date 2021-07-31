@@ -41,7 +41,7 @@
           ref="batchAddTextArea"
           v-model="batchUrl"
           class="batch-add-textarea"
-          :placeholder="'批量粘贴' + config.title + '链接'"
+          placeholder="批量粘贴功能链接, 可以混合其他类型的功能 (如合集包)"
         />
         <div class="batch-add-actions">
           <VButton @click="batchAddShow = false">
@@ -95,9 +95,11 @@
 </template>
 <script lang="ts">
 import { monkey } from '@/core/ajax'
+import { installFeature } from '@/core/install-feature'
 import { pickFile } from '@/core/file-picker'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
+import { getHook } from '@/plugins/hook'
 import {
   VIcon,
   VButton,
@@ -207,23 +209,33 @@ export default Vue.extend({
       const urls = (this.batchUrl as string).split('\n')
         .map(it => it.trim())
         .filter(it => it !== '')
-      const toast = Toast.info('获取中...', '批量添加')
+      const toast = Toast.info(`获取中... (0/${urls.length})`, '批量添加')
+      let completed = 0
       const results = await Promise.allSettled(urls.map(async url => {
         const code = await monkey({
           url,
           method: 'GET',
         })
-        return this.config.onItemAdd?.(code, url)
+        const { type, installer } = await installFeature(code)
+        const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
+        await before()
+        const { metadata, message } = await installer()
+        completed++
+        toast.message = `获取中... (${completed}/${urls.length})`
+        await after(metadata)
+        return message
       }))
+      const successCount = results.filter(it => it.status === 'fulfilled').length
+      const failCount = results.filter(it => it.status === 'rejected').length
+      toast.message = `安装完成, 成功 ${successCount} 个, 失败 ${failCount} 个.`
       const resultsText = results.map((r, index) => {
         const suffix = urls[index]
         if (r.status === 'fulfilled') {
           return `${r.value} ${suffix}`
         }
-        console.error(r.reason, suffix)
         return `${r.reason} ${suffix}`
       }).join('\n')
-      toast.message = resultsText
+      console.log(resultsText)
       this.batchUrl = ''
     },
   },
