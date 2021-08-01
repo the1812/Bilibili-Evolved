@@ -45,7 +45,9 @@
 
 > 安装需要对应文件的直链, GitHub Raw 或 jsDelivr 都可以. 批量安装时逐行粘贴链接即可.
 
-如果你曾经使用过 v1 版, 可以利用 `v1 设置迁移` 组件将旧设置导入到 v2 中, 该工具将自动把里面开启的设置对应的组件下载并安装. (当然, 现在也还没做出来)
+> ⚠️ 目前的 Technical Preview 阶段中, 只有 GitHub Stable 源可以用
+
+如果你曾经使用过 v1 版, 可以利用 `v1 设置迁移` 组件将旧设置导入到 v2 中, 该工具将自动把里面开启的设置对应的组件下载并安装.
 
 
 # 兼容性
@@ -88,6 +90,7 @@ TODO (之前那个 contributors badge 抽风了)
 - [JSZip](https://stuk.github.io/jszip/)
 - [bilibili API collect](https://github.com/SocialSisterYi/bilibili-API-collect)
 - [popper-core](https://github.com/popperjs/popper-core)
+- [Tippy.js](https://github.com/atomiks/tippyjs)
 - [Sortable](https://github.com/SortableJS/Sortable)
 - [color](https://github.com/Qix-/color)
 - [Lodash](https://lodash.com/)

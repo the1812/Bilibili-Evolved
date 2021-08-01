@@ -1,62 +1,6 @@
 [
   {
     "type": "component",
-    "name": "autoContinue",
-    "displayName": "历史记录点自动播放",
-    "description": "播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.",
-    "fullRelativePath": "../../registry/dist/components/deprecated/auto-continue.js",
-    "fullAbsolutePath": "registry/dist/components/deprecated/auto-continue.js"
-  },
-  {
-    "type": "component",
-    "name": "avUrl",
-    "displayName": "网址AV号转换",
-    "description": "当视频的链接是BV号时, 自动转换为AV号.",
-    "fullRelativePath": "../../registry/dist/components/deprecated/av-url.js",
-    "fullAbsolutePath": "registry/dist/components/deprecated/av-url.js"
-  },
-  {
-    "type": "component",
-    "name": "defaultLiveQuality",
-    "displayName": "默认直播画质",
-    "description": "暂无描述.",
-    "fullRelativePath": "../../registry/dist/components/deprecated/live-default-quality.js",
-    "fullAbsolutePath": "registry/dist/components/deprecated/live-default-quality.js"
-  },
-  {
-    "type": "component",
-    "name": "recordLiveDanmaku",
-    "displayName": "直播弹幕记录器",
-    "description": "在功能中添加直播弹幕记录器, 可以记录直播弹幕并导出XML.",
-    "fullRelativePath": "../../registry/dist/components/deprecated/record-danmaku.js",
-    "fullAbsolutePath": "registry/dist/components/deprecated/record-danmaku.js"
-  },
-  {
-    "type": "component",
-    "name": "restoreFloors",
-    "displayName": "评论楼层显示",
-    "description": "恢复按热度排序时评论楼层, 按时间排序只能恢复第一页, 仅对普通视频页有效.",
-    "fullRelativePath": "../../registry/dist/components/deprecated/restore-floors.js",
-    "fullAbsolutePath": "registry/dist/components/deprecated/restore-floors.js"
-  },
-  {
-    "type": "component",
-    "name": "turnOffDanmaku",
-    "displayName": "默认关闭弹幕",
-    "description": "暂无描述.",
-    "fullRelativePath": "../../registry/dist/components/deprecated/turn-off-danmaku.js",
-    "fullAbsolutePath": "registry/dist/components/deprecated/turn-off-danmaku.js"
-  },
-  {
-    "type": "component",
-    "name": "defaultVideoQuality",
-    "displayName": "默认视频画质",
-    "description": "暂无描述.",
-    "fullRelativePath": "../../registry/dist/components/deprecated/video-default-quality.js",
-    "fullAbsolutePath": "registry/dist/components/deprecated/video-default-quality.js"
-  },
-  {
-    "type": "component",
     "name": "copyFeedsLink",
     "displayName": "复制动态链接",
     "description": "开启后, 可在每条动态的菜单中选择复制链接.",
@@ -411,7 +355,7 @@
     "type": "component",
     "name": "touchPlayerGestures",
     "displayName": "播放器触摸手势",
-    "description": "为播放器启用触摸手势支持:\r\n- 左右滑动可调整进度\r\n- 上下滑动可调整音量\r\n- 进度调整可在左上角和右上角取消\r\n- 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.",
+    "description": "为播放器启用触摸手势支持:\n- 左右滑动可调整进度\n- 上下滑动可调整音量\n- 进度调整可在左上角和右上角取消\n- 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.",
     "fullRelativePath": "../../registry/dist/components/touch/player-gestures.js",
     "fullAbsolutePath": "registry/dist/components/touch/player-gestures.js"
   },
@@ -459,7 +403,7 @@
     "type": "component",
     "name": "imageExporter",
     "displayName": "图片批量导出",
-    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n`user`: 用户名\r\n`id`: 动态 ID\r\n`n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n`title`: 专栏标题\r\n`n`: 第 n 张图",
+    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\n\n动态文件名变量:\n`user`: 用户名\n`id`: 动态 ID\n`n`: 第 n 张图\n\n专栏文件名变量:\n`title`: 专栏标题\n`n`: 第 n 张图",
     "fullRelativePath": "../../registry/dist/components/utils/image-exporter.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-exporter.js"
   },
@@ -627,7 +571,7 @@
     "type": "component",
     "name": "playerFocus",
     "displayName": "播放器定位",
-    "description": "进入视频/番剧页面时, 自动定位到播放器.\r\n\r\n可设置定位时的竖直偏移量, 单位为像素(px).",
+    "description": "进入视频/番剧页面时, 自动定位到播放器.\n\n可设置定位时的竖直偏移量, 单位为像素(px).",
     "fullRelativePath": "../../registry/dist/components/video/player/focus.js",
     "fullAbsolutePath": "registry/dist/components/video/player/focus.js"
   },
@@ -675,7 +619,7 @@
     "type": "component",
     "name": "videoScreenshot",
     "displayName": "启用视频截图",
-    "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.\r\n\r\n如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为\"按住<kbd>Shift</kbd>点击截图按钮\", 键盘操作为\"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>\".",
+    "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.\n\n如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为\"按住<kbd>Shift</kbd>点击截图按钮\", 键盘操作为\"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>\".",
     "fullRelativePath": "../../registry/dist/components/video/player/screenshot.js",
     "fullAbsolutePath": "registry/dist/components/video/player/screenshot.js"
   },
@@ -683,7 +627,7 @@
     "type": "component",
     "name": "seekByFrames",
     "displayName": "启用逐帧调整",
-    "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\r\n\r\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
+    "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\n\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
     "fullRelativePath": "../../registry/dist/components/video/player/seek-by-frames.js",
     "fullAbsolutePath": "registry/dist/components/video/player/seek-by-frames.js"
   },

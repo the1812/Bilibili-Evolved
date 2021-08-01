@@ -2,69 +2,6 @@
 
 ## 组件
 
-### [历史记录点自动播放](../../registry/dist/components/deprecated/auto-continue.js)
-`autoContinue`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/deprecated/auto-continue.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/deprecated/auto-continue.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/deprecated/auto-continue.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/deprecated/auto-continue.js)
-
-播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.
-
-### [网址AV号转换](../../registry/dist/components/deprecated/av-url.js)
-`avUrl`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/deprecated/av-url.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/deprecated/av-url.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/deprecated/av-url.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/deprecated/av-url.js)
-
-当视频的链接是BV号时, 自动转换为AV号.
-
-### [默认直播画质](../../registry/dist/components/deprecated/live-default-quality.js)
-`defaultLiveQuality`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/deprecated/live-default-quality.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/deprecated/live-default-quality.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/deprecated/live-default-quality.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/deprecated/live-default-quality.js)
-
-暂无描述.
-
-### [直播弹幕记录器](../../registry/dist/components/deprecated/record-danmaku.js)
-`recordLiveDanmaku`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/deprecated/record-danmaku.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/deprecated/record-danmaku.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/deprecated/record-danmaku.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/deprecated/record-danmaku.js)
-
-在功能中添加直播弹幕记录器, 可以记录直播弹幕并导出XML.
-
-### [评论楼层显示](../../registry/dist/components/deprecated/restore-floors.js)
-`restoreFloors`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/deprecated/restore-floors.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/deprecated/restore-floors.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/deprecated/restore-floors.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/deprecated/restore-floors.js)
-
-恢复按热度排序时评论楼层, 按时间排序只能恢复第一页, 仅对普通视频页有效.
-
-### [默认关闭弹幕](../../registry/dist/components/deprecated/turn-off-danmaku.js)
-`turnOffDanmaku`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/deprecated/turn-off-danmaku.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/deprecated/turn-off-danmaku.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/deprecated/turn-off-danmaku.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/deprecated/turn-off-danmaku.js)
-
-暂无描述.
-
-### [默认视频画质](../../registry/dist/components/deprecated/video-default-quality.js)
-`defaultVideoQuality`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/deprecated/video-default-quality.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/deprecated/video-default-quality.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/deprecated/video-default-quality.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/deprecated/video-default-quality.js)
-
-暂无描述.
-
 ### [复制动态链接](../../registry/dist/components/feeds/copy-link.js)
 `copyFeedsLink`
 

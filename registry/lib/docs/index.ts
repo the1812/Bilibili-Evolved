@@ -1,5 +1,6 @@
 import { ComponentMetadata } from '@/components/types'
 import { cdnRoots } from '@/core/cdn-types'
+import { branches } from '@/core/meta'
 import { getComponentsDoc } from './components-doc'
 import { generatePackageDocs } from './packages-doc'
 import { getPluginsDoc } from './plugins-doc'
@@ -40,9 +41,9 @@ const entry = () => {
 ### [${displayName}](${fullRelativePath})
 \`${name}\`
 
-**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr('v2')}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr('preview')}${fullAbsolutePath})
+**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr(branches.stable)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr(branches.preview)}${fullAbsolutePath})
 
-**GitHub:** [\`Stable\`](${cdnRoots.GitHub('v2')}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub('preview')}${fullAbsolutePath})
+**GitHub:** [\`Stable\`](${cdnRoots.GitHub(branches.stable)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub(branches.preview)}${fullAbsolutePath})
 
 ${description || ''}
         `.trim()

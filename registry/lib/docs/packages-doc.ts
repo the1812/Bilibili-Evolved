@@ -1,4 +1,5 @@
 import { cdnRoots } from '@/core/cdn-types'
+import { branches } from '@/core/meta'
 import { DocSourceItem, Package } from '.'
 
 export const generatePackageDocs = async (allItems: DocSourceItem[]) => {
@@ -11,14 +12,14 @@ export const generatePackageDocs = async (allItems: DocSourceItem[]) => {
         const pack = module.pack as Package
         return {
           pack,
-          path,
+          // path,
         }
       }
       return undefined
     })
     .filter(it => it !== undefined)
     .map(it => {
-      const { pack, path } = it
+      const { pack } = it
       const { components = [], plugins = [] } = pack
       const getDocSource = (type: string, name: string) => {
         const docSource = allItems.find(item => item.type === type && item.name === name)
@@ -29,20 +30,54 @@ export const generatePackageDocs = async (allItems: DocSourceItem[]) => {
       return {
         ...pack,
         items: docSourceItems,
-        path,
+        // path,
       }
     })
+  packagesPaths.unshift({
+    name: 'all',
+    displayName: '我全都要',
+    description: '安装所有功能, 请注意会耗费大量性能.',
+    components: allItems.filter(it => it.type === 'component').map(it => it.name),
+    plugins: allItems.filter(it => it.type === 'plugin').map(it => it.name),
+    items: allItems,
+  })
   const packagesTexts = packagesPaths.map(it => {
     const itemText = `
-### [${it.displayName}]
-\`${it.name}\`
-
-**GitHub Stable:**
-\`\`\`
-${it.items.map(item => cdnRoots.GitHub('v2') + item.fullAbsolutePath).join('\n')}
-\`\`\`
-
+### ${it.displayName}
 ${it.description || ''}
+
+<details>
+<summary><strong>jsDelivr Stable</strong></summary>
+
+\`\`\`
+${it.items.map(item => cdnRoots.jsDelivr(branches.stable) + item.fullAbsolutePath).join('\n')}
+\`\`\`
+
+</details>
+<details>
+<summary><strong>jsDelivr Preview</strong></summary>
+
+\`\`\`
+${it.items.map(item => cdnRoots.jsDelivr(branches.preview) + item.fullAbsolutePath).join('\n')}
+\`\`\`
+
+</details>
+<details>
+<summary><strong>GitHub Stable</strong></summary>
+
+\`\`\`
+${it.items.map(item => cdnRoots.GitHub(branches.stable) + item.fullAbsolutePath).join('\n')}
+\`\`\`
+
+</details>
+<details>
+<summary><strong>GitHub Preview</strong></summary>
+
+\`\`\`
+${it.items.map(item => cdnRoots.GitHub(branches.preview) + item.fullAbsolutePath).join('\n')}
+\`\`\`
+
+</details>
         `.trim()
     return itemText
   })
@@ -50,7 +85,7 @@ ${it.description || ''}
 # 合集包
 合集包提供了批量的功能安装链接, 方便一次性安装大量功能.
 
-${packagesTexts.join('\n')}
+${packagesTexts.join('\n\n')}
 
 `.trim()
   return {

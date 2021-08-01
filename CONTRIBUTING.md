@@ -13,6 +13,8 @@ cd Bilibili-Evolved
 
 ```powershell
 yarn
+cd registry
+yarn
 ```
 
 ### 本体
