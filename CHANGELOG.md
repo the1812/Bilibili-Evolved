@@ -6,7 +6,7 @@
 - 搜索栏可以使用 Shift + P 全局唤起了. (安装了`快捷键扩展`时)
 - 自定义顶栏功能同步至 `v1.12.13`.
 - 新增组件 `v1 设置迁移`, 可以导入 v1 设置了, README 中有使用说明.
-- 支持[合集包](https://github.com/the1812/Bilibili-Evolved/blob/v2/doc/v1-migrate.md)安装, 设置面板中的批量安装可以接受任意类型的功能.
+- 支持[合集包](https://github.com/the1812/Bilibili-Evolved/blob/v2/doc/features/pack/pack.md)安装, 设置面板中的批量安装可以接受任意类型的功能.
 - `关于`面板中有了更多的链接, 并显示更详细的版本信息.
 
 ## v2.0.0-tp5
