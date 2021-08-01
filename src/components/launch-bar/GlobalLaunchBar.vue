@@ -59,6 +59,7 @@ export default Vue.extend({
   max-width: 650px;
   height: 50px;
   padding: 0 8px;
+  z-index: 5000;
   @include popup();
   border: 1px solid #8882;
   font-size: 16px;
