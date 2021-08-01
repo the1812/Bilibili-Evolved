@@ -50,7 +50,7 @@ export const component: ComponentMetadata = {
           displayName: '视频截图',
           run: context => {
             const { clickElement } = context
-            clickElement('.be-video-control-bar-extend [data-name="takeScreenshot"]', context)
+            return clickElement('.be-video-control-bar-extend [data-name="takeScreenshot"]', context)
           },
         }
       })

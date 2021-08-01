@@ -13,7 +13,7 @@ export interface KeyBindingActionContext {
 }
 export interface KeyBindingAction {
   displayName: string
-  run: (context: KeyBindingActionContext) => void
+  run: (context: KeyBindingActionContext) => boolean
 }
 export interface KeyBinding {
   keys: string[]
@@ -74,11 +74,7 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         return
       }
 
-      if (binding?.prevent ?? true) {
-        e.stopPropagation()
-        e.preventDefault()
-      }
-      binding.action.run({
+      const actionSuccess = binding.action.run({
         binding,
         isWatchlater,
         isMediaList,
@@ -87,6 +83,11 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         changeVideoTime,
         showTip,
       })
+
+      if (binding?.prevent ?? actionSuccess) {
+        e.stopPropagation()
+        e.preventDefault()
+      }
     })
   })
   return config

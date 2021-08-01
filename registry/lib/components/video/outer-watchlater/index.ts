@@ -54,7 +54,7 @@ export const component: ComponentMetadata = {
           displayName: '稍后再看',
           run: context => {
             const { clickElement } = context
-            clickElement('.video-toolbar .ops .watchlater, .more-ops-list .ops-watch-later, .video-toolbar-module .see-later-box', context)
+            return clickElement('.video-toolbar .ops .watchlater, .more-ops-list .ops-watch-later, .video-toolbar-module .see-later-box', context)
           },
         }
       })

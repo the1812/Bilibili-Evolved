@@ -85,14 +85,14 @@ export const component: ComponentMetadata = {
           displayName: '上一帧',
           run: context => {
             const { clickElement } = context
-            clickElement('.be-video-control-bar-extend [data-name="seekPrevFrame"]', context)
+            return clickElement('.be-video-control-bar-extend [data-name="seekPrevFrame"]', context)
           },
         }
         actions.nextFrame = {
           displayName: '下一帧',
           run: context => {
             const { clickElement } = context
-            clickElement('.be-video-control-bar-extend [data-name="seekNextFrame"]', context)
+            return clickElement('.be-video-control-bar-extend [data-name="seekNextFrame"]', context)
           },
         }
       })

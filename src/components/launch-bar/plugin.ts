@@ -11,6 +11,7 @@ export const plugin: PluginMetadata = {
         displayName: '显示搜索栏',
         run: () => {
           toggleLaunchBar()
+          return true
         },
       }
     })

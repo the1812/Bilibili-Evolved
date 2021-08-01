@@ -40,6 +40,7 @@ export const component: ComponentMetadata = {
                 || rates[rates.length - 1],
               )
             })
+            return true
           },
         }
         actions.videoSpeedDecrease = {
@@ -51,6 +52,7 @@ export const component: ComponentMetadata = {
                 || rates[0],
               )
             })
+            return true
           },
         }
         actions.videoSpeedReset = {
@@ -59,6 +61,7 @@ export const component: ComponentMetadata = {
             videoSpeed(context, controller => {
               controller.toggleVideoSpeed()
             })
+            return true
           },
         }
         if (getComponentSettings('rememberVideoSpeed').options.individualRemember) {
@@ -68,6 +71,7 @@ export const component: ComponentMetadata = {
               videoSpeed(context, controller => {
                 controller.reset(true)
               })
+              return true
             },
           }
         }

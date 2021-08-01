@@ -65,7 +65,7 @@ export const component: ComponentMetadata = {
           displayName: '快速收藏',
           run: context => {
             const { clickElement } = context
-            clickElement('.quick-favorite', context)
+            return clickElement('.quick-favorite', context)
           },
         }
       })
