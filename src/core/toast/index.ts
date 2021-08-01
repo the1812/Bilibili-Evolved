@@ -1,4 +1,5 @@
-import { dq, mountVueComponent } from '../utils'
+import { mountVueComponent } from '../utils'
+import { createMiniToast } from './mini'
 import ToastCardContainer from './ToastCardContainer.vue'
 
 export enum ToastType {
@@ -71,5 +72,8 @@ export class Toast {
   }
   static error(message: string, title: string, duration?: number | undefined) {
     return this.internalShow(message, title, duration, ToastType.Error)
+  }
+  static mini(...args: Parameters<typeof createMiniToast>) {
+    return createMiniToast(...args)
   }
 }

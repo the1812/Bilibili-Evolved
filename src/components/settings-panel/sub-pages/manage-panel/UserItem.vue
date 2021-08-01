@@ -7,33 +7,44 @@
       {{ config.item.name }}
     </div>
     <div v-if="config.isUserItem" class="user-item-line"></div>
-    <div v-if="config.isUserItem" class="user-item-remove">
+    <div
+      v-if="config.isUserItem"
+      ref="removeIcon"
+      class="user-item-remove"
+      @dblclick="removeItem()"
+    >
       <VIcon
-        v-if="!removeConfirm"
         icon="mdi-trash-can-outline"
         :size="18"
-        @click="showRemoveConfirm()"
       />
       <div
-        v-else
+        ref="removeConfirmTemplate"
         class="user-item-remove-confirm"
-        @click="removeItem()"
       >
-        <VIcon
-          icon="mdi-trash-can-outline"
-          :size="18"
-        />
-        确认卸载
+        确定要卸载 {{ config.item.displayName }} 吗?
+        <VButton
+          type="primary"
+          @click="removeItem()"
+        >
+          <VIcon
+            icon="mdi-trash-can-outline"
+            :size="16"
+          />
+          确定
+        </VButton>
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
+import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
+import VButton from '@/ui/VButton.vue'
 
 export default Vue.extend({
   components: {
     VIcon,
+    VButton,
   },
   props: {
     config: {
@@ -51,19 +62,14 @@ export default Vue.extend({
     if (this.config.getSettings) {
       this.settings = this.config.getSettings(this.config.item)
     }
+    Toast.mini(this.$refs.removeConfirmTemplate, this.$refs.removeIcon, {
+      trigger: 'click',
+      hideOnClick: true,
+    })
   },
   methods: {
-    showRemoveConfirm() {
-      this.removeConfirm = true
-      window.setTimeout(() => {
-        this.removeConfirm = false
-      }, 3000)
-    },
     async removeItem() {
-      // const hooks = getHook(`${this.config.key}.remove`, this.config.item)
-      // await hooks.before()
       await this.config.onItemRemove(this.config.item)
-      // await hooks.after()
       this.removeConfirm = false
     },
   },
@@ -102,7 +108,24 @@ export default Vue.extend({
     justify-self: end;
   }
   .user-item-remove-confirm {
-    @include h-center();
+    @include h-center(8px);
+    font-size: 13px;
+    color: white;
+    .be-button {
+      color: inherit;
+      font-size: 12px;
+      padding: 4px;
+      padding-right: 6px;
+      .be-icon {
+        margin-right: 4px;
+      }
+    }
+  }
+  .tippy-box {
+    border-radius: 8px;
+    .tippy-content {
+      padding-right: 5px;
+    }
   }
   .user-item-remove {
     grid-area: remove;
@@ -112,6 +135,7 @@ export default Vue.extend({
     opacity: 0.1;
     transition: .2s ease-out;
     cursor: pointer;
+    padding: 4px;
     &:hover {
       opacity: 1;
       color: #E54E4E;

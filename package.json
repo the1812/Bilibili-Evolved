@@ -59,6 +59,7 @@
     "jszip": "^3.2.2",
     "lodash": "^4.17.15",
     "marked": "^1.2.5",
+    "tippy.js": "^6.3.1",
     "vue": "^2.6.11"
   },
   "repository": {

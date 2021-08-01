@@ -64,6 +64,14 @@ const getDefaultConfig = (srcFolder) => {
         },
         {
           test: /\.css$/,
+          use: [
+            'style-loader',
+            ...cssStyleLoaders,
+          ],
+          include: /node_modules/,
+        },
+        {
+          test: /\.css$/,
           oneOf: [
             {
               resourceQuery: /vue/,

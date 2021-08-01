@@ -1,6 +1,6 @@
 const postcssPresetEnv = require('postcss-preset-env')
 const autoPrefixer = require('autoprefixer')
-const sass = require('sass')
+// const sass = require('sass')
 
 const cssLoader = {
   loader: 'css-loader',
