@@ -400,6 +400,7 @@ https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/vi
 ```
 
 </details>
+
 ### 简洁至上
 简化各种多余界面元素, 专注于内容本身.
 
@@ -479,6 +480,7 @@ https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components
 ```
 
 </details>
+
 ### 下载器
 包含下载各种内容的功能.
 
@@ -530,6 +532,7 @@ https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components
 ```
 
 </details>
+
 ### 常用功能包
 包含一些常用功能.
 
