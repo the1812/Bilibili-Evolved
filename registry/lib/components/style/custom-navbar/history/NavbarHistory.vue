@@ -2,18 +2,8 @@
   <div class="history-list">
     <div class="header">
       <div class="header-row">
-        <div class="type-filters">
-          <div v-for="t of types" :key="t.name" class="type-filter">
-            <VButton
-              round
-              :title="(t.checked ? '不显示' : '显示') + t.displayName"
-              :class="{ checked: t.checked }"
-              @click="toggleTypeFilter(t)"
-            >
-              <VIcon :icon="t.icon" :size="18"></VIcon>
-              {{ t.displayName }}
-            </VButton>
-          </div>
+        <div class="search">
+          <TextBox v-model="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
           <a
@@ -28,8 +18,19 @@
         </div>
       </div>
       <div class="header-row">
-        <div class="search">
-          <TextBox v-model="search" placeholder="搜索" linear></TextBox>
+        过滤:
+        <div class="type-filters">
+          <div v-for="t of types" :key="t.name" class="type-filter">
+            <VButton
+              round
+              :title="(t.checked ? '不显示' : '显示') + t.displayName"
+              :class="{ checked: t.checked }"
+              @click="toggleTypeFilter(t)"
+            >
+              <VIcon :icon="t.icon" :size="18"></VIcon>
+              {{ t.displayName }}
+            </VButton>
+          </div>
         </div>
       </div>
     </div>
@@ -237,7 +238,7 @@ export default Vue.extend({
   }
   .header {
     @include v-stretch(8px);
-    margin: 16px 12px;
+    margin: 16px 12px 0 12px;
     .header-row {
       @include h-center(8px);
       justify-content: space-between;
@@ -279,7 +280,7 @@ export default Vue.extend({
     .be-loading {
       align-self: center;
       text-align: center;
-      margin-bottom: 12px;
+      margin: 12px 0;
     }
     .cards {
       @include items-animation();
@@ -292,11 +293,11 @@ export default Vue.extend({
         text-align: center;
       }
       .time-group {
-        padding-bottom: 16px;
+        // padding-bottom: 16px;
         @include items-animation();
         &-name {
-          padding: 0 12px 8px 12px;
-          font-size: 13px;
+          padding: 8px 12px;
+          font-size: 12px;
           position: sticky;
           top: 0;
           z-index: 1;

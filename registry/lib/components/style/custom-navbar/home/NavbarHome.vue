@@ -100,7 +100,7 @@ export default Vue.extend({
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 6px 8px;
+      padding: 8px;
       &.sub-region {
         @include nav-link();
       }
