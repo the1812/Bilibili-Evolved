@@ -2,7 +2,7 @@
 合集包提供了批量的功能安装链接, 方便一次性安装大量功能.
 
 ### 我全都要
-安装所有功能, 请注意会耗费大量性能.
+安装所有功能 (互斥的和个人私货不算), 请注意会耗费大量性能.
 
 <details>
 <summary><strong>jsDelivr Stable</strong></summary>
@@ -48,6 +48,7 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/simplify/home.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/simplify/live.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/special-danmaku.js
+https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/v1-panel.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/touch/combo-like.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/touch/double-click-control.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/touch/mini-player.js
@@ -147,6 +148,7 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/compo
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/home.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/live.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/special-danmaku.js
+https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/v1-panel.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/combo-like.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/double-click-control.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/mini-player.js
@@ -246,6 +248,7 @@ https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/styl
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/simplify/home.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/simplify/live.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/special-danmaku.js
+https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/v1-panel.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/touch/combo-like.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/touch/double-click-control.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/touch/mini-player.js
@@ -345,6 +348,7 @@ https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/simplify/home.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/simplify/live.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/special-danmaku.js
+https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/v1-panel.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/touch/combo-like.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/touch/double-click-control.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/touch/mini-player.js

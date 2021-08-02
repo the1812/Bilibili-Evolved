@@ -371,6 +371,15 @@
 
 移除高赞弹幕或UP主弹幕的特殊样式, 弹幕内容不会移除.
 
+### [v1 风格设置面板](../../registry/dist/components/style/v1-panel.js)
+`v1PanelStyle`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/v1-panel.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/v1-panel.js)
+
+**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/style/v1-panel.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/style/v1-panel.js)
+
+使用 v1 风格的设置面板样式
+
 ### [三连触摸支持](../../registry/dist/components/touch/combo-like.js)
 `touchComboLike`
 

@@ -33,12 +33,20 @@ export const generatePackageDocs = async (allItems: DocSourceItem[]) => {
         // path,
       }
     })
+  const allPackExcludes = [
+    'darkModeSchedule',
+    'vLoading.reimu',
+  ]
   packagesPaths.unshift({
     name: 'all',
     displayName: '我全都要',
-    description: '安装所有功能, 请注意会耗费大量性能.',
-    components: allItems.filter(it => it.type === 'component').map(it => it.name),
-    plugins: allItems.filter(it => it.type === 'plugin').map(it => it.name),
+    description: '安装所有功能 (互斥的和个人私货不算), 请注意会耗费大量性能.',
+    components: allItems
+      .filter(it => it.type === 'component' && !allPackExcludes.includes(it.name))
+      .map(it => it.name),
+    plugins: allItems
+      .filter(it => it.type === 'plugin' && !allPackExcludes.includes(it.name))
+      .map(it => it.name),
     items: allItems,
   })
   const packagesTexts = packagesPaths.map(it => {

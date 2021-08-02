@@ -321,6 +321,14 @@
   },
   {
     "type": "component",
+    "name": "v1PanelStyle",
+    "displayName": "v1 风格设置面板",
+    "description": "使用 v1 风格的设置面板样式",
+    "fullRelativePath": "../../registry/dist/components/style/v1-panel.js",
+    "fullAbsolutePath": "registry/dist/components/style/v1-panel.js"
+  },
+  {
+    "type": "component",
     "name": "touchComboLike",
     "displayName": "三连触摸支持",
     "description": "为视频页面中的三连操作(长按点赞)启用触摸支持.",
