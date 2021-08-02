@@ -16,7 +16,7 @@ export const plugin: PluginMetadata = {
       }
     })
     addData('keymap.presets', (presetBase: Record<string, string>) => {
-      presetBase.showLaunchBar = 'shift p'
+      presetBase.showLaunchBar = '/'
     })
   },
 }
