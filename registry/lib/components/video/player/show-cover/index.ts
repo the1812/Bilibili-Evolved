@@ -1,14 +1,14 @@
 import { ComponentMetadata } from '@/components/types'
 import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { createHook } from '@/core/utils'
+import { createHook, isBwpVideo } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   let lastCid: string
   const removeCover = () => document.body.style.removeProperty('--cover-url')
   // eslint-disable-next-line prefer-arrow-callback
-  createHook(HTMLVideoElement.prototype, 'play', function play() {
+  createHook(isBwpVideo() ? BwpElement.prototype : HTMLVideoElement.prototype, 'play', function play() {
     removeCover()
     return true
   })

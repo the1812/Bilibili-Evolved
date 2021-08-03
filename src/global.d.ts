@@ -21,6 +21,10 @@ declare global {
     pictureInPictureElement: HTMLElement | null
     exitPictureInPicture: () => void
   }
+  const BwpElement: {
+    new(): HTMLVideoElement
+    prototype: HTMLVideoElement
+  }
   interface HTMLVideoElement {
     requestPictureInPicture: () => void
   }

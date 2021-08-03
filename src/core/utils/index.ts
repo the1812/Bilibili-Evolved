@@ -56,6 +56,9 @@ export function dqa(selectorOrElement: Element | string, scopedSelector?: string
 export const none = () => {
   // Do nothing
 }
+/** 页面是否使用了 Wasm 播放器 */
+// eslint-disable-next-line no-underscore-dangle
+export const isBwpVideo = () => unsafeWindow.__ENABLE_WASM_PLAYER__ || dq('bwp-video')
 /**
  * 等待一定时间
  * @param time 延迟的毫秒数
@@ -171,7 +174,7 @@ export const createHook = <ParentType, HookParameters extends any[], ReturnType 
     if (!shouldCallOriginal) {
       return undefined
     }
-    return original.call(this, ...args)
+    return original?.call(this, ...args)
   } as any
   return original
 }
