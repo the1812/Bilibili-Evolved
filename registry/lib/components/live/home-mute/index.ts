@@ -33,6 +33,9 @@ export const component: ComponentMetadata = {
   ],
   plugin: {
     displayName: '直播首页静音',
+    description: {
+      'zh-CN': '提前执行代码以尽快静音.',
+    },
     async setup() {
       const { matchUrlPattern } = await import('@/core/utils')
       if (!matchUrlPattern(liveHome)) {

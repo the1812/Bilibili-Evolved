@@ -1,4 +1,5 @@
 import { ComponentMetadata } from '@/components/component'
+import { I18nDescription } from '@/core/common-types'
 import { deleteValue } from '@/core/utils'
 import { CoreApis } from '../core/core-apis'
 import { addData, registerData, registerAndGetData } from './data'
@@ -22,6 +23,8 @@ export interface PluginMinimalData {
   name: string
   /** 显示名称, 默认同插件名称 */
   displayName?: string
+  /** 插件描述, 类型同 `ComponentMetadata.description` */
+  description?: I18nDescription
 }
 export type PluginMetadata = Required<PluginMinimalData>
 

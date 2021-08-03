@@ -141,6 +141,10 @@ export const component: ComponentMetadata = {
   },
   plugin: {
     displayName: '自动更新器 - 安装/卸载记录',
+    description: {
+      'zh-CN': '记录在设置面板中的功能安装/卸载数据供自动更新使用',
+    },
+    // 非设置面板的组件如果也对能功能进行修改, 建议调用此处的 Hooks 同步状态.
     setup: ({ addHook, coreApis: { settings: { getComponentSettings } } }) => {
       const types = ['components', 'plugins', 'styles']
       types.forEach(type => {

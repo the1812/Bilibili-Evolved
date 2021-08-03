@@ -6,10 +6,14 @@ import {
 } from '@/core/common-types'
 import { ComponentSettings } from '@/core/settings'
 import { CoreApis } from '@/core/core-apis'
-import { PluginSetupParameters } from '@/plugins/plugin'
+import { PluginMinimalData } from '@/plugins/plugin'
 import { Range } from '@/ui/range'
 import { Widget } from '@/widgets/widget'
+import { LanguagePack } from './i18n/types'
 
+type Optional<Target, Props extends keyof Target> = {
+  [P in Props]?: Target[P]
+} & Omit<Target, Props>
 /** 组件标签 */
 export interface ComponentTag {
   /** 标签的名称 */
@@ -149,14 +153,7 @@ export interface FunctionalMetadata {
   /** 关闭时执行 */
   unload?: Executable
   /** 插件化数据定义 */
-  plugin?: {
-    /** 初始化函数, 可在其中注册数据, 添加代码注入等 */
-    setup: (params: PluginSetupParameters) => void | Promise<void>
-    /** 插件ID, 省略则为组件名 + `.plugin` */
-    name?: string
-    /** 插件显示名称 */
-    displayName?: string
-  }
+  plugin?: Optional<PluginMinimalData, 'name'>
   /** 额外想要展示在设置里的选项 UI */
   extraOptions?: Executable<VueModule>
   /** 设置匹配的URL, 不匹配则不运行此组件 */
@@ -178,13 +175,12 @@ export interface ComponentMetadata extends FunctionalMetadata {
   configurable?: boolean
   /**  是否在设置界面中隐藏 (代码仍可操作) */
   hidden?: boolean
-  /**
-   * 组件描述 (可使用HTML), 可以设置为对象提供多语言的描述 (`key: 语言代码`)
-   * @todo 应使用Markdown
-  */
+  /** 组件描述 (markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
   description?: I18nDescription
   /** 组件子选项 */
   options?: ComponentOptions
+  /** i18n 数据 */
+  i18n?: Record<string, LanguagePack>
 }
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>
