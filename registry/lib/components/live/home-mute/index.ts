@@ -32,7 +32,7 @@ export const component: ComponentMetadata = {
     liveHome,
   ],
   plugin: {
-    displayName: '直播首页静音',
+    displayName: '直播首页静音 - 提前执行',
     description: {
       'zh-CN': '提前执行代码以尽快静音.',
     },
