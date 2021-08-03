@@ -127,6 +127,8 @@ export const component: ComponentMetadata = {
 ```
 > 在 `ComponentMetadata` 的源码中有各属性的说明
 
+> `author` 字段记得填, 这个因为我自己写的组件不需要所以就不是 required 的
+
 5. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
 6. 编译并调试组件.
 

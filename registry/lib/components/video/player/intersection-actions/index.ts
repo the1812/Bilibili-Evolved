@@ -11,6 +11,10 @@ enum IntersectionMode {
 
 export const component: ComponentMetadata = {
   name: 'playerIntersectionActions',
+  author: {
+    name: 'FoundTheWOUT',
+    link: 'https://github.com/FoundTheWOUT',
+  },
   tags: [componentsTags.video],
   entry: async ({ settings: { options }, metadata }) => {
     const settings = options as {

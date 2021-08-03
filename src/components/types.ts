@@ -11,6 +11,10 @@ import { Range } from '@/ui/range'
 import { Widget } from '@/widgets/widget'
 import { LanguagePack } from './i18n/types'
 
+type Author = {
+  name: string
+  link: string
+}
 type Optional<Target, Props extends keyof Target> = {
   [P in Props]?: Target[P]
 } & Omit<Target, Props>
@@ -181,6 +185,8 @@ export interface ComponentMetadata extends FunctionalMetadata {
   options?: ComponentOptions
   /** i18n 数据 */
   i18n?: Record<string, LanguagePack>
+  /** 作者信息 */
+  author?: Author | Author[]
 }
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>
