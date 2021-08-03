@@ -26,7 +26,10 @@ export interface PluginMinimalData {
   /** 插件描述, 类型同 `ComponentMetadata.description` */
   description?: I18nDescription
 }
-export type PluginMetadata = Required<PluginMinimalData>
+type PartialRequired<Target, Props extends keyof Target> = Target & {
+  [P in Props]-?: Target[P]
+}
+export type PluginMetadata = PartialRequired<PluginMinimalData, 'displayName'>
 
 /** 可根据插件名称检索对应的内置插件 */
 export const pluginsMap: { [name: string]: PluginMetadata } = {}
