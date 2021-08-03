@@ -16,9 +16,9 @@
     #bilibili_pbp,
     #bilibili_pbp_canvas {
       opacity: 1 !important;
-      &.pin {
-        bottom: calc(100% - 2px) !important;
-      }
+      // &.pin {
+      bottom: calc(100% - 2px) !important;
+      // }
     }
     #bilibili_pbp_pin {
       right: -8px !important;
@@ -37,9 +37,9 @@
       &.touch-video-control-show {
         #bilibili_pbp,
         #bilibili_pbp_canvas {
-          &.pin {
-            bottom: calc(100% + 5px) !important;
-          }
+          // &.pin {
+          bottom: calc(100% + 5px) !important;
+          // }
         }
       }
     }
