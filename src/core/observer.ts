@@ -114,14 +114,30 @@ export const allMutationsOn = (
   characterData: true,
 }, callback)
 
-let everyNodesObserver: [MutationObserver, MutationObserverInit]
+const everyNodesObserver: {
+  observer: MutationObserver
+  config: MutationObserverInit
+  callbacks: MutationCallback[]
+} = {
+  observer: null,
+  config: null,
+  callbacks: [],
+}
 /**
  * 监听 `document.body` 上的所有变化, 包括自身及子孙元素的元素增减, 属性变化, 文本内容变化
  * @param callback 回调函数
  */
 export const allMutations = (callback: MutationCallback) => {
-  if (!everyNodesObserver) {
-    everyNodesObserver = allMutationsOn(document.body, callback)
+  if (!everyNodesObserver.observer) {
+    everyNodesObserver.callbacks.push(callback)
+    const [observer, config] = allMutationsOn(
+      document.body,
+      records => everyNodesObserver.callbacks.forEach(c => c(records, everyNodesObserver.observer)),
+    )
+    everyNodesObserver.observer = observer
+    everyNodesObserver.config = config
+  } else {
+    everyNodesObserver.callbacks.push(callback)
   }
   return everyNodesObserver
 }

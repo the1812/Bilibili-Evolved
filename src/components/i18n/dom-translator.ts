@@ -3,8 +3,7 @@ import { allMutations } from '@/core/observer'
 import { ComponentEntry } from '../types'
 import { RegexTranslation, Translation } from './types'
 
-/* eslint-disable */
-
+// 基本照搬 v1 的代码 + ESLint 适配. 设计质量很一般, Translator 需要更巧妙的抽象
 export class Translator {
   static textNode: TextNodeTranslator
   static title: TitleTranslator
@@ -13,10 +12,10 @@ export class Translator {
   static map: Map<string, any>
   static regex: [RegExp, string][]
 
-  accepts(node: Node) { return node.nodeType === Node.ELEMENT_NODE }
-  getValue(node: Node) { return node.nodeValue }
-  setValue(node: Node, value: string) { node.nodeValue = value }
-  getElement(node: Node) { return node as Element }
+  protected accepts = (node: Node) => node.nodeType === Node.ELEMENT_NODE
+  protected getValue = (node: Node) => node.nodeValue
+  protected setValue = (node: Node, value: string) => { node.nodeValue = value }
+  protected getElement = (node: Node) => node as Element
   translate(node: Node) {
     let value = this.getValue(node)
     if (!value || typeof value !== 'string' || value === '*') {
@@ -25,7 +24,7 @@ export class Translator {
     value = value.trim()
     const translation = Translator.map.get(value)
     if (translation === undefined) {
-      const result = Translator.regex.find(([r]) => r.test(value!))
+      const result = Translator.regex.find(([r]) => r.test(value))
       if (result) {
         const [regex, replacement] = result
         this.setValue(node, value.replace(regex, replacement))
@@ -39,7 +38,7 @@ export class Translator {
           finalTranslation = subTranslation
         } else {
           const { text, selector, not } = subTranslation
-          if (this.getElement(node).matches(selector) !== Boolean(not)) {
+          if (this.getElement(node)?.matches(selector) !== Boolean(not)) {
             finalTranslation = text
           }
         }
@@ -49,14 +48,18 @@ export class Translator {
       }
     } else {
       const { text, selector, not } = translation
-      if (this.getElement(node).matches(selector) !== Boolean(not)) {
+      if (this.getElement(node)?.matches(selector) !== Boolean(not)) {
         this.setValue(node, text)
       }
     }
   }
   // https://stackoverflow.com/questions/10730309/find-all-text-nodes-in-html-page
   static walk(rootElement: Node, action: (node: Node) => void) {
-    const walker = document.createNodeIterator(rootElement, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT)
+    const walker = document.createNodeIterator(
+      rootElement,
+      // eslint-disable-next-line no-bitwise
+      NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT,
+    )
     let node = walker.nextNode()
     while (node) {
       action(node)
@@ -86,27 +89,26 @@ export class Translator {
     for (const { selector, text } of selectors) {
       const element = document.querySelector(selector)
       if (element) {
-        [...element.childNodes].filter(it => it.nodeType === Node.TEXT_NODE).forEach(it => it.nodeValue = text)
+        [...element.childNodes]
+          .filter(it => it.nodeType === Node.TEXT_NODE)
+          .forEach(it => (it.nodeValue = text))
       }
     }
   }
 }
 export class TextNodeTranslator extends Translator {
-  accepts(node: Node) { return node.nodeType === Node.TEXT_NODE }
-  getElement(node: Node) {
-    return node.parentElement!
-  }
+  accepts = (node: Node) => node.nodeType === Node.TEXT_NODE
+  getElement = (node: Node) => node.parentElement
 }
 export class TitleTranslator extends Translator {
-  getValue(node: Node) { return (node as Element).getAttribute('title') }
-  setValue(node: Node, value: string) {
+  getValue = (node: Node) => (node as Element).getAttribute('title')
+  setValue = (node: Node, value: string) => {
     (node as Element).setAttribute('title', value)
   }
 }
 export class PlaceholderTranslator extends Translator {
-  // accepts(node: Node) { return node.nodeName === "INPUT" && (node as HTMLInputElement).type.toUpperCase() === "TEXT" || node.nodeName === "TEXTAREA"; }
-  getValue(node: Node) { return (node as Element).getAttribute('placeholder') }
-  setValue(node: Node, value: string) {
+  getValue = (node: Node) => (node as Element).getAttribute('placeholder')
+  setValue = (node: Node, value: string) => {
     (node as Element).setAttribute('placeholder', value)
   }
 }

@@ -20,6 +20,16 @@ const getAllComponents = lodash.once(() => {
 /** 包含所有组件的数组 */
 export const components: ComponentMetadata[] = getAllComponents()
 
+const loadI18n = async (component: ComponentMetadata) => {
+  if (!component.i18n) {
+    return
+  }
+  const { addI18nData } = await import('@/components/i18n/helpers')
+  Object.entries(component.i18n).forEach(([language, data]) => {
+    const { map = [], regex = [] } = data
+    addI18nData(language, map, regex)
+  })
+}
 /** 获取组件内置Widget名称 */
 const getComponentWidgetName = (component: ComponentMetadata) => `${component.name}.widget`
 /** 提取组件中的Widget */
@@ -142,6 +152,7 @@ export const loadAllComponents = async () => {
   const generalSettings = getGeneralSettings()
   const { loadAllPlugins } = await import('@/plugins/plugin')
   const loadComponents = () => loadAllPlugins(components)
+    .then(() => Promise.allSettled(components.map(loadI18n)))
     .then(() => Promise.allSettled(components.map(loadComponent)))
     .then(async () => {
       if (generalSettings.devMode) {

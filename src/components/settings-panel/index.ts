@@ -5,7 +5,6 @@ import { CdnTypes } from '@/core/cdn-types'
 import { addComponentListener } from '@/core/settings'
 import { DownloadPackageEmitMode } from '@/core/download-mode'
 import { ComponentEntry, ComponentMetadata, componentsTags } from '../types'
-import { addI18nData } from '../i18n/helpers'
 
 export const WidgetsPlugin = 'widgets'
 export enum SettingsPanelDockSide {
@@ -87,21 +86,17 @@ export const component: ComponentMetadata = {
     },
   },
   tags: [componentsTags.general],
-  plugin: {
-    displayName: '通用设置 - 多语言',
-    setup: () => {
-      addI18nData(
-        'en-US',
-        [
-          ['通用设置', 'General'],
-          ['实验性', 'Experimental'],
-          ['通用', 'General'],
-          ['开发者模式', 'Dev mode'],
-          ['辅助颜色', 'Accent color'],
-          ['功能加载模式', 'Script loading mode'],
-          ['样式加载模式', 'Style loading mode'],
-        ],
-      )
+  i18n: {
+    'en-US': {
+      map: [
+        ['通用设置', 'General'],
+        ['实验性', 'Experimental'],
+        ['通用', 'General'],
+        ['开发者模式', 'Dev mode'],
+        ['辅助颜色', 'Accent color'],
+        ['功能加载模式', 'Script loading mode'],
+        ['样式加载模式', 'Style loading mode'],
+      ],
     },
   },
 }

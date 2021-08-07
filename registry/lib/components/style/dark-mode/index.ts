@@ -47,7 +47,10 @@ export const component: ComponentMetadata = {
     },
   ],
   plugin: {
-    displayName: '夜间模式 - 提前注入 class',
+    displayName: '夜间模式 - 提前注入',
+    description: {
+      'zh-CN': '提前注入夜间模式的 .dark class 以减少一些组件首屏仍然是白色的问题.',
+    },
     async setup() {
       const { contentLoaded } = await import('@/core/life-cycle')
       const { isComponentEnabled } = await import('@/core/settings')

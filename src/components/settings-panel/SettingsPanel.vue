@@ -203,6 +203,7 @@ export default {
   z-index: 1000;
   .settings-panel {
     @include shadow();
+    @include v-stretch();
     position: relative;
     overscroll-behavior: contain;
     border-radius: 8px;
@@ -210,8 +211,6 @@ export default {
     color: black;
     border: 1px solid #8882;
     box-sizing: content-box;
-    display: flex;
-    flex-direction: column;
     width: auto;
     min-width: 320px;
     height: var(--panel-height);
@@ -226,15 +225,13 @@ export default {
       box-sizing: border-box;
       height: var(--header-height);
       padding: 12px;
-      display: flex;
-      align-items: center;
       border-bottom: 1px solid #8882;
+      @include h-center(8px);
       @include text-color();
       // body.dark & {
       //   border-color: #333;
       // }
       .title {
-        margin-left: 6px;
         font-size: 18px;
         font-weight: bold;
       }
@@ -243,7 +240,7 @@ export default {
         @include h-center();
         justify-content: center;
         .be-textbox {
-          flex: 0 0 120px;
+          flex: 1 0 0;
         }
         .be-icon {
           margin-right: 8px;
@@ -256,7 +253,6 @@ export default {
         }
       }
       .peek {
-        margin-right: 8px;
         cursor: pointer;
       }
       .collaspe,
