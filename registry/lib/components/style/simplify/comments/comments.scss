@@ -237,6 +237,7 @@
     .list-item {
       position: relative;
       .info {
+        margin-top: 0 !important;
         @include orders();
         .like,
         .hate {
@@ -286,6 +287,9 @@
             }
           }
         }
+        .btn-hover {
+          padding: 3px 5px !important;
+        }
         .operation {
           &:hover {
             background: transparent !important;
@@ -314,6 +318,7 @@
         .text-con {
           white-space: pre-wrap;
           display: block;
+          margin: 0 !important;
         }
       }
       .user-face .hot-follow,
