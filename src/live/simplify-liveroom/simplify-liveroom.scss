@@ -25,6 +25,10 @@
   }
 }
 .simplify-headerPanel {
+  // 修复高度太低时下面的弹窗挡不住排行榜
+  .control-panel-ctnr .dialog-ctnr {
+    z-index: 800 !important;
+  }
   .player-ctnr .room-info-ctnr {
     display: inline-flex !important;
     flex: 1 0 auto;
