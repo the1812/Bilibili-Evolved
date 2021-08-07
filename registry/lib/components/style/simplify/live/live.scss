@@ -27,6 +27,10 @@ $prefix: "simplifyLiveroom-switch";
 }
 
 .#{$prefix}-headerPanel {
+  // 修复高度太低时下面的弹窗挡不住排行榜
+  .control-panel-ctnr .dialog-ctnr {
+    z-index: 800 !important;
+  }
   .player-ctnr .room-info-ctnr {
     display: inline-flex !important;
     flex: 1 0 auto;
@@ -44,12 +48,20 @@ $prefix: "simplifyLiveroom-switch";
     .face-pendants {
       display: none !important;
     }
+    .avatar {
+      height: 32px;
+      width: 32px;
+    }
   }
   .room-cover {
     width: 32px !important;
     height: 32px !important;
     border-radius: 50% !important;
   }
+  .rows-ctnr {
+    display: flex !important;
+  }
+  .rows-ctnr .upper-row,
   .room-info-upper-row {
     display: flex !important;
     align-items: center !important;
@@ -57,18 +69,22 @@ $prefix: "simplifyLiveroom-switch";
     flex-direction: row-reverse !important;
     position: static !important;
 
+    .left-ctnr,
     .normal-mode {
       position: absolute !important;
       left: 50% !important;
       transform: translateX(-50%) !important;
     }
+    .live-area,
     .area-text {
       display: inline-flex !important;
     }
+    .right-ctnr,
     .upper-right-ctnr {
       position: static !important;
       transform: none !important;
     }
+    .live-title,
     .room-title {
       display: flex !important;
       align-items: center !important;
@@ -80,16 +96,19 @@ $prefix: "simplifyLiveroom-switch";
       }
     }
   }
+  .rows-ctnr .lower-row,
   .room-info-down-row {
     margin: 0 !important;
     order: -1;
-    > :nth-child(n + 3) {
+    .right-ctnr,
+    .left-ctnr > :nth-child(n + 3) {
       display: none !important;
     }
   }
   .room-owner-username {
     max-width: 150px !important;
   }
+  .live-status,
   .live-status-label {
     display: none !important;
   }
