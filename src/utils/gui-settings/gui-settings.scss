@@ -8,7 +8,7 @@
   top: calc(50vh + var(--side-bar-offset));
   left: 0;
   width: 32px;
-  z-index: 99999;
+  z-index: 1000;
   transform: translateY(-50%);
   user-select: none;
   i {
@@ -754,12 +754,12 @@ li.category.folded i.icon-arrow {
 }
 
 /* Fix bangumi and live player z-index */
-.player-mode-webfullscreen .player-module,
-.player-mode-webfullscreen .player-module .player-container,
-.player-full-win .app-content,
-.player-full-win .live-room-app .app-content {
-  z-index: 100000 !important;
-}
+// .player-mode-webfullscreen .player-module,
+// .player-mode-webfullscreen .player-module .player-container,
+// .player-full-win .app-content,
+// .player-full-win .live-room-app .app-content {
+//   z-index: 100000 !important;
+// }
 
 body.round-corner {
   --corner-radius: 4px;
