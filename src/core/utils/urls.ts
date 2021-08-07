@@ -1,3 +1,6 @@
+import { matchUrlPattern } from '.'
+import { TestPattern } from '../common-types'
+
 /** 稍后再看页面 */
 export const watchlaterUrls = [
   '//www.bilibili.com/medialist/play/watchlater/',
@@ -77,3 +80,15 @@ export const playerUrls = [
   ...bangumiUrls,
   ...cheeseUrls,
 ]
+/**
+ * 测试当前页面网址是否符合传入的 URL 匹配列表
+ * @param urlLists URL 匹配列表
+ */
+export const matchCurrentPage = (...urlLists: TestPattern[] | TestPattern) => (
+  urlLists.some((list: TestPattern | string | RegExp) => {
+    if (Array.isArray(list)) {
+      return list.some(url => matchUrlPattern(url))
+    }
+    return matchUrlPattern(list)
+  })
+)

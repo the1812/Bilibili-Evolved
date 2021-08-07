@@ -100,6 +100,7 @@ import {
 } from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
 import { select } from '@/core/spin-query'
+import { matchUrlPattern } from '@/core/utils'
 import {
   LaunchBarActionProviders,
   LaunchBarActionProvider,
@@ -164,6 +165,9 @@ export default Vue.extend({
   },
   async mounted() {
     this.getActions()
+    if (!matchUrlPattern(/^http:\/\/search\.bilibili\.com/)) {
+      return
+    }
     select('#search-keyword').then((input: HTMLInputElement) => {
       if (!input) {
         return

@@ -1,8 +1,7 @@
-import { headLoaded } from '@/core/life-cycle'
-import { none } from '@/core/utils'
-
 /** 初始化脚本 */
 export const init = async () => {
+  window.lodash = _
+
   const { initVue } = await import('./init-vue')
   initVue()
 
@@ -13,12 +12,12 @@ export const init = async () => {
   //   return
   // }
 
-  const { raiseLifeCycleEvent, LifeCycleEventTypes } = await import('@/core/life-cycle')
+  const { headLoaded, raiseLifeCycleEvent, LifeCycleEventTypes } = await import('@/core/life-cycle')
   raiseLifeCycleEvent(LifeCycleEventTypes.Start)
 
-  window.lodash = _
   const { promiseLoadTrace } = await import('@/core/performance/promise-trace')
   const { coreApis, externalApis } = await import('@/core/core-apis')
+  const { none } = await import('@/core/utils')
   unsafeWindow.bilibiliEvolved = externalApis
   /** sand-boxed window, safe to use original name */
   window.coreApis = coreApis

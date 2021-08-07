@@ -349,3 +349,22 @@ export const retrieveImageUrl = (element: HTMLElement) => {
     extension: noThumbMatch[2],
   }
 }
+/**
+ * 等待标签页处于前台时(未失去焦点, 未最小化)再执行动作
+ * @param action 要执行的动作
+ */
+export const waitForForeground = (action: () => void) => {
+  const runAction = () => {
+    if (document.visibilityState === 'visible') {
+      action()
+      document.removeEventListener('visibilitychange', runAction)
+      return true
+    }
+    return false
+  }
+  const isNowForeground = runAction()
+  if (isNowForeground) {
+    return
+  }
+  document.addEventListener('visibilitychange', runAction)
+}

@@ -1,5 +1,5 @@
 import { allMutations, videoChange } from './observer'
-import { bwpVideoFilter } from './utils'
+import { bwpVideoFilter, waitForForeground } from './utils'
 
 /** 轮询设置 */
 export interface SpinQueryConfig {
@@ -7,13 +7,10 @@ export interface SpinQueryConfig {
   maxRetry?: number
   /** 重试间隔(ms) */
   queryInterval?: number
-  /** 是否无视文档聚焦状态, 在文档未聚焦时, 使查询失败仍计入重试次数中. */
-  ignoreFocus?: boolean
 }
 const defaultConfig: Required<SpinQueryConfig> = {
   maxRetry: 15,
   queryInterval: 1000,
-  ignoreFocus: false,
 }
 /**
  * 基本轮询器, 反复按照一定时间间隔(`config.queryInterval`)进行查询:
@@ -53,10 +50,18 @@ export const sq = <T>(
       if (condition(target, stop) === true) {
         resolve(target)
       } else {
-        if (combinedConfig.ignoreFocus || !(typeof document !== 'undefined' && !document.hasFocus())) {
-          queryTimes++
-        }
-        setTimeout(() => tryQuery(), combinedConfig.queryInterval)
+        setTimeout(() => {
+          if (typeof document === 'undefined') {
+            tryQuery()
+            return
+          }
+          // console.log('request query')
+          waitForForeground(() => {
+            // console.log('has focus, start query', query)
+            queryTimes++
+            tryQuery()
+          })
+        }, combinedConfig.queryInterval)
       }
     }
     tryQuery()

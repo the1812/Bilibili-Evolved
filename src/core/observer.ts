@@ -1,5 +1,6 @@
 import { dqa } from './utils'
 import { select } from './spin-query'
+import { matchCurrentPage, playerUrls } from './utils/urls'
 
 let cidHooked = false
 type VideoChangeCallback = (id: { aid: string; cid: string }) => void
@@ -198,38 +199,38 @@ export const sizeChange = (
   box: 'border-box',
 }, callback)
 
-/** 缓存 cid 的 select */
-let cidPromise: Promise<string>
+/** 等待 cid */
+const selectCid = lodash.once(() => select(() => {
+  if (unsafeWindow.cid) {
+    return unsafeWindow.cid
+  }
+  if (unsafeWindow.player && unsafeWindow.player.getVideoMessage) {
+    const info = unsafeWindow.player.getVideoMessage()
+    if (Number.isNaN(info.cid)) {
+      return null
+    }
+    if (!unsafeWindow.aid && info.aid) {
+      unsafeWindow.aid = info.aid.toString()
+    }
+    if (!unsafeWindow.bvid && info.bvid) {
+      unsafeWindow.bvid = info.bvid
+    }
+    return info.cid.toString()
+  }
+  return null
+}))
 /**
  * 监听视频的变化, 等待视频加载并开始监听后resolve
  * @param callback 回调函数
  * @returns 是否有视频存在
  */
 export const videoChange = async (callback: VideoChangeCallback) => {
+  if (!matchCurrentPage(playerUrls)) {
+    return false
+  }
   const { bpxPlayerPolyfill } = await import('./bpx-player-adaptor')
   bpxPlayerPolyfill()
-  if (!cidPromise) {
-    cidPromise = select(() => {
-      if (unsafeWindow.cid) {
-        return unsafeWindow.cid
-      }
-      if (unsafeWindow.player && unsafeWindow.player.getVideoMessage) {
-        const info = unsafeWindow.player.getVideoMessage()
-        if (Number.isNaN(info.cid)) {
-          return null
-        }
-        if (!unsafeWindow.aid && info.aid) {
-          unsafeWindow.aid = info.aid.toString()
-        }
-        if (!unsafeWindow.bvid && info.bvid) {
-          unsafeWindow.bvid = info.bvid
-        }
-        return info.cid.toString()
-      }
-      return null
-    })
-  }
-  const cid = await cidPromise
+  const cid = await selectCid()
   if (cid === null) {
     return false
   }
