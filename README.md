@@ -35,12 +35,6 @@
 | 正式发布的版本, 最稳定, 更新频率较低.                                                          | 新增内容测试的地方, 更新频率高, 但功能不稳定.                                                           | 内置所有依赖项, 体积较大, 更新频率高于正式版.                                                          | 兼备预览版和离线版的特点.                                                                                           |
 
 
-> 使用过程中脚本管理器可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
-
-> 某些破坏性的大更新会使旧版脚本**完全**无法运行, 请及时检查更新.
-
-> 自 2021 年 (v1.11.12) 起, 脚本不再在 GreasyFork 开放入口, 所有的后续更新均以 GitHub 上的信息为准.
-
 ## 备用安装源
 如果默认的安装链接无法使用, 可以尝试以下的备用安装源.
 
@@ -96,7 +90,7 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 > Windows 10 20H2 更新中好像完全替换掉了 UWP 版 Edge (R.I.P.) 自带浏览器变成了 Chromium 内核 Edge.
 
 # 开发者
-[![开发者](https://badges.pufler.dev/contributors/the1812/Bilibili-Evolved?size=32&padding=12&bots=false)](https://github.com/the1812/Bilibili-Evolved/graphs/contributors)
+见 https://github.com/the1812/Bilibili-Evolved/graphs/contributors (之前用的 Contributors Badge 挂了)
 
 ## 文案翻译贡献者
 - [PleiadeSubaru](https://github.com/Etherrrr)
@@ -104,6 +98,9 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - Joshuaふみひる
 
 ## 参与项目
+
+> v2.0 正在开发中, 请暂时不要为此仓库开发新功能, 以免增加不必要的迁移成本. (其他一些维护性的工作是可以的)
+
 欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
 
 # 第三方开源组件
