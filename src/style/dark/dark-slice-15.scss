@@ -251,3 +251,18 @@
     }
   }
 }
+.msg-push-new {
+  @include background-color("2");
+  .ar-recommend-item__info {
+    &--title {
+      @include color("e");
+    }
+    &--desc .time,
+    &--view {
+      @include color("a");
+    }
+  }
+}
+.send-box .core-style {
+  @include color("e");
+}
