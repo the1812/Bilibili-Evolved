@@ -111,7 +111,7 @@ export default {
   & > .sidebar {
     position: fixed;
     top: 50%;
-    z-index: 99999;
+    z-index: 1000;
     transform: translateX(calc(-50% * var(--direction))) translateY(-50%);
     & > * {
       transition: transform 0.3s ease-out, opacity 0.3s ease-out;
