@@ -255,3 +255,18 @@ export const getAid = (aid = unsafeWindow.aid) => {
   }
   return aid
 }
+export const waitForForeground = (action) => {
+  const runAction = () => {
+    if (document.visibilityState === 'visible') {
+      action()
+      document.removeEventListener('visibilitychange', runAction)
+      return true
+    }
+    return false
+  }
+  const isNowForeground = runAction()
+  if (isNowForeground) {
+    return
+  }
+  document.addEventListener('visibilitychange', runAction)
+}

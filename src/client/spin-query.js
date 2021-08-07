@@ -17,10 +17,10 @@ export class SpinQuery {
       if (condition(result)) {
         action(result)
       } else {
-        if (document.hasFocus()) {
+        setTimeout(() => waitForForeground(() => {
           this.retry++
-        }
-        setTimeout(() => this.tryQuery(query, condition, action, failed), this.queryInterval)
+          this.tryQuery(query, condition, action, failed)
+        }), this.queryInterval)
       }
     } else {
       typeof failed === 'function' && failed()
