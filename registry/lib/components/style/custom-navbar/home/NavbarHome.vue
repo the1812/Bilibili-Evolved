@@ -74,7 +74,7 @@ export default Vue.extend({
 <style lang="scss">
 @import '../nav-link';
 .custom-navbar .home-popup {
-  max-height: 66vh;
+  max-height: 75vh;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
