@@ -31,6 +31,10 @@
           <VIcon :size="18" icon="mdi-folder-open-outline" />
           浏览
         </VButton>
+        <OnlineRegistryButton>
+          <VIcon :size="18" icon="mdi-web" />
+          在线
+        </OnlineRegistryButton>
       </div>
       <VPopup
         v-model="batchAddShow"
@@ -111,6 +115,7 @@ import {
   SwitchBox,
 } from '@/ui'
 import ManageItem from './ManageItem.vue'
+import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
 
 export default Vue.extend({
   components: {
@@ -123,6 +128,7 @@ export default Vue.extend({
     TextArea,
     SwitchBox,
     ManageItem,
+    OnlineRegistryButton,
   },
   props: {
     config: {
