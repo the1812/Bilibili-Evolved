@@ -12,6 +12,7 @@ $prefix: "simplifyLiveroom-switch";
   &-popup .chat-popups-section,
   &-popup #chat-draw-area-vm,
   &-giftMessage .chat-item.gift-item,
+  &-giftMessage .chat-history-panel .penury-gift-msg,
   &-guardPurchase .chat-item.guard-buy,
   &-eventsBanner .z-section-blocks .left-container .flip-view,
   &-eventsBanner .activity-pushing-out,
@@ -113,7 +114,17 @@ $prefix: "simplifyLiveroom-switch";
     display: none !important;
   }
 }
-.#{$prefix}-enterPrompt {
+.#{$prefix}-giftMessage:not(.#{$prefix}-enterPrompt) {
+  .chat-history-list.with-penury-gift {
+    &:not(.with-brush-prompt) {
+      height: calc(100%) !important;
+    }
+    &.with-brush-prompt {
+      height: calc(100% - 32px) !important;
+    }
+  }
+}
+.#{$prefix}-enterPrompt:not(.#{$prefix}-giftMessage) {
   .chat-history-list.with-brush-prompt {
     &:not(.with-penury-gift) {
       height: calc(100%) !important;
@@ -121,6 +132,11 @@ $prefix: "simplifyLiveroom-switch";
     &.with-penury-gift {
       height: calc(100% - 32px) !important;
     }
+  }
+}
+.#{$prefix}-enterPrompt.#{$prefix}-giftMessage {
+  .chat-history-list {
+    height: calc(100%) !important;
   }
 }
 .#{$prefix}-rankList {
