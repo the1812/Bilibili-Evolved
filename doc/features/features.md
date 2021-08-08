@@ -585,7 +585,9 @@
 
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/danmaku/airborne.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/danmaku/airborne.js)
 
-暂无描述.
+by [@kdxcxs](https://github.com/kdxcxs)
+
+为可能含有时间点的弹幕添加下划线, 点击可以跳到视频对应时间.
 
 ### [下载弹幕](../../registry/dist/components/video/danmaku/download.js)
 `downloadDanmaku`
@@ -695,6 +697,8 @@
 
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/player/intersection-actions.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/player/intersection-actions.js)
 
+by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
+
 设置当播放器移出视图的位置变化时执行的动作.
 
 ### [传统连播模式](../../registry/dist/components/video/player/legacy-auto-play.js)
@@ -721,6 +725,8 @@
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/player/remember-speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remember-speed.js)
 
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/player/remember-speed.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/player/remember-speed.js)
+
+by [@JLoeve](https://github.com/LonelySteve)
 
 记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.
 

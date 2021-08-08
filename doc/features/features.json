@@ -491,7 +491,7 @@
     "type": "component",
     "name": "danmakuAirborne",
     "displayName": "启用弹幕空降",
-    "description": "暂无描述.",
+    "description": "by [@kdxcxs](https://github.com/kdxcxs)\n\n为可能含有时间点的弹幕添加下划线, 点击可以跳到视频对应时间.",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/airborne.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/airborne.js"
   },
@@ -587,7 +587,7 @@
     "type": "component",
     "name": "playerIntersectionActions",
     "displayName": "播放器位置动作",
-    "description": "设置当播放器移出视图的位置变化时执行的动作.",
+    "description": "by [@FoundTheWOUT](https://github.com/FoundTheWOUT)\n\n设置当播放器移出视图的位置变化时执行的动作.",
     "fullRelativePath": "../../registry/dist/components/video/player/intersection-actions.js",
     "fullAbsolutePath": "registry/dist/components/video/player/intersection-actions.js"
   },
@@ -611,7 +611,7 @@
     "type": "component",
     "name": "rememberVideoSpeed",
     "displayName": "倍速记忆",
-    "description": "记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.",
+    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.",
     "fullRelativePath": "../../registry/dist/components/video/player/remember-speed.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remember-speed.js"
   },

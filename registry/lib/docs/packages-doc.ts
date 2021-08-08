@@ -98,6 +98,6 @@ ${packagesTexts.join('\n\n')}
 `.trim()
   return {
     markdown,
-    json: JSON.stringify(packagesPaths, undefined, 2),
+    json: JSON.stringify(packagesPaths.map(it => ({ ...it, type: 'pack' })), undefined, 2),
   }
 }
