@@ -567,6 +567,9 @@ body:not(.simplify-comment) .panel-area .bb-comment {
 }
 
 .article-detail {
+  .normal-article-holder {
+    @include color("e");
+  }
   .card-image {
     @include background-color("3");
   }
@@ -664,15 +667,18 @@ body:not(.simplify-comment) .panel-area .bb-comment {
       }
       [class*="color-"][class*="-03"] {
         @include brightness(6 / 5);
-        > * {
-          @include brightness(5 / 6);
-        }
+        // > * {
+        //   @include brightness(5 / 6);
+        // }
       }
       [class*="color-"][class*="-04"] {
         @include brightness(4 / 3);
-        > * {
-          @include brightness(3 / 4);
-        }
+        // > * {
+        //   @include brightness(3 / 4);
+        // }
+      }
+      [class*="color-"] [class*="color-"] {
+        @include brightness(1);
       }
       caption {
         @include color("a");
