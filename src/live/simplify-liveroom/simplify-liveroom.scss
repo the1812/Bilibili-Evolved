@@ -290,3 +290,19 @@
     opacity: 0.5;
   }
 }
+.simplify-emoticons {
+  .control-panel-icon-row .emoticons-panel {
+    display: none !important;
+  }
+  .chat-history-list .chat-item .emoticon {
+    img {
+      display: none !important;
+    }
+    span {
+      display: inline-flex !important;
+    }
+  }
+  .danmaku-item-container .bilibili-danmaku img {
+    display: none !important;
+  }
+}

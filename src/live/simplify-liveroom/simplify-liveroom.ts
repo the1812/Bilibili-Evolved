@@ -4,6 +4,7 @@ const displayNames = {
   fansMedal: '粉丝勋章',
   title: '活动头衔',
   guard: '弹幕特效',
+  emoticons: '表情特效',
   systemMessage: '全区广播',
   welcomeMessage: '欢迎信息',
   giftMessage: '礼物弹幕',
