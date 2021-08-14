@@ -98,10 +98,13 @@
   .room-info-down-row {
     margin: 0 !important;
     order: -1;
-    .right-ctnr,
-    .left-ctnr > :nth-child(n + 3) {
-      display: none !important;
-    }
+    // .right-ctnr,
+    // .left-ctnr > :nth-child(n + 3) {
+    //   display: none !important;
+    // }
+  }
+  .room-info-down-row > :nth-child(n + 3) {
+    display: none !important;
   }
   .room-owner-username {
     max-width: 150px !important;
@@ -239,7 +242,8 @@
   #head-info-vm,
   #gift-control-vm,
   .control-panel-ctnr,
-  #rank-list-ctnr-box {
+  #rank-list-ctnr-box,
+  #chat-control-panel-vm {
     background-image: none !important;
   }
 }
