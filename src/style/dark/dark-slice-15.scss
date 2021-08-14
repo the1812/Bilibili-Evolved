@@ -266,3 +266,17 @@
 .send-box .core-style {
   @include color("e");
 }
+.section.user-info {
+  .user-info-title {
+    @include border-color("5");
+  }
+  .tag-content,
+  .info-value,
+  .info-title {
+    @include color("e");
+  }
+  .iconfont,
+  .info-command {
+    @include color("a");
+  }
+}

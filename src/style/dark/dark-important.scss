@@ -303,3 +303,9 @@ blockquote {
     @include background-color("5");
   }
 }
+.bilibili-player-video-popup-vote-an.bilibili-player-video-popup-select .bilibili-player-video-popup-vote-an-bg-buffer {
+  @include theme-background-color("40");
+}
+.s-space .search-page .feed-dynamic-content .card {
+  @include border-color("5");
+}
