@@ -280,3 +280,12 @@
     @include color("a");
   }
 }
+.h-notice {
+  @include background-color("3");
+  a {
+    @include color("e");
+  }
+  svg path {
+    @include fill("e");
+  }
+}
