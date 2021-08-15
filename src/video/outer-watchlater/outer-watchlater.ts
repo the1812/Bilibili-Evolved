@@ -48,8 +48,12 @@
         }, 2000)
       },
       async toggle() {
-        await this.toggleWatchlater(this.aid)
-        this.showTip(this.isInWatchlater ? '已添加至稍后再看' : '已从稍后再看移除')
+        try {
+          await this.toggleWatchlater(this.aid)
+          this.showTip(this.isInWatchlater ? '已添加至稍后再看' : '已从稍后再看移除')
+        } catch (error) {
+          logError(error)
+        }
       }
     }
   })
