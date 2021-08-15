@@ -36,6 +36,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
         // fallback
         console.log('[keymap] fallback')
         video.currentTime += delta
+        return
       }
       console.log('[keymap] player API seek')
       unsafeWindow.player.seek(video.currentTime + delta, video.paused)
