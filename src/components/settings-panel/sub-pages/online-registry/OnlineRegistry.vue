@@ -28,19 +28,19 @@
       />
     </div>
     <div class="online-registry-separator"></div>
-    <div class="online-registry-content">
+    <div ref="content" class="online-registry-content">
       <VLoading v-if="loading" />
-      <VEmpty v-if="!loading && !featureList.length && !packList.length" />
+      <VEmpty v-if="!loading && !list.length" />
       <RegistryItem
-        v-for="item of featureList"
+        v-for="item of filteredList"
         :key="item.name"
         :item="item"
       />
-      <RegistryItem
+      <!-- <RegistryItem
         v-for="item of packList"
         :key="item.name"
         :item="item"
-      />
+      /> -->
     </div>
   </VPopup>
 </template>
@@ -57,6 +57,8 @@ import {
   VLoading,
   VEmpty,
 } from '@/ui'
+import Fuse from 'fuse.js'
+import { DocSourceItem } from 'registry/lib/docs'
 import RegistryItem from './RegistryItem.vue'
 
 export default Vue.extend({
@@ -79,9 +81,23 @@ export default Vue.extend({
       searchKeyword: '',
       popupOpen: false,
       loading: false,
-      featureList: [],
-      packList: [],
+      list: [],
+      filteredList: [],
+      // packList: [],
+      fuse: null,
     }
+  },
+  watch: {
+    searchKeyword: lodash.debounce(function updateList(keyword: string) {
+      if (!keyword) {
+        this.filteredList = this.list
+        return
+      }
+      const fuse = this.fuse as Fuse<DocSourceItem>
+      const fuseResult = fuse.search(keyword)
+      this.filteredList = fuseResult.map(it => it.item)
+      this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
+    }, 200),
   },
   mounted() {
     this.fetchFeatures()
@@ -95,14 +111,20 @@ export default Vue.extend({
         this.loading = true
         const featureListUrl = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}doc/features/features.json`
         const packListUrl = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}doc/features/pack/pack.json`
-        this.featureList = await monkey({
+        const featureList = await monkey({
           url: featureListUrl,
           responseType: 'json',
         })
-        this.packList = await monkey({
+        const packList = await monkey({
           url: packListUrl,
           responseType: 'json',
         })
+        this.list = [...packList, ...featureList]
+        this.fuse = new Fuse(this.list, {
+          keys: ['displayName', 'name', 'description'],
+        })
+        this.searchKeyword = ''
+        this.filteredList = [...this.list]
       } catch (error) {
         logError(error)
       } finally {
@@ -152,13 +174,16 @@ export default Vue.extend({
     &-close-icon {
       padding: 4px;
       cursor: pointer;
-      transition: .2s ease-out;
+      transition: .3s ease-out;
       &:hover {
         color: var(--theme-color);
       }
     }
     &-refresh-icon {
       padding: 2px;
+      &:hover {
+        transform: rotate(360deg);
+      }
     }
   }
   &-separator {

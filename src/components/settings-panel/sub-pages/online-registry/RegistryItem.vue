@@ -17,10 +17,11 @@
         v-if="!installed"
         class="install-button"
         title="安装"
+        type="primary"
         :disabled="installing"
         @click="install(getUrl(item))"
       >
-        <VIcon icon="mdi-plus" :size="18" />
+        <VIcon icon="mdi-plus" :size="16" />
         {{ installing ? '正在安装' : '安装' }}
       </VButton>
       <VButton
@@ -154,6 +155,7 @@ export default Vue.extend({
     flex: 1 0 0;
   }
   .item-action {
+    font-size: 12px;
     .be-icon {
       margin-right: 6px;
     }

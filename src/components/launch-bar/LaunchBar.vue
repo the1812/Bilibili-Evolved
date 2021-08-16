@@ -105,7 +105,7 @@ async function getOnlineActions() {
   })
   const fuseResult = fuse.search(this.keyword)
   console.log(fuseResult)
-  this.actions = fuseResult.map(it => it.item)
+  this.actions = fuseResult.map(it => it.item).slice(0, 12)
   this.noActions = this.actions.length === 0
 }
 async function getActions() {
