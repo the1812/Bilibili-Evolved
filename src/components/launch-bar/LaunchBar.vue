@@ -30,10 +30,10 @@
           class="history-item suggest-item"
           :title="a.name"
           @click.self="a.action()"
-          @keydown.enter.stop="a.action()"
-          @keydown.shift.delete.stop="deleteHistory($event, index)"
-          @keydown.up.stop.prevent="previousItem($event, index)"
-          @keydown.down.stop.prevent="nextItem($event, index)"
+          @keydown.enter.prevent.stop="a.action()"
+          @keydown.shift.delete.prevent.stop="deleteHistory($event, index)"
+          @keydown.up.prevent.stop="previousItem($event, index)"
+          @keydown.down.prevent.stop="nextItem($event, index)"
         >
           <div
             class="name"
@@ -54,7 +54,7 @@
           class="clear-history suggest-item"
           tabindex="0"
           @click="clearHistory()"
-          @keydown.enter.stop="clearHistory()"
+          @keydown.enter.prevent.stop="clearHistory()"
           @keydown.up.prevent.stop="previousItem($event, actions.length)"
           @keydown.down.prevent.stop="nextItem($event, actions.length)"
         >
@@ -78,8 +78,9 @@
           tabindex="0"
           class="action-item suggest-item"
           :title="a.name"
+          :data-indexer="a.indexer"
           @click="a.action()"
-          @keydown.enter.stop="a.action()"
+          @keydown.enter.prevent.stop="a.action()"
           @keydown.up.prevent.stop="previousItem($event, index)"
           @keydown.down.prevent.stop="nextItem($event, index)"
         >
@@ -137,7 +138,7 @@ async function getOnlineActions() {
     actionProviders.map(provider => provider.getActions(this.keyword)),
   )).flat()
   const fuse = new Fuse(onlineActions, {
-    keys: ['indexer', 'name', 'displayName', 'description'],
+    keys: ['indexer', 'displayName', 'name', 'description'],
   })
   const fuseResult = fuse.search(this.keyword)
   console.log(fuseResult)
@@ -207,17 +208,21 @@ export default Vue.extend({
     getOnlineActions: lodash.debounce(getOnlineActions, 200),
     getActions,
     async handleEnter() {
-      if (this.keyword.length > 0) {
-        const providers = [...actionProviders].reverse()
-        for (const p of providers) {
-          if (p.getEnterAction) {
-            const action = p.getEnterAction(this.keyword)
-            if (action !== null) {
-              action(this.keyword)
-              return
-            }
-          }
-        }
+      // if (this.keyword.length > 0) {
+      //   const providers = [...actionProviders].reverse()
+      //   for (const p of providers) {
+      //     if (p.getEnterAction) {
+      //       const action = p.getEnterAction(this.keyword)
+      //       if (action !== null) {
+      //         action(this.keyword)
+      //         return
+      //       }
+      //     }
+      //   }
+      // } else {
+      if (this.actions.length > 0) {
+        const [first] = this.actions as LaunchBarAction[]
+        first.action()
       } else {
         window.open(this.recommended.href, '_blank')
       }
@@ -400,11 +405,12 @@ export default Vue.extend({
     .input-active-bar {
       width: 100%;
     }
-    .launch-bar-suggest-list {
-      opacity: 1;
-      transform: translateX(-50%);
-      pointer-events: initial;
-    }
+  }
+  &:focus-within .launch-bar-suggest-list,
+  .launch-bar-suggest-list:focus-within {
+    opacity: 1;
+    transform: translateX(-50%);
+    pointer-events: initial;
   }
 }
 </style>

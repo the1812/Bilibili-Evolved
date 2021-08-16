@@ -35,5 +35,5 @@ export const searchProvider: LaunchBarActionProvider = {
       action: () => search(result.value),
     }))
   },
-  getEnterAction: () => input => search(input),
+  // getEnterAction: () => input => search(input),
 }

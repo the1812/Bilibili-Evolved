@@ -11,10 +11,10 @@ const getCopyItem = async (name: string, id: string, original: string) => {
     action: async () => {
       if (item.name === id) {
         GM_setClipboard(id, { mimetype: 'text/plain' })
-        item.name = '已复制'
-        setTimeout(() => {
-          item.name = id
-        }, 1000)
+        // item.name = '已复制'
+        // setTimeout(() => {
+        //   item.name = id
+        // }, 1000)
       }
     },
   }
@@ -61,15 +61,15 @@ export const plugin: PluginMetadata = {
     addData(LaunchBarActionProviders, (providers: LaunchBarActionProvider[]) => {
       providers.push({
         name: 'IDSearchProvider',
-        getEnterAction: input => {
-          for (const it of idMatches) {
-            const match = input.match(it.pattern)
-            if (match) {
-              return () => window.open(it.link(match), '_blank')
-            }
-          }
-          return null
-        },
+        // getEnterAction: input => {
+        //   for (const it of idMatches) {
+        //     const match = input.match(it.pattern)
+        //     if (match) {
+        //       return () => window.open(it.link(match), '_blank')
+        //     }
+        //   }
+        //   return null
+        // },
         getActions: async input => {
           const results: LaunchBarAction[] = []
           for (const it of idMatches) {

@@ -25,6 +25,6 @@ export interface LaunchBarActionProvider {
   name: string
   /** 为 LaunchBar 提供搜索结果, 参数为用户输入的关键词 */
   getActions: (input: string) => Promise<LaunchBarAction[]>
-  /** 获取用户按下 Enter 时的动作, 可以覆盖默认的搜索行为, 返回`null`表示不覆盖 */
-  getEnterAction?: (input: string) => ((input: string) => void) | null
+  // /** 获取用户按下 Enter 时的动作, 可以覆盖默认的搜索行为, 返回`null`表示不覆盖 */
+  // getEnterAction?: (input: string) => ((input: string) => void) | null
 }
