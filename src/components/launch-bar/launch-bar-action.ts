@@ -16,6 +16,10 @@ export interface LaunchBarAction {
   content?: Executable<VueModule>
   /** 用户选择此动作时要执行的代码 */
   action: Executable
+  /** 设置删除动作, 用户可以在此动作右侧选择删除 */
+  deleteAction?: Executable
+  /** 显式选中模式: 开启后可以禁止在列表第一项时直接由 Enter 触发 */
+  explicitSelect?: boolean
 }
 /** LaunchBar 动作提供者的插件key, 可注入其他提供者 */
 export const LaunchBarActionProviders = 'launchBar.actions'

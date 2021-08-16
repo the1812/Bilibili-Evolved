@@ -1,4 +1,5 @@
-import { LaunchBarActionProvider } from './launch-bar-action'
+// import { formatDate } from '@/core/utils/formatters'
+import { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 
 export interface HistoryItem {
   value: string
@@ -38,12 +39,30 @@ export const historyProvider: LaunchBarActionProvider = {
   name: 'history',
   getActions: async () => {
     const { search } = await import('./search-provider')
-    return getHistoryItems().map(it => ({
+    const clearAction: LaunchBarAction = {
+      name: '清除搜索历史',
+      icon: 'mdi-trash-can-outline',
+      description: 'Clear History',
+      explicitSelect: true,
+      action: () => {
+        clearHistoryItems()
+      },
+    }
+    const items = getHistoryItems().map(it => ({
       name: it.value,
       icon: 'mdi-history',
+      // description: `在 ${formatDate(new Date(it.timestamp))} 搜索过`,
+      explicitSelect: true,
       action: () => {
         search(it.value)
       },
-    }))
+      deleteAction: () => {
+        deleteHistoryItem(it.value)
+      },
+    } as LaunchBarAction))
+    if (items.length > 0) {
+      items.push(clearAction)
+    }
+    return items
   },
 }

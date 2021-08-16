@@ -10,6 +10,7 @@
           autocomplete="off"
           :placeholder="recommended.word"
           @keydown.enter.stop="handleEnter"
+          @keydown.up.prevent.stop="$refs.list.querySelector('.suggest-item:last-child').focus()"
           @keydown.down.prevent.stop="$refs.list.querySelector('.suggest-item').focus()"
         />
         <button class="submit" title="执行" tabindex="-1" @click="handleEnter">
@@ -23,43 +24,15 @@
         <div v-if="actions.length === 0" class="history-empty suggest-item disabled" tabindex="0">
           暂无搜索历史
         </div>
-        <div
+        <ActionItem
           v-for="(a, index) of actions"
-          :key="a.name"
-          tabindex="0"
-          class="history-item suggest-item"
-          :title="a.name"
-          @click.self="a.action()"
-          @keydown.enter.prevent.stop="a.action()"
-          @keydown.shift.delete.prevent.stop="deleteHistory($event, index)"
-          @keydown.up.prevent.stop="previousItem($event, index)"
-          @keydown.down.prevent.stop="nextItem($event, index)"
-        >
-          <div
-            class="name"
-            @click="a.action()"
-          >
-            {{ a.name }}
-          </div>
-          <div
-            class="delete-history"
-            title="删除此项"
-            @click="deleteHistory($event, index)"
-          >
-            <VIcon icon="cancel" :size="18"></VIcon>
-          </div>
-        </div>
-        <div
-          v-if="actions.length > 0"
-          class="clear-history suggest-item"
-          tabindex="0"
-          @click="clearHistory()"
-          @keydown.enter.prevent.stop="clearHistory()"
-          @keydown.up.prevent.stop="previousItem($event, actions.length)"
-          @keydown.down.prevent.stop="nextItem($event, actions.length)"
-        >
-          <VIcon icon="mdi-trash-can-outline" :size="18"></VIcon>清除搜索历史
-        </div>
+          :key="a.key"
+          :action="a"
+          @previous-item="previousItem($event, index)"
+          @next-item="nextItem($event, index)"
+          @delete-item="onDeleteHistory($event, index)"
+          @action="(index === actions.length - 1) && onClearHistory()"
+        />
       </div>
       <div v-if="!isHistory" class="launch-bar-action-list">
         <VEmpty
@@ -72,38 +45,13 @@
           tabindex="0"
           class="suggest-item disabled"
         ></VLoading>
-        <div
+        <ActionItem
           v-for="(a, index) of actions"
-          :key="a.name"
-          tabindex="0"
-          class="action-item suggest-item"
-          :title="a.name"
-          :data-indexer="a.indexer"
-          @click="a.action()"
-          @keydown.enter.prevent.stop="a.action()"
-          @keydown.up.prevent.stop="previousItem($event, index)"
-          @keydown.down.prevent.stop="nextItem($event, index)"
-        >
-          <div class="suggest-item-content">
-            <div v-if="a.icon" class="suggest-item-icon">
-              <VIcon :icon="a.icon" :size="16" />
-            </div>
-            <div class="suggest-item-title">
-              <component
-                :is="a.content"
-                v-if="a.content"
-                class="suggest-item-name"
-                :name="a.name"
-              ></component>
-              <div v-else class="suggest-item-name">
-                {{ a.title || a.name }}
-              </div>
-              <div v-if="a.description" class="suggest-item-description">
-                {{ a.description }}
-              </div>
-            </div>
-          </div>
-        </div>
+          :key="a.key"
+          :action="a"
+          @previous-item="previousItem($event, index)"
+          @next-item="nextItem($event, index)"
+        />
       </div>
     </div>
   </div>
@@ -118,6 +66,7 @@ import { registerAndGetData } from '@/plugins/data'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
 import Fuse from 'fuse.js'
+import ActionItem from './ActionItem.vue'
 import {
   LaunchBarActionProviders,
   LaunchBarActionProvider,
@@ -126,19 +75,33 @@ import {
 import { searchProvider, search } from './search-provider'
 import {
   historyProvider,
-  deleteHistoryItem as del,
-  clearHistoryItems as clear,
 } from './history-provider'
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
+  historyProvider,
 ]) as [LaunchBarActionProvider[]]
+const generateKeys = (provider: LaunchBarActionProvider, actions: LaunchBarAction[]): ({
+  key: string
+  provider: LaunchBarActionProvider
+} & LaunchBarAction)[] => (
+  actions.map(a => {
+    const key = `${provider.name}.${a.name}`
+    return {
+      ...a,
+      key,
+      provider,
+    }
+  })
+)
 async function getOnlineActions() {
   const onlineActions = (await Promise.all(
-    actionProviders.map(provider => provider.getActions(this.keyword)),
+    actionProviders.map(async provider => (
+      generateKeys(provider, await provider.getActions(this.keyword))
+    )),
   )).flat()
   const fuse = new Fuse(onlineActions, {
-    keys: ['indexer', 'displayName', 'name', 'description'],
+    keys: ['indexer', 'displayName', 'name', 'description', 'key'],
   })
   const fuseResult = fuse.search(this.keyword)
   console.log(fuseResult)
@@ -148,7 +111,7 @@ async function getOnlineActions() {
 async function getActions() {
   this.noActions = false
   if (this.isHistory) {
-    this.actions = await historyProvider.getActions(this.keyword)
+    this.actions = generateKeys(historyProvider, await historyProvider.getActions(this.keyword))
     return
   }
   const actions: LaunchBarAction[] = []
@@ -165,6 +128,7 @@ export default Vue.extend({
     VIcon,
     VLoading,
     VEmpty,
+    ActionItem,
   },
   data() {
     return {
@@ -186,7 +150,7 @@ export default Vue.extend({
   },
   async mounted() {
     this.getActions()
-    if (!matchUrlPattern(/^http:\/\/search\.bilibili\.com/)) {
+    if (!matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
       return
     }
     select('#search-keyword').then((input: HTMLInputElement) => {
@@ -208,24 +172,18 @@ export default Vue.extend({
     getOnlineActions: lodash.debounce(getOnlineActions, 200),
     getActions,
     async handleEnter() {
-      // if (this.keyword.length > 0) {
-      //   const providers = [...actionProviders].reverse()
-      //   for (const p of providers) {
-      //     if (p.getEnterAction) {
-      //       const action = p.getEnterAction(this.keyword)
-      //       if (action !== null) {
-      //         action(this.keyword)
-      //         return
-      //       }
-      //     }
-      //   }
-      // } else {
-      if (this.actions.length > 0) {
+      if (this.actions.length > 0 && !this.isHistory) {
         const [first] = this.actions as LaunchBarAction[]
-        first.action()
-      } else {
-        window.open(this.recommended.href, '_blank')
+        if (!first.explicitSelect) {
+          first.action()
+          return
+        }
       }
+      if (this.keyword) {
+        search(this.keyword)
+        return
+      }
+      window.open(this.recommended.href, '_blank')
     },
     previousItem(e: KeyboardEvent, index: number) {
       if (index === 0) {
@@ -235,20 +193,20 @@ export default Vue.extend({
       }
     },
     nextItem(e: KeyboardEvent, index: number) {
-      const lastItemIndex = this.actions.length - (this.isHistory ? 0 : 1)
+      const lastItemIndex = this.actions.length - 1
       if (index !== lastItemIndex) {
         ((e.currentTarget as HTMLElement).nextElementSibling as HTMLElement).focus()
+      } else {
+        this.focus()
       }
     },
     search,
-    deleteHistory(e: Event, index: number) {
+    onDeleteHistory(e: Event, index: number) {
       this.previousItem(e, index)
-      del(this.actions[index].name)
       this.getActions()
     },
-    clearHistory() {
+    onClearHistory() {
       this.focus()
-      clear()
       this.getActions()
     },
     focus() {
@@ -331,75 +289,75 @@ export default Vue.extend({
       color: var(--theme-color);
       font-style: normal;
     }
-    .suggest-item {
-      outline: none !important;
-      padding: 6px 6px 6px 10px;
-      cursor: pointer;
-      &.disabled {
-        cursor: default;
-        @include h-center();
-        justify-content: center;
-      }
-      &:not(.disabled):hover,
-      &:not(.disabled):focus-within {
-        background-color: #8882;
-      }
-      &:first-child {
-        padding-top: 8px;
-        border-radius: 7px 7px 0 0;
-      }
-      &:last-child {
-        padding-bottom: 8px;
-        border-radius: 0 0 7px 7px;
-      }
-      &-content {
-        @include h-center();
-      }
-      &-icon {
-        margin-right: 6px;
-      }
-      &-title {
-        @include v-stretch();
-        flex: 1 0 auto;
-      }
-      &-name {
-        max-width: 100%;
-      }
-      &-description {
-        opacity: .5;
-        font-size: smaller;
-      }
-    }
-    .action-item {
-      > * {
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-    }
-    .history-item {
-      @include h-center(8px);
-      .name {
-        flex: 1 0 auto;
-        max-width: calc(100% - 28px);
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .delete-history {
-        opacity: 0.5;
-        &:hover {
-          opacity: 1;
-        }
-      }
-    }
-    .clear-history {
-      @include h-center(6px);
-      opacity: 0.5;
-      justify-content: center;
-      &:hover,
-      &:focus-within {
-        opacity: 1;
-      }
-    }
+    // .suggest-item {
+    //   outline: none !important;
+    //   padding: 6px 6px 6px 10px;
+    //   cursor: pointer;
+    //   &.disabled {
+    //     cursor: default;
+    //     @include h-center();
+    //     justify-content: center;
+    //   }
+    //   &:not(.disabled):hover,
+    //   &:not(.disabled):focus-within {
+    //     background-color: #8882;
+    //   }
+    //   &:first-child {
+    //     padding-top: 8px;
+    //     border-radius: 7px 7px 0 0;
+    //   }
+    //   &:last-child {
+    //     padding-bottom: 8px;
+    //     border-radius: 0 0 7px 7px;
+    //   }
+    //   &-content {
+    //     @include h-center();
+    //   }
+    //   &-icon {
+    //     margin-right: 6px;
+    //   }
+    //   &-title {
+    //     @include v-stretch();
+    //     flex: 1 0 auto;
+    //   }
+    //   &-name {
+    //     max-width: 100%;
+    //   }
+    //   &-description {
+    //     opacity: .5;
+    //     font-size: smaller;
+    //   }
+    // }
+    // .action-item {
+    //   > * {
+    //     overflow: hidden;
+    //     text-overflow: ellipsis;
+    //   }
+    // }
+    // .history-item {
+    //   @include h-center(8px);
+    //   .name {
+    //     flex: 1 0 auto;
+    //     max-width: calc(100% - 28px);
+    //     overflow: hidden;
+    //     text-overflow: ellipsis;
+    //   }
+    //   .delete-history {
+    //     opacity: 0.5;
+    //     &:hover {
+    //       opacity: 1;
+    //     }
+    //   }
+    // }
+    // .clear-history {
+    //   @include h-center(6px);
+    //   opacity: 0.5;
+    //   justify-content: center;
+    //   &:hover,
+    //   &:focus-within {
+    //     opacity: 1;
+    //   }
+    // }
   }
   &:focus-within {
     .input-active-bar {
