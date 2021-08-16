@@ -415,3 +415,18 @@
   }
   @include fans-medal-list();
 }
+.ztolayer-dialog {
+  @include background-color("2");
+  .dialog-title .title {
+    @include theme-color();
+  }
+  .dialog-body {
+    @include color("e");
+    .info {
+      @include color("a");
+    }
+    .configItem .switch {
+      @include to-theme("pink");
+    }
+  }
+}
