@@ -30,6 +30,7 @@ const getDefaultConfig = (srcFolder) => {
       extensions: ['.tsx', '.ts', '.js', '.vue', '.json'],
       alias: {
         '@': relativePath('src'),
+        'fuse.js$': relativePath('node_modules/fuse.js/dist/fuse.basic.esm.min.js'),
       },
     },
     performance: {

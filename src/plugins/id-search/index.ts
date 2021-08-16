@@ -2,32 +2,23 @@
 import { LaunchBarActionProvider, LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
 import { PluginMetadata } from '../plugin'
 
-/* eslint-disable no-loop-func */
-
-const getCopyItem = async (name: string, id: string) => {
-  const vm = {
-    text: id,
-  }
-  return [
-    {
-      name: id,
-      content: async () => Vue.extend({
-        data() {
-          return vm
-        },
-        template: `<div class="badge-item"><div class="badge">复制${name}</div>{{ text }}</div>`,
-      }),
-      action: async () => {
-        if (vm.text === id) {
-          GM_setClipboard(id, { mimetype: 'text/plain' })
-          vm.text = '已复制'
-          setTimeout(() => {
-            vm.text = id
-          }, 1000)
-        }
-      },
+const getCopyItem = async (name: string, id: string, original: string) => {
+  const item: LaunchBarAction = {
+    name: id,
+    icon: 'mdi-content-copy',
+    description: `复制${name}`,
+    indexer: original,
+    action: async () => {
+      if (item.name === id) {
+        GM_setClipboard(id, { mimetype: 'text/plain' })
+        item.name = '已复制'
+        setTimeout(() => {
+          item.name = id
+        }, 1000)
+      }
     },
-  ] as LaunchBarAction[]
+  }
+  return [item]
 }
 const idMatches = [
   {
@@ -42,7 +33,7 @@ const idMatches = [
       if (bv === null) {
         return []
       }
-      return getCopyItem('BV号', bv)
+      return getCopyItem('BV号', bv, `av${match[1]}`)
     },
   },
   {
@@ -57,7 +48,7 @@ const idMatches = [
       if (av === null) {
         return []
       }
-      return getCopyItem('av号', `av${av}`)
+      return getCopyItem('av号', `av${av}`, `BV${match[1]}`)
     },
   },
 ]
@@ -86,9 +77,8 @@ export const plugin: PluginMetadata = {
             if (match) {
               results.push({
                 name: it.name(match),
-                content: async () => Vue.extend({
-                  template: `<div class="badge-item"><div class="badge">${it.badge}</div>${it.name(match)}</div>`,
-                }),
+                icon: 'mdi-open-in-new',
+                description: it.badge,
                 action: () => {
                   window.open(it.link(match), '_blank')
                 },

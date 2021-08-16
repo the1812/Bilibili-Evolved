@@ -2,9 +2,17 @@ import { Executable, VueModule } from '@/core/common-types'
 
 /** 表示 LaunchBar 里的一个动作 */
 export interface LaunchBarAction {
-  /** 名称 */
+  /** 内部名称 */
   name: string
-  /** 要渲染的内容, 是一个导入Vue模块的函数, 省略则直接使用`name` */
+  /** 显示名称 */
+  displayName?: string
+  /** 图标 */
+  icon?: string
+  /** 描述 */
+  description?: string
+  /** 提供给搜索栏过滤的关键词 */
+  indexer?: string
+  /** 自定义渲染的内容, 会覆盖其他一些字段 */
   content?: Executable<VueModule>
   /** 用户选择此动作时要执行的代码 */
   action: Executable

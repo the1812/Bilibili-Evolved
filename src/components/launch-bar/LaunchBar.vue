@@ -83,10 +83,25 @@
           @keydown.up.prevent.stop="previousItem($event, index)"
           @keydown.down.prevent.stop="nextItem($event, index)"
         >
-          <component :is="a.content" v-if="a.content" :name="a.name"></component>
-          <template v-else>
-            {{ a.name }}
-          </template>
+          <div class="suggest-item-content">
+            <div v-if="a.icon" class="suggest-item-icon">
+              <VIcon :icon="a.icon" :size="16" />
+            </div>
+            <div class="suggest-item-title">
+              <component
+                :is="a.content"
+                v-if="a.content"
+                class="suggest-item-name"
+                :name="a.name"
+              ></component>
+              <div v-else class="suggest-item-name">
+                {{ a.title || a.name }}
+              </div>
+              <div v-if="a.description" class="suggest-item-description">
+                {{ a.description }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -101,6 +116,7 @@ import {
 import { registerAndGetData } from '@/plugins/data'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
+import Fuse from 'fuse.js'
 import {
   LaunchBarActionProviders,
   LaunchBarActionProvider,
@@ -117,11 +133,15 @@ const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
 ]) as [LaunchBarActionProvider[]]
 async function getOnlineActions() {
-  await Promise.all(
-    actionProviders.map(async provider => {
-      this.actions.push(...(await provider.getActions(this.keyword)))
-    }),
-  )
+  const onlineActions = (await Promise.all(
+    actionProviders.map(provider => provider.getActions(this.keyword)),
+  )).flat()
+  const fuse = new Fuse(onlineActions, {
+    keys: ['indexer', 'name', 'displayName', 'description'],
+  })
+  const fuseResult = fuse.search(this.keyword)
+  console.log(fuseResult)
+  this.actions = fuseResult.map(it => it.item)
   this.noActions = this.actions.length === 0
 }
 async function getActions() {
@@ -327,13 +347,22 @@ export default Vue.extend({
         padding-bottom: 8px;
         border-radius: 0 0 7px 7px;
       }
-      .badge-item {
-        @include h-center(6px);
-        .badge {
-          padding: 2px 6px;
-          border-radius: 4px;
-          background-color: #8882;
-        }
+      &-content {
+        @include h-center();
+      }
+      &-icon {
+        margin-right: 6px;
+      }
+      &-title {
+        @include v-stretch();
+        flex: 1 0 auto;
+      }
+      &-name {
+        max-width: 100%;
+      }
+      &-description {
+        opacity: .5;
+        font-size: smaller;
       }
     }
     .action-item {

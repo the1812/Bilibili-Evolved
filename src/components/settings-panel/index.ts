@@ -5,6 +5,7 @@ import { CdnTypes } from '@/core/cdn-types'
 import { addComponentListener } from '@/core/settings'
 import { DownloadPackageEmitMode } from '@/core/download-mode'
 import { ComponentEntry, ComponentMetadata, componentsTags } from '../types'
+import { provideActions } from './actions'
 
 export const WidgetsPlugin = 'widgets'
 export enum SettingsPanelDockSide {
@@ -97,6 +98,12 @@ export const component: ComponentMetadata = {
         ['功能加载模式', 'Script loading mode'],
         ['样式加载模式', 'Style loading mode'],
       ],
+    },
+  },
+  plugin: {
+    displayName: '设置面板 - 功能扩展',
+    setup: () => {
+      provideActions()
     },
   },
 }

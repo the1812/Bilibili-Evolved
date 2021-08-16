@@ -40,6 +40,7 @@ export const historyProvider: LaunchBarActionProvider = {
     const { search } = await import('./search-provider')
     return getHistoryItems().map(it => ({
       name: it.value,
+      icon: 'mdi-history',
       action: () => {
         search(it.value)
       },

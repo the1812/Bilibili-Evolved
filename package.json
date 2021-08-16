@@ -56,6 +56,7 @@
   "dependencies": {
     "@popperjs/core": "^2.6.0",
     "color": "^3.1.2",
+    "fuse.js": "^6.4.6",
     "jszip": "^3.2.2",
     "lodash": "^4.17.15",
     "marked": "^1.2.5",
