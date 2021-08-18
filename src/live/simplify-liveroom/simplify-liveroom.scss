@@ -98,13 +98,10 @@
   .room-info-down-row {
     margin: 0 !important;
     order: -1;
-    // .right-ctnr,
-    // .left-ctnr > :nth-child(n + 3) {
-    //   display: none !important;
-    // }
-  }
-  .room-info-down-row > :nth-child(n + 3) {
-    display: none !important;
+    .right-ctnr,
+    .left-ctnr > :nth-child(n + 3) {
+      display: none !important;
+    }
   }
   .room-owner-username {
     max-width: 150px !important;
