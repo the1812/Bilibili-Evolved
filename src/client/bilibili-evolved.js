@@ -17,6 +17,7 @@
 // @exclude      *://member.bilibili.com/studio/bs-editor/*
 // @exclude      *://www.bilibili.com/h5/*
 // @exclude      *://www.bilibili.com/*/h5/*
+// @exclude      *://bbq.bilibili.com/*
 // @run-at       document-start
 // @updateURL    https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
 // @downloadURL  https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/bilibili-evolved.preview.user.js
