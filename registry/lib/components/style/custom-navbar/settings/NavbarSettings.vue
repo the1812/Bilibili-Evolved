@@ -108,7 +108,7 @@ export default Vue.extend({
   props: {
     triggerElement: {
       type: HTMLElement,
-      required: true,
+      default: null,
     },
   },
   data() {
