@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { TestPattern } from '@/core/common-types'
-import { childList } from '@/core/observer'
+import { childList, childListSubtree } from '@/core/observer'
 import { sq, select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
@@ -99,16 +99,46 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
         if (!container) {
           return false
         }
-        let cardListObserver: MutationObserver | null = null
-        childList(container, async () => {
-          if (dq('#page-dynamic')) {
-            const cardsList = await select('.feed-card .content') as HTMLElement
-            cardListObserver?.disconnect();
-            [cardListObserver] = manager.updateCards(cardsList)
+        const vm: {
+          observer?: Promise<MutationObserver>
+          listElement?: Promise<HTMLElement | null>
+        } = {}
+        const stop = () => {
+          if (!vm.listElement || !vm.observer) {
+            return []
+          }
+          console.log('space feeds stop')
+          vm.observer?.then(it => it.disconnect())
+          delete vm.observer
+          delete vm.listElement
+          return Promise.all(manager.cards.map(c => c.element).map(e => manager.removeCard(e)))
+        }
+        const start = () => {
+          if (vm.observer) {
+            return vm.observer
+          }
+          const newListPromise = select('.feed-card .content') as Promise<HTMLElement>
+          vm.observer = (async () => {
+            // const newList = await vm.listElement as HTMLElement
+            const newList = await newListPromise
+            if (newList !== await vm.listElement) {
+              if (vm.listElement) {
+                await stop()
+              }
+              vm.listElement = newListPromise
+              start()
+            }
+            console.log('space feeds start')
+            const [cardListObserver] = manager.updateCards(newList)
+            return cardListObserver
+          })()
+          return vm.observer
+        }
+        childListSubtree(container, async () => {
+          if (dq('.feed-card .content')) {
+            start()
           } else {
-            cardListObserver?.disconnect()
-            cardListObserver = null
-            await Promise.all(manager.cards.map(c => c.element).map(e => manager.removeCard(e)))
+            stop()
           }
         })
         return true

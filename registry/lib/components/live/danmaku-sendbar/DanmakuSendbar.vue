@@ -81,8 +81,7 @@ export default Vue.extend({
   background-image: linear-gradient(to bottom, transparent 20%, rgba(0, 0, 0, 0.9));
 }
 @media screen and (min-width: 1038px) {
-  .player-full-win,
-  .fullscreen-fix {
+  .player-full-win {
     &:not(.danmaku-send-bar-unloaded) {
       .live-web-player-controller .control-area {
         .danmaku-send-bar {
