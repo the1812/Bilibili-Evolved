@@ -567,7 +567,9 @@ body:not(.simplify-comment) .panel-area .bb-comment {
 }
 
 .article-detail {
-
+  .normal-article-holder {
+    @include color("e");
+  }
   .card-image {
     @include background-color("3");
   }
@@ -614,6 +616,25 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     }
     .article-up-info {
       @include background-color();
+      .nameplate-card {
+        @include background-color();
+      }
+      .nameplate-ctnr {
+        @include background-color("3");
+        @include border-color();
+        .info {
+          @include border-color("4");
+          .n-type {
+            @include color("a");
+          }
+          .info-bottom a {
+            &,
+            &:hover {
+              @include theme-color();
+            }
+          }
+        }
+      }
     }
     .banner-container {
       > a > .info > .title {
@@ -644,17 +665,20 @@ body:not(.simplify-comment) .panel-area .bb-comment {
           @include color("9");
         }
       }
-      [class*='color-'][class*='-03'] {
+      [class*="color-"][class*="-03"] {
         @include brightness(6 / 5);
-        > * {
-          @include brightness(5 / 6);
-        }
+        // > * {
+        //   @include brightness(5 / 6);
+        // }
       }
-      [class*='color-'][class*='-04'] {
+      [class*="color-"][class*="-04"] {
         @include brightness(4 / 3);
-        > * {
-          @include brightness(3 / 4);
-        }
+        // > * {
+        //   @include brightness(3 / 4);
+        // }
+      }
+      [class*="color-"] [class*="color-"] {
+        @include brightness(1);
       }
       caption {
         @include color("a");
@@ -972,7 +996,8 @@ body:not(.simplify-comment) .panel-area .bb-comment {
   }
 }
 .bui-progress-bar {
-  &, &::before {
+  &,
+  &::before {
     @include theme-background-color();
   }
   .bui-progress-dot {
@@ -1032,7 +1057,7 @@ body:not(.simplify-comment) .panel-area .bb-comment {
     @include color("e");
     @include border-color("5");
   }
-  &-nickname>a,
+  &-nickname > a,
   &-summary {
     @include color("e");
   }

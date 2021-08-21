@@ -68,6 +68,7 @@ const startResolution = async () => {
 }
 startResolution()
 resources.applyStyleFromText(`
+.favInfo-box .collection-cover img,
 .favInfo-box .favInfo-cover img {
   width: 100% !important;
   object-position: left !important;

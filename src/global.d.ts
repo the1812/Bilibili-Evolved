@@ -586,5 +586,6 @@ declare global {
   const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
   const isTyping: () => boolean
   const getAid: (aid?: string) => string
+  const waitForForeground: (action: () => void) => void
 }
 export { }

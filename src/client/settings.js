@@ -111,6 +111,7 @@ export const settings = {
     title: true,
     userLevel: true,
     guard: true,
+    emoticons: true,
     systemMessage: true,
     welcomeMessage: true,
     giftMessage: true,

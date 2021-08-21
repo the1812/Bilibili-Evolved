@@ -1,3 +1,8 @@
+body:not(.gui-settings-dock-right) {
+  .contact-help {
+    display: none !important;
+  }
+}
 .gui-settings-dock-right {
   .gui-settings-icon-panel {
     right: 0;

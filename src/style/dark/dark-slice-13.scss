@@ -200,6 +200,46 @@
       }
     }
   }
+  .search-page {
+    @include background-color("4");
+    .search-nav {
+      @include color("e");
+    }
+    .search-nav-item {
+      .num {
+        @include color("a");
+      }
+      &:hover {
+        @include background-color("5");
+        .text {
+          @include theme-color();
+        }
+      }
+      &.search-nav-actived {
+        @include theme-background-color();
+        .text,
+        .num {
+          @include foreground-color();
+        }
+      }
+    }
+    .feed-dynamic {
+      @include border-color();
+      .feed-dynamic-header-search-kw,
+      .feed-dynamic-header-title {
+        @include color("e");
+      }
+      .feed-dynamic-header-search {
+        @include color("a");
+      }
+      .feed-dynamic-header-search-count {
+        @include theme-color();
+      }
+      .card .main-content .single-icon {
+        @include grayscale();
+      }
+    }
+  }
 }
 .switch-wrap {
   .type {

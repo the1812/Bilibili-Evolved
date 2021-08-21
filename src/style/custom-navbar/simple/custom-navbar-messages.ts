@@ -43,6 +43,7 @@ export class Messages extends NavbarComponent {
       hideNotFollowedCount: json.data.show_unfollowed_msg === 1,
       json: json.data,
     }
+    console.log(this.settings)
     return json.data.msg_notify !== 3
   }
   async setupEvents() {
@@ -74,11 +75,11 @@ export class Messages extends NavbarComponent {
     if (mainJson.code !== 0 || messageJson.code !== 0) {
       return
     }
-    mainJson.data['user_msg'] = messageJson.data.follow_unread
+    mainJson.data['user_msg'] = messageJson.data.follow_unread || 0
     if (!this.settings.hideNotFollowedCount) {
-      mainJson.data['user_msg'] += messageJson.data.unfollow_unread
+      mainJson.data['user_msg'] += messageJson.data.unfollow_unread || 0
     }
-    this.totalCount = names.reduce((acc, it) => acc + mainJson.data[it], 0)
+    this.totalCount = names.reduce((acc, it) => acc + (mainJson.data[it] || 0), 0)
     if (!this.totalCount) {
       return
     }

@@ -92,13 +92,19 @@ export const languageCodeToName = {
 export function getI18nKey () {
   return settings.i18n ? languageNameToCode[settings.i18nLanguage] : 'zh-CN'
 }
-/** 当查询 video 元素且被灰度了 WasmPlayer 时, 更换为对 bwp-video 的查询, 否则会找不到 video 元素 */
-export const bwpVideoFilter = (selector) => {
+/**
+ * 自动补充其他版本播放器的 video 查询
+ * - 灰度了 WasmPlayer: 添加对 bwp-video 的查询
+ * - ~~番剧区: 添加对 bpx-player 的查询~~
+ */
+export const altVideoFilter = (selector) => {
   // if (!unsafeWindow.__ENABLE_WASM_PLAYER__) {
   //   return selector
   // }
   const map = {
     video: ', bwp-video',
+    // 等功能全兼容了, 再增加番剧区支持
+    // '.bilibili-player-video video': ', .bilibili-player-video bwp-video, .bpx-player-video-wrap video',
     '.bilibili-player-video video': ', .bilibili-player-video bwp-video',
   }
   const suffix = map[selector]
@@ -109,13 +115,13 @@ export const bwpVideoFilter = (selector) => {
 }
 export const dq = (selector, scopedSelector) => {
   if (!scopedSelector) {
-    return document.querySelector(bwpVideoFilter(selector))
+    return document.querySelector(altVideoFilter(selector))
   }
   return selector.querySelector(scopedSelector)
 }
 export const dqa = (selector, scopedSelector) => {
   if (!scopedSelector) {
-    return [...document.querySelectorAll(bwpVideoFilter(selector))]
+    return [...document.querySelectorAll(altVideoFilter(selector))]
   }
   return [...selector.querySelectorAll(scopedSelector)]
 }
@@ -254,4 +260,19 @@ export const getAid = (aid = unsafeWindow.aid) => {
     throw new Error('aid is unknown')
   }
   return aid
+}
+export const waitForForeground = (action) => {
+  const runAction = () => {
+    if (document.visibilityState === 'visible') {
+      action()
+      document.removeEventListener('visibilitychange', runAction)
+      return true
+    }
+    return false
+  }
+  const isNowForeground = runAction()
+  if (isNowForeground) {
+    return
+  }
+  document.addEventListener('visibilitychange', runAction)
 }

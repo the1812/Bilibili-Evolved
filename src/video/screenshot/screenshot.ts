@@ -172,7 +172,7 @@ Observer.videoChange(async () => {
   if (video === null) {
     return
   }
-  const time = await SpinQuery.select('.bilibili-player-video-time')
+  const time = await SpinQuery.select('.bilibili-player-video-time, .squirtle-time-wrap')
   if (time === null || document.querySelector('.video-take-screenshot')) {
     return
   }

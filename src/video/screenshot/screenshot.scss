@@ -7,6 +7,7 @@
   height: 100%;
   cursor: pointer;
   display: none !important;
+  .squirtle-controller-wrap &,
   .bilibili-player-video-control-bottom & {
     display: flex !important;
   }

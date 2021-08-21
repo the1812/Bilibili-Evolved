@@ -353,22 +353,48 @@ class FeedsCardsManager extends EventTarget {
       if (!container) {
         return false
       }
-      let cardListObserver: Observer | null = null
-      Observer.childList(container, async () => {
-        if (dq('#page-dynamic')) {
-          const cardsList = await SpinQuery.select('.feed-card .content') as HTMLElement
-          console.log('enter feeds tab')
-          if (cardListObserver) {
-            cardListObserver.stop()
+      const vm: {
+        observer?: Promise<Observer>
+        listElement?: Promise<HTMLElement | null>
+      } = {}
+      const stop = () => {
+        if (!vm.listElement || !vm.observer) {
+          return []
+        }
+        console.log('space feeds stop')
+        vm.observer?.then(it => it.stop())
+        delete vm.observer
+        delete vm.listElement
+        return Promise.all(this.cards.map(c => c.element).map(e => this.removeCard(e)))
+      }
+      const start = () => {
+        if (vm.observer) {
+          return vm.observer
+        }
+        const newListPromise = SpinQuery.select('.feed-card .content')
+        vm.observer = (async () => {
+          // const newList = await vm.listElement as HTMLElement
+          const newList = await newListPromise as HTMLElement
+          if (newList !== await vm.listElement) {
+            if (vm.listElement) {
+              await stop()
+            }
+            vm.listElement = newListPromise
+            start()
           }
-          cardListObserver = updateCards(cardsList)
+          const cardListObserver = (async () => {
+            console.log('space feeds start')
+            return updateCards(newList)
+          })()
+          return cardListObserver
+        })()
+        return vm.observer
+      }
+      Observer.childListSubtree(container, async () => {
+        if (dq('.feed-card .content')) {
+          start()
         } else {
-          console.log('leave feeds tab')
-          if (cardListObserver) {
-            cardListObserver.stop()
-            cardListObserver = null
-          }
-          await Promise.all(this.cards.map(c => c.element).map(e => this.removeCard(e)))
+          stop()
         }
       })
       this.watching = true
