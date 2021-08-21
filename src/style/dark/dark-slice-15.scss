@@ -430,3 +430,12 @@
     }
   }
 }
+.bilibili-player-video-info-hover {
+  @include background-color("2");
+  &-num {
+    @include color("e");
+  }
+  &-tips {
+    @include color("a");
+  }
+}
