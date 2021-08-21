@@ -701,7 +701,7 @@
 
 </details>
 <details>
-<summary><strong>界面翻译(实验性)</strong></summary>
+<summary><strong>界面翻译(暂停更新)</strong></summary>
 
 为界面中一些常用文本提供翻译, 完成度不高, 目前仅开放日语和英语.
 

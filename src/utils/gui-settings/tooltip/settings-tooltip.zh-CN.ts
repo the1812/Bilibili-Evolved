@@ -89,7 +89,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   ["toastInternalError", /*html*/`开启后, 错误消息将显示详细的技术性错误信息及堆栈跟踪, 这通常用于准确地确定问题发生的原因, 所以报告问题时这些信息会非常有用.`],
   ["useCache", /*html*/`使用缓存以提高脚本的加载速度.`],
   ["outerWatchlater", /*html*/`将视频页面菜单里的<span>稍后再看</span>移到外面.`],
-  ["i18n", /*html*/`为界面中一些常用文本提供翻译.`],
+  ["i18n", /*html*/`[暂时停更] 为界面中一些常用文本提供翻译.`],
   ["i18nLanguage", /*html*/`翻译的目标语言.`],
   ["customNavbar", /*html*/`启用自定义顶栏, 替代原版的顶栏, 仅对主站生效, 不影响直播/相簿/会员购等.`],
   ["customNavbarSeasonLogo", /*html*/`是否使用季节Logo代替普通的Logo.`],
