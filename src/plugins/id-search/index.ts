@@ -1,4 +1,3 @@
-/* eslint-disable vue/one-component-per-file */
 import { LaunchBarActionProvider, LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
 import { PluginMetadata } from '../plugin'
 

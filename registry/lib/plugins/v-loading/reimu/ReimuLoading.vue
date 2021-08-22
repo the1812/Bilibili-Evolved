@@ -4,12 +4,6 @@
     少女祈祷中...
   </div>
 </template>
-<script lang="ts">
-/* eslint-disable */
-export default Vue.extend({
-
-})
-</script>
 <style lang="scss">
 @import "common";
 @import "./image.css";

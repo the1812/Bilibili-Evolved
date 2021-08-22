@@ -2,8 +2,7 @@ import { PluginMetadata } from '../plugin'
 
 // https://github.com/the1812/Bilibili-Evolved/issues/84
 let ajaxHooked = false
-// eslint-disable-next-line
-const handlerMap = new Map<string, ((...args: any[]) => void)[]>()
+const handlerMap: Map<string, ((...args: any[]) => void)[]> = new Map()
 export const getHandlers = (name: string) => {
   const lowercase = name.toLowerCase()
   let handlers = handlerMap.get(lowercase)

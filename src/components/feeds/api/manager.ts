@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { TestPattern } from '@/core/common-types'
 import { childList, childListSubtree } from '@/core/observer'
 import { sq, select } from '@/core/spin-query'
@@ -275,6 +274,7 @@ class FeedsCardsManager extends EventTarget {
    * @param element 动态卡片的元素
    */
   static async parseCard(element: HTMLElement): Promise<FeedsCard> {
+    // eslint-disable-next-line no-underscore-dangle
     const getVueData = (el: any) => el.__vue__ || el.parentElement.__vue__
     const getSimpleText = async (selector: string) => {
       const subElement = await sq(

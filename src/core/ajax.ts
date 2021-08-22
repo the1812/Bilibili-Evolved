@@ -185,28 +185,29 @@ export const responsiveGetPages = <T = any>(config: {
 }): [Promise<T[]>, Promise<T[]>] => {
   let responsivePromise: Promise<T[]>
   const totalPromise = new Promise<T[]>(resolveTotal => {
-    // eslint-disable-next-line no-async-promise-executor
-    responsivePromise = new Promise(async resolveResponsive => {
-      const { api, getList, getTotal } = config
-      let page = 1
-      let total = Infinity
-      const result = []
-      while (result.length < total) {
-        const json = await api(page)
-        if (json.code !== 0) {
-          console.warn(`api failed in ajax.getPages. message = ${json.message}, page = ${page}, total = ${total}, api = `, api)
+    responsivePromise = new Promise(resolveResponsive => {
+      (async () => {
+        const { api, getList, getTotal } = config
+        let page = 1
+        let total = Infinity
+        const result = []
+        while (result.length < total) {
+          const json = await api(page)
+          if (json.code !== 0) {
+            console.warn(`api failed in ajax.getPages. message = ${json.message}, page = ${page}, total = ${total}, api = `, api)
+          }
+          const list = getList(json)
+          result.push(...list)
+          if (page === 1) {
+            resolveResponsive(result)
+          }
+          page++
+          if (total === Infinity) {
+            total = getTotal(json)
+          }
         }
-        const list = getList(json)
-        result.push(...list)
-        if (page === 1) {
-          resolveResponsive(result)
-        }
-        page++
-        if (total === Infinity) {
-          total = getTotal(json)
-        }
-      }
-      resolveTotal(result)
+        resolveTotal(result)
+      })()
     })
   })
   return [responsivePromise, totalPromise]

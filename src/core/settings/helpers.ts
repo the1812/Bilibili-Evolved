@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { ComponentMetadata, componentsMap, ComponentOptions } from '@/components/component'
 import { PluginMetadata } from '@/plugins/plugin'
 // import serialize from 'serialize-javascript'

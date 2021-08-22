@@ -1,3 +1,5 @@
+import { ascendingSort } from '@/core/utils/sort'
+import { convertHexColorForDialogue, convertTimeByDuration, normalizeContent } from '@/components/video/ass-utils'
 import {
   Duration, BlockTypes, AssDanmaku, AssDanmakuDocument, Resolution,
 } from './ass-danmaku'
@@ -5,7 +7,6 @@ import { Danmaku } from './danmaku-data'
 import { XmlDanmakuDocument, XmlDanmaku } from './xml-danmaku'
 import { DanmakuStack } from './danmaku-stack'
 
-/* eslint-disable */
 export interface DanmakuConverterConfig {
   title: string
   font: string
@@ -54,24 +55,28 @@ export class DanmakuConverter {
     const assDanmakus = []
     for (const xmlDanmaku of xmlDanmakus) {
       // 跳过设置为屏蔽的弹幕类型
-      if (this.blockTypes.indexOf(xmlDanmaku.type) !== -1 ||
-        this.blockTypes.indexOf('color') !== -1 && xmlDanmaku.color !== DanmakuConverter.white) {
+      const isBlockType = this.blockTypes.indexOf(xmlDanmaku.type) !== -1
+      const isBlockColor = this.blockTypes.indexOf('color') !== -1 && xmlDanmaku.color !== DanmakuConverter.white
+      if (isBlockType || isBlockColor) {
         continue
       }
       // 应用传入的过滤器
       if (!this.blockFilter(xmlDanmaku)) {
         continue
       }
-      const [startTime, endTime] = this.convertTime(xmlDanmaku.startTime, this.duration(xmlDanmaku))
+      const [startTime, endTime] = convertTimeByDuration(
+        xmlDanmaku.startTime,
+        this.duration(xmlDanmaku),
+      )
       assDanmakus.push(new AssDanmaku({
-        content: this.convertText(xmlDanmaku.content),
+        content: normalizeContent(xmlDanmaku.content),
         time: startTime,
-        endTime: endTime,
+        endTime,
         type: xmlDanmaku.type.valueOf().toString(),
         fontSize: xmlDanmaku.fontSize.toString(),
         color: xmlDanmaku.color.toString(),
         typeTag: this.convertType(xmlDanmaku),
-        colorTag: this.convertColor(xmlDanmaku.color)
+        colorTag: convertHexColorForDialogue(xmlDanmaku.color.toString(16)),
       }))
     }
     return new AssDanmakuDocument(
@@ -79,59 +84,16 @@ export class DanmakuConverter {
       this.title,
       this.fontStyles,
       this.blockTypes,
-      this.resolution
+      this.resolution,
     )
   }
   xmlStringToAssDocument(xml: string) {
     const xmlDanmakuDocument = new XmlDanmakuDocument(xml)
-    return this.xmlDanmakuToAssDocument(xmlDanmakuDocument.danmakus.sort((a, b) => a.startTime - b.startTime))
-  }
-  convertText(text: string) {
-    const map = {
-      '{': '｛',
-      '}': '｝',
-      '&amp;': '&',
-      '&lt;': '<',
-      '&gt;': '>',
-      '&quot;': '"',
-      '&apos;': "'",
-    }
-    for (const [key, value] of Object.entries(map)) {
-      text = text.replace(new RegExp(key, 'g'), value)
-    }
-    return text
+    return this.xmlDanmakuToAssDocument(
+      xmlDanmakuDocument.danmakus.sort(ascendingSort(it => it.startTime)),
+    )
   }
   convertType(danmaku: Danmaku) {
     return this.danmakuStack.push(danmaku).tags
-  }
-  convertColor(decColor: number) {
-    if (decColor === DanmakuConverter.white) {
-      return ''
-    }
-    const hex = decColor.toString(16)
-    const red = hex.substring(0, 2)
-    const green = hex.substring(2, 4)
-    const blue = hex.substring(4, 6)
-    return `\\c&H${blue}${green}${red}&`
-  }
-  convertTime(startTime: number, duration: number) {
-    function round(number: number) {
-      const [integer, decimal = '00'] = String(number).split('.')
-      return `${integer.padStart(2, '0')}.${decimal.substr(0, 2).padEnd(2, '0')}`
-    }
-    function secondsToTime(seconds: number) {
-      let hours = 0
-      let minutes = 0
-      while (seconds >= 60) {
-        seconds -= 60
-        minutes++
-      }
-      while (minutes >= 60) {
-        minutes -= 60
-        hours++
-      }
-      return `${hours}:${String(minutes).padStart(2, '0')}:${round(seconds)}`
-    }
-    return [secondsToTime(startTime), secondsToTime(startTime + duration)]
   }
 }

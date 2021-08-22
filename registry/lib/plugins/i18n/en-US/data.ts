@@ -1,7 +1,5 @@
 import { RegexTranslation, Translation } from '@/components/i18n/types'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const not = true
 export const map = new Map<string, Translation>([
   ['主站', 'Home'],
   ['画友', 'Photos'],

@@ -1,8 +1,8 @@
+import { fixed } from '@/core/utils'
 import { DanmakuType } from './danmaku-type'
 import { Resolution, Duration, FontStyles } from './ass-danmaku'
 import { Danmaku } from './danmaku-data'
 
-/* eslint-disable */
 interface TrackItem {
   start: number
   end: number
@@ -54,7 +54,7 @@ export class DanmakuStack {
     font: string,
     resolution: Resolution,
     duration: Duration,
-    bottomMarginPercent: number
+    bottomMarginPercent: number,
   ) {
     this.horizontalStack = []
     this.horizontalTrack = []
@@ -63,7 +63,7 @@ export class DanmakuStack {
     this.resolution = resolution
     this.duration = duration
     this.canvas = document.createElement('canvas')
-    this.context = this.canvas.getContext('2d')!
+    this.context = this.canvas.getContext('2d')
     // XML字体大小到实际大小的表
     this.fontSizes = {
       30: `64px ${font}`,
@@ -80,7 +80,7 @@ export class DanmakuStack {
     this.danmakuHeight = height
     this.trackHeight = DanmakuStack.margin * 2 + height
     this.trackCount = parseInt(
-      coreApis.utils.fixed((this.resolution.y * (1 - this.bottomMarginPercent)) / this.trackHeight, 0)
+      fixed((this.resolution.y * (1 - this.bottomMarginPercent)) / this.trackHeight, 0),
     )
   }
   getTextSize(danmaku: Danmaku) {
@@ -104,13 +104,14 @@ export class DanmakuStack {
       当前弹幕的速度 v = (x + w) / d
       完全进入屏幕所需时间 = visibleTime = delay + w / v = delay + wd / (x + w)
     */
-    const visibleTime = (this.duration(danmaku) * width) /
-      (this.resolution.x + width) + DanmakuStack.nextDanmakuDelay
+    const visibleTime = (this.duration(danmaku) * width)
+      / (this.resolution.x + width) + DanmakuStack.nextDanmakuDelay
     let trackNumber = initTrackNumber
     let overlayDanmaku = null
     // 寻找前面已发送的弹幕中可能重叠的
+    const overlayDanmakuInTrack = (it: TrackItem) => willOverlay(it, trackNumber, width)
     do {
-      overlayDanmaku = targetTrack.find(it => willOverlay(it, trackNumber, width))
+      overlayDanmaku = targetTrack.find(overlayDanmakuInTrack)
       trackNumber += nextTrackNumber
     }
     while (overlayDanmaku && trackNumber <= this.trackCount && trackNumber >= 0)
@@ -148,8 +149,8 @@ export class DanmakuStack {
             即 t <= end
             也就是 start + dx / (x + w) <= end 或 dx / (x + w) <= end - start
           */
-          return (this.duration(danmaku) * this.resolution.x) /
-            (this.resolution.x + width) <= it.end - danmaku.startTime
+          return (this.duration(danmaku) * this.resolution.x)
+            / (this.resolution.x + width) <= it.end - danmaku.startTime
         } // 前面弹幕完全进入屏幕的时间点晚于当前弹幕的开始时间, 就一定会重叠
         return it.visible > danmaku.startTime
       },
@@ -189,30 +190,30 @@ export class DanmakuStack {
     })
   }
   push(danmaku: Danmaku) {
-    let tags: string = ''
+    let tags = ''
     let stack: { tags: string }[] = []
     switch (DanmakuStack.danmakuType[danmaku.type]) {
       case 'normal':
       case 'reversed': // 反向先鸽了, 直接当正向了
-        {
-          tags = this.getHorizontalTags(danmaku)
-          stack = this.horizontalStack
-          break
-        }
+      {
+        tags = this.getHorizontalTags(danmaku)
+        stack = this.horizontalStack
+        break
+      }
       case 'top':
       case 'bottom':
-        {
-          tags = this.getVerticalTags(danmaku)
-          stack = this.verticalStack
-          break
-        }
+      {
+        tags = this.getVerticalTags(danmaku)
+        stack = this.verticalStack
+        break
+      }
       case 'special': // 高级弹幕也鸽了先
       default:
-        {
-          return {
-            tags: '\\pos(0,-999)',
-          }
+      {
+        return {
+          tags: '\\pos(0,-999)',
         }
+      }
     }
     const info = {
       tags,
