@@ -1,6 +1,13 @@
 <template>
-  <MiniToast trigger="mouseenter focus" placement="right" :delay="0" :offset="[0, 13]">
-    <div class="online-registry-item">
+  <MiniToast
+    class="online-registry-item-wrapper"
+    trigger="mouseenter focus"
+    placement="right"
+    :delay="0"
+    :offset="[0, 13]"
+    :class="{ virtual }"
+  >
+    <div v-if="!virtual" class="online-registry-item">
       <VIcon :size="18" :icon="icon" class="item-icon" />
       <div class="item-badge">
         {{ badge }}
@@ -48,6 +55,7 @@ import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { meta } from '@/core/meta'
+import { visibleInside } from '@/core/observer'
 import { getGeneralSettings, settings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
@@ -100,10 +108,19 @@ export default Vue.extend({
       description: getDescriptionHTML(this.item),
       installing: false,
       installed: false,
+      virtual: false,
     }
   },
   created() {
     this.checkInstalled()
+  },
+  mounted() {
+    const element = this.$el as HTMLElement
+    visibleInside(element, element.parentElement, '150% 0px', records => {
+      records.forEach(record => {
+        this.virtual = !record.isIntersecting
+      })
+    })
   },
   methods: {
     checkInstalled() {
@@ -117,12 +134,14 @@ export default Vue.extend({
       // Toast.show(urls.join('\n'), 'demo')
       try {
         this.installing = true
-        await Promise.all(urls.map(async url => {
-          const code = await monkey({ url })
-          console.log(code)
-          const { installer } = await installFeature(code)
-          return installer()
-        }))
+        await Promise.all(
+          urls.map(async url => {
+            const code = await monkey({ url })
+            console.log(code)
+            const { installer } = await installFeature(code)
+            return installer()
+          }),
+        )
         this.checkInstalled()
       } catch (error) {
         logError(error)
@@ -137,6 +156,27 @@ export default Vue.extend({
 @import 'common';
 @import 'markdown';
 
+.online-registry-item-wrapper {
+  min-height: 39px;
+  position: relative;
+  &::before {
+    content: "";
+    opacity: 0;
+    transition: opacity .2s ease-out;
+    position: absolute;
+    pointer-events: none;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 100%;
+    height: 20px;
+    background-color: #8882;
+    display: flex;
+  }
+  &.virtual::before {
+    opacity: 1;
+  }
+}
 .online-registry-item {
   @include h-center(4px);
   flex-wrap: wrap;
