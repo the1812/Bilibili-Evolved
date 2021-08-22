@@ -1,4 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
+import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { urlInclude, urlExclude } from './urls'
 import { entry } from './entry'
 
@@ -83,4 +84,23 @@ export const component: ComponentMetadata = {
     // addImportantStyle(style, styleID)
   },
   extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
+  plugin: {
+    displayName: '自定义顶栏 - 功能扩展',
+    setup: ({ addData }) => {
+      addData('launchBar.actions', (providers: LaunchBarActionProvider[]) => {
+        providers.push({
+          name: 'navbarSettings',
+          getActions: async () => [{
+            name: '自定义顶栏设置',
+            description: 'Custom Navbar Settings',
+            icon: 'mdi-sort',
+            action: async () => {
+              const { toggleNavbarSettings } = await import('./settings/vm')
+              toggleNavbarSettings()
+            },
+          }],
+        })
+      })
+    },
+  },
 }

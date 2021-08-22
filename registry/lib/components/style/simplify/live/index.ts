@@ -42,6 +42,10 @@ export const component = createSwitchOptions({
       defaultValue: true,
       displayName: '礼物弹幕',
     },
+    emoticons: {
+      defaultValue: true,
+      displayName: '表情特效',
+    },
     guardPurchase: {
       defaultValue: true,
       displayName: '上舰提示',
