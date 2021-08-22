@@ -9,11 +9,11 @@ const branch = process
   .toString()
   .trim()
 const nearestTag = process
-  .execSync('git describe --abbrev=0 --tags')
+  .execSync('git describe --abbrev=0 --tags --always')
   .toString()
   .trim()
 const versionWithTag = process
-  .execSync('git describe --tags')
+  .execSync('git describe --tags --always')
   .toString()
   .trim()
 const compilationInfo = {
