@@ -14,6 +14,7 @@
 
 <script lang="ts">
 import { CurriedFunction2 } from 'lodash'
+import CheckBox from './CheckBox.vue'
 
 type RadioGroup = {
   instance: Vue
@@ -32,7 +33,7 @@ const setGroup = lodash.curry(
 export default Vue.extend({
   name: 'RadioButton',
   components: {
-    CheckBox: () => import('@/ui/CheckBox.vue').then(m => m.default),
+    CheckBox,
   },
   model: {
     prop: 'checked',

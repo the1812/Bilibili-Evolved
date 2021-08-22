@@ -16,9 +16,11 @@
   </a>
 </template>
 <script lang="ts">
+import { DpiImage } from '@/ui'
+
 export default Vue.extend({
   components: {
-    DpiImage: () => import('@/ui/DpiImage.vue').then(m => m.default),
+    DpiImage,
   },
   props: {
     data: {

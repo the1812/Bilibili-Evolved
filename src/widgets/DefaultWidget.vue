@@ -12,10 +12,13 @@
 </template>
 
 <script lang="ts">
+import VIcon from '@/ui/icon/VIcon.vue'
+import VButton from '@/ui/VButton.vue'
+
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
-    VButton: () => import('@/ui/VButton.vue').then(m => m.default),
+    VIcon,
+    VButton,
   },
   props: {
     name: {

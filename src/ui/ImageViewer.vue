@@ -41,10 +41,11 @@
 import { addComponentListener } from '../core/settings'
 import { getFriendlyTitle } from '../core/utils/title'
 import { getBlob } from '../core/ajax'
+import VIcon from './icon/VIcon.vue'
 
 export default Vue.extend({
   components: {
-    VIcon: () => import('@/ui/icon/VIcon.vue').then(m => m.default),
+    VIcon,
   },
   // model: {
   //   prop: 'open',
