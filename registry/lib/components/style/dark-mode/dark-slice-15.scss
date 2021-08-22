@@ -1,0 +1,441 @@
+@import "./dark-definitions";
+
+.bui-button {
+  .bui-button-blue,
+  .bui-button-blue:hover,
+  .bui-button-gray3:hover {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+}
+.bpx-docker-minor {
+  @include background-color();
+}
+.bpx-player-auxiliary {
+  .bui-dropdown {
+    @include background-color();
+    .bui-dropdown-wrap {
+      @include fill("e");
+      @include color("e");
+      &.bui-dropdown-unfold .bui-dropdown-icon,
+      .bui-dropdown-icon:hover {
+        @include theme-fill();
+      }
+    }
+    .bui-dropdown-items {
+      @include background-color("4");
+      @include border-color();
+      .bui-dropdown-item {
+        @include color("e");
+        @include background-color();
+        &:hover {
+          @include theme-color();
+          @include background-color("2");
+        }
+      }
+    }
+  }
+  .bpx-player-dm-load-status {
+    @include background-color();
+    @include color("a");
+  }
+  .bpx-player-collapse {
+    .bui-collapse-body {
+      @include background-color("3");
+    }
+    .bpx-player-dm-function {
+      @include background-color();
+      > * {
+        @include color("e");
+        @include background-color();
+      }
+    }
+    .bpx-player-dm-wrap {
+      @include background-color();
+      .dm-info-row {
+        @include color("a");
+        .dm-info-dm {
+          @include color("e");
+        }
+        .dm-info-block-btn,
+        .dm-info-report-btn {
+          @include background-color("5");
+          @include border-color();
+          @include color("e");
+          &:hover {
+            @include theme-background-color();
+            @include foreground-color();
+          }
+        }
+      }
+      .bui-long-list-item-selected .dm-info-row {
+        @include background-color("4");
+      }
+    }
+    .bpx-player-dm-btn-footer {
+      @include background-color();
+      .bpx-player-dm-btn-history {
+        &,
+        &.bpx-player-disable,
+        &.bpx-player-disable:hover {
+          @include background-color("4");
+          @include color("a");
+        }
+        &:hover {
+          @include color("e");
+        }
+      }
+    }
+  }
+  .bpx-player-block-area {
+    .bpx-player-block-label {
+      @include color("e");
+    }
+    .bpx-player-block-sync-btn {
+      @include theme-color();
+      @include theme-fill();
+    }
+    .bpx-player-block-add-input {
+      @include border-color("6");
+      @include color("e");
+      @include background-color("4");
+      &:focus-within {
+        @include theme-border-color();
+      }
+    }
+    .bpx-player-block-add-btn,
+    .bpx-player-block-add-btn .bui-area {
+      @include border-color();
+      @include background-color("4");
+      @include color("e");
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+    .bpx-player-block-list {
+      @include background-color("2");
+      .bpx-player-block-list-function {
+        @include color("a");
+      }
+      .bpx-player-state-list-wrap > * {
+        @include color("a");
+        @include fill("a");
+        &.bpx-player-block-list-delete:hover {
+          @include theme-color();
+          @include theme-fill();
+        }
+        &.bpx-player-block-list-state {
+          @include theme-color();
+        }
+      }
+      .bpx-player-block-list-line {
+        @include color("e");
+        @include background-color();
+      }
+    }
+  }
+  .bpx-player-contextmenu {
+    @include background-color("3");
+    @include border-color();
+    box-shadow: 0 0 5px #222 !important;
+    > li {
+      @include color("e");
+      &:hover {
+        @include background-color("4");
+      }
+    }
+  }
+  .bpx-player-adv-danmaku,
+  .bpx-player-setting {
+    @include background-color();
+  }
+  .bpx-player-adv-danmaku-panel {
+    @include border-color();
+    .bpx-player-adv-danmaku-group {
+      @include border-color("4");
+      .bpx-player-adv-danmaku-title {
+        @include color("e");
+      }
+    }
+    .bpx-player-adv-danmaku-btn,
+    .bpx-player-adv-danmaku-btn .bui-area {
+      @include background-color("4");
+      @include color("e");
+      &.active,
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+    .bpx-player-adv-danmaku-pos-title {
+      @include color("e");
+    }
+  }
+}
+.ep-list-wrapper,
+.section-ep-wrapper {
+  .ep-item a {
+    @include color("e");
+  }
+}
+.bpx-player-container {
+  box-shadow: 0 4px 8px 0 #0004 !important;
+  .squirtle-controller {
+    .squirtle-high-energy {
+      @include to-theme("blue");
+    }
+    .squirtle-progress-timeline {
+      @include theme-background-color();
+    }
+  }
+  .bpx-player-sending-area::before {
+    @include background-color();
+  }
+  .bpx-player-sending-bar {
+    @include background-color();
+    .bpx-player-dm-setting:hover {
+      @include theme-fill();
+    }
+    .bpx-player-video-btn-dm:hover {
+      @include theme-fill();
+    }
+    .bpx-player-dm-input {
+      @include color("e");
+    }
+    .bpx-player-block-filter-type.bpx-player-active > * {
+      @include theme-color();
+      @include theme-fill();
+    }
+    .bpx-player-mode-selection-container .selection-span.active {
+      &,
+      &:hover {
+        @include theme-fill();
+      }
+    }
+    .bpx-player-video-inputbar {
+      background-color: rgba(255, 255, 255, 0.06667) !important;
+      .bpx-player-video-inputbar-wrap {
+        @include border-color();
+        .bpx-player-dm-wrap {
+          a,
+          a:hover {
+            @include theme-color();
+          }
+        }
+        .bpx-player-dm-hint {
+          a {
+            @include color("a");
+            @include fill("a");
+            &:hover {
+              @include theme-color();
+              @include theme-fill();
+            }
+          }
+        }
+      }
+    }
+  }
+  .bpx-player-video-info {
+    @include color("a");
+  }
+}
+.twp-container .new-twp-btn {
+  &.confirm,
+  &.ticket,
+  &.vip {
+    @include theme-background-color();
+    @include foreground-color();
+    .current {
+      @include foreground-color();
+    }
+  }
+}
+.msg-push-new {
+  @include background-color("2");
+  .ar-recommend-item__info {
+    &--title {
+      @include color("e");
+    }
+    &--desc .time,
+    &--view {
+      @include color("a");
+    }
+  }
+}
+.send-box .core-style {
+  @include color("e");
+}
+.section.user-info {
+  .user-info-title {
+    @include border-color("5");
+  }
+  .tag-content,
+  .info-value,
+  .info-title {
+    @include color("e");
+  }
+  .iconfont,
+  .info-command {
+    @include color("a");
+  }
+}
+.h-notice {
+  @include background-color("3");
+  a {
+    @include color("e");
+  }
+  svg path {
+    @include fill("e");
+  }
+}
+.video-info .video-data .argue {
+  &,
+  & i {
+    color: #e1a411 !important;
+  }
+  background: #312d21 !important;
+}
+.short-review-content {
+  .review-edit-header {
+    .media-info {
+      h4 {
+        @include color("e");
+      }
+      .rate-tip {
+        @include color("a");
+      }
+    }
+  }
+  .review-body-wrap {
+    @include border-color("5");
+    @include background-color("2");
+    &:focus-within {
+      @include theme-border-color();
+    }
+    textarea,
+    textarea:focus-within {
+      @include background-color();
+      @include border-color();
+    }
+    .tip {
+      @include color("a");
+    }
+    .mr-btn {
+      &,
+      &:hover,
+      &:active {
+        @include foreground-color();
+        @include theme-background-color();
+        @include border-color();
+      }
+    }
+  }
+}
+.fans-medal-dialog {
+  @include background-color("2");
+  .van-dialog__title {
+    @include color("e");
+  }
+  .van-dialog__close {
+    @include color("a");
+  }
+}
+@mixin fans-medal-list {
+  .list {
+    .content {
+      @include border-color("4");
+      @include background-color("3");
+
+      .btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+      &.border {
+        @include theme-border-color();
+        opacity: 1 !important;
+      }
+      .info {
+        @include no-image();
+        @include background-color();
+        .num,
+        .name {
+          @include color("e");
+        }
+        .img,
+        .image {
+          @include to-theme("pink");
+        }
+        .limit {
+          &,
+          & .before {
+            @include color("a");
+          }
+        }
+        .progress {
+          @include background-color("5");
+          .blue {
+            @include theme-background-color();
+          }
+        }
+      }
+    }
+  }
+}
+// 粉丝勋章墙的 iframe, 实在不理解为什么这也要弄个 iframe, 还起这么泛的名称, 感觉很容易和其他地方冲突
+#app > #main > .container {
+  .header {
+    .name {
+      @include color("e");
+    }
+    .count {
+      @include color("a");
+      span {
+        @include theme-color();
+      }
+    }
+  }
+  @include fans-medal-list();
+}
+.container.medalList {
+  @include background-color();
+  .title {
+    .name {
+      @include color("e");
+    }
+    img {
+      @include to-theme("blue");
+    }
+    .mount {
+      @include color("a");
+    }
+    .button {
+      @include theme-color();
+    }
+  }
+  @include fans-medal-list();
+}
+.ztolayer-dialog {
+  @include background-color("2");
+  .dialog-title .title {
+    @include theme-color();
+  }
+  .dialog-body {
+    @include color("e");
+    .info {
+      @include color("a");
+    }
+    .configItem .switch {
+      @include to-theme("pink");
+    }
+  }
+}
+.bilibili-player-video-info-hover {
+  @include background-color("2");
+  &-num {
+    @include color("e");
+  }
+  &-tips {
+    @include color("a");
+  }
+}
