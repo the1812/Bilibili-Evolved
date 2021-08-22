@@ -48,6 +48,12 @@ export interface ComponentOption {
   color?: boolean
   /** 设为`true`时, 表示选项为多个`boolean`开关, 将显示为选择框列表 */
   switches?: boolean
+  /** 设置范围, 可以显示为一个滑动条 */
+  slider?: {
+    min?: number
+    max?: number
+    step?: number
+  }
   // /** 与`switches`选项配合使用, 设为`true`时, 用<RadioButton>替代<CheckBox>进行单选限制 */
   // radio?: boolean
   /** `number`, `string`或`Range`类型的选项, 可以添加验证函数来阻止非法输入 */

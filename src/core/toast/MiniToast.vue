@@ -40,7 +40,7 @@ export default Vue.extend({
     this.toast = createMiniToast(this.message, this.$refs.content, {
       content: this.$refs.toast,
       showOnCreate: this.show,
-      trigger: 'manual',
+      trigger: 'mouseenter focusin',
       onHide: () => {
         this.$emit('change', false)
       },
@@ -48,7 +48,7 @@ export default Vue.extend({
         this.$emit('change', true)
       },
       appendTo: containerMap[this.container],
-      ...(lodash.omit(this.$props, 'show')),
+      // ...(lodash.omit(this.$props, 'show', 'container')),
       ...this.$attrs,
     })
   },

@@ -1,7 +1,6 @@
 <template>
   <MiniToast
     class="online-registry-item-wrapper"
-    trigger="mouseenter focus"
     placement="right"
     container="body"
     :delay="[200, 0]"

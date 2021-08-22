@@ -50,6 +50,12 @@
       small-size
       :options="option.defaultValue"
     ></SwitchOptions>
+    <VSlider
+      v-if="type === 'slider'"
+      v-bind="option.slider"
+      :value="value"
+      @change="valueChange($event)"
+    ></VSlider>
     <div v-if="type === 'unknown'" class="unknown-option-type">
       未知的选项类型
     </div>
@@ -57,20 +63,31 @@
 </template>
 
 <script lang="ts">
+import {
+  TextBox,
+  SwitchBox,
+  ColorPicker,
+  RangeInput,
+  VDropdown,
+  ImagePicker,
+  VSlider,
+} from '@/ui'
 import { getComponentSettings, ComponentSettings } from '@/core/settings'
 import { ComponentOption } from '../component'
 import { getDropdownItems } from './dropdown'
+import SwitchOptions from '../SwitchOptions.vue'
 
 export default {
   name: 'ComponentOption',
   components: {
-    TextBox: () => import('@/ui/TextBox.vue').then(m => m.default),
-    SwitchBox: () => import('@/ui/SwitchBox.vue').then(m => m.default),
-    ColorPicker: () => import('@/ui/ColorPicker.vue').then(m => m.default),
-    RangeInput: () => import('@/ui/RangeInput.vue').then(m => m.default),
-    VDropdown: () => import('@/ui/VDropdown.vue').then(m => m.default),
-    ImagePicker: () => import('@/ui/ImagePicker.vue').then(m => m.default),
-    SwitchOptions: () => import('../SwitchOptions.vue').then(m => m.default),
+    SwitchOptions,
+    TextBox,
+    SwitchBox,
+    ColorPicker,
+    RangeInput,
+    VDropdown,
+    ImagePicker,
+    VSlider,
   },
   props: {
     name: {
@@ -105,8 +122,12 @@ export default {
       switch (typeof defaultValue) {
         case 'boolean':
           return 'boolean'
-        case 'number':
+        case 'number': {
+          if (option.slider) {
+            return 'slider'
+          }
           return 'number'
+        }
         case 'string': {
           if (option.color) {
             return 'color'
@@ -159,6 +180,7 @@ export default {
   align-items: center;
   min-height: 24px;
   .unknown-option-type,
+  .be-slider,
   .be-range-input,
   .be-text-box {
     flex: 1 0 0;
@@ -176,6 +198,9 @@ export default {
   }
   .option-name {
     margin-right: 8px;
+  }
+  .be-slider {
+    margin: 0 8px;
   }
 }
 </style>

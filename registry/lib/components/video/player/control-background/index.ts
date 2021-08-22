@@ -6,9 +6,9 @@ const entry: ComponentEntry = async ({ metadata }) => {
   addComponentListener(`${metadata.name}.includeProgress`, (value: boolean) => {
     document.body.classList.toggle('video-control-progress-background', value)
   }, true)
-  addComponentListener(`${metadata.name}.opacity`, (value: number) => {
-    document.documentElement.style.setProperty('--video-control-opacity', value.toString())
-  }, true)
+  addComponentListener(`${metadata.name}.opacity`, lodash.debounce((value: number) => {
+    document.documentElement.style.setProperty('--video-control-opacity', (value / 100).toString())
+  }, 200), true)
 }
 export const component: ComponentMetadata = {
   name: 'playerControlBackground',
@@ -30,17 +30,9 @@ export const component: ComponentMetadata = {
   urlInclude: playerUrls,
   options: {
     opacity: {
-      displayName: '不透明度',
-      defaultValue: 0.64,
-      validator: (value: number) => {
-        if (value < 0) {
-          return 0
-        }
-        if (value > 1) {
-          return 1
-        }
-        return value
-      },
+      displayName: '不透明度(%)',
+      defaultValue: 64,
+      slider: {},
     },
     includeProgress: {
       displayName: '包括进度条',

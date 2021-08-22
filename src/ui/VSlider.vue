@@ -11,17 +11,28 @@
         <div class="default-bar"></div>
       </slot>
     </div>
-    <div ref="thumbContainer" class="thumb-container">
+    <MiniToast
+      ref="thumbContainer"
+      class="thumb-container"
+      placement="top"
+      :arrow="false"
+    >
       <slot name="thumb">
         <div class="default-thumb"></div>
       </slot>
-    </div>
+      <template #toast>
+        {{ value }}
+      </template>
+    </MiniToast>
   </div>
 </template>
 
 <script lang="ts">
+import MiniToast from '@/core/toast/MiniToast.vue'
+
 export default Vue.extend({
   name: 'VSlider',
+  components: { MiniToast },
   model: {
     prop: 'value',
     event: 'change',
@@ -81,12 +92,12 @@ export default Vue.extend({
       return undefined
     },
     updateThumbPosition(value: number) {
-      const thumbContainer = this.$refs.thumbContainer as HTMLElement
+      const thumbContainer = this.$refs.thumbContainer.$el as HTMLElement
       thumbContainer.style.left = `${((100 * (value - this.min)) / (this.max - this.min)).toString()}%`
     },
     setupEvents() {
       const barContainer = this.$refs.barContainer as HTMLElement
-      const thumbContainer = this.$refs.thumbContainer as HTMLElement
+      const thumbContainer = this.$refs.thumbContainer.$el as HTMLElement
       const updateValue = (value: number) => {
         this.$emit('change', value)
       }
