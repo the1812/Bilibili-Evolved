@@ -103,7 +103,6 @@ import { installFeature } from '@/core/install-feature'
 import { pickFile } from '@/core/file-picker'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import { getHook } from '@/plugins/hook'
 import {
   VIcon,
   VButton,
@@ -218,17 +217,9 @@ export default Vue.extend({
       const toast = Toast.info(`获取中... (0/${urls.length})`, '批量添加')
       let completed = 0
       const results = await Promise.allSettled(urls.map(async url => {
-        const code = await monkey({
-          url,
-          method: 'GET',
-        })
-        const { type, installer } = await installFeature(code)
-        const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
-        await before()
-        const { metadata, message } = await installer()
+        const { message } = await installFeature(url)
         completed++
         toast.message = `获取中... (${completed}/${urls.length})`
-        await after(metadata)
         return message
       }))
       const successCount = results.filter(it => it.status === 'fulfilled').length

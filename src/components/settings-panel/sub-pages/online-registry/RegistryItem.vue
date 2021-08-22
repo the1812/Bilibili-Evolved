@@ -16,7 +16,6 @@
         {{ item.displayName }}
       </div>
       <div class="grow"></div>
-      <!-- <MiniToast trigger="mouseenter focus"> -->
       <div class="item-action">
         <VButton
           v-if="!installed"
@@ -39,10 +38,6 @@
           {{ installing ? '正在安装' : '已安装' }}
         </VButton>
       </div>
-      <!-- <template #toast>
-          hello world
-        </template>
-      </MiniToast> -->
     </div>
     <template #toast>
       <div v-if="description" class="online-registry-description" v-html="description"></div>
@@ -51,7 +46,6 @@
 </template>
 <script lang="ts">
 import { getDescriptionHTML } from '@/components/description'
-import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { meta } from '@/core/meta'
@@ -131,16 +125,10 @@ export default Vue.extend({
         .split('\n')
         .map(it => it.trim())
         .filter(it => it !== '')
-      // Toast.show(urls.join('\n'), 'demo')
       try {
         this.installing = true
         await Promise.all(
-          urls.map(async url => {
-            const code = await monkey({ url })
-            console.log(code)
-            const { installer } = await installFeature(code)
-            return installer()
-          }),
+          urls.map(async url => installFeature(url)),
         )
         this.checkInstalled()
       } catch (error) {
