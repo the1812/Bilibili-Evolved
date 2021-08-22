@@ -124,7 +124,7 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "common";
-.sidebar > * {
+.settings-panel-content .sidebar > * {
   position: relative;
   flex: 1;
   display: flex;

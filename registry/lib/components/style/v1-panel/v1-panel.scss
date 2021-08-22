@@ -2,7 +2,11 @@
   > .be-popup {
     top: 0 !important;
     left: 0 !important;
-    transform: translateZ(0) translateY(0) translateX(-101%) !important;
+    body.settings-panel-dock-right & {
+      left: unset !important;
+      right: 0 !important;
+    }
+    transform: translateZ(0) translateY(0) translateX(calc(-101% * var(--direction))) !important;
     --panel-height: 100vh !important;
 
     &.open {
@@ -17,11 +21,25 @@
     }
   }
   > .sidebar > * {
+    width: 52px !important;
+    border-radius: 21px !important;
+    transform: translateX(calc(-13px * var(--direction))) !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    body.settings-panel-dock-right & {
+      justify-content: flex-start !important;
+    }
     .be-icon {
       transition: 0.2s ease-out !important;
     }
-    &:hover .be-icon {
-      transform: rotate(360deg) !important;
+    &:hover {
+      transform: translateX(calc(8px * var(--direction))) !important;
+      .be-icon {
+        transform: rotate(360deg) !important;
+      }
+    }
+    &.open {
+      transform: translateX(calc(12px * var(--direction))) !important;
     }
   }
   .settings-panel-popup .component-tags .component-tags-item:last-child {
@@ -29,5 +47,8 @@
   }
   .widgets-panel {
     padding: 24px !important;
+    &-header {
+      margin-bottom: 36px !important;
+    }
   }
 }
