@@ -21,7 +21,6 @@ const getDefaultConfig = (srcFolder) => {
     },
     externals: [
       {
-        vue: 'Vue',
         lodash: 'lodash',
         jszip: 'JSZip',
       },
@@ -30,7 +29,8 @@ const getDefaultConfig = (srcFolder) => {
       extensions: ['.tsx', '.ts', '.js', '.vue', '.json'],
       alias: {
         '@': relativePath('src'),
-        'fuse.js$': relativePath('node_modules/fuse.js/dist/fuse.basic.esm.min.js'),
+        'fuse.js$': 'fuse.js/dist/fuse.basic.esm.min.js',
+        'vue$': 'vue/dist/vue.esm.js',
       },
     },
     performance: {

@@ -37,9 +37,8 @@
     "*"
   ],
   "require": [
-    "https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js",
-    "https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js",
-    "https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js"
+    "https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js",
+    "https://cdn.jsdelivr.net/npm/jszip@3.7.1/dist/jszip.min.js"
   ],
   "icon": "https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png",
   "icon64": "https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png"

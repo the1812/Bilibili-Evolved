@@ -1,4 +1,7 @@
+import { default as VueLibrary } from 'vue'
+
 export const initVue = () => {
+  window.Vue = VueLibrary
   Vue.config.devtools = false
   Vue.config.productionTip = false
   Vue.directive('hit', {

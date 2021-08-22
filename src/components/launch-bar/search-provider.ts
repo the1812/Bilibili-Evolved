@@ -31,7 +31,14 @@ export const searchProvider: LaunchBarActionProvider = {
       explicitSelect: true,
       icon: 'search',
       content: async () => Vue.extend({
-        template: `<div>${result.name.replace(/suggest_high_light/g, 'suggest-highlight')}</div>`,
+        render: h => {
+          const content = h('div', {
+            domProps: {
+              innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
+            },
+          })
+          return content
+        },
       }),
       action: () => search(result.value),
     }))
