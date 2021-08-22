@@ -4,17 +4,17 @@
     class="action-item suggest-item"
     :title="action.name"
     :data-indexer="action.indexer"
-    @click.self="performAction()"
-    @keydown.enter.prevent.stop="performAction()"
-    @keydown.shift.delete.prevent.stop="performDelete()"
+    @click.self="performAction($event)"
+    @keydown.enter.prevent.stop="performAction($event)"
+    @keydown.shift.delete.prevent.stop="performDelete($event)"
     @keydown.up.prevent.stop="$emit('previous-item', $event)"
     @keydown.down.prevent.stop="$emit('next-item', $event)"
   >
     <div class="suggest-item-content">
-      <div v-if="action.icon" class="suggest-item-icon" @click="performAction()">
+      <div v-if="action.icon" class="suggest-item-icon" @click="performAction($event)">
         <VIcon :icon="action.icon" :size="18" />
       </div>
-      <div class="suggest-item-title" @click="performAction()">
+      <div class="suggest-item-title" @click="performAction($event)">
         <component
           :is="action.content"
           v-if="action.content"
@@ -32,7 +32,7 @@
         v-if="action.deleteAction"
         class="suggest-item-delete"
         title="删除此项"
-        @click="performDelete()"
+        @click="performDelete($event)"
       >
         <VIcon icon="cancel" :size="18" />
       </div>

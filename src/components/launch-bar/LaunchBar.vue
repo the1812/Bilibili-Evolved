@@ -30,7 +30,7 @@
           :action="a"
           @previous-item="previousItem($event, index)"
           @next-item="nextItem($event, index)"
-          @delete-item="onDeleteHistory($event, index)"
+          @delete-item="onDeleteItem($event, index)"
           @action="(index === actions.length - 1) && onClearHistory()"
         />
       </div>
@@ -51,6 +51,7 @@
           :action="a"
           @previous-item="previousItem($event, index)"
           @next-item="nextItem($event, index)"
+          @delete-item="onDeleteItem($event, index)"
         />
       </div>
     </div>
@@ -201,7 +202,7 @@ export default Vue.extend({
       }
     },
     search,
-    onDeleteHistory(e: Event, index: number) {
+    onDeleteItem(e: Event, index: number) {
       this.previousItem(e, index)
       this.getActions()
     },
