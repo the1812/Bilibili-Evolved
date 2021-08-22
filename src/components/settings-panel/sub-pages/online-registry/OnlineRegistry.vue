@@ -141,7 +141,7 @@ export default Vue.extend({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  width: 30vw;
+  width: 360px;
   height: 85vh;
   z-index: 100002;
   will-change: transform;
@@ -194,7 +194,7 @@ export default Vue.extend({
   }
   &-content {
     flex: 1;
-    padding: 4px 12px;
+    padding: 4px 0;
     @include no-scrollbar();
     .be-loading,
     .be-empty {

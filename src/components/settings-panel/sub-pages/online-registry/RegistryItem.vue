@@ -4,7 +4,7 @@
     trigger="mouseenter focus"
     placement="right"
     :delay="0"
-    :offset="[0, 13]"
+    :offset="[0, 12]"
     :class="{ virtual }"
   >
     <div v-if="!virtual" class="online-registry-item">
@@ -154,9 +154,9 @@ export default Vue.extend({
     position: absolute;
     pointer-events: none;
     top: 50%;
-    left: 0;
+    left: 12px;
     transform: translateY(-50%);
-    width: 100%;
+    width: calc(100% - 24px);
     height: 20px;
     background-color: #8882;
     display: flex;
@@ -168,13 +168,16 @@ export default Vue.extend({
 .online-registry-item {
   @include h-center(4px);
   flex-wrap: wrap;
-  padding: 8px 0;
+  padding: 8px 12px;
+  &:hover {
+    background-color: #8881;
+  }
   &:not(:last-child) {
     border-bottom: 1px solid #8882;
   }
   .item-badge {
     padding: 2px 4px;
-    background-color: #8882;
+    border: 1px solid #8882;
     border-radius: 4px;
     font-size: 12px;
   }
