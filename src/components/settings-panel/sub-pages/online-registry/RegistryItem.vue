@@ -12,28 +12,33 @@
       {{ item.displayName }}
     </div>
     <div class="grow"></div>
-    <div class="item-action">
-      <VButton
-        v-if="!installed"
-        class="install-button"
-        title="安装"
-        type="primary"
-        :disabled="installing"
-        @click="install(getUrl(item))"
-      >
-        <VIcon icon="mdi-plus" :size="16" />
-        {{ installing ? '正在安装' : '安装' }}
-      </VButton>
-      <VButton
-        v-else
-        class="reinstall-button"
-        title="重新安装"
-        :disabled="installing"
-        @click="install(getUrl(item))"
-      >
-        {{ installing ? '正在安装' : '已安装' }}
-      </VButton>
-    </div>
+    <MiniToast>
+      <div class="item-action">
+        <VButton
+          v-if="!installed"
+          class="install-button"
+          title="安装"
+          type="primary"
+          :disabled="installing"
+          @click="install(getUrl(item))"
+        >
+          <VIcon icon="mdi-plus" :size="16" />
+          {{ installing ? '正在安装' : '安装' }}
+        </VButton>
+        <VButton
+          v-else
+          class="reinstall-button"
+          title="重新安装"
+          :disabled="installing"
+          @click="install(getUrl(item))"
+        >
+          {{ installing ? '正在安装' : '已安装' }}
+        </VButton>
+      </div>
+      <template #toast>
+        hello world
+      </template>
+    </MiniToast>
     <div
       v-if="description"
       class="item-description"
@@ -51,6 +56,7 @@ import { Toast } from '@/core/toast'
 import {
   VIcon,
   VButton,
+  MiniToast,
 } from '@/ui'
 import { DocSourceItem } from 'registry/lib/docs'
 
@@ -91,7 +97,7 @@ const typeMappings = {
   },
 }
 export default Vue.extend({
-  components: { VIcon, VButton },
+  components: { VIcon, VButton, MiniToast },
   props: {
     item: {
       type: Object,

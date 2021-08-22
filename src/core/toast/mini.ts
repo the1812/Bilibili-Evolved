@@ -1,5 +1,5 @@
 import { Placement } from '@popperjs/core'
-import tippy, { Content, Props } from 'tippy.js'
+import tippy, { Content, Instance, Props } from 'tippy.js'
 import 'tippy.js/dist/tippy.css'
 import { addStyle } from '../style'
 import miniStyle from './mini.scss'
@@ -8,6 +8,7 @@ export interface MiniToast {
   message: Content
   readonly triggerElement: Element
   placement?: Placement
+  tippy: Instance<Props>
 }
 
 export const createMiniToast = (
@@ -39,6 +40,9 @@ export const createMiniToast = (
     },
     set placement(value: Placement) {
       tip.setProps({ placement: value })
+    },
+    get tippy() {
+      return tip
     },
   } as MiniToast
 }
