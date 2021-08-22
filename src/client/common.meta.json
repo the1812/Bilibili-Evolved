@@ -11,7 +11,8 @@
     "*://member.bilibili.com/studio/bs-editor/*",
     "*://message.bilibili.com/pages/nav/index_new_sync",
     "*://message.bilibili.com/pages/nav/index_new_pc_sync",
-    "*://t.bilibili.com/h5/dynamic/specification"
+    "*://t.bilibili.com/h5/dynamic/specification",
+    "*://bbq.bilibili.com/*"
   ],
   "run-at": "document-start",
   "supportURL": "https://github.com/the1812/Bilibili-Evolved/issues",

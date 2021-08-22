@@ -115,7 +115,10 @@ export const runMigrate = async (v1Settings: any) => {
       featureMap('touchVideoPlayer', 'touchPlayerGestures', 'component'),
       featureMap('touchVideoPlayer', 'touchPlayerControl', 'component'),
       featureMap('customControlBackground', 'playerControlBackground', 'component'),
-      optionMap('customControlBackgroundOpacity', 'playerControlBackground.opacity', (value: string) => parseFloat(value)),
+      optionMap('customControlBackgroundOpacity', 'playerControlBackground.opacity', (value: string) => {
+        const opacity = parseFloat(value)
+        return Math.round(opacity * 100)
+      }),
       featureMap('darkSchedule', 'darkModeSchedule', 'component'),
       optionMap('darkScheduleStart', 'darkModeSchedule.range.start'),
       optionMap('darkScheduleEnd', 'darkModeSchedule.range.end'),

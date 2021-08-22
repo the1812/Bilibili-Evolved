@@ -1,4 +1,7 @@
 body:not(.settings-panel-dock-right) {
+  .contact-help {
+    display: none !important;
+  }
   .be-settings {
     --direction: 1;
     > .sidebar {

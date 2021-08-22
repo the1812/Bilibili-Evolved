@@ -20,6 +20,7 @@ const entry = async () => {
     'share_medium',
     'share_plat',
     'share_tag',
+    'share_session_id',
     'bbid',
     'ts',
     'timestamp',

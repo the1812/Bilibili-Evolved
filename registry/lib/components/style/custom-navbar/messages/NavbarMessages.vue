@@ -100,9 +100,9 @@ export default Vue.extend({
       const messageJson = await getJsonWithCredentials(
         'https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread',
       )
-      mainJson.data.user_msg = messageJson.data.follow_unread
+      mainJson.data.user_msg = messageJson.data.follow_unread || 0
       if (!this.settings.hideNotFollowedCount) {
-        mainJson.data.user_msg += messageJson.data.unfollow_unread
+        mainJson.data.user_msg += messageJson.data.unfollow_unread || 0
       }
 
       this.item.notifyCount = entries.reduce(

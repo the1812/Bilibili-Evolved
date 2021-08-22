@@ -92,9 +92,6 @@ export default {
 
 <style lang="scss">
 @import "common";
-.contact-help {
-  display: none !important;
-}
 .be-settings {
   body.player-mode-blackmask & {
     visibility: hidden;

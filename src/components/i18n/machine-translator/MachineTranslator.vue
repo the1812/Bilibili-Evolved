@@ -122,6 +122,7 @@ export default Vue.extend({
 }
 .bb-comment .reply-con .text-con {
   display: block;
+  margin: 0 !important;
 }
 .card-content .translate-container {
   margin: 13px 0 2px 0;
