@@ -3,7 +3,8 @@
     class="online-registry-item-wrapper"
     trigger="mouseenter focus"
     placement="right"
-    :delay="0"
+    container="body"
+    :delay="[200, 0]"
     :offset="[0, 12]"
     :class="{ virtual }"
   >

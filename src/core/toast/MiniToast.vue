@@ -11,6 +11,10 @@
 <script lang="ts">
 import { createMiniToast } from './mini'
 
+const containerMap: Record<string, HTMLElement> = {
+  body: document.body,
+  local: undefined,
+}
 export default Vue.extend({
   model: {
     prop: 'show',
@@ -20,6 +24,10 @@ export default Vue.extend({
     show: {
       type: Boolean,
       default: false,
+    },
+    container: {
+      type: String,
+      default: 'local',
     },
   },
   data() {
@@ -39,6 +47,7 @@ export default Vue.extend({
       onShow: () => {
         this.$emit('change', true)
       },
+      appendTo: containerMap[this.container],
       ...(lodash.omit(this.$props, 'show')),
       ...this.$attrs,
     })

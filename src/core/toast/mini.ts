@@ -23,7 +23,6 @@ export const createMiniToast = (
     interactive: true,
     delay: [0, 200],
     arrow: true,
-    appendTo: document.body,
     ...tippyProps,
   })
   return {

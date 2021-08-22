@@ -45,7 +45,10 @@
         <div class="internal-name">
           内部名称: {{ componentData.name }}
         </div>
-        <div v-if="componentActions.length > 0" class="extra-actions-wrapper">
+        <div
+          v-if="componentData.configurable !== false && componentActions.length > 0"
+          class="extra-actions-wrapper"
+        >
           <div class="extra-actions">
             <VIcon icon="mdi-dots-vertical" :size="16" />
           </div>
