@@ -1,18 +1,15 @@
 <template>
-  <div class="online-registry-item">
-    <VIcon
-      :size="18"
-      :icon="icon"
-      class="item-icon"
-    />
-    <div class="item-badge">
-      {{ badge }}
-    </div>
-    <div class="item-display-name">
-      {{ item.displayName }}
-    </div>
-    <div class="grow"></div>
-    <MiniToast>
+  <MiniToast trigger="mouseenter focus" placement="right" :delay="0" :offset="[0, 13]">
+    <div class="online-registry-item">
+      <VIcon :size="18" :icon="icon" class="item-icon" />
+      <div class="item-badge">
+        {{ badge }}
+      </div>
+      <div class="item-display-name">
+        {{ item.displayName }}
+      </div>
+      <div class="grow"></div>
+      <!-- <MiniToast trigger="mouseenter focus"> -->
       <div class="item-action">
         <VButton
           v-if="!installed"
@@ -22,7 +19,7 @@
           :disabled="installing"
           @click="install(getUrl(item))"
         >
-          <VIcon icon="mdi-plus" :size="16" />
+          <VIcon icon="mdi-plus" :size="15" />
           {{ installing ? '正在安装' : '安装' }}
         </VButton>
         <VButton
@@ -35,36 +32,30 @@
           {{ installing ? '正在安装' : '已安装' }}
         </VButton>
       </div>
-      <template #toast>
-        hello world
-      </template>
-    </MiniToast>
-    <div
-      v-if="description"
-      class="item-description"
-      v-html="description"
-    >
+      <!-- <template #toast>
+          hello world
+        </template>
+      </MiniToast> -->
     </div>
-  </div>
+    <template #toast>
+      <div v-if="description" class="online-registry-description" v-html="description"></div>
+    </template>
+  </MiniToast>
 </template>
 <script lang="ts">
 import { getDescriptionHTML } from '@/components/description'
+import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
+import { installFeature } from '@/core/install-feature'
 import { meta } from '@/core/meta'
 import { getGeneralSettings, settings } from '@/core/settings'
-import { Toast } from '@/core/toast'
-import {
-  VIcon,
-  VButton,
-  MiniToast,
-} from '@/ui'
+import { logError } from '@/core/utils/log'
+import { VIcon, VButton, MiniToast } from '@/ui'
 import { DocSourceItem } from 'registry/lib/docs'
 
-const getFeatureUrl = (item: DocSourceItem) => (
-  `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}${item.fullAbsolutePath}`
-)
+const getFeatureUrl = (item: DocSourceItem) => `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}${item.fullAbsolutePath}`
 const isFeatureInstalled = (item: DocSourceItem) => {
-  const storageKey = `user${lodash.startCase((item.type))}s`
+  const storageKey = `user${lodash.startCase(item.type)}s`
   return item.name in settings[storageKey]
 }
 type PackItem = { items: DocSourceItem[] }
@@ -90,9 +81,7 @@ const typeMappings = {
   pack: {
     icon: 'mdi-package-variant-closed',
     badge: '合集包',
-    getUrl: (pack: PackItem) => (
-      pack.items.map(getFeatureUrl).join('\n')
-    ),
+    getUrl: (pack: PackItem) => pack.items.map(getFeatureUrl).join('\n'),
     isInstalled: (pack: PackItem) => pack.items.every(isFeatureInstalled),
   },
 }
@@ -120,18 +109,33 @@ export default Vue.extend({
     checkInstalled() {
       this.installed = this.isInstalled(this.item)
     },
-    install(sourceUrls: string) {
-      const urls = sourceUrls.split('\n')
+    async install(sourceUrls: string) {
+      const urls = sourceUrls
+        .split('\n')
         .map(it => it.trim())
         .filter(it => it !== '')
-      Toast.show(urls.join('\n'), 'demo')
+      // Toast.show(urls.join('\n'), 'demo')
+      try {
+        this.installing = true
+        await Promise.all(urls.map(async url => {
+          const code = await monkey({ url })
+          console.log(code)
+          const { installer } = await installFeature(code)
+          return installer()
+        }))
+        this.checkInstalled()
+      } catch (error) {
+        logError(error)
+      } finally {
+        this.installing = false
+      }
     },
   },
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "markdown";
+@import 'common';
+@import 'markdown';
 
 .online-registry-item {
   @include h-center(4px);
@@ -149,14 +153,6 @@ export default Vue.extend({
   .item-display-name {
     font-weight: bold;
   }
-  .item-description {
-    flex: 1 0 100%;
-    transition: opacity .2s ease-out;
-    opacity: 0.5;
-    font-size: 13px;
-    margin-top: 4px;
-    @include markdown();
-  }
   .grow {
     flex: 1 0 0;
   }
@@ -166,11 +162,19 @@ export default Vue.extend({
       margin-right: 6px;
     }
     .reinstall-button:not(:hover):not(:focus-within) {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
   &:hover .item-description {
     opacity: 1;
   }
+}
+.online-registry-description {
+  // flex: 1 0 100%;
+  // transition: opacity 0.2s ease-out;
+  // opacity: 0.5;
+  font-size: 13px;
+  // margin-top: 4px;
+  @include markdown();
 }
 </style>

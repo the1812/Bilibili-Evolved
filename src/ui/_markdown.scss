@@ -50,13 +50,14 @@
     margin: 0;
     padding: 4px;
     padding-left: 12px;
+    color: inherit;
     background-color: #8881;
     box-sizing: border-box;
     position: relative;
-    @include text-color();
+    // @include text-color();
     body.dark & * {
       // 需要覆盖夜间模式
-      color: #eee !important;
+      color: inherit !important;
     }
     &::before {
       content: "";

@@ -194,7 +194,7 @@ export default Vue.extend({
   }
   &-content {
     flex: 1;
-    padding: 0 12px;
+    padding: 4px 12px;
     @include no-scrollbar();
     .be-loading,
     .be-empty {

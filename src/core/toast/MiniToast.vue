@@ -29,7 +29,6 @@ export default Vue.extend({
   },
   async mounted() {
     await this.$nextTick()
-    console.log(this.$refs.content, this.$refs.toast)
     this.toast = createMiniToast(this.message, this.$refs.content, {
       content: this.$refs.toast,
       showOnCreate: this.show,
@@ -41,6 +40,7 @@ export default Vue.extend({
         this.$emit('change', true)
       },
       ...(lodash.omit(this.$props, 'show')),
+      ...this.$attrs,
     })
   },
 })
