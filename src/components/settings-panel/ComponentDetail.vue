@@ -11,30 +11,18 @@
         <VIcon class="close" icon="close" :size="18" @click="$emit('close')" />
       </div>
       <div class="component-detail-tags">
-        <div
-          v-for="t of componentData.tags"
-          :key="t.name"
-          class="tag"
-        >
+        <div v-for="t of componentData.tags" :key="t.name" class="tag">
           <div class="tag-color" :style="{ backgroundColor: t.color }"></div>
           {{ t.displayName }}
         </div>
       </div>
       <div class="component-detail-separator"></div>
-      <template
-        v-if="componentData.options && generatedOptions.length > 0"
-      >
-        <div
-          class="component-detail-options"
-        >
+      <template v-if="componentData.options && generatedOptions.length > 0">
+        <div class="component-detail-options">
           <div class="component-detail-options-title">
             选项
           </div>
-          <div
-            v-for="[name, option] of generatedOptions"
-            :key="name"
-            class="generated-option"
-          >
+          <div v-for="[name, option] of generatedOptions" :key="name" class="generated-option">
             <ComponentOption
               :name="name"
               :display-name="option.displayName"
@@ -43,24 +31,33 @@
             ></ComponentOption>
           </div>
           <div v-if="componentData.extraOptions" class="extra-option">
-            <component
-              :is="componentData.extraOptions"
-              :component-data="componentData"
-            ></component>
+            <component :is="componentData.extraOptions" :component-data="componentData"></component>
           </div>
           <slot></slot>
         </div>
         <div class="component-detail-separator"></div>
       </template>
       <template v-if="!(componentData.options && !componentData.description)">
-        <ComponentDescription
-          :component-data="componentData"
-        />
+        <ComponentDescription :component-data="componentData" />
         <div class="component-detail-separator"></div>
       </template>
       <div class="component-detail-internal-data">
-        <div class="component-detail-internal-data-item">
+        <div class="internal-name">
           内部名称: {{ componentData.name }}
+        </div>
+        <div v-if="componentActions.length > 0" class="extra-actions-wrapper">
+          <div class="extra-actions">
+            <VIcon icon="mdi-dots-vertical" :size="16" />
+          </div>
+          <div class="extra-actions-list">
+            <ComponentAction
+              v-for="a of componentActions"
+              :key="a.name"
+              class="extra-action-item"
+              :item="a"
+              :component="componentData"
+            />
+          </div>
         </div>
       </div>
       <!-- <div class="component-detail-separator"></div> -->
@@ -77,6 +74,8 @@ import { ComponentOptions } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
 import { componentSettingsMixin } from './mixins'
+import { componentActions } from './component-actions/component-actions'
+import ComponentAction from './component-actions/ComponentAction.vue'
 
 export default Vue.extend({
   components: {
@@ -85,18 +84,20 @@ export default Vue.extend({
     ComponentOption,
     VButton,
     VIcon,
+    ComponentAction,
   },
   mixins: [componentSettingsMixin],
   data() {
     return {
       virtual: false,
+      componentActions,
     }
   },
   computed: {
     generatedOptions() {
-      return Object.entries(
-        this.componentData.options as ComponentOptions,
-      ).filter(([, option]) => !option.hidden)
+      return Object.entries(this.componentData.options as ComponentOptions).filter(
+        ([, option]) => !option.hidden,
+      )
     },
   },
   async mounted() {
@@ -111,7 +112,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .component-detail {
   min-width: 264px;
@@ -163,11 +164,44 @@ export default Vue.extend({
     }
   }
   &-internal-data {
-    opacity: .5;
+    @include h-center();
+    justify-content: space-between;
+
+    .internal-name {
+      opacity: 0.5;
+    }
+    .extra-actions-wrapper {
+      position: relative;
+      .extra-actions {
+        padding: 4px;
+        cursor: pointer;
+        transform: translateX(2px);
+      }
+      .extra-actions-list {
+        @include popup();
+        padding: 4px;
+        position: absolute;
+        width: max-content;
+        top: 100%;
+        left: 50%;
+        opacity: 0;
+        pointer-events: none;
+        transform: translateX(-50%) scaleY(0.8);
+        transition: .2s ease-out;
+        transform-origin: top;
+      }
+      .extra-actions:hover ~ .extra-actions-list,
+      .extra-actions-list:hover {
+        pointer-events: initial;
+        opacity: 1;
+        transform: translateX(-50%) scaleY(1);
+      }
+    }
     // margin-bottom: 12px;
     // &-item {
     //   margin-bottom: 6px;
     // }
+
   }
   &-operations {
     @include h-center();
