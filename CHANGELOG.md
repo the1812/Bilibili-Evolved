@@ -1,9 +1,36 @@
 # 更新日志
 
+## v2.0.0-tp7
+`v2.0.0 Technical Preview 7` `2021-08-23`
+
+**功能:**
+
+- 组件与 `v1.12.16` 同步更新.
+- 新增组件 `v1 风格设置面板`.
+- 在功能的管理面板中, 支持在线安装新功能.
+- 搜索栏支持提供自定义选项, 目前实现的有:
+  - 切换在线仓库
+  - 自定义顶栏设置
+- 修复 `observer.allMutations` 只处理第一个调用者.
+- 修复高能进度条未固定时的样式.
+- 尝试为 `bwp-video` 适配 `播放前显示封面`.
+- `播放器控制栏背景色` 的不透明度选项使用 `0% ~ 100%` 做范围, 之前保存的值默认是 `0.64`, 如果你之前使用过, 更新后记得去改成 `64`.
+
+**开发:**
+
+- `Toast` API 支持 `Toast.mini` 并提供对应组件 `MiniToast` (基于 [tippy.js](https://atomiks.github.io/tippyjs/)), 用于在特定元素旁边弹出小提示.
+- 插件允许提供描述 `PluginMetadata.description`
+- 组件允许提供多语言配置和作者 `ComponentMetadata.i18n` / `ComponentMetadata.author`
+- 删除所有的非必要 `eslint-disable`
+- 统一内置组件的 UI 导入方式.
+- Vue 内置于脚本, 不再由 `// @require` 提供.
+- 组件选项支持使用滑动条提供带范围的数字选择 `ComponentOption.slider`, 例子可以参考 `registry/lib/components/video/player/control-background/index.ts`.
+- 组件详情中支持扩展动作, 并内置了 `卸载` 动作.
+
 ## v2.0.0-tp6
 `v2.0.0 Technical Preview 6` `2021-08-01`
 
-- 搜索栏可以使用 Shift + P 全局唤起了. (安装了`快捷键扩展`时)
+- 搜索栏可以使用 <kbd>/</kbd> 全局唤起了. (安装了`快捷键扩展`时)
 - 自定义顶栏功能同步至 `v1.12.13`.
 - 新增组件 `v1 设置迁移`, 可以导入 v1 设置了, README 中有使用说明.
 - 支持[合集包](https://github.com/the1812/Bilibili-Evolved/blob/v2/doc/features/pack/pack.md)安装, 设置面板中的批量安装可以接受任意类型的功能.
