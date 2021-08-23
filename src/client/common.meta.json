@@ -28,6 +28,7 @@
   ],
   "connect": [
     "raw.githubusercontent.com",
+    "github.com",
     "cdn.jsdelivr.net",
     "cn.bing.com",
     "www.bing.com",
