@@ -10,8 +10,8 @@
           autocomplete="off"
           :placeholder="recommended.word"
           @keydown.enter.stop="handleEnter"
-          @keydown.up.prevent.stop="$refs.list.querySelector('.suggest-item:last-child').focus()"
-          @keydown.down.prevent.stop="$refs.list.querySelector('.suggest-item').focus()"
+          @keydown.up.stop="handleUp"
+          @keydown.down.stop="handleDown"
         />
         <button class="submit" title="执行" tabindex="-1" @click="handleEnter">
           <VIcon icon="right-arrow" :size="20"></VIcon>
@@ -185,6 +185,20 @@ export default Vue.extend({
         return
       }
       window.open(this.recommended.href, '_blank')
+    },
+    handleUp(e: KeyboardEvent) {
+      if (e.isComposing) {
+        return
+      }
+      this.$refs.list.querySelector('.suggest-item:last-child').focus()
+      e.preventDefault()
+    },
+    handleDown(e: KeyboardEvent) {
+      if (e.isComposing) {
+        return
+      }
+      this.$refs.list.querySelector('.suggest-item').focus()
+      e.preventDefault()
     },
     previousItem(e: KeyboardEvent, index: number) {
       if (index === 0) {
