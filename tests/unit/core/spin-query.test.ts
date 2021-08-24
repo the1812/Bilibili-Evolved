@@ -7,7 +7,6 @@ describe('SpinQuery', () => {
   const config: SpinQueryConfig = {
     maxRetry: 5,
     queryInterval: 1,
-    ignoreFocus: true,
   }
   it('condition query', async () => {
     const testObj = {
@@ -59,7 +58,7 @@ describe('SpinQuery', () => {
     }, 3)
     const result = await select('.select-target', config)
     expect(result).not.null
-    expect(result!.classList.contains('select-target')).to.be.true
+    expect(result.classList.contains('select-target')).to.be.true
   })
   it('selectAll', async () => {
     setTimeout(() => {

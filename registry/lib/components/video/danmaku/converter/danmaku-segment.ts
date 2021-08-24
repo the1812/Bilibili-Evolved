@@ -1,6 +1,4 @@
-import { monkey } from '@/core/ajax'
-import { Toast } from '@/core/toast'
-import { logError } from '@/core/utils/log'
+import { protobufLibrary } from '@/core/runtime-library'
 
 export const proto = {
   nested: {
@@ -273,29 +271,29 @@ export const proto = {
     },
   },
 }
-const decode = lodash.curry(async (type: string, blob: Blob, toastTitle = '') => {
+const decode = lodash.curry(async (type: string, blob: Blob) => {
   const buffer = new Uint8Array(
     'arrayBuffer' in Blob.prototype ? await blob.arrayBuffer() : await new Response(blob).arrayBuffer(),
   )
-  if (!window.protobufPromise) {
-    window.protobufPromise = new Promise((resolve, reject) => {
-      monkey({
-        url: 'https://cdn.jsdelivr.net/npm/protobufjs@6.10.1/dist/light/protobuf.min.js',
-        method: 'GET',
-      })
-        .catch(error => logError(error))
-        .then(library => {
-          if (!library) {
-            const message = '加载依赖库失败, 请稍后重试.'
-            Toast.error(message, toastTitle || '错误')
-            reject(message)
-          }
-          eval(library)
-          resolve(window.protobuf)
-        })
-    })
-  }
-  const protobuf = await window.protobufPromise
+  // if (!window.protobufPromise) {
+  //   window.protobufPromise = new Promise((resolve, reject) => {
+  //     monkey({
+  //       url: 'https://cdn.jsdelivr.net/npm/protobufjs@6.10.1/dist/light/protobuf.min.js',
+  //       method: 'GET',
+  //     })
+  //       .catch(error => logError(error))
+  //       .then(library => {
+  //         if (!library) {
+  //           const message = '加载依赖库失败, 请稍后重试.'
+  //           Toast.error(message, toastTitle || '错误')
+  //           reject(message)
+  //         }
+  //         eval(library)
+  //         resolve(window.protobuf)
+  //       })
+  //   })
+  // }
+  const protobuf = await protobufLibrary
   const root = protobuf.Root.fromJSON(proto)
   const reply = root.lookupType(type)
   const message = reply.decode(buffer)

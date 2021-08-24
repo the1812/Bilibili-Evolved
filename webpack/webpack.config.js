@@ -22,7 +22,6 @@ const getDefaultConfig = (srcFolder) => {
     externals: [
       {
         lodash: 'lodash',
-        jszip: 'JSZip',
       },
     ],
     resolve: {

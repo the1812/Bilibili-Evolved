@@ -5,8 +5,6 @@ declare global {
   const _: LoDashStatic
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
-  const JSZip: typeof import('jszip')
-  // const VueMarkdown: import('vue').PluginObject<any>
 
   interface CompilationInfo {
     commitHash: string

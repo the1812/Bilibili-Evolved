@@ -8,6 +8,7 @@ import * as loadingMode from '@/core/loading-mode'
 import * as meta from '@/core/meta'
 import * as observer from '@/core/observer'
 import * as reorder from '@/core/reorder'
+import * as runtimeLibrary from '@/core/runtime-library'
 import * as spinQuery from '@/core/spin-query'
 import * as style from '@/core/style'
 import * as textColor from '@/core/text-color'
@@ -44,6 +45,7 @@ export const coreApis = {
   meta,
   observer,
   reorder,
+  runtimeLibrary,
   spinQuery,
   style,
   textColor,
@@ -81,6 +83,7 @@ export const externalApis = {
   ...meta,
   observer,
   ...reorder,
+  runtimeLibrary,
   spinQuery,
   ...style,
   ...textColor,
@@ -127,7 +130,6 @@ export const externalApis = {
   },
   lodash,
   Vue,
-  JSZip,
   sandboxWindow: window,
 }
 export type ExternalApis = typeof externalApis

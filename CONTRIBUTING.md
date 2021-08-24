@@ -51,6 +51,7 @@ yarn
 // @exclude      *://message.bilibili.com/pages/nav/index_new_sync
 // @exclude      *://message.bilibili.com/pages/nav/index_new_pc_sync
 // @exclude      *://t.bilibili.com/h5/dynamic/specification
+// @exclude      *://bbq.bilibili.com/*
 // @run-at       document-start
 // @grant        unsafeWindow
 // @grant        GM_getValue
@@ -68,8 +69,6 @@ yarn
 // @connect      localhost
 // @connect      *
 // @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
-// @require      https://cdn.jsdelivr.net/npm/jszip@3.1.5/dist/jszip.min.js
-// @require      https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.min.js
 // @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
 // @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
 // ==/UserScript==
@@ -142,8 +141,9 @@ export const component: ComponentMetadata = {
 
 - `Vue`: Vue 库的主对象, 在创建 `.vue` 组件时, 其中的 `<script>` 可以直接使用 `Vue.extend()`
 - `lodash`: 包含所有 Lodash 库提供的方法
-- `JSZip`: 创建 `.zip` 文件的库, 一般直接用脚本的 `DownloadPackage` 就行了
 - `dq` / `dqa`: `document.querySelector` 和 `document.querySelectorAll` 的简写, `dqa` 会返回真实数组
+> 在 `bwp-video` 出现后, 这两个查询函数还会自动将对 `video` 的查询扩展到 `bwp-video`
+
 - `none`: 什么都不做的空函数
 - `componentTags`: 预置的一些组件标签, 实现 `ComponentMetadata.tags` 时常用
 
@@ -157,6 +157,7 @@ export const component: ComponentMetadata = {
 - `core/meta`: 获取脚本的自身元数据, 如名称, 版本等/
 - `core/observer`: 封装各种监视器, 包括元素增删, 进入/离开视图, 大小变化, 以及当前页面视频的更换
 - `core/spin-query`: 轮询器, 等待页面上异步加载的元素, 也可以自定义查询条件
+- `core/runtime-library`: 运行时代码库, 目前支持导入 protobufjs 和 JSZip 使用
 - `core/user-info`: 获取当前用户的登录信息
 - `core/version`: 版本比较
 - `core/watchlater`: 稍后再看列表获取, 添加/移除稍后再看等

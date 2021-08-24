@@ -1,5 +1,6 @@
 import { JSZipFileOptions } from 'jszip'
 import { DownloadPackageEmitMode } from './download-mode'
+import { JSZipLibrary } from './runtime-library'
 import { getGeneralSettings } from './settings'
 import { formatFilename } from './utils/formatters'
 
@@ -41,6 +42,7 @@ export class DownloadPackage {
       const { data } = this.entries[0]
       return typeof data === 'string' ? new Blob([data]) : data
     }
+    const JSZip = await JSZipLibrary
     const zip = new JSZip()
     this.entries.forEach(({ name, data, options }) => {
       zip.file(name, data, options)
