@@ -99,10 +99,12 @@ export default Vue.extend({
   }
   &-title {
     @include v-stretch();
-    flex: 1 0 auto;
+    flex: 1 0 0;
+    width: 0;
   }
   &-name {
     max-width: 100%;
+    @include single-line();
   }
   &-description {
     opacity: 0.5;
