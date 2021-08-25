@@ -39,12 +39,13 @@ export const runMigrate = async (v1Settings: any) => {
         plugin: installPlugin,
       }
       if (!(newKey in map[type])) {
-        const path = features.find(it => it.type === type && it.name === newKey)?.fullAbsolutePath
-        if (!path) {
+        const featureItem = features.find(it => it.type === type && it.name === newKey)
+        const path = featureItem?.fullAbsolutePath
+        if (!path || !featureItem) {
           console.log(`没有找到名为 ${newKey} 的功能`)
           return
         }
-        const url = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}${path}`
+        const url = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch, featureItem.owner)}${path}`
         const code = await monkey({ url })
         const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
         await before()

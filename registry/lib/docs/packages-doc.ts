@@ -58,7 +58,7 @@ ${it.description || ''}
 <summary><strong>jsDelivr Stable</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.jsDelivr(branches.stable) + item.fullAbsolutePath).join('\n')}
+${it.items.map(item => cdnRoots.jsDelivr(branches.stable, item.owner) + item.fullAbsolutePath).join('\n')}
 \`\`\`
 
 </details>
@@ -66,7 +66,7 @@ ${it.items.map(item => cdnRoots.jsDelivr(branches.stable) + item.fullAbsolutePat
 <summary><strong>jsDelivr Preview</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.jsDelivr(branches.preview) + item.fullAbsolutePath).join('\n')}
+${it.items.map(item => cdnRoots.jsDelivr(branches.preview, item.owner) + item.fullAbsolutePath).join('\n')}
 \`\`\`
 
 </details>
@@ -74,7 +74,7 @@ ${it.items.map(item => cdnRoots.jsDelivr(branches.preview) + item.fullAbsolutePa
 <summary><strong>GitHub Stable</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.GitHub(branches.stable) + item.fullAbsolutePath).join('\n')}
+${it.items.map(item => cdnRoots.GitHub(branches.stable, item.owner) + item.fullAbsolutePath).join('\n')}
 \`\`\`
 
 </details>
@@ -82,7 +82,7 @@ ${it.items.map(item => cdnRoots.GitHub(branches.stable) + item.fullAbsolutePath)
 <summary><strong>GitHub Preview</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.GitHub(branches.preview) + item.fullAbsolutePath).join('\n')}
+${it.items.map(item => cdnRoots.GitHub(branches.preview, item.owner) + item.fullAbsolutePath).join('\n')}
 \`\`\`
 
 </details>

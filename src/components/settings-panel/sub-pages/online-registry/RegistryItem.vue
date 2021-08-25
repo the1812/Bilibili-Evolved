@@ -55,7 +55,7 @@ import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
 import { DocSourceItem } from 'registry/lib/docs'
 
-const getFeatureUrl = (item: DocSourceItem) => `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}${item.fullAbsolutePath}`
+const getFeatureUrl = (item: DocSourceItem) => `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch, item.owner)}${item.fullAbsolutePath}`
 const isFeatureInstalled = (item: DocSourceItem) => {
   const storageKey = `user${lodash.startCase(item.type)}s`
   return item.name in settings[storageKey]

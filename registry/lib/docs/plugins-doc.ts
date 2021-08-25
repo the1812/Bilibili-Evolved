@@ -1,6 +1,7 @@
 import { PluginMetadata } from '@/plugins/plugin'
-import { DocSource } from '.'
+import { DocSource, DocSourceItem } from '.'
 import { getId } from '../../webpack/id'
+import { thirdPartyPlugins } from './third-party'
 
 export const getPluginsDoc: DocSource = async rootPath => {
   const pluginsContext = require.context('../plugins', true, /index\.ts$/)
@@ -32,8 +33,9 @@ export const getPluginsDoc: DocSource = async rootPath => {
         displayName,
         fullRelativePath,
         fullAbsolutePath,
-      }
+      } as DocSourceItem
     })
+    .concat(thirdPartyPlugins)
   return {
     title: '插件',
     items: pluginsPaths,

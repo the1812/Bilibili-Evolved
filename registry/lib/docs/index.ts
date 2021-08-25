@@ -5,6 +5,7 @@ import { getComponentsDoc } from './components-doc'
 import { generatePackageDocs } from './packages-doc'
 import { getPluginsDoc } from './plugins-doc'
 
+/** 表示一个合集包 */
 export interface Package {
   name: string
   displayName: string
@@ -12,13 +13,15 @@ export interface Package {
   components?: string[]
   plugins?: string[]
 }
+/** 表示一个支持在线安装的功能 */
 export interface DocSourceItem {
-  type: string
+  type: 'component' | 'plugin'
   name: string
   displayName: string
   description?: string
   fullAbsolutePath: string
   fullRelativePath: string
+  owner?: string
 }
 export type DocSource = (rootPath: string) => Promise<{
   title: string
@@ -36,14 +39,15 @@ const entry = () => {
           description,
           fullAbsolutePath,
           fullRelativePath,
+          owner,
         } = it
         const item = `
 ### [${displayName}](${fullRelativePath})
 \`${name}\`
 
-**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr(branches.stable)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr(branches.preview)}${fullAbsolutePath})
+**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr(branches.stable, owner)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr(branches.preview, owner)}${fullAbsolutePath})
 
-**GitHub:** [\`Stable\`](${cdnRoots.GitHub(branches.stable)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub(branches.preview)}${fullAbsolutePath})
+**GitHub:** [\`Stable\`](${cdnRoots.GitHub(branches.stable, owner)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub(branches.preview, owner)}${fullAbsolutePath})
 
 ${description || ''}
         `.trim()
