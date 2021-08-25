@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { VIcon } from '@/ui'
-import { watchlaterList, toggleWatchlater } from '@/core/watchlater'
+import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
 import { logError } from '@/core/utils/log'
 
 export default Vue.extend({

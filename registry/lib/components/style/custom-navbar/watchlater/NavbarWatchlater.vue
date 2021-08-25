@@ -71,7 +71,7 @@ import {
   getWatchlaterList,
   RawWatchlaterItem,
   toggleWatchlater,
-} from '@/core/watchlater'
+} from '@/components/video/watchlater'
 import {
   VLoading,
   VEmpty,

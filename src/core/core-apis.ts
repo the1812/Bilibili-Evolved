@@ -15,7 +15,6 @@ import * as textColor from '@/core/text-color'
 import * as settings from '@/core/settings'
 import * as userInfo from '@/core/user-info'
 import * as version from '@/core/version'
-import * as watchlater from '@/core/watchlater'
 import * as commonUtils from '@/core/utils'
 import * as constants from '@/core/utils/constants'
 import * as formatters from '@/core/utils/formatters'
@@ -51,7 +50,6 @@ export const coreApis = {
   textColor,
   userInfo,
   version,
-  watchlater,
   settings,
   toast,
   themeColor,
@@ -89,7 +87,6 @@ export const externalApis = {
   ...textColor,
   ...userInfo,
   ...version,
-  watchlater,
   settingsApis: settings,
   get settings() {
     return settings.settings

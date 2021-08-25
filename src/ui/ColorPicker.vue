@@ -255,26 +255,9 @@
 
 <script lang="ts">
 import Color from 'color'
+import palette from '@/core/theme-color/palette.json'
 import { createColorWrapper } from './color-picker-wrapper'
 
-const ColorPresets = [
-  '#E57373',
-  '#F06292',
-  '#BA68C8',
-  '#9575CD',
-  '#7986CB',
-  '#2196F3',
-  '#00A0D8',
-  '#00ACC1',
-  '#26A69A',
-  '#81C784',
-  '#9CCC65',
-  '#FF9800',
-  '#FF7043',
-  '#A1887F',
-  '#757575',
-  '#78909C',
-]
 export default Vue.extend({
   name: 'ColorPicker',
   components: {
@@ -311,7 +294,7 @@ export default Vue.extend({
     return {
       popupOpened: false,
       wrapper: createColorWrapper(this.color),
-      colors: ColorPresets,
+      colors: palette,
       isRGB: false,
     }
   },

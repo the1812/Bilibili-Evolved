@@ -4,7 +4,7 @@ const entry: ComponentEntry = async ({ settings }) => {
   if (settings.options.page) {
     const { select } = await import('@/core/spin-query')
     const { childList } = await import('@/core/observer')
-    const { getWatchlaterList } = await import('@/core/watchlater')
+    const { getWatchlaterList } = await import('@/components/video/watchlater')
     const list = await getWatchlaterList(true)
     const listBox = await select('.watch-later-list .list-box > span')
     if (!listBox) {

@@ -87,7 +87,7 @@ export async function getWatchlaterList(raw: true): Promise<RawWatchlaterItem[]>
 export async function getWatchlaterList(raw: false): Promise<number[]>
 export async function getWatchlaterList(raw = false): Promise<number[] | RawWatchlaterItem[]> {
   const api = 'https://api.bilibili.com/x/v2/history/toview/web'
-  const { getJsonWithCredentials } = await import('./ajax')
+  const { getJsonWithCredentials } = await import('@/core/ajax')
   const response = await getJsonWithCredentials(api)
   if (response.code !== 0) {
     throw new Error(`获取稍后再看列表失败: ${response.message}`)
@@ -123,9 +123,9 @@ export const toggleWatchlater = async (aid: string | number, add?: boolean | und
     add = !watchlaterList.includes(id)
   }
   const api = add ? 'https://api.bilibili.com/x/v2/history/toview/add' : 'https://api.bilibili.com/x/v2/history/toview/del'
-  const { getCsrf } = await import('./utils')
+  const { getCsrf } = await import('@/core/utils')
   const csrf = getCsrf()
-  const { postTextWithCredentials } = await import('./ajax')
+  const { postTextWithCredentials } = await import('@/core/ajax')
   const responseText = await postTextWithCredentials(api, `aid=${aid}&csrf=${csrf}`)
   const response = JSON.parse(responseText) as {
     code: number
@@ -142,7 +142,7 @@ export const toggleWatchlater = async (aid: string | number, add?: boolean | und
 }
 
 requestIdleCallback(async () => {
-  const { getUID } = await import('./utils')
+  const { getUID } = await import('@/core/utils')
   if (getUID()) {
     getWatchlaterList()
   }

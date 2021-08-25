@@ -160,7 +160,6 @@ export const component: ComponentMetadata = {
 - `core/runtime-library`: 运行时代码库, 目前支持导入 protobufjs 和 JSZip 使用
 - `core/user-info`: 获取当前用户的登录信息
 - `core/version`: 版本比较
-- `core/watchlater`: 稍后再看列表获取, 添加/移除稍后再看等
 - `core/settings`: 脚本设置 API, 可监听设置变更, 获取组件设置, 判断组件是否开启等
 - `core/toast`: 通知 API, 能够在左下角显示通知
 - `core/utils`: 工具集, 包含各种常量, 格式化函数, 排序工具, 标题获取, 日志等
@@ -184,6 +183,7 @@ export const component: ComponentMetadata = {
   - `video-quality`: 视频清晰度列表
   - `video-context-menu`: 向播放器右键菜单插入内容
   - `video-control-bar`: 向播放器控制栏插入内容
+  - `watchlater`: 稍后再看列表获取, 添加/移除稍后再看等
 - `components/live/`:
   - `live-control-bar`: 向直播控制栏插入内容
   - `live-socket`: 直播间弹幕的 WebSocket 封装

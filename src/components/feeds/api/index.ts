@@ -1,7 +1,7 @@
 import { getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
-import { watchlaterList } from '@/core/watchlater'
+import { watchlaterList } from '@/components/video/watchlater'
 import { getData, registerData } from '@/plugins/data'
 import { descendingStringSort } from '@/core/utils/sort'
 import { VideoCard } from '../video-card'

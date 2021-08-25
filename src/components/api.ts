@@ -15,6 +15,7 @@ import * as videoInfo from './video/video-info'
 import * as videoQuality from './video/video-quality'
 import * as videoContextMenu from './video/video-context-menu'
 import * as videoControlBar from './video/video-control-bar'
+import * as watchlater from './video/watchlater'
 import * as liveControlBar from './live/live-control-bar'
 import * as liveSocket from './live/live-socket'
 import * as commentApis from './utils/comment-apis'
@@ -49,6 +50,7 @@ export const componentApis = {
     videoQuality,
     videoContextMenu,
     videoControlBar,
+    watchlater,
   },
   live: {
     liveControlBar,

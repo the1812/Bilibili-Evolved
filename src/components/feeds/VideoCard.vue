@@ -101,7 +101,7 @@ import {
   VIcon,
 } from '@/ui'
 import { getUID } from '@/core/utils'
-import { watchlaterList, toggleWatchlater } from '@/core/watchlater'
+import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
 
 /*
   ============
