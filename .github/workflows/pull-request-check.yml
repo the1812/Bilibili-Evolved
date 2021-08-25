@@ -21,14 +21,17 @@ jobs:
     - name: Install dependencies
       uses: bahmutov/npm-install@v1
 
-    - name: Run type check
+    - name: Type check
       run: yarn type
 
-    - name: Run ESLint
+    - name: ESLint check
       run: yarn lint
 
-    - name: Run build
-      run: yarn build
+    - name: Build core
+      run: yarn build-core
+
+    - name: Build features
+      run: yarn build-features
 
     - name: Log
       run: echo Check complete.
