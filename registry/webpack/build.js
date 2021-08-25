@@ -1,22 +1,6 @@
 module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
-  return [type, async () => {
-    const src = `./registry/lib/${type}s/`
-    const glob = require('glob')
-    const entries = glob.sync(src + '**/index.ts')
-
-    let entry
-    if (entries.length > 1) {
-      const { AutoComplete } = require('enquirer')
-      const prompt = new AutoComplete({
-        name: 'path',
-        message: 'Select build target',
-        choices: entries,
-      })
-      entry = await prompt.run()
-    } else {
-      [entry] = entries
-      console.log(`Build target · ${entry}`)
-    }
+  const src = `./registry/lib/${type}s/`
+  const buildByEntry = entry => {
     const path = require('path')
     const { getId } = require('./id')
     const id = getId(src, entry)
@@ -77,7 +61,31 @@ module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
         }
       }
       return callback()
-    },)
+    })
     return config
+  }
+  return [type, async ({ buildAll = false } = {}) => {
+    const glob = require('glob')
+    const entries = glob.sync(src + '**/index.ts')
+
+    if (buildAll) {
+      console.log(`[build all] discovered ${entries.length} ${type}s`)
+      return entries.map(entry => buildByEntry(entry))
+    }
+
+    let entry
+    if (entries.length > 1) {
+      const { AutoComplete } = require('enquirer')
+      const prompt = new AutoComplete({
+        name: 'path',
+        message: 'Select build target',
+        choices: entries,
+      })
+      entry = await prompt.run()
+    } else {
+      [entry] = entries
+      console.log(`Build target · ${entry}`)
+    }
+    return buildByEntry(entry)
   }]
 }))
