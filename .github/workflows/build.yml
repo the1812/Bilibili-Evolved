@@ -35,7 +35,11 @@ jobs:
       run: yarn build-core
 
     - name: Build features
-      run: yarn build-features
+      run: |
+        cd registry
+        yarn
+        cd ../
+        yarn build-features
 
     - name: Git commit
       id: commit
