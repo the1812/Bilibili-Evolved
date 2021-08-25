@@ -237,8 +237,8 @@ export default Vue.extend({
     box-sizing: border-box;
   }
   .header {
-    @include v-stretch(8px);
-    margin: 16px 12px 0 12px;
+    @include v-stretch(6px);
+    margin: 16px 12px 4px 12px;
     .header-row {
       @include h-center(8px);
       justify-content: space-between;
