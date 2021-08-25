@@ -18,7 +18,7 @@ const initControlBar = lodash.once(async () => {
   }
   videoChange(async () => {
     const time = await select('.bilibili-player-video-time')
-    if (time === null || dq('.video-take-screenshot')) {
+    if (time === null) {
       return
     }
     const VideoControlBar = await import('./VideoControlBar.vue').then(m => m.default)

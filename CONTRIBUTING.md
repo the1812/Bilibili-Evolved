@@ -169,7 +169,30 @@ export const component: ComponentMetadata = {
 - `components/types`: 组件相关接口定义
 - `components/styled-components`: 包含样式的组件 entry 简化包装函数
 - `components/user-component`: 用户组件的安装/卸载 API
-- <待 v1 组件迁移完成后补充>
+- `components/description`: 获取组件或插件的描述, 会自动匹配语言并插入作者标记, 支持 HTML, Markdown 和纯文本形式
+- `components/feeds/`:
+  - `api`: 动态相关 API 封装, 获取动态流, 对每一个动态卡片执行操作等
+  - `BangumiCard.vue`: 番剧卡片
+  - `VideoCard.vue`: 视频卡片
+  - `ColumnCard.vue`: 专栏卡片
+  - `notify`: 获取未读动态数目, 最后阅读的动态 ID 等
+- `components/video/`:
+  - `ass-utils`: ASS 字幕工具函数
+  - `player-light`: 控制播放器开关灯
+  - `video-danmaku`: 对每一条视频弹幕执行操作
+  - `video-info`: 根据 av 号查询视频信息
+  - `video-quality`: 视频清晰度列表
+  - `video-context-menu`: 向播放器右键菜单插入内容
+  - `video-control-bar`: 向播放器控制栏插入内容
+- `components/live/`:
+  - `live-control-bar`: 向直播控制栏插入内容
+  - `live-socket`: 直播间弹幕的 WebSocket 封装
+- `components/utils/`:
+  - `comment-apis`: 对每条评论执行操作
+  - `categories/data`: 主站分区数据
+- `components/i18n/machine-translator/MachineTranslator.vue`: 机器翻译器组件
+- `components/switch-options`: SwitchOptions API, 方便创建含有多个独立开闭的子选项的功能
+- `components/launch-bar/LaunchBar.vue`: 搜索栏组件
 
 ### 插件 API
 - `plugins/data`: 数据注入 API
@@ -195,6 +218,7 @@ export const component: ComponentMetadata = {
 
 - `ui/icon/VIcon.vue`: 图标组件, 自带 MDI 图标集, b 站图标集, 支持自定义图标注入
 - `ui/_common.scss`: 一些通用的 Sass Mixin, 在代码中可以直接使用 `@import "common"` 导入
+- `ui/_markdown.scss`: 提供一个 Markdown Mixin, 导入这个 Mixin 的地方将获得为各种 HTML 元素适配的 Markdown 样式. 在代码中可以直接使用 `@import "markdown"` 导入
 - `ui/ScrollTrigger.vue`: 进入视图时触发事件, 通常用于实现无限滚动
 - `ui/VEmpty.vue`: 表示无数据, 界面可被插件更改
 - `ui/VLoading.vue`: 表示数据加载中, 界面可被插件更改
