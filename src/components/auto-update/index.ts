@@ -1,4 +1,11 @@
 import { ComponentMetadata, componentsTags } from '@/components/types'
+import {
+  getGeneralSettings,
+  getComponentSettings,
+  settings,
+  isUserComponent,
+} from '@/core/settings'
+import { ComponentAction } from '../settings-panel/component-actions/component-actions'
 
 interface UpdateCheckItem {
   url: string
@@ -7,8 +14,100 @@ interface UpdateCheckItem {
   alwaysUpdate?: boolean
 }
 const localhost = /^http:\/\/localhost/
+const name = 'autoUpdate'
+type UpdateRecord = Record<string, Record<string, UpdateCheckItem>>
+interface CheckUpdateConfig {
+  items: Record<string, UpdateCheckItem>
+  existPredicate: (name: string) => boolean
+  installer: (code: string) => Promise<{ message: string }>
+  filterNames?: string[]
+}
+const checkUpdate = async (config: CheckUpdateConfig) => {
+  const {
+    items,
+    existPredicate,
+    installer,
+    filterNames = [],
+  } = config
+  const now = Number(new Date())
+  const { devMode } = getGeneralSettings()
+  const { options } = getComponentSettings(name)
+  // Remove uninstalled items
+  Object.keys(items).filter(it => !existPredicate(it)).forEach(key => {
+    delete items[key]
+  })
+  const shouldUpdate = (itemName: string) => {
+    if (filterNames.length === 0) {
+      return true
+    }
+    return filterNames.includes(itemName)
+  }
+  const results = await Promise.allSettled(
+    Object.entries(items)
+      .filter(([itemName, item]) => shouldUpdate(itemName) && Boolean(item.url))
+      .map(async ([itemName, item]) => {
+        const { url, lastUpdateCheck, alwaysUpdate } = item
+        const isDebugItem = alwaysUpdate && devMode
+        if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration) {
+          return `[${itemName}] 未超过更新间隔期, 已跳过`
+        }
+        let finalUrl = url
+        if (localhost.test(url) && options.localPortOverride) {
+          finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
+        }
+        const response: string = await coreApis.ajax.monkey({ url: finalUrl })
+        // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
+        if (!(itemName in items)) {
+          return `[${itemName}] 已被卸载, 取消更新`
+        }
+        const { message } = await installer(response)
+        item.lastUpdateCheck = Number(new Date())
+        return `[${itemName}] ${message}`
+      }),
+  )
+  return results.map((r, index) => {
+    if (r.status === 'fulfilled') {
+      return r.value
+    }
+    const message = r.reason?.message ?? r.reason.toString()
+    return `[${Object.keys(items)[index]}] ${message}`
+  }).join('\n').trim()
+}
+const checkComponentsUpdate = async (...filterNames: string[]) => {
+  const { options } = getComponentSettings(name)
+  const { components } = options.urls as UpdateRecord
+  const { installComponent } = await import('@/components/user-component')
+  return checkUpdate({
+    items: components,
+    existPredicate: itemName => settings.userComponents[itemName] !== undefined,
+    filterNames,
+    installer: installComponent,
+  })
+}
+const checkPluginsUpdate = async (...filterNames: string[]) => {
+  const { options } = getComponentSettings(name)
+  const { plugins } = options.urls as UpdateRecord
+  const { installPlugin } = await import('@/plugins/plugin')
+  return checkUpdate({
+    items: plugins,
+    existPredicate: itemName => settings.userPlugins[itemName] !== undefined,
+    filterNames,
+    installer: installPlugin,
+  })
+}
+const checkStylesUpdate = async (...filterNames: string[]) => {
+  const { options } = getComponentSettings(name)
+  const { styles } = options.urls as UpdateRecord
+  const { installStyle } = await import('@/plugins/style')
+  return checkUpdate({
+    items: styles,
+    existPredicate: itemName => settings.userStyles[itemName] !== undefined,
+    filterNames,
+    installer: installStyle,
+  })
+}
 export const component: ComponentMetadata = {
-  name: 'autoUpdate',
+  name,
   displayName: '自动更新器',
   description: {
     'zh-CN': '自动检查组件, 插件和样式的更新. (仅限从设置面板中安装的)',
@@ -40,73 +139,13 @@ export const component: ComponentMetadata = {
     },
   },
   entry: async ({ settings: { options } }) => {
-    const { getGeneralSettings, settings } = await import('@/core/settings')
     const now = Number(new Date())
     const duration = now - options.lastUpdateCheck
-    const {
-      components,
-      plugins,
-      styles,
-    } = options.urls as Record<string, Record<string, UpdateCheckItem>>
-    const { devMode } = getGeneralSettings()
-    const checkUpdate = async (
-      items: Record<string, UpdateCheckItem>,
-      existPredicate: (name: string) => boolean,
-      installer: (code: string)=> Promise<{ message: string }>,
-    ) => {
-      // Remove uninstalled items
-      Object.keys(items).filter(it => !existPredicate(it)).forEach(key => {
-        delete items[key]
-      })
-      const results = await Promise.allSettled(
-        Object.entries(items).filter(([, item]) => Boolean(item.url)).map(async ([name, item]) => {
-          const { url, lastUpdateCheck, alwaysUpdate } = item
-          const isDebugItem = alwaysUpdate && devMode
-          if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration) {
-            return `[${name}] 未超过更新间隔期, 已跳过`
-          }
-          let finalUrl = url
-          if (localhost.test(url) && options.localPortOverride) {
-            finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
-          }
-          const response: string = await coreApis.ajax.monkey({ url: finalUrl })
-          // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
-          if (!(name in items)) {
-            return `[${name}] 已被卸载, 取消更新`
-          }
-          const { message } = await installer(response)
-          item.lastUpdateCheck = Number(new Date())
-          return `[${name}] ${message}`
-        }),
-      )
-      return results.map((r, index) => {
-        if (r.status === 'fulfilled') {
-          return r.value
-        }
-        const message = r.reason?.message ?? r.reason.toString()
-        return `[${Object.keys(items)[index]}] ${message}`
-      }).join('\n').trim()
-    }
     const checkUpdates = async () => {
-      const { installComponent } = await import('@/components/user-component')
       console.log('[自动更新器] 开始检查更新')
-      console.log(await checkUpdate(
-        components,
-        name => settings.userComponents[name] !== undefined,
-        installComponent,
-      ) || '暂无组件更新')
-      const { installPlugin } = await import('@/plugins/plugin')
-      console.log(await checkUpdate(
-        plugins,
-        name => settings.userPlugins[name] !== undefined,
-        installPlugin,
-      ) || '暂无插件更新')
-      const { installStyle } = await import('@/plugins/style')
-      console.log(await checkUpdate(
-        styles,
-        name => settings.userStyles[name] !== undefined,
-        installStyle,
-      ) || '暂无样式更新')
+      console.log(await checkComponentsUpdate() || '暂无组件更新')
+      console.log(await checkPluginsUpdate() || '暂无插件更新')
+      console.log(await checkStylesUpdate() || '暂无样式更新')
       options.lastUpdateCheck = Number(new Date())
       console.log('[自动更新器] 完成更新检查')
     }
@@ -121,31 +160,26 @@ export const component: ComponentMetadata = {
         window.location.reload()
       },
       updateSingleComponent: async (...itemNames: string[]) => {
-        await Promise.all(
-          itemNames.map(async itemName => {
-            const pickedItems = lodash.pick(components, itemName)
-            if (Object.keys(pickedItems).length === 0) {
-              console.log(`[${itemName}] 没有记录更新链接`)
-            }
-            const { installComponent } = await import('@/components/user-component')
-            console.log(await checkUpdate(
-              lodash.pick(components, itemName),
-              name => settings.userComponents[name] !== undefined,
-              installComponent,
-            ))
-          }),
-        )
+        await checkComponentsUpdate(...itemNames)
+        window.location.reload()
+      },
+      updateSinglePlugin: async (...itemNames: string[]) => {
+        await checkPluginsUpdate(...itemNames)
+        window.location.reload()
+      },
+      updateSingleStyle: async (...itemNames: string[]) => {
+        await checkStylesUpdate(...itemNames)
         window.location.reload()
       },
     }
   },
   plugin: {
-    displayName: '自动更新器 - 安装/卸载记录',
+    displayName: '自动更新器 - 扩展功能',
     description: {
-      'zh-CN': '记录在设置面板中的功能安装/卸载数据供自动更新使用',
+      'zh-CN': '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件详情中支持手动检查该组件的更新.',
     },
     // 非设置面板的组件如果也对能功能进行修改, 建议调用此处的 Hooks 同步状态.
-    setup: ({ addHook, coreApis: { settings: { getComponentSettings } } }) => {
+    setup: ({ addData, addHook }) => {
       const types = ['components', 'plugins', 'styles']
       types.forEach(type => {
         addHook(`user${lodash.startCase(type)}.add`, {
@@ -175,6 +209,21 @@ export const component: ComponentMetadata = {
               return
             }
             delete options.urls[type][metadata.name]
+          },
+        })
+      })
+      addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
+        actions.push({
+          name: 'checkUpdate',
+          displayName: '检查更新',
+          icon: 'mdi-cloud-download-outline',
+          condition: isUserComponent,
+          action: async metadata => {
+            const { Toast } = await import('@/core/toast')
+            const toast = Toast.info('检查更新中...', '检查更新')
+            const result = await checkComponentsUpdate(metadata.name)
+            toast.message = result
+            toast.duration = 3000
           },
         })
       })

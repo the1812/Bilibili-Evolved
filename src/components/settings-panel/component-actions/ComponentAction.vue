@@ -57,7 +57,7 @@ export default Vue.extend({
   font-size: 13px;
 
   &:hover {
-    background-color: #8882;
+    background-color: #8884;
   }
   &.disabled {
     cursor: not-allowed;

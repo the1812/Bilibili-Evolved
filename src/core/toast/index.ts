@@ -10,7 +10,9 @@ export enum ToastType {
 }
 let container: Vue & { cards: Toast[] }
 export class Toast {
-  duration: number | undefined = 3000
+  private durationNumber: number | undefined = 3000
+  private durationTimeout = 0
+
   creationTime = Number(new Date())
   randomKey = Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER + 1))
   constructor(
@@ -38,16 +40,35 @@ export class Toast {
   get key() {
     return `${this.creationTime}[${this.randomKey}]`
   }
+  get duration() {
+    return this.durationNumber
+  }
+  set duration(num: number) {
+    this.durationNumber = num
+    if (this.durationTimeout) {
+      this.clearDuration()
+    }
+    this.setDuration()
+  }
   show() {
     Toast.containerVM.cards.unshift(this)
-    if (this.duration !== undefined) {
-      setTimeout(() => this.dismiss(), this.duration)
-    }
+    this.setDuration()
   }
   dismiss() {
     if (Toast.containerVM.cards.includes(this)) {
       Toast.containerVM.cards.splice(Toast.containerVM.cards.indexOf(this), 1)
     }
+    this.clearDuration()
+  }
+  private setDuration() {
+    if (this.durationNumber === undefined) {
+      return
+    }
+    this.durationTimeout = window.setTimeout(() => this.dismiss(), this.durationNumber)
+  }
+  private clearDuration() {
+    window.clearTimeout(this.durationTimeout)
+    this.durationTimeout = 0
   }
 
   private static internalShow(

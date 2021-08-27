@@ -45,23 +45,27 @@
         <div class="internal-name">
           内部名称: {{ componentData.name }}
         </div>
-        <div
+        <MiniToast
           v-if="componentData.configurable !== false && componentActions.length > 0"
+          placement="bottom"
+          trigger="click"
           class="extra-actions-wrapper"
         >
           <div class="extra-actions">
             <VIcon icon="mdi-dots-vertical" :size="16" />
           </div>
-          <div class="extra-actions-list">
-            <ComponentAction
-              v-for="a of componentActions"
-              :key="a.name"
-              class="extra-action-item"
-              :item="a"
-              :component="componentData"
-            />
-          </div>
-        </div>
+          <template #toast>
+            <div class="extra-actions-list">
+              <ComponentAction
+                v-for="a of componentActions"
+                :key="a.name"
+                class="extra-action-item"
+                :item="a"
+                :component="componentData"
+              />
+            </div>
+          </template>
+        </MiniToast>
       </div>
       <!-- <div class="component-detail-separator"></div> -->
     </template>
@@ -69,10 +73,13 @@
 </template>
 
 <script lang="ts">
-import SwitchBox from '@/ui/SwitchBox.vue'
+import {
+  VButton,
+  VIcon,
+  SwitchBox,
+  MiniToast,
+} from '@/ui'
 import { visible } from '@/core/observer'
-import VButton from '@/ui/VButton.vue'
-import VIcon from '@/ui/icon/VIcon.vue'
 import { ComponentOptions } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
@@ -82,18 +89,20 @@ import ComponentAction from './component-actions/ComponentAction.vue'
 
 export default Vue.extend({
   components: {
-    SwitchBox,
     ComponentDescription,
     ComponentOption,
+    ComponentAction,
     VButton,
     VIcon,
-    ComponentAction,
+    SwitchBox,
+    MiniToast,
   },
   mixins: [componentSettingsMixin],
   data() {
+    const metadata = (this as any).componentData
     return {
       virtual: false,
-      componentActions,
+      componentActions: componentActions.filter(action => action.condition?.(metadata) ?? true),
     }
   },
   computed: {
@@ -173,38 +182,43 @@ export default Vue.extend({
     .internal-name {
       opacity: 0.5;
     }
+    .tippy-content {
+      padding: 4px;
+    }
     .extra-actions-wrapper {
       position: relative;
+      transform: translateX(2px);
+
       .extra-actions {
         padding: 4px;
         cursor: pointer;
-        transform: translateX(2px);
       }
       .extra-actions-list {
-        @include popup();
-        padding: 4px;
-        position: absolute;
         width: max-content;
-        top: 100%;
-        left: 50%;
-        opacity: 0;
-        pointer-events: none;
-        transform: translateX(-50%) scaleY(0.8);
-        transition: .2s ease-out;
-        transform-origin: top;
       }
-      .extra-actions:hover ~ .extra-actions-list,
-      .extra-actions-list:hover {
-        pointer-events: initial;
-        opacity: 1;
-        transform: translateX(-50%) scaleY(1);
-      }
+      //   @include popup();
+      //   padding: 4px;
+      //   position: absolute;
+      //   width: max-content;
+      //   top: 100%;
+      //   left: 50%;
+      //   opacity: 0;
+      //   pointer-events: none;
+      //   transform: translateX(-50%) scaleY(0.8);
+      //   transition: 0.2s ease-out;
+      //   transform-origin: top;
+      // }
+      // .extra-actions:hover ~ .extra-actions-list,
+      // .extra-actions-list:hover {
+      //   pointer-events: initial;
+      //   opacity: 1;
+      //   transform: translateX(-50%) scaleY(1);
+      // }
     }
     // margin-bottom: 12px;
     // &-item {
     //   margin-bottom: 6px;
     // }
-
   }
   &-operations {
     @include h-center();
