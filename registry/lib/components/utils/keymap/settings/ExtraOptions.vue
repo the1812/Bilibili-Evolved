@@ -16,10 +16,11 @@ import {
   VButton,
   VIcon,
 } from '@/ui'
+import {
+  loadKeymapSettings,
+  toggleKeymapSettings,
+} from './vm'
 
-let settingsVM: Vue & {
-  popupOpen: boolean
-}
 export default Vue.extend({
   components: {
     VButton,
@@ -32,24 +33,10 @@ export default Vue.extend({
   },
   methods: {
     async loadSettings() {
-      if (settingsVM) {
-        return
-      }
-      const triggerButton = this.$refs.button.$el as HTMLElement
-      const KeymapSettings = await import('./KeymapSettings.vue').then(m => m.default)
-      settingsVM = new KeymapSettings({
-        propsData: {
-          triggerElement: triggerButton,
-        },
-      }).$mount()
-      console.log(triggerButton, settingsVM, settingsVM.$el)
-      document.body.insertAdjacentElement('beforeend', settingsVM.$el)
+      await loadKeymapSettings(this.$refs.button)
     },
-    toggleSettings() {
-      if (!settingsVM) {
-        return
-      }
-      settingsVM.popupOpen = !settingsVM.popupOpen
+    async toggleSettings() {
+      await toggleKeymapSettings(this.$refs.button)
     },
   },
 })
