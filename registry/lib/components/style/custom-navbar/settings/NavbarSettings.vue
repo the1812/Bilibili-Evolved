@@ -87,8 +87,9 @@ import {
 } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { dqa } from '@/core/utils'
+import { SortableJSLibrary } from '@/core/runtime-library'
+import { SortableEvent } from 'sortablejs'
 import { getData } from '@/plugins/data'
-import Sortable, { SortableEvent } from 'sortablejs'
 import {
   CustomNavbarItem,
   CustomNavbarRenderedItems,
@@ -125,13 +126,14 @@ export default Vue.extend({
       navbarOptions.padding = newValue
     }, 200),
   },
-  mounted() {
+  async mounted() {
     addComponentListener('customNavbar.padding', (newValue: number) => {
       if (this.padding !== newValue) {
         this.padding = newValue
       }
     })
     const list: HTMLElement = this.$refs.navbarSortList
+    const Sortable = await SortableJSLibrary
     Sortable.create(list, {
       delay: 100,
       forceFallback: true,

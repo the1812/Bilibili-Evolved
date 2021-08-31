@@ -1,5 +1,6 @@
 import type protobufType from 'protobufjs'
 import type JSZipType from 'jszip'
+import type SortableJSType from 'sortablejs'
 import { monkey } from './ajax'
 
 export interface RuntimeLibraryConfig<LibraryType> {
@@ -41,4 +42,8 @@ export const protobufLibrary = new RuntimeLibrary<typeof protobufType>({
 export const JSZipLibrary = new RuntimeLibrary<typeof JSZipType>({
   url: 'https://cdn.jsdelivr.net/npm/jszip@3.7.1/dist/jszip.min.js',
   getModule: window => window.JSZip,
+})
+export const SortableJSLibrary = new RuntimeLibrary<typeof SortableJSType>({
+  url: 'https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js',
+  getModule: window => window.Sortable,
 })
