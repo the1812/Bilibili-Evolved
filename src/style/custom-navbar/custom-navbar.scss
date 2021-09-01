@@ -206,6 +206,9 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   display: flex;
   justify-content: center;
 
+  body.player-fullscreen-fix & {
+    z-index: 1;
+  }
   &:not(.fill) .custom-navbar-iconfont {
     color: var(--theme-color);
   }
