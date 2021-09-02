@@ -39,10 +39,10 @@ export const parseExternalInput = async <T>(input: ExternalInput<T>): Promise<T>
       // console.log(exports)
       if (Object.values(exports).length > 0) {
         const value = Object.values(exports)[0]
-        if (typeof value === 'function') {
-          const { coreApis } = await import('@/core/core-apis')
-          return value(coreApis) as T
-        }
+        // if (typeof value === 'function') {
+        //   const { coreApis } = await import('@/core/core-apis')
+        //   return value(coreApis) as T
+        // }
         return value as T
       }
       return result
