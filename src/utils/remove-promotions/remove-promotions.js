@@ -2,6 +2,9 @@ if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.c
   // addSettingsListener('removeGameMatchModule', value => {
   //   document.body.classList.toggle('remove-game-match-module', value)
   // }, true)
+  SpinQuery.select('.eva-extension-area').then(it => {
+    it.parentElement.style.margin = '12px'
+  })
   SpinQuery.any(
     () => dqa('.gg-pic'),
     it => {
