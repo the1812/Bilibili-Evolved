@@ -10,37 +10,43 @@ const supportedUrls = [
   'https://www.bilibili.com/festival/2021bnj',
 ]
 
-let config: { enable: boolean, bindings: KeyBinding[] } | undefined = undefined
-if (supportedUrls.some(url => document.URL.startsWith(url))) {
-  const clickElement = (target: string | HTMLElement) => {
-    return ({ event }: KeyBindingActionContext) => {
+let config: { enable: boolean, bindings: KeyBinding[] } | undefined = undefined;
+(async () => {
+  if (!supportedUrls.some(url => document.URL.startsWith(url))) {
+    return
+  }
+  const { playerAgent } = await import('../player-agent')
+  const clickElement = (target: string | HTMLElement | Promise<HTMLElement | null>) => {
+    return async ({ event }: KeyBindingActionContext) => {
       const mouseEvent = new MouseEvent('click', {
         ..._.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey')
       })
       if (typeof target === 'string') {
         (dq(target) as HTMLElement)?.dispatchEvent(mouseEvent)
       } else {
-        target.dispatchEvent(mouseEvent)
+        const element = await target
+        element?.dispatchEvent(mouseEvent)
       }
     }
   }
   const changeVideoTime = (delta: number) => {
-    return () => {
-      const video = dq('.bilibili-player-video video') as HTMLVideoElement
-      console.log(`[keymap] requested video time change, delta = ${delta}`)
-      if (!video) {
-        console.log('[keymap] video element not found')
-        return
-      }
-      if (!unsafeWindow.player) {
-        // fallback
-        console.log('[keymap] fallback')
-        video.currentTime += delta
-        return
-      }
-      console.log('[keymap] player API seek')
-      unsafeWindow.player.seek(video.currentTime + delta, video.paused)
-    }
+    return async () => playerAgent.changeTime(delta)
+    // return async () => {
+    //   const video = await playerAgent.query.video.element() as HTMLVideoElement
+    //   console.log(`[keymap] requested video time change, delta = ${delta}`)
+    //   if (!video) {
+    //     console.log('[keymap] video element not found')
+    //     return
+    //   }
+    //   if (!unsafeWindow.player) {
+    //     // fallback
+    //     console.log('[keymap] fallback')
+    //     video.currentTime += delta
+    //     return
+    //   }
+    //   console.log('[keymap] player API seek')
+    //   unsafeWindow.player.seek(video.currentTime + delta, video.paused)
+    // }
   }
   /** 提示框用的`setTimeout`句柄 */
   let tipTimeoutHandle: number
@@ -49,10 +55,10 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
    * @param text 文字 (可以 HTML)
    * @param icon MDI 图标 class
    */
-  const showTip = (text: string, icon: string) => {
+  const showTip = async (text: string, icon: string) => {
     let tip = dq('.keymap-tip') as HTMLDivElement
     if (!tip) {
-      const player = dq('.bilibili-player-video-wrap')
+      const player = await playerAgent.query.playerArea() as HTMLElement
       if (!player) {
         return
       }
@@ -86,37 +92,34 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     }
   }
   const actions = {
-    fullscreen: clickElement('.bilibili-player-video-btn-fullscreen'),
-    webFullscreen: clickElement('.bilibili-player-video-web-fullscreen'),
-    wideScreen: clickElement('.bilibili-player-video-btn-widescreen'),
-    volumeUp: () => {
-      const current = unsafeWindow.player.volume()
-      unsafeWindow.player.volume(current + 0.1)
-      showTip(`${Math.round(unsafeWindow.player.volume() * 100)}%`, 'mdi-volume-high')
+    fullscreen: () => playerAgent.fullscreen(),
+    webFullscreen: () => playerAgent.webFullscreen(),
+    wideScreen: () => playerAgent.widescreen(),
+    volumeUp: async () => {
+      const volume = await playerAgent.changeVolume(10)
+      showTip(`${volume}%`, 'mdi-volume-high')
     },
-    volumeDown: () => {
-      const current = unsafeWindow.player.volume()
-      unsafeWindow.player.volume(current - 0.1)
-      const after = Math.round(unsafeWindow.player.volume() * 100)
-      if (after === 0) {
+    volumeDown: async () => {
+      const volume = await playerAgent.changeVolume(-10)
+      if (volume === 0) {
         showTip('静音', 'mdi-volume-off')
       } else {
-        showTip(`${after}%`, 'mdi-volume-high')
+        showTip(`${volume}%`, 'mdi-volume-high')
       }
     },
-    mute: (context: KeyBindingActionContext) => {
-      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume')(context)
-      const isMute = unsafeWindow.player.isMute()
+    mute: async () => {
+      await playerAgent.toggleMute()
+      const isMute = await playerAgent.isMute()
       if (isMute) {
         showTip('已静音', 'mdi-volume-off')
       } else {
         showTip('已取消静音', 'mdi-volume-high')
       }
     },
-    pictureInPicture: clickElement('.bilibili-player-video-btn-pip'),
+    pictureInPicture: () => playerAgent.togglePip(),
     coin: clickElement('.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2)'),
     favorite: clickElement('.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3)'),
-    pause: clickElement('.bilibili-player-video-btn-start'),
+    pause: () => playerAgent.togglePlay(),
     like: (() => {
       /** 长按`L`三连使用的记忆变量 */
       let likeClick = true
@@ -140,26 +143,21 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       }) as KeyBindingAction
     })(),
     danmaku: () => {
-      const checkbox = dq('.bilibili-player-video-danmaku-switch input') as HTMLInputElement
-      if (!checkbox) {
-        return
-      }
-      checkbox.checked = !checkbox.checked
-      raiseEvent(checkbox, 'change')
+      playerAgent.toggleDanmaku()
     },
     longJumpBackward: changeVideoTime(-settings.keymapJumpSeconds),
     longJumpForward: changeVideoTime(settings.keymapJumpSeconds),
     jumpBackward: changeVideoTime(-5),
     jumpForward: changeVideoTime(5),
-    playerMenu: () => {
+    playerMenu: async () => {
       // menu size: 386.6 x 311 (2020-03-29)
       // menu size: 176.65 x 194 (2020-06-09)
-      const player = dq('.bilibili-player-video-wrap') as HTMLElement
-      if (!player) {
+      const container = await playerAgent.query.video.container() as HTMLElement
+      if (!container) {
         return
       }
-      const rect = player.getBoundingClientRect()
-      player.dispatchEvent(new MouseEvent('contextmenu', {
+      const rect = container.getBoundingClientRect()
+      container.dispatchEvent(new MouseEvent('contextmenu', {
         bubbles: true,
         cancelable: false,
         view: unsafeWindow,
@@ -186,19 +184,7 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
     takeScreenshot: clickElement('.video-take-screenshot'),
     previousFrame: clickElement('.prev-frame'),
     nextFrame: clickElement('.next-frame'),
-    seekBegin: () => {
-      if (!unsafeWindow.player) {
-        return
-      }
-      unsafeWindow.player.play()
-      setTimeout(() => {
-        unsafeWindow.player.seek(0)
-        const toastText = dq(".bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)")
-        if (toastText) {
-          toastText.textContent = " 00:00"
-        }
-      })
-    },
+    seekBegin: () => playerAgent.seek(0),
   }
   const defaultBindings: { [action in keyof typeof actions]: string } = {
     fullscreen: 'f',
@@ -234,29 +220,26 @@ if (supportedUrls.some(url => document.URL.startsWith(url))) {
       const keys = keyString.split(' ').filter(it => it !== '')
       return {
         keys,
-        action: (actions as any)[actionName] || (() => {}),
+        action: (actions as any)[actionName] || (() => { }),
       } as KeyBinding
     })
   }
-
-  ;(async () => {
-    const { loadKeyBindings } = await import('./key-bindings')
-    const { presets } = await import('./key-binding-presets')
-    addSettingsListener('keymapPreset', () => {
-      const preset = presets[settings.keymapPreset] || {}
-      const bindings = parseBindings(
-        { ...defaultBindings, ...preset, ...settings.customKeyBindings }
-      )
-      if (config) {
-        console.log('load preset', settings.keymapPreset)
-        config.bindings = bindings
-      } else {
-        config = loadKeyBindings(bindings)
-      }
-    }, true)
-    resources.applyImportantStyle('keymapStyle')
-  })()
-}
+  const { loadKeyBindings } = await import('./key-bindings')
+  const { presets } = await import('./key-binding-presets')
+  addSettingsListener('keymapPreset', () => {
+    const preset = presets[settings.keymapPreset] || {}
+    const bindings = parseBindings(
+      { ...defaultBindings, ...preset, ...settings.customKeyBindings }
+    )
+    if (config) {
+      console.log('load preset', settings.keymapPreset)
+      config.bindings = bindings
+    } else {
+      config = loadKeyBindings(bindings)
+    }
+  }, true)
+  resources.applyImportantStyle('keymapStyle')
+})()
 
 export default {
   reload: () => config && (config.enable = true),

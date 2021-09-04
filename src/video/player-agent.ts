@@ -44,25 +44,48 @@ interface PlayerQuery<QueryResult> {
   }
   toastWrap: QueryResult
   danmakuTipLayer: QueryResult
+  danmakuSwitch: QueryResult
 }
-export interface PlayerAgent {
-  query: PlayerQuery<ElementQuery>
-}
-export abstract class PlayerAgentBase implements PlayerAgent {
+export abstract class PlayerAgent {
   abstract query: PlayerQuery<ElementQuery>
-  async widescreen() {
-    const button = await this.query.control.buttons.widescreen()
+  protected async click(target: () => Promise<HTMLElement | null>) {
+    const button = await target()
     button?.click()
+  }
+  async widescreen() {
+    await this.click(this.query.control.buttons.widescreen)
   }
   async webFullscreen() {
-    const button = await this.query.control.buttons.webFullscreen()
-    button?.click()
+    await this.click(this.query.control.buttons.webFullscreen)
   }
   async fullscreen() {
-    const button = await this.query.control.buttons.fullscreen()
-    button?.click()
+    await this.click(this.query.control.buttons.fullscreen)
   }
-}
+  async togglePlay() {
+    await this.click(this.query.control.buttons.start)
+  }
+  async togglePip() {
+    await this.click(this.query.control.buttons.pip)
+  }
+  async toggleMute() {
+    await this.click(this.query.control.buttons.volume)
+  }
+  async toggleDanmaku() {
+    const checkbox = await this.query.danmakuSwitch() as HTMLInputElement
+    if (!checkbox) {
+      return
+    }
+    checkbox.checked = !checkbox.checked
+    raiseEvent(checkbox, 'change')
+  }
+  abstract isMute(): Promise<boolean>
+  /** 更改音量 (%) */
+  abstract changeVolume(change: number): Promise<number>
+  /** 跳转到指定时间 */
+  abstract seek(time: number): Promise<number>
+  /** 更改时间 */
+  abstract changeTime(change: number): Promise<number>
+  }
 
 const select = (selector: string) => () => SpinQuery.select(selector)
 const selectorWrap = (query: PlayerQuery<string>): PlayerQuery<ElementQuery> => {
@@ -74,7 +97,8 @@ const selectorWrap = (query: PlayerQuery<string>): PlayerQuery<ElementQuery> => 
   }
   return _.mapValues(query, map) as PlayerQuery<ElementQuery>
 }
-export class VideoPlayerAgent extends PlayerAgentBase {
+export class VideoPlayerAgent extends PlayerAgent {
+  get nativeApi() { return unsafeWindow.player }
   query = selectorWrap({
     playerWrap: '.player-wrap',
     bilibiliPlayer: '.bilibili-player',
@@ -103,24 +127,49 @@ export class VideoPlayerAgent extends PlayerAgentBase {
       bottomCenter: '.bilibili-player-control-bottom-center',
       bottomRight: '.bilibili-player-control-bottom-right',
       buttons: {
-        start: '.bilibili-player-btn-start',
+        start: '.bilibili-player-video-btn-start',
         next: '.bilibili-player-video-btn-next',
         time: '.bilibili-player-video-time',
         quality: '.bilibili-player-btn-quality',
         pageList: '.bilibili-player-video-btn-pagelist',
         speed: '.bilibili-player-video-btn-speed',
         subtitle: '.bilibili-player-video-btn-subtitle',
-        volume: '.bilibili-player-video-btn-volume',
+        volume: '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume',
         settings: '.bilibili-player-video-btn-setting',
         pip: '.bilibili-player-video-btn-pip',
         widescreen: '.bilibili-player-video-btn-widescreen',
-        webFullscreen: '.bilibili-player-video-btn-web-fullscreen',
+        webFullscreen: '.bilibili-player-video-web-fullscreen',
         fullscreen: '.bilibili-player-video-btn-fullscreen',
       }
     },
     toastWrap: '.bilibili-player-video-toast-wrp',
     danmakuTipLayer: '.bilibili-player-dm-tip-wrap',
+    danmakuSwitch: '.bilibili-player-video-danmaku-switch input',
   })
+  async isMute() {
+    return this.nativeApi.isMute()
+  }
+  async changeVolume(change: number) {
+    const current = this.nativeApi.volume()
+    this.nativeApi.volume(current + change / 100)
+    return Math.round(this.nativeApi.volume() * 100)
+  }
+  async seek(time: number) {
+    this.nativeApi.play()
+    setTimeout(() => {
+      this.nativeApi.seek(time)
+      const toastText = dq(".bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)")
+      if (toastText) {
+        toastText.textContent = " 00:00"
+      }
+    })
+    return this.nativeApi.getCurrentTime()
+  }
+  async changeTime(change: number) {
+    const video = await this.query.video.element() as HTMLVideoElement
+    this.nativeApi.seek(video.currentTime + change, video.paused)
+    return this.nativeApi.getCurrentTime()
+  }
 }
 export class BwpPlayerAgent extends VideoPlayerAgent {
   constructor() {
@@ -128,7 +177,7 @@ export class BwpPlayerAgent extends VideoPlayerAgent {
     this.query.video.element = select('bwp-video')
   }
 }
-export class BangumiPlayerAgent extends PlayerAgentBase {
+export class BangumiPlayerAgent extends PlayerAgent {
   query = selectorWrap({
     playerWrap: '.player-module',
     bilibiliPlayer: '.bpx-player-container',
@@ -164,7 +213,7 @@ export class BangumiPlayerAgent extends PlayerAgentBase {
         pageList: '.squirtle-video-pagelist',
         speed: '.squirtle-video-speed',
         subtitle: '.squirtle-video-subtitle',
-        volume: '.squirtle-video-volume',
+        volume: '.squirtle-video-volume .squirtle-volume-icon',
         settings: '.squirtle-video-setting',
         pip: '.squirtle-video-pip',
         widescreen: '.squirtle-video-widescreen',
@@ -174,7 +223,34 @@ export class BangumiPlayerAgent extends PlayerAgentBase {
     },
     toastWrap: '.bpx-player-tooltip-area',
     danmakuTipLayer: '.bpx-player-dialog-wrap',
+    danmakuSwitch: '.bpx-player-dm-switch input',
   })
+  async isMute() {
+    const icon = await this.query.control.buttons.volume() as HTMLElement
+    return icon?.classList.contains('squirtle-volume-mute-state') ?? false
+  }
+  async changeVolume(change: number) {
+    const video = await this.query.video.element() as HTMLVideoElement
+    video.volume = _.clamp(video.volume + change / 100, 0, 1)
+    return Math.round(video.volume * 100)
+  }
+  async seek(time: number) {
+    const video = await this.query.video.element() as HTMLVideoElement
+    video.play()
+    setTimeout(() => {
+      video.currentTime = _.clamp(time, 0, video.duration)
+      const toastText = dq('.bpx-player-toast-row .bpx-player-toast-item .bpx-player-toast-text')
+      if (toastText?.textContent?.startsWith('已为您定位至')) {
+        toastText.textContent = '已为您定位至00:00'
+      }
+    })
+    return video.currentTime
+  }
+  async changeTime(change: number) {
+    const video = await this.query.video.element() as HTMLVideoElement
+    video.currentTime = _.clamp(video.currentTime + change, 0, video.duration)
+    return video.currentTime
+  }
 }
 
 export const playerAgent = (() => {

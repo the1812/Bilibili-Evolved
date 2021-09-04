@@ -71,7 +71,10 @@ async function main () {
   }
   const info = playerModes.find(it => it.name === settings.defaultPlayerMode)
   const onplay = () => {
-    if (info && $('#bilibiliPlayer[class*=mode-]').length === 0) {
+    const container = await (playerAgent.query.bilibiliPlayer())
+    const attribute = container.getAttribute('data-screen')
+    const isNormalMode = !container.className.includes('mode-') && (attribute === null || attribute === 'normal')
+    if (info && isNormalMode) {
       info.action()
     }
   }
