@@ -5,7 +5,8 @@
         ref="widgetsIcon"
         title="功能"
         :class="{ open: widgetsOpened }"
-        @click="widgetsOpened = !widgetsOpened"
+        @click.shift="theWorld"
+        @click.exact="widgetsOpened = !widgetsOpened"
         @mouseover="loadPanel('widgetsPanelPopup')"
       >
         <VIcon icon="widgets" :size="26"></VIcon>
@@ -47,6 +48,7 @@ import {
   VPopup,
   VIcon,
 } from '@/ui'
+import { externalApis } from '@/core/core-apis'
 
 export default {
   name: 'SettingsContainer',
@@ -63,6 +65,9 @@ export default {
     }
   },
   methods: {
+    theWorld() {
+      externalApis.theWorld(0)
+    },
     settingsPanalClosePredicate(data: {
       target: HTMLElement
       element: HTMLElement

@@ -128,5 +128,11 @@ export const externalApis = {
   lodash,
   Vue,
   sandboxWindow: window,
+  theWorld: (time: number) => {
+    setTimeout(() => {
+      // eslint-disable-next-line no-debugger
+      debugger
+    }, time)
+  },
 }
 export type ExternalApis = typeof externalApis
