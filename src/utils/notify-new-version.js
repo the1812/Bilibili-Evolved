@@ -69,6 +69,15 @@ async function checkNewVersion () {
       latestVersionText = await Ajax.monkey({ url: Resource.cdnRoot || Resource.root + 'version.txt' })
     }
     const latestVersion = new Version(latestVersionText)
+    if (latestVersion.parts[0] >= 2 && !settings.noNotifyV2) {
+      const message = /* html */`新版本<span>${latestVersion.versionString}</span>已发布, 请前往项目的<a class="link" target="_blank" href="https://github.com/the1812/Bilibili-Evolved/releases">更新日志</a>或者<a class="link" target="_blank" href="https://github.com/the1812/Bilibili-Evolved/discussions">讨论区</a>了解如何安装和使用. <a class="link" href="javascript:void(0)" id="no-notify-v2">不再提示</a>`
+      const toast = Toast.info(message, '检查更新')
+      SpinQuery.select('#no-notify-v2').then(span => span.addEventListener('click', () => {
+        settings.noNotifyV2 = true
+        toast && toast.dismiss()
+      }))
+      return false
+    }
     const currentVersion = new Version(settings.currentVersion)
     const hasNewVersion = latestVersion.greaterThan(currentVersion)
     if (hasNewVersion) {

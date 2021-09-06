@@ -525,6 +525,7 @@ declare global {
     scrollOutPlayerAutoLightOn: boolean,
     disableDanmakuHighlights: boolean,
     disableUpDanmakuStyle: boolean,
+    noNotifyV2: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }

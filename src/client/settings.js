@@ -262,6 +262,7 @@ export const settings = {
   scrollOutPlayerAutoLightOn: true,
   disableDanmakuHighlights: false,
   disableUpDanmakuStyle: false,
+  noNotifyV2: false,
   cache: {},
 }
 const fixedSettings = {
