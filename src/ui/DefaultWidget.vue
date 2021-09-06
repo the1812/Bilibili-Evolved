@@ -12,8 +12,8 @@
 </template>
 
 <script lang="ts">
-import VIcon from '@/ui/icon/VIcon.vue'
-import VButton from '@/ui/VButton.vue'
+import VIcon from './icon/VIcon.vue'
+import VButton from './VButton.vue'
 
 export default Vue.extend({
   components: {

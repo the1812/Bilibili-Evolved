@@ -8,7 +8,7 @@ import { ComponentSettings } from '@/core/settings'
 import { CoreApis } from '@/core/core-apis'
 import { PluginMinimalData } from '@/plugins/plugin'
 import { Range } from '@/ui/range'
-import { Widget } from '@/widgets/widget'
+import { Widget } from '@/components/widget'
 import { LanguagePack } from './i18n/types'
 
 type Author = {

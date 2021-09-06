@@ -6,7 +6,7 @@ import {
 } from '@/core/settings'
 import { fullyLoaded, contentLoaded } from '@/core/life-cycle'
 import { LoadingMode } from '@/core/loading-mode'
-import { Widget } from '@/widgets/widget'
+import { Widget } from '@/components/widget'
 import { ComponentMetadata } from './types'
 import { getBuiltInComponents } from './built-in-components'
 
