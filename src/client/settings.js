@@ -225,7 +225,7 @@ export const settings = {
   quickFavoriteID: 0,
   bilibiliSimpleNewHomeCompatible: false,
   disableFeedsDetails: true,
-  elegantScrollbar: true,
+  elegantScrollbar: !navigator.platform.toLowerCase().includes('mac'),
   danmakuSendBar: false,
   watchLaterRedirectNavbar: true,
   watchLaterRedirectPage: true,
