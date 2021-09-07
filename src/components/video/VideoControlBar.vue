@@ -61,6 +61,7 @@ export default Vue.extend({
     }
   }
   .be-video-control-tooltip {
+    pointer-events: none;
     font-size: 12px;
     padding: 6px 8px;
     line-height: normal;
