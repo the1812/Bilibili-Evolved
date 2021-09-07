@@ -109,20 +109,6 @@
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./webpack/webpack.test.js --progress",
-      "group": "test",
-      "problemMatcher": [],
-      "label": "测试:编译测试 test:build-tests"
-    },
-    {
-      "type": "shell",
-      "command": "yarn webpack --watch --config ./webpack/webpack.test.js --progress",
-      "group": "test",
-      "problemMatcher": [],
-      "label": "测试:监视测试 test:watch-tests"
-    },
-    {
-      "type": "shell",
       "command": "rm -r ./node_modules/.cache/webpack/",
       "label": "缓存:清除webpack cache:clean-webpack",
       "problemMatcher": []

@@ -46,7 +46,9 @@
         >
           按住并拖动可以调整顺序, 点击眼睛图标可以切换隐藏/显示.
         </div>
+        <VLoading v-if="!loaded" />
         <div
+          v-show="loaded"
           ref="navbarSortList"
           class="navbar-settings-section-content navbar-sort-list"
         >
@@ -84,11 +86,13 @@ import {
   VPopup,
   VIcon,
   VSlider,
+  VLoading,
 } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { dqa } from '@/core/utils'
+import { SortableJSLibrary } from '@/core/runtime-library'
+import { SortableEvent } from 'sortablejs'
 import { getData } from '@/plugins/data'
-import Sortable, { SortableEvent } from 'sortablejs'
 import {
   CustomNavbarItem,
   CustomNavbarRenderedItems,
@@ -104,6 +108,7 @@ export default Vue.extend({
     VPopup,
     VIcon,
     VSlider,
+    VLoading,
   },
   props: {
     triggerElement: {
@@ -118,6 +123,7 @@ export default Vue.extend({
       rendered,
       order: navbarOptions.order,
       hidden: navbarOptions.hidden,
+      loaded: false,
     }
   },
   watch: {
@@ -125,13 +131,15 @@ export default Vue.extend({
       navbarOptions.padding = newValue
     }, 200),
   },
-  mounted() {
+  async mounted() {
     addComponentListener('customNavbar.padding', (newValue: number) => {
       if (this.padding !== newValue) {
         this.padding = newValue
       }
     })
     const list: HTMLElement = this.$refs.navbarSortList
+    const Sortable = await SortableJSLibrary
+    console.log(Sortable)
     Sortable.create(list, {
       delay: 100,
       forceFallback: true,
@@ -140,6 +148,7 @@ export default Vue.extend({
       },
     })
     checkSequentialOrder(rendered.items)
+    this.loaded = true
     // unsafeWindow.nsTest = {
     //   list,
     //   Sortable,

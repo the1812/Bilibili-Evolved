@@ -8,7 +8,7 @@ import { ComponentSettings } from '@/core/settings'
 import { CoreApis } from '@/core/core-apis'
 import { PluginMinimalData } from '@/plugins/plugin'
 import { Range } from '@/ui/range'
-import { Widget } from '@/widgets/widget'
+import { Widget } from '@/components/widget'
 import { LanguagePack } from './i18n/types'
 
 type Author = {
@@ -196,10 +196,3 @@ export interface ComponentMetadata extends FunctionalMetadata {
 }
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>
-// export interface UserComponentMetadata extends Omit<
-//   ComponentMetadata, keyof FunctionalMetadata
-// > {
-//   /** 是否支持 reload / unload */
-//   reloadable: boolean
-// }
-export type ComponentMetadataFunction = (coreApis: CoreApis) => ComponentMetadata

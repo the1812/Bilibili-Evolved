@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { Widget } from '@/widgets/widget'
+import { Widget } from '@/components/widget'
 import { deleteValue, matchUrlPattern } from '@/core/utils'
 import {
   VIcon,

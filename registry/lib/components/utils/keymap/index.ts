@@ -1,3 +1,4 @@
+import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { styledComponentEntry } from '@/components/styled-component'
 import { ComponentEntry, ComponentMetadata } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
@@ -65,6 +66,25 @@ export const component: ComponentMetadata = {
       defaultValue: 'Default',
       displayName: '预设',
       hidden: true,
+    },
+  },
+  plugin: {
+    displayName: '快捷键扩展 - 搜索支持',
+    setup: ({ addData }) => {
+      addData('launchBar.actions', (providers: LaunchBarActionProvider[]) => {
+        providers.push({
+          name: 'navbarSettings',
+          getActions: async () => [{
+            name: '快捷键扩展设置',
+            description: 'Keymap Settings',
+            icon: 'mdi-keyboard-settings-outline',
+            action: async () => {
+              const { toggleKeymapSettings } = await import('./settings/vm')
+              toggleKeymapSettings()
+            },
+          }],
+        })
+      })
     },
   },
 }

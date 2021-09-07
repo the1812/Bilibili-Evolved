@@ -18,8 +18,10 @@ export const initColors = () => {
   }, 100)
   addComponentListener('settingsPanel.themeColor', (value: string) => {
     set('--theme-color', value)
-    for (let opacity = 10; opacity <= 90; opacity += 10) {
-      set(`--theme-color-${opacity}`, Color(value, 'hex').alpha(opacity / 100).rgb().string())
+    for (let delta = 10; delta <= 90; delta += 10) {
+      const color = Color(value, 'hex')
+      set(`--theme-color-${delta}`, color.alpha(delta / 100).rgb().string())
+      set(`--theme-color-lightness-${delta}`, color.lightness(delta).rgb().toString())
     }
     set('--pink-image-filter', makeImageFilter(Color({
       r: 251,
