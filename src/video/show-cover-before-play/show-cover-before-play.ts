@@ -12,8 +12,10 @@ const entry = () => {
   }
   resources.applyStyle(styleID)
   const removeCover = () => document.body.style.removeProperty('--cover-url')
-  const originalPlay = HTMLVideoElement.prototype.play
-  HTMLVideoElement.prototype.play = function (...args: any[]) {
+  const isBwpVideo = unsafeWindow.__ENABLE_WASM_PLAYER__ || dq('bwp-video')
+  const proto = isBwpVideo ? BwpElement.prototype : HTMLVideoElement.prototype
+  const originalPlay = proto.play
+  proto.play = function (...args: any[]) {
     removeCover()
     return originalPlay.call(this, ...args)
   }
