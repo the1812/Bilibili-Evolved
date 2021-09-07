@@ -51,6 +51,7 @@
           :key="selectedComponent.name"
           :component-data="selectedComponent"
           @close="closePopper()"
+          @mounted="updatePopper()"
         />
       </VPopup>
     </div>
@@ -138,10 +139,13 @@ export default {
   },
   mounted() {
     addComponentListener('settingsPanel.dockSide', () => {
-      activePopper?.update()
+      this.updatePopper()
     })
   },
   methods: {
+    updatePopper() {
+      activePopper?.update()
+    },
     closePopper() {
       activePopper?.destroy()
       this.selectedComponent = null

@@ -119,6 +119,8 @@ export default Vue.extend({
         this.virtual = !record.isIntersecting
       })
     })
+    await this.$nextTick()
+    this.$emit('mounted')
   },
 })
 </script>
