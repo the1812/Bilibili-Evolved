@@ -18,35 +18,45 @@ export const bwpVideoFilter = (selector: string) => {
   }
   return selector
 }
-/**
- * 同 `document.querySelector`, 对 `<bwp-video>` 有额外处理
- * @param selector 选择器
- */
-export function dq(selector: string): Element | null
-/**
- * 在指定元素上进行 `querySelector`, 对 `<bwp-video>` 有额外处理
- * @param selector 元素
- * @param scopedSelector 选择器
- */
-export function dq(element: Element, scopedSelector: string): Element | null
-export function dq(selectorOrElement: Element | string, scopedSelector?: string): Element | null {
+type DocumentQuerySelector = {
+  /**
+   * 同 `document.querySelector`, 对 `<bwp-video>` 有额外处理
+   * @param selector 选择器
+   */
+  (selector: string): Element | null
+  /**
+   * 在指定元素上进行 `querySelector`, 对 `<bwp-video>` 有额外处理
+   * @param selector 元素
+   * @param scopedSelector 选择器
+   */
+  (element: Element, scopedSelector: string): Element | null
+}
+export const dq: DocumentQuerySelector = (
+  selectorOrElement: string | Element,
+  scopedSelector?: string,
+) => {
   if (!scopedSelector) {
     return document.querySelector(bwpVideoFilter(selectorOrElement as string))
   }
   return (selectorOrElement as Element).querySelector(bwpVideoFilter(scopedSelector))
 }
-/**
- * 同 `document.querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
- * @param selector 选择器
- */
-export function dqa(selector: string): Element[]
-/**
- * 在指定元素上进行`querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
- * @param selector 元素
- * @param scopedSelector 选择器
- */
-export function dqa(element: Element, scopedSelector: string): Element[]
-export function dqa(selectorOrElement: Element | string, scopedSelector?: string): Element[] {
+type DocumentQuerySelectorAll = {
+  /**
+   * 同 `document.querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
+   * @param selector 选择器
+   */
+  (selector: string): Element[]
+  /**
+   * 在指定元素上进行`querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
+   * @param selector 元素
+   * @param scopedSelector 选择器
+   */
+  (element: Element, scopedSelector: string): Element[]
+}
+export const dqa: DocumentQuerySelectorAll = (
+  selectorOrElement: Element | string,
+  scopedSelector?: string,
+) => {
   if (!scopedSelector) {
     return Array.from(document.querySelectorAll(bwpVideoFilter(selectorOrElement as string)))
   }
