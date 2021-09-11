@@ -1,5 +1,19 @@
-type ElementQuery<Target = HTMLElement> = () => Promise<Target | null>
-interface PlayerQuery<QueryResult> {
+/** 元素查询函数, 调用时执行 `SpinQuery.select` 查询, 可访问 `selector` 获取选择器 */
+type ElementQuery<Target = HTMLElement> = {
+  (): Promise<Target | null>
+  selector: string
+}
+interface CustomNestedQuery<QueryResult> {
+  [key: string]: QueryResult | CustomNestedQuery<QueryResult>
+}
+interface CustomQuery<QueryResult> extends CustomNestedQuery<QueryResult> {
+  [key: string]: QueryResult
+}
+type AgentType = 'video' | 'bwp' | 'bangumi'
+type CustomQueryProvider<TargetType> = {
+  [key in AgentType]?: TargetType
+} & { video: TargetType }
+interface PlayerQuery<QueryResult> extends CustomNestedQuery<QueryResult> {
   playerWrap: QueryResult
   bilibiliPlayer: QueryResult
   playerArea: QueryResult
@@ -46,11 +60,30 @@ interface PlayerQuery<QueryResult> {
   danmakuTipLayer: QueryResult
   danmakuSwitch: QueryResult
 }
+const select = (selector: string): ElementQuery => {
+  const func = () => SpinQuery.select(selector)
+  func.selector = selector
+  return func
+}
+const selectorWrap = (query: CustomNestedQuery<string>): CustomNestedQuery<ElementQuery> => {
+  const map = (value: string | Record<string, any>): ElementQuery | Record<string, any> => {
+    if (typeof value !== 'string') {
+      return _.mapValues(value, map)
+    }
+    return select(value)
+  }
+  return _.mapValues(query, map) as CustomNestedQuery<ElementQuery>
+}
 export abstract class PlayerAgent {
+  abstract type: AgentType
   abstract query: PlayerQuery<ElementQuery>
   protected async click(target: () => Promise<HTMLElement | null>) {
     const button = await target()
     button?.click()
+  }
+  provideCustomQuery<CustomQueryType extends CustomQuery<string>>(config: CustomQueryProvider<CustomQueryType>) {
+    const custom = selectorWrap(config[this.type] ?? config.video) as CustomQuery<ElementQuery>
+    return { ...this, custom } as (this & { custom: { [key in keyof CustomQueryType]: ElementQuery } })
   }
   async widescreen() {
     await this.click(this.query.control.buttons.widescreen)
@@ -85,19 +118,9 @@ export abstract class PlayerAgent {
   abstract seek(time: number): Promise<number>
   /** 更改时间 */
   abstract changeTime(change: number): Promise<number>
-  }
-
-const select = (selector: string) => () => SpinQuery.select(selector)
-const selectorWrap = (query: PlayerQuery<string>): PlayerQuery<ElementQuery> => {
-  const map = (value: string | Record<string, any>): ElementQuery | Record<string, any> => {
-    if (typeof value !== 'string') {
-      return _.mapValues(value, map)
-    }
-    return select(value)
-  }
-  return _.mapValues(query, map) as PlayerQuery<ElementQuery>
 }
 export class VideoPlayerAgent extends PlayerAgent {
+  type: AgentType = 'video'
   get nativeApi() { return unsafeWindow.player }
   query = selectorWrap({
     playerWrap: '.player-wrap',
@@ -145,7 +168,7 @@ export class VideoPlayerAgent extends PlayerAgent {
     toastWrap: '.bilibili-player-video-toast-wrp',
     danmakuTipLayer: '.bilibili-player-dm-tip-wrap',
     danmakuSwitch: '.bilibili-player-video-danmaku-switch input',
-  })
+  }) as PlayerQuery<ElementQuery>
   async isMute() {
     return this.nativeApi.isMute()
   }
@@ -172,12 +195,14 @@ export class VideoPlayerAgent extends PlayerAgent {
   }
 }
 export class BwpPlayerAgent extends VideoPlayerAgent {
+  type: AgentType = 'bwp'
   constructor() {
     super()
     this.query.video.element = select('bwp-video')
   }
 }
 export class BangumiPlayerAgent extends PlayerAgent {
+  type: AgentType = 'bangumi'
   query = selectorWrap({
     playerWrap: '.player-module',
     bilibiliPlayer: '.bpx-player-container',
@@ -224,7 +249,7 @@ export class BangumiPlayerAgent extends PlayerAgent {
     toastWrap: '.bpx-player-tooltip-area',
     danmakuTipLayer: '.bpx-player-dialog-wrap',
     danmakuSwitch: '.bpx-player-dm-switch input',
-  })
+  }) as PlayerQuery<ElementQuery>
   async isMute() {
     const icon = await this.query.control.buttons.volume() as HTMLElement
     return icon?.classList.contains('squirtle-volume-mute-state') ?? false
@@ -265,9 +290,6 @@ export const playerAgent = (() => {
 
 export default {
   export: {
-    VideoPlayerAgent,
-    BangumiPlayerAgent,
-    BwpPlayerAgent,
     playerAgent,
   }
 }

@@ -198,6 +198,10 @@ declare global {
   interface HTMLVideoElement {
     requestPictureInPicture: () => void
   }
+  const BwpElement: {
+    new(): HTMLVideoElement
+    prototype: HTMLVideoElement
+  }
   class SpinQuery {
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean): Promise<T>
