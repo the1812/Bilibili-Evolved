@@ -465,6 +465,7 @@
     }
   }
 
+  .bili-header,
   .home-header {
     @include background-color();
     &__banner {

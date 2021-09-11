@@ -4,7 +4,9 @@
 #app > .bili-wrapper,
 #app > .elevator-module,
 #app > .bili-header-m.stardust-common > .bili-wrapper,
-.bili-header-m .head-banner .head-content .head-logo {
+.bili-header-m .head-banner .head-content .head-logo,
+#i_cecream .bili-header__channel,
+#i_cecream > :not(.bili-header) {
   position: fixed;
   visibility: hidden;
   top: 100vh;
