@@ -26,7 +26,7 @@
         :title="b.title"
       >
         <dpi-img :src="b.imageUrl" :alt="b.title" :size="{width: 500, height: 250}" :root="cardsContainer"></dpi-img>
-        <div class="title">{{b.title}}</div>
+        <div class="title" :title="b.title">{{b.title}}</div>
       </a>
     </div>
     <div class="jump-dots">
@@ -99,37 +99,45 @@ $first-row-height: 250px;
 
   .jump-dots {
     position: absolute;
-    top: 50%;
-    left: 8px;
-    transform: translateY(-50%);
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
     grid-area: cards;
     align-self: center;
     justify-self: center;
+    display: flex;
+    align-items: center;
     & label {
       display: block;
-    }
-    & label:not(:last-child) {
-      margin-bottom: 6px;
+      padding: 8px 6px;
+      cursor: pointer;
     }
     .jump-dot {
       background-color: #8884;
-      border: 1px solid #8888;
       box-sizing: border-box;
-      width: 8px;
-      height: 20px;
+      width: 20px;
+      height: 8px;
       border-radius: 8px;
-      cursor: pointer;
     }
   }
   .blackboard-cards {
+    display: flex;
     grid-area: cards;
-    --blackboard-width: 568.5px;
+    --blackboard-width: 350px;
     --blackboard-height: 250px;
+    --image-height: 197px;
     width: var(--blackboard-width);
     height: var(--blackboard-height);
     border-radius: 16px;
     overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 4px 8px 0 #0001;
+    body.dark & {
+      background-color: #282828;
+    }
+
     .blackboard-card {
+      flex: 0 0 auto;
       width: 100%;
       height: 100%;
       position: relative;
@@ -137,27 +145,26 @@ $first-row-height: 250px;
       transition: 0.8s cubic-bezier(0.44, 0.29, 0.13, 1);
       img {
         width: 100%;
-        height: 100%;
+        height: var(--image-height);
         object-fit: fill;
         display: block;
         border-radius: 12px;
+        transition-duration: inherit;
       }
       .title {
         position: absolute;
-        bottom: 8px;
+        bottom: 24px;
         left: 50%;
         transform: translateX(-50%);
-        padding: 4px 16px;
-        color: white;
-        background-color: #000a;
+        padding: 0 16px;
         font-size: 14px;
         font-weight: bold;
         border-radius: 14px;
+        max-width: var(--blackboard-width);
+        box-sizing: border-box;
         white-space: nowrap;
-        opacity: 0;
-      }
-      &:hover .title {
-        opacity: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
     }
   }

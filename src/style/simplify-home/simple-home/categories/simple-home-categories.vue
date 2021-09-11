@@ -219,6 +219,8 @@ export default {
     font-weight: bold;
     font-size: 11pt;
     padding-bottom: 12px;
+    margin: 0;
+    height: auto;
     &::before {
       content: '';
       display: inline-flex;

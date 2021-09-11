@@ -1,5 +1,5 @@
 <template>
-  <div class="simple-home" :class="{ snap }">
+  <div class="simple-home" :class="{ snap, 'layout-fill': layoutFill }">
     <blackboards></blackboards>
     <trending-videos></trending-videos>
     <info-row></info-row>
@@ -19,11 +19,15 @@ export default {
   data() {
     return {
       snap: false,
+      layoutFill: true,
     }
   },
   mounted() {
     addSettingsListener('simpleHomeWheelScroll', (value: boolean) => {
       this.snap = !value
+    }, true)
+    addSettingsListener('simpleHomeLayoutFill', (value: boolean) => {
+      this.layoutFill = value
     }, true)
   },
 }
@@ -57,14 +61,14 @@ export default {
         label:nth-child(#{$i})
         .jump-dot {
         background-color: var(--theme-color);
-        height: 40px;
+        width: 40px;
       }
       &:checked:nth-of-type(#{$i}) ~ .blackboard-cards .blackboard-card {
-        transform: translateY(calc(-1 * #{$i - 1} * var(--blackboard-height))) scale(0.95);
+        transform: translateX(calc(-1 * #{$i - 1} * var(--blackboard-width))) scale(0.9);
         &:nth-of-type(#{$i}) {
-          transform: translateY(calc(-1 * #{$i - 1} * var(--blackboard-height)));
+          transform: translateX(calc(-1 * #{$i - 1} * var(--blackboard-width)));
           img {
-            border-radius: 16px;
+            border-radius: 16px 16px 0 0;
           }
         }
       }
@@ -186,6 +190,46 @@ export default {
   .categories {
     grid-area: categories;
     padding-bottom: 32px;
+  }
+  &.layout-fill {
+    flex: 1;
+    .trendings,
+    .feeds {
+      justify-self: stretch;
+    }
+
+    &.layout-fill .edge-gradient {
+      width: auto;
+      &::before,
+      &::after {
+        content: "";
+        position: fixed;
+        bottom: 0;
+        height: calc(var(--card-height) + 16px);
+        width: 10%;
+        pointer-events: none;
+        z-index: 1;
+        transition: .2s ease-out;
+      }
+      &::before {
+        background-image: linear-gradient(to left, transparent, var(--simplify-home-background));
+        left: 0;
+        opacity: 0;
+      }
+      &::after {
+        background-image: linear-gradient(to right, transparent, var(--simplify-home-background));
+        right: 0;
+        opacity: 1;
+      }
+      &.is-bottom {
+        &::before {
+          opacity: 1;
+        }
+        &::after {
+          opacity: 0;
+        }
+      }
+    }
   }
   @media screen and (max-width: 1100px) {
     & {

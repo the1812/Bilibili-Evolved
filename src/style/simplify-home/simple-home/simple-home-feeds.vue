@@ -32,7 +32,7 @@
         <icon type="home" icon="activity"></icon>全部动态
       </a>
     </div>
-    <div class="contents" ref="contents">
+    <div class="contents edge-gradient" ref="contents" @scroll="checkScrollPosition" :class="{ 'is-bottom': isBottom }">
       <div class="card-wrapper" v-for="card in feedCards" :key="card.id">
         <video-card :data="card" orientation="vertical"></video-card>
       </div>
@@ -82,6 +82,7 @@ export default {
   data() {
     return {
       online: '--',
+      isBottom: false,
       tabs,
       currentTab: tabs[0],
       feedCards: []
@@ -112,7 +113,11 @@ export default {
       const gap = 16
       const distance = count * (width + gap)
       contents.scrollBy(orientation * distance, 0)
-    }
+    },
+    checkScrollPosition: _.debounce(function checkScrollPosition(e: Event) {
+      const element = e.target as HTMLElement
+      this.isBottom = element.scrollWidth - element.scrollLeft === element.clientWidth
+    }, 200),
   },
   async mounted() {
     this.updateFeedCards(this.currentTab)
@@ -209,7 +214,7 @@ export default {
     --card-height: 250px;
     --card-count: 4;
     width: calc((var(--card-width) + 16px) * var(--card-count));
-    padding-bottom: 16px;
+    // padding-bottom: 16px;
     scrollbar-width: none !important;
     min-height: calc(var(--card-height) + 16px);
     @media screen and (max-width: 900px) {

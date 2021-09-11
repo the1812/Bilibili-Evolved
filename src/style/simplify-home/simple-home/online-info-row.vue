@@ -128,19 +128,19 @@ export default {
     // display: grid;
     // grid-template: 'main main main' 1fr / 1fr 1fr 1fr;
     flex-grow: 1;
-    margin: 16px 0;
+    margin: 16px 0 10px 0;
     justify-self: stretch;
     // grid-gap: 12px;
     // gap: 12px;
     .entry-row {
       display: flex;
       align-items: center;
-      margin-top: 16px;
+      margin-top: 10px;
       .entry {
         flex: 1;
         display: flex;
         align-items: center;
-        border-radius: 8px;
+        border-radius: 18px;
         font-size: 14px;
         color: inherit;
         background-color: #fff;
@@ -182,7 +182,7 @@ export default {
       position: relative;
       width: 350px;
       height: 204px;
-      border-radius: 8px;
+      border-radius: 16px;
       overflow: hidden;
       .image {
         background-size: cover;

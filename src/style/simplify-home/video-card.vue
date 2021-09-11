@@ -39,23 +39,23 @@
       <div class="name" :title="upName">{{upName}}</div>
     </a>
     <div class="stats">
-      <template v-if="like && !vertical">
+      <Icon type="extended" icon="play"></Icon>
+      {{playCount}}
+      <template v-if="danmakuCount">
+        <Icon type="extended" icon="danmaku"></Icon>
+        {{danmakuCount}}
+      </template>
+      <template v-if="like">
         <Icon type="extended" icon="like-outline"></Icon>
         {{like}}
       </template>
-      <template v-if="coins && !vertical">
+      <template v-if="coins">
         <Icon type="home" icon="coin-outline"></Icon>
         {{coins}}
       </template>
       <template v-if="favorites">
         <Icon type="home" icon="favorites-outline"></Icon>
         {{favorites}}
-      </template>
-      <Icon type="extended" icon="play"></Icon>
-      {{playCount}}
-      <template v-if="danmakuCount">
-        <Icon type="extended" icon="danmaku"></Icon>
-        {{danmakuCount}}
       </template>
     </div>
   </a>
@@ -176,6 +176,9 @@ export default {
       justify-self: start;
       margin-bottom: 8px;
       margin-right: 0;
+      > :nth-child(n+3) {
+        display: none;
+      }
     }
   }
   & > * {

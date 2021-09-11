@@ -426,6 +426,11 @@ declare global {
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,
     simplifyHomeStyle: '清爽' | '极简',
+    simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
+    simpleHomeBangumiLayout: '时间表' | '动态',
+    simpleHomeWheelScroll: boolean,
+    simpleHomePersonalized: boolean,
+    simpleHomeLayoutFill: boolean,
     minimalHomeSettings: {
       showSearch: boolean,
       backgroundImage: string,
@@ -455,9 +460,6 @@ declare global {
     defaultMedalID: number,
     autoMatchMedal: boolean,
     customStyles: CustomStyle[],
-    simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
-    simpleHomeBangumiLayout: '时间表' | '动态',
-    simpleHomeWheelScroll: boolean,
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
     collapseLiveSideBar: boolean,
