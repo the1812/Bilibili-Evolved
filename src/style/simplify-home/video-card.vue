@@ -40,22 +40,22 @@
     </a>
     <div class="stats">
       <Icon type="extended" icon="play"></Icon>
-      {{playCount}}
+      <span>{{playCount}}</span>
       <template v-if="danmakuCount">
         <Icon type="extended" icon="danmaku"></Icon>
-        {{danmakuCount}}
+        <span>{{danmakuCount}}</span>
       </template>
       <template v-if="like">
         <Icon type="extended" icon="like-outline"></Icon>
-        {{like}}
+        <span>{{like}}</span>
       </template>
       <template v-if="coins">
         <Icon type="home" icon="coin-outline"></Icon>
-        {{coins}}
+        <span>{{coins}}</span>
       </template>
       <template v-if="favorites">
         <Icon type="home" icon="favorites-outline"></Icon>
-        {{favorites}}
+        <span>{{favorites}}</span>
       </template>
     </div>
   </a>
@@ -176,7 +176,7 @@ export default {
       justify-self: start;
       margin-bottom: 8px;
       margin-right: 0;
-      > :nth-child(n+3) {
+      > :nth-child(n + 5) {
         display: none;
       }
     }

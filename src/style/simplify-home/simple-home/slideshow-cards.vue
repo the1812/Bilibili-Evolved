@@ -151,6 +151,7 @@ export default {
   }
   @mixin round-button {
     background-color: #ddd;
+    color: inherit;
     border-radius: 50%;
     border: none;
     display: flex;

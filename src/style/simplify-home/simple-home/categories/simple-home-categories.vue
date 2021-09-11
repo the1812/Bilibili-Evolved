@@ -220,7 +220,8 @@ export default {
     font-size: 11pt;
     padding-bottom: 12px;
     margin: 0;
-    height: auto;
+    height: 20px;
+    box-sizing: content-box;
     &::before {
       content: '';
       display: inline-flex;
