@@ -77,7 +77,6 @@ const entry = async () => {
       }
       return true
     })
-    // if (urlParams.length !== filteredParams.length) {
     const filteredParamsString = filteredParams.join('&')
     const url = document.URL.replace(window.location.search, '')
     const query = filteredParamsString ? (`?${filteredParamsString}`) : ''
@@ -86,14 +85,12 @@ const entry = async () => {
       console.log('[URL params clean]', document.URL, newUrl)
       window.history.replaceState({}, document.title, newUrl)
     }
-    // }
   }
   const { fullyLoaded } = await import('@/core/life-cycle')
-  const { videoChange } = await import('@/core/observer')
+  const { urlChange } = await import('@/core/observer')
   fullyLoaded(() => {
     if (document.contentType === 'text/html') {
-      clean()
-      videoChange(() => clean())
+      urlChange(() => clean())
     }
   })
 }
