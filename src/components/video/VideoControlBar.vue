@@ -51,6 +51,8 @@ export default Vue.extend({
       font-size: $size;
       width: $size;
       height: $size;
+      color: #fff;
+      fill: #fff;
       .bilibili-player.mode-fullscreen &,
       .bilibili-player.mode-webfullscreen & {
         $size: 28px;
