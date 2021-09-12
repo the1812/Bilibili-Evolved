@@ -2,9 +2,6 @@ import { dqa } from './utils'
 import { select } from './spin-query'
 import { matchCurrentPage, playerUrls } from './utils/urls'
 
-let cidHooked = false
-type VideoChangeCallback = (id: { aid: string; cid: string }) => void
-const videoChangeCallbacks: VideoChangeCallback[] = []
 type ObserverTarget = string | Element[] | Element
 const resolveTargets = (target: ObserverTarget) => {
   if (typeof target === 'string') {
@@ -199,6 +196,30 @@ export const sizeChange = (
   box: 'border-box',
 }, callback)
 
+const setupUrlChangeListener = lodash.once(() => {
+  let lastUrl = document.URL
+  const fireEvent = () => {
+    const event = new CustomEvent('urlChange', { detail: document.URL })
+    window.dispatchEvent(event)
+  }
+  allMutations(() => {
+    if (lastUrl !== document.URL) {
+      fireEvent()
+      lastUrl = document.URL
+    }
+  })
+})
+/**
+ * 监听 URL 变化
+ * @param callback 回调函数
+ * @param config 事件监听选项
+ */
+export const urlChange = (callback: (url: string) => void, config?: AddEventListenerOptions) => {
+  setupUrlChangeListener()
+  callback(document.URL)
+  window.addEventListener('urlChange', () => callback(document.URL), config)
+}
+
 /** 等待 cid */
 const selectCid = lodash.once(() => select(() => {
   if (unsafeWindow.cid) {
@@ -219,12 +240,19 @@ const selectCid = lodash.once(() => select(() => {
   }
   return null
 }))
+
+let cidHooked = false
+type VideoChangeCallback = (id: { aid: string; cid: string }) => void
 /**
- * 监听视频的变化, 等待视频加载并开始监听后resolve
+ * 监听视频的变化, 等待视频加载并开始监听后 resolve
  * @param callback 回调函数
+ * @param config 事件监听选项
  * @returns 是否有视频存在
  */
-export const videoChange = async (callback: VideoChangeCallback) => {
+export const videoChange = async (
+  callback: VideoChangeCallback,
+  config?: AddEventListenerOptions,
+) => {
   if (!matchCurrentPage(playerUrls)) {
     return false
   }
@@ -233,6 +261,15 @@ export const videoChange = async (callback: VideoChangeCallback) => {
   const cid = await selectCid()
   if (cid === null) {
     return false
+  }
+  const getId = () => ({
+    aid: unsafeWindow.aid,
+    cid: unsafeWindow.cid,
+  })
+  const fireEvent = () => {
+    const detail = getId()
+    const event = new CustomEvent('videoChange', { detail })
+    window.dispatchEvent(event)
   }
   if (!cidHooked) {
     let hookedCid = cid
@@ -243,27 +280,13 @@ export const videoChange = async (callback: VideoChangeCallback) => {
       set(newId) {
         hookedCid = newId
         if (!Array.isArray(newId)) {
-          videoChangeCallbacks.forEach(it => it({
-            aid: unsafeWindow.aid,
-            cid: unsafeWindow.cid,
-          }))
+          fireEvent()
         }
       },
     })
     cidHooked = true
   }
-  // const videoContainer = await select('.bilibili-player-video video')
-  // if (videoContainer) {
-  //   childList(videoContainer, () => callback({
-  //     aid: unsafeWindow.aid,
-  //     cid: unsafeWindow.cid,
-  //   }))
-  // } else {
-  callback({
-    aid: unsafeWindow.aid,
-    cid: unsafeWindow.cid,
-  })
-  // }
-  videoChangeCallbacks.push(callback)
+  callback(getId())
+  window.addEventListener('videoChange', (e: CustomEvent<ReturnType<typeof getId>>) => callback(e.detail), config)
   return true
 }
