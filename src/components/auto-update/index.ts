@@ -217,7 +217,9 @@ export const component: ComponentMetadata = {
         const { options } = getComponentSettings('autoUpdate')
         actions.push(metadata => {
           const item = options.urls.components[metadata.name] as UpdateCheckItem
-
+          if (!item) {
+            return undefined
+          }
           return {
             name: 'checkUpdate',
             displayName: '检查更新',

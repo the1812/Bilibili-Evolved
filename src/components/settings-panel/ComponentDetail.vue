@@ -102,7 +102,13 @@ export default Vue.extend({
     const metadata = (this as any).componentData
     return {
       virtual: false,
-      componentActions: componentActions.filter(action => action(metadata).condition?.() ?? true),
+      componentActions: componentActions.filter(action => {
+        const data = action(metadata)
+        if (!data) {
+          return false
+        }
+        return data.condition?.() ?? true
+      }),
     }
   },
   computed: {
