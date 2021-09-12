@@ -57,7 +57,7 @@
           <template #toast>
             <div class="extra-actions-list">
               <ComponentAction
-                v-for="a of componentActions"
+                v-for="a of componentActions.map(action => action(componentData))"
                 :key="a.name"
                 class="extra-action-item"
                 :item="a"
@@ -102,7 +102,7 @@ export default Vue.extend({
     const metadata = (this as any).componentData
     return {
       virtual: false,
-      componentActions: componentActions.filter(action => action.condition?.(metadata) ?? true),
+      componentActions: componentActions.filter(action => action(metadata).condition?.() ?? true),
     }
   },
   computed: {

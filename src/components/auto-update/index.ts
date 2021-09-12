@@ -22,6 +22,7 @@ interface CheckUpdateConfig {
   installer: (code: string) => Promise<{ message: string }>
   filterNames?: string[]
 }
+const isLocalItem = (url: string) => localhost.test(url)
 const checkUpdate = async (config: CheckUpdateConfig) => {
   const {
     items,
@@ -192,12 +193,12 @@ export const component: ComponentMetadata = {
                 url,
                 lastUpdateCheck: Number(new Date()),
                 installTime: Number(new Date()),
-                alwaysUpdate: localhost.test(url),
+                alwaysUpdate: isLocalItem(url),
               } as UpdateCheckItem
             } else {
               existingItem.url = url
               existingItem.lastUpdateCheck = Number(new Date())
-              existingItem.alwaysUpdate = localhost.test(url)
+              existingItem.alwaysUpdate = isLocalItem(url)
               // keep install time
             }
           },
@@ -213,18 +214,24 @@ export const component: ComponentMetadata = {
         })
       })
       addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
-        actions.push({
-          name: 'checkUpdate',
-          displayName: '检查更新',
-          icon: 'mdi-cloud-download-outline',
-          condition: isUserComponent,
-          action: async metadata => {
-            const { Toast } = await import('@/core/toast')
-            const toast = Toast.info('检查更新中...', '检查更新')
-            const result = await checkComponentsUpdate(metadata.name)
-            toast.message = result
-            toast.duration = 3000
-          },
+        const { options } = getComponentSettings('autoUpdate')
+        actions.push(metadata => {
+          const item = options.urls.components[metadata.name] as UpdateCheckItem
+
+          return {
+            name: 'checkUpdate',
+            displayName: '检查更新',
+            icon: isLocalItem(item.url) ? 'mdi-file-download-outline' : 'mdi-cloud-download-outline',
+            condition: () => isUserComponent(metadata),
+            title: item.url,
+            action: async () => {
+              const { Toast } = await import('@/core/toast')
+              const toast = Toast.info('检查更新中...', '检查更新')
+              const result = await checkComponentsUpdate(metadata.name)
+              toast.message = result
+              toast.duration = 3000
+            },
+          }
         })
       })
     },

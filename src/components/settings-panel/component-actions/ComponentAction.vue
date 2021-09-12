@@ -3,6 +3,7 @@
     class="component-action"
     :class="{ disabled }"
     :aria-disabled="disabled"
+    :title="item.title"
     @click="handleClick"
   >
     <VIcon :icon="item.icon" :size="16" />

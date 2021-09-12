@@ -1,27 +1,31 @@
 import { registerAndGetData } from '@/plugins/data'
-import { ExecutableWithParameter } from '@/core/common-types'
+import { Executable } from '@/core/common-types'
 import { getHook } from '@/plugins/hook'
 import { isUserComponent } from '@/core/settings'
 import { ComponentMetadata } from '../../types'
 import { uninstallComponent } from '../../user-component'
 
-export interface ComponentAction {
+export type ComponentAction = (metadata: ComponentMetadata) => {
   name: string
   displayName: string
-  action: ExecutableWithParameter<[ComponentMetadata], void>
+  action: Executable
   icon: string
-  condition?: (metadata: ComponentMetadata) => boolean
+  title?: string
+  condition?: () => boolean
 }
 
-export const [componentActions] = registerAndGetData('settingsPanel.componentActions', [{
-  name: 'uninstall',
-  displayName: '卸载',
-  icon: 'mdi-trash-can-outline',
-  condition: isUserComponent,
-  action: async metadata => {
-    const { before, after } = getHook('userComponents.remove', metadata)
-    await before()
-    await uninstallComponent(metadata.name)
-    await after()
-  },
-}] as ComponentAction[])
+const builtInActions: ComponentAction[] = [
+  metadata => ({
+    name: 'uninstall',
+    displayName: '卸载',
+    icon: 'mdi-trash-can-outline',
+    condition: () => isUserComponent(metadata),
+    action: async () => {
+      const { before, after } = getHook('userComponents.remove', metadata)
+      await before()
+      await uninstallComponent(metadata.name)
+      await after()
+    },
+  }),
+]
+export const [componentActions] = registerAndGetData('settingsPanel.componentActions', builtInActions)
