@@ -304,7 +304,7 @@ class FeedsCardsManager extends EventTarget {
       }
       const originalCard = JSON.parse(vueData.card.origin)
       const originalText: string = vueData.originCardData.pureText
-      const originalDescription: string = _.get(originalCard, 'item.description', '')
+      const originalDescription: string = lodash.get(originalCard, 'item.description', '')
       const originalTitle: string = originalCard.title
       return {
         originalText,
@@ -374,7 +374,7 @@ class FeedsCardsManager extends EventTarget {
     if (isRepostType(card)) {
       const currentUsername = card.username
       const vueData = getVueData(card.element)
-      const repostUsername = _.get(vueData, 'card.origin_user.info.uname', '')
+      const repostUsername = lodash.get(vueData, 'card.origin_user.info.uname', '')
       if (currentUsername === repostUsername) {
         element.setAttribute('data-self-repost', 'true')
       }

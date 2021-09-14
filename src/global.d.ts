@@ -2,7 +2,9 @@ import { LoDashStatic } from 'lodash'
 import { CoreApis, ExternalApis } from './core/core-apis'
 
 declare global {
+  /** @deprecated Use window.lodash instead. */
   const _: LoDashStatic
+
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
 

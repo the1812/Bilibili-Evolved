@@ -1,6 +1,12 @@
 /** 初始化脚本 */
 export const init = async () => {
   window.lodash = _
+  Object.defineProperty(window, '_', {
+    get() {
+      console.warn('window._ is deprecated, please use window.lodash instead.')
+      return window.lodash
+    },
+  })
 
   const { initVue } = await import('./init-vue')
   initVue()
