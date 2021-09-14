@@ -173,15 +173,21 @@
       background-color: #fff;
     }
     .comment-submit {
+      height: 64px !important;
       padding: 4px 15px !important;
       position: relative !important;
       right: 0 !important;
       margin-left: 10px !important;
     }
-    // .comment-submit,
-    .textarea-container .ipt-txt {
-      height: 65px !important;
-      width: calc(100% - 80px) !important;
+    .textarea-container {
+      .baffle {
+        line-height: 65px !important;
+      }
+      .baffle,
+      .ipt-txt {
+        height: 65px !important;
+        width: calc(100% - 80px) !important;
+      }
     }
     > * {
       pointer-events: initial;

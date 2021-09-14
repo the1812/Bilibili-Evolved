@@ -13,7 +13,7 @@ export const checkTransparentFill = async (vm: {
     return
   }
   sq(
-    () => dq('#banner_link,.international-header .bili-banner'),
+    () => dq('#banner_link,.international-header .bili-banner, .bili-header__banner'),
     banner => (banner === null ? false : Boolean((banner as HTMLElement).style.backgroundImage)),
   ).then((banner: HTMLElement) => {
     if (!banner) {

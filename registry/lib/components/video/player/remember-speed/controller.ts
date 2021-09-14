@@ -4,6 +4,7 @@ import { allMutationsOn, videoChange } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { ascendingSort } from '@/core/utils/sort'
+import { playerAgent } from '@/components/video/player-agent'
 
 export const minValue = 0.0625
 export const maxValue = 16
@@ -27,15 +28,36 @@ const options = rememberVideoSpeed.options as {
   individualRememberList: Record<string, string[]>
 }
 
-export class VideoSpeedController {
-  static readonly classNameMap = {
+const extendedAgent = playerAgent.provideCustomQuery({
+  video: {
     speedMenuList: 'bilibili-player-video-btn-speed-menu',
     speedMenuItem: 'bilibili-player-video-btn-speed-menu-list',
     speedNameBtn: 'bilibili-player-video-btn-speed-name',
     speedContainer: 'bilibili-player-video-btn-speed',
     active: 'bilibili-player-active',
     show: 'bilibili-player-speed-show',
-    video: 'bilibili-player-video',
+  },
+  bangumi: {
+    speedMenuList: 'squirtle-speed-select-list',
+    speedMenuItem: 'squirtle-select-item',
+    speedNameBtn: 'squirtle-speed-select-result',
+    speedContainer: 'squirtle-speed-wrap',
+    active: 'active',
+    // bangumi 那边没有这种 class, 随便填一个就行了
+    show: 'bilibili-player-speed-show',
+  },
+})
+const trimLeadingDot = (selector: string) => selector.replace(/^\./, '')
+
+export class VideoSpeedController {
+  static readonly classNameMap = {
+    speedMenuList: trimLeadingDot(extendedAgent.custom.speedMenuList.selector),
+    speedMenuItem: trimLeadingDot(extendedAgent.custom.speedMenuItem.selector),
+    speedNameBtn: trimLeadingDot(extendedAgent.custom.speedNameBtn.selector),
+    speedContainer: trimLeadingDot(extendedAgent.custom.speedContainer.selector),
+    active: trimLeadingDot(extendedAgent.custom.active.selector),
+    show: trimLeadingDot(extendedAgent.custom.show.selector),
+    video: trimLeadingDot(extendedAgent.query.video.container.selector),
   }
   static readonly nativeSupportedRates = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]
   static instanceMap = new WeakMap<HTMLElement, VideoSpeedController>()
@@ -230,6 +252,12 @@ export class VideoSpeedController {
     )
     this.nameBtn = this.containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedNameBtn}`) as HTMLButtonElement
     this.menuListElement = this.containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedMenuList}`) as HTMLElement
+    this.menuListElement.querySelectorAll(`.${VideoSpeedController.classNameMap.speedMenuItem}`).forEach(it => {
+      if (!it.hasAttribute('data-value')) {
+        const speed = parseFloat(it.textContent).toString()
+        it.setAttribute('data-value', speed)
+      }
+    })
 
     VideoSpeedController.instanceMap.set(containerElement, this)
   }
