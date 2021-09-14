@@ -13,7 +13,7 @@ export interface KeyBindingActionContext {
 }
 export interface KeyBindingAction {
   displayName: string
-  run: (context: KeyBindingActionContext) => boolean
+  run: (context: KeyBindingActionContext) => any
 }
 export interface KeyBinding {
   keys: string[]
@@ -74,7 +74,7 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         return
       }
 
-      const actionSuccess = binding.action.run({
+      const actionResult = binding.action.run({
         binding,
         isWatchlater,
         isMediaList,
@@ -84,6 +84,7 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         showTip,
       })
 
+      const actionSuccess = !lodash.isNil(actionResult)
       if (binding?.prevent ?? actionSuccess) {
         e.stopPropagation()
         e.preventDefault()

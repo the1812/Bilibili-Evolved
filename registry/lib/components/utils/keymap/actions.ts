@@ -1,11 +1,10 @@
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
-import { raiseEvent } from '@/core/utils'
 import { registerAndGetData } from '@/plugins/data'
 import { KeyBindingAction, KeyBindingActionContext } from './bindings'
 
-export const clickElement = async (
-  target: string | HTMLElement | Promise<HTMLElement>,
+export const clickElement = (
+  target: string | HTMLElement,
   context: KeyBindingActionContext,
 ) => {
   const { event } = context
@@ -19,8 +18,10 @@ export const clickElement = async (
     }
     targetElement.dispatchEvent(mouseEvent)
   } else {
-    const element = await target
-    element?.dispatchEvent(mouseEvent)
+    if (!target) {
+      return false
+    }
+    target.dispatchEvent(mouseEvent)
   }
   return true
 }
@@ -81,44 +82,37 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   volumeUp: {
     displayName: '增加音量',
     run: () => {
-      const volume = await playerAgent.changeVolume(10)
-      showTip(`${volume}%`, 'mdi-volume-high')
-
-      if (!unsafeWindow.player) {
-        return false
+      const volume = playerAgent.changeVolume(10)
+      if (lodash.isNil(volume)) {
+        return volume
       }
-      const current = unsafeWindow.player.volume()
-      unsafeWindow.player.volume(current + 0.1)
-      showTip(`${Math.round(unsafeWindow.player.volume() * 100)}%`, 'mdi-volume-high')
+      showTip(`${volume}%`, 'mdi-volume-high')
       return true
     },
   },
   volumeDown: {
     displayName: '降低音量',
     run: () => {
-      if (!unsafeWindow.player) {
-        return false
+      const volume = playerAgent.changeVolume(-10)
+      if (lodash.isNil(volume)) {
+        return volume
       }
-      const current = unsafeWindow.player.volume()
-      unsafeWindow.player.volume(current - 0.1)
-      const after = Math.round(unsafeWindow.player.volume() * 100)
-      if (after === 0) {
+      if (volume === 0) {
         showTip('静音', 'mdi-volume-off')
       } else {
-        showTip(`${after}%`, 'mdi-volume-high')
+        showTip(`${volume}%`, 'mdi-volume-high')
       }
       return true
     },
   },
   mute: {
     displayName: '静音',
-    run: context => {
-      if (!unsafeWindow.player) {
-        return false
+    run: () => {
+      const result = playerAgent.toggleMute()
+      if (lodash.isNil(result)) {
+        return result
       }
-      clickElement('.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume', context)
-      const isMute = unsafeWindow.player.isMute()
-      if (isMute) {
+      if (result) {
         showTip('已静音', 'mdi-volume-off')
       } else {
         showTip('已取消静音', 'mdi-volume-high')
@@ -128,7 +122,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   pictureInPicture: {
     displayName: '画中画',
-    run: useClickElement('.bilibili-player-video-btn-pip'),
+    run: () => playerAgent.togglePip(),
   },
   coin: {
     displayName: '投币',
@@ -140,7 +134,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   pause: {
     displayName: '暂停/播放',
-    run: useClickElement('.bilibili-player-video-btn-start'),
+    run: () => playerAgent.togglePlay(),
   },
   like: {
     displayName: '点赞',
@@ -174,44 +168,32 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   danmaku: {
     displayName: '弹幕开关',
-    run: () => {
-      const checkbox = dq('.bilibili-player-video-danmaku-switch input') as HTMLInputElement
-      if (!checkbox) {
-        return false
-      }
-      checkbox.checked = !checkbox.checked
-      raiseEvent(checkbox, 'change')
-      return true
-    },
+    run: () => playerAgent.toggleDanmaku(),
   },
   longJumpBackward: {
     displayName: '长倒退',
-    run: changeVideoTime(
-      () => -(getComponentSettings('keymap').options.longJumpSeconds),
-    ),
+    run: () => playerAgent.changeTime(-(getComponentSettings('keymap').options.longJumpSeconds)),
   },
   longJumpForward: {
     displayName: '长前进',
-    run: changeVideoTime(
-      () => getComponentSettings('keymap').options.longJumpSeconds,
-    ),
+    run: () => playerAgent.changeTime(getComponentSettings('keymap').options.longJumpSeconds),
   },
   jumpBackward: {
     displayName: '倒退',
-    run: changeVideoTime(-5),
+    run: () => playerAgent.changeTime(-5),
   },
   jumpForward: {
     displayName: '前进',
-    run: changeVideoTime(5),
+    run: () => playerAgent.changeTime(5),
   },
   playerMenu: {
     displayName: '播放器菜单',
     run: () => {
       // menu size: 386.6 x 311 (2020-03-29)
       // menu size: 176.65 x 194 (2020-06-09)
-      const player = dq('.bilibili-player-video-wrap') as HTMLElement
+      const player = playerAgent.query.video.container.sync() as HTMLElement
       if (!player) {
-        return false
+        return null
       }
       const rect = player.getBoundingClientRect()
       player.dispatchEvent(new MouseEvent('contextmenu', {
@@ -228,20 +210,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   seekBegin: {
     displayName: '回开头',
-    run: () => {
-      if (!unsafeWindow.player) {
-        return false
-      }
-      unsafeWindow.player.play()
-      setTimeout(() => {
-        unsafeWindow.player.seek(0)
-        const toastText = dq('.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)')
-        if (toastText) {
-          toastText.textContent = ' 00:00'
-        }
-      })
-      return true
-    },
+    run: () => playerAgent.seek(0),
   },
 }
 export const [actions] = registerAndGetData('keymap.actions', builtInActions)
