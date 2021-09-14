@@ -1,9 +1,13 @@
+import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
 import { raiseEvent } from '@/core/utils'
 import { registerAndGetData } from '@/plugins/data'
 import { KeyBindingAction, KeyBindingActionContext } from './bindings'
 
-export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
+export const clickElement = async (
+  target: string | HTMLElement | Promise<HTMLElement>,
+  context: KeyBindingActionContext,
+) => {
   const { event } = context
   const mouseEvent = new MouseEvent('click', {
     ...lodash.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
@@ -15,30 +19,17 @@ export const clickElement = (target: string | HTMLElement, context: KeyBindingAc
     }
     targetElement.dispatchEvent(mouseEvent)
   } else {
-    target.dispatchEvent(mouseEvent)
+    const element = await target
+    element?.dispatchEvent(mouseEvent)
   }
   return true
 }
 export const useClickElement = (target: string | HTMLElement) => (
   (context: KeyBindingActionContext) => clickElement(target, context)
 )
-export const changeVideoTime = (delta: number | (() => number)) => () => {
-  const video = dq('.bilibili-player-video video') as HTMLVideoElement
-  const deltaNumber = typeof delta === 'function' ? delta() : delta
-  console.log(`[keymap] requested video time change, delta = ${delta}`)
-  if (!video) {
-    console.log('[keymap] video element not found')
-    return false
-  }
-  if (!unsafeWindow.player) {
-    // fallback
-    console.log('[keymap] fallback')
-    video.currentTime += deltaNumber
-  }
-  console.log('[keymap] player API seek')
-  unsafeWindow.player.seek(video.currentTime + deltaNumber, video.paused)
-  return true
-}
+export const changeVideoTime = (delta: number | (() => number)) => () => (
+  playerAgent.changeTime(typeof delta === 'number' ? delta : delta())
+)
 /** 提示框用的`setTimeout`句柄 */
 let tipTimeoutHandle: number
 /**
@@ -46,10 +37,10 @@ let tipTimeoutHandle: number
  * @param text 文字 (可以 HTML)
  * @param icon MDI 图标 class
  */
-export const showTip = (text: string, icon: string) => {
+export const showTip = async (text: string, icon: string) => {
   let tip = dq('.keymap-tip') as HTMLDivElement
   if (!tip) {
-    const player = dq('.bilibili-player-video-wrap')
+    const player = await playerAgent.query.playerArea() as HTMLElement
     if (!player) {
       return
     }
@@ -77,19 +68,22 @@ export const showTip = (text: string, icon: string) => {
 export const builtInActions: Record<string, KeyBindingAction> = {
   fullscreen: {
     displayName: '全屏',
-    run: useClickElement('.bilibili-player-video-btn-fullscreen'),
+    run: () => playerAgent.fullscreen(),
   },
   webFullscreen: {
     displayName: '网页全屏',
-    run: useClickElement('.bilibili-player-video-web-fullscreen'),
+    run: () => playerAgent.webFullscreen(),
   },
   wideScreen: {
     displayName: '宽屏',
-    run: useClickElement('.bilibili-player-video-btn-widescreen'),
+    run: () => playerAgent.widescreen(),
   },
   volumeUp: {
     displayName: '增加音量',
     run: () => {
+      const volume = await playerAgent.changeVolume(10)
+      showTip(`${volume}%`, 'mdi-volume-high')
+
       if (!unsafeWindow.player) {
         return false
       }

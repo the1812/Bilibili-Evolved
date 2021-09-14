@@ -9,6 +9,7 @@ import ColumnCard from './feeds/ColumnCard.vue'
 import * as disableProfilePopup from './feeds/disable-profile-popup'
 import * as notify from './feeds/notify'
 import * as assUtils from './video/ass-utils'
+import * as playerAgent from './video/player-agent'
 import * as playerLight from './video/player-light'
 import * as videoDanmaku from './video/video-danmaku'
 import * as videoInfo from './video/video-info'
@@ -45,6 +46,7 @@ export const componentApis = {
   video: {
     assUtils,
     playerLight,
+    playerAgent,
     videoDanmaku,
     videoInfo,
     videoQuality,
