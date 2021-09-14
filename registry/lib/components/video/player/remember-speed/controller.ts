@@ -146,7 +146,7 @@ export class VideoSpeedController {
 
   static async getInstance(previousSpeed?: number, nativeSpeed?: number) {
     const containerElement = await select(`.${VideoSpeedController.classNameMap.speedContainer}`) as HTMLElement
-    const videoElement = await select(`.${VideoSpeedController.classNameMap.video} video`) as HTMLVideoElement
+    const videoElement = await playerAgent.query.video.element() as HTMLVideoElement
 
     if (!containerElement) {
       throw new Error('speed container element not found!')

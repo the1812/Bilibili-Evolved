@@ -143,7 +143,7 @@ export class VideoPlayerAgent extends PlayerAgent {
     bilibiliPlayer: '.bilibili-player',
     playerArea: '.bilibili-player-area',
     video: {
-      element: 'video',
+      element: '.bilibili-player-video video',
       wrap: '.bilibili-player-video-wrap',
       top: '.bilibili-player-top',
       state: '.bilibili-player-state',
@@ -229,7 +229,7 @@ export class BwpPlayerAgent extends VideoPlayerAgent {
   type: AgentType = 'bwp'
   constructor() {
     super()
-    this.query.video.element = elementQuery('bwp-video')
+    this.query.video.element = elementQuery('.bilibili-player-video bwp-video')
   }
 }
 export class BangumiPlayerAgent extends PlayerAgent {
@@ -239,7 +239,7 @@ export class BangumiPlayerAgent extends PlayerAgent {
     bilibiliPlayer: '.bpx-player-container',
     playerArea: '.bpx-player-primary-area',
     video: {
-      element: 'video',
+      element: '.bpx-player-video-wrap video',
       wrap: '.bpx-player-video-area',
       top: '.bpx-player-top-wrap',
       state: '.bpx-player-state-wrap',
