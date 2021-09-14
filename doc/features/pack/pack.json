@@ -87,7 +87,8 @@
       "skipChargeList",
       "quickFavorite",
       "seoRedirect",
-      "downloadSubtitle"
+      "downloadSubtitle",
+      "videoCurTime"
     ],
     "plugins": [
       "i18n.language.english",
@@ -463,7 +464,7 @@
         "type": "component",
         "name": "touchPlayerGestures",
         "displayName": "播放器触摸手势",
-        "description": "为播放器启用触摸手势支持:\n- 左右滑动可调整进度\n- 上下滑动可调整音量\n- 进度调整可在左上角和右上角取消\n- 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.",
+        "description": "为播放器启用触摸手势支持:\r\n- 左右滑动可调整进度\r\n- 上下滑动可调整音量\r\n- 进度调整可在左上角和右上角取消\r\n- 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.",
         "fullRelativePath": "../../registry/dist/components/touch/player-gestures.js",
         "fullAbsolutePath": "registry/dist/components/touch/player-gestures.js"
       },
@@ -511,7 +512,7 @@
         "type": "component",
         "name": "imageExporter",
         "displayName": "图片批量导出",
-        "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\n\n动态文件名变量:\n`user`: 用户名\n`id`: 动态 ID\n`n`: 第 n 张图\n\n专栏文件名变量:\n`title`: 专栏标题\n`n`: 第 n 张图",
+        "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n`user`: 用户名\r\n`id`: 动态 ID\r\n`n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n`title`: 专栏标题\r\n`n`: 第 n 张图",
         "fullRelativePath": "../../registry/dist/components/utils/image-exporter.js",
         "fullAbsolutePath": "registry/dist/components/utils/image-exporter.js"
       },
@@ -679,7 +680,7 @@
         "type": "component",
         "name": "playerFocus",
         "displayName": "播放器定位",
-        "description": "进入视频/番剧页面时, 自动定位到播放器.\n\n可设置定位时的竖直偏移量, 单位为像素(px).",
+        "description": "进入视频/番剧页面时, 自动定位到播放器.\r\n\r\n可设置定位时的竖直偏移量, 单位为像素(px).",
         "fullRelativePath": "../../registry/dist/components/video/player/focus.js",
         "fullAbsolutePath": "registry/dist/components/video/player/focus.js"
       },
@@ -727,7 +728,7 @@
         "type": "component",
         "name": "videoScreenshot",
         "displayName": "启用视频截图",
-        "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.\n\n如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为\"按住<kbd>Shift</kbd>点击截图按钮\", 键盘操作为\"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>\".",
+        "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.\r\n\r\n如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为\"按住<kbd>Shift</kbd>点击截图按钮\", 键盘操作为\"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>\".",
         "fullRelativePath": "../../registry/dist/components/video/player/screenshot.js",
         "fullAbsolutePath": "registry/dist/components/video/player/screenshot.js"
       },
@@ -735,7 +736,7 @@
         "type": "component",
         "name": "seekByFrames",
         "displayName": "启用逐帧调整",
-        "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\n\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
+        "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\r\n\r\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
         "fullRelativePath": "../../registry/dist/components/video/player/seek-by-frames.js",
         "fullAbsolutePath": "registry/dist/components/video/player/seek-by-frames.js"
       },
@@ -778,6 +779,14 @@
         "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
         "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
         "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
+      },
+      {
+        "type": "component",
+        "name": "videoCurTime",
+        "displayName": "视频内显示时间",
+        "fullRelativePath": "../../registry/dist/components/video/player/localtime.js",
+        "fullAbsolutePath": "registry/dist/components/video/player/localtime.js",
+        "owner": "FoundTheWOUT"
       },
       {
         "type": "plugin",

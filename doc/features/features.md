@@ -805,6 +805,13 @@ by [@JLoeve](https://github.com/LonelySteve)
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/subtitle/download.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/subtitle/download.js)
 
 启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.
+
+### [视频内显示时间](../../registry/dist/components/video/player/localtime.js)
+`videoCurTime`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@v2/registry/dist/components/video/player/localtime.js) / [`Preview`](https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@preview/registry/dist/components/video/player/localtime.js)
+
+**GitHub:** [`Stable`](https://github.com/FoundTheWOUT/Bilibili-Evolved/raw/v2/registry/dist/components/video/player/localtime.js) / [`Preview`](https://github.com/FoundTheWOUT/Bilibili-Evolved/raw/preview/registry/dist/components/video/player/localtime.js)
 ## 插件
 
 ### [英语语言包](../../registry/dist/plugins/i18n/en-US.js)
