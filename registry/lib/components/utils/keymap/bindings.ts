@@ -14,11 +14,12 @@ export interface KeyBindingActionContext {
 export interface KeyBindingAction {
   displayName: string
   run: (context: KeyBindingActionContext) => any
+  prevent?: boolean
+  ignoreTyping?: boolean
 }
 export interface KeyBinding {
   keys: string[]
   action: KeyBindingAction
-  prevent?: boolean
 }
 const modifyKeys = [
   'shift',
@@ -37,22 +38,23 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
     if (!config.enable) {
       return
     }
-    // 打字时无视快捷键
-    if (isTyping()) {
-      return
-    }
-    const key = e.key.toLowerCase()
-
-    // 全景视频禁用 WASD 快捷键
-    const panoramaControl = dq('.bilibili-player-sphere-control') as HTMLElement
-    if (panoramaControl !== null && panoramaControl.style.display !== 'none' && ['w', 'a', 's', 'd'].includes(key)) {
-      return
-    }
-
     config.bindings.forEach(binding => {
       if (binding.keys.length === 0) {
         return
       }
+
+      // 打字时无视快捷键
+      if (binding.action.ignoreTyping !== false && isTyping()) {
+        return
+      }
+      const key = e.key.toLowerCase()
+
+      // 全景视频禁用 WASD 快捷键
+      const panoramaControl = dq('.bilibili-player-sphere-control') as HTMLElement
+      if (panoramaControl !== null && panoramaControl.style.display !== 'none' && ['w', 'a', 's', 'd'].includes(key)) {
+        return
+      }
+
       const modifyKeyNotMatch = modifyKeys.some(m => {
         const needModifyKey = binding.keys.includes(m)
         const optionalModifyKey = binding.keys.includes(`[${m}]`)
@@ -85,7 +87,7 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
       })
 
       const actionSuccess = !lodash.isNil(actionResult)
-      if (binding?.prevent ?? actionSuccess) {
+      if (binding.action.prevent ?? actionSuccess) {
         e.stopPropagation()
         e.preventDefault()
       }

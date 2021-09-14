@@ -214,6 +214,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   sendComment: {
     displayName: '发送评论',
+    ignoreTyping: false,
     run: () => {
       const sendButton = document.activeElement?.nextElementSibling as HTMLButtonElement
       if (!sendButton) {
