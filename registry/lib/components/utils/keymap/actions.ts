@@ -212,5 +212,16 @@ export const builtInActions: Record<string, KeyBindingAction> = {
     displayName: '回开头',
     run: () => playerAgent.seek(0),
   },
+  sendComment: {
+    displayName: '发送评论',
+    run: () => {
+      const sendButton = document.activeElement?.nextElementSibling as HTMLButtonElement
+      if (!sendButton) {
+        return null
+      }
+      sendButton.click()
+      return true
+    },
+  },
 }
 export const [actions] = registerAndGetData('keymap.actions', builtInActions)

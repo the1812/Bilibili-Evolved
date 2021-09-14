@@ -19,6 +19,7 @@ export const presetBase: Record<string, string> = {
   jumpForward: 'arrowRight',
   danmaku: 'd',
   seekBegin: '0',
+  sendComment: 'shift enter',
 }
 export const builtInPresets: Record<string, Record<string, string>> = {
   Default: {},
