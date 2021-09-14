@@ -1,13 +1,10 @@
+import { playerAgent } from '@/components/video/player-agent'
 import { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
 
 export const entry = async () => {
   const { videoChange } = await import('@/core/observer')
-  const { sq } = await import('@/core/spin-query')
   videoChange(async () => {
-    const video = await sq(
-      () => dq('video') as HTMLVideoElement,
-      it => Boolean(it?.duration ?? 0),
-    )
+    const video = await playerAgent.query.video.element()
     if (!video) {
       return
     }
@@ -26,13 +23,13 @@ export const entry = async () => {
       const GesturePreview = await import('./GesturePreview.vue')
       const { mountVueComponent } = await import('@/core/utils')
       gestureVM = mountVueComponent(GesturePreview)
-      dq('.bilibili-player-video-subtitle')?.insertAdjacentElement(
+      playerAgent.query.video.subtitle.sync()?.insertAdjacentElement(
         'beforebegin',
         gestureVM.$el,
       )
     }
     const { Swiper } = await import('./swiper')
-    const swiper = new Swiper(dq('.bilibili-player-video') as HTMLElement)
+    const swiper = new Swiper(playerAgent.query.video.container.sync())
     swiper.action.addEventListener('start', () => {
       gestureVM.sync()
     })

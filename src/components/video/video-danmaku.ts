@@ -1,5 +1,6 @@
 import { childListSubtree, videoChange } from '@/core/observer'
-import { hasVideo, select } from '@/core/spin-query'
+import { hasVideo } from '@/core/spin-query'
+import { playerAgent } from './player-agent'
 
 let danmakuContainerObserver: MutationObserver
 export interface DanmakuRecord {
@@ -61,7 +62,7 @@ export const forEachVideoDanmaku = async (callback: DanmakuRecordCallback) => {
     return
   }
   videoChange(async () => {
-    const container = await select('.bilibili-player-video-danmaku') as HTMLElement
+    const container = await playerAgent.query.video.danmaku()
     if (!container) {
       return
     }

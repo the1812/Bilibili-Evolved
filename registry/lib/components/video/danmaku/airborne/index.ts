@@ -1,8 +1,8 @@
 import { toggleStyle } from '@/components/styled-component'
 import { ComponentMetadata } from '@/components/types'
+import { playerAgent } from '@/components/video/player-agent'
 import { DanmakuRecord, forEachVideoDanmaku } from '@/components/video/video-danmaku'
 import { videoChange } from '@/core/observer'
-import { select } from '@/core/spin-query'
 import { playerUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
@@ -61,7 +61,7 @@ export const component: ComponentMetadata = {
     }
     forEachVideoDanmaku({ added: addAirborneStyle })
     videoChange(async () => {
-      const wrapper = await select('.bilibili-player-video-wrap') as HTMLElement
+      const wrapper = await playerAgent.query.video.wrap() as HTMLElement
       if (wrapper.classList.contains('airborne-enabled')) {
         return
       }

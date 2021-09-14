@@ -1,28 +1,24 @@
 import { ComponentMetadata } from '@/components/types'
+import { playerAgent } from '@/components/video/player-agent'
+import { videoChange } from '@/core/observer'
+import { addStyle } from '@/core/style'
 import { playerUrls } from '@/core/utils/urls'
 import touchStyles from './double-click-control.scss'
 
 const entry = async () => {
-  const { select } = await import('@/core/spin-query')
-  const { videoChange } = await import('@/core/observer')
-  const { addStyle } = await import('@/core/style')
-
   addStyle(touchStyles)
   const disableOriginalHover = 'disable-original-hover'
   const touchHover = 'touch-video-control-show'
   videoChange(async () => {
-    const playerArea = await select('.bilibili-player-area')
+    const playerArea = await playerAgent.query.playerArea()
     if (playerArea.classList.contains(disableOriginalHover)) {
       return
     }
     playerArea.classList.add(disableOriginalHover)
-    const videoWrapper = dq('.bilibili-player-video') as HTMLElement
+    const videoWrapper = playerAgent.query.video.container.sync()
     const { DoubleClickEvent } = await import('@/core/utils')
     const doubleClickEvent = new DoubleClickEvent(
-      () => {
-        const playButton = dq('.bilibili-player-video-btn-start') as HTMLElement
-        playButton?.click()
-      },
+      () => playerAgent.togglePlay(),
       true,
     )
     doubleClickEvent.singleClickHandler = () => {
