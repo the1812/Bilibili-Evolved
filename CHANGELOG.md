@@ -1,5 +1,35 @@
 # 更新日志
 
+## v2.0.0-tp8
+`v2.0.0 Technical Preview 8` `2021-09-15`
+
+**功能:**
+
+- 组件与 `v1.12.18` 同步更新.
+- 使用在线仓库时, 连接到 `github.com` 时无需再设置跨域.
+- 修复搜索栏建议的文本过长时溢出.
+- 快捷键设置也能从搜索栏中唤起了.
+- 修复播放器控制栏的扩展按钮(截图, 逐帧调整等)颜色不对.
+- 在组件详情的菜单中, 鼠标停留在 `检查更新` 上时可以显示安装的来源 URL, 如果是来自 `localhost`, 还会显示特定的图标作为区分. (#2278)
+- 快捷键支持 <kbd>Ctrl</kbd>+<kbd>Enter</kbd> 发送评论. (#1015)
+
+**开发:**
+
+- 新增 `RuntimeLibrary API` (`src/core/runtime-library.ts`), 可以在运行时动态载入第三方库, 可以避免在每次载入页面时都加载了不常用的库. 以下原先内置于脚本的库现已转换为运行时库:
+  - protobufjs
+  - JSZip
+  - Sortable
+- 重新整理了 `task.json` 中任务的命名.
+- 功能也和本体一样能参与 CI 构建流程了.
+- 支持记录第三方功能并在在线仓库中显示.
+- 在 `CONTRIBUTING.md` 中补充了一些 API 说明.
+- 主题颜色除了 10 级不同透明度 `var(--theme-color-XX)`, 也支持了 10 级不同明亮度 `var(--theme-color-lightness-XX)`.
+- `Toast` 的 `duration` 即使在 Toast 已发出后也能响应更改了.
+- 同 v1 一样, 按住 <kbd>Shift</kbd> 点击侧栏的功能将会执行 `debugger` 语句, 在开发者工具打开时能够立即停止页面运行.
+- 清理了一些无用文件, `widgets` 文件夹中的代码移动到 `ui` 和 `components` 中对应的文件夹.
+- `observer` 新增 `urlChange`, 可以检测 URL 变动.
+
+
 ## v2.0.0-tp7
 `v2.0.0 Technical Preview 7` `2021-08-23`
 
