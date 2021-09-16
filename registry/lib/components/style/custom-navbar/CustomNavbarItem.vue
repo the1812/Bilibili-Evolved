@@ -7,15 +7,16 @@
     :class="{ disabled: item.disabled, active: item.active }"
     :style="{ flex: item.flexStyle, order: item.order }"
   >
-    <a
+    <CustomNavbarLink
       v-if="item.href"
+      :new-tab="newTab"
       class="main-content"
       :href="!item.active && !item.touch && item.href"
       @mouseover.self="requestPopup()"
     >
       <template v-if="typeof item.content === 'string'">{{ item.content }}</template>
       <component :is="item.content" v-else :item="item"></component>
-    </a>
+    </CustomNavbarLink>
     <div
       v-else
       class="main-content"
@@ -48,25 +49,54 @@
 </template>
 
 <script lang="ts">
-// import { createPopper } from '@popperjs/core'
+import { addComponentListener, removeComponentListener } from '@/core/settings'
+import CustomNavbarLink from './CustomNavbarLink.vue'
 import { CustomNavbarItem } from './custom-navbar-item'
 
+const isOpenInNewTab = (item: CustomNavbarItem) => {
+  const { name } = item
+  const options = CustomNavbarItem.navbarOptions
+  if (name in options.openInNewTabOverrides) {
+    return options.openInNewTabOverrides[name]
+  }
+  return options.openInNewTab
+}
 export default Vue.extend({
+  components: {
+    CustomNavbarLink,
+  },
   props: {
     item: {
       type: CustomNavbarItem,
       required: true,
     },
   },
-  async mounted() {
+  data() {
+    return {
+      newTab: isOpenInNewTab(this.item),
+      cancelListeners: none,
+    }
+  },
+  mounted() {
     const navbarItem = this.item as CustomNavbarItem
     navbarItem.contentMounted?.(navbarItem)
-    // if (navbarItem.requestedPopup) {
-    //   await this.$nextTick()
-    //   this.initPopper()
-    // }
+    const listener = () => {
+      this.updateLinkOption()
+    }
+    addComponentListener('customNavbar.openInNewTabOverrides', listener)
+    addComponentListener('customNavbar.openInNewTab', listener)
+    this.cancelListeners = () => {
+      removeComponentListener('customNavbar.openInNewTabOverrides', listener)
+      removeComponentListener('customNavbar.openInNewTab', listener)
+    }
+  },
+  beforeDestroy() {
+    this.cancelListeners?.()
   },
   methods: {
+    updateLinkOption() {
+      this.newTab = isOpenInNewTab(this.item)
+    },
     popupClasses(item: CustomNavbarItem & { iframeName?: string }) {
       return {
         transparent: item.transparentPopup,

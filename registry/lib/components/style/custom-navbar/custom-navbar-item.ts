@@ -80,6 +80,8 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
     fill: boolean
     transparent: boolean
     shadow: boolean
+    openInNewTab: boolean
+    openInNewTabOverrides: Record<string, boolean>
     seasonLogo: boolean
     touch: boolean
   }

@@ -56,6 +56,15 @@ export const component: ComponentMetadata = {
       defaultValue: false,
       displayName: '触摸模式',
     },
+    openInNewTab: {
+      defaultValue: true,
+      displayName: '新标签页打开',
+    },
+    openInNewTabOverrides: {
+      defaultValue: { logo: false },
+      displayName: '新标签页打开设置覆盖',
+      hidden: true,
+    },
     showDeadVideos: {
       defaultValue: false,
       displayName: '显示已失效视频',
