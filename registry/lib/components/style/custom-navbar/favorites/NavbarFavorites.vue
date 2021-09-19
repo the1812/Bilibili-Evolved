@@ -17,8 +17,8 @@
       </a>
     </div>
     <div class="content">
-      <VLoading v-if="loading"></VLoading>
-      <VEmpty v-else-if="!loading && filteredCards.length === 0"></VEmpty>
+      <VLoading v-if="loading && !searching"></VLoading>
+      <VEmpty v-else-if="!loading && !canLoadMore && filteredCards.length === 0"></VEmpty>
       <transition-group v-else name="cards" tag="div" class="cards">
         <div v-for="card of filteredCards" :key="card.id" class="favorite-card">
           <a
@@ -56,7 +56,7 @@
           </a>
         </div>
         <ScrollTrigger
-          v-if="!loading && (searching ? hasMoreSearchPage : hasMorePage)"
+          v-if="canLoadMore"
           key="scroll-trigger"
           @trigger="scrollTrigger()"
         ></ScrollTrigger>
@@ -89,6 +89,13 @@ interface FavoritesItemInfo extends VideoCard {
   favoriteTimestamp: number
   favoriteTime: string
 }
+const MaxPageSize = 20
+const favoriteItemFilter = (item: any): boolean => {
+  if (navbarOptions.showDeadVideos) {
+    return true
+  }
+  return item.attr !== 9 && item.attr !== 1 // 过滤掉已失效视频
+}
 const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
   id: item.id,
   aid: item.id,
@@ -111,28 +118,33 @@ async function searchAllList() {
     return
   }
   try {
-    const jsonCurrent = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=20&keyword=${this.search}&order=mtime&type=0&tid=0`)
-    const jsonAll = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=20&keyword=${this.search}&order=mtime&type=1&tid=0`)
+    this.loading = true
+    const jsonCurrent = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=0&tid=0`)
+    const jsonAll = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=1&tid=0`)
     if (jsonCurrent.code !== 0 && jsonAll.code !== 0) {
       return
     }
     const currentItems = lodash.get(jsonCurrent, 'data.medias', []) || []
     const allItems = lodash.get(jsonAll, 'data.medias', []) || []
     this.searchPage++
-    if (currentItems.length + allItems.length === 0) {
-      this.hasMoreSearchPage = false
-      return
-    }
     const results = lodash.uniqBy(
       this.filteredCards.concat(
-        currentItems.map(favoriteItemMapper),
-        allItems.map(favoriteItemMapper),
+        currentItems.filter(favoriteItemFilter).map(favoriteItemMapper),
+        allItems.filter(favoriteItemFilter).map(favoriteItemMapper),
       ),
       (card: FavoritesItemInfo) => card.id,
     )
     this.filteredCards = results
+    const noNewItems = currentItems.length + allItems.length === 0
+    const lessThanPageSize = allItems.length < MaxPageSize
+    if (noNewItems || lessThanPageSize) {
+      this.hasMoreSearchPage = false
+      return
+    }
   } catch (error) {
     console.error(error)
+  } finally {
+    this.loading = false
   }
 }
 export default Vue.extend({
@@ -178,6 +190,12 @@ export default Vue.extend({
       }
       return `https://www.bilibili.com/medialist/play/ml${id}`
     },
+    canLoadMore() {
+      if (this.searching) {
+        return this.hasMoreSearchPage
+      }
+      return this.hasMorePage
+    },
   },
   watch: {
     folder() {
@@ -195,12 +213,11 @@ export default Vue.extend({
         it => it.title.toLowerCase().includes(keyword)
           || it.upName.toLowerCase().includes(keyword),
       )
-      // this.debounceSearchAllList()
     },
   },
   methods: {
     async getCards() {
-      const url = `https://api.bilibili.com/medialist/gateway/base/spaceDetail?media_id=${this.folder.id}&pn=${this.page}&ps=20`
+      const url = `https://api.bilibili.com/medialist/gateway/base/spaceDetail?media_id=${this.folder.id}&pn=${this.page}&ps=${MaxPageSize}`
       const json = await getJsonWithCredentials(url)
       if (json.code !== 0) {
         throw new Error(`加载收藏夹内容失败: ${json.message}`)
@@ -210,14 +227,7 @@ export default Vue.extend({
         return []
       }
       return json.data.medias
-        .filter(
-          (item: any) => {
-            if (navbarOptions.showDeadVideos) {
-              return true
-            }
-            return item.attr !== 9 && item.attr !== 1 // 过滤掉已失效视频
-          },
-        )
+        .filter(favoriteItemFilter)
         .map(favoriteItemMapper)
     },
     async changeList() {
@@ -250,12 +260,10 @@ export default Vue.extend({
         logError(error)
       }
     },
-    /** 搜索当前收藏夹所有的视频 */
     debounceSearchAllList: lodash.debounce(searchAllList, 200),
-    searchAllList,
     scrollTrigger() {
       if (this.searching) {
-        this.searchAllList()
+        this.debounceSearchAllList()
       } else {
         this.loadNextPage()
       }
