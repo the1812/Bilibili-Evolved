@@ -1,6 +1,7 @@
 import { select } from '@/core/spin-query'
 import { isBwpVideo, raiseEvent } from '@/core/utils'
 import { bangumiUrls, matchCurrentPage } from '@/core/utils/urls'
+import { bpxPlayerPolyfill } from './bpx-player-adaptor'
 
 /** 元素查询函数, 调用时执行 `SpinQuery.select` 查询, 可访问 `selector` 获取选择器 */
 type ElementQuery<Target = HTMLElement> = {
@@ -281,6 +282,10 @@ export class BangumiPlayerAgent extends PlayerAgent {
     danmakuTipLayer: '.bpx-player-dialog-wrap',
     danmakuSwitch: '.bpx-player-dm-switch input',
   }) as PlayerQuery<ElementQuery>
+  constructor() {
+    super()
+    bpxPlayerPolyfill()
+  }
   isMute() {
     const icon = this.query.control.buttons.volume.sync() as HTMLElement
     return icon?.classList.contains('squirtle-volume-mute-state') ?? false

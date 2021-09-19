@@ -256,7 +256,7 @@ export const videoChange = async (
   if (!matchCurrentPage(playerUrls)) {
     return false
   }
-  const { bpxPlayerPolyfill } = await import('./bpx-player-adaptor')
+  const { bpxPlayerPolyfill } = await import('@/components/video/bpx-player-adaptor')
   bpxPlayerPolyfill()
   const cid = await selectCid()
   if (cid === null) {

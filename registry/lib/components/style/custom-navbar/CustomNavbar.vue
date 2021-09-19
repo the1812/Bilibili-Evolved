@@ -139,6 +139,10 @@ body.fixed-navbar {
   justify-content: center;
   line-height: normal;
 
+  body.player-mode-webfullscreen &,
+  body.player-mode-fullscreen & {
+    z-index: 1;
+  }
   // &:not(.fill) .custom-navbar-iconfont {
   //   color: var(--theme-color);
   // }

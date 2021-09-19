@@ -1,5 +1,5 @@
-import { attributes } from './observer'
-import { select } from './spin-query'
+import { attributes } from '@/core/observer'
+import { select } from '@/core/spin-query'
 
 const playerModePolyfill = async () => {
   const bpxContainer = await select('.bpx-player-container') as HTMLElement
