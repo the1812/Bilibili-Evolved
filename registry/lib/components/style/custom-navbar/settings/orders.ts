@@ -1,4 +1,3 @@
-import { ascendingSort } from '@/core/utils/sort'
 import { CustomNavbarItem } from '../custom-navbar-item'
 
 const regenerateOrder = (items: CustomNavbarItem[]) => {
@@ -7,8 +6,9 @@ const regenerateOrder = (items: CustomNavbarItem[]) => {
       return
     }
     item.order = index
-    CustomNavbarItem.navbarOptions.order[item.name] = item.order
   })
+  const orderMap = Object.fromEntries(items.map(it => ([it.name, it.order])))
+  CustomNavbarItem.navbarOptions.order = orderMap
 }
 export const checkSequentialOrder = (items: CustomNavbarItem[]) => {
   const isSequentialOrder = items.every((item, index) => item.order === index)
@@ -17,7 +17,7 @@ export const checkSequentialOrder = (items: CustomNavbarItem[]) => {
   }
 }
 export const sortItems = (items: CustomNavbarItem[], orderMap: Record<string, number>) => {
-  items.sort(ascendingSort(it => orderMap[it.name]))
-  regenerateOrder(items)
-  return items
+  const sortedItems = lodash.sortBy(items, it => orderMap[it.name])
+  regenerateOrder(sortedItems)
+  return sortedItems
 }

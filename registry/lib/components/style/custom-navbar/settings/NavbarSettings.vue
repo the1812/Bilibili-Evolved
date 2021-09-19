@@ -121,7 +121,7 @@ export default Vue.extend({
       open: false,
       padding: navbarOptions.padding,
       rendered,
-      order: navbarOptions.order,
+      // order: navbarOptions.order,
       hidden: navbarOptions.hidden,
       loaded: false,
     }
@@ -139,7 +139,6 @@ export default Vue.extend({
     })
     const list: HTMLElement = this.$refs.navbarSortList
     const Sortable = await SortableJSLibrary
-    console.log(Sortable)
     Sortable.create(list, {
       delay: 100,
       forceFallback: true,
@@ -171,7 +170,7 @@ export default Vue.extend({
       const ordersMap = Object.fromEntries([...container.children].map((el, index) => (
         [el.getAttribute('data-name') as string, index]
       )))
-      sortItems(rendered.items, ordersMap)
+      this.rendered.items = sortItems(rendered.items, ordersMap)
     },
     toggleVisible(item: CustomNavbarItem) {
       if (navbarOptions.hidden.includes(item.name)) {
