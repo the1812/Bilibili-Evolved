@@ -3,8 +3,8 @@
     class="be-slider"
     role="slider"
     :tabindex="focusable ? 0 : -1"
-    @keydown.left="moveBy(-1)"
-    @keydown.right="moveBy(1)"
+    @keydown.left.prevent.stop="moveBy(-1)"
+    @keydown.right.prevent.stop="moveBy(1)"
   >
     <div ref="barContainer" class="bar-container">
       <slot name="bar">
