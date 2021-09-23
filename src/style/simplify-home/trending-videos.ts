@@ -3,7 +3,7 @@ import { VideoCardInfo } from './video-card-info'
 export const getTrendingVideos = async () => {
   const { isVideoCardBlocked } = await import('../../activity/feeds-apis')
   const api = 'https://api.bilibili.com/x/web-interface/index/top/rcmd?fresh_type=0&version=1'
-  const personalized = getUID() && settings.simpleHomePersonalized
+  const personalized = Boolean(getUID()) && settings.simpleHomePersonalized
   const requestMethod: keyof typeof Ajax = personalized ? 'getJsonWithCredentials' : 'getJson'
   const { code, message, data } = await Ajax[requestMethod](api)
   if (code !== 0) {

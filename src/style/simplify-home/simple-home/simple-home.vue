@@ -196,6 +196,7 @@ export default {
     .trendings,
     .feeds {
       justify-self: stretch;
+      width: 100%;
     }
 
     &.layout-fill .edge-gradient {
