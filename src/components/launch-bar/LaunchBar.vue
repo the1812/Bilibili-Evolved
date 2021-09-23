@@ -101,6 +101,9 @@ async function getOnlineActions() {
       generateKeys(provider, await provider.getActions(this.keyword))
     )),
   )).flat()
+  if (this.isHistory) {
+    return
+  }
   const fuse = new Fuse(onlineActions, {
     keys: ['indexer', 'displayName', 'name', 'description', 'key'],
   })
