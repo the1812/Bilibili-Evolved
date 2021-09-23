@@ -20,10 +20,15 @@ export const init = async () => {
 
   const { headLoaded, raiseLifeCycleEvent, LifeCycleEventTypes } = await import('@/core/life-cycle')
   raiseLifeCycleEvent(LifeCycleEventTypes.Start)
-
-  const { promiseLoadTrace } = await import('@/core/performance/promise-trace')
-  const { coreApis, externalApis } = await import('@/core/core-apis')
   const { none } = await import('@/core/utils')
+  const { promiseLoadTrace } = await import('@/core/performance/promise-trace')
+
+  await promiseLoadTrace('wait for <head>', async () => {
+    // 等待<head>元素
+    await headLoaded(none)
+  })
+
+  const { coreApis, externalApis } = await import('@/core/core-apis')
   unsafeWindow.bilibiliEvolved = externalApis
   /** sand-boxed window, safe to use original name */
   window.coreApis = coreApis
@@ -31,11 +36,6 @@ export const init = async () => {
   window.dqa = coreApis.utils.dqa
   window.none = coreApis.utils.none
   window.componentsTags = coreApis.componentApis.component.componentsTags
-
-  await promiseLoadTrace('wait for <head>', async () => {
-    // 等待<head>元素
-    await headLoaded(none)
-  })
 
   await promiseLoadTrace('compatibility patch', async () => {
     // 兼容性补丁

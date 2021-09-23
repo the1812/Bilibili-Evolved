@@ -11,8 +11,8 @@
 <script lang="ts">
 import { createMiniToast } from './mini'
 
-const containerMap: Record<string, HTMLElement> = {
-  body: document.body,
+const containerMap: Record<string, HTMLElement | (() => HTMLElement)> = {
+  body: () => document.body,
   local: undefined,
 }
 export default Vue.extend({
@@ -37,6 +37,7 @@ export default Vue.extend({
   },
   async mounted() {
     await this.$nextTick()
+    const appendTarget = containerMap[this.container]
     this.toast = createMiniToast(this.message, this.$refs.content, {
       content: this.$refs.toast,
       showOnCreate: this.show,
@@ -47,7 +48,7 @@ export default Vue.extend({
       onShow: () => {
         this.$emit('change', true)
       },
-      appendTo: containerMap[this.container],
+      appendTo: typeof appendTarget === 'function' ? appendTarget() : appendTarget,
       // ...(lodash.omit(this.$props, 'show', 'container')),
       ...this.$attrs,
     })

@@ -1,6 +1,5 @@
 import { PluginMetadata } from '@/plugins/plugin'
 import { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
-import { toggleLaunchBar } from './toggle'
 
 export const plugin: PluginMetadata = {
   name: 'launchBar.plugin',
@@ -9,7 +8,8 @@ export const plugin: PluginMetadata = {
     addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
       actions.showLaunchBar = {
         displayName: '显示搜索栏',
-        run: () => {
+        run: async () => {
+          const { toggleLaunchBar } = await import('./toggle')
           toggleLaunchBar()
           return true
         },
