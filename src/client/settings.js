@@ -202,10 +202,8 @@ export const settings = {
   urlParamsClean: true,
   collapseLiveSideBar: true,
   noDarkOnMember: true,
-  feedsTranslate: false,
   feedsTranslateProvider: 'Bing',
   feedsTranslateLanguage: '',
-  commentsTranslate: false,
   downloadVideoQuality: 120,
   defaultLiveQuality: '原画',
   foregroundColorMode: '自动',
@@ -268,6 +266,8 @@ export const settings = {
   cache: {},
 }
 const fixedSettings = {
+  feedsTranslate: false,
+  commentsTranslate: false,
   seedsToCoins: false,
   autoSeedsToCoins: false,
   lastSeedsToCoinsDate: 0,
