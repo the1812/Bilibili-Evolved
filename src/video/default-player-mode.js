@@ -10,21 +10,22 @@ const playerModes = [
     name: '宽屏',
     action: async () => {
       const { playerAgent } = await import('./player-agent')
-      console.log(playerAgent)
       await playerAgent.widescreen()
     }
   },
   {
     name: '网页全屏',
-    action: () => {
-      document.querySelector('.bilibili-player-video-web-fullscreen').click()
+    action: async () => {
+      const { playerAgent } = await import('./player-agent')
+      await playerAgent.webFullscreen()
     }
   },
   {
     name: '全屏',
     action: async () => {
+      const { playerAgent } = await import('./player-agent')
       const video = await SpinQuery.condition(
-        () => document.querySelector('.bilibili-player-video video'),
+        () => document.querySelector(playerAgent.query.video.element.selector),
         it => {
           return it !== null && it.readyState === 4 &&
             document.readyState === 'complete' && document.hasFocus()
@@ -33,7 +34,7 @@ const playerModes = [
         console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
         return
       }
-      document.querySelector('.bilibili-player-video-btn-fullscreen').click()
+      await playerAgent.fullscreen()
     }
   }
 ]
@@ -70,7 +71,7 @@ async function main () {
     return
   }
   const info = playerModes.find(it => it.name === settings.defaultPlayerMode)
-  const onplay = () => {
+  const onplay = async () => {
     const container = await (playerAgent.query.bilibiliPlayer())
     const attribute = container.getAttribute('data-screen')
     const isNormalMode = !container.className.includes('mode-') && (attribute === null || attribute === 'normal')
