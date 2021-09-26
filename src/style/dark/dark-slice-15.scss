@@ -677,3 +677,13 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     @include color("e");
   }
 }
+
+.gm-skeleton {
+  .chat-input-ctnr {
+    @include border-color("3");
+    @include background-color("2");
+    .medal-section {
+      @include border-color("3");
+    }
+  }
+}
