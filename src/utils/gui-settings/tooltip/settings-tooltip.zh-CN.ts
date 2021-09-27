@@ -209,6 +209,7 @@ export const toolTips = new Map<keyof BilibiliEvolvedSettings, string>([
   [`unfoldFeeds`, /*html*/`自动展开被折叠的动态.`],
   [`commentsTranslate`, /*html*/`为评论也添加翻译按钮.`],
   [`simpleHomeWheelScroll`, /*html*/`在横向的卡片列表中, 允许鼠标滚轮上下滚动时变成对此列表的横向滚动. (因为是模拟的, 可能会有点卡顿)`],
+  [`simpleHomePersonalized`, /*html*/`是否允许展示个性化推荐视频, 关闭后则展示热门视频.`],
   [`downloadPackageEmitMode`, /*html*/`选择多个文件下载时的行为, 打包会先打成一个 zip 再下载, 分别下载会对每一个文件触发下载.`],
   [`columnImageExporter`, /*html*/`在专栏页面中可在附加功能中导出所有图片.`],
   [`feedsImageExporter`, /*html*/`在动态的右上角菜单中可选择导出图片来下载当前动态里的所有图片.`],
