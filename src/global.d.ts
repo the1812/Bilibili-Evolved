@@ -193,10 +193,6 @@ declare global {
   }
   interface Document {
     pictureInPictureElement: HTMLElement | null
-    exitPictureInPicture: () => void
-  }
-  interface HTMLVideoElement {
-    requestPictureInPicture: () => void
   }
   const BwpElement: {
     new(): HTMLVideoElement
@@ -578,6 +574,7 @@ declare global {
   const descendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
   const getDpiSourceSet: (src: string, baseSize: number | string | { width?: number | string, height?: number | string }, extension?: string) => string
   const isOffline: () => boolean
+  const getCookieValue: (name: string) => string
   const getUID: () => string
   const getCsrf: () => string
   const formatCount: (count: number | string) => string

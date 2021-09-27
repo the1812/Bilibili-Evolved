@@ -644,9 +644,34 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
         @include background-color("4");
       }
     }
+
+    &__wrap {
+      @include background-color();
+    }
   }
 }
-#bilibili-footer {
+.n-drawer-container .elevator {
+  @include background-color("2");
+  .elevator-head {
+    @include color("e");
+  }
+
+  .elevator-core {
+    &.is-active {
+      @include background-color("3");
+    }
+    &:hover {
+      @include background-color("4");
+    }
+    .name {
+      @include color("e");
+    }
+    .icon {
+      @include color("a");
+    }
+  }
+}
+#bili-footer {
   @include background-color();
   .split-line {
     @include background-color("4");

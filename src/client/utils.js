@@ -173,12 +173,13 @@ export const getDpiSourceSet = (src, baseSize, forceExtension = '') => {
   }).join(",")
 }
 export const isOffline = () => typeof offlineData !== 'undefined'
-export const getUID = () => document.cookie.replace(/(?:(?:^|.*;\s*)DedeUserID\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+export const getCookieValue = (name) => document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${name}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+export const getUID = () => getCookieValue('DedeUserID')
 export const scriptVersion = (() => {
   const match = GM.info.script.name.match(/Evolved \((.*)\)/)
   return match ? match[1] : 'Stable'
 })()
-export const getCsrf = () => document.cookie.replace(/(?:(?:^|.*;\s*)bili_jct\s*\=\s*([^;]*).*$)|^.*$/, '$1')
+export const getCsrf = () => getCookieValue('bili_jct')
 export const formatCount = (count) => {
   if (typeof count === 'string') {
     count = parseInt(count)
