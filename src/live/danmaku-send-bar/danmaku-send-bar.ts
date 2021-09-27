@@ -10,8 +10,8 @@
     },
     callback: async controlBar => {
       const leftController = dq(controlBar, '.left-area') as HTMLDivElement
-      const originalTextArea = await SpinQuery.select('.chat-input-ctnr .chat-input') as HTMLTextAreaElement
-      const sendButton = await SpinQuery.select('.chat-input-ctnr ~ .bottom-actions .bl-button--primary') as HTMLButtonElement
+      const originalTextArea = await SpinQuery.select('.control-panel-ctnr .chat-input-ctnr .chat-input') as HTMLTextAreaElement
+      const sendButton = await SpinQuery.select('.control-panel-ctnr .chat-input-ctnr ~ .bottom-actions .bl-button--primary') as HTMLButtonElement
 
       if ([leftController, originalTextArea, sendButton].some(it => it === null)) {
         console.warn('[danmakuSendBar] ref elements not found', leftController === null, originalTextArea === null, sendButton === null)

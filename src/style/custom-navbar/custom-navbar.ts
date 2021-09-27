@@ -74,7 +74,7 @@ export default (() => {
           true
         )
       })
-      SpinQuery.select('#banner_link,.international-header .bili-banner').then(banner => {
+      SpinQuery.select('#banner_link,.international-header .bili-banner, .bili-header__banner').then(banner => {
         if (banner === null || !(banner instanceof HTMLElement)) {
           return
         }

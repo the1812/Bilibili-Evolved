@@ -439,3 +439,276 @@
     @include color("a");
   }
 }
+#i_cecream {
+  @include background-color();
+  .mini-header {
+    .header-entry-avatar {
+      @include border-color("3");
+    }
+    .default-entry,
+    .right-entry-icon,
+    .mini-header__title > span {
+      @include color("e");
+    }
+    .right-entry-text {
+      @include color("a");
+    }
+    .header-upload-entry {
+      @include theme-background-color();
+      @include foreground-color();
+      .header-upload-entry__icon {
+        @include foreground-color();
+      }
+      &:hover {
+        @include theme-background-color("90");
+      }
+    }
+  }
+
+  .bili-header,
+  .home-header {
+    @include background-color();
+    &__banner {
+      @include background-color("3");
+    }
+    &.fixed-top .home-header__bar {
+      @include background-color("2");
+    }
+    &__channel {
+      @include background-color();
+      .channel-entry-more__link,
+      .channel-link {
+        @include color("e");
+        @include background-color("3");
+        @include border-color();
+        &:hover {
+          @include color("e");
+          @include background-color("5");
+        }
+      }
+    }
+    .channel-icons {
+      &__item {
+        @include color("e");
+      }
+      .channel-notify {
+        @include border-color("2");
+      }
+    }
+  }
+
+  .primary-btn {
+    @include color("e");
+    @include background-color("3");
+    @include border-color();
+    &:hover {
+      @include background-color("5");
+    }
+  }
+  .area-header {
+    .roll-btn {
+      @include color("e");
+    }
+    .title {
+      @include color("e");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .track-switch {
+      @include background-color("3");
+      @include color("a");
+
+      .switch-bar {
+        @include theme-background-color();
+      }
+      button {
+        &:hover {
+          @include background-color("5");
+        }
+        &.is-active {
+          @include foreground-color();
+        }
+      }
+    }
+  }
+  :not(.aside-head) > .area-header {
+    .mouse-switch > * {
+      @include color("a");
+      @include background-color("3");
+      &:hover {
+        @include color("a");
+        @include background-color("5");
+      }
+      &.is-active {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+  }
+  .aside-head {
+    .mouse-switch > * {
+      @include color("a");
+      &.is-active {
+        @include theme-color();
+        &::after {
+          @include theme-background-color();
+        }
+      }
+    }
+  }
+  .aside-body {
+    .list-state-error,
+    .list-state-nothing,
+    .list-state-loading {
+      @include background-color("4");
+      span {
+        @include color("a");
+      }
+    }
+  }
+}
+.v-popover-content {
+  @include border-color();
+  @include background-color("3");
+}
+$media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
+@each $type in $media-types {
+  .bili-rank-list-#{$type} {
+    &__list {
+      @include border-color();
+      @include background-color();
+    }
+    &__item:nth-of-type(2n + 1) {
+      @include background-color("3");
+    }
+    &__item:nth-of-type(2n) {
+      @include background-color("4");
+    }
+    .rank-#{$type}-card {
+      &__popover {
+        @include background-color();
+        &--icon,
+        &--stats,
+        &--subtitle,
+        &--author {
+          @include color("a");
+        }
+        &--stats {
+          @include border-color("4");
+        }
+      }
+      &__cover {
+        @include background-color("3");
+      }
+      &__info--pts,
+      &__info--schedule,
+      &__info--styles {
+        @include color("a");
+      }
+    }
+  }
+  .bili-#{$type}-card {
+    &__info--tit {
+      &:hover {
+        @include theme-color();
+      }
+    }
+    &__info--living {
+      @include to-theme("pink");
+    }
+    &__info--pub,
+    &__info--subtitle,
+    &__info--styles,
+    &__info--uname {
+      @include color("a");
+    }
+    &__info--owner {
+      @include color("a");
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .v-img,
+    &__image,
+    &__cover,
+    &__image--wrap {
+      @include background-color("3");
+    }
+
+    &__skeleton {
+      &--light,
+      &--text,
+      &--face,
+      &--cover {
+        @include background-color("4");
+      }
+    }
+
+    &__wrap {
+      @include background-color();
+    }
+  }
+}
+.n-drawer-container .elevator {
+  @include background-color("2");
+  .elevator-head {
+    @include color("e");
+  }
+
+  .elevator-core {
+    &.is-active {
+      @include background-color("3");
+    }
+    &:hover {
+      @include background-color("4");
+    }
+    .name {
+      @include color("e");
+    }
+    .icon {
+      @include color("a");
+    }
+  }
+}
+#bili-footer {
+  @include background-color();
+  .split-line {
+    @include background-color("4");
+  }
+  p {
+    @include color("e");
+  }
+  a {
+    @include color("e");
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .link-item .bt {
+    @include color("a");
+  }
+  .text-con {
+    &__line {
+      &--link {
+        @include color("a");
+      }
+    }
+  }
+}
+.footer-qrcode-popover,
+.footer-wechat-popover {
+  .qrcode-text {
+    @include color("e");
+  }
+}
+
+.gm-skeleton {
+  .chat-input-ctnr {
+    @include border-color("3");
+    @include background-color("2");
+    .medal-section {
+      @include border-color("3");
+    }
+  }
+}

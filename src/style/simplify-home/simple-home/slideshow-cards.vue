@@ -151,6 +151,7 @@ export default {
   }
   @mixin round-button {
     background-color: #ddd;
+    color: inherit;
     border-radius: 50%;
     border: none;
     display: flex;
@@ -227,6 +228,9 @@ export default {
     & > * {
       display: flex;
       align-items: center;
+      &:not(:last-child) {
+        margin-bottom: 6px;
+      }
     }
     .title {
       color: inherit !important;
@@ -234,6 +238,7 @@ export default {
       font-weight: bold;
       line-height: normal;
       text-align: right;
+      flex-shrink: 0;
       @include max-line(2);
     }
     .up {
@@ -258,6 +263,7 @@ export default {
     .description {
       @include max-line(6);
       flex-grow: 1;
+      flex-shrink: 1;
       white-space: pre-wrap;
       text-align: right;
       opacity: 0.75;

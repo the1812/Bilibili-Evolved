@@ -193,10 +193,10 @@ declare global {
   }
   interface Document {
     pictureInPictureElement: HTMLElement | null
-    exitPictureInPicture: () => void
   }
-  interface HTMLVideoElement {
-    requestPictureInPicture: () => void
+  const BwpElement: {
+    new(): HTMLVideoElement
+    prototype: HTMLVideoElement
   }
   class SpinQuery {
     static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void
@@ -422,6 +422,11 @@ declare global {
     doubleClickFullscreenPreventSingleClick: boolean
     simplifyHome: boolean,
     simplifyHomeStyle: '清爽' | '极简',
+    simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
+    simpleHomeBangumiLayout: '时间表' | '动态',
+    simpleHomeWheelScroll: boolean,
+    simpleHomePersonalized: boolean,
+    simpleHomeLayoutFill: boolean,
     minimalHomeSettings: {
       showSearch: boolean,
       backgroundImage: string,
@@ -451,9 +456,6 @@ declare global {
     defaultMedalID: number,
     autoMatchMedal: boolean,
     customStyles: CustomStyle[],
-    simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
-    simpleHomeBangumiLayout: '时间表' | '动态',
-    simpleHomeWheelScroll: boolean,
     keymapJumpSeconds: number,
     urlParamsClean: boolean,
     collapseLiveSideBar: boolean,
@@ -525,6 +527,7 @@ declare global {
     scrollOutPlayerAutoLightOn: boolean,
     disableDanmakuHighlights: boolean,
     disableUpDanmakuStyle: boolean,
+    noNotifyV2: boolean,
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
@@ -571,6 +574,7 @@ declare global {
   const descendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
   const getDpiSourceSet: (src: string, baseSize: number | string | { width?: number | string, height?: number | string }, extension?: string) => string
   const isOffline: () => boolean
+  const getCookieValue: (name: string) => string
   const getUID: () => string
   const getCsrf: () => string
   const formatCount: (count: number | string) => string

@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       srcset: null,
-      actualSrc: null,
+      actualSrc: EmptyImageUrl,
       isPlaceholderActive: false,
     }
   },
@@ -51,7 +51,7 @@ export default {
         if (this.placeholderImage) {
           this.actualSrc = `https://s1.hdslb.com/bfs/static/blive/live-web-center/static/img/no-cover.1ebe4d5.jpg`
         } else {
-          this.actualSrc = null
+          this.actualSrc = EmptyImageUrl
         }
         return
       }

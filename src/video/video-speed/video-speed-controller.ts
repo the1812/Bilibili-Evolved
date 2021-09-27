@@ -1,5 +1,5 @@
 export class VideoSpeedController {
-  static readonly classNameMap = {
+  static classNameMap = {
     speedMenuList: "bilibili-player-video-btn-speed-menu",
     speedMenuItem: "bilibili-player-video-btn-speed-menu-list",
     speedNameBtn: "bilibili-player-video-btn-speed-name",
@@ -106,13 +106,44 @@ export class VideoSpeedController {
     return new VideoSpeedController(containerElement, videoElement, previousSpeed, nativeSpeed)
   }
 
-  static init = _.once(() => {
+  static init = _.once(async () => {
     // 分 P 切换时共享同一个倍数，这里指定初始倍数可以是 undefined，不需要是 1
     let sharedSpeed: number | undefined = undefined
     // 分 P 切换时共享同一个原生倍速值，初始值设置为 1
     let sharedNativeSpeed = 1
     // 持有菜单容器元素的引用，videoChange 时更换（以前缓存的 VideoController 就没有意义了）
     let containerElement: HTMLElement
+
+    const { playerAgent } = await import('../player-agent')
+    const extendedAgent = playerAgent.provideCustomQuery({
+      video: {
+        speedMenuList: 'bilibili-player-video-btn-speed-menu',
+        speedMenuItem: 'bilibili-player-video-btn-speed-menu-list',
+        speedNameBtn: 'bilibili-player-video-btn-speed-name',
+        speedContainer: 'bilibili-player-video-btn-speed',
+        active: 'bilibili-player-active',
+        show: 'bilibili-player-speed-show',
+      },
+      bangumi: {
+        speedMenuList: 'squirtle-speed-select-list',
+        speedMenuItem: 'squirtle-select-item',
+        speedNameBtn: 'squirtle-speed-select-result',
+        speedContainer: 'squirtle-speed-wrap',
+        active: 'active',
+        // bangumi 那边没有这种 class, 随便填一个就行了
+        show: 'bilibili-player-speed-show',
+      }
+    })
+    const trimLeadingDot = (selector: string) => selector.replace(/^\./, '')
+    VideoSpeedController.classNameMap = {
+      speedMenuList: trimLeadingDot(extendedAgent.custom.speedMenuList.selector),
+      speedMenuItem: trimLeadingDot(extendedAgent.custom.speedMenuItem.selector),
+      speedNameBtn: trimLeadingDot(extendedAgent.custom.speedNameBtn.selector),
+      speedContainer: trimLeadingDot(extendedAgent.custom.speedContainer.selector),
+      active: trimLeadingDot(extendedAgent.custom.active.selector),
+      show: trimLeadingDot(extendedAgent.custom.show.selector),
+      video: trimLeadingDot(extendedAgent.query.video.container.selector),
+    }
 
     Observer.videoChange(async () => {
       const { getExtraSpeedMenuItemElements } = await import("./extend-video-speed")
@@ -176,12 +207,20 @@ export class VideoSpeedController {
       return controller
     }
 
+
+
     this._videoElement = videoElement
     this._containerElement = containerElement
     this._previousSpeedVal = previousSpeed
     this._nativeSpeedVal = nativeSpeed ?? (previousSpeed && VideoSpeedController.nativeSupportedRates.includes(previousSpeed) ? previousSpeed : 1)
     this._nameBtn = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedNameBtn}`) as HTMLButtonElement
     this._menuListElement = this._containerElement.querySelector(`.${VideoSpeedController.classNameMap.speedMenuList}`) as HTMLElement
+    this._menuListElement.querySelectorAll(`.${VideoSpeedController.classNameMap.speedMenuItem}`).forEach(it => {
+      if (!it.hasAttribute('data-value')) {
+        const speed = parseFloat(it.textContent!).toString()
+        it.setAttribute('data-value', speed)
+      }
+    })
 
     VideoSpeedController.instanceMap.set(containerElement, this)
   }

@@ -113,13 +113,14 @@ export default {
     position: sticky;
     top: 0;
     z-index: 1000;
-    background-color: #f4f4f4;
+    background-color: var(--simplify-home-background);
     color: black;
+    margin: 0;
+    height: auto;
     &:link {
       cursor: pointer;
     }
     body.dark & {
-      background-color: #181818;
       color: #eee;
     }
   }

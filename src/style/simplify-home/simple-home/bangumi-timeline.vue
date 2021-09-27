@@ -272,10 +272,7 @@ export default {
         position: sticky;
         top: 0;
         z-index: 1;
-        background-color: #f4f4f4;
-        body.dark & {
-          background-color: #181818;
-        }
+        background-color: var(--simplify-home-background);
         .icon {
           grid-area: icon;
           justify-self: center;

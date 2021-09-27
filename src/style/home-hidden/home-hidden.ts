@@ -21,6 +21,12 @@ const homeHiddenOptions: HomeHiddenOption[] = [
         height: 24px !important;
         padding: 0 !important;
       }
+      .bili-header__channel {
+        height: 12px !important;
+      }
+      .bili-header__channel > * {
+        display: none !important;
+      }
     `,
   },
   {
@@ -29,30 +35,36 @@ const homeHiddenOptions: HomeHiddenOption[] = [
       .first-screen .space-between {
         margin-bottom: 0 !important;
       }
-      .rcmd-box-wrap { display: none !important; }
+      .bili-layout .bili-grid:first-child,
+      .rcmd-box-wrap {
+        display: none !important;
+      }
     `,
   },
   {
-    name: 'online', displayName: '在线列表', style: `
+    name: 'online', displayName: '在线列表(旧版)', style: `
       .first-screen #reportFirst2 { display: none !important; }
     `,
   },
   {
-    name: 'ext-box', displayName: '电竞赛事', style: `
+    name: 'ext-box', displayName: '赛事(旧版)', style: `
       .first-screen #reportFirst3 { display: none !important; } `,
   },
   {
-    name: 'special', displayName: '特别推荐', style: `
+    name: 'special', displayName: '特别推荐(旧版)', style: `
       #bili_report_spe_rec { display: none !important; }
     `,
   },
   {
     name: 'contact', displayName: '联系方式', style: `
-      .international-footer { display: none !important; }
+      .bili-footer .b-footer-wrap,
+      .international-footer {
+        display: none !important;
+      }
     `,
   },
   {
-    name: 'elevator', displayName: '右侧分区导航', style: `
+    name: 'elevator', displayName: '右侧分区导航(旧版)', style: `
       .storey-box .elevator { display: none !important; }
     `,
   },
@@ -76,17 +88,58 @@ const syncState = (item: HomeHiddenOption) => {
   if (!isHome()) {
     return
   }
-  const generatedOptions: HomeHiddenOption[] = (await SpinQuery.condition(
-    () => dqa('.proxy-box > div'),
-    elements => elements.length > 0 || document.URL !== 'https://www.bilibili.com/',
-  )).map(it => ({
-    name: it.id.replace(/^bili_/, ''),
-    displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
-  }))
+  const homeOptions: Promise<HomeHiddenOption[]> = (async () => {
+    const isNewHome = getCookieValue('i-wanna-go-back') === '-1'
+    const isNotHome = document.URL !== 'https://www.bilibili.com/'
+    if (!isNewHome) {
+      const list = await SpinQuery.condition(
+        () => dqa('.proxy-box > div'),
+        elements => elements.length > 0 || isNotHome,
+      )
+      return list?.map(it => ({
+        name: it.id.replace(/^bili_/, ''),
+        displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
+      })) ?? []
+    } else {
+      const skipIds = ['推广']
+      const headers = await SpinQuery.condition(
+        () => dqa('.bili-grid .the-world'),
+        elements => elements.length > 3 || isNotHome,
+      )
+      console.log(headers)
+      const getContainer = (header: Element) => {
+        let currentElement = header
+        while (currentElement.parentElement) {
+          if (currentElement.classList.contains('bili-grid')) {
+            return currentElement
+          }
+          currentElement = currentElement.parentElement
+        }
+        return null
+      }
+      return headers
+        ?.filter(element => !skipIds.includes(element.id))
+        .map(element => {
+          const container = getContainer(element) as HTMLElement
+          const name = element.id
+          if (container) {
+            container.dataset.area = name
+            return {
+              name,
+              displayName: name,
+            }
+          }
+          return null
+        })
+        .filter((it): it is HomeHiddenOption => it !== null) ?? []
+    }
+  })()
+  const generatedOptions = await homeOptions
   homeHiddenOptions.push(...generatedOptions)
   homeHiddenOptions.forEach(syncState)
   const generatedStyles = generatedOptions.map(({ name }) => {
     return `
+body.home-hidden-${name} .bili-layout .bili-grid[data-area="${name}"],
 body.home-hidden-${name} .storey-box .proxy-box #bili_${name} {
   display: none !important;
 }

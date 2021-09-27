@@ -17,6 +17,9 @@
     transform: rotate(360deg);
     font-size: 12px;
   }
+  body.player-fullscreen-fix & {
+    z-index: 1;
+  }
 }
 .gui-settings,
 .gui-settings-widgets {

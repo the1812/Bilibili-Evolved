@@ -138,7 +138,16 @@ function checkOfflineData () {
 }
 
 const preCheckCompatibility = () => {
-  // empty
+  SpinQuery.select('meta[name=spm_prefix]').then(spm => {
+    if (spm) {
+      spm.remove()
+      SpinQuery.select(() => unsafeWindow.__spm_prefix).then(() => {
+        if (unsafeWindow.__spm_prefix) {
+          delete unsafeWindow.__spm_prefix
+        }
+      })
+    }
+  })
 }
 function checkCompatibility () {
   if (window.devicePixelRatio === 1) {

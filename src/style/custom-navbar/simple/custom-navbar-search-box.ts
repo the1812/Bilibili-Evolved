@@ -338,6 +338,9 @@ export class SearchBox extends NavbarComponent {
       }
     })
     keywordInput.addEventListener('keydown', e => {
+      if (e.isComposing) {
+        return
+      }
       if (e.key === 'ArrowDown' && searchList.items.length > 0) {
         e.preventDefault();
         e.stopImmediatePropagation();
