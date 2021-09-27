@@ -161,9 +161,9 @@ export default {
   --loading-from: #d4d4d4;
   --loading-to: #ddd;
   --slideshow-ratio: 0.6;
-  --rank-width: 370px;
+  --rank-width: 20vw;
   --rank-height: calc(var(--rank-width) / 16 * 10);
-  --card-height: 280px;
+  --card-height: 22vh;
   --card-width: calc(var(--card-height) * (42 / 25));
   display: flex;
   flex-direction: column;
@@ -179,12 +179,12 @@ export default {
       background-color: var(--loading-to);
     }
   }
-  @for $width from 18 through 7 {
-    @media screen and (max-width: #{$width * 100}px) {
-      --card-height: #{280 - 8 * (19 - $width)}px;
-      --rank-width: #{370 - 20 * (19 - $width)}px;
-    }
-  }
+  // @for $width from 18 through 7 {
+  //   @media screen and (max-width: #{$width * 100}px) {
+  //     --card-height: #{280 - 8 * (19 - $width)}px;
+  //     --rank-width: #{370 - 20 * (19 - $width)}px;
+  //   }
+  // }
   &,
   & *,
   ::after,
