@@ -328,6 +328,10 @@ export default Vue.extend({
           item.quality = this.selectedQuality
         })
         const videoInfos = await Promise.all(videoInputs.map(i => api.downloadVideoInfo(i)))
+        if (videoInfos.length === 0 || lodash.sumBy(videoInfos, it => it.fragments.length) === 0) {
+          Toast.info('未接收到可下载数据, 请检查输入源和格式是否适用于当前视频.', '下载视频', 3000)
+          return
+        }
         const action = new DownloadVideoAction(videoInfos)
         const extraAssets = (await Promise.all(
           assets.map(a => a.getAssets(
