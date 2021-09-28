@@ -10,12 +10,16 @@ import {
 /* spell-checker: disable */
 
 /** dash 格式更明确的扩展名 */
-export const DashExtensions = ['.mp4', '.m4a']
+export const DashExtensions = {
+  video: '.mp4',
+  audio: '.m4a',
+}
 /** dash 格式原本的扩展名 */
 export const DashFragmentExtension = '.m4s'
 /** dash 格式支持的编码类型 */
 export type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
-export interface AudioDash {
+export interface Dash {
+  type: keyof typeof DashExtensions
   bandWidth: number
   codecs: string
   codecId: number
@@ -23,18 +27,27 @@ export interface AudioDash {
   downloadUrl: string
   duration: number
 }
-export interface VideoDash extends AudioDash {
+export interface AudioDash extends Dash {
+  type: 'audio'
+}
+export interface VideoDash extends Dash {
+  type: 'video'
   quality: VideoQuality
   frameRate: string
   height: number
   width: number
   videoCodec: DashCodec
 }
-const dashToFragment = (dash: AudioDash): Omit<DownloadVideoFragment, 'extension'> => ({
+export interface DashFilters {
+  video?: (dash: VideoDash) => boolean
+  audio?: (dash: AudioDash) => boolean
+}
+const dashToFragment = (dash: Dash): DownloadVideoFragment => ({
   url: dash.downloadUrl,
   backupUrls: dash.backupUrls,
   length: dash.duration,
   size: Math.trunc((dash.bandWidth * dash.duration) / 8),
+  extension: DashExtensions[dash.type] ?? DashFragmentExtension,
 })
 export const dashToFragments = (info: {
   videoDashes: VideoDash[]
@@ -42,25 +55,39 @@ export const dashToFragments = (info: {
   videoCodec: DashCodec
 }) => {
   const { videoDashes, audioDashes, videoCodec } = info
+  const results: DownloadVideoFragment[] = []
   // 画面按照首选编码选择, 若没有相应编码则选择大小较小的编码
-  const video = (() => {
+  if (videoDashes.length !== 0) {
     const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
     if (videoDashes.some(matchPreferredCodec)) {
-      return videoDashes
+      const dash = videoDashes
         .filter(matchPreferredCodec)
         .sort(ascendingSort(d => d.bandWidth))[0]
+      results.push(dashToFragment(dash))
+    } else {
+      results.push(dashToFragment(videoDashes.sort(ascendingSort(d => d.bandWidth))[0]))
     }
-    return videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
-  })()
-  // 居然还有不带音轨的视频 #574 av370857916
-  if (audioDashes.length > 0) {
+  }
+  if (audioDashes.length !== 0) {
     // 声音倒序排, 选择最高音质
     const audio = audioDashes.sort(descendingSort(d => d.bandWidth))[0]
-    return [dashToFragment(video), dashToFragment(audio)]
+    results.push(dashToFragment(audio))
   }
-  return [dashToFragment(video)]
+  return results
 }
-const downloadDash = async (input: DownloadVideoInputItem, codec: DashCodec) => {
+const downloadDash = async (
+  input: DownloadVideoInputItem,
+  config: {
+    codec?: DashCodec
+    filters?: DashFilters
+  },
+) => {
+  const { codec = 'AVC/H.264', filters } = config
+  const dashFilters = {
+    video: () => true,
+    audio: () => true,
+    ...filters,
+  }
   const { aid, cid, quality } = input
   const params = {
     avid: aid,
@@ -81,9 +108,9 @@ const downloadDash = async (input: DownloadVideoInputItem, codec: DashCodec) => 
   }
   const currentQuality = allQualities.find(q => q.value === data.quality)
   const { duration, video, audio } = data.dash
-  const videoDashes: VideoDash[] = video
+  const videoDashes: VideoDash[] = (video as any[])
     .filter((d: any) => d.id === currentQuality.value)
-    .map((d: any) => {
+    .map((d: any): VideoDash => {
       const videoCodec: DashCodec = (() => {
         switch (d.codecid) {
           case 12:
@@ -94,6 +121,7 @@ const downloadDash = async (input: DownloadVideoInputItem, codec: DashCodec) => 
         }
       })()
       const dash: VideoDash = {
+        type: 'video',
         quality: currentQuality,
         width: d.width,
         height: d.height,
@@ -110,7 +138,9 @@ const downloadDash = async (input: DownloadVideoInputItem, codec: DashCodec) => 
       }
       return dash
     })
-  const audioDashes: AudioDash[] = (audio || []).map((d: any) => ({
+    .filter(d => dashFilters.video(d))
+  const audioDashes: AudioDash[] = (audio as any[] || []).map((d: any): AudioDash => ({
+    type: 'audio',
     bandWidth: d.bandwidth,
     codecs: d.codecs,
     codecId: d.codecid,
@@ -119,12 +149,12 @@ const downloadDash = async (input: DownloadVideoInputItem, codec: DashCodec) => 
     ),
     downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
     duration,
-  }))
+  })).filter(d => dashFilters.audio(d))
   const fragments: DownloadVideoFragment[] = dashToFragments({
     audioDashes,
     videoDashes,
     videoCodec: codec,
-  }).map((it, index) => ({ ...it, extension: DashExtensions[index] ?? DashFragmentExtension }))
+  })
   const qualities = (data.accept_quality as number[])
     .map(qn => allQualities.find(q => q.value === qn))
     .filter(q => q !== undefined)
@@ -141,12 +171,18 @@ const downloadDash = async (input: DownloadVideoInputItem, codec: DashCodec) => 
 export const videoDashAVC: DownloadVideoApi = {
   name: 'video.dash.avc',
   displayName: 'dash (AVC/H.264)',
-  description: '音画分离的 mp4 格式, 编码为H.264, 兼容性较好. 下载后可以合并为单个 mp4 文件.',
-  downloadVideoInfo: async input => downloadDash(input, 'AVC/H.264'),
+  description: '音画分离的 mp4 格式, 编码为 H.264, 兼容性较好. 下载后可以合并为单个 mp4 文件.',
+  downloadVideoInfo: async input => downloadDash(input, { codec: 'AVC/H.264' }),
 }
 export const videoDashHEVC: DownloadVideoApi = {
   name: 'video.dash.hevc',
   displayName: 'dash (HEVC/H.265)',
-  description: '音画分离的 mp4 格式, 编码为H.265, 体积较小, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
-  downloadVideoInfo: async input => downloadDash(input, 'HEVC/H.265'),
+  description: '音画分离的 mp4 格式, 编码为 H.265, 体积较小, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
+  downloadVideoInfo: async input => downloadDash(input, { codec: 'HEVC/H.265' }),
+}
+export const audioDash: DownloadVideoApi = {
+  name: 'video.dash.audio',
+  displayName: 'dash (仅音频)',
+  description: '仅下载视频中的音频轨道.',
+  downloadVideoInfo: async input => downloadDash(input, { filters: { video: () => false } }),
 }
