@@ -161,7 +161,7 @@ export default {
   --loading-from: #d4d4d4;
   --loading-to: #ddd;
   --slideshow-ratio: 0.6;
-  --rank-width: 20vw;
+  --rank-width: min(20vw, 380px);
   --rank-height: calc(var(--rank-width) / 16 * 10);
   --card-height: 22vh;
   --card-width: calc(var(--card-height) * (42 / 25));

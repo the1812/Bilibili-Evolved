@@ -34,7 +34,7 @@ export default {
     --simplify-home-background: #181818;
   }
   .simplify-home-component {
-    max-width: 100%;
+    max-width: min(100%, 2000px);
   }
 }
 html {
