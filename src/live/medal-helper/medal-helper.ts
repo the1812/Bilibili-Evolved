@@ -20,19 +20,36 @@ class Medal extends Badge {
   roomID: number
   isLighted: boolean
   constructor(json: any) {
-    const { medal_id, status, level, medalName, uname, roomid, is_lighted } = json
-    super(status === 1, medal_id)
+    const {
+      medal: {
+        medal_id,
+        level,
+        medal_name,
+        wearing_status,
+        is_lighted,
+      },
+      anchor_info: {
+        nick_name,
+      },
+      room_info: {
+        room_id,
+      },
+    } = json
+    super(wearing_status === 1, medal_id)
     this.level = level
-    this.name = medalName
-    this.upName = uname
-    this.roomID = roomid
+    this.name = medal_name
+    this.upName = nick_name
+    this.roomID = room_id
     this.isLighted = is_lighted
   }
   static async getList(): Promise<Medal[]> {
     return Badge.parseJson(
-      await Ajax.getTextWithCredentials("https://api.live.bilibili.com/i/api/medal?page=1&pageSize=256"),
+      await Ajax.getTextWithCredentials(`https://api.live.bilibili.com/xlive/app-ucenter/v1/fansMedal/panel?page=1&page_size=256&target_id=${getUID()}`),
       {
-        successAction: json => json.data.fansMedalList.map((it: any) => new Medal(it)),
+        successAction: json => {
+          const list: any[] = (json.data.list ?? []).concat(json.data.special_list ?? [])
+          return list.map(it => new Medal(it))
+        },
         errorAction: () => [],
         errorMessage: "无法获取勋章列表.",
       })
