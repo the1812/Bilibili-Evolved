@@ -8,7 +8,7 @@ const playerModePolyfill = async () => {
   Observer.attributes(bpxContainer, () => {
     const dataScreen = bpxContainer.getAttribute('data-screen')
     document.body.classList.toggle('player-mode-webfullscreen', dataScreen === 'full' || dataScreen === 'web')
-    document.body.classList.toggle('player-mode-widescreen', dataScreen === 'wide')
+    dataScreen === 'wide' ? document.body.classList.add('player-mode-widescreen') : ''
   })
 }
 const idPolyfill = async () => {
