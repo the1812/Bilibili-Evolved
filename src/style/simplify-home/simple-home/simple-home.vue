@@ -214,12 +214,12 @@ export default {
       }
       &::before {
         background-image: linear-gradient(to left, transparent, var(--simplify-home-background));
-        left: 0;
+        left: -1px;
         opacity: 0;
       }
       &::after {
         background-image: linear-gradient(to right, transparent, var(--simplify-home-background));
-        right: 0;
+        right: -1px;
         opacity: 1;
       }
       &.is-bottom {
