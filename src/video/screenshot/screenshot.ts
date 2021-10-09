@@ -16,7 +16,8 @@ class Screenshot {
   }
   async createUrl() {
     if (this.withDanmaku) {
-      const videoWrapper = dq('.bilibili-player-video-wrap') as HTMLElement
+      const { playerAgent } = await import('../player-agent')
+      const videoWrapper = dq(playerAgent.query.video.wrap.selector) as HTMLElement
       const rect = videoWrapper.getBoundingClientRect()
       const playerRatio = rect.width / rect.height
       const videoRatio = this.video.videoWidth / this.video.videoHeight
@@ -168,11 +169,12 @@ Observer.videoChange(async () => {
     })
   }
 
-  const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
+  const { playerAgent } = await import('../player-agent')
+  const video = await playerAgent.query.video.element() as HTMLVideoElement
   if (video === null) {
     return
   }
-  const time = await SpinQuery.select('.bilibili-player-video-time, .squirtle-time-wrap')
+  const time = await playerAgent.query.control.buttons.time()
   if (time === null || document.querySelector('.video-take-screenshot')) {
     return
   }
@@ -180,14 +182,14 @@ Observer.videoChange(async () => {
   const buttonHtml = /*html*/`
     <div class="video-take-screenshot">
       <span><i class="mdi mdi-camera"></i></span>
-      <div class="player-tooltips tip top-center animation active">
+      <div class="player-tooltips bpx-player-tooltip-item tip top-center animation active">
         <div class="tooltip">截图</div>
       </div>
     </div>`
   time.insertAdjacentHTML('afterend', buttonHtml)
   const screenshotButton = document.querySelector('.video-take-screenshot') as HTMLElement
   screenshotButton.addEventListener('click', async e => {
-    const video = await SpinQuery.select('.bilibili-player-video video') as HTMLVideoElement
+    const video = await playerAgent.query.video.element() as HTMLVideoElement
     const screenshot = takeScreenshot(video, e.shiftKey)
     screenShotsList.screenshots.unshift(screenshot)
   })
@@ -210,8 +212,8 @@ export default {
     takeScreenshot,
     screenShotsList,
   },
-  unload: () => document.querySelectorAll('.bilibili-player-video-control-bottom .video-take-screenshot,.video-screenshot-container')
+  unload: () => document.querySelectorAll('.video-take-screenshot,.video-screenshot-container')
     .forEach(it => (it as HTMLElement).setAttribute('style', 'display: none !important')),
-  reload: () => document.querySelectorAll('.bilibili-player-video-control-bottom .video-take-screenshot,.video-screenshot-container')
+  reload: () => document.querySelectorAll('.video-take-screenshot,.video-screenshot-container')
     .forEach(it => (it as HTMLElement).setAttribute('style', 'display: flex !important')),
 }

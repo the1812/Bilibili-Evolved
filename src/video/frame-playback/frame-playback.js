@@ -2,6 +2,7 @@ import html from 'framePlaybackHtml'
 
 resources.applyStyle('framePlaybackStyle')
 const main = async () => {
+  const { playerAgent } = await import('../player-agent')
   if (settings.videoScreenshot) {
     const screenshotButton = await SpinQuery.select('.video-take-screenshot')
     if (screenshotButton === null || document.querySelector('.frame-playback')) {
@@ -9,7 +10,7 @@ const main = async () => {
     }
     screenshotButton.insertAdjacentHTML('afterend', html)
   } else {
-    const time = await SpinQuery.select('.bilibili-player-video-time')
+    const time = await playerAgent.query.control.buttons.time()
     if (time === null || document.querySelector('.frame-playback')) {
       return
     }
@@ -18,13 +19,12 @@ const main = async () => {
 
   let frameTime = 0
   const seek = (forward) => () => {
-    const video = dq('video')
-    unsafeWindow.player.seek(video.currentTime + (forward ? 1 : -1) * frameTime, video.paused)
+    playerAgent.changeTime((forward ? 1 : -1) * frameTime)
   }
   const prevFrame = seek(false)
   const nextFrame = seek(true)
-  Observer.attributesSubtree('.bilibili-player-video-quality-menu ul.bui-select-list', () => {
-    const selectedQuality = document.querySelector('.bilibili-player-video-quality-menu .bui-select-item-active')
+  Observer.attributesSubtree(`${playerAgent.query.control.buttons.quality.selector} ul`, () => {
+    const selectedQuality = document.querySelector(`${playerAgent.query.control.buttons.quality.selector} .bui-select-item-active, ${playerAgent.query.control.buttons.quality.selector} .active`)
     const quality = selectedQuality ? parseInt(selectedQuality.getAttribute('data-value')) : 0
     const fps = (() => {
       switch (quality) {
@@ -40,19 +40,6 @@ const main = async () => {
     frameTime = 1 / fps
     // console.log(frameTime);
   })
-  // document.addEventListener('keydown', e => {
-  //   if (e.shiftKey && !isTyping()) {
-  //     if (e.key === 'ArrowLeft') {
-  //       e.stopPropagation()
-  //       e.preventDefault()
-  //       prevFrame()
-  //     } else if (e.key === 'ArrowRight') {
-  //       e.stopPropagation()
-  //       e.preventDefault()
-  //       nextFrame()
-  //     }
-  //   }
-  // })
   document.querySelector('.prev-frame').addEventListener('click', prevFrame)
   document.querySelector('.next-frame').addEventListener('click', nextFrame)
   if (settings.touchVideoPlayer) {
@@ -61,6 +48,6 @@ const main = async () => {
 }
 Observer.videoChange(main)
 export default {
-  reload: () => document.querySelectorAll('.bilibili-player-video-control-bottom .frame-playback').forEach(it => it.setAttribute('style', 'display: flex !important')),
-  unload: () => document.querySelectorAll('.bilibili-player-video-control-bottom .frame-playback').forEach(it => it.setAttribute('style', 'display: none !important'))
+  reload: () => document.querySelectorAll('.frame-playback').forEach(it => it.setAttribute('style', 'display: flex !important')),
+  unload: () => document.querySelectorAll('.frame-playback').forEach(it => it.setAttribute('style', 'display: none !important'))
 }
