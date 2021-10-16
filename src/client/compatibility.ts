@@ -10,12 +10,10 @@ export const compatibilityPatch = () => {
       'https://live.bilibili.com/blackboard/dropdown-menu.html',
       'https://www.bilibili.com/page-proxy/game-nav.html',
     ]
-    document.body.classList.toggle('iframe', isIframe() && transparentFrames.some(matchUrlPattern))
+    document.documentElement.classList.toggle('iframe', isIframe() && transparentFrames.some(matchUrlPattern))
   })
   if (!('requestIdleCallback' in window)) {
-    window.requestIdleCallback = (callback: TimerHandler) => {
-      window.setTimeout(callback, 0)
-    }
+    window.requestIdleCallback = (callback: TimerHandler) => window.setTimeout(callback, 0)
     window.cancelIdleCallback = (handle: number) => {
       window.clearTimeout(handle)
     }
