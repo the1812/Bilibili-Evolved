@@ -9,6 +9,12 @@ body.simplifyHome-switch {
       height: 24px !important;
       padding: 0 !important;
     }
+    .bili-header__channel {
+      height: 12px !important;
+    }
+    .bili-header__channel > * {
+      display: none !important;
+    }
   }
   &-trends {
     .first-screen #reportFirst1 {
@@ -17,6 +23,8 @@ body.simplifyHome-switch {
     .first-screen .space-between {
       margin-bottom: 0 !important;
     }
+
+    .bili-layout .bili-grid:first-child,
     .rcmd-box-wrap {
       display: none !important;
     }
@@ -37,6 +45,7 @@ body.simplifyHome-switch {
     }
   }
   &-contact {
+    .bili-footer .b-footer-wrap,
     .international-footer {
       display: none !important;
     }

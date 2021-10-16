@@ -12,16 +12,17 @@ import seekRight from './seek-right.svg'
 export const SeekByFramesDisabledClass = 'seek-by-frame-disable'
 const entry = async () => {
   await playerReady()
+  const { playerAgent } = await import('@/components/video/player-agent')
   addData('ui.icons', (icons: Record<string, string>) => {
     icons['seek-left'] = seekLeft
     icons['seek-right'] = seekRight
   })
   let frameTime = 0
   attributesSubtree(
-    '.bilibili-player-video-quality-menu ul.bui-select-list',
+    `${playerAgent.query.control.buttons.quality.selector} ul`,
     () => {
       const selectedQuality = dq(
-        '.bilibili-player-video-quality-menu .bui-select-item-active',
+        `${playerAgent.query.control.buttons.quality.selector} .bui-select-item-active, ${playerAgent.query.control.buttons.quality.selector} .active`,
       )
       const quality = selectedQuality
         ? parseInt(selectedQuality.getAttribute('data-value'))
@@ -41,8 +42,7 @@ const entry = async () => {
     },
   )
   const setFrame = (num: number) => {
-    const video = dq('video') as HTMLVideoElement
-    unsafeWindow.player.seek(video.currentTime + num * frameTime, video.paused)
+    playerAgent.changeTime(num * frameTime)
   }
   addControlBarButton({
     name: 'seekPrevFrame',

@@ -63,7 +63,6 @@ import {
   DefaultWidget,
   VPopup,
 } from '@/ui'
-import { createPopper } from '@popperjs/core'
 import {
   Medal, Title, Badge, getMedalList, getTitleList,
 } from './badge'
@@ -82,29 +81,6 @@ export default Vue.extend({
     }
   },
   async mounted() {
-    createPopper(this.$refs.medalButton.$el, this.$refs.medalPopup.$el, {
-      placement: 'right',
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 8],
-          },
-        },
-      ],
-    })
-    createPopper(this.$refs.titleButton.$el, this.$refs.titlePopup.$el, {
-      placement: 'right',
-      modifiers: [
-        {
-          name: 'offset',
-          options: {
-            offset: [0, 8],
-          },
-        },
-      ],
-    })
-
     this.loadMedalList()
     await Title.getImageMap()
     this.loadTitleList()

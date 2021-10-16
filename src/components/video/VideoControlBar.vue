@@ -1,9 +1,9 @@
 <template>
-  <div class="be-video-control-bar-extend">
+  <div class="be-video-control-bar-extend squirtle-block-wrap">
     <div
       v-for="item of items"
       :key="item.name"
-      class="bilibili-player-video-btn"
+      class="be-video-control-bar-extend-item bilibili-player-video-btn squirtle-block-wrap"
       :style="{ order: item.order.toString() }"
       :data-name="item.name"
       @click="item.action($event)"
@@ -39,6 +39,14 @@ export default Vue.extend({
 
 .be-video-control-bar-extend {
   display: flex;
+  .squirtle-controller-wrap & {
+    margin-top: 1px;
+  }
+  &,
+  .squirtle-controller.squirtle-wide-screen &.squirtle-block-wrap {
+    width: auto !important;
+    margin-top: 0px;
+  }
   .bp-svgicon {
     width: auto;
     padding-top: 1px;
@@ -53,8 +61,8 @@ export default Vue.extend({
       height: $size;
       color: #fff;
       fill: #fff;
-      .bilibili-player.mode-fullscreen &,
-      .bilibili-player.mode-webfullscreen & {
+      body.player-mode-fullscreen &,
+      body.player-mode-webfullscreen & {
         $size: 28px;
         font-size: $size;
         width: $size;
@@ -67,6 +75,7 @@ export default Vue.extend({
     font-size: 12px;
     padding: 6px 8px;
     line-height: normal;
+    white-space: nowrap;
     color: #fff;
     background-color: #000000b3;
     border-radius: 4px;
@@ -76,8 +85,14 @@ export default Vue.extend({
     transform: translateX(-50%) translateY(calc(-100% - 11px));
     opacity: 0;
   }
-  .bilibili-player-video-btn {
+  &-item {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
     position: relative;
+    .squirtle-controller-wrap & {
+      align-items: center;
+    }
     &:hover .be-video-control-tooltip {
       transition: all .3s ease-in-out .3s;
       opacity: 1;
@@ -85,6 +100,17 @@ export default Vue.extend({
     }
     &:active .bp-svgicon .be-icon {
       transform: scale(0.95);
+    }
+    button {
+      background-color: transparent;
+      margin: 0;
+      padding: 0;
+      border: none;
+      cursor: pointer;
+      &:hover,
+      &:active {
+        outline: none !important;
+      }
     }
   }
 }

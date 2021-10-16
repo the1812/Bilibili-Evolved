@@ -1,4 +1,5 @@
 import { ComponentMetadata, ComponentEntry } from '@/components/types'
+import { playerAgent } from '@/components/video/player-agent'
 import { videoChange } from '@/core/observer'
 import { sq } from '@/core/spin-query'
 import { isEmbeddedPlayer } from '@/core/utils'
@@ -18,16 +19,14 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
     const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
       [PlayerModes.normal, none],
       [PlayerModes.wide, () => {
-        const button = dq('.bilibili-player-video-btn-widescreen') as HTMLElement
-        button.click()
+        playerAgent.widescreen()
       }],
       [PlayerModes.webFullscreen, () => {
-        const button = dq('.bilibili-player-video-web-fullscreen') as HTMLElement
-        button.click()
+        playerAgent.webFullscreen()
       }],
       [PlayerModes.fullscreen, async () => {
         const video = await sq(
-          () => dq('.bilibili-player-video video'),
+          () => dq(playerAgent.query.video.element.selector),
           (it: HTMLVideoElement) => it !== null && it.readyState === 4
             && document.readyState === 'complete' && document.hasFocus(),
         )
@@ -35,8 +34,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
           console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
           return
         }
-        const button = dq('.bilibili-player-video-btn-fullscreen') as HTMLElement
-        button.click()
+        playerAgent.fullscreen()
       }],
     ])
 

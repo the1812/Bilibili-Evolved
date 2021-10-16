@@ -18,8 +18,8 @@ const entry = async () => {
     icon: 'mdi-camera',
     order: 0,
     action: async (e: MouseEvent) => {
-      const { select } = await import('@/core/spin-query')
-      const video = (await select('.bilibili-player-video video')) as HTMLVideoElement
+      const { playerAgent } = await import('@/components/video/player-agent')
+      const video = await playerAgent.query.video.element() as HTMLVideoElement
       const screenshot = takeScreenshot(video, e.shiftKey)
       if (!screenShotsList) {
         screenShotsList = mountVueComponent(ScreenshotContainer)

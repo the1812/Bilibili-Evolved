@@ -39,7 +39,8 @@ export default Vue.extend({
         this.imageUrl = videoInfo.coverUrl.replace('http:', 'https:')
       })
     } else {
-      const coverLink = await select('.header-info-ctnr .room-cover') as HTMLElement
+      const spaceElementSelector = '.header-info-ctnr .room-cover, .header-info-ctnr .avatar'
+      const coverLink = await select(spaceElementSelector) as HTMLElement
       if (!coverLink) {
         return
       }

@@ -10,7 +10,6 @@ export const urlInclude = [
   '//message.bilibili.com',
   '//app.bilibili.com',
   '//passport.bilibili.com',
-  '//game.bilibili.com',
   '//live.bilibili.com/blackboard/',
 ]
 export const urlExclude = [
@@ -21,4 +20,5 @@ export const urlExclude = [
   '//www.bilibili.com/h5/comment/',
   // '//www.bilibili.com/blackboard/',
   '//member.bilibili.com/v2',
+  '//game.bilibili.com/',
 ]

@@ -1,8 +1,9 @@
 import { createSwitchOptions, SwitchOptions } from '@/components/switch-options'
 import { ComponentMetadata } from '@/components/types'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
-import { selectAll } from '@/core/spin-query'
+import { sq } from '@/core/spin-query'
 import { addStyle } from '@/core/style'
+import { getCookieValue } from '@/core/utils'
 import { mainSiteUrls } from '@/core/utils/urls'
 
 const switchOptions: SwitchOptions = {
@@ -23,15 +24,15 @@ const switchOptions: SwitchOptions = {
     },
     online: {
       defaultValue: false,
-      displayName: '在线列表',
+      displayName: '在线列表(旧版)',
     },
     'ext-box': {
       defaultValue: false,
-      displayName: '电竞赛事',
+      displayName: '电竞赛事(旧版)',
     },
     special: {
       defaultValue: false,
-      displayName: '特别推荐',
+      displayName: '特别推荐(旧版)',
     },
     contact: {
       defaultValue: false,
@@ -39,7 +40,7 @@ const switchOptions: SwitchOptions = {
     },
     elevator: {
       defaultValue: false,
-      displayName: '右侧分区导航',
+      displayName: '右侧分区导航(旧版)',
     },
   },
 }
@@ -64,14 +65,63 @@ const metadata: ComponentMetadata = {
     }
 
     const { options } = getComponentSettings(metadata.name)
-    const categoryElements = await selectAll('.proxy-box > div')
-    const generatedOptions = Object.fromEntries(categoryElements.map(it => ([
-      it.id.replace(/^bili_/, ''),
-      {
-        displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
-        defaultValue: false,
-      },
-    ])))
+    const isNewHome = getCookieValue('i-wanna-go-back') === '-1'
+    type SimplifyHomeOption = {
+      displayName: string
+      defaultValue: boolean
+    }
+    const generatedOptions: Record<string, SimplifyHomeOption> = await (async () => {
+      const isNotHome = document.URL !== 'https://www.bilibili.com/'
+      if (!isNewHome) {
+        const categoryElements = await sq(
+          () => dqa('.proxy-box > div'),
+          elements => elements.length > 0 || isNotHome,
+        )
+        return Object.fromEntries(categoryElements.map(it => ([
+          it.id.replace(/^bili_/, ''),
+          {
+            displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
+            defaultValue: false,
+          },
+        ])))
+      }
+
+      const skipIds = ['推广']
+      const headers = await sq(
+        () => dqa('.bili-grid .the-world'),
+        elements => elements.length > 3 || isNotHome,
+      )
+      console.log(headers)
+      const getContainer = (header: Element) => {
+        let currentElement = header
+        while (currentElement.parentElement) {
+          if (currentElement.classList.contains('bili-grid')) {
+            return currentElement
+          }
+          currentElement = currentElement.parentElement
+        }
+        return null
+      }
+      const entries = headers
+        ?.filter(element => !skipIds.includes(element.id))
+        .map(element => {
+          const container = getContainer(element) as HTMLElement
+          const name = element.id
+          if (container) {
+            container.dataset.area = name
+            return [
+              name,
+              {
+                displayName: name,
+                defaultValue: false,
+              },
+            ]
+          }
+          return null
+        })
+        .filter((it): it is [string, SimplifyHomeOption] => it !== null) ?? []
+      return Object.fromEntries(entries)
+    })()
     Object.entries(generatedOptions).forEach(([key, { displayName, defaultValue }]) => {
       const option = {
         defaultValue,
@@ -81,11 +131,11 @@ const metadata: ComponentMetadata = {
       if (options[optionKey] === undefined) {
         options[optionKey] = defaultValue
       }
-      const optionPath = `${metadata.name}.switch-${key}`
+      const switchKey = `switch-${key}`
       addComponentListener(
-        optionPath,
+        `${metadata.name}.${switchKey}`,
         (value: boolean) => {
-          document.body.classList.toggle(optionPath, value)
+          document.body.classList.toggle(`${metadata.name}-${switchKey}`, value)
         },
         true,
       )
@@ -93,6 +143,7 @@ const metadata: ComponentMetadata = {
       options.simplifyOptions.switches[key] = option
     })
     const generatedStyles = Object.keys(generatedOptions).map(name => `
+        body.simplifyHome-switch-${name} .bili-layout .bili-grid[data-area="${name}"],
         body.simplifyHome-switch-${name} .storey-box .proxy-box #bili_${name} {
           display: none !important;
         }

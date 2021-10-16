@@ -644,6 +644,31 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
         @include background-color("4");
       }
     }
+
+    &__wrap {
+      @include background-color();
+    }
+  }
+}
+.n-drawer-container .elevator {
+  @include background-color("2");
+  .elevator-head {
+    @include color("e");
+  }
+
+  .elevator-core {
+    &.is-active {
+      @include background-color("3");
+    }
+    &:hover {
+      @include background-color("4");
+    }
+    .name {
+      @include color("e");
+    }
+    .icon {
+      @include color("a");
+    }
   }
 }
 #bilibili-footer {
@@ -675,6 +700,38 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
 .footer-wechat-popover {
   .qrcode-text {
     @include color("e");
+  }
+}
+
+.suggest-wrap .suggest-item {
+  @include color("e");
+  &:hover{
+    @include background("6e")
+  }
+}
+
+#all-list {
+  .sub-filter {
+    @include background("6e")
+  }
+  .icon-tid2-arr {
+    @include color("6e")
+  }
+
+  .mixin-list .user-list {
+    .all-user-item > .user-row .title,
+    .u-videos .video-item .video-desc {
+      @include color("e")
+    }
+  }
+}
+.gm-skeleton {
+  .chat-input-ctnr {
+    @include border-color("3");
+    @include background-color("2");
+    .medal-section {
+      @include border-color("3");
+    }
   }
 }
 

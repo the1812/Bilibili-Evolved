@@ -1,3 +1,4 @@
+import { playerAgent } from '@/components/video/player-agent'
 import { getFriendlyTitle } from '@/core/utils/title'
 
 const canvas = document.createElement('canvas')
@@ -15,7 +16,7 @@ export class Screenshot {
   async createUrl() {
     const { logError } = await import('@/core/utils/log')
     if (this.withDanmaku) {
-      const videoWrapper = dq('.bilibili-player-video-wrap') as HTMLElement
+      const videoWrapper = dq(playerAgent.query.video.wrap.selector) as HTMLElement
       const rect = videoWrapper.getBoundingClientRect()
       const playerRatio = rect.width / rect.height
       const videoRatio = this.video.videoWidth / this.video.videoHeight

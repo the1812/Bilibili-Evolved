@@ -265,7 +265,7 @@ export class BangumiPlayerAgent extends PlayerAgent {
       buttons: {
         start: '.squirtle-video-start',
         next: '.squirtle-video-next',
-        time: '.squirtle-video-time',
+        time: '.squirtle-time-wrap',
         quality: '.squirtle-video-quality',
         pageList: '.squirtle-video-pagelist',
         speed: '.squirtle-video-speed',

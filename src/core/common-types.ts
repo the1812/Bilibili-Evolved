@@ -8,3 +8,7 @@ export type ExecutableWithParameter<Parameters extends any[] = never[], ReturnTy
 export type TestPattern = (string | RegExp)[]
 export type VueModule = VueConstructor | { default: VueConstructor }
 export type I18nDescription = string | { 'zh-CN': string; [key: string]: string }
+export type WithName = {
+  name: string
+  displayName: string
+}

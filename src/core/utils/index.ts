@@ -280,6 +280,13 @@ export const playerReady = async () => {
     () => unsafeWindow.onLoginInfoLoaded !== undefined,
   )
   return new Promise<void>((resolve, reject) => {
+    const isJudgementVideo = document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/blackboard/newplayer.html' && document.URL.includes('fjw=true')
+    if (isJudgementVideo) {
+      /* 如果是风纪委员里的内嵌视频, 永远不 resolve
+        https://github.com/the1812/Bilibili-Evolved/issues/2340
+      */
+      return
+    }
     if (unsafeWindow.onLoginInfoLoaded) {
       unsafeWindow.onLoginInfoLoaded(resolve)
     } else {

@@ -4,6 +4,12 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
   const { addComponentListener } = await import('@/core/settings')
   if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     const { selectAll, select } = await import('@/core/spin-query')
+    select('.eva-extension-area').then(it => {
+      if (!it) {
+        return
+      }
+      it.parentElement.style.margin = '12px'
+    })
     selectAll('.gg-pic').then((pictures: HTMLElement[]) => {
       if (pictures.length === 0) {
         return

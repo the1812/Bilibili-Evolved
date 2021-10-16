@@ -1,5 +1,4 @@
 import { videoChange } from '@/core/observer'
-import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 
@@ -17,7 +16,8 @@ const initControlBar = lodash.once(async () => {
     return
   }
   videoChange(async () => {
-    const time = await select('.bilibili-player-video-time')
+    const { playerAgent } = await import('@/components/video/player-agent')
+    const time = await playerAgent.query.control.buttons.time()
     if (time === null) {
       return
     }
