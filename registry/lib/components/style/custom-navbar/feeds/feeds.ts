@@ -9,13 +9,14 @@ export const feeds: CustomNavbarItemInit = {
   touch: true,
   active: document.URL.replace(window.location.search, '') === 'https://t.bilibili.com/',
   contentMounted: async item => {
-    const { updateInterval, getNotifyCount } = await import('@/components/feeds/notify')
+    const { getNotifyCount } = await import('@/components/feeds/notify')
     const updateCount = async () => {
       const count = await getNotifyCount()
       item.notifyCount = count
     }
     await updateCount()
-    setInterval(() => updateCount(), updateInterval)
+    // 弹窗里还没实现实时刷新, 这里先不更新数字
+    // setInterval(() => updateCount(), updateInterval)
   },
   loginRequired: true,
 
