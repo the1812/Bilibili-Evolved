@@ -1,5 +1,6 @@
 import { attributes } from '@/core/observer'
 import { select } from '@/core/spin-query'
+import { preventEvent } from '@/core/utils'
 
 const playerModePolyfill = async () => {
   const bpxContainer = await select('.bpx-player-container') as HTMLElement
@@ -29,10 +30,21 @@ const idPolyfill = async () => {
   }
   Object.assign(unsafeWindow, idData)
 }
+/** 移除番剧的双击全屏, 和视频区保持一致.
+ * 如果以后视频区兼容了弹幕点赞层, 需要将双击全屏组件更换为阻止双击全屏, 并取消对此函数的使用.
+ */
+const doubleClickPolyfill = async () => {
+  const layer = await select('.bpx-player-video-perch') as HTMLElement
+  if (!layer) {
+    return
+  }
+  preventEvent(layer, 'dblclick')
+}
 export const bpxPlayerPolyfill = lodash.once(async () => {
   if (!document.URL.startsWith('https://www.bilibili.com/bangumi/play/')) {
     return
   }
   playerModePolyfill()
   idPolyfill()
+  doubleClickPolyfill()
 })

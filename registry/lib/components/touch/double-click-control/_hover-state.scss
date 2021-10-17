@@ -1,8 +1,9 @@
 @mixin hover-state {
   &.touch-video-control-show {
-    .bilibili-player-video-control {
-      &-bottom,
-      &-mask {
+    .bilibili-player-video {
+      &-control-bottom,
+      &-control-mask,
+      &-top {
         opacity: 1 !important;
         visibility: visible !important;
       }
@@ -10,6 +11,10 @@
     .bilibili-player-video-control-top {
       opacity: 1 !important;
       bottom: 32px !important;
+    }
+    .bpx-player-top-wrap {
+      opacity: 1 !important;
+      visibility: visible !important;
     }
     .squirtle-progress-wrap {
       top: 0 !important;

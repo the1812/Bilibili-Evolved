@@ -189,6 +189,19 @@ export const createHook = <ParentType, HookParameters extends any[], ReturnType 
   return original
 }
 /**
+ * 阻止元素的对特定类型事件 (非 capture 类) 的处理
+ * @param element 目标元素
+ * @param event 事件类型
+ * @returns 取消阻止的函数
+ */
+export const preventEvent = (element: Element, event: keyof HTMLElementEventMap) => {
+  const listener = (e: Event) => e.stopImmediatePropagation()
+  element.addEventListener(event, listener, { capture: true })
+  return () => {
+    element.removeEventListener(event, listener, { capture: true })
+  }
+}
+/**
  * 根据传入的对象拼接处 URL 查询字符串
  * @param obj 参数对象
  */
