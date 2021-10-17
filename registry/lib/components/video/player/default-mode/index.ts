@@ -1,8 +1,7 @@
 import { ComponentMetadata, ComponentEntry } from '@/components/types'
 import { playerAgent } from '@/components/video/player-agent'
-import { videoChange } from '@/core/observer'
 import { sq } from '@/core/spin-query'
-import { isEmbeddedPlayer } from '@/core/utils'
+import { isEmbeddedPlayer, playerReady } from '@/core/utils'
 import { allVideoUrls } from '@/core/utils/urls'
 
 export enum PlayerModes {
@@ -15,62 +14,49 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   if (isEmbeddedPlayer()) {
     return
   }
-  videoChange(async () => {
-    const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
-      [PlayerModes.normal, none],
-      [PlayerModes.wide, () => {
-        playerAgent.widescreen()
-      }],
-      [PlayerModes.webFullscreen, () => {
-        playerAgent.webFullscreen()
-      }],
-      [PlayerModes.fullscreen, async () => {
-        const video = await sq(
-          () => dq(playerAgent.query.video.element.selector),
-          (it: HTMLVideoElement) => it !== null && it.readyState === 4
-            && document.readyState === 'complete' && document.hasFocus(),
-        )
-        if (video === null) {
-          console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
-          return
-        }
-        playerAgent.fullscreen()
-      }],
-    ])
-
-    await sq(
-      () => dqa('.bilibili-player-video,.bilibili-player-video-btn-start,.bilibili-player-area'),
-      it => {
-        if (it.length !== 3) {
-          return false
-        }
-        const video = dq('video') as HTMLVideoElement
-        return Boolean(video?.duration ?? 0)
-      },
-    )
-
-    const video = dq('video') as HTMLVideoElement
-    if (!video) {
-      return
-    }
-    const autoPlay = lodash.get(
-      JSON.parse(localStorage.getItem('bilibili_player_settings')),
-      'video_status.autoplay',
-      false,
-    )
-    const action = actions.get(options.mode)
-    const onplay = () => {
-      const isNormalMode = !dq('#bilibiliPlayer[class*=mode-]')
-      if (isNormalMode) {
-        action()
+  await playerReady()
+  const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
+    [PlayerModes.normal, none],
+    [PlayerModes.wide, () => {
+      playerAgent.widescreen()
+    }],
+    [PlayerModes.webFullscreen, () => {
+      playerAgent.webFullscreen()
+    }],
+    [PlayerModes.fullscreen, async () => {
+      const video = await sq(
+        () => dq(playerAgent.query.video.element.selector),
+        (it: HTMLVideoElement) => it !== null && it.readyState === 4
+          && document.readyState === 'complete' && document.hasFocus(),
+      )
+      if (video === null) {
+        console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
+        return
       }
+      playerAgent.fullscreen()
+    }],
+  ])
+  const video = await playerAgent.query.video.element() as HTMLVideoElement
+  if (!video) {
+    return
+  }
+  const autoPlay = lodash.get(
+    JSON.parse(localStorage.getItem('bilibili_player_settings')),
+    'video_status.autoplay',
+    false,
+  )
+  const action = actions.get(options.mode)
+  const onplay = () => {
+    const isNormalMode = !dq('body[class*=player-mode-]')
+    if (isNormalMode) {
+      action()
     }
-    if (options.applyOnPlay && !autoPlay) {
-      video.addEventListener('play', onplay, { once: true })
-    } else {
-      onplay()
-    }
-  })
+  }
+  if (options.applyOnPlay && !autoPlay) {
+    video.addEventListener('play', onplay, { once: true })
+  } else {
+    onplay()
+  }
 }
 export const component: ComponentMetadata = {
   name: 'defaultPlayerMode',
