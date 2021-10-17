@@ -11,5 +11,25 @@
       opacity: 1 !important;
       bottom: 32px !important;
     }
+    .squirtle-progress-wrap {
+      top: 0 !important;
+      bottom: unset !important;
+      height: 16px !important;
+      width: calc(100% - 24px) !important;
+      margin: 0 12px !important;
+      .squirtle-progress-bar {
+        height: 4px !important;
+        bottom: 6px !important;
+      }
+    }
+    .squirtle-high-energy {
+      width: calc(100% - 24px) !important;
+      top: -22px !important;
+      bottom: unset !important;
+      margin: 0 12px !important;
+    }
+    .squirtle-controller-wrap {
+      display: flex !important;
+    }
   }
 }

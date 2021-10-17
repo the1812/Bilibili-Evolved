@@ -1,45 +1,47 @@
 @mixin pbp {
-  #bilibili_pbp,
-  #bilibili_pbp_canvas {
-    left: 0 !important;
-    width: 100% !important;
-    opacity: 0 !important;
-    &.pin {
-      opacity: 1 !important;
-      bottom: 3px !important;
-    }
-  }
-  #bilibili_pbp_pin {
-    opacity: 0 !important;
-  }
-  &.touch-video-control-show {
+  .bilibili-player-video-control {
     #bilibili_pbp,
     #bilibili_pbp_canvas {
-      opacity: 1 !important;
-      // &.pin {
-      bottom: calc(100% - 2px) !important;
-      // }
+      left: 0 !important;
+      width: 100% !important;
+      opacity: 0 !important;
+      &.pin {
+        opacity: 1 !important;
+        bottom: 3px !important;
+      }
     }
     #bilibili_pbp_pin {
-      right: -8px !important;
-      opacity: 1 !important;
+      opacity: 0 !important;
     }
-  }
-  @media screen and (min-width: 750px) {
-    .mode-fullscreen &,
-    .mode-webfullscreen & {
+    &.touch-video-control-show {
       #bilibili_pbp,
       #bilibili_pbp_canvas {
-        &.pin {
-          bottom: 4px !important;
-        }
+        opacity: 1 !important;
+        // &.pin {
+        bottom: calc(100% - 2px) !important;
+        // }
       }
-      &.touch-video-control-show {
+      #bilibili_pbp_pin {
+        right: -8px !important;
+        opacity: 1 !important;
+      }
+    }
+    @media screen and (min-width: 750px) {
+      body.player-mode-fullscreen &,
+      body.player-mode-webfullscreen & {
         #bilibili_pbp,
         #bilibili_pbp_canvas {
-          // &.pin {
-          bottom: calc(100% + 5px) !important;
-          // }
+          &.pin {
+            bottom: 4px !important;
+          }
+        }
+        &.touch-video-control-show {
+          #bilibili_pbp,
+          #bilibili_pbp_canvas {
+            // &.pin {
+            bottom: calc(100% + 5px) !important;
+            // }
+          }
         }
       }
     }

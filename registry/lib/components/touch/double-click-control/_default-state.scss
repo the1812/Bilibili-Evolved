@@ -16,4 +16,24 @@
     bottom: -7px !important;
     visibility: visible !important;
   }
+  .squirtle-progress-wrap {
+    top: unset !important;
+    bottom: 0 !important;
+    height: 2px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    .squirtle-progress-bar {
+      height: 2px !important;
+      bottom: 0 !important;
+    }
+  }
+  .squirtle-high-energy {
+    width: 100% !important;
+    top: unset !important;
+    bottom: 2px !important;
+    margin: 0 !important;
+  }
+  .squirtle-controller-wrap {
+    display: none !important;
+  }
 }
