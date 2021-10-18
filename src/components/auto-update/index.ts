@@ -16,11 +16,17 @@ interface UpdateCheckItem {
 const localhost = /^http:\/\/localhost/
 const name = 'autoUpdate'
 type UpdateRecord = Record<string, Record<string, UpdateCheckItem>>
-interface CheckUpdateConfig {
+interface CheckSingleTypeUpdateConfig {
+  filterNames?: string[]
+  force?: boolean
+}
+type CheckSingleTypeUpdate = (config?: CheckSingleTypeUpdateConfig) => Promise<string>
+interface CheckUpdateConfig extends CheckSingleTypeUpdateConfig {
   items: Record<string, UpdateCheckItem>
   existPredicate: (name: string) => boolean
   installer: (code: string) => Promise<{ message: string }>
   filterNames?: string[]
+  force?: boolean
 }
 const isLocalItem = (url: string) => localhost.test(url)
 const checkUpdate = async (config: CheckUpdateConfig) => {
@@ -29,6 +35,7 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
     existPredicate,
     installer,
     filterNames = [],
+    force = false,
   } = config
   const now = Number(new Date())
   const { devMode } = getGeneralSettings()
@@ -49,7 +56,7 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
       .map(async ([itemName, item]) => {
         const { url, lastUpdateCheck, alwaysUpdate } = item
         const isDebugItem = alwaysUpdate && devMode
-        if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration) {
+        if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration && !force) {
           return `[${itemName}] 未超过更新间隔期, 已跳过`
         }
         let finalUrl = url
@@ -74,37 +81,40 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
     return `[${Object.keys(items)[index]}] ${message}`
   }).join('\n').trim()
 }
-const checkComponentsUpdate = async (...filterNames: string[]) => {
+const checkComponentsUpdate: CheckSingleTypeUpdate = async ({ filterNames, force } = {}) => {
   const { options } = getComponentSettings(name)
   const { components } = options.urls as UpdateRecord
   const { installComponent } = await import('@/components/user-component')
   return checkUpdate({
     items: components,
     existPredicate: itemName => settings.userComponents[itemName] !== undefined,
-    filterNames,
     installer: installComponent,
+    filterNames,
+    force,
   })
 }
-const checkPluginsUpdate = async (...filterNames: string[]) => {
+const checkPluginsUpdate: CheckSingleTypeUpdate = async ({ filterNames, force } = {}) => {
   const { options } = getComponentSettings(name)
   const { plugins } = options.urls as UpdateRecord
   const { installPlugin } = await import('@/plugins/plugin')
   return checkUpdate({
     items: plugins,
     existPredicate: itemName => settings.userPlugins[itemName] !== undefined,
-    filterNames,
     installer: installPlugin,
+    filterNames,
+    force,
   })
 }
-const checkStylesUpdate = async (...filterNames: string[]) => {
+const checkStylesUpdate: CheckSingleTypeUpdate = async ({ filterNames, force } = {}) => {
   const { options } = getComponentSettings(name)
   const { styles } = options.urls as UpdateRecord
   const { installStyle } = await import('@/plugins/style')
   return checkUpdate({
     items: styles,
     existPredicate: itemName => settings.userStyles[itemName] !== undefined,
-    filterNames,
     installer: installStyle,
+    filterNames,
+    force,
   })
 }
 export const component: ComponentMetadata = {
@@ -161,15 +171,15 @@ export const component: ComponentMetadata = {
         window.location.reload()
       },
       updateSingleComponent: async (...itemNames: string[]) => {
-        await checkComponentsUpdate(...itemNames)
+        await checkComponentsUpdate({ filterNames: itemNames, force: true })
         window.location.reload()
       },
       updateSinglePlugin: async (...itemNames: string[]) => {
-        await checkPluginsUpdate(...itemNames)
+        await checkPluginsUpdate({ filterNames: itemNames, force: true })
         window.location.reload()
       },
       updateSingleStyle: async (...itemNames: string[]) => {
-        await checkStylesUpdate(...itemNames)
+        await checkStylesUpdate({ filterNames: itemNames, force: true })
         window.location.reload()
       },
     }
@@ -229,7 +239,10 @@ export const component: ComponentMetadata = {
             action: async () => {
               const { Toast } = await import('@/core/toast')
               const toast = Toast.info('检查更新中...', '检查更新')
-              const result = await checkComponentsUpdate(metadata.name)
+              const result = await checkComponentsUpdate({
+                filterNames: [metadata.name],
+                force: true,
+              })
               toast.message = result
               toast.duration = 3000
             },
