@@ -61,7 +61,7 @@ export default Vue.extend({
       height: $size;
       color: #fff;
       fill: #fff;
-      body.player-mode-fullscreen &,
+      body.player-fullscreen-fix &,
       body.player-mode-webfullscreen & {
         $size: 28px;
         font-size: $size;

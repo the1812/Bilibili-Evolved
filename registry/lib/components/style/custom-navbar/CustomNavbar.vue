@@ -140,7 +140,7 @@ body.fixed-navbar {
   line-height: normal;
 
   body.player-mode-webfullscreen &,
-  body.player-mode-fullscreen & {
+  body.player-fullscreen-fix & {
     z-index: 1;
   }
   // &:not(.fill) .custom-navbar-iconfont {

@@ -15,7 +15,7 @@ body {
       background: rgba(0, 0, 0, var(--video-control-opacity)) !important;
     }
   }
-  &.player-mode-fullscreen,
+  &.player-fullscreen-fix,
   &.player-mode-webfullscreen {
     .bilibili-player-video-control-bottom {
       margin: -2px 0 0 0 !important;

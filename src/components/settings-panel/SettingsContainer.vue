@@ -117,7 +117,7 @@ export default {
     transform: translateX(calc(-50% * var(--direction))) translateY(-50%);
 
     body.player-mode-webfullscreen &,
-    body.player-mode-fullscreen & {
+    body.player-fullscreen-fix & {
       z-index: 1;
     }
     & > * {
