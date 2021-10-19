@@ -65,14 +65,6 @@
   },
   {
     "type": "component",
-    "name": "feedsTranslate",
-    "displayName": "动态翻译",
-    "description": "在每条动态下方添加翻译按钮.",
-    "fullRelativePath": "../../registry/dist/components/feeds/translate.js",
-    "fullAbsolutePath": "registry/dist/components/feeds/translate.js"
-  },
-  {
-    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "自动展开被折叠的动态.",
@@ -390,14 +382,6 @@
     "description": "开启后, 可在每条评论的菜单中选择复制链接.",
     "fullRelativePath": "../../registry/dist/components/utils/comments/copy-link.js",
     "fullAbsolutePath": "registry/dist/components/utils/comments/copy-link.js"
-  },
-  {
-    "type": "component",
-    "name": "commentsTranslate",
-    "displayName": "评论翻译",
-    "description": "在每条评论下方添加翻译按钮.",
-    "fullRelativePath": "../../registry/dist/components/utils/comments/translate.js",
-    "fullAbsolutePath": "registry/dist/components/utils/comments/translate.js"
   },
   {
     "type": "component",

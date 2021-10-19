@@ -16,7 +16,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/fold-comments.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/full-content.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/full-title.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/translate.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/unfold.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/live/auto-draw.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/live/badge-helper.js
@@ -57,7 +56,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/check-in-center.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/column-unlock.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/comments/copy-link.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/comments/translate.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/download-audio.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/image-exporter.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/image-resolution.js
@@ -117,7 +115,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/compo
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/fold-comments.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/full-content.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/full-title.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/translate.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/unfold.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/auto-draw.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/badge-helper.js
@@ -158,7 +155,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/compo
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/check-in-center.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/column-unlock.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/copy-link.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/translate.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/download-audio.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-exporter.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-resolution.js
@@ -218,7 +214,6 @@ https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feed
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/fold-comments.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/full-content.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/full-title.js
-https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/translate.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/unfold.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/live/auto-draw.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/live/badge-helper.js
@@ -259,7 +254,6 @@ https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/touc
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/check-in-center.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/column-unlock.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/comments/copy-link.js
-https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/comments/translate.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/download-audio.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/image-exporter.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/image-resolution.js
@@ -319,7 +313,6 @@ https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/fold-comments.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/full-content.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/full-title.js
-https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/translate.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/unfold.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/live/auto-draw.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/live/badge-helper.js
@@ -360,7 +353,6 @@ https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/check-in-center.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/column-unlock.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/comments/copy-link.js
-https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/comments/translate.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/download-audio.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/image-exporter.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/image-resolution.js

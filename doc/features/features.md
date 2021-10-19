@@ -74,15 +74,6 @@
 
 在顶栏的视频动态中, 无论标题多长总是完全展开.
 
-### [动态翻译](../../registry/dist/components/feeds/translate.js)
-`feedsTranslate`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/feeds/translate.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/translate.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/feeds/translate.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/feeds/translate.js)
-
-在每条动态下方添加翻译按钮.
-
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
 
@@ -455,15 +446,6 @@
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/comments/copy-link.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/comments/copy-link.js)
 
 开启后, 可在每条评论的菜单中选择复制链接.
-
-### [评论翻译](../../registry/dist/components/utils/comments/translate.js)
-`commentsTranslate`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/utils/comments/translate.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/translate.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/utils/comments/translate.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/utils/comments/translate.js)
-
-在每条评论下方添加翻译按钮.
 
 ### [下载音频](../../registry/dist/components/utils/download-audio.js)
 `downloadAudio`
