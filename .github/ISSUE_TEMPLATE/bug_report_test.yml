@@ -27,7 +27,7 @@ body:
     attributes:
       label: 脚本版本
       description: 可在设置面板底部找到脚本版本信息
-      placeholder: v1.12.20
+      placeholder: 请输入
     validations:
       required: true
   - type: input
@@ -35,7 +35,7 @@ body:
     attributes:
       label: 浏览器版本
       description: 可在浏览器的关于页面中找到浏览器版本信息
-      placeholder: Chrome 90 / Firefox 90
+      placeholder: 请输入
     validations:
       required: true
   - type: input
@@ -43,7 +43,7 @@ body:
     attributes:
       label: 播放器版本
       description: 在 b 站播放器上右键可以看到播放器版本号, 反馈播放器相关问题请务必提供
-      placeholder: v2.69.0
+      placeholder: 请输入
   - type: checkboxes
     id: hevc
     attributes:
@@ -57,9 +57,11 @@ body:
       label: 错误信息
       description: 脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出
       render: shell
+      placeholder: 请输入
     validations:
       required: true
   - type: textarea
     id: screenshots
     attributes:
       label: 附加截图
+      placeholder: 可在此粘贴图片
