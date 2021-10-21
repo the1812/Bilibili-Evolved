@@ -1,4 +1,4 @@
-name: Bug 反馈 (仅做测试, 勿用)
+name: Bug 反馈
 description: 功能运行不正常 / 失效
 body:
   - type: markdown
@@ -18,7 +18,7 @@ body:
     id: description
     attributes:
       label: 问题描述
-      description: 如何重现此问题, 在哪个页面里出现这个问题, 比如视频相关的可以提供一下av号 
+      description: 如何重现此问题, 在哪个页面里出现这个问题, 比如视频相关的可以提供一下av号
       placeholder: 请输入
     validations:
       required: true
