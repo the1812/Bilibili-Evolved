@@ -44,13 +44,15 @@ body:
       label: 播放器版本
       description: 在 b 站播放器上右键可以看到播放器版本号, 反馈播放器相关问题请务必提供
       placeholder: 请输入
-  - type: checkboxes
+  - type: dropdown
     id: hevc
     attributes:
       label: 是否开启 HEVC
       description: 在 b 站播放器设置里可以看到 HEVC 设置
       options:
-        - label: 是的
+        - 优先 HEVC
+        - 强制 HEVC
+        - 禁止 HEVC
   - type: textarea
     id: logs
     attributes:
