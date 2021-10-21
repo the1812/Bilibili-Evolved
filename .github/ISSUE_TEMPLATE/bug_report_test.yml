@@ -50,9 +50,7 @@ body:
       label: 是否开启 HEVC
       description: 在 b 站播放器设置里可以看到 HEVC 设置
       options:
-        - label: 优先 HEVC
-        - label: 强制 HEVC
-        - label: 禁止 HEVC
+        - label: 是的
   - type: textarea
     id: logs
     attributes:
