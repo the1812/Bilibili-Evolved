@@ -290,7 +290,7 @@ export const playerReady = async () => {
   const { logError } = await import('./log')
   await sq(
     () => unsafeWindow,
-    () => unsafeWindow.onLoginInfoLoaded !== undefined,
+    () => unsafeWindow.UserStatus !== undefined,
   )
   return new Promise<void>((resolve, reject) => {
     const isJudgementVideo = document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/blackboard/newplayer.html' && document.URL.includes('fjw=true')
