@@ -56,7 +56,6 @@ jobs:
       if: ${{ steps.commit.outcome == 'success' }}
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        branch: 'v2'
 
     - name: Log
       if: ${{ steps.commit.outcome != 'success' }}
