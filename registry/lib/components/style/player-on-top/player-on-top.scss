@@ -1,0 +1,33 @@
+.v-wrap {
+  .l-con,
+  .r-con {
+    display: flex;
+    flex-direction: column;
+    margin-top: 24px;
+  }
+  .l-con {
+    .player-wrap {
+      order: -1;
+    }
+    .video-info {
+      margin: 20px 0 0 0 !important;
+      padding: 0 !important;
+      height: auto !important;
+      .video-data {
+        .argue,
+        .copyright {
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+  }
+  .r-con {
+    .danmaku-box {
+      order: -1;
+    }
+    .up-info {
+      padding-top: 0 !important;
+    }
+  }
+}

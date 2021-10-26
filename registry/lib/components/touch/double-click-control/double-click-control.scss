@@ -1,0 +1,12 @@
+@import "./default-state";
+@import "./hover-state";
+@import "./pbp";
+@import "./subtitle";
+
+.disable-original-hover {
+  @include default-state();
+  @include hover-state();
+  @include pbp();
+  @include subtitle();
+}
+@import "./fullscreen";

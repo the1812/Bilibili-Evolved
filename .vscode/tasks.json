@@ -4,122 +4,128 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "生产编译 production",
       "type": "shell",
-      "command": "dotnet builder/dotnet/publish/build.dll production",
-      "options": {
-        "cwd": "./"
-      },
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "echo": false,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": false
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "重新编译 rebuild",
-      "type": "shell",
-      "command": "dotnet builder/dotnet/publish/build.dll",
-      "options": {
-        "cwd": "./"
-      },
+      "command": "yarn webpack --config ./webpack/webpack.dev.js --progress",
       "group": "build",
-      "presentation": {
-        "echo": false,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": false
-      },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "label": "本体:编译开发版本 dev:build-core"
     },
     {
-      "label": "监视 watch",
       "type": "shell",
-      "command": "dotnet builder/dotnet/publish/build.dll watch",
-      "options": {
-        "cwd": "./"
-      },
+      "command": "yarn webpack --watch --config ./webpack/webpack.dev.js --progress",
       "group": "build",
-      "presentation": {
-        "echo": false,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": false
-      },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "label": "本体:监视开发版本 dev:watch-core"
     },
     {
-      "label": "生产监视 production-watch",
       "type": "shell",
-      "command": "dotnet builder/dotnet/publish/build.dll watch production",
-      "options": {
-        "cwd": "./"
-      },
+      "command": "yarn serve dist -p ${input:serverPort}",
       "group": "build",
-      "presentation": {
-        "echo": false,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": false
-      },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "label": "本体:启动服务器 dev:serve-core"
     },
     {
-      "label": "构建编译器 compile builder",
       "type": "shell",
-      "command": "dotnet publish -c Release -o publish/",
-      "options": {
-        "cwd": "./builder/dotnet/"
-      },
+      "command": "yarn serve registry/dist -p ${input:serverPort}",
       "group": "build",
-      "presentation": {
-        "echo": false,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": false
-      },
-      "problemMatcher": []
+      "problemMatcher": [],
+      "label": "功能:启动服务器 dev:serve-features"
     },
     {
-      "label": "构建编译器 (Debug模式) compile builder",
       "type": "shell",
-      "command": "dotnet build",
-      "options": {
-        "cwd": "./builder/dotnet/"
-      },
+      "command": "yarn webpack --watch --config ./registry/webpack/components.js --progress",
       "group": "build",
-      "presentation": {
-        "echo": false,
-        "reveal": "always",
-        "focus": true,
-        "panel": "shared",
-        "showReuseMessage": false
-      },
+      "problemMatcher": [],
+      "label": "功能:监视组件 dev:watch-components"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --watch --config ./registry/webpack/plugins.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "功能:监视插件 dev:watch-plugins"
+    },
+    // {
+    //   "type": "shell",
+    //   "command": "yarn webpack --config ./webpack/webpack.measure.js --progress",
+    //   "problemMatcher": [],
+    //   "label": "打包分析 dev:measure"
+    // },
+    // {
+    //   "type": "shell",
+    //   "command": "./dist/stats.html",
+    //   "problemMatcher": [],
+    //   "dependsOn": "打包分析 dev:measure",
+    //   "label": "查看打包分析 dev:stats"
+    // },
+    {
+      "type": "shell",
+      "command": "yarn eslint -f html -o dev/eslint.html --cache --cache-location node_modules/.cache/eslint/ 'src/**/*.@(js|ts|vue)' 'registry/lib/**/*.@(js|ts|vue)'",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "生产:代码检查 prod:lint"
+    },
+    {
+      "type": "shell",
+      "command": "yarn eslint -f html -o dev/eslint.html --cache --cache-location node_modules/.cache/eslint/ --fix 'src/**/*.@(js|ts|vue)' 'registry/lib/**/*.@(js|ts|vue)'",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "生产:代码修复 prod:lint-fix"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./webpack/webpack.prod.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "本体:编译生产版本 prod:build-core"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./registry/webpack/components.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "功能:编译组件 prod:bulid-components"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./registry/webpack/plugins.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "功能:编译插件 prod:build-plugins"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./registry/webpack/all.js",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "功能:编译所有 prod:build-features"
+    },
+    {
+      "type": "shell",
+      "command": "yarn webpack --config ./registry/webpack/docs.js --progress",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "功能:编译功能文档 prod:build-docs"
+    },
+    {
+      "type": "shell",
+      "command": "rm -r ./node_modules/.cache/webpack/",
+      "label": "缓存:清除webpack cache:clean-webpack",
       "problemMatcher": []
     },
     {
-      "label": "同步i18n数据 sync i18n",
       "type": "shell",
-      "command": "node ./builder/node/i18n-sync/i18n-sync.js",
-      "presentation": {
-        "echo": false,
-        "reveal": "silent",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": false
-      },
+      "command": "rm -r ./node_modules/.cache/",
+      "label": "缓存:清除全部 cache:clear-all",
       "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "serverPort",
+      "type": "promptString",
+      "description": "监听端口",
+      "default": "5000"
     }
   ]
 }

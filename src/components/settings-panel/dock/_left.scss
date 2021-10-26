@@ -1,0 +1,37 @@
+body:not(.settings-panel-dock-right) {
+  .contact-help {
+    display: none !important;
+  }
+  .be-settings {
+    --direction: 1;
+    > .sidebar {
+      left: 0;
+    }
+  }
+  .widgets-panel-popup,
+  .settings-panel-popup {
+    left: 12px;
+    transform-origin: left;
+  }
+  .settings-panel-popup {
+    .settings-panel-content {
+      .sidebar {
+        border-right: 1px solid #8882;
+      }
+      .main {
+        border-bottom-right-radius: 7px;
+      }
+    }
+    .component-tags {
+      border-bottom-left-radius: 8px;
+      border-right: 1px solid #8882;
+      left: 0;
+      .component-tags-item:last-child {
+        border-bottom-left-radius: 7px;
+      }
+    }
+  }
+  .settings-panel-sub-page {
+    left: 53px;
+  }
+}

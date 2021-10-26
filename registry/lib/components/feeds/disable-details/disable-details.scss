@@ -1,0 +1,9 @@
+.card[data-did] .content {
+  cursor: text;
+  .details {
+    font-size: 12px;
+    opacity: 0.6;
+    cursor: pointer;
+    display: block;
+  }
+}

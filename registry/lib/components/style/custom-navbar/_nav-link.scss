@@ -1,0 +1,24 @@
+@mixin nav-link {
+  position: relative;
+  padding: 8px;
+  display: flex;
+  justify-content: flex-start;
+  border-bottom: 2px solid transparent;
+  font-size: 15px;
+  line-height: normal;
+  &::before {
+    content: "";
+    position: absolute;
+    top: calc(100% - 4px);
+    left: 8px;
+    width: calc(100% - 16px);
+    height: 2px;
+    border-radius: 2px;
+    background-color: var(--theme-color);
+    transition: 0.16s 0.1s ease-out;
+    transform: scaleX(0);
+  }
+  &:hover::before {
+    transform: scaleX(1);
+  }
+}

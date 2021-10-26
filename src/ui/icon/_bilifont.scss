@@ -1,0 +1,35 @@
+@mixin bilifont {
+  $map: (
+    "logo": "\E725",
+    "profile": "\E722",
+    "posts": "\E723",
+    "wallet": "\E71F",
+    "live-center": "\E720",
+    "order-center": "\E71E",
+    "course": '\E60E',
+    "logout": "\E721",
+    "ok": "\E749",
+    "cancel": "\E74A",
+    "bind-phone": "\E733",
+    "bind-email": "\E735",
+    "coin-outline": "\E734",
+    "b-coin": "\E736",
+    "b-coin-outline": "\E736",
+    "activity": "\E732",
+    "feeds": "\E732",
+    "message": "\E731",
+    "favorites-outline": "\E730",
+    "history": "\E72F",
+    "vip": "\E72E",
+    "up-outline": "\E741",
+    "play-triangle": "\E737",
+    "refresh": "\E73C",
+    "eye": "\E742",
+  );
+  @each $name, $value in $map {
+    &.be-iconfont-#{$name}::before {
+      font-family: "be-iconfont-bilifont" !important;
+      content: $value;
+    }
+  }
+}

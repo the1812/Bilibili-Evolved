@@ -1,0 +1,154 @@
+@mixin replace-with-icon() {
+  display: block;
+  width: 36px;
+  color: #eee;
+  font: normal normal normal 20px/1 "Material Design Icons";
+  text-rendering: auto;
+  line-height: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body.touch-player-control {
+  .bpx-player-video-area {
+    .squirtle-controller {
+      height: 48px !important;
+      .squirtle-controller-wrap {
+        height: 31px !important;
+        padding: 18px 6px 0 !important;
+        .squirtle-pagelist-wrap {
+          width: 36px !important;
+          .squirtle-select-result {
+            display: none !important;
+          }
+          .squirtle-video-pagelist::before {
+            content: "\F0279";
+            @include replace-with-icon();
+          }
+        }
+        .squirtle-speed-wrap {
+          width: 36px !important;
+          .squirtle-select-result {
+            display: none !important;
+          }
+          .squirtle-video-speed::before {
+            content: "\F08FF";
+            @include replace-with-icon();
+          }
+        }
+      }
+      .squirtle-high-energy.ease {
+        bottom: 2px !important;
+      }
+      .squirtle-high-energy,
+      .squirtle-progress-common {
+        width: 100% !important;
+        margin: 0 !important;
+      }
+      #bilibili_pbp_pin {
+        right: 0 !important;
+      }
+    }
+  }
+  .bilibili-player {
+    * {
+      -webkit-tap-highlight-color: transparent !important;
+    }
+    .bilibili-player-area {
+      .bilibili-player-video-control-wrap {
+        padding: 0 !important;
+        .bilibili-player-video-btn {
+          height: 100% !important;
+          padding-left: 2px !important;
+          padding-right: 2px !important;
+          &.bilibili-player-video-btn-start {
+            padding-left: 22px !important;
+          }
+          &.bilibili-player-video-btn-fullscreen {
+            padding-right: 18px !important;
+          }
+        }
+        .bilibili-player-video-btn-pagelist {
+          width: 36px !important;
+          .bilibili-player-video-btn-name {
+            display: none !important;
+          }
+          &::before {
+            content: "\F0279";
+            @include replace-with-icon();
+          }
+        }
+        .bilibili-player-video-btn-speed {
+          width: 36px !important;
+          &-name {
+            display: none !important;
+          }
+          &::before {
+            content: "\F08FF";
+            @include replace-with-icon();
+          }
+        }
+      }
+      #bilibili_pbp_pin {
+        right: 0 !important;
+      }
+    }
+  }
+
+  &.player-fullscreen-fix,
+  &.player-mode-webfullscreen {
+    .bpx-player-video-area {
+      .squirtle-controller {
+        height: 72px !important;
+        .squirtle-controller-wrap {
+          height: 56px !important;
+          padding: 16px 6px 0 !important;
+          .squirtle-sendbar-wrap {
+            align-items: center !important;
+          }
+          .squirtle-pagelist-wrap,
+          .squirtle-speed-wrap {
+            width: 54px !important;
+            .squirtle-video-pagelist,
+            .squirtle-video-speed {
+              &::before {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                font-size: 26px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .bilibili-player {
+      .bilibili-player-area {
+        .bilibili-player-video-control-bottom-center {
+          padding: 0 12px !important;
+        }
+        .bilibili-player-video-btn {
+          flex-shrink: 0 !important;
+          flex-basis: 48px !important;
+        }
+        .bilibili-player-video-btn-speed,
+        .bilibili-player-video-btn-pagelist {
+          width: 54px !important;
+          &::before {
+            width: 50px;
+            font-size: 26px;
+          }
+        }
+        .bilibili-player-video-btn-start {
+          padding-top: 0 !important;
+          // height: 32px !important;
+        }
+        .bilibili-player-video-danmaku-switch {
+          // width: 20px !important;
+          padding-left: 0 !important;
+        }
+      }
+    }
+  }
+}

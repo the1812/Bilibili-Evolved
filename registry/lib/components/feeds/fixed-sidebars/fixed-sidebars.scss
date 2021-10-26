@@ -1,0 +1,49 @@
+@import "common";
+
+.international-header {
+  position: sticky !important;
+  top: 0 !important;
+}
+.custom-navbar {
+  position: fixed !important;
+}
+.sticky-bar {
+  display: none !important;
+}
+.left-panel,
+.right-panel {
+  position: fixed !important;
+}
+.home-container {
+  --left-width: 244px;
+  --center-width: 632px;
+
+  @media screen and (min-width: 1921px) {
+    --left-width: 12.71vw;
+    --center-width: 32.92vw;
+  }
+  @media screen and (min-width: 2497px) {
+    --left-width: 317px;
+    --center-width: 822px;
+  }
+}
+.center-panel {
+  margin-left: calc(var(--left-width) + 8px) !important;
+}
+.right-panel {
+  margin-left: calc(var(--left-width) + 16px + var(--center-width)) !important;
+}
+.live-panel .live-up-list {
+  max-height: calc(100vh - 380px);
+  overflow: auto;
+  @include no-scrollbar();
+  body.feeds-filter-side-block-profile & {
+    max-height: calc(100vh - 180px);
+  }
+}
+.adaptive-scroll {
+  min-height: unset !important;
+  .scroll-content {
+    position: static !important;
+  }
+}
