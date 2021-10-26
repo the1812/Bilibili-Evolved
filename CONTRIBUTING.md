@@ -109,7 +109,7 @@ bilibiliEvolved.componentApis.importComponent('autoUpdate').checkUpdatesAndReloa
 ### 组件
 在 `registry/lib/components` 中是所有组件的源代码.
 
-> 你可能还发现 `src/components` 中也有大量组件, 除了几个内置组件, 其他是在 v1.10.20 (commit `855bb6f`) 时做的迁移测试留下的, 我以后会迁移到  `registry/lib/components` 中, 所以就当没看见好了.
+> 你可能还发现 `src/components` 中也有一些组件, 这些是内置组件, 无法独立安装/卸载.
 
 1. 根据类别进入对应的子文件夹, 如样式修改的功能就是 `style/`
 2. 新建文件夹, 名称为组件名, 单词短横线分隔
@@ -241,7 +241,6 @@ commit message 只需写明改动点, 中英文随意, 也不强求类似 [commi
 
 ## 发起 PR (合并请求)
 将你的分支往主仓库的 `preview` 分支合并就行.
-> 目前 Technical Preview 阶段应该是往 `v2` 分支
 
 ## 自行保留
 你可以选择不将功能代码合并到主仓库, 因此也没有 ESLint 的限制. PR 时仅添加指向你的仓库中的组件信息即可, 具体来说, 是在 `registry/lib/docs/third-party.ts` 中, 往对应数组中添加你的功能的相关信息, 当然别忘了把 `owner` 设为你的 GitHub 用户名.

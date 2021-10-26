@@ -25,7 +25,7 @@
 - 使用外部网站的链接时(如将下载任务发送到自己的服务器 / 使用链接安装组件等)可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
 
 点击名称即可安装👇
-- [jsDelivr 源](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/bilibili-evolved.user.js)
+- [jsDelivr 源](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/dist/bilibili-evolved.user.js)
 - [GitHub 源](./dist/bilibili-evolved.user.js)
 
 ## 推荐配置
