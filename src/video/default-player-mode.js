@@ -66,7 +66,7 @@ async function main () {
   const { playerAgent } = await import('./player-agent')
   await playerReady()
 
-  Observer.videoChange(() => {
+  Observer.videoChange(async () => {
     // if (!autoPlay) {
     //   video.addEventListener('play', lightOff, { once: true })
     // } else {

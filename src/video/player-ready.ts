@@ -14,7 +14,7 @@ export const playerReady = () => {
     }
     await SpinQuery.condition(
       () => unsafeWindow,
-      () => unsafeWindow.onLoginInfoLoaded !== undefined,
+      () => unsafeWindow.UserStatus !== undefined,
     )
     if (unsafeWindow.onLoginInfoLoaded) {
       unsafeWindow.onLoginInfoLoaded(resolve)
