@@ -5,3 +5,4 @@ dev/
 *.log
 dist/stats.html
 dist/bilibili-evolved.dev.user.js
+builder/**/dist/
