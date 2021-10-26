@@ -11,7 +11,6 @@ const supportedUrls = [
   '//message.bilibili.com',
   '//app.bilibili.com',
   '//passport.bilibili.com',
-  '//game.bilibili.com',
   '//live.bilibili.com/blackboard/',
 ]
 const unsupportedUrls = [

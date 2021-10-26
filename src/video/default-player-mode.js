@@ -66,15 +66,31 @@ async function main () {
   const { playerAgent } = await import('./player-agent')
   await playerReady()
 
+  Observer.videoChange(() => {
+    // if (!autoPlay) {
+    //   video.addEventListener('play', lightOff, { once: true })
+    // } else {
+    //   lightOff()
+    // }
+    const video = await playerAgent.query.video.element()
+    if (!video) {
+      return
+    }
+    if (autoPlay) {
+      lightOff()
+    }
+    video.addEventListener('ended', lightOn)
+    video.addEventListener('pause', lightOn)
+    video.addEventListener('play', lightOff)
+  })
+
   const video = await playerAgent.query.video.element()
   if (!video) {
     return
   }
   const info = playerModes.find(it => it.name === settings.defaultPlayerMode)
   const onplay = async () => {
-    const container = await (playerAgent.query.bilibiliPlayer())
-    const attribute = container.getAttribute('data-screen')
-    const isNormalMode = !container.className.includes('mode-') && (attribute === null || attribute === 'normal')
+    const isNormalMode = !dq('body[class*=player-mode-]')
     if (info && isNormalMode) {
       info.action()
     }
@@ -85,17 +101,5 @@ async function main () {
   } else {
     onplay()
   }
-
-  // if (!autoPlay) {
-  //   video.addEventListener('play', lightOff, { once: true })
-  // } else {
-  //   lightOff()
-  // }
-  if (autoPlay) {
-    lightOff()
-  }
-  video.addEventListener('ended', lightOn)
-  video.addEventListener('pause', lightOn)
-  video.addEventListener('play', lightOff)
 }
-Observer.videoChange(main)
+main()

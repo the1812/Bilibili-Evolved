@@ -30,13 +30,13 @@
     opacity: 0.9;
     transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
     display: block;
-    .player-mode-fullscreen &,
+    .player-fullscreen-fix &,
     .player-mode-webfullscreen & {
       font-size: 24px;
     }
   }
   span {
-    .player-mode-fullscreen .squirtle-controller-wrap &,
+    .player-fullscreen-fix .squirtle-controller-wrap &,
     .player-mode-webfullscreen .squirtle-controller-wrap & {
       align-self: center;
     }

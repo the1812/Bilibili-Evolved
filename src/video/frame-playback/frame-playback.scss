@@ -10,7 +10,7 @@
   span {
     height: 100%;
 
-    .player-mode-fullscreen .squirtle-controller-wrap &,
+    .player-fullscreen-fix .squirtle-controller-wrap &,
     .player-mode-webfullscreen .squirtle-controller-wrap & {
       height: auto;
       align-self: center;
@@ -57,7 +57,7 @@
   &:not(.touch) i {
     margin-top: -2px;
   }
-  .player-mode-fullscreen &,
+  .player-fullscreen-fix &,
   .player-mode-webfullscreen & {
     margin-left: 4px;
     padding: 0 4px;
