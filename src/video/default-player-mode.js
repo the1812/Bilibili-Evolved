@@ -1,6 +1,15 @@
 if (typeof isEmbeddedPlayer !== 'undefined' && isEmbeddedPlayer()) {
   return
 }
+const supportedUrls = [
+  'https://www.bilibili.com/video/',
+  'https://www.bilibili.com/watchlater/',
+  'https://www.bilibili.com/medialist/play/',
+  'https://www.bilibili.com/bangumi/play/',
+]
+if (!supportedUrls.some(url => document.URL.startsWith(url))) {
+  return
+}
 const playerModes = [
   {
     name: '常规',
