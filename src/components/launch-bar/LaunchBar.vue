@@ -178,7 +178,7 @@ export default Vue.extend({
     async handleEnter() {
       if (this.actions.length > 0 && !this.isHistory) {
         const [first] = this.actions as LaunchBarAction[]
-        if (!first.explicitSelect) {
+        if (first.explicitSelect === false) {
           first.action()
           return
         }
