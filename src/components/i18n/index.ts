@@ -28,4 +28,6 @@ export const component: ComponentMetadata = {
       dropdownEnum: translateProviderNames,
     },
   },
+  // 相关功能好像全挂了, 先隐藏了
+  hidden: true,
 }
