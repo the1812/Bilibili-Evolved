@@ -56,17 +56,17 @@ async function checkNewVersion () {
   try {
     const clientTypeMatch = GM.info.script.name.match(/Bilibili Evolved \((.*)\)/)
     const clientType = clientTypeMatch ? '.' + clientTypeMatch[1].replace(/ /g, '-').toLowerCase() : ''
-    const isPreview = clientType === '.preview'
-    // 脚本的更新固定只能为jsDelivr
-    latestVersionLink = `https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@${isPreview ? 'preview' : 'master'}/bilibili-evolved${clientType}.user.js`
     let latestVersionText
     try {
+      latestVersionText = await Ajax.monkey({ url: Resource.cdnRoot || Resource.root + 'version.txt' })
+    } catch (error) {
+      const isPreview = clientType === '.preview'
+      // 脚本的更新固定只能为jsDelivr
+      latestVersionLink = `https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@${isPreview ? 'preview' : 'master'}/bilibili-evolved${clientType}.user.js`
       const latestScript = await Ajax.monkey({
         url: latestVersionLink,
       })
       latestVersionText = latestScript.match(/@version[ ]*([\d\.]+)/)[1]
-    } catch (error) {
-      latestVersionText = await Ajax.monkey({ url: Resource.cdnRoot || Resource.root + 'version.txt' })
     }
     const latestVersion = new Version(latestVersionText)
     if (latestVersion.parts[0] >= 2 && !settings.noNotifyV2) {
