@@ -1,5 +1,29 @@
 # 更新日志
 
+## v2.0.0-preview
+`[预览] v2.0.0` `2021-10-31`
+🎃欢迎来到 Bilibili Evolved v2.0.0 (预览版), 为了更长远的发展, 我完全重写了整个项目:
+- 引入现代化前端工具 (webpack, Babel, PostCSS 等)
+- 源代码 TypeScript 全覆盖 (webpack 等配置文件除外)
+- 自带 UI 组件库 (基于 Vue)
+- 移除对 jQuery 和 Vuex 的依赖
+- 全新的架构设计, 脚本体积大幅缩小: 2.79MB 👉 759KB
+- 不再有离线版, 你可以自行控制功能的更新
+
+需要注意的是:
+- 脚本不会由脚本管理器自动更新到 v2, 更新提示里也不会直接让你安装更新. 因为 v2 的安装和使用方式和 v1 有很大区别, 即便你是 v1 的老用户, 也强烈建议你重新阅读 [README](https://github.com/the1812/Bilibili-Evolved/blob/preview/README.md).
+- 安装前建议先备份 v1 设置, 然后卸载或者清空 v1 的数据存储, 避免遗留数据继承至 v2 造成性能影响.
+
+功能差异:
+- 虽然 README 有写, 但还是要再强调下, 全新安装的 v2 不包含任何实质性的功能, 它本身更接近于一个功能管理器, 你可以装个 `v1 设置迁移` 导入 v1 的设置 (顺便还能熟悉下怎么装功能), v1 开着的功能会在 v2 中自动安装, 详情见[此文档](https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/v1-migrate.md).
+- 暂不支持 v1 的 `简化首页` 功能, 在 v2 中 `简化首页` 等于 v1 的 `首页过滤` 功能. v1 的 `简化首页` 由于代码设计过于糟糕, 很难再进一步扩充功能, 我计划在 v2 发布后重写这个功能, 届时会比 v1 更加美观和强大. 如果你非常需要这个功能, 请暂时不要升级到 v2.
+- 暂不支持 Safari, 但也有计划去支持了. (#2349)
+- 暂不支持 v1 的 `界面翻译` 功能, 以后可能会做英语支持.
+
+安装及使用方法见 [README](https://github.com/the1812/Bilibili-Evolved/blob/preview/README.md#安装). 如希望参与开发, 请参考[代码贡献指南](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md).
+
+如有其他疑问, 请在这个 Release 对应的讨论区里回复.
+
 ## v2.0.0-tp9
 `v2.0.0 Technical Preview ⑨` `2021-10-17`
 **功能:**
