@@ -231,9 +231,9 @@ export const runMigrate = async (v1Settings: any) => {
       featureMap('hideRelatedVideos', 'hideRelatedVideos', 'component'),
       featureMap('urlParamsClean', 'urlParamsClean', 'component'),
       featureMap('collapseLiveSideBar', 'collapseLiveSideBar', 'component'),
-      featureMap('feedsTranslate', 'feedsTranslate', 'component'),
-      optionMap('feedsTranslateProvider', 'i18n.translator'),
-      featureMap('commentsTranslate', 'commentsTranslate', 'component'),
+      // featureMap('feedsTranslate', 'feedsTranslate', 'component'),
+      // optionMap('feedsTranslateProvider', 'i18n.translator'),
+      // featureMap('commentsTranslate', 'commentsTranslate', 'component'),
       optionMap('foregroundColorMode', 'settingsPanel.textColor'),
       optionMap('updateCdn', 'settingsPanel.cdnRoot'),
       optionMap('downloadPackageEmitMode', 'settingsPanel.downloadPackageEmitMode', (value: string) => (
@@ -263,9 +263,7 @@ export const runMigrate = async (v1Settings: any) => {
       featureMap('homeHidden', 'simplifyHome', 'component'),
       optionMap('homeHiddenItems', 'simplifyHome', (items: string[]) => {
         const { options } = getComponentSettings('simplifyHome')
-        console.log('simplifyHome.options before', options)
         items.forEach(item => (options[`switch-${item}`] = true))
-        console.log('simplifyHome.options after', options)
       }),
       featureMap('alwaysShowDuration', 'alwaysShowDuration', 'component'),
       featureMap('removeVideoPopup', 'removePlayerPopup', 'component'),
