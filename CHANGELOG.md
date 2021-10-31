@@ -19,6 +19,7 @@
 - 暂不支持 v1 的 `简化首页` 功能, 在 v2 中 `简化首页` 等于 v1 的 `首页过滤` 功能. v1 的 `简化首页` 由于代码设计过于糟糕, 很难再进一步扩充功能, 我计划在 v2 发布后重写这个功能, 届时会比 v1 更加美观和强大. 如果你非常需要这个功能, 请暂时不要升级到 v2.
 - 暂不支持 Safari, 但也有计划去支持了. (#2349)
 - 暂不支持 v1 的 `界面翻译` 功能, 以后可能会做英语支持.
+- 下载视频暂不支持 ffmpeg 命令生成 和 课程下载.
 
 安装及使用方法见 [README](https://github.com/the1812/Bilibili-Evolved/blob/preview/README.md#安装). 如希望参与开发, 请参考[代码贡献指南](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md).
 
