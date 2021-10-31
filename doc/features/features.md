@@ -578,7 +578,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/danmaku/download.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/danmaku/download.js)
 
-启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕.
+启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕. 请注意 ASS 弹幕下载不会包含高级弹幕, 字幕弹幕等.
 
 ### [展开弹幕列表](../../registry/dist/components/video/danmaku/expand.js)
 `expandDanmakuList`
@@ -795,20 +795,6 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://github.com/FoundTheWOUT/Bilibili-Evolved/raw/v2/registry/dist/components/video/player/localtime.js) / [`Preview`](https://github.com/FoundTheWOUT/Bilibili-Evolved/raw/preview/registry/dist/components/video/player/localtime.js)
 ## 插件
-
-### [英语语言包](../../registry/dist/plugins/i18n/en-US.js)
-`i18n.language.english`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/i18n/en-US.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/i18n/en-US.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/i18n/en-US.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/i18n/en-US.js)
-
-### [日语语言包](../../registry/dist/plugins/i18n/ja-JP.js)
-`i18n.language.japanese`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/i18n/ja-JP.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/i18n/ja-JP.js)
-
-**GitHub:** [`Stable`](https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/i18n/ja-JP.js) / [`Preview`](https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/i18n/ja-JP.js)
 
 ### [搜索栏 - 搜索推荐](../../registry/dist/plugins/launch-bar/trending-search.js)
 `launchBar.trendingSearch`

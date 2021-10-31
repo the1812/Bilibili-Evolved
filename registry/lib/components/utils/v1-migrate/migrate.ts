@@ -76,17 +76,16 @@ export const runMigrate = async (v1Settings: any) => {
       // magic: guiSettings is always enabled
       featureMap('guiSettings', pluginName, 'plugin')
     )
-    const i18nMap = () => {
-      const { i18n, i18nLanguage } = v1Settings
-      if (!i18n) {
-        return none
-      }
-      const languageMappings = {
-        English: 'i18n.language.english',
-        日本語: 'i18n.language.japanese',
-      }
-      return getPlugin(languageMappings[i18nLanguage])
-    }
+    const i18nMap = () => none
+    // const { i18n, i18nLanguage } = v1Settings
+    // if (!i18n) {
+    //   return none
+    // }
+    // const languageMappings = {
+    //   English: 'i18n.language.english',
+    //   日本語: 'i18n.language.japanese',
+    // }
+    // return getPlugin(languageMappings[i18nLanguage])
 
     const navbarItemMappings = {
       category: 'home',

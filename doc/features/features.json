@@ -483,7 +483,7 @@
     "type": "component",
     "name": "downloadDanmaku",
     "displayName": "下载弹幕",
-    "description": "启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕.",
+    "description": "启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕. 请注意 ASS 弹幕下载不会包含高级弹幕, 字幕弹幕等.",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/download.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/download.js"
   },
@@ -670,20 +670,6 @@
     "fullRelativePath": "../../registry/dist/components/video/player/localtime.js",
     "fullAbsolutePath": "registry/dist/components/video/player/localtime.js",
     "owner": "FoundTheWOUT"
-  },
-  {
-    "type": "plugin",
-    "name": "i18n.language.english",
-    "displayName": "英语语言包",
-    "fullRelativePath": "../../registry/dist/plugins/i18n/en-US.js",
-    "fullAbsolutePath": "registry/dist/plugins/i18n/en-US.js"
-  },
-  {
-    "type": "plugin",
-    "name": "i18n.language.japanese",
-    "displayName": "日语语言包",
-    "fullRelativePath": "../../registry/dist/plugins/i18n/ja-JP.js",
-    "fullAbsolutePath": "registry/dist/plugins/i18n/ja-JP.js"
   },
   {
     "type": "plugin",

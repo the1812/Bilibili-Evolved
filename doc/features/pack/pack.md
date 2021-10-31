@@ -92,8 +92,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/seo-redirect.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/subtitle/download.js
 https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@v2/registry/dist/components/video/player/localtime.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/i18n/en-US.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/i18n/ja-JP.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/launch-bar/trending-search.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/settings-panel/recent-components.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/style/custom-navbar-dark-mode.js
@@ -191,8 +189,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/compo
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/seo-redirect.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/subtitle/download.js
 https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@preview/registry/dist/components/video/player/localtime.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/i18n/en-US.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/i18n/ja-JP.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/trending-search.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/settings-panel/recent-components.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-dark-mode.js
@@ -290,8 +286,6 @@ https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/vide
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/seo-redirect.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/components/video/subtitle/download.js
 https://github.com/FoundTheWOUT/Bilibili-Evolved/raw/v2/registry/dist/components/video/player/localtime.js
-https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/i18n/en-US.js
-https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/i18n/ja-JP.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/launch-bar/trending-search.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/settings-panel/recent-components.js
 https://github.com/the1812/Bilibili-Evolved/raw/v2/registry/dist/plugins/style/custom-navbar-dark-mode.js
@@ -389,8 +383,6 @@ https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/seo-redirect.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/components/video/subtitle/download.js
 https://github.com/FoundTheWOUT/Bilibili-Evolved/raw/preview/registry/dist/components/video/player/localtime.js
-https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/i18n/en-US.js
-https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/i18n/ja-JP.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/launch-bar/trending-search.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/settings-panel/recent-components.js
 https://github.com/the1812/Bilibili-Evolved/raw/preview/registry/dist/plugins/style/custom-navbar-dark-mode.js
