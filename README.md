@@ -1,4 +1,4 @@
-# Bilibili Evolved II
+# Bilibili Evolved
 
 「 强大的哔哩哔哩增强脚本 」
 
