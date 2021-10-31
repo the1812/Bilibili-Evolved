@@ -44,10 +44,10 @@
 
 如果你曾经使用过 v1 版, 可以利用 `v1 设置迁移` 组件将旧设置导入到 v2 中, 该工具将自动把里面开启的设置对应的组件下载并安装, 使用方法可以参考[这个文档](./doc/v1-migrate.md).
 
-## 推荐配置
+# 推荐配置
 - 操作系统: 64-bit Windows 10+ / macOS 10.15+
 - 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+ / Safari 14.1+
+- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+
 - 处理器: Intel Core i7 / AMD Ryzen 5
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
