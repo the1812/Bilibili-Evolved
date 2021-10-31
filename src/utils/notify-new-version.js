@@ -58,7 +58,7 @@ async function checkNewVersion () {
     const clientType = clientTypeMatch ? '.' + clientTypeMatch[1].replace(/ /g, '-').toLowerCase() : ''
     let latestVersionText
     try {
-      latestVersionText = await Ajax.monkey({ url: Resource.cdnRoot || Resource.root + 'version.txt' })
+      latestVersionText = await Ajax.monkey({ url: (Resource.cdnRoot || Resource.root) + 'version.txt' })
     } catch (error) {
       const isPreview = clientType === '.preview'
       // 脚本的更新固定只能为jsDelivr
