@@ -30,17 +30,6 @@
 | jsDelivr | 24h      | 未发布 | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/dist/bilibili-evolved.preview.user.js)       |
 | GitHub   | <1h      | 未发布 | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
 
-
-## 推荐配置
-- 操作系统: 64-bit Windows 10 / macOS 10.15+
-- 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+ / Safari 14.1+
-- 处理器: Intel Core i7 / AMD Ryzen 5
-- 内存: 8GB
-- 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
-- 显卡: GeForce GTX 660 / Radeon HD 7870
-- 网络: 10MB/s
-
 # 设置
 脚本启用后, 在网页左侧中央会有功能面板和设置面板的入口. 功能面板中包含适用于当前页面的一些功能入口, 设置面板中可以管理组件的开启/关闭, 修改组件选项, 以及安装/卸载组件和插件等.
 
@@ -49,6 +38,16 @@
 > 安装需要对应文件的直链, GitHub Raw 或 jsDelivr 都可以. 批量安装时逐行粘贴链接即可.
 
 如果你曾经使用过 v1 版, 可以利用 `v1 设置迁移` 组件将旧设置导入到 v2 中, 该工具将自动把里面开启的设置对应的组件下载并安装, 使用方法可以参考[这个文档](./doc/v1-migrate.md).
+
+## 推荐配置
+- 操作系统: 64-bit Windows 10+ / macOS 10.15+
+- 分辨率: 2K+ / 192ppi
+- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+ / Safari 14.1+
+- 处理器: Intel Core i7 / AMD Ryzen 5
+- 内存: 8GB
+- 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
+- 显卡: GeForce GTX 660 / Radeon HD 7870
+- 网络: 10MB/s
 
 # 兼容性
 
@@ -65,7 +64,7 @@
 
 ## 浏览器
 
-支持**最新版** Chrome, Edge (Chromium 内核), Firefox, Safari, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)或者较长时间没更新的浏览器中完美运行.
+支持**最新版** Chrome, Edge (Chromium 内核), Firefox, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)或者较长时间没更新的浏览器中完美运行.
 
 # 开发者
 TODO (之前那个 contributors badge 抽风了)
@@ -98,8 +97,8 @@ TODO (之前那个 contributors badge 抽风了)
 - [MDI](https://materialdesignicons.com)
 
 # 已知问题
-- 可能无法很好地适应窄屏幕, 请尽量以1400px以上的宽度使用此脚本.
-- ASS弹幕下载不能包含高级弹幕, 字幕弹幕等.
+- 可能无法很好地适应窄屏幕, 请尽量以 1400px 以上的视图宽度使用此脚本.
+- ASS 弹幕下载不能包含高级弹幕, 字幕弹幕等.
 
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
