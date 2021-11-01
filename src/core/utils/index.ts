@@ -223,11 +223,13 @@ export const deleteValue = <ItemType> (
 }
 
 type ClickEvent = (e: MouseEvent) => void
-/** 封装双击事件 */
+/** 封装双击事件, 可以对元素原先的单击事件有更多控制. (纯粹想用双击事件直接用 dblclick) */
 export class DoubleClickEvent {
   /** 已绑定的元素 */
   elements: Element[] = []
+  /** 屏蔽单击事件时, 没有在短时间内完成双击才判定为单击, 并会运行此函数 */
   singleClickHandler: (e: MouseEvent) => void = none
+
   private clickedOnce = false
   private readonly doubleClickHandler = (e: MouseEvent) => {
     if (!this.clickedOnce) {
@@ -235,7 +237,9 @@ export class DoubleClickEvent {
       setTimeout(() => {
         if (this.clickedOnce) {
           this.clickedOnce = false
-          this.singleClickHandler?.(e)
+          if (this.preventSingle) {
+            this.singleClickHandler?.(e)
+          }
         }
       }, 200)
     } else {
