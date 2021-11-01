@@ -17,7 +17,7 @@
 
 打开设置, 点左下角的组件管理, 然后进在线仓库, 搜索 `v1 设置迁移` 并安装, 安装完成后刷新页面.
 
-![image](https://user-images.githubusercontent.com/26504152/127772811-bc1ac97f-ecaa-4823-b694-c393d688ad35.png)
+![image](https://user-images.githubusercontent.com/26504152/139682841-86d045a4-08dd-401e-8726-3d0dea298eec.png)
 
 ## 4. 开始迁移
 再次打开设置面板, 进入左下角的 `关于`, 上一步成功的话这里会多出一个 `导入 v1 设置` 的按钮.
