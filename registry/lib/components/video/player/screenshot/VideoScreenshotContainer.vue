@@ -122,7 +122,7 @@ export default Vue.extend({
     border-radius: 8px;
     @include no-scrollbar();
 
-    * {
+    > * {
       pointer-events: initial;
     }
     &-enter {
