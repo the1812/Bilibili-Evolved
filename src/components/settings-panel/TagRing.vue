@@ -56,5 +56,9 @@ export default Vue.extend({
 .tag-ring {
   display: flex;
   transform: scaleX(-1) rotate(-90deg);
+  svg {
+    height: 18px;
+    width: 18px;
+  }
 }
 </style>
