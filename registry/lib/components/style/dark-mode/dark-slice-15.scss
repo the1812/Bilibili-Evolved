@@ -705,23 +705,23 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
 
 .suggest-wrap .suggest-item {
   @include color("e");
-  &:hover{
-    @include background("6e")
+  &:hover {
+    @include background("6e");
   }
 }
 
 #all-list {
   .sub-filter {
-    @include background("6e")
+    @include background("6e");
   }
   .icon-tid2-arr {
-    @include color("6e")
+    @include color("6e");
   }
 
   .mixin-list .user-list {
     .all-user-item > .user-row .title,
     .u-videos .video-item .video-desc {
-      @include color("e")
+      @include color("e");
     }
   }
 }
@@ -737,17 +737,17 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
 
 .suggest-wrap .suggest-item {
   @include color("e");
-  &:hover{
-    @include background("6e")
+  &:hover {
+    @include background("6e");
   }
 }
 
 #all-list {
   .sub-filter {
-    @include background("6e")
+    @include background("6e");
   }
   .icon-tid2-arr {
-    @include color("6e")
+    @include color("6e");
   }
 
   .mixin-list .user-list {
