@@ -24,5 +24,9 @@ export default Vue.extend({
 <style lang="scss">
 .navbar-dark-mode {
   display: flex;
+  svg {
+    height: 18px;
+    width: 18px;
+  }
 }
 </style>
