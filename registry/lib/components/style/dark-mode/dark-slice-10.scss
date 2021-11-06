@@ -647,6 +647,9 @@
         }
       }
     }
+    .calendar.active {
+      @include to-theme("blue");
+    }
   }
   .toolbar {
     .static-popup {
@@ -818,7 +821,8 @@
       .btn-box .jump-btn {
         @include theme-background-color();
         @include foreground-color();
-        &.checked, &.disabled {
+        &.checked,
+        &.disabled {
           @include background-color("4");
         }
       }
