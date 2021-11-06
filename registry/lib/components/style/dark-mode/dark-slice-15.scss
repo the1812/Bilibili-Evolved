@@ -895,5 +895,105 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     }
   }
 }
+.toolbar-box {
+  .icon-reserve.live:hover {
+    @include to-theme("blue");
+  }
+}
+.bili-popup-layer {
+  @include background("2");
+  @include border-color();
+  &__content {
+    .dynamic-reserve {
+      &__type {
+        @include color("e");
+      }
+      &__form__item {
+        &.title {
+          .bili-input {
+            &::before {
+              @include border-color();
+            }
+            &:hover::before {
+              @include theme-border-color();
+            }
+            &__inner {
+              @include color("e");
+              @include background("4");
+            }
+          }
+        }
+        &.datetime {
+          .date-input {
+            input {
+              @include background("4");
+            }
+            &::before {
+              @include border-color();
+            }
+            &:hover::before {
+              @include theme-border-color();
+            }
+            .calendar.active {
+              @include to-theme("blue");
+            }
+          }
+          .scroll-input {
+            .s-input-wrap {
+              &::before {
+                @include border-color();
+              }
+              &:hover::before {
+                @include theme-border-color();
+              }
+              .s-input {
+                @include background("4");
+                @include color("e");
+              }
+            }
+            .s-label {
+              @include color("a");
+            }
+            .s-panel {
+              @include theme-border-color();
+              @include background("4");
+              .s-item {
+                @include color("e");
+                &:hover {
+                  @include theme-color();
+                }
+              }
+            }
+          }
+        }
+      }
+      &__about {
+        img {
+          @include to-theme("blue");
+        }
+        .link {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  &__footer {
+    &::after {
+      @include border-color();
+    }
+  }
+  @at-root #{&}__button {
+    @include color("e");
+    &.confirm {
+      @include theme-background();
+    }
+    &.cancel {
+      @include background("4");
+    }
+    &::before {
+      @include border-color();
+    }
+  }
+}
   }
 }
