@@ -995,5 +995,14 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     }
   }
 }
+.dyn-topic {
+  &__card:hover {
+    @include theme-background("10");
+  }
+  &__icon {
+    @include to-theme("blue");
+  }
+  &__text {
+    @include theme-color();
   }
 }
