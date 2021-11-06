@@ -875,5 +875,25 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     }
   }
 }
+.comment-setting {
+  .settings-panel {
+    @include background("3");
+    @include border-color();
+    @include theme-shadow();
+    &__option {
+      @include color("e");
+      &:hover {
+        @include color("e");
+        @include background-color("2");
+      }
+      &--active {
+        @include theme-color();
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+  }
+}
   }
 }
