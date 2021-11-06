@@ -91,6 +91,9 @@ $prefix: "simplifyLiveroom-switch";
       display: flex !important;
       align-items: center !important;
 
+      .text {
+        line-height: normal !important;
+      }
       @media screen and (max-width: 1750px) {
         & .title-length-limit {
           max-width: 250px !important;
