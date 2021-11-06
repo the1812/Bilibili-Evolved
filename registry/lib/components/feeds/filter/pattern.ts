@@ -10,7 +10,7 @@ const testPattern = (pattern: string, text: string) => {
 export interface BlockableCard {
   text: string
   username: string
-  [key: string]: string
+  // [key: string]: string
 }
 export const hasBlockedPattern = (pattern: string, card: BlockableCard) => {
   const upNameMatch = pattern.match(/(.+) up:([^ ]+)/)
