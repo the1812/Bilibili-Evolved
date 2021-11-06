@@ -4,9 +4,9 @@ import { playerUrls } from '@/core/utils/urls'
 const entry: ComponentEntry = async ({ settings: { options } }) => {
   const { videoChange } = await import('@/core/observer')
   videoChange(async () => {
-    const { select } = await import('@/core/spin-query')
     const { DoubleClickEvent } = await import('@/core/utils')
-    const playerArea = await select('.bilibili-player-dm-tip-wrap, .bilibili-player-area')
+    const { playerAgent } = await import('@/components/video/player-agent')
+    const playerArea = await playerAgent.query.danmakuTipLayer()
     if (playerArea === null) {
       console.error('playerArea not found')
       return
@@ -14,13 +14,13 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
     const className = 'double-click-fullscreen'
     if (!playerArea.classList.contains(className)) {
       playerArea.classList.add(className)
-      const videoWrapper = dq('.bilibili-player-video')
+      const container = playerAgent.query.video.container.sync()
       const doubleClick = new DoubleClickEvent(
-        () => (dq('.bilibili-player-video-btn-fullscreen') as HTMLDivElement).click(),
+        () => playerAgent.fullscreen(),
         options.preventSingleClick,
       )
-      doubleClick.singleClickHandler = () => (dq('.bilibili-player-video-btn-start') as HTMLDivElement).click()
-      doubleClick.bind(videoWrapper)
+      doubleClick.singleClickHandler = () => playerAgent.togglePlay()
+      doubleClick.bind(container)
     }
   })
 }

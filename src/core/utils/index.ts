@@ -244,7 +244,9 @@ export class DoubleClickEvent {
       }, 200)
     } else {
       this.clickedOnce = false
-      this.handler?.(e)
+      Promise.resolve().then(() => {
+        this.handler?.(e)
+      })
     }
     if (this.preventSingle) {
       e.stopImmediatePropagation()
