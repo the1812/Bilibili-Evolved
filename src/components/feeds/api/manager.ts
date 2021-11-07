@@ -304,7 +304,7 @@ class FeedsCardsManager extends EventTarget {
       }
       const originalCard = JSON.parse(vueData.card.origin)
       const originalText: string = vueData.originCardData.pureText
-      const originalDescription: string = lodash.get(originalCard, 'item.description', '')
+      const originalDescription: string = lodash.get(originalCard, 'item.description', lodash.get(originalCard, 'desc', ''))
       const originalTitle: string = originalCard.title
       return {
         originalText,
