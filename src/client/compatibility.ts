@@ -1,4 +1,6 @@
-import { contentLoaded } from '@/core/life-cycle'
+/* eslint-disable no-underscore-dangle */
+import { contentLoaded, fullyLoaded } from '@/core/life-cycle'
+import { select } from '@/core/spin-query'
 
 export const compatibilityPatch = () => {
   contentLoaded(async () => {
@@ -11,6 +13,18 @@ export const compatibilityPatch = () => {
       'https://www.bilibili.com/page-proxy/game-nav.html',
     ]
     document.documentElement.classList.toggle('iframe', isIframe() && transparentFrames.some(matchUrlPattern))
+  })
+  fullyLoaded(() => {
+    select('meta[name=spm_prefix]').then(spm => {
+      if (spm) {
+        spm.remove()
+        select(() => unsafeWindow.__spm_prefix).then(() => {
+          if (unsafeWindow.__spm_prefix) {
+            delete unsafeWindow.__spm_prefix
+          }
+        })
+      }
+    })
   })
   if (!('requestIdleCallback' in window)) {
     window.requestIdleCallback = (callback: TimerHandler) => window.setTimeout(callback, 0)
