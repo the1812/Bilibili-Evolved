@@ -30,7 +30,7 @@
           <ComponentSettings
             v-for="c of renderedComponents"
             :key="c.name"
-            :class="{ selected: selectedComponent === c }"
+            :class="{ selected: selectedComponent === c && componentDetailOpen }"
             :component-data="c"
             :data-name="c.name"
             @click.native="selectComponent(c)"
@@ -43,7 +43,7 @@
         ref="detailsPopup"
         class="component-detail-panel"
         :trigger-element="$refs.componentList"
-        :open="Boolean(selectedComponent)"
+        :open="componentDetailOpen"
         @popup-change="!$event && closePopper()"
       >
         <ComponentDetail
@@ -51,7 +51,6 @@
           :key="selectedComponent.name"
           :component-data="selectedComponent"
           @close="closePopper()"
-          @mounted="updatePopper()"
         />
       </VPopup>
     </div>
@@ -65,9 +64,6 @@ import {
   VPopup,
   VEmpty,
 } from '@/ui'
-import { createPopper } from '@popperjs/core'
-import { dq } from '@/core/utils'
-import { addComponentListener } from '@/core/settings'
 import { getHook } from '@/plugins/hook'
 import ComponentSettings from './ComponentSettings.vue'
 import {
@@ -77,7 +73,6 @@ import ComponentDetail from './ComponentDetail.vue'
 import ComponentTags from './ComponentTags.vue'
 import { getDescriptionText } from '../description'
 
-let activePopper: ReturnType<typeof createPopper>
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
 export default {
   name: 'SettingsPanel',
@@ -95,6 +90,7 @@ export default {
       components,
       renderedComponents: components.filter(c => !c.hidden),
       selectedComponent: null,
+      componentDetailOpen: false,
       collasped: false,
       peek: false,
       searchKeyword: '',
@@ -137,24 +133,15 @@ export default {
       }
     },
   },
-  mounted() {
-    addComponentListener('settingsPanel.dockSide', () => {
-      this.updatePopper()
-    })
-  },
   methods: {
-    updatePopper() {
-      activePopper?.update()
-    },
     closePopper() {
-      activePopper?.destroy()
-      this.selectedComponent = null
+      this.componentDetailOpen = false
     },
     selectComponent(component: ComponentMetadata) {
       const closeHooks = getHook('settingsPanel.componentDetail.close')
       const openHooks = getHook('settingsPanel.componentDetail.open')
       const selectedName = this.selectedComponent?.name
-      const isAlreadySelected = selectedName === component.name
+      const isAlreadySelected = this.componentDetailOpen && selectedName === component.name
       closeHooks.before(selectedName)
       this.closePopper()
       closeHooks.after(selectedName)
@@ -163,13 +150,7 @@ export default {
       }
       openHooks.before(component.name)
       this.selectedComponent = component
-      activePopper = createPopper(
-        dq(`.component-settings[data-name=${component.name}]`),
-        this.$refs.detailsPopup.$el,
-        {
-          placement: 'right',
-        },
-      )
+      this.componentDetailOpen = true
       openHooks.after(component.name)
     },
     updateRenderedComponents() {
@@ -306,7 +287,23 @@ export default {
     }
     .component-detail-panel {
       @include card();
-      padding: 12px;
+      @include v-stretch();
+      top: 50%;
+      left: calc(100% - 12px);
+      height: calc(100% - 22px);
+      z-index: -1;
+      transform: translateZ(0) translateY(-50%) translateX(calc(-48% * var(--direction)));
+      transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+                  opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+      padding-left: 12px;
+      body.settings-panel-dock-right & {
+        left: unset;
+        right: calc(100% - 12px);
+        padding: 0 12px 0 0;
+      }
+      &.open {
+        transform: translateZ(0) translateY(-50%) translateX(0);
+      }
     }
     &.collasped {
       height: auto;
