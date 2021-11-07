@@ -144,7 +144,6 @@ export default Vue.extend({
   width: 360px;
   height: 85vh;
   z-index: 100002;
-  will-change: transform;
   transition: .2s ease-out;
   font-size: 14px;
   @include v-stretch();
