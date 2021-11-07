@@ -1,7 +1,6 @@
 import { logError } from './utils/log'
 
-type XhrBody = string | Document | Blob | ArrayBufferView |
-  ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>
+type XhrBody = Document | XMLHttpRequestBodyInit
 type XhrConfig = (xhr: XMLHttpRequest) => { isText?: boolean, body?: XhrBody }
 const send = <T = any>(config: XhrConfig) => {
   const xhr = new XMLHttpRequest()

@@ -60,7 +60,7 @@ declare global {
     binary?: boolean
     timeout?: number
     context?: any
-    responseType?: 'arraybuffer' | 'blob' | 'json'
+    responseType?: 'arraybuffer' | 'blob' | 'json' | 'text'
     overrideMimeType?: string
     anonymous?: boolean
     fetch?: boolean

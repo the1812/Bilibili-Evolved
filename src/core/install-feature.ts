@@ -8,12 +8,30 @@ type FeatureType = ComponentMetadata | PluginMetadata | UserStyle
 const isComponent = (item: FeatureType): item is ComponentMetadata => 'entry' in item
 const isPlugin = (item: FeatureType): item is PluginMetadata => 'setup' in item
 const isStyle = (item: FeatureType): item is UserStyle => 'style' in item
+
+/** 如果输入的功能链接是 .zip, 则尝试解压. 仅支持单个功能, 不能批量, 只是为了能方便在 GitHub 直接以 .zip 格式分享功能. */
+export const tryParseZip = async (url: string) => {
+  const { JSZipLibrary } = await import('./runtime-library')
+  const { monkey } = await import('../core/ajax')
+  const isZip = url.endsWith('.zip')
+  const responseType = isZip ? 'blob' : 'text'
+  const response = await monkey({ url, method: 'GET', responseType }) as Blob | string
+  if (!isZip || typeof response === 'string') {
+    return response as string
+  }
+  const JSZip = await JSZipLibrary
+  const zip = await JSZip.loadAsync(response)
+  const files = Object.values(zip.files)
+  if (files.length === 0) {
+    throw new Error('Empty zip file')
+  }
+  return files[0].async('text')
+}
 export const installFeature = async (url: string): Promise<{
   metadata: FeatureType
   message: string
 }> => {
-  const { monkey } = await import('../core/ajax')
-  const code = await monkey({ url })
+  const code = await tryParseZip(url)
   const { parseExternalInput } = await import('../core/external-input')
   const item = await parseExternalInput<FeatureType>(code)
   const { type, installer } = (() => {

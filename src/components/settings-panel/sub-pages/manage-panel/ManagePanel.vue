@@ -98,11 +98,11 @@
   </div>
 </template>
 <script lang="ts">
-import { monkey } from '@/core/ajax'
-import { installFeature } from '@/core/install-feature'
+import { installFeature, tryParseZip } from '@/core/install-feature'
 import { pickFile } from '@/core/file-picker'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
+import { JSZipLibrary } from '@/core/runtime-library'
 import {
   VIcon,
   VButton,
@@ -170,12 +170,24 @@ export default Vue.extend({
   },
   methods: {
     async browse() {
-      const codes = await pickFile({ accept: '*.js' })
+      const codes = await pickFile({ accept: '*.js;*.zip' })
       if (codes.length === 0) {
         return
       }
       const [codeFile] = codes
-      const code = await codeFile.text()
+      let code: string
+      if (codeFile.name.endsWith('.zip')) {
+        const JSZip = await JSZipLibrary
+        const zip = await JSZip.loadAsync(codeFile)
+        const files = Object.values(zip.files)
+        if (files.length === 0) {
+          Toast.info('不能打开空文件', `添加${this.config.title}`)
+          return
+        }
+        code = await files[0].async('text')
+      } else {
+        code = await codeFile.text()
+      }
       try {
         Toast.info(await this.config.onItemAdd?.(code, ''), `添加${this.config.title}`)
       } catch (error) {
@@ -195,10 +207,7 @@ export default Vue.extend({
       }
       const toast = Toast.info('获取中...', `添加${this.config.title}`)
       try {
-        const code = await monkey({
-          url: this.url,
-          method: 'GET',
-        })
+        const code = await tryParseZip(this.url)
         toast.message = await this.config.onItemAdd?.(code, this.url)
         this.url = ''
       } catch (error) {
