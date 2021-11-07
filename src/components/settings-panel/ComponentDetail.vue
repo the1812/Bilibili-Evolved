@@ -17,7 +17,9 @@
         </div>
       </div>
       <div class="component-detail-separator"></div>
-      <template v-if="componentData.options && generatedOptions.length > 0">
+      <template
+        v-if="(componentData.options && generatedOptions.length > 0) || componentData.extraOptions"
+      >
         <div class="component-detail-options">
           <div class="component-detail-options-title">
             选项
@@ -113,7 +115,7 @@ export default Vue.extend({
   },
   computed: {
     generatedOptions() {
-      return Object.entries(this.componentData.options as ComponentOptions).filter(
+      return Object.entries((this.componentData.options ?? {}) as ComponentOptions).filter(
         ([, option]) => !option.hidden,
       )
     },
