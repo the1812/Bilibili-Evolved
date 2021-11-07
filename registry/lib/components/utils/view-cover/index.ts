@@ -1,5 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
-import { videoAndBangumiUrls, liveUrls } from '@/core/utils/urls'
+import { videoAndBangumiUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
   name: 'viewCover',
@@ -7,7 +7,7 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.utils,
     componentsTags.video,
-    componentsTags.live,
+    // componentsTags.live,
   ],
   entry: none,
   reload: none,
@@ -16,10 +16,10 @@ export const component: ComponentMetadata = {
     component: () => import('./ViewCover.vue').then(m => m.default),
   },
   description: {
-    'zh-CN': '在视频和直播页面中, 可从功能面板中查看封面.',
+    'zh-CN': '在视频页面中, 可从功能面板中查看封面.',
   },
   urlInclude: [
     ...videoAndBangumiUrls,
-    ...liveUrls,
+    // ...liveUrls,
   ],
 }
