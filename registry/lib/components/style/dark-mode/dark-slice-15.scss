@@ -757,60 +757,23 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     }
   }
 }
-.bili-topic-selector {
-  .bili-topic-search {
-    &__popover {
-      @include background-color("3");
-      @include border-color();
-      &.active {
-        @include background-color("3");
-        @include border-color();
-        box-shadow: 0 11px 12px #0002;
-        .bili-topic-search__input {
-          @include background-color("2");
-        }
-      }
-    }
-    &__input__inner {
-      @include color("e");
-    }
-    &__input__text,
-    &__input__prefix {
-      @include color("a");
-    }
-    .bili-topic-item {
-      &__cloud {
-        &:hover {
-          @include background-color("4");
-        }
-      }
-      &__cloud__prefix {
-        @include theme-color();
-      }
-      &__cloud__name {
-        @include color("e");
-      }
-      &__cloud__desc {
-        @include color("a");
-      }
-    }
-  }
-}
 .dyn-topic-panel {
   .topic-panel {
-    @include background-color("4");
-    &__nav-title {
-      @include color("e");
+    @include background("4");
+    &__nav {
+      &-title {
+        @include color("e");
+      }
     }
     .relevant-topic {
       &::before {
         @include to-gray(0.8);
       }
-      &__title {
-        @include color("e");
-      }
       &:hover .relevant-topic__title {
         @include theme-color();
+      }
+      &__title {
+        @include color("e");
       }
       &__exposed {
         @include color("a");
@@ -818,12 +781,236 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     }
   }
 }
+.bili-topic-selector {
+  &__search {
+    .bili-topic-search {
+      &__input__prefix,
+      &__input__text {
+        @include color("a");
+      }
+      &__popover {
+        @include background-color("3");
+        @include border-color();
+      }
+      &__popover.active {
+        @include theme-shadow();
+        .bili-topic-search {
+          &__input {
+            @include background-color("4");
+            &__inner {
+              @include color("e");
+              &::placeholder {
+                @include color("a");
+              }
+            }
+            &__text {
+              @include color("9");
+            }
+          }
+        }
+      }
+    }
+  }
+  .bili-topic-item {
+    &__cloud {
+      &:hover {
+        @include background("2");
+      }
+      &__prefix {
+        @include to-gray(0.8);
+      }
+      &__name {
+        @include color("e");
+      }
+      &__desc {
+        @include color("a");
+      }
+    }
+  }
+  &__rcmd {
+    &__default {
+      .bili-topic-item {
+        &__stela {
+          @include background("3");
+          &__prefix {
+            @include to-theme("blue");
+          }
+          &__name {
+            @include to-theme("blue");
+          }
+        }
+      }
+    }
+    .bili-topic-rcmd-more {
+      &__action {
+        @include background("3");
+        @include theme-color();
+      }
+      &__items {
+        .bili-topic-item__cloud {
+          &__prefix {
+            @include theme-color();
+          }
+          &__name {
+            @include color("e");
+          }
+        }
+      }
+      &__popover {
+        @include background("3");
+        @include border-color();
+        &.hover {
+          @include theme-shadow();
+        }
+      }
+    }
+  }
+  &__bulletin {
+    @include background("4");
+    .bili-topic-item {
+      &__normal {
+        &:hover {
+          @include theme-background("10");
+        }
+        &__prefix {
+          @include to-theme("blue");
+        }
+        &__name {
+          @include to-theme("blue");
+        }
+      }
+    }
+    &__clear {
+      @include to-theme("blue");
+    }
+  }
+}
+.comment-setting {
+  .settings-panel {
+    @include background("3");
+    @include border-color();
+    @include theme-shadow();
+    &__option {
+      @include color("e");
+      &:hover {
+        @include color("e");
+        @include background-color("2");
+      }
+      &--active {
+        @include theme-color();
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+  }
+}
+.toolbar-box {
+  .icon-reserve.live:hover {
+    @include to-theme("blue");
+  }
+}
+.bili-popup-layer {
+  @include background-color("2");
+  @include border-color();
+  &__content {
+    .dynamic-reserve {
+      &__type {
+        @include color("e");
+      }
+      &__form__item {
+        &.title {
+          .bili-input {
+            &::before {
+              @include border-color();
+            }
+            &:hover::before {
+              @include theme-border-color();
+            }
+            &__inner {
+              @include color("e");
+              @include background-color("4");
+            }
+          }
+        }
+        &.datetime {
+          .date-input {
+            input {
+              @include background-color("4");
+            }
+            &::before {
+              @include border-color();
+            }
+            &:hover::before {
+              @include theme-border-color();
+            }
+            .calendar.active {
+              @include to-theme("blue");
+            }
+          }
+          .scroll-input {
+            .s-input-wrap {
+              &::before {
+                @include border-color();
+              }
+              &:hover::before {
+                @include theme-border-color();
+              }
+              .s-input {
+                @include background-color("4");
+                @include color("e");
+              }
+            }
+            .s-label {
+              @include color("a");
+            }
+            .s-panel {
+              @include theme-border-color();
+              @include background-color("4");
+              .s-item {
+                @include color("e");
+                &:hover {
+                  @include theme-color();
+                }
+              }
+            }
+          }
+        }
+      }
+      &__about {
+        img {
+          @include to-theme("blue");
+        }
+        .link {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  &__footer {
+    &::after {
+      @include border-color();
+    }
+  }
+  @at-root #{&}__button {
+    @include color("e");
+    &.confirm {
+      @include theme-background-color();
+    }
+    &.cancel {
+      @include background("4");
+    }
+    &::before {
+      @include border-color();
+    }
+  }
+}
 .dyn-topic {
   &__card:hover {
-    @include background-color("2");
+    @include theme-background("10");
   }
   &__icon {
-    @include to-gray(0.8);
+    @include to-theme("blue");
   }
   &__text {
     @include theme-color();
