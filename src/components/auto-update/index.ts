@@ -68,6 +68,9 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
         if (!(itemName in items)) {
           return `[${itemName}] 已被卸载, 取消更新`
         }
+        if (!response) {
+          return `[${itemName}] 更新下载失败, 取消更新`
+        }
         const { message } = await installer(response)
         item.lastUpdateCheck = Number(new Date())
         return `[${itemName}] ${message}`
