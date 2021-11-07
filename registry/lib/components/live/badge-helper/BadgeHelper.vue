@@ -59,6 +59,7 @@
 </template>
 
 <script lang="ts">
+import { descendingSort } from '@/core/utils/sort'
 import {
   DefaultWidget,
   VPopup,
@@ -81,13 +82,27 @@ export default Vue.extend({
     }
   },
   async mounted() {
-    this.loadMedalList()
-    await Title.getImageMap()
-    this.loadTitleList()
+    const init = async () => {
+      const medal = this.loadMedalList()
+      await Title.getImageMap()
+      const title = this.loadTitleList()
+      return Promise.all([medal, title])
+    }
+    await init()
+    this.updateColumnsCount()
   },
   methods: {
+    updateColumnsCount() {
+      const maxColumnCount = 6
+      const columnLength = 12
+      const element = this.$el as HTMLElement
+      const medalColumns = Math.min(Math.ceil(this.medalList.length / columnLength), maxColumnCount)
+      element.style.setProperty('--medal-columns', medalColumns.toString())
+      const titleColumns = Math.min(Math.ceil(this.titleList.length / columnLength), maxColumnCount)
+      element.style.setProperty('--title-columns', titleColumns.toString())
+    },
     async loadMedalList() {
-      this.medalList = await getMedalList()
+      this.medalList = (await getMedalList()).sort(descendingSort(it => it.level))
     },
     async loadTitleList() {
       this.titleList = await getTitleList()
@@ -127,6 +142,7 @@ export default Vue.extend({
   transform: scale(0.9) translateY(-50%);
   transform-origin: left;
   padding: 4px;
+  max-height: calc(100vh - 150px);
   @include card();
   @include round-corner(4px);
   &.open {
@@ -180,7 +196,8 @@ export default Vue.extend({
         height: 14px;
         line-height: 14px;
         color: #fff;
-        border: 1px solid map-get($rankColors, 0);
+        border: 1px solid map-get($rankColors, 4);
+        background-color: map-get($rankColors, 4);
         border-left: 0;
         white-space: nowrap;
         border-radius: 2px;
@@ -192,12 +209,13 @@ export default Vue.extend({
           padding: 0 2px;
           color: #fff;
           border-radius: 1px 0 0 1px;
+          background-color: map-get($rankColors, 4);
         }
         .level {
           width: 16px;
           background-color: #fff;
           text-align: center;
-          color: map-get($rankColors, 0);
+          color: map-get($rankColors, 4);
           border-radius: 0 1px 1px 0;
         }
         .label,
@@ -224,6 +242,12 @@ export default Vue.extend({
         }
       }
     }
+  }
+  &.medal ul {
+    grid-template-columns: repeat(var(--medal-columns, 2), 1fr);
+  }
+  &.title ul {
+    grid-template-columns: repeat(var(--title-columns, 2), 1fr);
   }
 }
 </style>
