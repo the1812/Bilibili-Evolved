@@ -48,7 +48,7 @@
     "terser-webpack-plugin": "^5.0.1",
     "to-string-loader": "^1.1.6",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.3.5",
+    "typescript": "^4.4.4",
     "url-loader": "^4.1.1",
     "vue-loader": "^15.8.3",
     "vue-template-compiler": "^2.6.11",

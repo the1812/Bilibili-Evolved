@@ -47,7 +47,7 @@ export const feedsFilterPlugin: PluginMetadata = {
                 }
                 return [key, item[value].trim() as string]
               }),
-            )
+            ) as Record<keyof BlockableCard, string>
             return patterns.every(p => !hasBlockedPattern(p, card as BlockableCard))
           })
         },
