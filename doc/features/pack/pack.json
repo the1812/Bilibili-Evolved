@@ -250,7 +250,7 @@
         "type": "component",
         "name": "viewCover",
         "displayName": "查看封面",
-        "description": "在视频和直播页面中, 可从功能面板中查看封面.",
+        "description": "在视频页面中, 可从功能面板中查看封面.",
         "fullRelativePath": "../../registry/dist/components/utils/view-cover.js",
         "fullAbsolutePath": "registry/dist/components/utils/view-cover.js"
       },
