@@ -239,6 +239,12 @@
   }
 }
 .s_tag .tag-area {
+  .topic-link {
+    @include color("e");
+    .tag-icon {
+      @include to-white();
+    }
+  }
   .channel {
     &-icon {
       @include to-white();

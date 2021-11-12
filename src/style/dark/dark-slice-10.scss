@@ -647,6 +647,9 @@
         }
       }
     }
+    .calendar.active {
+      @include to-theme("blue");
+    }
   }
   .toolbar {
     .static-popup {
