@@ -263,6 +263,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   }
   &.#{$side-block}-following-tags {
     .left-panel .tag-panel,
+    .right-panel .dyn-topic-panel,
     .right-panel .new-topic-panel {
       display: none !important;
     }

@@ -108,6 +108,7 @@ export default (() => {
     }
   }
   else {
+    const spaceElementSelector = '.header-info-ctnr .room-cover, .header-info-ctnr .avatar'
     return {
       widget: {
         content: /*html*/`
@@ -118,11 +119,11 @@ export default (() => {
             <span>查看封面</span>
           </button>`,
         condition: async () => {
-          const coverLink = await SpinQuery.select(() => document.querySelector('.header-info-ctnr .room-cover'))
+          const coverLink = await SpinQuery.select(() => document.querySelector(spaceElementSelector))
           return Boolean(coverLink)
         },
         success: async () => {
-          const coverLink = document.querySelector('.header-info-ctnr .room-cover') as HTMLAnchorElement
+          const coverLink = document.querySelector(spaceElementSelector) as HTMLAnchorElement
           const match = coverLink.href.match(/space\.bilibili\.com\/([\d]+)/)
           if (match && match[1]) {
             const uid = match[1]

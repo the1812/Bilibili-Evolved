@@ -9,19 +9,28 @@
 
   span {
     height: 100%;
+
+    .player-fullscreen-fix .squirtle-controller-wrap &,
+    .player-mode-webfullscreen .squirtle-controller-wrap & {
+      height: auto;
+      align-self: center;
+    }
   }
   .squirtle-controller-wrap &,
   .bilibili-player-video-control-bottom & {
     display: flex !important;
   }
   .player-tooltips.active {
-    transition-duration: .15s;
-    transition-delay: .15s;
+    transition-duration: 0.15s;
+    transition-delay: 0.15s;
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%) translateY(calc(-100% - 4px));
     opacity: 0;
+    pointer-events: none;
+    visibility: visible;
+    white-space: nowrap;
   }
   &:hover .player-tooltips {
     opacity: 1;
@@ -48,8 +57,8 @@
   &:not(.touch) i {
     margin-top: -2px;
   }
-  .bilibili-player.mode-fullscreen &,
-  .bilibili-player.mode-webfullscreen & {
+  .player-fullscreen-fix &,
+  .player-mode-webfullscreen & {
     margin-left: 4px;
     padding: 0 4px;
 

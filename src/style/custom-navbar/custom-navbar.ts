@@ -11,7 +11,6 @@ const supportedUrls = [
   '//message.bilibili.com',
   '//app.bilibili.com',
   '//passport.bilibili.com',
-  '//game.bilibili.com',
   '//live.bilibili.com/blackboard/',
 ]
 const unsupportedUrls = [
@@ -22,6 +21,7 @@ const unsupportedUrls = [
   '//www.bilibili.com/h5/comment/',
   // '//www.bilibili.com/blackboard/',
   '//member.bilibili.com/v2',
+  '//game.bilibili.com/',
 ]
 const loadSettings = () => {
   document.documentElement.style.setProperty('--navbar-bounds-padding', `0 ${settings.customNavbarBoundsPadding}%`)

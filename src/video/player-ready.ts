@@ -5,9 +5,16 @@
  */
 export const playerReady = () => {
   return new Promise<void>(async (resolve, reject) => {
+    const isJudgementVideo = document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/blackboard/newplayer.html' && document.URL.includes('fjw=true')
+    if (isJudgementVideo) {
+      /* 如果是风纪委员里的内嵌视频, 永远不 resolve
+        https://github.com/the1812/Bilibili-Evolved/issues/2340
+      */
+      return
+    }
     await SpinQuery.condition(
       () => unsafeWindow,
-      () => unsafeWindow.onLoginInfoLoaded !== undefined,
+      () => unsafeWindow.UserStatus !== undefined,
     )
     if (unsafeWindow.onLoginInfoLoaded) {
       unsafeWindow.onLoginInfoLoaded(resolve)

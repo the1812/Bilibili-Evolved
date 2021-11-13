@@ -171,7 +171,4 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 ## [Steam CSS](https://github.com/the1812/SteamCSS)
 为 [Steam](https://store.steampowered.com/) 的库和内置浏览器插入一段自定义的 CSS, 用于更换字体等
 
-## [Popcap Patches](https://github.com/the1812/Popcap-Patches)
-Popcap游戏3D加速补丁制作器, 可修复宝石迷阵, 祖玛等游戏
-
 ----
