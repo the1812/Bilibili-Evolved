@@ -1,0 +1,69 @@
+name: Bug 反馈
+description: 功能运行不正常 / 失效
+body:
+  - type: markdown
+    attributes:
+      value: |
+        默认您已阅读 [Issues 须知](https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/issue-rules.md)
+        发之前记得看下[置顶问题 (Pinned issues)](https://github.com/the1812/Bilibili-Evolved/issues) (如果有的话), 以及[常见问题解答](https://github.com/the1812/Bilibili-Evolved/discussions/1301)
+  - type: input
+    id: feature
+    attributes:
+      label: 关于哪一项功能
+      description: 可以在设置中尝试开启/关闭某项功能来排查
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: 问题描述
+      description: 如何重现此问题, 在哪个页面里出现这个问题, 比如视频相关的可以提供一下av号
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: input
+    id: script-version
+    attributes:
+      label: 脚本版本
+      description: 可在设置面板底部找到脚本版本信息
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: input
+    id: browser-version
+    attributes:
+      label: 浏览器版本
+      description: 可在浏览器的关于页面中找到浏览器版本信息
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: input
+    id: player-version
+    attributes:
+      label: 播放器版本
+      description: 在 b 站播放器上右键可以看到播放器版本号, 反馈播放器相关问题请务必提供
+      placeholder: 请输入
+  - type: dropdown
+    id: hevc
+    attributes:
+      label: 是否开启 HEVC
+      description: 在 b 站播放器设置里可以看到 HEVC 设置
+      options:
+        - 优先 HEVC
+        - 强制 HEVC
+        - 禁止 HEVC
+  - type: textarea
+    id: logs
+    attributes:
+      label: 错误信息
+      description: 脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出
+      render: shell
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 附加截图
+      placeholder: 可在此粘贴图片
