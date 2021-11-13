@@ -37,7 +37,7 @@ export const component: ComponentMetadata = {
   name: 'liveGiftBox',
   displayName: '直播全屏包裹',
   description: {
-    'zh-CN': '在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮',
+    'zh-CN': '在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮.',
   },
   urlInclude: liveUrls,
   tags: [componentsTags.live],
