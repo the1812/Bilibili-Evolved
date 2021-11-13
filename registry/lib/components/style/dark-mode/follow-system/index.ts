@@ -27,6 +27,10 @@ export const component: ComponentMetadata = {
     componentsTags.general,
   ],
   description: {
-    'zh-CN': '使夜间模式同步系统设置的亮/暗主题.',
+    'zh-CN': `
+使夜间模式同步系统设置的亮/暗主题.
+
+> 注：在某些浏览器(如\`Microsoft Edge\`)中，夜间模式仅会同步浏览器的亮/暗主题.
+    `.trim(),
   },
 }
