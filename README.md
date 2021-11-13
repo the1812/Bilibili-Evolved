@@ -1,6 +1,10 @@
-# Bilibili Evolved
+<div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/bilibili-evolved-wide-color.svg"></div>
+<br>
+<div align="center">
 
 「 强大的哔哩哔哩增强脚本 」
+
+</div>
 
 [📦 安装](#安装)
 
@@ -148,8 +152,5 @@ TODO (之前那个 contributors badge 抽风了)
 
 ## [Steam CSS](https://github.com/the1812/SteamCSS)
 为 [Steam](https://store.steampowered.com/) 的库和内置浏览器插入一段自定义的 CSS, 用于更换字体等
-
-## [Popcap Patches](https://github.com/the1812/Popcap-Patches)
-Popcap游戏3D加速补丁制作器, 可修复宝石迷阵, 祖玛等游戏
 
 ----
