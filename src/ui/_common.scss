@@ -131,3 +131,10 @@
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 }
+@mixin on-fullscreen {
+  body.player-mode-webfullscreen &,
+  body.player-fullscreen-fix &,
+  body.player-full-win & {
+    @content;
+  }
+}
