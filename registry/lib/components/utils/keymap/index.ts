@@ -73,7 +73,7 @@ export const component: ComponentMetadata = {
     setup: ({ addData }) => {
       addData('launchBar.actions', (providers: LaunchBarActionProvider[]) => {
         providers.push({
-          name: 'navbarSettings',
+          name: 'keymapSettings',
           getActions: async () => [{
             name: '快捷键扩展设置',
             description: 'Keymap Settings',
