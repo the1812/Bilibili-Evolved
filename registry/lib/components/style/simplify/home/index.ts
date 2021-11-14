@@ -24,15 +24,15 @@ const switchOptions: SwitchOptions = {
     },
     online: {
       defaultValue: false,
-      displayName: '在线列表(旧版)',
+      displayName: '在线列表(旧)',
     },
     'ext-box': {
       defaultValue: false,
-      displayName: '电竞赛事(旧版)',
+      displayName: '电竞赛事(旧)',
     },
     special: {
       defaultValue: false,
-      displayName: '特别推荐(旧版)',
+      displayName: '特别推荐(旧)',
     },
     contact: {
       defaultValue: false,
@@ -40,7 +40,7 @@ const switchOptions: SwitchOptions = {
     },
     elevator: {
       defaultValue: false,
-      displayName: '右侧分区导航(旧版)',
+      displayName: '右侧分区导航(旧)',
     },
   },
 }

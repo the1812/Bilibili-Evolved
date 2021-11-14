@@ -17,7 +17,10 @@
       border-radius: 0 !important;
       border-width: 0 1px 0 0 !important;
       height: var(--panel-height) !important;
-      box-shadow: 0 0 128px 0 #0008 !important;
+
+      body.settings-panel-dock-right & {
+        border-width: 0 0 0 1px !important;
+      }
     }
   }
   > .sidebar > * {
@@ -49,6 +52,17 @@
     padding: 24px !important;
     &-header {
       margin-bottom: 36px !important;
+    }
+    .switch-options-popup {
+      top: -1px !important;
+      transform-origin: top left !important;
+      transform: scale(0.9) !important;
+      &.open {
+        transform: scale(1) !important;
+      }
+      body.settings-panel-dock-right & {
+        transform-origin: top right !important;
+      }
     }
   }
 }
