@@ -1,4 +1,4 @@
-import { componentToSettings } from '@/core/settings'
+import { ComponentSettings, componentToSettings } from '@/core/settings'
 import { getBuiltInComponents } from './built-in-components'
 import {
   ComponentMetadata, componentsMap,
@@ -37,10 +37,16 @@ export const installComponent = async (code: string) => {
   if (existingComponent) {
     existingComponent.code = code
     existingComponent.metadata = userMetadata
-    existingComponent.settings = lodash.defaultsDeep(
+    const existingOptions = existingComponent.settings.options
+    const newSettings: ComponentSettings = lodash.defaultsDeep(
       existingComponent.settings,
       componentToSettings(component),
     )
+    Object.entries(existingOptions).forEach(([name, option]) => {
+      if (Array.isArray(option)) {
+        newSettings.options[name] = option
+      }
+    })
     return {
       metadata: component,
       message: `已更新组件'${component.displayName}', 刷新后生效`,
