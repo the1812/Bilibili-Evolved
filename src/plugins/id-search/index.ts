@@ -9,11 +9,7 @@ const getCopyItem = async (name: string, id: string, original: string) => {
     indexer: original,
     action: async () => {
       if (item.name === id) {
-        GM_setClipboard(id, { mimetype: 'text/plain' })
-        // item.name = '已复制'
-        // setTimeout(() => {
-        //   item.name = id
-        // }, 1000)
+        await navigator.clipboard.writeText(id)
       }
     },
   }

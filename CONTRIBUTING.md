@@ -57,7 +57,6 @@ yarn
 // @grant        GM_getValue
 // @grant        GM_setValue
 // @grant        GM_deleteValue
-// @grant        GM_setClipboard
 // @grant        GM_info
 // @grant        GM_xmlhttpRequest
 // @connect      raw.githubusercontent.com

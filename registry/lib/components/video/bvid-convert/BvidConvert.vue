@@ -43,14 +43,14 @@ export default Vue.extend({
     })
   },
   methods: {
-    copyLink(data: 'aid' | 'bvid') {
+    async copyLink(data: 'aid' | 'bvid') {
       if (this[`${data}Copyed`]) {
         return
       }
       const query = window.location.search
       const url = document.URL.replace(query, '')
       const link = url.replace(/\/[^\/]+$/, `/${this[data]}`) + query
-      GM_setClipboard(link, { mimetype: 'text/plain' })
+      await navigator.clipboard.writeText(link)
       this[`${data}Copyed`] = true
       setTimeout(() => (this[`${data}Copyed`] = false), 1000)
     },

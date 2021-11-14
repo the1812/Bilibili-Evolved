@@ -8,8 +8,8 @@ const entry = async () => {
     addMenuItem(card, {
       className: 'copy-link',
       text: '复制链接',
-      action: () => {
-        GM_setClipboard(`https://t.bilibili.com/${card.id}`, 'text')
+      action: async () => {
+        await navigator.clipboard.writeText(`https://t.bilibili.com/${card.id}`)
       },
     })
   }

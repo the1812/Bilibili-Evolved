@@ -121,7 +121,6 @@ export const externalApis = {
     GM_setValue,
     GM_getValue,
     GM_deleteValue,
-    GM_setClipboard,
     GM_xmlhttpRequest,
     GM_info,
   },

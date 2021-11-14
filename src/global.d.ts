@@ -17,16 +17,9 @@ declare global {
   }
   const webpackCompilationInfo: CompilationInfo
 
-  interface Document {
-    pictureInPictureElement: HTMLElement | null
-    exitPictureInPicture: () => void
-  }
   const BwpElement: {
     new(): HTMLVideoElement
     prototype: HTMLVideoElement
-  }
-  interface HTMLVideoElement {
-    requestPictureInPicture: () => void
   }
   interface Window {
     aid: string | undefined
@@ -128,7 +121,6 @@ declare global {
   }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
-  function GM_setClipboard(data: string, info: string | { type?: string, mimetype?: string }): void
   function GM_setValue<T>(name: string, value: T): void
   function GM_getValue<T>(name: string, defaultValue?: T): T
   function GM_deleteValue(name: string): void

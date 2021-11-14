@@ -91,8 +91,8 @@ export default Vue.extend({
     )
   },
   methods: {
-    copyLink() {
-      GM_setClipboard(this.image, { mimetype: 'text/plain' })
+    async copyLink() {
+      await navigator.clipboard.writeText(this.image)
     },
     newTab() {
       window.open(this.image, '_blank')

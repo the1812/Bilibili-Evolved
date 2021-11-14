@@ -28,9 +28,9 @@ const entry = async () => {
         addMenuItem(item, {
           className: 'copy-link',
           text: '复制链接',
-          action: () => {
+          action: async () => {
             const url = findParentFeedsUrl(item.element) || document.URL
-            GM_setClipboard(`${url}#reply${item.id}`, { mimetype: 'text/plain' })
+            await navigator.clipboard.writeText(`${url}#reply${item.id}`)
           },
         })
       })
