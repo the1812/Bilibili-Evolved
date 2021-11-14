@@ -57,6 +57,11 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    maxColumnCount: {
+      type: Number,
+      // TODO: 在设置里其实可以直接列出来, 不用弹窗, 暂时先限制为 2 了
+      default: 2,
+    },
   },
   data() {
     const { componentName } = this.options
@@ -77,7 +82,10 @@ export default Vue.extend({
   methods: {
     updateColumnsCount() {
       const element = this.$el as HTMLElement
-      const columns = Math.ceil(Object.keys(this.options.switches).length / 12)
+      const columns = Math.min(
+        Math.ceil(Object.keys(this.options.switches).length / 12),
+        this.maxColumnCount,
+      )
       element.style.setProperty('--columns', columns.toString())
     },
     isDim(name: string) {
@@ -87,7 +95,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import 'common';
 .switch-options {
   position: relative;
@@ -108,6 +116,7 @@ export default Vue.extend({
     white-space: nowrap;
     padding: 4px;
     display: grid;
+    width: max-content;
     grid-template-columns: repeat(var(--columns), auto);
     border-radius: 5px;
     border: 1px solid #8882;

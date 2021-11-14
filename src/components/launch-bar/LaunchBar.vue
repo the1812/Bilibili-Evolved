@@ -31,7 +31,7 @@
           @previous-item="previousItem($event, index)"
           @next-item="nextItem($event, index)"
           @delete-item="onDeleteItem($event, index)"
-          @action="(index === actions.length - 1) && onClearHistory()"
+          @action="(index === actions.length - 1) && onClearHistory(); onAction(a)"
         />
       </div>
       <div v-if="!isHistory" class="launch-bar-action-list">
@@ -52,6 +52,7 @@
           @previous-item="previousItem($event, index)"
           @next-item="nextItem($event, index)"
           @delete-item="onDeleteItem($event, index)"
+          @action="onAction(a)"
         />
       </div>
     </div>
@@ -226,6 +227,9 @@ export default Vue.extend({
     onClearHistory() {
       this.focus()
       this.getActions()
+    },
+    onAction() {
+      // this.focus()
     },
     focus() {
       this.$refs.input.focus()
