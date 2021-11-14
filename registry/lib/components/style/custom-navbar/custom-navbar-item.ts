@@ -82,7 +82,7 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
     shadow: boolean
     openInNewTab: boolean
     openInNewTabOverrides: Record<string, boolean>
-    seasonLogo: boolean
+    // seasonLogo: boolean
     touch: boolean
   }
   constructor(init: CustomNavbarItemInit) {

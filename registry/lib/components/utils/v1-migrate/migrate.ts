@@ -187,7 +187,7 @@ export const runMigrate = async (v1Settings: any) => {
       }),
       optionMap('customNavbarBoundsPadding', 'customNavbar.padding', (it: string) => parseFloat(it)),
       optionMap('customNavbarGlobalFixed', 'customNavbar.globalFixed'),
-      optionMap('customNavbarSeasonLogo', 'customNavbar.seasonLogo'),
+      // optionMap('customNavbarSeasonLogo', 'customNavbar.seasonLogo'),
       optionMap('customNavbarShowDeadVideos', 'customNavbar.showDeadVideos'),
       featureMap('playerShadow', 'playerShadow', 'component'),
       featureMap('narrowDanmaku', 'preserveDanmakuInput', 'component'),

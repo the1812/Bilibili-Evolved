@@ -48,10 +48,10 @@ export const component: ComponentMetadata = {
       defaultValue: true,
       displayName: '投影',
     },
-    seasonLogo: {
-      defaultValue: false,
-      displayName: '使用季节Logo',
-    },
+    // seasonLogo: {
+    //   defaultValue: false,
+    //   displayName: '使用季节Logo',
+    // },
     touch: {
       defaultValue: false,
       displayName: '触摸模式',

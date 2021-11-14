@@ -1,16 +1,10 @@
 <template>
-  <VIcon v-if="!seasonLogoUrl" icon="logo" class="custom-navbar-logo"></VIcon>
-  <img
-    v-else
-    height="38"
-    class="custom-navbar-logo season"
-    :src="seasonLogoUrl"
-  />
+  <VIcon icon="logo" class="custom-navbar-logo"></VIcon>
 </template>
 
 <script lang="ts">
-import { addComponentListener } from '@/core/settings'
-import { getJson } from '@/core/ajax'
+// import { addComponentListener } from '@/core/settings'
+// import { getJson } from '@/core/ajax'
 import { VIcon } from '@/ui'
 
 export default Vue.extend({
@@ -18,34 +12,34 @@ export default Vue.extend({
   components: {
     VIcon,
   },
-  data() {
-    return {
-      seasonLogoUrl: '',
-    }
-  },
-  async created() {
-    addComponentListener(
-      'customNavbar.seasonLogo',
-      async (value: boolean) => {
-        if (!value) {
-          this.seasonLogoUrl = ''
-          return
-        }
-        const json = await getJson(
-          'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142',
-        )
-        if (json.code !== 0) {
-          this.seasonLogoUrl = ''
-          return
-        }
-        this.seasonLogoUrl = lodash.get(json, 'data[142][0].litpic', '').replace(
-          'http:',
-          'https:',
-        )
-      },
-      true,
-    )
-  },
+  // data() {
+  //   return {
+  //     seasonLogoUrl: '',
+  //   }
+  // },
+  // async created() {
+  //   addComponentListener(
+  //     'customNavbar.seasonLogo',
+  //     async (value: boolean) => {
+  //       if (!value) {
+  //         this.seasonLogoUrl = ''
+  //         return
+  //       }
+  //       const json = await getJson(
+  //         'https://api.bilibili.com/x/web-show/res/locs?pf=0&ids=142',
+  //       )
+  //       if (json.code !== 0) {
+  //         this.seasonLogoUrl = ''
+  //         return
+  //       }
+  //       this.seasonLogoUrl = lodash.get(json, 'data[142][0].litpic', '').replace(
+  //         'http:',
+  //         'https:',
+  //       )
+  //     },
+  //     true,
+  //   )
+  // },
 })
 </script>
 
