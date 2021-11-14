@@ -13,5 +13,34 @@
 ## 预设
 在第三列的表头中可以通过下拉框切换预设, 预设是一套固定的按键定义, 方便快速切换到用户更熟悉的按键风格中. 插件可以使用 `keymap.presets` 作为 key 添加新的预设.
 
+示例:
+```ts
+addData('keymap.presets', (presetBase: Record<string, string>, builtInPresets: Record<string, Record<string, string>>) => {
+  builtInPresets.myPreset = {
+    like: 'l',
+    pause: 'space',
+    longJumpForward: 'shift rightArrow',
+    longJumpBackward: 'shift leftArrow',
+    seekBegin: 'ctrl [shift] 0',
+  },
+})
+```
+
 ## 动作
 插件可以使用 `keymap.actions` 作为 key 添加新的动作, 动作的默认按键需要添加到 `presetBase` 上, 动作返回值是一个 `boolean` 值, `true` 表示完成了快捷键动作, 应当阻止其他事件; 反之表示动作在当前情况不适用, 应当执行原先的事件.
+
+示例:
+```ts
+addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
+  actions.watchlater = {
+    displayName: '稍后再看',
+    run: context => {
+      const { clickElement } = context
+      return clickElement('.video-toolbar .ops .watchlater, .more-ops-list .ops-watch-later, .video-toolbar-module .see-later-box', context)
+    },
+  }
+})
+addData('keymap.presets', (presetBase: Record<string, string>) => {
+  presetBase.watchlater = 'shift w'
+})
+```
