@@ -27,11 +27,10 @@ export const tryParseZip = async (url: string) => {
   }
   return files[0].async('text')
 }
-export const installFeature = async (url: string): Promise<{
+export const installFeatureFromCode = async (code: string, url?: string): Promise<{
   metadata: FeatureType
   message: string
 }> => {
-  const code = await tryParseZip(url)
   const { parseExternalInput } = await import('../core/external-input')
   const item = await parseExternalInput<FeatureType>(code)
   const { type, installer } = (() => {
@@ -61,4 +60,11 @@ export const installFeature = async (url: string): Promise<{
   const installerResult = await installer()
   await after(installerResult.metadata)
   return installerResult
+}
+export const installFeature = async (url: string): Promise<{
+  metadata: FeatureType
+  message: string
+}> => {
+  const code = await tryParseZip(url)
+  return installFeatureFromCode(code, url)
 }

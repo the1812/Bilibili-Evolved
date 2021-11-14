@@ -5,6 +5,8 @@ import {
   settings,
   isUserComponent,
 } from '@/core/settings'
+import { descendingSort } from '@/core/utils/sort'
+import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
 import { ComponentAction } from '../settings-panel/component-actions/component-actions'
 
 interface UpdateCheckItem {
@@ -19,23 +21,27 @@ type UpdateRecord = Record<string, Record<string, UpdateCheckItem>>
 interface CheckSingleTypeUpdateConfig {
   filterNames?: string[]
   force?: boolean
+  maxCount?: number
 }
 type CheckSingleTypeUpdate = (config?: CheckSingleTypeUpdateConfig) => Promise<string>
 interface CheckUpdateConfig extends CheckSingleTypeUpdateConfig {
   items: Record<string, UpdateCheckItem>
-  existPredicate: (name: string) => boolean
-  installer: (code: string) => Promise<{ message: string }>
-  filterNames?: string[]
-  force?: boolean
+  existPredicate?: (name: string) => boolean
+  // installer: (code: string) => Promise<{ message: string }>
 }
 const isLocalItem = (url: string) => localhost.test(url)
+const defaultExistPredicate = (itemName: string) => (
+  settings.userComponents[itemName] !== undefined
+  || settings.userPlugins[itemName] !== undefined
+  || settings.userStyles[itemName] !== undefined
+)
 const checkUpdate = async (config: CheckUpdateConfig) => {
   const {
     items,
-    existPredicate,
-    installer,
+    existPredicate = defaultExistPredicate,
     filterNames = [],
     force = false,
+    maxCount = Infinity,
   } = config
   const now = Number(new Date())
   const { devMode } = getGeneralSettings()
@@ -50,6 +56,7 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
     }
     return filterNames.includes(itemName)
   }
+  let updatedCount = 0
   const results = await Promise.allSettled(
     Object.entries(items)
       .filter(([itemName, item]) => shouldUpdate(itemName) && Boolean(item.url))
@@ -59,20 +66,25 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
         if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration && !force) {
           return `[${itemName}] 未超过更新间隔期, 已跳过`
         }
+        if (updatedCount > maxCount && !force) {
+          return `[${itemName}] 已到达单次更新量上限 (${maxCount} 个), 已跳过`
+        }
         let finalUrl = url
         if (localhost.test(url) && options.localPortOverride) {
           finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
         }
-        const response: string = await coreApis.ajax.monkey({ url: finalUrl })
+        const code: string = await coreApis.ajax.monkey({ url: finalUrl })
         // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
         if (!(itemName in items)) {
           return `[${itemName}] 已被卸载, 取消更新`
         }
-        if (!response) {
+        if (!code) {
           return `[${itemName}] 更新下载失败, 取消更新`
         }
-        const { message } = await installer(response)
+        const { installFeatureFromCode } = await import('@/core/install-feature')
+        const { message } = await installFeatureFromCode(code, url)
         item.lastUpdateCheck = Number(new Date())
+        updatedCount++
         return `[${itemName}] ${message}`
       }),
   )
@@ -84,40 +96,28 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
     return `[${Object.keys(items)[index]}] ${message}`
   }).join('\n').trim()
 }
-const checkComponentsUpdate: CheckSingleTypeUpdate = async ({ filterNames, force } = {}) => {
+const checkComponentsUpdate: CheckSingleTypeUpdate = async config => {
   const { options } = getComponentSettings(name)
   const { components } = options.urls as UpdateRecord
-  const { installComponent } = await import('@/components/user-component')
   return checkUpdate({
     items: components,
-    existPredicate: itemName => settings.userComponents[itemName] !== undefined,
-    installer: installComponent,
-    filterNames,
-    force,
+    ...config,
   })
 }
-const checkPluginsUpdate: CheckSingleTypeUpdate = async ({ filterNames, force } = {}) => {
+const checkPluginsUpdate: CheckSingleTypeUpdate = async config => {
   const { options } = getComponentSettings(name)
   const { plugins } = options.urls as UpdateRecord
-  const { installPlugin } = await import('@/plugins/plugin')
   return checkUpdate({
     items: plugins,
-    existPredicate: itemName => settings.userPlugins[itemName] !== undefined,
-    installer: installPlugin,
-    filterNames,
-    force,
+    ...config,
   })
 }
-const checkStylesUpdate: CheckSingleTypeUpdate = async ({ filterNames, force } = {}) => {
+const checkStylesUpdate: CheckSingleTypeUpdate = async config => {
   const { options } = getComponentSettings(name)
   const { styles } = options.urls as UpdateRecord
-  const { installStyle } = await import('@/plugins/style')
   return checkUpdate({
     items: styles,
-    existPredicate: itemName => settings.userStyles[itemName] !== undefined,
-    installer: installStyle,
-    filterNames,
-    force,
+    ...config,
   })
 }
 export const component: ComponentMetadata = {
@@ -151,15 +151,20 @@ export const component: ComponentMetadata = {
       },
       hidden: true,
     },
+    maxUpdateCount: {
+      displayName: '单次最大更新量 (个)',
+      defaultValue: 4,
+      hidden: true,
+    },
   },
-  entry: async ({ settings: { options } }) => {
+  entry: async ({ settings: { options }, coreApis: { pluginApis } }) => {
     const now = Number(new Date())
     const duration = now - options.lastUpdateCheck
     const checkUpdates = async () => {
       console.log('[自动更新器] 开始检查更新')
-      console.log(await checkComponentsUpdate() || '暂无组件更新')
-      console.log(await checkPluginsUpdate() || '暂无插件更新')
-      console.log(await checkStylesUpdate() || '暂无样式更新')
+      console.log(await checkComponentsUpdate({ maxCount: options.maxUpdateCount }) || '暂无组件更新')
+      console.log(await checkPluginsUpdate({ maxCount: options.maxUpdateCount }) || '暂无插件更新')
+      console.log(await checkStylesUpdate({ maxCount: options.maxUpdateCount }) || '暂无样式更新')
       options.lastUpdateCheck = Number(new Date())
       console.log('[自动更新器] 完成更新检查')
     }
@@ -167,7 +172,8 @@ export const component: ComponentMetadata = {
     if (duration >= options.minimumDuration) {
       coreApis.lifeCycle.fullyLoaded(checkUpdates)
     }
-    return {
+
+    const exportMethods = {
       checkUpdates,
       checkUpdatesAndReload: async () => {
         await checkUpdates()
@@ -185,7 +191,58 @@ export const component: ComponentMetadata = {
         await checkStylesUpdate({ filterNames: itemNames, force: true })
         window.location.reload()
       },
+      updateLastFeature: async () => {
+        const items = Object.values(options.urls)
+          .flatMap(it => Object.entries(it))
+          .map(([key, record]: [string, UpdateCheckItem]) => (
+            { key, time: record.lastUpdateCheck, item: record }
+          ))
+          .sort(descendingSort(it => it.time))
+        const [firstItem] = items
+        if (!firstItem) {
+          console.log('没有找到最近更新的功能')
+          return
+        }
+        await checkUpdate({
+          items: { [firstItem.key]: firstItem.item },
+          force: true,
+        })
+        window.location.reload()
+      },
     }
+    if (getGeneralSettings().devMode) {
+      const icon = 'mdi-cloud-sync-outline'
+      pluginApis.data.addData('launchBar.actions', (actions: LaunchBarActionProvider[]) => {
+        actions.push({
+          name: 'autoUpdateActions',
+          getActions: async () => [
+            {
+              name: '检查所有更新',
+              description: 'Check Updates',
+              action: async () => {
+                const { Toast } = await import('@/core/toast')
+                const toast = Toast.info('正在检查更新...', '检查所有更新')
+                await exportMethods.checkUpdatesAndReload()
+                toast.dismiss()
+              },
+              icon,
+            },
+            {
+              name: '检查最近更新的功能',
+              description: 'Check Last Update',
+              action: async () => {
+                const { Toast } = await import('@/core/toast')
+                const toast = Toast.info('正在检查更新...', '检查最近更新的功能')
+                await exportMethods.updateLastFeature()
+                toast.dismiss()
+              },
+              icon,
+            },
+          ],
+        })
+      })
+    }
+    return exportMethods
   },
   plugin: {
     displayName: '自动更新器 - 扩展功能',
