@@ -1,3 +1,5 @@
+@import "common";
+
 @mixin replace-with-icon() {
   display: block;
   width: 36px;
@@ -48,6 +50,32 @@ body.touch-player-control {
         right: 0 !important;
       }
     }
+    @include on-fullscreen {
+      .squirtle-controller {
+        height: 72px !important;
+        .squirtle-controller-wrap {
+          height: 56px !important;
+          padding: 16px 6px 0 !important;
+          .squirtle-sendbar-wrap {
+            align-items: center !important;
+          }
+          .squirtle-pagelist-wrap,
+          .squirtle-speed-wrap {
+            width: 54px !important;
+            .squirtle-video-pagelist,
+            .squirtle-video-speed {
+              &::before {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 50px;
+                font-size: 26px;
+              }
+            }
+          }
+        }
+      }
+    }
   }
   .bilibili-player {
     * {
@@ -92,38 +120,7 @@ body.touch-player-control {
         right: 0 !important;
       }
     }
-  }
-
-  &.player-fullscreen-fix,
-  &.player-mode-webfullscreen {
-    .bpx-player-video-area {
-      .squirtle-controller {
-        height: 72px !important;
-        .squirtle-controller-wrap {
-          height: 56px !important;
-          padding: 16px 6px 0 !important;
-          .squirtle-sendbar-wrap {
-            align-items: center !important;
-          }
-          .squirtle-pagelist-wrap,
-          .squirtle-speed-wrap {
-            width: 54px !important;
-            .squirtle-video-pagelist,
-            .squirtle-video-speed {
-              &::before {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 50px;
-                font-size: 26px;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    .bilibili-player {
+    @include on-fullscreen {
       .bilibili-player-area {
         .bilibili-player-video-control-bottom-center {
           padding: 0 12px !important;

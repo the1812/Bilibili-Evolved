@@ -72,6 +72,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import "common";
+
 $navbar-height: 50px;
 html {
   --navbar-height: #{$navbar-height};
@@ -139,8 +141,7 @@ body.fixed-navbar {
   justify-content: center;
   line-height: normal;
 
-  body.player-mode-webfullscreen &,
-  body.player-fullscreen-fix & {
+  @include on-fullscreen {
     z-index: 1;
   }
   // &:not(.fill) .custom-navbar-iconfont {

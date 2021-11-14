@@ -1,3 +1,5 @@
+@import "common";
+
 @mixin pbp {
   #bilibili_pbp,
   #bilibili_pbp_canvas {
@@ -39,8 +41,7 @@
     }
   }
   @media screen and (min-width: 750px) {
-    body.player-fullscreen-fix &,
-    body.player-mode-webfullscreen & {
+    @include on-fullscreen {
       .bilibili-player-video-control {
         #bilibili_pbp,
         #bilibili_pbp_canvas {
