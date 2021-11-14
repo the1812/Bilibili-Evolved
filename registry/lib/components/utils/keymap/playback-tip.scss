@@ -15,6 +15,9 @@
   font-size: 14pt;
   border-radius: 4px;
   transition: 0.2s ease-out;
+  body.player-mode-blackmask & {
+    z-index: 10017;
+  }
   &.show {
     opacity: 1;
   }
