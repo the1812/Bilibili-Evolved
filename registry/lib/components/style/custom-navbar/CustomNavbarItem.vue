@@ -14,7 +14,9 @@
       :href="!item.active && !item.touch && item.href"
       @mouseover.self="requestPopup()"
     >
-      <template v-if="typeof item.content === 'string'">{{ item.content }}</template>
+      <template v-if="typeof item.content === 'string'">
+        {{ item.content }}
+      </template>
       <component :is="item.content" v-else :item="item"></component>
     </CustomNavbarLink>
     <div

@@ -4,10 +4,10 @@ import { formatDuration } from '@/core/utils/formatters'
 
 /** 历史项目类型, 值为 API 中的 `history.business` */
 export enum HistoryType {
-  video = 'archive',
-  live = 'live',
-  article = 'article',
-  bangumi = 'pgc',
+  Video = 'archive',
+  Live = 'live',
+  Article = 'article',
+  Bangumi = 'pgc',
 }
 export interface HistoryItem {
   id: string | number
@@ -52,25 +52,25 @@ export interface TypeFilter {
 /** 所有的历史记录类型 */
 export const types = [
   {
-    name: HistoryType.video,
+    name: HistoryType.Video,
     displayName: '视频',
     icon: 'mdi-play-circle-outline',
     checked: true,
   },
   {
-    name: HistoryType.bangumi,
+    name: HistoryType.Bangumi,
     displayName: '番剧',
     icon: 'mdi-television-classic',
     checked: true,
   },
   {
-    name: HistoryType.live,
+    name: HistoryType.Live,
     displayName: '直播',
     icon: 'mdi-video-wireless-outline',
     checked: true,
   },
   {
-    name: HistoryType.article,
+    name: HistoryType.Article,
     displayName: '专栏',
     icon: 'mdi-newspaper-variant-outline',
     checked: true,
@@ -135,7 +135,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
       url: `https://www.bilibili.com/bangumi/play/ep${epid}?${progressParam}`,
       title: item.show_title || item.title,
       upName: item.title,
-      type: HistoryType.bangumi,
+      type: HistoryType.Bangumi,
     }
   }
   if (bvid) {
@@ -143,7 +143,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
       ...commonInfo,
       id: bvid,
       url: `https://www.bilibili.com/video/${bvid}?p=${item.history.page}&${progressParam}`,
-      type: HistoryType.video,
+      type: HistoryType.Video,
     }
   }
   if (cid) {
@@ -151,7 +151,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
       ...commonInfo,
       id: cid,
       url: `https://www.bilibili.com/read/cv${cid}`,
-      type: HistoryType.article,
+      type: HistoryType.Article,
     }
   }
   if (oid) {
@@ -160,7 +160,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
       id: oid,
       url: `https://live.bilibili.com/${oid}`,
       liveStatus: item.live_status,
-      type: HistoryType.live,
+      type: HistoryType.Live,
     }
   }
   console.error('unknown history item type', item)

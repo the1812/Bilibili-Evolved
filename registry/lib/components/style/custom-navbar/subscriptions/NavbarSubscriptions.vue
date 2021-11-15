@@ -21,13 +21,13 @@ export default Vue.extend({
       moreLink: (tab: TabMapping) => `https://space.bilibili.com/${uid}/${tab.name}`,
       tabs: [
         {
-          name: SubscriptionTypes.bangumi,
+          name: SubscriptionTypes.Bangumi,
           displayName: '追番',
           activeLink: `https://space.bilibili.com/${uid}/bangumi`,
           component: () => import('./BangumiSubscriptions.vue').then(m => m.default),
         },
         {
-          name: SubscriptionTypes.cinema,
+          name: SubscriptionTypes.Cinema,
           displayName: '追剧',
           activeLink: `https://space.bilibili.com/${uid}/cinema`,
           component: () => import('./CinemaSubscriptions.vue').then(m => m.default),

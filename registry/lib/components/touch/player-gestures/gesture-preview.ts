@@ -1,8 +1,8 @@
 /** 进度调整模式(灵敏度) */
 export enum ProgressSeekMode {
-  fast = '高速',
-  medium = '中速',
-  slow = '低速',
+  Fast = '高速',
+  Medium = '中速',
+  Slow = '低速',
 }
 /** 手势操作预览参数 */
 export interface GesturePreviewParams {

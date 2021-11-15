@@ -63,18 +63,18 @@ import { getJsonWithCredentials } from '@/core/ajax'
 import { SubscriptionTypes } from './subscriptions'
 
 enum SubscriptionStatus {
-  toView = 1,
-  viewing,
-  viewed,
+  ToView = 1,
+  Viewing,
+  Viewed,
 }
 const getStatusText = (status: SubscriptionStatus) => {
   switch (status) {
-    case SubscriptionStatus.toView:
+    case SubscriptionStatus.ToView:
       return '想看'
-    case SubscriptionStatus.viewing:
+    case SubscriptionStatus.Viewing:
     default:
       return '在看'
-    case SubscriptionStatus.viewed:
+    case SubscriptionStatus.Viewed:
       return '看过'
   }
 }
@@ -83,12 +83,12 @@ const subscriptionSorter = (
   b: { status: SubscriptionStatus },
 ) => {
   let statusA = a.status
-  if (statusA !== SubscriptionStatus.viewed) {
-    statusA = SubscriptionStatus.viewed - statusA
+  if (statusA !== SubscriptionStatus.Viewed) {
+    statusA = SubscriptionStatus.Viewed - statusA
   }
   let statusB = b.status
-  if (statusB !== SubscriptionStatus.viewed) {
-    statusB = SubscriptionStatus.viewed - statusB
+  if (statusB !== SubscriptionStatus.Viewed) {
+    statusB = SubscriptionStatus.Viewed - statusB
   }
   return statusA - statusB
 }
@@ -103,7 +103,7 @@ export default Vue.extend({
   props: {
     type: {
       type: String,
-      default: SubscriptionTypes.bangumi,
+      default: SubscriptionTypes.Bangumi,
     },
   },
   data() {
@@ -122,7 +122,7 @@ export default Vue.extend({
       try {
         const json = await getJsonWithCredentials(
           `https://api.bilibili.com/x/space/bangumi/follow/list?type=${
-            this.type !== SubscriptionTypes.bangumi ? '2' : '1'
+            this.type !== SubscriptionTypes.Bangumi ? '2' : '1'
           }&pn=${this.page}&ps=16&vmid=${getUID()}`,
         )
         if (json.code !== 0) {

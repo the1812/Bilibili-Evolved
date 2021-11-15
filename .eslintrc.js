@@ -38,6 +38,12 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     '@typescript-eslint/no-redeclare': 'error',
+    '@typescript-eslint/naming-convention': ['error',
+      {
+        selector: 'enumMember',
+        format: ['PascalCase'],
+      },
+    ],
 
     'vue/max-attributes-per-line': 'off',
     'vue/html-self-closing': 'off',
@@ -97,4 +103,4 @@ module.exports = {
       }
     }
   ]
-};
+}

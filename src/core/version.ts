@@ -1,8 +1,8 @@
 export enum CompareResult {
-  less = -1,
-  equal = 0,
-  greater = 1,
-  incomparable = NaN
+  Less = -1,
+  Equal = 0,
+  Greater = 1,
+  Incomparable = NaN
 }
 export class Version {
   parts: number[]
@@ -15,28 +15,28 @@ export class Version {
   compareTo(other: Version) {
     for (let i = 0; i < this.parts.length; ++i) {
       if (other.parts.length === i) {
-        return CompareResult.greater
+        return CompareResult.Greater
       }
       if (this.parts[i] === other.parts[i]) {
         continue
       }
       if (this.parts[i] > other.parts[i]) {
-        return CompareResult.greater
+        return CompareResult.Greater
       }
-      return CompareResult.less
+      return CompareResult.Less
     }
     if (this.parts.length !== other.parts.length) {
-      return CompareResult.less
+      return CompareResult.Less
     }
-    return CompareResult.equal
+    return CompareResult.Equal
   }
   greaterThan(other: Version) {
-    return this.compareTo(other) === CompareResult.greater
+    return this.compareTo(other) === CompareResult.Greater
   }
   lessThan(other: Version) {
-    return this.compareTo(other) === CompareResult.less
+    return this.compareTo(other) === CompareResult.Less
   }
   equals(other: Version) {
-    return this.compareTo(other) === CompareResult.equal
+    return this.compareTo(other) === CompareResult.Equal
   }
 }

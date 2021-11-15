@@ -100,9 +100,9 @@ export class SwipeAction extends EventTarget {
           speedFactor = 1
         }
         const modeMap = {
-          0.05: ProgressSeekMode.slow,
-          0.2: ProgressSeekMode.medium,
-          1: ProgressSeekMode.fast,
+          0.05: ProgressSeekMode.Slow,
+          0.2: ProgressSeekMode.Medium,
+          1: ProgressSeekMode.Fast,
         }
 
         if (distance > 0) {

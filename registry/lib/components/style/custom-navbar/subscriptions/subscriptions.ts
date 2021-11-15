@@ -2,8 +2,8 @@ import { getUID } from '@/core/utils'
 import { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export enum SubscriptionTypes {
-  bangumi = 'bangumi',
-  cinema = 'cinema',
+  Bangumi = 'bangumi',
+  Cinema = 'cinema',
 }
 const uid = getUID()
 export const subscriptions: CustomNavbarItemInit = {
