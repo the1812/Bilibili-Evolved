@@ -1,35 +1,52 @@
 <template>
-  <div class="switch-options" :class="{ 'small-size': smallSize }">
-    <VButton
-      ref="button"
-      @click="popupOpen = !popupOpen"
-    >
-      <VIcon
-        class="switch-icon"
-        icon="mdi-checkbox-marked-circle-outline"
-        :size="smallSize ? 16 : 22"
-      ></VIcon>
-      {{ options.optionDisplayName }}
-    </VButton>
-    <VPopup
-      v-model="popupOpen"
-      class="switch-options-popup"
-      :trigger-element="$refs.button"
-      esc-close
-      auto-destroy
-    >
-      <component
-        :is="options.radio ? 'RadioButton' : 'CheckBox'"
-        v-for="name of Object.keys(options.switches)"
-        :key="name"
-        :class="{ dim: isDim(name) }"
-        v-bind="options.switchProps || {}"
-        :checked="componentOptions[`switch-${name}`]"
-        @change="componentOptions[`switch-${name}`] = $event"
+  <div class="switch-options" :class="{ 'small-size': smallSize, 'grid': !popupMode }">
+    <template v-if="popupMode">
+      <VButton
+        ref="button"
+        @click="popupOpen = !popupOpen"
       >
-        {{ options.switches[name].displayName }}
-      </component>
-    </VPopup>
+        <VIcon
+          class="switch-icon"
+          icon="mdi-checkbox-marked-circle-outline"
+          :size="smallSize ? 16 : 22"
+        ></VIcon>
+        {{ options.optionDisplayName }}
+      </VButton>
+      <VPopup
+        v-model="popupOpen"
+        class="switch-options-popup"
+        :trigger-element="$refs.button"
+        esc-close
+        auto-destroy
+      >
+        <component
+          :is="options.radio ? 'RadioButton' : 'CheckBox'"
+          v-for="name of Object.keys(options.switches)"
+          :key="name"
+          :class="{ dim: isDim(name) }"
+          v-bind="options.switchProps || {}"
+          :checked="componentOptions[`switch-${name}`]"
+          @change="componentOptions[`switch-${name}`] = $event"
+        >
+          {{ options.switches[name].displayName }}
+        </component>
+      </VPopup>
+    </template>
+    <template v-else>
+      <div class="switch-options-grid">
+        <component
+          :is="options.radio ? 'RadioButton' : 'CheckBox'"
+          v-for="name of Object.keys(options.switches)"
+          :key="name"
+          :class="{ dim: isDim(name) }"
+          v-bind="options.switchProps || {}"
+          :checked="componentOptions[`switch-${name}`]"
+          @change="componentOptions[`switch-${name}`] = $event"
+        >
+          {{ options.switches[name].displayName }}
+        </component>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -57,10 +74,9 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
-    maxColumnCount: {
-      type: Number,
-      // TODO: 在设置里其实可以直接列出来, 不用弹窗, 暂时先限制为 2 了
-      default: 2,
+    popupMode: {
+      type: Boolean,
+      default: true,
     },
   },
   data() {
@@ -82,10 +98,7 @@ export default Vue.extend({
   methods: {
     updateColumnsCount() {
       const element = this.$el as HTMLElement
-      const columns = Math.min(
-        Math.ceil(Object.keys(this.options.switches).length / 12),
-        this.maxColumnCount,
-      )
+      const columns = Math.ceil(Object.keys(this.options.switches).length / 12)
       element.style.setProperty('--columns', columns.toString())
     },
     isDim(name: string) {
@@ -100,9 +113,20 @@ export default Vue.extend({
 .switch-options {
   position: relative;
   --columns: 1;
+  &.grid {
+    width: 100%;
+  }
   .switch-icon {
     margin-right: 8px;
     transform: scale(0.9);
+  }
+  .dim {
+    opacity: .5;
+  }
+  &-grid {
+    font-size: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 50%);
   }
   &-popup {
     font-size: 12px;
@@ -120,11 +144,11 @@ export default Vue.extend({
     grid-template-columns: repeat(var(--columns), auto);
     border-radius: 5px;
     border: 1px solid #8882;
+    max-height: calc(100vh - 100px);
+    @include no-scrollbar();
+
     &.open {
       transform: translateY(-50%) scale(1);
-    }
-    .dim {
-      opacity: .5;
     }
     body.settings-panel-dock-right & {
       right: calc(100% + 8px);

@@ -208,6 +208,7 @@ export default Vue.extend({
     bottom: 0;
     justify-content: space-between;
     min-height: 24px;
+    box-sizing: content-box;
     background-color: inherit;
     padding: 8px 12px;
 

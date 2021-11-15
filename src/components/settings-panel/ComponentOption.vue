@@ -48,6 +48,7 @@
     <SwitchOptions
       v-if="type === 'switch'"
       small-size
+      :popup-mode="false"
       :options="option.defaultValue"
     ></SwitchOptions>
     <VSlider
