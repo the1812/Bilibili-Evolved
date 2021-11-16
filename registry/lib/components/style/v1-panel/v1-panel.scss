@@ -1,3 +1,5 @@
+@import "common";
+
 .be-settings {
   > .be-popup {
     top: 0 !important;
@@ -50,18 +52,28 @@
   }
   .widgets-panel {
     padding: 24px !important;
+    @include no-scrollbar();
     &-header {
       margin-bottom: 36px !important;
     }
     .switch-options-popup {
-      top: -1px !important;
-      transform-origin: top left !important;
-      transform: scale(0.9) !important;
+      left: 50%;
+      top: calc(100% + 4px) !important;
+      transform-origin: top !important;
+      max-width: calc(100% + 40px) !important;
+      max-height: unset !important;
+      transform: translateX(calc(-50% * var(--direction))) scale(0.9) !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      > * {
+        flex-grow: 1;
+      }
       &.open {
-        transform: scale(1) !important;
+        transform: translateX(calc(-50% * var(--direction))) scale(1) !important;
       }
       body.settings-panel-dock-right & {
-        transform-origin: top right !important;
+        left: unset !important;
+        right: 50% !important;
       }
     }
   }

@@ -52,12 +52,13 @@ export default Vue.extend({
 @import "common";
 
 .global-launch-bar-container {
+  $barHeight: 50px;
   display: flex;
   top: 20vh;
   left: 50%;
   width: 40vw;
   max-width: 650px;
-  height: 50px;
+  height: $barHeight;
   padding: 0 8px;
   z-index: 5000;
   @include popup();
@@ -74,6 +75,8 @@ export default Vue.extend({
     .launch-bar-suggest-list {
       transition: .2s ease-out;
       top: calc(100% + 8px);
+      max-height: calc(80vh - 16px - #{$barHeight});
+      @include no-scrollbar();
       font-size: 14px;
     }
   }
