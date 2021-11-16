@@ -9,8 +9,6 @@
     "*://api.*.bilibili.com/*",
     "*://*.bilibili.com/api/*",
     "*://member.bilibili.com/studio/bs-editor/*",
-    "*://message.bilibili.com/pages/nav/index_new_sync",
-    "*://message.bilibili.com/pages/nav/index_new_pc_sync",
     "*://t.bilibili.com/h5/dynamic/specification",
     "*://bbq.bilibili.com/*"
   ],

@@ -32,6 +32,7 @@ export default Vue.extend({
 @import "markdown";
 
 .component-description {
+  word-break: break-all;
   @include markdown();
 }
 </style>
