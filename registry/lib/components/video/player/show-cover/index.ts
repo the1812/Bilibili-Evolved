@@ -5,7 +5,7 @@ import { createHook, isBwpVideo } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 
 const entry = async () => {
-  let lastCid: string
+  let lastAid: string
   const removeCover = () => document.body.style.removeProperty('--cover-url')
   // eslint-disable-next-line prefer-arrow-callback
   createHook(isBwpVideo() ? BwpElement.prototype : HTMLVideoElement.prototype, 'play', function play() {
@@ -18,11 +18,10 @@ const entry = async () => {
       console.warn('[播放前显示封面] 未找到av号')
       return
     }
-    const { cid } = unsafeWindow
-    if (cid === lastCid || !cid) {
+    if (aid === lastAid) {
       return
     }
-    lastCid = cid
+    lastAid = aid
     const { VideoInfo } = await import('@/components/video/video-info')
     const info = new VideoInfo(aid)
     await info.fetchInfo()

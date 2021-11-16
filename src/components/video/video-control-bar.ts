@@ -9,6 +9,7 @@ export interface VideoControlBarItem {
   order: number
   action: (event: MouseEvent) => void | Promise<void>
 }
+const controlBarClass = '.be-video-control-bar-extend'
 let controlBarInstance: Vue
 const controlBarItems: VideoControlBarItem[] = []
 const initControlBar = lodash.once(async () => {
@@ -18,7 +19,7 @@ const initControlBar = lodash.once(async () => {
   videoChange(async () => {
     const { playerAgent } = await import('@/components/video/player-agent')
     const time = await playerAgent.query.control.buttons.time()
-    if (time === null) {
+    if (time === null || time.parentElement?.querySelector(controlBarClass) !== null) {
       return
     }
     const VideoControlBar = await import('./VideoControlBar.vue').then(m => m.default)
