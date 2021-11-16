@@ -5,10 +5,10 @@ import { isEmbeddedPlayer, playerReady } from '@/core/utils'
 import { allVideoUrls } from '@/core/utils/urls'
 
 export enum PlayerModes {
-  normal = '常规',
-  wide = '宽屏',
-  webFullscreen = '网页全屏',
-  fullscreen = '全屏',
+  Normal = '常规',
+  Wide = '宽屏',
+  WebFullscreen = '网页全屏',
+  Fullscreen = '全屏',
 }
 const entry: ComponentEntry = async ({ settings: { options } }) => {
   if (isEmbeddedPlayer()) {
@@ -16,14 +16,14 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   }
   await playerReady()
   const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
-    [PlayerModes.normal, none],
-    [PlayerModes.wide, () => {
+    [PlayerModes.Normal, none],
+    [PlayerModes.Wide, () => {
       playerAgent.widescreen()
     }],
-    [PlayerModes.webFullscreen, () => {
+    [PlayerModes.WebFullscreen, () => {
       playerAgent.webFullscreen()
     }],
-    [PlayerModes.fullscreen, async () => {
+    [PlayerModes.Fullscreen, async () => {
       const video = await sq(
         () => dq(playerAgent.query.video.element.selector),
         (it: HTMLVideoElement) => it !== null && it.readyState === 4
@@ -70,7 +70,7 @@ export const component: ComponentMetadata = {
   },
   options: {
     mode: {
-      defaultValue: PlayerModes.normal,
+      defaultValue: PlayerModes.Normal,
       displayName: '模式选择',
       dropdownEnum: PlayerModes,
     },

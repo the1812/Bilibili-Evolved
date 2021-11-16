@@ -1,5 +1,6 @@
 /** 热更新使用的更新源 */
 export enum CdnTypes {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
   jsDelivr = 'jsDelivr',
   GitHub = 'GitHub',
 }

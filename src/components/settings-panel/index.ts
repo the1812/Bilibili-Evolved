@@ -77,7 +77,7 @@ export const component: ComponentMetadata = {
       displayName: '批量命名格式',
     },
     downloadPackageEmitMode: {
-      defaultValue: DownloadPackageEmitMode.packed,
+      defaultValue: DownloadPackageEmitMode.Packed,
       displayName: '文件下载模式',
       dropdownEnum: DownloadPackageEmitMode,
     },

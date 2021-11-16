@@ -13,11 +13,4 @@ export const component: ComponentMetadata = {
     componentsTags.general,
     componentsTags.utils,
   ],
-  options: {
-    searchHistory: {
-      displayName: '搜索历史',
-      defaultValue: [],
-      hidden: true,
-    },
-  },
 }

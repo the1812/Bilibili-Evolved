@@ -3,11 +3,11 @@ import { delay } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 
 export enum LiveQuality {
-  original = '原画',
-  blueRay = '蓝光',
-  high = '超清',
-  medium = '高清',
-  low = '流畅',
+  Original = '原画',
+  BlueRay = '蓝光',
+  High = '超清',
+  Medium = '高清',
+  Low = '流畅',
 }
 const entry: ComponentEntry = async ({ settings }) => {
   const { getDropdownItems } = await import('@/components/settings-panel/dropdown')
@@ -60,7 +60,7 @@ export const component: ComponentMetadata = {
   options: {
     quality: {
       displayName: '画质选择',
-      defaultValue: LiveQuality.original,
+      defaultValue: LiveQuality.Original,
       dropdownEnum: LiveQuality,
     },
   },

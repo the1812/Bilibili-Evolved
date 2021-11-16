@@ -61,7 +61,7 @@ export class DownloadPackage {
       filename = this.entries[0].name
     }
     const isIndividualMode = (
-      getGeneralSettings().downloadPackageEmitMode === DownloadPackageEmitMode.individual
+      getGeneralSettings().downloadPackageEmitMode === DownloadPackageEmitMode.Individual
     )
     if (isIndividualMode && this.entries.length > 1) {
       await Promise.all(this.entries.map(e => DownloadPackage.single(e.name, e.data, e.options)))

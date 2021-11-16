@@ -4,11 +4,11 @@ import { deleteValue } from '@/core/utils'
 /** 自定义样式注入模式 */
 export enum UserStyleMode {
   /** 组件加载完成后注入至<head>末尾 */
-  default = 'default',
+  Default = 'default',
   /** 随首屏样式注入 */
-  instant = 'instant',
+  Instant = 'instant',
   /** 组件加载完成后注入至<body>末尾 */
-  important = 'important',
+  Important = 'important',
 }
 /** 自定义样式定义 */
 export interface UserStyle {
@@ -46,13 +46,13 @@ export const installStyle = async (input: UserStyle | string) => {
     } else {
       const newStyle = {
         displayName: name,
-        mode: UserStyleMode.default,
+        mode: UserStyleMode.Default,
         ...userStyle,
       }
       settings.userStyles[name] = newStyle
       styles.push(newStyle)
     }
-    if (mode === UserStyleMode.important) {
+    if (mode === UserStyleMode.Important) {
       addImportantStyle(style, name)
     } else {
       addStyle(style, name)

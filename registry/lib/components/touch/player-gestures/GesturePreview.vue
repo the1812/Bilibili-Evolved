@@ -129,7 +129,7 @@ export default Vue.extend({
          * - `NaN`: 取消时间调整
          */
         progress: null,
-        seekMode: ProgressSeekMode.fast,
+        seekMode: ProgressSeekMode.Fast,
       },
     }
   },
