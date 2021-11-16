@@ -126,7 +126,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/live/gift-box.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/gift-box.js)
 
-在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮
+在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮.
 
 ### [直播首页静音](../../registry/dist/components/live/home-mute.js)
 `liveHomeMute`
@@ -198,7 +198,9 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/custom-navbar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/custom-navbar.js)
 
-暂无描述.
+使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:
+- *://message.bilibili.com/pages/nav/index_new_pc_sync
+- *://message.bilibili.com/pages/nav/index_new_sync
 
 ### [夜间模式跟随系统](../../registry/dist/components/style/dark-mode/follow-system.js)
 `darkModeFollowSystem`
@@ -208,6 +210,8 @@
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/dark-mode/follow-system.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/follow-system.js)
 
 使夜间模式同步系统设置的亮/暗主题.
+
+> 注：在某些浏览器(如`Microsoft Edge`)中，夜间模式仅会同步浏览器的亮/暗主题.
 
 ### [夜间模式](../../registry/dist/components/style/dark-mode.js)
 `darkMode`

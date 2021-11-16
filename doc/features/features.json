@@ -107,7 +107,7 @@
     "type": "component",
     "name": "liveGiftBox",
     "displayName": "直播全屏包裹",
-    "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮",
+    "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮.",
     "fullRelativePath": "../../registry/dist/components/live/gift-box.js",
     "fullAbsolutePath": "registry/dist/components/live/gift-box.js"
   },
@@ -171,7 +171,7 @@
     "type": "component",
     "name": "customNavbar",
     "displayName": "自定义顶栏",
-    "description": "暂无描述.",
+    "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\n- *://message.bilibili.com/pages/nav/index_new_sync",
     "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
     "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
   },
@@ -179,7 +179,7 @@
     "type": "component",
     "name": "darkModeFollowSystem",
     "displayName": "夜间模式跟随系统",
-    "description": "使夜间模式同步系统设置的亮/暗主题.",
+    "description": "使夜间模式同步系统设置的亮/暗主题.\n\n> 注：在某些浏览器(如`Microsoft Edge`)中，夜间模式仅会同步浏览器的亮/暗主题.",
     "fullRelativePath": "../../registry/dist/components/style/dark-mode/follow-system.js",
     "fullAbsolutePath": "registry/dist/components/style/dark-mode/follow-system.js"
   },
