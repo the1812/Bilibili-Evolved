@@ -49,30 +49,30 @@ const urlNormalize = (url: string) => (url.startsWith('//') ? `https:${url}` : u
 const mainCategories = rawData[0].filter(it => typeof it.tid !== 'string')
 const secondaryCategories = rawData[3]
 const generalCategories: Record<string, Category> = {}
-const cinemaMerge = ['纪录片', '电影', '电视剧']
+// const cinemaMerge = ['纪录片', '电影', '电视剧']
 mainCategories.forEach(it => {
-  const mainUrl = urlNormalize(it.url || `https://www.bilibili.com/v/${it.route}/`)
+  const mainUrl = urlNormalize(`https://www.bilibili.com/v/${it.route}/`)
   generalCategories[it.name] = {
     icon: it.route,
     code: it.tid,
     link: mainUrl,
     subCategories: it.sub ? Object.fromEntries(
       it.sub.map(sub => {
-        const subUrl = urlNormalize(`${mainUrl}${sub.route}/`)
+        const subUrl = urlNormalize(!sub.route ? sub.url : `${mainUrl}${sub.route}/`)
         return [sub.name, subUrl]
       }),
     ) : null,
   }
 })
-generalCategories.放映厅 = {
-  icon: 'cinema',
-  code: cinemaMerge.map(name => generalCategories[name].code as number),
-  link: 'https://www.bilibili.com/cinema/',
-  subCategories: Object.fromEntries(
-    cinemaMerge.map(name => ([name, generalCategories[name].link])),
-  ),
-}
-cinemaMerge.forEach(name => (delete generalCategories[name]))
+// generalCategories.放映厅 = {
+//   icon: 'cinema',
+//   code: cinemaMerge.map(name => generalCategories[name].code as number),
+//   link: 'https://www.bilibili.com/cinema/',
+//   subCategories: Object.fromEntries(
+//     cinemaMerge.map(name => ([name, generalCategories[name].link])),
+//   ),
+// }
+// cinemaMerge.forEach(name => (delete generalCategories[name]))
 secondaryCategories.forEach(it => {
   generalCategories[it.name] = {
     icon: it.icon,

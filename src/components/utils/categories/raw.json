@@ -979,6 +979,15 @@
           "url": "#"
         },
         {
+          "name": "摩托车",
+          "route": "motorcycle",
+          "tid": 240,
+          "ps": 15,
+          "rps": 10,
+          "desc": "骑士们集合啦",
+          "url": "#"
+        },
+        {
           "name": "智能出行",
           "route": "smart",
           "tid": 226,
@@ -1081,15 +1090,6 @@
           },
           "desc": "记录日常生活，分享生活故事",
           "url": "//www.bilibili.com/video/ent-life-1.html"
-        },
-        {
-          "name": "其他",
-          "route": "other",
-          "tid": 174,
-          "ps": 15,
-          "rps": 10,
-          "desc": "对分区归属不明的视频进行归纳整合的特定分区",
-          "url": "//www.bilibili.com/video/others-1.html"
         }
       ]
     },
@@ -1345,7 +1345,7 @@
       },
       "sub": [
         {
-          "name": "美妆",
+          "name": "美妆护肤",
           "route": "makeup",
           "tid": 157,
           "ps": 15,
@@ -1354,11 +1354,11 @@
             "active": true,
             "dataLocId": 279
           },
-          "desc": "涵盖妆容、发型、美甲等教程，彩妆、护肤相关产品测评、分享等",
+          "desc": "彩妆护肤、美甲美发、仿妆、医美相关内容分享或产品测评",
           "url": "//www.bilibili.com/video/fashion-makeup-fitness-1.html"
         },
         {
-          "name": "服饰",
+          "name": "穿搭",
           "route": "clothing",
           "tid": 158,
           "ps": 15,
@@ -1367,29 +1367,16 @@
             "active": true,
             "dataLocId": 281
           },
-          "desc": "服饰风格、搭配技巧相关的展示和教程视频",
+          "desc": "穿搭风格、穿搭技巧的展示分享，涵盖衣服、鞋靴、箱包配件、配饰（帽子、钟表、珠宝首饰）等",
           "url": "//www.bilibili.com/video/fashion-clothing-1.html"
         },
         {
-          "name": "T台",
-          "route": "catwalk",
+          "name": "时尚潮流",
+          "route": "trend",
           "tid": 159,
           "ps": 15,
           "rps": 10,
-          "desc": "发布会走秀现场及模特相关时尚片、采访、后台花絮",
-          "url": "#"
-        },
-        {
-          "name": "风尚标",
-          "route": "trends",
-          "tid": 192,
-          "ps": 15,
-          "rps": 10,
-          "ad": {
-            "active": true,
-            "dataLocId": 283
-          },
-          "desc": "时尚明星专访、街拍、时尚购物相关知识科普",
+          "desc": "时尚街拍、时装周、时尚大片，时尚品牌、潮流等行业相关记录及知识科普",
           "url": "#"
         }
       ]
@@ -1470,21 +1457,36 @@
             "active": true,
             "dataLocId": 267
           },
-          "desc": "国内外有趣的综艺和综艺相关精彩剪辑",
+          "desc": "所有综艺相关，全部一手掌握！",
           "url": "//www.bilibili.com/video/ent-variety-1.html"
         },
         {
-          "name": "明星",
-          "route": "star",
-          "tid": 137,
+          "name": "娱乐杂谈",
+          "route": "talker",
+          "tid": 241,
           "ps": 15,
           "rps": 10,
           "ad": {
             "active": true,
             "dataLocId": 269
           },
-          "desc": "娱乐圈动态、明星资讯相关",
-          "url": "//www.bilibili.com/video/ent-circle-1.html"
+          "desc": "娱乐人物解读、娱乐热点点评、娱乐行业分析"
+        },
+        {
+          "name": "粉丝创作",
+          "route": "fans",
+          "tid": 242,
+          "ps": 15,
+          "rps": 10,
+          "desc": "粉丝向创作视频"
+        },
+        {
+          "name": "明星综合",
+          "route": "celebrity",
+          "tid": 137,
+          "ps": 15,
+          "rps": 10,
+          "desc": "娱乐圈动态、明星资讯相关"
         }
       ]
     },
@@ -1674,19 +1676,71 @@
           "url": "//www.bilibili.com/tv/index/"
         }
       ]
+    },
+    {
+      "name": "虚拟UP主",
+      "route": "virtual",
+      "locid": 4735,
+      "count": "",
+      "isHide": true,
+      "subMenuSize": 60,
+      "slider": {
+        "width": 620,
+        "height": 220
+      },
+      "viewTag": false,
+      "customComponent": {
+        "name": "Energy",
+        "titleId": 4754,
+        "leftId": 4756
+      },
+      "sub": [
+        {
+          "name": "游戏",
+          "route": "game",
+          "tid": 4,
+          "ps": 18,
+          "rps": 10,
+          "url": "//www.bilibili.com/v/virtual/game"
+        },
+        {
+          "name": "音乐",
+          "route": "music",
+          "tid": 3,
+          "ps": 18,
+          "rps": 10,
+          "url": "//www.bilibili.com/v/virtual/music"
+        },
+        {
+          "name": "动画",
+          "route": "douga",
+          "tid": 1,
+          "ps": 18,
+          "rps": 10,
+          "url": "//www.bilibili.com/v/virtual/douga"
+        },
+        {
+          "name": "其他",
+          "route": "other",
+          "tid": 0,
+          "ps": 18,
+          "rps": 10,
+          "url": "//www.bilibili.com/v/virtual/other"
+        }
+      ]
     }
   ],
   [
     {
-      "url": "//live.bilibili.com/all?visit_id=5icxsa0kmts0",
+      "url": "//live.bilibili.com/all",
       "name": "全部直播"
     },
     {
-      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=2&areaId=0&visit_id=5icxsa0kmts0#/2/0",
+      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=2&areaId=0",
       "name": "网游直播"
     },
     {
-      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=3&areaId=0&visit_id=5icxsa0kmts0#/3/0",
+      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=3&areaId=0",
       "name": "手游直播"
     },
     {
@@ -1694,11 +1748,11 @@
       "name": "单机直播"
     },
     {
-      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=1&areaId=0&visit_id=5icxsa0kmts0#/1/0",
+      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=1&areaId=0",
       "name": "娱乐直播"
     },
     {
-      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=5&areaId=0&visit_id=5icxsa0kmts0#/5/0",
+      "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=5&areaId=0",
       "name": "电台直播"
     },
     {
@@ -1750,15 +1804,15 @@
       "icon": "live",
       "sub": [
         {
-          "url": "//live.bilibili.com/all?visit_id=5icxsa0kmts0",
+          "url": "//live.bilibili.com/all",
           "name": "全部直播"
         },
         {
-          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=2&areaId=0&visit_id=5icxsa0kmts0#/2/0",
+          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=2&areaId=0",
           "name": "网游直播"
         },
         {
-          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=3&areaId=0&visit_id=5icxsa0kmts0#/3/0",
+          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=3&areaId=0",
           "name": "手游直播"
         },
         {
@@ -1766,11 +1820,11 @@
           "name": "单机直播"
         },
         {
-          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=1&areaId=0&visit_id=5icxsa0kmts0#/1/0",
+          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=1&areaId=0",
           "name": "娱乐直播"
         },
         {
-          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=5&areaId=0&visit_id=5icxsa0kmts0#/5/0",
+          "url": "//live.bilibili.com/p/eden/area-tags?parentAreaId=5&areaId=0",
           "name": "电台直播"
         },
         {
@@ -1810,63 +1864,6 @@
       "report": "musicplus",
       "url": "//www.bilibili.com/v/musicplus/",
       "icon": "musicplus"
-    }
-  ],
-  [
-    {
-      "name": "搞笑",
-      "url": "//www.bilibili.com/v/life/funny",
-      "tid": 138,
-      "count": "",
-      "hidePopover": true,
-      "combination": true
-    },
-    {
-      "name": "美食",
-      "url": "//www.bilibili.com/v/food",
-      "tid": 211,
-      "count": "",
-      "hidePopover": true,
-      "combination": true
-    },
-    {
-      "name": "动物圈",
-      "url": "//www.bilibili.com/v/animal",
-      "tid": 217,
-      "count": "",
-      "hidePopover": true,
-      "combination": true
-    },
-    {
-      "name": "单机游戏",
-      "url": "//www.bilibili.com/v/game/stand_alone",
-      "tid": 17,
-      "count": "",
-      "hidePopover": true,
-      "combination": true
-    },
-    {
-      "name": "运动",
-      "url": "//www.bilibili.com/v/sports",
-      "tid": 234,
-      "count": "",
-      "hidePopover": true,
-      "combination": true
-    },
-    {
-      "name": "汽车",
-      "url": "//www.bilibili.com/v/car",
-      "tid": 223,
-      "count": "",
-      "hidePopover": true,
-      "combination": true
-    },
-    {
-      "name": "VLOG",
-      "url": "//www.bilibili.com/v/life/daily/#/530003",
-      "hidePopover": true,
-      "hideCount": true,
-      "combination": true
     }
   ]
 ]
