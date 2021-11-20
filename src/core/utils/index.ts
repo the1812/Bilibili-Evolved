@@ -112,16 +112,25 @@ export const raiseEvent = (element: HTMLElement, eventName: string) => {
   event.initEvent(eventName, true, true)
   element.dispatchEvent(event)
 }
-/** 根据图片URL生成`srcset`, 范围从`@1x`至`@4x`, 每`0.25x`产生一个`src`
+/** 根据图片URL生成 `srcset`, 范围从 `@1x` 至 `@4x`, 每 `0.25x` 产生一个 `src`
  * @param src 图片URL
- * @param baseSize 图片尺寸, 传入数字代表宽高, 也可传入对象`{ width: number, height: number }`, 对象省略任一属性可表示等比缩放
- * @param extension 图片扩展名(不包含`.`), 默认为`jpg`
+ * @param baseSize 图片尺寸, 传入数字代表宽高, 也可传入对象 `{ width: number, height: number }`, 对象省略任一属性可表示等比缩放
+ * @param extension 图片扩展名(不包含 `.`), 默认从 `src` 读取, fallback 为 `jpg`
  */
 export const getDpiSourceSet = (src: string, baseSize: number | {
   width?: number
   height?: number
-}, extension = 'jpg') => {
+}, extension?: string) => {
   const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4]
+
+  if (!extension) {
+    const srcExtension = src.match(/.+\.(.+)$/)
+    if (srcExtension) {
+      extension = srcExtension[1]
+    } else {
+      extension = 'jpg'
+    }
+  }
   if (extension.startsWith('.')) {
     extension = extension.substring(1)
   }
