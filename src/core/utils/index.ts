@@ -315,6 +315,9 @@ export const playerReady = async () => {
       */
       return
     }
+    if (isEmbeddedPlayer()) {
+      return
+    }
     if (unsafeWindow.onLoginInfoLoaded) {
       unsafeWindow.onLoginInfoLoaded(resolve)
     } else {
