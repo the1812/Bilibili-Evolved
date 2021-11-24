@@ -16,7 +16,7 @@
         <div class="videoshot" :style="videoshotStyle"></div>
         <div v-show="preview.progress !== null" class="preview">
           <div
-            v-if="preview.progress"
+            v-if="!Number.isNaN(preview.progress)"
             class="diff"
           >
             {{ (preview.progress - store.progress) | progressDiff }}
@@ -24,7 +24,7 @@
           <div
             class="seek-mode"
           >
-            {{ preview.progress ? preview.seekMode : '取消调整' }}
+            {{ !Number.isNaN(preview.progress) ? preview.seekMode : '取消调整' }}
           </div>
         </div>
         <div v-show="preview.progress === null" class="name">
@@ -65,6 +65,7 @@ import { fixed } from '@/core/utils'
 import { formatPercent, formatDuration } from '@/core/utils/formatters'
 import { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
 import { Videoshot } from './videoshot'
+import { syncVolumeUI } from './volume'
 
 /**
  * 将秒数转为中文时间的小函数
@@ -170,7 +171,7 @@ export default Vue.extend({
           this.video.duration,
         )
         const videoshot = this.videoshot as Videoshot
-        videoshot.getVideoshot(progress).then(style => {
+        videoshot.getVideoshot(this.preview.progress).then(style => {
           this.videoshotStyle = style
         })
       } else {
@@ -193,6 +194,9 @@ export default Vue.extend({
       if (!unsafeWindow.touchGestureDebug) {
         this.opened = false
       }
+      if (this.store.volume !== this.preview.volume) {
+        syncVolumeUI(this.preview.volume)
+      }
       if (Number.isNaN(this.preview.progress)) {
         this.preview.progress = null
         return
@@ -202,6 +206,7 @@ export default Vue.extend({
         && this.preview.progress !== null
       ) {
         this.apply({ progress: this.preview.progress })
+        this.preview.progress = null
       }
     },
     async apply({ brightness, volume, progress }: GesturePreviewParams) {
@@ -217,7 +222,7 @@ export default Vue.extend({
         setVolume(video, this.preview.volume)
       } else if (progress !== undefined) {
         const { setProgress } = await import('./progress')
-        setProgress(video, this.preview.progress)
+        setProgress(video, progress)
       }
     },
   },

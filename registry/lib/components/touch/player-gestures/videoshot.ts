@@ -1,31 +1,14 @@
-const supportWebp = lodash.once(() => {
-  try {
-    const canvas = document.createElement('canvas')
-    if (canvas.getContext && canvas.getContext('2d')) {
-      try {
-        return canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0
-      } catch (ex) {
-        return false
-      }
-    } else { return false }
-  } catch (ex) {
-    return false
-  }
-})
-/** 处理视频缩略图的style */
+/** 处理视频缩略图的 style */
 export class Videoshot {
   aid = unsafeWindow.aid
   cid = unsafeWindow.cid
+  viewWidth = 120
+  viewHeight = 70
   cidData = null
   blocked = false
   workingPromise: Promise<any> = null
-  /** 获取特点时间点的缩略图style */
-  async getVideoshot(currentTime: number): Promise<{
-    width: number
-    height: number
-    backgroundImage: string
-    backgroundPosition: string
-  }> {
+  /** 获取特点时间点的缩略图 style */
+  async getVideoshot(currentTime: number): Promise<Partial<CSSStyleDeclaration>> {
     if (!(this.aid && this.cid) || this.blocked) {
       return null
     }
@@ -46,33 +29,35 @@ export class Videoshot {
     }
     const data = this.cidData
     const indexData = data.index
-    let shotIndex = 0
-    for (let index = 0; index < indexData.length - 2; index++) {
-      if (currentTime >= indexData[index]
-          && currentTime < indexData[index + 1]) {
+    // 缩略图 index 是从 1 开始的
+    let shotIndex = 1
+    for (let index = indexData.length - 1; index > 0; index--) {
+      if (currentTime >= indexData[index]) {
         shotIndex = index
         break
       }
     }
 
-    let imageData = data.image as string[]
+    const imageData = data.image as string[]
     if (imageData === null) {
       return null
     }
-    if (supportWebp()) {
-      imageData = imageData.map(url => url.replace('.jpg', '.jpg@.webp'))
-    }
-    const xLength = parseInt(data.pv_x_len) || 10
-    const yLength = parseInt(data.pv_y_len) || 10
-    const xSize = parseInt(data.pv_x_size) || 160
-    const ySize = parseInt(data.pv_y_size) || 90
-    const x = -(shotIndex % 100 % xLength) * xSize
-    const y = -Math.floor((shotIndex % 100) / yLength) * ySize
+    const xLength = data.img_x_len ?? 10
+    const yLength = data.img_y_len ?? 10
+    const xScale = xLength * this.viewWidth
+    const yScale = yLength * this.viewHeight
+    // const xSize = data.img_x_size ?? 120
+    // const ySize = data.img_y_size ?? 70
+    const xSize = this.viewWidth
+    const ySize = this.viewHeight
+    const x = -((shotIndex - 1) % 100 % xLength) * xSize
+    const y = -Math.floor(((shotIndex - 1) % 100) / yLength) * ySize
     return {
-      width: xSize,
-      height: ySize,
+      // width: xSize,
+      // height: ySize,
       backgroundImage: `url(${imageData[Math.floor(shotIndex / 100)]})`,
       backgroundPosition: `${x}px ${y}px`,
+      backgroundSize: `${xScale}px ${yScale}px`,
     }
   }
 }
