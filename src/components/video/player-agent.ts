@@ -61,6 +61,10 @@ interface PlayerQuery<QueryResult> extends CustomNestedQuery<QueryResult> {
       webFullscreen: QueryResult
       fullscreen: QueryResult
     }
+    settings: {
+      wrap: QueryResult,
+      lightOff: QueryResult
+    }
   }
   toastWrap: QueryResult
   danmakuTipLayer: QueryResult
@@ -89,6 +93,9 @@ const click = (target: ElementQuery) => {
 export abstract class PlayerAgent {
   abstract type: AgentType
   abstract query: PlayerQuery<ElementQuery>
+
+  abstract rawQueryObject: PlayerQuery<string>
+
   provideCustomQuery<CustomQueryType extends CustomQuery<string>>(
     config: CustomQueryProvider<CustomQueryType>,
   ) {
@@ -125,6 +132,17 @@ export abstract class PlayerAgent {
     raiseEvent(checkbox, 'change')
     return checkbox.checked
   }
+
+  abstract toggleLight(on: boolean): void
+
+  // eslint-disable-next-line class-methods-use-this
+  getPlayerConfig(target:string) {
+    return lodash.get(
+      JSON.parse(localStorage.getItem('bilibili_player_settings')),
+      target,
+      false,
+    )
+  }
   abstract isMute(): boolean
   /** 更改音量 (%) */
   abstract changeVolume(change: number): number
@@ -139,7 +157,7 @@ export class VideoPlayerAgent extends PlayerAgent {
     return unsafeWindow.player
   }
   type: AgentType = 'video'
-  query = selectorWrap({
+  rawQueryObject = {
     playerWrap: '.player-wrap',
     bilibiliPlayer: '.bilibili-player',
     playerArea: '.bilibili-player-area',
@@ -181,11 +199,16 @@ export class VideoPlayerAgent extends PlayerAgent {
         webFullscreen: '.bilibili-player-video-web-fullscreen',
         fullscreen: '.bilibili-player-video-btn-fullscreen',
       },
+      settings: {
+        wrap: '.bilibili-player-video-btn-setting-wrap',
+        lightOff: '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input',
+      },
     },
     toastWrap: '.bilibili-player-video-toast-wrp',
     danmakuTipLayer: '.bilibili-player-dm-tip-wrap',
     danmakuSwitch: '.bilibili-player-video-danmaku-switch input',
-  }) as PlayerQuery<ElementQuery>
+  }
+  query = selectorWrap(this.rawQueryObject) as PlayerQuery<ElementQuery>
   isMute() {
     if (!this.nativeApi) {
       return null
@@ -225,6 +248,12 @@ export class VideoPlayerAgent extends PlayerAgent {
     this.nativeApi.seek(video.currentTime + change, video.paused)
     return this.nativeApi.getCurrentTime()
   }
+  async toggleLight(on:boolean) {
+    // const checkbox = this.query.control.settings.lightOff.sync() as HTMLInputElement
+    const checkbox = await select(this.rawQueryObject.control.settings.lightOff) as HTMLInputElement
+    checkbox.checked = !on
+    raiseEvent(checkbox, 'change')
+  }
 }
 export class BwpPlayerAgent extends VideoPlayerAgent {
   type: AgentType = 'bwp'
@@ -235,7 +264,7 @@ export class BwpPlayerAgent extends VideoPlayerAgent {
 }
 export class BangumiPlayerAgent extends PlayerAgent {
   type: AgentType = 'bangumi'
-  query = selectorWrap({
+  rawQueryObject = {
     playerWrap: '.player-module',
     bilibiliPlayer: '.bpx-player-container',
     playerArea: '.bpx-player-primary-area',
@@ -277,11 +306,16 @@ export class BangumiPlayerAgent extends PlayerAgent {
         webFullscreen: '.squirtle-video-pagefullscreen',
         fullscreen: '.squirtle-video-fullscreen',
       },
+      settings: {
+        wrap: '.squirtle-setting-wrap',
+        lightOff: '.squirtle-lightoff',
+      },
     },
     toastWrap: '.bpx-player-tooltip-area',
     danmakuTipLayer: '.bpx-player-dialog-wrap',
     danmakuSwitch: '.bpx-player-dm-switch input',
-  }) as PlayerQuery<ElementQuery>
+  }
+  query = selectorWrap(this.rawQueryObject) as PlayerQuery<ElementQuery>
   constructor() {
     super()
     bpxPlayerPolyfill()
@@ -320,6 +354,15 @@ export class BangumiPlayerAgent extends PlayerAgent {
     }
     video.currentTime = lodash.clamp(video.currentTime + change, 0, video.duration)
     return video.currentTime
+  }
+  toggleLight(on: boolean) {
+    const checkbox = this.query.control.settings.lightOff.sync()
+    const canLightOff = !checkbox.classList.contains('active') && !on
+    const canLightOn = checkbox.classList.contains('active') && on
+
+    if (canLightOff || canLightOn) {
+      checkbox.dispatchEvent(new MouseEvent('click'))
+    }
   }
 }
 
