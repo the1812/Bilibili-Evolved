@@ -93,9 +93,6 @@ const click = (target: ElementQuery) => {
 export abstract class PlayerAgent {
   abstract type: AgentType
   abstract query: PlayerQuery<ElementQuery>
-
-  abstract rawQueryObject: PlayerQuery<string>
-
   provideCustomQuery<CustomQueryType extends CustomQuery<string>>(
     config: CustomQueryProvider<CustomQueryType>,
   ) {
@@ -157,7 +154,7 @@ export class VideoPlayerAgent extends PlayerAgent {
     return unsafeWindow.player
   }
   type: AgentType = 'video'
-  rawQueryObject = {
+  query = selectorWrap({
     playerWrap: '.player-wrap',
     bilibiliPlayer: '.bilibili-player',
     playerArea: '.bilibili-player-area',
@@ -207,8 +204,7 @@ export class VideoPlayerAgent extends PlayerAgent {
     toastWrap: '.bilibili-player-video-toast-wrp',
     danmakuTipLayer: '.bilibili-player-dm-tip-wrap',
     danmakuSwitch: '.bilibili-player-video-danmaku-switch input',
-  }
-  query = selectorWrap(this.rawQueryObject) as PlayerQuery<ElementQuery>
+  }) as PlayerQuery<ElementQuery>
   isMute() {
     if (!this.nativeApi) {
       return null
@@ -250,7 +246,7 @@ export class VideoPlayerAgent extends PlayerAgent {
   }
   async toggleLight(on:boolean) {
     // const checkbox = this.query.control.settings.lightOff.sync() as HTMLInputElement
-    const checkbox = await select(this.rawQueryObject.control.settings.lightOff) as HTMLInputElement
+    const checkbox = await select(this.query.control.settings.lightOff.selector) as HTMLInputElement
     checkbox.checked = !on
     raiseEvent(checkbox, 'change')
   }
@@ -264,7 +260,7 @@ export class BwpPlayerAgent extends VideoPlayerAgent {
 }
 export class BangumiPlayerAgent extends PlayerAgent {
   type: AgentType = 'bangumi'
-  rawQueryObject = {
+  query = selectorWrap({
     playerWrap: '.player-module',
     bilibiliPlayer: '.bpx-player-container',
     playerArea: '.bpx-player-primary-area',
@@ -314,8 +310,7 @@ export class BangumiPlayerAgent extends PlayerAgent {
     toastWrap: '.bpx-player-tooltip-area',
     danmakuTipLayer: '.bpx-player-dialog-wrap',
     danmakuSwitch: '.bpx-player-dm-switch input',
-  }
-  query = selectorWrap(this.rawQueryObject) as PlayerQuery<ElementQuery>
+  }) as PlayerQuery<ElementQuery>
   constructor() {
     super()
     bpxPlayerPolyfill()

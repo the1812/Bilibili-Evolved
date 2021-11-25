@@ -12,15 +12,15 @@ const setLight = (on: boolean) => {
   return async () => {
     const playerAgentInstance = playerAgent
     const {
-      rawQueryObject: {
+      query: {
         control: { settings, buttons },
       },
     } = playerAgentInstance
 
     // if (!initialized) {
     loadLazyPlayerSettingsPanel(
-      buttons.settings,
-      settings.wrap,
+      buttons.settings.selector,
+      settings.wrap.selector,
     )
     // initialized = true
     // }
