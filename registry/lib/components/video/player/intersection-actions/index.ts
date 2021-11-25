@@ -1,4 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
+import { playerAgent } from '@/components/video/player-agent'
 import { lightOff, lightOn } from '@/components/video/player-light'
 import { videoChange } from '@/core/observer'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
@@ -22,9 +23,11 @@ export const component: ComponentMetadata = {
       pause: boolean
       light: boolean
     }
+    const { query: { video } } = playerAgent
 
-    let videoEl: HTMLVideoElement
-    let playerWrap: HTMLElement
+    const videoEl = await video.element() as HTMLVideoElement
+    // const playerWrap = await video.wrap()
+    const playerWrap = (dq('.player-wrap') || dq('.player-module')) as HTMLElement
     let observer: IntersectionObserver
     let intersectionLock = true // Lock intersection action
 
@@ -98,19 +101,27 @@ export const component: ComponentMetadata = {
     )
 
     function mountPlayListener() {
+      const autoPlay = lodash.get(
+        JSON.parse(localStorage.getItem('bilibili_player_settings')),
+        'video_status.autoplay',
+        false,
+      )
       videoChange(async () => {
+        if (autoPlay) {
+          addPlayerOutEvent()
+        }
         videoEl.addEventListener('play', addPlayerOutEvent)
         // videoEl.addEventListener('pause', removePlayerOutEvent);
         videoEl.addEventListener('ended', removePlayerOutEvent)
       })
     }
+
     addComponentListener(`${metadata.name}.triggerLocation`, (value: IntersectionMode) => {
       removePlayerOutEvent()
       observer = createObserver(value)
       addPlayerOutEvent()
     })
-    videoEl = dq('.bilibili-player-video video') as HTMLVideoElement
-    playerWrap = (dq('.player-wrap') || dq('.player-module')) as HTMLElement
+
     observer = createObserver()
     mountPlayListener()
   },
