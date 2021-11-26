@@ -140,6 +140,11 @@ export abstract class PlayerAgent {
       false,
     )
   }
+
+  isAutoPlay() {
+    return this.getPlayerConfig('video_status.autoplay')
+  }
+
   abstract isMute(): boolean
   /** 更改音量 (%) */
   abstract changeVolume(change: number): number
@@ -245,8 +250,7 @@ export class VideoPlayerAgent extends PlayerAgent {
     return this.nativeApi.getCurrentTime()
   }
   async toggleLight(on:boolean) {
-    // const checkbox = this.query.control.settings.lightOff.sync() as HTMLInputElement
-    const checkbox = await select(this.query.control.settings.lightOff.selector) as HTMLInputElement
+    const checkbox = await this.query.control.settings.lightOff() as HTMLInputElement
     checkbox.checked = !on
     raiseEvent(checkbox, 'change')
   }

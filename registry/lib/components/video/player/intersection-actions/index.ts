@@ -23,8 +23,7 @@ export const component: ComponentMetadata = {
       pause: boolean
       light: boolean
     }
-    const playerAgentInstance = playerAgent
-    const { query: { video } } = playerAgentInstance
+    const { query: { video } } = playerAgent
 
     const videoEl = await video.element() as HTMLVideoElement
     // const playerWrap = await video.wrap()
@@ -109,9 +108,8 @@ export const component: ComponentMetadata = {
     )
 
     function mountPlayListener() {
-      const autoPlay = playerAgentInstance.getPlayerConfig('video_status.autoplay')
       videoChange(async () => {
-        if (autoPlay) {
+        if (playerAgent.isAutoPlay()) {
           addPlayerOutEvent()
         }
         videoEl.addEventListener('play', addPlayerOutEvent)

@@ -23,17 +23,17 @@ export const component: ComponentMetadata = {
 
     videoChange(async () => {
       if (playerAgentInstance != null) {
-        const oldVideo = await playerAgentInstance.query.video.element() as HTMLVideoElement
+        const oldVideo = await playerAgentInstance.query.video.element()
         oldVideo.removeEventListener('ended', lightOn)
         oldVideo.removeEventListener('pause', lightOn)
         oldVideo.removeEventListener('play', lightOff)
       }
 
       playerAgentInstance = playerAgent
-      const { query, getPlayerConfig } = playerAgentInstance
-      const video = await query.video.element() as HTMLVideoElement
+      const { query, isAutoPlay } = playerAgentInstance
+      const video = await query.video.element()
 
-      if (getPlayerConfig('video_status.autoplay')) {
+      if (isAutoPlay()) {
         lightOff()
       }
 

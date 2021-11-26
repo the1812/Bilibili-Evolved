@@ -40,7 +40,6 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   if (!video) {
     return
   }
-  const autoPlay = playerAgent.getPlayerConfig('video_status.autoplay')
   const action = actions.get(options.mode)
   const onplay = () => {
     const isNormalMode = !dq('body[class*=player-mode-]')
@@ -48,7 +47,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
       action()
     }
   }
-  if (options.applyOnPlay && !autoPlay) {
+  if (options.applyOnPlay && !playerAgent.isAutoPlay()) {
     video.addEventListener('play', onplay, { once: true })
   } else {
     onplay()
