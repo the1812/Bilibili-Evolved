@@ -16,7 +16,7 @@
         <div class="videoshot" :style="videoshotStyle"></div>
         <div v-show="preview.progress !== null" class="preview">
           <div
-            v-if="!Number.isNaN(preview.progress)"
+            v-if="!progressNaN"
             class="diff"
           >
             {{ (preview.progress - store.progress) | progressDiff }}
@@ -24,7 +24,7 @@
           <div
             class="seek-mode"
           >
-            {{ !Number.isNaN(preview.progress) ? preview.seekMode : '取消调整' }}
+            {{ !progressNaN ? preview.seekMode : '取消调整' }}
           </div>
         </div>
         <div v-show="preview.progress === null" class="name">
@@ -33,7 +33,7 @@
         <div
           class="progress-label"
         >
-          {{ (preview.progress || store.progress ) | progress }}
+          {{ (progressValid ? preview.progress : store.progress) | progress }}
         </div>
       </div>
       <div class="volume">
@@ -50,7 +50,7 @@
     </div>
     <div class="progress-bar">
       <ProgressBar
-        :progress="(preview.progress || store.progress)"
+        :progress="progressValid ? preview.progress : store.progress"
         :max="video.duration"
       ></ProgressBar>
     </div>
@@ -134,16 +134,17 @@ export default Vue.extend({
       },
     }
   },
-  // computed: lodash.fromPairs(
-  //   ['progress', 'brightness', 'volume'].map(type => {
-  //     return [
-  //       type,
-  //       function computed() {
-  //         return this.preview[type] || this.store[type]
-  //       },
-  //     ]
-  //   }),
-  // ),
+  computed: {
+    progressNaN() {
+      return Number.isNaN(this.preview.progress)
+    },
+    progressNull() {
+      return this.preview.progress === null
+    },
+    progressValid() {
+      return !this.progressNaN && !this.progressNull
+    },
+  },
   methods: {
     sync() {
       const video = dq('video') as HTMLVideoElement
@@ -206,7 +207,6 @@ export default Vue.extend({
         && this.preview.progress !== null
       ) {
         this.apply({ progress: this.preview.progress })
-        this.preview.progress = null
       }
     },
     async apply({ brightness, volume, progress }: GesturePreviewParams) {

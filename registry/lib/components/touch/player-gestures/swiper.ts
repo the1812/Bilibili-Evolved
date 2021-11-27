@@ -7,6 +7,7 @@
 import { getComponentSettings } from '@/core/settings'
 import { ProgressSeekMode } from './gesture-preview'
 
+type Position = { x: number, y: number, width: number, height: number }
 const getPosition = (element: HTMLElement) => {
   let x = 0
   let y = 0
@@ -18,7 +19,16 @@ const getPosition = (element: HTMLElement) => {
   }
   return { x, y }
 }
-type Position = { x: number, y: number, width: number, height: number }
+const createPosition = (e: TouchEvent, element: HTMLElement) => {
+  const elementPosition = getPosition(element)
+  const position = {
+    x: (e.touches[0].pageX - elementPosition.x) / element.clientWidth,
+    y: (e.touches[0].pageY - elementPosition.y) / element.clientHeight,
+    width: element.clientWidth,
+    height: element.clientHeight,
+  }
+  return position
+}
 
 /** 从运动轨迹中判断手势, 并触发对应的事件: (有的事件里带有参数`detail`)
  * - `start`: 手势开始
@@ -30,7 +40,6 @@ type Position = { x: number, y: number, width: number, height: number }
  */
 export class SwipeAction extends EventTarget {
   minSwipeDistance = getComponentSettings('touchPlayerGestures').options.swiperDistance
-  touchStart = false
   startPosition: Position = null
   lastAction: {
     type: 'brightness' | 'volume' | 'progress'
@@ -41,10 +50,9 @@ export class SwipeAction extends EventTarget {
   constructor(public element: HTMLElement) {
     super()
     element.addEventListener('touchstart', () => {
-      this.touchStart = true
+      this.dispatchEvent(new CustomEvent('start'))
     })
     element.addEventListener('touchend', () => {
-      this.startPosition = null
       this.dispatchEvent(new CustomEvent('end', {
         detail: this.lastAction,
       }))
@@ -57,11 +65,6 @@ export class SwipeAction extends EventTarget {
     distance: number,
     position: Position,
   ) {
-    if (this.touchStart) {
-      this.dispatchEvent(new CustomEvent('start'))
-      this.startPosition = position
-      this.touchStart = false
-    }
     if (direction === 'vertical') {
       if (this.startPosition.x < 1 / 2) {
         const brightnessChange = Math.round(
@@ -149,6 +152,7 @@ export class Swiper {
       this.xDown = e.touches[0].clientX
       this.yDown = e.touches[0].clientY
       this.onTouchStart?.(e)
+      this.action.startPosition = createPosition(e, element)
     })
     element.addEventListener('touchmove', e => {
       if (!this.xDown || !this.yDown || !e.cancelable) {
@@ -156,13 +160,7 @@ export class Swiper {
       }
       const xUp = e.touches[0].clientX
       const yUp = e.touches[0].clientY
-      const elementPosition = getPosition(element)
-      const position = {
-        x: (e.touches[0].pageX - elementPosition.x) / element.clientWidth,
-        y: (e.touches[0].pageY - elementPosition.y) / element.clientHeight,
-        width: element.clientWidth,
-        height: element.clientHeight,
-      }
+      const position = createPosition(e, element)
 
       const xDiff = this.xDown - xUp
       const yDiff = this.yDown - yUp
@@ -181,6 +179,7 @@ export class Swiper {
       this.yDown = null
       this.direction = null
       this.onTouchEnd?.(e)
+      this.action.startPosition = null
     })
   }
 }
