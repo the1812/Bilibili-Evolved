@@ -23,6 +23,11 @@ export default Vue.extend({
       seasonLogoUrl: '',
     }
   },
+  watch: {
+    seasonLogoUrl() {
+      document.body.classList.toggle('season-logo-enabled', Boolean(this.seasonLogoUrl))
+    },
+  },
   async created() {
     addComponentListener(
       'customNavbar.seasonLogo',
@@ -49,7 +54,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .custom-navbar-logo {
   width: auto;
   margin: 0 4px;
@@ -61,6 +66,11 @@ export default Vue.extend({
   &.season {
     transform: scale(1.15);
     filter: drop-shadow(0 0 2px #0002);
+  }
+}
+body.season-logo-enabled {
+  .bili-header .inner-logo {
+    display: none !important;
   }
 }
 </style>
