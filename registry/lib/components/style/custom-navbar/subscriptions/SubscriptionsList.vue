@@ -157,6 +157,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import "common";
+
 .subscription-list {
   width: 100%;
   box-sizing: border-box;
@@ -212,12 +214,12 @@ export default Vue.extend({
         border-radius: 14px;
         line-height: 1;
         &:hover {
-          background-color: #8882;
+          color: var(--theme-color) !important;
         }
       }
       .progress-row {
-        flex-grow: 1;
         display: flex;
+        padding-bottom: 8px;
         justify-content: space-between;
         align-self: stretch;
         align-items: center;
@@ -243,15 +245,17 @@ export default Vue.extend({
         text-overflow: ellipsis;
       }
       .title {
-        font-size: 11pt;
+        font-size: 14px;
         font-weight: bold;
-        padding-top: 8px;
+        padding-top: 4px;
         color: inherit;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         width: 100%;
         margin: 0;
+        flex: 1;
+        @include h-center();
       }
       &:hover .title {
         color: var(--theme-color);

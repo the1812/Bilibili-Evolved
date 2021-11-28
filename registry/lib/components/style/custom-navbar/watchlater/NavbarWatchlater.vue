@@ -228,7 +228,7 @@ export default Vue.extend({
     cursor: pointer;
   }
   .header {
-    @include h-center();
+    @include h-stretch();
     justify-content: space-between;
     align-self: stretch;
     margin: 16px 12px;
@@ -236,6 +236,9 @@ export default Vue.extend({
       position: relative;
       flex-grow: 1;
       margin-right: 8px;
+      .be-textbox {
+        height: 100%;
+      }
     }
     .operations {
       @include h-center();

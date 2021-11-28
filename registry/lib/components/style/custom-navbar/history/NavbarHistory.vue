@@ -18,7 +18,9 @@
         </div>
       </div>
       <div class="header-row">
-        过滤:
+        <div class="row-title">
+          过滤:
+        </div>
         <div class="type-filters">
           <div v-for="t of types" :key="t.name" class="type-filter">
             <VButton
@@ -240,8 +242,11 @@ export default Vue.extend({
     @include v-stretch(6px);
     margin: 16px 12px 4px 12px;
     .header-row {
-      @include h-center(8px);
+      @include h-stretch(8px);
       justify-content: space-between;
+      .row-title {
+        @include h-center();
+      }
     }
     .type-filters {
       @include h-center(8px);
@@ -260,6 +265,9 @@ export default Vue.extend({
     }
     .search {
       flex: 1;
+      .be-textbox {
+        height: 100%;
+      }
     }
     .operations {
       @include h-center(8px);

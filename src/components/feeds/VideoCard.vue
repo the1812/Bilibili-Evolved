@@ -171,6 +171,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "common";
+
 .video-card {
   display: grid;
   grid-template-columns: 200px 1fr;
@@ -293,6 +295,7 @@ export default {
     }
     & > :not(.cover) {
       position: absolute;
+      @include h-center();
     }
     .publish-time-detail,
     .publish-time-summary,
@@ -338,8 +341,6 @@ export default {
     }
     .watchlater {
       right: 6px;
-      display: flex;
-      align-items: center;
       padding-left: 4px;
     }
   }

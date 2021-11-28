@@ -147,6 +147,7 @@ export default Vue.extend({
     margin-left: 6px;
     width: 200px;
     @include single-line();
+    @include h-center();
   }
   .details-arrow {
     opacity: 0.75;

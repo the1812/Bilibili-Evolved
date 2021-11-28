@@ -288,12 +288,15 @@ export default Vue.extend({
     text-align: center;
   }
   .header {
-    @include h-center();
+    @include h-stretch();
     justify-content: space-between;
     margin: 16px 12px;
     .search {
       flex: 1;
       margin-left: 8px;
+      .be-textbox {
+        height: 100%;
+      }
     }
     .list-select {
       flex-shrink: 0;

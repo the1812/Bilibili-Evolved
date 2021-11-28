@@ -13,8 +13,10 @@
         <div class="face-container">
           <DpiImage class="face" :size="48" :src="c.upFaceUrl"></DpiImage>
         </div>
-        <div class="live-title" :title="c.title">{{ c.title }}</div>
-        <div class="name" :title="c.name">{{ c.upName }}</div>
+        <div class="live-info">
+          <div class="live-title" :title="c.title">{{ c.title }}</div>
+          <div class="live-name" :title="c.name">{{ c.upName }}</div>
+        </div>
       </a>
     </transition-group>
   </div>
@@ -87,10 +89,7 @@ export default Vue.extend({
       background-color: #fff;
       box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
       border: 1px solid #8882;
-      display: grid;
-      grid-template:
-        'face title' 6fr
-        'face name' 5fr / 48px 1fr;
+      @include h-stretch();
       height: 54px;
       border-radius: 26px;
       box-sizing: border-box;
@@ -102,7 +101,6 @@ export default Vue.extend({
         color: #eee;
       }
       .face-container {
-        grid-area: face;
         border-radius: 50%;
         height: 48px;
         overflow: hidden;
@@ -114,28 +112,26 @@ export default Vue.extend({
       &:hover .face {
         transform: scale(1.05);
       }
+      .live-info {
+        @include v-stretch();
+        justify-content: center;
+      }
       .live-title {
-        grid-area: title;
-        font-size: 11pt;
+        font-size: 14px;
         font-weight: bold;
-        align-self: center;
         padding: 0 12px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        padding-bottom: 6px;
+        @include single-line();
         color: inherit;
         line-height: normal;
       }
       &:hover .live-title {
         color: var(--theme-color);
       }
-      .name {
-        grid-area: name;
-        align-self: start;
+      .live-name {
+        opacity: .75;
         padding: 0 12px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        @include single-line();
         line-height: normal;
       }
     }
