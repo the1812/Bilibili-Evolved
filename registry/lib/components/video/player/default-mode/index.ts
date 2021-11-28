@@ -40,11 +40,6 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   if (!video) {
     return
   }
-  const autoPlay = lodash.get(
-    JSON.parse(localStorage.getItem('bilibili_player_settings')),
-    'video_status.autoplay',
-    false,
-  )
   const action = actions.get(options.mode)
   const onplay = () => {
     const isNormalMode = !dq('body[class*=player-mode-]')
@@ -52,7 +47,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
       action()
     }
   }
-  if (options.applyOnPlay && !autoPlay) {
+  if (options.applyOnPlay && !playerAgent.isAutoPlay()) {
     video.addEventListener('play', onplay, { once: true })
   } else {
     onplay()

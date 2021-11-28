@@ -1,6 +1,9 @@
 import { ComponentMetadata } from '@/components/types'
+import { playerAgent } from '@/components/video/player-agent'
 import { videoChange } from '@/core/observer'
 import { allVideoUrls } from '@/core/utils/urls'
+
+let playerAgentInstance
 
 export const component: ComponentMetadata = {
   name: 'playerAutoLight',
@@ -17,19 +20,26 @@ export const component: ComponentMetadata = {
     if (isEmbeddedPlayer()) {
       return
     }
-    const autoPlay = lodash.get(
-      JSON.parse(localStorage.getItem('bilibili_player_settings')),
-      'video_status.autoplay',
-      false,
-    )
-    videoChange(() => {
-      const video = dq('video') as HTMLVideoElement
-      if (autoPlay) {
+
+    videoChange(async () => {
+      if (playerAgentInstance != null) {
+        const oldVideo = await playerAgentInstance.query.video.element()
+        oldVideo.removeEventListener('ended', lightOn)
+        oldVideo.removeEventListener('pause', lightOn)
+        oldVideo.removeEventListener('play', lightOff)
+      }
+
+      playerAgentInstance = playerAgent
+      const { query, isAutoPlay } = playerAgentInstance
+      const video = await query.video.element()
+
+      if (isAutoPlay()) {
         lightOff()
       }
-      video.addEventListener('ended', () => lightOn())
-      video.addEventListener('pause', () => lightOn())
-      video.addEventListener('play', () => lightOff())
+
+      video.addEventListener('ended', lightOn)
+      video.addEventListener('pause', lightOn)
+      video.addEventListener('play', lightOff)
     })
   },
 }

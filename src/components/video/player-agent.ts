@@ -61,6 +61,10 @@ interface PlayerQuery<QueryResult> extends CustomNestedQuery<QueryResult> {
       webFullscreen: QueryResult
       fullscreen: QueryResult
     }
+    settings: {
+      wrap: QueryResult,
+      lightOff: QueryResult
+    }
   }
   toastWrap: QueryResult
   danmakuTipLayer: QueryResult
@@ -125,6 +129,22 @@ export abstract class PlayerAgent {
     raiseEvent(checkbox, 'change')
     return checkbox.checked
   }
+
+  abstract toggleLight(on: boolean): void
+
+  // eslint-disable-next-line class-methods-use-this
+  getPlayerConfig(target:string) {
+    return lodash.get(
+      JSON.parse(localStorage.getItem('bilibili_player_settings')),
+      target,
+      false,
+    )
+  }
+
+  isAutoPlay() {
+    return this.getPlayerConfig('video_status.autoplay')
+  }
+
   abstract isMute(): boolean
   /** 更改音量 (%) */
   abstract changeVolume(change: number): number
@@ -181,6 +201,10 @@ export class VideoPlayerAgent extends PlayerAgent {
         webFullscreen: '.bilibili-player-video-web-fullscreen',
         fullscreen: '.bilibili-player-video-btn-fullscreen',
       },
+      settings: {
+        wrap: '.bilibili-player-video-btn-setting-wrap',
+        lightOff: '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input',
+      },
     },
     toastWrap: '.bilibili-player-video-toast-wrp',
     danmakuTipLayer: '.bilibili-player-dm-tip-wrap',
@@ -224,6 +248,11 @@ export class VideoPlayerAgent extends PlayerAgent {
     }
     this.nativeApi.seek(video.currentTime + change, video.paused)
     return this.nativeApi.getCurrentTime()
+  }
+  async toggleLight(on:boolean) {
+    const checkbox = await this.query.control.settings.lightOff() as HTMLInputElement
+    checkbox.checked = !on
+    raiseEvent(checkbox, 'change')
   }
 }
 export class BwpPlayerAgent extends VideoPlayerAgent {
@@ -277,6 +306,10 @@ export class BangumiPlayerAgent extends PlayerAgent {
         webFullscreen: '.squirtle-video-pagefullscreen',
         fullscreen: '.squirtle-video-fullscreen',
       },
+      settings: {
+        wrap: '.squirtle-setting-wrap',
+        lightOff: '.squirtle-lightoff',
+      },
     },
     toastWrap: '.bpx-player-tooltip-area',
     danmakuTipLayer: '.bpx-player-dialog-wrap',
@@ -320,6 +353,15 @@ export class BangumiPlayerAgent extends PlayerAgent {
     }
     video.currentTime = lodash.clamp(video.currentTime + change, 0, video.duration)
     return video.currentTime
+  }
+  toggleLight(on: boolean) {
+    const checkbox = this.query.control.settings.lightOff.sync()
+    const canLightOff = !checkbox.classList.contains('active') && !on
+    const canLightOn = checkbox.classList.contains('active') && on
+
+    if (canLightOff || canLightOn) {
+      checkbox.dispatchEvent(new MouseEvent('click'))
+    }
   }
 }
 
