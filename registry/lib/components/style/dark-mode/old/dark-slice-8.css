@@ -728,7 +728,8 @@ li.danmaku-info-row.bpui-selecting,
 .comment .comment-hot-item-user-content,
 .replies-comment-input-wrapper .submit-comment,
 .comment .comment-selecotr,
-.buyticket .product-buy.enable {
+.buyticket .product-buy.enable,
+.mini-header__content .i-frame {
   box-shadow: none !important;
 }
 /* a
