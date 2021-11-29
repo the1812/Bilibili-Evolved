@@ -1,9 +1,15 @@
+import { importComponent } from '@/components/component'
 import { ComponentMetadata } from '@/components/types'
 import { playerUrls } from '@/core/utils/urls'
 import { KeyBindingAction, KeyBindingActionContext } from 'registry/lib/components/utils/keymap/bindings'
+import type { createController } from './controller'
+
+const componentName = 'rememberVideoSpeed'
+
+type Controller = ReturnType<typeof createController>
 
 export const component: ComponentMetadata = {
-  name: 'rememberVideoSpeed',
+  name: componentName,
   displayName: '倍速记忆',
   author: {
     name: 'JLoeve',
@@ -14,33 +20,31 @@ export const component: ComponentMetadata = {
   },
   tags: [componentsTags.video],
   urlInclude: playerUrls,
-  entry: async () => {
-    const { VideoSpeedController } = await import('./controller')
-    VideoSpeedController.init()
-    return VideoSpeedController
-  },
+  entry: async () => (await import('./controller')).createController(),
   plugin: {
     displayName: '倍速记忆 - 快捷键支持',
     setup: async ({ addData }) => {
       const { getComponentSettings } = await import('@/core/settings')
+
       const videoSpeed = async (
         context: KeyBindingActionContext,
         controllerAction: (
-          controller: InstanceType<typeof import('./controller')['VideoSpeedController']>, rates: number[]
+          controller: Controller, rates: number[]
         ) => void,
       ) => {
-        const { VideoSpeedController } = await import('./controller')
-        const controller = await VideoSpeedController.getInstance()
-        controllerAction(controller, VideoSpeedController.supportedRates)
-        context.showTip(`${controller.playbackRate}x`, 'mdi-fast-forward')
+        // 不要提前导入，插件在组件加载之前进行加载，因此如果提前加载会取不到 entry 调用后返回的对象
+        const controller = importComponent(componentName) as Controller
+        controllerAction(controller, controller.getSupportedRates())
+        context.showTip(`${controller.videoSpeed()}x`, 'mdi-fast-forward')
       }
+
       addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
         actions.videoSpeedIncrease = {
           displayName: '提高倍速',
           run: context => {
             videoSpeed(context, (controller, rates) => {
               controller.setVideoSpeed(
-                rates.find(it => it > controller.playbackRate)
+                rates.find(it => it > controller.videoSpeed())
                 || rates[rates.length - 1],
               )
             })
@@ -52,7 +56,7 @@ export const component: ComponentMetadata = {
           run: context => {
             videoSpeed(context, (controller, rates) => {
               controller.setVideoSpeed(
-                [...rates].reverse().find(it => it < controller.playbackRate)
+                [...rates].reverse().find(it => it < controller.videoSpeed())
                 || rates[0],
               )
             })
@@ -73,7 +77,7 @@ export const component: ComponentMetadata = {
             displayName: '清除当前倍速记忆',
             run: context => {
               videoSpeed(context, controller => {
-                controller.reset(true)
+                controller.resetVideoSpeed(true)
               })
               return true
             },
