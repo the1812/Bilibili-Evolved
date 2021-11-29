@@ -47,7 +47,6 @@
 <script lang="ts">
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
-import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import {
