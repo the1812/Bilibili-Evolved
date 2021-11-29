@@ -119,6 +119,10 @@ export default Vue.extend({
           url: packListUrl,
           responseType: 'json',
         })
+        if (!Array.isArray(featureList) || !Array.isArray(packList)) {
+          console.error('Fetch failed:', featureList, packList)
+          throw new Error('获取在线仓库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
+        }
         this.list = [...packList, ...featureList]
         this.fuse = new Fuse(this.list, {
           keys: ['displayName', 'name', 'description'],
