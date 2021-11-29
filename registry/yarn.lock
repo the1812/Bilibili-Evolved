@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@types/sortablejs@^1.10.6":
-  version "1.10.6"
-  resolved "https://registry.nlark.com/@types/sortablejs/download/@types/sortablejs-1.10.6.tgz#98725ae08f1dfe28b8da0fdf302c417f5ff043c0"
-  integrity sha1-mHJa4I8d/ii42g/fMCxBf1/wQ8A=
+"@types/sortablejs@^1.10.7":
+  version "1.10.7"
+  resolved "https://registry.npmmirror.com/@types/sortablejs/download/@types/sortablejs-1.10.7.tgz#ab9039c85429f0516955ec6dbc0bb20139417b15"
+  integrity sha1-q5A5yFQp8FFpVextvAuyATlBexU=
 
 ansi-colors@^4.1.1:
   version "4.1.1"
@@ -85,11 +85,6 @@ path-is-absolute@^1.0.0:
   version "1.0.1"
   resolved "https://registry.nlark.com/path-is-absolute/download/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
-
-sortablejs@^1.13.0:
-  version "1.13.0"
-  resolved "https://registry.nlark.com/sortablejs/download/sortablejs-1.13.0.tgz#3ab2473f8c69ca63569e80b1cd1b5669b51269e9"
-  integrity sha1-OrJHP4xpymNWnoCxzRtWabUSaek=
 
 wrappy@1:
   version "1.0.2"
