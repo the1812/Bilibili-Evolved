@@ -245,7 +245,7 @@ export const component: ComponentMetadata = {
     return exportMethods
   },
   plugin: {
-    displayName: '自动更新器 - 扩展功能',
+    displayName: '自动更新器 - 功能扩展',
     description: {
       'zh-CN': '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件详情中支持手动检查该组件的更新.',
     },
