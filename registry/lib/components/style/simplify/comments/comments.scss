@@ -1,3 +1,5 @@
+@import "common";
+
 @mixin mdi($content) {
   background: none !important;
   color: #000;
@@ -245,6 +247,9 @@
       .info {
         margin-top: 0 !important;
         @include orders();
+        > * {
+          @include h-center();
+        }
         .like,
         .hate {
           i {

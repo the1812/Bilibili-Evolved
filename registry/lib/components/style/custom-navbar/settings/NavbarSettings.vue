@@ -233,6 +233,7 @@ export default Vue.extend({
       &-description {
         font-size: 12px;
         opacity: 0.6;
+        line-height: 1.5;
       }
       &-content {
         @include h-center();

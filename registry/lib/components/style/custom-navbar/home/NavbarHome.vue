@@ -134,6 +134,7 @@ export default Vue.extend({
     }
     .count {
       opacity: 0.5;
+      font-size: 14px;
     }
   }
   @media screen and (max-height: 600px) {
