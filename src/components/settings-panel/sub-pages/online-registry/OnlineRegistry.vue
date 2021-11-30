@@ -47,7 +47,6 @@
 <script lang="ts">
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
-import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import {
@@ -107,10 +106,11 @@ export default Vue.extend({
       if (this.loading) {
         return
       }
+      const fetchPath = cdnRoots[getGeneralSettings().cdnRoot](getGeneralSettings().branch)
       try {
         this.loading = true
-        const featureListUrl = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}doc/features/features.json`
-        const packListUrl = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}doc/features/pack/pack.json`
+        const featureListUrl = `${fetchPath}doc/features/features.json`
+        const packListUrl = `${fetchPath}doc/features/pack/pack.json`
         const featureList = await monkey({
           url: featureListUrl,
           responseType: 'json',

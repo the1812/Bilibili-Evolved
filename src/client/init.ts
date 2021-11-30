@@ -28,6 +28,12 @@ export const init = async () => {
     await headLoaded(none)
   })
 
+  await promiseLoadTrace('compatibility patch', async () => {
+    // 兼容性补丁
+    const { compatibilityPatch } = await import('./compatibility')
+    compatibilityPatch()
+  })
+
   const { coreApis, externalApis } = await import('@/core/core-apis')
   unsafeWindow.bilibiliEvolved = externalApis
   /** sand-boxed window, safe to use original name */
@@ -36,12 +42,6 @@ export const init = async () => {
   window.dqa = coreApis.utils.dqa
   window.none = coreApis.utils.none
   window.componentsTags = coreApis.componentApis.component.componentsTags
-
-  await promiseLoadTrace('compatibility patch', async () => {
-    // 兼容性补丁
-    const { compatibilityPatch } = await import('./compatibility')
-    compatibilityPatch()
-  })
 
   const { loadAllUserComponents } = await import('@/components/component')
   await promiseLoadTrace('parse user components', loadAllUserComponents)
