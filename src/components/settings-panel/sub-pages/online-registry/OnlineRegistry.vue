@@ -5,13 +5,6 @@
       <div class="online-registry-header-title">
         在线仓库
       </div>
-      <div class="online-registry-header-search">
-        <VIcon icon="search" :size="18" />
-        <TextBox
-          v-model="searchKeyword"
-          placeholder="搜索功能"
-        />
-      </div>
       <VIcon
         icon="mdi-refresh"
         :size="22"
@@ -26,6 +19,23 @@
         title="关闭"
         @click="popupOpen = false"
       />
+    </div>
+    <div class="online-registry-header">
+      <div class="online-registry-header-search">
+        <VIcon icon="search" :size="18" />
+        <TextBox
+          v-model="searchKeyword"
+          placeholder="搜索功能"
+        />
+      </div>
+      <div class="online-registry-header-branch">
+        分支:
+        <VDropdown v-model="selectedBranch" :items="registryBranches">
+          <template #item="{ item }">
+            {{ item }}
+          </template>
+        </VDropdown>
+      </div>
     </div>
     <div class="online-registry-separator"></div>
     <div ref="content" class="online-registry-content">
@@ -47,10 +57,12 @@
 <script lang="ts">
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
+import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import {
   VIcon,
+  VDropdown,
   TextBox,
   VPopup,
   VLoading,
@@ -59,10 +71,13 @@ import {
 import Fuse from 'fuse.js'
 import { DocSourceItem } from 'registry/lib/docs'
 import RegistryItem from './RegistryItem.vue'
+import { registryBranches } from './third-party'
 
+const general = getGeneralSettings()
 export default Vue.extend({
   components: {
     VIcon,
+    VDropdown,
     TextBox,
     VPopup,
     RegistryItem,
@@ -76,6 +91,11 @@ export default Vue.extend({
     },
   },
   data() {
+    const branches = [
+      general.registryBranch,
+      meta.compilationInfo.branch,
+      registryBranches[0],
+    ].filter(it => registryBranches.includes(it) && Boolean(it))
     return {
       searchKeyword: '',
       popupOpen: false,
@@ -84,6 +104,8 @@ export default Vue.extend({
       filteredList: [],
       // packList: [],
       fuse: null,
+      registryBranches,
+      selectedBranch: branches[0],
     }
   },
   watch: {
@@ -97,6 +119,10 @@ export default Vue.extend({
       this.filteredList = fuseResult.map(it => it.item)
       this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
     }, 200),
+    selectedBranch(newBranch: string) {
+      general.registryBranch = newBranch
+      this.fetchFeatures()
+    },
   },
   mounted() {
     this.fetchFeatures()
@@ -106,7 +132,7 @@ export default Vue.extend({
       if (this.loading) {
         return
       }
-      const fetchPath = cdnRoots[getGeneralSettings().cdnRoot](getGeneralSettings().branch)
+      const fetchPath = cdnRoots[general.cdnRoot](general.branch)
       try {
         this.loading = true
         const featureListUrl = `${fetchPath}doc/features/features.json`
@@ -157,14 +183,17 @@ export default Vue.extend({
   }
   &-header {
     padding: 12px;
-    @include h-center(6px);
+    @include h-center(12px);
+    & + & {
+      padding-top: 0;
+    }
     &-title {
+      flex: 1;
       font-size: 18px;
       font-weight: bold;
     }
     &-search {
       flex: 1;
-      margin: 0 12px;
       justify-content: center;
       @include h-center(6px);
       .be-textbox {
@@ -172,6 +201,10 @@ export default Vue.extend({
         flex: 1;
         font-size: 12px;
       }
+    }
+    &-branch {
+      @include h-center(6px);
+      font-size: 12px;
     }
     &-refresh-icon,
     &-close-icon {
