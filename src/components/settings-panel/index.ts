@@ -12,6 +12,12 @@ export enum SettingsPanelDockSide {
   Left = '左侧',
   Right = '右侧',
 }
+
+export enum Branch {
+  Master = 'master',
+  Preview = 'preview'
+}
+
 const entry: ComponentEntry = async ({ metadata }) => {
   const { isIframe } = await import('@/core/utils')
   if (isIframe()) {
@@ -62,6 +68,11 @@ export const component: ComponentMetadata = {
       defaultValue: CdnTypes.jsDelivr,
       displayName: '更新源',
       dropdownEnum: CdnTypes,
+    },
+    branch: {
+      defaultValue: Branch.Preview,
+      displayName: '更新分支',
+      dropdownEnum: Branch,
     },
     dockSide: {
       defaultValue: SettingsPanelDockSide.Left,
