@@ -1,5 +1,17 @@
 # 更新日志
 
+## v2.0.3-preview
+`[预览] v2.0.3` `2021-12-01`
+- `自定义顶栏` 重新开放 `使用季节 Logo` 选项, 并且这回真的是季节 Logo 了, 不再受活动影响. (#2420)
+- 修复一部分 `播放器触摸手势` 的问题. (#2469)
+- 改善一些组件在 4K 屏下的布局样式.
+- 去除夜间模式给原版顶栏弹窗增加的不必要的投影. (#2493)
+- 增加了 `自动隐藏侧栏` 开启时的边缘触发区域宽度, 避免 FireFox 中有时无法触发. (#2539)
+- 在线仓库可以独立选择数据来源的分支了, 这对于在本地不同分支开发时可以避免 404. (PR #2559 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 支持在 Safari 下运行. (PR #2559 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 修复 `倍速记忆` 的一些 bug. (#2561, PR #2567 by [JLoeve](https://github.com/LonelySteve))
+- 修复 `自定义顶栏` 弹窗里一些懒加载图片的尺寸导致界面抖动.
+
 ## v2.0.2-preview
 `[预览] v2.0.2` `2021-11-16`
 - 完善一些组件的描述. (PR #2506, PR #2507 by [shenzhiming88](https://github.com/shenzhiming88))
