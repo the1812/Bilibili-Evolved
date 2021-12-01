@@ -51,10 +51,10 @@
 # 推荐配置
 - 操作系统: 64-bit Windows 10+ / macOS 10.15+
 - 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+
+- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+ / Safari 14.1+
 - 处理器: Intel Core i7 / AMD Ryzen 5
 - 内存: 8GB
-- 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
+- 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
 - 显卡: GeForce GTX 660 / Radeon HD 7870
 - 网络: 10MB/s
 
@@ -69,7 +69,7 @@
 不兼容.
 
 ### [AdGuard](https://adguard.com/zh_cn/adguard-windows/overview.html)
-部分兼容, 加载模式仅可为`延迟(自动)`且无法更改. 经测试, AdGuard 在最新7.5.3版本中已支持复杂数据储存.
+需要 7.5.3 版以上, 部分兼容, 加载模式需要设为 `延迟`.
 
 ## 浏览器
 
