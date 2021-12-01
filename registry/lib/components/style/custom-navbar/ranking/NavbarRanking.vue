@@ -22,7 +22,7 @@ const entries = [
     name: '综合热门',
   },
   {
-    href: 'hhttps://www.bilibili.com/v/popular/weekly',
+    href: 'https://www.bilibili.com/v/popular/weekly',
     name: '每周必看',
   },
   {
