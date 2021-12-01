@@ -11,6 +11,10 @@
 - 支持在 Safari 下运行. (PR #2559 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
 - 修复 `倍速记忆` 的一些 bug. (#2561, PR #2567 by [JLoeve](https://github.com/LonelySteve))
 - 修复 `自定义顶栏` 弹窗里一些懒加载图片的尺寸导致界面抖动.
+- `utils.playerReady` 排除嵌入式播放器. (#2540)
+- 修复动态头像无法加载. (#2530)
+- 更新了 `自定义顶栏` 的分区结构和链接. (#2532)
+- 再次尝试修复 `自定义顶栏` 更新后设置丢失的问题. (#2501)
 
 ## v2.0.2-preview
 `[预览] v2.0.2` `2021-11-16`
