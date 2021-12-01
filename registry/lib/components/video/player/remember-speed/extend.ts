@@ -1,123 +1,122 @@
-import { getComponentSettings } from '@/core/settings'
 import { addStyle } from '@/core/style'
 import { logError } from '@/core/utils/log'
+import {
+  calcOrder,
+  errorMessageDuration,
+  extendedAgent,
+  getExtendedSupportedRates,
+  formatSpeedText,
+  getUniqueAscendingSortList,
+  maxValue,
+  minValue,
+  nativeSupportedRates,
+  options,
+  stepValue,
+  getSupportedRates,
+  trimLeadingDot,
+} from './utils'
 
-const { options } = getComponentSettings('rememberVideoSpeed')
-let extendList = options.extendList as number[]
-export const getExtraSpeedMenuItemElements = async () => {
-  const {
-    VideoSpeedController,
-    calcOrder,
-    minValue,
-    maxValue,
-    stepValue,
-    errorMessageDuration,
-  } = await import('./controller')
+const getRecommendedValue = () => {
+  const val = getSupportedRates().slice(-1)[0] + stepValue
+  return val > maxValue ? null : val
+}
 
-  const getRecommendedValue = () => {
-    const val = VideoSpeedController.supportedRates.slice(-1)[0] + stepValue
-    return val > maxValue ? null : val
-  }
+const speedMenuItemClassName = trimLeadingDot(extendedAgent.custom.speedMenuItem.selector)
 
-  const createExtendedSpeedMenuItemElement = (rate: number) => {
-    const li = document.createElement('li')
-    li.innerText = VideoSpeedController.formatSpeedText(rate)
-    li.classList.add(VideoSpeedController.classNameMap.speedMenuItem, 'extended')
-    li.dataset.value = rate.toString()
-    li.style.order = calcOrder(rate)
+const createExtendedSpeedMenuItemElement = (rate: number) => {
+  const li = document.createElement('li')
+  li.innerText = formatSpeedText(rate)
+  li.classList.add(speedMenuItemClassName, 'extended')
+  li.dataset.value = rate.toString()
+  li.style.order = calcOrder(rate)
+  const i = document.createElement('i')
+  i.classList.add('mdi', 'mdi-close-circle')
+  i.addEventListener('click', () => {
+    lodash.pull(options.extendList, rate)
+    li.remove()
+  })
+  li.append(i)
+  return li
+}
 
-    const i = document.createElement('i')
-    i.classList.add('mdi', 'mdi-close-circle')
-    i.addEventListener('click', () => {
-      lodash.pull(extendList, rate)
-      li.remove()
-    })
+const updateInput = (elem: HTMLInputElement) => {
+  const recommendedValue = getRecommendedValue()
+  elem.setAttribute('min', recommendedValue ? (elem.value = recommendedValue.toString()) : (elem.value = '', minValue.toString()))
+}
 
-    li.append(i)
-
-    return li
-  }
-
-  const createAddEntryElement = () => {
-    const updateInput = (elem: HTMLInputElement) => {
-      const value = getRecommendedValue()
-      elem.setAttribute('min', value ? (elem.value = value.toString()) : (elem.value = '', minValue.toString()))
-    }
-
-    const li = document.createElement('li')
-    li.classList.add(VideoSpeedController.classNameMap.speedMenuItem)
-
-    const iconElement = document.createElement('i')
-    iconElement.classList.add('mdi', 'mdi-playlist-plus')
-
-    const input = document.createElement('input')
-    input.classList.add('add-speed-entry')
-    input.setAttribute('type', 'number')
-    input.setAttribute('max', maxValue.toString())
-    input.setAttribute('step', stepValue.toString())
-    input.setAttribute('title', '增加新的倍速值')
-    updateInput(input)
-    input.addEventListener('keydown', ev => {
-      if (ev.key === 'Enter') {
-        const value = parseFloat(input.value)
-        if (!isFinite(value)) {
-          logError('无效的倍速值', errorMessageDuration)
-          return false
-        }
-        if (value < minValue) {
-          logError('倍速值太小了', errorMessageDuration)
-          return false
-        }
-        if (value > maxValue) {
-          logError('倍速值太大了', errorMessageDuration)
-          return false
-        }
-        if (VideoSpeedController.supportedRates.includes(value)) {
-          logError('不能重复添加已有的倍速值', errorMessageDuration)
-          return false
-        }
-        extendList.push(value)
-        options.extendList = VideoSpeedController.extendedSupportedRates
-        extendList = options.extendList
-
-        let afterElement = li.nextElementSibling as HTMLLIElement
-        while (
-          !afterElement.dataset.value
-          || (parseFloat(afterElement.dataset.value)
-            > VideoSpeedController.nativeSupportedRates.slice(-1)[0]
-            && value < parseFloat(afterElement.dataset.value))
-        ) {
-          afterElement = afterElement.nextElementSibling as HTMLLIElement
-        }
-        afterElement.before(createExtendedSpeedMenuItemElement(value))
-        updateInput(input)
+const createAddEntryElement = () => {
+  const li = document.createElement('li')
+  li.classList.add(speedMenuItemClassName)
+  const iconElement = document.createElement('i')
+  iconElement.classList.add('mdi', 'mdi-playlist-plus')
+  const input = document.createElement('input')
+  input.classList.add('add-speed-entry')
+  input.setAttribute('type', 'number')
+  input.setAttribute('max', maxValue.toString())
+  input.setAttribute('step', stepValue.toString())
+  input.setAttribute('title', '增加新的倍速值')
+  updateInput(input)
+  input.addEventListener('keydown', ev => {
+    if (ev.key === 'Enter') {
+      const value = parseFloat(input.value)
+      if (!isFinite(value)) {
+        logError('无效的倍速值', errorMessageDuration)
+        return false
       }
-      return true
-    })
+      if (value < minValue) {
+        logError('倍速值太小了', errorMessageDuration)
+        return false
+      }
+      if (value > maxValue) {
+        logError('倍速值太大了', errorMessageDuration)
+        return false
+      }
+      if (getSupportedRates().includes(value)) {
+        logError('不能重复添加已有的倍速值', errorMessageDuration)
+        return false
+      }
+      options.extendList.push(value)
+      options.extendList = getUniqueAscendingSortList(options.extendList)
 
-    li.prepend(iconElement, input)
-
-    input.style.display = 'none'
-    li.addEventListener('mouseenter', () => {
+      let afterElement = li.nextElementSibling as HTMLLIElement
+      while (
+        !afterElement.dataset.value
+        || (parseFloat(afterElement.dataset.value)
+          > nativeSupportedRates.slice(-1)[0]
+          && value < parseFloat(afterElement.dataset.value))
+      ) {
+        afterElement = afterElement.nextElementSibling as HTMLLIElement
+      }
+      afterElement.before(createExtendedSpeedMenuItemElement(value))
       updateInput(input)
-      input.style.display = 'inline'
-      iconElement.style.display = 'none'
-      input.focus()
-    })
-    li.addEventListener('mouseleave', () => {
-      iconElement.style.display = 'inline'
-      input.style.display = 'none'
-    })
+    }
+    return true
+  })
 
-    return li
-  }
+  li.prepend(iconElement, input)
 
+  input.style.display = 'none'
+  li.addEventListener('mouseenter', () => {
+    updateInput(input)
+    input.style.display = 'inline'
+    iconElement.style.display = 'none'
+    input.focus()
+  })
+  li.addEventListener('mouseleave', () => {
+    iconElement.style.display = 'inline'
+    input.style.display = 'none'
+  })
+
+  return li
+}
+
+export const getExtraSpeedMenuItemElements = async () => {
   // 应用样式
   addStyle(`
-  .${VideoSpeedController.classNameMap.speedContainer} .${VideoSpeedController.classNameMap.speedMenuItem}:first-child .mdi-playlist-plus {
+  ${extendedAgent.custom.speedContainer.selector} ${extendedAgent.custom.speedMenuItem.selector}:first-child .mdi-playlist-plus {
     font-size: 1.5em;
   }
-  .${VideoSpeedController.classNameMap.speedContainer} .${VideoSpeedController.classNameMap.speedMenuItem}:first-child input {
+  ${extendedAgent.custom.speedContainer.selector} ${extendedAgent.custom.speedMenuItem.selector}:first-child input {
     font-size: inherit;
     color: inherit;
     line-height: inherit;
@@ -127,17 +126,17 @@ export const getExtraSpeedMenuItemElements = async () => {
     border: none;
     text-align: center;
   }
-  .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle {
+  ${extendedAgent.custom.speedMenuItem.selector} .mdi-close-circle {
     color: inherit;
     opacity: 0.5;
     display: none;
     position: absolute;
     right: 4px;
   }
-  .${VideoSpeedController.classNameMap.speedMenuItem}:not(.${VideoSpeedController.classNameMap.active}):hover .mdi-close-circle {
+  ${extendedAgent.custom.speedMenuItem.selector}:not(${extendedAgent.custom.active.selector}):hover .mdi-close-circle {
     display: inline;
   }
-  .${VideoSpeedController.classNameMap.speedMenuItem} .mdi-close-circle:hover {
+  ${extendedAgent.custom.speedMenuItem.selector} .mdi-close-circle:hover {
     opacity: 1;
     transition: all .3s;
   }
@@ -152,7 +151,7 @@ export const getExtraSpeedMenuItemElements = async () => {
   .add-speed-entry[type=number] {
     -moz-appearance:textfield;
   }
-  .${VideoSpeedController.classNameMap.speedMenuList} {
+  ${extendedAgent.custom.speedMenuList.selector} {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
@@ -160,7 +159,7 @@ export const getExtraSpeedMenuItemElements = async () => {
   }
   `, 'extend-video-speed-style')
 
-  const elements = VideoSpeedController.extendedSupportedRates
+  const elements = getExtendedSupportedRates()
     .map(rate => createExtendedSpeedMenuItemElement(rate))
     .reverse()
 
