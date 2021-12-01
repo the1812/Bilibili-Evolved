@@ -219,6 +219,7 @@ export default Vue.extend({
     display: flex;
     align-items: center;
     flex-grow: 1;
+    line-height: normal;
     &-item {
       flex: 1;
       padding: 4px 8px;
