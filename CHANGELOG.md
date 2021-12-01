@@ -17,6 +17,7 @@
 - 修复 `倍速记忆` 的一些 bug. (#2561, PR #2567 by [JLoeve](https://github.com/LonelySteve))
 - `utils.playerReady` 排除嵌入式播放器. (#2540)
 - 修复动态头像无法加载. (#2530)
+- 修复 `简化评论区` 导致视频 tag 弹窗被遮挡. (#2499)
 
 ## v2.0.2-preview
 `[预览] v2.0.2` `2021-11-16`
