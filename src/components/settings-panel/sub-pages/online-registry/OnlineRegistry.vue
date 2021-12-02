@@ -132,7 +132,7 @@ export default Vue.extend({
       if (this.loading) {
         return
       }
-      const fetchPath = cdnRoots[general.cdnRoot](general.branch)
+      const fetchPath = cdnRoots[general.cdnRoot](this.selectedBranch)
       try {
         this.loading = true
         const featureListUrl = `${fetchPath}doc/features/features.json`
@@ -146,7 +146,7 @@ export default Vue.extend({
           responseType: 'json',
         })
         if (!Array.isArray(featureList) || !Array.isArray(packList)) {
-          console.error('Fetch failed:', featureList, packList)
+          console.error('Fetch failed:', featureList, packList, featureListUrl, packListUrl)
           throw new Error('获取在线仓库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
         }
         this.list = [...packList, ...featureList]
