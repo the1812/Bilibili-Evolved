@@ -48,30 +48,37 @@
       </template>
       <div class="component-detail-grow"></div>
       <div class="component-detail-internal-data">
-        <div class="internal-name">
-          内部名称: {{ componentData.name }}
-        </div>
-        <MiniToast
-          v-if="componentData.configurable !== false && componentActions.length > 0"
-          placement="bottom"
-          trigger="click"
-          class="extra-actions-wrapper"
-        >
-          <div class="extra-actions">
-            <VIcon icon="mdi-dots-vertical" :size="16" />
+        <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
+          <div class="internal-name">
+            Commit: {{ componentData.commitHash.substr(0, 9) }}
           </div>
-          <template #toast>
-            <div class="extra-actions-list">
-              <ComponentAction
-                v-for="a of componentActions.map(action => action(componentData))"
-                :key="a.name"
-                class="extra-action-item"
-                :item="a"
-                :component="componentData"
-              />
+        </div>
+        <div class="component-detail-internal-data-row">
+          <div class="internal-name">
+            内部名称: {{ componentData.name }}
+          </div>
+          <MiniToast
+            v-if="componentData.configurable !== false && componentActions.length > 0"
+            placement="bottom"
+            trigger="click"
+            class="extra-actions-wrapper"
+          >
+            <div class="extra-actions">
+              <VIcon icon="mdi-dots-vertical" :size="16" />
             </div>
-          </template>
-        </MiniToast>
+            <template #toast>
+              <div class="extra-actions-list">
+                <ComponentAction
+                  v-for="a of componentActions.map(action => action(componentData))"
+                  :key="a.name"
+                  class="extra-action-item"
+                  :item="a"
+                  :component="componentData"
+                />
+              </div>
+            </template>
+          </MiniToast>
+        </div>
       </div>
       <!-- <div class="component-detail-separator"></div> -->
     </template>
@@ -203,14 +210,20 @@ export default Vue.extend({
     }
   }
   &-internal-data {
-    @include h-center();
+    @include v-stretch();
+    justify-content: center;
+    flex-shrink: 0;
     position: sticky;
     bottom: 0;
-    justify-content: space-between;
     min-height: 24px;
     box-sizing: content-box;
     background-color: inherit;
     padding: 8px 12px;
+
+    &-row {
+      @include h-center();
+      justify-content: space-between;
+    }
 
     .internal-name {
       opacity: 0.5;

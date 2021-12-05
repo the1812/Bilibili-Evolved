@@ -110,7 +110,13 @@
     {
       "type": "shell",
       "command": "rm -r ./node_modules/.cache/webpack/",
-      "label": "缓存:清除webpack cache:clean-webpack",
+      "label": "缓存:清除 webpack cache:clean-webpack",
+      "problemMatcher": []
+    },
+    {
+      "type": "shell",
+      "command": "rm -r ./node_modules/.cache/babel-loader/",
+      "label": "缓存:清除 babel cache:clean-babel",
       "problemMatcher": []
     },
     {
