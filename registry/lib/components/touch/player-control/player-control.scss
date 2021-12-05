@@ -11,72 +11,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 body.touch-player-control {
-  .bpx-player-video-area {
-    .squirtle-controller {
-      height: 48px !important;
-      .squirtle-controller-wrap {
-        height: 31px !important;
-        padding: 18px 6px 0 !important;
-        .squirtle-pagelist-wrap {
-          width: 36px !important;
-          .squirtle-select-result {
-            display: none !important;
-          }
-          .squirtle-video-pagelist::before {
-            content: "\F0279";
-            @include replace-with-icon();
-          }
-        }
-        .squirtle-speed-wrap {
-          width: 36px !important;
-          .squirtle-select-result {
-            display: none !important;
-          }
-          .squirtle-video-speed::before {
-            content: "\F08FF";
-            @include replace-with-icon();
-          }
-        }
-      }
-      .squirtle-high-energy.ease {
-        bottom: 2px !important;
-      }
-      .squirtle-high-energy,
-      .squirtle-progress-common {
-        width: 100% !important;
-        margin: 0 !important;
-      }
-      #bilibili_pbp_pin {
-        right: 0 !important;
-      }
-    }
-    @include on-fullscreen {
-      .squirtle-controller {
-        height: 72px !important;
-        .squirtle-controller-wrap {
-          height: 56px !important;
-          padding: 16px 6px 0 !important;
-          .squirtle-sendbar-wrap {
-            align-items: center !important;
-          }
-          .squirtle-pagelist-wrap,
-          .squirtle-speed-wrap {
-            width: 54px !important;
-            .squirtle-video-pagelist,
-            .squirtle-video-speed {
-              &::before {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 50px;
-                font-size: 26px;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
   .bilibili-player {
     * {
       -webkit-tap-highlight-color: transparent !important;
@@ -144,6 +78,75 @@ body.touch-player-control {
         .bilibili-player-video-danmaku-switch {
           // width: 20px !important;
           padding-left: 0 !important;
+        }
+      }
+    }
+  }
+}
+
+.bpx-player-video-area {
+  body.touch-player-control & {
+    .squirtle-controller {
+      height: 48px !important;
+      .squirtle-controller-wrap {
+        height: 31px !important;
+        padding: 18px 6px 0 !important;
+        .squirtle-pagelist-wrap {
+          width: 36px !important;
+          .squirtle-select-result {
+            display: none !important;
+          }
+          .squirtle-video-pagelist::before {
+            content: "\F0279";
+            @include replace-with-icon();
+          }
+        }
+        .squirtle-speed-wrap {
+          width: 36px !important;
+          .squirtle-select-result {
+            display: none !important;
+          }
+          .squirtle-video-speed::before {
+            content: "\F08FF";
+            @include replace-with-icon();
+          }
+        }
+      }
+      .squirtle-high-energy.ease {
+        bottom: 2px !important;
+      }
+      .squirtle-high-energy,
+      .squirtle-progress-common {
+        width: 100% !important;
+        margin: 0 !important;
+      }
+      #bilibili_pbp_pin {
+        right: 0 !important;
+      }
+    }
+  }
+  @include on-fullscreen(".touch-player-control") {
+    .squirtle-controller {
+      height: 72px !important;
+      .squirtle-controller-wrap {
+        height: 56px !important;
+        padding: 16px 6px 0 !important;
+        .squirtle-sendbar-wrap {
+          align-items: center !important;
+        }
+        .squirtle-pagelist-wrap,
+        .squirtle-speed-wrap {
+          width: 54px !important;
+          .squirtle-video-pagelist,
+          .squirtle-video-speed {
+            &::before {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 50px;
+              font-size: 26px;
+            }
+          }
         }
       }
     }
