@@ -10,13 +10,13 @@ export const component: ComponentMetadata = {
       style: () => import('./recommended-live.scss'),
     },
   ],
-  displayName: '隐藏推荐直播',
+  displayName: '隐藏直播推荐',
   tags: [
     componentsTags.style,
     componentsTags.video,
   ],
   description: {
-    'zh-CN': '隐藏视频页面右侧下方的推荐直播.',
+    'zh-CN': '隐藏视频页面右侧下方的直播推荐.',
   },
   urlInclude: videoUrls,
 }

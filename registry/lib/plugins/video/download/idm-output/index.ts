@@ -7,6 +7,7 @@ import { DownloadVideoOutput } from '../../../../components/video/download/types
 export const plugin: PluginMetadata = {
   name: 'downloadVideo.outputs.idm',
   displayName: '下载视频 - IDM 输出支持',
+  description: '为下载视频增加 IDM 输出支持.',
   setup: ({ addData }) => {
     addData('downloadVideo.outputs', (outputs: DownloadVideoOutput[]) => {
       outputs.push({

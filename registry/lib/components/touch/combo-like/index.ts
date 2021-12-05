@@ -38,7 +38,7 @@ export const component: ComponentMetadata = {
   enabledByDefault: navigator.maxTouchPoints > 0,
   entry,
   description: {
-    'zh-CN': '为视频页面中的三连操作(长按点赞)启用触摸支持.',
+    'zh-CN': '为视频页面中的三连操作 (长按点赞) 启用触摸支持.',
   },
   urlInclude: videoUrls,
 }

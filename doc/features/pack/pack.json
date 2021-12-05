@@ -2,7 +2,7 @@
   {
     "name": "cleaner",
     "displayName": "简洁至上",
-    "description": "简化各种多余界面元素, 专注于内容本身.",
+    "description": "简化各种多余界面元素, 专注于内容本身.\n包含以下功能:\n删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层, 自动隐藏侧栏",
     "components": [
       "removePromotions",
       "removeLiveWatermark",
@@ -22,7 +22,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -46,7 +46,7 @@
         "type": "component",
         "name": "disableSpecialDanmaku",
         "displayName": "禁用特殊弹幕样式",
-        "description": "移除高赞弹幕或UP主弹幕的特殊样式, 弹幕内容不会移除.",
+        "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.",
         "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
         "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
       },
@@ -54,7 +54,7 @@
         "type": "component",
         "name": "simplifyComments",
         "displayName": "简化评论区",
-        "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端`这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
+        "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端` 这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
         "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
       },
@@ -70,7 +70,7 @@
         "type": "component",
         "name": "simplifyHome",
         "displayName": "简化首页",
-        "description": "隐藏原版首页不需要的元素/分区.",
+        "description": "隐藏原版首页不需要的元素 / 分区.\n\n> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.",
         "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
       },
@@ -78,7 +78,7 @@
         "type": "component",
         "name": "collapseLiveSideBar",
         "displayName": "自动收起直播侧栏",
-        "description": "暂无描述.",
+        "description": "自动收起直播间右边偏下的侧栏. (上面有个 \"关注\" 的面板)",
         "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
         "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
       },
@@ -86,15 +86,15 @@
         "type": "component",
         "name": "hideRelatedVideos",
         "displayName": "隐藏视频推荐",
-        "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏视频推荐才能看到开关.",
+        "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.",
         "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
         "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
       },
       {
         "type": "component",
         "name": "hideRecommendedLive",
-        "displayName": "隐藏推荐直播",
-        "description": "隐藏视频页面右侧下方的推荐直播.",
+        "displayName": "隐藏直播推荐",
+        "description": "隐藏视频页面右侧下方的直播推荐.",
         "fullRelativePath": "../../registry/dist/components/style/hide/video/recommended-live.js",
         "fullAbsolutePath": "registry/dist/components/style/hide/video/recommended-live.js"
       },
@@ -110,7 +110,7 @@
         "type": "component",
         "name": "autoHideSidebar",
         "displayName": "自动隐藏侧栏",
-        "description": "自动隐藏脚本的侧栏(功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.",
+        "description": "自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.",
         "fullRelativePath": "../../registry/dist/components/style/auto-hide-sidebar.js",
         "fullAbsolutePath": "registry/dist/components/style/auto-hide-sidebar.js"
       }
@@ -120,7 +120,7 @@
   {
     "name": "downloader",
     "displayName": "下载器",
-    "description": "包含下载各种内容的功能.",
+    "description": "包含下载各种内容的功能.\n包含以下功能:\n下载视频, 下载字幕, 下载弹幕, 下载音频, 直播录像下载",
     "components": [
       "downloadVideo",
       "downloadSubtitle",
@@ -133,7 +133,7 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "暂无描述.",
+        "description": "在功能面板中添加下载视频支持.",
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },
@@ -175,7 +175,7 @@
   {
     "name": "starter",
     "displayName": "常用功能包",
-    "description": "包含一些常用功能.",
+    "description": "包含一些常用功能.\n包含以下功能:\n使用细滚动条, 自定义顶栏, 删除广告, 专栏文字选择, 网址参数清理, 快捷键扩展, 查看封面, BV 号转换, 删除直播水印, 直播弹幕发送栏, 直播全屏包裹, 展开动态内容, 动态反折叠, 快速收起评论, 禁止跳转动态详情, 展开视频简介, 设置面板 - \"最近使用\" 类别",
     "components": [
       "elegantScrollbar",
       "customNavbar",
@@ -202,7 +202,7 @@
         "type": "component",
         "name": "elegantScrollbar",
         "displayName": "使用细滚动条",
-        "description": "暂无描述.",
+        "description": "使用浏览器的滚动条风格替代系统的滚动条, 不过 macOS 系统滚动条比浏览器做得好一些, 因此不建议 macOS 使用此功能.",
         "fullRelativePath": "../../registry/dist/components/style/scrollbar.js",
         "fullAbsolutePath": "registry/dist/components/style/scrollbar.js"
       },
@@ -218,7 +218,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -242,7 +242,7 @@
         "type": "component",
         "name": "keymap",
         "displayName": "快捷键扩展",
-        "description": "为视频播放器启用更多的快捷键, 快捷键列表可在`快捷键设置`中查看和配置.",
+        "description": "为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.",
         "fullRelativePath": "../../registry/dist/components/utils/keymap.js",
         "fullAbsolutePath": "registry/dist/components/utils/keymap.js"
       },
@@ -257,8 +257,8 @@
       {
         "type": "component",
         "name": "bvidConvert",
-        "displayName": "BV号转换",
-        "description": "在功能面板中显示视频的AV号和BV号.",
+        "displayName": "BV 号转换",
+        "description": "在功能面板中显示视频的 AV 号和 BV 号.",
         "fullRelativePath": "../../registry/dist/components/video/bvid-convert.js",
         "fullAbsolutePath": "registry/dist/components/video/bvid-convert.js"
       },
@@ -329,7 +329,7 @@
       {
         "type": "plugin",
         "name": "settingsPanel.tagFilters.recentComponents",
-        "displayName": "设置面板 - \"最近使用\"类别",
+        "displayName": "设置面板 - \"最近使用\" 类别",
         "fullRelativePath": "../../registry/dist/plugins/settings-panel/recent-components.js",
         "fullAbsolutePath": "registry/dist/plugins/settings-panel/recent-components.js"
       }

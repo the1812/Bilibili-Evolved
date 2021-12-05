@@ -5,7 +5,7 @@ export const component: ComponentMetadata = {
   name: 'livePip',
   displayName: '直播画中画',
   description: {
-    'zh-CN': '在直播间的功能中启用画中画支持.',
+    'zh-CN': '在直播间的功能面板中启用画中画支持, 不过现在好像 b 站已经直接支持了, 后续可能会删掉这个功能.',
   },
   entry: none,
   tags: [

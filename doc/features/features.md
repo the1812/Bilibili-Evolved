@@ -144,7 +144,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/live/pip.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/pip.js)
 
-在直播间的功能中启用画中画支持.
+在直播间的功能面板中启用画中画支持, 不过现在好像 b 站已经直接支持了, 后续可能会删掉这个功能.
 
 ### [删除直播水印](../../registry/dist/components/live/remove-watermark.js)
 `removeLiveWatermark`
@@ -155,14 +155,14 @@
 
 删除观看直播时角落的水印.
 
-### [直播看板娘高DPI适配](../../registry/dist/components/live/showgirl.js)
+### [直播看板娘高 DPI 适配](../../registry/dist/components/live/showgirl.js)
 `dpiLiveShowgirl`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/live/showgirl.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/showgirl.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/live/showgirl.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/showgirl.js)
 
-根据屏幕DPI缩放直播看板娘的大小, 避免像素锯齿.
+根据屏幕 DPI 缩放直播看板娘的大小, 避免像素锯齿.
 
 ### [自动收起直播侧栏](../../registry/dist/components/live/side-bar.js)
 `collapseLiveSideBar`
@@ -171,7 +171,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/live/side-bar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/side-bar.js)
 
-暂无描述.
+自动收起直播间右边偏下的侧栏. (上面有个 "关注" 的面板)
 
 ### [总是显示视频时长](../../registry/dist/components/style/always-show-duration.js)
 `alwaysShowDuration`
@@ -189,7 +189,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/auto-hide-sidebar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/auto-hide-sidebar.js)
 
-自动隐藏脚本的侧栏(功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.
+自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.
 
 ### [自定义顶栏](../../registry/dist/components/style/custom-navbar.js)
 `customNavbar`
@@ -209,9 +209,9 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/dark-mode/follow-system.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/follow-system.js)
 
-使夜间模式同步系统设置的亮/暗主题.
+使夜间模式同步系统设置的亮 / 暗主题, 请勿和 `夜间模式计划时段` 一同使用.
 
-> 注：在某些浏览器(如`Microsoft Edge`)中，夜间模式仅会同步浏览器的亮/暗主题.
+> 注：在某些浏览器 (如 `Microsoft Edge`) 中，夜间模式仅会同步浏览器的亮 / 暗主题.
 
 ### [夜间模式](../../registry/dist/components/style/dark-mode.js)
 `darkMode`
@@ -229,7 +229,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/dark-mode/schedule.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/schedule.js)
 
-设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式. 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.
+设置一个使用夜间模式的时间段, 进入 / 离开此时间段时, 会自动开启 / 关闭夜间模式. 结束时间小于起始时间时将视为次日, 如 `18:00` 至 `6:00` 表示晚上 18:00 到次日 6:00. 请勿和 `夜间模式跟随系统` 一同使用.
 
 ### [隐藏番剧点评](../../registry/dist/components/style/hide/bangumi/reviews.js)
 `hideBangumiReviews`
@@ -258,14 +258,14 @@
 
 隐藏首页顶部横幅.
 
-### [隐藏推荐直播](../../registry/dist/components/style/hide/video/recommended-live.js)
+### [隐藏直播推荐](../../registry/dist/components/style/hide/video/recommended-live.js)
 `hideRecommendedLive`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/style/hide/video/recommended-live.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/recommended-live.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/hide/video/recommended-live.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/recommended-live.js)
 
-隐藏视频页面右侧下方的推荐直播.
+隐藏视频页面右侧下方的直播推荐.
 
 ### [隐藏视频推荐](../../registry/dist/components/style/hide/video/related-videos.js)
 `hideRelatedVideos`
@@ -274,7 +274,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/related-videos.js)
 
-隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏视频推荐才能看到开关.
+隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.
 
 ### [隐藏视频标题层](../../registry/dist/components/style/hide/video/top-mask.js)
 `hideVideoTopMask`
@@ -310,7 +310,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/scrollbar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/scrollbar.js)
 
-暂无描述.
+使用浏览器的滚动条风格替代系统的滚动条, 不过 macOS 系统滚动条比浏览器做得好一些, 因此不建议 macOS 使用此功能.
 
 ### [侧栏垂直偏移](../../registry/dist/components/style/sidebar-offset.js)
 `sidebarOffset`
@@ -330,7 +330,7 @@
 
 - 删除热评头像下方的关注按钮
 - 删除用户的等级标识
-- 删除发送源信息(`来自安卓客户端`这种)
+- 删除发送源信息(`来自安卓客户端` 这种)
 - 删除用户名右边的勋章
 - 删除评论区顶部的横幅
 - 发送时间移动到右上角
@@ -346,7 +346,9 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/simplify/home.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/home.js)
 
-隐藏原版首页不需要的元素/分区.
+隐藏原版首页不需要的元素 / 分区.
+
+> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.
 
 ### [简化直播间](../../registry/dist/components/style/simplify/live.js)
 `simplifyLiveroom`
@@ -364,7 +366,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/style/special-danmaku.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/special-danmaku.js)
 
-移除高赞弹幕或UP主弹幕的特殊样式, 弹幕内容不会移除.
+移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.
 
 ### [v1 风格设置面板](../../registry/dist/components/style/v1-panel.js)
 `v1PanelStyle`
@@ -382,7 +384,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/touch/combo-like.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/combo-like.js)
 
-为视频页面中的三连操作(长按点赞)启用触摸支持.
+为视频页面中的三连操作 (长按点赞) 启用触摸支持.
 
 ### [启用双击控制](../../registry/dist/components/touch/double-click-control.js)
 `doubleClickControl`
@@ -391,7 +393,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/touch/double-click-control.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/double-click-control.js)
 
-将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.
+将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.
 
 ### [迷你播放器触摸拖动](../../registry/dist/components/touch/mini-player.js)
 `touchMiniPlayer`
@@ -481,13 +483,13 @@
 可以批量导出某个地方的图片, 目前支持动态和专栏.
 
 动态文件名变量:
-`user`: 用户名
-`id`: 动态 ID
-`n`: 第 n 张图
+- `user`: 用户名
+- `id`: 动态 ID
+- `n`: 第 n 张图
 
 专栏文件名变量:
-`title`: 专栏标题
-`n`: 第 n 张图
+- `title`: 专栏标题
+- `n`: 第 n 张图
 
 ### [高分辨率图片](../../registry/dist/components/utils/image-resolution.js)
 `imageResolution`
@@ -496,7 +498,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/utils/image-resolution.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/image-resolution.js)
 
-根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些.
+根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)
 
 ### [快捷键扩展](../../registry/dist/components/utils/keymap.js)
 `keymap`
@@ -505,7 +507,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/utils/keymap.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/keymap.js)
 
-为视频播放器启用更多的快捷键, 快捷键列表可在`快捷键设置`中查看和配置.
+为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.
 
 ### [删除广告](../../registry/dist/components/utils/remove-promotions.js)
 `removePromotions`
@@ -514,7 +516,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/utils/remove-promotions.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/remove-promotions.js)
 
-删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.
+删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.
 
 - `占位文本`: 删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
 - `保留活动横幅`: 保留视频页面的活动横幅.
@@ -553,25 +555,25 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/utils/watchlater-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/watchlater-redirect.js)
 
-将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.
+将稍后再看的链接重定向为普通播放网址.
 
-### [BiliPlus跳转支持](../../registry/dist/components/video/biliplus-redirect.js)
+### [BiliPlus 跳转支持](../../registry/dist/components/video/biliplus-redirect.js)
 `biliplusRedirect`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/biliplus-redirect.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/biliplus-redirect.js)
 
-在视频/番剧/空间中, 可以从功能中的按钮点击转到BiliPlus上对应的页面.
+在视频 / 番剧 / 空间中, 可以从功能中的按钮点击转到 BiliPlus 上对应的页面.
 
-### [BV号转换](../../registry/dist/components/video/bvid-convert.js)
+### [BV 号转换](../../registry/dist/components/video/bvid-convert.js)
 `bvidConvert`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/bvid-convert.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/bvid-convert.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/bvid-convert.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/bvid-convert.js)
 
-在功能面板中显示视频的AV号和BV号.
+在功能面板中显示视频的 AV 号和 BV 号.
 
 ### [启用弹幕空降](../../registry/dist/components/video/danmaku/airborne.js)
 `danmakuAirborne`
@@ -609,7 +611,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/download.js)
 
-暂无描述.
+在功能面板中添加下载视频支持.
 
 ### [展开视频简介](../../registry/dist/components/video/full-description.js)
 `fullVideoDescription`
@@ -636,7 +638,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/outer-watchlater.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/outer-watchlater.js)
 
-将视频页面菜单里的`稍后再看`移到外面.
+将视频页面菜单里的 `稍后再看` 移到外面.
 
 ### [播放时自动关灯](../../registry/dist/components/video/player/auto-light.js)
 `playerAutoLight`
@@ -663,7 +665,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/default-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/default-mode.js)
 
-控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`.
+控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))
 
 ### [双击全屏](../../registry/dist/components/video/player/double-click-fullscreen.js)
 `doubleClickFullscreen`
@@ -681,7 +683,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/focus.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/focus.js)
 
-进入视频/番剧页面时, 自动定位到播放器.
+进入视频 / 番剧页面时, 自动定位到播放器. 注意: 不能和其他影响定位的功能一同使用, 例如自动宽屏. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))
 
 可设置定位时的竖直偏移量, 单位为像素(px).
 
@@ -703,7 +705,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/legacy-auto-play.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/legacy-auto-play.js)
 
-暂无描述.
+模拟传统的多 P 连播策略: 仅连播视频的分 P 和番剧的多集, 最后 1P 放完禁止连播其他推荐视频.
 
 ### [强制保留弹幕发送栏](../../registry/dist/components/video/player/preserve-danmaku-input.js)
 `preserveDanmakuInput`
@@ -712,7 +714,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/preserve-danmaku-input.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/preserve-danmaku-input.js)
 
-在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
+在视频播放器网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
 ### [倍速记忆](../../registry/dist/components/video/player/remember-speed.js)
 `rememberVideoSpeed`
@@ -741,9 +743,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/screenshot.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/screenshot.js)
 
-启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.
-
-如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为"按住<kbd>Shift</kbd>点击截图按钮", 键盘操作为"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>".
+启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.
 
 ### [启用逐帧调整](../../registry/dist/components/video/player/seek-by-frames.js)
 `seekByFrames`
@@ -752,7 +752,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/seek-by-frames.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/seek-by-frames.js)
 
-在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.
+在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.
 
 > 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.
 
@@ -772,7 +772,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/skip-charge-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/skip-charge-list.js)
 
-自动跳过视频结尾的充电鸣谢.
+自动跳过视频结尾的充电鸣谢. 注意: 不包括番剧承包鸣谢.
 
 ### [启用快速收藏](../../registry/dist/components/video/quick-favorite.js)
 `quickFavorite`
@@ -781,16 +781,16 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/quick-favorite.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/quick-favorite.js)
 
-启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.
+启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹.
 
-### [SEO页面重定向](../../registry/dist/components/video/seo-redirect.js)
+### [SEO 页面重定向](../../registry/dist/components/video/seo-redirect.js)
 `seoRedirect`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/components/video/seo-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/seo-redirect.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/seo-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/seo-redirect.js)
 
-进入SEO视频页面时 (`https://www.bilibili.com/s/video/`) 自动跳转到原视频页面.
+进入 SEO 视频页面时 (`https://www.bilibili.com/s/video/`) 自动跳转到原视频页面.
 
 ### [下载字幕](../../registry/dist/components/video/subtitle/download.js)
 `downloadSubtitle`
@@ -807,6 +807,10 @@ by [@JLoeve](https://github.com/LonelySteve)
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@v2/registry/dist/components/video/player/localtime.js) / [`Preview`](https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@preview/registry/dist/components/video/player/localtime.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/FoundTheWOUT/Bilibili-Evolved/v2/registry/dist/components/video/player/localtime.js) / [`Preview`](https://raw.githubusercontent.com/FoundTheWOUT/Bilibili-Evolved/preview/registry/dist/components/video/player/localtime.js)
+
+by FoundTheWOUT
+
+在视频播放器右上角显示系统时间.
 ## 插件
 
 ### [搜索栏 - 搜索推荐](../../registry/dist/plugins/launch-bar/trending-search.js)
@@ -816,7 +820,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/launch-bar/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/trending-search.js)
 
-### [设置面板 - "最近使用"类别](../../registry/dist/plugins/settings-panel/recent-components.js)
+### [设置面板 - "最近使用" 类别](../../registry/dist/plugins/settings-panel/recent-components.js)
 `settingsPanel.tagFilters.recentComponents`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/settings-panel/recent-components.js)

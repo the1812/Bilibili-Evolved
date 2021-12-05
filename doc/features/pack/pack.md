@@ -3,6 +3,8 @@
 
 ### 简洁至上
 简化各种多余界面元素, 专注于内容本身.
+包含以下功能:
+删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层, 自动隐藏侧栏
 
 <details>
 <summary><strong>jsDelivr Stable</strong></summary>
@@ -83,6 +85,8 @@ https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist
 
 ### 下载器
 包含下载各种内容的功能.
+包含以下功能:
+下载视频, 下载字幕, 下载弹幕, 下载音频, 直播录像下载
 
 <details>
 <summary><strong>jsDelivr Stable</strong></summary>
@@ -135,6 +139,8 @@ https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist
 
 ### 常用功能包
 包含一些常用功能.
+包含以下功能:
+使用细滚动条, 自定义顶栏, 删除广告, 专栏文字选择, 网址参数清理, 快捷键扩展, 查看封面, BV 号转换, 删除直播水印, 直播弹幕发送栏, 直播全屏包裹, 展开动态内容, 动态反折叠, 快速收起评论, 禁止跳转动态详情, 展开视频简介, 设置面板 - "最近使用" 类别
 
 <details>
 <summary><strong>jsDelivr Stable</strong></summary>

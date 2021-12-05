@@ -29,7 +29,7 @@ export type DocSource = (rootPath: string) => Promise<{
 }>
 
 const entry = () => {
-  unsafeWindow.generateDocs = async () => {
+  unsafeWindow.generateDocs = async (output = 'zip') => {
     const rootPath = '../../registry/dist/'
     const getDocText = (title: string, items: DocSourceItem[]) => {
       const docText = items.map(it => {
@@ -61,27 +61,33 @@ ${docText.join('\n\n')}
     }
     const componentsDoc = await getComponentsDoc(rootPath)
     const pluginsDoc = await getPluginsDoc(rootPath)
-    const markdown = `
+    const featuresMarkdown = `
 # 可安装功能
 
 ${getDocText(componentsDoc.title, componentsDoc.items)}
 ${getDocText(pluginsDoc.title, pluginsDoc.items)}
 
 `.trim()
+    const featuresJson = JSON.stringify([
+      ...componentsDoc.items,
+      ...pluginsDoc.items,
+    ], undefined, 2)
 
     const packData = await generatePackageDocs(componentsDoc.items.concat(pluginsDoc.items))
 
-    const { DownloadPackage } = await import('@/core/download')
-    const pack = new DownloadPackage()
-    pack.noEscape = true
-    pack.add('features.md', markdown)
-    pack.add('pack/pack.md', packData.markdown)
-    pack.add('features.json', JSON.stringify([
-      ...componentsDoc.items,
-      ...pluginsDoc.items,
-    ], undefined, 2))
-    pack.add('pack/pack.json', packData.json)
-    await pack.emit('features.zip')
+    if (output === 'zip') {
+      const { DownloadPackage } = await import('@/core/download')
+      const pack = new DownloadPackage()
+      pack.noEscape = true
+      pack.add('features.md', featuresMarkdown)
+      pack.add('pack/pack.md', packData.markdown)
+      pack.add('features.json', featuresJson)
+      pack.add('pack/pack.json', packData.json)
+      await pack.emit('features.zip')
+    } else if (output === 'console') {
+      console.log(JSON.parse(featuresJson))
+      console.log(JSON.parse(packData.json))
+    }
   }
 }
 export const doc: ComponentMetadata = {

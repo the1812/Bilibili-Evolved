@@ -2,6 +2,10 @@ import { cdnRoots } from '@/core/cdn-types'
 import { branches } from '@/core/meta'
 import { DocSourceItem, Package } from '.'
 
+const generateDescription = (pack: Package, containedItems: DocSourceItem[]) => {
+  const finalDescription = `包含以下功能:\n${containedItems.map(it => it.displayName).join(', ')}`
+  return pack.description ? `${pack.description}\n${finalDescription}` : finalDescription
+}
 export const generatePackageDocs = async (allItems: DocSourceItem[]) => {
   const packagesContext = require.context('./packages', true, /\.ts$/)
   const packagesPaths = packagesContext
@@ -30,6 +34,7 @@ export const generatePackageDocs = async (allItems: DocSourceItem[]) => {
       return {
         ...pack,
         items: docSourceItems,
+        description: generateDescription(pack, docSourceItems),
         // path,
       }
     })

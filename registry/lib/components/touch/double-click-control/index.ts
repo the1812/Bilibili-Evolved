@@ -31,7 +31,7 @@ export const component: ComponentMetadata = {
   name: 'doubleClickControl',
   displayName: '启用双击控制',
   description: {
-    'zh-CN': '将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.',
+    'zh-CN': '将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.',
   },
   tags: [
     componentsTags.touch,

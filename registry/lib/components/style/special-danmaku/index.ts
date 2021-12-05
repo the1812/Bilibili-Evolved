@@ -18,7 +18,7 @@ export const component: ComponentMetadata = {
   ...toggleStyle('disableSpecialDanmaku', () => import('./special-danmaku.scss'), entry),
   urlInclude: playerUrls,
   description: {
-    'zh-CN': '移除高赞弹幕或UP主弹幕的特殊样式, 弹幕内容不会移除.',
+    'zh-CN': '移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.',
   },
   options: {
     highlight: {

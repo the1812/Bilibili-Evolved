@@ -4,10 +4,10 @@ import { videoAndBangumiUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
   name: 'bvidConvert',
-  displayName: 'BV号转换',
+  displayName: 'BV 号转换',
   entry: none,
   description: {
-    'zh-CN': '在功能面板中显示视频的AV号和BV号.',
+    'zh-CN': '在功能面板中显示视频的 AV 号和 BV 号.',
   },
   tags: [
     componentsTags.video,

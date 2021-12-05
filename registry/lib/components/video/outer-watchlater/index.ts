@@ -32,7 +32,7 @@ export const component: ComponentMetadata = {
     componentsTags.video,
   ],
   description: {
-    'zh-CN': '将视频页面菜单里的\`稍后再看\`移到外面.',
+    'zh-CN': '将视频页面菜单里的 \`稍后再看\` 移到外面.',
   },
   urlInclude: videoUrls,
   urlExclude: watchlaterUrls,

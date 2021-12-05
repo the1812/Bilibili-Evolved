@@ -3,6 +3,7 @@ import { PluginMetadata } from '@/plugins/plugin'
 export const plugin: PluginMetadata = {
   name: 'launchBar.trendingSearch',
   displayName: '搜索栏 - 搜索推荐',
+  description: '在脚本的搜索栏中默认显示类似 b 站搜索栏的搜索推荐词, 替代原来的 "搜索" 两字.',
   setup: ({ addData }) => {
     addData('launchBar.recommended', async (data: {
       word: string,

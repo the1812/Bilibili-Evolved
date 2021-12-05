@@ -3,9 +3,9 @@ import { videoAndBangumiUrls } from '@/core/utils/urls'
 
 export const component: ComponentMetadata = {
   name: 'biliplusRedirect',
-  displayName: 'BiliPlus跳转支持',
+  displayName: 'BiliPlus 跳转支持',
   description: {
-    'zh-CN': '在视频/番剧/空间中, 可以从功能中的按钮点击转到BiliPlus上对应的页面.',
+    'zh-CN': '在视频 / 番剧 / 空间中, 可以从功能中的按钮点击转到 BiliPlus 上对应的页面.',
   },
   urlInclude: [
     ...videoAndBangumiUrls,

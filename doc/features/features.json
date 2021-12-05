@@ -123,7 +123,7 @@
     "type": "component",
     "name": "livePip",
     "displayName": "直播画中画",
-    "description": "在直播间的功能中启用画中画支持.",
+    "description": "在直播间的功能面板中启用画中画支持, 不过现在好像 b 站已经直接支持了, 后续可能会删掉这个功能.",
     "fullRelativePath": "../../registry/dist/components/live/pip.js",
     "fullAbsolutePath": "registry/dist/components/live/pip.js"
   },
@@ -138,8 +138,8 @@
   {
     "type": "component",
     "name": "dpiLiveShowgirl",
-    "displayName": "直播看板娘高DPI适配",
-    "description": "根据屏幕DPI缩放直播看板娘的大小, 避免像素锯齿.",
+    "displayName": "直播看板娘高 DPI 适配",
+    "description": "根据屏幕 DPI 缩放直播看板娘的大小, 避免像素锯齿.",
     "fullRelativePath": "../../registry/dist/components/live/showgirl.js",
     "fullAbsolutePath": "registry/dist/components/live/showgirl.js"
   },
@@ -147,7 +147,7 @@
     "type": "component",
     "name": "collapseLiveSideBar",
     "displayName": "自动收起直播侧栏",
-    "description": "暂无描述.",
+    "description": "自动收起直播间右边偏下的侧栏. (上面有个 \"关注\" 的面板)",
     "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
     "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
   },
@@ -163,7 +163,7 @@
     "type": "component",
     "name": "autoHideSidebar",
     "displayName": "自动隐藏侧栏",
-    "description": "自动隐藏脚本的侧栏(功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.",
+    "description": "自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.",
     "fullRelativePath": "../../registry/dist/components/style/auto-hide-sidebar.js",
     "fullAbsolutePath": "registry/dist/components/style/auto-hide-sidebar.js"
   },
@@ -179,7 +179,7 @@
     "type": "component",
     "name": "darkModeFollowSystem",
     "displayName": "夜间模式跟随系统",
-    "description": "使夜间模式同步系统设置的亮/暗主题.\n\n> 注：在某些浏览器(如`Microsoft Edge`)中，夜间模式仅会同步浏览器的亮/暗主题.",
+    "description": "使夜间模式同步系统设置的亮 / 暗主题, 请勿和 `夜间模式计划时段` 一同使用.\n\n> 注：在某些浏览器 (如 `Microsoft Edge`) 中，夜间模式仅会同步浏览器的亮 / 暗主题.",
     "fullRelativePath": "../../registry/dist/components/style/dark-mode/follow-system.js",
     "fullAbsolutePath": "registry/dist/components/style/dark-mode/follow-system.js"
   },
@@ -195,7 +195,7 @@
     "type": "component",
     "name": "darkModeSchedule",
     "displayName": "夜间模式计划时段",
-    "description": "设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式. 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.",
+    "description": "设置一个使用夜间模式的时间段, 进入 / 离开此时间段时, 会自动开启 / 关闭夜间模式. 结束时间小于起始时间时将视为次日, 如 `18:00` 至 `6:00` 表示晚上 18:00 到次日 6:00. 请勿和 `夜间模式跟随系统` 一同使用.",
     "fullRelativePath": "../../registry/dist/components/style/dark-mode/schedule.js",
     "fullAbsolutePath": "registry/dist/components/style/dark-mode/schedule.js"
   },
@@ -226,8 +226,8 @@
   {
     "type": "component",
     "name": "hideRecommendedLive",
-    "displayName": "隐藏推荐直播",
-    "description": "隐藏视频页面右侧下方的推荐直播.",
+    "displayName": "隐藏直播推荐",
+    "description": "隐藏视频页面右侧下方的直播推荐.",
     "fullRelativePath": "../../registry/dist/components/style/hide/video/recommended-live.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/video/recommended-live.js"
   },
@@ -235,7 +235,7 @@
     "type": "component",
     "name": "hideRelatedVideos",
     "displayName": "隐藏视频推荐",
-    "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播(自动播放下一个推荐视频)功能, 需要先取消隐藏视频推荐才能看到开关.",
+    "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.",
     "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
   },
@@ -267,7 +267,7 @@
     "type": "component",
     "name": "elegantScrollbar",
     "displayName": "使用细滚动条",
-    "description": "暂无描述.",
+    "description": "使用浏览器的滚动条风格替代系统的滚动条, 不过 macOS 系统滚动条比浏览器做得好一些, 因此不建议 macOS 使用此功能.",
     "fullRelativePath": "../../registry/dist/components/style/scrollbar.js",
     "fullAbsolutePath": "registry/dist/components/style/scrollbar.js"
   },
@@ -283,7 +283,7 @@
     "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
-    "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端`这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
+    "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端` 这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
     "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
   },
@@ -291,7 +291,7 @@
     "type": "component",
     "name": "simplifyHome",
     "displayName": "简化首页",
-    "description": "隐藏原版首页不需要的元素/分区.",
+    "description": "隐藏原版首页不需要的元素 / 分区.\n\n> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.",
     "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
   },
@@ -307,7 +307,7 @@
     "type": "component",
     "name": "disableSpecialDanmaku",
     "displayName": "禁用特殊弹幕样式",
-    "description": "移除高赞弹幕或UP主弹幕的特殊样式, 弹幕内容不会移除.",
+    "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.",
     "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
     "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
   },
@@ -323,7 +323,7 @@
     "type": "component",
     "name": "touchComboLike",
     "displayName": "三连触摸支持",
-    "description": "为视频页面中的三连操作(长按点赞)启用触摸支持.",
+    "description": "为视频页面中的三连操作 (长按点赞) 启用触摸支持.",
     "fullRelativePath": "../../registry/dist/components/touch/combo-like.js",
     "fullAbsolutePath": "registry/dist/components/touch/combo-like.js"
   },
@@ -331,7 +331,7 @@
     "type": "component",
     "name": "doubleClickControl",
     "displayName": "启用双击控制",
-    "description": "将操作方式更改为: 单击显示/隐藏控制栏, 双击播放/暂停.",
+    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.",
     "fullRelativePath": "../../registry/dist/components/touch/double-click-control.js",
     "fullAbsolutePath": "registry/dist/components/touch/double-click-control.js"
   },
@@ -403,7 +403,7 @@
     "type": "component",
     "name": "imageExporter",
     "displayName": "图片批量导出",
-    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n`user`: 用户名\r\n`id`: 动态 ID\r\n`n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n`title`: 专栏标题\r\n`n`: 第 n 张图",
+    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `user`: 用户名\r\n- `id`: 动态 ID\r\n- `n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n- `title`: 专栏标题\r\n- `n`: 第 n 张图",
     "fullRelativePath": "../../registry/dist/components/utils/image-exporter.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-exporter.js"
   },
@@ -411,7 +411,7 @@
     "type": "component",
     "name": "imageResolution",
     "displayName": "高分辨率图片",
-    "description": "根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些.",
+    "description": "根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)",
     "fullRelativePath": "../../registry/dist/components/utils/image-resolution.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-resolution.js"
   },
@@ -419,7 +419,7 @@
     "type": "component",
     "name": "keymap",
     "displayName": "快捷键扩展",
-    "description": "为视频播放器启用更多的快捷键, 快捷键列表可在`快捷键设置`中查看和配置.",
+    "description": "为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.",
     "fullRelativePath": "../../registry/dist/components/utils/keymap.js",
     "fullAbsolutePath": "registry/dist/components/utils/keymap.js"
   },
@@ -427,7 +427,7 @@
     "type": "component",
     "name": "removePromotions",
     "displayName": "删除广告",
-    "description": "删除站内的各种广告. 包括首页的推广模块, 手机app推荐, 视频页面右侧的广告等.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
+    "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
     "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
     "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
   },
@@ -459,23 +459,23 @@
     "type": "component",
     "name": "watchlaterRedirect",
     "displayName": "稍后再看重定向",
-    "description": "将稍后再看的链接重定向为普通播放网址, 以使用新版播放页面.",
+    "description": "将稍后再看的链接重定向为普通播放网址.",
     "fullRelativePath": "../../registry/dist/components/utils/watchlater-redirect.js",
     "fullAbsolutePath": "registry/dist/components/utils/watchlater-redirect.js"
   },
   {
     "type": "component",
     "name": "biliplusRedirect",
-    "displayName": "BiliPlus跳转支持",
-    "description": "在视频/番剧/空间中, 可以从功能中的按钮点击转到BiliPlus上对应的页面.",
+    "displayName": "BiliPlus 跳转支持",
+    "description": "在视频 / 番剧 / 空间中, 可以从功能中的按钮点击转到 BiliPlus 上对应的页面.",
     "fullRelativePath": "../../registry/dist/components/video/biliplus-redirect.js",
     "fullAbsolutePath": "registry/dist/components/video/biliplus-redirect.js"
   },
   {
     "type": "component",
     "name": "bvidConvert",
-    "displayName": "BV号转换",
-    "description": "在功能面板中显示视频的AV号和BV号.",
+    "displayName": "BV 号转换",
+    "description": "在功能面板中显示视频的 AV 号和 BV 号.",
     "fullRelativePath": "../../registry/dist/components/video/bvid-convert.js",
     "fullAbsolutePath": "registry/dist/components/video/bvid-convert.js"
   },
@@ -507,7 +507,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "暂无描述.",
+    "description": "在功能面板中添加下载视频支持.",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
@@ -531,7 +531,7 @@
     "type": "component",
     "name": "outerWatchlater",
     "displayName": "外置稍后再看",
-    "description": "将视频页面菜单里的`稍后再看`移到外面.",
+    "description": "将视频页面菜单里的 `稍后再看` 移到外面.",
     "fullRelativePath": "../../registry/dist/components/video/outer-watchlater.js",
     "fullAbsolutePath": "registry/dist/components/video/outer-watchlater.js"
   },
@@ -555,7 +555,7 @@
     "type": "component",
     "name": "defaultPlayerMode",
     "displayName": "默认播放器模式",
-    "description": "控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`.",
+    "description": "控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))",
     "fullRelativePath": "../../registry/dist/components/video/player/default-mode.js",
     "fullAbsolutePath": "registry/dist/components/video/player/default-mode.js"
   },
@@ -571,7 +571,7 @@
     "type": "component",
     "name": "playerFocus",
     "displayName": "播放器定位",
-    "description": "进入视频/番剧页面时, 自动定位到播放器.\r\n\r\n可设置定位时的竖直偏移量, 单位为像素(px).",
+    "description": "进入视频 / 番剧页面时, 自动定位到播放器. 注意: 不能和其他影响定位的功能一同使用, 例如自动宽屏. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))\r\n\r\n可设置定位时的竖直偏移量, 单位为像素(px).",
     "fullRelativePath": "../../registry/dist/components/video/player/focus.js",
     "fullAbsolutePath": "registry/dist/components/video/player/focus.js"
   },
@@ -587,7 +587,7 @@
     "type": "component",
     "name": "legacyAutoPlay",
     "displayName": "传统连播模式",
-    "description": "暂无描述.",
+    "description": "模拟传统的多 P 连播策略: 仅连播视频的分 P 和番剧的多集, 最后 1P 放完禁止连播其他推荐视频.",
     "fullRelativePath": "../../registry/dist/components/video/player/legacy-auto-play.js",
     "fullAbsolutePath": "registry/dist/components/video/player/legacy-auto-play.js"
   },
@@ -595,7 +595,7 @@
     "type": "component",
     "name": "preserveDanmakuInput",
     "displayName": "强制保留弹幕发送栏",
-    "description": "在网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.",
+    "description": "在视频播放器网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.",
     "fullRelativePath": "../../registry/dist/components/video/player/preserve-danmaku-input.js",
     "fullAbsolutePath": "registry/dist/components/video/player/preserve-danmaku-input.js"
   },
@@ -619,7 +619,7 @@
     "type": "component",
     "name": "videoScreenshot",
     "displayName": "启用视频截图",
-    "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.\r\n\r\n如果弹幕渲染类型选择了Canvas, 则可以再按住<kbd>Shift</kbd>键来截取带弹幕的截图. 也就是鼠标操作为\"按住<kbd>Shift</kbd>点击截图按钮\", 键盘操作为\"<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>\".",
+    "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.",
     "fullRelativePath": "../../registry/dist/components/video/player/screenshot.js",
     "fullAbsolutePath": "registry/dist/components/video/player/screenshot.js"
   },
@@ -627,7 +627,7 @@
     "type": "component",
     "name": "seekByFrames",
     "displayName": "启用逐帧调整",
-    "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\r\n\r\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
+    "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\r\n\r\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
     "fullRelativePath": "../../registry/dist/components/video/player/seek-by-frames.js",
     "fullAbsolutePath": "registry/dist/components/video/player/seek-by-frames.js"
   },
@@ -643,7 +643,7 @@
     "type": "component",
     "name": "skipChargeList",
     "displayName": "跳过充电鸣谢",
-    "description": "自动跳过视频结尾的充电鸣谢.",
+    "description": "自动跳过视频结尾的充电鸣谢. 注意: 不包括番剧承包鸣谢.",
     "fullRelativePath": "../../registry/dist/components/video/player/skip-charge-list.js",
     "fullAbsolutePath": "registry/dist/components/video/player/skip-charge-list.js"
   },
@@ -651,15 +651,15 @@
     "type": "component",
     "name": "quickFavorite",
     "displayName": "启用快速收藏",
-    "description": "启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.",
+    "description": "启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹.",
     "fullRelativePath": "../../registry/dist/components/video/quick-favorite.js",
     "fullAbsolutePath": "registry/dist/components/video/quick-favorite.js"
   },
   {
     "type": "component",
     "name": "seoRedirect",
-    "displayName": "SEO页面重定向",
-    "description": "进入SEO视频页面时 (`https://www.bilibili.com/s/video/`) 自动跳转到原视频页面.",
+    "displayName": "SEO 页面重定向",
+    "description": "进入 SEO 视频页面时 (`https://www.bilibili.com/s/video/`) 自动跳转到原视频页面.",
     "fullRelativePath": "../../registry/dist/components/video/seo-redirect.js",
     "fullAbsolutePath": "registry/dist/components/video/seo-redirect.js"
   },
@@ -677,6 +677,7 @@
     "displayName": "视频内显示时间",
     "fullRelativePath": "../../registry/dist/components/video/player/localtime.js",
     "fullAbsolutePath": "registry/dist/components/video/player/localtime.js",
+    "description": "by FoundTheWOUT\n\n在视频播放器右上角显示系统时间.",
     "owner": "FoundTheWOUT"
   },
   {
@@ -689,7 +690,7 @@
   {
     "type": "plugin",
     "name": "settingsPanel.tagFilters.recentComponents",
-    "displayName": "设置面板 - \"最近使用\"类别",
+    "displayName": "设置面板 - \"最近使用\" 类别",
     "fullRelativePath": "../../registry/dist/plugins/settings-panel/recent-components.js",
     "fullAbsolutePath": "registry/dist/plugins/settings-panel/recent-components.js"
   },

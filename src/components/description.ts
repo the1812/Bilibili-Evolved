@@ -3,7 +3,8 @@ import marked from 'marked'
 import { ComponentMetadata } from './component'
 import { getSelectedLanguage } from './i18n/helpers'
 
-export const getDescriptionMarkdown = (component: ComponentMetadata) => {
+type ItemWithDescription = Pick<ComponentMetadata, 'description' | 'author'>
+export const getDescriptionMarkdown = (component: ItemWithDescription) => {
   const { description, author } = component
   const authorPrefix = (() => {
     if (!author) {
@@ -33,10 +34,10 @@ export const getDescriptionMarkdown = (component: ComponentMetadata) => {
   })()
   return authorPrefix + descriptionText
 }
-export const getDescriptionHTML = (component: ComponentMetadata) => marked(
+export const getDescriptionHTML = (component: ItemWithDescription) => marked(
   getDescriptionMarkdown(component),
 )
-export const getDescriptionText = (component: ComponentMetadata) => {
+export const getDescriptionText = (component: ItemWithDescription) => {
   const html = getDescriptionHTML(component)
   const div = document.createElement('div')
   div.innerHTML = html

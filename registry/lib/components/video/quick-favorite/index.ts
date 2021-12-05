@@ -36,7 +36,7 @@ export const component: ComponentMetadata = {
   name: 'quickFavorite',
   displayName: '启用快速收藏',
   description: {
-    'zh-CN': '启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹.',
+    'zh-CN': '启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹.',
   },
   entry,
   unload: () => {

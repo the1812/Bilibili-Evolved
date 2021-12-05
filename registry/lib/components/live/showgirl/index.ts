@@ -16,10 +16,10 @@ const entry = async () => {
 }
 export const component: ComponentMetadata = {
   name: 'dpiLiveShowgirl',
-  displayName: '直播看板娘高DPI适配',
+  displayName: '直播看板娘高 DPI 适配',
   enabledByDefault: window.devicePixelRatio > 1,
   description: {
-    'zh-CN': '根据屏幕DPI缩放直播看板娘的大小, 避免像素锯齿.',
+    'zh-CN': '根据屏幕 DPI 缩放直播看板娘的大小, 避免像素锯齿.',
   },
   tags: [
     componentsTags.live,

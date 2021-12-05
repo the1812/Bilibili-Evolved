@@ -113,7 +113,7 @@ const checkTime = (settings: ComponentSettings) => {
 export const component: ComponentMetadata = {
   name: 'darkModeSchedule',
   displayName: '夜间模式计划时段',
-  description: '设置一个使用夜间模式的时间段, 进入/离开此时间段时, 会自动开启/关闭夜间模式. 结束时间小于起始时间时将视为次日, 如`18:00`至`6:00`表示晚上18:00到次日6:00.',
+  description: '设置一个使用夜间模式的时间段, 进入 / 离开此时间段时, 会自动开启 / 关闭夜间模式. 结束时间小于起始时间时将视为次日, 如 `18:00` 至 `6:00` 表示晚上 18:00 到次日 6:00. 请勿和 \`夜间模式跟随系统\` 一同使用.',
   tags: [
     componentsTags.style,
     componentsTags.general,
