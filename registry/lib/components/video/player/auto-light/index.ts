@@ -30,10 +30,9 @@ export const component: ComponentMetadata = {
       }
 
       playerAgentInstance = playerAgent
-      const { query, isAutoPlay } = playerAgentInstance
-      const video = await query.video.element()
+      const video = await playerAgentInstance.query.video.element()
 
-      if (isAutoPlay()) {
+      if (playerAgentInstance.isAutoPlay()) {
         lightOff()
       }
 
