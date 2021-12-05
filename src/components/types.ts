@@ -193,6 +193,8 @@ export interface ComponentMetadata extends FunctionalMetadata {
   i18n?: Record<string, LanguagePack>
   /** 作者信息 */
   author?: Author | Author[]
+  /** 编译时的 commit hash, 由 Babel 注入, 不需要手动填写 */
+  commitHash?: string
 }
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>

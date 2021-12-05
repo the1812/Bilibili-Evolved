@@ -14,6 +14,7 @@ const babelLoader = {
     ],
     plugins: [
       ['@babel/plugin-proposal-class-properties'],
+      './webpack/commit-hash.js',
     ],
   },
 }
