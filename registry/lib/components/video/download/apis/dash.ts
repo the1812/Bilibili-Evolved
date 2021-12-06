@@ -96,7 +96,7 @@ const downloadDash = async (
     otype: 'json',
     fourk: 1,
     fnver: 0,
-    fnval: 80,
+    fnval: 2000,
   }
   const api = `https://api.bilibili.com/x/player/playurl?${formData(params)}`
   const data = await bilibiliApi(
