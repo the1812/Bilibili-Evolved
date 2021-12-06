@@ -99,7 +99,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/live/badge-helper.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/badge-helper.js)
 
-在直播区中, 可从功能面板中直接切换勋章和头衔.
+在直播区中, 可从功能面板中直接切换勋章和头衔. 默认加载 256 个 (同时也是上限), 可在选项中修改.
 
 ### [直播弹幕发送栏](../../registry/dist/components/live/danmaku-sendbar.js)
 `liveDanmakuSendbar`
