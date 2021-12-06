@@ -59,6 +59,7 @@
 </template>
 
 <script lang="ts">
+import { getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
 import {
   DefaultWidget,
@@ -68,6 +69,7 @@ import {
   Medal, Title, Badge, getMedalList, getTitleList,
 } from './badge'
 
+const { options } = getComponentSettings('badgeHelper')
 export default Vue.extend({
   components: {
     DefaultWidget,
@@ -102,10 +104,12 @@ export default Vue.extend({
       element.style.setProperty('--title-columns', titleColumns.toString())
     },
     async loadMedalList() {
-      this.medalList = (await getMedalList()).sort(descendingSort(it => it.level))
+      this.medalList = (await getMedalList())
+        .sort(descendingSort(it => it.level))
+        .slice(0, options.maxBadgeCount)
     },
     async loadTitleList() {
-      this.titleList = await getTitleList()
+      this.titleList = (await getTitleList()).slice(0, options.maxBadgeCount)
     },
     async toggleBadge(badge: Badge, list: Badge[]) {
       console.log(badge)
@@ -120,8 +124,7 @@ export default Vue.extend({
         badge.isActive = true
         await badge.activate()
         if (badge instanceof Medal) {
-          const { getComponentSettings } = await import('@/core/settings')
-          getComponentSettings('badgeHelper').options.defaultMedalID = badge.id
+          options.defaultMedalID = badge.id
         }
       }
       if (badge instanceof Medal) {
@@ -144,6 +147,7 @@ export default Vue.extend({
   padding: 4px;
   max-height: calc(100vh - 150px);
   @include card();
+  @include no-scrollbar();
   @include round-corner(4px);
   &.open {
     transform: scale(1) translateY(-50%);

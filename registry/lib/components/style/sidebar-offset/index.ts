@@ -23,15 +23,7 @@ export const component: ComponentMetadata = {
     offset: {
       displayName: '偏移量 (%)',
       defaultValue: 0,
-      validator: (value: number) => {
-        if (value > 40) {
-          return 40
-        }
-        if (value < -40) {
-          return -40
-        }
-        return value
-      },
+      validator: (value: number) => lodash.clamp(value, -40, 40),
     },
   },
 }
