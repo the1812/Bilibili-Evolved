@@ -19,6 +19,11 @@ export const loginRequiredQualities: VideoQuality[] = [
 ]
 export const vipRequiredQualities: VideoQuality[] = [
   {
+    name: '8K',
+    displayName: '超高清 8K',
+    value: 127,
+  },
+  {
     name: 'HDR',
     displayName: '真彩 HDR',
     value: 125,
