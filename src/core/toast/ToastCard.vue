@@ -122,8 +122,8 @@ export default Vue.extend({
   span,
   .link {
     display: inline-block;
-    padding: 4px 6px;
-    margin: 0 2px;
+    padding: 2px 4px;
+    margin: 2px;
     background-color: #8882;
     text-decoration: none;
     color: #000;

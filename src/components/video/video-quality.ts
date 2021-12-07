@@ -24,6 +24,11 @@ export const vipRequiredQualities: VideoQuality[] = [
     value: 127,
   },
   {
+    name: 'DolbyVision',
+    displayName: '杜比视界',
+    value: 126,
+  },
+  {
     name: 'HDR',
     displayName: '真彩 HDR',
     value: 125,
