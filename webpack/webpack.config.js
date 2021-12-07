@@ -82,7 +82,7 @@ const getDefaultConfig = (srcFolder) => {
             },
             {
               use: [
-                'to-string-loader',
+                'raw-loader',
                 ...cssStyleLoaders,
               ],
             },
@@ -101,7 +101,7 @@ const getDefaultConfig = (srcFolder) => {
             },
             {
               use: [
-                'to-string-loader',
+                'raw-loader',
                 ...sassStyleLoaders,
               ],
             },
