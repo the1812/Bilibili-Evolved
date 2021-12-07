@@ -239,6 +239,15 @@
   }
 }
 .s_tag .tag-area {
+  .tag-item {
+    @include background-color("4");
+    @include border-color();
+    @include color("e");
+    &:hover {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
   .topic-link {
     @include color("e");
     .tag-icon {

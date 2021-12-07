@@ -760,6 +760,7 @@
   }
 }
 .v-wrap {
+  @include background-color();
   .video-toolbar,
   .season-tabs .tabs {
     @include border-color("4");
