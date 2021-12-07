@@ -13,8 +13,8 @@
         @click="fetchFeatures()"
       />
       <VIcon
-        icon="close"
-        :size="18"
+        icon="mdi-close"
+        :size="24"
         class="online-registry-header-close-icon"
         title="关闭"
         @click="popupOpen = false"
@@ -208,7 +208,7 @@ export default Vue.extend({
     }
     &-refresh-icon,
     &-close-icon {
-      padding: 4px;
+      padding: 2px;
       cursor: pointer;
       transition: .3s ease-out;
       &:hover {
@@ -216,7 +216,7 @@ export default Vue.extend({
       }
     }
     &-refresh-icon {
-      padding: 2px;
+      padding: 3px;
       &:hover {
         transform: rotate(360deg);
       }
