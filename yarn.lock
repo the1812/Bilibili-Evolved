@@ -3088,7 +3088,7 @@ loader-runner@^4.2.0:
   resolved "https://registry.npm.taobao.org/loader-runner/download/loader-runner-4.2.0.tgz?cache=0&sync_timestamp=1610027852811&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Floader-runner%2Fdownload%2Floader-runner-4.2.0.tgz#d7022380d66d14c5fb1d496b89864ebcfd478384"
   integrity sha1-1wIjgNZtFMX7HUlriYZOvP1Hg4Q=
 
-loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.4.0:
+loader-utils@^1.0.0, loader-utils@^1.0.2, loader-utils@^1.1.0, loader-utils@^1.4.0:
   version "1.4.0"
   resolved "https://registry.npm.taobao.org/loader-utils/download/loader-utils-1.4.0.tgz#c579b5e34cb34b1a74edc6c1fb36bfa371d5a613"
   integrity sha1-xXm140yzSxp07cbB+za/o3HVphM=
@@ -4716,6 +4716,13 @@ to-regex-range@^5.0.1:
   integrity sha1-FkjESq58jZiKMmAY7XL1tN0DkuQ=
   dependencies:
     is-number "^7.0.0"
+
+to-string-loader@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.npmmirror.com/to-string-loader/download/to-string-loader-1.2.0.tgz#4364aa044b9aa876473f4d7a36ef7d216a276e9c"
+  integrity sha1-Q2SqBEuaqHZHP016Nu99IWonbpw=
+  dependencies:
+    loader-utils "^1.0.0"
 
 tsconfig-paths@^3.9.0:
   version "3.9.0"
