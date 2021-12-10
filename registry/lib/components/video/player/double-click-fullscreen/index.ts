@@ -27,6 +27,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
 export const component: ComponentMetadata = {
   name: 'doubleClickFullscreen',
   displayName: '双击全屏',
+  description: '为视频播放器启用双击全屏功能, 请注意不能和 `启用双击控制` 一同使用.',
   entry,
   tags: [
     componentsTags.video,
