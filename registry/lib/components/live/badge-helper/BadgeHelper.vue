@@ -3,7 +3,7 @@
     <VPopup
       ref="medalPopup"
       v-model="medalOpen"
-      class="badge-popup medal"
+      class="badge-popup widgets-popup medal"
       :trigger-element="$refs.medalButton"
     >
       <ul>
@@ -33,7 +33,7 @@
     <VPopup
       ref="titlePopup"
       v-model="titleOpen"
-      class="badge-popup title"
+      class="badge-popup widgets-popup title"
       :trigger-element="$refs.titleButton"
     >
       <ul>

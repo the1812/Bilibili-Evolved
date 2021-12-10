@@ -56,11 +56,15 @@
     &-header {
       margin-bottom: 36px !important;
     }
-    .switch-options-popup {
+    .widgets-popup {
+      --columns: 1;
+      --medal-columns: 1;
+      --title-columns: 1;
       left: 50%;
       top: calc(100% + 4px) !important;
       transform-origin: top !important;
-      max-width: calc(100% + 40px) !important;
+      box-sizing: border-box;
+      max-width: calc(100% + 44px) !important;
       max-height: unset !important;
       transform: translateX(calc(-50% * var(--direction))) scale(0.9) !important;
       display: flex !important;

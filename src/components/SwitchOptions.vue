@@ -14,7 +14,7 @@
       </VButton>
       <VPopup
         v-model="popupOpen"
-        class="switch-options-popup"
+        class="switch-options-popup widgets-popup"
         :trigger-element="$refs.button"
         esc-close
         auto-destroy
