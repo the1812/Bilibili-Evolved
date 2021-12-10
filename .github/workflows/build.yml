@@ -3,10 +3,9 @@
 name: Build
 
 # Controls when the action will run. Triggers the workflow on push or pull request
-# events but only for the v2 branch
 on:
   push:
-    branches: [ v2, preview ]
+    branches: [ master, preview ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
