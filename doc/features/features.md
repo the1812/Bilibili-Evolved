@@ -393,7 +393,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/touch/double-click-control.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/double-click-control.js)
 
-将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.
+将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.
 
 ### [迷你播放器触摸拖动](../../registry/dist/components/touch/mini-player.js)
 `touchMiniPlayer`
@@ -611,7 +611,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/download.js)
 
-在功能面板中添加下载视频支持.
+在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.
 
 ### [展开视频简介](../../registry/dist/components/video/full-description.js)
 `fullVideoDescription`
@@ -674,7 +674,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/double-click-fullscreen.js)
 
-暂无描述.
+为视频播放器启用双击全屏功能, 请注意不能和 `启用双击控制` 一同使用.
 
 ### [播放器定位](../../registry/dist/components/video/player/focus.js)
 `playerFocus`
@@ -820,12 +820,16 @@ by FoundTheWOUT
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/launch-bar/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/trending-search.js)
 
+在脚本的搜索栏中默认显示类似 b 站搜索栏的搜索推荐词, 替代原来的 "搜索" 两字.
+
 ### [设置面板 - "最近使用" 类别](../../registry/dist/plugins/settings-panel/recent-components.js)
 `settingsPanel.tagFilters.recentComponents`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/settings-panel/recent-components.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/settings-panel/recent-components.js)
+
+在设置面板中添加 "最近使用" 类别, 方便检索最近操作过的组件.
 
 ### [自定义顶栏 - 夜间模式开关](../../registry/dist/plugins/style/custom-navbar-dark-mode.js)
 `customNavbar.items.darkMode`
@@ -834,12 +838,16 @@ by FoundTheWOUT
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/style/custom-navbar-dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-dark-mode.js)
 
+为自定义顶栏添加一个夜间模式开关, 方便快速切换夜间模式.
+
 ### [快捷键扩展 - 无动作](../../registry/dist/plugins/utils/keymap-empty-action.ts.js)
 `keymap.actions.empty`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/utils/keymap-empty-action.ts.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-empty-action.ts.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/utils/keymap-empty-action.ts.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-empty-action.ts.js)
+
+在快捷键的动作列表里添加一个 "无动作", 将按键绑定到这个上面就可以阻止原有的快捷键行为.
 
 ### [加载提示 - 灵梦油库里](../../registry/dist/plugins/v-loading/reimu.js)
 `vLoading.reimu`
@@ -848,6 +856,8 @@ by FoundTheWOUT
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/v-loading/reimu.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/v-loading/reimu.js)
 
+用灵梦油库里代替脚本的所有 "加载中" 提示, 油库里素材来自[东方我乐多从志](https://cn.touhougarakuta.com/).
+
 ### [下载视频 - aria2 输出支持](../../registry/dist/plugins/video/download/aria2-output.js)
 `downloadVideo.outputs.aria2`
 
@@ -855,9 +865,24 @@ by FoundTheWOUT
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/video/download/aria2-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/aria2-output.js)
 
+为下载视频增加 aria2 文件导出和 RPC 输出支持.
+
 ### [下载视频 - IDM 输出支持](../../registry/dist/plugins/video/download/idm-output.js)
 `downloadVideo.outputs.idm`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/video/download/idm-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/idm-output.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/video/download/idm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/idm-output.js)
+
+为下载视频增加 IDM 输出支持.
+
+### [下载视频 - MPV 输出支持](../../registry/dist/plugins/video/download/mpv-output.js)
+`downloadVideo.outputs.mpv`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/video/download/mpv-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/video/download/mpv-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/mpv-output.js)
+
+by [@diannaojiang](https://github.com/diannaojiang)
+
+为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)

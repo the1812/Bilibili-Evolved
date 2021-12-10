@@ -133,7 +133,7 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "在功能面板中添加下载视频支持.",
+        "description": "在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.",
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },
@@ -330,6 +330,7 @@
         "type": "plugin",
         "name": "settingsPanel.tagFilters.recentComponents",
         "displayName": "设置面板 - \"最近使用\" 类别",
+        "description": "在设置面板中添加 \"最近使用\" 类别, 方便检索最近操作过的组件.",
         "fullRelativePath": "../../registry/dist/plugins/settings-panel/recent-components.js",
         "fullAbsolutePath": "registry/dist/plugins/settings-panel/recent-components.js"
       }
