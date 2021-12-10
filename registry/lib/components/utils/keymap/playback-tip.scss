@@ -1,0 +1,37 @@
+// 自定义提示框
+.keymap-tip-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 8px 16px;
+  background-color: #000a;
+  color: white;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  font-size: 14pt;
+  border-radius: 4px;
+  transition: 0.2s ease-out;
+  body.player-mode-blackmask & {
+    z-index: 10017;
+  }
+  &.show {
+    opacity: 1;
+  }
+  i {
+    line-height: 1;
+    margin-right: 8px;
+    font-size: 18pt;
+  }
+}
+// b 站的提示框
+.bilibili-player .bilibili-player-area .bilibili-player-video-wrap .bilibili-player-volumeHint {
+  &-icon {
+    line-height: 1;
+  }
+  background-color: #000a;
+  color: white;
+}

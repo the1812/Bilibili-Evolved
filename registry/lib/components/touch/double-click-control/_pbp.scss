@@ -1,0 +1,65 @@
+@import "common";
+
+@mixin pbp {
+  #bilibili_pbp,
+  #bilibili_pbp_canvas {
+    opacity: 0 !important;
+    &.pin {
+      opacity: 1 !important;
+    }
+  }
+  #bilibili_pbp_pin {
+    opacity: 0 !important;
+  }
+  &.touch-video-control-show {
+    #bilibili_pbp,
+    #bilibili_pbp_canvas {
+      opacity: 1 !important;
+    }
+    #bilibili_pbp_pin {
+      opacity: 1 !important;
+    }
+  }
+
+  .bilibili-player-video-control {
+    #bilibili_pbp,
+    #bilibili_pbp_canvas {
+      left: 0 !important;
+      width: 100% !important;
+      &.pin {
+        bottom: 3px !important;
+      }
+    }
+  }
+  &.touch-video-control-show .bilibili-player-video-control {
+    #bilibili_pbp,
+    #bilibili_pbp_canvas {
+      bottom: calc(100% - 2px) !important;
+    }
+    #bilibili_pbp_pin {
+      right: -8px !important;
+    }
+  }
+  @media screen and (min-width: 750px) {
+    @include on-fullscreen {
+      .bilibili-player-video-control {
+        #bilibili_pbp,
+        #bilibili_pbp_canvas {
+          &.pin {
+            bottom: 4px !important;
+          }
+        }
+      }
+      &.touch-video-control-show {
+        .bilibili-player-video-control {
+          #bilibili_pbp,
+          #bilibili_pbp_canvas {
+            // &.pin {
+            bottom: calc(100% + 5px) !important;
+            // }
+          }
+        }
+      }
+    }
+  }
+}

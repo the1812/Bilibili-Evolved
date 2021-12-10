@@ -1,0 +1,48 @@
+body.settings-panel-dock-right {
+  --direction: -1;
+  .be-settings {
+    > .sidebar {
+      right: 0;
+    }
+  }
+  .widgets-panel-popup,
+  .settings-panel-popup {
+    right: 12px;
+    transform-origin: right;
+  }
+  .settings-panel-popup {
+    .settings-panel-content {
+      .sidebar {
+        order: 1;
+        border-left: 1px solid #8882;
+      }
+      .main {
+        border-bottom-left-radius: 7px;
+      }
+    }
+    .component-tags {
+      border-bottom-right-radius: 8px;
+      border-left: 1px solid #8882;
+      right: 0;
+      .component-tags-item:last-child {
+        border-bottom-right-radius: 7px;
+      }
+    }
+    .component-settings {
+      padding: 7px 7px 7px 12px;
+      .row {
+        flex-direction: row-reverse;
+        .details-arrow {
+          transform: rotate(180deg);
+        }
+        .display-name {
+          margin-left: 12px;
+          width: 180px;
+        }
+      }
+    }
+  }
+  .settings-panel-sub-page {
+    right: 53px;
+  }
+}

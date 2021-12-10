@@ -1,0 +1,71 @@
+@mixin vanfont-family {
+  font-family: "be-iconfont-vanfont" !important;
+}
+@mixin vanfont {
+  $map: (
+    "coin": "\E6E4",
+    "favorites": "\E6E1",
+    "play": "\E6E6",
+    "danmaku": "\E6E7",
+    "like": "\E6E0",
+    "like-outline": "\E63A",
+    "dislike-outline": "\E638",
+    "comment-outline": "\E639",
+    "up": "\E723",
+    "left-arrow": "\E6F1",
+    "right-arrow": "\E6F0",
+    "up-arrow": "\E6EC",
+    "down-arrow": "\E6EB",
+    "close": "\E63C",
+    "search": "\E635",
+    "upload": "\E634",
+  );
+  @each $name, $value in $map {
+    &.be-iconfont-#{$name}::before {
+      @include vanfont-family();
+      content: $value;
+    }
+  }
+
+  &.be-iconfont-lv0::before {
+    @include vanfont-family();
+    content: "\E6CB";
+    color: #9a9a9a;
+    body.dark & {
+      color: #777;
+    }
+  }
+  &.be-iconfont-lv1::before {
+    @include vanfont-family();
+    content: "\E6CC";
+    color: #646464;
+    body.dark & {
+      color: #ddd;
+    }
+  }
+  &.be-iconfont-lv2::before {
+    @include vanfont-family();
+    content: "\E6CD";
+    color: #1bc861;
+  }
+  &.be-iconfont-lv3::before {
+    @include vanfont-family();
+    content: "\E6CE";
+    color: #22baea;
+  }
+  &.be-iconfont-lv4::before {
+    @include vanfont-family();
+    content: "\E6CF";
+    color: #eaa722;
+  }
+  &.be-iconfont-lv5::before {
+    @include vanfont-family();
+    content: "\E6D0";
+    color: #ff7631;
+  }
+  &.be-iconfont-lv6::before {
+    @include vanfont-family();
+    content: "\E6D1";
+    color: #ff3131;
+  }
+}

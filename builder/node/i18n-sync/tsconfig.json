@@ -1,9 +1,0 @@
-{
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "commonjs",
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "sourceMap": false,
-    }
-}

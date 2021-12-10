@@ -6,94 +6,93 @@
 
 </div>
 
-[📦 安装](#安装) / [Install](doc/install-tutorial.en-US.md) / [インストール](doc/install-tutorial.ja-JP.md)
+[📦 安装](#安装)
 
 [⚙ 设置](#设置)
 
-[📚 功能](doc/features.md)
+[📚 功能](doc/features/features.md)
 
 [👻 兼容性](#兼容性)
 
-[🐛 版本历史与更新日志](https://github.com/the1812/Bilibili-Evolved/releases)
+[🐛 版本历史与更新日志](CHANGELOG.md)
 
 [📖 参与开发](CONTRIBUTING.md)
 
 [❤ 捐助](doc/donate.md)
 
 # 安装
-需要浏览器拥有 [Tampermonkey](https://tampermonkey.net/) 插件.
+需要浏览器装有 [Tampermonkey](https://tampermonkey.net/) 或 [Violentmonkey](https://violentmonkey.github.io/) 插件, 下方表格中挑一个链接安装.
 
 **注意事项**
-- 近期番剧区改版, 大部分视频功能都不支持番剧.
-- 港澳台等地区限定内容一概不支持.
-- 如果你只是来下载视频的, 不需要其他功能, 建议找个专门支持下载的软件/插件. 本脚本的下载视频就是凑合用用的, 如果下载失败我可懒得管.
 - 做好觉悟, 脚本开启后不能使用弹幕点赞和举报, 全景视频不能用鼠标拖拽视角(只能用键盘操作), 对性能也有较大影响.
-- 某些破坏性的大更新会使旧版脚本**完全**无法运行, 请及时检查更新.
-- 使用 aria2 RPC 时脚本管理器可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
+- 新版本一旦正式发布, 就不再对旧版本做任何技术支持.
+- 使用外部网站的链接时(如将下载任务发送到自己的服务器 / 使用链接安装组件等)可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
+- 可能无法很好地适应窄屏幕, 请尽量以 1400 x 800 以上的逻辑分辨率使用此脚本.
 
-点击名称即可安装👇
-
-| [正式版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [预览版](https://github.com/the1812/Bilibili-Evolved/tree/preview) | [离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) |
-| ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------ |
-| 正式发布的版本, 最稳定, 更新频率较低. | v2.0 开放测试中, [点此查看](https://github.com/the1812/Bilibili-Evolved/tree/preview). | 内置所有依赖项, 不在线获取功能热更新. |
-
-
-## 备用安装源
-如果默认的安装链接无法使用, 可以尝试以下的备用安装源.
-
-|          | 更新延迟 | 下载速度 | 正式版 | 离线版 |
-| -------- | -------- | -------- | ------ | ------ |
-| jsDelivr | 24h      | 快             | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/bilibili-evolved.offline.user.js) |
-| GitHub   | <1h      | 需要梯子       | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.user.js)  | [安装](https://github.com/the1812/Bilibili-Evolved/raw/master/bilibili-evolved.offline.user.js) |
-
-### 关于换源
-上面的更换安装源能够以不同的来源安装脚本**本体**, 但脚本还有个热更新机制, 会自动下载脚本**功能**的更新. 如果你想完全更换为 GitHub 源 (例如希望尽快得到刚发布的更新), 除了从上面的 GitHub 安装源安装脚本以外, 安装完还需要在脚本的设置里将 `其他 - 更新源` 从默认的 `jsDelivr` 更换为 `GitHub`.
-
-## 推荐配置
-- 操作系统: 64-bit Windows 10 / macOS 10.15+
-- 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 80+ / Firefox 65+ / Edge 80+ / Safari 14+
-- 处理器: Intel Core i7 / AMD Ryzen 5
-- 内存: 8GB
-- 脚本管理器: Tampermonkey 4.11 / Violentmonkey 2.12
-- 显卡: GeForce GTX 660 / Radeon HD 7870
-- 网络: 10MB/s
+|          | 更新延迟 | 正式版 | 预览版                                                                                                   |
+| -------- | -------- | ------ | -------------------------------------------------------------------------------------------------------- |
+| jsDelivr | 24h      | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/dist/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/dist/bilibili-evolved.preview.user.js)       |
+| GitHub   | <1h      | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
 
 # 设置
-脚本启用后, 在网页左侧中央会有一个齿轮图标, 点击即可打开设置. 默认只启用了一部分功能, 您可以根据需要自由调整设置.
+脚本启用后, 在网页左侧中央会有功能面板和设置面板的入口. 功能面板中包含适用于当前页面的一些功能入口, 设置面板中可以管理组件的开启/关闭, 修改组件选项, 以及安装/卸载组件和插件等.
 
-可以在[功能列表](doc/features.md)页中查看每项功能的详细说明, 在网页中通过鼠标停留在某一项也可以查看简要说明.
+![sidebar](images/v2/side-panel.jpg)
 
-大部分功能可通过设置面板开启, 有一些功能会以`附加功能`的形式生效, 或者是可以在`附加功能`做进一步设置. `附加功能`可从网页左侧中央的功能按钮进入.
 
-**绝大部分设置保存后, 需要刷新网页才能生效. 仅有一些样式设置可以立即生效.**
+<img alt="settings-panel" src="images/v2/settings-panel.jpg" width="600">
 
-<img alt="设置" height="500" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/gui-settings.jpg">
+全新安装的脚本实际上没有任何功能, 你可以通过多种方式添加功能:
 
+打开设置面板, 进入左下的组件/插件/样式管理, 会有批量, 浏览, 和在线三个按钮, 以及下面还有个输入框可以用链接添加.
+- `批量`: 可以粘贴多个功能的在线链接并一次性安装.
+- `浏览`: 载入本地的功能文件.
+- `在线`: 打开在线仓库窗口.
+
+<img alt="manage-panel" src="images/v2/manage-panel.jpg" width="400">
+
+> 用链接安装需要对应文件的直链, GitHub Raw 或 jsDelivr 都可以. 批量安装时逐行粘贴链接即可.
+
+如果你曾经使用过 v1 版, 可以利用 `v1 设置迁移` 组件将旧设置导入到 v2 中, 该工具将自动把里面开启的设置对应的组件下载并安装, 使用方法可以参考[这个文档](./doc/v1-migrate.md).
+
+最后, 在关于面板中, 可以查看脚本的详细版本号, 以及进行设置导入 / 导出等快捷操作.
+
+<img alt="about-panel" src="images/v2/about-panel.jpg" width="450">
+
+# 推荐配置
+- 操作系统: 64-bit Windows 10+ / macOS 10.15+
+- 分辨率: 2K+ / 192ppi
+- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+ / Safari 14.1+
+- 处理器: 8代 Intel Core i7+ / Zen 3 架构 AMD Ryzen 5+
+- 内存: 8GB
+- 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
+- 显卡: GeForce GTX 660 / Radeon HD 7870
+- 网络: 10MB/s
 
 # 兼容性
 
 ## 脚本管理器
 
 ### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)
-完全兼容, 但在较旧的浏览器中 Violentmonkey 可能无法运行此脚本.
+兼容, 但在较旧的浏览器中 Violentmonkey 可能无法运行此脚本.
+
+> Tampermonkey 版本不能是 4.14.6147 / 6148
 
 ### [Greasemonkey](https://www.greasespot.net/)
 不兼容.
 
 ### [AdGuard](https://adguard.com/zh_cn/adguard-windows/overview.html)
-~~不兼容~~
-部分兼容, 加载模式仅可为`延迟(自动)`且无法更改. 经测试, Adguard 在最新7.5.3版本中已支持复杂数据储存.
+未测试.
 
 ## 浏览器
 
-支持**最新版** Chrome, Edge (Chromium 内核), Firefox, Safari, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)或者较长时间没更新的浏览器中完美运行.
-
-UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用以上列出的浏览器, 或换用 [Chromium 内核的 Edge](https://www.microsoft.com/en-us/edge).
-> Windows 10 20H2 更新中好像完全替换掉了 UWP 版 Edge (R.I.P.) 自带浏览器变成了 Chromium 内核 Edge.
+支持**最新版** Chrome, Edge (Chromium 内核), Firefox, 不保证脚本能在["套壳类浏览器"](https://www.jianshu.com/p/67d790a8f221)或者较长时间没更新的浏览器中完美运行.
 
 # 开发者
-见 https://github.com/the1812/Bilibili-Evolved/graphs/contributors (之前用的 Contributors Badge 挂了)
+
+<a href="https://github.com/the1812/Bilibili-Evolved/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=the1812/Bilibili-Evolved" />
+</a>
 
 ## 文案翻译贡献者
 - [PleiadeSubaru](https://github.com/Etherrrr)
@@ -101,27 +100,26 @@ UWP 版 Edge 已经不再支持了(就是 Windows 10 自带的那个), 请使用
 - Joshuaふみひる
 
 ## 参与项目
+欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~
 
-> v2.0 正在开发中, 请暂时不要为此仓库开发新功能, 以免增加不必要的迁移成本. (其他一些维护性的工作是可以的)
+# 隐私声明
+本脚本以及本仓库中提供的组件/插件, 是完全匿名的. 用户数据的使用均在本地完成, 不会存储到任何服务器, 也不会有所谓的"用户体验改善计划"来收集统计数据.
 
-欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~ (小心编译器的神秘 bug / 小心被祖传代码闪瞎)
+但是, 任何组件/插件都对用户数据有着完全的访问能力, 对于其他来源(非本仓库提供)的组件/插件, 请自行甄别其安全性.
 
 # 第三方开源组件
 👍感谢这些组件帮助我们极大地提升了开发效率.
 
 - [Vue.js](https://cn.vuejs.org/index.html)
-- [Vuex](https://vuex.vuejs.org/zh/)
 - [JSZip](https://stuk.github.io/jszip/)
-- [Slip.js](https://github.com/kornelski/slip)
+- [bilibili API collect](https://github.com/SocialSisterYi/bilibili-API-collect)
+- [popper-core](https://github.com/popperjs/popper-core)
+- [Tippy.js](https://github.com/atomiks/tippyjs)
+- [Sortable](https://github.com/SortableJS/Sortable)
+- [color](https://github.com/Qix-/color)
 - [Lodash](https://lodash.com/)
-- [jQuery](http://jquery.com/)
+- [marked](https://github.com/markedjs/marked)
 - [MDI](https://materialdesignicons.com)
-
-# 已知问题
-- 和`解除B站区域限制`一同使用时, 两个脚本功能互相没有任何问题, 但有的人会遇到没弹幕的状况. 单独使用各脚本时正常, 目前未找到原因.
-- 4K视频只能导出下载, 不能直接下载.
-- 可能无法很好地适应窄屏幕, 请尽量以1400px以上的宽度使用此脚本.
-- ASS弹幕下载不能包含高级弹幕, 字幕弹幕等.
 
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配

@@ -1,15 +1,32 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
+    "outDir": "./dist/",
     "moduleResolution": "node",
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "sourceMap": false,
-    "outDir": ".ts-output/"
+    "resolveJsonModule": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "target": "ESNext",
+    "strict": false,
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
   "include": [
-    "./src/**/*.ts"
+    "src/**/*",
+    "tests/**/*",
+    "registry/lib/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dev",
+    "packages",
+    "typings"
   ]
 }

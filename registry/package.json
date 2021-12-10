@@ -1,0 +1,12 @@
+{
+  "name": "@bevo/components",
+  "version": "0.0.1",
+  "description": "Components registry for Bilibili Evolved",
+  "author": "Grant Howard",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/sortablejs": "^1.10.7",
+    "enquirer": "^2.3.6",
+    "glob": "^7.1.7"
+  }
+}

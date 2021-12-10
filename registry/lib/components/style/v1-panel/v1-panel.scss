@@ -1,0 +1,84 @@
+@import "common";
+
+.be-settings {
+  > .be-popup {
+    top: 0 !important;
+    left: 0 !important;
+    body.settings-panel-dock-right & {
+      left: unset !important;
+      right: 0 !important;
+    }
+    transform: translateZ(0) translateY(0) translateX(calc(-101% * var(--direction))) !important;
+    --panel-height: 100vh !important;
+
+    &.open {
+      transform: translateZ(0) translateY(0) translateX(0) !important;
+    }
+
+    > * {
+      border-radius: 0 !important;
+      border-width: 0 1px 0 0 !important;
+      height: var(--panel-height) !important;
+
+      body.settings-panel-dock-right & {
+        border-width: 0 0 0 1px !important;
+      }
+    }
+  }
+  > .sidebar > * {
+    width: 52px !important;
+    border-radius: 21px !important;
+    transform: translateX(calc(-13px * var(--direction))) !important;
+    display: flex !important;
+    justify-content: flex-end !important;
+    body.settings-panel-dock-right & {
+      justify-content: flex-start !important;
+    }
+    .be-icon {
+      transition: 0.2s ease-out !important;
+    }
+    &:hover {
+      transform: translateX(calc(8px * var(--direction))) !important;
+      .be-icon {
+        transform: rotate(360deg) !important;
+      }
+    }
+    &.open {
+      transform: translateX(calc(12px * var(--direction))) !important;
+    }
+  }
+  .settings-panel-popup .component-tags .component-tags-item:last-child {
+    border-radius: 0 !important;
+  }
+  .widgets-panel {
+    padding: 24px !important;
+    @include no-scrollbar();
+    &-header {
+      margin-bottom: 36px !important;
+    }
+    .widgets-popup {
+      --columns: 1;
+      --medal-columns: 1;
+      --title-columns: 1;
+      left: 50%;
+      top: calc(100% + 4px) !important;
+      transform-origin: top !important;
+      box-sizing: border-box;
+      max-width: calc(100% + 44px) !important;
+      max-height: unset !important;
+      transform: translateX(calc(-50% * var(--direction))) scale(0.9) !important;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      > * {
+        flex-grow: 1;
+      }
+      &.open {
+        transform: translateX(calc(-50% * var(--direction))) scale(1) !important;
+      }
+      body.settings-panel-dock-right & {
+        left: unset !important;
+        right: 50% !important;
+      }
+    }
+  }
+}

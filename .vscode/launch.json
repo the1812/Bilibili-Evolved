@@ -4,28 +4,5 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
-    {
-      "name": "重新编译 rebuild",
-      "type": "coreclr",
-      "request": "launch",
-      "program": "${workspaceFolder}/builder/dotnet/bin/Debug/netcoreapp3.1/build.dll",
-      "args": [],
-      "cwd": "${workspaceFolder}",
-      "stopAtEntry": false,
-      "console": "internalConsole",
-      "preLaunchTask": "构建编译器 (Debug模式) compile builder"
-    },
-    {
-      "name": "监视 watch",
-      "type": "coreclr",
-      "request": "launch",
-      "program": "${workspaceFolder}/builder/dotnet/bin/Debug/netcoreapp3.1/build.dll",
-      "args": ["watch"],
-      "cwd": "${workspaceFolder}",
-      "stopAtEntry": false,
-      "internalConsoleOptions": "neverOpen",
-      "console": "integratedTerminal",
-      "preLaunchTask": "构建编译器 (Debug模式) compile builder"
-    }
   ]
 }

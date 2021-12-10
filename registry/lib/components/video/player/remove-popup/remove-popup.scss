@@ -1,0 +1,28 @@
+body {
+  &.remove-player-popup {
+    &-combo-likes {
+      .bilibili-player-video-popup-three,
+      .bilibili-player-video-popup-three-animate,
+      .bilibili-player-video-popup-follow,
+      .bilibili-player-video-popup-there-cyc {
+        display: none !important;
+      }
+    }
+    &-related-videos {
+      .bilibili-player-video-link,
+      .bilibili-player-link {
+        display: none !important;
+      }
+    }
+    &-votes {
+      .bilibili-player-video-popup-vote {
+        display: none !important;
+      }
+    }
+    &-rates {
+      .bilibili-player-score {
+        display: none !important;
+      }
+    }
+  }
+}

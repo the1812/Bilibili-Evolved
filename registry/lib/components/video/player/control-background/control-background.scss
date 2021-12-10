@@ -1,0 +1,25 @@
+@import "common";
+
+.bilibili-player-video-control {
+  &-mask {
+    background: transparent !important;
+  }
+  .bilibili-player-video-control-bottom {
+    background: rgba(0, 0, 0, var(--video-control-opacity)) !important;
+    margin: 5px 0 0 0 !important;
+    padding: 9px 0 0 !important;
+    height: 30px !important;
+    @include on-fullscreen {
+      margin: -2px 0 0 0 !important;
+      padding: 13px 0 0 !important;
+      height: 45px !important;
+    }
+  }
+}
+body {
+  &.video-control-progress-background {
+    .bui-track-video-progress .bui-bar-wrap {
+      background: rgba(0, 0, 0, var(--video-control-opacity)) !important;
+    }
+  }
+}

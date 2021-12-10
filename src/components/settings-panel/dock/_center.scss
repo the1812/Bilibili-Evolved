@@ -1,0 +1,22 @@
+// .settings-panel-popup .settings-panel {
+//   $outside-padding: 72;
+//   $sidebar-width: 171;
+//   $content-padding: 16;
+//   $card-width: 240;
+//   $gutter: 8;
+//   @for $count from 1 through 6 {
+//     $width: 2 *
+//       ($content-padding) +
+//       $card-width *
+//       $count +
+//       $gutter *
+//       ($count - 1) +
+//       $sidebar-width;
+//     $screen: 2 * $outside-padding + $width;
+//     @media screen and (min-width: #{$screen}px) {
+//       & {
+//         width: #{$width}px;
+//       }
+//     }
+//   }
+// }

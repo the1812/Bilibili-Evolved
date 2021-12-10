@@ -1,0 +1,140 @@
+@mixin shadow {
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  // box-shadow: #0002 0 1px 10px 1px;
+}
+@mixin h-center($gap: 0) {
+  display: flex;
+  align-items: center;
+  gap: $gap;
+}
+@mixin v-center($gap: 0) {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: $gap;
+}
+@mixin h-stretch($gap: 0) {
+  display: flex;
+  align-items: stretch;
+  gap: $gap;
+}
+@mixin v-stretch($gap: 0) {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  gap: $gap;
+}
+@mixin round-bar($height) {
+  box-sizing: border-box;
+  height: #{$height}px;
+  border-radius: #{$height / 2}px;
+}
+@mixin no-scrollbar {
+  overflow: auto;
+  scrollbar-width: none !important;
+  overscroll-behavior: contain;
+  &::-webkit-scrollbar {
+    height: 0 !important;
+    width: 0 !important;
+  }
+}
+@mixin max-line($line, $line-height: 1.5) {
+  display: -webkit-box;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-line-clamp: $line;
+  -webkit-box-orient: vertical;
+  line-height: $line-height;
+  max-height: #{$line * $line-height}em;
+}
+@mixin single-line() {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+@mixin round-corner($radius: 8px) {
+  border-radius: $radius;
+}
+@mixin default-transition($prop: all) {
+  &,
+  & *,
+  & *::before,
+  & *::after {
+    transition: 0.2s $prop ease-out;
+  }
+}
+@mixin card($radius: 8px) {
+  background-color: #fff;
+  color: black;
+  border-radius: $radius;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid #8882;
+  box-sizing: border-box;
+  // box-shadow: rgba(0, 0, 0, 0.12) 0 4px 8px 0px;
+  body.dark & {
+    background-color: #282828;
+    color: #eee;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+@mixin popup($radius: 8px) {
+  @include card($radius);
+  body.dark & {
+    background-color: #222;
+  }
+}
+@mixin border-card($radius: 8px) {
+  background-color: #fdfdfd;
+  color: black;
+  border-radius: $radius;
+  border: 1px solid #e8e8e8;
+  body.dark & {
+    background-color: #222;
+    color: #eee;
+    border-color: #333;
+  }
+}
+// @mixin popup($radius: 8px) {
+//   background-color: #fff;
+//   border-radius: $radius;
+//   box-shadow: #0002 0 1px 10px 1px;
+//   body.dark & {
+//     background-color: #282828;
+//   }
+// }
+@mixin flex-gap($gap: 8px) {
+  > :not(:last-child) {
+    margin-right: $gap;
+  }
+}
+@mixin text-color {
+  color: black;
+  fill: black;
+  stroke: black;
+  body.dark & {
+    color: #eee;
+    fill: #eee;
+    stroke: #eee;
+  }
+}
+@mixin default-background-color {
+  background-color: #fff;
+  body.dark & {
+    background-color: #333;
+  }
+}
+@mixin absolute-center($position: absolute) {
+  position: $position;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+@mixin on-fullscreen($bodyClass: "*") {
+  #{selector-unify("body.player-mode-webfullscreen", $bodyClass)} &,
+  #{selector-unify("body.player-fullscreen-fix", $bodyClass)} &,
+  #{selector-unify("body.player-full-win", $bodyClass)} & {
+    @content;
+  }
+}

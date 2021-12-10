@@ -1,0 +1,26 @@
+@mixin subtitle {
+  &.bilibili-player-area .subtitle-position.subtitle-position {
+    &-bc,
+    &-bl,
+    &-br {
+      bottom: 20px !important;
+    }
+  }
+  &.touch-video-control-show .subtitle-position.subtitle-position {
+    &-bc,
+    &-bl,
+    &-br {
+      bottom: 54px !important;
+    }
+  }
+  .mode-webfullscreen &.touch-video-control-show,
+  .mode-fullscreen &.touch-video-control-show {
+    .subtitle-position.subtitle-position {
+      &-bc,
+      &-bl,
+      &-br {
+        bottom: 68px !important;
+      }
+    }
+  }
+}

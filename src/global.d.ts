@@ -1,15 +1,39 @@
 import { LoDashStatic } from 'lodash'
-import { Store } from 'vuex'
+import { CoreApis, ExternalApis } from './core/core-apis'
 
 declare global {
+  /** @deprecated Use window.lodash instead. */
   const _: LoDashStatic
+
+  const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
-  const Vuex: typeof import('vuex')
-  const JSZip: typeof import('jszip')
-  const store: Store<{
-    watchlaterList: number[]
-    watchlaterListCached: boolean
-  }>
+
+  interface CompilationInfo {
+    commitHash: string
+    branch: string
+    nearestTag: string
+    versionWithTag: string
+    // buildTime: number
+  }
+  const webpackCompilationInfo: CompilationInfo
+
+  const BwpElement: {
+    new(): HTMLVideoElement
+    prototype: HTMLVideoElement
+  }
+  interface Window {
+    aid: string | undefined
+    cid: string | undefined
+    pageno: string | number | undefined
+    bilibiliEvolved: ExternalApis
+    [key: string]: any
+  }
+  const unsafeWindow: Window
+  const coreApis: CoreApis
+  const dq: CoreApis['utils']['dq']
+  const dqa: CoreApis['utils']['dqa']
+  const none: CoreApis['utils']['none']
+  const componentsTags: CoreApis['componentApis']['component']['componentsTags']
 
   interface MonkeyXhrResponse {
     finalUrl: string
@@ -22,14 +46,14 @@ declare global {
     responseText: string
   }
   interface MonkeyXhrBasicDetails {
-    method: 'GET' | 'POST' | 'HEAD'
     url: string
+    method?: 'GET' | 'POST' | 'HEAD'
     headers?: { [name: string]: string },
     data?: string
     binary?: boolean
     timeout?: number
     context?: any
-    responseType?: 'arraybuffer' | 'blob' | 'json'
+    responseType?: 'arraybuffer' | 'blob' | 'json' | 'text'
     overrideMimeType?: string
     anonymous?: boolean
     fetch?: boolean
@@ -45,36 +69,7 @@ declare global {
     ontimeout?: (response: MonkeyXhrResponse) => void
     onload?: (response: MonkeyXhrResponse) => void
   }
-  type RunAtOptions = "document-start" | "document-end" | "document-idle" | "document-body" | "context-menu"
-  type DanmakuOption = '无' | 'XML' | 'JSON' | 'ASS'
-  type SubtitleOption = '无' | 'JSON' | 'ASS'
-  type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
-  type Pattern = string
-  type Dropdown = { key: string; items: string[] }
-  interface RpcOption {
-    secretKey: string
-    dir: string
-    host: string
-    port: string
-    method: 'get' | 'post'
-    other: string
-    [key: string]: string
-  }
-  interface RpcOptionProfile extends RpcOption {
-    name: string
-  }
-  interface SearchHistoryItem {
-    keyword: string
-    count: number
-    date: string
-  }
-  interface CustomStyle {
-    style: string
-    name: string
-    displayName: string
-    enabled: boolean
-    mode?: 'default' | 'instant' | 'important'
-  }
+  type RunAtOptions = 'document-start' | 'document-end' | 'document-idle' | 'document-body' | 'context-menu'
   interface MonkeyInfo {
     script: {
       author: string
@@ -111,7 +106,7 @@ declare global {
       }
       position: number
       resources: string[]
-      "run-at": RunAtOptions
+      'run-at': RunAtOptions
       system: boolean
       unwrap: boolean
       version: string
@@ -124,472 +119,11 @@ declare global {
     isIncognito: boolean
     version: string
   }
-  interface CustomNavbarComponents {
-    blank1: number
-    logo: number
-    category: number
-    rankingLink: number
-    bangumiLink: number
-    drawingLink: number
-    musicLink: number
-    gamesIframe: number
-    livesIframe: number
-    matchLink: number
-    shopLink: number
-    mangaIframe: number
-    blank2: number
-    search: number
-    userInfo: number
-    messages: number
-    activities: number
-    bangumi: number
-    watchlaterList: number
-    favoritesList: number
-    historyList: number
-    upload: number
-    blank3: number
-    darkMode: number
-  }
-  type CustomNavbarOrders = { [key in keyof CustomNavbarComponents]: number }
-  interface SimpleHomeCategoryOrders {
-    anime: number
-    bangumi: number
-    china: number
-    manga: number
-    music: number
-    dance: number
-    game: number
-    knowledge: number
-    tech: number
-    life: number
-    kichiku: number
-    fashion: number
-    // ads: number
-    information: number
-    entertainment: number
-    column: number
-    movie: number
-    tv: number
-    film: number
-    documentary: number
-    [key: string]: number
-  }
-  interface UserImage {
-    url: string
-    name: string
-  }
-  const unsafeWindow: Window
-  const offlineData: Record<string, string> | undefined
-  const onlineData: Record<string, string> | undefined
-  const UserAgent: string
-  const EmptyImageUrl: string
-  interface Window {
-    aid: string | undefined
-    cid: string | undefined
-    bvid: string | undefined
-    pageno: string | number | undefined
-    $: JQueryStatic
-    [key: string]: any
-  }
-  interface Document {
-    pictureInPictureElement: HTMLElement | null
-  }
-  const BwpElement: {
-    new(): HTMLVideoElement
-    prototype: HTMLVideoElement
-  }
-  class SpinQuery {
-    static condition<T>(query: () => T, condition: (queryResult: T) => boolean, success: (queryResult: T) => void, failed?: () => void): void
-    static condition<T>(query: () => T, condition: (queryResult: T) => boolean): Promise<T>
-    static select<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void
-    static select<T>(query: () => T): Promise<T>
-    static select(query: string): Promise<HTMLElement | null>
-    static select(query: string, action: (queryResult: HTMLElement) => void, failed?: () => void): void
-    static any<T>(query: () => T, action: (queryResult: T) => void, failed?: () => void): void
-    static any<T>(query: () => T): Promise<T>
-    static any(query: string): Promise<JQuery>
-    static any(query: string, action: (queryResult: JQuery) => void, failed?: () => void): void
-    static count<T>(query: () => T, count: number, success: (queryResult: T) => void, failed?: () => void): void
-    static count<T>(query: () => T, count: number): Promise<T>
-    static count(query: string, count: number): Promise<NodeListOf<Element>>
-    static count(query: string, count: number, success: (queryResult: NodeListOf<Element>) => void, failed?: () => void): Promise<void>
-    static unsafeJquery(action: () => void, failed?: () => void): void
-    static unsafeJquery(): Promise<void>
-  }
-  class Toast {
-    show(): void
-    dismiss(): void
-    element: HTMLElement
-    key: string
-    static show(message: string, title: string, duration?: number): Toast
-    static info(message: string, title: string, duration?: number): Toast
-    static success(message: string, title: string, duration?: number): Toast
-    static error(message: string, title: string, duration?: number): Toast
-  }
-  class Resource {
-    text: string
-    key: string
-    dependencies: Array<Resource>
-    styles: Array<Resource>
-    displayName: string
-    dropdown: Dropdown | Dropdown[]
-    downloaded: boolean
-    constructor(url: string, styles?: Resource[])
-    download(): Promise<string>
-    getStyle(id: string): string
-    getPriorStyle(): any
-    applyStyle(id: string, important: boolean): void
-    static all: { [key: string]: Resource }
-    static displayNames: Record<string, string>
-    static manifest: object
-    static root: string
-    static cdnRoot: string
-    static reloadables: string[]
-  }
-  class ResourceManager {
-    attributes: Record<string, any>
-    import(componentName: string): any
-    getDefaultStyleId(key: string): string
-    applyStyle(key: string, id?: string): void
-    removeStyle(key: string): void
-    applyImportantStyle(key: string, id?: string): void
-    applyStyleFromText(text: string, id: string): void
-    applyImportantStyleFromText(text: string, id: string): void
-    getStyle(key: string, id?: string): void
-    toggleStyle(content: string, id: string, urlPattern?: {
-      include?: (string | RegExp)[]
-      exclude?: (string | RegExp)[]
-    }): void
-    toggleStyle(key: string): void
-    applyDropdownOptions(): Promise<void>
-    fetchByKey(key: string): Promise<void>
-  }
-  const resources: ResourceManager
-  class DoubleClickEvent {
-    constructor(handler: (e: MouseEvent) => void, singleClickHandler: (e: MouseEvent) => void)
-    bind(element: Element): void
-    unbind(element: Element): void
-  }
-  class Ajax {
-    static send(xhr: XMLHttpRequest, body: string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>): Promise<string>
-    static getText(url: string): Promise<string>
-    static getTextWithCredentials(url: string): Promise<string>
-    static getJson(url: string): Promise<any>
-    static getJsonWithCredentials(url: string): Promise<any>
-    static getBlob(url: string): Promise<Blob>
-    static getBlobWithCredentials(url: string): Promise<Blob>
-    static postText(url: string, body: string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>): Promise<string>
-    static postTextWithCredentials(url: string, body: string | Document | Blob | ArrayBufferView | ArrayBuffer | FormData | URLSearchParams | ReadableStream<Uint8Array>): Promise<string>
-    static postJson(url: string, json: any): Promise<any>
-    static postJsonWithCredentials(url: string, json: any): Promise<any>
-    static monkey(details: MonkeyXhrBasicDetails): Promise<any>
-    static getPages<T = any>(config: {
-      api: (page: number) => Promise<any>
-      getList: (json: any) => T[]
-      getTotal: (json: any) => number
-    }): Promise<T[]>
-  }
-  type Observable = string | Node | Node[] | NodeList
-  class Observer {
-    constructor(element: Element, callback: MutationCallback)
-    start(): Observer
-    stop(): Observer
-    forEach(callback: (observer: Observer) => void): void
-    add(element: Element): Observer
-    options: MutationObserverInit
-    static observe(observable: Observable, callback: MutationCallback, options: MutationObserverInit): Observer
-    static childList(observable: Observable, callback: MutationCallback): Observer
-    static childListSubtree(observable: Observable, callback: MutationCallback): Observer
-    static attributes(observable: Observable, callback: MutationCallback): Observer
-    static attributesSubtree(observable: Observable, callback: MutationCallback): Observer
-    static all(observable: Observable, callback: MutationCallback): Observer
-    static videoChange(callback: MutationCallback): Promise<void>
-  }
-  interface BilibiliEvolvedSettings {
-    [key: string]: any,
-    useDarkStyle: boolean,
-    hideBanner: boolean,
-    expandDanmakuList: boolean,
-    expandDanmakuListIgnoreMediaList: boolean,
-    expandDescription: boolean,
-    watchLaterRedirect: boolean,
-    touchNavBar: boolean,
-    touchVideoPlayer: boolean,
-    customControlBackgroundOpacity: number,
-    customControlBackground: boolean,
-    darkScheduleStart: string,
-    darkScheduleEnd: string,
-    darkSchedule: boolean,
-    toast: boolean,
-    fullTweetsTitle: boolean,
-    fullPageTitle: boolean,
-    removeVideoTopMask: boolean,
-    removeLiveWatermark: boolean,
-    harunaScale: boolean,
-    removeAds: boolean,
-    showBlockedAdsTip: boolean,
-    hideTopSearch: boolean,
-    touchVideoPlayerDoubleTapControl: boolean,
-    customStyleColor: string,
-    preserveRank: boolean,
-    blurBackgroundOpacity: number,
-    useDefaultPlayerMode: boolean,
-    applyPlayerModeOnPlay: boolean,
-    defaultPlayerMode: string,
-    useDefaultVideoQuality: boolean,
-    defaultVideoQuality: string,
-    defaultBangumiLayout: string,
-    useDefaultPlayerLayout: boolean,
-    skipChargeList: boolean,
-    comboLike: boolean,
-    autoLightOff: boolean,
-    useCache: boolean,
-    autoContinue: boolean,
-    allowJumpContinue: boolean,
-    airborne: boolean,
-    deadVideoTitleProvider: '稍后再看' | 'BiliPlus',
-    useBiliplusRedirect: boolean,
-    biliplusRedirect: boolean,
-    framePlayback: boolean,
-    useCommentStyle: boolean,
-    imageResolution: boolean,
-    imageResolutionScale: string,
-    toastInternalError: boolean,
-    i18n: boolean,
-    i18nLanguage: string,
-    playerFocus: boolean,
-    playerFocusOffset: number,
-    simplifyLiveroom: boolean,
-    simplifyLiveroomSettings: {
-      vip: boolean,
-      fansMedal: boolean,
-      title: boolean,
-      userLevel: boolean,
-      guard: boolean,
-      systemMessage: boolean,
-      welcomeMessage: boolean,
-      giftMessage: boolean,
-      guardPurchase: boolean,
-      giftPanel: boolean,
-      headerPanel: boolean,
-      userEffect: boolean,
-      kanban: boolean,
-      eventsBanner: boolean,
-      rankList: boolean,
-      popup: boolean,
-      skin: boolean,
-      [key: string]: boolean,
-    },
-    customNavbar: boolean,
-    customNavbarFill: boolean,
-    customNavbarTransparent: boolean,
-    customNavbarShadow: boolean,
-    customNavbarCompact: boolean,
-    customNavbarBlur: boolean,
-    customNavbarBlurOpacity: number,
-    customNavbarOrder: CustomNavbarOrders,
-    customNavbarHidden: Array<keyof CustomNavbarComponents>,
-    customNavbarBoundsPadding: number,
-    customNavbarShowDeadVideos: boolean,
-    playerShadow: boolean,
-    narrowDanmaku: boolean,
-    outerWatchlater: boolean,
-    hideBangumiReviews: boolean,
-    videoScreenshot: boolean,
-    cache: {} | { version: string } | undefined,
-    filenameFormat: string,
-    batchFilenameFormat: string,
-    sideBarOffset: number,
-    noLiveAutoplay: boolean,
-    hideHomeLive: boolean,
-    noMiniVideoAutoplay: boolean,
-    useDefaultVideoSpeed: boolean,
-    defaultVideoSpeed: string,
-    foldComment: boolean,
-    downloadVideoDefaultDanmaku: DanmakuOption,
-    downloadVideoDefaultSubtitle: SubtitleOption,
-    aria2RpcOption: RpcOption,
-    aria2RpcOptionSelectedProfile: string,
-    aria2RpcOptionProfiles: RpcOptionProfile[],
-    searchHistory: SearchHistoryItem[],
-    seedsToCoins: boolean,
-    autoSeedsToCoins: boolean,
-    lastSeedsToCoinsDate: number,
-    autoDraw: boolean,
-    keymap: boolean,
-    keymapPreset: 'Default' | 'YouTube' | 'HTML5Player' | 'PotPlayer',
-    doubleClickFullscreen: boolean,
-    doubleClickFullscreenPreventSingleClick: boolean
-    simplifyHome: boolean,
-    simplifyHomeStyle: '清爽' | '极简',
-    simpleHomeCategoryOrders: SimpleHomeCategoryOrders,
-    simpleHomeBangumiLayout: '时间表' | '动态',
-    simpleHomeWheelScroll: boolean,
-    simpleHomePersonalized: boolean,
-    simpleHomeLayoutFill: boolean,
-    minimalHomeSettings: {
-      showSearch: boolean,
-      backgroundImage: string,
-    },
-    ajaxHook: boolean,
-    scriptLoadingMode: '同时' | '延后' | '同时(自动)' | '延后(自动)' | '自动',
-    scriptDownloadMode: 'bundle' | 'legacy'
-    guiSettingsDockSide: '左侧' | '右侧'
-    fullActivityContent: boolean,
-    feedsFilter: boolean,
-    feedsFilterPatterns: Pattern[],
-    feedsFilterTypes: number[],
-    feedsSpecialFilterTypes: number[],
-    feedsFilterSideCards: number[],
-    activityImageSaver: boolean,
-    scriptBlockPatterns: Pattern[],
-    customNavbarSeasonLogo: boolean,
-    selectableColumnText: boolean,
-    downloadVideoFormat: 'flv' | 'dash',
-    downloadVideoDashCodec: DashCodec,
-    enableDashDownload: boolean,
-    superchatTranslate: boolean,
-    miniPlayerTouchMove: boolean,
-    hideBangumiSponsors: boolean,
-    hideRecommendLive: boolean,
-    hideRelatedVideos: boolean,
-    defaultMedalID: number,
-    autoMatchMedal: boolean,
-    customStyles: CustomStyle[],
-    keymapJumpSeconds: number,
-    urlParamsClean: boolean,
-    collapseLiveSideBar: boolean,
-    downloadVideoQuality: number,
-    downloadSubtitle: boolean,
-    removeGameMatchModule: boolean,
-    noDarkOnMember: boolean,
-    feedsTranslate: boolean,
-    feedsTranslateProvider: 'Bing' | 'Google' | 'Baidu' | 'GoogleCN',
-    feedsTranslateLanguage: string,
-    downloadLiveRecords: boolean
-    defaultLiveQuality: '原画' | '4K' | '蓝光' | '超清' | '高清' | '流畅'
-    useDefaultLiveQuality: boolean,
-    recordLiveDanmaku: boolean,
-    foregroundColorMode: '自动' | '白色' | '黑色'
-    preserveEventBanner: boolean
-    bvidConvert: boolean
-    fixedSidebars: boolean
-    updateCdn: 'jsDelivr' | 'GitHub',
-    lastNewVersionCheck: number,
-    newVersionCheckInterval: number,
-    useDarkStyleAsUserStyle: boolean,
-    darkColorScheme: boolean,
-    livePip: boolean,
-    extendFeedsLive: boolean,
-    userImages: UserImage[],
-    playerOnTop: boolean,
-    restoreFloors: boolean,
-    quickFavorite: boolean,
-    quickFavoriteID: number,
-    bilibiliSimpleNewHomeCompatible: boolean,
-    preferAvUrl: boolean,
-    elegantScrollbar: boolean,
-    danmakuSendBar: boolean,
-    watchLaterRedirectNavbar: boolean,
-    watchLaterRedirectPage: boolean,
-    showCoverBeforePlay: boolean,
-    customNavbarGlobalFixed: boolean,
-    volumeOverdrive: boolean,
-    seoJump: boolean,
-    commentsTranslate: boolean,
-    copyFeedsLink: boolean,
-    copyCommentLink: boolean,
-    unfoldFeeds: boolean,
-    feedsImageExporter: boolean,
-    columnImageExporter: boolean,
-    downloadPackageEmitMode: '打包下载' | '分别下载',
-    latestVersionLink: string,
-    currentVersion: string,
-    favoritesListCurrentSelect: string,
-    homeHidden: boolean,
-    homeHiddenItems: string[],
-    rememberVideoSpeedList: {
-      [index: string]: string[]
-    },
-    rememberVideoSpeed: boolean,
-    extendVideoSpeed: boolean,
-    extendVideoSpeedList: number[],
-    customKeyBindings: { [actionName: string]: string },
-    alwaysShowDuration: boolean,
-    menuRepeatVideo: boolean,
-    removeGuidePopup: boolean,
-    liveSpeedBoost: boolean,
-    checkInCenter: boolean,
-    fullscreenGiftBox: boolean,
-    scrollOutPlayer: boolean,
-    scrollOutPlayerTriggerPlace: string,
-    scrollOutPlayerAutoPause: boolean,
-    scrollOutPlayerAutoLightOn: boolean,
-    disableDanmakuHighlights: boolean,
-    disableUpDanmakuStyle: boolean,
-    noNotifyV2: boolean,
-  }
   const GM_info: MonkeyInfo
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
-  function GM_setClipboard(data: any, info?: string | { type?: string, mimetype?: string }): void
-  function GM_setValue(name: keyof BilibiliEvolvedSettings, value: any): void
-  function GM_getValue<T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T): T
-  const GM: {
-    info: MonkeyInfo
-    xmlHttpRequest: typeof GM_xmlhttpRequest
-    setClipboard: typeof GM_setClipboard
-    setValue: (name: keyof BilibiliEvolvedSettings, value: any) => Promise<void>
-    getValue: <T>(name: keyof BilibiliEvolvedSettings, defaultValue?: T) => Promise<T>
-  }
-  const settings: BilibiliEvolvedSettings
-  const customNavbarDefaultOrders: CustomNavbarOrders
-  const simpleHomeCategoryDefaultOrders: SimpleHomeCategoryOrders
-  const aria2RpcDefaultOption: RpcOption
-  const languageNameToCode: { [key: string]: string }
-  const languageCodeToName: { [key: string]: string }
-  function logError(message: Error | string, duration?: number): void
-  function loadSettings(): void
-  function addSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void, initCall?: boolean): void
-  function removeSettingsListener(key: keyof BilibiliEvolvedSettings, handler: (newValue: any, oldValue: any) => void): void
-  function raiseEvent(element: Element, eventName: string): void
-  function loadLazyPanel(selector: string): Promise<HTMLElement>
-  function loadLazyPlayerSettingsPanel(buttonSelector: string, panelSelector: string): Promise<HTMLElement>
-  function loadDanmakuSettingsPanel(): Promise<HTMLElement>
-  function loadSubtitleSettingsPanel(): Promise<HTMLElement>
-  function contentLoaded(callback: () => void): void
-  function fullyLoaded(callback: () => void): void
-  function fixed(number: number, precision?: number): string
-  function isEmbeddedPlayer(): boolean
-  function isIframe(): boolean
-  function getI18nKey(): string
-  function bwpVideoFilter(selector: string): string
-  function dq(selector: string): Element | null
-  function dq(element: Element, selector: string): Element | null
-  function dqa(selector: string): Element[]
-  function dqa(element: Element, selector: string): Element[]
-  function html(strings: TemplateStringsArray, ...values: unknown[]): string
-  const formatFileSize: (bytes: number, fixed?: number) => string
-  const formatDuration: (time: number, fixed?: number) => string
-  const ascendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
-  const descendingSort: <T>(itemProp: (item: T) => number) => (a: T, b: T) => number
-  const getDpiSourceSet: (src: string, baseSize: number | string | { width?: number | string, height?: number | string }, extension?: string) => string
-  const isOffline: () => boolean
-  const getCookieValue: (name: string) => string
-  const getUID: () => string
-  const getCsrf: () => string
-  const formatCount: (count: number | string) => string
-  const escapeFilename: (filename: string, replacement?: string) => string
-  const dashExtensions: string[]
-  const dashFragmentExtension: string
-  const videoCondition: () => Promise<boolean>
-  const matchPattern: (str: string, pattern: string | RegExp) => boolean
-  type ScriptVersion = 'Stable' | 'Preview' | 'Offline' | 'Preview Offline' | 'Local' | 'Local preview' | 'Local stable' | 'Local offline' | 'Local preview offline'
-  const getScriptVersion: () => ScriptVersion
-  // const playerReady: () => Promise<void>
-  const formData: (obj: any) => string
-  const retrieveImageUrl: (element: Element) => { url: string; extension: string } | null
-  const isTyping: () => boolean
-  const getAid: (aid?: string) => string
-  const waitForForeground: (action: () => void) => void
+  function GM_setValue<T>(name: string, value: T): void
+  function GM_getValue<T>(name: string, defaultValue?: T): T
+  function GM_deleteValue(name: string): void
+  function GM_getResourceText(name: string): string
+  function GM_getResourceURL(name: string): string
 }
-export { }

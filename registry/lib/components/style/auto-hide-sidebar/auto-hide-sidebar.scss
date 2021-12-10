@@ -1,0 +1,20 @@
+body .be-settings {
+  &::before {
+    content: "";
+    position: fixed;
+    width: 8px;
+    height: 100vh;
+    top: 0;
+    left: 0;
+  }
+  &.settings-panel-dock-right::before {
+    left: unset;
+    right: 0;
+  }
+  > .sidebar {
+    transition: transform .2s ease-out;
+  }
+  &:not(:hover) > .sidebar {
+    transform: translateX(calc(-100% * var(--direction))) translateY(-50%);
+  }
+}

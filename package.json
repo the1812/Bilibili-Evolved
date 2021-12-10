@@ -1,46 +1,79 @@
 {
-  "name": "bilibili-evolved",
-  "description": "「 强大的哔哩哔哩增强脚本 」",
-  "main": "bilibili-evolved.user.js",
+  "name": "@bevo/core",
+  "description": "强大的哔哩哔哩增强脚本",
   "private": true,
-  "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.3",
-    "@babel/plugin-proposal-class-properties": "^7.12.1",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.1",
-    "@babel/plugin-proposal-optional-chaining": "^7.12.1",
-    "@babel/preset-typescript": "^7.12.1",
-    "@types/jquery": "^3.5.4",
-    "@types/lodash": "^4.14.165",
-    "@types/node": "^14.14.7",
-    "clean-css-cli": "^4.3.0",
-    "html-minifier": "^4.0.0",
-    "jszip": "^3.5.0",
-    "koa": "^2.13.1",
-    "sass": "^1.22.10",
-    "terser": "^5.3.8",
-    "typescript": "^4.0.5",
-    "vue": "^2.6.12",
-    "vuex": "^3.1.2"
-  },
+  "main": "dist/bilibili-evolved.user.js",
+  "author": "Grant Howard, Coulomb-G",
+  "license": "MIT",
   "scripts": {
-    "serve": "node script/server.js"
+    "build-core": "webpack --config ./webpack/webpack.prod.js --bail",
+    "build-features": "webpack --config ./registry/webpack/all.js --bail",
+    "lint": "eslint --config ./.eslintrc.js --quiet --fix \"src/**/*.@(js|ts|vue)\" \"registry/lib/**/*.@(js|ts|vue)\"",
+    "type": "tsc -p tsconfig.type-check.json --noEmit"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.6",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/preset-env": "^7.9.6",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/color": "^3.0.1",
+    "@types/lodash": "^4.14.172",
+    "@types/marked": "^1.2.0",
+    "@types/sortablejs": "^1.10.7",
+    "@types/webpack": "^4.41.6",
+    "@types/webpack-env": "^1.15.1",
+    "@typescript-eslint/eslint-plugin": "^4.29.2",
+    "@typescript-eslint/parser": "^4.29.2",
+    "autoprefixer": "^10.0.1",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^5.0.0",
+    "eslint": "7.11.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-vue": "^7.1.0",
+    "fast-sass-loader": "^2.0.0",
+    "html-webpack-plugin": "^5.0.0-alpha.7",
+    "postcss": "^8.1.0",
+    "postcss-loader": "^4.0.4",
+    "postcss-preset-env": "^6.7.0",
+    "raw-loader": "^4.0.1",
+    "sass": "^1.25.0",
+    "serve": "^13.0.2",
+    "style-loader": "^2.0.0",
+    "terser": ">=5.3.8 <6",
+    "terser-webpack-plugin": "^5.0.1",
+    "to-string-loader": "^1.2.0",
+    "typescript": "^4.4.4",
+    "url-loader": "^4.1.1",
+    "vue-loader": "^15.8.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^5.31.2",
+    "webpack-cli": "^4.6.0"
+  },
+  "dependencies": {
+    "@popperjs/core": "^2.6.0",
+    "color": "^3.1.2",
+    "fuse.js": "^6.4.6",
+    "jszip": "^3.7.1",
+    "lodash": "^4.17.21",
+    "marked": "^1.2.5",
+    "protobufjs": "^6.11.2",
+    "tippy.js": "^6.3.1",
+    "vue": "^2.6.11"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/the1812/Bilibili-Evolved.git"
   },
+  "bugs": {
+    "url": "https://github.com/the1812/Bilibili-Evolved/issues"
+  },
+  "homepage": "https://github.com/the1812/Bilibili-Evolved#readme",
   "keywords": [
     "userscript",
     "bilibili",
     "dark-theme",
     "touchscreen",
     "tampermonkey"
-  ],
-  "author": "Grant Howard, Coulomb-G",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/the1812/Bilibili-Evolved/issues"
-  },
-  "homepage": "https://github.com/the1812/Bilibili-Evolved#readme"
+  ]
 }
