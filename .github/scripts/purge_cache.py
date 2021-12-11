@@ -15,7 +15,12 @@ if __name__ == '__main__':
     work_space = os.environ.get('GITHUB_WORKSPACE')
     file_list = get_file_list(work_space)
     for file in file_list:
-        # https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/dist/bilibili-evolved.preview.user.js
+        # https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/dist/*
+        url = f'https://purge.jsdelivr.net/gh/the1812/Bilibili-Evolved/dist/{file}'
+        print(url)
+        print(requests.get(url).text)
+         # https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/*
         url = f'https://purge.jsdelivr.net/gh/the1812/Bilibili-Evolved/{file}'
         print(url)
         print(requests.get(url).text)
+        
