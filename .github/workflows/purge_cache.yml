@@ -1,15 +1,21 @@
 name: Purge Cache
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [ master, preview ]
+  workflow_dispatch:
 
 jobs:
-  speed:
+  pruge:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          python-version: 3.x
-      - run: pip install requests
-      - run: python ./.github/scripts/purge_cache.py
+          node-version: '16'
+
+      - name: Send Purge Request
+        run: node .github/scripts/purge-cache.js
