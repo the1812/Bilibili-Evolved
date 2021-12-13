@@ -1,5 +1,5 @@
-const { compilationInfo } = require('../../webpack/compilation-info')
-const https = require('https')
+import fetch from 'node-fetch'
+import { compilationInfo } from '../../webpack/compilation-info.js'
 
 const files = [
   'dist/bilibili-evolved.preview.user.js',
@@ -7,15 +7,10 @@ const files = [
 ]
 
 files.forEach(file => {
-  const path = `/gh/the1812/Bilibili-Evolved@${compilationInfo.branch}/${file}`
-  console.log('path:', path)
-  const request = https.request({
-    hostname: 'purge.jsdelivr.net',
-    path,
-    method: 'GET',
-  }, response => {
-    response.on('data', data => console.log(data))
-  })
-  request.on('error', error => console.error(error))
-  request.end()
+  const url = `https://purge.jsdelivr.net/gh/the1812/Bilibili-Evolved@${compilationInfo.branch}/${file}`
+
+  console.log('url:', url)
+  fetch(url)
+    .then(response => response.json()).then(json => console.log(json))
+    .catch(error => console.error(error))
 })

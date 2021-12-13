@@ -18,4 +18,4 @@ jobs:
           node-version: '16'
 
       - name: Send Purge Request
-        run: node .github/scripts/purge-cache.js
+        run: cd .github/scripts/ && yarn && node purge-cache.js
