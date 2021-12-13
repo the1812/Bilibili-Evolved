@@ -113,12 +113,21 @@ const parseHistoryItem = (item: any): HistoryItem => {
   const progress = item.progress === -1 ? 1 : (item.progress / item.duration)
   const https = (url: string) => url.replace('http:', 'https:')
   const time = new Date(item.view_at * 1000)
+  const cover = (() => {
+    if (item.cover) {
+      return https(item.cover)
+    }
+    if (item.covers) {
+      return https(item.covers[0])
+    }
+    return ''
+  })()
   const commonInfo = {
     title: item.title,
     viewAt: item.view_at * 1000,
     time,
     timeText: formatTime(time),
-    cover: item.cover ? https(item.cover) : https(item.covers[0]),
+    cover,
     covers: item.covers?.map(https) ?? [],
     progress,
     progressText: Number.isNaN(progress) ? null : `${fixed(progress * 100, 1)}%`,
