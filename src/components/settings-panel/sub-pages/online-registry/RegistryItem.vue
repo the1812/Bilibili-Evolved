@@ -131,6 +131,9 @@ export default Vue.extend({
           urls.map(async url => installFeature(url)),
         )
         this.checkInstalled()
+        if (this.item.type === 'pack') {
+          this.$emit('refresh')
+        }
       } catch (error) {
         logError(error)
       } finally {

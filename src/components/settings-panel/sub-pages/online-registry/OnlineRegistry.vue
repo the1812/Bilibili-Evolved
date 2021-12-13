@@ -44,7 +44,9 @@
       <RegistryItem
         v-for="item of filteredList"
         :key="item.name"
+        ref="items"
         :item="item"
+        @refresh="checkInstalled"
       />
       <!-- <RegistryItem
         v-for="item of packList"
@@ -160,6 +162,9 @@ export default Vue.extend({
       } finally {
         this.loading = false
       }
+    },
+    checkInstalled() {
+      this.$refs.items?.forEach((item: any) => item.checkInstalled())
     },
   },
 })
