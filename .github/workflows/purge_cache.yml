@@ -1,8 +1,6 @@
 name: Purge Cache
 
 on:
-  push:
-    branches: [ master, preview ]
   workflow_dispatch:
 
 jobs:
