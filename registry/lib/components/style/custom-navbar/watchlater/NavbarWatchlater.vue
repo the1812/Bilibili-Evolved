@@ -199,9 +199,10 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "../popup";
+
 .custom-navbar .watchlater-list {
-  min-height: 200px;
-  max-height: 600px;
+  @include navbar-popup-height();
   width: 380px;
   font-size: 12px;
   display: flex;
