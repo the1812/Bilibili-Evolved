@@ -129,6 +129,9 @@ export default Vue.extend({
   },
   methods: {
     toggleWatchlater,
+    popupRefresh() {
+      this.updateList()
+    },
     async updateList() {
       const rawList = await getWatchlaterList(true)
       if (!rawList) {

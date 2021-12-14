@@ -75,11 +75,12 @@ export default Vue.extend({
   },
   async created() {
     await this.fetchSettings()
-    if (this.settings.notify) {
-      this.notify()
-    }
+    this.notify()
   },
   methods: {
+    popupRefresh() {
+      this.notify()
+    },
     async fetchSettings() {
       const json = await getJsonWithCredentials(
         'https://api.vc.bilibili.com/link_setting/v1/link_setting/get?msg_notify=1&show_unfollowed_msg=1',
@@ -94,12 +95,17 @@ export default Vue.extend({
       }
     },
     async notify() {
-      const mainJson = await getJsonWithCredentials(
-        'https://api.bilibili.com/x/msgfeed/unread',
-      )
-      const messageJson = await getJsonWithCredentials(
-        'https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread',
-      )
+      if (!this.settings.notify) {
+        return
+      }
+      const [mainJson, messageJson] = await Promise.all([
+        getJsonWithCredentials(
+          'https://api.bilibili.com/x/msgfeed/unread',
+        ),
+        getJsonWithCredentials(
+          'https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread',
+        ),
+      ])
       mainJson.data.user_msg = messageJson.data.follow_unread || 0
       if (!this.settings.hideNotFollowedCount) {
         mainJson.data.user_msg += messageJson.data.unfollow_unread || 0

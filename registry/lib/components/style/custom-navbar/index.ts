@@ -65,6 +65,10 @@ export const component: ComponentMetadata = {
       defaultValue: true,
       displayName: '新标签页打开',
     },
+    refreshOnPopup: {
+      defaultValue: true,
+      displayName: '自动刷新数据',
+    },
     openInNewTabOverrides: {
       defaultValue: { logo: false },
       displayName: '新标签页打开设置覆盖',
