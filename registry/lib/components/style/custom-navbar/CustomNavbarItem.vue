@@ -106,12 +106,16 @@ export default Vue.extend({
         'iframe-container': item.iframeName,
       }
     },
-    triggerPopupShow: lodash.debounce(function trigger() {
+    triggerPopupShow: lodash.debounce(function trigger(initialPopup: boolean) {
       const { popup } = this.$refs
       if (!popup) {
         return
       }
-      if ('popupShow' in popup && typeof popup.popupShow === 'function') {
+      const allowRefresh = CustomNavbarItem.navbarOptions.refreshOnPopup && popup.popupRefresh && typeof popup.popupRefresh === 'function'
+      if (!initialPopup && allowRefresh) {
+        popup.popupRefresh()
+      }
+      if (popup.popupShow && typeof popup.popupShow === 'function') {
         popup.popupShow()
       }
     }, 300),
@@ -119,12 +123,18 @@ export default Vue.extend({
       const { item } = this as {
         item: CustomNavbarItem
       }
-      if (!item.requestedPopup && !item.disabled /* && !component.active */) {
-        item.requestedPopup = true
-        // await this.$nextTick()
-        // this.initPopper()
+      /** 惰性加载的, 要在鼠标经过时加载 popup */
+      if (item.disabled) {
+        return
       }
-      this.triggerPopupShow()
+      if (!item.requestedPopup) {
+        item.requestedPopup = true
+        console.log('requestedPopup', true)
+        this.triggerPopupShow(true)
+        return
+      }
+      console.log('requestedPopup', false)
+      this.triggerPopupShow(false)
     },
     // async initPopper() {
     //   const { popupContainer } = this.$refs

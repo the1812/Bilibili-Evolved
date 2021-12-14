@@ -1,0 +1,5 @@
+@mixin navbar-popup-height {
+  height: 600px;
+  min-height: 200px;
+  max-height: calc(100vh - var(--navbar-height) - 12px);
+}
