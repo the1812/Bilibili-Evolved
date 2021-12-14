@@ -10,7 +10,7 @@ body:
     id: feature
     attributes:
       label: 关于哪一项功能
-      description: 可以在设置中尝试开启/关闭某项功能来排查
+      description: (指本脚本的某项具体功能, 不是指 b 站的) 可以在设置中尝试开启 / 关闭某项功能来排查
       placeholder: 请输入
     validations:
       required: true
@@ -18,7 +18,7 @@ body:
     id: description
     attributes:
       label: 问题描述
-      description: 如何重现此问题, 在哪个页面里出现这个问题, 比如视频相关的可以提供一下av号
+      description: 如何重现此问题, 在哪个页面里出现这个问题, 比如视频相关的可以提供一下 av / BV 号
       placeholder: 请输入
     validations:
       required: true
@@ -26,7 +26,7 @@ body:
     id: script-version
     attributes:
       label: 脚本版本
-      description: 可在设置面板底部找到脚本版本信息
+      description: 可在设置面板的关于弹窗中找到脚本版本信息
       placeholder: 请输入
     validations:
       required: true
