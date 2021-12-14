@@ -57,7 +57,7 @@ body:
     id: logs
     attributes:
       label: 错误信息
-      description: 脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出
+      description: 脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出, 在过滤里填入 `-/^DevTools/ -jinkela -[Report -BY_CLIENT`, 剩下的信息就可以粘贴过来. ![image](https://user-images.githubusercontent.com/26504152/145991238-c3f3bc87-6cda-4192-afd1-c25843afe0db.png)
       render: shell
       placeholder: 请输入
     validations:
