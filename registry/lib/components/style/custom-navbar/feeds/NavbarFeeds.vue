@@ -61,9 +61,11 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
+@import "../popup";
+
 .navbar-feeds {
   width: 380px;
-  height: 600px;
+  @include navbar-popup-height();
   line-height: normal;
   white-space: nowrap;
   box-sizing: border-box;

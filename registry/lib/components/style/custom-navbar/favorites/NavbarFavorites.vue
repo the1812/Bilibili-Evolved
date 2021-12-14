@@ -273,9 +273,11 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "../popup";
+
 .custom-navbar .favorites-list {
   width: 380px;
-  height: 600px;
+  @include navbar-popup-height();
   font-size: 12px;
   @include v-stretch();
   justify-content: center;

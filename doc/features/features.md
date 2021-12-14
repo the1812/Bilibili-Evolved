@@ -840,6 +840,15 @@ by FoundTheWOUT
 
 为自定义顶栏添加一个夜间模式开关, 方便快速切换夜间模式.
 
+### [快捷键扩展 - 夜间模式](../../registry/dist/plugins/utils/keymap-dark-mode.js)
+`keymap.actions.darkMode`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2/registry/dist/plugins/utils/keymap-dark-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-dark-mode.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/v2/registry/dist/plugins/utils/keymap-dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-dark-mode.js)
+
+在快捷键的动作列表里添加一个 "夜间模式", 可以通过快捷键切换夜间模式
+
 ### [快捷键扩展 - 无动作](../../registry/dist/plugins/utils/keymap-empty-action.ts.js)
 `keymap.actions.empty`
 

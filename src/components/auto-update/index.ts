@@ -154,7 +154,7 @@ export const component: ComponentMetadata = {
     maxUpdateCount: {
       displayName: '单次最大更新量 (个)',
       defaultValue: 4,
-      hidden: true,
+      // hidden: true,
     },
   },
   entry: async ({ settings: { options }, coreApis: { pluginApis } }) => {

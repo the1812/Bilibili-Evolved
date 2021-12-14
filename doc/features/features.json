@@ -706,6 +706,14 @@
   },
   {
     "type": "plugin",
+    "name": "keymap.actions.darkMode",
+    "displayName": "快捷键扩展 - 夜间模式",
+    "description": "在快捷键的动作列表里添加一个 \"夜间模式\", 可以通过快捷键切换夜间模式",
+    "fullRelativePath": "../../registry/dist/plugins/utils/keymap-dark-mode.js",
+    "fullAbsolutePath": "registry/dist/plugins/utils/keymap-dark-mode.js"
+  },
+  {
+    "type": "plugin",
     "name": "keymap.actions.empty",
     "displayName": "快捷键扩展 - 无动作",
     "description": "在快捷键的动作列表里添加一个 \"无动作\", 将按键绑定到这个上面就可以阻止原有的快捷键行为.",

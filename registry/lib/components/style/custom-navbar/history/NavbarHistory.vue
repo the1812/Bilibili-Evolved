@@ -215,9 +215,11 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "../popup";
+
 .history-list {
   width: 350px;
-  height: 600px;
+  @include navbar-popup-height();
   font-size: 12px;
   padding: 0;
   margin: 0;

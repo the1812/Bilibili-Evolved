@@ -84,6 +84,7 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
     openInNewTabOverrides: Record<string, boolean>
     seasonLogo: boolean
     touch: boolean
+    refreshOnPopup: boolean
   }
   constructor(init: CustomNavbarItemInit) {
     Object.assign(this, init)
