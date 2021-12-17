@@ -1,6 +1,9 @@
 @mixin shadow {
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   // box-shadow: #0002 0 1px 10px 1px;
+  body.dark & {
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+  }
 }
 @mixin h-center($gap: 0) {
   display: flex;
@@ -69,14 +72,12 @@
   background-color: #fff;
   color: black;
   border-radius: $radius;
-  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   border: 1px solid #8882;
   box-sizing: border-box;
-  // box-shadow: rgba(0, 0, 0, 0.12) 0 4px 8px 0px;
+  @include shadow();
   body.dark & {
     background-color: #282828;
     color: #eee;
-    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
   }
 }
 @mixin popup($radius: 8px) {
@@ -118,6 +119,9 @@
     fill: #eee;
     stroke: #eee;
   }
+}
+@mixin semibold {
+  font-weight: 600;
 }
 @mixin default-background-color {
   background-color: #fff;
