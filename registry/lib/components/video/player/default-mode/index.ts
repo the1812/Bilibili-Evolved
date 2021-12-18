@@ -41,16 +41,18 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
     return
   }
   const action = actions.get(options.mode)
-  const onplay = () => {
-    const isNormalMode = !dq('body[class*=player-mode-]')
-    if (isNormalMode) {
-      action()
-    }
-  }
+  // https://github.com/the1812/Bilibili-Evolved/issues/2408
+  // 也许以前切P是会刷新页面，但现在(2.7+)的播放器切P是不刷新页面的，所以不需要判断
+  // const onplay = () => {
+  //   const isNormalMode = !dq('body[class*=player-mode-]')
+  //   if (isNormalMode) {
+  //     action()
+  //   }
+  // }
   if (options.applyOnPlay && !playerAgent.isAutoPlay()) {
-    video.addEventListener('play', onplay, { once: true })
+    video.addEventListener('play', action, { once: true })
   } else {
-    onplay()
+    action()
   }
 }
 export const component: ComponentMetadata = {
