@@ -3,7 +3,7 @@ import { select } from './spin-query'
 import { matchCurrentPage, playerUrls } from './utils/urls'
 
 type ObserverTarget = string | Element[] | Element
-const resolveTargets = (target: ObserverTarget) => {
+export const resolveTargets = (target: ObserverTarget) => {
   if (typeof target === 'string') {
     return dqa(target)
   }
@@ -12,15 +12,15 @@ const resolveTargets = (target: ObserverTarget) => {
   }
   return [target]
 }
-const mutationObserve = (
+export const mutationObserve = (
   targets: Element[],
   config: MutationObserverInit,
   callback: MutationCallback,
-): [MutationObserver, MutationObserverInit] => {
+) => {
   const observer = new MutationObserver(callback)
   targets.forEach(it => observer.observe(it, config))
   callback([], observer)
-  return [observer, config]
+  return [observer, config] as const
 }
 /** 监听直接子元素
  * @param target 监听目标
@@ -140,14 +140,14 @@ export const allMutations = (callback: MutationCallback) => {
   return everyNodesObserver
 }
 
-const intersectionObserve = (
+export const intersectionObserve = (
   targets: Element[],
   config: IntersectionObserverInit,
   callback: IntersectionObserverCallback,
 ) => {
   const observer = new IntersectionObserver(callback, config)
   targets.forEach(it => observer.observe(it))
-  return [observer, config]
+  return [observer, config] as const
 }
 /**
  * 监听元素进入视图内/变为可见
@@ -175,14 +175,14 @@ export const visibleInside = (
   rootMargin: margin,
 }, callback)
 
-const resizeObserve = (
+export const resizeObserve = (
   targets: Element[],
   config: ResizeObserverOptions,
   callback: ResizeObserverCallback,
 ) => {
   const observer = new ResizeObserver(callback)
   targets.forEach(it => observer.observe(it, config))
-  return [observer, config]
+  return [observer, config] as const
 }
 /**
  * 监听元素自身的尺寸变化

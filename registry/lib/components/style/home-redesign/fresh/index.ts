@@ -24,6 +24,10 @@ export const component: ComponentMetadata = {
       defaultValue: {},
       hidden: true,
     },
+    personalized: {
+      displayName: '个性化推荐',
+      defaultValue: false,
+    },
   },
   instantStyles: [
     {

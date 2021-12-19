@@ -71,25 +71,49 @@
       </div>
     </div>
     <div v-if="showStats" class="stats">
-      <template v-if="like && !vertical">
-        <VIcon icon="like-outline" :size="18"></VIcon>
-        {{ like }}
+      <template v-if="vertical">
+        <template v-if="playCount">
+          <VIcon icon="play" :size="statsIconSize"></VIcon>
+          {{ playCount }}
+        </template>
+        <template v-if="danmakuCount">
+          <VIcon icon="danmaku" :size="statsIconSize"></VIcon>
+          {{ danmakuCount }}
+        </template>
+        <template v-if="like">
+          <VIcon icon="like-outline" :size="statsIconSize"></VIcon>
+          {{ like }}
+        </template>
+        <template v-if="coins">
+          <VIcon icon="coin-outline" :size="statsIconSize"></VIcon>
+          {{ coins }}
+        </template>
+        <template v-if="favorites">
+          <VIcon icon="favorites-outline" :size="statsIconSize"></VIcon>
+          {{ favorites }}
+        </template>
       </template>
-      <template v-if="coins && !vertical">
-        <VIcon icon="coin-outline" :size="18"></VIcon>
-        {{ coins }}
-      </template>
-      <template v-if="favorites">
-        <VIcon icon="favorites-outline" :size="18"></VIcon>
-        {{ favorites }}
-      </template>
-      <template v-if="playCount">
-        <VIcon icon="play" :size="18"></VIcon>
-        {{ playCount }}
-      </template>
-      <template v-if="danmakuCount">
-        <VIcon icon="danmaku" :size="18"></VIcon>
-        {{ danmakuCount }}
+      <template v-else>
+        <template v-if="like">
+          <VIcon icon="like-outline" :size="statsIconSize"></VIcon>
+          {{ like }}
+        </template>
+        <template v-if="coins">
+          <VIcon icon="coin-outline" :size="statsIconSize"></VIcon>
+          {{ coins }}
+        </template>
+        <template v-if="favorites">
+          <VIcon icon="favorites-outline" :size="statsIconSize"></VIcon>
+          {{ favorites }}
+        </template>
+        <template v-if="playCount">
+          <VIcon icon="play" :size="statsIconSize"></VIcon>
+          {{ playCount }}
+        </template>
+        <template v-if="danmakuCount">
+          <VIcon icon="danmaku" :size="statsIconSize"></VIcon>
+          {{ danmakuCount }}
+        </template>
       </template>
     </div>
   </a>
@@ -146,8 +170,11 @@ export default {
       upID: 0,
       epID: 0,
       cooperation: [],
+      pubTime: 0,
+      pubTimeText: '',
       ...lodash.omit(this.data, 'watchlater'),
       watchlaterInit: this.data.watchlater,
+      statsIconSize: 14,
     }
   },
   computed: {
@@ -204,11 +231,14 @@ export default {
   }
   &.vertical {
     grid-template-columns: auto auto;
-    grid-template-rows: 1fr auto auto;
+    grid-template-rows: auto 1fr auto auto;
     grid-template-areas:
       'cover cover'
       'title title'
-      'up up';
+      'up up'
+      'stats stats';
+    gap: 4px;
+
     .description,
     .topics {
       display: none;
@@ -224,8 +254,8 @@ export default {
       word-break: break-all;
       white-space: normal;
       line-height: 1.5;
-      margin: 8px 0;
-      font-size: 10pt;
+      margin: 4px 0;
+      font-size: 14px;
     }
     .up {
       align-self: start;
@@ -247,9 +277,10 @@ export default {
       margin: 0 12px 8px 8px;
     }
     .stats {
+      grid-area: stats;
       align-self: end;
       justify-self: start;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       margin-right: 0;
     }
   }
@@ -266,7 +297,6 @@ export default {
   &:hover {
     .cover {
       transform: scale(1.05);
-      transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
     }
     .publish-time-summary,
     .duration,
@@ -289,6 +319,7 @@ export default {
     height: calc(var(--card-width) / 20 * 12);
     overflow: hidden;
     .cover {
+      transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -346,8 +377,9 @@ export default {
   }
   .title {
     grid-area: title;
-    font-size: 12pt;
-    font-weight: bold;
+    font-size: 16px;
+    // font-weight: bold;
+    @include semi-bold();
     color: inherit;
     padding: 0 10px;
     white-space: nowrap;
@@ -412,7 +444,7 @@ export default {
       background-color: transparent;
       padding: 0;
       .be-icon {
-        font-size: 14pt;
+        font-size: 18px;
         opacity: 0.75;
       }
     }
@@ -424,6 +456,7 @@ export default {
   }
   .up {
     margin-left: 12px;
+    margin-bottom: 6px;
     display: flex;
     align-items: center;
     padding: 2px;
@@ -447,7 +480,7 @@ export default {
     }
   }
   &.no-stats .up {
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
   .cooperation {
     margin-left: 12px;
@@ -485,11 +518,15 @@ export default {
     }
   }
   .stats {
+    font-size: 11px;
     justify-self: self-end;
     margin-right: 12px;
     display: flex;
     align-items: center;
     opacity: 0.5;
+    > :nth-child(n + 3) {
+      display: none;
+    }
     .be-icon {
       // font-size: 12pt;
       margin: 0 4px 0 12px;

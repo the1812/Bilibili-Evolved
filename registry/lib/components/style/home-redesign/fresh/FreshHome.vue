@@ -32,7 +32,7 @@ export default Vue.extend({
 @import "common";
 
 .fresh-home {
-  padding: 24px;
+  padding: 12px;
   width: 100%;
   max-width: var(--home-max-width, unset);
   @include v-stretch();
@@ -45,8 +45,32 @@ export default Vue.extend({
       font-weight: bold;
       font-size: 20px;
     }
+    &-pagination {
+      @include h-center(8px);
+      .be-button {
+        .be-icon {
+          transition: .3s ease-out;
+        }
+        .be-iconfont-left-arrow {
+          transform: translateX(-0.5px);
+        }
+        .be-iconfont-right-arrow {
+          transform: translateX(0.5px);
+        }
+        .mdi-reload {
+          margin: 1px;
+          position: relative;
+          top: 0.5px;
+          left: 0.5px;
+        }
+        &:hover .mdi-reload {
+          transform: rotate(1turn);
+        }
+      }
+    }
     &-more {
-      @include semibold();
+      @include semi-bold();
+      font-size: 13px;
       .be-icon {
         transition: .3s ease-out;
         margin-right: 6px;

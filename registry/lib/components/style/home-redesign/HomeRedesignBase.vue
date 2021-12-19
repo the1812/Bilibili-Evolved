@@ -16,8 +16,9 @@ export default Vue.extend({
   --home-background-color: #fff;
   --home-color: #000;
   --home-max-width: var(--home-max-width-override, 1440px);
+  --home-content-height: 250px;
   --home-card-radius: 12px;
-  --home-card-shadow: 0 0 0 1px #8881, 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  --home-card-shadow: inset 0 0 0 1px #8882, 0 4px 12px 0 rgba(0, 0, 0, 0.05);
   background-color: var(--home-base-color);
   color: var(--home-color);
   font-size: 12px;
@@ -29,7 +30,7 @@ export default Vue.extend({
     --home-base-color: #181818;
     --home-background-color: #282828;
     --home-color: #eee;
-    --home-card-shadow: 0 0 0 1px #8882, 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+    --home-card-shadow: inset 0 0 0 1px #8882, 0 4px 12px 0 rgba(0, 0, 0, 0.2);
   }
 }
 html {

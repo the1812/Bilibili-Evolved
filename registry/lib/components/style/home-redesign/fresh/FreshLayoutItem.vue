@@ -10,12 +10,8 @@
   </div>
 </template>
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
-import { FreshLayoutItemSettings } from './layouts/fresh-layout-item'
+import { freshHomeOptions } from './types'
 
-const options = getComponentSettings('freshHome').options as {
-  layoutOptions: Record<string, FreshLayoutItemSettings>
-}
 export default Vue.extend({
   props: {
     item: {
@@ -25,7 +21,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      options: options.layoutOptions[this.item.name] ?? {},
+      options: freshHomeOptions.layoutOptions[this.item.name] ?? {},
     }
   },
 })
@@ -34,6 +30,7 @@ export default Vue.extend({
 .fresh-home {
   &-content-layout-item {
     flex: 0 0 auto;
+    padding: 12px;
       &.linebreak {
         flex: 1 0 100%;
       }

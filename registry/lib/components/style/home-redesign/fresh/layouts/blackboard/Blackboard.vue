@@ -6,7 +6,7 @@
       </div>
       <a class="fresh-home-header-more" href="https://www.bilibili.com/blackboard/x/act_list/" target="_blank">
         <VButton round>
-          <VIcon icon="mdi-dots-horizontal" :size="18"></VIcon>
+          <VIcon icon="mdi-dots-horizontal" :size="20"></VIcon>
           更多
         </VButton>
       </a>
@@ -123,7 +123,7 @@ $max-card-count: 16;
     &-cards {
       display: flex;
       --blackboard-width: 350px;
-      --blackboard-height: 250px;
+      --blackboard-height: var(--home-content-height);
       --image-height: 197px;
       width: var(--blackboard-width);
       height: var(--blackboard-height);
@@ -139,8 +139,9 @@ $max-card-count: 16;
       position: relative;
       display: block;
       transition: 0.8s cubic-bezier(0.44, 0.29, 0.13, 1);
-      color: inherit;
-      body.dark & {
+      &,
+      body.dark &,
+      &:hover {
         color: inherit !important;
       }
       &-image {
@@ -159,7 +160,7 @@ $max-card-count: 16;
         transform: translateX(-50%);
         padding: 0 16px;
         font-size: 14px;
-        font-weight: bold;
+        @include semi-bold();
         line-height: calc(var(--blackboard-height) - var(--image-height) - #{$bottom});
         border-radius: 14px;
         max-width: var(--blackboard-width);
