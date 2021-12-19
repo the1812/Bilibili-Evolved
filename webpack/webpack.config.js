@@ -50,16 +50,13 @@ const getDefaultConfig = (srcFolder) => {
     module: {
       rules: [
         {
-          test: /\.woff2$/,
-          loader: 'url-loader',
-          options: {
-            mimetype: 'font/woff2',
-          },
+          test: /\.(woff2|jpg|png|gif)$/,
+          type: 'asset/inline',
           include: [src],
         },
         {
-          test: /\.svg$|\.md$/,
-          loader: 'raw-loader',
+          test: /\.(svg|md)$/,
+          type: 'asset/source',
           include: [src],
         },
         {
