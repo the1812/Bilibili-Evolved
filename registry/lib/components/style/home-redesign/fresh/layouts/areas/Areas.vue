@@ -88,6 +88,7 @@ export default Vue.extend({
     border-radius: var(--home-card-radius);
     background-color: var(--home-background-color);
     box-shadow: var(--home-card-shadow);
+    border: var(--home-card-border);
     overflow: hidden;
     @include v-stretch();
     &-primary {
@@ -109,7 +110,7 @@ export default Vue.extend({
     }
     &-other {
       flex: 1;
-      padding: 8px;
+      padding: 6px;
       @include h-stretch();
       a {
         flex: 1 0 0;

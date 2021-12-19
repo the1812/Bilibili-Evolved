@@ -22,7 +22,8 @@ body {
   --home-max-width: var(--home-max-width-override, 1440px);
   --home-content-height: 250px;
   --home-card-radius: 12px;
-  --home-card-shadow: inset 0 0 0 1px #8882, 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  --home-card-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  --home-card-border: 1px solid #8882;
   background-color: var(--home-base-color);
   color: var(--home-color);
   font-size: 12px;
@@ -34,7 +35,7 @@ body {
     --home-base-color: #181818;
     --home-background-color: #282828;
     --home-color: #eee;
-    --home-card-shadow: inset 0 0 0 1px #8882, 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+    --home-card-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
   }
 }
 html {

@@ -123,11 +123,13 @@ $max-card-count: 16;
     &-cards {
       display: flex;
       --blackboard-width: 350px;
+      --blackboard-width-without-border: calc(var(--blackboard-width) - 2px);
       --blackboard-height: var(--home-content-height);
       --image-height: 197px;
       width: var(--blackboard-width);
       height: var(--blackboard-height);
       box-shadow: var(--home-card-shadow);
+      border: var(--home-card-border);
       border-radius: var(--home-card-radius);
       background-color: var(--home-background-color);
       overflow: hidden;
@@ -179,9 +181,10 @@ $max-card-count: 16;
           width: 40px;
         }
         &:checked:nth-of-type(#{$i}) ~ .fresh-home-blackboard-cards .fresh-home-blackboard-card {
-          transform: translateX(calc(-1 * #{$i - 1} * var(--blackboard-width))) scale(0.9);
+          transform:
+            translateX(calc(-1 * #{$i - 1} * var(--blackboard-width-without-border))) scale(0.9);
           &:nth-of-type(#{$i}) {
-            transform: translateX(calc(-1 * #{$i - 1} * var(--blackboard-width)));
+            transform: translateX(calc(-1 * #{$i - 1} * var(--blackboard-width-without-border)));
             img {
               border-radius: var(--home-card-radius) var(--home-card-radius) 0 0;
             }
