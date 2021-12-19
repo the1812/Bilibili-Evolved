@@ -5,13 +5,13 @@
         {{ title }}
       </div>
       <div class="fresh-home-header-pagination">
-        <VButton icon @click="reload">
+        <VButton icon title="刷新" @click="reload">
           <VIcon icon="mdi-reload" :size="18" />
         </VButton>
-        <VButton icon @click="$refs.videoList.offsetPage(-1)">
+        <VButton icon title="上一页" @click="$refs.videoList.offsetPage(-1)">
           <VIcon icon="left-arrow" :size="20" />
         </VButton>
-        <VButton icon @click="$refs.videoList.offsetPage(1)">
+        <VButton icon title="下一页" @click="$refs.videoList.offsetPage(1)">
           <VIcon icon="right-arrow" :size="20" />
         </VButton>
       </div>
@@ -71,7 +71,6 @@ export default Vue.extend({
 
 .fresh-home-trending {
   @include v-stretch();
-  height: 100%;
   &-content {
     flex-grow: 1;
     display: flex;

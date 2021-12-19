@@ -30,6 +30,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "tabs";
 
 .fresh-home {
   padding: 12px;
@@ -40,6 +41,17 @@ export default Vue.extend({
     @include h-center();
     justify-content: space-between;
     margin-bottom: 16px;
+    &-center-area {
+      flex: 1;
+      margin: 0 24px;
+      @include h-center();
+    }
+    &-grow {
+      flex: 1;
+    }
+    &-tabs {
+      @include tabs-style();
+    }
     &-title {
       color: var(--home-color);
       font-weight: bold;
@@ -68,14 +80,19 @@ export default Vue.extend({
         }
       }
     }
-    &-more {
+    &-icon-button {
       @include semi-bold();
       font-size: 13px;
+      &.be-button,
+      .be-button {
+        padding-left: 4px !important;
+      }
       .be-icon {
+        font-weight: normal;
         transition: .3s ease-out;
         margin-right: 6px;
       }
-      &:hover .be-icon {
+      &.rotate:hover .be-icon {
         transform: rotate(0.5turn);
       }
     }

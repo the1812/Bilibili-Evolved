@@ -524,7 +524,7 @@ export default {
     display: flex;
     align-items: center;
     opacity: 0.5;
-    > :nth-child(n + 3) {
+    > :nth-child(n + 4) {
       display: none;
     }
     .be-icon {

@@ -4,7 +4,7 @@
       <div class="fresh-home-header-title">
         活动
       </div>
-      <a class="fresh-home-header-more" href="https://www.bilibili.com/blackboard/x/act_list/" target="_blank">
+      <a class="fresh-home-header-icon-button rotate" href="https://www.bilibili.com/blackboard/x/act_list/" target="_blank">
         <VButton round>
           <VIcon icon="mdi-dots-horizontal" :size="20"></VIcon>
           更多

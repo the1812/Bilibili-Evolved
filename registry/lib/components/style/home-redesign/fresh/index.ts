@@ -21,7 +21,11 @@ export const component: ComponentMetadata = {
   options: {
     layoutOptions: {
       displayName: '版块设置',
-      defaultValue: {},
+      defaultValue: {
+        trending: {
+          linebreak: true,
+        },
+      },
       hidden: true,
     },
     personalized: {

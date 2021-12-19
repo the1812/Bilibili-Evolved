@@ -1,0 +1,66 @@
+@mixin tabs-style {
+  .default-tabs {
+    display: flex;
+    padding: 6px 8px;
+    // margin-bottom: 8px;
+    .default-tab {
+      font-size: 14px;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+      @include text-color();
+      &:not(:last-child) {
+        margin-right: 16px;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: calc(100% + 4px);
+        left: 50%;
+        display: block;
+        height: 3px;
+        border-radius: 2px;
+        width: 80%;
+        background-color: var(--theme-color);
+        transition: transform 0.2s ease-out;
+        transform: translateX(-50%) scaleX(0);
+      }
+      &-name {
+        transition: transform 0.2s ease-out;
+        opacity: 0.5;
+      }
+      &.selected {
+        .default-tab-name {
+          font-weight: bold;
+          transform: scale(1.1);
+          opacity: 1;
+        }
+      }
+      &.selected::after {
+        transform: translateX(-50%) scaleX(1);
+      }
+      &:not(.selected)[data-count]::before {
+        content: attr(data-count);
+        position: absolute;
+        bottom: calc(100% + 2px);
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px;
+        font-size: 11px;
+        border-radius: 10px;
+        background-color: #fff;
+        border: 1px solid #8882;
+        height: 10px;
+        min-width: 10px;
+        box-sizing: content-box;
+        line-height: 1;
+        body.dark & {
+          background-color: #333;
+        }
+      }
+    }
+  }
+}

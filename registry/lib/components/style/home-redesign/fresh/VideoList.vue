@@ -119,6 +119,7 @@ export default Vue.extend({
     @include h-center();
     @include no-scrollbar();
     flex: 1;
+    min-height: calc(var(--home-content-height) + var(--card-padding) * 2);
   }
   &-empty {
     margin: var(--card-padding);
