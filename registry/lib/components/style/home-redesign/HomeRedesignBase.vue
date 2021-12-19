@@ -11,6 +11,10 @@ export default Vue.extend({
 <style lang="scss">
 @import "common";
 
+body {
+  @include v-stretch();
+  min-height: 100vh;
+}
 .home-redesign-base {
   --home-base-color: #fff;
   --home-background-color: #fff;
@@ -22,7 +26,7 @@ export default Vue.extend({
   background-color: var(--home-base-color);
   color: var(--home-color);
   font-size: 12px;
-  min-height: 100vh;
+  flex-grow: 1;
   line-height: normal;
   @include v-center();
 

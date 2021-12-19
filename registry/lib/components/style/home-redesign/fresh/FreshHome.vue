@@ -33,7 +33,7 @@ export default Vue.extend({
 @import "tabs";
 
 .fresh-home {
-  padding: 12px;
+  padding: 16px 36px;
   width: 100%;
   max-width: var(--home-max-width, unset);
   @include v-stretch();
@@ -51,11 +51,15 @@ export default Vue.extend({
     }
     &-tabs {
       @include tabs-style();
+      .default-tabs {
+        padding: 4px 8px;
+      }
     }
     &-title {
       color: var(--home-color);
       font-weight: bold;
       font-size: 20px;
+      line-height: 28px;
     }
     &-pagination {
       @include h-center(8px);
@@ -85,7 +89,7 @@ export default Vue.extend({
       font-size: 13px;
       &.be-button,
       .be-button {
-        padding-left: 4px !important;
+        padding-left: 6px !important;
       }
       .be-icon {
         font-weight: normal;
@@ -100,7 +104,7 @@ export default Vue.extend({
   &-content-layout {
     @include h-stretch();
     flex-wrap: wrap;
-    gap: 12px 24px;
+    gap: 8px 16px;
   }
 }
 </style>

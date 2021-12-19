@@ -25,6 +25,9 @@ export const component: ComponentMetadata = {
         trending: {
           linebreak: true,
         },
+        areas: {
+          linebreak: true,
+        },
       },
       hidden: true,
     },
