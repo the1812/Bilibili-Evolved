@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-navbar" :class="styles" role="navigation">
+  <div class="custom-navbar" :class="styles" role="navigation" :style="cssVars">
     <div class="left-pad padding"></div>
     <div class="custom-navbar-items" role="list">
       <NavbarItem v-for="item of items" :key="item.name" :item="item"></NavbarItem>
@@ -19,6 +19,7 @@ import {
   CustomNavbarItems,
   CustomNavbarRenderedItems,
 } from './custom-navbar-item'
+import { getComponentSettings } from '@/core/settings'
 import CustomNavbarItemComponent from './CustomNavbarItem.vue'
 import { checkTransparentFill } from './transparent-fill'
 
@@ -68,6 +69,19 @@ export default Vue.extend({
       }
     },
   },
+  computed: {
+    cssVars() {
+      var opacity = getComponentSettings("customNavbar").options.blurOpacity
+      //console.log(opacity);
+      
+      if (opacity.substring(opacity.length-2) !== "px"){
+        opacity += "px"
+      }
+      return {
+        "--navbar-blur-opacity": opacity
+      };
+    }
+  }
 })
 </script>
 
@@ -80,7 +94,6 @@ html {
   --navbar-foreground: #555;
   --navbar-background: white;
   --navbar-bounds-padding: 10%;
-  // --navbar-blur-opacity: 0.7;
   --navbar-icon-size: 24px;
 }
 
@@ -176,7 +189,7 @@ body.fixed-navbar {
   }
 
   &.blur:not(.transparent) {
-    backdrop-filter: blur(24px);
+    backdrop-filter: blur(var(--navbar-blur-opacity));
     --navbar-background: #fffc;
   }
 
