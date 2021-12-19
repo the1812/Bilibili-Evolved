@@ -12,6 +12,7 @@
 import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import { registerAndGetData } from '@/plugins/data'
+import { getComponentSettings } from '@/core/settings'
 import { getBuiltInItems } from './built-in-items'
 import {
   CustomNavbarItemInit,
@@ -19,7 +20,6 @@ import {
   CustomNavbarItems,
   CustomNavbarRenderedItems,
 } from './custom-navbar-item'
-import { getComponentSettings } from '@/core/settings'
 import CustomNavbarItemComponent from './CustomNavbarItem.vue'
 import { checkTransparentFill } from './transparent-fill'
 
@@ -71,17 +71,17 @@ export default Vue.extend({
   },
   computed: {
     cssVars() {
-      var opacity = getComponentSettings("customNavbar").options.blurOpacity
-      //console.log(opacity);
-      
-      if (opacity.substring(opacity.length-2) !== "px"){
-        opacity += "px"
+      let opacity = getComponentSettings('customNavbar').options.blurOpacity
+      // console.log(opacity);
+
+      if (opacity.substring(opacity.length - 2) !== 'px') {
+        opacity += 'px'
       }
       return {
-        "--navbar-blur-opacity": opacity
-      };
-    }
-  }
+        '--navbar-blur-opacity': opacity,
+      }
+    },
+  },
 })
 </script>
 

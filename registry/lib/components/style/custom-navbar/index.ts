@@ -49,9 +49,9 @@ export const component: ComponentMetadata = {
       defaultValue: false,
       displayName: '背景模糊',
     },
-    blurOpacity:{
-      defaultValue: "24px",
-      displayName: '模糊大小'
+    blurOpacity: {
+      defaultValue: '24px',
+      displayName: '模糊大小',
     },
     shadow: {
       defaultValue: true,
