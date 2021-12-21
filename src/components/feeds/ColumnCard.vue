@@ -46,7 +46,7 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "common";
 .column-card {
   width: 356px;
