@@ -176,7 +176,10 @@ export default Vue.extend({
   methods: {
     getOnlineActions: lodash.debounce(getOnlineActions, 200),
     getActions,
-    async handleEnter() {
+    async handleEnter(e: KeyboardEvent) {
+      if (e.isComposing) {
+        return
+      }
       if (this.actions.length > 0 && !this.isHistory) {
         const [first] = this.actions as LaunchBarAction[]
         if (first.explicitSelect === false) {
