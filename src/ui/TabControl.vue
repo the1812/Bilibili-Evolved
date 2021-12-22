@@ -24,6 +24,7 @@
         v-if="moreLink !== null && moreLink !== undefined"
         :href="typeof moreLink === 'function' ? moreLink(selectedTab) : moreLink"
         class="be-more-link"
+        target="_blank"
       >
         <VButton :disabled="!moreLink" round>
           <slot name="more-link">
