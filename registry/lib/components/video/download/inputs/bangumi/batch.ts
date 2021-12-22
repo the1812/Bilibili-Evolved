@@ -11,6 +11,7 @@ export const bangumiBatchInput: DownloadVideoInput = {
   name: 'bangumi.batch',
   displayName: '当前番剧 (多P)',
   match: bangumiUrls,
+  batch: true,
   getInputs: async instance => (instance?.checkedInputItems ?? []),
   component: async () => createEpisodesPicker(async instance => {
     const metaUrl = document.querySelector("meta[property='og:url']")

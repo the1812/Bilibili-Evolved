@@ -23,7 +23,13 @@ export interface DownloadVideoInputItem {
 }
 /** 页面数据提供者 */
 export interface DownloadVideoInput<InputParameter = any> extends VueInstanceInput, WithName {
+  /** 获取用户选择的所有视频输入数据 */
   getInputs: (componentInstance: InputParameter) => Promise<DownloadVideoInputItem[]>
+  /** 获取测试用的视频输入数据 (用于拉取清晰度列表等) */
+  getTestInput?: () => DownloadVideoInputItem | null
+  /** 是否是批量源 */
+  batch?: boolean
+  /** 网址匹配规则 */
   match?: TestPattern
 }
 /** 表示一个视频分段 */

@@ -136,6 +136,7 @@ import {
 import { registerAndGetData } from '@/plugins/data'
 import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { Toast } from '@/core/toast'
+import { getFriendlyTitle } from '@/core/utils/title'
 import { bangumiBatchInput } from './inputs/bangumi/batch'
 import { videoBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
@@ -185,6 +186,11 @@ const filterData = (items: { match?: TestPattern }[]) => {
   const matchedItems = items.filter(it => it.match?.some(p => matchUrlPattern(p)) ?? true)
   return matchedItems
 }
+const getFallbackTestVideoInfo = () => ({
+  aid: unsafeWindow.aid,
+  cid: unsafeWindow.cid,
+  title: getFriendlyTitle(true),
+} as DownloadVideoInputItem)
 
 export default Vue.extend({
   components: {
@@ -289,14 +295,14 @@ export default Vue.extend({
         return
       }
       this.testData.videoInfo = null
-      const items: DownloadVideoInputItem[] = await this.getVideoItems()
-      console.log('[updateTestVideoInfo]', items)
-      this.testData.multiple = items.length > 1
+      const input = this.selectedInput as DownloadVideoInput
+      const testItem = input.getTestInput?.() ?? getFallbackTestVideoInfo()
+      console.log('[updateTestVideoInfo]', testItem)
+      this.testData.multiple = input.batch
       const api = this.selectedApi as DownloadVideoApi
-      const [firstItem] = items
       // 没有清晰度信息时先获取清晰度列表
       if (!this.selectedQuality) {
-        const videoInfo = await api.downloadVideoInfo(firstItem)
+        const videoInfo = await api.downloadVideoInfo(testItem)
         this.qualities = videoInfo.qualities
         this.selectedQuality = videoInfo.qualities[0]
         if (basicConfig.quality) {
@@ -307,8 +313,8 @@ export default Vue.extend({
         }
       }
       try {
-        firstItem.quality = this.selectedQuality
-        const videoInfo = await api.downloadVideoInfo(firstItem)
+        testItem.quality = this.selectedQuality
+        const videoInfo = await api.downloadVideoInfo(testItem)
         this.testData.videoInfo = videoInfo
       } catch (error) {
         this.testData.videoInfo = undefined

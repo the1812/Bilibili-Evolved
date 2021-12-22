@@ -11,6 +11,7 @@ export const videoBatchInput: DownloadVideoInput = {
   name: 'video.batch',
   displayName: '当前视频 (多P)',
   match: videoUrls,
+  batch: true,
   getInputs: async instance => (instance?.checkedInputItems ?? []),
   component: async () => createEpisodesPicker(async instance => {
     const { aid } = unsafeWindow
