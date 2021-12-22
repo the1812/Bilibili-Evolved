@@ -36,6 +36,8 @@ export const component: ComponentMetadata = {
       defaultValue: false,
     },
   },
+  unload: () => document.body.classList.add('home-redesign-off'),
+  reload: () => document.body.classList.remove('home-redesign-off'),
   instantStyles: [
     {
       name: 'fresh-home-hide-original',
