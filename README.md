@@ -31,7 +31,7 @@
 
 |          | 更新延迟 | 正式版 | 预览版                                                                                                   |
 | -------- | -------- | ------ | -------------------------------------------------------------------------------------------------------- |
-| jsDelivr | 24h      | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/dist/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/dist/bilibili-evolved.preview.user.js)       |
+| jsDelivr | 24h      | 暂不可用 | 暂不可用 |
 | GitHub   | <1h      | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
 
 # 设置
