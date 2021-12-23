@@ -109,5 +109,8 @@
         "**/dev": true,
         "**/dist": true,
         "**/yarn.lock": true
-    }
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
 }
