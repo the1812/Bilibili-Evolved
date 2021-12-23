@@ -953,9 +953,6 @@ th.list-head-text,
 {
     display: none !important;
 } */
-.textarea {
-  transition: all 0.2s;
-}
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item:hover,
 .main-container .ep-list-wrapper .list-wrapper.simple ul .ep-item.cursor,
 .send-tabs-item-active,
