@@ -4,9 +4,8 @@ name: Build
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 on:
-  release:
-    types: [published]
-  workflow_dispatch:
+  push:
+    branches: [ master, preview ]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
