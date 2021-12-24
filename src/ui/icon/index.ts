@@ -2,7 +2,6 @@ import { registerAndGetData } from '@/plugins/data'
 
 export const CustomIcons = 'ui.icons'
 const context = require.context('./custom', true, /\.svg$/)
-console.log(context)
 export const customIcons: {
   [name: string]: string
 } = lodash.fromPairs(
