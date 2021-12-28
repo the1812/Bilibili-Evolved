@@ -114,38 +114,38 @@
       </div>
       <div class="separator"></div>
       <a
-        class="operation"
+        class="bv-custom-navbar-operation"
         target="_blank"
         href="https://account.bilibili.com/account/home"
       >
         <VIcon icon="profile"></VIcon>个人中心
       </a>
       <a
-        class="operation"
+        class="bv-custom-navbar-operation"
         target="_blank"
         href="https://member.bilibili.com/v2#/upload-manager/article"
       >
         <VIcon icon="posts"></VIcon>投稿管理
       </a>
-      <a class="operation" target="_blank" href="https://pay.bilibili.com/">
+      <a class="bv-custom-navbar-operation" target="_blank" href="https://pay.bilibili.com/">
         <VIcon icon="wallet"></VIcon>B币钱包
       </a>
       <a
-        class="operation"
+        class="bv-custom-navbar-operation"
         target="_blank"
         href="https://link.bilibili.com/p/center/index"
       >
         <VIcon icon="live-center"></VIcon>直播中心
       </a>
       <a
-        class="operation"
+        class="bv-custom-navbar-operation"
         target="_blank"
         href="https://show.bilibili.com/orderlist"
       >
         <VIcon icon="order-center"></VIcon>订单中心
       </a>
       <a
-        class="operation"
+        class="bv-custom-navbar-operation"
         target="_blank"
         href="https://www.bilibili.com/v/cheese/mine"
       >
@@ -419,7 +419,7 @@ export default Vue.extend({
       }
     }
   }
-  .operation {
+  .bv-custom-navbar-operation {
     height: 36px;
     display: flex;
     align-items: center;
