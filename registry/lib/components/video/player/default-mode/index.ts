@@ -1,7 +1,7 @@
 import { ComponentMetadata, ComponentEntry } from '@/components/types'
 import { playerAgent } from '@/components/video/player-agent'
 import { sq } from '@/core/spin-query'
-import { isEmbeddedPlayer, playerReady } from '@/core/utils'
+import { disableWindowScroll, isEmbeddedPlayer, playerReady } from '@/core/utils'
 import { allVideoUrls } from '@/core/utils/urls'
 
 export enum PlayerModes {
@@ -18,7 +18,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
     [PlayerModes.Normal, none],
     [PlayerModes.Wide, () => {
-      playerAgent.widescreen()
+      disableWindowScroll(() => playerAgent.widescreen())
     }],
     [PlayerModes.WebFullscreen, () => {
       playerAgent.webFullscreen()
