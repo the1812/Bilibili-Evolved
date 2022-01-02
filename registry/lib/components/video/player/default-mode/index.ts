@@ -2,6 +2,7 @@ import { ComponentMetadata, ComponentEntry } from '@/components/types'
 import { playerAgent } from '@/components/video/player-agent'
 import { sq } from '@/core/spin-query'
 import { isEmbeddedPlayer, playerReady } from '@/core/utils'
+import { loadLazyPlayerSettingsPanel } from '@/core/utils/lazy-panel'
 import { allVideoUrls } from '@/core/utils/urls'
 
 export enum PlayerModes {
@@ -14,13 +15,28 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   if (isEmbeddedPlayer()) {
     return
   }
+  const {
+    query: {
+      control: { settings, buttons },
+    },
+  } = playerAgent
+
+  const loadButton = async (selector: string) => {
+    await loadLazyPlayerSettingsPanel(
+      selector,
+      settings.wrap.selector,
+    )
+  }
+
   await playerReady()
   const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
     [PlayerModes.Normal, none],
-    [PlayerModes.Wide, () => {
+    [PlayerModes.Wide, async () => {
+      await loadButton(buttons.widescreen.selector)
       playerAgent.widescreen()
     }],
-    [PlayerModes.WebFullscreen, () => {
+    [PlayerModes.WebFullscreen, async () => {
+      await loadButton(buttons.fullscreen.selector)
       playerAgent.webFullscreen()
     }],
     [PlayerModes.Fullscreen, async () => {
@@ -33,6 +49,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
         console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
         return
       }
+      // await loadButton(buttons.fullscreen.selector)
       playerAgent.fullscreen()
     }],
   ])
