@@ -36,7 +36,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
       playerAgent.widescreen()
     }],
     [PlayerModes.WebFullscreen, async () => {
-      await loadButton(buttons.fullscreen.selector)
+      await loadButton(buttons.webFullscreen.selector)
       playerAgent.webFullscreen()
     }],
     [PlayerModes.Fullscreen, async () => {
