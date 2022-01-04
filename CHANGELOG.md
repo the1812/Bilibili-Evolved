@@ -12,6 +12,7 @@
 - 稍后再看的错误处理统一移动到 core 中 (src/components/video/watchlater.ts)
 - `isComponentEnabled` 能够对不存在的组件返回 `false` 了.
 - 关闭 preview 分支的 CI 触发, 方便多个 PR 的合并.
+- 对组件 / 插件的 watch task 默认启用 webpack 的 mode=development 以提供 source map.
 
 ## v2.0.9-preview
 `[预览] v2.0.9` `2021-12-24`
