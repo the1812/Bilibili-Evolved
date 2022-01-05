@@ -84,7 +84,7 @@
       "command": "yarn webpack --config ./registry/webpack/components.js --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:编译组件 prod:bulid-components"
+      "label": "功能:编译组件 prod:build-components"
     },
     {
       "type": "shell",
