@@ -1,6 +1,8 @@
 // 移除已观看: https://api.bilibili.com/x/v2/history/toview/del  viewed=true&csrf=csrf
 // 清空: https://api.bilibili.com/x/v2/history/toview/clear  csrf=csrf
 
+import { logError } from '@/core/utils/log'
+
 export interface Rights {
   bp: number
   elec: number
@@ -90,7 +92,8 @@ export async function getWatchlaterList(raw = false): Promise<number[] | RawWatc
   const { getJsonWithCredentials } = await import('@/core/ajax')
   const response = await getJsonWithCredentials(api)
   if (response.code !== 0) {
-    throw new Error(`获取稍后再看列表失败: ${response.message}`)
+    logError(new Error(`获取稍后再看列表失败: ${response.message}`))
+    return []
   }
   if (!response.data.list) {
     // clear list
@@ -132,7 +135,8 @@ export const toggleWatchlater = async (aid: string | number, add?: boolean | und
     message: string
   }
   if (response.code !== 0) {
-    throw new Error(`稍后再看操作失败: ${response.message}`)
+    logError(new Error(`稍后再看操作失败: ${response.message}`))
+    return
   }
   if (add) {
     watchlaterList.push(id)

@@ -14,7 +14,6 @@
 <script lang="ts">
 import { VIcon } from '@/ui'
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
-import { logError } from '@/core/utils/log'
 
 export default Vue.extend({
   components: {
@@ -48,15 +47,11 @@ export default Vue.extend({
       }, 2000)
     },
     async toggle() {
-      try {
-        await toggleWatchlater(this.aid)
-        this.on = this.isInWatchlater()
-        this.showTip(
-          this.on ? '已添加至稍后再看' : '已从稍后再看移除',
-        )
-      } catch (error) {
-        logError(error)
-      }
+      await toggleWatchlater(this.aid)
+      this.on = this.isInWatchlater()
+      this.showTip(
+        this.on ? '已添加至稍后再看' : '已从稍后再看移除',
+      )
     },
   },
 })
