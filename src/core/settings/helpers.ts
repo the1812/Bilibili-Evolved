@@ -82,6 +82,10 @@ export const isComponentEnabled = (component: ComponentMetadata | string) => {
   if (typeof component === 'string') {
     component = componentsMap[component]
   }
+  // 不存在 / 未安装的组件
+  if (!component) {
+    return false
+  }
   // 若指定了排除URL, 任意URL匹配就不加载
   if (component.urlExclude && component.urlExclude.some(matchUrlPattern)) {
     return false
