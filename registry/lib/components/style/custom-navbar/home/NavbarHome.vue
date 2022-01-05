@@ -69,6 +69,15 @@ export default Vue.extend({
       }
     })
   },
+  mounted() {
+    // 火狐浏览器似乎无法按预期地计算 NavbarHome 外层容器的大小
+    // 通过某些方法迫使其重新计算似乎就能得到正确的值。如这里的方法，以及改变视口大小等
+    // 上述结论来自实验，其原理未知
+    this.$el.style.maxHeight = 'inherit'
+    this.$nextTick(() => {
+      this.$el.style.maxHeight = ''
+    })
+  },
 })
 </script>
 <style lang="scss">
