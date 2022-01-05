@@ -234,6 +234,8 @@ export const component: ComponentMetadata = {
 - 不需要使用 `this` 特性的函数, 均使用箭头函数.
 
 ## 提交 commit
+仅提交源代码上的修改即可, 不建议把 dist 文件夹里的产物也提交, 否则容易在 PR 时产生冲突.
+
 commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式.
 
 ## 发起 PR (合并请求)
