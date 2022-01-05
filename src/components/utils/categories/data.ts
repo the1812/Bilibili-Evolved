@@ -51,7 +51,7 @@ const secondaryCategories = rawData[3]
 const generalCategories: Record<string, Category> = {}
 // const cinemaMerge = ['纪录片', '电影', '电视剧']
 mainCategories.forEach(it => {
-  const mainUrl = urlNormalize(`https://www.bilibili.com/v/${it.route}/`)
+  const mainUrl = urlNormalize(it.url || `https://www.bilibili.com/v/${it.route}/`)
   generalCategories[it.name] = {
     icon: it.route,
     code: it.tid,

@@ -33,14 +33,14 @@
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./registry/webpack/components.js --progress",
+      "command": "yarn webpack --watch --config ./registry/webpack/components.js --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:监视组件 dev:watch-components"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./registry/webpack/plugins.js --progress",
+      "command": "yarn webpack --watch --config ./registry/webpack/plugins.js --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:监视插件 dev:watch-plugins"
@@ -84,7 +84,7 @@
       "command": "yarn webpack --config ./registry/webpack/components.js --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:编译组件 prod:bulid-components"
+      "label": "功能:编译组件 prod:build-components"
     },
     {
       "type": "shell",

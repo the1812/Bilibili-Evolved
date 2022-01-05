@@ -1,5 +1,19 @@
 # 更新日志
 
+## v2.0.10-preview
+`[预览] v2.0.10` `2022-01-04`
+- 修复专栏中视频卡片布局错位. (PR #2776 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 尝试支持禁用 b 站切换播放器模式时的定位效果. (#483)
+- 自定义顶栏:
+  - 修复主站中的链接错误. (#2774)
+  - 视频卡片的链接带上 `/video` 避免二次跳转. (#2779)
+
+开发者相关:
+- 稍后再看的错误处理统一移动到 core 中 (src/components/video/watchlater.ts)
+- `isComponentEnabled` 能够对不存在的组件返回 `false` 了.
+- 关闭 preview 分支的 CI 触发, 方便多个 PR 的合并.
+- 对组件 / 插件的 watch task 默认启用 webpack 的 mode=development 以提供 source map.
+
 ## v2.0.9-preview
 `[预览] v2.0.9` `2021-12-24`
 - 清爽首页还是上周图里的进度, 支持活动, 热门, 动态, 栏目, 暂不支持分区和排行榜, 板块排序也还没做图形界面. 如果你只是需要上面那四个板块, 那么现在就可以试用起来了, 链接是[这个](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/home-redesign/fresh.js). (在线仓库里不开放, 因为还是半成品)

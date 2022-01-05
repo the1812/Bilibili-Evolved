@@ -1,7 +1,7 @@
 import { ComponentMetadata, ComponentEntry } from '@/components/types'
 import { playerAgent } from '@/components/video/player-agent'
 import { sq } from '@/core/spin-query'
-import { isEmbeddedPlayer, playerReady } from '@/core/utils'
+import { disableWindowScroll, isEmbeddedPlayer, playerReady } from '@/core/utils'
 import { loadLazyPlayerSettingsPanel } from '@/core/utils/lazy-panel'
 import { allVideoUrls } from '@/core/utils/urls'
 
@@ -33,7 +33,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
     [PlayerModes.Normal, none],
     [PlayerModes.Wide, async () => {
       await loadButton(buttons.widescreen.selector)
-      playerAgent.widescreen()
+      disableWindowScroll(() => playerAgent.widescreen())
     }],
     [PlayerModes.WebFullscreen, async () => {
       await loadButton(buttons.webFullscreen.selector)
