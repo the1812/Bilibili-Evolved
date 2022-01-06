@@ -6,10 +6,11 @@
       </div>
       <div class="fresh-home-header-center-area">
         <div class="fresh-home-header-tabs">
-          <div class="default-tabs">
+          <div ref="tabs" class="default-tabs">
             <div
               v-for="t of tabs"
               :key="t.name"
+              :data-name="t.name"
               class="default-tab"
               :class="{ selected: t === selectedTab }"
               @click="selectTab(t)"
@@ -22,7 +23,10 @@
         </div>
       </div>
       <div class="fresh-home-header-pagination">
-        <VButton icon title="排序">
+        <VButton v-if="isReordering" icon title="完成排序" @click="toggleReorder">
+          <VIcon icon="mdi-check" :size="18" />
+        </VButton>
+        <VButton v-else icon title="排序" @click="toggleReorder">
           <VIcon icon="mdi-swap-horizontal" :size="18" />
         </VButton>
       </div>
@@ -33,16 +37,20 @@
   </div>
 </template>
 <script lang="ts">
-import { categories } from '@/components/utils/categories/data'
 import { ArrayContent } from '@/core/common-types'
+import { Reorder } from '@/core/reorder'
+import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
+import { freshHomeOptions } from '../../types'
+import { supportedCategories } from './filter'
 
-const tabs = Object.entries(categories).map(([name, category]) => ({
+const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   id: category.code as number,
   name,
   displayName: name,
   category,
   href: category.link,
+  order: 0,
 }))
 type TabType = ArrayContent<typeof tabs>
 export default Vue.extend({
@@ -51,9 +59,13 @@ export default Vue.extend({
     VIcon,
   },
   data() {
+    const orderMap = (freshHomeOptions.categoriesOrder ?? {}) as Record<string, number>
+    const orderedTabs = [...tabs].sort(ascendingSort(t => orderMap[t.name]))
     return {
-      tabs,
-      selectedTab: tabs[0],
+      tabs: orderedTabs,
+      isReordering: false,
+      reorder: null,
+      selectedTab: orderedTabs[0],
       loading: true,
       videos: [],
       rankVideos: [],
@@ -62,8 +74,30 @@ export default Vue.extend({
   created() {
     this.reload()
   },
+  mounted() {
+    const tabsContainer = this.$refs.tabs as HTMLElement
+    const reorder = new Reorder(tabsContainer)
+    reorder.addEventListener('reorder', ({ detail: items }) => {
+      const newOrder = Object.fromEntries(
+        items.map(it => {
+          const name = it.element.getAttribute('data-name') as string
+          return [name, it.order]
+        }),
+      )
+      console.log(items, newOrder)
+      freshHomeOptions.categoriesOrder = newOrder
+    })
+    this.reorder = reorder
+  },
   methods: {
+    toggleReorder() {
+      this.reorder.toggle()
+      this.isReordering = this.reorder.enabled
+    },
     selectTab(tab: TabType) {
+      if (this.isReordering) {
+        return
+      }
       if (this.selectedTab === tab) {
         window.open(tab.href, '_blank')
         return
@@ -74,7 +108,8 @@ export default Vue.extend({
     async reload() {
       this.loading = true
       this.videos = []
-      this.videos = await this.selectedTab.api().finally(() => { this.loading = false })
+      // this.videos = await this.selectedTab.api().finally(() => { this.loading = false })
+      this.loading = false
     },
   },
 })

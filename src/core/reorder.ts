@@ -3,6 +3,11 @@ export const ReorderIncreaseClassName = 'reorder-increase'
 export const ReorderEnabledClassName = 'reorder-enabled'
 export const ReorderingClassName = 'reordering'
 
+/** 表示重排列事件的监听函数 */
+export type ReorderEventHandler = (event: CustomEvent<{
+  element: HTMLElement
+  order: number
+}[]>) => void
 /** 表示重排列项目的一个状态(位置信息) */
 export interface ReorderItemSnapshot {
   /** 元素 */
@@ -164,10 +169,10 @@ export class Reorder extends EventTarget {
       })
     }
   }
-  addEventListener(type: 'reorder', listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions) {
+  addEventListener(type: 'reorder', listener: ReorderEventHandler, options?: boolean | AddEventListenerOptions) {
     super.addEventListener(type, listener, options)
   }
-  removeEventListener(type: 'reorder', callback: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions) {
+  removeEventListener(type: 'reorder', callback: ReorderEventHandler, options?: boolean | EventListenerOptions) {
     super.addEventListener(type, callback, options)
   }
   /** 获取各元素的`order`映射 */
