@@ -58,7 +58,7 @@ mainCategories.forEach(it => {
     link: mainUrl,
     subCategories: it.sub ? Object.fromEntries(
       it.sub.map(sub => {
-        const subUrl = urlNormalize(!sub.route ? sub.url : `${mainUrl}${sub.route}/`)
+        const subUrl = urlNormalize(!sub.route ? sub.url : `https://www.bilibili.com/v/${it.route}/${sub.route}/`)
         return [sub.name, subUrl]
       }),
     ) : null,
