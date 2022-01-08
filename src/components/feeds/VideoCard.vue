@@ -316,7 +316,7 @@ export default {
     border-radius: $radius 0 0 $radius;
     position: relative;
     width: calc(var(--card-width) - 2px);
-    height: calc(var(--card-width) / 20 * 12);
+    height: calc(var(--card-width) / 20 * 12.5);
     overflow: hidden;
     .cover {
       transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
