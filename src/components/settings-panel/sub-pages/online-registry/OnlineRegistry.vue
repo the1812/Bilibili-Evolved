@@ -46,6 +46,7 @@
         :key="item.name"
         ref="items"
         :item="item"
+        :branch="selectedBranch"
         @refresh="checkInstalled"
       />
       <!-- <RegistryItem
