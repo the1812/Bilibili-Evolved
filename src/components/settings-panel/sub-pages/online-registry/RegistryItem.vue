@@ -48,14 +48,17 @@
 import { getDescriptionHTML } from '@/components/description'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
-import { meta } from '@/core/meta'
 import { visibleInside } from '@/core/observer'
 import { getGeneralSettings, settings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
 import { DocSourceItem } from 'registry/lib/docs'
 
-const getFeatureUrl = (item: DocSourceItem) => `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch, item.owner)}${item.fullAbsolutePath}`
+const getFeatureUrl = (item: DocSourceItem, branch: string) => {
+  const cdnRootFn = cdnRoots[getGeneralSettings().cdnRoot]
+  const cdnRoot = cdnRootFn(branch, item.owner)
+  return `${cdnRoot}${item.fullAbsolutePath}`
+}
 const isFeatureInstalled = (item: DocSourceItem) => {
   const storageKey = `user${lodash.startCase(item.type)}s`
   return item.name in settings[storageKey]
@@ -83,7 +86,7 @@ const typeMappings = {
   pack: {
     icon: 'mdi-package-variant-closed',
     badge: '合集包',
-    getUrl: (pack: PackItem) => pack.items.map(getFeatureUrl).join('\n'),
+    getUrl: (pack: PackItem, branch: string) => pack.items.map(it => getFeatureUrl(it, branch)).join('\n'),
     isInstalled: (pack: PackItem) => pack.items.every(isFeatureInstalled),
   },
 }
@@ -94,11 +97,20 @@ export default Vue.extend({
       type: Object,
       required: true,
     },
+    branch: {
+      type: String,
+      required: true,
+    },
   },
   data() {
+    const {
+      icon, badge, getUrl, isInstalled,
+    } = typeMappings[this.item.type]
     return {
-      typeMappings,
-      ...typeMappings[this.item.type],
+      icon,
+      badge,
+      getUrl: (item: PackItem) => getUrl(item, this.branch),
+      isInstalled,
       description: getDescriptionHTML(this.item),
       installing: false,
       installed: false,
