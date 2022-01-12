@@ -44,11 +44,17 @@ export default Vue.extend({
       if (typeof this.size === 'object' && 'width' in this.size) {
         return this.size.width
       }
+      if (typeof this.size === 'number') {
+        return this.size
+      }
       return null
     },
     height() {
       if (typeof this.size === 'object' && 'height' in this.size) {
         return this.size.height
+      }
+      if (typeof this.size === 'number') {
+        return this.size
       }
       return null
     },

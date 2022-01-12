@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="fresh-home-categories-content">
-      content
+      <component :is="content" :region-code="selectedTab.id" />
     </div>
   </div>
 </template>
@@ -43,6 +43,7 @@ import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
 import { freshHomeOptions } from '../../types'
 import { supportedCategories } from './filter'
+import { getContent } from './content/content'
 
 const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   id: category.code as number,
@@ -66,9 +67,7 @@ export default Vue.extend({
       isReordering: false,
       reorder: null,
       selectedTab: orderedTabs[0],
-      loading: true,
-      videos: [],
-      rankVideos: [],
+      content: getContent(orderedTabs[0].name),
     }
   },
   created() {
@@ -103,11 +102,12 @@ export default Vue.extend({
         return
       }
       this.selectedTab = tab
+      this.content = getContent(tab.name)
       this.reload()
     },
     async reload() {
       this.loading = true
-      this.videos = []
+      // this.videos = []
       // this.videos = await this.selectedTab.api().finally(() => { this.loading = false })
       this.loading = false
     },
@@ -120,7 +120,7 @@ export default Vue.extend({
 .fresh-home-categories {
   @include v-stretch();
   &-content {
-
+    font-size: 14px;
   }
 }
 </style>
