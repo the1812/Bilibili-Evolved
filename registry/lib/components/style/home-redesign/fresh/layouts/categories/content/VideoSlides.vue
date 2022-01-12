@@ -6,52 +6,56 @@
         <div class="fresh-home-video-slides-row">
           <div class="cover-placeholder-horizontal"></div>
           <div class="fresh-home-video-slides-main-actions">
-            <VButton class="fresh-home-video-slides-play-button" type="primary" round>
-              <VIcon icon="mdi-play" />
-              播放
-            </VButton>
+            <a class="fresh-home-video-slides-play-button" :href="currentUrl" target="_blank">
+              <VButton type="primary" round>
+                <VIcon icon="mdi-play" />
+                播放
+              </VButton>
+            </a>
             <VButton class="fresh-home-video-slides-watchlater-button" icon title="稍后再看">
               <VIcon icon="mdi-clock-outline" :size="20" />
             </VButton>
-            <div class="fresh-home-video-slides-up-container">
+            <a class="fresh-home-video-slides-up-container" :href="`https://space.bilibili.com/${currentItem.upID}`" target="_blank">
               <DpiImage :size="24" :src="currentItem.upFaceUrl" />
               <div class="fresh-home-video-slides-up-name">
                 {{ currentItem.upName }}
               </div>
-            </div>
+            </a>
           </div>
         </div>
-        <div class="fresh-home-video-slides-main-title">
+        <a class="fresh-home-video-slides-main-title" :href="currentUrl" target="_blank">
           {{ currentItem.title }}
-        </div>
+        </a>
       </div>
       <div class="fresh-home-video-slides-main-description">
         <div class="description-text" v-text="currentItem.description"></div>
       </div>
       <div class="fresh-home-video-slides-actions">
-        <VButton class="fresh-home-video-slides-refresh-button" icon>
+        <VButton class="fresh-home-video-slides-refresh-button" icon @click="reload">
           <VIcon icon="mdi-refresh" />
         </VButton>
-        <VButton class="fresh-home-video-slides-previous-button" icon>
+        <VButton class="fresh-home-video-slides-previous-button" icon @click="previousCard">
           <VIcon icon="mdi-arrow-left" />
         </VButton>
-        <VButton class="fresh-home-video-slides-next-button" icon>
+        <VButton class="fresh-home-video-slides-next-button" icon @click="nextCard">
           <VIcon icon="mdi-arrow-right" :size="36" />
         </VButton>
       </div>
     </div>
     <div class="fresh-home-video-slides-covers">
-      <div
+      <a
         v-for="video of items"
         :key="video.id"
         :title="video.title"
         class="fresh-home-video-slides-cover"
+        :href="url(video.bvid)"
+        target="_blank"
       >
         <DpiImage
           :src="video.coverUrl"
           :size="{ width: ui.mainCoverWidth, height: ui.mainCoverHeight }"
         />
-      </div>
+      </a>
     </div>
   </div>
 </template>
@@ -86,6 +90,9 @@ export default Vue.extend({
     currentItem() {
       return this.items[1]
     },
+    currentUrl() {
+      return this.url(this.currentItem.bvid)
+    },
   },
   mounted() {
     const element = this.$el as HTMLElement
@@ -115,6 +122,15 @@ export default Vue.extend({
         durationText: formatDuration(item.duration),
       }))
     },
+    url(id: string) {
+      return `https://www.bilibili.com/video/${id}`
+    },
+    nextCard() {
+      this.items.push(this.items.shift())
+    },
+    previousCard() {
+      this.items.unshift(this.items.pop())
+    },
   },
 })
 </script>
@@ -127,6 +143,20 @@ export default Vue.extend({
   position: relative;
   overflow: hidden;
   padding: var(--main-padding-y) var(--main-padding-x);
+
+  @mixin bounce-x($offset-in-px) {
+    @keyframes bounce-x-#{$offset-in-px} {
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(#{$offset-in-px}px);
+      }
+    }
+    animation: bounce-x-#{$offset-in-px} .4s ease-out;
+  }
+
   .cover-placeholder-vertical {
     height: var(--other-cover-height);
     width: 0;
@@ -135,11 +165,21 @@ export default Vue.extend({
     width: var(--main-cover-width);
     height: 0;
   }
+  .be-button .be-icon {
+    transition: .2s ease-out;
+  }
+  a {
+    display: block;
+    transition: color .2s ease-out;
+    &:hover {
+      color: var(--theme-color) !important;
+    }
+  }
 
-  &-row {
+  & &-row {
     @include h-stretch(var(--cover-padding));
   }
-  &-play-button {
+  & &-play-button {
     flex: 1;
     font-size: 16px;
     filter: drop-shadow(0 4px 12px var(--theme-color-10));
@@ -147,11 +187,35 @@ export default Vue.extend({
       margin-right: 6px;
     }
   }
-  &-next-button,
-  &-watchlater-button {
+  & &-refresh-button {
+    .be-icon {
+      transition-duration: .5s;
+    }
+    &:hover .be-icon {
+      transform: rotate(1turn);
+    }
+  }
+  & &-previous-button {
+    &:hover .be-icon {
+      @include bounce-x(-2);
+    }
+    &:active .be-icon {
+      transform: scale(0.9);
+    }
+  }
+  & &-next-button {
+    padding: 6px !important;
+    &:hover .be-icon {
+      @include bounce-x(2);
+    }
+    &:active .be-icon {
+      transform: scale(0.9);
+    }
+  }
+  & &-watchlater-button {
     padding: 6px !important;
   }
-  &-up-container {
+  & &-up-container {
     @include h-center(8px);
     @include card(14px);
     @include round-bar(28);
@@ -163,29 +227,26 @@ export default Vue.extend({
       border-radius: 50%;
     }
   }
-  &-up-name {
+  & &-up-name {
     @include single-line();
     font-size: 12px;
-    &:hover {
-      color: var(--theme-color);
-    }
   }
-  &-main-info {
+  & &-main-info {
     @include v-stretch(var(--main-padding-y));
     justify-content: space-between;
     max-width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
   }
-  &-main-title {
+  & &-main-title {
     font-size: 16px;
     @include single-line();
     @include semi-bold();
   }
-  &-main-actions {
+  & &-main-actions {
     @include h-center(8px);
     width: var(--other-cover-width);
     flex-wrap: wrap;
   }
-  &-main-description {
+  & &-main-description {
     @include v-stretch();
     @include no-scrollbar();
     font-size: 13px;
@@ -196,21 +257,22 @@ export default Vue.extend({
     .description-text {
       height: 0;
       white-space: pre-wrap;
+      word-break: break-word;
     }
   }
-  &-actions {
+  & &-actions {
     @include h-stretch(8px);
     align-items: flex-end;
     .be-button .content-container {
       opacity: .8;
     }
   }
-  &-covers {
+  & &-covers {
     position: absolute;
     top: 0;
     left: 0;
   }
-  &-cover {
+  & &-cover {
     @include card(12px);
     position: absolute;
     box-shadow: none;
@@ -219,13 +281,18 @@ export default Vue.extend({
     left: var(--main-padding-x);
     width: var(--other-cover-width);
     height: var(--other-cover-height);
+    transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
     img {
+      transition: .2s ease-out;
       width: 100%;
       height: 100%;
     }
+    &:hover img {
+      transform: scale(1.05);
+    }
     &:nth-child(1) {
       opacity: 0;
-      transform: translateX(- var(--other-cover-width) - var(--cover-padding));
+      transform: translateX(calc(0px - var(--other-cover-width) - var(--cover-padding)));
     }
     &:nth-child(2) {
       width: var(--main-cover-width);
