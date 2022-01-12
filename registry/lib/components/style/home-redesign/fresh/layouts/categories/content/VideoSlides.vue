@@ -1,7 +1,36 @@
 <template>
   <div class="fresh-home-video-slides">
+    <div v-if="loaded" class="fresh-home-video-slides-covers">
+      <a
+        v-for="(video, index) of items"
+        :key="video.id"
+        :title="video.title"
+        class="fresh-home-video-slides-cover"
+        :href="index !== 1 ? 'javascript:void(0)' : url(video.bvid)"
+        target="_blank"
+        @click.capture.prevent="index !== 1 ? jumpToCard(index) : (() => {})"
+      >
+        <DpiImage
+          :src="video.coverUrl"
+          :size="{ width: ui.mainCoverWidth, height: ui.mainCoverHeight }"
+        />
+      </a>
+    </div>
     <div class="cover-placeholder-vertical"></div>
-    <div v-if="currentItem" class="fresh-home-video-slides-row">
+    <div v-if="!loaded" class="fresh-home-video-slides-empty">
+      <div class="empty-placeholder fresh-home-video-slides-main-title" v-text="' '"></div>
+      <div class="empty-indicator">
+        <VLoading v-if="loading" />
+        <div v-if="error" class="empty-indicator-error">
+          <VEmpty />
+          <VButton class="fresh-home-video-slides-refresh-button" round @click="reload">
+            <VIcon icon="mdi-refresh" />
+            刷新
+          </VButton>
+        </div>
+      </div>
+    </div>
+    <div v-if="currentItem && loaded" class="fresh-home-video-slides-row">
       <div class="fresh-home-video-slides-main-info">
         <div class="fresh-home-video-slides-row">
           <div class="cover-placeholder-horizontal"></div>
@@ -42,27 +71,18 @@
         </VButton>
       </div>
     </div>
-    <div class="fresh-home-video-slides-covers">
-      <a
-        v-for="video of items"
-        :key="video.id"
-        :title="video.title"
-        class="fresh-home-video-slides-cover"
-        :href="url(video.bvid)"
-        target="_blank"
-      >
-        <DpiImage
-          :src="video.coverUrl"
-          :size="{ width: ui.mainCoverWidth, height: ui.mainCoverHeight }"
-        />
-      </a>
-    </div>
   </div>
 </template>
 <script lang="ts">
 import { VideoCard } from '@/components/feeds/video-card'
 import { formatDuration } from '@/core/utils/formatters'
-import { DpiImage, VButton, VIcon } from '@/ui'
+import {
+  DpiImage,
+  VButton,
+  VIcon,
+  VLoading,
+  VEmpty,
+} from '@/ui'
 import { requestMixin } from './request'
 
 export default Vue.extend({
@@ -70,6 +90,8 @@ export default Vue.extend({
     VButton,
     VIcon,
     DpiImage,
+    VLoading,
+    VEmpty,
   },
   mixins: [requestMixin],
   data() {
@@ -92,6 +114,9 @@ export default Vue.extend({
     },
     currentUrl() {
       return this.url(this.currentItem.bvid)
+    },
+    loaded() {
+      return !this.loading && !this.error
     },
   },
   mounted() {
@@ -131,6 +156,20 @@ export default Vue.extend({
     previousCard() {
       this.items.unshift(this.items.pop())
     },
+    jumpToCard(index: number) {
+      if (index <= 1 || index >= this.items.length) {
+        return
+      }
+      let steps = index - 1
+      const jump = () => {
+        this.nextCard()
+        steps--
+        if (steps > 0) {
+          setTimeout(jump)
+        }
+      }
+      jump()
+    },
   },
 })
 </script>
@@ -140,6 +179,10 @@ export default Vue.extend({
 .fresh-home-video-slides {
   @include card(12px);
   @include v-stretch(var(--cover-padding));
+  --main-info-padding: calc(
+    var(--main-padding-y) + var(--main-cover-height) -
+    var(--other-cover-height) - var(--cover-padding)
+  );
   position: relative;
   overflow: hidden;
   padding: var(--main-padding-y) var(--main-padding-x);
@@ -176,6 +219,27 @@ export default Vue.extend({
     }
   }
 
+  & &-empty {
+    padding-top: var(--main-info-padding);
+    @include h-center();
+    justify-content: center;
+    .empty-placeholder {
+      visibility: hidden;
+      white-space: pre;
+    }
+    .empty-indicator {
+      @include absolute-center();
+      &-error {
+        @include v-center(12px);
+        .be-button {
+          padding: 4px 10px 4px 6px !important;
+           .be-icon {
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+  }
   & &-row {
     @include h-stretch(var(--cover-padding));
   }
@@ -232,9 +296,11 @@ export default Vue.extend({
     font-size: 12px;
   }
   & &-main-info {
-    @include v-stretch(var(--main-padding-y));
+    @include v-stretch();
     justify-content: space-between;
-    max-width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
+    position: relative;
+    padding-top: var(--main-info-padding);
+    width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
   }
   & &-main-title {
     font-size: 16px;
@@ -245,6 +311,9 @@ export default Vue.extend({
     @include h-center(8px);
     width: var(--other-cover-width);
     flex-wrap: wrap;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
   & &-main-description {
     @include v-stretch();
