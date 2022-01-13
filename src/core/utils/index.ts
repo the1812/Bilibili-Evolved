@@ -228,7 +228,24 @@ export const deleteValue = <ItemType> (
   const index = target.findIndex(predicate)
   if (index !== -1) {
     target.splice(index, 1)
+    return true
   }
+  return false
+}
+/**
+ * 移除一个数组中所有符合条件的元素
+ * @param target 目标数组
+ * @param predicate 数组元素判断
+ */
+export const deleteValues = <ItemType>(
+  target: ItemType[],
+  predicate: (value: ItemType, index: number, obj: ItemType[]) => boolean,
+) => {
+  let foundDeleteItem = false
+  do {
+    foundDeleteItem = deleteValue(target, predicate)
+  } while (foundDeleteItem)
+  return foundDeleteItem
 }
 
 type ClickEvent = (e: MouseEvent) => void
