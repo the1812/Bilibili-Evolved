@@ -141,7 +141,12 @@ export const toggleWatchlater = async (aid: string | number, add?: boolean | und
   if (add) {
     watchlaterList.push(id)
   } else {
-    lodash.pull(watchlaterList, id)
+    // lodash.pull(watchlaterList, id)
+    // 这里一般用于 Vue 的 data, 用 lodash.pull 触发不了响应式更新
+    const index = watchlaterList.findIndex(it => it === id)
+    if (index !== -1) {
+      watchlaterList.splice(index, 1)
+    }
   }
 }
 
