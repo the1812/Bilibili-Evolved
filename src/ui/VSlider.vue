@@ -283,10 +283,11 @@ export default Vue.extend({
     // 设置拖拽相关的事件
     setupDrag() {
       type Listener = (pageX: number) => void;
-      type Stopper = () => void | null;
+      type Stopper = () => void;
 
       // addEventListener 的简单包装。统一鼠标和触摸事件的注册。
       // 已经屏蔽事件默认行为。触摸事件仅在单个触摸点时触发。
+      // 返回值是一个函数，用于停止被注册的事件
       function startListen(
         target: EventTarget,
         type: string,
@@ -302,12 +303,10 @@ export default Vue.extend({
           }
         }
         target.addEventListener(type, listener0, { once, passive: false })
-        if (once) {
-          return null
-        }
         return () => target.removeEventListener(type, listener0)
       }
 
+      // 注册拖拽相关事件
       const thumb = this.$refs.thumbContainer.$el
       const types = [
         { start: 'mousedown', move: 'mousemove', end: 'mouseup' },
