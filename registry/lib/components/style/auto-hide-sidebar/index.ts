@@ -1,8 +1,45 @@
 import { ComponentMetadata } from '@/components/types'
 
+const showSideBar = () => {
+  const sidebar = dq('.be-settings .sidebar') as HTMLElement
+  sidebar.style.transform = 'translateX(calc(-50% * var(--direction))) translateY(-50%)'
+}
+
+const hideSideBar = () => {
+  const sidebar = dq('.be-settings .sidebar') as HTMLElement
+  sidebar.style.transform = ''
+}
+
+const mouseLeaveListener = (e: MouseEvent) => {
+  // 从左侧离开
+  if (e.clientX < 0) {
+    showSideBar()
+  }
+}
+
+const mountListener = () => {
+  document.addEventListener('mouseleave', mouseLeaveListener)
+  document.addEventListener('mouseenter', hideSideBar)
+}
+
+const unMountListener = () => {
+  document.removeEventListener('mouseleave', mouseLeaveListener)
+  document.removeEventListener('mouseenter', hideSideBar)
+}
+
 export const component: ComponentMetadata = {
   name: 'autoHideSidebar',
-  entry: none,
+  entry: () => {
+    mountListener()
+  },
+  reload: () => {
+    mountListener()
+    hideSideBar()
+  },
+  unload: () => {
+    unMountListener()
+    showSideBar()
+  },
   displayName: '自动隐藏侧栏',
   instantStyles: [
     {
