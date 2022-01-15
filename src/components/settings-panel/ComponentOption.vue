@@ -97,7 +97,7 @@ export default {
     },
     displayName: {
       type: String,
-      required: true,
+      default: '',
     },
     option: {
       type: Object,
