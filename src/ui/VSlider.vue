@@ -287,7 +287,7 @@ export default Vue.extend({
       ): Stopper {
         const listener0 = (e: MouseEvent | TouchEvent) => {
           e.preventDefault()
-          if (e instanceof MouseEvent) {
+          if (e instanceof MouseEvent || e instanceof unsafeWindow.MouseEvent) {
             listener(e.pageX)
           } else if (e.touches.length === 1) {
             listener(e.touches[0].pageX)
@@ -348,6 +348,7 @@ export default Vue.extend({
     background-color: #8882;
   }
   .thumb-container {
+    cursor: pointer;
     position: absolute;
     top: 50%;
     transform: translateX(-50%) translateY(-50%);
@@ -356,7 +357,6 @@ export default Vue.extend({
   .default-thumb {
     width: 16px;
     height: 16px;
-    cursor: pointer;
     @include round-corner(50%);
     background-color: var(--theme-color);
     box-shadow: 0 0 0 2px var(--theme-color-20);

@@ -55,7 +55,7 @@
       v-if="type === 'slider'"
       v-bind="option.slider"
       :value="value"
-      @change="valueChange($event)"
+      @change="debounceValueChange($event)"
     ></VSlider>
     <div v-if="type === 'unknown'" class="unknown-option-type">
       未知的选项类型
@@ -78,6 +78,11 @@ import { ComponentOption } from '../component'
 import { getDropdownItems } from './dropdown'
 import SwitchOptions from '../SwitchOptions.vue'
 
+function valueChange(newValue: unknown) {
+  const settings = this.settings as ComponentSettings
+  settings.options[this.name] = newValue
+  this.value = newValue
+}
 export default {
   name: 'ComponentOption',
   components: {
@@ -166,11 +171,8 @@ export default {
       settings.options[this.name] = numberValue
       this.value = numberValue
     },
-    valueChange(newValue: unknown) {
-      const settings = this.settings as ComponentSettings
-      settings.options[this.name] = newValue
-      this.value = newValue
-    },
+    debounceValueChange: lodash.debounce(valueChange, 200),
+    valueChange,
   },
 }
 </script>
