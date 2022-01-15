@@ -136,18 +136,28 @@ export default Vue.extend({
     }
   },
   computed: {
+    // 不大于 max 的对齐 step 与 center 的值
     realMax() {
       return this.valueToRounded(this.max, Math.floor)
     },
+    // 不小于 min 的对齐 step 与 center 的值
     realMin() {
       return this.valueToRounded(this.min, Math.ceil)
     },
-    thumbLeft() {
-      const totalValueLength = this.realMax - this.realMin
-      if (totalValueLength === 0) {
+    // 最大与最小可取值的差。若没有可取值则输出错误日志并返回 0
+    valueLength() {
+      const len = this.realMax - this.realMin
+      if (len < 0) {
+        console.error('[VSlider] No desirable value between min and max')
         return 0
       }
-      const percent = 100 * ((this.realValue - this.realMin) / totalValueLength)
+      return len
+    },
+    thumbLeft() {
+      if (this.valueLength === 0) {
+        return 0
+      }
+      const percent = 100 * ((this.realValue - this.realMin) / this.valueLength)
       return `${percent}%`
     },
     // center 处的 coord
@@ -196,8 +206,7 @@ export default Vue.extend({
     lengthToValue(length: number): number {
       const bar = this.$refs.barContainer as HTMLElement
       const totalLength = bar.getBoundingClientRect().width
-      const totalValueLength = this.realMax - this.realMin
-      return totalValueLength * (length / totalLength)
+      return this.valueLength * (length / totalLength)
     },
     // 计算 slider bar 上 length 像素所对应的 step 偏移。（可计算负偏移）
     lengthToStep(length: number): number {
@@ -211,11 +220,10 @@ export default Vue.extend({
     valueToLength(value: number): number {
       const bar = this.$refs.barContainer as HTMLElement
       const totalLength = bar.getBoundingClientRect().width
-      const totalValueLength = this.realMax - this.realMin
-      if (totalValueLength === 0) {
+      if (this.valueLength === 0) {
         return 0
       }
-      return totalLength * (value / totalValueLength)
+      return totalLength * (value / this.valueLength)
     },
     // 将一个 value 按步骤转化为 rounded
     valueToRounded(
@@ -228,6 +236,9 @@ export default Vue.extend({
     },
     // 执行 limit 步骤的函数，不含其他步骤的处理
     limitValue(value: number): number {
+      if (this.valueLength === 0) {
+        return this.realMin
+      }
       if (value < this.realMin) {
         value = this.realMin
       } else if (value > this.realMax) {
