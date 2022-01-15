@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
+import { ComponentMetadata, Author } from '@/components/component'
 import { I18nDescription } from '@/core/common-types'
 import { deleteValue } from '@/core/utils'
 import { CoreApis } from '../core/core-apis'
@@ -25,6 +25,8 @@ export interface PluginMinimalData {
   displayName?: string
   /** 插件描述, 类型同 `ComponentMetadata.description` */
   description?: I18nDescription
+  /** 作者信息, 类型同 `ComponentMetadata.author` */
+  author?: Author | Author[]
 }
 type PartialRequired<Target, Props extends keyof Target> = Target & {
   [P in Props]-?: Target[P]

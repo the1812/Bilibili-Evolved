@@ -11,7 +11,7 @@ import { Range } from '@/ui/range'
 import { Widget } from '@/components/widget'
 import { LanguagePack } from './i18n/types'
 
-type Author = {
+export type Author = {
   name: string
   link: string
 }
