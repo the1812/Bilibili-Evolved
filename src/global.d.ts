@@ -11,6 +11,7 @@ declare global {
   interface CompilationInfo {
     commitHash: string
     branch: string
+    version: string
     nearestTag: string
     versionWithTag: string
     // buildTime: number

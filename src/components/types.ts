@@ -15,6 +15,17 @@ export type Author = {
   name: string
   link: string
 }
+export interface FeatureBase {
+  // TODO: 可在编译时转换 Markdown 以提高运行时性能
+  /** 描述 (支持 markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
+  description?: I18nDescription
+  /** 作者信息 */
+  author?: Author | Author[]
+  /** 编译时的 commit hash, 由 Babel 注入, 不需要手动填写 */
+  commitHash?: string
+  /** 编译时的 core version, 由 Babel 注入, 不需要手动填写 */
+  coreVersion?: string
+}
 type Optional<Target, Props extends keyof Target> = {
   [P in Props]?: Target[P]
 } & Omit<Target, Props>
@@ -168,7 +179,7 @@ export interface FunctionalMetadata {
   urlExclude?: TestPattern
 }
 /** 组件基本信息 */
-export interface ComponentMetadata extends FunctionalMetadata {
+export interface ComponentMetadata extends FunctionalMetadata, FeatureBase {
   /** 组件名称 */
   name: string
   /** 显示名称 */
@@ -181,16 +192,10 @@ export interface ComponentMetadata extends FunctionalMetadata {
   configurable?: boolean
   /**  是否在设置界面中隐藏 (代码仍可操作) */
   hidden?: boolean
-  /** 组件描述 (markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
-  description?: I18nDescription
   /** 组件子选项 */
   options?: ComponentOptions
   /** i18n 数据 */
   i18n?: Record<string, LanguagePack>
-  /** 作者信息 */
-  author?: Author | Author[]
-  /** 编译时的 commit hash, 由 Babel 注入, 不需要手动填写 */
-  commitHash?: string
 }
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>

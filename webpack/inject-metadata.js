@@ -21,6 +21,7 @@ module.exports = function (babel) {
             return
           }
           d.init.properties.push(types.objectProperty(types.identifier('commitHash'), types.stringLiteral(compilationInfo.commitHash)))
+          d.init.properties.push(types.objectProperty(types.identifier('coreVersion'), types.stringLiteral(compilationInfo.version)))
         })
       }
     }
