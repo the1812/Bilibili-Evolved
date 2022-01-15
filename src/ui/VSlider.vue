@@ -37,23 +37,20 @@
 /**
  * 提供一种数值输入方式
  *
- * 组件的值受 step 严格影响，且以 center 对齐。例如：若 `center == 0.8`、`step == 1`
- * `max == 3`，则组件的真实最大值为 `2.8`。在 step 的约束后，最终值还会接受 fix-num 的修正。
+ * 组件的值受 center 和 step 约束。如当 `center == 0.8`、`step == 1` 时，
+ * 组件的可取值只能是 -0.2, 0.8, 1.8 等。即以 center 为起点，偏移整数倍个 step 的实数。
  *
- * min, max 仅代表组件值的上下限（含），不等于真实最大最小可取值。
- * 真实最大最小值是 min, max 在对齐 step、接受 fix-num 修正之后得到的值。
+ * 由于有上述约束，min, max 并不代表组件的最大与最小可取值，而是可取值的上下限（可等于）。
  *
  * # Props
  *
  * - focusable {boolean} {default: true} 是否可由 Tab 键获取到焦点
- * - min {number} {default: 0} 最小值下限。真实最小值会结合 step 与 center 共同决定
- * - max {number} {default: 100} 最大值上限。真实最大值会结合 step 与 center 共同决定
+ * - min {number} {default: 0} 取值下限
+ * - max {number} {default: 100} 取值上限
  * - value {number} {default: 0} 当前组件的值
- * - center {number} {default: 0} 对齐的中心。
- *   当该值被改变时，组件值也会被改变到新 center 下其最接近的刻度。
- * - step {number} {default: 1} 单步的跨度
- * - fix-num {(v: number) => number} {default: v => v}
- *   修正组件最终得到的值（包括真实最大最小值）。
+ * - center {number} {default: 0} 取值对齐的中心与起点。
+ *   当 center 被改变时，组件当前值也会被变更为对齐 center 的最接近的值。
+ * - step {number} {default: 1} 相邻可取值的差
  * - display-fun {(v: number) => string} {default: v => String(v)}
  *   仅修改提示中显示内容的函数，不修改真实组件值。接受当前的组件值，返回用于显示的字符串
  *
@@ -74,17 +71,15 @@
  */
 
 /*
- * 给定一个 value，其变为组件允许的值（即 this.realValue）需经历以下几步：
- * round -> fix -> limit
+ * 给定一个 value，其变为组件允许的值（即 this.realValue）需经历以下 2 步：
+ * round -> limit
  * round: 将值限制到 step 和 center 共同决定的刻度上
- * fix: 使用用户传入的 fixNum 进行修正
  * limit: 将值限制到 this.realMin 和 this.realMax 的范围内
  *
  * 受限制的 value 用以下名称称呼：
  * rounded：以 center 为中心，偏移整数个 step 的 value 值。
  *   除 this.realMin 和 this.realMax 外，取整方式使用 Math.round
- * fixed：在 rounded 基础上被 fixNum 修正的值
- * limited: 在 fixed 基础上被 this.realMin、this.realMax 约束的值
+ * limited: 在 rounded 基础上被 this.realMin、this.realMax 约束的值
  *
  * 长度相关：
  * length：slider bar 上的一段长度，单位为像素
@@ -128,10 +123,6 @@ export default Vue.extend({
       type: Number,
       default: 1,
     },
-    fixNum: {
-      type: Function,
-      default: (v: number) => v,
-    },
     displayFun: {
       type: Function,
       default: (v: number) => String(v),
@@ -146,10 +137,10 @@ export default Vue.extend({
   },
   computed: {
     realMax() {
-      return this.valueToFixed(this.max, Math.floor)
+      return this.valueToRounded(this.max, Math.floor)
     },
     realMin() {
-      return this.valueToFixed(this.min, Math.ceil)
+      return this.valueToRounded(this.min, Math.ceil)
     },
     thumbLeft() {
       const totalValueLength = this.realMax - this.realMin
@@ -174,10 +165,10 @@ export default Vue.extend({
       this.setByValue(this.realValue)
     },
     min() {
-      this.setByFixed(this.realValue)
+      this.setByRounded(this.realValue)
     },
     max() {
-      this.setByFixed(this.realValue)
+      this.setByRounded(this.realValue)
     },
   },
   created() {
@@ -235,13 +226,6 @@ export default Vue.extend({
         this.center + this.valueToStepped(value - this.center, intoIntCallback)
       )
     },
-    // 将一个 value 按步骤转化为 fixed
-    valueToFixed(
-      value: number,
-      intoIntCallback: IntoIntCallback = Math.round,
-    ): number {
-      return this.fixNum(this.valueToRounded(value, intoIntCallback))
-    },
     // 执行 limit 步骤的函数，不含其他步骤的处理
     limitValue(value: number): number {
       if (value < this.realMin) {
@@ -262,13 +246,9 @@ export default Vue.extend({
         this.$emit('change', this.realValue)
       }
     },
-    // 用 fixed 设置组件的值，设置前完成剩余步骤
-    setByFixed(fixed: number) {
-      this.setByLimited(this.limitValue(fixed))
-    },
     // 用 rounded 设置组件的值，设置前完成剩余步骤
     setByRounded(rounded: number) {
-      this.setByFixed(this.fixNum(rounded))
+      this.setByLimited(this.limitValue(rounded))
     },
     // 用任意 value 设置组件的值，设置前完成所有步骤
     setByValue(value: number) {
