@@ -214,7 +214,15 @@ export const preventEvent = (element: Element, event: keyof HTMLElementEventMap)
  * 根据传入的对象拼接处 URL 查询字符串
  * @param obj 参数对象
  */
-export const formData = (obj: Record<string, any>) => Object.entries(obj).map(([k, v]) => `${k}=${v}`).join('&')
+export const formData = (obj: Record<string, any>, config?: { encode?: boolean }) => {
+  const { encode } = { encode: true, ...config }
+  return Object.entries(obj).map(([k, v]) => {
+    if (encode) {
+      return `${k}=${encodeURIComponent(v)}`
+    }
+    return `${k}=${v}`
+  }).join('&')
+}
 
 /**
  * 移除一个数组中的元素
