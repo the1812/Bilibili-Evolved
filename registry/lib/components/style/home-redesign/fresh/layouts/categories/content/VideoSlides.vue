@@ -8,7 +8,7 @@
         class="fresh-home-video-slides-cover"
         :href="index !== 1 ? 'javascript:void(0)' : url(video.bvid)"
         target="_blank"
-        @click.capture.prevent="index !== 1 ? jumpToCard(index) : () => {}"
+        @click.capture="index !== 1 ? jumpToCard($event, index) : () => {}"
       >
         <DpiImage
           :src="video.coverUrl"
@@ -126,7 +126,7 @@
 </template>
 <script lang="ts">
 import { VideoCard } from '@/components/feeds/video-card'
-import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
+import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
 import { requestMixin } from './request'
@@ -168,6 +168,9 @@ export default Vue.extend({
     watchlaterAdded() {
       return this.watchlaterList.includes(this.currentItem.aid)
     },
+  },
+  created() {
+    getWatchlaterList()
   },
   mounted() {
     const element = this.$el as HTMLElement
@@ -211,7 +214,7 @@ export default Vue.extend({
     previousCard() {
       this.items.unshift(this.items.pop())
     },
-    jumpToCard(index: number) {
+    jumpToCard(event: MouseEvent, index: number) {
       if (index <= 1 || index >= this.items.length) {
         return
       }
@@ -224,6 +227,7 @@ export default Vue.extend({
         }
       }
       jump()
+      event.preventDefault()
     },
   },
 })
@@ -241,6 +245,7 @@ export default Vue.extend({
   position: relative;
   overflow: hidden;
   padding: var(--main-padding-y) var(--main-padding-x);
+  height: 266px;
 
   @mixin bounce-x($offset-in-px) {
     @keyframes bounce-x-#{$offset-in-px} {
