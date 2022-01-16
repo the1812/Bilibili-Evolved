@@ -4,7 +4,7 @@ import { cdnRoots } from './cdn-types'
 commonMeta.copyright = commonMeta.copyright.replace(/\[year\]/g, new Date().getFullYear().toString())
 /** 分支表 */
 export const branches = {
-  stable: 'v2',
+  stable: 'master',
   preview: 'preview',
 }
 const compilationInfo = webpackCompilationInfo
