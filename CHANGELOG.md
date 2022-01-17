@@ -1,5 +1,35 @@
 # 更新日志
 
+## v2.1.0-preview
+`[预览] v2.1.0` `2022-01-17`
+- 修复 Firefox 中顶栏分区弹窗大小异常. (#2773, PR #2801 by [timongh](https://github.com/timongh))
+- 修复复制评论链接后菜单不消失. (#1196, PR #2807 by [timongh](https://github.com/timongh))
+- 修复默认播放器模式不生效的问题. (#2815, PR #2818 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 修复评论区的样式问题. (#2837)
+- 防御 spm_id 对下载功能的干扰. (#2247)
+- 修复顶栏子分区的链接错误. (#2532)
+- 新增 MPV 列表播放支持. (PR #2806 by [wullic](https://github.com/wullic))
+- IDM 导出现在支持文件命名了. (#2871)
+- 修复在线仓库安装时分支选择无效. (PR #2874 by [timongh](https://github.com/timongh))
+- 修复 XML 弹幕下载得到的文件内容不规范. (#2875)
+- 修复搜索词没有转义导致的问题. (#2872)
+- `自动隐藏侧栏` 支持用户自定义触发宽度, 顺便一提非自动隐藏状态下的触发宽度是 42px. (#2836)
+- 迁移 v1 隐藏功能: 网址AV号转换. (#2631)
+- 自动更新组件时, 会检查组件对应的本体版本, 如果当前脚本本体过旧, 则拒绝安装. (#2891)
+- 本体功能新增 `新版本提示`, 和 v1 类似, 检测脚本本体的更新并弹出 Toast 提示.
+- 清爽首页已完成 70%.
+- 捐助方式更改:
+  - 支付宝更换为爱发电, 爱发电支持支付宝和微信, 以及周期性捐助 (#2543)
+  - 微信支付改用赞赏码
+
+开发者相关:
+- 对功能进行 watch 时, 默认采用 development 模式以获得 source map 支持
+- 修复 tasks.json 的拼写错误 (#2838)
+- VSlider 修复 bug, 支持更多功能. (#2877 by [timongh](https://github.com/timongh))
+- 更新了 @typescript/eslint, 消除 ESLint 的 TS 版本警告. (#2885)
+- ComponentOption 中, displayName 改为可选. (#2809)
+- plugin 中也支持 author 字段了.
+
 ## v2.0.10-preview
 `[预览] v2.0.10` `2022-01-04`
 - 修复专栏中视频卡片布局错位. (PR #2776 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
