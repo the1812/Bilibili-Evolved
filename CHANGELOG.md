@@ -25,7 +25,7 @@
 开发者相关:
 - 对功能进行 watch 时, 默认采用 development 模式以获得 source map 支持
 - 修复 tasks.json 的拼写错误 (#2838)
-- VSlider 修复 bug, 支持更多功能. (#2877 by [timongh](https://github.com/timongh))
+- VSlider 修复 bug, 支持更多功能. (PR #2877 by [timongh](https://github.com/timongh))
 - 更新了 @typescript/eslint, 消除 ESLint 的 TS 版本警告. (#2885)
 - ComponentOption 中, displayName 改为可选. (#2809)
 - plugin 中也支持 author 字段了.
