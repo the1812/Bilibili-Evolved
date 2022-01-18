@@ -1,5 +1,9 @@
 # 更新日志
 
+## v2.1.1-preview
+`[预览] v2.1.1` `2022-01-18`
+- 修复 v2.1.0 在 Firefox + Violentmonkey 中无法运行.
+
 ## v2.1.0-preview
 `[预览] v2.1.0` `2022-01-17`
 - 修复 Firefox 中顶栏分区弹窗大小异常. (#2773, PR #2801 by [timongh](https://github.com/timongh))

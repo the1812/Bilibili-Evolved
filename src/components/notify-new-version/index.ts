@@ -1,7 +1,3 @@
-import { monkey } from '@/core/ajax'
-import { meta } from '@/core/meta'
-import { Toast } from '@/core/toast'
-import { Version } from '@/core/version'
 import { ComponentMetadata, componentsTags } from '../types'
 
 export const component: ComponentMetadata = {
@@ -24,6 +20,10 @@ export const component: ComponentMetadata = {
   },
   entry: async ({ settings: { options } }) => {
     try {
+      const { Version } = await import('@/core/version')
+      const { monkey } = await import('@/core/ajax')
+      const { meta } = await import('@/core/meta')
+      const { Toast } = await import('@/core/toast')
       const now = Number(new Date())
       const duration = now - options.lastUpdateCheck
       if (duration < options.minimumDuration) { // 未到间隔期
