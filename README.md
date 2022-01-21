@@ -1,4 +1,4 @@
-<div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/bilibili-evolved-wide-color.svg"></div>
+<div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="./images/bilibili-evolved-wide-color.svg"></div>
 <br>
 <div align="center">
 
@@ -145,13 +145,17 @@
 
 **或者也可以考虑[捐助](doc/donate.md)支持一下哦(｀・ω・´)**
 
-支付宝
+爱发电
 
-<img alt="支付宝" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/alipay.jpg" height="200">
+> 之前的支付宝付款码有点问题, 现已弃用 (不必担心, 转账均已收到), 在爱发电中仍然可以选择支付宝作为付款方式.
+
+<a href="https://afdian.net/@the1812" target="_blank">
+  <img alt="爱发电" src="./images/compressed/afdian.jpg" width="400">
+</a>
 
 微信
 
-<img alt="微信" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/wechat.jpg" height="200">
+<img alt="微信" src="./images/compressed/wechat.jpg" width="400">
 
 ----
 

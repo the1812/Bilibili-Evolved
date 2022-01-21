@@ -89,9 +89,7 @@ const entry = async () => {
   const { fullyLoaded } = await import('@/core/life-cycle')
   const { urlChange } = await import('@/core/observer')
   fullyLoaded(() => {
-    if (document.contentType === 'text/html') {
-      urlChange(() => clean())
-    }
+    urlChange(() => clean())
   })
 }
 export const component: ComponentMetadata = {
@@ -99,7 +97,7 @@ export const component: ComponentMetadata = {
   displayName: '网址参数清理',
   entry,
   description: {
-    'zh-CN': '自动删除网址中的多余跟踪参数.',
+    'zh-CN': '自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址).',
   },
   tags: [
     componentsTags.utils,

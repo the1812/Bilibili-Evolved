@@ -6,7 +6,11 @@ export const plugin: PluginMetadata = {
   name: 'downloadVideo.outputs.mpv',
   displayName: '下载视频 - MPV 输出支持',
   // FIXME: plugin 也需要 author 字段
-  description: 'by [@diannaojiang](https://github.com/diannaojiang)\n\n为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)',
+  author: {
+    name: 'diannaojiang',
+    link: 'https://github.com/diannaojiang',
+  },
+  description: '为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)',
   setup: ({ addData }) => {
     addData('downloadVideo.outputs', (outputs: DownloadVideoOutput[]) => {
       outputs.push({
