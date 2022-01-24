@@ -35,3 +35,24 @@ export const requestMixin = Vue.extend({
     },
   },
 })
+
+/**
+ * 将 UI 常量放到 this.ui 上, 并在根元素上同步对应的 CSS var
+ * @param variables UI 常量
+ */
+export const cssVariableMixin = (variables: Record<string, string | number>) => Vue.extend({
+  data() {
+    return {
+      ui: variables,
+    }
+  },
+  mounted() {
+    const element = this.$el as HTMLElement
+    Object.entries(variables).forEach(
+      ([name, value]) => {
+        const stringValue = typeof value === 'number' ? `${value}px` : value
+        element.style.setProperty(`--${lodash.kebabCase(name)}`, stringValue)
+      },
+    )
+  },
+})

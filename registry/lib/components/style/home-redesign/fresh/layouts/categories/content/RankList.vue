@@ -14,14 +14,15 @@
       <div class="fresh-home-rank-list-laser" data-number="1"></div>
     </div>
     <div v-if="secondItem" class="fresh-home-rank-list-second-item">
-      <div class="fresh-home-rank-list-rank-item"></div>
-      <div class="fresh-home-rank-list-rank-item-title">
-        {{ secondItem.title }}
+      <div class="fresh-home-rank-list-rank-item">
+        <div class="fresh-home-rank-list-rank-item-title">
+          {{ secondItem.title }}
+        </div>
       </div>
       <div class="fresh-home-rank-list-cover">
         <DpiImage
           :src="secondItem.coverUrl"
-          :size="{ width: 350, height: 225 }"
+          :size="{ width: 168, height: 110 }"
         />
       </div>
       <div class="fresh-home-rank-list-laser" data-number="2"></div>
@@ -31,13 +32,24 @@
 <script lang="ts">
 import { VideoCard } from '@/components/feeds/video-card'
 import { DpiImage } from '@/ui'
-import { requestMixin } from './request'
+import { requestMixin, cssVariableMixin } from './mixin'
 
 export default Vue.extend({
   components: {
     DpiImage,
   },
-  mixins: [requestMixin],
+  mixins: [
+    requestMixin,
+    cssVariableMixin({
+      panelHeight: 608,
+      padding: 12,
+      rankItemHeight: 110,
+      rankItemMargin: 24,
+      rankItemTitleHeight: 20,
+      firstCoverHeight: 225,
+      firstCoverWidth: 350,
+    }),
+  ],
   computed: {
     firstItem() {
       return this.items[0]
@@ -85,9 +97,6 @@ export default Vue.extend({
 @import "common";
 
 .fresh-home-rank-list {
-  --panel-height: 608px;
-  --padding: 12px;
-  --rank-item-height: 110px;
   position: relative;
   flex: 1;
   width: 400px;
@@ -111,11 +120,19 @@ export default Vue.extend({
     top: 0;
     width: 100%;
     height: var(--rank-item-height);
-    opacity: .95;
+    opacity: 0.95;
+  }
+  & &-second-item {
+    position: absolute;
+    top: calc(
+      2 * var(--padding) + var(--rankItemTitleHeight) + var(--firstCoverHeight) +
+        var(--rankItemMargin)
+    );
   }
   & &-rank-item-title {
     @include semi-bold();
     @include single-line();
+    line-height: var(--rank-item-title-height);
     padding: 12px 14px;
   }
   & &-cover {
@@ -125,7 +142,7 @@ export default Vue.extend({
     box-shadow: none;
     overflow: hidden;
     &:hover img {
-      transition: .2s ease-out;
+      transition: 0.2s ease-out;
       transform: scale(1.05);
     }
   }
@@ -135,7 +152,11 @@ export default Vue.extend({
     flex: 1;
     width: 4px;
     border-radius: 2px;
-    background-image: linear-gradient(to bottom, var(--theme-color) 0%, var(--theme-color-10) 100%);
+    background-image: linear-gradient(
+      to bottom,
+      var(--theme-color) 0%,
+      var(--theme-color-10) 100%
+    );
     &::after {
       content: attr(data-number);
       @include absolute-center();

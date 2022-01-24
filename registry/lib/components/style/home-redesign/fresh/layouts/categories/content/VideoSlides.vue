@@ -129,7 +129,7 @@ import { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
-import { requestMixin } from './request'
+import { cssVariableMixin, requestMixin } from './mixin'
 
 export default Vue.extend({
   components: {
@@ -139,20 +139,19 @@ export default Vue.extend({
     VLoading,
     VEmpty,
   },
-  mixins: [requestMixin],
+  mixins: [requestMixin, cssVariableMixin({
+    mainCoverHeight: 185,
+    mainCoverWidth: 287,
+    otherCoverHeight: 100,
+    otherCoverWidth: 154,
+    mainPaddingX: 18,
+    mainPaddingY: 20,
+    coverPadding: 16,
+  })],
   data() {
     return {
       watchlaterList,
       itemLimit: 10,
-      ui: {
-        mainCoverHeight: 185,
-        mainCoverWidth: 287,
-        otherCoverHeight: 100,
-        otherCoverWidth: 154,
-        mainPaddingX: 18,
-        mainPaddingY: 20,
-        coverPadding: 16,
-      },
     }
   },
   computed: {
@@ -171,14 +170,6 @@ export default Vue.extend({
   },
   created() {
     getWatchlaterList()
-  },
-  mounted() {
-    const element = this.$el as HTMLElement
-    Object.entries(this.ui as Record<string, number>).forEach(
-      ([name, value]) => {
-        element.style.setProperty(`--${lodash.kebabCase(name)}`, `${value}px`)
-      },
-    )
   },
   methods: {
     parseJson(json: any) {
