@@ -234,7 +234,7 @@
         "type": "component",
         "name": "urlParamsClean",
         "displayName": "网址参数清理",
-        "description": "自动删除网址中的多余跟踪参数.",
+        "description": "自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址).",
         "fullRelativePath": "../../registry/dist/components/utils/url-params-clean.js",
         "fullAbsolutePath": "registry/dist/components/utils/url-params-clean.js"
       },
