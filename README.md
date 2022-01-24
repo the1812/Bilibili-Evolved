@@ -143,15 +143,17 @@
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 
-**或者也可以考虑[捐助](doc/donate.md)支持一下哦(｀・ω・´)**
+**或者也可以考虑[捐助](https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/donate.md)支持一下哦(｀・ω・´)**
 
-支付宝
+爱发电
 
-<img alt="支付宝" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/alipay.jpg" height="200">
+> 之前的支付宝付款码有点问题, 现已弃用 (不必担心, 转账均已收到), 在爱发电中仍然可以选择支付宝作为付款方式.
+
+<img alt="爱发电" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/afdian.jpg" width="400">
 
 微信
 
-<img alt="微信" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/wechat.jpg" height="200">
+<img alt="微信" src="https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/compressed/wechat.jpg" width="400">
 
 ----
 
