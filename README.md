@@ -143,7 +143,7 @@
 
 **喜欢的话就点个⭐Star吧(°∀°)ﾉ**
 
-**或者也可以考虑[捐助](doc/donate.md)支持一下哦(｀・ω・´)**
+**或者也可以考虑[捐助](https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/donate.md)支持一下哦(｀・ω・´)**
 
 爱发电
 
