@@ -13,7 +13,7 @@ export const plugin: PluginMetadata = {
       outputs.push({
         name: 'idm',
         displayName: 'IDM',
-        description: '使用 IDM 的 .ef2 格式导出, 可以在 IDM 中使用导入开始下载. 请注意此导出方式不能保留视频文件名.',
+        description: '使用 IDM 的 .ef2 格式导出, 可以在 IDM 中使用导入开始下载.',
         runAction: async action => {
           const { infos } = action
           const referer = document.URL.replace(window.location.search, '')
@@ -22,6 +22,7 @@ export const plugin: PluginMetadata = {
 ${f.url}
 referer: ${referer}
 User-Agent: ${UserAgent}
+filename: ${f.title}
 >`.trim()
           ))).flat()
           const input = items.concat('').join('\n').replace(/([^\r])\n/g, '$1\r\n')

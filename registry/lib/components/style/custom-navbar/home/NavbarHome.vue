@@ -69,6 +69,15 @@ export default Vue.extend({
       }
     })
   },
+  mounted() {
+    // 火狐浏览器似乎无法按预期地计算 NavbarHome 外层容器的大小
+    // 通过某些方法迫使其重新计算似乎就能得到正确的值。如这里的方法，以及改变视口大小等
+    // 上述结论来自实验，其原理未知
+    this.$el.style.maxHeight = 'inherit'
+    this.$nextTick(() => {
+      this.$el.style.maxHeight = ''
+    })
+  },
 })
 </script>
 <style lang="scss">
@@ -76,9 +85,18 @@ export default Vue.extend({
 .custom-navbar .home-popup {
   max-height: 75vh;
   display: flex;
-  flex-direction: column;
   flex-wrap: wrap;
-  width: 300px;
+
+  // flex 布局纵向排列换行无法撑开父元素的水平长度（浏览器 bug），用此方式绕过
+  // 相关链接：
+  // 1. https://www.cnblogs.com/ccti7/p/14687477.html
+  // 2. https://stackoverflow.com/a/41209546/13860169
+  // 3. https://stackoverflow.com/a/33899301/13860169
+  flex-direction: row;
+  writing-mode: vertical-lr;
+  &>* {
+    writing-mode: horizontal-tb
+  }
 
   .category-item {
     border-radius: 8px;
@@ -135,11 +153,6 @@ export default Vue.extend({
     .count {
       opacity: 0.5;
       font-size: 14px;
-    }
-  }
-  @media screen and (max-height: 600px) {
-    & {
-      width: 450px;
     }
   }
 }

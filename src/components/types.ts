@@ -11,9 +11,20 @@ import { Range } from '@/ui/range'
 import { Widget } from '@/components/widget'
 import { LanguagePack } from './i18n/types'
 
-type Author = {
+export type Author = {
   name: string
   link: string
+}
+export interface FeatureBase {
+  // TODO: 可在编译时转换 Markdown 以提高运行时性能
+  /** 描述 (支持 markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
+  description?: I18nDescription
+  /** 作者信息 */
+  author?: Author | Author[]
+  /** 编译时的 commit hash, 由 Babel 注入, 不需要手动填写 */
+  commitHash?: string
+  /** 编译时的 core version, 由 Babel 注入, 不需要手动填写 */
+  coreVersion?: string
 }
 type Optional<Target, Props extends keyof Target> = {
   [P in Props]?: Target[P]
@@ -37,25 +48,21 @@ type ComponentOptionValidator<T> = (value: T) => T | undefined | null
  */
 export interface ComponentOption {
   /** 默认值 */
-  defaultValue: any
+  defaultValue: unknown
   /** 显示名称 */
-  displayName: string
-  /** 如果希望这个选项显示为一个下拉框, 可以用相应的`enum`提供下拉框的选值, 或者也可以传入`string[]` */
-  dropdownEnum?: any
+  displayName?: string
+  /** 如果希望这个选项显示为一个下拉框, 可以用相应的 `enum` 提供下拉框的选值, 或者也可以传入 `string[]` */
+  dropdownEnum?: unknown
   /** 是否不显示在设置面板中(不自动生成选项UI) */
   hidden?: boolean
-  /** 设为`true`时, 将用颜色选取器替代文本框 */
+  /** 设为 `true` 时, 将用颜色选取器替代文本框 */
   color?: boolean
-  /** 设为`true`时, 表示选项为多个`boolean`开关, 将显示为选择框列表 */
-  switches?: boolean
   /** 设置范围, 可以显示为一个滑动条 */
   slider?: {
     min?: number
     max?: number
     step?: number
   }
-  // /** 与`switches`选项配合使用, 设为`true`时, 用<RadioButton>替代<CheckBox>进行单选限制 */
-  // radio?: boolean
   /** `number`, `string`或`Range`类型的选项, 可以添加验证函数来阻止非法输入 */
   validator?: ComponentOptionValidator<Range<string>> |
   ComponentOptionValidator<string> | ComponentOptionValidator<number>
@@ -172,7 +179,7 @@ export interface FunctionalMetadata {
   urlExclude?: TestPattern
 }
 /** 组件基本信息 */
-export interface ComponentMetadata extends FunctionalMetadata {
+export interface ComponentMetadata extends FunctionalMetadata, FeatureBase {
   /** 组件名称 */
   name: string
   /** 显示名称 */
@@ -185,16 +192,10 @@ export interface ComponentMetadata extends FunctionalMetadata {
   configurable?: boolean
   /**  是否在设置界面中隐藏 (代码仍可操作) */
   hidden?: boolean
-  /** 组件描述 (markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
-  description?: I18nDescription
   /** 组件子选项 */
   options?: ComponentOptions
   /** i18n 数据 */
   i18n?: Record<string, LanguagePack>
-  /** 作者信息 */
-  author?: Author | Author[]
-  /** 编译时的 commit hash, 由 Babel 注入, 不需要手动填写 */
-  commitHash?: string
 }
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>

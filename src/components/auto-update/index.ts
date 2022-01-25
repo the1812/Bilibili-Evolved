@@ -6,6 +6,7 @@ import {
   isUserComponent,
 } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
+import { isFeatureAcceptable } from '@/core/version'
 import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
 import { ComponentAction } from '../settings-panel/component-actions/component-actions'
 
@@ -80,6 +81,9 @@ const checkUpdate = async (config: CheckUpdateConfig) => {
         }
         if (!code) {
           return `[${itemName}] 更新下载失败, 取消更新`
+        }
+        if (!isFeatureAcceptable(code)) {
+          return `[${itemName}] 版本不匹配, 取消更新`
         }
         const { installFeatureFromCode } = await import('@/core/install-feature')
         const { message } = await installFeatureFromCode(code, url)

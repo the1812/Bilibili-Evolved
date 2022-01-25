@@ -247,9 +247,12 @@ export const getBlobByType = async (type: DanmakuDownloadType, input: {
   const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
   switch (type) {
     case 'xml': {
-      return new Blob([
-        danmaku.xmlDanmakus.map(x => new XmlDanmaku(x).text()).join('\n'),
-      ], {
+      const xmlText = `
+<?xml version="1.0" encoding="UTF-8"?><i><chatserver>chat.bilibili.com</chatserver><chatid>${cid}</chatid><mission>0</mission><maxlimit>${danmaku.xmlDanmakus.length}</maxlimit><state>0</state><real_name>0</real_name><source>k-v</source>
+${danmaku.xmlDanmakus.map(x => new XmlDanmaku(x).text()).join('\n')}
+</i>
+      `.trim()
+      return new Blob([xmlText], {
         type: 'text/xml',
       })
     }

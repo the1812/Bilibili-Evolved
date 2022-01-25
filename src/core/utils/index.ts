@@ -195,7 +195,7 @@ export const createHook = <ParentType, HookParameters extends any[], ReturnType 
     }
     return original?.call(this, ...args)
   } as any
-  return original
+  return () => (type[target] = original as any)
 }
 /**
  * 阻止元素的对特定类型事件 (非 capture 类) 的处理
@@ -214,7 +214,15 @@ export const preventEvent = (element: Element, event: keyof HTMLElementEventMap)
  * 根据传入的对象拼接处 URL 查询字符串
  * @param obj 参数对象
  */
-export const formData = (obj: Record<string, any>) => Object.entries(obj).map(([k, v]) => `${k}=${v}`).join('&')
+export const formData = (obj: Record<string, any>, config?: { encode?: boolean }) => {
+  const { encode } = { encode: true, ...config }
+  return Object.entries(obj).map(([k, v]) => {
+    if (encode) {
+      return `${k}=${encodeURIComponent(v)}`
+    }
+    return `${k}=${v}`
+  }).join('&')
+}
 
 /**
  * 移除一个数组中的元素
@@ -415,4 +423,22 @@ export const waitForForeground = (action: () => void) => {
     return
   }
   document.addEventListener('visibilitychange', runAction)
+}
+/**
+ * 暂时或永久禁用滚动 (window.scrollTo)
+ * - 暂时: 传入 `action` 时会在 `action` 执行完毕后解除禁用
+ * - 永久: 不传入 `action`, 返回一个解除禁用的函数可供调用
+ * @param action 需要在禁止滚动时进行的操作
+ */
+export const disableWindowScroll = async (action?: () => unknown | Promise<unknown>) => {
+  // eslint-disable-next-line prefer-arrow-callback
+  const restore = createHook(unsafeWindow, 'scrollTo', function hook() {
+    return false
+  })
+  if (action) {
+    await action()
+    restore()
+    return none
+  }
+  return restore
 }

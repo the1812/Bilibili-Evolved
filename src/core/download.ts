@@ -85,6 +85,10 @@ export class DownloadPackage {
     a.setAttribute('download', finalFilename)
     console.log('[Download file]', finalFilename)
     document.body.appendChild(a)
+    // 阻止 spm id 的事件 (#2247)
+    a.addEventListener('click', e => {
+      e.stopPropagation()
+    }, { capture: true })
     a.click()
     a.remove()
   }

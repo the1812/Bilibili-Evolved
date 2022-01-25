@@ -29,8 +29,12 @@ const entry = async () => {
           className: 'copy-link',
           text: '复制链接',
           action: async () => {
-            const url = findParentFeedsUrl(item.element) || document.URL
+            const url = findParentFeedsUrl(item.element) || document.URL.replace(location.hash, '')
             await navigator.clipboard.writeText(`${url}#reply${item.id}`)
+            const operaList = dq(item.element, '.opera-list') as HTMLElement
+            if (operaList) {
+              operaList.style.display = 'none'
+            }
           },
         })
       })

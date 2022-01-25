@@ -9,7 +9,7 @@ export const customIcons: {
     .keys()
     .map(key => [
       key.replace(/.*\/([^/]+?)\.svg$/, '$1'),
-      context(key).default,
+      context(key),
     ]),
 )
 const [icons] = registerAndGetData(CustomIcons, customIcons)

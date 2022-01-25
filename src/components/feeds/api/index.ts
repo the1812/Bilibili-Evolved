@@ -58,6 +58,11 @@ export const applyContentFilter = <T> (items: T[]) => {
 export const withContentFilter = <Args extends any[], Item> (
   func: (...args: Args) => Promise<Item[]>,
 ) => (...args: Args) => func(...args).then(items => applyContentFilter(items))
+
+/**
+ * 获取视频或番剧动态
+ * @param type 指定视频 (video) 或番剧 (bangumi) 类型, 默认是视频
+ */
 export const getVideoFeeds = withContentFilter(
   async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCard[]> => {
     if (!getUID()) {

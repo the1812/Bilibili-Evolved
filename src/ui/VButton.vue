@@ -4,7 +4,7 @@
     role="button"
     :aria-disabled="disabled"
     :tabindex="disabled ? -1 : 0"
-    :class="{ [type]: true, disabled, round }"
+    :class="{ [type]: true, disabled, round, icon }"
     v-on="disabled ? null : $listeners"
     @keydown.enter.prevent="$listeners.click && $listeners.click($event)"
     @keydown.space.prevent="$listeners.click && $listeners.click($event)"
@@ -24,6 +24,10 @@ export default Vue.extend({
       default: 'light',
     },
     round: {
+      type: Boolean,
+      default: false,
+    },
+    icon: {
       type: Boolean,
       default: false,
     },
@@ -60,6 +64,10 @@ export default Vue.extend({
   &.round {
     border-radius: calc(1em + 8px);
     padding: 4px 10px;
+  }
+  &.icon {
+    border-radius: 50%;
+    padding: 4px;
   }
 
   .content-container {

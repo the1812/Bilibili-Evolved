@@ -1,7 +1,8 @@
 import { ComponentMetadata, ComponentEntry } from '@/components/types'
 import { playerAgent } from '@/components/video/player-agent'
 import { sq } from '@/core/spin-query'
-import { isEmbeddedPlayer, playerReady } from '@/core/utils'
+import { disableWindowScroll, isEmbeddedPlayer, playerReady } from '@/core/utils'
+import { loadLazyPanel } from '@/core/utils/lazy-panel'
 import { allVideoUrls } from '@/core/utils/urls'
 
 export enum PlayerModes {
@@ -14,13 +15,21 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   if (isEmbeddedPlayer()) {
     return
   }
+  const {
+    query: {
+      control: { buttons },
+    },
+  } = playerAgent
+
   await playerReady()
   const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
     [PlayerModes.Normal, none],
-    [PlayerModes.Wide, () => {
-      playerAgent.widescreen()
+    [PlayerModes.Wide, async () => {
+      await loadLazyPanel(buttons.widescreen.selector)
+      disableWindowScroll(() => playerAgent.widescreen())
     }],
-    [PlayerModes.WebFullscreen, () => {
+    [PlayerModes.WebFullscreen, async () => {
+      await loadLazyPanel(buttons.webFullscreen.selector)
       playerAgent.webFullscreen()
     }],
     [PlayerModes.Fullscreen, async () => {
@@ -33,6 +42,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
         console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
         return
       }
+      // await loadLazyPanel(buttons.fullscreen.selector)
       playerAgent.fullscreen()
     }],
   ])
@@ -41,16 +51,18 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
     return
   }
   const action = actions.get(options.mode)
-  const onplay = () => {
-    const isNormalMode = !dq('body[class*=player-mode-]')
-    if (isNormalMode) {
-      action()
-    }
-  }
+  // https://github.com/the1812/Bilibili-Evolved/issues/2408
+  // 也许以前切P是会刷新页面，但现在(2.7+)的播放器切P是不刷新页面的，所以不需要判断
+  // const onplay = () => {
+  //   const isNormalMode = !dq('body[class*=player-mode-]')
+  //   if (isNormalMode) {
+  //     action()
+  //   }
+  // }
   if (options.applyOnPlay && !playerAgent.isAutoPlay()) {
-    video.addEventListener('play', onplay, { once: true })
+    video.addEventListener('play', action, { once: true })
   } else {
-    onplay()
+    action()
   }
 }
 export const component: ComponentMetadata = {

@@ -4,5 +4,6 @@ node_modules/
 dev/
 *.log
 dist/stats.html
+dist/profile.json
 dist/bilibili-evolved.dev.user.js
 builder/**/dist/

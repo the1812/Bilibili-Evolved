@@ -4,8 +4,13 @@ import { ComponentMetadata } from './component'
 import { getSelectedLanguage } from './i18n/helpers'
 
 type ItemWithDescription = Pick<ComponentMetadata, 'description' | 'author'>
-export const getDescriptionMarkdown = (component: ItemWithDescription) => {
-  const { description, author } = component
+
+/**
+ * 读取功能的 `description` 和 `author`, 生成描述 (Markdown)
+ * @param item 功能
+ */
+export const getDescriptionMarkdown = (item: ItemWithDescription) => {
+  const { description, author } = item
   const authorPrefix = (() => {
     if (!author) {
       return ''
@@ -34,11 +39,20 @@ export const getDescriptionMarkdown = (component: ItemWithDescription) => {
   })()
   return authorPrefix + descriptionText
 }
-export const getDescriptionHTML = (component: ItemWithDescription) => marked(
-  getDescriptionMarkdown(component),
+
+/**
+ * 同 `getDescriptionMarkdown`, 将最后的 Markdown 转为 HTML string
+ * @param item 功能
+ */
+export const getDescriptionHTML = (item: ItemWithDescription) => marked(
+  getDescriptionMarkdown(item),
 )
-export const getDescriptionText = (component: ItemWithDescription) => {
-  const html = getDescriptionHTML(component)
+/**
+ * 同 `getDescriptionMarkdown`, 将最后的 Markdown 转为纯文本 (innerText)
+ * @param item 功能
+ */
+export const getDescriptionText = (item: ItemWithDescription) => {
+  const html = getDescriptionHTML(item)
   const div = document.createElement('div')
   div.innerHTML = html
   return div.innerText

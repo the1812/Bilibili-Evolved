@@ -42,6 +42,12 @@ const formatCountData = (count: number | string) => {
       unit: '亿',
     }
   }
+  if (count >= 1e7) {
+    return {
+      number: Math.round(count / 1e4).toString(),
+      unit: '万',
+    }
+  }
   if (count >= 1e4) {
     return {
       number: (Math.round(count / 1e3) / 10).toString(),

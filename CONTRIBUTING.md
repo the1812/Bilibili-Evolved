@@ -129,6 +129,8 @@ export const component: ComponentMetadata = {
 ### 插件
 在 `registry/lib/plugins` 中是所有插件的源代码, 步骤和组件基本一致, 只有在第 4 步中, 导出的是 `plugin` 对象, 实现 `PluginMetadata` 接口.
 
+> 关于如何判断要实现的是组件还是插件, 可以想想这个功能能否独立存在, 插件的定位是是增强组件的功能, 如果要开发的功能在没有安装某个组件的情况下毫无作用, 那么它就应该是一个插件; 如果可以独立存在并发挥一些作用, 那么它就应该是一个组件.
+
 ## 可用资源
 本体提供了大量 API 供组件 / 插件使用.
 ### 全局
@@ -145,7 +147,7 @@ export const component: ComponentMetadata = {
 - `componentTags`: 预置的一些组件标签, 实现 `ComponentMetadata.tags` 时常用
 
 ### 本体 API
-仅介绍常用 API, 其他可以翻阅源代码了解, 代码中均带有文档.
+仅介绍常用 API, 其他可以翻阅源代码了解, `core` 中的代码中均带有文档.
 
 - `core/ajax`: 封装 `XMLHttpRequest` 常见操作, 以及 `bilibiliApi` 作为 b 站 API 的响应处理 (`fetch` 可以直接用)
 - `core/download`: `DownloadPackage` 类封装了下载文件的逻辑, 可以添加单个或多个文件, 多个文件时自动打包为 `.zip`, 确定是单个文件时也可以直接调用静态方法 `single`
@@ -204,7 +206,7 @@ export const component: ComponentMetadata = {
 
 - `plugins/hook`: 钩子函数 API
 
-对于某种特定时机发生的事件, 可以调用 `getHook` 允许其他地方注入钩子提高扩展性, 其他地方可以嗲用 `addHook` 进行注入.
+对于某种特定时机发生的事件, 可以调用 `getHook` 允许其他地方注入钩子提高扩展性, 其他地方可以调用 `addHook` 进行注入.
 
 例如, 自动更新器在组件管理面板注入了钩子, 在新组件安装时记录安装来源, 实现自动更新. 组件管理面板没有任何更新相关代码.
 
@@ -221,7 +223,7 @@ export const component: ComponentMetadata = {
 - `ui/VLoading.vue`: 表示数据加载中, 界面可被插件更改
 
 ## 代码风格检查
-项目中含有 ESLint, 不通过 ESLint 可能无法发起 Pull Request. 配置基于 `airbnb-base`, `typescript-eslint/recommended`, `vue/recommended` 修改而来, 几个比较特殊的规则如下:
+项目中含有 ESLint, 不通过 ESLint 是无法进行 Pull Request 的. 配置基于 `airbnb-base`, `typescript-eslint/recommended`, `vue/recommended` 修改而来, 几个比较特殊的规则如下:
 
 ### 强制性
 - 除了 Vue 单文件组件, 禁止使用 `export default`, 所有导出必须命名.
@@ -234,6 +236,8 @@ export const component: ComponentMetadata = {
 - 不需要使用 `this` 特性的函数, 均使用箭头函数.
 
 ## 提交 commit
+仅提交源代码上的修改即可, 不建议把 dist 文件夹里的产物也提交, 否则容易在 PR 时产生冲突.
+
 commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式.
 
 ## 发起 PR (合并请求)

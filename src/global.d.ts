@@ -11,6 +11,7 @@ declare global {
   interface CompilationInfo {
     commitHash: string
     branch: string
+    version: string
     nearestTag: string
     versionWithTag: string
     // buildTime: number
@@ -28,7 +29,7 @@ declare global {
     bilibiliEvolved: ExternalApis
     [key: string]: any
   }
-  const unsafeWindow: Window
+  const unsafeWindow: Window & typeof globalThis
   const coreApis: CoreApis
   const dq: CoreApis['utils']['dq']
   const dqa: CoreApis['utils']['dqa']

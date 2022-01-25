@@ -1,4 +1,6 @@
 let eventAttached = false
+
+// FIXME: 需要重构, 不要直接对具体组件有行为依赖
 export const disableProfilePopup = () => {
   if (document.URL.replace(window.location.search, '') === 'https://t.bilibili.com/') {
     (async () => {

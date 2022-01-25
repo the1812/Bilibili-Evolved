@@ -3,7 +3,7 @@ body {
     &::before {
       content: "";
       position: fixed;
-      width: 8px;
+      width: var(--auto-hide-sidebar-width, 8px);
       height: 100vh;
       top: 0;
       left: 0;

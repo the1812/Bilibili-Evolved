@@ -1,5 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
-import { I18nDescription } from '@/core/common-types'
+import { ComponentMetadata, FeatureBase } from '@/components/component'
 import { deleteValue } from '@/core/utils'
 import { CoreApis } from '../core/core-apis'
 import { addData, registerData, registerAndGetData } from './data'
@@ -16,15 +15,13 @@ export interface PluginSetupParameters {
 }
 
 /** 插件基本信息 */
-export interface PluginMinimalData {
+export interface PluginMinimalData extends FeatureBase {
   /** 初始化函数, 可在其中注册数据, 添加代码注入等 */
   setup: (params: PluginSetupParameters) => void | Promise<void>
   /** 插件名称 */
   name: string
   /** 显示名称, 默认同插件名称 */
   displayName?: string
-  /** 插件描述, 类型同 `ComponentMetadata.description` */
-  description?: I18nDescription
 }
 type PartialRequired<Target, Props extends keyof Target> = Target & {
   [P in Props]-?: Target[P]
