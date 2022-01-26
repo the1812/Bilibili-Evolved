@@ -1,13 +1,13 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { formData } from '@/core/utils'
+import { formData, matchUrlPattern } from '@/core/utils'
 import { ascendingSort, descendingSort } from '@/core/utils/sort'
 import { allQualities, VideoQuality } from '@/components/video/video-quality'
+import { bangumiUrls } from '@/core/utils/urls'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi, DownloadVideoFragment, DownloadVideoInfo, DownloadVideoInputItem,
 } from '../types'
-
-/* spell-checker: disable */
+import { bangumiApi, videoApi } from './url'
 
 /** dash 格式更明确的扩展名 */
 export const DashExtensions = {
@@ -75,12 +75,14 @@ export const dashToFragments = (info: {
   }
   return results
 }
+
+/* spell-checker: disable */
 const downloadDash = async (
   input: DownloadVideoInputItem,
   config: {
     codec?: DashCodec
     filters?: DashFilters
-  },
+  } = {},
 ) => {
   const { codec = 'AVC/H.264', filters } = config
   const dashFilters = {
@@ -98,7 +100,8 @@ const downloadDash = async (
     fnver: 0,
     fnval: 2000,
   }
-  const api = `https://api.bilibili.com/x/player/playurl?${formData(params)}`
+  const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
+  const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
   const data = await bilibiliApi(
     getJsonWithCredentials(api),
     '获取视频链接失败',
@@ -184,6 +187,7 @@ const downloadDash = async (
   compareQuality(input, info)
   return info
 }
+
 export const videoDashAVC: DownloadVideoApi = {
   name: 'video.dash.avc',
   displayName: 'dash (AVC/H.264)',
@@ -196,7 +200,7 @@ export const videoDashHEVC: DownloadVideoApi = {
   description: '音画分离的 mp4 格式, 编码为 H.265, 体积较小, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
   downloadVideoInfo: async input => downloadDash(input, { codec: 'HEVC/H.265' }),
 }
-export const audioDash: DownloadVideoApi = {
+export const videoAudioDash: DownloadVideoApi = {
   name: 'video.dash.audio',
   displayName: 'dash (仅音频)',
   description: '仅下载视频中的音频轨道.',

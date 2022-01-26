@@ -72,6 +72,8 @@ export class DownloadVideoInfo {
 export interface DownloadVideoApi extends WithName {
   downloadVideoInfo: (input: DownloadVideoInputItem) => Promise<DownloadVideoInfo>
   description?: string
+  /** 网址匹配规则 */
+  match?: TestPattern
 }
 /** 表示下载时额外附带的产物, 如弹幕 / 字幕等 */
 export interface DownloadVideoAssets<AssetsParameter = any> extends VueInstanceInput, WithName {

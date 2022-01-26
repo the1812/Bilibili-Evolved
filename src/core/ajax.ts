@@ -234,6 +234,7 @@ export interface BilibiliApiResponse {
   msg?: string
   ttl: number
   data: any
+  result?: any
 }
 /**
  * 进行 bilibili API 标准响应处理
@@ -252,5 +253,5 @@ export const bilibiliApi = async <T = any>(
     logError(error)
     throw error
   }
-  return (json.data || {}) as T
+  return (json.data || json.result || {}) as T
 }
