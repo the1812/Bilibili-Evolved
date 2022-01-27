@@ -144,7 +144,7 @@ import {
   videoDashAvc,
   videoDashHevc,
   videoDashAv1,
-  audioDash,
+  videoAudioDash,
 } from './apis/dash'
 import { videoFlv } from './apis/flv'
 import { toastOutput } from './outputs/toast'
@@ -170,7 +170,7 @@ const [apis] = registerAndGetData(
     videoDashAvc,
     videoDashHevc,
     videoDashAv1,
-    audioDash,
+    videoAudioDash,
   ] as DownloadVideoApi[],
 )
 const [assets] = registerAndGetData(
@@ -188,7 +188,7 @@ const { basicConfig } = getComponentSettings('downloadVideo').options as {
     output: string
   }
 }
-const filterData = (items: { match?: TestPattern }[]) => {
+const filterData = <T extends { match?: TestPattern }> (items: T[]) => {
   const matchedItems = items.filter(it => it.match?.some(p => matchUrlPattern(p)) ?? true)
   return matchedItems
 }
@@ -208,7 +208,6 @@ export default Vue.extend({
     },
   },
   data() {
-    const lastApi = basicConfig.api
     const lastOutput = basicConfig.output
     return {
       open: false,
@@ -225,8 +224,8 @@ export default Vue.extend({
       selectedQuality: undefined,
       inputs: [],
       selectedInput: undefined,
-      apis,
-      selectedApi: apis.find(it => it.name === lastApi) || apis[0],
+      apis: [],
+      selectedApi: undefined,
       outputs,
       selectedOutput: outputs.find(it => it.name === lastOutput) || outputs[0],
     }
@@ -278,6 +277,14 @@ export default Vue.extend({
       const matchedInputs = filterData(inputs)
       this.inputs = matchedInputs
       this.selectedInput = matchedInputs[0]
+      const matchedApis = filterData(apis)
+      this.apis = matchedApis
+      const lastApi = matchedApis.find(api => api.name === basicConfig.api)
+      if (lastApi) {
+        this.selectedApi = lastApi
+      } else {
+        this.selectedApi = matchedApis[0]
+      }
     })
   },
   methods: {
@@ -297,7 +304,7 @@ export default Vue.extend({
       return videoItems
     },
     async updateTestVideoInfo() {
-      if (!this.selectedInput) {
+      if (!this.selectedInput || !this.selectedApi) {
         return
       }
       this.testData.videoInfo = null
