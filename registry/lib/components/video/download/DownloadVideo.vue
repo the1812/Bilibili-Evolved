@@ -140,7 +140,12 @@ import { getFriendlyTitle } from '@/core/utils/title'
 import { bangumiBatchInput } from './inputs/bangumi/batch'
 import { videoBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
-import { videoDashAVC, videoDashHEVC, audioDash } from './apis/dash'
+import {
+  videoDashAvc,
+  videoDashHevc,
+  videoDashAv1,
+  audioDash,
+} from './apis/dash'
 import { videoFlv } from './apis/flv'
 import { toastOutput } from './outputs/toast'
 import {
@@ -162,8 +167,9 @@ const [inputs] = registerAndGetData(
 const [apis] = registerAndGetData(
   'downloadVideo.apis', [
     videoFlv,
-    videoDashAVC,
-    videoDashHEVC,
+    videoDashAvc,
+    videoDashHevc,
+    videoDashAv1,
     audioDash,
   ] as DownloadVideoApi[],
 )
