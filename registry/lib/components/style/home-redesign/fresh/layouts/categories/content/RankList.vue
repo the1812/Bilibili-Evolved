@@ -38,6 +38,31 @@
       </div>
       <div class="fresh-home-rank-list-laser" data-number="2"></div>
     </div>
+    <div v-if="thirdItem" class="fresh-home-rank-list-third-item">
+      <div class="fresh-home-rank-list-rank-item">
+        <div class="fresh-home-rank-list-rank-item-title">
+          {{ thirdItem.title }}
+        </div>
+        <UpInfo
+          :up-face-url="thirdItem.upFaceUrl"
+          :up-id="thirdItem.upID"
+          :up-name="thirdItem.upName"
+        />
+        <div class="fresh-home-rank-list-rank-item-stats">
+          <VIcon icon="mdi-fire" :size="16" />
+          {{ secondItem.points | formatCount }}
+          <VIcon icon="play" :size="16" />
+          {{ secondItem.playCount | formatCount }}
+        </div>
+      </div>
+      <div class="fresh-home-rank-list-cover">
+        <DpiImage
+          :src="thirdItem.coverUrl"
+          :size="{ width: ui.thirdCoverWidth, height: ui.thirdCoverHeight }"
+        />
+      </div>
+      <div class="fresh-home-rank-list-laser" data-number="3"></div>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -68,6 +93,8 @@ export default Vue.extend({
       firstCoverWidth: 350,
       secondCoverHeight: 110,
       secondCoverWidth: 168,
+      thirdCoverHeight: 90,
+      thirdCoverWidth: 139,
     }),
   ],
   computed: {
@@ -124,6 +151,14 @@ export default Vue.extend({
   padding: var(--padding);
   margin: calc(0px - var(--padding));
 
+  --offset-second: calc(
+    3 * var(--padding) + var(--rank-item-title-height) + var(--first-cover-height) +
+      var(--rank-item-margin)
+  );
+  --offset-third: calc(
+    var(--offset-second) + var(--second-cover-height) + var(--padding) + var(--rank-item-margin)
+  );
+
   & &-rank-item {
     @include card(12px);
     @include v-stretch();
@@ -171,13 +206,9 @@ export default Vue.extend({
   }
   & &-second-item {
     @include v-stretch();
-    --offset-y: calc(
-      3 * var(--padding) + var(--rank-item-title-height) + var(--first-cover-height) +
-        var(--rank-item-margin)
-    );
     position: absolute;
     transform: translateZ(0);
-    top: var(--offset-y);
+    top: var(--offset-second);
     bottom: var(--padding);
     .fresh-home-rank-list-rank-item {
       position: absolute;
@@ -188,6 +219,28 @@ export default Vue.extend({
       &-title {
         @include max-line(2);
         padding: 0 8px 0 12px;
+      }
+      .be-up-info {
+        margin: 4px 8px;
+      }
+    }
+  }
+  & &-third-item {
+    @include v-stretch();
+    position: absolute;
+    transform: translateZ(0);
+    top: var(--offset-third);
+    right: 0;
+    bottom: var(--padding);
+    .fresh-home-rank-list-rank-item {
+      position: absolute;
+      width: 254px;
+      top: var(--padding);
+      right: 121px;
+      padding-right: 18px;
+      &-title {
+        @include max-line(2);
+        padding: 0 12px 0 8px;
       }
       .be-up-info {
         margin: 4px 8px;
