@@ -8,7 +8,7 @@
       <div class="fresh-home-rank-list-cover">
         <DpiImage
           :src="firstItem.coverUrl"
-          :size="{ width: 350, height: 225 }"
+          :size="{ width: ui.firstCoverWidth, height: ui.firstCoverHeight }"
         />
       </div>
       <div class="fresh-home-rank-list-laser" data-number="1"></div>
@@ -18,11 +18,22 @@
         <div class="fresh-home-rank-list-rank-item-title">
           {{ secondItem.title }}
         </div>
+        <UpInfo
+          :up-face-url="secondItem.upFaceUrl"
+          :up-id="secondItem.upID"
+          :up-name="secondItem.upName"
+        />
+        <div class="fresh-home-rank-list-rank-item-stats">
+          <VIcon icon="mdi-fire" :size="16" />
+          {{ secondItem.points | formatCount }}
+          <VIcon icon="play" :size="16" />
+          {{ secondItem.playCount | formatCount }}
+        </div>
       </div>
       <div class="fresh-home-rank-list-cover">
         <DpiImage
           :src="secondItem.coverUrl"
-          :size="{ width: 168, height: 110 }"
+          :size="{ width: ui.secondCoverWidth, height: ui.secondCoverHeight }"
         />
       </div>
       <div class="fresh-home-rank-list-laser" data-number="2"></div>
@@ -31,12 +42,19 @@
 </template>
 <script lang="ts">
 import { VideoCard } from '@/components/feeds/video-card'
-import { DpiImage } from '@/ui'
+import UpInfo from '@/components/feeds/UpInfo.vue'
+import { formatCount } from '@/core/utils/formatters'
+import { DpiImage, VIcon } from '@/ui'
 import { requestMixin, cssVariableMixin } from './mixin'
 
 export default Vue.extend({
   components: {
     DpiImage,
+    UpInfo,
+    VIcon,
+  },
+  filters: {
+    formatCount,
   },
   mixins: [
     requestMixin,
@@ -48,6 +66,8 @@ export default Vue.extend({
       rankItemTitleHeight: 20,
       firstCoverHeight: 225,
       firstCoverWidth: 350,
+      secondCoverHeight: 110,
+      secondCoverWidth: 168,
     }),
   ],
   computed: {
@@ -104,6 +124,33 @@ export default Vue.extend({
   padding: var(--padding);
   margin: calc(0px - var(--padding));
 
+  & &-rank-item {
+    @include card(12px);
+    @include v-stretch();
+    justify-content: space-between;
+    padding: 10px 0;
+    height: var(--rank-item-height);
+    opacity: 0.95;
+    z-index: -1;
+
+    &-title {
+      @include semi-bold();
+      line-height: var(--rank-item-title-height);
+      box-sizing: content-box;
+    }
+    .be-up-info {
+      align-self: flex-start;
+    }
+    &-stats {
+      @include h-center(12px);
+      font-size: 12px;
+      opacity: .75;
+      margin: 0 10px;
+      .be-icon {
+        margin-right: -8px;
+      }
+    }
+  }
   & &-first-item {
     @include v-stretch();
     transform: translateZ(0);
@@ -112,37 +159,52 @@ export default Vue.extend({
     left: var(--padding);
     height: calc(100% - 2 * var(--padding));
     width: calc(100% - 2 * var(--padding));
-  }
-  & &-rank-item {
-    @include card(12px);
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    width: 100%;
-    height: var(--rank-item-height);
-    opacity: 0.95;
+    .fresh-home-rank-list-rank-item {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      &-title {
+        @include single-line();
+        padding: var(--padding) 14px;
+      }
+    }
   }
   & &-second-item {
-    position: absolute;
-    top: calc(
-      2 * var(--padding) + var(--rankItemTitleHeight) + var(--firstCoverHeight) +
-        var(--rankItemMargin)
+    @include v-stretch();
+    --offset-y: calc(
+      3 * var(--padding) + var(--rank-item-title-height) + var(--first-cover-height) +
+        var(--rank-item-margin)
     );
-  }
-  & &-rank-item-title {
-    @include semi-bold();
-    @include single-line();
-    line-height: var(--rank-item-title-height);
-    padding: 12px 14px;
+    position: absolute;
+    transform: translateZ(0);
+    top: var(--offset-y);
+    bottom: var(--padding);
+    .fresh-home-rank-list-rank-item {
+      position: absolute;
+      width: 230px;
+      top: var(--padding);
+      left: 143px;
+      padding-left: 24px;
+      &-title {
+        @include max-line(2);
+        padding: 0 8px 0 12px;
+      }
+      .be-up-info {
+        margin: 4px 8px;
+      }
+    }
   }
   & &-cover {
     @include card(12px);
+    cursor: pointer;
     display: flex;
     align-self: center;
     box-shadow: none;
     overflow: hidden;
-    &:hover img {
+    img {
       transition: 0.2s ease-out;
+    }
+    &:hover img {
       transform: scale(1.05);
     }
   }
