@@ -89,6 +89,11 @@ export async function getWatchlaterList(): Promise<number[]>
 export async function getWatchlaterList(raw: true): Promise<RawWatchlaterItem[]>
 export async function getWatchlaterList(raw: false): Promise<number[]>
 export async function getWatchlaterList(raw = false): Promise<number[] | RawWatchlaterItem[]> {
+  const { getUID } = await import('@/core/utils')
+  if (!getUID()) {
+    console.warn('[稍后再看列表] 账号未登录')
+    return []
+  }
   const api = 'https://api.bilibili.com/x/v2/history/toview/web'
   const { getJsonWithCredentials } = await import('@/core/ajax')
   const response = await getJsonWithCredentials(api)

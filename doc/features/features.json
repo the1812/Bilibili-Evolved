@@ -435,7 +435,7 @@
     "type": "component",
     "name": "urlParamsClean",
     "displayName": "网址参数清理",
-    "description": "自动删除网址中的多余跟踪参数.",
+    "description": "自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址).",
     "fullRelativePath": "../../registry/dist/components/utils/url-params-clean.js",
     "fullAbsolutePath": "registry/dist/components/utils/url-params-clean.js"
   },
@@ -462,6 +462,14 @@
     "description": "将稍后再看的链接重定向为普通播放网址.",
     "fullRelativePath": "../../registry/dist/components/utils/watchlater-redirect.js",
     "fullAbsolutePath": "registry/dist/components/utils/watchlater-redirect.js"
+  },
+  {
+    "type": "component",
+    "name": "avUrl",
+    "displayName": "网址AV号转换",
+    "description": "当视频的链接是BV号时, 自动转换为AV号. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址).",
+    "fullRelativePath": "../../registry/dist/components/video/av-url.js",
+    "fullAbsolutePath": "registry/dist/components/video/av-url.js"
   },
   {
     "type": "component",
@@ -743,6 +751,14 @@
     "description": "为下载视频增加 IDM 输出支持.",
     "fullRelativePath": "../../registry/dist/plugins/video/download/idm-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/idm-output.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.mpv-playlist",
+    "displayName": "下载视频 - MPV 播放支持（列表）",
+    "description": "by [@wuliic](https://github.com/wullic)\n\n为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/mpv-output-playlist.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/mpv-output-playlist.js"
   },
   {
     "type": "plugin",

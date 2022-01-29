@@ -4,12 +4,8 @@
 
 - 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [yarn](https://yarnpkg.com/getting-started/install#global-install).
 - 将项目 Fork 至自己账户后, 克隆至本地
-
-```powershell
-git clone https://github.com/{{your-name}}/Bilibili-Evolved.git -b preview --single-branch
-cd Bilibili-Evolved
-```
-- 安装依赖
+- 分支视情况切换或新建, 新功能以 `preview-features` 为基础分支, 功能修复以 `preview-fixes` 为基础分支.
+- 安装依赖:
 
 ```powershell
 yarn
@@ -241,7 +237,7 @@ export const component: ComponentMetadata = {
 commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式.
 
 ## 发起 PR (合并请求)
-将你的分支往主仓库的 `preview` 分支合并就行.
+将你的分支往主仓库的 `preview-features` (新增功能) 或 `preview-fixes` (功能修复) 分支合并就行.
 
 ## 自行保留
 你可以选择不将功能代码合并到主仓库, 因此也没有 ESLint 的限制. PR 时仅添加指向你的仓库中的组件信息即可, 具体来说, 是在 `registry/lib/docs/third-party.ts` 中, 往对应数组中添加你的功能的相关信息, 当然别忘了把 `owner` 设为你的 GitHub 用户名.

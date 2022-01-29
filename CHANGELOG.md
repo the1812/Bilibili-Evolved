@@ -1,5 +1,64 @@
 # 更新日志
 
+## v2.1.2
+`v2.1.2` `2022-01-25`
+如果你是从 v1 过来的, 记得看下 [v2 的发布公告](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.0.7).
+从此版本起, 除[最后一个 v1 离线版](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@v2.0.8/bilibili-evolved.offline.user.js)以外, 删除了所有 v1 相关文件.
+
+这个月基本没什么时间写, 跨年忙得很; 不过更新内容意外地很多, 也是多亏了常来 PR 的几位大神们了.
+
+在功能的更新方面, 为了将来能够更新完本体后立即进行一次功能更新, 我也开始做了一些准备 (不过还没弄完), 目前可以在顶栏里搜索 `check updates`, 选择 `检查所有更新` 来更新已安装的功能.
+由于在线仓库的分支 bug, 正式版用户的功能可能还是检查不到更新, 此时可以安装 `更新链接替换` 组件, 然后在功能面板中选择 `替换更新链接`, 输入 `master` 点击确定即可. 之后 `检查所有更新` 应该可以正常使用, `更新链接替换` 组件用完后也可以卸载.
+
+预览版用户可以不看下面这个更新日志, 因为就是 v2.0.9 ~ v2.1.1 的合并.
+
+✨新增
+- 清爽首页完成 70% 左右, 支持活动, 热门, 动态, 栏目, 暂不支持分区和排行榜, 板块排序也还没做图形界面. 如果你只是需要上面那四个板块, 那么现在就可以试用起来了, 链接是[这个](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/home-redesign/fresh.js). (在线仓库里不开放, 因为还是半成品)
+- 尝试支持禁用 b 站切换播放器模式时的定位效果, 不过离谱的是这东西上了之后又有人不想要这个定位效果, 后续应该还会做个选项. (#483)
+- 防御 spm_id 对下载功能的干扰. (#2247)
+- 本体功能新增 `新版本提示`, 和 v1 类似, 检测脚本本体的更新并弹出 Toast 提示.
+- 自动更新组件时, 会检查组件对应的本体版本, 如果当前脚本本体过旧, 则拒绝安装. (#2891)
+- 迁移 v1 隐藏功能: 网址AV号转换. (#2631)
+- 视频卡片的链接带上 `/video` 避免二次跳转. (#2779)
+- `自动隐藏侧栏` 支持用户自定义触发宽度, 顺便一提非自动隐藏状态下的触发宽度是 42px. (#2836)
+- 下载视频:
+  - 新增 MPV 列表播放支持. (PR #2806 by [wullic](https://github.com/wullic))
+  - IDM 导出现在支持文件命名了. (#2871)
+- 捐助方式更改:
+  - 支付宝更换为爱发电, 爱发电支持支付宝和微信, 以及周期性捐助 (#2543)
+  - 微信支付改用赞赏码
+
+🐛修复
+- 自定义顶栏:
+  - 修复搜索框在 macOS 下输入法回车会直接触发搜索. (#2738)
+  - 修复搜索词没有转义导致的问题. (#2872)
+  - 修复 `动态弹窗` - `所有动态` 没有在新标签页打开.
+  - 修复主站中的链接错误. (#2774, #2532)
+  - 修复主页弹窗在低分辨率下内容溢出. (#2610, #2773, PR #2757 by [timongh](https://github.com/timongh), PR #2801 by [timongh](https://github.com/timongh))
+  - 修复个人信息弹窗样式. (PR #2776 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 修复专栏里的视频卡片样式问题. (#2709)
+- 修复番剧区首次打开下载视频时按钮无法点击. (#2725)
+- 修复 `复制评论链接` 没清理 URL hash 参数. (#2641)
+- 修复 `夜间模式` 下评论的输入框高度无限增长. (#2633, PR #2764 by [timongh](https://github.com/timongh))
+- 重新实现了 `直播全屏包裹`, 修复某些时候弹窗位置不正确. (~~虽然我没遇到过~~) (PR #2758 by [timongh](https://github.com/timongh))
+- 修复复制评论链接后菜单不消失. (#1196, PR #2807 by [timongh](https://github.com/timongh))
+- 修复默认播放器模式不生效的问题. (#2815, PR #2818 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 修复评论区的样式问题. (#2837)
+- 修复在线仓库安装时分支选择无效. (PR #2874 by [timongh](https://github.com/timongh))
+- 修复 XML 弹幕下载得到的文件内容不规范. (#2875)
+
+☕开发者相关
+- 调整了 webpack 打包配置 (使用 webpack 5 asset modules, 移除 `raw-loader`), 之前 (指 v2.0.8 前) 有 clone 的开发者们记得重新 yarn 更新一下包.
+- 稍后再看的错误处理统一移动到 core 中 (`src/components/video/watchlater.ts`)
+- `isComponentEnabled` 能够对不存在的组件返回 `false` 了.
+- 关闭 preview 分支的 CI 触发, 方便多个 PR 的合并.
+- 对组件 / 插件的 watch task 默认启用 webpack 的 `mode=development` 以提供 source map.
+- 修复 tasks.json 的拼写错误 (#2838)
+- VSlider 修复 bug, 支持更多功能. (PR #2877 by [timongh](https://github.com/timongh))
+- 更新了 @typescript/eslint, 消除 ESLint 的 TS 版本警告. (#2885)
+- ComponentOption 中, `displayName` 改为可选. (#2809)
+- plugin 中也支持 `author` 字段了.
+
 ## v2.1.1-preview
 `[预览] v2.1.1` `2022-01-18`
 - 修复 v2.1.0 在 Firefox + Violentmonkey 中无法运行.

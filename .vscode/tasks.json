@@ -45,19 +45,20 @@
       "problemMatcher": [],
       "label": "功能:监视插件 dev:watch-plugins"
     },
-    // {
-    //   "type": "shell",
-    //   "command": "yarn webpack --config ./webpack/webpack.measure.js --progress",
-    //   "problemMatcher": [],
-    //   "label": "打包分析 dev:measure"
-    // },
-    // {
-    //   "type": "shell",
-    //   "command": "./dist/stats.html",
-    //   "problemMatcher": [],
-    //   "dependsOn": "打包分析 dev:measure",
-    //   "label": "查看打包分析 dev:stats"
-    // },
+    {
+      "type": "shell",
+      "command": "yarn tsc -p tsconfig.type-check.json --noEmit",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "生产:类型检查 prod:type"
+    },
+    {
+      "type": "shell",
+      "command": "yarn --silent webpack --config ./webpack/webpack.prod.js --profile --json > dist/profile.json && yarn webpack-bundle-analyzer dist/profile.json",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "本体:打包分析 prod:analyze"
+    },
     {
       "type": "shell",
       "command": "yarn eslint -f html -o dev/eslint.html --cache --cache-location node_modules/.cache/eslint/ 'src/**/*.@(js|ts|vue)' 'registry/lib/**/*.@(js|ts|vue)'",

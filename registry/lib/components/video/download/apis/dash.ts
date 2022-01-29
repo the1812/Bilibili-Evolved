@@ -1,13 +1,13 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { formData } from '@/core/utils'
+import { formData, matchUrlPattern } from '@/core/utils'
 import { ascendingSort, descendingSort } from '@/core/utils/sort'
 import { allQualities, VideoQuality } from '@/components/video/video-quality'
+import { bangumiUrls } from '@/core/utils/urls'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi, DownloadVideoFragment, DownloadVideoInfo, DownloadVideoInputItem,
 } from '../types'
-
-/* spell-checker: disable */
+import { bangumiApi, videoApi } from './url'
 
 /** dash 格式更明确的扩展名 */
 export const DashExtensions = {
@@ -17,7 +17,11 @@ export const DashExtensions = {
 /** dash 格式原本的扩展名 */
 export const DashFragmentExtension = '.m4s'
 /** dash 格式支持的编码类型 */
-export type DashCodec = 'AVC/H.264' | 'HEVC/H.265'
+export enum DashCodec {
+  Avc = 'AVC/H.264',
+  Hevc = 'HEVC/H.265',
+  Av1 = 'AV1'
+}
 export interface Dash {
   type: keyof typeof DashExtensions
   bandWidth: number
@@ -75,14 +79,16 @@ export const dashToFragments = (info: {
   }
   return results
 }
+
+/* spell-checker: disable */
 const downloadDash = async (
   input: DownloadVideoInputItem,
   config: {
     codec?: DashCodec
     filters?: DashFilters
-  },
+  } = {},
 ) => {
-  const { codec = 'AVC/H.264', filters } = config
+  const { codec = DashCodec.Avc, filters } = config
   const dashFilters = {
     video: () => true,
     audio: () => true,
@@ -96,9 +102,10 @@ const downloadDash = async (
     otype: 'json',
     fourk: 1,
     fnver: 0,
-    fnval: 2000,
+    fnval: 4048,
   }
-  const api = `https://api.bilibili.com/x/player/playurl?${formData(params)}`
+  const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
+  const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
   const data = await bilibiliApi(
     getJsonWithCredentials(api),
     '获取视频链接失败',
@@ -119,10 +126,12 @@ const downloadDash = async (
       const videoCodec: DashCodec = (() => {
         switch (d.codecid) {
           case 12:
-            return 'HEVC/H.265'
+            return DashCodec.Hevc
+          case 13:
+            return DashCodec.Av1
           default:
           case 7:
-            return 'AVC/H.264'
+            return DashCodec.Avc
         }
       })()
       const dash: VideoDash = {
@@ -184,19 +193,25 @@ const downloadDash = async (
   compareQuality(input, info)
   return info
 }
-export const videoDashAVC: DownloadVideoApi = {
+export const videoDashAvc: DownloadVideoApi = {
   name: 'video.dash.avc',
   displayName: 'dash (AVC/H.264)',
   description: '音画分离的 mp4 格式, 编码为 H.264, 兼容性较好. 下载后可以合并为单个 mp4 文件.',
-  downloadVideoInfo: async input => downloadDash(input, { codec: 'AVC/H.264' }),
+  downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Avc }),
 }
-export const videoDashHEVC: DownloadVideoApi = {
+export const videoDashHevc: DownloadVideoApi = {
   name: 'video.dash.hevc',
   displayName: 'dash (HEVC/H.265)',
   description: '音画分离的 mp4 格式, 编码为 H.265, 体积较小, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
-  downloadVideoInfo: async input => downloadDash(input, { codec: 'HEVC/H.265' }),
+  downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Hevc }),
 }
-export const audioDash: DownloadVideoApi = {
+export const videoDashAv1: DownloadVideoApi = {
+  name: 'video.dash.av1',
+  displayName: 'dash (AV1)',
+  description: '音画分离的 mp4 格式, 编码为 AV1, 体积较小, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
+  downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Av1 }),
+}
+export const videoAudioDash: DownloadVideoApi = {
   name: 'video.dash.audio',
   displayName: 'dash (仅音频)',
   description: '仅下载视频中的音频轨道.',
