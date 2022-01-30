@@ -1,115 +1,137 @@
 <template>
-  <div class="fresh-home-rank-list">
-    <div v-if="firstItem" class="fresh-home-rank-list-first-item">
-      <div class="fresh-home-rank-list-rank-item"></div>
-      <a
-        class="fresh-home-rank-list-rank-item-title"
-        target="_blank"
-        :href="videoHref(firstItem)"
-        :title="firstItem.title"
-      >
-        {{ firstItem.title }}
-      </a>
-      <a
-        class="fresh-home-rank-list-cover"
-        target="_blank"
-        :href="videoHref(firstItem)"
-      >
-        <DpiImage
-          :src="firstItem.coverUrl"
-          :size="{ width: ui.firstCoverWidth, height: ui.firstCoverHeight }"
-        />
-        <UpInfo
-          :up-face-url="firstItem.upFaceUrl"
-          :up-id="firstItem.upID"
-          :up-name="firstItem.upName"
-        />
-        <div class="fresh-home-rank-list-stats">
-          <VIcon icon="mdi-fire" :size="16" />
-          {{ firstItem.points | formatCount }}
-        </div>
-      </a>
-      <div class="fresh-home-rank-list-laser" data-number="1"></div>
-    </div>
-    <div v-if="secondItem" class="fresh-home-rank-list-second-item">
-      <a
-        class="fresh-home-rank-list-rank-item"
-        target="_blank"
-        :href="videoHref(secondItem)"
-      >
-        <div
-          class="fresh-home-rank-list-rank-item-title"
-          :title="secondItem.title"
+  <div class="fresh-home-rank-list" :class="{ loading, loaded }">
+    <div v-if="!loaded" class="fresh-home-rank-list-loading-container">
+      <VLoading v-if="loading" />
+      <div v-if="(error || items.length === 0) && !loading" class="fresh-home-rank-list-empty">
+        <VEmpty />
+        <VButton
+          class="fresh-home-rank-list-refresh-button"
+          round
+          @click="reload"
         >
-          {{ secondItem.title }}
-        </div>
-        <UpInfo
-          :up-face-url="secondItem.upFaceUrl"
-          :up-id="secondItem.upID"
-          :up-name="secondItem.upName"
-        />
-        <div class="fresh-home-rank-list-stats">
-          <VIcon icon="mdi-fire" :size="16" />
-          {{ secondItem.points | formatCount }}
-          <VIcon icon="play" :size="16" />
-          {{ secondItem.playCount | formatCount }}
-        </div>
-      </a>
-      <a
-        class="fresh-home-rank-list-cover"
-        target="_blank"
-        :href="videoHref(secondItem)"
-      >
-        <DpiImage
-          :src="secondItem.coverUrl"
-          :size="{ width: ui.secondCoverWidth, height: ui.secondCoverHeight }"
-        />
-      </a>
-      <div class="fresh-home-rank-list-laser" data-number="2"></div>
+          <VIcon icon="mdi-refresh" />
+          刷新
+        </VButton>
+      </div>
     </div>
-    <div v-if="thirdItem" class="fresh-home-rank-list-third-item">
-      <a
-        class="fresh-home-rank-list-rank-item"
-        target="_blank"
-        :href="videoHref(thirdItem)"
-      >
-        <div
+    <template v-if="loaded">
+      <div v-if="firstItem" class="fresh-home-rank-list-first-item animation">
+        <div class="fresh-home-rank-list-rank-item"></div>
+        <a
           class="fresh-home-rank-list-rank-item-title"
-          :title="thirdItem.title"
+          target="_blank"
+          :href="videoHref(firstItem)"
+          :title="firstItem.title"
         >
-          {{ thirdItem.title }}
-        </div>
-        <UpInfo
-          :up-face-url="thirdItem.upFaceUrl"
-          :up-id="thirdItem.upID"
-          :up-name="thirdItem.upName"
-        />
-        <div class="fresh-home-rank-list-stats">
-          <VIcon icon="mdi-fire" :size="16" />
-          {{ secondItem.points | formatCount }}
-          <VIcon icon="play" :size="16" />
-          {{ secondItem.playCount | formatCount }}
-        </div>
-      </a>
-      <a
-        class="fresh-home-rank-list-cover"
-        target="_blank"
-        :href="videoHref(thirdItem)"
-      >
-        <DpiImage
-          :src="thirdItem.coverUrl"
-          :size="{ width: ui.thirdCoverWidth, height: ui.thirdCoverHeight }"
-        />
-      </a>
-      <div class="fresh-home-rank-list-laser" data-number="3"></div>
-    </div>
+          {{ firstItem.title }}
+        </a>
+        <a
+          class="fresh-home-rank-list-cover"
+          target="_blank"
+          :href="videoHref(firstItem)"
+        >
+          <DpiImage
+            :src="firstItem.coverUrl"
+            :size="{ width: ui.firstCoverWidth, height: ui.firstCoverHeight }"
+          />
+          <UpInfo
+            :up-face-url="firstItem.upFaceUrl"
+            :up-id="firstItem.upID"
+            :up-name="firstItem.upName"
+          />
+          <div class="fresh-home-rank-list-stats">
+            <VIcon icon="mdi-fire" :size="16" />
+            {{ firstItem.points | formatCount }}
+          </div>
+        </a>
+        <div class="fresh-home-rank-list-laser" data-number="1"></div>
+      </div>
+      <div v-if="secondItem" class="fresh-home-rank-list-second-item animation">
+        <a
+          class="fresh-home-rank-list-rank-item"
+          target="_blank"
+          :href="videoHref(secondItem)"
+        >
+          <div
+            class="fresh-home-rank-list-rank-item-title"
+            :title="secondItem.title"
+          >
+            {{ secondItem.title }}
+          </div>
+          <UpInfo
+            :up-face-url="secondItem.upFaceUrl"
+            :up-id="secondItem.upID"
+            :up-name="secondItem.upName"
+          />
+          <div class="fresh-home-rank-list-stats">
+            <VIcon icon="mdi-fire" :size="16" />
+            {{ secondItem.points | formatCount }}
+            <VIcon icon="play" :size="16" />
+            {{ secondItem.playCount | formatCount }}
+          </div>
+        </a>
+        <a
+          class="fresh-home-rank-list-cover"
+          target="_blank"
+          :href="videoHref(secondItem)"
+        >
+          <DpiImage
+            :src="secondItem.coverUrl"
+            :size="{ width: ui.secondCoverWidth, height: ui.secondCoverHeight }"
+          />
+        </a>
+        <div class="fresh-home-rank-list-laser" data-number="2"></div>
+      </div>
+      <div v-if="thirdItem" class="fresh-home-rank-list-third-item animation">
+        <a
+          class="fresh-home-rank-list-rank-item"
+          target="_blank"
+          :href="videoHref(thirdItem)"
+        >
+          <div
+            class="fresh-home-rank-list-rank-item-title"
+            :title="thirdItem.title"
+          >
+            {{ thirdItem.title }}
+          </div>
+          <UpInfo
+            :up-face-url="thirdItem.upFaceUrl"
+            :up-id="thirdItem.upID"
+            :up-name="thirdItem.upName"
+          />
+          <div class="fresh-home-rank-list-stats">
+            <VIcon icon="mdi-fire" :size="16" />
+            {{ secondItem.points | formatCount }}
+            <VIcon icon="play" :size="16" />
+            {{ secondItem.playCount | formatCount }}
+          </div>
+        </a>
+        <a
+          class="fresh-home-rank-list-cover"
+          target="_blank"
+          :href="videoHref(thirdItem)"
+        >
+          <DpiImage
+            :src="thirdItem.coverUrl"
+            :size="{ width: ui.thirdCoverWidth, height: ui.thirdCoverHeight }"
+          />
+        </a>
+        <div class="fresh-home-rank-list-laser" data-number="3"></div>
+      </div>
+    </template>
   </div>
 </template>
 <script lang="ts">
 import { VideoCard } from '@/components/feeds/video-card'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
-import { DpiImage, VIcon } from '@/ui'
+import {
+  DpiImage,
+  VIcon,
+  VLoading,
+  VEmpty,
+  VButton,
+} from '@/ui'
 import { requestMixin, cssVariableMixin } from './mixin'
 
 export default Vue.extend({
@@ -117,6 +139,9 @@ export default Vue.extend({
     DpiImage,
     UpInfo,
     VIcon,
+    VLoading,
+    VEmpty,
+    VButton,
   },
   filters: {
     formatCount,
@@ -190,6 +215,7 @@ export default Vue.extend({
   position: relative;
   flex: 1;
   width: 400px;
+  overflow: hidden;
   height: var(--panel-height);
   padding: var(--padding);
   margin: calc(0px - var(--padding));
@@ -201,11 +227,12 @@ export default Vue.extend({
   --offset-third: calc(
     var(--offset-second) + var(--second-cover-height) + var(--padding) + var(--rank-item-margin)
   );
+  --animation-timing: cubic-bezier(0.22, 0.61, 0.36, 1);
 
   & &-stats {
     @include h-center(12px);
     font-size: 12px;
-    opacity: .75;
+    opacity: .5;
     margin: 0 10px;
     .be-icon {
       margin-right: -8px;
@@ -234,8 +261,18 @@ export default Vue.extend({
     }
   }
   & &-first-item {
+    @keyframes first-animation {
+      0% {
+        transform: translateY(54px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
     @include v-stretch();
-    transform: translateZ(0);
+    animation: .4s var(--animation-timing) first-animation paused both;
     position: absolute;
     top: var(--padding);
     left: var(--padding);
@@ -267,6 +304,7 @@ export default Vue.extend({
       }
     }
     .fresh-home-rank-list-stats {
+      opacity: 1;
       margin: 0;
       padding: 4px 6px;
       bottom: 6px;
@@ -274,17 +312,28 @@ export default Vue.extend({
     }
   }
   & &-second-item {
+    @keyframes second-animation {
+      0% {
+        transform: translateY(28px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
     @include v-stretch();
+    animation: .4s var(--animation-timing) second-animation paused both;
     position: absolute;
-    transform: translateZ(0);
     top: var(--offset-second);
     bottom: var(--padding);
+
     .fresh-home-rank-list-rank-item {
       position: absolute;
       width: 230px;
       top: var(--padding);
-      left: 143px;
-      padding-left: 24px;
+      left: 146px;
+      padding-left: 22px;
       &-title {
         @include max-line(2);
         margin: auto 0;
@@ -296,11 +345,21 @@ export default Vue.extend({
     }
   }
   & &-third-item {
+    @keyframes third-animation {
+      0% {
+        transform: translateY(14px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
     @include v-stretch();
+    animation: .4s var(--animation-timing) third-animation paused both;
     position: absolute;
-    transform: translateZ(0);
     top: var(--offset-third);
-    right: 0;
+    right: var(--padding);
     bottom: var(--padding);
     .fresh-home-rank-list-rank-item {
       position: absolute;
@@ -336,7 +395,7 @@ export default Vue.extend({
       transform: scale(1.05);
     }
     &:hover {
-      transform: scale(1.05);
+      transform: scale(1.025);
     }
   }
   & &-laser {
@@ -362,6 +421,35 @@ export default Vue.extend({
       border-radius: 50%;
       background-color: var(--theme-color);
       color: var(--foreground-color);
+    }
+  }
+  & &-loading-container {
+    @include v-center();
+    justify-content: center;
+    padding: var(--padding);
+    border-radius: var(--home-card-radius);
+    border: 2px dashed #8884;
+    height: 100%;
+  }
+  & &-empty {
+    @include v-center(12px);
+    justify-content: center;
+    .be-button {
+      padding: 4px 10px 4px 6px !important;
+      &:hover .be-icon {
+        transform: rotate(1turn);
+      }
+    }
+    .be-icon {
+      margin-right: 6px;
+      transition: .5s ease-out;
+    }
+  }
+
+  &.loaded {
+    @include no-scrollbar();
+    .animation {
+      animation-play-state: running;
     }
   }
 }

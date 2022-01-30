@@ -17,6 +17,11 @@ export const requestMixin = Vue.extend({
       error: false,
     }
   },
+  computed: {
+    loaded() {
+      return !this.loading && !this.error
+    },
+  },
   created() {
     this.reload()
   },

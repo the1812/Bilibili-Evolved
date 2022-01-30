@@ -161,9 +161,6 @@ export default Vue.extend({
     currentUrl() {
       return this.url(this.currentItem.bvid)
     },
-    loaded() {
-      return !this.loading && !this.error
-    },
     watchlaterAdded() {
       return this.watchlaterList.includes(this.currentItem.aid)
     },
