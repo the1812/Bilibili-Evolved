@@ -2,20 +2,45 @@
   <div class="fresh-home-rank-list">
     <div v-if="firstItem" class="fresh-home-rank-list-first-item">
       <div class="fresh-home-rank-list-rank-item"></div>
-      <div class="fresh-home-rank-list-rank-item-title">
+      <a
+        class="fresh-home-rank-list-rank-item-title"
+        target="_blank"
+        :href="videoHref(firstItem)"
+        :title="firstItem.title"
+      >
         {{ firstItem.title }}
-      </div>
-      <div class="fresh-home-rank-list-cover">
+      </a>
+      <a
+        class="fresh-home-rank-list-cover"
+        target="_blank"
+        :href="videoHref(firstItem)"
+      >
         <DpiImage
           :src="firstItem.coverUrl"
           :size="{ width: ui.firstCoverWidth, height: ui.firstCoverHeight }"
         />
-      </div>
+        <UpInfo
+          :up-face-url="firstItem.upFaceUrl"
+          :up-id="firstItem.upID"
+          :up-name="firstItem.upName"
+        />
+        <div class="fresh-home-rank-list-stats">
+          <VIcon icon="mdi-fire" :size="16" />
+          {{ firstItem.points | formatCount }}
+        </div>
+      </a>
       <div class="fresh-home-rank-list-laser" data-number="1"></div>
     </div>
     <div v-if="secondItem" class="fresh-home-rank-list-second-item">
-      <div class="fresh-home-rank-list-rank-item">
-        <div class="fresh-home-rank-list-rank-item-title">
+      <a
+        class="fresh-home-rank-list-rank-item"
+        target="_blank"
+        :href="videoHref(secondItem)"
+      >
+        <div
+          class="fresh-home-rank-list-rank-item-title"
+          :title="secondItem.title"
+        >
           {{ secondItem.title }}
         </div>
         <UpInfo
@@ -23,24 +48,35 @@
           :up-id="secondItem.upID"
           :up-name="secondItem.upName"
         />
-        <div class="fresh-home-rank-list-rank-item-stats">
+        <div class="fresh-home-rank-list-stats">
           <VIcon icon="mdi-fire" :size="16" />
           {{ secondItem.points | formatCount }}
           <VIcon icon="play" :size="16" />
           {{ secondItem.playCount | formatCount }}
         </div>
-      </div>
-      <div class="fresh-home-rank-list-cover">
+      </a>
+      <a
+        class="fresh-home-rank-list-cover"
+        target="_blank"
+        :href="videoHref(secondItem)"
+      >
         <DpiImage
           :src="secondItem.coverUrl"
           :size="{ width: ui.secondCoverWidth, height: ui.secondCoverHeight }"
         />
-      </div>
+      </a>
       <div class="fresh-home-rank-list-laser" data-number="2"></div>
     </div>
     <div v-if="thirdItem" class="fresh-home-rank-list-third-item">
-      <div class="fresh-home-rank-list-rank-item">
-        <div class="fresh-home-rank-list-rank-item-title">
+      <a
+        class="fresh-home-rank-list-rank-item"
+        target="_blank"
+        :href="videoHref(thirdItem)"
+      >
+        <div
+          class="fresh-home-rank-list-rank-item-title"
+          :title="thirdItem.title"
+        >
           {{ thirdItem.title }}
         </div>
         <UpInfo
@@ -48,19 +84,23 @@
           :up-id="thirdItem.upID"
           :up-name="thirdItem.upName"
         />
-        <div class="fresh-home-rank-list-rank-item-stats">
+        <div class="fresh-home-rank-list-stats">
           <VIcon icon="mdi-fire" :size="16" />
           {{ secondItem.points | formatCount }}
           <VIcon icon="play" :size="16" />
           {{ secondItem.playCount | formatCount }}
         </div>
-      </div>
-      <div class="fresh-home-rank-list-cover">
+      </a>
+      <a
+        class="fresh-home-rank-list-cover"
+        target="_blank"
+        :href="videoHref(thirdItem)"
+      >
         <DpiImage
           :src="thirdItem.coverUrl"
           :size="{ width: ui.thirdCoverWidth, height: ui.thirdCoverHeight }"
         />
-      </div>
+      </a>
       <div class="fresh-home-rank-list-laser" data-number="3"></div>
     </div>
   </div>
@@ -137,6 +177,9 @@ export default Vue.extend({
         )
         .slice(0, 10)
     },
+    videoHref(videoCard: VideoCard) {
+      return `https://www.bilibili.com/video/${videoCard.bvid}`
+    },
   },
 })
 </script>
@@ -159,6 +202,15 @@ export default Vue.extend({
     var(--offset-second) + var(--second-cover-height) + var(--padding) + var(--rank-item-margin)
   );
 
+  & &-stats {
+    @include h-center(12px);
+    font-size: 12px;
+    opacity: .75;
+    margin: 0 10px;
+    .be-icon {
+      margin-right: -8px;
+    }
+  }
   & &-rank-item {
     @include card(12px);
     @include v-stretch();
@@ -170,20 +222,15 @@ export default Vue.extend({
 
     &-title {
       @include semi-bold();
+      transition: color .2s ease-out;
       line-height: var(--rank-item-title-height);
       box-sizing: content-box;
+      &:hover {
+        color: var(--theme-color) !important;
+      }
     }
     .be-up-info {
       align-self: flex-start;
-    }
-    &-stats {
-      @include h-center(12px);
-      font-size: 12px;
-      opacity: .75;
-      margin: 0 10px;
-      .be-icon {
-        margin-right: -8px;
-      }
     }
   }
   & &-first-item {
@@ -203,6 +250,28 @@ export default Vue.extend({
         padding: var(--padding) 14px;
       }
     }
+    .be-up-info,
+    .fresh-home-rank-list-stats {
+      position: absolute;
+      background-color: #0008;
+      color: white;
+      border-radius: 8px;
+    }
+    .be-up-info {
+      bottom: 6px;
+      left: 6px;
+      padding: 3px 6px;
+      .be-up-info-cover-fallback {
+        height: 18px;
+        margin-left: 0;
+      }
+    }
+    .fresh-home-rank-list-stats {
+      margin: 0;
+      padding: 4px 6px;
+      bottom: 6px;
+      right: 6px;
+    }
   }
   & &-second-item {
     @include v-stretch();
@@ -218,7 +287,8 @@ export default Vue.extend({
       padding-left: 24px;
       &-title {
         @include max-line(2);
-        padding: 0 8px 0 12px;
+        margin: auto 0;
+        padding: 0 12px;
       }
       .be-up-info {
         margin: 4px 8px;
@@ -240,7 +310,8 @@ export default Vue.extend({
       padding-right: 18px;
       &-title {
         @include max-line(2);
-        padding: 0 12px 0 8px;
+        margin: auto 0;
+        padding: 0 12px;
       }
       .be-up-info {
         margin: 4px 8px;
@@ -254,10 +325,17 @@ export default Vue.extend({
     align-self: center;
     box-shadow: none;
     overflow: hidden;
+    transform-origin: bottom;
+    transition: .2s ease-out;
+    position: relative;
+
     img {
       transition: 0.2s ease-out;
     }
     &:hover img {
+      transform: scale(1.05);
+    }
+    &:hover {
       transform: scale(1.05);
     }
   }

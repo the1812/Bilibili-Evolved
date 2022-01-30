@@ -2,7 +2,7 @@
   <a
     class="be-up-info"
     :class="{ fallback: !upFaceUrl }"
-    :href="`https://space.bilibili.com/${upID}`"
+    :href="`https://space.bilibili.com/${upId}`"
     :title="upName"
     target="_blank"
   >
@@ -32,7 +32,7 @@ export default Vue.extend({
     VIcon,
   },
   props: {
-    upID: {
+    upId: {
       type: [String, Number],
       required: true,
     },
