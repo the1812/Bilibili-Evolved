@@ -1,4 +1,4 @@
-打开视频页时自动定位到一个默认位置
+打开视频页时自动定位到指定的默认位置
 
 <div class="video-default-location-desc-detail">
 
@@ -10,3 +10,4 @@
 .video-default-location-desc-detail.video-default-location-desc-detail p {
   margin-top: 1ex;
 }
+</style>
