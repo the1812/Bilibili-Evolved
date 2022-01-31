@@ -17,7 +17,7 @@
       </div>
     </div>
     <div class="fresh-home-categories-default-rank-list">
-      <a href="" target="_blank">
+      <a :href="rankingsLink" target="_blank">
         <SubHeader>
           排行榜
         </SubHeader>
@@ -38,16 +38,19 @@ export default Vue.extend({
     SubHeader,
   },
   props: {
-    regionCode: {
-      type: Number,
+    region: {
+      type: Object,
       required: true,
     },
   },
   data() {
+    const regionCode = this.region.id
+    console.log(this.region.category)
     return {
-      activeVideosApi: `https://api.bilibili.com/x/web-interface/dynamic/region?ps=10&rid=${this.regionCode}`,
-      newVideosApi: `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${this.regionCode}`,
-      rankingsApi: `https://api.bilibili.com/x/web-interface/ranking/region?rid=${this.regionCode}&day=3&original=0`,
+      activeVideosApi: `https://api.bilibili.com/x/web-interface/dynamic/region?ps=10&rid=${regionCode}`,
+      newVideosApi: `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${regionCode}`,
+      rankingsApi: `https://api.bilibili.com/x/web-interface/ranking/region?rid=${regionCode}&day=3&original=0`,
+      rankingsLink: `https://www.bilibili.com/v/popular/rank/${this.region.category.route}`,
     }
   },
 })

@@ -390,6 +390,7 @@ export default Vue.extend({
     position: absolute;
     top: 0;
     left: 0;
+    z-index: 1;
   }
   & &-cover {
     @include card(12px);

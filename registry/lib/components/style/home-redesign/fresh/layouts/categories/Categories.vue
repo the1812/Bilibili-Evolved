@@ -32,7 +32,7 @@
       </div>
     </div>
     <div class="fresh-home-categories-content">
-      <component :is="content" :region-code="selectedTab.id" />
+      <component :is="content" :region="selectedTab" />
     </div>
   </div>
 </template>
@@ -70,9 +70,6 @@ export default Vue.extend({
       content: getContent(orderedTabs[0].name),
     }
   },
-  created() {
-    this.reload()
-  },
   mounted() {
     const tabsContainer = this.$refs.tabs as HTMLElement
     const reorder = new Reorder(tabsContainer)
@@ -103,13 +100,6 @@ export default Vue.extend({
       }
       this.selectedTab = tab
       this.content = getContent(tab.name)
-      this.reload()
-    },
-    async reload() {
-      this.loading = true
-      // this.videos = []
-      // this.videos = await this.selectedTab.api().finally(() => { this.loading = false })
-      this.loading = false
     },
   },
 })

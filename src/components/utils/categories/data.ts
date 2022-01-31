@@ -28,11 +28,13 @@ export interface SecondaryCategory {
   name: string
   url: string
   icon: string
+  route: string
   sub?: LiveCategory[]
 }
 export interface Category {
   icon: string
   code: number | number[] | null
+  route: string
   count?: number
   link: string
   subCategories: Record<string, string> | null
@@ -54,6 +56,7 @@ mainCategories.forEach(it => {
   const mainUrl = urlNormalize(it.url || `https://www.bilibili.com/v/${it.route}/`)
   generalCategories[it.name] = {
     icon: it.route,
+    route: it.route,
     code: it.tid,
     link: mainUrl,
     subCategories: it.sub ? Object.fromEntries(
@@ -77,6 +80,7 @@ secondaryCategories.forEach(it => {
   generalCategories[it.name] = {
     icon: it.icon,
     code: null,
+    route: it.route,
     link: urlNormalize(it.url),
     subCategories: it.sub ? Object.fromEntries(
       it.sub.map(sub => ([sub.name, urlNormalize(sub.url)])),
