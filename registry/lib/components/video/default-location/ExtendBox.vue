@@ -2,7 +2,7 @@
   <div class="container" :class="{ hidden: realHidden }">
     <div class="bar" :class="{ 'bar-bottom': !realHidden }" @click="onClick">
       <div class="bar-text">
-        高级测试
+        位置测试
       </div>
       <div class="bar-btn">
         <VIcon icon="mdi-chevron-up" :size="15" />
