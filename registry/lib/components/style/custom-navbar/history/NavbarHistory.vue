@@ -1,5 +1,5 @@
 <template>
-  <div class="history-list">
+  <div class="custom-navbar-history-list">
     <div class="header">
       <div class="header-row">
         <div class="search">
@@ -217,7 +217,7 @@ export default Vue.extend({
 @import "common";
 @import "../popup";
 
-.history-list {
+.custom-navbar-history-list {
   width: 350px;
   @include navbar-popup-height();
   font-size: 12px;
