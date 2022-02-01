@@ -272,6 +272,9 @@ export default Vue.extend({
   },
   mounted() {
     coreApis.observer.videoChange(() => {
+      this.selectedInput = undefined
+      this.selectedApi = undefined
+
       const matchedInputs = filterData(inputs)
       this.inputs = matchedInputs
       this.selectedInput = matchedInputs[0]
