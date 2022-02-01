@@ -141,8 +141,9 @@ import { bangumiBatchInput } from './inputs/bangumi/batch'
 import { videoBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
 import {
-  videoDashAVC,
-  videoDashHEVC,
+  videoDashAvc,
+  videoDashHevc,
+  videoDashAv1,
   videoAudioDash,
 } from './apis/dash'
 import { videoFlv } from './apis/flv'
@@ -166,8 +167,9 @@ const [inputs] = registerAndGetData(
 const [apis] = registerAndGetData(
   'downloadVideo.apis', [
     videoFlv,
-    videoDashAVC,
-    videoDashHEVC,
+    videoDashAvc,
+    videoDashHevc,
+    videoDashAv1,
     videoAudioDash,
   ] as DownloadVideoApi[],
 )
