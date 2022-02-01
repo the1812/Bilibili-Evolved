@@ -1,7 +1,6 @@
 import { ComponentMetadata } from '@/components/types'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { select } from '@/core/spin-query'
-import Options from './Options.vue'
 import desc from './desc.md'
 
 export const component: ComponentMetadata = {
@@ -10,7 +9,7 @@ export const component: ComponentMetadata = {
   tags: [componentsTags.video],
   urlInclude: videoAndBangumiUrls,
   description: { 'zh-CN': desc },
-  extraOptions: async () => Options,
+  extraOptions: () => import('./Options.vue').then(m => m.default),
   options: {
     location: {
       defaultValue: 0,
