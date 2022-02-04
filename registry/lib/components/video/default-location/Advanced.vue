@@ -1,43 +1,49 @@
 <template>
   <div>
-    <div class="label-input-line form-line">
-      <div class="label">
+    <div class="video-default-location-advanced-form-line">
+      <div class="video-default-location-advanced-item-not-grow">
         当前位置
       </div>
-      <TextBox class="input" :text="String(curPosition)" change-on-blur readonly linear />
+      <TextBox
+        class="video-default-location-advanced-item-grow"
+        :text="String(curPosition)"
+        change-on-blur
+        readonly
+        linear
+      />
     </div>
 
-    <div class="inputs-line form-line">
+    <div class="video-default-location-advanced-form-line">
       <VButton
-        class="input"
+        class="video-default-location-advanced-item-grow"
         @click="$emit('set-default-location', curPosition)"
       >
         将当前位置设为默认值
       </VButton>
     </div>
 
-    <div class="input-btn-line form-line">
+    <div class="video-default-location-advanced-form-line">
       <TextBox
         v-model="locationInput"
-        class="input"
+        class="video-default-location-advanced-item-grow"
         linear
         change-on-blur
         @change="onLocationInput"
       />
-      <VButton class="btn" @click="locateTo">
+      <VButton @click="locateTo">
         定位
       </VButton>
     </div>
 
-    <div class="input-btn-line form-line">
+    <div class="video-default-location-advanced-form-line">
       <TextBox
         v-model="offsetInput"
-        class="input"
+        class="video-default-location-advanced-item-grow"
         linear
         change-on-blur
         @change="onOffsetInput"
       />
-      <VButton class="btn" @click="offsetTo">
+      <VButton @click="offsetTo">
         偏移
       </VButton>
     </div>
@@ -149,36 +155,23 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-.form-line {
+<style lang="scss">
+.video-default-location-advanced-form-line {
   margin: 8px 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   column-gap: 10px;
-  &>* {
-    hight: min-content;
+  & > * {
+    height: min-content;
   }
 }
 
-.label-input-line {
-  .label {
-    flex: 0 auto;
-  }
-  .input {
-    flex: 1;
-  }
+.video-default-location-advanced-item-grow {
+  flex: 1 auto;
 }
 
-.inputs-line .input {
-  flex: 1;
-}
-
-.input-btn-line {
-  .input {
-    flex: 1;
-  }
-  .btn {
-    flex: 0 auto;
-  }
+.video-default-location-advanced-item-not-grow {
+  flex: 0 auto;
 }
 </style>

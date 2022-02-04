@@ -1,20 +1,21 @@
 <template>
-  <div class="container" :class="{ hidden: realHidden }">
-    <div class="bar" :class="{ 'bar-bottom': !realHidden }" @click="onClick">
-      <div class="bar-text">
+  <div
+    class="video-default-location-extend-box"
+    :class="{ 'video-default-location-extend-box-hidden': realHidden }"
+  >
+    <div class="video-default-location-extend-box-bar" @click="onClick">
+      <div class="video-default-location-extend-box-bar-text">
         位置测试
       </div>
-      <div class="bar-btn">
+      <div class="video-default-location-extend-box-bar-btn">
         <VIcon icon="mdi-chevron-up" :size="15" />
       </div>
     </div>
 
-    <div class="content-container">
-      <transition name="hidden">
-        <div v-show="!realHidden" class="content">
-          <slot></slot>
-        </div>
-      </transition>
+    <div class="video-default-location-extend-box-content-wrap">
+      <div class="video-default-location-extend-box-content">
+        <slot></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -57,51 +58,49 @@ export default Vue.extend({
 })
 </script>
 
-<style scoped>
-.container {
-  --border-color: #8884;
+<style lang="scss">
+.video-default-location-extend-box {
+  --video-default-location-extend-box-border-color: #8884;
   border-radius: 3px;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--video-default-location-extend-box-border-color);
 }
 
-.bar {
+.video-default-location-extend-box-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid transparent;
   border-radius: 3px;
+  border-bottom: 1px solid var(--video-default-location-extend-box-border-color);
   padding: 8px;
   cursor: pointer;
-  &>* {
-    hight: min-content;
+  & > * {
+    height: min-content;
   }
 }
 
-.bar-bottom {
-  border-bottom-color: var(--border-color);
-}
-
-.content-container {
+.video-default-location-extend-box-content-wrap {
   overflow: hidden;
 }
 
-.content {
+.video-default-location-extend-box-content {
   padding: 0px 8px;
 }
 
-.hidden-enter-active,
-.hidden-leave-active,
-.bar,
-.bar-btn {
+.video-default-location-extend-box-bar,
+.video-default-location-extend-box-bar-btn,
+.video-default-location-extend-box-content {
   transition: all 0.3s;
 }
 
-.hidden-enter,
-.hidden-leave-to {
-  margin-top: -100%;
-}
-
-.hidden .bar-btn {
-  transform: rotate(-0.5turn);
+.video-default-location-extend-box-hidden {
+  .video-default-location-extend-box-bar {
+    border-bottom-color: transparent;
+  }
+  .video-default-location-extend-box-bar-btn {
+    transform: rotate(-0.5turn);
+  }
+  .video-default-location-extend-box-content {
+    margin-top: -100%;
+  }
 }
 </style>

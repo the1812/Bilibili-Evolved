@@ -1,24 +1,20 @@
 <template>
-  <div class="video-page-orientation-options">
-    <div class="label-input-line form-line">
-      <div class="label">
+  <div class="video-default-location-options">
+    <div class="video-default-location-options-form-line">
+      <div class="video-default-location-options-item-not-grow">
         默认位置
       </div>
       <TextBox
         v-model="defaultLocation"
-        class="input"
+        class="video-default-location-options-item-grow"
         linear
         change-on-blur
         @change="onChangeDefaultLocation"
       />
     </div>
 
-    <div class="inputs-line form-line">
-      <ExtendBox
-        v-model="hiddenAdvance"
-        class="input"
-        @change="resetObservePosition"
-      >
+    <div class="video-default-location-options-test">
+      <ExtendBox v-model="hiddenAdvance" @change="resetObservePosition">
         <Advanced
           :observe-position="observePosition"
           :location-limit="locationLimit"
@@ -133,27 +129,23 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-.form-line {
+<style lang="scss">
+.video-default-location-options-form-line {
   margin: 8px 0;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   column-gap: 10px;
-  &>* {
-    hight: min-content;
+  & > * {
+    height: min-content;
   }
 }
 
-.label-input-line {
-  .label {
-    flex: 0 auto;
-  }
-  .input {
-    flex: 1;
-  }
+.video-default-location-options-item-grow {
+  flex: 1 auto;
 }
 
-.inputs-line .input {
-  flex: 1;
+.video-default-location-options-item-not-grow {
+  flex: 0 auto;
 }
 </style>
