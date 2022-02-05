@@ -17,6 +17,7 @@ export const mediaListUrls = [
 /** 含有普通视频的页面 */
 export const videoUrls = [
   '//www.bilibili.com/video/',
+  /\/\/www\.bilibili\.com\/festival\/(\d+)bnj/,
   ...mediaListUrls,
 ]
 /** 含有番剧的页面 */
@@ -43,6 +44,7 @@ export const mainSiteUrls = [
   /^https:\/\/www\.bilibili\.com\/$/,
   /^https:\/\/www\.bilibili\.com\/([^\/]+)\.html$/,
   /^https:\/\/www\.bilibili\.com\/watchlater\/#\/list$/,
+  'https://www.bilibili.com/account/',
 ]
 /** 直播间页面 */
 export const liveUrls = [

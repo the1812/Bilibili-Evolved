@@ -22,7 +22,7 @@
         </div> -->
       </div>
       <div class="script-links">
-        <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/tree/v2/" class="homepage script-link">
+        <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved" class="homepage script-link">
           <VButton>
             <VIcon icon="mdi-home-outline" :size="20" />
             主页

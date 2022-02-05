@@ -89,7 +89,7 @@ import {
   VLoading,
 } from '@/ui'
 import { addComponentListener } from '@/core/settings'
-import { dqa } from '@/core/utils'
+import { deleteValue, dqa } from '@/core/utils'
 import { SortableJSLibrary } from '@/core/runtime-library'
 import { SortableEvent } from 'sortablejs'
 import { getData } from '@/plugins/data'
@@ -122,7 +122,7 @@ export default Vue.extend({
       padding: navbarOptions.padding,
       rendered,
       // order: navbarOptions.order,
-      hidden: navbarOptions.hidden,
+      hidden: [...navbarOptions.hidden],
       loaded: false,
     }
   },
@@ -173,11 +173,13 @@ export default Vue.extend({
       this.rendered.items = sortItems(rendered.items, ordersMap)
     },
     toggleVisible(item: CustomNavbarItem) {
-      if (navbarOptions.hidden.includes(item.name)) {
-        lodash.pull(navbarOptions.hidden, item.name)
+      if (this.hidden.includes(item.name)) {
+        deleteValue(this.hidden, it => it === item.name)
+        deleteValue(navbarOptions.hidden, it => it === item.name)
         item.hidden = false
         console.log('delete', item.name)
       } else {
+        this.hidden.push(item.name)
         navbarOptions.hidden.push(item.name)
         item.hidden = true
         console.log('add', item.name)
