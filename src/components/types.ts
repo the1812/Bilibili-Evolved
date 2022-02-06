@@ -172,7 +172,7 @@ export interface FunctionalMetadata {
   /** 插件化数据定义 */
   plugin?: Optional<PluginMinimalData, 'name'>
   /** 额外想要展示在设置里的选项 UI */
-  extraOptions?: Executable<VueModule>
+  extraOptions?: () => Promise<VueModule>
   /** 设置匹配的URL, 不匹配则不运行此组件 */
   urlInclude?: TestPattern
   /** 设置不匹配的URL, 不匹配则不运行此组件, 优先级高于`urlInclude` */

@@ -196,19 +196,19 @@ const downloadDash = async (
 export const videoDashAvc: DownloadVideoApi = {
   name: 'video.dash.avc',
   displayName: 'dash (AVC/H.264)',
-  description: '音画分离的 mp4 格式, 编码为 H.264, 兼容性较好. 下载后可以合并为单个 mp4 文件.',
+  description: '音画分离的 mp4 格式, 编码为 H.264, 体积较大, 兼容性较好. 下载后可以合并为单个 mp4 文件.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Avc }),
 }
 export const videoDashHevc: DownloadVideoApi = {
   name: 'video.dash.hevc',
   displayName: 'dash (HEVC/H.265)',
-  description: '音画分离的 mp4 格式, 编码为 H.265, 体积较小, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
+  description: '音画分离的 mp4 格式, 编码为 H.265, 体积中等, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Hevc }),
 }
 export const videoDashAv1: DownloadVideoApi = {
   name: 'video.dash.av1',
   displayName: 'dash (AV1)',
-  description: '音画分离的 mp4 格式, 编码为 AV1, 体积较小, 兼容性较差. 下载后可以合并为单个 mp4 文件.',
+  description: '音画分离的 mp4 格式, 编码为 AV1, 体积较小, 兼容性中等. 下载后可以合并为单个 mp4 文件.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Av1 }),
 }
 export const videoAudioDash: DownloadVideoApi = {
