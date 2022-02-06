@@ -336,7 +336,7 @@ export default Vue.extend({
       padding-left: 22px;
       &-title {
         @include max-line(2);
-        margin: auto 0;
+        margin-bottom: auto;
         padding: 0 12px;
       }
       .be-up-info {
@@ -369,7 +369,7 @@ export default Vue.extend({
       padding-right: 18px;
       &-title {
         @include max-line(2);
-        margin: auto 0;
+        margin-bottom: auto;
         padding: 0 12px;
       }
       .be-up-info {

@@ -31,6 +31,12 @@ import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
 import SubHeader from '../../../SubHeader.vue'
 
+/*
+TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, 所以 RankList 也要换 API
+视频排行: `https://api.bilibili.com/x/web-interface/ranking/region?rid=${regionCode}&day=3&original=0`
+番剧排行: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`
+*/
+
 export default Vue.extend({
   components: {
     RankList,
