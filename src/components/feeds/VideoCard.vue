@@ -274,7 +274,7 @@ export default {
       }
     }
     .cooperation {
-      margin: 0 12px 8px 8px;
+      margin: 0 12px 6px 8px;
     }
     .stats {
       grid-area: stats;
@@ -452,6 +452,7 @@ export default {
       border-radius: 50%;
       width: 24px;
       height: 24px;
+      box-sizing: content-box;
     }
   }
   .up {
@@ -479,8 +480,11 @@ export default {
       }
     }
   }
-  &.no-stats .up {
-    margin-bottom: 4px;
+  &.no-stats {
+    .up,
+    .cooperation {
+      margin-bottom: 4px;
+    }
   }
   .cooperation {
     margin-left: 12px;
