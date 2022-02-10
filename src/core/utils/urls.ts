@@ -19,10 +19,14 @@ export const mediaListUrls = [
   ...favoriteListUrls,
   ...upListUrls,
 ]
+/** 拜年纪页面 */
+export const bnjUrls = [
+  /\/\/www\.bilibili\.com\/festival\/(\d+)bnj/,
+]
 /** 含有普通视频的页面 */
 export const videoUrls = [
   '//www.bilibili.com/video/',
-  /\/\/www\.bilibili\.com\/festival\/(\d+)bnj/,
+  ...bnjUrls,
   ...mediaListUrls,
 ]
 /** 含有番剧的页面 */
