@@ -9,10 +9,15 @@ export const watchlaterUrls = [
 export const favoriteListUrls = [
   '//www.bilibili.com/medialist/play/ml',
 ]
+/** UP 主视频连播页面 */
+export const upListUrls = [
+  /\/\/www\.bilibili\.com\/medialist\/play\/\d+/,
+]
 /** 合集类页面 */
 export const mediaListUrls = [
   ...watchlaterUrls,
   ...favoriteListUrls,
+  ...upListUrls,
 ]
 /** 拜年纪页面 */
 export const bnjUrls = [
