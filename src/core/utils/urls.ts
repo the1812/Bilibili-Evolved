@@ -3,7 +3,7 @@ import { TestPattern } from '../common-types'
 
 /** 稍后再看页面 */
 export const watchlaterUrls = [
-  '//www.bilibili.com/medialist/play/watchlater/',
+  '//www.bilibili.com/medialist/play/watchlater',
 ]
 /** 收藏夹连播页面 */
 export const favoriteListUrls = [
