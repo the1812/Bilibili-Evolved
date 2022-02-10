@@ -155,6 +155,10 @@ export default Vue.extend({
   border-radius: 7px;
   @include no-scrollbar();
   @include v-stretch();
+
+  .extra-option {
+    display: flow-root;
+  }
   &-separator {
     height: 1px;
     background-color: #8882;
