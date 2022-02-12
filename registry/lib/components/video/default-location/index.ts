@@ -140,7 +140,7 @@ const entry = async ({ settings: { options: { locations } } }) => {
 
 export const component: ComponentMetadata = {
   name: 'videoDefaultLocation',
-  displayName: '播放页默认定位',
+  displayName: '视频页默认定位',
   tags: [componentsTags.video],
   urlInclude: allVideoUrls,
   description: { 'zh-CN': desc },
