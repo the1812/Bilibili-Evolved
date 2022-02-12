@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="video-default-location-advanced-form-line">
-      <div class="video-default-location-advanced-item-not-grow">
+    <div class="video-default-location-form-line">
+      <div class="video-default-location-form-item-not-grow">
         当前位置
       </div>
       <TextBox
-        class="video-default-location-advanced-item-grow"
+        class="video-default-location-form-item-grow"
         :text="String(curPosition)"
         change-on-blur
         readonly
@@ -13,19 +13,23 @@
       />
     </div>
 
-    <div class="video-default-location-advanced-form-line">
+    <div class="video-default-location-vertical-space"></div>
+
+    <div class="video-default-location-form-line">
       <VButton
-        class="video-default-location-advanced-item-grow"
+        class="video-default-location-form-item-grow"
         @click="$emit('set-default-location', curPosition)"
       >
         将当前位置设为默认值
       </VButton>
     </div>
 
-    <div class="video-default-location-advanced-form-line">
+    <div class="video-default-location-vertical-space"></div>
+
+    <div class="video-default-location-form-line">
       <TextBox
         v-model="locationInput"
-        class="video-default-location-advanced-item-grow"
+        class="video-default-location-form-item-grow"
         linear
         change-on-blur
         @change="onLocationInput"
@@ -35,10 +39,12 @@
       </VButton>
     </div>
 
-    <div class="video-default-location-advanced-form-line">
+    <div class="video-default-location-vertical-space"></div>
+
+    <div class="video-default-location-form-line">
       <TextBox
         v-model="offsetInput"
-        class="video-default-location-advanced-item-grow"
+        class="video-default-location-form-item-grow"
         linear
         change-on-blur
         @change="onOffsetInput"
@@ -156,22 +162,5 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.video-default-location-advanced-form-line {
-  margin: 8px 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: 10px;
-  & > * {
-    height: min-content;
-  }
-}
 
-.video-default-location-advanced-item-grow {
-  flex: 1 auto;
-}
-
-.video-default-location-advanced-item-not-grow {
-  flex: 0 auto;
-}
 </style>

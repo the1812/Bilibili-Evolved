@@ -1,25 +1,42 @@
 <template>
   <div class="video-default-location-options">
-    <div class="video-default-location-options-form-line">
-      <div class="video-default-location-options-item-not-grow">
+    <div class="video-default-location-form-line">
+      <div class="video-default-location-form-item-not-grow">
+        页面
+      </div>
+      <PageTypeSelector
+        v-model="pageType"
+        class="video-default-location-form-item-grow"
+        @change="onChangePageType"
+      />
+    </div>
+
+    <div class="video-default-location-vertical-space"></div>
+
+    <div class="video-default-location-form-line">
+      <div class="video-default-location-form-item-not-grow">
         默认位置
       </div>
       <TextBox
         v-model="defaultLocation"
-        class="video-default-location-options-item-grow"
+        class="video-default-location-form-item-grow"
         linear
         change-on-blur
         @change="onChangeDefaultLocation"
       />
     </div>
 
+    <div class="video-default-location-vertical-space"></div>
+
     <div class="video-default-location-options-test">
       <ExtendBox v-model="hiddenAdvance" @change="resetObservePosition">
-        <Advanced
-          :observe-position="observePosition"
-          :location-limit="locationLimit"
-          @set-default-location="setDefaultLocation"
-        />
+        <div class="video-default-location-options-advanced">
+          <Advanced
+            :observe-position="observePosition"
+            :location-limit="locationLimit"
+            @set-default-location="setDefaultLocation"
+          />
+        </div>
       </ExtendBox>
     </div>
   </div>
@@ -30,6 +47,8 @@ import { getComponentSettings } from '@/core/settings'
 import { TextBox } from '@/ui'
 import ExtendBox from './ExtendBox.vue'
 import Advanced from './Advanced.vue'
+import PageTypeSelector from './PageTypeSelector.vue'
+import { pageTypeInfos, getCurrentPageType } from '.'
 
 const maxLocation = 4000
 
@@ -48,6 +67,7 @@ export default Vue.extend({
     TextBox,
     ExtendBox,
     Advanced,
+    PageTypeSelector,
   },
   props: {
     componentData: {
@@ -56,13 +76,15 @@ export default Vue.extend({
     },
   },
   data() {
-    const { options } = getComponentSettings(this.componentData)
+    const { options: { locations } } = getComponentSettings(this.componentData)
+    const currentPageType = getCurrentPageType() ?? Object.keys(pageTypeInfos)[0]
     return {
-      options,
-      defaultLocation: String(options.location),
+      locations,
+      defaultLocation: String(locations[currentPageType]),
       hiddenAdvance: true,
       observePosition: false,
       locationLimit: maxLocation,
+      pageType: currentPageType,
     }
   },
   created() {
@@ -79,8 +101,11 @@ export default Vue.extend({
     }
   },
   methods: {
+    onChangePageType(value: string) {
+      this.defaultLocation = String(this.locations[value])
+    },
     setDefaultLocation(value: number) {
-      this.options.location = value
+      this.locations[this.pageType] = value
       this.defaultLocation = String(value)
     },
     onChangeDefaultLocation(value: string) {
@@ -130,22 +155,9 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.video-default-location-options-form-line {
-  margin: 8px 0;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  column-gap: 10px;
-  & > * {
-    height: min-content;
-  }
-}
+@import 'form';
 
-.video-default-location-options-item-grow {
-  flex: 1 auto;
-}
-
-.video-default-location-options-item-not-grow {
-  flex: 0 auto;
+.video-default-location-options-advanced {
+  margin: 8px;
 }
 </style>

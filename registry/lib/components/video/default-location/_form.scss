@@ -1,0 +1,18 @@
+.video-default-location-form-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.video-default-location-form-item-grow {
+  flex: 1 auto;
+}
+
+.video-default-location-form-item-not-grow {
+  flex: 0 auto;
+}
+
+.video-default-location-vertical-space {
+  height: 8px;
+}
