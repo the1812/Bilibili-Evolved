@@ -3,21 +3,30 @@ import { TestPattern } from '../common-types'
 
 /** 稍后再看页面 */
 export const watchlaterUrls = [
-  '//www.bilibili.com/medialist/play/watchlater/',
+  '//www.bilibili.com/medialist/play/watchlater',
 ]
 /** 收藏夹连播页面 */
 export const favoriteListUrls = [
   '//www.bilibili.com/medialist/play/ml',
 ]
+/** UP 主视频连播页面 */
+export const upListUrls = [
+  /\/\/www\.bilibili\.com\/medialist\/play\/\d+/,
+]
 /** 合集类页面 */
 export const mediaListUrls = [
   ...watchlaterUrls,
   ...favoriteListUrls,
+  ...upListUrls,
+]
+/** 拜年纪页面 */
+export const bnjUrls = [
+  /\/\/www\.bilibili\.com\/festival\/(\d+)bnj/,
 ]
 /** 含有普通视频的页面 */
 export const videoUrls = [
   '//www.bilibili.com/video/',
-  /\/\/www\.bilibili\.com\/festival\/(\d+)bnj/,
+  ...bnjUrls,
   ...mediaListUrls,
 ]
 /** 含有番剧的页面 */
