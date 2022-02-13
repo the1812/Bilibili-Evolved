@@ -6,7 +6,7 @@
       </div>
       <div class="fresh-home-header-pagination">
         <VButton icon title="刷新" @click="reload">
-          <VIcon icon="mdi-reload" :size="18" />
+          <VIcon icon="mdi-refresh" :size="18" />
         </VButton>
         <VButton icon title="上一页" @click="$refs.videoList.offsetPage(-1)">
           <VIcon icon="left-arrow" :size="20" />

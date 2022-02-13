@@ -15,6 +15,9 @@ body {
   @include v-stretch();
   min-height: 100vh;
 }
+#i_cecream {
+  width: 100%;
+}
 .home-redesign-base {
   --home-base-color: #fff;
   --home-background-color: #fff;

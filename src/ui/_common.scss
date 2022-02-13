@@ -129,6 +129,16 @@
     background-color: #333;
   }
 }
+@mixin absolute-h-center($position: absolute) {
+  position: $position;
+  left: 50%;
+  transform: translateX(-50%);
+}
+@mixin absolute-v-center($position: absolute) {
+  position: $position;
+  top: 50%;
+  transform: translateY(-50%);
+}
 @mixin absolute-center($position: absolute) {
   position: $position;
   top: 50%;

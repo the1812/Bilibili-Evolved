@@ -74,6 +74,7 @@ module.exports = {
     'no-restricted-globals': 'off',
 
     'arrow-parens': ['error', 'as-needed'],
+    'object-curly-newline': 'off',
     'semi': ['error', 'never'],
     'linebreak-style': 'off',
     'camelcase': 'off',

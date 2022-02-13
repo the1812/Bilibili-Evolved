@@ -4,6 +4,7 @@ import * as styledComponent from './styled-component'
 import * as description from './description'
 import * as feedsApis from './feeds/api'
 import BangumiCard from './feeds/BangumiCard.vue'
+import UpInfo from './feeds/UpInfo.vue'
 import VideoCard from './feeds/VideoCard.vue'
 import ColumnCard from './feeds/ColumnCard.vue'
 import * as disableProfilePopup from './feeds/disable-profile-popup'
@@ -38,6 +39,7 @@ export const componentApis = {
   feeds: {
     api: feedsApis,
     BangumiCard,
+    UpInfo,
     VideoCard,
     ColumnCard,
     disableProfilePopup,

@@ -73,13 +73,11 @@ export default Vue.extend({
         .be-iconfont-right-arrow {
           transform: translateX(0.5px);
         }
-        .mdi-reload {
+        .mdi-refresh {
           margin: 1px;
-          position: relative;
-          top: 0.5px;
-          left: 0.5px;
+          transition-duration: .5s;
         }
-        &:hover .mdi-reload {
+        &:hover .mdi-refresh {
           transform: rotate(1turn);
         }
       }

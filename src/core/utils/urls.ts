@@ -53,6 +53,7 @@ export const mainSiteUrls = [
   /^https:\/\/www\.bilibili\.com\/$/,
   /^https:\/\/www\.bilibili\.com\/([^\/]+)\.html$/,
   /^https:\/\/www\.bilibili\.com\/watchlater\/#\/list$/,
+  'https://www.bilibili.com/account/',
 ]
 /** 直播间页面 */
 export const liveUrls = [

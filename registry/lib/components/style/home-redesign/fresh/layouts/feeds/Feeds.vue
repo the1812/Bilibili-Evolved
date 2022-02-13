@@ -32,7 +32,7 @@
           </VButton>
         </a>
         <VButton icon title="刷新" @click="reload">
-          <VIcon icon="mdi-reload" :size="18" />
+          <VIcon icon="mdi-refresh" :size="18" />
         </VButton>
         <VButton icon title="上一页" @click="$refs.videoList.offsetPage(-1)">
           <VIcon icon="left-arrow" :size="20" />
@@ -64,6 +64,7 @@
 <script lang="ts">
 import { getVideoFeeds } from '@/components/feeds/api'
 import { VideoCard } from '@/components/feeds/video-card'
+import { ArrayContent } from '@/core/common-types'
 import { VButton, VIcon } from '@/ui'
 import VideoList from '../../VideoList.vue'
 
@@ -82,7 +83,6 @@ const tabs = [
     href: 'https://t.bilibili.com/?tab=512',
   },
 ]
-type ArrayContent<T> = T extends Array<infer R> ? R : T
 type TabType = ArrayContent<typeof tabs>
 export default Vue.extend({
   components: {
