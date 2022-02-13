@@ -3,7 +3,6 @@ import { videoChange } from '@/core/observer'
 import {
   addListener,
   calcOrder,
-  enabled,
   extendedAgent,
   formatSpeedText,
   getAid,
@@ -43,7 +42,7 @@ const getRememberSpeed = (aid?: string) => {
 
 const getFallbackVideoSpeed = () => {
   // 如果组件被启用才使用存储的后备值
-  if (enabled) {
+  if (options.remember) {
     return parseFloat(options.speed)
   }
   return null
@@ -231,8 +230,12 @@ export const createController = _.once(() => {
     }
     containerElement = tmpContainerElement
     videoElement = tmpVideoElement
-    nameBtn = containerElement.querySelector(extendedAgent.custom.speedNameBtn.selector) as HTMLButtonElement
-    menuListElement = containerElement.querySelector(extendedAgent.custom.speedMenuList.selector) as HTMLElement
+    nameBtn = containerElement.querySelector(
+      extendedAgent.custom.speedNameBtn.selector,
+    ) as HTMLButtonElement
+    menuListElement = containerElement.querySelector(
+      extendedAgent.custom.speedMenuList.selector,
+    ) as HTMLElement
     // 试图插入扩展的倍速菜单项
     await extendListIfAllow()
     // 为每一个倍速菜单项附加 dataset
@@ -259,9 +262,9 @@ export const createController = _.once(() => {
         menuListElement.querySelector(`${extendedAgent.custom.speedMenuItem.selector}.extended${extendedAgent.custom.active.selector}`)?.classList.remove(activeClassName)
       }
       // 记忆
-      // - `enabled` 表示是否启用记忆
+      // - `options.remember` 表示是否启用记忆
       // - `options.individualRemember` 表示是否启用细化到视频级别的记忆
-      if (enabled) {
+      if (options.remember) {
         if (options.individualRemember) {
           rememberSpeed(
             speed,
@@ -284,7 +287,7 @@ export const createController = _.once(() => {
     setTimeout(() => {
       setVideoSpeed(
         (
-          enabled
+          options.remember
           && options.individualRemember
           && getRememberSpeed()
         )
@@ -294,6 +297,14 @@ export const createController = _.once(() => {
     }, 100)
   })
   return {
-    getSupportedRates, getExtendedSupportedRates, setVideoSpeed, videoSpeed, getRememberSpeed, rememberSpeed, forgetSpeed, resetVideoSpeed, toggleVideoSpeed,
+    getSupportedRates,
+    getExtendedSupportedRates,
+    setVideoSpeed,
+    videoSpeed,
+    getRememberSpeed,
+    rememberSpeed,
+    forgetSpeed,
+    resetVideoSpeed,
+    toggleVideoSpeed,
   }
 })

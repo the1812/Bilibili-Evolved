@@ -41,13 +41,16 @@ export interface Options {
   speed: string
   extend: boolean
   extendList: number[]
+  remember: boolean
   individualRemember: boolean
   individualRememberList: Record<string, string[]>
 }
 
-export const { options, enabled } = getComponentSettings('rememberVideoSpeed') as ComponentSettings<Options>
+export const { options } = getComponentSettings('rememberVideoSpeed') as ComponentSettings<Options>
 
-export const getUniqueAscendingSortList = (values: number[]) => Array.from(new Set(values)).sort(ascendingSort())
+export const getUniqueAscendingSortList = (values: number[]) => (
+  Array.from(new Set(values)).sort(ascendingSort())
+)
 
 export const getExtendedSupportedRates = () => getUniqueAscendingSortList(options.extendList)
 
@@ -71,4 +74,6 @@ export const addListener = (element: HTMLElement, listener: Listener) => {
   listeners.set(element, listener)
 }
 
-export const removeListeners = () => listeners.forEach((listener, element) => element.removeEventListener(...listener))
+export const removeListeners = () => listeners.forEach(
+  (listener, element) => element.removeEventListener(...listener),
+)

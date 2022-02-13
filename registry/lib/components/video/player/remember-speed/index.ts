@@ -10,19 +10,19 @@ type Controller = ReturnType<typeof createController>
 
 export const component: ComponentMetadata = {
   name: componentName,
-  displayName: '倍速记忆',
+  displayName: '倍速增强',
   author: {
     name: 'JLoeve',
     link: 'https://github.com/LonelySteve',
   },
   description: {
-    'zh-CN': '记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.',
+    'zh-CN': '可以记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.',
   },
   tags: [componentsTags.video],
   urlInclude: playerUrls,
   entry: async () => (await import('./controller')).createController(),
   plugin: {
-    displayName: '倍速记忆 - 快捷键支持',
+    displayName: '倍速增强 - 快捷键支持',
     setup: async ({ addData }) => {
       const { getComponentSettings } = await import('@/core/settings')
 
@@ -106,6 +106,10 @@ export const component: ComponentMetadata = {
       displayName: '扩展倍速列表',
       defaultValue: [2.5, 3],
       hidden: true,
+    },
+    remember: {
+      displayName: '启用倍速记忆',
+      defaultValue: true,
     },
     individualRemember: {
       displayName: '各视频分别记忆',
