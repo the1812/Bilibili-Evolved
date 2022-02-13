@@ -1,0 +1,14 @@
+@mixin title-container {
+  height: 24px;
+  line-height: 24px;
+  padding: 0 8px;
+}
+
+@mixin icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 24px;
+  width: 24px;
+  color: #888a;
+}
