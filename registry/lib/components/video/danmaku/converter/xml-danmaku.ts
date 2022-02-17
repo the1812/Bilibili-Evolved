@@ -1,3 +1,4 @@
+import { normalizeContent } from '@/components/video/xml-utils'
 import { BasicDanmakuData, Danmaku } from './danmaku-data'
 
 export interface XmlDanmakuData extends BasicDanmakuData {
@@ -27,7 +28,7 @@ export class XmlDanmaku extends Danmaku {
   }
   text() {
     const pData = this.pDataArray.join(',')
-    return `<d p="${pData}">${this.content}</d>`
+    return `<d p="${pData}">${normalizeContent(this.content)}</d>`
   }
   static parse(element: Element) {
     const pData = element.getAttribute('p')
