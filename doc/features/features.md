@@ -81,7 +81,13 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/unfold.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/unfold.js)
 
+
 自动展开被折叠的动态.
+
+动态被折叠可能是因为:
+- 短时间内大量更新作品
+- 多人转发同一个作品
+- 被审核折叠
 
 ### [直播间自动抽奖](../../registry/dist/components/live/auto-draw.js)
 `liveAutoDraw`
@@ -613,6 +619,32 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 每次加载视频时自动展开弹幕列表.
 
+### [视频页默认定位](../../registry/dist/components/video/default-location.js)
+`videoDefaultLocation`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/default-location.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/default-location.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/default-location.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/default-location.js)
+
+打开视频/番剧时自动定位到指定位置
+
+<div class="video-default-location-desc-detail">
+
+位置：距离页面顶部的像素距离\
+默认位置：打开视频时自动定位到此处\
+位置测试：查看、调整当前页面所在位置
+
+当前版本限制默认位置的最大值为 4000。\
+脚本不会等待评论完全加载，因此较大的默认位置将无法正确定位。
+
+</div>
+
+<style>
+.video-default-location-desc-detail.video-default-location-desc-detail p {
+  margin-top: 1ex;
+}
+</style>
+
 ### [下载视频](../../registry/dist/components/video/download.js)
 `downloadVideo`
 
@@ -725,7 +757,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 在视频播放器网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
-### [倍速记忆](../../registry/dist/components/video/player/remember-speed.js)
+### [倍速增强](../../registry/dist/components/video/player/remember-speed.js)
 `rememberVideoSpeed`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/remember-speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remember-speed.js)
@@ -734,7 +766,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 by [@JLoeve](https://github.com/LonelySteve)
 
-记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.
+可以记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.
 
 ### [删除视频弹窗](../../registry/dist/components/video/player/remove-popup.js)
 `removePlayerPopup`
