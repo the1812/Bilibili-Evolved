@@ -44,7 +44,7 @@ export const bangumiBatchInput: DownloadVideoInput = {
             ep: title,
             cid: it.cid,
             aid: it.aid,
-            n: formatNumber(parseFloat(nText), items.length) ?? title,
+            n: formatNumber(parseFloat(nText), items.length) ?? nText,
           }),
           allowQualityDrop: true,
         },

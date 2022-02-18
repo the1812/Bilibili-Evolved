@@ -12,7 +12,11 @@ export const component: ComponentMetadata = {
   urlInclude: videoUrls,
   entry: async () => {
     const autoPlayControls = {
-      enable: ['.multi-page .next-button', '.player-auxiliary-autoplay-switch input'],
+      enable: [
+        '.base-video-sections .next-button',
+        '.multi-page .next-button',
+        '.player-auxiliary-autoplay-switch input',
+      ],
       disable: ['.recommend-list .next-button'],
     }
     const disableConditions = [

@@ -1,4 +1,4 @@
-import { getJson, getText } from '@/core/ajax'
+import { getJsonWithCredentials, getText } from '@/core/ajax'
 
 export class VideoInfo {
   aid: string
@@ -36,7 +36,7 @@ export class VideoInfo {
     } else {
       url = `https://api.bilibili.com/x/web-interface/view?aid=${this.aid}`
     }
-    const json = await getJson(url)
+    const json = await getJsonWithCredentials(url)
     if (json.code !== 0) {
       throw new Error(json.message)
     }
