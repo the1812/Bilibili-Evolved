@@ -22,8 +22,8 @@ const idMatches = [
     badge: 'av号跳转',
     link: (match: RegExpMatchArray) => `https://www.bilibili.com/av${match[1]}`,
     extend: async (match: RegExpMatchArray) => {
-      const { getJson } = await import('@/core/ajax')
-      const json = await getJson(`https://api.bilibili.com/x/web-interface/view?aid=${match[1]}`)
+      const { getJsonWithCredentials } = await import('@/core/ajax')
+      const json = await getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/view?aid=${match[1]}`)
       const bv = lodash.get(json, 'data.bvid', null)
       if (bv === null) {
         return []
@@ -37,8 +37,8 @@ const idMatches = [
     badge: 'BV号跳转',
     link: (match: RegExpMatchArray) => `https://www.bilibili.com/BV${match[1]}`,
     extend: async (match: RegExpMatchArray) => {
-      const { getJson } = await import('@/core/ajax')
-      const json = await getJson(`https://api.bilibili.com/x/web-interface/view?bvid=${match[1]}`)
+      const { getJsonWithCredentials } = await import('@/core/ajax')
+      const json = await getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/view?bvid=${match[1]}`)
       const av = lodash.get(json, 'data.aid', null)
       if (av === null) {
         return []

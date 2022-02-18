@@ -1,4 +1,4 @@
-import { getJson } from '@/core/ajax'
+import { getJsonWithCredentials } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatDuration, formatNumber } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
@@ -16,7 +16,7 @@ export const videoBatchInput: DownloadVideoInput = {
   component: async () => createEpisodesPicker(async instance => {
     const { aid } = unsafeWindow
     const api = `https://api.bilibili.com/x/web-interface/view?aid=${aid}`
-    const json = await getJson(api)
+    const json = await getJsonWithCredentials(api)
     if (json.code !== 0) {
       logError(`获取视频选集列表失败, message = ${json.message}`)
       return []

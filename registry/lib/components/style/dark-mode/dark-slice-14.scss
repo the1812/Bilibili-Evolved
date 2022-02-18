@@ -120,13 +120,13 @@
         @include background-color("4");
         @include theme-color();
         &.already-fav {
-          @include background-color("6");
-          @include color("9");
+          @include background-color("5");
+          @include color("a");
         }
       }
     }
     &_desc {
-      @include background-color("6");
+      @include background-color("3");
       @include color("e");
     }
     .border-bottom-line {

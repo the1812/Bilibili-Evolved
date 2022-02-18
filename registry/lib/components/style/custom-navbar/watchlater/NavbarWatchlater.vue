@@ -146,14 +146,13 @@ export default Vue.extend({
       }
       const cards = rawList.map(item => {
         const href = (() => {
-          if (item.pages === undefined) {
+          if (item.pages === undefined || !this.redirect) {
             return getLink(item)
           }
           const pages = item.pages.map(it => it.cid)
           const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
-          return this.redirect
-            ? `${getLink(item)}?p=${page}`
-            : getLink(item)
+
+          return page <= 1 ? getLink(item) : `${getLink(item)}?p=${page}`
         })()
         const percent = Math.round((1000 * item.progress) / item.duration) / 1000
         return {
