@@ -43,12 +43,12 @@ export interface ComponentTag {
   order: number
 }
 type ComponentOptionValidator<T> = (value: T) => T | undefined | null
-/** 组件选项信息
- * @todo 需要 extends 出更具体的 Option 类型, 现在这样混一起太乱
- */
-export interface ComponentOption {
+export interface UnknownOptions {
+  [name: string]: unknown
+}
+export interface OptionMetadata<V = unknown> {
   /** 默认值 */
-  defaultValue: unknown
+  defaultValue: V
   /** 显示名称 */
   displayName?: string
   /** 如果希望这个选项显示为一个下拉框, 可以用相应的 `enum` 提供下拉框的选值, 或者也可以传入 `string[]` */
@@ -67,10 +67,11 @@ export interface ComponentOption {
   validator?: ComponentOptionValidator<Range<string>> |
   ComponentOptionValidator<string> | ComponentOptionValidator<number>
 }
-/** 组件选项信息 */
-export interface ComponentOptions {
-  [key: string]: ComponentOption
+
+export type OptionsMetadata<O extends UnknownOptions = UnknownOptions> = {
+  [OptionName in keyof O]: OptionMetadata<O[OptionName]>
 }
+
 /** 组件标签 */
 export const componentsTags = {
   /** 视频 */
@@ -139,21 +140,22 @@ export const componentsTags = {
     order: 8,
   } as ComponentTag,
 }
+export interface ComponentEntryContext<O extends UnknownOptions = UnknownOptions> {
+  /** 当前组件的设置 */
+  settings: ComponentSettings<O>
+  /** 当前组件的信息 */
+  metadata: ComponentMetadata<O>
+  /** 核心 API */
+  coreApis: CoreApis
+}
 /** 组件入口函数 */
-export type ComponentEntry<T = unknown> = (
-  context: {
-    /** 当前组件的设置 */
-    settings: ComponentSettings
-    /** 当前组件的信息 */
-    metadata: ComponentMetadata
-    /** 核心 API */
-    coreApis: CoreApis
-  }
+export type ComponentEntry<O extends UnknownOptions = UnknownOptions, T = unknown> = (
+  context: ComponentEntryContext<O>
 ) => T | Promise<T>
 /** 带有函数/复杂对象的组件信息 */
-export interface FunctionalMetadata {
+export interface FunctionalMetadata<O extends UnknownOptions = UnknownOptions> {
   /** 主入口, 重新开启时不会再运行 */
-  entry: ComponentEntry
+  entry: ComponentEntry<O>
   /** 导出小组件 */
   widget?: Omit<Widget, 'name'>
   /** 首屏样式, 会尽快注入 (before DCL) */
@@ -179,7 +181,8 @@ export interface FunctionalMetadata {
   urlExclude?: TestPattern
 }
 /** 组件基本信息 */
-export interface ComponentMetadata extends FunctionalMetadata, FeatureBase {
+export interface ComponentMetadata<O extends UnknownOptions = UnknownOptions>
+  extends FunctionalMetadata<O>, FeatureBase {
   /** 组件名称 */
   name: string
   /** 显示名称 */
@@ -193,9 +196,10 @@ export interface ComponentMetadata extends FunctionalMetadata, FeatureBase {
   /**  是否在设置界面中隐藏 (代码仍可操作) */
   hidden?: boolean
   /** 组件子选项 */
-  options?: ComponentOptions
+  options?: OptionsMetadata<O>
   /** i18n 数据 */
   i18n?: Record<string, LanguagePack>
 }
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
-export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>
+export type UserComponentMetadata<O extends UnknownOptions = UnknownOptions> =
+  Omit<ComponentMetadata<O>, keyof FunctionalMetadata<O>>

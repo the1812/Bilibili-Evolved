@@ -1,4 +1,6 @@
-import { ComponentMetadata, componentsMap, ComponentOptions } from '@/components/component'
+import {
+  ComponentMetadata, componentsMap, OptionsMetadata, UnknownOptions,
+} from '@/components/component'
 import { PluginMetadata } from '@/plugins/plugin'
 // import serialize from 'serialize-javascript'
 import { settings, ComponentSettings } from '../settings'
@@ -8,9 +10,13 @@ import { matchUrlPattern } from '../utils'
  * 生成组件选项设置
  * @param options 组件选项定义
  */
-export const componentOptionsToSettings = (options: ComponentOptions) => (
-  lodash.fromPairs(Object.entries(options).map(([key, value]) => [key, value.defaultValue]))
-)
+export function componentOptionsToSettings<O extends UnknownOptions>(
+  options: OptionsMetadata<O>,
+): O {
+  return Object.fromEntries(
+    Object.entries(options).map(([key, value]) => [key, value.defaultValue]),
+  ) as O
+}
 /**
  * 生成组件设置
  * @param component 组件定义
