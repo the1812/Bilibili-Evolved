@@ -13,9 +13,7 @@ import { matchUrlPattern } from '../utils'
 export function componentOptionsToSettings<O extends UnknownOptions>(
   options: OptionsMetadata<O>,
 ): O {
-  return Object.fromEntries(
-    Object.entries(options).map(([key, value]) => [key, value.defaultValue]),
-  ) as O
+  return lodash.mapValues(options, m => m.defaultValue) as O
 }
 /**
  * 生成组件设置
