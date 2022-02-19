@@ -17,7 +17,7 @@ import {
   VButton,
   VIcon,
 } from '@/ui'
-import { silentCheckUpdateAndReload } from './checker'
+import { forceCheckUpdateAndReload } from './checker'
 
 export default Vue.extend({
   components: {
@@ -34,7 +34,7 @@ export default Vue.extend({
       try {
         this.disabled = true
         const toast = Toast.info('正在检查更新...', '检查所有更新')
-        await silentCheckUpdateAndReload()
+        await forceCheckUpdateAndReload()
         toast.dismiss()
       } finally {
         this.disabled = false
