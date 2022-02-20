@@ -44,7 +44,9 @@ export interface ComponentTag {
 }
 type ComponentOptionValidator<T> = (value: T) => T | undefined | null
 export interface UnknownOptions {
-  [name: string]: unknown
+  // TODO: 参考 discussion #3041。当不兼容代码替换完成后替换类型为 unknown
+  // [name: string]: unknown
+  [name: string]: any
 }
 export interface OptionMetadata<V = unknown> {
   /** 默认值 */
@@ -67,7 +69,8 @@ export interface OptionMetadata<V = unknown> {
   validator?: ComponentOptionValidator<Range<string>> |
   ComponentOptionValidator<string> | ComponentOptionValidator<number>
 }
-
+// TODO: 参考 discussion #3041。当不兼容代码替换完成后删除
+export type ComponentOptions = OptionsMetadata<UnknownOptions>
 export type OptionsMetadata<O extends UnknownOptions = UnknownOptions> = {
   [OptionName in keyof O]: OptionMetadata<O[OptionName]>
 }
