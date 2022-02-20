@@ -232,13 +232,22 @@ export const convertToAss = async (xml: string) => {
   const assDocument = converter.xmlStringToAssDocument(xml)
   return assDocument.generateAss()
 }
-export const convertToAssFromJson = async (json: JsonDanmaku) => {
+export const convertToAssFromJson = async (danmaku: JsonDanmaku) => {
   const converter = new DanmakuConverter(await getUserDanmakuConfig())
   const assDocument = converter.xmlDanmakuToAssDocument(
-    json.xmlDanmakus.map(x => new XmlDanmaku(x)),
+    danmaku.xmlDanmakus.map(x => new XmlDanmaku(x)),
   )
   return assDocument.generateAss()
 }
+export const convertToXmlFromJson = (danmaku: JsonDanmaku) => {
+  const xmlText = `
+<?xml version="1.0" encoding="UTF-8"?><i><chatserver>chat.bilibili.com</chatserver><chatid>${danmaku.cid}</chatid><mission>0</mission><maxlimit>${danmaku.xmlDanmakus.length}</maxlimit><state>0</state><real_name>0</real_name><source>k-v</source>
+${danmaku.xmlDanmakus.map(x => new XmlDanmaku(x).text()).join('\n')}
+</i>
+  `.trim()
+  return xmlText
+}
+
 export const getBlobByType = async (type: DanmakuDownloadType, input: {
   aid: string
   cid: string
@@ -247,12 +256,7 @@ export const getBlobByType = async (type: DanmakuDownloadType, input: {
   const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
   switch (type) {
     case 'xml': {
-      const xmlText = `
-<?xml version="1.0" encoding="UTF-8"?><i><chatserver>chat.bilibili.com</chatserver><chatid>${cid}</chatid><mission>0</mission><maxlimit>${danmaku.xmlDanmakus.length}</maxlimit><state>0</state><real_name>0</real_name><source>k-v</source>
-${danmaku.xmlDanmakus.map(x => new XmlDanmaku(x).text()).join('\n')}
-</i>
-      `.trim()
-      return new Blob([xmlText], {
+      return new Blob([convertToXmlFromJson(danmaku)], {
         type: 'text/xml',
       })
     }

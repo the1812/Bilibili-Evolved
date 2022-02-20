@@ -994,3 +994,63 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     @include theme-color();
   }
 }
+.base-video-sections {
+  @include background-color("4");
+  .first-line-title {
+    @include color("e");
+  }
+  .next-button,
+  .cur-page {
+    @include color("a");
+  }
+
+  .video-sections-head_second-line {
+    &,
+    .abstract {
+      @include color("a");
+    }
+  }
+
+  .video-section-list .video-episode-card {
+    @include color("e");
+    &__info {
+      transition: background-color .2s ease-out;
+      &:hover {
+        @include background-color("2");
+      }
+      .video-episode-card__info-duration {
+        @include color("a");
+      }
+    }
+    &__info-playing {
+      @include background-color("3");
+      .video-episode-card__info-title {
+        @include theme-color();
+      }
+      .cur-play-icon {
+        @include to-theme("blue");
+      }
+    }
+  }
+}
+.up-info {
+  .u-face .u-face__avatar {
+    @include background-color("4");
+  }
+  .bili-avatar {
+    @include no-image();
+    @include background-color("4");
+  }
+}
+.v-wrap .float-nav {
+  &__btn--fixed,
+  .nav-btn-item {
+    @include background-color("3");
+    @include color("e");
+    @include border-color();
+    &:hover {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+}

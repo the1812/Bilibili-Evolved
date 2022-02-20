@@ -101,6 +101,7 @@ export default Vue.extend({
         color: #eee;
       }
       .face-container {
+        flex-shrink: 0;
         border-radius: 50%;
         height: 48px;
         overflow: hidden;
@@ -114,6 +115,8 @@ export default Vue.extend({
       }
       .live-info {
         @include v-stretch();
+        flex: 1 0 0;
+        width: 0;
         justify-content: center;
       }
       .live-title {

@@ -104,5 +104,6 @@ export const component: ComponentMetadata = {
   ],
   urlExclude: [
     /game\.bilibili\.com\/fgo/,
+    /live\.bilibili\.com\/p\/html\/live-app-hotrank\//,
   ],
 }

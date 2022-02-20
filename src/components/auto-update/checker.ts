@@ -10,6 +10,7 @@ import {
   CheckSingleTypeUpdate,
   UpdateRecord,
   UpdateCheckItem,
+  CheckSingleTypeUpdateConfig,
 } from './utils'
 
 export const checkUpdate = async (config: CheckUpdateConfig) => {
@@ -121,17 +122,27 @@ const checkByName = (method: CheckSingleTypeUpdate) => reload(
     await method({ filterNames: itemNames, force: true })
   },
 ) as (...itemNames: string[]) => Promise<void>
-export const silentCheckUpdate = async () => {
+
+export const checkAllUpdate = async (config: CheckSingleTypeUpdateConfig) => {
   const { options } = getComponentSettings(name)
   console.log('[自动更新器] 开始检查更新')
-  console.log(await checkComponentsUpdate({ maxCount: options.maxUpdateCount }) || '暂无组件更新')
-  console.log(await checkPluginsUpdate({ maxCount: options.maxUpdateCount }) || '暂无插件更新')
-  console.log(await checkStylesUpdate({ maxCount: options.maxUpdateCount }) || '暂无样式更新')
+  console.log(await checkComponentsUpdate(config) || '暂无组件更新')
+  console.log(await checkPluginsUpdate(config) || '暂无插件更新')
+  console.log(await checkStylesUpdate(config) || '暂无样式更新')
   options.lastUpdateCheck = Number(new Date())
   options.lastInstalledVersion = meta.version
   console.log('[自动更新器] 完成更新检查')
 }
+export const silentCheckUpdate = () => checkAllUpdate({
+  maxCount: getComponentSettings(name).options.maxUpdateCount,
+})
 export const silentCheckUpdateAndReload = reload(silentCheckUpdate)
+
+export const forceCheckUpdate = () => checkAllUpdate({
+  force: true,
+})
+export const forceCheckUpdateAndReload = reload(forceCheckUpdate)
+
 export const checkComponentsByName = checkByName(checkComponentsUpdate)
 export const checkPluginsByName = checkByName(checkPluginsUpdate)
 export const checkStylesByName = checkByName(checkStylesUpdate)

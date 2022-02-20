@@ -67,7 +67,7 @@
     "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
-    "description": "自动展开被折叠的动态.",
+    "description": "\n自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠\n",
     "fullRelativePath": "../../registry/dist/components/feeds/unfold.js",
     "fullAbsolutePath": "registry/dist/components/feeds/unfold.js"
   },
@@ -246,6 +246,14 @@
     "description": "隐藏视频里鼠标经过时出现在右上角的覆盖层.",
     "fullRelativePath": "../../registry/dist/components/style/hide/video/top-mask.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/video/top-mask.js"
+  },
+  {
+    "type": "component",
+    "name": "freshHome",
+    "displayName": "清爽首页",
+    "description": "使用重新设计的清爽风格首页替换原本的首页.",
+    "fullRelativePath": "../../registry/dist/components/style/home-redesign/fresh.js",
+    "fullAbsolutePath": "registry/dist/components/style/home-redesign/fresh.js"
   },
   {
     "type": "component",
@@ -610,8 +618,8 @@
   {
     "type": "component",
     "name": "rememberVideoSpeed",
-    "displayName": "倍速记忆",
-    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.",
+    "displayName": "倍速增强",
+    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n可以记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.",
     "fullRelativePath": "../../registry/dist/components/video/player/remember-speed.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remember-speed.js"
   },

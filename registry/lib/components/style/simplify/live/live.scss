@@ -246,27 +246,6 @@ $prefix: "simplifyLiveroom-switch";
     }
   }
 }
-.#{$prefix}-skin {
-  &:not(.dark) {
-    .player-ctnr {
-      #head-info-vm,
-      #gift-control-vm {
-        box-sizing: content-box !important;
-        border: 1px solid #e9eaec !important;
-      }
-    }
-    .player-and-aside-area #aside-area-vm {
-      border: 1px solid #e9eaec !important;
-      width: 302px !important;
-    }
-  }
-  .control-panel-ctnr,
-  #head-info-vm,
-  #gift-control-vm,
-  #rank-list-ctnr-box {
-    background-image: none !important;
-  }
-}
 .#{$prefix}-guard {
   .guard-danmaku::before {
     border-image: none !important;

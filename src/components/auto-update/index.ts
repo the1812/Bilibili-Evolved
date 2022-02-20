@@ -14,8 +14,9 @@ import * as checkerMethods from './checker'
 const {
   checkComponentsUpdate,
   checkLastFeature,
+  forceCheckUpdate,
+  forceCheckUpdateAndReload,
   silentCheckUpdate,
-  silentCheckUpdateAndReload,
 } = checkerMethods
 
 export const component: ComponentMetadata = {
@@ -68,8 +69,10 @@ export const component: ComponentMetadata = {
     const isDurationExceeded = duration >= options.minimumDuration
     const isVersionOutdated = new Version(meta.version)
       .greaterThan(new Version(options.lastInstalledVersion))
-    if (isDurationExceeded || isVersionOutdated) {
+    if (isDurationExceeded) {
       coreApis.lifeCycle.fullyLoaded(() => silentCheckUpdate())
+    } else if (isVersionOutdated) {
+      coreApis.lifeCycle.fullyLoaded(() => forceCheckUpdate())
     }
 
     return checkerMethods
@@ -151,7 +154,7 @@ export const component: ComponentMetadata = {
               action: async () => {
                 const { Toast } = await import('@/core/toast')
                 const toast = Toast.info('正在检查更新...', '检查所有更新')
-                await silentCheckUpdateAndReload()
+                await forceCheckUpdateAndReload()
                 toast.dismiss()
               },
               icon,
