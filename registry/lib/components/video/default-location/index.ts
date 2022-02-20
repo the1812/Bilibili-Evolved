@@ -1,6 +1,6 @@
 import { ComponentMetadata } from '@/components/types'
 import {
-  allVideoUrls, bangumiUrls, bnjUrls, cheeseUrls, matchCurrentPage, mediaListUrls,
+  allVideoUrls, bangumiUrls, cheeseUrls, matchCurrentPage, mediaListUrls,
 } from '@/core/utils/urls'
 import { select } from '@/core/spin-query'
 import desc from './desc.md'
@@ -24,9 +24,7 @@ export const pageTypeInfos = {
   },
   bnj: {
     displayName: '拜年纪视频页',
-    urls: [
-      ...bnjUrls,
-    ],
+    urls: [/\/\/www\.bilibili\.com\/festival\/(\d+)bnj/],
   },
 }
 
