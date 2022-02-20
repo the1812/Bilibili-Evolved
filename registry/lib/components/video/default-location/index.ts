@@ -102,6 +102,7 @@ const waitComment = async (): Promise<boolean> => {
 }
 
 const entry = async ({ settings: { options: { locations } } }) => {
+  // TODO: 添加“刷新/前进/后退时禁用”选项以支持自定义
   // 仅在初次进入页面时进行定位，即刷新、回退等操作不会执行定位
   const navigationArr = window?.performance?.getEntriesByType('navigation')
   if (navigationArr?.length !== 1) {
@@ -129,6 +130,7 @@ const entry = async ({ settings: { options: { locations } } }) => {
   }
   const defaultLocation = locations[pageType]
 
+  // TODO: 自定义顶栏会改变页面高度，使该组件的定位出现偏差。因此需要在其操作完成后再定位
   // 滚动到默认位置
   const html = document.documentElement
   if (defaultLocation < html.scrollHeight - html.clientHeight || await waitComment()) {
