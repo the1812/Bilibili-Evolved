@@ -8,9 +8,9 @@ const parseAliPay = (csv: Record<string, string>[]) => {
     item.toString = () => {
       let name = ''
       if (item.商品名称 !== '收钱码收款') {
-        name += item.商品名称 + ' '
+        name += `${item.商品名称} `
       }
-      name += item.对方名称 + ' ' + item.付款备注
+      name += `${item.对方名称} ${item.付款备注}`
       return `| ${item.创建时间.replace(/-/g, '.')} | ${name} | ${item.支付宝交易号.substring(item.支付宝交易号.length - 4)} | ¥${item['订单金额(元)']} |`
     }
   })
@@ -23,10 +23,10 @@ const parseWeChat = (csv: Record<string, string>[]) => {
       let name = item.交易对方
       const noteMatch = item.商品.match(/付款方留言:(.+)/)
       if (noteMatch) {
-        name += ' ' + noteMatch[1]
+        name += ` ${noteMatch[1]}`
       }
       if (item.备注.trim() !== '/') {
-        name += ' ' + item.备注
+        name += ` ${item.备注}`
       }
       item.交易单号 = item.交易单号.trim()
       return `| ${item.交易时间.replace(/-/g, '.')} | ${name} | ${item.交易单号.substring(item.交易单号.length - 4)} | ${item['金额(元)']} |`

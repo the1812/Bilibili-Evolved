@@ -14,30 +14,34 @@ Send Messages:
 
 `start`
 ```json
-{}
+{
+  "type": "start"
+}
 ```
 
 `coreUpdate`
 ```json
 {
-  "type": "core",
-  "path": "core/bilibili-evolved.dev.user.js"
+  "type": "coreUpdate",
 }
 ```
 
 `itemUpdate`
 ```json
 {
+  "type": "itemUpdate",
   "name": "name",
+  "itemType": "component",
   "displayName": "Display Name",
-  "type": "component",
   "path": "registry/components/feeds/copy-link.js"
 }
 ```
 
 `stop`
 ```json
-{}
+{
+  "type": "stop",
+}
 ```
 
 ## Client
