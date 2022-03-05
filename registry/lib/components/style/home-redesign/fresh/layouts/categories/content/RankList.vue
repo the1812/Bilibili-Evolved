@@ -20,7 +20,7 @@
         <a
           class="fresh-home-rank-list-rank-item-title"
           target="_blank"
-          :href="videoHref(firstItem)"
+          :href="firstItem.videoHref"
           :title="firstItem.title"
         >
           {{ firstItem.title }}
@@ -28,7 +28,7 @@
         <a
           class="fresh-home-rank-list-cover"
           target="_blank"
-          :href="videoHref(firstItem)"
+          :href="firstItem.videoHref"
         >
           <DpiImage
             :src="firstItem.coverUrl"
@@ -36,9 +36,13 @@
           />
           <UpInfo
             :up-face-url="firstItem.upFaceUrl"
-            :up-id="firstItem.upID"
+            :href="firstItem.upHref"
             :up-name="firstItem.upName"
-          />
+          >
+            <template #fallback-icon>
+              <VIcon v-bind="upInfoProps" />
+            </template>
+          </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
             {{ firstItem.points | formatCount }}
@@ -50,7 +54,7 @@
         <a
           class="fresh-home-rank-list-rank-item"
           target="_blank"
-          :href="videoHref(secondItem)"
+          :href="secondItem.videoHref"
         >
           <div
             class="fresh-home-rank-list-rank-item-title"
@@ -60,9 +64,13 @@
           </div>
           <UpInfo
             :up-face-url="secondItem.upFaceUrl"
-            :up-id="secondItem.upID"
+            :href="secondItem.upHref"
             :up-name="secondItem.upName"
-          />
+          >
+            <template #fallback-icon>
+              <VIcon v-bind="upInfoProps" />
+            </template>
+          </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
             {{ secondItem.points | formatCount }}
@@ -73,7 +81,7 @@
         <a
           class="fresh-home-rank-list-cover"
           target="_blank"
-          :href="videoHref(secondItem)"
+          :href="secondItem.videoHref"
         >
           <DpiImage
             :src="secondItem.coverUrl"
@@ -86,7 +94,7 @@
         <a
           class="fresh-home-rank-list-rank-item"
           target="_blank"
-          :href="videoHref(thirdItem)"
+          :href="thirdItem.videoHref"
         >
           <div
             class="fresh-home-rank-list-rank-item-title"
@@ -96,9 +104,13 @@
           </div>
           <UpInfo
             :up-face-url="thirdItem.upFaceUrl"
-            :up-id="thirdItem.upID"
+            :href="thirdItem.upHref"
             :up-name="thirdItem.upName"
-          />
+          >
+            <template #fallback-icon>
+              <VIcon v-bind="upInfoProps" />
+            </template>
+          </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
             {{ secondItem.points | formatCount }}
@@ -109,7 +121,7 @@
         <a
           class="fresh-home-rank-list-cover"
           target="_blank"
-          :href="videoHref(thirdItem)"
+          :href="thirdItem.videoHref"
         >
           <DpiImage
             :src="thirdItem.coverUrl"
@@ -122,7 +134,6 @@
   </div>
 </template>
 <script lang="ts">
-import { VideoCard } from '@/components/feeds/video-card'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
 import {
@@ -162,6 +173,16 @@ export default Vue.extend({
       thirdCoverWidth: 139,
     }),
   ],
+  props: {
+    parseJson: {
+      type: Function,
+      required: true,
+    },
+    bangumiMode: {
+      type: Boolean,
+      default: false,
+    },
+  },
   computed: {
     firstItem() {
       return this.items[0]
@@ -172,38 +193,20 @@ export default Vue.extend({
     thirdItem() {
       return this.items[2]
     },
+    upInfoProps() {
+      return {
+        size: 18,
+        icon: this.bangumiMode ? 'mdi-television-classic' : 'up-outline',
+        style: {
+          transform: this.bangumiMode ? 'translateY(-1px)' : 'none',
+        },
+      }
+    },
     firstRow() {
       return this.items.slice(3, 6)
     },
     secondRow() {
       return this.items.slice(6, 10)
-    },
-  },
-  methods: {
-    parseJson(json: any) {
-      const items = (lodash.get(json, 'data', []) || []) as any[]
-      return items
-        .map(
-          (item): VideoCard => ({
-            id: item.aid,
-            aid: parseInt(item.aid),
-            bvid: item.bvid,
-            title: item.title,
-            playCount: item.play,
-            favorites: item.favorites,
-            upID: item.mid,
-            upName: item.author,
-            description: item.description,
-            coverUrl: item.pic,
-            coins: item.coins,
-            durationText: item.duration,
-            points: item.pts,
-          }),
-        )
-        .slice(0, 10)
-    },
-    videoHref(videoCard: VideoCard) {
-      return `https://www.bilibili.com/video/${videoCard.bvid}`
     },
   },
 })
@@ -216,6 +219,7 @@ export default Vue.extend({
   flex: 1;
   width: 400px;
   overflow: hidden;
+  min-height: var(--panel-height);
   height: var(--panel-height);
   padding: var(--padding);
   margin: calc(0px - var(--padding));
@@ -241,6 +245,7 @@ export default Vue.extend({
   & &-rank-item {
     @include card(12px);
     @include v-stretch();
+    border-radius: var(--home-card-radius);
     justify-content: space-between;
     padding: 10px 0;
     height: var(--rank-item-height);

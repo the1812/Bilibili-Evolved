@@ -1,0 +1,24 @@
+@mixin bounce-x($offset-in-px) {
+  @keyframes bounce-x-#{$offset-in-px} {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    50% {
+      transform: translateX(#{$offset-in-px}px);
+    }
+  }
+  animation: bounce-x-#{$offset-in-px} 0.4s ease-out;
+}
+@mixin bounce-y($offset-in-px) {
+  @keyframes bounce-y-#{$offset-in-px} {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(#{$offset-in-px}px);
+    }
+  }
+  animation: bounce-y-#{$offset-in-px} 0.4s ease-out;
+}

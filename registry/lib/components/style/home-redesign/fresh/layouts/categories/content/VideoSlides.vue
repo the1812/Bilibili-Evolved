@@ -222,6 +222,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "./effects";
 
 .fresh-home-video-slides {
   @include card(12px);
@@ -234,19 +235,6 @@ export default Vue.extend({
   overflow: hidden;
   padding: var(--main-padding-y) var(--main-padding-x);
   height: 266px;
-
-  @mixin bounce-x($offset-in-px) {
-    @keyframes bounce-x-#{$offset-in-px} {
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(#{$offset-in-px}px);
-      }
-    }
-    animation: bounce-x-#{$offset-in-px} 0.4s ease-out;
-  }
 
   .cover-placeholder-vertical {
     height: var(--other-cover-height);
