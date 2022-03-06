@@ -26,7 +26,7 @@
       </div>
       <BangumiTimeline
         :view-last-week="viewLastWeek"
-        :api="bangumiDataMap[route].api"
+        :api="timelineApi"
       />
     </div>
     <div class="fresh-home-categories-bangumi-rank-list">
@@ -55,16 +55,16 @@ import {
 import SubHeader from '../../../SubHeader.vue'
 import RankList from './RankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
-import { RankListCard } from './rank-list-card'
+import { RankListCard } from './rank-list'
 
 const bangumiDataMap = {
   anime: {
-    api: 'https://bangumi.bilibili.com/web_api/timeline_global',
+    timeline: 'global',
     seasonType: 1,
     rankingName: 'bangumi',
   },
   guochuang: {
-    api: 'https://bangumi.bilibili.com/web_api/timeline_cn',
+    timeline: 'cn',
     seasonType: 4,
     // 你永远不知道"国创"在 b 站代码里有多少种叫法...
     rankingName: 'guochan',
@@ -86,12 +86,14 @@ export default Vue.extend({
   },
   data() {
     const { route } = this.region.category
+    const { rankingName, seasonType, timeline } = bangumiDataMap[route]
     return {
       viewLastWeek: false,
       bangumiDataMap,
       route,
-      rankingsApi: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${bangumiDataMap[route].seasonType}`,
-      rankingsLink: `https://www.bilibili.com/v/popular/rank/${bangumiDataMap[route].rankingName}`,
+      timelineApi: `https://bangumi.bilibili.com/web_api/timeline_${timeline}`,
+      rankingsApi: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`,
+      rankingsLink: `https://www.bilibili.com/v/popular/rank/${rankingName}`,
     }
   },
   methods: {

@@ -28,7 +28,7 @@
   </div>
 </template>
 <script lang="ts">
-import { RankListCard } from './rank-list-card'
+import { RankListCard } from './rank-list'
 import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
 import SubHeader from '../../../SubHeader.vue'

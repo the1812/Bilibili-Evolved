@@ -144,6 +144,7 @@ import {
   VButton,
 } from '@/ui'
 import { requestMixin, cssVariableMixin } from './mixin'
+import { rankListCssVars } from './rank-list'
 
 export default Vue.extend({
   components: {
@@ -159,19 +160,7 @@ export default Vue.extend({
   },
   mixins: [
     requestMixin,
-    cssVariableMixin({
-      panelHeight: 608,
-      padding: 12,
-      rankItemHeight: 110,
-      rankItemMargin: 24,
-      rankItemTitleHeight: 20,
-      firstCoverHeight: 225,
-      firstCoverWidth: 350,
-      secondCoverHeight: 110,
-      secondCoverWidth: 168,
-      thirdCoverHeight: 90,
-      thirdCoverWidth: 139,
-    }),
+    cssVariableMixin(rankListCssVars),
   ],
   props: {
     parseJson: {
