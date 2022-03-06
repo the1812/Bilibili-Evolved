@@ -19,13 +19,18 @@ const entry = async () => {
     order: 0,
     action: async (e: MouseEvent) => {
       const { playerAgent } = await import('@/components/video/player-agent')
-      const video = await playerAgent.query.video.element() as HTMLVideoElement
-      const screenshot = takeScreenshot(video, e.shiftKey)
-      if (!screenShotsList) {
-        screenShotsList = mountVueComponent(ScreenshotContainer)
-        document.body.insertAdjacentElement('beforeend', screenShotsList.$el)
+      const video = await playerAgent.query.video.element()
+      if (video instanceof HTMLVideoElement) {
+        const screenshot = takeScreenshot(video, e.shiftKey)
+        if (!screenShotsList) {
+          screenShotsList = mountVueComponent(ScreenshotContainer)
+          document.body.insertAdjacentElement('beforeend', screenShotsList.$el)
+        }
+        screenShotsList.screenshots.unshift(screenshot)
+      } else {
+        const { logError } = await import('@/core/utils/log')
+        logError('视频截图失败: 无法定位视频元素，请尝试右击视频两次后另存为图片，或将播放策略改为AV1或AVC.')
       }
-      screenShotsList.screenshots.unshift(screenshot)
     },
   })
 }
