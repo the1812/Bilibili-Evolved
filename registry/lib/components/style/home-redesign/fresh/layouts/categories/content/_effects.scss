@@ -22,3 +22,35 @@
   }
   animation: bounce-y-#{$offset-in-px} 0.4s ease-out;
 }
+@mixin scroll-mask-x {
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    opacity: 0;
+  }
+  &.not-empty::before,
+  &.not-empty::after {
+    position: absolute;
+    pointer-events: none;
+    transition: .1s ease-out;
+    width: 24px;
+    opacity: 1;
+    height: 100%;
+    flex-shrink: 0;
+    top: 0;
+    z-index: 1;
+  }
+  &.not-empty::before {
+    background: linear-gradient(to right, var(--home-base-color) 40%, rgba(0, 0, 0, 0) 100%);
+    left: -2px;
+  }
+  &.not-empty::after {
+    background: linear-gradient(to left, var(--home-base-color) 40%, rgba(0, 0, 0, 0) 100%);
+    right: -2px;
+  }
+  &.scroll-top::before,
+  &.scroll-bottom::after {
+    width: 0;
+  }
+}

@@ -42,7 +42,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      observer: [],
+      observers: [],
     }
   },
   watch: {
@@ -58,7 +58,7 @@ export default Vue.extend({
   methods: {
     async setupIntersection() {
       await this.$nextTick()
-      const observers = this.observer as IntersectionObserver[]
+      const observers = this.observers as IntersectionObserver[]
       if (observers) {
         observers.forEach(o => o.disconnect())
         this.observers = []

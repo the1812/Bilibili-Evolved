@@ -30,53 +30,63 @@
           TODAY
         </div>
       </div>
-      <div class="fresh-home-categories-bangumi-timeline-seasons">
+      <div
+        ref="seasonsList"
+        class="fresh-home-categories-bangumi-timeline-seasons-container scroll-top scroll-bottom"
+        :class="{ 'not-empty': item.seasons.length > 0 }"
+      >
         <div
-          v-for="season of item.seasons"
-          :key="season.season_id"
-          class="fresh-home-categories-bangumi-timeline-season"
+          class="fresh-home-categories-bangumi-timeline-seasons"
           :class="{ today: index === todayIndex }"
         >
           <div
-            class="fresh-home-categories-bangumi-timeline-season-cover"
-            :class="{
-              published: index === todayIndex && publishedToday(season),
-              today: index === todayIndex,
-              follow: season.follow,
-            }"
+            v-for="season of item.seasons"
+            :key="season.season_id"
+            :data-season="season.season_id"
+            class="fresh-home-categories-bangumi-timeline-season"
+            :class="{ today: index === todayIndex }"
           >
-            <DpiImage
-              :src="season.square_cover"
-              :size="80"
-            />
-          </div>
-          <div
-            class="fresh-home-categories-bangumi-timeline-season-title"
-            :title="season.title"
-          >
-            {{ season.title }}
-          </div>
-          <div
-            class="fresh-home-categories-bangumi-timeline-season-episode"
-            :title="getEpisode(season)"
-          >
-            {{ getEpisode(season) }}
-          </div>
-          <div
-            class="fresh-home-categories-bangumi-timeline-season-time"
-            :class="{
-              published: index === todayIndex && publishedToday(season),
-              follow: season.follow,
-            }"
-          >
-            <div class="fresh-home-categories-bangumi-timeline-season-time-icon">
-              <VIcon
-                :icon="season.follow ? 'mdi-heart-outline' : 'mdi-progress-clock'"
-                :size="14"
+            <div
+              class="fresh-home-categories-bangumi-timeline-season-cover"
+              :class="{
+                published: index === todayIndex && publishedToday(season),
+                today: index === todayIndex,
+                follow: season.follow,
+              }"
+            >
+              <DpiImage
+                :src="season.square_cover"
+                :size="80"
               />
             </div>
-            <div class="fresh-home-categories-bangumi-timeline-season-time-text">
-              {{ season.pub_time }}
+            <div
+              class="fresh-home-categories-bangumi-timeline-season-title"
+              :title="season.title"
+            >
+              {{ season.title }}
+            </div>
+            <div
+              class="fresh-home-categories-bangumi-timeline-season-episode"
+              :title="getEpisode(season)"
+            >
+              {{ getEpisode(season) }}
+            </div>
+            <div
+              class="fresh-home-categories-bangumi-timeline-season-time"
+              :class="{
+                published: index === todayIndex && publishedToday(season),
+                follow: season.follow,
+              }"
+            >
+              <div class="fresh-home-categories-bangumi-timeline-season-time-icon">
+                <VIcon
+                  :icon="season.follow ? 'mdi-heart-outline' : 'mdi-progress-clock'"
+                  :size="14"
+                />
+              </div>
+              <div class="fresh-home-categories-bangumi-timeline-season-time-text">
+                {{ season.pub_time }}
+              </div>
             </div>
           </div>
         </div>
@@ -88,6 +98,7 @@
 import { DpiImage, VIcon } from '@/ui'
 import { cssVariableMixin, requestMixin } from './mixin'
 import { rankListCssVars } from './rank-list'
+import { setupScrollMask } from './scroll-mask'
 
 interface TimelineSeason {
   cover: string
@@ -117,16 +128,45 @@ interface TimelineDay {
 }
 
 const rankListHeight = rankListCssVars.panelHeight - 2 * rankListCssVars.padding
+const timelineCssVars = (() => {
+  const seasonItemWidth = 250
+  const seasonTodayWidth = 280
+  const timelineItemHeight = 66
+  const timelineTodayHeight = 96
+  const timelineViewportItemsHeight = (
+    6 * timelineItemHeight + timelineTodayHeight
+  )
+  const timelineItemGap = (
+    rankListHeight - timelineViewportItemsHeight
+  ) / 6
+  const timelineViewportHeight = (
+    6 * timelineItemGap + timelineViewportItemsHeight
+  )
+  return {
+    seasonItemWidth,
+    seasonTodayWidth,
+    timelineItemHeight,
+    timelineTodayHeight,
+    timelineViewportItemsHeight,
+    timelineItemGap,
+    timelineViewportHeight,
+  }
+})()
 export default Vue.extend({
   components: { DpiImage, VIcon },
-  mixins: [requestMixin, cssVariableMixin({
-    rankListHeight,
-  })],
+  mixins: [requestMixin, cssVariableMixin(timelineCssVars)],
   props: {
     viewLastWeek: {
       type: Boolean,
       default: false,
     },
+  },
+  data() {
+    return {
+      observers: [],
+      now: Number(new Date()),
+      timer: 0,
+    }
   },
   computed: {
     todayIndex() {
@@ -143,17 +183,56 @@ export default Vue.extend({
     viewLastWeek() {
       this.updateScrollPosition()
     },
+    loaded() {
+      if (this.loaded) {
+        this.updateScrollPosition()
+      }
+    },
   },
   mounted() {
-    this.updateScrollPosition()
+    this.timer = setInterval(() => {
+      this.now = Number(new Date())
+    }, 60 * 1000)
+  },
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
   },
   methods: {
     parseJson(json: any) {
       return json.result ?? []
     },
-    updateScrollPosition() {
-      const element = this.$el as HTMLElement
-      element.scrollTo(0, this.viewLastWeek ? 0 : rankListHeight)
+    async updateScrollPosition() {
+      await this.$nextTick()
+      const list: HTMLElement[] = this.$refs.seasonsList
+      const root: HTMLElement = this.$el
+      root.scrollTop = 5 * timelineCssVars.timelineItemHeight + 4 * timelineCssVars.timelineItemGap
+
+      const classPrefix = '.fresh-home-categories-bangumi-timeline'
+      list.forEach(seasons => {
+        setupScrollMask({
+          container: seasons,
+          items: dqa(seasons, `${classPrefix}-season`) as HTMLElement[],
+        })
+      })
+      const todaySeasons = dq(`${classPrefix}-seasons.today`)
+      if (!todaySeasons) {
+        return
+      }
+      const seasonsData: TimelineSeason[] = this.items[this.todayIndex]?.seasons
+      if (seasonsData.length === 0) {
+        return
+      }
+      const lastPublishedItem = [...seasonsData].reverse().find(it => this.publishedToday(it))
+      if (!lastPublishedItem) {
+        return
+      }
+      const lastPublishedElement = dq(todaySeasons, `[data-season="${lastPublishedItem.season_id}"]`) as HTMLElement
+      if (!lastPublishedElement) {
+        return
+      }
+      todaySeasons.scrollLeft = lastPublishedElement.offsetLeft
     },
     getEpisode(season: TimelineSeason) {
       if (season.delay) {
@@ -165,8 +244,7 @@ export default Vue.extend({
       if (season.delay) {
         return false
       }
-      const now = Number(new Date())
-      return season.pub_ts * 1000 <= now
+      return season.pub_ts * 1000 <= this.now
     },
     dayOfWeekText(item: TimelineDay) {
       return `周${[
@@ -185,24 +263,11 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "./effects";
 
 .fresh-home-categories-bangumi {
   &-timeline {
     &-content {
-      --season-item-width: 250px;
-      --season-today-width: 280px;
-      --timeline-item-height: 66px;
-      --timeline-today-height: 96px;
-      --timeline-viewport-items-height: calc(
-        6 * var(--timeline-item-height) + var(--timeline-today-height)
-      );
-      --timeline-item-gap: calc(
-        (var(--rank-list-height) - var(--timeline-viewport-items-height)) / 6
-      );
-      --timeline-viewport-height: calc(
-        6 * var(--timeline-item-gap) + var(--timeline-viewport-items-height)
-      );
-      scroll-behavior: smooth;
       height: var(--timeline-viewport-height);
       max-height: var(--timeline-viewport-height);
       flex: 1;
@@ -283,11 +348,20 @@ export default Vue.extend({
         border-radius: calc(1.25em + 4px);
       }
     }
+    &-seasons-container {
+      @include h-stretch();
+      @include scroll-mask-x();
+      width: 0;
+      flex: 1 0 0;
+      position: relative;
+    }
     &-seasons {
       @include h-stretch(calc(var(--timeline-item-gap) / 2));
       @include no-scrollbar();
+      overscroll-behavior: initial;
       width: 0;
       flex: 1 0 0;
+      margin: 0 2px;
       scroll-snap-type: x mandatory;
     }
     &-season {

@@ -48,10 +48,10 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  VButton,
-  VIcon,
-} from '@/ui'
+// import {
+//   VButton,
+//   VIcon,
+// } from '@/ui'
 import SubHeader from '../../../SubHeader.vue'
 import RankList from './RankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
@@ -73,8 +73,8 @@ const bangumiDataMap = {
 export default Vue.extend({
   components: {
     SubHeader,
-    VButton,
-    VIcon,
+    // VButton,
+    // VIcon,
     BangumiTimeline,
     RankList,
   },
