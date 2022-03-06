@@ -5,13 +5,14 @@ export interface ScrollMaskConfig {
   items: HTMLElement[]
 }
 const observersMap = new Map<HTMLElement, IntersectionObserver[]>()
-export const setupScrollMask = async (config: ScrollMaskConfig) => {
+export const setupScrollMask = (config: ScrollMaskConfig) => {
   const { container, items } = config
   const observers = observersMap.get(container)
   if (observers) {
     observers.forEach(o => o.disconnect())
     observersMap.delete(container)
   }
+  console.log('setupScrollMask', observersMap)
   if (items.length === 0) {
     return
   }
@@ -40,4 +41,13 @@ export const setupScrollMask = async (config: ScrollMaskConfig) => {
     )
     newObservers.push(lastObserver)
   }
+}
+export const cleanUpScrollMask = (...containers: HTMLElement[]) => {
+  containers.forEach(container => {
+    if (observersMap.has(container)) {
+      const observers = observersMap.get(container)
+      observers.forEach(o => o.disconnect())
+      observersMap.delete(container)
+    }
+  })
 }

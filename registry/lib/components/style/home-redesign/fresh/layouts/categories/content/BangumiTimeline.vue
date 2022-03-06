@@ -98,7 +98,7 @@
 import { DpiImage, VIcon } from '@/ui'
 import { cssVariableMixin, requestMixin } from './mixin'
 import { rankListCssVars } from './rank-list'
-import { setupScrollMask } from './scroll-mask'
+import { setupScrollMask, cleanUpScrollMask } from './scroll-mask'
 
 interface TimelineSeason {
   cover: string
@@ -198,6 +198,8 @@ export default Vue.extend({
     if (this.timer) {
       clearInterval(this.timer)
     }
+    const list: HTMLElement[] = this.$refs.seasonsList
+    cleanUpScrollMask(...list)
   },
   methods: {
     parseJson(json: any) {
