@@ -279,7 +279,7 @@ export const videoChange = async (
       if (Array.isArray(newCid)) {
         return
       }
-      if (lastCid !== newCid) {
+      if (lastCid !== newCid && !lodash.isNil(newCid)) {
         fireEvent()
         lastCid = newCid
       }
