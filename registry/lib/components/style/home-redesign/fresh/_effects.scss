@@ -22,7 +22,7 @@
   }
   animation: bounce-y-#{$offset-in-px} 0.4s ease-out;
 }
-@mixin scroll-mask-x {
+@mixin scroll-mask-x($mask-width: 24px) {
   &::before,
   &::after {
     content: "";
@@ -34,7 +34,7 @@
     position: absolute;
     pointer-events: none;
     transition: .1s ease-out;
-    width: 24px;
+    width: $mask-width;
     opacity: 1;
     height: 100%;
     flex-shrink: 0;

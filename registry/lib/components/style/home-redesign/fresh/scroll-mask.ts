@@ -12,7 +12,6 @@ export const setupScrollMask = (config: ScrollMaskConfig) => {
     observers.forEach(o => o.disconnect())
     observersMap.delete(container)
   }
-  console.log('setupScrollMask', observersMap)
   if (items.length === 0) {
     return
   }

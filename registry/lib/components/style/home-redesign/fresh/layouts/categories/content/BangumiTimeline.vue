@@ -62,6 +62,7 @@
             <div
               class="fresh-home-categories-bangumi-timeline-season-title"
               :title="season.title"
+              :class="{ today: index === todayIndex }"
             >
               {{ season.title }}
             </div>
@@ -98,7 +99,7 @@
 import { DpiImage, VIcon } from '@/ui'
 import { cssVariableMixin, requestMixin } from './mixin'
 import { rankListCssVars } from './rank-list'
-import { setupScrollMask, cleanUpScrollMask } from './scroll-mask'
+import { setupScrollMask, cleanUpScrollMask } from '../../../scroll-mask'
 
 interface TimelineSeason {
   cover: string
@@ -130,7 +131,7 @@ interface TimelineDay {
 const rankListHeight = rankListCssVars.panelHeight - 2 * rankListCssVars.padding
 const timelineCssVars = (() => {
   const seasonItemWidth = 250
-  const seasonTodayWidth = 280
+  const seasonTodayWidth = 250
   const timelineItemHeight = 66
   const timelineTodayHeight = 96
   const timelineViewportItemsHeight = (
@@ -265,7 +266,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
-@import "./effects";
+@import "../../../effects";
 
 .fresh-home-categories-bangumi {
   &-timeline {
@@ -352,9 +353,10 @@ export default Vue.extend({
     }
     &-seasons-container {
       @include h-stretch();
-      @include scroll-mask-x();
+      @include scroll-mask-x(18px);
       width: 0;
       flex: 1 0 0;
+      margin: 0 2px;
       position: relative;
     }
     &-seasons {
@@ -363,7 +365,6 @@ export default Vue.extend({
       overscroll-behavior: initial;
       width: 0;
       flex: 1 0 0;
-      margin: 0 2px;
       scroll-snap-type: x mandatory;
     }
     &-season {
@@ -412,6 +413,9 @@ export default Vue.extend({
         grid-area: title;
         @include semi-bold();
         @include single-line();
+        &.today {
+          @include max-line(2, 1.25);
+        }
       }
       &-episode {
         grid-area: episode;
@@ -424,7 +428,6 @@ export default Vue.extend({
         @include card(6px);
         @include h-center(4px);
         box-shadow: none;
-        font-size: 12px;
         padding: 2px 4px;
         &.published {
           border-color: var(--theme-color);
@@ -435,6 +438,7 @@ export default Vue.extend({
         }
         &-text {
           @include semi-bold();
+          font-size: 11px;
         }
         &.follow:not(.published) &-icon {
           color: var(--theme-color);
@@ -446,10 +450,10 @@ export default Vue.extend({
         height: var(--timeline-today-height);
         --cover-size: 80px;
         grid-template:
-          "cover title title" 1.2fr
+          "cover title title" 2fr
           "cover episode episode" 1fr
           "cover time ." auto / var(--cover-size) auto 1fr;
-        row-gap: 8px;
+        row-gap: 4px;
       }
     }
   }
