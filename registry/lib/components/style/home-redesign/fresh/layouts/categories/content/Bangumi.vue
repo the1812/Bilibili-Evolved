@@ -5,7 +5,7 @@
         <SubHeader>
           时间表
         </SubHeader>
-        <VButton
+        <!-- <VButton
           v-if="viewLastWeek"
           class="fresh-home-header-icon-button fresh-home-categories-bangumi-timeline-down"
           round
@@ -22,7 +22,7 @@
         >
           <VIcon icon="mdi-arrow-up" :size="20" />
           上周
-        </VButton>
+        </VButton> -->
       </div>
       <BangumiTimeline
         :view-last-week="viewLastWeek"
@@ -153,10 +153,10 @@ export default Vue.extend({
   }
   &-rank-list {
     @include v-stretch(var(--fresh-home-categories-header-gap));
-    &-header {
-      // Timeline 的 header 中, 图标为 20px, 上下 padding 共 8px, 这里的 line-height 需要保持一致来对齐
-      line-height: calc(20px + 8px);
-    }
+    // &-header {
+    //   // Timeline 的 header 中, 图标为 20px, 上下 padding 共 8px, 这里的 line-height 需要保持一致来对齐
+    //   line-height: calc(20px + 8px);
+    // }
   }
 }
 </style>

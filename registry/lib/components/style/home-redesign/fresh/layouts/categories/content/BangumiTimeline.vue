@@ -37,20 +37,47 @@
           class="fresh-home-categories-bangumi-timeline-season"
           :class="{ today: index === todayIndex }"
         >
-          <div class="fresh-home-categories-bangumi-timeline-season-cover">
+          <div
+            class="fresh-home-categories-bangumi-timeline-season-cover"
+            :class="{
+              published: index === todayIndex && publishedToday(season),
+              today: index === todayIndex,
+              follow: season.follow,
+            }"
+          >
             <DpiImage
               :src="season.square_cover"
               :size="80"
             />
           </div>
-          <div class="fresh-home-categories-bangumi-timeline-season-title">
+          <div
+            class="fresh-home-categories-bangumi-timeline-season-title"
+            :title="season.title"
+          >
             {{ season.title }}
           </div>
-          <div class="fresh-home-categories-bangumi-timeline-season-episode">
+          <div
+            class="fresh-home-categories-bangumi-timeline-season-episode"
+            :title="getEpisode(season)"
+          >
             {{ getEpisode(season) }}
           </div>
-          <div class="fresh-home-categories-bangumi-timeline-season-time">
-            {{ season.pub_time }}
+          <div
+            class="fresh-home-categories-bangumi-timeline-season-time"
+            :class="{
+              published: index === todayIndex && publishedToday(season),
+              follow: season.follow,
+            }"
+          >
+            <div class="fresh-home-categories-bangumi-timeline-season-time-icon">
+              <VIcon
+                :icon="season.follow ? 'mdi-heart-outline' : 'mdi-progress-clock'"
+                :size="14"
+              />
+            </div>
+            <div class="fresh-home-categories-bangumi-timeline-season-time-text">
+              {{ season.pub_time }}
+            </div>
           </div>
         </div>
       </div>
@@ -58,7 +85,7 @@
   </div>
 </template>
 <script lang="ts">
-import { DpiImage } from '@/ui'
+import { DpiImage, VIcon } from '@/ui'
 import { cssVariableMixin, requestMixin } from './mixin'
 import { rankListCssVars } from './rank-list'
 
@@ -91,7 +118,7 @@ interface TimelineDay {
 
 const rankListHeight = rankListCssVars.panelHeight - 2 * rankListCssVars.padding
 export default Vue.extend({
-  components: { DpiImage },
+  components: { DpiImage, VIcon },
   mixins: [requestMixin, cssVariableMixin({
     rankListHeight,
   })],
@@ -134,6 +161,13 @@ export default Vue.extend({
       }
       return season.pub_index
     },
+    publishedToday(season: TimelineSeason) {
+      if (season.delay) {
+        return false
+      }
+      const now = Number(new Date())
+      return season.pub_ts * 1000 <= now
+    },
     dayOfWeekText(item: TimelineDay) {
       return `周${[
         '日',
@@ -155,8 +189,8 @@ export default Vue.extend({
 .fresh-home-categories-bangumi {
   &-timeline {
     &-content {
-      --season-item-width: 220px;
-      --season-today-width: 250px;
+      --season-item-width: 250px;
+      --season-today-width: 280px;
       --timeline-item-height: 66px;
       --timeline-today-height: 96px;
       --timeline-viewport-items-height: calc(
@@ -171,12 +205,14 @@ export default Vue.extend({
       scroll-behavior: smooth;
       height: var(--timeline-viewport-height);
       max-height: var(--timeline-viewport-height);
-      overflow: hidden;
       flex: 1;
+      scroll-snap-type: y mandatory;
       @include v-stretch(var(--timeline-item-gap));
+      @include no-scrollbar();
     }
     &-item {
       @include h-center(24px);
+      scroll-snap-align: start;
       flex-shrink: 0;
       height: var(--timeline-item-height);
       &.today {
@@ -240,7 +276,7 @@ export default Vue.extend({
         @include h-center();
         justify-content: center;
         padding: 2px 0;
-        color: #fff;
+        color: var(--foreground-color);
         background-color: var(--theme-color);
         letter-spacing: 1px;
         line-height: 1.25;
@@ -248,14 +284,15 @@ export default Vue.extend({
       }
     }
     &-seasons {
-      @include h-stretch(var(--timeline-item-gap));
+      @include h-stretch(calc(var(--timeline-item-gap) / 2));
       @include no-scrollbar();
       width: 0;
       flex: 1 0 0;
+      scroll-snap-type: x mandatory;
     }
     &-season {
-      @include card(var(--home-card-radius));
       --cover-size: 50px;
+      scroll-snap-align: start;
       flex-shrink: 0;
       padding: 7px;
       display: grid;
@@ -269,16 +306,30 @@ export default Vue.extend({
       align-items: center;
       width: var(--season-item-width);
       height: var(--timeline-item-height);
+      &:not(:last-child) {
+        padding-right: calc(var(--timeline-item-gap) / 2 + 6px);
+        border-right: 1px solid #8884;
+      }
 
       &-cover {
         grid-area: cover;
         width: var(--cover-size);
         height: var(--cover-size);
-        border-radius: 6px;
+        box-shadow: 0 0 0 1px #8882;
+        border-radius: 10px;
         overflow: hidden;
         img {
           width: var(--cover-size);
           height: var(--cover-size);
+        }
+        &.follow {
+          box-shadow: 0 0 0 2px var(--theme-color);
+        }
+        &.today {
+          border-radius: 12px;
+          &.follow.published {
+            box-shadow: 0 0 0 2px var(--theme-color), 0 0 0 5px var(--theme-color-20);
+          }
         }
       }
       &-title {
@@ -290,13 +341,28 @@ export default Vue.extend({
         grid-area: episode;
         font-size: 12px;
         @include single-line();
+        opacity: .64;
       }
       &-time {
         grid-area: time;
         @include card(6px);
-        @include semi-bold();
+        @include h-center(4px);
+        box-shadow: none;
         font-size: 12px;
         padding: 2px 4px;
+        &.published {
+          border-color: var(--theme-color);
+          &.follow {
+            background-color: var(--theme-color);
+            color: var(--foreground-color);
+          }
+        }
+        &-text {
+          @include semi-bold();
+        }
+        &.follow:not(.published) &-icon {
+          color: var(--theme-color);
+        }
       }
 
       &.today {
@@ -304,13 +370,10 @@ export default Vue.extend({
         height: var(--timeline-today-height);
         --cover-size: 80px;
         grid-template:
-          "cover title title" 1.5fr
+          "cover title title" 1.2fr
           "cover episode episode" 1fr
-          "cover time ." 1fr / var(--cover-size) auto 1fr;
+          "cover time ." auto / var(--cover-size) auto 1fr;
         row-gap: 8px;
-        .fresh-home-categories-bangumi-timeline-season-cover {
-          border-radius: 8px;
-        }
       }
     }
   }
