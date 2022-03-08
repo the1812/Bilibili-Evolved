@@ -1,12 +1,14 @@
 <template>
   <div
     class="fresh-home-categories-bangumi-timeline-content"
-    :class="{ loading, loaded, 'last-week': viewLastWeek }"
+    :class="{ loading, loaded, scrolled, 'last-week': viewLastWeek, empty: items.length === 0 }"
   >
+    <VLoading v-if="loading" />
+    <VEmpty v-if="loaded && items.length === 0" />
     <div
       v-for="(item, index) of items"
       :key="item.date_ts"
-      class="fresh-home-categories-bangumi-timeline-item"
+      class="fresh-home-categories-bangumi-timeline-item animation"
       :class="{ today: index === todayIndex }"
     >
       <div class="fresh-home-categories-bangumi-timeline-date">
@@ -96,7 +98,12 @@
   </div>
 </template>
 <script lang="ts">
-import { DpiImage, VIcon } from '@/ui'
+import {
+  DpiImage,
+  VIcon,
+  VEmpty,
+  VLoading,
+} from '@/ui'
 import { cssVariableMixin, requestMixin } from './mixin'
 import { rankListCssVars } from './rank-list'
 import { setupScrollMask, cleanUpScrollMask } from '../../../scroll-mask'
@@ -154,7 +161,12 @@ const timelineCssVars = (() => {
   }
 })()
 export default Vue.extend({
-  components: { DpiImage, VIcon },
+  components: {
+    DpiImage,
+    VIcon,
+    VEmpty,
+    VLoading,
+  },
   mixins: [requestMixin, cssVariableMixin(timelineCssVars)],
   props: {
     viewLastWeek: {
@@ -167,6 +179,7 @@ export default Vue.extend({
       observers: [],
       now: Number(new Date()),
       timer: 0,
+      scrolled: false,
     }
   },
   computed: {
@@ -194,6 +207,16 @@ export default Vue.extend({
     this.timer = setInterval(() => {
       this.now = Number(new Date())
     }, 60 * 1000)
+    const element = this.$el as HTMLElement
+    let ended = 0
+    const endHandler = () => {
+      ended++
+      if (ended >= 7) {
+        element.classList.add('snap')
+        element.removeEventListener('animationend', endHandler)
+      }
+    }
+    element.addEventListener('animationend', endHandler)
   },
   beforeDestroy() {
     if (this.timer) {
@@ -210,7 +233,14 @@ export default Vue.extend({
       await this.$nextTick()
       const list: HTMLElement[] = this.$refs.seasonsList
       const root: HTMLElement = this.$el
-      root.scrollTop = 5 * timelineCssVars.timelineItemHeight + 4 * timelineCssVars.timelineItemGap
+      root.scrollTop = (
+        5 * timelineCssVars.timelineItemHeight
+        + 5 * timelineCssVars.timelineItemGap
+      )
+      console.log((
+        5 * timelineCssVars.timelineItemHeight
+        + 5 * timelineCssVars.timelineItemGap
+      ))
 
       const classPrefix = '.fresh-home-categories-bangumi-timeline'
       list.forEach(seasons => {
@@ -236,6 +266,7 @@ export default Vue.extend({
         return
       }
       todaySeasons.scrollLeft = lastPublishedElement.offsetLeft
+      this.scrolled = true
     },
     getEpisode(season: TimelineSeason) {
       if (season.delay) {
@@ -271,12 +302,38 @@ export default Vue.extend({
 .fresh-home-categories-bangumi {
   &-timeline {
     &-content {
+      @include v-stretch(var(--timeline-item-gap));
+      @include no-scrollbar();
       height: var(--timeline-viewport-height);
       max-height: var(--timeline-viewport-height);
       flex: 1;
-      scroll-snap-type: y mandatory;
-      @include v-stretch(var(--timeline-item-gap));
-      @include no-scrollbar();
+      .be-empty,
+      .be-loading {
+        align-self: center;
+      }
+      &.empty,
+      &.loading {
+        flex: 1;
+        border: 2px dashed #8884;
+        border-radius: var(--home-card-radius);
+      }
+      &.snap {
+        scroll-snap-type: y mandatory;
+      }
+      &.scrolled {
+        .animation {
+          animation-play-state: running;
+        }
+      }
+    }
+    @function slides($index) {
+      @return -10 * $index * $index / 9  + 40 * $index / 3 + 24
+    }
+    @for $index from 6 through 12 {
+      &-item:nth-child(#{$index}) {
+        @include item-slides-y(#{slides($index)}px);
+        animation-delay: #{(1 - (slides($index) - 24) / 40) * 0.2}s;
+      }
     }
     &-item {
       @include h-center(24px);
