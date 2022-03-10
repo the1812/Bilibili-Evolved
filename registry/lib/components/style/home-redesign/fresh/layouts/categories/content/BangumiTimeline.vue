@@ -259,6 +259,7 @@ export default Vue.extend({
       }
       const lastPublishedItem = [...seasonsData].reverse().find(it => this.publishedToday(it))
       if (!lastPublishedItem) {
+        this.scrolled = true
         return
       }
       const lastPublishedElement = dq(todaySeasons, `[data-season="${lastPublishedItem.season_id}"]`) as HTMLElement
