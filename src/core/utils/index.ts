@@ -459,3 +459,13 @@ export const disableWindowScroll = async (action?: () => unknown | Promise<unkno
   }
   return restore
 }
+/**
+ * 生成一个对组件选项进行数字校验的函数, 可选择设置数字范围
+ * @param clampLower 最小值
+ * @param clampUpper 最大值
+ */
+export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity) => (
+  (value: number, oldValue: number) => (
+    lodash.isNumber(value) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
+  )
+)

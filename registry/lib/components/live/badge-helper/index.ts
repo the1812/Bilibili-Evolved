@@ -1,5 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
-import { getUID, none } from '@/core/utils'
+import { getNumberValidator, getUID, none } from '@/core/utils'
 import { autoMatchMedal } from './auto-match'
 
 export const component: ComponentMetadata = {
@@ -26,7 +26,7 @@ export const component: ComponentMetadata = {
     maxBadgeCount: {
       defaultValue: 256,
       displayName: '最大加载数量',
-      validator: (value: number) => lodash.clamp(value, 1, 256),
+      validator: getNumberValidator(1, 256),
     },
     defaultMedalID: {
       displayName: '默认勋章ID',
