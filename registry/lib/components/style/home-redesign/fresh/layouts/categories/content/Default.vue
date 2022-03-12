@@ -28,6 +28,7 @@
   </div>
 </template>
 <script lang="ts">
+import { applyContentFilter } from '@/components/feeds/api'
 import { RankListCard } from './rank-list'
 import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
@@ -65,7 +66,7 @@ export default Vue.extend({
   methods: {
     parseJson(json: any) {
       const items = (lodash.get(json, 'data', []) || []) as any[]
-      return items
+      const cards = items
         .map(
           (item): RankListCard => ({
             id: item.aid,
@@ -74,11 +75,13 @@ export default Vue.extend({
             points: item.pts,
             upHref: `https://space.bilibili.com/${item.mid}`,
             upName: item.author,
+            dynamic: item.description,
             coverUrl: item.pic,
             videoHref: `https://www.bilibili.com/video/${item.bvid}`,
           }),
         )
         .slice(0, 10)
+      return applyContentFilter(cards)
     },
   },
 })

@@ -29,6 +29,7 @@
   </div>
 </template>
 <script lang="ts">
+import { applyContentFilter } from '@/components/feeds/api'
 import SubHeader from '../../../SubHeader.vue'
 import RankList from './RankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
@@ -73,20 +74,25 @@ export default Vue.extend({
   methods: {
     parseJson(json: any) {
       const items = (json.data?.list ?? []) as any[]
-      return items
+      const cards = items
         .map(
-          (item): RankListCard => ({
-            id: item.season_id,
-            title: item.title,
-            playCount: item.stat.view,
-            points: item.pts,
-            upHref: item.url,
-            upName: item.new_ep?.index_show ?? item.title,
-            coverUrl: item.new_ep?.cover ?? item.ss_horizontal_cover,
-            videoHref: item.url,
-          }),
+          (item): RankListCard => {
+            const upName = item.new_ep?.index_show ?? item.title
+            return {
+              id: item.season_id,
+              title: item.title,
+              playCount: item.stat.view,
+              points: item.pts,
+              upHref: item.url,
+              upName,
+              dynamic: upName,
+              coverUrl: item.new_ep?.cover ?? item.ss_horizontal_cover,
+              videoHref: item.url,
+            }
+          },
         )
         .slice(0, 10)
+      return applyContentFilter(cards)
     },
   },
 })

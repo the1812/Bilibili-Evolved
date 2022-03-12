@@ -125,6 +125,7 @@
   </div>
 </template>
 <script lang="ts">
+import { applyContentFilter } from '@/components/feeds/api'
 import { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
@@ -171,7 +172,7 @@ export default Vue.extend({
   methods: {
     parseJson(json: any) {
       const items = lodash.get(json, 'data.archives', [])
-      return items.map(
+      const cards = items.map(
         (item: any): VideoCard => ({
           id: item.aid,
           aid: item.aid,
@@ -186,11 +187,13 @@ export default Vue.extend({
           like: item.stat.like,
           coins: item.stat.coin,
           description: item.desc,
+          dynamic: item.desc === '-' ? '' : item.desc,
           type: item.tname,
           duration: item.duration,
           durationText: formatDuration(item.duration),
         }),
       )
+      return applyContentFilter(cards)
     },
     url(id: string) {
       return `https://www.bilibili.com/video/${id}`

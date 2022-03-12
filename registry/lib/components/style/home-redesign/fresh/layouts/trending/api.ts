@@ -23,6 +23,7 @@ export const getTrendingVideos = async () => {
       coverUrl: it.pic.replace('http:', 'https:'),
       title: it.title,
       description: '',
+      dynamic: '',
       duration: it.duration,
       durationText: formatDuration(it.duration),
       timestamp: it.pubdate * 1000,

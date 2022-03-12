@@ -8,6 +8,7 @@ export interface RankListCard {
   upName: string
   points: number
   playCount: number
+  dynamic?: string
 }
 export const rankListCssVars = {
   panelHeight: 608,
