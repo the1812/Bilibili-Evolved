@@ -1,7 +1,7 @@
 <template>
   <div
     class="fresh-home-categories-bangumi-timeline-content"
-    :class="{ loading, loaded, scrolled, 'last-week': viewLastWeek, empty: items.length === 0 }"
+    :class="{ loading, loaded, scrolled, empty: items.length === 0 }"
   >
     <VLoading v-if="loading" />
     <VEmpty v-if="loaded && items.length === 0" />
@@ -104,6 +104,8 @@ import {
   VEmpty,
   VLoading,
 } from '@/ui'
+import { addComponentListener } from '@/core/settings'
+import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { cssVariableMixin, requestMixin } from './mixin'
 import { rankListCssVars } from './rank-list'
 import { setupScrollMask, cleanUpScrollMask } from '../../../scroll-mask'
@@ -168,12 +170,6 @@ export default Vue.extend({
     VLoading,
   },
   mixins: [requestMixin, cssVariableMixin(timelineCssVars)],
-  props: {
-    viewLastWeek: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       observers: [],
@@ -194,9 +190,6 @@ export default Vue.extend({
     },
   },
   watch: {
-    viewLastWeek() {
-      this.updateScrollPosition()
-    },
     loaded() {
       if (this.loaded) {
         this.updateScrollPosition()
@@ -232,15 +225,22 @@ export default Vue.extend({
     async updateScrollPosition() {
       await this.$nextTick()
       const list: HTMLElement[] = this.$refs.seasonsList
+      let cancelAll: () => void
+      addComponentListener('freshHome.horizontalWheelScroll', (scroll: boolean) => {
+        if (scroll) {
+          const cancel = list
+            .flatMap(it => [...it.children])
+            .map(it => enableHorizontalScroll(it as HTMLElement))
+          cancelAll = () => cancel.forEach(fn => fn())
+        } else {
+          cancelAll?.()
+        }
+      }, true)
       const root: HTMLElement = this.$el
       root.scrollTop = (
         5 * timelineCssVars.timelineItemHeight
         + 5 * timelineCssVars.timelineItemGap
       )
-      console.log((
-        5 * timelineCssVars.timelineItemHeight
-        + 5 * timelineCssVars.timelineItemGap
-      ))
 
       const classPrefix = '.fresh-home-categories-bangumi-timeline'
       list.forEach(seasons => {

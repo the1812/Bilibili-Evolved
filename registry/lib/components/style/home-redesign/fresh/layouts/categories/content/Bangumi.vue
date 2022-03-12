@@ -5,27 +5,8 @@
         <SubHeader>
           时间表
         </SubHeader>
-        <!-- <VButton
-          v-if="viewLastWeek"
-          class="fresh-home-header-icon-button fresh-home-categories-bangumi-timeline-down"
-          round
-          @click="verticalScroll(false)"
-        >
-          <VIcon icon="mdi-arrow-down" :size="20" />
-          本周
-        </VButton>
-        <VButton
-          v-else
-          class="fresh-home-header-icon-button fresh-home-categories-bangumi-timeline-up"
-          round
-          @click="verticalScroll(true)"
-        >
-          <VIcon icon="mdi-arrow-up" :size="20" />
-          上周
-        </VButton> -->
       </div>
       <BangumiTimeline
-        :view-last-week="viewLastWeek"
         :api="timelineApi"
       />
     </div>
@@ -48,10 +29,6 @@
   </div>
 </template>
 <script lang="ts">
-// import {
-//   VButton,
-//   VIcon,
-// } from '@/ui'
 import SubHeader from '../../../SubHeader.vue'
 import RankList from './RankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
@@ -73,8 +50,6 @@ const bangumiDataMap = {
 export default Vue.extend({
   components: {
     SubHeader,
-    // VButton,
-    // VIcon,
     BangumiTimeline,
     RankList,
   },
@@ -88,7 +63,6 @@ export default Vue.extend({
     const { route } = this.region.category
     const { rankingName, seasonType, timeline } = bangumiDataMap[route]
     return {
-      viewLastWeek: false,
       bangumiDataMap,
       route,
       timelineApi: `https://bangumi.bilibili.com/web_api/timeline_${timeline}`,
@@ -97,9 +71,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    verticalScroll(goUp: boolean) {
-      this.viewLastWeek = goUp
-    },
     parseJson(json: any) {
       const items = (json.data?.list ?? []) as any[]
       return items

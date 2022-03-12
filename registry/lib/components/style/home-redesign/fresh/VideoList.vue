@@ -20,6 +20,8 @@
 </template>
 <script lang="ts">
 import { VEmpty, VLoading } from '@/ui'
+import { enableHorizontalScroll } from '@/core/horizontal-scroll'
+import { addComponentListener } from '@/core/settings'
 import VideoCardWrapper from './VideoCardWrapper.vue'
 import { setupScrollMask, cleanUpScrollMask } from './scroll-mask'
 
@@ -51,6 +53,17 @@ export default Vue.extend({
   },
   beforeDestroy() {
     cleanUpScrollMask(this.$el)
+  },
+  mounted() {
+    const container = this.$refs.content as HTMLElement
+    let cancel: () => void
+    addComponentListener('freshHome.horizontalWheelScroll', (scroll: boolean) => {
+      if (scroll) {
+        cancel = enableHorizontalScroll(container)
+      } else {
+        cancel?.()
+      }
+    }, true)
   },
   methods: {
     async setupIntersection() {
