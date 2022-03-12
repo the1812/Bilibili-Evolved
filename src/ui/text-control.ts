@@ -33,7 +33,7 @@ export const textControlMixin = Vue.extend({
     emitChange() {
       let { value } = this.$refs.input
       if (this.validator) {
-        value = this.validator(value)
+        value = this.validator(value, this.text)
         if (this.changeOnBlur) {
           this.$refs.input.value = value
         }

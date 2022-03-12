@@ -42,7 +42,7 @@ export interface ComponentTag {
   /** 设置面板中的呈现顺序 */
   order: number
 }
-type ComponentOptionValidator<T> = (value: T) => T | undefined | null
+type ComponentOptionValidator<T> = (value: T, oldValue: T) => T | undefined | null
 /** 组件选项信息
  * @todo 需要 extends 出更具体的 Option 类型, 现在这样混一起太乱
  */
