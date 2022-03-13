@@ -56,7 +56,7 @@ export const dashToFragments = (info: {
 }) => {
   const { videoDashes, audioDashes, videoCodec } = info
   const results: DownloadVideoFragment[] = []
-  // 画面按照首选编码选择, 若没有相应编码则选择大小较小的编码
+  // 画面按照首选编码选择, 若没有相应编码则选择第一个编码
   if (videoDashes.length !== 0) {
     const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
     if (videoDashes.some(matchPreferredCodec)) {
@@ -116,20 +116,21 @@ const downloadDash = async (
     audio,
     dolby,
   } = data.dash
+  const parseVideoCodec = (codecId: number) => {
+    switch (codecId) {
+      case 12:
+        return 'HEVC/H.265'
+      default:
+      case 7:
+        return 'AVC/H.264'
+    }
+  }
   const videoDashes: VideoDash[] = (video as any[])
-    .filter((d: any) => d.id === currentQuality.value)
-    .map((d: any): VideoDash => {
-      const videoCodec: DashCodec = (() => {
-        switch (d.codecid) {
-          case 12:
-            return 'HEVC/H.265'
-          default:
-          case 7:
-            return 'AVC/H.264'
-        }
-      })()
+    .filter(d => d.id === currentQuality.value)
+    .map((d): VideoDash => {
       const dash: VideoDash = {
         type: 'video',
+        videoCodec: parseVideoCodec(d.codecid),
         quality: currentQuality,
         width: d.width,
         height: d.height,
@@ -142,7 +143,6 @@ const downloadDash = async (
         ),
         downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
         duration,
-        videoCodec,
       }
       return dash
     })
@@ -175,6 +175,10 @@ const downloadDash = async (
     videoCodec: codec,
   })
   const qualities = (data.accept_quality as number[])
+    .filter(qn => (
+      // 去掉当前编码不匹配的 quality
+      (video as any[]).some(d => d.id === qn && parseVideoCodec(d.codecid) === codec)
+    ))
     .map(qn => allQualities.find(q => q.value === qn))
     .filter(q => q !== undefined)
   const info = new DownloadVideoInfo({
