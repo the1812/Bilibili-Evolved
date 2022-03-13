@@ -291,6 +291,18 @@
 
 隐藏视频里鼠标经过时出现在右上角的覆盖层.
 
+### [清爽首页](../../registry/dist/components/style/home-redesign/fresh.js)
+`freshHome`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/home-redesign/fresh.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/home-redesign/fresh.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/home-redesign/fresh.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/home-redesign/fresh.js)
+
+使用重新设计的清爽风格首页替换原本的首页.
+
+- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频
+- 启用横向滚动: 在可以横向滚动的列表中, 使鼠标滚轮可以做出横向滚动的效果, 请注意这会禁用卡片的边缘吸附效果.
+
 ### [播放器置顶](../../registry/dist/components/style/player-on-top.js)
 `playerOnTop`
 
@@ -635,6 +647,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 位置测试：查看、调整当前页面所在位置
 
 当前版本限制默认位置的最大值为 4000。\
+若有其他希望支持的页面，请提交反馈。\
 脚本不会等待评论完全加载，因此较大的默认位置将无法正确定位。
 
 </div>

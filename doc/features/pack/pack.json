@@ -2,7 +2,7 @@
   {
     "name": "cleaner",
     "displayName": "简洁至上",
-    "description": "简化各种多余界面元素, 专注于内容本身.\n\n包含以下功能:\n删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层, 自动隐藏侧栏",
+    "description": "简化各种多余界面元素, 专注于内容本身.\n\n包含以下功能:\n删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层",
     "components": [
       "removePromotions",
       "removeLiveWatermark",
@@ -14,8 +14,7 @@
       "collapseLiveSideBar",
       "hideRelatedVideos",
       "hideRecommendedLive",
-      "hideVideoTopMask",
-      "autoHideSidebar"
+      "hideVideoTopMask"
     ],
     "items": [
       {
@@ -105,14 +104,6 @@
         "description": "隐藏视频里鼠标经过时出现在右上角的覆盖层.",
         "fullRelativePath": "../../registry/dist/components/style/hide/video/top-mask.js",
         "fullAbsolutePath": "registry/dist/components/style/hide/video/top-mask.js"
-      },
-      {
-        "type": "component",
-        "name": "autoHideSidebar",
-        "displayName": "自动隐藏侧栏",
-        "description": "自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.",
-        "fullRelativePath": "../../registry/dist/components/style/auto-hide-sidebar.js",
-        "fullAbsolutePath": "registry/dist/components/style/auto-hide-sidebar.js"
       }
     ],
     "type": "pack"
