@@ -1,6 +1,7 @@
 <template>
   <VPopup
     v-model="open"
+    fixed
     class="download-video-panel"
     :trigger-element="triggerElement"
   >
@@ -379,7 +380,9 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+
 .download-video-panel {
+  @include no-scrollbar();
   font-size: 12px;
   top: 100px;
   left: 50%;
@@ -387,17 +390,28 @@ export default Vue.extend({
   transition: .2s ease-out;
   z-index: 1000;
   width: 320px;
+  max-height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 12px;
 
   @include card();
   &.open {
     transform: translateX(-50%);
   }
-  > :not(:first-child) {
+  > * {
     margin-top: 12px;
+    padding: 0 12px;
+  }
+  > :first-child {
+    margin-top: 0;
+    padding-top: 12px;
+    padding-bottom: 6px;
+  }
+  > :last-child {
+    margin-top: 6px;
+    padding-top: 6px;
+    padding-bottom: 12px;
   }
   .be-textbox,
   .be-textarea {
@@ -406,6 +420,10 @@ export default Vue.extend({
   &-header {
     @include h-center();
     align-self: stretch;
+    background-color: inherit;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 
     .title {
       font-size: 16px;
@@ -434,6 +452,10 @@ export default Vue.extend({
     margin-top: 4px;
   }
   &-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    background-color: inherit;
     align-self: stretch;
     justify-content: center;
     @include h-center();
