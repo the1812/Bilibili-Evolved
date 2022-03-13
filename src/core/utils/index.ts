@@ -67,8 +67,14 @@ export const none = () => {
   // Do nothing
 }
 /** 页面是否使用了 Wasm 播放器 */
-// eslint-disable-next-line no-underscore-dangle
-export const isBwpVideo = () => unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('bwp-video'))
+export const isBwpVideo = async () => {
+  const { hasVideo } = await import('../spin-query')
+  if (!(await hasVideo())) {
+    return false
+  }
+  // eslint-disable-next-line no-underscore-dangle
+  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('bwp-video'))
+}
 /**
  * 等待一定时间
  * @param time 延迟的毫秒数

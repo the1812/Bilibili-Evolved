@@ -59,15 +59,6 @@ export const mainSiteUrls = [
 export const liveUrls = [
   /^https:\/\/live\.bilibili\.com\/(blanc\/)?[\d]+/,
 ]
-/** 不支持夜间模式的页面 */
-export const darkExcludes = [
-  '//member.bilibili.com/v2',
-  '//member.bilibili.com/video/upload.html',
-  '//member.bilibili.com/article-text/home',
-  '//www.bilibili.com/audio/submit/',
-  '//member.bilibili.com/studio/bs-editor/projects',
-  '//www.bilibili.com/s/video/',
-]
 /** 除动态详情页以外的含有动态的页面 */
 export const feedsUrlsWithoutDetail = [
   /^https:\/\/t\.bilibili\.com\/$/,

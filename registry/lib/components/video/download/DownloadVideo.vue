@@ -316,22 +316,26 @@ export default Vue.extend({
       console.log('[updateTestVideoInfo]', testItem)
       this.testData.multiple = input.batch
       const api = this.selectedApi as DownloadVideoApi
-      // 没有清晰度信息时先获取清晰度列表
-      if (!this.selectedQuality) {
+      try {
         const videoInfo = await api.downloadVideoInfo(testItem)
         this.qualities = videoInfo.qualities
-        this.selectedQuality = videoInfo.qualities[0]
-        if (basicConfig.quality) {
-          const [matchedQuality] = videoInfo.qualities.filter(q => q.value <= basicConfig.quality)
-          if (matchedQuality) {
-            this.selectedQuality = matchedQuality
+        const isSelectedQualityOutdated = (
+          !this.selectedQuality
+          || !(videoInfo.qualities.some(q => q.value === this.selectedQuality.value))
+        )
+        if (isSelectedQualityOutdated) {
+          this.selectedQuality = videoInfo.qualities[0]
+          if (basicConfig.quality) {
+            const [matchedQuality] = videoInfo.qualities.filter(q => q.value <= basicConfig.quality)
+            if (matchedQuality) {
+              this.selectedQuality = matchedQuality
+            }
           }
         }
-      }
-      try {
+        // 填充 quality 后要再请求一次得到对应 quality 的统计数据
         testItem.quality = this.selectedQuality
-        const videoInfo = await api.downloadVideoInfo(testItem)
-        this.testData.videoInfo = videoInfo
+        const qualityVideoInfo = await api.downloadVideoInfo(testItem)
+        this.testData.videoInfo = qualityVideoInfo
       } catch (error) {
         this.testData.videoInfo = undefined
       }

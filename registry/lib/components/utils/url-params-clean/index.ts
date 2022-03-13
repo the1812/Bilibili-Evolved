@@ -1,6 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
 import { ComponentMetadata } from '@/components/types'
-import { isNotHtml } from '@/core/utils'
+import { isNotHtml, matchPattern } from '@/core/utils'
 
 const entry = async () => {
   if (isNotHtml()) {
@@ -43,6 +43,7 @@ const entry = async () => {
     'bsource',
     'spm',
     'hotRank',
+    '-Arouter',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
@@ -60,6 +61,8 @@ const entry = async () => {
     },
   ]
   const [siteSpecifiedParams] = registerAndGetData('urlParamsClean.siteSpecifiedParams', builtInSiteSpecifiedParams)
+  const builtInTailingSlash: { match: string | RegExp }[] = []
+  const [tailingSlash] = registerAndGetData('urlParamsClean.tailingSlash', builtInTailingSlash)
 
   const clean = () => {
     const urlParams = window.location.search.substring(1).split('&')
@@ -78,7 +81,12 @@ const entry = async () => {
       return true
     })
     const filteredParamsString = filteredParams.join('&')
-    const url = document.URL.replace(window.location.search, '')
+    let url = document.URL.replace(window.location.search, '')
+    tailingSlash.forEach(({ match }) => {
+      if (matchPattern(url, match) && url.endsWith('/')) {
+        url = url.slice(0, url.length - 1)
+      }
+    })
     const query = filteredParamsString ? (`?${filteredParamsString}`) : ''
     const newUrl = url + query
     if (newUrl !== document.URL) {

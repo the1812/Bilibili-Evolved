@@ -4,13 +4,13 @@
       <div class="bvid-convert-item">
         {{ aid }}
         <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('aid')">
-          <VIcon :size="16" :icon="aidCopyed ? 'mdi-check': 'mdi-link'" />
+          <VIcon :size="16" :icon="aidCopied ? 'mdi-check': 'mdi-link'" />
         </div>
       </div>
       <div class="bvid-convert-item">
         {{ bvid }}
         <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('bvid')">
-          <VIcon :size="16" :icon="bvidCopyed ? 'mdi-check': 'mdi-link'" />
+          <VIcon :size="16" :icon="bvidCopied ? 'mdi-check': 'mdi-link'" />
         </div>
       </div>
     </template>
@@ -22,14 +22,22 @@ import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { VIcon } from '@/ui'
 
+enum CopyIdType {
+  Aid = 'aid',
+  Bvid = 'bvid',
+}
+const copyIds = [
+  CopyIdType.Aid,
+  CopyIdType.Bvid,
+]
 export default Vue.extend({
   components: { VIcon },
   data() {
     return {
       aid: '',
-      aidCopyed: false,
+      aidCopied: false,
       bvid: '',
-      bvidCopyed: false,
+      bvidCopied: false,
     }
   },
   async mounted() {
@@ -43,16 +51,26 @@ export default Vue.extend({
     })
   },
   methods: {
-    async copyLink(data: 'aid' | 'bvid') {
-      if (this[`${data}Copyed`]) {
-        return
+    getParamCopyLink(data: CopyIdType) {
+      const query = window.location.search
+      if (copyIds.some(id => query.includes(`${id}=`))) {
+        return `https://www.bilibili.com/video/${this[data]}`
       }
+      return null
+    },
+    getTailingCopyLink(data: CopyIdType) {
       const query = window.location.search
       const url = document.URL.replace(query, '')
-      const link = url.replace(/\/[^\/]+$/, `/${this[data]}`) + query
+      return url.replace(/\/[^\/]+$/, `/${this[data]}`) + query
+    },
+    async copyLink(data: CopyIdType) {
+      if (this[`${data}Copied`]) {
+        return
+      }
+      const link = this.getParamCopyLink(data) ?? this.getTailingCopyLink(data)
       await navigator.clipboard.writeText(link)
-      this[`${data}Copyed`] = true
-      setTimeout(() => (this[`${data}Copyed`] = false), 1000)
+      this[`${data}Copied`] = true
+      setTimeout(() => (this[`${data}Copied`] = false), 1000)
     },
   },
 })

@@ -123,7 +123,7 @@
       <a
         class="bv-custom-navbar-operation"
         target="_blank"
-        href="https://member.bilibili.com/v2#/upload-manager/article"
+        href="https://member.bilibili.com/platform/upload-manager/article"
       >
         <VIcon icon="posts"></VIcon>投稿管理
       </a>

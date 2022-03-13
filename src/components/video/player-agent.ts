@@ -15,7 +15,7 @@ interface CustomNestedQuery<QueryResult> {
 interface CustomQuery<QueryResult> extends CustomNestedQuery<QueryResult> {
   [key: string]: QueryResult
 }
-type AgentType = 'video' | 'bwp' | 'bangumi'
+type AgentType = 'video' | 'bangumi'
 type CustomQueryProvider<TargetType> = {
   [key in AgentType]?: TargetType
 } & { video: TargetType }
@@ -210,6 +210,30 @@ export class VideoPlayerAgent extends PlayerAgent {
     danmakuTipLayer: '.bilibili-player-dm-tip-wrap',
     danmakuSwitch: '.bilibili-player-video-danmaku-switch input',
   }) as PlayerQuery<ElementQuery>
+
+  constructor() {
+    super()
+    const videoSelector = this.query.video.element.selector
+    const bwpSelector = '.bilibili-player-video bwp-video'
+    this.query.video.element = (() => {
+      const func = async () => {
+        if (await isBwpVideo()) {
+          return select<HTMLElement>(bwpSelector)
+        }
+        return select<HTMLElement>(videoSelector)
+      }
+      func.selector = videoSelector
+      func.sync = () => dq(videoSelector) as HTMLElement
+      isBwpVideo().then(bwp => {
+        if (!bwp) {
+          return
+        }
+        func.selector = bwpSelector
+        func.sync = () => dq(bwpSelector) as HTMLElement
+      })
+      return func
+    })()
+  }
   isMute() {
     if (!this.nativeApi) {
       return null
@@ -253,13 +277,6 @@ export class VideoPlayerAgent extends PlayerAgent {
     const checkbox = await this.query.control.settings.lightOff() as HTMLInputElement
     checkbox.checked = !on
     raiseEvent(checkbox, 'change')
-  }
-}
-export class BwpPlayerAgent extends VideoPlayerAgent {
-  type: AgentType = 'bwp'
-  constructor() {
-    super()
-    this.query.video.element = elementQuery('.bilibili-player-video bwp-video')
   }
 }
 export class BangumiPlayerAgent extends PlayerAgent {
@@ -368,9 +385,6 @@ export class BangumiPlayerAgent extends PlayerAgent {
 export const playerAgent = (() => {
   if (matchCurrentPage(bangumiUrls)) {
     return new BangumiPlayerAgent()
-  }
-  if (isBwpVideo()) {
-    return new BwpPlayerAgent()
   }
   return new VideoPlayerAgent()
 })()

@@ -29,7 +29,7 @@ const entry = async () => {
         screenShotsList.screenshots.unshift(screenshot)
       } else {
         const { logError } = await import('@/core/utils/log')
-        logError('视频截图失败: 无法定位视频元素，请尝试右击视频两次后另存为图片，或将播放策略改为AV1或AVC.')
+        logError('视频截图失败: 无法定位视频元素, 请尝试右击视频两次后另存为图片, 或将播放策略改为 AV1 或 AVC.')
       }
     },
   })

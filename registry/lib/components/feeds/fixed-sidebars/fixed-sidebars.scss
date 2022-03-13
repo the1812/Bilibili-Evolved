@@ -42,13 +42,11 @@
   margin-left: calc(var(--left-width) + 16px + var(--center-width)) !important;
 }
 .live-panel .live-up-list {
-  max-height: calc(100vh - 380px);
   overflow: auto;
   @include no-scrollbar();
-  body.feeds-filter-side-block-profile & {
-    max-height: calc(100vh - 180px);
-  }
 }
+@import "../feeds-panel-shared";
+
 .adaptive-scroll {
   min-height: unset !important;
   .scroll-content {

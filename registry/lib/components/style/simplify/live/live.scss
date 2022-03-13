@@ -50,9 +50,11 @@ $prefix: "simplifyLiveroom-switch";
     .face-pendants {
       display: none !important;
     }
+    .blive-avatar-face,
+    .blive-avatar,
     .avatar {
-      height: 32px;
-      width: 32px;
+      height: 32px !important;
+      width: 32px !important;
     }
   }
   .room-cover {
