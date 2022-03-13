@@ -6,7 +6,7 @@ export const upload: CustomNavbarItemInit = {
   content: () => import('./NavbarUpload.vue').then(m => m.default),
 
   touch: true,
-  href: 'https://member.bilibili.com/v2#/upload/video/frame',
+  href: 'https://member.bilibili.com/platform/upload/video/frame',
 
   popupContent: () => import('./UploadPopup.vue').then(m => m.default),
 }
