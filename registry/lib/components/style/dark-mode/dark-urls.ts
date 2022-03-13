@@ -1,5 +1,6 @@
 export const darkExcludes = [
   '//member.bilibili.com/v2',
+  '//member.bilibili.com/platform',
   '//member.bilibili.com/video/upload.html',
   '//member.bilibili.com/article-text/home',
   '//www.bilibili.com/audio/submit/',

@@ -2,7 +2,7 @@
   <a
     class="be-up-info"
     :class="{ fallback: !upFaceUrl }"
-    :href="`https://space.bilibili.com/${upId}`"
+    :href="actualHref"
     :title="upName"
     target="_blank"
   >
@@ -13,10 +13,12 @@
       :src="upFaceUrl"
     />
     <div v-else class="be-up-info-cover-fallback">
-      <VIcon
-        icon="up-outline"
-        :size="18"
-      />
+      <slot name="fallback-icon">
+        <VIcon
+          icon="up-outline"
+          :size="18"
+        />
+      </slot>
     </div>
     <div class="be-up-info-name">
       {{ upName }}
@@ -32,9 +34,13 @@ export default Vue.extend({
     VIcon,
   },
   props: {
+    href: {
+      type: String,
+      default: '',
+    },
     upId: {
       type: [String, Number],
-      required: true,
+      default: '',
     },
     upFaceUrl: {
       type: String,
@@ -43,6 +49,14 @@ export default Vue.extend({
     upName: {
       type: String,
       required: true,
+    },
+  },
+  computed: {
+    actualHref() {
+      if (this.href) {
+        return this.href
+      }
+      return `https://space.bilibili.com/${this.upId}`
     },
   },
 })

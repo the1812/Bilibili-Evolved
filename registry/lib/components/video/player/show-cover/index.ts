@@ -8,7 +8,7 @@ const entry = async () => {
   let lastAid: string
   const removeCover = () => document.body.style.removeProperty('--cover-url')
   // eslint-disable-next-line prefer-arrow-callback
-  createHook(isBwpVideo() ? BwpElement.prototype : HTMLVideoElement.prototype, 'play', function play() {
+  createHook(await isBwpVideo() ? BwpElement.prototype : HTMLVideoElement.prototype, 'play', function play() {
     removeCover()
     return true
   })

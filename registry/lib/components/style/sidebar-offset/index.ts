@@ -1,5 +1,6 @@
 import { ComponentMetadata } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
+import { getNumberValidator } from '@/core/utils'
 
 export const component: ComponentMetadata = {
   name: 'sidebarOffset',
@@ -23,7 +24,7 @@ export const component: ComponentMetadata = {
     offset: {
       displayName: '偏移量 (%)',
       defaultValue: 0,
-      validator: (value: number) => lodash.clamp(value, -40, 40),
+      validator: getNumberValidator(-40, 40),
     },
   },
 }

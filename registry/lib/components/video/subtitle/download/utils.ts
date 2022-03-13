@@ -1,7 +1,5 @@
 import { getJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
-import { loadSubtitleSettingsPanel } from '@/core/utils/lazy-panel'
-import { logError } from '@/core/utils/log'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { SubtitleConverterConfig } from '../subtitle-converter'
 
@@ -15,46 +13,25 @@ export const getSubtitleConfig = async (): Promise<[
     SubtitleSize,
     SubtitleLocation,
   } = await import('../subtitle-converter')
-
-  const settingsPanel = await loadSubtitleSettingsPanel()
-  if (!settingsPanel) {
-    logError('未找到字幕设置')
+  const { playerAgent } = await import('@/components/video/player-agent')
+  const playerSettingsText = localStorage.getItem('bilibili_player_settings')
+  if (!playerSettingsText) {
     return [SubtitleConverter.defaultConfig, '']
   }
-  const language = (settingsPanel.querySelector(
-    '.bilibili-player-video-subtitle-setting-lan .bui-select-result',
-  ) as HTMLElement).innerHTML
+  const subtitleSettings = JSON.parse(playerSettingsText).subtitle
+  const language = subtitleSettings.lan
   const title = getFriendlyTitle(true)
-  const fontSizeThumb = settingsPanel.querySelector(
-    '.bilibili-player-video-subtitle-setting-fontsize .bui-thumb',
-  ) as HTMLElement
-  const translateX = parseFloat(
-    fontSizeThumb.style.transform.replace(/translateX\(([\d\.]+)/, '$1'),
-  )
   const fontSizeMapping: { [key: number]: number } = {
-    214: SubtitleSize.VeryLarge,
-    163.5: SubtitleSize.Large,
-    107: SubtitleSize.Medium,
-    50.5: SubtitleSize.Small,
-    0: SubtitleSize.VerySmall,
+    0.6: SubtitleSize.VerySmall,
+    0.8: SubtitleSize.Small,
+    1: SubtitleSize.Medium,
+    1.3: SubtitleSize.Large,
+    1.6: SubtitleSize.VeryLarge,
   }
-  const size = fontSizeMapping[translateX]
+  const size = fontSizeMapping[subtitleSettings.fontsize]
+  const color = subtitleSettings.color.toString(16)
+  const opacity = subtitleSettings.backgroundopacity
 
-  const colorSpan = settingsPanel.querySelector(
-    '.bilibili-player-video-subtitle-setting-color .bui-select-result span:first-child',
-  ) as HTMLElement
-  const color = colorSpan
-    .getAttribute('style')
-    .match(/background:[ ]*(.+);/)[1]
-
-  const opacityDiv = settingsPanel.querySelector(
-    '.bilibili-player-video-subtitle-setting-opacity .bui-bar',
-  ) as HTMLElement
-  const opacity = parseFloat(
-    opacityDiv.style.transform.replace(/scaleX\(([\d\.]+)/, '$1'),
-  )
-
-  const positionDiv = dq('.subtitle-position') as HTMLElement
   const positions = {
     bc: SubtitleLocation.BottomCenter,
     bl: SubtitleLocation.BottomLeft,
@@ -63,12 +40,9 @@ export const getSubtitleConfig = async (): Promise<[
     tl: SubtitleLocation.TopLeft,
     tr: SubtitleLocation.TopRight,
   }
-  const subtitleLocation = Object.entries(positions)
-    .filter(([name]) => positionDiv.classList.contains(`subtitle-position-${name}`))
-    .map(([, location]) => location)
-    .shift()
+  const subtitleLocation = positions[subtitleSettings.position]
 
-  const video = dq('video') as HTMLVideoElement
+  const video = playerAgent.query.video.element.sync() as HTMLVideoElement
   const config: SubtitleConverterConfig = {
     title,
     height: video.videoHeight,

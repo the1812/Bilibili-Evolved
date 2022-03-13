@@ -10,7 +10,9 @@
     "*://*.bilibili.com/api/*",
     "*://member.bilibili.com/studio/bs-editor/*",
     "*://t.bilibili.com/h5/dynamic/specification",
-    "*://bbq.bilibili.com/*"
+    "*://bbq.bilibili.com/*",
+    "*://message.bilibili.com/pages/nav/header_sync",
+    "*://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html"
   ],
   "run-at": "document-start",
   "supportURL": "https://github.com/the1812/Bilibili-Evolved/issues",

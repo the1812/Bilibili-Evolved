@@ -126,6 +126,7 @@ const metadata: ComponentMetadata = {
         .filter((it): it is [string, SimplifyHomeOption] => it !== null) ?? []
       return Object.fromEntries(entries)
     })()
+    const generatedSwitches: Record<string, unknown> = {}
     Object.entries(generatedOptions).forEach(([key, { displayName, defaultValue }]) => {
       const option = {
         defaultValue,
@@ -144,8 +145,9 @@ const metadata: ComponentMetadata = {
         true,
       )
       switchOptions.switches[key] = option
-      options.simplifyOptions.switches[key] = option
+      generatedSwitches[key] = option
     })
+    options.simplifyOptions.switches = generatedSwitches
     const generatedStyles = Object.keys(generatedOptions).map(name => `
         body.simplifyHome-switch-${name} .bili-layout .bili-grid[data-area="${name}"],
         body.simplifyHome-switch-${name} .storey-box .proxy-box #bili_${name} {

@@ -3,7 +3,6 @@
     class="fresh-home-video-list scroll-top scroll-bottom"
     :class="{ 'not-empty': videos.length > 0 }"
   >
-    <div class="fresh-home-video-list-mask left"></div>
     <div ref="content" class="fresh-home-video-list-content">
       <div v-if="videos.length === 0" class="fresh-home-video-list-empty">
         <VLoading v-if="loading" />
@@ -12,17 +11,19 @@
       <VideoCardWrapper
         v-for="video of videos"
         v-else
+        ref="cards"
         :key="video.id"
         :data="video"
       />
     </div>
-    <div class="fresh-home-video-list-mask right"></div>
   </div>
 </template>
 <script lang="ts">
-import { intersectionObserve } from '@/core/observer'
 import { VEmpty, VLoading } from '@/ui'
+import { enableHorizontalScroll } from '@/core/horizontal-scroll'
+import { addComponentListener } from '@/core/settings'
 import VideoCardWrapper from './VideoCardWrapper.vue'
+import { setupScrollMask, cleanUpScrollMask } from './scroll-mask'
 
 export default Vue.extend({
   components: {
@@ -40,57 +41,37 @@ export default Vue.extend({
       default: true,
     },
   },
-  data() {
-    return {
-      observer: [],
-    }
-  },
   watch: {
     videos() {
       this.setupIntersection()
     },
-    loading(loading: boolean) {
-      if (!loading) {
+    loaded() {
+      if (this.loaded) {
         this.setupIntersection()
       }
     },
   },
+  beforeDestroy() {
+    cleanUpScrollMask(this.$el)
+  },
+  mounted() {
+    const container = this.$refs.content as HTMLElement
+    let cancel: () => void
+    addComponentListener('freshHome.horizontalWheelScroll', (scroll: boolean) => {
+      if (scroll) {
+        cancel = enableHorizontalScroll(container)
+      } else {
+        cancel?.()
+      }
+    }, true)
+  },
   methods: {
     async setupIntersection() {
       await this.$nextTick()
-      const observers = this.observer as IntersectionObserver[]
-      if (observers) {
-        observers.forEach(o => o.disconnect())
-        this.observers = []
-      }
-      const container = this.$refs.content as HTMLElement
-      const videoWrappers = dqa(container, '.fresh-home-video-card-wrapper') as HTMLElement[]
-      if (videoWrappers.length === 0) {
-        return
-      }
-      const observerConfig: IntersectionObserverInit = { threshold: [1], root: container }
-      const [firstWrapper] = videoWrappers
-      const [firstObserver] = intersectionObserve(
-        [firstWrapper],
-        observerConfig,
-        records => records.forEach(r => {
-          const isScrollTop = r.isIntersecting && r.intersectionRatio === 1
-          this.$el.classList.toggle('scroll-top', isScrollTop)
-        }),
-      )
-      this.observers.push(firstObserver)
-      if (videoWrappers.length > 1) {
-        const lastWrapper = videoWrappers[videoWrappers.length - 1]
-        const [lastObserver] = intersectionObserve(
-          [lastWrapper],
-          observerConfig,
-          records => records.forEach(r => {
-            const isScrollBottom = r.isIntersecting && r.intersectionRatio === 1
-            this.$el.classList.toggle('scroll-bottom', isScrollBottom)
-          }),
-        )
-        this.observers.push(lastObserver)
-      }
+      setupScrollMask({
+        container: this.$el,
+        items: this.$refs.cards.map((c: Vue) => c.$el),
+      })
     },
     offsetPage(offset: number) {
       const container = this.$refs.content as HTMLElement
@@ -105,6 +86,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "./effects";
 
 .fresh-home-video-list {
   --card-height: var(--home-content-height);
@@ -114,6 +96,7 @@ export default Vue.extend({
   display: flex;
   flex: 1 0 0;
   width: 0;
+  @include scroll-mask-x(36px);
 
   &-content {
     @include h-center();
@@ -132,36 +115,6 @@ export default Vue.extend({
   }
   &.not-empty &-content {
     scroll-snap-type: x mandatory;
-  }
-  &-mask {
-    opacity: 0;
-  }
-  &.not-empty &-mask {
-    position: absolute;
-    pointer-events: none;
-    transition: .1s ease-out;
-    width: 36px;
-    opacity: 1;
-    height: 100%;
-    flex-shrink: 0;
-    top: 0;
-    z-index: 1;
-    &.left {
-      background: linear-gradient(to right, var(--home-base-color) 40%, rgba(0, 0, 0, 0) 100%);
-      left: -2px;
-    }
-    &.right {
-      background: linear-gradient(to left, var(--home-base-color) 40%, rgba(0, 0, 0, 0) 100%);
-      right: -2px;
-    }
-  }
-  &.scroll-top .fresh-home-video-list-mask.left {
-    // background: linear-gradient(to right, var(--home-base-color) 0%, rgba(0, 0, 0, 0) 100%);
-    width: 0;
-  }
-  &.scroll-bottom .fresh-home-video-list-mask.right {
-    // background: linear-gradient(to left, var(--home-base-color) 0%, rgba(0, 0, 0, 0) 100%);
-    width: 0;
   }
 }
 </style>

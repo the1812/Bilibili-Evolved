@@ -125,6 +125,7 @@
   </div>
 </template>
 <script lang="ts">
+import { applyContentFilter } from '@/components/feeds/api'
 import { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
@@ -171,7 +172,7 @@ export default Vue.extend({
   methods: {
     parseJson(json: any) {
       const items = lodash.get(json, 'data.archives', [])
-      return items.map(
+      const cards = items.map(
         (item: any): VideoCard => ({
           id: item.aid,
           aid: item.aid,
@@ -186,11 +187,13 @@ export default Vue.extend({
           like: item.stat.like,
           coins: item.stat.coin,
           description: item.desc,
+          dynamic: item.desc === '-' ? '' : item.desc,
           type: item.tname,
           duration: item.duration,
           durationText: formatDuration(item.duration),
         }),
       )
+      return applyContentFilter(cards)
     },
     url(id: string) {
       return `https://www.bilibili.com/video/${id}`
@@ -222,6 +225,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
+@import "../../../effects";
 
 .fresh-home-video-slides {
   @include card(12px);
@@ -234,19 +238,6 @@ export default Vue.extend({
   overflow: hidden;
   padding: var(--main-padding-y) var(--main-padding-x);
   height: 266px;
-
-  @mixin bounce-x($offset-in-px) {
-    @keyframes bounce-x-#{$offset-in-px} {
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-      50% {
-        transform: translateX(#{$offset-in-px}px);
-      }
-    }
-    animation: bounce-x-#{$offset-in-px} 0.4s ease-out;
-  }
 
   .cover-placeholder-vertical {
     height: var(--other-cover-height);

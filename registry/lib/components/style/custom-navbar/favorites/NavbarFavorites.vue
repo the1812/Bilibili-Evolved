@@ -41,6 +41,7 @@
             :title="card.title"
           >{{ card.title }}</a>
           <a
+            v-if="card.upID"
             class="up"
             target="_blank"
             :href="'https://space.bilibili.com/' + card.upID"
@@ -54,6 +55,12 @@
             ></DpiImage>
             <div class="name">{{ card.upName }}</div>
           </a>
+          <div
+            v-else
+            class="description"
+          >
+            {{ card.description }}
+          </div>
         </div>
         <ScrollTrigger
           v-if="canLoadMore"
@@ -83,6 +90,11 @@ import { getComponentSettings } from '@/core/settings'
 import { notSelectedFolder } from './favorites-folder'
 import FavoritesFolderSelect from './FavoritesFolderSelect.vue'
 import { popperMixin } from '../mixins'
+
+/*
+新版收藏夹 API
+https://api.bilibili.com/x/v3/fav/resource/list?media_id=media_id&pn=1&ps=20&keyword=keyword&order=mtime&type=0&tid=0&platform=web
+*/
 
 const navbarOptions = getComponentSettings('customNavbar').options
 interface FavoritesItemInfo extends VideoCard {
@@ -119,8 +131,8 @@ async function searchAllList() {
   }
   try {
     this.loading = true
-    const jsonCurrent = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=0&tid=0`)
-    const jsonAll = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=1&tid=0`)
+    const jsonCurrent = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=0&tid=0&platform=web`)
+    const jsonAll = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=1&tid=0&platform=web`)
     if (jsonCurrent.code !== 0 && jsonAll.code !== 0) {
       return
     }
@@ -217,7 +229,7 @@ export default Vue.extend({
   },
   methods: {
     async getCards() {
-      const url = `https://api.bilibili.com/medialist/gateway/base/spaceDetail?media_id=${this.folder.id}&pn=${this.page}&ps=${MaxPageSize}`
+      const url = `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.page}&ps=${MaxPageSize}&keyword=&order=mtime&type=0&tid=0&platform=web`
       const json = await getJsonWithCredentials(url)
       if (json.code !== 0) {
         throw new Error(`加载收藏夹内容失败: ${json.message}`)
@@ -453,6 +465,10 @@ export default Vue.extend({
           &:hover .name {
             color: var(--theme-color);
           }
+        }
+        .description {
+          @include single-line();
+          margin: 4px 10px;
         }
       }
     }

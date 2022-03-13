@@ -3,29 +3,35 @@
     <div role="listitem">
       <a
         target="_blank"
-        href="https://member.bilibili.com/v2#/upload/text/apply"
+        href="https://member.bilibili.com/platform/upload/text/apply"
       >专栏投稿</a>
     </div>
     <div role="listitem">
       <a
         target="_blank"
-        href="https://member.bilibili.com/v2#/upload/audio/"
+        href="https://member.bilibili.com/platform/upload/audio/frame"
       >音频投稿</a>
     </div>
     <div role="listitem">
       <a
         target="_blank"
-        href="https://member.bilibili.com/v2#/upload/video/frame"
+        href="https://member.bilibili.com/platform/upload/sticker"
+      >贴纸投稿</a>
+    </div>
+    <div role="listitem">
+      <a
+        target="_blank"
+        href="https://member.bilibili.com/platform/upload/video/frame"
       >视频投稿</a>
     </div>
     <div role="listitem">
       <a
         target="_blank"
-        href="https://member.bilibili.com/v2#/upload-manager/article"
+        href="https://member.bilibili.com/platform/upload-manager/article"
       >投稿管理</a>
     </div>
     <div role="listitem">
-      <a target="_blank" href="https://member.bilibili.com/v2#/home">创作中心</a>
+      <a target="_blank" href="https://member.bilibili.com/platform/home">创作中心</a>
     </div>
   </div>
 </template>

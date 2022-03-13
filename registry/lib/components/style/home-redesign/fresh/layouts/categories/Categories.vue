@@ -109,6 +109,8 @@ export default Vue.extend({
 
 .fresh-home-categories {
   @include v-stretch();
+  --fresh-home-categories-column-gap: 28px;
+  --fresh-home-categories-header-gap: 12px;
   &-content {
     font-size: 14px;
   }

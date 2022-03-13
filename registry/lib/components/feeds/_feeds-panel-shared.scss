@@ -1,0 +1,9 @@
+.live-up-list {
+  max-height: calc(100vh - 315px);
+  body.enable-feeds-filter & {
+    max-height: calc(100vh - 370px);
+  }
+  body.feeds-filter-side-block-profile & {
+    max-height: calc(100vh - 180px);
+  }
+}

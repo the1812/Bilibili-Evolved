@@ -67,8 +67,14 @@ export const none = () => {
   // Do nothing
 }
 /** 页面是否使用了 Wasm 播放器 */
-// eslint-disable-next-line no-underscore-dangle
-export const isBwpVideo = () => unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('bwp-video'))
+export const isBwpVideo = async () => {
+  const { hasVideo } = await import('../spin-query')
+  if (!(await hasVideo())) {
+    return false
+  }
+  // eslint-disable-next-line no-underscore-dangle
+  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('bwp-video'))
+}
 /**
  * 等待一定时间
  * @param time 延迟的毫秒数
@@ -459,3 +465,13 @@ export const disableWindowScroll = async (action?: () => unknown | Promise<unkno
   }
   return restore
 }
+/**
+ * 生成一个对组件选项进行数字校验的函数, 可选择设置数字范围
+ * @param clampLower 最小值
+ * @param clampUpper 最大值
+ */
+export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity) => (
+  (value: number, oldValue: number) => (
+    lodash.isNumber(value) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
+  )
+)
