@@ -10,31 +10,38 @@ export interface VideoControlBarItem {
   action: (event: MouseEvent) => void | Promise<void>
 }
 const controlBarClass = '.be-video-control-bar-extend'
-let controlBarInstance: Vue
+let controlBarInstance: Promise<Vue> = null
 const controlBarItems: VideoControlBarItem[] = []
-const initControlBar = lodash.once(async () => {
+const initControlBar = lodash.once(() => {
   if (!playerUrls.some(url => matchUrlPattern(url))) {
-    return
+    return Promise.resolve<Vue>(null)
   }
-  videoChange(async () => {
-    const { playerAgent } = await import('@/components/video/player-agent')
-    const time = await playerAgent.query.control.buttons.time()
-    if (time === null || time.parentElement?.querySelector(controlBarClass) !== null) {
-      return
-    }
-    const VideoControlBar = await import('./VideoControlBar.vue').then(m => m.default)
-    controlBarInstance = new VideoControlBar({
-      propsData: {
-        items: controlBarItems,
-      },
-    }).$mount()
-    time.insertAdjacentElement('afterend', controlBarInstance.$el)
+  return new Promise<Vue>(resolve => {
+    videoChange(async () => {
+      const { playerAgent } = await import('@/components/video/player-agent')
+      const time = await playerAgent.query.control.buttons.time()
+      const VideoControlBar = await import('./VideoControlBar.vue').then(m => m.default)
+      if (time === null || time.parentElement?.querySelector(controlBarClass) !== null) {
+        return
+      }
+      const instance = new VideoControlBar({
+        propsData: {
+          items: controlBarItems,
+        },
+      }).$mount()
+      time.insertAdjacentElement('afterend', instance.$el)
+      resolve(instance)
+    })
   })
 })
 /** 向视频控制栏添加按钮 */
 export const addControlBarButton = async (button: VideoControlBarItem) => {
   if (!controlBarInstance) {
-    await initControlBar()
+    controlBarInstance = initControlBar()
+  }
+  const created = await controlBarInstance
+  if (!created) {
+    return
   }
   controlBarItems.push(button)
 }

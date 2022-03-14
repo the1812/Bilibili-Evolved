@@ -16,6 +16,7 @@ export const urlExclude = [
   '//t.bilibili.com/vote/h5/index/#/result',
   '//t.bilibili.com/lottery/h5/index/#/result',
   '//member.bilibili.com/video/upload',
+  '//member.bilibili.com/platform',
   '//space.bilibili.com/ajax/',
   '//www.bilibili.com/h5/comment/',
   // '//www.bilibili.com/blackboard/',

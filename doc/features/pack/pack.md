@@ -5,7 +5,7 @@
 简化各种多余界面元素, 专注于内容本身.
 
 包含以下功能:
-删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层, 自动隐藏侧栏
+删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层
 
 <details>
 <summary><strong>jsDelivr Stable</strong></summary>
@@ -22,7 +22,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/compon
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/related-videos.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/recommended-live.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/top-mask.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/auto-hide-sidebar.js
 ```
 
 </details>
@@ -41,7 +40,6 @@ https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/compo
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/related-videos.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/recommended-live.js
 https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/top-mask.js
-https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/auto-hide-sidebar.js
 ```
 
 </details>
@@ -60,7 +58,6 @@ https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/
 https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/related-videos.js
 https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/recommended-live.js
 https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/top-mask.js
-https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/auto-hide-sidebar.js
 ```
 
 </details>
@@ -79,7 +76,6 @@ https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist
 https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/related-videos.js
 https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/recommended-live.js
 https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/top-mask.js
-https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/auto-hide-sidebar.js
 ```
 
 </details>

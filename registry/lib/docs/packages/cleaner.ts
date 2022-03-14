@@ -16,6 +16,5 @@ export const pack: Package = {
     'hideRelatedVideos',
     'hideRecommendedLive',
     'hideVideoTopMask',
-    'autoHideSidebar',
   ],
 }

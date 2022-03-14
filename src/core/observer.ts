@@ -236,6 +236,9 @@ const selectCid = lodash.once(() => select(() => {
     if (!unsafeWindow.bvid && info.bvid) {
       unsafeWindow.bvid = info.bvid
     }
+    if (!unsafeWindow.cid && info.cid) {
+      unsafeWindow.cid = info.cid.toString()
+    }
     return info.cid.toString()
   }
   return null
@@ -279,7 +282,7 @@ export const videoChange = async (
       if (Array.isArray(newCid)) {
         return
       }
-      if (lastCid !== newCid) {
+      if (lastCid !== newCid && !lodash.isNil(newCid)) {
         fireEvent()
         lastCid = newCid
       }
