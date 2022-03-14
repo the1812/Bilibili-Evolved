@@ -472,6 +472,6 @@ export const disableWindowScroll = async (action?: () => unknown | Promise<unkno
  */
 export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity) => (
   (value: number, oldValue: number) => (
-    lodash.isNumber(value) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
+    lodash.isNumber(Number(value)) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
   )
 )
