@@ -40,6 +40,10 @@ export const init = async () => {
   window.coreApis = coreApis
   window.dq = coreApis.utils.dq
   window.dqa = coreApis.utils.dqa
+  window.de = coreApis.utils.de
+  window.des = coreApis.utils.des
+  window.dea = coreApis.utils.dea
+  window.deai = coreApis.utils.deai
   window.none = coreApis.utils.none
   window.componentsTags = coreApis.componentApis.component.componentsTags
 
