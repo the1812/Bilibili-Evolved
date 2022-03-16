@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-panel" :class="{ collasped, peek }">
+  <div class="settings-panel" :class="{ peek }">
     <div class="settings-panel-header">
       <VIcon icon="settings-outline" />
       <div class="title">
@@ -7,15 +7,43 @@
       </div>
       <div
         class="peek"
+        type="transparent"
         title="透视"
-        style="margin-left:auto"
         @mouseover="peek = true"
         @mouseout="peek = false"
       >
         <VIcon icon="eye" :size="18" />
       </div>
-      <div class="close" @click="$emit('close')">
+      <VButton class="close" type="transparent" @click="$emit('close')">
         <VIcon icon="close" :size="18" />
+      </VButton>
+      <div class="modifier">
+        <div class="settings-panel-search">
+          <VIcon icon="search" :size="18" />
+          <TextBox v-model="searchKeyword" placeholder="搜索" />
+        </div>
+        <VButton
+          :disabled="selectedComponents.length === 0"
+          type="transparent"
+          title="更新所选组件"
+        >
+          <VIcon
+            icon="mdi-arrow-up-circle-outline"
+            :size="18"
+            @click="upgradeSelectedComponents"
+          />
+        </VButton>
+        <VButton
+          :disabled="selectedComponents.length === 0"
+          type="transparent"
+          title="卸载所选组件"
+        >
+          <VIcon
+            icon="mdi-trash-can-outline"
+            :size="18"
+            @click="uninstallSelectedComponents"
+          />
+        </VButton>
       </div>
     </div>
     <div class="settings-panel-content">
@@ -24,19 +52,6 @@
       </div>
       <div ref="mainContainer" class="main">
         <div ref="componentList" class="component-list">
-          <!-- <div v-show="selectedComponents.length>1" class="modifier"> -->
-          <div class="modifier">
-            <div class="settings-panel-search">
-              <VIcon icon="search" :size="18" />
-              <TextBox v-model="searchKeyword" placeholder="搜索"></TextBox>
-            </div>
-            <VButton style="margin-left: 5px;">
-              <VIcon icon="mdi-arrow-up-circle-outline" :size="18" @click="upgrade" />
-            </VButton>
-            <VButton style="margin-left: 5px;">
-              <VIcon icon="mdi-trash-can-outline" :size="18" @click="uninstall" />
-            </VButton>
-          </div>
           <div
             v-for="c of renderedComponents"
             :key="c.name"
@@ -112,7 +127,6 @@ export default {
       selectedComponent: null, // store component obj
       selectedComponents: [], // store component name
       componentDetailOpen: false,
-      collasped: false,
       peek: false,
       searchKeyword: '',
       searchFilter: defaultSearchFilter,
@@ -159,7 +173,7 @@ export default {
     },
   },
   methods: {
-    upgrade() {
+    upgradeSelectedComponents() {
       this.selectedComponents.forEach(async name => {
         const toast = Toast.info('检查更新中...', '检查更新')
         const result = await checkComponentsUpdate({
@@ -171,7 +185,7 @@ export default {
       })
       this.selectedComponents = []
     },
-    uninstall() {
+    uninstallSelectedComponents() {
       this.selectedComponents.forEach(name => {
         uninstallComponent(name)
       })
@@ -179,6 +193,7 @@ export default {
     },
     closePopper() {
       this.componentDetailOpen = false
+      this.selectedComponents = []
     },
     selectMultipleComponent({ name }: ComponentMetadata, listSelect = false) {
       if (this.selectedComponent && listSelect) {
@@ -260,50 +275,68 @@ export default {
     position: relative;
     overscroll-behavior: contain;
     border-radius: 8px;
-    background-color: #fff;
-    color: black;
+    --settings-panel-background-color: #fff;
+    --settings-panel-color: #000;
+    background-color: var(--settings-panel-background-color);
+    color: var(--settings-panel-color);
     border: 1px solid #8882;
     box-sizing: content-box;
     width: auto;
     min-width: 320px;
     height: var(--panel-height);
-    --header-height: 50px;
+    --header-height: 87px;
     transition: opacity 0.2s 0.2s ease-out;
     body.dark & {
-      background-color: #222;
-      color: #eee;
-      // border-color: #333;
+      --settings-panel-background-color: #222;
+      --settings-panel-color: #eee;
     }
     .settings-panel-header {
       box-sizing: border-box;
       height: var(--header-height);
       padding: 12px;
       border-bottom: 1px solid #8882;
-      @include h-center(8px);
+      @include h-center(4px);
       @include text-color();
-      // body.dark & {
-      //   border-color: #333;
-      // }
+      row-gap: 12px;
+      flex-wrap: wrap;
       .title {
         font-size: 18px;
         font-weight: bold;
-      }
-      .collaspe {
-        .be-icon {
-          font-size: 28px;
-        }
+        flex-grow: 1;
       }
       .peek {
         cursor: pointer;
+        padding: 4px;
       }
-      .collaspe,
       .close {
+        padding: 4px;
         .be-icon {
           cursor: pointer;
           transition: 0.2s ease-out;
           &:hover {
             color: var(--theme-color);
           }
+        }
+      }
+      .modifier {
+        flex-basis: 100%;
+        display: flex;
+        @include h-center(4px);
+        .settings-panel-search {
+          flex-grow: 1;
+          margin-right: 4px;
+          @include h-center(8px);
+          justify-content: center;
+          .be-textbox {
+            flex: 1 0 0;
+            height: 24px;
+          }
+          .be-icon {
+            opacity: 0.5;
+          }
+        }
+        .be-button {
+          padding: 4px;
         }
       }
     }
@@ -351,30 +384,6 @@ export default {
               position: absolute;
             }
           }
-
-          .modifier {
-            display: flex;
-            padding: 7px 12px 7px 7px;
-            // flex-direction: row-reverse;
-
-            .settings-panel-search {
-              flex-grow: 1;
-              @include h-center();
-              justify-content: center;
-              .be-textbox {
-                flex: 1 0 0;
-                height: 100%;
-              }
-              .be-icon {
-                margin-right: 8px;
-                opacity: 0.5;
-              }
-            }
-
-            div:nth-child(n+2) {
-              margin-left: 5px;
-            }
-          }
         }
         > * {
           flex: 1;
@@ -399,27 +408,6 @@ export default {
       }
       &.open {
         transform: translateZ(0) translateY(-50%) translateX(0);
-      }
-    }
-    &.collasped {
-      height: auto;
-      transform: translateY(calc(50% - 45vh));
-      .header,
-      body.dark & .header {
-        border-color: transparent;
-      }
-      .sidebar,
-      .main {
-        opacity: 0;
-        padding: 0;
-        pointer-events: none;
-      }
-      .sidebar {
-        display: none;
-      }
-      opacity: 0.3;
-      &:hover {
-        opacity: 1;
       }
     }
     &.peek {
