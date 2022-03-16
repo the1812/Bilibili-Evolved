@@ -1,5 +1,6 @@
 import { meta } from '@/core/meta'
 import { getGeneralSettings, getComponentSettings } from '@/core/settings'
+import { useScopedConsole } from '@/core/utils/log'
 import { descendingSort } from '@/core/utils/sort'
 import { isFeatureAcceptable } from '@/core/version'
 import {
@@ -13,6 +14,7 @@ import {
   CheckSingleTypeUpdateConfig,
 } from './utils'
 
+const console = useScopedConsole({ name: '自动更新器' })
 export const checkUpdate = async (config: CheckUpdateConfig) => {
   const {
     items,
@@ -125,13 +127,14 @@ const checkByName = (method: CheckSingleTypeUpdate) => reload(
 
 export const checkAllUpdate = async (config: CheckSingleTypeUpdateConfig) => {
   const { options } = getComponentSettings(name)
-  console.log('[自动更新器] 开始检查更新')
+  console.groupCollapsed('开始检查更新')
   console.log(await checkComponentsUpdate(config) || '暂无组件更新')
   console.log(await checkPluginsUpdate(config) || '暂无插件更新')
   console.log(await checkStylesUpdate(config) || '暂无样式更新')
   options.lastUpdateCheck = Number(new Date())
   options.lastInstalledVersion = meta.version
-  console.log('[自动更新器] 完成更新检查')
+  console.groupEnd()
+  console.log('完成更新检查')
 }
 export const silentCheckUpdate = () => checkAllUpdate({
   maxCount: getComponentSettings(name).options.maxUpdateCount,
