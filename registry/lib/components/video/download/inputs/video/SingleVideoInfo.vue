@@ -39,6 +39,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 .single-video-info.download-video-config-section {
+  position: relative;
   height: 125px;
   display: flex;
   align-items: center;
