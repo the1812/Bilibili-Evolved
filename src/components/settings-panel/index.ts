@@ -39,11 +39,6 @@ export const component: ComponentMetadata = {
       displayName: '主题颜色',
       color: true,
     },
-    // accentColor: {
-    //   defaultValue: '#D55480',
-    //   displayName: '辅助颜色',
-    //   color: true,
-    // },
     scriptLoadingMode: {
       defaultValue: LoadingMode.Delay,
       displayName: '功能加载模式',

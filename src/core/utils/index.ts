@@ -73,7 +73,7 @@ export const isBwpVideo = async () => {
     return false
   }
   // eslint-disable-next-line no-underscore-dangle
-  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('bwp-video'))
+  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('#bilibili-player bwp-video'))
 }
 /**
  * 等待一定时间
