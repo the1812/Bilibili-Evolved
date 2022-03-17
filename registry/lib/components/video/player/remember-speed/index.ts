@@ -1,125 +1,66 @@
-import { importComponent } from '@/components/component'
-import { ComponentMetadata } from '@/components/types'
 import { playerUrls } from '@/core/utils/urls'
-import { KeyBindingAction, KeyBindingActionContext } from 'registry/lib/components/utils/keymap/bindings'
-import type { createController } from './controller'
+import { MAX_BROWSER_SPEED_VALUE, MIN_BROWSER_SPEED_VALUE } from '../common/speed'
+import { Options, RememberSpeedComponent } from './component'
 
-const componentName = 'rememberVideoSpeed'
-
-type Controller = ReturnType<typeof createController>
-
-export const component: ComponentMetadata = {
-  name: componentName,
-  displayName: '倍速增强',
+export const component = RememberSpeedComponent.create<Options>({
+  name: 'rememberVideoSpeed',
+  displayName: '记忆倍速',
   author: {
     name: 'JLoeve',
     link: 'https://github.com/LonelySteve',
   },
   description: {
-    'zh-CN': '可以记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.',
+    'zh-CN': `
+
+> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.
+
+### 🔧 **选项**
+
+- \`全局记忆倍速值\`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.
+- \`固定全局倍速值\`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.
+- \`各视频分别记忆\`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.
+- \`弹出还原倍速提示\`：打开此选项后，每次成功还原倍速后都会弹出提示.
+
+### 🌈 **温馨提示**
+
+「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.
+
+请根据自身需要：
+
+- 前往「组件」页面安装[「扩展倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js)组件
+- 前往「插件」页面安装[「视频倍速 - 快捷键支持」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js)插件.
+
+*如果想要清除当前视频的记忆状态，需要安装「视频倍速 - 快捷键支持」插件.*
+`,
   },
   tags: [componentsTags.video],
   urlInclude: playerUrls,
-  entry: async () => (await import('./controller')).createController(),
-  plugin: {
-    displayName: '倍速增强 - 快捷键支持',
-    setup: async ({ addData }) => {
-      const { getComponentSettings } = await import('@/core/settings')
-
-      const videoSpeed = async (
-        context: KeyBindingActionContext,
-        controllerAction: (
-          controller: Controller, rates: number[]
-        ) => void,
-      ) => {
-        // 不要提前导入，插件在组件加载之前进行加载，因此如果提前加载会取不到 entry 调用后返回的对象
-        const controller = importComponent(componentName) as Controller
-        controllerAction(controller, controller.getSupportedRates())
-        context.showTip(`${controller.videoSpeed()}x`, 'mdi-fast-forward')
-      }
-
-      addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
-        actions.videoSpeedIncrease = {
-          displayName: '提高倍速',
-          run: context => {
-            videoSpeed(context, (controller, rates) => {
-              controller.setVideoSpeed(
-                rates.find(it => it > controller.videoSpeed())
-                || rates[rates.length - 1],
-              )
-            })
-            return true
-          },
-        }
-        actions.videoSpeedDecrease = {
-          displayName: '降低倍速',
-          run: context => {
-            videoSpeed(context, (controller, rates) => {
-              controller.setVideoSpeed(
-                [...rates].reverse().find(it => it < controller.videoSpeed())
-                || rates[0],
-              )
-            })
-            return true
-          },
-        }
-        actions.videoSpeedReset = {
-          displayName: '重置倍速',
-          run: context => {
-            videoSpeed(context, controller => {
-              controller.toggleVideoSpeed()
-            })
-            return true
-          },
-        }
-        if (getComponentSettings('rememberVideoSpeed').options.individualRemember) {
-          actions.videoSpeedForget = {
-            displayName: '清除当前倍速记忆',
-            run: context => {
-              videoSpeed(context, controller => {
-                controller.resetVideoSpeed(true)
-              })
-              return true
-            },
-          }
-        }
-      })
-      addData('keymap.presets', (presetBase: Record<string, string>) => {
-        presetBase.videoSpeedIncrease = 'shift > 》 arrowUp'
-        presetBase.videoSpeedDecrease = 'shift < 《 arrowDown'
-        presetBase.videoSpeedReset = 'shift ? ？'
-        presetBase.videoSpeedForget = 'shift : ：'
-      })
-    },
-  },
   options: {
-    speed: {
-      displayName: '记忆的速度',
-      defaultValue: '1.0',
-      hidden: true,
+    globalSpeed: {
+      displayName: '全局记忆倍速值',
+      defaultValue: 1,
+      validator: val => lodash.clamp(
+        parseFloat(val),
+        MIN_BROWSER_SPEED_VALUE,
+        MAX_BROWSER_SPEED_VALUE,
+      ) || 1,
     },
-    extend: {
-      displayName: '扩展倍速菜单',
-      defaultValue: true,
-    },
-    extendList: {
-      displayName: '扩展倍速列表',
-      defaultValue: [2.5, 3],
-      hidden: true,
-    },
-    remember: {
-      displayName: '启用倍速记忆',
-      defaultValue: true,
+    fixGlobalSpeed: {
+      displayName: '固定全局倍速值',
+      defaultValue: false,
     },
     individualRemember: {
       displayName: '各视频分别记忆',
       defaultValue: false,
-      hidden: true,
     },
-    individualRememberList: {
-      displayName: '分别记忆倍速列表',
+    individualRememberRecord: {
+      displayName: '独立记忆倍速记录',
       defaultValue: {},
       hidden: true,
     },
+    showRestoreTip: {
+      displayName: '弹出还原倍速提示',
+      defaultValue: true,
+    },
   },
-}
+})

@@ -770,7 +770,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 在视频播放器网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
-### [倍速增强](../../registry/dist/components/video/player/remember-speed.js)
+### [记忆倍速](../../registry/dist/components/video/player/remember-speed.js)
 `rememberVideoSpeed`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/remember-speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remember-speed.js)
@@ -779,7 +779,18 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 by [@JLoeve](https://github.com/LonelySteve)
 
-可以记忆上次选择的视频播放速度, 还可以使用更多倍速来扩展原生倍速菜单.
+提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.
+
+### [扩展倍速](../../registry/dist/components/video/player/extend-speed.js)
+`extendVideoSpeed`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/extend-speed.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/extend-speed.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/extend-speed.js)
+
+by [@JLoeve](https://github.com/LonelySteve)
+
+扩展视频播放器的倍速菜单项，可用于突破原有播放倍数的上限或下限.
 
 ### [删除视频弹窗](../../registry/dist/components/video/player/remove-popup.js)
 `removePlayerPopup`
@@ -960,3 +971,14 @@ by [@wuliic](https://github.com/wullic)
 by [@diannaojiang](https://github.com/diannaojiang)
 
 为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)
+
+### [视频倍速 - 快捷键支持](../../registry/dist/plugins/video/player/speed.js)
+`speed.keymap`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/player/speed.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/player/speed.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/player/speed.js)
+
+by [@JLoeve](https://github.com/LonelySteve)
+
+为操作视频倍速提供快捷键支持，同时适配「扩展倍速」，联动「记忆倍速」并提供「清除倍速记忆」功能.
