@@ -112,6 +112,12 @@
             @include color("e");
           }
         }
+        &-title {
+          @include color("e");
+          &:hover {
+            @include theme-color();
+          }
+        }
       }
     }
     &_second-line {
