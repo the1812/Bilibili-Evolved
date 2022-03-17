@@ -100,7 +100,6 @@ export default Vue.extend({
   position: relative;
   cursor: pointer;
   transition: .2s ease-out;
-  user-select: none;
 
   &::after {
     content: "";
