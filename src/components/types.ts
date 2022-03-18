@@ -83,6 +83,7 @@ export type OptionsMetadata<O extends UnknownOptions = UnknownOptions> = {
 
 // TODO: 参考 discussion #3041。当不兼容代码替换完成后删除
 export type ComponentOptions = OptionsMetadata
+export type ComponentOption = OptionMetadata
 
 /** 组件标签 */
 export const componentsTags = {
