@@ -158,7 +158,7 @@ export const componentsTags = {
  * 从 OptionalOptionsMetadata 中获取 Options 信息。
  * 当其为 undefined 时，返回类型 EmptyOptions。
  */
-export type OptionsFromOptionalMeta<M extends OptionalOptionsMetadata> = (
+export type OptionsFromOptionalMetadata<M extends OptionalOptionsMetadata> = (
   M extends undefined | Record<string, never> ? EmptyOptions :
     M extends OptionsMetadata<infer O> ? O : never
 )
@@ -168,7 +168,7 @@ export interface ComponentEntryContext<
   Om extends OptionalOptionsMetadata = OptionalOptionsMetadata
 > {
   /** 当前组件的设置 */
-  settings: ComponentSettings<OptionsFromOptionalMeta<Om>>
+  settings: ComponentSettings<OptionsFromOptionalMetadata<Om>>
   /** 当前组件的信息 */
   metadata: ComponentMetadata<Om>
   /** 核心 API */

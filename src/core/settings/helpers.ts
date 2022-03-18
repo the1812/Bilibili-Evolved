@@ -2,7 +2,7 @@ import {
   ComponentMetadata,
   componentsMap,
   OptionalOptionsMetadata,
-  OptionsFromOptionalMeta,
+  OptionsFromOptionalMetadata,
   OptionsMetadata,
   UnknownOptions,
 } from '@/components/component'
@@ -26,7 +26,7 @@ export const metadataToOptions = <O extends UnknownOptions>(
 export const componentToSettings = <
   Om extends OptionalOptionsMetadata
 >(component: ComponentMetadata<Om>): (
-  ComponentSettings<OptionsFromOptionalMeta<Om>>
+  ComponentSettings<OptionsFromOptionalMetadata<Om>>
 ) => {
   const { options: meta } = component
   return {
