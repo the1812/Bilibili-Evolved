@@ -105,19 +105,26 @@ yarn
 1. 根据类别进入对应的子文件夹, 如样式修改的功能就是 `style/`
 2. 新建文件夹, 名称为组件名, 单词短横线分隔
 3. 新建文件 `index.ts` 作为组件入口点
-> 此名称不可更改, webpack 配置中将搜索所有 index.ts 作为组件编译入口
 
-4. 在 `index.ts` 中导出 `component` 对象, 实现 `ComponentMetadata` 接口
-```ts
-import { ComponentMetadata } from '@/components/types'
+    > 此名称不可更改, webpack 配置中将搜索所有 index.ts 作为组件编译入口
 
-export const component: ComponentMetadata = {
-  // ...
-}
-```
-> 在 `ComponentMetadata` 的源码中有各属性的说明
+4. 在 `index.ts` 中导出 `component` 对象, 用 `defComponentMeta` 定义组件.
 
-> `author` 字段记得填, 这个因为我自己写的组件不需要所以就不是 required 的
+    ```ts
+    import { defComponentMeta } from '@/components/define'
+
+    export const component = defComponentMeta({
+      // ...
+    })
+    ```
+
+    所需要的字段在 `@/components/types.ts` 的 `ComponentMetadata` 中，源码中有各属性的说明.
+
+    其中 `options` 字段的类型为同文件中的 `OptionsMetadata`.
+
+    在 `@/components/define.ts` 中还提供了几个方法用于辅助定义.
+
+    > `author` 字段记得填, 这个因为我自己写的组件不需要所以就不是 required 的
 
 5. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
 6. 编译并调试组件.
@@ -160,6 +167,7 @@ export const component: ComponentMetadata = {
 - `core/utils`: 工具集, 包含各种常量, 格式化函数, 排序工具, 标题获取, 日志等
 
 ### 组件 API
+- `components/define`: 包含定义组件的相关方法
 - `components/types`: 组件相关接口定义
 - `components/styled-components`: 包含样式的组件 entry 简化包装函数
 - `components/user-component`: 用户组件的安装/卸载 API
