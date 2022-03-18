@@ -1,3 +1,4 @@
+.bpx-player-video-wrap::after,
 .bilibili-player-video::after {
   position: absolute;
   content: "";
@@ -10,6 +11,11 @@
   background-size: contain;
   pointer-events: none;
   z-index: 10;
+}
+.bpx-player-container.bpx-state-paused {
+  .bpx-player-video-wrap::after {
+    display: block;
+  }
 }
 .bilibili-player-area.video-control-show.video-state-pause {
   .bilibili-player-video::after {

@@ -62,6 +62,85 @@ export const dqa: DocumentQuerySelectorAll = (
   }
   return Array.from((selectorOrElement as Element).querySelectorAll(bwpVideoFilter(scopedSelector)))
 }
+type DocumentEvaluate = {
+  (xpathExpression: string): XPathResult
+  (xpathExpression: string, contextNode: Node): XPathResult
+  (xpathExpression: string, contextNode: Node, type: number): XPathResult
+  (xpathExpression: string, contextNode: Node, type: number, result: XPathResult): XPathResult
+}
+export const de: DocumentEvaluate = (
+  xpathExpression: string,
+  contextNode?: Node,
+  type?: number,
+  result?: XPathResult,
+) => document.evaluate(xpathExpression, contextNode, null, type, result)
+type DocumentEvaluateAll = {
+  (xpathExpression: string): Node[]
+  (xpathExpression: string, contextNode: Node): Node[]
+  (xpathExpression: string, contextNode: Node, order: boolean): Node[]
+  (xpathExpression: string, contextNode: Node, order: boolean, result: XPathResult): Node[]
+}
+export const dea: DocumentEvaluateAll = (
+  xpathExpression: string,
+  contextNode?: Node,
+  order?: boolean,
+  result?: XPathResult,
+) => {
+  const xpathResult = de(
+    xpathExpression,
+    contextNode,
+    order ? XPathResult.ORDERED_NODE_SNAPSHOT_TYPE : XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+    result,
+  )
+
+  return Array.from({ length: xpathResult.snapshotLength }, (_, i) => xpathResult.snapshotItem(i))
+}
+type DocumentEvaluateAllIterable = {
+  (xpathExpression: string): Iterable<Node>
+  (xpathExpression: string, contextNode: Node): Iterable<Node>
+  (xpathExpression: string, contextNode: Node, order: boolean): Iterable<Node>
+  (xpathExpression: string, contextNode: Node, order: boolean, result: XPathResult): Iterable<Node>
+}
+export const deai: DocumentEvaluateAllIterable = (
+  xpathExpression: string,
+  contextNode?: Node,
+  order?: boolean,
+  result?: XPathResult,
+) => {
+  const xpathResult = de(
+    xpathExpression,
+    contextNode,
+    order ? XPathResult.ORDERED_NODE_ITERATOR_TYPE : XPathResult.UNORDERED_NODE_ITERATOR_TYPE,
+    result,
+  )
+
+  return {
+    [Symbol.iterator]: () => ({
+      next: () => {
+        let node = null
+        do {
+          node = xpathResult.iterateNext()
+          return node
+            ? ({ done: false, value: node } as { done: false, value: Node })
+            : ({ done: true } as { done: true, value: any })
+        } while (node)
+      },
+    }),
+  }
+}
+type DocumentEvaluateSingle = {
+  <T extends Node>(xpathExpression: string): T | null
+  <T extends Node>(xpathExpression: string, contextNode: Node): T | null
+  <T extends Node>(xpathExpression: string, contextNode: Node, result: XPathResult): T | null
+}
+export const des: DocumentEvaluateSingle = <T extends Node>(
+  xpathExpression: string, contextNode?: Node, result?: XPathResult,
+) => de(
+  xpathExpression,
+  contextNode,
+  XPathResult.FIRST_ORDERED_NODE_TYPE,
+  result,
+).singleNodeValue as (T | null)
 /** 空函数 */
 export const none = () => {
   // Do nothing
@@ -73,7 +152,7 @@ export const isBwpVideo = async () => {
     return false
   }
   // eslint-disable-next-line no-underscore-dangle
-  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('bwp-video'))
+  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('#bilibili-player bwp-video'))
 }
 /**
  * 等待一定时间
@@ -472,6 +551,6 @@ export const disableWindowScroll = async (action?: () => unknown | Promise<unkno
  */
 export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity) => (
   (value: number, oldValue: number) => (
-    lodash.isNumber(value) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
+    lodash.isNumber(Number(value)) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
   )
 )

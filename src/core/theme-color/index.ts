@@ -1,5 +1,5 @@
 import Color from 'color'
-import { settings, addComponentListener } from '../settings'
+import { getGeneralSettings, addComponentListener } from '../settings'
 import { makeImageFilter } from './image-filter'
 import { TextColor } from '../text-color'
 
@@ -16,7 +16,23 @@ export const initColors = () => {
     }
     `.trim()
   }, 100)
-  addComponentListener('settingsPanel.themeColor', (value: string) => {
+  const handleTextColorChange = (value: TextColor) => {
+    let textColor: 'black' | 'white'
+    if (value === TextColor.Auto) {
+      textColor = Color(getGeneralSettings().themeColor).isLight() ? 'black' : 'white'
+    } else {
+      textColor = value === TextColor.Black ? 'black' : 'white'
+    }
+    set('--text-color', textColor)
+    // for v1.x
+    set('--foreground-color', textColor)
+    set('--foreground-color-d', Color(textColor, 'keyword').alpha(14 / 16).rgb().string())
+    set('--foreground-color-b', Color(textColor, 'keyword').alpha(12 / 16).rgb().string())
+    set('--brightness', `${textColor === 'black' ? '100' : '0'}%`)
+    set('--invert-filter', textColor === 'black' ? 'invert(0)' : 'invert(1)')
+    update()
+  }
+  const handleThemeColorChange = (value: string) => {
     set('--theme-color', value)
     for (let delta = 10; delta <= 90; delta += 10) {
       const color = Color(value, 'hex')
@@ -33,27 +49,10 @@ export const initColors = () => {
       g: 160,
       b: 213,
     }, 'rgb'), Color(value, 'hex')))
+    handleTextColorChange(getGeneralSettings().textColor)
     update()
-  }, true)
-  addComponentListener('settingsPanel.accentColor', (value: string) => {
-    set('--accent-color', value)
-    update()
-  }, true)
-  addComponentListener('settingsPanel.textColor', (value: TextColor) => {
-    let textColor: 'black' | 'white'
-    if (value === TextColor.Auto) {
-      textColor = Color(settings.themeColor).isLight() ? 'black' : 'white'
-    } else {
-      textColor = value === TextColor.Black ? 'black' : 'white'
-    }
-    set('--text-color', textColor)
-    // for v1.x
-    set('--foreground-color', textColor)
-    set('--foreground-color-d', Color(textColor, 'keyword').alpha(14 / 16).rgb().string())
-    set('--foreground-color-b', Color(textColor, 'keyword').alpha(12 / 16).rgb().string())
-    set('--brightness', `${textColor === 'black' ? '100' : '0'}%`)
-    set('--invert-filter', textColor === 'black' ? 'invert(0)' : 'invert(1)')
-    update()
-  }, true)
+  }
+  addComponentListener('settingsPanel.themeColor', handleThemeColorChange, true)
+  addComponentListener('settingsPanel.textColor', handleTextColorChange, true)
   return colorStyle
 }
