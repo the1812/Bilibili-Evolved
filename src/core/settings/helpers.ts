@@ -1,4 +1,11 @@
-import { ComponentMetadata, componentsMap, ComponentOptions } from '@/components/component'
+import {
+  ComponentMetadata,
+  componentsMap,
+  OptionalOptionsMetadata,
+  OptionsFromOptionalMetadata,
+  OptionsMetadata,
+  UnknownOptions,
+} from '@/components/component'
 import { PluginMetadata } from '@/plugins/plugin'
 // import serialize from 'serialize-javascript'
 import { settings, ComponentSettings } from '../settings'
@@ -8,19 +15,26 @@ import { matchUrlPattern } from '../utils'
  * 生成组件选项设置
  * @param options 组件选项定义
  */
-export const componentOptionsToSettings = (options: ComponentOptions) => (
-  lodash.fromPairs(Object.entries(options).map(([key, value]) => [key, value.defaultValue]))
-)
+export const metadataToOptions = <O extends UnknownOptions>(
+  options: OptionsMetadata<O>,
+): O => lodash.mapValues(options, m => m.defaultValue) as O
+
 /**
  * 生成组件设置
  * @param component 组件定义
  */
-export const componentToSettings = (component: ComponentMetadata): ComponentSettings => (
-  {
+export const componentToSettings = <
+  Om extends OptionalOptionsMetadata
+>(component: ComponentMetadata<Om>): (
+  ComponentSettings<OptionsFromOptionalMetadata<Om>>
+) => {
+  const { options: meta } = component
+  return {
     enabled: component.enabledByDefault ?? true,
-    options: component.options ? componentOptionsToSettings(component.options) : {},
+    options: (meta ? metadataToOptions(meta as any) : {}) as any,
   }
-)
+}
+
 /**
  * 判断是否为自定义组件
  * @param component 组件定义
@@ -29,6 +43,7 @@ export const isUserComponent = (component: ComponentMetadata | string) => {
   const name = typeof component === 'string' ? component : component.name
   return Boolean(settings.userComponents[name])
 }
+
 /**
  * 判断是否为自定义插件
  * @param plugin 插件定义
@@ -45,27 +60,42 @@ const emptySettings: ComponentSettings = {
     },
   }),
 }
+
+// TODO: 参考 discussion #3041。
+// 当不兼容代码替换完成后将 R 的默认类型替换为 UnknownOptions
 /**
- * 获取组件的设置
+ * 获取已加载组件的设置
+ *
+ * 若组件未安装，则返回一个默认的 ComponentSettings 对象：
+ * {
+ *   enabled: false,
+ *   options new Proxy({}, { get: () => false })
+ * }
+ *
  * @param component 组件或组件名称
  */
-export const getComponentSettings = (component: ComponentMetadata | string): ComponentSettings => {
+export const getComponentSettings = <R extends UnknownOptions = UnknownOptions>(
+  component: ComponentMetadata | string,
+): ComponentSettings<R> => {
+  let componentMetadata: ComponentMetadata
   if (typeof component === 'string') {
-    const componentMetadata = componentsMap[component]
-    if (componentMetadata === undefined) {
+    if (componentsMap[component] === undefined) {
       if (settings.components.settingsPanel.options.devMode) {
         console.warn('No settings found for component:', component)
       }
-      return emptySettings
+      return emptySettings as any
     }
-    component = componentMetadata
+    componentMetadata = componentsMap[component]
+  } else {
+    componentMetadata = component
   }
-  if (isUserComponent(component)) {
-    const { name } = component
-    return settings.userComponents[name]?.settings ?? emptySettings
+  if (isUserComponent(componentMetadata)) {
+    const { name } = componentMetadata
+    return (settings.userComponents[name]?.settings ?? emptySettings) as any
   }
-  return settings.components[component.name]
+  return settings.components[componentMetadata.name] as any
 }
+
 /**
  * 获取通用设置 (`settingsPanel`组件的`options`)
  */
