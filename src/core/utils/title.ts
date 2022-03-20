@@ -12,6 +12,7 @@ export const formatTitle = (
   const now = new Date()
   const data: StringMap = {
     title: document.title
+      .replace(/-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
       .replace(/：([^：]+?)_.+?_bilibili_哔哩哔哩$/, '')
       .replace(/_哔哩哔哩_bilibili$/, '')
       .replace(/ - 哔哩哔哩$/, '')
