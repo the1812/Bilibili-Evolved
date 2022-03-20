@@ -108,12 +108,12 @@ yarn
 
     > 此名称不可更改, webpack 配置中将搜索所有 index.ts 作为组件编译入口
 
-4. 在 `index.ts` 中导出 `component` 对象, 用 `defComponentMeta` 定义组件.
+4. 在 `index.ts` 中导出 `component` 对象, 用 `defineComponentMetadata` 定义组件.
 
     ```ts
-    import { defComponentMeta } from '@/components/define'
+    import { defineComponentMetadata } from '@/components/define'
 
-    export const component = defComponentMeta({
+    export const component = defineComponentMetadata({
       // ...
     })
     ```
