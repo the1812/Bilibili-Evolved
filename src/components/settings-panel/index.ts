@@ -6,6 +6,7 @@ import { addComponentListener } from '@/core/settings'
 import { DownloadPackageEmitMode } from '@/core/download-mode'
 import { ComponentEntry, ComponentMetadata, componentsTags } from '../types'
 import { provideActions } from './external-actions'
+import description from './desc.md'
 
 export const WidgetsPlugin = 'widgets'
 export enum SettingsPanelDockSide {
@@ -31,7 +32,7 @@ export const component: ComponentMetadata = {
   name: 'settingsPanel',
   displayName: '通用设置',
   configurable: false,
-  // hidden: true,
+  description,
   entry,
   options: {
     themeColor: {
