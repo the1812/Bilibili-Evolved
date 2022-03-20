@@ -102,11 +102,18 @@ export const mountVueComponent = <T>(
   module: VueModule,
   target?: Element | string,
 ): Vue & T => {
-  const options = 'default' in module ? module.default : module
-  const getInstance = (o: any) => (
-    o.functional ? new (Vue.extend(o))() : new Vue(o)
-  )
-  return getInstance(options).$mount(target) as Vue & T
+  const obj = 'default' in module ? module.default : module
+  const getInstance = (o: any) => {
+    if (o instanceof Function) {
+      // eslint-disable-next-line new-cap
+      return new o()
+    }
+    if (o.functional) {
+      return new (Vue.extend(o))()
+    }
+    return new Vue(o)
+  }
+  return getInstance(obj).$mount(target) as Vue & T
 }
 /** 是否处于其他网站的内嵌播放器中 */
 export const isEmbeddedPlayer = () => window.location.host === 'player.bilibili.com' || document.URL.startsWith('https://www.bilibili.com/html/player.html')
