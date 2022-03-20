@@ -207,7 +207,7 @@ const buildElementPart = (
 
   const updateAvailableSpeedValues = () => {
     availableSpeedValues = lodash([...menuListElement.children])
-      .map(element => lodash.attempt(() => parseSpeedText(element.innerHTML)))
+      .map(element => lodash.attempt(() => parseSpeedText(element.textContent)))
       .reject(speed => lodash.isError(speed))
       .sort(ascendingSort())
       .value() as number[]

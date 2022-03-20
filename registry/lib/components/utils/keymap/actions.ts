@@ -112,7 +112,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       if (lodash.isNil(result)) {
         return result
       }
-      if (result) {
+      if (playerAgent.isMute()) {
         showTip('已静音', 'mdi-volume-off')
       } else {
         showTip('已取消静音', 'mdi-volume-high')
