@@ -98,10 +98,15 @@ export const matchUrlPattern = (pattern: string | RegExp) => (
  * @param module Vue组件模块对象
  * @param target 组件的挂载目标元素, 省略时不挂载直接返回
  */
-export const mountVueComponent = <T>(module: VueModule, target?: Element | string) => {
-  const instance = new Vue('default' in module ? module.default : module)
-  // const instance = new Vue({ render: h => h('default' in module ? module.default : module) })
-  return instance.$mount(target) as Vue & T
+export const mountVueComponent = <T>(
+  module: VueModule,
+  target?: Element | string,
+): Vue & T => {
+  const options = 'default' in module ? module.default : module
+  const getInstance = (o: any) => (
+    o.functional ? new (Vue.extend(o))() : new Vue(o)
+  )
+  return getInstance(options).$mount(target) as Vue & T
 }
 /** 是否处于其他网站的内嵌播放器中 */
 export const isEmbeddedPlayer = () => window.location.host === 'player.bilibili.com' || document.URL.startsWith('https://www.bilibili.com/html/player.html')
