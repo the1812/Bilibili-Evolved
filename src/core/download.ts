@@ -5,7 +5,7 @@ import { getGeneralSettings } from './settings'
 import { formatFilename } from './utils/formatters'
 import { useScopedConsole } from './utils/log'
 
-const console = useScopedConsole({ name: '文件下载' })
+const console = useScopedConsole('文件下载')
 /** 表示`DownloadPackage`中的一个文件 */
 export interface PackageEntry {
   /** 文件名 */
