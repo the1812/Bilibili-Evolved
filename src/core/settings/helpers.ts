@@ -8,7 +8,8 @@ import {
 } from '@/components/component'
 import { PluginMetadata } from '@/plugins/plugin'
 // import serialize from 'serialize-javascript'
-import { settings, ComponentSettings } from '../settings'
+import type { Options as SettingsPanelOptions } from '@/components/settings-panel'
+import { ComponentSettings, settings } from '../settings'
 import { matchUrlPattern } from '../utils'
 
 /**
@@ -23,11 +24,9 @@ export const metadataToOptions = <O extends UnknownOptions>(
  * 生成组件设置
  * @param component 组件定义
  */
-export const componentToSettings = <
-  Om extends OptionalOptionsMetadata
->(component: ComponentMetadata<Om>): (
-  ComponentSettings<OptionsFromOptionalMetadata<Om>>
-) => {
+export const componentToSettings = <Om extends OptionalOptionsMetadata>(
+  component: ComponentMetadata<Om>,
+): ComponentSettings<OptionsFromOptionalMetadata<Om>> => {
   const { options: meta } = component
   return {
     enabled: component.enabledByDefault ?? true,
@@ -99,7 +98,7 @@ export const getComponentSettings = <R extends UnknownOptions = UnknownOptions>(
 /**
  * 获取通用设置 (`settingsPanel`组件的`options`)
  */
-export const getGeneralSettings = () => getComponentSettings('settingsPanel').options
+export const getGeneralSettings = () => getComponentSettings<SettingsPanelOptions>('settingsPanel').options
 /**
  * 判断此组件是否启用, 启用的条件为:
  * - 若定义了排除列表, 当前URL必须不匹配其排除列表中任意一项(`Component.urlExclude`)

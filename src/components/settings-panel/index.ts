@@ -5,11 +5,16 @@ import { CdnTypes } from '@/core/cdn-types'
 import { addComponentListener } from '@/core/settings'
 import { DownloadPackageEmitMode } from '@/core/download-mode'
 import { ComponentEntry, componentsTags } from '../types'
-import { defineOptionsMetadata, defineComponentMetadata } from '../define'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '../define'
 import { provideActions } from './external-actions'
 import description from './desc.md'
 
 export const WidgetsPlugin = 'widgets'
+
 export enum SettingsPanelDockSide {
   Left = '左侧',
   Right = '右侧',
@@ -65,14 +70,23 @@ const options = defineOptionsMetadata({
   },
 })
 
+export type Options = OptionsOfMetadata<typeof options>
+
 const entry: ComponentEntry<typeof options> = async ({ metadata }) => {
   const { isIframe } = await import('@/core/utils')
   if (isIframe()) {
     return
   }
-  addComponentListener(`${metadata.name}.dockSide`, (value: SettingsPanelDockSide) => {
-    document.body.classList.toggle('settings-panel-dock-right', value === SettingsPanelDockSide.Right)
-  }, true)
+  addComponentListener(
+    `${metadata.name}.dockSide`,
+    (value: SettingsPanelDockSide) => {
+      document.body.classList.toggle(
+        'settings-panel-dock-right',
+        value === SettingsPanelDockSide.Right,
+      )
+    },
+    true,
+  )
   requestIdleCallback(async () => {
     const Container = await import('./SettingsContainer.vue')
     const instance = mountVueComponent(Container)
