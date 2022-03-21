@@ -1,3 +1,4 @@
+import { cdnRoots } from '@/core/cdn-types'
 import { ComponentMetadata, componentsTags } from '../types'
 
 export const component: ComponentMetadata = {
@@ -24,15 +25,17 @@ export const component: ComponentMetadata = {
       const { monkey } = await import('@/core/ajax')
       const { meta } = await import('@/core/meta')
       const { Toast } = await import('@/core/toast')
+      const { getGeneralSettings } = await import('@/core/settings')
       const now = Number(new Date())
       const duration = now - options.lastUpdateCheck
       if (duration < options.minimumDuration) { // 未到间隔期
         return
       }
-      const updateUrl = GM_info.scriptUpdateURL
-      if (!updateUrl) { // 本地调试版没有 updateUrl
+      // 本地调试版不检查
+      if (!GM_info.scriptUpdateURL) {
         return
       }
+      const updateUrl = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}dist/${meta.originalFilename}`
       const scriptText: string = await monkey({ url: updateUrl, responseType: 'text' })
       options.lastUpdateCheck = Number(new Date())
       const versionMatch = scriptText.match(/^\/\/ @version\s*([\d\.]+)$/m)

@@ -245,7 +245,7 @@ const selectCid = lodash.once(() => select(() => {
 }))
 
 let cidHooked = false
-type VideoChangeCallback = (id: { aid: string; cid: string }) => void
+export type VideoChangeCallback = (id: { aid: string; cid: string }) => void
 /**
  * 监听视频的变化, 等待视频加载并开始监听后 resolve
  * @param callback 回调函数

@@ -1,4 +1,3 @@
-import { attributes } from '@/core/observer'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
 import { mainSiteUrls, matchCurrentPage } from '@/core/utils/urls'
@@ -13,23 +12,35 @@ export const checkTransparentFill = async (vm: {
     return
   }
   sq(
-    () => dq('#banner_link,.international-header .bili-banner, .bili-header__banner'),
-    banner => (banner === null ? false : Boolean((banner as HTMLElement).style.backgroundImage)),
-  ).then((banner: HTMLElement) => {
-    if (!banner) {
-      return
-    }
-    attributes(banner, () => {
-      addComponentListener('customNavbar.transparent', value => {
-        if (!getComponentSettings('hideBanner').enabled) {
-          vm.toggleStyle(value, 'transparent')
+    () => dqa('.animated-banner video, .banner-img img, #banner_link, .international-header .bili-banner, .bili-header__banner'),
+    banners => {
+      if (banners.length === 0) {
+        return false
+      }
+      const hasBannerImage = (banner: HTMLElement) => {
+        if (banner.style.backgroundImage) {
+          return true
         }
-      }, true)
-      addComponentListener('hideBanner', value => {
-        if (getComponentSettings('customNavbar').options.transparent) {
-          vm.toggleStyle(!value, 'transparent')
+        if ((banner as HTMLVideoElement | HTMLImageElement).src) {
+          return true
         }
-      })
+        return false
+      }
+      if (banners.some(hasBannerImage)) {
+        return true
+      }
+      return false
+    },
+  ).then(() => {
+    addComponentListener('customNavbar.transparent', value => {
+      if (!getComponentSettings('hideBanner').enabled) {
+        vm.toggleStyle(value, 'transparent')
+      }
+    }, true)
+    addComponentListener('hideBanner', value => {
+      if (getComponentSettings('customNavbar').options.transparent) {
+        vm.toggleStyle(!value, 'transparent')
+      }
     })
   })
 }

@@ -24,7 +24,7 @@ export const meta = {
     if (branch === branches.stable) {
       return 'bilibili-evolved.user.js'
     }
-    return `bilibili-evolved.${branch}.user.js`
+    return `bilibili-evolved.${branches.preview}.user.js`
   },
   /** 检查更新的链接 */
   get updateURL(): string {

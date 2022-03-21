@@ -1,6 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
-import { videoChange } from '@/core/observer'
-import { select } from '@/core/spin-query'
+import { videoChange, VideoChangeCallback } from '@/core/observer'
 import { createHook, isBwpVideo } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 
@@ -12,8 +11,7 @@ const entry = async () => {
     removeCover()
     return true
   })
-  const showCover = async () => {
-    const aid = await select(() => unsafeWindow.aid)
+  const showCover: VideoChangeCallback = async ({ aid }) => {
     if (!aid) {
       console.warn('[播放前显示封面] 未找到av号')
       return
@@ -25,9 +23,6 @@ const entry = async () => {
     const { VideoInfo } = await import('@/components/video/video-info')
     const info = new VideoInfo(aid)
     await info.fetchInfo()
-    // if (!(dq('video') as HTMLVideoElement).paused) {
-    //   return
-    // }
     document.body.style.setProperty('--cover-url', `url('${info.coverUrl}')`)
   }
   videoChange(showCover)

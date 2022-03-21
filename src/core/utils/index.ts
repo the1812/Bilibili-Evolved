@@ -73,7 +73,7 @@ export const isBwpVideo = async () => {
     return false
   }
   // eslint-disable-next-line no-underscore-dangle
-  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('bwp-video'))
+  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('#bilibili-player bwp-video'))
 }
 /**
  * 等待一定时间
@@ -98,10 +98,22 @@ export const matchUrlPattern = (pattern: string | RegExp) => (
  * @param module Vue组件模块对象
  * @param target 组件的挂载目标元素, 省略时不挂载直接返回
  */
-export const mountVueComponent = <T>(module: VueModule, target?: Element | string) => {
-  const instance = new Vue('default' in module ? module.default : module)
-  // const instance = new Vue({ render: h => h('default' in module ? module.default : module) })
-  return instance.$mount(target) as Vue & T
+export const mountVueComponent = <T>(
+  module: VueModule,
+  target?: Element | string,
+): Vue & T => {
+  const obj = 'default' in module ? module.default : module
+  const getInstance = (o: any) => {
+    if (o instanceof Function) {
+      // eslint-disable-next-line new-cap
+      return new o()
+    }
+    if (o.functional) {
+      return new (Vue.extend(o))()
+    }
+    return new Vue(o)
+  }
+  return getInstance(obj).$mount(target) as Vue & T
 }
 /** 是否处于其他网站的内嵌播放器中 */
 export const isEmbeddedPlayer = () => window.location.host === 'player.bilibili.com' || document.URL.startsWith('https://www.bilibili.com/html/player.html')
@@ -472,6 +484,6 @@ export const disableWindowScroll = async (action?: () => unknown | Promise<unkno
  */
 export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity) => (
   (value: number, oldValue: number) => (
-    lodash.isNumber(value) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
+    lodash.isNumber(Number(value)) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
   )
 )

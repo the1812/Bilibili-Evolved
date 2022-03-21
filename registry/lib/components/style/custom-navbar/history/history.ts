@@ -7,6 +7,7 @@ export const history: CustomNavbarItemInit = {
   content: '历史',
 
   href,
+  touch: true,
   active: document.URL.replace(/\?.*$/, '') === href,
   loginRequired: true,
 
