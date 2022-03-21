@@ -405,7 +405,9 @@ export default Vue.extend({
   }
   &-header {
     @include h-center();
-    padding: 6px;
+    border-bottom: 1px solid #8882;
+    padding: 6px 0;
+    margin: 0 6px;
 
     .title {
       font-size: 16px;
@@ -421,7 +423,7 @@ export default Vue.extend({
     @include no-scrollbar();
     @include v-stretch();
     flex: 1 0 0;
-    padding: 6px;
+    padding: 12px 6px;
     align-items: flex-start;
     > :not(:first-child) {
       margin-top: 12px;
@@ -445,7 +447,9 @@ export default Vue.extend({
   }
   &-footer {
     @include h-center();
-    padding: 6px;
+    border-top: 1px solid #8882;
+    padding: 6px 0;
+    margin: 0 6px;
     justify-content: center;
   }
   .run-download {
