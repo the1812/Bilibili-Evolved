@@ -34,7 +34,7 @@ class PluginData<D extends unknown[] = unknown[]> {
   /**
    * 注册 data，如果已经注册过，则忽略
    * @param data 需要注册的一系列数据
-   * @return 是否为首次注册
+   * @returns 是否为首次注册
    */
   setDataIfNot(...data: D): boolean {
     if (this.data) {
@@ -107,7 +107,7 @@ const pluginDataMap = new (class PluginDataMap {
    * 注册 data，如果已经注册过，则忽略
    * @param key 数据的唯一标识
    * @param data 需要注册的一系列数据
-   * @return 该 `key` 所标识的数据是否为首次注册
+   * @returns 该 `key` 所标识的数据是否为首次注册
    */
   setDataIfNot(key: string, ...data: unknown[]): boolean {
     const pluginData = this.getOrSetNew(key)
@@ -158,7 +158,7 @@ export const addData = <D extends unknown[]>(
 /**
  * 在注册的数据上应用未使用的 provider，并返回对象自身
  * @param key 数据的唯一标识
- * @return 被更改后的数据。若数据尚未被注册，则返回空数组
+ * @returns 被更改后的数据。若数据尚未被注册，则返回空数组
  */
 export const getData = <D extends unknown[]>(key: string): D | [] => (
   pluginDataMap.getData<D>(key) ?? []
@@ -168,7 +168,7 @@ export const getData = <D extends unknown[]>(key: string): D | [] => (
  * 注册并获取数据（{@link registerData} + {@link getData}）
  * @param key 数据的唯一标识
  * @param data 提供数据对象。将会应用到未使用的 provider
- * @return 被更改后的数据
+ * @returns 被更改后的数据
  */
 export const registerAndGetData = <D extends unknown[]>(
   key: string,
