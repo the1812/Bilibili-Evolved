@@ -31,6 +31,11 @@ class PluginData<D extends unknown[] = unknown[]> {
   private data: D | null = null
   private unusedProviders: PluginDataProvider<D>[] = []
 
+  /**
+   * 注册 data，如果已经注册过，则忽略
+   * @param data 需要注册的一系列数据
+   * @return 是否为首次注册
+   */
   setDataIfNot(...data: D): boolean {
     if (this.data) {
       return false
@@ -98,14 +103,20 @@ const pluginDataMap = new (class PluginDataMap {
     return null
   }
 
+  /**
+   * 注册 data，如果已经注册过，则忽略
+   * @param key 数据的唯一标识
+   * @param data 需要注册的一系列数据
+   * @return 该 `key` 所标识的数据是否为首次注册
+   */
   setDataIfNot(key: string, ...data: unknown[]): boolean {
     const pluginData = this.getOrSetNew(key)
     return pluginData.setDataIfNot(...data)
   }
 
-  pushProvider(key: string, ...providers: PluginDataProvider[]) {
+  pushProvider<D extends unknown[]>(key: string, ...providers: PluginDataProvider<D>[]) {
     const pluginData = this.getOrSetNew(key)
-    pluginData.pushProvider(...providers)
+    pluginData.pushProvider(...providers as any[])
   }
 
   /**
@@ -140,9 +151,9 @@ export const registerData = (key: string, ...data: unknown[]) => {
  * @param key 数据的唯一标识
  * @param provider 用于修改数据的回调函数
  */
-export const addData = (key: string, provider: PluginDataProvider) => {
-  pluginDataMap.pushProvider(key, provider)
-}
+export const addData = <D extends unknown[]>(
+  key: string, provider: PluginDataProvider<D>,
+) => pluginDataMap.pushProvider(key, provider)
 
 /**
  * 在注册的数据上应用未使用的 provider，并返回对象自身
