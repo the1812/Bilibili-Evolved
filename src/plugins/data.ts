@@ -175,6 +175,5 @@ export const registerAndGetData = <D extends unknown[]>(
   ...data: D
 ): D => {
   pluginDataMap.setDataIfNot(key, ...data)
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  return pluginDataMap.getDataUnchecked<D>(key)!
+  return pluginDataMap.getDataUnchecked(key)
 }
