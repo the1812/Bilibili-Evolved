@@ -1,0 +1,1 @@
+!function(e,o){"object"==typeof exports&&"object"==typeof module?module.exports=o():"function"==typeof define&&define.amd?define([],o):"object"==typeof exports?exports["video/player/common/mini-rxjs"]=o():e["video/player/common/mini-rxjs"]=o()}(self,(function(){return function(){"use strict";var e={};coreApis.settings;return e=e.component}()}));
