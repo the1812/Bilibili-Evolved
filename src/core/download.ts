@@ -5,7 +5,6 @@ import { getGeneralSettings } from './settings'
 import { formatFilename } from './utils/formatters'
 import { useScopedConsole } from './utils/log'
 
-const console = useScopedConsole({ name: '文件下载' })
 /** 表示`DownloadPackage`中的一个文件 */
 export interface PackageEntry {
   /** 文件名 */
@@ -76,6 +75,7 @@ export class DownloadPackage {
     DownloadPackage.download(filename, blob)
   }
   private static download(filename: string, blob: Blob) {
+    const console = useScopedConsole('文件下载')
     const a = document.createElement('a')
     const url = URL.createObjectURL(blob)
     if (DownloadPackage.lastPackageUrl) {

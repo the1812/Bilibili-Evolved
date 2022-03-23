@@ -1,5 +1,48 @@
 # 更新日志
 
+## v2.1.7
+`2022-03-22`
+
+✨**正式版** `v2.1.7`
+- 修复 `简化直播间` 里带头像框的头像大小还是不对. (#3119)
+- 修复 `清爽首页` 无法设置最大宽度. (#3120)
+- 检查更新时的 `安装` 链接现在将遵循更新源设置. (#3122)
+- 修复 `BV 号转换` 在番剧区产生的链接错误. (#3123)
+- 修复 `查看封面` 在番剧区显示错误. (#1992)
+- 修复 `自定义顶栏` 的透明模式在 b 站春季主题下失效. (#3126)
+- 修复更改了主题色后文字颜色没有更新.
+- 修复 `下载视频` 中的下拉菜单被遮挡. (#3129, #3133)
+- 更新合集的一些夜间模式样式. (#3027)
+- `传统连播模式` 支持在合集的最后一集停止连播. (#2940)
+- 修复番剧区在文件命名时取得的 `title` 变量错误. (#3140)
+- 修复通过 `快捷键扩展` 进行的静音操作提示总是显示 `已静音`. (#2830)
+- 修复 `自定义顶栏` 的历史弹窗不支持触摸模式. (#3142)
+- `下载视频` 的编码格式限制恢复之前的逻辑, 仍然是优先匹配, 没有相应编码的视频源时自动回退到其他编码. (#3118)
+- 完善 `mountVueComponent` 的类型. (PR #3151 by [timongh](https://github.com/timongh))
+- 修复 Wasm 播放器部分情况下识别错误. (#3131)
+
+----
+
+✨**预览版** `v2.1.7-preview`
+- `倍速增强` 正式完成分离, 变更为 `记忆倍速`, `扩展倍速` 和独立的插件 `视频倍速 - 快捷键支持`, 详见 [PR 说明](https://github.com/the1812/Bilibili-Evolved/pull/2746). (PR #2746 by [JLoeve](https://github.com/LonelySteve))
+- 为通用设置增加了一些选项描述. (#3140)
+- 新增 ScopedConsole API, 可以创建带有固定前缀的 `console` 对象. 同时脚本作用域中的 `window.console` 将自带 `Bilibili Evolved` 前缀. (#3105)
+```ts
+import { useScopedConsole, randomScopedConsole } from '@/core/utils/log'
+
+console.log(123)
+// [Bilibili Evolved] 123
+{
+  const console2 = useScopedConsole('scope')
+  console2.log(123)
+  // [Bilibili Evolved] [scope] 123
+
+  const console3 = randomScopedConsole({ console: console2 })
+  console3.log(123)
+  // [Bilibili Evolved] [scope] [977a7962] 123
+}
+```
+
 ## v2.1.6
 `2022-03-13`
 

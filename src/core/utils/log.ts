@@ -24,13 +24,15 @@ export const logError = async (error: Error | string, duration?: number) => {
 }
 
 /**
- * 可添加到 ScopedConsole 的前缀
+ * ScopedConsole 配置
  */
-export interface ConsoleBadge {
+export interface ScopedConsoleConfig {
   /** 名称 */
   name: string
   /** 背景色 */
   color?: string
+  /** console 原型 */
+  console?: Console
 }
 interface ScopedData {
   readonly badgeNames: string[]
@@ -58,23 +60,30 @@ export const ScopedConsoleCreateHook = 'scopedConsole.create'
 export const ScopedConsoleCallHook = 'scopedConsole.call'
 /**
  * 创建一个 ScopedConsole, 为输出的日志添加固定的前缀
- * @param consoleBadge 前缀信息
- * @param console 原型对象
+ * @param config 配置对象或者 scope 名称
  */
-export const useScopedConsole = (consoleBadge: ConsoleBadge, console = window.console) => {
+export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
   const { before: beforeCreate, after: afterCreate } = getHook(ScopedConsoleCreateHook)
-  beforeCreate(consoleBadge, console)
+  const {
+    name,
+    color = specialPalette.default,
+    console = window.console,
+  } = typeof config === 'string' ? { name: config } : config
+  const actualConfig: ScopedConsoleConfig = { name, color, console }
+  beforeCreate(config, console)
   let groupCounter = 0
   const prependBadge = (
     target: (...args: any[]) => void,
-    badge: ConsoleBadge,
-    firstColor = badge.color,
+    prependConfig: ScopedConsoleConfig,
+    firstColor = prependConfig.color,
   ) => {
     const lastScopedData: ScopedData = target[ScopedConsoleSymbol]
-    const backgroundColor = (lastScopedData ? badge.color : firstColor) ?? specialPalette.default
+    const backgroundColor = (
+      lastScopedData ? prependConfig.color : firstColor
+    ) ?? specialPalette.default
     const textColor = '#fff'
     const currentScopedData: ScopedData = {
-      badgeNames: [...(lastScopedData?.badgeNames ?? []), `%c${badge.name}`],
+      badgeNames: [...(lastScopedData?.badgeNames ?? []), `%c${prependConfig.name}`],
       badgeValues: [...(lastScopedData?.badgeValues ?? []), `background-color: ${backgroundColor}; color: ${textColor}; padding: 2px 4px; border-radius: 4px; margin-left: ${lastScopedData ? 6 : 0}px`],
       original: lastScopedData?.original ?? target,
     }
@@ -101,16 +110,18 @@ export const useScopedConsole = (consoleBadge: ConsoleBadge, console = window.co
   }
   const prependGroupBadge = (
     target: (...args: any[]) => void,
-    badge: ConsoleBadge,
-    firstColor = badge.color,
+    groupConfig: ScopedConsoleConfig,
+    firstColor = groupConfig.color,
     counter: (num: number) => number = n => n,
   ) => {
-    const patch = prependBadge(target, badge, firstColor)
-    return function patchedGroup(...args: any[]) {
+    const patch = prependBadge(target, groupConfig, firstColor)
+    const patchedGroup = function patchedGroup(...args: any[]) {
       const returnValue = patch.apply(this, args)
       groupCounter = counter(groupCounter)
       return returnValue
     }
+    patchedGroup[ScopedConsoleSymbol] = patch[ScopedConsoleSymbol]
+    return patchedGroup
   }
 
   // 为各个函数补充名称, 方便 Hook 拿到被调用的函数类型
@@ -129,22 +140,22 @@ export const useScopedConsole = (consoleBadge: ConsoleBadge, console = window.co
     ...console,
   }
 
-  scopedConsole.log = prependBadge(console.log, consoleBadge)
-  scopedConsole.info = prependBadge(console.info, consoleBadge)
-  scopedConsole.warn = prependBadge(console.warn, consoleBadge, specialPalette.warn)
-  scopedConsole.error = prependBadge(console.error, consoleBadge, specialPalette.error)
+  scopedConsole.log = prependBadge(console.log, actualConfig)
+  scopedConsole.info = prependBadge(console.info, actualConfig)
+  scopedConsole.warn = prependBadge(console.warn, actualConfig, specialPalette.warn)
+  scopedConsole.error = prependBadge(console.error, actualConfig, specialPalette.error)
 
   scopedConsole.group = prependGroupBadge(
-    console.group, consoleBadge, specialPalette.group, n => n + 1,
+    console.group, actualConfig, specialPalette.group, n => n + 1,
   )
   scopedConsole.groupCollapsed = prependGroupBadge(
-    console.groupCollapsed, consoleBadge, specialPalette.group, n => n + 1,
+    console.groupCollapsed, actualConfig, specialPalette.group, n => n + 1,
   )
   scopedConsole.groupEnd = prependGroupBadge(
-    console.groupEnd, consoleBadge, specialPalette.group, n => n - 1,
+    console.groupEnd, actualConfig, specialPalette.group, n => n - 1,
   )
   scopedConsole.debug = (() => {
-    const patch = prependBadge(console.debug, consoleBadge)
+    const patch = prependBadge(console.debug, actualConfig)
     return function patchedDebug(...args: any[]) {
       if (!getGeneralSettings().devMode) {
         return undefined
@@ -152,6 +163,16 @@ export const useScopedConsole = (consoleBadge: ConsoleBadge, console = window.co
       return patch.apply(this, args)
     }
   })()
-  afterCreate(consoleBadge, scopedConsole)
+  afterCreate(actualConfig, scopedConsole)
   return scopedConsole
+}
+/**
+ * 创建一个随机前缀的 ScopedConsole
+ * @param config 配置对象
+ */
+export const randomScopedConsole = (config: Omit<ScopedConsoleConfig, 'name'>) => {
+  const typedArray = new Uint8Array(4)
+  crypto.getRandomValues(typedArray)
+  const id = [...typedArray].map(it => it.toString(16).padStart(2, '0')).join('')
+  return useScopedConsole({ ...config, name: id })
 }
