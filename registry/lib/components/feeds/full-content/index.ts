@@ -1,8 +1,8 @@
-import { ComponentMetadata } from '@/components/types'
 import { toggleStyle } from '@/components/styled-component'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
+import { defineComponentMetadata } from '@/components/define'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   ...toggleStyle('fullFeedsContent', () => import('./full-content.scss')),
   displayName: '展开动态内容',
   description: {
@@ -13,4 +13,4 @@ export const component: ComponentMetadata = {
     componentsTags.feeds,
   ],
   urlInclude: feedsUrlsWithoutDetail,
-}
+})

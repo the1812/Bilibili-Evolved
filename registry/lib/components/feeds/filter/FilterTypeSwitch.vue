@@ -1,7 +1,7 @@
 <template>
   <div class="filter-type-switch feeds-filter-swtich">
     <label :class="{ disabled }">
-      <span class="name" :class="{ disabled }">{{ type.name }}</span>
+      <span :class="{ disabled }" class="name">{{ type.name }}</span>
       <input v-model="disabled" type="checkbox" />
       <VIcon v-if="disabled" :size="16" class="disabled" icon="mdi-cancel"></VIcon>
       <VIcon v-else :size="16" icon="mdi-check"></VIcon>
@@ -9,13 +9,14 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
 import { getComponentSettings } from '@/core/settings'
-import {
-  VIcon,
-} from '@/ui'
+import { VIcon } from '@/ui'
+import { PropType } from 'vue'
+import { FeedsCardType } from '@/components/feeds/api'
+import { Options as FeedsFilterOptions } from '.'
 
-const { options } = getComponentSettings('feedsFilter')
+const { options } = getComponentSettings<FeedsFilterOptions>('feedsFilter')
 export default Vue.extend({
   components: {
     VIcon,
@@ -26,7 +27,7 @@ export default Vue.extend({
       required: true,
     },
     type: {
-      type: Object,
+      type: Object as PropType<FeedsCardType>,
       required: true,
     },
   },
@@ -66,11 +67,12 @@ export default Vue.extend({
   },
 })
 </script>
-<style lang="scss">
+<style lang='scss'>
 .feeds-filter-swtich {
   &:not(:last-child) {
     margin-bottom: 4px;
   }
+
   label {
     cursor: pointer;
     margin: 0;
@@ -84,23 +86,29 @@ export default Vue.extend({
     .name {
       font-size: 12px;
     }
+
     .disabled {
       color: var(--theme-color) !important;
     }
+
     &:hover {
       background-color: #8882;
     }
+
     input {
       display: none;
     }
+
     .be-icon {
       &.disabled {
         display: none;
       }
     }
+
     &.disabled {
       .be-icon {
         display: none;
+
         &.disabled {
           display: block;
         }

@@ -1,6 +1,6 @@
-import { ComponentMetadata } from '@/components/types'
 import { FeedsCard } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
+import { defineComponentMetadata } from '@/components/define'
 
 let enabled = true
 const id = 'disable-feeds-details-style'
@@ -56,7 +56,7 @@ const entry = async () => {
       details.classList.add('details')
       details.setAttribute('click-title', '详情')
       details.innerHTML = /* html */`
-        详情<i class="mdi mdi-chevron-right" click-title></i>
+        详情<i class='mdi mdi-chevron-right' click-title></i>
       `
       contents.insertAdjacentElement('beforeend', details)
     }
@@ -65,7 +65,7 @@ const entry = async () => {
     added: disableDetails,
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'disableFeedsDetails',
   displayName: '禁止跳转动态详情',
   tags: [
@@ -77,11 +77,12 @@ export const component: ComponentMetadata = {
   },
   entry,
   unload: () => {
-    document.getElementById(id)?.remove()
+    document.getElementById(id)
+      ?.remove()
     enabled = false
   },
   reload: () => {
     addStyle()
     enabled = true
   },
-}
+})

@@ -1,9 +1,12 @@
-import { ComponentMetadata } from '@/components/types'
 import { FeedsCard } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
+import { defineComponentMetadata } from '@/components/define'
 
 const entry = async () => {
-  const { forEachFeedsCard, addMenuItem } = await import('@/components/feeds/api')
+  const {
+    forEachFeedsCard,
+    addMenuItem,
+  } = await import('@/components/feeds/api')
   const addCopyLinkButton = (card: FeedsCard) => {
     addMenuItem(card, {
       className: 'copy-link',
@@ -17,7 +20,8 @@ const entry = async () => {
     added: addCopyLinkButton,
   })
 }
-export const component: ComponentMetadata = {
+
+export const component = defineComponentMetadata({
   name: 'copyFeedsLink',
   displayName: '复制动态链接',
   description: {
@@ -29,4 +33,4 @@ export const component: ComponentMetadata = {
     componentsTags.feeds,
     componentsTags.utils,
   ],
-}
+})

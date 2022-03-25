@@ -1,4 +1,8 @@
-import { ComponentMetadata, ComponentOptions } from '@/components/types'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { feedsFilterPlugin } from './plugin'
 
 const entry = async () => {
@@ -11,7 +15,7 @@ const entry = async () => {
   const { mountVueComponent } = await import('@/core/utils')
   leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(FeedsFilterCard).$el)
 }
-const options: ComponentOptions = {
+const options = defineOptionsMetadata({
   types: {
     defaultValue: [],
     displayName: '过滤动态类型',
@@ -32,15 +36,9 @@ const options: ComponentOptions = {
     displayName: '过滤特殊动态类型',
     hidden: true,
   },
-}
-export type FeedsFilterOptions = {
-  types: number[]
-  patterns: string[]
-  /** FIXME: 虽然代码里按照`number[]`, 但其实存进去的是`string[]`? */
-  sideCards: number[]
-  specialTypes: number[]
-}
-export const component: ComponentMetadata = {
+})
+export type Options = OptionsOfMetadata<typeof options>
+export const component = defineComponentMetadata({
   name: 'feedsFilter',
   displayName: '动态过滤器',
   description: {
@@ -58,4 +56,4 @@ export const component: ComponentMetadata = {
     /^https:\/\/t\.bilibili\.com\/$/,
   ],
   plugin: feedsFilterPlugin,
-}
+})

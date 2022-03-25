@@ -1,6 +1,6 @@
-import { ComponentMetadata } from '@/components/types'
 import { styledComponentEntry } from '@/components/styled-component'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
+import { defineComponentMetadata } from '@/components/define'
 
 const entry = async () => {
   const { forEachFeedsCard } = await import('@/components/feeds/api')
@@ -48,7 +48,7 @@ const entry = async () => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'foldComments',
   displayName: '快速收起评论',
   description: {
@@ -59,4 +59,4 @@ export const component: ComponentMetadata = {
     componentsTags.feeds,
   ],
   entry: styledComponentEntry(() => import('./fold-comment.scss'), entry),
-}
+})

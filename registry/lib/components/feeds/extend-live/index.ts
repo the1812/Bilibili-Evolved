@@ -1,5 +1,5 @@
-import { ComponentMetadata } from '@/components/types'
 import { styledComponentEntry } from '@/components/styled-component'
+import { defineComponentMetadata } from '@/components/define'
 
 interface LiveInfo {
   cover: string
@@ -11,6 +11,7 @@ interface LiveInfo {
   online: number
   link: string
 }
+
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
   const liveList = await select('.live-up-list') as HTMLElement
@@ -18,14 +19,17 @@ const entry = async () => {
     return
   }
   const pageSize = 24
-  const { getPages, getJsonWithCredentials } = await import('@/core/ajax')
+  const {
+    getPages,
+    getJsonWithCredentials,
+  } = await import('@/core/ajax')
   const fullList: LiveInfo[] = await getPages({
     api: page => getJsonWithCredentials(`https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=${pageSize}`),
     getList: json => lodash.get(json, 'data.list', []),
     getTotal: json => lodash.get(json, 'data.results', 0),
   })
   const liveListNames = dqa(liveList, '.up-name')
-  const presentedNames = liveListNames.map((it: HTMLElement) => it.innerText.trim())
+  const presentedNames = liveListNames.map(it => (it as HTMLElement).innerText.trim())
   const presented = fullList.filter(it => presentedNames.includes(it.uname))
   const extend = fullList.filter(it => !presentedNames.includes(it.uname))
 
@@ -36,7 +40,8 @@ const entry = async () => {
       return
     }
     const clone = liveDetailItem.cloneNode(true) as HTMLElement
-    dqa(clone, 'a[href]').forEach(a => a.setAttribute('href', `https://live.bilibili.com/${it.roomid}`))
+    dqa(clone, 'a[href]')
+      .forEach(a => a.setAttribute('href', `https://live.bilibili.com/${it.roomid}`))
     const face = dq(clone, '.live-up-img') as HTMLElement
     face.style.backgroundImage = `url(${it.face})`
     const title = dq(clone, '.live-name') as HTMLElement
@@ -52,7 +57,7 @@ const entry = async () => {
   console.log(presented, extend)
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'extendFeedsLive',
   displayName: '直播信息扩充',
   description: {
@@ -66,4 +71,4 @@ export const component: ComponentMetadata = {
   urlInclude: [
     /^https:\/\/t\.bilibili\.com\/$/,
   ],
-}
+})
