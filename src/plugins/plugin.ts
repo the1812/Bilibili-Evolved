@@ -1,7 +1,7 @@
 import { ComponentMetadata, FeatureBase } from '@/components/component'
 import { deleteValue } from '@/core/utils'
-import { CoreApis } from '../core/core-apis'
-import { addData, registerData, registerAndGetData } from './data'
+import { CoreApis } from '@/core/core-apis'
+import { addData, registerAndGetData, registerData } from './data'
 import { addHook, getHook } from './hook'
 
 /** 插件初始化时的传入参数, 可以解构并调用 */
@@ -48,7 +48,7 @@ export const plugins: PluginMetadata[] = getBuiltInPlugins()
 
 /**
  * 安装插件
- * @param input 插件数据
+ * @param code 插件代码
  */
 export const installPlugin = async (code: string) => {
   const { parseExternalInput } = await import('../core/external-input')
@@ -95,13 +95,9 @@ export const installPlugin = async (code: string) => {
  */
 export const uninstallPlugin = async (nameOrDisplayName: string) => {
   const { settings } = await import('@/core/settings')
-  const existingPlugin = Object.entries(settings.userPlugins)
-    .find(([name, { displayName }]) => {
-      if (name === nameOrDisplayName || displayName === nameOrDisplayName) {
-        return true
-      }
-      return false
-    })
+  const existingPlugin = Object.entries(settings.userPlugins).find(([name, { displayName }]) => {
+    return name === nameOrDisplayName || displayName === nameOrDisplayName
+  })
   if (!existingPlugin) {
     throw new Error(`没有找到与名称'${nameOrDisplayName}'相关联的插件`)
   }
@@ -155,20 +151,29 @@ export const loadPlugin = async (plugin: PluginMetadata) => {
  * @param components 组件列表
  */
 export const loadAllPlugins = async (components: ComponentMetadata[]) => {
-  const { settings, getGeneralSettings } = await import('@/core/settings')
-  const { batchParseCode } = await import('@/core/external-input')
-  const otherPlugins = components
-    .map(extractPluginFromComponent)
-    .filter(p => p !== null)
-    .concat(await batchParseCode<PluginMetadata>(
+  const {
+    settings,
+    getGeneralSettings,
+  } = await import('@/core/settings')
+  const {
+    loadFeaturesFromCodes,
+    FeatureKind,
+  } = await import('@/core/external-input/load-features-from-codes')
+  const otherPlugins = lodash(components).map(extractPluginFromComponent).filter(p => p !== null).
+    map(p => p!).concat(await loadFeaturesFromCodes(
+      FeatureKind.Plugin,
+      Object.keys(settings.userPlugins),
       Object.values(settings.userPlugins).map(p => p.code),
-    ))
+    )).value()
   plugins.push(...otherPlugins)
   return Promise.allSettled(
     plugins.map(loadPlugin),
   ).then(async () => {
     if (getGeneralSettings().devMode) {
-      const { pluginLoadTime, pluginResolveTime } = await import('@/core/performance/plugin-trace')
+      const {
+        pluginLoadTime,
+        pluginResolveTime,
+      } = await import('@/core/performance/plugin-trace')
       const { logStats } = await import('@/core/performance/stats')
       logStats('plugins block', pluginLoadTime)
       logStats('plugins resolve', pluginResolveTime)

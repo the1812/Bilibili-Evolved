@@ -1,10 +1,10 @@
 import {
   addComponentListener,
+  getComponentSettings,
   getGeneralSettings,
   isComponentEnabled,
-  getComponentSettings,
 } from '@/core/settings'
-import { fullyLoaded, contentLoaded } from '@/core/life-cycle'
+import { contentLoaded, fullyLoaded } from '@/core/life-cycle'
 import { LoadingMode } from '@/core/loading-mode'
 import { Widget } from '@/components/widget'
 import { ComponentMetadata } from './types'
@@ -26,7 +26,10 @@ const loadI18n = async (component: ComponentMetadata) => {
   }
   const { addI18nData } = await import('@/components/i18n/helpers')
   Object.entries(component.i18n).forEach(([language, data]) => {
-    const { map = [], regex = [] } = data
+    const {
+      map = [],
+      regex = [],
+    } = data
     addI18nData(language, map, regex)
   })
 }
@@ -35,14 +38,20 @@ const getComponentWidgetName = (component: ComponentMetadata) => `${component.na
 /** 提取组件中的Widget */
 const loadWidget = async (component: ComponentMetadata) => {
   if (component.widget) {
-    const widget: Widget = { ...component.widget, name: getComponentWidgetName(component) }
+    const widget: Widget = {
+      ...component.widget,
+      name: getComponentWidgetName(component),
+    }
     const { addData } = await import('@/plugins/data')
     const { WidgetsPlugin } = await import('./settings-panel')
     addData(WidgetsPlugin, (widgets: Widget[]) => {
       if (widgets.find(w => w.name === widget.name)) {
         return
       }
-      const { urlInclude, urlExclude } = widget
+      const {
+        urlInclude,
+        urlExclude,
+      } = widget
       if (component.urlInclude) {
         if (urlInclude) {
           urlInclude.push(...component.urlInclude)
@@ -66,7 +75,7 @@ const loadedComponents: Record<string, Record<string, any>> = {}
 /** 获取已加载组件的导出内容
  * @param name 组件名称
  */
-export const importComponent = <ComponentExportType> (
+export const importComponent = <ComponentExportType>(
   name: string,
 ): Record<string, ComponentExportType> => {
   if (!(name in loadedComponents)) {
@@ -137,12 +146,17 @@ export const loadComponent = async (component: ComponentMetadata) => {
 /** 加载所有用户组件的定义 (不运行) */
 export const loadAllUserComponents = async () => {
   const { settings } = await import('@/core/settings')
-  const { batchParseCode } = await import('@/core/external-input')
+  const {
+    loadFeaturesFromCodes,
+    FeatureKind,
+  } = await import('@/core/external-input/load-features-from-codes')
   const loadUserComponent = (component: ComponentMetadata) => {
     components.push(component)
     componentsMap[component.name] = component
   }
-  const userComponents = await batchParseCode<ComponentMetadata>(
+  const userComponents = await loadFeaturesFromCodes(
+    FeatureKind.Component,
+    Object.keys(settings.userComponents),
     Object.values(settings.userComponents).map(it => it.code),
   )
   userComponents.forEach(loadUserComponent)
@@ -153,12 +167,12 @@ export const loadAllComponents = async () => {
   const { loadAllPlugins } = await import('@/plugins/plugin')
   const loadComponents = () => loadAllPlugins(components)
     .then(() => Promise.allSettled(components.map(loadI18n)))
-    .then(() => Promise.allSettled(components.map(loadComponent)))
-    .then(async () => {
+    .then(() => Promise.allSettled(components.map(loadComponent))).then(async () => {
       if (generalSettings.devMode) {
-        const { componentLoadTime, componentResolveTime } = await import(
-          '@/core/performance/component-trace'
-        )
+        const {
+          componentLoadTime,
+          componentResolveTime,
+        } = await import('@/core/performance/component-trace')
         const { logStats } = await import('@/core/performance/stats')
         logStats('components block', componentLoadTime)
         logStats('components resolve', componentResolveTime)
