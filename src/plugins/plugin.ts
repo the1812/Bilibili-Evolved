@@ -23,6 +23,7 @@ export interface PluginMinimalData extends FeatureBase {
   /** 显示名称, 默认同插件名称 */
   displayName?: string
 }
+
 type PartialRequired<Target, Props extends keyof Target> = Target & {
   [P in Props]-?: Target[P]
 }
@@ -67,11 +68,12 @@ export const installPlugin = async (code: string) => {
       message: `已更新插件'${plugin.displayName}', 刷新后生效`,
     }
   }
-  const newPlugin = {
-    code,
-    displayName: plugin.name, // 默认等于 name
-    ...plugin,
-  }
+  const newPlugin = lodash(plugin)
+    .set<PluginMetadata & { code: string }>(['code'], code)
+    .defaults({
+      displayName: plugin.name, // 默认等于 name
+    })
+    .value()
   settings.userPlugins[plugin.name] = newPlugin
   plugins.push(newPlugin)
   // const { coreApis } = await import('../core/core-apis')
@@ -159,8 +161,8 @@ export const loadAllPlugins = async (components: ComponentMetadata[]) => {
     loadFeaturesFromCodes,
     FeatureKind,
   } = await import('@/core/external-input/load-features-from-codes')
-  const otherPlugins = lodash(components).map(extractPluginFromComponent).filter(p => p !== null).
-    map(p => p!).concat(await loadFeaturesFromCodes(
+  const otherPlugins = lodash(components).map(extractPluginFromComponent).filter(p => p !== null)
+    .map(p => p!).concat(await loadFeaturesFromCodes(
       FeatureKind.Plugin,
       Object.keys(settings.userPlugins),
       Object.values(settings.userPlugins).map(p => p.code),
