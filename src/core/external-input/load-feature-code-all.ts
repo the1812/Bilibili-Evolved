@@ -1,101 +1,106 @@
 import {
-  loadFeatureCode,
-  LoadFeatureCodeError,
-  LoadFeatureCodeResult,
+  loadFeatureCode, LoadFeatureCodeResult, LoadFeatureCodeResultError,
   LoadFeatureCodeResultOk,
 } from '@/core/external-input/load-feature-code'
 import { FeatureBase } from '@/components/types'
 
-// ========== result type definitions ==========
+interface ResultInstance {
+  readonly isOk: <X extends FeatureBase>(
+    this: LoadFeatureCodeAllResult<X>
+  ) => this is LoadFeatureCodeAllResultOk<X>
 
-class LoadFeatureCodeAllResultConstructor<X extends FeatureBase> {
-  isOk(): this is LoadFeatureCodeAllResultOk<X> {
-    return this instanceof LoadFeatureCodeAllResultOk
-  }
+  readonly isError: (
+    this: LoadFeatureCodeAllResult<FeatureBase>
+  ) => this is LoadFeatureCodeAllResultError
 
-  isError(): this is LoadFeatureCodeAllError {
-    return !this.isOk()
-  }
+  readonly isNoExport: (
+    this: LoadFeatureCodeAllResult<FeatureBase>
+  ) => this is LoadFeatureCodeAllResultNoExport
 
-  isNoExport(): this is LoadFeatureCodeAllResultNoExport {
-    return this instanceof LoadFeatureCodeAllResultNoExport
-  }
-
-  isCodeThrew(): this is LoadFeatureCodeAllResultCodeThrew {
-    return this instanceof LoadFeatureCodeAllResultCodeThrew
-  }
-
-  tryGetFeatures(): X[] | undefined {
-    if (this.isOk()) {
-      return this.features
-    }
-    return undefined
-  }
+  readonly isCodeThrew: (
+    this: LoadFeatureCodeAllResult<FeatureBase>
+  ) => this is LoadFeatureCodeAllResultCodeThrew
 }
 
 /**
- * 成活从代码中获取 features
+ * 成功从代码中获取 features
  *
- * @member features 从代码中获取的导出值
+ * @namespace
+ * @property features 从代码中获取的导出值
  */
-export class LoadFeatureCodeAllResultOk<X extends FeatureBase> extends LoadFeatureCodeAllResultConstructor<X> {
-  constructor(public readonly features: X[]) {
-    super()
-  }
+interface LoadFeatureCodeAllResultOk<X extends FeatureBase> extends ResultInstance {
+  readonly tag: 'Ok',
+  readonly features: X[],
 }
 
-/**
- * 代码没有导出任何值
- *
- * @member index 出错代码对应的代码数组下标
- */
-export class LoadFeatureCodeAllResultNoExport extends LoadFeatureCodeAllResultConstructor<never> {
-  constructor(public readonly index: number) {
-    super()
-  }
+/** 代码没有导出任何值 */
+interface LoadFeatureCodeAllResultNoExport extends ResultInstance {
+  readonly tag: 'NoExport',
 }
 
 /**
  * 执行代码过程中产生了抛出值。
  *
- * @member index 出错代码对应的代码数组索引
- * @member thrown 抛出的值
+ * @namespace
+ * @property thrown 抛出的值
  */
-export class LoadFeatureCodeAllResultCodeThrew extends LoadFeatureCodeAllResultConstructor<never> {
-  constructor(public readonly index: number, public readonly thrown: unknown) {
-    super()
-  }
+interface LoadFeatureCodeAllResultCodeThrew extends ResultInstance {
+  readonly tag: 'CodeThrew',
+  readonly thrown: unknown,
 }
 
-export type LoadFeatureCodeAllError =
+type LoadFeatureCodeAllResultError =
   LoadFeatureCodeAllResultNoExport
   | LoadFeatureCodeAllResultCodeThrew
-export type LoadFeatureCodeAllResult<X extends FeatureBase> =
+type LoadFeatureCodeAllResult<X extends FeatureBase> =
   LoadFeatureCodeAllResultOk<X>
-  | LoadFeatureCodeAllError
+  | LoadFeatureCodeAllResultError
 
-// ========== internal definitions ==========
+const resultProto: ResultInstance = {
+  isOk() { return this.tag === 'Ok' },
+  isError() { return this.tag !== 'Ok' },
+  isNoExport() { return this.tag === 'NoExport' },
+  isCodeThrew() { return this.tag === 'CodeThrew' },
+}
 
+const okResult = <X extends FeatureBase>(
+  features: X[],
+): LoadFeatureCodeAllResultOk<X> => lodash.create(
+    resultProto,
+    {
+      tag: 'Ok' as const,
+      features,
+    },
+  )
+
+const noExportResult = lodash.create(resultProto, {
+  tag: 'NoExport' as const,
+})
+
+const codeThrewResult = (thrown: unknown): LoadFeatureCodeAllResultCodeThrew => lodash.create(
+  resultProto,
+  {
+    tag: 'CodeThrew' as const,
+    thrown,
+  },
+)
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type Task<Ok, Err = never> = Promise<Ok>
 
 type LdRes<X> = LoadFeatureCodeResult<X>
 type LdOk<X> = LoadFeatureCodeResultOk<X>
-type LdErr = LoadFeatureCodeError
+type LdErr = LoadFeatureCodeResultError
 
 type LdAllRes<X> = LoadFeatureCodeAllResult<X>
 type LdAllOk<X> = LoadFeatureCodeAllResultOk<X>
-type LdAllErr = LoadFeatureCodeAllError
+type LdAllErr = LoadFeatureCodeAllResultError
 
 type LoadCodesTask<X> = Task<LdOk<X>[], [number, LdErr]>
 
-const LdCodeThrew = LoadFeatureCodeAllResultCodeThrew
-const LdAllOk = LoadFeatureCodeAllResultOk
-const LdAllNoExport = LoadFeatureCodeAllResultNoExport
-const LdAllCodeThrew = LoadFeatureCodeAllResultCodeThrew
-
 // covert `Task<LdRes<X>>` to `Task<LdOk<X>, LdErr>`
 const rejectErrorResult = <X>(t: Task<LdRes<X>>): Task<LdOk<X>, LdErr> => (
-  t.then(r => r.isOk() ? r : Promise.reject(r))
+  t.then(r => (r.isOk() ? r : Promise.reject(r)))
 )
 
 // load feature code, and return `Task<LdOk<X>, LdErr>`
@@ -104,20 +109,22 @@ const loadCode = <X>(code: string): Task<LdOk<X>, LdErr> => (
 )
 
 // covert `Task`'s `Err` type from `T` to `[number, T]`
-const addIndexToRejected = <N extends number, O, E>(t: Task<O, E>, i: N): Task<O, [N, E]> => (
-  t.catch(e => Promise.reject([i, e]))
-)
+const addIndexToRejected = <N extends number, O, E>(
+  t: Task<O, E>,
+  i: N,
+// eslint-disable-next-line prefer-promise-reject-errors
+): Task<O, [N, E]> => t.catch(e => Promise.reject([i, e]))
 
 // create `LdAllOk` from an array of `LdOk`
 const createOkResult = <X>(arr: LdOk<X>[]): LdAllOk<X> => (
-  new LdAllOk(arr.map(r => r.feature))
+  okResult(arr.map(r => r.feature))
 )
 
 // create `LdAllErr` from `[number, LdErr]`
 const createErrResult = (t: [number, LdErr]): LdAllErr => (
-  t[1] instanceof LdCodeThrew
-    ? new LdAllCodeThrew(t[0], t[1].thrown)
-    : new LdAllNoExport(t[0])
+  t[1].isCodeThrew()
+    ? codeThrewResult(t[1].thrown)
+    : noExportResult
 )
 
 // load all feature codes, and return `LoadCodesTask`
@@ -132,8 +139,6 @@ const createTaskResult = <X>(t: LoadCodesTask<X>): Task<LdAllRes<X>> => t
   .then(createOkResult)
   .catch(createErrResult)
 
-// ========== paramount function to export ==========
-
 /**
  * 批量加载组件或插件的代码字符串，获取其导出 feature
  *
@@ -142,7 +147,18 @@ const createTaskResult = <X>(t: LoadCodesTask<X>): Task<LdAllRes<X>> => t
  * @param codes 代码字符串数组
  * @returns 一个不会失败的 `Promise`，其结果值为 `LoadFeatureCodeAllResult`
  */
-export const loadFeatureCodeAll = <X>(codes: string[]): Promise<LoadFeatureCodeAllResult<X>> => lodash(codes)
-  .thru<LoadCodesTask<X>>(loadCodes)
-  .thru(createTaskResult)
-  .value()
+const loadFeatureCodeAll = <X>(codes: string[]): Promise<LoadFeatureCodeAllResult<X>> => (
+  lodash(codes)
+    .thru<LoadCodesTask<X>>(loadCodes)
+    .thru(createTaskResult)
+    .value()
+)
+
+export {
+  loadFeatureCodeAll,
+  LoadFeatureCodeAllResult,
+  LoadFeatureCodeAllResultOk,
+  LoadFeatureCodeAllResultError,
+  LoadFeatureCodeAllResultNoExport,
+  LoadFeatureCodeAllResultCodeThrew,
+}

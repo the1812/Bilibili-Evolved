@@ -1,33 +1,44 @@
 import {
-  LoadFeatureCodeError,
-  LoadFeatureCodeResultNoExport,
-  LoadFeatureCodeResultOk,
+  LoadFeatureCodeResultError, LoadFeatureCodeResultOk,
 } from '@/core/external-input/load-feature-code'
 import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata } from '@/components/types'
 import { PluginMetadata } from '@/plugins/plugin'
-import { loadFeatureCodeAllSettled } from '@/core/external-input/load-feature-code-all-settled'
+import {
+  loadFeatureCodeAllSettled,
+} from '@/core/external-input/load-feature-code-all-settled'
 
-const curConsole = useScopedConsole('@/core/external-input/load-features-from-codes.ts')
+const curConsole = useScopedConsole(
+  '@/core/external-input/load-features-from-codes.ts',
+)
 
 export enum FeatureKind {
   Component = 'Component',
   Plugin = 'Plugin',
 }
 
-const logError = (kind: FeatureKind): (featureName: string, err: LoadFeatureCodeError) => void => {
+const logError = (kind: FeatureKind): (
+  featureName: string, err: LoadFeatureCodeResultError) => void => {
   const prefix = kind === FeatureKind.Component ? 'component' : 'plugin'
   return (featureName, err) => {
-    if (err instanceof LoadFeatureCodeResultNoExport) {
-      curConsole.error(`${prefix} '${featureName}' exports no value, failed to load`)
+    if (err.isNoExport()) {
+      curConsole.error(
+        `${prefix} '${featureName}' exports no value, failed to load`,
+      )
     } else {
-      curConsole.error(`${prefix} '${featureName}' throws something when importing, failed to load`, { thrown: err.thrown })
+      curConsole.error(
+        `${prefix} '${featureName}' throws something when importing, failed to load`,
+        { thrown: err.thrown },
+      )
     }
   }
 }
 
-const reportErrToUser = (featureKind: FeatureKind, errNames: string[]): void => {
+const reportErrToUser = (
+  featureKind: FeatureKind,
+  errNames: string[],
+): void => {
   type ErrInfo = number | string[]
 
   const emptyErrInfo: () => string[] = () => []
@@ -37,16 +48,14 @@ const reportErrToUser = (featureKind: FeatureKind, errNames: string[]): void => 
       if (acc.length < 3) {
         acc.push(featureName)
         return acc
-      } else {
-        return 4
       }
-    } else {
-      return acc + 1
+      return 4
     }
+    return acc + 1
   }
 
-  const reportErrInfo = (featureKind: FeatureKind, info: ErrInfo): void => {
-    const kindName = featureKind === FeatureKind.Component ? '组件' : '插件'
+  const reportErrInfo = (kind: FeatureKind, info: ErrInfo): void => {
+    const kindName = kind === FeatureKind.Component ? '组件' : '插件'
     if (Array.isArray(info)) {
       Toast.error(
         `${kindName} "${info.join('", "')}" 加载失败。请向我们反馈，以解决此问题。`,
@@ -64,8 +73,7 @@ const reportErrToUser = (featureKind: FeatureKind, errNames: string[]): void => 
   reportErrInfo(featureKind, errInfo)
 }
 
-type KindToType<K extends FeatureKind> =
-  K extends FeatureKind.Component ? ComponentMetadata : PluginMetadata
+export type FeatureMetadata = ComponentMetadata | PluginMetadata
 
 /**
  * 批量加载组件或插件代码
@@ -93,8 +101,8 @@ export async function loadFeaturesFromCodes(
   kind: FeatureKind,
   names: string[],
   codes: string[],
-): Promise<(ComponentMetadata | PluginMetadata)[]> {
-  const results = await loadFeatureCodeAllSettled<KindToType<typeof kind>>(codes)
+): Promise<FeatureMetadata[]> {
+  const results = await loadFeatureCodeAllSettled<FeatureMetadata>(codes)
   const [namedOk, namedErr] = lodash(results)
     .map((r, i) => [names[i], r] as const)
     .partition(([, r]) => r.isOk())
@@ -111,6 +119,6 @@ export async function loadFeaturesFromCodes(
 
   return lodash.map(
     namedOk,
-    ([, r]) => (r as LoadFeatureCodeResultOk<KindToType<typeof kind>>).feature,
+    ([, r]) => (r as LoadFeatureCodeResultOk<FeatureMetadata>).feature,
   )
 }
