@@ -42,9 +42,9 @@ export const registerData = (key: string, ...data: any[]) => {
  */
 export const addData = (key: string, provider: PluginDataProvider) => {
   if (pluginDataMap.has(key)) {
-    const { providers, registered, data } = pluginDataMap.get(key)
+    const { providers, loaded, data } = pluginDataMap.get(key)
     providers.push(provider)
-    if (registered) {
+    if (loaded) {
       provider(...data)
     }
   } else {
