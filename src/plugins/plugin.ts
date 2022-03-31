@@ -23,6 +23,7 @@ export interface PluginMinimalData extends FeatureBase {
   /** 显示名称, 默认同插件名称 */
   displayName?: string
 }
+
 type PartialRequired<Target, Props extends keyof Target> = Target & {
   [P in Props]-?: Target[P]
 }
@@ -95,9 +96,11 @@ export const installPlugin = async (code: string) => {
  */
 export const uninstallPlugin = async (nameOrDisplayName: string) => {
   const { settings } = await import('@/core/settings')
-  const existingPlugin = Object.entries(settings.userPlugins).find(([name, { displayName }]) => {
-    return name === nameOrDisplayName || displayName === nameOrDisplayName
-  })
+  const existingPlugin = Object.entries(settings.userPlugins).find(
+    ([name, { displayName }]) => (
+      name === nameOrDisplayName || displayName === nameOrDisplayName
+    ),
+  )
   if (!existingPlugin) {
     throw new Error(`没有找到与名称'${nameOrDisplayName}'相关联的插件`)
   }
@@ -159,12 +162,16 @@ export const loadAllPlugins = async (components: ComponentMetadata[]) => {
     loadFeaturesFromCodes,
     FeatureKind,
   } = await import('@/core/external-input/load-features-from-codes')
-  const otherPlugins = lodash(components).map(extractPluginFromComponent).filter(p => p !== null).
-    map(p => p!).concat(await loadFeaturesFromCodes(
+  const otherPlugins = lodash(components)
+    .map(extractPluginFromComponent)
+    .filter(p => p !== null)
+    .map(p => p as PluginMetadata)
+    .concat(await loadFeaturesFromCodes(
       FeatureKind.Plugin,
       Object.keys(settings.userPlugins),
       Object.values(settings.userPlugins).map(p => p.code),
-    )).value()
+    ))
+    .value()
   plugins.push(...otherPlugins)
   return Promise.allSettled(
     plugins.map(loadPlugin),
