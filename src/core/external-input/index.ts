@@ -1,4 +1,4 @@
-import { pickFile } from './file-picker'
+import { pickFile } from '@/core/file-picker'
 
 /** 外部输入包装类型, 详见`parseExternalInput`的文档 */
 export type ExternalInput<T> = undefined | string | T
@@ -52,24 +52,5 @@ export const parseExternalInput = async <T>(input: ExternalInput<T>): Promise<T>
     }
   } else {
     return input
-  }
-}
-export const batchParseCode = async<T>(inputs: string[]): Promise<T[]> => {
-  try {
-    const exports = {}
-    const result = inputs.map(input => eval(input) as T)
-    if (Object.values(exports).length > 0) {
-      const { coreApis } = await import('@/core/core-apis')
-      return Object.values(exports).map(value => {
-        if (typeof value === 'function') {
-          return value(coreApis) as T
-        }
-        return value as T
-      })
-    }
-    return result
-  } catch (error) {
-    console.error(error)
-    return null
   }
 }
