@@ -99,7 +99,7 @@ export const loadComponent = async (component: ComponentMetadata) => {
       metadata: component,
       coreApis,
     })
-    loadedComponents[component.name] = data || {}
+    loadedComponents[component.name] = data as any || {}
   }
   if (component.reload && component.unload) {
     addComponentListener(component.name, async (enable: boolean) => {
@@ -189,3 +189,4 @@ export const loadAllComponents = async () => {
 }
 
 export * from './types'
+export * from './define'
