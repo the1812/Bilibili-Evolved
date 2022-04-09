@@ -26,16 +26,15 @@ export default Vue.extend({
       tipText: '',
       tipShowing: false,
       tipHandle: 0,
-      on: false,
     }
   },
-  created() {
-    this.on = this.isInWatchlater()
-  },
-  methods: {
-    isInWatchlater() {
+  computed: {
+    on() {
+      console.log(this.watchlaterList, this.aid, this.watchlaterList.includes(parseInt(this.aid)))
       return this.watchlaterList.includes(parseInt(this.aid))
     },
+  },
+  methods: {
     showTip(text: string) {
       this.tipText = text
       this.tipShowing = true
@@ -48,7 +47,6 @@ export default Vue.extend({
     },
     async toggle() {
       await toggleWatchlater(this.aid)
-      this.on = this.isInWatchlater()
       this.showTip(
         this.on ? '已添加至稍后再看' : '已从稍后再看移除',
       )
