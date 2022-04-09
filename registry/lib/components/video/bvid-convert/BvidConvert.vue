@@ -19,11 +19,15 @@
 
 <script lang="ts">
 import { videoChange } from '@/core/observer'
+import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
+import { getFriendlyTitle } from '@/core/utils/title'
 import { bangumiUrls } from '@/core/utils/urls'
 import { VIcon } from '@/ui'
+import { BvidConvertOptions } from '.'
 
+const { options } = getComponentSettings<BvidConvertOptions>('bvidConvert')
 enum CopyIdType {
   Aid = 'aid',
   Bvid = 'bvid',
@@ -82,7 +86,11 @@ export default Vue.extend({
         id: this[data],
       }
       const link = linkProviders.map(p => p(context)).filter(it => it !== null)[0]
-      await navigator.clipboard.writeText(link)
+      if (options.copyWithTitle) {
+        await navigator.clipboard.writeText(`${getFriendlyTitle()} ${link}`)
+      } else {
+        await navigator.clipboard.writeText(link)
+      }
       this[`${data}Copied`] = true
       setTimeout(() => (this[`${data}Copied`] = false), 1000)
     },
