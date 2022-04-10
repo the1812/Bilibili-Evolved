@@ -3,7 +3,7 @@ import { childList, childListSubtree } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { liveUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
-import { FeedsCardsManager } from '.'
+import { FeedsCardsManager } from './base'
 
 /** 表示一个动态卡片列表适配器, 可以对在不同页面的地方里的动态列表提供支持 */
 export interface FeedsCardsListAdaptor {
@@ -133,7 +133,7 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
         'https://t.bilibili.com/',
       ],
       watchCardsList: async manager => {
-        const list = await select('.feed-card .content, .detail-content .detail-card') as HTMLElement
+        const list = await select('.feed-card .content, .detail-content .detail-card, .bili-dyn-list__items') as HTMLElement
         if (!list) {
           return false
         }

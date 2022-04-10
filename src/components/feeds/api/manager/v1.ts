@@ -1,10 +1,7 @@
 import { childList } from '@/core/observer'
 import { sq } from '@/core/spin-query'
-import { matchUrlPattern } from '@/core/utils'
-import { registerAndGetData } from '@/plugins/data'
-import { FeedsCardsManager, FeedsCardsManagerEventType } from '.'
+import { FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
 import { feedsCardTypes, FeedsCard, RepostFeedsCard, FeedsCardType } from '../types'
-import { FeedsCardsListAdaptor, ListAdaptorKey } from './adaptor'
 
 const getFeedsCardType = (element: HTMLElement) => {
   if (element.querySelector('.repost')) {
@@ -45,8 +42,6 @@ const isRepostType = (card: FeedsCard): card is RepostFeedsCard => (
  * @param element 动态卡片的元素
  */
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
-  // eslint-disable-next-line no-underscore-dangle
-  const getVueData = (el: any) => el.__vue__ || el.parentElement.__vue__
   const getSimpleText = async (selector: string) => {
     const subElement = await sq(
       () => element.querySelector(selector),
@@ -233,18 +228,5 @@ export class FeedsCardsManagerV1 extends FeedsCardsManager {
         record.removedNodes.forEach(node => this.removeCard(findCardNode(node)))
       })
     })
-  }
-  async startWatching() {
-    if (this.watching) {
-      return true
-    }
-    this.watching = true
-    const [adaptors] = registerAndGetData(ListAdaptorKey, [] as FeedsCardsListAdaptor[])
-    const adaptor = adaptors.find(a => a.match.some(p => matchUrlPattern(p)))
-    if (!adaptor) {
-      console.warn('[FeedsCardsManager] No adaptor found', adaptors)
-      return false
-    }
-    return adaptor.watchCardsList(this)
   }
 }
