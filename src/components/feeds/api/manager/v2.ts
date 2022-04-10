@@ -1,5 +1,6 @@
 import { childList } from '@/core/observer'
 import { descendingStringSort } from '@/core/utils/sort'
+import { pascalCase } from '@/core/utils'
 import { createNodeValidator, FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
 import { FeedsCard, feedsCardTypes } from '../types'
 
@@ -25,12 +26,12 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     likes: like.count,
     reposts: forward.count,
     comments: comment.count,
-    text: desc.text,
-    type: feedsCardTypeMap[lodash.startCase(type)] ?? feedsCardTypeMap.DynamicTypeWord,
+    text: desc?.text ?? '',
+    type: feedsCardTypeMap[pascalCase(type)] ?? feedsCardTypeMap.DynamicTypeWord,
     element,
     get presented() { return element.parentNode !== null },
     async getText() {
-      return getVueData(element).data.modules.module_dynamic.desc.text
+      return getVueData(element).data.modules.module_dynamic.desc?.text ?? ''
     },
   }
 }
@@ -67,10 +68,17 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
     const selector = '.bili-dyn-item'
     const cards = dqa(cardsList, selector)
     cards.forEach(it => this.addCard(it))
+    const cardWrapper = createNodeValidator('bili-dyn-list__item')
+    const getCardNode = (node: Node) => {
+      if (!cardWrapper(node)) {
+        return null
+      }
+      return node.querySelector(selector) as HTMLElement
+    }
     return childList(cardsList, records => {
       records.forEach(record => {
-        record.addedNodes.forEach(node => this.addCard(node))
-        record.removedNodes.forEach(node => this.removeCard(node))
+        record.addedNodes.forEach(node => this.addCard(getCardNode(node)))
+        record.removedNodes.forEach(node => this.removeCard(getCardNode(node)))
       })
     })
   }
