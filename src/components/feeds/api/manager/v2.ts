@@ -39,6 +39,7 @@ const isNodeValid = createNodeValidator('bili-dyn-item')
 
 /** 新版动态卡片管理器实现 */
 export class FeedsCardsManagerV2 extends FeedsCardsManager {
+  readonly managerType = 'v2'
   async addCard(node: Node) {
     if (!isNodeValid(node)) {
       return

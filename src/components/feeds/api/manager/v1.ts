@@ -155,6 +155,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
 
 /** 旧版动态卡片管理器实现 */
 export class FeedsCardsManagerV1 extends FeedsCardsManager {
+  readonly managerType = 'v1'
   async addCard(node: Node) {
     if (!node) {
       return

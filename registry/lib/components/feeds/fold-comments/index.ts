@@ -1,16 +1,17 @@
 import { ComponentMetadata } from '@/components/types'
 import { styledComponentEntry } from '@/components/styled-component'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
+import { feedsCardsManager } from '@/components/feeds/api'
+import { select } from '@/core/spin-query'
+import { childListSubtree } from '@/core/observer'
 
 const entry = async () => {
   const { forEachFeedsCard } = await import('@/components/feeds/api')
   const { childList } = await import('@/core/observer')
+  const commentSelector = '.bb-comment'
   const injectButton = (card: HTMLElement) => {
-    const injectToComment = (panelArea: HTMLDivElement) => {
-      const button = document.createElement('div')
-      button.classList.add('fold-comment')
-      button.innerHTML = '收起评论'
-      const commentBox = panelArea.querySelector('.bb-comment')
+    const injectToComment = async (panelArea: HTMLElement, clickHandler: () => void) => {
+      const commentBox = await select(() => dq(panelArea, commentSelector))
       if (commentBox.querySelector('.fold-comment') !== null) {
         return
       }
@@ -18,30 +19,58 @@ const entry = async () => {
         console.error('未找到评论区')
         return
       }
+      const button = document.createElement('div')
+      button.classList.add('fold-comment')
+      button.innerHTML = '收起评论'
       button.addEventListener('click', () => {
-        const buttonBar = card.querySelector('.button-bar') as HTMLDivElement
-        const originalButton = buttonBar.children[1] as HTMLDivElement
-        if (originalButton !== null) {
-          originalButton.click()
-          card.scrollIntoView()
-        }
+        clickHandler()
+        card.scrollIntoView()
       })
       commentBox.insertAdjacentElement('beforeend', button)
     }
-    const panelArea = card.querySelector('.panel-area') as HTMLDivElement
-    if (panelArea === null) {
-      console.log(card)
+    if (feedsCardsManager.managerType === 'v2') {
+      const existingComment = dq(card, commentSelector) as HTMLElement
+      const handler = () => {
+        const button = dq(card, '.bili-dyn-action.comment') as HTMLElement
+        button?.click()
+      }
+      if (!existingComment) {
+        const [observer] = childListSubtree(card, () => {
+          const panel = dq(card, commentSelector)
+          if (panel) {
+            injectToComment(card, handler)
+            observer.disconnect()
+          }
+        })
+      } else {
+        injectToComment(existingComment, handler)
+      }
+      return
     }
-    if (panelArea.childElementCount === 0) {
-      const [observer] = childList(panelArea, records => {
-        if (records.length > 0) {
-          injectToComment(panelArea)
-          observer.disconnect()
-        }
-      })
-    } else {
-      injectToComment(panelArea)
+    if (feedsCardsManager.managerType === 'v1') {
+      const panelArea = card.querySelector('.panel-area') as HTMLElement
+      if (panelArea === null) {
+        console.warn('panelArea not found', card)
+        return
+      }
+      const handler = () => {
+        const buttonBar = card.querySelector('.button-bar')
+        const originalButton = buttonBar.children[1] as HTMLElement
+        originalButton?.click()
+      }
+      if (panelArea.childElementCount === 0) {
+        const [observer] = childList(panelArea, records => {
+          if (records.length > 0) {
+            injectToComment(panelArea, handler)
+            observer.disconnect()
+          }
+        })
+      } else {
+        injectToComment(panelArea, handler)
+      }
+      return
     }
+    console.warn('unrecognized card type', card)
   }
   forEachFeedsCard({
     added: c => injectButton(c.element),

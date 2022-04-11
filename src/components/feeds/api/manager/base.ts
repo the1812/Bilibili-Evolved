@@ -78,4 +78,6 @@ export abstract class FeedsCardsManager extends EventTarget {
    * @param cardsList 卡片列表元素
    */
   abstract updateCards(cardsList: HTMLElement): readonly [MutationObserver, MutationObserverInit]
+  /** 卡片管理器的标识名称, 组件如果需要对不同版本的动态做出行为区分, 可以读取这个字段 */
+  abstract readonly managerType: string
 }
