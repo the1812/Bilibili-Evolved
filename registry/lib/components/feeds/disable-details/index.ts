@@ -1,5 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
-import { FeedsCard } from '@/components/feeds/api'
+import { FeedsCard, feedsCardTypes } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
 
 let enabled = true
@@ -22,7 +22,7 @@ const entry = async () => {
       if (e.ctrlKey || !enabled) {
         return
       }
-      const contents = dqa(element, '.content')
+      const contents = dqa(element, '.content, .bili-dyn-content')
       const target = e.target as HTMLElement
       if (target.hasAttribute('click-title')) {
         return
@@ -35,7 +35,7 @@ const entry = async () => {
         e.stopImmediatePropagation()
       }
     }, { capture: true })
-    const postContent = dq(element, '.post-content')
+    const postContent = dq(element, '.post-content, .bili-dyn-content')
     if (!postContent) {
       return
     }
@@ -47,8 +47,8 @@ const entry = async () => {
     if (dq(postContent, '.details')) {
       return
     }
-    if (postContent.classList.contains('repost')) {
-      const contents = dq(postContent, '.content') as HTMLElement
+    if (postContent.classList.contains('repost') || card.type === feedsCardTypes.repost) {
+      const contents = dq(postContent, '.content, .bili-dyn-content__orig__desc') as HTMLElement
       if (!contents) {
         return
       }
