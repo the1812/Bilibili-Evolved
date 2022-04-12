@@ -5,12 +5,20 @@ import { ListAdaptorKey, FeedsCardsListAdaptor } from './adaptor'
 
 export const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 
-// eslint-disable-next-line no-underscore-dangle
-export const getVueData = (el: any) => el.__vue__ || el.parentElement.__vue__
-
-export const createNodeValidator = (className: string) => (node: Node): node is HTMLElement => (
-  node && node instanceof HTMLElement && node.parentNode && node.classList.contains(className)
+export const getVueData = (el: any) => (
+  // eslint-disable-next-line no-underscore-dangle
+  el.__vue__ ?? el.parentElement.__vue__ ?? el.children[0].__vue__
 )
+
+export const createNodeValidator = (className: string) => (node: Node): node is HTMLElement => {
+  if (className.startsWith('.')) {
+    className = className.substring(1)
+  }
+  const notNull = Boolean(node)
+  const notDetached = node && node.parentNode
+  const matchClassName = (node instanceof HTMLElement) && node.classList.contains(className)
+  return notNull && notDetached && matchClassName
+}
 
 /** 动态卡片管理器支持的自定义事件 */
 export enum FeedsCardsManagerEventType {

@@ -3,7 +3,7 @@ import { feedsFilterPlugin } from './plugin'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
-  const leftPanel = await select('.home-container .left-panel')
+  const leftPanel = await select('.home-container .left-panel, .bili-dyn-home--member aside.left section:first-child')
   if (leftPanel === null) {
     return
   }

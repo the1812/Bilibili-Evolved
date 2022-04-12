@@ -1,7 +1,7 @@
 import { childList } from '@/core/observer'
 import { sq } from '@/core/spin-query'
 import { FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
-import { feedsCardTypes, FeedsCard, RepostFeedsCard, FeedsCardType } from '../types'
+import { feedsCardTypes, isRepostType, FeedsCard, FeedsCardType } from '../types'
 
 const getFeedsCardType = (element: HTMLElement) => {
   if (element.querySelector('.repost')) {
@@ -33,9 +33,6 @@ const getFeedsCardType = (element: HTMLElement) => {
   }
   return feedsCardTypes.text
 }
-const isRepostType = (card: FeedsCard): card is RepostFeedsCard => (
-  card.type === feedsCardTypes.repost
-)
 
 /**
  * 根据传入元素解析出动态卡片对象
