@@ -262,6 +262,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
     }
   }
   @include side-block();
+  .bili-dyn-list__item.pattern-block,
   .feed-card .card.pattern-block {
     display: none !important;
   }

@@ -77,7 +77,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
       getText(repostDynamicModule, cardType),
     )
   }
-  await card.getText()
+  card.text = await card.getText()
   return card
 }
 const isNodeValid = createNodeValidator('bili-dyn-list__item')

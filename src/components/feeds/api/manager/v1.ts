@@ -126,13 +126,10 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     type: getFeedsCardType(element),
     get presented() { return element.parentNode !== null },
     async getText() {
-      const result = await getComplexText(this.type)
-      this.text = result
-      // console.log(result)
-      return result
+      return getComplexText(this.type)
     },
   }
-  await card.getText()
+  card.text = await card.getText()
   element.setAttribute('data-type', card.type.id.toString())
   if (isRepostType(card)) {
     const currentUsername = card.username
