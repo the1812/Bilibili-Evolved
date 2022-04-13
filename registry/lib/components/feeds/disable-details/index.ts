@@ -22,7 +22,7 @@ const entry = async () => {
       if (e.ctrlKey || !enabled) {
         return
       }
-      const contents = dqa(element, '.content, .bili-dyn-content')
+      const contents = dqa(element, '.content, .bili-dyn-content [data-module="desc"] .bili-rich-text')
       const target = e.target as HTMLElement
       if (target.hasAttribute('click-title')) {
         return
