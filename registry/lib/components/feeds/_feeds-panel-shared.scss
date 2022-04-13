@@ -1,9 +1,33 @@
+@import 'common';
+
 .live-up-list {
+  // 默认状态
   max-height: calc(100vh - 315px);
+  // 开启过滤器
   body.enable-feeds-filter & {
     max-height: calc(100vh - 370px);
   }
+  // 禁掉 profile 后
   body.feeds-filter-side-block-profile & {
     max-height: calc(100vh - 180px);
+  }
+}
+.bili-dyn-live-users {
+  display: flex !important;
+  flex-direction: column !important;
+}
+.bili-dyn-live-users__body {
+  @include no-scrollbar();
+  margin: 0px -16px -16px -16px;
+  padding: 0px 16px 4px 16px;
+  // 默认状态
+  max-height: calc(100vh - 318px);
+  // 开启过滤器
+  body.enable-feeds-filter & {
+    max-height: calc(100vh - 374px);
+  }
+  // 禁掉 profile 后
+  body.feeds-filter-side-block-profile & {
+    max-height: calc(100vh - 178px);
   }
 }
