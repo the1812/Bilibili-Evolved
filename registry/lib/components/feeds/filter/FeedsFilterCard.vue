@@ -235,6 +235,11 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   @include side-block();
   @include pattern-block();
 }
+body.disable-feeds-filter {
+  .feeds-filter-section {
+    display: none;
+  }
+}
 .feeds-filter {
   background-color: white;
   font-size: 12px;
