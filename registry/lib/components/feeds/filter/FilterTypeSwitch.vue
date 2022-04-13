@@ -1,5 +1,5 @@
 <template>
-  <div class="filter-type-switch feeds-filter-swtich">
+  <div class="filter-type-switch feeds-filter-switch">
     <label :class="{ disabled }">
       <span class="name" :class="{ disabled }">{{ type.name }}</span>
       <input v-model="disabled" type="checkbox" />
@@ -67,7 +67,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-.feeds-filter-swtich {
+.feeds-filter-switch {
   &:not(:last-child) {
     margin-bottom: 4px;
   }

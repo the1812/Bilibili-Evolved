@@ -41,7 +41,7 @@
       <div
         v-for="[id, type] of Object.entries(allSideCards)"
         :key="id"
-        class="filter-side-card-switch feeds-filter-swtich"
+        class="filter-side-card-switch feeds-filter-switch"
         @click="toggleBlockSide(id)"
       >
         <label :class="{ disabled: sideDisabled(id) }">
@@ -228,44 +228,12 @@ export default Vue.extend({
 
 <style lang="scss">
 @import "common";
-@import "./side-block";
+@import "./blocker";
 
 body.enable-feeds-filter:not(.disable-feeds-filter) {
-  @each $name,
-    $value
-      in (
-        'repost': 1,
-        'textWithImages': 2,
-        'text': 4,
-        'video': 8,
-        'miniVideo': 16,
-        'column': 64,
-        'audio': 256,
-        'bangumi': 512,
-        'liveRecord': 2047,
-        'share': 2048
-      )
-  {
-    &:not(.by-type).feeds-filter-block-#{$name} {
-      .bili-dyn-list__item[data-type='#{$value}'],
-      .feed-card .card[data-type='#{$value}'] {
-        display: none !important;
-      }
-    }
-  }
-  @each $name in ('self-repost') {
-    &:not(.by-type).feeds-filter-block-#{$name} {
-      .bili-dyn-list__item[data-#{$name}],
-      .feed-card .card[data-#{$name}] {
-        display: none !important;
-      }
-    }
-  }
+  @include type-block();
   @include side-block();
-  .bili-dyn-list__item.pattern-block,
-  .feed-card .card.pattern-block {
-    display: none !important;
-  }
+  @include pattern-block();
 }
 .feeds-filter {
   background-color: white;
