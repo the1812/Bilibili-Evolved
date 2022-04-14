@@ -324,7 +324,7 @@ export const formData = (obj: Record<string, any>, config?: { encode?: boolean }
 /**
  * 移除一个数组中的元素
  * @param target 目标数组
- * @param property 数组元素判断
+ * @param predicate 数组元素判断
  */
 export const deleteValue = <ItemType> (
   target: ItemType[],
@@ -566,3 +566,8 @@ export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity
     lodash.isNumber(Number(value)) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
   )
 )
+/**
+ * 将文本转换为 PascalCase
+ * @param text 文本
+ */
+export const pascalCase = (text: string) => lodash.upperFirst(lodash.camelCase(text))

@@ -1,9 +1,19 @@
+import { feedsCardsManager } from '@/components/feeds/api'
 import { ComponentMetadata, ComponentOptions } from '@/components/types'
 import { feedsFilterPlugin } from './plugin'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
-  const leftPanel = await select('.home-container .left-panel')
+  let leftPanel: HTMLElement
+  if (feedsCardsManager.managerType === 'v2') {
+    const leftAside = await select('.bili-dyn-home--member aside.left')
+    const section = document.createElement('section')
+    section.classList.add('feeds-filter-section')
+    leftAside.insertAdjacentElement('afterbegin', section)
+    leftPanel = section
+  } else {
+    leftPanel = await select('.home-container .left-panel')
+  }
   if (leftPanel === null) {
     return
   }

@@ -180,7 +180,7 @@ export default Vue.extend({
   transform: translate(-50%, -50%) scale(0.95);
   width: 360px;
   height: 85vh;
-  z-index: 100002;
+  z-index: 100000;
   transition: 0.2s ease-out;
   font-size: 14px;
   @include v-stretch();

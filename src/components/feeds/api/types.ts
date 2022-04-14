@@ -78,6 +78,10 @@ export const feedsCardTypes = {
     name: '开播记录',
   } as FeedsCardType,
 }
+/** 是否是转发类型的卡片, 额外能够读取被转发动态的信息 */
+export const isRepostType = (card: FeedsCard): card is RepostFeedsCard => (
+  card.type === feedsCardTypes.repost
+)
 /** 番剧类型列表 (用于API请求) */
 export const bangumiTypeList = '512,4097,4098,4099,4100,4101'
 /** 顶栏动态类型列表 (用于API请求) */
