@@ -89,8 +89,11 @@
     .squirtle-controller {
       height: 48px !important;
       .squirtle-controller-wrap {
-        height: 31px !important;
-        padding: 18px 6px 0 !important;
+        height: 30px !important;
+        padding: 14px 6px 4px !important;
+        .squirtle-play-wrap {
+          padding-left: 10px !important;
+        }
         .squirtle-pagelist-wrap {
           width: 36px !important;
           .squirtle-select-result {
@@ -129,7 +132,7 @@
     .squirtle-controller {
       height: 72px !important;
       .squirtle-controller-wrap {
-        height: 56px !important;
+        height: 50px !important;
         padding: 16px 6px 0 !important;
         .squirtle-sendbar-wrap {
           align-items: center !important;
