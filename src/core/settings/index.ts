@@ -9,7 +9,7 @@ export interface ComponentSettings<O = { [key: string]: any }> {
   /** 是否启用此组件 */
   enabled: boolean
   /** 组件选项 */
-  options: O
+  options: O & Record<string, unknown>
 }
 /** 脚本总设置 */
 export interface Settings {

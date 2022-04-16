@@ -19,6 +19,13 @@
   p {
     margin: 0;
   }
+  details {
+    line-height: 1.75;
+    summary {
+      cursor: pointer;
+      margin: 4px 0;
+    }
+  }
   > p {
     line-height: 1.75;
   }

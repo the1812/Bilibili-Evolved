@@ -40,8 +40,19 @@ export const init = async () => {
   window.coreApis = coreApis
   window.dq = coreApis.utils.dq
   window.dqa = coreApis.utils.dqa
+  window.de = coreApis.utils.de
+  window.des = coreApis.utils.des
+  window.dea = coreApis.utils.dea
+  window.deai = coreApis.utils.deai
   window.none = coreApis.utils.none
   window.componentsTags = coreApis.componentApis.component.componentsTags
+  window.console = coreApis.utils.log.useScopedConsole({
+    name: 'Bilibili Evolved',
+    color: '#00A0D8',
+  })
+  // window.console 和 console 是独立的引用
+  // eslint-disable-next-line no-global-assign
+  console = window.console
 
   const { loadAllUserComponents } = await import('@/components/component')
   await promiseLoadTrace('parse user components', loadAllUserComponents)

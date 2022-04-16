@@ -1,7 +1,10 @@
 import { registerAndGetData } from '@/plugins/data'
 import { ComponentMetadata } from '@/components/types'
 import { isNotHtml, matchPattern } from '@/core/utils'
+import { useScopedConsole } from '@/core/utils/log'
 
+const displayName = '网址参数清理'
+const console = useScopedConsole(displayName)
 const entry = async () => {
   if (isNotHtml()) {
     return
@@ -90,7 +93,7 @@ const entry = async () => {
     const query = filteredParamsString ? (`?${filteredParamsString}`) : ''
     const newUrl = url + query
     if (newUrl !== document.URL) {
-      console.log('[URL params clean]', document.URL, newUrl)
+      console.log(document.URL, newUrl)
       window.history.replaceState({}, document.title, newUrl)
     }
   }
@@ -102,7 +105,7 @@ const entry = async () => {
 }
 export const component: ComponentMetadata = {
   name: 'urlParamsClean',
-  displayName: '网址参数清理',
+  displayName,
   entry,
   description: {
     'zh-CN': '自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址).',
