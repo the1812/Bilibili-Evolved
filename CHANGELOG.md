@@ -44,7 +44,7 @@
 ☕开发者相关
 - 修复 `addData` 在数据未加载过时就执行 `provider`, 改善文档. (PR #3160 by [timongh](https://github.com/timongh))
 - 添加了 `pascalCase` 工具函数.
-- 接入 define API (兼容模式, 未知类型默认 any), 新功能都将遵循这套 API 来编写. (PR #3181, #3191 by [timongh](https://github.com/timongh))
+- 接入 define API (兼容模式, 未知类型默认 any), 新功能都将遵循这套 API 来编写. (PR #3181, #3041 by [timongh](https://github.com/timongh))
 - 整理了一下 ESLint 配置, task 不再输出到 HTML 文件, 并移除 `settings.json` 中冗余的配置. (#3202)
 - 改进了功能代码加载的稳定性. (PR #3195 by [timongh](https://github.com/timongh))
 
