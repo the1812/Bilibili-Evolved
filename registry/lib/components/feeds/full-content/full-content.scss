@@ -1,10 +1,15 @@
+.bili-dyn-content,
 .card .main-content {
+  .bili-rich-text__action,
   .expand-btn,
   .content-ellipsis {
     display: none !important;
   }
+  .bili-rich-text__content,
   .content-full {
+    -webkit-line-clamp: unset !important;
     display: block !important;
     height: auto !important;
+    max-height: unset !important;
   }
 }

@@ -41,12 +41,15 @@
           class="fresh-home-categories-bangumi-timeline-seasons"
           :class="{ today: index === todayIndex }"
         >
-          <div
+          <VEmpty v-if="item.seasons.length === 0" />
+          <a
             v-for="season of item.seasons"
             :key="season.season_id"
             :data-season="season.season_id"
             class="fresh-home-categories-bangumi-timeline-season"
             :class="{ today: index === todayIndex }"
+            target="_blank"
+            :href="season.url"
           >
             <div
               class="fresh-home-categories-bangumi-timeline-season-cover"
@@ -91,7 +94,7 @@
                 {{ season.pub_time }}
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -456,6 +459,7 @@ export default Vue.extend({
         img {
           width: var(--cover-size);
           height: var(--cover-size);
+          transition: .2s ease-out;
         }
         &.follow {
           box-shadow: 0 0 0 2px var(--theme-color);
@@ -469,6 +473,7 @@ export default Vue.extend({
       }
       &-title {
         grid-area: title;
+        transition: color .2s ease-out;
         @include semi-bold();
         @include single-line();
         &.today {
@@ -501,6 +506,13 @@ export default Vue.extend({
         &.follow:not(.published) &-icon {
           color: var(--theme-color);
         }
+      }
+
+      &:hover &-title {
+        color: var(--theme-color) !important;
+      }
+      &:hover &-cover img {
+        transform: scale(1.05);
       }
 
       &.today {

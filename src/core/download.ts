@@ -3,7 +3,9 @@ import { DownloadPackageEmitMode } from './download-mode'
 import { JSZipLibrary } from './runtime-library'
 import { getGeneralSettings } from './settings'
 import { formatFilename } from './utils/formatters'
+import { useScopedConsole } from './utils/log'
 
+const console = useScopedConsole('文件下载')
 /** 表示`DownloadPackage`中的一个文件 */
 export interface PackageEntry {
   /** 文件名 */
@@ -83,7 +85,7 @@ export class DownloadPackage {
     const finalFilename = formatFilename(filename)
     a.setAttribute('href', url)
     a.setAttribute('download', finalFilename)
-    console.log('[Download file]', finalFilename)
+    console.log(finalFilename)
     document.body.appendChild(a)
     // 阻止 spm id 的事件 (#2247)
     a.addEventListener('click', e => {

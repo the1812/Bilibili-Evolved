@@ -62,6 +62,85 @@ export const dqa: DocumentQuerySelectorAll = (
   }
   return Array.from((selectorOrElement as Element).querySelectorAll(bwpVideoFilter(scopedSelector)))
 }
+type DocumentEvaluate = {
+  (xpathExpression: string): XPathResult
+  (xpathExpression: string, contextNode: Node): XPathResult
+  (xpathExpression: string, contextNode: Node, type: number): XPathResult
+  (xpathExpression: string, contextNode: Node, type: number, result: XPathResult): XPathResult
+}
+export const de: DocumentEvaluate = (
+  xpathExpression: string,
+  contextNode?: Node,
+  type?: number,
+  result?: XPathResult,
+) => document.evaluate(xpathExpression, contextNode, null, type, result)
+type DocumentEvaluateAll = {
+  (xpathExpression: string): Node[]
+  (xpathExpression: string, contextNode: Node): Node[]
+  (xpathExpression: string, contextNode: Node, order: boolean): Node[]
+  (xpathExpression: string, contextNode: Node, order: boolean, result: XPathResult): Node[]
+}
+export const dea: DocumentEvaluateAll = (
+  xpathExpression: string,
+  contextNode?: Node,
+  order?: boolean,
+  result?: XPathResult,
+) => {
+  const xpathResult = de(
+    xpathExpression,
+    contextNode,
+    order ? XPathResult.ORDERED_NODE_SNAPSHOT_TYPE : XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE,
+    result,
+  )
+
+  return Array.from({ length: xpathResult.snapshotLength }, (_, i) => xpathResult.snapshotItem(i))
+}
+type DocumentEvaluateAllIterable = {
+  (xpathExpression: string): Iterable<Node>
+  (xpathExpression: string, contextNode: Node): Iterable<Node>
+  (xpathExpression: string, contextNode: Node, order: boolean): Iterable<Node>
+  (xpathExpression: string, contextNode: Node, order: boolean, result: XPathResult): Iterable<Node>
+}
+export const deai: DocumentEvaluateAllIterable = (
+  xpathExpression: string,
+  contextNode?: Node,
+  order?: boolean,
+  result?: XPathResult,
+) => {
+  const xpathResult = de(
+    xpathExpression,
+    contextNode,
+    order ? XPathResult.ORDERED_NODE_ITERATOR_TYPE : XPathResult.UNORDERED_NODE_ITERATOR_TYPE,
+    result,
+  )
+
+  return {
+    [Symbol.iterator]: () => ({
+      next: () => {
+        let node = null
+        do {
+          node = xpathResult.iterateNext()
+          return node
+            ? ({ done: false, value: node } as { done: false, value: Node })
+            : ({ done: true } as { done: true, value: any })
+        } while (node)
+      },
+    }),
+  }
+}
+type DocumentEvaluateSingle = {
+  <T extends Node>(xpathExpression: string): T | null
+  <T extends Node>(xpathExpression: string, contextNode: Node): T | null
+  <T extends Node>(xpathExpression: string, contextNode: Node, result: XPathResult): T | null
+}
+export const des: DocumentEvaluateSingle = <T extends Node>(
+  xpathExpression: string, contextNode?: Node, result?: XPathResult,
+) => de(
+  xpathExpression,
+  contextNode,
+  XPathResult.FIRST_ORDERED_NODE_TYPE,
+  result,
+).singleNodeValue as (T | null)
 /** 空函数 */
 export const none = () => {
   // Do nothing
@@ -245,7 +324,7 @@ export const formData = (obj: Record<string, any>, config?: { encode?: boolean }
 /**
  * 移除一个数组中的元素
  * @param target 目标数组
- * @param property 数组元素判断
+ * @param predicate 数组元素判断
  */
 export const deleteValue = <ItemType> (
   target: ItemType[],
@@ -487,3 +566,8 @@ export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity
     lodash.isNumber(Number(value)) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
   )
 )
+/**
+ * 将文本转换为 PascalCase
+ * @param text 文本
+ */
+export const pascalCase = (text: string) => lodash.upperFirst(lodash.camelCase(text))

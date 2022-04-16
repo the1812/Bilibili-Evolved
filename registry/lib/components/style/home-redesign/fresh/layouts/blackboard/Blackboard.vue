@@ -1,5 +1,5 @@
 <template>
-  <div class="fresh-home-blackboard">
+  <div class="fresh-home-blackboard" @mouseenter="destroyTimer" @mouseleave="createTimer">
     <div class="fresh-home-header">
       <div class="fresh-home-header-title">
         活动
@@ -83,29 +83,42 @@ export default Vue.extend({
     this.blackboards = blackboards.filter(b => !b.isAd)
   },
   mounted() {
-    const radioClass = 'fresh-home-blackboard-radio'
-    this.timer = window.setInterval(() => {
-      if (!document.hasFocus() || this.$el.matches(':hover')) {
-        return
-      }
-      const currentIndex = parseInt(
-        dq(`.${radioClass}:checked`).getAttribute('data-index'),
-      )
-      let targetIndex: number
-      if (currentIndex === this.blackboards.length - 1) {
-        targetIndex = 0
-      } else {
-        targetIndex = currentIndex + 1
-      }
-      (dq(
-        `.${radioClass}[data-index='${targetIndex}']`,
-      ) as HTMLInputElement).checked = true
-    }, 5000)
+    this.createTimer()
   },
   beforeDestroy() {
-    if (this.timer) {
+    this.destroyTimer()
+  },
+  methods: {
+    createTimer() {
+      if (this.timer) {
+        return
+      }
+      const radioClass = 'fresh-home-blackboard-radio'
+      this.timer = window.setInterval(() => {
+        if (!document.hasFocus() || this.$el.matches(':hover')) {
+          return
+        }
+        const currentIndex = parseInt(
+          dq(`.${radioClass}:checked`).getAttribute('data-index'),
+        )
+        let targetIndex: number
+        if (currentIndex === this.blackboards.length - 1) {
+          targetIndex = 0
+        } else {
+          targetIndex = currentIndex + 1
+        }
+        (dq(
+          `.${radioClass}[data-index='${targetIndex}']`,
+        ) as HTMLInputElement).checked = true
+      }, 5000)
+    },
+    destroyTimer() {
+      if (!this.timer) {
+        return
+      }
       window.clearInterval(this.timer)
-    }
+      this.timer = 0
+    },
   },
 })
 </script>

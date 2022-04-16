@@ -18,7 +18,7 @@ export const setupFeedImageExporter: ComponentEntry = async ({ settings: { optio
       text: '导出图片',
       action: async () => {
         const imageUrls: { url: string; extension: string }[] = []
-        dqa(card.element, '.main-content .img-content').forEach((img: HTMLImageElement | HTMLDivElement) => {
+        dqa(card.element, '.main-content .img-content, .bili-album__preview__picture__img').forEach((img: HTMLImageElement | HTMLDivElement) => {
           const urlData = retrieveImageUrl(img)
           if (urlData && !imageUrls.some(({ url }) => url === urlData.url)) {
             imageUrls.push(urlData)
