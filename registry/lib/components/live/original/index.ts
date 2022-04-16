@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+import { matchUrlPattern } from '@/core/utils'
 
 export const component = defineComponentMetadata({
   name: 'originalLiveroom',
@@ -12,5 +13,6 @@ export const component = defineComponentMetadata({
   ],
   widget: {
     component: () => import('./Widget.vue').then(m => m.default),
+    condition: () => matchUrlPattern(/^https:\/\/live\.bilibili\.com\/([\d]+)/),
   },
 })

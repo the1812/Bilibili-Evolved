@@ -1,5 +1,5 @@
 <template>
-  <a :href="url" target="_blank" tabindex="-1">
+  <a :href="href" tabindex="-1">
     <DefaultWidget
       name="返回原版直播间"
       icon="mdi-arrow-left-circle-outline"
