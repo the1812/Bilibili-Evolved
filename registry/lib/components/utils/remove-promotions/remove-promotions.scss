@@ -22,7 +22,8 @@ body.remove-game-match-module #reportFirst3,
 .home-content .ad-panel,
 .recommend-list .rec-list > :not(.video-page-card),
 .eva-extension-area,
-.eva-banner {
+.eva-banner,
+.video-ad-creative-card {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
