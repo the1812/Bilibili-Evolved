@@ -1,17 +1,14 @@
 <template>
-  <div class="settings-panel" :class="{ collasped, peek }">
+  <div class="settings-panel" :class="{ collapsed, peek }">
     <div class="settings-panel-header">
       <VIcon icon="settings-outline" />
       <div class="title">
         设置
       </div>
-      <div class="settings-panel-search">
-        <VIcon icon="search" :size="18" />
-        <TextBox v-model="searchKeyword" placeholder="搜索"></TextBox>
-      </div>
       <div
         class="peek"
         title="透视"
+        style="margin-left:auto"
         @mouseover="peek = true"
         @mouseout="peek = false"
       >
@@ -27,15 +24,47 @@
       </div>
       <div ref="mainContainer" class="main">
         <div ref="componentList" class="component-list">
-          <ComponentSettings
+          <!-- <div v-show="selectedComponents.length>1" class="modifier"> -->
+          <div class="modifier">
+            <div class="settings-panel-search">
+              <!-- <VIcon icon="search" :size="18" /> -->
+              <TextBox v-model="searchKeyword" placeholder="搜索"></TextBox>
+            </div>
+            <VButton
+              style="margin-left: 5px;"
+              :title="selectedComponents.length > 0 ? '更新选择组件' : '更新全部'"
+            >
+              <VIcon
+                icon="mdi-arrow-up-circle-outline"
+                :size="18"
+                @click="upgrade"
+              />
+            </VButton>
+            <VButton
+              style="margin-left: 5px;"
+              :disabled="selectedComponents.length == 0 ? true : false"
+            >
+              <VIcon
+                icon="mdi-trash-can-outline"
+                :size="18"
+                @click="uninstall"
+              />
+            </VButton>
+          </div>
+          <div
             v-for="c of renderedComponents"
             :key="c.name"
-            :class="{ selected: selectedComponent === c && componentDetailOpen }"
-            :component-data="c"
-            :data-name="c.name"
-            @click.native="selectComponent(c)"
+            @click.ctrl.stop.capture="selectMultipleComponent(c)"
+            @click.shift.stop.capture="selectMultipleComponent(c, true)"
           >
-          </ComponentSettings>
+            <ComponentSettings
+              :class="{ selected: isComponentSelected(c.name) }"
+              :component-data="c"
+              :data-name="c.name"
+              @click.native="selectComponent(c)"
+            >
+            </ComponentSettings>
+          </div>
           <VEmpty v-if="renderedComponents.length === 0" />
         </div>
       </div>
@@ -63,8 +92,10 @@ import {
   TextBox,
   VPopup,
   VEmpty,
+  VButton,
 } from '@/ui'
 import { getHook } from '@/plugins/hook'
+import { Toast } from '@/core/toast'
 import ComponentSettings from './ComponentSettings.vue'
 import {
   ComponentMetadata, ComponentTag, components,
@@ -72,14 +103,19 @@ import {
 import ComponentDetail from './ComponentDetail.vue'
 import ComponentTags from './ComponentTags.vue'
 import { getDescriptionText } from '../description'
+import { uninstallComponent } from '../user-component'
+import { checkComponentsUpdate, forceCheckUpdateAndReload } from '../auto-update/checker'
+import { getBuiltInComponents } from '../built-in-components'
 
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
+const isBuildInComponent = (name: string) => getBuiltInComponents().some(c => c.name === name)
 export default {
   name: 'SettingsPanel',
   components: {
     VIcon,
     TextBox,
     VPopup,
+    VButton,
     VEmpty,
     ComponentSettings,
     ComponentDetail,
@@ -89,15 +125,19 @@ export default {
     return {
       components,
       renderedComponents: components.filter(c => !c.hidden),
-      selectedComponent: null,
+      selectedComponent: null, // store component obj
+      selectedComponents: [], // store component name
       componentDetailOpen: false,
-      collasped: false,
+      collapsed: false,
       peek: false,
       searchKeyword: '',
       searchFilter: defaultSearchFilter,
     }
   },
   computed: {
+    isComponentSelected() {
+      return (name:string) => this.selectedComponents.includes(name)
+    },
     tags() {
       const renderedComponents = this.renderedComponents as ComponentMetadata[]
       let tags = [] as (ComponentTag & { count: number })[]
@@ -120,6 +160,7 @@ export default {
     searchFilter() {
       // if (this.searchFilter !== defaultSearchFilter) {
       this.searchKeyword = ''
+      this.selectedComponents = []
       // }
       this.updateRenderedComponents()
     },
@@ -134,10 +175,69 @@ export default {
     },
   },
   methods: {
+    async upgrade() {
+      if (this.selectedComponents.length === 0) {
+        const toast = Toast.info('正在检查更新...', '检查所有更新')
+        forceCheckUpdateAndReload()
+        await forceCheckUpdateAndReload()
+        toast.dismiss()
+      } else {
+        this.selectedComponents.forEach(async name => {
+          if (isBuildInComponent(name)) {
+            Toast.info('内置组件不能更新', '警告', 3000)
+          } else {
+            const toast = Toast.info(`检查更新${name}中...`, '检查更新')
+            const result = await checkComponentsUpdate({
+              filterNames: [name],
+              force: true,
+            })
+            toast.message = result
+            toast.duration = 3000
+          }
+        })
+      }
+      // this.selectedComponents = []
+    },
+    uninstall() {
+      this.selectedComponents.forEach(name => {
+        if (!isBuildInComponent(name)) {
+          uninstallComponent(name)
+        } else {
+          Toast.info('内置组件不能卸载', '警告', 3000)
+        }
+      })
+      this.selectedComponents = []
+    },
     closePopper() {
+      this.selectedComponent = null
+      this.selectedComponents = []
       this.componentDetailOpen = false
     },
+    selectMultipleComponent({ name }: ComponentMetadata, listSelect = false) {
+      if (this.selectedComponent && listSelect) {
+        // handle shift + click
+        const { name: selectedComponentName } = this.selectedComponent
+        const list = this.renderedComponents.map(c => c.name)
+        let startIdx = list.indexOf(selectedComponentName)
+        let endIdx = list.indexOf(name)
+        if (startIdx > endIdx) {
+          // if start index is greater than end index, swap them
+          const t = startIdx
+          startIdx = endIdx
+          endIdx = t
+        }
+        this.selectedComponents = list.slice(startIdx, endIdx + 1)
+        return
+      }
+      const idx = this.selectedComponents.indexOf(name)
+      if (idx === -1) {
+        this.selectedComponents.push(name)
+      } else {
+        this.selectedComponents.splice(idx, 1)
+      }
+    },
     selectComponent(component: ComponentMetadata) {
+      this.selectedComponents = []
       const closeHooks = getHook('settingsPanel.componentDetail.close')
       const openHooks = getHook('settingsPanel.componentDetail.open')
       const selectedName = this.selectedComponent?.name
@@ -148,6 +248,7 @@ export default {
       if (isAlreadySelected) {
         return
       }
+      this.selectedComponents.push(component.name)
       openHooks.before(component.name)
       this.selectedComponent = component
       this.componentDetailOpen = true
@@ -181,7 +282,7 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scope>
 @import "common";
 
 .settings-panel-popup {
@@ -219,18 +320,6 @@ export default {
       .title {
         font-size: 18px;
         font-weight: bold;
-      }
-      .settings-panel-search {
-        flex-grow: 1;
-        @include h-center();
-        justify-content: center;
-        .be-textbox {
-          flex: 1 0 0;
-        }
-        .be-icon {
-          margin-right: 8px;
-          opacity: 0.5;
-        }
       }
       .collaspe {
         .be-icon {
@@ -279,6 +368,46 @@ export default {
           //   margin-right: 12px;
           //   margin-bottom: 12px;
           // }
+
+          .transition{
+            &-move,
+            &-enter-active,
+            &-leave-active {
+              transition: all 0.5s ease;
+            }
+            &-enter-from,
+            &-leave-to {
+              opacity: 0;
+              transform: translateY(-30px);
+            }
+            &-leave-active {
+              position: absolute;
+            }
+          }
+
+          .modifier {
+            display: flex;
+            padding: 6px 12px 4px 10px;
+            // flex-direction: row-reverse;
+
+            .settings-panel-search {
+              flex-grow: 1;
+              @include h-center();
+              justify-content: center;
+              .be-textbox {
+                flex: 1 0 0;
+                height: 100%;
+              }
+              .be-icon {
+                margin-right: 8px;
+                opacity: 0.5;
+              }
+            }
+
+            div:nth-child(n+2) {
+              margin-left: 5px;
+            }
+          }
         }
         > * {
           flex: 1;
@@ -305,7 +434,7 @@ export default {
         transform: translateZ(0) translateY(-50%) translateX(0);
       }
     }
-    &.collasped {
+    &.collapsed {
       height: auto;
       transform: translateY(calc(50% - 45vh));
       .header,
