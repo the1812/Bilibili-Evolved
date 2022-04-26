@@ -12,7 +12,8 @@
     "*://t.bilibili.com/h5/dynamic/specification",
     "*://bbq.bilibili.com/*",
     "*://message.bilibili.com/pages/nav/header_sync",
-    "*://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html"
+    "*://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html",
+    "*://open-live.bilibili.com/*"
   ],
   "run-at": "document-start",
   "supportURL": "https://github.com/the1812/Bilibili-Evolved/issues",
