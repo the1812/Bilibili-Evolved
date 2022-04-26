@@ -133,7 +133,7 @@ export abstract class PlayerAgent {
   abstract toggleLight(on: boolean): void
 
   // eslint-disable-next-line class-methods-use-this
-  getPlayerConfig(target:string) {
+  getPlayerConfig(target: string) {
     return lodash.get(
       JSON.parse(localStorage.getItem('bilibili_player_settings')),
       target,
@@ -271,9 +271,10 @@ export class VideoPlayerAgent extends PlayerAgent {
       return null
     }
     this.nativeApi.seek(video.currentTime + change, video.paused)
+    this.togglePlay()
     return this.nativeApi.getCurrentTime()
   }
-  async toggleLight(on:boolean) {
+  async toggleLight(on: boolean) {
     const checkbox = await this.query.control.settings.lightOff() as HTMLInputElement
     checkbox.checked = !on
     raiseEvent(checkbox, 'change')
