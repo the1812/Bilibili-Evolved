@@ -45,7 +45,7 @@ export const formatTitle = (
     h: now.getHours().toString().padStart(2, '0'),
     m: now.getMinutes().toString().padStart(2, '0'),
     s: now.getSeconds().toString().padStart(2, '0'),
-    ms: now.getMilliseconds().toString().substr(0, 3),
+    ms: now.getMilliseconds().toString().substring(0, 3),
   }
   Object.assign(data, extraData)
   const filename = Object.keys(data)
