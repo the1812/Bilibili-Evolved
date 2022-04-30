@@ -16,8 +16,6 @@
     "*://open-live.bilibili.com/*"
   ],
   "run-at": "document-start",
-  "supportURL": "https://github.com/the1812/Bilibili-Evolved/issues",
-  "homepage": "https://github.com/the1812/Bilibili-Evolved",
   "grant": [
     "unsafeWindow",
     "GM_getValue",

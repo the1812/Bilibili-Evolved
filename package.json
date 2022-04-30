@@ -61,14 +61,6 @@
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.2"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/the1812/Bilibili-Evolved.git"
-  },
-  "bugs": {
-    "url": "https://github.com/the1812/Bilibili-Evolved/issues"
-  },
-  "homepage": "https://github.com/the1812/Bilibili-Evolved#readme",
   "keywords": [
     "userscript",
     "bilibili",
