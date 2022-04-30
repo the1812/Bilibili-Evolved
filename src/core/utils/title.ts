@@ -1,16 +1,42 @@
 import { dq } from '../utils'
 import { getGeneralSettings } from '../settings'
 import { formatFilename } from './formatters'
-import { descendingSort } from './sort'
 
 type StringMap = Record<string, string>
+const tokenSplit = (format: string) => {
+  let startIndex = 0
+  let depth = 0
+  const tokens: string[] = []
+  format.split('').forEach((char, index) => {
+    if (char === '[') {
+      if (depth === 0) {
+        tokens.push(format.substring(startIndex, index))
+        startIndex = index
+      } else {
+        depth++
+      }
+    }
+    if (char === ']') {
+      if (depth === 0) {
+        tokens.push(format.substring(startIndex, index + 1))
+        startIndex = index + 1
+      } else {
+        depth--
+      }
+    }
+  })
+  if (startIndex < format.length) {
+    tokens.push(format.substring(startIndex))
+  }
+  return tokens
+}
 export const formatTitle = (
   format: string,
   includesPageTitle = true,
-  extraData: StringMap = {},
+  extraVariables: StringMap = {},
 ) => {
   const now = new Date()
-  const data: StringMap = {
+  const builtInVariables: StringMap = {
     title: document.title
       .replace(/-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
       .replace(/：([^：]+?)_.+?_bilibili_哔哩哔哩$/, '')
@@ -47,15 +73,27 @@ export const formatTitle = (
     s: now.getSeconds().toString().padStart(2, '0'),
     ms: now.getMilliseconds().toString().substring(0, 3),
   }
-  Object.assign(data, extraData)
-  const filename = Object.keys(data)
-    .sort(descendingSort(it => it.length))
-    .reduce((result, name) => result.replace(
-      new RegExp(`\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]`, 'g'),
-      data[name] ? `$1${data[name]}$2` : '',
-    ), format)
-  return formatFilename(filename, ' ')
+  const variables = {
+    ...builtInVariables,
+    ...extraVariables,
+  }
+  const tokens = tokenSplit(format)
+  const processedTokens = tokens.map(token => {
+    if (!token.startsWith('[') || !token.endsWith(']')) {
+      return token
+    }
+    for (const [name, value] of Object.entries(variables)) {
+      const regex = new RegExp(`^\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]$`)
+      const match = token.match(regex)
+      if (match && Boolean(value)) {
+        return `${match[1] ?? ''}${value}${match[2] ?? ''}`
+      }
+    }
+    return ''
+  })
+  const finalTitle = processedTokens.join('')
+  return formatFilename(finalTitle, ' ')
 }
-export const getFriendlyTitle = (includesPageTitle = true, extraData: StringMap = {}) => (
-  formatTitle(getGeneralSettings().filenameFormat, includesPageTitle, extraData)
+export const getFriendlyTitle = (includesPageTitle = true, extraVariables: StringMap = {}) => (
+  formatTitle(getGeneralSettings().filenameFormat, includesPageTitle, extraVariables)
 )
