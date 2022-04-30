@@ -19,9 +19,15 @@
 
 <script lang="ts">
 import { videoChange } from '@/core/observer'
+import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
+import { matchUrlPattern } from '@/core/utils'
+import { getFriendlyTitle } from '@/core/utils/title'
+import { bangumiUrls } from '@/core/utils/urls'
 import { VIcon } from '@/ui'
+import { BvidConvertOptions } from '.'
 
+const { options } = getComponentSettings<BvidConvertOptions>('bvidConvert')
 enum CopyIdType {
   Aid = 'aid',
   Bvid = 'bvid',
@@ -29,6 +35,25 @@ enum CopyIdType {
 const copyIds = [
   CopyIdType.Aid,
   CopyIdType.Bvid,
+]
+type LinkProvider = (context: { id: string, url: string, query: string }) => string
+const linkProviders: LinkProvider[] = [
+  // 参数类页面, 如 festival
+  ({ id, query }) => {
+    if (copyIds.some(copyId => query.includes(`${copyId}=`))) {
+      return `https://www.bilibili.com/video/${id}`
+    }
+    return null
+  },
+  // 番剧
+  ({ id }) => {
+    if (bangumiUrls.some(u => matchUrlPattern(u))) {
+      return `https://www.bilibili.com/video/${id}`
+    }
+    return null
+  },
+  // 普通视频
+  ({ id, url, query }) => url.replace(/\/[^\/]+$/, `/${id}`) + query,
 ]
 export default Vue.extend({
   components: { VIcon },
@@ -51,24 +76,21 @@ export default Vue.extend({
     })
   },
   methods: {
-    getParamCopyLink(data: CopyIdType) {
-      const query = window.location.search
-      if (copyIds.some(id => query.includes(`${id}=`))) {
-        return `https://www.bilibili.com/video/${this[data]}`
-      }
-      return null
-    },
-    getTailingCopyLink(data: CopyIdType) {
-      const query = window.location.search
-      const url = document.URL.replace(query, '')
-      return url.replace(/\/[^\/]+$/, `/${this[data]}`) + query
-    },
     async copyLink(data: CopyIdType) {
       if (this[`${data}Copied`]) {
         return
       }
-      const link = this.getParamCopyLink(data) ?? this.getTailingCopyLink(data)
-      await navigator.clipboard.writeText(link)
+      const context = {
+        query: location.search,
+        url: location.origin + location.pathname,
+        id: this[data],
+      }
+      const link = linkProviders.map(p => p(context)).filter(it => it !== null)[0]
+      if (options.copyWithTitle) {
+        await navigator.clipboard.writeText(`${getFriendlyTitle()} ${link}`)
+      } else {
+        await navigator.clipboard.writeText(link)
+      }
       this[`${data}Copied`] = true
       setTimeout(() => (this[`${data}Copied`] = false), 1000)
     },

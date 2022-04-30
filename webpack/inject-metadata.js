@@ -5,7 +5,7 @@ module.exports = function (babel) {
   const { types } = babel
   return {
     visitor: {
-      ExportNamedDeclaration(path, state) {
+      ExportNamedDeclaration (path, state) {
         const { filename } = state.file.opts
         const isFromRegistry = filename.startsWith(nodePath.resolve('./registry'))
         const isEntryFile = nodePath.basename(filename) === 'index.ts'
@@ -17,11 +17,14 @@ module.exports = function (babel) {
           if (!['component', 'plugin'].includes(d.id?.name)) {
             return
           }
-          if (d.init.type !== 'ObjectExpression') {
+          const targetExpression = d.init.type === 'CallExpression' ? d.init.arguments[0] : d.init
+          if (targetExpression.type !== 'ObjectExpression') {
             return
           }
-          d.init.properties.push(types.objectProperty(types.identifier('commitHash'), types.stringLiteral(compilationInfo.commitHash)))
-          d.init.properties.push(types.objectProperty(types.identifier('coreVersion'), types.stringLiteral(compilationInfo.version)))
+          targetExpression.properties.push(...[
+            types.objectProperty(types.identifier('commitHash'), types.stringLiteral(compilationInfo.commitHash)),
+            types.objectProperty(types.identifier('coreVersion'), types.stringLiteral(compilationInfo.version)),
+          ])
         })
       }
     }

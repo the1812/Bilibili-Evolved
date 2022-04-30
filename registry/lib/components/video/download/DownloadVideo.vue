@@ -14,105 +14,106 @@
         <VIcon icon="mdi-close" :size="20" />
       </VButton>
     </div>
-    <div
-      v-if="selectedInput"
-      class="download-video-config-item"
-    >
-      <div class="download-video-config-title">
-        输入源:
-      </div>
-      <VDropdown
-        v-model="selectedInput"
-        :items="inputs"
-      />
-    </div>
-    <div
-      v-if="inputs.length === 0"
-      class="download-video-config-item error"
-    >
-      没有匹配的输入源, 请确保安装了适合此页面的插件.
-    </div>
-    <component
-      :is="selectedInput.component"
-      v-if="selectedInput && selectedInput.component"
-      ref="inputOptions"
-    />
-    <div
-      v-if="selectedApi"
-      class="download-video-config-item"
-    >
-      <div class="download-video-config-title">
-        格式:
-      </div>
-      <VDropdown
-        v-model="selectedApi"
-        :items="apis"
-      />
-    </div>
-    <div
-      v-if="selectedApi && selectedApi.description"
-      class="download-video-config-description"
-      v-html="selectedApi.description"
-    >
-    </div>
-    <div
-      v-if="selectedQuality"
-      class="download-video-config-item"
-    >
-      <div class="download-video-config-title">
-        清晰度:
-      </div>
-      <VDropdown
-        v-model="selectedQuality"
-        :items="filteredQualities"
-        @change="saveSelectedQuality()"
-      />
-    </div>
-    <template v-if="!testData.multiple && selectedQuality">
+    <div class="download-video-panel-content">
       <div
-        v-if="testData.videoInfo"
-        class="download-video-config-description"
+        v-if="selectedInput"
+        class="download-video-config-item"
       >
-        预计大小: {{ formatFileSize(testData.videoInfo.totalSize) }}
+        <div class="download-video-config-title">
+          输入源:
+        </div>
+        <VDropdown
+          v-model="selectedInput"
+          :items="inputs"
+        />
       </div>
       <div
-        v-if="testData.videoInfo === null"
+        v-if="inputs.length === 0"
+        class="download-video-config-item error"
+      >
+        没有匹配的输入源, 请确保安装了适合此页面的插件.
+      </div>
+      <component
+        :is="selectedInput.component"
+        v-if="selectedInput && selectedInput.component"
+        ref="inputOptions"
+      />
+      <div
+        v-if="selectedApi"
+        class="download-video-config-item"
+      >
+        <div class="download-video-config-title">
+          格式:
+        </div>
+        <VDropdown
+          v-model="selectedApi"
+          :items="apis"
+        />
+      </div>
+      <div
+        v-if="selectedApi && selectedApi.description"
+        class="download-video-config-description"
+        v-html="selectedApi.description"
+      >
+      </div>
+      <div
+        v-if="selectedQuality"
+        class="download-video-config-item"
+      >
+        <div class="download-video-config-title">
+          清晰度:
+        </div>
+        <VDropdown
+          v-model="selectedQuality"
+          :items="filteredQualities"
+          @change="saveSelectedQuality()"
+        />
+      </div>
+      <template v-if="!testData.multiple && selectedQuality">
+        <div
+          v-if="testData.videoInfo"
+          class="download-video-config-description"
+        >
+          预计大小: {{ formatFileSize(testData.videoInfo.totalSize) }}
+        </div>
+        <div
+          v-if="testData.videoInfo === null"
+          class="download-video-config-description"
+        >
+          正在计算大小
+        </div>
+      </template>
+      <component
+        :is="a.component"
+        v-for="a of assetsWithOptions"
+        :key="a.name"
+        ref="assetsOptions"
+        :name="a.name"
+      />
+      <div
+        v-if="selectedOutput"
+        class="download-video-config-item"
+      >
+        <div class="download-video-config-title">
+          输出方式:
+        </div>
+        <VDropdown
+          v-model="selectedOutput"
+          :items="outputs"
+        />
+      </div>
+      <div
+        v-if="selectedOutput && selectedOutput.description"
         class="download-video-config-description"
       >
-        正在计算大小
+        {{ selectedOutput.description }}
       </div>
-    </template>
-    <component
-      :is="a.component"
-      v-for="a of assetsWithOptions"
-      :key="a.name"
-      ref="assetsOptions"
-      :name="a.name"
-    />
-    <div
-      v-if="selectedOutput"
-      class="download-video-config-item"
-    >
-      <div class="download-video-config-title">
-        输出方式:
-      </div>
-      <VDropdown
-        v-model="selectedOutput"
-        :items="outputs"
+      <component
+        :is="selectedOutput.component"
+        v-if="selectedOutput && selectedOutput.component"
+        ref="outputOptions"
       />
     </div>
-    <div
-      v-if="selectedOutput && selectedOutput.description"
-      class="download-video-config-description"
-    >
-      {{ selectedOutput.description }}
-    </div>
-    <component
-      :is="selectedOutput.component"
-      v-if="selectedOutput && selectedOutput.component"
-      ref="outputOptions"
-    />
-
     <div class="download-video-panel-footer">
       <VButton
         class="run-download"
@@ -382,36 +383,21 @@ export default Vue.extend({
 @import "common";
 
 .download-video-panel {
-  @include no-scrollbar();
+  @include card();
   font-size: 12px;
+  padding: 6px;
   top: 100px;
   left: 50%;
   transform: translateX(-50%) scale(0.95);
   transition: .2s ease-out;
   z-index: 1000;
   width: 320px;
-  max-height: calc(100vh - 200px);
+  height: calc(100vh - 200px);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 
-  @include card();
   &.open {
     transform: translateX(-50%);
-  }
-  > * {
-    margin-top: 12px;
-    padding: 0 12px;
-  }
-  > :first-child {
-    margin-top: 0;
-    padding-top: 12px;
-    padding-bottom: 6px;
-  }
-  > :last-child {
-    margin-top: 6px;
-    padding-top: 6px;
-    padding-bottom: 12px;
   }
   .be-textbox,
   .be-textarea {
@@ -419,11 +405,9 @@ export default Vue.extend({
   }
   &-header {
     @include h-center();
-    align-self: stretch;
-    background-color: inherit;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+    border-bottom: 1px solid #8882;
+    padding: 6px 0;
+    margin: 0 6px;
 
     .title {
       font-size: 16px;
@@ -433,6 +417,16 @@ export default Vue.extend({
     }
     .be-button {
       padding: 4px;
+    }
+  }
+  &-content {
+    @include no-scrollbar();
+    @include v-stretch();
+    flex: 1 0 0;
+    padding: 12px 6px;
+    align-items: flex-start;
+    > :not(:first-child) {
+      margin-top: 12px;
     }
   }
   .download-video-config-item {
@@ -452,13 +446,11 @@ export default Vue.extend({
     margin-top: 4px;
   }
   &-footer {
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-    background-color: inherit;
-    align-self: stretch;
-    justify-content: center;
     @include h-center();
+    border-top: 1px solid #8882;
+    padding: 6px 0;
+    margin: 0 6px;
+    justify-content: center;
   }
   .run-download {
     font-size: 13px;

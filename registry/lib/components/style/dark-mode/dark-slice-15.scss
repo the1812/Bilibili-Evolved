@@ -1032,6 +1032,10 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
       }
     }
   }
+
+  .border-bottom-line {
+    @include background-color("6");
+  }
 }
 .up-info {
   .u-face .u-face__avatar {
@@ -1052,5 +1056,13 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
       @include theme-background-color();
       @include foreground-color();
     }
+  }
+}
+.user-card {
+  .info p {
+    @include color("e");
+  }
+  .gray-text {
+    @include color("a");
   }
 }

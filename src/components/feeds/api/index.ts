@@ -1,4 +1,4 @@
-import { getUID } from '@/core/utils'
+import { getUID, pascalCase } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
 import { watchlaterList } from '@/components/video/watchlater'
@@ -165,13 +165,24 @@ export const addMenuItem = (card: FeedsCard, config: {
   text: string
   action: (e: MouseEvent) => void
 }) => {
-  const morePanel = dq(card.element, '.more-panel') as HTMLElement
+  const morePanel = dq(card.element, '.more-panel, .bili-dyn-more__menu') as HTMLElement
+  const isV2 = morePanel.classList.contains('bili-dyn-more__menu')
   const { className, text, action } = config
   if (!morePanel || dq(morePanel, `.${className}`)) {
     return
   }
-  const menuItem = document.createElement('p')
-  menuItem.classList.add('child-button', 'c-pointer', className)
+  const menuItem = document.createElement(isV2 ? 'div' : 'p')
+  if (isV2) {
+    menuItem.classList.add('bili-dyn-more__menu__item', className)
+    menuItem.style.height = '25px'
+    menuItem.style.padding = '2px 0'
+    menuItem.style.textAlign = 'center'
+    menuItem.dataset.module = 'more'
+    menuItem.dataset.type = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
+    menuItem.dataset.params = '{}'
+  } else {
+    menuItem.classList.add('child-button', 'c-pointer', className)
+  }
   menuItem.textContent = text
   const vueScopeAttributes = [...new Set([...morePanel.children].map((element: HTMLElement) => element.getAttributeNames().filter(it => it.startsWith('data-v-'))).flat())]
   vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))

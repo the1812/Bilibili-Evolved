@@ -17,9 +17,10 @@ const parseAliPay = (csv: Record<string, string>[]) => {
   return csv
 }
 const parseWeChat = (csv: Record<string, string>[]) => {
-  csv.forEach(item => {
-    item.sortKey = Number(new Date(item.交易时间)).toString()
-    item.toString = () => {
+  const items = csv.filter(item => item.交易类型 === '赞赏码').map(item => ({
+    ...item,
+    sortKey: Number(new Date(item.交易时间)).toString(),
+    toString: () => {
       let name = item.交易对方
       const noteMatch = item.商品.match(/付款方留言:(.+)/)
       if (noteMatch) {
@@ -29,10 +30,11 @@ const parseWeChat = (csv: Record<string, string>[]) => {
         name += ` ${item.备注}`
       }
       item.交易单号 = item.交易单号.trim()
+      console.log(item, item.交易时间)
       return `| ${item.交易时间.replace(/-/g, '.')} | ${name} | ${item.交易单号.substring(item.交易单号.length - 4)} | ${item['金额(元)']} |`
-    }
-  })
-  return csv
+    },
+  }))
+  return items
 }
 const items = files.map(file => {
   const text = fs.readFileSync(file, { encoding: 'utf-8' })

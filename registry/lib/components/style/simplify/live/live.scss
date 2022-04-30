@@ -47,8 +47,22 @@ $prefix: "simplifyLiveroom-switch";
     display: flex !important;
     padding: 10px 24px 10px 12px !important;
     height: auto !important;
+
+    .blive-avatar-icons,
     .face-pendants {
       display: none !important;
+    }
+    // .blive-avatar-icons {
+    //   right: -2px !important;
+    //   .blive-avatar-icon {
+    //     width: 12px !important;
+    //     height: 12px !important;
+    //     border-width: 1px !important;
+    //   }
+    // }
+    .blive-avatar-pendant {
+      width: 48px !important;
+      height: 48px !important;
     }
     .blive-avatar-face,
     .blive-avatar,

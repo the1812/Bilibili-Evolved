@@ -82,7 +82,7 @@ export default Vue.extend({
               id: item.season_id,
               title: item.title,
               playCount: item.stat.view,
-              points: item.pts,
+              points: item.stat.follow,
               upHref: item.url,
               upName,
               dynamic: upName,

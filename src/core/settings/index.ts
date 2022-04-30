@@ -1,15 +1,19 @@
-import { components, UserComponentMetadata } from '@/components/component'
+import {
+  components,
+  UnknownOptions,
+  UserComponentMetadata,
+} from '@/components/component'
 import { UserStyle } from '@/plugins/style'
 import { PluginMetadata, plugins } from '@/plugins/plugin'
 import { componentToSettings, isUserComponent } from './helpers'
 
 type Property = string | number | symbol
 /** 表示一个组件的设置 */
-export interface ComponentSettings<O = { [key: string]: any }> {
+export interface ComponentSettings<O extends UnknownOptions = UnknownOptions> {
   /** 是否启用此组件 */
   enabled: boolean
   /** 组件选项 */
-  options: O
+  options: O & Record<string, unknown>
 }
 /** 脚本总设置 */
 export interface Settings {

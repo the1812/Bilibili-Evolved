@@ -1,6 +1,7 @@
 import * as component from './component'
 import * as userComponent from './user-component'
 import * as styledComponent from './styled-component'
+import * as define from './define'
 import * as description from './description'
 import * as feedsApis from './feeds/api'
 import BangumiCard from './feeds/BangumiCard.vue'
@@ -32,6 +33,7 @@ export const componentApis = {
   component,
   userComponent,
   styledComponent,
+  define,
   description,
   switchOptions,
   launchBar: {

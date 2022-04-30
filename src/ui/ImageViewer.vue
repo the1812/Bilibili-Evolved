@@ -47,25 +47,18 @@ export default Vue.extend({
   components: {
     VIcon,
   },
-  // model: {
-  //   prop: 'open',
-  //   event: 'change',
-  // },
   props: {
     image: {
       type: String,
       required: true,
     },
-    // open: {
-    //   type: Boolean,
-    //   default: false,
-    // },
   },
   data() {
     return {
       filename: '',
       open: false,
       blobUrl: '',
+      keyHandler: null,
     }
   },
   watch: {
@@ -82,6 +75,12 @@ export default Vue.extend({
     },
   },
   mounted() {
+    this.keyHandler = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        this.open = false
+      }
+    }
+    document.addEventListener('keydown', this.keyHandler)
     addComponentListener(
       'settingsPanel.filenameFormat',
       () => {
@@ -89,6 +88,9 @@ export default Vue.extend({
       },
       true,
     )
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.keyHandler)
   },
   methods: {
     async copyLink() {

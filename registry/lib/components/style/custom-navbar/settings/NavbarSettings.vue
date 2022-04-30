@@ -2,7 +2,7 @@
   <VPopup
     ref="popup"
     v-model="open"
-    class="custom-navbar-settings be-settings-extra-options"
+    class="custom-navbar-settings"
     fixed
     :lazy="false"
     :trigger-element="triggerElement"

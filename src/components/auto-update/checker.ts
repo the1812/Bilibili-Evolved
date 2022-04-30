@@ -1,5 +1,6 @@
 import { meta } from '@/core/meta'
 import { getGeneralSettings, getComponentSettings } from '@/core/settings'
+import { useScopedConsole } from '@/core/utils/log'
 import { descendingSort } from '@/core/utils/sort'
 import { isFeatureAcceptable } from '@/core/version'
 import {
@@ -37,45 +38,45 @@ export const checkUpdate = async (config: CheckUpdateConfig) => {
     return filterNames.includes(itemName)
   }
   let updatedCount = 0
+  const updateItems = Object.entries(items)
+    .filter(([itemName, item]) => shouldUpdate(itemName) && Boolean(item.url))
   const results = await Promise.allSettled(
-    Object.entries(items)
-      .filter(([itemName, item]) => shouldUpdate(itemName) && Boolean(item.url))
-      .map(async ([itemName, item]) => {
-        const { url, lastUpdateCheck, alwaysUpdate } = item
-        const isDebugItem = alwaysUpdate && devMode
-        if (
-          !isDebugItem
-          && now - lastUpdateCheck <= options.minimumDuration
-          && !force
-        ) {
-          return `[${itemName}] 未超过更新间隔期, 已跳过`
-        }
-        if (updatedCount > maxCount && !force) {
-          return `[${itemName}] 已到达单次更新量上限 (${maxCount} 个), 已跳过`
-        }
-        let finalUrl = url
-        if (localhost.test(url) && options.localPortOverride) {
-          finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
-        }
-        const code: string = await coreApis.ajax.monkey({ url: finalUrl })
-        // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
-        if (!(itemName in items)) {
-          return `[${itemName}] 已被卸载, 取消更新`
-        }
-        if (!code) {
-          return `[${itemName}] 更新下载失败, 取消更新`
-        }
-        if (!isFeatureAcceptable(code)) {
-          return `[${itemName}] 版本不匹配, 取消更新`
-        }
-        const { installFeatureFromCode } = await import(
-          '@/core/install-feature'
-        )
-        const { message } = await installFeatureFromCode(code, url)
-        item.lastUpdateCheck = Number(new Date())
-        updatedCount++
-        return `[${itemName}] ${message}`
-      }),
+    updateItems.map(async ([itemName, item]) => {
+      const { url, lastUpdateCheck, alwaysUpdate } = item
+      const isDebugItem = alwaysUpdate && devMode
+      if (
+        !isDebugItem
+        && now - lastUpdateCheck <= options.minimumDuration
+        && !force
+      ) {
+        return `[${itemName}] 未超过更新间隔期, 已跳过`
+      }
+      if (updatedCount > maxCount && !force) {
+        return `[${itemName}] 已到达单次更新量上限 (${maxCount} 个), 已跳过`
+      }
+      let finalUrl = url
+      if (localhost.test(url) && options.localPortOverride) {
+        finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
+      }
+      const code: string = await coreApis.ajax.monkey({ url: finalUrl })
+      // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
+      if (!(itemName in items)) {
+        return `[${itemName}] 已被卸载, 取消更新`
+      }
+      if (!code) {
+        return `[${itemName}] 更新下载失败, 取消更新`
+      }
+      if (!isFeatureAcceptable(code)) {
+        return `[${itemName}] 版本不匹配, 取消更新`
+      }
+      const { installFeatureFromCode } = await import(
+        '@/core/install-feature'
+      )
+      const { message } = await installFeatureFromCode(code, url)
+      item.lastUpdateCheck = Number(new Date())
+      updatedCount++
+      return `[${itemName}] ${message}`
+    }),
   )
   return results
     .map((r, index) => {
@@ -125,13 +126,18 @@ const checkByName = (method: CheckSingleTypeUpdate) => reload(
 
 export const checkAllUpdate = async (config: CheckSingleTypeUpdateConfig) => {
   const { options } = getComponentSettings(name)
-  console.log('[自动更新器] 开始检查更新')
-  console.log(await checkComponentsUpdate(config) || '暂无组件更新')
-  console.log(await checkPluginsUpdate(config) || '暂无插件更新')
-  console.log(await checkStylesUpdate(config) || '暂无样式更新')
+  const console = useScopedConsole('检查所有更新')
+  console.log('开始检查更新')
+  const updateMessages = [
+    await checkComponentsUpdate(config) || '暂无组件更新',
+    await checkPluginsUpdate(config) || '暂无插件更新',
+    await checkStylesUpdate(config) || '暂无样式更新',
+  ]
   options.lastUpdateCheck = Number(new Date())
   options.lastInstalledVersion = meta.version
-  console.log('[自动更新器] 完成更新检查')
+  console.groupCollapsed('完成更新检查')
+  updateMessages.forEach(message => console.log(message))
+  console.groupEnd()
 }
 export const silentCheckUpdate = () => checkAllUpdate({
   maxCount: getComponentSettings(name).options.maxUpdateCount,
