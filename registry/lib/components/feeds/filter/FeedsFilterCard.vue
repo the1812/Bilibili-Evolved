@@ -36,7 +36,7 @@
         <VIcon title="添加" icon="mdi-plus" :size="18" />
       </VButton>
     </div>
-    <h2>侧边栏</h2>
+    <h2>板块</h2>
     <div class="filter-side-card">
       <div
         v-for="[id, type] of Object.entries(allSideCards)"
@@ -99,6 +99,10 @@ const sideCards: { [id: number]: SideCardType } = {
   5: {
     className: 'most-viewed',
     displayName: '关注栏',
+  },
+  6: {
+    className: 'compose',
+    displayName: '发布动态',
   },
 }
 let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
