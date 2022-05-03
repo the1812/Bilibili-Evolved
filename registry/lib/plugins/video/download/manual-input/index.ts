@@ -17,6 +17,7 @@ export const plugin: PluginMetadata = {
         name: 'videoManual',
         displayName: '手动输入',
         match: videoUrls,
+        batch: true,
         getInputs: async (instance: { ids: string[] }) => {
           const console = useScopedConsole('手动输入')
           const handleAid = (aid: string) => {
