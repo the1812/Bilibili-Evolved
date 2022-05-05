@@ -1,5 +1,5 @@
 import { componentToSettings } from '@/core/settings'
-import { getBuiltInComponents } from './built-in-components'
+import { isBuildInComponent } from './built-in-components'
 import {
   ComponentMetadata, componentsMap,
 } from './component'
@@ -16,8 +16,7 @@ export const installComponent = async (code: string) => {
     throw new Error('无效的组件代码')
   }
   const { settings } = await import('@/core/settings')
-  const isBuiltInComponent = getBuiltInComponents().some(it => it.name === component.name)
-  if (isBuiltInComponent) {
+  if (isBuildInComponent(component.name)) {
     throw new Error(`不能覆盖内置组件'${component.name}', 请更换名称`)
   }
   const userMetadata = {

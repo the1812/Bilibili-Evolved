@@ -24,14 +24,9 @@
       </div>
       <div ref="mainContainer" class="main">
         <div ref="componentList" class="component-list">
-          <!-- <div v-show="selectedComponents.length>1" class="modifier"> -->
-          <div class="modifier">
-            <div class="settings-panel-search">
-              <!-- <VIcon icon="search" :size="18" /> -->
-              <TextBox v-model="searchKeyword" placeholder="搜索"></TextBox>
-            </div>
+          <div class="bv-modifier">
+            <TextBox v-model="searchKeyword" class="settings-panel-search" placeholder="搜索" />
             <VButton
-              style="margin-left: 5px;"
               :title="selectedComponents.length > 0 ? '更新选择组件' : '更新全部'"
             >
               <VIcon
@@ -41,7 +36,6 @@
               />
             </VButton>
             <VButton
-              style="margin-left: 5px;"
               :disabled="selectedComponents.length == 0 ? true : false"
             >
               <VIcon
@@ -105,10 +99,9 @@ import ComponentTags from './ComponentTags.vue'
 import { getDescriptionText } from '../description'
 import { uninstallComponent } from '../user-component'
 import { checkComponentsUpdate, forceCheckUpdateAndReload } from '../auto-update/checker'
-import { getBuiltInComponents } from '../built-in-components'
+import { isBuildInComponent } from '../built-in-components'
 
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
-const isBuildInComponent = (name: string) => getBuiltInComponents().some(c => c.name === name)
 export default {
   name: 'SettingsPanel',
   components: {
@@ -222,9 +215,7 @@ export default {
         let endIdx = list.indexOf(name)
         if (startIdx > endIdx) {
           // if start index is greater than end index, swap them
-          const t = startIdx
-          startIdx = endIdx
-          endIdx = t
+          [startIdx, endIdx] = [endIdx, startIdx]
         }
         this.selectedComponents = list.slice(startIdx, endIdx + 1)
         return
@@ -282,7 +273,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scope>
+<style lang="scss">
 @import "common";
 
 .settings-panel-popup {
@@ -385,27 +376,11 @@ export default {
             }
           }
 
-          .modifier {
-            display: flex;
+          .bv-modifier {
+            @include h-center(5px);
             padding: 6px 12px 4px 10px;
-            // flex-direction: row-reverse;
-
             .settings-panel-search {
-              flex-grow: 1;
-              @include h-center();
-              justify-content: center;
-              .be-textbox {
-                flex: 1 0 0;
-                height: 100%;
-              }
-              .be-icon {
-                margin-right: 8px;
-                opacity: 0.5;
-              }
-            }
-
-            div:nth-child(n+2) {
-              margin-left: 5px;
+              height: 100%;
             }
           }
         }
