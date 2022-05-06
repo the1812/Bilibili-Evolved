@@ -12,3 +12,6 @@ export const getBuiltInComponents = (): ComponentMetadata[] => [
   AutoUpdate,
   NotifyNewVersion,
 ]
+
+// eslint-disable-next-line max-len
+export const isBuildInComponent = (name: string) => getBuiltInComponents().some(c => c.name === name)
