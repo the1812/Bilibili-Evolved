@@ -1,12 +1,28 @@
 <template>
-  <div class="toast-card visible" :class="'toast-' + card.type">
+  <div
+    class="toast-card visible"
+    :class="'toast-' + card.type"
+    @mouseover="stopTimer"
+    @mouseout="startTimer"
+  >
     <div class="toast-card-border"></div>
     <div class="toast-card-header">
       <h1 class="toast-card-title">
         {{ card.title }}
       </h1>
-      <div class="toast-card-dismiss" @click="card.dismiss()">
-        <VIcon icon="close" :size="20"></VIcon>
+      <div
+        class="toast-card-close"
+        :class="{ 'show-progress': Boolean(remainingTime) }"
+        title="关闭"
+        @click="card.close()"
+      >
+        <ProgressRing
+          :size="28"
+          :stroke="2"
+          :progress="progressMax - remainingTime"
+          :max="progressMax"
+        />
+        <VIcon icon="close" :size="14" />
       </div>
     </div>
     <div class="toast-card-message" v-html="card.message"></div>
@@ -14,11 +30,13 @@
 </template>
 
 <script lang="ts">
-import { VIcon } from '@/ui'
+import { VIcon, ProgressRing } from '@/ui'
+import type { Toast } from '.'
 
 export default Vue.extend({
   components: {
     VIcon,
+    ProgressRing,
   },
   props: {
     card: {
@@ -26,11 +44,49 @@ export default Vue.extend({
       required: true,
     },
   },
+  data() {
+    return {
+      progressMax: 0,
+      remainingTime: 0,
+    }
+  },
+  created() {
+    this.readDuration()
+  },
+  methods: {
+    durationTick() {
+      const { closeTime } = this.card as Toast
+      if (!closeTime) {
+        return
+      }
+      this.remainingTime = closeTime - Number(new Date())
+      if (this.remainingTime > 0) {
+        requestAnimationFrame(() => this.durationTick())
+      }
+    },
+    readDuration() {
+      const { duration, closeTime } = this.card as Toast
+      if (duration) {
+        this.progressMax = closeTime - Number(new Date())
+        this.remainingTime = this.progressMax
+        requestAnimationFrame(() => this.durationTick())
+      }
+    },
+    stopTimer() {
+      (this.card as Toast).clearDuration()
+      this.progressMax = 0
+      this.remainingTime = 0
+    },
+    startTimer() {
+      (this.card as Toast).setDuration()
+      this.readDuration()
+    },
+  },
 })
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 .toast-card {
   background: #fff;
   min-width: var(--card-min-width);
@@ -72,23 +128,41 @@ export default Vue.extend({
       color: #999;
     }
   }
-  &-dismiss {
-    height: 20px;
-    width: 20px;
+  &-close {
+    height: 24px;
+    width: 24px;
     @include h-center();
+    position: relative;
+    justify-content: center;
     flex: 0 0 auto;
-    padding: 16px;
+    padding: 14px;
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
-    transition: all 0.2s ease-out;
-    transform-origin: center;
-    opacity: 0.5;
     box-sizing: content-box;
+    opacity: 0.75;
     &:hover {
-      transform: scale(1.2);
+      opacity: 0.85;
+      .be-icon {
+        transform: scale(1.2);
+      }
     }
     &:active {
-      transform: scale(1.1);
+      opacity: 0.9;
+      .be-icon {
+        transform: scale(1.3);
+      }
+    }
+
+    .be-icon {
+      transition: 0.2s ease-out;
+    }
+    .be-progress-ring {
+      @include absolute-center();
+      --ring-color: currentColor;
+      opacity: 0;
+    }
+    &.show-progress .be-progress-ring {
+      opacity: 1;
     }
   }
   &-message {

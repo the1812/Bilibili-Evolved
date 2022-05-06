@@ -176,7 +176,7 @@ export const component = defineComponentMetadata({
                 const { Toast } = await import('@/core/toast')
                 const toast = Toast.info('正在检查更新...', '检查所有更新')
                 await forceCheckUpdateAndReload()
-                toast.dismiss()
+                toast.close()
               },
               icon,
             },
@@ -198,7 +198,7 @@ export const component = defineComponentMetadata({
                     '检查最近更新的功能',
                   )
                   await checkLastFeature()
-                  toast.dismiss()
+                  toast.close()
                 },
                 icon,
               },
