@@ -2,13 +2,11 @@
   <div class="settings-panel" :class="{ collapsed, peek }">
     <div class="settings-panel-header">
       <VIcon icon="settings-outline" />
-      <div class="title">
-        设置
-      </div>
+      <div class="title">设置</div>
       <div
         class="peek"
         title="透视"
-        style="margin-left:auto"
+        style="margin-left: auto"
         @mouseover="peek = true"
         @mouseout="peek = false"
       >
@@ -24,24 +22,30 @@
       </div>
       <div ref="mainContainer" class="main">
         <div ref="componentList" class="component-list">
-          <div class="bv-modifier">
-            <TextBox v-model="searchKeyword" class="settings-panel-search" placeholder="搜索" />
+          <div class="settings-panel-search-bar">
+            <TextBox
+              v-model="searchKeyword"
+              class="settings-panel-search"
+              placeholder="搜索"
+            />
             <VButton
-              :title="selectedComponents.length > 0 ? '更新选择组件' : '更新全部'"
+              v-for="action of searchBarActions"
+              :key="action.key"
+              type="transparent"
+              icon
+              :title="
+                typeof action.title === 'function'
+                  ? action.title(searchBarContext)
+                  : action.title
+              "
+              :disabled="
+                action.disabled ? action.disabled(searchBarContext) : false
+              "
             >
               <VIcon
-                icon="mdi-arrow-up-circle-outline"
+                :icon="action.icon"
                 :size="18"
-                @click="upgrade"
-              />
-            </VButton>
-            <VButton
-              :disabled="selectedComponents.length == 0 ? true : false"
-            >
-              <VIcon
-                icon="mdi-trash-can-outline"
-                :size="18"
-                @click="uninstall"
+                @click="action.run(searchBarContext)"
               />
             </VButton>
           </div>
@@ -89,7 +93,7 @@ import {
   VButton,
 } from '@/ui'
 import { getHook } from '@/plugins/hook'
-import { Toast } from '@/core/toast'
+import { deleteValue } from '@/core/utils'
 import ComponentSettings from './ComponentSettings.vue'
 import {
   ComponentMetadata, ComponentTag, components,
@@ -97,9 +101,7 @@ import {
 import ComponentDetail from './ComponentDetail.vue'
 import ComponentTags from './ComponentTags.vue'
 import { getDescriptionText } from '../description'
-import { uninstallComponent } from '../user-component'
-import { checkComponentsUpdate, forceCheckUpdateAndReload } from '../auto-update/checker'
-import { isBuildInComponent } from '../built-in-components'
+import { SearchBarActionContext, searchBarActions } from './search-bar-actions'
 
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
 export default {
@@ -118,18 +120,21 @@ export default {
     return {
       components,
       renderedComponents: components.filter(c => !c.hidden),
-      selectedComponent: null, // store component obj
-      selectedComponents: [], // store component name
+      selectedComponent: null,
+      selectedComponents: [],
       componentDetailOpen: false,
       collapsed: false,
       peek: false,
       searchKeyword: '',
       searchFilter: defaultSearchFilter,
+      searchBarActions,
     }
   },
   computed: {
     isComponentSelected() {
-      return (name:string) => this.selectedComponents.includes(name)
+      return (name: string) => (
+        this.selectedComponents.some((c: ComponentMetadata) => c.name === name)
+      )
     },
     tags() {
       const renderedComponents = this.renderedComponents as ComponentMetadata[]
@@ -141,6 +146,9 @@ export default {
       tags = lodash.uniqBy(tags, t => t.name)
       tags.forEach(t => (t.count = counts[t.name]))
       return tags
+    },
+    searchBarContext(): SearchBarActionContext {
+      return lodash.pick(this, 'components', 'selectedComponent', 'selectedComponents', 'searchKeyword', 'searchFilter')
     },
   },
   watch: {
@@ -168,39 +176,6 @@ export default {
     },
   },
   methods: {
-    async upgrade() {
-      if (this.selectedComponents.length === 0) {
-        const toast = Toast.info('正在检查更新...', '检查所有更新')
-        forceCheckUpdateAndReload()
-        await forceCheckUpdateAndReload()
-        toast.dismiss()
-      } else {
-        this.selectedComponents.forEach(async name => {
-          if (isBuildInComponent(name)) {
-            Toast.info('内置组件不能更新', '警告', 3000)
-          } else {
-            const toast = Toast.info(`检查更新${name}中...`, '检查更新')
-            const result = await checkComponentsUpdate({
-              filterNames: [name],
-              force: true,
-            })
-            toast.message = result
-            toast.duration = 3000
-          }
-        })
-      }
-      // this.selectedComponents = []
-    },
-    uninstall() {
-      this.selectedComponents.forEach(name => {
-        if (!isBuildInComponent(name)) {
-          uninstallComponent(name)
-        } else {
-          Toast.info('内置组件不能卸载', '警告', 3000)
-        }
-      })
-      this.selectedComponents = []
-    },
     closePopper() {
       this.selectedComponent = null
       this.selectedComponents = []
@@ -209,10 +184,10 @@ export default {
     selectMultipleComponent({ name }: ComponentMetadata, listSelect = false) {
       if (this.selectedComponent && listSelect) {
         // handle shift + click
-        const { name: selectedComponentName } = this.selectedComponent
-        const list = this.renderedComponents.map(c => c.name)
-        let startIdx = list.indexOf(selectedComponentName)
-        let endIdx = list.indexOf(name)
+        const { name: selectedComponentName } = this.selectedComponent as ComponentMetadata
+        const list = this.renderedComponents as ComponentMetadata[]
+        let startIdx = list.findIndex(c => c.name === selectedComponentName)
+        let endIdx = list.findIndex(c => c.name === name)
         if (startIdx > endIdx) {
           // if start index is greater than end index, swap them
           [startIdx, endIdx] = [endIdx, startIdx]
@@ -220,11 +195,12 @@ export default {
         this.selectedComponents = list.slice(startIdx, endIdx + 1)
         return
       }
-      const idx = this.selectedComponents.indexOf(name)
-      if (idx === -1) {
-        this.selectedComponents.push(name)
+      const selectedList = this.selectedComponents as ComponentMetadata[]
+      const component = selectedList.find(c => c.name === name)
+      if (component) {
+        selectedList.push(component)
       } else {
-        this.selectedComponents.splice(idx, 1)
+        deleteValue(selectedList, c => c.name === component.name)
       }
     },
     selectComponent(component: ComponentMetadata) {
@@ -239,8 +215,8 @@ export default {
       if (isAlreadySelected) {
         return
       }
-      this.selectedComponents.push(component.name)
       openHooks.before(component.name)
+      this.selectedComponents.push(component)
       this.selectedComponent = component
       this.componentDetailOpen = true
       openHooks.after(component.name)
@@ -274,27 +250,28 @@ export default {
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .settings-panel-popup {
   z-index: 1000;
   .settings-panel {
     @include shadow();
     @include v-stretch();
+    --header-height: 50px;
+    --settings-panel-background: #fff;
+    background-color: var(--settings-panel-background);
     position: relative;
     overscroll-behavior: contain;
     border-radius: 8px;
-    background-color: #fff;
     color: black;
     border: 1px solid #8882;
     box-sizing: content-box;
     width: auto;
     min-width: 320px;
     height: var(--panel-height);
-    --header-height: 50px;
     transition: opacity 0.2s 0.2s ease-out;
     body.dark & {
-      background-color: #222;
+      --settings-panel-background: #222;
       color: #eee;
       // border-color: #333;
     }
@@ -338,7 +315,7 @@ export default {
       .sidebar {
         display: flex;
         flex-direction: column;
-        z-index: 1;
+        z-index: 2;
       }
       .main {
         flex: 1;
@@ -360,7 +337,7 @@ export default {
           //   margin-bottom: 12px;
           // }
 
-          .transition{
+          .transition {
             &-move,
             &-enter-active,
             &-leave-active {
@@ -376,11 +353,22 @@ export default {
             }
           }
 
-          .bv-modifier {
-            @include h-center(5px);
-            padding: 6px 12px 4px 10px;
+          .settings-panel-search-bar {
+            @include h-center();
+            background-color: var(--settings-panel-background);
+            padding-right: 8px;
+            height: 36px;
+            border-bottom: 1px solid #8882;
+            position: sticky;
+            top: 0;
+            z-index: 1;
             .settings-panel-search {
-              height: 100%;
+              align-self: stretch;
+              font-size: 13px;
+              box-shadow: none;
+              input {
+                padding: 4px 10px;
+              }
             }
           }
         }
@@ -396,9 +384,10 @@ export default {
       left: calc(100% - 12px);
       height: calc(100% - 22px);
       z-index: -1;
-      transform: translateZ(0) translateY(-50%) translateX(calc(-48% * var(--direction)));
+      transform: translateZ(0) translateY(-50%)
+        translateX(calc(-48% * var(--direction)));
       transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
-                  opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+        opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
       padding-left: 12px;
       body.settings-panel-dock-right & {
         left: unset;
