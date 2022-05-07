@@ -770,6 +770,14 @@
   },
   {
     "type": "plugin",
+    "name": "downloadVideo.inputs.manual",
+    "displayName": "下载视频 - 手动输入",
+    "description": "为下载视频增加手动输入支持.",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/manual-input.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/manual-input.js"
+  },
+  {
+    "type": "plugin",
     "name": "downloadVideo.outputs.mpv-playlist",
     "displayName": "下载视频 - MPV 播放支持（列表）",
     "description": "by [@wuliic](https://github.com/wullic)\n\n为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)",
