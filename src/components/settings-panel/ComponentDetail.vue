@@ -50,7 +50,7 @@
       <div class="component-detail-internal-data">
         <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
           <div class="internal-name">
-            Commit: {{ componentData.commitHash.substr(0, 9) }}
+            Commit: {{ componentData.commitHash.substring(0, 9) }}
           </div>
         </div>
         <div class="component-detail-internal-data-row">

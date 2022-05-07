@@ -11,7 +11,7 @@
         target="_blank"
         href="https://account.bilibili.com/account/big"
       >{{ userType }}</a>
-      <div v-if="userInfo.vipStatus ===1 && userInfo.vipType === 2" class="privileges row">
+      <div v-if="userInfo.vipStatus === 1 && userInfo.vipType === 2" class="privileges row">
         <div
           class="b-coin"
           :class="{ received: privileges.bCoin.received }"
@@ -37,9 +37,17 @@
           class="level"
         >
           <VIcon
+            v-if="userInfo.is_senior_member"
+            :icon="'lv' + userInfo.level_info.current_level + '-plus'"
+            colored
+            :size="30"
+            class="level-icon plus"
+          />
+          <VIcon
+            v-else
             :icon="'lv' + userInfo.level_info.current_level"
             class="level-icon"
-          ></VIcon>
+          />
         </a>
         <span
           class="level-progress-label"
@@ -209,6 +217,18 @@ export default Vue.extend({
     }
   },
   computed: {
+    level() {
+      const baseLevel = `lv${this.userInfo.level_info.current_level}`
+      if (this.userInfo.is_senior_member) {
+        return {
+          icon: `${baseLevel}-plus`,
+          colored: true,
+        }
+      }
+      return {
+        icon: baseLevel,
+      }
+    },
     userType() {
       if (!this.userInfo.isLogin) {
         return '未登录'
@@ -485,6 +505,9 @@ export default Vue.extend({
     body.dark & {
       background: rgba(255, 255, 255, 0.1);
     }
+  }
+  .level-icon.plus {
+    max-height: 24px;
   }
   .level-progress-thumb {
     width: 100%;

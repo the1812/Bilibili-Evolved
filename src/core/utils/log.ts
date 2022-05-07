@@ -82,9 +82,10 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
       lastScopedData ? prependConfig.color : firstColor
     ) ?? specialPalette.default
     const textColor = '#fff'
+    const leadingWhitespace = lastScopedData ? ['%c '] : ['%c']
     const currentScopedData: ScopedData = {
-      badgeNames: [...(lastScopedData?.badgeNames ?? []), `%c${prependConfig.name}`],
-      badgeValues: [...(lastScopedData?.badgeValues ?? []), `background-color: ${backgroundColor}; color: ${textColor}; padding: 2px 4px; border-radius: 4px; margin-left: ${lastScopedData ? 6 : 0}px`],
+      badgeNames: [...(lastScopedData?.badgeNames ?? []), ...leadingWhitespace, `%c${prependConfig.name}`],
+      badgeValues: [...(lastScopedData?.badgeValues ?? []), '', `background-color: ${backgroundColor}; color: ${textColor}; padding: 2px 4px; border-radius: 4px;`],
       original: lastScopedData?.original ?? target,
     }
     const rootTarget = currentScopedData.original
@@ -95,15 +96,18 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
       }
       const { before: beforeCall, after: afterCall } = getHook(ScopedConsoleCallHook)
       beforeCall(hookPayload)
-      afterCall(hookPayload)
+      let returnValue: any
       if (groupCounter === 0) {
-        return rootTarget.apply(this, [
+        returnValue = rootTarget.apply(this, [
           currentScopedData.badgeNames.join(''),
           ...currentScopedData.badgeValues,
           ...args,
         ])
+      } else {
+        returnValue = rootTarget.apply(this, args)
       }
-      return rootTarget.apply(this, args)
+      afterCall(hookPayload)
+      return returnValue
     }
     patchedLog[ScopedConsoleSymbol] = currentScopedData
     return patchedLog

@@ -35,7 +35,7 @@ export default Vue.extend({
         this.disabled = true
         const toast = Toast.info('正在检查更新...', '检查所有更新')
         await forceCheckUpdateAndReload()
-        toast.dismiss()
+        toast.close()
       } finally {
         this.disabled = false
       }

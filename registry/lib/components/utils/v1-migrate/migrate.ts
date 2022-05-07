@@ -327,7 +327,7 @@ export const runMigrate = async (v1Settings: any) => {
     }
     toast.message = `导入完成. 成功 ${success} 个, 失败 ${fail} 个, 可在控制台查看详细日志.`
   } catch (error) {
-    toast.dismiss()
+    toast.close()
     logError(error)
   }
 }

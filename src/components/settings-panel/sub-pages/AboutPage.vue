@@ -21,7 +21,7 @@
           Commit Hash: {{ meta.compilationInfo.commitHash.substring(0, 8) }}
         </div> -->
       </div>
-      <div class="script-links">
+      <div v-if="feedbackSupported" class="script-links">
         <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved" class="homepage script-link">
           <VButton>
             <VIcon icon="mdi-home-outline" :size="20" />
@@ -72,6 +72,17 @@ import {
 } from '@/ui'
 import { AboutPageAction, aboutPageActions } from './about-page'
 
+const feedbackSupported = (() => {
+  const namespace = GM_info.scriptMetaStr.match(/@namespace\s*(.+)/)
+  if (!namespace || !namespace[1]) {
+    return true
+  }
+  if (namespace[1].includes('greasyfork')) {
+    return false
+  }
+  return true
+})()
+
 export default Vue.extend({
   components: {
     VButton,
@@ -81,6 +92,7 @@ export default Vue.extend({
     return {
       meta,
       aboutPageActions,
+      feedbackSupported,
     }
   },
   methods: {

@@ -13,6 +13,7 @@ const feedsCardTypeMap = {
   DynamicTypePgc: feedsCardTypes.bangumi,
   DynamicTypeArticle: feedsCardTypes.column,
   DynamicTypeMusic: feedsCardTypes.audio,
+  DynamicTypeLiveRcmd: feedsCardTypes.liveRecord,
 }
 
 const combineText = (...texts: string[]) => texts.filter(it => Boolean(it)).join('\n').trim()
