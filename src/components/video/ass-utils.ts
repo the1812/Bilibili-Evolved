@@ -20,7 +20,7 @@ export const convertHexColorForStyle = (hexColor: string, opacity = 1) => {
 }
 const round = (number: number) => {
   const [integer, decimal = '00'] = String(number).split('.')
-  return `${integer.padStart(2, '0')}.${decimal.substr(0, 2).padEnd(2, '0')}`
+  return `${integer.padStart(2, '0')}.${decimal.substring(0, 2).padEnd(2, '0')}`
 }
 const secondsToTime = (seconds: number) => {
   let hours = 0

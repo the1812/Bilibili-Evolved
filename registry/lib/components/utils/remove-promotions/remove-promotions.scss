@@ -22,7 +22,9 @@ body.remove-game-match-module #reportFirst3,
 .home-content .ad-panel,
 .recommend-list .rec-list > :not(.video-page-card),
 .eva-extension-area,
-.eva-banner {
+.eva-banner,
+.video-ad-creative-card,
+.bili-dyn-home--member .bili-dyn-ads {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
