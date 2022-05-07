@@ -38,7 +38,7 @@ export const formatTitle = (
   const now = new Date()
   const builtInVariables: StringMap = {
     title: document.title
-      .replace(/第[0-9]*[一二三四五六七八九十百千]*[集话]-[^-]+-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
+      .replace(/第[0-9]*[零一二三四五六七八九十百千]*[集话]-[^-]+-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
       .replace(/-[^-]+-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
       .replace(/-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
       .replace(/：([^：]+?)_.+?_bilibili_哔哩哔哩$/, '')
