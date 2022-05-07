@@ -358,6 +358,7 @@ export default {
             background-color: var(--settings-panel-background);
             padding-right: 8px;
             height: 36px;
+            box-sizing: border-box;
             border-bottom: 1px solid #8882;
             position: sticky;
             top: 0;
