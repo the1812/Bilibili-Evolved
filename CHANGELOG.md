@@ -9,7 +9,7 @@
 - 排除在直播开放平台的运行 (open-live.bilibili.com). (#3259)
 - 检测到由 GreasyFork 安装时禁用反馈入口. (#3277)
 - `网址参数清理` 不再在 iframe 中运行. (#2953)
-- 修复标题格式化的两个问题. (#2953, #3309, PR 3310 by [cicur](https://github.com/cicur))
+- 修复标题格式化的两个问题. (#3251, #3309, PR 3310 by [cicur](https://github.com/cicur))
 
 ----
 
