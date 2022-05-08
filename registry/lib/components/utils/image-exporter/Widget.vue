@@ -69,7 +69,7 @@ export default Vue.extend({
         logError(error)
       } finally {
         this.busy = false
-        toast.dismiss()
+        toast.close()
       }
     },
   },

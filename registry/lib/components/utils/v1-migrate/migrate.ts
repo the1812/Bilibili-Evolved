@@ -1,3 +1,4 @@
+import { DocSourceItem } from 'registry/lib/docs'
 import { componentsMap } from '@/components/component'
 import { installComponent } from '@/components/user-component'
 import { monkey } from '@/core/ajax'
@@ -10,7 +11,6 @@ import { logError } from '@/core/utils/log'
 import { getHook } from '@/plugins/hook'
 import { installPlugin, pluginsMap } from '@/plugins/plugin'
 import { UserStyle } from '@/plugins/style'
-import { DocSourceItem } from 'registry/lib/docs'
 
 export const runMigrate = async (v1Settings: any) => {
   const toast = Toast.info('下载功能列表中', '导入 v1 设置')
@@ -327,7 +327,7 @@ export const runMigrate = async (v1Settings: any) => {
     }
     toast.message = `导入完成. 成功 ${success} 个, 失败 ${fail} 个, 可在控制台查看详细日志.`
   } catch (error) {
-    toast.dismiss()
+    toast.close()
     logError(error)
   }
 }

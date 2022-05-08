@@ -46,7 +46,7 @@ export const setupFeedImageExporter: ComponentEntry = async ({ settings: { optio
           }
           pack.add(`${formatTitle(feedFormat, false, titleData)}${imageUrls[index].extension}`, blob)
         })
-        toast.dismiss()
+        toast.close()
         const packTitleData = {
           user: card.username,
           id: card.id,

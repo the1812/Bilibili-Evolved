@@ -1,5 +1,5 @@
-import { PluginMetadata } from '@/plugins/plugin'
 import { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
+import { PluginMetadata } from '@/plugins/plugin'
 
 export const plugin: PluginMetadata = {
   name: 'launchBar.plugin',

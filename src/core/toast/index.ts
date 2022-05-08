@@ -13,6 +13,7 @@ export class Toast {
   private durationNumber: number | undefined = 3000
   private durationTimeout = 0
 
+  closeTime = 0
   creationTime = Number(new Date())
   randomKey = Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER + 1))
   constructor(
@@ -51,23 +52,37 @@ export class Toast {
     this.setDuration()
   }
   show() {
-    Toast.containerVM.cards.unshift(this)
     this.setDuration()
+    Toast.containerVM.cards.unshift(this)
   }
-  dismiss() {
-    if (Toast.containerVM.cards.includes(this)) {
-      Toast.containerVM.cards.splice(Toast.containerVM.cards.indexOf(this), 1)
+  close() {
+    const { cards } = Toast.containerVM
+    if (cards.includes(this)) {
+      cards.splice(cards.indexOf(this), 1)
     }
     this.clearDuration()
   }
-  private setDuration() {
+  /** @deprecated use `Toast.close()` instead. */
+  dismiss() {
+    this.close()
+  }
+  setDuration() {
     if (this.durationNumber === undefined) {
+      this.closeTime = 0
       return
     }
-    this.durationTimeout = window.setTimeout(() => this.dismiss(), this.durationNumber)
+    if (this.durationTimeout) {
+      this.clearDuration()
+    }
+    this.closeTime = Number(new Date()) + this.durationNumber
+    this.durationTimeout = window.setTimeout(() => this.close(), this.durationNumber)
   }
-  private clearDuration() {
+  clearDuration() {
+    if (!this.durationTimeout) {
+      return
+    }
     window.clearTimeout(this.durationTimeout)
+    this.closeTime = 0
     this.durationTimeout = 0
   }
 
