@@ -2,7 +2,6 @@ import { createServer, Server } from 'http'
 import webpack, { Watching, Configuration } from 'webpack'
 import exitHook from 'async-exit-hook'
 import handler from 'serve-handler'
-import path from 'path'
 import { devServerConfig } from './config'
 import { buildByEntry } from '../../registry/webpack/config'
 import { fromId } from '../../registry/webpack/id'
@@ -13,12 +12,12 @@ export const startRegistryWatcher = () => new Promise<Server>(resolve => {
   const { maxWatchers, port } = devServerConfig
   const watchers: { url: string; instance: Watching }[] = []
   const parseRegistryUrl = (url: string) => {
-    /* example: http://localhost:2333/registry/components/style/auto-hide-sidebar.js
+    /* example: http://localhost:2333/registry/dist/components/feeds/copy-link.js
     -> src: ./registry/lib/components/
     -> type: component
-    -> entry: ./registry/lib/components/style/auto-hide-sidebar/index.ts
+    -> entry: ./registry/lib/components/feeds/copy-link/index.ts
     */
-    const regex = new RegExp('http://[^/]+/registry/(.+)s/(.+)\\.js')
+    const regex = new RegExp('/registry/dist/([^/]+)s/(.+)\\.js')
     const match = url.match(regex)
     if (!match) {
       return null
@@ -32,62 +31,69 @@ export const startRegistryWatcher = () => new Promise<Server>(resolve => {
     }
   }
 
-  const createWatcher = async (url: string, config: Configuration) => {
-    const watcher = webpack(config)
-    const instance = watcher.watch({}, defaultWatcherHandler(
-      () => console.log(`Registry watcher started, url = ${url}`),
-      result => {
-        console.log('itemUpdate', result.hash, url)
-        sendMessage({
-          type: 'itemUpdate',
-          path: url,
-        })
-      },
-    ))
-    exitHook(exit => {
-      if (!instance.closed) {
-        instance.close(() => {
-          console.log(`Registry watcher stopped, url = ${url}`)
-          exit()
-        })
+  const createWatcher = (url: string, config: Configuration) => new Promise<void>(
+    resolveWatcher => {
+      const watcher = webpack(config)
+      const instance = watcher.watch({}, defaultWatcherHandler(
+        () => {
+          console.log(`Registry watcher started, url = ${url}`)
+          resolveWatcher()
+        },
+        result => {
+          console.log('itemUpdate', result.hash, url)
+          sendMessage({
+            type: 'itemUpdate',
+            path: url,
+          })
+        },
+      ))
+      exitHook(exit => {
+        if (!instance.closed) {
+          instance.close(() => {
+            console.log(`Registry watcher stopped, url = ${url}`)
+            exit()
+          })
+        }
+      })
+      if (watchers.length >= maxWatchers) {
+        const oldInstance = watchers.shift()
+        if (!oldInstance.instance.closed) {
+          oldInstance.instance.close(() => {
+            console.log(`Registry watcher stopped, url = ${oldInstance.url}`)
+          })
+        }
       }
-    })
-    if (watchers.length >= maxWatchers) {
-      const oldInstance = watchers.shift()
-      if (!oldInstance.instance.closed) {
-        oldInstance.instance.close(() => {
-          console.log(`Registry watcher stopped, url = ${oldInstance.url}`)
-        })
-      }
-    }
-    watchers.push({ url, instance })
-  }
+      watchers.push({ url, instance })
+    },
+  )
 
   const server = createServer((request, response) => {
     const { url } = request
-    if (url.startsWith('/core')) {
-      request.url = url.replace(/^\/core/, '')
-      console.log('request from', request.url)
+    const callHandler = () => {
       handler(request, response, {
-        public: path.resolve('./dist/'),
+        public: '.',
+        directoryListing: [
+          '/dist',
+          '/dist/**',
+          '/registry/dist',
+          '/registry/dist/**',
+        ],
       })
     }
     if (url.startsWith('/registry')) {
-      request.url = url.replace(/^\/registry/, '')
-      const existingWatcher = watchers[url]
+      const existingWatcher = watchers.find(w => w.url === url)
       const registryInfo = parseRegistryUrl(url)
-      const registryRoot = path.resolve('./registry/dist/')
+      console.log('existingWatcher', Boolean(existingWatcher))
+      console.log('registryInfo', registryInfo)
       if (existingWatcher || !registryInfo) {
-        handler(request, response, {
-          public: registryRoot,
-        })
+        callHandler()
       } else {
         createWatcher(url, buildByEntry(registryInfo) as Configuration).then(
-          () => handler(request, response, {
-            public: registryRoot,
-          }),
+          () => callHandler(),
         )
       }
+    } else {
+      callHandler()
     }
   })
   exitHook(exit => {
