@@ -4,8 +4,8 @@
 
 ### Serve components
 Serve (watch) contents:
-- `./registry/dist/*` -> `localhost:2333/registry/*`: Build on demand, cache 16 items by default.
-- `./dist/` -> `localhost:2333/core/*`: Build at startup.
+- `./registry/dist/*` -> `localhost:2333/registry/dist/*`: Build on demand, cache 16 items by default.
+- `./dist/` -> `localhost:2333/dist/*`: Build at startup.
 
 ### WebSocket
 Dev server on WebSocket: `ws://localhost:2333`
@@ -30,7 +30,7 @@ Send Messages:
 ```json
 {
   "type": "itemUpdate",
-  "path": "http://localhost:2333/registry/components/style/auto-hide-sidebar.js"
+  "path": "http://localhost:2333/registry/dist/components/style/auto-hide-sidebar.js"
 }
 ```
 
@@ -44,7 +44,7 @@ Send Messages:
 ## Client
 As component:
 - name: devClient
-- displayName: Dev Client
+- displayName: DevClient
 - entry:
   - Try connect `ws://localhost:2333`
   - Debug toolbar (as widget)
