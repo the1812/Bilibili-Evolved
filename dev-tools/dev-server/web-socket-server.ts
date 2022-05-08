@@ -1,3 +1,4 @@
+import { Server } from 'http'
 import { WebSocketServer } from 'ws'
 import { devServerConfig } from './config'
 import { Payload } from './payload'
@@ -13,10 +14,13 @@ export const sendMessage = (message: Payload) => {
     client.send(text)
   })
 }
-export const startWebSocketServer = () => new Promise<void>((resolve, reject) => {
+export const startWebSocketServer = (httpServer: Server) => new Promise<void>((resolve, reject) => {
   const { port } = devServerConfig
-  server = new WebSocketServer({ port })
+  server = new WebSocketServer({ server: httpServer })
   server.on('close', () => sendMessage({ type: 'stop' }))
-  server.on('listening', () => resolve())
+  server.on('listening', () => {
+    console.log(`WebSocket server listening ${port}`)
+    resolve()
+  })
   server.on('error', () => reject())
 })

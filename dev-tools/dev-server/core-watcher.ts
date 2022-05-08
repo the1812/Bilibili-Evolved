@@ -1,28 +1,23 @@
-import * as webpack from 'webpack'
-import * as webpackConfig from '../../webpack/webpack.dev'
-import { sendMessage } from './server'
+import webpack from 'webpack'
+import exitHook from 'async-exit-hook'
+import webpackConfig from '../../webpack/webpack.dev'
+import { sendMessage } from './web-socket-server'
+import { defaultWatcherHandler } from './watcher-common'
 
 export const startCoreWatcher = () => {
   const compiler = webpack(webpackConfig as webpack.Configuration)
-  let lastHash = ''
   console.log('Starting core watcher')
-  const instance = compiler.watch({}, (error, result) => {
-    if (error) {
-      console.error(error)
-      process.exit(1)
-    }
-    if (result.hash === lastHash) {
-      return
-    }
-    if (!lastHash) {
-      console.log('Core watcher started')
-    }
-    lastHash = result.hash
-    sendMessage({
-      type: 'coreUpdate',
-    })
-  })
-  process.on('beforeExit', () => instance.close(() => {
+  const instance = compiler.watch({}, defaultWatcherHandler(
+    () => console.log('Core watcher started'),
+    result => {
+      console.log('coreUpdate:', result.hash)
+      sendMessage({
+        type: 'coreUpdate',
+      })
+    },
+  ))
+  exitHook(exit => instance.close(() => {
     console.log('Core watcher stopped')
+    exit()
   }))
 }

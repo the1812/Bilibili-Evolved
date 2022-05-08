@@ -8,7 +8,7 @@ module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
 
     if (buildAll) {
       console.log(`[build all] discovered ${entries.length} ${type}s`)
-      return entries.map(entry => buildByEntry(entry))
+      return entries.map(entry => buildByEntry({ src, type, entry }))
     }
 
     let entry
@@ -24,6 +24,6 @@ module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
       [entry] = entries
       console.log(`Build target · ${entry}`)
     }
-    return buildByEntry(src, entry)
+    return buildByEntry({ src, type, entry })
   }]
 }))

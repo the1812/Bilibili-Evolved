@@ -4,9 +4,6 @@ export interface PayloadBase<Type extends string = string> {
 export type StartPayload = PayloadBase<'start'>
 export type CoreUpdatePayload = PayloadBase<'coreUpdate'>
 export type ItemUpdatePayload = PayloadBase<'itemUpdate'> & {
-  name: string
-  displayName: string
-  itemType: string
   path: string
 }
 export type StopPayload = PayloadBase<'stop'>

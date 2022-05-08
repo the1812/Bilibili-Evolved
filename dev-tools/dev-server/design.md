@@ -30,10 +30,7 @@ Send Messages:
 ```json
 {
   "type": "itemUpdate",
-  "name": "name",
-  "itemType": "component",
-  "displayName": "Display Name",
-  "path": "registry/components/feeds/copy-link.js"
+  "path": "http://localhost:2333/registry/components/style/auto-hide-sidebar.js"
 }
 ```
 

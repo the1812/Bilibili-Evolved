@@ -1,9 +1,8 @@
-const buildByEntry = (entry: string) => {
-  const match = entry.match(/\/?registry\/dist\/([^\/]+)\/(.+)\/index\.ts/)
-  if (!match) {
-    throw new Error(`Invalid entry path: ${entry}`)
-  }
-  const
+const buildByEntry = ({ src, type, entry }) => {
+  // const match = entry.match(/\/?registry\/dist\/([^\/]+)\/(.+)\/index\.ts/)
+  // if (!match) {
+  //   throw new Error(`Invalid entry path: ${entry}`)
+  // }
   const path = require('path')
   const { getId } = require('./id')
   const id = getId(src, entry)
