@@ -1,6 +1,6 @@
+import exitHook from 'async-exit-hook'
 import { Server } from 'http'
 import { WebSocketServer } from 'ws'
-import { devServerConfig } from './config'
 import { Payload } from './payload'
 
 let server: WebSocketServer
@@ -14,13 +14,24 @@ export const sendMessage = (message: Payload) => {
     client.send(text)
   })
 }
-export const startWebSocketServer = (httpServer: Server) => new Promise<void>((resolve, reject) => {
-  const { port } = devServerConfig
+export const exitWebSocketServer = () => {
+  if (!server) {
+    return
+  }
+  sendMessage({ type: 'stop' })
+  server.clients.forEach(c => c.close())
+}
+export const startWebSocketServer = (httpServer: Server) => new Promise<void>(resolve => {
   server = new WebSocketServer({ server: httpServer })
-  server.on('close', () => sendMessage({ type: 'stop' }))
-  server.on('listening', () => {
-    console.log(`WebSocket server listening ${port}`)
-    resolve()
+  server.on('connection', () => {
+    sendMessage({ type: 'start' })
   })
-  server.on('error', () => reject())
+  server.on('error', error => console.error(error))
+  exitHook(exit => server.close(error => {
+    if (error) {
+      console.error(error)
+    }
+    exit()
+  }))
+  resolve()
 })

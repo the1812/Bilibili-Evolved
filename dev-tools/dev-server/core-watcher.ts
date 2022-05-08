@@ -4,20 +4,20 @@ import webpackConfig from '../../webpack/webpack.dev'
 import { sendMessage } from './web-socket-server'
 import { defaultWatcherHandler } from './watcher-common'
 
-export const startCoreWatcher = () => {
+export const startCoreWatcher = () => new Promise<void>(resolve => {
   const compiler = webpack(webpackConfig as webpack.Configuration)
-  console.log('Starting core watcher')
+  console.log('本体编译中...')
   const instance = compiler.watch({}, defaultWatcherHandler(
-    () => console.log('Core watcher started'),
+    () => resolve(),
     result => {
-      console.log('coreUpdate:', result.hash)
+      console.log('本体已编译:', result.hash)
       sendMessage({
         type: 'coreUpdate',
       })
     },
   ))
   exitHook(exit => instance.close(() => {
-    console.log('Core watcher stopped')
+    console.log('本体编译器已退出')
     exit()
   }))
-}
+})

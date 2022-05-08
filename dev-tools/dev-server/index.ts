@@ -1,8 +1,8 @@
+import { startDevServer } from './server'
 import { startCoreWatcher } from './core-watcher'
-import { startRegistryWatcher } from './registry-watcher'
 import { startWebSocketServer } from './web-socket-server'
 
-startRegistryWatcher().then(server => {
+startDevServer().then(server => {
   startCoreWatcher()
   startWebSocketServer(server)
 })
