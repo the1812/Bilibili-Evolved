@@ -331,12 +331,12 @@ export default Vue.extend({
       }
     }
     @function slides($index) {
-      @return -10 * $index * $index / 9  + 40 * $index / 3 + 24
+      @return calc(-10 * $index * $index / 9  + 40 * $index / 3 + 24)
     }
     @for $index from 6 through 12 {
       &-item:nth-child(#{$index}) {
         @include item-slides-y(#{slides($index)}px);
-        animation-delay: #{(1 - (slides($index) - 24) / 40) * 0.2}s;
+        animation-delay: #{calc((1 - (slides($index) - 24) / 40) * 0.2)}s;
       }
     }
     &-item {

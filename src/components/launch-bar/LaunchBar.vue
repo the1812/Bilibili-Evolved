@@ -59,6 +59,7 @@
   </div>
 </template>
 <script lang="ts">
+import Fuse from 'fuse.js'
 import {
   VIcon,
   VLoading,
@@ -67,7 +68,6 @@ import {
 import { registerAndGetData } from '@/plugins/data'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
-import Fuse from 'fuse.js'
 import ActionItem from './ActionItem.vue'
 import {
   LaunchBarActionProviders,

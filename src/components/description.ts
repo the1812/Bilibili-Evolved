@@ -1,5 +1,5 @@
-import { languageNameToCode } from '@/core/utils/i18n'
 import marked from 'marked'
+import { languageNameToCode } from '@/core/utils/i18n'
 import { ComponentMetadata } from './component'
 import { getSelectedLanguage } from './i18n/helpers'
 
