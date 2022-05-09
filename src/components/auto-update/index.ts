@@ -80,7 +80,7 @@ const entry: ComponentEntry<typeof optionsMetadata> = async ({
   return checkerMethods
 }
 
-type Options = OptionsOfMetadata<typeof optionsMetadata>
+export type AutoUpdateOptions = OptionsOfMetadata<typeof optionsMetadata>
 
 export const component = defineComponentMetadata({
   name,
@@ -137,7 +137,7 @@ export const component = defineComponentMetadata({
       addData(
         'settingsPanel.componentActions',
         (actions: ComponentAction[]) => {
-          const { options } = getComponentSettings<Options>('autoUpdate')
+          const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
           actions.push(metadata => {
             const item = options.urls.components[metadata.name]
             if (!item) {
