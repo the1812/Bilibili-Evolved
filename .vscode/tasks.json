@@ -5,6 +5,13 @@
   "tasks": [
     {
       "type": "shell",
+      "command": "yarn ts-node ./dev-tools/dev-server/index.ts",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "启动开发服务 dev-server"
+    },
+    {
+      "type": "shell",
       "command": "yarn webpack --config ./webpack/webpack.dev.js --progress",
       "group": "build",
       "problemMatcher": [],

@@ -6,7 +6,9 @@ export const component = defineComponentMetadata({
   displayName: 'DevClient',
   tags: [componentsTags.utils],
   description: '本地开发工具',
-  entry: none,
+  entry: async () => {
+    import('./client')
+  },
   options,
   widget: {
     component: () => import('./Widget.vue').then(m => m.default),

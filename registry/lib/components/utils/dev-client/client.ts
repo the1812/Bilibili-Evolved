@@ -97,6 +97,7 @@ export class DevClient extends EventTarget {
       const oldInstantStyles = oldComponent.instantStyles ?? []
       const newInstantStyles = newComponent.instantStyles ?? []
       const isEntryEmpty = oldComponent.entry === none && newComponent.entry === none
+      console.log({ oldInstantStyles, newInstantStyles, isEntryEmpty })
 
       const doNotReload = () => {
         console.log(`组件 [${newComponent.displayName}] 已更新`)
