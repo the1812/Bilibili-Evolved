@@ -58,6 +58,8 @@
   </VPopup>
 </template>
 <script lang="ts">
+import Fuse from 'fuse.js'
+import { DocSourceItem } from 'registry/lib/docs'
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
@@ -71,8 +73,6 @@ import {
   VLoading,
   VEmpty,
 } from '@/ui'
-import Fuse from 'fuse.js'
-import { DocSourceItem } from 'registry/lib/docs'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
 

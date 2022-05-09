@@ -12,7 +12,7 @@
     "type": "tsc -p tsconfig.type-check.json --noEmit"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
+    "@babel/core": "7.17.9",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@babel/preset-env": "^7.9.6",
     "@babel/preset-typescript": "^7.9.0",
@@ -30,12 +30,12 @@
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-vue": "^7.1.0",
+    "eslint-plugin-vue": "7.1.0",
     "fast-sass-loader": "^2.0.0",
     "html-webpack-plugin": "^5.0.0-alpha.7",
     "postcss": "^8.1.0",
     "postcss-loader": "^4.0.4",
-    "postcss-preset-env": "^6.7.0",
+    "postcss-preset-env": "^7.5.0",
     "sass": "^1.25.0",
     "serve": "^13.0.2",
     "style-loader": "^2.0.0",

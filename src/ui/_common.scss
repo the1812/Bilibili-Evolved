@@ -30,7 +30,7 @@
 @mixin round-bar($height) {
   box-sizing: border-box;
   height: #{$height}px;
-  border-radius: #{$height / 2}px;
+  border-radius: #{$height * 0.5}px;
 }
 @mixin no-scrollbar {
   overflow: auto;

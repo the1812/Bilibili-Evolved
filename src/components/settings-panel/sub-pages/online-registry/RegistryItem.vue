@@ -45,6 +45,7 @@
   </MiniToast>
 </template>
 <script lang="ts">
+import { DocSourceItem } from 'registry/lib/docs'
 import { getDescriptionHTML } from '@/components/description'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
@@ -52,7 +53,6 @@ import { visibleInside } from '@/core/observer'
 import { getGeneralSettings, settings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
-import { DocSourceItem } from 'registry/lib/docs'
 
 const getFeatureUrl = (item: DocSourceItem, branch: string) => {
   const cdnRootFn = cdnRoots[getGeneralSettings().cdnRoot]

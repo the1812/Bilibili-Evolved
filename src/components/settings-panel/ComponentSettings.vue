@@ -17,8 +17,8 @@
 </template>
 
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
 import marked from 'marked'
+import { getComponentSettings } from '@/core/settings'
 import SwitchBox from '@/ui/SwitchBox.vue'
 import VIcon from '@/ui/icon/VIcon.vue'
 import { languageNameToCode } from '@/core/utils/i18n'

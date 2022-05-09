@@ -638,13 +638,13 @@ body:not(.simplify-comment) .panel-area .bb-comment {
         }
       }
       [class*='color-'][class*='-03'] {
-        @include brightness(6 / 5);
+        @include brightness(calc(6 / 5));
         // > * {
         //   @include brightness(5 / 6);
         // }
       }
       [class*='color-'][class*='-04'] {
-        @include brightness(4 / 3);
+        @include brightness(calc(4 / 3));
         // > * {
         //   @include brightness(3 / 4);
         // }
