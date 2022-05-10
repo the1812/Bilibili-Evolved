@@ -1,18 +1,18 @@
-import type { Payload } from 'dev-tools/dev-server/payload'
-import type { AutoUpdateOptions } from '@/components/auto-update'
+import type { ItemStopPayload, Payload } from 'dev-tools/dev-server/payload'
 import { OptionsOfMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeStyle } from '@/core/style'
-import { options as optionsDefinition } from './options'
+import { autoUpdateOptions, devClientOptionsMetadata } from './options'
 import { CoreUpdateMethod, RegistryUpdateMethod } from './update-method'
 
-const { options } = getComponentSettings<OptionsOfMetadata<typeof optionsDefinition>>('devClient')
+const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
 const console = useScopedConsole('DevClient')
 
 export class DevClient extends EventTarget {
   socket: WebSocket
+  sessions: string[] = []
   constructor() {
     super()
     this.createSocket()
@@ -41,8 +41,11 @@ export class DevClient extends EventTarget {
         const payload: Payload = JSON.parse(data)
         console.log('接收信息', payload)
         switch (payload.type) {
-          case 'start':
           default: {
+            break
+          }
+          case 'start': {
+            this.sessions = payload.sessions
             break
           }
           case 'stop': {
@@ -69,6 +72,7 @@ export class DevClient extends EventTarget {
   closeSocket() {
     this.socket?.close()
     this.socket = null
+    this.sessions = []
   }
 
   private handleCoreUpdate() {
@@ -81,14 +85,13 @@ export class DevClient extends EventTarget {
 
   private async handleItemUpdate(path: string) {
     this.dispatchEvent(new CustomEvent('itemUpdate', { detail: path }))
-    const { options: autoUpdateOptions } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
     const url = `http://localhost:${options.port}${path}`
     const componentRecord = Object.entries(autoUpdateOptions.urls.components)
-      .find(([, { devUrl }]) => devUrl === url)
+      .find(([, { url: itemUrl }]) => itemUrl.endsWith(path))
     if (componentRecord) {
-      const [name, { devUrl }] = componentRecord
+      const [name] = componentRecord
       const oldComponent = componentsMap[name]
-      const code: string = await coreApis.ajax.monkey({ url: devUrl })
+      const code: string = await coreApis.ajax.monkey({ url })
       const { installFeatureFromCode } = await import(
         '@/core/install-feature'
       )
@@ -148,6 +151,14 @@ export class DevClient extends EventTarget {
       }
     }
     // TODO: plugin update
+  }
+
+  stopDebugging(path: string) {
+    const payload: ItemStopPayload = {
+      type: 'itemStop',
+      path,
+    }
+    this.socket?.send(JSON.stringify(payload))
   }
 }
 export const devClient = new DevClient()

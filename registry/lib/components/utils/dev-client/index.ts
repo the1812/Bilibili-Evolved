@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import { options } from './options'
+import { devClientOptionsMetadata } from './options'
+import { setupPlugin } from './plugin'
 
 export const component = defineComponentMetadata({
   name: 'devClient',
@@ -9,8 +10,11 @@ export const component = defineComponentMetadata({
   entry: async () => {
     import('./client')
   },
-  options,
+  options: devClientOptionsMetadata,
   widget: {
     component: () => import('./Widget.vue').then(m => m.default),
+  },
+  plugin: {
+    setup: setupPlugin,
   },
 })

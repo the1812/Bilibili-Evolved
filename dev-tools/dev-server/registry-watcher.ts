@@ -26,6 +26,14 @@ export const parseRegistryUrl = (url: string) => {
   }
 }
 
+export const stopInstance = (instance: Watching, onClose: () => void) => {
+  if (!instance.closed) {
+    instance.close(() => {
+      onClose()
+    })
+  }
+}
+
 export const startRegistryWatcher = (url: string, config: Configuration) => new Promise<void>(
   resolve => {
     console.log(`功能编译中... ${url}`)
@@ -40,6 +48,7 @@ export const startRegistryWatcher = (url: string, config: Configuration) => new 
         sendMessage({
           type: 'itemUpdate',
           path: url,
+          sessions: watchers.map(it => it.url),
         })
       },
     ))
@@ -53,11 +62,9 @@ export const startRegistryWatcher = (url: string, config: Configuration) => new 
     })
     if (watchers.length >= maxWatchers) {
       const oldInstance = watchers.shift()
-      if (!oldInstance.instance.closed) {
-        oldInstance.instance.close(() => {
-          console.log(`已达到 maxWatchers 数量 (${maxWatchers}), 退出了功能编译器: ${oldInstance.url}`)
-        })
-      }
+      stopInstance(oldInstance.instance, () => {
+        console.log(`已达到 maxWatchers 数量 (${maxWatchers}), 退出了功能编译器: ${oldInstance.url}`)
+      })
     }
     watchers.push({ url, instance })
   },

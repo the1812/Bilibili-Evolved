@@ -5,7 +5,6 @@ export interface UpdateCheckItem {
   url: string
   lastUpdateCheck: number
   installTime: number
-  devUrl?: string
   alwaysUpdate?: boolean
 }
 export const localhost = /^http:\/\/localhost/
