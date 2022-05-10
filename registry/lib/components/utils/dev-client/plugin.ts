@@ -1,11 +1,17 @@
 import { PluginSetupParameters } from '@/plugins/plugin'
 import { ComponentAction } from '@/components/settings-panel/component-actions/component-actions'
+import { isIframe } from '@/core/utils'
 import { monkey } from '@/core/ajax'
+import { Toast } from '@/core/toast'
 import { getComponentSettings } from '@/core/settings'
+import { ComponentMetadata } from '@/components/types'
 import { OptionsOfMetadata } from '@/components/define'
 import { autoUpdateOptions, devClientOptionsMetadata } from './options'
 
 export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
+  if (isIframe()) {
+    return
+  }
   const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
   const { devClient } = await import('./client')
   addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
@@ -24,26 +30,38 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
         }
         const onlineMatch = url.match(/\/registry\/dist\/components\/(.+)$/)
         if (onlineMatch) {
-          return `http://localhost:${options.port}/registry/dist/components/${onlineMatch[2]}`
+          return `http://localhost:${options.port}/registry/dist/components/${onlineMatch[1]}`
         }
         return null
       },
     }
+    const getDebugInfo = (metadata: ComponentMetadata) => {
+      const autoUpdateRecord = autoUpdateOptions.urls.components[metadata.name]
+      const componentUpdateUrl = autoUpdateRecord?.url
+      const isDebugging = () => componentUpdateUrl && devClient.sessions.some(path => {
+        const { pathname } = new URL(componentUpdateUrl)
+        return path === pathname
+      })
+      const canStartDebug = () => !isDebugging() && converter.toDevUrl(componentUpdateUrl) !== null
+      const canStopDebug = () => Boolean(isDebugging() && componentUpdateUrl)
+      return {
+        autoUpdateRecord,
+        componentUpdateUrl,
+        canStartDebug,
+        canStopDebug,
+      }
+    }
     actions.push(
       metadata => {
-        const autoUpdateRecord = autoUpdateOptions.urls.components[metadata.name]
-        const componentUpdateUrl = autoUpdateRecord?.url
-        const isDebugging = componentUpdateUrl && devClient.sessions.some(path => {
-          const { pathname } = new URL(componentUpdateUrl)
-          return path === pathname
-        })
-        return {
+        const { componentUpdateUrl, autoUpdateRecord, canStartDebug } = getDebugInfo(metadata)
+        const result = {
           name: 'startDebug',
           displayName: '开始调试',
           icon: 'mdi-play-network-outline',
-          condition: () => !isDebugging && converter.toDevUrl(componentUpdateUrl) !== null,
+          visible: canStartDebug(),
           action: async () => {
             const devUrl = converter.toDevUrl(componentUpdateUrl)
+            console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', autoUpdateRecord.url)
             if (autoUpdateRecord.url !== devUrl) {
               options.devRecords[metadata.name] = {
                 name: metadata.name,
@@ -51,30 +69,39 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
               }
               autoUpdateRecord.url = devUrl
             }
-            await monkey({ url: autoUpdateRecord.url })
+            const toast = Toast.info('启动调试中...', 'DevClient')
+            try {
+              await monkey({ url: autoUpdateRecord.url })
+            } catch (error) {
+              console.error(error)
+            } finally {
+              toast.close()
+              result.visible = canStartDebug()
+              console.log('visible', result.visible)
+            }
           },
         }
+        return result
       },
       metadata => {
-        const autoUpdateRecord = autoUpdateOptions.urls.components[metadata.name]
-        const componentUpdateUrl = autoUpdateRecord?.url
-        const isDebugging = devClient.sessions.some(path => {
-          const { pathname } = new URL(componentUpdateUrl)
-          return path === pathname
-        })
-        return {
+        const { componentUpdateUrl, autoUpdateRecord, canStopDebug } = getDebugInfo(metadata)
+        const result = {
           name: 'stopDebug',
           displayName: '停止调试',
           icon: 'mdi-minus-network-outline',
-          condition: () => Boolean(isDebugging && componentUpdateUrl),
+          visible: canStopDebug(),
           action: async () => {
             const { pathname } = new URL(componentUpdateUrl)
             devClient.stopDebugging(pathname)
             if (options.devRecords[metadata.name]) {
               autoUpdateRecord.url = options.devRecords[metadata.name].originalUrl
+              delete options.devRecords[metadata.name]
             }
+            result.visible = canStopDebug()
+            console.log('visible', result.visible)
           },
         }
+        return result
       },
     )
   })

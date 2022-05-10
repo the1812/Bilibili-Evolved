@@ -5,6 +5,7 @@ import {
   getGeneralSettings,
   isUserComponent,
 } from '@/core/settings'
+import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
 import {
   defineComponentMetadata,
@@ -64,6 +65,9 @@ const optionsMetadata = defineOptionsMetadata({
 const entry: ComponentEntry<typeof optionsMetadata> = async ({
   settings: { options: opt },
 }) => {
+  if (isIframe()) {
+    return checkerMethods
+  }
   const now = Number(new Date())
   const duration = now - opt.lastUpdateCheck
 
@@ -149,7 +153,7 @@ export const component = defineComponentMetadata({
               icon: isLocalItem(item.url)
                 ? 'mdi-file-download-outline'
                 : 'mdi-cloud-download-outline',
-              condition: () => isUserComponent(metadata),
+              visible: isUserComponent(metadata),
               title: item.url,
               action: async () => {
                 const { Toast } = await import('@/core/toast')

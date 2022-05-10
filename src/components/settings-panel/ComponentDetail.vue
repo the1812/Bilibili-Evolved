@@ -70,6 +70,7 @@
               <div class="extra-actions-list">
                 <ComponentAction
                   v-for="a of componentActions.map(action => action(componentData))"
+                  v-show="a.visible !== false"
                   :key="a.name"
                   class="extra-action-item"
                   :item="a"
@@ -112,16 +113,9 @@ export default Vue.extend({
   },
   mixins: [componentSettingsMixin],
   data() {
-    const metadata = (this as any).componentData
     return {
       virtual: false,
-      componentActions: componentActions.filter(action => {
-        const data = action(metadata)
-        if (!data) {
-          return false
-        }
-        return data.condition?.() ?? true
-      }),
+      componentActions,
     }
   },
   computed: {

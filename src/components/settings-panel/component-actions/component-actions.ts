@@ -10,8 +10,9 @@ export type ComponentAction = (metadata: ComponentMetadata) => {
   displayName: string
   action: Executable
   icon: string
+  visible?: boolean
   title?: string
-  condition?: () => boolean
+  // condition?: () => boolean
 }
 
 const builtInActions: ComponentAction[] = [
@@ -19,7 +20,7 @@ const builtInActions: ComponentAction[] = [
     name: 'uninstall',
     displayName: '卸载',
     icon: 'mdi-trash-can-outline',
-    condition: () => isUserComponent(metadata),
+    visible: isUserComponent(metadata),
     action: async () => {
       const { before, after } = getHook('userComponents.remove', metadata)
       await before()
