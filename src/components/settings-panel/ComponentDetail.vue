@@ -69,7 +69,7 @@
             <template #toast>
               <div class="extra-actions-list">
                 <ComponentAction
-                  v-for="a of componentActions.map(action => action(componentData))"
+                  v-for="a of componentActions"
                   v-show="a.visible !== false"
                   :key="a.name"
                   class="extra-action-item"
@@ -115,7 +115,9 @@ export default Vue.extend({
   data() {
     return {
       virtual: false,
-      componentActions,
+      componentActions: componentActions
+        .map(factory => factory((this as any).componentData))
+        .filter(it => it !== undefined),
     }
   },
   computed: {
@@ -134,6 +136,7 @@ export default Vue.extend({
     })
     await this.$nextTick()
     this.$emit('mounted')
+    console.log(this.componentActions)
   },
 })
 </script>

@@ -12,6 +12,10 @@ export type ItemUpdatePayload = PayloadBase<'itemUpdate'> & {
 export type ItemStopPayload = PayloadBase<'itemStop'> & {
   path: string
 }
+export type QuerySessionsPayload = PayloadBase<'querySessions'>
+export type QuerySessionsResponsePayload = PayloadBase<'querySessionsResponse'> & {
+  sessions: string[]
+}
 export type StopPayload = PayloadBase<'stop'>
 
 export type Payload = (
@@ -19,7 +23,9 @@ export type Payload = (
   CoreUpdatePayload |
   ItemUpdatePayload |
   StopPayload |
-  ItemStopPayload
+  ItemStopPayload |
+  QuerySessionsPayload |
+  QuerySessionsResponsePayload
 )
 
 export type MessageHandler<P extends Payload = Payload> = (payload: P) => void

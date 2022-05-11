@@ -6,9 +6,20 @@ import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeStyle } from '@/core/style'
 import { autoUpdateOptions, devClientOptionsMetadata } from './options'
 import { CoreUpdateMethod, RegistryUpdateMethod } from './update-method'
+import { monkey } from '@/core/ajax'
 
 const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
 const console = useScopedConsole('DevClient')
+const handleSocketMessage = (event: MessageEvent, callback: (payload: Payload) => void) => {
+  const { data } = event
+  try {
+    const payload: Payload = JSON.parse(data)
+    console.log('接收信息', payload)
+    callback(payload)
+  } catch (error) {
+    console.error('无效信息', data)
+  }
+}
 
 export class DevClient extends EventTarget {
   socket: WebSocket
@@ -36,10 +47,7 @@ export class DevClient extends EventTarget {
       console.log('已连接到 DevServer')
     })
     this.socket.addEventListener('message', e => {
-      const { data } = e
-      try {
-        const payload: Payload = JSON.parse(data)
-        console.log('接收信息', payload)
+      handleSocketMessage(e, payload => {
         switch (payload.type) {
           default: {
             break
@@ -62,9 +70,7 @@ export class DevClient extends EventTarget {
             break
           }
         }
-      } catch (error) {
-        console.error('无效信息', data)
-      }
+      })
     })
     window.addEventListener('unload', unloadHandler)
   }
@@ -153,12 +159,32 @@ export class DevClient extends EventTarget {
     // TODO: plugin update
   }
 
-  stopDebugging(path: string) {
-    const payload: ItemStopPayload = {
+  private async querySessions() {
+    return new Promise<string[]>(resolve => {
+      this.socket?.addEventListener('message', e => {
+        handleSocketMessage(e, payload => {
+          if (payload.type === 'querySessionsResponse') {
+            this.sessions = payload.sessions
+            resolve(payload.sessions)
+          }
+        })
+      }, { once: true })
+      this.socket?.send(JSON.stringify({ type: 'querySessions' }))
+    })
+  }
+
+  async startDebug(url: string) {
+    await monkey({ url })
+    return this.querySessions()
+  }
+
+  async stopDebug(path: string) {
+    const stopPayload: ItemStopPayload = {
       type: 'itemStop',
       path,
     }
-    this.socket?.send(JSON.stringify(payload))
+    this.socket?.send(JSON.stringify(stopPayload))
+    return this.querySessions()
   }
 }
 export const devClient = new DevClient()

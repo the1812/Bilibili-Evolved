@@ -1,7 +1,6 @@
 import { PluginSetupParameters } from '@/plugins/plugin'
 import { ComponentAction } from '@/components/settings-panel/component-actions/component-actions'
 import { isIframe } from '@/core/utils'
-import { monkey } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { getComponentSettings } from '@/core/settings'
 import { ComponentMetadata } from '@/components/types'
@@ -71,7 +70,7 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
             }
             const toast = Toast.info('启动调试中...', 'DevClient')
             try {
-              await monkey({ url: autoUpdateRecord.url })
+              await devClient.startDebug(autoUpdateRecord.url)
             } catch (error) {
               console.error(error)
             } finally {
@@ -92,7 +91,7 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
           visible: canStopDebug(),
           action: async () => {
             const { pathname } = new URL(componentUpdateUrl)
-            devClient.stopDebugging(pathname)
+            await devClient.stopDebug(pathname)
             if (options.devRecords[metadata.name]) {
               autoUpdateRecord.url = options.devRecords[metadata.name].originalUrl
               delete options.devRecords[metadata.name]

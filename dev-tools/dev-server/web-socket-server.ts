@@ -45,6 +45,10 @@ export const startWebSocketServer = (httpServer: Server) => new Promise<void>(re
             }
             break
           }
+          case 'querySessions': {
+            sendMessage({ type: 'querySessionsResponse', sessions: watchers.map(it => it.url) })
+            break
+          }
         }
       } catch (error) {
         console.error('无效信息', data)
