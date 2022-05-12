@@ -181,9 +181,10 @@ export default {
       this.selectedComponents = []
       this.componentDetailOpen = false
     },
-    selectMultipleComponent({ name }: ComponentMetadata, listSelect = false) {
+    selectMultipleComponent(component: ComponentMetadata, listSelect = false) {
       if (this.selectedComponent && listSelect) {
         // handle shift + click
+        const { name } = component
         const { name: selectedComponentName } = this.selectedComponent as ComponentMetadata
         const list = this.renderedComponents as ComponentMetadata[]
         let startIdx = list.findIndex(c => c.name === selectedComponentName)
@@ -196,11 +197,11 @@ export default {
         return
       }
       const selectedList = this.selectedComponents as ComponentMetadata[]
-      const component = selectedList.find(c => c.name === name)
-      if (component) {
-        selectedList.push(component)
+      const selectedComponent = selectedList.find(c => c.name === component.name)
+      if (selectedComponent) {
+        deleteValue(selectedList, c => c.name === selectedComponent.name)
       } else {
-        deleteValue(selectedList, c => c.name === component.name)
+        selectedList.push(component)
       }
     },
     selectComponent(component: ComponentMetadata) {
