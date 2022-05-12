@@ -1,5 +1,5 @@
 import { registerAndGetData } from '@/plugins/data'
-import { Executable } from '@/core/common-types'
+import { Executable, VueModule } from '@/core/common-types'
 import { getHook } from '@/plugins/hook'
 import { isUserComponent } from '@/core/settings'
 import { ComponentMetadata } from '../../types'
@@ -13,6 +13,9 @@ export type ComponentAction = (metadata: ComponentMetadata) => {
   visible?: boolean
   title?: string
   // condition?: () => boolean
+} | {
+  name: string
+  component: Executable<VueModule>
 }
 
 const builtInActions: ComponentAction[] = [

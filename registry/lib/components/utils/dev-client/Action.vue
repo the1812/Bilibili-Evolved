@@ -1,0 +1,160 @@
+<template>
+  <div>
+    <div
+      v-if="canStartDebug"
+      class="component-action dev-client-action"
+      @click="startDebug"
+    >
+      <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
+      <VIcon v-else icon="mdi-play-network-outline" :size="16" />
+      {{ busy ? '启动中' : '开始调试' }}
+    </div>
+    <div
+      v-if="canStopDebug"
+      class="component-action dev-client-action"
+      @click="stopDebug"
+    >
+      <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
+      <VIcon v-else icon="mdi-minus-network-outline" :size="16" />
+      {{ busy ? '停止中' : '停止调试' }}
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import { OptionsOfMetadata } from '@/components/define'
+import { ComponentMetadata } from '@/components/types'
+import { getComponentSettings } from '@/core/settings'
+import { Toast } from '@/core/toast'
+import { VIcon } from '@/ui'
+import { autoUpdateOptions, devClientOptionsMetadata } from './options'
+
+const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
+const converter = {
+  toDevUrl: (url: string) => {
+    if (!url) {
+      return null
+    }
+    const devUrlMatch = url.match(new RegExp(`localhost:${options.port}\\/registry\\/components\\/(.+)$`))
+    if (devUrlMatch) {
+      return url
+    }
+    const localhostMatch = url.match(/localhost:(\d+?)\/components\/(.+)$/)
+    if (localhostMatch) {
+      return `http://localhost:${options.port}/registry/dist/components/${localhostMatch[2]}`
+    }
+    const onlineMatch = url.match(/\/registry\/dist\/components\/(.+)$/)
+    if (onlineMatch) {
+      return `http://localhost:${options.port}/registry/dist/components/${onlineMatch[1]}`
+    }
+    return null
+  },
+}
+
+export default Vue.extend({
+  components: {
+    VIcon,
+  },
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+    component: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      busy: false,
+      autoUpdateComponents: autoUpdateOptions.urls.components,
+      sessions: [],
+    }
+  },
+  computed: {
+    autoUpdateRecord() {
+      const metadata = this.component as ComponentMetadata
+      return this.autoUpdateComponents[metadata.name]
+    },
+    componentUpdateUrl() {
+      return this.autoUpdateRecord?.url
+    },
+    isDebugging() {
+      return this.componentUpdateUrl && this.sessions.some((path: string) => {
+        const { pathname } = new URL(this.componentUpdateUrl)
+        return path === pathname
+      })
+    },
+    canStartDebug() {
+      return !this.isDebugging && converter.toDevUrl(this.componentUpdateUrl) !== null
+    },
+    canStopDebug() {
+      return Boolean(this.isDebugging && this.componentUpdateUrl)
+    },
+  },
+  async created() {
+    const { devClient } = await import('./client')
+    this.sessions = devClient.sessions
+    devClient.addEventListener('sessionsUpdate', this.handleSessionsUpdate)
+  },
+  async beforeDestroy() {
+    const { devClient } = await import('./client')
+    devClient.removeEventListener('sessionsUpdate', this.handleSessionsUpdate)
+  },
+  methods: {
+    handleSessionsUpdate(e: CustomEvent<string[]>) {
+      this.sessions = e.detail
+    },
+    async handleClick(action: () => Promise<void>) {
+      if (this.busy) {
+        return
+      }
+      try {
+        this.busy = true
+        await action()
+      } finally {
+        this.busy = false
+      }
+    },
+    async startDebug() {
+      await this.handleClick(async () => {
+        const { devClient } = await import('./client')
+        const metadata = this.component as ComponentMetadata
+        const devUrl = converter.toDevUrl(this.componentUpdateUrl)
+        console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
+        if (this.autoUpdateRecord.url !== devUrl) {
+          options.devRecords[metadata.name] = {
+            name: metadata.name,
+            originalUrl: this.componentUpdateUrl,
+          }
+          this.autoUpdateRecord.url = devUrl
+        }
+        const toast = Toast.info('启动调试中...', 'DevClient')
+        try {
+          await devClient.startDebug(this.autoUpdateRecord.url)
+        } catch (error) {
+          console.error(error)
+        } finally {
+          toast.close()
+        }
+      })
+    },
+    async stopDebug() {
+      await this.handleClick(async () => {
+        const { devClient } = await import('./client')
+        const metadata = this.component as ComponentMetadata
+        const { pathname } = new URL(this.componentUpdateUrl)
+        await devClient.stopDebug(pathname)
+        if (options.devRecords[metadata.name]) {
+          this.autoUpdateRecord.url = options.devRecords[metadata.name].originalUrl
+          delete options.devRecords[metadata.name]
+        }
+      })
+    },
+  },
+})
+</script>
+<style lang="scss">
+.dev-client-action {
+}
+</style>

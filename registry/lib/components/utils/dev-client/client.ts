@@ -165,6 +165,7 @@ export class DevClient extends EventTarget {
         handleSocketMessage(e, payload => {
           if (payload.type === 'querySessionsResponse') {
             this.sessions = payload.sessions
+            this.dispatchEvent(new CustomEvent('sessionsUpdate', { detail: payload.sessions }))
             resolve(payload.sessions)
           }
         })

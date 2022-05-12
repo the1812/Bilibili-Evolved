@@ -68,14 +68,24 @@
             </div>
             <template #toast>
               <div class="extra-actions-list">
-                <ComponentAction
+                <div
                   v-for="a of componentActions"
-                  v-show="a.visible !== false"
                   :key="a.name"
-                  class="extra-action-item"
-                  :item="a"
-                  :component="componentData"
-                />
+                >
+                  <component
+                    :is="a.component"
+                    v-if="a.component"
+                    :item="a"
+                    :component="componentData"
+                  />
+                  <ComponentAction
+                    v-else
+                    v-show="a.visible !== false"
+                    class="extra-action-item"
+                    :item="a"
+                    :component="componentData"
+                  />
+                </div>
               </div>
             </template>
           </MiniToast>
