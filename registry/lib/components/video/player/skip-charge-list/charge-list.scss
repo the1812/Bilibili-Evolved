@@ -1,3 +1,4 @@
-body:not(.skip-charge-list-disable) .bilibili-player .bilibili-player-electric-panel {
+body:not(.skip-charge-list-disable) .bilibili-player .bilibili-player-electric-panel,
+body:not(.skip-charge-list-disable) #bilibili-player .bpx-player-electric-panel {
   display: none !important;
 }
