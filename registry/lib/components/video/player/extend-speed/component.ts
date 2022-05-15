@@ -335,6 +335,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                   ${PLAYER_AGENT.custom.speedMenuList.selector} {
                     display: flex!important;/* 防止3.X样式覆盖 */
                     flex-direction: column;
+                    justify-content: center;/* 添加倍速那一项，当鼠标在上半部分会有莫名其妙的'mouseleave',用这个修复 */
                     overflow-y: auto;
                     max-height: ${maxMenuHeight}px;
                     visibility: hidden;

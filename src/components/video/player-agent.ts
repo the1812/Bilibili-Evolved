@@ -441,8 +441,6 @@ export class VideoPlayerCompatAgent extends VideoPlayer2XAgent {
     setTimeout(() => {
       this.nativeApi.seek(time)
       const toastText = dq('.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)')
-      console.log('seek:toastText',toastText);
-
       if (toastText) {
         toastText.textContent = ' 00:00'
       }
