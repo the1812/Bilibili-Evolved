@@ -21,12 +21,12 @@ import {
 
 export const PLAYER_AGENT = playerAgent.provideCustomQuery({
   video: {
-    speedMenuList: '.bilibili-player-video-btn-speed-menu',
-    speedMenuItem: '.bilibili-player-video-btn-speed-menu-list',
-    speedNameBtn: '.bilibili-player-video-btn-speed-name',
-    speedContainer: '.bilibili-player-video-btn-speed',
-    active: '.bilibili-player-active',
-    show: '.bilibili-player-speed-show',
+    speedMenuList: '.bilibili-player-video-btn-speed-menu,.bpx-player-ctrl-playbackrate-menu',
+    speedMenuItem: '.bilibili-player-video-btn-speed-menu-list,.bpx-player-ctrl-playbackrate-menu-item',
+    speedNameBtn: '.bilibili-player-video-btn-speed-name,.bpx-player-ctrl-playbackrate-result',
+    speedContainer: '.bilibili-player-video-btn-speed,.bpx-player-ctrl-playbackrate',
+    active: '.bilibili-player-active,.bpx-state-active',
+    show: '.bilibili-player-speed-show,.bpx-state-show',
   },
   bangumi: {
     speedMenuList: '.squirtle-speed-select-list',
