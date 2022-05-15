@@ -453,22 +453,8 @@ export class VideoPlayerCompatAgent extends VideoPlayer2XAgent {
 
 
 export const playerAgent = (() => {
-  let agent: PlayerAgent
-  const querys = ['#bilibili-player', '.bilibili-player']
+    if (matchCurrentPage(bangumiUrls)) {
+      return new BangumiPlayerAgent()
+    }
   return new VideoPlayerCompatAgent()
-  // return () => {
-  //   if (agent) {
-  //     console.log('if-agent',agent);
-  //     return agent
-  //   }
-  //   if (matchCurrentPage(bangumiUrls)) {
-  //     agent = new BangumiPlayerAgent()
-  //   }else if ((dq(querys[0]) as HTMLElement)) {
-  //     agent = new VideoPlayer3XAgent()
-  //   }else if (dq(querys[1]) as HTMLElement) {
-  //     agent = new VideoPlayer2XAgent()
-  //   }
-  //   console.log('end-agent',agent);
-  //   return agent
-  // }
 })()
