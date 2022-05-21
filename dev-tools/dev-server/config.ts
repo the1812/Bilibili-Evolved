@@ -11,7 +11,7 @@ const configFile = (path: string) => () => (
 )
 const configSource: (() => DevServerConfig)[] = [
   () => ({
-    port: 2333,
+    port: 23333,
     maxWatchers: 16,
   }),
   configFile('dev/dev-server.json'),
