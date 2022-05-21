@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-show="isConnected">
     <div
       v-if="canStartDebug"
       class="component-action dev-client-action"
@@ -70,6 +70,7 @@ export default Vue.extend({
       busy: false,
       autoUpdateComponents: autoUpdateOptions.urls.components,
       sessions: [],
+      isConnected: false,
     }
   },
   computed: {
@@ -96,6 +97,8 @@ export default Vue.extend({
   async created() {
     const { devClient } = await import('./client')
     this.sessions = devClient.sessions
+    this.isConnected = devClient.isConnected
+    devClient.addEventListener(DevClientEvents.ServerChange, this.handleServerChange)
     devClient.addEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
   },
   async beforeDestroy() {
@@ -105,6 +108,9 @@ export default Vue.extend({
   methods: {
     handleSessionsUpdate(e: CustomEvent<string[]>) {
       this.sessions = e.detail
+    },
+    handleServerChange(e: CustomEvent<boolean>) {
+      this.isConnected = e.detail
     },
     async handleClick(action: () => Promise<void>) {
       if (this.busy) {
@@ -157,7 +163,3 @@ export default Vue.extend({
   },
 })
 </script>
-<style lang="scss">
-.dev-client-action {
-}
-</style>

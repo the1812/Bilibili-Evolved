@@ -50,14 +50,12 @@ export default Vue.extend({
     const { devClient } = await import('./client')
     this.client = devClient
     this.updateConnectionStatus()
-    devClient.addEventListener(DevClientEvents.ServerConnected, this.updateConnectionStatus)
-    devClient.addEventListener(DevClientEvents.ServerDisconnected, this.updateConnectionStatus)
+    devClient.addEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
     // devClient.addEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)
   },
   beforeDestroy() {
     const devClient = this.client as DevClient
-    devClient.removeEventListener(DevClientEvents.ServerConnected, this.updateConnectionStatus)
-    devClient.removeEventListener(DevClientEvents.ServerDisconnected, this.updateConnectionStatus)
+    devClient.removeEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
     // devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)
   },
   methods: {

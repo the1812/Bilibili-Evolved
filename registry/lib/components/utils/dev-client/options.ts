@@ -2,7 +2,7 @@ import type { AutoUpdateOptions } from '@/components/auto-update'
 import { defineOptionsMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
 import { getNumberValidator } from '@/core/utils'
-import { CoreUpdateMethod, RegistryUpdateMethod, PluginUpdateMethod } from './update-method'
+import { CoreUpdateMethod, RegistryUpdateMethod } from './update-method'
 
 export const { options: autoUpdateOptions } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
 export interface DevRecord {
@@ -15,6 +15,10 @@ export const devClientOptionsMetadata = defineOptionsMetadata({
     displayName: '端口',
     validator: getNumberValidator(1024, 65535),
   },
+  autoConnect: {
+    defaultValue: true,
+    displayName: '自动连接',
+  },
   coreUpdateMethod: {
     defaultValue: CoreUpdateMethod.AlwaysReload,
     displayName: '本体刷新策略',
@@ -24,12 +28,6 @@ export const devClientOptionsMetadata = defineOptionsMetadata({
     defaultValue: RegistryUpdateMethod.PreferInstantStyles,
     displayName: '功能刷新策略',
     dropdownEnum: RegistryUpdateMethod,
-  },
-  pluginUpdateMethod: {
-    // 同本体
-    defaultValue: PluginUpdateMethod.AlwaysReload,
-    displayName: '插件刷新策略',
-    dropdownEnum: PluginUpdateMethod,
   },
   devRecords: {
     defaultValue: {} as Record<string, DevRecord>,

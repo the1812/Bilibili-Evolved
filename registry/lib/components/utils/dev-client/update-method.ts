@@ -8,4 +8,3 @@ export enum CoreUpdateMethod {
   AlwaysReload = '自动刷新',
   DoNotReload = '不自动刷新',
 }
-export { CoreUpdateMethod as PluginUpdateMethod }

@@ -5,7 +5,7 @@ import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeStyle } from '@/core/style'
 import { autoUpdateOptions, devClientOptionsMetadata } from './options'
-import { CoreUpdateMethod, PluginUpdateMethod, RegistryUpdateMethod } from './update-method'
+import { CoreUpdateMethod, RegistryUpdateMethod } from './update-method'
 import { monkey } from '@/core/ajax'
 import { plugins } from '@/plugins/plugin'
 
@@ -25,6 +25,7 @@ export enum DevClientEvents {
   CoreUpdate = 'coreUpdate',
   ItemUpdate = 'itemUpdate',
   SessionsUpdate = 'sessionsUpdate',
+  ServerChange = 'serverChange',
   ServerConnected = 'serverConnected',
   ServerDisconnected = 'serverDisconnected',
 }
@@ -32,10 +33,6 @@ export enum DevClientEvents {
 export class DevClient extends EventTarget {
   socket: WebSocket
   sessions: string[] = []
-  constructor() {
-    super()
-    this.createSocket()
-  }
 
   addEventListener(
     type: DevClientEvents,
@@ -71,6 +68,7 @@ export class DevClient extends EventTarget {
       })
       this.socket.addEventListener('open', () => {
         console.log('已连接到 DevServer')
+        this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: true }))
         this.dispatchEvent(new CustomEvent(DevClientEvents.ServerConnected))
         resolve(true)
       })
@@ -111,6 +109,7 @@ export class DevClient extends EventTarget {
     this.socket.close()
     this.socket = null
     this.sessions = []
+    this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerDisconnected))
   }
 
@@ -181,8 +180,7 @@ export class DevClient extends EventTarget {
           break
         }
         case RegistryUpdateMethod.PreferEntry: {
-          if (isEntryEmpty) {
-            reloadInstantStyles()
+          if (isEntryEmpty && reloadInstantStyles()) {
             doNotReload()
           } else {
             reload()
@@ -207,7 +205,7 @@ export class DevClient extends EventTarget {
         return
       }
       const { displayName } = plugin
-      if (options.pluginUpdateMethod === PluginUpdateMethod.AlwaysReload) {
+      if (options.registryUpdateMethod !== RegistryUpdateMethod.DoNotReload) {
         console.log(`插件 [${displayName}] 已更新, 刷新页面...`)
         location.reload()
       } else {
