@@ -13,6 +13,20 @@ export const defaultWatcherHandler = (
     if (result.hash === lastHash) {
       return
     }
+    const needLogging = result.hasErrors() || result.hasWarnings()
+    if (needLogging) {
+      console.log(result.toString({
+        hash: false,
+        assets: false,
+        modules: false,
+        chunks: false,
+        color: true,
+      }))
+    }
+    if (result.hasErrors()) {
+      lastHash = ''
+      return
+    }
     if (!lastHash) {
       initCallback(result)
     }
