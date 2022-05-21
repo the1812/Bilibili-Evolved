@@ -60,8 +60,7 @@ Receive Messages:
 - `itemUpdate`
 - `stop`
 
-### Debug toolbar
-- Updated ${num} features
+### Debug widget
 - Server connection status
 - Action: Disconnect / Reconnect
 - Support key bindings / LaunchBar actions

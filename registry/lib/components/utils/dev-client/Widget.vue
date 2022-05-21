@@ -17,11 +17,11 @@
         <div class="status-dot disconnected" />
         <div class="status-text">未连接</div>
         <AsyncButton
-          title="重新连接"
+          title="连接"
           @click="connect"
         >
           <VIcon icon="mdi-play" :size="14" />
-          重新连接
+          连接
         </AsyncButton>
       </template>
     </div>

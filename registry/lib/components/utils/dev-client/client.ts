@@ -179,12 +179,24 @@ export class DevClient extends EventTarget {
           }
           break
         }
+        case RegistryUpdateMethod.PreferInstantStylesNoReload: {
+          reloadInstantStyles()
+          doNotReload()
+          break
+        }
         case RegistryUpdateMethod.PreferEntry: {
           if (isEntryEmpty && reloadInstantStyles()) {
             doNotReload()
           } else {
             reload()
           }
+          break
+        }
+        case RegistryUpdateMethod.PreferEntryNoReload: {
+          if (isEntryEmpty) {
+            reloadInstantStyles()
+          }
+          doNotReload()
           break
         }
         default:
