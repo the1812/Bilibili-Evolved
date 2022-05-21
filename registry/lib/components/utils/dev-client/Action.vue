@@ -26,6 +26,7 @@ import { ComponentMetadata } from '@/components/types'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
+import { DevClientEvents } from './client'
 import { autoUpdateOptions, devClientOptionsMetadata } from './options'
 
 const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
@@ -95,11 +96,11 @@ export default Vue.extend({
   async created() {
     const { devClient } = await import('./client')
     this.sessions = devClient.sessions
-    devClient.addEventListener('sessionsUpdate', this.handleSessionsUpdate)
+    devClient.addEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
   },
   async beforeDestroy() {
     const { devClient } = await import('./client')
-    devClient.removeEventListener('sessionsUpdate', this.handleSessionsUpdate)
+    devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
   },
   methods: {
     handleSessionsUpdate(e: CustomEvent<string[]>) {
@@ -121,7 +122,7 @@ export default Vue.extend({
         const { devClient } = await import('./client')
         const metadata = this.component as ComponentMetadata
         const devUrl = converter.toDevUrl(this.componentUpdateUrl)
-        console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
+        // console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
         if (this.autoUpdateRecord.url !== devUrl) {
           options.devRecords[metadata.name] = {
             name: metadata.name,
@@ -144,7 +145,9 @@ export default Vue.extend({
         const { devClient } = await import('./client')
         const metadata = this.component as ComponentMetadata
         const { pathname } = new URL(this.componentUpdateUrl)
-        await devClient.stopDebug(pathname)
+        if (devClient.isConnected) {
+          await devClient.stopDebug(pathname)
+        }
         if (options.devRecords[metadata.name]) {
           this.autoUpdateRecord.url = options.devRecords[metadata.name].originalUrl
           delete options.devRecords[metadata.name]
