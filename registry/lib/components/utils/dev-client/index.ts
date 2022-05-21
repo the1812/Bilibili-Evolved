@@ -16,13 +16,16 @@ export const component = defineComponentMetadata({
     const { devClient, DevClientEvents } = await import('./client')
     const cleanUpDevRecords = () => {
       Object.entries(options.devRecords).forEach(([, { name, originalUrl }]) => {
-        if (devClient.sessions.find(s => originalUrl.endsWith(s))) {
+        const autoUpdateRecord = autoUpdateOptions.urls.components[name]
+        if (!autoUpdateRecord) {
           return
         }
-        const autoUpdateRecord = autoUpdateOptions.urls.components[name]
-        if (autoUpdateRecord) {
-          autoUpdateRecord.url = originalUrl
+        const devUrl = autoUpdateRecord.url
+        if (!devClient.sessions.find(s => devUrl.endsWith(s))) {
+          return
         }
+        autoUpdateRecord.url = originalUrl
+        console.log('cleanUpDevRecords', name, originalUrl, autoUpdateRecord)
         delete options.devRecords[name]
       })
     }
