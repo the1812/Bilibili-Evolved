@@ -2,7 +2,7 @@ import type { AutoUpdateOptions } from '@/components/auto-update'
 import { defineOptionsMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
 import { getNumberValidator } from '@/core/utils'
-import { CoreUpdateMethod, RegistryUpdateMethod } from './update-method'
+import { RefreshMethod, HotReloadMethod } from './update-method'
 
 export const { options: autoUpdateOptions } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
 export interface DevRecord {
@@ -19,15 +19,20 @@ export const devClientOptionsMetadata = defineOptionsMetadata({
     defaultValue: true,
     displayName: '自动连接',
   },
-  coreUpdateMethod: {
-    defaultValue: CoreUpdateMethod.AlwaysReload,
+  coreRefreshMethod: {
+    defaultValue: RefreshMethod.AlwaysReload,
     displayName: '本体刷新策略',
-    dropdownEnum: CoreUpdateMethod,
+    dropdownEnum: RefreshMethod,
   },
-  registryUpdateMethod: {
-    defaultValue: RegistryUpdateMethod.PreferInstantStyles,
+  registryRefreshMethod: {
+    defaultValue: RefreshMethod.AlwaysReload,
     displayName: '功能刷新策略',
-    dropdownEnum: RegistryUpdateMethod,
+    dropdownEnum: RefreshMethod,
+  },
+  registryReloadMethod: {
+    defaultValue: HotReloadMethod.Enabled,
+    displayName: '功能热重载策略',
+    dropdownEnum: HotReloadMethod,
   },
   devRecords: {
     defaultValue: {} as Record<string, DevRecord>,

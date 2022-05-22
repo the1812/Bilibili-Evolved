@@ -239,6 +239,8 @@ export interface ComponentMetadata<
   options?: Om
   /** i18n 数据 */
   i18n?: Record<string, LanguagePack>
+  /** 是否支持热重载 */
+  // allowHotReload?: boolean
 }
 
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */

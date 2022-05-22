@@ -5,7 +5,7 @@ import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeStyle } from '@/core/style'
 import { autoUpdateOptions, devClientOptionsMetadata } from './options'
-import { CoreUpdateMethod, RegistryUpdateMethod } from './update-method'
+import { RefreshMethod, HotReloadMethod } from './update-method'
 import { monkey } from '@/core/ajax'
 import { plugins } from '@/plugins/plugin'
 import { Toast } from '@/core/toast'
@@ -123,7 +123,7 @@ export class DevClient extends EventTarget {
 
   private handleCoreUpdate() {
     this.dispatchEvent(new CustomEvent(DevClientEvents.CoreUpdate))
-    if (options.coreUpdateMethod === CoreUpdateMethod.AlwaysReload) {
+    if (options.coreUpdateMethod === RefreshMethod.AlwaysReload) {
       console.log('本体已更新, 刷新页面...')
       location.reload()
     }
@@ -148,11 +148,15 @@ export class DevClient extends EventTarget {
       const newComponent = metadata as ComponentMetadata
       const oldInstantStyles = oldComponent.instantStyles ?? []
       const newInstantStyles = newComponent.instantStyles ?? []
-      const isEntryEmpty = oldComponent.entry === none && newComponent.entry === none
-      console.log({ oldInstantStyles, newInstantStyles, isEntryEmpty })
+      // const isEntryEmpty = oldComponent.entry === none && newComponent.entry === none
+      // console.log({ oldInstantStyles, newInstantStyles, isEntryEmpty })
 
       const doNotReload = () => {
         console.log(`组件 [${newComponent.displayName}] 已更新`)
+      }
+      const reload = () => {
+        console.log(`组件 [${newComponent.displayName}] 已更新, 刷新页面...`)
+        location.reload()
       }
       const reloadInstantStyles = () => {
         if (oldInstantStyles.length > 0 || newInstantStyles.length > 0) {
@@ -166,46 +170,18 @@ export class DevClient extends EventTarget {
         }
         return false
       }
-      const reload = () => {
-        console.log(`组件 [${newComponent.displayName}] 已更新, 刷新页面...`)
-        location.reload()
-      }
-      switch (options.registryUpdateMethod) {
-        case RegistryUpdateMethod.AlwaysReload: {
+      switch (options.registryReloadMethod) {
+        default:
+        case HotReloadMethod.Disabled: {
           reload()
           break
         }
-        case RegistryUpdateMethod.PreferInstantStyles: {
+        case HotReloadMethod.Enabled: {
           if (reloadInstantStyles()) {
             doNotReload()
           } else {
             reload()
           }
-          break
-        }
-        case RegistryUpdateMethod.PreferInstantStylesNoReload: {
-          reloadInstantStyles()
-          doNotReload()
-          break
-        }
-        case RegistryUpdateMethod.PreferEntry: {
-          if (isEntryEmpty && reloadInstantStyles()) {
-            doNotReload()
-          } else {
-            reload()
-          }
-          break
-        }
-        case RegistryUpdateMethod.PreferEntryNoReload: {
-          if (isEntryEmpty) {
-            reloadInstantStyles()
-          }
-          doNotReload()
-          break
-        }
-        default:
-        case RegistryUpdateMethod.DoNotReload: {
-          doNotReload()
           break
         }
       }
@@ -221,7 +197,7 @@ export class DevClient extends EventTarget {
         return
       }
       const { displayName } = plugin
-      if (options.registryUpdateMethod !== RegistryUpdateMethod.DoNotReload) {
+      if (options.registryRefreshMethod !== RefreshMethod.DoNotReload) {
         console.log(`插件 [${displayName}] 已更新, 刷新页面...`)
         location.reload()
       } else {
