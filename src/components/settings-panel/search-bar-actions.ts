@@ -25,6 +25,9 @@ const builtInActions: SearchBarAction[] = [
     icon: 'mdi-trash-can-outline',
     disabled: ({ selectedComponents }) => selectedComponents.length === 0,
     run: context => {
+      if (!window.confirm(`确定要卸载所选的 ${context.selectedComponents.length} 个组件吗?`)) {
+        return
+      }
       context.selectedComponents.forEach(({ name }: ComponentMetadata) => {
         if (!isBuiltInComponent(name)) {
           uninstallComponent(name)
