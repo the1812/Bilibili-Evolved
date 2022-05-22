@@ -1,0 +1,405 @@
+@import './dark-definitions';
+
+#app .bg {
+  @include no-image();
+}
+@mixin dyn-container-skeleton() {
+  &--skeleton {
+    @include background-color('4');
+  }
+}
+.bili-dyn-live-users {
+  @include dyn-container-skeleton();
+  @include background-color('4');
+  &__title {
+    @include color('e');
+    span {
+      @include color('a');
+    }
+  }
+  &__more {
+    @include color('a');
+    &::after {
+      @include border-color('a');
+    }
+    &:hover {
+      @include theme-color();
+      &::after {
+        @include theme-border-color();
+      }
+    }
+  }
+  &__item {
+    &__face-container {
+      box-shadow: 0 0 0 1px var(--theme-color) !important;
+    }
+    &__uname {
+      @include color('e');
+    }
+    &__title {
+      @include color('a');
+    }
+  }
+}
+.bili-dyn-my-info {
+  @include dyn-container-skeleton();
+  @include background-color('4');
+  &__name {
+    @include color('e');
+  }
+  &__stat__item {
+    &__count {
+      @include color('e');
+    }
+    &:hover {
+      .bili-dyn-my-info__stat__item__count {
+        @include theme-color();
+      }
+    }
+    &__label {
+      @include color('a');
+    }
+  }
+}
+.bili-dyn-publishing {
+  @include dyn-container-skeleton();
+  @include background-color('4');
+  &__tools {
+    &__item {
+      &:hover {
+        @include to-theme('blue');
+      }
+      &.emoji {
+        @include background-color();
+      }
+    }
+  }
+  .bili-rich-textarea__inner {
+    @include background-color();
+    @include color('e');
+    &.empty::before {
+      @include color('a');
+    }
+  }
+  .bili-dyn-publishing {
+    &__hint {
+      @include color('a');
+      &::after {
+        @include color('6');
+      }
+    }
+    &__action {
+      @include theme-background-color();
+      @include foreground-color();
+      &.disabled {
+        @include background-color('6');
+        @include color('a');
+      }
+    }
+  }
+}
+.bili-dyn-up-list {
+  @include dyn-container-skeleton();
+  @include background-color('4');
+  &__prev,
+  &__next {
+    @include to-gray();
+    &.disabled {
+      opacity: 0.4 !important;
+    }
+    &:hover:not(.disabled) {
+      @include to-white();
+    }
+  }
+  &__item {
+    &__face {
+      @include border-color();
+      box-shadow: 0 0 0 1px #999 !important;
+      &.all {
+        @include theme-background-color('30');
+        @include no-shadow();
+        img {
+          @include to-theme('blue');
+        }
+      }
+    }
+    &__name {
+      @include color('e');
+    }
+    &.active {
+      .bili-dyn-up-list__item__face {
+        @include theme-background-color('30');
+        box-shadow: 0 0 0 1px var(--theme-color) !important;
+      }
+      .bili-dyn-up-list__item__name {
+        @include theme-color();
+      }
+    }
+  }
+}
+.bili-dyn-list-tabs {
+  @include dyn-container-skeleton();
+  @include background-color('4');
+  &__item {
+    @include color('e');
+    &:hover,
+    &.active {
+      @include theme-color();
+    }
+  }
+  &__highlight {
+    @include theme-background-color();
+  }
+}
+.bili-dyn-list {
+  &__notification {
+    @include theme-background-color();
+    @include foreground-color();
+  }
+  .bili-dyn-item {
+    @include background-color('4');
+    .bili-dyn-title {
+      &__text {
+        &:not([style*='color: rgb(251, 114, 153);']) {
+          @include color('e');
+        }
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+    .bili-dyn-time {
+      @include color('a');
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .bili-dyn-more {
+      &__btn {
+        &:hover {
+          @include to-theme('blue');
+        }
+      }
+
+      &__menu {
+        @include color('e');
+        &__item {
+          &:hover {
+            @include theme-color();
+          }
+        }
+      }
+    }
+    .bili-dyn-action {
+      @include color('a');
+      &__icon {
+        @include to-gray();
+      }
+      &.active,
+      &:hover {
+        @include theme-color();
+        .bili-dyn-action__icon {
+          @include to-theme('blue');
+        }
+      }
+    }
+    .bili-dyn-card-article,
+    .bili-dyn-card-common {
+      @include background-color('3');
+      &:hover {
+        @include no-shadow();
+      }
+    }
+    .bili-dyn-card-article,
+    .bili-dyn-card-pgc,
+    .bili-dyn-card-common,
+    .bili-dyn-card-live,
+    .bili-dyn-card-video {
+      @include border-color();
+      &__body {
+        @include background-color('3');
+      }
+      &__title {
+        @include color('e');
+      }
+      &__desc,
+      &__stat {
+        @include color('a');
+      }
+      &__tag {
+        &.state--1 {
+          @include theme-background-color();
+        }
+        &.state--0 {
+          @include background-color('2');
+        }
+      }
+      &__badge {
+        @include theme-background-color();
+      }
+      &:hover {
+        .bili-dyn-card-article__title,
+        .bili-dyn-card-pgc__title,
+        .bili-dyn-card-common__title,
+        .bili-dyn-card-live__title,
+        .bili-dyn-card-video__title {
+          @include theme-color();
+        }
+      }
+    }
+    .bili-dyn-topic {
+      &__card {
+        &:hover {
+          @include theme-background-color('20');
+        }
+      }
+      &__icon,
+      &__text {
+        @include theme-color();
+      }
+    }
+    .bili-rich-text {
+      &__content {
+        @include color('e');
+      }
+      &-link,
+      &-topic {
+        @include theme-color();
+        &::before {
+          @include to-theme('blue');
+        }
+        &:hover {
+          @include theme-background-color('20');
+        }
+      }
+      &-module {
+        @include color('e');
+        &:hover {
+          @include theme-background-color('20');
+        }
+      }
+    }
+    .bili-dyn-content {
+      &__orig {
+        &.reference {
+          @include background-color('2');
+        }
+      }
+    }
+    .dyn-orig-author {
+      &__name {
+        @include color('e');
+        &:hover {
+          @include theme-color();
+        }
+      }
+      &__action {
+        @include color('a');
+      }
+      &__following {
+        @include theme-border-color();
+        @include theme-color();
+      }
+    }
+    .bili-dyn-forward {
+      &__more {
+        @include color('a');
+        @include border-color();
+      }
+      &-publishing {
+        &__action {
+          &__count {
+            @include color('a');
+          }
+          &__btn {
+            @include theme-background-color();
+            @include foreground-color();
+          }
+        }
+        &__emoji {
+          @include border-color();
+          @include no-shadow();
+          @include color('a');
+          @include background-color('2');
+          i {
+            @include to-gray();
+          }
+          &:hover {
+            @include color('e');
+            i {
+              @include to-white();
+            }
+          }
+        }
+        &__editor {
+          @include border-color();
+          @include background-color('2');
+          &:focus-within {
+            @include theme-border-color();
+          }
+          .bili-rich-textarea__inner {
+            @include color('e');
+            @include background-color();
+            &::before {
+              @include color('a');
+            }
+          }
+        }
+      }
+    }
+    .bili-dyn-interaction {
+      &::before {
+        @include background-color('6');
+      }
+      .bili-rich-text__content {
+        @include color('a');
+      }
+    }
+    .bili-dyn-item {
+      &__extra {
+        @include border-color('6');
+      }
+      &-fold {
+        @include color('a');
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+    .dyn-reserve {
+      &__card {
+        @include background-color('3');
+      }
+      &__title {
+        @include color('e');
+      }
+      &__desc {
+        @include color('a');
+      }
+      &__action button {
+        @include theme-background-color();
+        @include foreground-color();
+        &.check,
+        &.disabled {
+          @include background-color('6');
+          @include color('a');
+        }
+      }
+    }
+  }
+}
+.bili-dyn-list-loading {
+  @include background-color('4');
+}
+.bili-popover {
+  &,
+  &__arrow {
+    @include border-color('8884');
+    @include background-color('3');
+  }
+}
+.bili-awesome-img {
+  &--sleepy {
+    @include background-color('28');
+  }
+}
