@@ -123,7 +123,7 @@ export class DevClient extends EventTarget {
 
   private handleCoreUpdate() {
     this.dispatchEvent(new CustomEvent(DevClientEvents.CoreUpdate))
-    if (options.coreUpdateMethod === RefreshMethod.AlwaysReload) {
+    if (options.coreRefreshMethod === RefreshMethod.AlwaysReload) {
       console.log('本体已更新, 刷新页面...')
       location.reload()
     }

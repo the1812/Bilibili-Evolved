@@ -194,6 +194,12 @@ export const component = defineComponentMetadata({
           title: ({ selectedComponents }) => (selectedComponents.length > 0 ? '更新所选组件' : '检查所有更新'),
           icon: 'mdi-cloud-download-outline',
           run: async context => {
+            const confirmMessage = context.selectedComponents.length > 0
+              ? `确定要更新所选的 ${context.selectedComponents.length} 个组件吗?`
+              : '确定要检查所有更新吗?'
+            if (!window.confirm(confirmMessage)) {
+              return
+            }
             const { Toast } = await import('@/core/toast')
             const { isBuiltInComponent } = await import('@/components/built-in-components')
             if (context.selectedComponents.length === 0) {
