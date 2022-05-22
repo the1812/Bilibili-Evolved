@@ -1,6 +1,7 @@
 import { getData, registerAndGetData } from '@/plugins/data'
 
-export const trimLeadingDot = (selector: string) => selector.replace(/^\./, '')
+export const trimLeadingDot = (selector: string) => selector.split(',').map(cls => cls.trim().replace(/^\./, '')).join(',')
+export const splitToSpace = (selector: string) => selector.split(',').join(' ')
 
 export const useShare = <T>(
   key: string,

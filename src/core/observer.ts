@@ -225,8 +225,8 @@ const selectCid = lodash.once(() => select(() => {
   if (unsafeWindow.cid) {
     return unsafeWindow.cid
   }
-  if (unsafeWindow.player && unsafeWindow.player.getVideoMessage) {
-    const info = unsafeWindow.player.getVideoMessage()
+  if (unsafeWindow.player && (unsafeWindow.player.getVideoMessage||unsafeWindow.player.getUserParams)) {
+    const info = unsafeWindow.player.getVideoMessage?unsafeWindow.player.getVideoMessage():unsafeWindow.player.getUserParams().input
     if (Number.isNaN(info.cid)) {
       return null
     }
@@ -266,8 +266,8 @@ export const videoChange = async (
     return false
   }
   const getId = () => ({
-    aid: unsafeWindow.aid,
-    cid: unsafeWindow.cid,
+    aid: unsafeWindow?.aid?unsafeWindow.aid:unsafeWindow.player.getUserParams().input.aid,
+    cid: unsafeWindow?.cid?unsafeWindow.cid:unsafeWindow.player.getUserParams().input.cid,
   })
   const fireEvent = () => {
     const detail = getId()
