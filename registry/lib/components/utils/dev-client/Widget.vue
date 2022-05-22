@@ -28,7 +28,6 @@
   </div>
 </template>
 <script lang="ts">
-import { Toast } from '@/core/toast'
 import { AsyncButton, VIcon } from '@/ui'
 import type { DevClient } from './client'
 import { DevClientEvents } from './client'
@@ -60,10 +59,7 @@ export default Vue.extend({
   },
   methods: {
     async connect() {
-      const result = await this.client.createSocket()
-      if (!result) {
-        Toast.error('连接失败, 请确保 DevServer 已启动, 并检查连接配置.', 'DevClient', 2000)
-      }
+      return this.client.createSocket(true)
     },
     disconnect() {
       this.client.closeSocket()

@@ -21,7 +21,7 @@ export const component = defineComponentMetadata({
           return
         }
         const devUrl = autoUpdateRecord.url
-        if (!devClient.sessions.find(s => devUrl.endsWith(s))) {
+        if (devClient.sessions.find(s => devUrl.endsWith(s))) {
           return
         }
         autoUpdateRecord.url = originalUrl
@@ -32,7 +32,6 @@ export const component = defineComponentMetadata({
     devClient.addEventListener(
       DevClientEvents.ServerConnected,
       () => cleanUpDevRecords(),
-      { once: true },
     )
     if (options.autoConnect) {
       devClient.createSocket()

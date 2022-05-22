@@ -176,6 +176,10 @@ export default Vue.extend({
   methods: {
     getOnlineActions: lodash.debounce(getOnlineActions, 200),
     getActions,
+    handleSelect() {
+      this.$emit('close')
+      this.getActions()
+    },
     async handleEnter(e: KeyboardEvent) {
       if (e.isComposing) {
         return
@@ -189,9 +193,11 @@ export default Vue.extend({
       }
       if (this.keyword) {
         search(this.keyword)
+        this.handleSelect()
         return
       }
       window.open(this.recommended.href, '_blank')
+      this.handleSelect()
     },
     handleUp(e: KeyboardEvent) {
       if (e.isComposing) {
@@ -233,6 +239,7 @@ export default Vue.extend({
     },
     onAction() {
       // this.focus()
+      this.handleSelect()
     },
     focus() {
       this.$refs.input.focus()

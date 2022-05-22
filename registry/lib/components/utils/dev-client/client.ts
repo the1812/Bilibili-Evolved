@@ -8,6 +8,7 @@ import { autoUpdateOptions, devClientOptionsMetadata } from './options'
 import { CoreUpdateMethod, RegistryUpdateMethod } from './update-method'
 import { monkey } from '@/core/ajax'
 import { plugins } from '@/plugins/plugin'
+import { Toast } from '@/core/toast'
 
 const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
 const console = useScopedConsole('DevClient')
@@ -49,7 +50,7 @@ export class DevClient extends EventTarget {
     super.removeEventListener(type, callback, eventOptions)
   }
 
-  createSocket() {
+  createSocket(toastError = false) {
     return new Promise<boolean>(resolve => {
       this.closeSocket()
 
@@ -59,6 +60,9 @@ export class DevClient extends EventTarget {
       this.socket = new WebSocket(`ws://localhost:${options.port}`)
       this.socket.addEventListener('error', () => {
         console.warn('未能连接到 DevServer')
+        if (toastError) {
+          Toast.error('连接失败, 请确保 DevServer 已启动, 并检查连接配置.', 'DevClient', 2000)
+        }
         this.closeSocket()
         resolve(false)
       })
