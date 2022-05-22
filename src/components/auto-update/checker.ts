@@ -38,45 +38,45 @@ export const checkUpdate = async (config: CheckUpdateConfig) => {
     return filterNames.includes(itemName)
   }
   let updatedCount = 0
+  const updateItems = Object.entries(items)
+    .filter(([itemName, item]) => shouldUpdate(itemName) && Boolean(item.url))
   const results = await Promise.allSettled(
-    Object.entries(items)
-      .filter(([itemName, item]) => shouldUpdate(itemName) && Boolean(item.url))
-      .map(async ([itemName, item]) => {
-        const { url, lastUpdateCheck, alwaysUpdate } = item
-        const isDebugItem = alwaysUpdate && devMode
-        if (
-          !isDebugItem
-          && now - lastUpdateCheck <= options.minimumDuration
-          && !force
-        ) {
-          return `[${itemName}] 未超过更新间隔期, 已跳过`
-        }
-        if (updatedCount > maxCount && !force) {
-          return `[${itemName}] 已到达单次更新量上限 (${maxCount} 个), 已跳过`
-        }
-        let finalUrl = url
-        if (localhost.test(url) && options.localPortOverride) {
-          finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
-        }
-        const code: string = await coreApis.ajax.monkey({ url: finalUrl })
-        // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
-        if (!(itemName in items)) {
-          return `[${itemName}] 已被卸载, 取消更新`
-        }
-        if (!code) {
-          return `[${itemName}] 更新下载失败, 取消更新`
-        }
-        if (!isFeatureAcceptable(code)) {
-          return `[${itemName}] 版本不匹配, 取消更新`
-        }
-        const { installFeatureFromCode } = await import(
-          '@/core/install-feature'
-        )
-        const { message } = await installFeatureFromCode(code, url)
-        item.lastUpdateCheck = Number(new Date())
-        updatedCount++
-        return `[${itemName}] ${message}`
-      }),
+    updateItems.map(async ([itemName, item]) => {
+      const { url, lastUpdateCheck, alwaysUpdate } = item
+      const isDebugItem = alwaysUpdate && devMode
+      if (
+        !isDebugItem
+        && now - lastUpdateCheck <= options.minimumDuration
+        && !force
+      ) {
+        return `[${itemName}] 未超过更新间隔期, 已跳过`
+      }
+      if (updatedCount > maxCount && !force) {
+        return `[${itemName}] 已到达单次更新量上限 (${maxCount} 个), 已跳过`
+      }
+      let finalUrl = url
+      if (localhost.test(url) && options.localPortOverride) {
+        finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
+      }
+      const code: string = await coreApis.ajax.monkey({ url: finalUrl })
+      // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
+      if (!(itemName in items)) {
+        return `[${itemName}] 已被卸载, 取消更新`
+      }
+      if (!code) {
+        return `[${itemName}] 更新下载失败, 取消更新`
+      }
+      if (!isFeatureAcceptable(code)) {
+        return `[${itemName}] 版本不匹配, 取消更新`
+      }
+      const { installFeatureFromCode } = await import(
+        '@/core/install-feature'
+      )
+      const { message } = await installFeatureFromCode(code, url)
+      item.lastUpdateCheck = Number(new Date())
+      updatedCount++
+      return `[${itemName}] ${message}`
+    }),
   )
   return results
     .map((r, index) => {

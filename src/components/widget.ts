@@ -1,5 +1,5 @@
-import { TestPattern, Executable } from '@/core/common-types'
 import { VueConstructor } from 'vue'
+import { TestPattern, Executable } from '@/core/common-types'
 
 /**
  * 小组件(v1中称为附加功能), 可在组件中定义, 也可以由插件注入

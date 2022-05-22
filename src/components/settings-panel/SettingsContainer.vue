@@ -35,7 +35,7 @@
       v-model="settingsOpened"
       class="settings-panel-popup"
       :trigger-element="$refs.settingsIcon"
-      :auto-close-predicate="settingsPanalClosePredicate"
+      :auto-close-predicate="settingsPanelClosePredicate"
       :fixed="true"
     >
       <SettingsPanel @close="settingsOpened = false" />
@@ -68,7 +68,7 @@ export default {
     theWorld() {
       externalApis.theWorld(0)
     },
-    settingsPanalClosePredicate(data: {
+    settingsPanelClosePredicate(data: {
       target: HTMLElement
       element: HTMLElement
       trigger: HTMLElement

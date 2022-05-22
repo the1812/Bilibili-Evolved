@@ -1,4 +1,5 @@
 export { default as VIcon } from '@/ui/icon/VIcon.vue'
+export { default as AsyncButton } from '@/ui/AsyncButton.vue'
 export { default as CheckBox } from '@/ui/CheckBox.vue'
 export { default as ColorPicker } from '@/ui/ColorPicker.vue'
 export { default as DpiImage } from '@/ui/DpiImage.vue'

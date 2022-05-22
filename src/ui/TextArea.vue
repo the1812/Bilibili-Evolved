@@ -41,6 +41,7 @@ export default Vue.extend({
     padding: 4px 6px;
     border-radius: 4px;
     background-color: transparent;
+    overflow: auto;
     border: none;
     outline: none !important;
     color: black;

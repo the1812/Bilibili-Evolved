@@ -6,4 +6,4 @@ dev/
 dist/stats.html
 dist/profile.json
 dist/bilibili-evolved.dev.user.js
-builder/**/dist/
+dev-tools/**/dist/

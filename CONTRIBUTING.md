@@ -14,10 +14,10 @@ yarn
 ```
 
 ### 本体
-需要说明的是, 脚本本体和功能是分开的两个项目, 因此编译时也是分开的. 脚本本体的编译通常使用 `监视开发版 dev:watch` 任务, 会产生 `dist/bilibili-evolved.dev.user.js` 文件.
+需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发时在 `registry/dist/` 下产生文件.
 > 如果不使用 Visual Studio Code, 则需要根据 `.vscode/tasks.json` 中各个任务定义的命令手动在终端执行. (npm scripts 仅用于 CI)
 
-然后配置本地调试环境:
+配置本地调试环境:
 
 **如果使用的是基于 Chromium 的浏览器**
 1. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
@@ -30,7 +30,7 @@ yarn
 // @description  Bilibili Evolved (本地)
 // @version      300.0
 // @author       Grant Howard, Coulomb-G
-// @copyright    2021, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2022, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @exclude      *://*.bilibili.com/*/mobile.html
@@ -72,26 +72,26 @@ yarn
 > Windows 例子: `@require file://C:/xxx/Bilibili-Evolved/bilibili-evolved.dev.user.js`
 
 > macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/bilibili-evolved.dev.user.js`
-7. 保存脚本, 监视模式下保存文件构建完成后, 刷新即可生效
 
 > 上面那些其他的 @require 跟 `src/client/common.meta.json` 里的保持一致就行, 偶尔这些依赖项会变动导致这个本地调试脚本失效, 到时候照着改一下就行.
+7. 保存脚本, 运行 `启动开发服务 dev-server` 任务
+8. 进入 b 站, 安装 `DevClient` 组件, 功能中显示已连接时就是成功了
+
 
 **如果使用 Firefox 或 Safari**
-1. 运行 `启动服务器(本体) dev:serve` 任务, 假设得到的服务链接为`http://localhost:5000/`
-2. 继续 Chromium 指南中的第 3~6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:5000/bilibili-evolved.dev.user.js`.
-3. 保存脚本, 监视模式下保存文件构建完成后, 在 Tampermonkey 中编辑脚本 - 外部, 删除 `localhost` 的缓存文件后生效.
+1. 运行 `启动开发服务 dev-server` 任务时, 假设得到的本体链接为 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`
+2. 继续 Chromium 指南中的第 3 ~ 6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
+3. 保存脚本, 运行 `启动开发服务 dev-server` 任务
+4. 进入 b 站, 安装 `DevClient` 组件, 将 `本体刷新策略` 设置为 `不刷新`, 功能中显示已连接时就是成功了
+5. 每次本体代码变动后, 需要在 Tampermonkey 中编辑脚本 - 外部, 删除 `localhost` 的缓存文件后刷新生效.
 
 ### 组件
 组件除了本体内置的几个(内置的按照本体的调试方法就行), 其他都是和本体分离的, 本节包括这些组件的编译和调试方法, 同样适用于插件. 组件的源代码和产物均位于 `registry` 文件夹中.
 
-1. 运行任务 `监视组件 dev:components`, (插件运行 `监视插件 dev:plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可.
-2. 然后运行 `启动服务器(组件) dev:serve components`, 就得到了组件在 `localhost` 下的链接.
-3. 进入网站, 打开脚本的设置面板 - 组件管理, (确保`自动更新器`功能开启) 粘贴组件的链接并安装.
-4. 监视模式下保存文件构建完成后, 可以在设置里进入组件详情, 从菜单里选择检查更新; 如果开着 `开发者模式` 和 `自动更新器`, 也可以在搜索栏中搜索 `Check Last Update` 来一键更新上一次检查更新的组件.
-
-
 ## 修改
-找到对应的代码文件修改, 可以搜索组件的 `name` 或 `displayName` 定位文件, 修改后运行对应的编译任务即可.
+1. 运行 `启动开发服务 dev-server`
+2. 在脚本的设置面板 - 组件详情中, 从右下角的菜单中选择 `开始调试`.
+3. 找到对应的代码文件修改, 可以搜索组件的 `name` 或 `displayName` 定位文件, 修改后会自动更新.
 
 ## 新增
 ### 本体
@@ -105,22 +105,32 @@ yarn
 1. 根据类别进入对应的子文件夹, 如样式修改的功能就是 `style/`
 2. 新建文件夹, 名称为组件名, 单词短横线分隔
 3. 新建文件 `index.ts` 作为组件入口点
-> 此名称不可更改, webpack 配置中将搜索所有 index.ts 作为组件编译入口
 
-4. 在 `index.ts` 中导出 `component` 对象, 实现 `ComponentMetadata` 接口
-```ts
-import { ComponentMetadata } from '@/components/types'
+    > 此名称不可更改, webpack 配置中将搜索所有 index.ts 作为组件编译入口
 
-export const component: ComponentMetadata = {
-  // ...
-}
-```
-> 在 `ComponentMetadata` 的源码中有各属性的说明
+4. 在 `index.ts` 中导出 `component` 对象, 用 `defineComponentMetadata` 定义组件.
 
-> `author` 字段记得填, 这个因为我自己写的组件不需要所以就不是 required 的
+    ```ts
+    import { defineComponentMetadata } from '@/components/define'
+
+    export const component = defineComponentMetadata({
+      // ...
+    })
+    ```
+
+    所需要的字段在 `@/components/types.ts` 的 `ComponentMetadata` 中，源码中有各属性的说明.
+
+    其中 `options` 字段的类型为同文件中的 `OptionsMetadata`.
+
+    在 `@/components/define.ts` 中还提供了几个方法用于辅助定义.
+
+    > `author` 字段记得填, 这个因为我自己写的组件不需要所以就不是 required 的
 
 5. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
-6. 编译并调试组件.
+6. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可.
+7. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
+8. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
+9. 后续同 [修改](##修改) 中的 2 ~ 3 步.
 
 ### 插件
 在 `registry/lib/plugins` 中是所有插件的源代码, 步骤和组件基本一致, 只有在第 4 步中, 导出的是 `plugin` 对象, 实现 `PluginMetadata` 接口.
@@ -160,6 +170,7 @@ export const component: ComponentMetadata = {
 - `core/utils`: 工具集, 包含各种常量, 格式化函数, 排序工具, 标题获取, 日志等
 
 ### 组件 API
+- `components/define`: 包含定义组件的相关方法
 - `components/types`: 组件相关接口定义
 - `components/styled-components`: 包含样式的组件 entry 简化包装函数
 - `components/user-component`: 用户组件的安装/卸载 API
@@ -198,7 +209,7 @@ export const component: ComponentMetadata = {
 
 > 有时候需要分开数据的注册和获取, 可以分别调用 `registerData` 和 `getData`
 
-> 从设计上考虑好你的数据是否适合此 API, `addData` 做出的数据修改是单向累加式的, 不能够撤销.
+> 从设计上考虑好你的数据是否适合此 API, `addData` 做出的数据修改是单向累加式的, 不能够撤销. 以 `git` 作为比喻的话, 就是只能继续 `git commit`, 不允许 `git reset`.
 
 - `plugins/hook`: 钩子函数 API
 
@@ -217,6 +228,7 @@ export const component: ComponentMetadata = {
 - `ui/ScrollTrigger.vue`: 进入视图时触发事件, 通常用于实现无限滚动
 - `ui/VEmpty.vue`: 表示无数据, 界面可被插件更改
 - `ui/VLoading.vue`: 表示数据加载中, 界面可被插件更改
+- `ui/AsyncButton.vue`: `click` 事件为异步函数时, 执行期间自动使 `Button` 禁用, 其他和 `Button` 相同.
 
 ## 代码风格检查
 项目中含有 ESLint, 不通过 ESLint 是无法进行 Pull Request 的. 配置基于 `airbnb-base`, `typescript-eslint/recommended`, `vue/recommended` 修改而来, 几个比较特殊的规则如下:

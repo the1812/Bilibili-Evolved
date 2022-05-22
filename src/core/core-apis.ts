@@ -3,6 +3,7 @@ import * as cdnTypes from '@/core/cdn-types'
 import * as download from '@/core/download'
 import * as externalInput from '@/core/external-input'
 import * as filePicker from '@/core/file-picker'
+import * as installFeature from '@/core/install-feature'
 import * as horizontalScroll from '@/core/horizontal-scroll'
 import * as lifeCycle from '@/core/life-cycle'
 import * as loadingMode from '@/core/loading-mode'
@@ -40,6 +41,7 @@ export const coreApis = {
   download,
   externalInput,
   filePicker,
+  installFeature,
   horizontalScroll,
   lifeCycle,
   loadingMode,
@@ -78,6 +80,7 @@ export const externalApis = {
   ...download,
   ...externalInput,
   ...filePicker,
+  ...installFeature,
   ...horizontalScroll,
   lifeCycle,
   ...loadingMode,

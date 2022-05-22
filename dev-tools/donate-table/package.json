@@ -1,11 +1,14 @@
 {
   "name": "donate-table",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "index.ts",
   "author": "Grant Howard",
   "license": "MIT",
   "private": true,
   "dependencies": {
     "csv-parse": "^4.15.4"
+  },
+  "devDependencies": {
+    "ts-node": "^10.5.0"
   }
 }

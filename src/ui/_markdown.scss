@@ -12,6 +12,7 @@
   ul,
   ol {
     padding-left: 16px;
+    margin: 0;
     li {
       line-height: 1.75;
     }
@@ -28,6 +29,9 @@
   }
   > p {
     line-height: 1.75;
+  }
+  p + p {
+    margin-top: 8px;
   }
   pre {
     white-space: pre-wrap;

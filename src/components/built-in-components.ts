@@ -12,3 +12,7 @@ export const getBuiltInComponents = (): ComponentMetadata[] => [
   AutoUpdate,
   NotifyNewVersion,
 ]
+
+export const isBuiltInComponent = (name: string) => (
+  getBuiltInComponents().some(c => c.name === name)
+)

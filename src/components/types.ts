@@ -15,6 +15,7 @@ export type Author = {
   name: string
   link: string
 }
+
 export interface FeatureBase {
   // TODO: 可在编译时转换 Markdown 以提高运行时性能
   /** 描述 (支持 markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
@@ -26,9 +27,11 @@ export interface FeatureBase {
   /** 编译时的 core version, 由 Babel 注入, 不需要手动填写 */
   coreVersion?: string
 }
+
 type Optional<Target, Props extends keyof Target> = {
   [P in Props]?: Target[P]
 } & Omit<Target, Props>
+
 /** 组件标签 */
 export interface ComponentTag {
   /** 标签的名称 */
@@ -42,13 +45,18 @@ export interface ComponentTag {
   /** 设置面板中的呈现顺序 */
   order: number
 }
+
 type ComponentOptionValidator<T> = (value: T, oldValue: T) => T | undefined | null
-/** 组件选项信息
- * @todo 需要 extends 出更具体的 Option 类型, 现在这样混一起太乱
- */
-export interface ComponentOption {
+
+// TODO: 参考 discussion #3041。当不兼容代码替换完成后将 any 改为 unknown
+export type UnknownOptions = Record<string, any>
+
+export type EmptyOptions = Record<string, never>
+
+/** 单个选项的信息 */
+export interface OptionMetadata<V = unknown> {
   /** 默认值 */
-  defaultValue: unknown
+  defaultValue: V
   /** 显示名称 */
   displayName?: string
   /** 如果希望这个选项显示为一个下拉框, 可以用相应的 `enum` 提供下拉框的选值, 或者也可以传入 `string[]` */
@@ -67,10 +75,16 @@ export interface ComponentOption {
   validator?: ComponentOptionValidator<Range<string>> |
   ComponentOptionValidator<string> | ComponentOptionValidator<number>
 }
-/** 组件选项信息 */
-export interface ComponentOptions {
-  [key: string]: ComponentOption
+
+/** 多个选项的信息 */
+export type OptionsMetadata<O extends UnknownOptions = UnknownOptions> = {
+  [OptionName in keyof O]: OptionMetadata<O[OptionName]>
 }
+
+// TODO: 参考 discussion #3041。当不兼容代码替换完成后删除
+export type ComponentOptions = OptionsMetadata
+export type ComponentOption = OptionMetadata
+
 /** 组件标签 */
 export const componentsTags = {
   /** 视频 */
@@ -139,21 +153,42 @@ export const componentsTags = {
     order: 8,
   } as ComponentTag,
 }
+
+/**
+ * 从 OptionalOptionsMetadata 中获取 Options 信息。
+ * 当其为 undefined 时，返回类型 EmptyOptions。
+ */
+export type OptionsFromOptionalMetadata<M extends OptionalOptionsMetadata> = (
+  M extends undefined | Record<string, never> ? EmptyOptions :
+    M extends OptionsMetadata<infer O> ? O : never
+)
+
+/** 组件入口函数的参数 */
+export interface ComponentEntryContext<
+  Om extends OptionalOptionsMetadata = OptionalOptionsMetadata
+> {
+  /** 当前组件的设置 */
+  settings: ComponentSettings<OptionsFromOptionalMetadata<Om>>
+  /** 当前组件的信息 */
+  metadata: ComponentMetadata<Om>
+  /** 核心 API */
+  coreApis: CoreApis
+}
+
 /** 组件入口函数 */
-export type ComponentEntry<T = unknown> = (
-  context: {
-    /** 当前组件的设置 */
-    settings: ComponentSettings
-    /** 当前组件的信息 */
-    metadata: ComponentMetadata
-    /** 核心 API */
-    coreApis: CoreApis
-  }
+export type ComponentEntry<
+  Om extends OptionalOptionsMetadata = OptionalOptionsMetadata,
+  T = unknown
+> = (
+  context: ComponentEntryContext<Om>
 ) => T | Promise<T>
+
 /** 带有函数/复杂对象的组件信息 */
-export interface FunctionalMetadata {
+export interface FunctionalMetadata<
+  Om extends OptionalOptionsMetadata = OptionalOptionsMetadata
+> {
   /** 主入口, 重新开启时不会再运行 */
-  entry: ComponentEntry
+  entry: ComponentEntry<Om>
   /** 导出小组件 */
   widget?: Omit<Widget, 'name'>
   /** 首屏样式, 会尽快注入 (before DCL) */
@@ -178,8 +213,16 @@ export interface FunctionalMetadata {
   /** 设置不匹配的URL, 不匹配则不运行此组件, 优先级高于`urlInclude` */
   urlExclude?: TestPattern
 }
+
+/** ComponentMetadata 的类型参数，用于表达其可选参数 options 的类型 */
+export type OptionalOptionsMetadata<O extends UnknownOptions = UnknownOptions> = (
+  OptionsMetadata<O> | undefined
+)
+
 /** 组件基本信息 */
-export interface ComponentMetadata extends FunctionalMetadata, FeatureBase {
+export interface ComponentMetadata<
+  Om extends OptionalOptionsMetadata = OptionalOptionsMetadata
+> extends FeatureBase, FunctionalMetadata<Om> {
   /** 组件名称 */
   name: string
   /** 显示名称 */
@@ -193,9 +236,12 @@ export interface ComponentMetadata extends FunctionalMetadata, FeatureBase {
   /**  是否在设置界面中隐藏 (代码仍可操作) */
   hidden?: boolean
   /** 组件子选项 */
-  options?: ComponentOptions
+  options?: Om
   /** i18n 数据 */
   i18n?: Record<string, LanguagePack>
+  /** 是否支持热重载 */
+  // allowHotReload?: boolean
 }
+
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>
