@@ -62,6 +62,7 @@
   }
 }
 .bili-dyn-publishing {
+  z-index: 1; // 下面的 to-theme filter 会改变层级, 这里修复一下
   @include dyn-container-skeleton();
   @include background-color('4');
   &__tools {
