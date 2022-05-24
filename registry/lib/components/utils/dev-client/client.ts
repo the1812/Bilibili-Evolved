@@ -1,16 +1,14 @@
 import type { ItemStopPayload, Payload } from 'dev-tools/dev-server/payload'
-import { OptionsOfMetadata } from '@/components/define'
-import { getComponentSettings } from '@/core/settings'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeStyle } from '@/core/style'
-import { autoUpdateOptions, devClientOptionsMetadata } from './options'
+import { autoUpdateOptions, getDevClientOptions } from './options'
 import { RefreshMethod, HotReloadMethod } from './update-method'
 import { monkey } from '@/core/ajax'
 import { plugins } from '@/plugins/plugin'
 import { Toast } from '@/core/toast'
 
-const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
+const options = getDevClientOptions()
 const console = useScopedConsole('DevClient')
 const handleSocketMessage = (event: MessageEvent, callback: (payload: Payload) => void) => {
   const { data } = event
@@ -84,6 +82,10 @@ export class DevClient extends EventTarget {
             }
             case 'start': {
               this.sessions = payload.sessions
+              this.dispatchEvent(new CustomEvent(
+                DevClientEvents.SessionsUpdate,
+                { detail: this.sessions },
+              ))
               break
             }
             case 'stop': {
@@ -113,6 +115,7 @@ export class DevClient extends EventTarget {
     this.socket.close()
     this.socket = null
     this.sessions = []
+    this.dispatchEvent(new CustomEvent(DevClientEvents.SessionsUpdate, { detail: this.sessions }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerDisconnected))
   }

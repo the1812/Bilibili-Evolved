@@ -25,13 +25,17 @@ export const component = defineComponentMetadata({
           return
         }
         autoUpdateRecord.url = originalUrl
-        console.log('cleanUpDevRecords', name, originalUrl, autoUpdateRecord)
+        console.log('cleanUpDevRecords', name, devUrl, originalUrl, autoUpdateRecord)
         delete options.devRecords[name]
       })
     }
     devClient.addEventListener(
       DevClientEvents.ServerConnected,
-      () => cleanUpDevRecords(),
+      () => {
+        devClient.addEventListener(DevClientEvents.SessionsUpdate, () => {
+          cleanUpDevRecords()
+        }, { once: true })
+      },
     )
     if (options.autoConnect) {
       devClient.createSocket()
