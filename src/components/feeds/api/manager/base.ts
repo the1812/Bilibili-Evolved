@@ -70,6 +70,10 @@ export abstract class FeedsCardsManager extends EventTarget {
     }
     return adaptor.watchCardsList(this)
   }
+  /** 清理不在 DOM 里的动态卡片 */
+  cleanUpCards() {
+    this.cards = this.cards.filter(c => c.presented)
+  }
 
   /**
    * 根据传入元素添加动态卡片
