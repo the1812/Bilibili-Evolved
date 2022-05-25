@@ -269,6 +269,7 @@
     &__content {
       @include color('e');
     }
+    &-module,
     &-link,
     &-topic {
       @include theme-color();
@@ -281,8 +282,9 @@
     }
     &-module {
       @include color('e');
-      &:hover {
-        @include theme-background-color('20');
+      &.at,
+      &.vote {
+        @include theme-color();
       }
     }
   }
@@ -374,6 +376,9 @@
     }
     .bili-rich-text__content {
       @include color('a');
+      .at {
+        @include color('e');
+      }
     }
   }
   .bili-dyn-item {
@@ -384,6 +389,35 @@
       @include color('a');
       &:hover {
         @include theme-color();
+      }
+    }
+  }
+  .dyn-additional-common {
+    &__mark span {
+      @include color('a');
+    }
+    &__wrap {
+      @include background-color('3');
+    }
+    &__cover {
+      @include background-color('2');
+    }
+    &__detail {
+      &__title {
+        @include color('e');
+      }
+      &__desc {
+        @include color('a');
+      }
+    }
+    &__action {
+      button {
+        @include theme-background-color();
+        @include foreground-color();
+        &.check {
+          @include background-color('4');
+          @include color('a');
+        }
       }
     }
   }
@@ -685,6 +719,46 @@
       @include color('e');
       &.active {
         @include theme-color();
+      }
+    }
+  }
+}
+.dyn-vote {
+  @include border-color();
+  &__cover {
+    @include background-color('2f3436');
+    @include to-theme('blue');
+  }
+  &__body {
+    @include background-color('3');
+  }
+  &__detail {
+    &__title {
+      @include color('e');
+    }
+    &__desc {
+      @include color('a');
+    }
+  }
+  &__action {
+    button {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+}
+.bili-popup {
+  &__wrap {
+    @include background-color('2');
+  }
+  &__header {
+    @include border-color('4');
+    &__title {
+      @include color('e');
+    }
+    &__close {
+      path {
+        @include fill('a');
       }
     }
   }
