@@ -27,7 +27,6 @@ const entry = async () => {
       if (target.hasAttribute('click-title')) {
         return
       }
-      console.log({ target })
       if ([
         'bili-rich-text-topic',
         'bili-rich-text-module',
