@@ -143,7 +143,7 @@ export class DevClient extends EventTarget {
       if (!oldComponent) {
         return
       }
-      const code: string = await coreApis.ajax.monkey({ url })
+      const code: string = await monkey({ url })
       const { installFeatureFromCode } = await import(
         '@/core/install-feature'
       )

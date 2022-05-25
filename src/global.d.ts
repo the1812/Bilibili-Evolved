@@ -51,14 +51,17 @@ declare global {
     method?: 'GET' | 'POST' | 'HEAD'
     headers?: { [name: string]: string },
     data?: string
+    cookie?: string
     binary?: boolean
+    nocache?: boolean
+    revalidate?: boolean
     timeout?: number
     context?: any
     responseType?: 'arraybuffer' | 'blob' | 'json' | 'text'
     overrideMimeType?: string
     anonymous?: boolean
     fetch?: boolean
-    username?: string
+    user?: string
     password?: string
   }
   interface MonkeyXhrDetails extends MonkeyXhrBasicDetails {
