@@ -27,6 +27,14 @@ const entry = async () => {
       if (target.hasAttribute('click-title')) {
         return
       }
+      console.log({ target })
+      if ([
+        'bili-rich-text-topic',
+        'bili-rich-text-module',
+        'bili-rich-text-link',
+      ].some(className => target.classList.contains(className))) {
+        return
+      }
       const popups = dqa(element, '.im-popup')
       if (popups.some(p => p.contains(target))) {
         return
