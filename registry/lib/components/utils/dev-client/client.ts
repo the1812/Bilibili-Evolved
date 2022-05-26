@@ -126,7 +126,7 @@ export class DevClient extends EventTarget {
 
   private handleCoreUpdate() {
     this.dispatchEvent(new CustomEvent(DevClientEvents.CoreUpdate))
-    if (options.coreRefreshMethod === RefreshMethod.AlwaysReload) {
+    if (options.coreRefreshMethod === RefreshMethod.AlwaysRefresh) {
       console.log('本体已更新, 刷新页面...')
       location.reload()
     }
@@ -200,7 +200,7 @@ export class DevClient extends EventTarget {
         return
       }
       const { displayName } = plugin
-      if (options.registryRefreshMethod !== RefreshMethod.DoNotReload) {
+      if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
         console.log(`插件 [${displayName}] 已更新, 刷新页面...`)
         location.reload()
       } else {

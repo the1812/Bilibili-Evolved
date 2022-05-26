@@ -21,12 +21,12 @@ export const devClientOptionsMetadata = defineOptionsMetadata({
     displayName: '自动连接',
   },
   coreRefreshMethod: {
-    defaultValue: RefreshMethod.AlwaysReload,
+    defaultValue: RefreshMethod.AlwaysRefresh,
     displayName: '本体刷新策略',
     dropdownEnum: RefreshMethod,
   },
   registryRefreshMethod: {
-    defaultValue: RefreshMethod.AlwaysReload,
+    defaultValue: RefreshMethod.AlwaysRefresh,
     displayName: '功能刷新策略',
     dropdownEnum: RefreshMethod,
   },
