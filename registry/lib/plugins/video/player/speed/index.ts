@@ -14,7 +14,7 @@ interface CommonKeyBindingAction {
 
 export const plugin: PluginMetadata = {
   name: 'speed.keymap',
-  displayName: '视频倍速 - 快捷键支持',
+  displayName: '快捷键扩展 - 视频倍速',
   author: {
     name: 'JLoeve',
     link: 'https://github.com/LonelySteve',
