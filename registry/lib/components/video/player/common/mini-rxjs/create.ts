@@ -23,18 +23,23 @@ export const bindCallback = <T>(cb: (...args: any[]) => any, ...args_: any[]) =>
   },
 )
 
-export const concat = (...subjects: Subject<unknown>[]) => subject<unknown>(({ next }) => {
-  const copiedSubjects = [...subjects]
+export const concat = (...subjects: Subject<unknown>[]) => subject<unknown>(
+  ({ next, complete }) => {
+    const copiedSubjects = [...subjects]
 
-  const handleNext = () => {
-    const s = copiedSubjects.shift()
-    s.subscribe({
-      next,
-      complete: () => {
-        handleNext()
-      },
-    })
-  }
+    const handleNext = () => {
+      const s = copiedSubjects.shift()
+      if (!s) {
+        complete()
+      }
+      s.subscribe({
+        next,
+        complete: () => {
+          handleNext()
+        },
+      })
+    }
 
-  handleNext()
-})
+    handleNext()
+  },
+)
