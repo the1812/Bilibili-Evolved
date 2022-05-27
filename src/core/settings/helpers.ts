@@ -1,8 +1,6 @@
 import {
   ComponentMetadata,
   componentsMap,
-  OptionalOptionsMetadata,
-  OptionsFromOptionalMetadata,
   OptionsMetadata,
   UnknownOptions,
 } from '@/components/component'
@@ -24,9 +22,9 @@ export const metadataToOptions = <O extends UnknownOptions>(
  * 生成组件设置
  * @param component 组件定义
  */
-export const componentToSettings = <Om extends OptionalOptionsMetadata>(
-  component: ComponentMetadata<Om>,
-): ComponentSettings<OptionsFromOptionalMetadata<Om>> => {
+export const componentToSettings = <O extends UnknownOptions>(
+  component: ComponentMetadata<O>,
+): ComponentSettings<O> => {
   const { options: meta } = component
   return {
     enabled: component.enabledByDefault ?? true,

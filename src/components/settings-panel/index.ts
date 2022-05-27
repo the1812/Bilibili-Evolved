@@ -72,7 +72,7 @@ const options = defineOptionsMetadata({
 
 export type Options = OptionsOfMetadata<typeof options>
 
-const entry: ComponentEntry<typeof options> = async ({ metadata }) => {
+const entry: ComponentEntry<Options> = async ({ metadata }) => {
   const { isIframe } = await import('@/core/utils')
   if (isIframe()) {
     return

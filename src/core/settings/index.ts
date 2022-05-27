@@ -13,7 +13,7 @@ export interface ComponentSettings<O extends UnknownOptions = UnknownOptions> {
   /** 是否启用此组件 */
   enabled: boolean
   /** 组件选项 */
-  options: O & Record<string, unknown>
+  options: O
 }
 /** 脚本总设置 */
 export interface Settings {
