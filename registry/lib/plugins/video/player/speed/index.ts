@@ -4,6 +4,7 @@ import type { PluginMetadata } from '@/plugins/plugin'
 import { getSpeedContext, SpeedContext } from '../../../../components/video/player/common/speed/context'
 import { formatSpeedText } from '../../../../components/video/player/common/speed/utils'
 import type { RememberSpeedComponent } from '../../../../components/video/player/remember-speed/component'
+import '../../../../components/video/player/common/speed'
 
 interface CommonKeyBindingAction {
   videoSpeedIncrease: KeyBindingAction

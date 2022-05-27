@@ -1,4 +1,4 @@
-import { subject } from './subject'
+import { Subject, subject } from './subject'
 
 export const of = (...items: any[]) => subject(({ next, complete }) => {
   items.forEach(item => { next(item) })
@@ -22,3 +22,19 @@ export const bindCallback = <T>(cb: (...args: any[]) => any, ...args_: any[]) =>
     cb(...args_, next)
   },
 )
+
+export const concat = (...subjects: Subject<unknown>[]) => subject<unknown>(({ next }) => {
+  const copiedSubjects = [...subjects]
+
+  const handleNext = () => {
+    const s = copiedSubjects.shift()
+    s.subscribe({
+      next,
+      complete: () => {
+        handleNext()
+      },
+    })
+  }
+
+  handleNext()
+})
