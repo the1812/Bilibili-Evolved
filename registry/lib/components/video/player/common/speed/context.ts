@@ -4,7 +4,7 @@ import { videoChange } from '@/core/observer'
 import { des } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import {
-  bindCallback, firstValueFrom, fromEvent, subject, Subject,
+  bindCallback, concat, firstValueFrom, fromEvent, of, subject, Subject,
 } from '../mini-rxjs'
 import { bufferSet } from '../mini-rxjs/operators/bufferSet'
 import { combineLatest } from '../mini-rxjs/operators/combineLatest'
@@ -16,7 +16,8 @@ import { pairwise } from '../mini-rxjs/operators/pairwise'
 import { startWith } from '../mini-rxjs/operators/startWith'
 import type { EntrySpeedComponent } from '../speed'
 import {
-  formatSpeedText, parseSpeedText, trimLeadingDot, useShare,
+  convertToXPath,
+  formatSpeedText, parseSpeedText, useShare,
 } from './utils'
 
 export const PLAYER_AGENT = playerAgent.provideCustomQuery({
@@ -166,10 +167,10 @@ const buildElementPart = (
   ) as HTMLElement
 
   const query = (speed: number) => des<HTMLElement | null>(
-    // 有的时候，选择 1.0x 倍速，会错误选中 11.0x 倍速
-    // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没出现该问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
+    `./*[(${convertToXPath(PLAYER_AGENT.custom.speedMenuItem.selector)})`
+    // 以前实现功能时发现一个 BUG，在用户点击 1.0x 倍速后，却错误选中 11.0x 倍速
+    // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没不会产生此问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
     // 原先使用 contains 而不直接比较的原因是，自定义的倍速菜单项，可能在创建时引入了多余的空白符，现在使用 normalize-space 代替之前的做法
-    `./*[contains(@class, "${trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector)}")`
     // see: https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
     // 自定义的倍速菜单项，在创建时引入了多余的空白符，需要通过 normalize-space 函数排除掉
     + ` and normalize-space()="${formatSpeedText(speed)}"]`,
@@ -512,7 +513,10 @@ export const getSpeedContext = async (
   const [speedContext$] = useShare('speed.speedContext$', () => subject<DisposableSpeedContext>(
     ({ next }) => combineLatest(
       videoChange$,
-      shareBuildArgument$,
+      concat(
+        of([]),
+        shareBuildArgument$,
+      ),
       lifeCycleComponentLoaded$,
     )
       .subscribe(
