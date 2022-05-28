@@ -283,7 +283,8 @@
     &-module {
       @include color('e');
       &.at,
-      &.vote {
+      &.vote,
+      &.lottery {
         @include theme-color();
       }
     }
