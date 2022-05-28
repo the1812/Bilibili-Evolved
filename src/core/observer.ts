@@ -222,24 +222,9 @@ export const urlChange = (callback: (url: string) => void, config?: AddEventList
 
 /** 等待 cid */
 const selectCid = lodash.once(() => select(() => {
+  import('@/components/video/player-adaptor').then(({ playerPolyfill }) => playerPolyfill())
   if (unsafeWindow.cid) {
     return unsafeWindow.cid
-  }
-  if (unsafeWindow.player && (unsafeWindow.player.getVideoMessage||unsafeWindow.player.getUserParams)) {
-    const info = unsafeWindow.player.getVideoMessage?unsafeWindow.player.getVideoMessage():unsafeWindow.player.getUserParams().input
-    if (Number.isNaN(info.cid)) {
-      return null
-    }
-    if (!unsafeWindow.aid && info.aid) {
-      unsafeWindow.aid = info.aid.toString()
-    }
-    if (!unsafeWindow.bvid && info.bvid) {
-      unsafeWindow.bvid = info.bvid
-    }
-    if (!unsafeWindow.cid && info.cid) {
-      unsafeWindow.cid = info.cid.toString()
-    }
-    return info.cid.toString()
   }
   return null
 }))
@@ -259,15 +244,15 @@ export const videoChange = async (
   if (!matchCurrentPage(playerUrls)) {
     return false
   }
-  const { bpxPlayerPolyfill } = await import('@/components/video/bpx-player-adaptor')
-  bpxPlayerPolyfill()
+  const { playerPolyfill } = await import('@/components/video/player-adaptor')
+  playerPolyfill()
   const cid = await selectCid()
   if (cid === null) {
     return false
   }
   const getId = () => ({
-    aid: unsafeWindow?.aid?unsafeWindow.aid:unsafeWindow.player.getUserParams().input.aid,
-    cid: unsafeWindow?.cid?unsafeWindow.cid:unsafeWindow.player.getUserParams().input.cid,
+    aid: unsafeWindow.aid,
+    cid: unsafeWindow.cid,
   })
   const fireEvent = () => {
     const detail = getId()
@@ -276,7 +261,7 @@ export const videoChange = async (
   }
   if (!cidHooked) {
     let lastCid = cid
-    allMutations(() => {
+    childListSubtree(document.body, () => {
       const { cid: newCid } = getId()
       // b 站代码的神秘行为, 在更换 cid 时会临时改成一个数组, 做监听要忽略这种值
       if (Array.isArray(newCid)) {

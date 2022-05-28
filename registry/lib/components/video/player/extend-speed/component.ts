@@ -233,7 +233,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
   createCustomSpeedMenuItemElement(
     value: number,
   ): VNode<HTMLLIElement, number> {
-    //3.X的倍速需要通过data-value读取值并设置
+    // 3.X的倍速需要通过data-value读取值并设置
     const { closeBtn, root } = $<{ closeBtn: HTMLElement }, HTMLLIElement>(`
       <li class="${splitToSpace(trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector))} ${EXTEND_SPEED_ITEM_CLASS_NAME}" data-value="${(value)}">
         ${formatSpeedText(value)}
@@ -296,7 +296,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
         // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没出现该问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
         // 原先使用 contains 而不直接比较的原因是，自定义的倍速菜单项，可能在创建时引入了多余的空白符，现在使用 normalize-space 代替之前的做法
         // `./*[contains(@class, "${ExtendSpeedComponent.speedMenuItemClassName}")`
-        `./*[(${ExtendSpeedComponent.speedMenuItemClassName.split(',').map(cls=>'contains(@class, "'+cls+'")').join(' or ')})`
+        `./*[(${ExtendSpeedComponent.speedMenuItemClassName.split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})`
         + ` and not(contains(@class, "${EXTEND_SPEED_INPUT_CLASS_NAME}"))`
         // see: https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
         // 自定义的倍速菜单项，在创建时引入了多余的空白符，需要通过 normalize-space 函数排除掉
@@ -333,9 +333,9 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
           name: 'extend-video-speed-style',
           style: maxMenuHeight => `
                   ${PLAYER_AGENT.custom.speedMenuList.selector} {
-                    display: flex!important;/* 防止3.X样式覆盖 */
+                    display: flex !important; /* 防止3.X样式覆盖 */
                     flex-direction: column;
-                    justify-content: center;/* 添加倍速那一项，当鼠标在上半部分会有莫名其妙的'mouseleave',用这个修复 */
+                    justify-content: center; /* 添加倍速那一项，当鼠标在上半部分会有莫名其妙的'mouseleave', 用这个修复 */
                     overflow-y: auto;
                     max-height: ${maxMenuHeight}px;
                     visibility: hidden;
@@ -477,10 +477,10 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     } = this.speedContext
     // 移除所有激活态的菜单项
     for (const element of dea(
-      `./*[(${trimLeadingDot(ExtendSpeedComponent.speedMenuItemClassName).split(',').map(cls=>'contains(@class, "'+cls+'")').join(' or ')})`
-      +' and '
-      +`(${trimLeadingDot(ExtendSpeedComponent.activeClassName).split(',').map(cls=>'contains(@class, "'+cls+'")').join(' or ')})]`
-      ,menuListElement,
+      `./*[(${trimLeadingDot(ExtendSpeedComponent.speedMenuItemClassName).split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})`
+      + ' and '
+      + `(${trimLeadingDot(ExtendSpeedComponent.activeClassName).split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})]`,
+      menuListElement,
     ) as Iterable<HTMLElement>) {
       element.classList.remove(...ExtendSpeedComponent.activeClassName.split(','))
     }

@@ -61,7 +61,7 @@
 .bili-dyn-home--member {
   --center-width: 632px;
   --gap: 8px;
-  --fixed-offset: calc(var(--center-width) + (100vw - var(--center-width)) / 2 + var(--gap));
+  --fixed-offset: calc(var(--center-width) + (100% - var(--center-width)) / 2 + var(--gap));
   section.sticky {
     position: static !important;
   }
