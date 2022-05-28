@@ -1,7 +1,8 @@
 import { select } from '@/core/spin-query'
 import { isBwpVideo, raiseEvent } from '@/core/utils'
 import { bangumiUrls, matchCurrentPage } from '@/core/utils/urls'
-import { bpxPlayerPolyfill } from './bpx-player-adaptor'
+import { bpxPlayerPolyfill } from './player-adaptor/bpx'
+import { v3PlayerPolyfill } from './player-adaptor/v3'
 
 /** 元素查询函数, 调用时执行 `SpinQuery.select` 查询, 可访问 `selector` 获取选择器 */
 type ElementQuery<Target = HTMLElement> = {
@@ -153,7 +154,7 @@ export abstract class PlayerAgent {
   /** 更改时间 */
   abstract changeTime(change: number): number
 }
-export class VideoPlayer2XAgent extends PlayerAgent {
+export class VideoPlayerV2Agent extends PlayerAgent {
   // eslint-disable-next-line class-methods-use-this
   get nativeApi() {
     return unsafeWindow.player
@@ -381,7 +382,7 @@ export class BangumiPlayerAgent extends PlayerAgent {
     }
   }
 }
-export class VideoPlayerCompatAgent extends VideoPlayer2XAgent {
+export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
   query = selectorWrap({
     playerWrap: '.player-wrap',
     bilibiliPlayer: '.bilibili-player,#bilibili-player',
@@ -433,6 +434,12 @@ export class VideoPlayerCompatAgent extends VideoPlayer2XAgent {
     danmakuTipLayer: '.bilibili-player-dm-tip-wrap,.bpx-player-dm-tip',
     danmakuSwitch: '.bilibili-player-video-danmaku-switch input,.bpx-player-dm-switch input',
   }) as PlayerQuery<ElementQuery>
+
+  constructor() {
+    super()
+    v3PlayerPolyfill()
+  }
+
   seek(time: number) {
     if (!this.nativeApi) {
       return null
@@ -449,10 +456,9 @@ export class VideoPlayerCompatAgent extends VideoPlayer2XAgent {
   }
 }
 
-
 export const playerAgent = (() => {
-    if (matchCurrentPage(bangumiUrls)) {
-      return new BangumiPlayerAgent()
-    }
-  return new VideoPlayerCompatAgent()
+  if (matchCurrentPage(bangumiUrls)) {
+    return new BangumiPlayerAgent()
+  }
+  return new VideoPlayerMixedAgent()
 })()
