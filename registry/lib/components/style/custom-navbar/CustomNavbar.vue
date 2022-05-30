@@ -247,11 +247,16 @@ body.fixed-navbar {
       content: "";
       position: absolute;
       top: 0;
-      left: 0;
       width: 100%;
       height: 100%;
       box-sizing: border-box;
       border: 2px dashed;
+    }
+    &.left-pad::after {
+      left: 0;
+    }
+    &.right-pad::after {
+      right: 0;
     }
   }
 }
