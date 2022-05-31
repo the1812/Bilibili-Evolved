@@ -31,11 +31,11 @@
 - 新版本一旦正式发布, 就不再对旧版本做任何技术支持.
 - 使用外部网站的链接时(如将下载任务发送到自己的服务器 / 使用链接安装组件等)可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
 - 可能无法很好地适应窄屏幕, 请尽量以 1400 x 800 以上的逻辑分辨率使用此脚本.
+- **⚠ 网络需要确保能够连接 cdn.jsdelivr.net, 如果使用 GitHub 更新源, 也需要能够连接 raw.githubusercontent.com (这两个目前都有墙**
 
-|          | 更新延迟 | 正式版 | 预览版                                                                                                   |
-| -------- | -------- | ------ | -------------------------------------------------------------------------------------------------------- |
-| jsDelivr | 24h      | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/dist/bilibili-evolved.user.js) | [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/dist/bilibili-evolved.preview.user.js)       |
-| GitHub   | <1h      | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
+| 正式版 | 预览版                                                                                                   |
+| ------ | -------------------------------------------------------------------------------------------------------- |
+| [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
 
 # 设置
 脚本启用后, 在网页左侧中央会有功能面板和设置面板的入口. 功能面板中包含适用于当前页面的一些功能入口, 设置面板中可以管理组件的开启/关闭, 修改组件选项, 以及安装/卸载组件和插件等.

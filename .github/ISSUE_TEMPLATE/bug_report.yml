@@ -72,7 +72,9 @@ body:
     id: logs
     attributes:
       label: 错误信息
-      description: 脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出, 在过滤里填入 `-/^DevTools/ -jinkela -[Report -BY_CLIENT`, 剩下的信息就可以粘贴过来. <br><img width="400" src="https://user-images.githubusercontent.com/26504152/145991238-c3f3bc87-6cda-4192-afd1-c25843afe0db.png">
+      description: |
+        脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出, 在过滤里填入 `-/^DevTools/ -jinkela -[Report -BY_CLIENT`, 剩下的信息就可以粘贴过来. <br><img width="400" src="https://user-images.githubusercontent.com/26504152/145991238-c3f3bc87-6cda-4192-afd1-c25843afe0db.png">
+        如果是近期出问题, 并且其中包含 `couldn't load @require from URL 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js'`, 请看 [#3337](https://github.com/the1812/Bilibili-Evolved/issues/3337) 的解答
       render: shell
       placeholder: 请输入
     validations:
