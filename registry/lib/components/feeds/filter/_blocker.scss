@@ -1,0 +1,109 @@
+@mixin type-block {
+  @each $name,
+    $value
+      in (
+        'repost': 1,
+        'textWithImages': 2,
+        'text': 4,
+        'video': 8,
+        'miniVideo': 16,
+        'column': 64,
+        'audio': 256,
+        'bangumi': 512,
+        'liveRecord': 2047,
+        'share': 2048
+      )
+  {
+    &:not(.by-type).feeds-filter-block-#{$name} {
+      .bili-dyn-list__item[data-type='#{$value}'],
+      .feed-card .card[data-type='#{$value}'] {
+        display: none !important;
+      }
+    }
+  }
+  @each $name in ('self-repost') {
+    &:not(.by-type).feeds-filter-block-#{$name} {
+      .bili-dyn-list__item[data-#{$name}],
+      .feed-card .card[data-#{$name}] {
+        display: none !important;
+      }
+    }
+  }
+}
+@mixin side-block {
+  $side-block: 'feeds-filter-side-block';
+  .left-panel,
+  .right-panel {
+    .scroll-content > * {
+      margin: 0 !important;
+      margin-bottom: 8px !important;
+    }
+  }
+  .left-panel {
+    > :not(:last-child) {
+      margin: 0 !important;
+      margin-bottom: 8px !important;
+    }
+  }
+  .left-panel .user-panel.f-left {
+    float: none !important;
+  }
+  .bili-dyn-home--member {
+    main section,
+    aside section {
+      margin-bottom: 0 !important;
+      > * {
+        margin-bottom: 8px !important;
+      }
+    }
+  }
+  &.#{$side-block}-profile {
+    .left-panel .user-wrapper,
+    .bili-dyn-my-info {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-following-tags {
+    .left-panel .tag-panel,
+    .right-panel .dyn-topic-panel,
+    .right-panel .new-topic-panel,
+    section .topic-panel {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-notice {
+    .right-panel .notice-panel,
+    .bili-dyn-banner {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-live {
+    .left-panel .live-panel,
+    .bili-dyn-live-users {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-trending-tags {
+    .right-panel .tag-panel,
+    .topic-panel {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-most-viewed {
+    .bili-dyn-up-list,
+    .card-list .most-viewed-panel {
+      display: none !important;
+    }
+  }
+  &.#{$side-block}-compose {
+    .bili-dyn-publishing {
+      display: none !important;
+    }
+  }
+}
+@mixin pattern-block {
+  .bili-dyn-list__item.pattern-block,
+  .feed-card .card.pattern-block {
+    display: none !important;
+  }
+}

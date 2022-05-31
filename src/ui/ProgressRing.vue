@@ -1,6 +1,10 @@
 <template>
   <div class="be-progress-ring">
-    <svg :height="size" :width="size">
+    <svg
+      :height="size"
+      :width="size"
+      :style="{ width: size + 'px', height: size + 'px' }"
+    >
       <circle
         class="progress"
         :class="{ transition }"
@@ -81,6 +85,8 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .be-progress-ring {
+  --ring-color: var(--theme-color);
+  --ring-background: #8884;
   display: flex;
   svg {
     transform: rotate(-90deg);
@@ -88,10 +94,10 @@ export default Vue.extend({
       &.transition {
         transition: stroke-dashoffset 0.3s ease-out;
       }
-      stroke: var(--theme-color);
+      stroke: var(--ring-color);
     }
     .progress-background {
-      stroke: #8884;
+      stroke: var(--ring-background);
     }
   }
 }

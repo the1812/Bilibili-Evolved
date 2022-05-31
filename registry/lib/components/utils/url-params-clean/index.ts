@@ -1,12 +1,12 @@
 import { registerAndGetData } from '@/plugins/data'
 import { ComponentMetadata } from '@/components/types'
-import { isNotHtml, matchPattern } from '@/core/utils'
+import { isIframe, isNotHtml, matchPattern } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 
 const displayName = '网址参数清理'
-const console = useScopedConsole({ name: displayName })
+const console = useScopedConsole(displayName)
 const entry = async () => {
-  if (isNotHtml()) {
+  if (isNotHtml() || isIframe()) {
     return
   }
   const builtInNoClean = [

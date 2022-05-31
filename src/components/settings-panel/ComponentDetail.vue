@@ -50,7 +50,7 @@
       <div class="component-detail-internal-data">
         <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
           <div class="internal-name">
-            Commit: {{ componentData.commitHash.substr(0, 9) }}
+            Commit: {{ componentData.commitHash.substring(0, 9) }}
           </div>
         </div>
         <div class="component-detail-internal-data-row">
@@ -68,13 +68,24 @@
             </div>
             <template #toast>
               <div class="extra-actions-list">
-                <ComponentAction
-                  v-for="a of componentActions.map(action => action(componentData))"
+                <div
+                  v-for="a of componentActions"
                   :key="a.name"
-                  class="extra-action-item"
-                  :item="a"
-                  :component="componentData"
-                />
+                >
+                  <component
+                    :is="a.component"
+                    v-if="a.component"
+                    :item="a"
+                    :component="componentData"
+                  />
+                  <ComponentAction
+                    v-else
+                    v-show="a.visible !== false"
+                    class="extra-action-item"
+                    :item="a"
+                    :component="componentData"
+                  />
+                </div>
               </div>
             </template>
           </MiniToast>
@@ -112,16 +123,11 @@ export default Vue.extend({
   },
   mixins: [componentSettingsMixin],
   data() {
-    const metadata = (this as any).componentData
     return {
       virtual: false,
-      componentActions: componentActions.filter(action => {
-        const data = action(metadata)
-        if (!data) {
-          return false
-        }
-        return data.condition?.() ?? true
-      }),
+      componentActions: componentActions
+        .map(factory => factory((this as any).componentData))
+        .filter(it => it !== undefined),
     }
   },
   computed: {
@@ -140,6 +146,7 @@ export default Vue.extend({
     })
     await this.$nextTick()
     this.$emit('mounted')
+    console.log(this.componentActions)
   },
 })
 </script>

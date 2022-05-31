@@ -13,7 +13,7 @@ interface LiveInfo {
 }
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
-  const liveList = await select('.live-up-list') as HTMLElement
+  const liveList = await select('.live-up-list, .bili-dyn-live-users__body') as HTMLElement
   if (liveList === null) {
     return
   }
@@ -24,28 +24,39 @@ const entry = async () => {
     getList: json => lodash.get(json, 'data.list', []),
     getTotal: json => lodash.get(json, 'data.results', 0),
   })
-  const liveListNames = dqa(liveList, '.up-name')
+  const upNameSelector = '.up-name, .bili-dyn-live-users__item__uname'
+  const liveListNames = dqa(liveList, upNameSelector)
   const presentedNames = liveListNames.map((it: HTMLElement) => it.innerText.trim())
+  // const presentedNames = []
   const presented = fullList.filter(it => presentedNames.includes(it.uname))
   const extend = fullList.filter(it => !presentedNames.includes(it.uname))
 
   const liveDetailItem = liveList.children[0] as HTMLElement
   extend.forEach(it => {
-    const existingNames = dqa(liveList, '.up-name') as HTMLElement[]
+    const existingNames = dqa(liveList, upNameSelector) as HTMLElement[]
     if (existingNames.some(n => n.innerText.trim() === it.uname)) {
       return
     }
-    const clone = liveDetailItem.cloneNode(true) as HTMLElement
-    dqa(clone, 'a[href]').forEach(a => a.setAttribute('href', `https://live.bilibili.com/${it.roomid}`))
-    const face = dq(clone, '.live-up-img') as HTMLElement
-    face.style.backgroundImage = `url(${it.face})`
-    const title = dq(clone, '.live-name') as HTMLElement
-    title.innerHTML = it.title
-    title.title = it.title
-    const name = dq(clone, '.up-name') as HTMLElement
-    name.innerHTML = it.uname
-    name.title = it.uname
-    liveList.insertAdjacentElement('beforeend', clone)
+    const cloneItem = (() => {
+      const clone = liveDetailItem.cloneNode(true) as HTMLElement
+      const url = `https://live.bilibili.com/${it.roomid}`
+      dqa(clone, 'a[href]').forEach(a => a.setAttribute('href', url))
+      if (clone.matches('.bili-dyn-live-users__item')) {
+        clone.addEventListener('click', () => {
+          window.open(url, '_blank')
+        })
+      }
+      const face = dq(clone, '.live-up-img, .bili-dyn-live-users__item__face .bili-awesome-img') as HTMLElement
+      face.style.backgroundImage = `url(${it.face})`
+      const title = dq(clone, '.live-name, .bili-dyn-live-users__item__title') as HTMLElement
+      title.innerHTML = it.title
+      title.title = it.title
+      const name = dq(clone, upNameSelector) as HTMLElement
+      name.innerHTML = it.uname
+      name.title = it.uname
+      return clone
+    })()
+    liveList.insertAdjacentElement('beforeend', cloneItem)
   })
   const { disableProfilePopup } = await import('@/components/feeds/disable-profile-popup')
   disableProfilePopup()

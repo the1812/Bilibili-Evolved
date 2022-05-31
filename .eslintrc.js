@@ -50,6 +50,7 @@ module.exports = {
     'vue/no-v-html': 'off',
     'vue/require-prop-types': 'off',
     'vue/one-component-per-file': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
 
     // 使用 @typescript-eslint/no-unused-vars, 否则 interface 都是 unused
     'no-unused-vars': 'off',
@@ -80,7 +81,7 @@ module.exports = {
     'camelcase': 'off',
     'lines-between-class-members': 'off',
     'radix': ['error', 'as-needed'],
-    'max-len': 'warn',
+    'max-len': 'error',
     'max-classes-per-file': 'off',
     'prefer-destructuring': ['error',
       {

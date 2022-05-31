@@ -1,8 +1,6 @@
 import {
   ComponentMetadata,
   componentsMap,
-  OptionalOptionsMetadata,
-  OptionsFromOptionalMetadata,
   OptionsMetadata,
   UnknownOptions,
 } from '@/components/component'
@@ -24,9 +22,9 @@ export const metadataToOptions = <O extends UnknownOptions>(
  * 生成组件设置
  * @param component 组件定义
  */
-export const componentToSettings = <Om extends OptionalOptionsMetadata>(
-  component: ComponentMetadata<Om>,
-): ComponentSettings<OptionsFromOptionalMetadata<Om>> => {
+export const componentToSettings = <O extends UnknownOptions>(
+  component: ComponentMetadata<O>,
+): ComponentSettings<O> => {
   const { options: meta } = component
   return {
     enabled: component.enabledByDefault ?? true,
@@ -66,10 +64,12 @@ const emptySettings: ComponentSettings = {
  * 获取已加载组件的设置
  *
  * 若组件未安装，则返回一个默认的 ComponentSettings 对象：
+ * ```js
  * {
  *   enabled: false,
- *   options new Proxy({}, { get: () => false })
+ *   options: new Proxy({}, { get: () => false })
  * }
+ * ```
  *
  * @param component 组件或组件名称
  */

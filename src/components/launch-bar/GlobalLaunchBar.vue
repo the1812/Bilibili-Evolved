@@ -6,7 +6,7 @@
     class="global-launch-bar-container"
     @keydown.esc.capture="close()"
   >
-    <LaunchBar ref="launchBar" />
+    <LaunchBar ref="launchBar" @close="close()" />
   </VPopup>
 </template>
 <script lang="ts">

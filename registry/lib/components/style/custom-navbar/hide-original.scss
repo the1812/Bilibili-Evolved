@@ -13,8 +13,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 .bili-header-m .head-banner .head-content .head-logo,
 #biliMainHeader .mini-header,
 #biliMainHeader .base-mini-header,
-.bili-header__bar,
-.z-top-container#bili-header-container {
+.bili-header__bar {
   display: none !important;
 }
 .van-popover {
@@ -28,7 +27,8 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 
 .bili-header-m > .nav-menu,
-.z_top {
+.z_top,
+.z-top-container#bili-header-container {
   visibility: hidden !important;
   height: $height !important;
 }

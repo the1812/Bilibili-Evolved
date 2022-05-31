@@ -1,8 +1,13 @@
-@import "common";
+@import 'common';
 
+#app {
+  z-index: 0;
+}
+.z-top-container,
 .international-header {
   position: sticky !important;
   top: 0 !important;
+  z-index: 1;
 }
 .van-popper-avatar,
 .van-popper-vip,
@@ -45,11 +50,34 @@
   overflow: auto;
   @include no-scrollbar();
 }
-@import "../feeds-panel-shared";
+@import '../feeds-panel-shared';
 
 .adaptive-scroll {
   min-height: unset !important;
   .scroll-content {
     position: static !important;
+  }
+}
+.bili-dyn-home--member {
+  --center-width: 632px;
+  --gap: 8px;
+  --fixed-offset: calc(var(--center-width) + (100vw - var(--center-width)) / 2 + var(--gap));
+  section.sticky {
+    position: static !important;
+  }
+  aside {
+    position: fixed !important;
+    &.left {
+      right: var(--fixed-offset);
+    }
+    &.right {
+      left: var(--fixed-offset);
+    }
+  }
+  @media screen and (min-width: 1921px) {
+    --center-width: 32.92vw;
+  }
+  @media screen and (min-width: 2497px) {
+    --center-width: 822px;
   }
 }

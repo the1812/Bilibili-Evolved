@@ -2,7 +2,7 @@
   <VPopup
     ref="popup"
     v-model="open"
-    class="custom-navbar-settings be-settings-extra-options"
+    class="custom-navbar-settings"
     fixed
     :lazy="false"
     :trigger-element="triggerElement"
@@ -82,6 +82,7 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { SortableEvent } from 'sortablejs'
 import {
   VPopup,
   VIcon,
@@ -91,7 +92,6 @@ import {
 import { addComponentListener } from '@/core/settings'
 import { dqa } from '@/core/utils'
 import { SortableJSLibrary } from '@/core/runtime-library'
-import { SortableEvent } from 'sortablejs'
 import { getData } from '@/plugins/data'
 import {
   CustomNavbarItem,

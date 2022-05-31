@@ -1,10 +1,13 @@
 <template>
-  <VPopup v-model="popupOpen" class="online-registry" fixed :auto-close="false">
+  <VPopup
+    v-model="popupOpen"
+    class="online-registry be-settings-extra-options"
+    fixed
+    :auto-close="false"
+  >
     <div class="online-registry-header">
       <VIcon icon="mdi-web" class="online-registry-header-title-icon" />
-      <div class="online-registry-header-title">
-        在线仓库
-      </div>
+      <div class="online-registry-header-title">在线仓库</div>
       <VIcon
         icon="mdi-refresh"
         :size="22"
@@ -23,10 +26,7 @@
     <div class="online-registry-header">
       <div class="online-registry-header-search">
         <VIcon icon="search" :size="18" />
-        <TextBox
-          v-model="searchKeyword"
-          placeholder="搜索功能"
-        />
+        <TextBox v-model="searchKeyword" placeholder="搜索功能" />
       </div>
       <div class="online-registry-header-branch">
         分支:
@@ -58,6 +58,8 @@
   </VPopup>
 </template>
 <script lang="ts">
+import Fuse from 'fuse.js'
+import { DocSourceItem } from 'registry/lib/docs'
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
@@ -71,12 +73,11 @@ import {
   VLoading,
   VEmpty,
 } from '@/ui'
-import Fuse from 'fuse.js'
-import { DocSourceItem } from 'registry/lib/docs'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
 
-const general = getGeneralSettings()
+type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
+const general = getGeneralSettings() as ExtendedSettings
 export default Vue.extend({
   components: {
     VIcon,
@@ -171,7 +172,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .online-registry {
   top: 50%;
@@ -179,8 +180,8 @@ export default Vue.extend({
   transform: translate(-50%, -50%) scale(0.95);
   width: 360px;
   height: 85vh;
-  z-index: 100002;
-  transition: .2s ease-out;
+  z-index: 100000;
+  transition: 0.2s ease-out;
   font-size: 14px;
   @include v-stretch();
   @include popup();
@@ -216,7 +217,7 @@ export default Vue.extend({
     &-close-icon {
       padding: 2px;
       cursor: pointer;
-      transition: .3s ease-out;
+      transition: 0.3s ease-out;
       &:hover {
         color: var(--theme-color);
       }

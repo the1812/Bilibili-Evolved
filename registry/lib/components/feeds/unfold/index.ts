@@ -20,7 +20,7 @@ export const component: ComponentMetadata = {
     const { forEachFeedsCard } = await import('@/components/feeds/api')
     forEachFeedsCard({
       added: card => {
-        const foldButton = dq(card.element, '.fold-hoverable') as HTMLElement
+        const foldButton = dq(card.element, '.fold-hoverable, .bili-dyn-item-fold') as HTMLElement
         foldButton?.click()
       },
     })
