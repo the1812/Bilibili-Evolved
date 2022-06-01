@@ -49,6 +49,14 @@
 - 新增 UI 组件 `AsyncButton`: `click` 事件为异步函数时, 执行期间自动使 `Button` 禁用, 其他和 `Button` 相同.
 - 禁用 Tampermonkey `GM_xmlhttpRequest` 的缓存.
 
+## v2.1.10-preview
+`2022-05-09`
+
+✨**预览版** `v2.1.10-preview`
+
+- 修复设置面板中按住 Ctrl 多选时报错.
+- 升级一些依赖包.
+
 ## v2.1.9
 `2022-05-07`
 
