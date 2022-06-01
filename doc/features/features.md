@@ -89,15 +89,6 @@
 - 多人转发同一个作品
 - 被审核折叠
 
-### [直播间自动抽奖](../../registry/dist/components/live/auto-draw.js)
-`liveAutoDraw`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/auto-draw.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/auto-draw.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/auto-draw.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/auto-draw.js)
-
-在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(
-
 ### [直播勋章快速更换](../../registry/dist/components/live/badge-helper.js)
 `badgeHelper`
 
@@ -143,14 +134,14 @@
 
 禁止直播首页的推荐直播间自动开始播放.
 
-### [直播画中画](../../registry/dist/components/live/pip.js)
-`livePip`
+### [返回原版直播间](../../registry/dist/components/live/original.js)
+`originalLiveroom`
 
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/pip.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/pip.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/original.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/original.js)
 
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/pip.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/pip.js)
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/original.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/original.js)
 
-在直播间的功能面板中启用画中画支持, 不过现在好像 b 站已经直接支持了, 后续可能会删掉这个功能.
+在直播间中提供返回原版直播间的按钮, 原版直播间将无视活动皮肤, 强制使用标准的直播页面.
 
 ### [删除直播水印](../../registry/dist/components/live/remove-watermark.js)
 `removeLiveWatermark`
@@ -480,6 +471,27 @@
 
 开启后, 可在每条评论的菜单中选择复制链接.
 
+### [DevClient](../../registry/dist/components/utils/dev-client.js)
+`devClient`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/dev-client.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/dev-client.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/dev-client.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/dev-client.js)
+
+本地开发工具, 提供自动更新功能和样式热重载的能力, 需要与 DevServer 配合使用. (DevServer 的使用方式见 [CONTRIBUTING.md](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md))
+
+`自动连接` 开启时, 每次进入网页都会自动尝试连接到 DevServer, 如果关闭则需要手动操作连接.
+
+`刷新策略` 决定了收到本体或者功能更新的消息时是否刷新:
+  - **总是刷新**: 收到更新时立即刷新页面
+  - 不刷新: 收到更新时不刷新页面
+
+`热重载策略` 决定了是否开启热重载功能, 只要成功触发热重载, 就不刷新页面:
+  - **开启热重载**: 功能带有 `instantStyles` 时, 热重载 `instantStyles` 中的样式
+  - 关闭热重载: 收到更新时不刷新页面
+
+> 目前就这两个选项, 将来可能会支持对 `entry` 的热重载
+
 ### [下载音频](../../registry/dist/components/utils/download-audio.js)
 `downloadAudio`
 
@@ -692,7 +704,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/outer-watchlater.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/outer-watchlater.js)
 
-将视频页面菜单里的 `稍后再看` 移到外面.
+将视频页面菜单里的 `稍后再看` 移到外面. 请注意如果在稍后再看页面中仍然显示, 是不会实时同步右侧的播放列表的.
 
 ### [播放时自动关灯](../../registry/dist/components/video/player/auto-light.js)
 `playerAutoLight`
@@ -886,7 +898,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/quick-favorite.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/quick-favorite.js)
 
-启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹.
+启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹. 请注意如果在在收藏夹播放页面仍然显示, 是不会实时同步右侧的播放列表的.
 
 ### [SEO 页面重定向](../../registry/dist/components/video/seo-redirect.js)
 `seoRedirect`
@@ -989,6 +1001,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/idm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/idm-output.js)
 
 为下载视频增加 IDM 输出支持.
+
+### [下载视频 - 手动输入](../../registry/dist/plugins/video/download/manual-input.js)
+`downloadVideo.inputs.manual`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/manual-input.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/manual-input.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/manual-input.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/manual-input.js)
+
+为下载视频增加手动输入支持.
 
 ### [下载视频 - MPV 播放支持（列表）](../../registry/dist/plugins/video/download/mpv-output-playlist.js)
 `downloadVideo.outputs.mpv-playlist`
