@@ -66,10 +66,12 @@ const emptySettings: ComponentSettings = {
  * 获取已加载组件的设置
  *
  * 若组件未安装，则返回一个默认的 ComponentSettings 对象：
+ * ```js
  * {
  *   enabled: false,
- *   options new Proxy({}, { get: () => false })
+ *   options: new Proxy({}, { get: () => false })
  * }
+ * ```
  *
  * @param component 组件或组件名称
  */

@@ -28,9 +28,9 @@ export const component = RememberSpeedComponent.create<Options>({
 请根据自身需要：
 
 - 前往「组件」页面安装[「扩展倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js)组件
-- 前往「插件」页面安装[「视频倍速 - 快捷键支持」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js)插件.
+- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js)插件.
 
-*如果想要清除当前视频的记忆状态，需要安装「视频倍速 - 快捷键支持」插件.*
+*如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*
 `,
   },
   tags: [componentsTags.video],

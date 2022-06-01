@@ -1,5 +1,54 @@
 # 更新日志
 
+## v2.2.0
+`2022-06-02`
+
+正好借本次更新列一下最近常见的几个问题:
+
+1. jsDelivr 被墙的问题
+  - 现象: 在线仓库加载失败, 各种图标加载不出来, 新安装的脚本完全不运行等.
+  - 总讨论见 #3331, 解决办法是给 `cdn.jsdelivr.net` 挂上梯子, 没梯子的可以用 #3356 的临时解决方案.
+  - 我计划将所有涉及 `cdn.jsdelivr.net` 的代码都提取出来, 放在统一的一个配置里, 但是本仓库将会更换为 `raw.githubusercontent.com`, 不再内置其他任何 GitHub 反代服务. 如需使用其他 CDN, 请 Fork 仓库后自行打包.
+  - 这个估计没那么快换完, 因为无论是 `cdn.jsdelivr.net` 还是 `raw.githubusercontent.com` 都有墙, 直连反正都连不上的.
+
+2. 新版视频页最近似乎扩大灰度了, 请注意这和新版播放器 (3.x) 是两回事, 看三连那栏就可以迅速判断自己所处的视频页版本. 近期脚本功能不会支持新版视频页, 请点击右下角的返回旧版.
+
+3. 新版播放器 (3.x) 我仍然收不到灰度, PR #3320 中提供了 `window.aid` 等变量的获取方式, 我对其做了一些整理, 但无法自行测试是否可行, 但愿能恢复一些功能吧.
+
+4. `极简首页` 啥时候搞? 本来这次应该能写出来的, 但是中途遭遇了动态页改版和 jsDelivr 被墙, 真是片刻不得安宁, 只能再等等了.
+
+✨新增
+<details>
+<summary>正式版获得 v2.1.9 ~ v2.1.10 预览版的功能</summary>
+
+- 设置面板移动了搜索框的位置, 添加了检查更新和卸载组件的快捷按钮. (PR #3279 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- `自定义顶栏` 支持硬核 LV6 会员的图标显示. (#3203)
+- `动态过滤器` 支持屏蔽发送动态的面板. (#2447)
+- 新增插件 `下载视频 - 手动输入`, 可以手动输入 av / BV 号来进行下载. (#3227)
+- Toast 消息能够显示关闭时间的倒计时进度, 且鼠标进入时停止倒计时. (#3204)
+
+</details>
+
+🐛修复
+- 修复一些 3.x 播放器的适配问题. (#3187, PR #3320 by [imshixin](https://github.com/imshixin))
+- 修复 `强制固定动态侧栏` 在有滚动条的时候侧栏定位出现偏移.
+- 修复倍速播放快捷键单独使用时不生效. (#3350, PR #3367 by [JLoeve](https://github.com/LonelySteve))
+- `视频倍速 - 快捷键支持` 更名为 `快捷键扩展 - 视频倍速`. (PR #3367 by [JLoeve](https://github.com/LonelySteve))
+- 修复 `.icon` 在个人空间被覆盖背景图. (#3371)
+- 修复 `自定义顶栏` 边缘间距为 `0%` 时, 预览边缘间距时出现溢出. (PR #3372 by [timongh](https://github.com/timongh))
+- 新版动态页面适配: (#3191)
+  - 支持 `夜间模式`.
+  - 修复 `禁止跳转动态详情` 导致链接点不了.
+  - 动态详情页和个人空间适配.
+
+☕开发者相关
+- 新增 DevTools 来改善开发体验, 使用方式详见 [CONTRIBUTING.md](CONTRIBUTING.md).
+  - 本地可启动 DevServer, 接管本体和所有组件的编译
+  - 脚本可安装 DevClient, 与 DevServer 通信并自动更新本体或组件
+- GitHub Action 提交的 commit 更换为 `github-actions[bot]`. (PR #3319 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 新增 UI 组件 `AsyncButton`: `click` 事件为异步函数时, 执行期间自动使 `Button` 禁用, 其他和 `Button` 相同.
+- 禁用 Tampermonkey `GM_xmlhttpRequest` 的缓存.
+
 ## v2.1.10-preview
 `2022-05-09`
 

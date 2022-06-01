@@ -1,6 +1,10 @@
 <template>
   <div class="be-progress-ring">
-    <svg :height="size" :width="size">
+    <svg
+      :height="size"
+      :width="size"
+      :style="{ width: size + 'px', height: size + 'px' }"
+    >
       <circle
         class="progress"
         :class="{ transition }"

@@ -5,6 +5,7 @@ import {
   getGeneralSettings,
   isUserComponent,
 } from '@/core/settings'
+import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
 import {
   defineComponentMetadata,
@@ -64,6 +65,9 @@ const optionsMetadata = defineOptionsMetadata({
 const entry: ComponentEntry<typeof optionsMetadata> = async ({
   settings: { options: opt },
 }) => {
+  if (isIframe()) {
+    return checkerMethods
+  }
   const now = Number(new Date())
   const duration = now - opt.lastUpdateCheck
 
@@ -80,7 +84,7 @@ const entry: ComponentEntry<typeof optionsMetadata> = async ({
   return checkerMethods
 }
 
-type Options = OptionsOfMetadata<typeof optionsMetadata>
+export type AutoUpdateOptions = OptionsOfMetadata<typeof optionsMetadata>
 
 export const component = defineComponentMetadata({
   name,
@@ -137,7 +141,7 @@ export const component = defineComponentMetadata({
       addData(
         'settingsPanel.componentActions',
         (actions: ComponentAction[]) => {
-          const { options } = getComponentSettings<Options>('autoUpdate')
+          const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
           actions.push(metadata => {
             const item = options.urls.components[metadata.name]
             if (!item) {
@@ -149,7 +153,7 @@ export const component = defineComponentMetadata({
               icon: isLocalItem(item.url)
                 ? 'mdi-file-download-outline'
                 : 'mdi-cloud-download-outline',
-              condition: () => isUserComponent(metadata),
+              visible: isUserComponent(metadata),
               title: item.url,
               action: async () => {
                 const { Toast } = await import('@/core/toast')
@@ -190,6 +194,12 @@ export const component = defineComponentMetadata({
           title: ({ selectedComponents }) => (selectedComponents.length > 0 ? '更新所选组件' : '检查所有更新'),
           icon: 'mdi-cloud-download-outline',
           run: async context => {
+            const confirmMessage = context.selectedComponents.length > 0
+              ? `确定要更新所选的 ${context.selectedComponents.length} 个组件吗?`
+              : '确定要检查所有更新吗?'
+            if (!window.confirm(confirmMessage)) {
+              return
+            }
             const { Toast } = await import('@/core/toast')
             const { isBuiltInComponent } = await import('@/components/built-in-components')
             if (context.selectedComponents.length === 0) {

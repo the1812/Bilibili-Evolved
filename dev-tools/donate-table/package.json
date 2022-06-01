@@ -1,0 +1,18 @@
+{
+  "name": "donate-table",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "author": "Grant Howard",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "csv-parse": "^4.15.4",
+    "fs-extra": "^10.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^9.0.13",
+    "@types/node": "^17.0.38",
+    "ts-node": "^10.8.0",
+    "typescript": "^4.7.2"
+  }
+}

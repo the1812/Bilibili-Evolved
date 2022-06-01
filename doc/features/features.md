@@ -471,6 +471,27 @@
 
 开启后, 可在每条评论的菜单中选择复制链接.
 
+### [DevClient](../../registry/dist/components/utils/dev-client.js)
+`devClient`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/dev-client.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/dev-client.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/dev-client.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/dev-client.js)
+
+本地开发工具, 提供自动更新功能和样式热重载的能力, 需要与 DevServer 配合使用. (DevServer 的使用方式见 [CONTRIBUTING.md](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md))
+
+`自动连接` 开启时, 每次进入网页都会自动尝试连接到 DevServer, 如果关闭则需要手动操作连接.
+
+`刷新策略` 决定了收到本体或者功能更新的消息时是否刷新:
+  - **总是刷新**: 收到更新时立即刷新页面
+  - 不刷新: 收到更新时不刷新页面
+
+`热重载策略` 决定了是否开启热重载功能, 只要成功触发热重载, 就不刷新页面:
+  - **开启热重载**: 功能带有 `instantStyles` 时, 热重载 `instantStyles` 中的样式
+  - 关闭热重载: 收到更新时不刷新页面
+
+> 目前就这两个选项, 将来可能会支持对 `entry` 的热重载
+
 ### [下载音频](../../registry/dist/components/utils/download-audio.js)
 `downloadAudio`
 
@@ -819,9 +840,9 @@ by [@JLoeve](https://github.com/LonelySteve)
 请根据自身需要：
 
 - 前往「组件」页面安装[「扩展倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js)组件
-- 前往「插件」页面安装[「视频倍速 - 快捷键支持」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js)插件.
+- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js)插件.
 
-*如果想要清除当前视频的记忆状态，需要安装「视频倍速 - 快捷键支持」插件.*
+*如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*
 
 ### [删除视频弹窗](../../registry/dist/components/video/player/remove-popup.js)
 `removePlayerPopup`
@@ -1012,7 +1033,7 @@ by [@diannaojiang](https://github.com/diannaojiang)
 
 为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)
 
-### [视频倍速 - 快捷键支持](../../registry/dist/plugins/video/player/speed.js)
+### [快捷键扩展 - 视频倍速](../../registry/dist/plugins/video/player/speed.js)
 `speed.keymap`
 
 **jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/player/speed.js)

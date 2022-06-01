@@ -55,7 +55,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     text: '',
     type: cardType,
     element,
-    get presented() { return element.parentNode !== null },
+    get presented() { return document.body.contains(element) },
     async getText() {
       return getText(modules.module_dynamic, cardType)
     },
@@ -103,6 +103,9 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
       return
     }
     const vueData = getVueData(node)
+    if (!vueData) {
+      return
+    }
     const id = vueData.data?.id_str ?? '0'
     const index = this.cards.findIndex(c => c.id === id)
     if (index === -1) {
@@ -129,6 +132,7 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
         record.addedNodes.forEach(node => this.addCard(getCardNode(node)))
         record.removedNodes.forEach(node => this.removeCard(getCardNode(node)))
       })
+      this.cleanUpCards()
     })
   }
 }
