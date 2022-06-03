@@ -1,5 +1,4 @@
 import { LaunchBarActionProvider, LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
-import { Toast } from '@/core/toast'
 import { PluginMetadata } from '../plugin'
 
 const getCopyItem = async (name: string, id: string, original: string) => {
@@ -11,6 +10,7 @@ const getCopyItem = async (name: string, id: string, original: string) => {
     action: async () => {
       if (item.name === id) {
         await navigator.clipboard.writeText(id)
+        const { Toast } = await import('@/core/toast')
         Toast.success('复制成功', `复制${name}`, 1500)
       }
     },
