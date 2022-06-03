@@ -117,7 +117,7 @@ getSpeedContext((components: EntrySpeedComponent[]) => disposableSpeedContext =>
 
     if (repeatedKeys.length) {
       throw new Error(
-        'In the registered speed ​​component, there is an implementation of getSpeedContextMixin that causes the speed context to be mixed in ambiguous.\n'
+        'In the registered speed component, there is an implementation of getSpeedContextMixin that causes the speed context to be mixed in ambiguous.\n'
      + `The repeated key names are ${repeatedKeys.join(', ')}`,
       )
     }
