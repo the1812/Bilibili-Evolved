@@ -343,7 +343,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                     visibility: visible;
                   }
                   /* 修复番剧区的列表显示问题 */
-                  ${PLAYER_AGENT.custom.speedMenuList.selector}[style*="block"] {
+                  :is(${PLAYER_AGENT.custom.speedMenuList.selector})[style*="block"] {
                     visibility: visible;
                   }`,
         }),
