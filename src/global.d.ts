@@ -9,11 +9,28 @@ declare global {
   const Vue: typeof import('vue/types/umd')
 
   interface CompilationInfo {
+    year: string
     commitHash: string
     branch: string
     version: string
     nearestTag: string
     versionWithTag: string
+    altCdn: {
+      owner: string
+      host: string
+      stableClient: string
+      previewClient: string
+      library: {
+        lodash: string
+        protobuf: string
+        jszip: string
+        sortable: string
+        mdi: string
+      }
+      smallLogo: string
+      logo: string
+      root: (branch: string, owner?: string) => string
+    }
     // buildTime: number
   }
   const webpackCompilationInfo: CompilationInfo

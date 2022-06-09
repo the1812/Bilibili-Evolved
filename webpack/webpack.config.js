@@ -1,13 +1,12 @@
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const TerserPlugin = require('terser-webpack-plugin')
-// const HardSourcePlugin = require('hard-source-webpack-plugin')
 const webpack = require('webpack')
 const path = require('path')
-// const WebpackBar = require('webpackbar')
+const get = require('lodash/get')
 const {
   cssStyleLoaders, sassStyleLoaders
-} = require('./style-loaders')
-const tsLoader = require('./ts-loader')
+} = require('./loaders/style-loaders')
+const tsLoader = require('./loaders/ts-loader')
 const { compilationInfo } = require('./compilation-info')
 
 const relativePath = p => path.join(process.cwd(), p)
@@ -132,8 +131,11 @@ const getDefaultConfig = (srcFolder) => {
     },
     plugins: [
       new VueLoaderPlugin(),
+      new webpack.ProvidePlugin({
+        webpackCompilationInfo: [relativePath('webpack/compilation-info'), 'compilationInfo'],
+      }),
       new webpack.DefinePlugin({
-        webpackCompilationInfo: JSON.stringify(compilationInfo),
+        webpackGitInfo: JSON.stringify(require('./compilation-info/git')),
       }),
       // new WebpackBar(),
       new webpack.optimize.LimitChunkCountPlugin({
@@ -152,12 +154,21 @@ const getDefaultConfig = (srcFolder) => {
 
 const commonMeta = require('../src/client/common.meta.json')
 
-const year = new Date().getFullYear()
+const replaceVariables = text => {
+  return text.replace(/\[([^\[\]]+)\]/g, match => {
+    const value = get(compilationInfo, match)
+    if (value !== undefined) {
+      return value
+    }
+    return match
+  })
+}
 const getBanner = meta => `// ==UserScript==\n${Object.entries(Object.assign(meta, commonMeta)).map(([key, value]) => {
   if (Array.isArray(value)) {
-    return value.map(item => `// @${key.padEnd(16, ' ')}${item}`).join('\n')
+    const lines = [...new Set(value.map(item => `// @${key.padEnd(16, ' ')}${replaceVariables(item)}`))]
+    return lines.join('\n')
   }
-  return `// @${key.padEnd(16, ' ')}${value.replace(/\[year\]/g, year)}`
+  return `// @${key.padEnd(16, ' ')}${replaceVariables(value)}`
 }).join('\n')}
 // ==/UserScript==
 /* eslint-disable */ /* spell-checker: disable */

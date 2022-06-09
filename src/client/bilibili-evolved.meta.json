@@ -1,6 +1,6 @@
 {
   "name": "Bilibili Evolved",
   "description": "强大的哔哩哔哩增强脚本",
-  "updateURL": "https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/dist/bilibili-evolved.user.js",
-  "downloadURL": "https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/dist/bilibili-evolved.user.js"
+  "updateURL": "[altCdn.stableClient]",
+  "downloadURL": "[altCdn.stableClient]"
 }

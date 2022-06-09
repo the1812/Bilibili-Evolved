@@ -42,7 +42,7 @@ const options = defineOptionsMetadata({
     dropdownEnum: TextColor,
   },
   cdnRoot: {
-    defaultValue: CdnTypes.jsDelivr,
+    defaultValue: CdnTypes.GitHub,
     displayName: '更新源',
     dropdownEnum: CdnTypes,
   },

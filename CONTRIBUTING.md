@@ -56,16 +56,15 @@ yarn
 // @grant        GM_info
 // @grant        GM_xmlhttpRequest
 // @connect      raw.githubusercontent.com
-// @connect      cdn.jsdelivr.net
 // @connect      cn.bing.com
 // @connect      www.bing.com
 // @connect      translate.google.cn
 // @connect      translate.google.com
 // @connect      localhost
 // @connect      *
-// @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
-// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
-// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
+// @require      https://raw.githubusercontent.com/lodash/lodash/4.17.15/dist/lodash.min.js
+// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
+// @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
 ```
 6. 在那些 `@require` 下面再添加一行 `@require file://{{ bilibili-evolved.dev.user.js的绝对路径 }}`

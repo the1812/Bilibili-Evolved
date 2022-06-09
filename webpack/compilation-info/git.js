@@ -1,5 +1,4 @@
 const process = require('child_process')
-const commonMeta = require('../src/client/common.meta.json')
 
 const commitHash = process
   .execSync('git rev-parse HEAD')
@@ -17,14 +16,10 @@ const versionWithTag = process
   .execSync('git describe --tags --always')
   .toString()
   .trim()
-const compilationInfo = {
+
+module.exports = {
   commitHash,
   branch,
-  version: commonMeta.version,
   nearestTag,
   versionWithTag,
-  // buildTime: Number(new Date()),
-}
-module.exports = {
-  compilationInfo,
 }

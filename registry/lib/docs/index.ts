@@ -45,7 +45,7 @@ const entry = () => {
 ### [${displayName}](${fullRelativePath})
 \`${name}\`
 
-**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr(branches.stable, owner)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr(branches.preview, owner)}${fullAbsolutePath})
+**AltCdn:** [\`Stable\`](${cdnRoots.AltCdn(branches.stable, owner)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.AltCdn(branches.preview, owner)}${fullAbsolutePath})
 
 **GitHub:** [\`Stable\`](${cdnRoots.GitHub(branches.stable, owner)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub(branches.preview, owner)}${fullAbsolutePath})
 

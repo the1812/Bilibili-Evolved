@@ -12,7 +12,7 @@ const babelLoader = {
     ],
     plugins: [
       ['@babel/plugin-proposal-class-properties'],
-      './webpack/inject-metadata.js',
+      './webpack/loaders/inject-metadata.js',
     ],
   },
 }

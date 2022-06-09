@@ -1,4 +1,4 @@
-const { compilationInfo } = require('./compilation-info')
+const { compilationInfo } = require('../compilation-info')
 const nodePath = require('path')
 
 module.exports = function (babel) {
