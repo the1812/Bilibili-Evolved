@@ -7,7 +7,7 @@ const {
   cssStyleLoaders, sassStyleLoaders
 } = require('./loaders/style-loaders')
 const tsLoader = require('./loaders/ts-loader')
-const { compilationInfo } = require('./compilation-info')
+const runtimeInfo = require('./compilation-info/runtime')
 
 const relativePath = p => path.join(process.cwd(), p)
 const getDefaultConfig = (srcFolder) => {
@@ -156,7 +156,7 @@ const commonMeta = require('../src/client/common.meta.json')
 
 const replaceVariables = text => {
   return text.replace(/\[([^\[\]]+)\]/g, match => {
-    const value = get(compilationInfo, match)
+    const value = get(runtimeInfo, match)
     if (value !== undefined) {
       return value
     }

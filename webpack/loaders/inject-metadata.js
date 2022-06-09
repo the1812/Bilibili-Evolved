@@ -1,4 +1,5 @@
-const { compilationInfo } = require('../compilation-info')
+const runtimeInfo = require('../compilation-info/runtime')
+const gitInfo = require('../compilation-info/git')
 const nodePath = require('path')
 
 module.exports = function (babel) {
@@ -22,8 +23,8 @@ module.exports = function (babel) {
             return
           }
           targetExpression.properties.push(...[
-            types.objectProperty(types.identifier('commitHash'), types.stringLiteral(compilationInfo.commitHash)),
-            types.objectProperty(types.identifier('coreVersion'), types.stringLiteral(compilationInfo.version)),
+            types.objectProperty(types.identifier('commitHash'), types.stringLiteral(gitInfo.commitHash)),
+            types.objectProperty(types.identifier('coreVersion'), types.stringLiteral(runtimeInfo.version)),
           ])
         })
       }
