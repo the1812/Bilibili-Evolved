@@ -10,7 +10,7 @@ const github = {
     protobuf: `https://${host}/protobufjs/protobuf.js/6.10.1/dist/light/protobuf.min.js`,
     jszip: `https://${host}/Stuk/jszip/3.7.1/dist/jszip.min.js`,
     sortable: `https://${host}/SortableJS/Sortable/1.14.0/Sortable.min.js`,
-    mdi: `https://${host}/Templarian/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.min.css`,
+    mdi: `https://${owner}.github.io/Bilibili-Evolved/static/mdi/mdi.css`,
   },
   smallLogo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo-small.png`,
   logo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo.png`,
