@@ -221,6 +221,9 @@ export class VideoPlayerV2Agent extends PlayerAgent {
 
   constructor() {
     super()
+    this.checkBwpVideo()
+  }
+  checkBwpVideo() {
     const videoSelector = this.query.video.element.selector
     const bwpSelector = '.bilibili-player-video bwp-video'
     this.query.video.element = (() => {
@@ -242,6 +245,7 @@ export class VideoPlayerV2Agent extends PlayerAgent {
       return func
     })()
   }
+
   isMute() {
     if (!this.nativeApi) {
       return null
@@ -437,6 +441,7 @@ export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
 
   constructor() {
     super()
+    this.checkBwpVideo()
     v3PlayerPolyfill()
   }
 
