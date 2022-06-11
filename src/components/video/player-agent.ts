@@ -131,7 +131,14 @@ export abstract class PlayerAgent {
     return checkbox.checked
   }
 
-  abstract toggleLight(on: boolean): void
+  /** true 开灯，false 关灯 */
+  async toggleLight(on: boolean) {
+    const checkbox = await this.query.control.settings.lightOff() as HTMLInputElement
+    // 关灯状态 && 要开灯 -> 开灯
+    checkbox.checked && on && checkbox.click()
+    // 开灯状态 && 要关灯 -> 关灯
+    !checkbox.checked && !on && checkbox.click()
+  }
 
   // eslint-disable-next-line class-methods-use-this
   getPlayerConfig(target: string) {
@@ -214,6 +221,9 @@ export class VideoPlayerV2Agent extends PlayerAgent {
 
   constructor() {
     super()
+    this.checkBwpVideo()
+  }
+  checkBwpVideo() {
     const videoSelector = this.query.video.element.selector
     const bwpSelector = '.bilibili-player-video bwp-video'
     this.query.video.element = (() => {
@@ -235,6 +245,7 @@ export class VideoPlayerV2Agent extends PlayerAgent {
       return func
     })()
   }
+
   isMute() {
     if (!this.nativeApi) {
       return null
@@ -273,11 +284,6 @@ export class VideoPlayerV2Agent extends PlayerAgent {
     }
     this.nativeApi.seek(video.currentTime + change, video.paused)
     return this.nativeApi.getCurrentTime()
-  }
-  async toggleLight(on: boolean) {
-    const checkbox = await this.query.control.settings.lightOff() as HTMLInputElement
-    checkbox.checked = !on
-    raiseEvent(checkbox, 'change')
   }
 }
 export class BangumiPlayerAgent extends PlayerAgent {
@@ -372,14 +378,12 @@ export class BangumiPlayerAgent extends PlayerAgent {
     video.currentTime = lodash.clamp(video.currentTime + change, 0, video.duration)
     return video.currentTime
   }
-  toggleLight(on: boolean) {
+  async toggleLight(on: boolean) {
     const checkbox = this.query.control.settings.lightOff.sync()
-    const canLightOff = !checkbox.classList.contains('active') && !on
-    const canLightOn = checkbox.classList.contains('active') && on
-
-    if (canLightOff || canLightOn) {
-      checkbox.dispatchEvent(new MouseEvent('click'))
-    }
+    //  开灯状态 && 关灯 -> 关灯
+    !checkbox.classList.contains('active') && !on && checkbox.click()
+    // 关灯状态 && 开灯 -> 开灯
+    checkbox.classList.contains('active') && on && checkbox.click()
   }
 }
 export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
@@ -437,6 +441,7 @@ export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
 
   constructor() {
     super()
+    this.checkBwpVideo()
     v3PlayerPolyfill()
   }
 
