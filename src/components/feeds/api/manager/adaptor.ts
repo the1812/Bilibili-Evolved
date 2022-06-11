@@ -133,7 +133,7 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
         'https://t.bilibili.com/',
       ],
       watchCardsList: async manager => {
-        const list = await select('.feed-card .content, .detail-content .detail-card, .bili-dyn-list__items') as HTMLElement
+        const list = await select('.feed-card .content, .detail-content .detail-card, #app > .content > .card, .bili-dyn-list__items') as HTMLElement
         if (!list) {
           return false
         }
