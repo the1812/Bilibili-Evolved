@@ -310,9 +310,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
 
   onSpeedContext({
     menuListElementClickSpeedChange$,
-    menuListElementMutations$,
     playbackRate$,
-    menuListElement,
   }: SpeedContext) {
     this.options.extendSpeedList$
       .subscribe({
@@ -344,7 +342,10 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                   :is(${PLAYER_AGENT.custom.show.selector}) :is(${PLAYER_AGENT.custom.speedMenuList.selector}){
                     visibility: visible;
                   }
-                  `,
+                  /* 修复番剧区的列表显示问题 */
+                  :is(${PLAYER_AGENT.custom.speedMenuList.selector})[style*="block"] {
+                    visibility: visible;
+                  }`,
         }),
       )
 
@@ -382,22 +383,6 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
         this.setVideoSpeed(nativeSpeedValue)
         this.forceVideoSpeedWithUpdateStyle(nativeSpeedValue)
       },
-    })
-
-    // 【修复】番剧类视频扩展倍速菜单项顺序可能错误
-    //
-    // 针对番剧类视频的倍速菜单做后备的 flex 布局设置方式
-    // 番剧类视频的倍速菜单通过内联样式方式直接改变 menuListElement 的 display
-    // 这将优先于通过内部样式设定的 flex 布局，因此只能监听元素的特性变化，在 display 被设置为 block 时，强行设置为 flex
-    menuListElementMutations$.subscribe(({ attributes }) => {
-      attributes.forEach(mutation => {
-        if (mutation.attributeName === 'style') {
-          const { display } = unsafeWindow.getComputedStyle(menuListElement)
-          if (display === 'block') {
-            menuListElement.style.display = 'flex'
-          }
-        }
-      })
     })
 
     this.currentSpeedValue && requestIdleCallback(() => {

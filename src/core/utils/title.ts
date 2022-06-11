@@ -1,6 +1,7 @@
 import { dq } from '../utils'
 import { getGeneralSettings } from '../settings'
 import { formatFilename } from './formatters'
+import { descendingSort } from './sort'
 
 type StringMap = Record<string, string>
 const tokenSplit = (format: string) => {
@@ -28,7 +29,7 @@ const tokenSplit = (format: string) => {
   if (startIndex < format.length) {
     tokens.push(format.substring(startIndex))
   }
-  return tokens
+  return tokens.filter(it => it !== '')
 }
 export const formatTitle = (
   format: string,
@@ -80,11 +81,13 @@ export const formatTitle = (
     ...extraVariables,
   }
   const tokens = tokenSplit(format)
+  const sortedVariables = Object.entries(variables)
+    .sort(descendingSort(([name]) => name.length))
   const processedTokens = tokens.map(token => {
     if (!token.startsWith('[') || !token.endsWith(']')) {
       return token
     }
-    for (const [name, value] of Object.entries(variables)) {
+    for (const [name, value] of sortedVariables) {
       const regex = new RegExp(`^\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]$`)
       const match = token.match(regex)
       if (match && Boolean(value)) {

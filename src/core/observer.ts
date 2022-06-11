@@ -261,7 +261,7 @@ export const videoChange = async (
   }
   if (!cidHooked) {
     let lastCid = cid
-    childListSubtree(document.body, () => {
+    allMutations(() => {
       const { cid: newCid } = getId()
       // b 站代码的神秘行为, 在更换 cid 时会临时改成一个数组, 做监听要忽略这种值
       if (Array.isArray(newCid)) {
