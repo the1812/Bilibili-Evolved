@@ -95,7 +95,7 @@ const entry = async () => {
     const newUrl = url + query
     if (newUrl !== document.URL) {
       console.log(document.URL, newUrl)
-      window.history.replaceState({}, document.title, newUrl)
+      window.history.replaceState(history.state, '', newUrl)
     }
   }
   const { fullyLoaded } = await import('@/core/life-cycle')
@@ -109,7 +109,7 @@ export const component: ComponentMetadata = {
   displayName,
   entry,
   description: {
-    'zh-CN': '自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址).',
+    'zh-CN': '自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.',
   },
   tags: [
     componentsTags.utils,
