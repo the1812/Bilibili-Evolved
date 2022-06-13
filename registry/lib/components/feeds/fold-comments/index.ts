@@ -35,11 +35,10 @@ const entry = async () => {
         button?.click()
       }
       if (!existingComment) {
-        const [observer] = childListSubtree(card, () => {
+        childListSubtree(card, () => {
           const panel = dq(card, commentSelector)
           if (panel) {
             injectToComment(card, handler)
-            observer.disconnect()
           }
         })
       } else {
