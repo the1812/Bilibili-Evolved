@@ -21,7 +21,7 @@ yarn
 
 **如果使用的是基于 Chromium 的浏览器**
 1. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
-2. 打开`允许访问文件网址`
+2. 打开 `允许访问文件网址`
 3. 新建脚本
 4. 粘贴内容:
 ```js
