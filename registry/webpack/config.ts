@@ -1,13 +1,17 @@
-import { getDefaultConfig } from '../../webpack/webpack.config'
 import path from 'path'
-import { getId } from '../lib/id'
+import lodash from 'lodash'
 import { Configuration } from 'webpack'
+import { getDefaultConfig } from '../../webpack/webpack.config'
+import { getId } from '../lib/id'
 
-export const buildByEntry = ({ src, type, entry }: { src: string; type: string; entry: string }) => {
+export const buildByEntry = (
+  params: { src: string; type: string; entry: string },
+) => {
   // const match = entry.match(/\/?registry\/dist\/([^\/]+)\/(.+)\/index\.ts/)
   // if (!match) {
   //   throw new Error(`Invalid entry path: ${entry}`)
   // }
+  const { src, type, entry } = params
   const id = getId(src, entry)
   const defaultConfig = getDefaultConfig(path.resolve('./registry/lib/'))
   const config: Configuration = {
@@ -29,7 +33,6 @@ export const buildByEntry = ({ src, type, entry }: { src: string; type: string; 
     externals: [
       ...(defaultConfig.externals as any[]),
       ({ request }, callback) => {
-        const lodash = require('lodash')
         const regexMatch = (regex: RegExp, base: string[]) => {
           const match = request.match(regex)
           if (match) {
@@ -68,7 +71,7 @@ export const buildByEntry = ({ src, type, entry }: { src: string; type: string; 
           }
         }
         return callback()
-      }
+      },
     ],
   }
   return config

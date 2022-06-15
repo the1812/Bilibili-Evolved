@@ -1,5 +1,4 @@
 import { basename, dirname } from 'path'
-import { InjectMetadataAction } from './types'
 import { glob } from 'glob'
 import {
   ObjectProperty,
@@ -11,6 +10,7 @@ import {
   arrowFunctionExpression,
   stringLiteral,
 } from '@babel/types'
+import { InjectMetadataAction } from './types'
 
 export const injectI18n: InjectMetadataAction = ({ filename }) => {
   const folder = dirname(filename)

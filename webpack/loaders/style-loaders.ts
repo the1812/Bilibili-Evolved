@@ -26,5 +26,5 @@ export const sassLoader: RuleSetUseItem = {
   },
 }
 
-export const cssStyleLoaders = [ cssLoader, postCssLoader ]
-export const sassStyleLoaders = [ cssLoader, postCssLoader, sassLoader ]
+export const cssStyleLoaders = [cssLoader, postCssLoader]
+export const sassStyleLoaders = [cssLoader, postCssLoader, sassLoader]

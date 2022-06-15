@@ -1,6 +1,5 @@
 import { existsSync, readFileSync } from 'fs'
 import { basename, dirname, join } from 'path'
-import { InjectMetadataAction } from './types'
 import { glob } from 'glob'
 import {
   objectProperty,
@@ -8,6 +7,7 @@ import {
   identifier,
   stringLiteral,
 } from '@babel/types'
+import { InjectMetadataAction } from './types'
 
 export const injectDescription: InjectMetadataAction = ({ filename }) => {
   const folder = dirname(filename)

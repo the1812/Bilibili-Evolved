@@ -1,10 +1,10 @@
-import { buildByEntry } from './config'
 import glob from 'glob'
+import { buildByEntry } from './config'
 
 export const builders = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
   const src = `./registry/lib/${type}s/`
   return [type, async ({ buildAll = false } = {}) => {
-    const entries = glob.sync(src + '**/index.ts')
+    const entries = glob.sync(`${src}**/index.ts`)
 
     if (buildAll) {
       console.log(`[build all] discovered ${entries.length} ${type}s`)
@@ -13,7 +13,7 @@ export const builders = Object.fromEntries(['component', 'plugin', 'doc'].map(ty
 
     let entry: string
     if (entries.length > 1) {
-      const { AutoComplete } = require('enquirer')
+      const { AutoComplete } = await import('enquirer')
       const prompt = new AutoComplete({
         name: 'path',
         message: 'Select build target',
