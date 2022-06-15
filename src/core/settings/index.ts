@@ -92,3 +92,4 @@ state.settingsLoaded = true
 /** 脚本当前的设置 */
 export const settings: Settings = state.internalSettings
 export * from './helpers'
+export * from './types'

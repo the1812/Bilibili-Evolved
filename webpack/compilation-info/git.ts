@@ -1,25 +1,18 @@
-const process = require('child_process')
+import process from 'child_process'
 
-const commitHash = process
+export const commitHash = process
   .execSync('git rev-parse HEAD')
   .toString()
   .trim()
-const branch = process
+export const branch = process
   .execSync('git rev-parse --abbrev-ref HEAD')
   .toString()
   .trim()
-const nearestTag = process
+export const nearestTag = process
   .execSync('git describe --abbrev=0 --tags --always')
   .toString()
   .trim()
-const versionWithTag = process
+export const versionWithTag = process
   .execSync('git describe --tags --always')
   .toString()
   .trim()
-
-module.exports = {
-  commitHash,
-  branch,
-  nearestTag,
-  versionWithTag,
-}

@@ -1,4 +1,7 @@
-const babelLoader = {
+import { RuleSetUseItem } from 'webpack'
+import { injectMetadata } from './inject-metadata'
+
+const babelLoader: RuleSetUseItem = {
   loader: 'babel-loader',
   options: {
     presets: [
@@ -12,7 +15,8 @@ const babelLoader = {
     ],
     plugins: [
       ['@babel/plugin-proposal-class-properties'],
-      './webpack/loaders/inject-metadata.js',
+      // './webpack/loaders/inject-metadata.js',
+      injectMetadata,
     ],
   },
 }
@@ -42,4 +46,4 @@ const babelLoader = {
 //   tsLoader = babelLoader
 // }
 
-module.exports = [babelLoader]
+export const tsLoaders = [babelLoader]

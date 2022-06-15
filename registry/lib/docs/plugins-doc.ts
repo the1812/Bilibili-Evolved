@@ -1,7 +1,7 @@
 import { getDescriptionMarkdown } from '@/components/description'
 import { PluginMetadata } from '@/plugins/plugin'
 import { DocSource, DocSourceItem } from '.'
-import { getId } from '../../webpack/id'
+import { getId } from '../id'
 import { getThirdPartyDescription, thirdPartyPlugins } from './third-party'
 
 export const getPluginsDoc: DocSource = async rootPath => {

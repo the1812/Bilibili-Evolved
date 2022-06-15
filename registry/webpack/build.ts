@@ -1,9 +1,9 @@
-const { buildByEntry } = require('./config')
+import { buildByEntry } from './config'
+import glob from 'glob'
 
-module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
+export const builders = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
   const src = `./registry/lib/${type}s/`
   return [type, async ({ buildAll = false } = {}) => {
-    const glob = require('glob')
     const entries = glob.sync(src + '**/index.ts')
 
     if (buildAll) {
@@ -11,7 +11,7 @@ module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
       return entries.map(entry => buildByEntry({ src, type, entry }))
     }
 
-    let entry
+    let entry: string
     if (entries.length > 1) {
       const { AutoComplete } = require('enquirer')
       const prompt = new AutoComplete({
@@ -24,6 +24,6 @@ module.exports = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
       [entry] = entries
       console.log(`Build target · ${entry}`)
     }
-    return buildByEntry({ src, type, entry })
+    return [buildByEntry({ src, type, entry })]
   }]
 }))

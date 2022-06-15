@@ -1,6 +1,8 @@
+import { CdnConfig } from './types'
+
 const owner = 'the1812'
 const host = 'cdn.jsdelivr.net'
-const jsdelivr = {
+export const jsdelivr: CdnConfig = {
   owner,
   host,
   stableClient: `https://${host}/gh/${owner}/Bilibili-Evolved@master/dist/bilibili-evolved.user.js`,
@@ -15,7 +17,4 @@ const jsdelivr = {
   smallLogo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo-small.png`,
   logo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo.png`,
   root: (branch, ownerOverride) => `https://${host}/gh/${ownerOverride || owner}/Bilibili-Evolved@${branch}/`,
-}
-module.exports = {
-  jsdelivr,
 }

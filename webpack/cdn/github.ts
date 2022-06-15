@@ -1,6 +1,8 @@
+import { CdnConfig } from './types'
+
 const owner = 'the1812'
 const host = 'raw.githubusercontent.com'
-const github = {
+export const github: CdnConfig = {
   owner,
   host,
   stableClient: `https://${host}/${owner}/Bilibili-Evolved/master/dist/bilibili-evolved.user.js`,
@@ -15,7 +17,4 @@ const github = {
   smallLogo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo-small.png`,
   logo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo.png`,
   root: (branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`,
-}
-module.exports = {
-  github,
 }

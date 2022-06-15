@@ -8,13 +8,15 @@ declare global {
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
 
-  interface CompilationInfo {
-    year: string
+  interface GitInfo {
     commitHash: string
     branch: string
-    version: string
     nearestTag: string
     versionWithTag: string
+  }
+  interface CompilationInfo extends GitInfo {
+    year: string
+    version: string
     altCdn: {
       owner: string
       host: string
@@ -34,6 +36,7 @@ declare global {
     // buildTime: number
   }
   const webpackCompilationInfo: CompilationInfo
+  const webpackGitInfo: GitInfo
 
   const BwpElement: {
     new(): HTMLVideoElement

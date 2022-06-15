@@ -1,17 +1,15 @@
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
-const TerserPlugin = require('terser-webpack-plugin')
-const webpack = require('webpack')
-const path = require('path')
-const get = require('lodash/get')
-const {
-  cssStyleLoaders, sassStyleLoaders
-} = require('./loaders/style-loaders')
-const tsLoader = require('./loaders/ts-loader')
-const runtimeInfo = require('./compilation-info/runtime')
+import VueLoaderPlugin from 'vue-loader/lib/plugin'
+import TerserPlugin from 'terser-webpack-plugin'
+import webpack, { Configuration } from 'webpack'
+import path from 'path'
+import get from 'lodash/get'
+import { cssStyleLoaders, sassStyleLoaders } from './loaders/style-loaders'
+import { tsLoaders } from './loaders/ts-loader'
+import { runtimeInfo } from './compilation-info/runtime'
+import commonMeta from '../src/client/common.meta.json'
 
-const relativePath = p => path.join(process.cwd(), p)
-const getDefaultConfig = (srcFolder) => {
-  const src = srcFolder || relativePath('src')
+const relativePath = (p: string) => path.join(process.cwd(), p)
+export const getDefaultConfig = (src = relativePath('src')): Configuration => {
   return {
     mode: 'development',
     // devtool: 'eval-source-map',
@@ -107,11 +105,12 @@ const getDefaultConfig = (srcFolder) => {
         {
           test: /\.tsx?$/,
           use: [
-            ...tsLoader,
+            ...tsLoaders,
           ],
           include: [
             src,
             relativePath('tests'),
+            relativePath('webpack'),
           ],
         },
         {
@@ -152,9 +151,7 @@ const getDefaultConfig = (srcFolder) => {
   }
 }
 
-const commonMeta = require('../src/client/common.meta.json')
-
-const replaceVariables = text => {
+const replaceVariables = (text: string) => {
   return text.replace(/\[([^\[\]]+)\]/g, match => {
     const value = get(runtimeInfo, match)
     if (value !== undefined) {
@@ -163,7 +160,7 @@ const replaceVariables = text => {
     return match
   })
 }
-const getBanner = meta => `// ==UserScript==\n${Object.entries(Object.assign(meta, commonMeta)).map(([key, value]) => {
+export const getBanner = (meta: Record<string, string | string[]>) => `// ==UserScript==\n${Object.entries(Object.assign(meta, commonMeta)).map(([key, value]) => {
   if (Array.isArray(value)) {
     const lines = [...new Set(value.map(item => `// @${key.padEnd(16, ' ')}${replaceVariables(item)}`))]
     return lines.join('\n')
@@ -173,8 +170,3 @@ const getBanner = meta => `// ==UserScript==\n${Object.entries(Object.assign(met
 // ==/UserScript==
 /* eslint-disable */ /* spell-checker: disable */
 // @[ You can find all source codes in GitHub repo ]`
-
-module.exports = {
-  getDefaultConfig,
-  getBanner,
-}
