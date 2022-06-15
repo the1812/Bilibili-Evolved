@@ -1,6 +1,9 @@
 import glob from 'glob'
 import { buildByEntry } from './config'
 
+declare module 'enquirer' {
+  export const AutoComplete: any
+}
 export const builders = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
   const src = `./registry/lib/${type}s/`
   return [type, async ({ buildAll = false } = {}) => {
