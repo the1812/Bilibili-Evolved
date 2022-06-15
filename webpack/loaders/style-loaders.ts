@@ -1,13 +1,14 @@
 import postcssPresetEnv from 'postcss-preset-env'
 import autoPrefixer from 'autoprefixer'
+import { RuleSetUseItem } from 'webpack'
 
-export const cssLoader = {
+export const cssLoader: RuleSetUseItem = {
   loader: 'css-loader',
   options: {
     esModule: false,
   },
 }
-export const postCssLoader = {
+export const postCssLoader: RuleSetUseItem = {
   loader: 'postcss-loader',
   options: {
     postcssOptions: {
@@ -18,13 +19,10 @@ export const postCssLoader = {
     },
   },
 }
-export const sassLoader = {
+export const sassLoader: RuleSetUseItem = {
   loader: 'fast-sass-loader',
   options: {
-    // implementation: sass,
-    // sassOptions: {
-      includePaths: ['src/ui/'],
-    // }
+    includePaths: ['src/ui/'],
   },
 }
 

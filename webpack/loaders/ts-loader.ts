@@ -15,35 +15,9 @@ const babelLoader: RuleSetUseItem = {
     ],
     plugins: [
       ['@babel/plugin-proposal-class-properties'],
-      // './webpack/loaders/inject-metadata.js',
       injectMetadata,
     ],
   },
 }
-// const esBuildLoader = {
-//   loader: 'esbuild-loader',
-//   options: {
-//     target: 'esnext',
-//     loader: 'ts',
-//   },
-// }
-// const swcLoader = {
-//   loader: 'swc-loader',
-//   options: {
-//     jsc: {
-//       parser: {
-//         syntax: 'typescript',
-//         dynamicImport: true,
-//       },
-//     },
-//   },
-// }
-// let tsLoader
-// try {
-//   require('swc-loader')
-//   tsLoader = swcLoader
-// } catch (e) {
-//   tsLoader = babelLoader
-// }
 
 export const tsLoaders = [babelLoader]

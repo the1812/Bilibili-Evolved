@@ -3,4 +3,8 @@ import {
   ObjectProperty,
 } from '@babel/types'
 
-export type InjectMetadataAction = ((expression: ObjectExpression) => ObjectProperty[])
+export interface InjectMetadataContext {
+  expression: ObjectExpression
+  filename: string
+}
+export type InjectMetadataAction = ((context: InjectMetadataContext) => ObjectProperty[])

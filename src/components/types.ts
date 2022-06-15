@@ -238,7 +238,7 @@ export interface ComponentMetadata<
   /** 组件子选项 */
   options?: Om
   /** i18n 数据 */
-  i18n?: Record<string, LanguagePack>
+  i18n?: Record<string, LanguagePack | Executable<LanguagePack>>
   /** 是否支持热重载 */
   // allowHotReload?: boolean
 }
