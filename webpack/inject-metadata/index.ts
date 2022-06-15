@@ -1,13 +1,11 @@
-import { runtimeInfo } from '../compilation-info/runtime'
-import { commitHash } from '../compilation-info/git'
 import nodePath from 'path'
 import { PluginObj } from '@babel/core'
-import {
-  Identifier,
-  objectProperty,
-  identifier,
-  stringLiteral,
-} from '@babel/types'
+import { InjectMetadataAction } from './types'
+import { injectCoreInfo } from './core-info'
+
+const injectActions: InjectMetadataAction[] = [
+  injectCoreInfo,
+]
 
 export const injectMetadata = (): PluginObj => {
   return {
@@ -26,7 +24,8 @@ export const injectMetadata = (): PluginObj => {
           return
         }
         node.declaration.declarations?.forEach(d => {
-          if (!['component', 'plugin'].includes((d.id as Identifier)?.name)) {
+          const isNameValid = d.id?.type === 'Identifier' && ['component', 'plugin'].includes(d.id.name)
+          if (!isNameValid) {
             return
           }
           const targetExpression =
@@ -35,16 +34,7 @@ export const injectMetadata = (): PluginObj => {
             return
           }
           targetExpression.properties.push(
-            ...[
-              objectProperty(
-                identifier('commitHash'),
-                stringLiteral(commitHash),
-              ),
-              objectProperty(
-                identifier('coreVersion'),
-                stringLiteral(runtimeInfo.version),
-              ),
-            ],
+            ...injectActions.flatMap(action => action(targetExpression)),
           )
         })
       },

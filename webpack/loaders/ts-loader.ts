@@ -1,5 +1,5 @@
 import { RuleSetUseItem } from 'webpack'
-import { injectMetadata } from './inject-metadata'
+import { injectMetadata } from '../inject-metadata'
 
 const babelLoader: RuleSetUseItem = {
   loader: 'babel-loader',
