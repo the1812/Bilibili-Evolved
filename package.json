@@ -40,7 +40,6 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-vue": "7.1.0",
     "fast-sass-loader": "^2.0.0",
-    "html-webpack-plugin": "^5.0.0-alpha.7",
     "postcss": "^8.1.0",
     "postcss-loader": "^4.0.4",
     "postcss-preset-env": "^7.5.0",
