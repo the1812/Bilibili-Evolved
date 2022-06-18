@@ -1,9 +1,6 @@
 import glob from 'glob'
 import { buildByEntry } from './config'
 
-declare module 'enquirer' {
-  export const AutoComplete: any
-}
 export const builders = Object.fromEntries(['component', 'plugin', 'doc'].map(type => {
   const src = `./registry/lib/${type}s/`
   return [type, async ({ buildAll = false } = {}) => {
@@ -16,7 +13,8 @@ export const builders = Object.fromEntries(['component', 'plugin', 'doc'].map(ty
 
     let entry: string
     if (entries.length > 1) {
-      const { AutoComplete } = await import('enquirer')
+      const { default: AutoComplete } = await import('enquirer/lib/prompts/autocomplete')
+      console.log(AutoComplete)
       const prompt = new AutoComplete({
         name: 'path',
         message: 'Select build target',
