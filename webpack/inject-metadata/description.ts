@@ -1,36 +1,49 @@
-import { existsSync, readFileSync } from 'fs'
-import { basename, dirname, join } from 'path'
-import { glob } from 'glob'
+import { existsSync } from 'fs'
+import { dirname, join } from 'path'
 import {
   objectProperty,
-  objectExpression,
   identifier,
-  stringLiteral,
 } from '@babel/types'
+import { parseExpression } from '@babel/parser'
 import { InjectMetadataAction } from './types'
 
+/**
+ * 当入口文件 index.ts 旁边还有 index.md 时, 将其作为中文的 description 注入.
+ * 如果还有 index.{language}.md, 也会一并作为多语言的 description 注入.
+ * 注意 index.ts 中原有的 description 会被覆盖.
+ *
+ * 例子:
+ * - index.ts
+ * - index.md
+ * - index.en-US.md
+ *
+ * 可以自动在 index.ts 中的定义中注入 zh-CN 和 en-US 的 description
+ */
 export const injectDescription: InjectMetadataAction = ({ filename }) => {
   const folder = dirname(filename)
   const defaultDesc = join(folder, 'index.md')
   if (!existsSync(defaultDesc)) {
     return []
   }
-  const properties = [
-    objectProperty(stringLiteral('zh-CN'), stringLiteral(readFileSync(defaultDesc, { encoding: 'utf-8' }))),
-  ]
-  glob.sync('index.*.md', { cwd: folder }).forEach(path => {
-    const languageMatch = basename(path).match(/^index\.(.+)\.md$/)
-    if (!languageMatch) {
-      return
-    }
-    const [, language] = languageMatch
-    properties.push(objectProperty(stringLiteral(language), stringLiteral(readFileSync(path, { encoding: 'utf-8' }))))
-  })
-
+  const regex = /index\.(.+)\.md$/
   return [
     objectProperty(
       identifier('description'),
-      objectExpression(properties),
+      parseExpression(`
+(() => {
+  const context = require.context('./', false, ${regex})
+  return {
+    ...Object.fromEntries(context
+      .keys()
+      .map(path => {
+        const key = path.match(${regex})[1]
+        const value = context(path)
+        return [key, value]
+      })),
+    'zh-CN': () => import('./index.md').then(m => m.default),
+  }
+})()
+      `, { plugins: ['typescript'] }),
     ),
   ]
 }
