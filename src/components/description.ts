@@ -1,5 +1,4 @@
 import marked from 'marked'
-import { languageNameToCode } from '@/core/utils/i18n'
 import { ComponentMetadata } from './component'
 import { getSelectedLanguage } from './i18n/helpers'
 import { Executable } from '@/core/common-types'
@@ -32,7 +31,7 @@ export const getDescriptionMarkdown = async (item: ItemWithDescription) => {
       return input()
     }
     if (typeof description === 'object') {
-      const currentLanguage = languageNameToCode(getSelectedLanguage())
+      const currentLanguage = getSelectedLanguage()
       const input = description[currentLanguage] ?? description['zh-CN']
       return parseDescriptionInput(input)
     }

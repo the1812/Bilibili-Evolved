@@ -223,14 +223,19 @@ export default {
       openHooks.after(component.name)
     },
     async updateRenderedComponents() {
-      const textMap: Record<string, string> = Object.fromEntries(
-        await Promise.all(components.map(async c => [c.name, ([
-          c.name,
-          c.displayName,
-          c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
-          await getDescriptionText(c),
-        ]).join('\n').toLowerCase()])),
-      )
+      const textMap: Record<string, string> = await (async () => {
+        if (!this.searchKeyword) {
+          return {}
+        }
+        return Object.fromEntries(
+          await Promise.all(components.map(async c => [c.name, ([
+            c.name,
+            c.displayName,
+            c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
+            await getDescriptionText(c),
+          ]).join('\n').toLowerCase()])),
+        )
+      })()
       const internalFiltered = components.filter(c => {
         if (c.hidden) {
           return false
