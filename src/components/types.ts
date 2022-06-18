@@ -212,6 +212,8 @@ export interface FunctionalMetadata<
   urlInclude?: TestPattern
   /** 设置不匹配的URL, 不匹配则不运行此组件, 优先级高于`urlInclude` */
   urlExclude?: TestPattern
+  /** i18n 数据 */
+  i18n?: Record<string, LanguagePack | Executable<LanguagePack>>
 }
 
 /** ComponentMetadata 的类型参数，用于表达其可选参数 options 的类型 */
@@ -237,8 +239,6 @@ export interface ComponentMetadata<
   hidden?: boolean
   /** 组件子选项 */
   options?: Om
-  /** i18n 数据 */
-  i18n?: Record<string, LanguagePack | Executable<LanguagePack>>
   /** 是否支持热重载 */
   // allowHotReload?: boolean
 }

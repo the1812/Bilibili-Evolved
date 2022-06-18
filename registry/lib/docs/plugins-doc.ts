@@ -20,7 +20,7 @@ export const getPluginsDoc: DocSource = async rootPath => {
       return undefined
     })
     .filter(it => it !== undefined)
-    .map(it => {
+    .map(async it => {
       const root = `${rootPath}plugins/`
       const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
       const fullAbsolutePath = fullRelativePath.replace(/^(\.\.?\/)*/, '')
@@ -28,7 +28,7 @@ export const getPluginsDoc: DocSource = async rootPath => {
         name,
         displayName,
       } = it.plugin
-      const description = getDescriptionMarkdown(it.plugin)
+      const description = await getDescriptionMarkdown(it.plugin)
       return {
         type: 'plugin',
         name,
@@ -41,6 +41,6 @@ export const getPluginsDoc: DocSource = async rootPath => {
     .concat(thirdPartyPlugins.map(getThirdPartyDescription))
   return {
     title: '插件',
-    items: pluginsPaths,
+    items: await Promise.all(pluginsPaths),
   }
 }

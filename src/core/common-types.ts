@@ -12,7 +12,9 @@ export type VueModule =
   | { default: Component }
   | VueConstructor
   | { default: VueConstructor }
-export type I18nDescription = string | { 'zh-CN': string; [key: string]: string }
+
+type DescriptionInput = string | Executable<string>
+export type I18nDescription = DescriptionInput | { 'zh-CN': DescriptionInput; [key: string]: DescriptionInput }
 export type WithName = {
   name: string
   displayName: string
