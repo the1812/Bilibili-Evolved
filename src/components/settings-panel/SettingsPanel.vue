@@ -222,19 +222,25 @@ export default {
       this.componentDetailOpen = true
       openHooks.after(component.name)
     },
-    updateRenderedComponents() {
+    async updateRenderedComponents() {
+      const textMap: Record<string, string> = Object.fromEntries(
+        await Promise.all(components.map(async c => [c.name, ([
+          c.name,
+          c.displayName,
+          c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
+          await getDescriptionText(c),
+        ]).join('\n').toLowerCase()])),
+      )
       const internalFiltered = components.filter(c => {
         if (c.hidden) {
           return false
         }
         if (this.searchKeyword) {
-          const text = [
-            c.name,
-            c.displayName,
-            c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
-            getDescriptionText(c),
-          ]
-          return text.join('\n').toLowerCase().includes(this.searchKeyword.toLowerCase())
+          const text = textMap[c.name]
+          if (!text) {
+            return false
+          }
+          return text.includes(this.searchKeyword.toLowerCase())
         }
         return true
       })

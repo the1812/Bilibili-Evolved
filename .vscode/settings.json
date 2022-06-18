@@ -116,7 +116,6 @@
     "*.tsx": "${capture}.ts",
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .*",
-    "index.ts": "index.*.ts",
-    "index.md": "index.*.md"
+    "index.ts": "index.*.ts, index.md, index.*.md",
   }
 }
