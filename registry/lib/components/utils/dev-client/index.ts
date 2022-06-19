@@ -2,13 +2,11 @@ import { defineComponentMetadata } from '@/components/define'
 import { isIframe } from '@/core/utils'
 import { devClientOptionsMetadata, autoUpdateOptions } from './options'
 import { setupPlugin } from './plugin'
-import description from './desc.md'
 
 export const component = defineComponentMetadata({
   name: 'devClient',
   displayName: 'DevClient',
   tags: [componentsTags.utils],
-  description,
   entry: async ({ settings: { options } }) => {
     if (isIframe()) {
       return
