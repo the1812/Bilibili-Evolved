@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'collapseLiveSideBar',
   entry: none,
   instantStyles: [
@@ -17,4 +17,4 @@ export const component: ComponentMetadata = {
     componentsTags.style,
   ],
   urlInclude: liveUrls,
-}
+})

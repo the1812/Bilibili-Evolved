@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
 
 const id = 'dpi-live-showgirl'
@@ -14,7 +14,7 @@ const entry = async () => {
     `, id)
   }
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'dpiLiveShowgirl',
   displayName: '直播看板娘高 DPI 适配',
   enabledByDefault: window.devicePixelRatio > 1,
@@ -31,4 +31,4 @@ export const component: ComponentMetadata = {
     document.getElementById(id)?.remove()
   },
   urlInclude: liveUrls,
-}
+})
