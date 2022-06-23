@@ -1,16 +1,14 @@
 import type { ItemStopPayload, Payload } from 'dev-tools/dev-server/payload'
-import { OptionsOfMetadata } from '@/components/define'
-import { getComponentSettings } from '@/core/settings'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeStyle } from '@/core/style'
-import { autoUpdateOptions, devClientOptionsMetadata } from './options'
+import { autoUpdateOptions, getDevClientOptions } from './options'
 import { RefreshMethod, HotReloadMethod } from './update-method'
 import { monkey } from '@/core/ajax'
 import { plugins } from '@/plugins/plugin'
 import { Toast } from '@/core/toast'
 
-const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
+const options = getDevClientOptions()
 const console = useScopedConsole('DevClient')
 const handleSocketMessage = (event: MessageEvent, callback: (payload: Payload) => void) => {
   const { data } = event
@@ -84,6 +82,10 @@ export class DevClient extends EventTarget {
             }
             case 'start': {
               this.sessions = payload.sessions
+              this.dispatchEvent(new CustomEvent(
+                DevClientEvents.SessionsUpdate,
+                { detail: this.sessions },
+              ))
               break
             }
             case 'stop': {
@@ -113,6 +115,7 @@ export class DevClient extends EventTarget {
     this.socket.close()
     this.socket = null
     this.sessions = []
+    this.dispatchEvent(new CustomEvent(DevClientEvents.SessionsUpdate, { detail: this.sessions }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerDisconnected))
   }
@@ -123,7 +126,7 @@ export class DevClient extends EventTarget {
 
   private handleCoreUpdate() {
     this.dispatchEvent(new CustomEvent(DevClientEvents.CoreUpdate))
-    if (options.coreRefreshMethod === RefreshMethod.AlwaysReload) {
+    if (options.coreRefreshMethod === RefreshMethod.AlwaysRefresh) {
       console.log('本体已更新, 刷新页面...')
       location.reload()
     }
@@ -140,7 +143,7 @@ export class DevClient extends EventTarget {
       if (!oldComponent) {
         return
       }
-      const code: string = await coreApis.ajax.monkey({ url })
+      const code: string = await monkey({ url })
       const { installFeatureFromCode } = await import(
         '@/core/install-feature'
       )
@@ -173,7 +176,11 @@ export class DevClient extends EventTarget {
       switch (options.registryReloadMethod) {
         default:
         case HotReloadMethod.Disabled: {
-          reload()
+          if (options.registryRefreshMethod === RefreshMethod.DoNotRefresh) {
+            doNotReload()
+          } else {
+            reload()
+          }
           break
         }
         case HotReloadMethod.Enabled: {
@@ -197,7 +204,7 @@ export class DevClient extends EventTarget {
         return
       }
       const { displayName } = plugin
-      if (options.registryRefreshMethod !== RefreshMethod.DoNotReload) {
+      if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
         console.log(`插件 [${displayName}] 已更新, 刷新页面...`)
         location.reload()
       } else {

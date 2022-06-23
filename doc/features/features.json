@@ -73,14 +73,6 @@
   },
   {
     "type": "component",
-    "name": "liveAutoDraw",
-    "displayName": "直播间自动抽奖",
-    "description": "在当前直播间有抽奖活动时, 自动点击抽奖按钮. 注意只适用于少量抽奖, 那种99+限量抽奖可能跟不上其他人的手速(",
-    "fullRelativePath": "../../registry/dist/components/live/auto-draw.js",
-    "fullAbsolutePath": "registry/dist/components/live/auto-draw.js"
-  },
-  {
-    "type": "component",
     "name": "badgeHelper",
     "displayName": "直播勋章快速更换",
     "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认加载 256 个 (同时也是上限), 可在选项中修改.",
@@ -121,11 +113,11 @@
   },
   {
     "type": "component",
-    "name": "livePip",
-    "displayName": "直播画中画",
-    "description": "在直播间的功能面板中启用画中画支持, 不过现在好像 b 站已经直接支持了, 后续可能会删掉这个功能.",
-    "fullRelativePath": "../../registry/dist/components/live/pip.js",
-    "fullAbsolutePath": "registry/dist/components/live/pip.js"
+    "name": "originalLiveroom",
+    "displayName": "返回原版直播间",
+    "description": "在直播间中提供返回原版直播间的按钮, 原版直播间将无视活动皮肤, 强制使用标准的直播页面.",
+    "fullRelativePath": "../../registry/dist/components/live/original.js",
+    "fullAbsolutePath": "registry/dist/components/live/original.js"
   },
   {
     "type": "component",
@@ -401,6 +393,14 @@
   },
   {
     "type": "component",
+    "name": "devClient",
+    "displayName": "DevClient",
+    "description": "本地开发工具, 提供自动更新功能和样式热重载的能力, 需要与 DevServer 配合使用. (DevServer 的使用方式见 [CONTRIBUTING.md](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md))\r\n\r\n`自动连接` 开启时, 每次进入网页都会自动尝试连接到 DevServer, 如果关闭则需要手动操作连接.\r\n\r\n`刷新策略` 决定了收到本体或者功能更新的消息时是否刷新:\r\n  - **总是刷新**: 收到更新时立即刷新页面\r\n  - 不刷新: 收到更新时不刷新页面\r\n\r\n`热重载策略` 决定了是否开启热重载功能, 只要成功触发热重载, 就不刷新页面:\r\n  - **开启热重载**: 功能带有 `instantStyles` 时, 热重载 `instantStyles` 中的样式\r\n  - 关闭热重载: 收到更新时不刷新页面\r\n\r\n> 目前就这两个选项, 将来可能会支持对 `entry` 的热重载\r\n",
+    "fullRelativePath": "../../registry/dist/components/utils/dev-client.js",
+    "fullAbsolutePath": "registry/dist/components/utils/dev-client.js"
+  },
+  {
+    "type": "component",
     "name": "downloadAudio",
     "displayName": "下载音频",
     "description": "开启音频下载支持, 音频页面中可以在功能面板中下载当前音频.\n\n> 需要进入音频的详细信息页面才能下载, 在其他页面中此按钮将不可点击.",
@@ -555,7 +555,7 @@
     "type": "component",
     "name": "outerWatchlater",
     "displayName": "外置稍后再看",
-    "description": "将视频页面菜单里的 `稍后再看` 移到外面.",
+    "description": "将视频页面菜单里的 `稍后再看` 移到外面. 请注意如果在稍后再看页面中仍然显示, 是不会实时同步右侧的播放列表的.",
     "fullRelativePath": "../../registry/dist/components/video/outer-watchlater.js",
     "fullAbsolutePath": "registry/dist/components/video/outer-watchlater.js"
   },
@@ -635,7 +635,7 @@
     "type": "component",
     "name": "rememberVideoSpeed",
     "displayName": "记忆倍速",
-    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n### 🌈 **温馨提示**\n\n「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.\n\n请根据自身需要：\n\n- 前往「组件」页面安装[「扩展倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js)组件\n- 前往「插件」页面安装[「视频倍速 - 快捷键支持」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js)插件.\n\n*如果想要清除当前视频的记忆状态，需要安装「视频倍速 - 快捷键支持」插件.*\n",
+    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n### 🌈 **温馨提示**\n\n「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.\n\n请根据自身需要：\n\n- 前往「组件」页面安装[「扩展倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js)组件\n- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js)插件.\n\n*如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*\n",
     "fullRelativePath": "../../registry/dist/components/video/player/remember-speed.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remember-speed.js"
   },
@@ -683,7 +683,7 @@
     "type": "component",
     "name": "quickFavorite",
     "displayName": "启用快速收藏",
-    "description": "启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹.",
+    "description": "启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹. 请注意如果在在收藏夹播放页面仍然显示, 是不会实时同步右侧的播放列表的.",
     "fullRelativePath": "../../registry/dist/components/video/quick-favorite.js",
     "fullAbsolutePath": "registry/dist/components/video/quick-favorite.js"
   },
@@ -778,6 +778,14 @@
   },
   {
     "type": "plugin",
+    "name": "downloadVideo.inputs.manual",
+    "displayName": "下载视频 - 手动输入",
+    "description": "为下载视频增加手动输入支持.",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/manual-input.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/manual-input.js"
+  },
+  {
+    "type": "plugin",
     "name": "downloadVideo.outputs.mpv-playlist",
     "displayName": "下载视频 - MPV 播放支持（列表）",
     "description": "by [@wuliic](https://github.com/wullic)\n\n为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)",
@@ -795,7 +803,7 @@
   {
     "type": "plugin",
     "name": "speed.keymap",
-    "displayName": "视频倍速 - 快捷键支持",
+    "displayName": "快捷键扩展 - 视频倍速",
     "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n为操作视频倍速提供快捷键支持：\n\n- 提高倍速\n- 降低倍速\n- 切换倍速\n\n若添加并启用了记忆倍速组件，则还会增加一个快捷键：\n\n- 清除倍速记忆\n  ",
     "fullRelativePath": "../../registry/dist/plugins/video/player/speed.js",
     "fullAbsolutePath": "registry/dist/plugins/video/player/speed.js"

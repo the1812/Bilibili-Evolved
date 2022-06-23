@@ -1,4 +1,4 @@
-const process = require('child_process')
+import process from 'child_process'
 
 const excludePatterns = [
   /^docs?\//,
@@ -13,7 +13,7 @@ const excludePatterns = [
   /^LICENCE$/,
 ]
 
-const isSourceChanged = () => {
+export const isSourceChanged = () => {
   const lastDiff = process
     .execSync('git diff --name-only HEAD^')
     .toString()
@@ -22,8 +22,4 @@ const isSourceChanged = () => {
 
   const isAllExcluded = lastDiff.every(path => excludePatterns.some(p => p.test(path)))
   return !isAllExcluded
-}
-
-module.exports = {
-  isSourceChanged,
 }

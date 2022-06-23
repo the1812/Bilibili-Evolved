@@ -33,6 +33,7 @@ export const getTrendingVideos = async () => {
       upFaceUrl: it.owner.face.replace('http:', 'https:'),
       like: formatCount(it.stat.like),
       playCount: formatCount(it.stat.view),
+      danmakuCount: formatCount(it.stat.danmaku),
     }
     return card
   })

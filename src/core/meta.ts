@@ -28,7 +28,7 @@ export const meta = {
   },
   /** 检查更新的链接 */
   get updateURL(): string {
-    return `${cdnRoots.jsDelivr(compilationInfo.branch)}dist/${this.originalFilename}`
+    return `${cdnRoots.AltCdn(compilationInfo.branch)}dist/${this.originalFilename}`
   },
   /** 下载更新的链接 */
   get downloadURL(): string {

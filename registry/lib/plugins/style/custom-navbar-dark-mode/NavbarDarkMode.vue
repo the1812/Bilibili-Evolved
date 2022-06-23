@@ -27,6 +27,7 @@ export default Vue.extend({
   svg {
     height: 18px;
     width: 18px;
+    fill: currentColor;
   }
 }
 </style>

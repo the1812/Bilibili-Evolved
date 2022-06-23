@@ -13,7 +13,8 @@ const entry = styledComponentEntry(() => import('./charge-list.scss'), async () 
       if (document.body.classList.contains(SkipChargeListDisabledClass)) {
         return
       }
-      const jumpButton = await select('.bilibili-player-electric-panel-jump') as HTMLElement
+      // 选择2.X或3.X的跳过按钮
+      const jumpButton = await select('.bilibili-player-electric-panel-jump,.bpx-player-electric-jump') as HTMLElement
       jumpButton?.click()
     })
   })

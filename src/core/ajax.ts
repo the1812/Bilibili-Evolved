@@ -151,6 +151,7 @@ export const postJsonWithCredentials = (url: string, json: any) => send<string>(
 export const monkey = <T = any>(details: MonkeyXhrBasicDetails) => (
   new Promise<T>((resolve, reject) => {
     const fullDetails: MonkeyXhrDetails = {
+      nocache: true,
       ...details,
       onload: (r: MonkeyXhrResponse) => resolve(r.response),
       onerror: (r: MonkeyXhrResponse) => {

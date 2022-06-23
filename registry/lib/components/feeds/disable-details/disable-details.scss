@@ -1,4 +1,4 @@
-[data-module="desc"],
+[data-module="desc"][data-orig],
 .card[data-did] .content {
   cursor: text;
   .details {
@@ -11,5 +11,10 @@
     body.dark & {
       color: #eee;
     }
+  }
+}
+.bili-rich-text-module {
+  &.at {
+    cursor: pointer;
   }
 }

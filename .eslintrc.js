@@ -18,10 +18,7 @@ module.exports = {
     parser: '@typescript-eslint/parser',
     sourceType: 'module',
   },
-  plugins: [
-    'vue',
-    '@typescript-eslint',
-  ],
+  plugins: ['vue', '@typescript-eslint'],
   rules: {
     'import/no-unresolved': 'off',
     'import/extensions': 'off',
@@ -38,7 +35,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     '@typescript-eslint/no-redeclare': 'error',
-    '@typescript-eslint/naming-convention': ['error',
+    '@typescript-eslint/naming-convention': [
+      'error',
       {
         selector: 'enumMember',
         format: ['PascalCase'],
@@ -65,7 +63,7 @@ module.exports = {
     'no-await-in-loop': 'off',
     'no-restricted-syntax': 'off',
     'no-useless-escape': 'off',
-    'no-empty-function': ['error', { 'allow': ['constructors'] }],
+    'no-empty-function': ['error', { allow: ['constructors'] }],
     'no-return-assign': ['error', 'except-parens'],
     'no-redeclare': 'off',
     'no-script-url': 'off',
@@ -76,33 +74,34 @@ module.exports = {
 
     'arrow-parens': ['error', 'as-needed'],
     'object-curly-newline': 'off',
-    'semi': ['error', 'never'],
+    semi: ['error', 'never'],
     'linebreak-style': 'off',
-    'camelcase': 'off',
+    camelcase: 'off',
     'lines-between-class-members': 'off',
-    'radix': ['error', 'as-needed'],
+    radix: ['error', 'as-needed'],
     'max-len': 'error',
     'max-classes-per-file': 'off',
-    'prefer-destructuring': ['error',
+    'prefer-destructuring': [
+      'error',
       {
-        'VariableDeclarator': {
-          'array': false,
-          'object': true
+        VariableDeclarator: {
+          array: false,
+          object: true,
         },
-        'AssignmentExpression': {
-          'array': false,
-          'object': false
-        }
+        AssignmentExpression: {
+          array: false,
+          object: false,
+        },
       },
     ],
-    'curly': ['error', 'all'],
+    curly: ['error', 'all'],
   },
   overrides: [
     {
-      files: ['*.vue', 'shims.d.ts'],
+      files: ['*.vue', 'shims.d.ts', 'webpack/**/*.ts', 'registry/webpack/**/*.ts'],
       rules: {
         'import/no-default-export': 'off',
-      }
-    }
-  ]
+      },
+    },
+  ],
 }

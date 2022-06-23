@@ -21,7 +21,6 @@ import marked from 'marked'
 import { getComponentSettings } from '@/core/settings'
 import SwitchBox from '@/ui/SwitchBox.vue'
 import VIcon from '@/ui/icon/VIcon.vue'
-import { languageNameToCode } from '@/core/utils/i18n'
 import { visibleInside } from '@/core/observer'
 import { dq } from '@/core/utils'
 import TagRing from './TagRing.vue'
@@ -76,7 +75,7 @@ export default Vue.extend({
         return description
       }
       return (
-        description[languageNameToCode[getSelectedLanguage()]]
+        description[getSelectedLanguage()]
         || description['zh-CN']
       )
     },

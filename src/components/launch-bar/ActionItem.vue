@@ -1,7 +1,7 @@
 <template>
   <div
     tabindex="0"
-    class="action-item suggest-item"
+    class="be-launch-bar-action-item suggest-item"
     :title="action.name"
     :data-indexer="action.indexer"
     @click.self="performAction($event)"

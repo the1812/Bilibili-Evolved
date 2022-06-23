@@ -4,6 +4,7 @@ import type { PluginMetadata } from '@/plugins/plugin'
 import { getSpeedContext, SpeedContext } from '../../../../components/video/player/common/speed/context'
 import { formatSpeedText } from '../../../../components/video/player/common/speed/utils'
 import type { RememberSpeedComponent } from '../../../../components/video/player/remember-speed/component'
+import '../../../../components/video/player/common/speed'
 
 interface CommonKeyBindingAction {
   videoSpeedIncrease: KeyBindingAction
@@ -13,7 +14,7 @@ interface CommonKeyBindingAction {
 
 export const plugin: PluginMetadata = {
   name: 'speed.keymap',
-  displayName: '视频倍速 - 快捷键支持',
+  displayName: '快捷键扩展 - 视频倍速',
   author: {
     name: 'JLoeve',
     link: 'https://github.com/LonelySteve',

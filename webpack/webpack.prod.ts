@@ -1,7 +1,7 @@
-const webpack = require('webpack')
-const { getBanner, getDefaultConfig } = require('./webpack.config')
-
-const mainMeta = require('../src/client/bilibili-evolved.meta.json')
+import webpack, { Configuration } from 'webpack'
+import { getBanner, getDefaultConfig } from './webpack.config'
+import previewConfig from './webpack.dev'
+import mainMeta from '../src/client/bilibili-evolved.meta.json'
 
 const mainConfig = Object.assign(getDefaultConfig(), {
   mode: 'production',
@@ -9,7 +9,7 @@ const mainConfig = Object.assign(getDefaultConfig(), {
   output: {
     filename: 'bilibili-evolved.user.js',
   },
-})
+}) as Configuration
 mainConfig.plugins.push(
   new webpack.BannerPlugin({
     banner: getBanner(mainMeta),
@@ -17,7 +17,6 @@ mainConfig.plugins.push(
     entryOnly: true,
   }),
 )
-const previewConfig = require('./webpack.dev')
 
 previewConfig.output.filename = 'bilibili-evolved.preview.user.js'
 previewConfig.mode = 'production'
@@ -26,4 +25,5 @@ const targets = [mainConfig, previewConfig].map(config => {
   config.devtool = false
   return config
 })
-module.exports = targets
+
+export default targets
