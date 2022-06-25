@@ -17,13 +17,13 @@ const tabs: TabMappings = [
   {
     name: MinimalHomeTabOption.Feeds,
     displayName: '动态',
-    component: () => import('./tabs/MinimalHomeFeeds.vue').then(m => m.default),
+    component: () => import('./tabs/Feeds.vue').then(m => m.default),
     activeLink: 'https://t.bilibili.com/?tab=video',
   },
   {
     name: MinimalHomeTabOption.Trending,
     displayName: minimalHomeOptions.personalized ? '推荐' : '热门',
-    component: () => import('./tabs/MinimalHomeTrending.vue').then(m => m.default),
+    component: () => import('./tabs/Trending.vue').then(m => m.default),
     activeLink: 'https://www.bilibili.com/v/popular/all',
   },
 ]
@@ -73,6 +73,21 @@ export default Vue.extend({
   flex-direction: column;
   &-tabs {
     flex-grow: 1;
+    .minimal-home-tab {
+      &-cards {
+        display: grid;
+        grid-template-columns: repeat(
+          var(--minimal-home-card-column),
+          var(--card-width)
+        );
+        gap: 12px;
+        padding: 0 8px;
+        margin-bottom: 16px;
+        .video-card * {
+          transition: 0.2s ease-out;
+        }
+      }
+    }
   }
 }
 </style>
