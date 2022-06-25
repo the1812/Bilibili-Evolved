@@ -1,5 +1,5 @@
 import parse from 'csv-parse/lib/sync'
-import fs from 'fs'
+import fs from 'fs-extra'
 
 const files = process.argv.slice(2)
 const parseAliPay = (csv: Record<string, string>[]) => {
@@ -48,4 +48,4 @@ const items = files.map(file => {
   console.warn(`not parse method for ${file}`)
   return []
 }).flat().sort((a, b) => parseInt(b.sortKey) - parseInt(a.sortKey))
-fs.writeFileSync('dist/output.md', items.join('\n'))
+fs.outputFileSync('dist/output.md', items.join('\n'))

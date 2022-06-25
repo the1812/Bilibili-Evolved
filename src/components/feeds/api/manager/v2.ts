@@ -55,7 +55,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     text: '',
     type: cardType,
     element,
-    get presented() { return element.parentNode !== null },
+    get presented() { return document.body.contains(element) },
     async getText() {
       return getText(modules.module_dynamic, cardType)
     },
@@ -81,7 +81,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   card.text = await card.getText()
   return card
 }
-const isNodeValid = createNodeValidator('bili-dyn-list__item')
+const isNodeValid = createNodeValidator('.bili-dyn-list__item, .bili-dyn-item')
 
 /** 新版动态卡片管理器实现 */
 export class FeedsCardsManagerV2 extends FeedsCardsManager {
@@ -103,6 +103,9 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
       return
     }
     const vueData = getVueData(node)
+    if (!vueData) {
+      return
+    }
     const id = vueData.data?.id_str ?? '0'
     const index = this.cards.findIndex(c => c.id === id)
     if (index === -1) {
@@ -112,7 +115,7 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
     this.dispatchCardEvent(FeedsCardsManagerEventType.RemoveCard, card)
   }
   updateCards(cardsList: HTMLElement) {
-    const selector = '.bili-dyn-list__item'
+    const selector = '.bili-dyn-list__item, :not(.bili-dyn-list__item) > .bili-dyn-item'
     const cards = dqa(cardsList, selector)
     cards.forEach(it => this.addCard(it))
     const getCardNode = (node: Node) => {
@@ -129,6 +132,7 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
         record.addedNodes.forEach(node => this.addCard(getCardNode(node)))
         record.removedNodes.forEach(node => this.removeCard(getCardNode(node)))
       })
+      this.cleanUpCards()
     })
   }
 }

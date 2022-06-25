@@ -63,19 +63,19 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
         } = {}
         const stop = () => {
           if (!vm.listElement || !vm.observer) {
-            return []
+            return
           }
           console.log('space feeds stop')
           vm.observer?.then(it => it.disconnect())
           delete vm.observer
           delete vm.listElement
-          return Promise.all(manager.cards.map(c => c.element).map(e => manager.removeCard(e)))
+          manager.cleanUpCards()
         }
         const start = () => {
           if (vm.observer) {
             return vm.observer
           }
-          const newListPromise = select('.feed-card .content') as Promise<HTMLElement>
+          const newListPromise = select('.feed-card .content, .bili-dyn-list__items') as Promise<HTMLElement>
           vm.observer = (async () => {
             // const newList = await vm.listElement as HTMLElement
             const newList = await newListPromise
@@ -93,7 +93,7 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
           return vm.observer
         }
         childListSubtree(container, async () => {
-          if (dq('.feed-card .content')) {
+          if (dq('.feed-card .content, .bili-dyn-list__items')) {
             start()
           } else {
             stop()
@@ -133,11 +133,25 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
         'https://t.bilibili.com/',
       ],
       watchCardsList: async manager => {
-        const list = await select('.feed-card .content, .detail-content .detail-card, .bili-dyn-list__items') as HTMLElement
+        const list = await select('.feed-card .content, .detail-content .detail-card, #app > .content > .card, .bili-dyn-list__items') as HTMLElement
         if (!list) {
           return false
         }
-        manager.updateCards(list)
+        if (list.classList.contains('bili-dyn-list__items')) {
+          const section = list.parentElement.parentElement
+          let cardListObserver: MutationObserver
+          childList(section, () => {
+            const changedList = dq(section, '.bili-dyn-list__items') as HTMLElement
+            if (!changedList) {
+              return
+            }
+            cardListObserver?.disconnect()
+            manager.cards = [];
+            [cardListObserver] = manager.updateCards(changedList)
+          })
+        } else {
+          manager.updateCards(list)
+        }
         return true
       },
     },

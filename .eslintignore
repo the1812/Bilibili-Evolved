@@ -1,7 +1,7 @@
-webpack/
 packages/
 typings/
 dist/
 dev/
+node_modules/
 *.config.*
 .eslintrc.*

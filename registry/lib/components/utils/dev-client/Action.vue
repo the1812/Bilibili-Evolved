@@ -21,35 +21,14 @@
   </div>
 </template>
 <script lang="ts">
-import { OptionsOfMetadata } from '@/components/define'
 import { ComponentMetadata } from '@/components/types'
-import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
 import { DevClientEvents } from './client'
-import { autoUpdateOptions, devClientOptionsMetadata } from './options'
+import { autoUpdateOptions, getDevClientOptions } from './options'
+import { urlConverter } from './converter'
 
-const { options } = getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient')
-const converter = {
-  toDevUrl: (url: string) => {
-    if (!url) {
-      return null
-    }
-    const devUrlMatch = url.match(new RegExp(`localhost:${options.port}\\/registry\\/components\\/(.+)$`))
-    if (devUrlMatch) {
-      return url
-    }
-    const localhostMatch = url.match(/localhost:(\d+?)\/components\/(.+)$/)
-    if (localhostMatch) {
-      return `http://localhost:${options.port}/registry/dist/components/${localhostMatch[2]}`
-    }
-    const onlineMatch = url.match(/\/registry\/dist\/components\/(.+)$/)
-    if (onlineMatch) {
-      return `http://localhost:${options.port}/registry/dist/components/${onlineMatch[1]}`
-    }
-    return null
-  },
-}
+const options = getDevClientOptions()
 
 export default Vue.extend({
   components: {
@@ -88,7 +67,7 @@ export default Vue.extend({
       })
     },
     canStartDebug() {
-      return !this.isDebugging && converter.toDevUrl(this.componentUpdateUrl) !== null
+      return !this.isDebugging && urlConverter.toDevUrl(this.componentUpdateUrl) !== null
     },
     canStopDebug() {
       return Boolean(this.isDebugging && this.componentUpdateUrl)
@@ -127,7 +106,7 @@ export default Vue.extend({
       await this.handleClick(async () => {
         const { devClient } = await import('./client')
         const metadata = this.component as ComponentMetadata
-        const devUrl = converter.toDevUrl(this.componentUpdateUrl)
+        const devUrl = urlConverter.toDevUrl(this.componentUpdateUrl)
         // console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
         if (this.autoUpdateRecord.url !== devUrl) {
           options.devRecords[metadata.name] = {

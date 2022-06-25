@@ -87,7 +87,7 @@ $vip-color: "FB7299";
 @mixin to-white {
   filter: brightness(0) invert(1) !important;
 }
-@mixin to-gray($invert: 0.7) {
+@mixin to-gray($invert: 0.666) {
   filter: brightness(0) invert($invert) !important;
 }
 @mixin grayscale($value: 1) {

@@ -2,13 +2,11 @@ import { defineComponentMetadata } from '@/components/define'
 import { isIframe } from '@/core/utils'
 import { devClientOptionsMetadata, autoUpdateOptions } from './options'
 import { setupPlugin } from './plugin'
-import description from './desc.md'
 
 export const component = defineComponentMetadata({
   name: 'devClient',
   displayName: 'DevClient',
   tags: [componentsTags.utils],
-  description,
   entry: async ({ settings: { options } }) => {
     if (isIframe()) {
       return
@@ -25,13 +23,17 @@ export const component = defineComponentMetadata({
           return
         }
         autoUpdateRecord.url = originalUrl
-        console.log('cleanUpDevRecords', name, originalUrl, autoUpdateRecord)
+        console.log('cleanUpDevRecords', name, devUrl, originalUrl, autoUpdateRecord)
         delete options.devRecords[name]
       })
     }
     devClient.addEventListener(
       DevClientEvents.ServerConnected,
-      () => cleanUpDevRecords(),
+      () => {
+        devClient.addEventListener(DevClientEvents.SessionsUpdate, () => {
+          cleanUpDevRecords()
+        }, { once: true })
+      },
     )
     if (options.autoConnect) {
       devClient.createSocket()

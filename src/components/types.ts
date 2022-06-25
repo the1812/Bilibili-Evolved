@@ -203,6 +203,8 @@ export interface FunctionalMetadata<
   urlInclude?: TestPattern
   /** 设置不匹配的URL, 不匹配则不运行此组件, 优先级高于`urlInclude` */
   urlExclude?: TestPattern
+  /** i18n 数据 */
+  i18n?: Record<string, LanguagePack | Executable<LanguagePack>>
 }
 
 /** 组件基本信息 */
@@ -223,8 +225,6 @@ export interface ComponentMetadata<
   hidden?: boolean
   /** 组件子选项 */
   options?: OptionsMetadata<O>
-  /** i18n 数据 */
-  i18n?: Record<string, LanguagePack>
   /** 是否支持热重载 */
   // allowHotReload?: boolean
 }

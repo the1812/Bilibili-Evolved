@@ -90,13 +90,17 @@ const loadFeatureCode = async <X extends FeatureBase>(
 ): Promise<LoadFeatureCodeResult<X>> => {
   // 收集代码导出值
   const exports = {}
+  let result: X
   try {
-    eval(code)
+    result = eval(code)
   } catch (thrown) {
     return codeThrewResult(thrown)
   }
   const values = Object.values(exports)
   if (values.length === 0) {
+    if (typeof result === 'object') {
+      return okResult(result)
+    }
     return noExportResult
   }
   return okResult(values[0] as X)

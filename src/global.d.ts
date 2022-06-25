@@ -8,15 +8,35 @@ declare global {
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
 
-  interface CompilationInfo {
+  interface GitInfo {
     commitHash: string
     branch: string
-    version: string
     nearestTag: string
     versionWithTag: string
+  }
+  interface CompilationInfo extends GitInfo {
+    year: string
+    version: string
+    altCdn: {
+      owner: string
+      host: string
+      stableClient: string
+      previewClient: string
+      library: {
+        lodash: string
+        protobuf: string
+        jszip: string
+        sortable: string
+        mdi: string
+      }
+      smallLogo: string
+      logo: string
+      root: (branch: string, owner?: string) => string
+    }
     // buildTime: number
   }
   const webpackCompilationInfo: CompilationInfo
+  const webpackGitInfo: GitInfo
 
   const BwpElement: {
     new(): HTMLVideoElement
@@ -51,14 +71,17 @@ declare global {
     method?: 'GET' | 'POST' | 'HEAD'
     headers?: { [name: string]: string },
     data?: string
+    cookie?: string
     binary?: boolean
+    nocache?: boolean
+    revalidate?: boolean
     timeout?: number
     context?: any
     responseType?: 'arraybuffer' | 'blob' | 'json' | 'text'
     overrideMimeType?: string
     anonymous?: boolean
     fetch?: boolean
-    username?: string
+    user?: string
     password?: string
   }
   interface MonkeyXhrDetails extends MonkeyXhrBasicDetails {

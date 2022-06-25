@@ -16,7 +16,7 @@ import {
   NATIVE_SUPPORTED_VALUES,
 } from '../common/speed'
 import { PLAYER_AGENT, SpeedContext } from '../common/speed/context'
-import { formatSpeedText, parseSpeedText, trimLeadingDot } from '../common/speed/utils'
+import { formatSpeedText, parseSpeedText, splitToSpace, trimLeadingDot } from '../common/speed/utils'
 import type { Options as RememberSpeedOptions } from '../remember-speed/component'
 
 export const EXTEND_SPEED_INPUT_CLASS_NAME = 'extend-speed-input'
@@ -140,7 +140,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
 
   createInputElement(): VNode<HTMLLIElement> {
     const { input, root, icon } = $<{ input: HTMLInputElement, icon: HTMLElement }, HTMLLIElement>(`
-      <li class="${trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector)} ${EXTEND_SPEED_INPUT_CLASS_NAME}">
+      <li class="${splitToSpace(trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector))} ${EXTEND_SPEED_INPUT_CLASS_NAME}">
         <i data-ref="icon" class="mdi mdi-playlist-plus" style="font-size: 1.5em"></i>
         <input data-ref="input" type="number" title="添加新的倍数值" max="${MAX_BROWSER_SPEED_VALUE}" step="${STEP_SPEED_VALUE}" style="display: none;"></input>
       </li>
@@ -233,8 +233,9 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
   createCustomSpeedMenuItemElement(
     value: number,
   ): VNode<HTMLLIElement, number> {
+    // 3.X的倍速需要通过data-value读取值并设置
     const { closeBtn, root } = $<{ closeBtn: HTMLElement }, HTMLLIElement>(`
-      <li class="${trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector)} ${EXTEND_SPEED_ITEM_CLASS_NAME}">
+      <li class="${splitToSpace(trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector))} ${EXTEND_SPEED_ITEM_CLASS_NAME}" data-value="${(value)}">
         ${formatSpeedText(value)}
         <i data-ref="close-btn" class="mdi mdi-close-circle"></i>
       </li>
@@ -248,7 +249,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
         position: absolute;
         right: 4px;
       }
-      ${PLAYER_AGENT.custom.speedMenuItem.selector}:not(${PLAYER_AGENT.custom.active.selector}):hover [data-ref="close-btn"] {
+      :is(${PLAYER_AGENT.custom.speedMenuItem.selector}):not(${PLAYER_AGENT.custom.active.selector}):hover [data-ref="close-btn"] {
         display: inline;
       }
       .${EXTEND_SPEED_ITEM_CLASS_NAME} [data-ref="close-btn"]:hover {
@@ -298,7 +299,8 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
         // 有的时候，选择 1.0x 倍速，会错误选中 11.0x 倍速
         // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没出现该问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
         // 原先使用 contains 而不直接比较的原因是，自定义的倍速菜单项，可能在创建时引入了多余的空白符，现在使用 normalize-space 代替之前的做法
-        `./*[contains(@class, "${ExtendSpeedComponent.speedMenuItemClassName}")`
+        // `./*[contains(@class, "${ExtendSpeedComponent.speedMenuItemClassName}")`
+        `./*[(${ExtendSpeedComponent.speedMenuItemClassName.split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})`
         + ` and not(contains(@class, "${EXTEND_SPEED_INPUT_CLASS_NAME}"))`
         // see: https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
         // 自定义的倍速菜单项，在创建时引入了多余的空白符，需要通过 normalize-space 函数排除掉
@@ -312,9 +314,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
 
   onSpeedContext({
     menuListElementClickSpeedChange$,
-    menuListElementMutations$,
     playbackRate$,
-    menuListElement,
   }: SpeedContext) {
     this.options.extendSpeedList$
       .subscribe({
@@ -335,10 +335,20 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
           name: 'extend-video-speed-style',
           style: maxMenuHeight => `
                   ${PLAYER_AGENT.custom.speedMenuList.selector} {
-                    display: flex;
+                    display: flex !important; /* 防止3.X样式覆盖 */
                     flex-direction: column;
+                    justify-content: center; /* 添加倍速那一项，当鼠标在上半部分会有莫名其妙的'mouseleave', 用这个修复 */
                     overflow-y: auto;
                     max-height: ${maxMenuHeight}px;
+                    visibility: hidden;
+                  }
+                  /* 修复2.X倍速列表显示问题 */
+                  :is(${PLAYER_AGENT.custom.show.selector}) :is(${PLAYER_AGENT.custom.speedMenuList.selector}){
+                    visibility: visible;
+                  }
+                  /* 修复番剧区的列表显示问题 */
+                  :is(${PLAYER_AGENT.custom.speedMenuList.selector})[style*="block"] {
+                    visibility: visible;
                   }`,
         }),
       )
@@ -352,7 +362,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                   scrollbar-width: none !important;
                   overscroll-behavior: contain;
                 }
-                ${PLAYER_AGENT.custom.speedMenuList.selector}::-webkit-scrollbar {
+                :is(${PLAYER_AGENT.custom.speedMenuList.selector})::-webkit-scrollbar {
                     height: 0 !important;
                     width: 0 !important;
                 }`,
@@ -377,22 +387,6 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
         this.setVideoSpeed(nativeSpeedValue)
         this.forceVideoSpeedWithUpdateStyle(nativeSpeedValue)
       },
-    })
-
-    // 【修复】番剧类视频扩展倍速菜单项顺序可能错误
-    //
-    // 针对番剧类视频的倍速菜单做后备的 flex 布局设置方式
-    // 番剧类视频的倍速菜单通过内联样式方式直接改变 menuListElement 的 display
-    // 这将优先于通过内部样式设定的 flex 布局，因此只能监听元素的特性变化，在 display 被设置为 block 时，强行设置为 flex
-    menuListElementMutations$.subscribe(({ attributes }) => {
-      attributes.forEach(mutation => {
-        if (mutation.attributeName === 'style') {
-          const { display } = unsafeWindow.getComputedStyle(menuListElement)
-          if (display === 'block') {
-            menuListElement.style.display = 'flex'
-          }
-        }
-      })
     })
 
     this.currentSpeedValue && requestIdleCallback(() => {
@@ -447,7 +441,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     // 为所有倍速菜单项刷新 Order
     menuListElement
       .querySelectorAll(
-        `${PLAYER_AGENT.custom.speedMenuItem.selector}:not(#${this.inputElement.node.id})`,
+        `:is(${PLAYER_AGENT.custom.speedMenuItem.selector}):not(#${this.inputElement.node.id})`,
       )
       .forEach((it: HTMLLIElement) => {
         it.style.order = calcOrder(
@@ -472,15 +466,17 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     } = this.speedContext
     // 移除所有激活态的菜单项
     for (const element of dea(
-      `./*[contains(@class, "${ExtendSpeedComponent.speedMenuItemClassName}") and contains(@class, "${ExtendSpeedComponent.activeClassName}")]`,
+      `./*[(${trimLeadingDot(ExtendSpeedComponent.speedMenuItemClassName).split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})`
+      + ' and '
+      + `(${trimLeadingDot(ExtendSpeedComponent.activeClassName).split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})]`,
       menuListElement,
     ) as Iterable<HTMLElement>) {
-      element.classList.remove(ExtendSpeedComponent.activeClassName)
+      element.classList.remove(...ExtendSpeedComponent.activeClassName.split(','))
     }
     // 对于被强制更新的菜单项，添加激活态的类名
-    querySpeedMenuItemElement(value).classList.add(ExtendSpeedComponent.activeClassName)
+    querySpeedMenuItemElement(value).classList.add(...ExtendSpeedComponent.activeClassName.split(','))
     // 关闭菜单
-    containerElement.classList.remove(ExtendSpeedComponent.showClassName)
+    containerElement.classList.remove(...ExtendSpeedComponent.showClassName.split(','))
     // 更新倍速菜单按钮文本
     nameBtnElement.innerText = formatSpeedText(
       value,

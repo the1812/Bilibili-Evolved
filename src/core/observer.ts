@@ -222,24 +222,9 @@ export const urlChange = (callback: (url: string) => void, config?: AddEventList
 
 /** 等待 cid */
 const selectCid = lodash.once(() => select(() => {
+  import('@/components/video/player-adaptor').then(({ playerPolyfill }) => playerPolyfill())
   if (unsafeWindow.cid) {
     return unsafeWindow.cid
-  }
-  if (unsafeWindow.player && unsafeWindow.player.getVideoMessage) {
-    const info = unsafeWindow.player.getVideoMessage()
-    if (Number.isNaN(info.cid)) {
-      return null
-    }
-    if (!unsafeWindow.aid && info.aid) {
-      unsafeWindow.aid = info.aid.toString()
-    }
-    if (!unsafeWindow.bvid && info.bvid) {
-      unsafeWindow.bvid = info.bvid
-    }
-    if (!unsafeWindow.cid && info.cid) {
-      unsafeWindow.cid = info.cid.toString()
-    }
-    return info.cid.toString()
   }
   return null
 }))
@@ -259,8 +244,8 @@ export const videoChange = async (
   if (!matchCurrentPage(playerUrls)) {
     return false
   }
-  const { bpxPlayerPolyfill } = await import('@/components/video/bpx-player-adaptor')
-  bpxPlayerPolyfill()
+  const { playerPolyfill } = await import('@/components/video/player-adaptor')
+  playerPolyfill()
   const cid = await selectCid()
   if (cid === null) {
     return false

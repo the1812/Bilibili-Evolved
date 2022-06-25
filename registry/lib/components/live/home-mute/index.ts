@@ -1,9 +1,9 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { addStyle, removeStyle } from '@/core/style'
 
 const liveHome = /^https:\/\/live\.bilibili\.com\/(index\.html)?$/
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'liveHomeMute',
   displayName: '直播首页静音',
   tags: [
@@ -47,4 +47,4 @@ export const component: ComponentMetadata = {
       })
     },
   },
-}
+})

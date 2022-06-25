@@ -6,7 +6,7 @@ import { FeedsCardsManagerV2 } from './v2'
 
 export * from './base'
 export const feedsCardsManager = (() => {
-  const isV2Feeds = parseInt(getCookieValue('hit-dyn-v2')) > 0
+  const isV2Feeds = parseInt(getCookieValue('hit-dyn-v2')) > 0 && location.host === 't.bilibili.com'
   if (isV2Feeds) {
     return new FeedsCardsManagerV2()
   }
