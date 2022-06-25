@@ -5,18 +5,18 @@ import { getDefaultConfig } from '../../webpack/webpack.config'
 import { getId } from '../lib/id'
 
 export const buildByEntry = (
-  params: { src: string; type: string; entry: string },
+  params: { src: string; type: string; entry: string, mode?: Configuration['mode'] },
 ) => {
   // const match = entry.match(/\/?registry\/dist\/([^\/]+)\/(.+)\/index\.ts/)
   // if (!match) {
   //   throw new Error(`Invalid entry path: ${entry}`)
   // }
-  const { src, type, entry } = params
+  const { src, type, entry, mode = 'production' } = params
   const id = getId(src, entry)
   const defaultConfig = getDefaultConfig(path.resolve('./registry/lib/'))
   const config: Configuration = {
     ...defaultConfig,
-    mode: 'production',
+    mode,
     entry: {
       [id]: entry,
     },
