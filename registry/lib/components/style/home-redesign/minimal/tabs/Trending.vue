@@ -3,7 +3,7 @@
     <div class="minimal-home-tab-cards">
       <VideoCard v-for="c of cards" :key="c.id" :data="c" />
     </div>
-    <VEmpty v-if="loaded && cards.length === 0" />
+    <VEmpty v-if="!loading && cards.length === 0" />
     <VLoading v-if="loading && cards.length === 0" />
     <MinimalHomeOperations v-if="cards.length > 0" @refresh="loadCards" />
   </div>

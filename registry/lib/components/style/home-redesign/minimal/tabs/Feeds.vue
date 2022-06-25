@@ -3,8 +3,8 @@
     <div class="minimal-home-tab-cards">
       <VideoCard v-for="c of cards" :key="c.id" :data="c" />
     </div>
-    <VEmpty v-if="loaded && cards.length === 0" />
-    <ScrollTrigger @trigger="loadCards" />
+    <VEmpty v-if="!loading && cards.length === 0" />
+    <ScrollTrigger v-if="!error" @trigger="loadCards" />
     <MinimalHomeOperations v-if="cards.length > 0" @refresh="refresh" />
   </div>
 </template>

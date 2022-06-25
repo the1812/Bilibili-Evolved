@@ -53,13 +53,15 @@ export default Vue.extend({
 @import 'common';
 
 .minimal-home {
-  --minimal-home-auto-card-columns: 1;
+  --minimal-home-auto-card-column: 1;
   --card-width: 600px;
   --card-height: 122px;
-  @media screen and (min-width: 1080px) {
+  --minimal-home-grid-gap: 12px;
+  --minimal-home-grid-padding: 8px;
+  @media screen and (min-width: 1440px) {
     --minimal-home-auto-card-column: 2;
   }
-  @media screen and (min-width: 2520px) {
+  @media screen and (min-width: 2160px) {
     --minimal-home-auto-card-column: 3;
   }
   --minimal-home-card-column: var(
@@ -73,6 +75,11 @@ export default Vue.extend({
   flex-direction: column;
   &-tabs {
     flex-grow: 1;
+    min-width: calc(
+      var(--card-width) * var(--minimal-home-card-column) +
+        var(--minimal-home-grid-gap) * (var(--minimal-home-card-column) - 1) + 2 *
+        var(--minimal-home-grid-padding)
+    );
     .minimal-home-tab {
       &-cards {
         display: grid;
@@ -80,8 +87,8 @@ export default Vue.extend({
           var(--minimal-home-card-column),
           var(--card-width)
         );
-        gap: 12px;
-        padding: 0 8px;
+        gap: var(--minimal-home-grid-gap);
+        padding: 0 var(--minimal-home-grid-padding);
         margin-bottom: 16px;
         .video-card * {
           transition: 0.2s ease-out;
