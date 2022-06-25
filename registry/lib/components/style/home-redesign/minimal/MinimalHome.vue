@@ -1,64 +1,72 @@
 <template>
   <HomeRedesignBase>
     <div class="minimal-home">
-      <div class="minimal-home-tabs">
-        <div class="default-tabs">
-          <MinimalHomeFeeds  @tab-change="onTabChange" />
-          <MinimalHomeTrending @tab-change="onTabChange" />
-        </div>
-      </div>
+      <TabControl class="minimal-home-tabs" :tabs="tabs" />
     </div>
   </HomeRedesignBase>
 </template>
 <script lang="ts">
+import { addComponentListener } from '@/core/settings'
+import { TabControl } from '@/ui'
+import { TabMappings } from '@/ui/tab-mapping'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
 import { minimalHomeOptions } from './options'
-import MinimalHomeFeeds from './tabs/MinimalHomeFeeds.vue'
-import MinimalHomeTrending from './tabs/MinimalHomeTrending.vue'
 import { MinimalHomeTabOption } from './types'
 
-const tabs = [
-  MinimalHomeFeeds,
-  MinimalHomeTrending,
+const tabs: TabMappings = [
+  {
+    name: MinimalHomeTabOption.Feeds,
+    displayName: '动态',
+    component: () => import('./tabs/MinimalHomeFeeds.vue').then(m => m.default),
+    activeLink: 'https://t.bilibili.com/?tab=video',
+  },
+  {
+    name: MinimalHomeTabOption.Trending,
+    displayName: minimalHomeOptions.personalized ? '推荐' : '热门',
+    component: () => import('./tabs/MinimalHomeTrending.vue').then(m => m.default),
+    activeLink: 'https://www.bilibili.com/v/popular/all',
+  },
 ]
 export default Vue.extend({
   components: {
     HomeRedesignBase,
-    MinimalHomeFeeds,
-    MinimalHomeTrending,
+    TabControl,
   },
   data() {
     return {
       tabs,
-      selectedTab: minimalHomeOptions.defaultTab,
     }
   },
-  computed: {
-
-  },
-  methods: {
-    onTabChange(newTab: MinimalHomeTabOption) {
-      this.selectedTab = newTab
-    },
+  mounted() {
+    const columnCountKey = '--minimal-home-column-count-override'
+    addComponentListener('minimalHome.columnCount', (count: number) => {
+      if (count > 0) {
+        (this.$el as HTMLElement).style.setProperty(columnCountKey, count.toString())
+      } else {
+        (this.$el as HTMLElement).style.removeProperty(columnCountKey)
+      }
+    }, true)
   },
 })
 </script>
 <style lang="scss">
 @import 'common';
-@import 'tabs';
 
-/* TODO:
-- 默认列数自适应
-  - 720P 一列
-  - 1080P 两列
-  - 21:9 四列
-*/
 .minimal-home {
-  &-tabs {
-    @include tabs-style();
-    .default-tabs {
-      padding: 4px 8px;
-    }
+  --minimal-home-auto-card-columns: 1;
+  --card-width: 600px;
+  --card-height: 122px;
+  @media screen and (min-width: 1080px) {
+    --minimal-home-auto-card-column: 2;
   }
+  @media screen and (min-width: 2520px) {
+    --minimal-home-auto-card-column: 3;
+  }
+  --minimal-home-card-column: var(
+    --minimal-home-column-count-override,
+    var(--minimal-home-auto-card-column)
+  );
+
+  padding: 24px 32px;
 }
 </style>

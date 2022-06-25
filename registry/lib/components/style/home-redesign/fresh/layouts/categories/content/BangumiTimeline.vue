@@ -109,7 +109,7 @@ import {
 } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
-import { cssVariableMixin, requestMixin } from './mixin'
+import { cssVariableMixin, requestMixin } from '../../../../mixin'
 import { rankListCssVars } from './rank-list'
 import { setupScrollMask, cleanUpScrollMask } from '../../../scroll-mask'
 
