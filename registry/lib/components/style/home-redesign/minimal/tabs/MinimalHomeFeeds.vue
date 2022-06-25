@@ -1,14 +1,11 @@
 <template>
   <div class="minimal-home-feeds" :class="{ loading, loaded, error }">
     <div class="minimal-home-feeds-cards">
-      <VideoCard
-        v-for="c of cards"
-        :key="c.id"
-        :data="c"
-      />
+      <VideoCard v-for="c of cards" :key="c.id" :data="c" />
     </div>
     <VEmpty v-if="loaded && cards.length === 0" />
     <ScrollTrigger @trigger="loadCards" />
+    <MinimalHomeOperations @refresh="refresh" />
   </div>
 </template>
 <script lang="ts">
@@ -21,19 +18,15 @@ import {
   VEmpty,
   ScrollTrigger,
 } from '@/ui'
-import { cssVariableMixin } from '../../mixin'
+import MinimalHomeOperations from '../MinimalHomeOperations.vue'
 
 export default Vue.extend({
-  components: { ScrollTrigger, VEmpty, VideoCard: VideoCardComponent },
-  mixins: [cssVariableMixin({
-
-  })],
+  components: { ScrollTrigger, VEmpty, VideoCard: VideoCardComponent, MinimalHomeOperations },
   data() {
     return {
       loading: true,
       cards: [],
       error: false,
-
     }
   },
   computed: {
@@ -61,6 +54,9 @@ export default Vue.extend({
         this.loading = false
       }
     },
+    async refresh() {
+      this.cards = []
+    },
   },
 })
 </script>
@@ -68,12 +64,15 @@ export default Vue.extend({
 .minimal-home-feeds {
   &-cards {
     display: grid;
-    grid-template-columns: repeat(var(--minimal-home-card-column), var(--card-width));
+    grid-template-columns: repeat(
+      var(--minimal-home-card-column),
+      var(--card-width)
+    );
     gap: 12px;
     padding: 0 8px;
     margin-bottom: 16px;
     .video-card * {
-      transition: .2s ease-out;
+      transition: 0.2s ease-out;
     }
   }
 }

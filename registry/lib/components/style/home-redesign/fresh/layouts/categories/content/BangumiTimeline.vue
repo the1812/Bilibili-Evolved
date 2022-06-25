@@ -301,7 +301,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
-@import "../../../effects";
+@import "effects";
 
 .fresh-home-categories-bangumi {
   &-timeline {
