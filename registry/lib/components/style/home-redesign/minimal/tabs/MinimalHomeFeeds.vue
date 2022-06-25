@@ -5,7 +5,7 @@
     </div>
     <VEmpty v-if="loaded && cards.length === 0" />
     <ScrollTrigger @trigger="loadCards" />
-    <MinimalHomeOperations @refresh="refresh" />
+    <MinimalHomeOperations v-if="loaded" @refresh="refresh" />
   </div>
 </template>
 <script lang="ts">

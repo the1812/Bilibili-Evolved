@@ -67,6 +67,12 @@ export default Vue.extend({
     var(--minimal-home-auto-card-column)
   );
 
-  padding: 24px 32px;
+  padding: 24px 32px 0 32px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  &-tabs {
+    flex-grow: 1;
+  }
 }
 </style>
