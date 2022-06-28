@@ -11,12 +11,9 @@ export const getVueData = (el: any) => (
 )
 
 export const createNodeValidator = (className: string) => (node: Node): node is HTMLElement => {
-  if (className.startsWith('.')) {
-    className = className.substring(1)
-  }
   const notNull = Boolean(node)
   const notDetached = node && node.parentNode
-  const matchClassName = (node instanceof HTMLElement) && node.classList.contains(className)
+  const matchClassName = (node instanceof HTMLElement) && node.matches(className)
   return notNull && notDetached && matchClassName
 }
 

@@ -8,7 +8,7 @@ export const component: ComponentMetadata = {
   name: 'avUrl',
   displayName: '网址AV号转换',
   description: {
-    'zh-CN': '当视频的链接是BV号时, 自动转换为AV号. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址).',
+    'zh-CN': '当视频的链接是BV号时, 自动转换为AV号. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.',
   },
   entry: () => {
     fullyLoaded(() => {
@@ -24,7 +24,7 @@ export const component: ComponentMetadata = {
         }
         const newUrl = document.URL.replace(/\/(video|bangumi)\/(BV[\w]+)/i, (_, type) => `/${type}/av${aid}`)
         if (document.URL !== newUrl) {
-          window.history.replaceState({}, document.title, newUrl)
+          window.history.replaceState(history.state, '', newUrl)
         }
       })
     })

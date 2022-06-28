@@ -65,8 +65,8 @@
 # 推荐配置
 - 操作系统: 64-bit Windows 10+ / macOS 10.15+
 - 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 84+ / Firefox 80+ / Edge 84+ / Safari 14.1+
-- 处理器: 8代 Intel Core i7+ / Zen 3 架构 AMD Ryzen 5+
+- 浏览器: Chrome 88+ / Firefox 80+ / Edge 88+ / Safari 14.1+
+- 处理器: 8代 Intel Core i7+ / AMD Ryzen 5000+
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
 - 显卡: GeForce GTX 660 / Radeon HD 7870

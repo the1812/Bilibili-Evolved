@@ -26,7 +26,7 @@ jobs:
       run: yarn type
 
     - name: ESLint check
-      run: yarn lint
+      run: yarn lint-check
 
     - name: Build core
       run: yarn build-core
