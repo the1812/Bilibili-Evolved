@@ -12,14 +12,14 @@
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./webpack/webpack.dev.js --progress",
+      "command": "yarn webpack --config ./webpack/webpack.dev.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:编译开发版本 dev:build-core"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./webpack/webpack.dev.js --progress",
+      "command": "yarn webpack --watch --config ./webpack/webpack.dev.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:监视开发版本 dev:watch-core"
@@ -40,14 +40,14 @@
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./registry/webpack/components.js --progress --mode=development",
+      "command": "yarn webpack --watch --config ./registry/webpack/components.ts --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:监视组件 dev:watch-components"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./registry/webpack/plugins.js --progress --mode=development",
+      "command": "yarn webpack --watch --config ./registry/webpack/plugins.ts --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:监视插件 dev:watch-plugins"
@@ -61,56 +61,56 @@
     },
     {
       "type": "shell",
-      "command": "yarn --silent webpack --config ./webpack/webpack.prod.js --profile --json > dist/profile.json && yarn webpack-bundle-analyzer dist/profile.json",
+      "command": "yarn --silent webpack --config ./webpack/webpack.prod.ts --profile --json > dist/profile.json && yarn webpack-bundle-analyzer dist/profile.json",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:打包分析 prod:analyze"
     },
     {
       "type": "shell",
-      "command": "yarn eslint --cache --cache-location node_modules/.cache/eslint/ 'src/**/*.@(js|ts|vue)' 'registry/lib/**/*.@(js|ts|vue)'",
+      "command": "yarn eslint --cache --cache-location node_modules/.cache/eslint/ './**/*.@(js|ts|vue)'",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:代码检查 prod:lint"
     },
     {
       "type": "shell",
-      "command": "yarn eslint --cache --cache-location node_modules/.cache/eslint/ --fix 'src/**/*.@(js|ts|vue)' 'registry/lib/**/*.@(js|ts|vue)'",
+      "command": "yarn eslint --cache --cache-location node_modules/.cache/eslint/ --fix './**/*.@(js|ts|vue)'",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:代码修复 prod:lint-fix"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./webpack/webpack.prod.js --progress",
+      "command": "yarn webpack --config ./webpack/webpack.prod.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:编译生产版本 prod:build-core"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/components.js --progress",
+      "command": "yarn webpack --config ./registry/webpack/components.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译组件 prod:build-components"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/plugins.js --progress",
+      "command": "yarn webpack --config ./registry/webpack/plugins.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译插件 prod:build-plugins"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/all.js",
+      "command": "yarn webpack --config ./registry/webpack/all.ts",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译所有 prod:build-features"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/docs.js --progress",
+      "command": "yarn webpack --config ./registry/webpack/docs.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译功能文档 prod:build-docs"

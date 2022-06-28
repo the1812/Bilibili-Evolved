@@ -1,7 +1,9 @@
+import { meta } from '@/core/meta'
+
 export const initMdiStyle = () => {
   const mdi = document.createElement('link')
   mdi.rel = 'stylesheet'
-  mdi.href = 'https://cdn.jsdelivr.net/gh/Templarian/MaterialDesign-Webfont@5.3.45/css/materialdesignicons.min.css'
+  mdi.href = meta.compilationInfo.altCdn.library.mdi
   mdi.media = 'none'
   mdi.onload = () => {
     mdi.media = 'all'

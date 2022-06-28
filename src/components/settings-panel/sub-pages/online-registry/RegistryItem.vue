@@ -40,19 +40,19 @@
       </div>
     </div>
     <template #toast>
-      <div v-if="description" class="online-registry-description" v-html="description"></div>
+      <ComponentDescription v-if="item.description" :component-data="item" />
     </template>
   </MiniToast>
 </template>
 <script lang="ts">
 import { DocSourceItem } from 'registry/lib/docs'
-import { getDescriptionHTML } from '@/components/description'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
 import { getGeneralSettings, settings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
+import ComponentDescription from '../../ComponentDescription.vue'
 
 const getFeatureUrl = (item: DocSourceItem, branch: string) => {
   const cdnRootFn = cdnRoots[getGeneralSettings().cdnRoot]
@@ -91,7 +91,7 @@ const typeMappings = {
   },
 }
 export default Vue.extend({
-  components: { VIcon, VButton, MiniToast },
+  components: { VIcon, VButton, MiniToast, ComponentDescription },
   props: {
     item: {
       type: Object,
@@ -111,7 +111,6 @@ export default Vue.extend({
       badge,
       getUrl: (item: PackItem) => getUrl(item, this.branch),
       isInstalled,
-      description: getDescriptionHTML(this.item),
       installing: false,
       installed: false,
       virtual: false,

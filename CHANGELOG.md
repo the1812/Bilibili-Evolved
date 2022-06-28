@@ -1,8 +1,53 @@
 # 更新日志
 
+## v2.3.0-preview
+`2022-06-28`
+
+包含 v2.2.2 的所有更新内容.
+
+✨新增
+- `清爽首页` 的热门视频支持显示弹幕数量.
+- `极简首页` 初版已完成.
+- 脚本的更新源配置默认值更换为 `GitHub`, 并添加了 `AltCdn`, 表示开发者自定义的其他 CDN 源. `jsDelivr` 之后将会删除.
+- 在 `GitHub` 更新源下, MDI 图标库更换使用 GitHub Pages.
+
+☕开发者相关
+- 重新整理了所有 CDN 调用, 并支持自定义 CDN 配置, 文档见 [doc/cdn.md](https://github.com/the1812/Bilibili-Evolved/blob/preview-features/doc/cdn.md).
+- 拆分并整理了 `/src/core/settings` 的代码结构.
+- 所有 webpack 配置更换为 TypeScript, 并启用 ESLint 检查.
+- 重构了元数据注入功能, 新增了 i18n 和 description 注入, 详细用法可见 `webpack/inject-metadata/i18n.ts` 和 `webpack/inject-metadata/description.ts` 中的注释说明.
+- 删除了用不到的包 `html-webpack-plugin`.
+- 适配了 VSCode File Nesting 功能.
+
+## v2.2.2
+`2022-06-28`
+
+⚠ 此版本起, 对 Chromium 内核浏览器的版本要求提升至 88
+
+✨新增
+- `网址参数清理` 支持清理 `vd_source`, 之前装了临时插件的用户可以在更新后卸载相应的插件. (#3424)
+
+🐛修复
+- 修复 `bwp-video` (HEVC 编码) 下 PlayerAgent 的异常行为:
+  - 修复倍速扩展的问题. (#3398, PR #3400 by [JLoeve](https://github.com/LonelySteve), PR #3401 by [imshixin](https://github.com/imshixin))
+  - 修复开关灯的问题. (#3403, PR #3413 by [FoundTheWOUT](https://github.com/FoundTheWOUT))
+- 修复 `简化评论区` 的样式失效, 以及评论区的操作菜单失效. (#3425, #3453)
+- 修复动态详情页的动态相关功能失效.
+- 修复 `videoChange` 部分情况下无法触发.
+- 修复 `简化直播间` 的直播间皮肤部分情况下无法屏蔽.
+- 修复搜索栏的建议在话题页面布局错乱. (#3383)
+- 修复 `图片批量导出` 中的命名格式未能正确赋值. (#3326)
+- 修复 `快速收起评论` 收起后再打开评论区失效的问题.
+
+☕开发者相关
+- 修复 Pull Request 中 ESLint 未报告部分代码问题.
+- `loadFeatureCode` 支持从代码的返回值中得到结果.
+- 删除 jsDelivr 相关的 GitHub Action.
+
 ## v2.2.1
 `2022-06-03`
 - 修复部分浏览器 / 脚本管理器中脚本无法运行. (对应报错 `Error: Couldn't find a style target`)
+- 移除代码中的零宽空格. (#3391)
 
 ## v2.2.0
 `2022-06-02`

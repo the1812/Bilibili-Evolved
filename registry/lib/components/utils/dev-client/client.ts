@@ -176,7 +176,11 @@ export class DevClient extends EventTarget {
       switch (options.registryReloadMethod) {
         default:
         case HotReloadMethod.Disabled: {
-          reload()
+          if (options.registryRefreshMethod === RefreshMethod.DoNotRefresh) {
+            doNotReload()
+          } else {
+            reload()
+          }
           break
         }
         case HotReloadMethod.Enabled: {

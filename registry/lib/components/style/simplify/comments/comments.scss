@@ -1,4 +1,4 @@
-@import "common";
+@import 'common';
 
 @mixin mdi($content) {
   background: none !important;
@@ -9,7 +9,7 @@
   &::before {
     content: $content;
     display: inline-block;
-    font: normal normal normal 24px/1 "Material Design Icons";
+    font: normal normal normal 24px/1 'Material Design Icons';
     font-size: 16px;
     line-height: 1;
     width: 16px;
@@ -45,7 +45,7 @@
     display: flex !important;
     justify-content: flex-end;
     margin: 0 !important;
-    padding: 0 !important;
+    padding: 3px !important;
   }
 }
 @mixin time {
@@ -79,10 +79,10 @@
   display: inline-flex !important;
 }
 @mixin like-icon {
-  @include mdi("\F0514");
+  @include mdi('\F0514');
 }
 @mixin liked-icon {
-  @include mdi("\F0513");
+  @include mdi('\F0513');
   &,
   & + span,
   body.dark & {
@@ -90,10 +90,10 @@
   }
 }
 @mixin hate-icon {
-  @include mdi("\F0512");
+  @include mdi('\F0512');
 }
 @mixin hated-icon {
-  @include mdi("\F0511");
+  @include mdi('\F0511');
   &,
   & + span,
   body.dark & {
@@ -101,10 +101,10 @@
   }
 }
 @mixin spot-icon {
-  @include mdi("\F01D9");
+  @include mdi('\F01D9');
 }
 @mixin face-icon {
-  @include mdi("\F01F5");
+  @include mdi('\F01F5');
 }
 @mixin invert-on-dark {
   body.dark & {
@@ -125,7 +125,7 @@
   .comment-send:not(.no-login) {
     padding-top: 15px !important;
     .dynamic-repost {
-      margin-left: 85px !important;
+      margin-left: 81px !important;
       margin-top: 4px;
     }
     .comment-emoji {
@@ -134,6 +134,7 @@
       top: 51px;
       width: 68px !important;
       background: #fff;
+      box-sizing: content-box !important;
     }
     .comment-submit {
       height: 34px !important;
@@ -142,7 +143,7 @@
         color: var(--theme-color) !important;
       }
       &::after {
-        content: "发表";
+        content: '发表';
         color: #fff;
         position: absolute;
         top: 50%;
@@ -299,9 +300,6 @@
             }
           }
         }
-        .btn-hover {
-          padding: 3px 5px !important;
-        }
         .operation {
           &:hover {
             background: transparent !important;
@@ -346,10 +344,11 @@
         }
         > .info {
           margin-top: 4px;
+          > .time-location,
           > .time {
-            opacity: 0.7;
             @include time();
           }
+          > .time-location,
           > .time,
           > .floor {
             @include invert-on-dark();
@@ -363,6 +362,7 @@
     .reply-con {
       position: relative;
       > .info {
+        > .time-location,
         > .time {
           @include reply-time();
           @include invert-on-dark();
@@ -373,7 +373,6 @@
   .reply-item {
     position: relative;
     > .info > .time {
-      opacity: 0.7;
       // @include white-text-on-dark();
       @include invert-on-dark();
     }
@@ -427,10 +426,10 @@ body.dark .panel-area .bb-comment {
     @include hide();
   }
   .reply-box {
+    .time-location,
     .time {
       @include reply-time();
       top: 10px;
-      opacity: 0.7;
     }
   }
   .reply-item {
@@ -439,10 +438,14 @@ body.dark .panel-area .bb-comment {
     }
   }
 }
-.reply-item > .info > .time {
-  @include time();
-  top: 12px;
-  opacity: 1;
+.reply-item > .info {
+  > .time-location,
+  > .time {
+    @include time();
+    @include invert-on-dark();
+    top: 12px;
+    opacity: 1;
+  }
 }
 .reply-box .item-user {
   > a {

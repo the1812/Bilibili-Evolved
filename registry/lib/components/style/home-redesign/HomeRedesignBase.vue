@@ -11,6 +11,10 @@ export default Vue.extend({
 <style lang="scss">
 @import "common";
 
+html {
+  scroll-behavior: smooth;
+  min-height: 100vh;
+}
 body {
   @include v-stretch();
   min-height: 100vh;
@@ -43,8 +47,5 @@ body {
   body.home-redesign-off & {
     display: none;
   }
-}
-html {
-  scroll-behavior: smooth;
 }
 </style>

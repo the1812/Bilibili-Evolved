@@ -63,7 +63,7 @@ ${it.description || ''}
 <summary><strong>jsDelivr Stable</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.jsDelivr(branches.stable, item.owner) + item.fullAbsolutePath).join('\n')}
+${it.items.map(item => cdnRoots.AltCdn(branches.stable, item.owner) + item.fullAbsolutePath).join('\n')}
 \`\`\`
 
 </details>
@@ -71,7 +71,7 @@ ${it.items.map(item => cdnRoots.jsDelivr(branches.stable, item.owner) + item.ful
 <summary><strong>jsDelivr Preview</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.jsDelivr(branches.preview, item.owner) + item.fullAbsolutePath).join('\n')}
+${it.items.map(item => cdnRoots.AltCdn(branches.preview, item.owner) + item.fullAbsolutePath).join('\n')}
 \`\`\`
 
 </details>

@@ -86,7 +86,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
-@import "./effects";
+@import "effects";
 
 .fresh-home-video-list {
   --card-height: var(--home-content-height);

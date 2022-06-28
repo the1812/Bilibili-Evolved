@@ -32,7 +32,7 @@ import {
 } from '@/ui'
 import VideoList from '../../VideoList.vue'
 import { freshHomeOptions } from '../../types'
-import { getTrendingVideos } from './api'
+import { getTrendingVideos } from '../../../trending'
 
 export default Vue.extend({
   components: {
@@ -61,7 +61,8 @@ export default Vue.extend({
     async reload() {
       this.loading = true
       this.videos = []
-      this.videos = await getTrendingVideos().finally(() => { this.loading = false })
+      this.videos = await getTrendingVideos(freshHomeOptions.personalized)
+        .finally(() => { this.loading = false })
     },
   },
 })

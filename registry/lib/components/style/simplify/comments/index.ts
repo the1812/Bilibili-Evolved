@@ -1,13 +1,20 @@
 import { ComponentMetadata } from '@/components/types'
-import { toggleStyle } from '@/components/styled-component'
 
+const name = 'simplifyComments'
 export const component: ComponentMetadata = {
-  ...toggleStyle('simplifyComments', () => import('./comments.scss'), async ({ metadata }) => {
+  name,
+  entry: async ({ metadata }) => {
     const { addComponentListener } = await import('@/core/settings')
     addComponentListener(metadata.name, (value: boolean) => {
       document.body.classList.toggle('simplify-comment', value)
     }, true)
-  }),
+  },
+  instantStyles: [
+    {
+      name,
+      style: () => import('./comments.scss'),
+    },
+  ],
   displayName: '简化评论区',
   description: {
     'zh-CN': `

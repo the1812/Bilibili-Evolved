@@ -1,179 +1,18 @@
-import {
-  components,
-  UnknownOptions,
-  UserComponentMetadata,
-} from '@/components/component'
-import { UserStyle } from '@/plugins/style'
-import { PluginMetadata, plugins } from '@/plugins/plugin'
-import { componentToSettings, isUserComponent } from './helpers'
+import { isUserComponent } from './helpers'
+// import { getRandomId } from '../utils'
+import { Settings, ValueChangeListener } from './types'
+import { createProxy } from './proxy'
+import { registeredListeners, settingsChangedHandler } from './listener'
+import { initInternalSettings, settingsInternalState as state } from './internal-state'
+import { readSettings } from './read'
 
-type Property = string | number | symbol
-/** 表示一个组件的设置 */
-export interface ComponentSettings<O extends UnknownOptions = UnknownOptions> {
-  /** 是否启用此组件 */
-  enabled: boolean
-  /** 组件选项 */
-  options: O & Record<string, unknown>
-}
-/** 脚本总设置 */
-export interface Settings {
-  [name: string]: any
-  /** 用户安装的样式 */
-  userStyles: Record<string, Required<UserStyle>>
-  /** 用户安装的插件 */
-  userPlugins: Record<string, (Omit<PluginMetadata, 'setup'> & {
-    code: string
-  })>
-  /** 用户安装的组件 */
-  userComponents: Record<string, {
-    /** 原始代码, 开启时将执行并获取完整的组件信息 */
-    code: string
-    /** 部分可序列化的组件信息 */
-    metadata: UserComponentMetadata
-    /** 组件设置 */
-    settings: ComponentSettings
-  }>
-  /** 组件更新的代码 */
-  update?: string
-  /** 组件设置 */
-  components: Record<string, ComponentSettings>
-  /** 插件设置 */
-  plugins: Record<string, boolean>
-}
-// 默认设置
-let internalSettings: Settings = {
-  userStyles: {},
-  userPlugins: {},
-  userComponents: {},
-  components: {},
-  plugins: {},
-}
-let settingsLoaded = false
-
-type ValueChangeListener<T = any> = (
-  value: T,
-  oldValue: T,
-  prop: Property,
-  propPath?: Property[],
-) => void
-const registeredListeners = new Map<string, ValueChangeListener[]>()
-const settingsChangedHandler = (
-  value: any,
-  oldValue: any,
-  prop: Property,
-  propPath: Property[] = [],
-) => {
-  if (settingsLoaded) {
-    GM_setValue(prop.toString(), internalSettings[prop.toString()])
-    const path = propPath.join('.')
-    // 如果父级是普通对象或数组也会通知, 但没有旧值
-    if (propPath.length > 1) {
-      const parentPath = propPath.slice(0, propPath.length - 1).join('.')
-      const parent = lodash.get(internalSettings, parentPath)
-      const notifyParent = Array.isArray(parent) || lodash.isPlainObject(parent)
-      if (notifyParent) {
-        const handlers = registeredListeners.get(parentPath)
-        handlers?.forEach(h => h(parent, null, prop, propPath))
-      }
-    }
-    const handlers = registeredListeners.get(path)
-    handlers?.forEach(h => h(value, oldValue, prop, propPath))
-  }
-}
-
-/** 标识经由 `createProxy` 控制的对象 */
-export const isProxy = Symbol('isProxy')
-
-/**
- * 为目标对象创建深层 Proxy
- * @param targetObj 目标对象
- * @param valueChangeListener 对象自身属性变化时的回调函数
- */
-export const createProxy = (targetObj: any, valueChangeListener?: ValueChangeListener) => {
-  const applyProxy = (obj: any, rootProp?: Property, propPath: Property[] = []) => {
-    for (const [key, value] of Object.entries(obj)) {
-      if (typeof value === 'object' && !(value instanceof RegExp)) {
-        obj[key] = applyProxy(value, rootProp || key, [...propPath, key])
-      }
-    }
-    const proxy = new Proxy(obj, {
-      get(o, prop) {
-        if (prop === isProxy) {
-          return true
-        }
-        return o[prop]
-      },
-      set(o, prop, value) {
-        const oldValue = o[prop]
-        const isImplicitProp = (
-          !Object.prototype.hasOwnProperty.call(o, prop) && oldValue !== undefined
-        )
-        if (unsafeWindow.proxyDebug) {
-          console.log({ isImplicitProp, prop, value })
-        }
-        /**
-         * 是否对 value 启用深层 Proxy
-         * - 是 Object (或 Array)
-         * - 不能是 RegExp
-         * - 不能是已经启用过的
-         * - 不能是上游原型链里的
-         */
-        const deep = (
-          typeof value === 'object'
-          && !(value instanceof RegExp)
-          && !(value[isProxy] === true)
-          && !isImplicitProp
-        )
-        if (deep) {
-          value = applyProxy(value, rootProp || prop, [...propPath, prop])
-        }
-        o[prop] = value
-        if (!isImplicitProp) {
-          valueChangeListener?.(value, oldValue, rootProp || prop, [...propPath, prop])
-        }
-        return true
-      },
-      deleteProperty(o, prop) {
-        const oldValue = o[prop]
-        delete o[prop]
-        valueChangeListener?.(undefined, oldValue, rootProp || prop, [...propPath, prop])
-        return true
-      },
-    })
-    return proxy
-  }
-  return applyProxy(targetObj)
-}
-
-// 载入插件设置
-plugins.forEach(plugin => {
-  internalSettings.plugins[plugin.name] = true
-})
-// 载入组件设置
-components.forEach(component => {
-  internalSettings.components[component.name] = componentToSettings(component)
-})
-
-// 读取保存的设置
-const readSettings = (obj: any) => {
-  for (const [key, value] of Object.entries(obj)) {
-    let result: any
-    const gmValue = GM_getValue(key, value)
-    if (typeof gmValue === 'object') {
-      result = lodash.defaultsDeep(gmValue, value)
-    } else {
-      result = gmValue
-    }
-    obj[key] = result
-  }
-  return obj
-}
-/** 默认设置 */
-export const defaultSettings = lodash.cloneDeep(internalSettings)
-internalSettings = createProxy(readSettings(internalSettings), settingsChangedHandler)
-for (const [key, value] of Object.entries(internalSettings)) {
+initInternalSettings()
+export { defaultSettings } from './internal-state'
+state.internalSettings = createProxy(readSettings(state.internalSettings), settingsChangedHandler)
+for (const [key, value] of Object.entries(state.internalSettings)) {
   GM_setValue(key, value)
 }
+// state.internalSettings.instance = getRandomId(32)
 
 /**
  * 添加对设置里某项的监听
@@ -193,7 +32,7 @@ export const addSettingsChangeListener = <T = any>(
     registeredListeners.set(path, [listener])
   }
   if (initCall) {
-    const value = lodash.get(internalSettings, path)
+    const value = lodash.get(state.internalSettings, path)
     listener(value, value, '', [])
   }
 }
@@ -249,7 +88,8 @@ export const removeComponentListener = (path: string, listener: ValueChangeListe
   removeSettingsChangeListener(componentPath(path), listener)
 }
 
-settingsLoaded = true
+state.settingsLoaded = true
 /** 脚本当前的设置 */
-export const settings: Settings = internalSettings
+export const settings: Settings = state.internalSettings
 export * from './helpers'
+export * from './types'

@@ -1,6 +1,6 @@
 import { ComponentMetadata } from '@/components/types'
 import { DocSource, DocSourceItem } from '.'
-import { getId } from '../../webpack/id'
+import { getId } from '../id'
 import { getThirdPartyDescription, thirdPartyComponents } from './third-party'
 
 export const getComponentsDoc: DocSource = async rootPath => {
@@ -20,7 +20,7 @@ export const getComponentsDoc: DocSource = async rootPath => {
       return undefined
     })
     .filter(it => it !== undefined)
-    .map(it => {
+    .map(async it => {
       const root = `${rootPath}components/`
       const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
       const fullAbsolutePath = fullRelativePath.replace(/^(\.\.?\/)*/, '')
@@ -28,7 +28,7 @@ export const getComponentsDoc: DocSource = async rootPath => {
         name,
         displayName,
       } = it.component
-      const description = getDescriptionMarkdown(it.component)
+      const description = await getDescriptionMarkdown(it.component)
       return {
         type: 'component',
         name,
@@ -41,6 +41,6 @@ export const getComponentsDoc: DocSource = async rootPath => {
     .concat(thirdPartyComponents.map(getThirdPartyDescription))
   return {
     title: '组件',
-    items: componentsPaths,
+    items: await Promise.all(componentsPaths),
   }
 }
