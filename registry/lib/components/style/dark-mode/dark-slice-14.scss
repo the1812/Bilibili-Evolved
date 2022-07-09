@@ -111,6 +111,14 @@
           span:not(.cur-page) {
             @include color("e");
           }
+          .cur-page {
+            @include color('a');
+          }
+        }
+        &-right {
+          .next-button {
+            @include color('a');
+          }
         }
         &-title {
           @include color("e");
@@ -121,6 +129,11 @@
       }
     }
     &_second-line {
+      .second-line_left {
+        .abstract {
+          @include color('a');
+        }
+      }
       .second-line_right {
         @include theme-border-color();
         @include background-color("4");
@@ -156,8 +169,10 @@
             &-title {
               @include color("e");
             }
+            &-playing,
             &-title-playing {
               @include theme-color();
+              @include background-color('5');
               .cur-play-icon {
                 @include to-theme("blue");
               }

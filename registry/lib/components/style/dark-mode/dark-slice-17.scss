@@ -1,4 +1,5 @@
 @import './dark-definitions';
+@import 'common';
 
 .video-info-v1 .video-data {
   @include color('a');
@@ -137,6 +138,9 @@
     @include color('e');
   }
 }
+.base-video-sections-v1 {
+  @include background-color('4');
+}
 .video-page-special-card-small,
 .video-page-card-small {
   .pic-box {
@@ -164,12 +168,15 @@
     }
   }
   .bilibili-player-video-danmaku-input::-webkit-input-placeholder {
-    @include color('8');
+    @include color('fff4');
   }
   .bilibili-player-video-danmaku {
     &-setting,
     &-switch {
       @include fill('a');
+      @include on-fullscreen {
+        @include fill('e');
+      }
       &:hover {
         @include fill('e');
       }
@@ -569,6 +576,15 @@
   }
 }
 
+.player-auxiliary-filter-playlist {
+  .player-auxiliary-playlist-user {
+    @include color('a');
+  }
+  .player-auxiliary-playlist-bottom {
+    @include border-color('6');
+  }
+}
+
 .player-auxiliary-setting-menu-wrap {
   @include background-color('3');
   @include border-color('8884');
@@ -595,6 +611,10 @@
 }
 .player-auxiliary-danmaku-wrap {
   @include background-color();
+  .player-auxiliary-danmaku-load-status {
+    @include background-color();
+    @include color('a');
+  }
 }
 .player-auxiliary-danmaku-function {
   @include background-color();
