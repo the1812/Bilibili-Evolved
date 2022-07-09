@@ -1,6 +1,6 @@
 @import './dark-definitions';
 
-#app .bg {
+#app > .bg {
   @include no-image();
 }
 @mixin dyn-container-skeleton() {

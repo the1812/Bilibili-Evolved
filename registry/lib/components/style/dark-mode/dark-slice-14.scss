@@ -303,10 +303,16 @@ a {
     @include theme-color();
   }
 }
-.follow-btn.followed {
-  @include border-color("");
-  @include background-color("4");
-  @include color("a");
+.follow-btn {
+  &.following,
+  &.followed {
+    @include border-color("");
+    @include background-color("4");
+    @include color("a");
+    path {
+      @include fill('a');
+    }
+  }
 }
 #article-list-index .index-holder {
   .article-item:not(.on) {
