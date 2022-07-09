@@ -169,6 +169,9 @@
             &-title {
               @include color("e");
             }
+            &-duration {
+              @include color('a');
+            }
             &-playing,
             &-title-playing {
               @include theme-color();
