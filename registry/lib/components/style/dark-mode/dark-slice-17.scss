@@ -474,6 +474,12 @@
     .content-warp {
       @include border-color('4');
     }
+    .jump-url-prefix {
+      @include to-theme('blue');
+    }
+    .jump-url-link {
+      @include theme-color();
+    }
   }
   .view-more {
     @include color('a');
@@ -712,5 +718,11 @@
     .fav-invalid {
       filter: invert(1);
     }
+  }
+}
+.live-room-app {
+  .hot-rank-text {
+    @include theme-background-color('80');
+    @include foreground-color();
   }
 }
