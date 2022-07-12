@@ -259,5 +259,8 @@ body.fixed-navbar {
       right: 0;
     }
   }
+  ~ .bili-gallery {
+    z-index: 10002;
+  }
 }
 </style>
