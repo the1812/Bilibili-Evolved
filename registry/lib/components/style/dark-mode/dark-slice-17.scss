@@ -123,6 +123,71 @@
     }
   }
 }
+.multi-page-v1 {
+  @include background-color('4');
+  .head-left {
+    .cur-page {
+      @include color('a');
+    }
+    .range-box i {
+      @include color('a');
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .head-right {
+    .next-button {
+      @include color('a');
+    }
+  }
+  .cur-list {
+    .list-box {
+      > li {
+        &,
+        & a {
+          @include color('e');
+        }
+        &:hover {
+          @include background-color('5');
+        }
+        &.on {
+          @include background-color('5');
+          img {
+            @include to-theme('blue');
+          }
+          &,
+          & a {
+            @include theme-color();
+          }
+        }
+        .duration {
+          @include color('a');
+        }
+      }
+    }
+    .module-box {
+      > li {
+        @include background-color('5');
+        @include border-color();
+        &,
+        & a {
+          @include color('e');
+        }
+        &:hover {
+          @include background-color('6');
+        }
+        &.on {
+          @include theme-background-color();
+          &,
+          & a {
+            @include foreground-color();
+          }
+        }
+      }
+    }
+  }
+}
 .recommend-list-v1 {
   .rec-title {
     @include color('e');
