@@ -48,6 +48,7 @@
     }
   }
   .charge-btn {
+    border: 1px solid;
     @include background-color();
     @include theme-border-color('80');
     @include theme-color('80');
@@ -789,5 +790,12 @@
   .hot-rank-text {
     @include theme-background-color('80');
     @include foreground-color();
+  }
+}
+.bili-gallery {
+  &__pagination {
+    &__index {
+      @include theme-color();
+    }
   }
 }
