@@ -3,12 +3,11 @@ import { VideoCard } from '@/components/feeds/video-card'
 import { getJson, getJsonWithCredentials } from '@/core/ajax'
 import { getUID } from '@/core/utils'
 import { formatDuration, formatCount } from '@/core/utils/formatters'
-import { freshHomeOptions } from '../../types'
 
-export const getTrendingVideos = async () => {
-  const api = 'https://api.bilibili.com/x/web-interface/index/top/rcmd?fresh_type=0&version=1'
+export const getTrendingVideos = async (isPersonalized: boolean) => {
+  const api = 'https://api.bilibili.com/x/web-interface/index/top/rcmd?fresh_type=3&version=1&ps=14'
 
-  const personalized = Boolean(getUID()) && freshHomeOptions.personalized
+  const personalized = Boolean(getUID()) && isPersonalized
   const requestMethod = personalized ? getJsonWithCredentials : getJson
   const { code, message, data } = await requestMethod(api)
   if (code !== 0) {

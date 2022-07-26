@@ -65,3 +65,9 @@
   }
   animation: item-slides-y paused 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
+@mixin rotate() {
+  transition-duration: .5s;
+  &:hover {
+    transform: rotate(1turn);
+  }
+}

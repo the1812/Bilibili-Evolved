@@ -22,6 +22,9 @@ const parseWeChat = (csv: Record<string, string>[]) => {
     sortKey: Number(new Date(item.交易时间)).toString(),
     toString: () => {
       let name = item.交易对方
+      if (name === '/') {
+        name = '匿名'
+      }
       const noteMatch = item.商品.match(/付款方留言:(.+)/)
       if (noteMatch) {
         name += ` ${noteMatch[1]}`
