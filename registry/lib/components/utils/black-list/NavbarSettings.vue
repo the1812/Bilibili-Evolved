@@ -71,6 +71,7 @@ import {
   VIcon,
   VButton,
 } from '@/ui'
+
 export default Vue.extend({
   components: {
     VPopup,
