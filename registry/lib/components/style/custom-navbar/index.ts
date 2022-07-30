@@ -1,10 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { urlInclude, urlExclude } from './urls'
 import { entry } from './entry'
 
 const styleID = 'custom-navbar-style'
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'customNavbar',
   displayName: '自定义顶栏',
   description: `
@@ -121,4 +121,4 @@ export const component: ComponentMetadata = {
       })
     },
   },
-}
+})

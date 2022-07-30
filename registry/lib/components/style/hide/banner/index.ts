@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { mainSiteUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'hideBanner',
   entry: none,
   displayName: '隐藏顶部横幅',
@@ -16,4 +16,4 @@ export const component: ComponentMetadata = {
     'zh-CN': '隐藏首页顶部横幅.',
   },
   urlInclude: mainSiteUrls,
-}
+})
