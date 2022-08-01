@@ -17,8 +17,8 @@ const options = defineOptionsMetadata({
 
 type Options = OptionsOfMetadata<typeof options>
 
-const entry: ComponentEntry<Options> = ({ metadata, settings: { options } }) => {
-  Object.keys(options).forEach(disableType => {
+const entry: ComponentEntry<Options> = ({ metadata, settings }) => {
+  Object.keys(settings.options).forEach(disableType => {
     addComponentListener(`${metadata.name}.${disableType}`, (value: boolean) => {
       document.body.classList.toggle(`disable-${disableType}-danmaku-style`, value)
     }, true)
