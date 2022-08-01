@@ -540,8 +540,7 @@
     .content-warp {
       @include border-color('4');
     }
-    .icon.video,
-    .icon.search-word,
+    .icon,
     .jump-url-prefix {
       @include to-theme('blue');
     }
