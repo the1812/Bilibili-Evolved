@@ -1,1 +1,1 @@
-export const BlockListDataKey = 'blokList.blockList'
+export const BlockListDataKey = 'blokList.data'

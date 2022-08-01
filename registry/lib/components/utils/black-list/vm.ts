@@ -1,5 +1,6 @@
+import { getComponentSettings } from '@/core/settings'
 import { mountVueComponent } from '@/core/utils'
-import { getData } from '@/plugins/data'
+import { addData, getData } from '@/plugins/data'
 import { BlockListDataKey } from './common'
 
 type SettingsVmType = Vue & {
@@ -11,16 +12,24 @@ type SettingsVmType = Vue & {
 }
 let nameSettingsVM: SettingsVmType
 let regexSettingsVm: SettingsVmType
+
+const blackListOptions = getComponentSettings('blackList').options as {
+  up: string[]
+  upRegex: string[]
+}
+
 export const setNameProps = (element: HTMLElement) => {
   if (!nameSettingsVM) {
     return
   }
   nameSettingsVM.triggerElement = element
   const blockList = getData(BlockListDataKey)
-  nameSettingsVM.list = blockList[0].up
+  nameSettingsVM.list = lodash.cloneDeep(blockList[0].up)
   nameSettingsVM.save = (items:string[]) => {
-    blockList[0].up = items
-    GM_setValue(BlockListDataKey, blockList[0])
+    addData(BlockListDataKey, data => {
+      data.up = items
+    })
+    blackListOptions.up = items
   }
   nameSettingsVM.titleName = '精确匹配'
 }
@@ -30,10 +39,12 @@ export const setRegexProps = (element: HTMLElement) => {
   }
   regexSettingsVm.triggerElement = element
   const blockList = getData(BlockListDataKey)
-  regexSettingsVm.list = blockList[0].upRegex
+  regexSettingsVm.list = lodash.cloneDeep(blockList[0].upRegex)
   regexSettingsVm.save = (items:string[]) => {
-    blockList[0].upRegex = items
-    GM_setValue(BlockListDataKey, blockList[0])
+    addData(BlockListDataKey, data => {
+      data.upRegex = items
+    })
+    blackListOptions.upRegex = items
   }
   regexSettingsVm.titleName = '正则匹配'
 }
@@ -42,8 +53,8 @@ export const loadNameSettings = async () => {
   if (nameSettingsVM) {
     return false
   }
-  const NavbarSettings = await import('./NavbarSettings.vue').then(m => m.default)
-  nameSettingsVM = mountVueComponent(NavbarSettings)
+  const blockListSettings = await import('./BlockListSettings.vue').then(m => m.default)
+  nameSettingsVM = mountVueComponent(blockListSettings)
   document.body.insertAdjacentElement('beforeend', nameSettingsVM.$el)
   return true
 }
@@ -52,8 +63,8 @@ export const loadRegexSettings = async () => {
   if (regexSettingsVm) {
     return false
   }
-  const NavbarSettings = await import('./NavbarSettings.vue').then(m => m.default)
-  regexSettingsVm = mountVueComponent(NavbarSettings)
+  const blockListSettings = await import('./BlockListSettings.vue').then(m => m.default)
+  regexSettingsVm = mountVueComponent(blockListSettings)
   document.body.insertAdjacentElement('beforeend', regexSettingsVm.$el)
   return true
 }

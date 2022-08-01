@@ -2,12 +2,12 @@
   <VPopup
     ref="popup"
     v-model="open"
-    class="custom-navbar-settings"
+    class="custom-block-list-settings"
     fixed
     :lazy="false"
     :trigger-element="triggerElement"
   >
-    <div class="navbar-settings-header">
+    <div class="block-list-settings-header">
       <VIcon class="title-icon" icon="mdi-sort" :size="24"></VIcon>
       <div class="title">
         {{ titleName }}黑名单设置
@@ -17,35 +17,35 @@
         <VIcon icon="close" :size="18"></VIcon>
       </div>
     </div>
-    <div class="navbar-settings-content">
-      <div class="navbar-settings-section">
-        <div class="navbar-settings-section-title">
+    <div class="block-list-settings-content">
+      <div class="block-list-settings-section">
+        <div class="block-list-settings-section-title">
           添加到黑名单
         </div>
-        <div class="navbar-settings-section-input">
+        <div class="block-list-settings-section-input">
           <TextBox :text="name" @change="changeName" />
           <VButton @click="add">添加</VButton>
         </div>
       </div>
-      <div class="navbar-settings-section">
-        <div class="navbar-settings-section-title">
+      <div class="block-list-settings-section">
+        <div class="block-list-settings-section-title">
           黑名单列表
         </div>
         <div
-          class="navbar-settings-section-description"
+          class="block-list-settings-section-description"
         >
           点击×图标可以删除名单.
         </div>
         <VLoading v-if="!loaded" />
         <div
           v-show="loaded"
-          ref="navbarSortList"
-          class="navbar-settings-section-content navbar-sort-list"
+          ref="block-listSortList"
+          class="block-list-settings-section-content block-list-sort-list"
         >
           <div
             v-for="item of list"
             :key="item"
-            class="navbar-sort-item"
+            class="block-list-sort-item"
             :data-name="item"
           >
             <div class="item-name">
@@ -137,7 +137,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
-.custom-navbar-settings {
+.custom-block-list-settings {
   @include popup();
   width: 400px;
   font-size: 14px;
@@ -150,7 +150,7 @@ export default Vue.extend({
   &.open {
     transform: translateX(-50%) translateY(-50%) scale(1);
   }
-  .navbar-settings-header {
+  .block-list-settings-header {
     @include h-center();
     justify-content: space-between;
     .title {
@@ -170,8 +170,8 @@ export default Vue.extend({
       }
     }
   }
-  .navbar-settings-content {
-    .navbar-settings-section {
+  .block-list-settings-content {
+    .block-list-settings-section {
       margin-top: 12px;
       > :not(:last-child) {
         margin-bottom: 6px;
@@ -202,7 +202,7 @@ export default Vue.extend({
           width: 50px;
           text-align: end;
         }
-        .navbar-sort-item {
+        .block-list-sort-item {
           @include card();
           @include h-center();
           transition: none;
@@ -214,7 +214,7 @@ export default Vue.extend({
           &:hover {
             border-color: var(--theme-color);
           }
-          &.navbar-hidden {
+          &.block-list-hidden {
             opacity: 0.5;
           }
           &.sortable-ghost {
@@ -227,7 +227,7 @@ export default Vue.extend({
           &.sortable-drag {
             opacity: 1;
           }
-          &.sortable-drag.navbar-hidden {
+          &.sortable-drag.block-list-hidden {
             opacity: 0.5;
           }
           .toggle-visible {

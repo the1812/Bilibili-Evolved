@@ -5,14 +5,13 @@ import { selectAll } from '@/core/spin-query'
 import { registerData, getData } from '@/plugins/data'
 import { BlockListDataKey } from './common'
 
-const name = 'black-list'
+const name = 'blackList'
 
-const entry = async () => {
-  // GM_deleteValue(BlockListDataKey)
-  const blockListData = GM_getValue(BlockListDataKey, {
-    up: ['程序员鱼皮'],
-    upRegex: ['马士兵*', '图灵学院*'],
-  })
+const entry = async ({ settings: { options } }) => {
+  const blockListData = {
+    up: options.up,
+    upRegex: options.upRegex,
+  }
 
   registerData(BlockListDataKey, blockListData)
   const billGrid = await selectAll('.bili-grid')
@@ -52,14 +51,30 @@ const entry = async () => {
 export const component: ComponentMetadata = {
   name,
   entry,
-  reload: entry,
+  // reload: entry,
   extraOptions: () => import('./Settings.vue').then(m => m.default),
+  options: {
+    up: {
+      displayName: 'up主名称',
+      defaultValue: [],
+      hidden: true,
+    },
+    upRegex: {
+      displayName: '正则匹配up主名称',
+      defaultValue: [],
+      hidden: true,
+    },
+  },
   displayName: '屏蔽黑名单up主',
   tags: [
     componentsTags.utils,
   ],
   description: {
     'zh-CN': '屏蔽黑名单up主',
+  },
+  author: {
+    name: 'snowraincloud',
+    link: 'https://github.com/snowraincloud',
   },
   urlInclude: mainSiteUrls,
 }

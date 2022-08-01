@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="custom-navbar-extra-options">
+    <div class="custom-block-list-extra-options">
       <VButton
         v-if="login"
         ref="button"
-        @mouseover="loadNameNavbarSettings()"
+        @mouseover="loadNameBlockListSettings()"
         @click="toggleNameSettings()"
       >
         精确匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
       </VButton>
     </div>
-    <div class="custom-navbar-extra-options">
+    <div class="custom-block-list-extra-options">
       <VButton
         v-if="login"
         ref="button"
-        @mouseover="loadRegexNavbarSettings()"
+        @mouseover="loadRegexBlockListSettings()"
         @click="toggleRegexSettings()"
       >
         正则匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
@@ -38,7 +38,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    async loadNameNavbarSettings() {
+    async loadNameBlockListSettings() {
       const isFirstLoad = await loadNameSettings()
       if (isFirstLoad) {
         const triggerButton = this.$refs.button.$el as HTMLElement
@@ -46,7 +46,7 @@ export default Vue.extend({
       }
     },
     toggleNameSettings,
-    async loadRegexNavbarSettings() {
+    async loadRegexBlockListSettings() {
       const isFirstLoad = await loadRegexSettings()
       if (isFirstLoad) {
         const triggerButton = this.$refs.button.$el as HTMLElement
@@ -58,7 +58,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-.custom-navbar-extra-options {
+.custom-block-list-extra-options {
   display: flex;
   align-items: center;
   justify-content: center;
