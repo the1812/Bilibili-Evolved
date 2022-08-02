@@ -234,6 +234,7 @@ export default Vue.extend({
     &-row {
       @include h-center();
       justify-content: space-between;
+      line-height: 24px;
     }
 
     .internal-name {

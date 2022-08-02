@@ -5,7 +5,7 @@ import { watchlaterList } from '@/components/video/watchlater'
 import { getData, registerData } from '@/plugins/data'
 import { descendingStringSort } from '@/core/utils/sort'
 import { VideoCard } from '../video-card'
-import { FeedsCard, FeedsCardType } from './types'
+import { FeedsCard, FeedsCardType, feedsCardTypes } from './types'
 
 export * from './types'
 export * from './manager'
@@ -60,17 +60,41 @@ export const withContentFilter = <Args extends any[], Item> (
 ) => (...args: Args) => func(...args).then(items => applyContentFilter(items))
 
 /**
+ * 获取动态 API 地址
+ * @param type 动态类型, 或传入类型ID列表返回最新动态
+ * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
+ */
+export const getFeedsUrl = (type: FeedsCardType | string, afterID?: string | number) => {
+  if (typeof type === 'string') {
+    return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type}`
+  }
+  const id = type.id.toString()
+  let api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${id}`
+  if (afterID) {
+    api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${afterID}&type=${id}`
+  }
+  return api
+}
+/**
+ * 获取动态
+ * @param type 动态类型, 或传入类型ID列表返回最新动态
+ * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
+ */
+export const getFeeds = async (type: FeedsCardType | string, afterID?: string | number) => (
+  getJsonWithCredentials(getFeedsUrl(type, afterID))
+)
+
+/**
  * 获取视频或番剧动态
  * @param type 指定视频 (video) 或番剧 (bangumi) 类型, 默认是视频
+ * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
  */
 export const getVideoFeeds = withContentFilter(
-  async (type: 'video' | 'bangumi' = 'video'): Promise<VideoCard[]> => {
+  async (type: 'video' | 'bangumi' = 'video', afterID?: string | number): Promise<VideoCard[]> => {
     if (!getUID()) {
       return []
     }
-    const json = await getJsonWithCredentials(
-      `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type === 'video' ? 8 : 512}`,
-    )
+    const json = await getJsonWithCredentials(getFeedsUrl(type === 'video' ? feedsCardTypes.video : feedsCardTypes.bangumi, afterID))
     if (json.code !== 0) {
       throw new Error(json.message)
     }
@@ -138,23 +162,6 @@ export const getVideoFeeds = withContentFilter(
   },
 )
 
-// let mockupCalled = false
-/**
- * 获取动态
- * @param type 动态类型, 或传入类型ID列表返回最新动态
- * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
- */
-export const getFeeds = async (type: FeedsCardType | string, afterID?: string | number) => {
-  if (typeof type === 'string') {
-    return getJsonWithCredentials(`https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type}`)
-  }
-  const id = type.id.toString()
-  let api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${id}`
-  if (afterID) {
-    api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${afterID}&type=${id}`
-  }
-  return getJsonWithCredentials(api)
-}
 /**
  * 向动态卡片的菜单中添加菜单项
  * @param card 动态卡片

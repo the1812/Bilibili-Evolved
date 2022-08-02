@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { darkExcludes } from './dark-urls'
 
 const changeDelay = 200
@@ -27,7 +27,7 @@ const remove = async () => {
   }
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'darkMode',
   displayName: '夜间模式',
   entry: () => {
@@ -73,4 +73,4 @@ export const component: ComponentMetadata = {
     },
   },
   urlExclude: darkExcludes,
-}
+})
