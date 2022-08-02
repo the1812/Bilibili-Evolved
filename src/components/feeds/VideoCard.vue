@@ -320,6 +320,7 @@ export default {
     overflow: hidden;
     .cover {
       transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
+      -webkit-transform:rotate(0deg);
       object-fit: cover;
       width: 100%;
       height: 100%;

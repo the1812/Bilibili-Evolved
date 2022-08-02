@@ -64,7 +64,8 @@ export default Vue.extend({
     }
   }
   &.season {
-    transform: scale(1.15);
+    height: 36px;
+    // transform: scale(1.15);
     filter: drop-shadow(0 0 2px #0002);
   }
 }

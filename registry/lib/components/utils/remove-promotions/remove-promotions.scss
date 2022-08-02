@@ -24,7 +24,9 @@ body.remove-game-match-module #reportFirst3,
 .eva-extension-area,
 .eva-banner,
 .video-ad-creative-card,
-.bili-dyn-home--member .bili-dyn-ads {
+.bili-dyn-home--member .bili-dyn-ads,
+.video-page-special-card-small,
+.video-page-operator-card-small {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
