@@ -225,7 +225,7 @@ export class VideoPlayerV2Agent extends PlayerAgent {
   }
   checkBwpVideo() {
     const videoSelector = this.query.video.element.selector
-    const bwpSelector = '.bilibili-player-video bwp-video'
+    const bwpSelector = '.bilibili-player-video bwp-video,.bpx-player-video-area bwp-video'
     this.query.video.element = (() => {
       const func = async () => {
         if (await isBwpVideo()) {
