@@ -1,9 +1,9 @@
-@import "./dark-definitions";
+@import './dark-definitions';
 
 #disable-popup-modal,
 #vip-exchange-modal {
   .vip-exchange .months button.disabled {
-    @include background-color("2");
+    @include background-color('2');
   }
 }
 
@@ -12,7 +12,7 @@
   .sch-pub-btn.disabled,
   .publish-btn.publishing,
   .publish-btn.disabled {
-    @include background-color("2");
+    @include background-color('2');
   }
 }
 .link-footer,
@@ -22,10 +22,10 @@
 .tab-list .tab-item.active:before,
 .player-auxiliary-area .player-auxiliary-bscrollbar .bscroll-indicator,
 .home-content .publish-btn.disabled {
-  @include background-color("2");
+  @include background-color('2');
 }
 .manga-detail .episode-list-component .episode-list .list-header .header-item.selected {
-  @include background-color("3");
+  @include background-color('3');
 }
 .wrapper .elec-btn.disabled,
 .f-list-hover:hover,
@@ -43,10 +43,10 @@
 .main-container .media-info .media-right .media-tool-bar .btn-follow.active,
 .coupon-content-con .coupon-btn-disable,
 .customize-wrp .select {
-  @include background-color("4");
+  @include background-color('4');
 }
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-indicator {
-  @include background-color("5");
+  @include background-color('5');
 }
 .player-auxiliary-area .player-auxiliary-bscrollbar {
   .bscroll-vertical-scrollbar,
@@ -68,12 +68,12 @@
 blockquote {
   &,
   * {
-    @include color("a");
+    @include color('a');
   }
-  @each $color in "blue", "gray", "green", "lblue", "pink", "purple", "yellow" {
-    @each $value in "01", "02", "03", "04" {
+  @each $color in 'blue', 'gray', 'green', 'lblue', 'pink', 'purple', 'yellow' {
+    @each $value in '01', '02', '03', '04' {
       .color-#{$color}-#{$value} {
-        @include color("a");
+        @include color('a');
       }
     }
   }
@@ -81,30 +81,30 @@ blockquote {
 .open-dialog-masker .open-dialog-content .open-footer .btn-normal.disabled {
   &,
   &:hover {
-    @include color("a");
+    @include color('a');
   }
 }
 .status_box .status_btn.disabled {
-  @include color("a");
+  @include color('a');
 }
 .live-room-app .guard-rank-cntr {
   .tabs.isHundred .item.active {
-    @include color("e");
+    @include color('e');
   }
   &.hundred,
   &.thousand {
     .live-skin-main-a-text,
     .page-box .live-skin-main-text,
     .live-skin-highlight-text {
-      @include color("e");
+      @include color('e');
     }
   }
 }
 .bb-comment .no-login .comment-submit {
   .common &,
   & {
-    @include color("9");
-    @include background-color("4");
+    @include color('9');
+    @include background-color('4');
     @include border-color();
   }
 }
@@ -124,7 +124,7 @@ blockquote {
 .customize-wrp .select,
 .manga-detail .episode-list-component .episode-list .list-data .list-item.last-read,
 .popup-content-ctnr .bl-button--ghost {
-  @include color("e");
+  @include color('e');
 }
 
 .link-footer,
@@ -224,27 +224,27 @@ blockquote {
 
 #bilibiliPlayer {
   box-shadow: 0 4px 8px 0 #0004;
-  @include background-color("2");
+  @include background-color('2');
 }
 
 .live-skin-coloration-area {
   .live-skin-separate-area,
   .live-skin-separate-area-hover:hover {
-    @include background-color("2");
+    @include background-color('2');
   }
   .live-skin-normal-a-text {
     &,
     &:link,
     &:visited {
-      @include color("a");
+      @include color('a');
     }
   }
   .live-skin-normal-text {
-    @include color("a");
+    @include color('a');
   }
   .live-skin-main-text,
   .live-skin-highlight-text {
-    @include color("e");
+    @include color('e');
   }
   .live-skin-highlight-border,
   .live-skin-separate-border {
@@ -292,5 +292,52 @@ blockquote {
   }
   .bilibili-player-block-filter-label {
     @include theme-color();
+  }
+}
+.left-container #head-info-vm.head-info-section {
+  @include background-color('4');
+}
+#link-navbar-vm.link-navbar-ctnr {
+  &,
+  & .link-navbar {
+    @include background-color('3');
+  }
+  .calendar-checkin .calendar-wrapper,
+  .download-panel-ctnr,
+  .nav-item,
+  .nav-item .area-list-panel .list-item,
+  .nav-logo,
+  .shortcuts-ctnr .shortcut-item,
+  .user-panel-ctnr .user-panel .header-node .username-info,
+  .user-panel-ctnr .user-panel .user-level-detail .detail-link {
+    @include color('e');
+  }
+  .link-panel-ctnr .ps__thumb-x,
+  .link-panel-ctnr .ps__thumb-y,
+  .nav-item:hover,
+  .shortcuts-ctnr .shortcut-item:not(:last-child):hover {
+    @include background-color('4');
+  }
+  .calendar-checkin,
+  .calendar-checkin .calendar-wrapper,
+  .calendar-checkin .title,
+  .download-panel-ctnr,
+  .link-panel-ctnr,
+  .link-panel-ctnr .totally-empty-hint,
+  .nav-item .area-list-panel,
+  .user-panel-ctnr .user-panel,
+  .user-panel-ctnr .user-panel .load-error-panel,
+  .user-panel-ctnr .user-panel .user-level-detail {
+    @include background-color('3');
+  }
+  .right-part > .shortcuts-ctnr .shortcut-item:hover {
+    @include background-color();
+  }
+  .content-ctnr {
+    .items .item .light-name,
+    .items .item .name,
+    .title {
+      @include color('e');
+    }
   }
 }

@@ -88,8 +88,7 @@ div#square.container,
     background-color: #222 !important;
 }
 .article-holder .error-card .video-holder .video-cover,
-.article-holder .error-card .video-holder p,
-.player-auxiliary-danmaku-function .player-auxiliary-danmaku-multiple-control
+.article-holder .error-card .video-holder p
 {
     background-color: #333 !important;
 }

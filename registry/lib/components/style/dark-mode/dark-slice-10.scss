@@ -612,6 +612,9 @@
     @include foreground-color();
   }
 }
+.placeholder-shown::before {
+  @include color("8");
+}
 .publish-panel {
   .core-style {
     @include background-color();
@@ -622,9 +625,6 @@
     &:active {
       @include theme-border-color();
     }
-  }
-  .editor .placeholder-shown::before {
-    @include color("8");
   }
   .schedule-bar {
     @include background-color("3");

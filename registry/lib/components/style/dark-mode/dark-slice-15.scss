@@ -28,6 +28,9 @@
       .bui-dropdown-item {
         @include color("e");
         @include background-color();
+        &::before {
+          @include hide();
+        }
         &:hover {
           @include theme-color();
           @include background-color("2");
@@ -1037,10 +1040,18 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
     @include background-color("6");
   }
 }
+.reply-warp,
 .up-info {
   .u-face .u-face__avatar {
     @include background-color("4");
   }
+  .bili-avatar {
+    @include no-image();
+    @include background-color("4");
+  }
+}
+.user-card-avatar,
+.up-info-v1 {
   .bili-avatar {
     @include no-image();
     @include background-color("4");
@@ -1059,6 +1070,36 @@ $media-types: (video, bangumi, cheese, live, manga, movie, ogv, article);
   }
 }
 .user-card {
+  .card-user-name {
+    @include color('e');
+  }
+  .card-social-info {
+    > a {
+      @include color('e');
+      .social-info-title {
+        @include color('a');
+      }
+    }
+  }
+  .card-sign {
+    @include color('a');
+  }
+  .card-btn-warp {
+    .card-attention-btn {
+      @include theme-background-color();
+      @include border-color();
+      @include foreground-color();
+      &.attention {
+        @include background-color('4');
+        @include color('e');
+      }
+    }
+    .card-message-btn {
+      @include border-color('8');
+      @include color('e');
+      @include background-color();
+    }
+  }
   .info p {
     @include color("e");
   }

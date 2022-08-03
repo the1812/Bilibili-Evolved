@@ -1,4 +1,4 @@
-import { childListSubtree } from '@/core/observer'
+import { allMutations } from '@/core/observer'
 import { select } from '@/core/spin-query'
 
 const idPolyfill = async () => {
@@ -8,7 +8,7 @@ const idPolyfill = async () => {
   }
   const { useScopedConsole } = await import('@/core/utils/log')
   const console = useScopedConsole('v2 player polyfill')
-  childListSubtree(document.body, () => {
+  allMutations(() => {
     const input = player.getVideoMessage()
     if (!input) {
       console.warn('invalid getUserParams data')

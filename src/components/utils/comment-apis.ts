@@ -55,7 +55,7 @@ const parseCommentItem = (element: HTMLElement) => {
       userID: replyFace.getAttribute('data-usercard-mid'),
       userName: replyUser.textContent,
       content: replyElement.querySelector('.text-con').textContent,
-      timeText: replyElement.querySelector('.info .time').textContent,
+      timeText: replyElement.querySelector('.info .time, .info .time-location').textContent,
       likes: parseInt(replyElement.querySelector('.info .like span').textContent),
     }
   }
@@ -65,7 +65,7 @@ const parseCommentItem = (element: HTMLElement) => {
     userID: user.getAttribute('data-usercard-mid'),
     userName: user.textContent,
     content: element.querySelector('.con .text').textContent,
-    timeText: element.querySelector('.con .info .time').textContent,
+    timeText: element.querySelector('.con .info .time, .info .time-location').textContent,
     likes: parseInt(element.querySelector('.con .like span').textContent),
     replies: [],
   }
