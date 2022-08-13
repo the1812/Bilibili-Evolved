@@ -16,8 +16,7 @@
 #link-navbar-vm > .link-navbar,
 #app > .link-navbar,
 #app > .nav-header-wrapper,
-.b-header-mask-wrp .b-header-mask,
-.link-navbar {
+.b-header-mask-wrp .b-header-mask {
   @include background-color("3");
 }
 .z_top .i-link:hover,

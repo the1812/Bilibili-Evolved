@@ -216,7 +216,8 @@
   .medal,
   .medal-level,
   .reply-notice,
-  .sailing {
+  .sailing,
+  .perfect-reply {
     @include hide();
   }
   .comment-send-lite .comment-emoji,
