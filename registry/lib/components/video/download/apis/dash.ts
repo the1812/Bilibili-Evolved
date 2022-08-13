@@ -13,6 +13,7 @@ import { bangumiApi, videoApi } from './url'
 export const DashExtensions = {
   video: '.mp4',
   audio: '.m4a',
+  flacAudio: '.flac',
 }
 /** dash 格式原本的扩展名 */
 export const DashFragmentExtension = '.m4s'
@@ -32,7 +33,7 @@ export interface Dash {
   duration: number
 }
 export interface AudioDash extends Dash {
-  type: 'audio'
+  type: 'audio' | 'flacAudio'
 }
 export interface VideoDash extends Dash {
   type: 'video'
@@ -119,6 +120,7 @@ const downloadDash = async (
     video,
     audio,
     dolby,
+    flac,
   } = data.dash
   const parseVideoCodec = (codecId: number) => {
     switch (codecId) {
@@ -153,27 +155,26 @@ const downloadDash = async (
       return dash
     })
     .filter(d => dashFilters.video(d))
-  const audioDashes: AudioDash[] = (audio as any[] || []).map((d: any): AudioDash => ({
-    type: 'audio',
-    bandWidth: d.bandwidth,
-    codecs: d.codecs,
-    codecId: d.codecid,
-    backupUrls: (d.backupUrl || d.backup_url || []).map(
+
+  const mapAudioDash = (dash: any, type: AudioDash['type'] = 'audio'): AudioDash => ({
+    type,
+    bandWidth: dash.bandwidth,
+    codecs: dash.codecs,
+    codecId: dash.codecid ?? 0,
+    backupUrls: (dash.backupUrl || dash.backup_url || []).map(
       (it: string) => it.replace('http:', 'https:'),
     ),
-    downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
+    downloadUrl: (dash.baseUrl || dash.base_url || '').replace('http:', 'https:'),
     duration,
-  })).filter(d => dashFilters.audio(d))
+  })
+  const audioDashes: AudioDash[] = (audio as any[] || [])
+    .map(d => mapAudioDash(d))
+    .filter(d => dashFilters.audio(d))
   if (dolby) {
-    audioDashes.push(...dolby.audio?.map((d: any): AudioDash => ({
-      type: 'audio',
-      bandWidth: d.bandwidth,
-      codecs: d.codecs,
-      codecId: -1, // unknown id
-      backupUrls: [],
-      downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
-      duration,
-    })) ?? [])
+    audioDashes.push(...dolby.audio?.map((d: any) => mapAudioDash(d)) ?? [])
+  }
+  if (flac) {
+    audioDashes.push(...(flac.audio ? [mapAudioDash(flac.audio, 'flacAudio')] : []))
   }
   const fragments: DownloadVideoFragment[] = dashToFragments({
     audioDashes,
