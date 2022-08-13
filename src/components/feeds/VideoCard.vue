@@ -423,7 +423,7 @@ export default {
       border-radius: 14px;
       opacity: 0.75;
       .topic-name {
-        max-width: 120px;
+        max-width: 84px;
         @include single-line();
       }
       &:hover {
