@@ -369,6 +369,14 @@
   },
   {
     "type": "component",
+    "name": "blackList",
+    "displayName": "屏蔽黑名单up主",
+    "description": "by [@snowraincloud](https://github.com/snowraincloud)\n\n屏蔽黑名单up主",
+    "fullRelativePath": "../../registry/dist/components/utils/black-list.js",
+    "fullAbsolutePath": "registry/dist/components/utils/black-list.js"
+  },
+  {
+    "type": "component",
     "name": "changeUpdateUrls",
     "displayName": "更新链接替换",
     "description": "批量更换已安装功能的更新链接的分支, 对本地安装的功能无效.",
