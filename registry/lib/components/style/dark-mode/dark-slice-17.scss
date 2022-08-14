@@ -1,0 +1,806 @@
+@import './dark-definitions';
+@import 'common';
+
+.video-info-v1 .video-data {
+  @include color('a');
+  .item {
+    svg path {
+      @include fill('a');
+    }
+  }
+}
+.members-info-v1 {
+  .normal-members-header {
+    @include background-color('4');
+    @include color('e');
+    .person {
+      @include color('a');
+    }
+    .btn path {
+      @include fill('e');
+    }
+  }
+  .normal-members-container {
+    .avatar {
+      @include border-color('4');
+      @include background-color('3');
+    }
+    .upname {
+      @include color('e');
+      &.is-vip {
+        @include vip-color();
+      }
+    }
+    .info-tag {
+      @include color('a');
+    }
+    .attention {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+}
+.up-info-v1 {
+  .up-info_right_message {
+    &,
+    & i {
+      @include color('8');
+    }
+  }
+  .charge-btn {
+    border: 1px solid;
+    @include background-color();
+    @include theme-border-color('80');
+    @include theme-color('80');
+    &:hover {
+      @include theme-border-color();
+      @include theme-color();
+    }
+  }
+}
+.user-card-m-exp {
+  @include background-color('3');
+  @include border-color();
+  .social {
+    a,
+    span {
+      @include color('e');
+      .tip_text {
+        @include color('a');
+      }
+    }
+  }
+  .btn-box {
+    .like {
+      @include theme-background-color();
+      &,
+      & .plus {
+        @include foreground-color();
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .liked {
+      @include background-color('4');
+      &,
+      & .plus {
+        @include color('a');
+      }
+      &:hover,
+      &:hover .plus {
+        @include color('e');
+      }
+    }
+    .message {
+      @include color('e');
+    }
+  }
+}
+.float-nav-exp,
+.fixed-nav {
+  .nav-menu {
+    .item {
+      @include color('e');
+      @include background-color('3');
+      @include border-color();
+      .item-icon path {
+        @include fill('e');
+      }
+      &:hover {
+        @include theme-background-color();
+        @include foreground-color();
+        .item-icon path {
+          @include foreground-fill();
+        }
+      }
+    }
+  }
+}
+.bui-collapse-header {
+  .bui-collapse-arrow-text {
+    .arrow-icon {
+      @include fill('e');
+    }
+  }
+}
+.multi-page-v1 {
+  @include background-color('4');
+  .head-left {
+    .cur-page {
+      @include color('a');
+    }
+    .range-box i {
+      @include color('a');
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+  .head-right {
+    .next-button {
+      @include color('a');
+    }
+  }
+  .cur-list {
+    .list-box {
+      > li {
+        &,
+        & a {
+          @include color('e');
+        }
+        &:hover {
+          @include background-color('5');
+        }
+        &.on {
+          @include background-color('5');
+          img {
+            @include to-theme('blue');
+          }
+          &,
+          & a {
+            @include theme-color();
+          }
+        }
+        .duration {
+          @include color('a');
+        }
+      }
+    }
+    .module-box {
+      > li {
+        @include background-color('5');
+        @include border-color();
+        &,
+        & a {
+          @include color('e');
+        }
+        &:hover {
+          @include background-color('6');
+        }
+        &.on {
+          @include theme-background-color();
+          &,
+          & a {
+            @include foreground-color();
+          }
+        }
+      }
+    }
+  }
+}
+.recommend-list-v1 {
+  .rec-title {
+    @include color('e');
+  }
+  .next-button {
+    @include color('a');
+  }
+  .split-line {
+    @include background-color('5');
+  }
+  .rec-footer {
+    @include background-color('3');
+    @include color('e');
+  }
+}
+.base-video-sections-v1 {
+  @include background-color('4');
+}
+.video-page-special-card-small,
+.video-page-card-small {
+  .pic-box {
+    @include background-color('3');
+  }
+  .info .title {
+    @include color('e');
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .playinfo,
+  .upname a {
+    @include color('a');
+    svg path {
+      @include fill('a');
+    }
+  }
+}
+.bilibili-player-video-sendbar .bilibili-player-video-danmaku-root {
+  .bilibili-player-video-btn-danmaku {
+    @include fill('a');
+    &:hover {
+      @include fill('e');
+    }
+  }
+  .bilibili-player-video-danmaku-input::-webkit-input-placeholder {
+    @include color('fff4');
+  }
+  .bilibili-player-video-danmaku {
+    &-setting,
+    &-switch {
+      @include fill('a');
+      @include on-fullscreen {
+        @include fill('e');
+      }
+      &:hover {
+        @include fill('e');
+      }
+    }
+  }
+  .bui-danmaku-switch-on {
+    path[fill] {
+      @include theme-fill();
+    }
+  }
+}
+.video-toolbar-v1 {
+  .toolbar-left {
+    @include color('8');
+    > span {
+      @include color('8');
+      @include fill('8');
+      .info-text {
+        @include color('8');
+      }
+      &:hover,
+      &.on {
+        @include theme-color();
+        @include theme-fill();
+        .info-text {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .toolbar-right {
+    @include color('a');
+    > div,
+    > span {
+      @include color('8');
+      @include fill('8');
+      &:hover {
+        @include theme-color();
+        @include theme-fill();
+      }
+    }
+  }
+}
+.van-popover.van-more {
+  @include background-color('3');
+  @include border-color('8884');
+  .more_dropdown {
+    li {
+      @include color('e');
+      @include fill('e');
+    }
+  }
+}
+.video-desc-v1 {
+  .desc-info {
+    @include color('e');
+    a {
+      @include theme-color();
+    }
+  }
+  .toggle-btn span {
+    @include color('e');
+  }
+}
+.s_tag-v1 {
+  @include border-color('4');
+  .tag-area {
+    .tag {
+      @include background-color();
+      &-more,
+      .tag-link {
+        @include color('e');
+        @include background-color('3');
+        > svg {
+          @include fill('e');
+        }
+      }
+      .tag-icon {
+        @include to-theme('blue');
+      }
+      .rarrow-icon {
+        @include fill('e');
+      }
+      &-more:hover,
+      &:hover .tag-link {
+        @include theme-background-color();
+        @include foreground-color();
+        > svg {
+          @include foreground-fill();
+        }
+      }
+      .tag-channel-pane-exp {
+        @include background-color('3');
+        .channel-cover {
+          @include border-color('3');
+        }
+        .channel-title {
+          @include color('e');
+        }
+        .channel-desc {
+          @include color('a');
+        }
+        .channel-btns {
+          &__link {
+            @include theme-border-color();
+            @include theme-color();
+          }
+          &__subs {
+            @include theme-background-color();
+            @include foreground-color();
+            @include border-color();
+            &.is-subs {
+              @include background-color('4');
+              @include color('8');
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.activity-m-v1 {
+  @include background-color();
+  .inside-wrp {
+    @include border-color();
+    @include background-color('3');
+    .left {
+      @include color('e');
+    }
+    .right {
+      .inside-bg::before {
+        background-image: linear-gradient(to right, #333, transparent 30%) !important;
+      }
+    }
+  }
+}
+.reply-navigation {
+  .nav-title {
+    @include color('e');
+    .total-reply {
+      @include color('a');
+    }
+  }
+  .nav-sort {
+    @include color('8');
+    .time-sort:hover,
+    .hot-sort:hover {
+      @include theme-color();
+    }
+    &.time .time-sort,
+    &.hot .hot-sort {
+      @include color('e');
+    }
+  }
+}
+.reply-warp {
+  .reply-box-textarea::-webkit-input-placeholder {
+    @include color('8');
+  }
+  .fixed-reply-box {
+    .reply-box {
+      @include background-color('2');
+      @include border-color('5');
+    }
+  }
+  .reply-box-send {
+    @include theme-background-color('50');
+    .send-text {
+      @include foreground-color('50');
+    }
+    &::after {
+      @include hide();
+    }
+    &.send-active {
+      @include theme-background-color();
+      .send-text {
+        @include foreground-color();
+      }
+    }
+  }
+  .reply-box-emoji {
+    .emoji-btn {
+      @include border-color('4');
+      @include color('a');
+      .box-emoji-icon path {
+        @include fill('a');
+      }
+      &:hover {
+        @include color('e');
+        .box-emoji-icon path {
+          @include fill('e');
+        }
+      }
+    }
+  }
+  .emoji-panel {
+    @include border-color('8884');
+    @include color('e');
+    .emoji-title {
+      @include background-color('3');
+    }
+    .emoji-content {
+      @include background-color('3');
+      .emoji-info:hover {
+        @include background-color('5');
+      }
+    }
+    .emoji-tab {
+      @include background-color('4');
+      .emoji-type {
+        &.current-type {
+          @include background-color('5');
+        }
+        &:hover {
+          @include background-color('6');
+        }
+      }
+    }
+    .emoji-slider {
+      .svg-icon {
+        &[style*='c9ccd0'] {
+          @include color('8');
+        }
+        &[style*='61666d'] {
+          @include color('e');
+        }
+      }
+    }
+  }
+  $prefixes: ('', 'sub-');
+  @each $prefix in $prefixes {
+    .#{$prefix}user-info {
+      .#{$prefix}user-name {
+        @include color('c');
+      }
+    }
+    .#{$prefix}reply-content {
+      @include color('e');
+      .user-link {
+        @include theme-color();
+      }
+    }
+    .#{$prefix}reply-info {
+      @include color('a');
+      .svg-icon {
+        &.dislike,
+        &.like {
+          @include color('a');
+          &:hover {
+            @include theme-color();
+          }
+        }
+        &.liked,
+        &.disliked {
+          @include theme-color();
+          ~ span {
+            @include theme-color();
+          }
+        }
+      }
+      .#{$prefix}reply-btn {
+        &:hover {
+          @include theme-color();
+        }
+      }
+      .#{$prefix}reply-operation-warp {
+        .operation-icon {
+          @include color('a');
+        }
+        &:hover {
+          .operation-icon {
+            @include theme-color();
+          }
+        }
+        .operation-list {
+          @include background-color('3');
+          @include color('e');
+          .operation-option {
+            &:hover {
+              @include background-color('4');
+              .option-title {
+                @include theme-color();
+              }
+            }
+          }
+        }
+      }
+    }
+    .#{$prefix}reply-tag-item {
+      @include background-color('3');
+      @include color('e');
+    }
+  }
+  .reply-item {
+    .content-warp {
+      @include border-color('4');
+    }
+    .icon,
+    .jump-url-prefix {
+      @include to-theme('blue');
+    }
+    .jump-link,
+    .jump-url-link {
+      @include theme-color();
+    }
+    .bottom-line {
+      @include border-color('4');
+    }
+  }
+  .view-more {
+    @include color('a');
+    .view-more-btn {
+      @include theme-color();
+    }
+    .view-more-pagination {
+      @include color('a');
+      .pagination-btn,
+      .pagination-page-number {
+        &:hover,
+        &.current-page {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .reply-end {
+    @include color('a');
+  }
+}
+.coin-operated-m-exp {
+  @include background-color('3');
+  .icon.close {
+    @include to-white();
+  }
+  .coin-title {
+    @include color('e');
+    span {
+      @include theme-color();
+    }
+  }
+  .mc {
+    &-box {
+      @include border-color('8');
+      .c-num {
+        @include color('e');
+      }
+      &.on {
+        @include theme-border-color();
+        .c-num {
+          @include theme-color();
+        }
+      }
+    }
+  }
+  .like-checkbox {
+    @include color('e');
+    input[type='checkbox'] {
+      &:checked + i {
+        @include to-theme('blue');
+      }
+    }
+  }
+  .coin-bottom {
+    .tips {
+      @include color('a');
+    }
+  }
+}
+.follow-dialog-wrap-exp,
+.collection-m-exp {
+  @include background-color('3');
+  .title {
+    @include color('e');
+    @include border-color('5');
+    i.close {
+      @include to-white();
+    }
+  }
+  .special-tip {
+    @include color('a');
+  }
+  .bottom {
+    @include border-color('5');
+    .submit-move {
+      @include theme-background-color();
+      @include foreground-color();
+      &.disable {
+        @include background-color('5');
+        @include color('8');
+      }
+    }
+  }
+}
+.share_dropdown {
+  @include color('e');
+  .box-right {
+    @include border-color('4');
+  }
+  .share-link {
+    @include background-color('4');
+    #link_copy {
+      @include background-color();
+      @include color('e');
+    }
+    .btn {
+      @include theme-color();
+    }
+  }
+}
+
+.player-auxiliary-filter-playlist {
+  .player-auxiliary-playlist-user {
+    @include color('a');
+  }
+  .player-auxiliary-playlist-bottom {
+    @include border-color('6');
+  }
+}
+
+.player-auxiliary-setting-menu-wrap {
+  @include background-color('3');
+  @include border-color('8884');
+  .player-auxiliary-setting-menu-list {
+    @include color('e');
+    &::before {
+      @include hide();
+    }
+    &:hover {
+      @include background-color('2');
+    }
+  }
+}
+.player-auxiliary-adv-danmaku {
+  @include border-color('4');
+  * {
+    // 这个不能用 important
+    background-color: #222;
+    color: #eee;
+  }
+  .mask::after {
+    @include background-color('222A');
+  }
+}
+.player-auxiliary-danmaku-wrap {
+  @include background-color();
+  .player-auxiliary-danmaku-load-status {
+    @include background-color();
+    @include color('a');
+  }
+}
+.player-auxiliary-danmaku-function {
+  @include background-color();
+
+  .player-auxiliary-danmaku-multiple-control {
+    @include background-color('2');
+  }
+  [class*='player-auxiliary-danmaku-btn-'] {
+    @include background-color();
+  }
+}
+.player-auxiliary-block-wrap {
+  @include border-color('4');
+}
+.player-auxiliary-modal-container {
+  @include border-color('8884');
+  .player-auxiliary-modal-header {
+    @include background-color();
+  }
+}
+.player-auxiliary-modal-close.bpm-btn {
+  @include background-color();
+  i {
+    @include color('a');
+  }
+}
+.fav-list-container {
+  .nav-add {
+    .icon {
+      @include to-gray();
+    }
+    .text {
+      @include color('e');
+    }
+  }
+}
+.edit-media-list {
+  .edit-info {
+    .cover-title {
+      @include color('e');
+    }
+    .upload-cover:not([style*='background-image']) {
+      filter: invert(1);
+    }
+  }
+  .name-input {
+    @include border-color('4');
+    @include background-color();
+    @include color('e');
+    &::-webkit-input-placeholder {
+      @include color('8');
+    }
+  }
+  .media-list-intro {
+    &::-webkit-input-placeholder {
+      @include color('8');
+    }
+  }
+  .intro-num-limit,
+  .name-num-limit {
+    @include color('a');
+  }
+}
+.upload-center-clip {
+  .head-wrap {
+    @include border-color('6');
+  }
+  .img-clip-title {
+    @include color('e');
+  }
+  .img-clip-tips {
+    @include color('a');
+  }
+  .reset-img .reset-select {
+    @include color('a');
+    .icon-reset {
+      @include to-gray();
+    }
+  }
+  .modal-footer {
+    .cancel-btn {
+      @include border-color('6');
+      @include color('e');
+    }
+    .confirm-btn {
+      @include theme-background-color();
+      @include foreground-color();
+      @include border-color();
+    }
+  }
+}
+.favList-info {
+  .favInfo-cover.empty {
+    filter: invert(0.8);
+    .fav-invalid {
+      filter: invert(1);
+    }
+  }
+}
+.live-room-app {
+  .hot-rank-text {
+    @include theme-background-color('80');
+    @include foreground-color();
+  }
+}
+.bili-gallery {
+  &__pagination {
+    &__index {
+      @include theme-color();
+    }
+  }
+}
