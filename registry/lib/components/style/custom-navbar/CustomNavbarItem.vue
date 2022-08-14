@@ -129,11 +129,9 @@ export default Vue.extend({
       }
       if (!item.requestedPopup) {
         item.requestedPopup = true
-        console.log('requestedPopup', true)
         this.triggerPopupShow(true)
         return
       }
-      console.log('requestedPopup', false)
       this.triggerPopupShow(false)
     },
     // async initPopper() {
