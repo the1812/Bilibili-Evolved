@@ -21,7 +21,7 @@ const entry: ComponentEntry<typeof options> = async ({ settings }) => {
     return
   }
   await playerReady()
-  const favoriteButton = dq('.video-toolbar .ops .collect') as HTMLElement
+  const favoriteButton = dq('.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect') as HTMLElement
   if (!favoriteButton) {
     return
   }

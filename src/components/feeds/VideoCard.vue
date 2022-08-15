@@ -340,6 +340,7 @@ export default {
     overflow: hidden;
     .cover {
       transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
+      -webkit-transform:rotate(0deg);
       object-fit: cover;
       width: 100%;
       height: 100%;
@@ -423,7 +424,7 @@ export default {
       border-radius: 14px;
       opacity: 0.75;
       .topic-name {
-        max-width: 120px;
+        max-width: 84px;
         @include single-line();
       }
       &:hover {

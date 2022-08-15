@@ -80,10 +80,6 @@ li.user-wrapper .avatar .detail .logout,
 {
     background-color: #222 !important;
 }
-.player-auxiliary-area .bui-collapse
-{
-    background-color: #333 !important;
-}
 .container .host-list-layout .hot-list-wrap .hot-song-list,
 .rank-list-container .rank-list-wrapper .rank-list,
 .rank-list-container .rank-list-wrapper,
@@ -194,7 +190,6 @@ body #app .marquee,
 {
     background-color: #444 !important;
 }
-.player-auxiliary-area .bui-collapse,
 .player-auxiliary-area .player-auxiliary-danmaku-btn-footer,
 .v-wrap #multi_page
 {

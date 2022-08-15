@@ -142,6 +142,7 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
   ])
 
   const scopedConsole = {
+    ...unsafeWindow.console,
     ...console,
   }
 

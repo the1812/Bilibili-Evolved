@@ -10,7 +10,7 @@ export const bwpVideoFilter = (selector: string) => {
   // }
   const map = {
     video: ', bwp-video',
-    '.bilibili-player-video video': ', .bilibili-player-video bwp-video',
+    '.bilibili-player-video video': ', .bilibili-player-video bwp-video,.bpx-player-video-area bwp-video',
   }
   const suffix = map[selector]
   if (suffix) {
