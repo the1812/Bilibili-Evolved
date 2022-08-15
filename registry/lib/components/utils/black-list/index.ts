@@ -3,24 +3,24 @@ import { mainSiteUrls } from '@/core/utils/urls'
 import { allMutationsOn } from '@/core/observer'
 import { selectAll } from '@/core/spin-query'
 import { registerData, getData } from '@/plugins/data'
-import { BlockListDataKey } from './common'
+import { BlackListDataKey } from './common'
 
 const name = 'blackList'
 
 const entry = async ({ settings: { options } }) => {
-  const blockListData = {
+  const blackListData = {
     up: options.up,
     upRegex: options.upRegex,
   }
 
-  registerData(BlockListDataKey, blockListData)
+  registerData(BlackListDataKey, blackListData)
   const billGrid = await selectAll('.bili-grid')
   allMutationsOn(billGrid, async () => {
     const videos = await selectAll('.bili-video-card')
     if (!videos) {
       return
     }
-    const blockList = getData(BlockListDataKey)
+    const blockList = getData(BlackListDataKey)
     const upRegex = blockList[0].upRegex.map(e => new RegExp(e))
     videos.forEach(video => {
       const authorElement = (video as unknown as HTMLElement).querySelector('.bili-video-card__info--author')
@@ -70,7 +70,7 @@ export const component: ComponentMetadata = {
     componentsTags.utils,
   ],
   description: {
-    'zh-CN': '屏蔽黑名单up主',
+    'zh-CN': '屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配',
   },
   author: {
     name: 'snowraincloud',
