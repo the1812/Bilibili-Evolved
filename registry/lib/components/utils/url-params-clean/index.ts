@@ -24,6 +24,7 @@ const entry = async () => {
     'share_plat',
     'share_tag',
     'share_session_id',
+    'share_from',
     'bbid',
     'ts',
     'timestamp',
