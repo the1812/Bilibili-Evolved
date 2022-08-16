@@ -35,15 +35,15 @@
       <div
         ref="seasonsList"
         class="fresh-home-categories-bangumi-timeline-seasons-container scroll-top scroll-bottom"
-        :class="{ 'not-empty': item.seasons.length > 0 }"
+        :class="{ 'not-empty': item.episodes.length > 0 }"
       >
         <div
           class="fresh-home-categories-bangumi-timeline-seasons"
           :class="{ today: index === todayIndex }"
         >
-          <VEmpty v-if="item.seasons.length === 0" />
+          <VEmpty v-if="item.episodes.length === 0" />
           <a
-            v-for="season of item.seasons"
+            v-for="season of item.episodes"
             :key="season.season_id"
             :data-season="season.season_id"
             class="fresh-home-categories-bangumi-timeline-season"
@@ -137,7 +137,7 @@ interface TimelineDay {
   date_ts: number
   day_of_week: number
   is_today: number
-  seasons: TimelineSeason[]
+  episodes: TimelineSeason[]
 }
 
 const rankListHeight = rankListCssVars.panelHeight - 2 * rankListCssVars.padding
@@ -256,7 +256,7 @@ export default Vue.extend({
       if (!todaySeasons) {
         return
       }
-      const seasonsData: TimelineSeason[] = this.items[this.todayIndex]?.seasons
+      const seasonsData: TimelineSeason[] = this.items[this.todayIndex]?.episodes
       if (seasonsData.length === 0) {
         return
       }
