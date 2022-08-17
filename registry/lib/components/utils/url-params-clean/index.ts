@@ -47,9 +47,9 @@ const entry = async () => {
     'spm',
     'hotRank',
     '-Arouter',
-    'vd_source',    
+    'vd_source',
     'is_story_h5',
-    'share_from'
+    'share_from',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
