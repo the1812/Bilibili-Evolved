@@ -50,7 +50,6 @@ const entry = async () => {
     '-Arouter',
     'vd_source',
     'is_story_h5',
-    'share_from',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
