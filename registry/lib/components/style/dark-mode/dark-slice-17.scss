@@ -548,6 +548,9 @@
     .jump-url-link {
       @include theme-color();
     }
+    .bottom-line {
+      @include border-color('4');
+    }
   }
   .view-more {
     @include color('a');

@@ -37,12 +37,10 @@ import { RankListCard } from './rank-list'
 
 const bangumiDataMap = {
   anime: {
-    timeline: 'global',
     seasonType: 1,
     rankingName: 'bangumi',
   },
   guochuang: {
-    timeline: 'cn',
     seasonType: 4,
     // 你永远不知道"国创"在 b 站代码里有多少种叫法...
     rankingName: 'guochan',
@@ -62,11 +60,11 @@ export default Vue.extend({
   },
   data() {
     const { route } = this.region.category
-    const { rankingName, seasonType, timeline } = bangumiDataMap[route]
+    const { rankingName, seasonType } = bangumiDataMap[route]
     return {
       bangumiDataMap,
       route,
-      timelineApi: `https://bangumi.bilibili.com/web_api/timeline_${timeline}`,
+      timelineApi: `https://api.bilibili.com/pgc/web/timeline?types=${seasonType}&before=6&after=6`,
       rankingsApi: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`,
       rankingsLink: `https://www.bilibili.com/v/popular/rank/${rankingName}`,
     }
