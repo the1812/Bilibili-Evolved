@@ -1,7 +1,7 @@
 import { getComponentSettings } from '@/core/settings'
 import { mountVueComponent } from '@/core/utils'
 import { addData, getData } from '@/plugins/data'
-import { BlockListDataKey } from './common'
+import { BlackListDataKey } from './common'
 
 type SettingsVmType = Vue & {
   toggle: () => void
@@ -23,10 +23,10 @@ export const setNameProps = (element: HTMLElement) => {
     return
   }
   nameSettingsVM.triggerElement = element
-  const blockList = getData(BlockListDataKey)
-  nameSettingsVM.list = lodash.cloneDeep(blockList[0].up)
+  const blackList = getData(BlackListDataKey)
+  nameSettingsVM.list = lodash.cloneDeep(blackList[0].up)
   nameSettingsVM.save = (items:string[]) => {
-    addData(BlockListDataKey, data => {
+    addData(BlackListDataKey, data => {
       data.up = items
     })
     blackListOptions.up = items
@@ -38,10 +38,10 @@ export const setRegexProps = (element: HTMLElement) => {
     return
   }
   regexSettingsVm.triggerElement = element
-  const blockList = getData(BlockListDataKey)
-  regexSettingsVm.list = lodash.cloneDeep(blockList[0].upRegex)
+  const blackList = getData(BlackListDataKey)
+  regexSettingsVm.list = lodash.cloneDeep(blackList[0].upRegex)
   regexSettingsVm.save = (items:string[]) => {
-    addData(BlockListDataKey, data => {
+    addData(BlackListDataKey, data => {
       data.upRegex = items
     })
     blackListOptions.upRegex = items
@@ -53,8 +53,8 @@ export const loadNameSettings = async () => {
   if (nameSettingsVM) {
     return false
   }
-  const blockListSettings = await import('./BlockListSettings.vue').then(m => m.default)
-  nameSettingsVM = mountVueComponent(blockListSettings)
+  const blackListSettings = await import('./BlackListSettings.vue').then(m => m.default)
+  nameSettingsVM = mountVueComponent(blackListSettings)
   document.body.insertAdjacentElement('beforeend', nameSettingsVM.$el)
   return true
 }
@@ -63,8 +63,8 @@ export const loadRegexSettings = async () => {
   if (regexSettingsVm) {
     return false
   }
-  const blockListSettings = await import('./BlockListSettings.vue').then(m => m.default)
-  regexSettingsVm = mountVueComponent(blockListSettings)
+  const blackListSettings = await import('./BlackListSettings.vue').then(m => m.default)
+  regexSettingsVm = mountVueComponent(blackListSettings)
   document.body.insertAdjacentElement('beforeend', regexSettingsVm.$el)
   return true
 }
