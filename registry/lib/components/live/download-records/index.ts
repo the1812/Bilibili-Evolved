@@ -1,6 +1,6 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'downloadLiveRecords',
   displayName: '直播录像下载',
   description: {
@@ -16,4 +16,4 @@ export const component: ComponentMetadata = {
   urlInclude: [
     /^https:\/\/live\.bilibili\.com\/record\/(.+)/,
   ],
-}
+})

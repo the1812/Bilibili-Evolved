@@ -1,5 +1,5 @@
 import { waitForControlBar } from '@/components/live/live-control-bar'
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { getUID } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 import { leftControllerSelector } from './original-elements'
@@ -27,7 +27,7 @@ const entry = async () => {
     },
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'liveDanmakuSendbar',
   displayName: '直播弹幕发送栏',
   tags: [
@@ -40,4 +40,4 @@ export const component: ComponentMetadata = {
   reload: () => document.body.classList.remove('danmaku-send-bar-unloaded'),
   unload: () => document.body.classList.add('danmaku-send-bar-unloaded'),
   urlInclude: liveUrls,
-}
+})

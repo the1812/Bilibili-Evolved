@@ -1,6 +1,6 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'playerOnTop',
   displayName: '播放器置顶',
   description: {
@@ -14,4 +14,4 @@ export const component: ComponentMetadata = {
   ],
   tags: [componentsTags.style, componentsTags.video],
   entry: none,
-}
+})

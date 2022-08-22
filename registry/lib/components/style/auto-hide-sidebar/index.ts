@@ -1,8 +1,8 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { getNumberValidator } from '@/core/utils'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'autoHideSidebar',
   entry: () => {
     addComponentListener('autoHideSidebar.triggerWidth', (value: number) => {
@@ -28,4 +28,4 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.',
   },
-}
+})
