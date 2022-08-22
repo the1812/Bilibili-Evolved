@@ -2,12 +2,12 @@
   <VPopup
     ref="popup"
     v-model="open"
-    class="custom-block-list-settings"
+    class="custom-black-list-settings"
     fixed
     :lazy="false"
     :trigger-element="triggerElement"
   >
-    <div class="block-list-settings-header">
+    <div class="black-list-settings-header">
       <VIcon class="title-icon" icon="mdi-sort" :size="24"></VIcon>
       <div class="title">
         {{ titleName }}黑名单设置
@@ -17,35 +17,35 @@
         <VIcon icon="close" :size="18"></VIcon>
       </div>
     </div>
-    <div class="block-list-settings-content">
-      <div class="block-list-settings-section">
-        <div class="block-list-settings-section-title">
+    <div class="black-list-settings-content">
+      <div class="black-list-settings-section">
+        <div class="black-list-settings-section-title">
           添加到黑名单
         </div>
-        <div class="block-list-settings-section-input">
+        <div class="black-list-settings-section-input">
           <TextBox :text="name" @change="changeName" />
           <VButton @click="add">添加</VButton>
         </div>
       </div>
-      <div class="block-list-settings-section">
-        <div class="block-list-settings-section-title">
+      <div class="black-list-settings-section">
+        <div class="black-list-settings-section-title">
           黑名单列表
         </div>
         <div
-          class="block-list-settings-section-description"
+          class="black-list-settings-section-description"
         >
           点击×图标可以删除名单.
         </div>
         <VLoading v-if="!loaded" />
         <div
           v-show="loaded"
-          ref="block-listSortList"
-          class="block-list-settings-section-content block-list-sort-list"
+          ref="black-listSortList"
+          class="black-list-settings-section-content black-list-sort-list"
         >
           <div
             v-for="item of list"
             :key="item"
-            class="block-list-sort-item"
+            class="black-list-sort-item"
             :data-name="item"
           >
             <div class="item-name">
@@ -137,7 +137,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
-.custom-block-list-settings {
+.custom-black-list-settings {
   @include popup();
   width: 400px;
   font-size: 14px;
@@ -150,7 +150,7 @@ export default Vue.extend({
   &.open {
     transform: translateX(-50%) translateY(-50%) scale(1);
   }
-  .block-list-settings-header {
+  .black-list-settings-header {
     @include h-center();
     justify-content: space-between;
     .title {
@@ -170,8 +170,8 @@ export default Vue.extend({
       }
     }
   }
-  .block-list-settings-content {
-    .block-list-settings-section {
+  .black-list-settings-content {
+    .black-list-settings-section {
       margin-top: 12px;
       > :not(:last-child) {
         margin-bottom: 6px;
@@ -202,7 +202,7 @@ export default Vue.extend({
           width: 50px;
           text-align: end;
         }
-        .block-list-sort-item {
+        .black-list-sort-item {
           @include card();
           @include h-center();
           transition: none;
@@ -214,7 +214,7 @@ export default Vue.extend({
           &:hover {
             border-color: var(--theme-color);
           }
-          &.block-list-hidden {
+          &.black-list-hidden {
             opacity: 0.5;
           }
           &.sortable-ghost {
@@ -227,7 +227,7 @@ export default Vue.extend({
           &.sortable-drag {
             opacity: 1;
           }
-          &.sortable-drag.block-list-hidden {
+          &.sortable-drag.black-list-hidden {
             opacity: 0.5;
           }
           .toggle-visible {
