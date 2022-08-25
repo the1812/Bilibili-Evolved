@@ -6,7 +6,7 @@ import { formatDuration, formatCount } from '@/core/utils/formatters'
 import { freshHomeOptions } from '../../types'
 
 export const getTrendingVideos = async () => {
-  const api = 'https://api.bilibili.com/x/web-interface/index/top/rcmd?fresh_type=0&version=1'
+  const api = 'https://api.bilibili.com/x/web-interface/index/top/feed/rcmd'
 
   const personalized = Boolean(getUID()) && freshHomeOptions.personalized
   const requestMethod = personalized ? getJsonWithCredentials : getJson

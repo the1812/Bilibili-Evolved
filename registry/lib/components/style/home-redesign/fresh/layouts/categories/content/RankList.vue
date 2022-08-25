@@ -159,7 +159,7 @@ export default Vue.extend({
     formatCount,
   },
   mixins: [
-    requestMixin,
+    requestMixin(),
     cssVariableMixin(rankListCssVars),
   ],
   props: {

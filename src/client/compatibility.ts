@@ -26,7 +26,7 @@ export const compatibilityPatch = () => {
       }
     })
   })
-  if (!('requestIdleCallback' in window)) {
+  if (typeof requestIdleCallback === 'undefined') {
     window.requestIdleCallback = (callback: TimerHandler) => window.setTimeout(callback, 0)
     window.cancelIdleCallback = (handle: number) => {
       window.clearTimeout(handle)

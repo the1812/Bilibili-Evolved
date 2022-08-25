@@ -11,7 +11,7 @@
           v-for="medal of medalList"
           :key="medal.id"
           :data-id="medal.id"
-          :class="{ active: medal.isActive, gray: !medal.isLighted }"
+          :class="{ active: medal.isActive, gray: grayEffect && !medal.isLighted }"
           :title="medal.upName"
           @click="toggleBadge(medal, medalList)"
         >
@@ -59,7 +59,7 @@
 </template>
 
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
 import {
   DefaultWidget,
@@ -81,9 +81,13 @@ export default Vue.extend({
       titleList: [],
       medalOpen: false,
       titleOpen: false,
+      grayEffect: true,
     }
   },
   async mounted() {
+    addComponentListener('badgeHelper.grayEffect', (enable: boolean) => {
+      this.grayEffect = enable
+    }, true)
     const init = async () => {
       const medal = this.loadMedalList()
       await Title.getImageMap()

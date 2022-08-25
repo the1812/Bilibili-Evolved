@@ -5,7 +5,7 @@ import { isUserComponent } from '@/core/settings'
 import { ComponentMetadata } from '../../types'
 import { uninstallComponent } from '../../user-component'
 
-export type ComponentAction = (metadata: ComponentMetadata) => {
+export interface ComponentConfigAction {
   name: string
   displayName: string
   action: Executable
@@ -13,10 +13,13 @@ export type ComponentAction = (metadata: ComponentMetadata) => {
   visible?: boolean
   title?: string
   // condition?: () => boolean
-} | {
+}
+export interface ComponentVueAction {
   name: string
   component: Executable<VueModule>
 }
+export type ComponentAction = (metadata: ComponentMetadata)
+  => ComponentConfigAction | ComponentVueAction
 
 const builtInActions: ComponentAction[] = [
   metadata => ({
