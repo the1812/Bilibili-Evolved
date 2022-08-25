@@ -4,7 +4,11 @@ body {
       .bilibili-player-video-popup-three,
       .bilibili-player-video-popup-three-animate,
       .bilibili-player-video-popup-follow,
-      .bilibili-player-video-popup-there-cyc {
+      .bilibili-player-video-popup-there-cyc,
+      .bpx-player-popup-three,
+      .bpx-player-popup-animate,
+      .bpx-player-popup-follow,
+      .bpx-player-popup-cyc {
         display: none !important;
       }
     }
@@ -15,7 +19,10 @@ body {
       }
     }
     &-votes {
-      .bilibili-player-video-popup-vote {
+      .bilibili-player-video-popup-vote,
+      .bpx-player-popup-dm-close,
+      .bpx-player-popup-dm-shrink,
+      .bpx-player-popup-vote {
         display: none !important;
       }
     }

@@ -140,7 +140,7 @@ export default Vue.extend({
     VLoading,
     VEmpty,
   },
-  mixins: [requestMixin, cssVariableMixin({
+  mixins: [requestMixin(), cssVariableMixin({
     mainCoverHeight: 185,
     mainCoverWidth: 287,
     otherCoverHeight: 100,

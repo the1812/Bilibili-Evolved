@@ -278,8 +278,12 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
   protected unpatch: TeardownLogic
 
   protected migrate() {
+    type MixedRememberSpeedOptions = Partial<RememberSpeedOptions> & {
+      extendList?: number[]
+      extend?: unknown
+    }
     const { options } = this.settings
-    const { options: rememberSpeedOptions } = getComponentSettings('rememberVideoSpeed') as ComponentSettings<RememberSpeedOptions>
+    const { options: rememberSpeedOptions } = getComponentSettings('rememberVideoSpeed') as ComponentSettings<MixedRememberSpeedOptions>
     if (rememberSpeedOptions.extendList) {
       options.extendSpeedList = Array.from(rememberSpeedOptions.extendList as number[])
       delete rememberSpeedOptions.extendList

@@ -1,5 +1,5 @@
 import { waitForControlBar } from '@/components/live/live-control-bar'
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { select as spinSelect } from '@/core/spin-query'
 import { addStyle, removeStyle } from '@/core/style'
 import { liveUrls } from '@/core/utils/urls'
@@ -220,7 +220,7 @@ function unload() {
   removeStyle(componentName)
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: componentName,
   displayName: '直播全屏包裹',
   description: {
@@ -231,4 +231,4 @@ export const component: ComponentMetadata = {
   entry,
   reload,
   unload,
-}
+})

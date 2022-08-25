@@ -4,6 +4,9 @@
 .bili-header__banner {
   display: none !important;
 }
+#biliMainHeader {
+  min-height: unset !important;
+}
 .bili-header {
   padding-top: 50px !important;
   min-height: 0 !important;

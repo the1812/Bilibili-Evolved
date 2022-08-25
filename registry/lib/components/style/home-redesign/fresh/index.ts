@@ -1,10 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
 import { addComponentListener } from '@/core/settings'
 import { getNumberValidator, mountVueComponent } from '@/core/utils'
 import { homeUrls } from '../urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'freshHome',
   displayName: '清爽首页',
   urlInclude: homeUrls,
@@ -56,4 +56,4 @@ export const component: ComponentMetadata = {
       style: () => import('../hide-original.scss'),
     },
   ],
-}
+})

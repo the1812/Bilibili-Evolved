@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div class="custom-block-list-extra-options">
+    <div class="custom-black-list-extra-options">
       <VButton
         v-if="login"
         ref="button"
-        @mouseover="loadNameBlockListSettings()"
+        @mouseover="loadNameBlackListSettings()"
         @click="toggleNameSettings()"
       >
         精确匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
       </VButton>
     </div>
-    <div class="custom-block-list-extra-options">
+    <div class="custom-black-list-extra-options">
       <VButton
         v-if="login"
         ref="button"
-        @mouseover="loadRegexBlockListSettings()"
+        @mouseover="loadRegexBlackListSettings()"
         @click="toggleRegexSettings()"
       >
         正则匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
@@ -38,7 +38,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    async loadNameBlockListSettings() {
+    async loadNameBlackListSettings() {
       const isFirstLoad = await loadNameSettings()
       if (isFirstLoad) {
         const triggerButton = this.$refs.button.$el as HTMLElement
@@ -46,7 +46,7 @@ export default Vue.extend({
       }
     },
     toggleNameSettings,
-    async loadRegexBlockListSettings() {
+    async loadRegexBlackListSettings() {
       const isFirstLoad = await loadRegexSettings()
       if (isFirstLoad) {
         const triggerButton = this.$refs.button.$el as HTMLElement
@@ -58,7 +58,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-.custom-block-list-extra-options {
+.custom-black-list-extra-options {
   display: flex;
   align-items: center;
   justify-content: center;

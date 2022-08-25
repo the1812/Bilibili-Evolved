@@ -1,6 +1,6 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'elegantScrollbar',
   entry: none,
   displayName: '使用细滚动条',
@@ -15,4 +15,4 @@ export const component: ComponentMetadata = {
       style: () => import('./scrollbar.scss'),
     },
   ],
-}
+})

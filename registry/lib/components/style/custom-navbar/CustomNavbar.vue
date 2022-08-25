@@ -2,13 +2,18 @@
   <div class="custom-navbar" :class="styles" role="navigation">
     <div class="left-pad padding"></div>
     <div class="custom-navbar-items" role="list">
-      <NavbarItem v-for="item of items" :key="item.name" :item="item"></NavbarItem>
+      <NavbarItem
+        v-for="item of items"
+        :key="item.name"
+        :item="item"
+      ></NavbarItem>
     </div>
     <div class="right-pad padding"></div>
   </div>
 </template>
 
 <script lang="ts">
+import { addComponentListener } from '@/core/settings'
 import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import { registerAndGetData } from '@/plugins/data'
@@ -49,6 +54,7 @@ export default Vue.extend({
       initItems,
       items: getItems(),
       styles: [],
+      height: CustomNavbarItem.navbarOptions.height,
     }
   },
   watch: {
@@ -57,6 +63,9 @@ export default Vue.extend({
     },
   },
   async mounted() {
+    addComponentListener('customNavbar.height', (value: number) => {
+      document.documentElement.style.setProperty('--navbar-height', `${value}px`)
+    }, true)
     await checkTransparentFill(this)
   },
   methods: {
@@ -72,11 +81,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 
-$navbar-height: 50px;
 html {
-  --navbar-height: #{$navbar-height};
+  --navbar-height: 50px;
   --navbar-foreground: #555;
   --navbar-background: white;
   --navbar-bounds-padding: 10%;
@@ -100,14 +108,17 @@ body.dark.custom-navbar-loading::after {
 body.fixed-navbar {
   .left-panel {
     .adaptive-scroll .scroll-content {
-      top: $navbar-height !important;
+      top: var(--navbar-height) !important;
     }
   }
   &.enable-feeds-filter .left-panel,
   .right-panel {
     .adaptive-scroll .scroll-content {
-      top: #{$navbar-height + 8px} !important;
+      top: calc(var(--navbar-height) + 8px) !important;
     }
+  }
+  .bili-feed4 .header-channel {
+    display: none !important;
   }
 }
 
@@ -244,7 +255,7 @@ body.fixed-navbar {
   .padding,
   .custom-navbar-items > * {
     &.peek::after {
-      content: "";
+      content: '';
       position: absolute;
       top: 0;
       width: 100%;

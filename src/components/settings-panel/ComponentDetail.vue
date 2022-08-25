@@ -108,7 +108,7 @@ import { ComponentOptions } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
 import { componentSettingsMixin } from './mixins'
-import { componentActions } from './component-actions/component-actions'
+import { componentActions, ComponentConfigAction } from './component-actions/component-actions'
 import ComponentAction from './component-actions/ComponentAction.vue'
 
 export default Vue.extend({
@@ -127,7 +127,15 @@ export default Vue.extend({
       virtual: false,
       componentActions: componentActions
         .map(factory => factory((this as any).componentData))
-        .filter(it => it !== undefined),
+        .filter(it => {
+          if (it === undefined) {
+            return false
+          }
+          if ((it as ComponentConfigAction).visible === false) {
+            return false
+          }
+          return true
+        }),
     }
   },
   computed: {

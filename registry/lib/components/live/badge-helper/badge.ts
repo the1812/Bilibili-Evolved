@@ -1,9 +1,19 @@
-import { postTextWithCredentials } from '@/core/ajax'
-import { formData, getCsrf, getUID } from '@/core/utils'
+import { getJsonWithCredentials, getPages, getTextWithCredentials, postTextWithCredentials } from '@/core/ajax'
+import { formData, getCsrf } from '@/core/utils'
 import { logError } from '@/core/utils/log'
+
+const validateJson = (json: any, errorMessage: string) => {
+  if (json.code !== 0) {
+    const message = `${errorMessage} 错误码:${json.code} ${json.message || ''}`
+    logError(message)
+    return false
+  }
+  return true
+}
 
 export abstract class Badge {
   constructor(public isActive: boolean = false, public id: number = 0) { }
+  /** @deprecated */
   static parseJson<T>(text: string, actions: {
     successAction: (json: any) => T,
     errorMessage: string,
@@ -49,52 +59,38 @@ export class Medal extends Badge {
     this.isLighted = is_lighted
   }
   async activate() {
-    return Badge.parseJson(
-      await postTextWithCredentials('https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/wear', formData({
-        medal_id: this.id,
-        csrf_token: getCsrf(),
-        csrf: getCsrf(),
-      })),
-      {
-        successAction: () => {
-          this.isActive = true
-          return true
-        },
-        errorAction: () => false,
-        errorMessage: '佩戴勋章失败.',
-      },
-    )
+    const text = await postTextWithCredentials('https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/wear', formData({
+      medal_id: this.id,
+      csrf_token: getCsrf(),
+      csrf: getCsrf(),
+    }))
+    const result = validateJson(JSON.parse(text), '佩戴勋章失败.')
+    this.isActive = true
+    return result
   }
   async deactivate() {
-    return Badge.parseJson(
-      await postTextWithCredentials('https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/take_off', formData({
-        csrf_token: getCsrf(),
-        csrf: getCsrf(),
-      })),
-      {
-        successAction: () => {
-          this.isActive = false
-          return true
-        },
-        errorAction: () => false,
-        errorMessage: '卸下勋章失败.',
-      },
-    )
+    const text = await postTextWithCredentials('https://api.live.bilibili.com/xlive/web-room/v1/fansMedal/take_off', formData({
+      csrf_token: getCsrf(),
+      csrf: getCsrf(),
+    }))
+    const result = validateJson(JSON.parse(text), '卸下勋章失败.')
+    this.isActive = false
+    return result
   }
 }
 export const getMedalList = async () => {
-  const { getTextWithCredentials } = await import('@/core/ajax')
-  return Badge.parseJson(
-    await getTextWithCredentials(`https://api.live.bilibili.com/xlive/app-ucenter/v1/fansMedal/panel?page=1&page_size=256&target_id=${getUID()}`),
-    {
-      successAction: json => {
-        const list: any[] = (json.data.list ?? []).concat(json.data.special_list ?? [])
-        return list.map(it => new Medal(it))
-      },
-      errorAction: () => [] as Medal[],
-      errorMessage: '无法获取勋章列表.',
+  const pages = await getPages({
+    api: page => getJsonWithCredentials(`https://api.live.bilibili.com/xlive/app-ucenter/v1/fansMedal/panel?page=${page}&page_size=50`),
+    getList: json => {
+      validateJson(json, '无法获取勋章列表.')
+      return [
+        ...lodash.get(json, 'data.list', []),
+        ...lodash.get(json, 'data.special_list', []),
+      ]
     },
-  )
+    getTotal: json => lodash.get(json, 'data.total_number', 0),
+  })
+  return pages.map(it => new Medal(it))
 }
 export class Title extends Badge {
   static imageMap: { [id: string]: string }
@@ -118,7 +114,6 @@ export class Title extends Badge {
   }
   static async getImageMap() {
     if (Title.imageMap === undefined) {
-      const { getTextWithCredentials } = await import('@/core/ajax')
       return Badge.parseJson(
         await getTextWithCredentials('https://api.live.bilibili.com/rc/v1/Title/webTitles'),
         {
@@ -165,14 +160,11 @@ export class Title extends Badge {
     )
   }
 }
-export const getTitleList = async () => {
-  const { getTextWithCredentials } = await import('@/core/ajax')
-  return Badge.parseJson(
-    await getTextWithCredentials('https://api.live.bilibili.com/i/api/ajaxTitleInfo?page=1&pageSize=256&had=1'),
-    {
-      successAction: json => lodash.get(json, 'data.list', []).map((it: any) => new Title(it)) as Title[],
-      errorAction: () => [] as Title[],
-      errorMessage: '无法获取头衔列表.',
-    },
-  )
-}
+export const getTitleList = async () => Badge.parseJson(
+  await getTextWithCredentials('https://api.live.bilibili.com/i/api/ajaxTitleInfo?page=1&pageSize=256&had=1'),
+  {
+    successAction: json => lodash.get(json, 'data.list', []).map((it: any) => new Title(it)) as Title[],
+    errorAction: () => [] as Title[],
+    errorMessage: '无法获取头衔列表.',
+  },
+)
