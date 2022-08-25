@@ -24,6 +24,7 @@ const entry = async () => {
     'share_plat',
     'share_tag',
     'share_session_id',
+    'share_from',
     'bbid',
     'ts',
     'timestamp',
@@ -48,6 +49,7 @@ const entry = async () => {
     'hotRank',
     '-Arouter',
     'vd_source',
+    'is_story_h5',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [

@@ -5,7 +5,7 @@ import { getUID } from '@/core/utils'
 import { formatDuration, formatCount } from '@/core/utils/formatters'
 
 export const getTrendingVideos = async (isPersonalized: boolean) => {
-  const api = 'https://api.bilibili.com/x/web-interface/index/top/rcmd?fresh_type=3&version=1&ps=14'
+  const api = 'https://api.bilibili.com/x/web-interface/index/top/feed/rcmd'
 
   const personalized = Boolean(getUID()) && isPersonalized
   const requestMethod = personalized ? getJsonWithCredentials : getJson
