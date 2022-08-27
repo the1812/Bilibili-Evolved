@@ -3,6 +3,7 @@ import { playerAgent } from '@/components/video/player-agent'
 import { lightOff, lightOn } from '@/components/video/player-light'
 import { videoChange } from '@/core/observer'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
+import { allVideoUrls } from '@/core/utils/urls'
 
 enum IntersectionMode {
   Top = '视频顶部',
@@ -17,6 +18,7 @@ export const component: ComponentMetadata = {
     link: 'https://github.com/FoundTheWOUT',
   },
   tags: [componentsTags.video],
+  urlInclude: allVideoUrls,
   entry: async ({ settings: { options }, metadata }) => {
     const settings = options as {
       triggerLocation: IntersectionMode
