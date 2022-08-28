@@ -31,7 +31,10 @@ export const checkTransparentFill = async (vm: {
       }
       return false
     },
-  ).then(() => {
+  ).then(banner => {
+    if (banner.length === 0) {
+      return
+    }
     addComponentListener('customNavbar.transparent', value => {
       if (!getComponentSettings('hideBanner').enabled) {
         vm.toggleStyle(value, 'transparent')
