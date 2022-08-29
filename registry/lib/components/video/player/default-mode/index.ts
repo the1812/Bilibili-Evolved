@@ -22,48 +22,50 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   } = playerAgent
 
   await playerReady()
-  const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
-    [PlayerModes.Normal, none],
-    [PlayerModes.Wide, async () => {
-      await loadLazyPanel(buttons.widescreen.selector)
-      disableWindowScroll(() => playerAgent.widescreen())
-    }],
-    [PlayerModes.WebFullscreen, async () => {
-      await loadLazyPanel(buttons.webFullscreen.selector)
-      playerAgent.webFullscreen()
-    }],
-    [PlayerModes.Fullscreen, async () => {
-      const video = await sq(
-        () => dq(playerAgent.query.video.element.selector),
-        (it: HTMLVideoElement) => it !== null && it.readyState === 4
-          && document.readyState === 'complete' && document.hasFocus(),
-      )
-      if (video === null) {
-        console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
-        return
-      }
-      // await loadLazyPanel(buttons.fullscreen.selector)
-      playerAgent.fullscreen()
-    }],
-  ])
-  const video = await playerAgent.query.video.element() as HTMLVideoElement
-  if (!video) {
-    return
-  }
-  const action = actions.get(options.mode)
-  // https://github.com/the1812/Bilibili-Evolved/issues/2408
-  // 也许以前切P是会刷新页面，但现在(2.7+)的播放器切P是不刷新页面的，所以不需要判断
-  // const onplay = () => {
-  //   const isNormalMode = !dq('body[class*=player-mode-]')
-  //   if (isNormalMode) {
-  //     action()
-  //   }
-  // }
-  if (options.applyOnPlay && !playerAgent.isAutoPlay()) {
-    video.addEventListener('play', action, { once: true })
-  } else {
-    action()
-  }
+  Promise.resolve().then(async () => {
+    const actions: Map<PlayerModes, () => void | Promise<void>> = new Map([
+      [PlayerModes.Normal, none],
+      [PlayerModes.Wide, async () => {
+        await loadLazyPanel(buttons.widescreen.selector)
+        disableWindowScroll(() => playerAgent.widescreen())
+      }],
+      [PlayerModes.WebFullscreen, async () => {
+        await loadLazyPanel(buttons.webFullscreen.selector)
+        playerAgent.webFullscreen()
+      }],
+      [PlayerModes.Fullscreen, async () => {
+        const video = await sq(
+          () => dq(playerAgent.query.video.element.selector),
+          (it: HTMLVideoElement) => it !== null && it.readyState === 4
+            && document.readyState === 'complete' && document.hasFocus(),
+        )
+        if (video === null) {
+          console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')
+          return
+        }
+        // await loadLazyPanel(buttons.fullscreen.selector)
+        playerAgent.fullscreen()
+      }],
+    ])
+    const video = await playerAgent.query.video.element() as HTMLVideoElement
+    if (!video) {
+      return
+    }
+    const action = actions.get(options.mode)
+    // https://github.com/the1812/Bilibili-Evolved/issues/2408
+    // 也许以前切P是会刷新页面，但现在(2.7+)的播放器切P是不刷新页面的，所以不需要判断
+    // const onplay = () => {
+    //   const isNormalMode = !dq('body[class*=player-mode-]')
+    //   if (isNormalMode) {
+    //     action()
+    //   }
+    // }
+    if (options.applyOnPlay && !playerAgent.isAutoPlay()) {
+      video.addEventListener('play', action, { once: true })
+    } else {
+      action()
+    }
+  })
 }
 export const component: ComponentMetadata = {
   name: 'defaultPlayerMode',
