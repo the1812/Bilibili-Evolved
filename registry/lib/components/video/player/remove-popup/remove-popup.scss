@@ -14,7 +14,8 @@ body {
     }
     &-related-videos {
       .bilibili-player-video-link,
-      .bilibili-player-link {
+      .bilibili-player-link,
+      .bpx-player-link {
         display: none !important;
       }
     }
@@ -27,7 +28,10 @@ body {
       }
     }
     &-rates {
-      .bilibili-player-score {
+      .bilibili-player-score,
+      .bpx-player-popup-dm-close,
+      .bpx-player-score-summary-wrap,
+      .bpx-player-score {
         display: none !important;
       }
     }
