@@ -1,10 +1,17 @@
 import { ComponentMetadata } from '@/components/types'
-import { toggleStyle } from '@/components/styled-component'
 import { playerUrls } from '@/core/utils/urls'
 
+const name = 'hideVideoTopMask'
 export const component: ComponentMetadata = {
+  name,
   displayName: '隐藏视频标题层',
-  ...toggleStyle('hideVideoTopMask', () => import('./top-mask.scss')),
+  entry: none,
+  instantStyles: [
+    {
+      name,
+      style: () => import('./top-mask.scss'),
+    },
+  ],
   tags: [
     componentsTags.style,
   ],
