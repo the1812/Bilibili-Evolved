@@ -3,7 +3,7 @@ import { videoUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
-  const likeButton = await select('.ops span.like') as HTMLElement
+  const likeButton = await select(':is(.ops, .video-toolbar-v1) span.like') as HTMLElement
   if (!likeButton) {
     return
   }
