@@ -250,11 +250,19 @@ export class VideoPlayerV2Agent extends PlayerAgent {
     if (!this.nativeApi) {
       return null
     }
+    if (this.nativeApi.isMuted) {
+      return this.nativeApi.isMuted()
+    }
     return this.nativeApi.isMute()
   }
   changeVolume(change: number) {
     if (!this.nativeApi) {
       return null
+    }
+    if (this.nativeApi.getVolume) {
+      const current = this.nativeApi.getVolume()
+      this.nativeApi.setVolume(current + change / 100)
+      return Math.round(this.nativeApi.getVolume() * 100)
     }
     const current = this.nativeApi.volume()
     this.nativeApi.volume(current + change / 100)
