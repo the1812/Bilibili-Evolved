@@ -1,10 +1,17 @@
 import { ComponentMetadata } from '@/components/types'
-import { toggleStyle } from '@/components/styled-component'
 import { playerUrls } from '@/core/utils/urls'
 
+const name = 'preserveDanmakuInput'
 export const component: ComponentMetadata = {
-  ...toggleStyle('preserveDanmakuInput', () => import('./danmaku-input.scss')),
+  name,
   displayName: '强制保留弹幕发送栏',
+  entry: none,
+  instantStyles: [
+    {
+      name,
+      style: () => import('./danmaku-input.scss'),
+    },
+  ],
   tags: [
     componentsTags.style,
     componentsTags.video,
