@@ -1,5 +1,52 @@
 # 更新日志
 
+## v2.4.0
+
+✨新增
+<details>
+<summary>正式版获得 v2.3.1 ~ v2.3.3 预览版的功能</summary>
+
+- `清爽首页` 的热门视频支持显示弹幕数量.
+- `极简首页` 初版已完成.
+- 脚本的更新源配置默认值更换为 `GitHub`, 并添加了 `AltCdn`, 表示开发者自定义的其他 CDN 源. `jsDelivr` 将会删除.
+- 在 `GitHub` 更新源下, MDI 图标库更换使用 GitHub Pages.
+- 新增组件 `UP 主黑名单` by [snowraincloud](https://github.com/snowraincloud). (PR #3537)
+- 在无限滚动的场景下, 点击那个 `加载中` 的标识 (ScrollTrigger) 可以手动触发加载下一页. 在遇到没有自动加载下一页的情况时会比较有用.
+- `下载视频` 支持 `flac` 音源. (#3497)
+- `自定义顶栏` 支持设置顶栏的高度, 设置为 64px 即为原版顶栏的高度. (#3136)
+
+</details>
+
+- `删除视频弹窗` 支持 3.x 播放器的 `关联视频` 和 `评分` 弹窗. (#3545)
+- `展开弹幕列表` 支持设置 `最大弹幕数量`, 超过此数量不进行展开, 避免展开时卡死页面. (#2972)
+
+🐛修复
+- 修复 `默认播放器模式` 和 `播放器位置动作` 导致 `夜间模式跟随系统` 未生效. (#3157, PR #3636 by [ChsBuffer](https://github.com/chsbuffer))
+- 修复个人空间中的动态无法使用动态相关功能. (#3191)
+- 新版播放页 & 3.x 播放器适配: (#3187, #2615)
+  - 夜间模式 (#3647)
+  - 播放器投影
+  - 启用双击控制
+  - 控制栏触摸优化
+  - 三连触摸支持
+  - 隐藏视频标题层
+  - 展开视频简介
+  - 启用弹幕空降
+  - 播放器控制栏背景色
+  - 强制保留弹幕栏
+  - 快捷键扩展
+  - 外置稍后再看
+  - 启用快速收藏
+  - 传统连播模式
+
+☕开发者相关 (来自预览版 v2.3.1)
+- 重新整理了所有 CDN 调用, 并支持自定义 CDN 配置, 文档见 [doc/cdn.md](https://github.com/the1812/Bilibili-Evolved/blob/preview-features/doc/cdn.md).
+- 拆分并整理了 `/src/core/settings` 的代码结构.
+- 所有 webpack 配置更换为 TypeScript, 并启用 ESLint 检查.
+- 重构了元数据注入功能, 新增了 i18n 和 description 注入, 详细用法可见 `webpack/inject-metadata/i18n.ts` 和 `webpack/inject-metadata/description.ts` 中的注释说明.
+- 删除了用不到的包 `html-webpack-plugin`.
+- 适配了 VSCode File Nesting 功能.
+
 ## v2.3.3-preview
 
 包含 v2.2.4 的所有更新内容.
