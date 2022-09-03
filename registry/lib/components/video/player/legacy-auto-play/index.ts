@@ -1,4 +1,5 @@
 import { ComponentMetadata } from '@/components/types'
+import { playerAgent } from '@/components/video/player-agent'
 import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { playerReady } from '@/core/utils'
@@ -12,17 +13,19 @@ export const component: ComponentMetadata = {
   urlInclude: videoUrls,
   entry: async () => {
     const autoPlayControls = {
+      // 命中时应该打开连播: 传统分 P, 合集
       enable: [
-        '.base-video-sections .next-button',
-        '.multi-page .next-button',
+        ':is(.base-video-sections, .base-video-sections-v1) .next-button',
+        ':is(.multi-page, .multi-page-v1) .next-button',
         '.player-auxiliary-autoplay-switch input',
       ],
-      disable: ['.recommend-list .next-button'],
+      // 命中时应该关闭连播: 关联视频推荐
+      disable: [':is(.recommend-list, .recommend-list-v1) .next-button'],
     }
     // 最后 1P 时不能开启连播
     const disableConditions = [
       // 传统分 P
-      () => Boolean(dq('.multi-page .list-box li.on:last-child')),
+      () => Boolean(dq(':is(.multi-page, .multi-page-v1) .list-box li.on:last-child')),
       // 替代分 P 的合集
       // & 可分子合集的分 P 合集, 布局长得比下面那个丑一点
       () => Boolean(dq('.video-sections-item:last-child .video-episode-card:last-child .video-episode-card__info-playing')),
@@ -49,7 +52,7 @@ export const component: ComponentMetadata = {
     }
     videoChange(async () => {
       checkPlayMode()
-      const video = await select('.bilibili-player-video video') as HTMLVideoElement
+      const video = await playerAgent.query.video.element() as HTMLVideoElement
       video?.addEventListener('play', checkPlayMode, { once: true })
     })
   },
