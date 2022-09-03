@@ -45,7 +45,7 @@ const idPolyfill = async () => {
   })
   loadPbpData()
 }
-/** 移除番剧的双击全屏, 和视频区保持一致.
+/** 移除 3.x 的双击全屏.
  * 如果以后视频区兼容了弹幕点赞层, 需要将双击全屏组件更换为阻止双击全屏, 并取消对此函数的使用.
  */
 const doubleClickPolyfill = async () => {
@@ -56,10 +56,11 @@ const doubleClickPolyfill = async () => {
   preventEvent(layer, 'dblclick')
 }
 export const bpxPlayerPolyfill = lodash.once(async () => {
+  // 番剧 + 3.x 播放器通用
+  playerModePolyfill()
+  doubleClickPolyfill()
   if (!document.URL.startsWith('https://www.bilibili.com/bangumi/play/')) {
     return
   }
-  playerModePolyfill()
   idPolyfill()
-  doubleClickPolyfill()
 })

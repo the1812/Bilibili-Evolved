@@ -182,6 +182,18 @@
     @include color("e");
   }
 }
+#bilibili-player-placeholder-bottom {
+  @include background-color('3');
+  &-left,
+  &-right {
+    @include background-color('4');
+  }
+}
+#bpx-svg-sprite-danmu-on {
+  path:last-child {
+    @include theme-fill();
+  }
+}
 .bpx-player-container {
   box-shadow: 0 4px 8px 0 #0004 !important;
   .squirtle-controller {
@@ -196,12 +208,16 @@
     @include background-color();
   }
   .bpx-player-sending-bar {
-    @include background-color();
-    .bpx-player-dm-setting:hover {
-      @include theme-fill();
+    @include background-color('2');
+    .bpx-player-video-btn-dm,
+    .bpx-player-dm-setting,
+    .bpx-player-dm-switch {
+      @include fill('a');
     }
+    .bpx-player-dm-switch:hover,
+    .bpx-player-dm-setting:hover,
     .bpx-player-video-btn-dm:hover {
-      @include theme-fill();
+      @include fill('e');
     }
     .bpx-player-dm-input {
       @include color("e");

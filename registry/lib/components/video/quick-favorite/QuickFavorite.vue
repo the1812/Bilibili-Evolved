@@ -1,6 +1,6 @@
 <template>
   <span
-    class="quick-favorite"
+    class="quick-favorite be-quick-favorite"
     title="快速收藏"
     :class="{ on: isFavorite }"
     @click.left.self="toggle()"

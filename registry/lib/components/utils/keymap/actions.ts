@@ -126,11 +126,11 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   coin: {
     displayName: '投币',
-    run: useClickElement('.video-toolbar .coin,.tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2)'),
+    run: useClickElement('.video-toolbar .coin, .tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2), .video-toolbar-v1 .coin'),
   },
   favorite: {
     displayName: '收藏',
-    run: useClickElement('.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3)'),
+    run: useClickElement('.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3), .video-toolbar-v1 .collect'),
   },
   pause: {
     displayName: '暂停/播放',
@@ -143,7 +143,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       let likeClick = true
       return ((context: KeyBindingActionContext) => {
         const { event } = context
-        const likeButton = dq('.video-toolbar .like, .tool-bar .like-info') as HTMLSpanElement
+        const likeButton = dq('.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like') as HTMLSpanElement
         if (!likeButton) {
           return false
         }

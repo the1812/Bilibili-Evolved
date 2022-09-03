@@ -638,8 +638,20 @@
 }
 .share_dropdown {
   @include color('e');
+  @include background-color('3');
   .box-right {
     @include border-color('4');
+  }
+  .capture-bar {
+    .bar-left {
+      @include color('a');
+    }
+    .bar-right {
+      .copy-link {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
   }
   .share-link {
     @include background-color('4');
@@ -650,6 +662,12 @@
     .btn {
       @include theme-color();
     }
+  }
+  .box-top-right {
+    box-shadow: -0.5px 0 0 #555 !important;
+  }
+  .box-bottom {
+    @include background-color('4');
   }
 }
 
@@ -803,4 +821,8 @@
       @include theme-color();
     }
   }
+}
+#bilibili-player-placeholder,
+.bpx-player-container {
+  box-shadow: none !important;
 }

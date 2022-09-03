@@ -1,5 +1,10 @@
+@import 'common';
+
 @media screen and (max-width: 1200px) {
-  .bilibili-player.mode-webfullscreen .bilibili-player-video-inputbar {
-    display: flex !important;
+  .bpx-player-video-inputbar,
+  .bilibili-player-video-inputbar {
+    @include on-fullscreen {
+      display: flex !important;
+    }
   }
 }
