@@ -130,7 +130,7 @@ import { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
-import { cssVariableMixin, requestMixin } from './mixin'
+import { cssVariableMixin, requestMixin } from '../../../../mixin'
 
 export default Vue.extend({
   components: {
@@ -225,7 +225,7 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import "common";
-@import "../../../effects";
+@import "effects";
 
 .fresh-home-video-slides {
   @include card(12px);

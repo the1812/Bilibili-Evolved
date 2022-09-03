@@ -21,7 +21,7 @@ yarn
 
 **如果使用的是基于 Chromium 的浏览器**
 1. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
-2. 打开`允许访问文件网址`
+2. 打开 `允许访问文件网址`
 3. 新建脚本
 4. 粘贴内容:
 ```js
@@ -56,16 +56,15 @@ yarn
 // @grant        GM_info
 // @grant        GM_xmlhttpRequest
 // @connect      raw.githubusercontent.com
-// @connect      cdn.jsdelivr.net
 // @connect      cn.bing.com
 // @connect      www.bing.com
 // @connect      translate.google.cn
 // @connect      translate.google.com
 // @connect      localhost
 // @connect      *
-// @require      https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js
-// @icon         https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo-small.png
-// @icon64       https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/images/logo.png
+// @require      https://raw.githubusercontent.com/lodash/lodash/4.17.15/dist/lodash.min.js
+// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
+// @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
 // ==/UserScript==
 ```
 6. 在那些 `@require` 下面再添加一行 `@require file://{{ bilibili-evolved.dev.user.js的绝对路径 }}`

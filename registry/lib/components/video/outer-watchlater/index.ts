@@ -1,4 +1,6 @@
-import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import {
+  defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata,
+} from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { matchUrlPattern } from '@/core/utils'
 import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
@@ -10,7 +12,10 @@ const options = defineOptionsMetadata({
     displayName: '在稍后再看页面中仍然显示',
   },
 })
-const entry: ComponentEntry<typeof options> = async ({ settings }) => {
+
+type Options = OptionsOfMetadata<typeof options>
+
+const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (watchlaterUrls.some(matchUrlPattern) && !settings.options.showInWatchlaterPages) {
     return
   }

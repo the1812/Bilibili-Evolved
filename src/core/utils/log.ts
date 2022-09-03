@@ -1,4 +1,5 @@
 import { getHook } from '@/plugins/hook'
+import { getRandomId } from '.'
 import { getGeneralSettings } from '../settings'
 
 /**
@@ -175,9 +176,6 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
  * 创建一个随机前缀的 ScopedConsole
  * @param config 配置对象
  */
-export const randomScopedConsole = (config: Omit<ScopedConsoleConfig, 'name'>) => {
-  const typedArray = new Uint8Array(4)
-  crypto.getRandomValues(typedArray)
-  const id = [...typedArray].map(it => it.toString(16).padStart(2, '0')).join('')
-  return useScopedConsole({ ...config, name: id })
-}
+export const randomScopedConsole = (config: Omit<ScopedConsoleConfig, 'name'>) => (
+  useScopedConsole({ ...config, name: getRandomId() })
+)

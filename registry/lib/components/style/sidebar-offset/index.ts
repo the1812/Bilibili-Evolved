@@ -1,8 +1,8 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { getNumberValidator } from '@/core/utils'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'sidebarOffset',
   displayName: '侧栏垂直偏移',
   tags: [componentsTags.style],
@@ -27,4 +27,4 @@ export const component: ComponentMetadata = {
       validator: getNumberValidator(-35, 40),
     },
   },
-}
+})

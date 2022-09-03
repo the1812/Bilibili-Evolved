@@ -143,7 +143,7 @@ import {
   VEmpty,
   VButton,
 } from '@/ui'
-import { requestMixin, cssVariableMixin } from './mixin'
+import { requestMixin, cssVariableMixin } from '../../../../mixin'
 import { rankListCssVars } from './rank-list'
 
 export default Vue.extend({

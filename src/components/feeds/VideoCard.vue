@@ -2,11 +2,19 @@
   <a
     class="video-card"
     target="_blank"
-    :href="epID ? ('https://www.bilibili.com/bangumi/play/ep' + epID) : ('https://www.bilibili.com/video/' + bvid)"
+    :href="
+      epID
+        ? 'https://www.bilibili.com/bangumi/play/ep' + epID
+        : 'https://www.bilibili.com/video/' + bvid
+    "
     :class="{ vertical: orientation === 'vertical', 'no-stats': !showStats }"
   >
     <div class="cover-container">
-      <DpiImage class="cover" :src="coverUrl" :size="{ height: 120, width: 200 }"></DpiImage>
+      <DpiImage
+        class="cover"
+        :src="coverUrl"
+        :size="{ height: 120, width: 196 }"
+      ></DpiImage>
       <div v-if="isNew" class="new">NEW</div>
       <template v-if="pubTime && pubTimeText">
         <div class="publish-time-summary">
@@ -32,12 +40,18 @@
     <h1 class="title" :title="title">{{ title }}</h1>
     <div v-if="topics && topics.length" class="topics">
       <a
-        v-for="topic of topics.slice(0,3)"
+        v-for="topic of topics.slice(0, 3)"
         :key="topic.id"
+        :title="topic.name"
         class="topic"
         target="_blank"
         :href="'https://t.bilibili.com/topic/name/' + topic.name + '/feed'"
-      >#{{ topic.name }}#</a>
+      >
+        <VIcon icon="mdi-tag-outline" :size="14" />
+        <div class="topic-name">
+          {{ topic.name }}
+        </div>
+      </a>
     </div>
     <p v-else class="description" :title="description">{{ description }}</p>
     <a
@@ -45,7 +59,7 @@
       class="up"
       :class="{ 'no-face': !upFaceUrl }"
       target="_blank"
-      :href="upID ? ('https://space.bilibili.com/' + upID) : null"
+      :href="upID ? 'https://space.bilibili.com/' + upID : null"
     >
       <DpiImage v-if="upFaceUrl" class="face" :src="upFaceUrl" :size="24" />
       <VIcon v-else icon="up" />
@@ -60,15 +74,18 @@
           :class="{ 'no-face': !up.faceUrl }"
           target="_blank"
           :title="up.name"
-          :href="up.id ? ('https://space.bilibili.com/' + up.id) : null"
+          :href="up.id ? 'https://space.bilibili.com/' + up.id : null"
         >
-          <DpiImage v-if="up.faceUrl" class="face" :src="up.faceUrl" :size="24" />
+          <DpiImage
+            v-if="up.faceUrl"
+            class="face"
+            :src="up.faceUrl"
+            :size="24"
+          />
           <VIcon v-else icon="up" />
         </a>
       </div>
-      <div class="cooperation-note">
-        联合投稿
-      </div>
+      <div class="cooperation-note">联合投稿</div>
     </div>
     <div v-if="showStats" class="stats">
       <template v-if="vertical">
@@ -198,11 +215,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "common";
+@import 'common';
 
 .video-card {
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 196px 1fr;
   grid-template-rows: 1fr 1fr 1fr;
   grid-template-areas:
     'cover title'
@@ -245,6 +262,8 @@ export default {
     }
     .cover-container {
       border-radius: $radius $radius 0 0;
+      width: calc(var(--card-width) - 2px);
+      height: calc(var(--card-width) / 20 * 12.5);
     }
     .title {
       display: -webkit-box;
@@ -255,6 +274,7 @@ export default {
       white-space: normal;
       line-height: 1.5;
       margin: 4px 0;
+      padding: 0 10px;
       font-size: 14px;
     }
     .up {
@@ -315,8 +335,8 @@ export default {
     grid-area: cover;
     border-radius: $radius 0 0 $radius;
     position: relative;
-    width: calc(var(--card-width) - 2px);
-    height: calc(var(--card-width) / 20 * 12.5);
+    width: calc(var(--card-height) / 12.5 * 20);
+    height: calc(var(--card-height) - 2px);
     overflow: hidden;
     .cover {
       transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
@@ -378,11 +398,11 @@ export default {
   }
   .title {
     grid-area: title;
-    font-size: 16px;
+    font-size: 15px;
     // font-weight: bold;
     @include semi-bold();
     color: inherit;
-    padding: 0 10px;
+    padding: 4px 12px 0 12px;
     white-space: nowrap;
     overflow: hidden;
     justify-self: stretch;
@@ -392,23 +412,25 @@ export default {
     }
   }
   .topics {
+    @include h-center();
     grid-area: description;
-    display: flex;
-    align-items: center;
     margin-left: 12px;
     .topic {
+      @include h-center(4px);
       color: inherit;
       padding: 4px 8px;
-      background-color: #8882;
+      border: 1px solid #8882;
       margin-right: 8px;
       border-radius: 14px;
-      white-space: nowrap;
-      max-width: 120px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      opacity: 0.75;
+      .topic-name {
+        max-width: 84px;
+        @include single-line();
+      }
       &:hover {
-        background-color: #8884;
+        background-color: #8882;
         color: var(--theme-color);
+        opacity: 1;
       }
     }
   }
@@ -519,7 +541,7 @@ export default {
       }
     }
     &-note {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
   .stats {

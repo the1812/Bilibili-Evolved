@@ -117,6 +117,9 @@ export default Vue.extend({
       .header-item {
         flex: 1;
         margin: 0 8px;
+        &:empty {
+          display: none;
+        }
       }
       .be-more-link {
         .be-button {

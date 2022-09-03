@@ -119,7 +119,7 @@ import {
 } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
-import { cssVariableMixin, requestMixin } from './mixin'
+import { cssVariableMixin, requestMixin } from '../../../../mixin'
 import { rankListCssVars } from './rank-list'
 import { setupScrollMask, cleanUpScrollMask } from '../../../scroll-mask'
 import { getJsonWithCredentials } from '@/core/ajax'
@@ -314,8 +314,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import 'common';
-@import '../../../effects';
+@import "common";
+@import "effects";
 
 .fresh-home-categories-bangumi {
   &-timeline {

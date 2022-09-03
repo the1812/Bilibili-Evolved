@@ -1,4 +1,4 @@
-import { FeedsCard, addMenuItem, forEachFeedsCard } from '@/components/feeds/api'
+import { FeedsCard, addMenuItem, forEachFeedsCard, RepostFeedsCard } from '@/components/feeds/api'
 import { ComponentEntry } from '@/components/types'
 import { getBlob } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
@@ -42,6 +42,7 @@ export const setupFeedImageExporter: ComponentEntry = async ({ settings: { optio
           const titleData = {
             user: card.username,
             id: card.id,
+            originalUser: (card as RepostFeedsCard).repostUsername ?? card.username,
             n: (index + 1).toString(),
           }
           pack.add(`${formatTitle(feedFormat, false, titleData)}${imageUrls[index].extension}`, blob)
@@ -50,6 +51,7 @@ export const setupFeedImageExporter: ComponentEntry = async ({ settings: { optio
         const packTitleData = {
           user: card.username,
           id: card.id,
+          originalUser: (card as RepostFeedsCard).repostUsername ?? card.username,
           n: '',
         }
         await pack.emit(`${formatTitle(feedFormat, false, packTitleData)}.zip`)

@@ -33,7 +33,10 @@ export const startDevServer = () => new Promise<Server>(resolve => {
       if (existingWatcher || !registryInfo) {
         callHandler()
       } else {
-        startRegistryWatcher(url, buildByEntry(registryInfo) as Configuration).then(
+        startRegistryWatcher(url, buildByEntry({
+          ...registryInfo,
+          mode: 'development',
+        }) as Configuration).then(
           () => callHandler(),
         )
       }

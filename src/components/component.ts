@@ -20,18 +20,19 @@ const getAllComponents = lodash.once(() => {
 /** 包含所有组件的数组 */
 export const components: ComponentMetadata[] = getAllComponents()
 
+/** 载入组件的 i18n 数据 */
 const loadI18n = async (component: ComponentMetadata) => {
   if (!component.i18n) {
     return
   }
   const { addI18nData } = await import('@/components/i18n/helpers')
-  Object.entries(component.i18n).forEach(([language, data]) => {
+  for (const [language, data] of Object.entries(component.i18n)) {
     const {
       map = [],
       regex = [],
-    } = data
+    } = (typeof data === 'function' ? (await data()) : data)
     addI18nData(language, map, regex)
-  })
+  }
 }
 /** 获取组件内置Widget名称 */
 const getComponentWidgetName = (component: ComponentMetadata) => `${component.name}.widget`

@@ -1,8 +1,5 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "skipLibCheck": true,
-  },
   "include": [
     "src/client/bilibili-evolved.ts",
     "src/**/*.d.ts",

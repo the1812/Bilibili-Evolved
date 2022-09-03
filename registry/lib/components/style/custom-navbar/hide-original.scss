@@ -1,5 +1,3 @@
-$height: 50px;
-
 body.no-banner #banner_link,
 body.no-banner .z-top-container.has-banner > .header,
 .bili-header-m > #banner_link .search,
@@ -20,20 +18,20 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   z-index: 10002 !important;
 }
 .international-header {
-  min-height: $height !important;
+  min-height: var(--navbar-height) !important;
 }
 .bili-header-m .head-banner {
-  margin-top: calc(-1 * $height) !important;
+  margin-top: calc(-1 * var(--navbar-height)) !important;
 }
 
 .bili-header-m > .nav-menu,
 .z_top,
 .z-top-container#bili-header-container {
   visibility: hidden !important;
-  height: $height !important;
+  height: var(--navbar-height) !important;
 }
 .link-top-container#tab-container {
-  top: $height !important;
+  top: var(--navbar-height) !important;
 }
 .bili-feed4 .header-channel{
   top: 0 !important;

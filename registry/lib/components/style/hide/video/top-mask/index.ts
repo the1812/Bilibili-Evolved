@@ -1,8 +1,8 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { playerUrls } from '@/core/utils/urls'
 
 const name = 'hideVideoTopMask'
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name,
   displayName: '隐藏视频标题层',
   entry: none,
@@ -19,4 +19,4 @@ export const component: ComponentMetadata = {
     'zh-CN': '隐藏视频里鼠标经过时出现在右上角的覆盖层.',
   },
   urlInclude: playerUrls,
-}
+})

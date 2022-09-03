@@ -2,14 +2,10 @@ import { ComponentMetadata } from '@/components/types'
 import { matchUrlPattern } from '@/core/utils'
 import { columnUrls, feedsUrls } from '@/core/utils/urls'
 import { setupFeedImageExporter } from './feed'
-import desc from './desc.md'
 
 export const component: ComponentMetadata = {
   name: 'imageExporter',
   displayName: '图片批量导出',
-  description: {
-    'zh-CN': desc,
-  },
   tags: [
     componentsTags.feeds,
     componentsTags.utils,

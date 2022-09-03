@@ -62,7 +62,12 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
   }
 
   protected migrate() {
-    const { options } = this.settings
+    type MinedOptions = Partial<Options> & {
+      speed?: number
+      individualRememberList?: Record<string, (number | string)[]>
+      remember?: boolean
+    }
+    const { options }: { options: MinedOptions } = this.settings
     let flag = false
     if (options.speed) {
       options.globalSpeed = +options.speed || 1
@@ -72,7 +77,7 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
     if (options.individualRememberList) {
       options.individualRememberRecord = lodash.cloneDeep(
         options.individualRememberList,
-      ) as Record<string, (number | string)[]>
+      )
       delete options.individualRememberList
       flag = true
     }

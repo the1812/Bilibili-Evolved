@@ -1,6 +1,6 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'v1PanelStyle',
   displayName: 'v1 风格设置面板',
   tags: [componentsTags.style],
@@ -12,4 +12,4 @@ export const component: ComponentMetadata = {
     name: 'v1PanelStyle',
     style: () => import('./v1-panel.scss'),
   }],
-}
+})

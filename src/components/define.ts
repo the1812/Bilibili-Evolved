@@ -1,6 +1,5 @@
 import {
-  ComponentMetadata,
-  OptionalOptionsMetadata,
+  ComponentMetadata, EmptyOptions,
   OptionMetadata,
   OptionsMetadata,
   UnknownOptions,
@@ -23,5 +22,5 @@ export const defineOptionsMetadata = <
 
 /** 定义组件 */
 export const defineComponentMetadata = <
-  Om extends OptionalOptionsMetadata
->(m: ComponentMetadata<Om>): ComponentMetadata<Om> => m
+  O extends UnknownOptions = EmptyOptions
+>(m: ComponentMetadata<O>): ComponentMetadata<O> => m

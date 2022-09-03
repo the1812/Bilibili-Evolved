@@ -1,8 +1,8 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { getNumberValidator, getUID, none } from '@/core/utils'
 import { autoMatchMedal } from './auto-match'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'badgeHelper',
   displayName: '直播勋章快速更换',
   description: {
@@ -41,4 +41,4 @@ export const component: ComponentMetadata = {
   urlInclude: [
     '//live.bilibili.com',
   ],
-}
+})

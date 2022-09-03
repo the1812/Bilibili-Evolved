@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
 const name = 'simplifyComments'
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name,
   entry: async ({ metadata }) => {
     const { addComponentListener } = await import('@/core/settings')
@@ -32,4 +32,4 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.style,
   ],
-}
+})
