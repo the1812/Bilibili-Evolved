@@ -61,10 +61,10 @@ export const component = defineComponentMetadata({
   },
   entry,
   unload: () => {
-    dqa('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'none'))
+    dqa('.be-quick-favorite').forEach((it: HTMLElement) => (it.style.display = ''))
   },
   reload: () => {
-    dqa('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'inline-block'))
+    dqa('.be-quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'inline-block'))
   },
   urlInclude: videoUrls,
   // urlExclude: favoriteListUrls,
@@ -80,7 +80,7 @@ export const component = defineComponentMetadata({
           displayName: '快速收藏',
           run: context => {
             const { clickElement } = context
-            return clickElement('.quick-favorite', context)
+            return clickElement('.be-quick-favorite', context)
           },
         }
       })

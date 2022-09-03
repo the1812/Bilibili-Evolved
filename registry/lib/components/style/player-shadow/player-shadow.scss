@@ -5,3 +5,7 @@
     box-shadow: 0px 2px 8px 0px var(--theme-color-20) !important;
   }
 }
+#bilibili-player-placeholder,
+.bpx-player-container {
+  box-shadow: none !important;
+}

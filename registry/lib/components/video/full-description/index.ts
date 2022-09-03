@@ -1,7 +1,7 @@
 import { ComponentMetadata } from '@/components/types'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { videoChange } from '@/core/observer'
-import { select } from '@/core/spin-query'
+import { select, sq } from '@/core/spin-query'
 import { addStyle, removeStyle } from '@/core/style'
 import style from './full-description.scss'
 
@@ -9,11 +9,14 @@ const name = 'fullVideoDescription'
 const entry = () => {
   addStyle(style, name)
   videoChange(async () => {
-    const desc = await select('.video-desc')
+    const desc = await select('.video-desc, .video-desc-v1')
     if (!desc) {
       return
     }
-    const expandButton = await select('.video-desc .btn[report-id="abstract_spread"], .video-desc .toggle-btn') as HTMLElement
+    const expandButton = await sq(
+      () => dq(desc, '[report-id="abstract_spread"], .toggle-btn') as HTMLElement,
+      it => it.style.display !== 'none',
+    )
     expandButton?.click()
   })
 }

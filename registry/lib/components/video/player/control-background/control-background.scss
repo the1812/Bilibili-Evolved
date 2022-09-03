@@ -1,23 +1,57 @@
-@import "common";
+@import 'common';
 
 .bilibili-player-video-control {
   &-mask {
     background: transparent !important;
   }
   .bilibili-player-video-control-bottom {
-    background: rgba(0, 0, 0, var(--video-control-opacity)) !important;
-    margin: 5px 0 0 0 !important;
-    padding: 9px 0 0 !important;
-    height: 30px !important;
-    @include on-fullscreen {
-      margin: -2px 0 0 0 !important;
-      padding: 13px 0 0 !important;
-      height: 45px !important;
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: calc(100% - 5px);
+      width: 100%;
+      background-color: rgba(0, 0, 0, var(--video-control-opacity));
+      z-index: -1;
+      @include on-fullscreen {
+        height: calc(100% + 2px);
+      }
+    }
+  }
+}
+.bpx-player-control {
+  &-mask {
+    background: transparent !important;
+  }
+  &-bottom {
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      height: calc(100% - 17px);
+      width: 100%;
+      background-color: rgba(0, 0, 0, var(--video-control-opacity));
+      z-index: -1;
+      @include on-fullscreen {
+        height: calc(100% - 11px);
+      }
+      .video-container-v1 & {
+        height: calc(100% - 5px);
+        @include on-fullscreen {
+          height: calc(100% + 1px);
+        }
+      }
     }
   }
 }
 body {
   &.video-control-progress-background {
+    .squirtle-progress-bar:not(.squirtle-progress-buffer):not(.squirtle-progress-timeline):not(.squirtle-progress-dot-container),
+    .bpx-player-progress-schedule {
+      background-color: transparent !important;
+    }
+    .bpx-player-progress,
+    .squirtle-progress-dot-container,
     .bui-track-video-progress .bui-bar-wrap {
       background: rgba(0, 0, 0, var(--video-control-opacity)) !important;
     }

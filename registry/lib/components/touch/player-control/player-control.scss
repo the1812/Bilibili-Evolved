@@ -1,10 +1,10 @@
-@import "common";
+@import 'common';
 
 @mixin replace-with-icon() {
   display: block;
   width: 36px;
   color: #eee;
-  font: normal normal normal 20px/1 "Material Design Icons";
+  font: normal normal normal 20px/1 'Material Design Icons';
   text-rendering: auto;
   line-height: inherit;
   -webkit-font-smoothing: antialiased;
@@ -35,7 +35,7 @@
             display: none !important;
           }
           &::before {
-            content: "\F0279";
+            content: '\F0279';
             @include replace-with-icon();
           }
         }
@@ -45,7 +45,7 @@
             display: none !important;
           }
           &::before {
-            content: "\F08FF";
+            content: '\F08FF';
             @include replace-with-icon();
           }
         }
@@ -55,7 +55,7 @@
       }
     }
   }
-  @include on-fullscreen(".touch-player-control") {
+  @include on-fullscreen('.touch-player-control') {
     .bilibili-player-area {
       .bilibili-player-video-control-bottom-center {
         padding: 0 12px !important;
@@ -100,7 +100,7 @@
             display: none !important;
           }
           .squirtle-video-pagelist::before {
-            content: "\F0279";
+            content: '\F0279';
             @include replace-with-icon();
           }
         }
@@ -110,7 +110,7 @@
             display: none !important;
           }
           .squirtle-video-speed::before {
-            content: "\F08FF";
+            content: '\F08FF';
             @include replace-with-icon();
           }
         }
@@ -127,8 +127,28 @@
         right: 0 !important;
       }
     }
+    .bpx-player-control-top,
+    .bpx-player-control-bottom {
+      padding: 0 !important;
+    }
+    .bpx-player-pbp {
+      padding: 0 !important;
+      left: 0 !important;
+      width: 100% !important;
+    }
+    .bpx-player-ctrl-btn {
+      height: 100% !important;
+      padding-left: 2px !important;
+      padding-right: 2px !important;
+      &.bpx-player-ctrl-play {
+        padding-left: 12px !important;
+      }
+      &.bpx-player-ctrl-full {
+        padding-right: 12px !important;
+      }
+    }
   }
-  @include on-fullscreen(".touch-player-control") {
+  @include on-fullscreen('.touch-player-control') {
     .squirtle-controller {
       height: 72px !important;
       .squirtle-controller-wrap {

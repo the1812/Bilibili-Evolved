@@ -1,5 +1,5 @@
 <template>
-  <span title="稍后再看" class="watchlater" :class="{ on }" @click="toggle()">
+  <span title="稍后再看" class="watchlater be-outer-watchlater" :class="{ on }" @click="toggle()">
     <VIcon class="icon" :size="28" icon="mdi-timetable"></VIcon>
     <span class="text">稍后再看</span>
     <div class="tip" :class="{ show: tipShowing }">{{ tipText }}</div>

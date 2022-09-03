@@ -12,7 +12,14 @@
       opacity: 1 !important;
       bottom: 44px !important;
     }
-    .bpx-player-top-wrap {
+    .bpx-player-shadow-progress-area {
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
+    .bpx-player-top-wrap,
+    .bpx-player-control-mask,
+    .bpx-player-control-bottom,
+    .bpx-player-control-top {
       opacity: 1 !important;
       visibility: visible !important;
     }

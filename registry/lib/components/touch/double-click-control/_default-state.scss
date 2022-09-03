@@ -8,6 +8,7 @@
       visibility: hidden !important;
     }
   }
+  .bpx-player-shadow-progress-area,
   .bilibili-player-video-control-wrap {
     opacity: 1 !important;
     visibility: visible !important;
@@ -19,6 +20,9 @@
     bottom: -7px !important;
     visibility: visible !important;
   }
+  .bpx-player-control-top,
+  .bpx-player-control-mask,
+  .bpx-player-control-bottom,
   .bpx-player-top-wrap {
     opacity: 0 !important;
     visibility: hidden !important;
