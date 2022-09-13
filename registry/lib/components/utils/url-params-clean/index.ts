@@ -1,5 +1,5 @@
 import { registerAndGetData } from '@/plugins/data'
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { isIframe, isNotHtml, matchPattern } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 
@@ -106,7 +106,7 @@ const entry = async () => {
     urlChange(() => clean())
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'urlParamsClean',
   displayName,
   entry,
@@ -120,4 +120,4 @@ export const component: ComponentMetadata = {
     /game\.bilibili\.com\/fgo/,
     /live\.bilibili\.com\/p\/html\/live-app-hotrank\//,
   ],
-}
+})

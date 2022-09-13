@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { startResolution } from './resolution'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'imageResolution',
   displayName: '高分辨率图片',
   tags: [
@@ -19,4 +19,4 @@ export const component: ComponentMetadata = {
       hidden: true,
     },
   },
-}
+})

@@ -1,6 +1,7 @@
 import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { styledComponentEntry } from '@/components/styled-component'
-import { ComponentEntry, ComponentMetadata } from '@/components/types'
+import { ComponentEntry } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { actions } from './actions'
 import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
@@ -33,7 +34,7 @@ const entry: ComponentEntry = styledComponentEntry(() => import('./playback-tip.
   addComponentListener('keymap.preset', update, true)
   addComponentListener('keymap.customKeyBindings', update)
 })
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'keymap',
   displayName: '快捷键扩展',
   tags: [
@@ -87,4 +88,4 @@ export const component: ComponentMetadata = {
       })
     },
   },
-}
+})
