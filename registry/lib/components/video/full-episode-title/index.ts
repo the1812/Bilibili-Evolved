@@ -1,8 +1,8 @@
 import { toggleStyle } from '@/components/styled-component'
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { videoUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   ...toggleStyle('fullEpisodeTitle', () => import('./full-episode-title.scss')),
   displayName: '展开选集标题',
   description: {
@@ -10,4 +10,4 @@ export const component: ComponentMetadata = {
   },
   tags: [componentsTags.video],
   urlInclude: videoUrls,
-}
+})

@@ -1,11 +1,11 @@
 import { toggleStyle } from '@/components/styled-component'
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
 import { DanmakuRecord, forEachVideoDanmaku } from '@/components/video/video-danmaku'
 import { videoChange } from '@/core/observer'
 import { playerUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   displayName: '启用弹幕空降',
   author: {
     name: 'kdxcxs',
@@ -69,4 +69,4 @@ export const component: ComponentMetadata = {
       wrapper.addEventListener('click', airborneHandler)
     })
   }),
-}
+})
