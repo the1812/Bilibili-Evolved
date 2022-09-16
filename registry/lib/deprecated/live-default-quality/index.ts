@@ -32,7 +32,7 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   const { select } = await import('@/core/spin-query')
   const { childList } = await import('@/core/observer')
 
-  const qualities = getDropdownItems(LiveQuality) as string[]
+  const qualities = getDropdownItems(LiveQuality) as LiveQuality[]
   const targetQuality = settings.options.quality
 
   const qualitySettings = (await select(
