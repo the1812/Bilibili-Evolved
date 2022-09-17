@@ -1,3 +1,3 @@
-import { github } from './github'
+import { jsdelivr } from './jsdelivr'
 
-export const altCdn = github
+export const altCdn = jsdelivr
