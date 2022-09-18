@@ -1,3 +1,3 @@
-import { jsdelivr } from './jsdelivr'
+import { jsDelivr } from './jsdelivr'
 
-export const altCdn = jsdelivr
+export const altCdn = jsDelivr
