@@ -373,8 +373,6 @@
 
 隐藏原版首页不需要的元素 / 分区.
 
-> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.
-
 ### [简化直播间](../../registry/dist/components/style/simplify/live.js)
 `simplifyLiveroom`
 
