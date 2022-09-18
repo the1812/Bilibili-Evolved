@@ -47,6 +47,7 @@ const switchOptions: SwitchOptions = {
 const metadata: ComponentMetadata = {
   name: 'simplifyHome',
   displayName: '简化首页',
+  description: '隐藏原版首页不需要的元素 / 分区.',
   instantStyles: [
     {
       name: 'simplifyHome',
