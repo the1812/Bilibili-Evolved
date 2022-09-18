@@ -69,7 +69,7 @@
         "type": "component",
         "name": "simplifyHome",
         "displayName": "简化首页",
-        "description": "隐藏原版首页不需要的元素 / 分区.\n\n> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.",
+        "description": "隐藏原版首页不需要的元素 / 分区.",
         "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
       },
