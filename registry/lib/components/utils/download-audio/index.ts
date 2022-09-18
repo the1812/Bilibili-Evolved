@@ -1,6 +1,6 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'downloadAudio',
   displayName: '下载音频',
   entry: none,
@@ -20,4 +20,4 @@ export const component: ComponentMetadata = {
   urlInclude: [
     '//www.bilibili.com/audio/',
   ],
-}
+})

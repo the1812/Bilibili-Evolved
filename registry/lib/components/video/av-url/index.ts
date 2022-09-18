@@ -1,10 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { fullyLoaded } from '@/core/life-cycle'
 import { urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { videoUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'avUrl',
   displayName: '网址AV号转换',
   description: {
@@ -34,4 +34,4 @@ export const component: ComponentMetadata = {
     componentsTags.utils,
   ],
   urlInclude: videoUrls,
-}
+})

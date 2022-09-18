@@ -1,9 +1,9 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { videoUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
-  const likeButton = await select('.ops span.like') as HTMLElement
+  const likeButton = await select(':is(.ops, .video-toolbar-v1) span.like') as HTMLElement
   if (!likeButton) {
     return
   }
@@ -29,7 +29,7 @@ const entry = async () => {
     }
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'touchComboLike',
   displayName: '三连触摸支持',
   tags: [
@@ -41,4 +41,4 @@ export const component: ComponentMetadata = {
     'zh-CN': '为视频页面中的三连操作 (长按点赞) 启用触摸支持.',
   },
   urlInclude: videoUrls,
-}
+})

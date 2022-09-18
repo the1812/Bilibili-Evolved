@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
 import { matchUrlPattern } from '@/core/utils'
 import { feedsUrls } from '@/core/utils/urls'
@@ -46,7 +46,7 @@ const entry = async () => {
     added: addCopyLinkButton,
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'copyCommentsLink',
   displayName: '复制评论链接',
   description: {
@@ -56,4 +56,4 @@ export const component: ComponentMetadata = {
   tags: [
     componentsTags.utils,
   ],
-}
+})

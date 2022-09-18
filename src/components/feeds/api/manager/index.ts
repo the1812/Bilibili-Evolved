@@ -5,9 +5,19 @@ import { FeedsCardsManagerV1 } from './v1'
 import { FeedsCardsManagerV2 } from './v2'
 
 export * from './base'
+export const isV2Feeds = () => {
+  const hasCookieValue = parseInt(getCookieValue('hit-dyn-v2')) > 0
+  if (!hasCookieValue) {
+    return false
+  }
+  return [
+    't.bilibili.com',
+    'space.bilibili.com',
+  ].some(host => location.host === host)
+}
 export const feedsCardsManager = (() => {
-  const isV2Feeds = parseInt(getCookieValue('hit-dyn-v2')) > 0 && location.host === 't.bilibili.com'
-  if (isV2Feeds) {
+  const isV2 = isV2Feeds()
+  if (isV2) {
     return new FeedsCardsManagerV2()
   }
   return new FeedsCardsManagerV1()

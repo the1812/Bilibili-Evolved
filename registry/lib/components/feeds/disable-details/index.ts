@@ -28,6 +28,7 @@ const entry = async () => {
         return
       }
       if ([
+        'bili-rich-text__action',
         'bili-rich-text-topic',
         'bili-rich-text-module',
         'bili-rich-text-link',

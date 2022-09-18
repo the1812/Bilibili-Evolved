@@ -13,7 +13,7 @@ export const component = defineComponentMetadata({
     },
   ],
   description: {
-    'zh-CN': '给脚本的侧栏设置垂直偏移量, 范围为 -40% ~ 40%',
+    'zh-CN': '给脚本的侧栏设置垂直偏移量, 范围为 -35% ~ 40%',
   },
   entry: ({ metadata }) => {
     addComponentListener(`${metadata.name}.offset`, (value: number) => {
@@ -24,7 +24,7 @@ export const component = defineComponentMetadata({
     offset: {
       displayName: '偏移量 (%)',
       defaultValue: 0,
-      validator: getNumberValidator(-40, 40),
+      validator: getNumberValidator(-35, 40),
     },
   },
 })

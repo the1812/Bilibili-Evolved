@@ -6,6 +6,17 @@
           <TextBox v-model="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
+          <div
+            class="operation"
+            @click="toggleHistoryPause"
+          >
+            <VButton v-if="!paused" title="暂停记录历史" round>
+              <VIcon icon="mdi-pause" :size="14"></VIcon>
+            </VButton>
+            <VButton v-else title="继续记录历史" round>
+              <VIcon icon="mdi-play" :size="14"></VIcon>
+            </VButton>
+          </div>
           <a
             class="operation"
             target="_blank"
@@ -116,6 +127,8 @@
   </div>
 </template>
 <script lang="ts">
+import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
+import { formData, getCsrf } from '@/core/utils'
 import { descendingSort } from '@/core/utils/sort'
 import {
   VButton,
@@ -151,6 +164,7 @@ export default Vue.extend({
       groups: [],
       loading: true,
       hasMorePage: true,
+      paused: false,
     }
   },
   computed: {
@@ -170,7 +184,10 @@ export default Vue.extend({
   },
   async created() {
     try {
-      await this.nextPage()
+      await Promise.all([
+        this.nextPage(),
+        this.updateHistoryPauseState(),
+      ])
     } finally {
       this.loading = false
     }
@@ -210,6 +227,29 @@ export default Vue.extend({
       }
       this.hasMorePage = cards.length !== 0
     },
+    async updateHistoryPauseState() {
+      const result = await bilibiliApi(getJsonWithCredentials('https://api.bilibili.com/x/v2/history/shadow'))
+      /*
+        result == true: 暂停
+        result == {}: 没暂停
+      */
+      this.paused = result === true
+    },
+    async toggleHistoryPause() {
+      const targetState = !this.paused
+      try {
+        this.paused = targetState
+        await postTextWithCredentials(
+          'https://api.bilibili.com/x/v2/history/shadow/set',
+          formData({
+            csrf: getCsrf(),
+            switch: targetState,
+          }),
+        )
+      } catch (error) {
+        this.paused = !targetState
+      }
+    },
   },
 })
 </script>
@@ -236,8 +276,9 @@ export default Vue.extend({
       position: absolute;
     }
   }
-  @mixin round-button($width: 26px) {
-    width: $width;
+  @mixin round-button($size: 26px) {
+    width: $size;
+    height: $size;
     box-sizing: border-box;
   }
   .header {

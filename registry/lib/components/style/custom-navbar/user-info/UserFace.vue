@@ -52,6 +52,8 @@ export default Vue.extend({
   position: relative;
   height: calc(var(--navbar-height) - 16px);
   width: calc(var(--navbar-height) - 16px);
+  max-width: 36px;
+  max-height: 36px;
   .user-face,
   .user-pendant {
     position: absolute;

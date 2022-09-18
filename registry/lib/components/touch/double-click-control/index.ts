@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
 import { videoChange } from '@/core/observer'
 import { addStyle } from '@/core/style'
@@ -27,7 +27,7 @@ const entry = async () => {
     doubleClickEvent.bind(videoWrapper)
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'doubleClickControl',
   displayName: '启用双击控制',
   description: {
@@ -39,4 +39,4 @@ export const component: ComponentMetadata = {
   enabledByDefault: navigator.maxTouchPoints > 0,
   urlInclude: playerUrls,
   entry,
-}
+})

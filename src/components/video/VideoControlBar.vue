@@ -3,7 +3,12 @@
     <div
       v-for="item of items"
       :key="item.name"
-      class="be-video-control-bar-extend-item bilibili-player-video-btn squirtle-block-wrap"
+      class="
+        be-video-control-bar-extend-item
+        bilibili-player-video-btn
+        squirtle-block-wrap
+        bpx-player-ctrl-btn
+      "
       :style="{ order: item.order.toString() }"
       :data-name="item.name"
       @click="item.action($event)"
@@ -51,7 +56,7 @@ export default Vue.extend({
     width: auto;
     padding-top: 1px;
     .be-icon {
-      transition: transform .2s ease-out;
+      transition: transform 0.2s ease-out;
     }
     .be-icon svg,
     .be-icon {
@@ -93,7 +98,7 @@ export default Vue.extend({
       align-items: center;
     }
     &:hover .be-video-control-tooltip {
-      transition: all .3s ease-in-out .3s;
+      transition: all 0.3s ease-in-out 0.3s;
       opacity: 1;
       transform: translateX(-50%) translateY(calc(-100% - 19px));
     }
@@ -110,6 +115,13 @@ export default Vue.extend({
       &:active {
         outline: none !important;
       }
+    }
+  }
+}
+.bpx-player-control-wrap {
+  @include on-fullscreen {
+    & .be-video-control-bar-extend-item button {
+      padding-top: 2px;
     }
   }
 }

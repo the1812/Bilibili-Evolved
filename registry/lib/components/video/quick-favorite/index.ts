@@ -34,7 +34,7 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   }
 
   await playerReady()
-  const favoriteButton = dq('.video-toolbar .ops .collect')
+  const favoriteButton = dq('.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect')
   if (!favoriteButton) {
     return
   }
@@ -61,10 +61,10 @@ export const component = defineComponentMetadata({
   },
   entry,
   unload: () => {
-    dqa('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'none'))
+    dqa('.be-quick-favorite').forEach((it: HTMLElement) => (it.style.display = ''))
   },
   reload: () => {
-    dqa('.ops .quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'inline-block'))
+    dqa('.be-quick-favorite').forEach((it: HTMLElement) => (it.style.display = 'inline-block'))
   },
   urlInclude: videoUrls,
   // urlExclude: favoriteListUrls,
@@ -80,7 +80,7 @@ export const component = defineComponentMetadata({
           displayName: '快速收藏',
           run: context => {
             const { clickElement } = context
-            return clickElement('.quick-favorite', context)
+            return clickElement('.be-quick-favorite', context)
           },
         }
       })

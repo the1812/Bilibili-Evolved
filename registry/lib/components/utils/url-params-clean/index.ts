@@ -1,5 +1,5 @@
 import { registerAndGetData } from '@/plugins/data'
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { isIframe, isNotHtml, matchPattern } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 
@@ -24,6 +24,7 @@ const entry = async () => {
     'share_plat',
     'share_tag',
     'share_session_id',
+    'share_from',
     'bbid',
     'ts',
     'timestamp',
@@ -48,6 +49,7 @@ const entry = async () => {
     'hotRank',
     '-Arouter',
     'vd_source',
+    'is_story_h5',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
@@ -104,7 +106,7 @@ const entry = async () => {
     urlChange(() => clean())
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'urlParamsClean',
   displayName,
   entry,
@@ -118,4 +120,4 @@ export const component: ComponentMetadata = {
     /game\.bilibili\.com\/fgo/,
     /live\.bilibili\.com\/p\/html\/live-app-hotrank\//,
   ],
-}
+})

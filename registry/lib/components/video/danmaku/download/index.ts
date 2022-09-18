@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
@@ -6,7 +6,7 @@ import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../../download/types'
 import { DanmakuDownloadType } from './utils'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'downloadDanmaku',
   displayName: '下载弹幕',
   description: {
@@ -60,4 +60,4 @@ export const component: ComponentMetadata = {
     condition: hasVideo,
     component: () => import('./DownloadDanmaku.vue').then(m => m.default),
   },
-}
+})

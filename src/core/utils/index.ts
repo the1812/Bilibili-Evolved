@@ -10,7 +10,7 @@ export const bwpVideoFilter = (selector: string) => {
   // }
   const map = {
     video: ', bwp-video',
-    '.bilibili-player-video video': ', .bilibili-player-video bwp-video',
+    '.bilibili-player-video video': ', .bilibili-player-video bwp-video,.bpx-player-video-area bwp-video',
   }
   const suffix = map[selector]
   if (suffix) {
@@ -362,6 +362,9 @@ export class DoubleClickEvent {
   singleClickHandler: (e: MouseEvent) => void = none
 
   private clickedOnce = false
+  private readonly stopPropagationHandler = (e: MouseEvent) => {
+    e.stopImmediatePropagation()
+  }
   private readonly doubleClickHandler = (e: MouseEvent) => {
     if (!this.clickedOnce) {
       this.clickedOnce = true
@@ -400,6 +403,7 @@ export class DoubleClickEvent {
       element.addEventListener('click', this.doubleClickHandler, {
         capture: true,
       })
+      element.addEventListener('dblclick', this.stopPropagationHandler, { capture: true })
     }
   }
   /**
@@ -415,6 +419,7 @@ export class DoubleClickEvent {
     element.removeEventListener('click', this.doubleClickHandler, {
       capture: true,
     })
+    element.removeEventListener('dblclick', this.stopPropagationHandler, { capture: true })
   }
 }
 /** 等待播放器准备好, 如果过早注入 DOM 元素可能会导致爆炸

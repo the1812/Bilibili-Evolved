@@ -1,85 +1,87 @@
-import { defineComponentMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
 import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { urlInclude, urlExclude } from './urls'
 import { entry } from './entry'
+import { getNumberValidator } from '@/core/utils'
 
 const styleID = 'custom-navbar-style'
+const options = defineOptionsMetadata({
+  hidden: {
+    hidden: true,
+    defaultValue: ['blank1', 'blank4', 'drawing', 'music', 'gamesIframe', 'bangumi', 'match'],
+    displayName: '隐藏的元素',
+  },
+  order: {
+    hidden: true,
+    defaultValue: {},
+    displayName: '元素顺序',
+  },
+  padding: {
+    hidden: true,
+    defaultValue: 10,
+    displayName: '边缘间距(%)',
+  },
+  globalFixed: {
+    defaultValue: false,
+    displayName: '全局固定',
+  },
+  fill: {
+    defaultValue: false,
+    displayName: '主题色填充',
+  },
+  transparent: {
+    defaultValue: true,
+    displayName: '透明填充',
+  },
+  blur: {
+    defaultValue: false,
+    displayName: '背景模糊',
+  },
+  shadow: {
+    defaultValue: true,
+    displayName: '投影',
+  },
+  seasonLogo: {
+    defaultValue: false,
+    displayName: '使用季节Logo',
+  },
+  touch: {
+    defaultValue: false,
+    displayName: '触摸模式',
+  },
+  openInNewTab: {
+    defaultValue: true,
+    displayName: '新标签页打开',
+  },
+  refreshOnPopup: {
+    defaultValue: true,
+    displayName: '自动刷新数据',
+  },
+  height: {
+    defaultValue: 50,
+    validator: getNumberValidator(50, 64),
+    displayName: '顶栏高度 (px)',
+  },
+  openInNewTabOverrides: {
+    defaultValue: { logo: false },
+    displayName: '新标签页打开设置覆盖',
+    hidden: true,
+  },
+  showDeadVideos: {
+    defaultValue: false,
+    displayName: '显示已失效视频',
+    hidden: true,
+  },
+})
 export const component = defineComponentMetadata({
   name: 'customNavbar',
   displayName: '自定义顶栏',
-  description: `
-使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:
-- *://message.bilibili.com/pages/nav/index_new_pc_sync
-- *://message.bilibili.com/pages/nav/index_new_sync
-  `.trim(),
   entry,
   tags: [
     componentsTags.style,
     componentsTags.general,
   ],
-  options: {
-    hidden: {
-      hidden: true,
-      defaultValue: ['blank1', 'blank4', 'drawing', 'music', 'gamesIframe', 'bangumi', 'match'],
-      displayName: '隐藏的元素',
-    },
-    order: {
-      hidden: true,
-      defaultValue: {},
-      displayName: '元素顺序',
-    },
-    padding: {
-      hidden: true,
-      defaultValue: 10,
-      displayName: '边缘间距(%)',
-    },
-    globalFixed: {
-      defaultValue: false,
-      displayName: '全局固定',
-    },
-    fill: {
-      defaultValue: false,
-      displayName: '主题色填充',
-    },
-    transparent: {
-      defaultValue: true,
-      displayName: '透明填充',
-    },
-    blur: {
-      defaultValue: false,
-      displayName: '背景模糊',
-    },
-    shadow: {
-      defaultValue: true,
-      displayName: '投影',
-    },
-    seasonLogo: {
-      defaultValue: false,
-      displayName: '使用季节Logo',
-    },
-    touch: {
-      defaultValue: false,
-      displayName: '触摸模式',
-    },
-    openInNewTab: {
-      defaultValue: true,
-      displayName: '新标签页打开',
-    },
-    refreshOnPopup: {
-      defaultValue: true,
-      displayName: '自动刷新数据',
-    },
-    openInNewTabOverrides: {
-      defaultValue: { logo: false },
-      displayName: '新标签页打开设置覆盖',
-      hidden: true,
-    },
-    showDeadVideos: {
-      defaultValue: false,
-      displayName: '显示已失效视频',
-      hidden: true,
-    },
-  },
+  options,
   urlInclude,
   urlExclude,
   instantStyles: [
@@ -122,3 +124,4 @@ export const component = defineComponentMetadata({
     },
   },
 })
+export type CustomNavbarOptions = OptionsOfMetadata<typeof options>

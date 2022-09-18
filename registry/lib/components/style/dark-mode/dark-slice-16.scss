@@ -1,6 +1,6 @@
 @import './dark-definitions';
 
-#app .bg {
+#app > .bg {
   @include no-image();
 }
 @mixin dyn-container-skeleton() {
@@ -269,6 +269,9 @@
     &__content {
       @include color('e');
     }
+    &__action {
+      @include theme-color();
+    }
     &-module,
     &-link,
     &-topic {
@@ -450,6 +453,73 @@
         @include background-color('6');
         @include color('a');
       }
+    }
+  }
+  .dyn-ugc {
+    &__wrap {
+      @include background-color('3');
+    }
+    &__cover {
+      @include background-color();
+    }
+    &__detail {
+      &__title {
+        @include color('e');
+      }
+      &__desc {
+        @include color('a');
+      }
+    }
+  }
+}
+.bili-dyn-report {
+  @include background-color('3');
+  &__title {
+    @include color('e');
+  }
+  &__message {
+    @include color('a');
+  }
+  &__remark {
+    &__tip {
+      @include color('a');
+    }
+    &__content {
+      @include background-color('2');
+      @include border-color('5');
+      &:focus-within {
+        @include theme-border-color();
+      }
+    }
+  }
+  &__button {
+    @include background-color('5');
+    @include color('e');
+    @include border-color();
+    &.confirm {
+      @include theme-background-color();
+      @include foreground-color();
+      @include border-color();
+    }
+  }
+}
+.bili-modal {
+  @include background-color('3');
+  @include color('e');
+  &__title {
+    @include color('e');
+  }
+  &__close {
+    @include color('a');
+  }
+  &__button {
+    @include background-color('5');
+    @include color('e');
+    @include border-color();
+    &.confirm {
+      @include theme-background-color();
+      @include foreground-color();
+      @include border-color();
     }
   }
 }

@@ -75,7 +75,7 @@
     "type": "component",
     "name": "badgeHelper",
     "displayName": "直播勋章快速更换",
-    "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认加载 256 个 (同时也是上限), 可在选项中修改.",
+    "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.",
     "fullRelativePath": "../../registry/dist/components/live/badge-helper.js",
     "fullAbsolutePath": "registry/dist/components/live/badge-helper.js"
   },
@@ -163,7 +163,7 @@
     "type": "component",
     "name": "customNavbar",
     "displayName": "自定义顶栏",
-    "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\n- *://message.bilibili.com/pages/nav/index_new_sync",
+    "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n",
     "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
     "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
   },
@@ -283,7 +283,7 @@
     "type": "component",
     "name": "sidebarOffset",
     "displayName": "侧栏垂直偏移",
-    "description": "给脚本的侧栏设置垂直偏移量, 范围为 -40% ~ 40%",
+    "description": "给脚本的侧栏设置垂直偏移量, 范围为 -35% ~ 40%",
     "fullRelativePath": "../../registry/dist/components/style/sidebar-offset.js",
     "fullAbsolutePath": "registry/dist/components/style/sidebar-offset.js"
   },
@@ -369,6 +369,14 @@
   },
   {
     "type": "component",
+    "name": "blackList",
+    "displayName": "屏蔽黑名单up主",
+    "description": "by [@snowraincloud](https://github.com/snowraincloud)\n\n屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配",
+    "fullRelativePath": "../../registry/dist/components/utils/black-list.js",
+    "fullAbsolutePath": "registry/dist/components/utils/black-list.js"
+  },
+  {
+    "type": "component",
     "name": "changeUpdateUrls",
     "displayName": "更新链接替换",
     "description": "批量更换已安装功能的更新链接的分支, 对本地安装的功能无效.",
@@ -419,7 +427,7 @@
     "type": "component",
     "name": "imageExporter",
     "displayName": "图片批量导出",
-    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `user`: 用户名\r\n- `id`: 动态 ID\r\n- `n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n- `title`: 专栏标题\r\n- `n`: 第 n 张图",
+    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `user`: 用户名\r\n- `originalUser`: 被转发用户名, 如果不是转发类型的动态则等于 `user`\r\n- `id`: 动态 ID\r\n- `n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n- `title`: 专栏标题\r\n- `n`: 第 n 张图",
     "fullRelativePath": "../../registry/dist/components/utils/image-exporter.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-exporter.js"
   },
@@ -523,7 +531,7 @@
     "type": "component",
     "name": "expandDanmakuList",
     "displayName": "展开弹幕列表",
-    "description": "每次加载视频时自动展开弹幕列表.",
+    "description": "每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿.",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/expand.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/expand.js"
   },
@@ -735,6 +743,14 @@
     "description": "在设置面板中添加 \"最近使用\" 类别, 方便检索最近操作过的组件.",
     "fullRelativePath": "../../registry/dist/plugins/settings-panel/recent-components.js",
     "fullAbsolutePath": "registry/dist/plugins/settings-panel/recent-components.js"
+  },
+  {
+    "type": "plugin",
+    "name": "customNavbar.items.channel",
+    "displayName": "自定义顶栏 - 频道",
+    "description": "为自定义顶栏添加一个频道入口.",
+    "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-channel.js",
+    "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-channel.js"
   },
   {
     "type": "plugin",

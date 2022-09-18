@@ -1,6 +1,7 @@
 import { createPopper, Instance as Popper } from '@popperjs/core'
 import { VueModule, Executable } from '@/core/common-types'
 import { getComponentSettings, addComponentListener } from '@/core/settings'
+import type { CustomNavbarOptions } from '.'
 
 export const CustomNavbarItems = 'customNavbar.items'
 export const CustomNavbarRenderedItems = 'customNavbar.renderedItems'
@@ -72,20 +73,7 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
   order = 0
   requestedPopup: boolean
 
-  static navbarOptions = getComponentSettings('customNavbar').options as {
-    hidden: string[]
-    order: { [name: string]: number }
-    padding: number
-    globalFixed: boolean
-    fill: boolean
-    transparent: boolean
-    shadow: boolean
-    openInNewTab: boolean
-    openInNewTabOverrides: Record<string, boolean>
-    seasonLogo: boolean
-    touch: boolean
-    refreshOnPopup: boolean
-  }
+  static navbarOptions = getComponentSettings('customNavbar').options as CustomNavbarOptions
   constructor(init: CustomNavbarItemInit) {
     Object.assign(this, init)
     if (!this.name) {

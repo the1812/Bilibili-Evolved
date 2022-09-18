@@ -1,11 +1,12 @@
 <template>
-  <VIcon v-if="!seasonLogoUrl" icon="logo" class="custom-navbar-logo"></VIcon>
-  <img
-    v-else
-    height="38"
-    class="custom-navbar-logo season"
-    :src="seasonLogoUrl"
-  />
+  <div class="custom-navbar-logo-container">
+    <VIcon v-if="!seasonLogoUrl" icon="logo" class="custom-navbar-logo"></VIcon>
+    <div
+      v-else
+      class="custom-navbar-logo season"
+      :style="{ backgroundImage: `url(${seasonLogoUrl})` }"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -55,16 +56,34 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import 'common';
+
+.custom-navbar-logo-container {
+  @include v-stretch();
+  justify-content: center;
+  height: 100%;
+  padding: 8px 0;
+  box-sizing: border-box;
+  max-height: 54px;
+  width: calc(var(--navbar-height) * 1.3);
+}
 .custom-navbar-logo {
-  width: auto;
-  margin: 0 4px;
   .custom-navbar:not(.fill) & {
     &:not(.season) {
       color: var(--theme-color);
     }
   }
+  &.be-icon {
+    --size: calc(var(--navbar-height) / 2) !important;
+    width: 100%;
+    max-height: 32px;
+  }
   &.season {
-    transform: scale(1.15);
+    height: 0;
+    flex: 1 0 0;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
     filter: drop-shadow(0 0 2px #0002);
   }
 }

@@ -26,7 +26,7 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
     return
   }
   await playerReady()
-  const favoriteButton = dq('.video-toolbar .ops .collect') as HTMLElement
+  const favoriteButton = dq('.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect') as HTMLElement
   if (!favoriteButton) {
     return
   }
@@ -57,12 +57,12 @@ export const component = defineComponentMetadata({
   // urlExclude: watchlaterUrls,
   options,
   reload: () => {
-    dqa('.ops .watchlater').forEach((it: HTMLElement) => {
-      it.style.display = 'inline-block'
+    dqa('.be-outer-watchlater').forEach((it: HTMLElement) => {
+      it.style.display = ''
     })
   },
   unload: () => {
-    dqa('.ops .watchlater').forEach((it: HTMLElement) => {
+    dqa('.be-outer-watchlater').forEach((it: HTMLElement) => {
       it.style.display = 'none'
     })
   },
@@ -74,7 +74,7 @@ export const component = defineComponentMetadata({
           displayName: '稍后再看',
           run: context => {
             const { clickElement } = context
-            return clickElement('.video-toolbar .ops .watchlater, .more-ops-list .ops-watch-later, .video-toolbar-module .see-later-box', context)
+            return clickElement('.be-outer-watchlater', context)
           },
         }
       })

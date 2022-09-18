@@ -201,7 +201,7 @@
         "type": "component",
         "name": "customNavbar",
         "displayName": "自定义顶栏",
-        "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\n- *://message.bilibili.com/pages/nav/index_new_sync",
+        "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n",
         "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
         "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
       },

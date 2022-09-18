@@ -1,13 +1,13 @@
 <template>
   <span
-    class="quick-favorite"
+    class="quick-favorite be-quick-favorite"
     title="快速收藏"
     :class="{ on: isFavorite }"
     @click.left.self="toggle()"
     @click.right.prevent.self="listShowing = !listShowing"
   >
     <i
-      class="quick-favorite-icon"
+      class="quick-favorite-icon icon"
       @click.left="toggle()"
       @click.right.prevent="listShowing = !listShowing"
     ></i>
@@ -19,8 +19,8 @@
       快速收藏
     </div>
     <div ref="selectList" class="select-list" :class="{ show: listShowing }">
-      选择快速收藏夹:
       <div class="lists">
+        选择快速收藏夹:
         <VDropdown
           v-model="selectedFavorite"
           :items="lists.map(it => it.title)"
@@ -31,9 +31,9 @@
           </template>
         </VDropdown>
       </div>
-    </div>
-    <div class="lists-tip" :class="{ show: listShowing }">
-      右键点击快速收藏可再次打开
+      <div class="lists-tip" :class="{ show: listShowing }">
+        右键点击快速收藏可再次打开
+      </div>
     </div>
     <div class="tip" :class="{ show: tipShowing }">{{ tipText }}</div>
   </span>
@@ -168,95 +168,76 @@ export default Vue.extend({
   },
 })
 </script>
-<style lang="scss">
-@import "./font";
+<style lang="scss" scoped>
+@import 'common';
+@import './font';
 
-.video-toolbar .ops {
-  .quick-favorite {
-    margin-right: 28px !important;
-    position: relative;
-    font-size: 0;
-    font-size: 14px;
-    width: auto !important;
+.quick-favorite {
+  margin-right: 28px !important;
+  position: relative;
+  font-size: 14px;
+  font-weight: normal;
+  width: auto !important;
+  .text {
+    display: inline;
+  }
+  @media screen and (max-width: 1320px), (max-height: 750px) {
+    margin-right: max(calc(min(11vw, 11vh) - 117.2px), 6px) !important;
     .text {
-      display: inline;
+      display: none;
     }
-    @media screen and (max-width: 1320px), (max-height: 750px) {
-      margin-right: max(calc(min(11vw, 11vh) - 117.2px),6px) !important;
-      .text {
-        display: none;
-      }
+  }
+  &-icon {
+    font-family: 'quick-favorite' !important;
+    font-size: 28px;
+    display: inline-block;
+    font-style: normal;
+    text-align: center;
+    text-transform: none;
+    line-height: 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    &:after {
+      content: '\ea01';
     }
-    &-icon {
-      font-family: "quick-favorite" !important;
-      display: inline-block;
-      font-style: normal;
-      text-align: center;
-      text-transform: none;
-      line-height: 1;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      &:after {
-        content: "\ea01";
-      }
+    .video-toolbar-v1 & {
+      transform: translateY(1px);
     }
-    .tip,
-    .select-list,
+  }
+  .tip,
+  .select-list {
+    line-height: normal;
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    background: #000d;
+    padding: 8px;
+    border-radius: 4px;
+    color: #eee;
+    transition: all 0.2s ease-out;
+    opacity: 0;
+    pointer-events: none;
+    &.show {
+      opacity: 1;
+      pointer-events: initial;
+    }
+  }
+  .select-list {
+    @include v-center(8px);
+    > * {
+      white-space: nowrap;
+    }
+    .lists-loading {
+      padding: 4px 32px;
+    }
+    .lists {
+      @include h-center(8px);
+    }
     .lists-tip {
-      line-height: normal;
-      position: absolute;
-      top: calc(100% + 8px);
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      background: #000d;
-      padding: 4px 8px;
-      border-radius: 4px;
-      color: #eee;
-      transition: all 0.2s ease-out;
-      opacity: 0;
-      pointer-events: none;
-      &.show {
-        opacity: 1;
-        pointer-events: initial;
-      }
-    }
-    .tip {
-      padding: 8px;
-    }
-    .lists-tip {
-      top: calc(100% + 8px + 42px);
-      color: #ccc;
+      color: #aaa;
       font-size: 12px;
-      z-index: 100;
-    }
-    .select-list {
-      display: flex;
-      align-items: center;
-      > * {
-        white-space: nowrap;
-      }
-      .lists-loading {
-        padding: 4px 32px;
-      }
-      .lists {
-        margin-left: 8px;
-      }
-      // .v-dropdown {
-      //   color: black;
-      //   body.dark & {
-      //     color: #eee;
-      //   }
-      //   .mdi-chevron-down {
-      //     color: inherit !important;
-      //     margin: 0 !important;
-      //     transition: 0.2s ease-out;
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: center;
-      //     font-size: 16pt !important;
-      //   }
-      // }
     }
   }
 }

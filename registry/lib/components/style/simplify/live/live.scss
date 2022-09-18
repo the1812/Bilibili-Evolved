@@ -116,6 +116,9 @@ $prefix: "simplifyLiveroom-switch";
         }
       }
     }
+    .info-section {
+      display: none !important;
+    }
   }
   .rows-ctnr .lower-row,
   .room-info-down-row {

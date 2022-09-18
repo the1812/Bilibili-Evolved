@@ -1,18 +1,32 @@
-import { toggleStyle } from '@/components/styled-component'
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { playerUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
-  ...toggleStyle('removePlayerPopup', () => import('./remove-popup.scss'), ({ settings, metadata }) => {
+const name = 'removePlayerPopup'
+export const component = defineComponentMetadata({
+  name,
+  entry: ({ settings, metadata }) => {
     const { options } = settings
     const { kebabCase } = lodash
-    Object.keys(options).forEach(name => {
-      addComponentListener(`${metadata.name}.${name}`, (value: boolean) => {
-        document.body.classList.toggle(`${kebabCase(metadata.name)}-${kebabCase(name)}`, value)
-      }, true)
+    Object.keys(options).forEach(optionName => {
+      addComponentListener(
+        `${metadata.name}.${optionName}`,
+        (value: boolean) => {
+          document.body.classList.toggle(
+            `${kebabCase(metadata.name)}-${kebabCase(optionName)}`,
+            value,
+          )
+        },
+        true,
+      )
     })
-  }),
+  },
+  instantStyles: [
+    {
+      name,
+      style: () => import('./remove-popup.scss'),
+    },
+  ],
   displayName: '删除视频弹窗',
   tags: [componentsTags.video, componentsTags.style],
   description: {
@@ -37,4 +51,4 @@ export const component: ComponentMetadata = {
       displayName: '评分',
     },
   },
-}
+})

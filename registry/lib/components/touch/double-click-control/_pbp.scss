@@ -31,6 +31,25 @@
       }
     }
   }
+
+  .bpx-player-pbp {
+    opacity: 0 !important;
+    bottom: 3px !important;
+    &.pin {
+      opacity: 1 !important;
+    }
+    .bpx-player-pbp-pin {
+      opacity: 0 !important;
+    }
+  }
+  &.touch-video-control-show .bpx-player-pbp {
+    opacity: 1 !important;
+    bottom: calc(100% - 1px) !important;
+    .bpx-player-pbp-pin {
+      opacity: 1 !important;
+    }
+  }
+
   &.touch-video-control-show .bilibili-player-video-control {
     #bilibili_pbp,
     #bilibili_pbp_canvas {
@@ -59,6 +78,9 @@
             // }
           }
         }
+      }
+      &.touch-video-control-show .bpx-player-pbp {
+        bottom: calc(100% + 5px) !important;
       }
     }
   }

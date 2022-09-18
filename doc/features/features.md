@@ -96,7 +96,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/badge-helper.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/badge-helper.js)
 
-在直播区中, 可从功能面板中直接切换勋章和头衔. 默认加载 256 个 (同时也是上限), 可在选项中修改.
+在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.
 
 ### [直播弹幕发送栏](../../registry/dist/components/live/danmaku-sendbar.js)
 `liveDanmakuSendbar`
@@ -344,7 +344,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/sidebar-offset.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/sidebar-offset.js)
 
-给脚本的侧栏设置垂直偏移量, 范围为 -40% ~ 40%
+给脚本的侧栏设置垂直偏移量, 范围为 -35% ~ 40%
 
 ### [简化评论区](../../registry/dist/components/style/simplify/comments.js)
 `simplifyComments`
@@ -451,6 +451,17 @@
 - 进度调整可在左上角和右上角取消
 - 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.
 
+### [屏蔽黑名单up主](../../registry/dist/components/utils/black-list.js)
+`blackList`
+
+**AltCdn:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/black-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/black-list.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/black-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/black-list.js)
+
+by [@snowraincloud](https://github.com/snowraincloud)
+
+屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配
+
 ### [更新链接替换](../../registry/dist/components/utils/change-update-urls.js)
 `changeUpdateUrls`
 
@@ -530,6 +541,7 @@
 
 动态文件名变量:
 - `user`: 用户名
+- `originalUser`: 被转发用户名, 如果不是转发类型的动态则等于 `user`
 - `id`: 动态 ID
 - `n`: 第 n 张图
 
@@ -657,7 +669,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/expand.js)
 
-每次加载视频时自动展开弹幕列表.
+每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿.
 
 ### [视频页默认定位](../../registry/dist/components/video/default-location.js)
 `videoDefaultLocation`
@@ -963,6 +975,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/settings-panel/recent-components.js)
 
 在设置面板中添加 "最近使用" 类别, 方便检索最近操作过的组件.
+
+### [自定义顶栏 - 频道](../../registry/dist/plugins/style/custom-navbar-channel.js)
+`customNavbar.items.channel`
+
+**AltCdn:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-channel.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-channel.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-channel.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-channel.js)
+
+为自定义顶栏添加一个频道入口.
 
 ### [自定义顶栏 - 夜间模式开关](../../registry/dist/plugins/style/custom-navbar-dark-mode.js)
 `customNavbar.items.darkMode`
