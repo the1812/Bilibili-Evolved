@@ -1,10 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
 import { addControlBarButton } from '@/components/video/video-control-bar'
 import { attributesSubtree } from '@/core/observer'
 import { playerReady } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
 import { KeyBindingAction } from '../../../utils/keymap/bindings'
+import { defineComponentMetadata } from '@/components/define'
 import desc from './desc.md'
 import seekLeft from './seek-left.svg'
 import seekRight from './seek-right.svg'
@@ -64,12 +64,10 @@ const entry = async () => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'seekByFrames',
   displayName: '启用逐帧调整',
-  tags: [
-    componentsTags.video,
-  ],
+  tags: [componentsTags.video],
   description: {
     'zh-CN': desc,
   },
@@ -85,14 +83,20 @@ export const component: ComponentMetadata = {
           displayName: '上一帧',
           run: context => {
             const { clickElement } = context
-            return clickElement('.be-video-control-bar-extend [data-name="seekPrevFrame"]', context)
+            return clickElement(
+              '.be-video-control-bar-extend [data-name="seekPrevFrame"]',
+              context,
+            )
           },
         }
         actions.nextFrame = {
           displayName: '下一帧',
           run: context => {
             const { clickElement } = context
-            return clickElement('.be-video-control-bar-extend [data-name="seekNextFrame"]', context)
+            return clickElement(
+              '.be-video-control-bar-extend [data-name="seekNextFrame"]',
+              context,
+            )
           },
         }
       })
@@ -102,4 +106,4 @@ export const component: ComponentMetadata = {
       })
     },
   },
-}
+})

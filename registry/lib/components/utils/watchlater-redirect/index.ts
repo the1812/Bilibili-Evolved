@@ -1,4 +1,5 @@
-import { ComponentMetadata, ComponentEntry } from '@/components/types'
+import { ComponentEntry } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
 const entry: ComponentEntry = async ({ settings }) => {
   if (settings.options.page) {
@@ -46,7 +47,7 @@ const entry: ComponentEntry = async ({ settings }) => {
     })
   }
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'watchlaterRedirect',
   displayName: '稍后再看重定向',
   description: {
@@ -70,4 +71,4 @@ export const component: ComponentMetadata = {
     componentsTags.utils,
     componentsTags.video,
   ],
-}
+})

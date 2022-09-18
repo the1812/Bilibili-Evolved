@@ -3,11 +3,6 @@
 
 .video-info-v1 .video-data {
   @include color('a');
-  .item {
-    svg path {
-      @include fill('a');
-    }
-  }
 }
 .members-info-v1 {
   .normal-members-header {
@@ -47,6 +42,7 @@
       @include color('8');
     }
   }
+  .not-follow-charge-btn,
   .charge-btn {
     border: 1px solid;
     @include background-color();
@@ -204,6 +200,7 @@
     @include color('e');
   }
 }
+.video-sections-v1,
 .base-video-sections-v1 {
   @include background-color('4');
 }
@@ -825,4 +822,24 @@
 #bilibili-player-placeholder,
 .bpx-player-container {
   box-shadow: none !important;
+}
+.comment-m-v1 {
+  .comment-container {
+    @include background-color();
+  }
+}
+.recommended-container {
+  .container {
+    @include background-color();
+  }
+}
+.feed-floor .channel-floor {
+  @include border-color('4');
+}
+.bili-video-card {
+  &__info--tit {
+    a {
+      @include color('e');
+    }
+  }
 }

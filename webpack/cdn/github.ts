@@ -3,6 +3,7 @@ import { CdnConfig } from './types'
 const owner = 'the1812'
 const host = 'raw.githubusercontent.com'
 export const github: CdnConfig = {
+  name: 'GitHub',
   owner,
   host,
   stableClient: `https://${host}/${owner}/Bilibili-Evolved/master/dist/bilibili-evolved.user.js`,

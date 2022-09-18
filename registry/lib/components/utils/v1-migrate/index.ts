@@ -1,9 +1,9 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { addData } from '@/plugins/data'
 import { AboutPageAction } from '@/components/settings-panel/sub-pages/about-page'
 import { runMigrate } from './migrate'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'v1Migrate',
   displayName: 'v1 设置迁移',
   description: {
@@ -36,4 +36,4 @@ export const component: ComponentMetadata = {
       })
     })
   },
-}
+})

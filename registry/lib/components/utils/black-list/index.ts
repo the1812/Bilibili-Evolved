@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { mainSiteUrls } from '@/core/utils/urls'
 import { allMutationsOn } from '@/core/observer'
 import { selectAll } from '@/core/spin-query'
@@ -48,7 +48,7 @@ const entry = async ({ settings: { options } }) => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name,
   entry,
   // reload: entry,
@@ -77,4 +77,4 @@ export const component: ComponentMetadata = {
     link: 'https://github.com/snowraincloud',
   },
   urlInclude: mainSiteUrls,
-}
+})

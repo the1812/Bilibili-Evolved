@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import {
   allVideoUrls, bangumiUrls, cheeseUrls, matchCurrentPage, mediaListUrls,
 } from '@/core/utils/urls'
@@ -138,7 +138,7 @@ const entry = async ({ settings: { options: { locations } } }) => {
   }
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'videoDefaultLocation',
   displayName: '视频页默认定位',
   tags: [componentsTags.video],
@@ -152,4 +152,4 @@ export const component: ComponentMetadata = {
     },
   },
   entry: entry as any,
-}
+})

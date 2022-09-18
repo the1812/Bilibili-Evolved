@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
 let eventInjected = false
 let enable = true
@@ -16,7 +16,7 @@ const entry = async () => {
     }, { capture: true })
   }
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'columnUnlock',
   displayName: '专栏文字选择',
   entry,
@@ -34,4 +34,4 @@ export const component: ComponentMetadata = {
   urlInclude: [
     '//www.bilibili.com/read/',
   ],
-}
+})

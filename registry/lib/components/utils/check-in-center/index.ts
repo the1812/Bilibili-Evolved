@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { getUID } from '@/core/utils'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'checkInCenter',
   displayName: '签到助手',
   description: {
@@ -13,4 +13,4 @@ export const component: ComponentMetadata = {
     component: () => import('./Widget.vue').then(m => m.default),
     condition: () => Boolean(getUID()),
   },
-}
+})

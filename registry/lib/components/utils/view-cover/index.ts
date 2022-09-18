@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'viewCover',
   displayName: '查看封面',
   tags: [
@@ -22,4 +22,4 @@ export const component: ComponentMetadata = {
     ...videoAndBangumiUrls,
     // ...liveUrls,
   ],
-}
+})

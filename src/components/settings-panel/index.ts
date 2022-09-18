@@ -41,7 +41,7 @@ const options = defineOptionsMetadata({
     dropdownEnum: TextColor,
   },
   cdnRoot: {
-    defaultValue: CdnTypes.GitHub,
+    defaultValue: CdnTypes.AltCdn,
     displayName: '更新源',
     dropdownEnum: CdnTypes,
   },

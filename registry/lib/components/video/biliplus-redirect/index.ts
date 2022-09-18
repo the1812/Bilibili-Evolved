@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'biliplusRedirect',
   displayName: 'BiliPlus 跳转支持',
   description: {
@@ -19,4 +19,4 @@ export const component: ComponentMetadata = {
   widget: {
     component: () => import('./BiliplusRedirect.vue').then(m => m.default),
   },
-}
+})
