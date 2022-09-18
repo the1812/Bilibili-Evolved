@@ -8,7 +8,7 @@ CDN 是脚本的编译时配置, 无法做进设置中于运行时切换, 如需
 
 ## 修改 CDN 配置
 
-CDN 配置位于 `webpack/cdn/`, 可在目录下新建一个文件, 导出一个 CDN 配置对象, 并在 `index.js` 中将 `altCdn` 指向新的配置对象.
+CDN 配置位于 `webpack/cdn/`, 可在目录下新建一个文件, 导出一个 CDN 配置对象, 并在 `index.ts` 中将 `altCdn` 指向新的配置对象.
 
 配置对象的各个字段说明如下:
 ```js
@@ -17,7 +17,7 @@ CDN 配置位于 `webpack/cdn/`, 可在目录下新建一个文件, 导出一个
   host: 'CDN 的域名',
   stableClient: `正式版下载链接`,
   previewClient: `预览版下载链接`,
-  // 第三方库配置, 注意版本要和 github.js 里的一致, MDI 是 5.3.45
+  // 第三方库配置, 注意版本要和 github.ts 里的一致, MDI 是 5.3.45
   library: {
     lodash: 'Lodash 下载链接',
     protobuf: 'protobuf.js 下载链接',
@@ -33,7 +33,7 @@ CDN 配置位于 `webpack/cdn/`, 可在目录下新建一个文件, 导出一个
 
 ## 编译
 
-运行 `本体:编译生产版本` 任务 (`yarn webpack --config ./webpack/webpack.prod.js --progress`).
+运行 `本体:编译生产版本` 任务 (`yarn webpack --config ./webpack/webpack.prod.ts --progress`).
 
 会得到:
 - 正式版: `dist\bilibili-evolved.user.js`
