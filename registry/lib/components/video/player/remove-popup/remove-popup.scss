@@ -35,5 +35,10 @@ body {
         display: none !important;
       }
     }
+    &-reservations {
+      .bpx-player-reserve {
+        display: none !important;
+      }
+    }
   }
 }

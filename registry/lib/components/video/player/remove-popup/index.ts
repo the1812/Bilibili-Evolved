@@ -43,5 +43,9 @@ export const component: ComponentMetadata = {
       defaultValue: true,
       displayName: '评分',
     },
+    reservations: {
+      defaultValue: true,
+      displayName: '预告',
+    },
   },
 }
