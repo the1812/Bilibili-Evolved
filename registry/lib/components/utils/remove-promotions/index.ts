@@ -1,5 +1,6 @@
 import { ComponentEntry, ComponentMetadata } from '@/components/types'
 
+const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {
   const { addComponentListener } = await import('@/core/settings')
   if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
@@ -46,6 +47,15 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
             <div class="blocked-ads new">${settings.options.showPlaceholder ? '🚫已屏蔽广告' : ''}</div>
           `)
         })
+    })
+    selectAll('.business-card').then(cards => {
+      // cards.forEach(card => {
+      //   if (dq(card, '.bili-video-card__info--ad')) {
+      //     card.setAttribute(PromotionMark, '')
+      //   }
+      // })
+      // 直接用 CSS 不知道为啥分区就加载不出来了
+      cards.forEach(card => card.setAttribute(PromotionMark, ''))
     })
   }
   addComponentListener(`${metadata.name}.preserveEventBanner`, (value: boolean) => {
