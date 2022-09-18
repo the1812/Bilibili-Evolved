@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { videoChange } from '@/core/observer'
 import { select, sq } from '@/core/spin-query'
@@ -20,7 +20,7 @@ const entry = () => {
     expandButton?.click()
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name,
   entry,
   reload: entry,
@@ -36,4 +36,4 @@ export const component: ComponentMetadata = {
     'zh-CN': '总是展开完整的视频简介.',
   },
   urlInclude: videoAndBangumiUrls,
-}
+})

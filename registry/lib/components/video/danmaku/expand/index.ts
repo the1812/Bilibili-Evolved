@@ -1,4 +1,5 @@
-import { ComponentEntry, ComponentMetadata } from '@/components/types'
+import { ComponentEntry } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
@@ -43,7 +44,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'expandDanmakuList',
   displayName: '展开弹幕列表',
   entry,
@@ -65,4 +66,4 @@ export const component: ComponentMetadata = {
     ...videoAndBangumiUrls,
     ...mediaListUrls,
   ],
-}
+})

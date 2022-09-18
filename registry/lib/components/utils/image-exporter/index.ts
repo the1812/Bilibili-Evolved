@@ -1,9 +1,9 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { matchUrlPattern } from '@/core/utils'
 import { columnUrls, feedsUrls } from '@/core/utils/urls'
 import { setupFeedImageExporter } from './feed'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'imageExporter',
   displayName: '图片批量导出',
   tags: [
@@ -31,4 +31,4 @@ export const component: ComponentMetadata = {
       displayName: '动态图片命名格式',
     },
   },
-}
+})

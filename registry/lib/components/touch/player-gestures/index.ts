@@ -1,9 +1,9 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { playerUrls } from '@/core/utils/urls'
 import desc from './desc.md'
 import { entry } from './entry'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'touchPlayerGestures',
   displayName: '播放器触摸手势',
   enabledByDefault: navigator.maxTouchPoints > 0,
@@ -22,4 +22,4 @@ export const component: ComponentMetadata = {
       hidden: true,
     },
   },
-}
+})

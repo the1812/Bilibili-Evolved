@@ -1,11 +1,11 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
 import { videoChange } from '@/core/observer'
 import { allVideoUrls } from '@/core/utils/urls'
 
 let playerAgentInstance
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'playerAutoLight',
   displayName: '播放时自动关灯',
   urlInclude: allVideoUrls,
@@ -41,4 +41,4 @@ export const component: ComponentMetadata = {
       video.addEventListener('play', lightOff)
     })
   },
-}
+})

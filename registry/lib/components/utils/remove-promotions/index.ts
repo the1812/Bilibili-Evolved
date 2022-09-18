@@ -1,4 +1,5 @@
-import { ComponentEntry, ComponentMetadata } from '@/components/types'
+import { ComponentEntry } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
 // const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {
@@ -53,7 +54,7 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
     document.body.classList.toggle('preserve-event-banner', value)
   }, true)
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'removePromotions',
   displayName: '删除广告',
   entry,
@@ -84,4 +85,4 @@ export const component: ComponentMetadata = {
       defaultValue: false,
     },
   },
-}
+})

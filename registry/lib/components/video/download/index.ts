@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'downloadVideo',
   displayName: '下载视频',
   description: '在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.',
@@ -23,4 +23,4 @@ export const component: ComponentMetadata = {
     },
   },
   // plugin,
-}
+})
