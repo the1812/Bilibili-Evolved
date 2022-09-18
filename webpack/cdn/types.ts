@@ -1,4 +1,5 @@
 export interface CdnConfig {
+  name: string
   owner: string
   host: string
   stableClient: string

@@ -28,7 +28,7 @@ export default Vue.extend({
       this.faceSrc = notLoginFaceUrl
     } else {
       if (userInfo.face) {
-        const faceUrl = userInfo.face.replace('http', 'https')
+        const faceUrl = userInfo.face.replace('http:', 'https:')
         if (faceUrl.includes(noFaceUrl)) {
           this.faceSrc = noFaceUrl
         } else {
@@ -38,7 +38,7 @@ export default Vue.extend({
         }
       }
       if (userInfo.pendant?.image) {
-        const pendantUrl = userInfo.pendant.image.replace('http', 'https')
+        const pendantUrl = userInfo.pendant.image.replace('http:', 'https:')
         const pendantBaseSize = 116
         this.pendantSrcset = getDpiSourceSet(pendantUrl, pendantBaseSize, 'png')
       }

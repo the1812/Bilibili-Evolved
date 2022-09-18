@@ -1,8 +1,9 @@
 import { CdnConfig } from './types'
 
 const owner = 'the1812'
-const host = 'cdn.jsdelivr.net'
-export const jsdelivr: CdnConfig = {
+const host = 'fastly.jsdelivr.net'
+export const jsDelivr: CdnConfig = {
+  name: 'jsDelivr',
   owner,
   host,
   stableClient: `https://${host}/gh/${owner}/Bilibili-Evolved@master/dist/bilibili-evolved.user.js`,
