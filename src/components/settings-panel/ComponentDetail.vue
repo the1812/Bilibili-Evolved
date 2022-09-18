@@ -168,7 +168,7 @@ export default Vue.extend({
   flex: 1;
   background-color: inherit;
   border-radius: 7px;
-  @include no-scrollbar();
+  overflow: auto;
   @include v-stretch();
 
   .extra-option {
