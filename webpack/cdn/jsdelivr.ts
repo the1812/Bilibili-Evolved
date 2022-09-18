@@ -6,7 +6,7 @@ export const jsDelivr: CdnConfig = {
   name: 'jsDelivr',
   owner,
   host,
-  stableClient: `https://${host}/gh/${owner}/Bilibili-Evolved@master/dist/bilibili-evolved.user.js`,
+  stableClient: `https://${host}/gh/${owner}/Bilibili-Evolved@master-cdn/dist/bilibili-evolved.user.js`,
   previewClient: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/dist/bilibili-evolved.preview.user.js`,
   library: {
     lodash: `https://${host}/npm/lodash@4.17.21/lodash.min.js`,
