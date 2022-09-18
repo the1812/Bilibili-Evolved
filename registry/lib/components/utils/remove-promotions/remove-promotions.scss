@@ -27,7 +27,8 @@ body.remove-game-match-module #reportFirst3,
 .bili-dyn-home--member .bili-dyn-ads,
 .video-page-special-card-small,
 .video-page-game-card-small,
-.video-page-operator-card-small {
+.video-page-operator-card-small,
+[data-be-promotion-mark] {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
@@ -69,4 +70,9 @@ body.remove-game-match-module #reportFirst3,
 }
 body.dark .blocked-ads.new {
   background-color: #333;
+}
+.recommended-container .business-card {
+  position: absolute !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
 }

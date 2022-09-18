@@ -495,6 +495,15 @@
     }
     &__channel {
       @include background-color();
+      .channel-items__left {
+        @include border-color('4');
+      }
+      .channel-link__right {
+        @include color('e');
+        svg path {
+          @include fill('e');
+        }
+      }
       .channel-entry-more__link,
       .channel-link {
         @include color("e");

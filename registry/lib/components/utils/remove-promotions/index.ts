@@ -1,5 +1,6 @@
 import { ComponentEntry, ComponentMetadata } from '@/components/types'
 
+// const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {
   const { addComponentListener } = await import('@/core/settings')
   if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
