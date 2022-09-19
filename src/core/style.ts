@@ -128,7 +128,9 @@ export const preloadStyles = lodash.once(async () => {
     const { initColors } = await import('./theme-color')
     const { initMdiStyle } = await import('@/ui/mdi')
     document.head.appendChild(initColors())
-    document.head.appendChild(initMdiStyle())
+    const [mdi, webFont] = initMdiStyle()
+    document.head.appendChild(mdi)
+    document.head.appendChild(webFont)
   })
 })
 
