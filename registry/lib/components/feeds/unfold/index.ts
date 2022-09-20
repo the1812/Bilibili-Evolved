@@ -1,7 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'unfoldFeeds',
   displayName: '动态反折叠',
   tags: [componentsTags.feeds],
@@ -25,4 +25,4 @@ export const component: ComponentMetadata = {
       },
     })
   },
-}
+})

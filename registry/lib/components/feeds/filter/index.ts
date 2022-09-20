@@ -1,5 +1,6 @@
+import { defineComponentMetadata } from '@/components/define'
 import { feedsCardsManager } from '@/components/feeds/api'
-import { ComponentMetadata, ComponentOptions } from '@/components/types'
+import { ComponentOptions } from '@/components/types'
 import { feedsFilterPlugin } from './plugin'
 
 const entry = async () => {
@@ -50,7 +51,7 @@ export type FeedsFilterOptions = {
   sideCards: number[]
   specialTypes: number[]
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'feedsFilter',
   displayName: '动态过滤器',
   description: {
@@ -68,4 +69,4 @@ export const component: ComponentMetadata = {
     /^https:\/\/t\.bilibili\.com\/$/,
   ],
   plugin: feedsFilterPlugin,
-}
+})
