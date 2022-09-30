@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
 const id = 'fixed-sidebars-style'
 const entry = async () => {
@@ -6,7 +6,7 @@ const entry = async () => {
   disableProfilePopup()
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'fixedFeedsSidebars',
   instantStyles: [
     {
@@ -26,4 +26,4 @@ export const component: ComponentMetadata = {
   urlInclude: [
     /^https:\/\/t\.bilibili\.com\/$/,
   ],
-}
+})

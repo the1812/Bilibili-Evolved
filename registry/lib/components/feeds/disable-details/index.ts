@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { FeedsCard, feedsCardTypes } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
 
@@ -73,7 +73,7 @@ const entry = async () => {
     added: disableDetails,
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'disableFeedsDetails',
   displayName: '禁止跳转动态详情',
   tags: [
@@ -92,4 +92,4 @@ export const component: ComponentMetadata = {
     addStyle()
     enabled = true
   },
-}
+})
