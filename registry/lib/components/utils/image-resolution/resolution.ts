@@ -1,4 +1,5 @@
 import { styledComponentEntry } from '@/components/styled-component'
+import { Options } from '.'
 
 const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
 const excludeSelectors = [
@@ -59,7 +60,7 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     replaceSource(e => e.style.backgroundImage, (e, v) => (e.style.backgroundImage = v))
   })
 }
-export const startResolution = styledComponentEntry(() => import('./fix.scss'),
+export const startResolution = styledComponentEntry<Options>(() => import('./fix.scss'),
   async ({ settings }) => {
     const { allMutations } = await import('@/core/observer')
     const dpi = settings.options.scale === 'auto'

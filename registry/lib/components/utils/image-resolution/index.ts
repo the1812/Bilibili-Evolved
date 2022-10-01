@@ -1,5 +1,15 @@
-import { defineComponentMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
 import { startResolution } from './resolution'
+
+const options = defineOptionsMetadata({
+  scale: {
+    displayName: '缩放级别',
+    defaultValue: 'auto',
+    hidden: true,
+  },
+})
+
+export type Options = OptionsOfMetadata<typeof options>
 
 export const component = defineComponentMetadata({
   name: 'imageResolution',
@@ -12,11 +22,5 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)',
   },
-  options: {
-    scale: {
-      displayName: '缩放级别',
-      defaultValue: 'auto',
-      hidden: true,
-    },
-  },
+  options,
 })
