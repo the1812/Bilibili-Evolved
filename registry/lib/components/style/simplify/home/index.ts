@@ -1,12 +1,16 @@
-import { createSwitchOptions, SwitchOptions } from '@/components/switch-options'
-import { ComponentMetadata } from '@/components/types'
+import {
+  newSwitchComponentBuilder,
+  defineSwitchMetadata,
+  defineIncompleteSwitchComponentMetadata,
+} from '@/components/switch-options'
+
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
 import { addStyle } from '@/core/style'
 import { getCookieValue } from '@/core/utils'
 import { mainSiteUrls } from '@/core/utils/urls'
 
-const switchOptions: SwitchOptions = {
+const switchMetadata = defineSwitchMetadata({
   name: 'simplifyOptions',
   dimAt: 'checked',
   switchProps: {
@@ -43,8 +47,9 @@ const switchOptions: SwitchOptions = {
       displayName: '右侧分区导航(旧)',
     },
   },
-}
-const metadata: ComponentMetadata = {
+})
+
+const metadata = defineIncompleteSwitchComponentMetadata({
   name: 'simplifyHome',
   displayName: '简化首页',
   description: {
@@ -81,13 +86,17 @@ const metadata: ComponentMetadata = {
           () => dqa('.proxy-box > div'),
           elements => elements.length > 0 || isNotHome,
         )
-        return Object.fromEntries(categoryElements.map(it => ([
-          it.id.replace(/^bili_/, ''),
-          {
-            displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
-            defaultValue: false,
-          },
-        ])))
+        return Object.fromEntries(
+          categoryElements.map(it => [
+            it.id.replace(/^bili_/, ''),
+            {
+              displayName:
+                  it.querySelector('header .name')?.textContent?.trim()
+                  ?? '未知分区',
+              defaultValue: false,
+            },
+          ]),
+        )
       }
 
       const skipIds = ['推广']
@@ -123,39 +132,47 @@ const metadata: ComponentMetadata = {
           }
           return null
         })
-        .filter((it): it is [string, SimplifyHomeOption] => it !== null) ?? []
+        .filter((it): it is [string, SimplifyHomeOption] => it !== null)
+          ?? []
       return Object.fromEntries(entries)
     })()
     const generatedSwitches: Record<string, unknown> = {}
-    Object.entries(generatedOptions).forEach(([key, { displayName, defaultValue }]) => {
-      const option = {
-        defaultValue,
-        displayName,
-      }
-      const optionKey = `switch-${key}`
-      if (options[optionKey] === undefined) {
-        options[optionKey] = defaultValue
-      }
-      const switchKey = `switch-${key}`
-      addComponentListener(
-        `${metadata.name}.${switchKey}`,
-        (value: boolean) => {
-          document.body.classList.toggle(`${metadata.name}-${switchKey}`, value)
-        },
-        true,
-      )
-      switchOptions.switches[key] = option
-      generatedSwitches[key] = option
-    })
-    options.simplifyOptions.switches = generatedSwitches
-    const generatedStyles = Object.keys(generatedOptions).map(name => `
+    Object.entries(generatedOptions).forEach(
+      ([key, { displayName, defaultValue }]) => {
+        const option = {
+          defaultValue,
+          displayName,
+        }
+        const optionKey = `switch-${key}`
+        if (options[optionKey] === undefined) {
+          options[optionKey] = defaultValue
+        }
+        const switchKey = `switch-${key}`
+        addComponentListener(
+          `${metadata.name}.${switchKey}`,
+          (value: boolean) => {
+            document.body.classList.toggle(
+              `${metadata.name}-${switchKey}`,
+              value,
+            )
+          },
+          true,
+        )
+        switchMetadata.switches[key] = option
+        generatedSwitches[key] = option
+      },
+    );
+    (options.simplifyOptions as any).switches = generatedSwitches
+    const generatedStyles = Object.keys(generatedOptions)
+      .map(name => `
         body.simplifyHome-switch-${name} .bili-layout .bili-grid[data-area="${name}"],
         body.simplifyHome-switch-${name} .storey-box .proxy-box #bili_${name} {
           display: none !important;
         }
-      `.trim()).join('\n')
+      `.trim())
+      .join('\n')
     addStyle(generatedStyles, 'simplify-home-generated')
   },
-}
+})
 
-export const component = createSwitchOptions(switchOptions)(metadata)
+export const component = newSwitchComponentBuilder(switchMetadata)(metadata)
