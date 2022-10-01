@@ -48,8 +48,7 @@ export interface ComponentTag {
 
 type ComponentOptionValidator<T> = (value: T, oldValue: T) => T | undefined | null
 
-// TODO: 参考 discussion #3041。当不兼容代码替换完成后将 any 改为 unknown
-export type UnknownOptions = Record<string, any>
+export type UnknownOptions = Record<string, unknown>
 
 export type EmptyOptions = Record<string, never>
 
