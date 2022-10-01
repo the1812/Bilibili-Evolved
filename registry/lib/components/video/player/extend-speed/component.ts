@@ -1,4 +1,3 @@
-import { UnknownOptions } from '@/components/types'
 import { ComponentSettings, getComponentSettings } from '@/core/settings'
 import { addStyle } from '@/core/style'
 import { Toast } from '@/core/toast'
