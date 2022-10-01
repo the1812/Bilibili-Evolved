@@ -1,7 +1,8 @@
 import {
   ComponentEntry,
   ComponentMetadata,
-  ComponentOption,
+  OptionMetadata,
+  UnknownOptions,
 } from '@/components/types'
 import { CoreApis } from '@/core/core-apis'
 import { addComponentListener, ComponentSettings } from '@/core/settings'
@@ -31,7 +32,7 @@ export type EntryContext = Parameters<ComponentEntry>[0]
 
 export type OptionSubjects<O> = O & { [K in keyof O as `${Exclude<K, symbol>}$`]: Subject<O[K]> }
 
-export class EntrySpeedComponent<O = Record<string, unknown>>
+export class EntrySpeedComponent<O extends UnknownOptions = UnknownOptions>
 implements EntryContext {
   static create: <
     OO extends Record<string, any> = unknown
@@ -39,7 +40,7 @@ implements EntryContext {
       ComponentMetadata,
       'entry' | 'reload' | 'unload' | 'options'
     > & {
-      options?: { [K in keyof OO]: ComponentOption }
+      options?: { [K in keyof OO]: OptionMetadata }
     }) => ComponentMetadata;
 
   static contextMap: Partial<Record<keyof EntrySpeedComponent, keyof SpeedContext | string>> = {
