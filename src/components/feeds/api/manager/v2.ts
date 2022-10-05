@@ -18,7 +18,7 @@ const feedsCardTypeMap = {
 }
 
 const combineText = (...texts: string[]) => texts.filter(it => Boolean(it)).join('\n').trim()
-const getType = (rawType: string) => (
+const getType = (rawType: string): FeedsCardType => (
   feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypeMap.DynamicTypeWord
 )
 const getText = (dynamicModule: any, cardType: FeedsCardType) => {
@@ -69,8 +69,9 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
       },
       module_dynamic: repostDynamicModule,
     } = vueData.data.orig.modules
+    const repostCardType = getType(vueData.data.orig.type)
     card.repostUsername = repostUsername
-    card.repostText = getText(repostDynamicModule, cardType)
+    card.repostText = getText(repostDynamicModule, repostCardType)
     if (repostUsername === currentUsername) {
       element.setAttribute('data-self-repost', 'true')
     }
