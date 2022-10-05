@@ -1,6 +1,7 @@
 import { FeedsContentFilter } from '@/components/feeds/api'
+import { getComponentSettings } from '@/core/settings'
 import { PluginMetadata } from '@/plugins/plugin'
-import { BlockableCard } from './pattern'
+import { BlockableCard, hasBlockedPattern } from './pattern'
 
 const bangumiFields = {
   username: 'title',
@@ -23,9 +24,7 @@ export const feedsFilterPlugin: PluginMetadata = {
   name: 'feeds.contentFilters.patterns',
   displayName: '动态关键词过滤',
   setup: ({ addData }) => {
-    addData('feeds.contentFilters', async (filters: FeedsContentFilter[]) => {
-      const { getComponentSettings } = await import('@/core/settings')
-      const { hasBlockedPattern } = await import('./pattern')
+    addData('feeds.contentFilters', (filters: FeedsContentFilter[]) => {
       filters.push({
         filter: (items: any[]) => {
           const { patterns } = getComponentSettings('feedsFilter').options as {
