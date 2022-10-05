@@ -3,6 +3,7 @@ import { descendingStringSort } from '@/core/utils/sort'
 import { pascalCase } from '@/core/utils'
 import { createNodeValidator, FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
 import { FeedsCard, FeedsCardType, feedsCardTypes, isRepostType } from '../types'
+import { selectAll } from '@/core/spin-query'
 
 /** b 站的动态卡片 type 标记 -> FeedsCard.type */
 const feedsCardTypeMap = {
@@ -79,6 +80,8 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     )
   }
   card.text = await card.getText()
+  // 等待第一次 Vue 渲染完成
+  await selectAll(() => element.querySelectorAll('.bili-dyn-item *'), { queryInterval: 50 })
   return card
 }
 const isNodeValid = createNodeValidator('.bili-dyn-list__item, .bili-dyn-item')

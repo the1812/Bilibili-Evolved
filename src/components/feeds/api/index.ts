@@ -173,11 +173,12 @@ export const addMenuItem = (card: FeedsCard, config: {
   action: (e: MouseEvent) => void
 }) => {
   const morePanel = dq(card.element, '.more-panel, .bili-dyn-more__menu') as HTMLElement
-  const isV2 = morePanel.classList.contains('bili-dyn-more__menu')
   const { className, text, action } = config
   if (!morePanel || dq(morePanel, `.${className}`)) {
+    console.warn('more panel not found', card.element)
     return
   }
+  const isV2 = morePanel.classList.contains('bili-dyn-more__menu')
   const menuItem = document.createElement(isV2 ? 'div' : 'p')
   if (isV2) {
     menuItem.classList.add('bili-dyn-more__menu__item', className)
