@@ -13,6 +13,7 @@ import {
   UpdateCheckItem,
   CheckSingleTypeUpdateConfig,
 } from './utils'
+import { Options } from '.'
 
 export const checkUpdate = async (config: CheckUpdateConfig) => {
   const {
@@ -140,7 +141,7 @@ export const checkAllUpdate = async (config: CheckSingleTypeUpdateConfig) => {
   console.groupEnd()
 }
 export const silentCheckUpdate = () => checkAllUpdate({
-  maxCount: getComponentSettings(name).options.maxUpdateCount,
+  maxCount: getComponentSettings<Options>(name).options.maxUpdateCount,
 })
 export const silentCheckUpdateAndReload = reload(silentCheckUpdate)
 

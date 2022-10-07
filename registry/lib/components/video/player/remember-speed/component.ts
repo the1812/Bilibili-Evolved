@@ -3,7 +3,7 @@ import { EntrySpeedComponent, VideoIdObject } from '../common/speed'
 import { NoSuchSpeedMenuItemElementError, SpeedContext } from '../common/speed/context'
 import { formatSpeedText } from '../common/speed/utils'
 
-export interface Options {
+export type Options = {
   /** 全局倍速 */
   globalSpeed: number
   /** 固定全局倍速 */
