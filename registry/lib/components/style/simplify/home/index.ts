@@ -1,5 +1,5 @@
 import {
-  newSwitchComponentBuilder,
+  newSwitchComponentWrapper,
   defineSwitchMetadata,
   defineIncompleteSwitchComponentMetadata,
 } from '@/components/switch-options'
@@ -175,4 +175,4 @@ const metadata = defineIncompleteSwitchComponentMetadata({
   },
 })
 
-export const component = newSwitchComponentBuilder(switchMetadata)(metadata)
+export const component = newSwitchComponentWrapper(switchMetadata)(metadata)

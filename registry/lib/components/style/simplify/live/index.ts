@@ -1,8 +1,8 @@
-import { newSwitchComponentBuilder } from '@/components/switch-options'
+import { newSwitchComponentWrapper } from '@/components/switch-options'
 import { styledComponentEntry } from '@/components/styled-component'
 import { liveUrls } from '@/core/utils/urls'
 
-export const component = newSwitchComponentBuilder({
+export const component = newSwitchComponentWrapper({
   name: 'simplifyOptions',
   dimAt: 'checked',
   switchProps: {

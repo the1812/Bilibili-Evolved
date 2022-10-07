@@ -1,11 +1,11 @@
 /**
- * Switch Options
- * @module components/switch-options
+ * Switch Options API
+ * @module src/components/switch-options
  *
  * 通过包装原始的 ComponentMetadata 为组件提供一系列开关选项。
  * 如果组件未定义 Widget，还会提供一个默认的有相同效果的 Widget。
  *
- * 主要函数是 {@link newSwitchComponentBuilder}。
+ * API 主要函数是 {@link newSwitchComponentWrapper}。
  */
 
 import { getComponentSettings, addComponentListener } from '@/core/settings'
@@ -21,22 +21,22 @@ import { Widget } from './widget'
 /**
  * 单个开关的设置
  */
-export interface SwitchItemMetadata {
+export type SwitchItemMetadata = {
+  /** 开关的显示名称 */
   displayName: string
+  /** 开关的默认开启状态 */
   defaultValue: boolean
 }
 
 /**
- * 一个对象，键是开关的名称，用于生成 options；值是关于单个开关的设置
+ * 用于配置所有开关。
+ *
+ * 该定义中的每个属性都会被用于生成一个组件 option。
+ * 其中 option 的键为属性加上前缀 'switch-'，值为一个 `boolean`，表示开关状态。
  */
 export type SwitchItemsMetadata<S extends string> = {
   [key in S]: SwitchItemMetadata
 }
-
-/**
- * 从 SwitchItemsMetadata 中提取所有 SwitchItem 的名称
- */
-export type SwitchItemNamesOfItemsMetadata<C extends SwitchItemsMetadata<string>> = keyof C
 
 /**
  * 可用于单独定义 SwitchItemsMetadata
@@ -46,37 +46,40 @@ export const defineSwitchItemsMetadata = <S extends string>(
 ): SwitchItemsMetadata<S> => c
 
 /**
- * 用于配置 API 的行为
- *
- * {@link SwitchItemsMetadata} 可用 {@link defineSwitchItemsMetadata} 单独定义
+ * 用于配置 API 的行为。使用 {@link defineSwitchMetadata} 定义。
  */
 export interface SwitchMetadata<N extends string, S extends string> {
-  // 注入 options 时会使用
+  /**
+   * 作为键名注入到组件 `options` 中
+   *
+   * @see {@link SwitchOptions}
+   */
   name: N
-  // 每个开关的单独配置，其键名会被用于生成注入 options 的名称，见 {@link SwitchItemNames}
+  /** 每个开关的单独配置。可用 {@link defineSwitchItemsMetadata} 单独定义  */
   switches: SwitchItemsMetadata<S>
-  // 是否单选 default: false
+  /**
+   * 是否单选。值为 `undefined` 时取默认值。
+   *
+   * @default false
+   */
   radio?: undefined | boolean
-  // default: 'checked'
+  /**
+   * 控制开关变暗的时机
+   *
+   * `undefined`: 始终不变暗
+   * `'checked'`: 当开关关闭时变暗
+   * `'notChecked'`: 始终为变暗状态
+   *
+   * @default undefined
+   */
   dimAt?: undefined | 'checked' | 'notChecked'
-  // 配置每个开关的图标
+  /** 配置每个开关的图标 */
   switchProps?: {
     checkedIcon?: string
     notCheckedIcon?: string
     iconPosition?: 'left' | 'right'
   }
 }
-
-/**
- * 从 SwitchMetadata 中提取 name 的字面量类型（如果可能）
- */
-export type SwitchNameOfMetadata<C extends SwitchMetadata<string, string>> = C['name']
-
-/**
- * 从 SwitchMetadata 中提取所有 SwitchItem 的名称
- */
-export type SwitchItemNamesOfMetadata<C extends SwitchMetadata<string, string>> =
-  keyof C['switches']
 
 /**
  * 定义一个 {@link SwitchMetadata}
@@ -86,52 +89,65 @@ export const defineSwitchMetadata = <N extends string, S extends string>(
 ): SwitchMetadata<N, S> => c
 
 /**
- * 传递给 Widget 的选项。同时也是注入组件的 options 的一部分
+ * 注入组件的 options 的一部分。
+ *
+ * 接口中的属性值大部分来自于 {@link SwitchMetadata} 中的定义。
+ * 用户在 `SwitchMetadata` 中未定义的，为其默认值。
+ *
+ * @see {@link SwitchOptions}
  */
-export interface SwitchWidgetOptions<N extends string, S extends string> {
+export interface SwitchMetadataOption<N extends string, S extends string> {
   name: N
   switches: SwitchItemsMetadata<S>
   radio: boolean
-  dimAt: 'checked' | 'notChecked'
+  dimAt: undefined | 'checked' | 'notChecked'
   switchProps?: {
     checkedIcon?: string
     notCheckedIcon?: string
     iconPosition?: 'left' | 'right'
   }
+  /** 组件名称 */
   componentName: string
+  /** 组件的 Widget 显示名称 */
   optionDisplayName: string
 }
 
 /**
- * 创建一个 SwitchWidgetOptions
+ * 创建一个 SwitchMetadataOption
  */
-const newSwitchWidgetOptions = <N extends string, S extends string>(
+const newSwitchMetadataOption = <N extends string, S extends string>(
   metadata: SwitchMetadata<N, S>,
   componentName: string,
   optionDisplayName,
 ) => ({
     ...metadata,
     radio: metadata.radio === undefined ? false : metadata.radio,
-    dimAt: metadata.dimAt === undefined ? 'checked' : metadata.dimAt,
+    dimAt: metadata.dimAt,
     componentName,
     optionDisplayName,
   })
 
 /**
- * 注入的 options 的名称集合。规则是 SwitchItemsMetadata 的所有键加上 'switch-' 前缀。
+ * 为类型参数 `S` 加上 'switch-' 前缀。
  */
 export type SwitchItemNames<S extends string> = `switch-${S}`
 
 /**
  * API 注入的 options 中的一部分
  */
-export type SwitchItemOptions<S extends string> = Record<SwitchItemNames<S>, string>
+export type SwitchItemOptions<S extends string> = Record<SwitchItemNames<S>, boolean>
 
 /**
- * 在原始的 Options 类型中添加了该 API 所需的定义后形成的类型
+ * 包装完成后的组件元数据中的 options 类型
+ *
+ * 由三部分组成：
+ * 1. 组件元数据被包装前的所有 options
+ * 2. 一个键值对：键为 {@link SwitchMetadata} 定义时的 `name` 属性，值为 {@link SwitchMetadataOption} 类型
+ * 3. 对应 {@link SwitchItemsMetadata} 的定义内容
+ * （来自于 `SwitchMetadata` 的 `switches`）。详情见该类型描述
  */
 export type SwitchOptions<O extends UnknownOptions, N extends string, S extends string> = O & {
-  N: SwitchWidgetOptions<N, S>
+  N: SwitchMetadataOption<N, S>
 } & SwitchItemOptions<S>
 
 /**
@@ -151,7 +167,7 @@ export type SwitchOptionsOfMetadata<
 > = SwitchOptionsOfSwitchMetadata<OptionsOfMetadata<M>, C>
 
 /**
- * 在原始的 OptionsMetadata 中添加了该 API 所需的定义后形成的类型
+ * 在原始的 OptionsMetadata 中添加了该 API 注入的 options 后形成的类型
  */
 export type SwitchOptionsMetadata<
   O extends UnknownOptions,
@@ -160,18 +176,21 @@ export type SwitchOptionsMetadata<
 > = OptionsMetadata<SwitchOptions<O, N, S>>
 
 /**
- * 创建一个 extender。
+ * 向传入的 `options` 注入 API 所需的内容
  *
- * extender 是一个函数，其作用是为传入的 OptionsMetadata 添加新字段。
- *
- * 该函数会直接修改传入的 OptionsMetadata，并将其返回。
+ * 该函数会直接修改传入的 `options` 自身，并将其返回。
+ */
+type SwitchOptionsMetadataExtender<S extends string> = <O extends UnknownOptions, N extends string>(
+  options: OptionsMetadata<O>,
+  switchMetadataOption: SwitchMetadataOption<N, S>,
+) => SwitchOptionsMetadata<O, N, S>
+
+/**
+ * 创建一个 {@link SwitchOptionsMetadataExtender}
  */
 const newSwitchOptionsMetadataExtender = <S extends string>(
   itemsMetadata: SwitchItemsMetadata<S>,
-): (<O extends UnknownOptions, N extends string>(
-  options: OptionsMetadata<O>,
-  widgetOptions: SwitchWidgetOptions<N, S>,
-) => SwitchOptionsMetadata<O, N, S>) => {
+): SwitchOptionsMetadataExtender<S> => {
   const optionsToExtend = {}
   const entries = Object.entries<SwitchItemMetadata>(itemsMetadata)
   for (const [key, { displayName, defaultValue }] of entries) {
@@ -183,11 +202,11 @@ const newSwitchOptionsMetadataExtender = <S extends string>(
   }
   return <O extends UnknownOptions, N extends string>(
     options: OptionsMetadata<O>,
-    widgetOptions: SwitchWidgetOptions<N, S>,
+    switchMetadataOption: SwitchMetadataOption<N, S>,
   ) => {
-    optionsToExtend[widgetOptions.name as string] = {
+    optionsToExtend[switchMetadataOption.name as string] = {
       defaultValue: options,
-      displayName: widgetOptions.optionDisplayName,
+      displayName: switchMetadataOption.optionDisplayName,
     }
     Object.assign(options, optionsToExtend)
     return options as SwitchOptionsMetadata<O, N, S>
@@ -198,28 +217,28 @@ const newSwitchOptionsMetadataExtender = <S extends string>(
  * 创建默认 Widget
  */
 const newWidget = <N extends string, S extends string>(
-  options: SwitchWidgetOptions<N, S>,
+  options: SwitchMetadataOption<N, S>,
 ): Omit<Widget, 'name'> => ({
     component: () => import('./SwitchOptions.vue').then(m => m.default),
     options,
   })
 
 /**
- * 包装后的 entry 函数，函数参数类型中包含 API 注入的 `options`
+ * 携带 API 注入的 `options` 的 `entry` 函数类型
  */
 export type SwitchEntry<
   O extends UnknownOptions,
   N extends string,
   S extends string,
-> = ComponentEntry<SwitchOptions<O, N, S>>
+  T = unknown,
+> = ComponentEntry<SwitchOptions<O, N, S>, T>
 
 /**
- * 类似于 `ComponentMetadata`。
+ * 用于被 API 包装的组件原数据，类似于 `ComponentMetadata`。
  *
- * 定义该类型时，请使用 {@link defineIncompleteSwitchComponentMetadata}
+ * 定义该类型时，请使用 {@link defineIncompleteSwitchComponentMetadata}。
  *
- * 不同之处在于，该类型在定义时，可在此 API 的相关 `options` 注入前，
- * 让 `entry` 函数获取到完整类型提示。
+ * 在通过该函数定义组件的 `entry` 时，可以获得被 API 注入的 options 的类型提示。
  */
 export type IncompleteSwitchComponentMetadata<
   O extends UnknownOptions,
@@ -232,8 +251,10 @@ export type IncompleteSwitchComponentMetadata<
 }
 
 /**
- * 辅助定义一个 {@link IncompleteSwitchComponentMetadata}，
- * 类似 {@link ./define.ts defineComponentMetadata}。
+ * 定义一个用于被该 API 包装的组件元数据，
+ * 类似于 {@link import("./define").defineComponentMetadata}。
+ *
+ * 与直接定义的不同之处在于：定义 `entry` 时，可以获得被 API 注入的 options 的类型提示。
  */
 export const defineIncompleteSwitchComponentMetadata = <
   O extends UnknownOptions,
@@ -244,7 +265,7 @@ export const defineIncompleteSwitchComponentMetadata = <
   ): IncompleteSwitchComponentMetadata<O, N, S> => m
 
 /**
- * 包装原始 entry 函数并返回
+ * 包装原始 `entry` 函数并返回
  */
 const newSwitchEntry = <O extends UnknownOptions, N extends string, S extends string>(
   component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
@@ -266,7 +287,7 @@ const newSwitchEntry = <O extends UnknownOptions, N extends string, S extends st
   }
 
 /**
- * 被包装后的 `ComponentMetadata`
+ * 被包装后的 {@link ComponentMetadata}
  */
 export type SwitchComponentMetadata<
   O extends UnknownOptions,
@@ -275,50 +296,57 @@ export type SwitchComponentMetadata<
 > = ComponentMetadata<SwitchOptions<O, N, S>>
 
 /**
- * 创建一个 builder
+ * 用于包装组件元数据，生成开关选项。
  *
- * builder 是一个函数，该函数接收一个 `ComponentMetadata`，为其添加 `options`。
- * 如果组件为未定义 Widget，还会提供一个默认的有相同效果的 Widget。
+ * 传入参数可以是普通的组件元数据，也可以是 {@link IncompleteSwitchComponentMetadata}。
+ * 后者应使用 {@link defineIncompleteSwitchComponentMetadata} 定义；
+ * 在通过该函数定义组件的 `entry` 时，可以获得被 API 注入的 options 的类型提示。
  *
- * 定义 {@link SwitchMetadata} 请使用 {@link defineSwitchMetadata}
+ * 为保障组件功能的正常运行，请勿使用以 'switch-' 开头的 option。
  *
- * 所注入的 options 参考 {@link SwitchOptions}。
- * Widget 的选项见 {@link SwitchWidgetOptions}。
+ * 若传入组件未定义 Widget，则会注入一个用于控制各开关的 Widget。
+ * 此 Widget 的功能与注入组件的 options 功能相同。
  *
- * 如果想在定义原始 `ComponentMetadata` 时提前获得被注入的 `options` 的类型提示，
- * 可以使用 {@link defineIncompleteSwitchComponentMetadata} 函数辅助定义
+ * 被包装后的元数据，其 `entry` 函数是原函数的包装，用于实现相关功能。
  *
- * 为了实现效果，builder 还会对 `entry` 进行包装，
- * 因此包装后的 `entry` 与之前的不再是同一个函数。
+ * 该函数会直接修改传入参数自身，并将其返回。
  *
- * 该函数会直接修改传入的 `ComponentMetadata` 并将其返回。
- *
+ * @param component - 被包装的组件元数据
+ * @returns 包装完成的组件元数据
  */
-export const newSwitchComponentBuilder = <N extends string, S extends string>(
-  metadata: SwitchMetadata<N, S>,
-): (<O extends UnknownOptions>(
+export type SwitchComponentWrapper<N extends string, S extends string> = <O extends UnknownOptions>(
   component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
-) => SwitchComponentMetadata<O, N, S>) => {
+) => SwitchComponentMetadata<O, N, S>
+
+/**
+ * 创建一个 {@link SwitchComponentWrapper}
+ *
+ * 传入参数请使用 {@link defineSwitchMetadata} 定义。
+ *
+ * @param metadata - 相关配置元数据
+ * @returns 组件包装器
+ */
+export const newSwitchComponentWrapper = <N extends string, S extends string>(
+  metadata: SwitchMetadata<N, S>,
+): SwitchComponentWrapper<N, S> => {
   const extendOptions = newSwitchOptionsMetadataExtender(metadata.switches)
-  // 返回的 builder
+  // 返回的 wrapper
   return <O extends UnknownOptions>(
     component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
   ) => {
-    const widgetOptions = newSwitchWidgetOptions(
+    const switchMetadataOption = newSwitchMetadataOption(
       metadata,
       component.name,
       `${component.displayName}选项`,
     )
-
     // 若没有 Widget，则注入一个
     if (!component.widget) {
-      component.widget = newWidget(widgetOptions)
+      component.widget = newWidget(switchMetadataOption)
     }
     // 扩展组件 options
-    extendOptions(component.options, widgetOptions)
+    extendOptions(component.options, switchMetadataOption)
     // 包装 entry 函数
     component.entry = newSwitchEntry(component)
-
     return component as SwitchComponentMetadata<O, N, S>
   }
 }
