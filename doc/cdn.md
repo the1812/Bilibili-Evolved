@@ -33,7 +33,7 @@ CDN 配置位于 `webpack/cdn/`, 可在目录下新建一个文件, 导出一个
 
 ## 编译
 
-运行 `本体:编译生产版本` 任务 (`yarn webpack --config ./webpack/webpack.prod.ts --progress`).
+运行 `本体:编译生产版本` 任务 (`pnpm run webpack --config ./webpack/webpack.prod.ts --progress`).
 
 会得到:
 - 正式版: `dist\bilibili-evolved.user.js`

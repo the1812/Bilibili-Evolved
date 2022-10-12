@@ -68,6 +68,7 @@
     "overscroll",
     "pako",
     "plusplus",
+    "pnpm",
     "Popcap",
     "popperjs",
     "preload",
@@ -106,7 +107,7 @@
   "search.exclude": {
     "**/dev": true,
     "**/dist": true,
-    "**/yarn.lock": true
+    "**/pnpm-lock.yaml": true
   },
   "eslint.format.enable": true,
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
