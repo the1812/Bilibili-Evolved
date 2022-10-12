@@ -61,9 +61,8 @@ export class DownloadPackage {
     if (!filename || this.entries.length === 1) {
       filename = this.entries[0].name
     }
-    const isIndividualMode = (
+    const isIndividualMode =
       getGeneralSettings().downloadPackageEmitMode === DownloadPackageEmitMode.Individual
-    )
     if (isIndividualMode && this.entries.length > 1) {
       await Promise.all(this.entries.map(e => DownloadPackage.single(e.name, e.data, e.options)))
       return
@@ -88,9 +87,13 @@ export class DownloadPackage {
     console.log(finalFilename)
     document.body.appendChild(a)
     // 阻止 spm id 的事件 (#2247)
-    a.addEventListener('click', e => {
-      e.stopPropagation()
-    }, { capture: true })
+    a.addEventListener(
+      'click',
+      e => {
+        e.stopPropagation()
+      },
+      { capture: true },
+    )
     a.click()
     a.remove()
   }

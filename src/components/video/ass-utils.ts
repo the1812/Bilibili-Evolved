@@ -6,7 +6,9 @@ const parseHexColor = (hexColor: string) => {
   const green = hexColor.substring(2, 4)
   const blue = hexColor.substring(4, 6)
   return {
-    red, green, blue,
+    red,
+    green,
+    blue,
   }
 }
 export const convertHexColorForDialogue = (hexColor: string) => {
@@ -15,7 +17,9 @@ export const convertHexColorForDialogue = (hexColor: string) => {
 }
 export const convertHexColorForStyle = (hexColor: string, opacity = 1) => {
   const { red, green, blue } = parseHexColor(hexColor)
-  const hexOpacity = Math.round(255 * (1 - opacity)).toString(16).padStart(2, '0')
+  const hexOpacity = Math.round(255 * (1 - opacity))
+    .toString(16)
+    .padStart(2, '0')
   return `&H${hexOpacity}${blue}${green}${red}`.toUpperCase()
 }
 const round = (number: number) => {
@@ -35,12 +39,14 @@ const secondsToTime = (seconds: number) => {
   }
   return `${hours}:${String(minutes).padStart(2, '0')}:${round(seconds)}`
 }
-export const convertTimeByDuration = (startTime: number, duration: number) => (
-  [secondsToTime(startTime), secondsToTime(startTime + duration)]
-)
-export const convertTimeByEndTime = (startTime: number, endTime: number) => (
-  [secondsToTime(startTime), secondsToTime(endTime)]
-)
+export const convertTimeByDuration = (startTime: number, duration: number) => [
+  secondsToTime(startTime),
+  secondsToTime(startTime + duration),
+]
+export const convertTimeByEndTime = (startTime: number, endTime: number) => [
+  secondsToTime(startTime),
+  secondsToTime(endTime),
+]
 export const normalizeContent = (content: string) => {
   const map = {
     '{': '｛',

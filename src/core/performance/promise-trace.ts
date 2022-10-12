@@ -1,6 +1,6 @@
 export const promiseLoadTime = new Map<{ name: string }, number>()
 export const promiseResolveTime = new Map<{ name: string }, number>()
-export const promiseLoadTrace = async <T> (name: string, promiseFunc: () => Promise<T>) => {
+export const promiseLoadTrace = async <T>(name: string, promiseFunc: () => Promise<T>) => {
   const { getGeneralSettings } = await import('../settings')
   if (!getGeneralSettings().devMode) {
     return promiseFunc()

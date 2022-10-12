@@ -1,31 +1,27 @@
 import {
-  LoadFeatureCodeResultError, LoadFeatureCodeResultOk,
+  LoadFeatureCodeResultError,
+  LoadFeatureCodeResultOk,
 } from '@/core/external-input/load-feature-code'
 import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata } from '@/components/types'
 import { PluginMetadata } from '@/plugins/plugin'
-import {
-  loadFeatureCodeAllSettled,
-} from '@/core/external-input/load-feature-code-all-settled'
+import { loadFeatureCodeAllSettled } from '@/core/external-input/load-feature-code-all-settled'
 
-const curConsole = useScopedConsole(
-  '@/core/external-input/load-features-from-codes.ts',
-)
+const curConsole = useScopedConsole('@/core/external-input/load-features-from-codes.ts')
 
 export enum FeatureKind {
   Component = 'Component',
   Plugin = 'Plugin',
 }
 
-const logError = (kind: FeatureKind): (
-  featureName: string, err: LoadFeatureCodeResultError) => void => {
+const logError = (
+  kind: FeatureKind,
+): ((featureName: string, err: LoadFeatureCodeResultError) => void) => {
   const prefix = kind === FeatureKind.Component ? 'component' : 'plugin'
   return (featureName, err) => {
     if (err.isNoExport()) {
-      curConsole.error(
-        `${prefix} '${featureName}' exports no value, failed to load`,
-      )
+      curConsole.error(`${prefix} '${featureName}' exports no value, failed to load`)
     } else {
       curConsole.error(
         `${prefix} '${featureName}' throws something when importing, failed to load`,
@@ -35,10 +31,7 @@ const logError = (kind: FeatureKind): (
   }
 }
 
-const reportErrToUser = (
-  featureKind: FeatureKind,
-  errNames: string[],
-): void => {
+const reportErrToUser = (featureKind: FeatureKind, errNames: string[]): void => {
   type ErrInfo = number | string[]
 
   const emptyErrInfo: () => string[] = () => []
@@ -117,8 +110,5 @@ export async function loadFeaturesFromCodes(
     reportErrToUser(kind, errNames)
   }
 
-  return lodash.map(
-    namedOk,
-    ([, r]) => (r as LoadFeatureCodeResultOk<FeatureMetadata>).feature,
-  )
+  return lodash.map(namedOk, ([, r]) => (r as LoadFeatureCodeResultOk<FeatureMetadata>).feature)
 }

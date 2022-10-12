@@ -11,11 +11,7 @@
       :placeholder="value.toString()"
       @change="type === 'text' ? valueChange($event) : numberChange($event)"
     ></TextBox>
-    <SwitchBox
-      v-if="type === 'boolean'"
-      :checked="value"
-      @change="valueChange($event)"
-    ></SwitchBox>
+    <SwitchBox v-if="type === 'boolean'" :checked="value" @change="valueChange($event)"></SwitchBox>
     <ColorPicker
       v-if="type === 'color'"
       :compact="true"
@@ -29,11 +25,7 @@
       :range="value"
       @change="valueChange($event)"
     ></RangeInput>
-    <ImagePicker
-      v-if="type === 'image'"
-      :image="value"
-      @change="valueChange($event)"
-    ></ImagePicker>
+    <ImagePicker v-if="type === 'image'" :image="value" @change="valueChange($event)"></ImagePicker>
     <VDropdown
       v-if="type === 'dropdown'"
       :value="value"
@@ -57,22 +49,12 @@
       :value="value"
       @change="debounceValueChange($event)"
     ></VSlider>
-    <div v-if="type === 'unknown'" class="unknown-option-type">
-      未知的选项类型
-    </div>
+    <div v-if="type === 'unknown'" class="unknown-option-type">未知的选项类型</div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  TextBox,
-  SwitchBox,
-  ColorPicker,
-  RangeInput,
-  VDropdown,
-  ImagePicker,
-  VSlider,
-} from '@/ui'
+import { TextBox, SwitchBox, ColorPicker, RangeInput, VDropdown, ImagePicker, VSlider } from '@/ui'
 import { getComponentSettings, ComponentSettings } from '@/core/settings'
 import { ComponentOption } from '../component'
 import { getDropdownItems } from './dropdown'

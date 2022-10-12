@@ -1,7 +1,12 @@
 import { childList } from '@/core/observer'
 import { descendingStringSort } from '@/core/utils/sort'
 import { pascalCase } from '@/core/utils'
-import { createNodeValidator, FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
+import {
+  createNodeValidator,
+  FeedsCardsManager,
+  FeedsCardsManagerEventType,
+  getVueData,
+} from './base'
 import { FeedsCard, FeedsCardType, feedsCardTypes, isRepostType } from '../types'
 
 /** b 站的动态卡片 type 标记 -> FeedsCard.type */
@@ -16,10 +21,13 @@ const feedsCardTypeMap = {
   DynamicTypeLiveRcmd: feedsCardTypes.liveRecord,
 }
 
-const combineText = (...texts: string[]) => texts.filter(it => Boolean(it)).join('\n').trim()
-const getType = (rawType: string) => (
+const combineText = (...texts: string[]) =>
+  texts
+    .filter(it => Boolean(it))
+    .join('\n')
+    .trim()
+const getType = (rawType: string) =>
   feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypeMap.DynamicTypeWord
-)
 const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   const { desc: mainDesc, major } = dynamicModule
   const mainText = mainDesc?.text ?? ''
@@ -55,7 +63,9 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     text: '',
     type: cardType,
     element,
-    get presented() { return document.body.contains(element) },
+    get presented() {
+      return document.body.contains(element)
+    },
     async getText() {
       return getText(modules.module_dynamic, cardType)
     },
@@ -63,9 +73,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   if (isRepostType(card)) {
     const currentUsername = card.username
     const {
-      module_author: {
-        name: repostUsername,
-      },
+      module_author: { name: repostUsername },
       module_dynamic: repostDynamicModule,
     } = vueData.data.orig.modules
     card.repostUsername = repostUsername
@@ -73,10 +81,8 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     if (repostUsername === currentUsername) {
       element.setAttribute('data-self-repost', 'true')
     }
-    card.getText = async () => combineText(
-      getText(modules.module_dynamic, cardType),
-      getText(repostDynamicModule, cardType),
-    )
+    card.getText = async () =>
+      combineText(getText(modules.module_dynamic, cardType), getText(repostDynamicModule, cardType))
   }
   card.text = await card.getText()
   return card

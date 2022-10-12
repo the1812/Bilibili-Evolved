@@ -37,7 +37,7 @@ class SocketBufferHelper {
   private static writeInt(buffer: number[], start: number, length: number, value: number) {
     let i = 0
     while (i < length) {
-      buffer[start + i] = value / (256 ** (length - i - 1))
+      buffer[start + i] = value / 256 ** (length - i - 1)
       i++
     }
   }
@@ -46,7 +46,7 @@ class SocketBufferHelper {
     const packetLen = 16 + data.byteLength
     const header = [0, 0, 0, 0, 0, 16, 0, 1, 0, 0, 0, liveOperationCodes[operationCode], 0, 0, 0, 1]
     SocketBufferHelper.writeInt(header, 0, 4, packetLen)
-    return (new Uint8Array(header.concat(...data))).buffer
+    return new Uint8Array(header.concat(...data)).buffer
   }
   decode(blob: Blob) {
     const decodeBuffer = async (buffer: Uint8Array) => {
@@ -59,7 +59,7 @@ class SocketBufferHelper {
       }
       const results = [result]
       if (result.packetLength < buffer.length) {
-        results.push(...await decodeBuffer(buffer.slice(result.packetLength)))
+        results.push(...(await decodeBuffer(buffer.slice(result.packetLength))))
       }
       if (result.operation === liveOperationCodes.message) {
         const bodyBuffer = buffer.slice(result.headerLength, result.packetLength)
@@ -101,15 +101,24 @@ class LiveTimeExtractor {
         resolve(this.startTime)
         return
       }
-      const timeElement = dq('.bilibili-live-player-video-controller-duration-btn span') as HTMLElement
+      const timeElement = dq(
+        '.bilibili-live-player-video-controller-duration-btn span',
+      ) as HTMLElement
       const [observer] = childList(timeElement, records => {
-        const isTimeChanged = records.length > 0
-          && records.some(r => r.addedNodes.length > 0
-              && [...r.addedNodes].every(it => it.nodeType === Node.TEXT_NODE))
+        const isTimeChanged =
+          records.length > 0 &&
+          records.some(
+            r =>
+              r.addedNodes.length > 0 &&
+              [...r.addedNodes].every(it => it.nodeType === Node.TEXT_NODE),
+          )
         if (isTimeChanged) {
           observer.disconnect()
           const time = records[0].addedNodes[0].textContent as string
-          const [seconds, minutes, hours = 0] = time.split(':').reverse().map(lodash.unary(parseInt))
+          const [seconds, minutes, hours = 0] = time
+            .split(':')
+            .reverse()
+            .map(lodash.unary(parseInt))
           const now = Number(new Date())
           this.startTime = now - hours * 1000 * 3600 - minutes * 60 * 1000 - seconds * 1000
           resolve(this.startTime)
@@ -186,10 +195,12 @@ export class LiveSocket extends EventTarget {
     if (!this.stopRequested && this.autoRetry) {
       console.log(`Live Socket: unexpected disconnect, retry in ${this.retryInterval}ms`)
       const index = this.servers.indexOf(this.selectedServer)
-      if (index < this.servers.length - 1) { // 尝试下一个服务器
+      if (index < this.servers.length - 1) {
+        // 尝试下一个服务器
         this.selectedServer = this.servers[index + 1]
-      } else { // 所有服务器用尽, 从头再来
-        [this.selectedServer] = this.servers
+      } else {
+        // 所有服务器用尽, 从头再来
+        ;[this.selectedServer] = this.servers
       }
       console.log('Live Socket: server changed to', this.selectedServer)
       setTimeout(() => this.start(), this.retryInterval)
@@ -197,28 +208,34 @@ export class LiveSocket extends EventTarget {
   }
   /** 启动WebSocket */
   async start() {
-    const roomConfig = await getJson(`https://api.live.bilibili.com/room/v1/Danmu/getConf?room_id=${this.roomID}&platform=pc&player=web`)
+    const roomConfig = await getJson(
+      `https://api.live.bilibili.com/room/v1/Danmu/getConf?room_id=${this.roomID}&platform=pc&player=web`,
+    )
     const hostServers: { host: string }[] = lodash.get(roomConfig, 'data.host_server_list', [])
     // let server = 'broadcastlv.chat.bilibili.com'
     // if (hostServers.length > 0) {
     //   server = hostServers[0].host
     // }
     this.servers = [...new Set([...this.servers, ...hostServers.map(it => it.host)])]
-    if (this.selectedServer === '') { // 首次启动
-      [this.selectedServer] = this.servers
+    if (this.selectedServer === '') {
+      // 首次启动
+      ;[this.selectedServer] = this.servers
       console.log('Initial server:', this.selectedServer)
     }
 
-    if (this.webSocket
-      && ([WebSocket.CONNECTING, WebSocket.OPEN].includes(this.webSocket.readyState))
+    if (
+      this.webSocket &&
+      [WebSocket.CONNECTING, WebSocket.OPEN].includes(this.webSocket.readyState)
     ) {
       this.stop()
     }
     this.webSocket = new WebSocket(`wss://${this.selectedServer}/sub`)
     this.stopRequested = false
-    this.dispatchEvent(new CustomEvent('start', {
-      detail: this.webSocket,
-    }))
+    this.dispatchEvent(
+      new CustomEvent('start', {
+        detail: this.webSocket,
+      }),
+    )
     this.webSocket.addEventListener('open', () => {
       const enterRoomData = {
         roomid: this.roomID,
@@ -230,15 +247,19 @@ export class LiveSocket extends EventTarget {
         key: lodash.get(roomConfig, 'data.token'),
       }
       this.webSocket.send(this.bufferHelper.encode(JSON.stringify(enterRoomData), 'enterRoom'))
-      this.dispatchEvent(new CustomEvent('open', {
-        detail: enterRoomData,
-      }))
+      this.dispatchEvent(
+        new CustomEvent('open', {
+          detail: enterRoomData,
+        }),
+      )
     })
     this.webSocket.addEventListener('message', async e => {
       const [data] = await this.bufferHelper.decode(e.data)
-      this.dispatchEvent(new CustomEvent('message', {
-        detail: data,
-      }))
+      this.dispatchEvent(
+        new CustomEvent('message', {
+          detail: data,
+        }),
+      )
       switch (data.operation) {
         case liveOperationCodes.enterRoomResponse: {
           if (this.heartBeatTimer) {
@@ -253,9 +274,11 @@ export class LiveSocket extends EventTarget {
           if (!data.heartBeatResponse) {
             break
           }
-          this.dispatchEvent(new CustomEvent('heartBeatResponse', {
-            detail: data.heartBeatResponse.count,
-          }))
+          this.dispatchEvent(
+            new CustomEvent('heartBeatResponse', {
+              detail: data.heartBeatResponse.count,
+            }),
+          )
           break
         }
         case liveOperationCodes.message: {
@@ -281,14 +304,17 @@ export class LiveSocket extends EventTarget {
                   return this.sendTime - this.startTime
                 },
               }
-              this.dispatchEvent(new CustomEvent('danmaku', {
-                detail: danmaku,
-              }))
+              this.dispatchEvent(
+                new CustomEvent('danmaku', {
+                  detail: danmaku,
+                }),
+              )
             }
           })
           break
         }
-        default: break
+        default:
+          break
       }
     })
     this.webSocket.addEventListener('close', e => {

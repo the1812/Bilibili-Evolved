@@ -49,7 +49,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .global-launch-bar-container {
   $barHeight: 50px;
@@ -65,7 +65,7 @@ export default Vue.extend({
   border: 1px solid #8882;
   font-size: 16px;
   transform: translateX(-50%);
-  transition: opacity .2s ease-out;
+  transition: opacity 0.2s ease-out;
 
   .launch-bar {
     flex: 1;
@@ -73,7 +73,7 @@ export default Vue.extend({
       --color: #eee;
     }
     .launch-bar-suggest-list {
-      transition: .2s ease-out;
+      transition: 0.2s ease-out;
       top: calc(100% + 8px);
       max-height: calc(80vh - 16px - #{$barHeight});
       @include no-scrollbar();

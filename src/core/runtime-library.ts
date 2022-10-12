@@ -23,11 +23,11 @@ export class RuntimeLibrary<LibraryType> implements PromiseLike<LibraryType> {
         this.modulePromise = (async () => {
           console.log(`[Runtime Library] Start download from ${url}`)
           const code: string = await monkey({ url })
-          console.log(`[Runtime Library] Downloaded from ${url} , length = ${code.length}`);
-          (function runEval() {
+          console.log(`[Runtime Library] Downloaded from ${url} , length = ${code.length}`)
+          ;(function runEval() {
             return eval(code)
             // eslint-disable-next-line no-extra-bind
-          }).bind(window)()
+          }.bind(window)())
           return getModule(window)
         })()
       }

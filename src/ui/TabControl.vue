@@ -102,7 +102,7 @@ export default Vue.extend({
 
 <style lang="scss">
 @import './common';
-@import "./tabs";
+@import './tabs';
 
 .be-tab-control {
   display: flex;

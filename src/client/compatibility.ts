@@ -12,7 +12,10 @@ export const compatibilityPatch = () => {
       'https://live.bilibili.com/blackboard/dropdown-menu.html',
       'https://www.bilibili.com/page-proxy/game-nav.html',
     ]
-    document.documentElement.classList.toggle('iframe', isIframe() && transparentFrames.some(matchUrlPattern))
+    document.documentElement.classList.toggle(
+      'iframe',
+      isIframe() && transparentFrames.some(matchUrlPattern),
+    )
   })
   fullyLoaded(() => {
     select('meta[name=spm_prefix]').then(spm => {

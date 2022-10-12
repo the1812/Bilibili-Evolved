@@ -26,7 +26,10 @@ const config: ManagePanelConfig<ComponentMetadata> = {
     // if (item.hidden) {
     //   return false
     // }
-    if (search && !`${item.name}\n${item.displayName}`.toLowerCase().includes(search.toLowerCase())) {
+    if (
+      search &&
+      !`${item.name}\n${item.displayName}`.toLowerCase().includes(search.toLowerCase())
+    ) {
       return false
     }
     if (excludeBuiltIn && !isUserComponent(item)) {
@@ -42,20 +45,18 @@ const config: ManagePanelConfig<ComponentMetadata> = {
     return message
   },
 }
-const getItemConfig = (item: ComponentMetadata): ManageItem<ComponentMetadata> => (
-  {
-    key: 'userComponents',
-    item,
-    isUserItem: isUserComponent(item),
-    getSettings: it => getComponentSettings(it),
-    onItemRemove: async it => {
-      const { before, after } = getHook('userComponents.remove', it)
-      await before()
-      uninstallComponent(it.name)
-      await after()
-    },
-  }
-)
+const getItemConfig = (item: ComponentMetadata): ManageItem<ComponentMetadata> => ({
+  key: 'userComponents',
+  item,
+  isUserItem: isUserComponent(item),
+  getSettings: it => getComponentSettings(it),
+  onItemRemove: async it => {
+    const { before, after } = getHook('userComponents.remove', it)
+    await before()
+    uninstallComponent(it.name)
+    await after()
+  },
+})
 export default Vue.extend({
   components: {
     ManagePanel,

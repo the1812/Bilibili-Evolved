@@ -79,14 +79,21 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
     firstColor = prependConfig.color,
   ) => {
     const lastScopedData: ScopedData = target[ScopedConsoleSymbol]
-    const backgroundColor = (
-      lastScopedData ? prependConfig.color : firstColor
-    ) ?? specialPalette.default
+    const backgroundColor =
+      (lastScopedData ? prependConfig.color : firstColor) ?? specialPalette.default
     const textColor = '#fff'
     const leadingWhitespace = lastScopedData ? ['%c '] : ['%c']
     const currentScopedData: ScopedData = {
-      badgeNames: [...(lastScopedData?.badgeNames ?? []), ...leadingWhitespace, `%c${prependConfig.name}`],
-      badgeValues: [...(lastScopedData?.badgeValues ?? []), '', `background-color: ${backgroundColor}; color: ${textColor}; padding: 2px 4px; border-radius: 4px;`],
+      badgeNames: [
+        ...(lastScopedData?.badgeNames ?? []),
+        ...leadingWhitespace,
+        `%c${prependConfig.name}`,
+      ],
+      badgeValues: [
+        ...(lastScopedData?.badgeValues ?? []),
+        '',
+        `background-color: ${backgroundColor}; color: ${textColor}; padding: 2px 4px; border-radius: 4px;`,
+      ],
       original: lastScopedData?.original ?? target,
     }
     const rootTarget = currentScopedData.original
@@ -152,13 +159,22 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
   scopedConsole.error = prependBadge(console.error, actualConfig, specialPalette.error)
 
   scopedConsole.group = prependGroupBadge(
-    console.group, actualConfig, specialPalette.group, n => n + 1,
+    console.group,
+    actualConfig,
+    specialPalette.group,
+    n => n + 1,
   )
   scopedConsole.groupCollapsed = prependGroupBadge(
-    console.groupCollapsed, actualConfig, specialPalette.group, n => n + 1,
+    console.groupCollapsed,
+    actualConfig,
+    specialPalette.group,
+    n => n + 1,
   )
   scopedConsole.groupEnd = prependGroupBadge(
-    console.groupEnd, actualConfig, specialPalette.group, n => n - 1,
+    console.groupEnd,
+    actualConfig,
+    specialPalette.group,
+    n => n - 1,
   )
   scopedConsole.debug = (() => {
     const patch = prependBadge(console.debug, actualConfig)
@@ -176,6 +192,5 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
  * 创建一个随机前缀的 ScopedConsole
  * @param config 配置对象
  */
-export const randomScopedConsole = (config: Omit<ScopedConsoleConfig, 'name'>) => (
+export const randomScopedConsole = (config: Omit<ScopedConsoleConfig, 'name'>) =>
   useScopedConsole({ ...config, name: getRandomId() })
-)

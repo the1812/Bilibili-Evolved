@@ -1,21 +1,13 @@
 <template>
   <div ref="container" class="be-infinite-scroll">
-    <div
-      v-for="item of items"
-      :key="keyMapper(item)"
-      class="infinite-scroll-item"
-    >
+    <div v-for="item of items" :key="keyMapper(item)" class="infinite-scroll-item">
       <slot :item="item">
         {{ item }}
       </slot>
     </div>
     <div ref="scrollTrigger" class="scroll-trigger" :class="{ end }">
-      <slot v-if="!end" name="loading">
-        加载中...
-      </slot>
-      <slot v-else name="end">
-        已经到底啦~
-      </slot>
+      <slot v-if="!end" name="loading"> 加载中... </slot>
+      <slot v-else name="end"> 已经到底啦~ </slot>
     </div>
   </div>
 </template>
@@ -86,10 +78,7 @@ export default Vue.extend({
         //   scrollTrigger.offsetTop,
         //   container.clientHeight + container.offsetTop
         // )
-        if (
-          scrollTrigger.offsetTop
-          < container.clientHeight + container.offsetTop
-        ) {
+        if (scrollTrigger.offsetTop < container.clientHeight + container.offsetTop) {
           this.loadNextPage()
         }
       } catch (error) {

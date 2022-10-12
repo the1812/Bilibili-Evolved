@@ -10,14 +10,15 @@ export const formatFileSize = (bytes: number, fixed = 1) => {
     number /= 1024
     unitIndex++
   }
-  return `${Math.round(number * (10 ** fixed)) / (10 ** fixed)}${units[unitIndex]}`
+  return `${Math.round(number * 10 ** fixed) / 10 ** fixed}${units[unitIndex]}`
 }
 /**
  * 格式化百分数为带`%`的字符串
  * @param percent 百分数
  * @param fixed 保留的小数位, 默认为`1`
  */
-export const formatPercent = (percent: number, fixed = 1) => `${Math.round(percent * 100 * (10 ** fixed)) / (10 ** fixed)}%`
+export const formatPercent = (percent: number, fixed = 1) =>
+  `${Math.round(percent * 100 * 10 ** fixed) / 10 ** fixed}%`
 /** 格式化时长为`H:mm:ss.F`, 不足1小时则为`mm:ss.F`
  * @param time 时长
  * @param fixed 保留的小数位(毫秒), 默认不保留
@@ -88,12 +89,20 @@ export const formatNumber = (number: number, total: number) => {
  * 格式化日期为`YYYY-MM-DD`
  * @param date 日期对象
  */
-export const formatDate = (date: Date) => `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${(date.getDate()).toString().padStart(2, '0')}`
+export const formatDate = (date: Date) =>
+  `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
+    .getDate()
+    .toString()
+    .padStart(2, '0')}`
 /**
  * 格式化时间为`HH:mm:ss`
  * @param date 日期对象
  */
-export const formatTime = (date: Date) => `${(date.getHours()).toString().padStart(2, '0')}:${(date.getMinutes()).toString().padStart(2, '0')}:${(date.getSeconds()).toString().padStart(2, '0')}`
+export const formatTime = (date: Date) =>
+  `${date.getHours().toString().padStart(2, '0')}:${date
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}:${date.getSeconds().toString().padStart(2, '0')}`
 /**
  * 格式化时间为`YYYY-MM-DD HH:mm:ss`
  * @param date 日期对象
@@ -103,4 +112,5 @@ export const formatDateTime = (date: Date) => `${formatDate(date)} ${formatTime(
  * @param filename 文件名
  * @param replacement 填充字符, 被过滤掉的字符将用此填充字符替代, 默认为空
  */
-export const formatFilename = (filename: string, replacement = '') => filename.replace(/[\/\\:\*\?"<>\|]/g, replacement)
+export const formatFilename = (filename: string, replacement = '') =>
+  filename.replace(/[\/\\:\*\?"<>\|]/g, replacement)

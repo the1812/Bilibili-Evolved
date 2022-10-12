@@ -10,10 +10,7 @@ export const isV2Feeds = () => {
   if (!hasCookieValue) {
     return false
   }
-  return [
-    't.bilibili.com',
-    'space.bilibili.com',
-  ].some(host => location.host === host)
+  return ['t.bilibili.com', 'space.bilibili.com'].some(host => location.host === host)
 }
 export const feedsCardsManager = (() => {
   const isV2 = isV2Feeds()

@@ -1,12 +1,7 @@
 <template>
-  <a
-    class="bangumi-card"
-    :class="{ new: isNew }"
-    target="_blank"
-    :href="data.url"
-  >
+  <a class="bangumi-card" :class="{ new: isNew }" target="_blank" :href="data.url">
     <div class="ep-cover-container">
-      <DpiImage class="ep-cover" :size="{width: 100}" :src="data.epCoverUrl"></DpiImage>
+      <DpiImage class="ep-cover" :size="{ width: 100 }" :src="data.epCoverUrl"></DpiImage>
     </div>
     <h1 class="ep-title" :title="data.epTitle">{{ data.epTitle }}</h1>
     <div class="up" :title="data.title">

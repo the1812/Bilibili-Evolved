@@ -7,20 +7,10 @@
       <div class="close image-viewer-icon" title="关闭" @click="open = false">
         <VIcon :size="48" icon="mdi-close"></VIcon>
       </div>
-      <a
-        target="_blank"
-        class="copy-link image-viewer-icon"
-        title="复制原链接"
-        @click="copyLink()"
-      >
+      <a target="_blank" class="copy-link image-viewer-icon" title="复制原链接" @click="copyLink()">
         <VIcon :size="48" icon="mdi-link"></VIcon>
       </a>
-      <a
-        target="_blank"
-        class="new-tab image-viewer-icon"
-        title="在新标签页打开"
-        @click="newTab()"
-      >
+      <a target="_blank" class="new-tab image-viewer-icon" title="在新标签页打开" @click="newTab()">
         <VIcon :size="48" icon="mdi-open-in-new"></VIcon>
       </a>
       <a
@@ -113,8 +103,9 @@ export default Vue.extend({
         this.filename = ''
         return
       }
-      this.filename = getFriendlyTitle(document.URL.includes('/www.bilibili.com/bangumi/'))
-        + url.substring(url.lastIndexOf('.'))
+      this.filename =
+        getFriendlyTitle(document.URL.includes('/www.bilibili.com/bangumi/')) +
+        url.substring(url.lastIndexOf('.'))
     },
   },
 })

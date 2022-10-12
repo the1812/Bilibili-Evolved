@@ -2,11 +2,11 @@
   <div class="be-color-picker">
     <div
       ref="button"
-      v-hit="() => popupOpened = !popupOpened"
+      v-hit="() => (popupOpened = !popupOpened)"
       role="button"
       tabindex="0"
       class="selected-color"
-      :style="{ backgroundColor: color, width: size + 'px', height: size + 'px'}"
+      :style="{ backgroundColor: color, width: size + 'px', height: size + 'px' }"
     ></div>
     <VPopup
       v-model="popupOpened"
@@ -18,9 +18,7 @@
       :trigger-element="$refs.button"
     >
       <div class="item-group">
-        <div class="item-title">
-          预设颜色
-        </div>
+        <div class="item-title">预设颜色</div>
         <div class="colors">
           <div
             v-for="c of colors"
@@ -29,20 +27,16 @@
             role="radio"
             :tabindex="popupOpened ? 0 : -1"
             class="color"
-            :style="{backgroundColor: c}"
+            :style="{ backgroundColor: c }"
           ></div>
         </div>
       </div>
       <div class="item-group">
-        <div class="item-title">
-          调色
-        </div>
+        <div class="item-title">调色</div>
         <div class="bars">
           <template v-if="isRGB">
             <div class="bar">
-              <div class="bar-name">
-                R
-              </div>
+              <div class="bar-name">R</div>
               <VSlider
                 :focusable="false"
                 :max="255"
@@ -50,10 +44,7 @@
                 @change="wrapper.change('red', $event)"
               >
                 <template #bar>
-                  <div
-                    class="color-bar"
-                    :style="{ background: wrapper.redGradient }"
-                  ></div>
+                  <div class="color-bar" :style="{ background: wrapper.redGradient }"></div>
                 </template>
                 <template #thumb>
                   <div class="color-thumb"></div>
@@ -69,9 +60,7 @@
               />
             </div>
             <div class="bar">
-              <div class="bar-name">
-                G
-              </div>
+              <div class="bar-name">G</div>
               <VSlider
                 :focusable="false"
                 :max="255"
@@ -79,10 +68,7 @@
                 @change="wrapper.change('green', $event)"
               >
                 <template #bar>
-                  <div
-                    class="color-bar"
-                    :style="{ background: wrapper.greenGradient }"
-                  ></div>
+                  <div class="color-bar" :style="{ background: wrapper.greenGradient }"></div>
                 </template>
                 <template #thumb>
                   <div class="color-thumb"></div>
@@ -98,9 +84,7 @@
               />
             </div>
             <div class="bar">
-              <div class="bar-name">
-                B
-              </div>
+              <div class="bar-name">B</div>
               <VSlider
                 :focusable="false"
                 :max="255"
@@ -108,10 +92,7 @@
                 @change="wrapper.change('blue', $event)"
               >
                 <template #bar>
-                  <div
-                    class="color-bar"
-                    :style="{ background: wrapper.blueGradient }"
-                  ></div>
+                  <div class="color-bar" :style="{ background: wrapper.blueGradient }"></div>
                 </template>
                 <template #thumb>
                   <div class="color-thumb"></div>
@@ -129,9 +110,7 @@
           </template>
           <template v-else>
             <div class="bar">
-              <div class="bar-name">
-                H
-              </div>
+              <div class="bar-name">H</div>
               <VSlider
                 :focusable="false"
                 :max="359.9"
@@ -139,10 +118,7 @@
                 @change="wrapper.change('hue', $event)"
               >
                 <template #bar>
-                  <div
-                    class="color-bar"
-                    :style="{ background: wrapper.hueGradient }"
-                  ></div>
+                  <div class="color-bar" :style="{ background: wrapper.hueGradient }"></div>
                 </template>
                 <template #thumb>
                   <div class="color-thumb"></div>
@@ -158,19 +134,14 @@
               />
             </div>
             <div class="bar">
-              <div class="bar-name">
-                S
-              </div>
+              <div class="bar-name">S</div>
               <VSlider
                 :focusable="false"
                 :value="wrapper.saturation"
                 @change="wrapper.change('saturationv', $event)"
               >
                 <template #bar>
-                  <div
-                    class="color-bar"
-                    :style="{ background: wrapper.saturationGradient }"
-                  ></div>
+                  <div class="color-bar" :style="{ background: wrapper.saturationGradient }"></div>
                 </template>
                 <template #thumb>
                   <div class="color-thumb"></div>
@@ -186,19 +157,14 @@
               />
             </div>
             <div class="bar">
-              <div class="bar-name">
-                B
-              </div>
+              <div class="bar-name">B</div>
               <VSlider
                 :focusable="false"
                 :value="wrapper.brightness"
                 @change="wrapper.change('value', $event)"
               >
                 <template #bar>
-                  <div
-                    class="color-bar"
-                    :style="{ background: wrapper.brightnessGradient }"
-                  ></div>
+                  <div class="color-bar" :style="{ background: wrapper.brightnessGradient }"></div>
                 </template>
                 <template #thumb>
                   <div class="color-thumb"></div>
@@ -237,17 +203,8 @@
         />
       </div>
       <div class="operations item-group" @click="popupOpened = !popupOpened">
-        <VButton :disabled="!popupOpened" class="cancel" @click="reset()">
-          取消
-        </VButton>
-        <VButton
-          :disabled="!popupOpened"
-          class="ok"
-          type="primary"
-          @click="ok()"
-        >
-          确定
-        </VButton>
+        <VButton :disabled="!popupOpened" class="cancel" @click="reset()"> 取消 </VButton>
+        <VButton :disabled="!popupOpened" class="ok" type="primary" @click="ok()"> 确定 </VButton>
       </div>
     </VPopup>
   </div>
@@ -314,11 +271,7 @@ export default Vue.extend({
           }
         })
         document.body.addEventListener('touchstart', e => {
-          if (
-            e.touches.length === 1
-            && !this.$el.contains(e.target)
-            && this.$el !== e.target
-          ) {
+          if (e.touches.length === 1 && !this.$el.contains(e.target) && this.$el !== e.target) {
             document.body.addEventListener(
               'touchend',
               () => {

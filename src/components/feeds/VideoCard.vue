@@ -10,11 +10,7 @@
     :class="{ vertical: orientation === 'vertical', 'no-stats': !showStats }"
   >
     <div class="cover-container">
-      <DpiImage
-        class="cover"
-        :src="coverUrl"
-        :size="{ height: 120, width: 196 }"
-      ></DpiImage>
+      <DpiImage class="cover" :src="coverUrl" :size="{ height: 120, width: 196 }"></DpiImage>
       <div v-if="isNew" class="new">NEW</div>
       <template v-if="pubTime && pubTimeText">
         <div class="publish-time-summary">
@@ -30,10 +26,7 @@
         class="watchlater"
         @click.stop.prevent="toggleWatchlater(aid)"
       >
-        <VIcon
-          :size="15"
-          :icon="watchlater ? 'mdi-check-circle' : 'mdi-clock-outline'"
-        ></VIcon>
+        <VIcon :size="15" :icon="watchlater ? 'mdi-check-circle' : 'mdi-clock-outline'"></VIcon>
         {{ watchlater ? '已添加' : '稍后再看' }}
       </div>
     </div>
@@ -76,12 +69,7 @@
           :title="up.name"
           :href="up.id ? 'https://space.bilibili.com/' + up.id : null"
         >
-          <DpiImage
-            v-if="up.faceUrl"
-            class="face"
-            :src="up.faceUrl"
-            :size="24"
-          />
+          <DpiImage v-if="up.faceUrl" class="face" :src="up.faceUrl" :size="24" />
           <VIcon v-else icon="up" />
         </a>
       </div>
@@ -137,10 +125,7 @@
 </template>
 
 <script lang="ts">
-import {
-  DpiImage,
-  VIcon,
-} from '@/ui'
+import { DpiImage, VIcon } from '@/ui'
 import { getUID } from '@/core/utils'
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
 
@@ -340,7 +325,7 @@ export default {
     overflow: hidden;
     .cover {
       transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
-      -webkit-transform:rotate(0deg);
+      -webkit-transform: rotate(0deg);
       object-fit: cover;
       width: 100%;
       height: 100%;

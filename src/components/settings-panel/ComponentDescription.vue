@@ -26,8 +26,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
-@import "markdown";
+@import 'common';
+@import 'markdown';
 
 .component-description {
   word-break: break-all;

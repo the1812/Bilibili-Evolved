@@ -42,7 +42,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    getStyle(tag: { color: string}, index: number) {
+    getStyle(tag: { color: string }, index: number) {
       const strokeDashoffset = (index / this.tags.length) * this.circumference
       return {
         strokeDashoffset,

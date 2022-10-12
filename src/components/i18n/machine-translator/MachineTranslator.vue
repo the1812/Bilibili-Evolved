@@ -4,9 +4,7 @@
       <VIcon :size="14" icon="mdi-earth" />翻译
     </div>
     <div v-if="translated" class="translated">
-      <a :href="activeTranslator && activeTranslator.link" target="_blank">
-        翻译自
-      </a>
+      <a :href="activeTranslator && activeTranslator.link" target="_blank"> 翻译自 </a>
       <VDropdown
         :items="Object.values(translateProviders)"
         :value="activeTranslator"
@@ -85,7 +83,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .bb-comment .translate-container,
 .card-content .translate-container {

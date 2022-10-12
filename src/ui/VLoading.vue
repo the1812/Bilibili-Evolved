@@ -1,9 +1,7 @@
 <template>
   <div class="be-loading">
     <slot>
-      <template
-        v-if="typeof config.content === 'string' && config.content.length > 0"
-      >
+      <template v-if="typeof config.content === 'string' && config.content.length > 0">
         {{ config.content }}
       </template>
       <component :is="config.content" v-if="typeof config.content !== 'string'"></component>
@@ -23,7 +21,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .be-loading {
   flex-grow: 1;
   @include h-center();

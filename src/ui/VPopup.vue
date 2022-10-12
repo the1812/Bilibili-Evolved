@@ -109,24 +109,27 @@ export default Vue.extend({
     openHandler(e: Event) {
       const targetElement = e.target as HTMLElement
       const toastContainer = document.querySelector('.toast-card-container')
-      let isOutside = targetElement !== this.trigger
-        && !this.trigger?.contains(targetElement)
-        && targetElement !== this.$el
-        && !this.$el.contains(targetElement)
-        && !toastContainer?.contains(targetElement)
+      let isOutside =
+        targetElement !== this.trigger &&
+        !this.trigger?.contains(targetElement) &&
+        targetElement !== this.$el &&
+        !this.$el.contains(targetElement) &&
+        !toastContainer?.contains(targetElement)
       if (this.autoClosePredicate) {
-        isOutside = isOutside && this.autoClosePredicate({
-          target: targetElement,
-          element: this.$el,
-          trigger: this.trigger,
-        })
+        isOutside =
+          isOutside &&
+          this.autoClosePredicate({
+            target: targetElement,
+            element: this.$el,
+            trigger: this.trigger,
+          })
       }
       if (isOutside) {
         this.$emit('popup-change', false)
       }
     },
     setAutoClose() {
-      if (this.autoClose/*  && this.trigger !== null */) {
+      if (this.autoClose /*  && this.trigger !== null */) {
         const eventTypes = ['mousedown', 'touchstart']
         eventTypes.forEach(type => {
           if (this.open) {

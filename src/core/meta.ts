@@ -1,7 +1,10 @@
 import commonMeta from '@/client/common.meta.json'
 import { cdnRoots } from './cdn-types'
 
-commonMeta.copyright = commonMeta.copyright.replace(/\[year\]/g, new Date().getFullYear().toString())
+commonMeta.copyright = commonMeta.copyright.replace(
+  /\[year\]/g,
+  new Date().getFullYear().toString(),
+)
 /** 分支表 */
 export const branches = {
   stable: 'master',
