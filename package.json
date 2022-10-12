@@ -8,8 +8,8 @@
   "scripts": {
     "build-core": "webpack --config ./webpack/webpack.prod.ts --bail",
     "build-features": "webpack --config ./registry/webpack/all.ts --bail",
-    "lint": "eslint --quiet --fix \"./**\" --ext .js,.ts,.vue",
-    "lint-check": "eslint \"./**\" --ext .js,.ts,.vue",
+    "lint": "eslint --quiet --fix . --ext .js,.ts,.vue",
+    "lint-check": "eslint . --ext .js,.ts,.vue",
     "type": "tsc -p tsconfig.type-check.json --noEmit"
   },
   "devDependencies": {
