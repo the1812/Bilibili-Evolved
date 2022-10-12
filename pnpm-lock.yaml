@@ -28,7 +28,9 @@ specifiers:
   css-loader: ^5.0.0
   eslint: ^7.32.0
   eslint-config-airbnb-base: ^14.1.0
+  eslint-config-prettier: ^8.5.0
   eslint-plugin-import: ^2.20.1
+  eslint-plugin-prettier: ^4.2.1
   eslint-plugin-vue: 7.1.0
   fast-sass-loader: ^2.0.0
   fuse.js: ^6.4.6
@@ -38,6 +40,7 @@ specifiers:
   postcss: ^8.1.0
   postcss-loader: ^4.0.4
   postcss-preset-env: ^7.5.0
+  prettier: ^2.7.1
   protobufjs: ^6.11.2
   sass: ^1.25.0
   serve: ^13.0.2
@@ -96,12 +99,15 @@ devDependencies:
   css-loader: registry.npmmirror.com/css-loader/5.2.7_webpack@5.72.0
   eslint: registry.npmmirror.com/eslint/7.32.0
   eslint-config-airbnb-base: registry.npmmirror.com/eslint-config-airbnb-base/14.2.1_hpmu7kn6tcn2vnxpfzvv33bxmy
+  eslint-config-prettier: registry.npmmirror.com/eslint-config-prettier/8.5.0_eslint@7.32.0
   eslint-plugin-import: registry.npmmirror.com/eslint-plugin-import/2.26.0_hxnpavx536ar66swp44t4jeew4
+  eslint-plugin-prettier: registry.npmmirror.com/eslint-plugin-prettier/4.2.1_7gsvg5lgwpfdww3i7smtqxamuy
   eslint-plugin-vue: registry.npmmirror.com/eslint-plugin-vue/7.1.0_eslint@7.32.0
   fast-sass-loader: registry.npmmirror.com/fast-sass-loader/2.0.1_sass@1.51.0+webpack@5.72.0
   postcss: registry.npmmirror.com/postcss/8.4.13
   postcss-loader: registry.npmmirror.com/postcss-loader/4.3.0_g4najheu5gwop3kphiif6aqpde
   postcss-preset-env: registry.npmmirror.com/postcss-preset-env/7.5.0_postcss@8.4.13
+  prettier: registry.npmmirror.com/prettier/2.7.1
   sass: registry.npmmirror.com/sass/1.51.0
   serve: registry.npmmirror.com/serve/13.0.2
   serve-handler: registry.npmmirror.com/serve-handler/6.1.3
@@ -2264,7 +2270,7 @@ packages:
       source-map: registry.npmmirror.com/source-map/0.6.1
       vue-template-es2015-compiler: registry.npmmirror.com/vue-template-es2015-compiler/1.9.1
     optionalDependencies:
-      prettier: registry.npmmirror.com/prettier/2.6.2
+      prettier: registry.npmmirror.com/prettier/2.7.1
     transitivePeerDependencies:
       - arc-templates
       - atpl
@@ -3759,6 +3765,18 @@ packages:
       object.entries: registry.npmmirror.com/object.entries/1.1.5
     dev: true
 
+  registry.npmmirror.com/eslint-config-prettier/8.5.0_eslint@7.32.0:
+    resolution: {integrity: sha512-obmWKLUNCnhtQRKc+tmnYuQl0pFU1ibYJQ5BGhTVB08bHe9wC8qUeG7c08dj9XX+AuPj1YSGSQIHl1pnDHZR0Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/eslint-config-prettier/-/eslint-config-prettier-8.5.0.tgz}
+    id: registry.npmmirror.com/eslint-config-prettier/8.5.0
+    name: eslint-config-prettier
+    version: 8.5.0
+    hasBin: true
+    peerDependencies:
+      eslint: '>=7.0.0'
+    dependencies:
+      eslint: registry.npmmirror.com/eslint/7.32.0
+    dev: true
+
   registry.npmmirror.com/eslint-import-resolver-node/0.3.6:
     resolution: {integrity: sha512-0En0w03NRVMn9Uiyn8YRPDKvWjxCWkslUEhGNTdGx15RvPJYQ+lbOlqrlNI2vEAs4pDYK4f/HN2TbDmk5TP0iw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/eslint-import-resolver-node/-/eslint-import-resolver-node-0.3.6.tgz}
     name: eslint-import-resolver-node
@@ -3831,6 +3849,26 @@ packages:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
       - supports-color
+    dev: true
+
+  registry.npmmirror.com/eslint-plugin-prettier/4.2.1_7gsvg5lgwpfdww3i7smtqxamuy:
+    resolution: {integrity: sha512-f/0rXLXUt0oFYs8ra4w49wYZBG5GKZpAYsJSm6rnYL5uVDjd+zowwMwVZHnAjf4edNrKpCDYfXDgmRE/Ak7QyQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/eslint-plugin-prettier/-/eslint-plugin-prettier-4.2.1.tgz}
+    id: registry.npmmirror.com/eslint-plugin-prettier/4.2.1
+    name: eslint-plugin-prettier
+    version: 4.2.1
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      eslint: '>=7.28.0'
+      eslint-config-prettier: '*'
+      prettier: '>=2.0.0'
+    peerDependenciesMeta:
+      eslint-config-prettier:
+        optional: true
+    dependencies:
+      eslint: registry.npmmirror.com/eslint/7.32.0
+      eslint-config-prettier: registry.npmmirror.com/eslint-config-prettier/8.5.0_eslint@7.32.0
+      prettier: registry.npmmirror.com/prettier/2.7.1
+      prettier-linter-helpers: registry.npmmirror.com/prettier-linter-helpers/1.0.0
     dev: true
 
   registry.npmmirror.com/eslint-plugin-vue/7.1.0_eslint@7.32.0:
@@ -4067,6 +4105,12 @@ packages:
     resolution: {integrity: sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz}
     name: fast-deep-equal
     version: 3.1.3
+    dev: true
+
+  registry.npmmirror.com/fast-diff/1.2.0:
+    resolution: {integrity: sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/fast-diff/-/fast-diff-1.2.0.tgz}
+    name: fast-diff
+    version: 1.2.0
     dev: true
 
   registry.npmmirror.com/fast-glob/3.2.11:
@@ -6021,15 +6065,22 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  registry.npmmirror.com/prettier/2.6.2:
-    resolution: {integrity: sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/prettier/-/prettier-2.6.2.tgz}
+  registry.npmmirror.com/prettier-linter-helpers/1.0.0:
+    resolution: {integrity: sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz}
+    name: prettier-linter-helpers
+    version: 1.0.0
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      fast-diff: registry.npmmirror.com/fast-diff/1.2.0
+    dev: true
+
+  registry.npmmirror.com/prettier/2.7.1:
+    resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/prettier/-/prettier-2.7.1.tgz}
     name: prettier
-    version: 2.6.2
+    version: 2.7.1
     engines: {node: '>=10.13.0'}
     hasBin: true
-    requiresBuild: true
     dev: true
-    optional: true
 
   registry.npmmirror.com/process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz}
