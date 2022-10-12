@@ -1,8 +1,5 @@
 import { dirname } from 'path'
-import {
-  objectProperty,
-  identifier,
-} from '@babel/types'
+import { objectProperty, identifier } from '@babel/types'
 import { parseExpression } from '@babel/parser'
 import { readdirSync } from 'fs'
 import { InjectMetadataAction } from './types'
@@ -28,7 +25,8 @@ export const injectI18n: InjectMetadataAction = ({ filename }) => {
   return [
     objectProperty(
       identifier('i18n'),
-      parseExpression(`
+      parseExpression(
+        `
 (() => {
   const context = require.context('./', false, ${regex})
   return {
@@ -41,7 +39,9 @@ export const injectI18n: InjectMetadataAction = ({ filename }) => {
       })),
   }
 })()
-      `, { plugins: ['typescript'] }),
+      `,
+        { plugins: ['typescript'] },
+      ),
     ),
   ]
 }

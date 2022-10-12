@@ -7,6 +7,7 @@ import { cssStyleLoaders, sassStyleLoaders } from './loaders/style-loaders'
 import { tsLoaders } from './loaders/ts-loader'
 import { runtimeInfo } from './compilation-info/runtime'
 import commonMeta from '../src/client/common.meta.json'
+import * as gitInfo from './compilation-info/git'
 
 const relativePath = (p: string) => path.join(process.cwd(), p)
 export const getDefaultConfig = (src = relativePath('src')): Configuration => {
@@ -26,7 +27,7 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
       alias: {
         '@': relativePath('src'),
         'fuse.js$': 'fuse.js/dist/fuse.basic.esm.min.js',
-        'vue$': 'vue/dist/vue.esm.js',
+        vue$: 'vue/dist/vue.esm.js',
       },
     },
     performance: {
@@ -58,10 +59,7 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
         },
         {
           test: /\.css$/,
-          use: [
-            'style-loader',
-            ...cssStyleLoaders,
-          ],
+          use: ['style-loader', ...cssStyleLoaders],
           include: /node_modules/,
         },
         {
@@ -69,16 +67,10 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
           oneOf: [
             {
               resourceQuery: /vue/,
-              use: [
-                'style-loader',
-                ...cssStyleLoaders,
-              ],
+              use: ['style-loader', ...cssStyleLoaders],
             },
             {
-              use: [
-                'to-string-loader',
-                ...cssStyleLoaders,
-              ],
+              use: ['to-string-loader', ...cssStyleLoaders],
             },
           ],
           include: [src],
@@ -88,30 +80,18 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
           oneOf: [
             {
               resourceQuery: /vue/,
-              use: [
-                'style-loader',
-                ...sassStyleLoaders,
-              ],
+              use: ['style-loader', ...sassStyleLoaders],
             },
             {
-              use: [
-                'to-string-loader',
-                ...sassStyleLoaders,
-              ],
+              use: ['to-string-loader', ...sassStyleLoaders],
             },
           ],
           include: [src],
         },
         {
           test: /\.tsx?$/,
-          use: [
-            ...tsLoaders,
-          ],
-          include: [
-            src,
-            relativePath('tests'),
-            relativePath('webpack'),
-          ],
+          use: [...tsLoaders],
+          include: [src, relativePath('tests'), relativePath('webpack')],
         },
         {
           test: /\.vue$/,
@@ -134,7 +114,7 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
         webpackCompilationInfo: [relativePath('webpack/compilation-info'), 'compilationInfo'],
       }),
       new webpack.DefinePlugin({
-        webpackGitInfo: JSON.stringify(require('./compilation-info/git')),
+        webpackGitInfo: JSON.stringify(gitInfo),
       }),
       // new WebpackBar(),
       new webpack.optimize.LimitChunkCountPlugin({
@@ -143,11 +123,11 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
       // new HardSourcePlugin(),
     ],
     cache: {
-      type: "filesystem",
+      type: 'filesystem',
       buildDependencies: {
         config: [__filename],
-      }
-    }
+      },
+    },
   }
 }
 
@@ -160,13 +140,19 @@ const replaceVariables = (text: string) => {
     return match
   })
 }
-export const getBanner = (meta: Record<string, string | string[]>) => `// ==UserScript==\n${Object.entries(Object.assign(meta, commonMeta)).map(([key, value]) => {
-  if (Array.isArray(value)) {
-    const lines = [...new Set(value.map(item => `// @${key.padEnd(16, ' ')}${replaceVariables(item)}`))]
-    return lines.join('\n')
-  }
-  return `// @${key.padEnd(16, ' ')}${replaceVariables(value)}`
-}).join('\n')}
+export const getBanner = (
+  meta: Record<string, string | string[]>,
+) => `// ==UserScript==\n${Object.entries(Object.assign(meta, commonMeta))
+  .map(([key, value]) => {
+    if (Array.isArray(value)) {
+      const lines = [
+        ...new Set(value.map(item => `// @${key.padEnd(16, ' ')}${replaceVariables(item)}`)),
+      ]
+      return lines.join('\n')
+    }
+    return `// @${key.padEnd(16, ' ')}${replaceVariables(value)}`
+  })
+  .join('\n')}
 // ==/UserScript==
 /* eslint-disable */ /* spell-checker: disable */
 // @[ You can find all source codes in GitHub repo ]`
