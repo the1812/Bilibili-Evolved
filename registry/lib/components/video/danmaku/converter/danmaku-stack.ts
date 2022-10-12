@@ -20,7 +20,7 @@ interface TagData {
   nextTrackNumber: number
   willOverlay: (trackItem: TrackItem, trackNumber: number, width: number) => boolean
   getTrackItem: (trackNumber: number, width: number, visibleTime: number) => TrackItem
-  getTag: (info: { trackNumber: number, x: number, y: number }) => string
+  getTag: (info: { trackNumber: number; x: number; y: number }) => string
 }
 
 export class DanmakuStack {
@@ -90,9 +90,10 @@ export class DanmakuStack {
     return [x, this.danmakuHeight / 2]
   }
 
-  getTags(danmaku: Danmaku, {
-    targetTrack, initTrackNumber, nextTrackNumber, willOverlay, getTrackItem, getTag,
-  }: TagData) {
+  getTags(
+    danmaku: Danmaku,
+    { targetTrack, initTrackNumber, nextTrackNumber, willOverlay, getTrackItem, getTag }: TagData,
+  ) {
     const [x, y] = this.getTextSize(danmaku)
     const width = x * 2
     /*
@@ -104,8 +105,8 @@ export class DanmakuStack {
       当前弹幕的速度 v = (x + w) / d
       完全进入屏幕所需时间 = visibleTime = delay + w / v = delay + wd / (x + w)
     */
-    const visibleTime = (this.duration(danmaku) * width)
-      / (this.resolution.x + width) + DanmakuStack.nextDanmakuDelay
+    const visibleTime =
+      (this.duration(danmaku) * width) / (this.resolution.x + width) + DanmakuStack.nextDanmakuDelay
     let trackNumber = initTrackNumber
     let overlayDanmaku = null
     // 寻找前面已发送的弹幕中可能重叠的
@@ -113,8 +114,7 @@ export class DanmakuStack {
     do {
       overlayDanmaku = targetTrack.find(overlayDanmakuInTrack)
       trackNumber += nextTrackNumber
-    }
-    while (overlayDanmaku && trackNumber <= this.trackCount && trackNumber >= 0)
+    } while (overlayDanmaku && trackNumber <= this.trackCount && trackNumber >= 0)
 
     // 如果弹幕过多, 此条就不显示了
     if (trackNumber > this.trackCount || trackNumber < 0) {
@@ -130,10 +130,12 @@ export class DanmakuStack {
       initTrackNumber: 0,
       nextTrackNumber: 1,
       willOverlay: (it: HorizontalTrackItem, trackNumber, width) => {
-        if (it.trackNumber !== trackNumber) { // 不同轨道当然不会重叠
+        if (it.trackNumber !== trackNumber) {
+          // 不同轨道当然不会重叠
           return false
         }
-        if (it.width < width) { // 弹幕比前面的弹幕长, 必须等前面弹幕走完
+        if (it.width < width) {
+          // 弹幕比前面的弹幕长, 必须等前面弹幕走完
           /*
             x = this.resolution.x = 屏幕宽度
             d = this.duration(danmaku) = 当前弹幕总持续时长(从出现到完全消失)
@@ -149,19 +151,27 @@ export class DanmakuStack {
             即 t <= end
             也就是 start + dx / (x + w) <= end 或 dx / (x + w) <= end - start
           */
-          return (this.duration(danmaku) * this.resolution.x)
-            / (this.resolution.x + width) <= it.end - danmaku.startTime
+          return (
+            (this.duration(danmaku) * this.resolution.x) / (this.resolution.x + width) <=
+            it.end - danmaku.startTime
+          )
         } // 前面弹幕完全进入屏幕的时间点晚于当前弹幕的开始时间, 就一定会重叠
         return it.visible > danmaku.startTime
       },
-      getTrackItem: (trackNumber, width, visibleTime) => ({
-        width,
-        start: danmaku.startTime,
-        visible: danmaku.startTime + visibleTime,
-        end: danmaku.startTime + this.duration(danmaku),
-        trackNumber,
-      } as HorizontalTrackItem),
-      getTag: ({ trackNumber, x, y }) => `\\move(${this.resolution.x + x},${trackNumber * this.trackHeight + DanmakuStack.margin + y},${-x},${trackNumber * this.trackHeight + DanmakuStack.margin + y},0,${this.duration(danmaku) * 1000})`,
+      getTrackItem: (trackNumber, width, visibleTime) =>
+        ({
+          width,
+          start: danmaku.startTime,
+          visible: danmaku.startTime + visibleTime,
+          end: danmaku.startTime + this.duration(danmaku),
+          trackNumber,
+        } as HorizontalTrackItem),
+      getTag: ({ trackNumber, x, y }) =>
+        `\\move(${this.resolution.x + x},${
+          trackNumber * this.trackHeight + DanmakuStack.margin + y
+        },${-x},${trackNumber * this.trackHeight + DanmakuStack.margin + y},0,${
+          this.duration(danmaku) * 1000
+        })`,
     })
   }
   getVerticalTags(danmaku: Danmaku) {
@@ -183,9 +193,16 @@ export class DanmakuStack {
       }),
       getTag: ({ trackNumber, y }) => {
         if (isTop) {
-          return `\\pos(${this.resolution.x / 2},${trackNumber * this.trackHeight + DanmakuStack.margin + y})`
+          return `\\pos(${this.resolution.x / 2},${
+            trackNumber * this.trackHeight + DanmakuStack.margin + y
+          })`
         }
-        return `\\pos(${this.resolution.x / 2},${this.resolution.y - DanmakuStack.margin - y - (this.trackCount - 1 - trackNumber) * this.trackHeight})`
+        return `\\pos(${this.resolution.x / 2},${
+          this.resolution.y -
+          DanmakuStack.margin -
+          y -
+          (this.trackCount - 1 - trackNumber) * this.trackHeight
+        })`
       },
     })
   }
@@ -194,22 +211,20 @@ export class DanmakuStack {
     let stack: { tags: string }[] = []
     switch (DanmakuStack.danmakuType[danmaku.type]) {
       case 'normal':
-      case 'reversed': // 反向先鸽了, 直接当正向了
-      {
+      case 'reversed': {
+        // 反向先鸽了, 直接当正向了
         tags = this.getHorizontalTags(danmaku)
         stack = this.horizontalStack
         break
       }
       case 'top':
-      case 'bottom':
-      {
+      case 'bottom': {
         tags = this.getVerticalTags(danmaku)
         stack = this.verticalStack
         break
       }
       case 'special': // 高级弹幕也鸽了先
-      default:
-      {
+      default: {
         return {
           tags: '\\pos(0,-999)',
         }

@@ -40,13 +40,11 @@ export default Vue.extend({
       })
     } else {
       const spaceElementSelector = '.header-info-ctnr .room-cover, .header-info-ctnr .avatar'
-      const coverLink = await select(spaceElementSelector) as HTMLElement
+      const coverLink = (await select(spaceElementSelector)) as HTMLElement
       if (!coverLink) {
         return
       }
-      const match = coverLink
-        .getAttribute('href')
-        .match(/space\.bilibili\.com\/([\d]+)/)
+      const match = coverLink.getAttribute('href').match(/space\.bilibili\.com\/([\d]+)/)
       if (match && match[1]) {
         const uid = match[1]
         const url = `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`

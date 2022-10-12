@@ -4,13 +4,13 @@
       <div class="bvid-convert-item">
         {{ aid }}
         <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('aid')">
-          <VIcon :size="16" :icon="aidCopied ? 'mdi-check': 'mdi-link'" />
+          <VIcon :size="16" :icon="aidCopied ? 'mdi-check' : 'mdi-link'" />
         </div>
       </div>
       <div class="bvid-convert-item">
         {{ bvid }}
         <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('bvid')">
-          <VIcon :size="16" :icon="bvidCopied ? 'mdi-check': 'mdi-link'" />
+          <VIcon :size="16" :icon="bvidCopied ? 'mdi-check' : 'mdi-link'" />
         </div>
       </div>
     </template>
@@ -32,11 +32,8 @@ enum CopyIdType {
   Aid = 'aid',
   Bvid = 'bvid',
 }
-const copyIds = [
-  CopyIdType.Aid,
-  CopyIdType.Bvid,
-]
-type LinkProvider = (context: { id: string, url: string, query: string }) => string
+const copyIds = [CopyIdType.Aid, CopyIdType.Bvid]
+type LinkProvider = (context: { id: string; url: string; query: string }) => string
 const linkProviders: LinkProvider[] = [
   // 参数类页面, 如 festival
   ({ id, query }) => {
@@ -69,7 +66,7 @@ export default Vue.extend({
     videoChange(async () => {
       this.aid = `av${unsafeWindow.aid}`
       this.bvid = unsafeWindow.bvid
-      const link = await select('.av-link,.bv-link,.bvid-link') as HTMLElement
+      const link = (await select('.av-link,.bv-link,.bvid-link')) as HTMLElement
       if (link) {
         this.bvid = link.innerHTML.trim()
       }
@@ -99,7 +96,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 .bvid-convert {
   order: -1;
   flex-direction: column;
@@ -114,7 +111,7 @@ export default Vue.extend({
     font-size: 14px;
     @include h-center(6px);
     &-copy {
-      transition: transform .3s ease-out;
+      transition: transform 0.3s ease-out;
       cursor: pointer;
       &:active {
         transform: scale(0.9);

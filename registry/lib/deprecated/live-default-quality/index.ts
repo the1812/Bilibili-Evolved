@@ -25,9 +25,7 @@ const options = defineOptionsMetadata({
 export type Options = OptionsOfMetadata<typeof options>
 
 const entry: ComponentEntry<Options> = async ({ settings }) => {
-  const { getDropdownItems } = await import(
-    '@/components/settings-panel/dropdown'
-  )
+  const { getDropdownItems } = await import('@/components/settings-panel/dropdown')
   const { dqa, dq } = await import('@/core/utils')
   const { select } = await import('@/core/spin-query')
   const { childList } = await import('@/core/observer')
@@ -42,16 +40,12 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
     return
   }
   const setQuality = async () => {
-    const currentQuality = qualitySettings.children[0].getAttribute(
-      'data-title',
-    ) as string
+    const currentQuality = qualitySettings.children[0].getAttribute('data-title') as string
     const qualityButtons = dqa(
       qualitySettings,
       '.bilibili-live-player-video-controller-html-tooltip-option .text-btn',
     ) as HTMLElement[]
-    const availableQualities = qualityButtons.map(
-      it => it.getAttribute('data-title') as string,
-    )
+    const availableQualities = qualityButtons.map(it => it.getAttribute('data-title') as string)
     console.log(currentQuality, availableQualities, targetQuality)
     if (currentQuality !== targetQuality) {
       let quality = targetQuality
@@ -68,8 +62,8 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
       console.log(button)
       while (
         !(
-          button.classList.contains('active')
-          || dq('.bilibili-live-player-video-controller-switch-quality-info')
+          button.classList.contains('active') ||
+          dq('.bilibili-live-player-video-controller-switch-quality-info')
         )
       ) {
         await delay(3000)

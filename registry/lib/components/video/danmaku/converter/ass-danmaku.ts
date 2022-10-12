@@ -21,10 +21,21 @@ export class AssDanmaku extends Danmaku {
   colorTag: string
   endTime: string
   constructor({
-    content, time, type, fontSize, color, typeTag, colorTag, endTime,
+    content,
+    time,
+    type,
+    fontSize,
+    color,
+    typeTag,
+    colorTag,
+    endTime,
   }: AssDanmakuData) {
     super({
-      content, time, type, fontSize, color,
+      content,
+      time,
+      type,
+      fontSize,
+      color,
     })
     this.typeTag = typeTag
     this.colorTag = colorTag
@@ -80,6 +91,7 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 `.trim()
     return `${meta}\n${this.danmakus
       .map(it => it.text(this.fontStyles))
-      .filter(it => it !== '').join('\n')}`
+      .filter(it => it !== '')
+      .join('\n')}`
   }
 }

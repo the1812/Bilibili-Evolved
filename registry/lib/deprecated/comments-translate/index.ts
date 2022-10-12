@@ -8,11 +8,7 @@ const entry = async () => {
       return
     }
     textElements.forEach((textElement: HTMLElement) => {
-      if (
-        textElement.nextElementSibling?.classList.contains(
-          'translate-container',
-        )
-      ) {
+      if (textElement.nextElementSibling?.classList.contains('translate-container')) {
         return
       }
       const translator = new MachineTranslator({

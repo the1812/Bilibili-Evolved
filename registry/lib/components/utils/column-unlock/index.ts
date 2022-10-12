@@ -9,11 +9,15 @@ const entry = async () => {
   addStyle('.article-holder { user-select: text !important }', id)
   if (!eventInjected) {
     eventInjected = true
-    document.addEventListener('copy', e => {
-      if (enable) {
-        e.stopImmediatePropagation()
-      }
-    }, { capture: true })
+    document.addEventListener(
+      'copy',
+      e => {
+        if (enable) {
+          e.stopImmediatePropagation()
+        }
+      },
+      { capture: true },
+    )
   }
 }
 export const component = defineComponentMetadata({
@@ -25,13 +29,9 @@ export const component = defineComponentMetadata({
     document.getElementById(id)?.remove()
     enable = false
   },
-  tags: [
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.utils],
   description: {
     'zh-CN': '使专栏的文字可以选择.',
   },
-  urlInclude: [
-    '//www.bilibili.com/read/',
-  ],
+  urlInclude: ['//www.bilibili.com/read/'],
 })

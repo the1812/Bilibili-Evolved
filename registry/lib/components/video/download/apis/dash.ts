@@ -5,7 +5,10 @@ import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { bangumiUrls } from '@/core/utils/urls'
 import { compareQuality } from '../error'
 import {
-  DownloadVideoApi, DownloadVideoFragment, DownloadVideoInfo, DownloadVideoInputItem,
+  DownloadVideoApi,
+  DownloadVideoFragment,
+  DownloadVideoInfo,
+  DownloadVideoInputItem,
 } from '../types'
 import { bangumiApi, videoApi } from './url'
 
@@ -21,7 +24,7 @@ export const DashFragmentExtension = '.m4s'
 export enum DashCodec {
   Avc = 'AVC/H.264',
   Hevc = 'HEVC/H.265',
-  Av1 = 'AV1'
+  Av1 = 'AV1',
 }
 export interface Dash {
   type: keyof typeof DashExtensions
@@ -65,9 +68,7 @@ export const dashToFragments = (info: {
   if (videoDashes.length !== 0) {
     const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
     if (videoDashes.some(matchPreferredCodec)) {
-      const dash = videoDashes
-        .filter(matchPreferredCodec)
-        .sort(ascendingSort(d => d.bandWidth))[0]
+      const dash = videoDashes.filter(matchPreferredCodec).sort(ascendingSort(d => d.bandWidth))[0]
       results.push(dashToFragment(dash))
     } else {
       results.push(dashToFragment(videoDashes.sort(ascendingSort(d => d.bandWidth))[0]))
@@ -107,21 +108,12 @@ const downloadDash = async (
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
   const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
-  const data = await bilibiliApi(
-    getJsonWithCredentials(api),
-    '获取视频链接失败',
-  )
+  const data = await bilibiliApi(getJsonWithCredentials(api), '获取视频链接失败')
   if (!data.dash) {
     throw new Error('此视频没有 dash 格式, 请改用其他格式.')
   }
   const currentQuality = allQualities.find(q => q.value === data.quality)
-  const {
-    duration,
-    video,
-    audio,
-    dolby,
-    flac,
-  } = data.dash
+  const { duration, video, audio, dolby, flac } = data.dash
   const parseVideoCodec = (codecId: number) => {
     switch (codecId) {
       case 12:
@@ -146,8 +138,8 @@ const downloadDash = async (
         codecId: d.codecid,
         bandWidth: d.bandwidth,
         frameRate: d.frameRate,
-        backupUrls: (d.backupUrl || d.backup_url || []).map(
-          (it: string) => it.replace('http:', 'https:'),
+        backupUrls: (d.backupUrl || d.backup_url || []).map((it: string) =>
+          it.replace('http:', 'https:'),
         ),
         downloadUrl: (d.baseUrl || d.base_url || '').replace('http:', 'https:'),
         duration,
@@ -161,17 +153,17 @@ const downloadDash = async (
     bandWidth: dash.bandwidth,
     codecs: dash.codecs,
     codecId: dash.codecid ?? 0,
-    backupUrls: (dash.backupUrl || dash.backup_url || []).map(
-      (it: string) => it.replace('http:', 'https:'),
+    backupUrls: (dash.backupUrl || dash.backup_url || []).map((it: string) =>
+      it.replace('http:', 'https:'),
     ),
     downloadUrl: (dash.baseUrl || dash.base_url || '').replace('http:', 'https:'),
     duration,
   })
-  const audioDashes: AudioDash[] = (audio as any[] || [])
+  const audioDashes: AudioDash[] = ((audio as any[]) || [])
     .map(d => mapAudioDash(d))
     .filter(d => dashFilters.audio(d))
   if (dolby) {
-    audioDashes.push(...dolby.audio?.map((d: any) => mapAudioDash(d)) ?? [])
+    audioDashes.push(...(dolby.audio?.map((d: any) => mapAudioDash(d)) ?? []))
   }
   if (flac) {
     audioDashes.push(...(flac.audio ? [mapAudioDash(flac.audio, 'flacAudio')] : []))
@@ -201,19 +193,22 @@ const downloadDash = async (
 export const videoDashAvc: DownloadVideoApi = {
   name: 'video.dash.avc',
   displayName: 'dash (AVC/H.264)',
-  description: '音画分离的 mp4 格式, 编码为 H.264, 体积较大, 兼容性较好. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
+  description:
+    '音画分离的 mp4 格式, 编码为 H.264, 体积较大, 兼容性较好. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Avc }),
 }
 export const videoDashHevc: DownloadVideoApi = {
   name: 'video.dash.hevc',
   displayName: 'dash (HEVC/H.265)',
-  description: '音画分离的 mp4 格式, 编码为 H.265, 体积中等, 兼容性较差. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
+  description:
+    '音画分离的 mp4 格式, 编码为 H.265, 体积中等, 兼容性较差. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Hevc }),
 }
 export const videoDashAv1: DownloadVideoApi = {
   name: 'video.dash.av1',
   displayName: 'dash (AV1)',
-  description: '音画分离的 mp4 格式, 编码为 AV1, 体积较小, 兼容性中等. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
+  description:
+    '音画分离的 mp4 格式, 编码为 AV1, 体积较小, 兼容性中等. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Av1 }),
 }
 export const videoAudioDash: DownloadVideoApi = {

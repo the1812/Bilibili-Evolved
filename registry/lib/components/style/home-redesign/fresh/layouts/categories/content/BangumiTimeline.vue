@@ -25,19 +25,13 @@
         <div class="fresh-home-categories-bangumi-timeline-date-text">
           {{ dayOfWeekText(item) }}
         </div>
-        <div
-          v-if="index === todayIndex"
-          class="fresh-home-categories-bangumi-timeline-date-today"
-        >
+        <div v-if="index === todayIndex" class="fresh-home-categories-bangumi-timeline-date-today">
           TODAY
         </div>
       </div>
       <div
         ref="seasonsList"
-        class="
-          fresh-home-categories-bangumi-timeline-seasons-container
-          scroll-top scroll-bottom
-        "
+        class="fresh-home-categories-bangumi-timeline-seasons-container scroll-top scroll-bottom"
         :class="{ 'not-empty': item.episodes.length > 0 }"
       >
         <div
@@ -88,19 +82,13 @@
                 follow: season.follow,
               }"
             >
-              <div
-                class="fresh-home-categories-bangumi-timeline-season-time-icon"
-              >
+              <div class="fresh-home-categories-bangumi-timeline-season-time-icon">
                 <VIcon
-                  :icon="
-                    season.follow ? 'mdi-heart-outline' : 'mdi-progress-clock'
-                  "
+                  :icon="season.follow ? 'mdi-heart-outline' : 'mdi-progress-clock'"
                   :size="14"
                 />
               </div>
-              <div
-                class="fresh-home-categories-bangumi-timeline-season-time-text"
-              >
+              <div class="fresh-home-categories-bangumi-timeline-season-time-text">
                 {{ season.pub_time }}
               </div>
             </div>
@@ -111,12 +99,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  DpiImage,
-  VIcon,
-  VEmpty,
-  VLoading,
-} from '@/ui'
+import { DpiImage, VIcon, VEmpty, VLoading } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
@@ -157,15 +140,9 @@ const timelineCssVars = (() => {
   const seasonTodayWidth = 250
   const timelineItemHeight = 66
   const timelineTodayHeight = 96
-  const timelineViewportItemsHeight = (
-    6 * timelineItemHeight + timelineTodayHeight
-  )
-  const timelineItemGap = (
-    rankListHeight - timelineViewportItemsHeight
-  ) / 6
-  const timelineViewportHeight = (
-    6 * timelineItemGap + timelineViewportItemsHeight
-  )
+  const timelineViewportItemsHeight = 6 * timelineItemHeight + timelineTodayHeight
+  const timelineItemGap = (rankListHeight - timelineViewportItemsHeight) / 6
+  const timelineViewportHeight = 6 * timelineItemGap + timelineViewportItemsHeight
   return {
     seasonItemWidth,
     seasonTodayWidth,
@@ -243,21 +220,22 @@ export default Vue.extend({
       await this.$nextTick()
       const list: HTMLElement[] = this.$refs.seasonsList
       let cancelAll: () => void
-      addComponentListener('freshHome.horizontalWheelScroll', (scroll: boolean) => {
-        if (scroll) {
-          const cancel = list
-            .flatMap(it => [...it.children])
-            .map(it => enableHorizontalScroll(it as HTMLElement))
-          cancelAll = () => cancel.forEach(fn => fn())
-        } else {
-          cancelAll?.()
-        }
-      }, true)
-      const root: HTMLElement = this.$el
-      root.scrollTop = (
-        5 * timelineCssVars.timelineItemHeight
-        + 5 * timelineCssVars.timelineItemGap
+      addComponentListener(
+        'freshHome.horizontalWheelScroll',
+        (scroll: boolean) => {
+          if (scroll) {
+            const cancel = list
+              .flatMap(it => [...it.children])
+              .map(it => enableHorizontalScroll(it as HTMLElement))
+            cancelAll = () => cancel.forEach(fn => fn())
+          } else {
+            cancelAll?.()
+          }
+        },
+        true,
       )
+      const root: HTMLElement = this.$el
+      root.scrollTop = 5 * timelineCssVars.timelineItemHeight + 5 * timelineCssVars.timelineItemGap
 
       const classPrefix = '.fresh-home-categories-bangumi-timeline'
       list.forEach(seasons => {
@@ -279,7 +257,10 @@ export default Vue.extend({
         this.scrolled = true
         return
       }
-      const lastPublishedElement = dq(todaySeasons, `[data-season="${lastPublishedItem.season_id}"]`) as HTMLElement
+      const lastPublishedElement = dq(
+        todaySeasons,
+        `[data-season="${lastPublishedItem.season_id}"]`,
+      ) as HTMLElement
       if (!lastPublishedElement) {
         return
       }
@@ -299,23 +280,14 @@ export default Vue.extend({
       return season.pub_ts * 1000 <= this.now
     },
     dayOfWeekText(item: TimelineDay) {
-      return `周${[
-        '日',
-        '一',
-        '二',
-        '三',
-        '四',
-        '五',
-        '六',
-        '日',
-      ][item.day_of_week]}`
+      return `周${['日', '一', '二', '三', '四', '五', '六', '日'][item.day_of_week]}`
     },
   },
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "effects";
+@import 'common';
+@import 'effects';
 
 .fresh-home-categories-bangumi {
   &-timeline {
@@ -377,16 +349,13 @@ export default Vue.extend({
         $icon-height: 48;
         --scale-factor-x: calc(#{$icon-width} / 38);
         --scale-factor-y: calc(#{$icon-height} / 36);
-        background-size: calc(247px * var(--scale-factor-x))
-          calc(663px * var(--scale-factor-y));
+        background-size: calc(247px * var(--scale-factor-x)) calc(663px * var(--scale-factor-y));
         width: #{$icon-width}px;
         height: #{$icon-height}px;
         background-position-x: calc(-146px * var(--scale-factor-x));
         @for $day from 1 through 7 {
           &.day-of-week-#{$day} {
-            background-position-y: calc(
-              #{-36 - 72 * ($day - 1)}px * var(--scale-factor-y)
-            );
+            background-position-y: calc(#{-36 - 72 * ($day - 1)}px * var(--scale-factor-y));
           }
         }
         body.dark & {
@@ -485,8 +454,7 @@ export default Vue.extend({
         &.today {
           border-radius: 12px;
           &.follow.published {
-            box-shadow: 0 0 0 2px var(--theme-color),
-              0 0 0 5px var(--theme-color-20);
+            box-shadow: 0 0 0 2px var(--theme-color), 0 0 0 5px var(--theme-color-20);
           }
         }
       }

@@ -12,9 +12,7 @@ export const component = defineComponentMetadata({
       style: () => import('./top-mask.scss'),
     },
   ],
-  tags: [
-    componentsTags.style,
-  ],
+  tags: [componentsTags.style],
   description: {
     'zh-CN': '隐藏视频里鼠标经过时出现在右上角的覆盖层.',
   },

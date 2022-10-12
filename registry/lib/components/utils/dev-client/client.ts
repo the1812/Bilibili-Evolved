@@ -82,10 +82,9 @@ export class DevClient extends EventTarget {
             }
             case 'start': {
               this.sessions = payload.sessions
-              this.dispatchEvent(new CustomEvent(
-                DevClientEvents.SessionsUpdate,
-                { detail: this.sessions },
-              ))
+              this.dispatchEvent(
+                new CustomEvent(DevClientEvents.SessionsUpdate, { detail: this.sessions }),
+              )
               break
             }
             case 'stop': {
@@ -135,8 +134,9 @@ export class DevClient extends EventTarget {
   private async handleItemUpdate(path: string) {
     this.dispatchEvent(new CustomEvent(DevClientEvents.ItemUpdate, { detail: path }))
     const url = `http://localhost:${options.port}${path}`
-    const componentRecord = Object.entries(autoUpdateOptions.urls.components)
-      .find(([, { url: itemUrl }]) => itemUrl.endsWith(path))
+    const componentRecord = Object.entries(autoUpdateOptions.urls.components).find(
+      ([, { url: itemUrl }]) => itemUrl.endsWith(path),
+    )
     if (componentRecord) {
       const [name] = componentRecord
       const oldComponent = componentsMap[name]
@@ -144,9 +144,7 @@ export class DevClient extends EventTarget {
         return
       }
       const code: string = await monkey({ url })
-      const { installFeatureFromCode } = await import(
-        '@/core/install-feature'
-      )
+      const { installFeatureFromCode } = await import('@/core/install-feature')
       const { metadata } = await installFeatureFromCode(code, url)
       const newComponent = metadata as ComponentMetadata
       const oldInstantStyles = oldComponent.instantStyles ?? []
@@ -195,8 +193,9 @@ export class DevClient extends EventTarget {
       return
     }
 
-    const pluginRecord = Object.entries(autoUpdateOptions.urls.plugins)
-      .find(([, { url: itemUrl }]) => itemUrl.endsWith(path))
+    const pluginRecord = Object.entries(autoUpdateOptions.urls.plugins).find(
+      ([, { url: itemUrl }]) => itemUrl.endsWith(path),
+    )
     if (pluginRecord) {
       const [name] = pluginRecord
       const plugin = plugins.find(p => p.name === name)
@@ -215,17 +214,21 @@ export class DevClient extends EventTarget {
 
   private async querySessions() {
     return new Promise<string[]>(resolve => {
-      this.socket?.addEventListener('message', e => {
-        handleSocketMessage(e, payload => {
-          if (payload.type === 'querySessionsResponse') {
-            this.sessions = payload.sessions
-            this.dispatchEvent(
-              new CustomEvent(DevClientEvents.SessionsUpdate, { detail: payload.sessions }),
-            )
-            resolve(payload.sessions)
-          }
-        })
-      }, { once: true })
+      this.socket?.addEventListener(
+        'message',
+        e => {
+          handleSocketMessage(e, payload => {
+            if (payload.type === 'querySessionsResponse') {
+              this.sessions = payload.sessions
+              this.dispatchEvent(
+                new CustomEvent(DevClientEvents.SessionsUpdate, { detail: payload.sessions }),
+              )
+              resolve(payload.sessions)
+            }
+          })
+        },
+        { once: true },
+      )
       this.socket?.send(JSON.stringify({ type: 'querySessions' }))
     })
   }

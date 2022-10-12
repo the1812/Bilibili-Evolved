@@ -35,8 +35,8 @@ export const component = defineComponentMetadata({
       // 如果有 video-player 优先的使用该盒子
       // 因为在稍后再看页面（medialist）视频也有 player-wrap
       // 选择 player-wrap 会导致闪烁。
-      const playerWrap = (document.getElementById('video-player')
-        ?? (dq('.player-wrap') || dq('.player-module'))) as HTMLElement
+      const playerWrap = (document.getElementById('video-player') ??
+        (dq('.player-wrap') || dq('.player-module'))) as HTMLElement
 
       let observer: IntersectionObserver
       let intersectionLock = true // Lock intersection action
@@ -73,10 +73,10 @@ export const component = defineComponentMetadata({
           videoEl.play()
         }
         if (
-          settings.light
-          && getComponentSettings('playerAutoLight').enabled
-          && !settings.pause
-          && !videoEl.paused
+          settings.light &&
+          getComponentSettings('playerAutoLight').enabled &&
+          !settings.pause &&
+          !videoEl.paused
         ) {
           lightOff()
         }
@@ -90,23 +90,20 @@ export const component = defineComponentMetadata({
         if (settings.pause && !videoEl.paused) {
           videoEl.pause()
         }
-        if (
-          settings.light
-          && getComponentSettings('playerAutoLight').enabled
-          && !settings.pause
-        ) {
+        if (settings.light && getComponentSettings('playerAutoLight').enabled && !settings.pause) {
           lightOn()
         }
       }
 
-      const createObserver = (mode?: string) => new IntersectionObserver(
-        ([e]) => {
-          e.isIntersecting ? intersectingCall() : disIntersectingCall()
-        },
-        {
-          threshold: getToTop(mode || settings.triggerLocation),
-        },
-      )
+      const createObserver = (mode?: string) =>
+        new IntersectionObserver(
+          ([e]) => {
+            e.isIntersecting ? intersectingCall() : disIntersectingCall()
+          },
+          {
+            threshold: getToTop(mode || settings.triggerLocation),
+          },
+        )
 
       function mountPlayListener() {
         videoChange(async () => {
@@ -119,14 +116,11 @@ export const component = defineComponentMetadata({
         })
       }
 
-      addComponentListener(
-        `${metadata.name}.triggerLocation`,
-        (value: IntersectionMode) => {
-          removePlayerOutEvent()
-          observer = createObserver(value)
-          addPlayerOutEvent()
-        },
-      )
+      addComponentListener(`${metadata.name}.triggerLocation`, (value: IntersectionMode) => {
+        removePlayerOutEvent()
+        observer = createObserver(value)
+        addPlayerOutEvent()
+      })
 
       observer = createObserver()
       mountPlayListener()

@@ -5,8 +5,8 @@
   </div>
 </template>
 <style lang="scss">
-@import "common";
-@import "./image.css";
+@import 'common';
+@import './image.css';
 
 .reimu-loading {
   @include h-center(8px);

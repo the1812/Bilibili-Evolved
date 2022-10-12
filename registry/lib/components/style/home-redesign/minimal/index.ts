@@ -25,13 +25,15 @@ export const component = defineComponentMetadata({
   name: 'minimalHome',
   displayName: '极简首页',
   urlInclude: homeUrls,
-  tags: [
-    componentsTags.style,
-  ],
+  tags: [componentsTags.style],
   entry: () => {
-    addComponentListener('minimalHome.columnCount', (count: number) => {
-      document.documentElement.style.setProperty('--home-column-count-override', count.toString())
-    }, true)
+    addComponentListener(
+      'minimalHome.columnCount',
+      (count: number) => {
+        document.documentElement.style.setProperty('--home-column-count-override', count.toString())
+      },
+      true,
+    )
     contentLoaded(async () => {
       const MinimalHome = await import('./MinimalHome.vue')
       const minimalHome = mountVueComponent(MinimalHome)

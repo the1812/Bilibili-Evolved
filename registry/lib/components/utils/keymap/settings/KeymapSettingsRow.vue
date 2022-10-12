@@ -43,11 +43,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  TextBox,
-  VButton,
-  VIcon,
-} from '@/ui'
+import { TextBox, VButton, VIcon } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
 import { presetBase, presets } from '../presets'
 
@@ -119,7 +115,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .keymap-settings-grid .grid-row {
   padding: 2px 0;
@@ -130,7 +126,7 @@ export default Vue.extend({
     @include no-scrollbar();
     &.not-set,
     &.overwritten {
-      opacity: .25;
+      opacity: 0.25;
     }
   }
   .row-custom-binding {

@@ -25,8 +25,5 @@ export const component: ComponentMetadata = {
   },
   entry,
   urlInclude: feedsUrls,
-  tags: [
-    componentsTags.feeds,
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.feeds, componentsTags.utils],
 }

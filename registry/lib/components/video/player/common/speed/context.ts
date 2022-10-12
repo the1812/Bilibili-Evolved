@@ -3,9 +3,7 @@ import { LifeCycleEventTypes } from '@/core/life-cycle'
 import { videoChange } from '@/core/observer'
 import { des } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
-import {
-  bindCallback, concat, firstValueFrom, fromEvent, of, subject, Subject,
-} from '../mini-rxjs'
+import { bindCallback, concat, firstValueFrom, fromEvent, of, subject, Subject } from '../mini-rxjs'
 import { bufferSet } from '../mini-rxjs/operators/bufferSet'
 import { combineLatest } from '../mini-rxjs/operators/combineLatest'
 import { debounceTime } from '../mini-rxjs/operators/debounceTime'
@@ -15,15 +13,13 @@ import { map } from '../mini-rxjs/operators/map'
 import { pairwise } from '../mini-rxjs/operators/pairwise'
 import { startWith } from '../mini-rxjs/operators/startWith'
 import type { EntrySpeedComponent } from '../speed'
-import {
-  convertToXPath,
-  formatSpeedText, parseSpeedText, useShare,
-} from './utils'
+import { convertToXPath, formatSpeedText, parseSpeedText, useShare } from './utils'
 
 export const PLAYER_AGENT = playerAgent.provideCustomQuery({
   video: {
     speedMenuList: '.bilibili-player-video-btn-speed-menu,.bpx-player-ctrl-playbackrate-menu',
-    speedMenuItem: '.bilibili-player-video-btn-speed-menu-list,.bpx-player-ctrl-playbackrate-menu-item',
+    speedMenuItem:
+      '.bilibili-player-video-btn-speed-menu-list,.bpx-player-ctrl-playbackrate-menu-item',
     speedNameBtn: '.bilibili-player-video-btn-speed-name,.bpx-player-ctrl-playbackrate-result',
     speedContainer: '.bilibili-player-video-btn-speed,.bpx-player-ctrl-playbackrate',
     active: '.bilibili-player-active,.bpx-state-active',
@@ -62,9 +58,10 @@ export interface SpeedContext {
   readonly menuListElementClickSpeed$: Subject<number>
   readonly menuListElementClickSpeedChange$: Subject<number>
   readonly videoSpeedChange$: Subject<number>
-  readonly menuListElementMutations$: Subject<
-    { attributes: MutationRecord[], childList: MutationRecord[] }
-  >
+  readonly menuListElementMutations$: Subject<{
+    attributes: MutationRecord[]
+    childList: MutationRecord[]
+  }>
 
   getAvailableSpeedValues(): number[]
   getActiveVideoSpeed(): number
@@ -148,10 +145,10 @@ const useMutationObserver = (
   return observer
 }
 
-const buildElementPart = (
-  [containerElement, videoElement]:
-    [HTMLElement | null, HTMLVideoElement | null],
-) => {
+const buildElementPart = ([containerElement, videoElement]: [
+  HTMLElement | null,
+  HTMLVideoElement | null,
+]) => {
   if (!containerElement) {
     throw new Error('speed container element not found!')
   }
@@ -166,16 +163,17 @@ const buildElementPart = (
     PLAYER_AGENT.custom.speedMenuList.selector,
   ) as HTMLElement
 
-  const query = (speed: number) => des<HTMLElement | null>(
-    `./*[(${convertToXPath(PLAYER_AGENT.custom.speedMenuItem.selector)})`
-    // 以前实现功能时发现一个 BUG，在用户点击 1.0x 倍速后，却错误选中 11.0x 倍速
-    // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没不会产生此问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
-    // 原先使用 contains 而不直接比较的原因是，自定义的倍速菜单项，可能在创建时引入了多余的空白符，现在使用 normalize-space 代替之前的做法
-    // see: https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
-    // 自定义的倍速菜单项，在创建时引入了多余的空白符，需要通过 normalize-space 函数排除掉
-    + ` and normalize-space()="${formatSpeedText(speed)}"]`,
-    menuListElement,
-  )
+  const query = (speed: number) =>
+    des<HTMLElement | null>(
+      `./*[(${convertToXPath(PLAYER_AGENT.custom.speedMenuItem.selector)})` +
+        // 以前实现功能时发现一个 BUG，在用户点击 1.0x 倍速后，却错误选中 11.0x 倍速
+        // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没不会产生此问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
+        // 原先使用 contains 而不直接比较的原因是，自定义的倍速菜单项，可能在创建时引入了多余的空白符，现在使用 normalize-space 代替之前的做法
+        // see: https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
+        // 自定义的倍速菜单项，在创建时引入了多余的空白符，需要通过 normalize-space 函数排除掉
+        ` and normalize-space()="${formatSpeedText(speed)}"]`,
+      menuListElement,
+    )
 
   let activeVideoSpeed: number
   let oldActiveVideoSpeed: number
@@ -183,16 +181,17 @@ const buildElementPart = (
   const menuListElementMutations$ = subject()
   const activeVideoSpeed$ = subject<number>().pipe(distinctUntilChanged())
 
-  activeVideoSpeed$.pipe<[number, number]>(
-    startWith(undefined),
-    pairwise(),
-  ).subscribe(([oldValue, newValue]) => {
-    oldActiveVideoSpeed = oldValue
-    activeVideoSpeed = newValue
-  })
+  activeVideoSpeed$
+    .pipe<[number, number]>(startWith(undefined), pairwise())
+    .subscribe(([oldValue, newValue]) => {
+      oldActiveVideoSpeed = oldValue
+      activeVideoSpeed = newValue
+    })
 
   const updateActiveVideoSpeed = (target?: HTMLElement | CharacterData) => {
-    if (!target) { return }
+    if (!target) {
+      return
+    }
     switch (target.nodeType) {
       case Node.TEXT_NODE:
         activeVideoSpeed$.next(parseSpeedText((target as CharacterData).data))
@@ -201,7 +200,9 @@ const buildElementPart = (
         activeVideoSpeed$.next(parseSpeedText((target as HTMLElement).innerHTML))
         break
       default:
-        console.warn('The target parameter of updateActiveVideoSpeed must be a Node, and the node type must be one of TEXT_NODE and ELEMENT_NODE')
+        console.warn(
+          'The target parameter of updateActiveVideoSpeed must be a Node, and the node type must be one of TEXT_NODE and ELEMENT_NODE',
+        )
         break
     }
   }
@@ -236,7 +237,7 @@ const buildElementPart = (
     mutations => {
       mutations.forEach(mutation => {
         const [newTextNode] = mutation.addedNodes
-        updateActiveVideoSpeed(newTextNode as (HTMLElement | CharacterData))
+        updateActiveVideoSpeed(newTextNode as HTMLElement | CharacterData)
       })
     },
   )
@@ -261,15 +262,10 @@ const buildElementPart = (
   }
 }
 
-const buildSubjectPart = (
-  elementContext: ReturnType<typeof buildElementPart>,
-) => {
+const buildSubjectPart = (elementContext: ReturnType<typeof buildElementPart>) => {
   const { videoElement, menuListElement } = elementContext
 
-  const menuListElementClickSpeed$ = fromEvent(
-    menuListElement,
-    'click',
-  ).pipe<number>(
+  const menuListElementClickSpeed$ = fromEvent(menuListElement, 'click').pipe<number>(
     map(ev => {
       const { innerText, innerHTML } = ev.target as HTMLLIElement
       const speedText = innerText.trim() || innerHTML.trim()
@@ -283,10 +279,7 @@ const buildSubjectPart = (
 
     do {
       proto = Object.getPrototypeOf(proto)
-    } while (
-      proto === null
-      || !Object.prototype.hasOwnProperty.call(proto, 'playbackRate')
-    )
+    } while (proto === null || !Object.prototype.hasOwnProperty.call(proto, 'playbackRate'))
 
     const descriptor = Object.getOwnPropertyDescriptor(proto, 'playbackRate')
 
@@ -305,10 +298,7 @@ const buildSubjectPart = (
   const playbackRateChange$ = playbackRate$.pipe(distinctUntilChanged())
 
   const videoSpeedChange$ = subject(({ next }) => {
-    const temp$ = combineLatest(
-      menuListElementClickSpeedChange$,
-      playbackRateChange$,
-    )
+    const temp$ = combineLatest(menuListElementClickSpeedChange$, playbackRateChange$)
     temp$.subscribe(([userSpeed, currentSpeed]) => {
       if (userSpeed === currentSpeed) {
         next(currentSpeed)
@@ -320,11 +310,7 @@ const buildSubjectPart = (
   let oldPlaybackRate: number
 
   playbackRateChange$
-    .pipe<[number, number]>(
-      debounceTime(200),
-      startWith(undefined),
-      pairwise(),
-    )
+    .pipe<[number, number]>(debounceTime(200), startWith(undefined), pairwise())
     .subscribe(([oldValue]) => {
       oldPlaybackRate = oldValue
     })
@@ -352,17 +338,21 @@ const buildSubjectPart = (
   }
 }
 
-export const [NoSuchSpeedMenuItemElementError] = useShare('speed.NoSuchSpeedMenuItemElementError', () => class InnerNoSuchSpeedMenuItemElementError extends Error {
-  readonly formattedSpeed: string
-  constructor(readonly speed: number) {
-    const formattedSpeedMaybeError = lodash.attempt(() => formatSpeedText(speed))
-    const formattedSpeed = lodash.isError(formattedSpeedMaybeError)
-      ? String(speed)
-      : String(formattedSpeedMaybeError)
-    super(`There is no such speed menu item as ${formattedSpeed}`)
-    this.formattedSpeed = formattedSpeed
-  }
-})
+export const [NoSuchSpeedMenuItemElementError] = useShare(
+  'speed.NoSuchSpeedMenuItemElementError',
+  () =>
+    class InnerNoSuchSpeedMenuItemElementError extends Error {
+      readonly formattedSpeed: string
+      constructor(readonly speed: number) {
+        const formattedSpeedMaybeError = lodash.attempt(() => formatSpeedText(speed))
+        const formattedSpeed = lodash.isError(formattedSpeedMaybeError)
+          ? String(speed)
+          : String(formattedSpeedMaybeError)
+        super(`There is no such speed menu item as ${formattedSpeed}`)
+        this.formattedSpeed = formattedSpeed
+      }
+    },
+)
 
 const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
   const {
@@ -390,22 +380,16 @@ const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
     }
 
     const promises = [
-      firstValueFrom(
-        videoSpeedChange$.pipe(debounceTime(Math.max(0, timeoutArg || 0))),
-      ),
+      firstValueFrom(videoSpeedChange$.pipe(debounceTime(Math.max(0, timeoutArg || 0)))),
     ]
 
     if (timeoutArg > 0) {
-      promises.push(new Promise(
-        (resolve, reject) => setTimeout(
-          () => setTimeout(reject, timeoutArg),
-        ),
-      ))
+      promises.push(
+        new Promise((resolve, reject) => setTimeout(() => setTimeout(reject, timeoutArg))),
+      )
     }
 
-    await Promise.all(promises)
-      .then(check)
-      .catch(check)
+    await Promise.all(promises).then(check).catch(check)
   }
 
   const force = async (value: number) => {
@@ -434,20 +418,19 @@ const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
           await set(availableSpeedValues[legacyOrOffset])
           break
         case SpeedSeekPosition.MAX:
-          await set(
-            availableSpeedValues[
-              availableSpeedValues.length - 1 + legacyOrOffset
-            ],
-          )
+          await set(availableSpeedValues[availableSpeedValues.length - 1 + legacyOrOffset])
           break
         case SpeedSeekPosition.CURRENT:
-        default: {
-          const index = availableSpeedValues.indexOf(getActiveVideoSpeed())
-          if (index === -1) {
-            throw new Error('Unexpected Error: The available speed values do not include the active speed value, this should be a bug, please report the issue on github!')
+        default:
+          {
+            const index = availableSpeedValues.indexOf(getActiveVideoSpeed())
+            if (index === -1) {
+              throw new Error(
+                'Unexpected Error: The available speed values do not include the active speed value, this should be a bug, please report the issue on github!',
+              )
+            }
+            await set(availableSpeedValues[index + legacyOrOffset])
           }
-          await set(availableSpeedValues[index + legacyOrOffset])
-        }
           break
       }
     }
@@ -485,13 +468,10 @@ const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
 
 const useShareSpeedContext = () => useShare<DisposableSpeedContext>('speed.speedContext')
 
-export const useShareBuildArgument$ = () => useShare<Subject<unknown>>(
-  'speed.buildArguments$',
-  () => subject()
-    .pipe(
-      bufferSet((component: EntrySpeedComponent) => component.settings.enabled),
-    ),
-)
+export const useShareBuildArgument$ = () =>
+  useShare<Subject<unknown>>('speed.buildArguments$', () =>
+    subject().pipe(bufferSet((component: EntrySpeedComponent) => component.settings.enabled)),
+  )
 
 export const getSpeedContext = async (
   build: (args) => (context: DisposableSpeedContext) => DisposableSpeedContext = lodash.identity,
@@ -505,55 +485,53 @@ export const getSpeedContext = async (
   let resolveBuildPromise
   let rejectBuildPromise
 
-  const [lifeCycleComponentLoaded$] = useShare('lifeCycleComponentLoaded$', () => fromEvent(
-    unsafeWindow, LifeCycleEventTypes.ComponentsLoaded,
-  ))
+  const [lifeCycleComponentLoaded$] = useShare('lifeCycleComponentLoaded$', () =>
+    fromEvent(unsafeWindow, LifeCycleEventTypes.ComponentsLoaded),
+  )
   const [shareBuildArgument$] = useShareBuildArgument$()
-  const [videoChange$] = useShare('speed.videoChange$', () => bindCallback<VideoIdObject>(videoChange).pipe(filter(({ aid, cid }) => aid || cid)))
-  const [speedContext$] = useShare('speed.speedContext$', () => subject<DisposableSpeedContext>(
-    ({ next }) => combineLatest(
-      videoChange$,
-      concat(
-        of([]),
-        shareBuildArgument$,
-      ),
-      lifeCycleComponentLoaded$,
-    )
-      .subscribe(
-        ([videoIdObject, shareBuildArgument]) => {
-          const [oldSpeedContext] = useShareSpeedContext()
-          oldSpeedContext?.dispose()
-          rejectBuildPromise?.('context update')
+  const [videoChange$] = useShare('speed.videoChange$', () =>
+    bindCallback<VideoIdObject>(videoChange).pipe(filter(({ aid, cid }) => aid || cid)),
+  )
+  const [speedContext$] = useShare('speed.speedContext$', () =>
+    subject<DisposableSpeedContext>(({ next }) =>
+      combineLatest(
+        videoChange$,
+        concat(of([]), shareBuildArgument$),
+        lifeCycleComponentLoaded$,
+      ).subscribe(([videoIdObject, shareBuildArgument]) => {
+        const [oldSpeedContext] = useShareSpeedContext()
+        oldSpeedContext?.dispose()
+        rejectBuildPromise?.('context update')
 
-          const buildPromise = new Promise((resolve, reject) => {
-            resolveBuildPromise = resolve
-            rejectBuildPromise = reject
-          })
+        const buildPromise = new Promise((resolve, reject) => {
+          resolveBuildPromise = resolve
+          rejectBuildPromise = reject
+        })
 
+        Promise.all([
           Promise.all([
-            Promise
-              .all([
-                PLAYER_AGENT.custom.speedContainer() as Promise<HTMLElement | null>,
-                PLAYER_AGENT.query.video.element() as Promise<HTMLVideoElement | null>,
-              ])
-              .then(resolveBuildPromise),
-            buildPromise,
-          ])
-            .then(([, elements]) => elements)
-            .then(buildElementPart)
-            .then(buildSubjectPart)
-            .then(buildMethodPart)
-            .then(context => (Object.assign(context, {
+            PLAYER_AGENT.custom.speedContainer() as Promise<HTMLElement | null>,
+            PLAYER_AGENT.query.video.element() as Promise<HTMLVideoElement | null>,
+          ]).then(resolveBuildPromise),
+          buildPromise,
+        ])
+          .then(([, elements]) => elements)
+          .then(buildElementPart)
+          .then(buildSubjectPart)
+          .then(buildMethodPart)
+          .then(context =>
+            Object.assign(context, {
               videoIdObject,
               speedContext$,
               videoChange$,
-            })))
-            .then(build(shareBuildArgument))
-            .then(next)
-            .catch(err => console.error(err))
-        },
-      ),
-  ))
+            }),
+          )
+          .then(build(shareBuildArgument))
+          .then(next)
+          .catch(err => console.error(err))
+      }),
+    ),
+  )
 
   speedContext$.subscribe(setSpeedContext)
 

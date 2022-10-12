@@ -8,7 +8,10 @@ const add = async () => {
   localStorage.setItem('pbp_theme_v4', 'b')
   const meta = dq('meta[name="theme-color"]') as HTMLMetaElement
   if (!meta) {
-    document.head.insertAdjacentHTML('beforeend', `<meta name="theme-color" content="${darkMetaColor}">`)
+    document.head.insertAdjacentHTML(
+      'beforeend',
+      `<meta name="theme-color" content="${darkMetaColor}">`,
+    )
   } else {
     meta.dataset.light = meta.content
     meta.content = darkMetaColor
@@ -40,10 +43,7 @@ export const component = defineComponentMetadata({
     setTimeout(remove, changeDelay)
   },
   description: '启用夜间模式能更好地适应光线暗的环境, 并会大量应用主题颜色.',
-  tags: [
-    componentsTags.style,
-    componentsTags.general,
-  ],
+  tags: [componentsTags.style, componentsTags.general],
   instantStyles: [
     {
       name: 'dark-mode',

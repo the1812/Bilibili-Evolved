@@ -1,9 +1,7 @@
 <template>
   <div class="episodes-picker download-video-config-section">
     <div class="episodes-picker-header">
-      <div class="episodes-picker-title">
-        选集:
-      </div>
+      <div class="episodes-picker-title">选集:</div>
       <div class="episodes-picker-checked-ratio">
         {{ checkedRatio }}
       </div>
@@ -56,11 +54,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  VButton,
-  VIcon,
-  CheckBox,
-} from '@/ui'
+import { VButton, VIcon, CheckBox } from '@/ui'
 import { EpisodeItem } from './episode-item'
 
 export default Vue.extend({
@@ -106,7 +100,7 @@ export default Vue.extend({
         return
       }
       if (e.shiftKey && this.lastCheckedEpisodeIndex !== -1) {
-        (this.episodeItems as EpisodeItem[])
+        ;(this.episodeItems as EpisodeItem[])
           .slice(
             Math.min(this.lastCheckedEpisodeIndex, index) + 1,
             Math.max(this.lastCheckedEpisodeIndex, index),

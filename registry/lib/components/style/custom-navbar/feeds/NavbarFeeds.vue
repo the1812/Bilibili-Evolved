@@ -1,10 +1,6 @@
 <template>
   <div class="navbar-feeds">
-    <TabControl
-      ref="tabControl"
-      :tabs="tabs"
-      more-link="https://t.bilibili.com/"
-    >
+    <TabControl ref="tabControl" :tabs="tabs" more-link="https://t.bilibili.com/">
       <template #more-link>
         所有动态
         <VIcon icon="feeds" :size="18"></VIcon>
@@ -13,10 +9,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  TabControl,
-  VIcon,
-} from '@/ui'
+import { TabControl, VIcon } from '@/ui'
 import { feedsCardTypes } from '@/components/feeds/api'
 import { getNotifyCount } from '@/components/feeds/notify'
 import { popperMixin } from '../mixins'
@@ -61,7 +54,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "../popup";
+@import '../popup';
 
 .navbar-feeds {
   width: 380px;

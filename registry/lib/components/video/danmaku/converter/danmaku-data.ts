@@ -14,9 +14,7 @@ export class Danmaku {
   type: DanmakuType
   fontSize: number
   color: number
-  constructor({
-    content, time, type, fontSize, color,
-  }: BasicDanmakuData) {
+  constructor({ content, time, type, fontSize, color }: BasicDanmakuData) {
     this.content = content
     this.time = time
     this.startTime = parseFloat(time)

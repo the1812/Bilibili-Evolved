@@ -17,10 +17,8 @@ export const setupScrollMask = (config: ScrollMaskConfig) => {
   }
   const observerConfig: IntersectionObserverInit = { threshold: [1], root: container }
   const [firstItem] = items
-  const [firstObserver] = intersectionObserve(
-    [firstItem],
-    observerConfig,
-    records => records.forEach(r => {
+  const [firstObserver] = intersectionObserve([firstItem], observerConfig, records =>
+    records.forEach(r => {
       const isScrollTop = r.isIntersecting && r.intersectionRatio === 1
       container.classList.toggle('scroll-top', isScrollTop)
     }),
@@ -30,10 +28,8 @@ export const setupScrollMask = (config: ScrollMaskConfig) => {
   newObservers.push(firstObserver)
   if (items.length > 1) {
     const lastItem = items[items.length - 1]
-    const [lastObserver] = intersectionObserve(
-      [lastItem],
-      observerConfig,
-      records => records.forEach(r => {
+    const [lastObserver] = intersectionObserve([lastItem], observerConfig, records =>
+      records.forEach(r => {
         const isScrollBottom = r.isIntersecting && r.intersectionRatio === 1
         container.classList.toggle('scroll-bottom', isScrollBottom)
       }),

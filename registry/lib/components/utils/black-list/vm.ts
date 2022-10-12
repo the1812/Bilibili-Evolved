@@ -6,8 +6,8 @@ import { BlackListDataKey } from './common'
 type SettingsVmType = Vue & {
   toggle: () => void
   triggerElement: HTMLElement
-  list : string[]
-  save : (items:string[]) => void
+  list: string[]
+  save: (items: string[]) => void
   titleName: string
 }
 let nameSettingsVM: SettingsVmType
@@ -25,7 +25,7 @@ export const setNameProps = (element: HTMLElement) => {
   nameSettingsVM.triggerElement = element
   const blackList = getData(BlackListDataKey)
   nameSettingsVM.list = lodash.cloneDeep(blackList[0].up)
-  nameSettingsVM.save = (items:string[]) => {
+  nameSettingsVM.save = (items: string[]) => {
     addData(BlackListDataKey, data => {
       data.up = items
     })
@@ -40,7 +40,7 @@ export const setRegexProps = (element: HTMLElement) => {
   regexSettingsVm.triggerElement = element
   const blackList = getData(BlackListDataKey)
   regexSettingsVm.list = lodash.cloneDeep(blackList[0].upRegex)
-  regexSettingsVm.save = (items:string[]) => {
+  regexSettingsVm.save = (items: string[]) => {
     addData(BlackListDataKey, data => {
       data.upRegex = items
     })

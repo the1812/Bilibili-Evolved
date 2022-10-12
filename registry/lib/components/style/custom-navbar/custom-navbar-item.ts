@@ -83,9 +83,13 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
       throw new Error('Missing CustomNavbarItem content')
     }
 
-    addComponentListener('customNavbar.touch', (value: boolean) => {
-      this.touch = value ? init.touch : false
-    }, true)
+    addComponentListener(
+      'customNavbar.touch',
+      (value: boolean) => {
+        this.touch = value ? init.touch : false
+      },
+      true,
+    )
     this.hidden = CustomNavbarItem.navbarOptions.hidden.includes(this.name)
     const orderMap = CustomNavbarItem.navbarOptions.order
     this.order = orderMap[this.name] || 0

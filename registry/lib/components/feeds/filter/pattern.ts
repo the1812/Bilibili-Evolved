@@ -15,10 +15,7 @@ export interface BlockableCard {
 export const hasBlockedPattern = (pattern: string, card: BlockableCard) => {
   const upNameMatch = pattern.match(/(.+) up:([^ ]+)/)
   if (upNameMatch) {
-    return (
-      testPattern(upNameMatch[1], card.text)
-      && testPattern(upNameMatch[2], card.username)
-    )
+    return testPattern(upNameMatch[1], card.text) && testPattern(upNameMatch[2], card.username)
   }
   return testPattern(pattern, card.text)
 }

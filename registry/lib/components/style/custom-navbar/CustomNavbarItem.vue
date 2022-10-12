@@ -111,7 +111,10 @@ export default Vue.extend({
       if (!popup) {
         return
       }
-      const allowRefresh = CustomNavbarItem.navbarOptions.refreshOnPopup && popup.popupRefresh && typeof popup.popupRefresh === 'function'
+      const allowRefresh =
+        CustomNavbarItem.navbarOptions.refreshOnPopup &&
+        popup.popupRefresh &&
+        typeof popup.popupRefresh === 'function'
       if (!initialPopup && allowRefresh) {
         popup.popupRefresh()
       }

@@ -30,9 +30,7 @@ const entry = async () => {
 export const component = defineComponentMetadata({
   name: 'liveDanmakuSendbar',
   displayName: '直播弹幕发送栏',
-  tags: [
-    componentsTags.live,
-  ],
+  tags: [componentsTags.live],
   description: {
     'zh-CN': '在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.',
   },

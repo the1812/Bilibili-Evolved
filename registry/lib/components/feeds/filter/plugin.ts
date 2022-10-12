@@ -14,11 +14,7 @@ const feedField = {
   username: ['username', 'repostUsername'],
   text: ['text', 'repostText'],
 }
-const filterableFields = [
-  bangumiFields,
-  videoField,
-  feedField,
-]
+const filterableFields = [bangumiFields, videoField, feedField]
 export const feedsFilterPlugin: PluginMetadata = {
   name: 'feeds.contentFilters.patterns',
   displayName: '动态关键词过滤',
@@ -32,18 +28,24 @@ export const feedsFilterPlugin: PluginMetadata = {
             patterns: string[]
           }
           return items.filter(item => {
-            const field = filterableFields.find(it => (
+            const field = filterableFields.find(it =>
               Object.values(it).every(fields => {
                 if (Array.isArray(fields)) {
                   return fields.some(f => f in item)
                 }
                 return fields in item
-              })
-            ))
+              }),
+            )
             const card = Object.fromEntries(
               Object.entries(field).map(([key, value]) => {
                 if (Array.isArray(value)) {
-                  return [key, value.map(v => item[v] ?? '').join('\n').trim()]
+                  return [
+                    key,
+                    value
+                      .map(v => item[v] ?? '')
+                      .join('\n')
+                      .trim(),
+                  ]
                 }
                 return [key, item[value].trim() as string]
               }),

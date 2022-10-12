@@ -16,9 +16,13 @@ export const component = defineComponentMetadata({
     'zh-CN': '给脚本的侧栏设置垂直偏移量, 范围为 -35% ~ 40%',
   },
   entry: ({ metadata }) => {
-    addComponentListener(`${metadata.name}.offset`, (value: number) => {
-      document.body.style.setProperty('--be-sidebar-offset', `${value}%`)
-    }, true)
+    addComponentListener(
+      `${metadata.name}.offset`,
+      (value: number) => {
+        document.body.style.setProperty('--be-sidebar-offset', `${value}%`)
+      },
+      true,
+    )
   },
   options: {
     offset: {

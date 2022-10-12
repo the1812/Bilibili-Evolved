@@ -12,9 +12,9 @@ export default Vue.extend({
     }
   },
   async created() {
-    const { channel_id } = await bilibiliApi(getJsonWithCredentials(
-      'https://api.bilibili.com/x/web-interface/web/channel/red',
-    ))
+    const { channel_id } = await bilibiliApi(
+      getJsonWithCredentials('https://api.bilibili.com/x/web-interface/web/channel/red'),
+    )
     if (!channel_id) {
       return
     }

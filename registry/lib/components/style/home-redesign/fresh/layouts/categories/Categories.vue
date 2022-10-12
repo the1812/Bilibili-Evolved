@@ -1,9 +1,7 @@
 <template>
   <div class="fresh-home-categories">
     <div class="fresh-home-header">
-      <div class="fresh-home-header-title">
-        分区
-      </div>
+      <div class="fresh-home-header-title">分区</div>
       <div class="fresh-home-header-center-area">
         <div class="fresh-home-header-tabs">
           <div ref="tabs" class="default-tabs">
@@ -105,7 +103,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .fresh-home-categories {
   @include v-stretch();

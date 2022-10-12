@@ -1,7 +1,4 @@
-const bangumiNames = [
-  '番剧',
-  '国创',
-]
+const bangumiNames = ['番剧', '国创']
 export const getContent = (tabName: string) => {
   console.log('getContent', tabName)
   if (bangumiNames.includes(tabName)) {

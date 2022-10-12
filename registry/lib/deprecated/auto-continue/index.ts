@@ -34,10 +34,7 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
 
       if (/第(\d+)话/.test(text)) {
         if (settings.options.allowJump) {
-          const jumpButton = dq(
-            parent,
-            '.bilibili-player-video-toast-item-jump',
-          ) as HTMLElement
+          const jumpButton = dq(parent, '.bilibili-player-video-toast-item-jump') as HTMLElement
           jumpButton?.click()
         }
         return
@@ -60,16 +57,11 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
           return minute * 60 + second
         }
 
-        logError(
-          `解析历史时间发生错误: historyTime=${JSON.stringify(historyTime)}`,
-        )
+        logError(`解析历史时间发生错误: historyTime=${JSON.stringify(historyTime)}`)
         return NaN
       })()
       const video = dq('video') as HTMLVideoElement
-      const closeButton = dq(
-        parent,
-        '.bilibili-player-video-toast-item-close',
-      ) as HTMLElement
+      const closeButton = dq(parent, '.bilibili-player-video-toast-item-close') as HTMLElement
       if (time < video.duration) {
         video.currentTime = time
         video.play()
@@ -97,8 +89,7 @@ export const component = defineComponentMetadata({
   entry,
   urlInclude: playerUrls,
   description: {
-    'zh-CN':
-      '播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.',
+    'zh-CN': '播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.',
   },
   options,
 })

@@ -11,15 +11,9 @@ enum CommentSortOrder {
   ByTime,
   ByLikes,
 }
-const getComments = (
-  oid: number | string,
-  mode: CommentSortOrder,
-  page = 1,
-) => {
+const getComments = (oid: number | string, mode: CommentSortOrder, page = 1) => {
   if (mode === CommentSortOrder.ByTime) {
-    return getJson(
-      `https://api.bilibili.com/x/v2/reply/main?oid=${oid}&type=1&mode=${mode}`,
-    )
+    return getJson(`https://api.bilibili.com/x/v2/reply/main?oid=${oid}&type=1&mode=${mode}`)
   }
   return getJson(
     `https://api.bilibili.com/x/v2/reply/main?oid=${oid}&type=1&mode=${mode}&next=${page}`,
@@ -37,9 +31,10 @@ const restore = async (commentContainer: HTMLElement) => {
   if (!oid) {
     return
   }
-  const mode = dq(commentContainer, '.hot-sort.on') !== null
-    ? CommentSortOrder.ByLikes
-    : CommentSortOrder.ByTime
+  const mode =
+    dq(commentContainer, '.hot-sort.on') !== null
+      ? CommentSortOrder.ByLikes
+      : CommentSortOrder.ByTime
   let page = 1
   const pagesElement = dq(commentContainer, '.paging-box .current')
   if (pagesElement !== null) {
@@ -67,10 +62,7 @@ const restore = async (commentContainer: HTMLElement) => {
     }
     return result
   }
-  const replies = lodash.flatMap(
-    lodash.get(json, 'data.replies', []),
-    getFloorInfo,
-  )
+  const replies = lodash.flatMap(lodash.get(json, 'data.replies', []), getFloorInfo)
   const top = lodash.get(json, 'data.top.upper')
   if (top) {
     replies.push(...getFloorInfo(top))
@@ -78,10 +70,7 @@ const restore = async (commentContainer: HTMLElement) => {
   // console.log(replies)
   const commentItems = dqa(commentContainer, '.reply-wrap[data-id]')
   const commentInfos = commentItems.map(
-    item => dq(
-      item,
-      '.reply-wrap > .con > .info, .reply-wrap > .info',
-    ) as HTMLElement,
+    item => dq(item, '.reply-wrap > .con > .info, .reply-wrap > .info') as HTMLElement,
   )
   commentItems.forEach((item, index) => {
     const id = item.getAttribute('data-id') as string
@@ -100,17 +89,19 @@ const restore = async (commentContainer: HTMLElement) => {
 }
 const prepareRestore = (commentContainer: HTMLElement) => {
   const commentLoading = 'comment-loading'
-  const isCommentLoading = Array.prototype.some.call(
-    commentContainer.children,
-    (it: HTMLElement) => it.classList.contains(commentLoading),
+  const isCommentLoading = Array.prototype.some.call(commentContainer.children, (it: HTMLElement) =>
+    it.classList.contains(commentLoading),
   )
   if (isCommentLoading) {
     const [observer] = childList(commentContainer, records => {
-      const isCommentLoaded = records.some(r => Array.prototype.some.call(
-        r.removedNodes,
-        (node: Node) => node.nodeType === Node.ELEMENT_NODE
-            && (node as HTMLElement).classList.contains(commentLoading),
-      ))
+      const isCommentLoaded = records.some(r =>
+        Array.prototype.some.call(
+          r.removedNodes,
+          (node: Node) =>
+            node.nodeType === Node.ELEMENT_NODE &&
+            (node as HTMLElement).classList.contains(commentLoading),
+        ),
+      )
       if (isCommentLoaded) {
         observer.disconnect()
         prepareRestore(commentContainer)
@@ -137,15 +128,12 @@ export const component = defineComponentMetadata({
     // '//t.bilibili.com/',
   ],
   description: {
-    'zh-CN':
-      '恢复按热度排序时评论楼层, 按时间排序只能恢复第一页, 仅对普通视频页有效.',
+    'zh-CN': '恢复按热度排序时评论楼层, 按时间排序只能恢复第一页, 仅对普通视频页有效.',
   },
   tags: [componentsTags.utils],
   entry: () => {
     fullyLoaded(async () => {
-      const { forEachCommentArea } = await import(
-        '@/components/utils/comment-apis'
-      )
+      const { forEachCommentArea } = await import('@/components/utils/comment-apis')
       const callback = (area: CommentArea) => prepareRestore(area.element)
       forEachCommentArea(callback)
     })

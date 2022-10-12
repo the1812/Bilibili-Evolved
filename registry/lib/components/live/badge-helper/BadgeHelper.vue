@@ -22,11 +22,7 @@
         </li>
       </ul>
     </VPopup>
-    <DefaultWidget
-      ref="medalButton"
-      icon="mdi-medal"
-      @click="medalOpen = !medalOpen"
-    >
+    <DefaultWidget ref="medalButton" icon="mdi-medal" @click="medalOpen = !medalOpen">
       <span>更换勋章</span>
     </DefaultWidget>
 
@@ -48,11 +44,7 @@
         </li>
       </ul>
     </VPopup>
-    <DefaultWidget
-      ref="titleButton"
-      icon="mdi-script-outline"
-      @click="titleOpen = !titleOpen"
-    >
+    <DefaultWidget ref="titleButton" icon="mdi-script-outline" @click="titleOpen = !titleOpen">
       <span>更换头衔</span>
     </DefaultWidget>
   </div>
@@ -61,13 +53,8 @@
 <script lang="ts">
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
-import {
-  DefaultWidget,
-  VPopup,
-} from '@/ui'
-import {
-  Medal, Title, Badge, getMedalList, getTitleList,
-} from './badge'
+import { DefaultWidget, VPopup } from '@/ui'
+import { Medal, Title, Badge, getMedalList, getTitleList } from './badge'
 
 const { options } = getComponentSettings('badgeHelper')
 export default Vue.extend({
@@ -85,9 +72,13 @@ export default Vue.extend({
     }
   },
   async mounted() {
-    addComponentListener('badgeHelper.grayEffect', (enable: boolean) => {
-      this.grayEffect = enable
-    }, true)
+    addComponentListener(
+      'badgeHelper.grayEffect',
+      (enable: boolean) => {
+        this.grayEffect = enable
+      },
+      true,
+    )
     const init = async () => {
       const medal = this.loadMedalList()
       await Title.getImageMap()
@@ -142,7 +133,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 .badge-popup {
   top: 50%;
   left: calc(100% + 8px);
