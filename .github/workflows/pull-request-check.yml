@@ -32,7 +32,11 @@ jobs:
       run: pnpm run build-core
 
     - name: Build features
-      run: pnpm run build-features
+      run: |
+        cd registry
+        pnpm install
+        cd ../
+        pnpm run build-features
 
     - name: Log
       run: echo Check complete.
