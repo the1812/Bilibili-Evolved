@@ -12,9 +12,6 @@ export const component = defineComponentMetadata({
   ],
   entry: none,
   displayName: '展开选集列表',
-  description: {
-    'zh-CN': '总是完全展开视频选集列表, 注意对番剧无效.',
-  },
   tags: [componentsTags.video, componentsTags.style],
   urlInclude: videoUrls,
 })
