@@ -209,7 +209,7 @@ export const getUserDanmakuConfig = async () => {
     }
 
     // 字体直接从 HTML 里取了, localStorage 里是 font-family 解析更麻烦些
-    config.font = (dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result') as HTMLElement).innerText
+    config.font = (dq(':is(.bilibili-player-video-danmaku-setting-right-font, .bpx-player-dm-setting-right-font-content-fontfamily) .bui-select-result') as HTMLElement).innerText
   } catch (error) {
     // The default config
     logError(error)
