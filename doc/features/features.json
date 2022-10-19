@@ -65,6 +65,14 @@
   },
   {
     "type": "component",
+    "name": "hideFeedsCommentPreview",
+    "displayName": "隐藏动态评论预览",
+    "description": "隐藏动态评论按钮上方的精选评论预览. (详细可看 [#3322](https://github.com/the1812/Bilibili-Evolved/discussions/3322))\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/hide-comment-preview.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/hide-comment-preview.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "\n自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠\n",
@@ -299,7 +307,7 @@
     "type": "component",
     "name": "simplifyHome",
     "displayName": "简化首页",
-    "description": "隐藏原版首页不需要的元素 / 分区.\n\n> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.",
+    "description": "隐藏原版首页不需要的元素 / 分区.",
     "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
   },
@@ -547,7 +555,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.",
+    "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
@@ -558,6 +566,14 @@
     "description": "总是展开完整的视频简介.",
     "fullRelativePath": "../../registry/dist/components/video/full-description.js",
     "fullAbsolutePath": "registry/dist/components/video/full-description.js"
+  },
+  {
+    "type": "component",
+    "name": "fullEpisodeTitle",
+    "displayName": "展开选集列表",
+    "description": "总是完全展开视频选集列表, 注意对番剧无效.\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/full-episode-list.js",
+    "fullAbsolutePath": "registry/dist/components/video/full-episode-list.js"
   },
   {
     "type": "component",
@@ -686,6 +702,14 @@
     "description": "在视频开始播放前, 在播放器中显示封面.",
     "fullRelativePath": "../../registry/dist/components/video/player/show-cover.js",
     "fullAbsolutePath": "registry/dist/components/video/player/show-cover.js"
+  },
+  {
+    "type": "component",
+    "name": "showUploadTime",
+    "displayName": "显示视频投稿时间",
+    "description": "by [@wisokey](https://github.com/wisokey)\n\n为视频播放页面的推荐列表中的视频添加显示视频投稿时间.",
+    "fullRelativePath": "../../registry/dist/components/video/player/show-upload-time.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/show-upload-time.js"
   },
   {
     "type": "component",

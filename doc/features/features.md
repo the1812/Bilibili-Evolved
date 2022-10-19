@@ -74,6 +74,15 @@
 
 在顶栏的视频动态中, 无论标题多长总是完全展开.
 
+### [隐藏动态评论预览](../../registry/dist/components/feeds/hide-comment-preview.js)
+`hideFeedsCommentPreview`
+
+**AltCdn:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/hide-comment-preview.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/hide-comment-preview.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/hide-comment-preview.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/hide-comment-preview.js)
+
+隐藏动态评论按钮上方的精选评论预览. (详细可看 [#3322](https://github.com/the1812/Bilibili-Evolved/discussions/3322))
+
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
 
@@ -372,8 +381,6 @@
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/home.js)
 
 隐藏原版首页不需要的元素 / 分区.
-
-> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.
 
 ### [简化直播间](../../registry/dist/components/style/simplify/live.js)
 `simplifyLiveroom`
@@ -705,7 +712,9 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/download.js)
 
-在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.
+在功能面板中添加下载视频支持. 请注意:
+- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.
+- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.
 
 ### [展开视频简介](../../registry/dist/components/video/full-description.js)
 `fullVideoDescription`
@@ -715,6 +724,15 @@ by [@kdxcxs](https://github.com/kdxcxs)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-description.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-description.js)
 
 总是展开完整的视频简介.
+
+### [展开选集列表](../../registry/dist/components/video/full-episode-list.js)
+`fullEpisodeTitle`
+
+**AltCdn:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-list.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-list.js)
+
+总是完全展开视频选集列表, 注意对番剧无效.
 
 ### [展开选集标题](../../registry/dist/components/video/full-episode-title.js)
 `fullEpisodeTitle`
@@ -909,6 +927,17 @@ by [@JLoeve](https://github.com/LonelySteve)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/show-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/show-cover.js)
 
 在视频开始播放前, 在播放器中显示封面.
+
+### [显示视频投稿时间](../../registry/dist/components/video/player/show-upload-time.js)
+`showUploadTime`
+
+**AltCdn:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/show-upload-time.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/show-upload-time.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/show-upload-time.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/show-upload-time.js)
+
+by [@wisokey](https://github.com/wisokey)
+
+为视频播放页面的推荐列表中的视频添加显示视频投稿时间.
 
 ### [跳过充电鸣谢](../../registry/dist/components/video/player/skip-charge-list.js)
 `skipChargeList`

@@ -69,7 +69,7 @@
         "type": "component",
         "name": "simplifyHome",
         "displayName": "简化首页",
-        "description": "隐藏原版首页不需要的元素 / 分区.\n\n> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.",
+        "description": "隐藏原版首页不需要的元素 / 分区.",
         "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
       },
@@ -124,7 +124,7 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.",
+        "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },
