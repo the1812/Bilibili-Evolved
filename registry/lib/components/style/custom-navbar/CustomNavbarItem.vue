@@ -265,12 +265,15 @@ export default Vue.extend({
     pointer-events: none;
   }
 
-  &:not(.disabled):hover .popup-container {
-    top: 100%;
-    > .popup {
-      // transform: translateY(0) translateX(-50%);
-      pointer-events: initial;
-      opacity: 1;
+  &:not(.disabled):hover,
+  &:not(.disabled):focus-within {
+    .popup-container {
+      top: 100%;
+      > .popup {
+        // transform: translateY(0) translateX(-50%);
+        pointer-events: initial;
+        opacity: 1;
+      }
     }
   }
 

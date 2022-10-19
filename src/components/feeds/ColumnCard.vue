@@ -97,7 +97,7 @@ export default Vue.extend({
     padding: 10px 10px 0;
     margin: 0;
     font-size: 11pt;
-    font-weight: bold;
+    @include semi-bold();
     color: inherit;
     line-height: normal;
     max-width: 100%;

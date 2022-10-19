@@ -56,16 +56,21 @@ export const loadLazyPlayerSettingsPanel = async (
 /** 加载弹幕设置的面板 */
 export const loadDanmakuSettingsPanel = () =>
   loadLazyPlayerSettingsPanel(
-    '.bilibili-player-video-danmaku-setting',
-    '.bilibili-player-video-danmaku-setting-wrap',
+    '.bilibili-player-video-danmaku-setting, .bpx-player-dm-setting',
+    '.bilibili-player-video-danmaku-setting-wrap, .bpx-player-dm-setting-wrap',
   )
 /** 加载字幕设置的面板 */
 export const loadSubtitleSettingsPanel = () =>
   loadLazyPlayerSettingsPanel(
-    '.bilibili-player-video-btn-subtitle',
-    '.bilibili-player-video-subtitle-setting-wrap',
+    '.bilibili-player-video-btn-subtitle, .bpx-player-ctrl-subtitle',
+    '.bilibili-player-video-subtitle-setting-wrap, .bpx-player-ctrl-subtitle-box',
     {
-      style:
-        '.bilibili-player-video-subtitle-setting-wrap, .bilibili-player-video-subtitle { display: none }',
+      style: `
+      .bpx-player-ctrl-subtitle-box,
+      .bilibili-player-video-subtitle-setting-wrap,
+      .bilibili-player-video-subtitle {
+        display: none
+      }
+    `,
     },
   )

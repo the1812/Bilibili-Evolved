@@ -50,7 +50,7 @@
 </template>
 
 <script lang="ts">
-import { FeedsCard, FeedsCardType } from '@/components/feeds/api'
+import { FeedsCard, FeedsCardType, feedsCardTypes, forEachFeedsCard, RepostFeedsCard } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { attributes } from '@/core/observer'
@@ -128,7 +128,6 @@ export default Vue.extend({
       console.error('tabBar not found')
       return
     }
-    const { forEachFeedsCard, feedsCardTypes } = await import('@/components/feeds/api')
     document.body.classList.add('enable-feeds-filter')
     const specialTypes = {
       'self-repost': {
@@ -167,7 +166,13 @@ export default Vue.extend({
   },
   methods: {
     updateCard(card: FeedsCard) {
-      const block = options.patterns.some(p => hasBlockedPattern(p, card))
+      const blockableCard = {
+        ...card,
+      }
+      if (card.type === feedsCardTypes.repost) {
+        blockableCard.text += `\n${(card as RepostFeedsCard).repostText}`
+      }
+      const block = options.patterns.some(p => hasBlockedPattern(p, blockableCard))
       if (block) {
         card.element.classList.add('pattern-block')
       } else {

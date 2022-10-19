@@ -83,6 +83,10 @@ export default Vue.extend({
 <style lang="scss">
 @import 'common';
 
+.van-message-box {
+  z-index: 10002 !important;
+}
+
 html {
   --navbar-height: 50px;
   --navbar-foreground: #555;

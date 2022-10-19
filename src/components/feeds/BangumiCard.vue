@@ -30,6 +30,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss" scoped>
+@import "common";
+
 .bangumi-card {
   --cover-width: 94px;
   background-color: #fff;
@@ -55,6 +57,7 @@ export default Vue.extend({
     margin-bottom: 4px;
     .cover {
       height: 18px;
+      width: 18px;
       border-radius: 50%;
     }
     .title {
@@ -68,7 +71,7 @@ export default Vue.extend({
   .ep-title {
     grid-area: epTitle;
     font-size: 11pt;
-    font-weight: bold;
+    @include semi-bold();
     padding: 0 12px;
     white-space: nowrap;
     overflow: hidden;
@@ -76,7 +79,7 @@ export default Vue.extend({
     align-self: center;
     color: inherit;
     line-height: normal;
-    margin-top: 4px;
+    margin: 4px 0 0 0;
   }
   .ep-cover-container {
     grid-area: cover;

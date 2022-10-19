@@ -75,7 +75,7 @@ export class JsonDanmaku {
         return result.elems ?? []
       }),
     )
-    this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress))
+    this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress ?? 0))
     return this
   }
 }
@@ -214,7 +214,9 @@ export const getUserDanmakuConfig = async () => {
 
     // 字体直接从 HTML 里取了, localStorage 里是 font-family 解析更麻烦些
     config.font = (
-      dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result') as HTMLElement
+      dq(
+        ':is(.bilibili-player-video-danmaku-setting-right-font, .bpx-player-dm-setting-right-font-content-fontfamily) .bui-select-result',
+      ) as HTMLElement
     ).innerText
   } catch (error) {
     // The default config
@@ -252,7 +254,7 @@ export const convertToXmlFromJson = (danmaku: JsonDanmaku) => {
   }</chatid><mission>0</mission><maxlimit>${
     danmaku.xmlDanmakus.length
   }</maxlimit><state>0</state><real_name>0</real_name><source>k-v</source>
-${danmaku.xmlDanmakus.map(x => new XmlDanmaku(x).text()).join('\n')}
+${danmaku.xmlDanmakus.map(x => `  ${new XmlDanmaku(x).text()}`).join('\n')}
 </i>
   `.trim()
   return xmlText
@@ -275,7 +277,7 @@ export const getBlobByType = async (
     }
     default:
     case 'json': {
-      return new Blob([JSON.stringify(danmaku.jsonDanmakus)], {
+      return new Blob([JSON.stringify(danmaku.jsonDanmakus, undefined, 2)], {
         type: 'text/json',
       })
     }

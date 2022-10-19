@@ -1,7 +1,7 @@
 <template>
   <div class="component-settings" :class="{ virtual }">
     <template v-if="!virtual">
-      <div class="row">
+      <div class="component-settings-row">
         <TagRing :tags="componentData.tags" />
         <div class="display-name">
           {{ componentData.displayName }}
@@ -123,7 +123,7 @@ export default Vue.extend({
     &::after {
       opacity: 1;
     }
-    .row {
+    .component-settings-row {
       display: none;
     }
   }
@@ -135,7 +135,7 @@ export default Vue.extend({
   //   opacity: 0.1;
   //   pointer-events: none;
   // }
-  .row {
+  .component-settings-row {
     @include h-center();
     justify-content: space-between;
     &:not(:last-child) {

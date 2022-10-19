@@ -8,6 +8,7 @@ import {
   getVueData,
 } from './base'
 import { FeedsCard, FeedsCardType, feedsCardTypes, isRepostType } from '../types'
+import { selectAll } from '@/core/spin-query'
 
 /** b 站的动态卡片 type 标记 -> FeedsCard.type */
 const feedsCardTypeMap = {
@@ -26,7 +27,7 @@ const combineText = (...texts: string[]) =>
     .filter(it => Boolean(it))
     .join('\n')
     .trim()
-const getType = (rawType: string) =>
+const getType = (rawType: string): FeedsCardType =>
   feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypeMap.DynamicTypeWord
 const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   const { desc: mainDesc, major } = dynamicModule
@@ -76,8 +77,9 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
       module_author: { name: repostUsername },
       module_dynamic: repostDynamicModule,
     } = vueData.data.orig.modules
+    const repostCardType = getType(vueData.data.orig.type)
     card.repostUsername = repostUsername
-    card.repostText = getText(repostDynamicModule, cardType)
+    card.repostText = getText(repostDynamicModule, repostCardType)
     if (repostUsername === currentUsername) {
       element.setAttribute('data-self-repost', 'true')
     }
@@ -85,6 +87,8 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
       combineText(getText(modules.module_dynamic, cardType), getText(repostDynamicModule, cardType))
   }
   card.text = await card.getText()
+  // 等待第一次 Vue 渲染完成
+  await selectAll(() => element.querySelectorAll('.bili-dyn-item *'), { queryInterval: 50 })
   return card
 }
 const isNodeValid = createNodeValidator('.bili-dyn-list__item, .bili-dyn-item')

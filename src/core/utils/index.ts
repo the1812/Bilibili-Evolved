@@ -292,7 +292,7 @@ export const fixed = (num: number, precision = 1): string => {
  * 在现有原型上添加钩子函数
  * @param type 原型
  * @param target 原型上的属性
- * @param hookFunc 钩子函数
+ * @param hookFunc 钩子函数, 返回值表示是否调用原函数
  */
 export const createHook = <ParentType, HookParameters extends any[], ReturnType = any>(
   type: ParentType,
@@ -306,6 +306,25 @@ export const createHook = <ParentType, HookParameters extends any[], ReturnType 
       return undefined
     }
     return original?.call(this, ...args)
+  } as any
+  return () => (type[target] = original as any)
+}
+/**
+ * 在现有原型上添加钩子函数 (原函数执行后再触发)
+ * @param type 原型
+ * @param target 原型上的属性
+ * @param hookFunc 钩子函数
+ */
+export const createPostHook = <ParentType, HookParameters extends any[], ReturnType = any>(
+  type: ParentType,
+  target: keyof ParentType,
+  hookFunc: (...args: HookParameters) => unknown,
+) => {
+  const original: (...args: HookParameters) => ReturnType = type[target] as any
+  type[target] = function hook(...args: HookParameters) {
+    const result = original?.call(this, ...args)
+    hookFunc(...args)
+    return result
   } as any
   return () => (type[target] = original as any)
 }

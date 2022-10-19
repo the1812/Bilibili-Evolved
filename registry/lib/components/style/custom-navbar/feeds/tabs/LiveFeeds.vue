@@ -112,7 +112,7 @@ export default Vue.extend({
       }
       .live-title {
         font-size: 14px;
-        font-weight: bold;
+        @include semi-bold();
         padding: 0 12px;
         padding-bottom: 6px;
         @include single-line();

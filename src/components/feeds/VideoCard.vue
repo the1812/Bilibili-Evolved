@@ -280,6 +280,10 @@ export default {
     }
     .cooperation {
       margin: 0 12px 6px 8px;
+      &-note {
+        display: flex;
+        opacity: 0.5;
+      }
     }
     .stats {
       grid-area: stats;
@@ -526,7 +530,7 @@ export default {
       }
     }
     &-note {
-      opacity: 0.5;
+      display: none;
     }
   }
   .stats {
