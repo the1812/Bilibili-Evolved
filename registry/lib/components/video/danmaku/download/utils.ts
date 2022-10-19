@@ -70,7 +70,7 @@ export class JsonDanmaku {
       const result = await decodeDanmakuSegment(blob)
       return result.elems ?? []
     }))
-    this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress))
+    this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress ?? 0))
     return this
   }
 }
@@ -242,7 +242,7 @@ export const convertToAssFromJson = async (danmaku: JsonDanmaku) => {
 export const convertToXmlFromJson = (danmaku: JsonDanmaku) => {
   const xmlText = `
 <?xml version="1.0" encoding="UTF-8"?><i><chatserver>chat.bilibili.com</chatserver><chatid>${danmaku.cid}</chatid><mission>0</mission><maxlimit>${danmaku.xmlDanmakus.length}</maxlimit><state>0</state><real_name>0</real_name><source>k-v</source>
-${danmaku.xmlDanmakus.map(x => new XmlDanmaku(x).text()).join('\n')}
+${danmaku.xmlDanmakus.map(x => `  ${new XmlDanmaku(x).text()}`).join('\n')}
 </i>
   `.trim()
   return xmlText
@@ -262,7 +262,7 @@ export const getBlobByType = async (type: DanmakuDownloadType, input: {
     }
     default:
     case 'json': {
-      return new Blob([JSON.stringify(danmaku.jsonDanmakus)], {
+      return new Blob([JSON.stringify(danmaku.jsonDanmakus, undefined, 2)], {
         type: 'text/json',
       })
     }
