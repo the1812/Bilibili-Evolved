@@ -3,13 +3,7 @@
     <VLoading v-if="loading"></VLoading>
     <VEmpty v-else-if="!loading && cards.length === 0"></VEmpty>
     <transition-group name="cards" tag="div" class="live-feeds-content">
-      <a
-        v-for="c of cards"
-        :key="c.id"
-        class="live-card"
-        target="_blank"
-        :href="c.url"
-      >
+      <a v-for="c of cards" :key="c.id" class="live-card" target="_blank" :href="c.url">
         <div class="face-container">
           <DpiImage class="face" :size="48" :src="c.upFaceUrl"></DpiImage>
         </div>
@@ -22,11 +16,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  VLoading,
-  VEmpty,
-  DpiImage,
-} from '@/ui'
+import { VLoading, VEmpty, DpiImage } from '@/ui'
 import { responsiveGetPages, getJsonWithCredentials } from '@/core/ajax'
 import { LiveFeedItem } from './live-feed-item'
 
@@ -57,9 +47,10 @@ export default Vue.extend({
   },
   async created() {
     const [responsive] = responsiveGetPages({
-      api: page => getJsonWithCredentials(
-        `https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=24`,
-      ),
+      api: page =>
+        getJsonWithCredentials(
+          `https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=24`,
+        ),
       getList: json => lodash.get(json, 'data.list', []),
       getTotal: json => lodash.get(json, 'data.results', 0),
     })
@@ -69,7 +60,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .live-feeds {
   width: 100%;
   @include v-center();
@@ -121,7 +112,7 @@ export default Vue.extend({
       }
       .live-title {
         font-size: 14px;
-        font-weight: bold;
+        @include semi-bold();
         padding: 0 12px;
         padding-bottom: 6px;
         @include single-line();
@@ -132,7 +123,7 @@ export default Vue.extend({
         color: var(--theme-color);
       }
       .live-name {
-        opacity: .75;
+        opacity: 0.75;
         padding: 0 12px;
         @include single-line();
         line-height: normal;

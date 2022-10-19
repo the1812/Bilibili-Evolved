@@ -5,17 +5,14 @@
       icon
       class="minimal-home-operations-refresh"
       title="刷新"
-      @click="backToTop(); $emit('refresh')"
+      @click="
+        backToTop()
+        $emit('refresh')
+      "
     >
       <VIcon icon="mdi-refresh" :size="size" />
     </VButton>
-    <VButton
-      round
-      icon
-      class="minimal-home-operations-top"
-      title="返回顶部"
-      @click="backToTop"
-    >
+    <VButton round icon class="minimal-home-operations-top" title="返回顶部" @click="backToTop">
       <VIcon icon="mdi-arrow-up" :size="size" />
     </VButton>
   </div>

@@ -7,13 +7,16 @@ export const map = new Map<string, Translation>([
   ['游戏中心', 'Game'],
   ['会员购', 'Shop'],
   ['下载APP', 'App'],
-  ['会员', [
-    'User',
-    {
-      selector: '.ep-list-wrapper .ep-item .badge.pink',
-      text: 'VIP',
-    },
-  ]],
+  [
+    '会员',
+    [
+      'User',
+      {
+        selector: '.ep-list-wrapper .ep-item .badge.pink',
+        text: 'VIP',
+      },
+    ],
+  ],
   ['大会员', 'VIP'],
   ['小会员', 'Reverse VIP'],
   ['未登录', 'Not logged in'],
@@ -74,7 +77,10 @@ export const map = new Map<string, Translation>([
   ['已看完', 'Completed'],
   ['一键清空', 'Clear all'],
   ['移除已观看视频', 'Clear watched'],
-  ['即将删除所有已观看视频，此操作不可恢复。确定是否删除？', 'This will remove all watched videos and is unrecoverable, do you want to continue?'],
+  [
+    '即将删除所有已观看视频，此操作不可恢复。确定是否删除？',
+    'This will remove all watched videos and is unrecoverable, do you want to continue?',
+  ],
   ['清空确认', 'Clear Confirm'],
   ['确定要清空你的稍后再看列表吗？', 'Clear the entire watchlater list?'],
   ['已观看', 'Watched'],
@@ -91,10 +97,16 @@ export const map = new Map<string, Translation>([
   ['设置', 'Settings'],
   ['频道', 'Channel'],
   ['标签', 'Tag'],
-  ['关注', ['Follow', {
-    selector: '.stats-item',
-    text: 'Following',
-  }]],
+  [
+    '关注',
+    [
+      'Follow',
+      {
+        selector: '.stats-item',
+        text: 'Following',
+      },
+    ],
+  ],
   ['关注数', 'Following'],
   ['粉丝', 'Follower'],
   ['粉丝数', 'Followers'],
@@ -125,10 +137,13 @@ export const map = new Map<string, Translation>([
   ['前往TA的直播间', 'Open live room'],
   ['今天你想了解什么呢？(☆▽☆)', 'Search ~~~ (☆▽☆)'],
   ['请输入弹幕 DA☆ZE～', 'Enter your danmaku DA☆ZE～'],
-  ['有什么想和大家分享的？', 'What\'s happening?'],
+  ['有什么想和大家分享的？', "What's happening?"],
   ['有新动态，点击查看', 'New feeds, click to view'],
   ['以上为热门评论，', 'Aboves are hot comments'],
-  ['请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。', 'Post your comments ε=ε=(ノ≧∇≦)ノ'],
+  [
+    '请自觉遵守互联网相关的政策法规，严禁发布色情、暴力、反动的言论。',
+    'Post your comments ε=ε=(ノ≧∇≦)ノ',
+  ],
   ['点击查看', 'Click to view'],
   ['刚刚', 'Just now'],
   ['转发动态', 'Repost'],
@@ -157,26 +172,32 @@ export const map = new Map<string, Translation>([
   ['发个友善的弹幕见证当下', 'Enter your danmaku'],
   ['发个弹幕见证当下', 'Enter your danmaku'],
   ['弹幕礼仪', 'Guidelines'],
-  ['追番', [
-    'Subscribe',
-    {
-      selector: '.subscriptions-tabs .tab',
-      text: 'Bangumi',
-    },
-    {
-      selector: '.tab-bar .tab-text',
-      text: 'Subscriptions',
-    },
-  ]],
+  [
+    '追番',
+    [
+      'Subscribe',
+      {
+        selector: '.subscriptions-tabs .tab',
+        text: 'Bangumi',
+      },
+      {
+        selector: '.tab-bar .tab-text',
+        text: 'Subscriptions',
+      },
+    ],
+  ],
   ['已追番', 'Subscribed'],
   ['取消追番', 'Unsubscribe'],
-  ['追剧', [
-    'Subscribe',
-    {
-      selector: '.subscriptions-tabs .tab',
-      text: 'Shows',
-    },
-  ]],
+  [
+    '追剧',
+    [
+      'Subscribe',
+      {
+        selector: '.subscriptions-tabs .tab',
+        text: 'Shows',
+      },
+    ],
+  ],
   ['已追剧', 'Subscribed'],
   ['取消追剧', 'Unsubscribe'],
   ['取消订阅', 'Unsubscribe'],
@@ -382,27 +403,36 @@ export const map = new Map<string, Translation>([
   ['直播', 'Live'],
   ['数码', 'Digital'],
   ['TV剧', 'TV'],
-  ['番剧', [
-    'Bangumi',
-    {
-      selector: '.elevator-module .nav-list .item',
-      text: 'Bangu',
-    },
-  ]],
-  ['纪录片', [
-    'Documentary',
-    {
-      selector: '.elevator-module .nav-list .item',
-      text: 'Doc',
-    },
-  ]],
-  ['娱乐', [
-    'Entertainment',
-    {
-      selector: '.primary-menu .nav-menu li .nav-name, .elevator-module .nav-list .item',
-      text: 'Entmt',
-    },
-  ]],
+  [
+    '番剧',
+    [
+      'Bangumi',
+      {
+        selector: '.elevator-module .nav-list .item',
+        text: 'Bangu',
+      },
+    ],
+  ],
+  [
+    '纪录片',
+    [
+      'Documentary',
+      {
+        selector: '.elevator-module .nav-list .item',
+        text: 'Doc',
+      },
+    ],
+  ],
+  [
+    '娱乐',
+    [
+      'Entertainment',
+      {
+        selector: '.primary-menu .nav-menu li .nav-name, .elevator-module .nav-list .item',
+        text: 'Entmt',
+      },
+    ],
+  ],
   ['自动', 'Auto'],
   ['常规', 'Normal'],
   ['宽屏', 'Widescreen'],
@@ -413,13 +443,16 @@ export const map = new Map<string, Translation>([
   ['注册', 'Sign up'],
   ['我的直播间', 'My live room'],
   ['直播间', 'Live room'],
-  ['订阅', [
-    'Subscribe',
-    {
-      selector: '.main-content',
-      text: 'Subscriptions',
-    },
-  ]],
+  [
+    '订阅',
+    [
+      'Subscribe',
+      {
+        selector: '.main-content',
+        text: 'Subscriptions',
+      },
+    ],
+  ],
   ['主站空间', 'My space'],
   ['播放数', 'Plays'],
   ['综合', 'General'],
@@ -535,7 +568,7 @@ export const map = new Map<string, Translation>([
   ['@我的消息提醒', '@Mentions'],
   ['（接受谁的@消息提醒）', '（Config notifications of @mentions）'],
   ['红点', 'Dot'],
-  ['不提醒', 'Don\'t show'],
+  ['不提醒', "Don't show"],
   ['推荐位申请', 'Apply for recommendation'],
   ['直播看板娘', 'Live showgirl'],
   ['收到的赞', 'Likes'],
@@ -544,20 +577,26 @@ export const map = new Map<string, Translation>([
   ['加载中...', 'Loading...'],
   ['模糊层不透明度', 'Opacity'],
   ['签到', 'Check-in'],
-  ['新版', [
-    'New version',
-    {
-      selector: '.gui-settings-dropdown-container *',
-      text: 'New',
-    },
-  ]],
-  ['旧版', [
-    'Old version',
-    {
-      selector: '.gui-settings-dropdown-container *',
-      text: 'Old',
-    },
-  ]],
+  [
+    '新版',
+    [
+      'New version',
+      {
+        selector: '.gui-settings-dropdown-container *',
+        text: 'New',
+      },
+    ],
+  ],
+  [
+    '旧版',
+    [
+      'Old version',
+      {
+        selector: '.gui-settings-dropdown-container *',
+        text: 'Old',
+      },
+    ],
+  ],
   ['文件命名格式', 'Filename format'],
   ['发布动态', 'Post'],
   ['了解更多', 'Learn more'],
@@ -628,11 +667,17 @@ export const map = new Map<string, Translation>([
   ['你还没有投过一个稿件("▔□▔)', 'You didn\'t post anything ("▔□▔)'],
   ['数据', 'Stat'],
   ['编辑稿件', 'Edit'],
-  ['（单次最多允许上传100p视频，推荐采用mp4、flv格式，可有效缩短审核转码耗时）', '(Up to 100 episodes per video, using mp4 or flv format can reduce encoding time)'],
+  [
+    '（单次最多允许上传100p视频，推荐采用mp4、flv格式，可有效缩短审核转码耗时）',
+    '(Up to 100 episodes per video, using mp4 or flv format can reduce encoding time)',
+  ],
   ['上传完成', 'Upload complete'],
   ['添加视频', 'Add video'],
   ['视频封面设置', 'Video cover'],
-  ['（格式jpeg、png，文件大小≤5MB，建议尺寸≥1146*717，最低尺寸≥960*600）', '(Format: jpeg / png, Size: ≤ 5MB, Recommended Resolution: ≥ 1146px*717px, Minimum Resolution: ≥ 960px*600px)'],
+  [
+    '（格式jpeg、png，文件大小≤5MB，建议尺寸≥1146*717，最低尺寸≥960*600）',
+    '(Format: jpeg / png, Size: ≤ 5MB, Recommended Resolution: ≥ 1146px*717px, Minimum Resolution: ≥ 960px*600px)',
+  ],
   ['类型', 'Type'],
   ['分区', 'Category'],
   ['全部分区', 'All categories'],
@@ -674,7 +719,7 @@ export const map = new Map<string, Translation>([
   ['收起评论', 'Close comments'],
   ['我的直播间地址', 'My live room address'],
   ['选择分类', 'Category'],
-  ['必须选择分类才能开播', 'You can\'t start live broadcasting before select a category.'],
+  ['必须选择分类才能开播', "You can't start live broadcasting before select a category."],
   ['使用默认播放速度', 'Default playback rate'],
   ['默认播放速度', 'Playback rate'],
   ['标记为 想看', 'Mark as "Want to watch"'],
@@ -691,7 +736,10 @@ export const map = new Map<string, Translation>([
   ['获取大小中', 'Fetching size'],
   ['获取大小失败', 'Failed to fetch size'],
   ['预计大小:', 'Estimated size: '],
-  ['警告: 过大的视频大小会在直接下载时占用大量内存, 并可能导致浏览器标签页崩溃. 请考虑降低清晰度或使用导出选项.', 'Warning: Videos in large size will cost a large number of RAM during Direct Download, even crash the browser tab. Please use lower quality or use Export.'],
+  [
+    '警告: 过大的视频大小会在直接下载时占用大量内存, 并可能导致浏览器标签页崩溃. 请考虑降低清晰度或使用导出选项.',
+    'Warning: Videos in large size will cost a large number of RAM during Direct Download, even crash the browser tab. Please use lower quality or use Export.',
+  ],
   ['清晰度', 'Quality'],
   ['无', 'None'],
   ['直接下载', 'Direct Download'],
@@ -716,7 +764,10 @@ export const map = new Map<string, Translation>([
   ['错误', 'Error'],
   ['请求遭到拒绝, 请检查您的密钥相关设置.', 'Connection refused, please check your Secret Key.'],
   ['明日方舟', 'Arknights'],
-  ['直播歌曲内容不适宜请立即调整', 'Your songs in live have conflicted our policy, please use other songs.'],
+  [
+    '直播歌曲内容不适宜请立即调整',
+    'Your songs in live have conflicted our policy, please use other songs.',
+  ],
   ['快捷键扩展', 'Extended Keymap'],
   ['限速', 'Speed Limit'],
   ['双击全屏', 'Quick fullscreen'],
@@ -779,7 +830,10 @@ export const map = new Map<string, Translation>([
   ['收起直播间侧栏', 'Collapse live room side bar'],
   ['导入设置', 'Import settings'],
   ['导出设置', 'Export settings'],
-  ['已成功导入设置, 部分设置需要刷新后生效.', 'Import settings successful, refresh to take effect.'],
+  [
+    '已成功导入设置, 部分设置需要刷新后生效.',
+    'Import settings successful, refresh to take effect.',
+  ],
   ['选择的设置文件无效.', 'Invalid settings file.'],
   ['上一个', 'Previous'],
   ['下一个', 'Next'],
@@ -903,22 +957,24 @@ export const map = new Map<string, Translation>([
   ['已从稍后再看移除', 'Removed from watchlater'],
   ['已添加至稍后再看', 'Added to watchlater'],
   ['赛事', 'Events'],
-  ['*', [
-    {
-      selector: '.gui-settings-widgets-box .widgets-container .empty-tip',
-      text: 'Nothing here =￣ω￣=',
-    },
-    {
-      selector: '.custom-navbar-settings .paddings-desc',
-      text: 'Edge padding: Set padding for left and right edge of navbar. It\'s measured as percent (total width is 100%) with 0% ~ 40% valid range.',
-    },
-    {
-      selector: '.custom-navbar-settings .orders-desc',
-      text: 'Orders & Display: Drag the hamburger icon to reorder them, or press on the name for some time to start a drag. Click the eye icon on the right to toggle their visibility.',
-    },
-    /* CSS translation here */
-
-  ]],
+  [
+    '*',
+    [
+      {
+        selector: '.gui-settings-widgets-box .widgets-container .empty-tip',
+        text: 'Nothing here =￣ω￣=',
+      },
+      {
+        selector: '.custom-navbar-settings .paddings-desc',
+        text: "Edge padding: Set padding for left and right edge of navbar. It's measured as percent (total width is 100%) with 0% ~ 40% valid range.",
+      },
+      {
+        selector: '.custom-navbar-settings .orders-desc',
+        text: 'Orders & Display: Drag the hamburger icon to reorder them, or press on the name for some time to start a drag. Click the eye icon on the right to toggle their visibility.',
+      },
+      /* CSS translation here */
+    ],
+  ],
 ])
 export const regex: RegexTranslation = [
   [/^浏览：([0-9\.a-z]+)$/, 'Views：$1'],

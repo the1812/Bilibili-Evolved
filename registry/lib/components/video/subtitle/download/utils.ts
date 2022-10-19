@@ -4,15 +4,10 @@ import { getFriendlyTitle } from '@/core/utils/title'
 import { SubtitleConverterConfig } from '../subtitle-converter'
 
 export type SubtitleDownloadType = 'json' | 'ass'
-export const getSubtitleConfig = async (): Promise<[
-  SubtitleConverterConfig,
-  string,
-]> => {
-  const {
-    SubtitleConverter,
-    SubtitleSize,
-    SubtitleLocation,
-  } = await import('../subtitle-converter')
+export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, string]> => {
+  const { SubtitleConverter, SubtitleSize, SubtitleLocation } = await import(
+    '../subtitle-converter'
+  )
   const { playerAgent } = await import('@/components/video/player-agent')
   const playerSettingsText = localStorage.getItem('bilibili_player_settings')
   if (!playerSettingsText) {

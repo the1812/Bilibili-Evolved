@@ -6,10 +6,7 @@ import { setupFeedImageExporter } from './feed'
 export const component = defineComponentMetadata({
   name: 'imageExporter',
   displayName: '图片批量导出',
-  tags: [
-    componentsTags.feeds,
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.feeds, componentsTags.utils],
   entry: async context => {
     await setupFeedImageExporter(context)
   },
@@ -17,10 +14,7 @@ export const component = defineComponentMetadata({
     condition: () => columnUrls.some(url => matchUrlPattern(url)),
     component: () => import('./Widget.vue').then(m => m.default),
   },
-  urlInclude: [
-    ...feedsUrls,
-    ...columnUrls,
-  ],
+  urlInclude: [...feedsUrls, ...columnUrls],
   options: {
     columnFormat: {
       defaultValue: '[title][ - n]',

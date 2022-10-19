@@ -17,15 +17,22 @@ export const plugin: PluginMetadata = {
         runAction: async action => {
           const { infos } = action
           const referer = document.URL.replace(window.location.search, '')
-          const items = infos.map(info => info.titledFragments.map(f => (
-            `<
+          const items = infos
+            .map(info =>
+              info.titledFragments.map(f =>
+                `<
 ${f.url}
 referer: ${referer}
 User-Agent: ${UserAgent}
 filename: ${f.title}
->`.trim()
-          ))).flat()
-          const input = items.concat('').join('\n').replace(/([^\r])\n/g, '$1\r\n')
+>`.trim(),
+              ),
+            )
+            .flat()
+          const input = items
+            .concat('')
+            .join('\n')
+            .replace(/([^\r])\n/g, '$1\r\n')
           await DownloadPackage.single(`${getFriendlyTitle()}.ef2`, input)
         },
       })

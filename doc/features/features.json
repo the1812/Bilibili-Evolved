@@ -555,7 +555,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.",
+    "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
@@ -566,6 +566,14 @@
     "description": "总是展开完整的视频简介.",
     "fullRelativePath": "../../registry/dist/components/video/full-description.js",
     "fullAbsolutePath": "registry/dist/components/video/full-description.js"
+  },
+  {
+    "type": "component",
+    "name": "fullEpisodeTitle",
+    "displayName": "展开选集列表",
+    "description": "总是完全展开视频选集列表, 注意对番剧无效.\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/full-episode-list.js",
+    "fullAbsolutePath": "registry/dist/components/video/full-episode-list.js"
   },
   {
     "type": "component",
@@ -694,6 +702,14 @@
     "description": "在视频开始播放前, 在播放器中显示封面.",
     "fullRelativePath": "../../registry/dist/components/video/player/show-cover.js",
     "fullAbsolutePath": "registry/dist/components/video/player/show-cover.js"
+  },
+  {
+    "type": "component",
+    "name": "showUploadTime",
+    "displayName": "显示视频投稿时间",
+    "description": "by [@wisokey](https://github.com/wisokey)\n\n为视频播放页面的推荐列表中的视频添加显示视频投稿时间.",
+    "fullRelativePath": "../../registry/dist/components/video/player/show-upload-time.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/show-upload-time.js"
   },
   {
     "type": "component",

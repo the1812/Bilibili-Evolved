@@ -28,10 +28,7 @@ export const component = defineComponentMetadata({
     removeStyle(name)
   },
   displayName: '展开视频简介',
-  tags: [
-    componentsTags.video,
-    componentsTags.style,
-  ],
+  tags: [componentsTags.video, componentsTags.style],
   description: {
     'zh-CN': '总是展开完整的视频简介.',
   },

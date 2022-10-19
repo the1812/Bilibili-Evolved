@@ -12,7 +12,10 @@ export const checkTransparentFill = async (vm: {
     return
   }
   sq(
-    () => dqa('.animated-banner video, .banner-img img, #banner_link, .international-header .bili-banner, .bili-header__banner'),
+    () =>
+      dqa(
+        '.animated-banner video, .banner-img img, #banner_link, .international-header .bili-banner, .bili-header__banner',
+      ),
     banners => {
       if (banners.length === 0) {
         return false
@@ -35,11 +38,15 @@ export const checkTransparentFill = async (vm: {
     if (banner.length === 0) {
       return
     }
-    addComponentListener('customNavbar.transparent', value => {
-      if (!getComponentSettings('hideBanner').enabled) {
-        vm.toggleStyle(value, 'transparent')
-      }
-    }, true)
+    addComponentListener(
+      'customNavbar.transparent',
+      value => {
+        if (!getComponentSettings('hideBanner').enabled) {
+          vm.toggleStyle(value, 'transparent')
+        }
+      },
+      true,
+    )
     addComponentListener('hideBanner', value => {
       if (getComponentSettings('customNavbar').options.transparent) {
         vm.toggleStyle(!value, 'transparent')

@@ -23,7 +23,10 @@ export const plugin: PluginMetadata = {
         content: () => import('./NavbarChannel.vue'),
         clickAction: () => {
           const channelId = dq('.navbar-channel[data-channel-id]').getAttribute('data-channel-id')
-          window.open(channelId ? `${defaultLink}${channelId}` : defaultLink, isOpenInNewTab() ? '_blank' : '_self')
+          window.open(
+            channelId ? `${defaultLink}${channelId}` : defaultLink,
+            isOpenInNewTab() ? '_blank' : '_self',
+          )
         },
       })
     })

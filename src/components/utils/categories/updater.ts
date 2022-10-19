@@ -2,7 +2,9 @@ import { getText } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
 
 export const updateCategories = async () => {
-  const [script] = (dqa('script') as HTMLScriptElement[]).filter(it => it.src.includes('stardust-video'))
+  const [script] = (dqa('script') as HTMLScriptElement[]).filter(it =>
+    it.src.includes('stardust-video'),
+  )
   if (!script) {
     throw new Error('no script found')
   }
@@ -27,7 +29,9 @@ export const updateIcons = () => {
   svgItems.forEach(svg => {
     const symbol = document.createElementNS('http://www.w3.org/2000/svg', 'symbol')
     symbol.innerHTML = svg.innerHTML
-    symbol.id = svg.id.replace(/^channel-icon-/, 'header-icon-') || `header-icon-${(svg.parentElement as HTMLAnchorElement)?.href.match(/\/v\/(.+)$/)?.[1]}`
+    symbol.id =
+      svg.id.replace(/^channel-icon-/, 'header-icon-') ||
+      `header-icon-${(svg.parentElement as HTMLAnchorElement)?.href.match(/\/v\/(.+)$/)?.[1]}`
     // 特殊: 电视剧的 icon 名称和 route 名称对不上
     if (symbol.id === 'header-icon-teleplay') {
       symbol.id = 'header-icon-tv'

@@ -1,4 +1,8 @@
-import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 
@@ -16,10 +20,7 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '在功能面板中显示视频的 AV 号和 BV 号.',
   },
-  tags: [
-    componentsTags.video,
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.video, componentsTags.utils],
   widget: {
     component: () => import('./BvidConvert.vue').then(m => m.default),
     condition: hasVideo,

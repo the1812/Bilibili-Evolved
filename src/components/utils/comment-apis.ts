@@ -89,12 +89,13 @@ const observeItems = (area: CommentArea) => {
   area.items = dqa(area.element, '.list-item.reply-wrap').map(parseCommentItem)
   area.items.forEach(item => {
     itemAddedCallbacks.forEach(c => c(item))
-  });
-  [area.observer] = childListSubtree(area.element, records => {
+  })
+  ;[area.observer] = childListSubtree(area.element, records => {
     records.forEach(r => {
-      const isCommentItem = (n: Node): n is HTMLElement => n instanceof HTMLElement
-          && n.classList.contains('list-item')
-          && n.classList.contains('reply-wrap')
+      const isCommentItem = (n: Node): n is HTMLElement =>
+        n instanceof HTMLElement &&
+        n.classList.contains('list-item') &&
+        n.classList.contains('reply-wrap')
       r.addedNodes.forEach(n => {
         if (isCommentItem(n)) {
           const commentItem = parseCommentItem(n)
@@ -162,11 +163,14 @@ export const forEachCommentItem = (callbacks: {
  * @param item 评论
  * @param config 菜单项配置
  */
-export const addMenuItem = (item: CommentReplyItem, config: {
-  className: string
-  text: string
-  action: (e: MouseEvent) => void
-}) => {
+export const addMenuItem = (
+  item: CommentReplyItem,
+  config: {
+    className: string
+    text: string
+    action: (e: MouseEvent) => void
+  },
+) => {
   const operationList = dq(item.element, '.opera-list ul') as HTMLUListElement
   const { className, text, action } = config
   if (!operationList || dq(operationList, `.${className}`)) {

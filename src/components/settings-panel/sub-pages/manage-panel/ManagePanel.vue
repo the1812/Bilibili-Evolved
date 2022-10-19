@@ -19,9 +19,7 @@
     </div>
     <div v-if="config.description" class="sub-page-row separator"></div>
     <div class="sub-page-row add-item-row">
-      <div class="title-text">
-        添加{{ config.title }}:
-      </div>
+      <div class="title-text">添加{{ config.title }}:</div>
       <div class="item-actions">
         <VButton ref="batchAddButton" @click="showBatchAddPopup()">
           <VIcon :size="18" icon="mdi-download-multiple" />
@@ -73,9 +71,7 @@
     </div>
     <div class="sub-page-row separator"></div>
     <div class="sub-page-row">
-      <div class="title-text">
-        已安装的{{ config.title }}:
-      </div>
+      <div class="title-text">已安装的{{ config.title }}:</div>
       <div class="exclude-built-in">
         隐藏内置{{ config.title }}
         <SwitchBox v-model="excludeBuiltIn" />
@@ -86,10 +82,7 @@
     </div>
     <div v-if="loaded" class="manage-item-list">
       <VEmpty v-if="debouncedList.length === 0" key="empty" />
-      <ManageItem
-        v-for="item of debouncedList"
-        :key="item.name"
-      >
+      <ManageItem v-for="item of debouncedList" :key="item.name">
         <slot name="item" :item="item">
           {{ item.displayName }}
         </slot>
@@ -103,16 +96,7 @@ import { pickFile } from '@/core/file-picker'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
 import { JSZipLibrary } from '@/core/runtime-library'
-import {
-  VIcon,
-  VButton,
-  TextBox,
-  VEmpty,
-  VLoading,
-  VPopup,
-  TextArea,
-  SwitchBox,
-} from '@/ui'
+import { VIcon, VButton, TextBox, VEmpty, VLoading, VPopup, TextArea, SwitchBox } from '@/ui'
 import ManageItem from './ManageItem.vue'
 import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
 
@@ -148,9 +132,9 @@ export default Vue.extend({
   },
   computed: {
     filteredList() {
-      return this.config.list.filter(it => this.config.listFilter(
-        it, this.search, this.excludeBuiltIn,
-      ))
+      return this.config.list.filter(it =>
+        this.config.listFilter(it, this.search, this.excludeBuiltIn),
+      )
     },
   },
   watch: {
@@ -220,27 +204,32 @@ export default Vue.extend({
       if (!this.batchUrl) {
         return
       }
-      const urls = (this.batchUrl as string).split('\n')
+      const urls = (this.batchUrl as string)
+        .split('\n')
         .map(it => it.trim())
         .filter(it => it !== '')
       const toast = Toast.info(`获取中... (0/${urls.length})`, '批量添加')
       let completed = 0
-      const results = await Promise.allSettled(urls.map(async url => {
-        const { message } = await installFeature(url)
-        completed++
-        toast.message = `获取中... (${completed}/${urls.length})`
-        return message
-      }))
+      const results = await Promise.allSettled(
+        urls.map(async url => {
+          const { message } = await installFeature(url)
+          completed++
+          toast.message = `获取中... (${completed}/${urls.length})`
+          return message
+        }),
+      )
       const successCount = results.filter(it => it.status === 'fulfilled').length
       const failCount = results.filter(it => it.status === 'rejected').length
       toast.message = `安装完成, 成功 ${successCount} 个, 失败 ${failCount} 个.`
-      const resultsText = results.map((r, index) => {
-        const suffix = urls[index]
-        if (r.status === 'fulfilled') {
-          return `${r.value} ${suffix}`
-        }
-        return `${r.reason} ${suffix}`
-      }).join('\n')
+      const resultsText = results
+        .map((r, index) => {
+          const suffix = urls[index]
+          if (r.status === 'fulfilled') {
+            return `${r.value} ${suffix}`
+          }
+          return `${r.reason} ${suffix}`
+        })
+        .join('\n')
       console.log(resultsText)
       this.batchUrl = ''
     },
@@ -248,7 +237,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .manage-panel {
   height: calc(var(--panel-height) - 52px - 48px);
@@ -291,7 +280,7 @@ export default Vue.extend({
     text-align: center;
   }
   .description-text {
-    opacity: .75;
+    opacity: 0.75;
   }
   .add-item-row {
     position: relative;
@@ -299,7 +288,7 @@ export default Vue.extend({
   .batch-add-popup {
     top: calc(100% + 8px);
     left: 50%;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
     transform: translateX(-50%) translateY(-8px);
     padding: 8px;
     width: 100%;

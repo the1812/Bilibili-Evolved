@@ -1,22 +1,15 @@
 <template>
   <div class="rpc-config download-video-config-section">
     <div v-if="isRenaming" class="profile-select">
-      <div class="profile-item-name">
-        重命名 RPC 预设:
-      </div>
+      <div class="profile-item-name">重命名 RPC 预设:</div>
       <TextBox ref="renameInput" v-model="profileRename" />
       <VButton key="check" type="transparent" title="完成" @click="endRename()">
         <VIcon icon="mdi-check" :size="16" />
       </VButton>
     </div>
     <div v-else class="profile-select">
-      <div class="profile-item-name">
-        RPC 预设:
-      </div>
-      <VDropdown
-        v-model="selectedRpcProfile"
-        :items="rpcProfiles"
-      >
+      <div class="profile-item-name">RPC 预设:</div>
+      <VDropdown v-model="selectedRpcProfile" :items="rpcProfiles">
         <template #item="{ item }">
           {{ item.name }}
         </template>
@@ -39,33 +32,23 @@
     </div>
     <template v-if="selectedRpcProfile">
       <div class="profile-secret-key">
-        <div class="profile-item-name">
-          密钥:
-        </div>
+        <div class="profile-item-name">密钥:</div>
         <TextBox v-model="selectedRpcProfile.secretKey" change-on-blur />
       </div>
       <div class="profile-dir">
-        <div class="profile-item-name">
-          路径:
-        </div>
+        <div class="profile-item-name">路径:</div>
         <TextBox v-model="selectedRpcProfile.dir" change-on-blur />
       </div>
       <div class="profile-host">
-        <div class="profile-item-name">
-          主机:
-        </div>
+        <div class="profile-item-name">主机:</div>
         <TextBox v-model="selectedRpcProfile.host" change-on-blur />
       </div>
       <div class="profile-port">
-        <div class="profile-item-name">
-          端口:
-        </div>
+        <div class="profile-item-name">端口:</div>
         <TextBox v-model="selectedRpcProfile.port" change-on-blur />
       </div>
       <div class="profile-method">
-        <div class="profile-item-name">
-          方法:
-        </div>
+        <div class="profile-item-name">方法:</div>
         <VDropdown
           v-model="selectedRpcProfile.method"
           :items="['get', 'post']"
@@ -77,14 +60,8 @@
         </VDropdown>
       </div>
       <div class="profile-other">
-        <div class="profile-item-name">
-          其他配置:
-        </div>
-        <TextArea
-          v-model="selectedRpcProfile.other"
-          placeholder="some-key=value"
-          change-on-blur
-        />
+        <div class="profile-item-name">其他配置:</div>
+        <TextArea v-model="selectedRpcProfile.other" placeholder="some-key=value" change-on-blur />
       </div>
     </template>
   </div>
@@ -92,13 +69,7 @@
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
-import {
-  TextBox,
-  VButton,
-  VIcon,
-  VDropdown,
-  TextArea,
-} from '@/ui'
+import { TextBox, VButton, VIcon, VDropdown, TextArea } from '@/ui'
 import { Aria2RpcProfile, defaultProfile } from './rpc-profiles'
 
 interface Options {
@@ -118,9 +89,8 @@ const handleMissingProfile = () => {
   }
   return options.rpcProfiles[0]
 }
-const lastSelectedProfile = options.rpcProfiles.find(
-  p => p.name === options.selectedRpcProfileName,
-) ?? handleMissingProfile()
+const lastSelectedProfile =
+  options.rpcProfiles.find(p => p.name === options.selectedRpcProfileName) ?? handleMissingProfile()
 console.log(options, lastSelectedProfile)
 export default Vue.extend({
   components: {
@@ -156,10 +126,9 @@ export default Vue.extend({
         Toast.error('名称不得为空', '重命名 RPC 预设', 2000)
         return
       }
-      if (options.rpcProfiles.some(
-        p => p.name !== this.selectedRpcProfile.name
-        && p.name === newName,
-      )) {
+      if (
+        options.rpcProfiles.some(p => p.name !== this.selectedRpcProfile.name && p.name === newName)
+      ) {
         Toast.error('名称不得与其他预设重复', '重命名 RPC 预设', 2000)
         return
       }
@@ -200,7 +169,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .rpc-config.download-video-config-section {
   @include v-center();
   align-items: stretch;

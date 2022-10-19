@@ -4,19 +4,9 @@ import { ranking } from './ranking/ranking'
 import { userInfo } from './user-info/user-info'
 import { logo } from './logo/logo'
 import { home } from './home/home'
-import {
-  gamesIframe,
-  livesIframe,
-  mangaIframe,
-} from './iframe/iframe'
+import { gamesIframe, livesIframe, mangaIframe } from './iframe/iframe'
 import { blanks } from './flexible-blank/flexible-blank'
-import {
-  bangumi,
-  music,
-  drawing,
-  shop,
-  match,
-} from './simple-links/simple-links'
+import { bangumi, music, drawing, shop, match } from './simple-links/simple-links'
 import { upload } from './upload/upload'
 import { search } from './search/search'
 import { feeds } from './feeds/feeds'

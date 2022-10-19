@@ -16,9 +16,7 @@ const entry = async () => {
     if (dq(card.element, '.translate-container')) {
       return
     }
-    const cardContent = card.element.querySelector(
-      '.card-content',
-    ) as HTMLElement
+    const cardContent = card.element.querySelector('.card-content') as HTMLElement
     const translator = new MachineTranslator({
       propsData: {
         text,

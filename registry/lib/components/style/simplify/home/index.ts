@@ -75,13 +75,15 @@ const metadata: ComponentMetadata = {
           () => dqa('.proxy-box > div'),
           elements => elements.length > 0 || isNotHome,
         )
-        return Object.fromEntries(categoryElements.map(it => ([
-          it.id.replace(/^bili_/, ''),
-          {
-            displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
-            defaultValue: false,
-          },
-        ])))
+        return Object.fromEntries(
+          categoryElements.map(it => [
+            it.id.replace(/^bili_/, ''),
+            {
+              displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
+              defaultValue: false,
+            },
+          ]),
+        )
       }
 
       const skipIds = ['推广']
@@ -100,24 +102,25 @@ const metadata: ComponentMetadata = {
         }
         return null
       }
-      const entries = headers
-        ?.filter(element => !skipIds.includes(element.id))
-        .map(element => {
-          const container = getContainer(element) as HTMLElement
-          const name = element.id
-          if (container) {
-            container.dataset.area = name
-            return [
-              name,
-              {
-                displayName: name,
-                defaultValue: false,
-              },
-            ]
-          }
-          return null
-        })
-        .filter((it): it is [string, SimplifyHomeOption] => it !== null) ?? []
+      const entries =
+        headers
+          ?.filter(element => !skipIds.includes(element.id))
+          .map(element => {
+            const container = getContainer(element) as HTMLElement
+            const name = element.id
+            if (container) {
+              container.dataset.area = name
+              return [
+                name,
+                {
+                  displayName: name,
+                  defaultValue: false,
+                },
+              ]
+            }
+            return null
+          })
+          .filter((it): it is [string, SimplifyHomeOption] => it !== null) ?? []
       return Object.fromEntries(entries)
     })()
     const generatedSwitches: Record<string, unknown> = {}
@@ -142,12 +145,16 @@ const metadata: ComponentMetadata = {
       generatedSwitches[key] = option
     })
     options.simplifyOptions.switches = generatedSwitches
-    const generatedStyles = Object.keys(generatedOptions).map(name => `
+    const generatedStyles = Object.keys(generatedOptions)
+      .map(name =>
+        `
         body.simplifyHome-switch-${name} .bili-layout .bili-grid[data-area="${name}"],
         body.simplifyHome-switch-${name} .storey-box .proxy-box #bili_${name} {
           display: none !important;
         }
-      `.trim()).join('\n')
+      `.trim(),
+      )
+      .join('\n')
     addStyle(generatedStyles, 'simplify-home-generated')
   },
 }

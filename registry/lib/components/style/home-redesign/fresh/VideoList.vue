@@ -8,13 +8,7 @@
         <VLoading v-if="loading" />
         <VEmpty v-else />
       </div>
-      <VideoCardWrapper
-        v-for="video of videos"
-        v-else
-        ref="cards"
-        :key="video.id"
-        :data="video"
-      />
+      <VideoCardWrapper v-for="video of videos" v-else ref="cards" :key="video.id" :data="video" />
     </div>
   </div>
 </template>
@@ -57,13 +51,17 @@ export default Vue.extend({
   mounted() {
     const container = this.$refs.content as HTMLElement
     let cancel: () => void
-    addComponentListener('freshHome.horizontalWheelScroll', (scroll: boolean) => {
-      if (scroll) {
-        cancel = enableHorizontalScroll(container)
-      } else {
-        cancel?.()
-      }
-    }, true)
+    addComponentListener(
+      'freshHome.horizontalWheelScroll',
+      (scroll: boolean) => {
+        if (scroll) {
+          cancel = enableHorizontalScroll(container)
+        } else {
+          cancel?.()
+        }
+      },
+      true,
+    )
   },
   methods: {
     async setupIntersection() {
@@ -77,7 +75,9 @@ export default Vue.extend({
       const container = this.$refs.content as HTMLElement
       const style = getComputedStyle(container)
       const containerWidth = container.clientWidth
-      const wrapperWidth = parseFloat(style.getPropertyValue('--card-width')) + parseFloat(style.getPropertyValue('--card-padding'))
+      const wrapperWidth =
+        parseFloat(style.getPropertyValue('--card-width')) +
+        parseFloat(style.getPropertyValue('--card-padding'))
       const pageWidth = Math.trunc(containerWidth / wrapperWidth) * wrapperWidth
       container.scrollBy(offset * pageWidth, 0)
     },
@@ -85,8 +85,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "effects";
+@import 'common';
+@import 'effects';
 
 .fresh-home-video-list {
   --card-height: var(--home-content-height);

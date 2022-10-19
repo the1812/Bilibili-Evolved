@@ -1,7 +1,13 @@
-import type { KeyBindingAction, KeyBindingActionContext } from 'registry/lib/components/utils/keymap/bindings'
+import type {
+  KeyBindingAction,
+  KeyBindingActionContext,
+} from 'registry/lib/components/utils/keymap/bindings'
 import { Toast } from '@/core/toast'
 import type { PluginMetadata } from '@/plugins/plugin'
-import { getSpeedContext, SpeedContext } from '../../../../components/video/player/common/speed/context'
+import {
+  getSpeedContext,
+  SpeedContext,
+} from '../../../../components/video/player/common/speed/context'
 import { formatSpeedText } from '../../../../components/video/player/common/speed/utils'
 import type { RememberSpeedComponent } from '../../../../components/video/player/remember-speed/component'
 import '../../../../components/video/player/common/speed'
@@ -32,14 +38,14 @@ export const plugin: PluginMetadata = {
 - 清除倍速记忆
   `,
   setup: ({ addData, addHook }) => {
-    const videoSpeedAction = (
-      cb: (context: SpeedContext) => Promise<unknown> | unknown,
-    ) => async (context: KeyBindingActionContext) => {
-      const speedContext = await getSpeedContext()
-      await cb(speedContext)
-      context.showTip(formatSpeedText(speedContext.videoElement.playbackRate), 'mdi-fast-forward')
-      return true
-    }
+    const videoSpeedAction =
+      (cb: (context: SpeedContext) => Promise<unknown> | unknown) =>
+      async (context: KeyBindingActionContext) => {
+        const speedContext = await getSpeedContext()
+        await cb(speedContext)
+        context.showTip(formatSpeedText(speedContext.videoElement.playbackRate), 'mdi-fast-forward')
+        return true
+      }
 
     // 最基本的支持
     addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
@@ -54,7 +60,9 @@ export const plugin: PluginMetadata = {
         },
         videoSpeedToggle: {
           displayName: '切换倍速',
-          run: videoSpeedAction(({ toggle }) => { toggle() }),
+          run: videoSpeedAction(({ toggle }) => {
+            toggle()
+          }),
         },
       } as CommonKeyBindingAction)
     })
@@ -79,19 +87,30 @@ export const plugin: PluginMetadata = {
         addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
           actions.videoSpeedForget = {
             displayName: '清除倍速记忆',
-            run: lodash.debounce(videoSpeedAction(async () => {
-              if (!component.settings.enabled) {
-                Toast.error('组件已禁用，不能清除当前视频倍速记忆值', component.metadata.displayName, 5000)
-                return
-              }
-              if (!component.options.individualRemember) {
-                Toast.error('选项「各视频分别记忆」已禁用，不能清除当前视频倍速记忆值', component.metadata.displayName, 5000)
-                return
-              }
-              component.forgetSpeed()
-              await component.resetVideoSpeed()
-              Toast.success('已清除当前视频倍速记忆值', component.metadata.displayName, 3000)
-            }), 200),
+            run: lodash.debounce(
+              videoSpeedAction(async () => {
+                if (!component.settings.enabled) {
+                  Toast.error(
+                    '组件已禁用，不能清除当前视频倍速记忆值',
+                    component.metadata.displayName,
+                    5000,
+                  )
+                  return
+                }
+                if (!component.options.individualRemember) {
+                  Toast.error(
+                    '选项「各视频分别记忆」已禁用，不能清除当前视频倍速记忆值',
+                    component.metadata.displayName,
+                    5000,
+                  )
+                  return
+                }
+                component.forgetSpeed()
+                await component.resetVideoSpeed()
+                Toast.success('已清除当前视频倍速记忆值', component.metadata.displayName, 3000)
+              }),
+              200,
+            ),
           }
         })
         addData('keymap.presets', (presetBase: Record<string, string>) => {

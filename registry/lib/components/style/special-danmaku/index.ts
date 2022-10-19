@@ -1,4 +1,8 @@
-import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { toggleStyle } from '@/components/styled-component'
 import { playerUrls } from '@/core/utils/urls'
@@ -19,17 +23,19 @@ type Options = OptionsOfMetadata<typeof options>
 
 const entry: ComponentEntry<Options> = ({ metadata, settings }) => {
   Object.keys(settings.options).forEach(disableType => {
-    addComponentListener(`${metadata.name}.${disableType}`, (value: boolean) => {
-      document.body.classList.toggle(`disable-${disableType}-danmaku-style`, value)
-    }, true)
+    addComponentListener(
+      `${metadata.name}.${disableType}`,
+      (value: boolean) => {
+        document.body.classList.toggle(`disable-${disableType}-danmaku-style`, value)
+      },
+      true,
+    )
   })
 }
 
 export const component = defineComponentMetadata({
   displayName: '禁用特殊弹幕样式',
-  tags: [
-    componentsTags.style,
-  ],
+  tags: [componentsTags.style],
   ...toggleStyle('disableSpecialDanmaku', () => import('./special-danmaku.scss'), entry),
   urlInclude: playerUrls,
   description: {

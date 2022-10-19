@@ -18,14 +18,13 @@ export type QuerySessionsResponsePayload = PayloadBase<'querySessionsResponse'> 
 }
 export type StopPayload = PayloadBase<'stop'>
 
-export type Payload = (
-  StartPayload |
-  CoreUpdatePayload |
-  ItemUpdatePayload |
-  StopPayload |
-  ItemStopPayload |
-  QuerySessionsPayload |
-  QuerySessionsResponsePayload
-)
+export type Payload =
+  | StartPayload
+  | CoreUpdatePayload
+  | ItemUpdatePayload
+  | StopPayload
+  | ItemStopPayload
+  | QuerySessionsPayload
+  | QuerySessionsResponsePayload
 
 export type MessageHandler<P extends Payload = Payload> = (payload: P) => void

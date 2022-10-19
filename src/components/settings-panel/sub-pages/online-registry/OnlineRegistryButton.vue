@@ -1,15 +1,10 @@
 <template>
-  <VButton
-    @mouseover="initPopup()"
-    @click="togglePopup()"
-  >
+  <VButton @mouseover="initPopup()" @click="togglePopup()">
     <slot />
   </VButton>
 </template>
 <script lang="ts">
-import {
-  VButton,
-} from '@/ui'
+import { VButton } from '@/ui'
 import { initPopup, togglePopup } from './vm'
 
 export default Vue.extend({

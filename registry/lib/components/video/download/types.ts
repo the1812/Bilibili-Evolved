@@ -1,6 +1,4 @@
-import {
-  Executable, TestPattern, VueModule, WithName,
-} from '@/core/common-types'
+import { Executable, TestPattern, VueModule, WithName } from '@/core/common-types'
 import { DownloadPackage, PackageEntry } from '@/core/download'
 import { formatNumber } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
@@ -47,7 +45,9 @@ export class DownloadVideoInfo {
   public qualities: VideoQuality[]
   public currentQuality: VideoQuality
   public jsonData: any
-  constructor(parameters: Omit<DownloadVideoInfo, 'totalSize' | 'totalLength' | 'titledFragments'>) {
+  constructor(
+    parameters: Omit<DownloadVideoInfo, 'totalSize' | 'totalLength' | 'titledFragments'>,
+  ) {
     Object.assign(this, parameters)
   }
   get totalSize() {
@@ -58,9 +58,8 @@ export class DownloadVideoInfo {
   }
   get titledFragments() {
     return this.fragments.map((fragment, index) => {
-      const hasSameExtension = this.fragments
-        .filter(f => f.extension === fragment.extension)
-        .length > 1
+      const hasSameExtension =
+        this.fragments.filter(f => f.extension === fragment.extension).length > 1
       const filenameSuffix = hasSameExtension
         ? ` - ${formatNumber(index + 1, this.fragments.length)}`
         : ''
@@ -84,9 +83,7 @@ export class DownloadVideoAction {
   readonly inputs: DownloadVideoInputItem[] = []
   extraAssets: PackageEntry[] = []
 
-  constructor(
-    public infos: DownloadVideoInfo[],
-  ) {
+  constructor(public infos: DownloadVideoInfo[]) {
     this.inputs = infos.map(it => it.input)
   }
   get isSingleVideo() {

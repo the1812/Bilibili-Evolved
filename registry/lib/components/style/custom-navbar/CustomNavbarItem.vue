@@ -111,7 +111,10 @@ export default Vue.extend({
       if (!popup) {
         return
       }
-      const allowRefresh = CustomNavbarItem.navbarOptions.refreshOnPopup && popup.popupRefresh && typeof popup.popupRefresh === 'function'
+      const allowRefresh =
+        CustomNavbarItem.navbarOptions.refreshOnPopup &&
+        popup.popupRefresh &&
+        typeof popup.popupRefresh === 'function'
       if (!initialPopup && allowRefresh) {
         popup.popupRefresh()
       }
@@ -262,12 +265,15 @@ export default Vue.extend({
     pointer-events: none;
   }
 
-  &:not(.disabled):hover .popup-container {
-    top: 100%;
-    > .popup {
-      // transform: translateY(0) translateX(-50%);
-      pointer-events: initial;
-      opacity: 1;
+  &:not(.disabled):hover,
+  &:not(.disabled):focus-within {
+    .popup-container {
+      top: 100%;
+      > .popup {
+        // transform: translateY(0) translateX(-50%);
+        pointer-events: initial;
+        opacity: 1;
+      }
     }
   }
 

@@ -14,10 +14,7 @@ import { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
 import { ascendingStringSort } from '@/core/utils/sort'
-import {
-  VEmpty,
-  ScrollTrigger,
-} from '@/ui'
+import { VEmpty, ScrollTrigger } from '@/ui'
 import MinimalHomeOperations from '../MinimalHomeOperations.vue'
 
 export default Vue.extend({
@@ -46,7 +43,10 @@ export default Vue.extend({
       try {
         this.error = false
         this.loading = true
-        this.cards = lodash.uniqBy([...this.cards, ...await getVideoFeeds('video', this.lastID)], it => it.id)
+        this.cards = lodash.uniqBy(
+          [...this.cards, ...(await getVideoFeeds('video', this.lastID))],
+          it => it.id,
+        )
       } catch (error) {
         logError(error)
         this.error = true

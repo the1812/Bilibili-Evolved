@@ -5,12 +5,7 @@ const context = require.context('./custom', true, /\.svg$/)
 export const customIcons: {
   [name: string]: string
 } = lodash.fromPairs(
-  context
-    .keys()
-    .map(key => [
-      key.replace(/.*\/([^/]+?)\.svg$/, '$1'),
-      context(key),
-    ]),
+  context.keys().map(key => [key.replace(/.*\/([^/]+?)\.svg$/, '$1'), context(key)]),
 )
 const [icons] = registerAndGetData(CustomIcons, customIcons)
 
@@ -22,11 +17,15 @@ const [icons] = registerAndGetData(CustomIcons, customIcons)
  * @param size 图标尺寸
  * @param config 其他设置
  */
-export const renderVIcon = (icon: string, size = 24, config?: {
-  slot?: string
-  style?: string
-  className?: string
-}) => {
+export const renderVIcon = (
+  icon: string,
+  size = 24,
+  config?: {
+    slot?: string
+    style?: string
+    className?: string
+  },
+) => {
   const { slot, style, className } = {
     slot: '',
     style: '',
@@ -42,15 +41,19 @@ export const renderVIcon = (icon: string, size = 24, config?: {
     }
     return [`be-iconfont-${icon}`]
   })().join(' ')
-  return /* html */`
+  return /* html */ `
     <i
       class="be-icon ${classes} ${className}"
       style="--size: ${size}px; ${style}"
     >
       ${slot}
-      ${icon in icons ? /* html */`
+      ${
+        icon in icons
+          ? /* html */ `
         <div class="custom-icon">${icons[icon]}</div>
-      ` : ''}
+      `
+          : ''
+      }
     </i>
   `
 }

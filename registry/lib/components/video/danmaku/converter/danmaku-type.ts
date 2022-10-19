@@ -6,5 +6,5 @@ export enum DanmakuType {
   Top,
   Reversed,
   Special,
-  Special2
+  Special2,
 }

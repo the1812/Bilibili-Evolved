@@ -4,10 +4,14 @@ export const ReorderEnabledClassName = 'reorder-enabled'
 export const ReorderingClassName = 'reordering'
 
 /** 表示重排列事件的监听函数 */
-export type ReorderEventHandler = (event: CustomEvent<{
-  element: HTMLElement
-  order: number
-}[]>) => void
+export type ReorderEventHandler = (
+  event: CustomEvent<
+    {
+      element: HTMLElement
+      order: number
+    }[]
+  >,
+) => void
 /** 表示重排列项目的一个状态(位置信息) */
 export interface ReorderItemSnapshot {
   /** 元素 */
@@ -26,7 +30,7 @@ export interface ReorderOrientation {
     snapshots: ReorderItemSnapshot[],
     currentElement: HTMLElement,
     xOffset: number,
-    yOffset: number
+    yOffset: number,
   ) => void
 }
 /** 支持的重排列方向 */
@@ -58,11 +62,14 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
             snapshot.element.classList.remove(ReorderIncreaseClassName)
           })
           rightSide.forEach(snapshot => {
-            if (currentRect.left + xOffset + currentRect.width
-              >= snapshot.rect.left + snapshot.rect.width / 2
+            if (
+              currentRect.left + xOffset + currentRect.width >=
+              snapshot.rect.left + snapshot.rect.width / 2
             ) {
               snapshot.element.classList.add(ReorderDecreaseClassName)
-              snapshot.element.style.transform = `translateX(-${firstSnapshot.rect.left - currentRect.left}px)`
+              snapshot.element.style.transform = `translateX(-${
+                firstSnapshot.rect.left - currentRect.left
+              }px)`
             } else {
               snapshot.element.classList.remove(ReorderDecreaseClassName)
               snapshot.element.style.transform = ''
@@ -77,14 +84,20 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
           leftSide.forEach(snapshot => {
             if (currentRect.left + xOffset <= snapshot.rect.left + snapshot.rect.width / 2) {
               snapshot.element.classList.add(ReorderIncreaseClassName)
-              snapshot.element.style.transform = `translateX(${currentRect.left + currentRect.width - firstSnapshot.rect.left - firstSnapshot.rect.width}px)`
+              snapshot.element.style.transform = `translateX(${
+                currentRect.left +
+                currentRect.width -
+                firstSnapshot.rect.left -
+                firstSnapshot.rect.width
+              }px)`
             } else {
               snapshot.element.classList.remove(ReorderIncreaseClassName)
               snapshot.element.style.transform = ''
             }
           })
         }
-      }, 50,
+      },
+      50,
     ),
   },
   /** 纵向 */
@@ -114,11 +127,14 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
             snapshot.element.classList.remove(ReorderIncreaseClassName)
           })
           lowerSide.forEach(snapshot => {
-            if (currentRect.top + yOffset + currentRect.height
-              >= snapshot.rect.top + snapshot.rect.height / 2
+            if (
+              currentRect.top + yOffset + currentRect.height >=
+              snapshot.rect.top + snapshot.rect.height / 2
             ) {
               snapshot.element.classList.add(ReorderDecreaseClassName)
-              snapshot.element.style.transform = `translateY(-${firstSnapshot.rect.top - currentRect.top}px)`
+              snapshot.element.style.transform = `translateY(-${
+                firstSnapshot.rect.top - currentRect.top
+              }px)`
             } else {
               snapshot.element.classList.remove(ReorderDecreaseClassName)
               snapshot.element.style.transform = ''
@@ -133,14 +149,20 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
           upperSide.forEach(snapshot => {
             if (currentRect.top + yOffset <= snapshot.rect.top + snapshot.rect.height / 2) {
               snapshot.element.classList.add(ReorderIncreaseClassName)
-              snapshot.element.style.transform = `translateY(${currentRect.top + currentRect.height - firstSnapshot.rect.top - firstSnapshot.rect.height}px)`
+              snapshot.element.style.transform = `translateY(${
+                currentRect.top +
+                currentRect.height -
+                firstSnapshot.rect.top -
+                firstSnapshot.rect.height
+              }px)`
             } else {
               snapshot.element.classList.remove(ReorderIncreaseClassName)
               snapshot.element.style.transform = ''
             }
           })
         }
-      }, 50,
+      },
+      50,
     ),
     // getFinalTransform: (changedSnapshots, currentSnapshot) => {
     //   return ''
@@ -169,10 +191,18 @@ export class Reorder extends EventTarget {
       })
     }
   }
-  addEventListener(type: 'reorder', listener: ReorderEventHandler, options?: boolean | AddEventListenerOptions) {
+  addEventListener(
+    type: 'reorder',
+    listener: ReorderEventHandler,
+    options?: boolean | AddEventListenerOptions,
+  ) {
     super.addEventListener(type, listener, options)
   }
-  removeEventListener(type: 'reorder', callback: ReorderEventHandler, options?: boolean | EventListenerOptions) {
+  removeEventListener(
+    type: 'reorder',
+    callback: ReorderEventHandler,
+    options?: boolean | EventListenerOptions,
+  ) {
     super.addEventListener(type, callback, options)
   }
   /** 获取各元素的`order`映射 */
@@ -208,9 +238,11 @@ export class Reorder extends EventTarget {
           element.style.transition = 'none'
           element.style.userSelect = 'none'
           this.generateSnapshots()
-          this.children.filter(e => e !== element).forEach(e => {
-            e.style.transition = 'transform .2s ease-out'
-          })
+          this.children
+            .filter(e => e !== element)
+            .forEach(e => {
+              e.style.transition = 'transform .2s ease-out'
+            })
           xInit = x
           yInit = y
           reordering = true
@@ -236,7 +268,10 @@ export class Reorder extends EventTarget {
           const yOffset = y - yInit
           element.style.transform = this.orientation.getMoveTransform(xOffset, yOffset)
           this.orientation.setOtherTransform(
-            [...this.snapshots.values()], element, xOffset, yOffset,
+            [...this.snapshots.values()],
+            element,
+            xOffset,
+            yOffset,
           )
         }
         const mousemove = (e: MouseEvent) => {
@@ -295,12 +330,14 @@ export class Reorder extends EventTarget {
           element.style.order = (parseInt(element.style.order) + orderOffset).toString()
           element.style.transform = ''
           element.style.transition = ''
-          this.dispatchEvent(new CustomEvent('reorder', {
-            detail: this.children.map(c => ({
-              element: c,
-              order: parseInt(c.style.order),
-            })),
-          }))
+          this.dispatchEvent(
+            new CustomEvent('reorder', {
+              detail: this.children.map(c => ({
+                element: c,
+                order: parseInt(c.style.order),
+              })),
+            }),
+          )
           // setTimeout(() => element.style.transition = '', 200);
           // setTimeout(() => {
           //   other.forEach(e => {

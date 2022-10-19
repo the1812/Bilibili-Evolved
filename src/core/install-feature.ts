@@ -5,15 +5,11 @@ import { installPlugin, PluginMetadata } from '@/plugins/plugin'
 import { installStyle, UserStyle } from '@/plugins/style'
 
 type FeatureType = ComponentMetadata | PluginMetadata | UserStyle
-const isComponent = (item: FeatureType): item is ComponentMetadata => (
+const isComponent = (item: FeatureType): item is ComponentMetadata =>
   Boolean((item as ComponentMetadata)?.entry)
-)
-const isPlugin = (item: FeatureType): item is PluginMetadata => (
+const isPlugin = (item: FeatureType): item is PluginMetadata =>
   Boolean((item as PluginMetadata)?.setup)
-)
-const isStyle = (item: FeatureType): item is UserStyle => (
-  Boolean((item as UserStyle)?.style)
-)
+const isStyle = (item: FeatureType): item is UserStyle => Boolean((item as UserStyle)?.style)
 
 /** 如果输入的功能链接是 .zip, 则尝试解压. 仅支持单个功能, 不能批量, 只是为了能方便在 GitHub 直接以 .zip 格式分享功能. */
 export const tryParseZip = async (url: string) => {
@@ -21,7 +17,7 @@ export const tryParseZip = async (url: string) => {
   const { monkey } = await import('../core/ajax')
   const isZip = url.endsWith('.zip')
   const responseType = isZip ? 'blob' : 'text'
-  const response = await monkey({ url, method: 'GET', responseType }) as Blob | string
+  const response = (await monkey({ url, method: 'GET', responseType })) as Blob | string
   if (!isZip || typeof response === 'string') {
     return response as string
   }
@@ -33,7 +29,10 @@ export const tryParseZip = async (url: string) => {
   }
   return files[0].async('text')
 }
-export const installFeatureFromCode = async (code: string, url?: string): Promise<{
+export const installFeatureFromCode = async (
+  code: string,
+  url?: string,
+): Promise<{
   metadata: FeatureType
   message: string
 }> => {
@@ -67,7 +66,9 @@ export const installFeatureFromCode = async (code: string, url?: string): Promis
   await after(installerResult.metadata)
   return installerResult
 }
-export const installFeature = async (url: string): Promise<{
+export const installFeature = async (
+  url: string,
+): Promise<{
   metadata: FeatureType
   message: string
 }> => {

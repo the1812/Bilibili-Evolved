@@ -8,13 +8,15 @@ export const component = defineComponentMetadata({
   name: 'freshHome',
   displayName: '清爽首页',
   urlInclude: homeUrls,
-  tags: [
-    componentsTags.style,
-  ],
+  tags: [componentsTags.style],
   entry: () => {
-    addComponentListener('freshHome.maxWidth', (width: number) => {
-      document.documentElement.style.setProperty('--home-max-width-override', `${width}px`)
-    }, true)
+    addComponentListener(
+      'freshHome.maxWidth',
+      (width: number) => {
+        document.documentElement.style.setProperty('--home-max-width-override', `${width}px`)
+      },
+      true,
+    )
     contentLoaded(async () => {
       const FreshHome = await import('./FreshHome.vue')
       const freshHome = mountVueComponent(FreshHome)

@@ -16,9 +16,10 @@ const entry: ComponentEntry = async ({ settings }) => {
         const watchlaterItem = list[index]
         const { bvid, cid, pages } = watchlaterItem
         const page = pages.find(p => p.cid === cid)?.page ?? 1
-        const url = page > 1
-          ? `https://www.bilibili.com/video/${bvid}?p=${page}`
-          : `https://www.bilibili.com/video/${bvid}`
+        const url =
+          page > 1
+            ? `https://www.bilibili.com/video/${bvid}?p=${page}`
+            : `https://www.bilibili.com/video/${bvid}`
         const pic = item.querySelector('.av-pic') as HTMLAnchorElement
         pic.target = '_blank'
         pic.href = url
@@ -64,11 +65,6 @@ export const component = defineComponentMetadata({
       defaultValue: true,
     },
   },
-  urlInclude: [
-    'https://www.bilibili.com/watchlater/#/list',
-  ],
-  tags: [
-    componentsTags.utils,
-    componentsTags.video,
-  ],
+  urlInclude: ['https://www.bilibili.com/watchlater/#/list'],
+  tags: [componentsTags.utils, componentsTags.video],
 })

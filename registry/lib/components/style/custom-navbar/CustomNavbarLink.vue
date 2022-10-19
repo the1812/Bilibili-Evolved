@@ -1,9 +1,5 @@
 <template>
-  <a
-    v-bind="$attrs"
-    :target="newTab ? '_blank' : null"
-    v-on="$listeners"
-  >
+  <a v-bind="$attrs" :target="newTab ? '_blank' : null" v-on="$listeners">
     <slot />
   </a>
 </template>

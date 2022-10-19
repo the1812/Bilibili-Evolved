@@ -16,15 +16,28 @@ export const getHistoryItems = (key = SearchHistoryKey) => {
 export const clearHistoryItems = (key = SearchHistoryKey) => localStorage.setItem(key, '[]')
 export const addHistoryItem = (keyword: string, key = SearchHistoryKey) => {
   console.log('add', keyword)
-  localStorage.setItem(key, JSON.stringify(
-    lodash.sortBy(lodash.uniqBy([{
-      value: keyword,
-      isHistory: 1,
-      timestamp: Number(new Date()),
-    }, ...getHistoryItems()], h => h.value), h => h.timestamp)
-      .reverse()
-      .slice(0, SearchHistoryMaxItems),
-  ))
+  localStorage.setItem(
+    key,
+    JSON.stringify(
+      lodash
+        .sortBy(
+          lodash.uniqBy(
+            [
+              {
+                value: keyword,
+                isHistory: 1,
+                timestamp: Number(new Date()),
+              },
+              ...getHistoryItems(),
+            ],
+            h => h.value,
+          ),
+          h => h.timestamp,
+        )
+        .reverse()
+        .slice(0, SearchHistoryMaxItems),
+    ),
+  )
 }
 export const deleteHistoryItem = (keyword: string, key = SearchHistoryKey) => {
   const items = getHistoryItems()
@@ -48,18 +61,21 @@ export const historyProvider: LaunchBarActionProvider = {
         clearHistoryItems()
       },
     }
-    const items = getHistoryItems().map(it => ({
-      name: it.value,
-      icon: 'mdi-history',
-      // description: `在 ${formatDate(new Date(it.timestamp))} 搜索过`,
-      explicitSelect: true,
-      action: () => {
-        search(it.value)
-      },
-      deleteAction: () => {
-        deleteHistoryItem(it.value)
-      },
-    } as LaunchBarAction))
+    const items = getHistoryItems().map(
+      it =>
+        ({
+          name: it.value,
+          icon: 'mdi-history',
+          // description: `在 ${formatDate(new Date(it.timestamp))} 搜索过`,
+          explicitSelect: true,
+          action: () => {
+            search(it.value)
+          },
+          deleteAction: () => {
+            deleteHistoryItem(it.value)
+          },
+        } as LaunchBarAction),
+    )
     if (items.length > 0) {
       items.push(clearAction)
     }

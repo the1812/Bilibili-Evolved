@@ -1,19 +1,11 @@
 <template>
   <div v-show="isConnected">
-    <div
-      v-if="canStartDebug"
-      class="component-action dev-client-action"
-      @click="startDebug"
-    >
+    <div v-if="canStartDebug" class="component-action dev-client-action" @click="startDebug">
       <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
       <VIcon v-else icon="mdi-play-network-outline" :size="16" />
       {{ busy ? '启动中' : '开始调试' }}
     </div>
-    <div
-      v-if="canStopDebug"
-      class="component-action dev-client-action"
-      @click="stopDebug"
-    >
+    <div v-if="canStopDebug" class="component-action dev-client-action" @click="stopDebug">
       <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
       <VIcon v-else icon="mdi-minus-network-outline" :size="16" />
       {{ busy ? '停止中' : '停止调试' }}
@@ -61,10 +53,13 @@ export default Vue.extend({
       return this.autoUpdateRecord?.url
     },
     isDebugging() {
-      return this.componentUpdateUrl && this.sessions.some((path: string) => {
-        const { pathname } = new URL(this.componentUpdateUrl)
-        return path === pathname
-      })
+      return (
+        this.componentUpdateUrl &&
+        this.sessions.some((path: string) => {
+          const { pathname } = new URL(this.componentUpdateUrl)
+          return path === pathname
+        })
+      )
     },
     canStartDebug() {
       return !this.isDebugging && urlConverter.toDevUrl(this.componentUpdateUrl) !== null

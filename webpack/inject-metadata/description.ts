@@ -1,9 +1,6 @@
 import { existsSync } from 'fs'
 import { dirname, join } from 'path'
-import {
-  objectProperty,
-  identifier,
-} from '@babel/types'
+import { objectProperty, identifier } from '@babel/types'
 import { parseExpression } from '@babel/parser'
 import { InjectMetadataAction } from './types'
 
@@ -29,7 +26,8 @@ export const injectDescription: InjectMetadataAction = ({ filename }) => {
   return [
     objectProperty(
       identifier('description'),
-      parseExpression(`
+      parseExpression(
+        `
 (() => {
   const context = require.context('./', false, ${regex})
   return {
@@ -43,7 +41,9 @@ export const injectDescription: InjectMetadataAction = ({ filename }) => {
     'zh-CN': () => import('./index.md').then(m => m.default),
   }
 })()
-      `, { plugins: ['typescript'] }),
+      `,
+        { plugins: ['typescript'] },
+      ),
     ),
   ]
 }

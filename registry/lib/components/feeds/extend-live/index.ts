@@ -13,14 +13,17 @@ interface LiveInfo {
 }
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
-  const liveList = await select('.live-up-list, .bili-dyn-live-users__body') as HTMLElement
+  const liveList = (await select('.live-up-list, .bili-dyn-live-users__body')) as HTMLElement
   if (liveList === null) {
     return
   }
   const pageSize = 24
   const { getPages, getJsonWithCredentials } = await import('@/core/ajax')
   const fullList: LiveInfo[] = await getPages({
-    api: page => getJsonWithCredentials(`https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=${pageSize}`),
+    api: page =>
+      getJsonWithCredentials(
+        `https://api.live.bilibili.com/relation/v1/feed/feed_list?page=${page}&pagesize=${pageSize}`,
+      ),
     getList: json => lodash.get(json, 'data.list', []),
     getTotal: json => lodash.get(json, 'data.results', 0),
   })
@@ -46,7 +49,10 @@ const entry = async () => {
           window.open(url, '_blank')
         })
       }
-      const face = dq(clone, '.live-up-img, .bili-dyn-live-users__item__face .bili-awesome-img') as HTMLElement
+      const face = dq(
+        clone,
+        '.live-up-img, .bili-dyn-live-users__item__face .bili-awesome-img',
+      ) as HTMLElement
       face.style.backgroundImage = `url(${it.face})`
       const title = dq(clone, '.live-name, .bili-dyn-live-users__item__title') as HTMLElement
       title.innerHTML = it.title
@@ -70,11 +76,6 @@ export const component: ComponentMetadata = {
     'zh-CN': '在动态的`正在直播`中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.',
   },
   entry: styledComponentEntry(() => import('./extend-feeds-live.scss'), entry),
-  tags: [
-    componentsTags.feeds,
-    componentsTags.live,
-  ],
-  urlInclude: [
-    /^https:\/\/t\.bilibili\.com\/$/,
-  ],
+  tags: [componentsTags.feeds, componentsTags.live],
+  urlInclude: [/^https:\/\/t\.bilibili\.com\/$/],
 }

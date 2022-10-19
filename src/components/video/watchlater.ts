@@ -130,7 +130,9 @@ export const toggleWatchlater = async (aid: string | number, add?: boolean | und
   if (add === undefined) {
     add = !watchlaterList.includes(id)
   }
-  const api = add ? 'https://api.bilibili.com/x/v2/history/toview/add' : 'https://api.bilibili.com/x/v2/history/toview/del'
+  const api = add
+    ? 'https://api.bilibili.com/x/v2/history/toview/add'
+    : 'https://api.bilibili.com/x/v2/history/toview/del'
   const { getCsrf } = await import('@/core/utils')
   const csrf = getCsrf()
   const { postTextWithCredentials } = await import('@/core/ajax')

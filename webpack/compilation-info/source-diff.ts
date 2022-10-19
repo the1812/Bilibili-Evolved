@@ -14,11 +14,7 @@ const excludePatterns = [
 ]
 
 export const isSourceChanged = () => {
-  const lastDiff = process
-    .execSync('git diff --name-only HEAD^')
-    .toString()
-    .trim()
-    .split('\n')
+  const lastDiff = process.execSync('git diff --name-only HEAD^').toString().trim().split('\n')
 
   const isAllExcluded = lastDiff.every(path => excludePatterns.some(p => p.test(path)))
   return !isAllExcluded

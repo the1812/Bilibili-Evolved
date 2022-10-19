@@ -17,13 +17,8 @@ export const component = defineComponentMetadata({
     'zh-CN': '使迷你播放器的拖动条可以触摸拖动.',
   },
   enabledByDefault: navigator.maxTouchPoints > 0,
-  tags: [
-    componentsTags.touch,
-  ],
-  urlInclude: [
-    ...videoAndBangumiUrls,
-    ...liveUrls,
-  ],
+  tags: [componentsTags.touch],
+  urlInclude: [...videoAndBangumiUrls, ...liveUrls],
   entry: () => setTouch(true),
   reload: () => setTouch(true),
   unload: () => setTouch(false),

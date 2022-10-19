@@ -11,10 +11,7 @@ export const component = defineComponentMetadata({
       style: () => import('./player-shadow.scss'),
     },
   ],
-  tags: [
-    componentsTags.style,
-    componentsTags.video,
-  ],
+  tags: [componentsTags.style, componentsTags.video],
   description: {
     'zh-CN': '为播放器添加主题色投影.',
   },

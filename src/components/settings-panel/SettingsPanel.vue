@@ -23,30 +23,18 @@
       <div ref="mainContainer" class="main">
         <div ref="componentList" class="component-list">
           <div class="settings-panel-search-bar">
-            <TextBox
-              v-model="searchKeyword"
-              class="settings-panel-search"
-              placeholder="搜索"
-            />
+            <TextBox v-model="searchKeyword" class="settings-panel-search" placeholder="搜索" />
             <VButton
               v-for="action of searchBarActions"
               :key="action.key"
               type="transparent"
               icon
               :title="
-                typeof action.title === 'function'
-                  ? action.title(searchBarContext)
-                  : action.title
+                typeof action.title === 'function' ? action.title(searchBarContext) : action.title
               "
-              :disabled="
-                action.disabled ? action.disabled(searchBarContext) : false
-              "
+              :disabled="action.disabled ? action.disabled(searchBarContext) : false"
             >
-              <VIcon
-                :icon="action.icon"
-                :size="18"
-                @click="action.run(searchBarContext)"
-              />
+              <VIcon :icon="action.icon" :size="18" @click="action.run(searchBarContext)" />
             </VButton>
           </div>
           <div
@@ -85,19 +73,11 @@
 </template>
 
 <script lang="ts">
-import {
-  VIcon,
-  TextBox,
-  VPopup,
-  VEmpty,
-  VButton,
-} from '@/ui'
+import { VIcon, TextBox, VPopup, VEmpty, VButton } from '@/ui'
 import { getHook } from '@/plugins/hook'
 import { deleteValue } from '@/core/utils'
 import ComponentSettings from './ComponentSettings.vue'
-import {
-  ComponentMetadata, ComponentTag, components,
-} from '../component'
+import { ComponentMetadata, ComponentTag, components } from '../component'
 import ComponentDetail from './ComponentDetail.vue'
 import ComponentTags from './ComponentTags.vue'
 import { getDescriptionText } from '../description'
@@ -132,23 +112,31 @@ export default {
   },
   computed: {
     isComponentSelected() {
-      return (name: string) => (
+      return (name: string) =>
         this.selectedComponents.some((c: ComponentMetadata) => c.name === name)
-      )
     },
     tags() {
       const renderedComponents = this.renderedComponents as ComponentMetadata[]
       let tags = [] as (ComponentTag & { count: number })[]
-      renderedComponents.forEach(it => it.tags.forEach(t => {
-        tags.push({ count: 0, ...t })
-      }))
+      renderedComponents.forEach(it =>
+        it.tags.forEach(t => {
+          tags.push({ count: 0, ...t })
+        }),
+      )
       const counts = lodash.countBy(tags, (t: ComponentTag) => t.name)
       tags = lodash.uniqBy(tags, t => t.name)
       tags.forEach(t => (t.count = counts[t.name]))
       return tags
     },
     searchBarContext(): SearchBarActionContext {
-      return lodash.pick(this, 'components', 'selectedComponent', 'selectedComponents', 'searchKeyword', 'searchFilter')
+      return lodash.pick(
+        this,
+        'components',
+        'selectedComponent',
+        'selectedComponents',
+        'searchKeyword',
+        'searchFilter',
+      )
     },
   },
   watch: {
@@ -168,9 +156,9 @@ export default {
     components() {
       this.updateRenderedComponents()
       this.$refs.componentTags.refreshTags()
-      if (!this.components.some((c: ComponentMetadata) => (
-        c.name === this.selectedComponent?.name
-      ))) {
+      if (
+        !this.components.some((c: ComponentMetadata) => c.name === this.selectedComponent?.name)
+      ) {
         this.selectedComponent = null
       }
     },
@@ -191,7 +179,7 @@ export default {
         let endIdx = list.findIndex(c => c.name === name)
         if (startIdx > endIdx) {
           // if start index is greater than end index, swap them
-          [startIdx, endIdx] = [endIdx, startIdx]
+          ;[startIdx, endIdx] = [endIdx, startIdx]
         }
         this.selectedComponents = list.slice(startIdx, endIdx + 1)
         return
@@ -228,12 +216,19 @@ export default {
           return {}
         }
         return Object.fromEntries(
-          await Promise.all(components.map(async c => [c.name, ([
-            c.name,
-            c.displayName,
-            c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
-            await getDescriptionText(c),
-          ]).join('\n').toLowerCase()])),
+          await Promise.all(
+            components.map(async c => [
+              c.name,
+              [
+                c.name,
+                c.displayName,
+                c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
+                await getDescriptionText(c),
+              ]
+                .join('\n')
+                .toLowerCase(),
+            ]),
+          ),
         )
       })()
       const internalFiltered = components.filter(c => {
@@ -397,8 +392,7 @@ export default {
       left: calc(100% - 12px);
       height: calc(100% - 22px);
       z-index: -1;
-      transform: translateZ(0) translateY(-50%)
-        translateX(calc(-48% * var(--direction)));
+      transform: translateZ(0) translateY(-50%) translateX(calc(-48% * var(--direction)));
       transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
         opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
       padding-left: 12px;

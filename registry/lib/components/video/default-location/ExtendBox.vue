@@ -4,9 +4,7 @@
     :class="{ 'video-default-location-extend-box-hidden': realHidden }"
   >
     <div class="video-default-location-extend-box-bar" @click="setRealHidden">
-      <div class="video-default-location-extend-box-bar-text">
-        位置测试
-      </div>
+      <div class="video-default-location-extend-box-bar-text">位置测试</div>
       <div
         class="video-default-location-extend-box-bar-btn"
         :class="btnClass"
@@ -29,7 +27,8 @@
 <script lang="ts">
 import { VIcon } from '@/ui'
 
-const getIconName = (hidden: boolean): string => (hidden ? 'mdi-unfold-more-horizontal' : 'mdi-unfold-less-horizontal')
+const getIconName = (hidden: boolean): string =>
+  hidden ? 'mdi-unfold-more-horizontal' : 'mdi-unfold-less-horizontal'
 
 const btnAnimationClass = 'video-default-location-extend-box-bar-btn-animation'
 
@@ -91,7 +90,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "bar";
+@import 'bar';
 
 $border-color: #8884;
 $border-radius: 4px;
@@ -129,7 +128,7 @@ $border-radius: 4px;
 }
 
 .video-default-location-extend-box-bar {
-  transition: box-shadow .2s ease-out;
+  transition: box-shadow 0.2s ease-out;
 }
 
 .video-default-location-extend-box-hidden {
@@ -144,7 +143,7 @@ $border-radius: 4px;
 
 .video-default-location-extend-box-content-transition-enter-active,
 .video-default-location-extend-box-content-transition-leave-active {
-  transition: margin-top .2s ease-out;
+  transition: margin-top 0.2s ease-out;
 }
 
 .video-default-location-extend-box-content-transition-enter,

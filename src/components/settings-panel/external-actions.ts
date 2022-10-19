@@ -6,15 +6,17 @@ export const provideActions = () => {
     const onlineRegistryActionName = 'onlineRegistry'
     providers.push({
       name: onlineRegistryActionName,
-      getActions: async () => [{
-        name: '切换在线仓库',
-        description: 'Toggle Online Registry',
-        icon: 'mdi-web',
-        action: async () => {
-          const { togglePopup } = await import('./sub-pages/online-registry/vm')
-          togglePopup()
+      getActions: async () => [
+        {
+          name: '切换在线仓库',
+          description: 'Toggle Online Registry',
+          icon: 'mdi-web',
+          action: async () => {
+            const { togglePopup } = await import('./sub-pages/online-registry/vm')
+            togglePopup()
+          },
         },
-      }],
+      ],
     })
   })
 }

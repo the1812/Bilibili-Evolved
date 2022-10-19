@@ -39,4 +39,6 @@ const builtInActions: SearchBarAction[] = [
     },
   },
 ]
-export const [searchBarActions] = registerAndGetData('settingsPanel.searchBarActions', [...builtInActions])
+export const [searchBarActions] = registerAndGetData('settingsPanel.searchBarActions', [
+  ...builtInActions,
+])

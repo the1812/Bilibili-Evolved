@@ -39,7 +39,7 @@ declare global {
   const webpackGitInfo: GitInfo
 
   const BwpElement: {
-    new(): HTMLVideoElement
+    new (): HTMLVideoElement
     prototype: HTMLVideoElement
   }
   interface Window {
@@ -69,7 +69,7 @@ declare global {
   interface MonkeyXhrBasicDetails {
     url: string
     method?: 'GET' | 'POST' | 'HEAD'
-    headers?: { [name: string]: string },
+    headers?: { [name: string]: string }
     data?: string
     cookie?: string
     binary?: boolean
@@ -93,7 +93,12 @@ declare global {
     ontimeout?: (response: MonkeyXhrResponse) => void
     onload?: (response: MonkeyXhrResponse) => void
   }
-  type RunAtOptions = 'document-start' | 'document-end' | 'document-idle' | 'document-body' | 'context-menu'
+  type RunAtOptions =
+    | 'document-start'
+    | 'document-end'
+    | 'document-idle'
+    | 'document-body'
+    | 'context-menu'
   interface MonkeyInfo {
     script: {
       author: string

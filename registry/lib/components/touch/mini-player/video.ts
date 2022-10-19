@@ -3,7 +3,7 @@ import { addStyle, removeStyle } from '@/core/style'
 import miniPlayerStyle from './mini-player.scss'
 
 export const touchVideoMiniPlayer = async (enable: boolean) => {
-  const player = await select('#bilibili-player') as HTMLDivElement
+  const player = (await select('#bilibili-player')) as HTMLDivElement
   if (!player) {
     console.warn('mini player touch move: player not found')
     return

@@ -65,14 +65,7 @@ import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import {
-  VIcon,
-  VDropdown,
-  TextBox,
-  VPopup,
-  VLoading,
-  VEmpty,
-} from '@/ui'
+import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty } from '@/ui'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
 

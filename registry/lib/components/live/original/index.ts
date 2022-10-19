@@ -4,7 +4,8 @@ import { matchUrlPattern } from '@/core/utils'
 export const component = defineComponentMetadata({
   name: 'originalLiveroom',
   displayName: '返回原版直播间',
-  description: '在直播间中提供返回原版直播间的按钮, 原版直播间将无视活动皮肤, 强制使用标准的直播页面.',
+  description:
+    '在直播间中提供返回原版直播间的按钮, 原版直播间将无视活动皮肤, 强制使用标准的直播页面.',
   tags: [componentsTags.live],
   entry: none,
   urlInclude: [

@@ -2,13 +2,7 @@
   <div class="video-screenshot-thumbnail">
     <img v-if="objectUrl" :src="objectUrl" />
     <div v-if="objectUrl" class="mask">
-      <a
-        ref="link"
-        class="link"
-        style="display:none"
-        :href="objectUrl"
-        :download="filename"
-      ></a>
+      <a ref="link" class="link" style="display: none" :href="objectUrl" :download="filename"></a>
       <button class="save" title="保存" @click="save">
         <VIcon :size="28" icon="mdi-content-save-outline"></VIcon>
       </button>

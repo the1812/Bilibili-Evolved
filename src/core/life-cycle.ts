@@ -4,7 +4,7 @@ import { childList } from './observer'
  * `<head>`载入后运行
  * @param callback 回调函数
  */
-export const headLoaded = <T> (callback: () => T) => (
+export const headLoaded = <T>(callback: () => T) =>
   new Promise<T>(resolve => {
     if (document.head !== null) {
       resolve(callback())
@@ -17,13 +17,12 @@ export const headLoaded = <T> (callback: () => T) => (
       })
     }
   })
-)
 
 /**
  * `<body>`载入后运行 (`DOMContentLoaded`)
  * @param callback 回调函数
  */
-export const contentLoaded = <T> (callback: () => T) => (
+export const contentLoaded = <T>(callback: () => T) =>
   new Promise<T>(resolve => {
     if (document.readyState !== 'loading') {
       resolve(callback())
@@ -31,13 +30,12 @@ export const contentLoaded = <T> (callback: () => T) => (
       document.addEventListener('DOMContentLoaded', () => resolve(callback()))
     }
   })
-)
 
 /**
  * 网页`load`事件时运行
  * @param callback 回调函数
  */
-export const fullyLoaded = <T> (callback: () => T) => (
+export const fullyLoaded = <T>(callback: () => T) =>
   new Promise<T>(resolve => {
     if (document.readyState === 'complete') {
       resolve(callback())
@@ -45,7 +43,6 @@ export const fullyLoaded = <T> (callback: () => T) => (
       unsafeWindow.addEventListener('load', () => resolve(callback()))
     }
   })
-)
 /**
  * 脚本的生命周期事件类型
  */

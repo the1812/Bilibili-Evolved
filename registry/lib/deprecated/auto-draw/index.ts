@@ -13,13 +13,8 @@ const entry = async () => {
     return
   }
   childListSubtree(popupContainer, () => {
-    console.log(
-      'draw button = ',
-      dq('.chat-popups-section .draw>span:nth-child(3)'),
-    )
-    const draw = dq(
-      '.chat-popups-section .draw>span:nth-child(3)',
-    ) as HTMLSpanElement | null
+    console.log('draw button = ', dq('.chat-popups-section .draw>span:nth-child(3)'))
+    const draw = dq('.chat-popups-section .draw>span:nth-child(3)') as HTMLSpanElement | null
     if (draw === null) {
       const drawWaiting = dq(
         '.chat-popups-section .function-bar>span:nth-child(3)',

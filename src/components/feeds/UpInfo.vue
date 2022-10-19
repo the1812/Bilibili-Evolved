@@ -6,18 +6,10 @@
     :title="upName"
     target="_blank"
   >
-    <DpiImage
-      v-if="upFaceUrl"
-      :size="24"
-      class="be-up-info-cover"
-      :src="upFaceUrl"
-    />
+    <DpiImage v-if="upFaceUrl" :size="24" class="be-up-info-cover" :src="upFaceUrl" />
     <div v-else class="be-up-info-cover-fallback">
       <slot name="fallback-icon">
-        <VIcon
-          icon="up-outline"
-          :size="18"
-        />
+        <VIcon icon="up-outline" :size="18" />
       </slot>
     </div>
     <div class="be-up-info-name">
@@ -62,7 +54,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .be-up-info {
   &:not(.fallback) {
@@ -88,7 +80,7 @@ export default Vue.extend({
   }
   &-name {
     @include single-line();
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
   }
   &:hover .be-up-info-name {
     color: var(--theme-color) !important;

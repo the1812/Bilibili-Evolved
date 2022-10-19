@@ -1,9 +1,7 @@
 <template>
-  <div class="live-danmaku-recorder" :class="{opened}">
+  <div class="live-danmaku-recorder" :class="{ opened }">
     <div class="header">
-      <div v-show="!(collapsed && isRecording)" class="title">
-        记录弹幕
-      </div>
+      <div v-show="!(collapsed && isRecording)" class="title">记录弹幕</div>
       <template v-if="collapsed && isRecording">
         <VIcon icon="mdi-record-rec"></VIcon>
         <div class="collapse-danmaku-count">
@@ -18,29 +16,14 @@
       </VButton>
     </div>
     <template v-if="!collapsed">
-      <div class="record-stats">
-        已记录{{ danmakus.length }}条弹幕
-      </div>
-      <div v-if="loading" class="loading-tip">
-        正在连接...
-      </div>
-      <VButton
-        v-else
-        class="toggle-record"
-        type="primary"
-        @click="isRecording = !isRecording"
-      >
-        <template v-if="isRecording">
-          <VIcon icon="mdi-square" :size="14"></VIcon>记录中
-        </template>
-        <template v-else>
-          <VIcon icon="mdi-circle" :size="14"></VIcon>开始记录
-        </template>
+      <div class="record-stats">已记录{{ danmakus.length }}条弹幕</div>
+      <div v-if="loading" class="loading-tip">正在连接...</div>
+      <VButton v-else class="toggle-record" type="primary" @click="isRecording = !isRecording">
+        <template v-if="isRecording"> <VIcon icon="mdi-square" :size="14"></VIcon>记录中 </template>
+        <template v-else> <VIcon icon="mdi-circle" :size="14"></VIcon>开始记录 </template>
       </VButton>
       <div class="exports">
-        <VButton class="export-xml" @click="exportXML()">
-          导出XML
-        </VButton>
+        <VButton class="export-xml" @click="exportXML()"> 导出XML </VButton>
         <!-- <div class="export-ass" @click="exportASS()">导出ASS</div> -->
       </div>
     </template>
@@ -74,9 +57,7 @@ export default {
     try {
       const { LiveSocket } = await import('@/components/live/live-socket')
       // 绕了一大圈拿 room id, 不知道为啥 URL 里那个数字有些直播间不是 room id
-      const user = (await select(
-        '.header-info-ctnr .room-cover',
-      )) as HTMLAnchorElement
+      const user = (await select('.header-info-ctnr .room-cover')) as HTMLAnchorElement
       const uidMatch = user.href.match(/space\.bilibili\.com\/(\d+)/)
       if (!uidMatch) {
         throw new Error(`无法获取 UID: ${user.href}`)
@@ -89,11 +70,7 @@ export default {
       if (!roomIDMatch) {
         throw new Error(`无法获取 Room ID: ${document.URL}`)
       }
-      const roomID = lodash.get(
-        json,
-        'data.roomid',
-        roomIDMatch[1],
-      )
+      const roomID = lodash.get(json, 'data.roomid', roomIDMatch[1])
       const socket = new LiveSocket(parseInt(roomID))
       socket.addEventListener('danmaku', (e: CustomEvent<LiveDanmaku>) => {
         if (this.isRecording) {
@@ -117,9 +94,9 @@ export default {
           .replace(/>/g, '&gt;')
           .replace(/"/g, '&quot;')
           .replace(/'/g, '&apos;')
-        return `<d p="${fixed(d.time / 1000, 3)},${d.type},${d.fontSize},${
-          d.color
-        },${d.sendTime},0,${d.userHash},0">${content}</d>`
+        return `<d p="${fixed(d.time / 1000, 3)},${d.type},${d.fontSize},${d.color},${
+          d.sendTime
+        },0,${d.userHash},0">${content}</d>`
       })
       const xml = `
 <?xml version="1.0" encoding="UTF-8"?>

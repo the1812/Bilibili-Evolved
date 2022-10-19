@@ -1,5 +1,7 @@
 import {
-  defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata,
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
 } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { matchUrlPattern } from '@/core/utils'
@@ -24,17 +26,15 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (favoriteListUrls.some(matchUrlPattern) && !settings.options.showInFavoritePages) {
     return
   }
-  const {
-    playerReady,
-    mountVueComponent,
-    getUID,
-  } = await import('@/core/utils')
+  const { playerReady, mountVueComponent, getUID } = await import('@/core/utils')
   if (!getUID()) {
     return
   }
 
   await playerReady()
-  const favoriteButton = dq('.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect')
+  const favoriteButton = dq(
+    '.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect',
+  )
   if (!favoriteButton) {
     return
   }
@@ -57,7 +57,8 @@ export const component = defineComponentMetadata({
   name: 'quickFavorite',
   displayName: '启用快速收藏',
   description: {
-    'zh-CN': '启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹. 请注意如果在在收藏夹播放页面仍然显示, 是不会实时同步右侧的播放列表的.',
+    'zh-CN':
+      '启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹. 请注意如果在在收藏夹播放页面仍然显示, 是不会实时同步右侧的播放列表的.',
   },
   entry,
   unload: () => {
@@ -68,9 +69,7 @@ export const component = defineComponentMetadata({
   },
   urlInclude: videoUrls,
   // urlExclude: favoriteListUrls,
-  tags: [
-    componentsTags.video,
-  ],
+  tags: [componentsTags.video],
   options,
   plugin: {
     displayName: '快速收藏 - 快捷键支持',

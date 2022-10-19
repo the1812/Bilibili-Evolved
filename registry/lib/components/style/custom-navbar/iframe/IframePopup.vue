@@ -1,10 +1,5 @@
 <template>
-  <iframe
-    :src="item.src"
-    frameborder="0"
-    :width="item.width"
-    :height="item.height"
-  ></iframe>
+  <iframe :src="item.src" frameborder="0" :width="item.width" :height="item.height"></iframe>
 </template>
 
 <script lang="ts">

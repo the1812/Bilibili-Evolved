@@ -5,11 +5,7 @@ import { CdnTypes } from '@/core/cdn-types'
 import { addComponentListener } from '@/core/settings'
 import { DownloadPackageEmitMode } from '@/core/download-mode'
 import { ComponentEntry, componentsTags } from '../types'
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '../define'
+import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '../define'
 import { provideActions } from './external-actions'
 
 export const WidgetsPlugin = 'widgets'

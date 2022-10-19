@@ -1,7 +1,7 @@
 import { select } from '@/core/spin-query'
 
 export const touchLiveMiniPlayer = async (enable: boolean) => {
-  const player = await select('.live-player-ctnr') as HTMLDivElement
+  const player = (await select('.live-player-ctnr')) as HTMLDivElement
   if (!player) {
     console.warn('mini player touch move: player not found')
     return

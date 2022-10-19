@@ -9,9 +9,7 @@ const entry = async () => {
   if (isNotHtml() || isIframe()) {
     return
   }
-  const builtInNoClean = [
-    'videocard_series',
-  ]
+  const builtInNoClean = ['videocard_series']
   const [noClean] = registerAndGetData('urlParamsClean.noClean', builtInNoClean)
   const builtInBlockParams = [
     'spm_id_from',
@@ -66,7 +64,10 @@ const entry = async () => {
       param: 'theme',
     },
   ]
-  const [siteSpecifiedParams] = registerAndGetData('urlParamsClean.siteSpecifiedParams', builtInSiteSpecifiedParams)
+  const [siteSpecifiedParams] = registerAndGetData(
+    'urlParamsClean.siteSpecifiedParams',
+    builtInSiteSpecifiedParams,
+  )
   const builtInTailingSlash: { match: string | RegExp }[] = []
   const [tailingSlash] = registerAndGetData('urlParamsClean.tailingSlash', builtInTailingSlash)
 
@@ -79,9 +80,11 @@ const entry = async () => {
       if (blockParams.some(b => p.startsWith(`${b}=`))) {
         return false
       }
-      if (siteSpecifiedParams.some(({ match, param }) => (
-        document.URL.match(match) && p.startsWith(`${param}=`)
-      ))) {
+      if (
+        siteSpecifiedParams.some(
+          ({ match, param }) => document.URL.match(match) && p.startsWith(`${param}=`),
+        )
+      ) {
         return false
       }
       return true
@@ -93,7 +96,7 @@ const entry = async () => {
         url = url.slice(0, url.length - 1)
       }
     })
-    const query = filteredParamsString ? (`?${filteredParamsString}`) : ''
+    const query = filteredParamsString ? `?${filteredParamsString}` : ''
     const newUrl = url + query
     if (newUrl !== document.URL) {
       console.log(document.URL, newUrl)
@@ -111,13 +114,9 @@ export const component = defineComponentMetadata({
   displayName,
   entry,
   description: {
-    'zh-CN': '自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.',
+    'zh-CN':
+      '自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.',
   },
-  tags: [
-    componentsTags.utils,
-  ],
-  urlExclude: [
-    /game\.bilibili\.com\/fgo/,
-    /live\.bilibili\.com\/p\/html\/live-app-hotrank\//,
-  ],
+  tags: [componentsTags.utils],
+  urlExclude: [/game\.bilibili\.com\/fgo/, /live\.bilibili\.com\/p\/html\/live-app-hotrank\//],
 })

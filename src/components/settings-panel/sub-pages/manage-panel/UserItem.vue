@@ -13,23 +13,11 @@
       class="user-item-remove"
       @dblclick="removeItem()"
     >
-      <VIcon
-        icon="mdi-trash-can-outline"
-        :size="18"
-      />
-      <div
-        ref="removeConfirmTemplate"
-        class="user-item-remove-confirm"
-      >
+      <VIcon icon="mdi-trash-can-outline" :size="18" />
+      <div ref="removeConfirmTemplate" class="user-item-remove-confirm">
         确定要卸载 {{ config.item.displayName }} 吗?
-        <VButton
-          type="primary"
-          @click="removeItem()"
-        >
-          <VIcon
-            icon="mdi-trash-can-outline"
-            :size="16"
-          />
+        <VButton type="primary" @click="removeItem()">
+          <VIcon icon="mdi-trash-can-outline" :size="16" />
           确定
         </VButton>
       </div>
@@ -76,7 +64,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .manage-panel .user-item {
   display: grid;
@@ -90,13 +78,13 @@ export default Vue.extend({
   }
   .user-item-name {
     grid-area: name;
-    opacity: .5;
+    opacity: 0.5;
     font-size: 11px;
   }
   .user-item-line {
     grid-area: line;
     justify-self: stretch;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
     opacity: 0;
     height: 0;
     width: 100%;
@@ -133,20 +121,20 @@ export default Vue.extend({
     display: flex;
     align-items: center;
     opacity: 0.1;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
     cursor: pointer;
     padding: 4px;
     &:hover {
       opacity: 1;
-      color: #E54E4E;
+      color: #e54e4e;
     }
   }
   &:hover {
     .user-item-remove:not(:hover) {
-      opacity: .75;
+      opacity: 0.75;
     }
     .user-item-line {
-      opacity: .5;
+      opacity: 0.5;
     }
   }
 }
