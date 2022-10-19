@@ -1,7 +1,6 @@
 import {
   LoadFeatureCodeResultError, LoadFeatureCodeResultOk,
 } from '@/core/external-input/load-feature-code'
-import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata } from '@/components/types'
 import { PluginMetadata } from '@/plugins/plugin'
@@ -54,7 +53,8 @@ const reportErrToUser = (
     return acc + 1
   }
 
-  const reportErrInfo = (kind: FeatureKind, info: ErrInfo): void => {
+  const reportErrInfo = async (kind: FeatureKind, info: ErrInfo) => {
+    const { Toast } = await import('../toast')
     const kindName = kind === FeatureKind.Component ? '组件' : '插件'
     if (Array.isArray(info)) {
       Toast.error(
