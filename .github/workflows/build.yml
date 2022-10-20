@@ -22,7 +22,10 @@ jobs:
         fetch-depth: '0'
 
     - name: Install dependencies
-      uses: bahmutov/npm-install@v1
+    - uses: pnpm/action-setup@v2.2.4
+      with:
+        version: latest
+        run_install: true
 
     - name: Type check
       run: pnpm run type
