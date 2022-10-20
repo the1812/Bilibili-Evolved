@@ -4,9 +4,12 @@ import { Configuration } from 'webpack'
 import { getDefaultConfig } from '../../webpack/webpack.config'
 import { getId } from '../lib/id'
 
-export const buildByEntry = (
-  params: { src: string; type: string; entry: string, mode?: Configuration['mode'] },
-) => {
+export const buildByEntry = (params: {
+  src: string
+  type: string
+  entry: string
+  mode?: Configuration['mode']
+}) => {
   // const match = entry.match(/\/?registry\/dist\/([^\/]+)\/(.+)\/index\.ts/)
   // if (!match) {
   //   throw new Error(`Invalid entry path: ${entry}`)
@@ -36,12 +39,14 @@ export const buildByEntry = (
         const regexMatch = (regex: RegExp, base: string[]) => {
           const match = request.match(regex)
           if (match) {
-            const subModules = match[1] ? match[1].split('/').map(name => {
-              if (name.match(/\.vue$/)) {
-                return name.replace(/\.vue$/, '')
-              }
-              return lodash.camelCase(name)
-            }) : []
+            const subModules = match[1]
+              ? match[1].split('/').map(name => {
+                  if (name.match(/\.vue$/)) {
+                    return name.replace(/\.vue$/, '')
+                  }
+                  return lodash.camelCase(name)
+                })
+              : []
             return () => (callback as any)(null, ['coreApis', ...base, ...subModules], 'root')
           }
           return null

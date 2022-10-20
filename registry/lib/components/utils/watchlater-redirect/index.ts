@@ -1,4 +1,5 @@
-import { ComponentMetadata, ComponentEntry } from '@/components/types'
+import { ComponentEntry } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
 const entry: ComponentEntry = async ({ settings }) => {
   if (settings.options.page) {
@@ -15,9 +16,10 @@ const entry: ComponentEntry = async ({ settings }) => {
         const watchlaterItem = list[index]
         const { bvid, cid, pages } = watchlaterItem
         const page = pages.find(p => p.cid === cid)?.page ?? 1
-        const url = page > 1
-          ? `https://www.bilibili.com/video/${bvid}?p=${page}`
-          : `https://www.bilibili.com/video/${bvid}`
+        const url =
+          page > 1
+            ? `https://www.bilibili.com/video/${bvid}?p=${page}`
+            : `https://www.bilibili.com/video/${bvid}`
         const pic = item.querySelector('.av-pic') as HTMLAnchorElement
         pic.target = '_blank'
         pic.href = url
@@ -46,7 +48,7 @@ const entry: ComponentEntry = async ({ settings }) => {
     })
   }
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'watchlaterRedirect',
   displayName: '稍后再看重定向',
   description: {
@@ -63,11 +65,6 @@ export const component: ComponentMetadata = {
       defaultValue: true,
     },
   },
-  urlInclude: [
-    'https://www.bilibili.com/watchlater/#/list',
-  ],
-  tags: [
-    componentsTags.utils,
-    componentsTags.video,
-  ],
-}
+  urlInclude: ['https://www.bilibili.com/watchlater/#/list'],
+  tags: [componentsTags.utils, componentsTags.video],
+})

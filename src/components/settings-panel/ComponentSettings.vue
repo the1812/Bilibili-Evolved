@@ -1,15 +1,12 @@
 <template>
   <div class="component-settings" :class="{ virtual }">
     <template v-if="!virtual">
-      <div class="row">
+      <div class="component-settings-row">
         <TagRing :tags="componentData.tags" />
         <div class="display-name">
           {{ componentData.displayName }}
         </div>
-        <SwitchBox
-          v-if="componentData.configurable !== false"
-          v-model="settings.enabled"
-        />
+        <SwitchBox v-if="componentData.configurable !== false" v-model="settings.enabled" />
         <VIcon v-else icon="right-arrow" class="details-arrow" :size="18" />
       </div>
     </template>
@@ -74,18 +71,15 @@ export default Vue.extend({
       if (typeof description === 'string') {
         return description
       }
-      return (
-        description[getSelectedLanguage()]
-        || description['zh-CN']
-      )
+      return description[getSelectedLanguage()] || description['zh-CN']
     },
   },
 })
 </script>
 
 <style lang="scss">
-@import "common";
-@import "markdown";
+@import 'common';
+@import 'markdown';
 
 .component-settings {
   display: flex;
@@ -98,13 +92,13 @@ export default Vue.extend({
   min-height: 36px;
   position: relative;
   cursor: pointer;
-  transition: .2s ease-out;
+  transition: 0.2s ease-out;
   user-select: none;
 
   &::after {
-    content: "";
+    content: '';
     opacity: 0;
-    transition: opacity .2s ease-out;
+    transition: opacity 0.2s ease-out;
     position: absolute;
     top: 0;
     left: 10px;
@@ -113,15 +107,23 @@ export default Vue.extend({
     pointer-events: none;
     $color: #8882;
     background-image: repeating-linear-gradient(
-      to bottom, #0000, #0000 10px, $color 10px,
-      $color 30px, #0000 30px, #0000 38px, $color 38px, $color 50px, #0000 50px
+      to bottom,
+      #0000,
+      #0000 10px,
+      $color 10px,
+      $color 30px,
+      #0000 30px,
+      #0000 38px,
+      $color 38px,
+      $color 50px,
+      #0000 50px
     );
   }
   &.virtual {
     &::after {
       opacity: 1;
     }
-    .row {
+    .component-settings-row {
       display: none;
     }
   }
@@ -133,7 +135,7 @@ export default Vue.extend({
   //   opacity: 0.1;
   //   pointer-events: none;
   // }
-  .row {
+  .component-settings-row {
     @include h-center();
     justify-content: space-between;
     &:not(:last-child) {

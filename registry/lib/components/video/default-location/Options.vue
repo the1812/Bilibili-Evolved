@@ -1,9 +1,7 @@
 <template>
   <div class="video-default-location-options">
     <div class="video-default-location-form-line">
-      <div class="video-default-location-form-item-not-grow">
-        页面
-      </div>
+      <div class="video-default-location-form-item-not-grow">页面</div>
       <PageTypeSelector
         v-model="pageType"
         class="video-default-location-form-item-grow"
@@ -14,9 +12,7 @@
     <div class="video-default-location-vertical-space"></div>
 
     <div class="video-default-location-form-line">
-      <div class="video-default-location-form-item-not-grow">
-        默认位置
-      </div>
+      <div class="video-default-location-form-item-not-grow">默认位置</div>
       <TextBox
         v-model="defaultLocation"
         class="video-default-location-form-item-grow"
@@ -76,7 +72,9 @@ export default Vue.extend({
     },
   },
   data() {
-    const { options: { locations } } = getComponentSettings(this.componentData)
+    const {
+      options: { locations },
+    } = getComponentSettings(this.componentData)
     const currentPageType = getCurrentPageType() ?? Object.keys(pageTypeInfos)[0]
     return {
       locations,
@@ -124,9 +122,7 @@ export default Vue.extend({
     setupPanelSwitch() {
       const panel = dq('.component-detail-panel')
       if (!panel) {
-        console.error(
-          "[videoPageOrientation] Could not find element '.component-detail-panel'",
-        )
+        console.error("[videoPageOrientation] Could not find element '.component-detail-panel'")
         return
       }
 

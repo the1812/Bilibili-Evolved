@@ -13,14 +13,14 @@ class ScheduleTime {
       this.hour = now.getHours()
       this.minute = now.getMinutes()
     } else if (args.length === 1) {
-      const [text] = args;
-      [this.hour, this.minute] = text
+      const [text] = args
+      ;[this.hour, this.minute] = text
         .split(':')
         .slice(0, 2)
         .map(it => ScheduleTime.validatePart(it))
       this.normalize()
     } else if (args.length === 2) {
-      [this.hour, this.minute] = args
+      ;[this.hour, this.minute] = args
     }
   }
   normalize() {
@@ -40,17 +40,13 @@ class ScheduleTime {
     }
   }
   lessThan(other: ScheduleTime) {
-    if (this.hour < other.hour
-      || (this.hour === other.hour && this.minute < other.minute)
-    ) {
+    if (this.hour < other.hour || (this.hour === other.hour && this.minute < other.minute)) {
       return true
     }
     return false
   }
   greaterThan(other: ScheduleTime) {
-    if (this.hour > other.hour
-      || (this.hour === other.hour && this.minute > other.minute)
-    ) {
+    if (this.hour > other.hour || (this.hour === other.hour && this.minute > other.minute)) {
       return true
     }
     return false
@@ -113,11 +109,9 @@ const checkTime = (settings: ComponentSettings) => {
 export const component: ComponentMetadata = {
   name: 'darkModeSchedule',
   displayName: '夜间模式计划时段',
-  description: '设置一个使用夜间模式的时间段, 进入 / 离开此时间段时, 会自动开启 / 关闭夜间模式. 结束时间小于起始时间时将视为次日, 如 `18:00` 至 `6:00` 表示晚上 18:00 到次日 6:00. 请勿和 \`夜间模式跟随系统\` 一同使用.',
-  tags: [
-    componentsTags.style,
-    componentsTags.general,
-  ],
+  description:
+    '设置一个使用夜间模式的时间段, 进入 / 离开此时间段时, 会自动开启 / 关闭夜间模式. 结束时间小于起始时间时将视为次日, 如 `18:00` 至 `6:00` 表示晚上 18:00 到次日 6:00. 请勿和 `夜间模式跟随系统` 一同使用.',
+  tags: [componentsTags.style, componentsTags.general],
   entry: ({ settings }) => fullyLoaded(() => checkTime(settings)),
   urlExclude: darkExcludes,
   options: {

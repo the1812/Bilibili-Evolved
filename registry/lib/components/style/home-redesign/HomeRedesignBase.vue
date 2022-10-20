@@ -4,12 +4,10 @@
   </div>
 </template>
 <script lang="ts">
-export default Vue.extend({
-
-})
+export default Vue.extend({})
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 html {
   scroll-behavior: smooth;

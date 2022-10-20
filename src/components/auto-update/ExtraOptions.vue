@@ -1,22 +1,12 @@
 <template>
-  <VButton
-    :disabled="disabled"
-    class="check-all-updates"
-    @click="checkUpdates()"
-  >
-    <VIcon
-      :size="16"
-      icon="mdi-cloud-sync-outline"
-    />
+  <VButton :disabled="disabled" class="check-all-updates" @click="checkUpdates()">
+    <VIcon :size="16" icon="mdi-cloud-sync-outline" />
     立即检查所有更新
   </VButton>
 </template>
 <script lang="ts">
 import { Toast } from '@/core/toast'
-import {
-  VButton,
-  VIcon,
-} from '@/ui'
+import { VButton, VIcon } from '@/ui'
 import { forceCheckUpdateAndReload } from './checker'
 
 export default Vue.extend({

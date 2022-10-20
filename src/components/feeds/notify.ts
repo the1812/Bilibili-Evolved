@@ -24,7 +24,9 @@ export const setLatestID = (id: string) => {
   if (compareID(id, currentID) < 0) {
     return
   }
-  document.cookie = `bp_t_offset_${getUID()}=${id};path=/;domain=.bilibili.com;max-age=${60 * 60 * 24 * 30}`
+  document.cookie = `bp_t_offset_${getUID()}=${id};path=/;domain=.bilibili.com;max-age=${
+    60 * 60 * 24 * 30
+  }`
 }
 export const isNewID = (id: string) => compareID(id, getLatestID()) > 0
 export const updateLatestID = (cards: { id: string }[]) => {
@@ -32,7 +34,9 @@ export const updateLatestID = (cards: { id: string }[]) => {
   setLatestID(id)
 }
 export const getNotifyCount = async (typeList?: string): Promise<number> => {
-  const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${getUID()}&update_num_dy_id=${getLatestID()}&type_list=${typeList || navbarFeedsTypeList}`
+  const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${getUID()}&update_num_dy_id=${getLatestID()}&type_list=${
+    typeList || navbarFeedsTypeList
+  }`
   const json = await getJsonWithCredentials(api)
   if (json.code !== 0) {
     return 0

@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import MachineTranslator from '@/components/i18n/machine-translator/MachineTranslator.vue'
 
 const entry = async () => {
@@ -28,15 +28,12 @@ const entry = async () => {
     },
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'commentsTranslate',
   displayName: '评论翻译',
   description: {
     'zh-CN': '在每条评论下方添加翻译按钮.',
   },
-  tags: [
-    componentsTags.utils,
-    componentsTags.feeds,
-  ],
+  tags: [componentsTags.utils, componentsTags.feeds],
   entry,
-}
+})

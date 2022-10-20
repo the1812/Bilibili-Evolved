@@ -5,9 +5,13 @@ export const component = defineComponentMetadata({
   name,
   entry: async ({ metadata }) => {
     const { addComponentListener } = await import('@/core/settings')
-    addComponentListener(metadata.name, (value: boolean) => {
-      document.body.classList.toggle('simplify-comment', value)
-    }, true)
+    addComponentListener(
+      metadata.name,
+      (value: boolean) => {
+        document.body.classList.toggle('simplify-comment', value)
+      },
+      true,
+    )
   },
   instantStyles: [
     {
@@ -29,7 +33,5 @@ export const component = defineComponentMetadata({
 
 > 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.`.trim(),
   },
-  tags: [
-    componentsTags.style,
-  ],
+  tags: [componentsTags.style],
 })

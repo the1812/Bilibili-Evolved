@@ -9,10 +9,7 @@
     >
       <a :href="data.link" target="_blank">
         <svg aria-hidden="true">
-          <use
-            :href="'#header-icon-' + data.icon"
-            :xlink:href="'#header-icon-' + data.icon"
-          />
+          <use :href="'#header-icon-' + data.icon" :xlink:href="'#header-icon-' + data.icon" />
         </svg>
         <div class="name">{{ name }}</div>
         <span class="count">
@@ -26,7 +23,8 @@
           class="sub-region"
           :href="url"
           target="_blank"
-        >{{ regionName }}</a>
+          >{{ regionName }}</a
+        >
       </div>
     </div>
   </div>
@@ -94,8 +92,8 @@ export default Vue.extend({
   // 3. https://stackoverflow.com/a/33899301/13860169
   flex-direction: row;
   writing-mode: vertical-lr;
-  &>* {
-    writing-mode: horizontal-tb
+  & > * {
+    writing-mode: horizontal-tb;
   }
 
   .category-item {

@@ -45,10 +45,7 @@ export const component = defineComponentMetadata({
       options.lastUpdateCheck = Number(new Date())
       const versionMatch = scriptText.match(/^\/\/ @version\s*([\d.]+)$/m)
       if (!versionMatch?.[1]) {
-        console.warn(
-          '[新版本提示] 未能检测出脚本版本, scriptText.length =',
-          scriptText.length,
-        )
+        console.warn('[新版本提示] 未能检测出脚本版本, scriptText.length =', scriptText.length)
         return
       }
       const latestVersion = new Version(versionMatch[1])

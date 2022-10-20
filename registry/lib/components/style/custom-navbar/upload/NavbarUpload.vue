@@ -1,9 +1,7 @@
 <template>
   <div class="navbar-upload">
     <VIcon icon="upload" :size="18"></VIcon>
-    <div class="navbar-upload-name">
-      投稿
-    </div>
+    <div class="navbar-upload-name">投稿</div>
   </div>
 </template>
 <script lang="ts">

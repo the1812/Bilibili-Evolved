@@ -24,12 +24,11 @@ export default Vue.extend({
   .video-card {
     border-radius: var(--home-card-radius) !important;
     .cover-container {
-      border-radius:
-        calc(var(--home-card-radius) - 1px) calc(var(--home-card-radius) - 1px) 0 0 !important;
+      border-radius: calc(var(--home-card-radius) - 1px) calc(var(--home-card-radius) - 1px) 0 0 !important;
     }
     &,
     & * {
-      transition: .2s ease-out;
+      transition: 0.2s ease-out;
     }
   }
 }

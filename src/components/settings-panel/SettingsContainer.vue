@@ -44,10 +44,7 @@
 </template>
 
 <script lang="ts">
-import {
-  VPopup,
-  VIcon,
-} from '@/ui'
+import { VPopup, VIcon } from '@/ui'
 import { externalApis } from '@/core/core-apis'
 
 export default {
@@ -74,9 +71,7 @@ export default {
       trigger: HTMLElement
     }) {
       if (
-        dqa('.be-settings-extra-options').some(
-          c => c === data.target || c.contains(data.target),
-        )
+        dqa('.be-settings-extra-options').some(c => c === data.target || c.contains(data.target))
       ) {
         return false
       }
@@ -96,7 +91,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 .be-settings {
   body.player-mode-blackmask & {
     visibility: hidden;
@@ -138,7 +133,7 @@ export default {
         margin-bottom: $size;
       }
       &::after {
-        content: "";
+        content: '';
         width: 140%;
         height: 140%;
         position: absolute;
@@ -191,7 +186,7 @@ export default {
     transition: transform 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
       opacity 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
     &.close {
-      transform: translateZ(0)translateY(-50%) translateX(calc(-48% * var(--direction)));
+      transform: translateZ(0) translateY(-50%) translateX(calc(-48% * var(--direction)));
     }
     &.open {
       transform: translateZ(0) translateY(-50%) translateX(0);
@@ -201,7 +196,7 @@ export default {
 .bilibili-player-dm-tip-wrap {
   pointer-events: none !important;
 }
-@import "./dock/center";
-@import "./dock/left";
-@import "./dock/right";
+@import './dock/center';
+@import './dock/left';
+@import './dock/right';
 </style>

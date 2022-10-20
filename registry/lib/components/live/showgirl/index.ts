@@ -5,13 +5,16 @@ const id = 'dpi-live-showgirl'
 const entry = async () => {
   const { addStyle } = await import('@/core/style')
   if (document.getElementById(id) === null) {
-    addStyle(`
+    addStyle(
+      `
       .haruna-ctnr,
       .avatar-btn
       {
         transform: scale(${1 / window.devicePixelRatio}) !important;
       }
-    `, id)
+    `,
+      id,
+    )
   }
 }
 export const component = defineComponentMetadata({
@@ -21,10 +24,7 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '根据屏幕 DPI 缩放直播看板娘的大小, 避免像素锯齿.',
   },
-  tags: [
-    componentsTags.live,
-    componentsTags.style,
-  ],
+  tags: [componentsTags.live, componentsTags.style],
   entry,
   reload: entry,
   unload: () => {

@@ -18,13 +18,16 @@ const parseInfoFromJson = (data: any, extensions: string[]) => {
     }
     return extensions[extensions.length - 1]
   }
-  const fragments = data.durl.map((it: any, index: number) => ({
-    length: it.length,
-    size: it.size,
-    url: it.url,
-    backupUrls: it.backup_url,
-    extension: getExtension(index),
-  } as DownloadVideoFragment))
+  const fragments = data.durl.map(
+    (it: any, index: number) =>
+      ({
+        length: it.length,
+        size: it.size,
+        url: it.url,
+        backupUrls: it.backup_url,
+        extension: getExtension(index),
+      } as DownloadVideoFragment),
+  )
   const qualities = (data.accept_quality as number[])
     .map(qn => allQualities.find(q => q.value === qn))
     .filter(q => q !== undefined)
@@ -37,9 +40,7 @@ const parseInfoFromJson = (data: any, extensions: string[]) => {
 }
 
 /* spell-checker: disable */
-const downloadFlv = async (
-  input: DownloadVideoInputItem,
-) => {
+const downloadFlv = async (input: DownloadVideoInputItem) => {
   const { aid, cid, quality } = input
   const params = {
     avid: aid,
@@ -52,10 +53,7 @@ const downloadFlv = async (
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
   const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
-  const data = await bilibiliApi(
-    getJsonWithCredentials(api),
-    '获取视频链接失败',
-  )
+  const data = await bilibiliApi(getJsonWithCredentials(api), '获取视频链接失败')
   const info = new DownloadVideoInfo({
     input,
     jsonData: data,

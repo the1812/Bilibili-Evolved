@@ -17,5 +17,6 @@ export const jsDelivr: CdnConfig = {
   },
   smallLogo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo-small.png`,
   logo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo.png`,
-  root: (branch, ownerOverride) => `https://${host}/gh/${ownerOverride || owner}/Bilibili-Evolved@${branch}/`,
+  root: (branch, ownerOverride) =>
+    `https://${host}/gh/${ownerOverride || owner}/Bilibili-Evolved@${branch}/`,
 }

@@ -83,8 +83,6 @@ export const component: ComponentMetadata = {
     'zh-CN': '动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.',
   },
   urlInclude: feedsUrlsWithoutDetail,
-  tags: [
-    componentsTags.feeds,
-  ],
+  tags: [componentsTags.feeds],
   entry: styledComponentEntry(() => import('./fold-comment.scss'), entry),
 }

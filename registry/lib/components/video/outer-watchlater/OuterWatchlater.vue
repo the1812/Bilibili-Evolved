@@ -42,9 +42,7 @@ export default Vue.extend({
     },
     async toggle() {
       await toggleWatchlater(this.aid)
-      this.showTip(
-        this.on ? '已添加至稍后再看' : '已从稍后再看移除',
-      )
+      this.showTip(this.on ? '已添加至稍后再看' : '已从稍后再看移除')
     },
   },
 })

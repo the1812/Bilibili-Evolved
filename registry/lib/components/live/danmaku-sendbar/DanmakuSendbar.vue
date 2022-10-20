@@ -25,10 +25,14 @@ export default Vue.extend({
     }
   },
   async mounted() {
-    const originalTextArea = await select(originalTextAreaSelector) as HTMLTextAreaElement
-    const sendButton = await select(sendButtonSelector) as HTMLButtonElement
+    const originalTextArea = (await select(originalTextAreaSelector)) as HTMLTextAreaElement
+    const sendButton = (await select(sendButtonSelector)) as HTMLButtonElement
     if (!originalTextArea || !sendButton) {
-      throw new Error(`[danmakuSendBar] ref elements not found. originalTextArea = ${originalTextArea === null} sendButton = ${sendButton === null}`)
+      throw new Error(
+        `[danmakuSendBar] ref elements not found. originalTextArea = ${
+          originalTextArea === null
+        } sendButton = ${sendButton === null}`,
+      )
     }
     // console.log(originalTextArea, sendButton)
     this.originalTextArea = originalTextArea
@@ -37,9 +41,7 @@ export default Vue.extend({
     originalTextArea.addEventListener('input', this.listenChange)
     originalTextArea.addEventListener('change', this.listenChange)
     if (!changeEventHook) {
-      const original = Object.getOwnPropertyDescriptors(
-        HTMLTextAreaElement.prototype,
-      ).value
+      const original = Object.getOwnPropertyDescriptors(HTMLTextAreaElement.prototype).value
       Object.defineProperty(originalTextArea, 'value', {
         ...original,
         set(value: string) {

@@ -1,18 +1,18 @@
-import { ComponentMetadata } from '@/components/types'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
+import { defineComponentMetadata } from '@/components/define'
 import desc from './desc.md'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'playerFocus',
   displayName: '播放器定位',
-  tags: [
-    componentsTags.video,
-  ],
+  tags: [componentsTags.video],
   entry: async ({ settings: { options } }) => {
-    const target = document.URL.includes('bangumi') ? '.bilibili-player' : '.video-info .video-title .tit'
+    const target = document.URL.includes('bangumi')
+      ? '.bilibili-player'
+      : '.video-info .video-title .tit'
     const { select } = await import('@/core/spin-query')
     const { playerReady } = await import('@/core/utils')
-    const element = await select(target) as HTMLElement
+    const element = (await select(target)) as HTMLElement
     await playerReady()
     if (!element) {
       return
@@ -32,4 +32,4 @@ export const component: ComponentMetadata = {
     },
   },
   urlInclude: videoAndBangumiUrls,
-}
+})

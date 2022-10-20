@@ -8,8 +8,10 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '使用 v1 风格的设置面板样式',
   },
-  instantStyles: [{
-    name: 'v1PanelStyle',
-    style: () => import('./v1-panel.scss'),
-  }],
+  instantStyles: [
+    {
+      name: 'v1PanelStyle',
+      style: () => import('./v1-panel.scss'),
+    },
+  ],
 })

@@ -37,17 +37,12 @@ export default Vue.extend({
           this.seasonLogoUrl = ''
           return
         }
-        const json = await getJson(
-          'https://api.bilibili.com/x/web-show/page/header?resource_id=1',
-        )
+        const json = await getJson('https://api.bilibili.com/x/web-show/page/header?resource_id=1')
         if (json.code !== 0) {
           this.seasonLogoUrl = ''
           return
         }
-        this.seasonLogoUrl = lodash.get(json, 'data.litpic', '').replace(
-          'http:',
-          'https:',
-        )
+        this.seasonLogoUrl = lodash.get(json, 'data.litpic', '').replace('http:', 'https:')
       },
       true,
     )

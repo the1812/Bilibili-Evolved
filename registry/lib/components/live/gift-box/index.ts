@@ -46,7 +46,7 @@ let stopObservingMouseLeavePlayer: StopObservingCallback | null = null
 interface FullWinToggleCallback {
   (
     // 标识监听到的动作是启动操作还是关闭操作
-    isStarted: boolean
+    isStarted: boolean,
   ): void
 }
 
@@ -75,9 +75,7 @@ function isFullWin(): boolean {
  * @param callback 回调函数
  * @returns 停止监听的函数
  */
-function observeFullWinToggle(
-  onToggle: FullWinToggleCallback,
-): StopObservingCallback {
+function observeFullWinToggle(onToggle: FullWinToggleCallback): StopObservingCallback {
   /**
    * 检查是否发生了全屏模式的变化
    * @param {MutationRecord} mutation body 元素的属性变化（不检查变化类型）
@@ -113,10 +111,7 @@ function observeFullWinToggle(
 }
 
 // 将包裹按钮移动到控制条上
-function moveGiftPackageToControlBar(
-  controlBar: Element,
-  giftBtn0: Element,
-) {
+function moveGiftPackageToControlBar(controlBar: Element, giftBtn0: Element) {
   // console.debug(`[${componentName}] moving gift button to control bar...`)
   const rightArea = dq(controlBar, '.right-area')
   if (rightArea) {
@@ -159,14 +154,9 @@ function onFullWinClose(giftBtn0: Element, originGiftBtnParent: Element) {
 }
 
 // 每当全屏模式切换时执行操作
-function doOnFullWinToggle(
-  giftBtn0: Element,
-  originGiftBtnParent: Element,
-): StopObservingCallback {
+function doOnFullWinToggle(giftBtn0: Element, originGiftBtnParent: Element): StopObservingCallback {
   return observeFullWinToggle(isStarted => {
-    isStarted
-      ? onFullWinStart(giftBtn0)
-      : onFullWinClose(giftBtn0, originGiftBtnParent)
+    isStarted ? onFullWinStart(giftBtn0) : onFullWinClose(giftBtn0, originGiftBtnParent)
   })
 }
 
@@ -195,7 +185,7 @@ async function reload() {
   addStyle(componentStyle, componentName)
 
   const giftBtnParent = await queryGiftBtnParent()
-  giftBtn = (giftBtnParent?.children[0])
+  giftBtn = giftBtnParent?.children[0]
 
   if (giftBtnParent && giftBtn) {
     stopObservingFullWinToggle = doOnFullWinToggle(giftBtn, giftBtnParent)

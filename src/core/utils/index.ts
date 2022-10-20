@@ -10,7 +10,8 @@ export const bwpVideoFilter = (selector: string) => {
   // }
   const map = {
     video: ', bwp-video',
-    '.bilibili-player-video video': ', .bilibili-player-video bwp-video,.bpx-player-video-area bwp-video',
+    '.bilibili-player-video video':
+      ', .bilibili-player-video bwp-video,.bpx-player-video-area bwp-video',
   }
   const suffix = map[selector]
   if (suffix) {
@@ -121,8 +122,8 @@ export const deai: DocumentEvaluateAllIterable = (
         do {
           node = xpathResult.iterateNext()
           return node
-            ? ({ done: false, value: node } as { done: false, value: Node })
-            : ({ done: true } as { done: true, value: any })
+            ? ({ done: false, value: node } as { done: false; value: Node })
+            : ({ done: true } as { done: true; value: any })
         } while (node)
       },
     }),
@@ -134,13 +135,12 @@ type DocumentEvaluateSingle = {
   <T extends Node>(xpathExpression: string, contextNode: Node, result: XPathResult): T | null
 }
 export const des: DocumentEvaluateSingle = <T extends Node>(
-  xpathExpression: string, contextNode?: Node, result?: XPathResult,
-) => de(
-  xpathExpression,
-  contextNode,
-  XPathResult.FIRST_ORDERED_NODE_TYPE,
-  result,
-).singleNodeValue as (T | null)
+  xpathExpression: string,
+  contextNode?: Node,
+  result?: XPathResult,
+) =>
+  de(xpathExpression, contextNode, XPathResult.FIRST_ORDERED_NODE_TYPE, result)
+    .singleNodeValue as T | null
 /** 空函数 */
 export const none = () => {
   // Do nothing
@@ -151,8 +151,10 @@ export const isBwpVideo = async () => {
   if (!(await hasVideo())) {
     return false
   }
-  // eslint-disable-next-line no-underscore-dangle
-  return unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean || Boolean(dq('#bilibili-player bwp-video'))
+  return (
+    // eslint-disable-next-line no-underscore-dangle
+    (unsafeWindow.__ENABLE_WASM_PLAYER__ as boolean) || Boolean(dq('#bilibili-player bwp-video'))
+  )
 }
 /**
  * 等待一定时间
@@ -170,17 +172,13 @@ export const matchPattern = (str: string, pattern: string | RegExp) => {
   return pattern.test(str)
 }
 /** 以`document.URL`作为被测字符串, 移除URL查询参数并调用`matchPattern` */
-export const matchUrlPattern = (pattern: string | RegExp) => (
+export const matchUrlPattern = (pattern: string | RegExp) =>
   matchPattern(document.URL.replace(window.location.search, ''), pattern)
-)
 /** 创建Vue组件的实例
  * @param module Vue组件模块对象
  * @param target 组件的挂载目标元素, 省略时不挂载直接返回
  */
-export const mountVueComponent = <T>(
-  module: VueModule,
-  target?: Element | string,
-): Vue & T => {
+export const mountVueComponent = <T>(module: VueModule, target?: Element | string): Vue & T => {
   const obj = 'default' in module ? module.default : module
   const getInstance = (o: any) => {
     if (o instanceof Function) {
@@ -195,7 +193,9 @@ export const mountVueComponent = <T>(
   return getInstance(obj).$mount(target) as Vue & T
 }
 /** 是否处于其他网站的内嵌播放器中 */
-export const isEmbeddedPlayer = () => window.location.host === 'player.bilibili.com' || document.URL.startsWith('https://www.bilibili.com/html/player.html')
+export const isEmbeddedPlayer = () =>
+  window.location.host === 'player.bilibili.com' ||
+  document.URL.startsWith('https://www.bilibili.com/html/player.html')
 /** 是否处于`<iframe>`中 */
 export const isIframe = () => document.body && unsafeWindow.parent.window !== unsafeWindow
 /** 当前页面是否不是 HTML 页面 (JSON, XML 页面等) */
@@ -214,10 +214,16 @@ export const raiseEvent = (element: HTMLElement, eventName: string) => {
  * @param baseSize 图片尺寸, 传入数字代表宽高, 也可传入对象 `{ width: number, height: number }`, 对象省略任一属性可表示等比缩放
  * @param extension 图片扩展名(不包含 `.`), 默认从 `src` 读取, fallback 为 `jpg`
  */
-export const getDpiSourceSet = (src: string, baseSize: number | {
-  width?: number
-  height?: number
-}, extension?: string) => {
+export const getDpiSourceSet = (
+  src: string,
+  baseSize:
+    | number
+    | {
+        width?: number
+        height?: number
+      },
+  extension?: string,
+) => {
   const dpis = [1, 1.25, 1.5, 1.75, 2, 2.25, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4]
 
   if (!extension) {
@@ -231,25 +237,34 @@ export const getDpiSourceSet = (src: string, baseSize: number | {
   if (extension.startsWith('.')) {
     extension = extension.substring(1)
   }
-  return dpis.map(dpi => {
-    if (typeof baseSize === 'object') {
-      if ('width' in baseSize && 'height' in baseSize) {
-        return `${src}@${Math.trunc(baseSize.width * dpi)}w_${Math.trunc(baseSize.height * dpi)}h.${extension} ${dpi}x`
-      } if ('width' in baseSize) {
-        return `${src}@${Math.trunc(baseSize.width * dpi)}w.${extension} ${dpi}x`
-      } if ('height' in baseSize) {
-        return `${src}@${Math.trunc(baseSize.height * dpi)}h.${extension} ${dpi}x`
+  return dpis
+    .map(dpi => {
+      if (typeof baseSize === 'object') {
+        if ('width' in baseSize && 'height' in baseSize) {
+          return `${src}@${Math.trunc(baseSize.width * dpi)}w_${Math.trunc(
+            baseSize.height * dpi,
+          )}h.${extension} ${dpi}x`
+        }
+        if ('width' in baseSize) {
+          return `${src}@${Math.trunc(baseSize.width * dpi)}w.${extension} ${dpi}x`
+        }
+        if ('height' in baseSize) {
+          return `${src}@${Math.trunc(baseSize.height * dpi)}h.${extension} ${dpi}x`
+        }
+        throw new Error(`Invalid argument 'baseSize': ${JSON.stringify(baseSize)}`)
+      } else {
+        return `${src}@${Math.trunc(baseSize * dpi)}w_${Math.trunc(
+          baseSize * dpi,
+        )}h.${extension} ${dpi}x`
       }
-      throw new Error(`Invalid argument 'baseSize': ${JSON.stringify(baseSize)}`)
-    } else {
-      return `${src}@${Math.trunc(baseSize * dpi)}w_${Math.trunc(baseSize * dpi)}h.${extension} ${dpi}x`
-    }
-  }).join(',')
+    })
+    .join(',')
 }
 /** 获取cookie值
  * @param name cookie名称
  */
-export const getCookieValue = (name: string) => document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${name}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
+export const getCookieValue = (name: string) =>
+  document.cookie.replace(new RegExp(`(?:(?:^|.*;\\s*)${name}\\s*\\=\\s*([^;]*).*$)|^.*$`), '$1')
 /** 获取UID, 未登录返回空字符串 */
 export const getUID = () => getCookieValue('DedeUserID')
 /** 获取CSRF Token */
@@ -277,7 +292,7 @@ export const fixed = (num: number, precision = 1): string => {
  * 在现有原型上添加钩子函数
  * @param type 原型
  * @param target 原型上的属性
- * @param hookFunc 钩子函数
+ * @param hookFunc 钩子函数, 返回值表示是否调用原函数
  */
 export const createHook = <ParentType, HookParameters extends any[], ReturnType = any>(
   type: ParentType,
@@ -291,6 +306,25 @@ export const createHook = <ParentType, HookParameters extends any[], ReturnType 
       return undefined
     }
     return original?.call(this, ...args)
+  } as any
+  return () => (type[target] = original as any)
+}
+/**
+ * 在现有原型上添加钩子函数 (原函数执行后再触发)
+ * @param type 原型
+ * @param target 原型上的属性
+ * @param hookFunc 钩子函数
+ */
+export const createPostHook = <ParentType, HookParameters extends any[], ReturnType = any>(
+  type: ParentType,
+  target: keyof ParentType,
+  hookFunc: (...args: HookParameters) => unknown,
+) => {
+  const original: (...args: HookParameters) => ReturnType = type[target] as any
+  type[target] = function hook(...args: HookParameters) {
+    const result = original?.call(this, ...args)
+    hookFunc(...args)
+    return result
   } as any
   return () => (type[target] = original as any)
 }
@@ -313,12 +347,14 @@ export const preventEvent = (element: Element, event: keyof HTMLElementEventMap)
  */
 export const formData = (obj: Record<string, any>, config?: { encode?: boolean }) => {
   const { encode } = { encode: true, ...config }
-  return Object.entries(obj).map(([k, v]) => {
-    if (encode) {
-      return `${k}=${encodeURIComponent(v)}`
-    }
-    return `${k}=${v}`
-  }).join('&')
+  return Object.entries(obj)
+    .map(([k, v]) => {
+      if (encode) {
+        return `${k}=${encodeURIComponent(v)}`
+      }
+      return `${k}=${v}`
+    })
+    .join('&')
 }
 
 /**
@@ -326,7 +362,7 @@ export const formData = (obj: Record<string, any>, config?: { encode?: boolean }
  * @param target 目标数组
  * @param predicate 数组元素判断
  */
-export const deleteValue = <ItemType> (
+export const deleteValue = <ItemType>(
   target: ItemType[],
   predicate: (value: ItemType, index: number, obj: ItemType[]) => boolean,
 ) => {
@@ -391,8 +427,7 @@ export class DoubleClickEvent {
     public handler: ClickEvent,
     /** 检测双击时是否屏蔽单击事件 */
     public preventSingle = false,
-  ) {
-  }
+  ) {}
   /**
    * 绑定双击事件
    * @param element 目标元素
@@ -435,7 +470,9 @@ export const playerReady = async () => {
     () => unsafeWindow.UserStatus !== undefined,
   )
   return new Promise<void>((resolve, reject) => {
-    const isJudgementVideo = document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/blackboard/newplayer.html' && document.URL.includes('fjw=true')
+    const isJudgementVideo =
+      document.URL.replace(window.location.search, '') ===
+        'https://www.bilibili.com/blackboard/newplayer.html' && document.URL.includes('fjw=true')
     if (isJudgementVideo) {
       /* 如果是风纪委员里的内嵌视频, 永远不 resolve
         https://github.com/the1812/Bilibili-Evolved/issues/2340
@@ -566,11 +603,10 @@ export const disableWindowScroll = async (action?: () => unknown | Promise<unkno
  * @param clampLower 最小值
  * @param clampUpper 最大值
  */
-export const getNumberValidator = (clampLower = -Infinity, clampUpper = Infinity) => (
-  (value: number, oldValue: number) => (
+export const getNumberValidator =
+  (clampLower = -Infinity, clampUpper = Infinity) =>
+  (value: number, oldValue: number) =>
     lodash.isNumber(Number(value)) ? lodash.clamp(value, clampLower, clampUpper) : oldValue
-  )
-)
 /**
  * 将文本转换为 PascalCase
  * @param text 文本
@@ -584,5 +620,8 @@ export const pascalCase = (text: string) => lodash.upperFirst(lodash.camelCase(t
 export const getRandomId = (length = 8) => {
   const typedArray = new Uint8Array(Math.ceil(length / 2))
   crypto.getRandomValues(typedArray)
-  return [...typedArray].map(it => it.toString(16).padStart(2, '0')).join('').substring(0, length)
+  return [...typedArray]
+    .map(it => it.toString(16).padStart(2, '0'))
+    .join('')
+    .substring(0, length)
 }

@@ -25,7 +25,14 @@
 <script lang="ts">
 import { getUID } from '@/core/utils'
 import { VIcon, VButton } from '@/ui'
-import { loadNameSettings, loadRegexSettings, setNameProps, setRegexProps, toggleNameSettings, toggleRegexSettings } from './vm'
+import {
+  loadNameSettings,
+  loadRegexSettings,
+  setNameProps,
+  setRegexProps,
+  toggleNameSettings,
+  toggleRegexSettings,
+} from './vm'
 
 export default Vue.extend({
   components: {

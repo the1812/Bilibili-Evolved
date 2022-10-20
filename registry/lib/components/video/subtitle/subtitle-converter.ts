@@ -6,10 +6,11 @@ export const SubtitleLocation = {
   BottomCenter: 2,
   BottomRight: 3,
 }
-const getLocationName = (location: number) => Object.entries(SubtitleLocation)
-  .filter(([, value]) => value === location)
-  .map(([name]) => name)
-  .shift()
+const getLocationName = (location: number) =>
+  Object.entries(SubtitleLocation)
+    .filter(([, value]) => value === location)
+    .map(([name]) => name)
+    .shift()
 export enum SubtitleSize {
   VerySmall = 1,
   Small,
@@ -58,7 +59,9 @@ export class SubtitleConverter {
     const fontSize = ((10 * (this.config.size - 3) + 48) * this.config.height) / 720
     console.log(fontSize)
     for (const [name, value] of Object.entries(SubtitleLocation)) {
-      fontStyles.push(`Style: ${name},微软雅黑,${fontSize},${color},${color},${background},${background},0,0,0,0,100,100,0,0,3,${this.config.boxPadding},0,${value},${this.config.boxMargin},${this.config.boxMargin},${this.config.boxMargin},0`)
+      fontStyles.push(
+        `Style: ${name},微软雅黑,${fontSize},${color},${color},${background},${background},0,0,0,0,100,100,0,0,3,${this.config.boxPadding},0,${value},${this.config.boxMargin},${this.config.boxMargin},${this.config.boxMargin},0`,
+      )
     }
     return `
 [Script Info]
@@ -73,7 +76,7 @@ WrapStyle: 0
 ScaledBorderAndShadow: no
 
 [V4+ Styles]
-Format: Name, Fontname, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
 ${fontStyles.join('\n')}
 
 [Events]
@@ -82,11 +85,15 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text`
   async convertToAss(subtitles: SubtitleItem[]) {
     const { convertTimeByEndTime, normalizeContent } = await import('@/components/video/ass-utils')
     const meta = await this.getAssMeta()
-    return `${meta}\n${subtitles.map(s => {
-      const [startTime, endTime] = convertTimeByEndTime(s.from, s.to)
-      const dialogue = `Dialogue: 0,${startTime},${endTime},${getLocationName(this.config.location)},,0,0,0,,${normalizeContent(s.content)}`
-      return dialogue
-    }).join('\n')}`
+    return `${meta}\n${subtitles
+      .map(s => {
+        const [startTime, endTime] = convertTimeByEndTime(s.from, s.to)
+        const dialogue = `Dialogue: 0,${startTime},${endTime},${getLocationName(
+          this.config.location,
+        )},,0,0,0,,${normalizeContent(s.content)}`
+        return dialogue
+      })
+      .join('\n')}`
   }
 }
 SubtitleConverter.defaultConfig = {

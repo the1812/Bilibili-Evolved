@@ -14,11 +14,14 @@ export const getBlackboards = async (): Promise<Blackboard[]> => {
     throw new Error(`获取活动卡片失败: ${message}`)
   }
   const list: any[] = data[locId]
-  return list.map(it => ({
-    url: it.url,
-    title: it.name,
-    // isAd: it.is_ad_loc,
-    isAd: it.res_id !== locId,
-    imageUrl: it.pic,
-  } as Blackboard))
+  return list.map(
+    it =>
+      ({
+        url: it.url,
+        title: it.name,
+        // isAd: it.is_ad_loc,
+        isAd: it.res_id !== locId,
+        imageUrl: it.pic,
+      } as Blackboard),
+  )
 }

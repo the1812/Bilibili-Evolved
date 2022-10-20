@@ -16,25 +16,25 @@ export * from './manager'
  */
 export const groupVideoFeeds = (cards: VideoCard[]) => {
   const groups = lodash.groupBy(cards, c => c.aid)
-  const cardToCooperationItem = (card: VideoCard) => (
-    {
-      id: card.upID,
-      name: card.upName,
-      faceUrl: card.upFaceUrl,
-    }
-  )
-  const results = Object.values(groups).map(groupCards => {
-    if (groupCards.length === 1) {
-      return groupCards[0]
-    }
-    const [firstCard, ...restCards] = groupCards
-    firstCard.cooperation = [
-      cardToCooperationItem(firstCard),
-      ...restCards.map(cardToCooperationItem),
-    ]
-    console.log([...firstCard.cooperation])
-    return firstCard
-  }).sort(descendingStringSort(it => it.id))
+  const cardToCooperationItem = (card: VideoCard) => ({
+    id: card.upID,
+    name: card.upName,
+    faceUrl: card.upFaceUrl,
+  })
+  const results = Object.values(groups)
+    .map(groupCards => {
+      if (groupCards.length === 1) {
+        return groupCards[0]
+      }
+      const [firstCard, ...restCards] = groupCards
+      firstCard.cooperation = [
+        cardToCooperationItem(firstCard),
+        ...restCards.map(cardToCooperationItem),
+      ]
+      console.log([...firstCard.cooperation])
+      return firstCard
+    })
+    .sort(descendingStringSort(it => it.id))
   return results
 }
 /** 判断动态卡片是否包含预约功能.
@@ -44,20 +44,21 @@ export const groupVideoFeeds = (cards: VideoCard[]) => {
 export const isPreOrderedVideo = (card: any) => lodash.get(card, 'extra.is_reserve_recall', 0) === 1
 
 export interface FeedsContentFilter {
-  filter: <T> (items: T[]) => T[]
+  filter: <T>(items: T[]) => T[]
 }
 const contentFiltersKey = 'feeds.contentFilters'
 registerData(contentFiltersKey, [] as FeedsContentFilter[])
 /** 对动态内容进行过滤 */
-export const applyContentFilter = <T> (items: T[]) => {
+export const applyContentFilter = <T>(items: T[]) => {
   const [contentFilters] = getData(contentFiltersKey) as [FeedsContentFilter[]]
   const result = contentFilters.reduce((acc, it) => (acc = it.filter(acc)), items)
   return result
 }
 /** 对异步获取动态内容的函数进行包装, 将返回值套用 `applyContentFilter` */
-export const withContentFilter = <Args extends any[], Item> (
-  func: (...args: Args) => Promise<Item[]>,
-) => (...args: Args) => func(...args).then(items => applyContentFilter(items))
+export const withContentFilter =
+  <Args extends any[], Item>(func: (...args: Args) => Promise<Item[]>) =>
+  (...args: Args) =>
+    func(...args).then(items => applyContentFilter(items))
 
 /**
  * 获取动态 API 地址
@@ -80,9 +81,8 @@ export const getFeedsUrl = (type: FeedsCardType | string, afterID?: string | num
  * @param type 动态类型, 或传入类型ID列表返回最新动态
  * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
  */
-export const getFeeds = async (type: FeedsCardType | string, afterID?: string | number) => (
+export const getFeeds = async (type: FeedsCardType | string, afterID?: string | number) =>
   getJsonWithCredentials(getFeedsUrl(type, afterID))
-)
 
 /**
  * 获取视频或番剧动态
@@ -94,22 +94,22 @@ export const getVideoFeeds = withContentFilter(
     if (!getUID()) {
       return []
     }
-    const json = await getJsonWithCredentials(getFeedsUrl(type === 'video' ? feedsCardTypes.video : feedsCardTypes.bangumi, afterID))
+    const json = await getJsonWithCredentials(
+      getFeedsUrl(type === 'video' ? feedsCardTypes.video : feedsCardTypes.bangumi, afterID),
+    )
     if (json.code !== 0) {
       throw new Error(json.message)
     }
     const dataCards = json.data.cards as any[]
     const dataCardsWithoutPreOrder = dataCards.filter(it => !isPreOrderedVideo(JSON.parse(it.card)))
     if (type === 'video') {
-      return groupVideoFeeds(dataCards.map(
-        (c: any): VideoCard => {
+      return groupVideoFeeds(
+        dataCards.map((c: any): VideoCard => {
           const card = JSON.parse(c.card)
-          const topics = lodash.get(c, 'display.topic_info.topic_details', []).map(
-            (it: any) => ({
-              id: it.topic_id,
-              name: it.topic_name,
-            }),
-          )
+          const topics = lodash.get(c, 'display.topic_info.topic_details', []).map((it: any) => ({
+            id: it.topic_id,
+            name: it.topic_name,
+          }))
           return {
             id: c.desc.dynamic_id_str,
             aid: card.aid,
@@ -131,32 +131,31 @@ export const getVideoFeeds = withContentFilter(
             danmakuCount: formatCount(card.stat.danmaku),
             watchlater: watchlaterList.includes(card.aid),
           }
-        },
-      ))
-    } if (type === 'bangumi') {
-      return dataCardsWithoutPreOrder.map(
-        (c: any): VideoCard => {
-          const card = JSON.parse(c.card)
-          return {
-            id: c.desc.dynamic_id_str,
-            aid: card.aid,
-            bvid: c.desc.bvid || card.bvid,
-            epID: card.episode_id,
-            title: card.new_desc,
-            upName: card.apiSeasonInfo.title,
-            upFaceUrl: card.apiSeasonInfo.cover,
-            coverUrl: card.cover,
-            description: '',
-            timestamp: c.timestamp,
-            time: new Date(c.timestamp * 1000),
-            like: formatCount(c.desc.like),
-            durationText: '',
-            playCount: formatCount(card.play_count),
-            danmakuCount: formatCount(card.bullet_count),
-            watchlater: false,
-          }
-        },
+        }),
       )
+    }
+    if (type === 'bangumi') {
+      return dataCardsWithoutPreOrder.map((c: any): VideoCard => {
+        const card = JSON.parse(c.card)
+        return {
+          id: c.desc.dynamic_id_str,
+          aid: card.aid,
+          bvid: c.desc.bvid || card.bvid,
+          epID: card.episode_id,
+          title: card.new_desc,
+          upName: card.apiSeasonInfo.title,
+          upFaceUrl: card.apiSeasonInfo.cover,
+          coverUrl: card.cover,
+          description: '',
+          timestamp: c.timestamp,
+          time: new Date(c.timestamp * 1000),
+          like: formatCount(c.desc.like),
+          durationText: '',
+          playCount: formatCount(card.play_count),
+          danmakuCount: formatCount(card.bullet_count),
+          watchlater: false,
+        }
+      })
     }
     return []
   },
@@ -167,17 +166,21 @@ export const getVideoFeeds = withContentFilter(
  * @param card 动态卡片
  * @param config 菜单项配置
  */
-export const addMenuItem = (card: FeedsCard, config: {
-  className: string
-  text: string
-  action: (e: MouseEvent) => void
-}) => {
+export const addMenuItem = (
+  card: FeedsCard,
+  config: {
+    className: string
+    text: string
+    action: (e: MouseEvent) => void
+  },
+) => {
   const morePanel = dq(card.element, '.more-panel, .bili-dyn-more__menu') as HTMLElement
-  const isV2 = morePanel.classList.contains('bili-dyn-more__menu')
   const { className, text, action } = config
   if (!morePanel || dq(morePanel, `.${className}`)) {
+    console.warn('more panel not found', card.element)
     return
   }
+  const isV2 = morePanel.classList.contains('bili-dyn-more__menu')
   const menuItem = document.createElement(isV2 ? 'div' : 'p')
   if (isV2) {
     menuItem.classList.add('bili-dyn-more__menu__item', className)
@@ -191,7 +194,15 @@ export const addMenuItem = (card: FeedsCard, config: {
     menuItem.classList.add('child-button', 'c-pointer', className)
   }
   menuItem.textContent = text
-  const vueScopeAttributes = [...new Set([...morePanel.children].map((element: HTMLElement) => element.getAttributeNames().filter(it => it.startsWith('data-v-'))).flat())]
+  const vueScopeAttributes = [
+    ...new Set(
+      [...morePanel.children]
+        .map((element: HTMLElement) =>
+          element.getAttributeNames().filter(it => it.startsWith('data-v-')),
+        )
+        .flat(),
+    ),
+  ]
   vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))
   menuItem.addEventListener('click', e => {
     action(e)

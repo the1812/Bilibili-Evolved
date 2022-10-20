@@ -1,13 +1,7 @@
 <template>
   <div class="be-image-picker">
-    <VButton
-      ref="pickButton"
-      class="pick-button"
-      @click="popupOpen = !popupOpen"
-    >
-      <slot name="text">
-        选择图片
-      </slot>
+    <VButton ref="pickButton" class="pick-button" @click="popupOpen = !popupOpen">
+      <slot name="text"> 选择图片 </slot>
     </VButton>
     <VPopup
       v-model="popupOpen"
@@ -15,12 +9,7 @@
       :trigger-element="$refs.pickButton"
       @keydown.esc="cancel()"
     >
-      <transition-group
-        name="image-list"
-        tag="div"
-        class="images"
-        tabindex="-1"
-      >
+      <transition-group name="image-list" tag="div" class="images" tabindex="-1">
         <div
           v-for="i of images"
           :key="i.name"
@@ -33,9 +22,7 @@
           <img width="64" height="64" :src="i.url" />
         </div>
       </transition-group>
-      <div v-show="images.length === 0" class="empty-tip">
-        空空如也哦 =￣ω￣=
-      </div>
+      <div v-show="images.length === 0" class="empty-tip">空空如也哦 =￣ω￣=</div>
       <div class="operations">
         <VPopup
           v-model="addImagePopupOpen"
@@ -54,10 +41,7 @@
           </div>
           <div class="add-image-row">
             链接:
-            <TextBox
-              v-model="newImage.url"
-              :disabled="!addImagePopupOpen"
-            ></TextBox>
+            <TextBox v-model="newImage.url" :disabled="!addImagePopupOpen"></TextBox>
           </div>
           <div class="add-image-row buttons">
             <VButton
@@ -82,11 +66,7 @@
             </VButton>
           </div>
         </VPopup>
-        <VButton
-          :disabled="!selectedImage.name"
-          class="clear-image"
-          @click="clearImage()"
-        >
+        <VButton :disabled="!selectedImage.name" class="clear-image" @click="clearImage()">
           清除选择
         </VButton>
         <VButton
@@ -97,11 +77,7 @@
         >
           添加
         </VButton>
-        <VButton
-          :disabled="!selectedImage.name"
-          class="edit-image"
-          @click="editImage()"
-        >
+        <VButton :disabled="!selectedImage.name" class="edit-image" @click="editImage()">
           编辑
         </VButton>
         <VButton
@@ -115,12 +91,8 @@
         </VButton>
       </div>
       <div class="operations">
-        <VButton :disabled="!popupOpen" @click="cancel()">
-          取消
-        </VButton>
-        <VButton :disabled="!popupOpen" type="primary" @click="ok()">
-          确定
-        </VButton>
+        <VButton :disabled="!popupOpen" @click="cancel()"> 取消 </VButton>
+        <VButton :disabled="!popupOpen" type="primary" @click="ok()"> 确定 </VButton>
       </div>
       <div v-if="addImagePopupOpen" class="mask"></div>
     </VPopup>
@@ -128,13 +100,7 @@
 </template>
 
 <script lang="ts">
-import {
-  ImageItem,
-  getEmptyImage,
-  images,
-  addImage,
-  removeImage,
-} from './image-store'
+import { ImageItem, getEmptyImage, images, addImage, removeImage } from './image-store'
 
 export default Vue.extend({
   name: 'ImagePicker',
@@ -201,7 +167,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "common";
+@import 'common';
 .be-image-picker {
   position: relative;
   font-size: 14px;
@@ -255,8 +221,7 @@ export default Vue.extend({
         }
         &:hover,
         &:focus-within {
-          box-shadow: 0 0 0 2px var(--theme-color),
-            0 0 0 4px var(--theme-color-20);
+          box-shadow: 0 0 0 2px var(--theme-color), 0 0 0 4px var(--theme-color-20);
           img {
             transform: scale(1.1);
           }

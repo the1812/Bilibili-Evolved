@@ -2,13 +2,9 @@
   <div class="fresh-home-categories-bangumi">
     <div class="fresh-home-categories-bangumi-timeline">
       <div class="fresh-home-categories-bangumi-timeline-header">
-        <SubHeader>
-          时间表
-        </SubHeader>
+        <SubHeader> 时间表 </SubHeader>
       </div>
-      <BangumiTimeline
-        :api="timelineApi"
-      />
+      <BangumiTimeline :api="timelineApi" />
     </div>
     <div class="fresh-home-categories-bangumi-rank-list">
       <a
@@ -16,15 +12,9 @@
         :href="rankingsLink"
         target="_blank"
       >
-        <SubHeader>
-          排行榜
-        </SubHeader>
+        <SubHeader> 排行榜 </SubHeader>
       </a>
-      <RankList
-        bangumi-mode
-        :parse-json="parseJson"
-        :api="rankingsApi"
-      />
+      <RankList bangumi-mode :parse-json="parseJson" :api="rankingsApi" />
     </div>
   </div>
 </template>
@@ -73,22 +63,20 @@ export default Vue.extend({
     parseJson(json: any) {
       const items = (json.data?.list ?? []) as any[]
       const cards = items
-        .map(
-          (item): RankListCard => {
-            const upName = item.new_ep?.index_show ?? item.title
-            return {
-              id: item.season_id,
-              title: item.title,
-              playCount: item.stat.view,
-              points: item.stat.follow,
-              upHref: item.url,
-              upName,
-              dynamic: upName,
-              coverUrl: item.new_ep?.cover ?? item.ss_horizontal_cover,
-              videoHref: item.url,
-            }
-          },
-        )
+        .map((item): RankListCard => {
+          const upName = item.new_ep?.index_show ?? item.title
+          return {
+            id: item.season_id,
+            title: item.title,
+            playCount: item.stat.view,
+            points: item.stat.follow,
+            upHref: item.url,
+            upName,
+            dynamic: upName,
+            coverUrl: item.new_ep?.cover ?? item.ss_horizontal_cover,
+            videoHref: item.url,
+          }
+        })
         .slice(0, 10)
       return applyContentFilter(cards)
     },
@@ -96,8 +84,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "effects";
+@import 'common';
+@import 'effects';
 
 .fresh-home-categories-bangumi {
   @include h-stretch(var(--fresh-home-categories-column-gap));

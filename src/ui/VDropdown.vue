@@ -9,11 +9,7 @@
   >
     <div ref="selected" class="selected">
       <div class="selected-item">
-        <slot
-          v-if="value !== null && value !== undefined"
-          name="item"
-          :item="value"
-        >
+        <slot v-if="value !== null && value !== undefined" name="item" :item="value">
           {{ value.displayName }}
         </slot>
       </div>

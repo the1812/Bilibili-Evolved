@@ -95,9 +95,18 @@ const formatTime = (date: Date) => {
   const { yesterday } = getTimeData()
   const timestamp = Number(date)
   if (timestamp >= yesterday) {
-    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+    return `${date.getHours().toString().padStart(2, '0')}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}`
   }
-  return `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+  return `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
+    .getDate()
+    .toString()
+    .padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}`
 }
 const parseHistoryItem = (item: any): HistoryItem => {
   if (item.history.business === 'article') {
@@ -110,7 +119,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
     oid, // 直播 房间号 / 专栏 cv 号
   } = item.history
   const progressParam = item.progress > 0 ? `t=${item.progress}` : 't=0'
-  const progress = item.progress === -1 ? 1 : (item.progress / item.duration)
+  const progress = item.progress === -1 ? 1 : item.progress / item.duration
   const https = (url: string) => url.replace('http:', 'https:')
   const time = new Date(item.view_at * 1000)
   const cover = (() => {

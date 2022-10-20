@@ -35,9 +35,7 @@ export const installStyle = async (input: UserStyle | string) => {
     } else {
       userStyle = input
     }
-    const {
-      name, style, displayName, mode,
-    } = userStyle
+    const { name, style, displayName, mode } = userStyle
     const { removeStyle, addImportantStyle, addStyle } = await import('@/core/style')
     const existingStyle = settings.userStyles[name]
     if (existingStyle) {
@@ -70,13 +68,12 @@ export const installStyle = async (input: UserStyle | string) => {
  * @param nameOrDisplayName 样式的名称(`name`或`displayName`)
  */
 export const uninstallStyle = async (nameOrDisplayName: string) => {
-  const existingStyle = Object.entries(settings.userStyles)
-    .find(([name, { displayName }]) => {
-      if (name === nameOrDisplayName || displayName === nameOrDisplayName) {
-        return true
-      }
-      return false
-    })
+  const existingStyle = Object.entries(settings.userStyles).find(([name, { displayName }]) => {
+    if (name === nameOrDisplayName || displayName === nameOrDisplayName) {
+      return true
+    }
+    return false
+  })
   if (!existingStyle) {
     throw new Error(`没有找到与名称'${nameOrDisplayName}'相关联的样式`)
   }

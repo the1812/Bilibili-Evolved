@@ -1,9 +1,5 @@
 <template>
-  <a
-    class="column-card"
-    target="_blank"
-    :href="`https://www.bilibili.com/read/cv${data.cvID}`"
-  >
+  <a class="column-card" target="_blank" :href="`https://www.bilibili.com/read/cv${data.cvID}`">
     <div class="covers">
       <DpiImage
         v-for="cover of data.covers"
@@ -13,11 +9,7 @@
         :src="cover"
       ></DpiImage>
     </div>
-    <a
-      class="up"
-      target="_blank"
-      :href="`https://space.bilibili.com/${data.upID}`"
-    >
+    <a class="up" target="_blank" :href="`https://space.bilibili.com/${data.upID}`">
       <DpiImage class="face" :size="24" :src="data.upFaceUrl"></DpiImage>
       <div class="name">{{ data.upName }}</div>
     </a>
@@ -47,7 +39,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "common";
+@import 'common';
 .column-card {
   width: 356px;
   display: flex;
@@ -105,7 +97,7 @@ export default Vue.extend({
     padding: 10px 10px 0;
     margin: 0;
     font-size: 11pt;
-    font-weight: bold;
+    @include semi-bold();
     color: inherit;
     line-height: normal;
     max-width: 100%;

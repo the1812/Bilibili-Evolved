@@ -1,4 +1,9 @@
-import { ComponentEntry, ComponentMetadata } from '@/components/types'
+import {
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+  defineComponentMetadata,
+} from '@/components/define'
+import { ComponentEntry } from '@/components/types'
 import { delay } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 
@@ -9,22 +14,37 @@ export enum LiveQuality {
   Medium = '高清',
   Low = '流畅',
 }
-const entry: ComponentEntry = async ({ settings }) => {
+const options = defineOptionsMetadata({
+  quality: {
+    displayName: '画质选择',
+    defaultValue: LiveQuality.Original,
+    dropdownEnum: LiveQuality,
+  },
+})
+
+export type Options = OptionsOfMetadata<typeof options>
+
+const entry: ComponentEntry<Options> = async ({ settings }) => {
   const { getDropdownItems } = await import('@/components/settings-panel/dropdown')
   const { dqa, dq } = await import('@/core/utils')
   const { select } = await import('@/core/spin-query')
   const { childList } = await import('@/core/observer')
 
-  const qualities = getDropdownItems(LiveQuality) as string[]
+  const qualities = getDropdownItems(LiveQuality) as LiveQuality[]
   const targetQuality = settings.options.quality
 
-  const qualitySettings = await select('.bilibili-live-player-video-controller-switch-quality-btn') as HTMLElement
+  const qualitySettings = (await select(
+    '.bilibili-live-player-video-controller-switch-quality-btn',
+  )) as HTMLElement
   if (qualitySettings === null) {
     return
   }
   const setQuality = async () => {
     const currentQuality = qualitySettings.children[0].getAttribute('data-title') as string
-    const qualityButtons = dqa(qualitySettings, '.bilibili-live-player-video-controller-html-tooltip-option .text-btn') as HTMLElement[]
+    const qualityButtons = dqa(
+      qualitySettings,
+      '.bilibili-live-player-video-controller-html-tooltip-option .text-btn',
+    ) as HTMLElement[]
     const availableQualities = qualityButtons.map(it => it.getAttribute('data-title') as string)
     console.log(currentQuality, availableQualities, targetQuality)
     if (currentQuality !== targetQuality) {
@@ -40,7 +60,12 @@ const entry: ComponentEntry = async ({ settings }) => {
       }
       const button = qualityButtons[availableQualities.indexOf(quality)]
       console.log(button)
-      while (!(button.classList.contains('active') || dq('.bilibili-live-player-video-controller-switch-quality-info'))) {
+      while (
+        !(
+          button.classList.contains('active') ||
+          dq('.bilibili-live-player-video-controller-switch-quality-info')
+        )
+      ) {
         await delay(3000)
         button.click()
         console.log('click')
@@ -54,19 +79,11 @@ const entry: ComponentEntry = async ({ settings }) => {
     }
   })
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'defaultLiveQuality',
   displayName: '默认直播画质',
-  options: {
-    quality: {
-      displayName: '画质选择',
-      defaultValue: LiveQuality.Original,
-      dropdownEnum: LiveQuality,
-    },
-  },
+  options,
   entry,
-  tags: [
-    componentsTags.live,
-  ],
+  tags: [componentsTags.live],
   urlInclude: liveUrls,
-}
+})

@@ -5,7 +5,10 @@ import { useScopedConsole } from '@/core/utils/log'
 import { formatTitle } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
 import { PluginMetadata } from '@/plugins/plugin'
-import { DownloadVideoInput, DownloadVideoInputItem } from '../../../../components/video/download/types'
+import {
+  DownloadVideoInput,
+  DownloadVideoInputItem,
+} from '../../../../components/video/download/types'
 
 export const plugin: PluginMetadata = {
   name: 'downloadVideo.inputs.manual',
@@ -28,16 +31,18 @@ export const plugin: PluginMetadata = {
             const api = `https://api.bilibili.com/x/web-interface/view?bvid=${bvid}`
             return bilibiliApi(getJsonWithCredentials(api), `获取视频信息失败, bvid = ${bvid}`)
           }
-          const apiData = await Promise.allSettled(instance.ids.map(id => {
-            if (/av(\d+)/i.test(id)) {
-              return handleAid(id)
-            }
-            if (/BV(.+)/i.test(id)) {
-              return handleBvid(id)
-            }
-            console.error(`无效输入: ${id}`)
-            return null
-          }))
+          const apiData = await Promise.allSettled(
+            instance.ids.map(id => {
+              if (/av(\d+)/i.test(id)) {
+                return handleAid(id)
+              }
+              if (/BV(.+)/i.test(id)) {
+                return handleBvid(id)
+              }
+              console.error(`无效输入: ${id}`)
+              return null
+            }),
+          )
           apiData
             .filter((it): it is PromiseRejectedResult => it.status === 'rejected')
             .forEach(result => {
@@ -57,11 +62,13 @@ export const plugin: PluginMetadata = {
                     title: formatTitle(
                       getGeneralSettings().batchFilenameFormat,
                       false,
-                      page.part ? {
-                        title,
-                        n: formatNumber(index + 1, pages.length),
-                        ep: page.part,
-                      } : { title },
+                      page.part
+                        ? {
+                            title,
+                            n: formatNumber(index + 1, pages.length),
+                            ep: page.part,
+                          }
+                        : { title },
                     ),
                   }
                   return item

@@ -1,9 +1,7 @@
 <template>
   <div>
     <div class="video-default-location-form-line">
-      <div class="video-default-location-form-item-not-grow">
-        当前位置
-      </div>
+      <div class="video-default-location-form-item-not-grow">当前位置</div>
       <TextBox
         class="video-default-location-form-item-grow"
         :text="String(curPosition)"
@@ -34,9 +32,7 @@
         change-on-blur
         @change="onLocationInput"
       />
-      <VButton @click="locateTo">
-        定位
-      </VButton>
+      <VButton @click="locateTo"> 定位 </VButton>
     </div>
 
     <div class="video-default-location-vertical-space"></div>
@@ -49,9 +45,7 @@
         change-on-blur
         @change="onOffsetInput"
       />
-      <VButton @click="offsetTo">
-        偏移
-      </VButton>
+      <VButton @click="offsetTo"> 偏移 </VButton>
     </div>
   </div>
 </template>
@@ -161,6 +155,4 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>

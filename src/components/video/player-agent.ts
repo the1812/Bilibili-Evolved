@@ -63,7 +63,7 @@ interface PlayerQuery<QueryResult> extends CustomNestedQuery<QueryResult> {
       fullscreen: QueryResult
     }
     settings: {
-      wrap: QueryResult,
+      wrap: QueryResult
       lightOff: QueryResult
     }
   }
@@ -101,7 +101,7 @@ export abstract class PlayerAgent {
     return {
       ...this,
       custom,
-    } as (this & { custom: { [key in keyof CustomQueryType]: ElementQuery } })
+    } as this & { custom: { [key in keyof CustomQueryType]: ElementQuery } }
   }
   widescreen() {
     return click(this.query.control.buttons.widescreen)
@@ -133,7 +133,7 @@ export abstract class PlayerAgent {
 
   /** true 开灯，false 关灯 */
   async toggleLight(on: boolean) {
-    const checkbox = await this.query.control.settings.lightOff() as HTMLInputElement
+    const checkbox = (await this.query.control.settings.lightOff()) as HTMLInputElement
     // 关灯状态 && 要开灯 -> 开灯
     checkbox.checked && on && checkbox.click()
     // 开灯状态 && 要关灯 -> 关灯
@@ -142,11 +142,7 @@ export abstract class PlayerAgent {
 
   // eslint-disable-next-line class-methods-use-this
   getPlayerConfig(target: string) {
-    return lodash.get(
-      JSON.parse(localStorage.getItem('bilibili_player_settings')),
-      target,
-      false,
-    )
+    return lodash.get(JSON.parse(localStorage.getItem('bilibili_player_settings')), target, false)
   }
 
   isAutoPlay() {
@@ -211,7 +207,8 @@ export class VideoPlayerV2Agent extends PlayerAgent {
       },
       settings: {
         wrap: '.bilibili-player-video-btn-setting-wrap',
-        lightOff: '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input',
+        lightOff:
+          '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input',
       },
     },
     toastWrap: '.bilibili-player-video-toast-wrp',
@@ -275,7 +272,9 @@ export class VideoPlayerV2Agent extends PlayerAgent {
     this.nativeApi.play()
     setTimeout(() => {
       this.nativeApi.seek(time)
-      const toastText = dq('.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)')
+      const toastText = dq(
+        '.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)',
+      )
       if (toastText) {
         toastText.textContent = ' 00:00'
       }
@@ -430,7 +429,8 @@ export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
         pageList: '.bilibili-player-video-btn-pagelist, .bpx-player-ctrl-eplist',
         speed: '.bilibili-player-video-btn-speed, .bpx-player-ctrl-playbackrate',
         subtitle: '.bilibili-player-video-btn-subtitle, .bpx-player-ctrl-subtitle',
-        volume: '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume, .bpx-player-ctrl-volume .bpx-player-ctrl-volume-icon',
+        volume:
+          '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume, .bpx-player-ctrl-volume .bpx-player-ctrl-volume-icon',
         settings: '.bilibili-player-video-btn-setting, .bpx-player-ctrl-setting',
         pip: '.bilibili-player-video-btn-pip, .bpx-player-ctrl-pip',
         widescreen: '.bilibili-player-video-btn-widescreen, .bpx-player-ctrl-wide',
@@ -439,7 +439,8 @@ export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
       },
       settings: {
         wrap: '.bilibili-player-video-btn-setting-wrap, .bpx-player-ctrl-setting-box',
-        lightOff: '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input, .bpx-player-ctrl-setting-lightoff .bui-checkbox-input',
+        lightOff:
+          '.bilibili-player-video-btn-setting-right-others-content-lightoff .bui-checkbox-input, .bpx-player-ctrl-setting-lightoff .bui-checkbox-input',
       },
     },
     toastWrap: '.bilibili-player-video-toast-wrp, .bpx-player-dialog-wrap',
@@ -460,7 +461,9 @@ export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
     this.nativeApi.play()
     setTimeout(() => {
       this.nativeApi.seek(time)
-      const toastText = dq('.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)')
+      const toastText = dq(
+        '.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)',
+      )
       if (toastText) {
         toastText.textContent = ' 00:00'
       }

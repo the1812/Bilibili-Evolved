@@ -51,7 +51,8 @@ const handleRpcResponse = async (
       success: true,
       message: response.result,
     }
-  } catch (error) { // Host or port is invalid
+  } catch (error) {
+    // Host or port is invalid
     return {
       param,
       success: false,
@@ -116,9 +117,7 @@ const parseRpcOptions = (option: string): Record<string, string> => {
     .split('\n')
     .map(line => {
       // 实际上就是按第一个 = 号分割出 key / value, 其他后面的 = 还是算进 value 里
-      const [key, ...values] = line
-        .trim()
-        .split('=')
+      const [key, ...values] = line.trim().split('=')
       return [key.trim(), values.join('=').trim()]
     })
     .filter(it => Boolean(it[1])) // 过滤掉没有 = 的行 (value 为空)
@@ -128,32 +127,39 @@ export const aria2Rpc: DownloadVideoOutput = {
   name: 'aria2Rpc',
   displayName: 'aria2 RPC',
   description: '使用 aria2 RPC 功能发送下载请求.',
-  runAction: async (action, instance: Vue & {
-    selectedRpcProfile: Aria2RpcProfile
-  }) => {
+  runAction: async (
+    action,
+    instance: Vue & {
+      selectedRpcProfile: Aria2RpcProfile
+    },
+  ) => {
     const { infos } = action
     const { selectedRpcProfile } = instance
     const { secretKey, dir, other } = selectedRpcProfile
     const referer = document.URL.replace(window.location.search, '')
-    const totalParams = infos.map(info => info.titledFragments.map(fragment => {
-      const singleInfoParams = []
-      if (secretKey) {
-        singleInfoParams.push(`token:${secretKey}`)
-      }
-      singleInfoParams.push([fragment.url])
-      singleInfoParams.push({
-        referer,
-        'user-agent': UserAgent,
-        out: fragment.title,
-        dir: dir || undefined,
-        ...parseRpcOptions(other),
-      })
-      const id = encodeURIComponent(fragment.title)
-      return {
-        params: singleInfoParams,
-        id,
-      }
-    })).flat()
+    const totalParams = infos
+      .map(info =>
+        info.titledFragments.map(fragment => {
+          const singleInfoParams = []
+          if (secretKey) {
+            singleInfoParams.push(`token:${secretKey}`)
+          }
+          singleInfoParams.push([fragment.url])
+          singleInfoParams.push({
+            referer,
+            'user-agent': UserAgent,
+            out: fragment.title,
+            dir: dir || undefined,
+            ...parseRpcOptions(other),
+          })
+          const id = encodeURIComponent(fragment.title)
+          return {
+            params: singleInfoParams,
+            id,
+          }
+        }),
+      )
+      .flat()
     const results = await sendRpc(selectedRpcProfile, totalParams)
     console.table(results)
     if (results.length === 1) {

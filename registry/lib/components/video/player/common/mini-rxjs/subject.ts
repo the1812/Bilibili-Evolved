@@ -30,13 +30,11 @@ export interface Subject<T> extends Required<PublishContext<T>> {
   pipe<R = T>(...operators: Operator[]): Subject<R>
 }
 
-export const toStandardizedObserver = <T>(
-  observer: Observer<T>,
-): StandardizedObserver<T> => (typeof observer === 'function' ? { next: observer } : observer)
+export const toStandardizedObserver = <T>(observer: Observer<T>): StandardizedObserver<T> =>
+  typeof observer === 'function' ? { next: observer } : observer
 
-export const subject = <T, R = T>(
-  publisher?: Publisher<T, R>,
-): Subject<R> => (function internalSubject(publisher_, parent = undefined, root = undefined) {
+export const subject = <T, R = T>(publisher?: Publisher<T, R>): Subject<R> =>
+  (function internalSubject(publisher_, parent = undefined, root = undefined) {
     let connected = false
 
     const teardownLogicList: TeardownLogic[] = []
@@ -44,7 +42,9 @@ export const subject = <T, R = T>(
     let completed = false
 
     const cleanup = () => {
-      while (teardownLogicList.length) { teardownLogicList.pop()() }
+      while (teardownLogicList.length) {
+        teardownLogicList.pop()()
+      }
       observers.length = 0
       completed = true
     }
@@ -103,8 +103,8 @@ export const subject = <T, R = T>(
       if (publishers.length === 0) {
         return {
           subscribe: observer => {
-            const unsubscribe = subscribe(toStandardizedObserver(observer));
-            (root?.connect ?? connect)()
+            const unsubscribe = subscribe(toStandardizedObserver(observer))
+            ;(root?.connect ?? connect)()
             return unsubscribe
           },
           pipe,
@@ -126,17 +126,17 @@ export const subject = <T, R = T>(
 
     if (parent) {
       const teardownLogic = publisher_?.({
-        subscribe: observer => parent.subscribe(
-          // 默认传递本级的 error 和 complete，这样实现操作符时，将简单许多，一般情况下，错误和完成信号都能沿着链式调用传递下去
-          { error, complete, ...toStandardizedObserver(observer) },
-        ),
+        subscribe: observer =>
+          parent.subscribe(
+            // 默认传递本级的 error 和 complete，这样实现操作符时，将简单许多，一般情况下，错误和完成信号都能沿着链式调用传递下去
+            { error, complete, ...toStandardizedObserver(observer) },
+          ),
         next,
         error,
         complete,
       })
-      teardownLogic
-      && teardownLogicList.push(teardownLogic)
+      teardownLogic && teardownLogicList.push(teardownLogic)
     }
 
     return pipe()
-  }(publisher))
+  })(publisher)

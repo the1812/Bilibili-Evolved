@@ -38,12 +38,12 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "common";
+@import 'common';
 .default-widget {
   position: relative;
   .widget-icon {
     margin-right: 8px;
-    opacity: .75;
+    opacity: 0.75;
   }
   .widget-name {
     display: flex;

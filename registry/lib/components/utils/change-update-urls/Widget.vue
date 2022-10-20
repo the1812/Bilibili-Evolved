@@ -37,7 +37,8 @@ export default Vue.extend({
               record.url = record.url.replace(indirectRaw, `$1${targetBranch}$3`)
               return
             }
-            const directRaw = /^(https:\/\/raw\.githubusercontent\.com\/.+\/Bilibili-Evolved\/)(.+?)(\/)/
+            const directRaw =
+              /^(https:\/\/raw\.githubusercontent\.com\/.+\/Bilibili-Evolved\/)(.+?)(\/)/
             if (directRaw.test(record.url)) {
               record.url = record.url.replace(directRaw, `$1${targetBranch}$3`)
               return

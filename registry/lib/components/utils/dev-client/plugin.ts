@@ -9,18 +9,16 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
     return
   }
   addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
-    actions.push(
-      component => {
-        if (!autoUpdateOptions.urls.components[component.name]) {
-          return undefined
-        }
-        const ActionModule = () => import('./Action.vue')
-        return {
-          name: 'devClient',
-          component: ActionModule,
-        }
-      },
-    )
+    actions.push(component => {
+      if (!autoUpdateOptions.urls.components[component.name]) {
+        return undefined
+      }
+      const ActionModule = () => import('./Action.vue')
+      return {
+        name: 'devClient',
+        component: ActionModule,
+      }
+    })
   })
   addData('launchBar.actions', (providers: LaunchBarActionProvider[]) => {
     providers.push({

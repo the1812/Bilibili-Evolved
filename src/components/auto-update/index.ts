@@ -1,10 +1,6 @@
 import { ComponentEntry, componentsTags } from '@/components/types'
 import { meta } from '@/core/meta'
-import {
-  getComponentSettings,
-  getGeneralSettings,
-  isUserComponent,
-} from '@/core/settings'
+import { getComponentSettings, getGeneralSettings, isUserComponent } from '@/core/settings'
 import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
 import {
@@ -64,9 +60,7 @@ const optionsMetadata = defineOptionsMetadata({
 
 type Options = OptionsOfMetadata<typeof optionsMetadata>
 
-const entry: ComponentEntry<Options> = async ({
-  settings: { options: opt },
-}) => {
+const entry: ComponentEntry<Options> = async ({ settings: { options: opt } }) => {
   if (isIframe()) {
     return checkerMethods
   }
@@ -112,9 +106,7 @@ export const component = defineComponentMetadata({
           after: (_, url: string, metadata: { name: string }) => {
             // console.log('hook', `user${lodash.startCase(type)}.add`, metadata.name, url)
             const { options } = getComponentSettings('autoUpdate')
-            const existingItem = options.urls[type][
-              metadata.name
-            ] as UpdateCheckItem
+            const existingItem = options.urls[type][metadata.name] as UpdateCheckItem
             if (!existingItem) {
               options.urls[type][metadata.name] = {
                 url,
@@ -140,36 +132,33 @@ export const component = defineComponentMetadata({
           },
         })
       })
-      addData(
-        'settingsPanel.componentActions',
-        (actions: ComponentAction[]) => {
-          const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-          actions.push(metadata => {
-            const item = options.urls.components[metadata.name]
-            if (!item) {
-              return undefined
-            }
-            return {
-              name: 'checkUpdate',
-              displayName: '检查更新',
-              icon: isLocalItem(item.url)
-                ? 'mdi-file-download-outline'
-                : 'mdi-cloud-download-outline',
-              visible: isUserComponent(metadata),
-              title: item.url,
-              action: async () => {
-                const { Toast } = await import('@/core/toast')
-                const toast = Toast.info('检查更新中...', '检查更新')
-                toast.message = await checkComponentsUpdate({
-                  filterNames: [metadata.name],
-                  force: true,
-                })
-                toast.duration = 3000
-              },
-            }
-          })
-        },
-      )
+      addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
+        const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
+        actions.push(metadata => {
+          const item = options.urls.components[metadata.name]
+          if (!item) {
+            return undefined
+          }
+          return {
+            name: 'checkUpdate',
+            displayName: '检查更新',
+            icon: isLocalItem(item.url)
+              ? 'mdi-file-download-outline'
+              : 'mdi-cloud-download-outline',
+            visible: isUserComponent(metadata),
+            title: item.url,
+            action: async () => {
+              const { Toast } = await import('@/core/toast')
+              const toast = Toast.info('检查更新中...', '检查更新')
+              toast.message = await checkComponentsUpdate({
+                filterNames: [metadata.name],
+                force: true,
+              })
+              toast.duration = 3000
+            },
+          }
+        })
+      })
 
       const icon = 'mdi-cloud-sync-outline'
       addData('launchBar.actions', (actions: LaunchBarActionProvider[]) => {
@@ -193,12 +182,14 @@ export const component = defineComponentMetadata({
       addData('settingsPanel.searchBarActions', (actions: SearchBarAction[]) => {
         actions.unshift({
           key: 'updateFeatures',
-          title: ({ selectedComponents }) => (selectedComponents.length > 0 ? '更新所选组件' : '检查所有更新'),
+          title: ({ selectedComponents }) =>
+            selectedComponents.length > 0 ? '更新所选组件' : '检查所有更新',
           icon: 'mdi-cloud-download-outline',
           run: async context => {
-            const confirmMessage = context.selectedComponents.length > 0
-              ? `确定要更新所选的 ${context.selectedComponents.length} 个组件吗?`
-              : '确定要检查所有更新吗?'
+            const confirmMessage =
+              context.selectedComponents.length > 0
+                ? `确定要更新所选的 ${context.selectedComponents.length} 个组件吗?`
+                : '确定要检查所有更新吗?'
             if (!window.confirm(confirmMessage)) {
               return
             }
@@ -237,10 +228,7 @@ export const component = defineComponentMetadata({
                 description: 'Check Last Update',
                 action: async () => {
                   const { Toast } = await import('@/core/toast')
-                  const toast = Toast.info(
-                    '正在检查更新...',
-                    '检查最近更新的功能',
-                  )
+                  const toast = Toast.info('正在检查更新...', '检查最近更新的功能')
                   await checkLastFeature()
                   toast.close()
                 },

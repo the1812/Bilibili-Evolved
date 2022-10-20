@@ -27,7 +27,7 @@ export const sq = <T>(
     /** 本轮查询的目标对象 */
     target: T,
     /** 调用此函数可立即中断轮询, 并返回此次的`target` */
-    stop: () => void
+    stop: () => void,
   ) => boolean = it => Boolean(it),
   config: SpinQueryConfig = defaultConfig,
 ) => {
@@ -98,10 +98,8 @@ const selectPromise = <T = Element>(
  * @param query 选择器字符串(用于`document.querySelector`中), 或其他任意有返回的函数
  * @param config 轮询设置
  */
-export const select = <T = Element>(
-  query: string | (() => T | null),
-  config?: SpinQueryConfig,
-) => selectPromise(query, realQuery => sq(realQuery, v => v !== null && v !== undefined, config))
+export const select = <T = Element>(query: string | (() => T | null), config?: SpinQueryConfig) =>
+  selectPromise(query, realQuery => sq(realQuery, v => v !== null && v !== undefined, config))
 
 /**
  * 通过Observer等待惰性加载的DOM元素, 也可选择其他任意对象, 得到非`null`且非`undefined`时结束
@@ -109,16 +107,19 @@ export const select = <T = Element>(
  * 结束之前每当DOM发生变化就会再次进行查询
  * @param query 选择器字符串(用于`document.querySelector`中), 或其他任意有返回的函数
  */
-export const selectLazy = <T = Element>(
-  query: string | (() => T | null),
-) => selectPromise(query, realQuery => new Promise<T>(resolve => {
-  allMutations(() => {
-    const result = realQuery()
-    if (result !== null && result !== undefined) {
-      resolve(result)
-    }
-  })
-}))
+export const selectLazy = <T = Element>(query: string | (() => T | null)) =>
+  selectPromise(
+    query,
+    realQuery =>
+      new Promise<T>(resolve => {
+        allMutations(() => {
+          const result = realQuery()
+          if (result !== null && result !== undefined) {
+            resolve(result)
+          }
+        })
+      }),
+  )
 
 const selectAllCache = new Map<string, Promise<unknown>>()
 const selectAllPromise = <T extends { length: number } = Element[]>(
@@ -168,14 +169,19 @@ export const selectAll = <T extends { length: number } = Element[]>(
  */
 export const selectAllLazy = <T extends { length: number } = Element[]>(
   query: string | (() => T),
-) => selectAllPromise(query, realQuery => new Promise<T>(resolve => {
-  allMutations(() => {
-    const result = realQuery()
-    if (result !== null && result !== undefined) {
-      resolve(result)
-    }
-  })
-}))
+) =>
+  selectAllPromise(
+    query,
+    realQuery =>
+      new Promise<T>(resolve => {
+        allMutations(() => {
+          const result = realQuery()
+          if (result !== null && result !== undefined) {
+            resolve(result)
+          }
+        })
+      }),
+  )
 
 /**
  * 轮询数组并在达到指定元素量后结束, 带有`length`属性的对象也可视为数组

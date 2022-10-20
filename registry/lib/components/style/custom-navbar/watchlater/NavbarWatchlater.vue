@@ -4,7 +4,11 @@
       <div class="search">
         <TextBox v-model="search" linear placeholder="搜索"></TextBox>
       </div>
-      <a class="operation" target="_blank" href="https://www.bilibili.com/medialist/play/watchlater">
+      <a
+        class="operation"
+        target="_blank"
+        href="https://www.bilibili.com/medialist/play/watchlater"
+      >
         <VButton class="round-button" title="播放全部" round>
           <VIcon icon="mdi-play" :size="18"></VIcon>
         </VButton>
@@ -17,39 +21,21 @@
     </div>
     <VLoading v-if="loading"></VLoading>
     <VEmpty v-else-if="!loading && cards.length === 0"></VEmpty>
-    <transition-group
-      v-else
-      name="cards"
-      tag="div"
-      class="watchlater-list-content"
-    >
-      <div
-        v-for="(card, index) of filteredCards"
-        :key="card.aid"
-        class="watchlater-card"
-      >
+    <transition-group v-else name="cards" tag="div" class="watchlater-list-content">
+      <div v-for="(card, index) of filteredCards" :key="card.aid" class="watchlater-card">
         <a class="cover-container" target="_blank" :href="card.href">
           <DpiImage
             class="cover"
             :src="card.coverUrl"
             :size="{ width: 130, height: 85 }"
           ></DpiImage>
-          <div
-            class="floating remove"
-            title="移除"
-            @click.prevent="remove(card.aid, index)"
-          >
+          <div class="floating remove" title="移除" @click.prevent="remove(card.aid, index)">
             <VIcon icon="mdi-close" :size="16"></VIcon>
           </div>
           <div class="floating duration">{{ card.durationText }}</div>
           <div v-if="card.complete" class="floating viewed">已观看</div>
         </a>
-        <a
-          class="title"
-          target="_blank"
-          :href="card.href"
-          :title="card.title"
-        >{{ card.title }}</a>
+        <a class="title" target="_blank" :href="card.href" :title="card.title">{{ card.title }}</a>
         <a
           class="up"
           target="_blank"
@@ -72,14 +58,7 @@ import {
   RawWatchlaterItem,
   toggleWatchlater,
 } from '@/components/video/watchlater'
-import {
-  VLoading,
-  VEmpty,
-  TextBox,
-  VButton,
-  VIcon,
-  DpiImage,
-} from '@/ui'
+import { VLoading, VEmpty, TextBox, VButton, VIcon, DpiImage } from '@/ui'
 import { popperMixin } from '../mixins'
 
 interface WatchlaterCard {
@@ -191,17 +170,17 @@ export default Vue.extend({
       const search = this.search.toLowerCase()
       const cardsList = this.$el.querySelector('.watchlater-list-content') as HTMLElement
       cardsList.scrollTo(0, 0)
-      this.filteredCards = (this.cards as WatchlaterCard[]).filter(card => (
-        card.title.toLowerCase().includes(search)
-          || card.upName.toLowerCase().includes(search)
-      ))
+      this.filteredCards = (this.cards as WatchlaterCard[]).filter(
+        card =>
+          card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search),
+      )
     }, 100),
   },
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "../popup";
+@import 'common';
+@import '../popup';
 
 .custom-navbar .watchlater-list {
   @include navbar-popup-height();

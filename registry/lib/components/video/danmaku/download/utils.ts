@@ -23,10 +23,7 @@ export class JsonDanmaku {
     pool: number
     attr: number
   }[] = []
-  constructor(
-    public aid: number | string,
-    public cid: number | string,
-  ) { }
+  constructor(public aid: number | string, public cid: number | string) {}
   // get segmentCount() {
   //   return Math.ceil(this.duration / JsonDanmaku.SegmentSize)
   // }
@@ -50,7 +47,9 @@ export class JsonDanmaku {
       const response = await fetch(url)
       return response.blob()
     }
-    const viewBlob = await fetchBlob(`https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=${this.cid}&pid=${this.aid}`)
+    const viewBlob = await fetchBlob(
+      `https://api.bilibili.com/x/v2/dm/web/view?type=1&oid=${this.cid}&pid=${this.aid}`,
+    )
     if (!viewBlob) {
       throw new Error('获取弹幕信息失败')
     }
@@ -60,17 +59,23 @@ export class JsonDanmaku {
       throw new Error(`获取弹幕分页数失败: ${JSON.stringify(lodash.omit(view, 'flag'))}`)
     }
     console.log('segment count =', total)
-    const segments = await Promise.all(new Array(total).fill(0).map(async (_, index) => {
-      const blob = await fetchBlob(`https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&pid=${this.aid}&segment_index=${index + 1}`)
-      if (!blob) {
-        logError(new Error(`弹幕片段${index + 1}下载失败`))
-        return []
-      }
-      console.log(`received blob for segment ${index + 1}`, blob)
-      const result = await decodeDanmakuSegment(blob)
-      return result.elems ?? []
-    }))
-    this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress))
+    const segments = await Promise.all(
+      new Array(total).fill(0).map(async (_, index) => {
+        const blob = await fetchBlob(
+          `https://api.bilibili.com/x/v2/dm/web/seg.so?type=1&oid=${this.cid}&pid=${
+            this.aid
+          }&segment_index=${index + 1}`,
+        )
+        if (!blob) {
+          logError(new Error(`弹幕片段${index + 1}下载失败`))
+          return []
+        }
+        console.log(`received blob for segment ${index + 1}`, blob)
+        const result = await decodeDanmakuSegment(blob)
+        return result.elems ?? []
+      }),
+    )
+    this.jsonDanmakus = segments.flat().sort(ascendingSort(it => it.progress ?? 0))
     return this
   }
 }
@@ -104,9 +109,8 @@ export const getUserDanmakuConfig = async () => {
 
     if (playerSettingsJson) {
       const playerSettings = JSON.parse(playerSettingsJson)
-      const getConfig = <T>(prop: string, defaultValue?: T): T => (
+      const getConfig = <T>(prop: string, defaultValue?: T): T =>
         lodash.get(playerSettings, `setting_config.${prop}`, defaultValue)
-      )
       // 屏蔽类型
       config.blockTypes = (() => {
         const result: (DanmakuType | 'color')[] = []
@@ -119,7 +123,7 @@ export const getUserDanmakuConfig = async () => {
 
         for (const [type, value] of Object.entries(blockValues)) {
           if (lodash.get(playerSettings, `block.type_${type}`, true) === false) {
-            result.push(...value as (DanmakuType | 'color')[])
+            result.push(...(value as (DanmakuType | 'color')[]))
           }
         }
         return result.concat(7, 8) // 高级弹幕不做转换
@@ -163,7 +167,7 @@ export const getUserDanmakuConfig = async () => {
       // 用户屏蔽词
       const blockSettings = lodash.get(playerSettings, 'block.list', []) as {
         /** 类型 */
-        t: 'keyword' | 'regexp' | 'user',
+        t: 'keyword' | 'regexp' | 'user'
         /** 内容 */
         v: string
         /** 是否开启 */
@@ -209,7 +213,11 @@ export const getUserDanmakuConfig = async () => {
     }
 
     // 字体直接从 HTML 里取了, localStorage 里是 font-family 解析更麻烦些
-    config.font = (dq('.bilibili-player-video-danmaku-setting-right-font .bui-select-result') as HTMLElement).innerText
+    config.font = (
+      dq(
+        ':is(.bilibili-player-video-danmaku-setting-right-font, .bpx-player-dm-setting-right-font-content-fontfamily) .bui-select-result',
+      ) as HTMLElement
+    ).innerText
   } catch (error) {
     // The default config
     logError(error)
@@ -241,17 +249,24 @@ export const convertToAssFromJson = async (danmaku: JsonDanmaku) => {
 }
 export const convertToXmlFromJson = (danmaku: JsonDanmaku) => {
   const xmlText = `
-<?xml version="1.0" encoding="UTF-8"?><i><chatserver>chat.bilibili.com</chatserver><chatid>${danmaku.cid}</chatid><mission>0</mission><maxlimit>${danmaku.xmlDanmakus.length}</maxlimit><state>0</state><real_name>0</real_name><source>k-v</source>
-${danmaku.xmlDanmakus.map(x => new XmlDanmaku(x).text()).join('\n')}
+<?xml version="1.0" encoding="UTF-8"?><i><chatserver>chat.bilibili.com</chatserver><chatid>${
+    danmaku.cid
+  }</chatid><mission>0</mission><maxlimit>${
+    danmaku.xmlDanmakus.length
+  }</maxlimit><state>0</state><real_name>0</real_name><source>k-v</source>
+${danmaku.xmlDanmakus.map(x => `  ${new XmlDanmaku(x).text()}`).join('\n')}
 </i>
   `.trim()
   return xmlText
 }
 
-export const getBlobByType = async (type: DanmakuDownloadType, input: {
-  aid: string
-  cid: string
-} = unsafeWindow) => {
+export const getBlobByType = async (
+  type: DanmakuDownloadType,
+  input: {
+    aid: string
+    cid: string
+  } = unsafeWindow,
+) => {
   const { aid, cid } = input
   const danmaku = await new JsonDanmaku(aid, cid).fetchInfo()
   switch (type) {
@@ -262,7 +277,7 @@ export const getBlobByType = async (type: DanmakuDownloadType, input: {
     }
     default:
     case 'json': {
-      return new Blob([JSON.stringify(danmaku.jsonDanmakus)], {
+      return new Blob([JSON.stringify(danmaku.jsonDanmakus, undefined, 2)], {
         type: 'text/json',
       })
     }

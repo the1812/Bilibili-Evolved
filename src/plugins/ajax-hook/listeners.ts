@@ -1,14 +1,14 @@
 import { getHandlers } from '.'
 
 type AjaxListenerType =
-  'beforeOnReadyStateChange' |
-  'afterOnReadyStateChange' |
-  'beforeOnLoad' |
-  'afterOnLoad' |
-  'beforeOpen' |
-  'afterOpen' |
-  'beforeSend' |
-  'afterSend'
+  | 'beforeOnReadyStateChange'
+  | 'afterOnReadyStateChange'
+  | 'beforeOnLoad'
+  | 'afterOnLoad'
+  | 'beforeOpen'
+  | 'afterOpen'
+  | 'beforeSend'
+  | 'afterSend'
 
 /**
  * 添加Ajax监听器

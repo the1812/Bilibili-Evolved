@@ -3,12 +3,7 @@
     <div
       v-for="item of items"
       :key="item.name"
-      class="
-        be-video-control-bar-extend-item
-        bilibili-player-video-btn
-        squirtle-block-wrap
-        bpx-player-ctrl-btn
-      "
+      class="be-video-control-bar-extend-item bilibili-player-video-btn squirtle-block-wrap bpx-player-ctrl-btn"
       :style="{ order: item.order.toString() }"
       :data-name="item.name"
       @click="item.action($event)"

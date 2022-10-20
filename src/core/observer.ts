@@ -26,91 +26,105 @@ export const mutationObserve = (
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const childList = (
-  target: ObserverTarget,
-  callback: MutationCallback,
-) => mutationObserve(resolveTargets(target), {
-  childList: true,
-  subtree: false,
-  attributes: false,
-}, callback)
+export const childList = (target: ObserverTarget, callback: MutationCallback) =>
+  mutationObserve(
+    resolveTargets(target),
+    {
+      childList: true,
+      subtree: false,
+      attributes: false,
+    },
+    callback,
+  )
 /** 监听所有子孙元素
-* @param target 监听目标
-* @param callback 回调函数
-*/
-export const childListSubtree = (
-  target: ObserverTarget,
-  callback: MutationCallback,
-) => mutationObserve(resolveTargets(target), {
-  childList: true,
-  subtree: true,
-  attributes: false,
-}, callback)
+ * @param target 监听目标
+ * @param callback 回调函数
+ */
+export const childListSubtree = (target: ObserverTarget, callback: MutationCallback) =>
+  mutationObserve(
+    resolveTargets(target),
+    {
+      childList: true,
+      subtree: true,
+      attributes: false,
+    },
+    callback,
+  )
 /** 监听自身的HTML属性变化
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const attributes = (
-  target: ObserverTarget,
-  callback: MutationCallback,
-) => mutationObserve(resolveTargets(target), {
-  childList: false,
-  subtree: false,
-  attributes: true,
-}, callback)
+export const attributes = (target: ObserverTarget, callback: MutationCallback) =>
+  mutationObserve(
+    resolveTargets(target),
+    {
+      childList: false,
+      subtree: false,
+      attributes: true,
+    },
+    callback,
+  )
 /** 监听自身及其子孙元素的HTML属性变化
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const attributesSubtree = (
-  target: ObserverTarget,
-  callback: MutationCallback,
-) => mutationObserve(resolveTargets(target), {
-  childList: false,
-  subtree: true,
-  attributes: true,
-}, callback)
+export const attributesSubtree = (target: ObserverTarget, callback: MutationCallback) =>
+  mutationObserve(
+    resolveTargets(target),
+    {
+      childList: false,
+      subtree: true,
+      attributes: true,
+    },
+    callback,
+  )
 /** 监听自身的文本内容变化
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const characterData = (
-  target: ObserverTarget,
-  callback: MutationCallback,
-) => mutationObserve(resolveTargets(target), {
-  childList: false,
-  subtree: false,
-  attributes: false,
-  characterData: true,
-}, callback)
+export const characterData = (target: ObserverTarget, callback: MutationCallback) =>
+  mutationObserve(
+    resolveTargets(target),
+    {
+      childList: false,
+      subtree: false,
+      attributes: false,
+      characterData: true,
+    },
+    callback,
+  )
 /** 监听自身及其子孙元素的文本内容变化
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const characterDataSubtree = (
-  target: ObserverTarget,
-  callback: MutationCallback,
-) => mutationObserve(resolveTargets(target), {
-  childList: false,
-  subtree: true,
-  attributes: false,
-  characterData: true,
-}, callback)
+export const characterDataSubtree = (target: ObserverTarget, callback: MutationCallback) =>
+  mutationObserve(
+    resolveTargets(target),
+    {
+      childList: false,
+      subtree: true,
+      attributes: false,
+      characterData: true,
+    },
+    callback,
+  )
 /** 监听指定目标上的所有变化, 包括自身及子孙元素的元素增减, 属性变化, 文本内容变化
  *
  * 若需要监听 `document.body` 上的, 请使用 allMutations
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const allMutationsOn = (
-  target: ObserverTarget,
-  callback: MutationCallback,
-) => mutationObserve(resolveTargets(target), {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  characterData: true,
-}, callback)
+export const allMutationsOn = (target: ObserverTarget, callback: MutationCallback) =>
+  mutationObserve(
+    resolveTargets(target),
+    {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true,
+    },
+    callback,
+  )
 
 const everyNodesObserver: {
   observer: MutationObserver
@@ -128,9 +142,8 @@ const everyNodesObserver: {
 export const allMutations = (callback: MutationCallback) => {
   if (!everyNodesObserver.observer) {
     everyNodesObserver.callbacks.push(callback)
-    const [observer, config] = allMutationsOn(
-      document.body,
-      records => everyNodesObserver.callbacks.forEach(c => c(records, everyNodesObserver.observer)),
+    const [observer, config] = allMutationsOn(document.body, records =>
+      everyNodesObserver.callbacks.forEach(c => c(records, everyNodesObserver.observer)),
     )
     everyNodesObserver.observer = observer
     everyNodesObserver.config = config
@@ -154,10 +167,8 @@ export const intersectionObserve = (
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const visible = (
-  target: ObserverTarget,
-  callback: IntersectionObserverCallback,
-) => intersectionObserve(resolveTargets(target), {}, callback)
+export const visible = (target: ObserverTarget, callback: IntersectionObserverCallback) =>
+  intersectionObserve(resolveTargets(target), {}, callback)
 /**
  * 监听元素进入指定容器内/变为可见
  * @param target 监听目标
@@ -170,10 +181,15 @@ export const visibleInside = (
   container: HTMLElement,
   margin: string,
   callback: IntersectionObserverCallback,
-) => intersectionObserve(resolveTargets(target), {
-  root: container,
-  rootMargin: margin,
-}, callback)
+) =>
+  intersectionObserve(
+    resolveTargets(target),
+    {
+      root: container,
+      rootMargin: margin,
+    },
+    callback,
+  )
 
 export const resizeObserve = (
   targets: Element[],
@@ -189,12 +205,14 @@ export const resizeObserve = (
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const sizeChange = (
-  target: ObserverTarget,
-  callback: ResizeObserverCallback,
-) => resizeObserve(resolveTargets(target), {
-  box: 'border-box',
-}, callback)
+export const sizeChange = (target: ObserverTarget, callback: ResizeObserverCallback) =>
+  resizeObserve(
+    resolveTargets(target),
+    {
+      box: 'border-box',
+    },
+    callback,
+  )
 
 const setupUrlChangeListener = lodash.once(() => {
   let lastUrl = document.URL
@@ -221,13 +239,15 @@ export const urlChange = (callback: (url: string) => void, config?: AddEventList
 }
 
 /** 等待 cid */
-const selectCid = lodash.once(() => select(() => {
-  import('@/components/video/player-adaptor').then(({ playerPolyfill }) => playerPolyfill())
-  if (unsafeWindow.cid) {
-    return unsafeWindow.cid
-  }
-  return null
-}))
+const selectCid = lodash.once(() =>
+  select(() => {
+    import('@/components/video/player-adaptor').then(({ playerPolyfill }) => playerPolyfill())
+    if (unsafeWindow.cid) {
+      return unsafeWindow.cid
+    }
+    return null
+  }),
+)
 
 let cidHooked = false
 export type VideoChangeCallback = (id: { aid: string; cid: string }) => void
@@ -275,6 +295,10 @@ export const videoChange = async (
     cidHooked = true
   }
   callback(getId())
-  window.addEventListener('videoChange', (e: CustomEvent<ReturnType<typeof getId>>) => callback(e.detail), config)
+  window.addEventListener(
+    'videoChange',
+    (e: CustomEvent<ReturnType<typeof getId>>) => callback(e.detail),
+    config,
+  )
   return true
 }

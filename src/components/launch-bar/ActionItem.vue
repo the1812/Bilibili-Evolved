@@ -68,7 +68,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .suggest-item {
   outline: none !important;

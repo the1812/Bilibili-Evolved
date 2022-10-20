@@ -24,11 +24,16 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
     return aid
   }
 
-  protected static readonly aidComparator =
-    (a: string | number, b: string | number) => a.toString() === b.toString()
+  protected static readonly aidComparator = (a: string | number, b: string | number) =>
+    a.toString() === b.toString()
 
   getSpeedContextMixin({
-    videoIdObject, set, reset: originReset, toggle, getActiveVideoSpeed, getOldActiveVideoSpeed,
+    videoIdObject,
+    set,
+    reset: originReset,
+    toggle,
+    getActiveVideoSpeed,
+    getOldActiveVideoSpeed,
   }: SpeedContext): Partial<SpeedContext> {
     const reset = async () => {
       const restoredVideoSpeed = this.getRestoredVideoSpeed(videoIdObject)
@@ -49,8 +54,8 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
         const individualFixGlobalSpeed = fixGlobalSpeed && !individualRemember
 
         if (
-          legacyOrOffset
-          || getActiveVideoSpeed() === (individualFixGlobalSpeed ? globalSpeed : 1)
+          legacyOrOffset ||
+          getActiveVideoSpeed() === (individualFixGlobalSpeed ? globalSpeed : 1)
         ) {
           await set(getOldActiveVideoSpeed())
           return
@@ -75,9 +80,7 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
       flag = true
     }
     if (options.individualRememberList) {
-      options.individualRememberRecord = lodash.cloneDeep(
-        options.individualRememberList,
-      )
+      options.individualRememberRecord = lodash.cloneDeep(options.individualRememberList)
       delete options.individualRememberList
       flag = true
     }
@@ -85,11 +88,16 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
       options.fixGlobalSpeed = false
       options.showRestoreTip = true
       delete options.remember
-      Toast.show('「扩展倍速」和倍速快捷键插件成为独立的组件或插件啦！详情请阅读组件描述.（此弹出提醒仅显示一次）', '【记忆倍速】迁移提醒', 8e3)
+      Toast.show(
+        '「扩展倍速」和倍速快捷键插件成为独立的组件或插件啦！详情请阅读组件描述.（此弹出提醒仅显示一次）',
+        '【记忆倍速】迁移提醒',
+        8e3,
+      )
     }
   }
 
-  onSpeedContext({ videoSpeedChange$, videoIdObject }: SpeedContext) { // 如果开启「独立记忆倍速」，则同时开启「固定全局倍速」
+  onSpeedContext({ videoSpeedChange$, videoIdObject }: SpeedContext) {
+    // 如果开启「独立记忆倍速」，则同时开启「固定全局倍速」
     this.options.individualRemember$.subscribe(value => {
       if (value) {
         this.options.fixGlobalSpeed = true
@@ -117,7 +125,10 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
           }
         } catch (err) {
           const toastTitle = `${this.metadata.displayName} - 倍速还原操作失败`
-          const toastContent = err instanceof NoSuchSpeedMenuItemElementError ? `没有 ${err.formattedSpeed} 这样的倍速项` : String(err)
+          const toastContent =
+            err instanceof NoSuchSpeedMenuItemElementError
+              ? `没有 ${err.formattedSpeed} 这样的倍速项`
+              : String(err)
           Toast.error(toastContent, toastTitle, 5000)
           console.error(err)
         }
@@ -145,10 +156,9 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
     // - 如果启用了“分视频记忆（individualRemember）”，则使用当前视频相应的记忆倍速值（如果有）
     // - 使用“全局记忆值（speed）”
     return (
-      this.options.individualRemember
-      && this.matchRememberSpeed(videoIdObject.aid)
+      (this.options.individualRemember && this.matchRememberSpeed(videoIdObject.aid)) ||
+      this.readGlobalVideoSpeed()
     )
-      || this.readGlobalVideoSpeed()
   }
 
   /**
@@ -216,10 +226,12 @@ export class RememberSpeedComponent extends EntrySpeedComponent<Options> {
     const aidList = lodash.castArray(aid)
 
     this.options.individualRememberRecord = lodash(this.options.individualRememberRecord)
-      .mapValues(aids => lodash(aids)
-        .pullAllWith(aidList, RememberSpeedComponent.aidComparator)
-        .uniqWith(RememberSpeedComponent.aidComparator) // 避免重复的项目
-        .value())
+      .mapValues(aids =>
+        lodash(aids)
+          .pullAllWith(aidList, RememberSpeedComponent.aidComparator)
+          .uniqWith(RememberSpeedComponent.aidComparator) // 避免重复的项目
+          .value(),
+      )
       .pickBy((v: (string | number)[]) => v.length) // 避免留下无用的空数组
       .value()
   }

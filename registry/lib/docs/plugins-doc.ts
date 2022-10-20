@@ -24,10 +24,7 @@ export const getPluginsDoc: DocSource = async rootPath => {
       const root = `${rootPath}plugins/`
       const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
       const fullAbsolutePath = fullRelativePath.replace(/^(\.\.?\/)*/, '')
-      const {
-        name,
-        displayName,
-      } = it.plugin
+      const { name, displayName } = it.plugin
       const description = await getDescriptionMarkdown(it.plugin)
       return {
         type: 'plugin',

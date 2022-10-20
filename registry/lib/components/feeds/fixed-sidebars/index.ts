@@ -19,11 +19,7 @@ export const component: ComponentMetadata = {
   description: {
     'zh-CN': '强制固定动态主页的顶栏和所有侧栏.',
   },
-  tags: [
-    componentsTags.feeds,
-  ],
+  tags: [componentsTags.feeds],
   entry,
-  urlInclude: [
-    /^https:\/\/t\.bilibili\.com\/$/,
-  ],
+  urlInclude: [/^https:\/\/t\.bilibili\.com\/$/],
 }

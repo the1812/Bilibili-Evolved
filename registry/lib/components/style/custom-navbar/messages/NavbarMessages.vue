@@ -7,7 +7,8 @@
         :href="e.href"
         :data-count="e.count || null"
         @click="clearCount(e)"
-      >{{ e.name }}</a>
+        >{{ e.name }}</a
+      >
     </div>
   </div>
 </template>
@@ -99,9 +100,7 @@ export default Vue.extend({
         return
       }
       const [mainJson, messageJson] = await Promise.all([
-        getJsonWithCredentials(
-          'https://api.bilibili.com/x/msgfeed/unread',
-        ),
+        getJsonWithCredentials('https://api.bilibili.com/x/msgfeed/unread'),
         getJsonWithCredentials(
           'https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread',
         ),

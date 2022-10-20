@@ -1,12 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'downloadAudio',
   displayName: '下载音频',
   entry: none,
-  tags: [
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.utils],
   description: {
     'zh-CN': `
 开启音频下载支持, 音频页面中可以在功能面板中下载当前音频.
@@ -17,7 +15,5 @@ export const component: ComponentMetadata = {
   widget: {
     component: () => import('./DownloadAudio.vue').then(m => m.default),
   },
-  urlInclude: [
-    '//www.bilibili.com/audio/',
-  ],
-}
+  urlInclude: ['//www.bilibili.com/audio/'],
+})

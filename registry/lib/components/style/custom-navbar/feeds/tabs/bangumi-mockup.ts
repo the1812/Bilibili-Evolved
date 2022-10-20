@@ -2,7 +2,8 @@
  * 返回一些假的番剧动态数据
  * (流下了没追番的泪水)
  */
-export const getBangumiFeedsMockup = async () => JSON.parse(`{
+export const getBangumiFeedsMockup = async () =>
+  JSON.parse(`{
   "code": 0,
   "msg": "",
   "message": "",

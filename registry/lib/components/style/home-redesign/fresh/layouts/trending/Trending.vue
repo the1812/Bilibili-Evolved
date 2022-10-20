@@ -17,19 +17,12 @@
       </div>
     </div>
     <div class="fresh-home-trending-content">
-      <VideoList
-        ref="videoList"
-        :videos="videos"
-        :loading="loading"
-      />
+      <VideoList ref="videoList" :videos="videos" :loading="loading" />
     </div>
   </div>
 </template>
 <script lang="ts">
-import {
-  VButton,
-  VIcon,
-} from '@/ui'
+import { VButton, VIcon } from '@/ui'
 import VideoList from '../../VideoList.vue'
 import { freshHomeOptions } from '../../types'
 import { getTrendingVideos } from '../../../trending'
@@ -61,14 +54,15 @@ export default Vue.extend({
     async reload() {
       this.loading = true
       this.videos = []
-      this.videos = await getTrendingVideos(freshHomeOptions.personalized)
-        .finally(() => { this.loading = false })
+      this.videos = await getTrendingVideos(freshHomeOptions.personalized).finally(() => {
+        this.loading = false
+      })
     },
   },
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .fresh-home-trending {
   @include v-stretch();

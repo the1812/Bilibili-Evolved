@@ -6,10 +6,7 @@
           <TextBox v-model="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
-          <div
-            class="operation"
-            @click="toggleHistoryPause"
-          >
+          <div class="operation" @click="toggleHistoryPause">
             <VButton v-if="!paused" title="暂停记录历史" round>
               <VIcon icon="mdi-pause" :size="14"></VIcon>
             </VButton>
@@ -17,11 +14,7 @@
               <VIcon icon="mdi-play" :size="14"></VIcon>
             </VButton>
           </div>
-          <a
-            class="operation"
-            target="_blank"
-            href="https://www.bilibili.com/account/history"
-          >
+          <a class="operation" target="_blank" href="https://www.bilibili.com/account/history">
             <VButton title="查看更多" round>
               <VIcon icon="mdi-dots-horizontal" :size="18"></VIcon>
             </VButton>
@@ -29,9 +22,7 @@
         </div>
       </div>
       <div class="header-row">
-        <div class="row-title">
-          过滤:
-        </div>
+        <div class="row-title">过滤:</div>
         <div class="type-filters">
           <div v-for="t of types" :key="t.name" class="type-filter">
             <VButton
@@ -55,11 +46,7 @@
           <div class="time-group-name">
             {{ g.name }}
           </div>
-          <transition-group
-            name="time-group"
-            tag="div"
-            class="time-group-items"
-          >
+          <transition-group name="time-group" tag="div" class="time-group-items">
             <div v-for="h of g.items" :key="h.id" class="time-group-item">
               <a class="cover-container" target="_blank" :href="h.url">
                 <DpiImage
@@ -73,26 +60,21 @@
                   class="progress"
                   :style="{ width: h.progress * 100 + '%' }"
                 ></div>
-                <div
-                  v-if="h.progressText"
-                  class="floating progress-number"
-                >{{ h.progress >= 1 ? '已看完' : h.progressText }}</div>
+                <div v-if="h.progressText" class="floating progress-number">
+                  {{ h.progress >= 1 ? '已看完' : h.progressText }}
+                </div>
                 <div
                   v-if="h.liveStatus !== undefined"
                   class="floating duration live-status"
                   :class="{ on: h.liveStatus === 1 }"
-                >{{ h.liveStatus === 1 ? '直播中': '未开播' }}</div>
-                <div
-                  v-if="h.durationText"
-                  class="floating duration"
-                >{{ h.durationText }}</div>
+                >
+                  {{ h.liveStatus === 1 ? '直播中' : '未开播' }}
+                </div>
+                <div v-if="h.durationText" class="floating duration">{{ h.durationText }}</div>
               </a>
-              <a
-                class="title"
-                target="_blank"
-                :href="h.url"
-                :title="h.title"
-              >{{ h.title || h.upName + '的直播间' }}</a>
+              <a class="title" target="_blank" :href="h.url" :title="h.title">{{
+                h.title || h.upName + '的直播间'
+              }}</a>
               <a
                 class="up"
                 target="_blank"
@@ -107,11 +89,7 @@
                 ></DpiImage>
                 <div class="up-name">{{ h.upName }}</div>
               </a>
-              <div
-                v-if="h.timeText"
-                class="time"
-                :title="new Date(h.viewAt).toLocaleString()"
-              >
+              <div v-if="h.timeText" class="time" :title="new Date(h.viewAt).toLocaleString()">
                 {{ h.timeText }}
               </div>
             </div>
@@ -130,19 +108,9 @@
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { formData, getCsrf } from '@/core/utils'
 import { descendingSort } from '@/core/utils/sort'
-import {
-  VButton,
-  VIcon,
-  TextBox,
-  VLoading,
-  VEmpty,
-  ScrollTrigger,
-  DpiImage,
-} from '@/ui'
+import { VButton, VIcon, TextBox, VLoading, VEmpty, ScrollTrigger, DpiImage } from '@/ui'
 import { popperMixin } from '../mixins'
-import {
-  types, TypeFilter, HistoryItem, getHistoryItems, group,
-} from './types'
+import { types, TypeFilter, HistoryItem, getHistoryItems, group } from './types'
 
 export default Vue.extend({
   components: {
@@ -170,10 +138,10 @@ export default Vue.extend({
   computed: {
     canNextPage() {
       return (
-        this.search === ''
-        && !this.loading
-        && this.hasMorePage
-        && this.types.every((t: TypeFilter) => t.checked)
+        this.search === '' &&
+        !this.loading &&
+        this.hasMorePage &&
+        this.types.every((t: TypeFilter) => t.checked)
       )
     },
   },
@@ -184,10 +152,7 @@ export default Vue.extend({
   },
   async created() {
     try {
-      await Promise.all([
-        this.nextPage(),
-        this.updateHistoryPauseState(),
-      ])
+      await Promise.all([this.nextPage(), this.updateHistoryPauseState()])
     } finally {
       this.loading = false
     }
@@ -202,8 +167,8 @@ export default Vue.extend({
         return false
       }
       if (
-        !item.title.toLowerCase().includes(this.search.toLowerCase())
-        && !item.upName.toLowerCase().includes(this.search.toLowerCase())
+        !item.title.toLowerCase().includes(this.search.toLowerCase()) &&
+        !item.upName.toLowerCase().includes(this.search.toLowerCase())
       ) {
         return false
       }
@@ -215,9 +180,7 @@ export default Vue.extend({
     async nextPage() {
       const items = await getHistoryItems(this.viewTime)
       const cards: HistoryItem[] = lodash.uniqBy(
-        this.cards
-          .concat(items)
-          .sort(descendingSort((item: HistoryItem) => item.viewAt)),
+        this.cards.concat(items).sort(descendingSort((item: HistoryItem) => item.viewAt)),
         item => item.id,
       )
       this.cards = cards
@@ -228,7 +191,9 @@ export default Vue.extend({
       this.hasMorePage = cards.length !== 0
     },
     async updateHistoryPauseState() {
-      const result = await bilibiliApi(getJsonWithCredentials('https://api.bilibili.com/x/v2/history/shadow'))
+      const result = await bilibiliApi(
+        getJsonWithCredentials('https://api.bilibili.com/x/v2/history/shadow'),
+      )
       /*
         result == true: 暂停
         result == {}: 没暂停
@@ -254,8 +219,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "../popup";
+@import 'common';
+@import '../popup';
 
 .custom-navbar-history-list {
   width: 350px;

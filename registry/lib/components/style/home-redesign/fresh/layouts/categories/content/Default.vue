@@ -2,28 +2,19 @@
   <div class="fresh-home-categories-default">
     <div class="fresh-home-categories-default-video-column">
       <div class="fresh-home-categories-default-video-column-item">
-        <SubHeader>
-          有新动态
-        </SubHeader>
+        <SubHeader> 有新动态 </SubHeader>
         <VideoSlides :api="activeVideosApi" />
       </div>
       <div class="fresh-home-categories-default-video-column-item">
-        <SubHeader>
-          最新发布
-        </SubHeader>
+        <SubHeader> 最新发布 </SubHeader>
         <VideoSlides :api="newVideosApi" />
       </div>
     </div>
     <div class="fresh-home-categories-default-rank-list">
       <a :href="rankingsLink" target="_blank">
-        <SubHeader>
-          排行榜
-        </SubHeader>
+        <SubHeader> 排行榜 </SubHeader>
       </a>
-      <RankList
-        :parse-json="parseJson"
-        :api="rankingsApi"
-      />
+      <RankList :parse-json="parseJson" :api="rankingsApi" />
     </div>
   </div>
 </template>
@@ -87,7 +78,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .fresh-home-categories-default {
   @include h-stretch(var(--fresh-home-categories-column-gap));

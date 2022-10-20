@@ -18,10 +18,7 @@ const setLight = (on: boolean) => {
     } = playerAgentInstance
 
     // if (!initialized) {
-    loadLazyPlayerSettingsPanel(
-      buttons.settings.selector,
-      settings.wrap.selector,
-    )
+    loadLazyPlayerSettingsPanel(buttons.settings.selector, settings.wrap.selector)
     // initialized = true
     // }
     playerAgentInstance.toggleLight(on)
