@@ -30,7 +30,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss" scoped>
-@import "common";
+@import 'common';
 
 .bangumi-card {
   --cover-width: 94px;
