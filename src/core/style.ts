@@ -2,7 +2,8 @@ import { ComponentMetadata } from '@/components/types'
 import { contentLoaded } from './life-cycle'
 
 /** 为`<style>`获取默认的ID (camelCase转为kebab-case) */
-export const getDefaultStyleID = (name: string) => name.replace(/([a-z][A-Z])/g, g => `${g[0]}-${g[1].toLowerCase()}`)
+export const getDefaultStyleID = (name: string) =>
+  name.replace(/([a-z][A-Z])/g, g => `${g[0]}-${g[1].toLowerCase()}`)
 /**
  * 向文档添加样式
  * @param text 样式内容
@@ -16,8 +17,8 @@ export const addStyle = (text: string, name?: string, container?: HTMLElement) =
   if (!existing || !name) {
     const style = document.createElement('style')
     style.id = id
-    style.textContent = text;
-    (container || document.head).insertAdjacentElement('beforeend', style)
+    style.textContent = text
+    ;(container || document.head).insertAdjacentElement('beforeend', style)
     return style
   }
   return existing as HTMLStyleElement
@@ -27,9 +28,8 @@ export const addStyle = (text: string, name?: string, container?: HTMLElement) =
  * @param text 样式内容
  * @param name 样式名称, 输入空字符串则会创建匿名样式
  */
-export const addImportantStyle = (text: string, name?: string) => (
+export const addImportantStyle = (text: string, name?: string) =>
   addStyle(text, name, document.body)
-)
 /**
  * 根据名称删除样式
  * @param names 样式名称列表
@@ -45,10 +45,13 @@ export const removeStyle = (...names: string[]) => {
  * @param component 组件
  * @param fragments 注入的目标容器, 默认为 document, 可以使用其他 Node
  */
-export const loadInstantStyle = async (component: ComponentMetadata, fragments: {
-  head: Node
-  body: Node
-} = { head: document.head, body: document.body }) => {
+export const loadInstantStyle = async (
+  component: ComponentMetadata,
+  fragments: {
+    head: Node
+    body: Node
+  } = { head: document.head, body: document.body },
+) => {
   component.instantStyles?.forEach(async it => {
     const style = document.createElement('style')
     style.id = getDefaultStyleID(it.name)
@@ -85,28 +88,30 @@ export const preloadStyles = lodash.once(async () => {
     const { components } = await import('@/components/component')
     const fragment = document.createDocumentFragment()
     const bodyFragment = document.createDocumentFragment()
-    await Promise.all(components.map(component => {
-      const listener = (enabled: boolean) => {
-        if (enabled) {
-          return loadInstantStyle(component)
+    await Promise.all(
+      components.map(component => {
+        const listener = (enabled: boolean) => {
+          if (enabled) {
+            return loadInstantStyle(component)
+          }
+          return component.instantStyles?.forEach(style => removeStyle(style.name))
         }
-        return component.instantStyles?.forEach(style => removeStyle(style.name))
-      }
-      addComponentListener(component.name, listener)
-      if (isUserComponent(component)) {
-        addHook('userComponents.remove', {
-          after: (metadata: ComponentMetadata) => {
-            if (metadata.name === component.name) {
-              removeComponentListener(component.name, listener)
-            }
-          },
-        })
-      }
-      if (!isComponentEnabled(component)) {
-        return undefined
-      }
-      return loadInstantStyle(component, { head: fragment, body: bodyFragment })
-    }))
+        addComponentListener(component.name, listener)
+        if (isUserComponent(component)) {
+          addHook('userComponents.remove', {
+            after: (metadata: ComponentMetadata) => {
+              if (metadata.name === component.name) {
+                removeComponentListener(component.name, listener)
+              }
+            },
+          })
+        }
+        if (!isComponentEnabled(component)) {
+          return undefined
+        }
+        return loadInstantStyle(component, { head: fragment, body: bodyFragment })
+      }),
+    )
     const { UserStyleMode: CustomStyleMode } = await import('@/plugins/style')
     Object.values(settings.userStyles)
       .filter(c => c.mode === CustomStyleMode.Instant)
@@ -128,7 +133,9 @@ export const preloadStyles = lodash.once(async () => {
     const { initColors } = await import('./theme-color')
     const { initMdiStyle } = await import('@/ui/mdi')
     document.head.appendChild(initColors())
-    document.head.appendChild(initMdiStyle())
+    const [mdi, webFont] = initMdiStyle()
+    document.head.appendChild(mdi)
+    document.head.appendChild(webFont)
   })
 })
 

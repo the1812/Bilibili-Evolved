@@ -115,8 +115,7 @@ export default Vue.extend({
         box-shadow: 0 0 0 1px var(--theme-color);
       }
       &:focus-within {
-        box-shadow: 0 0 0 1px var(--theme-color),
-          0 0 0 3px var(--theme-color-20);
+        box-shadow: 0 0 0 1px var(--theme-color), 0 0 0 3px var(--theme-color-20);
       }
       &:hover,
       &:focus-within {
@@ -131,8 +130,7 @@ export default Vue.extend({
       &:active,
       &:focus-within {
         background-color: #fff;
-        box-shadow: 0 0 0 1px var(--theme-color),
-          0 0 0 3px var(--theme-color-20);
+        box-shadow: 0 0 0 1px var(--theme-color), 0 0 0 3px var(--theme-color-20);
       }
     }
     body.dark &.light {
@@ -143,8 +141,7 @@ export default Vue.extend({
       &:active,
       &:focus-within {
         background-color: #333;
-        box-shadow: 0 0 0 1px var(--theme-color),
-          0 0 0 3px var(--theme-color-20);
+        box-shadow: 0 0 0 1px var(--theme-color), 0 0 0 3px var(--theme-color-20);
       }
     }
   }

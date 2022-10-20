@@ -27,14 +27,15 @@ export const component = defineComponentMetadata({
         delete options.devRecords[name]
       })
     }
-    devClient.addEventListener(
-      DevClientEvents.ServerConnected,
-      () => {
-        devClient.addEventListener(DevClientEvents.SessionsUpdate, () => {
+    devClient.addEventListener(DevClientEvents.ServerConnected, () => {
+      devClient.addEventListener(
+        DevClientEvents.SessionsUpdate,
+        () => {
           cleanUpDevRecords()
-        }, { once: true })
-      },
-    )
+        },
+        { once: true },
+      )
+    })
     if (options.autoConnect) {
       devClient.createSocket()
     }

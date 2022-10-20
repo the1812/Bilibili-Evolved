@@ -2,7 +2,7 @@ import { TeardownLogic } from '../../subject'
 
 export const withTeardownLogic = (
   cb: (
-    addTeardownLogic: (teardownLogicList: (TeardownLogic | TeardownLogic[] | any)) => void
+    addTeardownLogic: (teardownLogicList: TeardownLogic | TeardownLogic[] | any) => void,
   ) => void,
 ) => {
   const teardownLogicSet = new Set<TeardownLogic>()

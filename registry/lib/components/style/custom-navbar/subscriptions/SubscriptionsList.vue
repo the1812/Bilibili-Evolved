@@ -17,27 +17,18 @@
           <div class="card-info">
             <h1 class="title" :title="card.title">{{ card.title }}</h1>
             <div class="progress-row">
-              <div
-                v-if="card.status"
-                class="status"
-                :class="'status-' + card.status"
-              >{{ card.statusText }}</div>
+              <div v-if="card.status" class="status" :class="'status-' + card.status">
+                {{ card.statusText }}
+              </div>
               <div
                 v-if="card.progress"
                 class="progress"
                 :title="card.progress + ' | ' + card.latest"
-              >{{ card.progress }} | {{ card.latest }}</div>
-              <div
-                v-else
-                class="progress"
-                :title="card.latest"
-              >{{ card.latest }}</div>
-              <a
-                class="info"
-                :href="card.mediaUrl"
-                target="_blank"
-                title="详细信息"
               >
+                {{ card.progress }} | {{ card.latest }}
+              </div>
+              <div v-else class="progress" :title="card.latest">{{ card.latest }}</div>
+              <a class="info" :href="card.mediaUrl" target="_blank" title="详细信息">
                 <VIcon icon="mdi-information-outline" :size="16"></VIcon>
               </a>
             </div>
@@ -52,13 +43,7 @@
 <script lang="ts">
 import { getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
-import {
-  DpiImage,
-  VLoading,
-  VEmpty,
-  VIcon,
-  ScrollTrigger,
-} from '@/ui'
+import { DpiImage, VLoading, VEmpty, VIcon, ScrollTrigger } from '@/ui'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { SubscriptionTypes } from './subscriptions'
 
@@ -129,22 +114,24 @@ export default Vue.extend({
           logError(`加载订阅信息失败: ${json.message}`)
           return
         }
-        const cards = lodash.uniqBy(
-          (this.cards as any[]).concat(
-            (lodash.get(json, 'data.list') as any[]).map(item => ({
-              title: item.title,
-              coverUrl: item.square_cover.replace('http:', 'https:'),
-              latest: item.new_ep.index_show,
-              progress: item.progress,
-              id: item.season_id,
-              status: item.follow_status,
-              statusText: getStatusText(item.follow_status),
-              playUrl: `https://www.bilibili.com/bangumi/play/ss${item.season_id}`,
-              mediaUrl: `https://www.bilibili.com/bangumi/media/md${item.media_id}`,
-            })),
-          ),
-          card => card.id,
-        ).sort(subscriptionSorter)
+        const cards = lodash
+          .uniqBy(
+            (this.cards as any[]).concat(
+              (lodash.get(json, 'data.list') as any[]).map(item => ({
+                title: item.title,
+                coverUrl: item.square_cover.replace('http:', 'https:'),
+                latest: item.new_ep.index_show,
+                progress: item.progress,
+                id: item.season_id,
+                status: item.follow_status,
+                statusText: getStatusText(item.follow_status),
+                playUrl: `https://www.bilibili.com/bangumi/play/ss${item.season_id}`,
+                mediaUrl: `https://www.bilibili.com/bangumi/media/md${item.media_id}`,
+              })),
+            ),
+            card => card.id,
+          )
+          .sort(subscriptionSorter)
         this.page++
         this.cards = cards
         this.hasMorePage = lodash.get(json, 'data.total', 0) > this.cards.length
@@ -157,7 +144,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .subscription-list {
   width: 100%;

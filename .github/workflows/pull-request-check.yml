@@ -23,16 +23,20 @@ jobs:
       uses: bahmutov/npm-install@v1
 
     - name: Type check
-      run: yarn type
+      run: pnpm run type
 
     - name: ESLint check
-      run: yarn lint-check
+      run: pnpm run lint-check
 
     - name: Build core
-      run: yarn build-core
+      run: pnpm run build-core
 
     - name: Build features
-      run: yarn build-features
+      run: |
+        cd registry
+        pnpm install
+        cd ../
+        pnpm run build-features
 
     - name: Log
       run: echo Check complete.

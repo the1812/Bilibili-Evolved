@@ -6,12 +6,7 @@
     </div>
     <h2>类型</h2>
     <div class="filter-types">
-      <FilterTypeSwitch
-        v-for="[name, type] of allTypes"
-        :key="type.id"
-        :name="name"
-        :type="type"
-      />
+      <FilterTypeSwitch v-for="[name, type] of allTypes" :key="type.id" :name="name" :type="type" />
     </div>
     <h2>关键词</h2>
     <div class="filter-patterns">
@@ -45,10 +40,7 @@
         @click="toggleBlockSide(id)"
       >
         <label :class="{ disabled: sideDisabled(id) }">
-          <span
-            class="name"
-            :class="{ disabled: sideDisabled(id) }"
-          >{{ type.displayName }}</span>
+          <span class="name" :class="{ disabled: sideDisabled(id) }">{{ type.displayName }}</span>
           <VIcon :size="16" class="disabled" icon="mdi-cancel"></VIcon>
           <VIcon :size="16" icon="mdi-check"></VIcon>
         </label>
@@ -58,15 +50,11 @@
 </template>
 
 <script lang="ts">
-import { FeedsCard, FeedsCardType } from '@/components/feeds/api'
+import { FeedsCard, FeedsCardType, feedsCardTypes, forEachFeedsCard, RepostFeedsCard } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { attributes } from '@/core/observer'
-import {
-  VIcon,
-  TextBox,
-  VButton,
-} from '@/ui'
+import { VIcon, TextBox, VButton } from '@/ui'
 import { FeedsFilterOptions } from '.'
 import { hasBlockedPattern } from './pattern'
 
@@ -140,7 +128,6 @@ export default Vue.extend({
       console.error('tabBar not found')
       return
     }
-    const { forEachFeedsCard, feedsCardTypes } = await import('@/components/feeds/api')
     document.body.classList.add('enable-feeds-filter')
     const specialTypes = {
       'self-repost': {
@@ -158,14 +145,9 @@ export default Vue.extend({
       },
     })
     if (cardsManager.managerType === 'v1') {
-      const tab = tabBar.querySelector(
-        '.tab:nth-child(1) .tab-text',
-      ) as HTMLAnchorElement
+      const tab = tabBar.querySelector('.tab:nth-child(1) .tab-text') as HTMLAnchorElement
       attributes(tab, () => {
-        document.body.classList.toggle(
-          'by-type',
-          !tab.classList.contains('selected'),
-        )
+        document.body.classList.toggle('by-type', !tab.classList.contains('selected'))
       })
     }
     if (cardsManager.managerType === 'v2') {
@@ -184,7 +166,13 @@ export default Vue.extend({
   },
   methods: {
     updateCard(card: FeedsCard) {
-      const block = options.patterns.some(p => hasBlockedPattern(p, card))
+      const blockableCard = {
+        ...card,
+      }
+      if (card.type === feedsCardTypes.repost) {
+        blockableCard.text += `\n${(card as RepostFeedsCard).repostText}`
+      }
+      const block = options.patterns.some(p => hasBlockedPattern(p, blockableCard))
       if (block) {
         card.element.classList.add('pattern-block')
       } else {
@@ -206,9 +194,7 @@ export default Vue.extend({
     updateBlockSide() {
       Object.entries(sideCards).forEach(([id, type]) => {
         const name = sideBlock + type.className
-        document.body.classList[
-          this.blockSideCards.includes(id) ? 'add' : 'remove'
-        ](name)
+        document.body.classList[this.blockSideCards.includes(id) ? 'add' : 'remove'](name)
       })
     },
     toggleBlockSide(id: number) {
@@ -231,8 +217,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
-@import "./blocker";
+@import 'common';
+@import './blocker';
 
 body.enable-feeds-filter:not(.disable-feeds-filter) {
   @include type-block();

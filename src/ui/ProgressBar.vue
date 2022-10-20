@@ -54,7 +54,7 @@ export default Vue.extend({
     border-radius: 2px;
     background-color: var(--theme-color);
     &.transition {
-      transition: width .3s ease-out;
+      transition: width 0.3s ease-out;
     }
   }
 }

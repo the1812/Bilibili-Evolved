@@ -14,14 +14,14 @@ export interface PlayerContextMenu {
 }
 /** 在播放器菜单打开/关闭时执行特定操作 */
 export const forEachContextMenu = async (action: {
-  open?: (menu: PlayerContextMenu) => void,
-  close?: (menu: PlayerContextMenu) => void,
+  open?: (menu: PlayerContextMenu) => void
+  close?: (menu: PlayerContextMenu) => void
 }) => {
   const { open, close } = action
   if (!hasVideo()) {
     return
   }
-  const player = await select('.bilibili-player') as HTMLElement
+  const player = (await select('.bilibili-player')) as HTMLElement
   if (!player) {
     return
   }
@@ -41,9 +41,11 @@ export const forEachContextMenu = async (action: {
         },
       }
       childList(ul, () => {
-        if (menu.isOpen) { // 打开菜单
+        if (menu.isOpen) {
+          // 打开菜单
           open?.(menu)
-        } else { // 关闭菜单
+        } else {
+          // 关闭菜单
           close?.(menu)
         }
       })
@@ -54,25 +56,26 @@ export const forEachContextMenu = async (action: {
 export const addMenuItem = async (
   element: HTMLElement,
   cleanUp?: (menu: PlayerContextMenu) => void,
-) => forEachContextMenu({
-  open: menu => {
-    if (menu.listElement.contains(element)) {
-      return
-    }
-    // <li class="context-line context-menu-function" data-append="1">
-    //    <a class="context-menu-a js-action" href="javascript:void(0);"></a>
-    // </li>
-    const menuItem = document.createElement('li')
-    menuItem.classList.add('context-line', 'context-menu-function')
-    menuItem.setAttribute('data-append', '1')
-    const linkWrapper = document.createElement('a')
-    linkWrapper.classList.add('context-menu-a', 'js-action')
-    linkWrapper.href = 'javascript:void(0);'
-    linkWrapper.appendChild(element)
-    menuItem.addEventListener('mouseover', () => menuItem.classList.add('hover'))
-    menuItem.addEventListener('mouseout', () => menuItem.classList.remove('hover'))
-    menuItem.appendChild(linkWrapper)
-    menu.listElement.appendChild(menuItem)
-  },
-  close: menu => cleanUp?.(menu),
-})
+) =>
+  forEachContextMenu({
+    open: menu => {
+      if (menu.listElement.contains(element)) {
+        return
+      }
+      // <li class="context-line context-menu-function" data-append="1">
+      //    <a class="context-menu-a js-action" href="javascript:void(0);"></a>
+      // </li>
+      const menuItem = document.createElement('li')
+      menuItem.classList.add('context-line', 'context-menu-function')
+      menuItem.setAttribute('data-append', '1')
+      const linkWrapper = document.createElement('a')
+      linkWrapper.classList.add('context-menu-a', 'js-action')
+      linkWrapper.href = 'javascript:void(0);'
+      linkWrapper.appendChild(element)
+      menuItem.addEventListener('mouseover', () => menuItem.classList.add('hover'))
+      menuItem.addEventListener('mouseout', () => menuItem.classList.remove('hover'))
+      menuItem.appendChild(linkWrapper)
+      menu.listElement.appendChild(menuItem)
+    },
+    close: menu => cleanUp?.(menu),
+  })

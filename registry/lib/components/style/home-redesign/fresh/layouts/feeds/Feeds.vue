@@ -1,9 +1,7 @@
 <template>
   <div class="fresh-home-feeds">
     <div class="fresh-home-header">
-      <div class="fresh-home-header-title">
-        动态
-      </div>
+      <div class="fresh-home-header-title">动态</div>
       <div class="fresh-home-header-center-area">
         <div class="fresh-home-header-tabs">
           <div class="default-tabs">
@@ -22,11 +20,7 @@
         </div>
       </div>
       <div class="fresh-home-header-pagination">
-        <a
-          href="https://www.bilibili.com/video/online.html"
-          target="_blank"
-          title="在线列表"
-        >
+        <a href="https://www.bilibili.com/video/online.html" target="_blank" title="在线列表">
           <VButton icon>
             <VIcon icon="mdi-account-group-outline" :size="19" />
           </VButton>
@@ -53,11 +47,7 @@
       </div>
     </div>
     <div class="fresh-home-feeds-content">
-      <VideoList
-        ref="videoList"
-        :videos="videos"
-        :loading="loading"
-      />
+      <VideoList ref="videoList" :videos="videos" :loading="loading" />
     </div>
   </div>
 </template>
@@ -113,13 +103,15 @@ export default Vue.extend({
     async reload() {
       this.loading = true
       this.videos = []
-      this.videos = await this.selectedTab.api().finally(() => { this.loading = false })
+      this.videos = await this.selectedTab.api().finally(() => {
+        this.loading = false
+      })
     },
   },
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .fresh-home-feeds {
   @include v-stretch();

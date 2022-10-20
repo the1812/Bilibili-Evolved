@@ -21,8 +21,7 @@ export interface CheckUpdateConfig extends CheckSingleTypeUpdateConfig {
   // installer: (code: string) => Promise<{ message: string }>
 }
 export const isLocalItem = (url: string) => localhost.test(url)
-export const defaultExistPredicate = (itemName: string) => (
-  settings.userComponents[itemName] !== undefined
-  || settings.userPlugins[itemName] !== undefined
-  || settings.userStyles[itemName] !== undefined
-)
+export const defaultExistPredicate = (itemName: string) =>
+  settings.userComponents[itemName] !== undefined ||
+  settings.userPlugins[itemName] !== undefined ||
+  settings.userStyles[itemName] !== undefined

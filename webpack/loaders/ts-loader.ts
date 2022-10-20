@@ -13,10 +13,7 @@ const babelLoader: RuleSetUseItem = {
         },
       ],
     ],
-    plugins: [
-      ['@babel/plugin-proposal-class-properties'],
-      injectMetadata,
-    ],
+    plugins: [['@babel/plugin-proposal-class-properties'], injectMetadata],
   },
 }
 

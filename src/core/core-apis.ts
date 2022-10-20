@@ -115,7 +115,7 @@ export const externalApis = {
     ...componentApis.userComponent,
     ...componentApis.styledComponent,
     ...componentApis.launchBar,
-    ...(lodash.omit(componentApis, 'component', 'userComponent', 'styledComponent', 'launchBar')),
+    ...lodash.omit(componentApis, 'component', 'userComponent', 'styledComponent', 'launchBar'),
   },
   pluginApis: {
     ...pluginApis.style,

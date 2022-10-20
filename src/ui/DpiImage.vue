@@ -97,7 +97,8 @@ export default Vue.extend({
       if (isSourceInvalid) {
         this.srcset = null
         if (this.placeholderImage) {
-          this.actualSrc = 'https://s1.hdslb.com/bfs/static/blive/live-web-center/static/img/no-cover.1ebe4d5.jpg'
+          this.actualSrc =
+            'https://s1.hdslb.com/bfs/static/blive/live-web-center/static/img/no-cover.1ebe4d5.jpg'
         } else {
           this.actualSrc = EmptyImageUrl
         }

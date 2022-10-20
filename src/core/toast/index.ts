@@ -16,12 +16,7 @@ export class Toast {
   closeTime = 0
   creationTime = Number(new Date())
   randomKey = Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER + 1))
-  constructor(
-    public message = '',
-    public title = '',
-    public type = ToastType.Default,
-  ) {
-  }
+  constructor(public message = '', public title = '', public type = ToastType.Default) {}
   static get containerVM() {
     if (!container) {
       Toast.createToastContainer()

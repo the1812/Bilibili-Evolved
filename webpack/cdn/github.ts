@@ -17,5 +17,6 @@ export const github: CdnConfig = {
   },
   smallLogo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo-small.png`,
   logo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo.png`,
-  root: (branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`,
+  root: (branch, ownerOverride) =>
+    `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`,
 }

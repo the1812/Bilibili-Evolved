@@ -38,7 +38,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "../popup";
+@import '../popup';
 
 .navbar-subscriptions {
   width: 380px;

@@ -1,17 +1,24 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { playerUrls } from '@/core/utils/urls'
 
 const name = 'removePlayerPopup'
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name,
   entry: ({ settings, metadata }) => {
     const { options } = settings
     const { kebabCase } = lodash
     Object.keys(options).forEach(optionName => {
-      addComponentListener(`${metadata.name}.${optionName}`, (value: boolean) => {
-        document.body.classList.toggle(`${kebabCase(metadata.name)}-${kebabCase(optionName)}`, value)
-      }, true)
+      addComponentListener(
+        `${metadata.name}.${optionName}`,
+        (value: boolean) => {
+          document.body.classList.toggle(
+            `${kebabCase(metadata.name)}-${kebabCase(optionName)}`,
+            value,
+          )
+        },
+        true,
+      )
     })
   },
   instantStyles: [
@@ -48,4 +55,4 @@ export const component: ComponentMetadata = {
       displayName: '预告',
     },
   },
-}
+})

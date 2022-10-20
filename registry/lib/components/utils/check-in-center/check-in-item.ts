@@ -17,10 +17,13 @@ const builtInItems: CheckInItem[] = [
     icon: 'mdi-seed-outline',
     action: async () => {
       const seedsToCoinsApi = 'https://api.live.bilibili.com/xlive/revenue/v1/wallet/silver2coin'
-      const text = await postTextWithCredentials(seedsToCoinsApi, formData({
-        csrf: getCsrf(),
-        csrf_token: getCsrf(),
-      }))
+      const text = await postTextWithCredentials(
+        seedsToCoinsApi,
+        formData({
+          csrf: getCsrf(),
+          csrf_token: getCsrf(),
+        }),
+      )
       const json = JSON.parse(text) as {
         code: number
         message: string
@@ -43,7 +46,7 @@ const builtInItems: CheckInItem[] = [
     icon: 'mdi-calendar-check',
     action: async () => {
       const liveCheckInApi = 'https://api.live.bilibili.com/xlive/web-ucenter/v1/sign/DoSign'
-      const json = await getJsonWithCredentials(liveCheckInApi) as {
+      const json = (await getJsonWithCredentials(liveCheckInApi)) as {
         code: number
         message: string
         data: {
@@ -57,12 +60,7 @@ const builtInItems: CheckInItem[] = [
       if (json.code !== 0) {
         Toast.info(json.message, '直播间签到', 3000)
       } else {
-        const {
-          text,
-          specialText,
-          allDays,
-          hadSignDays,
-        } = json.data
+        const { text, specialText, allDays, hadSignDays } = json.data
         const message = `签到成功, 获得了${text} ${specialText}\n本月进度: ${hadSignDays} / ${allDays}`
         Toast.success(message, '直播间签到', 3000)
       }

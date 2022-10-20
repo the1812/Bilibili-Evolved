@@ -17,10 +17,13 @@ export class Videoshot {
     }
     const { getJson } = await import('@/core/ajax')
     if (!this.cidData) {
-      this.workingPromise = getJson(`https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`)
+      this.workingPromise = getJson(
+        `https://api.bilibili.com/x/player/videoshot?aid=${this.aid}&cid=${this.cid}&index=1`,
+      )
       const json = await this.workingPromise
       this.workingPromise = null
-      if (json.code === -412) { // 请求被拦截, 应停止访问
+      if (json.code === -412) {
+        // 请求被拦截, 应停止访问
         this.blocked = true
         return null
       }
@@ -50,7 +53,7 @@ export class Videoshot {
     // const ySize = data.img_y_size ?? 70
     const xSize = this.viewWidth
     const ySize = this.viewHeight
-    const x = -((shotIndex - 1) % 100 % xLength) * xSize
+    const x = -(((shotIndex - 1) % 100) % xLength) * xSize
     const y = -Math.floor(((shotIndex - 1) % 100) / yLength) * ySize
     return {
       // width: xSize,

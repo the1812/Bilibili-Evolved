@@ -15,7 +15,9 @@ export const throwQualityError = (value: number) => {
 export const compareQuality = (input: DownloadVideoInputItem, info: DownloadVideoInfo) => {
   if (input.quality && info.currentQuality.value !== input.quality.value) {
     if (input.allowQualityDrop) {
-      console.warn(`'${input.title}' 不支持选择的清晰度${input.quality.displayName}, 已降级为${info.currentQuality.displayName}`)
+      console.warn(
+        `'${input.title}' 不支持选择的清晰度${input.quality.displayName}, 已降级为${info.currentQuality.displayName}`,
+      )
     } else {
       throwQualityError(input.quality.value)
     }

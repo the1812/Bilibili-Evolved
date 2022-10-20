@@ -34,24 +34,27 @@ export const stopInstance = (instance: Watching, onClose: () => void) => {
   }
 }
 
-export const startRegistryWatcher = (url: string, config: Configuration) => new Promise<void>(
-  resolve => {
+export const startRegistryWatcher = (url: string, config: Configuration) =>
+  new Promise<void>(resolve => {
     console.log(`功能编译中... ${url}`)
     const { maxWatchers } = devServerConfig
     const watcher = webpack(config)
-    const instance = watcher.watch({}, defaultWatcherHandler(
-      () => {
-        resolve()
-      },
-      result => {
-        console.log('功能已编译:', result.hash, url)
-        sendMessage({
-          type: 'itemUpdate',
-          path: url,
-          sessions: watchers.map(it => it.url),
-        })
-      },
-    ))
+    const instance = watcher.watch(
+      {},
+      defaultWatcherHandler(
+        () => {
+          resolve()
+        },
+        result => {
+          console.log('功能已编译:', result.hash, url)
+          sendMessage({
+            type: 'itemUpdate',
+            path: url,
+            sessions: watchers.map(it => it.url),
+          })
+        },
+      ),
+    )
     exitHook(exit => {
       if (!instance.closed) {
         instance.close(() => {
@@ -63,9 +66,10 @@ export const startRegistryWatcher = (url: string, config: Configuration) => new 
     if (watchers.length >= maxWatchers) {
       const oldInstance = watchers.shift()
       stopInstance(oldInstance.instance, () => {
-        console.log(`已达到 maxWatchers 数量 (${maxWatchers}), 退出了功能编译器: ${oldInstance.url}`)
+        console.log(
+          `已达到 maxWatchers 数量 (${maxWatchers}), 退出了功能编译器: ${oldInstance.url}`,
+        )
       })
     }
     watchers.push({ url, instance })
-  },
-)
+  })

@@ -1,9 +1,11 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { FeedsCard } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
 
 const entry = async () => {
-  const { default: MachineTranslator } = await import('@/components/i18n/machine-translator/MachineTranslator.vue')
+  const { default: MachineTranslator } = await import(
+    '@/components/i18n/machine-translator/MachineTranslator.vue'
+  )
   const { forEachFeedsCard } = await import('@/components/feeds/api')
 
   const injectButton = (card: FeedsCard) => {
@@ -27,16 +29,13 @@ const entry = async () => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'feedsTranslate',
   displayName: '动态翻译',
   description: {
     'zh-CN': '在每条动态下方添加翻译按钮.',
   },
-  tags: [
-    componentsTags.utils,
-    componentsTags.feeds,
-  ],
+  tags: [componentsTags.utils, componentsTags.feeds],
   entry,
   urlInclude: feedsUrls,
-}
+})

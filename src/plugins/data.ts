@@ -24,16 +24,19 @@
 
 /** 执行数据注入, 参数将由插件注册者提供 */
 export type PluginDataProvider = (...args: any[]) => void | Promise<void>
-const pluginDataMap = new Map<string, {
-  /** 是否被注册过 ({@link registerData} / {@link registerAndGetData}) */
-  registered: boolean
-  /** 数据内容 */
-  data: any[]
-  /** 是否被加载过 ({@link getData} / {@link registerAndGetData}) */
-  loaded: boolean
-  /** 在被加载前储存的 provider (惰性求值) */
-  providers: PluginDataProvider[]
-}>()
+const pluginDataMap = new Map<
+  string,
+  {
+    /** 是否被注册过 ({@link registerData} / {@link registerAndGetData}) */
+    registered: boolean
+    /** 数据内容 */
+    data: any[]
+    /** 是否被加载过 ({@link getData} / {@link registerAndGetData}) */
+    loaded: boolean
+    /** 在被加载前储存的 provider (惰性求值) */
+    providers: PluginDataProvider[]
+  }
+>()
 
 /**
  * 注册数据, 允许其他代码修改数据
@@ -89,9 +92,7 @@ export const addData = (key: string, provider: PluginDataProvider) => {
 export const getData = (key: string) => {
   if (pluginDataMap.has(key)) {
     const item = pluginDataMap.get(key)
-    const {
-      data, registered, loaded, providers,
-    } = item
+    const { data, registered, loaded, providers } = item
     if (registered) {
       if (!loaded) {
         providers.forEach(p => p(...data))
@@ -110,7 +111,7 @@ export const getData = (key: string) => {
  * @param data 提供数据对象。将会应用到未使用的 provider
  * @returns 被更改后的数据
  */
-export const registerAndGetData = <T extends any[]> (key: string, ...data: T) => {
+export const registerAndGetData = <T extends any[]>(key: string, ...data: T) => {
   registerData(key, ...data)
   return getData(key) as T
 }

@@ -4,9 +4,7 @@
       <div class="brightness">
         <ProgressRing :size="100" :progress="preview.brightness * 100"></ProgressRing>
         <div class="label">
-          <div class="name">
-            亮度
-          </div>
+          <div class="name">亮度</div>
           <div class="value">
             {{ preview.brightness | percent }}
           </div>
@@ -15,33 +13,22 @@
       <div class="progress">
         <div class="videoshot" :style="videoshotStyle"></div>
         <div v-show="preview.progress !== null" class="preview">
-          <div
-            v-if="!progressNaN"
-            class="diff"
-          >
+          <div v-if="!progressNaN" class="diff">
             {{ (preview.progress - store.progress) | progressDiff }}
           </div>
-          <div
-            class="seek-mode"
-          >
+          <div class="seek-mode">
             {{ !progressNaN ? preview.seekMode : '取消调整' }}
           </div>
         </div>
-        <div v-show="preview.progress === null" class="name">
-          进度
-        </div>
-        <div
-          class="progress-label"
-        >
+        <div v-show="preview.progress === null" class="name">进度</div>
+        <div class="progress-label">
           {{ (progressValid ? preview.progress : store.progress) | progress }}
         </div>
       </div>
       <div class="volume">
         <ProgressRing :size="100" :progress="preview.volume * 100"></ProgressRing>
         <div class="label">
-          <div class="name">
-            音量
-          </div>
+          <div class="name">音量</div>
           <div class="value">
             {{ preview.volume | percent }}
           </div>
@@ -57,10 +44,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  ProgressBar,
-  ProgressRing,
-} from '@/ui'
+import { ProgressBar, ProgressRing } from '@/ui'
 import { fixed } from '@/core/utils'
 import { formatPercent, formatDuration } from '@/core/utils/formatters'
 import { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
@@ -166,22 +150,14 @@ export default Vue.extend({
     startPreview({ brightness, volume, progress }: GesturePreviewParams) {
       this.opened = true
       if (progress !== undefined) {
-        this.preview.progress = normalize(
-          this.store.progress,
-          progress,
-          this.video.duration,
-        )
+        this.preview.progress = normalize(this.store.progress, progress, this.video.duration)
         const videoshot = this.videoshot as Videoshot
         videoshot.getVideoshot(this.preview.progress).then(style => {
           this.videoshotStyle = style
         })
       } else {
         if (brightness !== undefined) {
-          this.preview.brightness = normalize(
-            this.store.brightness,
-            brightness,
-            Infinity,
-          )
+          this.preview.brightness = normalize(this.store.brightness, brightness, Infinity)
         } else if (volume !== undefined) {
           this.preview.volume = normalize(this.store.volume, volume)
         }
@@ -202,10 +178,7 @@ export default Vue.extend({
         this.preview.progress = null
         return
       }
-      if (
-        this.store.progress !== this.preview.progress
-        && this.preview.progress !== null
-      ) {
+      if (this.store.progress !== this.preview.progress && this.preview.progress !== null) {
         this.apply({ progress: this.preview.progress })
       }
     },
@@ -229,7 +202,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .gesture-preview {
   color: #fff;
   background-color: rgba(0, 0, 0, 0.8);

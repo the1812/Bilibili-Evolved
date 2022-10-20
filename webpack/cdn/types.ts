@@ -10,7 +10,7 @@ export interface CdnConfig {
     jszip: string
     sortable: string
     mdi: string
-  },
+  }
   smallLogo: string
   logo: string
   root: (branch: string, ownerOverride: string) => string

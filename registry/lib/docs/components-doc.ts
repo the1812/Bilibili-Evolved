@@ -24,10 +24,7 @@ export const getComponentsDoc: DocSource = async rootPath => {
       const root = `${rootPath}components/`
       const fullRelativePath = `${root}${getId(root, it.path.replace(/^\.?\//, ''))}.js`
       const fullAbsolutePath = fullRelativePath.replace(/^(\.\.?\/)*/, '')
-      const {
-        name,
-        displayName,
-      } = it.component
+      const { name, displayName } = it.component
       const description = await getDescriptionMarkdown(it.component)
       return {
         type: 'component',

@@ -16,7 +16,9 @@ export const runMigrate = async (v1Settings: any) => {
   const toast = Toast.info('下载功能列表中', '导入 v1 设置')
   try {
     console.log('下载功能列表中')
-    const featuresDataUrl = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch)}doc/features/features.json`
+    const featuresDataUrl = `${cdnRoots[getGeneralSettings().cdnRoot](
+      meta.compilationInfo.branch,
+    )}doc/features/features.json`
     const featuresDataText = await monkey({
       url: featuresDataUrl,
     })
@@ -24,38 +26,42 @@ export const runMigrate = async (v1Settings: any) => {
     const features: DocSourceItem[] = JSON.parse(featuresDataText)
     console.log('下载功能列表完成')
 
-    const featureMap = (oldKey: string, newKey: string, type: 'component' | 'plugin') => async () => {
-      const oldValue = v1Settings[oldKey]
-      if (!oldValue) {
-        console.log(`跳过了未开启的选项 ${oldKey}`)
-        return
-      }
-      const map = {
-        component: componentsMap,
-        plugin: pluginsMap,
-      }
-      const installerMap = {
-        component: installComponent,
-        plugin: installPlugin,
-      }
-      if (!(newKey in map[type])) {
-        const featureItem = features.find(it => it.type === type && it.name === newKey)
-        const path = featureItem?.fullAbsolutePath
-        if (!path || !featureItem) {
-          console.log(`没有找到名为 ${newKey} 的功能`)
+    const featureMap =
+      (oldKey: string, newKey: string, type: 'component' | 'plugin') => async () => {
+        const oldValue = v1Settings[oldKey]
+        if (!oldValue) {
+          console.log(`跳过了未开启的选项 ${oldKey}`)
           return
         }
-        const url = `${cdnRoots[getGeneralSettings().cdnRoot](meta.compilationInfo.branch, featureItem.owner)}${path}`
-        const code = await monkey({ url })
-        const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
-        await before()
-        const { metadata, message } = await installerMap[type](code)
-        await after(metadata)
-        console.log(message)
-      } else {
-        console.log(`${newKey} 已经存在, 跳过安装`)
+        const map = {
+          component: componentsMap,
+          plugin: pluginsMap,
+        }
+        const installerMap = {
+          component: installComponent,
+          plugin: installPlugin,
+        }
+        if (!(newKey in map[type])) {
+          const featureItem = features.find(it => it.type === type && it.name === newKey)
+          const path = featureItem?.fullAbsolutePath
+          if (!path || !featureItem) {
+            console.log(`没有找到名为 ${newKey} 的功能`)
+            return
+          }
+          const url = `${cdnRoots[getGeneralSettings().cdnRoot](
+            meta.compilationInfo.branch,
+            featureItem.owner,
+          )}${path}`
+          const code = await monkey({ url })
+          const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
+          await before()
+          const { metadata, message } = await installerMap[type](code)
+          await after(metadata)
+          console.log(message)
+        } else {
+          console.log(`${newKey} 已经存在, 跳过安装`)
+        }
       }
-    }
     const optionMap = (oldKey: string, newKey: string, mapFunction?: (value: any) => any) => () => {
       const oldValue = v1Settings[oldKey]
       const newValue = mapFunction?.(oldValue) ?? oldValue
@@ -68,14 +74,15 @@ export const runMigrate = async (v1Settings: any) => {
     }
     const stylesMap = () => () => {
       const { customStyles } = v1Settings
-      customStyles.filter((style: any) => style.enabled).forEach((style: any) => {
-        settings.userStyles[style.name] = lodash.omit(style, 'enabled') as Required<UserStyle>
-      })
+      customStyles
+        .filter((style: any) => style.enabled)
+        .forEach((style: any) => {
+          settings.userStyles[style.name] = lodash.omit(style, 'enabled') as Required<UserStyle>
+        })
     }
-    const getPlugin = (pluginName: string) => (
+    const getPlugin = (pluginName: string) =>
       // magic: guiSettings is always enabled
       featureMap('guiSettings', pluginName, 'plugin')
-    )
     const i18nMap = () => none
     // const { i18n, i18nLanguage } = v1Settings
     // if (!i18n) {
@@ -115,10 +122,14 @@ export const runMigrate = async (v1Settings: any) => {
       featureMap('touchVideoPlayer', 'touchPlayerGestures', 'component'),
       featureMap('touchVideoPlayer', 'touchPlayerControl', 'component'),
       featureMap('customControlBackground', 'playerControlBackground', 'component'),
-      optionMap('customControlBackgroundOpacity', 'playerControlBackground.opacity', (value: string) => {
-        const opacity = parseFloat(value)
-        return Math.round(opacity * 100)
-      }),
+      optionMap(
+        'customControlBackgroundOpacity',
+        'playerControlBackground.opacity',
+        (value: string) => {
+          const opacity = parseFloat(value)
+          return Math.round(opacity * 100)
+        },
+      ),
       featureMap('darkSchedule', 'darkModeSchedule', 'component'),
       optionMap('darkScheduleStart', 'darkModeSchedule.range.start'),
       optionMap('darkScheduleEnd', 'darkModeSchedule.range.end'),
@@ -151,12 +162,19 @@ export const runMigrate = async (v1Settings: any) => {
       featureMap('playerFocus', 'playerFocus', 'component'),
       optionMap('playerFocusOffset', 'playerFocus.offset'),
       featureMap('simplifyLiveroom', 'simplifyLiveroom', 'component'),
-      optionMap('simplifyLiveroomSettings', 'simplifyLiveroom', (switches: Record<string, number>) => {
-        const { options } = getComponentSettings('simplifyLiveroom')
-        Object.assign(options, Object.fromEntries(
-          Object.entries(switches).map(([key, value]) => [`switch-${key}`, value]),
-        ))
-      }),
+      optionMap(
+        'simplifyLiveroomSettings',
+        'simplifyLiveroom',
+        (switches: Record<string, number>) => {
+          const { options } = getComponentSettings('simplifyLiveroom')
+          Object.assign(
+            options,
+            Object.fromEntries(
+              Object.entries(switches).map(([key, value]) => [`switch-${key}`, value]),
+            ),
+          )
+        },
+      ),
       featureMap('customNavbar', 'customNavbar', 'component'),
       getPlugin('customNavbar.items.darkMode'),
       optionMap('favoritesListCurrentSelect', 'customNavbar.lastFavoriteFolder'),
@@ -176,7 +194,7 @@ export const runMigrate = async (v1Settings: any) => {
         return orders
       }),
       optionMap('customNavbarHidden', 'customNavbar.hidden', (hiddenItems: string[]) => {
-        [...hiddenItems].forEach(item => {
+        ;[...hiddenItems].forEach(item => {
           if (item in navbarItemMappings) {
             hiddenItems.push(navbarItemMappings[item])
             lodash.pull(hiddenItems, item)
@@ -185,7 +203,9 @@ export const runMigrate = async (v1Settings: any) => {
         lodash.pull(hiddenItems, 'mangaLink')
         return hiddenItems
       }),
-      optionMap('customNavbarBoundsPadding', 'customNavbar.padding', (it: string) => parseFloat(it)),
+      optionMap('customNavbarBoundsPadding', 'customNavbar.padding', (it: string) =>
+        parseFloat(it),
+      ),
       optionMap('customNavbarGlobalFixed', 'customNavbar.globalFixed'),
       optionMap('customNavbarSeasonLogo', 'customNavbar.seasonLogo'),
       optionMap('customNavbarShowDeadVideos', 'customNavbar.showDeadVideos'),
@@ -212,11 +232,14 @@ export const runMigrate = async (v1Settings: any) => {
       optionMap('keymapJumpSeconds', 'keymap.longJumpSeconds'),
       optionMap('customKeyBindings', 'keymap.customKeyBindings'),
       featureMap('doubleClickFullscreen', 'doubleClickFullscreen', 'component'),
-      optionMap('doubleClickFullscreenPreventSingleClick', 'doubleClickFullscreen.preventSingleClick'),
+      optionMap(
+        'doubleClickFullscreenPreventSingleClick',
+        'doubleClickFullscreen.preventSingleClick',
+      ),
       // TODO: simpleHome & minimalHome
-      optionMap('scriptLoadingMode', 'settingsPanel.scriptLoadingMode', (value: string) => (
-        value.replace(/\(自动\)$/, '')
-      )),
+      optionMap('scriptLoadingMode', 'settingsPanel.scriptLoadingMode', (value: string) =>
+        value.replace(/\(自动\)$/, ''),
+      ),
       optionMap('guiSettingsDockSide', 'settingsPanel.dockSide'),
       featureMap('fullActivityContent', 'fullFeedsContent', 'component'),
       featureMap('feedsFilter', 'feedsFilter', 'component'),
@@ -235,9 +258,11 @@ export const runMigrate = async (v1Settings: any) => {
       // featureMap('commentsTranslate', 'commentsTranslate', 'component'),
       optionMap('foregroundColorMode', 'settingsPanel.textColor'),
       optionMap('updateCdn', 'settingsPanel.cdnRoot'),
-      optionMap('downloadPackageEmitMode', 'settingsPanel.downloadPackageEmitMode', (value: string) => (
-        value === '分别下载' ? '单独下载' : value
-      )),
+      optionMap(
+        'downloadPackageEmitMode',
+        'settingsPanel.downloadPackageEmitMode',
+        (value: string) => (value === '分别下载' ? '单独下载' : value),
+      ),
       featureMap('bvidConvert', 'bvidConvert', 'component'),
       featureMap('fixedSidebars', 'fixedFeedsSidebars', 'component'),
       featureMap('autoHideSideBar', 'autoHideSidebar', 'component'),
@@ -290,7 +315,9 @@ export const runMigrate = async (v1Settings: any) => {
       optionMap('downloadVideoFormat', 'downloadVideo.basicConfig.api', (format: string) => {
         const formatMappings = {
           flv: 'video.flv',
-          dash: v1Settings.downloadVideoDashCodec.startsWith('HEVC') ? 'video.dash.hevc' : 'video.dash.avc',
+          dash: v1Settings.downloadVideoDashCodec.startsWith('HEVC')
+            ? 'video.dash.hevc'
+            : 'video.dash.avc',
         }
         return formatMappings[format]
       }),

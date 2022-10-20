@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { videoAndBangumiUrls, liveUrls } from '@/core/utils/urls'
 
 const setTouch = async (enable: boolean) => {
@@ -10,20 +10,15 @@ const setTouch = async (enable: boolean) => {
     await touchLiveMiniPlayer(enable)
   }
 }
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'touchMiniPlayer',
   displayName: '迷你播放器触摸拖动',
   description: {
     'zh-CN': '使迷你播放器的拖动条可以触摸拖动.',
   },
   enabledByDefault: navigator.maxTouchPoints > 0,
-  tags: [
-    componentsTags.touch,
-  ],
-  urlInclude: [
-    ...videoAndBangumiUrls,
-    ...liveUrls,
-  ],
+  tags: [componentsTags.touch],
+  urlInclude: [...videoAndBangumiUrls, ...liveUrls],
   entry: () => setTouch(true),
   reload: () => setTouch(true),
   unload: () => setTouch(false),
@@ -34,4 +29,4 @@ export const component: ComponentMetadata = {
       hidden: true,
     },
   },
-}
+})

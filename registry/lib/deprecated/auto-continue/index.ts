@@ -1,7 +1,21 @@
-import { ComponentEntry, ComponentMetadata } from '@/components/types'
+import {
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+  defineComponentMetadata,
+} from '@/components/define'
+import { ComponentEntry } from '@/components/types'
 import { playerUrls } from '@/core/utils/urls'
 
-const entry: ComponentEntry = async ({ settings }) => {
+const options = defineOptionsMetadata({
+  allowJump: {
+    displayName: '允许跨集跳转',
+    defaultValue: false,
+  },
+})
+
+export type Options = OptionsOfMetadata<typeof options>
+
+const entry: ComponentEntry<Options> = async ({ settings }) => {
   const { isEmbeddedPlayer, dq } = await import('@/core/utils')
   if (isEmbeddedPlayer()) {
     return
@@ -10,8 +24,10 @@ const entry: ComponentEntry = async ({ settings }) => {
   const { sq } = await import('@/core/spin-query')
   const { logError } = await import('@/core/utils/log')
   videoChange(async () => {
-    const toast = await sq(() => dq('.bilibili-player-video-toast-item-text') as HTMLElement,
-      it => it?.innerText.includes('上次看到') ?? false)
+    const toast = await sq(
+      () => dq('.bilibili-player-video-toast-item-text') as HTMLElement,
+      it => it?.innerText.includes('上次看到') ?? false,
+    )
     if (toast) {
       const text = toast.innerText
       const parent = toast.parentElement
@@ -66,21 +82,14 @@ const entry: ComponentEntry = async ({ settings }) => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'autoContinue',
   displayName: '历史记录点自动播放',
-  tags: [
-    componentsTags.video,
-  ],
+  tags: [componentsTags.video],
   entry,
   urlInclude: playerUrls,
   description: {
     'zh-CN': '播放视频时如果检测到历史记录信息(`上次看到...`消息), 则自动跳转到相应的时间播放.',
   },
-  options: {
-    allowJump: {
-      displayName: '允许跨集跳转',
-      defaultValue: false,
-    },
-  },
-}
+  options,
+})

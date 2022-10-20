@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
 import { lightOff, lightOn } from '@/components/video/player-light'
 import { videoChange } from '@/core/observer'
@@ -11,7 +11,7 @@ enum IntersectionMode {
   Bottom = '视频底部',
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'playerIntersectionActions',
   author: {
     name: 'FoundTheWOUT',
@@ -26,17 +26,17 @@ export const component: ComponentMetadata = {
       light: boolean
     }
     Promise.resolve().then(async () => {
-      const { query: { video } } = playerAgent
+      const {
+        query: { video },
+      } = playerAgent
 
-      const videoEl = await video.element() as HTMLVideoElement
+      const videoEl = (await video.element()) as HTMLVideoElement
       // const playerWrap = await video.wrap()
       // 如果有 video-player 优先的使用该盒子
       // 因为在稍后再看页面（medialist）视频也有 player-wrap
       // 选择 player-wrap 会导致闪烁。
-      const playerWrap = (
-        document.getElementById('video-player')
-        ?? (dq('.player-wrap') || dq('.player-module'))
-      ) as HTMLElement
+      const playerWrap = (document.getElementById('video-player') ??
+        (dq('.player-wrap') || dq('.player-module'))) as HTMLElement
 
       let observer: IntersectionObserver
       let intersectionLock = true // Lock intersection action
@@ -73,10 +73,10 @@ export const component: ComponentMetadata = {
           videoEl.play()
         }
         if (
-          settings.light
-          && getComponentSettings('playerAutoLight').enabled
-          && !settings.pause
-          && !videoEl.paused
+          settings.light &&
+          getComponentSettings('playerAutoLight').enabled &&
+          !settings.pause &&
+          !videoEl.paused
         ) {
           lightOff()
         }
@@ -90,16 +90,12 @@ export const component: ComponentMetadata = {
         if (settings.pause && !videoEl.paused) {
           videoEl.pause()
         }
-        if (
-          settings.light
-          && getComponentSettings('playerAutoLight').enabled
-          && !settings.pause
-        ) {
+        if (settings.light && getComponentSettings('playerAutoLight').enabled && !settings.pause) {
           lightOn()
         }
       }
 
-      const createObserver = (mode?: string) => (
+      const createObserver = (mode?: string) =>
         new IntersectionObserver(
           ([e]) => {
             e.isIntersecting ? intersectingCall() : disIntersectingCall()
@@ -108,7 +104,6 @@ export const component: ComponentMetadata = {
             threshold: getToTop(mode || settings.triggerLocation),
           },
         )
-      )
 
       function mountPlayListener() {
         videoChange(async () => {
@@ -150,4 +145,4 @@ export const component: ComponentMetadata = {
       displayName: '自动开灯',
     },
   },
-}
+})

@@ -1,8 +1,6 @@
 import { componentToSettings } from '@/core/settings'
 import { isBuiltInComponent } from './built-in-components'
-import {
-  ComponentMetadata, componentsMap,
-} from './component'
+import { ComponentMetadata, componentsMap } from './component'
 
 /**
  * 安装自定义组件
@@ -66,13 +64,19 @@ export const installComponent = async (code: string) => {
 export const uninstallComponent = async (nameOrDisplayName: string) => {
   const { settings } = await import('@/core/settings')
   const { components } = await import('./component')
-  const existingComponent = Object.entries(settings.userComponents)
-    .find(([name, { metadata: { displayName } }]) => {
+  const existingComponent = Object.entries(settings.userComponents).find(
+    ([
+      name,
+      {
+        metadata: { displayName },
+      },
+    ]) => {
       if (name === nameOrDisplayName || displayName === nameOrDisplayName) {
         return true
       }
       return false
-    })
+    },
+  )
   if (!existingComponent) {
     throw new Error(`没有找到与名称'${nameOrDisplayName}'相关联的组件`)
   }
@@ -104,13 +108,19 @@ export const uninstallComponent = async (nameOrDisplayName: string) => {
  */
 export const toggleComponent = async (nameOrDisplayName: string) => {
   const { settings } = await import('@/core/settings')
-  const existingComponent = Object.entries(settings.userComponents)
-    .find(([name, { metadata: { displayName } }]) => {
+  const existingComponent = Object.entries(settings.userComponents).find(
+    ([
+      name,
+      {
+        metadata: { displayName },
+      },
+    ]) => {
       if (name === nameOrDisplayName || displayName === nameOrDisplayName) {
         return true
       }
       return false
-    })
+    },
+  )
   if (!existingComponent) {
     throw new Error(`没有找到与名称'${nameOrDisplayName}'相关联的组件`)
   }

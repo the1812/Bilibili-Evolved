@@ -1,10 +1,7 @@
 <template>
-  <div class="switch-options" :class="{ 'small-size': smallSize, 'grid': !popupMode }">
+  <div class="switch-options" :class="{ 'small-size': smallSize, grid: !popupMode }">
     <template v-if="popupMode">
-      <VButton
-        ref="button"
-        @click="popupOpen = !popupOpen"
-      >
+      <VButton ref="button" @click="popupOpen = !popupOpen">
         <VIcon
           class="switch-icon"
           icon="mdi-checkbox-marked-circle-outline"
@@ -51,9 +48,7 @@
 </template>
 
 <script lang="ts">
-import {
-  VPopup, VButton, VIcon, CheckBox, RadioButton,
-} from '@/ui'
+import { VPopup, VButton, VIcon, CheckBox, RadioButton } from '@/ui'
 import { getComponentSettings } from '../core/settings'
 
 export default Vue.extend({
@@ -102,7 +97,10 @@ export default Vue.extend({
       element.style.setProperty('--columns', columns.toString())
     },
     isDim(name: string) {
-      return (this.componentOptions[`switch-${name}`] && this.options.dimAt === 'checked') || this.options.dimAt === 'notChecked'
+      return (
+        (this.componentOptions[`switch-${name}`] && this.options.dimAt === 'checked') ||
+        this.options.dimAt === 'notChecked'
+      )
     },
   },
 })
@@ -121,7 +119,7 @@ export default Vue.extend({
     transform: scale(0.9);
   }
   .dim {
-    opacity: .5;
+    opacity: 0.5;
   }
   &-grid {
     font-size: 12px;

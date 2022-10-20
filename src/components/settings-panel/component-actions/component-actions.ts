@@ -18,8 +18,9 @@ export interface ComponentVueAction {
   name: string
   component: Executable<VueModule>
 }
-export type ComponentAction = (metadata: ComponentMetadata)
-  => ComponentConfigAction | ComponentVueAction
+export type ComponentAction = (
+  metadata: ComponentMetadata,
+) => ComponentConfigAction | ComponentVueAction
 
 const builtInActions: ComponentAction[] = [
   metadata => ({
@@ -35,4 +36,7 @@ const builtInActions: ComponentAction[] = [
     },
   }),
 ]
-export const [componentActions] = registerAndGetData('settingsPanel.componentActions', builtInActions)
+export const [componentActions] = registerAndGetData(
+  'settingsPanel.componentActions',
+  builtInActions,
+)

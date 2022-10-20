@@ -10,7 +10,8 @@ export const plugin: PluginMetadata = {
     name: 'diannaojiang',
     link: 'https://github.com/diannaojiang',
   },
-  description: '为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)',
+  description:
+    '为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)',
   setup: ({ addData }) => {
     addData('downloadVideo.outputs', (outputs: DownloadVideoOutput[]) => {
       outputs.push({
@@ -22,10 +23,7 @@ export const plugin: PluginMetadata = {
           const urls = fragments.map(f => f.url).join('\n')
           const mpv = `mpv://--http-header-fields=\"referer:https://www.bilibili.com/\" \"${fragments[0].url}\" --audio-file=\"${fragments[1].url}\"`
           console.log(mpv)
-          Toast.show(
-            `<a class="link" href="${encodeURI(mpv)}" >播放</a>`,
-            'MPV播放',
-          )
+          Toast.show(`<a class="link" href="${encodeURI(mpv)}" >播放</a>`, 'MPV播放')
           console.log(urls)
           console.log(action)
         },

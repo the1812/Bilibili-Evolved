@@ -12,14 +12,8 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  VButton,
-  VIcon,
-} from '@/ui'
-import {
-  loadKeymapSettings,
-  toggleKeymapSettings,
-} from './vm'
+import { VButton, VIcon } from '@/ui'
+import { loadKeymapSettings, toggleKeymapSettings } from './vm'
 
 export default Vue.extend({
   components: {
@@ -42,7 +36,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .keymap-extra-options {
   @include h-center();
   justify-content: center;

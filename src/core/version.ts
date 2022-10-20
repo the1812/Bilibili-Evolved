@@ -6,7 +6,7 @@ export enum CompareResult {
   Less = -1,
   Equal = 0,
   Greater = 1,
-  Incomparable = NaN
+  Incomparable = NaN,
 }
 export class Version {
   parts: number[]

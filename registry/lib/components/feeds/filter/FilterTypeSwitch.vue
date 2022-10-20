@@ -11,9 +11,7 @@
 
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
-import {
-  VIcon,
-} from '@/ui'
+import { VIcon } from '@/ui'
 
 const { options } = getComponentSettings('feedsFilter')
 export default Vue.extend({
@@ -48,9 +46,7 @@ export default Vue.extend({
   },
   methods: {
     setFilter(disabled: boolean, updateSettings = true) {
-      document.body.classList[disabled ? 'add' : 'remove'](
-        `feeds-filter-block-${this.name}`,
-      )
+      document.body.classList[disabled ? 'add' : 'remove'](`feeds-filter-block-${this.name}`)
       if (!updateSettings) {
         return
       }

@@ -6,14 +6,13 @@ export const component = defineComponentMetadata({
   name: 'badgeHelper',
   displayName: '直播勋章快速更换',
   description: {
-    'zh-CN': '在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.',
+    'zh-CN':
+      '在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.',
   },
   entry: () => autoMatchMedal(),
   reload: none,
   unload: none,
-  tags: [
-    componentsTags.live,
-  ],
+  tags: [componentsTags.live],
   widget: {
     component: () => import('./BadgeHelper.vue').then(m => m.default),
     condition: () => Boolean(getUID()),
@@ -38,7 +37,5 @@ export const component = defineComponentMetadata({
       defaultValue: true,
     },
   },
-  urlInclude: [
-    '//live.bilibili.com',
-  ],
+  urlInclude: ['//live.bilibili.com'],
 })

@@ -6,9 +6,7 @@
       @change="wrapper.start = $event"
     ></TextBox>
     <slot name="separator">
-      <div class="default-separator">
-        ~
-      </div>
+      <div class="default-separator">~</div>
     </slot>
     <TextBox
       change-on-blur

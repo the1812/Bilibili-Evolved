@@ -38,12 +38,10 @@ export const getHook = (key: string, ...fixedArgs: any[]) => {
     const item = pluginHookMap.get(key)
     const { providers } = item
     return {
-      before: async (...args: any[]) => Promise.all(
-        providers.map(p => p.before?.(...fixedArgs.concat(args))),
-      ),
-      after: async (...args: any[]) => Promise.all(
-        providers.map(p => p.after?.(...fixedArgs.concat(args))),
-      ),
+      before: async (...args: any[]) =>
+        Promise.all(providers.map(p => p.before?.(...fixedArgs.concat(args)))),
+      after: async (...args: any[]) =>
+        Promise.all(providers.map(p => p.after?.(...fixedArgs.concat(args)))),
     }
   }
   return {

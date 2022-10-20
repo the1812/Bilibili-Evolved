@@ -1,10 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
 import { addControlBarButton } from '@/components/video/video-control-bar'
 import { attributesSubtree } from '@/core/observer'
 import { playerReady } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
 import { KeyBindingAction } from '../../../utils/keymap/bindings'
+import { defineComponentMetadata } from '@/components/define'
 import desc from './desc.md'
 import seekLeft from './seek-left.svg'
 import seekRight from './seek-right.svg'
@@ -18,29 +18,24 @@ const entry = async () => {
     icons['seek-right'] = seekRight
   })
   let frameTime = 0
-  attributesSubtree(
-    `${playerAgent.query.control.buttons.quality.selector} ul`,
-    () => {
-      const selectedQuality = dq(
-        `${playerAgent.query.control.buttons.quality.selector} .bui-select-item-active, ${playerAgent.query.control.buttons.quality.selector} .active`,
-      )
-      const quality = selectedQuality
-        ? parseInt(selectedQuality.getAttribute('data-value'))
-        : 0
-      const fps = (() => {
-        switch (quality) {
-          // 60fps
-          case 116:
-          case 74:
-            return 60000 / 1001
-          // 30fps
-          default:
-            return 30000 / 1001
-        }
-      })()
-      frameTime = 1 / fps
-    },
-  )
+  attributesSubtree(`${playerAgent.query.control.buttons.quality.selector} ul`, () => {
+    const selectedQuality = dq(
+      `${playerAgent.query.control.buttons.quality.selector} .bui-select-item-active, ${playerAgent.query.control.buttons.quality.selector} .active`,
+    )
+    const quality = selectedQuality ? parseInt(selectedQuality.getAttribute('data-value')) : 0
+    const fps = (() => {
+      switch (quality) {
+        // 60fps
+        case 116:
+        case 74:
+          return 60000 / 1001
+        // 30fps
+        default:
+          return 30000 / 1001
+      }
+    })()
+    frameTime = 1 / fps
+  })
   const setFrame = (num: number) => {
     playerAgent.changeTime(num * frameTime)
   }
@@ -64,12 +59,10 @@ const entry = async () => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'seekByFrames',
   displayName: '启用逐帧调整',
-  tags: [
-    componentsTags.video,
-  ],
+  tags: [componentsTags.video],
   description: {
     'zh-CN': desc,
   },
@@ -102,4 +95,4 @@ export const component: ComponentMetadata = {
       })
     },
   },
-}
+})

@@ -1,25 +1,17 @@
 <template>
   <div class="fresh-home-areas">
     <div class="fresh-home-header">
-      <div class="fresh-home-header-title">
-        栏目
-      </div>
+      <div class="fresh-home-header-title">栏目</div>
     </div>
     <div class="fresh-home-areas-content">
       <a class="fresh-home-areas-content-primary" :href="primary.url" target="_blank">
-        <div class="fresh-home-areas-content-primary-image">
-        </div>
+        <div class="fresh-home-areas-content-primary-image"></div>
         <div class="fresh-home-areas-content-primary-title">
           {{ primary.title }}
         </div>
       </a>
       <div class="fresh-home-areas-content-other">
-        <a
-          v-for="other of others"
-          :key="other.title"
-          :href="other.url"
-          target="_blank"
-        >
+        <a v-for="other of others" :key="other.title" :href="other.url" target="_blank">
           <VButton type="transparent">
             <VIcon colored :icon="other.icon" :size="22" />
             {{ other.title }}
@@ -76,7 +68,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .fresh-home-areas {
   @include v-stretch();

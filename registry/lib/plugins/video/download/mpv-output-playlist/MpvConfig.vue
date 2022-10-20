@@ -15,11 +15,8 @@
   </div>
 </template>
 <script lang="ts">
-
 import { getComponentSettings } from '@/core/settings'
-import {
-  TextBox,
-} from '@/ui'
+import { TextBox } from '@/ui'
 
 const defaultMpvInfo = {
   dir: 'mpv',

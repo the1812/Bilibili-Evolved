@@ -25,7 +25,9 @@ const idMatches = [
     link: (match: RegExpMatchArray) => `https://www.bilibili.com/av${match[1]}`,
     extend: async (match: RegExpMatchArray) => {
       const { getJsonWithCredentials } = await import('@/core/ajax')
-      const json = await getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/view?aid=${match[1]}`)
+      const json = await getJsonWithCredentials(
+        `https://api.bilibili.com/x/web-interface/view?aid=${match[1]}`,
+      )
       const bv = lodash.get(json, 'data.bvid', null)
       if (bv === null) {
         return []
@@ -40,7 +42,9 @@ const idMatches = [
     link: (match: RegExpMatchArray) => `https://www.bilibili.com/BV${match[1]}`,
     extend: async (match: RegExpMatchArray) => {
       const { getJsonWithCredentials } = await import('@/core/ajax')
-      const json = await getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/view?bvid=${match[1]}`)
+      const json = await getJsonWithCredentials(
+        `https://api.bilibili.com/x/web-interface/view?bvid=${match[1]}`,
+      )
       const av = lodash.get(json, 'data.aid', null)
       if (av === null) {
         return []

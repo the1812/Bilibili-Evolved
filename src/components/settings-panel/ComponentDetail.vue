@@ -21,9 +21,7 @@
         v-if="(componentData.options && generatedOptions.length > 0) || componentData.extraOptions"
       >
         <div class="component-detail-options">
-          <div class="component-detail-options-title">
-            选项
-          </div>
+          <div class="component-detail-options-title">选项</div>
           <div v-for="[name, option] of generatedOptions" :key="name" class="generated-option">
             <ComponentOption
               :name="name"
@@ -49,14 +47,10 @@
       <div class="component-detail-grow"></div>
       <div class="component-detail-internal-data">
         <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
-          <div class="internal-name">
-            Commit: {{ componentData.commitHash.substring(0, 9) }}
-          </div>
+          <div class="internal-name">Commit: {{ componentData.commitHash.substring(0, 9) }}</div>
         </div>
         <div class="component-detail-internal-data-row">
-          <div class="internal-name">
-            内部名称: {{ componentData.name }}
-          </div>
+          <div class="internal-name">内部名称: {{ componentData.name }}</div>
           <MiniToast
             v-if="componentData.configurable !== false && componentActions.length > 0"
             placement="bottom"
@@ -68,10 +62,7 @@
             </div>
             <template #toast>
               <div class="extra-actions-list">
-                <div
-                  v-for="a of componentActions"
-                  :key="a.name"
-                >
+                <div v-for="a of componentActions" :key="a.name">
                   <component
                     :is="a.component"
                     v-if="a.component"
@@ -97,12 +88,7 @@
 </template>
 
 <script lang="ts">
-import {
-  VButton,
-  VIcon,
-  SwitchBox,
-  MiniToast,
-} from '@/ui'
+import { VButton, VIcon, SwitchBox, MiniToast } from '@/ui'
 import { visible } from '@/core/observer'
 import { ComponentOptions } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
@@ -168,7 +154,7 @@ export default Vue.extend({
   flex: 1;
   background-color: inherit;
   border-radius: 7px;
-  @include no-scrollbar();
+  overflow: auto;
   @include v-stretch();
 
   .extra-option {

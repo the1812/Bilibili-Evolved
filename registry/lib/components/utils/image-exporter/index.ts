@@ -1,15 +1,12 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { matchUrlPattern } from '@/core/utils'
 import { columnUrls, feedsUrls } from '@/core/utils/urls'
 import { setupFeedImageExporter } from './feed'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'imageExporter',
   displayName: '图片批量导出',
-  tags: [
-    componentsTags.feeds,
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.feeds, componentsTags.utils],
   entry: async context => {
     await setupFeedImageExporter(context)
   },
@@ -17,10 +14,7 @@ export const component: ComponentMetadata = {
     condition: () => columnUrls.some(url => matchUrlPattern(url)),
     component: () => import('./Widget.vue').then(m => m.default),
   },
-  urlInclude: [
-    ...feedsUrls,
-    ...columnUrls,
-  ],
+  urlInclude: [...feedsUrls, ...columnUrls],
   options: {
     columnFormat: {
       defaultValue: '[title][ - n]',
@@ -31,4 +25,4 @@ export const component: ComponentMetadata = {
       displayName: '动态图片命名格式',
     },
   },
-}
+})

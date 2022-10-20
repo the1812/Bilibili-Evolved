@@ -8,8 +8,8 @@
   "scripts": {
     "build-core": "webpack --config ./webpack/webpack.prod.ts --bail",
     "build-features": "webpack --config ./registry/webpack/all.ts --bail",
-    "lint": "eslint --config ./.eslintrc.js --quiet --fix \"./**/*.@(js|ts|vue)\"",
-    "lint-check": "eslint --config ./.eslintrc.js \"./**/*.@(js|ts|vue)\"",
+    "lint": "eslint --quiet --fix . --ext .ts,.vue",
+    "lint-check": "eslint . --ext .ts,.vue",
     "type": "tsc -p tsconfig.type-check.json --noEmit"
   },
   "devDependencies": {
@@ -38,12 +38,15 @@
     "css-loader": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-vue": "7.1.0",
     "fast-sass-loader": "^2.0.0",
     "postcss": "^8.1.0",
     "postcss-loader": "^4.0.4",
     "postcss-preset-env": "^7.5.0",
+    "prettier": "^2.7.1",
     "sass": "^1.25.0",
     "serve": "^13.0.2",
     "serve-handler": "^6.1.3",

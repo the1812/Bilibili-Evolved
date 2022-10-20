@@ -26,10 +26,12 @@ const redirectProviders: BiliplusRedirectProvider[] = [
     condition: () => document.URL.includes('/bangumi/play'),
     getUrl: (host, updateUrl) => {
       videoChange(() => {
-        const aid = unsafeWindow.aid || (() => {
-          const link = document.querySelector('.av-link,.info-sec-av') as HTMLElement
-          return link.innerText.replace(/[aAvV]/g, '')
-        })()
+        const aid =
+          unsafeWindow.aid ||
+          (() => {
+            const link = document.querySelector('.av-link,.info-sec-av') as HTMLElement
+            return link.innerText.replace(/[aAvV]/g, '')
+          })()
         const url = `https://${host}/video/av${aid}/`
         if (document.URL !== url) {
           updateUrl(url)

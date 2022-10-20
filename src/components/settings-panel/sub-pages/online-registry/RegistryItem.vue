@@ -86,7 +86,8 @@ const typeMappings = {
   pack: {
     icon: 'mdi-package-variant-closed',
     badge: '合集包',
-    getUrl: (pack: PackItem, branch: string) => pack.items.map(it => getFeatureUrl(it, branch)).join('\n'),
+    getUrl: (pack: PackItem, branch: string) =>
+      pack.items.map(it => getFeatureUrl(it, branch)).join('\n'),
     isInstalled: (pack: PackItem) => pack.items.every(isFeatureInstalled),
   },
 }
@@ -103,9 +104,7 @@ export default Vue.extend({
     },
   },
   data() {
-    const {
-      icon, badge, getUrl, isInstalled,
-    } = typeMappings[this.item.type]
+    const { icon, badge, getUrl, isInstalled } = typeMappings[this.item.type]
     return {
       icon,
       badge,
@@ -138,9 +137,7 @@ export default Vue.extend({
         .filter(it => it !== '')
       try {
         this.installing = true
-        await Promise.all(
-          urls.map(async url => installFeature(url)),
-        )
+        await Promise.all(urls.map(async url => installFeature(url)))
         this.checkInstalled()
         if (this.item.type === 'pack') {
           this.$emit('refresh')
@@ -162,9 +159,9 @@ export default Vue.extend({
   min-height: 39px;
   position: relative;
   &::before {
-    content: "";
+    content: '';
     opacity: 0;
-    transition: opacity .2s ease-out;
+    transition: opacity 0.2s ease-out;
     position: absolute;
     pointer-events: none;
     top: 50%;

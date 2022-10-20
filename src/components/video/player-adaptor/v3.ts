@@ -3,7 +3,7 @@ import { select } from '@/core/spin-query'
 
 const idPolyfill = async () => {
   const player = await select(() => unsafeWindow.player)
-  if (!(player?.getUserParams)) {
+  if (!player?.getUserParams) {
     return
   }
   const { useScopedConsole } = await import('@/core/utils/log')

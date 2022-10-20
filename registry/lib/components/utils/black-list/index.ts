@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { mainSiteUrls } from '@/core/utils/urls'
 import { allMutationsOn } from '@/core/observer'
 import { selectAll } from '@/core/spin-query'
@@ -23,19 +23,27 @@ const entry = async ({ settings: { options } }) => {
     const blockList = getData(BlackListDataKey)
     const upRegex = blockList[0].upRegex.map(e => new RegExp(e))
     videos.forEach(video => {
-      const authorElement = (video as unknown as HTMLElement).querySelector('.bili-video-card__info--author')
-      const titleElement = (video as unknown as HTMLElement).querySelector('.bili-video-card__info--tit > a')
+      const authorElement = (video as unknown as HTMLElement).querySelector(
+        '.bili-video-card__info--author',
+      )
+      const titleElement = (video as unknown as HTMLElement).querySelector(
+        '.bili-video-card__info--tit > a',
+      )
       if (authorElement != null) {
         const author = authorElement.innerHTML
         if (blockList[0].up.indexOf(author) !== -1) {
-          const image = (video as unknown as HTMLElement).querySelector('.v-img.bili-video-card__cover')
+          const image = (video as unknown as HTMLElement).querySelector(
+            '.v-img.bili-video-card__cover',
+          )
           image.innerHTML = ''
           authorElement.innerHTML = ''
           titleElement.innerHTML = ''
         } else {
           for (const i in upRegex) {
             if (upRegex[i].test(author)) {
-              const image = (video as unknown as HTMLElement).querySelector('.v-img.bili-video-card__cover')
+              const image = (video as unknown as HTMLElement).querySelector(
+                '.v-img.bili-video-card__cover',
+              )
               image.innerHTML = ''
               authorElement.innerHTML = ''
               titleElement.innerHTML = ''
@@ -48,7 +56,7 @@ const entry = async ({ settings: { options } }) => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name,
   entry,
   // reload: entry,
@@ -66,9 +74,7 @@ export const component: ComponentMetadata = {
     },
   },
   displayName: '屏蔽黑名单up主',
-  tags: [
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.utils],
   description: {
     'zh-CN': '屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配',
   },
@@ -77,4 +83,4 @@ export const component: ComponentMetadata = {
     link: 'https://github.com/snowraincloud',
   },
   urlInclude: mainSiteUrls,
-}
+})
