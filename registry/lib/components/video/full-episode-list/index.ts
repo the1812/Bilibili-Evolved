@@ -1,7 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { videoUrls } from '@/core/utils/urls'
 
-const name = 'fullEpisodeTitle'
+const name = 'fullEpisodeList'
 export const component = defineComponentMetadata({
   name,
   instantStyles: [
