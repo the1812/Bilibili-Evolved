@@ -3,7 +3,8 @@ import { ComponentMetadata } from '@/components/types'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
 import { addStyle } from '@/core/style'
-import { getCookieValue } from '@/core/utils'
+import { getCookieValue, matchUrlPattern } from '@/core/utils'
+import { useScopedConsole } from '@/core/utils/log'
 import { mainSiteUrls } from '@/core/utils/urls'
 
 const switchOptions: SwitchOptions = {
@@ -44,6 +45,7 @@ const switchOptions: SwitchOptions = {
     },
   },
 }
+const console = useScopedConsole('简化首页')
 const metadata: ComponentMetadata = {
   name: 'simplifyHome',
   displayName: '简化首页',
@@ -58,10 +60,12 @@ const metadata: ComponentMetadata = {
   tags: [componentsTags.style],
   entry: async () => {
     // 正好是首页时提供首页分区的简化选项
-    if (document.URL !== 'https://www.bilibili.com/') {
+    const isHome = matchUrlPattern('https://www.bilibili.com/')
+    if (!isHome) {
       return
     }
 
+    console.log('isHome', isHome)
     const { options } = getComponentSettings(metadata.name)
     const isNewHome = getCookieValue('i-wanna-go-back') === '-1'
     type SimplifyHomeOption = {
@@ -69,11 +73,10 @@ const metadata: ComponentMetadata = {
       defaultValue: boolean
     }
     const generatedOptions: Record<string, SimplifyHomeOption> = await (async () => {
-      const isNotHome = document.URL !== 'https://www.bilibili.com/'
       if (!isNewHome) {
         const categoryElements = await sq(
           () => dqa('.proxy-box > div'),
-          elements => elements.length > 0 || isNotHome,
+          elements => elements.length > 0 || !isHome,
         )
         return Object.fromEntries(
           categoryElements.map(it => [
@@ -89,7 +92,7 @@ const metadata: ComponentMetadata = {
       const skipIds = ['推广']
       const headers = await sq(
         () => dqa('.bili-grid .the-world'),
-        elements => elements.length > 3 || isNotHome,
+        elements => elements.length > 3 || !isHome,
       )
       console.log(headers)
       const getContainer = (header: Element) => {
