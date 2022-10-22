@@ -725,23 +725,18 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 总是展开完整的视频简介.
 
-### [展开选集列表](../../registry/dist/components/video/full-episode-list.js)
-`fullEpisodeTitle`
-
-**AltCdn:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-list.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-list.js)
-
-总是完全展开视频选集列表, 注意对番剧无效.
-
-### [展开选集标题](../../registry/dist/components/video/full-episode-title.js)
+### [选集区域优化](../../registry/dist/components/video/full-episode-title.js)
 `fullEpisodeTitle`
 
 **AltCdn:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-title.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-title.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-title.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-title.js)
 
-总是完全展开视频选集列表的标题, 注意对番剧无效.
+提供一些视频选集区域的优化, 对番剧无效.
+- `展开选集标题`: 总是完全展开视频选集列表项的标题
+- `展开选集列表`: 总是完全展开视频选集列表
+
+打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换展开/收起选集列表.
 
 ### [外置稍后再看](../../registry/dist/components/video/outer-watchlater.js)
 `outerWatchlater`
