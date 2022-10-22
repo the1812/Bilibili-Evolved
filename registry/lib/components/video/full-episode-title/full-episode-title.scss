@@ -1,12 +1,63 @@
-.multi-page .cur-list {
-  ul {
-    max-height: none !important;
+body {
+  &.full-episode-title {
+    .base-video-sections-v1 {
+      .video-episode-card {
+        height: auto !important;
+        .cur-play-icon {
+          margin-right: 6px;
+        }
+        &__info {
+          height: auto !important;
+        }
+        &__info-title {
+          padding: 4px 0 !important;
+          width: auto !important;
+          max-height: unset !important;
+          height: auto !important;
+          white-space: normal !important;
+          line-height: 1.5 !important;
+        }
+      }
+    }
+    .multi-page-v1,
+    .multi-page {
+      .cur-list {
+        li {
+          height: auto !important;
+          a {
+            overflow: visible !important;
+            white-space: normal !important;
+          }
+          .part {
+            padding: 4px 0 !important;
+            line-height: 1.75 !important;
+          }
+          .duration {
+            align-self: center !important;
+          }
+        }
+      }
+    }
   }
-  li {
-    height: auto !important;
-    a {
-      overflow: visible !important;
-      white-space: normal !important;
+  &.full-episode-list:not(.disable-full-episode-list) {
+    .video-sections-content-list {
+      max-height: unset !important;
+      height: auto !important;
+      .video-section-list {
+        height: auto !important;
+      }
+    }
+    .multi-page-v1,
+    .multi-page {
+      .head-left h3 {
+        cursor: pointer;
+      }
+      .cur-list {
+        max-height: unset !important;
+        ul {
+          max-height: unset !important;
+        }
+      }
     }
   }
 }

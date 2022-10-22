@@ -19,7 +19,7 @@ export const initMdiStyle = () => {
   const cssPromise = new Promise<void>(resolve => {
     mdi.onload = () => resolve()
   })
-  Promise.all([cssPromise, webFontPromise]).then(() => {
+  Promise.allSettled([cssPromise, webFontPromise]).then(() => {
     mdi.media = 'all'
   })
 
