@@ -21,7 +21,9 @@ export const component: ComponentMetadata = {
     const { forEachFeedsCard } = await import('@/components/feeds/api')
     forEachFeedsCard({
       added: async card => {
-        const foldButton = await select(() => dq(card.element, '.fold-hoverable, .bili-dyn-item-fold') as HTMLElement)
+        const foldButton = await select(
+          () => dq(card.element, '.fold-hoverable, .bili-dyn-item-fold') as HTMLElement,
+        )
         foldButton?.click()
       },
     })

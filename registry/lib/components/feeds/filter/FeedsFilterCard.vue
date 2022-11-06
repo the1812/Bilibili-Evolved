@@ -50,7 +50,13 @@
 </template>
 
 <script lang="ts">
-import { FeedsCard, FeedsCardType, feedsCardTypes, forEachFeedsCard, RepostFeedsCard } from '@/components/feeds/api'
+import {
+  FeedsCard,
+  FeedsCardType,
+  feedsCardTypes,
+  forEachFeedsCard,
+  RepostFeedsCard,
+} from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { attributes } from '@/core/observer'
