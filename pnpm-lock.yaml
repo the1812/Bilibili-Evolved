@@ -24,6 +24,7 @@ specifiers:
   async-exit-hook: ^2.0.1
   autoprefixer: ^10.0.1
   babel-loader: ^8.1.0
+  browserslist: ^4.21.4
   color: ^3.1.2
   css-loader: ^5.0.0
   eslint: ^7.32.0
@@ -96,6 +97,7 @@ devDependencies:
   async-exit-hook: registry.npmmirror.com/async-exit-hook/2.0.1
   autoprefixer: registry.npmmirror.com/autoprefixer/10.4.7_postcss@8.4.13
   babel-loader: registry.npmmirror.com/babel-loader/8.2.5_vs5hf2sl7hjtttp43d2vzw3qay
+  browserslist: registry.npmmirror.com/browserslist/4.21.4
   css-loader: registry.npmmirror.com/css-loader/5.2.7_webpack@5.72.0
   eslint: registry.npmmirror.com/eslint/7.32.0
   eslint-config-airbnb-base: registry.npmmirror.com/eslint-config-airbnb-base/14.2.1_hpmu7kn6tcn2vnxpfzvv33bxmy
@@ -227,7 +229,7 @@ packages:
       '@babel/compat-data': registry.npmmirror.com/@babel/compat-data/7.17.10
       '@babel/core': registry.npmmirror.com/@babel/core/7.17.9
       '@babel/helper-validator-option': registry.npmmirror.com/@babel/helper-validator-option/7.16.7
-      browserslist: registry.npmmirror.com/browserslist/4.20.3
+      browserslist: registry.npmmirror.com/browserslist/4.21.4
       semver: registry.npmmirror.com/semver/6.3.0
     dev: true
 
@@ -2763,7 +2765,7 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      browserslist: registry.npmmirror.com/browserslist/4.20.3
+      browserslist: registry.npmmirror.com/browserslist/4.21.4
       caniuse-lite: registry.npmmirror.com/caniuse-lite/1.0.30001338
       fraction.js: registry.npmmirror.com/fraction.js/4.2.0
       normalize-range: registry.npmmirror.com/normalize-range/0.1.2
@@ -2902,18 +2904,17 @@ packages:
       fill-range: registry.npmmirror.com/fill-range/7.0.1
     dev: true
 
-  registry.npmmirror.com/browserslist/4.20.3:
-    resolution: {integrity: sha512-NBhymBQl1zM0Y5dQT/O+xiLP9/rzOIQdKM/eMJBAq7yBgaB6krIYLGejrwVYnSHZdqjscB1SPuAjHwxjvN6Wdg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/browserslist/-/browserslist-4.20.3.tgz}
+  registry.npmmirror.com/browserslist/4.21.4:
+    resolution: {integrity: sha512-CBHJJdDmgjl3daYjN5Cp5kbTf1mUhZoS+beLklHIvkOWscs83YAhLlF3Wsh/lciQYAcbBJgTOD44VtG31ZM4Hw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/browserslist/-/browserslist-4.21.4.tgz}
     name: browserslist
-    version: 4.20.3
+    version: 4.21.4
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: registry.npmmirror.com/caniuse-lite/1.0.30001338
-      electron-to-chromium: registry.npmmirror.com/electron-to-chromium/1.4.137
-      escalade: registry.npmmirror.com/escalade/3.1.1
-      node-releases: registry.npmmirror.com/node-releases/2.0.4
-      picocolors: registry.npmmirror.com/picocolors/1.0.0
+      caniuse-lite: registry.npmmirror.com/caniuse-lite/1.0.30001430
+      electron-to-chromium: registry.npmmirror.com/electron-to-chromium/1.4.284
+      node-releases: registry.npmmirror.com/node-releases/2.0.6
+      update-browserslist-db: registry.npmmirror.com/update-browserslist-db/1.0.10_browserslist@4.21.4
     dev: true
 
   registry.npmmirror.com/buffer-from/1.1.2:
@@ -2956,6 +2957,12 @@ packages:
     resolution: {integrity: sha512-1gLHWyfVoRDsHieO+CaeYe7jSo/MT7D7lhaXUiwwbuR5BwQxORs0f1tAwUSQr3YbxRXJvxHM/PA5FfPQRnsPeQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001338.tgz}
     name: caniuse-lite
     version: 1.0.30001338
+    dev: true
+
+  registry.npmmirror.com/caniuse-lite/1.0.30001430:
+    resolution: {integrity: sha512-IB1BXTZKPDVPM7cnV4iaKaHxckvdr/3xtctB3f7Hmenx3qYBhGtTZ//7EllK66aKXW98Lx0+7Yr0kxBtIt3tzg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001430.tgz}
+    name: caniuse-lite
+    version: 1.0.30001430
     dev: true
 
   registry.npmmirror.com/chalk/1.1.3:
@@ -3370,7 +3377,7 @@ packages:
     name: core-js-compat
     version: 3.22.4
     dependencies:
-      browserslist: registry.npmmirror.com/browserslist/4.20.3
+      browserslist: registry.npmmirror.com/browserslist/4.21.4
       semver: registry.npmmirror.com/semver/7.0.0
     dev: true
 
@@ -3609,10 +3616,10 @@ packages:
     version: 0.1.2
     dev: true
 
-  registry.npmmirror.com/electron-to-chromium/1.4.137:
-    resolution: {integrity: sha512-0Rcpald12O11BUogJagX3HsCN3FE83DSqWjgXoHo5a72KUKMSfI39XBgJpgNNxS9fuGzytaFjE06kZkiVFy2qA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/electron-to-chromium/-/electron-to-chromium-1.4.137.tgz}
+  registry.npmmirror.com/electron-to-chromium/1.4.284:
+    resolution: {integrity: sha512-M8WEXFuKXMYMVr45fo8mq0wUrrJHheiKZf6BArTKk9ZBYCKJEOU5H8cdWgDT+qCVZf7Na4lVUaZsA+h6uA9+PA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/electron-to-chromium/-/electron-to-chromium-1.4.284.tgz}
     name: electron-to-chromium
-    version: 1.4.137
+    version: 1.4.284
     dev: true
 
   registry.npmmirror.com/emoji-regex/8.0.0:
@@ -5245,10 +5252,10 @@ packages:
     version: 1.0.5
     dev: true
 
-  registry.npmmirror.com/node-releases/2.0.4:
-    resolution: {integrity: sha512-gbMzqQtTtDz/00jQzZ21PQzdI9PyLYqUSvD0p3naOhX4odFji0ZxYdnVwPTxmSwkmxhcFImpozceidSG+AgoPQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/node-releases/-/node-releases-2.0.4.tgz}
+  registry.npmmirror.com/node-releases/2.0.6:
+    resolution: {integrity: sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/node-releases/-/node-releases-2.0.6.tgz}
     name: node-releases
-    version: 2.0.4
+    version: 2.0.6
     dev: true
 
   registry.npmmirror.com/normalize-path/3.0.0:
@@ -5948,7 +5955,7 @@ packages:
       '@csstools/postcss-stepped-value-functions': registry.npmmirror.com/@csstools/postcss-stepped-value-functions/1.0.0_postcss@8.4.13
       '@csstools/postcss-unset-value': registry.npmmirror.com/@csstools/postcss-unset-value/1.0.0_postcss@8.4.13
       autoprefixer: registry.npmmirror.com/autoprefixer/10.4.7_postcss@8.4.13
-      browserslist: registry.npmmirror.com/browserslist/4.20.3
+      browserslist: registry.npmmirror.com/browserslist/4.21.4
       css-blank-pseudo: registry.npmmirror.com/css-blank-pseudo/3.0.3_postcss@8.4.13
       css-has-pseudo: registry.npmmirror.com/css-has-pseudo/3.0.4_postcss@8.4.13
       css-prefers-color-scheme: registry.npmmirror.com/css-prefers-color-scheme/6.0.3_postcss@8.4.13
@@ -7023,6 +7030,20 @@ packages:
     engines: {node: '>= 4.0.0'}
     dev: true
 
+  registry.npmmirror.com/update-browserslist-db/1.0.10_browserslist@4.21.4:
+    resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/update-browserslist-db/-/update-browserslist-db-1.0.10.tgz}
+    id: registry.npmmirror.com/update-browserslist-db/1.0.10
+    name: update-browserslist-db
+    version: 1.0.10
+    hasBin: true
+    peerDependencies:
+      browserslist: '>= 4.21.0'
+    dependencies:
+      browserslist: registry.npmmirror.com/browserslist/4.21.4
+      escalade: registry.npmmirror.com/escalade/3.1.1
+      picocolors: registry.npmmirror.com/picocolors/1.0.0
+    dev: true
+
   registry.npmmirror.com/update-check/1.5.2:
     resolution: {integrity: sha512-1TrmYLuLj/5ZovwUS7fFd1jMH3NnFDN1y1A8dboedIDt7zs/zJMo6TwwlhYKkSeEwzleeiSBV5/3c9ufAQWDaQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/update-check/-/update-check-1.5.2.tgz}
     name: update-check
@@ -7328,7 +7349,7 @@ packages:
       '@webassemblyjs/wasm-parser': registry.npmmirror.com/@webassemblyjs/wasm-parser/1.11.1
       acorn: registry.npmmirror.com/acorn/8.7.1
       acorn-import-assertions: registry.npmmirror.com/acorn-import-assertions/1.8.0_acorn@8.7.1
-      browserslist: registry.npmmirror.com/browserslist/4.20.3
+      browserslist: registry.npmmirror.com/browserslist/4.21.4
       chrome-trace-event: registry.npmmirror.com/chrome-trace-event/1.0.3
       enhanced-resolve: registry.npmmirror.com/enhanced-resolve/5.9.3
       es-module-lexer: registry.npmmirror.com/es-module-lexer/0.9.3
