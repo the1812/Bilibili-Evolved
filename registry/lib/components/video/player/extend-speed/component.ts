@@ -4,12 +4,13 @@ import { Toast } from '@/core/toast'
 import { dea, des } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { ascendingSort } from '@/core/utils/sort'
-import { fromEvent, PublishContext, TeardownLogic } from '../common/mini-rxjs'
+import { fromEvent, PublishContext, Subject, TeardownLogic } from '../common/mini-rxjs'
 import { debounceTime } from '../common/mini-rxjs/operators/debounceTime'
 import { filter } from '../common/mini-rxjs/operators/filter'
 import { asapScheduler, observeOn } from '../common/mini-rxjs/operators/observeOn'
 import { loadStyle } from '../common/mini-rxjs/utils/loadStyle'
 import {
+  EntryContext,
   EntrySpeedComponent,
   MAX_BROWSER_SPEED_VALUE,
   MIN_BROWSER_SPEED_VALUE,
@@ -121,6 +122,17 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
 
   protected static get speedMenuItemClassName() {
     return trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector)
+  }
+
+  constructor(entryContext: EntryContext, enabled$: Subject<boolean>) {
+    super(entryContext, enabled$)
+
+    this.enabled$.subscribe(
+      loadStyle({
+        name: 'fix-after-element',
+        style: enabled => enabled && '.bpx-player-ctrl-playbackrate-menu:after { display: none; }',
+      }),
+    )
   }
 
   addSpeedValue(value: number) {
@@ -337,7 +349,6 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                   ${PLAYER_AGENT.custom.speedMenuList.selector} {
                     display: flex !important; /* 防止3.X样式覆盖 */
                     flex-direction: column;
-                    justify-content: center; /* 添加倍速那一项，当鼠标在上半部分会有莫名其妙的'mouseleave', 用这个修复 */
                     overflow-y: auto;
                     max-height: ${maxMenuHeight}px;
                     visibility: hidden;
