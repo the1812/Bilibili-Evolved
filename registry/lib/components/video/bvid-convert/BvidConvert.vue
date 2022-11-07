@@ -60,7 +60,7 @@ const linkProviders: LinkProvider[] = [
       }
     }
     return `https://www.bilibili.com/video/${id}${newQuery ? `?${newQuery.toString()}` : ''}`
-  }
+  },
 ]
 export default Vue.extend({
   components: { VIcon },
@@ -117,7 +117,7 @@ export default Vue.extend({
   box-sizing: border-box;
   box-shadow: 0 0 0 1px #8884;
   @include default-background-color();
-&-item {
+  &-item {
     font-size: 14px;
     @include h-center(6px);
     &-copy {
