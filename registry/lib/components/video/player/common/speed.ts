@@ -45,7 +45,10 @@ export class EntrySpeedComponent<O = Record<string, unknown>> implements EntryCo
     decreaseVideoSpeed: 'decrease',
   }
 
-  constructor(protected readonly entryContext: EntryContext) {
+  constructor(
+    protected readonly entryContext: EntryContext,
+    protected readonly enabled$: Subject<boolean>,
+  ) {
     lodash.assign(this, entryContext, {
       options: entryContext.settings.options,
     })
@@ -169,7 +172,9 @@ EntrySpeedComponent.create = function create(metadata) {
   return {
     ...metadata,
     entry: (entryContext: EntryContext) => {
-      const component: EntrySpeedComponent | Error = lodash.attempt(() => new this(entryContext))
+      const component: EntrySpeedComponent | Error = lodash.attempt(
+        () => new this(entryContext, enabled$),
+      )
 
       if (component instanceof Error) {
         logError(component)
@@ -182,7 +187,7 @@ EntrySpeedComponent.create = function create(metadata) {
         shareBuildArgument$.next(component)
       })
 
-      shareBuildArgument$.next(component)
+      enabled$.next(true)
 
       getHook(`speed.component.${metadata.name}`).after(component)
 
