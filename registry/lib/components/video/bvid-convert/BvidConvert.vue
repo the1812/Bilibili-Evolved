@@ -33,7 +33,7 @@ enum CopyIdType {
   Bvid = 'bvid',
 }
 const copyIds = [CopyIdType.Aid, CopyIdType.Bvid]
-type LinkProvider = (context: { id: string; url: string; query: string }) => string
+type LinkProvider = (context: { id: string; query: string }) => string
 const linkProviders: LinkProvider[] = [
   // 参数类页面, 如 festival
   ({ id, query }) => {
@@ -50,7 +50,17 @@ const linkProviders: LinkProvider[] = [
     return null
   },
   // 普通视频
-  ({ id, url, query }) => url.replace(/\/[^\/]+$/, `/${id}`) + query,
+  ({ id, query }) => {
+    const params = new URLSearchParams(query)
+    const newQuery = new URLSearchParams()
+    for (const key of ['p', 't']) {
+      const value = params.get(key)
+      if (value) {
+        newQuery.set(key, value)
+      }
+    }
+    return `https://www.bilibili.com/video/${id}${newQuery ? `?${newQuery.toString()}` : ''}`
+  },
 ]
 export default Vue.extend({
   components: { VIcon },
