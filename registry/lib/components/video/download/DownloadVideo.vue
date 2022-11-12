@@ -45,6 +45,10 @@
           正在计算大小
         </div>
       </template>
+      <div class="download-video-config-item">
+        <div class="download-video-config-title">使用备用下载地址:</div>
+        <SwitchBox v-model="useBackupUrls" />
+      </div>
       <component
         :is="a.component"
         v-for="a of assetsWithOptions"
@@ -86,7 +90,7 @@ import { getComponentSettings } from '@/core/settings'
 import { matchUrlPattern } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { formatFileSize } from '@/core/utils/formatters'
-import { VPopup, VButton, VDropdown, VIcon } from '@/ui'
+import { VPopup, VButton, VDropdown, VIcon, SwitchBox } from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
 import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { Toast } from '@/core/toast'
@@ -127,6 +131,7 @@ const { basicConfig } = getComponentSettings('downloadVideo').options as {
     api: string
     quality: number
     output: string
+    useBackupUrls: boolean
   }
 }
 const filterData = <T extends { match?: TestPattern }>(items: T[]) => {
@@ -146,6 +151,7 @@ export default Vue.extend({
     VButton,
     VDropdown,
     VIcon,
+    SwitchBox,
   },
   props: {
     triggerElement: {
@@ -154,6 +160,7 @@ export default Vue.extend({
   },
   data() {
     const lastOutput = basicConfig.output
+    const lastUseBackupUrls = basicConfig.useBackupUrls
     return {
       open: false,
       busy: false,
@@ -173,6 +180,7 @@ export default Vue.extend({
       selectedApi: undefined,
       outputs,
       selectedOutput: outputs.find(it => it.name === lastOutput) || outputs[0],
+      useBackupUrls: lastUseBackupUrls || false,
     }
   },
   computed: {
@@ -217,6 +225,12 @@ export default Vue.extend({
         return
       }
       basicConfig.output = output.name
+    },
+    useBackupUrls(useBackupUrls: boolean) {
+      if (useBackupUrls === undefined) {
+        return
+      }
+      basicConfig.useBackupUrls = useBackupUrls
     },
   },
   mounted() {
@@ -303,6 +317,16 @@ export default Vue.extend({
         if (videoInfos.length === 0 || lodash.sumBy(videoInfos, it => it.fragments.length) === 0) {
           Toast.info('未接收到可下载数据, 请检查输入源和格式是否适用于当前视频.', '下载视频', 3000)
           return
+        }
+        if (this.useBackupUrls) {
+          videoInfos.forEach(videoInfo => {
+            videoInfo.fragments.forEach(fragment => {
+              fragment.url =
+                fragment.backupUrls && fragment.backupUrls.length !== 0
+                  ? fragment.backupUrls.at(0)
+                  : fragment.url
+            })
+          })
         }
         const action = new DownloadVideoAction(videoInfos)
         const extraAssets = (
