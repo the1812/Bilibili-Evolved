@@ -38,10 +38,10 @@ const entry = () => {
 ### [${displayName}](${fullRelativePath})
 \`${name}\`
 
-**AltCdn:** [\`Stable\`](${cdnRoots.AltCdn(
+**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr(
           branches.stable,
           owner,
-        )}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.AltCdn(
+        )}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr(
           branches.preview,
           owner,
         )}${fullAbsolutePath})
