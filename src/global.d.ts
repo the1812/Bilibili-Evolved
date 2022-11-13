@@ -1,5 +1,6 @@
 import { LoDashStatic } from 'lodash'
 import { CoreApis, ExternalApis } from './core/core-apis'
+import type { CdnConfig } from '../webpack/cdn/types'
 
 declare global {
   /** @deprecated Use window.lodash instead. */
@@ -17,22 +18,8 @@ declare global {
   interface CompilationInfo extends GitInfo {
     year: string
     version: string
-    altCdn: {
-      owner: string
-      host: string
-      stableClient: string
-      previewClient: string
-      library: {
-        lodash: string
-        protobuf: string
-        jszip: string
-        sortable: string
-        mdi: string
-      }
-      smallLogo: string
-      logo: string
-      root: (branch: string, owner?: string) => string
-    }
+    altCdn: CdnConfig
+    allCdns: Record<string, CdnConfig>
     // buildTime: number
   }
   const webpackCompilationInfo: CompilationInfo

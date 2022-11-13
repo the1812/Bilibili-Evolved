@@ -379,7 +379,7 @@
     "type": "component",
     "name": "blackList",
     "displayName": "屏蔽黑名单up主",
-    "description": "by [@snowraincloud](https://github.com/snowraincloud)\n\n屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配",
+    "description": "by [@snowraincloud](https://github.com/snowraincloud)\n\n屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配. 请注意只能在首页中使用或调整设置.",
     "fullRelativePath": "../../registry/dist/components/utils/black-list.js",
     "fullAbsolutePath": "registry/dist/components/utils/black-list.js"
   },
