@@ -14,6 +14,7 @@ export const github: CdnConfig = {
     jszip: `https://${host}/Stuk/jszip/v3.7.1/dist/jszip.min.js`,
     sortable: `https://${host}/SortableJS/Sortable/1.14.0/Sortable.min.js`,
     mdi: `https://${owner}.github.io/Bilibili-Evolved/static/mdi/mdi.css`,
+    streamsaver: `https://${host}/jimmywarting/StreamSaver.js/2.0.6/StreamSaver.js`,
   },
   smallLogo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo-small.png`,
   logo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo.png`,

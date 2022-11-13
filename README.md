@@ -120,6 +120,7 @@
 
 - [Vue.js](https://cn.vuejs.org/index.html)
 - [JSZip](https://stuk.github.io/jszip/)
+- [StreamSaver.js](https://github.com/jimmywarting/StreamSaver.js)
 - [bilibili API collect](https://github.com/SocialSisterYi/bilibili-API-collect)
 - [popper-core](https://github.com/popperjs/popper-core)
 - [Tippy.js](https://github.com/atomiks/tippyjs)
