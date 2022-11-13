@@ -10,7 +10,6 @@ const prevent = () => {
       'player-fullscreen-fix',
       'player-full-win',
     ].some(token => document.body.classList.contains(token))
-    console.log({ isFullscreen })
     return isFullscreen
   })
 }
