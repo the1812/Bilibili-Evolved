@@ -83,6 +83,9 @@ export default Vue.extend({
     }
     .be-icon {
       display: inline-flex;
+      @media (min-width: 1681px) {
+        --size: 36px !important;
+      }
     }
   }
 }
