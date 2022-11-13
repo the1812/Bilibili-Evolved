@@ -299,6 +299,7 @@ export default Vue.extend({
         const qualityVideoInfo = await api.downloadVideoInfo(testItem)
         this.testData.videoInfo = qualityVideoInfo
       } catch (error) {
+        console.error('[updateTestVideoInfo] failed', error)
         this.testData.videoInfo = undefined
       }
     },
