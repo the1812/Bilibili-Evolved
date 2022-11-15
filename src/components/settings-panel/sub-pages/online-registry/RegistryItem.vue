@@ -1,7 +1,7 @@
 <template>
   <MiniToast
     class="online-registry-item-wrapper"
-    placement="right"
+    :placement="placement"
     container="body"
     :delay="[200, 0]"
     :offset="[0, 12]"
@@ -49,10 +49,11 @@ import { DocSourceItem } from 'registry/lib/docs'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
-import { getGeneralSettings, settings } from '@/core/settings'
+import { addComponentListener, getGeneralSettings, settings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
 import ComponentDescription from '../../ComponentDescription.vue'
+import { SettingsPanelDockSide } from '../../dock'
 
 const getFeatureUrl = (item: DocSourceItem, branch: string) => {
   const cdnRootFn = cdnRoots[getGeneralSettings().cdnRoot]
@@ -113,10 +114,18 @@ export default Vue.extend({
       installing: false,
       installed: false,
       virtual: false,
+      placement: 'right',
     }
   },
   created() {
     this.checkInstalled()
+    addComponentListener(
+      'settingsPanel.dockSide',
+      (value: SettingsPanelDockSide) => {
+        this.placement = value === SettingsPanelDockSide.Left ? 'right' : 'left'
+      },
+      true,
+    )
   },
   mounted() {
     const element = this.$el as HTMLElement
