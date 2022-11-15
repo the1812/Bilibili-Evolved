@@ -42,6 +42,13 @@
       @include color('8');
     }
   }
+  .following-charge-btn {
+    @include theme-background-color('80');
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
   .not-follow-charge-btn,
   .charge-btn {
     border: 1px solid;
@@ -873,4 +880,8 @@
 }
 .bpx-player-progress-move-indicator-up {
   border-bottom-color: var(--theme-color) !important;
+}
+.reply-content .top-icon {
+  @include theme-border-color();
+  @include theme-color();
 }
