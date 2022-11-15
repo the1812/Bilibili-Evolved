@@ -1,4 +1,5 @@
 @import "./dark-definitions";
+@import "common";
 
 .bui-button {
   .bui-button-blue,
@@ -209,6 +210,9 @@
   }
   .bpx-player-sending-bar {
     @include background-color('2');
+    @include on-fullscreen {
+      @include background-color();
+    }
     .bpx-player-video-btn-dm,
     .bpx-player-dm-setting,
     .bpx-player-dm-switch {
