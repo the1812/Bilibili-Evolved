@@ -24,16 +24,15 @@ $prefix: 'simplifyComments-switch';
       line-height: 1.5 !important;
     }
     .sub-user-info {
-      margin-bottom: 2px !important;
+      margin-bottom: 4px !important;
+      max-height: 19.5px !important;
     }
     .reply-content {
       display: block !important;
       flex-basis: 100% !important;
     }
-    .sub-reply-content {
-      padding: 4px 0 !important;
-    }
-    .root-reply {
+    .root-reply:not(.reply-content) {
+      padding: 0 !important;
       display: flex !important;
       align-items: center !important;
       flex-wrap: wrap !important;
@@ -60,7 +59,7 @@ $prefix: 'simplifyComments-switch';
     }
     .reply-operation-warp,
     .sub-reply-operation-warp {
-      right: 0 !important;
+      right: -5px !important;
     }
     .reply-tag-list {
       display: inline-flex !important;
