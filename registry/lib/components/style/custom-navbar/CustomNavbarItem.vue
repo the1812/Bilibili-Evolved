@@ -104,6 +104,7 @@ export default Vue.extend({
   methods: {
     toggleInputWithin(e: FocusEvent, value: boolean) {
       if (!(e.target instanceof HTMLInputElement)) {
+        this.inputWithin = false
         return
       }
       this.inputWithin = value
