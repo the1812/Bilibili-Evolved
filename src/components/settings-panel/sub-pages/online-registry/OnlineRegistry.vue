@@ -36,6 +36,18 @@
           </template>
         </VDropdown>
       </div>
+      <div class="online-registry-header-filter">
+        查看:
+        <RadioButton
+          v-for="option of itemFilterOptions"
+          :key="option.value"
+          group="itemFilter"
+          :checked="itemFilter === option.value"
+          @change="$event && (itemFilter = option.value)"
+        >
+          {{ option.label }}
+        </RadioButton>
+      </div>
     </div>
     <div class="online-registry-separator"></div>
     <div ref="content" class="online-registry-content">
@@ -47,6 +59,7 @@
         ref="items"
         :item="item"
         :branch="selectedBranch"
+        :item-filter="itemFilter"
         @refresh="checkInstalled"
       />
       <!-- <RegistryItem
@@ -65,9 +78,10 @@ import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty } from '@/ui'
+import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty, RadioButton } from '@/ui'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
+import { ItemFilter } from './item-filter'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
 const general = getGeneralSettings() as ExtendedSettings
@@ -81,6 +95,21 @@ function updateList(keyword: string) {
   this.filteredList = fuseResult.map(it => it.item)
   this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
 }
+const itemFilterOptions = [
+  {
+    label: '全部',
+    value: ItemFilter.All,
+  },
+  {
+    label: '已安装',
+    value: ItemFilter.Installed,
+  },
+  {
+    label: '未安装',
+    value: ItemFilter.NotInstalled,
+  },
+]
+
 export default Vue.extend({
   components: {
     VIcon,
@@ -90,6 +119,7 @@ export default Vue.extend({
     RegistryItem,
     VLoading,
     VEmpty,
+    RadioButton,
   },
   props: {
     open: {
@@ -108,6 +138,8 @@ export default Vue.extend({
       popupOpen: false,
       loading: false,
       list: [],
+      itemFilter: ItemFilter.All,
+      itemFilterOptions,
       filteredList: [],
       // packList: [],
       fuse: null,
@@ -184,10 +216,12 @@ export default Vue.extend({
     transform: translate(-50%, -50%) scale(1);
   }
   &-header {
-    padding: 12px;
+    padding: 12px 12px 6px 12px;
     @include h-center(12px);
+    row-gap: 6px;
+    flex-wrap: wrap;
     & + & {
-      padding-top: 0;
+      padding-top: 6px;
     }
     &-title {
       flex: 1;
@@ -203,6 +237,10 @@ export default Vue.extend({
         flex: 1;
         font-size: 12px;
       }
+    }
+    &-filter {
+      @include h-center(6px);
+      font-size: 12px;
     }
     &-branch {
       @include h-center(6px);

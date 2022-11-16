@@ -5,7 +5,7 @@
     container="body"
     :delay="[200, 0]"
     :offset="[0, 12]"
-    :class="{ virtual }"
+    :class="{ virtual, hidden }"
   >
     <div v-if="!virtual" class="online-registry-item">
       <VIcon :size="18" :icon="icon" class="item-icon" />
@@ -54,6 +54,7 @@ import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
 import ComponentDescription from '../../ComponentDescription.vue'
 import { SettingsPanelDockSide } from '../../dock'
+import { ItemFilter } from './item-filter'
 
 const getFeatureUrl = (item: DocSourceItem, branch: string) => {
   const cdnRootFn = cdnRoots[getGeneralSettings().cdnRoot]
@@ -103,6 +104,10 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    itemFilter: {
+      type: String,
+      default: ItemFilter.All,
+    },
   },
   data() {
     const { icon, badge, getUrl, isInstalled } = typeMappings[this.item.type]
@@ -116,6 +121,22 @@ export default Vue.extend({
       virtual: false,
       placement: 'right',
     }
+  },
+  computed: {
+    hidden() {
+      switch (this.itemFilter) {
+        case ItemFilter.All:
+        default: {
+          return false
+        }
+        case ItemFilter.Installed: {
+          return !this.installed
+        }
+        case ItemFilter.NotInstalled: {
+          return this.installed
+        }
+      }
+    },
   },
   created() {
     this.checkInstalled()
@@ -167,6 +188,9 @@ export default Vue.extend({
 .online-registry-item-wrapper {
   min-height: 39px;
   position: relative;
+  &.hidden {
+    display: none;
+  }
   &::before {
     content: '';
     opacity: 0;
