@@ -1,11 +1,11 @@
 <template>
   <MiniToast
     class="online-registry-item-wrapper"
-    placement="right"
+    :placement="placement"
     container="body"
     :delay="[200, 0]"
     :offset="[0, 12]"
-    :class="{ virtual }"
+    :class="{ virtual, hidden }"
   >
     <div v-if="!virtual" class="online-registry-item">
       <VIcon :size="18" :icon="icon" class="item-icon" />
@@ -49,10 +49,12 @@ import { DocSourceItem } from 'registry/lib/docs'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
-import { getGeneralSettings, settings } from '@/core/settings'
+import { addComponentListener, getGeneralSettings, settings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
 import ComponentDescription from '../../ComponentDescription.vue'
+import { SettingsPanelDockSide } from '../../dock'
+import { ItemFilter } from './item-filter'
 
 const getFeatureUrl = (item: DocSourceItem, branch: string) => {
   const cdnRootFn = cdnRoots[getGeneralSettings().cdnRoot]
@@ -102,6 +104,10 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    itemFilter: {
+      type: String,
+      default: ItemFilter.All,
+    },
   },
   data() {
     const { icon, badge, getUrl, isInstalled } = typeMappings[this.item.type]
@@ -113,10 +119,34 @@ export default Vue.extend({
       installing: false,
       installed: false,
       virtual: false,
+      placement: 'right',
     }
+  },
+  computed: {
+    hidden() {
+      switch (this.itemFilter) {
+        case ItemFilter.All:
+        default: {
+          return false
+        }
+        case ItemFilter.Installed: {
+          return !this.installed
+        }
+        case ItemFilter.NotInstalled: {
+          return this.installed
+        }
+      }
+    },
   },
   created() {
     this.checkInstalled()
+    addComponentListener(
+      'settingsPanel.dockSide',
+      (value: SettingsPanelDockSide) => {
+        this.placement = value === SettingsPanelDockSide.Left ? 'right' : 'left'
+      },
+      true,
+    )
   },
   mounted() {
     const element = this.$el as HTMLElement
@@ -158,6 +188,9 @@ export default Vue.extend({
 .online-registry-item-wrapper {
   min-height: 39px;
   position: relative;
+  &.hidden {
+    display: none;
+  }
   &::before {
     content: '';
     opacity: 0;
