@@ -885,3 +885,9 @@
   @include theme-border-color();
   @include theme-color();
 }
+.startlive-icon {
+  @include to-theme('blue');
+}
+.right-area .tip-wrap .icon path[fill="#00AEEC"] {
+  @include theme-fill();
+}
