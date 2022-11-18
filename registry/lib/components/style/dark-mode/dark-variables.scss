@@ -188,3 +188,8 @@
   --Si9: #dce0e5;
   --Si10: #f0f2f4;
 }
+html:root {
+  --brand_blue: var(--theme-color);
+  --brand_blue_thin: var(--theme-color-10);
+  --text_link: var(--theme-color);
+}
