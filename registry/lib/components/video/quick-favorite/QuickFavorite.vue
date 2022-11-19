@@ -209,6 +209,9 @@ export default Vue.extend({
     line-height: 1;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
+    @media (min-width: 1681px) {
+      font-size: 36px;
+    }
     &:after {
       content: '\ea01';
     }

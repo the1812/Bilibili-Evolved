@@ -131,10 +131,6 @@ body.fixed-navbar {
   transition: all 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   outline: none !important;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  padding-inline-start: 0;
-  padding-inline-end: 0;
 }
 
 .custom-navbar {
