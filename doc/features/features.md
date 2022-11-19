@@ -364,7 +364,7 @@
 
 - 删除热评头像下方的关注按钮
 - 删除用户的等级标识
-- 删除发送源信息(`来自安卓客户端` 这种)
+- 删除发送源信息(\`来自安卓客户端\` 这种)
 - 删除用户名右边的勋章
 - 删除评论区顶部的横幅
 - 发送时间移动到右上角
@@ -774,6 +774,15 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))
 
+### [禁止滚轮调音量](../../registry/dist/components/video/player/disable-scroll-volume.js)
+`disableScrollVolume`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/disable-scroll-volume.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/disable-scroll-volume.js)
+
+在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.
+
 ### [双击全屏](../../registry/dist/components/video/player/double-click-fullscreen.js)
 `doubleClickFullscreen`
 
@@ -1035,6 +1044,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-empty-action.ts.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-empty-action.ts.js)
 
 在快捷键的动作列表里添加一个 "无动作", 将按键绑定到这个上面就可以阻止原有的快捷键行为.
+
+### [快捷键扩展 - 开关弹幕列表](../../registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
+`keymap.actions.toggleDanmakuList`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
+
+在快捷键的动作列表里添加一个 "开关弹幕列表".
 
 ### [加载提示 - 灵梦油库里](../../registry/dist/plugins/v-loading/reimu.js)
 `vLoading.reimu`
