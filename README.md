@@ -69,7 +69,7 @@
 # 推荐配置
 - 操作系统: 64-bit Windows 10+ / macOS 10.15+
 - 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 88+ / Firefox 80+ / Edge 88+ / Safari 14.1+
+- 浏览器: Chrome 100+ / Firefox 103+ / Edge 100+ / Safari 15+
 - 处理器: 8代 Intel Core i7+ / AMD Ryzen 5000+
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
@@ -120,6 +120,7 @@
 
 - [Vue.js](https://cn.vuejs.org/index.html)
 - [JSZip](https://stuk.github.io/jszip/)
+- [StreamSaver.js](https://github.com/jimmywarting/StreamSaver.js)
 - [bilibili API collect](https://github.com/SocialSisterYi/bilibili-API-collect)
 - [popper-core](https://github.com/popperjs/popper-core)
 - [Tippy.js](https://github.com/atomiks/tippyjs)

@@ -28,6 +28,7 @@
     "@types/node": "^17.0.31",
     "@types/serve-handler": "^6.1.1",
     "@types/sortablejs": "^1.10.7",
+    "@types/streamsaver": "^2.0.1",
     "@types/webpack-env": "^1.15.1",
     "@types/ws": "^8.2.3",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
@@ -35,6 +36,7 @@
     "async-exit-hook": "^2.0.1",
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
+    "browserslist": "^4.21.4",
     "css-loader": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -71,6 +73,7 @@
     "lodash": "^4.17.21",
     "marked": "^1.2.5",
     "protobufjs": "^6.11.2",
+    "streamsaver": "^2.0.6",
     "tippy.js": "^6.3.1",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.2"

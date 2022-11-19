@@ -42,6 +42,13 @@
       @include color('8');
     }
   }
+  .following-charge-btn {
+    @include theme-background-color('80');
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color();
+    }
+  }
   .not-follow-charge-btn,
   .charge-btn {
     border: 1px solid;
@@ -420,19 +427,35 @@
       }
     }
   }
-  .reply-box-emoji {
-    .emoji-btn {
-      @include border-color('4');
-      @include color('a');
+  .at-btn {
+    .at-icon path,
+    .at-icon ellipse {
+      @include stroke('a');
+    }
+    &:hover {
+      .at-icon path,
+      .at-icon ellipse {
+        @include stroke('e');
+      }
+    }
+  }
+  .emoji-btn {
+    .box-emoji-icon path {
+      @include fill('a');
+    }
+
+    &:hover {
       .box-emoji-icon path {
-        @include fill('a');
+        @include fill('e');
       }
-      &:hover {
-        @include color('e');
-        .box-emoji-icon path {
-          @include fill('e');
-        }
-      }
+    }
+  }
+  .emoji-btn,
+  .at-btn {
+    @include border-color('4');
+    @include color('a');
+    &:hover {
+      @include color('e');
     }
   }
   .emoji-panel {
@@ -828,6 +851,9 @@
     @include background-color();
   }
 }
+.bili-comment.browser-pc {
+  @include background-color();
+}
 .recommended-container {
   .container {
     @include background-color();
@@ -842,4 +868,26 @@
       @include color('e');
     }
   }
+}
+.bpx-player-progress-schedule-current {
+  @include theme-background-color();
+}
+.bpx-player-ctrl-playbackrate-menu-item.bpx-state-active {
+  @include theme-color();
+}
+.bpx-player-progress-move-indicator-down {
+  border-top-color: var(--theme-color) !important;
+}
+.bpx-player-progress-move-indicator-up {
+  border-bottom-color: var(--theme-color) !important;
+}
+.reply-content .top-icon {
+  @include theme-border-color();
+  @include theme-color();
+}
+.startlive-icon {
+  @include to-theme('blue');
+}
+.right-area .tip-wrap .icon path[fill="#00AEEC"] {
+  @include theme-fill();
 }

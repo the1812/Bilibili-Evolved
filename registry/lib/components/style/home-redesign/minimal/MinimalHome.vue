@@ -1,7 +1,7 @@
 <template>
   <HomeRedesignBase>
     <div class="minimal-home">
-      <TabControl class="minimal-home-tabs" :tabs="tabs" />
+      <TabControl class="minimal-home-tabs" :default-tab="defaultTab" :tabs="tabs" />
     </div>
   </HomeRedesignBase>
 </template>
@@ -35,6 +35,7 @@ export default Vue.extend({
   data() {
     return {
       tabs,
+      defaultTab: minimalHomeOptions.defaultTab,
     }
   },
   mounted() {

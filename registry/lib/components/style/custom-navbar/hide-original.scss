@@ -31,6 +31,10 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   visibility: hidden !important;
   height: var(--navbar-height) !important;
 }
+#message-navbar,
+.z-top-container {
+  max-height: var(--navbar-height) !important;
+}
 .link-top-container#tab-container {
   top: var(--navbar-height) !important;
 }

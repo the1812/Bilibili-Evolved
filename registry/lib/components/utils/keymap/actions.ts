@@ -227,7 +227,12 @@ export const builtInActions: Record<string, KeyBindingAction> = {
     displayName: '发送评论',
     ignoreTyping: false,
     run: () => {
-      const sendButton = document.activeElement?.nextElementSibling as HTMLButtonElement
+      const { activeElement } = document
+      if (!activeElement || !(activeElement instanceof HTMLTextAreaElement)) {
+        return null
+      }
+      const sendButton = (activeElement.nextElementSibling ??
+        activeElement.parentElement.nextElementSibling) as HTMLButtonElement
       if (!sendButton) {
         return null
       }
