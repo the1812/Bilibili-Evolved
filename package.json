@@ -35,6 +35,7 @@
     "async-exit-hook": "^2.0.1",
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
+    "browserslist": "^4.21.4",
     "css-loader": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.1.0",
