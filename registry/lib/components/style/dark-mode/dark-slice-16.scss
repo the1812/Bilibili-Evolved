@@ -217,6 +217,20 @@
       @include no-shadow();
     }
   }
+  .bili-dyn-card-music {
+    @include border-color();
+    @include background-color('3');
+    @include no-shadow();
+    &__title {
+      @include color('e');
+      &:hover {
+        @include theme-color();
+      }
+    }
+    &__label {
+      @include color('a');
+    }
+  }
   .bili-dyn-card-article,
   .bili-dyn-card-pgc,
   .bili-dyn-card-common,
@@ -404,6 +418,27 @@
       &:hover {
         @include theme-color();
       }
+    }
+  }
+  .dyn-match {
+    &__mark span {
+      @include color('a');
+    }
+    &__wrap {
+      @include background-color('3');
+    }
+    &__center__top,
+    &__center__bottom,
+    &__team__name,
+    &__title {
+      @include color('e');
+    }
+    &__head {
+      @include border-color('5');
+    }
+    &__action button {
+      @include theme-background-color();
+      @include foreground-color();
     }
   }
   .dyn-additional-common {
