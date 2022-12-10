@@ -233,7 +233,7 @@ export default Vue.extend({
       }
       .title {
         font-size: 14px;
-        font-weight: bold;
+        @include semi-bold();
         padding-top: 4px;
         color: inherit;
         white-space: nowrap;
