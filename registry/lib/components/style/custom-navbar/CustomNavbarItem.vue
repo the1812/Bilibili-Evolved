@@ -168,6 +168,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import 'common';
+
 .custom-navbar-item {
   color: inherit;
   position: relative;
@@ -229,7 +231,7 @@ export default Vue.extend({
   }
 
   &.active .main-content {
-    font-weight: bold;
+    @include semi-bold();
     font-size: 11pt;
   }
 

@@ -325,6 +325,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import 'common';
+
 .user-info-panel {
   border-radius: 8px;
   overflow: hidden;
@@ -441,7 +443,7 @@ export default Vue.extend({
   .welcome,
   .name {
     font-size: 16px;
-    font-weight: bold;
+    @include semi-bold();
     margin: 46px 0 16px 0;
     text-align: center;
     color: inherit;
@@ -495,7 +497,7 @@ export default Vue.extend({
         color: var(--theme-color) !important;
       }
       .stats-number {
-        font-weight: bold;
+        @include semi-bold();
         margin-bottom: 4px;
         font-size: 14px;
         transition: none;
