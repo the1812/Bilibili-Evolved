@@ -13,7 +13,7 @@ export interface KeyBindingActionContext {
 }
 export interface KeyBindingAction {
   displayName: string
-  run: (context: KeyBindingActionContext) => any
+  run: (context: KeyBindingActionContext) => unknown
   prevent?: boolean
   ignoreTyping?: boolean
 }
