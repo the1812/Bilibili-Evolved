@@ -45,6 +45,7 @@ $prefix: 'simplifyComments-switch';
     .reply-info,
     .sub-reply-info {
       display: inline-flex !important;
+      flex-basis: 100% !important;
     }
     .reply-time,
     .sub-reply-time {
