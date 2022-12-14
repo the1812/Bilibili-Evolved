@@ -101,13 +101,17 @@ export default Vue.extend({
         margin-right: 4px;
       }
     }
+    .bpx-player-container[data-screen='web'] &,
+    .bpx-player-container[data-screen='full'] & {
+      bottom: calc(73px + var(--thumbnail-margin-vertical));
+    }
   }
   .video-screenshot-list {
     position: fixed;
-    top: 0;
+    top: 64px;
     right: 0;
     margin: var(--thumbnail-margin-vertical) var(--thumbnail-margin-horizontal);
-    max-height: calc(100% - 3 * var(--thumbnail-margin-vertical) - 37px);
+    max-height: calc(100% - 3 * var(--thumbnail-margin-vertical) - 98px);
     width: var(--screenshot-list-width);
     background-color: #000c;
     border-radius: 8px;
@@ -123,6 +127,11 @@ export default Vue.extend({
     &-leave-to {
       opacity: 0;
       transform: translateX(var(--screenshot-width));
+    }
+    .bpx-player-container[data-screen='web'] &,
+    .bpx-player-container[data-screen='full'] & {
+      top: 0;
+      max-height: calc(100% - 3 * var(--thumbnail-margin-vertical) - 107px);
     }
   }
 }
