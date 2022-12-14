@@ -67,6 +67,7 @@ export default Vue.extend({
 
 .video-screenshot-container {
   position: relative;
+  z-index: 100000;
   --screenshot-width: 240px;
   --screenshot-width-negative: calc(0px - var(--screenshot-width));
   --screenshot-height: 135px;
@@ -80,7 +81,6 @@ export default Vue.extend({
     position: fixed;
     bottom: var(--thumbnail-margin-vertical);
     right: var(--thumbnail-margin-horizontal);
-    z-index: 20000;
     width: var(--screenshot-list-width);
     @include h-center(16px);
     justify-content: space-between;
@@ -106,7 +106,6 @@ export default Vue.extend({
     position: fixed;
     top: 0;
     right: 0;
-    z-index: 20000;
     margin: var(--thumbnail-margin-vertical) var(--thumbnail-margin-horizontal);
     max-height: calc(100% - 3 * var(--thumbnail-margin-vertical) - 37px);
     width: var(--screenshot-list-width);
