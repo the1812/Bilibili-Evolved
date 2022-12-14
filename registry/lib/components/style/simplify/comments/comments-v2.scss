@@ -27,11 +27,11 @@ $prefix: 'simplifyComments-switch';
       margin-bottom: 4px !important;
       max-height: 19.5px !important;
     }
-    .reply-content {
+    .reply-content-container {
       display: block !important;
       flex-basis: 100% !important;
     }
-    .root-reply:not(.reply-content) {
+    .root-reply:not(.reply-content-container) {
       padding: 0 !important;
       display: flex !important;
       align-items: center !important;
@@ -45,7 +45,6 @@ $prefix: 'simplifyComments-switch';
     .reply-info,
     .sub-reply-info {
       display: inline-flex !important;
-      flex-basis: 100% !important;
     }
     .reply-time,
     .sub-reply-time {
