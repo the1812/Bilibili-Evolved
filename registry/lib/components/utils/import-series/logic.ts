@@ -111,16 +111,13 @@ const addButton = () => {
   let sid
   if (url.pathname.includes('seriesdetail')) {
     // series id
-    console.log('aiden: series')
     sid = url.searchParams.get('sid')
     pageType = PageType.Series
   } else if (url.pathname.includes('collectiondetail')) {
     // collection id
-    console.log('aiden: collection')
     sid = url.searchParams.get('sid')
     pageType = PageType.Collection
   } else {
-    console.log('aiden: none')
     return
   }
 

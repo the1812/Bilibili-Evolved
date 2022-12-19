@@ -1,7 +1,7 @@
 <template>
   <div class="mask" :class="{ visible: isVisible }">
     <div class="container">
-      <p class="title">new收藏进度</p>
+      <p class="title">收藏进度</p>
       <div class="progress-wrapper">
         <span class="progress">{{ handled }} / {{ all }}</span>
       </div>
