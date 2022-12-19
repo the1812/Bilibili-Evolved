@@ -1,11 +1,9 @@
 <template>
-  <div class="mask">
+  <div class="mask" :class="{ visible: isVisible }">
     <div class="container">
-      <p class="title">收藏进度</p>
+      <p class="title">new收藏进度</p>
       <div class="progress-wrapper">
-        <span class="progress">{{ handled }}</span>
-        <span class="mid"> / </span>
-        <span class="all">{{ all }}</span>
+        <span class="progress">{{ handled }} / {{ all }}</span>
       </div>
       <button
         :disabled="isDisabled"
@@ -35,10 +33,23 @@ export default Vue.extend({
       default: 0,
     },
   },
+  data() {
+    return {
+      isVisible: false,
+    }
+  },
+  mounted() {
+    setTimeout(() => {
+      this.isVisible = true
+    })
+  },
   methods: {
     sure() {
-      this.$destroy()
-      this.$el.parentNode.removeChild(this.$el)
+      this.isVisible = false
+      this.$el.ontransitionend = () => {
+        this.$destroy()
+        this.$el.parentNode.removeChild(this.$el)
+      }
     },
   },
 })
@@ -49,12 +60,18 @@ export default Vue.extend({
   position: absolute;
   top: 0;
   background: rgba(0, 0, 0, 0.65);
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10102;
+  opacity: 0;
+  transition: opacity 0.5s linear;
+}
+
+.mask.visible {
+  opacity: 1;
 }
 
 .container {
@@ -94,8 +111,6 @@ export default Vue.extend({
 }
 
 .sure_button.disabled {
-  border: none;
-  color: white;
   background-color: #a0cfff;
   cursor: not-allowed;
 }
