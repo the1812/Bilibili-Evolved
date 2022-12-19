@@ -1,10 +1,9 @@
-import Progress from './Progress.vue'
-import { mountVueComponent, getCsrf, delay } from '@/core/utils'
+import { getCsrf, delay } from '@/core/utils'
 import { sq } from '@/core/spin-query'
 import { urlChange } from '@/core/observer'
 import { Toast } from '@/core/toast'
 
-const addSeries = async (sid, uid, csrf) => {
+const importSeries = async (sid, uid, csrf) => {
   // 获取合集所有视频
   const seriesVideos = (
     await fetch(
@@ -17,17 +16,6 @@ const addSeries = async (sid, uid, csrf) => {
     () => document.getElementsByClassName('item cur')[0].innerHTML,
     t => t !== '',
   )
-
-  // 挂载弹出框
-  const mountPoint = document.createElement('div')
-  document.getElementsByTagName('body')[0].appendChild(mountPoint)
-  type ProgressSetting = Vue & {
-    isDisabled: boolean
-    all: number
-    handled: number
-  }
-  const p: ProgressSetting = mountVueComponent(Progress, mountPoint)
-  p.all = seriesVideos.length
 
   // 创建收藏夹，获取新收藏夹id
   let favId = 0
@@ -49,6 +37,8 @@ const addSeries = async (sid, uid, csrf) => {
     }
   }
 
+  const prompt = '   过久未动即触发风控，等待一段时间自动继续'
+  const toast = Toast.info(`0 / ${seriesVideos.length}${prompt}`, '收藏系列')
   // 添加每一个视频至收藏夹
   for (let i = 0; i < seriesVideos.length; i++) {
     // 做个延迟，防止太快而遭服务器拒绝
@@ -64,21 +54,24 @@ const addSeries = async (sid, uid, csrf) => {
       }).then(r => r.json())
 
       if (response.code === 0) {
-        // 如果请求成功，更新progress组件
-        p.handled = i + 1
+        // 如果请求成功，更新toast
+        toast.message = `${i + 1} / ${seriesVideos.length}${prompt}`
         break
       } else {
-        // 如果请求失败，等待2s后重试
-        await delay(2000)
+        // 如果请求失败，等待若干秒后重试
+        const delayTime = Math.random() * 2000 + 2000
+        console.log(`请求失败，等待${(delayTime / 1000).toFixed(1)}s后重试`)
+        await delay(delayTime)
       }
     }
   }
 
-  // 添加收藏夹任务完成，更改按钮为可点击
-  p.isDisabled = false
+  // 添加收藏夹任务完成
+  toast.duration = 1000
+  Toast.success('完成', '收藏系列', 2000)
 }
 
-const addCollection = async (sid, csrf) => {
+const importCollection = async (sid, csrf) => {
   while (true) {
     const response = await fetch('https://api.bilibili.com/x/v3/fav/season/fav', {
       method: 'POST',
@@ -144,9 +137,9 @@ const addButton = () => {
 
   button.onclick = async () => {
     if (pageType === PageType.Series) {
-      await addSeries(sid, uid, csrf)
+      await importSeries(sid, uid, csrf)
     } else {
-      await addCollection(sid, csrf)
+      await importCollection(sid, csrf)
     }
   }
 }
