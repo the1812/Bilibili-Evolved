@@ -392,10 +392,10 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
           hideRemoveBtn &&
           `
             .${EXTEND_SPEED_ITEM_CLASS_NAME} [data-ref="close-btn"] {
-              display: none;
+              display: none !important;
             }
             :is(${PLAYER_AGENT.custom.speedMenuItem.selector}):not(${PLAYER_AGENT.custom.active.selector}):hover [data-ref="close-btn"] {
-              display: none;
+              display: none !important;
             }`,
       }),
     )
@@ -407,7 +407,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
           hideAddBtn &&
           `
           .${EXTEND_SPEED_INPUT_CLASS_NAME} {
-              display: none;
+              display: none !important;
             }`,
       }),
     )
