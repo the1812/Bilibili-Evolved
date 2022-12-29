@@ -1,5 +1,5 @@
 body {
-  &.full-episode-title {
+  &.full-episode-title:not(.disable-full-episode-list) {
     .base-video-sections-v1 {
       .video-episode-card {
         height: auto !important;

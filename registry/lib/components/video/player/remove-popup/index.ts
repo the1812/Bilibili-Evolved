@@ -29,9 +29,6 @@ export const component = defineComponentMetadata({
   ],
   displayName: '删除视频弹窗',
   tags: [componentsTags.video, componentsTags.style],
-  description: {
-    'zh-CN': '删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.',
-  },
   urlInclude: playerUrls,
   options: {
     votes: {

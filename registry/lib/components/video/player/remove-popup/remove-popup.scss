@@ -1,6 +1,8 @@
 body {
   &.remove-player-popup {
+    // https://www.bilibili.com/video/BV1V54y1b7yW/
     &-combo-likes {
+      .bili-guide,
       .bilibili-player-video-popup-three,
       .bilibili-player-video-popup-three-animate,
       .bilibili-player-video-popup-follow,
@@ -12,14 +14,18 @@ body {
         display: none !important;
       }
     }
+    // https://www.bilibili.com/video/BV11h411k72c/
     &-related-videos {
+      .bili-link,
       .bilibili-player-video-link,
       .bilibili-player-link,
       .bpx-player-link {
         display: none !important;
       }
     }
+    // https://www.bilibili.com/video/BV12Y4y1L7SR/
     &-votes {
+      .bili-vote,
       .bilibili-player-video-popup-vote,
       .bpx-player-popup-dm-close,
       .bpx-player-popup-dm-shrink,
@@ -27,7 +33,9 @@ body {
         display: none !important;
       }
     }
+    // https://www.bilibili.com/video/BV1V54y1b7yW/
     &-rates {
+      .bili-score,
       .bilibili-player-score,
       .bpx-player-popup-dm-close,
       .bpx-player-score-summary-wrap,
@@ -35,7 +43,9 @@ body {
         display: none !important;
       }
     }
+    // https://www.bilibili.com/video/BV1fe4y1b7NE/
     &-reservations {
+      .bili-reserve,
       .bpx-player-reserve {
         display: none !important;
       }
