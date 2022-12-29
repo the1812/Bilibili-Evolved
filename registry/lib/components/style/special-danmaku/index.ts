@@ -4,7 +4,6 @@ import {
   OptionsOfMetadata,
 } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
-import { toggleStyle } from '@/components/styled-component'
 import { playerUrls } from '@/core/utils/urls'
 import { addComponentListener } from '@/core/settings'
 
@@ -33,10 +32,18 @@ const entry: ComponentEntry<Options> = ({ metadata, settings }) => {
   })
 }
 
+const name = 'disableSpecialDanmaku'
 export const component = defineComponentMetadata({
+  name,
+  entry,
   displayName: '禁用特殊弹幕样式',
   tags: [componentsTags.style],
-  ...toggleStyle('disableSpecialDanmaku', () => import('./special-danmaku.scss'), entry),
+  instantStyles: [
+    {
+      name,
+      style: () => import('./special-danmaku.scss'),
+    },
+  ],
   urlInclude: playerUrls,
   description: {
     'zh-CN': '移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.',
