@@ -120,12 +120,12 @@ const newSwitchMetadataOption = <N extends string, S extends string>(
   componentName: string,
   optionDisplayName,
 ) => ({
-    ...metadata,
-    radio: metadata.radio === undefined ? false : metadata.radio,
-    dimAt: metadata.dimAt,
-    componentName,
-    optionDisplayName,
-  })
+  ...metadata,
+  radio: metadata.radio === undefined ? false : metadata.radio,
+  dimAt: metadata.dimAt,
+  componentName,
+  optionDisplayName,
+})
 
 /**
  * 为类型参数 `S` 加上 'switch-' 前缀。
@@ -219,9 +219,9 @@ const newSwitchOptionsMetadataExtender = <S extends string>(
 const newWidget = <N extends string, S extends string>(
   options: SwitchMetadataOption<N, S>,
 ): Omit<Widget, 'name'> => ({
-    component: () => import('./SwitchOptions.vue').then(m => m.default),
-    options,
-  })
+  component: () => import('./SwitchOptions.vue').then(m => m.default),
+  options,
+})
 
 /**
  * 携带 API 注入的 `options` 的 `entry` 函数类型
@@ -261,15 +261,17 @@ export const defineIncompleteSwitchComponentMetadata = <
   N extends string,
   S extends string,
 >(
-    m: IncompleteSwitchComponentMetadata<O, N, S>,
-  ): IncompleteSwitchComponentMetadata<O, N, S> => m
+  m: IncompleteSwitchComponentMetadata<O, N, S>,
+): IncompleteSwitchComponentMetadata<O, N, S> => m
 
 /**
  * 包装原始 `entry` 函数并返回
  */
-const newSwitchEntry = <O extends UnknownOptions, N extends string, S extends string>(
-  component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
-): SwitchEntry<O, N, S> => (...args) => {
+const newSwitchEntry =
+  <O extends UnknownOptions, N extends string, S extends string>(
+    component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
+  ): SwitchEntry<O, N, S> =>
+  (...args) => {
     const result = component.entry(...args)
     const componentOptions = getComponentSettings(component.name).options
     Object.keys(componentOptions).forEach(key => {

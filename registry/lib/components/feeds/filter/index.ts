@@ -1,4 +1,8 @@
-import { defineOptionsMetadata, defineComponentMetadata, OptionsOfMetadata } from '@/components/define'
+import {
+  defineOptionsMetadata,
+  defineComponentMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { feedsCardsManager } from '@/components/feeds/api'
 import { feedsFilterPlugin } from './plugin'
 

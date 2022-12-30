@@ -11,6 +11,6 @@ export type LanguagePack = {
   regex?: RegexTranslation
 }
 export type Options = {
-  language: string,
-  translator: string,
+  language: string
+  translator: string
 }

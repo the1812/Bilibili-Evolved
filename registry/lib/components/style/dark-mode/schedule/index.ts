@@ -1,4 +1,8 @@
-import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { fullyLoaded } from '@/core/life-cycle'
 import { ComponentSettings, getComponentSettings } from '@/core/settings'
 import { Range } from '@/ui/range'
