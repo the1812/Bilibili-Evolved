@@ -62,8 +62,7 @@ export default Vue.extend({
 /** 由于允许自定义SVG插入, 样式不能是scoped的, 否则匹配不上 */
 @font-face {
   font-family: 'be-iconfont-bilifont';
-  src: url('//s1.hdslb.com/bfs/seed/jinkela/header-v2/asserts/iconfont.ttf')
-    format('truetype');
+  src: url('//s1.hdslb.com/bfs/seed/jinkela/header-v2/asserts/iconfont.ttf') format('truetype');
 }
 @font-face {
   font-family: 'be-iconfont-vanfont';

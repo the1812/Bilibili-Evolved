@@ -1,13 +1,8 @@
 <template>
   <div class="download-danmaku-config download-video-config-section">
     <div class="download-video-config-item">
-      <div class="download-video-config-title">
-        弹幕:
-      </div>
-      <VDropdown
-        v-model="type"
-        :items="items"
-      >
+      <div class="download-video-config-title">弹幕:</div>
+      <VDropdown v-model="type" :items="items">
         <template #item="{ item }">
           {{ item }}
         </template>

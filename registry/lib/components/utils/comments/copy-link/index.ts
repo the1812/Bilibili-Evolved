@@ -31,10 +31,6 @@ const entry = async () => {
           action: async () => {
             const url = findParentFeedsUrl(item.element) || document.URL.replace(location.hash, '')
             await navigator.clipboard.writeText(`${url}#reply${item.id}`)
-            const operaList = dq(item.element, '.opera-list') as HTMLElement
-            if (operaList) {
-              operaList.style.display = 'none'
-            }
           },
         })
       })
@@ -53,7 +49,5 @@ export const component = defineComponentMetadata({
     'zh-CN': '开启后, 可在每条评论的菜单中选择复制链接.',
   },
   entry,
-  tags: [
-    componentsTags.utils,
-  ],
+  tags: [componentsTags.utils],
 })

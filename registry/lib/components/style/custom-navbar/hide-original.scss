@@ -17,6 +17,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 .van-popover {
   z-index: 10002 !important;
 }
+.bili-header,
 .international-header {
   min-height: var(--navbar-height) !important;
 }
@@ -29,6 +30,10 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 .z-top-container#bili-header-container {
   visibility: hidden !important;
   height: var(--navbar-height) !important;
+}
+#message-navbar,
+.z-top-container:not(#biliMainHeader) {
+  max-height: var(--navbar-height) !important;
 }
 .link-top-container#tab-container {
   top: var(--navbar-height) !important;

@@ -77,10 +77,9 @@ export const init = async () => {
       const { getGeneralSettings } = await import('@/core/settings/helpers')
       const { devMode } = getGeneralSettings()
       if (devMode) {
-        const {
-          promiseLoadTime,
-          promiseResolveTime,
-        } = await import('@/core/performance/promise-trace')
+        const { promiseLoadTime, promiseResolveTime } = await import(
+          '@/core/performance/promise-trace'
+        )
         const { logStats } = await import('@/core/performance/stats')
         logStats('init block', promiseLoadTime)
         logStats('init resolve', promiseResolveTime)

@@ -6,11 +6,7 @@ import {
 import { ComponentEntry } from '@/components/types'
 import { playerAgent } from '@/components/video/player-agent'
 import { sq } from '@/core/spin-query'
-import {
-  disableWindowScroll,
-  isEmbeddedPlayer,
-  playerReady,
-} from '@/core/utils'
+import { disableWindowScroll, isEmbeddedPlayer, playerReady } from '@/core/utils'
 import { loadLazyPanel } from '@/core/utils/lazy-panel'
 import { allVideoUrls } from '@/core/utils/urls'
 
@@ -35,9 +31,7 @@ const options = defineOptionsMetadata({
 
 export type Options = OptionsOfMetadata<typeof options>
 
-const entry: ComponentEntry<Options> = async ({
-  settings: { options: options0 },
-}) => {
+const entry: ComponentEntry<Options> = async ({ settings: { options: options0 } }) => {
   if (isEmbeddedPlayer()) {
     return
   }
@@ -70,10 +64,11 @@ const entry: ComponentEntry<Options> = async ({
         async () => {
           const video = await sq(
             () => dq(playerAgent.query.video.element.selector),
-            (it: HTMLVideoElement) => it !== null
-              && it.readyState === 4
-              && document.readyState === 'complete'
-              && document.hasFocus(),
+            (it: HTMLVideoElement) =>
+              it !== null &&
+              it.readyState === 4 &&
+              document.readyState === 'complete' &&
+              document.hasFocus(),
           )
           if (video === null) {
             console.warn('[默认播放器模式] 未能应用全屏模式, 等待超时.')

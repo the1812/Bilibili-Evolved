@@ -4,9 +4,7 @@ import { playerUrls } from '@/core/utils/urls'
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
   const { raiseEvent } = await import('@/core/utils')
-  const input = (await select(
-    '.bilibili-player-video-danmaku-switch>input',
-  )) as HTMLInputElement
+  const input = (await select('.bilibili-player-video-danmaku-switch>input')) as HTMLInputElement
   if (input === null) {
     return
   }

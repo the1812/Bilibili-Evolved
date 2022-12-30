@@ -1,10 +1,7 @@
 <template>
   <div class="ranking-popup" role="list">
     <div v-for="e of entries" :key="e.name" class="ranking-entry" role="listitem">
-      <a
-        target="_blank"
-        :href="e.href"
-      >{{ e.name }}</a>
+      <a target="_blank" :href="e.href">{{ e.name }}</a>
     </div>
   </div>
 </template>

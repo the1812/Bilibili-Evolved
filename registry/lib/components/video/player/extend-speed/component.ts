@@ -4,19 +4,25 @@ import { Toast } from '@/core/toast'
 import { dea, des } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { ascendingSort } from '@/core/utils/sort'
-import { fromEvent, PublishContext, TeardownLogic } from '../common/mini-rxjs'
+import { fromEvent, PublishContext, Subject, TeardownLogic } from '../common/mini-rxjs'
 import { debounceTime } from '../common/mini-rxjs/operators/debounceTime'
 import { filter } from '../common/mini-rxjs/operators/filter'
 import { asapScheduler, observeOn } from '../common/mini-rxjs/operators/observeOn'
 import { loadStyle } from '../common/mini-rxjs/utils/loadStyle'
 import {
+  EntryContext,
   EntrySpeedComponent,
   MAX_BROWSER_SPEED_VALUE,
   MIN_BROWSER_SPEED_VALUE,
   NATIVE_SUPPORTED_VALUES,
 } from '../common/speed'
 import { PLAYER_AGENT, SpeedContext } from '../common/speed/context'
-import { formatSpeedText, parseSpeedText, splitToSpace, trimLeadingDot } from '../common/speed/utils'
+import {
+  formatSpeedText,
+  parseSpeedText,
+  splitToSpace,
+  trimLeadingDot,
+} from '../common/speed/utils'
 import type { Options as RememberSpeedOptions } from '../remember-speed/component'
 
 export const EXTEND_SPEED_INPUT_CLASS_NAME = 'extend-speed-input'
@@ -53,28 +59,24 @@ const diff = (previousArr: number[], currentArr: number[]): [number, number, num
   let cEndIdx = currentArr.length
 
   while (
-    pStartIdx < pEndIdx
-    && cStartIdx < cEndIdx
-    && previousArr[pStartIdx] === currentArr[cStartIdx]
+    pStartIdx < pEndIdx &&
+    cStartIdx < cEndIdx &&
+    previousArr[pStartIdx] === currentArr[cStartIdx]
   ) {
     pStartIdx++
     cStartIdx++
   }
 
   while (
-    pStartIdx < pEndIdx
-    && cStartIdx < cEndIdx
-    && previousArr[pEndIdx - 1] === currentArr[cEndIdx - 1]
+    pStartIdx < pEndIdx &&
+    cStartIdx < cEndIdx &&
+    previousArr[pEndIdx - 1] === currentArr[cEndIdx - 1]
   ) {
     pEndIdx--
     cEndIdx--
   }
 
-  return [
-    pStartIdx,
-    pEndIdx - pStartIdx,
-    currentArr.slice(cStartIdx, cEndIdx),
-  ]
+  return [pStartIdx, pEndIdx - pStartIdx, currentArr.slice(cStartIdx, cEndIdx)]
 }
 
 interface VNode<N extends Node, T = any> {
@@ -84,7 +86,8 @@ interface VNode<N extends Node, T = any> {
 }
 
 const $ = <E extends Record<string, Element>, R extends Element = Element>(
-  html: string, scoped = true,
+  html: string,
+  scoped = true,
 ) => {
   const containerElement = document.createElement('div')
   containerElement.innerHTML = html
@@ -92,7 +95,9 @@ const $ = <E extends Record<string, Element>, R extends Element = Element>(
   const root = containerElement.children.item(0)
   const walkChildren = (element: Element) => {
     if (scoped) {
-      element.id = `scoped-element-${Math.random().toString(36).replace(/[^a-z0-9]+/g, '')}`
+      element.id = `scoped-element-${Math.random()
+        .toString(36)
+        .replace(/[^a-z0-9]+/g, '')}`
     }
     const dataRef = element.getAttribute('data-ref')
     if (dataRef) {
@@ -103,25 +108,30 @@ const $ = <E extends Record<string, Element>, R extends Element = Element>(
     }
   }
   walkChildren(root)
-  return { ...result, root } as (E & { root: R, [index: string]: Element })
+  return { ...result, root } as E & { root: R; [index: string]: Element }
 }
 
 export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
   protected static get activeClassName() {
-    return trimLeadingDot(
-      PLAYER_AGENT.custom.active.selector,
-    )
+    return trimLeadingDot(PLAYER_AGENT.custom.active.selector)
   }
 
   protected static get showClassName() {
-    return trimLeadingDot(
-      PLAYER_AGENT.custom.show.selector,
-    )
+    return trimLeadingDot(PLAYER_AGENT.custom.show.selector)
   }
 
   protected static get speedMenuItemClassName() {
-    return trimLeadingDot(
-      PLAYER_AGENT.custom.speedMenuItem.selector,
+    return trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector)
+  }
+
+  constructor(entryContext: EntryContext, enabled$: Subject<boolean>) {
+    super(entryContext, enabled$)
+
+    this.enabled$.subscribe(
+      loadStyle({
+        name: 'fix-after-element',
+        style: enabled => enabled && '.bpx-player-ctrl-playbackrate-menu:after { display: none; }',
+      }),
     )
   }
 
@@ -132,15 +142,14 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
   }
 
   removeSpeedValue(value: number) {
-    this.options.extendSpeedList = lodash.without(
-      this.options.extendSpeedList,
-      value,
-    )
+    this.options.extendSpeedList = lodash.without(this.options.extendSpeedList, value)
   }
 
   createInputElement(): VNode<HTMLLIElement> {
-    const { input, root, icon } = $<{ input: HTMLInputElement, icon: HTMLElement }, HTMLLIElement>(`
-      <li class="${splitToSpace(trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector))} ${EXTEND_SPEED_INPUT_CLASS_NAME}">
+    const { input, root, icon } = $<{ input: HTMLInputElement; icon: HTMLElement }, HTMLLIElement>(`
+      <li class="${splitToSpace(
+        trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector),
+      )} ${EXTEND_SPEED_INPUT_CLASS_NAME}">
         <i data-ref="icon" class="mdi mdi-playlist-plus" style="font-size: 1.5em"></i>
         <input data-ref="input" type="number" title="添加新的倍数值" max="${MAX_BROWSER_SPEED_VALUE}" step="${STEP_SPEED_VALUE}" style="display: none;"></input>
       </li>
@@ -230,12 +239,12 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     }
   }
 
-  createCustomSpeedMenuItemElement(
-    value: number,
-  ): VNode<HTMLLIElement, number> {
+  createCustomSpeedMenuItemElement(value: number): VNode<HTMLLIElement, number> {
     // 3.X的倍速需要通过data-value读取值并设置
     const { closeBtn, root } = $<{ closeBtn: HTMLElement }, HTMLLIElement>(`
-      <li class="${splitToSpace(trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector))} ${EXTEND_SPEED_ITEM_CLASS_NAME}" data-value="${(value)}">
+      <li class="${splitToSpace(
+        trimLeadingDot(PLAYER_AGENT.custom.speedMenuItem.selector),
+      )} ${EXTEND_SPEED_ITEM_CLASS_NAME}" data-value="${value}">
         ${formatSpeedText(value)}
         <i data-ref="close-btn" class="mdi mdi-close-circle"></i>
       </li>
@@ -273,7 +282,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     }
   }
 
-  protected elementMap: VNode<HTMLLIElement>[] = [];
+  protected elementMap: VNode<HTMLLIElement>[] = []
   protected inputElement: VNode<HTMLLIElement>
   protected unpatch: TeardownLogic
 
@@ -283,7 +292,9 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
       extend?: unknown
     }
     const { options } = this.settings
-    const { options: rememberSpeedOptions } = getComponentSettings('rememberVideoSpeed') as ComponentSettings<MixedRememberSpeedOptions>
+    const { options: rememberSpeedOptions } = getComponentSettings(
+      'rememberVideoSpeed',
+    ) as ComponentSettings<MixedRememberSpeedOptions>
     if (rememberSpeedOptions.extendList) {
       options.extendSpeedList = Array.from(rememberSpeedOptions.extendList as number[])
       delete rememberSpeedOptions.extendList
@@ -295,49 +306,49 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
   // eslint-disable-next-line class-methods-use-this
   getSpeedContextMixin({ menuListElement }: SpeedContext): Partial<SpeedContext> {
     return {
-      query: (speed: number) => des<HTMLElement>(
-        // 有的时候，选择 1.0x 倍速，会错误选中 11.0x 倍速
-        // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没出现该问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
-        // 原先使用 contains 而不直接比较的原因是，自定义的倍速菜单项，可能在创建时引入了多余的空白符，现在使用 normalize-space 代替之前的做法
-        // `./*[contains(@class, "${ExtendSpeedComponent.speedMenuItemClassName}")`
-        `./*[(${ExtendSpeedComponent.speedMenuItemClassName.split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})`
-        + ` and not(contains(@class, "${EXTEND_SPEED_INPUT_CLASS_NAME}"))`
-        // see: https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
-        // 自定义的倍速菜单项，在创建时引入了多余的空白符，需要通过 normalize-space 函数排除掉
-        + ` and normalize-space()="${formatSpeedText(speed)}"]`,
-        menuListElement,
-      ),
+      query: (speed: number) =>
+        des<HTMLElement>(
+          // 有的时候，选择 1.0x 倍速，会错误选中 11.0x 倍速
+          // 删掉 11.0x 倍速后，再选择 1.0x 倍速就没出现该问题，这是因为之前的实现使用 contains 函数判断，由于 11.0x 倍速文本包含 1.0x，所以被误判了
+          // 原先使用 contains 而不直接比较的原因是，自定义的倍速菜单项，可能在创建时引入了多余的空白符，现在使用 normalize-space 代替之前的做法
+          // `./*[contains(@class, "${ExtendSpeedComponent.speedMenuItemClassName}")`
+          `./*[(${ExtendSpeedComponent.speedMenuItemClassName
+            .split(',')
+            .map(cls => `contains(@class, "${cls}")`)
+            .join(' or ')})` +
+            ` and not(contains(@class, "${EXTEND_SPEED_INPUT_CLASS_NAME}"))` +
+            // see: https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/normalize-space
+            // 自定义的倍速菜单项，在创建时引入了多余的空白符，需要通过 normalize-space 函数排除掉
+            ` and normalize-space()="${formatSpeedText(speed)}"]`,
+          menuListElement,
+        ),
     }
   }
 
   currentSpeedValue: number
 
-  onSpeedContext({
-    menuListElementClickSpeedChange$,
-    playbackRate$,
-  }: SpeedContext) {
-    this.options.extendSpeedList$
-      .subscribe({
-        next: extendSpeedList => this.patch(
+  onSpeedContext({ menuListElementClickSpeedChange$, playbackRate$ }: SpeedContext) {
+    this.options.extendSpeedList$.subscribe({
+      next: extendSpeedList =>
+        this.patch(
           diff(
-            this.elementMap.map(e => e.tag), Array.from(extendSpeedList),
+            this.elementMap.map(e => e.tag),
+            Array.from(extendSpeedList),
           ),
         ),
-        complete: () => {
-          this.unpatch()
-        },
-      })
+      complete: () => {
+        this.unpatch()
+      },
+    })
 
     // 倍速菜单最大高度
-    this.options.maxMenuHeight$
-      .subscribe(
-        loadStyle({
-          name: 'extend-video-speed-style',
-          style: maxMenuHeight => `
+    this.options.maxMenuHeight$.subscribe(
+      loadStyle({
+        name: 'extend-video-speed-style',
+        style: maxMenuHeight => `
                   ${PLAYER_AGENT.custom.speedMenuList.selector} {
                     display: flex !important; /* 防止3.X样式覆盖 */
                     flex-direction: column;
-                    justify-content: center; /* 添加倍速那一项，当鼠标在上半部分会有莫名其妙的'mouseleave', 用这个修复 */
                     overflow-y: auto;
                     max-height: ${maxMenuHeight}px;
                     visibility: hidden;
@@ -350,14 +361,15 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                   :is(${PLAYER_AGENT.custom.speedMenuList.selector})[style*="block"] {
                     visibility: visible;
                   }`,
-        }),
-      )
+      }),
+    )
 
-    this.options.hideScrollbar$
-      .subscribe(
-        loadStyle({
-          name: 'extend-video-speed-no-scrollbar-style',
-          style: hideScrollbar => hideScrollbar && `
+    this.options.hideScrollbar$.subscribe(
+      loadStyle({
+        name: 'extend-video-speed-no-scrollbar-style',
+        style: hideScrollbar =>
+          hideScrollbar &&
+          `
                 ${PLAYER_AGENT.custom.speedMenuList.selector} {
                   scrollbar-width: none !important;
                   overscroll-behavior: contain;
@@ -366,8 +378,8 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                     height: 0 !important;
                     width: 0 !important;
                 }`,
-        }),
-      )
+      }),
+    )
 
     let nativeSpeedValue = 1
 
@@ -389,9 +401,10 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
       },
     })
 
-    this.currentSpeedValue && requestIdleCallback(() => {
-      this.setVideoSpeed(this.currentSpeedValue, 1000)
-    })
+    this.currentSpeedValue &&
+      requestIdleCallback(() => {
+        this.setVideoSpeed(this.currentSpeedValue, 1000)
+      })
   }
 
   protected async forceVideoSpeedWithUpdateStyle(value: number) {
@@ -400,16 +413,15 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     setTimeout(() => this.forceUpdateStyle(value))
   }
 
-  protected readonly filterNativeSpeed = () => ({
-    subscribe,
-    next,
-  }: PublishContext<number>) => {
-    subscribe(currentSpeed => {
-      if (NATIVE_SUPPORTED_VALUES.includes(currentSpeed)) {
-        next(currentSpeed)
-      }
-    })
-  };
+  protected readonly filterNativeSpeed =
+    () =>
+    ({ subscribe, next }: PublishContext<number>) => {
+      subscribe(currentSpeed => {
+        if (NATIVE_SUPPORTED_VALUES.includes(currentSpeed)) {
+          next(currentSpeed)
+        }
+      })
+    }
 
   protected patch(params: [number, number, number[]]) {
     const [start, deleteCount, added] = params
@@ -425,18 +437,14 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
 
     const addedElements = added.map(v => this.createCustomSpeedMenuItemElement(v))
 
-    const deleted = this.elementMap.splice(
-      start,
-      deleteCount,
-      ...addedElements,
-    )
+    const deleted = this.elementMap.splice(start, deleteCount, ...addedElements)
 
     deleted.forEach(vnode => {
       vnode.destroy()
-    });
-
-    ((this.elementMap[start - 1] || this.inputElement).node)
-      .after(...addedElements.map(el => el.node).reverse())
+    })
+    ;(this.elementMap[start - 1] || this.inputElement).node.after(
+      ...addedElements.map(el => el.node).reverse(),
+    )
 
     // 为所有倍速菜单项刷新 Order
     menuListElement
@@ -444,9 +452,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
         `:is(${PLAYER_AGENT.custom.speedMenuItem.selector}):not(#${this.inputElement.node.id})`,
       )
       .forEach((it: HTMLLIElement) => {
-        it.style.order = calcOrder(
-          parseSpeedText(it.innerHTML),
-        )
+        it.style.order = calcOrder(parseSpeedText(it.innerHTML))
       })
 
     this.unpatch = () => {
@@ -466,21 +472,26 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     } = this.speedContext
     // 移除所有激活态的菜单项
     for (const element of dea(
-      `./*[(${trimLeadingDot(ExtendSpeedComponent.speedMenuItemClassName).split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})`
-      + ' and '
-      + `(${trimLeadingDot(ExtendSpeedComponent.activeClassName).split(',').map(cls => `contains(@class, "${cls}")`).join(' or ')})]`,
+      `./*[(${trimLeadingDot(ExtendSpeedComponent.speedMenuItemClassName)
+        .split(',')
+        .map(cls => `contains(@class, "${cls}")`)
+        .join(' or ')})` +
+        ' and ' +
+        `(${trimLeadingDot(ExtendSpeedComponent.activeClassName)
+          .split(',')
+          .map(cls => `contains(@class, "${cls}")`)
+          .join(' or ')})]`,
       menuListElement,
     ) as Iterable<HTMLElement>) {
       element.classList.remove(...ExtendSpeedComponent.activeClassName.split(','))
     }
     // 对于被强制更新的菜单项，添加激活态的类名
-    querySpeedMenuItemElement(value).classList.add(...ExtendSpeedComponent.activeClassName.split(','))
+    querySpeedMenuItemElement(value).classList.add(
+      ...ExtendSpeedComponent.activeClassName.split(','),
+    )
     // 关闭菜单
     containerElement.classList.remove(...ExtendSpeedComponent.showClassName.split(','))
     // 更新倍速菜单按钮文本
-    nameBtnElement.innerText = formatSpeedText(
-      value,
-      true,
-    )
+    nameBtnElement.innerText = formatSpeedText(value, true)
   }
 }

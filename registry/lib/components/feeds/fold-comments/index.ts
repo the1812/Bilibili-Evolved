@@ -24,7 +24,7 @@ const entry = async () => {
       button.innerHTML = '收起评论'
       button.addEventListener('click', () => {
         clickHandler()
-        card.scrollIntoView()
+        card.scrollIntoView({ behavior: 'smooth' })
       })
       commentBox.insertAdjacentElement('beforeend', button)
     }
@@ -83,8 +83,6 @@ export const component = defineComponentMetadata({
     'zh-CN': '动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.',
   },
   urlInclude: feedsUrlsWithoutDetail,
-  tags: [
-    componentsTags.feeds,
-  ],
+  tags: [componentsTags.feeds],
   entry: styledComponentEntry(() => import('./fold-comment.scss'), entry),
 })

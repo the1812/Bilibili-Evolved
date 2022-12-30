@@ -21,11 +21,7 @@
         <VIcon :size="20" :icon="t.icon" :style="{ color: t.color }" />
       </div>
       <div class="grow"></div>
-      <div
-        v-for="t of subPages"
-        :key="t.name"
-        class="component-tags-item"
-      >
+      <div v-for="t of subPages" :key="t.name" class="component-tags-item">
         <VIcon :size="20" :icon="t.icon" :style="{ color: 'inherit' }" />
       </div>
     </div>
@@ -41,9 +37,7 @@
         <div class="tag-name">
           {{ t.displayName }}
         </div>
-        <div class="tag-count">
-          ({{ t.count }})
-        </div>
+        <div class="tag-count">({{ t.count }})</div>
       </div>
       <div class="grow"></div>
       <div
@@ -123,7 +117,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 .settings-panel-content .sidebar > * {
   position: relative;
   flex: 1;
@@ -134,7 +128,7 @@ export default Vue.extend({
   .settings-panel-sub-page {
     font-size: 13px;
     top: 12px;
-    transition: .3s cubic-bezier(0.22, 0.61, 0.36, 1);
+    transition: 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
     transform: translateX(calc(-12.5% * var(--direction)));
     min-width: 372px;
     padding: 12px;
@@ -197,7 +191,7 @@ export default Vue.extend({
     position: absolute;
     top: 0;
     opacity: 0;
-    transition: .2s ease-out;
+    transition: 0.2s ease-out;
     pointer-events: none;
     background-color: #fff;
     border-right: 1px solid #8882;

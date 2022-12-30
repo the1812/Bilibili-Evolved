@@ -7,7 +7,7 @@
 import { getComponentSettings } from '@/core/settings'
 import { ProgressSeekMode } from './gesture-preview'
 
-type Position = { x: number, y: number, width: number, height: number }
+type Position = { x: number; y: number; width: number; height: number }
 const getPosition = (element: HTMLElement) => {
   let x = 0
   let y = 0
@@ -53,37 +53,37 @@ export class SwipeAction extends EventTarget {
       this.dispatchEvent(new CustomEvent('start'))
     })
     element.addEventListener('touchend', () => {
-      this.dispatchEvent(new CustomEvent('end', {
-        detail: this.lastAction,
-      }))
+      this.dispatchEvent(
+        new CustomEvent('end', {
+          detail: this.lastAction,
+        }),
+      )
       this.lastAction = null
     })
   }
 
-  startAction(
-    direction: 'vertical' | 'horizontal',
-    distance: number,
-    position: Position,
-  ) {
+  startAction(direction: 'vertical' | 'horizontal', distance: number, position: Position) {
     if (direction === 'vertical') {
       if (this.startPosition.x < 1 / 2) {
-        const brightnessChange = Math.round(
-          (200 * (distance - this.minSwipeDistance)) / (1.5 * position.height),
-        ) / 100
-        this.dispatchEvent(new CustomEvent('brightness', {
-          detail: brightnessChange,
-        }))
+        const brightnessChange =
+          Math.round((200 * (distance - this.minSwipeDistance)) / (1.5 * position.height)) / 100
+        this.dispatchEvent(
+          new CustomEvent('brightness', {
+            detail: brightnessChange,
+          }),
+        )
         this.lastAction = {
           type: 'brightness',
           brightness: brightnessChange,
         }
       } else {
-        const volumeChange = Math.round(
-          (200 * (distance - this.minSwipeDistance)) / (1.5 * position.height),
-        ) / 100
-        this.dispatchEvent(new CustomEvent('volume', {
-          detail: volumeChange,
-        }))
+        const volumeChange =
+          Math.round((200 * (distance - this.minSwipeDistance)) / (1.5 * position.height)) / 100
+        this.dispatchEvent(
+          new CustomEvent('volume', {
+            detail: volumeChange,
+          }),
+        )
         this.lastAction = {
           type: 'volume',
           volume: volumeChange,
@@ -111,24 +111,28 @@ export class SwipeAction extends EventTarget {
         if (distance > 0) {
           const seconds = (distance - this.minSwipeDistance) * speedFactor
           // forwardHandler && forwardHandler(seconds)
-          this.dispatchEvent(new CustomEvent('progress', {
-            detail: {
-              mode: modeMap[speedFactor],
-              progress: seconds,
-            },
-          }))
+          this.dispatchEvent(
+            new CustomEvent('progress', {
+              detail: {
+                mode: modeMap[speedFactor],
+                progress: seconds,
+              },
+            }),
+          )
           this.lastAction = {
             type: 'progress',
             seconds,
           }
         } else {
           const seconds = (distance + this.minSwipeDistance) * speedFactor
-          this.dispatchEvent(new CustomEvent('progress', {
-            detail: {
-              mode: modeMap[speedFactor],
-              progress: seconds,
-            },
-          }))
+          this.dispatchEvent(
+            new CustomEvent('progress', {
+              detail: {
+                mode: modeMap[speedFactor],
+                progress: seconds,
+              },
+            }),
+          )
           this.lastAction = {
             type: 'progress',
             seconds,
@@ -154,26 +158,30 @@ export class Swiper {
       this.onTouchStart?.(e)
       this.action.startPosition = createPosition(e, element)
     })
-    element.addEventListener('touchmove', e => {
-      if (!this.xDown || !this.yDown || !e.cancelable) {
-        return
-      }
-      const xUp = e.touches[0].clientX
-      const yUp = e.touches[0].clientY
-      const position = createPosition(e, element)
+    element.addEventListener(
+      'touchmove',
+      e => {
+        if (!this.xDown || !this.yDown || !e.cancelable) {
+          return
+        }
+        const xUp = e.touches[0].clientX
+        const yUp = e.touches[0].clientY
+        const position = createPosition(e, element)
 
-      const xDiff = this.xDown - xUp
-      const yDiff = this.yDown - yUp
+        const xDiff = this.xDown - xUp
+        const yDiff = this.yDown - yUp
 
-      if (!this.direction) {
-        this.direction = Math.abs(xDiff) > Math.abs(yDiff) ? 'horizontal' : 'vertical'
-      } else if (this.direction === 'vertical') {
-        this.action.startAction(this.direction, yDiff, position)
-      } else if (this.direction === 'horizontal') {
-        this.action.startAction(this.direction, -xDiff, position)
-      }
-      e.preventDefault()
-    }, { passive: false })
+        if (!this.direction) {
+          this.direction = Math.abs(xDiff) > Math.abs(yDiff) ? 'horizontal' : 'vertical'
+        } else if (this.direction === 'vertical') {
+          this.action.startAction(this.direction, yDiff, position)
+        } else if (this.direction === 'horizontal') {
+          this.action.startAction(this.direction, -xDiff, position)
+        }
+        e.preventDefault()
+      },
+      { passive: false },
+    )
     element.addEventListener('touchend', e => {
       this.xDown = null
       this.yDown = null

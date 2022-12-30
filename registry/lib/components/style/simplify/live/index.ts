@@ -91,21 +91,19 @@ export const component = newSwitchComponentWrapper({
       displayName: '房间皮肤',
     },
   },
-})(
-  {
-    name: 'simplifyLiveroom',
-    displayName: '简化直播间',
-    entry: styledComponentEntry(() => import('./live.scss'), async () => {
+})({
+  name: 'simplifyLiveroom',
+  displayName: '简化直播间',
+  entry: styledComponentEntry(
+    () => import('./live.scss'),
+    async () => {
       const { setupSkinSimplify } = await import('./skin')
       setupSkinSimplify()
-    }),
-    description: {
-      'zh-CN': '隐藏直播间中各种不需要的内容.',
     },
-    tags: [
-      componentsTags.live,
-      componentsTags.style,
-    ],
-    urlInclude: liveUrls,
+  ),
+  description: {
+    'zh-CN': '隐藏直播间中各种不需要的内容.',
   },
-)
+  tags: [componentsTags.live, componentsTags.style],
+  urlInclude: liveUrls,
+})

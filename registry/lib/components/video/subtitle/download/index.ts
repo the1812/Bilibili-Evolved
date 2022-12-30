@@ -53,9 +53,7 @@ export const component = defineComponentMetadata({
             const success = results.filter(
               it => it.status === 'fulfilled',
             ) as PromiseFulfilledResult<PackageEntry>[]
-            const fail = results.filter(
-              it => it.status === 'rejected',
-            ) as PromiseRejectedResult[]
+            const fail = results.filter(it => it.status === 'rejected') as PromiseRejectedResult[]
             toast.message = `获取完成. 成功 ${success.length} 个, 失败 ${fail.length} 个.`
             return success.map(it => it.value)
           },

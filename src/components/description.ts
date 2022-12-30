@@ -44,9 +44,8 @@ export const getDescriptionMarkdown = async (item: ItemWithDescription) => {
  * 同 `getDescriptionMarkdown`, 将最后的 Markdown 转为 HTML string
  * @param item 功能
  */
-export const getDescriptionHTML = async (item: ItemWithDescription) => marked(
-  await getDescriptionMarkdown(item),
-)
+export const getDescriptionHTML = async (item: ItemWithDescription) =>
+  marked(await getDescriptionMarkdown(item))
 /**
  * 同 `getDescriptionMarkdown`, 将最后的 Markdown 转为纯文本 (innerText)
  * @param item 功能

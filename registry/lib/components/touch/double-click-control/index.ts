@@ -17,10 +17,7 @@ const entry = async () => {
     playerArea.classList.add(disableOriginalHover)
     const videoWrapper = playerAgent.query.video.container.sync()
     const { DoubleClickEvent } = await import('@/core/utils')
-    const doubleClickEvent = new DoubleClickEvent(
-      () => playerAgent.togglePlay(),
-      true,
-    )
+    const doubleClickEvent = new DoubleClickEvent(() => playerAgent.togglePlay(), true)
     doubleClickEvent.singleClickHandler = () => {
       playerArea.classList.toggle(touchHover)
     }
@@ -31,11 +28,10 @@ export const component = defineComponentMetadata({
   name: 'doubleClickControl',
   displayName: '启用双击控制',
   description: {
-    'zh-CN': '将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.',
+    'zh-CN':
+      '将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.',
   },
-  tags: [
-    componentsTags.touch,
-  ],
+  tags: [componentsTags.touch],
   enabledByDefault: navigator.maxTouchPoints > 0,
   urlInclude: playerUrls,
   entry,

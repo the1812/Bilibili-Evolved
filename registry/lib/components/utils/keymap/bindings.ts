@@ -13,7 +13,7 @@ export interface KeyBindingActionContext {
 }
 export interface KeyBindingAction {
   displayName: string
-  run: (context: KeyBindingActionContext) => any
+  run: (context: KeyBindingActionContext) => unknown
   prevent?: boolean
   ignoreTyping?: boolean
 }
@@ -21,12 +21,7 @@ export interface KeyBinding {
   keys: string[]
   action: KeyBindingAction
 }
-const modifyKeys = [
-  'shift',
-  'alt',
-  'ctrl',
-  'meta',
-]
+const modifyKeys = ['shift', 'alt', 'ctrl', 'meta']
 export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
   const isWatchlater = watchlaterUrls.some(url => matchUrlPattern(url))
   const isMediaList = mediaListUrls.some(url => matchUrlPattern(url))
@@ -51,7 +46,11 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
 
       // 全景视频禁用 WASD 快捷键
       const panoramaControl = dq('.bilibili-player-sphere-control') as HTMLElement
-      if (panoramaControl !== null && panoramaControl.style.display !== 'none' && ['w', 'a', 's', 'd'].includes(key)) {
+      if (
+        panoramaControl !== null &&
+        panoramaControl.style.display !== 'none' &&
+        ['w', 'a', 's', 'd'].includes(key)
+      ) {
         return
       }
 
@@ -70,8 +69,8 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
       const restKeys = binding.keys
         .filter(k => !modifyKeys.includes(k.toLowerCase()))
         .map(k => k.toLowerCase())
-      const keyMatch = restKeys.includes(e.key.toLowerCase())
-        || restKeys.includes(e.code.toLowerCase())
+      const keyMatch =
+        restKeys.includes(e.key.toLowerCase()) || restKeys.includes(e.code.toLowerCase())
       if (!keyMatch) {
         return
       }

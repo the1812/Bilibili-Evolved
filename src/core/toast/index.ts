@@ -1,3 +1,4 @@
+import { select } from '../spin-query'
 import { mountVueComponent } from '../utils'
 import { createMiniToast } from './mini'
 import ToastCardContainer from './ToastCardContainer.vue'
@@ -16,12 +17,7 @@ export class Toast {
   closeTime = 0
   creationTime = Number(new Date())
   randomKey = Math.floor(Math.random() * (Number.MAX_SAFE_INTEGER + 1))
-  constructor(
-    public message = '',
-    public title = '',
-    public type = ToastType.Default,
-  ) {
-  }
+  constructor(public message = '', public title = '', public type = ToastType.Default) {}
   static get containerVM() {
     if (!container) {
       Toast.createToastContainer()
@@ -36,7 +32,7 @@ export class Toast {
     }
   }
   get element() {
-    return dq(`.toast-card[data-key='${this.key}']`)
+    return select(`.toast-card[data-key='${this.key}']`)
   }
   get key() {
     return `${this.creationTime}[${this.randomKey}]`

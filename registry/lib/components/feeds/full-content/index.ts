@@ -8,9 +8,6 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '不管内容多长, 总是完全展开动态的内容.',
   },
-  tags: [
-    componentsTags.style,
-    componentsTags.feeds,
-  ],
+  tags: [componentsTags.style, componentsTags.feeds],
   urlInclude: feedsUrlsWithoutDetail,
 })

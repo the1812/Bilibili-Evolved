@@ -73,12 +73,12 @@ export default Vue.extend({
       }
     },
     stopTimer() {
-      (this.card as Toast).clearDuration()
+      ;(this.card as Toast).clearDuration()
       this.progressMax = 0
       this.remainingTime = 0
     },
     startTimer() {
-      (this.card as Toast).setDuration()
+      ;(this.card as Toast).setDuration()
       this.readDuration()
     },
   },
@@ -186,9 +186,7 @@ export default Vue.extend({
     top: 5px;
     left: 0;
   }
-  @each $name,
-    $color in (default: #444, error: #f44336, info: #2196f3, success: #8bc34a)
-  {
+  @each $name, $color in (default: #444, error: #f44336, info: #2196f3, success: #8bc34a) {
     &.toast-#{$name} .toast-card-border {
       background-color: $color;
     }
@@ -205,6 +203,7 @@ export default Vue.extend({
     border-radius: 6px;
   }
   .link {
+    cursor: pointer;
     &:hover {
       background-color: #8883;
     }

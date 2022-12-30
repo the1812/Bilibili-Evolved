@@ -16,7 +16,7 @@ export interface LazyPanelParameters {
  */
 export const loadLazyPanel = async (selector: string, params: LazyPanelParameters = {}) => {
   const { style, enterDelay = 750, leaveDelay = 1000 } = params
-  const panel = await select(selector) as HTMLElement
+  const panel = (await select(selector)) as HTMLElement
   if (!panel) {
     throw new Error(`lazy panel failed! selector = ${selector}`)
   }
@@ -54,15 +54,23 @@ export const loadLazyPlayerSettingsPanel = async (
   return panel
 }
 /** 加载弹幕设置的面板 */
-export const loadDanmakuSettingsPanel = () => loadLazyPlayerSettingsPanel(
-  '.bilibili-player-video-danmaku-setting',
-  '.bilibili-player-video-danmaku-setting-wrap',
-)
+export const loadDanmakuSettingsPanel = () =>
+  loadLazyPlayerSettingsPanel(
+    '.bilibili-player-video-danmaku-setting, .bpx-player-dm-setting',
+    '.bilibili-player-video-danmaku-setting-wrap, .bpx-player-dm-setting-wrap',
+  )
 /** 加载字幕设置的面板 */
-export const loadSubtitleSettingsPanel = () => loadLazyPlayerSettingsPanel(
-  '.bilibili-player-video-btn-subtitle',
-  '.bilibili-player-video-subtitle-setting-wrap',
-  {
-    style: '.bilibili-player-video-subtitle-setting-wrap, .bilibili-player-video-subtitle { display: none }',
-  },
-)
+export const loadSubtitleSettingsPanel = () =>
+  loadLazyPlayerSettingsPanel(
+    '.bilibili-player-video-btn-subtitle, .bpx-player-ctrl-subtitle',
+    '.bilibili-player-video-subtitle-setting-wrap, .bpx-player-ctrl-subtitle-box',
+    {
+      style: `
+      .bpx-player-ctrl-subtitle-box,
+      .bilibili-player-video-subtitle-setting-wrap,
+      .bilibili-player-video-subtitle {
+        display: none
+      }
+    `,
+    },
+  )

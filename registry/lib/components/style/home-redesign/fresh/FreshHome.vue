@@ -2,11 +2,7 @@
   <HomeRedesignBase>
     <div class="fresh-home">
       <div class="fresh-home-content-layout">
-        <FreshLayoutItem
-          v-for="layout of layouts"
-          :key="layout.name"
-          :item="layout"
-        />
+        <FreshLayoutItem v-for="layout of layouts" :key="layout.name" :item="layout" />
       </div>
     </div>
   </HomeRedesignBase>
@@ -29,8 +25,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "tabs";
+@import 'common';
+@import 'tabs';
 
 .fresh-home {
   padding: 16px 36px;
@@ -65,7 +61,7 @@ export default Vue.extend({
       @include h-center(8px);
       .be-button {
         .be-icon {
-          transition: .3s ease-out;
+          transition: 0.3s ease-out;
         }
         .be-iconfont-left-arrow {
           transform: translateX(-0.5px);
@@ -75,7 +71,7 @@ export default Vue.extend({
         }
         .mdi-refresh {
           margin: 1px;
-          transition-duration: .5s;
+          transition-duration: 0.5s;
         }
         &:hover .mdi-refresh {
           transform: rotate(1turn);
@@ -91,7 +87,7 @@ export default Vue.extend({
       }
       .be-icon {
         font-weight: normal;
-        transition: .3s ease-out;
+        transition: 0.3s ease-out;
         margin-right: 6px;
       }
       &.rotate:hover .be-icon {

@@ -68,6 +68,11 @@ export default Vue.extend({
         return true
       },
     },
+    defaultTab: {
+      type: String,
+      required: false,
+      default: '',
+    },
     link: {
       type: String,
       required: false,
@@ -80,7 +85,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      selectedTab: this.tabs[0] as TabMapping,
+      selectedTab: (this.tabs.find((t: TabMapping) => t.name === this.defaultTab) ??
+        this.tabs[0]) as TabMapping,
     }
   },
   mounted() {
@@ -102,7 +108,7 @@ export default Vue.extend({
 
 <style lang="scss">
 @import './common';
-@import "./tabs";
+@import './tabs';
 
 .be-tab-control {
   display: flex;

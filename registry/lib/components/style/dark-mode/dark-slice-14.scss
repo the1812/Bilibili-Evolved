@@ -175,7 +175,7 @@
             &-playing,
             &-title-playing {
               @include theme-color();
-              @include background-color('5');
+              @include background-color();
               .cur-play-icon {
                 @include to-theme("blue");
               }

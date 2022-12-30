@@ -9,9 +9,7 @@
 </template>
 <script lang="ts">
 import { getHook } from '@/plugins/hook'
-import {
-  UserStyle, installStyle, uninstallStyle, styles,
-} from '@/plugins/style'
+import { UserStyle, installStyle, uninstallStyle, styles } from '@/plugins/style'
 import { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
 import ManagePanel from './manage-panel/ManagePanel.vue'
 import UserItem from './manage-panel/UserItem.vue'
@@ -21,10 +19,14 @@ const config: ManagePanelConfig<StyleType> = {
   key: 'userStyles',
   icon: 'mdi-tune',
   title: '样式',
-  description: '可以在此处管理自定义样式, 自定义样式能简单修改界面元素以满足您的需求, 对于更复杂的样式, 推荐使用 Stylus 浏览器插件来管理.',
+  description:
+    '可以在此处管理自定义样式, 自定义样式能简单修改界面元素以满足您的需求, 对于更复杂的样式, 推荐使用 Stylus 浏览器插件来管理.',
   list: styles,
   listFilter: (item, search) => {
-    if (search && !`${item.name}\n${item.displayName}`.toLowerCase().includes(search.toLowerCase())) {
+    if (
+      search &&
+      !`${item.name}\n${item.displayName}`.toLowerCase().includes(search.toLowerCase())
+    ) {
       return false
     }
     return true
@@ -37,19 +39,17 @@ const config: ManagePanelConfig<StyleType> = {
     return message
   },
 }
-const getItemConfig = (item: StyleType): ManageItem<StyleType> => (
-  {
-    key: 'userStyles',
-    item,
-    isUserItem: true,
-    onItemRemove: async it => {
-      const { before, after } = getHook('userStyles.remove', it)
-      await before()
-      uninstallStyle(it.name)
-      await after()
-    },
-  }
-)
+const getItemConfig = (item: StyleType): ManageItem<StyleType> => ({
+  key: 'userStyles',
+  item,
+  isUserItem: true,
+  onItemRemove: async it => {
+    const { before, after } = getHook('userStyles.remove', it)
+    await before()
+    uninstallStyle(it.name)
+    await after()
+  },
+})
 export default Vue.extend({
   components: {
     ManagePanel,

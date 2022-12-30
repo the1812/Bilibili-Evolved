@@ -14,7 +14,9 @@ export class Translator {
 
   protected accepts = (node: Node) => node.nodeType === Node.ELEMENT_NODE
   protected getValue = (node: Node) => node.nodeValue
-  protected setValue = (node: Node, value: string) => { node.nodeValue = value }
+  protected setValue = (node: Node, value: string) => {
+    node.nodeValue = value
+  }
   protected getElement = (node: Node) => node as Element
   translate(node: Node) {
     let value = this.getValue(node)
@@ -89,7 +91,7 @@ export class Translator {
     for (const { selector, text } of selectors) {
       const element = document.querySelector(selector)
       if (element) {
-        [...element.childNodes]
+        ;[...element.childNodes]
           .filter(it => it.nodeType === Node.TEXT_NODE)
           .forEach(it => (it.nodeValue = text))
       }
@@ -103,24 +105,20 @@ export class TextNodeTranslator extends Translator {
 export class TitleTranslator extends Translator {
   getValue = (node: Node) => (node as Element).getAttribute('title')
   setValue = (node: Node, value: string) => {
-    (node as Element).setAttribute('title', value)
+    ;(node as Element).setAttribute('title', value)
   }
 }
 export class PlaceholderTranslator extends Translator {
   getValue = (node: Node) => (node as Element).getAttribute('placeholder')
   setValue = (node: Node, value: string) => {
-    (node as Element).setAttribute('placeholder', value)
+    ;(node as Element).setAttribute('placeholder', value)
   }
 }
 
 Translator.textNode = new TextNodeTranslator()
 Translator.title = new TitleTranslator()
 Translator.placeholder = new PlaceholderTranslator()
-Translator.sensitiveTranslators = [
-  Translator.textNode,
-  Translator.title,
-  Translator.placeholder,
-]
+Translator.sensitiveTranslators = [Translator.textNode, Translator.title, Translator.placeholder]
 
 export const startTranslate: ComponentEntry = async () => {
   const { getSelectedLanguage } = await import('./helpers')

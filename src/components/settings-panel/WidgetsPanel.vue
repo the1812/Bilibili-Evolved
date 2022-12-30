@@ -1,8 +1,6 @@
 <template>
   <div class="widgets-panel">
-    <div class="widgets-panel-header">
-      <VIcon icon="widgets"></VIcon>功能
-    </div>
+    <div class="widgets-panel-header"><VIcon icon="widgets"></VIcon>功能</div>
     <!-- <div class="widgets-loading" v-if="loading">加载中...</div> -->
     <VEmpty v-if="!loading && widgets.length === 0" class="widgets-empty"></VEmpty>
     <div class="widget-items">
@@ -20,10 +18,7 @@
 <script lang="ts">
 import { Widget } from '@/components/widget'
 import { deleteValue, matchUrlPattern } from '@/core/utils'
-import {
-  VIcon,
-  VEmpty,
-} from '@/ui'
+import { VIcon, VEmpty } from '@/ui'
 import { registerAndGetData } from '../../plugins/data'
 import { WidgetsPlugin } from '.'
 
@@ -37,10 +32,7 @@ const widgetFilter = async (w: Widget) => {
   }
   if (w.condition) {
     const result = w.condition()
-    if (
-      result === true
-      || (result instanceof Promise && (await result) === true)
-    ) {
+    if (result === true || (result instanceof Promise && (await result) === true)) {
       return true
     }
     return false
@@ -83,7 +75,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 .widgets-panel {
   max-height: var(--panel-height);
   min-height: 80px;
@@ -126,7 +118,7 @@ export default Vue.extend({
     align-items: flex-start;
     .widget-item {
       font-size: 14px;
-      transition: .2s ease-out;
+      transition: 0.2s ease-out;
       display: flex;
       &-enter,
       &-leave-to {

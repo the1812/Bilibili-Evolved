@@ -6,9 +6,7 @@ export interface LoadStyleOptions<D> {
   container?: HTMLElement
 }
 
-export const loadStyle = <D>(
-  { style, name, container }: LoadStyleOptions<D>,
-) => {
+export const loadStyle = <D>({ style, name, container }: LoadStyleOptions<D>) => {
   let styleElement
   const complete = () => styleElement?.remove()
   const next = (dep: D) => {

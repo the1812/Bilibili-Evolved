@@ -35,8 +35,8 @@ export default Vue.extend({
     childList(app, () => {
       const match = document.URL.match(/bilibili\.com\/audio\/au([\d]+)/)
       if (match && match[1]) {
-        this.disabled = false;
-        [, downloader.sid] = match
+        this.disabled = false
+        ;[, downloader.sid] = match
       } else {
         this.disabled = true
       }

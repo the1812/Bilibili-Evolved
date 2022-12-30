@@ -12,10 +12,7 @@ export const postCssLoader: RuleSetUseItem = {
   loader: 'postcss-loader',
   options: {
     postcssOptions: {
-      plugins: [
-        postcssPresetEnv(),
-        autoPrefixer(),
-      ],
+      plugins: [postcssPresetEnv(), autoPrefixer()],
     },
   },
 }

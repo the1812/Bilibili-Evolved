@@ -22,7 +22,7 @@ const startRecording = (container: HTMLElement, callback: DanmakuRecordCallback)
   if (danmakuContainerObserver) {
     danmakuContainerObserver.disconnect()
   }
-  [danmakuContainerObserver] = childListSubtree(container, records => {
+  ;[danmakuContainerObserver] = childListSubtree(container, records => {
     records.forEach(record => {
       record.addedNodes.forEach(node => {
         if (node.nodeType === Node.TEXT_NODE) {

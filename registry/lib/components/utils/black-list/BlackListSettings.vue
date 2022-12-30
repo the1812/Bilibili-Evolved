@@ -9,9 +9,7 @@
   >
     <div class="black-list-settings-header">
       <VIcon class="title-icon" icon="mdi-sort" :size="24"></VIcon>
-      <div class="title">
-        {{ titleName }}黑名单设置
-      </div>
+      <div class="title">{{ titleName }}黑名单设置</div>
       <div class="grow"></div>
       <div class="close" @click="open = false">
         <VIcon icon="close" :size="18"></VIcon>
@@ -19,44 +17,27 @@
     </div>
     <div class="black-list-settings-content">
       <div class="black-list-settings-section">
-        <div class="black-list-settings-section-title">
-          添加到黑名单
-        </div>
+        <div class="black-list-settings-section-title">添加到黑名单</div>
         <div class="black-list-settings-section-input">
           <TextBox :text="name" @change="changeName" />
           <VButton @click="add">添加</VButton>
         </div>
       </div>
       <div class="black-list-settings-section">
-        <div class="black-list-settings-section-title">
-          黑名单列表
-        </div>
-        <div
-          class="black-list-settings-section-description"
-        >
-          点击×图标可以删除名单.
-        </div>
+        <div class="black-list-settings-section-title">黑名单列表</div>
+        <div class="black-list-settings-section-description">点击×图标可以删除名单.</div>
         <VLoading v-if="!loaded" />
         <div
           v-show="loaded"
           ref="black-listSortList"
           class="black-list-settings-section-content black-list-sort-list"
         >
-          <div
-            v-for="item of list"
-            :key="item"
-            class="black-list-sort-item"
-            :data-name="item"
-          >
+          <div v-for="item of list" :key="item" class="black-list-sort-item" :data-name="item">
             <div class="item-name">
               {{ item }}
             </div>
             <div class="toggle-visible">
-              <VIcon
-                :size="18"
-                icon="close"
-                @click="toggleVisible(item)"
-              ></VIcon>
+              <VIcon :size="18" icon="close" @click="toggleVisible(item)"></VIcon>
             </div>
           </div>
         </div>
@@ -65,12 +46,7 @@
   </VPopup>
 </template>
 <script lang="ts">
-import {
-  VPopup,
-  TextBox,
-  VIcon,
-  VButton,
-} from '@/ui'
+import { VPopup, TextBox, VIcon, VButton } from '@/ui'
 
 export default Vue.extend({
   components: {
@@ -105,7 +81,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    open(newVal:boolean) {
+    open(newVal: boolean) {
       if (!newVal) {
         this.save(this.list)
       }
@@ -136,7 +112,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .custom-black-list-settings {
   @include popup();
   width: 400px;

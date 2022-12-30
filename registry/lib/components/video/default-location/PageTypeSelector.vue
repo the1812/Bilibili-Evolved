@@ -20,8 +20,8 @@ const itemsMap = lodash.mapValues(pageTypeInfos, (v, k) => ({
 }))
 
 interface Item {
-  name: string,
-  displayName: string,
+  name: string
+  displayName: string
 }
 
 export default Vue.extend({
@@ -58,7 +58,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "bar";
+@import 'bar';
 
 .video-default-location-page-type-selector-icon {
   @include icon-container;

@@ -47,7 +47,9 @@ export default Vue.extend({
           if (url) {
             images.push({
               ...url,
-              name: `${formatTitle(columnFormat, false, { n: (images.length + 1).toString() })}${url.extension}`,
+              name: `${formatTitle(columnFormat, false, { n: (images.length + 1).toString() })}${
+                url.extension
+              }`,
             })
           }
         })
@@ -56,12 +58,14 @@ export default Vue.extend({
           return
         }
         let downloadedCount = 0
-        const imageBlobs = await Promise.all(images.map(async ({ url }) => {
-          const blob = await getBlob(url)
-          downloadedCount++
-          toast.message = `下载中... (${downloadedCount}/${images.length})`
-          return blob
-        }))
+        const imageBlobs = await Promise.all(
+          images.map(async ({ url }) => {
+            const blob = await getBlob(url)
+            downloadedCount++
+            toast.message = `下载中... (${downloadedCount}/${images.length})`
+            return blob
+          }),
+        )
         const pack = new DownloadPackage()
         imageBlobs.forEach((blob, index) => pack.add(images[index].name, blob))
         await pack.emit(`${formatTitle(columnFormat, false, { n: '' })}.zip`)

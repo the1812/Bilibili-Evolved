@@ -31,7 +31,10 @@
           @previous-item="previousItem($event, index)"
           @next-item="nextItem($event, index)"
           @delete-item="onDeleteItem($event, index)"
-          @action="(index === actions.length - 1) && onClearHistory(); onAction(a)"
+          @action="
+            index === actions.length - 1 && onClearHistory()
+            onAction(a)
+          "
         />
       </div>
       <div v-if="!isHistory" class="launch-bar-action-list">
@@ -60,11 +63,7 @@
 </template>
 <script lang="ts">
 import Fuse from 'fuse.js'
-import {
-  VIcon,
-  VLoading,
-  VEmpty,
-} from '@/ui'
+import { VIcon, VLoading, VEmpty } from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
@@ -75,18 +74,19 @@ import {
   LaunchBarAction,
 } from './launch-bar-action'
 import { searchProvider, search } from './search-provider'
-import {
-  historyProvider,
-} from './history-provider'
+import { historyProvider } from './history-provider'
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
   historyProvider,
 ]) as [LaunchBarActionProvider[]]
-const generateKeys = (provider: LaunchBarActionProvider, actions: LaunchBarAction[]): ({
+const generateKeys = (
+  provider: LaunchBarActionProvider,
+  actions: LaunchBarAction[],
+): ({
   key: string
   provider: LaunchBarActionProvider
-} & LaunchBarAction)[] => (
+} & LaunchBarAction)[] =>
   actions.map(a => {
     const key = `${provider.name}.${a.name}`
     return {
@@ -95,13 +95,14 @@ const generateKeys = (provider: LaunchBarActionProvider, actions: LaunchBarActio
       provider,
     }
   })
-)
 async function getOnlineActions() {
-  const onlineActions = (await Promise.all(
-    actionProviders.map(async provider => (
-      generateKeys(provider, await provider.getActions(this.keyword))
-    )),
-  )).flat()
+  const onlineActions = (
+    await Promise.all(
+      actionProviders.map(async provider =>
+        generateKeys(provider, await provider.getActions(this.keyword)),
+      ),
+    )
+  ).flat()
   if (this.isHistory) {
     return
   }
@@ -217,13 +218,13 @@ export default Vue.extend({
       if (index === 0) {
         this.focus()
       } else {
-        ((e.currentTarget as HTMLElement).previousElementSibling as HTMLElement).focus()
+        ;((e.currentTarget as HTMLElement).previousElementSibling as HTMLElement).focus()
       }
     },
     nextItem(e: KeyboardEvent, index: number) {
       const lastItemIndex = this.actions.length - 1
       if (index !== lastItemIndex) {
-        ((e.currentTarget as HTMLElement).nextElementSibling as HTMLElement).focus()
+        ;((e.currentTarget as HTMLElement).nextElementSibling as HTMLElement).focus()
       } else {
         this.focus()
       }
@@ -248,7 +249,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .launch-bar {
   --color: black;
   color: var(--color);

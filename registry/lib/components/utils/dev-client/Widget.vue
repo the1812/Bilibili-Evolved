@@ -5,10 +5,7 @@
       <template v-if="isConnected">
         <div class="status-dot connected" />
         <div class="status-text">已连接</div>
-        <AsyncButton
-          title="断开连接"
-          @click="disconnect"
-        >
+        <AsyncButton title="断开连接" @click="disconnect">
           <VIcon icon="mdi-stop" :size="14" />
           断开连接
         </AsyncButton>
@@ -16,10 +13,7 @@
       <template v-else class="status">
         <div class="status-dot disconnected" />
         <div class="status-text">未连接</div>
-        <AsyncButton
-          title="连接"
-          @click="connect"
-        >
+        <AsyncButton title="连接" @click="connect">
           <VIcon icon="mdi-play" :size="14" />
           连接
         </AsyncButton>
@@ -74,7 +68,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss" scoped>
-@import "common";
+@import 'common';
 
 .be-dev-client {
   box-shadow: 0 0 0 1px #8884;
@@ -96,10 +90,10 @@ export default Vue.extend({
       width: 8px;
       border-radius: 50%;
       &.connected {
-        background-color: #81C785;
+        background-color: #81c785;
       }
       &.disconnected {
-        background-color: #78909C;
+        background-color: #78909c;
       }
     }
     .be-button {

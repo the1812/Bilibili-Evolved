@@ -40,14 +40,11 @@ export interface Category {
   subCategories: Record<string, string> | null
 }
 
-export const rawData: [
-  MainCategory[],
-  LiveCategory[],
-  SecondaryCategory[],
-  SecondaryCategory[],
-] = raw as any
+export const rawData: [MainCategory[], LiveCategory[], SecondaryCategory[], SecondaryCategory[]] =
+  raw as any
 
-const urlNormalize = (url: string) => (url.startsWith('//') ? `https:${url}` : url.replace('http:', 'https:'))
+const urlNormalize = (url: string) =>
+  url.startsWith('//') ? `https:${url}` : url.replace('http:', 'https:')
 const mainCategories = rawData[0].filter(it => typeof it.tid !== 'string')
 const secondaryCategories = rawData[3]
 const generalCategories: Record<string, Category> = {}
@@ -59,12 +56,16 @@ mainCategories.forEach(it => {
     route: it.route,
     code: it.tid,
     link: mainUrl,
-    subCategories: it.sub ? Object.fromEntries(
-      it.sub.map(sub => {
-        const subUrl = urlNormalize(!sub.route ? sub.url : `https://www.bilibili.com/v/${it.route}/${sub.route}/`)
-        return [sub.name, subUrl]
-      }),
-    ) : null,
+    subCategories: it.sub
+      ? Object.fromEntries(
+          it.sub.map(sub => {
+            const subUrl = urlNormalize(
+              !sub.route ? sub.url : `https://www.bilibili.com/v/${it.route}/${sub.route}/`,
+            )
+            return [sub.name, subUrl]
+          }),
+        )
+      : null,
   }
 })
 // generalCategories.放映厅 = {
@@ -82,15 +83,15 @@ secondaryCategories.forEach(it => {
     code: null,
     route: it.route,
     link: urlNormalize(it.url),
-    subCategories: it.sub ? Object.fromEntries(
-      it.sub.map(sub => ([sub.name, urlNormalize(sub.url)])),
-    ) : null,
+    subCategories: it.sub
+      ? Object.fromEntries(it.sub.map(sub => [sub.name, urlNormalize(sub.url)]))
+      : null,
   }
 })
 export const categories = generalCategories
 export const categoryCodes = Object.fromEntries(mainCategories.map(it => [it.route, it.tid]))
 export const categoryLinks = Object.fromEntries(
-  Object.values(generalCategories).map(data => ([data.icon, data.link])),
+  Object.values(generalCategories).map(data => [data.icon, data.link]),
 )
 /** 插入主站导航图标 SVG 符号定义 */
 export const addCategoryIcons = async () => {

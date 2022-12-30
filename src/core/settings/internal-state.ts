@@ -22,9 +22,8 @@ export const initInternalSettings = () => {
   })
   // 载入组件设置
   components.forEach(component => {
-    settingsInternalState.internalSettings.components[component.name] = (
+    settingsInternalState.internalSettings.components[component.name] =
       componentToSettings(component)
-    )
   })
 }
 /** 默认设置 */

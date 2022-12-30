@@ -1,14 +1,7 @@
 <template>
   <div class="single-video-info download-video-config-section">
-    <img
-      v-if="imageUrl"
-      class="shadow"
-      :src="imageUrl"
-    />
-    <img
-      v-if="imageUrl"
-      :src="imageUrl"
-    />
+    <img v-if="imageUrl" class="shadow" :src="imageUrl" />
+    <img v-if="imageUrl" :src="imageUrl" />
   </div>
 </template>
 <script lang="ts">

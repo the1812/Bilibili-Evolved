@@ -29,7 +29,8 @@ export const generatePackageDocs = async (allItems: DocSourceItem[]) => {
         const docSource = allItems.find(item => item.type === type && item.name === name)
         return docSource
       }
-      const docSourceItems = components.map(item => getDocSource('component', item))
+      const docSourceItems = components
+        .map(item => getDocSource('component', item))
         .concat(plugins.map(item => getDocSource('plugin', item)))
       return {
         ...pack,
@@ -63,7 +64,9 @@ ${it.description || ''}
 <summary><strong>jsDelivr Stable</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.AltCdn(branches.stable, item.owner) + item.fullAbsolutePath).join('\n')}
+${it.items
+  .map(item => cdnRoots.AltCdn(branches.stable, item.owner) + item.fullAbsolutePath)
+  .join('\n')}
 \`\`\`
 
 </details>
@@ -71,7 +74,9 @@ ${it.items.map(item => cdnRoots.AltCdn(branches.stable, item.owner) + item.fullA
 <summary><strong>jsDelivr Preview</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.AltCdn(branches.preview, item.owner) + item.fullAbsolutePath).join('\n')}
+${it.items
+  .map(item => cdnRoots.AltCdn(branches.preview, item.owner) + item.fullAbsolutePath)
+  .join('\n')}
 \`\`\`
 
 </details>
@@ -79,7 +84,9 @@ ${it.items.map(item => cdnRoots.AltCdn(branches.preview, item.owner) + item.full
 <summary><strong>GitHub Stable</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.GitHub(branches.stable, item.owner) + item.fullAbsolutePath).join('\n')}
+${it.items
+  .map(item => cdnRoots.GitHub(branches.stable, item.owner) + item.fullAbsolutePath)
+  .join('\n')}
 \`\`\`
 
 </details>
@@ -87,7 +94,9 @@ ${it.items.map(item => cdnRoots.GitHub(branches.stable, item.owner) + item.fullA
 <summary><strong>GitHub Preview</strong></summary>
 
 \`\`\`
-${it.items.map(item => cdnRoots.GitHub(branches.preview, item.owner) + item.fullAbsolutePath).join('\n')}
+${it.items
+  .map(item => cdnRoots.GitHub(branches.preview, item.owner) + item.fullAbsolutePath)
+  .join('\n')}
 \`\`\`
 
 </details>
@@ -103,6 +112,10 @@ ${packagesTexts.join('\n\n')}
 `.trim()
   return {
     markdown,
-    json: JSON.stringify(packagesPaths.map(it => ({ ...it, type: 'pack' })), undefined, 2),
+    json: JSON.stringify(
+      packagesPaths.map(it => ({ ...it, type: 'pack' })),
+      undefined,
+      2,
+    ),
   }
 }

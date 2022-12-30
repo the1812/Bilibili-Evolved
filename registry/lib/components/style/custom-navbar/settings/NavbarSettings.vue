@@ -9,9 +9,7 @@
   >
     <div class="navbar-settings-header">
       <VIcon class="title-icon" icon="mdi-sort" :size="24"></VIcon>
-      <div class="title">
-        顶栏布局设置
-      </div>
+      <div class="title">顶栏布局设置</div>
       <div class="grow"></div>
       <div class="close" @click="open = false">
         <VIcon icon="close" :size="18"></VIcon>
@@ -19,9 +17,7 @@
     </div>
     <div class="navbar-settings-content">
       <div class="navbar-settings-section">
-        <div class="navbar-settings-section-title">
-          边缘间距
-        </div>
+        <div class="navbar-settings-section-title">边缘间距</div>
         <div class="navbar-settings-section-description">
           设定两侧边缘处的间距, 单位为百分比, 100%为整个顶栏的宽度.
           <br />空间不足时, 实际呈现的间距会自动缩小.
@@ -32,18 +28,12 @@
           @mouseout="peekPadding(false)"
         >
           <VSlider v-model="padding" :min="0" :max="40" :step="0.5"></VSlider>
-          <div class="padding-value">
-            {{ padding.toFixed(1) }}%
-          </div>
+          <div class="padding-value">{{ padding.toFixed(1) }}%</div>
         </div>
       </div>
       <div class="navbar-settings-section">
-        <div class="navbar-settings-section-title">
-          元素呈现
-        </div>
-        <div
-          class="navbar-settings-section-description"
-        >
+        <div class="navbar-settings-section-title">元素呈现</div>
+        <div class="navbar-settings-section-description">
           按住并拖动可以调整顺序, 点击眼睛图标可以切换隐藏/显示.
         </div>
         <VLoading v-if="!loaded" />
@@ -67,11 +57,7 @@
             <div class="toggle-visible">
               <VIcon
                 :size="18"
-                :icon="
-                  item.hidden
-                    ? 'mdi-eye-off-outline'
-                    : 'mdi-eye-outline'
-                "
+                :icon="item.hidden ? 'mdi-eye-off-outline' : 'mdi-eye-outline'"
                 @click="toggleVisible(item)"
               ></VIcon>
             </div>
@@ -83,26 +69,20 @@
 </template>
 <script lang="ts">
 import { SortableEvent } from 'sortablejs'
-import {
-  VPopup,
-  VIcon,
-  VSlider,
-  VLoading,
-} from '@/ui'
+import { VPopup, VIcon, VSlider, VLoading } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { dqa } from '@/core/utils'
 import { SortableJSLibrary } from '@/core/runtime-library'
 import { getData } from '@/plugins/data'
-import {
-  CustomNavbarItem,
-  CustomNavbarRenderedItems,
-} from '../custom-navbar-item'
+import { CustomNavbarItem, CustomNavbarRenderedItems } from '../custom-navbar-item'
 import { checkSequentialOrder, sortItems } from './orders'
 
 const { navbarOptions } = CustomNavbarItem
-const [rendered] = getData(CustomNavbarRenderedItems) as [{
-  items: CustomNavbarItem[]
-}]
+const [rendered] = getData(CustomNavbarRenderedItems) as [
+  {
+    items: CustomNavbarItem[]
+  },
+]
 export default Vue.extend({
   components: {
     VPopup,
@@ -166,9 +146,9 @@ export default Vue.extend({
       const container = this.$refs.navbarSortList as HTMLElement
       const element = e.item
       console.log(`${element.getAttribute('data-name')} ${e.oldIndex}->${e.newIndex}`)
-      const ordersMap = Object.fromEntries([...container.children].map((el, index) => (
-        [el.getAttribute('data-name') as string, index]
-      )))
+      const ordersMap = Object.fromEntries(
+        [...container.children].map((el, index) => [el.getAttribute('data-name') as string, index]),
+      )
       this.rendered.items = sortItems(rendered.items, ordersMap)
     },
     toggleVisible(item: CustomNavbarItem) {
@@ -186,7 +166,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 .custom-navbar-settings {
   @include popup();
   width: 400px;
@@ -206,7 +186,7 @@ export default Vue.extend({
     .title {
       margin-left: 6px;
       font-size: 18px;
-      font-weight: bold;
+      @include semi-bold();
     }
     .grow {
       flex: 1;

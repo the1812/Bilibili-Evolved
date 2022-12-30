@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+import { select } from '@/core/spin-query'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 
 export const component = defineComponentMetadata({
@@ -19,8 +20,10 @@ export const component = defineComponentMetadata({
   entry: async () => {
     const { forEachFeedsCard } = await import('@/components/feeds/api')
     forEachFeedsCard({
-      added: card => {
-        const foldButton = dq(card.element, '.fold-hoverable, .bili-dyn-item-fold') as HTMLElement
+      added: async card => {
+        const foldButton = await select(
+          () => dq(card.element, '.fold-hoverable, .bili-dyn-item-fold') as HTMLElement,
+        )
         foldButton?.click()
       },
     })

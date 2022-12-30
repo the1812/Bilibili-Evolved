@@ -13,11 +13,7 @@
 <script lang="ts">
 import { getUID } from '@/core/utils'
 import { VIcon, VButton } from '@/ui'
-import {
-  setTriggerElement,
-  loadNavbarSettings,
-  toggleNavbarSettings,
-} from './vm'
+import { setTriggerElement, loadNavbarSettings, toggleNavbarSettings } from './vm'
 
 export default Vue.extend({
   components: {

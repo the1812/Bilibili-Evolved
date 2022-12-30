@@ -20,19 +20,26 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
 
     - name: Install dependencies
-      uses: bahmutov/npm-install@v1
+      uses: pnpm/action-setup@v2.2.4
+      with:
+        version: latest
+        run_install: true
 
     - name: Type check
-      run: yarn type
+      run: pnpm run type
 
     - name: ESLint check
-      run: yarn lint-check
+      run: pnpm run lint-check
 
     - name: Build core
-      run: yarn build-core
+      run: pnpm run build-core
 
     - name: Build features
-      run: yarn build-features
+      run: |
+        cd registry
+        pnpm install
+        cd ../
+        pnpm run build-features
 
     - name: Log
       run: echo Check complete.

@@ -7,7 +7,9 @@ export const urlConverter = {
     if (!originalUrl) {
       return null
     }
-    const devUrlMatch = originalUrl.match(new RegExp(`localhost:${options.port}\\/registry\\/components\\/(.+)$`))
+    const devUrlMatch = originalUrl.match(
+      new RegExp(`localhost:${options.port}\\/registry\\/components\\/(.+)$`),
+    )
     if (devUrlMatch) {
       return originalUrl
     }

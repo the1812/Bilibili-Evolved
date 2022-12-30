@@ -53,7 +53,7 @@
         "type": "component",
         "name": "simplifyComments",
         "displayName": "简化评论区",
-        "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端` 这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
+        "description": "- 删除热评头像下方的关注按钮\r\n- 删除用户的等级标识\r\n- 删除发送源信息(\\`来自安卓客户端\\` 这种)\r\n- 删除用户名右边的勋章\r\n- 删除评论区顶部的横幅\r\n- 发送时间移动到右上角\r\n- 位图图标全部换用矢量图标, 高分屏不会模糊\r\n- 投票仅显示链接, 隐藏下面的大框.\r\n\r\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.\r\n",
         "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
       },
@@ -69,7 +69,7 @@
         "type": "component",
         "name": "simplifyHome",
         "displayName": "简化首页",
-        "description": "隐藏原版首页不需要的元素 / 分区.\n\n> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.",
+        "description": "隐藏原版首页不需要的元素 / 分区.",
         "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
       },
@@ -124,7 +124,7 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.",
+        "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },

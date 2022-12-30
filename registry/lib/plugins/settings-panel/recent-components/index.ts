@@ -40,19 +40,16 @@ export const plugin: PluginMetadata = {
     })
     addData('settingsPanel.tagFilters', async (tagFilters: TagFilter[]) => {
       const recentComponents = await getRecentComponents()
-      tagFilters.unshift(({ renderedComponents }) => (
-        {
-          name: 'recent',
-          displayName: '最近',
-          color: 'inherit',
-          icon: 'mdi-clock-outline',
-          order: 0,
-          count: renderedComponents.length,
-          filter: components => (
-            lodash.sortBy(components, it => recentComponents[it.name] ?? 0).reverse()
-          ),
-        }
-      ))
+      tagFilters.unshift(({ renderedComponents }) => ({
+        name: 'recent',
+        displayName: '最近',
+        color: 'inherit',
+        icon: 'mdi-clock-outline',
+        order: 0,
+        count: renderedComponents.length,
+        filter: components =>
+          lodash.sortBy(components, it => recentComponents[it.name] ?? 0).reverse(),
+      }))
     })
   },
 }

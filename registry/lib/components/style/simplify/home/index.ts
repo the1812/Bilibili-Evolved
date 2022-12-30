@@ -7,7 +7,8 @@ import {
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
 import { addStyle } from '@/core/style'
-import { getCookieValue } from '@/core/utils'
+import { getCookieValue, matchUrlPattern } from '@/core/utils'
+import { useScopedConsole } from '@/core/utils/log'
 import { mainSiteUrls } from '@/core/utils/urls'
 
 const switchMetadata = defineSwitchMetadata({
@@ -48,17 +49,11 @@ const switchMetadata = defineSwitchMetadata({
     },
   },
 })
-
+const console = useScopedConsole('简化首页')
 const metadata = defineIncompleteSwitchComponentMetadata({
   name: 'simplifyHome',
   displayName: '简化首页',
-  description: {
-    'zh-CN': `
-隐藏原版首页不需要的元素 / 分区.
-
-> 这个功能相当于 v1 的 \`首页过滤\`, v1 的 \`简化首页\` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.
-    `.trim(),
-  },
+  description: '隐藏原版首页不需要的元素 / 分区.',
   instantStyles: [
     {
       name: 'simplifyHome',
@@ -69,10 +64,12 @@ const metadata = defineIncompleteSwitchComponentMetadata({
   tags: [componentsTags.style],
   entry: async () => {
     // 正好是首页时提供首页分区的简化选项
-    if (document.URL !== 'https://www.bilibili.com/') {
+    const isHome = matchUrlPattern('https://www.bilibili.com/')
+    if (!isHome) {
       return
     }
 
+    console.log('isHome', isHome)
     const { options } = getComponentSettings(metadata.name)
     const isNewHome = getCookieValue('i-wanna-go-back') === '-1'
     type SimplifyHomeOption = {
@@ -80,19 +77,16 @@ const metadata = defineIncompleteSwitchComponentMetadata({
       defaultValue: boolean
     }
     const generatedOptions: Record<string, SimplifyHomeOption> = await (async () => {
-      const isNotHome = document.URL !== 'https://www.bilibili.com/'
       if (!isNewHome) {
         const categoryElements = await sq(
           () => dqa('.proxy-box > div'),
-          elements => elements.length > 0 || isNotHome,
+          elements => elements.length > 0 || !isHome,
         )
         return Object.fromEntries(
           categoryElements.map(it => [
             it.id.replace(/^bili_/, ''),
             {
-              displayName:
-                  it.querySelector('header .name')?.textContent?.trim()
-                  ?? '未知分区',
+              displayName: it.querySelector('header .name')?.textContent?.trim() ?? '未知分区',
               defaultValue: false,
             },
           ]),
@@ -102,7 +96,7 @@ const metadata = defineIncompleteSwitchComponentMetadata({
       const skipIds = ['推广']
       const headers = await sq(
         () => dqa('.bili-grid .the-world'),
-        elements => elements.length > 3 || isNotHome,
+        elements => elements.length > 3 || !isHome,
       )
       console.log(headers)
       const getContainer = (header: Element) => {
@@ -115,61 +109,58 @@ const metadata = defineIncompleteSwitchComponentMetadata({
         }
         return null
       }
-      const entries = headers
-        ?.filter(element => !skipIds.includes(element.id))
-        .map(element => {
-          const container = getContainer(element) as HTMLElement
-          const name = element.id
-          if (container) {
-            container.dataset.area = name
-            return [
-              name,
-              {
-                displayName: name,
-                defaultValue: false,
-              },
-            ]
-          }
-          return null
-        })
-        .filter((it): it is [string, SimplifyHomeOption] => it !== null)
-          ?? []
+      const entries =
+        headers
+          ?.filter(element => !skipIds.includes(element.id))
+          .map(element => {
+            const container = getContainer(element) as HTMLElement
+            const name = element.id
+            if (container) {
+              container.dataset.area = name
+              return [
+                name,
+                {
+                  displayName: name,
+                  defaultValue: false,
+                },
+              ]
+            }
+            return null
+          })
+          .filter((it): it is [string, SimplifyHomeOption] => it !== null) ?? []
       return Object.fromEntries(entries)
     })()
     const generatedSwitches: Record<string, unknown> = {}
-    Object.entries(generatedOptions).forEach(
-      ([key, { displayName, defaultValue }]) => {
-        const option = {
-          defaultValue,
-          displayName,
-        }
-        const optionKey = `switch-${key}`
-        if (options[optionKey] === undefined) {
-          options[optionKey] = defaultValue
-        }
-        const switchKey = `switch-${key}`
-        addComponentListener(
-          `${metadata.name}.${switchKey}`,
-          (value: boolean) => {
-            document.body.classList.toggle(
-              `${metadata.name}-${switchKey}`,
-              value,
-            )
-          },
-          true,
-        )
-        switchMetadata.switches[key] = option
-        generatedSwitches[key] = option
-      },
-    );
-    (options.simplifyOptions as any).switches = generatedSwitches
+    Object.entries(generatedOptions).forEach(([key, { displayName, defaultValue }]) => {
+      const option = {
+        defaultValue,
+        displayName,
+      }
+      const optionKey = `switch-${key}`
+      if (options[optionKey] === undefined) {
+        options[optionKey] = defaultValue
+      }
+      const switchKey = `switch-${key}`
+      addComponentListener(
+        `${metadata.name}.${switchKey}`,
+        (value: boolean) => {
+          document.body.classList.toggle(`${metadata.name}-${switchKey}`, value)
+        },
+        true,
+      )
+      switchMetadata.switches[key] = option
+      generatedSwitches[key] = option
+    })
+    ;(options.simplifyOptions as any).switches = generatedSwitches
     const generatedStyles = Object.keys(generatedOptions)
-      .map(name => `
+      .map(name =>
+        `
         body.simplifyHome-switch-${name} .bili-layout .bili-grid[data-area="${name}"],
         body.simplifyHome-switch-${name} .storey-box .proxy-box #bili_${name} {
           display: none !important;
         }
-      `.trim())
+      `.trim(),
+      )
       .join('\n')
     addStyle(generatedStyles, 'simplify-home-generated')
   },

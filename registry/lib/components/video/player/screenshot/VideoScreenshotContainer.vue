@@ -1,10 +1,6 @@
 <template>
   <div class="video-screenshot-container">
-    <transition-group
-      class="video-screenshot-list"
-      name="video-screenshot-list"
-      tag="div"
-    >
+    <transition-group class="video-screenshot-list" name="video-screenshot-list" tag="div">
       <VideoScreenshot
         v-for="screenshot of screenshots"
         :key="screenshot.id"
@@ -15,9 +11,7 @@
       ></VideoScreenshot>
     </transition-group>
     <div v-show="showBatch" class="video-screenshot-batch">
-      <button @click="saveAll">
-        <VIcon :size="18" icon="mdi-content-save"></VIcon>全部保存
-      </button>
+      <button @click="saveAll"><VIcon :size="18" icon="mdi-content-save"></VIcon>全部保存</button>
       <button @click="discardAll">
         <VIcon :size="18" icon="mdi-delete-forever"></VIcon>全部丢弃
       </button>
@@ -69,7 +63,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .video-screenshot-container {
   position: relative;
@@ -78,9 +72,7 @@ export default Vue.extend({
   --screenshot-height: 135px;
   --thumbnail-margin-vertical: 12px;
   --thumbnail-margin-horizontal: 12px;
-  --screenshot-list-width: calc(
-    2 * var(--thumbnail-margin-horizontal) + var(--screenshot-width)
-  );
+  --screenshot-list-width: calc(2 * var(--thumbnail-margin-horizontal) + var(--screenshot-width));
   .video-screenshot-disable & {
     display: none;
   }

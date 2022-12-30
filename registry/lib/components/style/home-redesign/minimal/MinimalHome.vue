@@ -1,7 +1,7 @@
 <template>
   <HomeRedesignBase>
     <div class="minimal-home">
-      <TabControl class="minimal-home-tabs" :tabs="tabs" />
+      <TabControl class="minimal-home-tabs" :default-tab="defaultTab" :tabs="tabs" />
     </div>
   </HomeRedesignBase>
 </template>
@@ -35,17 +35,22 @@ export default Vue.extend({
   data() {
     return {
       tabs,
+      defaultTab: minimalHomeOptions.defaultTab,
     }
   },
   mounted() {
     const columnCountKey = '--minimal-home-column-count-override'
-    addComponentListener('minimalHome.columnCount', (count: number) => {
-      if (count > 0) {
-        (this.$el as HTMLElement).style.setProperty(columnCountKey, count.toString())
-      } else {
-        (this.$el as HTMLElement).style.removeProperty(columnCountKey)
-      }
-    }, true)
+    addComponentListener(
+      'minimalHome.columnCount',
+      (count: number) => {
+        if (count > 0) {
+          ;(this.$el as HTMLElement).style.setProperty(columnCountKey, count.toString())
+        } else {
+          ;(this.$el as HTMLElement).style.removeProperty(columnCountKey)
+        }
+      },
+      true,
+    )
   },
 })
 </script>
@@ -76,17 +81,13 @@ export default Vue.extend({
   &-tabs {
     flex-grow: 1;
     min-width: calc(
-      var(--card-width) * var(--minimal-home-card-column) +
-        var(--minimal-home-grid-gap) * (var(--minimal-home-card-column) - 1) + 2 *
-        var(--minimal-home-grid-padding)
+      var(--card-width) * var(--minimal-home-card-column) + var(--minimal-home-grid-gap) *
+        (var(--minimal-home-card-column) - 1) + 2 * var(--minimal-home-grid-padding)
     );
     .minimal-home-tab {
       &-cards {
         display: grid;
-        grid-template-columns: repeat(
-          var(--minimal-home-card-column),
-          var(--card-width)
-        );
+        grid-template-columns: repeat(var(--minimal-home-card-column), var(--card-width));
         gap: var(--minimal-home-grid-gap);
         padding: 0 var(--minimal-home-grid-padding);
         margin-bottom: 16px;

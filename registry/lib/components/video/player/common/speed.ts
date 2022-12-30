@@ -8,15 +8,13 @@ import { CoreApis } from '@/core/core-apis'
 import { addComponentListener, ComponentSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { getHook } from '@/plugins/hook'
-import {
-  bindCallback,
-  Subject,
-  subject,
-  TeardownLogic,
-} from './mini-rxjs'
+import { bindCallback, Subject, subject, TeardownLogic } from './mini-rxjs'
 import { distinctUntilChanged } from './mini-rxjs/operators/distinctUntilChanged'
 import {
-  getSpeedContext, SpeedContext, SpeedSeekPosition, useShareBuildArgument$,
+  getSpeedContext,
+  SpeedContext,
+  SpeedSeekPosition,
+  useShareBuildArgument$,
 } from './speed/context'
 
 export type VideoIdObject = { aid: string; cid: string }
@@ -33,15 +31,13 @@ export type EntryContext = Parameters<ComponentEntry>[0]
 export type OptionSubjects<O> = O & { [K in keyof O as `${Exclude<K, symbol>}$`]: Subject<O[K]> }
 
 export class EntrySpeedComponent<O extends UnknownOptions = UnknownOptions>
-implements EntryContext {
-  static create: <
-    OO extends Record<string, any> = unknown
-    >(metadata: Omit<
-      ComponentMetadata,
-      'entry' | 'reload' | 'unload' | 'options'
-    > & {
+  implements EntryContext
+{
+  static create: <OO extends Record<string, any> = unknown>(
+    metadata: Omit<ComponentMetadata, 'entry' | 'reload' | 'unload' | 'options'> & {
       options?: { [K in keyof OO]: OptionMetadata }
-    }) => ComponentMetadata;
+    },
+  ) => ComponentMetadata
 
   static contextMap: Partial<Record<keyof EntrySpeedComponent, keyof SpeedContext | string>> = {
     getVideoIdObject: 'videoIdObject',
@@ -56,31 +52,27 @@ implements EntryContext {
     decreaseVideoSpeed: 'decrease',
   }
 
-  constructor(protected readonly entryContext: EntryContext) {
-    lodash.assign(
-      this,
-      entryContext,
-      {
-        options: entryContext.settings.options,
-      },
-    )
+  constructor(
+    protected readonly entryContext: EntryContext,
+    protected readonly enabled$: Subject<boolean>,
+  ) {
+    lodash.assign(this, entryContext, {
+      options: entryContext.settings.options,
+    })
 
     // 执行迁移操作
     this.migrate?.()
 
     lodash.assign(
       this,
-      lodash.mapValues(
-        EntrySpeedComponent.contextMap,
-        path => async (...args) => {
-          // 这里调用 getSpeedContext 不是第一次调用，因此拿到的一定是缓存
-          // 无需传递 build 参数
-          const context = await getSpeedContext()
-          const value = lodash.get(context, path) as any
-          const result = lodash.isFunction(value) ? await value(...args) : value
-          return result
-        },
-      ),
+      lodash.mapValues(EntrySpeedComponent.contextMap, path => async (...args) => {
+        // 这里调用 getSpeedContext 不是第一次调用，因此拿到的一定是缓存
+        // 无需传递 build 参数
+        const context = await getSpeedContext()
+        const value = lodash.get(context, path) as any
+        const result = lodash.isFunction(value) ? await value(...args) : value
+        return result
+      }),
     )
   }
 
@@ -96,9 +88,9 @@ implements EntryContext {
   readonly getVideoSpeed: () => Promise<number>
   readonly setVideoSpeed: (value: number, timeout?: number) => Promise<void>
   readonly resetVideoSpeed: () => Promise<void>
-  readonly toggleVideoSpeed:
-    (legacy?: boolean) => Promise<void>
-      | ((offset: number, whence?: SpeedSeekPosition) => Promise<void>)
+  readonly toggleVideoSpeed: (
+    legacy?: boolean,
+  ) => Promise<void> | ((offset: number, whence?: SpeedSeekPosition) => Promise<void>)
   readonly increaseVideoSpeed: () => Promise<void>
   readonly decreaseVideoSpeed: () => Promise<void>
 
@@ -118,8 +110,8 @@ getSpeedContext((components: EntrySpeedComponent[]) => disposableSpeedContext =>
 
     if (repeatedKeys.length) {
       throw new Error(
-        'In the registered speed component, there is an implementation of getSpeedContextMixin that causes the speed context to be mixed in ambiguous.\n'
-     + `The repeated key names are ${repeatedKeys.join(', ')}`,
+        'In the registered speed component, there is an implementation of getSpeedContextMixin that causes the speed context to be mixed in ambiguous.\n' +
+          `The repeated key names are ${repeatedKeys.join(', ')}`,
       )
     }
   }
@@ -131,11 +123,10 @@ getSpeedContext((components: EntrySpeedComponent[]) => disposableSpeedContext =>
 
   components.forEach(component => {
     const options$ = lodash(component.settings.options)
-      .mapValues(
-        (_, optionName) => bindCallback(
-          addComponentListener,
-          `${component.metadata.name}.${optionName}`,
-        ).pipe(distinctUntilChanged()),
+      .mapValues((_, optionName) =>
+        bindCallback(addComponentListener, `${component.metadata.name}.${optionName}`).pipe(
+          distinctUntilChanged(),
+        ),
       )
       .mapKeys((_, optionName) => `${optionName}$`)
       .value()
@@ -143,19 +134,17 @@ getSpeedContext((components: EntrySpeedComponent[]) => disposableSpeedContext =>
     allOptions$.push(...lodash.values(options$))
 
     // 重新生成 options 代理对象
-    component.options = new Proxy<OptionSubjects<unknown>>(
-      component.settings.options, {
-        get: (target, p, receiver) => {
-          if (lodash.isSymbol(p)) {
-            return Reflect.get(target, p, receiver)
-          }
-          if (!Reflect.has(target, p) && p.endsWith('$')) {
-            return options$[p]
-          }
+    component.options = new Proxy<OptionSubjects<unknown>>(component.settings.options, {
+      get: (target, p, receiver) => {
+        if (lodash.isSymbol(p)) {
           return Reflect.get(target, p, receiver)
-        },
+        }
+        if (!Reflect.has(target, p) && p.endsWith('$')) {
+          return options$[p]
+        }
+        return Reflect.get(target, p, receiver)
       },
-    )
+    })
 
     component.speedContext = safeContext
     component.onSpeedContext(safeContext)
@@ -165,11 +154,11 @@ getSpeedContext((components: EntrySpeedComponent[]) => disposableSpeedContext =>
     }
 
     // 通知一下组件的选项值
-    lodash(options$).entries().forEach(([optionName, optionValue$]: [string, Subject<unknown>]) => {
-      optionValue$.next(
-        component.settings.options[optionName.slice(0, -1)],
-      )
-    })
+    lodash(options$)
+      .entries()
+      .forEach(([optionName, optionValue$]: [string, Subject<unknown>]) => {
+        optionValue$.next(component.settings.options[optionName.slice(0, -1)])
+      })
   })
 
   return {
@@ -190,9 +179,9 @@ EntrySpeedComponent.create = function create(metadata) {
   return {
     ...metadata,
     entry: (entryContext: EntryContext) => {
-      const component: EntrySpeedComponent | Error = lodash.attempt(() => new this(
-        entryContext,
-      ))
+      const component: EntrySpeedComponent | Error = lodash.attempt(
+        () => new this(entryContext, enabled$),
+      )
 
       if (component instanceof Error) {
         logError(component)
@@ -205,7 +194,7 @@ EntrySpeedComponent.create = function create(metadata) {
         shareBuildArgument$.next(component)
       })
 
-      shareBuildArgument$.next(component)
+      enabled$.next(true)
 
       getHook(`speed.component.${metadata.name}`).after(component)
 

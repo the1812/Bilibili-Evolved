@@ -43,7 +43,12 @@ export default Vue.extend({
           return
         }
         const links: string[] = json.data.list.map((it: { url: string }) => it.url)
-        Toast.success(links.map(l => `<a class="download-link" target="_blank" href="${l}">${l}</a>`).join('\n'), '下载录像')
+        Toast.success(
+          links
+            .map(l => `<a class="download-link" target="_blank" href="${l}">${l}</a>`)
+            .join('\n'),
+          '下载录像',
+        )
       } finally {
         this.disabled = false
       }

@@ -40,11 +40,8 @@ export const component = RememberSpeedComponent.create<Options>({
     globalSpeed: {
       displayName: '全局记忆倍速值',
       defaultValue: 1,
-      validator: val => lodash.clamp(
-        parseFloat(val),
-        MIN_BROWSER_SPEED_VALUE,
-        MAX_BROWSER_SPEED_VALUE,
-      ) || 1,
+      validator: val =>
+        lodash.clamp(parseFloat(val), MIN_BROWSER_SPEED_VALUE, MAX_BROWSER_SPEED_VALUE) || 1,
     },
     fixGlobalSpeed: {
       displayName: '固定全局倍速值',

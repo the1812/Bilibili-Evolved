@@ -23,7 +23,7 @@ export const plugin: PluginMetadata = {
         displayName: '频道',
         content: () => import('./NavbarChannel.vue'),
         clickAction: () => {
-          const channelId = dq('.navbar-channel[data-channel-id]').getAttribute('data-channel-id')
+          const channelId = dq('.navbar-channel').getAttribute('data-channel-id')
           window.open(
             channelId ? `${defaultLink}${channelId}` : defaultLink,
             isOpenInNewTab() ? '_blank' : '_self',

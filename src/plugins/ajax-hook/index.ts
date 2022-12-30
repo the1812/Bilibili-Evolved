@@ -21,9 +21,8 @@ const setupAjaxHook = () => {
     open: XMLHttpRequest.prototype.open,
     send: XMLHttpRequest.prototype.send,
   }
-  const fireHandlers = (name: string, thisArg: any, ...args: any[]) => (
+  const fireHandlers = (name: string, thisArg: any, ...args: any[]) =>
     getHandlers(name).forEach(it => it.call(thisArg, ...args))
-  )
   const hook = (name: string, thisArgs: any, ...args: any[]) => {
     fireHandlers(`before${name}`, thisArgs, ...args)
     const returnValue = original[name].call(thisArgs, ...args)

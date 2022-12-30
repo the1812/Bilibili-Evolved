@@ -1,4 +1,5 @@
 export interface CdnConfig {
+  name: string
   owner: string
   host: string
   stableClient: string
@@ -9,7 +10,8 @@ export interface CdnConfig {
     jszip: string
     sortable: string
     mdi: string
-  },
+    streamsaver: string
+  }
   smallLogo: string
   logo: string
   root: (branch: string, ownerOverride: string) => string

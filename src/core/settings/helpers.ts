@@ -14,9 +14,8 @@ import { matchUrlPattern } from '../utils'
  * 生成组件选项设置
  * @param options 组件选项定义
  */
-export const metadataToOptions = <O extends UnknownOptions>(
-  options: OptionsMetadata<O>,
-): O => lodash.mapValues(options, m => m.defaultValue) as O
+export const metadataToOptions = <O extends UnknownOptions>(options: OptionsMetadata<O>): O =>
+  lodash.mapValues(options, m => m.defaultValue) as O
 
 /**
  * 生成组件设置
@@ -51,11 +50,14 @@ export const isUserPlugin = (plugin: PluginMetadata | string) => {
 }
 const emptySettings: ComponentSettings = {
   enabled: false,
-  options: new Proxy({}, {
-    get() {
-      return false
+  options: new Proxy(
+    {},
+    {
+      get() {
+        return false
+      },
     },
-  }),
+  ),
 }
 
 /**
@@ -97,7 +99,8 @@ export const getComponentSettings = <O extends UnknownOptions>(
 /**
  * 获取通用设置 (`settingsPanel`组件的`options`)
  */
-export const getGeneralSettings = () => getComponentSettings<SettingsPanelOptions>('settingsPanel').options
+export const getGeneralSettings = () =>
+  getComponentSettings<SettingsPanelOptions>('settingsPanel').options
 /**
  * 判断此组件是否启用, 启用的条件为:
  * - 若定义了排除列表, 当前URL必须不匹配其排除列表中任意一项(`Component.urlExclude`)

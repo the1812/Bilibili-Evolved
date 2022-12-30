@@ -273,7 +273,9 @@ export const proto = {
 }
 const decode = lodash.curry(async (type: string, blob: Blob) => {
   const buffer = new Uint8Array(
-    'arrayBuffer' in Blob.prototype ? await blob.arrayBuffer() : await new Response(blob).arrayBuffer(),
+    'arrayBuffer' in Blob.prototype
+      ? await blob.arrayBuffer()
+      : await new Response(blob).arrayBuffer(),
   )
   const protobuf = await protobufLibrary
   const root = protobuf.Root.fromJSON(proto)

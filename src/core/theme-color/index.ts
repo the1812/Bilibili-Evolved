@@ -12,7 +12,7 @@ export const initColors = () => {
   const update = lodash.debounce(() => {
     colorStyle.textContent = `
     html {
-      ${[...colorMap.entries()].map(([key, value]) => (`${key}: ${value};`)).join('\n')}
+      ${[...colorMap.entries()].map(([key, value]) => `${key}: ${value};`).join('\n')}
     }
     `.trim()
   }, 100)
@@ -26,8 +26,20 @@ export const initColors = () => {
     set('--text-color', textColor)
     // for v1.x
     set('--foreground-color', textColor)
-    set('--foreground-color-d', Color(textColor, 'keyword').alpha(14 / 16).rgb().string())
-    set('--foreground-color-b', Color(textColor, 'keyword').alpha(12 / 16).rgb().string())
+    set(
+      '--foreground-color-d',
+      Color(textColor, 'keyword')
+        .alpha(14 / 16)
+        .rgb()
+        .string(),
+    )
+    set(
+      '--foreground-color-b',
+      Color(textColor, 'keyword')
+        .alpha(12 / 16)
+        .rgb()
+        .string(),
+    )
     set('--brightness', `${textColor === 'black' ? '100' : '0'}%`)
     set('--invert-filter', textColor === 'black' ? 'invert(0)' : 'invert(1)')
     update()
@@ -36,19 +48,43 @@ export const initColors = () => {
     set('--theme-color', value)
     for (let delta = 10; delta <= 90; delta += 10) {
       const color = Color(value, 'hex')
-      set(`--theme-color-${delta}`, color.alpha(delta / 100).rgb().string())
+      set(
+        `--theme-color-${delta}`,
+        color
+          .alpha(delta / 100)
+          .rgb()
+          .string(),
+      )
       set(`--theme-color-lightness-${delta}`, color.lightness(delta).rgb().toString())
     }
-    set('--pink-image-filter', makeImageFilter(Color({
-      r: 251,
-      g: 113,
-      b: 152,
-    }, 'rgb'), Color(value, 'hex')))
-    set('--blue-image-filter', makeImageFilter(Color({
-      r: 0,
-      g: 160,
-      b: 213,
-    }, 'rgb'), Color(value, 'hex')))
+    set(
+      '--pink-image-filter',
+      makeImageFilter(
+        Color(
+          {
+            r: 251,
+            g: 113,
+            b: 152,
+          },
+          'rgb',
+        ),
+        Color(value, 'hex'),
+      ),
+    )
+    set(
+      '--blue-image-filter',
+      makeImageFilter(
+        Color(
+          {
+            r: 0,
+            g: 160,
+            b: 213,
+          },
+          'rgb',
+        ),
+        Color(value, 'hex'),
+      ),
+    )
     handleTextColorChange(getGeneralSettings().textColor)
     update()
   }

@@ -19,7 +19,7 @@ export default Vue.extend({
       if (document.pictureInPictureElement) {
         document.exitPictureInPicture()
       } else {
-        (dq('video') as HTMLVideoElement)?.requestPictureInPicture()
+        ;(dq('video') as HTMLVideoElement)?.requestPictureInPicture()
       }
     },
   },

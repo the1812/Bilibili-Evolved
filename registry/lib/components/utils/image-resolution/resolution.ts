@@ -2,10 +2,7 @@ import { styledComponentEntry } from '@/components/styled-component'
 import { Options } from '.'
 
 const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
-const excludeSelectors = [
-  '#certify-img1',
-  '#certify-img2',
-]
+const excludeSelectors = ['#certify-img1', '#certify-img2']
 const walk = (rootElement: Node, action: (node: HTMLElement) => void) => {
   const walker = document.createNodeIterator(rootElement, NodeFilter.SHOW_ELEMENT)
   let node = walker.nextNode()
@@ -56,25 +53,36 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     setValue(element, value.replace(resizeRegex, `@${newWidth}w_${newHeight}h`))
   }
   attributes(element, () => {
-    replaceSource(e => e.getAttribute('src'), (e, v) => e.setAttribute('src', v))
-    replaceSource(e => e.style.backgroundImage, (e, v) => (e.style.backgroundImage = v))
+    replaceSource(
+      e => e.getAttribute('src'),
+      (e, v) => e.setAttribute('src', v),
+    )
+    replaceSource(
+      e => e.style.backgroundImage,
+      (e, v) => (e.style.backgroundImage = v),
+    )
   })
 }
-export const startResolution = styledComponentEntry<Options>(() => import('./fix.scss'),
+export const startResolution = styledComponentEntry<Options>(
+  () => import('./fix.scss'),
   async ({ settings }) => {
     const { allMutations } = await import('@/core/observer')
-    const dpi = settings.options.scale === 'auto'
-      ? window.devicePixelRatio
-      : parseFloat(settings.options.scale)
+    const dpi =
+      settings.options.scale === 'auto'
+        ? window.devicePixelRatio
+        : parseFloat(settings.options.scale)
     walk(document.body, it => imageResolution(dpi, it))
     allMutations(records => {
-      records.forEach(record => record.addedNodes.forEach(node => {
-        if (node instanceof HTMLElement) {
-          imageResolution(dpi, node)
-          if (node.nodeName.toUpperCase() !== 'IMG') {
-            walk(node, it => imageResolution(dpi, it))
+      records.forEach(record =>
+        record.addedNodes.forEach(node => {
+          if (node instanceof HTMLElement) {
+            imageResolution(dpi, node)
+            if (node.nodeName.toUpperCase() !== 'IMG') {
+              walk(node, it => imageResolution(dpi, it))
+            }
           }
-        }
-      }))
+        }),
+      )
     })
-  })
+  },
+)

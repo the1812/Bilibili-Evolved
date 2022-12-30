@@ -27,16 +27,23 @@
 需要浏览器装有 [Tampermonkey](https://tampermonkey.net/) 或 [Violentmonkey](https://violentmonkey.github.io/) 插件, 下方表格中挑一个链接安装.
 
 **注意事项**
-- 做好觉悟, 脚本开启后不能使用弹幕点赞和举报, 全景视频不能用鼠标拖拽视角(只能用键盘操作), 对性能也有较大影响.
-- 脚本功能默认不对未登录的状态做适配, 请登录 b 站后再使用此脚本.
+- **⚠ 使用正式版 (GitHub 源) 和预览版须翻墙.**
+- 默认不带任何具体功能, 需要在按[设置](#设置)中的说明添加感兴趣的功能.
+- 这个是一个综合性的脚本, 如果只是想下载视频建议去 [GreasyFork](https://greasyfork.org/zh-CN/scripts/by-site/bilibili.com) 找个更专业的.
+- 可能不能使用弹幕点赞和举报.
+- 全景视频不能用鼠标拖拽视角(只能用键盘操作).
+- 默认屏蔽双击全屏, 如有需要可以安装 `双击全屏` 组件来恢复.
+- 对性能有较大影响.
+- 默认不对未登录的状态做适配.
 - 新版本一旦正式发布, 就不再对旧版本做任何技术支持.
-- 使用外部网站的链接时(如将下载任务发送到自己的服务器 / 使用链接安装组件等)可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
-- 可能无法很好地适应窄屏幕, 请尽量以 1400 x 800 以上的逻辑分辨率使用此脚本.
-- **⚠ 网络需要确保能够连接 cdn.jsdelivr.net, 如果使用 GitHub 更新源, 也需要能够连接 raw.githubusercontent.com (这两个目前都有墙**
+- 使用外部网站的链接时 (如将下载任务发送到自己的服务器 / 使用链接安装组件等) 可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
+- 需要在至少 1400 x 800 以上的逻辑分辨率下使用.
 
-| 正式版 | 预览版                                                                                                   |
-| ------ | -------------------------------------------------------------------------------------------------------- |
-| [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
+| 正式版 (jsDelivr 源)                                                                                        | 正式版 (GitHub 源)                                                                                      | 预览版                                                                                                           |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master-cdn/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
+
+> 如果处于某种原因只能停在旧版, 可以参考[旧版本回退指南](./doc/rollback.md).
 
 # 设置
 脚本启用后, 在网页左侧中央会有功能面板和设置面板的入口. 功能面板中包含适用于当前页面的一些功能入口, 设置面板中可以管理组件的开启/关闭, 修改组件选项, 以及安装/卸载组件和插件等.
@@ -55,7 +62,7 @@
 
 <img alt="manage-panel" src="images/v2/manage-panel.jpg" width="400">
 
-> 用链接安装需要对应文件的直链, GitHub Raw 或 jsDelivr 都可以. 批量安装时逐行粘贴链接即可.
+> 用链接安装需要对应文件的直链, 批量安装时逐行粘贴链接即可.
 
 如果你曾经使用过 v1 版, 可以利用 `v1 设置迁移` 组件将旧设置导入到 v2 中, 该工具将自动把里面开启的设置对应的组件下载并安装, 使用方法可以参考[这个文档](./doc/v1-migrate.md).
 
@@ -66,7 +73,7 @@
 # 推荐配置
 - 操作系统: 64-bit Windows 10+ / macOS 10.15+
 - 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 88+ / Firefox 80+ / Edge 88+ / Safari 14.1+
+- 浏览器: Chrome 100+ / Firefox 103+ / Edge 100+ / Safari 15+
 - 处理器: 8代 Intel Core i7+ / AMD Ryzen 5000+
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
@@ -79,8 +86,6 @@
 
 ### [Tampermonkey](https://tampermonkey.net/) / [Violentmonkey](https://violentmonkey.github.io/)
 兼容, 但在较旧的浏览器中 Violentmonkey 可能无法运行此脚本.
-
-> Tampermonkey 版本不能是 4.14.6147 / 6148
 
 ### [Greasemonkey](https://www.greasespot.net/)
 不兼容.
@@ -106,16 +111,30 @@
 ## 参与项目
 欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~
 
+## 更换 CDN
+如果希望更换脚本的基础 CDN (GitHub Raw), 可以参考[更换脚本 CDN](./doc/cdn.md)中的说明.
+
 # 隐私声明
 本脚本以及本仓库中提供的组件/插件, 是完全匿名的. 用户数据的使用均在本地完成, 不会存储到任何服务器, 也不会有所谓的"用户体验改善计划"来收集统计数据.
 
 但是, 任何组件/插件都对用户数据有着完全的访问能力, 对于其他来源(非本仓库提供)的组件/插件, 请自行甄别其安全性.
+
+# 开源许可
+源代码基于 [MIT 许可](https://zh.wikipedia.org/zh-cn/MIT%E8%A8%B1%E5%8F%AF%E8%AD%89) 公开.
+
+但存在一些限制:
+- 如果需要在其他地方发布此脚本<sup>1</sup>, 则必须满足以下条件之一:
+  - 保留此 README 文档, 且安装入口只存在于此文档的 ["安装"](#安装) 章节中, 不得额外提供跳过 README 文档阅读即可安装的方式.
+  - 自行处理相关联的技术支持, 不得直接导向本仓库. 也就是必须 Fork 并修改所有指向本仓库的反馈渠道, 包括 Issues 和 Discussions. 本仓库不对来自其他来源安装的脚本提供技术支持.
+
+> <sup>1</sup> 指发布脚本的完整内容, 例如直接将安装链接 (以 `.user.js` 结尾) 发布, 或者在 GreasyFork 等脚本托管站点导入. 如果只是指向本仓库的页面链接 (例如 `https://github.com/the1812/Bilibili-Evolved`) 是没关系的.
 
 # 第三方开源组件
 👍感谢这些组件帮助我们极大地提升了开发效率.
 
 - [Vue.js](https://cn.vuejs.org/index.html)
 - [JSZip](https://stuk.github.io/jszip/)
+- [StreamSaver.js](https://github.com/jimmywarting/StreamSaver.js)
 - [bilibili API collect](https://github.com/SocialSisterYi/bilibili-API-collect)
 - [popper-core](https://github.com/popperjs/popper-core)
 - [Tippy.js](https://github.com/atomiks/tippyjs)

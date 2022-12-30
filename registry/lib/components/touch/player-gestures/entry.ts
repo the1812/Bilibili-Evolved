@@ -11,10 +11,10 @@ export const entry = async () => {
     let gestureVM: Vue & {
       opened: boolean
       sync: () => void
-      startPreview: (params: GesturePreviewParams) => void,
-      cancelPreview: () => void,
-      endPreview: () => void,
-      apply: (params: GesturePreviewParams) => Promise<void>,
+      startPreview: (params: GesturePreviewParams) => void
+      cancelPreview: () => void
+      endPreview: () => void
+      apply: (params: GesturePreviewParams) => Promise<void>
       preview: {
         seekMode: ProgressSeekMode
       }
@@ -23,10 +23,7 @@ export const entry = async () => {
       const GesturePreview = await import('./GesturePreview.vue')
       const { mountVueComponent } = await import('@/core/utils')
       gestureVM = mountVueComponent(GesturePreview)
-      playerAgent.query.video.subtitle.sync()?.insertAdjacentElement(
-        'beforebegin',
-        gestureVM.$el,
-      )
+      playerAgent.query.video.subtitle.sync()?.insertAdjacentElement('beforebegin', gestureVM.$el)
     }
     const { Swiper } = await import('./swiper')
     const swiper = new Swiper(playerAgent.query.video.container.sync())
@@ -38,26 +35,28 @@ export const entry = async () => {
     })
     swiper.action.addEventListener('end', () => {
       gestureVM.endPreview()
-    });
-    [
-      'volume',
-      'brightness',
-    ].forEach(type => {
+    })
+    ;['volume', 'brightness'].forEach(type => {
       swiper.action.addEventListener(type, (e: CustomEvent<number>) => {
         gestureVM.startPreview({
           [type]: e.detail,
         })
       })
     })
-    swiper.action.addEventListener('progress', (e: CustomEvent<{
-      progress: number
-      mode: ProgressSeekMode
-    }>) => {
-      const { progress, mode } = e.detail
-      gestureVM.preview.seekMode = mode
-      gestureVM.startPreview({
-        progress,
-      })
-    })
+    swiper.action.addEventListener(
+      'progress',
+      (
+        e: CustomEvent<{
+          progress: number
+          mode: ProgressSeekMode
+        }>,
+      ) => {
+        const { progress, mode } = e.detail
+        gestureVM.preview.seekMode = mode
+        gestureVM.startPreview({
+          progress,
+        })
+      },
+    )
   })
 }

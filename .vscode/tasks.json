@@ -5,112 +5,112 @@
   "tasks": [
     {
       "type": "shell",
-      "command": "yarn ts-node ./dev-tools/dev-server/index.ts",
+      "command": "pnpm ts-node ./dev-tools/dev-server/index.ts",
       "group": "build",
       "problemMatcher": [],
       "label": "启动开发服务 dev-server"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./webpack/webpack.dev.ts --progress",
+      "command": "pnpm webpack --config ./webpack/webpack.dev.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:编译开发版本 dev:build-core"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./webpack/webpack.dev.ts --progress",
+      "command": "pnpm webpack --watch --config ./webpack/webpack.dev.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:监视开发版本 dev:watch-core"
     },
     {
       "type": "shell",
-      "command": "yarn serve dist -p ${input:serverPort}",
+      "command": "pnpm serve dist -p ${input:serverPort}",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:启动服务器 dev:serve-core"
     },
     {
       "type": "shell",
-      "command": "yarn serve registry/dist -p ${input:serverPort}",
+      "command": "pnpm serve registry/dist -p ${input:serverPort}",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:启动服务器 dev:serve-features"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./registry/webpack/components.ts --progress --mode=development",
+      "command": "pnpm webpack --watch --config ./registry/webpack/components.ts --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:监视组件 dev:watch-components"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --watch --config ./registry/webpack/plugins.ts --progress --mode=development",
+      "command": "pnpm webpack --watch --config ./registry/webpack/plugins.ts --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:监视插件 dev:watch-plugins"
     },
     {
       "type": "shell",
-      "command": "yarn tsc -p tsconfig.type-check.json --noEmit",
+      "command": "pnpm tsc -p tsconfig.type-check.json --noEmit",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:类型检查 prod:type"
     },
     {
       "type": "shell",
-      "command": "yarn --silent webpack --config ./webpack/webpack.prod.ts --profile --json > dist/profile.json && yarn webpack-bundle-analyzer dist/profile.json",
+      "command": "pnpm --silent webpack --config ./webpack/webpack.prod.ts --profile --json > dist/profile.json && pnpm webpack-bundle-analyzer dist/profile.json",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:打包分析 prod:analyze"
     },
     {
       "type": "shell",
-      "command": "yarn eslint --cache --cache-location node_modules/.cache/eslint/ './**/*.@(js|ts|vue)'",
+      "command": "pnpm eslint --cache --cache-location node_modules/.cache/eslint/ './**/*.@(js|ts|vue)'",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:代码检查 prod:lint"
     },
     {
       "type": "shell",
-      "command": "yarn eslint --cache --cache-location node_modules/.cache/eslint/ --fix './**/*.@(js|ts|vue)'",
+      "command": "pnpm eslint --cache --cache-location node_modules/.cache/eslint/ --fix './**/*.@(js|ts|vue)'",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:代码修复 prod:lint-fix"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./webpack/webpack.prod.ts --progress",
+      "command": "pnpm webpack --config ./webpack/webpack.prod.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "本体:编译生产版本 prod:build-core"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/components.ts --progress",
+      "command": "pnpm webpack --config ./registry/webpack/components.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译组件 prod:build-components"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/plugins.ts --progress",
+      "command": "pnpm webpack --config ./registry/webpack/plugins.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译插件 prod:build-plugins"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/all.ts",
+      "command": "pnpm webpack --config ./registry/webpack/all.ts",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译所有 prod:build-features"
     },
     {
       "type": "shell",
-      "command": "yarn webpack --config ./registry/webpack/docs.ts --progress",
+      "command": "pnpm webpack --config ./registry/webpack/docs.ts --progress",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译功能文档 prod:build-docs"

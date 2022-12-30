@@ -1,9 +1,4 @@
-import {
-  TestPattern,
-  Executable,
-  VueModule,
-  I18nDescription,
-} from '@/core/common-types'
+import { TestPattern, Executable, VueModule, I18nDescription } from '@/core/common-types'
 import { ComponentSettings } from '@/core/settings'
 import { CoreApis } from '@/core/core-apis'
 import { PluginMinimalData } from '@/plugins/plugin'
@@ -71,8 +66,10 @@ export interface OptionMetadata<V = unknown> {
     step?: number
   }
   /** `number`, `string`或`Range`类型的选项, 可以添加验证函数来阻止非法输入 */
-  validator?: ComponentOptionValidator<Range<string>> |
-  ComponentOptionValidator<string> | ComponentOptionValidator<number>
+  validator?:
+    | ComponentOptionValidator<Range<string>>
+    | ComponentOptionValidator<string>
+    | ComponentOptionValidator<number>
 }
 
 /** 多个选项的信息 */
@@ -150,9 +147,7 @@ export const componentsTags = {
 }
 
 /** 组件入口函数的参数 */
-export interface ComponentEntryContext<
-  O extends UnknownOptions = UnknownOptions
-> {
+export interface ComponentEntryContext<O extends UnknownOptions = UnknownOptions> {
   /** 当前组件的设置 */
   settings: ComponentSettings<O>
   /** 当前组件的信息 */
@@ -162,17 +157,12 @@ export interface ComponentEntryContext<
 }
 
 /** 组件入口函数 */
-export type ComponentEntry<
-  O extends UnknownOptions = UnknownOptions,
-  T = unknown
-> = (
-  context: ComponentEntryContext<O>
+export type ComponentEntry<O extends UnknownOptions = UnknownOptions, T = unknown> = (
+  context: ComponentEntryContext<O>,
 ) => T | Promise<T>
 
 /** 带有函数/复杂对象的组件信息 */
-export interface FunctionalMetadata<
-  O extends UnknownOptions = UnknownOptions
-> {
+export interface FunctionalMetadata<O extends UnknownOptions = UnknownOptions> {
   /** 主入口, 重新开启时不会再运行 */
   entry: ComponentEntry<O>
   /** 导出小组件 */
@@ -203,9 +193,9 @@ export interface FunctionalMetadata<
 }
 
 /** 组件基本信息 */
-export interface ComponentMetadata<
-  O extends UnknownOptions = UnknownOptions
-> extends FeatureBase, FunctionalMetadata<O> {
+export interface ComponentMetadata<O extends UnknownOptions = UnknownOptions>
+  extends FeatureBase,
+    FunctionalMetadata<O> {
   /** 组件名称 */
   name: string
   /** 显示名称 */

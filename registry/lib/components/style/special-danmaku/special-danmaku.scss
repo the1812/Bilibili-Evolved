@@ -1,21 +1,30 @@
-body.disable-highlight-danmaku-style .b-danmaku-high {
-  display: block !important;
-  padding: 0 !important;
-  line-height: 1.125 !important;
-  .b-danmaku-high-icon {
-    display: none !important;
-  }
-  .b-danmaku-high-text {
-    margin: 0 !important;
-    text-shadow: inherit;
+body.disable-highlight-danmaku-style {
+  .bili-dm.bili-high,
+  .b-danmaku-high {
+    display: block !important;
+    padding: 0 !important;
+    line-height: 1.125 !important;
+    .bili-high-icon,
+    .b-danmaku-high-icon {
+      display: none !important;
+    }
+    .bili-high-text,
+    .b-danmaku-high-text {
+      margin: 0 !important;
+      text-shadow: inherit;
+    }
   }
 }
-body.disable-up-danmaku-style .b-danmaku-up {
-  padding: 0 !important;
-  line-height: 1.125 !important;
-  background-color: transparent !important;
-  border-radius: 0 !important;
-  .b-danmaku-up-tip {
-    display: none !important;
+body.disable-up-danmaku-style {
+  .bili-dm.bili-up,
+  .b-danmaku-up {
+    padding: 0 !important;
+    line-height: 1.125 !important;
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    .bili-up-tip,
+    .b-danmaku-up-tip {
+      display: none !important;
+    }
   }
 }

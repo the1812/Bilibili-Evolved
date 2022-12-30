@@ -33,21 +33,26 @@ const entry = () => {
     const rootPath = '../../registry/dist/'
     const getDocText = (title: string, items: DocSourceItem[]) => {
       const docText = items.map(it => {
-        const {
-          name,
-          displayName,
-          description,
-          fullAbsolutePath,
-          fullRelativePath,
-          owner,
-        } = it
+        const { name, displayName, description, fullAbsolutePath, fullRelativePath, owner } = it
         const item = `
 ### [${displayName}](${fullRelativePath})
 \`${name}\`
 
-**AltCdn:** [\`Stable\`](${cdnRoots.AltCdn(branches.stable, owner)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.AltCdn(branches.preview, owner)}${fullAbsolutePath})
+**jsDelivr:** [\`Stable\`](${cdnRoots.jsDelivr(
+          branches.stable,
+          owner,
+        )}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.jsDelivr(
+          branches.preview,
+          owner,
+        )}${fullAbsolutePath})
 
-**GitHub:** [\`Stable\`](${cdnRoots.GitHub(branches.stable, owner)}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub(branches.preview, owner)}${fullAbsolutePath})
+**GitHub:** [\`Stable\`](${cdnRoots.GitHub(
+          branches.stable,
+          owner,
+        )}${fullAbsolutePath}) / [\`Preview\`](${cdnRoots.GitHub(
+          branches.preview,
+          owner,
+        )}${fullAbsolutePath})
 
 ${description || ''}
         `.trim()
@@ -68,10 +73,7 @@ ${getDocText(componentsDoc.title, componentsDoc.items)}
 ${getDocText(pluginsDoc.title, pluginsDoc.items)}
 
 `.trim()
-    const featuresJson = JSON.stringify([
-      ...componentsDoc.items,
-      ...pluginsDoc.items,
-    ], undefined, 2)
+    const featuresJson = JSON.stringify([...componentsDoc.items, ...pluginsDoc.items], undefined, 2)
 
     const packData = await generatePackageDocs(componentsDoc.items.concat(pluginsDoc.items))
 

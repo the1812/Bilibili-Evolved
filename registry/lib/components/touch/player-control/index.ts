@@ -11,10 +11,7 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '增大播放器控制栏里按钮的间距, 方便触屏使用.',
   },
-  tags: [
-    componentsTags.touch,
-    componentsTags.style,
-  ],
+  tags: [componentsTags.touch, componentsTags.style],
   enabledByDefault: navigator.maxTouchPoints > 0,
   urlInclude: playerUrls,
   instantStyles: [

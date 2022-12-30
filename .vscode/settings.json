@@ -56,6 +56,7 @@
     "jsdelivr",
     "jszip",
     "kanban",
+    "keymap",
     "kichiku",
     "linebreak",
     "Liveroom",
@@ -68,6 +69,7 @@
     "overscroll",
     "pako",
     "plusplus",
+    "pnpm",
     "Popcap",
     "popperjs",
     "preload",
@@ -83,6 +85,8 @@
     "roomid",
     "saturationv",
     "Sendbar",
+    "sortablejs",
+    "streamsaver",
     "superchat",
     "Swiper",
     "tabindex",
@@ -90,6 +94,7 @@
     "Touhou",
     "truetype",
     "uname",
+    "userscript",
     "Violentmonkey",
     "Vuex",
     "Wasm",
@@ -106,10 +111,15 @@
   "search.exclude": {
     "**/dev": true,
     "**/dist": true,
-    "**/yarn.lock": true
+    "**/pnpm-lock.yaml": true
   },
   "eslint.format.enable": true,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+  },
   "explorer.fileNesting.patterns": {
     "*.ts": "${capture}.js",
     "*.js": "${capture}.js.map, ${capture}.min.js, ${capture}.d.ts",

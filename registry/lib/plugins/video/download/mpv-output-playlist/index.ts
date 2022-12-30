@@ -9,7 +9,8 @@ export const plugin: PluginMetadata = {
     name: 'wuliic',
     link: 'https://github.com/wullic',
   },
-  description: '为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)',
+  description:
+    '为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)',
   setup: ({ addData }) => {
     addData('downloadVideo.outputs', (outputs: DownloadVideoOutput[]) => {
       outputs.push(mpvPlaylist)

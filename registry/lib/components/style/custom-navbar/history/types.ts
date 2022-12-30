@@ -4,6 +4,7 @@ import { formatDuration } from '@/core/utils/formatters'
 
 /** 历史项目类型, 值为 API 中的 `history.business` */
 export enum HistoryType {
+  All = 'all',
   Video = 'archive',
   Live = 'live',
   Article = 'article',
@@ -48,32 +49,44 @@ export interface TypeFilter {
   displayName: string
   icon: string
   checked: boolean
+  apiType: string
 }
 /** 所有的历史记录类型 */
 export const types = [
   {
+    name: HistoryType.All,
+    displayName: '全部',
+    icon: '',
+    checked: true,
+    apiType: '',
+  },
+  {
     name: HistoryType.Video,
     displayName: '视频',
     icon: 'mdi-play-circle-outline',
-    checked: true,
+    checked: false,
+    apiType: 'archive',
   },
   {
     name: HistoryType.Bangumi,
     displayName: '番剧',
     icon: 'mdi-television-classic',
-    checked: true,
+    checked: false,
+    apiType: 'archive',
   },
   {
     name: HistoryType.Live,
     displayName: '直播',
     icon: 'mdi-video-wireless-outline',
-    checked: true,
+    checked: false,
+    apiType: 'live',
   },
   {
     name: HistoryType.Article,
     displayName: '专栏',
     icon: 'mdi-newspaper-variant-outline',
-    checked: true,
+    checked: false,
+    apiType: 'article',
   },
 ] as TypeFilter[]
 
@@ -95,9 +108,18 @@ const formatTime = (date: Date) => {
   const { yesterday } = getTimeData()
   const timestamp = Number(date)
   if (timestamp >= yesterday) {
-    return `${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+    return `${date.getHours().toString().padStart(2, '0')}:${date
+      .getMinutes()
+      .toString()
+      .padStart(2, '0')}`
   }
-  return `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
+  return `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
+    .getDate()
+    .toString()
+    .padStart(2, '0')} ${date.getHours().toString().padStart(2, '0')}:${date
+    .getMinutes()
+    .toString()
+    .padStart(2, '0')}`
 }
 const parseHistoryItem = (item: any): HistoryItem => {
   if (item.history.business === 'article') {
@@ -110,7 +132,7 @@ const parseHistoryItem = (item: any): HistoryItem => {
     oid, // 直播 房间号 / 专栏 cv 号
   } = item.history
   const progressParam = item.progress > 0 ? `t=${item.progress}` : 't=0'
-  const progress = item.progress === -1 ? 1 : (item.progress / item.duration)
+  const progress = item.progress === -1 ? 1 : item.progress / item.duration
   const https = (url: string) => url.replace('http:', 'https:')
   const time = new Date(item.view_at * 1000)
   const cover = (() => {
@@ -179,12 +201,17 @@ const parseHistoryItem = (item: any): HistoryItem => {
  * 获取指定观看时间之前的一页历史记录, 不指定则返回最新的历史记录
  * @param viewTime 观看时间
  */
-export const getHistoryItems = async (viewTime?: number) => {
-  let api = 'https://api.bilibili.com/x/web-interface/history/cursor'
+export const getHistoryItems = async (viewTime?: number, type?: TypeFilter) => {
+  const api = 'https://api.bilibili.com/x/web-interface/history/cursor'
+  const params = new URLSearchParams()
   if (viewTime) {
-    api += `?view_at=${Math.round(viewTime / 1000)}`
+    params.set('view_at', Math.round(viewTime / 1000).toString())
   }
-  const { list } = await bilibiliApi(getJsonWithCredentials(api), '获取历史记录失败')
+  params.set('type', type?.apiType ?? '')
+  const { list } = await bilibiliApi(
+    getJsonWithCredentials(`${api}?${params.toString()}`),
+    '获取历史记录失败',
+  )
   if (!Array.isArray(list)) {
     return []
   }

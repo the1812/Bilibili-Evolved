@@ -11,9 +11,7 @@ body:
     attributes:
       label: 对应功能
       description: |
-        **动态功能最近失效的请去 [#3191](https://github.com/the1812/Bilibili-Evolved/issues/3191), 求求别再开新反馈了**
-        
-        (指本脚本的某项具体功能, 不是指 b 站的) 可以在设置中尝试开启 / 关闭某项功能来排查. 最好能附上功能的 Commit 值 (在设置里功能选项的底部). 
+        (指本脚本的某项具体功能, 不是指 b 站的) 可以在设置中尝试开启 / 关闭某项功能来排查. 最好能附上功能的 Commit 值 (在设置里功能选项的底部).
         <img src="https://user-images.githubusercontent.com/26504152/152666017-8a5acabc-2ad1-47ef-b0a2-cd5c54c867ab.jpg" width="400">
         请注意: 以下功能已不再维护 (不再修复 bug 和添加新功能), 但是你仍然可以为其提供 Pull Request.
         - 直播间自动抽奖
@@ -52,7 +50,7 @@ body:
     attributes:
       label: 播放器版本
       description: |
-        在 b 站播放器上右键可以看到播放器版本号, 大于 3 的别反馈视频相关功能了, 去 [#3187](https://github.com/the1812/Bilibili-Evolved/issues/3187) 里有.
+        在 b 站播放器上右键可以看到播放器版本号, 大于 3 的别反馈视频相关功能了, 去 [#3187](https://github.com/the1812/Bilibili-Evolved/issues/3187) 里有. 如果是 2, 还要确认下是不是新版播放页, 需要返回旧版才能使用脚本功能. (辨认方法可参考 [#3384](https://github.com/the1812/Bilibili-Evolved/discussions/3384))
       placeholder: 请输入
     validations:
       required: true
@@ -73,8 +71,7 @@ body:
     attributes:
       label: 错误信息
       description: |
-        脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出, 在过滤里填入 `-/^DevTools/ -jinkela -[Report -BY_CLIENT`, 剩下的信息就可以粘贴过来. <br><img width="400" src="https://user-images.githubusercontent.com/26504152/145991238-c3f3bc87-6cda-4192-afd1-c25843afe0db.png">
-        如果是近期出问题, 并且其中包含 `couldn't load @require from URL 'https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js'`, 请看 [#3337](https://github.com/the1812/Bilibili-Evolved/issues/3337) 的解答
+        脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出, 在过滤里填入 `bilibili evolved`, 剩下的信息就可以粘贴过来, 太长的话可以截图放下面. <br><img width="400" src="https://user-images.githubusercontent.com/26504152/173189611-f1e9e46a-a31d-4d21-a95a-5771e16372dd.png">
       render: shell
       placeholder: 请输入
     validations:

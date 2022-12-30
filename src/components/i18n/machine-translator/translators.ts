@@ -110,7 +110,9 @@ export const [translateProviders] = registerAndGetData('i18n.machineTranslators'
 } as Record<string, MachineTranslateProvider>)
 export const translateProviderNames = Object.keys(translateProviders)
 export const getTranslator = (): MachineTranslateProvider => {
-  const { options: { translator } } = getComponentSettings<I18nOptions>('i18n')
+  const {
+    options: { translator },
+  } = getComponentSettings<I18nOptions>('i18n')
   const provider = translateProviders[translator] || translateProviders.GoogleCN
   return provider
 }

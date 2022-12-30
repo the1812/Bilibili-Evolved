@@ -9,13 +9,15 @@ export interface CommentReplyItem {
   /** 评论ID */
   id: string
   /** 评论者UID */
-  userID: string
+  userId: string
   /** 用户名 */
   userName: string
   /** 评论内容 */
   content: string
-  /** 评论时间(文本), 时间戳的获取有待研究 */
-  timeText: string
+  /** (仅 v1) 评论时间 (文本) */
+  timeText?: string
+  /** (仅 v2) 评论时间戳 */
+  time?: number
   /** 点赞数 */
   likes: number
 }
@@ -40,19 +42,89 @@ export interface CommentArea {
 export const commentAreas: CommentArea[] = []
 export type CommentAreaCallback = (area: CommentArea) => void
 
-const commentAreaClass = 'bb-comment'
+const commentAreaClasses = ['bili-comment', 'bb-comment']
+const replyItemClasses = ['list-item.reply-wrap', 'reply-item']
 const itemAddedCallbacks: CommentItemCallback[] = []
 const itemRemovedCallbacks: CommentItemCallback[] = []
 const commentAreaCallbacks: CommentAreaCallback[] = []
+
+/** (v2) 获取 Vue 数据 (评论 / 回复) */
+const getVueData = (element: HTMLElement) => {
+  // eslint-disable-next-line no-underscore-dangle
+  const props = (element as any).__vueParentComponent?.props
+  return props?.reply ?? props?.subReply
+}
+/** (v2) 获取回复对应的元素 */
+const getReplyItemElement = (parent: HTMLElement, replyId: string) => {
+  const [replyElement] = dqa(parent, '.sub-reply-item').filter(
+    (it: HTMLElement) => getVueData(it).rpid_str === replyId,
+  )
+  return replyElement as HTMLElement
+}
+/** (v1 / v2) 获取评论 ID */
+const getCommentId = (element: HTMLElement) => {
+  const attributeId = element.getAttribute('data-id')
+  if (attributeId) {
+    return attributeId
+  }
+  const vueData = getVueData(element)
+  return vueData?.rpid_str ?? ''
+}
+
+/** (v2) 解析评论对象 */
+const parseCommentItemV2 = (element: HTMLElement) => {
+  const vueData = getVueData(element)
+  if (!vueData) {
+    throw new Error('Invalid comment item')
+  }
+  const parseReplies = () => {
+    if (!vueData.replies) {
+      return []
+    }
+    return vueData.replies.map((r: any): CommentReplyItem => {
+      return {
+        id: r.rpid_str,
+        element: getReplyItemElement(element, r.rpid_str),
+        userId: r.member.mid,
+        userName: r.member.uname,
+        content: r.content.message,
+        time: r.ctime * 1000,
+        likes: r.like,
+      }
+    })
+  }
+  const item: CommentItem = {
+    id: vueData.rpid_str,
+    element,
+    userId: vueData.member.mid,
+    userName: vueData.member.uname,
+    content: vueData.content.message,
+    time: vueData.ctime * 1000,
+    likes: vueData.like,
+    replies: parseReplies(),
+  }
+  if (item.replies.length < vueData.rcount) {
+    const replyBox = dq(element, '.sub-reply-list')
+    childList(replyBox, () => {
+      item.replies = parseReplies()
+    })
+  }
+  return item
+}
+
+/** (v1 / v2) 解析评论对象 */
 const parseCommentItem = (element: HTMLElement) => {
   const user = element.querySelector('.con .user .name') as HTMLElement
+  if (!user) {
+    return parseCommentItemV2(element)
+  }
   const parseReplyItem = (replyElement: HTMLElement) => {
     const replyFace = replyElement.querySelector('.reply-face') as HTMLElement
     const replyUser = replyElement.querySelector('.reply-con .user .name') as HTMLElement
     return {
       id: replyElement.getAttribute('data-id'),
       element: replyElement,
-      userID: replyFace.getAttribute('data-usercard-mid'),
+      userId: replyFace.getAttribute('data-usercard-mid'),
       userName: replyUser.textContent,
       content: replyElement.querySelector('.text-con').textContent,
       timeText: replyElement.querySelector('.info .time, .info .time-location').textContent,
@@ -62,7 +134,7 @@ const parseCommentItem = (element: HTMLElement) => {
   const item: CommentItem = {
     id: element.getAttribute('data-id'),
     element,
-    userID: user.getAttribute('data-usercard-mid'),
+    userId: user.getAttribute('data-usercard-mid'),
     userName: user.textContent,
     content: element.querySelector('.con .text').textContent,
     timeText: element.querySelector('.con .info .time, .info .time-location').textContent,
@@ -82,19 +154,20 @@ const parseCommentItem = (element: HTMLElement) => {
   }
   return item
 }
+
 const observeItems = (area: CommentArea) => {
   if (area.observer) {
     return
   }
-  area.items = dqa(area.element, '.list-item.reply-wrap').map(parseCommentItem)
+  const replyItemSelector = replyItemClasses.map(c => `.${c}`).join(',')
+  area.items = dqa(area.element, replyItemSelector).map(parseCommentItem)
   area.items.forEach(item => {
     itemAddedCallbacks.forEach(c => c(item))
-  });
-  [area.observer] = childListSubtree(area.element, records => {
+  })
+  ;[area.observer] = childListSubtree(area.element, records => {
     records.forEach(r => {
-      const isCommentItem = (n: Node): n is HTMLElement => n instanceof HTMLElement
-          && n.classList.contains('list-item')
-          && n.classList.contains('reply-wrap')
+      const isCommentItem = (n: Node): n is HTMLElement =>
+        n instanceof HTMLElement && n.matches(replyItemSelector)
       r.addedNodes.forEach(n => {
         if (isCommentItem(n)) {
           const commentItem = parseCommentItem(n)
@@ -104,7 +177,7 @@ const observeItems = (area: CommentArea) => {
       })
       r.removedNodes.forEach(n => {
         if (isCommentItem(n)) {
-          const id = n.getAttribute('data-id')
+          const id = getCommentId(n)
           const index = area.items.findIndex(item => item.id === id)
           if (index !== -1) {
             const [commentItem] = area.items.splice(index, 1)
@@ -116,7 +189,7 @@ const observeItems = (area: CommentArea) => {
   })
 }
 const observeAreas = (node: Node) => {
-  if (node instanceof HTMLElement && node.classList.contains(commentAreaClass)) {
+  if (node instanceof HTMLElement && commentAreaClasses.some(c => node.classList.contains(c))) {
     const area: CommentArea = {
       element: node,
       items: [],
@@ -132,7 +205,7 @@ const init = () => {
       r.addedNodes.forEach(n => observeAreas(n))
     })
   })
-  dqa(`.${commentAreaClass}`).forEach(observeAreas)
+  dqa(commentAreaClasses.map(c => `.${c}`).join(',')).forEach(observeAreas)
 }
 contentLoaded(init)
 
@@ -157,19 +230,43 @@ export const forEachCommentItem = (callbacks: {
     }
   })
 }
+
+const addMenuItemV2 = (...params: Parameters<typeof addMenuItem>) => {
+  const [item, config] = params
+  const operationList = dq(item.element, '.operation-list') as HTMLUListElement
+  const { className, text, action } = config
+  if (!operationList || dq(operationList, `.${className}`)) {
+    return
+  }
+  const menuItem = document.createElement('li')
+  menuItem.classList.add(className, 'operation-option')
+  menuItem.innerHTML = `<span class="option-title">${text}</span>`
+  menuItem.addEventListener('click', event => {
+    action(event)
+    operationList.style.display = 'none'
+  })
+  operationList.appendChild(menuItem)
+}
 /**
  * 向评论的菜单中添加菜单项
  * @param item 评论
  * @param config 菜单项配置
  */
-export const addMenuItem = (item: CommentReplyItem, config: {
-  className: string
-  text: string
-  action: (e: MouseEvent) => void
-}) => {
+export const addMenuItem = (
+  item: CommentReplyItem,
+  config: {
+    className: string
+    text: string
+    action: (e: MouseEvent) => void
+  },
+) => {
   const operationList = dq(item.element, '.opera-list ul') as HTMLUListElement
+  if (!operationList) {
+    addMenuItemV2(item, config)
+    return
+  }
   const { className, text, action } = config
-  if (!operationList || dq(operationList, `.${className}`)) {
+  if (dq(operationList, `.${className}`)) {
     return
   }
   const menuItem = document.createElement('li')
@@ -177,6 +274,7 @@ export const addMenuItem = (item: CommentReplyItem, config: {
   menuItem.textContent = text
   menuItem.addEventListener('click', event => {
     action(event)
+    operationList.style.display = 'none'
   })
   operationList.appendChild(menuItem)
 }

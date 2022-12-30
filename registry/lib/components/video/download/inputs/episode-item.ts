@@ -10,7 +10,7 @@ export interface EpisodeItem {
 }
 export const createEpisodesPicker = (
   fetchEpisodeItems: (instance: any) => Promise<EpisodeItem[]>,
-) => (
+) =>
   Vue.extend({
     computed: {
       checkedInputItems() {
@@ -24,4 +24,3 @@ export const createEpisodesPicker = (
       })
     },
   })
-)

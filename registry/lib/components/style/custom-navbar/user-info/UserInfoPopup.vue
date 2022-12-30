@@ -1,16 +1,10 @@
 <template>
   <div class="user-info-panel">
     <div v-if="isLogin && userInfo.isLogin === true" class="logged-in">
-      <a
-        class="name"
-        target="_blank"
-        href="https://space.bilibili.com/"
-      >{{ userInfo.uname }}</a>
-      <a
-        class="type"
-        target="_blank"
-        href="https://account.bilibili.com/account/big"
-      >{{ userType }}</a>
+      <a class="name" target="_blank" href="https://space.bilibili.com/">{{ userInfo.uname }}</a>
+      <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{
+        userType
+      }}</a>
       <div v-if="userInfo.vipStatus === 1 && userInfo.vipType === 2" class="privileges row">
         <div
           class="b-coin"
@@ -43,15 +37,11 @@
             :size="30"
             class="level-icon plus"
           />
-          <VIcon
-            v-else
-            :icon="'lv' + userInfo.level_info.current_level"
-            class="level-icon"
-          />
+          <VIcon v-else :icon="'lv' + userInfo.level_info.current_level" class="level-icon" />
         </a>
-        <span
-          class="level-progress-label"
-        >{{ userInfo.level_info.current_exp }} / {{ userInfo.level_info.next_exp }}</span>
+        <span class="level-progress-label"
+          >{{ userInfo.level_info.current_exp }} / {{ userInfo.level_info.next_exp }}</span
+        >
       </div>
       <div class="level-progress separator">
         <div class="level-progress-thumb" :style="levelProgressStyle"></div>
@@ -77,21 +67,11 @@
           <VIcon v-if="userInfo.email_verified" icon="ok" :size="18"></VIcon>
           <VIcon v-else icon="cancel" :size="18"></VIcon>
         </a>
-        <a
-          class="item"
-          target="_blank"
-          href="https://account.bilibili.com/site/coin"
-          title="硬币"
-        >
+        <a class="item" target="_blank" href="https://account.bilibili.com/site/coin" title="硬币">
           <VIcon icon="coin-outline" :size="20"></VIcon>
           <span>{{ userInfo.money }}</span>
         </a>
-        <a
-          class="item"
-          target="_blank"
-          href="https://pay.bilibili.com/bb_balance.html"
-          title="B币"
-        >
+        <a class="item" target="_blank" href="https://pay.bilibili.com/bb_balance.html" title="B币">
           <VIcon icon="b-coin-outline" :size="20"></VIcon>
           <span>{{ userInfo.wallet.bcoin_balance }}</span>
         </a>
@@ -103,21 +83,24 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/fans/follow'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.following | count }}</div>关注
+          <div class="stats-number">{{ stat.following | count }}</div>
+          关注
         </a>
         <a
           class="stats-item"
           :href="'https://space.bilibili.com/' + userInfo.mid + '/fans/fans'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.follower | count }}</div>粉丝
+          <div class="stats-number">{{ stat.follower | count }}</div>
+          粉丝
         </a>
         <a
           class="stats-item"
           :href="'https://space.bilibili.com/' + userInfo.mid + '/dynamic'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.dynamic_count | count }}</div>动态
+          <div class="stats-number">{{ stat.dynamic_count | count }}</div>
+          动态
         </a>
       </div>
       <div class="separator"></div>
@@ -159,25 +142,14 @@
       >
         <VIcon icon="course"></VIcon>我的课程
       </a>
-      <div
-        class="logout grey-button"
-        @click="logout()"
-      >
-        退出登录
-      </div>
+      <div class="logout grey-button" @click="logout()">退出登录</div>
     </div>
     <div v-if="!isLogin" class="not-logged-in">
-      <h1 class="welcome">
-        欢迎来到 bilibili
-      </h1>
-      <a
-        href="https://passport.bilibili.com/register/phone.html"
-        class="signup grey-button"
-      >注册</a>
-      <a
-        href="https://passport.bilibili.com/login"
-        class="login theme-button"
-      >登录</a>
+      <h1 class="welcome">欢迎来到 bilibili</h1>
+      <a href="https://passport.bilibili.com/register/phone.html" class="signup grey-button"
+        >注册</a
+      >
+      <a href="https://passport.bilibili.com/login" class="login theme-button">登录</a>
     </div>
   </div>
 </template>
@@ -260,30 +232,18 @@ export default Vue.extend({
   async created() {
     const userInfo = await getUserInfo()
     this.userInfo = userInfo
-    const json = await getJsonWithCredentials(
-      'https://api.bilibili.com/x/web-interface/nav/stat',
-    )
+    const json = await getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav/stat')
     this.stat = json.data || {}
     if (this.isLogin && this.userInfo.vipType === 2) {
       // 年度大会员权益
-      const privileges = await getJsonWithCredentials(
-        'https://api.bilibili.com/x/vip/privilege/my',
-      )
+      const privileges = await getJsonWithCredentials('https://api.bilibili.com/x/vip/privilege/my')
       if (privileges.code === 0) {
-        const bCoin = privileges.data.list.find(
-          (it: { type: PrivilegeType }) => it.type === 1,
-        )
+        const bCoin = privileges.data.list.find((it: { type: PrivilegeType }) => it.type === 1)
         this.privileges.bCoin.received = bCoin.state === 1
-        this.privileges.bCoin.expire = new Date(
-          bCoin.expire_time * 1000,
-        ).toLocaleDateString()
-        const coupons = privileges.data.list.find(
-          (it: { type: PrivilegeType }) => it.type === 2,
-        )
+        this.privileges.bCoin.expire = new Date(bCoin.expire_time * 1000).toLocaleDateString()
+        const coupons = privileges.data.list.find((it: { type: PrivilegeType }) => it.type === 2)
         this.privileges.coupons.received = coupons.state === 1
-        this.privileges.coupons.expire = new Date(
-          coupons.expire_time * 1000,
-        ).toLocaleDateString()
+        this.privileges.coupons.expire = new Date(coupons.expire_time * 1000).toLocaleDateString()
       }
     }
   },
@@ -365,6 +325,8 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+@import 'common';
+
 .user-info-panel {
   border-radius: 8px;
   overflow: hidden;
@@ -481,7 +443,7 @@ export default Vue.extend({
   .welcome,
   .name {
     font-size: 16px;
-    font-weight: bold;
+    @include semi-bold();
     margin: 46px 0 16px 0;
     text-align: center;
     color: inherit;
@@ -535,7 +497,7 @@ export default Vue.extend({
         color: var(--theme-color) !important;
       }
       .stats-number {
-        font-weight: bold;
+        @include semi-bold();
         margin-bottom: 4px;
         font-size: 14px;
         transition: none;

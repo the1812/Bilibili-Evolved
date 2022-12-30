@@ -18,29 +18,24 @@ const entry = async () => {
     icons['seek-right'] = seekRight
   })
   let frameTime = 0
-  attributesSubtree(
-    `${playerAgent.query.control.buttons.quality.selector} ul`,
-    () => {
-      const selectedQuality = dq(
-        `${playerAgent.query.control.buttons.quality.selector} .bui-select-item-active, ${playerAgent.query.control.buttons.quality.selector} .active`,
-      )
-      const quality = selectedQuality
-        ? parseInt(selectedQuality.getAttribute('data-value'))
-        : 0
-      const fps = (() => {
-        switch (quality) {
-          // 60fps
-          case 116:
-          case 74:
-            return 60000 / 1001
-          // 30fps
-          default:
-            return 30000 / 1001
-        }
-      })()
-      frameTime = 1 / fps
-    },
-  )
+  attributesSubtree(`${playerAgent.query.control.buttons.quality.selector} ul`, () => {
+    const selectedQuality = dq(
+      `${playerAgent.query.control.buttons.quality.selector} .bui-select-item-active, ${playerAgent.query.control.buttons.quality.selector} .active`,
+    )
+    const quality = selectedQuality ? parseInt(selectedQuality.getAttribute('data-value')) : 0
+    const fps = (() => {
+      switch (quality) {
+        // 60fps
+        case 116:
+        case 74:
+          return 60000 / 1001
+        // 30fps
+        default:
+          return 30000 / 1001
+      }
+    })()
+    frameTime = 1 / fps
+  })
   const setFrame = (num: number) => {
     playerAgent.changeTime(num * frameTime)
   }
@@ -83,20 +78,14 @@ export const component = defineComponentMetadata({
           displayName: '上一帧',
           run: context => {
             const { clickElement } = context
-            return clickElement(
-              '.be-video-control-bar-extend [data-name="seekPrevFrame"]',
-              context,
-            )
+            return clickElement('.be-video-control-bar-extend [data-name="seekPrevFrame"]', context)
           },
         }
         actions.nextFrame = {
           displayName: '下一帧',
           run: context => {
             const { clickElement } = context
-            return clickElement(
-              '.be-video-control-bar-extend [data-name="seekNextFrame"]',
-              context,
-            )
+            return clickElement('.be-video-control-bar-extend [data-name="seekNextFrame"]', context)
           },
         }
       })

@@ -1,4 +1,8 @@
-import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { urlInclude, urlExclude } from './urls'
 import { entry } from './entry'
@@ -77,10 +81,7 @@ export const component = defineComponentMetadata({
   name: 'customNavbar',
   displayName: '自定义顶栏',
   entry,
-  tags: [
-    componentsTags.style,
-    componentsTags.general,
-  ],
+  tags: [componentsTags.style, componentsTags.general],
   options,
   urlInclude,
   urlExclude,
@@ -110,15 +111,17 @@ export const component = defineComponentMetadata({
       addData('launchBar.actions', (providers: LaunchBarActionProvider[]) => {
         providers.push({
           name: 'navbarSettings',
-          getActions: async () => [{
-            name: '自定义顶栏设置',
-            description: 'Custom Navbar Settings',
-            icon: 'mdi-sort',
-            action: async () => {
-              const { toggleNavbarSettings } = await import('./settings/vm')
-              toggleNavbarSettings()
+          getActions: async () => [
+            {
+              name: '自定义顶栏设置',
+              description: 'Custom Navbar Settings',
+              icon: 'mdi-sort',
+              action: async () => {
+                const { toggleNavbarSettings } = await import('./settings/vm')
+                toggleNavbarSettings()
+              },
             },
-          }],
+          ],
         })
       })
     },

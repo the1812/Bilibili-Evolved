@@ -1,5 +1,7 @@
 import {
-  defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata,
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
 } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { matchUrlPattern } from '@/core/utils'
@@ -19,14 +21,14 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (watchlaterUrls.some(matchUrlPattern) && !settings.options.showInWatchlaterPages) {
     return
   }
-  const {
-    mountVueComponent, getUID, playerReady,
-  } = await import('@/core/utils')
+  const { mountVueComponent, getUID, playerReady } = await import('@/core/utils')
   if (!getUID()) {
     return
   }
   await playerReady()
-  const favoriteButton = dq('.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect') as HTMLElement
+  const favoriteButton = dq(
+    '.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect',
+  ) as HTMLElement
   if (!favoriteButton) {
     return
   }
@@ -47,11 +49,10 @@ export const component = defineComponentMetadata({
   name: 'outerWatchlater',
   displayName: '外置稍后再看',
   entry,
-  tags: [
-    componentsTags.video,
-  ],
+  tags: [componentsTags.video],
   description: {
-    'zh-CN': '将视频页面菜单里的 \`稍后再看\` 移到外面. 请注意如果在稍后再看页面中仍然显示, 是不会实时同步右侧的播放列表的.',
+    'zh-CN':
+      '将视频页面菜单里的 `稍后再看` 移到外面. 请注意如果在稍后再看页面中仍然显示, 是不会实时同步右侧的播放列表的.',
   },
   urlInclude: videoUrls,
   // urlExclude: watchlaterUrls,

@@ -1,8 +1,9 @@
 import { CdnConfig } from './types'
 
 const owner = 'the1812'
-const host = 'cdn.jsdelivr.net'
-export const jsdelivr: CdnConfig = {
+const host = 'fastly.jsdelivr.net'
+export const jsDelivr: CdnConfig = {
+  name: 'jsDelivr',
   owner,
   host,
   stableClient: `https://${host}/gh/${owner}/Bilibili-Evolved@master/dist/bilibili-evolved.user.js`,
@@ -13,8 +14,10 @@ export const jsdelivr: CdnConfig = {
     jszip: `https://${host}/npm/jszip@3.7.1/dist/jszip.min.js`,
     sortable: `https://${host}/npm/sortablejs@1.14.0/Sortable.min.js`,
     mdi: `https://${host}/gh/Templarian/MaterialDesign-Webfont@5.3.45/css/materialdesignicons.min.css`,
+    streamsaver: `https://${host}/npm/streamsaver@2.0.6/StreamSaver.min.js`,
   },
   smallLogo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo-small.png`,
   logo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo.png`,
-  root: (branch, ownerOverride) => `https://${host}/gh/${ownerOverride || owner}/Bilibili-Evolved@${branch}/`,
+  root: (branch, ownerOverride) =>
+    `https://${host}/gh/${ownerOverride || owner}/Bilibili-Evolved@${branch}/`,
 }

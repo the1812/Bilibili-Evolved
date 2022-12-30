@@ -2,9 +2,7 @@
   <div class="be-about-page">
     <div class="be-about-page-header">
       <VIcon icon="mdi-information-outline" />
-      <div class="title-text">
-        关于
-      </div>
+      <div class="title-text">关于</div>
     </div>
     <div class="be-about-page-content">
       <div class="script-meta-info">
@@ -22,25 +20,41 @@
         </div> -->
       </div>
       <div v-if="feedbackSupported" class="script-links">
-        <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved" class="homepage script-link">
+        <a
+          target="_blank"
+          href="https://github.com/the1812/Bilibili-Evolved"
+          class="homepage script-link"
+        >
           <VButton>
             <VIcon icon="mdi-home-outline" :size="20" />
             主页
           </VButton>
         </a>
-        <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/issues" class="feedback script-link">
+        <a
+          target="_blank"
+          href="https://github.com/the1812/Bilibili-Evolved/issues"
+          class="feedback script-link"
+        >
           <VButton>
             <VIcon icon="mdi-message-text-outline" :size="18" />
             反馈
           </VButton>
         </a>
-        <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/releases" class="releases script-link">
+        <a
+          target="_blank"
+          href="https://github.com/the1812/Bilibili-Evolved/releases"
+          class="releases script-link"
+        >
           <VButton>
             <VIcon icon="mdi-update" :size="20" />
             更新日志
           </VButton>
         </a>
-        <a target="_blank" href="https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/donate.md" class="donate script-link">
+        <a
+          target="_blank"
+          href="https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/donate.md"
+          class="donate script-link"
+        >
           <VButton>
             <VIcon icon="mdi-heart-outline" :size="18" />
             捐赠
@@ -66,10 +80,7 @@
 <script lang="ts">
 import { meta } from '@/core/meta'
 import { formatDateTime } from '@/core/utils/formatters'
-import {
-  VButton,
-  VIcon,
-} from '@/ui'
+import { VButton, VIcon } from '@/ui'
 import { AboutPageAction, aboutPageActions } from './about-page'
 
 const feedbackSupported = (() => {
@@ -110,7 +121,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-@import "common";
+@import 'common';
 
 .be-about-page {
   flex: 1;
@@ -139,7 +150,7 @@ export default Vue.extend({
           color: var(--theme-color);
         }
         &-description {
-          opacity: .5;
+          opacity: 0.5;
         }
       }
     }

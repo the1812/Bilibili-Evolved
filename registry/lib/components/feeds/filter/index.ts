@@ -55,9 +55,7 @@ export const component = defineComponentMetadata({
     'zh-CN': '按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.',
   },
   entry,
-  tags: [
-    componentsTags.feeds,
-  ],
+  tags: [componentsTags.feeds],
   options,
   reload: () => document.body.classList.remove('disable-feeds-filter'),
   unload: () => document.body.classList.add('disable-feeds-filter'),

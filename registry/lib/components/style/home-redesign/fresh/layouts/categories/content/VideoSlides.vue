@@ -18,19 +18,12 @@
     </div>
     <div class="cover-placeholder-vertical"></div>
     <div v-if="!loaded" class="fresh-home-video-slides-empty">
-      <div
-        class="empty-placeholder fresh-home-video-slides-main-title"
-        v-text="' '"
-      ></div>
+      <div class="empty-placeholder fresh-home-video-slides-main-title" v-text="' '"></div>
       <div class="empty-indicator">
         <VLoading v-if="loading" />
         <div v-if="error" class="empty-indicator-error">
           <VEmpty />
-          <VButton
-            class="fresh-home-video-slides-refresh-button"
-            round
-            @click="reload"
-          >
+          <VButton class="fresh-home-video-slides-refresh-button" round @click="reload">
             <VIcon icon="mdi-refresh" />
             刷新
           </VButton>
@@ -42,11 +35,7 @@
         <div class="fresh-home-video-slides-row">
           <div class="cover-placeholder-horizontal"></div>
           <div class="fresh-home-video-slides-main-actions">
-            <a
-              class="fresh-home-video-slides-play-button"
-              :href="currentUrl"
-              target="_blank"
-            >
+            <a class="fresh-home-video-slides-play-button" :href="currentUrl" target="_blank">
               <VButton type="primary" round>
                 <VIcon icon="mdi-play" />
                 播放
@@ -96,12 +85,7 @@
         <div class="description-text" v-text="currentItem.description"></div>
       </div>
       <div class="fresh-home-video-slides-actions">
-        <VButton
-          class="fresh-home-video-slides-refresh-button"
-          title="刷新"
-          icon
-          @click="reload"
-        >
+        <VButton class="fresh-home-video-slides-refresh-button" title="刷新" icon @click="reload">
           <VIcon icon="mdi-refresh" />
         </VButton>
         <VButton
@@ -112,12 +96,7 @@
         >
           <VIcon icon="mdi-arrow-left" />
         </VButton>
-        <VButton
-          class="fresh-home-video-slides-next-button"
-          title="下一个"
-          icon
-          @click="nextCard"
-        >
+        <VButton class="fresh-home-video-slides-next-button" title="下一个" icon @click="nextCard">
           <VIcon icon="mdi-arrow-right" :size="36" />
         </VButton>
       </div>
@@ -140,15 +119,18 @@ export default Vue.extend({
     VLoading,
     VEmpty,
   },
-  mixins: [requestMixin(), cssVariableMixin({
-    mainCoverHeight: 185,
-    mainCoverWidth: 287,
-    otherCoverHeight: 100,
-    otherCoverWidth: 154,
-    mainPaddingX: 18,
-    mainPaddingY: 20,
-    coverPadding: 16,
-  })],
+  mixins: [
+    requestMixin(),
+    cssVariableMixin({
+      mainCoverHeight: 185,
+      mainCoverWidth: 287,
+      otherCoverHeight: 100,
+      otherCoverWidth: 154,
+      mainPaddingX: 18,
+      mainPaddingY: 20,
+      coverPadding: 16,
+    }),
+  ],
   data() {
     return {
       watchlaterList,
@@ -224,8 +206,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "effects";
+@import 'common';
+@import 'effects';
 
 .fresh-home-video-slides {
   @include card(12px);
@@ -339,9 +321,7 @@ export default Vue.extend({
     justify-content: space-between;
     position: relative;
     padding-top: var(--main-info-padding);
-    width: calc(
-      var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width)
-    );
+    width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
   }
   & &-main-title {
     font-size: 16px;
@@ -403,9 +383,7 @@ export default Vue.extend({
     }
     &:nth-child(1) {
       opacity: 0;
-      transform: translateX(
-        calc(0px - var(--other-cover-width) - var(--cover-padding))
-      );
+      transform: translateX(calc(0px - var(--other-cover-width) - var(--cover-padding)));
     }
     &:nth-child(2) {
       width: var(--main-cover-width);

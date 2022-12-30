@@ -39,7 +39,8 @@
             target="_blank"
             :href="'https://www.bilibili.com/video/' + card.bvid"
             :title="card.title"
-          >{{ card.title }}</a>
+            >{{ card.title }}</a
+          >
           <a
             v-if="card.upID"
             class="up"
@@ -47,18 +48,10 @@
             :href="'https://space.bilibili.com/' + card.upID"
             :title="card.upName"
           >
-            <DpiImage
-              placeholder-image
-              class="face"
-              :src="card.upFaceUrl"
-              :size="20"
-            ></DpiImage>
+            <DpiImage placeholder-image class="face" :src="card.upFaceUrl" :size="20"></DpiImage>
             <div class="name">{{ card.upName }}</div>
           </a>
-          <div
-            v-else
-            class="description"
-          >
+          <div v-else class="description">
             {{ card.description }}
           </div>
         </div>
@@ -72,15 +65,7 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  VLoading,
-  VEmpty,
-  VIcon,
-  VButton,
-  TextBox,
-  DpiImage,
-  ScrollTrigger,
-} from '@/ui'
+import { VLoading, VEmpty, VIcon, VButton, TextBox, DpiImage, ScrollTrigger } from '@/ui'
 import { formatDate, formatDuration } from '@/core/utils/formatters'
 import { getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
@@ -131,8 +116,12 @@ async function searchAllList() {
   }
   try {
     this.loading = true
-    const jsonCurrent = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=0&tid=0&platform=web`)
-    const jsonAll = await getJsonWithCredentials(`https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=1&tid=0&platform=web`)
+    const jsonCurrent = await getJsonWithCredentials(
+      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=0&tid=0&platform=web`,
+    )
+    const jsonAll = await getJsonWithCredentials(
+      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${this.folder.id}&pn=${this.searchPage}&ps=${MaxPageSize}&keyword=${this.search}&order=mtime&type=1&tid=0&platform=web`,
+    )
     if (jsonCurrent.code !== 0 && jsonAll.code !== 0) {
       return
     }
@@ -222,8 +211,7 @@ export default Vue.extend({
       this.hasMoreSearchPage = true
       this.searchPage = 1
       this.filteredCards = (this.cards as FavoritesItemInfo[]).filter(
-        it => it.title.toLowerCase().includes(keyword)
-          || it.upName.toLowerCase().includes(keyword),
+        it => it.title.toLowerCase().includes(keyword) || it.upName.toLowerCase().includes(keyword),
       )
     },
   },
@@ -238,9 +226,7 @@ export default Vue.extend({
         // 超过最后一页后返回空数组
         return []
       }
-      return json.data.medias
-        .filter(favoriteItemFilter)
-        .map(favoriteItemMapper)
+      return json.data.medias.filter(favoriteItemFilter).map(favoriteItemMapper)
     },
     async changeList() {
       if (this.folder.id === 0) {
@@ -284,8 +270,8 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-@import "common";
-@import "../popup";
+@import 'common';
+@import '../popup';
 
 .custom-navbar .favorites-list {
   width: 380px;
@@ -423,7 +409,7 @@ export default Vue.extend({
         .title {
           grid-area: title;
           font-size: 13px;
-          font-weight: bold;
+          @include semi-bold();
           @include max-line(2);
           -webkit-box-align: start;
           margin: 0;

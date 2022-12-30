@@ -26,15 +26,27 @@
     <div class="online-registry-header">
       <div class="online-registry-header-search">
         <VIcon icon="search" :size="18" />
-        <TextBox v-model="searchKeyword" placeholder="搜索功能" />
+        <TextBox v-model="searchKeyword" :disabled="loading" placeholder="搜索功能" />
       </div>
       <div class="online-registry-header-branch">
         分支:
-        <VDropdown v-model="selectedBranch" :items="registryBranches">
+        <VDropdown v-model="selectedBranch" :disabled="loading" :items="registryBranches">
           <template #item="{ item }">
             {{ item }}
           </template>
         </VDropdown>
+      </div>
+      <div class="online-registry-header-filter">
+        查看:
+        <RadioButton
+          v-for="option of itemFilterOptions"
+          :key="option.value"
+          group="itemFilter"
+          :checked="itemFilter === option.value"
+          @change="$event && (itemFilter = option.value)"
+        >
+          {{ option.label }}
+        </RadioButton>
       </div>
     </div>
     <div class="online-registry-separator"></div>
@@ -47,6 +59,7 @@
         ref="items"
         :item="item"
         :branch="selectedBranch"
+        :item-filter="itemFilter"
         @refresh="checkInstalled"
       />
       <!-- <RegistryItem
@@ -65,19 +78,38 @@ import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import {
-  VIcon,
-  VDropdown,
-  TextBox,
-  VPopup,
-  VLoading,
-  VEmpty,
-} from '@/ui'
+import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty, RadioButton } from '@/ui'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
+import { ItemFilter } from './item-filter'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
 const general = getGeneralSettings() as ExtendedSettings
+function updateList(keyword: string) {
+  if (!keyword) {
+    this.filteredList = this.list
+    return
+  }
+  const fuse = this.fuse as Fuse<DocSourceItem>
+  const fuseResult = fuse.search(keyword)
+  this.filteredList = fuseResult.map(it => it.item)
+  this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
+}
+const itemFilterOptions = [
+  {
+    label: '全部',
+    value: ItemFilter.All,
+  },
+  {
+    label: '已安装',
+    value: ItemFilter.Installed,
+  },
+  {
+    label: '未安装',
+    value: ItemFilter.NotInstalled,
+  },
+]
+
 export default Vue.extend({
   components: {
     VIcon,
@@ -87,6 +119,7 @@ export default Vue.extend({
     RegistryItem,
     VLoading,
     VEmpty,
+    RadioButton,
   },
   props: {
     open: {
@@ -105,6 +138,8 @@ export default Vue.extend({
       popupOpen: false,
       loading: false,
       list: [],
+      itemFilter: ItemFilter.All,
+      itemFilterOptions,
       filteredList: [],
       // packList: [],
       fuse: null,
@@ -113,16 +148,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    searchKeyword: lodash.debounce(function updateList(keyword: string) {
-      if (!keyword) {
-        this.filteredList = this.list
-        return
-      }
-      const fuse = this.fuse as Fuse<DocSourceItem>
-      const fuseResult = fuse.search(keyword)
-      this.filteredList = fuseResult.map(it => it.item)
-      this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
-    }, 200),
+    searchKeyword: lodash.debounce(updateList, 200),
     selectedBranch(newBranch: string) {
       general.registryBranch = newBranch
       this.fetchFeatures()
@@ -139,6 +165,8 @@ export default Vue.extend({
       const fetchPath = cdnRoots[general.cdnRoot](this.selectedBranch)
       try {
         this.loading = true
+        this.list = []
+        this.filteredList = []
         const featureListUrl = `${fetchPath}doc/features/features.json`
         const packListUrl = `${fetchPath}doc/features/pack/pack.json`
         const featureList = await monkey({
@@ -157,8 +185,7 @@ export default Vue.extend({
         this.fuse = new Fuse(this.list, {
           keys: ['displayName', 'name', 'description'],
         })
-        this.searchKeyword = ''
-        this.filteredList = [...this.list]
+        updateList.call(this, this.searchKeyword)
       } catch (error) {
         logError(error)
       } finally {
@@ -178,7 +205,7 @@ export default Vue.extend({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  width: 360px;
+  width: 400px;
   height: 85vh;
   z-index: 100000;
   transition: 0.2s ease-out;
@@ -189,10 +216,12 @@ export default Vue.extend({
     transform: translate(-50%, -50%) scale(1);
   }
   &-header {
-    padding: 12px;
+    padding: 12px 12px 6px 12px;
     @include h-center(12px);
+    row-gap: 6px;
+    flex-wrap: wrap;
     & + & {
-      padding-top: 0;
+      padding-top: 6px;
     }
     &-title {
       flex: 1;
@@ -208,6 +237,10 @@ export default Vue.extend({
         flex: 1;
         font-size: 12px;
       }
+    }
+    &-filter {
+      @include h-center(6px);
+      font-size: 12px;
     }
     &-branch {
       @include h-center(6px);

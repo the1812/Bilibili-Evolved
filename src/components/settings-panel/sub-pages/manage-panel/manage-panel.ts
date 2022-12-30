@@ -20,7 +20,7 @@ export interface ManageItem<
   ItemType extends {
     displayName: string
     name: string
-  }
+  },
 > {
   /** 唯一名称 */
   key: string

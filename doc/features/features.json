@@ -65,6 +65,14 @@
   },
   {
     "type": "component",
+    "name": "hideFeedsCommentPreview",
+    "displayName": "隐藏动态评论预览",
+    "description": "隐藏动态评论按钮上方的精选评论预览. (详细可看 [#3322](https://github.com/the1812/Bilibili-Evolved/discussions/3322))\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/hide-comment-preview.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/hide-comment-preview.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "\n自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠\n",
@@ -291,7 +299,7 @@
     "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
-    "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端` 这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
+    "description": "- 删除热评头像下方的关注按钮\r\n- 删除用户的等级标识\r\n- 删除发送源信息(\\`来自安卓客户端\\` 这种)\r\n- 删除用户名右边的勋章\r\n- 删除评论区顶部的横幅\r\n- 发送时间移动到右上角\r\n- 位图图标全部换用矢量图标, 高分屏不会模糊\r\n- 投票仅显示链接, 隐藏下面的大框.\r\n\r\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
   },
@@ -299,7 +307,7 @@
     "type": "component",
     "name": "simplifyHome",
     "displayName": "简化首页",
-    "description": "隐藏原版首页不需要的元素 / 分区.\n\n> 这个功能相当于 v1 的 `首页过滤`, v1 的 `简化首页` (清爽 / 极简首页) 需要重构后再发布, 问就是 Coming Soon.",
+    "description": "隐藏原版首页不需要的元素 / 分区.",
     "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
   },
@@ -371,7 +379,7 @@
     "type": "component",
     "name": "blackList",
     "displayName": "屏蔽黑名单up主",
-    "description": "by [@snowraincloud](https://github.com/snowraincloud)\n\n屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配",
+    "description": "by [@snowraincloud](https://github.com/snowraincloud)\n\n屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配. 请注意只能在首页中使用或调整设置.",
     "fullRelativePath": "../../registry/dist/components/utils/black-list.js",
     "fullAbsolutePath": "registry/dist/components/utils/black-list.js"
   },
@@ -547,7 +555,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.",
+    "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
@@ -562,8 +570,8 @@
   {
     "type": "component",
     "name": "fullEpisodeTitle",
-    "displayName": "展开选集标题",
-    "description": "总是完全展开视频选集列表的标题, 注意对番剧无效.",
+    "displayName": "选集区域优化",
+    "description": "提供一些视频选集区域的优化, 对番剧无效.\r\n- `展开选集标题`: 总是完全展开视频选集列表项的标题\r\n- `展开选集列表`: 总是完全展开视频选集列表\r\n\r\n打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换展开/收起选集列表.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/full-episode-title.js",
     "fullAbsolutePath": "registry/dist/components/video/full-episode-title.js"
   },
@@ -598,6 +606,14 @@
     "description": "控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))",
     "fullRelativePath": "../../registry/dist/components/video/player/default-mode.js",
     "fullAbsolutePath": "registry/dist/components/video/player/default-mode.js"
+  },
+  {
+    "type": "component",
+    "name": "disableScrollVolume",
+    "displayName": "禁止滚轮调音量",
+    "description": "在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.",
+    "fullRelativePath": "../../registry/dist/components/video/player/disable-scroll-volume.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/disable-scroll-volume.js"
   },
   {
     "type": "component",
@@ -689,6 +705,14 @@
   },
   {
     "type": "component",
+    "name": "showUploadTime",
+    "displayName": "显示视频投稿时间",
+    "description": "by [@wisokey](https://github.com/wisokey)\n\n为视频播放页面的推荐列表中的视频添加显示视频投稿时间.",
+    "fullRelativePath": "../../registry/dist/components/video/player/show-upload-time.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/show-upload-time.js"
+  },
+  {
+    "type": "component",
     "name": "skipChargeList",
     "displayName": "跳过充电鸣谢",
     "description": "自动跳过视频结尾的充电鸣谢. 注意: 不包括番剧承包鸣谢.",
@@ -775,6 +799,14 @@
     "description": "在快捷键的动作列表里添加一个 \"无动作\", 将按键绑定到这个上面就可以阻止原有的快捷键行为.",
     "fullRelativePath": "../../registry/dist/plugins/utils/keymap-empty-action.ts.js",
     "fullAbsolutePath": "registry/dist/plugins/utils/keymap-empty-action.ts.js"
+  },
+  {
+    "type": "plugin",
+    "name": "keymap.actions.toggleDanmakuList",
+    "displayName": "快捷键扩展 - 开关弹幕列表",
+    "description": "在快捷键的动作列表里添加一个 \"开关弹幕列表\".",
+    "fullRelativePath": "../../registry/dist/plugins/utils/keymap-toggle-danmaku-list.js",
+    "fullAbsolutePath": "registry/dist/plugins/utils/keymap-toggle-danmaku-list.js"
   },
   {
     "type": "plugin",

@@ -1,7 +1,7 @@
 import { logError } from './utils/log'
 
 type XhrBody = Document | XMLHttpRequestBodyInit
-type XhrConfig = (xhr: XMLHttpRequest) => { isText?: boolean, body?: XhrBody }
+type XhrConfig = (xhr: XMLHttpRequest) => { isText?: boolean; body?: XhrBody }
 const send = <T = any>(config: XhrConfig) => {
   const xhr = new XMLHttpRequest()
   const { isText = true, body } = config(xhr)
@@ -17,13 +17,15 @@ const withCredentials = (config: XhrConfig) => (xhr: XMLHttpRequest) => {
 }
 
 // GET
-const blobRequest = (url: string): XhrConfig => (xhr: XMLHttpRequest) => {
-  xhr.responseType = 'blob'
-  xhr.open('GET', url)
-  return {
-    isText: false,
+const blobRequest =
+  (url: string): XhrConfig =>
+  (xhr: XMLHttpRequest) => {
+    xhr.responseType = 'blob'
+    xhr.open('GET', url)
+    return {
+      isText: false,
+    }
   }
-}
 /**
  * 获取二进制`Blob`对象
  * @param url 链接
@@ -33,17 +35,17 @@ export const getBlob = (url: string) => send<Blob>(blobRequest(url))
  * 获取二进制`Blob`对象(带身份验证)
  * @param url 链接
  */
-export const getBlobWithCredentials = (url: string) => send<Blob>(
-  withCredentials(blobRequest(url)),
-)
+export const getBlobWithCredentials = (url: string) => send<Blob>(withCredentials(blobRequest(url)))
 
-const textRequest = (url: string): XhrConfig => (xhr: XMLHttpRequest) => {
-  xhr.responseType = 'text'
-  xhr.open('GET', url)
-  return {
-    isText: true,
+const textRequest =
+  (url: string): XhrConfig =>
+  (xhr: XMLHttpRequest) => {
+    xhr.responseType = 'text'
+    xhr.open('GET', url)
+    return {
+      isText: true,
+    }
   }
-}
 /**
  * 获取文本
  * @param url 链接
@@ -54,17 +56,18 @@ export const getText = (url: string) => send<string>(textRequest(url))
  * 获取文本(带身份验证)
  * @param url 链接
  */
-export const getTextWithCredentials = (url: string) => send<string>(
-  withCredentials(textRequest(url)),
-)
+export const getTextWithCredentials = (url: string) =>
+  send<string>(withCredentials(textRequest(url)))
 
-const jsonRequest = (url: string): XhrConfig => (xhr: XMLHttpRequest) => {
-  xhr.responseType = 'json'
-  xhr.open('GET', url)
-  return {
-    isText: false,
+const jsonRequest =
+  (url: string): XhrConfig =>
+  (xhr: XMLHttpRequest) => {
+    xhr.responseType = 'json'
+    xhr.open('GET', url)
+    return {
+      isText: false,
+    }
   }
-}
 const convertToJson = <T = any>(response: any) => {
   if (typeof response === 'string') {
     return JSON.parse(response) as T
@@ -94,61 +97,65 @@ export const getJsonWithCredentials = async <T = any>(url: string) => {
  * @param url 链接
  * @param text 文本
  */
-export const postText = (url: string, text: XhrBody) => send<string>(xhr => {
-  xhr.open('POST', url)
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-  return {
-    isText: false,
-    body: text,
-  }
-})
+export const postText = (url: string, text: XhrBody) =>
+  send<string>(xhr => {
+    xhr.open('POST', url)
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    return {
+      isText: false,
+      body: text,
+    }
+  })
 /**
  * 发送文本 (`application/x-www-form-urlencoded`)(带身份验证)
  * @param url 链接
  * @param text 文本
  */
-export const postTextWithCredentials = (url: string, text: XhrBody) => send<string>(xhr => {
-  xhr.open('POST', url)
-  xhr.withCredentials = true
-  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-  return {
-    isText: false,
-    body: text,
-  }
-})
+export const postTextWithCredentials = (url: string, text: XhrBody) =>
+  send<string>(xhr => {
+    xhr.open('POST', url)
+    xhr.withCredentials = true
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    return {
+      isText: false,
+      body: text,
+    }
+  })
 /**
  * 发送 JSON 数据 (`application/json`)
  * @param url 链接
  * @param json JSON 对象
  */
-export const postJson = (url: string, json: any) => send<string>(xhr => {
-  xhr.open('POST', url)
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  return {
-    isText: false,
-    body: JSON.stringify(json),
-  }
-})
+export const postJson = (url: string, json: any) =>
+  send<string>(xhr => {
+    xhr.open('POST', url)
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    return {
+      isText: false,
+      body: JSON.stringify(json),
+    }
+  })
 /**
  * 发送 JSON 数据 (`application/json`)(带身份验证)
  * @param url 链接
  * @param json JSON 对象
  */
-export const postJsonWithCredentials = (url: string, json: any) => send<string>(xhr => {
-  xhr.open('POST', url)
-  xhr.withCredentials = true
-  xhr.setRequestHeader('Content-Type', 'application/json')
-  return {
-    isText: false,
-    body: JSON.stringify(json),
-  }
-})
+export const postJsonWithCredentials = (url: string, json: any) =>
+  send<string>(xhr => {
+    xhr.open('POST', url)
+    xhr.withCredentials = true
+    xhr.setRequestHeader('Content-Type', 'application/json')
+    return {
+      isText: false,
+      body: JSON.stringify(json),
+    }
+  })
 
 /**
  * 调用 Tampermonkey API 进行请求 (`GM_xmlhttpRequest`)
  * @param details 参数
  */
-export const monkey = <T = any>(details: MonkeyXhrBasicDetails) => (
+export const monkey = <T = any>(details: MonkeyXhrBasicDetails) =>
   new Promise<T>((resolve, reject) => {
     const fullDetails: MonkeyXhrDetails = {
       nocache: true,
@@ -170,7 +177,6 @@ export const monkey = <T = any>(details: MonkeyXhrBasicDetails) => (
     }
     GM_xmlhttpRequest(fullDetails)
   })
-)
 /**
  * 获取全部的分页数据, 返回一个会随翻页变化的数组, 可用于响应式数据
  * @param config 配置参数
@@ -186,7 +192,7 @@ export const responsiveGetPages = <T = any>(config: {
   let responsivePromise: Promise<T[]>
   const totalPromise = new Promise<T[]>(resolveTotal => {
     responsivePromise = new Promise(resolveResponsive => {
-      (async () => {
+      ;(async () => {
         const { api, getList, getTotal } = config
         let page = 1
         let total = Infinity
@@ -194,7 +200,10 @@ export const responsiveGetPages = <T = any>(config: {
         while (result.length < total) {
           const json = await api(page)
           if (json.code !== 0) {
-            console.warn(`api failed in ajax.getPages. message = ${json.message}, page = ${page}, total = ${total}, api = `, api)
+            console.warn(
+              `api failed in ajax.getPages. message = ${json.message}, page = ${page}, total = ${total}, api = `,
+              api,
+            )
           }
           const list = getList(json)
           result.push(...list)

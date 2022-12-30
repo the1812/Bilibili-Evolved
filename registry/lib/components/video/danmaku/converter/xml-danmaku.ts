@@ -15,10 +15,22 @@ export class XmlDanmaku extends Danmaku {
   rowId: number
   pDataArray: Array<number | string>
   constructor({
-    content, time, type, fontSize, color, timeStamp, pool, userHash, rowId,
+    content,
+    time,
+    type,
+    fontSize,
+    color,
+    timeStamp,
+    pool,
+    userHash,
+    rowId,
   }: XmlDanmakuData) {
     super({
-      content, time, type, fontSize, color,
+      content,
+      time,
+      type,
+      fontSize,
+      color,
     })
     this.timeStamp = parseInt(timeStamp)
     this.pool = parseInt(pool)
@@ -35,7 +47,15 @@ export class XmlDanmaku extends Danmaku {
     const [time, type, fontSize, color, timeStamp, pool, userHash, rowId] = pData.split(',')
     const content = element.innerHTML
     return new XmlDanmaku({
-      content, time, type, fontSize, color, timeStamp, pool, userHash, rowId,
+      content,
+      time,
+      type,
+      fontSize,
+      color,
+      timeStamp,
+      pool,
+      userHash,
+      rowId,
     })
   }
 }

@@ -40,11 +40,11 @@ const getFeedsCardType = (element: HTMLElement) => {
  */
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   const getSimpleText = async (selector: string) => {
-    const subElement = await sq(
+    const subElement = (await sq(
       () => element.querySelector(selector),
       it => it !== null || element.parentNode === null,
       { queryInterval: 100 },
-    ) as HTMLElement
+    )) as HTMLElement
     if (element.parentNode === null) {
       // console.log('skip detached node:', element)
       return ''
@@ -67,7 +67,11 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     }
     const originalCard = JSON.parse(vueData.card.origin)
     const originalText: string = vueData.originCardData.pureText
-    const originalDescription: string = lodash.get(originalCard, 'item.description', lodash.get(originalCard, 'desc', ''))
+    const originalDescription: string = lodash.get(
+      originalCard,
+      'item.description',
+      lodash.get(originalCard, 'desc', ''),
+    )
     const originalTitle: string = originalCard.title
     return {
       originalText,
@@ -96,17 +100,13 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     if (type === feedsCardTypes.repost) {
       const currentText = vueData.card.item.content
       const repostData = getRepostData(vueData)
-      return [
-        currentText,
-        ...Object.values(repostData).filter(it => it !== ''),
-      ].filter(it => Boolean(it)).join('\n')
+      return [currentText, ...Object.values(repostData).filter(it => it !== '')]
+        .filter(it => Boolean(it))
+        .join('\n')
     }
     const currentText = vueData.originCardData.pureText
     const currentTitle = vueData.originCardData.title
-    return [
-      currentText,
-      currentTitle,
-    ].filter(it => Boolean(it)).join('\n')
+    return [currentText, currentTitle].filter(it => Boolean(it)).join('\n')
   }
   const getNumber = async (selector: string) => {
     const result = parseInt(await getSimpleText(selector))
@@ -124,7 +124,9 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     likes: await getNumber('.button-bar .single-button:nth-child(3) .text-offset'),
     element,
     type: getFeedsCardType(element),
-    get presented() { return element.parentNode !== null },
+    get presented() {
+      return element.parentNode !== null
+    },
     async getText() {
       return getComplexText(this.type)
     },

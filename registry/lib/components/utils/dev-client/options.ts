@@ -5,7 +5,8 @@ import { getNumberValidator } from '@/core/utils'
 import { RefreshMethod, HotReloadMethod } from './update-method'
 
 export const { options: autoUpdateOptions } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-export const getDevClientOptions = () => getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient').options
+export const getDevClientOptions = () =>
+  getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient').options
 export interface DevRecord {
   name: string
   originalUrl: string

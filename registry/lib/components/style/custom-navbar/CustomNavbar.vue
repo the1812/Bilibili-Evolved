@@ -2,11 +2,7 @@
   <div class="custom-navbar" :class="styles" role="navigation">
     <div class="left-pad padding"></div>
     <div class="custom-navbar-items" role="list">
-      <NavbarItem
-        v-for="item of items"
-        :key="item.name"
-        :item="item"
-      ></NavbarItem>
+      <NavbarItem v-for="item of items" :key="item.name" :item="item"></NavbarItem>
     </div>
     <div class="right-pad padding"></div>
   </div>
@@ -63,9 +59,13 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    addComponentListener('customNavbar.height', (value: number) => {
-      document.documentElement.style.setProperty('--navbar-height', `${value}px`)
-    }, true)
+    addComponentListener(
+      'customNavbar.height',
+      (value: number) => {
+        document.documentElement.style.setProperty('--navbar-height', `${value}px`)
+      },
+      true,
+    )
     await checkTransparentFill(this)
   },
   methods: {
@@ -82,6 +82,10 @@ export default Vue.extend({
 
 <style lang="scss">
 @import 'common';
+
+.van-message-box {
+  z-index: 10002 !important;
+}
 
 html {
   --navbar-height: 50px;
@@ -127,10 +131,6 @@ body.fixed-navbar {
   transition: all 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   outline: none !important;
-  margin-inline-start: 0;
-  margin-inline-end: 0;
-  padding-inline-start: 0;
-  padding-inline-end: 0;
 }
 
 .custom-navbar {
@@ -214,12 +214,7 @@ body.fixed-navbar {
       left: 0;
       width: 100%;
       height: calc(2 * var(--navbar-height));
-      background-image: linear-gradient(
-        to bottom,
-        #000a 0,
-        #0004 65%,
-        transparent 100%
-      );
+      background-image: linear-gradient(to bottom, #000a 0, #0004 65%, transparent 100%);
       pointer-events: none;
     }
   }

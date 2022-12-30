@@ -22,11 +22,13 @@ export const textControlMixin = Vue.extend({
   data() {
     return {
       composing: false,
-      restListeners: lodash.omit(this.$listeners,
+      restListeners: lodash.omit(
+        this.$listeners,
         'change',
         'input',
         'compositionstart',
-        'compositionend'),
+        'compositionend',
+      ),
     }
   },
   methods: {

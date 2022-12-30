@@ -7,11 +7,7 @@
     @keydown.left.prevent.stop="offsetByStep(-1)"
     @keydown.right.prevent.stop="offsetByStep(1)"
   >
-    <div
-      ref="barContainer"
-      class="bar-container"
-      @click="setByCoord($event.offsetX)"
-    >
+    <div ref="barContainer" class="bar-container" @click="setByCoord($event.offsetX)">
       <slot name="bar">
         <div class="default-bar"></div>
       </slot>
@@ -89,7 +85,7 @@
 import MiniToast from '@/core/toast/MiniToast.vue'
 
 // 将实数化为整数的函数，如 Math.round，Math.ceil
-type IntoIntCallback = (value: number) => number;
+type IntoIntCallback = (value: number) => number
 
 export default Vue.extend({
   name: 'VSlider',
@@ -189,17 +185,11 @@ export default Vue.extend({
   },
   methods: {
     // 以 0 为中心，计算 value 对应的 step 数。intoIntCallback 用于化整。
-    valueToStep(
-      value: number,
-      intoIntCallback: IntoIntCallback = Math.round,
-    ): number {
+    valueToStep(value: number, intoIntCallback: IntoIntCallback = Math.round): number {
       return intoIntCallback(value / this.step)
     },
     // 以 0 为中心，将 value 调整到 step 的整数倍上。intoIntCallback 用于化整。
-    valueToStepped(
-      value: number,
-      intoIntCallback: IntoIntCallback = Math.round,
-    ): number {
+    valueToStepped(value: number, intoIntCallback: IntoIntCallback = Math.round): number {
       return this.valueToStep(value, intoIntCallback) * this.step
     },
     // 计算 slider bar 上 length 像素所对应的 value 偏移。（可计算负偏移）
@@ -226,13 +216,8 @@ export default Vue.extend({
       return totalLength * (value / this.valueLength)
     },
     // 将一个 value 按步骤转化为 rounded
-    valueToRounded(
-      value: number,
-      intoIntCallback: IntoIntCallback = Math.round,
-    ): number {
-      return (
-        this.center + this.valueToStepped(value - this.center, intoIntCallback)
-      )
+    valueToRounded(value: number, intoIntCallback: IntoIntCallback = Math.round): number {
+      return this.center + this.valueToStepped(value - this.center, intoIntCallback)
     },
     // 执行 limit 步骤的函数，不含其他步骤的处理
     limitValue(value: number): number {
@@ -267,14 +252,12 @@ export default Vue.extend({
     },
     // 用 coord 设置组件的值，自动完成所有步骤
     setByCoord(coord: number) {
-      this.setByRounded(
-        this.center + this.lengthToStepped(coord - this.centerCoord),
-      )
+      this.setByRounded(this.center + this.lengthToStepped(coord - this.centerCoord))
     },
     // 设置拖拽相关的事件
     setupDrag() {
-      type Listener = (pageX: number) => void;
-      type Stopper = () => void;
+      type Listener = (pageX: number) => void
+      type Stopper = () => void
 
       // addEventListener 的简单包装。统一鼠标和触摸事件的注册。
       // 已经屏蔽事件默认行为。触摸事件仅在单个触摸点时触发。
@@ -312,9 +295,7 @@ export default Vue.extend({
           startPageX = pageX
           startRealValue = this.realValue
           const stopListenMove = startListen(window, type.move, pageX0 => {
-            this.setByValue(
-              startRealValue + this.lengthToValue(pageX0 - startPageX),
-            )
+            this.setByValue(startRealValue + this.lengthToValue(pageX0 - startPageX))
           })
           startListen(
             window,
@@ -333,7 +314,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
-@import "./common";
+@import './common';
 .be-slider {
   min-width: 50px;
   position: relative;

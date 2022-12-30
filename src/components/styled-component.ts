@@ -6,10 +6,12 @@ import { ComponentEntry, ComponentMetadata, UnknownOptions } from './component'
  * @param styleImport 动态导入样式的函数
  * @param entry 组件入口函数
  */
-export const styledComponentEntry = <O extends UnknownOptions>(
-  styleImport: () => Promise<{ default: string }>,
-  entry: ComponentEntry<O>,
-): ComponentEntry<O> => async context => {
+export const styledComponentEntry =
+  <O extends UnknownOptions>(
+    styleImport: () => Promise<{ default: string }>,
+    entry: ComponentEntry<O>,
+  ): ComponentEntry<O> =>
+  async context => {
     const { default: style } = await styleImport()
     const { addStyle } = await import('@/core/style')
     addStyle(style, context.metadata.name)

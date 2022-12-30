@@ -11,8 +11,8 @@ export enum CdnTypes {
 const defaultOwner = 'the1812'
 /** 根据分支名和仓库 owner 检索 CDN 链接 */
 export const cdnRoots: Record<CdnTypes, (branch: string, owner?: string) => string> = {
-  /** @deprecated */
-  jsDelivr: (branch, owner) => `https://cdn.jsdelivr.net/gh/${owner || defaultOwner}/Bilibili-Evolved@${branch}/`,
+  jsDelivr: (branch, owner) => meta.compilationInfo.allCdns.jsDelivr.root(branch, owner),
   AltCdn: (branch, owner) => meta.compilationInfo.altCdn.root(branch, owner),
-  GitHub: (branch, owner) => `https://raw.githubusercontent.com/${owner || defaultOwner}/Bilibili-Evolved/${branch}/`,
+  GitHub: (branch, owner) =>
+    `https://raw.githubusercontent.com/${owner || defaultOwner}/Bilibili-Evolved/${branch}/`,
 }

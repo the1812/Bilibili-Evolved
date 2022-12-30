@@ -7,7 +7,7 @@ const regenerateOrder = (items: CustomNavbarItem[]) => {
     }
     item.order = index
   })
-  const orderMap = Object.fromEntries(items.map(it => ([it.name, it.order])))
+  const orderMap = Object.fromEntries(items.map(it => [it.name, it.order]))
   CustomNavbarItem.navbarOptions.order = orderMap
 }
 export const checkSequentialOrder = (items: CustomNavbarItem[]) => {
