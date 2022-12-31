@@ -352,3 +352,5 @@ export const newSwitchComponentWrapper = <N extends string, S extends string>(
     return component as SwitchComponentMetadata<O, N, S>
   }
 }
+
+export { createSwitchOptions } from './switch-options-old'
