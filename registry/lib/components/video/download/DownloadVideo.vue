@@ -63,9 +63,8 @@
       <div
         v-if="selectedOutput && selectedOutput.description"
         class="download-video-config-description"
-      >
-        {{ selectedOutput.description }}
-      </div>
+        v-html="selectedOutput.description"
+      ></div>
       <component
         :is="selectedOutput.component"
         v-if="selectedOutput && selectedOutput.component"
@@ -417,8 +416,11 @@ export default Vue.extend({
     align-self: stretch;
   }
   .download-video-config-description {
-    opacity: 0.5;
+    color: #888d;
     margin-top: 4px;
+    a {
+      color: var(--theme-color-70);
+    }
   }
   &-footer {
     @include h-center();
