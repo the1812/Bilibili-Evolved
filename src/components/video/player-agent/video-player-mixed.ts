@@ -38,7 +38,7 @@ export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
         quality: '.bilibili-player-btn-quality, .bpx-player-ctrl-quality',
         pageList: '.bilibili-player-video-btn-pagelist, .bpx-player-ctrl-eplist',
         speed: '.bilibili-player-video-btn-speed, .bpx-player-ctrl-playbackrate',
-        subtitle: '.bilibili-player-video-btn-subtitle, .bpx-player-ctrl-subtitle',
+        subtitle: '.bilibili-player-video-btn-subtitle, .bpx-player-ctrl-subtitle > div > span',
         volume:
           '.bilibili-player-video-btn-volume .bilibili-player-iconfont-volume, .bpx-player-ctrl-volume .bpx-player-ctrl-volume-icon',
         settings: '.bilibili-player-video-btn-setting, .bpx-player-ctrl-setting',

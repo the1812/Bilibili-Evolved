@@ -1,23 +1,24 @@
 import { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
 import { PluginMetadata } from '@/plugins/plugin'
+import { playerAgent } from '@/components/video/player-agent'
 
 export const plugin: PluginMetadata = {
-  name: 'keymap.actions.toggleDanmakuList',
-  displayName: '快捷键扩展 - 开关弹幕列表',
-  description: '在快捷键的动作列表里添加一个 "开关弹幕列表".',
+  name: 'keymap.actions.toggleSubtitle',
+  displayName: '快捷键扩展 - 开关 CC 字幕',
+  description: '在快捷键的动作列表里添加一个 "开关 CC 字幕".',
   setup: ({ addData }) => {
     addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
-      actions.toggleDanmakuList = {
-        displayName: '开关弹幕列表',
+      actions.toggleSubtitle = {
+        displayName: '开关 CC 字幕',
         run: async () => {
-          const button = dq('.bui-collapse-header') as HTMLDivElement
+          const button = playerAgent.query.control.buttons.subtitle.sync()
           button?.click()
           return button
         },
       }
     })
     addData('keymap.presets', (presetBase: Record<string, string>) => {
-      presetBase.toggleDanmakuList = 'shift d'
+      presetBase.toggleSubtitle = 'shift c'
     })
   },
 }
