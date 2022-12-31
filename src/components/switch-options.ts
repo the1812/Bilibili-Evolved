@@ -346,7 +346,7 @@ export const newSwitchComponentWrapper = <N extends string, S extends string>(
       component.widget = newWidget(switchMetadataOption)
     }
     // 扩展组件 options
-    extendOptions(component.options, switchMetadataOption)
+    component.options = extendOptions(component.options, switchMetadataOption)
     // 包装 entry 函数
     component.entry = newSwitchEntry(component)
     return component as SwitchComponentMetadata<O, N, S>
