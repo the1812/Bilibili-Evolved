@@ -205,11 +205,10 @@ const newSwitchOptionsMetadataExtender = <S extends string>(
     switchMetadataOption: SwitchMetadataOption<N, S>,
   ) => {
     optionsToExtend[switchMetadataOption.name as string] = {
-      defaultValue: options,
+      defaultValue: switchMetadataOption,
       displayName: switchMetadataOption.optionDisplayName,
     }
-    Object.assign(options, optionsToExtend)
-    return options as SwitchOptionsMetadata<O, N, S>
+    return { ...options, ...optionsToExtend } as SwitchOptionsMetadata<O, N, S>
   }
 }
 
@@ -267,12 +266,12 @@ export const defineIncompleteSwitchComponentMetadata = <
 /**
  * 包装原始 `entry` 函数并返回
  */
-const newSwitchEntry =
-  <O extends UnknownOptions, N extends string, S extends string>(
-    component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
-  ): SwitchEntry<O, N, S> =>
-  (...args) => {
-    const result = component.entry(...args)
+const newSwitchEntry = <O extends UnknownOptions, N extends string, S extends string>(
+  component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
+): SwitchEntry<O, N, S> => {
+  const originalEntry = component.entry
+  return (...args) => {
+    const result = originalEntry(...args)
     const componentOptions = getComponentSettings(component.name).options
     Object.keys(componentOptions).forEach(key => {
       if (key.startsWith('switch-')) {
@@ -287,6 +286,7 @@ const newSwitchEntry =
     })
     return result
   }
+}
 
 /**
  * 被包装后的 {@link ComponentMetadata}
