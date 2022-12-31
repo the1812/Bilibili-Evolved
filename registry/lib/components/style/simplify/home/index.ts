@@ -1,8 +1,4 @@
-import {
-  newSwitchComponentWrapper,
-  defineSwitchMetadata,
-  defineIncompleteSwitchComponentMetadata,
-} from '@/components/switch-options'
+import { newSwitchComponentWrapper, defineSwitchMetadata } from '@/components/switch-options'
 
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
@@ -50,7 +46,8 @@ const switchMetadata = defineSwitchMetadata({
   },
 })
 const console = useScopedConsole('简化首页')
-const metadata = defineIncompleteSwitchComponentMetadata({
+
+export const component = newSwitchComponentWrapper(switchMetadata)({
   name: 'simplifyHome',
   displayName: '简化首页',
   description: '隐藏原版首页不需要的元素 / 分区.',
@@ -62,7 +59,7 @@ const metadata = defineIncompleteSwitchComponentMetadata({
   ],
   urlInclude: mainSiteUrls,
   tags: [componentsTags.style],
-  entry: async () => {
+  entry: async ({ metadata }) => {
     // 正好是首页时提供首页分区的简化选项
     const isHome = matchUrlPattern('https://www.bilibili.com/')
     if (!isHome) {
@@ -165,5 +162,3 @@ const metadata = defineIncompleteSwitchComponentMetadata({
     addStyle(generatedStyles, 'simplify-home-generated')
   },
 })
-
-export const component = newSwitchComponentWrapper(switchMetadata)(metadata)

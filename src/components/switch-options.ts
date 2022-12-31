@@ -233,41 +233,10 @@ export type SwitchEntry<
 > = ComponentEntry<SwitchOptions<O, N, S>, T>
 
 /**
- * 用于被 API 包装的组件原数据，类似于 `ComponentMetadata`。
- *
- * 定义该类型时，请使用 {@link defineIncompleteSwitchComponentMetadata}。
- *
- * 在通过该函数定义组件的 `entry` 时，可以获得被 API 注入的 options 的类型提示。
- */
-export type IncompleteSwitchComponentMetadata<
-  O extends UnknownOptions,
-  N extends string,
-  S extends string,
-> = {
-  [K in keyof ComponentMetadata<O>]: K extends 'entry'
-    ? SwitchEntry<O, N, S>
-    : ComponentMetadata<O>[K]
-}
-
-/**
- * 定义一个用于被该 API 包装的组件元数据，
- * 类似于 {@link import("./define").defineComponentMetadata}。
- *
- * 与直接定义的不同之处在于：定义 `entry` 时，可以获得被 API 注入的 options 的类型提示。
- */
-export const defineIncompleteSwitchComponentMetadata = <
-  O extends UnknownOptions,
-  N extends string,
-  S extends string,
->(
-  m: IncompleteSwitchComponentMetadata<O, N, S>,
-): IncompleteSwitchComponentMetadata<O, N, S> => m
-
-/**
  * 包装原始 `entry` 函数并返回
  */
 const newSwitchEntry = <O extends UnknownOptions, N extends string, S extends string>(
-  component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
+  component: ComponentMetadata<O>,
 ): SwitchEntry<O, N, S> => {
   const originalEntry = component.entry
   return (...args) => {
@@ -300,10 +269,6 @@ export type SwitchComponentMetadata<
 /**
  * 用于包装组件元数据，生成开关选项。
  *
- * 传入参数可以是普通的组件元数据，也可以是 {@link IncompleteSwitchComponentMetadata}。
- * 后者应使用 {@link defineIncompleteSwitchComponentMetadata} 定义；
- * 在通过该函数定义组件的 `entry` 时，可以获得被 API 注入的 options 的类型提示。
- *
  * 为保障组件功能的正常运行，请勿使用以 'switch-' 开头的 option。
  *
  * 若传入组件未定义 Widget，则会注入一个用于控制各开关的 Widget。
@@ -317,7 +282,7 @@ export type SwitchComponentMetadata<
  * @returns 包装完成的组件元数据
  */
 export type SwitchComponentWrapper<N extends string, S extends string> = <O extends UnknownOptions>(
-  component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
+  component: ComponentMetadata<O>,
 ) => SwitchComponentMetadata<O, N, S>
 
 /**
@@ -333,9 +298,7 @@ export const newSwitchComponentWrapper = <N extends string, S extends string>(
 ): SwitchComponentWrapper<N, S> => {
   const extendOptions = newSwitchOptionsMetadataExtender(metadata.switches)
   // 返回的 wrapper
-  return <O extends UnknownOptions>(
-    component: ComponentMetadata<O> | IncompleteSwitchComponentMetadata<O, N, S>,
-  ) => {
+  return <O extends UnknownOptions>(component: ComponentMetadata<O>) => {
     const switchMetadataOption = newSwitchMetadataOption(
       metadata,
       component.name,
