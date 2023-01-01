@@ -1,8 +1,8 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { LifeCycleEventTypes } from '@/core/life-cycle'
 import { darkExcludes } from '../dark-urls'
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'darkModeFollowSystem',
   displayName: '夜间模式跟随系统',
   entry: () => {
@@ -30,4 +30,4 @@ export const component: ComponentMetadata = {
 > 注：在某些浏览器 (如 \`Microsoft Edge\`) 中，夜间模式仅会同步浏览器的亮 / 暗主题.
     `.trim(),
   },
-}
+})

@@ -4,6 +4,7 @@ import { getComponentSettings } from '@/core/settings'
 import { languageNameToCode } from '@/core/utils/i18n'
 import { registerAndGetData } from '@/plugins/data'
 import { formData } from '@/core/utils'
+import { Options as I18nOptions } from '../types'
 
 export abstract class MachineTranslateProvider {
   abstract translate(text: string): Promise<string>
@@ -11,7 +12,7 @@ export abstract class MachineTranslateProvider {
   abstract link: string
   abstract defaultLanguage: string
   protected getTargetLanguage() {
-    const i18n = getComponentSettings('i18n')
+    const i18n = getComponentSettings<I18nOptions>('i18n')
     if (i18n.enabled) {
       return languageNameToCode(i18n.options.language)
     }
@@ -111,7 +112,7 @@ export const translateProviderNames = Object.keys(translateProviders)
 export const getTranslator = (): MachineTranslateProvider => {
   const {
     options: { translator },
-  } = getComponentSettings('i18n')
+  } = getComponentSettings<I18nOptions>('i18n')
   const provider = translateProviders[translator] || translateProviders.GoogleCN
   return provider
 }

@@ -1,6 +1,5 @@
 import { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
 import { PluginMetadata } from '@/plugins/plugin'
-import { select } from '@/core/spin-query'
 
 export const plugin: PluginMetadata = {
   name: 'keymap.actions.toggleDanmakuList',
@@ -10,10 +9,10 @@ export const plugin: PluginMetadata = {
     addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
       actions.toggleDanmakuList = {
         displayName: '开关弹幕列表',
-        prevent: true,
         run: async () => {
-          const button = (await select('.bui-collapse-header')) as HTMLDivElement
+          const button = dq('.bui-collapse-header') as HTMLDivElement
           button?.click()
+          return button
         },
       }
     })

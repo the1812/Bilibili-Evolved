@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { styledComponentEntry } from '@/components/styled-component'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 import { feedsCardsManager } from '@/components/feeds/api'
@@ -24,7 +24,7 @@ const entry = async () => {
       button.innerHTML = '收起评论'
       button.addEventListener('click', () => {
         clickHandler()
-        card.scrollIntoView()
+        card.scrollIntoView({ behavior: 'smooth' })
       })
       commentBox.insertAdjacentElement('beforeend', button)
     }
@@ -76,7 +76,7 @@ const entry = async () => {
   })
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'foldComments',
   displayName: '快速收起评论',
   description: {
@@ -85,4 +85,4 @@ export const component: ComponentMetadata = {
   urlInclude: feedsUrlsWithoutDetail,
   tags: [componentsTags.feeds],
   entry: styledComponentEntry(() => import('./fold-comment.scss'), entry),
-}
+})

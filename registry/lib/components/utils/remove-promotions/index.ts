@@ -74,6 +74,13 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
     },
     true,
   )
+  addComponentListener(
+    `${metadata.name}.showPlaceholder`,
+    (value: boolean) => {
+      document.body.classList.toggle('promotion-show-placeholder', value)
+    },
+    true,
+  )
 }
 export const component = defineComponentMetadata({
   name: 'removePromotions',

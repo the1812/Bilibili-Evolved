@@ -11,7 +11,7 @@ export const history: CustomNavbarItemInit = {
   active: document.URL.replace(/\?.*$/, '') === href,
   loginRequired: true,
 
-  boundingWidth: 350,
+  boundingWidth: 400,
   noPopupPadding: true,
   popupContent: () => import('./NavbarHistory.vue').then(m => m.default),
 }

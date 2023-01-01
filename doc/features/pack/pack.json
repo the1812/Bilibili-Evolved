@@ -37,7 +37,7 @@
         "type": "component",
         "name": "removePlayerPopup",
         "displayName": "删除视频弹窗",
-        "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.",
+        "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.\r\n",
         "fullRelativePath": "../../registry/dist/components/video/player/remove-popup.js",
         "fullAbsolutePath": "registry/dist/components/video/player/remove-popup.js"
       },

@@ -891,3 +891,6 @@
 .right-area .tip-wrap .icon path[fill="#00AEEC"] {
   @include theme-fill();
 }
+.bpx-player-pbp-videoshot rect[clip-path] {
+  @include theme-fill();
+}

@@ -1,6 +1,7 @@
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
+import { Options } from '.'
 import { KeyBindingAction, KeyBindingActionContext } from './bindings'
 
 export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
@@ -181,11 +182,13 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   longJumpBackward: {
     displayName: '长倒退',
-    run: () => playerAgent.changeTime(-getComponentSettings('keymap').options.longJumpSeconds),
+    run: () =>
+      playerAgent.changeTime(-getComponentSettings<Options>('keymap').options.longJumpSeconds),
   },
   longJumpForward: {
     displayName: '长前进',
-    run: () => playerAgent.changeTime(getComponentSettings('keymap').options.longJumpSeconds),
+    run: () =>
+      playerAgent.changeTime(getComponentSettings<Options>('keymap').options.longJumpSeconds),
   },
   jumpBackward: {
     displayName: '倒退',

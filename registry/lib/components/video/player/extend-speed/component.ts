@@ -34,11 +34,15 @@ export const ERROR_MESSAGE_DURATION = 5000
 /** 计算菜单项 order */
 export const calcOrder = (value: number) => ((MAX_BROWSER_SPEED_VALUE - value) * 10000).toString()
 
-export interface Options {
+export type Options = {
   /** 最大菜单高度 */
   maxMenuHeight: boolean
   /** 隐藏进度条 */
   hideScrollbar: boolean
+  /** 隐藏移除图标 */
+  hideRemoveBtn: boolean
+  /** 隐藏新增图标 */
+  hideAddBtn: boolean
   /** 扩展倍速列表 */
   extendSpeedList: number[]
 }
@@ -378,6 +382,33 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
                     height: 0 !important;
                     width: 0 !important;
                 }`,
+      }),
+    )
+
+    this.options.hideRemoveBtn$.subscribe(
+      loadStyle({
+        name: 'extend-video-speed-no-remove-btn-style',
+        style: hideRemoveBtn =>
+          hideRemoveBtn &&
+          `
+            .${EXTEND_SPEED_ITEM_CLASS_NAME} [data-ref="close-btn"] {
+              display: none !important;
+            }
+            :is(${PLAYER_AGENT.custom.speedMenuItem.selector}):not(${PLAYER_AGENT.custom.active.selector}):hover [data-ref="close-btn"] {
+              display: none !important;
+            }`,
+      }),
+    )
+
+    this.options.hideAddBtn$.subscribe(
+      loadStyle({
+        name: 'extend-video-speed-no-add-btn-style',
+        style: hideAddBtn =>
+          hideAddBtn &&
+          `
+          .${EXTEND_SPEED_INPUT_CLASS_NAME} {
+              display: none !important;
+            }`,
       }),
     )
 

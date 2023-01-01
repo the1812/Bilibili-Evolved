@@ -48,6 +48,7 @@ const entry = async () => {
     '-Arouter',
     'vd_source',
     'is_story_h5',
+    'buvid',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
@@ -62,6 +63,14 @@ const entry = async () => {
     {
       match: /\/\/www\.bilibili\.com\/bangumi\//,
       param: 'theme',
+    },
+    {
+      match: /\/\/www\.bilibili\.com\/video\//,
+      param: 'mid',
+    },
+    {
+      match: /\/\/www\.bilibili\.com\/video\//,
+      param: 'up_id',
     },
   ]
   const [siteSpecifiedParams] = registerAndGetData(

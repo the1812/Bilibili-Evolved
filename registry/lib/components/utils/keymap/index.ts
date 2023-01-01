@@ -1,22 +1,41 @@
 import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { styledComponentEntry } from '@/components/styled-component'
-import { ComponentEntry } from '@/components/types'
-import { defineComponentMetadata } from '@/components/define'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { actions } from './actions'
 import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
 import { presetBase, presets } from './presets'
 
+const options = defineOptionsMetadata({
+  longJumpSeconds: {
+    defaultValue: 85,
+    displayName: '长跳跃秒数',
+  },
+  customKeyBindings: {
+    defaultValue: {} as Record<string, string>,
+    displayName: '自定义键位',
+    hidden: true,
+  },
+  preset: {
+    defaultValue: 'Default',
+    displayName: '预设',
+    hidden: true,
+  },
+})
+export type Options = OptionsOfMetadata<typeof options>
 let config: KeyBindingConfig = null
-const parseBindings = (bindings: Record<string, string>) =>
-  Object.entries(bindings).map(([actionName, keyString]) => {
+const parseBindings = (bindings: Record<string, string>): KeyBinding[] => {
+  const parseBinding = (actionName: string, keyString: string) => {
     const keys = keyString.split(' ').filter(it => it !== '')
-    return {
-      keys,
-      action: actions[actionName] || none,
-    } as KeyBinding
-  })
-const entry: ComponentEntry = styledComponentEntry(
+    return { keys, action: actions[actionName] }
+  }
+  return Object.entries(bindings).map(([n, k]) => parseBinding(n, k))
+}
+const entry = styledComponentEntry<Options>(
   () => import('./playback-tip.scss'),
   async ({ settings }) => {
     const update = () => {
@@ -58,22 +77,7 @@ export const component = defineComponentMetadata({
     'zh-CN': '为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.',
   },
   extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
-  options: {
-    longJumpSeconds: {
-      defaultValue: 85,
-      displayName: '长跳跃秒数',
-    },
-    customKeyBindings: {
-      defaultValue: {},
-      displayName: '自定义键位',
-      hidden: true,
-    },
-    preset: {
-      defaultValue: 'Default',
-      displayName: '预设',
-      hidden: true,
-    },
-  },
+  options,
   plugin: {
     displayName: '快捷键扩展 - 搜索支持',
     setup: ({ addData }) => {
