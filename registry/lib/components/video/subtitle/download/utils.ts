@@ -9,7 +9,10 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
     '../subtitle-converter'
   )
   const { playerAgent } = await import('@/components/video/player-agent')
-  const playerSettingsText = localStorage.getItem('bilibili_player_settings')
+  const isBpxPlayer = dq('.bpx-player-video-wrap')
+  const playerSettingsText = isBpxPlayer
+    ? localStorage.getItem('bpx_player_profile')
+    : localStorage.getItem('bilibili_player_settings')
   if (!playerSettingsText) {
     return [SubtitleConverter.defaultConfig, '']
   }
@@ -24,8 +27,11 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
     1.6: SubtitleSize.VeryLarge,
   }
   const size = fontSizeMapping[subtitleSettings.fontsize]
-  const color = subtitleSettings.color.toString(16)
-  const opacity = subtitleSettings.backgroundopacity
+  const color =
+    typeof subtitleSettings.color === 'number'
+      ? subtitleSettings.color.toString(16)
+      : parseInt(subtitleSettings.color).toString(16)
+  const opacity = subtitleSettings.backgroundopacity ?? subtitleSettings.opacity
 
   const positions = {
     bc: SubtitleLocation.BottomCenter,
@@ -34,6 +40,12 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
     tc: SubtitleLocation.TopCenter,
     tl: SubtitleLocation.TopLeft,
     tr: SubtitleLocation.TopRight,
+    'bottom-center': SubtitleLocation.BottomCenter,
+    'bottom-left': SubtitleLocation.BottomLeft,
+    'bottom-right': SubtitleLocation.BottomRight,
+    'top-center': SubtitleLocation.TopCenter,
+    'top-left': SubtitleLocation.TopLeft,
+    'top-right': SubtitleLocation.TopRight,
   }
   const subtitleLocation = positions[subtitleSettings.position]
 
@@ -76,7 +88,7 @@ export const getBlobByType = async (
     return null
   }
   const [config, language] = await getSubtitleConfig()
-  const subtitle = subtitles.find(s => s.language === language) || subtitles[0]
+  const subtitle = subtitles.find(s => s.languageCode === language) || subtitles[0]
   const json = await getJson(subtitle.url)
   const rawData = json.body
   switch (type) {

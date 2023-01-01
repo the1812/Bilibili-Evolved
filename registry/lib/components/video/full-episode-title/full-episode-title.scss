@@ -1,5 +1,5 @@
 body {
-  &.full-episode-title {
+  &.full-episode-title:not(.disable-full-episode-list) {
     .base-video-sections-v1 {
       .video-episode-card {
         height: auto !important;
@@ -43,7 +43,7 @@ body {
     .video-sections-content-list {
       max-height: unset !important;
       height: auto !important;
-      .video-section-list {
+      .video-section-list:not([style*="height: 0px"]) {
         height: auto !important;
       }
     }

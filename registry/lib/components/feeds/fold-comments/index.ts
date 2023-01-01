@@ -24,7 +24,7 @@ const entry = async () => {
       button.innerHTML = '收起评论'
       button.addEventListener('click', () => {
         clickHandler()
-        card.scrollIntoView()
+        card.scrollIntoView({ behavior: 'smooth' })
       })
       commentBox.insertAdjacentElement('beforeend', button)
     }
