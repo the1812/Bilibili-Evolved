@@ -91,7 +91,7 @@ export default Vue.extend({
   &.left-icon {
     .icon-container {
       order: -1;
-      margin: 2px 8px 2px 0;
+      margin: 2px 6px 2px 0;
     }
   }
 }

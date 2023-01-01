@@ -326,7 +326,7 @@ export default Vue.extend({
       .title {
         grid-area: title;
         font-size: 13px;
-        font-weight: bold;
+        @include semi-bold();
         margin: 0;
         margin-top: 8px;
         padding: 0 10px;
