@@ -565,6 +565,17 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)
 
+### [批量导入合集](../../registry/dist/components/utils/import-series.js)
+`importSeries`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/import-series.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/import-series.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/import-series.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/import-series.js)
+
+by [@aiden](https://github.com/swhoro)
+
+在合集页面制作一个批量导入按钮，可以新增所有合集内视频至同名收藏夹
+
 ### [快捷键扩展](../../registry/dist/components/utils/keymap.js)
 `keymap`
 
@@ -808,6 +819,10 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### 🔧 **选项**
 
 - `隐藏滚动条`：如果添加的倍速过多，倍速菜单将出现滚动条，在 Windows 下，若没有安装并启用「细滚动条」组件会显得比较挤，建议开启此选项隐藏滚动条.
+
+- `隐藏移除图标`：如果认为倍速右侧的移除倍速图标有些突兀，可以开启此选项隐藏.
+
+- `隐藏新增图标`：如果认为顶部的新增倍速图标有些突兀，可以开启此选项隐藏.
 
 ### **新增倍速**
 
@@ -1053,6 +1068,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
 
 在快捷键的动作列表里添加一个 "开关弹幕列表".
+
+### [快捷键扩展 - 开关 CC 字幕](../../registry/dist/plugins/utils/keymap-toggle-subtitle.js)
+`keymap.actions.toggleSubtitle`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-subtitle.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-subtitle.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-subtitle.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-subtitle.js)
+
+在快捷键的动作列表里添加一个 "开关 CC 字幕".
 
 ### [加载提示 - 灵梦油库里](../../registry/dist/plugins/v-loading/reimu.js)
 `vLoading.reimu`
