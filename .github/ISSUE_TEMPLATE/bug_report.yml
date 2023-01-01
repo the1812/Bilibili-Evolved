@@ -50,7 +50,7 @@ body:
     attributes:
       label: 播放器版本
       description: |
-        在 b 站播放器上右键可以看到播放器版本号, 大于 3 的别反馈视频相关功能了, 去 [#3187](https://github.com/the1812/Bilibili-Evolved/issues/3187) 里有. 如果是 2, 还要确认下是不是新版播放页, 需要返回旧版才能使用脚本功能. (辨认方法可参考 [#3384](https://github.com/the1812/Bilibili-Evolved/discussions/3384))
+        在 b 站播放器上右键可以看到播放器版本号
       placeholder: 请输入
     validations:
       required: true
@@ -71,8 +71,8 @@ body:
     attributes:
       label: 错误信息
       description: |
-        脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出, 在过滤里填入 `bilibili evolved`, 剩下的信息就可以粘贴过来, 太长的话可以截图放下面. <br><img width="400" src="https://user-images.githubusercontent.com/26504152/173189611-f1e9e46a-a31d-4d21-a95a-5771e16372dd.png">
-      render: shell
+        脚本直接报告的错误信息, 或者浏览器开发者工具 (F12 或 Ctrl+Shift+I 召唤) 里 Console / 控制台 一栏的输出, 太长的话可以截图放下面. <br><img width="400" src="https://user-images.githubusercontent.com/26504152/173189611-f1e9e46a-a31d-4d21-a95a-5771e16372dd.png">
+      render: Shell
       placeholder: 请输入
     validations:
       required: true
