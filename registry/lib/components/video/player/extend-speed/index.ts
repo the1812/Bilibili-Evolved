@@ -18,6 +18,10 @@ export const component = ExtendSpeedComponent.create<Options>({
 
 - \`隐藏滚动条\`：如果添加的倍速过多，倍速菜单将出现滚动条，在 Windows 下，若没有安装并启用「细滚动条」组件会显得比较挤，建议开启此选项隐藏滚动条.
 
+- \`隐藏移除图标\`：如果认为倍速右侧的移除倍速图标有些突兀，可以开启此选项隐藏.
+
+- \`隐藏新增图标\`：如果认为顶部的新增倍速图标有些突兀，可以开启此选项隐藏.
+
 ### **新增倍速**
 
 开启组件后，在默认情况下，播放器的倍速菜单就会新增 2.5x 和 3.0x 两个倍速选项.
@@ -45,6 +49,14 @@ export const component = ExtendSpeedComponent.create<Options>({
     },
     hideScrollbar: {
       displayName: '隐藏滚动条',
+      defaultValue: false,
+    },
+    hideRemoveBtn: {
+      displayName: '隐藏移除图标',
+      defaultValue: false,
+    },
+    hideAddBtn: {
+      displayName: '隐藏新增图标',
       defaultValue: false,
     },
     extendSpeedList: {
