@@ -50,7 +50,8 @@ jobs:
         git config --local user.name github-actions[bot]
         git config --global core.autocrlf true
         git config --global core.safecrlf false
-        git commit -m "CI build" -a
+        git add --all
+        git commit -m "CI build"
       continue-on-error: true
 
     - name: Git push
