@@ -87,9 +87,9 @@
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ secondItem.points | formatCount }}
+            {{ thirdItem.points | formatCount }}
             <VIcon icon="play" :size="16" />
-            {{ secondItem.playCount | formatCount }}
+            {{ thirdItem.playCount | formatCount }}
           </div>
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="thirdItem.videoHref">
