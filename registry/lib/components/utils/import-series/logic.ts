@@ -91,7 +91,7 @@ const importCollection = async (sid, csrf) => {
   }
 }
 
-const addButton = () => {
+const addButton = async () => {
   enum PageType {
     Collection,
     Series,
@@ -121,7 +121,7 @@ const addButton = () => {
   const csrf = getCsrf()
 
   // add a button
-  const pageHead = document.getElementsByClassName('page-head')[0]
+  const pageHead = await sq(() => document.getElementsByClassName('page-head')[0])
   const rel = pageHead.children[1]
   const button = document.createElement('a')
   // 什么离谱class名，play打错了可还行
@@ -144,7 +144,7 @@ const addButton = () => {
   }
 }
 
-export const realEntry = async () => {
+export const realEntry = () => {
   urlChange(() => {
     addButton()
   })
