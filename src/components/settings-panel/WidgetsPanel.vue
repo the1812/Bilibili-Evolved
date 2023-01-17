@@ -2,7 +2,18 @@
   <div class="widgets-panel">
     <div class="widgets-panel-header"><VIcon icon="widgets"></VIcon>功能</div>
     <!-- <div class="widgets-loading" v-if="loading">加载中...</div> -->
-    <VEmpty v-if="!loading && widgets.length === 0" class="widgets-empty"></VEmpty>
+    <VEmpty v-if="!loading && widgets.length === 0" class="widgets-empty">
+      <div>
+        空空如也哦 =￣ω￣=<br />
+        可点此参考
+        <mark>
+          <a href="https://bilibili-evolved-doc.vercel.app/docs/user/settings" target="_blank">
+            用户手册
+          </a>
+        </mark>
+        以安装所需功能
+      </div>
+    </VEmpty>
     <div class="widget-items">
       <component
         :is="w.component"
