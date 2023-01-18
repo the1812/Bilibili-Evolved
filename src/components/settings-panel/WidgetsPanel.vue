@@ -3,14 +3,12 @@
     <div class="widgets-panel-header"><VIcon icon="widgets"></VIcon>功能</div>
     <!-- <div class="widgets-loading" v-if="loading">加载中...</div> -->
     <VEmpty v-if="!loading && widgets.length === 0" class="widgets-empty">
-      <div>
+      <div class="widgets-empty-content">
         空空如也哦 =￣ω￣=<br />
         可点此参考
-        <mark>
-          <a href="https://bilibili-evolved-doc.vercel.app/docs/user/settings" target="_blank">
-            用户手册
-          </a>
-        </mark>
+        <a href="https://bilibili-evolved-doc.vercel.app/docs/user/settings" target="_blank">
+          用户手册
+        </a>
         以安装所需功能
       </div>
     </VEmpty>
@@ -87,6 +85,8 @@ export default Vue.extend({
 
 <style lang="scss">
 @import 'common';
+@import 'markdown';
+
 .widgets-panel {
   max-height: var(--panel-height);
   min-height: 80px;
@@ -122,6 +122,9 @@ export default Vue.extend({
   .widgets-loading,
   .widgets-empty {
     padding: 12px 0;
+    .widgets-empty-content {
+      @include markdown();
+    }
   }
   .widget-items {
     position: relative;
