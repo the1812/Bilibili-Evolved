@@ -37,7 +37,7 @@ export const installFeatureFromCode = async (
   message: string
 }> => {
   const { loadFeatureCode } = await import('../core/external-input')
-  const item = loadFeatureCode(code)
+  const item = loadFeatureCode(code) as FeatureType
   const { type, installer } = (() => {
     if (isComponent(item)) {
       return {

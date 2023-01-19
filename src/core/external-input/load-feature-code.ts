@@ -13,10 +13,10 @@ export class LoadFeatureError extends Error {}
  * 2. 若代码整体为一个表达式，则导出表达式的返回值
  *
  * @param code - 被执行的代码
- * @returns 导出的元数据
+ * @returns 导出的元数据（不检测正确性）
  * @throws {@link LoadFeatureError} 代码抛出了一个值或代码存在语法错误
  */
-export const loadFeatureCode = (code: string): ComponentMetadata | PluginMetadata | UserStyle => {
+export const loadFeatureCode = (code: string): unknown => {
   // 将 `key` 和 `val` 临时赋值到 `target` 上并返回
   // 调用返回值中的 restore 函数，可以恢复 `target` 中该属性的原始情况（包括属性不存在的情况）
   const temporarilySet = <O extends object, K extends keyof any, V>(
