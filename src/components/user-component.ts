@@ -8,9 +8,11 @@ import { ComponentMetadata, componentsMap } from './component'
  */
 export const installComponent = async (code: string) => {
   const { components } = await import('./component')
-  const { parseExternalInput } = await import('../core/external-input')
-  const component = await parseExternalInput<ComponentMetadata>(code)
-  if (component === null) {
+  const { loadFeatureCode } = await import('@/core/external-input')
+  let component: ComponentMetadata
+  try {
+    component = loadFeatureCode(code) as ComponentMetadata
+  } catch {
     throw new Error('无效的组件代码')
   }
   const { settings } = await import('@/core/settings')
