@@ -58,8 +58,8 @@ export const installPlugin = async (code: string) => {
   let plugin: PluginMetadata
   try {
     plugin = loadFeatureCode(code) as PluginMetadata
-  } catch {
-    throw new Error('无效的插件代码')
+  } catch (e) {
+    throw new Error('无效的插件代码', e)
   }
   const { settings } = await import('@/core/settings')
   const existingPlugin = settings.userPlugins[plugin.name]
@@ -169,10 +169,11 @@ export const loadAllPlugins = async (components: ComponentMetadata[]) => {
     let metadata: PluginMetadata
     try {
       metadata = loadFeatureCode(code) as PluginMetadata
-    } catch {
-      console.error(
-        `从代码加载用户插件失败。代码可能有语法错误或代码执行时有抛出值。插件名：'${name}'`,
-      )
+    } catch (e) {
+      console.error('从代码加载用户插件失败。代码可能包含语法错误或执行时产生了异常', {
+        pluginName: name,
+        error: e,
+      })
       continue
     }
     plugins.push(metadata)

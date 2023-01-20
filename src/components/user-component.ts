@@ -12,8 +12,8 @@ export const installComponent = async (code: string) => {
   let component: ComponentMetadata
   try {
     component = loadFeatureCode(code) as ComponentMetadata
-  } catch {
-    throw new Error('无效的组件代码')
+  } catch (e) {
+    throw new Error('无效的组件代码', { cause: e })
   }
   const { settings } = await import('@/core/settings')
   if (isBuiltInComponent(component.name)) {

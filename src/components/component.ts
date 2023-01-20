@@ -153,10 +153,11 @@ export const loadAllUserComponents = async () => {
     let metadata: ComponentMetadata
     try {
       metadata = loadFeatureCode(code) as ComponentMetadata
-    } catch {
-      console.error(
-        `从代码加载用户组件失败。代码可能有语法错误或代码执行时有抛出值。组件名：'${name}'`,
-      )
+    } catch (e) {
+      console.error('从代码加载用户组件失败。代码可能有语法错误或代码执行时有抛出值。', {
+        componentName: name,
+        error: e,
+      })
       continue
     }
     loadUserComponent(metadata)
