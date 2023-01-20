@@ -1,70 +1,82 @@
-import { ComponentMetadata } from '@/components/types'
-import { PluginMetadata } from '@/plugins/plugin'
-import { UserStyle } from '@/plugins/style'
+export class LoadFeatureCodeError extends Error {}
 
-export class LoadFeatureError extends Error {}
+interface CodeSandbox {
+  /**
+   * 在沙箱中执行代码
+   *
+   * @remarks
+   * 代码执行时的相关注意事项见 {@link loadFeatureCode}
+   *
+   * @returns 一个二元组：`[导出值, 返回值]`
+   * @throws {@link LoadFeatureCodeError}
+   * 代码包含语法错误或代码执行时产生了异常
+   */
+  run(code: string): [unknown, unknown]
+}
+
+/**
+ * 获取代码运行沙箱
+ *
+ * @returns 一个函数：接受代码，返回。
+ */
+const getSandbox = lodash.once((): CodeSandbox => {
+  // 需要被注入到 `sandbox` 中的键值对
+  const injection = new Map([
+    // 加固，防止逃逸
+    [Symbol.unscopables, undefined],
+    ['unsafeWindow', unsafeWindow],
+  ] as [keyof any, unknown][])
+  // 目标代码执行时的全局对象代理
+  const sandbox = new Proxy(Object.create(null), {
+    has: () => true,
+    get: (_, p) => (injection.has(p) ? injection.get(p) : window[p as string]),
+    set: (_, p, v) => !injection.has(p) && (window[p as string] = v),
+  })
+  const codeKey = 'BILIBILI_EVOLVED_LOAD_FEATURE_CODE_CODE_KEY_3B63D912__'
+  // eslint-disable-next-line no-new-func
+  const fn = Function(
+    'window',
+    `with (window) {
+       return eval(${codeKey}) 
+     }`,
+  ).bind(undefined, sandbox)
+  return {
+    run(code) {
+      injection.set('exports', {})
+      injection.set(codeKey, code)
+      let returned
+      try {
+        returned = fn()
+      } catch (e) {
+        throw new LoadFeatureCodeError(undefined, { cause: e })
+      }
+      const exportsValues = Object.values(injection.get('exports'))
+      const exported = exportsValues.length > 0 ? exportsValues[0] : undefined
+      return [exported, returned]
+    },
+  }
+})
 
 /**
  * 执行 feature (component, plugin, style) 的代码，并尝试获取其导出元数据
  *
  * @remarks
- * feature 代码支持两种导出格式：
- * 1. 在本项目中打包 feature 所使用的导出格式
+ * feature 代码支持两种导出方式：
+ * 1. 以 UMD 方式打包的库
  * 2. 若代码整体为一个表达式，则导出表达式的返回值
+ *
+ * 该函数线程不安全
+ *
+ * 代码默认以非严格模式执行，启用需自行添加 `use strict`。（从本项目中打包的 feature 自带严格模式）
+ *
+ * 全局对象为脚本管理器提供的 `window`，支持访问 `unsafeWindow`。
  *
  * @param code - 被执行的代码
  * @returns 导出的元数据（不检测正确性）
- * @throws {@link LoadFeatureError} 代码抛出了一个值或代码存在语法错误
+ * @throws {@link LoadFeatureCodeError}
+ * 代码包含语法错误或代码执行时产生了异常
  */
 export const loadFeatureCode = (code: string): unknown => {
-  // 将 `key` 和 `val` 临时赋值到 `target` 上并返回
-  // 调用返回值中的 restore 函数，可以恢复 `target` 中该属性的原始情况（包括属性不存在的情况）
-  const temporarilySet = <O extends object, K extends keyof any, V>(
-    target: O,
-    key: K,
-    val: V,
-  ): { target: O & Record<K, V>; restore(): void } => {
-    const target0 = target as { [K0 in K]?: V }
-    let restore
-    if (key in target0) {
-      const org = target0[key]
-      target0[key] = val
-      restore = () => {
-        target0[key] = org
-      }
-    } else {
-      target0[key] = val
-      restore = () => {
-        delete target0[key]
-      }
-    }
-    return {
-      target: target0 as O & Record<K, V>,
-      restore,
-    }
-  }
-
-  // to save what the code exports
-  const exports = {}
-  // value to return.
-  let result: unknown
-  const { restore } = temporarilySet(window, 'exports', exports)
-  const gEval = eval
-  // eval code
-  try {
-    result = gEval(code)
-  } catch {
-    throw new LoadFeatureError()
-  } finally {
-    // restore window.exports
-    restore()
-  }
-
-  // set the value code exported to variable `result` if it exists
-  const values = Object.values(exports)
-  if (values.length !== 0) {
-    result = values[0]
-  }
-
-  return result as ComponentMetadata | PluginMetadata | UserStyle
+  const [exported, returned] = getSandbox().run(code)
+  return exported || returned
 }
