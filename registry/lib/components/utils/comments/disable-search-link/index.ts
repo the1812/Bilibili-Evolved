@@ -11,6 +11,7 @@ export const component = defineComponentMetadata({
     {
       name,
       style: () => import('./disable-search-link.scss'),
+      important: true,
     },
   ],
   tags: [componentsTags.utils, componentsTags.style],
