@@ -1,0 +1,9 @@
+.search-word {
+  &.icon {
+    display: none !important;
+  }
+  &.jump-link {
+    color: inherit !important;
+    cursor: text !important;
+  }
+}
