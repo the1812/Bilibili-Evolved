@@ -37,12 +37,13 @@ $prefix: 'simplifyComments-switch';
       align-items: center !important;
       flex-wrap: wrap !important;
     }
+    .note-content {
+      flex-basis: 100% !important;
+      margin-bottom: 4px !important;
+    }
     .image-exhibition {
       flex-basis: 100% !important;
       margin-bottom: 8px !important;
-    }
-    .reply-info {
-      flex-basis: 100% !important;
     }
     .root-reply,
     .reply-info,
