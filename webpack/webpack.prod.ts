@@ -1,7 +1,9 @@
-import webpack, { Configuration } from 'webpack'
+import type { Configuration } from 'webpack'
+import webpack from 'webpack'
+
+import mainMeta from '../src/client/bilibili-evolved.meta.json'
 import { getBanner, getDefaultConfig } from './webpack.config'
 import previewConfig from './webpack.dev'
-import mainMeta from '../src/client/bilibili-evolved.meta.json'
 
 const mainConfig = Object.assign(getDefaultConfig(), {
   mode: 'production',

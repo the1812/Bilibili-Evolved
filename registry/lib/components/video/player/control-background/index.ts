@@ -1,9 +1,6 @@
-import { ComponentEntry } from '@/components/types'
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
 import { playerUrls } from '@/core/utils/urls'
 
 const options = defineOptionsMetadata({

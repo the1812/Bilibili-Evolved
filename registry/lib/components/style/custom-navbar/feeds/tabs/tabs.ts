@@ -1,4 +1,4 @@
-import { TabMappings } from '@/ui/tab-mapping'
+import type { TabMappings } from '@/ui/tab-mapping'
 
 export const tabs: TabMappings = [
   {

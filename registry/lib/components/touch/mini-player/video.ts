@@ -1,5 +1,6 @@
 import { select } from '@/core/spin-query'
 import { addStyle, removeStyle } from '@/core/style'
+
 import miniPlayerStyle from './mini-player.scss'
 
 export const touchVideoMiniPlayer = async (enable: boolean) => {

@@ -1,12 +1,14 @@
-import { FeedsCard, addMenuItem, forEachFeedsCard, RepostFeedsCard } from '@/components/feeds/api'
-import { ComponentEntry } from '@/components/types'
+import type { FeedsCard, RepostFeedsCard } from '@/components/feeds/api'
+import { addMenuItem, forEachFeedsCard } from '@/components/feeds/api'
+import type { ComponentEntry } from '@/components/types'
 import { getBlob } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
 import { Toast } from '@/core/toast'
 import { matchUrlPattern, retrieveImageUrl } from '@/core/utils'
 import { formatTitle } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
-import { Options } from '.'
+
+import type { Options } from '.'
 
 export const setupFeedImageExporter: ComponentEntry<Options> = async ({
   settings: { options },

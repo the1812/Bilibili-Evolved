@@ -20,10 +20,11 @@
 </template>
 <script lang="ts">
 import { applyContentFilter } from '@/components/feeds/api'
-import { RankListCard } from './rank-list'
+
+import SubHeader from '../../../SubHeader.vue'
+import type { RankListCard } from './rank-list'
 import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
-import SubHeader from '../../../SubHeader.vue'
 
 /*
 TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, 所以 RankList 也要换 API

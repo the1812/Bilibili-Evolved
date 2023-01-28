@@ -1,13 +1,12 @@
-import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { styledComponentEntry } from '@/components/styled-component'
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
 import { addComponentListener } from '@/core/settings'
+
 import { actions } from './actions'
-import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
+import type { KeyBinding, KeyBindingConfig } from './bindings'
+import { loadKeyBindings } from './bindings'
 import { presetBase, presets } from './presets'
 
 const options = defineOptionsMetadata({

@@ -1,16 +1,17 @@
-import { DocSourceItem } from 'registry/lib/docs'
+import type { DocSourceItem } from 'registry/lib/docs'
+
 import { componentsMap } from '@/components/component'
 import { installComponent } from '@/components/user-component'
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
-import { Executable } from '@/core/common-types'
+import type { Executable } from '@/core/common-types'
 import { meta } from '@/core/meta'
 import { getComponentSettings, getGeneralSettings, settings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { logError } from '@/core/utils/log'
 import { getHook } from '@/plugins/hook'
 import { installPlugin, pluginsMap } from '@/plugins/plugin'
-import { UserStyle } from '@/plugins/style'
+import type { UserStyle } from '@/plugins/style'
 
 export const runMigrate = async (v1Settings: any) => {
   const toast = Toast.info('下载功能列表中', '导入 v1 设置')

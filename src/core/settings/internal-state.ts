@@ -1,7 +1,8 @@
 import { components } from '@/components/component'
 import { plugins } from '@/plugins/plugin'
+
 import { componentToSettings } from './helpers'
-import { Settings } from './types'
+import type { Settings } from './types'
 
 /** 默认设置 */
 const internalSettings = {

@@ -8,10 +8,11 @@
 </template>
 
 <script lang="ts">
-import { select } from '@/core/spin-query'
-import { childList } from '@/core/observer'
 import { DownloadPackage } from '@/core/download'
+import { childList } from '@/core/observer'
+import { select } from '@/core/spin-query'
 import { DefaultWidget } from '@/ui'
+
 import { AudioDownloader } from './audio-downloader'
 
 export default Vue.extend({

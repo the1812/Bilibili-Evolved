@@ -1,7 +1,8 @@
 import { Toast } from '@/core/toast'
 import { registerAndGetData } from '@/plugins/data'
+
 import { isBuiltInComponent } from '../built-in-components'
-import { ComponentMetadata } from '../types'
+import type { ComponentMetadata } from '../types'
 import { uninstallComponent } from '../user-component'
 
 export interface SearchBarActionContext {

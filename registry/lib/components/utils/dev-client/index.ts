@@ -1,6 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { isIframe } from '@/core/utils'
-import { devClientOptionsMetadata, autoUpdateOptions } from './options'
+
+import { autoUpdateOptions, devClientOptionsMetadata } from './options'
 import { setupPlugin } from './plugin'
 
 export const component = defineComponentMetadata({

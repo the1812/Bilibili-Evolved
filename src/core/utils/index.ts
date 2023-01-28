@@ -1,4 +1,4 @@
-import { VueModule } from '../common-types'
+import type { VueModule } from '../common-types'
 
 /**
  * 当查询 video 元素且被灰度了 WasmPlayer 时, 更换为对 bwp-video 的查询, 否则会找不到 video 元素
@@ -19,7 +19,7 @@ export const bwpVideoFilter = (selector: string) => {
   }
   return selector
 }
-type DocumentQuerySelector = {
+interface DocumentQuerySelector {
   /**
    * 同 `document.querySelector`, 对 `<bwp-video>` 有额外处理
    * @param selector 选择器
@@ -41,7 +41,7 @@ export const dq: DocumentQuerySelector = (
   }
   return (selectorOrElement as Element).querySelector(bwpVideoFilter(scopedSelector))
 }
-type DocumentQuerySelectorAll = {
+interface DocumentQuerySelectorAll {
   /**
    * 同 `document.querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
    * @param selector 选择器
@@ -63,7 +63,7 @@ export const dqa: DocumentQuerySelectorAll = (
   }
   return Array.from((selectorOrElement as Element).querySelectorAll(bwpVideoFilter(scopedSelector)))
 }
-type DocumentEvaluate = {
+interface DocumentEvaluate {
   (xpathExpression: string): XPathResult
   (xpathExpression: string, contextNode: Node): XPathResult
   (xpathExpression: string, contextNode: Node, type: number): XPathResult
@@ -75,7 +75,7 @@ export const de: DocumentEvaluate = (
   type?: number,
   result?: XPathResult,
 ) => document.evaluate(xpathExpression, contextNode, null, type, result)
-type DocumentEvaluateAll = {
+interface DocumentEvaluateAll {
   (xpathExpression: string): Node[]
   (xpathExpression: string, contextNode: Node): Node[]
   (xpathExpression: string, contextNode: Node, order: boolean): Node[]
@@ -96,7 +96,7 @@ export const dea: DocumentEvaluateAll = (
 
   return Array.from({ length: xpathResult.snapshotLength }, (_, i) => xpathResult.snapshotItem(i))
 }
-type DocumentEvaluateAllIterable = {
+interface DocumentEvaluateAllIterable {
   (xpathExpression: string): Iterable<Node>
   (xpathExpression: string, contextNode: Node): Iterable<Node>
   (xpathExpression: string, contextNode: Node, order: boolean): Iterable<Node>
@@ -129,7 +129,7 @@ export const deai: DocumentEvaluateAllIterable = (
     }),
   }
 }
-type DocumentEvaluateSingle = {
+interface DocumentEvaluateSingle {
   <T extends Node>(xpathExpression: string): T | null
   <T extends Node>(xpathExpression: string, contextNode: Node): T | null
   <T extends Node>(xpathExpression: string, contextNode: Node, result: XPathResult): T | null

@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+import { select } from '@/core/spin-query'
 import {
   allVideoUrls,
   bangumiUrls,
@@ -6,7 +7,7 @@ import {
   matchCurrentPage,
   mediaListUrls,
 } from '@/core/utils/urls'
-import { select } from '@/core/spin-query'
+
 import desc from './desc.md'
 
 const commonVideoUrlPattern = '//www.bilibili.com/video/'

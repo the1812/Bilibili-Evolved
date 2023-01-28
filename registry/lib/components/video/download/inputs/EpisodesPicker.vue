@@ -54,8 +54,9 @@
   </div>
 </template>
 <script lang="ts">
-import { VButton, VIcon, CheckBox } from '@/ui'
-import { EpisodeItem } from './episode-item'
+import { CheckBox, VButton, VIcon } from '@/ui'
+
+import type { EpisodeItem } from './episode-item'
 
 export default Vue.extend({
   components: {

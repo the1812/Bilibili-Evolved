@@ -1,6 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { cdnRoots } from '@/core/cdn-types'
 import { branches } from '@/core/meta'
+
 import { getComponentsDoc } from './components-doc'
 import { generatePackageDocs } from './packages-doc'
 import { getPluginsDoc } from './plugins-doc'

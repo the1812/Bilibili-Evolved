@@ -9,10 +9,10 @@
 </template>
 
 <script lang="ts">
-import { DefaultWidget } from '@/ui'
 import { getJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { logError } from '@/core/utils/log'
+import { DefaultWidget } from '@/ui'
 
 export default Vue.extend({
   components: {

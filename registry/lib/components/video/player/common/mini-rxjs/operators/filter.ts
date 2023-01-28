@@ -1,4 +1,4 @@
-import { PublishContext } from '../subject'
+import type { PublishContext } from '../subject'
 
 export const filter =
   <T>(predicate: (value: T) => boolean) =>

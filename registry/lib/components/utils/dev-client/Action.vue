@@ -13,12 +13,13 @@
   </div>
 </template>
 <script lang="ts">
-import { ComponentMetadata } from '@/components/types'
+import type { ComponentMetadata } from '@/components/types'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
+
 import { DevClientEvents } from './client'
-import { autoUpdateOptions, getDevClientOptions } from './options'
 import { urlConverter } from './converter'
+import { autoUpdateOptions, getDevClientOptions } from './options'
 
 const options = getDevClientOptions()
 

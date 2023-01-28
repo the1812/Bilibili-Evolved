@@ -14,7 +14,9 @@
 
 <script lang="ts">
 import { DefaultWidget } from '@/ui'
-import { CheckInItem, checkInItems } from './check-in-item'
+
+import type { CheckInItem } from './check-in-item'
+import { checkInItems } from './check-in-item'
 
 export default Vue.extend({
   components: {

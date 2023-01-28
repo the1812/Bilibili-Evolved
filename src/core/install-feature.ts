@@ -1,8 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
+import type { ComponentMetadata } from '@/components/types'
 import { installComponent } from '@/components/user-component'
 import { getHook } from '@/plugins/hook'
-import { installPlugin, PluginMetadata } from '@/plugins/plugin'
-import { installStyle, UserStyle } from '@/plugins/style'
+import type { PluginMetadata } from '@/plugins/plugin'
+import { installPlugin } from '@/plugins/plugin'
+import type { UserStyle } from '@/plugins/style'
+import { installStyle } from '@/plugins/style'
 
 type FeatureType = ComponentMetadata | PluginMetadata | UserStyle
 const isComponent = (item: FeatureType): item is ComponentMetadata =>

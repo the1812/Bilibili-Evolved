@@ -1,5 +1,6 @@
 import { getCookieValue } from '@/core/utils'
-import { FeedsCardCallback } from '../types'
+
+import type { FeedsCardCallback } from '../types'
 import { feedsCardCallbacks } from './base'
 import { FeedsCardsManagerV1 } from './v1'
 import { FeedsCardsManagerV2 } from './v2'

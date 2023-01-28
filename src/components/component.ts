@@ -1,14 +1,15 @@
+import type { Widget } from '@/components/widget'
+import { contentLoaded, fullyLoaded } from '@/core/life-cycle'
+import { LoadingMode } from '@/core/loading-mode'
 import {
   addComponentListener,
   getComponentSettings,
   getGeneralSettings,
   isComponentEnabled,
 } from '@/core/settings'
-import { contentLoaded, fullyLoaded } from '@/core/life-cycle'
-import { LoadingMode } from '@/core/loading-mode'
-import { Widget } from '@/components/widget'
-import { ComponentMetadata } from './types'
+
 import { getBuiltInComponents } from './built-in-components'
+import type { ComponentMetadata } from './types'
 
 /** 可根据组件名称检索对应的`ComponentMetadata` */
 export const componentsMap: { [name: string]: ComponentMetadata } = {}
@@ -183,5 +184,5 @@ export const loadAllComponents = async () => {
   })
 }
 
-export * from './types'
 export * from './define'
+export * from './types'

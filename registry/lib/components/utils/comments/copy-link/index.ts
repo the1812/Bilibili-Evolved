@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
+import type { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
 import { matchUrlPattern } from '@/core/utils'
 import { feedsUrls } from '@/core/utils/urls'
 

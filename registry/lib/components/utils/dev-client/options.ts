@@ -1,8 +1,10 @@
 import type { AutoUpdateOptions } from '@/components/auto-update'
-import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineOptionsMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
 import { getNumberValidator } from '@/core/utils'
-import { RefreshMethod, HotReloadMethod } from './update-method'
+
+import { HotReloadMethod, RefreshMethod } from './update-method'
 
 export const { options: autoUpdateOptions } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
 export const getDevClientOptions = () =>

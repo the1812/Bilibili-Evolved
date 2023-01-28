@@ -1,4 +1,5 @@
 import { mountVueComponent } from '@/core/utils'
+
 import GlobalLaunchBar from './GlobalLaunchBar.vue'
 
 let launchBarInstance: Vue & { show: boolean }

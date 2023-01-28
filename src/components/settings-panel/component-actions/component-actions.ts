@@ -1,8 +1,9 @@
-import { registerAndGetData } from '@/plugins/data'
-import { Executable, VueModule } from '@/core/common-types'
-import { getHook } from '@/plugins/hook'
+import type { Executable, VueModule } from '@/core/common-types'
 import { isUserComponent } from '@/core/settings'
-import { ComponentMetadata } from '../../types'
+import { registerAndGetData } from '@/plugins/data'
+import { getHook } from '@/plugins/hook'
+
+import type { ComponentMetadata } from '../../types'
 import { uninstallComponent } from '../../user-component'
 
 export interface ComponentConfigAction {

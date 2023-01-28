@@ -1,8 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
-import { mainSiteUrls } from '@/core/utils/urls'
 import { allMutationsOn } from '@/core/observer'
 import { selectAll } from '@/core/spin-query'
-import { registerData, getData } from '@/plugins/data'
+import { mainSiteUrls } from '@/core/utils/urls'
+import { getData, registerData } from '@/plugins/data'
+
 import { BlackListDataKey } from './common'
 
 const name = 'blackList'

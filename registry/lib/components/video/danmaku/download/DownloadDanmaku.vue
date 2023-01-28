@@ -27,8 +27,10 @@ import { logError } from '@/core/utils/log'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { addData } from '@/plugins/data'
 import { DefaultWidget } from '@/ui'
+
 import danmakuIcon from './danmaku.svg'
-import { DanmakuDownloadType, getBlobByType } from './utils'
+import type { DanmakuDownloadType } from './utils'
+import { getBlobByType } from './utils'
 
 addData('ui.icons', (icons: { [key: string]: string }) => {
   icons.danmaku = danmakuIcon

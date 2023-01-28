@@ -1,6 +1,6 @@
 import { bpxPlayerPolyfill } from '../player-adaptor/bpx'
 import { PlayerAgent, selectorWrap } from './base'
-import { AgentType, PlayerQuery, ElementQuery } from './types'
+import type { AgentType, ElementQuery, PlayerQuery } from './types'
 
 export class BangumiPlayerAgent extends PlayerAgent {
   type: AgentType = 'bangumi'

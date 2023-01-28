@@ -1,4 +1,4 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 const href = 'https://www.bilibili.com/account/history'
 export const history: CustomNavbarItemInit = {

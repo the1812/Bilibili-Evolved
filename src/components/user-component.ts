@@ -1,6 +1,8 @@
 import { componentToSettings } from '@/core/settings'
+
 import { isBuiltInComponent } from './built-in-components'
-import { ComponentMetadata, componentsMap } from './component'
+import type { ComponentMetadata } from './component'
+import { componentsMap } from './component'
 
 /**
  * 安装自定义组件

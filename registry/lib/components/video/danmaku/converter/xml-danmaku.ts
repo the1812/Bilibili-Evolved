@@ -1,5 +1,7 @@
 import { escapeContent } from '@/components/video/xml-utils'
-import { BasicDanmakuData, Danmaku } from './danmaku-data'
+
+import type { BasicDanmakuData } from './danmaku-data'
+import { Danmaku } from './danmaku-data'
 
 export interface XmlDanmakuData extends BasicDanmakuData {
   timeStamp: string

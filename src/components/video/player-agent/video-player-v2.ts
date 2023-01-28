@@ -1,7 +1,8 @@
 import { select } from '@/core/spin-query'
 import { isBwpVideo } from '@/core/utils'
+
 import { PlayerAgent, selectorWrap } from './base'
-import { AgentType, PlayerQuery, ElementQuery } from './types'
+import type { AgentType, ElementQuery, PlayerQuery } from './types'
 
 export class VideoPlayerV2Agent extends PlayerAgent {
   // eslint-disable-next-line class-methods-use-this

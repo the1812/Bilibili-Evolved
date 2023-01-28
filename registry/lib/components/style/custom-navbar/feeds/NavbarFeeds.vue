@@ -9,9 +9,10 @@
   </div>
 </template>
 <script lang="ts">
-import { TabControl, VIcon } from '@/ui'
 import { feedsCardTypes } from '@/components/feeds/api'
 import { getNotifyCount } from '@/components/feeds/notify'
+import { TabControl, VIcon } from '@/ui'
+
 import { popperMixin } from '../mixins'
 import { tabs } from './tabs/tabs'
 

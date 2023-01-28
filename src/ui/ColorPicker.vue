@@ -212,7 +212,9 @@
 
 <script lang="ts">
 import Color from 'color'
+
 import palette from '@/core/theme-color/palette.json'
+
 import { createColorWrapper } from './color-picker-wrapper'
 
 export default Vue.extend({

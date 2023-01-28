@@ -1,4 +1,5 @@
-import { loadFeatureCode, LoadFeatureCodeResult } from '@/core/external-input/load-feature-code'
+import type { LoadFeatureCodeResult } from '@/core/external-input/load-feature-code'
+import { loadFeatureCode } from '@/core/external-input/load-feature-code'
 
 type LdRes<X> = LoadFeatureCodeResult<X>
 type SettledRes<T> = PromiseSettledResult<T>

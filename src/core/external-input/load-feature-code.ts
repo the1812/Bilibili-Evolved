@@ -1,4 +1,4 @@
-import { FeatureBase } from '@/components/types'
+import type { FeatureBase } from '@/components/types'
 
 interface ResultInstance {
   readonly isOk: <X extends FeatureBase>(
@@ -109,8 +109,8 @@ const loadFeatureCode = async <X extends FeatureBase>(
 export {
   loadFeatureCode,
   LoadFeatureCodeResult,
-  LoadFeatureCodeResultOk,
+  LoadFeatureCodeResultCodeThrew,
   LoadFeatureCodeResultError,
   LoadFeatureCodeResultNoExport,
-  LoadFeatureCodeResultCodeThrew,
+  LoadFeatureCodeResultOk,
 }

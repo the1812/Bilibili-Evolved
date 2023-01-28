@@ -84,31 +84,33 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { TestPattern } from '@/core/common-types'
+import type { VideoQuality } from '@/components/video/video-quality'
+import { allQualities } from '@/components/video/video-quality'
+import type { TestPattern } from '@/core/common-types'
 import { getComponentSettings } from '@/core/settings'
-import { matchUrlPattern } from '@/core/utils'
-import { logError } from '@/core/utils/log'
-import { formatFileSize } from '@/core/utils/formatters'
-import { VPopup, VButton, VDropdown, VIcon, SwitchBox } from '@/ui'
-import { registerAndGetData } from '@/plugins/data'
-import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { Toast } from '@/core/toast'
+import { matchUrlPattern } from '@/core/utils'
+import { formatFileSize } from '@/core/utils/formatters'
+import { logError } from '@/core/utils/log'
 import { getFriendlyTitle } from '@/core/utils/title'
+import { registerAndGetData } from '@/plugins/data'
+import { SwitchBox, VButton, VDropdown, VIcon, VPopup } from '@/ui'
+
+import { videoAudioDash, videoDashAv1, videoDashAvc, videoDashHevc } from './apis/dash'
+import { videoFlv } from './apis/flv'
 import { bangumiBatchInput } from './inputs/bangumi/batch'
 import { videoBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
-import { videoDashAvc, videoDashHevc, videoDashAv1, videoAudioDash } from './apis/dash'
-import { videoFlv } from './apis/flv'
-import { toastOutput } from './outputs/toast'
 import { streamSaverOutput } from './outputs/stream-saver'
-import {
-  DownloadVideoAction,
+import { toastOutput } from './outputs/toast'
+import type {
   DownloadVideoApi,
   DownloadVideoAssets,
   DownloadVideoInput,
   DownloadVideoInputItem,
   DownloadVideoOutput,
 } from './types'
+import { DownloadVideoAction } from './types'
 
 const [inputs] = registerAndGetData('downloadVideo.inputs', [
   videoSingleInput,

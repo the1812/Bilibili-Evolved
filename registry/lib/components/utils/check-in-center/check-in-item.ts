@@ -1,4 +1,4 @@
-import { postTextWithCredentials, getJsonWithCredentials } from '@/core/ajax'
+import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { formData, getCsrf } from '@/core/utils'
 import { registerAndGetData } from '@/plugins/data'

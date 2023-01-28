@@ -155,11 +155,12 @@
 </template>
 
 <script lang="ts">
-import { getUID, getCsrf, formData } from '@/core/utils'
-import { formatCount } from '@/core/utils/formatters'
-import { logError } from '@/core/utils/log'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUserInfo } from '@/core/user-info'
+import { formData, getCsrf, getUID } from '@/core/utils'
+import { formatCount } from '@/core/utils/formatters'
+import { logError } from '@/core/utils/log'
+
 import { popperMixin } from '../mixins'
 
 type PrivilegeType = 1 | 2

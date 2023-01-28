@@ -45,13 +45,15 @@
   </MiniToast>
 </template>
 <script lang="ts">
-import { DocSourceItem } from 'registry/lib/docs'
+import type { DocSourceItem } from 'registry/lib/docs'
+
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
 import { addComponentListener, getGeneralSettings, settings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import { VIcon, VButton, MiniToast } from '@/ui'
+import { MiniToast, VButton, VIcon } from '@/ui'
+
 import ComponentDescription from '../../ComponentDescription.vue'
 import { SettingsPanelDockSide } from '../../dock'
 import { ItemFilter } from './item-filter'
@@ -65,7 +67,9 @@ const isFeatureInstalled = (item: DocSourceItem) => {
   const storageKey = `user${lodash.startCase(item.type)}s`
   return item.name in settings[storageKey]
 }
-type PackItem = { items: DocSourceItem[] }
+interface PackItem {
+  items: DocSourceItem[]
+}
 const typeMappings = {
   component: {
     icon: 'mdi-cube-scan',

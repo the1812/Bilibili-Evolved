@@ -68,12 +68,14 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { SortableEvent } from 'sortablejs'
-import { VPopup, VIcon, VSlider, VLoading } from '@/ui'
+import type { SortableEvent } from 'sortablejs'
+
+import { SortableJSLibrary } from '@/core/runtime-library'
 import { addComponentListener } from '@/core/settings'
 import { dqa } from '@/core/utils'
-import { SortableJSLibrary } from '@/core/runtime-library'
 import { getData } from '@/plugins/data'
+import { VIcon, VLoading, VPopup, VSlider } from '@/ui'
+
 import { CustomNavbarItem, CustomNavbarRenderedItems } from '../custom-navbar-item'
 import { checkSequentialOrder, sortItems } from './orders'
 

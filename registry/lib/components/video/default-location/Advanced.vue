@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts">
-import { VButton, TextBox } from '@/ui'
+import { TextBox, VButton } from '@/ui'
 
 let scrollObserver = null
 

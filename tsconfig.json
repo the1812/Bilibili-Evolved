@@ -11,6 +11,7 @@
     "target": "ESNext",
     "strict": false,
     "noImplicitAny": false,
+    "importsNotUsedAsValues": "error",
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {

@@ -1,4 +1,4 @@
-import { Executable, VueModule } from '@/core/common-types'
+import type { Executable, VueModule } from '@/core/common-types'
 
 export interface SubPage {
   name: string

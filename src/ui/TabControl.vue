@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts">
-import { TabMappings, TabMapping } from './tab-mapping'
+import type { TabMapping, TabMappings } from './tab-mapping'
 
 export default Vue.extend({
   name: 'TabControl',

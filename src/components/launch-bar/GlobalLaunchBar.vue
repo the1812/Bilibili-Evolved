@@ -11,6 +11,7 @@
 </template>
 <script lang="ts">
 import VPopup from '@/ui/VPopup.vue'
+
 import LaunchBar from './LaunchBar.vue'
 
 export default Vue.extend({
