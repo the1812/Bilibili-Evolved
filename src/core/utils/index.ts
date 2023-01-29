@@ -4,7 +4,7 @@ import type { VueModule } from '../common-types'
  * 当查询 video 元素且被灰度了 WasmPlayer 时, 更换为对 bwp-video 的查询, 否则会找不到 video 元素
  * @param selector 选择器
  */
-export const bwpVideoFilter = (selector: string) => {
+export const bwpVideoFilter = (selector: string): string => {
   // if (!unsafeWindow.__ENABLE_WASM_PLAYER__) {
   //   return selector
   // }
@@ -24,44 +24,46 @@ interface DocumentQuerySelector {
    * 同 `document.querySelector`, 对 `<bwp-video>` 有额外处理
    * @param selector 选择器
    */
-  (selector: string): Element | null
+  <E extends Element>(selector: string): E | null
   /**
    * 在指定元素上进行 `querySelector`, 对 `<bwp-video>` 有额外处理
-   * @param selector 元素
+   * @param element 元素
    * @param scopedSelector 选择器
    */
-  (element: Element, scopedSelector: string): Element | null
+  <E extends Element>(element: Element, scopedSelector: string): E | null
 }
-export const dq: DocumentQuerySelector = (
+export const dq: DocumentQuerySelector = <E extends Element>(
   selectorOrElement: string | Element,
   scopedSelector?: string,
-) => {
+): E => {
   if (!scopedSelector) {
-    return document.querySelector(bwpVideoFilter(selectorOrElement as string))
+    return document.querySelector<E>(bwpVideoFilter(selectorOrElement as string))
   }
-  return (selectorOrElement as Element).querySelector(bwpVideoFilter(scopedSelector))
+  return (selectorOrElement as Element).querySelector<E>(bwpVideoFilter(scopedSelector))
 }
 interface DocumentQuerySelectorAll {
   /**
    * 同 `document.querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
    * @param selector 选择器
    */
-  (selector: string): Element[]
+  <E extends Element>(selector: string): E[]
   /**
    * 在指定元素上进行`querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
    * @param selector 元素
    * @param scopedSelector 选择器
    */
-  (element: Element, scopedSelector: string): Element[]
+  <E extends Element>(element: Element, scopedSelector: string): E[]
 }
-export const dqa: DocumentQuerySelectorAll = (
+export const dqa: DocumentQuerySelectorAll = <E extends Element>(
   selectorOrElement: Element | string,
   scopedSelector?: string,
-) => {
+): E[] => {
   if (!scopedSelector) {
-    return Array.from(document.querySelectorAll(bwpVideoFilter(selectorOrElement as string)))
+    return Array.from(document.querySelectorAll<E>(bwpVideoFilter(selectorOrElement as string)))
   }
-  return Array.from((selectorOrElement as Element).querySelectorAll(bwpVideoFilter(scopedSelector)))
+  return Array.from(
+    (selectorOrElement as Element).querySelectorAll<E>(bwpVideoFilter(scopedSelector)),
+  )
 }
 interface DocumentEvaluate {
   (xpathExpression: string): XPathResult
@@ -74,8 +76,8 @@ export const de: DocumentEvaluate = (
   contextNode?: Node,
   type?: number,
   result?: XPathResult,
-) => document.evaluate(xpathExpression, contextNode, null, type, result)
-interface DocumentEvaluateAll {
+): XPathResult => document.evaluate(xpathExpression, contextNode, null, type, result)
+type DocumentEvaluateAll = {
   (xpathExpression: string): Node[]
   (xpathExpression: string, contextNode: Node): Node[]
   (xpathExpression: string, contextNode: Node, order: boolean): Node[]
@@ -86,7 +88,7 @@ export const dea: DocumentEvaluateAll = (
   contextNode?: Node,
   order?: boolean,
   result?: XPathResult,
-) => {
+): Node[] => {
   const xpathResult = de(
     xpathExpression,
     contextNode,
@@ -96,18 +98,12 @@ export const dea: DocumentEvaluateAll = (
 
   return Array.from({ length: xpathResult.snapshotLength }, (_, i) => xpathResult.snapshotItem(i))
 }
-interface DocumentEvaluateAllIterable {
-  (xpathExpression: string): Iterable<Node>
-  (xpathExpression: string, contextNode: Node): Iterable<Node>
-  (xpathExpression: string, contextNode: Node, order: boolean): Iterable<Node>
-  (xpathExpression: string, contextNode: Node, order: boolean, result: XPathResult): Iterable<Node>
-}
-export const deai: DocumentEvaluateAllIterable = (
+function* deaiRaw(
   xpathExpression: string,
   contextNode?: Node,
   order?: boolean,
   result?: XPathResult,
-) => {
+): Generator<Node, void, void> {
   const xpathResult = de(
     xpathExpression,
     contextNode,
@@ -115,20 +111,28 @@ export const deai: DocumentEvaluateAllIterable = (
     result,
   )
 
-  return {
-    [Symbol.iterator]: () => ({
-      next: () => {
-        let node = null
-        do {
-          node = xpathResult.iterateNext()
-          return node
-            ? ({ done: false, value: node } as { done: false; value: Node })
-            : ({ done: true } as { done: true; value: any })
-        } while (node)
-      },
-    }),
+  let node = null
+  for (;;) {
+    node = xpathResult.iterateNext()
+    if (node) {
+      yield node
+    } else {
+      break
+    }
   }
 }
+interface DocumentEvaluateAllIterable {
+  (xpathExpression: string): IterableIterator<Node>
+  (xpathExpression: string, contextNode: Node): IterableIterator<Node>
+  (xpathExpression: string, contextNode: Node, order: boolean): IterableIterator<Node>
+  (
+    xpathExpression: string,
+    contextNode: Node,
+    order: boolean,
+    result: XPathResult,
+  ): IterableIterator<Node>
+}
+export const deai: DocumentEvaluateAllIterable = deaiRaw
 interface DocumentEvaluateSingle {
   <T extends Node>(xpathExpression: string): T | null
   <T extends Node>(xpathExpression: string, contextNode: Node): T | null
@@ -138,7 +142,7 @@ export const des: DocumentEvaluateSingle = <T extends Node>(
   xpathExpression: string,
   contextNode?: Node,
   result?: XPathResult,
-) =>
+): T | null =>
   de(xpathExpression, contextNode, XPathResult.FIRST_ORDERED_NODE_TYPE, result)
     .singleNodeValue as T | null
 /** 空函数 */
@@ -300,7 +304,7 @@ export const createHook = <ParentType, HookParameters extends any[], ReturnType 
   hookFunc: (...args: HookParameters) => boolean,
 ) => {
   const original: (...args: HookParameters) => ReturnType = type[target] as any
-  type[target] = function hook(...args: HookParameters) {
+  type[target] = function hook(this: any, ...args: HookParameters) {
     const shouldCallOriginal = hookFunc(...args)
     if (!shouldCallOriginal) {
       return undefined
@@ -321,7 +325,7 @@ export const createPostHook = <ParentType, HookParameters extends any[], ReturnT
   hookFunc: (...args: HookParameters) => unknown,
 ) => {
   const original: (...args: HookParameters) => ReturnType = type[target] as any
-  type[target] = function hook(...args: HookParameters) {
+  type[target] = function hook(this: any, ...args: HookParameters) {
     const result = original?.call(this, ...args)
     hookFunc(...args)
     return result

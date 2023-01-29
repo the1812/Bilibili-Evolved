@@ -14,7 +14,7 @@ export const createEpisodesPicker = (
   Vue.extend({
     computed: {
       checkedInputItems() {
-        return this.$refs.picker.checkedInputItems
+        return (this.$refs.picker as any).checkedInputItems
       },
     },
     render(createElement) {

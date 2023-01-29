@@ -64,7 +64,7 @@ export const ScopedConsoleCallHook = 'scopedConsole.call'
  * 创建一个 ScopedConsole, 为输出的日志添加固定的前缀
  * @param config 配置对象或者 scope 名称
  */
-export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
+export const useScopedConsole = (config: ScopedConsoleConfig | string): Console => {
   const { before: beforeCreate, after: afterCreate } = getHook(ScopedConsoleCreateHook)
   const {
     name,
@@ -78,7 +78,7 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
     target: (...args: any[]) => void,
     prependConfig: ScopedConsoleConfig,
     firstColor = prependConfig.color,
-  ) => {
+  ): ((this: Console, ...args: unknown[]) => unknown) => {
     const lastScopedData: ScopedData = target[ScopedConsoleSymbol]
     const backgroundColor =
       (lastScopedData ? prependConfig.color : firstColor) ?? specialPalette.default
@@ -98,7 +98,7 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
       original: lastScopedData?.original ?? target,
     }
     const rootTarget = currentScopedData.original
-    const patchedLog = function patchedLog(...args: any[]) {
+    const patchedLog = function patchedLog(this: Console, ...args: unknown[]): unknown {
       const hookPayload = {
         type: rootTarget[NamePatchSymbol],
         args,
@@ -126,9 +126,9 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
     groupConfig: ScopedConsoleConfig,
     firstColor = groupConfig.color,
     counter: (num: number) => number = n => n,
-  ) => {
+  ): ((this: Console, ...args: unknown[]) => unknown) => {
     const patch = prependBadge(target, groupConfig, firstColor)
-    const patchedGroup = function patchedGroup(...args: any[]) {
+    const patchedGroup = function patchedGroup(this: Console, ...args: unknown[]): unknown {
       const returnValue = patch.apply(this, args)
       groupCounter = counter(groupCounter)
       return returnValue
@@ -179,7 +179,7 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
   )
   scopedConsole.debug = (() => {
     const patch = prependBadge(console.debug, actualConfig)
-    return function patchedDebug(...args: any[]) {
+    return function patchedDebug(this: Console, ...args: unknown[]): unknown {
       if (!getGeneralSettings().devMode) {
         return undefined
       }
