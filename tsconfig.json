@@ -1,32 +1,15 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
+    "noEmit": true,
     "strict": false,
     "sourceMap": true,
     "baseUrl": ".",
     "types": ["webpack-env"],
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     }
   },
-  "include": [
-    "src/**/*",
-    "tests/**/*",
-    "registry/lib/**/*",
-    "webpack/**/*",
-    "registry/webpack/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dev",
-    "packages",
-    "typings"
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+  "include": ["src/**/*", "registry/lib/**/*"],
+  "exclude": ["dev", "packages", "typings"]
 }

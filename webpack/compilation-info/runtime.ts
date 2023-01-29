@@ -1,4 +1,4 @@
-import commonMeta from '../../src/client/common.meta.json'
+import commonMeta from '@/client/common.meta.json'
 import { allCdns, altCdn } from '../cdn'
 
 export const runtimeInfo = {

@@ -5,7 +5,7 @@ import VueLoaderPlugin from 'vue-loader/lib/plugin'
 import type { Configuration } from 'webpack'
 import webpack from 'webpack'
 
-import commonMeta from '../src/client/common.meta.json'
+import commonMeta from '@/client/common.meta.json'
 import * as gitInfo from './compilation-info/git'
 import { runtimeInfo } from './compilation-info/runtime'
 import { cssStyleLoaders, sassStyleLoaders } from './loaders/style-loaders'

@@ -1,7 +1,7 @@
 import type { Configuration } from 'webpack'
 import webpack from 'webpack'
 
-import mainMeta from '../src/client/bilibili-evolved.meta.json'
+import mainMeta from '@/client/bilibili-evolved.meta.json'
 import { getBanner, getDefaultConfig } from './webpack.config'
 import previewConfig from './webpack.dev'
 
