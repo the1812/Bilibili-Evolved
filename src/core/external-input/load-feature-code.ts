@@ -108,9 +108,9 @@ const loadFeatureCode = async <X extends FeatureBase>(
 
 export {
   loadFeatureCode,
-  LoadFeatureCodeResult,
-  LoadFeatureCodeResultCodeThrew,
-  LoadFeatureCodeResultError,
-  LoadFeatureCodeResultNoExport,
-  LoadFeatureCodeResultOk,
+  type LoadFeatureCodeResult,
+  type LoadFeatureCodeResultCodeThrew,
+  type LoadFeatureCodeResultError,
+  type LoadFeatureCodeResultNoExport,
+  type LoadFeatureCodeResultOk,
 }

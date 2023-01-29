@@ -148,9 +148,9 @@ const loadFeatureCodeAll = <X>(codes: string[]): Promise<LoadFeatureCodeAllResul
 
 export {
   loadFeatureCodeAll,
-  LoadFeatureCodeAllResult,
-  LoadFeatureCodeAllResultCodeThrew,
-  LoadFeatureCodeAllResultError,
-  LoadFeatureCodeAllResultNoExport,
-  LoadFeatureCodeAllResultOk,
+  type LoadFeatureCodeAllResult,
+  type LoadFeatureCodeAllResultCodeThrew,
+  type LoadFeatureCodeAllResultError,
+  type LoadFeatureCodeAllResultNoExport,
+  type LoadFeatureCodeAllResultOk,
 }
