@@ -1,10 +1,11 @@
 /*
  * 旧版 Switch Options API, 暂时保留, 避免本体升级后组件未更新造成报错
  */
-import { getComponentSettings, addComponentListener } from '@/core/settings'
-import { ComponentMetadata, OptionsMetadata } from './component'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 
-type Switches = {
+import type { ComponentMetadata, OptionsMetadata } from './component'
+
+interface Switches {
   [key: string]: {
     displayName: string
     defaultValue: boolean

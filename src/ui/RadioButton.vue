@@ -13,10 +13,11 @@
 </template>
 
 <script lang="ts">
-import { CurriedFunction2 } from 'lodash'
+import type { CurriedFunction2 } from 'lodash'
+
 import CheckBox from './CheckBox.vue'
 
-type RadioGroup = {
+interface RadioGroup {
   instance: Vue
   uncheck: () => void
 }

@@ -16,13 +16,15 @@
 </template>
 
 <script lang="ts">
-import { addData } from '@/plugins/data'
-import { DefaultWidget } from '@/ui'
+import { DownloadPackage } from '@/core/download'
 import { logError } from '@/core/utils/log'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { DownloadPackage } from '@/core/download'
-import { SubtitleDownloadType, getBlobByType } from './utils'
+import { addData } from '@/plugins/data'
+import { DefaultWidget } from '@/ui'
+
 import subtitleIcon from './cc-subtitle.svg'
+import type { SubtitleDownloadType } from './utils'
+import { getBlobByType } from './utils'
 
 addData('ui.icons', (icons: Record<string, string>) => {
   icons.subtitle = subtitleIcon

@@ -8,7 +8,8 @@
 <script lang="ts">
 import { addComponentListener } from '@/core/settings'
 import { TabControl } from '@/ui'
-import { TabMappings } from '@/ui/tab-mapping'
+import type { TabMappings } from '@/ui/tab-mapping'
+
 import HomeRedesignBase from '../HomeRedesignBase.vue'
 import { minimalHomeOptions } from './options'
 import { MinimalHomeTabOption } from './types'

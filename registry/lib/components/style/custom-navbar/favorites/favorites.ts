@@ -1,5 +1,6 @@
 import { getUID } from '@/core/utils'
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 const href = `https://space.bilibili.com/${getUID()}/favlist`
 export const favorites: CustomNavbarItemInit = {

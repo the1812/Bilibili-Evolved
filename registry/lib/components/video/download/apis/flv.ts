@@ -1,14 +1,11 @@
+import { allQualities } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formData, matchUrlPattern } from '@/core/utils'
-import { allQualities } from '@/components/video/video-quality'
 import { bangumiUrls } from '@/core/utils/urls'
+
 import { compareQuality } from '../error'
-import {
-  DownloadVideoApi,
-  DownloadVideoFragment,
-  DownloadVideoInfo,
-  DownloadVideoInputItem,
-} from '../types'
+import type { DownloadVideoApi, DownloadVideoFragment, DownloadVideoInputItem } from '../types'
+import { DownloadVideoInfo } from '../types'
 import { bangumiApi, videoApi } from './url'
 
 const parseInfoFromJson = (data: any, extensions: string[]) => {

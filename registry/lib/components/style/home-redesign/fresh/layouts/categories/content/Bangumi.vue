@@ -20,10 +20,11 @@
 </template>
 <script lang="ts">
 import { applyContentFilter } from '@/components/feeds/api'
+
 import SubHeader from '../../../SubHeader.vue'
-import RankList from './RankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
-import { RankListCard } from './rank-list'
+import type { RankListCard } from './rank-list'
+import RankList from './RankList.vue'
 
 const bangumiDataMap = {
   anime: {

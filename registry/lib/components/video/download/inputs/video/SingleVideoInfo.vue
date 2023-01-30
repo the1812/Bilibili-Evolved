@@ -5,9 +5,9 @@
   </div>
 </template>
 <script lang="ts">
+import { VideoInfo } from '@/components/video/video-info'
 import { videoChange } from '@/core/observer'
 import { logError } from '@/core/utils/log'
-import { VideoInfo } from '@/components/video/video-info'
 
 export default Vue.extend({
   data() {

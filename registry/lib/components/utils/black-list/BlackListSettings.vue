@@ -46,7 +46,7 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { VPopup, TextBox, VIcon, VButton } from '@/ui'
+import { TextBox, VButton, VIcon, VPopup } from '@/ui'
 
 export default Vue.extend({
   components: {

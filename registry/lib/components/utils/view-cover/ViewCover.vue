@@ -9,12 +9,12 @@
 </template>
 
 <script lang="ts">
+import { VideoInfo } from '@/components/video/video-info'
 import { getJson } from '@/core/ajax'
 import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { logError } from '@/core/utils/log'
-import { showImage, DefaultWidget } from '@/ui'
-import { VideoInfo } from '@/components/video/video-info'
+import { DefaultWidget, showImage } from '@/ui'
 
 export default Vue.extend({
   components: {

@@ -8,20 +8,21 @@
  * API 主要函数是 {@link newSwitchComponentWrapper}。
  */
 
-import { getComponentSettings, addComponentListener } from '@/core/settings'
-import {
+import { addComponentListener, getComponentSettings } from '@/core/settings'
+
+import type {
   ComponentEntry,
   ComponentMetadata,
   OptionsMetadata,
   OptionsOfMetadata,
   UnknownOptions,
 } from './component'
-import { Widget } from './widget'
+import type { Widget } from './widget'
 
 /**
  * 单个开关的设置
  */
-export type SwitchItemMetadata = {
+export interface SwitchItemMetadata {
   /** 开关的显示名称 */
   displayName: string
   /** 开关的默认开启状态 */

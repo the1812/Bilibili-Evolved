@@ -1,13 +1,16 @@
-import { ascendingSort } from '@/core/utils/sort'
 import {
   convertHexColorForDialogue,
   convertTimeByDuration,
   normalizeContent,
 } from '@/components/video/ass-utils'
-import { Duration, BlockTypes, AssDanmaku, AssDanmakuDocument, Resolution } from './ass-danmaku'
-import { Danmaku } from './danmaku-data'
-import { XmlDanmakuDocument, XmlDanmaku } from './xml-danmaku'
+import { ascendingSort } from '@/core/utils/sort'
+
+import type { BlockTypes, Duration, Resolution } from './ass-danmaku'
+import { AssDanmaku, AssDanmakuDocument } from './ass-danmaku'
+import type { Danmaku } from './danmaku-data'
 import { DanmakuStack } from './danmaku-stack'
+import type { XmlDanmaku } from './xml-danmaku'
+import { XmlDanmakuDocument } from './xml-danmaku'
 
 export interface DanmakuConverterConfig {
   title: string

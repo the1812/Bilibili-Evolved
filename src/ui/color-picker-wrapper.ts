@@ -1,9 +1,28 @@
 import Color from 'color'
 
-export const createColorWrapper = (color: string) => {
+interface ColorWrapper {
+  color: Color
+  red: number
+  green: number
+  blue: number
+  hue: number
+  saturation: number
+  brightness: number
+  hex: string
+  hueGradient: string
+  saturationGradient: string
+  brightnessGradient: string
+  redGradient: string
+  greenGradient: string
+  blueGradient: string
+  change(prop: string, value: string | number): void
+  updateProps(): void
+}
+
+export const createColorWrapper = (color: string): ColorWrapper => {
   let internalColor = new Color(color)
-  const wrapper = {
-    get color() {
+  const wrapper: Partial<ColorWrapper> = {
+    get color(): Color {
       return internalColor
     },
     set color(newColor: Color) {
@@ -50,19 +69,5 @@ export const createColorWrapper = (color: string) => {
     },
   }
   wrapper.updateProps()
-  return wrapper as typeof wrapper & {
-    red: number
-    green: number
-    blue: number
-    hue: number
-    saturation: number
-    brightness: number
-    hex: string
-    hueGradient: string
-    saturationGradient: string
-    brightnessGradient: string
-    redGradient: string
-    greenGradient: string
-    blueGradient: string
-  }
+  return wrapper as ColorWrapper
 }

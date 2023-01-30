@@ -1,10 +1,12 @@
+import { defineComponentMetadata } from '@/components/define'
 import { addControlBarButton } from '@/components/video/video-control-bar'
 import { mountVueComponent } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
-import { KeyBindingAction } from '../../../utils/keymap/bindings'
-import { Screenshot, takeScreenshot } from './screenshot'
-import { defineComponentMetadata } from '@/components/define'
+
+import type { KeyBindingAction } from '../../../utils/keymap/bindings'
 import desc from './desc.md'
+import type { Screenshot } from './screenshot'
+import { takeScreenshot } from './screenshot'
 import ScreenshotContainer from './VideoScreenshotContainer.vue'
 
 export const VideoScreenshotDisabledClass = 'video-screenshot-disable'

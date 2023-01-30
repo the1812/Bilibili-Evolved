@@ -88,14 +88,16 @@
 </template>
 
 <script lang="ts">
-import { VButton, VIcon, SwitchBox, MiniToast } from '@/ui'
 import { visible } from '@/core/observer'
-import { OptionsMetadata } from '../component'
+import { MiniToast, SwitchBox, VButton, VIcon } from '@/ui'
+
+import type { OptionsMetadata } from '../component'
+import type { ComponentConfigAction } from './component-actions/component-actions'
+import { componentActions } from './component-actions/component-actions'
+import ComponentAction from './component-actions/ComponentAction.vue'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
 import { componentSettingsMixin } from './mixins'
-import { componentActions, ComponentConfigAction } from './component-actions/component-actions'
-import ComponentAction from './component-actions/ComponentAction.vue'
 
 export default Vue.extend({
   components: {

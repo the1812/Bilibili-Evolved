@@ -1,6 +1,7 @@
-import { ComponentMetadata, FeatureBase } from '@/components/component'
+import type { ComponentMetadata, FeatureBase } from '@/components/component'
+import type { CoreApis } from '@/core/core-apis'
 import { deleteValue } from '@/core/utils'
-import { CoreApis } from '@/core/core-apis'
+
 import { addData, registerAndGetData, registerData } from './data'
 import { addHook, getHook } from './hook'
 

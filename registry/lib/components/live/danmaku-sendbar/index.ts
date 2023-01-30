@@ -1,7 +1,8 @@
-import { waitForControlBar } from '@/components/live/live-control-bar'
 import { defineComponentMetadata } from '@/components/define'
+import { waitForControlBar } from '@/components/live/live-control-bar'
 import { getUID } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
+
 import { leftControllerSelector } from './original-elements'
 
 const entry = async () => {

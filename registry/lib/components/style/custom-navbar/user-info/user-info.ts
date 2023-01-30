@@ -1,5 +1,6 @@
 import { getUID } from '@/core/utils'
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export const userInfo: CustomNavbarItemInit = {
   name: 'userInfo',

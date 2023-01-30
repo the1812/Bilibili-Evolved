@@ -13,6 +13,7 @@
 <script lang="ts">
 import { select } from '@/core/spin-query'
 import { raiseEvent } from '@/core/utils'
+
 import { originalTextAreaSelector, sendButtonSelector } from './original-elements'
 
 let changeEventHook = false

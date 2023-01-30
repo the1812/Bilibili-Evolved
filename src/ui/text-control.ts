@@ -33,11 +33,12 @@ export const textControlMixin = Vue.extend({
   },
   methods: {
     emitChange() {
-      let { value } = this.$refs.input
+      const input = (this.$refs as any).input as { value: any }
+      let { value } = input
       if (this.validator) {
         value = this.validator(value, this.text)
         if (this.changeOnBlur) {
-          this.$refs.input.value = value
+          input.value = value
         }
       }
       if (value === this.text) {
@@ -63,7 +64,7 @@ export const textControlMixin = Vue.extend({
       this.input()
     },
     focus() {
-      this.$refs.input.focus()
+      ;(this.$refs as any).input.focus()
     },
   },
 })

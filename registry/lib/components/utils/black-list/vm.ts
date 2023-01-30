@@ -1,6 +1,7 @@
 import { getComponentSettings } from '@/core/settings'
 import { mountVueComponent } from '@/core/utils'
 import { addData, getData } from '@/plugins/data'
+
 import { BlackListDataKey } from './common'
 
 type SettingsVmType = Vue & {

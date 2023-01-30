@@ -1,6 +1,7 @@
 import { getFriendlyTitle } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
-import { DownloadVideoInput } from '../../types'
+
+import type { DownloadVideoInput } from '../../types'
 
 export const videoSingleInput: DownloadVideoInput = {
   name: 'video',

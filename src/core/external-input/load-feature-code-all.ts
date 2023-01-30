@@ -1,10 +1,10 @@
-import {
-  loadFeatureCode,
+import type { FeatureBase } from '@/components/types'
+import type {
   LoadFeatureCodeResult,
   LoadFeatureCodeResultError,
   LoadFeatureCodeResultOk,
 } from '@/core/external-input/load-feature-code'
-import { FeatureBase } from '@/components/types'
+import { loadFeatureCode } from '@/core/external-input/load-feature-code'
 
 interface ResultInstance {
   readonly isOk: <X extends FeatureBase>(
@@ -148,9 +148,9 @@ const loadFeatureCodeAll = <X>(codes: string[]): Promise<LoadFeatureCodeAllResul
 
 export {
   loadFeatureCodeAll,
-  LoadFeatureCodeAllResult,
-  LoadFeatureCodeAllResultOk,
-  LoadFeatureCodeAllResultError,
-  LoadFeatureCodeAllResultNoExport,
-  LoadFeatureCodeAllResultCodeThrew,
+  type LoadFeatureCodeAllResult,
+  type LoadFeatureCodeAllResultCodeThrew,
+  type LoadFeatureCodeAllResultError,
+  type LoadFeatureCodeAllResultNoExport,
+  type LoadFeatureCodeAllResultOk,
 }

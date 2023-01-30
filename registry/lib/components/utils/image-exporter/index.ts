@@ -1,10 +1,8 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { matchUrlPattern } from '@/core/utils'
 import { columnUrls, feedsUrls } from '@/core/utils/urls'
+
 import { setupFeedImageExporter } from './feed'
 
 const options = defineOptionsMetadata({

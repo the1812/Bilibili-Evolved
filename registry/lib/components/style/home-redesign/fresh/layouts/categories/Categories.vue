@@ -35,13 +35,14 @@
   </div>
 </template>
 <script lang="ts">
-import { ArrayContent } from '@/core/common-types'
+import type { ArrayContent } from '@/core/common-types'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
+
 import { freshHomeOptions } from '../../types'
-import { supportedCategories } from './filter'
 import { getContent } from './content/content'
+import { supportedCategories } from './filter'
 
 const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   id: category.code as number,

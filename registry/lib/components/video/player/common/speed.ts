@@ -1,21 +1,20 @@
-import {
+import type {
   ComponentEntry,
   ComponentMetadata,
   OptionMetadata,
   UnknownOptions,
 } from '@/components/types'
-import { CoreApis } from '@/core/core-apis'
-import { addComponentListener, ComponentSettings } from '@/core/settings'
+import type { CoreApis } from '@/core/core-apis'
+import type { ComponentSettings } from '@/core/settings'
+import { addComponentListener } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { getHook } from '@/plugins/hook'
-import { bindCallback, Subject, subject, TeardownLogic } from './mini-rxjs'
+
+import type { Subject, TeardownLogic } from './mini-rxjs'
+import { bindCallback, subject } from './mini-rxjs'
 import { distinctUntilChanged } from './mini-rxjs/operators/distinctUntilChanged'
-import {
-  getSpeedContext,
-  SpeedContext,
-  SpeedSeekPosition,
-  useShareBuildArgument$,
-} from './speed/context'
+import type { SpeedContext, SpeedSeekPosition } from './speed/context'
+import { getSpeedContext, useShareBuildArgument$ } from './speed/context'
 
 export type VideoIdObject = { aid: string; cid: string }
 

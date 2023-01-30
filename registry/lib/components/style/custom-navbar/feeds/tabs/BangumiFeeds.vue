@@ -12,9 +12,10 @@
 </template>
 <script lang="ts">
 import { feedsCardTypes } from '@/components/feeds/api'
-import { isNewID } from '@/components/feeds/notify'
-import { BangumiCard } from '@/components/feeds/bangumi-card'
+import type { BangumiCard } from '@/components/feeds/bangumi-card'
 import BangumiCardComponent from '@/components/feeds/BangumiCard.vue'
+import { isNewID } from '@/components/feeds/notify'
+
 import { nextPageMixin } from './next-page'
 
 export default Vue.extend({

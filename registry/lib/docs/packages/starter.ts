@@ -1,4 +1,4 @@
-import { Package } from '..'
+import type { Package } from '..'
 
 export const pack: Package = {
   name: 'starter',

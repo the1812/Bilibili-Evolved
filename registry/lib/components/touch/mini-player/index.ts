@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { videoAndBangumiUrls, liveUrls } from '@/core/utils/urls'
+import { liveUrls, videoAndBangumiUrls } from '@/core/utils/urls'
 
 const setTouch = async (enable: boolean) => {
   if (!document.URL.startsWith('https://live.bilibili.com')) {

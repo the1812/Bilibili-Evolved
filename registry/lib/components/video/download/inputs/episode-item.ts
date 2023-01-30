@@ -1,4 +1,4 @@
-import { DownloadVideoInputItem } from '../types'
+import type { DownloadVideoInputItem } from '../types'
 import EpisodesPicker from './EpisodesPicker.vue'
 
 export interface EpisodeItem {
@@ -14,7 +14,7 @@ export const createEpisodesPicker = (
   Vue.extend({
     computed: {
       checkedInputItems() {
-        return this.$refs.picker.checkedInputItems
+        return (this.$refs.picker as any).checkedInputItems
       },
     },
     render(createElement) {

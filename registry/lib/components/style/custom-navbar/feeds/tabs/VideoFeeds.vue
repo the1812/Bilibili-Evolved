@@ -30,11 +30,12 @@
   </div>
 </template>
 <script lang="ts">
-import { VideoCard } from '@/components/feeds/video-card'
-import { formatDuration, formatCount } from '@/core/utils/formatters'
-import { isNewID } from '@/components/feeds/notify'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
+import { isNewID } from '@/components/feeds/notify'
+import type { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
+import { formatCount, formatDuration } from '@/core/utils/formatters'
+
 import { nextPageMixin } from './next-page'
 
 const formatPubTime = (pubTime: number) => {

@@ -9,8 +9,10 @@
 </template>
 <script lang="ts">
 import { getHook } from '@/plugins/hook'
-import { UserStyle, installStyle, uninstallStyle, styles } from '@/plugins/style'
-import { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
+import type { UserStyle } from '@/plugins/style'
+import { installStyle, styles, uninstallStyle } from '@/plugins/style'
+
+import type { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
 import ManagePanel from './manage-panel/ManagePanel.vue'
 import UserItem from './manage-panel/UserItem.vue'
 

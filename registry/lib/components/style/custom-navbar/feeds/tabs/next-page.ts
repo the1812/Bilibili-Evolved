@@ -1,13 +1,9 @@
-import {
-  getFeeds,
-  FeedsCardType,
-  applyContentFilter,
-  isPreOrderedVideo,
-} from '@/components/feeds/api'
-import { descendingStringSort } from '@/core/utils/sort'
-import { logError } from '@/core/utils/log'
+import type { FeedsCardType } from '@/components/feeds/api'
+import { applyContentFilter, getFeeds, isPreOrderedVideo } from '@/components/feeds/api'
 import { setLatestID } from '@/components/feeds/notify'
-import { VLoading, VEmpty, ScrollTrigger } from '@/ui'
+import { logError } from '@/core/utils/log'
+import { descendingStringSort } from '@/core/utils/sort'
+import { ScrollTrigger, VEmpty, VLoading } from '@/ui'
 
 /**
  * 获取用于支持顶栏动态无限滚动的Vue Mixin
@@ -27,12 +23,12 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
     data() {
       return {
         loading: true,
-        cards: [],
+        cards: [] as MappedItem[],
         hasMorePage: true,
       }
     },
     computed: {
-      sortedCards() {
+      sortedCards(): MappedItem[] {
         return ([...this.cards] as MappedItem[]).sort(descendingStringSort(it => it.id))
       },
     },
@@ -46,6 +42,9 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
     },
     methods: {
       async nextPage() {
+        const this0 = this as typeof this & {
+          onCardsUpdate?: (cards: MappedItem[]) => MappedItem[]
+        }
         try {
           const cards: MappedItem[] = this.sortedCards
           const lastCardID = cards[cards.length - 1]?.id ?? 0
@@ -65,8 +64,8 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
               .filter(card => !isPreOrderedVideo(card)),
           )
 
-          if (concatCards.length > 0 && this.onCardsUpdate) {
-            concatCards = this.onCardsUpdate(concatCards)
+          if (concatCards.length > 0 && this0.onCardsUpdate) {
+            concatCards = this0.onCardsUpdate(concatCards)
           }
           console.log('nextPage get', concatCards)
           this.cards = concatCards

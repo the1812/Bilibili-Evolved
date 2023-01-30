@@ -53,9 +53,10 @@
 </template>
 <script lang="ts">
 import { getVideoFeeds } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
-import { ArrayContent } from '@/core/common-types'
+import type { VideoCard } from '@/components/feeds/video-card'
+import type { ArrayContent } from '@/core/common-types'
 import { VButton, VIcon } from '@/ui'
+
 import VideoList from '../../VideoList.vue'
 
 type FeedsApi = () => Promise<VideoCard[]>

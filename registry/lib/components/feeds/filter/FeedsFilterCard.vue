@@ -50,18 +50,20 @@
 </template>
 
 <script lang="ts">
-import {
+import type {
+  feedsCardsManager,
   FeedsCard,
   FeedsCardType,
-  feedsCardTypes,
-  forEachFeedsCard,
   RepostFeedsCard,
 } from '@/components/feeds/api'
+
+import { feedsCardTypes, forEachFeedsCard } from '@/components/feeds/api'
+import { attributes } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
-import { attributes } from '@/core/observer'
-import { VIcon, TextBox, VButton } from '@/ui'
-import { FeedsFilterOptions } from '.'
+import { TextBox, VButton, VIcon } from '@/ui'
+
+import type { FeedsFilterOptions } from '.'
 import { hasBlockedPattern } from './pattern'
 
 const options = getComponentSettings('feedsFilter').options as FeedsFilterOptions
@@ -99,7 +101,7 @@ const sideCards: { [id: number]: SideCardType } = {
     displayName: '发布动态',
   },
 }
-let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
+let cardsManager: typeof feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 
 export default Vue.extend({

@@ -1,5 +1,6 @@
-import { getCookieValue, getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
+import { getCookieValue, getUID } from '@/core/utils'
+
 import { navbarFeedsTypeList } from './api'
 
 export const updateInterval = 5 * 60 * 1000 // 每5分钟更新1次动态提醒数字

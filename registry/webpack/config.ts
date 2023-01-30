@@ -1,6 +1,7 @@
-import path from 'path'
 import lodash from 'lodash'
-import { Configuration } from 'webpack'
+import path from 'path'
+import type { Configuration } from 'webpack'
+
 import { getDefaultConfig } from '../../webpack/webpack.config'
 import { getId } from '../lib/id'
 

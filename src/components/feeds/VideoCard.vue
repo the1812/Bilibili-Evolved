@@ -125,9 +125,9 @@
 </template>
 
 <script lang="ts">
-import { DpiImage, VIcon } from '@/ui'
+import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getUID } from '@/core/utils'
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import { DpiImage, VIcon } from '@/ui'
 
 /*
   ============

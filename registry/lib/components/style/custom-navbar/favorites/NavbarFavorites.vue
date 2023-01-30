@@ -65,16 +65,17 @@
   </div>
 </template>
 <script lang="ts">
-import { VLoading, VEmpty, VIcon, VButton, TextBox, DpiImage, ScrollTrigger } from '@/ui'
-import { formatDate, formatDuration } from '@/core/utils/formatters'
-import { getUID } from '@/core/utils'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { getJsonWithCredentials } from '@/core/ajax'
-import { logError } from '@/core/utils/log'
-import { VideoCard } from '@/components/feeds/video-card'
 import { getComponentSettings } from '@/core/settings'
+import { getUID } from '@/core/utils'
+import { formatDate, formatDuration } from '@/core/utils/formatters'
+import { logError } from '@/core/utils/log'
+import { DpiImage, ScrollTrigger, TextBox, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
+import { popperMixin } from '../mixins'
 import { notSelectedFolder } from './favorites-folder'
 import FavoritesFolderSelect from './FavoritesFolderSelect.vue'
-import { popperMixin } from '../mixins'
 
 /*
 新版收藏夹 API

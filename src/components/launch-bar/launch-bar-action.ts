@@ -1,4 +1,4 @@
-import { Executable, VueModule } from '@/core/common-types'
+import type { Executable, VueModule } from '@/core/common-types'
 
 /** 表示 LaunchBar 里的一个动作 */
 export interface LaunchBarAction {

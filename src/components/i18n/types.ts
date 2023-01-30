@@ -6,11 +6,11 @@ export interface CssTranslation {
 export type Translation = string | CssTranslation | (string | CssTranslation)[]
 export type GeneralTranslation = Map<string, Translation>
 export type RegexTranslation = [RegExp, string][]
-export type LanguagePack = {
+export interface LanguagePack {
   map?: [string, Translation][]
   regex?: RegexTranslation
 }
-export type Options = {
+export interface Options {
   language: string
   translator: string
 }

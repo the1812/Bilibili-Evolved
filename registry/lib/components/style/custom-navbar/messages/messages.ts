@@ -1,4 +1,4 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 const messagesUrl = 'https://message.bilibili.com/'
 export const messages: CustomNavbarItemInit = {

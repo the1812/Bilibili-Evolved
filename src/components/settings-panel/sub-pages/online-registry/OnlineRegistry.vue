@@ -72,16 +72,18 @@
 </template>
 <script lang="ts">
 import Fuse from 'fuse.js'
-import { DocSourceItem } from 'registry/lib/docs'
+import type { DocSourceItem } from 'registry/lib/docs'
+
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty, RadioButton } from '@/ui'
+import { RadioButton, TextBox, VDropdown, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
+
+import { ItemFilter } from './item-filter'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
-import { ItemFilter } from './item-filter'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
 const general = getGeneralSettings() as ExtendedSettings

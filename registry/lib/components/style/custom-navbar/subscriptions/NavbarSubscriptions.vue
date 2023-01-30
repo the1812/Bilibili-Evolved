@@ -4,9 +4,10 @@
   </div>
 </template>
 <script lang="ts">
-import { TabControl } from '@/ui'
-import { TabMappings, TabMapping } from '@/ui/tab-mapping'
 import { getUID } from '@/core/utils'
+import { TabControl } from '@/ui'
+import type { TabMapping, TabMappings } from '@/ui/tab-mapping'
+
 import { popperMixin } from '../mixins'
 import { SubscriptionTypes } from './subscriptions'
 

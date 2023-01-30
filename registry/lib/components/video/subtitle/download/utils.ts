@@ -1,7 +1,8 @@
 import { getJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { SubtitleConverterConfig } from '../subtitle-converter'
+
+import type { SubtitleConverterConfig } from '../subtitle-converter'
 
 export type SubtitleDownloadType = 'json' | 'ass'
 export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, string]> => {

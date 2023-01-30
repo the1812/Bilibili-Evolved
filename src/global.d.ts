@@ -1,13 +1,15 @@
-import { LoDashStatic } from 'lodash'
-import { CoreApis, ExternalApis } from './core/core-apis'
+import type { LoDashStatic } from 'lodash'
+import type { VueConstructor } from 'vue'
+
 import type { CdnConfig } from '../webpack/cdn/types'
+import type { CoreApis, ExternalApis } from './core/core-apis'
 
 declare global {
   /** @deprecated Use window.lodash instead. */
   const _: LoDashStatic
 
   const lodash: LoDashStatic
-  const Vue: typeof import('vue/types/umd')
+  const Vue: VueConstructor
 
   interface GitInfo {
     commitHash: string

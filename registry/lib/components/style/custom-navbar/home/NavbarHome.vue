@@ -30,7 +30,9 @@
   </div>
 </template>
 <script lang="ts">
-import { categories, Category } from '@/components/utils/categories/data'
+import type { Category } from '@/components/utils/categories/data'
+import { categories } from '@/components/utils/categories/data'
+
 import { popperMixin } from '../mixins'
 
 const clone = lodash.cloneDeep(categories)

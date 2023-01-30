@@ -1,8 +1,5 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 

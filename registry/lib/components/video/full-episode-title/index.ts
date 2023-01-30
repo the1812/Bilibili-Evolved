@@ -1,7 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
-import { videoUrls } from '@/core/utils/urls'
 import { addComponentListener } from '@/core/settings'
 import { select } from '@/core/spin-query'
+import { videoUrls } from '@/core/utils/urls'
 
 const name = 'fullEpisodeTitle'
 export const component = defineComponentMetadata({

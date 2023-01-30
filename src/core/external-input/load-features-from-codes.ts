@@ -1,11 +1,11 @@
-import {
+import type { ComponentMetadata } from '@/components/types'
+import type {
   LoadFeatureCodeResultError,
   LoadFeatureCodeResultOk,
 } from '@/core/external-input/load-feature-code'
-import { useScopedConsole } from '@/core/utils/log'
-import { ComponentMetadata } from '@/components/types'
-import { PluginMetadata } from '@/plugins/plugin'
 import { loadFeatureCodeAllSettled } from '@/core/external-input/load-feature-code-all-settled'
+import { useScopedConsole } from '@/core/utils/log'
+import type { PluginMetadata } from '@/plugins/plugin'
 
 const curConsole = useScopedConsole('@/core/external-input/load-features-from-codes.ts')
 

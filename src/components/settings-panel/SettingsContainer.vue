@@ -44,8 +44,8 @@
 </template>
 
 <script lang="ts">
-import { VPopup, VIcon } from '@/ui'
 import { externalApis } from '@/core/core-apis'
+import { VIcon, VPopup } from '@/ui'
 
 export default {
   name: 'SettingsContainer',

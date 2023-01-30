@@ -1,13 +1,16 @@
-import { mountVueComponent } from '@/core/utils'
-import { LoadingMode } from '@/core/loading-mode'
-import { TextColor } from '@/core/text-color'
 import { CdnTypes } from '@/core/cdn-types'
-import { addComponentListener } from '@/core/settings'
 import { DownloadPackageEmitMode } from '@/core/download-mode'
-import { ComponentEntry, componentsTags } from '../types'
-import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '../define'
-import { provideActions } from './external-actions'
+import { LoadingMode } from '@/core/loading-mode'
+import { addComponentListener } from '@/core/settings'
+import { TextColor } from '@/core/text-color'
+import { mountVueComponent } from '@/core/utils'
+
+import type { OptionsOfMetadata } from '../define'
+import { defineComponentMetadata, defineOptionsMetadata } from '../define'
+import type { ComponentEntry } from '../types'
+import { componentsTags } from '../types'
 import { SettingsPanelDockSide } from './dock'
+import { provideActions } from './external-actions'
 
 export const WidgetsPlugin = 'widgets'
 

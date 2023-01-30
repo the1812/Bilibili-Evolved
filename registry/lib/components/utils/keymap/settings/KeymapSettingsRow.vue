@@ -43,8 +43,9 @@
   </div>
 </template>
 <script lang="ts">
-import { TextBox, VButton, VIcon } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
+import { TextBox, VButton, VIcon } from '@/ui'
+
 import { presetBase, presets } from '../presets'
 
 const keymapOptions = getComponentSettings('keymap').options

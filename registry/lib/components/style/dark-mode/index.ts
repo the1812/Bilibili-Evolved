@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+
 import { darkExcludes } from './dark-urls'
 
 const changeDelay = 200

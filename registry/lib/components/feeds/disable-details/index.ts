@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import { FeedsCard, feedsCardTypes } from '@/components/feeds/api'
+import type { FeedsCard } from '@/components/feeds/api'
+import { feedsCardTypes } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
 
 let enabled = true
