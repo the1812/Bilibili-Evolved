@@ -1,0 +1,4 @@
+// 为 IDE 提供的配置
+{
+  "extends": "../tsconfig.node.json"
+}

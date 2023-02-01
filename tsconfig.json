@@ -1,32 +1,24 @@
+/**
+ * 脚本核心与脚本功能共用配置
+ */
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
-    "strict": false,
-    "sourceMap": true,
     "baseUrl": ".",
-    "types": ["webpack-env"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "noEmit": true,
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+      "@/*": ["src/*"]
+    },
+    "sourceMap": true,
+    "strict": false,
+    "types": ["webpack-env"]
   },
   "include": [
     "src/**/*",
-    "tests/**/*",
+    "src/**/*.json",
     "registry/lib/**/*",
-    "webpack/**/*",
-    "registry/webpack/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "dev",
-    "packages",
-    "typings"
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "CommonJS"
-    }
-  }
+    "registry/lib/**/*.json",
+    "webpack/webpack-define.d.ts"
+  ]
 }

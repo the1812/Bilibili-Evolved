@@ -1,7 +1,7 @@
 import exitHook from 'async-exit-hook'
 import webpack from 'webpack'
 
-import webpackConfig from '../../webpack/webpack.dev'
+import webpackConfig from 'webpack/webpack.dev'
 import { defaultWatcherHandler } from './watcher-common'
 import { sendMessage } from './web-socket-server'
 

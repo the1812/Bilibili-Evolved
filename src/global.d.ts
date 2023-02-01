@@ -11,12 +11,6 @@ declare global {
   const lodash: LoDashStatic
   const Vue: VueConstructor
 
-  interface GitInfo {
-    commitHash: string
-    branch: string
-    nearestTag: string
-    versionWithTag: string
-  }
   interface CompilationInfo extends GitInfo {
     year: string
     version: string
@@ -25,7 +19,6 @@ declare global {
     // buildTime: number
   }
   const webpackCompilationInfo: CompilationInfo
-  const webpackGitInfo: GitInfo
 
   const BwpElement: {
     new (): HTMLVideoElement

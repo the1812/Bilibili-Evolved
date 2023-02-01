@@ -6,11 +6,11 @@
   "author": "Grant Howard, Coulomb-G",
   "license": "MIT",
   "scripts": {
-    "build-core": "webpack --config ./webpack/webpack.prod.ts --bail",
-    "build-features": "webpack --config ./registry/webpack/all.ts --bail",
+    "build-core": "cross-env TS_NODE_PROJECT='tsconfig.node.json' webpack --config ./webpack/webpack.prod.ts --bail",
+    "build-features": "cross-env TS_NODE_PROJECT='tsconfig.node.json' webpack --config ./registry/webpack/all.ts --bail",
     "lint": "eslint --quiet --fix . --ext .ts,.vue",
     "lint-check": "eslint . --ext .ts,.vue",
-    "type": "tsc -p tsconfig.type-check.json --noEmit"
+    "type": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@babel/core": "7.17.9",
@@ -38,6 +38,7 @@
     "autoprefixer": "^10.0.1",
     "babel-loader": "^8.1.0",
     "browserslist": "^4.21.4",
+    "cross-env": "^7.0.3",
     "css-loader": "^5.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.1.0",
@@ -58,6 +59,7 @@
     "terser-webpack-plugin": "^5.0.1",
     "to-string-loader": "^1.2.0",
     "ts-node": "^10.7.0",
+    "tsconfig-paths": "^4.1.2",
     "typescript": "^4.4.4",
     "vue-loader": "^15.8.3",
     "vue-template-compiler": "^2.6.11",

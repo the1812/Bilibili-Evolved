@@ -4,7 +4,7 @@ import { createServer } from 'http'
 import handler from 'serve-handler'
 import type { Configuration } from 'webpack'
 
-import { buildByEntry } from '../../registry/webpack/config'
+import { buildByEntry } from 'registry/webpack/config'
 import { devServerConfig } from './config'
 import { parseRegistryUrl, startRegistryWatcher, watchers } from './registry-watcher'
 import { exitWebSocketServer } from './web-socket-server'

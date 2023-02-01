@@ -2,7 +2,7 @@ import lodash from 'lodash'
 import path from 'path'
 import type { Configuration } from 'webpack'
 
-import { getDefaultConfig } from '../../webpack/webpack.config'
+import { getDefaultConfig } from 'webpack/webpack.config'
 import { getId } from '../lib/id'
 
 export const buildByEntry = (params: {

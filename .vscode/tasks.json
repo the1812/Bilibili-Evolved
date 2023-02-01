@@ -8,63 +8,108 @@
       "command": "pnpm ts-node ./dev-tools/dev-server/index.ts",
       "group": "build",
       "problemMatcher": [],
-      "label": "启动开发服务 dev-server"
+      "label": "启动开发服务 dev-server",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --config ./webpack/webpack.dev.ts --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "本体:编译开发版本 dev:build-core"
+      "label": "本体:编译开发版本 dev:build-core",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --watch --config ./webpack/webpack.dev.ts --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "本体:监视开发版本 dev:watch-core"
+      "label": "本体:监视开发版本 dev:watch-core",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm serve dist -p ${input:serverPort}",
       "group": "build",
       "problemMatcher": [],
-      "label": "本体:启动服务器 dev:serve-core"
+      "label": "本体:启动服务器 dev:serve-core",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm serve registry/dist -p ${input:serverPort}",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:启动服务器 dev:serve-features"
+      "label": "功能:启动服务器 dev:serve-features",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --watch --config ./registry/webpack/components.ts --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:监视组件 dev:watch-components"
+      "label": "功能:监视组件 dev:watch-components",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --watch --config ./registry/webpack/plugins.ts --progress --mode=development",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:监视插件 dev:watch-plugins"
+      "label": "功能:监视插件 dev:watch-plugins",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
-      "command": "pnpm tsc -p tsconfig.type-check.json --noEmit",
+      "command": "pnpm tsc -p tsconfig.json --noEmit",
       "group": "build",
       "problemMatcher": [],
-      "label": "生产:类型检查 prod:type"
+      "label": "生产:类型检查 prod:type",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm --silent webpack --config ./webpack/webpack.prod.ts --profile --json > dist/profile.json && pnpm webpack-bundle-analyzer dist/profile.json",
       "group": "build",
       "problemMatcher": [],
-      "label": "本体:打包分析 prod:analyze"
+      "label": "本体:打包分析 prod:analyze",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
@@ -85,35 +130,60 @@
       "command": "pnpm webpack --config ./webpack/webpack.prod.ts --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "本体:编译生产版本 prod:build-core"
+      "label": "本体:编译生产版本 prod:build-core",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --config ./registry/webpack/components.ts --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:编译组件 prod:build-components"
+      "label": "功能:编译组件 prod:build-components",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --config ./registry/webpack/plugins.ts --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:编译插件 prod:build-plugins"
+      "label": "功能:编译插件 prod:build-plugins",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --config ./registry/webpack/all.ts",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:编译所有 prod:build-features"
+      "label": "功能:编译所有 prod:build-features",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
       "command": "pnpm webpack --config ./registry/webpack/docs.ts --progress",
       "group": "build",
       "problemMatcher": [],
-      "label": "功能:编译功能文档 prod:build-docs"
+      "label": "功能:编译功能文档 prod:build-docs",
+      "options": {
+        "env": {
+          "TS_NODE_PROJECT": "tsconfig.node.json"
+        }
+      }
     },
     {
       "type": "shell",
