@@ -1,7 +1,8 @@
-import path from 'path'
 import lodash from 'lodash'
-import { Configuration } from 'webpack'
-import { getDefaultConfig } from '../../webpack/webpack.config'
+import path from 'path'
+import type { Configuration } from 'webpack'
+
+import { getDefaultConfig } from 'webpack/webpack.config'
 import { getId } from '../lib/id'
 
 export const buildByEntry = (params: {

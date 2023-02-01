@@ -30,7 +30,8 @@
 </template>
 
 <script lang="ts">
-import { VIcon, ProgressRing } from '@/ui'
+import { ProgressRing, VIcon } from '@/ui'
+
 import type { Toast } from '.'
 
 export default Vue.extend({

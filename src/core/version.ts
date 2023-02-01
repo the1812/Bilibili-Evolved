@@ -1,4 +1,5 @@
-import { FeatureBase } from '@/components/types'
+import type { FeatureBase } from '@/components/types'
+
 import { parseExternalInput } from './external-input'
 import { meta } from './meta'
 

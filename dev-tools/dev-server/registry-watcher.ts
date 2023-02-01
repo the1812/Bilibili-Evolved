@@ -1,9 +1,11 @@
-import { Watching, Configuration, webpack } from 'webpack'
 import exitHook from 'async-exit-hook'
+import type { Configuration, Watching } from 'webpack'
+import { webpack } from 'webpack'
+
 import { fromId } from '../../registry/lib/id'
+import { devServerConfig } from './config'
 import { defaultWatcherHandler } from './watcher-common'
 import { sendMessage } from './web-socket-server'
-import { devServerConfig } from './config'
 
 export const watchers: { url: string; instance: Watching }[] = []
 export const parseRegistryUrl = (url: string) => {

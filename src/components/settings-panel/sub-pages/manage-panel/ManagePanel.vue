@@ -91,14 +91,15 @@
   </div>
 </template>
 <script lang="ts">
-import { installFeature, tryParseZip } from '@/core/install-feature'
 import { pickFile } from '@/core/file-picker'
+import { installFeature, tryParseZip } from '@/core/install-feature'
+import { JSZipLibrary } from '@/core/runtime-library'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import { JSZipLibrary } from '@/core/runtime-library'
-import { VIcon, VButton, TextBox, VEmpty, VLoading, VPopup, TextArea, SwitchBox } from '@/ui'
-import ManageItem from './ManageItem.vue'
+import { SwitchBox, TextArea, TextBox, VButton, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
+
 import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
+import ManageItem from './ManageItem.vue'
 
 export default Vue.extend({
   components: {

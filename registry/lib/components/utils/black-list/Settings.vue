@@ -24,7 +24,8 @@
 </template>
 <script lang="ts">
 import { getUID } from '@/core/utils'
-import { VIcon, VButton } from '@/ui'
+import { VButton, VIcon } from '@/ui'
+
 import {
   loadNameSettings,
   loadRegexSettings,

@@ -1,4 +1,5 @@
-import { Subject, subject } from './subject'
+import type { Subject } from './subject'
+import { subject } from './subject'
 
 export const of = (...items: any[]) =>
   subject(({ next, complete }) => {

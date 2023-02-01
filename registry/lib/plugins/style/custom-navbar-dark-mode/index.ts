@@ -1,5 +1,6 @@
-import { PluginMetadata } from '@/plugins/plugin'
-import { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
+import type { PluginMetadata } from '@/plugins/plugin'
+
+import type { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
 
 export const plugin: PluginMetadata = {
   name: 'customNavbar.items.darkMode',

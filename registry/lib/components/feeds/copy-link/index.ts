@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { FeedsCard } from '@/components/feeds/api'
+import type { FeedsCard } from '@/components/feeds/api'
 import { feedsUrls } from '@/core/utils/urls'
 
 const entry = async () => {

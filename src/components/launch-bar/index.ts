@@ -1,5 +1,6 @@
-import { none } from '@/core/utils'
 import { defineComponentMetadata } from '@/components/define'
+import { none } from '@/core/utils'
+
 import { componentsTags } from '../types'
 import { plugin } from './plugin'
 

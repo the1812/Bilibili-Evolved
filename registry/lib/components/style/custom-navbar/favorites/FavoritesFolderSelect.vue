@@ -13,11 +13,13 @@
   </VDropdown>
 </template>
 <script lang="ts">
-import { VDropdown } from '@/ui'
-import { getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { getComponentSettings } from '@/core/settings'
-import { FavoritesFolder, notSelectedFolder } from './favorites-folder'
+import { getUID } from '@/core/utils'
+import { VDropdown } from '@/ui'
+
+import type { FavoritesFolder } from './favorites-folder'
+import { notSelectedFolder } from './favorites-folder'
 
 const navbarOptions = getComponentSettings('customNavbar').options
 export default Vue.extend({

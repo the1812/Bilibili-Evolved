@@ -56,13 +56,16 @@
 </template>
 
 <script lang="ts">
-import { Executable, VueModule } from '@/core/common-types'
+import type { Executable, VueModule } from '@/core/common-types'
 import { ascendingSort } from '@/core/utils/sort'
 import VIcon from '@/ui/icon/VIcon.vue'
 import VPopup from '@/ui/VPopup.vue'
-import { components, ComponentTag } from '../component'
+
+import type { ComponentTag } from '../component'
+import { components } from '../component'
 import { subPages } from './sub-pages'
-import { SettingsTag, tagFilters } from './tag-filter'
+import type { SettingsTag } from './tag-filter'
+import { tagFilters } from './tag-filter'
 
 export default Vue.extend({
   components: { VIcon, VPopup },

@@ -1,5 +1,5 @@
-import { toggleStyle } from '@/components/styled-component'
 import { defineComponentMetadata } from '@/components/define'
+import { toggleStyle } from '@/components/styled-component'
 
 export const component = defineComponentMetadata({
   ...toggleStyle('alwaysShowDuration', () => import('./always-show-duration.scss')),

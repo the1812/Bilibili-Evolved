@@ -1,6 +1,9 @@
-import { createPopper, Instance as Popper } from '@popperjs/core'
-import { VueModule, Executable } from '@/core/common-types'
-import { getComponentSettings, addComponentListener } from '@/core/settings'
+import type { Instance as Popper } from '@popperjs/core'
+import { createPopper } from '@popperjs/core'
+
+import type { Executable, VueModule } from '@/core/common-types'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
+
 import type { CustomNavbarOptions } from '.'
 
 export const CustomNavbarItems = 'customNavbar.items'

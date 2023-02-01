@@ -54,7 +54,9 @@
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
 import { DefaultWidget, VPopup } from '@/ui'
-import { Medal, Title, Badge, getMedalList, getTitleList } from './badge'
+
+import type { Badge } from './badge'
+import { getMedalList, getTitleList, Medal, Title } from './badge'
 
 const { options } = getComponentSettings('badgeHelper')
 export default Vue.extend({

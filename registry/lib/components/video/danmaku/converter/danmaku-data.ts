@@ -1,4 +1,4 @@
-import { DanmakuType } from './danmaku-type'
+import type { DanmakuType } from './danmaku-type'
 
 export interface BasicDanmakuData {
   content: string

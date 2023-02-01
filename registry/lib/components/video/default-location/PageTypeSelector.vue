@@ -12,6 +12,7 @@
 
 <script lang="ts">
 import { VDropdown, VIcon } from '@/ui'
+
 import { pageTypeInfos } from '.'
 
 const itemsMap = lodash.mapValues(pageTypeInfos, (v, k) => ({

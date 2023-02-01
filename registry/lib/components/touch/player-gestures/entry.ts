@@ -1,5 +1,6 @@
 import { playerAgent } from '@/components/video/player-agent'
-import { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
+
+import type { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
 
 export const entry = async () => {
   const { videoChange } = await import('@/core/observer')

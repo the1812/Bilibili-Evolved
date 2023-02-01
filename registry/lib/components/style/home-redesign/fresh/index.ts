@@ -2,6 +2,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
 import { addComponentListener } from '@/core/settings'
 import { getNumberValidator, mountVueComponent } from '@/core/utils'
+
 import { homeUrls } from '../urls'
 
 export const component = defineComponentMetadata({

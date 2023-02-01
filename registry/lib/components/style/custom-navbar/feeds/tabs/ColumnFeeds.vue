@@ -12,9 +12,10 @@
 </template>
 <script lang="ts">
 import { feedsCardTypes } from '@/components/feeds/api'
-import { isNewID } from '@/components/feeds/notify'
-import { ColumnCard } from '@/components/feeds/column-card'
+import type { ColumnCard } from '@/components/feeds/column-card'
 import ColumnCardComponent from '@/components/feeds/ColumnCard.vue'
+import { isNewID } from '@/components/feeds/notify'
+
 import { nextPageMixin } from './next-page'
 
 export default Vue.extend({

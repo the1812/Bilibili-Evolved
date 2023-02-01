@@ -1,14 +1,16 @@
 import { childList } from '@/core/observer'
-import { descendingStringSort } from '@/core/utils/sort'
+import { selectAll } from '@/core/spin-query'
 import { pascalCase } from '@/core/utils'
+import { descendingStringSort } from '@/core/utils/sort'
+
+import type { FeedsCard, FeedsCardType } from '../types'
+import { feedsCardTypes, isRepostType } from '../types'
 import {
   createNodeValidator,
   FeedsCardsManager,
   FeedsCardsManagerEventType,
   getVueData,
 } from './base'
-import { FeedsCard, FeedsCardType, feedsCardTypes, isRepostType } from '../types'
-import { selectAll } from '@/core/spin-query'
 
 /** b 站的动态卡片 type 标记 -> FeedsCard.type */
 const feedsCardTypeMap = {

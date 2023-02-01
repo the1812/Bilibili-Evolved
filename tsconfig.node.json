@@ -1,0 +1,18 @@
+/**
+ * 项目 node 环境共用的配置
+ */
+{
+  // 与脚本配置尽量一致
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ESNext"],
+    "module": "commonjs",
+    // `module: commonjs` 时，不支持该设置
+    "preserveValueImports": false,
+    "types": ["node"]
+  },
+  "include": ["webpack/**/*", "registry/webpack/**/*", "dev-tools/**/*"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  }
+}

@@ -1,5 +1,5 @@
-import { Executable, VueModule } from '@/core/common-types'
-import { PluginMetadata } from '@/plugins/plugin'
+import type { Executable, VueModule } from '@/core/common-types'
+import type { PluginMetadata } from '@/plugins/plugin'
 
 export const plugin: PluginMetadata = {
   name: 'vLoading.reimu',

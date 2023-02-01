@@ -1,6 +1,7 @@
 import { StreamSaverLibrary } from '@/core/runtime-library'
 import { Toast } from '@/core/toast'
-import { DownloadVideoOutput } from '../types'
+
+import type { DownloadVideoOutput } from '../types'
 
 const serviceWorkerMessage =
   '需要浏览器允许来自 jimmywarting.github.io (StreamSaver 的网站) 的第三方 cookie, 详细原因见 <a href="https://github.com/jimmywarting/StreamSaver.js?#how-does-it-work" target="blank">How does it work</a>'

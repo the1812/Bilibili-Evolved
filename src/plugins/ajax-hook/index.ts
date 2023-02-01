@@ -1,4 +1,4 @@
-import { PluginMetadata } from '../plugin'
+import type { PluginMetadata } from '../plugin'
 
 // https://github.com/the1812/Bilibili-Evolved/issues/84
 let ajaxHooked = false

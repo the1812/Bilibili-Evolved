@@ -4,8 +4,9 @@ import { formatNumber } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
 import { formatTitle } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
-import { PluginMetadata } from '@/plugins/plugin'
-import {
+import type { PluginMetadata } from '@/plugins/plugin'
+
+import type {
   DownloadVideoInput,
   DownloadVideoInputItem,
 } from '../../../../components/video/download/types'

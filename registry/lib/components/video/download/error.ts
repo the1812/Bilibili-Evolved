@@ -1,5 +1,6 @@
 import { loginRequiredQualities, vipRequiredQualities } from '@/components/video/video-quality'
-import { DownloadVideoInfo, DownloadVideoInputItem } from './types'
+
+import type { DownloadVideoInfo, DownloadVideoInputItem } from './types'
 
 export const throwQualityError = (value: number) => {
   // 大会员清晰度: 4K 1080P60 1080P+ 720P60

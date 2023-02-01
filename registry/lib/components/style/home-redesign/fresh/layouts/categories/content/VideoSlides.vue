@@ -105,10 +105,11 @@
 </template>
 <script lang="ts">
 import { applyContentFilter } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
-import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
+import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
 
 export default Vue.extend({

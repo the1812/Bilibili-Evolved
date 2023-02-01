@@ -1,12 +1,10 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
-import { urlInclude, urlExclude } from './urls'
-import { entry } from './entry'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { getNumberValidator } from '@/core/utils'
+
+import { entry } from './entry'
+import { urlExclude, urlInclude } from './urls'
 
 const styleID = 'custom-navbar-style'
 const options = defineOptionsMetadata({

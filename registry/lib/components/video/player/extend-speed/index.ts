@@ -1,6 +1,8 @@
 import { playerUrls } from '@/core/utils/urls'
+
 import { MAX_BROWSER_SPEED_VALUE, MIN_BROWSER_SPEED_VALUE } from '../common/speed'
-import { ExtendSpeedComponent, Options } from './component'
+import type { Options } from './component'
+import { ExtendSpeedComponent } from './component'
 
 export const component = ExtendSpeedComponent.create<Options>({
   name: 'extendVideoSpeed',

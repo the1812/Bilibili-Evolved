@@ -1,5 +1,5 @@
 // import { formatDate } from '@/core/utils/formatters'
-import { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
+import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 
 export interface HistoryItem {
   value: string

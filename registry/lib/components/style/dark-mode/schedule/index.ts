@@ -1,11 +1,10 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { fullyLoaded } from '@/core/life-cycle'
-import { ComponentSettings, getComponentSettings } from '@/core/settings'
-import { Range } from '@/ui/range'
+import type { ComponentSettings } from '@/core/settings'
+import { getComponentSettings } from '@/core/settings'
+import type { Range } from '@/ui/range'
+
 import { darkExcludes } from '../dark-urls'
 
 class ScheduleTime {

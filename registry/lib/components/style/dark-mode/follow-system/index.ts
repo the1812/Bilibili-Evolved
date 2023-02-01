@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { LifeCycleEventTypes } from '@/core/life-cycle'
+
 import { darkExcludes } from '../dark-urls'
 
 export const component = defineComponentMetadata({

@@ -1,7 +1,7 @@
-import { PluginMetadata } from '@/plugins/plugin'
-import { TagFilter } from '@/components/settings-panel/tag-filter'
-import { ComponentMetadata } from '@/components/types'
 import type { Options as SettingPanelOptions } from '@/components/settings-panel'
+import type { TagFilter } from '@/components/settings-panel/tag-filter'
+import type { ComponentMetadata } from '@/components/types'
+import type { PluginMetadata } from '@/plugins/plugin'
 
 type ExtendedOptions = SettingPanelOptions & {
   recentComponents?: Record<string, number>

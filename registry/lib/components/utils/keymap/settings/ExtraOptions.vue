@@ -13,6 +13,7 @@
 </template>
 <script lang="ts">
 import { VButton, VIcon } from '@/ui'
+
 import { loadKeymapSettings, toggleKeymapSettings } from './vm'
 
 export default Vue.extend({

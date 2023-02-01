@@ -1,12 +1,13 @@
-import { TestPattern, Executable, VueModule, I18nDescription } from '@/core/common-types'
-import { ComponentSettings } from '@/core/settings'
-import { CoreApis } from '@/core/core-apis'
-import { PluginMinimalData } from '@/plugins/plugin'
-import { Range } from '@/ui/range'
-import { Widget } from '@/components/widget'
-import { LanguagePack } from './i18n/types'
+import type { Widget } from '@/components/widget'
+import type { Executable, I18nDescription, TestPattern, VueModule } from '@/core/common-types'
+import type { CoreApis } from '@/core/core-apis'
+import type { ComponentSettings } from '@/core/settings'
+import type { PluginMinimalData } from '@/plugins/plugin'
+import type { Range } from '@/ui/range'
 
-export type Author = {
+import type { LanguagePack } from './i18n/types'
+
+export interface Author {
   name: string
   link: string
 }

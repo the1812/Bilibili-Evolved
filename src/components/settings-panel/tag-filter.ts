@@ -1,5 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
-import { ComponentTag, ComponentMetadata } from '../types'
+
+import type { ComponentMetadata, ComponentTag } from '../types'
 
 export interface SettingsTagFilterContext {
   components: ComponentMetadata[]

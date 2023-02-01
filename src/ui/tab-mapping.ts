@@ -1,4 +1,4 @@
-import { VueModule, Executable } from '@/core/common-types'
+import type { Executable, VueModule } from '@/core/common-types'
 
 /** 用于`TabControl`的标签定义 */
 export interface TabMapping {

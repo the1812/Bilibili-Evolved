@@ -30,6 +30,7 @@ module.exports = {
     'import/no-default-export': 'error',
     'import/no-named-default': 'off',
 
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/member-delimiter-style': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',

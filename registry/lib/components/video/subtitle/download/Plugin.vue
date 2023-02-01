@@ -13,7 +13,8 @@
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
 import { VDropdown } from '@/ui'
-import { SubtitleDownloadType } from './utils'
+
+import type { SubtitleDownloadType } from './utils'
 
 interface Options {
   subtitleType: SubtitleDownloadType | '无'

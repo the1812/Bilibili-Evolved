@@ -7,6 +7,7 @@
 <script lang="ts">
 import { Toast } from '@/core/toast'
 import { VButton, VIcon } from '@/ui'
+
 import { forceCheckUpdateAndReload } from './checker'
 
 export default Vue.extend({

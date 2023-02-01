@@ -1,5 +1,7 @@
-import { Placement } from '@popperjs/core'
-import tippy, { Content, Instance, Props } from 'tippy.js'
+import type { Placement } from '@popperjs/core'
+import type { Content, Instance, Props } from 'tippy.js'
+import tippy from 'tippy.js'
+
 import { addStyle } from '../style'
 import miniStyle from './mini.scss'
 

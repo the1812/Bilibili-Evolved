@@ -1,5 +1,5 @@
-import { dqa } from './utils'
 import { select } from './spin-query'
+import { dqa } from './utils'
 import { matchCurrentPage, playerUrls } from './utils/urls'
 
 type ObserverTarget = string | Element[] | Element

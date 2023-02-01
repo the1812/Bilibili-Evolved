@@ -1,4 +1,4 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 const count = 4
 export const blanks: CustomNavbarItemInit[] = new Array(count).fill(0).map((_, index) => ({

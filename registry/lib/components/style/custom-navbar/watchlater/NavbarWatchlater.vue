@@ -50,15 +50,12 @@
   </div>
 </template>
 <script lang="ts">
+import type { RawWatchlaterItem } from '@/components/video/watchlater'
+import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getComponentSettings } from '@/core/settings'
 import { formatDuration } from '@/core/utils/formatters'
-import {
-  watchlaterList,
-  getWatchlaterList,
-  RawWatchlaterItem,
-  toggleWatchlater,
-} from '@/components/video/watchlater'
-import { VLoading, VEmpty, TextBox, VButton, VIcon, DpiImage } from '@/ui'
+import { DpiImage, TextBox, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
 import { popperMixin } from '../mixins'
 
 interface WatchlaterCard {

@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts">
-import { addComponentListener } from '@/core/settings'
 import { getJson } from '@/core/ajax'
+import { addComponentListener } from '@/core/settings'
 import { VIcon } from '@/ui'
 
 export default Vue.extend({

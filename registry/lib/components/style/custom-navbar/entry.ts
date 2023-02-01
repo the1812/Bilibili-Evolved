@@ -1,4 +1,4 @@
-import { ComponentEntry } from '@/components/types'
+import type { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 import { isIframe, isNotHtml, matchUrlPattern, mountVueComponent } from '@/core/utils'
 

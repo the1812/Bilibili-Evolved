@@ -1,4 +1,4 @@
-import { CdnConfig } from './types'
+import type { CdnConfig } from './types'
 
 const owner = 'the1812'
 const host = 'fastly.jsdelivr.net'
