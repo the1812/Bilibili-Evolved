@@ -110,7 +110,7 @@ const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
   upFaceUrl: item.upper.face.replace('http:', 'https:'),
   upID: item.upper.mid,
 })
-async function searchAllList() {
+async function searchAllList(this: InstanceType<typeof ThisComponent>) {
   if (!this.searching) {
     return
   }
@@ -148,7 +148,7 @@ async function searchAllList() {
     this.loading = false
   }
 }
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   components: {
     FavoritesFolderSelect,
     VLoading,
@@ -258,7 +258,7 @@ export default Vue.extend({
         logError(error)
       }
     },
-    debounceSearchAllList: lodash.debounce(searchAllList, 200),
+    debounceSearchAllList: lodash.debounce(searchAllList, 200) as unknown as () => void,
     scrollTrigger() {
       if (this.searching) {
         this.debounceSearchAllList()
@@ -268,6 +268,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

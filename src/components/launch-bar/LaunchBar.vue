@@ -95,7 +95,7 @@ const generateKeys = (
       provider,
     }
   })
-async function getOnlineActions() {
+async function getOnlineActions(this: InstanceType<typeof ThisComponent>) {
   const onlineActions = (
     await Promise.all(
       actionProviders.map(async provider =>
@@ -129,7 +129,7 @@ const [recommended] = registerAndGetData('launchBar.recommended', {
   word: '搜索',
   href: 'https://search.bilibili.com/',
 })
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   components: {
     VIcon,
     VLoading,
@@ -175,7 +175,7 @@ export default Vue.extend({
     })
   },
   methods: {
-    getOnlineActions: lodash.debounce(getOnlineActions, 200),
+    getOnlineActions: lodash.debounce(getOnlineActions, 200) as unknown as () => Promise<void>,
     getActions,
     handleSelect() {
       this.$emit('close')
@@ -247,6 +247,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

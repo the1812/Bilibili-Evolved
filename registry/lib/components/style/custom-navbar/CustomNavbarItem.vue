@@ -68,7 +68,7 @@ const isOpenInNewTab = (item: CustomNavbarItem) => {
   }
   return options.openInNewTab
 }
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   components: {
     CustomNavbarLink,
   },
@@ -119,7 +119,7 @@ export default Vue.extend({
         'iframe-container': item.iframeName,
       }
     },
-    triggerPopupShow: lodash.debounce(function trigger(initialPopup: boolean) {
+    triggerPopupShow: lodash.debounce(function trigger(this: InstanceType<typeof ThisComponent>, initialPopup: boolean) {
       const { popup } = this.$refs
       if (!popup) {
         return
@@ -134,7 +134,7 @@ export default Vue.extend({
       if (popup.popupShow && typeof popup.popupShow === 'function') {
         popup.popupShow()
       }
-    }, 300),
+    }, 300) as unknown as (initialPopup: boolean) => void,
     async requestPopup() {
       const { item } = this as {
         item: CustomNavbarItem
@@ -165,6 +165,7 @@ export default Vue.extend({
     // },
   },
 })
+export default ThisComponent
 </script>
 
 <style lang="scss">

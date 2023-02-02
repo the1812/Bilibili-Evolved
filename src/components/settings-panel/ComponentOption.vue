@@ -60,12 +60,12 @@ import { OptionMetadata } from '../component'
 import { getDropdownItems } from './dropdown'
 import SwitchOptions from '../SwitchOptions.vue'
 
-function valueChange(newValue: unknown) {
+function valueChange(this: InstanceType<typeof ThisComponent>, newValue: unknown) {
   const settings = this.settings as ComponentSettings
   settings.options[this.name] = newValue
   this.value = newValue
 }
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   name: 'ComponentOption',
   components: {
     SwitchOptions,
@@ -153,10 +153,11 @@ export default Vue.extend({
       settings.options[this.name] = numberValue
       this.value = numberValue
     },
-    debounceValueChange: lodash.debounce(valueChange, 200),
-    valueChange,
+    debounceValueChange: lodash.debounce(valueChange, 200) as unknown as (value: unknown) => void,
+    valueChange: valueChange as unknown as (value: unknown) => void,
   },
 })
+export default ThisComponent
 </script>
 
 <style lang="scss" scoped>

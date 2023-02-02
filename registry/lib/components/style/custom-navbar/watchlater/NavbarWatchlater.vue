@@ -73,7 +73,7 @@ interface WatchlaterCard {
   upFaceUrl: string
   upID: number
 }
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   components: {
     VLoading,
     VEmpty,
@@ -166,7 +166,7 @@ export default Vue.extend({
         await this.toggleWatchlater(aid)
       }
     },
-    updateFilteredCards: lodash.debounce(function updateFilteredCards() {
+    updateFilteredCards: lodash.debounce(function updateFilteredCards(this: InstanceType<typeof ThisComponent>) {
       const search = this.search.toLowerCase()
       const cardsList = this.$el.querySelector('.watchlater-list-content') as HTMLElement
       cardsList.scrollTo(0, 0)
@@ -174,9 +174,10 @@ export default Vue.extend({
         card =>
           card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search),
       )
-    }, 100),
+    }, 100) as unknown as () => void,
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

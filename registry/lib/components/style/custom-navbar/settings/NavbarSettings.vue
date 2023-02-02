@@ -83,7 +83,7 @@ const [rendered] = getData(CustomNavbarRenderedItems) as [
     items: CustomNavbarItem[]
   },
 ]
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   components: {
     VPopup,
     VIcon,
@@ -106,9 +106,9 @@ export default Vue.extend({
     }
   },
   watch: {
-    padding: lodash.debounce((newValue: number) => {
+    padding: lodash.debounce((this: InstanceType<typeof ThisComponent>, newValue: number) => {
       navbarOptions.padding = newValue
-    }, 200),
+    }, 200) as unknown as (newValue: number) => void,
   },
   async mounted() {
     addComponentListener('customNavbar.padding', (newValue: number) => {
@@ -164,6 +164,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

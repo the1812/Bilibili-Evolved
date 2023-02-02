@@ -85,7 +85,7 @@ import { ItemFilter } from './item-filter'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
 const general = getGeneralSettings() as ExtendedSettings
-function updateList(keyword: string) {
+function updateList(this: InstanceType<typeof ThisComponent>, keyword: string) {
   if (!keyword) {
     this.filteredList = this.list
     return
@@ -110,7 +110,7 @@ const itemFilterOptions = [
   },
 ]
 
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   components: {
     VIcon,
     VDropdown,
@@ -148,7 +148,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    searchKeyword: lodash.debounce(updateList, 200),
+    searchKeyword: lodash.debounce(updateList, 200) as unknown as (keyword: string) => void,
     selectedBranch(newBranch: string) {
       general.registryBranch = newBranch
       this.fetchFeatures()
@@ -197,6 +197,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

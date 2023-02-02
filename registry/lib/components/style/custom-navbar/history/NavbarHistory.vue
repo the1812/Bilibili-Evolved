@@ -121,7 +121,7 @@ import {
 import { popperMixin } from '../mixins'
 import { types, TypeFilter, HistoryItem, getHistoryItems, group, HistoryType } from './types'
 
-export default Vue.extend({
+const ThisComponent = Vue.extend({
   components: {
     VButton,
     VIcon,
@@ -153,7 +153,7 @@ export default Vue.extend({
   watch: {
     search: lodash.debounce(function search() {
       this.reloadHistoryItems()
-    }, 200),
+    }, 200) as unknown as () => void,
   },
   async created() {
     try {
@@ -239,6 +239,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';
