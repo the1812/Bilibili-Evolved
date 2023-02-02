@@ -84,7 +84,7 @@ import { getDescriptionText } from '../description'
 import { SearchBarActionContext, searchBarActions } from './search-bar-actions'
 
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
-export default {
+export default Vue.extend({
   name: 'SettingsPanel',
   components: {
     VIcon,
@@ -253,7 +253,7 @@ export default {
       this.renderedComponents = this.searchFilter(internalFiltered)
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

@@ -47,7 +47,7 @@
 import { VPopup, VIcon } from '@/ui'
 import { externalApis } from '@/core/core-apis'
 
-export default {
+export default Vue.extend({
   name: 'SettingsContainer',
   components: {
     VPopup,
@@ -87,7 +87,7 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

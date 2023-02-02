@@ -65,7 +65,7 @@ function valueChange(newValue: unknown) {
   settings.options[this.name] = newValue
   this.value = newValue
 }
-export default {
+export default Vue.extend({
   name: 'ComponentOption',
   components: {
     SwitchOptions,
@@ -156,7 +156,7 @@ export default {
     debounceValueChange: lodash.debounce(valueChange, 200),
     valueChange,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

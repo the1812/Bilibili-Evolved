@@ -134,7 +134,7 @@ import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
   祖 传 代 码
   ============
 */
-export default {
+export default Vue.extend({
   // props: ['data', 'orientation'],
   components: {
     DpiImage,
@@ -196,7 +196,7 @@ export default {
   methods: {
     toggleWatchlater,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

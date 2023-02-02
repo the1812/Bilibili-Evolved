@@ -39,7 +39,7 @@ import { DownloadPackage } from '@/core/download'
 import { LiveDanmaku } from '@/components/live/live-socket'
 import { VIcon, VButton } from '@/ui'
 
-export default {
+export default Vue.extend({
   components: {
     VIcon,
     VButton,
@@ -115,7 +115,7 @@ export default {
       console.log(xml)
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>
