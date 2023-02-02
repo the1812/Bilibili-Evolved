@@ -1,3 +1,7 @@
+export interface Topic {
+  id: number
+  name: string
+}
 export interface Cooperation {
   id: number
   name: string
@@ -26,10 +30,7 @@ export interface VideoCard {
   favorites?: string
   timestamp?: number
   time?: Date
-  topics?: {
-    id: number
-    name: string
-  }[]
+  topics?: Topic[]
   type?: string
   points?: number
   watchlater?: boolean

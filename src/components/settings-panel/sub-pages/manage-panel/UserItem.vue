@@ -43,7 +43,7 @@ export default Vue.extend({
   data() {
     return {
       removeConfirm: false,
-      settings: {},
+      settings: {} as { enabled: boolean },
     }
   },
   mounted() {

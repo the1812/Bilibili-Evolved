@@ -139,7 +139,10 @@ const ThisComponent = Vue.extend({
   data() {
     return {
       recommended,
-      actions: [],
+      actions: [] as ({
+        key: string
+        provider: LaunchBarActionProvider
+      } & LaunchBarAction)[],
       keyword: '',
       noActions: false,
     }

@@ -95,7 +95,7 @@ export default Vue.extend({
     return {
       loading: true,
       hasMorePage: true,
-      cards: [],
+      cards: [] as any[],
       page: 1,
     }
   },
@@ -116,7 +116,7 @@ export default Vue.extend({
         }
         const cards = lodash
           .uniqBy(
-            (this.cards as any[]).concat(
+            this.cards.concat(
               (lodash.get(json, 'data.list') as any[]).map(item => ({
                 title: item.title,
                 coverUrl: item.square_cover.replace('http:', 'https:'),

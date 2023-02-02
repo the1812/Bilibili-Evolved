@@ -27,13 +27,13 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
     data() {
       return {
         loading: true,
-        cards: [],
+        cards: [] as MappedItem[],
         hasMorePage: true,
       }
     },
     computed: {
       sortedCards(): MappedItem[] {
-        return ([...this.cards] as MappedItem[]).sort(descendingStringSort(it => it.id))
+        return [...this.cards].sort(descendingStringSort(it => it.id))
       },
     },
     async created() {

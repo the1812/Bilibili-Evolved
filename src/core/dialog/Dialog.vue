@@ -50,7 +50,7 @@ export default Vue.extend({
   data() {
     return {
       open: false,
-      closeListeners: [],
+      closeListeners: [] as (() => void)[],
     }
   },
   methods: {

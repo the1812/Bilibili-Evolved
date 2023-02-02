@@ -18,7 +18,7 @@ export const requestMixin = (
     },
     data() {
       return {
-        items: [],
+        items: [] as unknown[],
         loading: true,
         error: false,
       }

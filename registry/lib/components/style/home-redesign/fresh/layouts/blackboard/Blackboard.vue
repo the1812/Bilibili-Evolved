@@ -53,7 +53,7 @@
 </template>
 <script lang="ts">
 import { VButton, VIcon, DpiImage } from '@/ui'
-import { getBlackboards } from './api'
+import { Blackboard, getBlackboards } from './api'
 
 export default Vue.extend({
   components: {
@@ -63,7 +63,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      blackboards: [],
+      blackboards: [] as Blackboard[],
       timer: 0,
     }
   },

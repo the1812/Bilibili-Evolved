@@ -40,7 +40,7 @@ export default Vue.extend({
     return {
       busy: false,
       autoUpdateComponents: autoUpdateOptions.urls.components,
-      sessions: [],
+      sessions: [] as string[],
       isConnected: false,
     }
   },

@@ -72,7 +72,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      episodeItems: [],
+      episodeItems: [] as EpisodeItem[],
       maxCheckedItems: 32,
       lastCheckedEpisodeIndex: -1,
     }

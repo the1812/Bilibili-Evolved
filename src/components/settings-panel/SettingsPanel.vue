@@ -101,7 +101,7 @@ export default Vue.extend({
       components,
       renderedComponents: components.filter(c => !c.hidden),
       selectedComponent: null,
-      selectedComponents: [],
+      selectedComponents: [] as ComponentMetadata[],
       componentDetailOpen: false,
       collapsed: false,
       peek: false,
@@ -112,8 +112,7 @@ export default Vue.extend({
   },
   computed: {
     isComponentSelected(): (name: string) => boolean {
-      return (name: string) =>
-        this.selectedComponents.some((c: ComponentMetadata) => c.name === name)
+      return (name: string) => this.selectedComponents.some(c => c.name === name)
     },
     tags(): (ComponentTag & { count: number })[] {
       const renderedComponents = this.renderedComponents as ComponentMetadata[]
@@ -184,7 +183,7 @@ export default Vue.extend({
         this.selectedComponents = list.slice(startIdx, endIdx + 1)
         return
       }
-      const selectedList = this.selectedComponents as ComponentMetadata[]
+      const selectedList = this.selectedComponents
       const selectedComponent = selectedList.find(c => c.name === component.name)
       if (selectedComponent) {
         deleteValue(selectedList, c => c.name === selectedComponent.name)

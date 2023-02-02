@@ -88,8 +88,8 @@ const ThisComponent = Vue.extend({
     return {
       watchlaterList,
       loading: true,
-      cards: [],
-      filteredCards: [],
+      cards: [] as WatchlaterCard[],
+      filteredCards: [] as WatchlaterCard[],
       search: '',
       redirect: redirect.enabled && redirect.options.navbar,
     }

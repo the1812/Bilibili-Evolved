@@ -29,20 +29,20 @@ export default Vue.extend({
   data() {
     return {
       loading: true,
-      rawItems: [],
+      rawItems: [] as unknown[],
       hasMorePage: true,
     }
   },
   computed: {
     cards(): LiveFeedItem[] {
-      const parseLiveCard = (card: any) => ({
+      const parseLiveCard = (card: unknown) => ({
         id: card.roomid,
         title: card.title,
         upFaceUrl: card.face,
         upName: card.uname,
         url: card.link,
       })
-      return (this.rawItems as any[]).map(parseLiveCard)
+      return this.rawItems.map(parseLiveCard)
     },
   },
   async created() {

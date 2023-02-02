@@ -36,7 +36,7 @@ export default Vue.extend({
   },
   data() {
     return {
-      folders: [],
+      folders: [] as FavoritesFolder[],
     }
   },
   async created() {

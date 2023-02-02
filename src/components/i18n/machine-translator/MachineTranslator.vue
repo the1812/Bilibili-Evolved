@@ -48,7 +48,7 @@ export default Vue.extend({
       result: '',
       working: false,
       translateProviders,
-      activeTranslator: {},
+      activeTranslator: {} as MachineTranslateProvider,
     }
   },
   computed: {

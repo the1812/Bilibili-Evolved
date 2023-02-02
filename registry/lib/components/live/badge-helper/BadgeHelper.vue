@@ -64,8 +64,8 @@ export default Vue.extend({
   },
   data() {
     return {
-      medalList: [],
-      titleList: [],
+      medalList: [] as Medal[],
+      titleList: [] as Title[],
       medalOpen: false,
       titleOpen: false,
       grayEffect: true,

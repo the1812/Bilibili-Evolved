@@ -5,13 +5,15 @@
 </template>
 
 <script lang="ts">
+import type { Toast } from '@/core/toast/index'
+
 export default Vue.extend({
   components: {
     ToastCard: () => import('./ToastCard.vue').then(m => m.default),
   },
   data() {
     return {
-      cards: [],
+      cards: [] as Toast[],
     }
   },
 })

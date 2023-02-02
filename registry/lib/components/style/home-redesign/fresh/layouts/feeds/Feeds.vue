@@ -84,7 +84,7 @@ export default Vue.extend({
     return {
       tabs,
       selectedTab: tabs[0],
-      videos: [],
+      videos: [] as VideoCard[],
       loading: true,
     }
   },

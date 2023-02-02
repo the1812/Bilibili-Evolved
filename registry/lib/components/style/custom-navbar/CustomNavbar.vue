@@ -49,7 +49,7 @@ export default Vue.extend({
     return {
       initItems,
       items: getItems(),
-      styles: [],
+      styles: [] as string[],
       height: CustomNavbarItem.navbarOptions.height,
     }
   },

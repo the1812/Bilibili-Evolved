@@ -22,7 +22,7 @@ export default Vue.extend({
   data() {
     return {
       loading: true,
-      cards: [],
+      cards: [] as VideoCard[],
       error: false,
     }
   },

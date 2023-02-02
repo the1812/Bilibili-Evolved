@@ -173,8 +173,8 @@ export default Vue.extend({
   mixins: [popperMixin],
   data() {
     return {
-      userInfo: {},
-      stat: {},
+      userInfo: {} as any,
+      stat: {} as any,
       isLogin: Boolean(getUID()),
       privileges: {
         bCoin: {

@@ -47,7 +47,7 @@ export default Vue.extend({
   data() {
     return {
       isRecording: true,
-      danmakus: [],
+      danmakus: [] as LiveDanmaku[],
       opened: false,
       collapsed: false,
       loading: true,

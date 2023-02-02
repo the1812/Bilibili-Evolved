@@ -127,7 +127,7 @@ export default Vue.extend({
       batchAddShow: false,
       batchUrl: '',
       excludeBuiltIn: true,
-      debouncedList: [],
+      debouncedList: [] as unknown[]
     }
   },
   computed: {

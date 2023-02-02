@@ -53,7 +53,7 @@ export default Vue.extend({
       tipText: '',
       tipShowing: false,
       tipHandle: 0,
-      lists: [],
+      lists: [] as { title: string; id: number }[],
       selectedFavorite: '<未选择>',
       listShowing: false,
     }

@@ -125,10 +125,11 @@
 </template>
 
 <script lang="ts">
-import { DpiImage, VIcon } from '@/ui'
+import type { PropType } from 'vue'
+import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getUID } from '@/core/utils'
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
-import { Cooperation } from './video-card'
+import { DpiImage, VIcon } from '@/ui'
+import type { VideoCard as VideoCardData, Cooperation, Topic } from './video-card'
 
 /*
   ============
@@ -143,7 +144,7 @@ export default Vue.extend({
   },
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<VideoCardData>,
       required: true,
     },
     orientation: {
@@ -169,10 +170,10 @@ export default Vue.extend({
       coins: '',
       favorites: '',
       dynamic: '',
-      topics: [],
+      topics: [] as Topic[],
       upID: 0,
       epID: 0,
-      cooperation: [],
+      cooperation: [] as Cooperation[],
       pubTime: 0,
       pubTimeText: '',
       ...lodash.omit(this.data, 'watchlater'),

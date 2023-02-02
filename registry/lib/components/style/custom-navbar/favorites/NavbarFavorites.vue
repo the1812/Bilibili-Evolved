@@ -163,8 +163,8 @@ const ThisComponent = Vue.extend({
   data() {
     return {
       loading: true,
-      cards: [],
-      filteredCards: [],
+      cards: [] as FavoritesItemInfo[],
+      filteredCards: [] as FavoritesItemInfo[],
       page: 1,
       hasMorePage: true,
       searchPage: 1,
