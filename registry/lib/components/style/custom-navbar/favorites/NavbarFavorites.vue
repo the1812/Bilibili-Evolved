@@ -174,24 +174,24 @@ const ThisComponent = Vue.extend({
     }
   },
   computed: {
-    searching() {
+    searching(): boolean {
       return this.search !== ''
     },
-    moreLink() {
+    moreLink(): string {
       const { id } = this.folder
       if (id === 0) {
         return `https://space.bilibili.com/${getUID()}/favlist`
       }
       return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}`
     },
-    playLink() {
+    playLink(): string {
       const { id } = this.folder
       if (id === 0) {
         return undefined
       }
       return `https://www.bilibili.com/medialist/play/ml${id}`
     },
-    canLoadMore() {
+    canLoadMore(): boolean {
       if (this.searching) {
         return this.hasMoreSearchPage
       }

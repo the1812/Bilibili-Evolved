@@ -55,6 +55,7 @@
 </template>
 <script lang="ts">
 import { VButton, VIcon, CheckBox } from '@/ui'
+import { DownloadVideoInputItem } from 'registry/lib/components/video/download/types'
 import { EpisodeItem } from './episode-item'
 
 export default Vue.extend({
@@ -77,14 +78,14 @@ export default Vue.extend({
     }
   },
   computed: {
-    checkedRatio() {
+    checkedRatio(): string {
       const checked: number = this.episodeItems.filter((it: EpisodeItem) => it.isChecked).length
       return `(${checked}/${this.episodeItems.length})`
     },
-    inputItems() {
+    inputItems(): DownloadVideoInputItem[] {
       return this.episodeItems.map((it: EpisodeItem) => it.inputItem)
     },
-    checkedInputItems() {
+    checkedInputItems(): DownloadVideoInputItem[] {
       const items: EpisodeItem[] = this.episodeItems
       return items.filter(it => it.isChecked).map(it => it.inputItem)
     },

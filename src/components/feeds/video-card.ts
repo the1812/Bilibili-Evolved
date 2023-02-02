@@ -1,3 +1,9 @@
+export interface Cooperation {
+  id: number
+  name: string
+  faceUrl: string
+}
+
 /** 视频卡片信息 */
 export interface VideoCard {
   id: string
@@ -27,9 +33,5 @@ export interface VideoCard {
   type?: string
   points?: number
   watchlater?: boolean
-  cooperation?: {
-    id: number
-    name: string
-    faceUrl: string
-  }[]
+  cooperation?: Cooperation[]
 }

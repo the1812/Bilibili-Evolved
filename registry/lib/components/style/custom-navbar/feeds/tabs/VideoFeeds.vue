@@ -105,7 +105,7 @@ export default Vue.extend({
     }),
   ],
   computed: {
-    columnedCards() {
+    columnedCards(): { left: VideoCard[]; right: VideoCard[] } {
       const { cards } = this as { cards: VideoCard[] }
       return {
         left: cards.filter((_, index) => index % 2 === 0),

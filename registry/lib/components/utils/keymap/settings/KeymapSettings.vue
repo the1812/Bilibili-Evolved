@@ -81,8 +81,8 @@ export default Vue.extend({
   },
   computed: {
     selectedPreset: {
-      get() {
-        return keymapOptions.preset
+      get(): string {
+        return keymapOptions.preset as string
       },
       set(value: string) {
         keymapOptions.preset = value

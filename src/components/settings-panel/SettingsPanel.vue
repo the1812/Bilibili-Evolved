@@ -111,11 +111,11 @@ export default Vue.extend({
     }
   },
   computed: {
-    isComponentSelected() {
+    isComponentSelected(): (name: string) => boolean {
       return (name: string) =>
         this.selectedComponents.some((c: ComponentMetadata) => c.name === name)
     },
-    tags() {
+    tags(): (ComponentTag & { count: number })[] {
       const renderedComponents = this.renderedComponents as ComponentMetadata[]
       let tags = [] as (ComponentTag & { count: number })[]
       renderedComponents.forEach(it =>

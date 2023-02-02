@@ -68,7 +68,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    cardsContainer() {
+    cardsContainer(): Element | null {
       return this.$el.querySelector('.fresh-home-blackboard-cards')
     },
   },

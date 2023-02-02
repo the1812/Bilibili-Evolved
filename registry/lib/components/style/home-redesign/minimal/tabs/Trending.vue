@@ -28,10 +28,10 @@ export default Vue.extend({
     }
   },
   computed: {
-    loaded() {
+    loaded(): boolean {
       return !this.loading && !this.error
     },
-    lastID() {
+    lastID(): string | null {
       if (!this.cards.length) {
         return null
       }

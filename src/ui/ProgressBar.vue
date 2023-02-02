@@ -26,7 +26,7 @@ export default Vue.extend({
     },
   },
   computed: {
-    width() {
+    width(): string | number {
       let progress = this.progress as number
       if (progress > this.max) {
         progress = this.max

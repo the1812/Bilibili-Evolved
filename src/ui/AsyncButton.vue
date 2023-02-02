@@ -27,10 +27,11 @@ export default Vue.extend({
     }
   },
   computed: {
-    listeners() {
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    listeners(): Record<string, Function | Function[]> {
       return lodash.omit(this.$listeners, 'click')
     },
-    onClick() {
+    onClick(): (...args: unknown[]) => Promise<void> {
       return async (...args: unknown[]) => {
         try {
           this.internalDisabled = true

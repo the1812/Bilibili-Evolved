@@ -40,7 +40,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    width() {
+    width(): number {
       if (typeof this.size === 'object' && 'width' in this.size) {
         return this.size.width
       }
@@ -49,7 +49,7 @@ export default Vue.extend({
       }
       return null
     },
-    height() {
+    height(): number {
       if (typeof this.size === 'object' && 'height' in this.size) {
         return this.size.height
       }

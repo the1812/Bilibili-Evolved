@@ -32,7 +32,7 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
       }
     },
     computed: {
-      sortedCards() {
+      sortedCards(): MappedItem[] {
         return ([...this.cards] as MappedItem[]).sort(descendingStringSort(it => it.id))
       },
     },

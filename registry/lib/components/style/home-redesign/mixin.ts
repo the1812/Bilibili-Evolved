@@ -24,7 +24,7 @@ export const requestMixin = (
       }
     },
     computed: {
-      loaded() {
+      loaded(): boolean {
         return !this.loading && !this.error
       },
     },

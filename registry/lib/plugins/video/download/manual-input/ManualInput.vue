@@ -26,7 +26,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    ids() {
+    ids(): string[] {
       const input: string = this.inputText
       const maxDownloadCount = 36
       const idRegex = /(BV.+)|av(\d+)/i

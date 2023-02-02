@@ -123,7 +123,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    hidden() {
+    hidden(): boolean {
       switch (this.itemFilter) {
         case ItemFilter.All:
         default: {
@@ -138,7 +138,7 @@ export default Vue.extend({
       }
     },
   },
-  created() {
+  created(): void {
     this.checkInstalled()
     addComponentListener(
       'settingsPanel.dockSide',

@@ -24,7 +24,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    on() {
+    on(): boolean {
       console.log(this.watchlaterList, this.aid, this.watchlaterList.includes(parseInt(this.aid)))
       return this.watchlaterList.includes(parseInt(this.aid))
     },

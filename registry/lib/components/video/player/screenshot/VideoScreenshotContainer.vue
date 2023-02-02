@@ -36,7 +36,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    showBatch() {
+    showBatch(): boolean {
       return this.screenshots.length >= 2
     },
   },

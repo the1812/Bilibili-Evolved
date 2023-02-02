@@ -145,7 +145,7 @@ const ThisComponent = Vue.extend({
     }
   },
   computed: {
-    isHistory() {
+    isHistory(): boolean {
       return this.keyword.length === 0
     },
   },

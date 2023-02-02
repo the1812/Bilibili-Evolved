@@ -100,7 +100,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    disabled() {
+    disabled(): boolean {
       return Boolean(this.$attrs.disabled)
     },
   },

@@ -146,7 +146,7 @@ const ThisComponent = Vue.extend({
     }
   },
   computed: {
-    canNextPage() {
+    canNextPage(): boolean {
       return this.search === '' && !this.loading && this.hasMorePage
     },
   },

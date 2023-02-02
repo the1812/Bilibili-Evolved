@@ -185,16 +185,16 @@ export default Vue.extend({
     }
   },
   computed: {
-    assetsWithOptions() {
+    assetsWithOptions(): DownloadVideoAssets[] {
       return (this.assets as DownloadVideoAssets[]).filter(a => a.component)
     },
-    filteredQualities() {
+    filteredQualities(): VideoQuality[] {
       if (this.qualities.length === 0) {
         return allQualities
       }
       return this.qualities
     },
-    canStartDownload() {
+    canStartDownload(): boolean {
       if (this.busy || !this.open) {
         return false
       }

@@ -108,7 +108,7 @@ import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VIcon, VLoading, VEmpty, VButton } from '@/ui'
 import { requestMixin, cssVariableMixin } from '../../../../mixin'
-import { rankListCssVars } from './rank-list'
+import { RankListCard, rankListCssVars } from './rank-list'
 
 export default Vue.extend({
   components: {
@@ -134,16 +134,16 @@ export default Vue.extend({
     },
   },
   computed: {
-    firstItem() {
+    firstItem(): RankListCard | undefined {
       return this.items[0]
     },
-    secondItem() {
+    secondItem(): RankListCard | undefined {
       return this.items[1]
     },
-    thirdItem() {
+    thirdItem(): RankListCard | undefined {
       return this.items[2]
     },
-    upInfoProps() {
+    upInfoProps(): { size: number; icon: string; style: { transform: string } } {
       return {
         size: 18,
         icon: this.bangumiMode ? 'mdi-television-classic' : 'up-outline',
@@ -152,10 +152,10 @@ export default Vue.extend({
         },
       }
     },
-    firstRow() {
+    firstRow(): RankListCard[] {
       return this.items.slice(3, 6)
     },
-    secondRow() {
+    secondRow(): RankListCard[] {
       return this.items.slice(6, 10)
     },
   },

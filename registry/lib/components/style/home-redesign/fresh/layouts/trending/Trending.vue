@@ -40,7 +40,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    title() {
+    title(): string {
       if (freshHomeOptions.personalized) {
         return '推荐'
       }

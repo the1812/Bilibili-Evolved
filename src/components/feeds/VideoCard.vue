@@ -128,6 +128,7 @@
 import { DpiImage, VIcon } from '@/ui'
 import { getUID } from '@/core/utils'
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import { Cooperation } from './video-card'
 
 /*
   ============
@@ -180,16 +181,16 @@ export default Vue.extend({
     }
   },
   computed: {
-    vertical() {
+    vertical(): boolean {
       return this.orientation === 'vertical'
     },
-    watchlater() {
+    watchlater(): boolean | null {
       if (getUID() && this.watchlaterInit !== null) {
         return this.watchlaterList.includes(this.aid)
       }
       return null
     },
-    reversedCooperation() {
+    reversedCooperation(): Cooperation[] {
       return [...this.cooperation].reverse().slice(0, 3)
     },
   },

@@ -13,7 +13,7 @@ export const createEpisodesPicker = (
 ) =>
   Vue.extend({
     computed: {
-      checkedInputItems() {
+      checkedInputItems(): DownloadVideoInputItem[] {
         return this.$refs.picker.checkedInputItems
       },
     },

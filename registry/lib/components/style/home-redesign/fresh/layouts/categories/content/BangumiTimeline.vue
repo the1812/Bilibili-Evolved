@@ -173,13 +173,13 @@ export default Vue.extend({
     }
   },
   computed: {
-    todayIndex() {
+    todayIndex(): number {
       return (this.items as TimelineDay[]).findIndex(it => it.is_today === 1)
     },
-    pastWeekItems() {
+    pastWeekItems(): TimelineDay[] {
       return this.items.slice(0, this.todayIndex + 1)
     },
-    currentWeekItems() {
+    currentWeekItems(): TimelineDay[] {
       return this.items.slice(this.todayIndex)
     },
   },

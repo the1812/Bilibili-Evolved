@@ -67,7 +67,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    trigger() {
+    trigger(): Element | null {
       if (this.triggerElement === null) {
         return null
       }

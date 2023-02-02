@@ -65,7 +65,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    strokeDashoffset() {
+    strokeDashoffset(): number {
       let progress = this.progress as number
       if (progress > this.max) {
         progress = this.max

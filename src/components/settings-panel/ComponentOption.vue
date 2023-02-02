@@ -103,7 +103,17 @@ const ThisComponent = Vue.extend({
     }
   },
   computed: {
-    type() {
+    type():
+      | 'boolean'
+      | 'dropdown'
+      | 'color'
+      | 'range'
+      | 'image'
+      | 'switch'
+      | 'slider'
+      | 'text'
+      | 'number'
+      | 'unknown' {
       const option = this.option as OptionMetadata
       const { defaultValue } = option
       // console.log(option)

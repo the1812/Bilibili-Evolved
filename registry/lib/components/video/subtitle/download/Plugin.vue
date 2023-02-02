@@ -31,7 +31,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    enabled() {
+    enabled(): boolean {
       return this.type !== '无'
     },
   },

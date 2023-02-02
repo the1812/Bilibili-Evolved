@@ -36,7 +36,7 @@ export default Vue.extend({
     },
   },
   computed: {
-    classes() {
+    classes(): string[] {
       const icons = this.$options.static.customIcons
       const icon = this.icon as string
       const base = []

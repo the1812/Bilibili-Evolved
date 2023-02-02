@@ -133,15 +133,15 @@ export default Vue.extend({
   },
   computed: {
     // 不大于 max 的对齐 step 与 center 的值
-    realMax() {
+    realMax(): number {
       return this.valueToRounded(this.max, Math.floor)
     },
     // 不小于 min 的对齐 step 与 center 的值
-    realMin() {
+    realMin(): number {
       return this.valueToRounded(this.min, Math.ceil)
     },
     // 最大与最小可取值的差。若没有可取值则输出错误日志并返回 0
-    valueLength() {
+    valueLength(): number {
       const len = this.realMax - this.realMin
       if (len < 0) {
         console.error('[VSlider] No desirable value between min and max')
@@ -149,7 +149,7 @@ export default Vue.extend({
       }
       return len
     },
-    thumbLeft() {
+    thumbLeft(): string | number {
       if (this.valueLength === 0) {
         return 0
       }
@@ -157,7 +157,7 @@ export default Vue.extend({
       return `${percent}%`
     },
     // center 处的 coord
-    centerCoord() {
+    centerCoord(): number {
       return this.valueToLength(this.center - this.realMin)
     },
   },

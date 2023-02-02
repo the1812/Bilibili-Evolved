@@ -52,7 +52,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    translated() {
+    translated(): boolean {
       return this.result !== ''
     },
   },

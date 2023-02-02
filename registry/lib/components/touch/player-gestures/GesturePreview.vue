@@ -119,13 +119,13 @@ export default Vue.extend({
     }
   },
   computed: {
-    progressNaN() {
+    progressNaN(): boolean {
       return Number.isNaN(this.preview.progress)
     },
-    progressNull() {
+    progressNull(): boolean {
       return this.preview.progress === null
     },
-    progressValid() {
+    progressValid(): boolean {
       return !this.progressNaN && !this.progressNull
     },
   },

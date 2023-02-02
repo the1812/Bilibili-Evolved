@@ -131,7 +131,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    filteredList() {
+    filteredList(): unknown[] {
       return this.config.list.filter(it =>
         this.config.listFilter(it, this.search, this.excludeBuiltIn),
       )

@@ -138,13 +138,13 @@ export default Vue.extend({
     }
   },
   computed: {
-    currentItem() {
+    currentItem(): VideoCard | undefined {
       return this.items[1]
     },
-    currentUrl() {
+    currentUrl(): string {
       return this.url(this.currentItem.bvid)
     },
-    watchlaterAdded() {
+    watchlaterAdded(): boolean {
       return this.watchlaterList.includes(this.currentItem.aid)
     },
   },

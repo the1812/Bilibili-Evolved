@@ -44,7 +44,7 @@ export default Vue.extend({
     },
   },
   computed: {
-    actualHref() {
+    actualHref(): string {
       if (this.href) {
         return this.href
       }

@@ -189,7 +189,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    level() {
+    level(): { icon: string; colored?: boolean } {
       const baseLevel = `lv${this.userInfo.level_info.current_level}`
       if (this.userInfo.is_senior_member) {
         return {
@@ -201,7 +201,14 @@ export default Vue.extend({
         icon: baseLevel,
       }
     },
-    userType() {
+    userType():
+      | '未登录'
+      | '注册会员'
+      | '正式会员'
+      | '小会员'
+      | '大会员'
+      | '年度小会员'
+      | '年度大会员' {
       if (!this.userInfo.isLogin) {
         return '未登录'
       }
@@ -218,7 +225,7 @@ export default Vue.extend({
       }
       return '正式会员'
     },
-    levelProgressStyle() {
+    levelProgressStyle(): Record<string, string> {
       if (!this.userInfo.isLogin) {
         return {}
       }
