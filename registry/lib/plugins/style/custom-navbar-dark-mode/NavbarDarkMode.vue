@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { getComponentSettings, addComponentListener } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 export default Vue.extend({
   data() {

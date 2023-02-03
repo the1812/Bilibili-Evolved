@@ -44,10 +44,12 @@
   </div>
 </template>
 <script lang="ts">
-import { ProgressBar, ProgressRing } from '@/ui'
 import { fixed } from '@/core/utils'
-import { formatPercent, formatDuration } from '@/core/utils/formatters'
-import { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
+import { formatDuration, formatPercent } from '@/core/utils/formatters'
+import { ProgressBar, ProgressRing } from '@/ui'
+
+import type { GesturePreviewParams } from './gesture-preview'
+import { ProgressSeekMode } from './gesture-preview'
 import { Videoshot } from './videoshot'
 import { syncVolumeUI } from './volume'
 

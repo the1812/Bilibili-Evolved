@@ -1,13 +1,11 @@
-import {
-  ComponentMetadata,
-  componentsMap,
-  OptionsMetadata,
-  UnknownOptions,
-} from '@/components/component'
-import { PluginMetadata } from '@/plugins/plugin'
+import type { ComponentMetadata, OptionsMetadata, UnknownOptions } from '@/components/component'
+import { componentsMap } from '@/components/component'
 // import serialize from 'serialize-javascript'
 import type { Options as SettingsPanelOptions } from '@/components/settings-panel'
-import { ComponentSettings, settings } from '../settings'
+import type { PluginMetadata } from '@/plugins/plugin'
+
+import type { ComponentSettings } from '../settings'
+import { settings } from '../settings'
 import { matchUrlPattern } from '../utils'
 
 /**

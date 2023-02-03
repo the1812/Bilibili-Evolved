@@ -63,18 +63,17 @@
 </template>
 <script lang="ts">
 import Fuse from 'fuse.js'
-import { VIcon, VLoading, VEmpty } from '@/ui'
-import { registerAndGetData } from '@/plugins/data'
+
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
+import { registerAndGetData } from '@/plugins/data'
+import { VEmpty, VIcon, VLoading } from '@/ui'
+
 import ActionItem from './ActionItem.vue'
-import {
-  LaunchBarActionProviders,
-  LaunchBarActionProvider,
-  LaunchBarAction,
-} from './launch-bar-action'
-import { searchProvider, search } from './search-provider'
 import { historyProvider } from './history-provider'
+import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
+import { LaunchBarActionProviders } from './launch-bar-action'
+import { search, searchProvider } from './search-provider'
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,

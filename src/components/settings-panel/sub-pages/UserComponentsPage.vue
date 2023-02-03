@@ -8,11 +8,13 @@
   </div>
 </template>
 <script lang="ts">
-import { ComponentMetadata, components } from '@/components/component'
+import type { ComponentMetadata } from '@/components/component'
+import { components } from '@/components/component'
 import { installComponent, uninstallComponent } from '@/components/user-component'
 import { getComponentSettings, isUserComponent } from '@/core/settings'
 import { getHook } from '@/plugins/hook'
-import { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
+
+import type { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
 import ManagePanel from './manage-panel/ManagePanel.vue'
 import UserItem from './manage-panel/UserItem.vue'
 

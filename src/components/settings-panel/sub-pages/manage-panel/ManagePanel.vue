@@ -92,15 +92,16 @@
 </template>
 <script lang="ts">
 import type { PropType } from 'vue'
+import { pickFile } from '@/core/file-picker'
 import type { ManagePanelConfig } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
 import { installFeature, tryParseZip } from '@/core/install-feature'
-import { pickFile } from '@/core/file-picker'
+import { JSZipLibrary } from '@/core/runtime-library'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import { JSZipLibrary } from '@/core/runtime-library'
-import { VIcon, VButton, TextBox, VEmpty, VLoading, VPopup, TextArea, SwitchBox } from '@/ui'
-import ManageItem from './ManageItem.vue'
+import { SwitchBox, TextArea, TextBox, VButton, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
+
 import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
+import ManageItem from './ManageItem.vue'
 
 export default Vue.extend({
   components: {

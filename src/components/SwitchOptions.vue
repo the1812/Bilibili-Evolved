@@ -48,9 +48,10 @@
 </template>
 
 <script lang="ts">
-import { SwitchMetadataOption } from '@/components/switch-options'
-import { VPopup, VButton, VIcon, CheckBox, RadioButton } from '@/ui'
-import { PropType } from 'vue'
+import type { PropType } from 'vue'
+import { CheckBox, RadioButton, VButton, VIcon, VPopup } from '@/ui'
+import type { SwitchMetadataOption } from '@/components/switch-options'
+
 import { getComponentSettings } from '../core/settings'
 
 export default Vue.extend({

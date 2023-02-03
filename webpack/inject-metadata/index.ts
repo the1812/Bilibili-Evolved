@@ -1,9 +1,10 @@
+import type { PluginObj } from '@babel/core'
 import nodePath from 'path'
-import { PluginObj } from '@babel/core'
-import { InjectMetadataAction } from './types'
+
 import { injectCoreInfo } from './core-info'
 import { injectDescription } from './description'
 import { injectI18n } from './i18n'
+import type { InjectMetadataAction } from './types'
 
 const injectActions: InjectMetadataAction[] = [injectCoreInfo, injectDescription, injectI18n]
 

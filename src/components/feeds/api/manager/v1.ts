@@ -1,7 +1,9 @@
 import { childList } from '@/core/observer'
 import { sq } from '@/core/spin-query'
+
+import type { FeedsCard, FeedsCardType } from '../types'
+import { feedsCardTypes, isRepostType } from '../types'
 import { FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
-import { feedsCardTypes, isRepostType, FeedsCard, FeedsCardType } from '../types'
 
 const getFeedsCardType = (element: HTMLElement) => {
   if (element.querySelector('.repost')) {

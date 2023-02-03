@@ -54,10 +54,11 @@
   </div>
 </template>
 <script lang="ts">
-import { DownloadVideoInputItem } from 'registry/lib/components/video/download/types'
 import type { PropType } from 'vue'
-import { VButton, VIcon, CheckBox } from '@/ui'
-import { EpisodeItem } from './episode-item'
+import type { DownloadVideoInputItem } from 'registry/lib/components/video/download/types'
+import { CheckBox, VButton, VIcon } from '@/ui'
+
+import type { EpisodeItem } from './episode-item'
 
 export default Vue.extend({
   components: {

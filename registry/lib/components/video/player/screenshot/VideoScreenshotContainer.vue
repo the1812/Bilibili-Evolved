@@ -19,11 +19,12 @@
   </div>
 </template>
 <script lang="ts">
-import { getFriendlyTitle } from '@/core/utils/title'
 import { DownloadPackage } from '@/core/download'
+import { getFriendlyTitle } from '@/core/utils/title'
 import { VIcon } from '@/ui'
+
+import type { Screenshot } from './screenshot'
 import VideoScreenshot from './VideoScreenshot.vue'
-import { Screenshot } from './screenshot'
 
 export default Vue.extend({
   components: {

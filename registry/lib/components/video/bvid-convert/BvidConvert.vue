@@ -25,7 +25,8 @@ import { matchUrlPattern } from '@/core/utils'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { bangumiUrls } from '@/core/utils/urls'
 import { VIcon } from '@/ui'
-import { BvidConvertOptions } from '.'
+
+import type { BvidConvertOptions } from '.'
 
 const { options } = getComponentSettings<BvidConvertOptions>('bvidConvert')
 enum CopyIdType {

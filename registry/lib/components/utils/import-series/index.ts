@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+
 import { realEntry } from './logic'
 
 export const component = defineComponentMetadata({

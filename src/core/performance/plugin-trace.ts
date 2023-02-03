@@ -1,4 +1,4 @@
-import { PluginMetadata, PluginSetupParameters } from '@/plugins/plugin'
+import type { PluginMetadata, PluginSetupParameters } from '@/plugins/plugin'
 
 export const pluginLoadTime = new Map<PluginMetadata, number>()
 export const pluginResolveTime = new Map<PluginMetadata, number>()

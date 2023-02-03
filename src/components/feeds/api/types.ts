@@ -121,7 +121,7 @@ export interface RepostFeedsCard extends FeedsCard {
 /**
  * 对动态卡片增删的监听
  */
-export type FeedsCardCallback = {
+export interface FeedsCardCallback {
   added?: (card: FeedsCard) => void
   removed?: (card: FeedsCard) => void
 }

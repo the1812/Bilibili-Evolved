@@ -16,14 +16,16 @@
 <script lang="ts">
 import marked from 'marked'
 import type { PropType } from 'vue'
-import { getComponentSettings } from '@/core/settings'
-import SwitchBox from '@/ui/SwitchBox.vue'
-import VIcon from '@/ui/icon/VIcon.vue'
+
 import { visibleInside } from '@/core/observer'
+import { getComponentSettings } from '@/core/settings'
 import { dq } from '@/core/utils'
-import TagRing from './TagRing.vue'
+import VIcon from '@/ui/icon/VIcon.vue'
+import SwitchBox from '@/ui/SwitchBox.vue'
+
+import type { ComponentMetadata } from '../component'
 import { getSelectedLanguage } from '../i18n/helpers'
-import { ComponentMetadata } from '../component'
+import TagRing from './TagRing.vue'
 
 export default Vue.extend({
   components: {

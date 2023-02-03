@@ -47,7 +47,7 @@
 </template>
 <script lang="ts">
 import type { PropType } from 'vue'
-import { VPopup, TextBox, VIcon, VButton } from '@/ui'
+import { TextBox, VButton, VIcon, VPopup } from '@/ui'
 
 export default Vue.extend({
   components: {

@@ -1,8 +1,9 @@
-import { dirname } from 'path'
-import { objectProperty, identifier } from '@babel/types'
 import { parseExpression } from '@babel/parser'
+import { identifier, objectProperty } from '@babel/types'
 import { readdirSync } from 'fs'
-import { InjectMetadataAction } from './types'
+import { dirname } from 'path'
+
+import type { InjectMetadataAction } from './types'
 
 /**
  * 当入口文件 index.ts 旁边还有 index.{language}.ts 时, 将其作为 i18n 注入.

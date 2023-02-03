@@ -1,6 +1,7 @@
 import { isTyping, matchUrlPattern } from '@/core/utils'
 import { mediaListUrls, watchlaterUrls } from '@/core/utils/urls'
-import { clickElement, changeVideoTime, showTip } from './actions'
+
+import { changeVideoTime, clickElement, showTip } from './actions'
 
 export interface KeyBindingActionContext {
   binding: KeyBinding

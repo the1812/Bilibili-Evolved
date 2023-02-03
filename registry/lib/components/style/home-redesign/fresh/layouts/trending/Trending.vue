@@ -24,9 +24,10 @@
 <script lang="ts">
 import type { VideoCard } from '@/components/feeds/video-card'
 import { VButton, VIcon } from '@/ui'
-import VideoList from '../../VideoList.vue'
-import { freshHomeOptions } from '../../types'
+
 import { getTrendingVideos } from '../../../trending'
+import { freshHomeOptions } from '../../types'
+import VideoList from '../../VideoList.vue'
 
 export default Vue.extend({
   components: {

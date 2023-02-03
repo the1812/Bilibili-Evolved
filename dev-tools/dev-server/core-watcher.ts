@@ -1,8 +1,9 @@
-import webpack from 'webpack'
 import exitHook from 'async-exit-hook'
+import webpack from 'webpack'
+
 import webpackConfig from '../../webpack/webpack.dev'
-import { sendMessage } from './web-socket-server'
 import { defaultWatcherHandler } from './watcher-common'
+import { sendMessage } from './web-socket-server'
 
 export const startCoreWatcher = () =>
   new Promise<void>(resolve => {

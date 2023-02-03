@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/component'
+import type { ComponentMetadata } from '@/components/component'
 
 export const componentLoadTime = new Map<ComponentMetadata, number>()
 export const componentResolveTime = new Map<ComponentMetadata, number>()

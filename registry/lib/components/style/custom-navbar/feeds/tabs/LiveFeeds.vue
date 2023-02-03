@@ -16,9 +16,10 @@
   </div>
 </template>
 <script lang="ts">
-import { VLoading, VEmpty, DpiImage } from '@/ui'
-import { responsiveGetPages, getJsonWithCredentials } from '@/core/ajax'
-import { LiveFeedItem } from './live-feed-item'
+import { getJsonWithCredentials, responsiveGetPages } from '@/core/ajax'
+import { DpiImage, VEmpty, VLoading } from '@/ui'
+
+import type { LiveFeedItem } from './live-feed-item'
 
 export default Vue.extend({
   components: {

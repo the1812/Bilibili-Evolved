@@ -15,11 +15,12 @@
 <script lang="ts">
 import type { PropType } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
-import { VEmpty, VLoading } from '@/ui'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { addComponentListener } from '@/core/settings'
+import { VEmpty, VLoading } from '@/ui'
+
+import { cleanUpScrollMask, setupScrollMask } from './scroll-mask'
 import VideoCardWrapper from './VideoCardWrapper.vue'
-import { setupScrollMask, cleanUpScrollMask } from './scroll-mask'
 
 export default Vue.extend({
   components: {

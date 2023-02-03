@@ -1,6 +1,7 @@
 import type { PropType } from 'vue'
 import { getComponentSettings } from '@/core/settings'
-import { ComponentMetadata } from '../component'
+
+import type { ComponentMetadata } from '../component'
 
 export const componentSettingsMixin = Vue.extend({
   props: {

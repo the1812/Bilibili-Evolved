@@ -1,4 +1,4 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 const rankingUrl = 'https://www.bilibili.com/v/popular/rank/'
 export const ranking: CustomNavbarItemInit = {

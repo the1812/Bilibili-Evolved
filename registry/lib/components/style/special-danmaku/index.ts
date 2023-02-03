@@ -1,11 +1,8 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { ComponentEntry } from '@/components/types'
-import { playerUrls } from '@/core/utils/urls'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
+import { playerUrls } from '@/core/utils/urls'
 
 const options = defineOptionsMetadata({
   highlight: {

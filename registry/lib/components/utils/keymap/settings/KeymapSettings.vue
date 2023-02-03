@@ -50,11 +50,12 @@
 </template>
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
-import { VIcon, VDropdown, VPopup } from '@/ui'
-import KeymapSettingsRow from './KeymapSettingsRow.vue'
+import { VDropdown, VIcon, VPopup } from '@/ui'
+
 import { actions } from '../actions'
-import { KeyBindingAction } from '../bindings'
+import type { KeyBindingAction } from '../bindings'
 import { presets } from '../presets'
+import KeymapSettingsRow from './KeymapSettingsRow.vue'
 
 const keymapOptions = getComponentSettings('keymap').options
 console.log(presets, actions, keymapOptions.preset, keymapOptions.customKeyBindings)

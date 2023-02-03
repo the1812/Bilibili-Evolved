@@ -31,7 +31,8 @@
 
 <script lang="ts">
 import type { PropType } from 'vue'
-import { VIcon, ProgressRing } from '@/ui'
+import { ProgressRing, VIcon } from '@/ui'
+
 import type { Toast } from '.'
 
 export default Vue.extend({

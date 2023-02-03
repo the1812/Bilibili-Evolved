@@ -1,13 +1,15 @@
-import VueLoaderPlugin from 'vue-loader/lib/plugin'
-import TerserPlugin from 'terser-webpack-plugin'
-import webpack, { Configuration } from 'webpack'
-import path from 'path'
 import get from 'lodash/get'
-import { cssStyleLoaders, sassStyleLoaders } from './loaders/style-loaders'
-import { tsLoaders } from './loaders/ts-loader'
-import { runtimeInfo } from './compilation-info/runtime'
+import path from 'path'
+import TerserPlugin from 'terser-webpack-plugin'
+import VueLoaderPlugin from 'vue-loader/lib/plugin'
+import type { Configuration } from 'webpack'
+import webpack from 'webpack'
+
 import commonMeta from '../src/client/common.meta.json'
 import * as gitInfo from './compilation-info/git'
+import { runtimeInfo } from './compilation-info/runtime'
+import { cssStyleLoaders, sassStyleLoaders } from './loaders/style-loaders'
+import { tsLoaders } from './loaders/ts-loader'
 
 const relativePath = (p: string) => path.join(process.cwd(), p)
 export const getDefaultConfig = (src = relativePath('src')): Configuration => {

@@ -1,6 +1,8 @@
-import { CustomNavbarOptions } from 'registry/lib/components/style/custom-navbar'
-import { PluginMetadata } from '@/plugins/plugin'
+import type { CustomNavbarOptions } from 'registry/lib/components/style/custom-navbar'
+
 import { getComponentSettings } from '@/core/settings'
+import type { PluginMetadata } from '@/plugins/plugin'
+
 import type { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
 
 export const plugin: PluginMetadata = {

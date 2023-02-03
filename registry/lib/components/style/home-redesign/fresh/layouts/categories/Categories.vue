@@ -39,9 +39,10 @@ import type { TabType } from './categories.ts'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
+
 import { freshHomeOptions } from '../../types'
-import { supportedCategories } from './filter'
 import { getContent } from './content/content'
+import { supportedCategories } from './filter'
 
 const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   id: category.code as number,

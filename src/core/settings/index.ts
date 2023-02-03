@@ -1,10 +1,10 @@
 import { isUserComponent } from './helpers'
-// import { getRandomId } from '../utils'
-import { Settings, ValueChangeListener } from './types'
-import { createProxy } from './proxy'
-import { registeredListeners, settingsChangedHandler } from './listener'
 import { initInternalSettings, settingsInternalState as state } from './internal-state'
+import { registeredListeners, settingsChangedHandler } from './listener'
+import { createProxy } from './proxy'
 import { readSettings } from './read'
+// import { getRandomId } from '../utils'
+import type { Settings, ValueChangeListener } from './types'
 
 initInternalSettings()
 export { defaultSettings } from './internal-state'

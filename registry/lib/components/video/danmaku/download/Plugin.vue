@@ -13,7 +13,8 @@
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
 import { VDropdown } from '@/ui'
-import { DanmakuDownloadType } from './utils'
+
+import type { DanmakuDownloadType } from './utils'
 
 interface Options {
   danmakuType: DanmakuDownloadType | '无'

@@ -1,4 +1,4 @@
-import { TeardownLogic } from '../../subject'
+import type { TeardownLogic } from '../../subject'
 
 export const withTeardownLogic = (
   cb: (

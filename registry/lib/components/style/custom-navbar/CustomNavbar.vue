@@ -13,9 +13,10 @@ import { addComponentListener } from '@/core/settings'
 import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import { registerAndGetData } from '@/plugins/data'
+
 import { getBuiltInItems } from './built-in-items'
+import type { CustomNavbarItemInit } from './custom-navbar-item'
 import {
-  CustomNavbarItemInit,
   CustomNavbarItem,
   CustomNavbarItems,
   CustomNavbarRenderedItems,

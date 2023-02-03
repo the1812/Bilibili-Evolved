@@ -1,4 +1,4 @@
-import { Component, VueConstructor } from 'vue'
+import type { Component, VueConstructor } from 'vue'
 
 export type Executable<ReturnType = void> = () => Promise<ReturnType> | ReturnType
 export type ExecutableWithParameter<Parameters extends any[] = never[], ReturnType = void> = (
@@ -17,7 +17,7 @@ type DescriptionInput = string | Executable<string>
 export type I18nDescription =
   | DescriptionInput
   | { 'zh-CN': DescriptionInput; [key: string]: DescriptionInput }
-export type WithName = {
+export interface WithName {
   name: string
   displayName: string
 }

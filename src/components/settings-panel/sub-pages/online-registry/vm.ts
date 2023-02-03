@@ -1,4 +1,5 @@
 import { mountVueComponent } from '@/core/utils'
+
 import OnlineRegistry from './OnlineRegistry.vue'
 
 let vm: Vue & {

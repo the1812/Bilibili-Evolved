@@ -1,7 +1,8 @@
 import { DownloadPackage } from '@/core/download'
 import { UserAgent } from '@/core/utils/constants'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { DownloadVideoOutput } from '../../../../components/video/download/types'
+
+import type { DownloadVideoOutput } from '../../../../components/video/download/types'
 
 export const aria2Input: DownloadVideoOutput = {
   name: 'aria2',

@@ -1,5 +1,6 @@
 import { Toast } from '@/core/toast'
-import { DownloadVideoOutput } from '../types'
+
+import type { DownloadVideoOutput } from '../types'
 
 export const toastOutput: DownloadVideoOutput = {
   name: 'toast',

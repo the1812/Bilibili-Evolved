@@ -43,10 +43,11 @@ import type { PropType } from 'vue'
 import { ComponentMetadata } from '@/components/types'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox } from '@/ui'
-import ExtendBox from './ExtendBox.vue'
+
+import { getCurrentPageType, pageTypeInfos } from '.'
 import Advanced from './Advanced.vue'
+import ExtendBox from './ExtendBox.vue'
 import PageTypeSelector from './PageTypeSelector.vue'
-import { pageTypeInfos, getCurrentPageType } from '.'
 
 const maxLocation = 4000
 

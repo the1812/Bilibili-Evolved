@@ -44,10 +44,11 @@
 </template>
 <script lang="ts">
 import type { PropType } from 'vue'
-import type { KeyBindingAction } from '../bindings'
-import { TextBox, VButton, VIcon } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
+import { TextBox, VButton, VIcon } from '@/ui'
+
 import { presetBase, presets } from '../presets'
+import type { KeyBindingAction } from '../bindings'
 
 const keymapOptions = getComponentSettings('keymap').options
 export default Vue.extend({

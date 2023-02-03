@@ -25,9 +25,10 @@
 </template>
 
 <script lang="ts">
-import { Widget } from '@/components/widget'
+import type { Widget } from '@/components/widget'
 import { deleteValue, matchUrlPattern } from '@/core/utils'
-import { VIcon, VEmpty } from '@/ui'
+import { VEmpty, VIcon } from '@/ui'
+
 import { registerAndGetData } from '../../plugins/data'
 import { WidgetsPlugin } from '.'
 

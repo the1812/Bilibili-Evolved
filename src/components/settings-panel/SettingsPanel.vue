@@ -73,15 +73,18 @@
 </template>
 
 <script lang="ts">
-import { VIcon, TextBox, VPopup, VEmpty, VButton } from '@/ui'
-import { getHook } from '@/plugins/hook'
 import { deleteValue } from '@/core/utils'
-import ComponentSettings from './ComponentSettings.vue'
-import { ComponentMetadata, ComponentTag, components } from '../component'
-import ComponentDetail from './ComponentDetail.vue'
-import ComponentTags from './ComponentTags.vue'
+import { getHook } from '@/plugins/hook'
+import { TextBox, VButton, VEmpty, VIcon, VPopup } from '@/ui'
+
+import type { ComponentMetadata, ComponentTag } from '../component'
+import { components } from '../component'
 import { getDescriptionText } from '../description'
-import { SearchBarActionContext, searchBarActions } from './search-bar-actions'
+import ComponentDetail from './ComponentDetail.vue'
+import ComponentSettings from './ComponentSettings.vue'
+import ComponentTags from './ComponentTags.vue'
+import type { SearchBarActionContext } from './search-bar-actions'
+import { searchBarActions } from './search-bar-actions'
 
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
 export default Vue.extend({

@@ -33,11 +33,11 @@
   </span>
 </template>
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
-import { getUID, getCsrf } from '@/core/utils'
-import { logError } from '@/core/utils/log'
+import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
+import { getCsrf, getUID } from '@/core/utils'
+import { logError } from '@/core/utils/log'
 import { VDropdown } from '@/ui'
 
 const { options } = getComponentSettings('quickFavorite')

@@ -1,5 +1,6 @@
-import { Category } from '@/components/utils/categories/data'
-import { FreshLayoutItem } from '../fresh-layout-item'
+import type { Category } from '@/components/utils/categories/data'
+
+import type { FreshLayoutItem } from '../fresh-layout-item'
 
 export interface TabType {
   id: number

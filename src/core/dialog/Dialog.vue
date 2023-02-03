@@ -21,7 +21,7 @@
   </div>
 </template>
 <script lang="ts">
-import { VIcon, VButton } from '@/ui'
+import { VButton, VIcon } from '@/ui'
 
 export default Vue.extend({
   components: {

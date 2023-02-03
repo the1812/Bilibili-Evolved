@@ -9,11 +9,12 @@
   </div>
 </template>
 <script lang="ts">
-import { VideoCard } from '@/components/feeds/video-card'
+import type { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
 import { ascendingStringSort } from '@/core/utils/sort'
 import { VEmpty, VLoading } from '@/ui'
+
 import { getTrendingVideos } from '../../trending'
 import MinimalHomeOperations from '../MinimalHomeOperations.vue'
 import { minimalHomeOptions } from '../options'

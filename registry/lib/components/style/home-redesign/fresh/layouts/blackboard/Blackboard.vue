@@ -52,8 +52,9 @@
   </div>
 </template>
 <script lang="ts">
-import { VButton, VIcon, DpiImage } from '@/ui'
-import { Blackboard, getBlackboards } from './api'
+import { DpiImage, VButton, VIcon } from '@/ui'
+
+import { type Blackboard, getBlackboards } from './api'
 
 export default Vue.extend({
   components: {

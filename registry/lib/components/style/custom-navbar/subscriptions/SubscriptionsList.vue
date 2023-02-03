@@ -41,10 +41,11 @@
 </template>
 
 <script lang="ts">
+import { getJsonWithCredentials } from '@/core/ajax'
 import { getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
-import { DpiImage, VLoading, VEmpty, VIcon, ScrollTrigger } from '@/ui'
-import { getJsonWithCredentials } from '@/core/ajax'
+import { DpiImage, ScrollTrigger, VEmpty, VIcon, VLoading } from '@/ui'
+
 import { SubscriptionTypes } from './subscriptions'
 
 enum SubscriptionStatus {

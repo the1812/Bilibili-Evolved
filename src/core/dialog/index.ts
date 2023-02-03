@@ -1,4 +1,4 @@
-import { Executable, VueModule } from '../common-types'
+import type { Executable, VueModule } from '../common-types'
 import Dialog from './Dialog.vue'
 
 export interface DialogInputs {

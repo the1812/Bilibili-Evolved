@@ -1,8 +1,9 @@
+import { parseExpression } from '@babel/parser'
+import { identifier, objectProperty } from '@babel/types'
 import { existsSync } from 'fs'
 import { dirname, join } from 'path'
-import { objectProperty, identifier } from '@babel/types'
-import { parseExpression } from '@babel/parser'
-import { InjectMetadataAction } from './types'
+
+import type { InjectMetadataAction } from './types'
 
 /**
  * 当入口文件 index.ts 旁边还有 index.md 时, 将其作为中文的 description 注入.

@@ -101,7 +101,8 @@
 
 <script lang="ts">
 import type { PropType } from 'vue'
-import { ImageItem, getEmptyImage, images, addImage, removeImage } from './image-store'
+import type { ImageItem } from './image-store'
+import { addImage, getEmptyImage, images, removeImage } from './image-store'
 
 export default Vue.extend({
   name: 'ImagePicker',

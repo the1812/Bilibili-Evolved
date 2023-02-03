@@ -1,11 +1,13 @@
-import { createServer, Server } from 'http'
-import { Configuration } from 'webpack'
 import exitHook from 'async-exit-hook'
+import type { Server } from 'http'
+import { createServer } from 'http'
 import handler from 'serve-handler'
-import { devServerConfig } from './config'
+import type { Configuration } from 'webpack'
+
 import { buildByEntry } from '../../registry/webpack/config'
+import { devServerConfig } from './config'
+import { parseRegistryUrl, startRegistryWatcher, watchers } from './registry-watcher'
 import { exitWebSocketServer } from './web-socket-server'
-import { watchers, parseRegistryUrl, startRegistryWatcher } from './registry-watcher'
 
 export const startDevServer = () =>
   new Promise<Server>(resolve => {

@@ -1,4 +1,4 @@
-import { RegexTranslation, Translation } from '@/components/i18n/types'
+import type { RegexTranslation, Translation } from '@/components/i18n/types'
 
 const not = true
 export const map = new Map<string, Translation>([

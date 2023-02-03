@@ -6,6 +6,7 @@
 import type { PropType } from 'vue'
 import type { ComponentMetadata } from '@/components/types'
 import { getComponentSettings } from '@/core/settings'
+
 import { getDescriptionHTML } from '../description'
 
 export default Vue.extend({

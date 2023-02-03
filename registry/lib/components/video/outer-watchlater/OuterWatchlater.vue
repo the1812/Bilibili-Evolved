@@ -7,8 +7,8 @@
 </template>
 
 <script lang="ts">
+import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { VIcon } from '@/ui'
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
 
 export default Vue.extend({
   components: {

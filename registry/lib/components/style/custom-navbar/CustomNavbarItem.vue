@@ -57,8 +57,9 @@
 
 <script lang="ts">
 import { addComponentListener, removeComponentListener } from '@/core/settings'
-import CustomNavbarLink from './CustomNavbarLink.vue'
+
 import { CustomNavbarItem } from './custom-navbar-item'
+import CustomNavbarLink from './CustomNavbarLink.vue'
 
 const isOpenInNewTab = (item: CustomNavbarItem) => {
   const { name } = item

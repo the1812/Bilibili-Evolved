@@ -1,6 +1,6 @@
-import { UnknownOptions, UserComponentMetadata } from '@/components/types'
-import { PluginMetadata } from '@/plugins/plugin'
-import { UserStyle } from '@/plugins/style'
+import type { UnknownOptions, UserComponentMetadata } from '@/components/types'
+import type { PluginMetadata } from '@/plugins/plugin'
+import type { UserStyle } from '@/plugins/style'
 
 export type Property = string | number | symbol
 export type ValueChangeListener<T = any> = (

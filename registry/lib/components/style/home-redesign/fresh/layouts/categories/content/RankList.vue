@@ -110,7 +110,7 @@ import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
-import { RankListCard, rankListCssVars } from './rank-list'
+import { type RankListCard, rankListCssVars } from './rank-list'
 
 const mixin0 = requestMixin<RankListCard>()
 const mixin1 = cssVariableMixin(rankListCssVars)

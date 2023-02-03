@@ -99,13 +99,14 @@
   </div>
 </template>
 <script lang="ts">
-import { DpiImage, VIcon, VEmpty, VLoading } from '@/ui'
-import { addComponentListener } from '@/core/settings'
-import { enableHorizontalScroll } from '@/core/horizontal-scroll'
-import { cssVariableMixin, requestMixin } from '../../../../mixin'
-import { rankListCssVars } from './rank-list'
-import { setupScrollMask, cleanUpScrollMask } from '../../../scroll-mask'
 import { getJsonWithCredentials } from '@/core/ajax'
+import { enableHorizontalScroll } from '@/core/horizontal-scroll'
+import { addComponentListener } from '@/core/settings'
+import { DpiImage, VEmpty, VIcon, VLoading } from '@/ui'
+
+import { cssVariableMixin, requestMixin } from '../../../../mixin'
+import { cleanUpScrollMask, setupScrollMask } from '../../../scroll-mask'
+import { rankListCssVars } from './rank-list'
 
 interface TimelineSeason {
   cover: string

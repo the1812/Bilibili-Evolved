@@ -29,7 +29,9 @@
 import { getComponentSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VDropdown, VIcon } from '@/ui'
-import { getTranslator, translateProviders, MachineTranslateProvider } from './translators'
+
+import type { MachineTranslateProvider } from './translators'
+import { getTranslator, translateProviders } from './translators'
 
 const MachineTranslatorClass = 'machine-translator-enabled'
 export default Vue.extend({
