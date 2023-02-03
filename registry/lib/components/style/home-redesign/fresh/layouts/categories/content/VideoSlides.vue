@@ -105,12 +105,24 @@
 </template>
 <script lang="ts">
 import { applyContentFilter } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
-import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
+import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
 
+const mixin0 = requestMixin<VideoCard>()
+const mixin1 = cssVariableMixin({
+  mainCoverHeight: 185,
+  mainCoverWidth: 287,
+  otherCoverHeight: 100,
+  otherCoverWidth: 154,
+  mainPaddingX: 18,
+  mainPaddingY: 20,
+  coverPadding: 16,
+})
+type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
 export default Vue.extend({
   components: {
     VButton,
@@ -119,18 +131,7 @@ export default Vue.extend({
     VLoading,
     VEmpty,
   },
-  mixins: [
-    requestMixin(),
-    cssVariableMixin({
-      mainCoverHeight: 185,
-      mainCoverWidth: 287,
-      otherCoverHeight: 100,
-      otherCoverWidth: 154,
-      mainPaddingX: 18,
-      mainPaddingY: 20,
-      coverPadding: 16,
-    }),
-  ],
+  mixins: [mixin0, mixin1],
   data() {
     return {
       watchlaterList,
@@ -139,10 +140,11 @@ export default Vue.extend({
   },
   computed: {
     currentItem(): VideoCard | undefined {
-      return this.items[1]
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items[1]
     },
     currentUrl(): string {
-      return this.url(this.currentItem.bvid)
+      return this.url(this.currentItem!.bvid)
     },
     watchlaterAdded(): boolean {
       return this.watchlaterList.includes(this.currentItem.aid)
@@ -152,7 +154,7 @@ export default Vue.extend({
     getWatchlaterList()
   },
   methods: {
-    parseJson(json: any) {
+    parseJson(json: any): VideoCard[] {
       const items = lodash.get(json, 'data.archives', [])
       const cards = items.map(
         (item: any): VideoCard => ({
@@ -182,13 +184,16 @@ export default Vue.extend({
     },
     toggleWatchlater,
     nextCard() {
-      this.items.push(this.items.shift())
+      const this0 = this as typeof this & MixinsInstance
+      this0.items.push(this0.items.shift())
     },
     previousCard() {
-      this.items.unshift(this.items.pop())
+      const this0 = this as typeof this & MixinsInstance
+      this0.items.unshift(this0.items.pop())
     },
     jumpToCard(event: MouseEvent, index: number) {
-      if (index <= 1 || index >= this.items.length) {
+      const this0 = this as typeof this & MixinsInstance
+      if (index <= 1 || index >= this0.items.length) {
         return
       }
       let steps = index - 1

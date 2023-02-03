@@ -153,6 +153,9 @@ const timelineCssVars = (() => {
     timelineViewportHeight,
   }
 })()
+const mixin0 = requestMixin<TimelineDay>({ requestMethod: getJsonWithCredentials })
+const mixin1 = cssVariableMixin(timelineCssVars)
+type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
 export default Vue.extend({
   components: {
     DpiImage,
@@ -160,10 +163,7 @@ export default Vue.extend({
     VEmpty,
     VLoading,
   },
-  mixins: [
-    requestMixin({ requestMethod: getJsonWithCredentials }),
-    cssVariableMixin(timelineCssVars),
-  ],
+  mixins: [mixin0, mixin1],
   data() {
     return {
       observers: [],
@@ -174,19 +174,23 @@ export default Vue.extend({
   },
   computed: {
     todayIndex(): number {
-      return (this.items as TimelineDay[]).findIndex(it => it.is_today === 1)
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items.findIndex(it => it.is_today === 1)
     },
     pastWeekItems(): TimelineDay[] {
-      return this.items.slice(0, this.todayIndex + 1)
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items.slice(0, this0.todayIndex + 1)
     },
     currentWeekItems(): TimelineDay[] {
-      return this.items.slice(this.todayIndex)
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items.slice(this0.todayIndex)
     },
   },
   watch: {
     loaded() {
-      if (this.loaded) {
-        this.updateScrollPosition()
+      const this0 = this as typeof this & { loaded: boolean }
+      if (this0.loaded) {
+        this0.updateScrollPosition()
       }
     },
   },

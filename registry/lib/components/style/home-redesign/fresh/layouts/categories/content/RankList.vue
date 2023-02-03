@@ -107,10 +107,14 @@
 import type { PropType } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
-import { DpiImage, VIcon, VLoading, VEmpty, VButton } from '@/ui'
-import { requestMixin, cssVariableMixin } from '../../../../mixin'
+import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
+import { cssVariableMixin, requestMixin } from '../../../../mixin'
 import { RankListCard, rankListCssVars } from './rank-list'
 
+const mixin0 = requestMixin<RankListCard>()
+const mixin1 = cssVariableMixin(rankListCssVars)
+type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
 export default Vue.extend({
   components: {
     DpiImage,
@@ -123,7 +127,7 @@ export default Vue.extend({
   filters: {
     formatCount,
   },
-  mixins: [requestMixin(), cssVariableMixin(rankListCssVars)],
+  mixins: [mixin0, mixin1],
   props: {
     parseJson: {
       type: Function as PropType<(json: unknown) => RankListCard[]>,
@@ -136,13 +140,16 @@ export default Vue.extend({
   },
   computed: {
     firstItem(): RankListCard | undefined {
-      return this.items[0]
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items[0]
     },
     secondItem(): RankListCard | undefined {
-      return this.items[1]
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items[1]
     },
     thirdItem(): RankListCard | undefined {
-      return this.items[2]
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items[2]
     },
     upInfoProps(): { size: number; icon: string; style: { transform: string } } {
       return {
@@ -154,10 +161,12 @@ export default Vue.extend({
       }
     },
     firstRow(): RankListCard[] {
-      return this.items.slice(3, 6)
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items.slice(3, 6)
     },
     secondRow(): RankListCard[] {
-      return this.items.slice(6, 10)
+      const this0 = this as typeof this & MixinsInstance
+      return this0.items.slice(6, 10)
     },
   },
 })
