@@ -98,7 +98,7 @@ export default Vue.extend({
   components: { VIcon, VButton, MiniToast, ComponentDescription },
   props: {
     item: {
-      type: Object as PropType<DocSourceItem>,
+      type: Object as PropType<any>,
       required: true,
     },
     branch: {
