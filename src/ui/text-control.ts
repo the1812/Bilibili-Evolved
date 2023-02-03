@@ -1,4 +1,4 @@
-import { PropType } from 'vue'
+import type { PropType } from 'vue'
 
 export const textControlMixin = Vue.extend({
   model: {
