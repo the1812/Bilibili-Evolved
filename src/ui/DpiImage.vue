@@ -9,11 +9,12 @@
   />
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'DpiImage',
   props: {
     size: {

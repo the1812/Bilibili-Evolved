@@ -7,10 +7,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },

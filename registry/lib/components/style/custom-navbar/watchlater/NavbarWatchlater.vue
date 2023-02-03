@@ -50,6 +50,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { RawWatchlaterItem } from '@/components/video/watchlater'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getComponentSettings } from '@/core/settings'
@@ -70,7 +71,7 @@ interface WatchlaterCard {
   upFaceUrl: string
   upID: number
 }
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     VLoading,
     VEmpty,

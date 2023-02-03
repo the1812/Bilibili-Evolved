@@ -27,7 +27,9 @@
 
 <script lang="ts">
 // https://css-tricks.com/building-progress-ring-quickly/
-export default Vue.extend({
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'ProgressRing',
   props: {
     size: {

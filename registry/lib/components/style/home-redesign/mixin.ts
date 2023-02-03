@@ -1,3 +1,4 @@
+import { defineComponent } from 'vue'
 import { getJson } from '@/core/ajax'
 
 /**
@@ -9,7 +10,7 @@ export const requestMixin = <Item = unknown, JsonData = unknown>(
   } = {},
 ) => {
   const { requestMethod = getJson } = config
-  return Vue.extend({
+  return defineComponent({
     props: {
       api: {
         type: String,
@@ -56,7 +57,7 @@ export const requestMixin = <Item = unknown, JsonData = unknown>(
  * @param variables UI 常量
  */
 export const cssVariableMixin = (variables: Record<string, string | number>) =>
-  Vue.extend({
+  defineComponent({
     data() {
       return {
         ui: variables,

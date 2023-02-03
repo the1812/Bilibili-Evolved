@@ -45,6 +45,7 @@
   </MiniToast>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { DocSourceItem } from 'registry/lib/docs'
 
@@ -98,7 +99,7 @@ const typeMappings = {
     isInstalled: (pack: PackItem) => pack.items.every(isFeatureInstalled),
   },
 }
-export default Vue.extend({
+export default defineComponent({
   components: { VIcon, VButton, MiniToast, ComponentDescription },
   props: {
     item: {

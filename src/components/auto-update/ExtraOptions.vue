@@ -5,12 +5,13 @@
   </VButton>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { Toast } from '@/core/toast'
 import { VButton, VIcon } from '@/ui'
 
 import { forceCheckUpdateAndReload } from './checker'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

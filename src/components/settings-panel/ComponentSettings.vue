@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import marked from 'marked'
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 import { visibleInside } from '@/core/observer'
@@ -27,7 +28,7 @@ import type { ComponentMetadata } from '../component'
 import { getSelectedLanguage } from '../i18n/helpers'
 import TagRing from './TagRing.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     SwitchBox,
     TagRing,

@@ -16,12 +16,13 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials, responsiveGetPages } from '@/core/ajax'
 import { DpiImage, VEmpty, VLoading } from '@/ui'
 
 import type { LiveFeedItem } from './live-feed-item'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VLoading,
     VEmpty,

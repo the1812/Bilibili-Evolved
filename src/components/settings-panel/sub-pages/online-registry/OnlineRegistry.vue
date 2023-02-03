@@ -71,6 +71,7 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import Fuse from 'fuse.js'
 import type { DocSourceItem } from 'registry/lib/docs'
 
@@ -112,7 +113,7 @@ const itemFilterOptions = [
   },
 ]
 
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     VIcon,
     VDropdown,

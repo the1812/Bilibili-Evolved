@@ -12,12 +12,13 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 /**
  * @deprecated use ScrollTrigger.vue instead.
  */
-export default Vue.extend({
+export default defineComponent({
   name: 'InfiniteScroll',
   props: {
     initialItems: {

@@ -22,6 +22,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { addData } from '@/plugins/data'
 import { VButton, VIcon } from '@/ui'
 
@@ -55,7 +56,7 @@ const others = [
     icon: 'black-room-colored',
   },
 ]
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

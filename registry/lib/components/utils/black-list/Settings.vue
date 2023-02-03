@@ -23,6 +23,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getUID } from '@/core/utils'
 import { VButton, VIcon } from '@/ui'
 
@@ -35,7 +36,7 @@ import {
   toggleRegexSettings,
 } from './vm'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VButton,

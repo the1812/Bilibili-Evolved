@@ -155,6 +155,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUserInfo } from '@/core/user-info'
 import { formData, getCsrf, getUID } from '@/core/utils'
@@ -164,7 +165,7 @@ import { logError } from '@/core/utils/log'
 import { popperMixin } from '../mixins'
 
 type PrivilegeType = 1 | 2
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon: coreApis.ui.VIcon,
   },

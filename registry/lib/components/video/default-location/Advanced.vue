@@ -51,6 +51,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { TextBox, VButton } from '@/ui'
 
 let scrollObserver = null
@@ -65,7 +66,7 @@ const stringIntoInt = (value: string): number | null => {
   return Math.round(num)
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: { VButton, TextBox },
   props: {
     observePosition: {

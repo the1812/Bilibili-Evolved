@@ -4,9 +4,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import LaunchBar from '@/components/launch-bar/LaunchBar.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     LaunchBar,
   },

@@ -10,13 +10,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import { FeedsCardType } from '@/components/feeds/api'
+import type { FeedsCardType } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { VIcon } from '@/ui'
 
 const { options } = getComponentSettings('feedsFilter')
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },

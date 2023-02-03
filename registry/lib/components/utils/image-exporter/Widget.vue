@@ -7,6 +7,7 @@
   ></DefaultWidget>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getBlob } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
 import { getComponentSettings } from '@/core/settings'
@@ -16,7 +17,7 @@ import { logError } from '@/core/utils/log'
 import { formatTitle } from '@/core/utils/title'
 import { DefaultWidget } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

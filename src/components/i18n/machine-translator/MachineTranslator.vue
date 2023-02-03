@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VDropdown, VIcon } from '@/ui'
@@ -34,7 +35,7 @@ import type { MachineTranslateProvider } from './translators'
 import { getTranslator, translateProviders } from './translators'
 
 const MachineTranslatorClass = 'machine-translator-enabled'
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
     VIcon,

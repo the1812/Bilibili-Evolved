@@ -9,9 +9,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'VPopup',
   model: {
     prop: 'open',

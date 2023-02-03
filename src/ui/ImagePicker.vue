@@ -100,11 +100,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ImageItem } from './image-store'
 import { addImage, getEmptyImage, images, removeImage } from './image-store'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'ImagePicker',
   components: {
     VButton: () => import('./VButton.vue').then(m => m.default),

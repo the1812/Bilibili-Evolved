@@ -125,6 +125,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getUID } from '@/core/utils'
@@ -136,7 +137,7 @@ import type { VideoCard as VideoCardData, Cooperation, Topic } from './video-car
   祖 传 代 码
   ============
 */
-export default Vue.extend({
+export default defineComponent({
   // props: ['data', 'orientation'],
   components: {
     DpiImage,

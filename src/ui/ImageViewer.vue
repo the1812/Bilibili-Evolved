@@ -28,12 +28,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getBlob } from '../core/ajax'
 import { addComponentListener } from '../core/settings'
 import { getFriendlyTitle } from '../core/utils/title'
 import VIcon from './icon/VIcon.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },

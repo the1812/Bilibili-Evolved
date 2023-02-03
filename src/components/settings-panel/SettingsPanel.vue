@@ -73,6 +73,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { deleteValue } from '@/core/utils'
 import { getHook } from '@/plugins/hook'
 import { TextBox, VButton, VEmpty, VIcon, VPopup } from '@/ui'
@@ -87,7 +88,7 @@ import type { SearchBarActionContext } from './search-bar-actions'
 import { searchBarActions } from './search-bar-actions'
 
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
-export default Vue.extend({
+export default defineComponent({
   name: 'SettingsPanel',
   components: {
     VIcon,

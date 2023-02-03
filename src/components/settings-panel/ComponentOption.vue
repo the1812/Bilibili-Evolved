@@ -54,6 +54,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ComponentSettings } from '@/core/settings'
 import { getComponentSettings } from '@/core/settings'
@@ -68,7 +69,7 @@ function valueChange(this: InstanceType<typeof ThisComponent>, newValue: unknown
   settings.options[this.name] = newValue
   this.value = newValue
 }
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   name: 'ComponentOption',
   components: {
     SwitchOptions,

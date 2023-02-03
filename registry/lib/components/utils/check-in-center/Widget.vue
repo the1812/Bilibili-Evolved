@@ -13,12 +13,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DefaultWidget } from '@/ui'
 
 import type { CheckInItem } from './check-in-item'
 import { checkInItems } from './check-in-item'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

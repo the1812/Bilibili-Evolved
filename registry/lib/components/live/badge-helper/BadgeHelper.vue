@@ -51,6 +51,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
 import { DefaultWidget, VPopup } from '@/ui'
@@ -59,7 +60,7 @@ import type { Badge } from './badge'
 import { getMedalList, getTitleList, Medal, Title } from './badge'
 
 const { options } = getComponentSettings('badgeHelper')
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
     VPopup,

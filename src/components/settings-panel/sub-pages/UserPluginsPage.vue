@@ -8,6 +8,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { isUserPlugin } from '@/core/settings'
 import { getHook } from '@/plugins/hook'
 import type { PluginMetadata } from '@/plugins/plugin'
@@ -55,7 +56,7 @@ const getItemConfig = (item: PluginMetadata): ManageItem<PluginMetadata> => ({
     await after()
   },
 })
-export default Vue.extend({
+export default defineComponent({
   components: {
     ManagePanel,
     UserItem,

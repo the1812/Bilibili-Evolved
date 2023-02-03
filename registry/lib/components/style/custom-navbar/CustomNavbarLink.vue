@@ -4,7 +4,9 @@
   </a>
 </template>
 <script lang="ts">
-export default Vue.extend({
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   props: {
     newTab: {
       type: Boolean,

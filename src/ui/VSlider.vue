@@ -82,13 +82,14 @@
  * coord：slider bar 上某一点到左端点的像素距离
  */
 
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import MiniToast from '@/core/toast/MiniToast.vue'
 
 // 将实数化为整数的函数，如 Math.round，Math.ceil
 type IntoIntCallback = (value: number) => number
 
-export default Vue.extend({
+export default defineComponent({
   name: 'VSlider',
   components: { MiniToast },
   model: {

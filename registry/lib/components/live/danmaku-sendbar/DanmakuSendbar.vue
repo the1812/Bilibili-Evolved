@@ -11,13 +11,14 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { select } from '@/core/spin-query'
 import { raiseEvent } from '@/core/utils'
 
 import { originalTextAreaSelector, sendButtonSelector } from './original-elements'
 
 let changeEventHook = false
-export default Vue.extend({
+export default defineComponent({
   data() {
     return {
       originalTextArea: null,

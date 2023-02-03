@@ -22,6 +22,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
 import { VButton, VIcon } from '@/ui'
 
@@ -29,7 +30,7 @@ import { getTrendingVideos } from '../../../trending'
 import { freshHomeOptions } from '../../types'
 import VideoList from '../../VideoList.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

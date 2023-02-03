@@ -16,9 +16,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { textControlMixin } from './text-control'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'TextBox',
   mixins: [textControlMixin],
   props: {

@@ -104,6 +104,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { applyContentFilter } from '@/components/feeds/api'
 import type { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
@@ -123,7 +124,7 @@ const mixin1 = cssVariableMixin({
   coverPadding: 16,
 })
 type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

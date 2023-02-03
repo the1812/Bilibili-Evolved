@@ -19,7 +19,9 @@
 </template>
 
 <script lang="ts">
-export default Vue.extend({
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'CheckBox',
   components: {
     VButton: () => import('./VButton.vue').then(m => m.default),

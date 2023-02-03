@@ -18,9 +18,10 @@
   </a>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DpiImage, VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
     VIcon,

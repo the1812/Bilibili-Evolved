@@ -104,6 +104,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
@@ -115,7 +116,7 @@ import { type RankListCard, rankListCssVars } from './rank-list'
 const mixin0 = requestMixin<RankListCard>()
 const mixin1 = cssVariableMixin(rankListCssVars)
 type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
     UpInfo,

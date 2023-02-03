@@ -22,12 +22,13 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { AsyncButton, VIcon } from '@/ui'
 
 import type { DevClient } from './client'
 import { DevClientEvents } from './client'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     AsyncButton,
     VIcon,

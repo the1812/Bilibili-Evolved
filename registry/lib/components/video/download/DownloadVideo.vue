@@ -84,6 +84,7 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { VideoQuality } from '@/components/video/video-quality'
 import { allQualities } from '@/components/video/video-quality'
 import type { TestPattern } from '@/core/common-types'
@@ -148,7 +149,7 @@ const getFallbackTestVideoInfo = () =>
     title: getFriendlyTitle(true),
   } as DownloadVideoInputItem)
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VPopup,
     VButton,

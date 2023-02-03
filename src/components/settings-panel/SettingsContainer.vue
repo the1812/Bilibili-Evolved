@@ -44,10 +44,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { externalApis } from '@/core/core-apis'
 import { VIcon, VPopup } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'SettingsContainer',
   components: {
     VPopup,

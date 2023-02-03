@@ -41,6 +41,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
@@ -78,7 +79,7 @@ const subscriptionSorter = (
   }
   return statusA - statusB
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
     VLoading,

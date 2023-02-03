@@ -19,6 +19,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { TabType } from '../categories.ts'
 import { applyContentFilter } from '@/components/feeds/api'
@@ -39,7 +40,7 @@ const bangumiDataMap = {
     rankingName: 'guochan',
   },
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     SubHeader,
     BangumiTimeline,

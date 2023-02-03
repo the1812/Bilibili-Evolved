@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { CurriedFunction2 } from 'lodash'
 
 import CheckBox from './CheckBox.vue'
@@ -29,7 +30,7 @@ const setGroup = lodash.curry((name: string | HTMLElement, instance: Vue, unchec
     groups.set(name, [{ instance, uncheck }])
   }
 })
-export default Vue.extend({
+export default defineComponent({
   name: 'RadioButton',
   components: {
     CheckBox,

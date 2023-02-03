@@ -23,9 +23,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { popperMixin } from '../mixins'
 
-export default Vue.extend({
+export default defineComponent({
   mixins: [popperMixin],
 })
 </script>

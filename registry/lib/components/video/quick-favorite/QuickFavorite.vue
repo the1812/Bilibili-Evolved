@@ -33,6 +33,7 @@
   </span>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
@@ -41,7 +42,7 @@ import { logError } from '@/core/utils/log'
 import { VDropdown } from '@/ui'
 
 const { options } = getComponentSettings('quickFavorite')
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
   },

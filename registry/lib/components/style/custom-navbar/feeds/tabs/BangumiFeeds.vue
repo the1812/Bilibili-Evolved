@@ -11,6 +11,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
 import type { BangumiCard } from '@/components/feeds/bangumi-card'
 import BangumiCardComponent from '@/components/feeds/BangumiCard.vue'
@@ -18,7 +19,7 @@ import { isNewID } from '@/components/feeds/notify'
 
 import { nextPageMixin } from './next-page'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     BangumiCard: BangumiCardComponent,
   },

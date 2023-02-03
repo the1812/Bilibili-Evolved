@@ -12,11 +12,12 @@
   </fragment>
 </template>
 <script lang="ts">
-import { PropType } from 'vue'
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 import { freshHomeOptions } from './types'
 import type { FreshLayoutItem } from './layouts/fresh-layout-item'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     item: {
       required: true,

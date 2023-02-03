@@ -9,6 +9,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
@@ -19,7 +20,7 @@ import { getTrendingVideos } from '../../trending'
 import MinimalHomeOperations from '../MinimalHomeOperations.vue'
 import { minimalHomeOptions } from '../options'
 
-export default Vue.extend({
+export default defineComponent({
   components: { VLoading, VEmpty, VideoCard: VideoCardComponent, MinimalHomeOperations },
   data() {
     return {

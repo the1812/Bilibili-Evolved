@@ -19,6 +19,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { applyContentFilter } from '@/components/feeds/api'
 
@@ -35,7 +36,7 @@ TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, �
 - seasonType: 1 番剧 2 电影 3 纪录片 4 国创 5 电视剧
 */
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     RankList,
     VideoSlides,

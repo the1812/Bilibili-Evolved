@@ -1,3 +1,4 @@
+import { defineComponent } from 'vue'
 import type { FeedsCardType } from '@/components/feeds/api'
 import { applyContentFilter, getFeeds, isPreOrderedVideo } from '@/components/feeds/api'
 import { setLatestID } from '@/components/feeds/notify'
@@ -14,7 +15,7 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
   type: FeedsCardType,
   jsonMapper: (obj: RawItem) => MappedItem,
 ) =>
-  Vue.extend({
+  defineComponent({
     components: {
       VLoading,
       VEmpty,

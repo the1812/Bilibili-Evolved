@@ -9,6 +9,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
 import { getNotifyCount } from '@/components/feeds/notify'
 import { TabControl, VIcon } from '@/ui'
@@ -16,7 +17,7 @@ import { TabControl, VIcon } from '@/ui'
 import { popperMixin } from '../mixins'
 import { tabs } from './tabs/tabs'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     TabControl,
     VIcon,

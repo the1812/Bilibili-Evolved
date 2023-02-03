@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VIcon } from '@/ui'
 
 const getIconName = (hidden: boolean): string =>
@@ -32,7 +33,7 @@ const getIconName = (hidden: boolean): string =>
 
 const btnAnimationClass = 'video-default-location-extend-box-bar-btn-animation'
 
-export default Vue.extend({
+export default defineComponent({
   components: { VIcon },
   model: {
     prop: 'hidden',

@@ -19,6 +19,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DownloadPackage } from '@/core/download'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { VIcon } from '@/ui'
@@ -26,7 +27,7 @@ import { VIcon } from '@/ui'
 import type { Screenshot } from './screenshot'
 import VideoScreenshot from './VideoScreenshot.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VideoScreenshot,

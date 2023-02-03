@@ -9,9 +9,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { emptyContent } from './v-empty'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'VEmpty',
   data() {
     return {

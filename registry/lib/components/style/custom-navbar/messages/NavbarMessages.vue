@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 
 import { popperMixin } from '../mixins'
@@ -59,7 +60,7 @@ const entries = [
     name: '消息设置',
   },
 ] as MessageEntry[]
-export default Vue.extend({
+export default defineComponent({
   name: 'MessagesPopup',
   mixins: [popperMixin],
   data() {

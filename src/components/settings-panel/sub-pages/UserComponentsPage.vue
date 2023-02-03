@@ -8,6 +8,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { ComponentMetadata } from '@/components/component'
 import { components } from '@/components/component'
 import { installComponent, uninstallComponent } from '@/components/user-component'
@@ -59,7 +60,7 @@ const getItemConfig = (item: ComponentMetadata): ManageItem<ComponentMetadata> =
     await after()
   },
 })
-export default Vue.extend({
+export default defineComponent({
   components: {
     ManagePanel,
     UserItem,

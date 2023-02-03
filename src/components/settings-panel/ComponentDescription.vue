@@ -3,13 +3,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ComponentMetadata } from '@/components/types'
 import { getComponentSettings } from '@/core/settings'
 
 import { getDescriptionHTML } from '../description'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     componentData: {
       type: Object as PropType<ComponentMetadata>,

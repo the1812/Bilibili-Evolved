@@ -52,11 +52,12 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DpiImage, VButton, VIcon } from '@/ui'
 
 import { type Blackboard, getBlackboards } from './api'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

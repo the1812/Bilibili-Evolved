@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DownloadPackage } from '@/core/download'
 import { logError } from '@/core/utils/log'
 import { getFriendlyTitle } from '@/core/utils/title'
@@ -30,7 +31,7 @@ addData('ui.icons', (icons: Record<string, string>) => {
   icons.subtitle = subtitleIcon
 })
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

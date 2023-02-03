@@ -3,9 +3,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 
-export default Vue.extend({
+export default defineComponent({
   data() {
     return {
       channelId: null,

@@ -30,6 +30,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import { isNewID } from '@/components/feeds/notify'
 import type { VideoCard } from '@/components/feeds/video-card'
@@ -75,7 +76,7 @@ const formatPubTimeText = (pubTime: number) => {
   }
   return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     VideoCard: VideoCardComponent,
   },

@@ -31,6 +31,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { LiveDanmaku } from '@/components/live/live-socket'
 import { getJson } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
@@ -39,7 +40,7 @@ import { fixed } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { VButton, VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VButton,

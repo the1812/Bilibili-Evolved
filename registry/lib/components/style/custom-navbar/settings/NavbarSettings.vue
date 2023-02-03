@@ -68,6 +68,7 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { SortableEvent } from 'sortablejs'
 
 import { SortableJSLibrary } from '@/core/runtime-library'
@@ -85,7 +86,7 @@ const [rendered] = getData(CustomNavbarRenderedItems) as [
     items: CustomNavbarItem[]
   },
 ]
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     VPopup,
     VIcon,

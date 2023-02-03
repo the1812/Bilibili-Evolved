@@ -6,13 +6,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getUserInfo } from '@/core/user-info'
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
 
 const noFaceUrl = '//static.hdslb.com/images/member/noface.gif'
 const notLoginFaceUrl = 'https://static.hdslb.com/images/akari.jpg'
-export default Vue.extend({
+export default defineComponent({
   name: 'UserFace',
   data() {
     return {

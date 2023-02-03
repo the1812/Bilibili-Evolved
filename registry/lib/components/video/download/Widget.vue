@@ -10,8 +10,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+
 let panel: { open: boolean } & Vue
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget: coreApis.ui.DefaultWidget,
   },

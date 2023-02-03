@@ -40,11 +40,12 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import { LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
+import type { LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
 import { VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },

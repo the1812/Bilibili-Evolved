@@ -18,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { videoChange } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
@@ -63,7 +64,7 @@ const linkProviders: LinkProvider[] = [
     return `https://www.bilibili.com/video/${id}${newQuery ? `?${newQuery.toString()}` : ''}`
   },
 ]
-export default Vue.extend({
+export default defineComponent({
   components: { VIcon },
   data() {
     return {

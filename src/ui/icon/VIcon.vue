@@ -16,10 +16,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { customIcons } from '.'
 
 const staticData = { customIcons }
-export default Vue.extend({
+export default defineComponent({
   name: 'VIcon',
   props: {
     icon: {

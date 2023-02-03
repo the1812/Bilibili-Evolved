@@ -7,6 +7,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { popperMixin } from '../mixins'
 
 interface RankingEntry {
@@ -31,7 +32,7 @@ const entries = [
     name: '排行榜',
   },
 ] as RankingEntry[]
-export default Vue.extend({
+export default defineComponent({
   name: 'RankingPopup',
   mixins: [popperMixin],
   data() {

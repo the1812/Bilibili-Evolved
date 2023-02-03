@@ -8,6 +8,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DownloadPackage } from '@/core/download'
 import { childList } from '@/core/observer'
 import { select } from '@/core/spin-query'
@@ -15,7 +16,7 @@ import { DefaultWidget } from '@/ui'
 
 import { AudioDownloader } from './audio-downloader'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

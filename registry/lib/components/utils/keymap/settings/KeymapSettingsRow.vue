@@ -43,6 +43,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox, VButton, VIcon } from '@/ui'
@@ -51,7 +52,7 @@ import { presetBase, presets } from '../presets'
 import type { KeyBindingAction } from '../bindings'
 
 const keymapOptions = getComponentSettings('keymap').options
-export default Vue.extend({
+export default defineComponent({
   components: {
     TextBox,
     VButton,

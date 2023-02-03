@@ -1,9 +1,10 @@
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 
 import type { ComponentMetadata } from '../component'
 
-export const componentSettingsMixin = Vue.extend({
+export const componentSettingsMixin = defineComponent({
   props: {
     componentData: {
       type: Object as PropType<ComponentMetadata>,
@@ -17,7 +18,7 @@ export const componentSettingsMixin = Vue.extend({
   },
 })
 export const virtualScrollMixin = (containerSelector: string) =>
-  Vue.extend({
+  defineComponent({
     data() {
       return {
         virtual: false,

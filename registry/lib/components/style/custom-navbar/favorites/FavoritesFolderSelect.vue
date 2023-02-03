@@ -13,6 +13,7 @@
   </VDropdown>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { getComponentSettings } from '@/core/settings'
@@ -23,7 +24,7 @@ import type { FavoritesFolder } from './favorites-folder'
 import { notSelectedFolder } from './favorites-folder'
 
 const navbarOptions = getComponentSettings('customNavbar').options
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
   },

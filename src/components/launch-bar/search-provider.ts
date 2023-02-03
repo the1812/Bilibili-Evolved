@@ -1,3 +1,4 @@
+import { defineComponent } from 'vue'
 import { getJson } from '@/core/ajax'
 import { formData, getUID } from '@/core/utils'
 
@@ -25,7 +26,7 @@ export const searchProvider: LaunchBarActionProvider = {
         name: input,
         icon: 'search',
         content: async () =>
-          Vue.extend({
+          defineComponent({
             render: h => {
               const content = h('div', {
                 domProps: {
@@ -50,7 +51,7 @@ export const searchProvider: LaunchBarActionProvider = {
         name: result.value,
         icon: 'search',
         content: async () =>
-          Vue.extend({
+          defineComponent({
             render: h => {
               const content = h('div', {
                 domProps: {

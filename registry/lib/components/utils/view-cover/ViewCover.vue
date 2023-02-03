@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VideoInfo } from '@/components/video/video-info'
 import { getJson } from '@/core/ajax'
 import { videoChange } from '@/core/observer'
@@ -16,7 +17,7 @@ import { select } from '@/core/spin-query'
 import { logError } from '@/core/utils/log'
 import { DefaultWidget, showImage } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

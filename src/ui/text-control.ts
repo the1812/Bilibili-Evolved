@@ -1,6 +1,7 @@
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
-export const textControlMixin = Vue.extend({
+export const textControlMixin = defineComponent({
   model: {
     prop: 'text',
     event: 'change',

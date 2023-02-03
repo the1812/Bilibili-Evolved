@@ -4,6 +4,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getUID } from '@/core/utils'
 import { TabControl } from '@/ui'
 import type { TabMapping, TabMappings } from '@/ui/tab-mapping'
@@ -11,7 +12,7 @@ import type { TabMapping, TabMappings } from '@/ui/tab-mapping'
 import { popperMixin } from '../mixins'
 import { SubscriptionTypes } from './subscriptions'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     TabControl,
   },

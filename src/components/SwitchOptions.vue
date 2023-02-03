@@ -48,13 +48,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { CheckBox, RadioButton, VButton, VIcon, VPopup } from '@/ui'
 import type { SwitchMetadataOption } from '@/components/switch-options'
 
 import { getComponentSettings } from '../core/settings'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'SwitchOptions',
   components: {
     VPopup,

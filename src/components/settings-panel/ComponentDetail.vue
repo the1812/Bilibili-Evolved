@@ -88,6 +88,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { visible } from '@/core/observer'
 import { MiniToast, SwitchBox, VButton, VIcon } from '@/ui'
 
@@ -99,7 +100,7 @@ import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
 import { componentSettingsMixin } from './mixins'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     ComponentDescription,
     ComponentOption,

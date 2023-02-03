@@ -8,11 +8,12 @@
   </HomeRedesignBase>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
 import FreshLayoutItem from './FreshLayoutItem.vue'
 import { layouts } from './layouts/layouts'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     HomeRedesignBase,
     FreshLayoutItem,

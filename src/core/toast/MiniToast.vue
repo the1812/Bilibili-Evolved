@@ -9,13 +9,14 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { createMiniToast } from './mini'
 
 const containerMap: Record<string, HTMLElement | (() => HTMLElement)> = {
   body: () => document.body,
   local: undefined,
 }
-export default Vue.extend({
+export default defineComponent({
   model: {
     prop: 'show',
     event: 'change',

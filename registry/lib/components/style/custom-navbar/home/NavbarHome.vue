@@ -30,6 +30,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { Category } from '@/components/utils/categories/data'
 import { categories } from '@/components/utils/categories/data'
 
@@ -40,7 +41,7 @@ Object.values(clone).forEach((data: any) => {
   data.count = null
 })
 let regionCountFetched = false
-export default Vue.extend({
+export default defineComponent({
   mixins: [popperMixin],
   data() {
     return {

@@ -1,3 +1,4 @@
+import { defineComponent } from 'vue'
 import type { DownloadVideoInputItem } from '../types'
 import EpisodesPicker from './EpisodesPicker.vue'
 
@@ -11,7 +12,7 @@ export interface EpisodeItem {
 export const createEpisodesPicker = (
   fetchEpisodeItems: (instance: any) => Promise<EpisodeItem[]>,
 ) =>
-  Vue.extend({
+  defineComponent({
     computed: {
       checkedInputItems(): DownloadVideoInputItem[] {
         return (this.$refs.picker as any).checkedInputItems

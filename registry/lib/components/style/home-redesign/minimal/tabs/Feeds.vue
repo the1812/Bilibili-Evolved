@@ -9,6 +9,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getVideoFeeds } from '@/components/feeds/api'
 import type { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
@@ -18,7 +19,7 @@ import { ScrollTrigger, VEmpty } from '@/ui'
 
 import MinimalHomeOperations from '../MinimalHomeOperations.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: { ScrollTrigger, VEmpty, VideoCard: VideoCardComponent, MinimalHomeOperations },
   data() {
     return {

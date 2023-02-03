@@ -65,6 +65,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { getComponentSettings } from '@/core/settings'
@@ -149,7 +150,7 @@ async function searchAllList(this: InstanceType<typeof ThisComponent>) {
     this.loading = false
   }
 }
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     FavoritesFolderSelect,
     VLoading,

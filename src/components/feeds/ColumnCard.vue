@@ -19,11 +19,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ColumnCard } from '@/components/feeds/column-card'
 import { DpiImage } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
   },

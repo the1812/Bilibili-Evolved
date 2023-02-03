@@ -91,6 +91,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { pickFile } from '@/core/file-picker'
 import type { ManagePanelConfig } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
@@ -103,7 +104,7 @@ import { SwitchBox, TextArea, TextBox, VButton, VEmpty, VIcon, VLoading, VPopup 
 import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
 import ManageItem from './ManageItem.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VButton,

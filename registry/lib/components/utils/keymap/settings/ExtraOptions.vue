@@ -12,11 +12,12 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VButton, VIcon } from '@/ui'
 
 import { loadKeymapSettings, toggleKeymapSettings } from './vm'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

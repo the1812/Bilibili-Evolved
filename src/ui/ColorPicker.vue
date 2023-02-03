@@ -211,13 +211,14 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import Color from 'color'
 
 import palette from '@/core/theme-color/palette.json'
 
 import { createColorWrapper } from './color-picker-wrapper'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'ColorPicker',
   components: {
     TextBox: () => import('./TextBox.vue').then(m => m.default),

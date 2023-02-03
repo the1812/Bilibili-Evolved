@@ -8,10 +8,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DefaultWidget } from '@/ui'
 
 let recorderVM: Vue & { opened: boolean }
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

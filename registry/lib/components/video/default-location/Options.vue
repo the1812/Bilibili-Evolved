@@ -39,8 +39,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import { ComponentMetadata } from '@/components/types'
+import type { ComponentMetadata } from '@/components/types'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox } from '@/ui'
 
@@ -61,7 +62,7 @@ const stringIntoInt = (value: string): number | null => {
   return Math.round(num)
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     TextBox,
     ExtendBox,

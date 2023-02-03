@@ -11,6 +11,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
 import type { ColumnCard } from '@/components/feeds/column-card'
 import ColumnCardComponent from '@/components/feeds/ColumnCard.vue'
@@ -18,7 +19,7 @@ import { isNewID } from '@/components/feeds/notify'
 
 import { nextPageMixin } from './next-page'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     ColumnCard: ColumnCardComponent,
   },

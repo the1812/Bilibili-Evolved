@@ -6,9 +6,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { useScopedConsole } from '@/core/utils/log'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VLoading: () => import('./VLoading.vue').then(m => m.default),
   },

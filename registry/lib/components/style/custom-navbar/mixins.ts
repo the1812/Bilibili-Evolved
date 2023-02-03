@@ -1,6 +1,7 @@
+import { defineComponent } from 'vue'
 import { CustomNavbarItem } from './custom-navbar-item'
 
-export const popperMixin = Vue.extend({
+export const popperMixin = defineComponent({
   props: {
     item: {
       type: CustomNavbarItem,

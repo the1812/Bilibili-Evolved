@@ -44,6 +44,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { fixed } from '@/core/utils'
 import { formatDuration, formatPercent } from '@/core/utils/formatters'
 import { ProgressBar, ProgressRing } from '@/ui'
@@ -83,7 +84,7 @@ const normalize = (current: number, add: number, max = 1, min = 0) => {
   }
   return finalValue
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     ProgressRing,
     ProgressBar,

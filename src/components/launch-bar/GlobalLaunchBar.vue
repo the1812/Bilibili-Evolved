@@ -10,11 +10,12 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import VPopup from '@/ui/VPopup.vue'
 
 import LaunchBar from './LaunchBar.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     LaunchBar,
     VPopup,

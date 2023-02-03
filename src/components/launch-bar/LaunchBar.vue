@@ -63,6 +63,7 @@
 </template>
 <script lang="ts">
 import Fuse from 'fuse.js'
+import { defineComponent } from 'vue'
 
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
@@ -128,7 +129,7 @@ const [recommended] = registerAndGetData('launchBar.recommended', {
   word: '搜索',
   href: 'https://search.bilibili.com/',
 })
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     VIcon,
     VLoading,

@@ -9,12 +9,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { logError } from '@/core/utils/log'
 import { DefaultWidget } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

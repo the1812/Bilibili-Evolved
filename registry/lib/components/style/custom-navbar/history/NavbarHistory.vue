@@ -105,6 +105,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { formData, getCsrf } from '@/core/utils'
 import { descendingSort } from '@/core/utils/sort'
@@ -123,7 +124,7 @@ import { popperMixin } from '../mixins'
 import type { HistoryItem, TypeFilter } from './types'
 import { getHistoryItems, group, HistoryType, types } from './types'
 
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     VButton,
     VIcon,

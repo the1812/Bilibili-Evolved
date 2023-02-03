@@ -35,6 +35,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { TabType } from './categories.ts'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
@@ -52,7 +53,7 @@ const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   href: category.link,
   order: 0,
 }))
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

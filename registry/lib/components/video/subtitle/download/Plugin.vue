@@ -11,6 +11,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { VDropdown } from '@/ui'
 
@@ -21,7 +22,7 @@ interface Options {
 }
 const options = getComponentSettings('downloadVideo').options as Options
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
   },

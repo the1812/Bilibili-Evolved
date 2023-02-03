@@ -13,6 +13,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ComponentMetadata } from '@/components/types'
 import { Toast } from '@/core/toast'
@@ -24,7 +25,7 @@ import { autoUpdateOptions, getDevClientOptions } from './options'
 
 const options = getDevClientOptions()
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },

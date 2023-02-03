@@ -15,6 +15,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox } from '@/ui'
 
@@ -25,7 +26,7 @@ const defaultMpvInfo = {
 }
 const { options: storedMpvInfo } = getComponentSettings('downloadVideo')
 const info = { ...defaultMpvInfo, ...storedMpvInfo }
-export default Vue.extend({
+export default defineComponent({
   components: {
     TextBox,
   },

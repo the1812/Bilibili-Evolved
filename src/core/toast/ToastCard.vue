@@ -30,12 +30,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import { ProgressRing, VIcon } from '@/ui'
 
 import type { Toast } from '.'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     ProgressRing,

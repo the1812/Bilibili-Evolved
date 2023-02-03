@@ -5,9 +5,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { Toast } from '@/core/toast/index'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     ToastCard: () => import('./ToastCard.vue').then(m => m.default),
   },

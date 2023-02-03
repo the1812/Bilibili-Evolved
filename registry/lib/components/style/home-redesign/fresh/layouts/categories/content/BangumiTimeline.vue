@@ -99,6 +99,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { addComponentListener } from '@/core/settings'
@@ -157,7 +158,7 @@ const timelineCssVars = (() => {
 const mixin0 = requestMixin<TimelineDay>({ requestMethod: getJsonWithCredentials })
 const mixin1 = cssVariableMixin(timelineCssVars)
 type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
     VIcon,

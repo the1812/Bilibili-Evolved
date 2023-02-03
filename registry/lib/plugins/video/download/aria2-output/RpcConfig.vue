@@ -67,6 +67,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { TextArea, TextBox, VButton, VDropdown, VIcon } from '@/ui'
@@ -94,7 +95,7 @@ const handleMissingProfile = () => {
 const lastSelectedProfile =
   options.rpcProfiles.find(p => p.name === options.selectedRpcProfileName) ?? handleMissingProfile()
 console.log(options, lastSelectedProfile)
-export default Vue.extend({
+export default defineComponent({
   components: {
     TextBox,
     VButton,

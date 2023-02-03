@@ -13,6 +13,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
@@ -22,7 +23,7 @@ import { VEmpty, VLoading } from '@/ui'
 import { cleanUpScrollMask, setupScrollMask } from './scroll-mask'
 import VideoCardWrapper from './VideoCardWrapper.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VEmpty,
     VLoading,

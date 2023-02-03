@@ -50,6 +50,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type {
   feedsCardsManager,
   FeedsCard,
@@ -104,7 +105,7 @@ const sideCards: { [id: number]: SideCardType } = {
 let cardsManager: typeof feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     FilterTypeSwitch: () => import('./FilterTypeSwitch.vue'),
     VIcon,

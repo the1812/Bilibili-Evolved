@@ -49,6 +49,7 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { VDropdown, VIcon, VPopup } from '@/ui'
 
@@ -59,7 +60,7 @@ import KeymapSettingsRow from './KeymapSettingsRow.vue'
 
 const keymapOptions = getComponentSettings('keymap').options
 console.log(presets, actions, keymapOptions.preset, keymapOptions.customKeyBindings)
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VDropdown,

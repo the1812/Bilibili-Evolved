@@ -8,6 +8,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getHook } from '@/plugins/hook'
 import type { UserStyle } from '@/plugins/style'
 import { installStyle, styles, uninstallStyle } from '@/plugins/style'
@@ -52,7 +53,7 @@ const getItemConfig = (item: StyleType): ManageItem<StyleType> => ({
     await after()
   },
 })
-export default Vue.extend({
+export default defineComponent({
   components: {
     ManagePanel,
     UserItem,

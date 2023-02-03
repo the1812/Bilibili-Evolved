@@ -14,11 +14,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { defaultOwner } from '@/core/cdn-types'
 import { VButton } from '@/ui'
 
 const detailsLink = `https://github.com/${defaultOwner}/Bilibili-Evolved/releases`
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
   },

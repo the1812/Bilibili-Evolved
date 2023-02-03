@@ -56,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { Executable, VueModule } from '@/core/common-types'
 import { ascendingSort } from '@/core/utils/sort'
 import VIcon from '@/ui/icon/VIcon.vue'
@@ -67,7 +68,7 @@ import { subPages } from './sub-pages'
 import type { SettingsTag } from './tag-filter'
 import { tagFilters } from './tag-filter'
 
-export default Vue.extend({
+export default defineComponent({
   components: { VIcon, VPopup },
   data() {
     return {

@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { Widget } from '@/components/widget'
 import { deleteValue, matchUrlPattern } from '@/core/utils'
 import { VEmpty, VIcon } from '@/ui'
@@ -49,7 +50,7 @@ const widgetFilter = async (w: Widget) => {
   }
   return true
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VEmpty,

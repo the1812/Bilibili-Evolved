@@ -17,6 +17,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { Range } from './range'
 
@@ -53,7 +54,7 @@ const createWrapper = (instance: any) => {
   }
   return wrapper
 }
-export default Vue.extend({
+export default defineComponent({
   name: 'RangeInput',
   components: {
     TextBox: () => import('./TextBox.vue'),

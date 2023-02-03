@@ -66,10 +66,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import VPopup from './VPopup.vue'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'VDropdown',
   components: {
     VPopup,

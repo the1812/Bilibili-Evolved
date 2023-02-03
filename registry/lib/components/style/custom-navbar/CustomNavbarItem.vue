@@ -56,6 +56,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
 
 import { CustomNavbarItem } from './custom-navbar-item'
@@ -69,7 +70,7 @@ const isOpenInNewTab = (item: CustomNavbarItem) => {
   }
   return options.openInNewTab
 }
-const ThisComponent = Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     CustomNavbarLink,
   },

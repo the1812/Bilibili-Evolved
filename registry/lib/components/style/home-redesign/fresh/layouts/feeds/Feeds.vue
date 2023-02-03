@@ -52,6 +52,7 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getVideoFeeds } from '@/components/feeds/api'
 import type { VideoCard } from '@/components/feeds/video-card'
 import type { ArrayContent } from '@/core/common-types'
@@ -75,7 +76,7 @@ const tabs = [
   },
 ]
 type TabType = ArrayContent<typeof tabs>
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

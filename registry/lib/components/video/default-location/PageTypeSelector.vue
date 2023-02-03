@@ -11,6 +11,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VDropdown, VIcon } from '@/ui'
 
 import { pageTypeInfos } from '.'
@@ -25,7 +26,7 @@ interface Item {
   displayName: string
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: { VDropdown, VIcon },
   model: {
     prop: 'value',

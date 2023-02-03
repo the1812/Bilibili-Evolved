@@ -9,6 +9,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { addComponentListener } from '@/core/settings'
 import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
@@ -42,7 +43,7 @@ const getItems = () => {
   renderedItems.items = items
   return items
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     NavbarItem: CustomNavbarItemComponent,
   },

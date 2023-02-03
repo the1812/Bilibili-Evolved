@@ -6,6 +6,7 @@
   </HomeRedesignBase>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { addComponentListener } from '@/core/settings'
 import { TabControl } from '@/ui'
 import type { TabMappings } from '@/ui/tab-mapping'
@@ -28,7 +29,7 @@ const tabs: TabMappings = [
     activeLink: 'https://www.bilibili.com/v/popular/all',
   },
 ]
-export default Vue.extend({
+export default defineComponent({
   components: {
     HomeRedesignBase,
     TabControl,
