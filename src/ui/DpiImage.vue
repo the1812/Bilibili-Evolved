@@ -9,7 +9,7 @@
   />
 </template>
 <script lang="ts">
-import type { PropType } from 'vue';
+import type { PropType } from 'vue'
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
 
@@ -41,7 +41,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    width(): number {
+    width(): number | null {
       if (typeof this.size === 'object' && 'width' in this.size) {
         return this.size.width
       }
@@ -50,7 +50,7 @@ export default Vue.extend({
       }
       return null
     },
-    height(): number {
+    height(): number | null {
       if (typeof this.size === 'object' && 'height' in this.size) {
         return this.size.height
       }
