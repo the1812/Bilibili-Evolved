@@ -33,6 +33,8 @@
     "@types/ws": "^8.2.3",
     "@typescript-eslint/eslint-plugin": "^5.9.1",
     "@typescript-eslint/parser": "^5.9.1",
+    "@vue/compiler-sfc": "^3.2.47",
+    "@vue/runtime-dom": "^3.2.47",
     "@vue/tsconfig": "^0.1.3",
     "async-exit-hook": "^2.0.1",
     "autoprefixer": "^10.0.1",
@@ -59,8 +61,8 @@
     "to-string-loader": "^1.2.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.4.4",
-    "vue-loader": "^15.8.3",
-    "vue-template-compiler": "^2.6.11",
+    "vue-loader": "^16.8.3",
+    "vue-tsc": "^1.0.24",
     "webpack": "^5.31.2",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.6.0",
@@ -68,6 +70,7 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.6.0",
+    "@vue/compat": "^3.2.47",
     "color": "^3.1.2",
     "fuse.js": "^6.4.6",
     "jszip": "^3.7.1",
@@ -76,7 +79,7 @@
     "protobufjs": "^6.11.2",
     "streamsaver": "^2.0.6",
     "tippy.js": "^6.3.1",
-    "vue": "^2.6.11",
+    "vue": "^3.2.47",
     "vue-fragment": "^1.5.2"
   },
   "keywords": [

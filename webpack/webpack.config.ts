@@ -1,7 +1,7 @@
 import get from 'lodash/get'
 import path from 'path'
 import TerserPlugin from 'terser-webpack-plugin'
-import VueLoaderPlugin from 'vue-loader/lib/plugin'
+import { VueLoaderPlugin } from 'vue-loader'
 import type { Configuration } from 'webpack'
 import webpack from 'webpack'
 
@@ -29,7 +29,7 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
       alias: {
         '@': relativePath('src'),
         'fuse.js$': 'fuse.js/dist/fuse.basic.esm.min.js',
-        vue$: 'vue/dist/vue.esm.js',
+        vue: '@vue/compat',
       },
     },
     performance: {
@@ -103,6 +103,11 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
               options: {
                 optimizeSSR: false,
                 hotReload: false,
+                compilerOptions: {
+                  compatConfig: {
+                    MODE: 2,
+                  },
+                },
               },
             },
           ],
