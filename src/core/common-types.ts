@@ -1,6 +1,6 @@
 import { Component, VueConstructor } from 'vue'
 
-export type Executable<ReturnType = void> = (component: object) => Promise<ReturnType> | ReturnType
+export type Executable<ReturnType = void> = () => Promise<ReturnType> | ReturnType
 export type ExecutableWithParameter<Parameters extends any[] = never[], ReturnType = void> = (
   ...args: Parameters
 ) => ReturnType | Promise<ReturnType>
