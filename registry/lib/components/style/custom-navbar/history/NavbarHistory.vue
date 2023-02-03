@@ -151,7 +151,7 @@ const ThisComponent = Vue.extend({
     },
   },
   watch: {
-    search: lodash.debounce(function search() {
+    search: lodash.debounce(function search(this: InstanceType<typeof ThisComponent>) {
       this.reloadHistoryItems()
     }, 200) as unknown as () => void,
   },
