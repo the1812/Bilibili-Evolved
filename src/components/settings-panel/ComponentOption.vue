@@ -54,9 +54,10 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
 import { TextBox, SwitchBox, ColorPicker, RangeInput, VDropdown, ImagePicker, VSlider } from '@/ui'
 import { getComponentSettings, ComponentSettings } from '@/core/settings'
-import { OptionMetadata } from '../component'
+import type { ComponentMetadata, OptionMetadata } from '../component'
 import { getDropdownItems } from './dropdown'
 import SwitchOptions from '../SwitchOptions.vue'
 
@@ -87,11 +88,11 @@ const ThisComponent = Vue.extend({
       default: '',
     },
     option: {
-      type: Object,
+      type: Object as PropType<OptionMetadata>,
       required: true,
     },
     component: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },

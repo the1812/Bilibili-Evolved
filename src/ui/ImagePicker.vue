@@ -100,6 +100,7 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
 import { ImageItem, getEmptyImage, images, addImage, removeImage } from './image-store'
 
 export default Vue.extend({
@@ -115,7 +116,7 @@ export default Vue.extend({
   },
   props: {
     image: {
-      type: Object,
+      type: Object as PropType<ImageItem>,
       required: true,
     },
   },

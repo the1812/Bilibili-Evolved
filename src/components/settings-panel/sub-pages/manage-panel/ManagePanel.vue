@@ -91,6 +91,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { ManagePanelConfig } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
 import { installFeature, tryParseZip } from '@/core/install-feature'
 import { pickFile } from '@/core/file-picker'
 import { Toast, ToastType } from '@/core/toast'
@@ -115,7 +117,7 @@ export default Vue.extend({
   },
   props: {
     config: {
-      type: Object,
+      type: Object as PropType<ManagePanelConfig<unknown>>,
       required: true,
     },
   },

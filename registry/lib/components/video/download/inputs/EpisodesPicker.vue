@@ -54,8 +54,9 @@
   </div>
 </template>
 <script lang="ts">
-import { VButton, VIcon, CheckBox } from '@/ui'
 import { DownloadVideoInputItem } from 'registry/lib/components/video/download/types'
+import type { PropType } from 'vue'
+import { VButton, VIcon, CheckBox } from '@/ui'
 import { EpisodeItem } from './episode-item'
 
 export default Vue.extend({
@@ -66,7 +67,7 @@ export default Vue.extend({
   },
   props: {
     api: {
-      type: Function,
+      type: Function as PropType<(vm: any) => Promise<EpisodeItem[]>>,
       required: true,
     },
   },

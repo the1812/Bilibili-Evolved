@@ -45,7 +45,8 @@
   </MiniToast>
 </template>
 <script lang="ts">
-import { DocSourceItem } from 'registry/lib/docs'
+import type { DocSourceItem } from 'registry/lib/docs'
+import type { PropType } from 'vue'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
@@ -97,7 +98,7 @@ export default Vue.extend({
   components: { VIcon, VButton, MiniToast, ComponentDescription },
   props: {
     item: {
-      type: Object,
+      type: Object as PropType<DocSourceItem>,
       required: true,
     },
     branch: {

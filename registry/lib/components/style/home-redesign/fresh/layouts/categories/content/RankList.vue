@@ -104,6 +104,7 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VIcon, VLoading, VEmpty, VButton } from '@/ui'
@@ -125,7 +126,7 @@ export default Vue.extend({
   mixins: [requestMixin(), cssVariableMixin(rankListCssVars)],
   props: {
     parseJson: {
-      type: Function,
+      type: Function as PropType<(json: unknown) => RankListCard[]>,
       required: true,
     },
     bangumiMode: {

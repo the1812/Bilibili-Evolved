@@ -9,6 +9,7 @@
   />
 </template>
 <script lang="ts">
+import type { PropType } from 'vue';
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
 
@@ -16,7 +17,7 @@ export default Vue.extend({
   name: 'DpiImage',
   props: {
     size: {
-      type: [Object, Number],
+      type: [Object, Number] as PropType<number | { width?: number; height?: number }>,
       required: true,
     },
     src: {

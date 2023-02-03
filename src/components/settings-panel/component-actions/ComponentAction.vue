@@ -11,6 +11,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { ComponentConfigAction } from './component-actions'
 import { VIcon } from '@/ui'
 
 export default Vue.extend({
@@ -19,7 +21,7 @@ export default Vue.extend({
   },
   props: {
     item: {
-      type: Object,
+      type: Object as PropType<ComponentConfigAction>,
       required: true,
     },
     component: {

@@ -10,6 +10,8 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+import { FeedsCardType } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { VIcon } from '@/ui'
 
@@ -24,7 +26,7 @@ export default Vue.extend({
       required: true,
     },
     type: {
-      type: Object,
+      type: Object as PropType<FeedsCardType>,
       required: true,
     },
   },

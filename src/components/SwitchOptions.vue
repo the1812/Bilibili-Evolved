@@ -48,7 +48,9 @@
 </template>
 
 <script lang="ts">
+import { SwitchMetadataOption } from '@/components/switch-options'
 import { VPopup, VButton, VIcon, CheckBox, RadioButton } from '@/ui'
+import { PropType } from 'vue'
 import { getComponentSettings } from '../core/settings'
 
 export default Vue.extend({
@@ -62,7 +64,7 @@ export default Vue.extend({
   },
   props: {
     options: {
-      type: Object,
+      type: Object as PropType<SwitchMetadataOption<string, string>>,
       required: true,
     },
     smallSize: {

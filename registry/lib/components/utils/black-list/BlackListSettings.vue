@@ -46,6 +46,7 @@
   </VPopup>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
 import { VPopup, TextBox, VIcon, VButton } from '@/ui'
 
 export default Vue.extend({
@@ -61,11 +62,11 @@ export default Vue.extend({
       default: null,
     },
     list: {
-      type: Array,
+      type: Array as PropType<string[]>,
       default: null,
     },
     save: {
-      type: Function,
+      type: Function as PropType<(list: string[]) => void>,
       default: undefined,
     },
     titleName: {

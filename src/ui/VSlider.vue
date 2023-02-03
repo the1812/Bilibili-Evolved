@@ -82,6 +82,7 @@
  * coord：slider bar 上某一点到左端点的像素距离
  */
 
+import type { PropType } from 'vue'
 import MiniToast from '@/core/toast/MiniToast.vue'
 
 // 将实数化为整数的函数，如 Math.round，Math.ceil
@@ -120,7 +121,7 @@ export default Vue.extend({
       default: 1,
     },
     displayFun: {
-      type: Function,
+      type: Function as PropType<(v: number) => string>,
       default: (v: number) => String(v),
     },
   },

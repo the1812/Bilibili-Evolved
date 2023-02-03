@@ -66,6 +66,7 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
 import VPopup from './VPopup.vue'
 
 export default Vue.extend({
@@ -82,11 +83,11 @@ export default Vue.extend({
       required: true,
     },
     items: {
-      type: Array,
+      type: Array as PropType<any[]>,
       required: true,
     },
     keyMapper: {
-      type: Function,
+      type: Function as PropType<(item: any) => string | number>,
       default: (item: any) => item.name,
     },
     round: {

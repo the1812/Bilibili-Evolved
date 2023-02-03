@@ -9,6 +9,8 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+
 export default Vue.extend({
   name: 'VPopup',
   model: {
@@ -56,7 +58,13 @@ export default Vue.extend({
       default: false,
     },
     autoClosePredicate: {
-      type: Function,
+      type: Function as PropType<
+        (options: {
+          target: HTMLElement
+          element: HTMLElement
+          trigger: HTMLElement | null
+        }) => boolean
+      >,
       required: false,
       default: null,
     },

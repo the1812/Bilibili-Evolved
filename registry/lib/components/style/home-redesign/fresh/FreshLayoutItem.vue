@@ -12,13 +12,15 @@
   </fragment>
 </template>
 <script lang="ts">
+import { PropType } from 'vue'
 import { freshHomeOptions } from './types'
+import type { FreshLayoutItem } from './layouts/fresh-layout-item'
 
 export default Vue.extend({
   props: {
     item: {
       required: true,
-      type: Object,
+      type: Object as PropType<FreshLayoutItem>,
     },
   },
   data() {

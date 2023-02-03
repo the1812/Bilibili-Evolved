@@ -39,6 +39,8 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+import { ComponentMetadata } from '@/components/types'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox } from '@/ui'
 import ExtendBox from './ExtendBox.vue'
@@ -67,7 +69,7 @@ export default Vue.extend({
   },
   props: {
     componentData: {
-      type: Object, // ComponentMetadata
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },

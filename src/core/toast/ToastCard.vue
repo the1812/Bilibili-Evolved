@@ -30,6 +30,7 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
 import { VIcon, ProgressRing } from '@/ui'
 import type { Toast } from '.'
 
@@ -40,7 +41,7 @@ export default Vue.extend({
   },
   props: {
     card: {
-      type: Object,
+      type: Object as PropType<Toast>,
       required: true,
     },
   },
@@ -55,7 +56,7 @@ export default Vue.extend({
   },
   methods: {
     durationTick() {
-      const { closeTime } = this.card as Toast
+      const { closeTime } = this.card
       if (!closeTime) {
         return
       }
@@ -65,7 +66,7 @@ export default Vue.extend({
       }
     },
     readDuration() {
-      const { duration, closeTime } = this.card as Toast
+      const { duration, closeTime } = this.card
       if (duration) {
         this.progressMax = closeTime - Number(new Date())
         this.remainingTime = this.progressMax
@@ -73,12 +74,12 @@ export default Vue.extend({
       }
     },
     stopTimer() {
-      ;(this.card as Toast).clearDuration()
+      this.card.clearDuration()
       this.progressMax = 0
       this.remainingTime = 0
     },
     startTimer() {
-      ;(this.card as Toast).setDuration()
+      this.card.setDuration()
       this.readDuration()
     },
   },

@@ -1,3 +1,5 @@
+import { PropType } from 'vue'
+
 export const textControlMixin = Vue.extend({
   model: {
     prop: 'text',
@@ -15,7 +17,7 @@ export const textControlMixin = Vue.extend({
       default: false,
     },
     validator: {
-      type: Function,
+      type: Function as PropType<(value: string, oldValue: string) => string>,
       default: undefined,
     },
   },

@@ -45,6 +45,7 @@
 </template>
 
 <script lang="ts">
+import { PropType } from 'vue'
 import { TabMappings, TabMapping } from './tab-mapping'
 
 export default Vue.extend({
@@ -59,7 +60,7 @@ export default Vue.extend({
   },
   props: {
     tabs: {
-      type: Array,
+      type: Array as PropType<TabMappings>,
       required: true,
       validator(mappings: TabMappings) {
         if (mappings.length === 0) {
@@ -79,7 +80,7 @@ export default Vue.extend({
       default: null,
     },
     moreLink: {
-      type: [String, Function],
+      type: [String, Function] as PropType<string | ((tab: TabMapping) => string) | null>,
       default: null,
     },
   },

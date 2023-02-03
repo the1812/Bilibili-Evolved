@@ -43,6 +43,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { KeyBindingAction } from '../bindings'
 import { TextBox, VButton, VIcon } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
 import { presetBase, presets } from '../presets'
@@ -56,7 +58,7 @@ export default Vue.extend({
   },
   props: {
     row: {
-      type: Object,
+      type: Object as PropType<KeyBindingAction & { name: string }>,
       required: true,
     },
     selectedPreset: {

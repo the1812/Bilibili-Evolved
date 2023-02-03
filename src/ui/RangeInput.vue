@@ -17,6 +17,9 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { Range } from './range'
+
 const createWrapper = (instance: any) => {
   const wrapper = {
     range: instance.range,
@@ -61,11 +64,11 @@ export default Vue.extend({
   },
   props: {
     range: {
-      type: Object,
+      type: Object as PropType<Range<unknown>>,
       required: true,
     },
     validator: {
-      type: Function,
+      type: Function as PropType<(range: Range<unknown>) => Range<unknown> | null | undefined>,
       default: undefined,
     },
   },

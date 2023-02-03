@@ -12,6 +12,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+
 /**
  * @deprecated use ScrollTrigger.vue instead.
  */
@@ -19,15 +21,15 @@ export default Vue.extend({
   name: 'InfiniteScroll',
   props: {
     initialItems: {
-      type: Array,
+      type: Array as PropType<unknown[]>,
       default: () => [],
     },
     fetchData: {
-      type: Function,
+      type: Function as PropType<(page: number) => Promise<any[] | false>>,
       required: true,
     },
     keyMapper: {
-      type: Function,
+      type: Function as PropType<(item: unknown) => string | number>,
       default: () => (item: any) => item,
     },
   },
@@ -57,7 +59,7 @@ export default Vue.extend({
   methods: {
     async loadNextPage(page: number = this.page) {
       try {
-        const func = this.fetchData as (page: number) => Promise<any[] | false>
+        const func = this.fetchData
         const promise = func(page)
         this.page++
         this.$emit('next-page')

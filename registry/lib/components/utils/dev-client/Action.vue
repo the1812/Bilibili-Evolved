@@ -13,6 +13,7 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
 import { ComponentMetadata } from '@/components/types'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
@@ -32,7 +33,7 @@ export default Vue.extend({
       required: true,
     },
     component: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },
@@ -46,7 +47,7 @@ export default Vue.extend({
   },
   computed: {
     autoUpdateRecord() {
-      const metadata = this.component as ComponentMetadata
+      const metadata = this.component
       return this.autoUpdateComponents[metadata.name]
     },
     componentUpdateUrl() {
@@ -100,7 +101,7 @@ export default Vue.extend({
     async startDebug() {
       await this.handleClick(async () => {
         const { devClient } = await import('./client')
-        const metadata = this.component as ComponentMetadata
+        const metadata = this.component
         const devUrl = urlConverter.toDevUrl(this.componentUpdateUrl)
         // console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
         if (this.autoUpdateRecord.url !== devUrl) {

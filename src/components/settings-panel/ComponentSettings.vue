@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import marked from 'marked'
+import type { PropType } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import SwitchBox from '@/ui/SwitchBox.vue'
 import VIcon from '@/ui/icon/VIcon.vue'
@@ -32,7 +33,7 @@ export default Vue.extend({
   },
   props: {
     componentData: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },

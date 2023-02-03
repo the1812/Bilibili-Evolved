@@ -1,10 +1,11 @@
+import type { PropType } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { ComponentMetadata } from '../component'
 
 export const componentSettingsMixin = Vue.extend({
   props: {
     componentData: {
-      type: Object as () => ComponentMetadata,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },

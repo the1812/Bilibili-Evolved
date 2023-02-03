@@ -19,6 +19,8 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { ColumnCard } from '@/components/feeds/column-card'
 import { DpiImage } from '@/ui'
 
 export default Vue.extend({
@@ -27,7 +29,7 @@ export default Vue.extend({
   },
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<ColumnCard>,
       required: true,
     },
     isNew: {

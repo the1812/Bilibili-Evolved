@@ -20,6 +20,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { VideoControlBarItem } from '@/components/video/video-control-bar'
 import { VIcon } from '@/ui'
 
 export default Vue.extend({
@@ -28,7 +30,7 @@ export default Vue.extend({
   },
   props: {
     items: {
-      type: Array,
+      type: Array as PropType<VideoControlBarItem[]>,
       required: true,
     },
   },

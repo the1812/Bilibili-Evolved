@@ -13,6 +13,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { VEmpty, VLoading } from '@/ui'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { addComponentListener } from '@/core/settings'
@@ -27,7 +29,7 @@ export default Vue.extend({
   },
   props: {
     videos: {
-      type: Array,
+      type: Array as PropType<VideoCard[]>,
       default: () => [],
     },
     loading: {

@@ -19,6 +19,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import type { TabType } from '../categories.ts'
 import { applyContentFilter } from '@/components/feeds/api'
 import SubHeader from '../../../SubHeader.vue'
 import RankList from './RankList.vue'
@@ -44,7 +46,7 @@ export default Vue.extend({
   },
   props: {
     region: {
-      type: Object,
+      type: Object as PropType<TabType>,
       required: true,
     },
   },

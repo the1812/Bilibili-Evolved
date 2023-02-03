@@ -40,6 +40,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import { LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
 import { VIcon } from '@/ui'
 
 export default Vue.extend({
@@ -48,7 +50,7 @@ export default Vue.extend({
   },
   props: {
     action: {
-      type: Object,
+      type: Object as PropType<LaunchBarAction>,
       required: true,
     },
   },

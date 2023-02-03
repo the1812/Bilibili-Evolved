@@ -25,6 +25,8 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import { ManageItem } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
 import VButton from '@/ui/VButton.vue'
@@ -36,7 +38,7 @@ export default Vue.extend({
   },
   props: {
     config: {
-      type: Object,
+      type: Object as PropType<ManageItem<{ displayName: string; name: string }>>,
       required: true,
     },
   },

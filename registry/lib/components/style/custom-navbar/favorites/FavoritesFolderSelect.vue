@@ -13,6 +13,7 @@
   </VDropdown>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
 import { VDropdown } from '@/ui'
 import { getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
@@ -30,7 +31,7 @@ export default Vue.extend({
   },
   props: {
     folder: {
-      type: Object,
+      type: Object as PropType<FavoritesFolder>,
       required: true,
     },
   },

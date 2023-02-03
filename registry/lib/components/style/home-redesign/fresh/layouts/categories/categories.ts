@@ -1,4 +1,14 @@
+import { Category } from '@/components/utils/categories/data'
 import { FreshLayoutItem } from '../fresh-layout-item'
+
+export interface TabType {
+  id: number
+  name: string
+  displayName: string
+  category: Category
+  href: string
+  order: number
+}
 
 export const categories: FreshLayoutItem = {
   name: 'categories',
