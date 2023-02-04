@@ -4,7 +4,7 @@
     class="custom-navbar-item"
     role="listitem"
     :data-name="item.name"
-    :class="{ disabled: item.disabled, active: item.active }"
+    :class="{ disabled: item.disabled, active: item.active, 'input-within': inputWithin }"
     :style="{ flex: item.flexStyle, order: item.order }"
   >
     <CustomNavbarLink
@@ -35,7 +35,12 @@
         {{ item.notifyCount }}
       </template>
     </div>
-    <div ref="popupContainer" class="popup-container">
+    <div
+      ref="popupContainer"
+      class="popup-container"
+      @focusin="toggleInputWithin($event, true)"
+      @focusout="toggleInputWithin($event, false)"
+    >
       <div v-if="item.popupContent" class="popup" :class="popupClasses(item)">
         <component
           :is="item.popupContent"
@@ -77,6 +82,7 @@ export default Vue.extend({
     return {
       newTab: isOpenInNewTab(this.item),
       cancelListeners: none,
+      inputWithin: false,
     }
   },
   mounted() {
@@ -96,6 +102,13 @@ export default Vue.extend({
     this.cancelListeners?.()
   },
   methods: {
+    toggleInputWithin(e: FocusEvent, value: boolean) {
+      if (!(e.target instanceof HTMLInputElement)) {
+        this.inputWithin = false
+        return
+      }
+      this.inputWithin = value
+    },
     updateLinkOption() {
       this.newTab = isOpenInNewTab(this.item)
     },
@@ -268,7 +281,7 @@ export default Vue.extend({
   }
 
   &:not(.disabled):hover,
-  &:not(.disabled):focus-within {
+  &:not(.disabled).input-within {
     .popup-container {
       top: 100%;
       > .popup {

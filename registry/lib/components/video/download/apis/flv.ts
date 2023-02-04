@@ -47,9 +47,6 @@ const downloadFlv = async (input: DownloadVideoInputItem) => {
     cid,
     qn: quality?.value ?? '',
     otype: 'json',
-    fourk: 1,
-    fnver: 0,
-    fnval: 0,
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
   const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
@@ -66,6 +63,6 @@ const downloadFlv = async (input: DownloadVideoInputItem) => {
 export const videoFlv: DownloadVideoApi = {
   name: 'video.flv',
   displayName: 'flv',
-  description: '使用 flv 格式下载, 兼容 H.264 编码.',
+  description: '使用 flv 格式下载, 兼容 H.264 编码. 支持的清晰度相比于 dash 会少很多.',
   downloadVideoInfo: input => downloadFlv(input),
 }

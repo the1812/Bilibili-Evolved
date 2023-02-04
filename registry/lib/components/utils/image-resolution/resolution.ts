@@ -1,4 +1,5 @@
 import { styledComponentEntry } from '@/components/styled-component'
+import { Options } from '.'
 
 const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
 const excludeSelectors = ['#certify-img1', '#certify-img2']
@@ -70,7 +71,7 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     )
   })
 }
-export const startResolution = styledComponentEntry(
+export const startResolution = styledComponentEntry<Options>(
   () => import('./fix.scss'),
   async ({ settings }) => {
     const { allMutations } = await import('@/core/observer')

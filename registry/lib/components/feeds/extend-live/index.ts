@@ -1,4 +1,4 @@
-import { ComponentMetadata } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
 import { styledComponentEntry } from '@/components/styled-component'
 
 interface LiveInfo {
@@ -69,7 +69,7 @@ const entry = async () => {
   console.log(presented, extend)
 }
 
-export const component: ComponentMetadata = {
+export const component = defineComponentMetadata({
   name: 'extendFeedsLive',
   displayName: '直播信息扩充',
   description: {
@@ -78,4 +78,4 @@ export const component: ComponentMetadata = {
   entry: styledComponentEntry(() => import('./extend-feeds-live.scss'), entry),
   tags: [componentsTags.feeds, componentsTags.live],
   urlInclude: [/^https:\/\/t\.bilibili\.com\/$/],
-}
+})

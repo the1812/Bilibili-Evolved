@@ -17,6 +17,7 @@ specifiers:
   '@types/node': ^17.0.31
   '@types/serve-handler': ^6.1.1
   '@types/sortablejs': ^1.10.7
+  '@types/streamsaver': ^2.0.1
   '@types/webpack-env': ^1.15.1
   '@types/ws': ^8.2.3
   '@typescript-eslint/eslint-plugin': ^5.9.1
@@ -46,6 +47,7 @@ specifiers:
   sass: ^1.25.0
   serve: ^13.0.2
   serve-handler: ^6.1.3
+  streamsaver: ^2.0.6
   style-loader: ^2.0.0
   terser: '>=5.3.8 <6'
   terser-webpack-plugin: ^5.0.1
@@ -70,6 +72,7 @@ dependencies:
   lodash: registry.npmmirror.com/lodash/4.17.21
   marked: registry.npmmirror.com/marked/1.2.9
   protobufjs: registry.npmmirror.com/protobufjs/6.11.2
+  streamsaver: registry.npmmirror.com/streamsaver/2.0.6
   tippy.js: registry.npmmirror.com/tippy.js/6.3.7
   vue: registry.npmmirror.com/vue/2.6.14
   vue-fragment: registry.npmmirror.com/vue-fragment/1.5.2_vue@2.6.14
@@ -90,6 +93,7 @@ devDependencies:
   '@types/node': registry.npmmirror.com/@types/node/17.0.31
   '@types/serve-handler': registry.npmmirror.com/@types/serve-handler/6.1.1
   '@types/sortablejs': registry.npmmirror.com/@types/sortablejs/1.10.7
+  '@types/streamsaver': registry.npmmirror.com/@types/streamsaver/2.0.1
   '@types/webpack-env': registry.npmmirror.com/@types/webpack-env/1.16.4
   '@types/ws': registry.npmmirror.com/@types/ws/8.2.3
   '@typescript-eslint/eslint-plugin': registry.npmmirror.com/@typescript-eslint/eslint-plugin/5.22.0_e7x4dwqa46aij5nkdae76zedue
@@ -2094,6 +2098,12 @@ packages:
     resolution: {integrity: sha512-lGCwwgpj8zW/ZmaueoPVSP7nnc9t8VqVWXS+ASX3eoUUENmiazv0rlXyTRludXzuX9ALjPsMqBu85TgJNWbTOg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/sortablejs/-/sortablejs-1.10.7.tgz}
     name: '@types/sortablejs'
     version: 1.10.7
+    dev: true
+
+  registry.npmmirror.com/@types/streamsaver/2.0.1:
+    resolution: {integrity: sha512-I49NtT8w6syBI3Zg3ixCyygTHoTVMY0z2TMRcTgccdIsVd2MwlKk7ITLHLsJtgchUHcOd7QEARG9h0ifcA6l2Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/streamsaver/-/streamsaver-2.0.1.tgz}
+    name: '@types/streamsaver'
+    version: 2.0.1
     dev: true
 
   registry.npmmirror.com/@types/webpack-env/1.16.4:
@@ -6632,6 +6642,12 @@ packages:
     name: sprintf-js
     version: 1.0.3
     dev: true
+
+  registry.npmmirror.com/streamsaver/2.0.6:
+    resolution: {integrity: sha512-LK4e7TfCV8HzuM0PKXuVUfKyCB1FtT9L0EGxsFk5Up8njj0bXK8pJM9+Wq2Nya7/jslmCQwRK39LFm55h7NBTw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/streamsaver/-/streamsaver-2.0.6.tgz}
+    name: streamsaver
+    version: 2.0.6
+    dev: false
 
   registry.npmmirror.com/string-width/4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/string-width/-/string-width-4.2.3.tgz}

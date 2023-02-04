@@ -1,0 +1,10 @@
+.search-word {
+  &.icon {
+    display: none !important;
+  }
+  // 需要比夜间模式的优先级高
+  .reply-warp .reply-item &.jump-link {
+    color: inherit !important;
+    cursor: text !important;
+  }
+}

@@ -2,7 +2,7 @@ import { Toast } from '@/core/toast'
 import { DownloadVideoOutput } from '../types'
 
 export const toastOutput: DownloadVideoOutput = {
-  name: 'consoleLogDemo',
+  name: 'toast',
   displayName: 'Toast',
   description:
     '弹一条消息显示出下载链接, 右键新标签页打开就可以下载. 链接有 referer 限制, 复制无用, 且不能保留视频文件名.',

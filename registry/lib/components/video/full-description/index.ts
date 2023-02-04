@@ -15,7 +15,7 @@ const entry = () => {
     }
     const expandButton = await sq(
       () => dq(desc, '[report-id="abstract_spread"], .toggle-btn') as HTMLElement,
-      it => it.style.display !== 'none',
+      it => it && it.style.display !== 'none',
     )
     expandButton?.click()
   })

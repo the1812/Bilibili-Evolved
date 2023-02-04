@@ -1,5 +1,5 @@
 import { none } from '@/core/utils'
-import { ComponentEntry, ComponentMetadata } from './component'
+import { ComponentEntry, ComponentMetadata, UnknownOptions } from './component'
 
 /**
  * 创建一个自动添加指定样式的组件入口函数
@@ -7,7 +7,10 @@ import { ComponentEntry, ComponentMetadata } from './component'
  * @param entry 组件入口函数
  */
 export const styledComponentEntry =
-  (styleImport: () => Promise<{ default: string }>, entry: ComponentEntry): ComponentEntry =>
+  <O extends UnknownOptions>(
+    styleImport: () => Promise<{ default: string }>,
+    entry: ComponentEntry<O>,
+  ): ComponentEntry<O> =>
   async context => {
     const { default: style } = await styleImport()
     const { addStyle } = await import('@/core/style')
@@ -20,11 +23,11 @@ export const styledComponentEntry =
  * @param styleImport 动态导入样式的函数
  * @param entry 组件入口函数
  */
-export const toggleStyle = (
+export const toggleStyle = <O extends UnknownOptions>(
   name: string,
   styleImport: () => Promise<{ default: string }>,
-  entry: ComponentEntry = none,
-): Pick<ComponentMetadata, 'name' | 'entry' | 'reload' | 'unload'> => {
+  entry: ComponentEntry<O> = none,
+): Pick<ComponentMetadata<O>, 'name' | 'entry' | 'reload' | 'unload'> => {
   let styleElement: HTMLStyleElement = null
   const styleEntry = async () => {
     if (styleElement) {
