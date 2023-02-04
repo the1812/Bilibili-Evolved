@@ -20,8 +20,8 @@
           :is="options.radio ? 'RadioButton' : 'CheckBox'"
           v-for="name of Object.keys(options.switches)"
           :key="name"
-          :class="{ dim: isDim(name) }"
           v-bind="options.switchProps || {}"
+          :class="{ dim: isDim(name) }"
           :checked="componentOptions[`switch-${name}`]"
           @update:checked="componentOptions[`switch-${name}`] = $event"
         >
@@ -35,8 +35,8 @@
           :is="options.radio ? 'RadioButton' : 'CheckBox'"
           v-for="name of Object.keys(options.switches)"
           :key="name"
-          :class="{ dim: isDim(name) }"
           v-bind="options.switchProps || {}"
+          :class="{ dim: isDim(name) }"
           :checked="componentOptions[`switch-${name}`]"
           @update:checked="componentOptions[`switch-${name}`] = $event"
         >
