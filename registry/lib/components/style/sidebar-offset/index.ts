@@ -19,7 +19,7 @@ export const component = defineComponentMetadata({
     addComponentListener(
       `${metadata.name}.offset`,
       (value: number) => {
-        document.body.style.setProperty('--be-sidebar-offset', `${value}%`)
+        document.documentElement.style.setProperty('--be-sidebar-offset', `${value}%`)
       },
       true,
     )
