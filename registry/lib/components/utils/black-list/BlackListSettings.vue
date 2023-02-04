@@ -32,7 +32,7 @@
           ref="black-listSortList"
           class="black-list-settings-section-content black-list-sort-list"
         >
-          <div v-for="item of list" :key="item" class="black-list-sort-item" :data-name="item">
+          <div v-for="item of list0" :key="item" class="black-list-sort-item" :data-name="item">
             <div class="item-name">
               {{ item }}
             </div>
@@ -80,12 +80,13 @@ export default defineComponent({
       open: false,
       loaded: false,
       name: '',
+      list0: this.list,
     }
   },
   watch: {
     open(newVal: boolean) {
       if (!newVal) {
-        this.save(this.list)
+        this.save(this.list0)
       }
     },
   },
@@ -100,15 +101,12 @@ export default defineComponent({
       this.name = val
     },
     add() {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.list.push(this.name)
-      // eslint-disable-next-line vue/no-mutating-props
-      this.list = lodash.uniq(this.list)
+      this.list0.push(this.name)
+      this.list0 = lodash.uniq(this.list0)
       this.name = ''
     },
     toggleVisible(item: any) {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.list.splice(this.list.indexOf(item), 1)
+      this.list0.splice(this.list0.indexOf(item), 1)
     },
   },
 })
