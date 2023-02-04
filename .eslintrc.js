@@ -4,7 +4,7 @@ module.exports = {
     es2020: true,
   },
   extends: [
-    'plugin:vue/recommended',
+    'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
     'airbnb-base',
     'plugin:prettier/recommended',
