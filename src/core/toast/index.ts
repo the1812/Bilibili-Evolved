@@ -9,7 +9,7 @@ export enum ToastType {
   Success = 'success',
   Error = 'error',
 }
-let container: Vue & { cards: Toast[] }
+let container: InstanceType<typeof ToastCardContainer> | undefined
 export class Toast {
   private durationNumber: number | undefined = 3000
   private durationTimeout = 0
@@ -27,8 +27,9 @@ export class Toast {
   static createToastContainer() {
     if (!dq('.toast-card-container')) {
       // console.log(Vue, ToastCardContainer)
-      container = mountVueComponent(ToastCardContainer)
-      document.body.insertAdjacentElement('beforeend', container.$el)
+      const [el, vm] = mountVueComponent(ToastCardContainer)
+      container = vm
+      document.body.insertAdjacentElement('beforeend', el)
     }
   }
   get element() {

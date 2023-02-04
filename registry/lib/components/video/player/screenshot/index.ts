@@ -5,15 +5,12 @@ import { playerUrls } from '@/core/utils/urls'
 
 import type { KeyBindingAction } from '../../../utils/keymap/bindings'
 import desc from './desc.md'
-import type { Screenshot } from './screenshot'
 import { takeScreenshot } from './screenshot'
 import ScreenshotContainer from './VideoScreenshotContainer.vue'
 
 export const VideoScreenshotDisabledClass = 'video-screenshot-disable'
 const entry = async () => {
-  let screenShotsList: Vue & {
-    screenshots: Screenshot[]
-  }
+  let screenShotsList: InstanceType<typeof ScreenshotContainer> | undefined
   addControlBarButton({
     name: 'takeScreenshot',
     displayName: '截图',
@@ -25,8 +22,9 @@ const entry = async () => {
       if (video instanceof HTMLVideoElement) {
         const screenshot = takeScreenshot(video, e.shiftKey)
         if (!screenShotsList) {
-          screenShotsList = mountVueComponent(ScreenshotContainer)
-          document.body.insertAdjacentElement('beforeend', screenShotsList.$el)
+          const [el, vm] = mountVueComponent(ScreenshotContainer)
+          screenShotsList = vm
+          document.body.insertAdjacentElement('beforeend', el)
         }
         screenShotsList.screenshots.unshift(screenshot)
       } else {

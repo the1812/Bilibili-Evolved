@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import type { Executable, VueModule } from '@/core/common-types'
+import type { Executable, ImportedVueComponent } from '@/core/common-types'
 import { ascendingSort } from '@/core/utils/sort'
 import VIcon from '@/ui/icon/VIcon.vue'
 import VPopup from '@/ui/VPopup.vue'
@@ -106,7 +106,7 @@ export default defineComponent({
       const { filter } = (this.tags as SettingsTag[]).find(t => t.name === tag.name)
       this.$emit('change', filter)
     },
-    async openSubPage(e: MouseEvent, component: Executable<VueModule>) {
+    async openSubPage(e: MouseEvent, component: Executable<ImportedVueComponent>) {
       if (this.selectedSubPage === component) {
         this.selectedSubPageOpen = !this.selectedSubPageOpen
         return

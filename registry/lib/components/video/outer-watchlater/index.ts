@@ -32,11 +32,8 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   }
   const { hasVideo } = await import('@/core/spin-query')
   await hasVideo()
-  const OuterWatchlater = await import('./OuterWatchlater.vue')
-  const vm: Vue & {
-    aid: string
-  } = mountVueComponent(OuterWatchlater)
-  favoriteButton.insertAdjacentElement('afterend', vm.$el)
+  const [el, vm] = mountVueComponent(await import('./OuterWatchlater.vue'))
+  favoriteButton.insertAdjacentElement('afterend', el)
   const { videoChange } = await import('@/core/observer')
   videoChange(({ aid }) => {
     console.log('videoChange', unsafeWindow.aid, aid)

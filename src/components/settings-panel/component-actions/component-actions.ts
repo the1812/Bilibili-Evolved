@@ -1,4 +1,4 @@
-import type { Executable, VueModule } from '@/core/common-types'
+import type { Executable, ImportedVueComponent } from '@/core/common-types'
 import { isUserComponent } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
 import { getHook } from '@/plugins/hook'
@@ -17,7 +17,7 @@ export interface ComponentConfigAction {
 }
 export interface ComponentVueAction {
   name: string
-  component: Executable<VueModule>
+  component: Executable<ImportedVueComponent>
 }
 export type ComponentAction = (
   metadata: ComponentMetadata,

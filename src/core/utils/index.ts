@@ -1,4 +1,6 @@
-import type { VueModule } from '../common-types'
+import { type CreateAppFunction, type ComponentPublicInstance, type App, createApp } from 'vue'
+import { Plugin as VueFragmentPlugin } from 'vue-fragment'
+import type { ImportedType } from '@/core/common-types'
 
 /**
  * 当查询 video 元素且被灰度了 WasmPlayer 时, 更换为对 bwp-video 的查询, 否则会找不到 video 元素
@@ -178,24 +180,60 @@ export const matchPattern = (str: string, pattern: string | RegExp) => {
 /** 以`document.URL`作为被测字符串, 移除URL查询参数并调用`matchPattern` */
 export const matchUrlPattern = (pattern: string | RegExp) =>
   matchPattern(document.URL.replace(window.location.search, ''), pattern)
-/** 创建Vue组件的实例
- * @param module Vue组件模块对象
- * @param target 组件的挂载目标元素, 省略时不挂载直接返回
+
+/**
+ * 创建 Vue 应用实例
+ *
+ * @remarks
+ * 是 `createApp` 的包装。在创建实例时会进行一些配置。
+ *
+ * 自定义指令：
+ * - `v-hit`：接受一个事件监听器，当点击、空格按下或回车按下时调用。当触发方式是键盘触发时，会抑制 DOM 元素事件的默认行为。监听器的类型参考 `addEventListener` 第二个参数。
  */
-export const mountVueComponent = <T>(module: VueModule, target?: Element | string): Vue & T => {
-  const obj = 'default' in module ? module.default : module
-  const getInstance = (o: any) => {
-    if (o instanceof Function) {
-      // eslint-disable-next-line new-cap
-      return new o()
-    }
-    if (o.functional) {
-      return new (Vue.extend(o))()
-    }
-    return new Vue(o)
+export const createVueApp: CreateAppFunction<Element> = (rootComponent, rootProps?) => {
+  const hook = (el: Element, { value: listener }: { value: EventListener }) => {
+    el.addEventListener('click', listener)
+    el.addEventListener('keydown', function raw(this, event, ...rest) {
+      if (['Enter', ' '].includes((event as KeyboardEvent).key)) {
+        event.preventDefault()
+        Reflect.apply(listener, this, [event, ...rest])
+      }
+    })
   }
-  return getInstance(obj).$mount(target) as Vue & T
+  const directive = { mounted: hook }
+  return createApp(rootComponent, rootProps).directive('hit', directive).use(VueFragmentPlugin)
 }
+
+/**
+ * 创建 Vue 应用实例，并挂载到新建的元素上
+ *
+ * @remarks
+ * 新建的元素游离在 DOM 树之外，需要手动添加到 DOM 树中
+ *
+ * @example
+ * ```ts
+ * // static import
+ * import MyComponent from './MyComponent.vue'
+ * const [el, vm, app] = mountVueComponent(MyComponent)
+ *
+ * // dynamic import
+ * const [el, vm, app] = mountVueComponent(await import('./MyComponent.vue'))
+ * ```
+ *
+ * @param component 组件
+ * @param rootProps 传递给根组件的 props
+ * @returns 被挂载的 DOM 元素、Vue 组件实例和 Vue 应用实例
+ */
+export const mountVueComponent = <I extends ComponentPublicInstance>(
+  component: ImportedType<new () => I>,
+  rootProps?: Record<string, unknown> | null,
+): [HTMLDivElement, I, App<HTMLDivElement>] => {
+  const container = document.createElement('div')
+  const app = createVueApp(component, rootProps) as App<HTMLDivElement>
+  const instance = app.mount(container) as I
+  return [container, instance, app]
+}
+
 /** 是否处于其他网站的内嵌播放器中 */
 export const isEmbeddedPlayer = () =>
   window.location.host === 'player.bilibili.com' ||

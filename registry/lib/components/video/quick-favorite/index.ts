@@ -36,19 +36,17 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (!favoriteButton) {
     return
   }
-  const QuickFavorite = await import('./QuickFavorite.vue')
-  let vm: Vue & {
-    aid: string
-    syncFavoriteState: () => Promise<void>
-  }
+  const { default: QuickFavorite } = await import('./QuickFavorite.vue')
+  let quickFavorite: InstanceType<typeof QuickFavorite> | undefined
   const { videoChange } = await import('@/core/observer')
   videoChange(() => {
-    if (!vm) {
-      vm = mountVueComponent(QuickFavorite)
-      favoriteButton.insertAdjacentElement('afterend', vm.$el)
+    if (!quickFavorite) {
+      const [el, vm] = mountVueComponent(QuickFavorite)
+      quickFavorite = vm
+      favoriteButton.insertAdjacentElement('afterend', el)
     }
-    vm.aid = unsafeWindow.aid
-    vm.syncFavoriteState()
+    quickFavorite.aid = unsafeWindow.aid
+    quickFavorite.syncFavoriteState()
   })
 }
 export const component = defineComponentMetadata({

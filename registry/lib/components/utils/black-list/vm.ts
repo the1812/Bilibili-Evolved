@@ -3,16 +3,11 @@ import { mountVueComponent } from '@/core/utils'
 import { addData, getData } from '@/plugins/data'
 
 import { BlackListDataKey } from './common'
+import type BlackListSettings from './BlackListSettings.vue'
 
-type SettingsVmType = Vue & {
-  toggle: () => void
-  triggerElement: HTMLElement
-  list: string[]
-  save: (items: string[]) => void
-  titleName: string
-}
-let nameSettingsVM: SettingsVmType
-let regexSettingsVm: SettingsVmType
+type SettingsVmType = InstanceType<typeof BlackListSettings>
+let nameSettingsVM: SettingsVmType | undefined
+let regexSettingsVm: SettingsVmType | undefined
 
 const blackListOptions = getComponentSettings('blackList').options as {
   up: string[]
@@ -54,9 +49,9 @@ export const loadNameSettings = async () => {
   if (nameSettingsVM) {
     return false
   }
-  const blackListSettings = await import('./BlackListSettings.vue').then(m => m.default)
-  nameSettingsVM = mountVueComponent(blackListSettings)
-  document.body.insertAdjacentElement('beforeend', nameSettingsVM.$el)
+  const [el, vm] = mountVueComponent(await import('./BlackListSettings.vue'))
+  nameSettingsVM = vm
+  document.body.insertAdjacentElement('beforeend', el)
   return true
 }
 
@@ -64,9 +59,9 @@ export const loadRegexSettings = async () => {
   if (regexSettingsVm) {
     return false
   }
-  const blackListSettings = await import('./BlackListSettings.vue').then(m => m.default)
-  regexSettingsVm = mountVueComponent(blackListSettings)
-  document.body.insertAdjacentElement('beforeend', regexSettingsVm.$el)
+  const [el, vm] = mountVueComponent(await import('./BlackListSettings.vue'))
+  regexSettingsVm = vm
+  document.body.insertAdjacentElement('beforeend', el)
   return true
 }
 export const toggleNameSettings = async () => {

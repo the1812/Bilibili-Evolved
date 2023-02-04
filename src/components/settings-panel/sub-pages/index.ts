@@ -1,9 +1,9 @@
-import type { Executable, VueModule } from '@/core/common-types'
+import type { Executable, ImportedVueComponent } from '@/core/common-types'
 
 export interface SubPage {
   name: string
   displayName: string
-  component: Executable<VueModule>
+  component: Executable<ImportedVueComponent>
   icon: string
 }
 export const subPages: SubPage[] = [

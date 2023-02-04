@@ -1,4 +1,4 @@
-import type { Executable, VueModule } from '@/core/common-types'
+import type { Executable, ImportedVueComponent } from '@/core/common-types'
 
 /** 用于`TabControl`的标签定义 */
 export interface TabMapping {
@@ -7,7 +7,7 @@ export interface TabMapping {
   /** 显示名称 */
   displayName: string
   /** 切换到此标签时要显示的组件 */
-  component: Executable<VueModule>
+  component: Executable<ImportedVueComponent>
   /** 传给组件的参数 */
   propsData?: Record<string, unknown>
   /** 选中状态时, 再次点击此标签触发的跳转URL */

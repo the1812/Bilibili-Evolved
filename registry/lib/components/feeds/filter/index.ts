@@ -19,9 +19,8 @@ const entry = async () => {
   if (leftPanel === null) {
     return
   }
-  const FeedsFilterCard = await import('./FeedsFilterCard.vue')
   const { mountVueComponent } = await import('@/core/utils')
-  leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(FeedsFilterCard).$el)
+  leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(await import('./FeedsFilterCard.vue'))[0])
 }
 
 const options = defineOptionsMetadata({

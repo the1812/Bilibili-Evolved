@@ -2,11 +2,12 @@ import { mountVueComponent } from '@/core/utils'
 
 import GlobalLaunchBar from './GlobalLaunchBar.vue'
 
-let launchBarInstance: Vue & { show: boolean }
+let launchBarInstance: InstanceType<typeof GlobalLaunchBar> | undefined
 export const toggleLaunchBar = () => {
   if (!launchBarInstance) {
-    launchBarInstance = mountVueComponent(GlobalLaunchBar)
-    document.body.append(launchBarInstance.$el)
+    const [el, vm] = mountVueComponent(GlobalLaunchBar)
+    launchBarInstance = vm
+    document.body.append(el)
     return
   }
   launchBarInstance.show = !launchBarInstance.show

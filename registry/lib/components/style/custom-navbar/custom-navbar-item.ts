@@ -1,7 +1,7 @@
 import type { Instance as Popper } from '@popperjs/core'
 import { createPopper } from '@popperjs/core'
 
-import type { Executable, VueModule } from '@/core/common-types'
+import type { Executable, ImportedVueComponent } from '@/core/common-types'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 import type { CustomNavbarOptions } from '.'
@@ -17,7 +17,7 @@ export interface CustomNavbarItemInit {
   /** 显示名称 */
   displayName: string
   /** 内容 */
-  content: Executable<VueModule> | string
+  content: Executable<ImportedVueComponent> | string
 
   /** 设定CSS flex样式 (grow, shrink, basis) */
   flexStyle?: string
@@ -39,7 +39,7 @@ export interface CustomNavbarItemInit {
   loginRequired?: boolean
 
   /** 弹窗内容 */
-  popupContent?: Executable<VueModule>
+  popupContent?: Executable<ImportedVueComponent>
   /** 设为大于0的值时, 表示预计的弹窗宽度, 将会用于边缘检测, 防止超出viewport */
   boundingWidth?: number
   /** 不使用默认的弹窗padding */
@@ -53,7 +53,7 @@ export interface CustomNavbarItemInit {
 export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
   name: string
   displayName: string
-  content: Executable<VueModule> | string
+  content: Executable<ImportedVueComponent> | string
 
   flexStyle = '0 0 auto'
   disabled = false
@@ -65,7 +65,7 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
   touch = false
   loginRequired = false
 
-  popupContent: Executable<VueModule> = null
+  popupContent: Executable<ImportedVueComponent> = null
   popper: Popper = null
   boundingWidth = 0
   noPopupPadding = false

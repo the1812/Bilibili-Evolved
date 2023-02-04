@@ -1,20 +1,18 @@
 import { mountVueComponent } from '@/core/utils'
+import type KeymapSettings from './KeymapSettings.vue'
 
-let settingsVM: Vue & {
-  popupOpen: boolean
-  triggerElement: HTMLElement
-}
+let settingsVM: InstanceType<typeof KeymapSettings> | undefined
 
 export const loadKeymapSettings = async (button?: HTMLElement) => {
   if (settingsVM) {
     return
   }
-  const KeymapSettings = await import('./KeymapSettings.vue').then(m => m.default)
-  settingsVM = mountVueComponent(KeymapSettings)
+  const [el, vm] = mountVueComponent(await import('./KeymapSettings.vue'))
+  settingsVM = vm
   if (button) {
     settingsVM.triggerElement = button
   }
-  document.body.insertAdjacentElement('beforeend', settingsVM.$el)
+  document.body.insertAdjacentElement('beforeend', el)
 }
 export const toggleKeymapSettings = async (button?: HTMLElement) => {
   if (!settingsVM) {

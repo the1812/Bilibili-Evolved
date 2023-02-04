@@ -1,9 +1,7 @@
 import { mountVueComponent } from '@/core/utils'
+import type NavbarSettings from './NavbarSettings.vue'
 
-let navbarSettingsVM: Vue & {
-  toggle: () => void
-  triggerElement: HTMLElement
-}
+let navbarSettingsVM: InstanceType<typeof NavbarSettings> | undefined
 export const setTriggerElement = (element: HTMLElement) => {
   if (!navbarSettingsVM) {
     return
@@ -14,9 +12,9 @@ export const loadNavbarSettings = async () => {
   if (navbarSettingsVM) {
     return false
   }
-  const NavbarSettings = await import('./NavbarSettings.vue').then(m => m.default)
-  navbarSettingsVM = mountVueComponent(NavbarSettings)
-  document.body.insertAdjacentElement('beforeend', navbarSettingsVM.$el)
+  const [el, vm] = mountVueComponent(await import('./NavbarSettings.vue'))
+  navbarSettingsVM = vm
+  document.body.insertAdjacentElement('beforeend', el)
   return true
 }
 export const toggleNavbarSettings = async () => {

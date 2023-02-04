@@ -11,8 +11,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { mountVueComponent } from '@/core/utils'
 
-let panel: { open: boolean } & Vue
+import type DownloadVideo from './DownloadVideo.vue'
+
+let panel: InstanceType<typeof DownloadVideo> | undefined
 export default defineComponent({
   components: {
     DefaultWidget: coreApis.ui.DefaultWidget,
@@ -20,14 +23,11 @@ export default defineComponent({
   methods: {
     async createDownloadPanel() {
       if (!panel) {
-        const holder = document.createElement('div')
-        document.body.appendChild(holder)
-        const DownloadVideoPanel = await import('./DownloadVideo.vue').then(m => m.default)
-        panel = new DownloadVideoPanel({
-          propsData: {
-            triggerElement: this.$refs.button,
-          },
-        }).$mount(holder)
+        const [el, vm] = mountVueComponent(await import('./DownloadVideo.vue'), {
+          triggerElement: this.$refs.button,
+        })
+        panel = vm
+        document.body.appendChild(el)
       }
     },
     async toggleDownloadPanel() {

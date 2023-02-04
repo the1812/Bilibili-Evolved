@@ -2,14 +2,12 @@ import { mountVueComponent } from '@/core/utils'
 
 import OnlineRegistry from './OnlineRegistry.vue'
 
-let vm: Vue & {
-  popupOpen: boolean
-  searchKeyword: string
-}
+let vm: InstanceType<typeof OnlineRegistry> | undefined
 export const initPopup = () => {
   if (!vm) {
-    vm = mountVueComponent(OnlineRegistry)
-    document.body.append(vm.$el)
+    const [el, vm0] = mountVueComponent(OnlineRegistry)
+    vm = vm0
+    document.body.append(el)
   }
 }
 export const togglePopup = () => {
