@@ -79,8 +79,7 @@
     "protobufjs": "^6.11.2",
     "streamsaver": "^2.0.6",
     "tippy.js": "^6.3.1",
-    "vue": "^3.2.47",
-    "vue-fragment": "^1.5.2"
+    "vue": "^3.2.47"
   },
   "keywords": [
     "userscript",

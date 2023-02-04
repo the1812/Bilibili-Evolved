@@ -1,15 +1,13 @@
 <template>
-  <fragment>
-    <div
-      class="fresh-home-content-layout-item"
-      :class="{
-        grow: item.grow,
-      }"
-    >
-      <component :is="item.component" />
-    </div>
-    <div v-if="options.linebreak" class="fresh-home-content-layout-item linebreak"></div>
-  </fragment>
+  <div
+    class="fresh-home-content-layout-item"
+    :class="{
+      grow: item.grow,
+    }"
+  >
+    <component :is="item.component" />
+  </div>
+  <div v-if="options.linebreak" class="fresh-home-content-layout-item linebreak"></div>
 </template>
 <script lang="ts">
 import type { PropType } from 'vue'

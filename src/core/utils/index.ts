@@ -1,5 +1,4 @@
 import { type CreateAppFunction, type ComponentPublicInstance, type App, createApp } from 'vue'
-import { Plugin as VueFragmentPlugin } from 'vue-fragment'
 import type { ImportedType } from '@/core/common-types'
 
 /**
@@ -201,7 +200,7 @@ export const createVueApp: CreateAppFunction<Element> = (rootComponent, rootProp
     })
   }
   const directive = { mounted: hook }
-  return createApp(rootComponent, rootProps).directive('hit', directive).use(VueFragmentPlugin)
+  return createApp(rootComponent, rootProps).directive('hit', directive)
 }
 
 /**
