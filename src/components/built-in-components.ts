@@ -4,6 +4,7 @@ import { component as LaunchBar } from './launch-bar'
 import { component as I18n } from './i18n'
 import { component as AutoUpdate } from './auto-update'
 import { component as NotifyNewVersion } from './notify-new-version'
+import { component as Bisector } from './bisector'
 
 export const getBuiltInComponents = (): ComponentMetadata[] => [
   SettingsPanel,
@@ -11,6 +12,7 @@ export const getBuiltInComponents = (): ComponentMetadata[] => [
   I18n,
   AutoUpdate,
   NotifyNewVersion,
+  Bisector,
 ]
 
 export const isBuiltInComponent = (name: string) =>
