@@ -67,7 +67,6 @@
       >
         <ComponentDetail
           v-if="selectedComponent"
-          :key="selectedComponent.name"
           :component-data="selectedComponent"
           @close="closePopper()"
         />

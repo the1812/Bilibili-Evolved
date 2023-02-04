@@ -78,10 +78,10 @@
       </div>
     </div>
     <div v-if="!loaded" class="sub-page-row">
-      <VLoading key="loading" />
+      <VLoading />
     </div>
     <div v-if="loaded" class="manage-item-list">
-      <VEmpty v-if="debouncedList.length === 0" key="empty" />
+      <VEmpty v-if="debouncedList.length === 0" />
       <ManageItem v-for="item of debouncedList" :key="item.name">
         <slot name="item" :item="item">
           {{ item.displayName }}
