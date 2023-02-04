@@ -1,5 +1,5 @@
 <template>
-  <VPopup v-model="open" fixed class="download-video-panel" :trigger-element="triggerElement">
+  <VPopup v-model:open="open" fixed class="download-video-panel" :trigger-element="triggerElement">
     <div class="download-video-panel-header">
       <VIcon icon="mdi-download" />
       <div class="title">下载视频</div>
@@ -10,7 +10,7 @@
     <div class="download-video-panel-content">
       <div v-if="selectedInput" class="download-video-config-item">
         <div class="download-video-config-title">输入源:</div>
-        <VDropdown v-model="selectedInput" :items="inputs" />
+        <VDropdown v-model:value="selectedInput" :items="inputs" />
       </div>
       <div v-if="inputs.length === 0" class="download-video-config-item error">
         没有匹配的输入源, 请确保安装了适合此页面的插件.
@@ -22,7 +22,7 @@
       />
       <div v-if="selectedApi" class="download-video-config-item">
         <div class="download-video-config-title">格式:</div>
-        <VDropdown v-model="selectedApi" :items="apis" />
+        <VDropdown v-model:value="selectedApi" :items="apis" />
       </div>
       <div
         v-if="selectedApi && selectedApi.description"
@@ -32,9 +32,9 @@
       <div v-if="selectedQuality" class="download-video-config-item">
         <div class="download-video-config-title">清晰度:</div>
         <VDropdown
-          v-model="selectedQuality"
+          v-model:value="selectedQuality"
           :items="filteredQualities"
-          @change="saveSelectedQuality()"
+          @update:value="saveSelectedQuality()"
         />
       </div>
       <template v-if="!testData.multiple && selectedQuality">
@@ -47,7 +47,7 @@
       </template>
       <div class="download-video-config-item">
         <div class="download-video-config-title">使用备用下载地址:</div>
-        <SwitchBox v-model="useBackupUrls" />
+        <SwitchBox v-model:checked="useBackupUrls" />
       </div>
       <component
         :is="a.component"
@@ -58,7 +58,7 @@
       />
       <div v-if="selectedOutput" class="download-video-config-item">
         <div class="download-video-config-title">输出方式:</div>
-        <VDropdown v-model="selectedOutput" :items="outputs" />
+        <VDropdown v-model:value="selectedOutput" :items="outputs" />
       </div>
       <div
         v-if="selectedOutput && selectedOutput.description"

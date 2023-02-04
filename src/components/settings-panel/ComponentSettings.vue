@@ -6,7 +6,7 @@
         <div class="display-name">
           {{ componentData.displayName }}
         </div>
-        <SwitchBox v-if="componentData.configurable !== false" v-model="settings.enabled" />
+        <SwitchBox v-if="componentData.configurable !== false" v-model:checked="settings.enabled" />
         <VIcon v-else icon="right-arrow" class="details-arrow" :size="18" />
       </div>
     </template>

@@ -44,7 +44,7 @@
     </div>
     <VPopup
       ref="popup"
-      v-model="popupOpen"
+      v-model:open="popupOpen"
       class="dropdown-popup"
       :lazy="false"
       :trigger-element="$refs.selected"
@@ -75,10 +75,6 @@ export default defineComponent({
   components: {
     VPopup,
   },
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
   props: {
     value: {
       required: true,
@@ -96,7 +92,7 @@ export default defineComponent({
       default: false,
     },
   },
-  emits: ['change'],
+  emits: ['update:value'],
   data() {
     return {
       popupOpen: false,
@@ -116,13 +112,13 @@ export default defineComponent({
   },
   created() {
     if (this.value === null || this.value === undefined) {
-      this.$emit('change', this.items[0] || '<No items>')
+      this.$emit('update:value', this.items[0] || '<No items>')
     }
   },
   methods: {
     selectItem(item: any) {
       if (item !== this.value) {
-        this.$emit('change', item)
+        this.$emit('update:value', item)
       }
       this.popupOpen = false
       this.$el.focus()

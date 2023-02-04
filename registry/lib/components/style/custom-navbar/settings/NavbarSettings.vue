@@ -1,7 +1,7 @@
 <template>
   <VPopup
     ref="popup"
-    v-model="open"
+    v-model:open="open"
     class="custom-navbar-settings"
     fixed
     :lazy="false"
@@ -27,7 +27,7 @@
           @mouseover="peekPadding(true)"
           @mouseout="peekPadding(false)"
         >
-          <VSlider v-model="padding" :min="0" :max="40" :step="0.5"></VSlider>
+          <VSlider v-model:value="padding" :min="0" :max="40" :step="0.5"></VSlider>
           <div class="padding-value">{{ padding.toFixed(1) }}%</div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 <template>
   <div class="manual-input download-video-config-section">
-    <TextArea v-model="inputText" placeholder="输入 av 号或 BV 号, 空格或换行分隔" />
+    <TextArea v-model:text="inputText" placeholder="输入 av 号或 BV 号, 空格或换行分隔" />
     <div class="manual-input-stats download-video-config-description">
       已输入 {{ ids.length }} 个视频
     </div>

@@ -4,7 +4,7 @@
       <slot name="text"> 选择图片 </slot>
     </VButton>
     <VPopup
-      v-model="popupOpen"
+      v-model:open="popupOpen"
       class="popup"
       :trigger-element="$refs.pickButton"
       @keydown.esc="cancel()"
@@ -25,7 +25,7 @@
       <div v-show="images.length === 0" class="empty-tip">空空如也哦 =￣ω￣=</div>
       <div class="operations">
         <VPopup
-          v-model="addImagePopupOpen"
+          v-model:open="addImagePopupOpen"
           tabindex="-1"
           class="add-image-popup"
           :lazy="false"
@@ -35,13 +35,13 @@
             名称:
             <TextBox
               ref="addImageInput"
-              v-model="newImage.name"
+              v-model:text="newImage.name"
               :disabled="!addImagePopupOpen"
             ></TextBox>
           </div>
           <div class="add-image-row">
             链接:
-            <TextBox v-model="newImage.url" :disabled="!addImagePopupOpen"></TextBox>
+            <TextBox v-model:text="newImage.url" :disabled="!addImagePopupOpen"></TextBox>
           </div>
           <div class="add-image-row buttons">
             <VButton
@@ -112,17 +112,13 @@ export default defineComponent({
     VPopup: () => import('./VPopup.vue').then(m => m.default),
     TextBox: () => import('./TextBox.vue').then(m => m.default),
   },
-  model: {
-    prop: 'image',
-    event: 'change',
-  },
   props: {
     image: {
       type: Object as PropType<ImageItem>,
       required: true,
     },
   },
-  emits: ['change'],
+  emits: ['update:image'],
   data() {
     return {
       images,
@@ -136,7 +132,7 @@ export default defineComponent({
     addImage,
     removeImage,
     ok() {
-      this.$emit('change', this.selectedImage)
+      this.$emit('update:image', this.selectedImage)
       this.popupOpen = false
     },
     cancel() {

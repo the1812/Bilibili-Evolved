@@ -1,6 +1,6 @@
 <template>
   <VPopup
-    v-model="popupOpen"
+    v-model:open="popupOpen"
     class="online-registry be-settings-extra-options"
     fixed
     :auto-close="false"
@@ -26,11 +26,11 @@
     <div class="online-registry-header">
       <div class="online-registry-header-search">
         <VIcon icon="search" :size="18" />
-        <TextBox v-model="searchKeyword" :disabled="loading" placeholder="搜索功能" />
+        <TextBox v-model:text="searchKeyword" :disabled="loading" placeholder="搜索功能" />
       </div>
       <div class="online-registry-header-branch">
         分支:
-        <VDropdown v-model="selectedBranch" :disabled="loading" :items="registryBranches">
+        <VDropdown v-model:value="selectedBranch" :disabled="loading" :items="registryBranches">
           <template #item="{ item }">
             {{ item }}
           </template>
@@ -43,7 +43,7 @@
           :key="option.value"
           group="itemFilter"
           :checked="itemFilter === option.value"
-          @change="$event && (itemFilter = option.value)"
+          @update:checked="$event && (itemFilter = option.value)"
         >
           {{ option.label }}
         </RadioButton>

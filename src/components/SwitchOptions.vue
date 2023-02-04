@@ -10,7 +10,7 @@
         {{ options.optionDisplayName }}
       </VButton>
       <VPopup
-        v-model="popupOpen"
+        v-model:open="popupOpen"
         class="switch-options-popup widgets-popup"
         :trigger-element="$refs.button"
         esc-close
@@ -23,7 +23,7 @@
           :class="{ dim: isDim(name) }"
           v-bind="options.switchProps || {}"
           :checked="componentOptions[`switch-${name}`]"
-          @change="componentOptions[`switch-${name}`] = $event"
+          @update:checked="componentOptions[`switch-${name}`] = $event"
         >
           {{ options.switches[name].displayName }}
         </component>
@@ -38,7 +38,7 @@
           :class="{ dim: isDim(name) }"
           v-bind="options.switchProps || {}"
           :checked="componentOptions[`switch-${name}`]"
-          @change="componentOptions[`switch-${name}`] = $event"
+          @update:checked="componentOptions[`switch-${name}`] = $event"
         >
           {{ options.switches[name].displayName }}
         </component>

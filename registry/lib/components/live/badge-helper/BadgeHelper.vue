@@ -2,7 +2,7 @@
   <div class="multiple-widgets">
     <VPopup
       ref="medalPopup"
-      v-model="medalOpen"
+      v-model:open="medalOpen"
       class="badge-popup widgets-popup medal"
       :trigger-element="$refs.medalButton"
     >
@@ -28,7 +28,7 @@
 
     <VPopup
       ref="titlePopup"
-      v-model="titleOpen"
+      v-model:open="titleOpen"
       class="badge-popup widgets-popup title"
       :trigger-element="$refs.titleButton"
     >

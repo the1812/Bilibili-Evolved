@@ -1,6 +1,6 @@
 <template>
   <div class="video-default-location-page-type-selector">
-    <VDropdown v-model="curItem" :items="items" @change="onChange">
+    <VDropdown v-model:value="curItem" :items="items" @update:value="onChange">
       <template #arrow>
         <div class="video-default-location-page-type-selector-icon">
           <VIcon :size="15" icon="mdi-chevron-down" />
@@ -28,17 +28,13 @@ interface Item {
 
 export default defineComponent({
   components: { VDropdown, VIcon },
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
   props: {
     value: {
       type: String,
       required: true,
     },
   },
-  emits: ['change'],
+  emits: ['update:value'],
   data() {
     return {
       items: Object.values(itemsMap),
@@ -54,7 +50,7 @@ export default defineComponent({
   },
   methods: {
     onChange(item: string | Item) {
-      this.$emit('change', item.name)
+      this.$emit('update:value', item.name)
     },
   },
 })

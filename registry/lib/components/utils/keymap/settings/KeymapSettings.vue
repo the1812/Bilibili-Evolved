@@ -1,6 +1,6 @@
 <template>
   <VPopup
-    v-model="popupOpen"
+    v-model:open="popupOpen"
     fixed
     class="keymap-settings-popup be-settings-extra-options"
     :trigger-element="triggerElement"
@@ -29,7 +29,11 @@
             <div class="header-name">动作</div>
             <div class="header-default-binding">默认按键</div>
             <div class="header-preset-binding">
-              <VDropdown v-model="selectedPreset" :items="presetOptions" :key-mapper="it => it">
+              <VDropdown
+                v-model:value="selectedPreset"
+                :items="presetOptions"
+                :key-mapper="it => it"
+              >
                 <template #item="{ item }">
                   {{ item }}
                 </template>

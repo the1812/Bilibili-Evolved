@@ -18,7 +18,7 @@
       <div class="lists">
         选择快速收藏夹:
         <VDropdown
-          v-model="selectedFavorite"
+          v-model:value="selectedFavorite"
           :items="lists.map(it => it.title)"
           :key-mapper="it => it"
         >

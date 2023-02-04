@@ -3,7 +3,7 @@
     <div class="header">
       <div class="header-row">
         <div class="search">
-          <TextBox v-model="search" placeholder="搜索" linear></TextBox>
+          <TextBox v-model:text="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
           <div class="operation" @click="toggleHistoryPause">
@@ -30,7 +30,7 @@
               :class="{ checked: t.checked }"
               :checked="t.checked"
               :disabled="loading"
-              @change="toggleTypeFilter(t)"
+              @update:checked="toggleTypeFilter(t)"
             >
               {{ t.displayName }}
             </RadioButton>

@@ -3,7 +3,7 @@
     <div class="video-default-location-form-line">
       <div class="video-default-location-form-item-not-grow">页面</div>
       <PageTypeSelector
-        v-model="pageType"
+        v-model:value="pageType"
         class="video-default-location-form-item-grow"
         @change="onChangePageType"
       />
@@ -14,7 +14,7 @@
     <div class="video-default-location-form-line">
       <div class="video-default-location-form-item-not-grow">默认位置</div>
       <TextBox
-        v-model="defaultLocation"
+        v-model:text="defaultLocation"
         class="video-default-location-form-item-grow"
         linear
         change-on-blur
@@ -25,7 +25,7 @@
     <div class="video-default-location-vertical-space"></div>
 
     <div class="video-default-location-options-test">
-      <ExtendBox v-model="hiddenAdvance" @change="resetObservePosition">
+      <ExtendBox v-model:hidden="hiddenAdvance" @change="resetObservePosition">
         <div class="video-default-location-options-advanced">
           <Advanced
             :observe-position="observePosition"

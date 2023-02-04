@@ -30,7 +30,7 @@
         class="video-default-location-form-item-grow"
         linear
         change-on-blur
-        @change="onLocationInput"
+        @update:text="onLocationInput"
       />
       <VButton @click="locateTo"> 定位 </VButton>
     </div>
@@ -43,7 +43,7 @@
         class="video-default-location-form-item-grow"
         linear
         change-on-blur
-        @change="onOffsetInput"
+        @update:text="onOffsetInput"
       />
       <VButton @click="offsetTo"> 偏移 </VButton>
     </div>

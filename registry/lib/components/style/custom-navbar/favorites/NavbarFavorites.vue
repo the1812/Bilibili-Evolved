@@ -1,9 +1,9 @@
 <template>
   <div class="favorites-list">
     <div class="header">
-      <FavoritesFolderSelect v-model="folder"></FavoritesFolderSelect>
+      <FavoritesFolderSelect v-model:folder="folder"></FavoritesFolderSelect>
       <div class="search">
-        <TextBox v-model="search" linear placeholder="搜索"></TextBox>
+        <TextBox v-model:text="search" linear placeholder="搜索"></TextBox>
       </div>
       <a class="operation" :href="playLink" title="播放全部" target="_blank">
         <VButton round class="play-all">

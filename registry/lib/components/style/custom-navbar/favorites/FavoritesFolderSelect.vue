@@ -5,7 +5,7 @@
     :items="folders"
     :key-mapper="f => f.id"
     :value="folder"
-    @change="change($event)"
+    @update:value="change($event)"
   >
     <template #item="{ item }">
       {{ item.name }}
@@ -28,17 +28,13 @@ export default defineComponent({
   components: {
     VDropdown,
   },
-  model: {
-    prop: 'folder',
-    event: 'change',
-  },
   props: {
     folder: {
       type: Object as PropType<FavoritesFolder>,
       required: true,
     },
   },
-  emits: ['change'],
+  emits: ['update:folder'],
   data() {
     return {
       folders: [] as FavoritesFolder[],
@@ -66,16 +62,16 @@ export default defineComponent({
       const { lastFavoriteFolder } = navbarOptions
       const folder = this.folders.find((f: FavoritesFolder) => f.id === lastFavoriteFolder)
       if (folder) {
-        this.$emit('change', folder)
+        this.$emit('update:folder', folder)
       } else {
-        this.$emit('change', this.folders[0])
+        this.$emit('update:folder', this.folders[0])
       }
     }
   },
   methods: {
     change(folder: FavoritesFolder) {
       navbarOptions.lastFavoriteFolder = folder.id
-      this.$emit('change', folder)
+      this.$emit('update:folder', folder)
     },
   },
 })

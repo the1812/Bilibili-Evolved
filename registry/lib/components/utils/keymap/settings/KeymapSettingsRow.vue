@@ -28,7 +28,7 @@
           placeholder="禁用"
           change-on-blur
           :text="customKeyBindings[row.name]"
-          @change="updateCustomBinding"
+          @update:text="updateCustomBinding"
         />
         <VButton type="transparent" title="删除自定义键位" @click="removeCustomBinding()">
           <VIcon icon="mdi-trash-can-outline" :size="16" />

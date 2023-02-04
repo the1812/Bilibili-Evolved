@@ -14,10 +14,6 @@ import type { PropType } from 'vue'
 
 export default defineComponent({
   name: 'VPopup',
-  model: {
-    prop: 'open',
-    event: 'popup-change',
-  },
   props: {
     open: {
       type: Boolean,
@@ -70,7 +66,7 @@ export default defineComponent({
       default: null,
     },
   },
-  emits: ['popup-change'],
+  emits: ['update:open'],
   data() {
     return {
       loaded: !this.lazy,
@@ -103,7 +99,7 @@ export default defineComponent({
     if (this.escClose) {
       element.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
-          this.$emit('popup-change', false)
+          this.$emit('update:open', false)
         }
       })
     }
@@ -135,7 +131,7 @@ export default defineComponent({
           })
       }
       if (isOutside) {
-        this.$emit('popup-change', false)
+        this.$emit('update:open', false)
       }
     },
     setAutoClose() {
@@ -151,7 +147,7 @@ export default defineComponent({
       }
     },
     toggle() {
-      this.$emit('popup-change', !this.open)
+      this.$emit('update:open', !this.open)
     },
   },
 })

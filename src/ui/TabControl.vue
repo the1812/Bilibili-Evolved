@@ -55,10 +55,6 @@ export default defineComponent({
     VButton: () => import('./VButton.vue').then(m => m.default),
     VIcon: () => import('./icon/VIcon.vue').then(m => m.default),
   },
-  model: {
-    prop: 'link',
-    event: 'change',
-  },
   props: {
     tabs: {
       type: Array as PropType<TabMappings>,
@@ -85,7 +81,7 @@ export default defineComponent({
       default: null,
     },
   },
-  emits: ['change'],
+  emits: ['update:link'],
   data() {
     return {
       selectedTab: (this.tabs.find((t: TabMapping) => t.name === this.defaultTab) ??
@@ -93,14 +89,14 @@ export default defineComponent({
     }
   },
   mounted() {
-    this.$emit('change', this.selectedTab.activeLink)
+    this.$emit('update:link', this.selectedTab.activeLink)
   },
   methods: {
     selectTab(tab: TabMapping) {
       if (this.selectedTab !== tab) {
         this.selectedTab = tab
         tab.count = 0
-        this.$emit('change', this.selectedTab.activeLink)
+        this.$emit('update:link', this.selectedTab.activeLink)
       } else if (tab.activeLink) {
         window.open(tab.activeLink, '_blank')
       }

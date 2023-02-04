@@ -6,7 +6,7 @@
     :aria-checked="checked"
     type="transparent"
     v-bind="$attrs"
-    @click="$emit('change', !checked)"
+    @click="$emit('update:checked', !checked)"
   >
     <div class="text-container">
       <slot>CheckBox</slot>
@@ -27,10 +27,6 @@ export default defineComponent({
     VButton: () => import('./VButton.vue').then(m => m.default),
     VIcon: () => import('./icon/VIcon.vue').then(m => m.default),
   },
-  model: {
-    prop: 'checked',
-    event: 'change',
-  },
   props: {
     checked: {
       type: Boolean,
@@ -49,7 +45,7 @@ export default defineComponent({
       default: 'mdi-checkbox-blank-circle-outline',
     },
   },
-  emits: ['change'],
+  emits: ['update:checked'],
 })
 </script>
 

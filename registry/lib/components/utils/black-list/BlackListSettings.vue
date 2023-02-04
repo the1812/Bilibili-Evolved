@@ -1,7 +1,7 @@
 <template>
   <VPopup
     ref="popup"
-    v-model="open"
+    v-model:open="open"
     class="custom-black-list-settings"
     fixed
     :lazy="false"
@@ -19,7 +19,7 @@
       <div class="black-list-settings-section">
         <div class="black-list-settings-section-title">添加到黑名单</div>
         <div class="black-list-settings-section-input">
-          <TextBox :text="name" @change="changeName" />
+          <TextBox :text="name" @update:text="changeName" />
           <VButton @click="add">添加</VButton>
         </div>
       </div>

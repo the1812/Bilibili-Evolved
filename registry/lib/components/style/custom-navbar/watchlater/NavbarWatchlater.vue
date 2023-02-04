@@ -2,7 +2,7 @@
   <div class="watchlater-list">
     <div class="header">
       <div class="search">
-        <TextBox v-model="search" linear placeholder="搜索"></TextBox>
+        <TextBox v-model:text="search" linear placeholder="搜索"></TextBox>
       </div>
       <a
         class="operation"

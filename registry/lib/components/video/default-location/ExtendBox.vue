@@ -35,10 +35,6 @@ const btnAnimationClass = 'video-default-location-extend-box-bar-btn-animation'
 
 export default defineComponent({
   components: { VIcon },
-  model: {
-    prop: 'hidden',
-    event: 'change',
-  },
   props: {
     title: {
       type: String,
@@ -53,7 +49,7 @@ export default defineComponent({
       default: true,
     },
   },
-  emits: ['change'],
+  emits: ['update:hidden'],
   data() {
     return {
       realHidden: this.hidden,
@@ -73,7 +69,7 @@ export default defineComponent({
     setRealHidden(value: boolean) {
       if (value !== this.realHidden) {
         this.realHidden = !this.realHidden
-        this.$emit('change', this.realHidden)
+        this.$emit('update:hidden', this.realHidden)
 
         this.btnClass[btnAnimationClass] = false
         this.$nextTick(() => {

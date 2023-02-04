@@ -2,7 +2,7 @@
   <div class="download-subtitle-config download-video-config-section">
     <div class="download-video-config-item">
       <div class="download-video-config-title">字幕:</div>
-      <VDropdown v-model="type" :items="items">
+      <VDropdown v-model:value="type" :items="items">
         <template #item="{ item }">
           {{ item }}
         </template>

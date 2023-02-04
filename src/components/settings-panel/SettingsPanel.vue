@@ -23,7 +23,11 @@
       <div ref="mainContainer" class="main">
         <div ref="componentList" class="component-list">
           <div class="settings-panel-search-bar">
-            <TextBox v-model="searchKeyword" class="settings-panel-search" placeholder="搜索" />
+            <TextBox
+              v-model:text="searchKeyword"
+              class="settings-panel-search"
+              placeholder="搜索"
+            />
             <VButton
               v-for="action of searchBarActions"
               :key="action.key"
@@ -59,7 +63,7 @@
         class="component-detail-panel"
         :trigger-element="$refs.componentList"
         :open="componentDetailOpen"
-        @popup-change="!$event && closePopper()"
+        @update:open="!$event && closePopper()"
       >
         <ComponentDetail
           v-if="selectedComponent"

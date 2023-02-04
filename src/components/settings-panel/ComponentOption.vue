@@ -9,29 +9,37 @@
       :validator="option.validator"
       :text="value.toString()"
       :placeholder="value.toString()"
-      @change="type === 'text' ? valueChange($event) : numberChange($event)"
+      @update:text="type === 'text' ? valueChange($event) : numberChange($event)"
     ></TextBox>
-    <SwitchBox v-if="type === 'boolean'" :checked="value" @change="valueChange($event)"></SwitchBox>
+    <SwitchBox
+      v-if="type === 'boolean'"
+      :checked="value"
+      @update:checked="valueChange($event)"
+    ></SwitchBox>
     <ColorPicker
       v-if="type === 'color'"
       :compact="true"
       :popup-offset="-95"
       :color="value"
-      @change="valueChange($event)"
+      @update:color="valueChange($event)"
     ></ColorPicker>
     <RangeInput
       v-if="type === 'range'"
       :validator="option.validator"
       :range="value"
-      @change="valueChange($event)"
+      @update:range="valueChange($event)"
     ></RangeInput>
-    <ImagePicker v-if="type === 'image'" :image="value" @change="valueChange($event)"></ImagePicker>
+    <ImagePicker
+      v-if="type === 'image'"
+      :image="value"
+      @update:image="valueChange($event)"
+    ></ImagePicker>
     <VDropdown
       v-if="type === 'dropdown'"
       :value="value"
       :items="getDropdownItems(option.dropdownEnum)"
       :key-mapper="it => it"
-      @change="valueChange($event)"
+      @update:value="valueChange($event)"
     >
       <template #item="{ item }">
         {{ item }}
@@ -47,7 +55,7 @@
       v-if="type === 'slider'"
       v-bind="option.slider"
       :value="value"
-      @change="debounceValueChange($event)"
+      @update:value="debounceValueChange($event)"
     ></VSlider>
     <div v-if="type === 'unknown'" class="unknown-option-type">未知的选项类型</div>
   </div>

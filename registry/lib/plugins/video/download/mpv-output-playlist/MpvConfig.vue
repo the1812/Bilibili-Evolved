@@ -2,15 +2,15 @@
   <div class="rpc-config download-video-config-section">
     <div class="profile-dir">
       <div class="profile-item-name">命令路径:</div>
-      <TextBox v-model="mpvInfo.dir" @blur="saveInfo" />
+      <TextBox v-model:text="mpvInfo.dir" @blur="saveInfo" />
     </div>
     <div class="profile-host">
       <div class="profile-item-name">主机:</div>
-      <TextBox v-model="mpvInfo.host" @blur="saveInfo" />
+      <TextBox v-model:text="mpvInfo.host" @blur="saveInfo" />
     </div>
     <div class="profile-port">
       <div class="profile-item-name">端口:</div>
-      <TextBox v-model="mpvInfo.port" @blur="saveInfo" />
+      <TextBox v-model:text="mpvInfo.port" @blur="saveInfo" />
     </div>
   </div>
 </template>

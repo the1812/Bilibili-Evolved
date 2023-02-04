@@ -35,13 +35,13 @@
         </OnlineRegistryButton>
       </div>
       <VPopup
-        v-model="batchAddShow"
+        v-model:open="batchAddShow"
         :trigger-element="$refs.batchAddButton"
         class="batch-add-popup"
       >
         <TextArea
           ref="batchAddTextArea"
-          v-model="batchUrl"
+          v-model:text="batchUrl"
           class="batch-add-textarea"
           placeholder="批量粘贴功能链接, 可以混合其他类型的功能 (如合集包)"
         />
@@ -59,7 +59,7 @@
     </div>
     <div class="sub-page-row">
       <TextBox
-        v-model="url"
+        v-model:text="url"
         class="item-url"
         :placeholder="'粘贴' + config.title + '链接'"
         @keydown.enter="addItem()"
@@ -74,7 +74,7 @@
       <div class="title-text">已安装的{{ config.title }}:</div>
       <div class="exclude-built-in">
         隐藏内置{{ config.title }}
-        <SwitchBox v-model="excludeBuiltIn" />
+        <SwitchBox v-model:checked="excludeBuiltIn" />
       </div>
     </div>
     <div v-if="!loaded" class="sub-page-row">

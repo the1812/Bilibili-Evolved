@@ -1,6 +1,6 @@
 <template>
   <VPopup
-    v-model="show"
+    v-model:open="show"
     :lazy="false"
     fixed
     class="global-launch-bar-container"

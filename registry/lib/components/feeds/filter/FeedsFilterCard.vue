@@ -17,7 +17,7 @@
     </div>
     <div class="add-pattern">
       <TextBox
-        v-model="newPattern"
+        v-model:text="newPattern"
         placeholder="支持正则表达式 /^xxx$/"
         type="text"
         @keydown.enter="addPattern(newPattern)"

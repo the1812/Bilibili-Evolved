@@ -92,10 +92,6 @@ type IntoIntCallback = (value: number) => number
 export default defineComponent({
   name: 'VSlider',
   components: { MiniToast },
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
   props: {
     focusable: {
       type: Boolean,
@@ -126,7 +122,7 @@ export default defineComponent({
       default: (v: number) => String(v),
     },
   },
-  emits: ['change', 'start', 'end'],
+  emits: ['update:value', 'start', 'end'],
   data() {
     return {
       // 用户输入值通过各种处理后得到的最终值，
@@ -242,7 +238,7 @@ export default defineComponent({
     setByLimited(limited: number) {
       if (limited !== this.realValue) {
         this.realValue = limited
-        this.$emit('change', this.realValue)
+        this.$emit('update:value', this.realValue)
       }
     },
     // 用 rounded 设置组件的值，设置前完成剩余步骤

@@ -35,7 +35,7 @@
     <div class="episodes-picker-items">
       <div v-for="(item, index) of episodeItems" :key="item.key" class="episodes-picker-item">
         <CheckBox
-          v-model="item.isChecked"
+          v-model:checked="item.isChecked"
           icon-position="left"
           :data-aid="item.inputItem.aid"
           :data-cid="item.inputItem.cid"

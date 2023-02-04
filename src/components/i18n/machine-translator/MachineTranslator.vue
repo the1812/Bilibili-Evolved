@@ -9,7 +9,7 @@
         :items="Object.values(translateProviders)"
         :value="activeTranslator"
         :key-mapper="it => it.name"
-        @change="changeTranslator($event)"
+        @update:value="changeTranslator($event)"
       >
         <template #item="{ item }">
           {{ item.name }}

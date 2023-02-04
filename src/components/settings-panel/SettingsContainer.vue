@@ -23,7 +23,7 @@
     </div>
     <VPopup
       ref="widgetsPanelPopup"
-      v-model="widgetsOpened"
+      v-model:open="widgetsOpened"
       class="widgets-panel-popup"
       :trigger-element="$refs.widgetsIcon"
       :fixed="true"
@@ -32,7 +32,7 @@
     </VPopup>
     <VPopup
       ref="settingsPanelPopup"
-      v-model="settingsOpened"
+      v-model:open="settingsOpened"
       class="settings-panel-popup"
       :trigger-element="$refs.settingsIcon"
       :auto-close-predicate="settingsPanelClosePredicate"

@@ -2,10 +2,6 @@ import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 export const textControlMixin = defineComponent({
-  model: {
-    prop: 'text',
-    event: 'change',
-  },
   props: {
     text: {
       type: String,
@@ -22,7 +18,7 @@ export const textControlMixin = defineComponent({
       default: undefined,
     },
   },
-  emits: ['change'],
+  emits: ['update:text'],
   data() {
     return {
       composing: false,
@@ -48,7 +44,7 @@ export const textControlMixin = defineComponent({
       if (value === this.text) {
         return
       }
-      this.$emit('change', value)
+      this.$emit('update:text', value)
     },
     input() {
       if (!this.changeOnBlur && !this.composing) {

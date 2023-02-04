@@ -49,7 +49,7 @@ const createWrapper = (instance: any) => {
         return
       }
       this.range = newRange
-      instance.$emit('change', newRange)
+      instance.$emit('update:range', newRange)
     },
   }
   return wrapper
@@ -58,10 +58,6 @@ export default defineComponent({
   name: 'RangeInput',
   components: {
     TextBox: () => import('./TextBox.vue'),
-  },
-  model: {
-    prop: 'range',
-    event: 'change',
   },
   props: {
     range: {
@@ -73,7 +69,7 @@ export default defineComponent({
       default: undefined,
     },
   },
-  emits: ['change'],
+  emits: ['update:range'],
   data() {
     return {
       wrapper: createWrapper(this),

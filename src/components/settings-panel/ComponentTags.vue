@@ -1,7 +1,7 @@
 <template>
   <div class="component-tags-preview">
     <VPopup
-      v-model="selectedSubPageOpen"
+      v-model:open="selectedSubPageOpen"
       :lazy="false"
       :trigger-element="selectedSubPageTrigger"
       class="settings-panel-sub-page"

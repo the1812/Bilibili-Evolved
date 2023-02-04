@@ -6,7 +6,7 @@
     :checked="checked"
     :checked-icon="checkedIcon"
     :not-checked-icon="notCheckedIcon"
-    @change="emitChange($event)"
+    @update:checked="emitChange($event)"
   >
     <slot>RadioButton</slot>
   </CheckBox>
@@ -35,10 +35,6 @@ export default defineComponent({
   components: {
     CheckBox,
   },
-  model: {
-    prop: 'checked',
-    event: 'change',
-  },
   props: {
     checked: {
       type: Boolean,
@@ -61,7 +57,7 @@ export default defineComponent({
       default: 'mdi-radiobox-blank',
     },
   },
-  emits: ['change'],
+  emits: ['update:checked'],
   watch: {
     checked(newValue: boolean) {
       if (newValue) {
@@ -84,7 +80,7 @@ export default defineComponent({
   mounted() {
     const group = this.group as string
     const element = this.$el as HTMLElement
-    const uncheck = () => this.$emit('change', false)
+    const uncheck = () => this.$emit('update:checked', false)
     let curriedSet: CurriedFunction2<Vue, () => void, void>
     if (group === '') {
       curriedSet = setGroup(element.parentElement)
@@ -96,7 +92,7 @@ export default defineComponent({
   methods: {
     emitChange(value: boolean) {
       if ((this.checked && this.allowUncheck) || !this.checked) {
-        this.$emit('change', value)
+        this.$emit('update:checked', value)
       }
     },
   },

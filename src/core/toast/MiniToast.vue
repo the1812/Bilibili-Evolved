@@ -17,10 +17,6 @@ const containerMap: Record<string, HTMLElement | (() => HTMLElement)> = {
   local: undefined,
 }
 export default defineComponent({
-  model: {
-    prop: 'show',
-    event: 'change',
-  },
   props: {
     show: {
       type: Boolean,
@@ -35,7 +31,7 @@ export default defineComponent({
       default: undefined,
     },
   },
-  emits: ['change'],
+  emits: ['update:show'],
   data() {
     return {
       toast: null,
@@ -57,10 +53,10 @@ export default defineComponent({
       showOnCreate: this.show,
       trigger: 'mouseenter focusin',
       onHide: () => {
-        this.$emit('change', false)
+        this.$emit('update:show', false)
       },
       onShow: () => {
-        this.$emit('change', true)
+        this.$emit('update:show', true)
       },
       appendTo: typeof appendTarget === 'function' ? appendTarget() : appendTarget,
       // ...(lodash.omit(this.$props, 'show', 'container')),
