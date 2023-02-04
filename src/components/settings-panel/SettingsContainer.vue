@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import { externalApis } from '@/core/core-apis'
 import { VIcon, VPopup } from '@/ui'
 
@@ -53,8 +53,8 @@ export default defineComponent({
   components: {
     VPopup,
     VIcon,
-    SettingsPanel: () => import('./SettingsPanel.vue').then(m => m.default),
-    WidgetsPanel: () => import('./WidgetsPanel.vue').then(m => m.default),
+    SettingsPanel: defineAsyncComponent(() => import('./SettingsPanel.vue')),
+    WidgetsPanel: defineAsyncComponent(() => import('./WidgetsPanel.vue')),
   },
   data() {
     return {

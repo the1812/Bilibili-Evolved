@@ -19,13 +19,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'CheckBox',
   components: {
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VIcon: () => import('./icon/VIcon.vue').then(m => m.default),
+    VButton: defineAsyncComponent(() => import('./VButton.vue')),
+    VIcon: defineAsyncComponent(() => import('./icon/VIcon.vue')),
   },
   props: {
     checked: {

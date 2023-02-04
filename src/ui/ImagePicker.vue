@@ -100,7 +100,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ImageItem } from './image-store'
 import { addImage, getEmptyImage, images, removeImage } from './image-store'
@@ -108,9 +108,9 @@ import { addImage, getEmptyImage, images, removeImage } from './image-store'
 export default defineComponent({
   name: 'ImagePicker',
   components: {
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VPopup: () => import('./VPopup.vue').then(m => m.default),
-    TextBox: () => import('./TextBox.vue').then(m => m.default),
+    VButton: defineAsyncComponent(() => import('./VButton.vue')),
+    VPopup: defineAsyncComponent(() => import('./VPopup.vue')),
+    TextBox: defineAsyncComponent(() => import('./TextBox.vue')),
   },
   props: {
     image: {

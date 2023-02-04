@@ -45,15 +45,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { TabMapping, TabMappings } from './tab-mapping'
 
 export default defineComponent({
   name: 'TabControl',
   components: {
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VIcon: () => import('./icon/VIcon.vue').then(m => m.default),
+    VButton: defineAsyncComponent(() => import('./VButton.vue')),
+    VIcon: defineAsyncComponent(() => import('./icon/VIcon.vue')),
   },
   props: {
     tabs: {

@@ -211,7 +211,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import Color from 'color'
 
 import palette from '@/core/theme-color/palette.json'
@@ -221,10 +221,10 @@ import { createColorWrapper } from './color-picker-wrapper'
 export default defineComponent({
   name: 'ColorPicker',
   components: {
-    TextBox: () => import('./TextBox.vue').then(m => m.default),
-    VSlider: () => import('./VSlider.vue').then(m => m.default),
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VPopup: () => import('./VPopup.vue').then(m => m.default),
+    TextBox: defineAsyncComponent(() => import('./TextBox.vue')),
+    VSlider: defineAsyncComponent(() => import('./VSlider.vue')),
+    VButton: defineAsyncComponent(() => import('./VButton.vue')),
+    VPopup: defineAsyncComponent(() => import('./VPopup.vue')),
   },
   props: {
     color: {

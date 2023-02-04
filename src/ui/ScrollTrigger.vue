@@ -6,12 +6,12 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import { useScopedConsole } from '@/core/utils/log'
 
 export default defineComponent({
   components: {
-    VLoading: () => import('./VLoading.vue').then(m => m.default),
+    VLoading: defineAsyncComponent(() => import('./VLoading.vue')),
   },
   emits: ['trigger'],
   async mounted() {
