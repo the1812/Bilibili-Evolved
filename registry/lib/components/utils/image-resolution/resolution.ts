@@ -28,6 +28,10 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     if (excludeSelectors.some(it => element.matches(it))) {
       return
     }
+    // 带 , 的 srcset 不处理
+    if (value.includes(',')) {
+      return
+    }
     const match = value.match(resizeRegex)
     if (!match) {
       return
@@ -55,6 +59,10 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     replaceSource(
       e => e.getAttribute('src'),
       (e, v) => e.setAttribute('src', v),
+    )
+    replaceSource(
+      e => e.getAttribute('srcset'),
+      (e, v) => e.setAttribute('srcset', v),
     )
     replaceSource(
       e => e.style.backgroundImage,
