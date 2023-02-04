@@ -12,12 +12,7 @@
     <div class="filter-patterns">
       <div v-for="p of patterns" :key="p" class="pattern">
         {{ p }}
-        <VIcon
-          title="删除"
-          icon="mdi-trash-can-outline"
-          :size="16"
-          @click.native="deletePattern(p)"
-        />
+        <VIcon title="删除" icon="mdi-trash-can-outline" :size="16" @click="deletePattern(p)" />
       </div>
     </div>
     <div class="add-pattern">
@@ -27,7 +22,7 @@
         type="text"
         @keydown.enter="addPattern(newPattern)"
       />
-      <VButton type="transparent" @click.native="addPattern(newPattern)">
+      <VButton type="transparent" @click="addPattern(newPattern)">
         <VIcon title="添加" icon="mdi-plus" :size="18" />
       </VButton>
     </div>

@@ -47,7 +47,7 @@
               :class="{ selected: isComponentSelected(c.name) }"
               :component-data="c"
               :data-name="c.name"
-              @click.native="selectComponent(c)"
+              @click="selectComponent(c)"
             >
             </ComponentSettings>
           </div>

@@ -40,7 +40,7 @@
           :data-aid="item.inputItem.aid"
           :data-cid="item.inputItem.cid"
           :data-bvid="item.inputItem.bvid"
-          @click.native="shiftSelect($event, item, index)"
+          @click="shiftSelect($event, item, index)"
         >
           <span class="episode-title">
             {{ item.title }}
