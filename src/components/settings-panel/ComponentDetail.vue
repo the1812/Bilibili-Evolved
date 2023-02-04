@@ -111,6 +111,7 @@ export default defineComponent({
     MiniToast,
   },
   mixins: [componentSettingsMixin],
+  emits: ['close', 'mounted'],
   data() {
     return {
       virtual: false,

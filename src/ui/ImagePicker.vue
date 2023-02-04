@@ -122,6 +122,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['change'],
   data() {
     return {
       images,

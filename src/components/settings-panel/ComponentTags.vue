@@ -70,6 +70,7 @@ import { tagFilters } from './tag-filter'
 
 export default defineComponent({
   components: { VIcon, VPopup },
+  emits: ['change'],
   data() {
     return {
       tags: [],

@@ -35,6 +35,7 @@ export default defineComponent({
       default: undefined,
     },
   },
+  emits: ['change'],
   data() {
     return {
       toast: null,

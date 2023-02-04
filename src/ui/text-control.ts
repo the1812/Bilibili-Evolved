@@ -22,6 +22,7 @@ export const textControlMixin = defineComponent({
       default: undefined,
     },
   },
+  emits: ['change'],
   data() {
     return {
       composing: false,

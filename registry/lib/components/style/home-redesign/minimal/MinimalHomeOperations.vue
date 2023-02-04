@@ -23,6 +23,7 @@ import { VButton, VIcon } from '@/ui'
 
 export default defineComponent({
   components: { VButton, VIcon },
+  emits: ['refresh'],
   data() {
     return {
       size: 28,

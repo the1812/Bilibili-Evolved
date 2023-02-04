@@ -136,6 +136,7 @@ const ThisComponent = defineComponent({
     VEmpty,
     ActionItem,
   },
+  emits: ['close'],
   data() {
     return {
       recommended,

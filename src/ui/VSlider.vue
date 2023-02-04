@@ -126,6 +126,7 @@ export default defineComponent({
       default: (v: number) => String(v),
     },
   },
+  emits: ['change', 'start', 'end'],
   data() {
     return {
       // 用户输入值通过各种处理后得到的最终值，

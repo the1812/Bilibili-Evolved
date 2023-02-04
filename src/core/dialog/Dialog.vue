@@ -48,6 +48,7 @@ export default defineComponent({
       default: () => ({}),
     },
   },
+  emits: ['close'],
   data() {
     return {
       open: false,

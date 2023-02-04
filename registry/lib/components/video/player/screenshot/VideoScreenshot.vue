@@ -36,6 +36,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['discard'],
   methods: {
     discard() {
       this.$emit('discard')

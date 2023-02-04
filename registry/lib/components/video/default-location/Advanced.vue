@@ -78,6 +78,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['set-default-location'],
   data() {
     return {
       curPosition: getScrollY(),

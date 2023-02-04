@@ -49,6 +49,7 @@ export default defineComponent({
       default: 'mdi-checkbox-blank-circle-outline',
     },
   },
+  emits: ['change'],
 })
 </script>
 

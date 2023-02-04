@@ -96,6 +96,7 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['change'],
   data() {
     return {
       popupOpen: false,

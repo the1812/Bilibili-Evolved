@@ -250,6 +250,7 @@ export default defineComponent({
       default: 0,
     },
   },
+  emits: ['change'],
   data() {
     return {
       popupOpened: false,

@@ -70,6 +70,7 @@ export default defineComponent({
       default: null,
     },
   },
+  emits: ['popup-change'],
   data() {
     return {
       loaded: !this.lazy,

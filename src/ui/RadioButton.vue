@@ -61,6 +61,7 @@ export default defineComponent({
       default: 'mdi-radiobox-blank',
     },
   },
+  emits: ['change'],
   watch: {
     checked(newValue: boolean) {
       if (newValue) {

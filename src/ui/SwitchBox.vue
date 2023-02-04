@@ -43,6 +43,7 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['change'],
   methods: {
     toggle() {
       if (this.disabled) {

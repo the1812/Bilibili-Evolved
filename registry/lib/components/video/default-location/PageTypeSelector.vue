@@ -38,6 +38,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['change'],
   data() {
     return {
       items: Object.values(itemsMap),

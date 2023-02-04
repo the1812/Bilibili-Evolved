@@ -53,6 +53,7 @@ export default defineComponent({
       default: true,
     },
   },
+  emits: ['change'],
   data() {
     return {
       realHidden: this.hidden,

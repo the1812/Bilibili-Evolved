@@ -85,6 +85,7 @@ export default defineComponent({
       default: null,
     },
   },
+  emits: ['change'],
   data() {
     return {
       selectedTab: (this.tabs.find((t: TabMapping) => t.name === this.defaultTab) ??

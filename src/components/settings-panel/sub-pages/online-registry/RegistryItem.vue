@@ -115,6 +115,7 @@ export default defineComponent({
       default: ItemFilter.All,
     },
   },
+  emits: ['refresh'],
   data() {
     const { icon, badge, getUrl, isInstalled } = typeMappings[this.item.type]
     return {

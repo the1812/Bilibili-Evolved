@@ -100,6 +100,7 @@ export default defineComponent({
     ComponentDetail,
     ComponentTags,
   },
+  emits: ['close'],
   data() {
     return {
       components,

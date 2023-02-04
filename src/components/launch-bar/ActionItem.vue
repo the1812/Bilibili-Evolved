@@ -55,6 +55,7 @@ export default defineComponent({
       required: true,
     },
   },
+  emits: ['action', 'delete-item', 'previous-item', 'next-item'],
   methods: {
     performAction(event: KeyboardEvent | MouseEvent) {
       this.action.action()

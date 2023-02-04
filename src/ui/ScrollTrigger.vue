@@ -13,6 +13,7 @@ export default defineComponent({
   components: {
     VLoading: () => import('./VLoading.vue').then(m => m.default),
   },
+  emits: ['trigger'],
   async mounted() {
     const console = useScopedConsole('ScrollTrigger')
     const element = this.$el as HTMLElement

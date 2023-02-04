@@ -33,6 +33,7 @@ export default defineComponent({
       default: '',
     },
   },
+  emits: ['dialog-close'],
   data() {
     return {
       detailsLink,

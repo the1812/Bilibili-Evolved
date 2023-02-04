@@ -34,6 +34,7 @@ export default defineComponent({
       default: () => (item: any) => item,
     },
   },
+  emits: ['next-page', 'prev-page'],
   data() {
     return {
       items: [...this.initialItems],
