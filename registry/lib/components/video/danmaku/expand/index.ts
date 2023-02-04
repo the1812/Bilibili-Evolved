@@ -1,29 +1,43 @@
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
 import { videoChange } from '@/core/observer'
-import { select } from '@/core/spin-query'
+import { select, sq } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { mediaListUrls, videoAndBangumiUrls } from '@/core/utils/urls'
 
 const getDanmakuCount = async () => {
-  const countElement = await select(
-    '.bilibili-player-video-info-danmaku-number, .bpx-player-video-info-dm',
-  )
-  /*
-    3.x: 已装填 n 条弹幕
-    2.x: n
-  */
-  const countText = countElement?.textContent ?? ''
-  const countMatch = countText.match(/\d+/)
-  if (!countMatch) {
-    return null
+  const parseCount = (countElement: Element) => {
+    const countText = countElement?.textContent ?? ''
+    const countMatch = countText.match(/\d+/)
+    if (!countMatch) {
+      return null
+    }
+    const count = parseInt(countMatch[0])
+    if (Number.isNaN(count)) {
+      return null
+    }
+    return count
   }
-  const count = parseInt(countMatch[0])
-  if (Number.isNaN(count)) {
-    return null
+  const v2 = async () => {
+    const countElement = await select('.bilibili-player-video-info-danmaku-number')
+    return parseCount(countElement)
   }
-  return count
+  const v3 = async () => {
+    await sq(
+      () => dq('.bpx-player-video-info-online'),
+      element => {
+        if (!element) {
+          return false
+        }
+        const userText = parseInt(element.querySelector('b')?.textContent ?? '')
+        return !Number.isNaN(userText)
+      },
+    )
+    const countElement = await select('.bpx-player-video-info-dm')
+    return parseCount(countElement)
+  }
+  return Promise.race([v2(), v3()])
 }
 
 const entry: ComponentEntry = async ({ settings: { options } }) => {
