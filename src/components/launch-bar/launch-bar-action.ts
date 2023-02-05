@@ -20,6 +20,8 @@ export interface LaunchBarAction {
   deleteAction?: Executable
   /** 显式选中模式: 开启后可以禁止在列表第一项时直接由 Enter 触发 */
   explicitSelect?: boolean
+  /** 手动指定在搜索结果中的顺序, 数字越小越排前面 */
+  order?: number
 }
 /** LaunchBar 动作提供者的插件key, 可注入其他提供者 */
 export const LaunchBarActionProviders = 'launchBar.actions'
