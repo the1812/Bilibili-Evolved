@@ -28,7 +28,7 @@ export class RuntimeLibrary<LibraryType> implements PromiseLike<LibraryType> {
           ;(function runEval() {
             return eval(code)
             // eslint-disable-next-line no-extra-bind
-          }.bind(window)())
+          }).bind(window)()
           return getModule(window)
         })()
       }
