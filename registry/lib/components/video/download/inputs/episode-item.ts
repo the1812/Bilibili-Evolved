@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { defineComponent, h } from 'vue'
 import type { DownloadVideoInputItem } from '../types'
 import EpisodesPicker from './EpisodesPicker.vue'
 
@@ -18,9 +18,9 @@ export const createEpisodesPicker = (
         return (this.$refs.picker as any).checkedInputItems
       },
     },
-    render(createElement) {
-      return createElement(EpisodesPicker, {
-        props: { api: fetchEpisodeItems },
+    render() {
+      return h(EpisodesPicker, {
+        api: fetchEpisodeItems,
         ref: 'picker',
       })
     },

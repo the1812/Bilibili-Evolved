@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import { h, defineComponent } from 'vue'
 import { getJson } from '@/core/ajax'
 import { formData, getUID } from '@/core/utils'
 
@@ -27,13 +27,10 @@ export const searchProvider: LaunchBarActionProvider = {
         icon: 'search',
         content: async () =>
           defineComponent({
-            render: h => {
-              const content = h('div', {
-                domProps: {
-                  innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
-                },
+            render() {
+              return h('div', {
+                innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
               })
-              return content
             },
           }),
         action: () => search(input),
@@ -52,13 +49,10 @@ export const searchProvider: LaunchBarActionProvider = {
         icon: 'search',
         content: async () =>
           defineComponent({
-            render: h => {
-              const content = h('div', {
-                domProps: {
-                  innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
-                },
+            render() {
+              return h('div', {
+                innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
               })
-              return content
             },
           }),
         action: () => search(result.value),
