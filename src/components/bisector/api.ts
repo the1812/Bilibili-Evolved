@@ -1,10 +1,10 @@
 import { DialogInstance, showDialog } from '@/core/dialog'
 import type { Settings } from '@/core/settings/types'
 import { Toast } from '@/core/toast'
-import { mountVueComponent } from '@/core/utils'
+import { getRandomId, mountVueComponent, sleep } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import type { RecordValue } from '../types'
-import type { BisectNext } from './bisect'
+import type { BisectNext, BisectReturn } from './bisect'
 import { bisect } from './bisect'
 import { BisectorOptions } from './options'
 import ResultToastContent from './ResultToastContent.vue'
@@ -13,7 +13,7 @@ type UserComponent = RecordValue<Settings['userComponents']>
 
 let bisectorOptions: BisectorOptions
 let scopedConsole: ReturnType<typeof useScopedConsole>
-let bisectorGenerator: ReturnType<typeof bisect>
+let bisectorGenerator: Generator<BisectNext<UserComponent>, BisectReturn<UserComponent>>
 let groupedComponents: Awaited<ReturnType<typeof classifyComponents>>
 let dialog: DialogInstance
 
@@ -80,23 +80,25 @@ export const stop = async () => {
   scopedConsole?.log('stop - 准备停止组件二等分')
   dialog?.close()
   const { configurableUserComponents } = await classifyComponents()
-  const unmatchedComponentNames = []
+  const unmatchedComponents: UserComponent[] = []
   for (const [componentName, componentSettings] of Object.entries(configurableUserComponents)) {
     const originalStatus = bisectorOptions.originalComponentEnableState?.[componentName]
     if (originalStatus == null) {
-      unmatchedComponentNames.push(componentName)
+      unmatchedComponents.push(componentSettings)
       continue
     }
     componentSettings.settings.enabled = originalStatus
   }
-  if (unmatchedComponentNames.length) {
-    scopedConsole?.warn(
-      `stop - 部分组件未能还原状态：${getComponentNames(unmatchedComponentNames)}`,
-    )
+  if (unmatchedComponents.length) {
+    const msg = `部分组件未能还原状态：${getComponentNames(unmatchedComponents)}`
+    scopedConsole?.warn(`stop - ${msg}`)
+    Toast.error(msg, '组件二等分')
+    await sleep(3e3)
   }
   scopedConsole?.log('stop - 清理状态')
   bisectorGenerator = null
   bisectorOptions.bisectInitialState = {}
+  bisectorOptions.originalComponentEnableState = {}
   scopedConsole?.log('stop - 重载页面')
   location.reload()
 }
@@ -109,24 +111,20 @@ export const next = async (seeingBad?: boolean, autoReload?: boolean) => {
       seeingBad == null ? '未知' : seeingBad ? '异常' : '正常'
     }`,
   )
-  const { done, value } = bisectorGenerator.next(seeingBad) as unknown as {
-    done: boolean
-    value: BisectNext<UserComponent> | UserComponent
-  }
+  const { done, value } = bisectorGenerator.next(seeingBad)
   if (done) {
-    const elementId = `bisector-result-toast-content-${Math.floor(
-      Math.random() * (Number.MAX_SAFE_INTEGER + 1),
-    )}`
-    Toast.info(/* html */ `<div id="${elementId}"></div>`, '二等分结果')
-    setTimeout(() => {
-      const vm = mountVueComponent<{ userComponent: UserComponent }>(
-        ResultToastContent,
-        `#${elementId}`,
-      )
-      vm.userComponent = value as UserComponent
-      vm.$on('restore', () => {
-        stop()
-      })
+    const { low, high } = value
+    bisectorOptions.bisectInitialState = { low, high }
+    const elementId = `bisector-result-toast-content-${getRandomId()}`
+    Toast.info(/* html */ `<div id="${elementId}"></div>`, '组件二等分结果')
+    await sleep()
+    const vm = mountVueComponent<{ userComponent: UserComponent }>(
+      ResultToastContent,
+      `#${elementId}`,
+    )
+    vm.userComponent = value.target
+    vm.$on('restore', () => {
+      stop()
     })
   } else {
     const { slice, low, high } = value as BisectNext<UserComponent>
