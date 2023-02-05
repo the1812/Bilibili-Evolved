@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { CommentArea } from '@/components/utils/comment-apis'
+import type { CommentArea } from '@/components/utils/comment-apis'
 import { getJson } from '@/core/ajax'
 import { fullyLoaded } from '@/core/life-cycle'
 import { childList } from '@/core/observer'

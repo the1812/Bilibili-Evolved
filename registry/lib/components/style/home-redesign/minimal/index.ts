@@ -1,7 +1,8 @@
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
 import { addComponentListener } from '@/core/settings'
-import { mountVueComponent, getNumberValidator } from '@/core/utils'
+import { getNumberValidator, mountVueComponent } from '@/core/utils'
+
 import { homeUrls } from '../urls'
 import { MinimalHomeTabOption } from './types'
 

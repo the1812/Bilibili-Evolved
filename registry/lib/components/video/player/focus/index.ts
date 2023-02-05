@@ -1,5 +1,6 @@
-import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { defineComponentMetadata } from '@/components/define'
+import { videoAndBangumiUrls } from '@/core/utils/urls'
+
 import desc from './desc.md'
 
 export const component = defineComponentMetadata({

@@ -28,9 +28,9 @@
 </template>
 
 <script lang="ts">
+import { getBlob } from '../core/ajax'
 import { addComponentListener } from '../core/settings'
 import { getFriendlyTitle } from '../core/utils/title'
-import { getBlob } from '../core/ajax'
 import VIcon from './icon/VIcon.vue'
 
 export default Vue.extend({

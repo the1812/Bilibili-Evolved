@@ -106,8 +106,9 @@
 <script lang="ts">
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
-import { DpiImage, VIcon, VLoading, VEmpty, VButton } from '@/ui'
-import { requestMixin, cssVariableMixin } from '../../../../mixin'
+import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
+import { cssVariableMixin, requestMixin } from '../../../../mixin'
 import { rankListCssVars } from './rank-list'
 
 export default Vue.extend({

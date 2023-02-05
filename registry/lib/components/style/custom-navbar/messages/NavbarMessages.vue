@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import { getJsonWithCredentials } from '@/core/ajax'
+
 import { popperMixin } from '../mixins'
 
 interface MessageEntry {

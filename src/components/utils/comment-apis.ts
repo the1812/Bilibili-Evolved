@@ -1,6 +1,6 @@
-import { dqa } from '@/core/utils'
-import { allMutations, childList, childListSubtree } from '@/core/observer'
 import { contentLoaded } from '@/core/life-cycle'
+import { allMutations, childList, childListSubtree } from '@/core/observer'
+import { dqa } from '@/core/utils'
 
 /** 表示一条评论回复 */
 export interface CommentReplyItem {

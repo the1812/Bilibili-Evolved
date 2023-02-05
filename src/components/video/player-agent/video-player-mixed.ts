@@ -1,6 +1,6 @@
 import { v3PlayerPolyfill } from '../player-adaptor/v3'
 import { selectorWrap } from './base'
-import { PlayerQuery, ElementQuery } from './types'
+import type { ElementQuery, PlayerQuery } from './types'
 import { VideoPlayerV2Agent } from './video-player-v2'
 
 export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {

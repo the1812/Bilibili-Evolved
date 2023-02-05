@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+
 import { componentsTags } from '../types'
 import { getReleaseContent, getUpdateUrl, showReleaseContent } from './release-content'
 

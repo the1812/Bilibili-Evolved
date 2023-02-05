@@ -3,6 +3,7 @@ import { playerAgent } from '@/components/video/player-agent'
 import { videoChange } from '@/core/observer'
 import { addStyle } from '@/core/style'
 import { playerUrls } from '@/core/utils/urls'
+
 import touchStyles from './double-click-control.scss'
 
 const entry = async () => {

@@ -1,4 +1,4 @@
-import { Translation } from '@/components/i18n/types'
+import type { Translation } from '@/components/i18n/types'
 
 export const map = new Map<string, Translation>([
   ['通用设置', 'General'],

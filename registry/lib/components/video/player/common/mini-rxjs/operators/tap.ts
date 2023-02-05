@@ -1,4 +1,5 @@
-import { Observer, PublishContext, toStandardizedObserver } from '../subject'
+import type { Observer, PublishContext } from '../subject'
+import { toStandardizedObserver } from '../subject'
 
 export const tap =
   <T>(observer: Observer<T>) =>

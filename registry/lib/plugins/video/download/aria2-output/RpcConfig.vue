@@ -69,8 +69,10 @@
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
-import { TextBox, VButton, VIcon, VDropdown, TextArea } from '@/ui'
-import { Aria2RpcProfile, defaultProfile } from './rpc-profiles'
+import { TextArea, TextBox, VButton, VDropdown, VIcon } from '@/ui'
+
+import type { Aria2RpcProfile } from './rpc-profiles'
+import { defaultProfile } from './rpc-profiles'
 
 interface Options {
   rpcProfiles: Aria2RpcProfile[]

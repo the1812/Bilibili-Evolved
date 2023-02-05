@@ -54,11 +54,13 @@
 </template>
 
 <script lang="ts">
-import { TextBox, SwitchBox, ColorPicker, RangeInput, VDropdown, ImagePicker, VSlider } from '@/ui'
-import { getComponentSettings, ComponentSettings } from '@/core/settings'
-import { OptionMetadata } from '../component'
-import { getDropdownItems } from './dropdown'
+import type { ComponentSettings } from '@/core/settings'
+import { getComponentSettings } from '@/core/settings'
+import { ColorPicker, ImagePicker, RangeInput, SwitchBox, TextBox, VDropdown, VSlider } from '@/ui'
+
+import type { OptionMetadata } from '../component'
 import SwitchOptions from '../SwitchOptions.vue'
+import { getDropdownItems } from './dropdown'
 
 function valueChange(newValue: unknown) {
   const settings = this.settings as ComponentSettings

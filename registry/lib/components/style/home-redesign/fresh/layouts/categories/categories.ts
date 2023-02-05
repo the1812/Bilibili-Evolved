@@ -1,4 +1,4 @@
-import { FreshLayoutItem } from '../fresh-layout-item'
+import type { FreshLayoutItem } from '../fresh-layout-item'
 
 export const categories: FreshLayoutItem = {
   name: 'categories',

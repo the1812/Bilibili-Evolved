@@ -109,17 +109,19 @@ import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/
 import { formData, getCsrf } from '@/core/utils'
 import { descendingSort } from '@/core/utils/sort'
 import {
-  VButton,
-  VIcon,
-  RadioButton,
-  TextBox,
-  VLoading,
-  VEmpty,
-  ScrollTrigger,
   DpiImage,
+  RadioButton,
+  ScrollTrigger,
+  TextBox,
+  VButton,
+  VEmpty,
+  VIcon,
+  VLoading,
 } from '@/ui'
+
 import { popperMixin } from '../mixins'
-import { types, TypeFilter, HistoryItem, getHistoryItems, group, HistoryType } from './types'
+import type { HistoryItem, TypeFilter } from './types'
+import { getHistoryItems, group, HistoryType, types } from './types'
 
 export default Vue.extend({
   components: {

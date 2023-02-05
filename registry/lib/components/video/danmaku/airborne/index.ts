@@ -1,7 +1,8 @@
-import { toggleStyle } from '@/components/styled-component'
 import { defineComponentMetadata } from '@/components/define'
+import { toggleStyle } from '@/components/styled-component'
 import { playerAgent } from '@/components/video/player-agent'
-import { DanmakuRecord, forEachVideoDanmaku } from '@/components/video/video-danmaku'
+import type { DanmakuRecord } from '@/components/video/video-danmaku'
+import { forEachVideoDanmaku } from '@/components/video/video-danmaku'
 import { videoChange } from '@/core/observer'
 import { playerUrls } from '@/core/utils/urls'
 

@@ -1,7 +1,8 @@
-import { formData, getUID } from '@/core/utils'
 import { getJson } from '@/core/ajax'
-import { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
+import { formData, getUID } from '@/core/utils'
+
 import { addHistoryItem } from './history-provider'
+import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 
 export const search = (keyword: string) => {
   if (!keyword) {

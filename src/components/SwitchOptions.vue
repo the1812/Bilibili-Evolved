@@ -48,7 +48,8 @@
 </template>
 
 <script lang="ts">
-import { VPopup, VButton, VIcon, CheckBox, RadioButton } from '@/ui'
+import { CheckBox, RadioButton, VButton, VIcon, VPopup } from '@/ui'
+
 import { getComponentSettings } from '../core/settings'
 
 export default Vue.extend({

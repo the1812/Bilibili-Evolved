@@ -1,5 +1,6 @@
 import { styledComponentEntry } from '@/components/styled-component'
-import { Options } from '.'
+
+import type { Options } from '.'
 
 const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
 const excludeSelectors = ['#certify-img1', '#certify-img2']

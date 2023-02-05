@@ -1,12 +1,13 @@
 import { select } from '@/core/spin-query'
 import { raiseEvent } from '@/core/utils'
-import {
-  ElementQuery,
-  CustomNestedQuery,
+
+import type {
   AgentType,
-  PlayerQuery,
+  CustomNestedQuery,
   CustomQuery,
   CustomQueryProvider,
+  ElementQuery,
+  PlayerQuery,
 } from './types'
 
 export const elementQuery = (selector: string): ElementQuery => {

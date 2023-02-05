@@ -1,10 +1,10 @@
 import { defineComponentMetadata } from '@/components/define'
-import { childList, urlChange } from '@/core/observer'
-import { playerReady } from '@/core/utils'
-import { videoUrls } from '@/core/utils/urls'
 import { getVueData } from '@/components/feeds/api'
 import { VideoInfo } from '@/components/video/video-info'
+import { childList, urlChange } from '@/core/observer'
+import { playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
+import { videoUrls } from '@/core/utils/urls'
 
 interface RecommendList extends Vue {
   isOpen: boolean

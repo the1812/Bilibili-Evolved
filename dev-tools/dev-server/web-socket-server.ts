@@ -1,7 +1,8 @@
 import exitHook from 'async-exit-hook'
-import { Server } from 'http'
+import type { Server } from 'http'
 import { WebSocketServer } from 'ws'
-import { Payload } from './payload'
+
+import type { Payload } from './payload'
 import { stopInstance, watchers } from './registry-watcher'
 
 let server: WebSocketServer

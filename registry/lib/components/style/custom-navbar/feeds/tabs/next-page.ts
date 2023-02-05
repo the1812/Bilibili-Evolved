@@ -1,13 +1,9 @@
-import {
-  getFeeds,
-  FeedsCardType,
-  applyContentFilter,
-  isPreOrderedVideo,
-} from '@/components/feeds/api'
-import { descendingStringSort } from '@/core/utils/sort'
-import { logError } from '@/core/utils/log'
+import type { FeedsCardType } from '@/components/feeds/api'
+import { applyContentFilter, getFeeds, isPreOrderedVideo } from '@/components/feeds/api'
 import { setLatestID } from '@/components/feeds/notify'
-import { VLoading, VEmpty, ScrollTrigger } from '@/ui'
+import { logError } from '@/core/utils/log'
+import { descendingStringSort } from '@/core/utils/sort'
+import { ScrollTrigger, VEmpty, VLoading } from '@/ui'
 
 /**
  * 获取用于支持顶栏动态无限滚动的Vue Mixin

@@ -1,8 +1,9 @@
 import { DownloadPackage } from '@/core/download'
 import { UserAgent } from '@/core/utils/constants'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { PluginMetadata } from '@/plugins/plugin'
-import { DownloadVideoOutput } from '../../../../components/video/download/types'
+import type { PluginMetadata } from '@/plugins/plugin'
+
+import type { DownloadVideoOutput } from '../../../../components/video/download/types'
 
 export const plugin: PluginMetadata = {
   name: 'downloadVideo.outputs.idm',

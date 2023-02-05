@@ -1,6 +1,7 @@
 import { getHook } from '@/plugins/hook'
-import { getRandomId } from '.'
+
 import { getGeneralSettings } from '../settings'
+import { getRandomId } from '.'
 
 /**
  * 向 console 中输出错误消息, 并弹出 Toast 提示. 如果开启了开发者模式且传入了 Error 对象, 则会输出整个堆栈

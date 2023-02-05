@@ -1,4 +1,4 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export const feeds: CustomNavbarItemInit = {
   name: 'feeds',

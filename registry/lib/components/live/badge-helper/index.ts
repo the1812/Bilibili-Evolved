@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { getNumberValidator, getUID, none } from '@/core/utils'
+
 import { autoMatchMedal } from './auto-match'
 
 export const component = defineComponentMetadata({

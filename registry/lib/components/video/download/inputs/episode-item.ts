@@ -1,4 +1,4 @@
-import { DownloadVideoInputItem } from '../types'
+import type { DownloadVideoInputItem } from '../types'
 import EpisodesPicker from './EpisodesPicker.vue'
 
 export interface EpisodeItem {

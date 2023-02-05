@@ -1,5 +1,5 @@
-import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
 
 // const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {

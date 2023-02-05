@@ -1,5 +1,4 @@
-import { newSwitchComponentWrapper, defineSwitchMetadata } from '@/components/switch-options'
-
+import { defineSwitchMetadata, newSwitchComponentWrapper } from '@/components/switch-options'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
 import { addStyle } from '@/core/style'

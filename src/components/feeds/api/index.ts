@@ -1,14 +1,16 @@
-import { getUID, pascalCase } from '@/core/utils'
-import { getJsonWithCredentials } from '@/core/ajax'
-import { formatCount, formatDuration } from '@/core/utils/formatters'
 import { watchlaterList } from '@/components/video/watchlater'
-import { getData, registerData } from '@/plugins/data'
+import { getJsonWithCredentials } from '@/core/ajax'
+import { getUID, pascalCase } from '@/core/utils'
+import { formatCount, formatDuration } from '@/core/utils/formatters'
 import { descendingStringSort } from '@/core/utils/sort'
-import { VideoCard } from '../video-card'
-import { FeedsCard, FeedsCardType, feedsCardTypes } from './types'
+import { getData, registerData } from '@/plugins/data'
 
-export * from './types'
+import type { VideoCard } from '../video-card'
+import type { FeedsCard, FeedsCardType } from './types'
+import { feedsCardTypes } from './types'
+
 export * from './manager'
+export * from './types'
 
 /**
  * 搜索视频卡片中重复的 aid, 合并为联合投稿

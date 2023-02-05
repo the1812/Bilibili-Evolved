@@ -2,8 +2,10 @@ import { loadDanmakuSettingsPanel } from '@/core/utils/lazy-panel'
 import { logError } from '@/core/utils/log'
 import { ascendingSort } from '@/core/utils/sort'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { DanmakuConverterConfig, DanmakuConverter } from '../converter/danmaku-converter'
-import { DanmakuType } from '../converter/danmaku-type'
+
+import type { DanmakuConverterConfig } from '../converter/danmaku-converter'
+import { DanmakuConverter } from '../converter/danmaku-converter'
+import type { DanmakuType } from '../converter/danmaku-type'
 import { XmlDanmaku } from '../converter/xml-danmaku'
 
 export class JsonDanmaku {

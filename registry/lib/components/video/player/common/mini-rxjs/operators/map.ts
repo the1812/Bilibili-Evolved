@@ -1,4 +1,4 @@
-import { PublishContext } from '../subject'
+import type { PublishContext } from '../subject'
 
 export const map =
   <T = unknown, R = T>(mapper: (value: T) => R) =>

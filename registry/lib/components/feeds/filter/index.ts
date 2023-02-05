@@ -1,9 +1,7 @@
-import {
-  defineOptionsMetadata,
-  defineComponentMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { feedsCardsManager } from '@/components/feeds/api'
+
 import { feedsFilterPlugin } from './plugin'
 
 const entry = async () => {

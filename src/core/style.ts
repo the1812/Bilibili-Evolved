@@ -1,4 +1,5 @@
-import { ComponentMetadata } from '@/components/types'
+import type { ComponentMetadata } from '@/components/types'
+
 import { contentLoaded } from './life-cycle'
 
 /** 为`<style>`获取默认的ID (camelCase转为kebab-case) */

@@ -1,4 +1,5 @@
-import { subject, Subject } from '../subject'
+import type { Subject } from '../subject'
+import { subject } from '../subject'
 import { asapScheduler, observeOn } from './observeOn'
 import { withTeardownLogic } from './util'
 

@@ -1,4 +1,4 @@
-import { ObjectExpression, ObjectProperty } from '@babel/types'
+import type { ObjectExpression, ObjectProperty } from '@babel/types'
 
 export interface InjectMetadataContext {
   expression: ObjectExpression

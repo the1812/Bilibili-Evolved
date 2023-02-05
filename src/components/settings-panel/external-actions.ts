@@ -1,5 +1,7 @@
 import { addData } from '@/plugins/data'
-import { LaunchBarActionProvider, LaunchBarActionProviders } from '../launch-bar/launch-bar-action'
+
+import type { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
+import { LaunchBarActionProviders } from '../launch-bar/launch-bar-action'
 
 export const provideActions = () => {
   addData(LaunchBarActionProviders, (providers: LaunchBarActionProvider[]) => {

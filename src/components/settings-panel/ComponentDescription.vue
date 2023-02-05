@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
+
 import { getDescriptionHTML } from '../description'
 
 export default Vue.extend({

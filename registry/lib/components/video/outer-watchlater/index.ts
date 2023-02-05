@@ -1,12 +1,10 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { ComponentEntry } from '@/components/types'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
 import { matchUrlPattern } from '@/core/utils'
 import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
-import { KeyBindingAction } from '../../utils/keymap/bindings'
+
+import type { KeyBindingAction } from '../../utils/keymap/bindings'
 
 const options = defineOptionsMetadata({
   showInWatchlaterPages: {

@@ -1,4 +1,4 @@
-import { Property, ValueChangeListener } from './types'
+import type { Property, ValueChangeListener } from './types'
 
 /** 标识经由 `createProxy` 控制的对象 */
 export const isProxy = Symbol('isProxy')
