@@ -1,22 +1,22 @@
-// import { formatDate } from '@/core/utils/formatters'
+import { crossOriginLocalStorage } from '@/core/local-storage'
 import { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 
 export interface HistoryItem {
   value: string
-  isHistory: number
   timestamp: number
 }
-const SearchHistoryKey = 'search_history'
-const SearchHistoryMaxItems = 12
-export const getHistoryItems = (key = SearchHistoryKey) => {
-  const historyText = localStorage.getItem(key)
+const SearchHistoryKey = 'search_history:search_history'
+const SearchHistoryMaxItems = 20
+export const getHistoryItems = async (key = SearchHistoryKey) => {
+  const historyText = await crossOriginLocalStorage.getItem(key)
   const historyItems: HistoryItem[] = historyText ? JSON.parse(historyText) : []
   return historyItems
 }
-export const clearHistoryItems = (key = SearchHistoryKey) => localStorage.setItem(key, '[]')
-export const addHistoryItem = (keyword: string, key = SearchHistoryKey) => {
+export const clearHistoryItems = (key = SearchHistoryKey) =>
+  crossOriginLocalStorage.setItem(key, '[]')
+export const addHistoryItem = async (keyword: string, key = SearchHistoryKey) => {
   console.log('add', keyword)
-  localStorage.setItem(
+  crossOriginLocalStorage.setItem(
     key,
     JSON.stringify(
       lodash
@@ -25,10 +25,9 @@ export const addHistoryItem = (keyword: string, key = SearchHistoryKey) => {
             [
               {
                 value: keyword,
-                isHistory: 1,
                 timestamp: Number(new Date()),
               },
-              ...getHistoryItems(),
+              ...(await getHistoryItems()),
             ],
             h => h.value,
           ),
@@ -39,8 +38,8 @@ export const addHistoryItem = (keyword: string, key = SearchHistoryKey) => {
     ),
   )
 }
-export const deleteHistoryItem = (keyword: string, key = SearchHistoryKey) => {
-  const items = getHistoryItems()
+export const deleteHistoryItem = async (keyword: string, key = SearchHistoryKey) => {
+  const items = await getHistoryItems()
   const index = items.findIndex(it => it.value === keyword)
   console.log('delete', keyword, index)
   if (index !== -1) {
@@ -61,7 +60,8 @@ export const historyProvider: LaunchBarActionProvider = {
         clearHistoryItems()
       },
     }
-    const items = getHistoryItems().map(
+    const historyItems = await getHistoryItems()
+    const items = historyItems.map(
       it =>
         ({
           name: it.value,
