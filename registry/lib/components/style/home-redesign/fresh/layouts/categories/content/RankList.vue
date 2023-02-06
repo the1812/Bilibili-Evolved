@@ -37,7 +37,7 @@
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ firstItem.points | formatCount }}
+            {{ formatCount(firstItem.points) }}
           </div>
         </a>
         <div class="fresh-home-rank-list-laser" data-number="1"></div>
@@ -58,9 +58,9 @@
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ secondItem.points | formatCount }}
+            {{ formatCount(secondItem.points) }}
             <VIcon icon="play" :size="16" />
-            {{ secondItem.playCount | formatCount }}
+            {{ formatCount(secondItem.playCount) }}
           </div>
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="secondItem.videoHref">
@@ -87,9 +87,9 @@
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ thirdItem.points | formatCount }}
+            {{ formatCount(thirdItem.points) }}
             <VIcon icon="play" :size="16" />
-            {{ thirdItem.playCount | formatCount }}
+            {{ formatCount(thirdItem.playCount) }}
           </div>
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="thirdItem.videoHref">
@@ -124,9 +124,6 @@ export default defineComponent({
     VLoading,
     VEmpty,
     VButton,
-  },
-  filters: {
-    formatCount,
   },
   mixins: [mixin0, mixin1],
   props: {
@@ -169,6 +166,9 @@ export default defineComponent({
       const this0 = this as typeof this & MixinsInstance
       return this0.items.slice(6, 10)
     },
+  },
+  methods: {
+    formatCount,
   },
 })
 </script>

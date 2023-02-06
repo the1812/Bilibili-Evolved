@@ -83,7 +83,7 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/fans/follow'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.following | count }}</div>
+          <div class="stats-number">{{ count(stat.following) }}</div>
           关注
         </a>
         <a
@@ -91,7 +91,7 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/fans/fans'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.follower | count }}</div>
+          <div class="stats-number">{{ count(stat.follower) }}</div>
           粉丝
         </a>
         <a
@@ -99,7 +99,7 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/dynamic'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.dynamic_count | count }}</div>
+          <div class="stats-number">{{ count(stat.dynamic_count }}</div>
           动态
         </a>
       </div>
@@ -155,6 +155,7 @@
 </template>
 
 <script lang="ts">
+import format from '@popperjs/core/lib/utils/format'
 import { defineComponent } from 'vue'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUserInfo } from '@/core/user-info'
@@ -168,9 +169,6 @@ type PrivilegeType = 1 | 2
 export default defineComponent({
   components: {
     VIcon: coreApis.ui.VIcon,
-  },
-  filters: {
-    count: formatCount,
   },
   mixins: [popperMixin],
   data() {
@@ -257,6 +255,7 @@ export default defineComponent({
     }
   },
   methods: {
+    count: formatCount,
     async privilegeReceive(type: PrivilegeType) {
       const typeMapping = {
         1: 'bCoin',
