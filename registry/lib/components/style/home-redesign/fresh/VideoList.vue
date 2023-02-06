@@ -75,7 +75,7 @@ export default defineComponent({
       await this.$nextTick()
       setupScrollMask({
         container: this.$el,
-        items: this.$refs.cards.map((c: Vue) => c.$el),
+        items: this.$refs.cards.map(c => c.$el),
       })
     },
     offsetPage(offset: number) {

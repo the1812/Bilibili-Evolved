@@ -12,23 +12,25 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { type ComponentPublicInstance, defineComponent } from 'vue'
 import type { CurriedFunction2 } from 'lodash'
 
 import CheckBox from './CheckBox.vue'
 
 interface RadioGroup {
-  instance: Vue
+  instance: ComponentPublicInstance
   uncheck: () => void
 }
 const groups = new Map<string | HTMLElement, RadioGroup[]>()
-const setGroup = lodash.curry((name: string | HTMLElement, instance: Vue, uncheck: () => void) => {
-  if (groups.has(name)) {
-    groups.get(name).push({ instance, uncheck })
-  } else {
-    groups.set(name, [{ instance, uncheck }])
-  }
-})
+const setGroup = lodash.curry(
+  (name: string | HTMLElement, instance: ComponentPublicInstance, uncheck: () => void) => {
+    if (groups.has(name)) {
+      groups.get(name).push({ instance, uncheck })
+    } else {
+      groups.set(name, [{ instance, uncheck }])
+    }
+  },
+)
 export default defineComponent({
   name: 'RadioButton',
   components: {

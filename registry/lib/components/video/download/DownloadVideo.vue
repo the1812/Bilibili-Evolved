@@ -84,7 +84,7 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { type ComponentPublicInstance, defineComponent } from 'vue'
 import type { VideoQuality } from '@/components/video/video-quality'
 import { allQualities } from '@/components/video/video-quality'
 import type { TestPattern } from '@/core/common-types'
@@ -305,7 +305,7 @@ export default defineComponent({
         this.testData.videoInfo = undefined
       }
     },
-    async startDownload(instance: Vue, output: DownloadVideoOutput) {
+    async startDownload(instance: ComponentPublicInstance, output: DownloadVideoOutput) {
       try {
         this.busy = true
         const input = this.selectedInput as DownloadVideoInput

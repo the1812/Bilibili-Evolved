@@ -8,9 +8,6 @@ export const init = async () => {
     },
   })
 
-  const { initVue } = await import('./init-vue')
-  initVue()
-
   // 跳过对多余<iframe>的加载
   // const { checkIframes } = await import('./check-iframes')
   // const skip = !checkIframes()

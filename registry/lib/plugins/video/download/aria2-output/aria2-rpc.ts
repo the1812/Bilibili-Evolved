@@ -1,3 +1,4 @@
+import type { ComponentPublicInstance } from 'vue'
 import { getJson, monkey, postJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { UserAgent } from '@/core/utils/constants'
@@ -130,7 +131,7 @@ export const aria2Rpc: DownloadVideoOutput = {
   description: '使用 aria2 RPC 功能发送下载请求.',
   runAction: async (
     action,
-    instance: Vue & {
+    instance: ComponentPublicInstance & {
       selectedRpcProfile: Aria2RpcProfile
     },
   ) => {

@@ -1,7 +1,7 @@
 import { videoChange } from '@/core/observer'
 import { matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
-import { mount } from 'sortablejs'
+import type VideoControlBar from './VideoControlBar.vue'
 
 export interface VideoControlBarItem {
   name: string
@@ -10,22 +10,24 @@ export interface VideoControlBarItem {
   order: number
   action: (event: MouseEvent) => void | Promise<void>
 }
+type ControlBarInstance = InstanceType<typeof VideoControlBar>
 const controlBarClass = '.be-video-control-bar-extend'
-let controlBarInstance: Promise<Vue> = null
+let controlBarInstance: Promise<ControlBarInstance> = null
 const controlBarItems: VideoControlBarItem[] = []
 const initControlBar = lodash.once(() => {
   if (!playerUrls.some(url => matchUrlPattern(url))) {
-    return Promise.resolve<Vue>(null)
+    return Promise.resolve<ControlBarInstance>(null)
   }
-  return new Promise<Vue>(resolve => {
+  return new Promise<ControlBarInstance>(resolve => {
     videoChange(async () => {
       const { playerAgent } = await import('@/components/video/player-agent')
       const time = await playerAgent.query.control.buttons.time()
-      const VideoControlBar = await import('./VideoControlBar.vue').then(m => m.default)
       if (time === null || time.parentElement?.querySelector(controlBarClass) !== null) {
         return
       }
-      const [el, vm] = mountVueComponent(VideoControlBar, { items: controlBarItems })
+      const [el, vm] = mountVueComponent(await import('./VideoControlBar.vue'), {
+        items: controlBarItems,
+      })
       time.insertAdjacentElement('afterend', el)
       resolve(vm)
     })

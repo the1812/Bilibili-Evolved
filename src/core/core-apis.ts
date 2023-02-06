@@ -131,7 +131,6 @@ export const externalApis = {
     GM_info,
   },
   lodash,
-  Vue,
   sandboxWindow: window,
   theWorld: (time: number) => {
     setTimeout(() => {
