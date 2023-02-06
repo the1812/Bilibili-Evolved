@@ -1,6 +1,7 @@
 import { videoChange } from '@/core/observer'
-import { matchUrlPattern } from '@/core/utils'
+import { matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
+import { mount } from 'sortablejs'
 
 export interface VideoControlBarItem {
   name: string
@@ -24,13 +25,9 @@ const initControlBar = lodash.once(() => {
       if (time === null || time.parentElement?.querySelector(controlBarClass) !== null) {
         return
       }
-      const instance = new VideoControlBar({
-        propsData: {
-          items: controlBarItems,
-        },
-      }).$mount()
-      time.insertAdjacentElement('afterend', instance.$el)
-      resolve(instance)
+      const [el, vm] = mountVueComponent(VideoControlBar, { items: controlBarItems })
+      time.insertAdjacentElement('afterend', el)
+      resolve(vm)
     })
   })
 })
