@@ -13,7 +13,7 @@
       <template v-else class="status">
         <div class="status-dot disconnected" />
         <div class="status-text">未连接</div>
-        <AsyncButton title="连接" @click="connect">
+        <AsyncButton title="连接" wait-on-click="connect">
           <VIcon icon="mdi-play" :size="14" />
           连接
         </AsyncButton>

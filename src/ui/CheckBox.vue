@@ -5,7 +5,6 @@
     role="checkbox"
     :aria-checked="checked"
     type="transparent"
-    v-bind="$attrs"
     @click="$emit('update:checked', !checked)"
   >
     <div class="text-container">

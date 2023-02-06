@@ -2,7 +2,6 @@
   <CheckBox
     class="be-radio-button"
     role="radio"
-    v-bind="$attrs"
     :checked="checked"
     :checked-icon="checkedIcon"
     :not-checked-icon="notCheckedIcon"

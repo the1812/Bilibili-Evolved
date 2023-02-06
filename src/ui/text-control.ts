@@ -2,6 +2,7 @@ import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 
 export const textControlMixin = defineComponent({
+  inheritAttrs: false,
   props: {
     text: {
       type: String,
@@ -22,12 +23,12 @@ export const textControlMixin = defineComponent({
   data() {
     return {
       composing: false,
-      restListeners: lodash.omit(
-        this.$listeners,
-        'change',
-        'input',
-        'compositionstart',
-        'compositionend',
+      restAttrs: lodash.omit(
+        this.$attrs,
+        'onChange',
+        'onInput',
+        'onCompositionstart',
+        'onCompositionend',
       ),
     }
   },

@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="be-popup"
-    :class="{ open, fixed, close: !open, 'closed-style': closedStyle }"
-    v-on="$listeners"
-  >
+  <div class="be-popup" :class="{ open, fixed, close: !open, 'closed-style': closedStyle }">
     <slot v-if="loaded"></slot>
   </div>
 </template>

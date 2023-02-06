@@ -1,6 +1,5 @@
 <template>
   <img
-    v-bind="$attrs"
     :width="width"
     :height="height"
     :srcset="srcset"

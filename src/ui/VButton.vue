@@ -5,9 +5,9 @@
     :aria-disabled="disabled"
     :tabindex="disabled ? -1 : 0"
     :class="{ [type]: true, disabled, round, icon }"
-    v-on="disabled ? null : $listeners"
-    @keydown.enter.prevent="$listeners.click && $listeners.click($event)"
-    @keydown.space.prevent="$listeners.click && $listeners.click($event)"
+    v-bind="attrs"
+    @keydown.enter.prevent="$emit('click')"
+    @keydown.space.prevent="$emit('click')"
   >
     <div class="content-container">
       <slot>Button</slot>
@@ -20,6 +20,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'VButton',
+  inheritAttrs: false,
   props: {
     type: {
       type: String,
@@ -34,7 +35,13 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['click'],
   computed: {
+    attrs(): Record<string, unknown> {
+      return this.disabled
+        ? lodash.omitBy(this.$attrs, (value, key) => key.startsWith('on'))
+        : this.$attrs
+    },
     disabled(): boolean {
       return Boolean(this.$attrs.disabled)
     },

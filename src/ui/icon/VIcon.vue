@@ -1,11 +1,5 @@
 <template>
-  <i
-    class="be-icon"
-    :class="classes"
-    :style="{ '--size': size + 'px' }"
-    v-bind="$attrs"
-    v-on="$listeners"
-  >
+  <i class="be-icon" :class="classes" :style="{ '--size': size + 'px' }">
     <slot></slot>
     <div
       v-if="icon in $options.static.customIcons"

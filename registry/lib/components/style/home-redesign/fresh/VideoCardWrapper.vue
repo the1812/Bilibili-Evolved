@@ -11,6 +11,7 @@ export default defineComponent({
   components: {
     VideoCard,
   },
+  inheritAttrs: false,
 })
 </script>
 <style lang="scss">

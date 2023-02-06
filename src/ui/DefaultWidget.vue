@@ -1,5 +1,5 @@
 <template>
-  <VButton class="default-widget" v-bind="$attrs" v-on="$listeners">
+  <VButton class="default-widget">
     <div class="widget-icon">
       <slot name="icon">
         <VIcon :type="iconType" :icon="icon"></VIcon>

@@ -3,9 +3,8 @@
     <textarea
       ref="input"
       type="text"
-      v-bind="$attrs"
+      v-bind="restattrs"
       :value="text"
-      v-on="restListeners"
       @change.stop="change"
       @input.stop="input"
       @compositionstart="compositionStart"
