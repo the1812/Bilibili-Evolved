@@ -136,7 +136,7 @@ export default defineComponent({
       font-size: 14px;
       transition: 0.2s ease-out;
       display: flex;
-      &-enter,
+      &-enter-from,
       &-leave-to {
         opacity: 0;
         transform: scale(0.9);

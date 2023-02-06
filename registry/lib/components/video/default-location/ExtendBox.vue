@@ -144,13 +144,13 @@ $border-radius: 4px;
   transition: margin-top 0.2s ease-out;
 }
 
-.video-default-location-extend-box-content-transition-enter,
+.video-default-location-extend-box-content-transition-enter-from,
 .video-default-location-extend-box-content-transition-leave-to {
   margin-top: -100%;
 }
 
 // .video-default-location-extend-box-content-transition-enter-to,
-// .video-default-location-extend-box-content-transition-leave {
+// .video-default-location-extend-box-content-transition-leave-from {
 //   margin-top: 0;
 // }
 </style>

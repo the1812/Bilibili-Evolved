@@ -260,7 +260,7 @@ export default ThisComponent
   @include v-stretch();
   justify-content: center;
   @mixin items-animation {
-    &-enter,
+    &-enter-from,
     &-leave-to {
       opacity: 0;
       transform: translateY(-16px) scale(0.9);

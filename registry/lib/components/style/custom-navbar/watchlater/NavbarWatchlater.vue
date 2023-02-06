@@ -251,7 +251,7 @@ export default ThisComponent
     padding: 0 12px;
     padding-bottom: 12px;
     .watchlater-card {
-      &.cards-enter,
+      &.cards-enter-from,
       &.cards-leave-to {
         opacity: 0;
         transform: translateY(-16px) scale(0.9);

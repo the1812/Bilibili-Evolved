@@ -141,7 +141,7 @@ export default defineComponent({
     justify-content: space-between;
     width: 356px;
     .cards {
-      &-enter,
+      &-enter-from,
       &-leave-to {
         opacity: 0;
         transform: translateY(-16px) scale(0.9);

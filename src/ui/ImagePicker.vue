@@ -200,7 +200,7 @@ export default defineComponent({
       padding-left: 6px;
       padding-top: 6px;
       .image {
-        &.image-list-enter,
+        &.image-list-enter-from,
         &.image-list-leave-to {
           opacity: 0;
         }

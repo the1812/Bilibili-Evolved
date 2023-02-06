@@ -343,7 +343,7 @@ export default ThisComponent
       @include no-scrollbar();
       padding: 0 12px;
       padding-bottom: 12px;
-      &-enter,
+      &-enter-from,
       &-leave-to {
         opacity: 0;
         transform: translateY(-16px) scale(0.9);

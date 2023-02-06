@@ -108,7 +108,7 @@ export default defineComponent({
   padding-left: 8px;
   border-radius: 8px;
 
-  &.toast-card-container-enter,
+  &.toast-card-container-enter-from,
   &.toast-card-container-leave-to {
     opacity: 0;
     transform: translateX(var(--card-min-width-negative));

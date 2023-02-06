@@ -68,7 +68,7 @@ export default defineComponent({
   @include v-center();
   .live-feeds-content {
     align-self: stretch;
-    &-enter,
+    &-enter-from,
     &-leave-to {
       opacity: 0;
       transform: translateY(-16px) scale(0.9);

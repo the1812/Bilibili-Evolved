@@ -119,7 +119,7 @@ export default defineComponent({
     > * {
       pointer-events: initial;
     }
-    &-enter {
+    &-enter-from {
       opacity: 0;
       transform: translateX(var(--screenshot-width-negative));
     }

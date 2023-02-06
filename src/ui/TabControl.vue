@@ -144,7 +144,7 @@ export default defineComponent({
       max-height: 100%;
       @include no-scrollbar();
       .content-transition {
-        &-enter,
+        &-enter-from,
         &-leave-to {
           opacity: 0;
           transform: translateY(-12px);
