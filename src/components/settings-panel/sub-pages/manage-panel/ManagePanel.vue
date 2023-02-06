@@ -142,12 +142,15 @@ export default defineComponent({
     },
   },
   watch: {
-    filteredList() {
-      this.loaded = false
-      window.setTimeout(() => {
-        this.debouncedList = this.filteredList
-        this.loaded = true
-      }, 200)
+    filteredList: {
+      handler() {
+        this.loaded = false
+        window.setTimeout(() => {
+          this.debouncedList = this.filteredList
+          this.loaded = true
+        }, 200)
+      },
+      deep: true,
     },
   },
   mounted() {

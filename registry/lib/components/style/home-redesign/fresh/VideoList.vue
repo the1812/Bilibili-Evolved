@@ -40,8 +40,11 @@ export default defineComponent({
     },
   },
   watch: {
-    videos() {
-      this.setupIntersection()
+    videos: {
+      handler() {
+        this.setupIntersection()
+      },
+      deep: true,
     },
     loaded() {
       if (this.loaded) {

@@ -160,14 +160,17 @@ export default defineComponent({
       // }
       this.updateRenderedComponents()
     },
-    components() {
-      this.updateRenderedComponents()
-      this.$refs.componentTags.refreshTags()
-      if (
-        !this.components.some((c: ComponentMetadata) => c.name === this.selectedComponent?.name)
-      ) {
-        this.selectedComponent = null
-      }
+    components: {
+      handler() {
+        this.updateRenderedComponents()
+        this.$refs.componentTags.refreshTags()
+        if (
+          !this.components.some((c: ComponentMetadata) => c.name === this.selectedComponent?.name)
+        ) {
+          this.selectedComponent = null
+        }
+      },
+      deep: true,
     },
   },
   methods: {

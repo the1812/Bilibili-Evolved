@@ -118,11 +118,14 @@ export default defineComponent({
     }
   },
   watch: {
-    patterns() {
-      options.patterns = this.patterns
-      if (cardsManager) {
-        cardsManager.cards.forEach(card => this.updateCard(lodash.clone(card)))
-      }
+    patterns: {
+      handler() {
+        options.patterns = this.patterns
+        if (cardsManager) {
+          cardsManager.cards.forEach(card => this.updateCard(lodash.clone(card)))
+        }
+      },
+      deep: true,
     },
   },
   async mounted() {

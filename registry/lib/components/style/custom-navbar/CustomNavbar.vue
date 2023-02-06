@@ -56,8 +56,11 @@ export default defineComponent({
     }
   },
   watch: {
-    initItems() {
-      this.items = getItems()
+    initItems: {
+      handler() {
+        this.items = getItems()
+      },
+      deep: true,
     },
   },
   async mounted() {

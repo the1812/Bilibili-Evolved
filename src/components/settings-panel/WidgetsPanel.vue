@@ -64,16 +64,20 @@ export default defineComponent({
     }
   },
   watch: {
-    allWidgets() {
-      this.allWidgets.forEach(async (w: Widget) => {
-        const add = await widgetFilter(w)
-        if (add) {
-          this.widgets.push(w)
-        } else {
-          deleteValue(this.widgets, (widget: Widget) => widget.name === w.name)
-        }
-      })
-      console.log('updated widgets', this.widgets)
+    // deep
+    allWidgets: {
+      handler() {
+        this.allWidgets.forEach(async (w: Widget) => {
+          const add = await widgetFilter(w)
+          if (add) {
+            this.widgets.push(w)
+          } else {
+            deleteValue(this.widgets, (widget: Widget) => widget.name === w.name)
+          }
+        })
+        console.log('updated widgets', this.widgets)
+      },
+      deep: true,
     },
   },
   created() {
