@@ -260,7 +260,7 @@ const ThisComponent = defineComponent({
         logError(error)
       }
     },
-    debounceSearchAllList: lodash.debounce(searchAllList, 200) as unknown as () => void,
+    debounceSearchAllList: lodash.debounce(searchAllList, 200) as unknown as () => Promise<void>,
     scrollTrigger() {
       if (this.searching) {
         this.debounceSearchAllList()
