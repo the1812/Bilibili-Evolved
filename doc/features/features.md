@@ -505,6 +505,15 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 开启后, 可在每条评论的菜单中选择复制链接.
 
+### [禁用评论区搜索词](../../registry/dist/components/utils/comments/disable-search-link.js)
+`disableCommentsSearchLink`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/disable-search-link.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/disable-search-link.js)
+
+禁用评论区的搜索词链接.
+
 ### [DevClient](../../registry/dist/components/utils/dev-client.js)
 `devClient`
 
@@ -687,7 +696,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/expand.js)
 
-每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿.
+每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿. (`最大弹幕数量` 是和视频的总弹幕量对比, 不一定和播放器实际装载的弹幕量相等)
 
 ### [视频页默认定位](../../registry/dist/components/video/default-location.js)
 `videoDefaultLocation`
@@ -1113,6 +1122,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/manual-input.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/manual-input.js)
 
 为下载视频增加手动输入支持.
+
+### [下载视频 - Motrix 输出支持](../../registry/dist/plugins/video/download/motrix-output.js)
+`downloadVideo.outputs.motrix`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/motrix-output.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/motrix-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/motrix-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/motrix-output.js)
+
+为下载视频增加 Motrix 输出支持.
 
 ### [下载视频 - MPV 播放支持（列表）](../../registry/dist/plugins/video/download/mpv-output-playlist.js)
 `downloadVideo.outputs.mpv-playlist`
