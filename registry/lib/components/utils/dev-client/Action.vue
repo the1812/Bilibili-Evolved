@@ -78,7 +78,7 @@ export default defineComponent({
     devClient.addEventListener(DevClientEvents.ServerChange, this.handleServerChange)
     devClient.addEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
   },
-  async beforeDestroy() {
+  async beforeUnmount() {
     const { devClient } = await import('./client')
     devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
   },

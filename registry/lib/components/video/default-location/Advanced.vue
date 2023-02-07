@@ -91,7 +91,7 @@ export default defineComponent({
   created() {
     this.setupObserveScroll()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     scrollObserver.stop()
   },
   methods: {

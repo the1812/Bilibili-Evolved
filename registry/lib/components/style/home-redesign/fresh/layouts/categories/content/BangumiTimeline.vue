@@ -211,7 +211,7 @@ export default defineComponent({
     }
     element.addEventListener('animationend', endHandler)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.timer) {
       clearInterval(this.timer)
     }

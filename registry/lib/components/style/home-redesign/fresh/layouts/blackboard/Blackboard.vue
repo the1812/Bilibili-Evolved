@@ -81,7 +81,7 @@ export default defineComponent({
   mounted() {
     this.createTimer()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.destroyTimer()
   },
   methods: {

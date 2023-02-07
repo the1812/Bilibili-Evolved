@@ -48,7 +48,7 @@ export default defineComponent({
     devClient.addEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
     // devClient.addEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     const devClient = this.client as DevClient
     devClient.removeEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
     // devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)

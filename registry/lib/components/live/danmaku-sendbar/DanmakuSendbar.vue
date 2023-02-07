@@ -54,7 +54,7 @@ export default defineComponent({
       changeEventHook = true
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.originalTextArea.removeEventListener('input', this.listenChange)
     this.originalTextArea.removeEventListener('change', this.listenChange)
   },

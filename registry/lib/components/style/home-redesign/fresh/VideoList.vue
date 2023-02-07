@@ -52,7 +52,7 @@ export default defineComponent({
       }
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     cleanUpScrollMask(this.$el)
   },
   mounted() {

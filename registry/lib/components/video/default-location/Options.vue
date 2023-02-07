@@ -97,7 +97,7 @@ export default defineComponent({
       panelObserver.start()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (panelObserver) {
       panelObserver.stop()
     }

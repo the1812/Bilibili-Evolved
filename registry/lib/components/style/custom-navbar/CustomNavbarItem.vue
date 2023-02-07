@@ -100,7 +100,7 @@ const ThisComponent = defineComponent({
       removeComponentListener('customNavbar.openInNewTab', listener)
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cancelListeners?.()
   },
   methods: {
