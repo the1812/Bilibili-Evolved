@@ -417,6 +417,14 @@
   },
   {
     "type": "component",
+    "name": "disableCommentsSearchLink",
+    "displayName": "禁用评论区搜索词",
+    "description": "禁用评论区的搜索词链接.",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/disable-search-link.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/disable-search-link.js"
+  },
+  {
+    "type": "component",
     "name": "devClient",
     "displayName": "DevClient",
     "description": "本地开发工具, 提供自动更新功能和样式热重载的能力, 需要与 DevServer 配合使用. (DevServer 的使用方式见 [CONTRIBUTING.md](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md))\r\n\r\n`自动连接` 开启时, 每次进入网页都会自动尝试连接到 DevServer, 如果关闭则需要手动操作连接.\r\n\r\n`刷新策略` 决定了收到本体或者功能更新的消息时是否刷新:\r\n  - **总是刷新**: 收到更新时立即刷新页面\r\n  - 不刷新: 收到更新时不刷新页面\r\n\r\n`热重载策略` 决定了是否开启热重载功能, 只要成功触发热重载, 就不刷新页面:\r\n  - **开启热重载**: 功能带有 `instantStyles` 时, 热重载 `instantStyles` 中的样式\r\n  - 关闭热重载: 收到更新时按 `刷新策略` 执行\r\n\r\n> 目前就这两个选项, 将来可能会支持对 `entry` 的热重载\r\n",
@@ -547,7 +555,7 @@
     "type": "component",
     "name": "expandDanmakuList",
     "displayName": "展开弹幕列表",
-    "description": "每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿.",
+    "description": "每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿. (`最大弹幕数量` 是和视频的总弹幕量对比, 不一定和播放器实际装载的弹幕量相等)\r\n",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/expand.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/expand.js"
   },
@@ -855,6 +863,14 @@
     "description": "为下载视频增加手动输入支持.",
     "fullRelativePath": "../../registry/dist/plugins/video/download/manual-input.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/manual-input.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.motrix",
+    "displayName": "下载视频 - Motrix 输出支持",
+    "description": "为下载视频增加 Motrix 输出支持.",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/motrix-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/motrix-output.js"
   },
   {
     "type": "plugin",
