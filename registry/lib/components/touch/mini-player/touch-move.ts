@@ -72,7 +72,7 @@ export const enableTouchMove = (element: HTMLElement, options?: TouchMoveOptions
     options,
     'minMoveDistance',
     getComponentSettings('touchMiniPlayer').options.touchMoveDistance,
-  )
+  ) as number
   // const scroll = lodash.get(options, 'scroll', false)
   const touchstart = (e: TouchEvent) => {
     if (e.touches.length < 1) {

@@ -1,6 +1,7 @@
 import type protobufType from 'protobufjs'
 import type JSZipType from 'jszip'
 import type SortableJSType from 'sortablejs'
+import type StreamSaverType from 'streamsaver'
 import { monkey } from './ajax'
 import { meta } from './meta'
 
@@ -27,7 +28,7 @@ export class RuntimeLibrary<LibraryType> implements PromiseLike<LibraryType> {
           ;(function runEval() {
             return eval(code)
             // eslint-disable-next-line no-extra-bind
-          }.bind(window)())
+          }).bind(window)()
           return getModule(window)
         })()
       }
@@ -50,4 +51,8 @@ export const JSZipLibrary = new RuntimeLibrary<typeof JSZipType>({
 export const SortableJSLibrary = new RuntimeLibrary<typeof SortableJSType>({
   url: meta.compilationInfo.altCdn.library.sortable,
   getModule: window => window.Sortable,
+})
+export const StreamSaverLibrary = new RuntimeLibrary<typeof StreamSaverType>({
+  url: meta.compilationInfo.altCdn.library.streamsaver,
+  getModule: window => window.streamSaver,
 })

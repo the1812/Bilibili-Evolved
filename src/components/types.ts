@@ -43,8 +43,7 @@ export interface ComponentTag {
 
 type ComponentOptionValidator<T> = (value: T, oldValue: T) => T | undefined | null
 
-// TODO: 参考 discussion #3041。当不兼容代码替换完成后将 any 改为 unknown
-export type UnknownOptions = Record<string, any>
+export type UnknownOptions = Record<string, unknown>
 
 export type EmptyOptions = Record<string, never>
 
@@ -77,10 +76,6 @@ export interface OptionMetadata<V = unknown> {
 export type OptionsMetadata<O extends UnknownOptions = UnknownOptions> = {
   [OptionName in keyof O]: OptionMetadata<O[OptionName]>
 }
-
-// TODO: 参考 discussion #3041。当不兼容代码替换完成后删除
-export type ComponentOptions = OptionsMetadata
-export type ComponentOption = OptionMetadata
 
 /** 组件标签 */
 export const componentsTags = {

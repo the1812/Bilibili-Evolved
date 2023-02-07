@@ -68,6 +68,13 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
     true,
   )
   addComponentListener(
+    `${metadata.name}.preserveFeedGoods`,
+    (value: boolean) => {
+      document.body.classList.toggle('preserve-feed-goods', value)
+    },
+    true,
+  )
+  addComponentListener(
     `${metadata.name}.showPlaceholder`,
     (value: boolean) => {
       document.body.classList.toggle('promotion-show-placeholder', value)
@@ -101,6 +108,10 @@ export const component = defineComponentMetadata({
     },
     preserveEventBanner: {
       displayName: '保留活动横幅',
+      defaultValue: false,
+    },
+    preserveFeedGoods: {
+      displayName: '保留动态商品推荐',
       defaultValue: false,
     },
   },

@@ -1,4 +1,4 @@
-$prefix: "simplifyLiveroom-switch";
+$prefix: 'simplifyLiveroom-switch';
 .#{$prefix} {
   &-vip .vip-icon,
   &-fansMedal .fans-medal-item-ctnr,
@@ -175,16 +175,14 @@ $prefix: "simplifyLiveroom-switch";
     }
     .chat-history-panel,
     #pay-note-panel-vm .pay-note-panel,
-    #pay-note-panel-vm .pay-note-panel .detail-info .mask
-    {
+    #pay-note-panel-vm .pay-note-panel .detail-info .mask {
       border-radius: 11px 11px 0 0 !important;
     }
   }
   &.player-full-win {
     .chat-history-panel,
     #pay-note-panel-vm .pay-note-panel,
-    #pay-note-panel-vm .pay-note-panel .detail-info .mask
-    {
+    #pay-note-panel-vm .pay-note-panel .detail-info .mask {
       border-radius: 0 !important;
     }
   }
@@ -201,6 +199,25 @@ $prefix: "simplifyLiveroom-switch";
   .gift-control-section,
   .gift-control-panel {
     height: 48px !important;
+  }
+  .gift-left-part {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 10px 0 0 16px !important;
+    .entry-icon {
+      margin: 0 !important;
+      width: 24px !important;
+      height: 24px !important;
+    }
+    .wait-num {
+      display: none !important;
+    }
+    .time-span {
+      margin: 1px 0 0 0 !important;
+    }
   }
   .draw-box,
   .anchor-lottery-entry,
@@ -277,7 +294,7 @@ $prefix: "simplifyLiveroom-switch";
       background-image: none !important;
     }
   }
-  .chat-history-panel [class*="guard-level-"] {
+  .chat-history-panel [class*='guard-level-'] {
     padding: 4px 5px !important;
     margin: 0 !important;
     &::after {

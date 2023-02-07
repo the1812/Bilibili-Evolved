@@ -203,6 +203,7 @@ export default Vue.extend({
     border-radius: 6px;
   }
   .link {
+    cursor: pointer;
     &:hover {
       background-color: #8883;
     }
