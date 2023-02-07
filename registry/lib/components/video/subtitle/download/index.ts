@@ -2,7 +2,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
-import { videoUrls } from '@/core/utils/urls'
+import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../../download/types'
 import { getBlobByType, SubtitleDownloadType } from './utils'
 
@@ -14,7 +14,7 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.video],
   entry: none,
-  urlInclude: videoUrls,
+  urlInclude: videoAndBangumiUrls,
   widget: {
     condition: hasVideo,
     component: () => import('./DownloadSubtitle.vue').then(m => m.default),

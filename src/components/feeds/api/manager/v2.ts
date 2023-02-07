@@ -87,6 +87,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
       combineText(getText(modules.module_dynamic, cardType), getText(repostDynamicModule, cardType))
   }
   card.text = await card.getText()
+  card.element.setAttribute('data-did', card.id)
   // 等待第一次 Vue 渲染完成
   await selectAll(() => element.querySelectorAll('.bili-dyn-item *'), { queryInterval: 50 })
   return card

@@ -83,6 +83,7 @@ export const plugin: PluginMetadata = {
                 action: () => {
                   window.open(it.link(match), '_blank')
                 },
+                order: 0,
               })
               if (it.extend) {
                 const actions = await it.extend(match)
