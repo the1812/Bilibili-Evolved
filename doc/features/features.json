@@ -561,6 +561,14 @@
   },
   {
     "type": "component",
+    "name": "unescapeDanmaku",
+    "displayName": "弹幕转义",
+    "description": "将弹幕中的 `\\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/danmaku/unescape.js",
+    "fullAbsolutePath": "registry/dist/components/video/danmaku/unescape.js"
+  },
+  {
+    "type": "component",
     "name": "videoDefaultLocation",
     "displayName": "视频页默认定位",
     "description": "打开视频/番剧时自动定位到指定位置\r\n\r\n<div class=\"video-default-location-desc-detail\">\r\n\r\n位置：距离页面顶部的像素距离\\\r\n默认位置：打开视频时自动定位到此处\\\r\n位置测试：查看、调整当前页面所在位置\r\n\r\n当前版本限制默认位置的最大值为 4000。\\\r\n若有其他希望支持的页面，请提交反馈。\\\r\n脚本不会等待评论完全加载，因此较大的默认位置将无法正确定位。\r\n\r\n</div>\r\n\r\n<style>\r\n.video-default-location-desc-detail.video-default-location-desc-detail p {\r\n  margin-top: 1ex;\r\n}\r\n</style>\r\n",
