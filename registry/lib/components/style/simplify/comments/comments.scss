@@ -53,6 +53,7 @@
   right: 8px;
   top: 24px;
   margin: 0 !important;
+  opacity: 0.5;
   line-height: normal;
   color: black;
 }
@@ -445,7 +446,6 @@ body.dark .panel-area .bb-comment {
     @include time();
     @include invert-on-dark();
     top: 12px;
-    opacity: 1;
   }
 }
 .reply-box .item-user {

@@ -299,7 +299,7 @@
     "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
-    "description": "- 删除热评头像下方的关注按钮\n- 删除用户的等级标识\n- 删除发送源信息(`来自安卓客户端` 这种)\n- 删除用户名右边的勋章\n- 删除评论区顶部的横幅\n- 发送时间移动到右上角\n- 位图图标全部换用矢量图标, 高分屏不会模糊\n- 投票仅显示链接, 隐藏下面的大框.\n\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.",
+    "description": "- 删除热评头像下方的关注按钮\r\n- 删除用户的等级标识\r\n- 删除发送源信息(\\`来自安卓客户端\\` 这种)\r\n- 删除用户名右边的勋章\r\n- 删除评论区顶部的横幅\r\n- 发送时间移动到右上角\r\n- 位图图标全部换用矢量图标, 高分屏不会模糊\r\n- 投票仅显示链接, 隐藏下面的大框.\r\n\r\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
   },
@@ -417,6 +417,14 @@
   },
   {
     "type": "component",
+    "name": "disableCommentsSearchLink",
+    "displayName": "禁用评论区搜索词",
+    "description": "禁用评论区的搜索词链接.",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/disable-search-link.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/disable-search-link.js"
+  },
+  {
+    "type": "component",
     "name": "devClient",
     "displayName": "DevClient",
     "description": "本地开发工具, 提供自动更新功能和样式热重载的能力, 需要与 DevServer 配合使用. (DevServer 的使用方式见 [CONTRIBUTING.md](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md))\r\n\r\n`自动连接` 开启时, 每次进入网页都会自动尝试连接到 DevServer, 如果关闭则需要手动操作连接.\r\n\r\n`刷新策略` 决定了收到本体或者功能更新的消息时是否刷新:\r\n  - **总是刷新**: 收到更新时立即刷新页面\r\n  - 不刷新: 收到更新时不刷新页面\r\n\r\n`热重载策略` 决定了是否开启热重载功能, 只要成功触发热重载, 就不刷新页面:\r\n  - **开启热重载**: 功能带有 `instantStyles` 时, 热重载 `instantStyles` 中的样式\r\n  - 关闭热重载: 收到更新时按 `刷新策略` 执行\r\n\r\n> 目前就这两个选项, 将来可能会支持对 `entry` 的热重载\r\n",
@@ -446,6 +454,14 @@
     "description": "根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)",
     "fullRelativePath": "../../registry/dist/components/utils/image-resolution.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-resolution.js"
+  },
+  {
+    "type": "component",
+    "name": "importSeries",
+    "displayName": "批量导入合集",
+    "description": "by [@aiden](https://github.com/swhoro)\n\n在合集页面制作一个批量导入按钮，可以新增所有合集内视频至同名收藏夹",
+    "fullRelativePath": "../../registry/dist/components/utils/import-series.js",
+    "fullAbsolutePath": "registry/dist/components/utils/import-series.js"
   },
   {
     "type": "component",
@@ -539,7 +555,7 @@
     "type": "component",
     "name": "expandDanmakuList",
     "displayName": "展开弹幕列表",
-    "description": "每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿.",
+    "description": "每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿. (`最大弹幕数量` 是和视频的总弹幕量对比, 不一定和播放器实际装载的弹幕量相等)\r\n",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/expand.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/expand.js"
   },
@@ -609,6 +625,14 @@
   },
   {
     "type": "component",
+    "name": "disableScrollVolume",
+    "displayName": "禁止滚轮调音量",
+    "description": "在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.",
+    "fullRelativePath": "../../registry/dist/components/video/player/disable-scroll-volume.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/disable-scroll-volume.js"
+  },
+  {
+    "type": "component",
     "name": "doubleClickFullscreen",
     "displayName": "双击全屏",
     "description": "为视频播放器启用双击全屏功能, 请注意不能和 `启用双击控制` 一同使用.",
@@ -619,7 +643,7 @@
     "type": "component",
     "name": "extendVideoSpeed",
     "displayName": "扩展倍速",
-    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 扩展视频播放器的倍速菜单项，可用于突破原有播放倍数的上限或下限.\n\n### 🔧 **选项**\n\n- `隐藏滚动条`：如果添加的倍速过多，倍速菜单将出现滚动条，在 Windows 下，若没有安装并启用「细滚动条」组件会显得比较挤，建议开启此选项隐藏滚动条.\n\n### **新增倍速**\n\n开启组件后，在默认情况下，播放器的倍速菜单就会新增 2.5x 和 3.0x 两个倍速选项.\n\n如果需要添加更多倍速，只需将鼠标指针移到菜单顶部的新增图标上，图标将变成一个输入框，根据需要键入新的倍速值，或通过滚轮增减数值，或直接使用推荐的数值，回车确认即可.\n\n新增倍速的范围要求在 0.0625 到 16 之间，数量则不受限制.\n\n**不推荐设置超高倍速（>3.0x）**：原生播放器内部没有针对超高倍速进行优化，可能导致音画不同步、播放卡顿、声音嘈杂/消失等一系列问题.\n\n### **删除倍速**\n\n将鼠标指针移到**自定义**的倍速菜单项上，其右侧将会显示一个移除图标，单击即可删除相应的倍速.\n\n",
+    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 扩展视频播放器的倍速菜单项，可用于突破原有播放倍数的上限或下限.\n\n### 🔧 **选项**\n\n- `隐藏滚动条`：如果添加的倍速过多，倍速菜单将出现滚动条，在 Windows 下，若没有安装并启用「细滚动条」组件会显得比较挤，建议开启此选项隐藏滚动条.\n\n- `隐藏移除图标`：如果认为倍速右侧的移除倍速图标有些突兀，可以开启此选项隐藏.\n\n- `隐藏新增图标`：如果认为顶部的新增倍速图标有些突兀，可以开启此选项隐藏.\n\n### **新增倍速**\n\n开启组件后，在默认情况下，播放器的倍速菜单就会新增 2.5x 和 3.0x 两个倍速选项.\n\n如果需要添加更多倍速，只需将鼠标指针移到菜单顶部的新增图标上，图标将变成一个输入框，根据需要键入新的倍速值，或通过滚轮增减数值，或直接使用推荐的数值，回车确认即可.\n\n新增倍速的范围要求在 0.0625 到 16 之间，数量则不受限制.\n\n**不推荐设置超高倍速（>3.0x）**：原生播放器内部没有针对超高倍速进行优化，可能导致音画不同步、播放卡顿、声音嘈杂/消失等一系列问题.\n\n### **删除倍速**\n\n将鼠标指针移到**自定义**的倍速菜单项上，其右侧将会显示一个移除图标，单击即可删除相应的倍速.\n\n",
     "fullRelativePath": "../../registry/dist/components/video/player/extend-speed.js",
     "fullAbsolutePath": "registry/dist/components/video/player/extend-speed.js"
   },
@@ -794,6 +818,22 @@
   },
   {
     "type": "plugin",
+    "name": "keymap.actions.toggleDanmakuList",
+    "displayName": "快捷键扩展 - 开关弹幕列表",
+    "description": "在快捷键的动作列表里添加一个 \"开关弹幕列表\".",
+    "fullRelativePath": "../../registry/dist/plugins/utils/keymap-toggle-danmaku-list.js",
+    "fullAbsolutePath": "registry/dist/plugins/utils/keymap-toggle-danmaku-list.js"
+  },
+  {
+    "type": "plugin",
+    "name": "keymap.actions.toggleSubtitle",
+    "displayName": "快捷键扩展 - 开关 CC 字幕",
+    "description": "在快捷键的动作列表里添加一个 \"开关 CC 字幕\".",
+    "fullRelativePath": "../../registry/dist/plugins/utils/keymap-toggle-subtitle.js",
+    "fullAbsolutePath": "registry/dist/plugins/utils/keymap-toggle-subtitle.js"
+  },
+  {
+    "type": "plugin",
     "name": "vLoading.reimu",
     "displayName": "加载提示 - 灵梦油库里",
     "description": "用灵梦油库里代替脚本的所有 \"加载中\" 提示, 油库里素材来自[东方我乐多从志](https://cn.touhougarakuta.com/).",
@@ -823,6 +863,14 @@
     "description": "为下载视频增加手动输入支持.",
     "fullRelativePath": "../../registry/dist/plugins/video/download/manual-input.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/manual-input.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.motrix",
+    "displayName": "下载视频 - Motrix 输出支持",
+    "description": "为下载视频增加 Motrix 输出支持.",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/motrix-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/motrix-output.js"
   },
   {
     "type": "plugin",

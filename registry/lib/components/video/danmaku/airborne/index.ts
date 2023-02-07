@@ -51,7 +51,7 @@ export const component = defineComponentMetadata({
           return
         }
         const target = e.target as HTMLElement
-        if (!target.classList.contains('b-danmaku')) {
+        if (!['b-danmaku', 'bili-dm'].some(token => target.classList.contains(token))) {
           return
         }
         const time = getAirborneTime(target.textContent)
@@ -59,11 +59,11 @@ export const component = defineComponentMetadata({
           unsafeWindow.player.seek(time, false)
         }
       }
-      const addAirborneStyle = (danmaku: DanmakuRecord) => {
+      const detectAirborne = (danmaku: DanmakuRecord) => {
         const canAirborne = !Number.isNaN(getAirborneTime(danmaku.text))
         danmaku.element.classList.toggle('airborne', canAirborne)
       }
-      forEachVideoDanmaku({ added: addAirborneStyle })
+      forEachVideoDanmaku({ added: detectAirborne })
       videoChange(async () => {
         const wrapper = (await playerAgent.query.video.wrap()) as HTMLElement
         if (wrapper.classList.contains('airborne-enabled')) {

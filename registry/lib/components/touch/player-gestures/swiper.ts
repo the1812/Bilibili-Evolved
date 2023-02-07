@@ -39,7 +39,7 @@ const createPosition = (e: TouchEvent, element: HTMLElement) => {
  * - `cancel`: 请求取消调整
  */
 export class SwipeAction extends EventTarget {
-  minSwipeDistance = getComponentSettings('touchPlayerGestures').options.swiperDistance
+  minSwipeDistance = getComponentSettings('touchPlayerGestures').options.swiperDistance as number
   startPosition: Position = null
   lastAction: {
     type: 'brightness' | 'volume' | 'progress'

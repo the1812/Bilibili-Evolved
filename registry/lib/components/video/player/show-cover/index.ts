@@ -40,7 +40,7 @@ const entry = async () => {
     const { VideoInfo } = await import('@/components/video/video-info')
     const info = new VideoInfo(aid)
     await info.fetchInfo()
-    document.body.style.setProperty('--cover-url', `url('${info.coverUrl}')`)
+    document.documentElement.style.setProperty('--cover-url', `url('${info.coverUrl}')`)
   }
   videoChange(showCover)
 }

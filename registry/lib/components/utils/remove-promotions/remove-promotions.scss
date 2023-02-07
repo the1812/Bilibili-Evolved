@@ -30,7 +30,8 @@ body.remove-game-match-module #reportFirst3,
 .video-page-special-card-small,
 .video-page-game-card-small,
 .video-page-operator-card-small,
-[data-be-promotion-mark] {
+[data-be-promotion-mark],
+body:not(.preserve-feed-goods) .dyn-goods {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
@@ -77,6 +78,9 @@ body.dark .blocked-ads.new {
   position: absolute !important;
   pointer-events: none !important;
   opacity: 0 !important;
+}
+body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-goods)  {
+  margin: 0 !important;
 }
 .bili-video-card__wrap {
   a[href*="cm.bilibili.com"] {

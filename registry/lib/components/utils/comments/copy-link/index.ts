@@ -31,10 +31,6 @@ const entry = async () => {
           action: async () => {
             const url = findParentFeedsUrl(item.element) || document.URL.replace(location.hash, '')
             await navigator.clipboard.writeText(`${url}#reply${item.id}`)
-            const operaList = dq(item.element, '.opera-list') as HTMLElement
-            if (operaList) {
-              operaList.style.display = 'none'
-            }
           },
         })
       })

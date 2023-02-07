@@ -38,9 +38,17 @@ body:
     validations:
       required: true
   - type: input
+    id: script-manager-version
+    attributes:
+      label: 脚本管理器及版本
+      description: 例如 Tampermonkey v4.19.6176
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: input
     id: browser-version
     attributes:
-      label: 浏览器版本
+      label: 浏览器及版本
       description: 可在浏览器的关于页面中找到浏览器版本信息
       placeholder: 请输入
     validations:

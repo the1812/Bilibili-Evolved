@@ -10,7 +10,7 @@
           断开连接
         </AsyncButton>
       </template>
-      <template v-else class="status">
+      <template v-else>
         <div class="status-dot disconnected" />
         <div class="status-text">未连接</div>
         <AsyncButton title="连接" @click="connect">

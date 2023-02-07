@@ -56,7 +56,7 @@
 <script lang="ts">
 import { TextBox, SwitchBox, ColorPicker, RangeInput, VDropdown, ImagePicker, VSlider } from '@/ui'
 import { getComponentSettings, ComponentSettings } from '@/core/settings'
-import { ComponentOption } from '../component'
+import { OptionMetadata } from '../component'
 import { getDropdownItems } from './dropdown'
 import SwitchOptions from '../SwitchOptions.vue'
 
@@ -104,7 +104,7 @@ export default {
   },
   computed: {
     type() {
-      const option = this.option as ComponentOption
+      const option = this.option as OptionMetadata
       const { defaultValue } = option
       // console.log(option)
       switch (typeof defaultValue) {

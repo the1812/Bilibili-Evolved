@@ -2,7 +2,6 @@ import { childListSubtree, videoChange } from '@/core/observer'
 import { hasVideo } from '@/core/spin-query'
 import { playerAgent } from './player-agent'
 
-let danmakuContainerObserver: MutationObserver
 export interface DanmakuRecord {
   element: HTMLElement
   reuse: boolean
@@ -12,17 +11,14 @@ export interface DanmakuRecordCallback {
   added?: (danmaku: DanmakuRecord) => void
   removed?: (danmaku: DanmakuRecord) => void
 }
-const recordedDanmakus: DanmakuRecord[] = []
 const parseDanmakuRecord = (element: HTMLElement) => ({
   element,
   reuse: false,
   text: element.textContent || '',
 })
 const startRecording = (container: HTMLElement, callback: DanmakuRecordCallback) => {
-  if (danmakuContainerObserver) {
-    danmakuContainerObserver.disconnect()
-  }
-  ;[danmakuContainerObserver] = childListSubtree(container, records => {
+  const recordedDanmakus: DanmakuRecord[] = []
+  childListSubtree(container, records => {
     records.forEach(record => {
       record.addedNodes.forEach(node => {
         if (node.nodeType === Node.TEXT_NODE) {

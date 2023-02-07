@@ -6,8 +6,11 @@ import { Toast } from '@/core/toast'
 import { matchUrlPattern, retrieveImageUrl } from '@/core/utils'
 import { formatTitle } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
+import { Options } from '.'
 
-export const setupFeedImageExporter: ComponentEntry = async ({ settings: { options } }) => {
+export const setupFeedImageExporter: ComponentEntry<Options> = async ({
+  settings: { options },
+}) => {
   if (!feedsUrls.some(url => matchUrlPattern(url))) {
     return
   }

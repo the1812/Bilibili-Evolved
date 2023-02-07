@@ -90,7 +90,7 @@
 <script lang="ts">
 import { VButton, VIcon, SwitchBox, MiniToast } from '@/ui'
 import { visible } from '@/core/observer'
-import { ComponentOptions } from '../component'
+import { OptionsMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
 import { componentSettingsMixin } from './mixins'
@@ -126,7 +126,7 @@ export default Vue.extend({
   },
   computed: {
     generatedOptions() {
-      return Object.entries((this.componentData.options ?? {}) as ComponentOptions).filter(
+      return Object.entries((this.componentData.options ?? {}) as OptionsMetadata).filter(
         ([, option]) => !option.hidden,
       )
     },

@@ -8,7 +8,7 @@ export enum CdnTypes {
   AltCdn = 'AltCdn',
   GitHub = 'GitHub',
 }
-const defaultOwner = 'the1812'
+export const defaultOwner = 'the1812'
 /** 根据分支名和仓库 owner 检索 CDN 链接 */
 export const cdnRoots: Record<CdnTypes, (branch: string, owner?: string) => string> = {
   jsDelivr: (branch, owner) => meta.compilationInfo.allCdns.jsDelivr.root(branch, owner),
