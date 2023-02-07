@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-subscriptions">
+  <div ref="el" class="navbar-subscriptions">
     <TabControl ref="tabControl" :tabs="tabs" :more-link="moreLink"></TabControl>
   </div>
 </template>
@@ -9,14 +9,15 @@ import { getUID } from '@/core/utils'
 import { TabControl } from '@/ui'
 import type { TabMapping, TabMappings } from '@/ui/tab-mapping'
 
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 import { SubscriptionTypes } from './subscriptions'
 
 export default defineComponent({
   components: {
     TabControl,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     const uid = getUID()
     return {

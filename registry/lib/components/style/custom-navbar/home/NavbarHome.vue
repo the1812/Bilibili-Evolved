@@ -1,5 +1,5 @@
 <template>
-  <div class="home-popup" role="list">
+  <div ref="el" class="home-popup" role="list">
     <div
       v-for="[name, data] of Object.entries(categories)"
       :key="name"
@@ -34,7 +34,7 @@ import { defineComponent } from 'vue'
 import type { Category } from '@/components/utils/categories/data'
 import { categories } from '@/components/utils/categories/data'
 
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 
 const clone = lodash.cloneDeep(categories)
 Object.values(clone).forEach((data: any) => {
@@ -42,7 +42,8 @@ Object.values(clone).forEach((data: any) => {
 })
 let regionCountFetched = false
 export default defineComponent({
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       categories: clone,

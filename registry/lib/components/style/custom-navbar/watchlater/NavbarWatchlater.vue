@@ -1,5 +1,5 @@
 <template>
-  <div class="watchlater-list">
+  <div ref="el" class="watchlater-list">
     <div class="header">
       <div class="search">
         <TextBox v-model:text="search" linear placeholder="搜索"></TextBox>
@@ -57,7 +57,7 @@ import { getComponentSettings } from '@/core/settings'
 import { formatDuration } from '@/core/utils/formatters'
 import { DpiImage, TextBox, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 
 interface WatchlaterCard {
   aid: number
@@ -80,7 +80,8 @@ const ThisComponent = defineComponent({
     VIcon,
     DpiImage,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     const redirect = getComponentSettings('watchlaterRedirect')
     return {

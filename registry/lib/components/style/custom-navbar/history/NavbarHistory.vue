@@ -1,5 +1,5 @@
 <template>
-  <div class="custom-navbar-history-list">
+  <div ref="el" class="custom-navbar-history-list">
     <div class="header">
       <div class="header-row">
         <div class="search">
@@ -120,7 +120,7 @@ import {
   VLoading,
 } from '@/ui'
 
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 import type { HistoryItem, TypeFilter } from './types'
 import { getHistoryItems, group, HistoryType, types } from './types'
 
@@ -135,7 +135,8 @@ const ThisComponent = defineComponent({
     ScrollTrigger,
     DpiImage,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       types,

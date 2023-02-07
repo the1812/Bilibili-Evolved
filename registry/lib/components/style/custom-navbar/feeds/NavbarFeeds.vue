@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-feeds">
+  <div ref="el" class="navbar-feeds">
     <TabControl ref="tabControl" :tabs="tabs" more-link="https://t.bilibili.com/">
       <template #more-link>
         所有动态
@@ -14,7 +14,7 @@ import { feedsCardTypes } from '@/components/feeds/api'
 import { getNotifyCount } from '@/components/feeds/notify'
 import { TabControl, VIcon } from '@/ui'
 
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 import { tabs } from './tabs/tabs'
 
 export default defineComponent({
@@ -22,7 +22,8 @@ export default defineComponent({
     TabControl,
     VIcon,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       tabs,

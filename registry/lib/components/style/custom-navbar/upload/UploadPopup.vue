@@ -1,5 +1,5 @@
 <template>
-  <div role="list" class="upload-popup">
+  <div ref="el" role="list" class="upload-popup">
     <div role="listitem">
       <a target="_blank" href="https://member.bilibili.com/platform/upload/text/apply">专栏投稿</a>
     </div>
@@ -24,10 +24,11 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 
 export default defineComponent({
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
 })
 </script>
 <style lang="scss" scoped>

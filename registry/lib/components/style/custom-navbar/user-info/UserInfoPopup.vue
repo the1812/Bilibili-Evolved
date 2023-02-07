@@ -1,5 +1,5 @@
 <template>
-  <div class="user-info-panel">
+  <div ref="el" class="user-info-panel">
     <div v-if="isLogin && userInfo.isLogin === true" class="logged-in">
       <a class="name" target="_blank" href="https://space.bilibili.com/">{{ userInfo.uname }}</a>
       <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{
@@ -155,7 +155,6 @@
 </template>
 
 <script lang="ts">
-import format from '@popperjs/core/lib/utils/format'
 import { defineComponent } from 'vue'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUserInfo } from '@/core/user-info'
@@ -163,14 +162,15 @@ import { formData, getCsrf, getUID } from '@/core/utils'
 import { formatCount } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
 
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 
 type PrivilegeType = 1 | 2
 export default defineComponent({
   components: {
     VIcon: coreApis.ui.VIcon,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       userInfo: {} as any,

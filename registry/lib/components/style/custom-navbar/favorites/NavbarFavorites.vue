@@ -1,5 +1,5 @@
 <template>
-  <div class="favorites-list">
+  <div ref="el" class="favorites-list">
     <div class="header">
       <FavoritesFolderSelect v-model:folder="folder"></FavoritesFolderSelect>
       <div class="search">
@@ -74,7 +74,7 @@ import { formatDate, formatDuration } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
 import { DpiImage, ScrollTrigger, TextBox, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 
-import { popperMixin } from '../mixins'
+import { popupProps, usePopup } from '../mixins'
 import { notSelectedFolder } from './favorites-folder'
 import FavoritesFolderSelect from './FavoritesFolderSelect.vue'
 
@@ -161,7 +161,8 @@ const ThisComponent = defineComponent({
     DpiImage,
     ScrollTrigger,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       loading: true,
