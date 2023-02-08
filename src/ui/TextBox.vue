@@ -1,7 +1,7 @@
 <template>
   <div class="be-textbox" role="textbox" :class="{ linear }">
     <input
-      ref="input"
+      ref="inputRef"
       type="text"
       v-bind="restAttrs"
       :value="text"
@@ -16,17 +16,19 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { textControlMixin } from './text-control'
+import { textControlProps, useTextControl } from './text-control'
 
 export default defineComponent({
   name: 'TextBox',
-  mixins: [textControlMixin],
   props: {
     linear: {
       type: Boolean,
       default: false,
     },
+    ...textControlProps,
   },
+  emits: ['update:text'],
+  setup: useTextControl,
 })
 </script>
 
