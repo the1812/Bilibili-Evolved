@@ -43,8 +43,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { Ref, PropType } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox, VButton, VIcon } from '@/ui'
 
@@ -68,6 +68,9 @@ export default defineComponent({
       required: true,
     },
   },
+  setup: () => ({
+    customBindingTextBox: ref(null) as Ref<InstanceType<typeof TextBox> | null>,
+  }),
   data() {
     return {
       presets,
@@ -103,7 +106,7 @@ export default defineComponent({
       this.customKeyBindings[name] = ''
       this.checkEditable()
       await this.$nextTick()
-      this.$refs.customBindingTextBox.focus()
+      this.customBindingTextBox.focus()
     },
     removeCustomBinding() {
       const { name } = this.row

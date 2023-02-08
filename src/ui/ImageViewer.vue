@@ -28,7 +28,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getBlob } from '../core/ajax'
 import { addComponentListener } from '../core/settings'
 import { getFriendlyTitle } from '../core/utils/title'
@@ -44,6 +45,9 @@ export default defineComponent({
       required: true,
     },
   },
+  setup: () => ({
+    viewer: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       filename: '',
@@ -92,7 +96,7 @@ export default defineComponent({
     },
     detectOutside(e: MouseEvent) {
       const container = this.$el
-      const { viewer } = this.$refs
+      const { viewer } = this
       if (e.target === container || e.target === viewer) {
         // this.$emit('change', false)
         this.open = false

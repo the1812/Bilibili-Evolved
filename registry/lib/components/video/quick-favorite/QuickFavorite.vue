@@ -33,7 +33,8 @@
   </span>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
@@ -46,6 +47,9 @@ export default defineComponent({
   components: {
     VDropdown,
   },
+  setup: () => ({
+    selectList: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       aid: unsafeWindow.aid,

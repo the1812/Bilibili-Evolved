@@ -67,7 +67,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { TextArea, TextBox, VButton, VDropdown, VIcon } from '@/ui'
@@ -103,6 +104,9 @@ export default defineComponent({
     VDropdown,
     TextArea,
   },
+  setup: () => ({
+    renameInput: ref(null) as Ref<InstanceType<typeof TextBox> | null>,
+  }),
   data() {
     return {
       isRenaming: false,
@@ -121,7 +125,7 @@ export default defineComponent({
       this.profileRename = this.selectedRpcProfile.name
       this.isRenaming = true
       await this.$nextTick()
-      this.$refs.renameInput?.focus()
+      this.renameInput?.focus()
     },
     endRename() {
       const newName: string = this.profileRename

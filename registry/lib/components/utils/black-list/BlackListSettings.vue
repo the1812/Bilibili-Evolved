@@ -46,8 +46,8 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { PropType, Ref } from 'vue'
 import { TextBox, VButton, VIcon, VPopup } from '@/ui'
 
 export default defineComponent({
@@ -75,6 +75,10 @@ export default defineComponent({
       default: '',
     },
   },
+  setup: () => ({
+    popup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    'black-listSortList': ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       open: false,
@@ -95,7 +99,7 @@ export default defineComponent({
   },
   methods: {
     toggle() {
-      this.$refs.popup.toggle()
+      this.popup.toggle()
     },
     changeName(val: string) {
       this.name = val

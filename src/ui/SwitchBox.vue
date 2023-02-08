@@ -25,7 +25,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'SwitchBox',
@@ -40,13 +41,16 @@ export default defineComponent({
     },
   },
   emits: ['update:checked'],
+  setup: () => ({
+    input: ref(null) as Ref<HTMLInputElement | null>,
+  }),
   methods: {
     toggle() {
       if (this.disabled) {
         return
       }
-      this.$refs.input.checked = !this.$refs.input.checked
-      this.$emit('update:checked', this.$refs.input.checked)
+      this.input.checked = !this.input.checked
+      this.$emit('update:checked', this.input.checked)
     },
   },
 })

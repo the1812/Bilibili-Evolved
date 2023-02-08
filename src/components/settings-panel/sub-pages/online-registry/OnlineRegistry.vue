@@ -71,7 +71,8 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Fuse from 'fuse.js'
 import type { DocSourceItem } from 'registry/lib/docs'
 
@@ -96,7 +97,7 @@ function updateList(this: InstanceType<typeof ThisComponent>, keyword: string) {
   const fuse = this.fuse as Fuse<DocSourceItem>
   const fuseResult = fuse.search(keyword)
   this.filteredList = fuseResult.map(it => it.item)
-  this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
+  this.$nextTick().then(() => this.content.scrollTo(0, 0))
 }
 const itemFilterOptions = [
   {
@@ -130,6 +131,10 @@ const ThisComponent = defineComponent({
       type: Boolean,
     },
   },
+  setup: () => ({
+    content: ref(null) as Ref<HTMLDivElement | null>,
+    items: ref(null) as Ref<Array<InstanceType<typeof RegistryItem>[] | null>>,
+  }),
   data() {
     const branches = [
       general.registryBranch,
@@ -196,7 +201,7 @@ const ThisComponent = defineComponent({
       }
     },
     checkInstalled() {
-      this.$refs.items?.forEach((item: any) => item.checkInstalled())
+      this.items?.forEach((item: any) => item.checkInstalled())
     },
   },
 })

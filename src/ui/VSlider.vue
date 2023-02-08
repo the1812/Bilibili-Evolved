@@ -82,8 +82,8 @@
  * coord：slider bar 上某一点到左端点的像素距离
  */
 
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 import MiniToast from '@/core/toast/MiniToast.vue'
 
 // 将实数化为整数的函数，如 Math.round，Math.ceil
@@ -123,6 +123,11 @@ export default defineComponent({
     },
   },
   emits: ['update:value', 'start', 'end'],
+  setup: () => ({
+    slider: ref(null) as Ref<HTMLDivElement | null>,
+    barContainer: ref(null) as Ref<HTMLDivElement | null>,
+    thumbContainer: ref(null) as Ref<InstanceType<typeof MiniToast> | null>,
+  }),
   data() {
     return {
       // 用户输入值通过各种处理后得到的最终值，
@@ -193,7 +198,7 @@ export default defineComponent({
     },
     // 计算 slider bar 上 length 像素所对应的 value 偏移。（可计算负偏移）
     lengthToValue(length: number): number {
-      const bar = this.$refs.barContainer as HTMLElement
+      const bar = this.barContainer
       const totalLength = bar.getBoundingClientRect().width
       return this.valueLength * (length / totalLength)
     },
@@ -207,7 +212,7 @@ export default defineComponent({
     },
     // 计算 slider bar 上 value 偏移所对应的 length 像素。（可计算负偏移）
     valueToLength(value: number): number {
-      const bar = this.$refs.barContainer as HTMLElement
+      const bar = this.barContainer
       const totalLength = bar.getBoundingClientRect().width
       if (this.valueLength === 0) {
         return 0
@@ -280,7 +285,7 @@ export default defineComponent({
       }
 
       // 注册拖拽相关事件
-      const thumb = this.$refs.thumbContainer.$el
+      const thumb = this.thumbContainer.$el
       const types = [
         { start: 'mousedown', move: 'mousemove', end: 'mouseup' },
         { start: 'touchstart', move: 'touchmove', end: 'touchend' },
@@ -290,7 +295,7 @@ export default defineComponent({
         let startRealValue = 0
         startListen(thumb, type.start, pageX => {
           this.$emit('start', this.realValue)
-          this.$refs.slider.focus()
+          this.slider.focus()
           startPageX = pageX
           startRealValue = this.realValue
           const stopListenMove = startListen(window, type.move, pageX0 => {

@@ -8,10 +8,10 @@
         <VButton icon title="刷新" @click="reload">
           <VIcon icon="mdi-refresh" :size="18" />
         </VButton>
-        <VButton icon title="上一页" @click="$refs.videoList.offsetPage(-1)">
+        <VButton icon title="上一页" @click="videoList.offsetPage(-1)">
           <VIcon icon="left-arrow" :size="20" />
         </VButton>
-        <VButton icon title="下一页" @click="$refs.videoList.offsetPage(1)">
+        <VButton icon title="下一页" @click="videoList.offsetPage(1)">
           <VIcon icon="right-arrow" :size="20" />
         </VButton>
       </div>
@@ -22,7 +22,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
 import { VButton, VIcon } from '@/ui'
 
@@ -36,6 +37,9 @@ export default defineComponent({
     VIcon,
     VideoList,
   },
+  setup: () => ({
+    videoList: ref(null) as Ref<InstanceType<typeof VideoList> | null>,
+  }),
   data() {
     return {
       videos: [] as VideoCard[],

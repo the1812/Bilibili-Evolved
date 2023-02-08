@@ -9,7 +9,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
 import { getNotifyCount } from '@/components/feeds/notify'
 import { TabControl, VIcon } from '@/ui'
@@ -23,7 +24,10 @@ export default defineComponent({
     VIcon,
   },
   props: popupProps,
-  setup: usePopup,
+  setup: props => ({
+    ...usePopup(props),
+    tabControl: ref(null) as Ref<InstanceType<typeof TabControl> | null>,
+  }),
   data() {
     return {
       tabs,
@@ -40,7 +44,7 @@ export default defineComponent({
     async refreshNotifyCount() {
       // const totalJson = await getFeeds(navbarFeedsTypeList)
       // this.item.notifyCount = lodash.get(totalJson, 'data.update_num', 0)
-      const { tabControl } = this.$refs
+      const { tabControl } = this
       tabs.forEach(async tab => {
         if (tabControl.selectedTab === tab) {
           return

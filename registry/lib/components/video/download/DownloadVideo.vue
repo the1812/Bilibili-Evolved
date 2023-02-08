@@ -76,7 +76,7 @@
         class="run-download"
         type="primary"
         :disabled="!canStartDownload"
-        @click="startDownload($refs.outputOptions, selectedOutput)"
+        @click="startDownload(outputOptions, selectedOutput)"
       >
         开始
       </VButton>
@@ -84,7 +84,8 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { type ComponentPublicInstance, defineComponent } from 'vue'
+import type { Ref, ComponentPublicInstance } from 'vue'
+import { ref, defineComponent } from 'vue'
 import type { VideoQuality } from '@/components/video/video-quality'
 import { allQualities } from '@/components/video/video-quality'
 import type { TestPattern } from '@/core/common-types'
@@ -162,6 +163,11 @@ export default defineComponent({
       required: true,
     },
   },
+  setup: () => ({
+    inputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
+    assetsOptions: ref(null) as Ref<ComponentPublicInstance | null>,
+    outputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
+  }),
   data() {
     const lastOutput = basicConfig.output
     const lastUseBackupUrls = basicConfig.useBackupUrls
@@ -268,7 +274,7 @@ export default defineComponent({
     },
     async getVideoItems() {
       const input = this.selectedInput as DownloadVideoInput
-      const videoItems = await input.getInputs(this.$refs.inputOptions)
+      const videoItems = await input.getInputs(this.inputOptions)
       return videoItems
     },
     async updateTestVideoInfo() {
@@ -310,7 +316,7 @@ export default defineComponent({
         this.busy = true
         const input = this.selectedInput as DownloadVideoInput
         const api = this.selectedApi as DownloadVideoApi
-        const videoInputs = await input.getInputs(this.$refs.inputOptions)
+        const videoInputs = await input.getInputs(this.inputOptions)
         if (videoInputs.length === 0) {
           Toast.info('未接收到视频, 如果输入源支持批量, 请至少选择一个视频.', '下载视频', 3000)
           return
@@ -339,7 +345,7 @@ export default defineComponent({
             assets.map(a =>
               a.getAssets(
                 videoInfos,
-                this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
+                this.assetsOptions.find((c: any) => c.$attrs.name === a.name),
               ),
             ),
           )

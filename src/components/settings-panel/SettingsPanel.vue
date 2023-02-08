@@ -61,7 +61,7 @@
       <VPopup
         ref="detailsPopup"
         class="component-detail-panel"
-        :trigger-element="$refs.componentList"
+        :trigger-element="componentList"
         :open="componentDetailOpen"
         @update:open="!$event && closePopper()"
       >
@@ -76,7 +76,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { deleteValue } from '@/core/utils'
 import { getHook } from '@/plugins/hook'
 import { TextBox, VButton, VEmpty, VIcon, VPopup } from '@/ui'
@@ -104,6 +105,13 @@ export default defineComponent({
     ComponentTags,
   },
   emits: ['close'],
+  setup: () => ({
+    sidebarContainer: ref(null) as Ref<HTMLDivElement | null>,
+    componentTags: ref(null) as Ref<InstanceType<typeof ComponentTags> | null>,
+    mainContainer: ref(null) as Ref<HTMLDivElement | null>,
+    componentList: ref(null) as Ref<HTMLDivElement | null>,
+    detailsPopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+  }),
   data() {
     return {
       components,
@@ -149,7 +157,7 @@ export default defineComponent({
   watch: {
     searchKeyword: lodash.debounce(function searchKeywordWatch() {
       // if (this.searchKeyword !== '') {
-      //   this.$refs.componentTags?.reset()
+      //   this.componentTags?.reset()
       // }
       this.updateRenderedComponents()
     }, 200),
@@ -163,7 +171,7 @@ export default defineComponent({
     components: {
       handler() {
         this.updateRenderedComponents()
-        this.$refs.componentTags.refreshTags()
+        this.componentTags.refreshTags()
         if (
           !this.components.some((c: ComponentMetadata) => c.name === this.selectedComponent?.name)
         ) {

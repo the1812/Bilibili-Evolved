@@ -12,7 +12,7 @@
       <VPopup
         v-model:open="popupOpen"
         class="switch-options-popup widgets-popup"
-        :trigger-element="$refs.button"
+        :trigger-element="button"
         esc-close
         auto-destroy
       >
@@ -48,8 +48,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { CheckBox, RadioButton, VButton, VIcon, VPopup } from '@/ui'
 import type { SwitchMetadataOption } from '@/components/switch-options'
 
@@ -78,6 +78,9 @@ export default defineComponent({
       default: true,
     },
   },
+  setup: () => ({
+    button: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+  }),
   data() {
     const { componentName } = this.options
     const componentOptions = getComponentSettings(componentName).options

@@ -12,7 +12,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { VButton, VIcon } from '@/ui'
 
 import { loadKeymapSettings, toggleKeymapSettings } from './vm'
@@ -22,6 +23,9 @@ export default defineComponent({
     VButton,
     VIcon,
   },
+  setup: () => ({
+    button: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+  }),
   data() {
     return {
       popupOpen: false,
@@ -29,10 +33,10 @@ export default defineComponent({
   },
   methods: {
     async loadSettings() {
-      await loadKeymapSettings(this.$refs.button)
+      await loadKeymapSettings(this.button)
     },
     async toggleSettings() {
-      await toggleKeymapSettings(this.$refs.button)
+      await toggleKeymapSettings(this.button)
     },
   },
 })

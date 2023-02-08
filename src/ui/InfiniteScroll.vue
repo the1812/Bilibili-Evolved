@@ -12,8 +12,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 /**
  * @deprecated use ScrollTrigger.vue instead.
@@ -35,6 +35,10 @@ export default defineComponent({
     },
   },
   emits: ['next-page', 'prev-page'],
+  setup: () => ({
+    container: ref(null) as Ref<HTMLDivElement | null>,
+    scrollTrigger: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       items: [...this.initialItems],
@@ -45,8 +49,8 @@ export default defineComponent({
     }
   },
   mounted() {
-    const scrollTrigger = this.$refs.scrollTrigger as HTMLElement
-    // const container = this.$refs.container as HTMLElement
+    const { scrollTrigger } = this
+    // const { container } = this
     const observer = new IntersectionObserver(
       lodash.debounce(records => {
         if (records.some(r => r.intersectionRatio > 0)) {
@@ -75,8 +79,8 @@ export default defineComponent({
         }
         this.items.push(...items)
         await this.$nextTick()
-        const scrollTrigger = this.$refs.scrollTrigger as HTMLElement
-        const container = this.$refs.container as HTMLElement
+        const { scrollTrigger } = this
+        const { container } = this
         // console.log(
         //   page,
         //   scrollTrigger.offsetTop,

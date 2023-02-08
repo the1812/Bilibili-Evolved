@@ -10,7 +10,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { mountVueComponent } from '@/core/utils'
 
 import type DownloadVideo from './DownloadVideo.vue'
@@ -20,11 +21,14 @@ export default defineComponent({
   components: {
     DefaultWidget: coreApis.ui.DefaultWidget,
   },
+  setup: () => ({
+    button: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   methods: {
     async createDownloadPanel() {
       if (!panel) {
         const [el, vm] = mountVueComponent(await import('./DownloadVideo.vue'), {
-          triggerElement: this.$refs.button,
+          triggerElement: this.button,
         })
         panel = vm
         document.body.appendChild(el)

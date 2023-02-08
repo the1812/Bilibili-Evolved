@@ -25,8 +25,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 import type { ManageItem } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
@@ -43,6 +43,10 @@ export default defineComponent({
       required: true,
     },
   },
+  setup: () => ({
+    removeIcon: ref(null) as Ref<HTMLDivElement | null>,
+    removeConfirmTemplate: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       removeConfirm: false,
@@ -53,7 +57,7 @@ export default defineComponent({
     if (this.config.getSettings) {
       this.settings = this.config.getSettings(this.config.item)
     }
-    Toast.mini(this.$refs.removeConfirmTemplate, this.$refs.removeIcon, {
+    Toast.mini(this.removeConfirmTemplate, this.removeIcon, {
       trigger: 'click',
       hideOnClick: true,
     })

@@ -10,7 +10,8 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import VPopup from '@/ui/VPopup.vue'
 
 import LaunchBar from './LaunchBar.vue'
@@ -20,6 +21,9 @@ export default defineComponent({
     LaunchBar,
     VPopup,
   },
+  setup: () => ({
+    launchBar: ref(null) as Ref<InstanceType<typeof LaunchBar> | null>,
+  }),
   data() {
     return {
       show: true,
@@ -38,13 +42,13 @@ export default defineComponent({
   },
   methods: {
     focus() {
-      const input = this.$refs.launchBar?.$refs.input as HTMLInputElement
+      const input = this.launchBar?.input
       input?.focus()
       input?.select()
     },
     close() {
       this.show = false
-      const input = this.$refs.launchBar?.$refs.input as HTMLInputElement
+      const input = this.launchBar?.input
       input?.blur()
     },
   },

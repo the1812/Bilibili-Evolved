@@ -85,7 +85,6 @@ const toggleSettings = async (kind: Kind, button: EventTarget): Promise<void> =>
   <div v-for="it in settingPanels" :key="it.kind" class="custom-black-list-extra-options">
     <VButton
       v-if="login"
-      ref="button"
       @mouseover="loadBlackListSettings(it.kind, $event.target)"
       @click="toggleSettings(it.kind, $event.target)"
     >

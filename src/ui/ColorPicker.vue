@@ -15,7 +15,7 @@
       class="picker"
       :class="{ compact }"
       :style="{ '--offset': popupOffset + 'px' }"
-      :trigger-element="$refs.button"
+      :trigger-element="button"
     >
       <div class="item-group">
         <div class="item-title">预设颜色</div>
@@ -211,7 +211,8 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineAsyncComponent, defineComponent, ref } from 'vue'
 import Color from 'color'
 
 import palette from '@/core/theme-color/palette.json'
@@ -247,6 +248,9 @@ export default defineComponent({
     },
   },
   emits: ['update:color'],
+  setup: () => ({
+    button: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       popupOpened: false,

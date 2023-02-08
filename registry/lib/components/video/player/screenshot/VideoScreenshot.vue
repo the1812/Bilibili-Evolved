@@ -15,7 +15,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { VIcon } from '@/ui'
 
 export default defineComponent({
@@ -37,12 +38,15 @@ export default defineComponent({
     },
   },
   emits: ['discard'],
+  setup: () => ({
+    link: ref(null) as Ref<HTMLAnchorElement | null>,
+  }),
   methods: {
     discard() {
       this.$emit('discard')
     },
     save() {
-      this.$refs.link.click()
+      this.link.click()
       this.discard()
     },
   },

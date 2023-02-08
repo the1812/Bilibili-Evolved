@@ -100,7 +100,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { addComponentListener } from '@/core/settings'
@@ -171,6 +172,7 @@ export default defineComponent({
       requestMethod: getJsonWithCredentials,
     }),
     ...useCssVariable(timelineCssVars),
+    seasonsList: ref(null) as Ref<HTMLDivElement[] | null>,
   }),
   data() {
     return {
@@ -217,19 +219,17 @@ export default defineComponent({
     if (this.timer) {
       clearInterval(this.timer)
     }
-    const list: HTMLElement[] = this.$refs.seasonsList
-    cleanUpScrollMask(...list)
+    cleanUpScrollMask(...this.seasonsList)
   },
   methods: {
     async updateScrollPosition() {
       await this.$nextTick()
-      const list: HTMLElement[] = this.$refs.seasonsList
       let cancelAll: () => void
       addComponentListener(
         'freshHome.horizontalWheelScroll',
         (scroll: boolean) => {
           if (scroll) {
-            const cancel = list
+            const cancel = this.seasonsList
               .flatMap(it => [...it.children])
               .map(it => enableHorizontalScroll(it as HTMLElement))
             cancelAll = () => cancel.forEach(fn => fn())
@@ -243,7 +243,7 @@ export default defineComponent({
       root.scrollTop = 5 * timelineCssVars.timelineItemHeight + 5 * timelineCssVars.timelineItemGap
 
       const classPrefix = '.fresh-home-categories-bangumi-timeline'
-      list.forEach(seasons => {
+      this.seasonsList.forEach(seasons => {
         setupScrollMask({
           container: seasons,
           items: dqa(seasons, `${classPrefix}-season`) as HTMLElement[],

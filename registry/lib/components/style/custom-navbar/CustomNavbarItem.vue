@@ -46,7 +46,7 @@
           :is="item.popupContent"
           v-if="item.requestedPopup"
           ref="popup"
-          :container="$refs.popupContainer"
+          :container="popupContainer"
           :item="item"
         ></component>
       </div>
@@ -56,7 +56,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { ComponentPublicInstance, Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
 
 import { CustomNavbarItem } from './custom-navbar-item'
@@ -80,6 +81,10 @@ const ThisComponent = defineComponent({
       required: true,
     },
   },
+  setup: () => ({
+    popup: ref(null) as Ref<ComponentPublicInstance | null>,
+    popupContainer: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       newTab: isOpenInNewTab(this.item),
@@ -122,7 +127,7 @@ const ThisComponent = defineComponent({
       }
     },
     triggerPopupShow: lodash.debounce(function trigger(this: InstanceType<typeof ThisComponent>, initialPopup: boolean) {
-      const { popup } = this.$refs
+      const { popup } = this
       if (!popup) {
         return
       }

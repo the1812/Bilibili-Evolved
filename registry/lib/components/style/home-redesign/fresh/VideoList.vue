@@ -13,7 +13,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import type { PropType } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
@@ -39,6 +40,10 @@ export default defineComponent({
       default: true,
     },
   },
+  setup: () => ({
+    content: ref(null) as Ref<HTMLDivElement | null>,
+    cards: ref(null) as Ref<InstanceType<typeof VideoCardWrapper>[] | null>,
+  }),
   watch: {
     videos: {
       handler() {
@@ -56,7 +61,7 @@ export default defineComponent({
     cleanUpScrollMask(this.$el)
   },
   mounted() {
-    const container = this.$refs.content as HTMLElement
+    const container = this.content as HTMLElement
     let cancel: () => void
     addComponentListener(
       'freshHome.horizontalWheelScroll',
@@ -75,11 +80,11 @@ export default defineComponent({
       await this.$nextTick()
       setupScrollMask({
         container: this.$el,
-        items: this.$refs.cards.map(c => c.$el),
+        items: this.cards.map(c => c.$el),
       })
     },
     offsetPage(offset: number) {
-      const container = this.$refs.content as HTMLElement
+      const container = this.content as HTMLElement
       const style = getComputedStyle(container)
       const containerWidth = container.clientWidth
       const wrapperWidth =

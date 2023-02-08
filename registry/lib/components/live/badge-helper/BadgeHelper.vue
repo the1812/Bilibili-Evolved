@@ -4,7 +4,7 @@
       ref="medalPopup"
       v-model:open="medalOpen"
       class="badge-popup widgets-popup medal"
-      :trigger-element="$refs.medalButton"
+      :trigger-element="medalButton"
     >
       <ul>
         <li
@@ -30,7 +30,7 @@
       ref="titlePopup"
       v-model:open="titleOpen"
       class="badge-popup widgets-popup title"
-      :trigger-element="$refs.titleButton"
+      :trigger-element="titleButton"
     >
       <ul>
         <li
@@ -51,7 +51,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { Ref } from 'vue'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
 import { DefaultWidget, VPopup } from '@/ui'
@@ -65,6 +66,12 @@ export default defineComponent({
     DefaultWidget,
     VPopup,
   },
+  setup: () => ({
+    medalPopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    titlePopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    medalButton: ref(null) as Ref<InstanceType<typeof DefaultWidget> | null>,
+    titleButton: ref(null) as Ref<InstanceType<typeof DefaultWidget> | null>,
+  }),
   data() {
     return {
       medalList: [] as Medal[],

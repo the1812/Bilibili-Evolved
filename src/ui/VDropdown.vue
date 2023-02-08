@@ -47,7 +47,7 @@
       v-model:open="popupOpen"
       class="dropdown-popup"
       :lazy="false"
-      :trigger-element="$refs.selected"
+      :trigger-element="selected"
       @keydown.esc="selectItem(value)"
     >
       <div
@@ -66,7 +66,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import type { PropType } from 'vue'
 import VPopup from './VPopup.vue'
 
@@ -93,6 +94,10 @@ export default defineComponent({
     },
   },
   emits: ['update:value'],
+  setup: () => ({
+    selected: ref(null) as Ref<HTMLDivElement | null>,
+    popup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+  }),
   data() {
     return {
       popupOpen: false,
@@ -127,7 +132,7 @@ export default defineComponent({
       if (this.disabled) {
         return
       }
-      const popup = this.$refs.popup.$el as HTMLElement
+      const popup = this.popup.$el as HTMLElement
       const target = event.target as HTMLElement
       if (popup !== target && !popup.contains(target)) {
         this.popupOpen = !this.popupOpen

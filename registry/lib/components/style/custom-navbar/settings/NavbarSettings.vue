@@ -68,7 +68,8 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import type { SortableEvent } from 'sortablejs'
 
 import { SortableJSLibrary } from '@/core/runtime-library'
@@ -99,6 +100,10 @@ const ThisComponent = defineComponent({
       default: null,
     },
   },
+  setup: () => ({
+    popup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    navbarSortList: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       open: false,
@@ -119,7 +124,7 @@ const ThisComponent = defineComponent({
         this.padding = newValue
       }
     })
-    const list: HTMLElement = this.$refs.navbarSortList
+    const list: HTMLElement = this.navbarSortList
     const Sortable = await SortableJSLibrary
     Sortable.create(list, {
       delay: 100,
@@ -137,7 +142,7 @@ const ThisComponent = defineComponent({
   },
   methods: {
     toggle() {
-      this.$refs.popup.toggle()
+      this.popup.toggle()
     },
     peekPadding(peek: boolean) {
       dqa('.custom-navbar .padding').forEach(it => it.classList.toggle('peek', peek))
@@ -146,7 +151,7 @@ const ThisComponent = defineComponent({
       item.element?.classList.toggle('peek', peek)
     },
     onSort(e: SortableEvent) {
-      const container = this.$refs.navbarSortList as HTMLElement
+      const container = this.navbarSortList as HTMLElement
       const element = e.item
       console.log(`${element.getAttribute('data-name')} ${e.oldIndex}->${e.newIndex}`)
       const ordersMap = Object.fromEntries(

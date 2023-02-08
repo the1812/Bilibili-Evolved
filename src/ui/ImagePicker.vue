@@ -6,7 +6,7 @@
     <VPopup
       v-model:open="popupOpen"
       class="popup"
-      :trigger-element="$refs.pickButton"
+      :trigger-element="pickButton"
       @keydown.esc="cancel()"
     >
       <transition-group name="image-list" tag="div" class="images" tabindex="-1">
@@ -100,17 +100,21 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import type { Ref, PropType } from 'vue'
+import { defineAsyncComponent, defineComponent, ref } from 'vue'
 import type { ImageItem } from './image-store'
 import { addImage, getEmptyImage, images, removeImage } from './image-store'
+
+const VButton = defineAsyncComponent(() => import('./VButton.vue'))
+const VPopup = defineAsyncComponent(() => import('./VPopup.vue'))
+const TextBox = defineAsyncComponent(() => import('./TextBox.vue'))
 
 export default defineComponent({
   name: 'ImagePicker',
   components: {
-    VButton: defineAsyncComponent(() => import('./VButton.vue')),
-    VPopup: defineAsyncComponent(() => import('./VPopup.vue')),
-    TextBox: defineAsyncComponent(() => import('./TextBox.vue')),
+    VButton,
+    VPopup,
+    TextBox,
   },
   props: {
     image: {
@@ -119,6 +123,11 @@ export default defineComponent({
     },
   },
   emits: ['update:image'],
+  setup: () => ({
+    pickButton: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+    addImageInput: ref(null) as Ref<InstanceType<typeof TextBox> | null>,
+    addButton: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+  }),
   data() {
     return {
       images,
@@ -154,13 +163,13 @@ export default defineComponent({
     },
     editImage() {
       this.newImage = this.selectedImage
-      // this.$refs.addButton.$el.click()
+      // this.addButton.$el.click()
       this.openAddImagePopup()
     },
     async openAddImagePopup() {
       this.addImagePopupOpen = !this.addImagePopupOpen
       await this.$nextTick()
-      this.$refs.addImageInput.$refs.input.focus()
+      this.addImageInput.inputRef.focus()
     },
   },
 })

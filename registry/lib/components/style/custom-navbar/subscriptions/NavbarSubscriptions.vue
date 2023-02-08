@@ -4,7 +4,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getUID } from '@/core/utils'
 import { TabControl } from '@/ui'
 import type { TabMapping, TabMappings } from '@/ui/tab-mapping'
@@ -17,7 +18,10 @@ export default defineComponent({
     TabControl,
   },
   props: popupProps,
-  setup: usePopup,
+  setup: props => ({
+    ...usePopup(props),
+    tabControl: ref(null) as Ref<InstanceType<typeof TabControl> | null>,
+  }),
   data() {
     const uid = getUID()
     return {

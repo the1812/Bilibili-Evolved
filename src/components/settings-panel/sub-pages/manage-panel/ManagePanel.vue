@@ -34,11 +34,7 @@
           在线
         </OnlineRegistryButton>
       </div>
-      <VPopup
-        v-model:open="batchAddShow"
-        :trigger-element="$refs.batchAddButton"
-        class="batch-add-popup"
-      >
+      <VPopup v-model:open="batchAddShow" :trigger-element="batchAddButton" class="batch-add-popup">
         <TextArea
           ref="batchAddTextArea"
           v-model:text="batchUrl"
@@ -91,8 +87,8 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { Ref, PropType } from 'vue'
 import { pickFile } from '@/core/file-picker'
 import type { ManagePanelConfig } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
 import { installFeature, tryParseZip } from '@/core/install-feature'
@@ -123,6 +119,10 @@ export default defineComponent({
       required: true,
     },
   },
+  setup: () => ({
+    batchAddButton: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+    batchAddTextArea: ref(null) as Ref<InstanceType<typeof TextArea> | null>,
+  }),
   data() {
     return {
       search: '',
@@ -131,7 +131,7 @@ export default defineComponent({
       batchAddShow: false,
       batchUrl: '',
       excludeBuiltIn: true,
-      debouncedList: [] as unknown[]
+      debouncedList: [] as unknown[],
     }
   },
   computed: {
@@ -189,7 +189,7 @@ export default defineComponent({
       this.batchAddShow = !this.batchAddShow
       if (this.batchAddShow) {
         await this.$nextTick()
-        this.$refs.batchAddTextArea?.focus()
+        this.batchAddTextArea?.focus()
       }
     },
     async addItem() {

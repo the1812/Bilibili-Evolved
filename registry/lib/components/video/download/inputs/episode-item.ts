@@ -1,4 +1,5 @@
-import { defineComponent, h } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, h, computed, ref } from 'vue'
 import type { DownloadVideoInputItem } from '../types'
 import EpisodesPicker from './EpisodesPicker.vue'
 
@@ -13,15 +14,9 @@ export const createEpisodesPicker = (
   fetchEpisodeItems: (instance: any) => Promise<EpisodeItem[]>,
 ) =>
   defineComponent({
-    computed: {
-      checkedInputItems(): DownloadVideoInputItem[] {
-        return (this.$refs.picker as any).checkedInputItems
-      },
-    },
-    render() {
-      return h(EpisodesPicker, {
-        api: fetchEpisodeItems,
-        ref: 'picker',
-      })
+    setup: (props, { expose }) => {
+      const picker = ref(null) as Ref<InstanceType<typeof EpisodesPicker> | null>
+      expose({ checkedInputItems: computed(() => picker.value.checkedInputItems) })
+      return () => h(EpisodesPicker, { api: fetchEpisodeItems, ref: picker })
     },
   })

@@ -63,7 +63,8 @@
 </template>
 <script lang="ts">
 import Fuse from 'fuse.js'
-import { defineComponent } from 'vue'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
@@ -137,6 +138,10 @@ const ThisComponent = defineComponent({
     ActionItem,
   },
   emits: ['close'],
+  setup: () => ({
+    input: ref(null) as Ref<HTMLInputElement | null>,
+    list: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       recommended,
@@ -208,14 +213,14 @@ const ThisComponent = defineComponent({
       if (e.isComposing) {
         return
       }
-      this.$refs.list.querySelector('.suggest-item:last-child').focus()
+      this.list.querySelector('.suggest-item:last-child').focus()
       e.preventDefault()
     },
     handleDown(e: KeyboardEvent) {
       if (e.isComposing) {
         return
       }
-      this.$refs.list.querySelector('.suggest-item').focus()
+      this.list.querySelector('.suggest-item').focus()
       e.preventDefault()
     },
     previousItem(e: KeyboardEvent, index: number) {
@@ -247,7 +252,7 @@ const ThisComponent = defineComponent({
       this.handleSelect()
     },
     focus() {
-      this.$refs.input.focus()
+      this.input.focus()
     },
   },
 })
