@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="el"
     class="fresh-home-categories-bangumi-timeline-content"
     :class="{ loading, loaded, scrolled, empty: items.length === 0 }"
   >
@@ -105,7 +106,7 @@ import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { addComponentListener } from '@/core/settings'
 import { DpiImage, VEmpty, VIcon, VLoading } from '@/ui'
 
-import { cssVariableMixin, requestMixin } from '../../../../mixin'
+import { requestProps, useCssVariable, useRequest } from '../../../../mixin'
 import { cleanUpScrollMask, setupScrollMask } from '../../../scroll-mask'
 import { rankListCssVars } from './rank-list'
 
@@ -155,9 +156,6 @@ const timelineCssVars = (() => {
     timelineViewportHeight,
   }
 })()
-const mixin0 = requestMixin<TimelineDay>({ requestMethod: getJsonWithCredentials })
-const mixin1 = cssVariableMixin(timelineCssVars)
-type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
 export default defineComponent({
   components: {
     DpiImage,
@@ -165,7 +163,15 @@ export default defineComponent({
     VEmpty,
     VLoading,
   },
-  mixins: [mixin0, mixin1],
+  props: requestProps,
+  setup: props => ({
+    ...useRequest<TimelineDay>({
+      api: props.api,
+      parseJson: (json: any) => json.result ?? [],
+      requestMethod: getJsonWithCredentials,
+    }),
+    ...useCssVariable(timelineCssVars),
+  }),
   data() {
     return {
       observers: [],
@@ -176,23 +182,19 @@ export default defineComponent({
   },
   computed: {
     todayIndex(): number {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items.findIndex(it => it.is_today === 1)
+      return this.items.findIndex(it => it.is_today === 1)
     },
     pastWeekItems(): TimelineDay[] {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items.slice(0, this0.todayIndex + 1)
+      return this.items.slice(0, this.todayIndex + 1)
     },
     currentWeekItems(): TimelineDay[] {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items.slice(this0.todayIndex)
+      return this.items.slice(this.todayIndex)
     },
   },
   watch: {
     loaded() {
-      const this0 = this as typeof this & { loaded: boolean }
-      if (this0.loaded) {
-        this0.updateScrollPosition()
+      if (this.loaded) {
+        this.updateScrollPosition()
       }
     },
   },
@@ -203,7 +205,7 @@ export default defineComponent({
     const element = this.$el as HTMLElement
     let ended = 0
     const endHandler = () => {
-      ended++
+      ended += 1
       if (ended >= 7) {
         element.classList.add('snap')
         element.removeEventListener('animationend', endHandler)
@@ -219,9 +221,6 @@ export default defineComponent({
     cleanUpScrollMask(...list)
   },
   methods: {
-    parseJson(json: any) {
-      return json.result ?? []
-    },
     async updateScrollPosition() {
       await this.$nextTick()
       const list: HTMLElement[] = this.$refs.seasonsList

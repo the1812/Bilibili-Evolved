@@ -111,19 +111,34 @@ import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/component
 import { formatDuration } from '@/core/utils/formatters'
 import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 
-import { cssVariableMixin, requestMixin } from '../../../../mixin'
+import { requestProps, useCssVariable, useRequest } from '../../../../mixin'
 
-const mixin0 = requestMixin<VideoCard>()
-const mixin1 = cssVariableMixin({
-  mainCoverHeight: 185,
-  mainCoverWidth: 287,
-  otherCoverHeight: 100,
-  otherCoverWidth: 154,
-  mainPaddingX: 18,
-  mainPaddingY: 20,
-  coverPadding: 16,
-})
-type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
+const parseJson = (json: any): VideoCard[] => {
+  const items = lodash.get(json, 'data.archives', [])
+  const cards = items.map(
+    (item: any): VideoCard => ({
+      id: item.aid,
+      aid: item.aid,
+      bvid: item.bvid,
+      coverUrl: item.pic,
+      title: item.title,
+      upName: item.owner.name,
+      upFaceUrl: item.owner.face,
+      upID: item.owner.mid,
+      playCount: item.stat.view,
+      danmakuCount: item.stat.danmaku,
+      like: item.stat.like,
+      coins: item.stat.coin,
+      description: item.desc,
+      dynamic: item.desc === '-' ? '' : item.desc,
+      type: item.tname,
+      duration: item.duration,
+      durationText: formatDuration(item.duration),
+    }),
+  )
+  return applyContentFilter(cards)
+}
+
 export default defineComponent({
   components: {
     VButton,
@@ -132,7 +147,19 @@ export default defineComponent({
     VLoading,
     VEmpty,
   },
-  mixins: [mixin0, mixin1],
+  props: requestProps,
+  setup: props => ({
+    ...useRequest({ api: props.api, parseJson }),
+    ...useCssVariable({
+      mainCoverHeight: 185,
+      mainCoverWidth: 287,
+      otherCoverHeight: 100,
+      otherCoverWidth: 154,
+      mainPaddingX: 18,
+      mainPaddingY: 20,
+      coverPadding: 16,
+    }),
+  }),
   data() {
     return {
       watchlaterList,
@@ -141,8 +168,7 @@ export default defineComponent({
   },
   computed: {
     currentItem(): VideoCard | undefined {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items[1]
+      return this.items[1]
     },
     currentUrl(): string {
       return this.url(this.currentItem!.bvid)
@@ -155,52 +181,24 @@ export default defineComponent({
     getWatchlaterList()
   },
   methods: {
-    parseJson(json: any): VideoCard[] {
-      const items = lodash.get(json, 'data.archives', [])
-      const cards = items.map(
-        (item: any): VideoCard => ({
-          id: item.aid,
-          aid: item.aid,
-          bvid: item.bvid,
-          coverUrl: item.pic,
-          title: item.title,
-          upName: item.owner.name,
-          upFaceUrl: item.owner.face,
-          upID: item.owner.mid,
-          playCount: item.stat.view,
-          danmakuCount: item.stat.danmaku,
-          like: item.stat.like,
-          coins: item.stat.coin,
-          description: item.desc,
-          dynamic: item.desc === '-' ? '' : item.desc,
-          type: item.tname,
-          duration: item.duration,
-          durationText: formatDuration(item.duration),
-        }),
-      )
-      return applyContentFilter(cards)
-    },
     url(id: string) {
       return `https://www.bilibili.com/video/${id}`
     },
     toggleWatchlater,
     nextCard() {
-      const this0 = this as typeof this & MixinsInstance
-      this0.items.push(this0.items.shift())
+      this.items.push(this.items.shift())
     },
     previousCard() {
-      const this0 = this as typeof this & MixinsInstance
-      this0.items.unshift(this0.items.pop())
+      this.items.unshift(this.items.pop())
     },
     jumpToCard(event: MouseEvent, index: number) {
-      const this0 = this as typeof this & MixinsInstance
-      if (index <= 1 || index >= this0.items.length) {
+      if (index <= 1 || index >= this.items.length) {
         return
       }
       let steps = index - 1
       const jump = () => {
         this.nextCard()
-        steps--
+        steps -= 1
         if (steps > 0) {
           setTimeout(jump)
         }

@@ -1,5 +1,5 @@
 <template>
-  <div class="fresh-home-rank-list" :class="{ loading, loaded }">
+  <div ref="el" class="fresh-home-rank-list" :class="{ loading, loaded }">
     <div v-if="!loaded" class="fresh-home-rank-list-loading-container">
       <VLoading v-if="loading" />
       <div v-if="(error || items.length === 0) && !loading" class="fresh-home-rank-list-empty">
@@ -110,12 +110,10 @@ import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 
-import { cssVariableMixin, requestMixin } from '../../../../mixin'
-import { type RankListCard, rankListCssVars } from './rank-list'
+import { requestProps, useCssVariable, useRequest } from '../../../../mixin'
+import { rankListCssVars } from './rank-list'
+import type { RankListCard } from './rank-list'
 
-const mixin0 = requestMixin<RankListCard>()
-const mixin1 = cssVariableMixin(rankListCssVars)
-type MixinsInstance = InstanceType<typeof mixin0> & InstanceType<typeof mixin1>
 export default defineComponent({
   components: {
     DpiImage,
@@ -125,7 +123,6 @@ export default defineComponent({
     VEmpty,
     VButton,
   },
-  mixins: [mixin0, mixin1],
   props: {
     parseJson: {
       type: Function as PropType<(json: unknown) => RankListCard[]>,
@@ -135,19 +132,21 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+    ...requestProps,
   },
+  setup: props => ({
+    ...useRequest<RankListCard>({ api: props.api, parseJson: props.parseJson }),
+    ...useCssVariable(rankListCssVars),
+  }),
   computed: {
     firstItem(): RankListCard | undefined {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items[0]
+      return this.items[0]
     },
     secondItem(): RankListCard | undefined {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items[1]
+      return this.items[1]
     },
     thirdItem(): RankListCard | undefined {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items[2]
+      return this.items[2]
     },
     upInfoProps(): { size: number; icon: string; style: { transform: string } } {
       return {
@@ -159,12 +158,10 @@ export default defineComponent({
       }
     },
     firstRow(): RankListCard[] {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items.slice(3, 6)
+      return this.items.slice(3, 6)
     },
     secondRow(): RankListCard[] {
-      const this0 = this as typeof this & MixinsInstance
-      return this0.items.slice(6, 10)
+      return this.items.slice(6, 10)
     },
   },
   methods: {
