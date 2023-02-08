@@ -1,16 +1,15 @@
+<script setup lang="ts">
+import { useVirtualScroll } from '@/components/settings-panel/mixins'
+
+const { el, virtual } = useVirtualScroll('.manage-panel .manage-item-list')
+</script>
+
 <template>
-  <div class="manage-item" :class="{ virtual }">
+  <div ref="el" class="manage-item" :class="{ virtual }">
     <slot v-if="!virtual"></slot>
   </div>
 </template>
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { virtualScrollMixin } from '../../mixins'
 
-export default defineComponent({
-  mixins: [virtualScrollMixin('.manage-panel .manage-item-list')],
-})
-</script>
 <style lang="scss">
 .manage-panel .manage-item {
   flex: 0 0 auto;

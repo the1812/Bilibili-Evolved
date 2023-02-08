@@ -88,9 +88,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { getComponentSettings } from '@/core/settings'
+import { defineComponent, PropType } from 'vue'
 import { visible } from '@/core/observer'
 import { MiniToast, SwitchBox, VButton, VIcon } from '@/ui'
+import { ComponentMetadata } from '../component'
 
 import type { OptionMetadata, OptionsMetadata } from '../component'
 import type { ComponentConfigAction } from './component-actions/component-actions'
@@ -110,22 +112,25 @@ export default defineComponent({
     SwitchBox,
     MiniToast,
   },
-  mixins: [componentSettingsMixin],
+  props: {
+    componentData: {
+      type: Object as PropType<ComponentMetadata>,
+      required: true,
+    },
+  },
   emits: ['close', 'mounted'],
   data() {
     return {
       virtual: false,
       componentActions: componentActions
-        .map(factory => factory((this as any).componentData))
+        .map(factory => factory(this.componentData))
         .filter(it => {
           if (it === undefined) {
             return false
           }
-          if ((it as ComponentConfigAction).visible === false) {
-            return false
-          }
-          return true
+          return (it as ComponentConfigAction).visible !== false
         }),
+      settings: getComponentSettings(this.componentData),
     }
   },
   computed: {
