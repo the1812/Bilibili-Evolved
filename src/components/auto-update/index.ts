@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import type { OptionsOfMetadata } from '@/components/define'
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import type { ComponentEntry } from '@/components/types'
@@ -90,7 +91,7 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.utils],
   options: optionsMetadata,
-  extraOptions: () => import('./ExtraOptions.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./ExtraOptions.vue')),
   entry,
   plugin: {
     displayName: '自动更新器 - 功能扩展',

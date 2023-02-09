@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import { select } from '@/core/spin-query'
 import {
@@ -152,7 +153,7 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.video],
   urlInclude: allVideoUrls,
   description: { 'zh-CN': desc },
-  extraOptions: () => import('./Options.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./Options.vue')),
   options: {
     locations: {
       defaultValue: lodash.mapValues(pageTypeInfos, () => 0),

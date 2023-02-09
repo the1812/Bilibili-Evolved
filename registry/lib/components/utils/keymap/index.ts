@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import type { OptionsOfMetadata } from '@/components/define'
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import type { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
@@ -75,7 +76,7 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.',
   },
-  extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./settings/ExtraOptions.vue')),
   options,
   plugin: {
     displayName: '快捷键扩展 - 搜索支持',

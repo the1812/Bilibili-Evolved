@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import {
   defineComponentMetadata,
   defineOptionsMetadata,
@@ -80,7 +81,7 @@ export const component = defineComponentMetadata({
   name,
   entry,
   // reload: entry,
-  extraOptions: () => import('./Settings.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./Settings.vue')),
   options: optionsMetadata,
   displayName: '屏蔽黑名单up主',
   tags: [componentsTags.utils],
