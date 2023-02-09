@@ -10,7 +10,7 @@ import { uninstallComponent } from '../../user-component'
 export interface ComponentConfigAction {
   name: string
   displayName: string
-  action: Executable
+  action: (component: ComponentMetadata) => void
   icon: string
   visible?: boolean
   title?: string

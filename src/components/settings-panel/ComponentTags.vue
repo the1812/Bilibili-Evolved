@@ -76,7 +76,7 @@ export default defineComponent({
       tags: [],
       selectedTagName: '',
       subPages,
-      selectedSubPage: null as PropType<Component | null>,
+      selectedSubPage: null as Component | null,
       selectedSubPageOpen: false,
       selectedSubPageTrigger: null,
     }

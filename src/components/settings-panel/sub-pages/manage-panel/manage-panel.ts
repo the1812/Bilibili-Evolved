@@ -1,5 +1,5 @@
 /** 用户内容管理面板配置 */
-export interface ManagePanelConfig<ItemType> {
+export interface ManagePanelConfig<ItemType extends { name: string; displayName?: string }> {
   /** 唯一名称 */
   key: string
   /** 图标 */
@@ -18,8 +18,8 @@ export interface ManagePanelConfig<ItemType> {
 /** 表示用户内容管理面板的单个内容, 必须具有 name 和 displayName */
 export interface ManageItem<
   ItemType extends {
-    displayName: string
     name: string
+    displayName?: string
   },
 > {
   /** 唯一名称 */

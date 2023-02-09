@@ -62,21 +62,12 @@
             </div>
             <template #toast>
               <div class="extra-actions-list">
-                <div v-for="a of componentActions" :key="a.name">
-                  <component
-                    :is="a.component"
-                    v-if="a.component"
-                    :item="a"
-                    :component="componentData"
-                  />
-                  <ComponentAction
-                    v-else
-                    v-show="a.visible !== false"
-                    class="extra-action-item"
-                    :item="a"
-                    :component="componentData"
-                  />
-                </div>
+                <Action
+                  v-for="a in componentActions"
+                  :key="a.name"
+                  :item="a"
+                  :component="componentData"
+                />
               </div>
             </template>
           </MiniToast>
@@ -88,20 +79,50 @@
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent, h, vShow, withDirectives } from 'vue'
+
 import { getComponentSettings } from '@/core/settings'
-import { defineComponent, PropType } from 'vue'
 import { visible } from '@/core/observer'
 import { MiniToast, SwitchBox, VButton, VIcon } from '@/ui'
-import { ComponentMetadata } from '../component'
 
-import type { OptionMetadata, OptionsMetadata } from '../component'
-import type { ComponentConfigAction } from './component-actions/component-actions'
+import type { ComponentMetadata, OptionMetadata, OptionsMetadata } from '../component'
+import type {
+  ComponentConfigAction,
+  ComponentVueAction,
+} from './component-actions/component-actions'
 import { componentActions } from './component-actions/component-actions'
 import ComponentAction from './component-actions/ComponentAction.vue'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
 
-export default defineComponent({
+const Action = defineComponent({
+  props: {
+    item: {
+      type: Object as PropType<ComponentConfigAction | ComponentVueAction>,
+      required: true,
+    },
+    component: {
+      type: Object as PropType<ComponentMetadata>,
+      required: true,
+    },
+  },
+  render() {
+    if ('component' in this.item) {
+      return h(this.item.component, { item: this.item, component: this.component })
+    }
+    return withDirectives(
+      h(ComponentAction, {
+        class: 'extra-item-item',
+        item: this.item,
+        component: this.component,
+      }),
+      [[vShow, !!this.item.visible]],
+    )
+  },
+})
+
+const ThisComponent = defineComponent({
   components: {
     ComponentDescription,
     ComponentOption,
@@ -110,6 +131,7 @@ export default defineComponent({
     VIcon,
     SwitchBox,
     MiniToast,
+    Action,
   },
   props: {
     componentData: {
@@ -151,6 +173,7 @@ export default defineComponent({
     console.log(this.componentActions)
   },
 })
+export default ThisComponent
 </script>
 
 <style lang="scss">

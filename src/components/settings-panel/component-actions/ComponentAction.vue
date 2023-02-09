@@ -11,6 +11,7 @@
   </div>
 </template>
 <script lang="ts">
+import type { ComponentMetadata } from '@/components/types'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ComponentConfigAction } from './component-actions'
@@ -26,7 +27,7 @@ export default defineComponent({
       required: true,
     },
     component: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },

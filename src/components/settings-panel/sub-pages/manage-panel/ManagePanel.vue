@@ -80,7 +80,7 @@
       <VEmpty v-if="debouncedList.length === 0" />
       <ManageItem v-for="item of debouncedList" :key="item.name">
         <slot name="item" :item="item">
-          {{ item.displayName }}
+          {{ item?.displayName }}
         </slot>
       </ManageItem>
     </div>
@@ -115,7 +115,7 @@ export default defineComponent({
   },
   props: {
     config: {
-      type: Object as PropType<ManagePanelConfig<unknown>>,
+      type: Object as PropType<ManagePanelConfig<{ name: string; displayName?: string }>>,
       required: true,
     },
   },
@@ -131,11 +131,11 @@ export default defineComponent({
       batchAddShow: false,
       batchUrl: '',
       excludeBuiltIn: true,
-      debouncedList: [] as unknown[],
+      debouncedList: [] as { name: string; displayName?: string }[],
     }
   },
   computed: {
-    filteredList(): unknown[] {
+    filteredList(): { name: string; displayName?: string }[] {
       return this.config.list.filter(it =>
         this.config.listFilter(it, this.search, this.excludeBuiltIn),
       )
