@@ -1,13 +1,13 @@
-import { defineComponent, type App } from 'vue'
+import { defineComponent, type App, type Component } from 'vue'
 import { mountVueComponent } from '@/core/utils'
-import type { Executable, ImportedVueComponent } from '../common-types'
 import Dialog from './Dialog.vue'
 
 export interface DialogInputs {
   icon?: string
-  title?: string | Executable<ImportedVueComponent>
+  title?: string | Component
   zIndex?: number
-  content: string | Executable<ImportedVueComponent>
+  /* 若为组件，可接受属性：`contentProps`，可触发事件：dialog-close: () => void */
+  content: string | Component
   contentProps?: Record<string, unknown>
 }
 export interface DialogInstance extends Required<DialogInputs> {

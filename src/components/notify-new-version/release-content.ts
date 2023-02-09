@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 export const getReleaseContent = async (version: string) => {
   const { monkey } = await import('@/core/ajax')
   const { meta, branches } = await import('@/core/meta')
@@ -30,7 +32,7 @@ export const showReleaseContent = async (content: string) => {
   const updateUrl = await getUpdateUrl()
   showDialog({
     title: '更新说明',
-    content: () => import('./ReleaseContent.vue'),
+    content: defineAsyncComponent(() => import('./ReleaseContent.vue')),
     contentProps: {
       content,
       updateUrl,
