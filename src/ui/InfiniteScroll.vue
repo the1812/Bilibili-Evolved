@@ -63,10 +63,11 @@ export default defineComponent({
     this.observer = observer
   },
   methods: {
-    async loadNextPage(page: number = this.page) {
+    async loadNextPage(page?: number) {
+      const page0 = page || this.page
       try {
         const func = this.fetchData
-        const promise = func(page)
+        const promise = func(page0)
         this.page++
         this.$emit('next-page')
         this.loadingPromise = promise
@@ -93,7 +94,7 @@ export default defineComponent({
         console.error(error)
         this.page--
         this.$emit('prev-page')
-        this.loadNextPage(page)
+        this.loadNextPage(page0)
       }
     },
   },

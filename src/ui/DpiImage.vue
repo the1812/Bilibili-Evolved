@@ -43,7 +43,7 @@ export default defineComponent({
   computed: {
     width(): number | null {
       if (typeof this.size === 'object' && 'width' in this.size) {
-        return this.size.width
+        return (this.size as { width: number }).width
       }
       if (typeof this.size === 'number') {
         return this.size
@@ -52,7 +52,7 @@ export default defineComponent({
     },
     height(): number | null {
       if (typeof this.size === 'object' && 'height' in this.size) {
-        return this.size.height
+        return (this.size as { height: number }).height
       }
       if (typeof this.size === 'number') {
         return this.size

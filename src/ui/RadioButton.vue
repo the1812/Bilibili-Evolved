@@ -82,7 +82,7 @@ export default defineComponent({
     const group = this.group as string
     const element = this.$el as HTMLElement
     const uncheck = () => this.$emit('update:checked', false)
-    let curriedSet: CurriedFunction2<Vue, () => void, void>
+    let curriedSet: CurriedFunction2<ComponentPublicInstance, () => void, void>
     if (group === '') {
       curriedSet = setGroup(element.parentElement)
     } else {

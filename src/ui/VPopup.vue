@@ -69,7 +69,7 @@ export default defineComponent({
     }
   },
   computed: {
-    trigger(): Element | null {
+    trigger(): HTMLElement | null {
       if (this.triggerElement === null) {
         return null
       }

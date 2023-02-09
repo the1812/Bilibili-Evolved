@@ -15,7 +15,7 @@
         type="checkbox"
         :disabled="disabled"
         :checked="checked"
-        @change.stop="$emit('update:checked', $event.target.checked)"
+        @change.stop="onChange"
       />
       <div class="bar">
         <div class="thumb"></div>
@@ -45,6 +45,9 @@ export default defineComponent({
     input: ref(null) as Ref<HTMLInputElement | null>,
   }),
   methods: {
+    onChange() {
+      this.$emit('update:checked', this.input.checked)
+    },
     toggle() {
       if (this.disabled) {
         return

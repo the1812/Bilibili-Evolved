@@ -59,12 +59,7 @@ export default defineComponent({
     tabs: {
       type: Array as PropType<TabMappings>,
       required: true,
-      validator(mappings: TabMappings) {
-        if (mappings.length === 0) {
-          return false
-        }
-        return true
-      },
+      validator: lodash.isArray,
     },
     defaultTab: {
       type: String,
