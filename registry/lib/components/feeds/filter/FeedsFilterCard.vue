@@ -32,10 +32,12 @@
         v-for="[id, type] of Object.entries(allSideCards)"
         :key="id"
         class="filter-side-card-switch feeds-filter-switch"
-        @click="toggleBlockSide(id)"
+        @click="toggleBlockSide(Number(id))"
       >
-        <label :class="{ disabled: sideDisabled(id) }">
-          <span class="name" :class="{ disabled: sideDisabled(id) }">{{ type.displayName }}</span>
+        <label :class="{ disabled: sideDisabled(Number(id)) }">
+          <span class="name" :class="{ disabled: sideDisabled(Number(id)) }">{{
+            type.displayName
+          }}</span>
           <VIcon :size="16" class="disabled" icon="mdi-cancel"></VIcon>
           <VIcon :size="16" icon="mdi-check"></VIcon>
         </label>
@@ -201,7 +203,7 @@ export default defineComponent({
     updateBlockSide() {
       Object.entries(sideCards).forEach(([id, type]) => {
         const name = sideBlock + type.className
-        document.body.classList[this.blockSideCards.includes(id) ? 'add' : 'remove'](name)
+        document.body.classList[this.blockSideCards.includes(Number(id)) ? 'add' : 'remove'](name)
       })
     },
     toggleBlockSide(id: number) {
