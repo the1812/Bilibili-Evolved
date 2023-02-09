@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatNumber } from '@/core/utils/formatters'
@@ -85,7 +86,7 @@ export const plugin: PluginMetadata = {
               return item
             })
         },
-        component: () => import('./ManualInput.vue').then(m => m.default),
+        component: defineAsyncComponent(() => import('./ManualInput.vue')),
       })
     })
   },

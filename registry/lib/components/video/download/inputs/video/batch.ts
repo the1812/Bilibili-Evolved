@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatDuration, formatNumber } from '@/core/utils/formatters'
@@ -15,7 +16,7 @@ export const videoBatchInput: DownloadVideoInput = {
   match: videoUrls,
   batch: true,
   getInputs: async instance => instance?.checkedInputItems ?? [],
-  component: async () =>
+  component: defineAsyncComponent(async () =>
     createEpisodesPicker(async instance => {
       const { aid } = unsafeWindow
       const api = `https://api.bilibili.com/x/web-interface/view?aid=${aid}`
@@ -50,4 +51,5 @@ export const videoBatchInput: DownloadVideoInput = {
         } as EpisodeItem
       })
     }),
+  ),
 }

@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import type { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
@@ -57,7 +58,7 @@ export const component = defineComponentMetadata({
             toast.message = `获取完成. 成功 ${success.length} 个, 失败 ${fail.length} 个.`
             return success.map(it => it.value)
           },
-          component: () => import('./Plugin.vue').then(m => m.default),
+          component: defineAsyncComponent(() => import('./Plugin.vue')),
         })
       })
     },

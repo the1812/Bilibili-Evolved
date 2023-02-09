@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
 
@@ -14,5 +15,5 @@ export const videoSingleInput: DownloadVideoInput = {
       title: getFriendlyTitle(true),
     },
   ],
-  component: () => import('./SingleVideoInfo.vue').then(m => m.default),
+  component: defineAsyncComponent(() => import('./SingleVideoInfo.vue')),
 }

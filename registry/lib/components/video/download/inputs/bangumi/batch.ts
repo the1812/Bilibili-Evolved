@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { getJson } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatNumber } from '@/core/utils/formatters'
@@ -15,7 +16,7 @@ export const bangumiBatchInput: DownloadVideoInput = {
   match: bangumiUrls,
   batch: true,
   getInputs: async instance => instance?.checkedInputItems ?? [],
-  component: async () =>
+  component: defineAsyncComponent(async () =>
     createEpisodesPicker(async instance => {
       const metaUrl = document.querySelector("meta[property='og:url']")
       if (metaUrl === null) {
@@ -56,4 +57,5 @@ export const bangumiBatchInput: DownloadVideoInput = {
         } as EpisodeItem
       })
     }),
+  ),
 }
