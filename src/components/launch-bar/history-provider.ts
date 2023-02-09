@@ -16,7 +16,7 @@ export const clearHistoryItems = (key = SearchHistoryKey) =>
   crossOriginLocalStorage.setItem(key, '[]')
 export const addHistoryItem = async (keyword: string, key = SearchHistoryKey) => {
   console.log('add', keyword)
-  crossOriginLocalStorage.setItem(
+  await crossOriginLocalStorage.setItem(
     key,
     JSON.stringify(
       lodash
@@ -44,7 +44,7 @@ export const deleteHistoryItem = async (keyword: string, key = SearchHistoryKey)
   console.log('delete', keyword, index)
   if (index !== -1) {
     items.splice(index, 1)
-    localStorage.setItem(key, JSON.stringify(items))
+    await crossOriginLocalStorage.setItem(key, JSON.stringify(items))
   }
 }
 export const historyProvider: LaunchBarActionProvider = {
@@ -56,8 +56,8 @@ export const historyProvider: LaunchBarActionProvider = {
       icon: 'mdi-trash-can-outline',
       description: 'Clear History',
       explicitSelect: true,
-      action: () => {
-        clearHistoryItems()
+      action: async () => {
+        await clearHistoryItems()
       },
     }
     const historyItems = await getHistoryItems()
@@ -71,8 +71,8 @@ export const historyProvider: LaunchBarActionProvider = {
           action: () => {
             search(it.value)
           },
-          deleteAction: () => {
-            deleteHistoryItem(it.value)
+          deleteAction: async () => {
+            await deleteHistoryItem(it.value)
           },
         } as LaunchBarAction),
     )
