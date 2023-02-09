@@ -97,7 +97,7 @@ export default defineComponent({
     }
     return {
       opened: false,
-      video: dq('video'),
+      video: dq('video') as HTMLVideoElement,
       videoshot: new Videoshot(),
       videoshotStyle: {},
       store: defaultStore,
@@ -184,7 +184,7 @@ export default defineComponent({
       }
     },
     async apply({ brightness, volume, progress }: GesturePreviewParams) {
-      const video = this.video as HTMLVideoElement
+      const { video } = this
       if (!video) {
         return
       }
