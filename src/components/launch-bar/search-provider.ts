@@ -1,4 +1,5 @@
-import { h, defineComponent } from 'vue'
+import { defineAsyncComponent, h } from 'vue'
+
 import { getJson } from '@/core/ajax'
 import { formData, getUID } from '@/core/utils'
 
@@ -25,14 +26,12 @@ export const searchProvider: LaunchBarActionProvider = {
       {
         name: input,
         icon: 'search',
-        content: async () =>
-          defineComponent({
-            render() {
-              return h('div', {
-                innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
-              })
-            },
-          }),
+        content: defineAsyncComponent(
+          async () => () =>
+            h('div', {
+              innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
+            }),
+        ),
         action: () => search(input),
       },
     ]
@@ -47,14 +46,12 @@ export const searchProvider: LaunchBarActionProvider = {
       ...suggests.map(result => ({
         name: result.value,
         icon: 'search',
-        content: async () =>
-          defineComponent({
-            render() {
-              return h('div', {
-                innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
-              })
-            },
-          }),
+        content: defineAsyncComponent(
+          async () => () =>
+            h('div', {
+              innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
+            }),
+        ),
         action: () => search(result.value),
       })),
     )
