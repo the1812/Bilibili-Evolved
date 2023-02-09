@@ -6,7 +6,7 @@
   </HomeRedesignBase>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, defineAsyncComponent } from 'vue'
 import { addComponentListener } from '@/core/settings'
 import { TabControl } from '@/ui'
 import type { TabMappings } from '@/ui/tab-mapping'
@@ -19,7 +19,7 @@ const tabs: TabMappings = [
   {
     name: MinimalHomeTabOption.Feeds,
     displayName: '动态',
-    component: () => import('./tabs/Feeds.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./tabs/Feeds.vue')),
     activeLink: 'https://t.bilibili.com/?tab=video',
   },
   {

@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { getUID } from '@/core/utils'
 import { TabControl } from '@/ui'
 import type { TabMapping, TabMappings } from '@/ui/tab-mapping'
@@ -31,13 +31,13 @@ export default defineComponent({
           name: SubscriptionTypes.Bangumi,
           displayName: '追番',
           activeLink: `https://space.bilibili.com/${uid}/bangumi`,
-          component: () => import('./BangumiSubscriptions.vue').then(m => m.default),
+          component: defineAsyncComponent(() => import('./BangumiSubscriptions.vue')),
         },
         {
           name: SubscriptionTypes.Cinema,
           displayName: '追剧',
           activeLink: `https://space.bilibili.com/${uid}/cinema`,
-          component: () => import('./CinemaSubscriptions.vue').then(m => m.default),
+          component: defineAsyncComponent(() => import('./CinemaSubscriptions.vue')),
         },
       ] as TabMappings,
     }
