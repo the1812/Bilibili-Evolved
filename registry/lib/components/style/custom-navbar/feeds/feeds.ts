@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export const feeds: CustomNavbarItemInit = {
@@ -20,7 +21,7 @@ export const feeds: CustomNavbarItemInit = {
   },
   loginRequired: true,
 
-  popupContent: () => import('./NavbarFeeds.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./NavbarFeeds.vue')),
   boundingWidth: 300,
   noPopupPadding: true,
 }

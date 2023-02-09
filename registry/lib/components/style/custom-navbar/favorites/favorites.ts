@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import { getUID } from '@/core/utils'
 
 import type { CustomNavbarItemInit } from '../custom-navbar-item'
@@ -15,5 +16,5 @@ export const favorites: CustomNavbarItemInit = {
 
   boundingWidth: 380,
   noPopupPadding: true,
-  popupContent: () => import('./NavbarFavorites.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./NavbarFavorites.vue')),
 }

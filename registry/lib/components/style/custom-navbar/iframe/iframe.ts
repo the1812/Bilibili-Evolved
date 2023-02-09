@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 interface NavbarIframeConfig {
@@ -16,7 +17,7 @@ const getIframeItem = (config: NavbarIframeConfig): CustomNavbarItemInit & Navba
 
   touch: true,
 
-  popupContent: () => import('./IframePopup.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./IframePopup.vue')),
   boundingWidth: config.width,
   noPopupPadding: true,
   transparentPopup: true,

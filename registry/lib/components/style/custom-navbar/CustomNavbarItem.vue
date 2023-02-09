@@ -56,10 +56,11 @@
 </template>
 
 <script lang="ts">
-import type { ComponentPublicInstance, Ref } from 'vue'
+import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
 
+import type { PopupContentInstance } from './custom-navbar-item'
 import { CustomNavbarItem } from './custom-navbar-item'
 import CustomNavbarLink from './CustomNavbarLink.vue'
 
@@ -70,6 +71,22 @@ const isOpenInNewTab = (item: CustomNavbarItem) => {
     return options.openInNewTabOverrides[name]
   }
   return options.openInNewTab
+}
+function trigger(this: InstanceType<typeof ThisComponent>, initialPopup: boolean) {
+  const { popup } = this
+  if (!popup) {
+    return
+  }
+  const allowRefresh =
+    CustomNavbarItem.navbarOptions.refreshOnPopup &&
+    popup.popupRefresh &&
+    typeof popup.popupRefresh === 'function'
+  if (!initialPopup && allowRefresh) {
+    popup.popupRefresh()
+  }
+  if (popup.popupShow && typeof popup.popupShow === 'function') {
+    popup.popupShow()
+  }
 }
 const ThisComponent = defineComponent({
   components: {
@@ -82,7 +99,7 @@ const ThisComponent = defineComponent({
     },
   },
   setup: () => ({
-    popup: ref(null) as Ref<ComponentPublicInstance | null>,
+    popup: ref(null) as Ref<PopupContentInstance | null>,
     popupContainer: ref(null) as Ref<HTMLDivElement | null>,
   }),
   data() {
@@ -126,22 +143,10 @@ const ThisComponent = defineComponent({
         'iframe-container': item.iframeName,
       }
     },
-    triggerPopupShow: lodash.debounce(function trigger(this: InstanceType<typeof ThisComponent>, initialPopup: boolean) {
-      const { popup } = this
-      if (!popup) {
-        return
-      }
-      const allowRefresh =
-        CustomNavbarItem.navbarOptions.refreshOnPopup &&
-        popup.popupRefresh &&
-        typeof popup.popupRefresh === 'function'
-      if (!initialPopup && allowRefresh) {
-        popup.popupRefresh()
-      }
-      if (popup.popupShow && typeof popup.popupShow === 'function') {
-        popup.popupShow()
-      }
-    }, 300) as unknown as (initialPopup: boolean) => void,
+    triggerPopupShow: lodash.debounce(trigger, 300) as unknown as (
+      this: any,
+      initialPopup: boolean,
+    ) => void,
     async requestPopup() {
       const { item } = this as {
         item: CustomNavbarItem
