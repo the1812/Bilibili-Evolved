@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
 
@@ -11,7 +13,7 @@ export const component = defineComponentMetadata({
   entry: none,
   tags: [componentsTags.live],
   widget: {
-    component: () => import('./LivePip.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./LivePip.vue')),
     condition: () => 'requestPictureInPicture' in HTMLVideoElement.prototype,
   },
   urlInclude: liveUrls,

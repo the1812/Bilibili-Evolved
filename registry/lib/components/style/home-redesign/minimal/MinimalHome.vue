@@ -25,7 +25,7 @@ const tabs: TabMappings = [
   {
     name: MinimalHomeTabOption.Trending,
     displayName: minimalHomeOptions.personalized ? '推荐' : '热门',
-    component: () => import('./tabs/Trending.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./tabs/Trending.vue')),
     activeLink: 'https://www.bilibili.com/v/popular/all',
   },
 ]

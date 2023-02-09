@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 
 export const component = defineComponentMetadata({
@@ -7,6 +9,6 @@ export const component = defineComponentMetadata({
   entry: none,
   tags: [componentsTags.utils],
   widget: {
-    component: () => import('./Widget.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./Widget.vue')),
   },
 })

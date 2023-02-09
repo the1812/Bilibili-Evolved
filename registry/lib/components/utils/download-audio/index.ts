@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 
 export const component = defineComponentMetadata({
@@ -13,7 +15,7 @@ export const component = defineComponentMetadata({
     `.trim(),
   },
   widget: {
-    component: () => import('./DownloadAudio.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./DownloadAudio.vue')),
   },
   urlInclude: ['//www.bilibili.com/audio/'],
 })

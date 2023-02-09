@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { getUID } from '@/core/utils'
 
@@ -10,7 +12,7 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.utils],
   entry: none,
   widget: {
-    component: () => import('./Widget.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./Widget.vue')),
     condition: () => Boolean(getUID()),
   },
 })

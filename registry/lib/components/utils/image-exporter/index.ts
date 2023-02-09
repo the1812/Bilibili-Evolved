@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import type { OptionsOfMetadata } from '@/components/define'
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { matchUrlPattern } from '@/core/utils'
@@ -27,7 +29,7 @@ export const component = defineComponentMetadata({
   },
   widget: {
     condition: () => columnUrls.some(url => matchUrlPattern(url)),
-    component: () => import('./Widget.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./Widget.vue')),
   },
   urlInclude: [...feedsUrls, ...columnUrls],
   options,

@@ -1,4 +1,5 @@
 import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import type { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
@@ -20,7 +21,7 @@ export const component = defineComponentMetadata({
   urlInclude: videoAndBangumiUrls,
   widget: {
     condition: hasVideo,
-    component: () => import('./DownloadSubtitle.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./DownloadSubtitle.vue')),
   },
   plugin: {
     displayName: '下载视频 - 下载字幕支持',

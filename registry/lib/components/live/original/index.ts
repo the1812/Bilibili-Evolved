@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { matchUrlPattern } from '@/core/utils'
 
@@ -13,7 +15,7 @@ export const component = defineComponentMetadata({
     /^https:\/\/live\.bilibili\.com\/[\d]+/,
   ],
   widget: {
-    component: () => import('./Widget.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./Widget.vue')),
     condition: () => matchUrlPattern(/^https:\/\/live\.bilibili\.com\/([\d]+)/),
   },
 })

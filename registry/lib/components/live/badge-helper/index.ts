@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { getNumberValidator, getUID, none } from '@/core/utils'
 
@@ -15,7 +17,7 @@ export const component = defineComponentMetadata({
   unload: none,
   tags: [componentsTags.live],
   widget: {
-    component: () => import('./BadgeHelper.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./BadgeHelper.vue')),
     condition: () => Boolean(getUID()),
   },
   options: {
