@@ -165,7 +165,7 @@ export default defineComponent({
   },
   setup: () => ({
     inputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
-    assetsOptions: ref(null) as Ref<ComponentPublicInstance | null>,
+    assetsOptions: ref(null) as Ref<ComponentPublicInstance[] | null>,
     outputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
   }),
   data() {
