@@ -8,6 +8,7 @@
  * API 主要函数是 {@link newSwitchComponentWrapper}。
  */
 
+import { defineAsyncComponent } from 'vue'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 import type {
@@ -219,7 +220,7 @@ const newSwitchOptionsMetadataExtender = <S extends string>(
 const newWidget = <N extends string, S extends string>(
   options: SwitchMetadataOption<N, S>,
 ): Omit<Widget, 'name'> => ({
-  component: () => import('./SwitchOptions.vue').then(m => m.default),
+  component: defineAsyncComponent(() => import('./SwitchOptions.vue')),
   options,
 })
 

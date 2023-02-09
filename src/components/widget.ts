@@ -1,4 +1,4 @@
-import type { VueConstructor } from 'vue'
+import type { Component } from 'vue'
 
 import type { Executable, TestPattern } from '@/core/common-types'
 
@@ -9,7 +9,7 @@ export interface Widget {
   /** 名称 */
   name: string
   /** 要渲染的Vue组件 */
-  component: Executable<VueConstructor>
+  component: Component
   /** 传递给`component`的选项 */
   options?: any
   /** 设置匹配的URL, 与组件的`urlInclude`类似 */
