@@ -33,7 +33,7 @@
           @delete-item="onDeleteItem($event, index)"
           @action="
             index === actions.length - 1 && onClearHistory()
-            onAction(a)
+            onAction()
           "
         />
       </div>
@@ -55,7 +55,7 @@
           @previous-item="previousItem($event, index)"
           @next-item="nextItem($event, index)"
           @delete-item="onDeleteItem($event, index)"
-          @action="onAction(a)"
+          @action="onAction"
         />
       </div>
     </div>
@@ -115,15 +115,14 @@ async function getOnlineActions(this: InstanceType<typeof ThisComponent>) {
   this.actions = fuseResult.map(it => it.item).slice(0, 12)
   this.noActions = this.actions.length === 0
 }
-async function getActions() {
+async function getActions(this: InstanceType<typeof ThisComponent>) {
   this.noActions = false
   if (this.isHistory) {
     this.actions = generateKeys(historyProvider, await historyProvider.getActions(this.keyword))
     return
   }
-  const actions: LaunchBarAction[] = []
-  this.actions = actions
-  this.getOnlineActions()
+  this.actions = []
+  this.getOnlineActions().then()
 }
 
 const [recommended] = registerAndGetData('launchBar.recommended', {
@@ -164,7 +163,7 @@ const ThisComponent = defineComponent({
     },
   },
   async mounted() {
-    this.getActions()
+    this.getActions().then()
     if (!matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
       return
     }
@@ -190,12 +189,12 @@ const ThisComponent = defineComponent({
       this.$emit('close')
       this.getActions()
     },
-    async handleEnter(e: KeyboardEvent) {
-      if (e.isComposing) {
+    async handleEnter(e: KeyboardEvent | MouseEvent) {
+      if ('isComposing' in e && e.isComposing) {
         return
       }
       if (this.actions.length > 0 && !this.isHistory) {
-        const [first] = this.actions as LaunchBarAction[]
+        const [first] = this.actions
         if (first.explicitSelect === false) {
           first.action()
           return
@@ -213,17 +212,17 @@ const ThisComponent = defineComponent({
       if (e.isComposing) {
         return
       }
-      this.list.querySelector('.suggest-item:last-child').focus()
+      ;(this.list.querySelector('.suggest-item:last-child') as HTMLElement).focus()
       e.preventDefault()
     },
     handleDown(e: KeyboardEvent) {
       if (e.isComposing) {
         return
       }
-      this.list.querySelector('.suggest-item').focus()
+      ;(this.list.querySelector('.suggest-item') as HTMLElement).focus()
       e.preventDefault()
     },
-    previousItem(e: KeyboardEvent, index: number) {
+    previousItem(e: KeyboardEvent | MouseEvent, index: number) {
       if (index === 0) {
         this.focus()
       } else {
@@ -239,7 +238,7 @@ const ThisComponent = defineComponent({
       }
     },
     search,
-    onDeleteItem(e: Event, index: number) {
+    onDeleteItem(e: KeyboardEvent | MouseEvent, index: number) {
       this.previousItem(e, index)
       this.getActions()
     },

@@ -22,7 +22,7 @@
           :name="action.name"
         ></component>
         <div v-else class="suggest-item-name">
-          {{ action.title || action.name }}
+          {{ action['title'] || action.name }}
         </div>
         <div v-if="action.description" class="suggest-item-description">
           {{ action.description }}
@@ -55,18 +55,23 @@ export default defineComponent({
       required: true,
     },
   },
-  emits: ['action', 'delete-item', 'previous-item', 'next-item'],
+  emits: {
+    action: null as (e: KeyboardEvent | MouseEvent) => true,
+    'delete-item': null as (e: KeyboardEvent | MouseEvent) => true,
+    'previous-item': null as (e: KeyboardEvent) => true,
+    'next-item': null as (e: KeyboardEvent) => true,
+  },
   methods: {
-    performAction(event: KeyboardEvent | MouseEvent) {
+    performAction(event: Event) {
       this.action.action()
-      this.$emit('action', event)
+      this.$emit('action', event as KeyboardEvent | MouseEvent)
     },
-    performDelete(event: KeyboardEvent | MouseEvent) {
+    performDelete(event: Event) {
       if (!this.action.deleteAction) {
         return
       }
       this.action.deleteAction()
-      this.$emit('delete-item', event)
+      this.$emit('delete-item', event as KeyboardEvent | MouseEvent)
     },
   },
 })
