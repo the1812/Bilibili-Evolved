@@ -1,3 +1,4 @@
+import { defineAsyncComponent } from 'vue'
 import type {
   LaunchBarAction,
   LaunchBarActionProvider,
@@ -17,7 +18,7 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
       if (!autoUpdateOptions.urls.components[component.name]) {
         return undefined
       }
-      const ActionModule = () => import('./Action.vue')
+      const ActionModule = defineAsyncComponent(() => import('./Action.vue'))
       return {
         name: 'devClient',
         component: ActionModule,

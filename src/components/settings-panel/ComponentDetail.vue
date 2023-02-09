@@ -100,7 +100,6 @@ import { componentActions } from './component-actions/component-actions'
 import ComponentAction from './component-actions/ComponentAction.vue'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
-import { componentSettingsMixin } from './mixins'
 
 export default defineComponent({
   components: {
