@@ -71,6 +71,14 @@ interface WatchlaterCard {
   upFaceUrl: string
   upID: number
 }
+function updateFilteredCards(this: InstanceType<typeof ThisComponent>) {
+  const search = this.search.toLowerCase()
+  const cardsList = this.$el.querySelector('.watchlater-list-content') as HTMLElement
+  cardsList.scrollTo(0, 0)
+  this.filteredCards = (this.cards as WatchlaterCard[]).filter(
+    card => card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search),
+  )
+}
 const ThisComponent = defineComponent({
   components: {
     VLoading,
@@ -165,15 +173,7 @@ const ThisComponent = defineComponent({
         await this.toggleWatchlater(aid)
       }
     },
-    updateFilteredCards: lodash.debounce(function updateFilteredCards(this: InstanceType<typeof ThisComponent>) {
-      const search = this.search.toLowerCase()
-      const cardsList = this.$el.querySelector('.watchlater-list-content') as HTMLElement
-      cardsList.scrollTo(0, 0)
-      this.filteredCards = (this.cards as WatchlaterCard[]).filter(
-        card =>
-          card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search),
-      )
-    }, 100) as unknown as () => void,
+    updateFilteredCards: lodash.debounce(updateFilteredCards, 100) as unknown as () => void,
   },
 })
 export default ThisComponent

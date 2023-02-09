@@ -91,8 +91,14 @@ import ComponentTags from './ComponentTags.vue'
 import type { SearchBarActionContext } from './search-bar-actions'
 import { searchBarActions } from './search-bar-actions'
 
+function searchKeywordWatch(this: InstanceType<typeof ThisComponent>) {
+  // if (this.searchKeyword !== '') {
+  //   this.componentTags?.reset()
+  // }
+  this.updateRenderedComponents()
+}
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
-export default defineComponent({
+const ThisComponent = defineComponent({
   name: 'SettingsPanel',
   components: {
     VIcon,
@@ -155,12 +161,7 @@ export default defineComponent({
     },
   },
   watch: {
-    searchKeyword: lodash.debounce(function searchKeywordWatch() {
-      // if (this.searchKeyword !== '') {
-      //   this.componentTags?.reset()
-      // }
-      this.updateRenderedComponents()
-    }, 200),
+    searchKeyword: lodash.debounce(searchKeywordWatch, 200) as unknown as () => void,
     searchFilter() {
       // if (this.searchFilter !== defaultSearchFilter) {
       this.searchKeyword = ''
@@ -272,6 +273,7 @@ export default defineComponent({
     },
   },
 })
+export default ThisComponent
 </script>
 
 <style lang="scss">

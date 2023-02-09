@@ -124,6 +124,9 @@ import { popupProps, usePopup } from '../mixins'
 import type { HistoryItem, TypeFilter } from './types'
 import { getHistoryItems, group, HistoryType, types } from './types'
 
+function search(this: InstanceType<typeof ThisComponent>) {
+  this.reloadHistoryItems()
+}
 const ThisComponent = defineComponent({
   components: {
     VButton,
@@ -155,12 +158,7 @@ const ThisComponent = defineComponent({
     },
   },
   watch: {
-    search: lodash.debounce(
-      function search(this: InstanceType<typeof ThisComponent>) {
-        this.reloadHistoryItems()
-      } as unknown as () => void,
-      200,
-    ),
+    search: lodash.debounce(search, 200) as unknown as () => void,
   },
   async created() {
     try {

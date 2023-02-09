@@ -81,6 +81,9 @@ import { VIcon, VLoading, VPopup, VSlider } from '@/ui'
 import { CustomNavbarItem, CustomNavbarRenderedItems } from '../custom-navbar-item'
 import { checkSequentialOrder, sortItems } from './orders'
 
+function padding(this: InstanceType<typeof ThisComponent>, newValue: number) {
+  navbarOptions.padding = newValue
+}
 const { navbarOptions } = CustomNavbarItem
 const [rendered] = getData(CustomNavbarRenderedItems) as [
   {
@@ -114,9 +117,7 @@ const ThisComponent = defineComponent({
     }
   },
   watch: {
-    padding: lodash.debounce((this: InstanceType<typeof ThisComponent>, newValue: number) => {
-      navbarOptions.padding = newValue
-    }, 200) as unknown as (newValue: number) => void,
+    padding: lodash.debounce(padding, 200) as unknown as (newValue: number) => void,
   },
   async mounted() {
     addComponentListener('customNavbar.padding', (newValue: number) => {
