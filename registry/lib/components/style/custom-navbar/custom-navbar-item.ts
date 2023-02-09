@@ -7,11 +7,7 @@ import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 import type { CustomNavbarOptions } from '.'
 
-export interface PopupContentInstance
-  extends ComponentPublicInstance<{
-    container?: HTMLElement
-    item?: CustomNavbarItem
-  }> {
+export interface PopupContentInstance {
   popupRefresh?(): void
   popupShow(): void
 }
@@ -28,8 +24,8 @@ export interface CustomNavbarItemInit {
   name: string
   /** 显示名称 */
   displayName: string
-  /** 内容 */
-  content: Component<{ item?: CustomNavbarItem }> | string
+  /** 内容。被创建时传入属性：item: CustomNavbarItem */
+  content: Component | string
 
   /** 设定CSS flex样式 (grow, shrink, basis) */
   flexStyle?: string
@@ -50,7 +46,7 @@ export interface CustomNavbarItemInit {
   /** 是否仅在登录后显示 */
   loginRequired?: boolean
 
-  /** 弹窗内容 */
+  /** 弹窗内容。创建其实例时传入参数有：container: HTMLElement, item: CustomNavbarItem */
   popupContent?: PopupContent | undefined
   /** 设为大于0的值时, 表示预计的弹窗宽度, 将会用于边缘检测, 防止超出viewport */
   boundingWidth?: number

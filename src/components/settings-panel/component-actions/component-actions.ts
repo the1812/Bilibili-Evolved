@@ -18,10 +18,8 @@ export interface ComponentConfigAction {
 }
 export interface ComponentVueAction {
   name: string
-  component: Component<{
-    item?: ComponentVueAction
-    component?: ComponentMetadata
-  }>
+  /* 组件。创建其实例时会传入属性：item: ComponentVueAction, component: ComponentMetadata */
+  component: Component
 }
 export type ComponentAction = (
   metadata: ComponentMetadata,

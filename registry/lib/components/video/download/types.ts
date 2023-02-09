@@ -7,7 +7,7 @@ import { formatNumber } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
 
 interface VueInstanceInput {
-  component?: Component<{ name?: string }>
+  component?: Component
 }
 /** 表示一个视频输入数据 */
 export interface DownloadVideoInputItem {
