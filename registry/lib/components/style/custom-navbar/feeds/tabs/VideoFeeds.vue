@@ -5,6 +5,7 @@ import { isNewID } from '@/components/feeds/notify'
 import type { VideoCard as VideoCardData } from '@/components/feeds/video-card'
 import VideoCard from '@/components/feeds/VideoCard.vue'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
+import { VLoading, VEmpty, ScrollTrigger } from '@/ui'
 
 import { useNextPage } from './next-page'
 
@@ -72,18 +73,27 @@ const jsonMapper = (card: any): VideoCardData & { new: boolean } => {
   }
 }
 
-const onCardsUpdate = (cards: VideoCardData[]) => {
+const onCardsUpdate = (cards: (VideoCardData & { new: boolean })[]) => {
   return groupVideoFeeds(cards)
 }
 
-const { loading, cards } = useNextPage(feedsCardTypes.video, jsonMapper, onCardsUpdate)
+const { loading, cards, hasMorePage, nextPage } = useNextPage(
+  feedsCardTypes.video,
+  jsonMapper,
+  onCardsUpdate,
+)
 
-const columnedCards = computed((): { left: VideoCardData[]; right: VideoCardData[] } => {
-  return {
-    left: cards.value.filter((_, index) => index % 2 === 0),
-    right: cards.value.filter((_, index) => index % 2 !== 0),
-  }
-})
+const columnedCards = computed(
+  (): {
+    left: (VideoCardData & { new: boolean })[]
+    right: (VideoCardData & { new: boolean })[]
+  } => {
+    return {
+      left: cards.value.filter((_, index) => index % 2 === 0),
+      right: cards.value.filter((_, index) => index % 2 !== 0),
+    }
+  },
+)
 </script>
 
 <template>

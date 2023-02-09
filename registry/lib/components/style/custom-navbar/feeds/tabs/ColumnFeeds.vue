@@ -9,7 +9,7 @@ import { useNextPage } from './next-page'
 
 const { loading, cards, hasMorePage, nextPage } = useNextPage(
   feedsCardTypes.column,
-  (card: any): ColumnCardData => {
+  (card: any): ColumnCardData & { new: boolean } => {
     const cardJson = JSON.parse(card.card)
     return {
       id: card.desc.dynamic_id_str,

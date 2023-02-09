@@ -38,7 +38,7 @@ export interface CustomNavbarItemInit {
   /** `content`指定的内容mount之后要执行的代码 */
   contentMounted?: (item: CustomNavbarItem) => Promise<void> | void
   /** 点击运行的代码段 */
-  clickAction?: Executable
+  clickAction?: (event: MouseEvent) => void
   /** 获取或设置提示数字, 将显示在顶部 */
   notifyCount?: number
   /** 是否在触屏状态下不响应点击 */

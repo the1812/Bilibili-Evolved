@@ -37,7 +37,7 @@ export default defineComponent({
   },
   computed: {
     cards(): LiveFeedItem[] {
-      const parseLiveCard = (card: unknown) => ({
+      const parseLiveCard = (card: any) => ({
         id: card.roomid,
         title: card.title,
         upFaceUrl: card.face,
