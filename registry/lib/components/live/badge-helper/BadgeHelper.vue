@@ -59,8 +59,9 @@ import { DefaultWidget, VPopup } from '@/ui'
 
 import type { Badge } from './badge'
 import { getMedalList, getTitleList, Medal, Title } from './badge'
+import type { Options } from './index'
 
-const { options } = getComponentSettings('badgeHelper')
+const { options } = getComponentSettings<Options>('badgeHelper')
 export default defineComponent({
   components: {
     DefaultWidget,

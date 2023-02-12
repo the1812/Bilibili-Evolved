@@ -1,6 +1,11 @@
 <template>
   <transition-group class="toast-card-container" name="toast-card-container" tag="div">
-    <ToastCard v-for="card of cards" :key="card.key" :data-key="card.key" :card="card"></ToastCard>
+    <ToastCard
+      v-for="card of cards"
+      :key="card.key"
+      :data-key="card.key"
+      :card="card as Toast"
+    ></ToastCard>
   </transition-group>
 </template>
 

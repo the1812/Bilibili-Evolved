@@ -9,7 +9,8 @@
   </div>
 </template>
 <script lang="ts">
-import type { Ref } from 'vue'
+import type { Placement } from 'tippy.js'
+import type { PropType, Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { createMiniToast } from './mini'
 
@@ -28,7 +29,7 @@ export default defineComponent({
       default: 'local',
     },
     placement: {
-      type: String,
+      type: String as PropType<Placement>,
       default: undefined,
     },
   },
