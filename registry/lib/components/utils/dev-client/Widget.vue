@@ -35,7 +35,7 @@ export default defineComponent({
   },
   data() {
     return {
-      client: null,
+      client: null as DevClient | null,
       // sessions: [],
       // devRecords: options.devRecords,
       isConnected: false,

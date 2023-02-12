@@ -33,10 +33,10 @@ export default defineComponent({
   },
   methods: {
     async loadSettings() {
-      await loadKeymapSettings(this.button)
+      await loadKeymapSettings(this.button.$el)
     },
     async toggleSettings() {
-      await toggleKeymapSettings(this.button)
+      await toggleKeymapSettings(this.button.$el)
     },
   },
 })

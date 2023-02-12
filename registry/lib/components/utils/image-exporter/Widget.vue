@@ -16,6 +16,7 @@ import { retrieveImageUrl } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { formatTitle } from '@/core/utils/title'
 import { DefaultWidget } from '@/ui'
+import type { Options } from './index'
 
 export default defineComponent({
   components: {
@@ -28,7 +29,7 @@ export default defineComponent({
   },
   methods: {
     async exportImages() {
-      const { columnFormat } = getComponentSettings('imageExporter').options
+      const { columnFormat } = getComponentSettings<Options>('imageExporter').options
       const toast = Toast.info('下载中...', '导出图片')
       this.busy = true
       try {

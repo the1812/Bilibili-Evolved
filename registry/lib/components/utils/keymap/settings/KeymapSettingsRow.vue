@@ -50,8 +50,9 @@ import { TextBox, VButton, VIcon } from '@/ui'
 
 import { presetBase, presets } from '../presets'
 import type { KeyBindingAction } from '../bindings'
+import type { Options } from '../index'
 
-const keymapOptions = getComponentSettings('keymap').options
+const keymapOptions = getComponentSettings<Options>('keymap').options
 export default defineComponent({
   components: {
     TextBox,

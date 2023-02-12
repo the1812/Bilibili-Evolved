@@ -31,8 +31,7 @@ export default defineComponent({
   methods: {
     async runItemAction(item: CheckInItem, event: MouseEvent) {
       try {
-        // 一开始可能是 undefined
-        this.$set(item, 'disabled', true)
+        item.disabled = true
         const button = this.$el.querySelector(`[data-name='${item.name}']`) as HTMLDivElement
         await item.action(button, event)
       } finally {
