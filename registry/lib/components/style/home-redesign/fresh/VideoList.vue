@@ -13,9 +13,9 @@
   </div>
 </template>
 <script lang="ts">
-import type { Ref } from 'vue'
+import type { Ref, PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
-import type { PropType } from 'vue'
+
 import type { VideoCard } from '@/components/feeds/video-card'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { addComponentListener } from '@/core/settings'
@@ -51,8 +51,8 @@ export default defineComponent({
       },
       deep: true,
     },
-    loaded() {
-      if (this.loaded) {
+    loaded(value) {
+      if (value) {
         this.setupIntersection()
       }
     },

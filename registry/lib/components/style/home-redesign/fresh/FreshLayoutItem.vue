@@ -24,7 +24,7 @@ export default defineComponent({
   },
   data() {
     return {
-      options: freshHomeOptions.layoutOptions[this.item.name] ?? {},
+      options: freshHomeOptions.layoutOptions[this.item.name] ?? { linebreak: false },
     }
   },
 })

@@ -70,14 +70,14 @@ const jsonMapper = (card: any): VideoCardData & { new: boolean } => {
     get new() {
       return isNewID(this.id)
     },
-  }
+  } as VideoCardData & { new: boolean }
 }
 
 const onCardsUpdate = (cards: (VideoCardData & { new: boolean })[]) => {
   return groupVideoFeeds(cards)
 }
 
-const { loading, cards, hasMorePage, nextPage } = useNextPage(
+const { loading, cards, hasMorePage, nextPage } = useNextPage<VideoCardData & { new: boolean }>(
   feedsCardTypes.video,
   jsonMapper,
   onCardsUpdate,
@@ -91,6 +91,9 @@ const columnedCards = computed(
     return {
       left: cards.value.filter((_, index) => index % 2 === 0),
       right: cards.value.filter((_, index) => index % 2 !== 0),
+    } as {
+      left: (VideoCardData & { new: boolean })[]
+      right: (VideoCardData & { new: boolean })[]
     }
   },
 )

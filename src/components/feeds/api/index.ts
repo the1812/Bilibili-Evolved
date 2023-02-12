@@ -16,7 +16,7 @@ export * from './types'
  * 搜索视频卡片中重复的 aid, 合并为联合投稿
  * @param cards 视频卡片
  */
-export const groupVideoFeeds = (cards: VideoCard[]) => {
+export const groupVideoFeeds = <C extends VideoCard>(cards: C[]): C[] => {
   const groups = lodash.groupBy(cards, c => c.aid)
   const cardToCooperationItem = (card: VideoCard) => ({
     id: card.upID,

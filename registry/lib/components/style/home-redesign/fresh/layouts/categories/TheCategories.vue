@@ -37,7 +37,7 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
-import type { TabType } from './categories.ts'
+import type { TabType } from './categories'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
@@ -60,7 +60,7 @@ export default defineComponent({
     VIcon,
   },
   setup: () => ({
-    tabsRef: ref(null) as Ref<HTMLDivElement[] | null>,
+    tabsRef: ref(null) as Ref<HTMLDivElement | null>,
   }),
   data() {
     const orderMap = (freshHomeOptions.categoriesOrder ?? {}) as Record<string, number>

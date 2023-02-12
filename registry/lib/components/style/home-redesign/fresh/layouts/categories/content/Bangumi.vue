@@ -21,7 +21,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
-import type { TabType } from '../categories.ts'
+import type { TabType } from '../categories'
 import { applyContentFilter } from '@/components/feeds/api'
 
 import SubHeader from '../../../SubHeader.vue'

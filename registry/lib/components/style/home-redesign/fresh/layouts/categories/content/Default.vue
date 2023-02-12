@@ -25,7 +25,7 @@ import { applyContentFilter } from '@/components/feeds/api'
 
 import SubHeader from '../../../SubHeader.vue'
 import type { RankListCard } from './rank-list'
-import type { TabType } from '../categories.ts'
+import type { TabType } from '../categories'
 import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
 

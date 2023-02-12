@@ -11,7 +11,7 @@ import { descendingStringSort } from '@/core/utils/sort'
  * @param jsonMapper 解析JSON数据的映射函数
  * @param onCardsUpdate 卡片列表更新时用于修改的回调函数
  */
-export const useNextPage = <MappedItem extends { id: string }, RawItem>(
+export const useNextPage = <MappedItem extends { id: string } = { id: string }, RawItem = unknown>(
   type: FeedsCardType,
   jsonMapper: (obj: RawItem) => MappedItem,
   onCardsUpdate?: (cards: MappedItem[]) => MappedItem[],

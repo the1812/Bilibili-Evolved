@@ -67,7 +67,7 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
   disabled = false
   href: string = null
   active = false
-  clickAction: Executable = none
+  clickAction: (event: MouseEvent) => void = none
   contentMounted: (item: CustomNavbarItem) => Promise<void> | void = none
   notifyCount = 0
   touch = false
