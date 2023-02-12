@@ -20,7 +20,7 @@ import type { SubtitleDownloadType } from './utils'
 interface Options {
   subtitleType: SubtitleDownloadType | '无'
 }
-const options = getComponentSettings('downloadVideo').options as Options
+const { options } = getComponentSettings<Options>('downloadVideo')
 
 export default defineComponent({
   components: {

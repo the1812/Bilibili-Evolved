@@ -3,13 +3,13 @@
     <template v-if="aid && bvid">
       <div class="bvid-convert-item">
         {{ aid }}
-        <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('aid')">
+        <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink(copyIdType.aid)">
           <VIcon :size="16" :icon="aidCopied ? 'mdi-check' : 'mdi-link'" />
         </div>
       </div>
       <div class="bvid-convert-item">
         {{ bvid }}
-        <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('bvid')">
+        <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink(copyIdType.bvid)">
           <VIcon :size="16" :icon="bvidCopied ? 'mdi-check' : 'mdi-link'" />
         </div>
       </div>
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, markRaw } from 'vue'
 import { videoChange } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
@@ -72,6 +72,10 @@ export default defineComponent({
       aidCopied: false,
       bvid: '',
       bvidCopied: false,
+      copyIdType: markRaw({
+        aid: CopyIdType.Aid,
+        bvid: CopyIdType.Bvid,
+      }),
     }
   },
   async mounted() {

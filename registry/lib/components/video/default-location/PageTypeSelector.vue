@@ -49,7 +49,7 @@ export default defineComponent({
     },
   },
   methods: {
-    onChange(item: string | Item) {
+    onChange(item: Item) {
       this.$emit('update:value', item.name)
     },
   },
