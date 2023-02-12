@@ -4,9 +4,9 @@ module.exports = {
     es2020: true,
   },
   extends: [
+    'airbnb-base',
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
-    'airbnb-base',
     'plugin:prettier/recommended',
   ],
   globals: {
@@ -30,11 +30,11 @@ module.exports = {
     'import/no-default-export': 'error',
     'import/no-named-default': 'off',
 
+    '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/member-delimiter-style': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-shadow': ['error', { builtinGlobals: false }],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
