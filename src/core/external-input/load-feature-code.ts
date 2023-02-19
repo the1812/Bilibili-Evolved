@@ -3,7 +3,7 @@ export class LoadFeatureCodeError extends Error {}
 /**
  * feature 代码运行沙箱
  */
-interface CodeSandbox {
+type CodeSandbox = {
   /**
    * 在沙箱中执行代码
    *
