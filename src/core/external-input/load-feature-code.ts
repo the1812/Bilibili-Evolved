@@ -1,5 +1,8 @@
 export class LoadFeatureCodeError extends Error {}
 
+/**
+ * feature 代码运行沙箱
+ */
 interface CodeSandbox {
   /**
    * 在沙箱中执行代码
@@ -15,11 +18,11 @@ interface CodeSandbox {
 }
 
 /**
- * 获取代码运行沙箱
+ * 创建 feature 代码的运行沙箱
  *
- * @returns 一个函数：接受代码，返回。
+ * @returns 一个 `CodeSandbox`。
  */
-const getSandbox = lodash.once((): CodeSandbox => {
+const createCodeSandbox = (): CodeSandbox => {
   // 需要被注入到 `sandbox` 中的键值对
   const injection = new Map([
     // 加固，防止逃逸
@@ -55,8 +58,9 @@ const getSandbox = lodash.once((): CodeSandbox => {
       return [exported, returned]
     },
   }
-})
+}
 
+let staticCodeSandbox: CodeSandbox | undefined
 /**
  * 执行 feature (component, plugin, style) 的代码，并尝试获取其导出元数据
  *
@@ -69,14 +73,15 @@ const getSandbox = lodash.once((): CodeSandbox => {
  *
  * 代码默认以非严格模式执行，启用需自行添加 `use strict`。（从本项目中打包的 feature 自带严格模式）
  *
- * 全局对象为脚本管理器提供的 `window`，支持访问 `unsafeWindow`。
+ * 代码执行时的全局对象为脚本管理器提供的 `window`。代码中支持访问 `unsafeWindow`。
  *
  * @param code - 被执行的代码
- * @returns 导出的元数据（不检测正确性）
+ * @returns 导出的元数据（不检测是否为正确的 feature）
  * @throws {@link LoadFeatureCodeError}
  * 代码包含语法错误或代码执行时产生了异常
  */
 export const loadFeatureCode = (code: string): unknown => {
-  const [exported, returned] = getSandbox().run(code)
+  staticCodeSandbox || (staticCodeSandbox = createCodeSandbox())
+  const [exported, returned] = staticCodeSandbox.run(code)
   return exported || returned
 }
