@@ -40,7 +40,7 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 .bisector-dialog-content-container {
-  padding: 8px;
+  padding: 12px;
   .bisector-dialog-content-text {
     margin-bottom: 8px;
   }

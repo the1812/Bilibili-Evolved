@@ -634,11 +634,3 @@ export const getRandomId = (length = 8) => {
     .join('')
     .substring(0, length)
 }
-
-/**
- * 异步延时指定毫秒数
- *
- * @param ms 传递给 setTimeout 的第二个参数，表示延时时间
- * @returns
- */
-export const sleep = (ms?: number) => new Promise(resolve => setTimeout(resolve, ms))

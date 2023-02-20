@@ -30,7 +30,7 @@ export const component = defineComponentMetadata({
           name: 'bisector-start',
           getActions: async () => [
             {
-              name: '开始/继续组件二等分',
+              name: '开始 / 继续组件二等分',
               description: 'Start/Continue component bisection',
               icon: 'mdi-view-split-horizontal',
               action: async () => {

@@ -1,7 +1,7 @@
 import { DialogInstance, showDialog } from '@/core/dialog'
 import type { Settings } from '@/core/settings/types'
 import { Toast } from '@/core/toast'
-import { getRandomId, mountVueComponent, sleep } from '@/core/utils'
+import { getRandomId, mountVueComponent, delay } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import type { RecordValue } from '../types'
 import type { BisectNext, BisectReturn } from './bisect'
@@ -93,7 +93,7 @@ export const stop = async () => {
     const msg = `部分组件未能还原状态：${getComponentNames(unmatchedComponents)}`
     scopedConsole?.warn(`stop - ${msg}`)
     Toast.error(msg, '组件二等分')
-    await sleep(3e3)
+    await delay(3e3)
   }
   scopedConsole?.log('stop - 清理状态')
   bisectorGenerator = null
@@ -117,7 +117,7 @@ export const next = async (seeingBad?: boolean, autoReload?: boolean) => {
     bisectorOptions.bisectInitialState = { low, high }
     const elementId = `bisector-result-toast-content-${getRandomId()}`
     Toast.info(/* html */ `<div id="${elementId}"></div>`, '组件二等分结果')
-    await sleep()
+    await delay()
     const vm = mountVueComponent<{ userComponent: UserComponent }>(
       ResultToastContent,
       `#${elementId}`,
