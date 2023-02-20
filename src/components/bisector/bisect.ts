@@ -33,7 +33,7 @@ export function* bisectLeft<O>(
       high,
       mid,
       slice: data.slice(low, mid),
-      rouge: ~~Math.log2(high - low),
+      rouge: Math.trunc(Math.log2(high - low)),
     }
 
     if (seeingBad) {
@@ -48,7 +48,7 @@ export function* bisectLeft<O>(
     high,
     mid,
     slice: data.slice(low, mid),
-    rouge: ~~Math.log2(high - low),
+    rouge: Math.trunc(Math.log2(high - low)),
     target: data[low],
   }
 }
@@ -69,7 +69,7 @@ export function* bisectRight<O>(
       high,
       mid,
       slice: data.slice(mid, high),
-      rouge: ~~Math.log2(high - low),
+      rouge: Math.trunc(Math.log2(high - low)),
     }
 
     if (seeingBad) {
@@ -84,7 +84,7 @@ export function* bisectRight<O>(
     high,
     mid,
     slice: data.slice(low, mid),
-    rouge: ~~Math.log2(high - low),
+    rouge: Math.trunc(Math.log2(high - low)),
     target: data[low],
   }
 }
