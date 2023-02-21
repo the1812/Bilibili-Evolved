@@ -10,7 +10,7 @@ export interface DialogInputs {
 }
 export interface DialogInstance extends Required<DialogInputs> {
   open: boolean
-  close: Promise<void>
+  close(): Promise<void>
   closeListeners: (() => void)[]
 }
 export const showDialog = (inputs: DialogInputs) => {
