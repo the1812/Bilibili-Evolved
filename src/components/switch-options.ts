@@ -269,14 +269,12 @@ export type SwitchComponentMetadata<
 > = ComponentMetadata<SwitchOptions<O, N, S>>
 
 /**
- * 用于包装组件元数据，生成开关选项。
+ * 用于包装组件元数据，根据配置生成一系列开关
  *
- * 为保障组件功能的正常运行，请勿使用以 'switch-' 开头的 option。
- *
- * 若传入组件未定义 Widget，则会注入一个用于控制各开关的 Widget。
- * 此 Widget 的功能与注入组件的 options 功能相同。
- *
- * 被包装后的元数据，其 `entry` 函数是原函数的包装，用于实现相关功能。
+ * 修改内容包括
+ * - 注入一系列选项，具体细节参考 {@link SwitchOptions}
+ * - 若传入组件未定义 Widget，则会注入一个用于控制各开关的 Widget。此 Widget 的功能与注入组件的 options 功能相同
+ * - 被包装后的元数据，其 `entry` 函数是原函数的包装，用于实现相关功能
  *
  * 该函数会直接修改传入参数自身，并将其返回。
  *
