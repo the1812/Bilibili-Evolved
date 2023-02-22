@@ -2,10 +2,12 @@
  * Switch Options API
  * @module src/components/switch-options
  *
- * 通过包装原始的 ComponentMetadata 为组件提供一系列开关选项。
+ * 通过包装原始的 {@link ComponentMetadata} 为组件提供一系列开关选项。
  * 如果组件未定义 Widget，还会提供一个默认的有相同效果的 Widget。
  *
- * API 主要函数是 {@link newSwitchComponentWrapper}。
+ * 包装器使用 {@link newSwitchComponentWrapper} 创建。
+ *
+ * 可以通过 {@link SwitchOptionsOfMetadata} 或 {@link SwitchOptionsOfSwitchMetadata} 从包装器的设置中，获取被包装后的组件的 options 类型
  */
 
 import { getComponentSettings, addComponentListener } from '@/core/settings'
@@ -39,14 +41,14 @@ export type SwitchItemsMetadata<S extends string> = {
 }
 
 /**
- * 可用于单独定义 SwitchItemsMetadata
+ * 可用于单独定义 {@link SwitchItemsMetadata}
  */
 export const defineSwitchItemsMetadata = <S extends string>(
   c: SwitchItemsMetadata<S>,
 ): SwitchItemsMetadata<S> => c
 
 /**
- * 用于配置 API 的行为。使用 {@link defineSwitchMetadata} 定义。
+ * 用于配置 API 的行为。可以使用 {@link defineSwitchMetadata} 辅助定义。
  */
 export interface SwitchMetadata<N extends string, S extends string> {
   /**
@@ -82,7 +84,7 @@ export interface SwitchMetadata<N extends string, S extends string> {
 }
 
 /**
- * 定义一个 {@link SwitchMetadata}
+ * 辅助定义 {@link SwitchMetadata}
  */
 export const defineSwitchMetadata = <N extends string, S extends string>(
   c: SwitchMetadata<N, S>,
@@ -113,7 +115,7 @@ export interface SwitchMetadataOption<N extends string, S extends string> {
 }
 
 /**
- * 创建一个 SwitchMetadataOption
+ * 创建一个 {@link SwitchMetadataOption}
  */
 const newSwitchMetadataOption = <N extends string, S extends string>(
   metadata: SwitchMetadata<N, S>,
@@ -151,7 +153,7 @@ export type SwitchOptions<O extends UnknownOptions, N extends string, S extends 
 } & SwitchItemOptions<S>
 
 /**
- * 提取 SwitchOptions 类型
+ * 提取 {@link SwitchOptions} 类型
  */
 export type SwitchOptionsOfSwitchMetadata<
   O extends UnknownOptions,
@@ -159,7 +161,7 @@ export type SwitchOptionsOfSwitchMetadata<
 > = C extends SwitchMetadata<infer N, infer S> ? SwitchOptions<O, N, S> : never
 
 /**
- * 提取 SwitchOptions 类型
+ * 提取 {@link SwitchOptions} 类型
  */
 export type SwitchOptionsOfMetadata<
   M extends OptionsMetadata,
@@ -288,9 +290,7 @@ export type SwitchComponentWrapper<N extends string, S extends string> = <O exte
 /**
  * 创建一个 {@link SwitchComponentWrapper}
  *
- * 传入参数请使用 {@link defineSwitchMetadata} 定义。
- *
- * @param metadata - 相关配置元数据
+ * @param metadata - 相关配置元数据。可使用 {@link defineSwitchMetadata} 在外部定义
  * @returns 组件包装器
  */
 export const newSwitchComponentWrapper = <N extends string, S extends string>(
