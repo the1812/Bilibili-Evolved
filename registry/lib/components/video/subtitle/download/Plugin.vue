@@ -18,6 +18,7 @@ import { VDropdown } from '@/ui'
 import type { SubtitleDownloadType } from './utils'
 
 interface Options {
+  [K: string]: unknown
   subtitleType: SubtitleDownloadType | '无'
 }
 const { options } = getComponentSettings<Options>('downloadVideo')

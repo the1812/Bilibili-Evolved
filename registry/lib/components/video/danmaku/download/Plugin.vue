@@ -18,6 +18,7 @@ import { VDropdown } from '@/ui'
 import type { DanmakuDownloadType } from './utils'
 
 interface Options {
+  [K: string]: unknown
   danmakuType: DanmakuDownloadType | '无'
 }
 const { options } = getComponentSettings<Options>('downloadVideo')
