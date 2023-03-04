@@ -407,6 +407,7 @@ export class DoubleClickEvent {
   singleClickHandler: (e: MouseEvent) => void = none
 
   private clickedOnce = false
+  // eslint-disable-next-line class-methods-use-this
   private readonly stopPropagationHandler = (e: MouseEvent) => {
     e.stopImmediatePropagation()
   }

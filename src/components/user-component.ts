@@ -1,6 +1,8 @@
 import { componentToSettings } from '@/core/settings'
 import { isBuiltInComponent } from './built-in-components'
 import { ComponentMetadata, componentsMap } from './component'
+import * as bisector from './bisector/api'
+import { BisectorOptions } from './bisector/options'
 
 /**
  * 安装自定义组件
@@ -131,4 +133,17 @@ export const toggleComponent = async (nameOrDisplayName: string) => {
   const { enabled } = userComponent.settings
   const { displayName } = userComponent.metadata
   return `已${enabled ? '开启' : '关闭'}组件'${displayName}', 可能需要刷新后才能生效`
+}
+
+/**
+ * 二等分自定义组件的开关状态
+ *
+ * @param options 二等分选项
+ * @returns
+ */
+export const bisectComponent = async (options?: BisectorOptions) => {
+  if (options) {
+    bisector.setOptions(options)
+  }
+  return bisector
 }
