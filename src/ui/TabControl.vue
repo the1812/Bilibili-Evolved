@@ -37,7 +37,10 @@
     <slot name="content">
       <div class="default-content">
         <transition name="content-transition">
-          <component :is="selectedTab.component" v-bind="selectedTab.propsData"></component>
+          <component
+            :is="markRaw(selectedTab.component)"
+            v-bind="selectedTab.propsData"
+          ></component>
         </transition>
       </div>
     </slot>
@@ -45,7 +48,7 @@
 </template>
 
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent, markRaw } from 'vue'
 import type { PropType } from 'vue'
 import type { TabMapping, TabMappings } from './tab-mapping'
 
@@ -77,6 +80,7 @@ export default defineComponent({
     },
   },
   emits: ['update:link'],
+  setup: () => ({ markRaw }),
   data() {
     return {
       selectedTab: (this.tabs.find((t: TabMapping) => t.name === this.defaultTab) ??

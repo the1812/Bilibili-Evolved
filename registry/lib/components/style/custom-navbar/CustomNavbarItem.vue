@@ -17,7 +17,7 @@
       <template v-if="typeof item.content === 'string'">
         {{ item.content }}
       </template>
-      <component :is="item.content" v-else :item="item"></component>
+      <component :is="markRaw(item.content)" v-else :item="item"></component>
     </CustomNavbarLink>
     <div
       v-else
@@ -27,7 +27,7 @@
       <template v-if="typeof item.content === 'string'">
         {{ item.content }}
       </template>
-      <component :is="item.content" v-else :item="item"></component>
+      <component :is="markRaw(item.content)" v-else :item="item"></component>
     </div>
 
     <div v-show="!item.active" class="notify-count">
@@ -43,7 +43,7 @@
     >
       <div v-if="item.popupContent" class="popup" :class="popupClasses(item)">
         <component
-          :is="item.popupContent"
+          :is="markRaw(item.popupContent)"
           v-if="item.requestedPopup"
           ref="popup"
           :container="popupContainer"
@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, markRaw } from 'vue'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
 
 import type { PopupContentInstance } from './custom-navbar-item'
@@ -99,6 +99,7 @@ const ThisComponent = defineComponent({
     },
   },
   setup: () => ({
+    markRaw,
     popup: ref(null) as Ref<PopupContentInstance | null>,
     popupContainer: ref(null) as Ref<HTMLDivElement | null>,
   }),

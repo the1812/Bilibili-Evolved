@@ -4,16 +4,20 @@
       <template v-if="typeof config.content === 'string' && config.content.length > 0">
         {{ config.content }}
       </template>
-      <component :is="config.content" v-if="typeof config.content !== 'string'"></component>
+      <component
+        :is="markRaw(config.content)"
+        v-if="typeof config.content !== 'string'"
+      ></component>
     </slot>
   </div>
 </template>
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, markRaw } from 'vue'
 import { loadingContent } from './v-loading'
 
 export default defineComponent({
   name: 'VLoading',
+  setup: () => ({ markRaw }),
   data() {
     return {
       config: loadingContent,

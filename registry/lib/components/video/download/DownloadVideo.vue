@@ -16,7 +16,7 @@
         没有匹配的输入源, 请确保安装了适合此页面的插件.
       </div>
       <component
-        :is="selectedInput.component"
+        :is="markRaw(selectedInput.component)"
         v-if="selectedInput && selectedInput.component"
         ref="inputOptions"
       />
@@ -50,7 +50,7 @@
         <SwitchBox v-model:checked="useBackupUrls" />
       </div>
       <component
-        :is="a.component"
+        :is="markRaw(a.component)"
         v-for="a of assetsWithOptions"
         :key="a.name"
         ref="assetsOptions"
@@ -66,7 +66,7 @@
         v-html="selectedOutput.description"
       ></div>
       <component
-        :is="selectedOutput.component"
+        :is="markRaw(selectedOutput.component)"
         v-if="selectedOutput && selectedOutput.component"
         ref="outputOptions"
       />
@@ -85,7 +85,7 @@
 </template>
 <script lang="ts">
 import type { Ref, ComponentPublicInstance } from 'vue'
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, markRaw } from 'vue'
 import type { VideoQuality } from '@/components/video/video-quality'
 import { allQualities } from '@/components/video/video-quality'
 import type { TestPattern } from '@/core/common-types'
@@ -164,6 +164,7 @@ export default defineComponent({
     },
   },
   setup: () => ({
+    markRaw,
     inputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
     assetsOptions: ref(null) as Ref<ComponentPublicInstance[] | null>,
     outputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
@@ -185,7 +186,7 @@ export default defineComponent({
       qualities: [] as VideoQuality[],
       selectedQuality: undefined,
       inputs: [] as DownloadVideoInput[],
-      selectedInput: undefined,
+      selectedInput: undefined as DownloadVideoInput | undefined,
       apis: [] as DownloadVideoApi[],
       selectedApi: undefined,
       outputs,
