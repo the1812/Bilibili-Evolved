@@ -6,8 +6,9 @@
     :tabindex="disabled ? -1 : 0"
     :class="{ [type]: true, disabled, round, icon }"
     v-bind="attrs"
-    @keydown.enter.prevent="$emit('click')"
-    @keydown.space.prevent="$emit('click')"
+    @click="$emit('click', $event)"
+    @keydown.enter.prevent="$emit('click', $event)"
+    @keydown.space.prevent="$emit('click', $event)"
   >
     <div class="content-container">
       <slot>Button</slot>
