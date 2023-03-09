@@ -47,8 +47,10 @@
             <VButton
               :disabled="!addImagePopupOpen"
               @click="
-                addImagePopupOpen = false
-                clearNewImage()
+                () => {
+                  addImagePopupOpen = false
+                  clearNewImage()
+                }
               "
             >
               取消
@@ -57,9 +59,11 @@
               :disabled="!newImage.url || !newImage.name"
               type="primary"
               @click="
-                addImage(newImage)
-                addImagePopupOpen = false
-                clearNewImage()
+                () => {
+                  addImage(newImage)
+                  addImagePopupOpen = false
+                  clearNewImage()
+                }
               "
             >
               确定
@@ -83,8 +87,10 @@
         <VButton
           :disabled="!selectedImage.name"
           @click="
-            removeImage(selectedImage)
-            clearImage()
+            () => {
+              removeImage(selectedImage)
+              clearImage()
+            }
           "
         >
           删除

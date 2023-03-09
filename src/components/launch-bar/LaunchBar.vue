@@ -32,8 +32,10 @@
           @next-item="nextItem($event, index)"
           @delete-item="onDeleteItem($event, index)"
           @action="
-            index === actions.length - 1 && onClearHistory()
-            onAction()
+            () => {
+              index === actions.length - 1 && onClearHistory()
+              onAction()
+            }
           "
         />
       </div>
