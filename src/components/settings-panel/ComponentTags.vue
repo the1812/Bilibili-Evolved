@@ -6,8 +6,8 @@
       :trigger-element="selectedSubPageTrigger"
       class="settings-panel-sub-page"
     >
-      <keep-alive>
-        <component :is="selectedSubPage" v-if="selectedSubPage" />
+      <keep-alive v-if="selectedSubPage">
+        <component :is="selectedSubPage" />
       </keep-alive>
     </VPopup>
     <div class="icon-list">
@@ -56,8 +56,8 @@
 </template>
 
 <script lang="ts">
-import type { Component, PropType } from 'vue'
-import { defineComponent } from 'vue'
+import type { Component, Raw } from 'vue'
+import { defineComponent, markRaw } from 'vue'
 import { ascendingSort } from '@/core/utils/sort'
 import VIcon from '@/ui/icon/VIcon.vue'
 import VPopup from '@/ui/VPopup.vue'
@@ -68,15 +68,20 @@ import { subPages } from './sub-pages'
 import type { SettingsTag } from './tag-filter'
 import { tagFilters } from './tag-filter'
 
+const subPagesWithRawComponent = subPages.map(page => ({
+  ...page,
+  component: markRaw(page.component),
+}))
+
 export default defineComponent({
   components: { VIcon, VPopup },
   emits: ['change'],
+  setup: () => ({ subPages: subPagesWithRawComponent }),
   data() {
     return {
-      tags: [],
+      tags: [] as SettingsTag[],
       selectedTagName: '',
-      subPages,
-      selectedSubPage: null as Component | null,
+      selectedSubPage: null as Raw<Component> | null,
       selectedSubPageOpen: false,
       selectedSubPageTrigger: null,
     }
@@ -104,10 +109,10 @@ export default defineComponent({
     },
     selectTag(tag: ComponentTag) {
       this.selectedTagName = tag.name
-      const { filter } = (this.tags as SettingsTag[]).find(t => t.name === tag.name)
+      const { filter } = this.tags.find(t => t.name === tag.name)
       this.$emit('change', filter)
     },
-    async openSubPage(e: MouseEvent, component: Component) {
+    async openSubPage(e: MouseEvent, component: Raw<Component>) {
       if (this.selectedSubPage === component) {
         this.selectedSubPageOpen = !this.selectedSubPageOpen
         return
