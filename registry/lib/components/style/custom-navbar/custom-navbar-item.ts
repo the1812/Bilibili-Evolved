@@ -2,17 +2,18 @@ import type { Instance as Popper } from '@popperjs/core'
 import { createPopper } from '@popperjs/core'
 
 import type { Component, ComponentPublicInstance } from 'vue'
-import type { Executable } from '@/core/common-types'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 import type { CustomNavbarOptions } from '.'
 
-export interface PopupContentInstance {
+export interface PopupContentInstance extends ComponentPublicInstance {
   popupRefresh?(): void
   popupShow(): void
 }
 
-export type PopupContent = Component & (new () => PopupContentInstance)
+export interface PopupContent {
+  new (): PopupContentInstance
+}
 
 export const CustomNavbarItems = 'customNavbar.items'
 export const CustomNavbarRenderedItems = 'customNavbar.renderedItems'
@@ -61,7 +62,7 @@ export interface CustomNavbarItemInit {
 export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
   name: string
   displayName: string
-  content: Component<{ item?: CustomNavbarItem }> | string
+  content: Component | string
 
   flexStyle = '0 0 auto'
   disabled = false
