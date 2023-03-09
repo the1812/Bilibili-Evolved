@@ -1,11 +1,7 @@
 <template>
   <i class="be-icon" :class="classes" :style="{ '--size': size + 'px' }">
     <slot></slot>
-    <div
-      v-if="icon in $options.static.customIcons"
-      class="custom-icon"
-      v-html="$options.static.customIcons[icon]"
-    ></div>
+    <div v-if="icon in customIcons" class="custom-icon" v-html="customIcons[icon]"></div>
   </i>
 </template>
 
@@ -13,7 +9,6 @@
 import { defineComponent } from 'vue'
 import { customIcons } from '.'
 
-const staticData = { customIcons }
 export default defineComponent({
   name: 'VIcon',
   props: {
@@ -30,15 +25,15 @@ export default defineComponent({
       default: false,
     },
   },
+  setup: () => ({ customIcons }),
   computed: {
     classes(): string[] {
-      const icons = this.$options.static.customIcons
       const icon = this.icon as string
       const base = []
       if (this.colored) {
         base.push('colored')
       }
-      if (icon === '' || icon in icons) {
+      if (icon === '' || icon in customIcons) {
         return base
       }
       if (icon.startsWith('mdi-')) {
@@ -46,9 +41,6 @@ export default defineComponent({
       }
       return [...base, `be-iconfont-${icon}`]
     },
-  },
-  beforeCreate(this: any) {
-    this.$options.static = staticData
   },
 })
 </script>
