@@ -51,9 +51,12 @@ const entry = async () => {
       }
       const face = dq(
         clone,
-        '.live-up-img, .bili-dyn-live-users__item__face .bili-awesome-img',
+        '.live-up-img, .bili-dyn-live-users__item__face, .bili-awesome-img',
       ) as HTMLElement
       face.style.backgroundImage = `url(${it.face})`
+      face.style.backgroundSize = 'cover'
+      const facepic = dq(clone, '.b-img--face') as HTMLElement
+      facepic.style.visibility = 'hidden'
       const title = dq(clone, '.live-name, .bili-dyn-live-users__item__title') as HTMLElement
       title.innerHTML = it.title
       title.title = it.title
