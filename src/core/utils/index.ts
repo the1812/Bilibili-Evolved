@@ -228,7 +228,8 @@ export const mountVueComponent = <I extends ComponentPublicInstance>(
   rootProps?: Record<string, unknown> | null,
 ): [HTMLDivElement, I, App<HTMLDivElement>] => {
   const container = document.createElement('div')
-  const app = createVueApp(component, rootProps) as App<HTMLDivElement>
+  const component0 = 'default' in component ? component.default : component
+  const app = createVueApp(component0, rootProps) as App<HTMLDivElement>
   const instance = app.mount(container) as I
   return [container, instance, app]
 }
