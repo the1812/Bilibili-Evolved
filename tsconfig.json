@@ -8,10 +8,7 @@
     "paths": {
       "@/*": [
         "src/*"
-      ],
-      "vue": [
-        "node_modules/@vue/compat"
-      ],
+      ]
     }
   },
   "include": [

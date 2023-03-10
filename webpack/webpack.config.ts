@@ -29,7 +29,6 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
       alias: {
         '@': relativePath('src'),
         'fuse.js$': 'fuse.js/dist/fuse.basic.esm.min.js',
-        vue: '@vue/compat',
       },
     },
     performance: {
@@ -103,11 +102,6 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
               options: {
                 optimizeSSR: false,
                 hotReload: false,
-                compilerOptions: {
-                  compatConfig: {
-                    MODE: 2,
-                  },
-                },
               },
             },
           ],
