@@ -121,6 +121,8 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
         webpackCompilationInfo: [relativePath('webpack/compilation-info'), 'compilationInfo'],
       }),
       new webpack.DefinePlugin({
+        __VUE_OPTIONS_API__: true,
+        __VUE_PROD_DEVTOOLS__: false,
         webpackGitInfo: JSON.stringify(gitInfo),
       }),
       // new WebpackBar(),
