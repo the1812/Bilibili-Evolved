@@ -5,13 +5,13 @@
       grow: item.grow,
     }"
   >
-    <component :is="markRaw(item.component)" />
+    <component :is="item.component" />
   </div>
   <div v-if="options.linebreak" class="fresh-home-content-layout-item linebreak"></div>
 </template>
 <script lang="ts">
 import type { PropType } from 'vue'
-import { defineComponent, markRaw } from 'vue'
+import { defineComponent } from 'vue'
 import { freshHomeOptions } from './types'
 import type { FreshLayoutItem } from './layouts/fresh-layout-item'
 
@@ -22,7 +22,6 @@ export default defineComponent({
       type: Object as PropType<FreshLayoutItem>,
     },
   },
-  setup: () => ({ markRaw }),
   data() {
     return {
       options: freshHomeOptions.layoutOptions[this.item.name] ?? { linebreak: false },

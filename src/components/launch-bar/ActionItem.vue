@@ -16,7 +16,7 @@
       </div>
       <div class="suggest-item-title" @click="performAction($event)">
         <component
-          :is="markRaw(action.content)"
+          :is="action.content"
           v-if="action.content"
           class="suggest-item-name"
           :name="action.name"
@@ -40,7 +40,7 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, markRaw } from 'vue'
+import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
 import { VIcon } from '@/ui'
@@ -61,7 +61,6 @@ export default defineComponent({
     'previous-item': null as (e: KeyboardEvent) => true,
     'next-item': null as (e: KeyboardEvent) => true,
   },
-  setup: () => ({ markRaw }),
   methods: {
     performAction(event: Event) {
       this.action.action()

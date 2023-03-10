@@ -31,10 +31,7 @@
             ></ComponentOption>
           </div>
           <div v-if="componentData.extraOptions" class="extra-option">
-            <component
-              :is="markRaw(componentData.extraOptions)"
-              :component-data="componentData"
-            ></component>
+            <component :is="componentData.extraOptions" :component-data="componentData"></component>
           </div>
           <slot></slot>
         </div>
@@ -83,7 +80,7 @@
 
 <script lang="ts">
 import type { PropType } from 'vue'
-import { defineComponent, h, vShow, withDirectives, markRaw } from 'vue'
+import { defineComponent, h, vShow, withDirectives } from 'vue'
 
 import { getComponentSettings } from '@/core/settings'
 import { visible } from '@/core/observer'
@@ -143,7 +140,6 @@ const ThisComponent = defineComponent({
     },
   },
   emits: ['close', 'mounted'],
-  setup: () => ({ markRaw }),
   data() {
     return {
       virtual: false,

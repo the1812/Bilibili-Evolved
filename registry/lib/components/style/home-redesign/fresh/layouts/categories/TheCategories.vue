@@ -30,13 +30,13 @@
       </div>
     </div>
     <div class="fresh-home-categories-content">
-      <component :is="markRaw(content)" :region="selectedTab" />
+      <component :is="content" :region="selectedTab" />
     </div>
   </div>
 </template>
 <script lang="ts">
 import type { Ref } from 'vue'
-import { defineComponent, ref, markRaw } from 'vue'
+import { defineComponent, ref } from 'vue'
 import type { TabType } from './categories'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
@@ -60,7 +60,6 @@ export default defineComponent({
     VIcon,
   },
   setup: () => ({
-    markRaw,
     tabsRef: ref(null) as Ref<HTMLDivElement | null>,
   }),
   data() {

@@ -14,7 +14,7 @@
     </VEmpty>
     <div class="widget-items">
       <component
-        :is="markRaw(w.component)"
+        :is="w.component"
         v-for="w of widgets"
         :key="w.name"
         class="widget-item"
@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, markRaw } from 'vue'
+import { defineComponent } from 'vue'
 import type { Widget } from '@/components/widget'
 import { deleteValue, matchUrlPattern } from '@/core/utils'
 import { VEmpty, VIcon } from '@/ui'
@@ -55,12 +55,11 @@ export default defineComponent({
     VIcon,
     VEmpty,
   },
-  setup: () => ({ markRaw }),
   data() {
     unsafeWindow.allWidgets = allWidgets
     return {
       allWidgets,
-      widgets: [] as Widget[],
+      widgets: [],
       loading: true,
     }
   },
