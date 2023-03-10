@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import type { ComponentMetadata, FeatureBase } from '@/components/component'
 import type { CoreApis } from '@/core/core-apis'
 import { deleteValue } from '@/core/utils'
@@ -32,10 +33,11 @@ export type PluginMetadata = PartialRequired<PluginMinimalData, 'displayName'>
 
 /** 可根据插件名称检索对应的内置插件 */
 export const pluginsMap: { [name: string]: PluginMetadata } = {}
+/** 获取包含所有插件的响应式数组（单例） */
 const getBuiltInPlugins = lodash.once(() => {
   const context = require.context('@/plugins', true, /index\.ts$/)
   const pluginPaths = context.keys()
-  return pluginPaths
+  const plugins = pluginPaths
     .map(path => {
       const m = context(path)
       if ('plugin' in m) {
@@ -46,8 +48,9 @@ const getBuiltInPlugins = lodash.once(() => {
       return undefined
     })
     .filter(it => it !== undefined) as PluginMetadata[]
+  return reactive(plugins)
 })
-/** 包含所有插件的数组 */
+/** 包含所有插件的响应式数组 */
 export const plugins: PluginMetadata[] = getBuiltInPlugins()
 
 /**
