@@ -6,7 +6,6 @@
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { ComponentMetadata } from '@/components/types'
-import { getComponentSettings } from '@/core/settings'
 
 import { getDescriptionHTML } from '../description'
 
@@ -19,12 +18,16 @@ export default defineComponent({
   },
   data() {
     return {
-      settings: getComponentSettings(this.componentData),
       html: '',
     }
   },
-  async created() {
-    this.html = await getDescriptionHTML(this.componentData)
+  watch: {
+    'componentData.description': {
+      async handler() {
+        this.html = await getDescriptionHTML(this.componentData)
+      },
+      immediate: true,
+    },
   },
 })
 </script>
