@@ -24,7 +24,7 @@ export const useTextControl = (
     changeOnBlur: boolean
     validator: (value: string, oldValue: string) => string | undefined
   },
-  { emit }: SetupContext<{ 'update:text': (value: string) => boolean }>,
+  { attrs, emit }: SetupContext<{ 'update:text': (value: string) => boolean }>,
 ): {
   inputRef: Ref<HTMLInputElement | null>
   composing: Ref<boolean>
@@ -39,7 +39,7 @@ export const useTextControl = (
   const inputRef = ref(null) as Ref<HTMLInputElement | null>
   const composing = ref(false) as Ref<boolean>
   const restAttrs = computed(() =>
-    lodash.omit(props, 'onChange', 'onInput', 'onCompositionstart', 'onCompositionend'),
+    lodash.omit(attrs, 'onChange', 'onInput', 'onCompositionstart', 'onCompositionend'),
   )
 
   const emitChange = () => {
