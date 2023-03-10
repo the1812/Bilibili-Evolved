@@ -47,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 import type {
   feedsCardsManager,
   FeedsCard,
@@ -104,7 +104,7 @@ const sideBlock = 'feeds-filter-side-block-'
 
 export default defineComponent({
   components: {
-    FilterTypeSwitch: () => import('./FilterTypeSwitch.vue'),
+    FilterTypeSwitch: defineAsyncComponent(() => import('./FilterTypeSwitch.vue')),
     VIcon,
     TextBox,
     VButton,
