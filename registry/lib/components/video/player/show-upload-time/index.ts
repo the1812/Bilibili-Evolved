@@ -1,4 +1,4 @@
-import type { ComponentPublicInstance } from '@vue/runtime-dom'
+import type { ComponentPublicInstance } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import { getVueData } from '@/components/feeds/api'
 import { VideoInfo } from '@/components/video/video-info'

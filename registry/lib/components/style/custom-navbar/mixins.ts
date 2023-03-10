@@ -1,5 +1,4 @@
-import { onMounted } from '@vue/runtime-dom'
-import { type Ref, ref } from 'vue'
+import { type Ref, ref, onMounted } from 'vue'
 import { CustomNavbarItem } from './custom-navbar-item'
 
 export const popupProps = {
