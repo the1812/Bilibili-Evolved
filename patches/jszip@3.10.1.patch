@@ -1,0 +1,176 @@
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+new file mode 100644
+index 0000000000000000000000000000000000000000..10b731c518c79596ed8690544cfbc87a98cf7e36
+--- /dev/null
++++ b/.idea/.gitignore
+@@ -0,0 +1,5 @@
++# 默认忽略的文件
++/shelf/
++/workspace.xml
++# 基于编辑器的 HTTP 客户端请求
++/httpRequests/
+diff --git a/.idea/76e50e522c18ecb7026f8d1c95ab7351.iml b/.idea/76e50e522c18ecb7026f8d1c95ab7351.iml
+new file mode 100644
+index 0000000000000000000000000000000000000000..0c8867d7e175f46d4bcd66698ac13f4ca00cf592
+--- /dev/null
++++ b/.idea/76e50e522c18ecb7026f8d1c95ab7351.iml
+@@ -0,0 +1,12 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<module type="WEB_MODULE" version="4">
++  <component name="NewModuleRootManager">
++    <content url="file://$MODULE_DIR$">
++      <excludeFolder url="file://$MODULE_DIR$/temp" />
++      <excludeFolder url="file://$MODULE_DIR$/.tmp" />
++      <excludeFolder url="file://$MODULE_DIR$/tmp" />
++    </content>
++    <orderEntry type="inheritedJdk" />
++    <orderEntry type="sourceFolder" forTests="false" />
++  </component>
++</module>
+\ No newline at end of file
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..03d9549ea8e4ada36fb3ecbc30fef08175b7d728
+--- /dev/null
++++ b/.idea/inspectionProfiles/Project_Default.xml
+@@ -0,0 +1,6 @@
++<component name="InspectionProjectProfileManager">
++  <profile version="1.0">
++    <option name="myName" value="Project Default" />
++    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
++  </profile>
++</component>
+\ No newline at end of file
+diff --git a/.idea/modules.xml b/.idea/modules.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..86959bb4dfd3ede12f4d2769b074ab205b6cb759
+--- /dev/null
++++ b/.idea/modules.xml
+@@ -0,0 +1,8 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ProjectModuleManager">
++    <modules>
++      <module fileurl="file://$PROJECT_DIR$/.idea/76e50e522c18ecb7026f8d1c95ab7351.iml" filepath="$PROJECT_DIR$/.idea/76e50e522c18ecb7026f8d1c95ab7351.iml" />
++    </modules>
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+new file mode 100644
+index 0000000000000000000000000000000000000000..e1e646f4406f21f50f8aeb462daf20493f72c77e
+--- /dev/null
++++ b/.idea/workspace.xml
+@@ -0,0 +1,44 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="ChangeListManager">
++    <list default="true" id="61a15d74-703e-43e7-9226-85dcec01205b" name="变更" comment="" />
++    <option name="SHOW_DIALOG" value="false" />
++    <option name="HIGHLIGHT_CONFLICTS" value="true" />
++    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
++    <option name="LAST_RESOLUTION" value="IGNORE" />
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
++  </component>
++  <component name="ProjectId" id="2L8WtYspVZmmp1sF8ITjwQ8QlvA" />
++  <component name="ProjectViewState">
++    <option name="hideEmptyMiddlePackages" value="true" />
++    <option name="showLibraryContents" value="true" />
++  </component>
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "WebServerToolWindowFactoryState": "false",
++    "last_opened_file_path": "C:/Users/zheyang_w/AppData/Local/Temp/76e50e522c18ecb7026f8d1c95ab7351",
++    "node.js.detected.package.eslint": "true",
++    "node.js.selected.package.eslint": "(autodetect)",
++    "vue.rearranger.settings.migration": "true"
++  }
++}]]></component>
++  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
++  <component name="TaskManager">
++    <task active="true" id="Default" summary="默认任务">
++      <changelist id="61a15d74-703e-43e7-9226-85dcec01205b" name="变更" comment="" />
++      <created>1675253404526</created>
++      <option name="number" value="Default" />
++      <option name="presentableId" value="Default" />
++      <updated>1675253404526</updated>
++      <workItem from="1675253405601" duration="191000" />
++    </task>
++    <servers />
++  </component>
++  <component name="TypeScriptGeneratedFilesManager">
++    <option name="version" value="3" />
++  </component>
++</project>
+\ No newline at end of file
+diff --git a/index.d.ts b/index.d.ts
+index b1c930821f256a3223c34b6aa3ca3493a6b86a96..4d480a5691f8727f6e7ee155697488440ae0bb86 100644
+--- a/index.d.ts
++++ b/index.d.ts
+@@ -4,13 +4,10 @@
+ // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
+ // TypeScript Version: 2.3
+ 
+-/// <reference types="node" />
+-
+ interface JSZipSupport {
+     arraybuffer: boolean;
+     uint8array: boolean;
+     blob: boolean;
+-    nodebuffer: boolean;
+ }
+ 
+ type Compression = 'STORE' | 'DEFLATE';
+@@ -32,7 +29,6 @@ interface InputByType {
+     uint8array: Uint8Array;
+     arraybuffer: ArrayBuffer;
+     blob: Blob;
+-    stream: NodeJS.ReadableStream;
+ }
+ 
+ interface OutputByType {
+@@ -44,7 +40,6 @@ interface OutputByType {
+     uint8array: Uint8Array;
+     arraybuffer: ArrayBuffer;
+     blob: Blob;
+-    nodebuffer: Buffer;
+ }
+ 
+ // This private `_data` property on a JSZipObject uses this interface.
+@@ -94,7 +89,6 @@ declare namespace JSZip {
+          * @return Promise the promise of the result.
+          */
+         async<T extends OutputType>(type: T, onUpdate?: OnUpdateCallback): Promise<OutputByType[T]>;
+-        nodeStream(type?: 'nodebuffer', onUpdate?: OnUpdateCallback): NodeJS.ReadableStream;
+     }
+ 
+     interface JSZipFileOptions {
+@@ -167,7 +161,7 @@ declare namespace JSZip {
+         checkCRC32?: boolean;
+         optimizedBinaryString?: boolean;
+         createFolders?: boolean;
+-        decodeFileName?: (bytes: string[] | Uint8Array | Buffer) => string;
++        decodeFileName?: (bytes: string[] | Uint8Array) => string;
+     }
+ 
+     type DataEventCallback<T> = (dataChunk: T, metadata: JSZipMetadata) => void
+@@ -284,15 +278,6 @@ interface JSZip {
+      */
+     generateAsync<T extends JSZip.OutputType>(options?: JSZip.JSZipGeneratorOptions<T>, onUpdate?: JSZip.OnUpdateCallback): Promise<OutputByType[T]>;
+ 
+-    /**
+-     * Generates a new archive asynchronously
+-     *
+-     * @param options Optional options for the generator
+-     * @param onUpdate The optional function called on each internal update with the metadata.
+-     * @return A Node.js `ReadableStream`
+-     */
+-    generateNodeStream(options?: JSZip.JSZipGeneratorOptions<'nodebuffer'>, onUpdate?: JSZip.OnUpdateCallback): NodeJS.ReadableStream;
+-
+     /**
+      * Generates the complete zip file with the internal stream implementation
+      *
