@@ -10,7 +10,7 @@
     <div ref="selected" class="selected">
       <div class="selected-item">
         <slot v-if="value !== null && value !== undefined" name="item" :item="value">
-          {{ value.displayName }}
+          {{ (value as Item).displayName }}
         </slot>
       </div>
       <div class="arrow" :class="{ open: popupOpen }">
@@ -58,7 +58,7 @@
         :tabindex="popupOpen ? 0 : -1"
       >
         <slot name="item" :item="item">
-          {{ item.displayName }}
+          {{ (item as Item).displayName }}
         </slot>
       </div>
     </VPopup>
@@ -70,6 +70,14 @@ import type { Ref, PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
 import VPopup from './VPopup.vue'
 
+interface Item {
+  name: string | number | symbol
+  displayName: string
+}
+
+/**
+ * 如果不自定义 item 插槽，则 item 必须能存在 displayName 属性，且其值为 `string` 类型
+ */
 export default defineComponent({
   name: 'VDropdown',
   components: {
@@ -77,15 +85,17 @@ export default defineComponent({
   },
   props: {
     value: {
+      type: [] as PropType<unknown>,
       required: true,
     },
     items: {
-      type: Array as PropType<any[]>,
+      type: Array as PropType<unknown[]>,
       required: true,
     },
+    // 如果使用默认值，则 item 必须存在 name 属性，且其值为 `string | number | symbol` 类型
     keyMapper: {
-      type: Function as PropType<(item: any) => string | number>,
-      default: (item: any) => item.name,
+      type: Function as PropType<(item: unknown) => string | number>,
+      default: (item: unknown) => (item as Item).name,
     },
     round: {
       type: Boolean,
@@ -120,7 +130,7 @@ export default defineComponent({
     }
   },
   methods: {
-    selectItem(item: any) {
+    selectItem(item: unknown) {
       if (item !== this.value) {
         this.$emit('update:value', item)
       }
