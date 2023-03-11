@@ -8,7 +8,9 @@ const props = defineProps<{
   container: HTMLElement
 }>()
 
-const { el } = usePopup(props)
+const { el, popupShow } = usePopup(props)
+
+defineExpose({ popupShow })
 </script>
 
 <template>
