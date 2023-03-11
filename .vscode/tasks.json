@@ -68,14 +68,14 @@
     },
     {
       "type": "shell",
-      "command": "pnpm eslint --cache --cache-location node_modules/.cache/eslint/ './**/*.@(js|ts|vue)'",
+      "command": "pnpm eslint . --cache --cache-location node_modules/.cache/eslint/ --ext .ts,.vue",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:代码检查 prod:lint"
     },
     {
       "type": "shell",
-      "command": "pnpm eslint --cache --cache-location node_modules/.cache/eslint/ --fix './**/*.@(js|ts|vue)'",
+      "command": "pnpm eslint . --cache --cache-location node_modules/.cache/eslint/ --fix --ext .ts,.vue",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:代码修复 prod:lint-fix"

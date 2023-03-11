@@ -78,18 +78,25 @@ import { historyProvider } from './history-provider'
 import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 import { LaunchBarActionProviders } from './launch-bar-action'
 import { search, searchProvider } from './search-provider'
+import { ascendingSort } from '@/core/utils/sort'
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
   historyProvider,
 ]) as [LaunchBarActionProvider[]]
+
+interface LaunchBarActionData extends LaunchBarAction {
+  key: string
+  provider: LaunchBarActionProvider
+}
+
+const sortActions = (actions: LaunchBarActionData[]): LaunchBarActionData[] => {
+  return [...actions].sort(ascendingSort(it => it.order ?? Infinity))
+}
 const generateKeys = (
   provider: LaunchBarActionProvider,
   actions: LaunchBarAction[],
-): ({
-  key: string
-  provider: LaunchBarActionProvider
-} & LaunchBarAction)[] =>
+): LaunchBarActionData[] =>
   actions.map(a => {
     const key = `${provider.name}.${a.name}`
     return {
@@ -114,13 +121,15 @@ async function getOnlineActions(this: InstanceType<typeof ThisComponent>) {
   })
   const fuseResult = fuse.search(this.keyword)
   console.log(fuseResult)
-  this.actions = fuseResult.map(it => it.item).slice(0, 12)
+  this.actions = sortActions(fuseResult.map(it => it.item).slice(0, 12))
   this.noActions = this.actions.length === 0
 }
 async function getActions(this: InstanceType<typeof ThisComponent>) {
   this.noActions = false
   if (this.isHistory) {
-    this.actions = generateKeys(historyProvider, await historyProvider.getActions(this.keyword))
+    this.actions = sortActions(
+      generateKeys(historyProvider, await historyProvider.getActions(this.keyword)),
+    )
     return
   }
   this.actions = []

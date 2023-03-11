@@ -2,12 +2,14 @@ import { componentApis } from '@/components/api'
 import * as ajax from '@/core/ajax'
 import * as cdnTypes from '@/core/cdn-types'
 import * as download from '@/core/download'
+import * as dialog from '@/core/dialog'
 import * as externalInput from '@/core/external-input'
 import * as filePicker from '@/core/file-picker'
 import * as horizontalScroll from '@/core/horizontal-scroll'
 import * as installFeature from '@/core/install-feature'
 import * as lifeCycle from '@/core/life-cycle'
 import * as loadingMode from '@/core/loading-mode'
+import * as localStorage from '@/core/local-storage'
 import * as meta from '@/core/meta'
 import * as observer from '@/core/observer'
 import * as reorder from '@/core/reorder'
@@ -39,12 +41,14 @@ export const coreApis = {
   ajax,
   cdnTypes,
   download,
+  dialog,
   externalInput,
   filePicker,
   installFeature,
   horizontalScroll,
   lifeCycle,
   loadingMode,
+  localStorage,
   meta,
   observer,
   reorder,
@@ -78,12 +82,14 @@ export const externalApis = {
   ajax,
   ...cdnTypes,
   ...download,
+  ...dialog,
   ...externalInput,
   ...filePicker,
   ...installFeature,
   ...horizontalScroll,
   lifeCycle,
   ...loadingMode,
+  ...localStorage,
   ...meta,
   observer,
   ...reorder,

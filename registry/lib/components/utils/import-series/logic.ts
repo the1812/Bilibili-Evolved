@@ -19,7 +19,7 @@ const importSeries = async (sid, uid, csrf) => {
 
   // 创建收藏夹，获取新收藏夹id
   let favId = 0
-  while (true) {
+  for (;;) {
     const response = await fetch('https://api.bilibili.com/x/v3/fav/folder/add', {
       method: 'POST',
       credentials: 'include',
@@ -43,7 +43,7 @@ const importSeries = async (sid, uid, csrf) => {
   for (let i = 0; i < seriesVideos.length; i++) {
     // 做个延迟，防止太快而遭服务器拒绝
     await delay(500)
-    while (true) {
+    for (;;) {
       const response = await fetch('https://api.bilibili.com/x/v3/fav/resource/deal', {
         method: 'POST',
         credentials: 'include',
@@ -72,7 +72,7 @@ const importSeries = async (sid, uid, csrf) => {
 }
 
 const importCollection = async (sid, csrf) => {
-  while (true) {
+  for (;;) {
     const response = await fetch('https://api.bilibili.com/x/v3/fav/season/fav', {
       method: 'POST',
       credentials: 'include',

@@ -62,16 +62,16 @@ export default defineComponent({
     'next-item': null as (e: KeyboardEvent) => true,
   },
   methods: {
-    performAction(event: Event) {
+    performAction(event: KeyboardEvent | MouseEvent) {
       this.action.action()
-      this.$emit('action', event as KeyboardEvent | MouseEvent)
+      this.$emit('action', event)
     },
-    performDelete(event: Event) {
+    performDelete(event: KeyboardEvent | MouseEvent) {
       if (!this.action.deleteAction) {
         return
       }
       this.action.deleteAction()
-      this.$emit('delete-item', event as KeyboardEvent | MouseEvent)
+      this.$emit('delete-item', event)
     },
   },
 })

@@ -1,5 +1,7 @@
 import { pickFile } from '@/core/file-picker'
 
+export * from './load-feature-code'
+
 /** 外部输入包装类型, 详见`parseExternalInput`的文档 */
 export type ExternalInput<T> = undefined | string | T
 // const arrayReturn = <InputType extends any[], OutputType>(

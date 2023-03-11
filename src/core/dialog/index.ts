@@ -12,10 +12,10 @@ export interface DialogInputs {
 }
 export interface DialogInstance extends Required<DialogInputs> {
   open: boolean
-  close: Promise<void>
+  close(): Promise<void>
   closeListeners: (() => void)[]
 }
-export const showDialog = (inputs: DialogInputs) => {
+export const showDialog = (inputs: DialogInputs): DialogInstance => {
   const { icon, title, zIndex, content, contentProps } = inputs
   let dialogEl: HTMLDivElement | undefined
   let dialogApp: App<HTMLDivElement> | undefined
@@ -46,5 +46,5 @@ export const showDialog = (inputs: DialogInputs) => {
   setTimeout(() => {
     vm.open = true
   })
-  return vm
+  return vm as DialogInstance
 }

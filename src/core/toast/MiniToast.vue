@@ -53,8 +53,7 @@ export default defineComponent({
   async mounted() {
     await this.$nextTick()
     const appendTarget = containerMap[this.container]
-    this.toast = createMiniToast(this.message, this.content, {
-      content: this.toastRef,
+    this.toast = createMiniToast(this.toastRef, this.content, {
       placement: this.placement,
       showOnCreate: this.show,
       trigger: 'mouseenter focusin',

@@ -1,3 +1,16 @@
+<script setup lang="ts">
+import type { NavbarIframeConfig } from './iframe'
+import type { CustomNavbarItem } from '../custom-navbar-item'
+import { usePopup } from '../mixins'
+
+const props = defineProps<{
+  item: CustomNavbarItem & NavbarIframeConfig
+  container: HTMLElement
+}>()
+
+const { el } = usePopup(props)
+</script>
+
 <template>
   <iframe
     ref="el"
@@ -7,14 +20,3 @@
     :height="item.height"
   ></iframe>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-import { popupProps, usePopup } from '../mixins'
-
-export default defineComponent({
-  name: 'IframePopup',
-  props: popupProps,
-  setup: usePopup,
-})
-</script>

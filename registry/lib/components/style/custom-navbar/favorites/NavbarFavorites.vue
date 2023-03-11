@@ -256,7 +256,7 @@ const ThisComponent = defineComponent({
         this.page++
         const cards = await this.getCards()
         this.cards.push(...cards)
-        this.hasMorePage = cards.length === 0 || this.cards.length < this.folder.count
+        this.hasMorePage = cards.length !== 0 || this.cards.length < this.folder.count
       } catch (error) {
         logError(error)
       }

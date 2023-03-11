@@ -13,7 +13,8 @@ const parseHexColor = (hexColor: string) => {
 }
 export const convertHexColorForDialogue = (hexColor: string) => {
   const { red, green, blue } = parseHexColor(hexColor)
-  return `\\c&H${blue}${green}${red}&`.toUpperCase()
+  const hex = `${blue}${green}${red}`.toUpperCase()
+  return `\\c&H${hex}&`
 }
 export const convertHexColorForStyle = (hexColor: string, opacity = 1) => {
   const { red, green, blue } = parseHexColor(hexColor)

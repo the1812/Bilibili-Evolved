@@ -10,7 +10,7 @@
           断开连接
         </AsyncButton>
       </template>
-      <template v-else class="status">
+      <template v-else>
         <div class="status-dot disconnected" />
         <div class="status-text">未连接</div>
         <AsyncButton title="连接" :wait-on-click="connect">
@@ -36,8 +36,6 @@ export default defineComponent({
   data() {
     return {
       client: null as DevClient | null,
-      // sessions: [],
-      // devRecords: options.devRecords,
       isConnected: false,
     }
   },
@@ -46,12 +44,10 @@ export default defineComponent({
     this.client = devClient
     this.updateConnectionStatus()
     devClient.addEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
-    // devClient.addEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)
   },
   beforeUnmount() {
     const devClient = this.client as DevClient
     devClient.removeEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
-    // devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)
   },
   methods: {
     async connect() {
@@ -62,9 +58,6 @@ export default defineComponent({
     },
     updateConnectionStatus() {
       this.isConnected = this.client.isConnected
-    },
-    updateSessionsStatus() {
-      this.sessions = [...this.client.sessions]
     },
   },
 })

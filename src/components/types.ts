@@ -218,3 +218,6 @@ export interface ComponentMetadata<O extends UnknownOptions = UnknownOptions>
 
 /** 用户组件的非函数基本信息, 用于直接保存为 JSON */
 export type UserComponentMetadata = Omit<ComponentMetadata, keyof FunctionalMetadata>
+
+/** 推断 Record 的 Value 类型 */
+export type RecordValue<R> = R extends Record<any, infer V> ? V : never
