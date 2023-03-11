@@ -6,7 +6,7 @@
       :value="value"
       maxlength="30"
       @keydown.enter="send()"
-      @input="updateValue($event.target.value)"
+      @input="updateValue(($event.target as HTMLInputElement).value)"
     />
   </div>
 </template>
