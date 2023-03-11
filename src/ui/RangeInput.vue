@@ -1,18 +1,10 @@
 <template>
   <div class="be-range-input">
-    <TextBox
-      change-on-blur
-      :text="wrapper.range.start.toString()"
-      @change="wrapper.start = $event"
-    ></TextBox>
+    <TextBox change-on-blur :text="wrapper.range.start" @change="wrapper.start = $event"></TextBox>
     <slot name="separator">
       <div class="default-separator">~</div>
     </slot>
-    <TextBox
-      change-on-blur
-      :text="wrapper.range.end.toString()"
-      @change="wrapper.end = $event"
-    ></TextBox>
+    <TextBox change-on-blur :text="wrapper.range.end" @change="wrapper.end = $event"></TextBox>
   </div>
 </template>
 
@@ -25,13 +17,13 @@ const createWrapper = (instance: any) => {
   const wrapper = {
     range: instance.range,
     get start() {
-      return this.range.start.toString()
+      return this.range.start
     },
     set start(value: string) {
       this.createNewRange(value, this.end)
     },
     get end() {
-      return this.range.end.toString()
+      return this.range.end
     },
     set end(value: string) {
       this.createNewRange(this.start, value)
@@ -61,11 +53,11 @@ export default defineComponent({
   },
   props: {
     range: {
-      type: Object as PropType<Range<unknown>>,
+      type: Object as PropType<Range<string>>,
       required: true,
     },
     validator: {
-      type: Function as PropType<(range: Range<unknown>) => Range<unknown> | null | undefined>,
+      type: Function as PropType<(range: Range<string>) => Range<string> | null | undefined>,
       default: undefined,
     },
   },
