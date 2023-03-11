@@ -49,6 +49,7 @@ import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { DocSourceItem } from 'registry/lib/docs'
 
+import type { Placement } from 'tippy.js'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
@@ -126,7 +127,7 @@ export default defineComponent({
       installing: false,
       installed: false,
       virtual: false,
-      placement: 'right',
+      placement: 'right' as Placement,
     }
   },
   computed: {
