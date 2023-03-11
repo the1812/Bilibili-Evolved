@@ -66,9 +66,8 @@
 </template>
 
 <script lang="ts">
-import type { Ref } from 'vue'
+import type { Ref, PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
-import type { PropType } from 'vue'
 import VPopup from './VPopup.vue'
 
 export default defineComponent({

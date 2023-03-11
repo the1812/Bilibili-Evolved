@@ -1,10 +1,14 @@
 <template>
   <div class="be-range-input">
-    <TextBox change-on-blur :text="wrapper.range.start" @change="wrapper.start = $event"></TextBox>
+    <TextBox
+      change-on-blur
+      :text="wrapper.range.start"
+      @update:text="wrapper.start = $event"
+    ></TextBox>
     <slot name="separator">
       <div class="default-separator">~</div>
     </slot>
-    <TextBox change-on-blur :text="wrapper.range.end" @change="wrapper.end = $event"></TextBox>
+    <TextBox change-on-blur :text="wrapper.range.end" @update:text="wrapper.end = $event"></TextBox>
   </div>
 </template>
 

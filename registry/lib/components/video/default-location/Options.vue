@@ -5,7 +5,7 @@
       <PageTypeSelector
         v-model:value="pageType"
         class="video-default-location-form-item-grow"
-        @change="onChangePageType"
+        @update:value="onChangePageType"
       />
     </div>
 
@@ -18,14 +18,14 @@
         class="video-default-location-form-item-grow"
         linear
         change-on-blur
-        @change="onChangeDefaultLocation"
+        @update:text="onChangeDefaultLocation"
       />
     </div>
 
     <div class="video-default-location-vertical-space"></div>
 
     <div class="video-default-location-options-test">
-      <ExtendBox v-model:hidden="hiddenAdvance" @change="resetObservePosition">
+      <ExtendBox v-model:hidden="hiddenAdvance" @update:hidden="resetObservePosition">
         <div class="video-default-location-options-advanced">
           <Advanced
             :observe-position="observePosition"
