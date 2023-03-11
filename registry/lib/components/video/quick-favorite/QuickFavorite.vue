@@ -20,7 +20,7 @@
         <VDropdown
           v-model:value="selectedFavorite"
           :items="lists.map(it => it.title)"
-          :key-mapper="it => it"
+          :key-mapper="it => it as string"
         >
           <template #item="{ item }">
             {{ item }}

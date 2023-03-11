@@ -3,7 +3,7 @@
     class="favorites-folder-select"
     round
     :items="folders"
-    :key-mapper="f => f.id"
+    :key-mapper="f => (f as FavoritesFolder).id"
     :value="folder"
     @update:value="change($event)"
   >

@@ -8,7 +8,6 @@
       <VDropdown
         :items="Object.values(translateProviders)"
         :value="activeTranslator"
-        :key-mapper="it => it.name"
         @update:value="changeTranslator($event)"
       >
         <template #item="{ item }">

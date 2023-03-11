@@ -32,7 +32,7 @@
               <VDropdown
                 v-model:value="selectedPreset"
                 :items="presetOptions"
-                :key-mapper="it => it"
+                :key-mapper="it => it as string"
               >
                 <template #item="{ item }">
                   {{ item }}

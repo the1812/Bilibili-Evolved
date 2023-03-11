@@ -92,9 +92,9 @@ export default defineComponent({
       type: Array as PropType<unknown[]>,
       required: true,
     },
-    // 如果使用默认值，则 item 必须存在 name 属性，且其值为 `string | number | symbol` 类型
+    // 默认获取 item 中的 `name` 属性。因此使用默认值时，item 必须拥有 `string | number | symbol` 类型的 `name` 属性
     keyMapper: {
-      type: Function as PropType<(item: unknown) => string | number>,
+      type: Function as PropType<(item: unknown) => string | number | symbol>,
       default: (item: unknown) => (item as Item).name,
     },
     round: {

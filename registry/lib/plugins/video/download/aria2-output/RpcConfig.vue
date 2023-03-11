@@ -52,7 +52,7 @@
         <VDropdown
           v-model:value="selectedRpcProfile.method"
           :items="['get', 'post']"
-          :key-mapper="item => item"
+          :key-mapper="item => item as string"
         >
           <template #item="{ item }">
             {{ item }}
