@@ -15,8 +15,9 @@ import type { PropType } from 'vue'
 import type { FeedsCardType } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { VIcon } from '@/ui'
+import type { FeedsFilterOptions } from './index'
 
-const { options } = getComponentSettings('feedsFilter')
+const { options } = getComponentSettings<FeedsFilterOptions>('feedsFilter')
 export default defineComponent({
   components: {
     VIcon,
@@ -32,7 +33,7 @@ export default defineComponent({
     },
   },
   data() {
-    const optionKey = this.type.id >= 0 ? 'types' : 'specialTypes'
+    const optionKey = this.type.id >= 0 ? 'types' : ('specialTypes' as 'types' | 'specialTypes')
     const disabled = options[optionKey].includes(this.type.id)
     return {
       disabled,
