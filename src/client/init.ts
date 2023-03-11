@@ -1,3 +1,5 @@
+import * as bevoVue from 'vue'
+
 /** 初始化脚本 */
 export const init = async () => {
   window.lodash = _
@@ -47,6 +49,10 @@ export const init = async () => {
     name: 'Bilibili Evolved',
     color: '#00A0D8',
   })
+  // should not be used directly
+  // only used to provide external dependencies for features
+  // see `externals` in features's webpack config
+  window.bevoVue = bevoVue
   // window.console 和 console 是独立的引用
   // eslint-disable-next-line no-global-assign
   console = window.console
