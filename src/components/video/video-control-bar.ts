@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { videoChange } from '@/core/observer'
 import { matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
@@ -13,7 +14,7 @@ export interface VideoControlBarItem {
 type ControlBarInstance = InstanceType<typeof VideoControlBar>
 const controlBarClass = '.be-video-control-bar-extend'
 let controlBarInstance: Promise<ControlBarInstance> = null
-const controlBarItems: VideoControlBarItem[] = []
+const controlBarItems: VideoControlBarItem[] = reactive([])
 const initControlBar = lodash.once(() => {
   if (!playerUrls.some(url => matchUrlPattern(url))) {
     return Promise.resolve<ControlBarInstance>(null)
