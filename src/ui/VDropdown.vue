@@ -85,7 +85,7 @@ export default defineComponent({
   },
   props: {
     value: {
-      type: [] as PropType<unknown>,
+      type: null as PropType<unknown>,
       required: true,
     },
     items: {
