@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import { addComponentListener } from '@/core/settings'
 import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
@@ -25,10 +25,13 @@ import {
 import CustomNavbarItemComponent from './CustomNavbarItem.vue'
 import { checkTransparentFill } from './transparent-fill'
 
-const [initItems] = registerAndGetData(CustomNavbarItems, getBuiltInItems())
-const [renderedItems] = registerAndGetData(CustomNavbarRenderedItems, {
-  items: [] as CustomNavbarItem[],
-})
+const [initItems] = registerAndGetData(CustomNavbarItems, reactive(getBuiltInItems()))
+const [renderedItems] = registerAndGetData(
+  CustomNavbarRenderedItems,
+  reactive({
+    items: [] as CustomNavbarItem[],
+  }),
+)
 const getItems = () => {
   const isLogin = Boolean(getUID())
   const items = (initItems as CustomNavbarItemInit[])

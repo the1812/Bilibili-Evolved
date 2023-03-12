@@ -65,8 +65,7 @@
 </template>
 <script lang="ts">
 import Fuse from 'fuse.js'
-import type { Ref } from 'vue'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, reactive, type Ref } from 'vue'
 
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
@@ -136,10 +135,13 @@ async function getActions(this: InstanceType<typeof ThisComponent>) {
   this.getOnlineActions().then()
 }
 
-const [recommended] = registerAndGetData('launchBar.recommended', {
-  word: '搜索',
-  href: 'https://search.bilibili.com/',
-})
+const [recommended] = registerAndGetData(
+  'launchBar.recommended',
+  reactive({
+    word: '搜索',
+    href: 'https://search.bilibili.com/',
+  }),
+)
 const ThisComponent = defineComponent({
   components: {
     VIcon,

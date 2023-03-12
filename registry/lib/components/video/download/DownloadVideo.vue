@@ -85,7 +85,7 @@
 </template>
 <script lang="ts">
 import type { Ref, ComponentPublicInstance } from 'vue'
-import { ref, defineComponent } from 'vue'
+import { ref, defineComponent, reactive } from 'vue'
 import type { VideoQuality } from '@/components/video/video-quality'
 import { allQualities } from '@/components/video/video-quality'
 import type { TestPattern } from '@/core/common-types'
@@ -126,11 +126,11 @@ const [apis] = registerAndGetData('downloadVideo.apis', [
   videoDashAv1,
   videoAudioDash,
 ] as DownloadVideoApi[])
-const [assets] = registerAndGetData('downloadVideo.assets', [] as DownloadVideoAssets[])
-const [outputs] = registerAndGetData('downloadVideo.outputs', [
-  toastOutput,
-  streamSaverOutput,
-] as DownloadVideoOutput[])
+const [assets] = registerAndGetData('downloadVideo.assets', reactive([]) as DownloadVideoAssets[])
+const [outputs] = registerAndGetData(
+  'downloadVideo.outputs',
+  reactive([toastOutput, streamSaverOutput]) as DownloadVideoOutput[],
+)
 const { basicConfig } = getComponentSettings('downloadVideo').options as {
   basicConfig: {
     api: string

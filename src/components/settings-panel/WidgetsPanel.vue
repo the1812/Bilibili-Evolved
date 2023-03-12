@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, reactive } from 'vue'
 import type { Widget } from '@/components/widget'
 import { deleteValue, matchUrlPattern } from '@/core/utils'
 import { VEmpty, VIcon } from '@/ui'
@@ -33,7 +33,7 @@ import { VEmpty, VIcon } from '@/ui'
 import { registerAndGetData } from '../../plugins/data'
 import { WidgetsPlugin } from '.'
 
-const allWidgets: Widget[] = []
+const allWidgets: Widget[] = reactive([])
 const widgetFilter = async (w: Widget) => {
   if (w.urlExclude && w.urlExclude.some(matchUrlPattern)) {
     return false

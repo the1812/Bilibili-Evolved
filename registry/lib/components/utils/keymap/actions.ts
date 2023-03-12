@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
@@ -245,4 +246,4 @@ export const builtInActions: Record<string, KeyBindingAction> = {
     },
   },
 }
-export const [actions] = registerAndGetData('keymap.actions', builtInActions)
+export const [actions] = registerAndGetData('keymap.actions', reactive(builtInActions))
