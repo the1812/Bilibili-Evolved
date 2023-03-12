@@ -99,7 +99,7 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/dynamic'"
           target="_blank"
         >
-          <div class="stats-number">{{ count(stat.dynamic_count }}</div>
+          <div class="stats-number">{{ count(stat.dynamic_count) }}</div>
           动态
         </a>
       </div>
