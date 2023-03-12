@@ -6,8 +6,10 @@
       class="minimal-home-operations-refresh"
       title="刷新"
       @click="
-        backToTop()
-        $emit('refresh')
+        () => {
+          backToTop()
+          $emit('refresh')
+        }
       "
     >
       <VIcon icon="mdi-refresh" :size="size" />
