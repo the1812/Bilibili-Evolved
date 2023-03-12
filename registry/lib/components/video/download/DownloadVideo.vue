@@ -207,9 +207,12 @@ export default defineComponent({
       if (this.busy || !this.open) {
         return false
       }
-      const isAnySelectionEmpty = Object.entries(this)
-        .filter(([key]) => key.startsWith('selected'))
-        .some(([, value]) => !value)
+      const isAnySelectionEmpty = [
+        'selectedQuality',
+        'selectedInput',
+        'selectedApi',
+        'selectedOutput',
+      ].some(prop => !this[prop])
       if (isAnySelectionEmpty) {
         return false
       }
