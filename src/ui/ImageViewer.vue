@@ -39,17 +39,12 @@ export default defineComponent({
   components: {
     VIcon,
   },
-  props: {
-    image: {
-      type: String,
-      required: true,
-    },
-  },
   setup: () => ({
     viewer: ref(null) as Ref<HTMLDivElement | null>,
   }),
   data() {
     return {
+      image: '',
       filename: '',
       open: false,
       blobUrl: '',

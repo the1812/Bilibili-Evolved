@@ -1,14 +1,9 @@
-import { ref } from 'vue'
 import { mountVueComponent } from '@/core/utils'
 import ViewerComponent from './ImageViewer.vue'
 
 let vm: InstanceType<typeof ViewerComponent> | undefined
-const image = ref('')
 export const createContainer = async () => {
-  const [el, vm0] = mountVueComponent(ViewerComponent, {
-    image,
-    open: false,
-  })
+  const [el, vm0] = mountVueComponent(ViewerComponent)
   vm = vm0
   document.body.insertAdjacentElement('beforeend', el)
   return vm
@@ -19,7 +14,7 @@ export const showImage = async (imageUrl: string) => {
   }
   // 等浏览器端完成一次任务处理, 防止容器创建瞬间 open = true 导致没有过渡动画
   setTimeout(() => {
-    image.value = imageUrl
+    vm.image = imageUrl
     vm.open = true
   })
   return vm
