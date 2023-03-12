@@ -81,10 +81,10 @@ import { VIcon, VLoading, VPopup, VSlider } from '@/ui'
 import { CustomNavbarItem, CustomNavbarRenderedItems } from '../custom-navbar-item'
 import { checkSequentialOrder, sortItems } from './orders'
 
+const { navbarOptions } = CustomNavbarItem
 function padding(this: InstanceType<typeof ThisComponent>, newValue: number) {
   navbarOptions.padding = newValue
 }
-const { navbarOptions } = CustomNavbarItem
 const [rendered] = getData(CustomNavbarRenderedItems) as [
   {
     items: CustomNavbarItem[]
@@ -97,18 +97,13 @@ const ThisComponent = defineComponent({
     VSlider,
     VLoading,
   },
-  props: {
-    triggerElement: {
-      type: HTMLElement,
-      default: null,
-    },
-  },
   setup: () => ({
     popup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
     navbarSortList: ref(null) as Ref<HTMLDivElement | null>,
   }),
   data() {
     return {
+      triggerElement: null as HTMLElement | null,
       open: false,
       padding: navbarOptions.padding,
       rendered,
