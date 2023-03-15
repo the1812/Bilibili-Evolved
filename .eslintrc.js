@@ -53,6 +53,7 @@ module.exports = {
     'vue/require-prop-types': 'off',
     'vue/one-component-per-file': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/multi-word-component-names': 'off',
 
     // 使用 @typescript-eslint/no-unused-vars, 否则 interface 都是 unused
     'no-unused-vars': 'off',
@@ -78,6 +79,7 @@ module.exports = {
 
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
+    'prefer-regex-literals': 'off',
     'object-curly-newline': 'off',
     'linebreak-style': 'off',
     camelcase: 'off',

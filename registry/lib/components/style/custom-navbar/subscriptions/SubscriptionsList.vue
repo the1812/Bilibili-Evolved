@@ -59,10 +59,10 @@ const getStatusText = (status: SubscriptionStatus) => {
     case SubscriptionStatus.ToView:
       return '想看'
     case SubscriptionStatus.Viewing:
-    default:
-      return '在看'
     case SubscriptionStatus.Viewed:
       return '看过'
+    default:
+      return '在看'
   }
 }
 const subscriptionSorter = (

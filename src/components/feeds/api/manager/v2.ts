@@ -36,15 +36,15 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   const mainText = mainDesc?.text ?? ''
   let typeText = ''
   switch (cardType) {
-    default: {
-      break
-    }
     case feedsCardTypes.bangumi:
     case feedsCardTypes.column:
     case feedsCardTypes.video: {
       const target = major.archive ?? major.pgc ?? major.article
       const { title, desc } = target
       typeText = combineText(title, desc)
+      break
+    }
+    default: {
       break
     }
   }

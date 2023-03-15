@@ -101,8 +101,8 @@ export const getBlobByType = async (
         type: 'text/ass',
       })
     }
-    default:
-    case 'json': {
+    case 'json':
+    default: {
       return new Blob([JSON.stringify(rawData)], {
         type: 'text/json',
       })

@@ -387,7 +387,9 @@ const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
 
     if (timeoutArg > 0) {
       promises.push(
-        new Promise((resolve, reject) => setTimeout(() => setTimeout(reject, timeoutArg))),
+        new Promise((resolve, reject) => {
+          setTimeout(() => setTimeout(reject, timeoutArg))
+        }),
       )
     }
 

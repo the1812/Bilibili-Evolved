@@ -92,7 +92,10 @@ export const getFeeds = async (type: FeedsCardType | string, afterID?: string | 
  * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
  */
 export const getVideoFeeds = withContentFilter(
-  async (type: 'video' | 'bangumi' = 'video', afterID?: string | number): Promise<VideoCard[]> => {
+  async (
+    type: 'video' | 'bangumi' = 'video',
+    afterID: string | number | undefined = undefined,
+  ): Promise<VideoCard[]> => {
     if (!getUID()) {
       return []
     }

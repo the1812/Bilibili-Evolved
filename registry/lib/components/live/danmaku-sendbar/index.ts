@@ -4,7 +4,6 @@ import { getUID } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 
 import { leftControllerSelector } from './original-elements'
-import type DanmakuSendBar from './DanmakuSendbar.vue'
 
 const entry = async () => {
   if (!getUID()) {

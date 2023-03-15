@@ -165,7 +165,10 @@ export const isBwpVideo = async () => {
  * 等待一定时间
  * @param time 延迟的毫秒数
  */
-export const delay = (time = 0) => new Promise<void>(r => setTimeout(() => r(), time))
+export const delay = (time = 0) =>
+  new Promise<void>(r => {
+    setTimeout(() => r(), time)
+  })
 /** 测试字符串是否包含子串或匹配正则
  * @param str 字符串
  * @param pattern 子串或正则表达式

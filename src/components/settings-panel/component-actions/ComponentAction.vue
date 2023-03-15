@@ -11,9 +11,9 @@
   </div>
 </template>
 <script lang="ts">
-import type { ComponentMetadata } from '@/components/types'
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
+import type { ComponentMetadata } from '@/components/types'
 import type { ComponentConfigAction } from './component-actions'
 import { VIcon } from '@/ui'
 

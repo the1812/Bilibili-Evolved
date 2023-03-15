@@ -1,5 +1,4 @@
 import type { Component } from 'vue'
-import type { Executable } from '@/core/common-types'
 import { isUserComponent } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
 import { getHook } from '@/plugins/hook'

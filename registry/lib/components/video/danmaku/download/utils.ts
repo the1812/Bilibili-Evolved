@@ -167,8 +167,6 @@ export const getUserDanmakuConfig = async () => {
             continue
           }
           switch (b.t) {
-            default:
-              return true
             case 'keyword': {
               if (danmaku.content.includes(b.v)) {
                 return false
@@ -187,6 +185,8 @@ export const getUserDanmakuConfig = async () => {
               }
               break
             }
+            default:
+              return true
           }
         }
         return true
@@ -262,15 +262,15 @@ export const getBlobByType = async (
         type: 'text/xml',
       })
     }
-    default:
-    case 'json': {
-      return new Blob([JSON.stringify(danmaku.jsonDanmakus, undefined, 2)], {
-        type: 'text/json',
-      })
-    }
     case 'ass': {
       return new Blob([await convertToAssFromJson(danmaku)], {
         type: 'text/ass',
+      })
+    }
+    case 'json':
+    default: {
+      return new Blob([JSON.stringify(danmaku.jsonDanmakus, undefined, 2)], {
+        type: 'text/json',
       })
     }
   }

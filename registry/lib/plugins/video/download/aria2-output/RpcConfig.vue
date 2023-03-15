@@ -61,7 +61,11 @@
       </div>
       <div class="profile-other">
         <div class="profile-item-name">其他配置:</div>
-        <TextArea v-model:text="selectedRpcProfile.other" placeholder="some-key=value" change-on-blur />
+        <TextArea
+          v-model:text="selectedRpcProfile.other"
+          placeholder="some-key=value"
+          change-on-blur
+        />
       </div>
     </template>
   </div>

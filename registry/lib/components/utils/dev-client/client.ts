@@ -80,9 +80,6 @@ export class DevClient extends EventTarget {
       this.socket.addEventListener('message', e => {
         handleSocketMessage(e, payload => {
           switch (payload.type) {
-            default: {
-              break
-            }
             case 'start': {
               this.sessions = payload.sessions
               this.dispatchEvent(
@@ -101,6 +98,9 @@ export class DevClient extends EventTarget {
             case 'itemUpdate': {
               const { path } = payload
               this.handleItemUpdate(path)
+              break
+            }
+            default: {
               break
             }
           }
@@ -175,17 +175,17 @@ export class DevClient extends EventTarget {
         return false
       }
       switch (options.registryReloadMethod) {
-        default:
-        case HotReloadMethod.Disabled: {
-          if (options.registryRefreshMethod === RefreshMethod.DoNotRefresh) {
+        case HotReloadMethod.Enabled: {
+          if (reloadInstantStyles()) {
             doNotReload()
           } else {
             reload()
           }
           break
         }
-        case HotReloadMethod.Enabled: {
-          if (reloadInstantStyles()) {
+        case HotReloadMethod.Disabled:
+        default: {
+          if (options.registryRefreshMethod === RefreshMethod.DoNotRefresh) {
             doNotReload()
           } else {
             reload()

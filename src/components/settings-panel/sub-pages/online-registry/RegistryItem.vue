@@ -133,15 +133,15 @@ export default defineComponent({
   computed: {
     hidden(): boolean {
       switch (this.itemFilter) {
-        case ItemFilter.All:
-        default: {
-          return false
-        }
         case ItemFilter.Installed: {
           return !this.installed
         }
         case ItemFilter.NotInstalled: {
           return this.installed
+        }
+        case ItemFilter.All:
+        default: {
+          return false
         }
       }
     },

@@ -20,7 +20,10 @@ const entry = async () => {
     return
   }
   const { mountVueComponent } = await import('@/core/utils')
-  leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(await import('./FeedsFilterCard.vue'))[0])
+  leftPanel.insertAdjacentElement(
+    'afterbegin',
+    mountVueComponent(await import('./FeedsFilterCard.vue'))[0],
+  )
 }
 
 const options = defineOptionsMetadata({

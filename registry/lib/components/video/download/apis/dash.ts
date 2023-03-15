@@ -118,8 +118,8 @@ const downloadDash = async (
         return DashCodec.Hevc
       case 13:
         return DashCodec.Av1
-      default:
       case 7:
+      default:
         return DashCodec.Avc
     }
   }

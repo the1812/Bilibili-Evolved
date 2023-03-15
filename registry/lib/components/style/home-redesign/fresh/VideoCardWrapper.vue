@@ -11,12 +11,12 @@ export default defineComponent({
   components: {
     VideoCard,
   },
+  inheritAttrs: false,
   computed: {
     attrs(): any {
       return this.$attrs
     },
   },
-  inheritAttrs: false,
 })
 </script>
 <style lang="scss">
