@@ -18,6 +18,9 @@ body {
           line-height: 1.5 !important;
         }
       }
+      .video-section-list:not([style*='height: 0px']) {
+        height: auto !important;
+      }
     }
     .multi-page-v1,
     .multi-page {
@@ -43,7 +46,7 @@ body {
     .video-sections-content-list {
       max-height: unset !important;
       height: auto !important;
-      .video-section-list:not([style*="height: 0px"]) {
+      .video-section-list:not([style*='height: 0px']) {
         height: auto !important;
       }
     }
