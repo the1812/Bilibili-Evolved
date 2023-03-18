@@ -84,6 +84,9 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
 }
 .bili-video-card__wrap {
   a[href*="cm.bilibili.com"] {
+    pointer-events: none !important;
+    cursor: default !important;
+
     > * {
       visibility: hidden !important;
     }

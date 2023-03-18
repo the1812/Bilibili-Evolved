@@ -50,10 +50,12 @@ export default Vue.extend({
     if (this.config.getSettings) {
       this.settings = this.config.getSettings(this.config.item)
     }
-    Toast.mini(this.$refs.removeConfirmTemplate, this.$refs.removeIcon, {
-      trigger: 'click',
-      hideOnClick: true,
-    })
+    if (this.config.isUserItem) {
+      Toast.mini(this.$refs.removeConfirmTemplate, this.$refs.removeIcon, {
+        trigger: 'click',
+        hideOnClick: true,
+      })
+    }
   },
   methods: {
     async removeItem() {
