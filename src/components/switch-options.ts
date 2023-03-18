@@ -180,7 +180,7 @@ export type SwitchOptionsMetadata<
 /**
  * 向传入的 `options` 注入 API 所需的内容
  *
- * 该函数会直接修改传入的 `options` 自身，并将其返回。
+ * 该函数会返回注入后新 `options` 对象。
  */
 type SwitchOptionsMetadataExtender<S extends string> = <O extends UnknownOptions, N extends string>(
   options: OptionsMetadata<O>,
