@@ -28,13 +28,14 @@ const idMatches: IdSearchProvider[] = [
       )
       const data = lodash.get(json, 'data', {})
       const { bvid, title } = data
+      const indexer = `av${match[1]}`
 
       return {
-        name: title,
+        name: title || indexer,
         description: 'av号跳转',
-        indexer: `av${match[1]}`,
+        indexer,
         link: `https://www.bilibili.com/av${match[1]}`,
-        extraActions: bvid ? await getCopyItem('BV号', bvid, `av${match[1]}`) : [],
+        extraActions: bvid ? await getCopyItem('BV号', bvid, indexer) : [],
       }
     },
   },
@@ -47,20 +48,21 @@ const idMatches: IdSearchProvider[] = [
       )
       const data = lodash.get(json, 'data', {})
       const { aid, title } = data
+      const indexer = `BV${match[1]}`
 
       return {
-        name: title,
+        name: title || indexer,
         description: 'BV号跳转',
-        indexer: `BV${match[1]}`,
+        indexer,
         link: `https://www.bilibili.com/BV${match[1]}`,
-        extraActions: aid ? await getCopyItem('av号', `av${aid}`, `BV${match[1]}`) : [],
+        extraActions: aid ? await getCopyItem('av号', `av${aid}`, indexer) : [],
       }
     },
   },
 ]
 export const plugin: PluginMetadata = {
   name: 'launchBar.actions.IDSearch',
-  displayName: 'ID搜索快速跳转',
+  displayName: '搜索栏 - 视频跳转',
   async setup() {
     const { addData } = await import('../data')
     const { LaunchBarActionProviders } = await import('@/components/launch-bar/launch-bar-action')
