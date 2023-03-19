@@ -1,0 +1,105 @@
+[class*="numberListItem_number_list_item"] {
+    background-color: #555;
+    border: 1px solid #555;
+}
+
+[class*="review_review_module"] [class*="review_module_content"] [class*="review_review_item"] [class*="review_review_item_fill"] [class*="review_review_header"] [class*="review_review_author"],
+[class*="seasonlist_season_list"] [class*="seasonlist_ss_list_wrapper"] [class*="seasonlist_ss_item"] [class*="seasonlist_ss_info"] [class*="seasonlist_ss_title"],
+[class*="review_review_module"] [class*="review_module_title"],
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc"] i,
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc"],
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_title"],
+[class*="epitem_ep_item"] a,
+[class*="section_ep_section_module"] [class*="section_section_title"],
+[class*="RecommendItem_wrap"] [class*="RecommendItem_right_wrap"] [class*="RecommendItem_title"],
+[class*="eplist_ep_list_wrapper"] [class*="eplist_list_title"] [class*="eplist_left_wrap"]  h4,
+[class*="numberListItem_title"] {
+    color: #eee;
+}
+
+[class*="numberListItem_number_list_item"][class*="numberListItem_select"] {
+    border: 2px solid #747474;
+    background-color: #555;
+}
+
+[class*="numberListItem_number_list_item"][class*="numberListItem_select"] [class*="numberListItem_title"] {
+    color: #00a1d6;
+    font-weight: 700;
+}
+
+[class*="numberListItem_number_list_item"]:hover {
+    border: 2px solid #747474;
+    color: #747474
+}
+
+[class*="epitem_ep_item"]:hover {
+    background-color: #555;
+}
+
+[class*="epitem_ep_item"][class*="epitem_cursor"] {
+    background-color: #555;
+    color: #00a1d6
+}
+
+[class*="epitem_cursor"] > a {
+    color: #00a1d6
+}
+
+[class*="review_review_module"] [class*="review_module_content"] [class*="review_review_item"] [class*="review_review_item_fill"] [class*="review_review_body"] [class*="review_review_title"],
+[class*="review_review_module"] [class*="review_module_content"] [class*="review_review_item"] [class*="review_review_item_fill"] [class*="review_review_body"] [class*="review_review_content"],
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_pub"] [class*="mediainfo_home_link"],
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_pub"] [class*="mediainfo_av_link"],
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_pub"] {
+    color: #aaa;
+}
+
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc"] i {
+    font-weight: 700;
+}
+
+
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc"] i,
+[class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc_section"] [class*="mediainfo_display_area"] [class*="mediainfo_ellipsis"] {
+    background: none;
+    color: #eee;
+    font-weight: 700;
+}
+
+[class*="operation_split_line"],
+[class*="mediainfo_media_info"] {
+    border-top: 1px solid #444;
+}
+
+[class*="review_review_module"] {
+    border-bottom: 1px solid #444
+}
+
+.bb-comment .reply-notice .notice-item {
+    background-color: #444 !important;
+}
+
+.bb-comment .comment-header .tabs-order li.on {
+    color: #eee !important;
+}
+
+.bb-comment .comment-header .tabs-order li {
+    color: #888 !important;
+}
+
+[id*="weslie-media-info-review"],
+[class^="eplist_ep_list_wrapper"],
+[id^="list_module"],
+[class*="section_ep_section_module"],
+[class*="review_review_item_fill"] {
+ background-color: #444 !important;   
+}
+
+[class*="DanmukuBox_wrap"] {
+    background: none;
+}
+
+[class*="seasonlist_season_list"] [class*="seasonlist_ss_list_wrapper"] [class*="seasonlist_expand_more"] {
+    background-color: #444;
+    color: #eee;
+}
+

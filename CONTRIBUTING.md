@@ -65,6 +65,7 @@ pnpm install
 // @require      https://raw.githubusercontent.com/lodash/lodash/4.17.15/dist/lodash.min.js
 // @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
 // @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
+// @require      file://{{ bilibili-evolved.dev.user.js的绝对路径 }}
 // ==/UserScript==
 ```
 6. 在那些 `@require` 下面再添加一行 `@require file://{{ bilibili-evolved.dev.user.js的绝对路径 }}`
@@ -73,6 +74,10 @@ pnpm install
 > macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/bilibili-evolved.dev.user.js`
 
 > 上面那些其他的 @require 跟 `src/client/common.meta.json` 里的保持一致就行, 偶尔这些依赖项会变动导致这个本地调试脚本失效, 到时候照着改一下就行.
+
+> 必须放到// ==/UserScript== 之前 不然会加载不到该脚本
+
+> 该bilibili-evolved.dev.user.js脚本 需要在vs code->终端>运行任务..->本地：编辑开发版本生成 目录为Bilibili-Evolved/dist/bilibili-evolved.dev.user.js
 7. 保存脚本, 运行 `启动开发服务 dev-server` 任务
 8. 进入 b 站, 安装 `DevClient` 组件, 功能中显示已连接时就是成功了
 
