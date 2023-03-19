@@ -10,12 +10,31 @@ export const plugin: PluginMetadata = {
       providers.push({
         name: 'cvSearchProvider',
         getActions: async input => {
-          const match = input.match(/^cv(\d+)$/)
+          const match = input.match(/^(cv|rl)(\d+)$/)
           if (!match) {
             return []
           }
-          const id = match[1]
-          const indexer = `cv${id}`
+          const type = match[1]
+          const id = match[2]
+          const indexer = `${type}${id}`
+          if (type === 'rl') {
+            const json = await getJson(
+              `https://api.bilibili.com/x/article/list/web/articles?id=${id}`,
+            )
+            const { name } = lodash.get(json, 'data.list', {})
+            return [
+              {
+                name: name || indexer,
+                icon: 'mdi-open-in-new',
+                indexer,
+                description: '文集跳转',
+                action: () => {
+                  window.open(`https://www.bilibili.com/read/readlist/${indexer}`, '_blank')
+                },
+                order: 0,
+              },
+            ]
+          }
           const json = await getJson(`https://api.bilibili.com/x/article/viewinfo?id=${id}`)
           const { title } = lodash.get(json, 'data', {})
           return [
