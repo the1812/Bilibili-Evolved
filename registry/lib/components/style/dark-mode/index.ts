@@ -70,14 +70,6 @@ export const component = defineComponentMetadata({
           document.body.classList.add('dark')
         }
       })
-      //修复一些番剧的样式class
-      contentLoaded(() => {
-        //查找id为paybar_moduled的div并删除
-        const paybar_module = document.querySelector('[id*="paybar_module"]')
-        if (paybar_module) {
-          paybar_module.remove();
-        }
-      })
     },
   },
   urlExclude: darkExcludes,

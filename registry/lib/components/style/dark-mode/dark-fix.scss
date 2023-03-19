@@ -3,6 +3,7 @@
     border: 1px solid #555;
 }
 
+[class*="review_review_module"] [class*="review_module_content"] [class*="review_review_item"] [class*="review_review_item_fill"] [class*="review_review_header"] [class*="review_review_author"],
 [class*="seasonlist_season_list"] [class*="seasonlist_ss_list_wrapper"] [class*="seasonlist_ss_item"] [class*="seasonlist_ss_info"] [class*="seasonlist_ss_title"],
 [class*="review_review_module"] [class*="review_module_title"],
 [class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc"] i,
@@ -96,3 +97,9 @@
 [class*="DanmukuBox_wrap"] {
     background: none;
 }
+
+[class*="seasonlist_season_list"] [class*="seasonlist_ss_list_wrapper"] [class*="seasonlist_expand_more"] {
+    background-color: #444;
+    color: #eee;
+}
+
