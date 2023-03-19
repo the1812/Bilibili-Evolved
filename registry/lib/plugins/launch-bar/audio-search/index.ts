@@ -1,6 +1,7 @@
 import type { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import type { PluginMetadata } from '@/plugins/plugin'
 import { getJson } from '@/core/ajax'
+import { createLinkAction, matchInput } from '../common'
 
 export const plugin: PluginMetadata = {
   name: 'launchBar.actions.audioSearch',
@@ -10,13 +11,10 @@ export const plugin: PluginMetadata = {
       providers.push({
         name: 'audioSearchProvider',
         getActions: async input => {
-          const match = input.match(/^(a[um])(\d+)$/)
+          const { match, type, id, indexer } = matchInput(input, /^(a[um])(\d+)$/)
           if (!match) {
             return []
           }
-          const type = match[1]
-          const id = match[2]
-          const indexer = `${type}${id}`
           const json = await getJson(
             type === 'am'
               ? `https://www.bilibili.com/audio/music-service-c/web/menu/info?sid=${id}`
@@ -24,16 +22,12 @@ export const plugin: PluginMetadata = {
           )
           const { title } = lodash.get(json, 'data', {})
           return [
-            {
-              name: title || indexer,
-              icon: 'mdi-open-in-new',
-              indexer,
+            createLinkAction({
+              name: title,
               description: type === 'am' ? '播放列表跳转' : '音频跳转',
-              action: () => {
-                window.open(`https://www.bilibili.com/audio/${indexer}`, '_blank')
-              },
-              order: 0,
-            },
+              link: `https://www.bilibili.com/audio/${indexer}`,
+              indexer,
+            }),
           ]
         },
       })
