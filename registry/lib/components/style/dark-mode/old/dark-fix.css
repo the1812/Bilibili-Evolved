@@ -3,6 +3,7 @@
     border: 1px solid #555;
 }
 
+[class*="seasonlist_season_list"] [class*="seasonlist_ss_list_wrapper"] [class*="seasonlist_ss_item"] [class*="seasonlist_ss_info"] [class*="seasonlist_ss_title"],
 [class*="review_review_module"] [class*="review_module_title"],
 [class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc"] i,
 [class*="mediainfo_media_info"] [class*="mediainfo_media_right"] [class*="mediainfo_media_desc"],
@@ -82,4 +83,16 @@
 
 .bb-comment .comment-header .tabs-order li {
     color: #888 !important;
+}
+
+[id*="weslie-media-info-review"],
+[class^="eplist_ep_list_wrapper"],
+[id^="list_module"],
+[class*="section_ep_section_module"],
+[class*="review_review_item_fill"] {
+ background-color: #444 !important;   
+}
+
+[class*="DanmukuBox_wrap"] {
+    background: none;
 }
