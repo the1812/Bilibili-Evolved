@@ -70,6 +70,45 @@ export const component = defineComponentMetadata({
           document.body.classList.add('dark')
         }
       })
+      //修复一些番剧的样式class
+      contentLoaded(() => {
+        //查找id为danmukuBox的div
+        const danmukuBox = document.querySelector('[id*="danmukuBox"]')
+        if (danmukuBox) {
+          //设置class为danmaku-box
+          danmukuBox.className = 'danmaku-box';
+        }
+        //查找id为eplist_module的div 并添加class media-info-card
+        const eplist_module = document.querySelector('[id*="list_module"]')
+        if (eplist_module) {
+          eplist_module.classList.add('media-info-card');
+        }
+        //查找clss为section_ep_section_module__GnauA的div 并添加class media-info-card
+        const section_ep_section_module =  document.querySelector('[class*="section_ep_section_module"]')
+        if (section_ep_section_module) {
+          section_ep_section_module.classList.add('media-info-card');
+        }
+
+        //查找class为review_review_item_fill__Mn7Oi的divs 都添加class media-info-card
+        const review_review_item_fills = document.querySelectorAll('[class*="review_review_item_fill"]')
+        if (review_review_item_fills) {
+          for (let i = 0; i < review_review_item_fills.length; i++) {
+            review_review_item_fills[i].classList.add('media-info-card');
+          }
+        }
+
+        //查找id为mogv-weslie-media-info-review的div 并添加class media-info-card
+        const weslie_media_info_review = document.querySelector('[id*="weslie-media-info-review"]')
+        if (weslie_media_info_review) {
+          weslie_media_info_review.classList.add('media-info-card');
+        }
+
+        //查找id为paybar_moduled的div并删除
+        const paybar_module = document.querySelector('[id*="paybar_module"]')
+        if (paybar_module) {
+          paybar_module.remove();
+        }
+      })
     },
   },
   urlExclude: darkExcludes,
