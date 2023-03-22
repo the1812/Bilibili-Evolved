@@ -408,11 +408,40 @@ export default Vue.extend({
     }
     &-seasons {
       @include h-stretch(calc(var(--timeline-item-gap) / 2));
-      @include no-scrollbar();
+      //@include no-scrollbar();
+      overflow-x: auto;
       overscroll-behavior: initial;
       width: 0;
       flex: 1 0 0;
       scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.1);
+      &::-webkit-scrollbar {
+        height: 4px;
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.5);
+        border-radius: 2px;
+      }
+      body.dark & {
+        scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.1);
+        &::-webkit-scrollbar {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba(255, 255, 255, 0.5);
+        }
+      }
+      @media (prefers-color-scheme: dark) {
+        scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.1);;
+        &::-webkit-scrollbar {
+          background-color: rgba(255, 255, 255, 0.1);
+        }
+        &::-webkit-scrollbar-thumb {
+          background-color: rgba(255, 255, 255, 0.5);
+        }
+      }
     }
     &-season {
       --cover-size: 50px;
