@@ -434,7 +434,7 @@ export default Vue.extend({
         }
       }
       @media (prefers-color-scheme: dark) {
-        scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.1);;
+        scrollbar-color: rgba(255, 255, 255, 0.5) rgba(255, 255, 255, 0.1);
         &::-webkit-scrollbar {
           background-color: rgba(255, 255, 255, 0.1);
         }
