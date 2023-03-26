@@ -36,7 +36,7 @@ export const component = defineComponentMetadata({
 
     const makeLightOff = () => {
       lightOff()
-      if (!settings.options.starAnimation) {
+      if (settings.options.starAnimation) {
         StarAnim(true)
       }
     }
