@@ -49,8 +49,7 @@ export default Vue.extend({
   async mounted() {
     await this.$nextTick()
     const appendTarget = containerMap[this.container]
-    this.toast = createMiniToast(this.message, this.$refs.content, {
-      content: this.$refs.toast,
+    this.toast = createMiniToast(this.$refs.toast, this.$refs.content, {
       placement: this.placement,
       showOnCreate: this.show,
       trigger: 'mouseenter focusin',

@@ -543,6 +543,9 @@ export const retrieveImageUrl = (element: HTMLElement) => {
     url = element.getAttribute('data-src')
   } else if (element instanceof HTMLImageElement) {
     url = element.src
+  } else if (dq(element, 'picture img')) {
+    const image = dq(element, 'picture img') as HTMLImageElement
+    url = image.src
   } else {
     const { backgroundImage } = element.style
     if (!backgroundImage) {

@@ -17,8 +17,17 @@ export const plugin: PluginMetadata = {
         },
       }
     })
-    addData('keymap.presets', (presetBase: Record<string, string>) => {
-      presetBase.toggleSubtitle = 'shift c'
-    })
+    addData(
+      'keymap.presets',
+      (
+        presetBase: Record<string, string>,
+        builtInPresets: Record<string, Record<string, string>>,
+      ) => {
+        presetBase.toggleSubtitle = 'shift c'
+        builtInPresets.YouTube.toggleSubtitle = 'c'
+        builtInPresets.YouTube.coin = ''
+        builtInPresets.PotPlayer.toggleSubtitle = 'alt h'
+      },
+    )
   },
 }

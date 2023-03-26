@@ -1,6 +1,7 @@
 import * as ajax from '@/core/ajax'
 import * as cdnTypes from '@/core/cdn-types'
 import * as download from '@/core/download'
+import * as dialog from '@/core/dialog'
 import * as externalInput from '@/core/external-input'
 import * as filePicker from '@/core/file-picker'
 import * as installFeature from '@/core/install-feature'
@@ -39,6 +40,7 @@ export const coreApis = {
   ajax,
   cdnTypes,
   download,
+  dialog,
   externalInput,
   filePicker,
   installFeature,
@@ -78,6 +80,7 @@ export const externalApis = {
   ajax,
   ...cdnTypes,
   ...download,
+  ...dialog,
   ...externalInput,
   ...filePicker,
   ...installFeature,
