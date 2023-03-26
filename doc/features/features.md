@@ -116,15 +116,6 @@
 
 在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
 
-### [直播录像下载](../../registry/dist/components/live/download-records.js)
-`downloadLiveRecords`
-
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/download-records.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/download-records.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/download-records.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/download-records.js)
-
-在直播录像页面 `live.bilibili.com/record/` 中添加下载支持.
-
 ### [直播全屏包裹](../../registry/dist/components/live/gift-box.js)
 `liveGiftBox`
 
@@ -487,14 +478,16 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 在功能面板中提供一些可以每日进行的操作.
 
-### [专栏文字选择](../../registry/dist/components/utils/column-unlock.js)
+### [专栏复制优化](../../registry/dist/components/utils/column-unlock.js)
 `columnUnlock`
 
 **jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/column-unlock.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/column-unlock.js)
 
-使专栏的文字可以选择.
+(原名: 专栏文字选择, 现在专栏已经不限制选中文字了)
+
+避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.
 
 ### [复制评论链接](../../registry/dist/components/utils/comments/copy-link.js)
 `copyCommentsLink`

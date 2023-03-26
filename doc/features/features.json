@@ -97,14 +97,6 @@
   },
   {
     "type": "component",
-    "name": "downloadLiveRecords",
-    "displayName": "直播录像下载",
-    "description": "在直播录像页面 `live.bilibili.com/record/` 中添加下载支持.",
-    "fullRelativePath": "../../registry/dist/components/live/download-records.js",
-    "fullAbsolutePath": "registry/dist/components/live/download-records.js"
-  },
-  {
-    "type": "component",
     "name": "liveGiftBox",
     "displayName": "直播全屏包裹",
     "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮.",
@@ -402,8 +394,8 @@
   {
     "type": "component",
     "name": "columnUnlock",
-    "displayName": "专栏文字选择",
-    "description": "使专栏的文字可以选择.",
+    "displayName": "专栏复制优化",
+    "description": "(原名: 专栏文字选择, 现在专栏已经不限制选中文字了)\r\n\r\n避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/column-unlock.js",
     "fullAbsolutePath": "registry/dist/components/utils/column-unlock.js"
   },
