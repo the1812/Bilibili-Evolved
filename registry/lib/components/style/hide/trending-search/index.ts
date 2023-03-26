@@ -14,7 +14,11 @@ export const component = defineComponentMetadata({
   entry: async () => {
     allMutations(records => {
       records.forEach(record => {
-        if (record.target instanceof HTMLInputElement && record.target.placeholder !== '搜索') {
+        if (
+          record.target instanceof HTMLInputElement &&
+          record.target.classList.contains('nav-search-input') &&
+          record.target.placeholder !== '搜索'
+        ) {
           record.target.placeholder = '搜索'
         }
       })
