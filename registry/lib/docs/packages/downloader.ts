@@ -9,7 +9,6 @@ export const pack: Package = {
     'downloadSubtitle',
     'downloadDanmaku',
     'downloadAudio',
-    'downloadLiveRecords',
   ],
 
 }

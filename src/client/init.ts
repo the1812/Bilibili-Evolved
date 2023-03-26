@@ -34,6 +34,11 @@ export const init = async () => {
     compatibilityPatch()
   })
 
+  if (unsafeWindow.bangumi_area_limit_hack) {
+    console.log('BALH detected, Bilibili Evolved is disabled.')
+    return
+  }
+
   const { coreApis, externalApis } = await import('@/core/core-apis')
   unsafeWindow.bilibiliEvolved = externalApis
   /** sand-boxed window, safe to use original name */
