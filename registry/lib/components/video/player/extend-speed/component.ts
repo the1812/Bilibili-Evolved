@@ -444,6 +444,7 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     setTimeout(() => this.forceUpdateStyle(value))
   }
 
+  // eslint-disable-next-line class-methods-use-this
   protected readonly filterNativeSpeed =
     () =>
     ({ subscribe, next }: PublishContext<number>) => {

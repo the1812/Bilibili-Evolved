@@ -41,8 +41,13 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
     case feedsCardTypes.column:
     case feedsCardTypes.video: {
       const target = major.archive ?? major.pgc ?? major.article
-      const { title, desc } = target
-      typeText = combineText(title, desc)
+      if (target) {
+        const { title, desc } = target
+        typeText = combineText(title, desc)
+      } else if (major.opus) {
+        const { title, summary } = major.opus
+        typeText = combineText(title, summary.text)
+      }
       break
     }
   }

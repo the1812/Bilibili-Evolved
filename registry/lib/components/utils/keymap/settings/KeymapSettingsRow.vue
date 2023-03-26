@@ -4,7 +4,7 @@
       {{ row.displayName }}
     </div>
     <div
-      class="row-default-binding"
+      class="row-default-binding row-binding"
       :class="{
         overwritten: isOverwrittern(presets[selectedPreset], customKeyBindings),
         'not-set': presetBase[row.name] === undefined,
@@ -13,7 +13,7 @@
       {{ showReadonlyKey(presetBase) }}
     </div>
     <div
-      class="row-preset-binding"
+      class="row-preset-binding row-binding"
       :class="{
         overwritten: isOverwrittern(customKeyBindings),
         'not-set': presets[selectedPreset][row.name] === undefined,
@@ -21,7 +21,7 @@
     >
       {{ showReadonlyKey(presets[selectedPreset]) }}
     </div>
-    <div class="row-custom-binding">
+    <div class="row-custom-binding row-binding">
       <div v-if="editable" class="custom-binding-edit">
         <TextBox
           ref="customBindingTextBox"
@@ -127,6 +127,12 @@ export default Vue.extend({
     &.not-set,
     &.overwritten {
       opacity: 0.25;
+    }
+  }
+  .row-binding {
+    &,
+    & input {
+      font-family: monospace, sans-serif;
     }
   }
   .row-custom-binding {

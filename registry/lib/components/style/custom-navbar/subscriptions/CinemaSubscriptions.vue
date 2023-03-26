@@ -1,5 +1,5 @@
 <template>
-  <SubscriptionsList type="cinema"></SubscriptionsList>
+  <SubscriptionsList type="cinema" :filter="filter"></SubscriptionsList>
 </template>
 <script lang="ts">
 import SubscriptionsList from './SubscriptionsList.vue'
@@ -7,6 +7,12 @@ import SubscriptionsList from './SubscriptionsList.vue'
 export default Vue.extend({
   components: {
     SubscriptionsList,
+  },
+  props: {
+    filter: {
+      type: [Object, null],
+      default: null,
+    },
   },
 })
 </script>

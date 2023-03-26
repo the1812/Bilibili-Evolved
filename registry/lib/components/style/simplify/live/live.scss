@@ -193,80 +193,13 @@ $prefix: 'simplifyLiveroom-switch';
   .gift-section.guard-ent,
   .seeds-wrap > .dp-i-block > .item:not(.seeds),
   .gift-control-panel .wish-icon,
-  .gift-control-panel .wish-tip {
+  .gift-control-panel .wish-tip,
+  .gift-control-panel .left-part-ctnr {
     display: none !important;
   }
   .gift-control-section,
   .gift-control-panel {
     height: 48px !important;
-  }
-  .gift-left-part {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    width: auto !important;
-    height: auto !important;
-    padding: 10px 0 0 16px !important;
-    .entry-icon {
-      margin: 0 !important;
-      width: 24px !important;
-      height: 24px !important;
-    }
-    .wait-num {
-      display: none !important;
-    }
-    .time-span {
-      margin: 1px 0 0 0 !important;
-    }
-  }
-  .draw-box,
-  .anchor-lottery-entry,
-  .treasure-box {
-    display: flex !important;
-    align-items: center !important;
-    padding: 10px 0 0 16px !important;
-    max-height: 36px !important;
-    .draw-box-pic,
-    .anchor-lot-icon,
-    .box-icon {
-      margin: 0 !important;
-      width: 24px !important;
-      height: 24px !important;
-      background-position: 0 -2.5px !important;
-      &.open {
-        background-position: 0 -1px !important;
-      }
-    }
-    .draw-box-pic {
-      transform: scale(1.1);
-    }
-    #BLRHH_treasure_div_tip br {
-      display: none !important;
-    }
-    #BLRHH_treasure_div {
-      img,
-      canvas {
-        max-height: 24px !important;
-      }
-    }
-    .draw-box-text,
-    .anchor-lot-text,
-    .count-down,
-    #BLRHH_treasure_div_tip,
-    #BLRHH_treasure_div_timer {
-      margin-left: 12px !important;
-      padding: 4px 8px !important;
-      max-width: unset !important;
-    }
-    .awarding-panel {
-      bottom: 42px !important;
-    }
-  }
-  .draw-box {
-    padding-top: 11px !important;
-  }
-  .anchor-lottery-entry {
-    padding-top: 12px !important;
   }
   .gift-control-panel .right-part {
     height: 48px !important;
@@ -279,6 +212,29 @@ $prefix: 'simplifyLiveroom-switch';
       .supporting-info {
         transform: translateY(-2px) !important;
       }
+    }
+  }
+  .gift-control-panel {
+    .more-gift-section {
+      position: static !important;
+      margin: 0 10px 0 0 !important;
+      height: 48px !important;
+    }
+    .z-gift-package {
+      margin: auto 0 !important;
+      position: static !important;
+      .gift-package {
+        margin-top: 2px;
+      }
+    }
+    .right-part {
+      padding-top: 0 !important;
+    }
+    .right-section > .gift-section {
+      height: 42px !important;
+    }
+    .battery-pic {
+      display: none !important;
     }
   }
 }
