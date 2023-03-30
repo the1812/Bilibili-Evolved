@@ -72,6 +72,14 @@ const entry = async () => {
       match: /\/\/www\.bilibili\.com\/video\//,
       param: 'up_id',
     },
+    {
+      match: /\/\/mall\.bilibili\.com\//,
+      param: 'hasBack',
+    },
+    {
+      match: /\/\/mall\.bilibili\.com\//,
+      param: 'jumpLinkType',
+    },
   ]
   const [siteSpecifiedParams] = registerAndGetData(
     'urlParamsClean.siteSpecifiedParams',
