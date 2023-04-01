@@ -2,13 +2,16 @@ import { CdnConfig } from './types'
 
 const owner = 'the1812'
 let host: string = 'fastly.jsdelivr.net';
-const timeout = 1000; // 单位ms
+const timeout = 50000; // 单位ms
 
 const controller = new AbortController();
 const signal = controller.signal;
 const timer = setTimeout(() => controller.abort(), timeout);
 
-fetch(`https://${host}/favicon.ico`, { signal })
+fetch(`https://${host}/favicon.ico`, { 
+  signal,
+  cache: 'no-store'
+})
   .then(response => {
     clearTimeout(timer);
     if (response.ok) {
