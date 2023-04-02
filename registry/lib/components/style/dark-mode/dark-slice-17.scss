@@ -60,6 +60,13 @@
       @include theme-color();
     }
   }
+  .follow-btn {
+    &.not-follow {
+      path {
+        @include foreground-fill();
+      }
+    }
+  }
 }
 .user-card-m-exp {
   @include background-color('3');
