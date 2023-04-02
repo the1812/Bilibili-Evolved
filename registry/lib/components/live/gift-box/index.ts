@@ -88,7 +88,8 @@ function observeFullWinToggle(onToggle: FullWinToggleCallback): StopObservingCal
   function analyzeMutation(mutation: MutationRecord): boolean | null {
     const curContainsFullWinClass = isFullWin()
     const prevClassList = mutation.oldValue.split(' ')
-    const prevContainsFullWinClass = prevClassList.includes(fullWinClass) || prevClassList.includes(fullScreenClass)
+    const prevContainsFullWinClass =
+      prevClassList.includes(fullWinClass) || prevClassList.includes(fullScreenClass)
     // console.debug(`[${componentName}]`, { curContainsFullWinClass, prevContainsFullWinClass })
     if (curContainsFullWinClass === prevContainsFullWinClass) {
       return null
