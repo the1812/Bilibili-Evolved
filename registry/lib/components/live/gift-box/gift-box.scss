@@ -28,8 +28,8 @@
   // 按钮部分
   .gift-package {
     margin: auto;
-    width: 100%;
-    height: auto;
+    width: auto;
+    height: 100%;
     color: inherit;
     fill: inherit;
     background: inherit !important;
@@ -40,8 +40,6 @@
 
     span {
       font-size: inherit;
-      line-height: 36px;
-      padding: 0 6px;
       color: rgba(255, 255, 255, 0.9);
       cursor: pointer;
 
