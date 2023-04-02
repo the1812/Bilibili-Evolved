@@ -7,7 +7,7 @@ Bilibili Evolved 是一个基于 Web 前端技术构建的油猴脚本, 贡献�
 
 ## 搭建开发环境
 
-- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [pnpm](https://pnpm.io/installation).
+- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [pnpm](https://pnpm.io/installation) (>= 8.1.0).
 - 将项目 Fork 至自己账户后, 克隆至本地
 - 分支视情况切换或新建, 新功能以 `preview-features` 为基础分支, 功能修复以 `preview-fixes` 为基础分支.
 - 安装依赖:
