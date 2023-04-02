@@ -236,6 +236,9 @@ $prefix: 'simplifyLiveroom-switch';
     .battery-pic {
       display: none !important;
     }
+    .skin-bg{
+      height: 48px !important;
+    }
   }
 }
 .#{$prefix}-guard {
