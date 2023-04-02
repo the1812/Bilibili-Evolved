@@ -57,7 +57,7 @@ export default Vue.extend({
     margin-right: 28px !important;
     position: relative;
     width: auto !important;
-    @media screen and (max-width: 1320px), (max-height: 750px) {
+    @media screen and (max-width: 1340px), (max-height: 750px) {
       margin-right: max(calc(min(11vw, 11vh) - 117.2px), 6px) !important;
       .text {
         display: none;
