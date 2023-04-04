@@ -1,90 +1,90 @@
-@mixin set-color($name, $level: "") {
+@mixin set-color($name, $level: '') {
   $length: str-length($level);
   @if $length == 1 or $length == 2 {
-    #{$name}: #{"#" + $level + $level + $level} !important;
+    #{$name}: #{'#' + $level + $level + $level} !important;
   } @else if $length == 3 or $length == 6 {
-    #{$name}: #{"#" + $level} !important;
+    #{$name}: #{'#' + $level} !important;
   } @else if $length == 0 {
     #{$name}: transparent !important;
   } @else {
-    #{$name}: #{"#" + $level} !important;
+    #{$name}: #{'#' + $level} !important;
   }
 }
-@mixin set-theme-color($name, $level: "") {
-  @if $level == "" {
+@mixin set-theme-color($name, $level: '') {
+  @if $level == '' {
     #{$name}: var(--theme-color) !important;
   } @else {
     #{$name}: var(--theme-color-#{$level}) !important;
   }
 }
-@mixin set-foreground-color($name, $level: "") {
-  @if $level == "" {
+@mixin set-foreground-color($name, $level: '') {
+  @if $level == '' {
     #{$name}: var(--foreground-color) !important;
   } @else {
     #{$name}: var(--foreground-color-#{$level}) !important;
   }
 }
-@mixin background-color($level: "") {
-  @include set-color("background-color", $level);
+@mixin background-color($level: '') {
+  @include set-color('background-color', $level);
 }
-@mixin color($level: "") {
-  @include set-color("color", $level);
+@mixin color($level: '') {
+  @include set-color('color', $level);
 }
-@mixin background($level: "") {
-  @include set-color("background", $level);
+@mixin background($level: '') {
+  @include set-color('background', $level);
 }
-@mixin border-color($level: "") {
-  @include set-color("border-color", $level);
+@mixin border-color($level: '') {
+  @include set-color('border-color', $level);
 }
-@mixin fill($level: "") {
-  @include set-color("fill", $level);
+@mixin fill($level: '') {
+  @include set-color('fill', $level);
 }
-@mixin stroke($level: "") {
-  @include set-color("stroke", $level);
-}
-
-@mixin theme-background-color($level: "") {
-  @include set-theme-color("background-color", $level);
-}
-@mixin theme-color($level: "") {
-  @include set-theme-color("color", $level);
-}
-@mixin theme-background($level: "") {
-  @include set-theme-color("background", $level);
-}
-@mixin theme-border-color($level: "") {
-  @include set-theme-color("border-color", $level);
-}
-@mixin theme-fill($level: "") {
-  @include set-theme-color("fill", $level);
-}
-@mixin theme-stroke($level: "") {
-  @include set-theme-color("stroke", $level);
+@mixin stroke($level: '') {
+  @include set-color('stroke', $level);
 }
 
-$vip-color: "FB7299";
+@mixin theme-background-color($level: '') {
+  @include set-theme-color('background-color', $level);
+}
+@mixin theme-color($level: '') {
+  @include set-theme-color('color', $level);
+}
+@mixin theme-background($level: '') {
+  @include set-theme-color('background', $level);
+}
+@mixin theme-border-color($level: '') {
+  @include set-theme-color('border-color', $level);
+}
+@mixin theme-fill($level: '') {
+  @include set-theme-color('fill', $level);
+}
+@mixin theme-stroke($level: '') {
+  @include set-theme-color('stroke', $level);
+}
+
+$vip-color: 'FB7299';
 
 @mixin vip-color() {
-  @include set-color("color", $vip-color);
+  @include set-color('color', $vip-color);
 }
 @mixin vip-background-color() {
-  @include set-color("background-color", $vip-color);
+  @include set-color('background-color', $vip-color);
 }
 
-@mixin foreground-background-color($level: "") {
-  @include set-foreground-color("background-color", $level);
+@mixin foreground-background-color($level: '') {
+  @include set-foreground-color('background-color', $level);
 }
-@mixin foreground-color($level: "") {
-  @include set-foreground-color("color", $level);
+@mixin foreground-color($level: '') {
+  @include set-foreground-color('color', $level);
 }
-@mixin foreground-background($level: "") {
-  @include set-foreground-color("background", $level);
+@mixin foreground-background($level: '') {
+  @include set-foreground-color('background', $level);
 }
-@mixin foreground-border-color($level: "") {
-  @include set-foreground-color("border-color", $level);
+@mixin foreground-border-color($level: '') {
+  @include set-foreground-color('border-color', $level);
 }
-@mixin foreground-fill($level: "") {
-  @include set-foreground-color("fill", $level);
+@mixin foreground-fill($level: '') {
+  @include set-foreground-color('fill', $level);
 }
 
 @mixin to-white {
@@ -123,16 +123,13 @@ $vip-color: "FB7299";
   }
 }
 
-@mixin back-top-btn(
-  $btn-selector: ".back-top-btn",
-  $arrow-selector: ".arrow-icon"
-) {
+@mixin back-top-btn($btn-selector: '.back-top-btn', $arrow-selector: '.arrow-icon') {
   #{$btn-selector} {
     @include border-color();
-    @include background-color("3");
+    @include background-color('3');
     @if $arrow-selector {
       #{$arrow-selector} {
-        @include color("a");
+        @include color('a');
       }
     }
     &:hover {
@@ -142,6 +139,17 @@ $vip-color: "FB7299";
           @include foreground-color();
         }
       }
+    }
+  }
+}
+@mixin contains($selector, $combineTarget: null) {
+  @if $combineTarget {
+    @at-root #{selector-unify($combineTarget, "[class*='#{$selector}']")} {
+      @content;
+    }
+  } @else {
+    [class*='#{$selector}'] {
+      @content;
     }
   }
 }

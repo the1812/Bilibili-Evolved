@@ -506,6 +506,11 @@
       }
     }
   }
+  .dyn-card-opus {
+    &__title {
+      @include color('e');
+    }
+  }
 }
 .bili-dyn-report {
   @include background-color('3');

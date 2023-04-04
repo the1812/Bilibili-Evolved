@@ -1015,6 +1015,34 @@
   [class*='numberListItem_title'] {
     @include color('e');
   }
+  @include contains('eplist_ep_list_order') {
+    @include to-theme('blue');
+  }
+  @include contains('longListItem_wrap') {
+    @include color('e');
+    &:hover {
+      @include background-color('5');
+      @include contains('longListItem_text') {
+        @include theme-color();
+      }
+    }
+    @include contains('longListItem_select', &) {
+      @include background-color('5');
+    }
+    @include contains('longListItem_icon') {
+      path {
+        @include theme-fill();
+      }
+    }
+  }
+  @include contains('modeChangeBtn_icon') {
+    path {
+      @include fill('a');
+    }
+    &:hover path {
+      @include theme-fill();
+    }
+  }
 }
 [class*='operation_split_line'] {
   @include border-color('4');
@@ -1024,4 +1052,43 @@
 }
 [class*='DanmukuBox_wrap'] {
   @include background();
+}
+@include contains('paybar_pay_bar') {
+  @include contains('paybar_btn_pay') {
+    @include border-color();
+    @include theme-background-color();
+    @include foreground-color();
+    @include contains('paybar_active', &) {
+      @include background-color('4');
+      @include color('e');
+    }
+  }
+}
+.player-left-components {
+  @include contains('toolbar_toolbar') {
+    @include contains('toolbar_item_info') {
+      path {
+        @include fill('a');
+      }
+      @include contains('toolbar_counts_num') {
+        @include color('a');
+      }
+      &:hover {
+        path {
+          @include theme-fill();
+        }
+        @include contains('toolbar_counts_num') {
+          @include theme-color();
+        }
+      }
+      @include contains('toolbar_active', &) {
+        path {
+          @include theme-fill();
+        }
+        @include contains('toolbar_counts_num') {
+          @include theme-color();
+        }
+      }
+    }
+  }
 }
