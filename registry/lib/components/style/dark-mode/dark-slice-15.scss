@@ -218,6 +218,11 @@
     .bpx-player-dm-switch {
       @include fill('a');
     }
+    .bui-danmaku-switch-on {
+      path:last-child {
+        @include theme-fill();
+      }
+    }
     .bpx-player-dm-switch:hover,
     .bpx-player-dm-setting:hover,
     .bpx-player-video-btn-dm:hover {
