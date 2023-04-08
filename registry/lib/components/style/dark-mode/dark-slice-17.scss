@@ -1067,7 +1067,7 @@
 .player-left-components {
   #{contains('toolbar_toolbar')} {
     #{contains('toolbar_item_info')} {
-      path {
+      #{contains('toolbar_icon')} path {
         @include fill('a');
       }
       #{contains('toolbar_counts_num')} {
@@ -1075,7 +1075,7 @@
       }
       &#{contains('toolbar_active')},
       &:hover {
-        path {
+        #{contains('toolbar_icon')}path {
           @include theme-fill();
         }
         #{contains('toolbar_counts_num')} {

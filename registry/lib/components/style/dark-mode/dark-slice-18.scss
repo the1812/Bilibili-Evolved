@@ -1,0 +1,153 @@
+@import './dark-definitions';
+@import 'common';
+
+#{contains('mediainfo_media_toolbar')} {
+  #{contains('mediainfo_btn_rating')} {
+    @include color('a');
+    @include border-color('4');
+  }
+  #{contains('mediainfo_btn_follow')} {
+    &#{contains('mediainfo_follow_active')}#ogv-weslie-media-info-follow {
+      @include background-color('4');
+      @include color('a');
+    }
+  }
+  #{contains('mediainfo_follow_options_list')} {
+    @include background-color('3');
+    @include border-color();
+    li {
+      @include color('e');
+      &#{contains('mediainfo_disabled')} {
+        @include color('6');
+      }
+      &:hover {
+        @include background-color('5');
+      }
+    }
+  }
+}
+#{contains('upinfo_up_info')} {
+  #{contains('upinfo_btn_follow_up')} {
+    @include theme-color();
+  }
+}
+#{contains('seasonlist_ss_badge')} {
+  &#{contains('seasonlist_blue')} {
+    @include theme-background-color();
+  }
+}
+#{contains('navTools_wrap')} {
+  #{contains('navTools_item')} {
+    @include background-color('3');
+    @include border-color('4');
+    @include color('a');
+    path {
+      @include fill('a');
+    }
+    &:hover {
+      @include theme-background-color();
+      @include border-color();
+      @include foreground-color();
+      path {
+        @include foreground-fill();
+      }
+    }
+  }
+}
+#{contains('toolbar_watch_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  @include no-shadow();
+  #{contains('toolbar_title')} {
+    @include color('e');
+  }
+}
+#{contains('toolbar_mobile_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  @include no-shadow();
+  #{contains('toolbar_video_title')} {
+    @include color('e');
+  }
+  #{contains('toolbar_mobile_tip')} {
+    @include color('a');
+    #{contains('toolbar_mobile_link')} {
+      @include theme-color();
+    }
+  }
+  // 二维码需要加个边框才能识别
+  canvas {
+    padding: 4px;
+    background-color: #fff;
+  }
+}
+#{contains('toolbar_share_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  @include no-shadow();
+  #{contains('toolbar_share_desc')} {
+    @include color('e');
+  }
+  #{contains('toolbar_share_btn')} {
+    &:hover {
+      #{contains('toolbar_share_desc')} {
+        @include theme-color();
+      }
+    }
+    &:not(#share_tieba) {
+      svg {
+        circle {
+          @include fill('e');
+          // 这一排图标只有贴吧是做了减去顶层的... 其他的只能填个和背景相同的颜色假装是挖空的效果
+          ~ path {
+            @include fill('3');
+          }
+        }
+      }
+      &:hover {
+        circle {
+          @include theme-fill();
+        }
+      }
+    }
+  }
+  #share_tieba {
+    path {
+      @include fill('e');
+    }
+    &:hover path {
+      @include theme-fill();
+    }
+  }
+}
+#{contains('dialogcoin_coin_operated')} {
+  @include background-color('3');
+  #{contains('dialogcoin_icon_close')} {
+    path {
+      @include fill('a');
+    }
+  }
+  #{contains('dialogcoin_coin_title')} {
+    @include color('e');
+    span {
+      @include theme-color();
+    }
+  }
+  #{contains('dialogcoin_like_checkbox')} {
+    @include color('e');
+    input[type='checkbox']:checked + i {
+      @include to-theme('blue');
+    }
+  }
+  #{contains('dialogcoin_coin_btn')} {
+    @include theme-background-color();
+    @include border-color();
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color('90');
+    }
+  }
+  #{contains('dialogcoin_tips')} {
+    @include color('a');
+  }
+}
