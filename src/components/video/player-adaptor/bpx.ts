@@ -1,8 +1,9 @@
 import { attributes } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { preventEvent } from '@/core/utils'
+import { playerReady, preventEvent } from '@/core/utils'
 
 const playerModePolyfill = async () => {
+  await playerReady()
   const bpxContainer = (await select('.bpx-player-container')) as HTMLElement
   if (!bpxContainer) {
     console.warn('[bpx player polyfill] bpxContainer not found')
