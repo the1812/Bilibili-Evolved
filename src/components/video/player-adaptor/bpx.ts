@@ -30,8 +30,8 @@ const idPolyfill = async () => {
       cid: pbp.options.cid.toString(),
       bvid: pbp.options.bvid,
     }
-    if (Object.values(idData).some(it => it === '' || parseInt(it) <= 0)) {
-      console.warn('[bpx player polyfill] invalid pbp data')
+    if (Object.values(idData).some(it => !it || parseInt(it) <= 0)) {
+      console.warn('[bpx player polyfill] invalid pbp data', pbp.options)
     }
     Object.assign(unsafeWindow, idData)
   }

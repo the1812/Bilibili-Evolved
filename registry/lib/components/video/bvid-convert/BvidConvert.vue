@@ -1,19 +1,17 @@
 <template>
   <div class="bvid-convert">
-    <template v-if="aid && bvid">
-      <div class="bvid-convert-item">
-        {{ aid }}
-        <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('aid')">
-          <VIcon :size="16" :icon="aidCopied ? 'mdi-check' : 'mdi-link'" />
-        </div>
+    <div v-if="aid" class="bvid-convert-item">
+      {{ aid }}
+      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('aid')">
+        <VIcon :size="16" :icon="aidCopied ? 'mdi-check' : 'mdi-link'" />
       </div>
-      <div class="bvid-convert-item">
-        {{ bvid }}
-        <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('bvid')">
-          <VIcon :size="16" :icon="bvidCopied ? 'mdi-check' : 'mdi-link'" />
-        </div>
+    </div>
+    <div v-if="bvid" class="bvid-convert-item">
+      {{ bvid }}
+      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('bvid')">
+        <VIcon :size="16" :icon="bvidCopied ? 'mdi-check' : 'mdi-link'" />
       </div>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -112,7 +110,6 @@ export default Vue.extend({
   flex-direction: column;
   border-radius: 4px;
   padding: 6px 8px;
-  width: 100%;
   user-select: text;
   box-sizing: border-box;
   box-shadow: 0 0 0 1px #8884;
