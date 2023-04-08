@@ -62,15 +62,15 @@
   }
 }
 .bili-dyn-publishing {
-  z-index: 1; // 下面的 to-theme filter 会改变层级, 这里修复一下
   @include dyn-container-skeleton();
   @include background-color('4');
   &__tools {
     &__item {
-      &.active,
-      &:hover {
-        @include to-theme('blue');
-      }
+      // 这里用 filter 会导致弹窗内容也被影响, 暂时先去掉了
+      // &.active,
+      // &:hover {
+      //   @include to-theme('blue');
+      // }
       &.emoji {
         @include background-color();
       }

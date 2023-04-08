@@ -1085,3 +1085,8 @@
     }
   }
 }
+.bili-dyn-item {
+  .b-img {
+    @include background-color('3');
+  }
+}
