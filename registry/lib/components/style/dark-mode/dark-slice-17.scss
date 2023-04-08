@@ -744,7 +744,7 @@
   .player-auxiliary-danmaku-multiple-control {
     @include background-color('2');
   }
-  [class*='player-auxiliary-danmaku-btn-'] {
+  #{contains('player-auxiliary-danmaku-btn-')} {
     @include background-color();
   }
 }
@@ -902,44 +902,44 @@
   @include theme-fill();
 }
 
-[class*='numberListItem_number_list_item'] {
+#{contains('numberListItem_number_list_item')} {
   @include background-color('5');
   @include border-color();
   &:hover {
     @include theme-border-color();
   }
-  &[class*='numberListItem_select'] {
+  &#{contains('numberListItem_select')} {
     @include theme-border-color();
-    [class*='numberListItem_title'] {
+    #{contains('numberListItem_title')} {
       @include theme-color();
     }
   }
 }
 
-[class*='review_review_module'] {
+#{contains('review_review_module')} {
   @include border-color('4');
 
-  [class*='review_review_item_fill'] {
+  #{contains('review_review_item_fill')} {
     @include background-color('4');
   }
 
-  [class*='review_module_title'],
-  [class*='review_review_title'] {
+  #{contains('review_module_title')},
+  #{contains('review_review_title')} {
     @include color('e');
   }
 
-  [class*='review_review_author'] {
+  #{contains('review_review_author')} {
     @include color('e');
-    &[class*='review_is-vip'] {
+    &#{contains('review_is-vip')} {
       @include vip-color();
     }
   }
-  [class*='review_review_content'] {
+  #{contains('review_review_content')} {
     @include color('a');
   }
 }
 
-[class*='epitem_ep_item'] {
+#{contains('epitem_ep_item')} {
   &:hover {
     @include background-color('5');
   }
@@ -951,7 +951,7 @@
     }
   }
 
-  &[class*='epitem_cursor'] {
+  &#{contains('epitem_cursor')} {
     @include background-color('5');
     path {
       @include theme-fill();
@@ -959,83 +959,83 @@
   }
 }
 
-[class*='seasonlist_season_list'] {
-  [class*='seasonlist_ss_title'] {
+#{contains('seasonlist_season_list')} {
+  #{contains('seasonlist_ss_title')} {
     @include color('e');
   }
-  [class*='seasonlist_expand_more'] {
+  #{contains('seasonlist_expand_more')} {
     @include background-color('4');
     @include color('e');
   }
 }
 
-[class*='mediainfo_media_info'] {
+#{contains('mediainfo_media_info')} {
   @include border-color('4');
 
-  [class*='mediainfo_media_desc'] {
+  #{contains('mediainfo_media_desc')} {
     &,
     & i {
       @include color('e');
     }
   }
-  [class*='mediainfo_media_title'] {
+  #{contains('mediainfo_media_title')} {
     @include color('e');
   }
-  [class*='mediainfo_av_link'],
-  [class*='mediainfo_home_link'],
-  [class*='mediainfo_media_pub'] {
+  #{contains('mediainfo_av_link')},
+  #{contains('mediainfo_home_link')},
+  #{contains('mediainfo_media_pub')} {
     @include color('a');
   }
 
-  [class*='mediainfo_ellipsis'],
-  [class*='mediainfo_media_desc'] i {
+  #{contains('mediainfo_ellipsis')},
+  #{contains('mediainfo_media_desc')} i {
     @include background();
     @include theme-color();
   }
 }
 
-[class*='section_ep_section_module'] {
+#{contains('section_ep_section_module')} {
   @include background-color('4');
-  [class*='section_section_title'] {
+  #{contains('section_section_title')} {
     @include color('e');
   }
 }
 
-[class*='RecommendItem_wrap'] {
-  [class*='RecommendItem_title'] {
+#{contains('RecommendItem_wrap')} {
+  #{contains('RecommendItem_title')} {
     @include color('e');
   }
 }
 
-[class*='eplist_ep_list_wrapper'] {
+#{contains('eplist_ep_list_wrapper')} {
   @include background-color('4');
-  [class*='eplist_list_title'] [class*='eplist_left_wrap'] h4 {
+  #{contains('eplist_list_title')} #{contains('eplist_left_wrap')} h4 {
     @include color('e');
   }
-  [class*='numberListItem_title'] {
+  #{contains('numberListItem_title')} {
     @include color('e');
   }
-  @include contains('eplist_ep_list_order') {
+  #{contains('eplist_ep_list_order')} {
     @include to-theme('blue');
   }
-  @include contains('longListItem_wrap') {
+  #{contains('longListItem_wrap')} {
     @include color('e');
     &:hover {
       @include background-color('5');
-      @include contains('longListItem_text') {
+      #{contains('longListItem_text')} {
         @include theme-color();
       }
     }
-    @include contains('longListItem_select', &) {
+    &#{contains('longListItem_select')} {
       @include background-color('5');
     }
-    @include contains('longListItem_icon') {
+    #{contains('longListItem_icon')} {
       path {
         @include theme-fill();
       }
     }
   }
-  @include contains('modeChangeBtn_icon') {
+  #{contains('modeChangeBtn_icon')} {
     path {
       @include fill('a');
     }
@@ -1044,48 +1044,41 @@
     }
   }
 }
-[class*='operation_split_line'] {
+#{contains('operation_split_line')} {
   @include border-color('4');
 }
-[class*='mediainfo_btn_rating'] {
+#{contains('mediainfo_btn_rating')} {
   @include background-color();
 }
-[class*='DanmukuBox_wrap'] {
+#{contains('DanmukuBox_wrap')} {
   @include background();
 }
-@include contains('paybar_pay_bar') {
-  @include contains('paybar_btn_pay') {
+#{contains('paybar_pay_bar')} {
+  #{contains('paybar_btn_pay')} {
     @include border-color();
     @include theme-background-color();
     @include foreground-color();
-    @include contains('paybar_active', &) {
+    &#{contains('paybar_active')} {
       @include background-color('4');
       @include color('e');
     }
   }
 }
 .player-left-components {
-  @include contains('toolbar_toolbar') {
-    @include contains('toolbar_item_info') {
+  #{contains('toolbar_toolbar')} {
+    #{contains('toolbar_item_info')} {
       path {
         @include fill('a');
       }
-      @include contains('toolbar_counts_num') {
+      #{contains('toolbar_counts_num')} {
         @include color('a');
       }
+      &#{contains('toolbar_active')},
       &:hover {
         path {
           @include theme-fill();
         }
-        @include contains('toolbar_counts_num') {
-          @include theme-color();
-        }
-      }
-      @include contains('toolbar_active', &) {
-        path {
-          @include theme-fill();
-        }
-        @include contains('toolbar_counts_num') {
+        #{contains('toolbar_counts_num')} {
           @include theme-color();
         }
       }
