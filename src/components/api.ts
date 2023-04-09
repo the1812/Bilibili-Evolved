@@ -15,6 +15,7 @@ import * as assUtils from './video/ass-utils'
 import * as xmlUtils from './video/xml-utils'
 import * as playerAgent from './video/player-agent'
 import * as playerLight from './video/player-light'
+import * as videoActions from './video/video-actions'
 import * as videoDanmaku from './video/video-danmaku'
 import * as videoInfo from './video/video-info'
 import * as videoQuality from './video/video-quality'
@@ -54,6 +55,7 @@ export const componentApis = {
     assUtils,
     playerLight,
     playerAgent,
+    videoActions,
     videoDanmaku,
     videoInfo,
     videoQuality,
