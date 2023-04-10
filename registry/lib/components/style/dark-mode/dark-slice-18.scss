@@ -151,3 +151,58 @@
     @include color('a');
   }
 }
+
+.action-list-container {
+  @include background-color('4');
+  .action-list-header {
+    .list-title {
+      @include color('e');
+    }
+    .list-count {
+      @include color('a');
+    }
+    .list-tool-btn {
+      &-icon {
+        @include color('a');
+      }
+      &:hover .list-tool-btn-icon {
+        @include theme-color();
+      }
+    }
+    .list-expand-btn {
+      &-icon {
+        @include color('e');
+      }
+    }
+  }
+  .list-display-name {
+    @include color('a');
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .split-line {
+    @include background-color('5');
+  }
+  .actionlist-item-inner {
+    .main {
+      .cover {
+        @include background-color('3');
+        .b-img {
+          @include background-color();
+        }
+      }
+      .info {
+        .views {
+          @include color('a');
+        }
+      }
+      .del-btn {
+        @include color('a');
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+  }
+}
