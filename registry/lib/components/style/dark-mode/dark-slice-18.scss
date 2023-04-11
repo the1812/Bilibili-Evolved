@@ -306,208 +306,30 @@
     }
   }
 }
-.link-navbar-ctnr {
-  .link-navbar {
-    @include background-color('2');
-    box-shadow: inset 0 -1px #333 !important;
-  }
-  .link-navbar .main-ctnr .nav-item .area-list-panel {
-    @include background-color('2');
-    @include border-color('3');
-    .list-item:hover {
-      @include background-color('4');
-    }
-  }
-  .showmore-link {
-    .more-label-text {
-      @include color('e');
-    }
-    .down-arrow-icon-block .down-arrow {
-      @include to-white();
-    }
-    .more-tab-content {
-      @include background-color('2');
-      @include border-color('3');
-      .waterfall-item:hover {
-        @include background-color('4');
-      }
-    }
-  }
-  .list-item .startlive-btn {
-    span {
-      @include color('e');
-    }
-  }
+.magic-adventures .magic-adventures-text {
+  @include color('e');
 }
-.search-bar-ctnr {
-  .search-bar.search-bar {
-    @include no-shadow();
-    &:hover {
+.gift-panel {
+  .gift-item-asset {
+    .b-img {
       @include background-color();
     }
   }
-  #nav-searchform {
-    @include background-color();
-    @include border-color('3');
-    &.is-actived,
-    &.is-focus {
-      .nav-search-content {
-        @include background-color('4');
-      }
+  .gift-item {
+    .gift-label {
+      @include color('e');
     }
-  }
-  .nav-search-clean path {
-    @include fill('a');
-  }
-  .search-btn {
-    &:hover {
-      @include background-color('4');
-    }
-    .search-icon {
-      @include to-white();
-    }
-  }
-  .search-pannel {
-    @include background-color('2');
-    .header .clear {
+    .panel-price {
       @include color('a');
     }
-    .histories {
-      .history-item {
-        @include background-color('3');
-        @include color('e');
-      }
-    }
-    .history-fold-wrap {
-      .fold-text {
-        @include color('a');
-      }
-      .fold-icon {
-        @include fill('a');
-      }
-      &:hover {
-        .fold-text {
-          @include theme-color();
-        }
-        .fold-icon {
-          @include theme-fill();
-        }
-      }
-    }
-    .trending {
-      .trending-item {
-        &.active,
-        &:focus,
-        &:hover {
-          @include background-color('3');
-        }
-        .trendings-rank {
-          @include color('a');
-          &.search-rank-top {
-            @include color('e');
-          }
-        }
-        .trending-text {
-          @include color('e');
-        }
-      }
-    }
   }
 }
-.user-panel-ctnr {
-  .user-panel {
-    @include border-color('3');
+.gift-sender-panel {
+  .content {
     @include background-color('2');
-    .level-progress {
-      @include background-color('3');
-    }
-    .user-level {
-      @include theme-color();
-    }
-    .battery-content {
-      @include color('e');
-    }
-    .pay-button {
-      @include theme-background-color();
-      @include foreground-color();
-    }
-    .content-ctnr {
-      .control-block {
-        &:hover {
-          @include background-color('4');
-        }
-      }
-      .ctrl-btn {
-        @include color('e');
-        .icon {
-          @include to-white();
-        }
-      }
-      .cut-line {
-        @include border-color('4');
-      }
-      .loginout-btn {
-        @include color('e');
-        .login-out-icon {
-          @include to-white();
-        }
-      }
-    }
   }
-}
-.link-panel-ctnr {
-  @include background-color('2');
-  @include border-color('3');
-  @include color('e');
-  .load-more-btn {
-    @include background-color();
-    @include color('e');
-    &:hover {
-      @include background-color('4');
-    }
-  }
-}
-.calendar-checkin {
-  @include background-color('2');
-  @include border-color('3');
-  @include color('e');
-  .divider {
-    @include background-color('3');
-  }
-  .title {
-    @include background-color();
-  }
-  .calendar-wrapper {
-    @include background-color();
-  }
-}
-.download-panel-ctnr {
-  @include background-color('2');
-  @include border-color('3');
-  @include color('e');
-  .content-ctnr {
-    .title {
-      @include color('e');
-    }
-    .item {
-      .name,
-      .light-name {
-        @include color('e');
-      }
-      .desc {
-        @include color('a');
-      }
-      .download-link {
-        @include color('a');
-        &:hover {
-          @include theme-color();
-        }
-      }
-      &:hover {
-        .light-name {
-          @include theme-color();
-        }
-      }
-    }
+  .feed-bar-section {
+    @include background-color('4');
+    @include border-color('4');
   }
 }

@@ -147,8 +147,9 @@
 }
 .gift-item.buy {
   &.hover,
+  &.hover-item,
   &:hover {
-    @include background-color("2");
+    @include background-color("3");
   }
 }
 .cntr {
