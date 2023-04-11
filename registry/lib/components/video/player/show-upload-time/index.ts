@@ -63,8 +63,8 @@ export const component = defineComponentMetadata({
         'm+': time.getMinutes(), // 分
         's+': time.getSeconds(), // 秒
         'q+': Math.floor((time.getMonth() + 3) / 3), // 季度
-        up: upName, // up主名
       }
+      // 处理年份
       let matchResult: RegExpMatchArray | null = format.match(/(y+)/)
       if (matchResult !== null) {
         format = format.replace(
@@ -72,6 +72,7 @@ export const component = defineComponentMetadata({
           `${time.getFullYear()}`.substring(4 - matchResult[0].length),
         )
       }
+      // 处理除年份外的时间
       for (const key in formatMap) {
         if (!key) {
           continue
@@ -85,6 +86,11 @@ export const component = defineComponentMetadata({
               : `00${formatMap[key]}`.substring(`${formatMap[key]}`.length),
           )
         }
+      }
+      // 处理up主名
+      matchResult = format.match(/(up)/)
+      if (matchResult !== null) {
+        format = format.replace(matchResult[0], upName)
       }
       return format
     }
