@@ -866,6 +866,11 @@
     @include background-color();
   }
 }
+.recommended-container_floor-aside{
+  .container.is-version8{
+    @include background-color();
+  }
+}
 .feed-floor .channel-floor {
   @include border-color('4');
 }
