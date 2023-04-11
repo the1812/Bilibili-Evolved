@@ -306,3 +306,111 @@
     }
   }
 }
+.link-navbar-ctnr {
+  .link-navbar {
+    @include background-color('2');
+    box-shadow: inset 0 -1px #333 !important;
+  }
+  .link-navbar .main-ctnr .nav-item .area-list-panel {
+    @include background-color('2');
+    @include border-color('3');
+    .list-item:hover {
+      @include background-color('4');
+    }
+  }
+  .showmore-link {
+    .more-label-text {
+      @include color('e');
+    }
+    .down-arrow-icon-block .down-arrow {
+      @include to-white();
+    }
+    .more-tab-content {
+      @include background-color('2');
+      @include border-color('3');
+      .waterfall-item:hover {
+        @include background-color('4');
+      }
+    }
+  }
+  .list-item .startlive-btn {
+    span {
+      @include color('e');
+    }
+  }
+}
+.search-bar-ctnr {
+  .search-bar.search-bar {
+    @include no-shadow();
+    &:hover {
+      @include background-color();
+    }
+  }
+  #nav-searchform {
+    @include background-color();
+    @include border-color('3');
+    &.is-actived,
+    &.is-focus {
+      .nav-search-content {
+        @include background-color('4');
+      }
+    }
+  }
+  .nav-search-clean path {
+    @include fill('a');
+  }
+  .search-btn {
+    &:hover {
+      @include background-color('4');
+    }
+    .search-icon {
+      @include to-white();
+    }
+  }
+  .search-pannel {
+    @include background-color('2');
+    .header .clear {
+      @include color('a');
+    }
+    .histories {
+      .history-item {
+        @include background-color('3');
+        @include color('e');
+      }
+    }
+    .history-fold-wrap {
+      .fold-text {
+        @include color('a');
+      }
+      .fold-icon {
+        @include fill('a');
+      }
+      &:hover {
+        .fold-text {
+          @include theme-color();
+        }
+        .fold-icon {
+          @include theme-fill();
+        }
+      }
+    }
+    .trending {
+      .trending-item {
+        &.active,
+        &:focus,
+        &:hover {
+          @include background-color('3');
+        }
+        .trendings-rank {
+          @include color('a');
+          &.search-rank-top {
+            @include color('e');
+          }
+        }
+        .trending-text {
+          @include color('e');
+        }
+      }
+    }
+  }
+}
