@@ -49,13 +49,18 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-indicator {
   @include background-color('5');
 }
+.bpx-player-auxiliary .bpx-player-dm-wrap,
 .player-auxiliary-area .player-auxiliary-bscrollbar {
   .bscroll-vertical-scrollbar,
   .bscroll-vertical-scrollbar.mousedown,
   &:hover .bscroll-vertical-scrollbar {
     @include background-color();
   }
+  .bscroll-indicator {
+    @include background-color('5');
+  }
 }
+.bpx-player-auxiliary .bpx-player-dm-wrap,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap {
   .bscroll-vertical-scrollbar.mousedown,
   &:hover .bscroll-vertical-scrollbar {

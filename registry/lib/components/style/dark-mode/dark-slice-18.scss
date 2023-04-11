@@ -155,6 +155,9 @@
 .action-list-container {
   @include background-color('4');
   .action-list-header {
+    &:hover {
+      @include background-color();
+    }
     .list-title {
       @include color('e');
     }
@@ -203,6 +206,103 @@
           @include theme-color();
         }
       }
+    }
+    &.siglep-active {
+      .title {
+        .playing-gif {
+          @include to-theme('blue');
+        }
+      }
+    }
+  }
+}
+.recommend-list-container .rec-footer {
+  @include background-color('3');
+  @include color('e');
+}
+.recommend-video-card {
+  .info {
+    .upname {
+      @include color('a');
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .playinfo {
+      @include color('a');
+    }
+  }
+}
+.video-tag-container {
+  .tag-panel {
+    @include background-color();
+    .tag-link {
+      @include background-color('3');
+      @include color('e');
+    }
+  }
+}
+.playlist-comment {
+  .comment-container {
+    @include background-color();
+  }
+}
+.video-info-container {
+  .video-title {
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .video-info-detail {
+    @include color('a');
+    &-list {
+      .item path {
+        @include fill('a');
+      }
+    }
+  }
+}
+.video-toolbar-left-item {
+  @include color('a');
+  &:hover,
+  &.on {
+    @include theme-color();
+  }
+}
+.video-toolbar-right-item:not(.dropdown-item) {
+  @include color('a');
+  &:hover {
+    @include theme-color();
+  }
+}
+.video-tool-more-popover {
+  @include background-color('3');
+  .video-tool-more-dropdown {
+    .dropdown-item {
+      @include color('e');
+      &:hover {
+        @include background-color('4');
+      }
+      .video-toolbar-item-icon {
+        @include color('e');
+      }
+    }
+  }
+}
+
+.playlist-container--right {
+  .up-detail .up-description {
+    @include color('a');
+  }
+}
+.upinfo-btn-panel .new-charge-btn {
+  @include background-color('4');
+  @include color('e');
+  &.charge-btn-loaded {
+    @include background-color();
+    @include theme-color();
+    &:hover {
+      @include theme-background-color('20');
     }
   }
 }
