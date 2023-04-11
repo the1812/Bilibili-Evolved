@@ -414,3 +414,100 @@
     }
   }
 }
+.user-panel-ctnr {
+  .user-panel {
+    @include border-color('3');
+    @include background-color('2');
+    .level-progress {
+      @include background-color('3');
+    }
+    .user-level {
+      @include theme-color();
+    }
+    .battery-content {
+      @include color('e');
+    }
+    .pay-button {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+    .content-ctnr {
+      .control-block {
+        &:hover {
+          @include background-color('4');
+        }
+      }
+      .ctrl-btn {
+        @include color('e');
+        .icon {
+          @include to-white();
+        }
+      }
+      .cut-line {
+        @include border-color('4');
+      }
+      .loginout-btn {
+        @include color('e');
+        .login-out-icon {
+          @include to-white();
+        }
+      }
+    }
+  }
+}
+.link-panel-ctnr {
+  @include background-color('2');
+  @include border-color('3');
+  @include color('e');
+  .load-more-btn {
+    @include background-color();
+    @include color('e');
+    &:hover {
+      @include background-color('4');
+    }
+  }
+}
+.calendar-checkin {
+  @include background-color('2');
+  @include border-color('3');
+  @include color('e');
+  .divider {
+    @include background-color('3');
+  }
+  .title {
+    @include background-color();
+  }
+  .calendar-wrapper {
+    @include background-color();
+  }
+}
+.download-panel-ctnr {
+  @include background-color('2');
+  @include border-color('3');
+  @include color('e');
+  .content-ctnr {
+    .title {
+      @include color('e');
+    }
+    .item {
+      .name,
+      .light-name {
+        @include color('e');
+      }
+      .desc {
+        @include color('a');
+      }
+      .download-link {
+        @include color('a');
+        &:hover {
+          @include theme-color();
+        }
+      }
+      &:hover {
+        .light-name {
+          @include theme-color();
+        }
+      }
+    }
+  }
+}

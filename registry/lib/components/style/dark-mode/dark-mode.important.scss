@@ -311,8 +311,6 @@ blockquote {
   & .link-navbar {
     @include background-color('3');
   }
-  .calendar-checkin .calendar-wrapper,
-  .download-panel-ctnr,
   .nav-item,
   .nav-item .area-list-panel .list-item,
   .nav-logo,
@@ -327,11 +325,6 @@ blockquote {
   .shortcuts-ctnr .shortcut-item:not(:last-child):hover {
     @include background-color('4');
   }
-  .calendar-checkin,
-  .calendar-checkin .calendar-wrapper,
-  .calendar-checkin .title,
-  .download-panel-ctnr,
-  .link-panel-ctnr,
   .link-panel-ctnr .totally-empty-hint,
   .nav-item .area-list-panel,
   .user-panel-ctnr .user-panel,
