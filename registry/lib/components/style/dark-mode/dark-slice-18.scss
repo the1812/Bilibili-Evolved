@@ -240,6 +240,32 @@
       @include background-color('3');
       @include color('e');
     }
+    .show-more-btn {
+      @include background-color('3');
+      @include color('e');
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+}
+.detail-channel-popup {
+  .channel-info {
+    .channel-desc {
+      @include color('a');
+    }
+  }
+  .channel-entry-btn {
+    @include theme-color();
+    &:hover {
+      @include foreground-color();
+    }
+  }
+  .toggle-sub-btn {
+    &.no-sub:hover {
+      @include border-color();
+      @include theme-background-color();
+    }
   }
 }
 .playlist-comment {
@@ -331,5 +357,65 @@
   .feed-bar-section {
     @include background-color('4');
     @include border-color('4');
+  }
+}
+.gift-control-panel {
+  .vertical-separator {
+    @include border-color('5');
+  }
+  .m-guard-ent,
+  .m-recharge-ent {
+    &:hover {
+      @include background-color('3');
+    }
+    .guard-info,
+    .balance-info {
+      .title {
+        @include color('a');
+      }
+      .guard-ent-info,
+      .recharge-ent-info {
+        @include color('e');
+      }
+      .right-arrow {
+        @include border-color('e');
+      }
+    }
+  }
+}
+.z-gift-package {
+  .silver-wallet {
+    @include background-color('3');
+    @include color('e');
+  }
+  .gift-item-wrap {
+    .gift-item {
+      &.free:hover {
+        @include background-color('3');
+      }
+    }
+    .num {
+      @include color('e');
+    }
+  }
+  .des {
+    @include color('a');
+  }
+}
+.gift-presets {
+  .gift-panel-switch {
+    @include background-color('3');
+    .arrow {
+      @include border-color('e');
+    }
+  }
+  .gift-package-btn {
+    @include color('e');
+    .bag-icon {
+      @include border-color('e');
+    }
+    &:hover {
+      @include background-color('8884');
+    }
   }
 }
