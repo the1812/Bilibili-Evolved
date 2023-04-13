@@ -320,9 +320,7 @@ blockquote {
     @include color('e');
   }
   .link-panel-ctnr .ps__thumb-x,
-  .link-panel-ctnr .ps__thumb-y,
-  .nav-item:hover,
-  .shortcuts-ctnr .shortcut-item:not(:last-child):hover {
+  .link-panel-ctnr .ps__thumb-y {
     @include background-color('4');
   }
   .link-panel-ctnr .totally-empty-hint,
@@ -344,10 +342,14 @@ blockquote {
   }
 }
 
+.link-navbar-wrap,
 .link-navbar-ctnr {
   .link-navbar {
     @include background-color('2');
     box-shadow: inset 0 -1px #333 !important;
+  }
+  .shortcut-item .list-item:hover {
+    @include background-color();
   }
   .link-navbar .main-ctnr .nav-item .area-list-panel {
     @include background-color('2');
@@ -407,8 +409,13 @@ blockquote {
   }
   .search-pannel {
     @include background-color('2');
-    .header .clear {
-      @include color('a');
+    .header {
+      .title {
+        @include color('e');
+      }
+      .clear {
+        @include color('a');
+      }
     }
     .histories {
       .history-item {
@@ -461,6 +468,9 @@ blockquote {
     }
     .user-level {
       @include theme-color();
+    }
+    .section-block {
+      @include background-color();
     }
     .battery-content {
       @include color('e');
