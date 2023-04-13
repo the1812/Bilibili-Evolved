@@ -215,28 +215,40 @@ $prefix: 'simplifyLiveroom-switch';
     }
   }
   .gift-control-panel {
+    .gift-presets {
+      .gift-section {
+        display: flex !important;
+      }
+    }
     .more-gift-section {
       position: static !important;
-      margin: 0 10px 0 0 !important;
-      height: 48px !important;
+      margin: 0 6px 0 0 !important;
+      height: auto !important;
     }
     .z-gift-package {
       margin: auto 0 !important;
       position: static !important;
-      .gift-package {
-        margin-top: 2px;
+      .gift-package-btn {
+        padding: 0 !important;
       }
     }
     .right-part {
       padding-top: 0 !important;
     }
-    .right-section > .gift-section {
-      height: 42px !important;
-    }
-    .battery-pic {
+    .right-section {
       display: none !important;
     }
-    .skin-bg{
+    // .right-section {
+    //   align-self: stretch !important;
+    //   align-items: center !important;
+    //   .vertical-separator {
+    //     height: 100% !important;
+    //   }
+    //   > .gift-section {
+    //     height: 42px !important;
+    //   }
+    // }
+    .skin-bg {
       height: 48px !important;
     }
   }
