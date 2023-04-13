@@ -244,6 +244,7 @@
       @include color('e');
     }
     &__desc,
+    &__text,
     &__stat {
       @include color('a');
     }

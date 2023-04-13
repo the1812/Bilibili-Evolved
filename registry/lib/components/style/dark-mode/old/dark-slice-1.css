@@ -194,7 +194,6 @@ div.con,
 .voted-result,
 .info-model,
 .app-watch,
-#app .header,
 #app .submit,
 .appeal-box,
 .fans-medal-item:not(.medal-guard) .fans-medal-level,
@@ -1068,8 +1067,7 @@ font,
 li.tag,
 li.tag > a,
 #app .container,
-#app .submit .cancel,
-#app .header
+#app .submit .cancel
 {
     color: #eee !important;
 }
@@ -1296,7 +1294,6 @@ div.bar>div.num,
 .fjw-case-detail .ban-detail .content-box .jury-status,
 .app-watch,
 .app-watch .title,
-#app .header,
 .iScrollIndicator,
 #app .submit,
 #app .submit .cancel,
@@ -2187,8 +2184,7 @@ a.up-name:hover,
 .video-toolbar .ops>span.on>i,
 .video-toolbar .ops>span:hover,
 .video-toolbar .ops>span:hover>i,
-.app-watch .app-look .foot-txt a,
-#app .header .close:hover
+.app-watch .app-look .foot-txt a
 {
     color: var(--theme-color) !important;
 }

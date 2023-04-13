@@ -419,3 +419,28 @@
     }
   }
 }
+.members-info-container {
+  .header {
+    @include background-color('4');
+    .staff-amt {
+      @include color('a');
+    }
+    .fold-btn path {
+      @include fill('e');
+    }
+  }
+  .container {
+    @include background-color();
+    .staff-info {
+      .staff-name {
+        @include color('e');
+        &.is-vip {
+          @include vip-color();
+        }
+      }
+      .info-tag {
+        @include color('a');
+      }
+    }
+  }
+}
