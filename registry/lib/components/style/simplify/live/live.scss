@@ -198,7 +198,7 @@ $prefix: 'simplifyLiveroom-switch';
     display: none !important;
   }
   .gift-control-section,
-  .gift-control-panel {
+  #gift-control-vm .gift-control-panel {
     height: 48px !important;
   }
   .gift-control-panel .right-part {
