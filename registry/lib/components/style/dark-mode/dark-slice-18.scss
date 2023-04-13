@@ -336,11 +336,6 @@
   @include color('e');
 }
 .gift-panel {
-  .gift-item-asset {
-    .b-img {
-      @include background-color();
-    }
-  }
   .gift-item {
     .gift-label {
       @include color('e');
@@ -383,7 +378,27 @@
     }
   }
 }
-.z-gift-package {
+.gift-presets {
+  .gift-panel-switch {
+    @include background-color('3');
+    .arrow {
+      @include border-color('e');
+    }
+  }
+}
+.gift-package {
+  @include color('e');
+  .gift-item-asset {
+    .b-img {
+      @include background-color();
+    }
+  }
+  .bag-icon {
+    @include border-color('e');
+  }
+  &:hover {
+    @include background-color('8884');
+  }
   .silver-wallet {
     @include background-color('3');
     @include color('e');
@@ -402,21 +417,9 @@
     @include color('a');
   }
 }
-.gift-presets {
-  .gift-panel-switch {
-    @include background-color('3');
-    .arrow {
-      @include border-color('e');
-    }
-  }
-  .gift-package-btn {
+.room-introduction-tag {
+  .icon-label {
     @include color('e');
-    .bag-icon {
-      @include border-color('e');
-    }
-    &:hover {
-      @include background-color('8884');
-    }
   }
 }
 .members-info-container {
