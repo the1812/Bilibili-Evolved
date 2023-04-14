@@ -386,6 +386,12 @@
     }
   }
 }
+.gift-package-btn {
+  @include color('e');
+  &:hover {
+    @include background-color('8884');
+  }
+}
 .gift-package {
   @include color('e');
   .gift-item-asset {
