@@ -861,7 +861,8 @@
 .bili-comment.browser-pc {
   @include background-color();
 }
-.recommended-container {
+.recommended-container,
+.recommended-container_floor-aside {
   .container {
     @include background-color();
   }
