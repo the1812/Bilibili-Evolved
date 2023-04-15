@@ -1,3 +1,5 @@
+/* ⚠ Ajax Hook API 已废弃, 请勿使用 */
+
 import { getHandlers } from '.'
 
 type AjaxListenerType =
@@ -12,6 +14,7 @@ type AjaxListenerType =
 
 /**
  * 添加Ajax监听器
+ * @deprecated ⚠ Ajax Hook API 已废弃, 请勿使用
  * @param type 事件类型
  * @param listener 监听器函数
  */
@@ -20,6 +23,7 @@ export const addAjaxListener = (type: AjaxListenerType, listener: (...args: any[
 }
 /**
  * 移除Ajax监听器
+ * @deprecated ⚠ Ajax Hook API 已废弃, 请勿使用
  * @param type 事件类型
  * @param listener 监听器函数
  */
