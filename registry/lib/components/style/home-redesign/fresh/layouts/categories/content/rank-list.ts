@@ -11,6 +11,7 @@ export interface RankListCard {
   dynamic?: string
 }
 export const rankListCssVars = {
+  panelWidth: 400,
   panelHeight: 608,
   padding: 12,
   rankItemHeight: 110,
@@ -22,4 +23,9 @@ export const rankListCssVars = {
   secondCoverWidth: 168,
   thirdCoverHeight: 90,
   thirdCoverWidth: 139,
+}
+export const compactRankListCssVars = {
+  panelWidth: 400,
+  panelHeight: 608,
+  padding: 12,
 }
