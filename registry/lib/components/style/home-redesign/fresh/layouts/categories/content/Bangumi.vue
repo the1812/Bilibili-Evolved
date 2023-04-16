@@ -31,8 +31,7 @@ import RankList from './RankList.vue'
 import CompactRankList from './CompactRankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
 import { RankListCard } from './rank-list'
-import { freshHomeOptions } from '../../../options'
-import { RankListMode } from '../../../types'
+import { compactRankListMixin } from '../../../../mixin'
 
 const bangumiDataMap = {
   anime: {
@@ -54,6 +53,7 @@ export default Vue.extend({
     VButton,
     VIcon,
   },
+  mixins: [compactRankListMixin()],
   props: {
     region: {
       type: Object,
@@ -69,23 +69,9 @@ export default Vue.extend({
       timelineApi: `https://api.bilibili.com/pgc/web/timeline?types=${seasonType}&before=6&after=6`,
       rankingsApi: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`,
       rankingsLink: `https://www.bilibili.com/v/popular/rank/${rankingName}`,
-      rankListMode: freshHomeOptions.rankListMode,
     }
   },
-  computed: {
-    isCompactRankList() {
-      return this.rankListMode === RankListMode.Compact
-    },
-  },
   methods: {
-    toggleRankListMode() {
-      if (this.rankListMode === RankListMode.Compact) {
-        this.rankListMode = RankListMode.Default
-      } else if (this.rankListMode === RankListMode.Default) {
-        this.rankListMode = RankListMode.Compact
-      }
-      freshHomeOptions.rankListMode = this.rankListMode
-    },
     parseJson(json: any) {
       const items = (json.data?.list ?? []) as any[]
       const cards = items

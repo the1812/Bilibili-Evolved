@@ -12,7 +12,7 @@ export interface RankListCard {
 }
 export const rankListCssVars = {
   panelWidth: 400,
-  panelHeight: 608,
+  panelHeight: 604,
   padding: 12,
   rankItemHeight: 110,
   rankItemMargin: 24,
@@ -26,6 +26,6 @@ export const rankListCssVars = {
 }
 export const compactRankListCssVars = {
   panelWidth: 376,
-  panelHeight: 584,
+  panelHeight: 580,
   padding: 0,
 }

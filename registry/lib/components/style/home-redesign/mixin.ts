@@ -1,4 +1,6 @@
 import { getJson } from '@/core/ajax'
+import { freshHomeOptions } from './fresh/options'
+import { RankListMode } from './fresh/types'
 
 /**
  * 封装一些 API 请求的通用行为, 使用者要定义 parseJson 方法将返回的 JSON 转换为数据数组, 会自动存到 this.items 里
@@ -70,3 +72,29 @@ export const cssVariableMixin = (variables: Record<string, string | number>) =>
       })
     },
   })
+
+/** 使用 CompactRankList, 提供一些与设置关联的 data */
+export const compactRankListMixin = () => {
+  return Vue.extend({
+    data() {
+      return {
+        rankListMode: freshHomeOptions.rankListMode,
+      }
+    },
+    computed: {
+      isCompactRankList() {
+        return this.rankListMode === RankListMode.Compact
+      },
+    },
+    methods: {
+      toggleRankListMode() {
+        if (this.rankListMode === RankListMode.Compact) {
+          this.rankListMode = RankListMode.Default
+        } else if (this.rankListMode === RankListMode.Default) {
+          this.rankListMode = RankListMode.Compact
+        }
+        freshHomeOptions.rankListMode = this.rankListMode
+      },
+    },
+  })
+}
