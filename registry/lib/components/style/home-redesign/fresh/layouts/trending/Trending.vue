@@ -24,7 +24,7 @@
 <script lang="ts">
 import { VButton, VIcon } from '@/ui'
 import VideoList from '../../VideoList.vue'
-import { freshHomeOptions } from '../../types'
+import { freshHomeOptions } from '../../options'
 import { getTrendingVideos } from '../../../trending'
 
 export default Vue.extend({

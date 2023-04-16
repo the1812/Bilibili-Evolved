@@ -7,23 +7,32 @@
       <BangumiTimeline :api="timelineApi" />
     </div>
     <div class="fresh-home-categories-bangumi-rank-list">
-      <a
-        class="fresh-home-categories-bangumi-rank-list-header"
-        :href="rankingsLink"
-        target="_blank"
-      >
-        <SubHeader> 排行榜 </SubHeader>
-      </a>
-      <RankList bangumi-mode :parse-json="parseJson" :api="rankingsApi" />
+      <div class="fresh-home-categories-bangumi-rank-list-header">
+        <a :href="rankingsLink" target="_blank">
+          <SubHeader> 排行榜 </SubHeader>
+        </a>
+        <VButton v-if="isCompactRankList" icon title="显示较少项目" @click="toggleRankListMode">
+          <VIcon icon="mdi-poll" :size="16" />
+        </VButton>
+        <VButton v-else icon title="显示较多项目" @click="toggleRankListMode">
+          <VIcon icon="mdi-format-list-text" :size="16" />
+        </VButton>
+      </div>
+      <CompactRankList v-if="isCompactRankList" :parse-json="parseJson" :api="rankingsApi" />
+      <RankList v-else bangumi-mode :parse-json="parseJson" :api="rankingsApi" />
     </div>
   </div>
 </template>
 <script lang="ts">
+import { VButton, VIcon } from '@/ui'
 import { applyContentFilter } from '@/components/feeds/api'
 import SubHeader from '../../../SubHeader.vue'
 import RankList from './RankList.vue'
+import CompactRankList from './CompactRankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
 import { RankListCard } from './rank-list'
+import { freshHomeOptions } from '../../../options'
+import { RankListMode } from '../../../types'
 
 const bangumiDataMap = {
   anime: {
@@ -41,6 +50,9 @@ export default Vue.extend({
     SubHeader,
     BangumiTimeline,
     RankList,
+    CompactRankList,
+    VButton,
+    VIcon,
   },
   props: {
     region: {
@@ -57,9 +69,23 @@ export default Vue.extend({
       timelineApi: `https://api.bilibili.com/pgc/web/timeline?types=${seasonType}&before=6&after=6`,
       rankingsApi: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`,
       rankingsLink: `https://www.bilibili.com/v/popular/rank/${rankingName}`,
+      rankListMode: freshHomeOptions.rankListMode,
     }
   },
+  computed: {
+    isCompactRankList() {
+      return this.rankListMode === RankListMode.Compact
+    },
+  },
   methods: {
+    toggleRankListMode() {
+      if (this.rankListMode === RankListMode.Compact) {
+        this.rankListMode = RankListMode.Default
+      } else if (this.rankListMode === RankListMode.Default) {
+        this.rankListMode = RankListMode.Compact
+      }
+      freshHomeOptions.rankListMode = this.rankListMode
+    },
     parseJson(json: any) {
       const items = (json.data?.list ?? []) as any[]
       const cards = items
@@ -116,10 +142,15 @@ export default Vue.extend({
   }
   &-rank-list {
     @include v-stretch(var(--fresh-home-categories-header-gap));
-    // &-header {
-    //   // Timeline 的 header 中, 图标为 20px, 上下 padding 共 8px, 这里的 line-height 需要保持一致来对齐
-    //   line-height: calc(20px + 8px);
-    // }
+    &-header {
+      // Timeline 的 header 中, 图标为 20px, 上下 padding 共 8px, 这里的 line-height 需要保持一致来对齐
+      // line-height: calc(20px + 8px);
+      @include h-center();
+      justify-content: space-between;
+      .be-icon {
+        margin: 1px;
+      }
+    }
   }
 }
 </style>

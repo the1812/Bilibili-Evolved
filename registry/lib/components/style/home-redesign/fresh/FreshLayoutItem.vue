@@ -12,7 +12,7 @@
   </fragment>
 </template>
 <script lang="ts">
-import { freshHomeOptions } from './types'
+import { freshHomeOptions } from './options'
 
 export default Vue.extend({
   props: {
@@ -22,6 +22,10 @@ export default Vue.extend({
     },
   },
   data() {
+    console.log({
+      name: this.item.name,
+      options: freshHomeOptions.layoutOptions[this.item.name] ?? {},
+    })
     return {
       options: freshHomeOptions.layoutOptions[this.item.name] ?? {},
     }
