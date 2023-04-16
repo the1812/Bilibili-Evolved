@@ -296,7 +296,7 @@ export default Vue.extend({
         padding: 0 12px;
       }
       .be-up-info {
-        margin: 4px 8px;
+        margin: 4px 10px;
       }
     }
   }
@@ -329,7 +329,7 @@ export default Vue.extend({
         padding: 0 12px;
       }
       .be-up-info {
-        margin: 4px 8px;
+        margin: 4px 10px;
       }
     }
   }

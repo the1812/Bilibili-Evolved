@@ -17,11 +17,13 @@
       </div>
     </div>
     <div v-if="loaded" ref="content" class="fresh-home-compact-rank-list-content">
-      <div
+      <a
         v-for="(video, index) of items"
         :key="video.id"
         ref="cards"
         class="compact-rank-list-card"
+        :href="video.videoHref"
+        target="_blank"
       >
         <div class="compact-rank-list-card-cover">
           <div class="compact-rank-list-card-rank" :class="{ 'top-three': index < 3 }">
@@ -43,7 +45,7 @@
             {{ video.playCount | formatCount }}
           </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </template>
@@ -138,26 +140,22 @@ export default Vue.extend({
   }
   .compact-rank-list-card {
     scroll-snap-align: start;
+    cursor: pointer;
     @include h-center(8px);
     &-cover {
       @include card(12px);
       flex-shrink: 0;
-      cursor: pointer;
       display: flex;
       align-self: center;
       box-shadow: none;
       overflow: hidden;
       transform-origin: bottom;
-      transition: 0.2s ease-out;
       position: relative;
       img {
         transition: 0.2s ease-out;
       }
       &:hover img {
         transform: scale(1.05);
-      }
-      &:hover {
-        transform: scale(1.025);
       }
     }
     &-rank {
@@ -181,11 +179,17 @@ export default Vue.extend({
     }
     &-info {
       @include v-stretch(6px);
+      flex: 1 0 0;
+      width: 0;
     }
     &-title {
       line-height: 1.5;
+      transition: color 0.2s ease-out;
       @include semi-bold();
       @include single-line();
+      &:hover {
+        color: var(--theme-color);
+      }
     }
     &-stats {
       @include h-center(12px);
