@@ -21,11 +21,4 @@
       transition: 0.5s ease-out;
     }
   }
-
-  &.loaded {
-    @include no-scrollbar();
-    .animation {
-      animation-play-state: running;
-    }
-  }
 }

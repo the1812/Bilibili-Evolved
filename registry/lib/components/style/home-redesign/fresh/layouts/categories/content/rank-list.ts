@@ -25,7 +25,7 @@ export const rankListCssVars = {
   thirdCoverWidth: 139,
 }
 export const compactRankListCssVars = {
-  panelWidth: 400,
-  panelHeight: 608,
-  padding: 12,
+  panelWidth: 376,
+  panelHeight: 584,
+  padding: 0,
 }

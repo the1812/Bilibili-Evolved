@@ -22,7 +22,7 @@
   }
   animation: bounce-y-#{$offset-in-px} 0.4s ease-out;
 }
-@mixin scroll-mask-x($mask-width: 24px) {
+@mixin scroll-mask-x($mask-width: 24px, $base-color: #fff) {
   &::before,
   &::after {
     content: "";
@@ -39,19 +39,51 @@
     height: 100%;
     flex-shrink: 0;
     top: 0;
-    z-index: 1;
+    z-index: 100;
   }
   &.not-empty::before {
-    background: linear-gradient(to right, var(--home-base-color) 40%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to right, $base-color 40%, rgba(0, 0, 0, 0) 100%);
     left: -2px;
   }
   &.not-empty::after {
-    background: linear-gradient(to left, var(--home-base-color) 40%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(to left, $base-color 40%, rgba(0, 0, 0, 0) 100%);
     right: -2px;
   }
   &.scroll-top::before,
   &.scroll-bottom::after {
     width: 0;
+  }
+}
+@mixin scroll-mask-y($mask-height: 24px, $base-color: #fff) {
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    opacity: 0;
+  }
+  &.not-empty::before,
+  &.not-empty::after {
+    position: absolute;
+    pointer-events: none;
+    transition: .1s ease-out;
+    height: $mask-height;
+    opacity: 1;
+    width: 100%;
+    flex-shrink: 0;
+    left: 0;
+    z-index: 100;
+  }
+  &.not-empty::before {
+    background: linear-gradient(to bottom, $base-color 40%, rgba(0, 0, 0, 0) 100%);
+    top: -2px;
+  }
+  &.not-empty::after {
+    background: linear-gradient(to top, $base-color 40%, rgba(0, 0, 0, 0) 100%);
+    bottom: -2px;
+  }
+  &.scroll-top::before,
+  &.scroll-bottom::after {
+    height: 0;
   }
 }
 @mixin item-slides-y($offset: 48px) {

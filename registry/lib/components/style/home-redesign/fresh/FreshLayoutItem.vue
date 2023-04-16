@@ -22,10 +22,6 @@ export default Vue.extend({
     },
   },
   data() {
-    console.log({
-      name: this.item.name,
-      options: freshHomeOptions.layoutOptions[this.item.name] ?? {},
-    })
     return {
       options: freshHomeOptions.layoutOptions[this.item.name] ?? {},
     }

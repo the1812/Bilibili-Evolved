@@ -1,5 +1,8 @@
 <template>
-  <div class="fresh-home-compact-rank-list" :class="{ loading, loaded }">
+  <div
+    class="fresh-home-compact-rank-list scroll-top scroll-bottom"
+    :class="{ loading, loaded, 'not-empty': items.length > 0 }"
+  >
     <div v-if="!loaded" class="fresh-home-compact-rank-list-loading-container">
       <VLoading v-if="loading" />
       <div
@@ -13,8 +16,13 @@
         </VButton>
       </div>
     </div>
-    <template v-if="loaded">
-      <div v-for="(video, index) of items" :key="video.id" class="compact-rank-list-card">
+    <div v-if="loaded" ref="content" class="fresh-home-compact-rank-list-content">
+      <div
+        v-for="(video, index) of items"
+        :key="video.id"
+        ref="cards"
+        class="compact-rank-list-card"
+      >
         <div class="compact-rank-list-card-cover">
           <div class="compact-rank-list-card-rank" :class="{ 'top-three': index < 3 }">
             {{ index + 1 }}
@@ -36,7 +44,7 @@
           </div>
         </div>
       </div>
-    </template>
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -44,6 +52,7 @@ import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
 import { VIcon, VLoading, VEmpty, VButton, DpiImage } from '@/ui'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
+import { cleanUpScrollMask, setupScrollMask } from '../../../scroll-mask'
 import { compactRankListCssVars } from './rank-list'
 
 export default Vue.extend({
@@ -80,23 +89,55 @@ export default Vue.extend({
       }
     },
   },
+  watch: {
+    loaded() {
+      if (this.loaded) {
+        this.setupIntersection()
+      }
+    },
+  },
+  beforeDestroy() {
+    cleanUpScrollMask(this.$el)
+  },
+  methods: {
+    async setupIntersection() {
+      await this.$nextTick()
+      console.log(this.$refs.cards)
+      setupScrollMask({
+        container: this.$el,
+        items: this.$refs.cards,
+      })
+    },
+  },
 })
 </script>
 <style lang="scss">
 @import 'common';
+@import 'effects';
 @import './rank-list';
 
 .fresh-home-compact-rank-list {
+  @include rank-list-common();
   @include v-stretch();
+  @include scroll-mask-y(8px, var(--home-base-color));
   width: var(--panel-width);
   height: var(--panel-height);
   min-height: var(--panel-height);
   padding: var(--padding);
   margin: calc(0px - var(--padding));
+  position: relative;
 
-  @include rank-list-common();
-
+  &-content {
+    height: 0;
+    flex: 1 0 0;
+    @include v-stretch(12px);
+    @include no-scrollbar();
+  }
+  &.not-empty &-content {
+    scroll-snap-type: y mandatory;
+  }
   .compact-rank-list-card {
+    scroll-snap-align: start;
     @include h-center(8px);
     &-cover {
       @include card(12px);
@@ -124,7 +165,7 @@ export default Vue.extend({
       justify-content: center;
       z-index: 10;
       position: absolute;
-      top: 4px;
+      bottom: 4px;
       left: 4px;
       font-size: 12px;
       width: 20px;
@@ -154,9 +195,6 @@ export default Vue.extend({
         margin-right: -8px;
       }
     }
-  }
-  &.loaded {
-    @include v-stretch(12px);
   }
 }
 </style>

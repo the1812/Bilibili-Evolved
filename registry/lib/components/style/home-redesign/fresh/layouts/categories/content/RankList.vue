@@ -375,6 +375,12 @@ export default Vue.extend({
       color: var(--foreground-color);
     }
   }
+  &.loaded {
+    @include no-scrollbar();
+    .animation {
+      animation-play-state: running;
+    }
+  }
   @include rank-list-common();
 }
 </style>
