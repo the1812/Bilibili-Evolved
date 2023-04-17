@@ -11,11 +11,25 @@ export const freshHomeOptionsMetadata = defineOptionsMetadata({
   layoutOptions: {
     displayName: '版块设置',
     defaultValue: {
+      blackboard: {
+        linebreak: false,
+        order: 1,
+      },
       trending: {
         linebreak: true,
+        order: 2,
+      },
+      feeds: {
+        linebreak: false,
+        order: 3,
       },
       areas: {
         linebreak: true,
+        order: 4,
+      },
+      categories: {
+        linebreak: false,
+        order: 5,
       },
     } satisfies Record<string, FreshLayoutItemSettings>,
     hidden: true,
