@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { preventEvent } from '@/core/utils'
+import { allVideoUrls } from '@/core/utils/urls'
 
 let cancel: () => void
 export const disableScrollVolume = () => {
@@ -27,4 +28,5 @@ export const component = defineComponentMetadata({
   unload: () => {
     cancel?.()
   },
+  urlInclude: allVideoUrls,
 })

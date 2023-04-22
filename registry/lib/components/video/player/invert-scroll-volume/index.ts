@@ -6,6 +6,7 @@ import {
 import { disableScrollVolume } from '../disable-scroll-volume'
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
+import { allVideoUrls } from '@/core/utils/urls'
 
 let cancel: () => void
 
@@ -55,4 +56,5 @@ export const component = defineComponentMetadata({
     cancel = invertScrollVolume()
   },
   unload: () => cancel?.(),
+  urlInclude: allVideoUrls,
 })
