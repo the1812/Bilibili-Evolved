@@ -204,7 +204,7 @@ export default Vue.extend({
       border: 1px solid #8884;
     }
     &-info {
-      @include v-stretch(4px);
+      @include v-stretch(2px);
       flex-grow: 1;
       width: 0;
     }
