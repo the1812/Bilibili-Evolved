@@ -27,7 +27,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/extend-live.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/extend-live.js)
 
-在动态的`正在直播`中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.
+替换动态的 `正在直播` 面板, 能够显示超过 10 个的直播间.
 
 ### [动态过滤器](../../registry/dist/components/feeds/filter.js)
 `feedsFilter`
@@ -82,6 +82,15 @@
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/hide-comment-preview.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/hide-comment-preview.js)
 
 隐藏动态评论按钮上方的精选评论预览. (详细可看 [#3322](https://github.com/the1812/Bilibili-Evolved/discussions/3322))
+
+### [动态看图自动回顶](../../registry/dist/components/feeds/image-auto-back-to-top.js)
+`imageAutoBackToTop`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/image-auto-back-to-top.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/image-auto-back-to-top.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/image-auto-back-to-top.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/image-auto-back-to-top.js)
+
+在动态里查看图片详情时 (非全屏), 切换图片自动回到图片顶部; 退出查看图片模式时, 自动将动态移入视图内.
 
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
@@ -262,7 +271,18 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/trending-search.js)
 
-隐藏搜索栏和搜索页面中的 `bilibili 热搜`.
+隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 请注意这只是视觉上的隐藏, 如果不输入任何关键词就点 Enter 或搜索按钮, 仍然会跳转至推荐的热搜词.
+
+### [隐藏用户信息卡片](../../registry/dist/components/style/hide/user-card.js)
+`hideUserCard`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/user-card.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/user-card.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/user-card.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/user-card.js)
+
+by [@WakelessSloth56](https://github.com/WakelessSloth56)
+
+隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片
 
 ### [隐藏直播推荐](../../registry/dist/components/style/hide/video/recommended-live.js)
 `hideRecommendedLive`
@@ -327,6 +347,17 @@
 
 - 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频
 - 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数
+
+### [播放器置顶（新）](../../registry/dist/components/style/player-on-top-new.js)
+`playerOnTopNew`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-on-top-new.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-on-top-new.js)
+
+by [@RieN7](https://github.com/rien7)
+
+原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
 
 ### [播放器置顶](../../registry/dist/components/style/player-on-top.js)
 `playerOnTop`
@@ -466,6 +497,15 @@
 - 上下滑动可调整音量
 - 进度调整可在左上角和右上角取消
 - 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.
+
+### [自动点赞](../../registry/dist/components/utils/auto-like.js)
+`autoLike`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/auto-like.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/auto-like.js)
+
+进入视频 / 查看动态时, 自动点赞.
 
 ### [屏蔽黑名单up主](../../registry/dist/components/utils/black-list.js)
 `blackList`
@@ -821,7 +861,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/disable-scroll-volume.js)
 
-在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.
+在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.  请注意不能和 `反转滚轮调音量` 一同使用.
 
 ### [双击全屏](../../registry/dist/components/video/player/double-click-fullscreen.js)
 `doubleClickFullscreen`
@@ -888,6 +928,19 @@ by [@JLoeve](https://github.com/LonelySteve)
 by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 设置当播放器移出视图的位置变化时执行的动作.
+
+### [反转滚轮调音量](../../registry/dist/components/video/player/invert-scroll-volume.js)
+`invertScrollVolume`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/invert-scroll-volume.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/invert-scroll-volume.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/invert-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/invert-scroll-volume.js)
+
+反转在网页全屏 / 全屏模式下使用滚轮调节音量的方向, 使其更符合使用触控板时的操作方向. 请注意不能和 `禁止滚轮调音量` 一同使用.
+
+- 手指向上推时, 增加音量
+- 手指向下推时, 减少音量
+- 可以自定义 `灵敏度`, 同样的滚动幅度下, 灵敏度越高变化的音量越多
 
 ### [传统连播模式](../../registry/dist/components/video/player/legacy-auto-play.js)
 `legacyAutoPlay`
@@ -987,6 +1040,16 @@ by [@wisokey](https://github.com/wisokey)
 
 为视频播放页面的推荐列表中的视频添加显示视频投稿时间.
 
+`时间格式` 替换up名的文本格式 (默认为'up · yyyy-MM-dd'):
+  - y: 年
+  - M: 月
+  - d: 日
+  - h: 时
+  - m: 分
+  - s: 秒
+  - q: 季度
+  - up: up名
+
 ### [跳过充电鸣谢](../../registry/dist/components/video/player/skip-charge-list.js)
 `skipChargeList`
 
@@ -1062,6 +1125,17 @@ by FoundTheWOUT
 
 在输入专栏的 cv 号或专栏文集的 rl 号时, 提供对应的跳转选项.
 
+### [搜索栏 - 数字联想](../../registry/dist/plugins/launch-bar/number-search.js)
+`launchBar.actions.numberSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/number-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/number-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/number-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/number-search.js)
+
+在输入纯数字时, 提供以下选项:
+- 跳转至相应的视频 (视为 av 号)
+- 跳转至相应的专栏 (视为 cv 号)
+
 ### [搜索栏 - 搜索推荐](../../registry/dist/plugins/launch-bar/trending-search.js)
 `launchBar.trendingSearch`
 
@@ -1070,6 +1144,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/trending-search.js)
 
 在脚本的搜索栏中默认显示类似 b 站搜索栏的搜索推荐词, 替代原来的 "搜索" 两字.
+
+### [搜索栏 - UID 跳转](../../registry/dist/plugins/launch-bar/uid-search.js)
+`launchBar.actions.uidSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/uid-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/uid-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/uid-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/uid-search.js)
+
+在输入 UID (用户 ID) 时, 提供对应的跳转选项.
 
 ### [设置面板 - "最近使用" 类别](../../registry/dist/plugins/settings-panel/recent-components.js)
 `settingsPanel.tagFilters.recentComponents`

@@ -28,7 +28,7 @@ export const searchProvider: LaunchBarActionProvider = {
             render: h => {
               const content = h('div', {
                 domProps: {
-                  innerHTML: /* html */ `<span>${input}</span>`,
+                  innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
                 },
               })
               return content

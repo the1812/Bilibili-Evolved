@@ -163,12 +163,13 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import 'common';
+@import './rank-list';
 
 .fresh-home-rank-list {
   position: relative;
   flex: 1;
-  width: 400px;
   overflow: hidden;
+  width: var(--panel-width);
   min-height: var(--panel-height);
   height: var(--panel-height);
   padding: var(--padding);
@@ -295,7 +296,7 @@ export default Vue.extend({
         padding: 0 12px;
       }
       .be-up-info {
-        margin: 4px 8px;
+        margin: 4px 10px;
       }
     }
   }
@@ -328,7 +329,7 @@ export default Vue.extend({
         padding: 0 12px;
       }
       .be-up-info {
-        margin: 4px 8px;
+        margin: 4px 10px;
       }
     }
   }
@@ -374,34 +375,12 @@ export default Vue.extend({
       color: var(--foreground-color);
     }
   }
-  & &-loading-container {
-    @include v-center();
-    justify-content: center;
-    padding: var(--padding);
-    border-radius: var(--home-card-radius);
-    border: 2px dashed #8884;
-    height: 100%;
-  }
-  & &-empty {
-    @include v-center(12px);
-    justify-content: center;
-    .be-button {
-      padding: 4px 10px 4px 6px !important;
-      &:hover .be-icon {
-        transform: rotate(1turn);
-      }
-    }
-    .be-icon {
-      margin-right: 6px;
-      transition: 0.5s ease-out;
-    }
-  }
-
   &.loaded {
     @include no-scrollbar();
     .animation {
       animation-play-state: running;
     }
   }
+  @include rank-list-common();
 }
 </style>

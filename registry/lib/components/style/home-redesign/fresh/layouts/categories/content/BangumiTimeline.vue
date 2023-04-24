@@ -400,7 +400,7 @@ export default Vue.extend({
     }
     &-seasons-container {
       @include h-stretch();
-      @include scroll-mask-x(18px);
+      @include scroll-mask-x(18px, var(--home-base-color));
       width: 0;
       flex: 1 0 0;
       margin: 0 2px;
