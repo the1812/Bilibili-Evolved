@@ -33,6 +33,9 @@ export interface CommentItem extends CommentReplyItem {
 - 新增功能 `自动点赞`. (#2354)
 > 进入视频 / 查看动态时, 自动点赞.
 
+- 新增功能 `隐藏用户信息卡片`. (PR #4093 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> 隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片.
+
 - 新增功能 `播放器置顶（新）`. (#3030, #PR #4152 by [RieN 7z](https://github.com/rien7))
 > 原来的播放器置顶组件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
 
