@@ -1,6 +1,6 @@
 <template>
   <span
-    class="quick-favorite be-quick-favorite"
+    class="quick-favorite be-quick-favorite video-toolbar-left-item"
     title="快速收藏"
     :class="{ on: isFavorite }"
     @click.left.self="toggle()"
@@ -104,7 +104,7 @@ export default Vue.extend({
   },
   methods: {
     async syncFavoriteState() {
-      if (options.favoriteFolderID === 0) {
+      if (options.favoriteFolderID === 0 || !this.aid) {
         return
       }
       try {
@@ -188,12 +188,11 @@ export default Vue.extend({
   margin-right: 28px !important;
   position: relative;
   font-size: 14px;
-  font-weight: normal;
   width: auto !important;
   .text {
     display: inline;
   }
-  @media screen and (max-width: 1320px), (max-height: 750px) {
+  @media screen and (max-width: 1340px), (max-height: 750px) {
     margin-right: max(calc(min(11vw, 11vh) - 117.2px), 6px) !important;
     .text {
       display: none;
@@ -217,6 +216,9 @@ export default Vue.extend({
     }
     .video-toolbar-v1 & {
       transform: translateY(1px);
+    }
+    .video-toolbar-left & {
+      margin-right: 8px;
     }
   }
   .tip,

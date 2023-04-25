@@ -2,7 +2,10 @@ import { matchUrlPattern } from '.'
 import { TestPattern } from '../common-types'
 
 /** 稍后再看页面 */
-export const watchlaterUrls = ['//www.bilibili.com/medialist/play/watchlater']
+export const watchlaterUrls = [
+  '//www.bilibili.com/medialist/play/watchlater',
+  '//www.bilibili.com/list/watchlater',
+]
 /** 收藏夹连播页面 */
 export const favoriteListUrls = ['//www.bilibili.com/medialist/play/ml']
 /** UP 主视频连播页面 */

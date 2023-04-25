@@ -44,7 +44,7 @@ const entry = async () => {
       const clone = liveDetailItem.cloneNode(true) as HTMLElement
       const url = `https://live.bilibili.com/${it.roomid}`
       dqa(clone, 'a[href]').forEach(a => a.setAttribute('href', url))
-      if (clone.matches('.bili-dyn-live-users__item')) {
+      if (clone.matches('.bili-dyn-live-users__item, .bili-dyn-live-users__container')) {
         clone.addEventListener('click', () => {
           window.open(url, '_blank')
         })
