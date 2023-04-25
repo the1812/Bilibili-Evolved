@@ -1,11 +1,6 @@
 @import "./dark-definitions";
-.bili-header-m .nav-menu .nav-con .nav-item:hover,
-.right-part > .shortcuts-ctnr .shortcut-item:hover,
-#link-navbar-vm > .link-navbar .nav-item:hover,
 .z_top .z_top_nav ul li:hover,
 .uns_box ul.menu li:not(.b-post):hover,
-.link-navbar .nav-item:hover,
-.shortcuts-ctnr .shortcut-item:hover,
 .search-bar-ctnr .search-bar,
 .nav-header-wrapper .nav-header .nav-header-search-bar {
   @include background-color("2");
@@ -43,17 +38,13 @@
 }
 .bili-header-m .nav-menu .nav-con .nav-item .t,
 #link-navbar-vm > .link-navbar .main-ctnr .nav-logo,
-#link-navbar-vm > .link-navbar .nav-item:hover,
 .right-part > .shortcuts-ctnr,
-.right-part > .shortcuts-ctnr .shortcut-item:hover,
 .z_top.b-header-blur .z_top_nav li a.i-link,
 .z_top.b-header-blur .uns_box li.u-i a.i-link,
 .z_top a,
 .my-link-btn .label,
 .uns_box li.u-i a.i-link,
-.shortcuts-ctnr .shortcut-item,
 .link-navbar .main-ctnr .custom-link > a,
-.shortcut-item .list-item span,
 .link-navbar .main-ctnr .nav-logo,
 .search-bar-ctnr .search-bar input,
 .nav-header-wrapper .nav-header .nav-header-search-bar {

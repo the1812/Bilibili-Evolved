@@ -4,9 +4,10 @@ import {
   OptionsOfMetadata,
 } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
-import { matchUrlPattern } from '@/core/utils'
+import { getUID, matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
 import { KeyBindingAction } from '../../utils/keymap/bindings'
+import { addVideoActionButton } from '@/components/video/video-actions'
 
 const options = defineOptionsMetadata({
   showInWatchlaterPages: {
@@ -21,29 +22,20 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (watchlaterUrls.some(matchUrlPattern) && !settings.options.showInWatchlaterPages) {
     return
   }
-  const { mountVueComponent, getUID, playerReady } = await import('@/core/utils')
   if (!getUID()) {
     return
   }
-  await playerReady()
-  const favoriteButton = dq(
-    '.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect',
-  ) as HTMLElement
-  if (!favoriteButton) {
-    return
-  }
-  const { hasVideo } = await import('@/core/spin-query')
-  await hasVideo()
   const OuterWatchlater = await import('./OuterWatchlater.vue')
   const vm: Vue & {
     aid: string
   } = mountVueComponent(OuterWatchlater)
-  favoriteButton.insertAdjacentElement('afterend', vm.$el)
-  const { videoChange } = await import('@/core/observer')
-  videoChange(({ aid }) => {
-    console.log('videoChange', unsafeWindow.aid, aid)
-    vm.aid = unsafeWindow.aid
-  })
+  if (await addVideoActionButton(() => vm.$el)) {
+    const { videoChange } = await import('@/core/observer')
+    videoChange(({ aid }) => {
+      console.log('videoChange', unsafeWindow.aid, aid)
+      vm.aid = unsafeWindow.aid
+    })
+  }
 }
 export const component = defineComponentMetadata({
   name: 'outerWatchlater',
