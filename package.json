@@ -78,6 +78,11 @@
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.2"
   },
+  "pnpm": {
+    "overrides": {
+      "caniuse-lite": "^1.0.30001481"
+    }
+  },
   "keywords": [
     "userscript",
     "bilibili",

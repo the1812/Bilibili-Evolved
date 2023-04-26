@@ -1,5 +1,8 @@
 lockfileVersion: '6.0'
 
+overrides:
+  caniuse-lite: ^1.0.30001481
+
 dependencies:
   '@popperjs/core':
     specifier: ^2.6.0
@@ -2896,7 +2899,7 @@ packages:
       postcss: ^8.1.0
     dependencies:
       browserslist: registry.npmmirror.com/browserslist@4.21.4
-      caniuse-lite: registry.npmmirror.com/caniuse-lite@1.0.30001338
+      caniuse-lite: registry.npmmirror.com/caniuse-lite@1.0.30001481
       fraction.js: registry.npmmirror.com/fraction.js@4.2.0
       normalize-range: registry.npmmirror.com/normalize-range@0.1.2
       picocolors: registry.npmmirror.com/picocolors@1.0.0
@@ -3033,7 +3036,7 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: registry.npmmirror.com/caniuse-lite@1.0.30001430
+      caniuse-lite: registry.npmmirror.com/caniuse-lite@1.0.30001481
       electron-to-chromium: registry.npmmirror.com/electron-to-chromium@1.4.284
       node-releases: registry.npmmirror.com/node-releases@2.0.6
       update-browserslist-db: registry.npmmirror.com/update-browserslist-db@1.0.10(browserslist@4.21.4)
@@ -3075,16 +3078,10 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  registry.npmmirror.com/caniuse-lite@1.0.30001338:
-    resolution: {integrity: sha512-1gLHWyfVoRDsHieO+CaeYe7jSo/MT7D7lhaXUiwwbuR5BwQxORs0f1tAwUSQr3YbxRXJvxHM/PA5FfPQRnsPeQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001338.tgz}
+  registry.npmmirror.com/caniuse-lite@1.0.30001481:
+    resolution: {integrity: sha512-KCqHwRnaa1InZBtqXzP98LPg0ajCVujMKjqKDhZEthIpAsJl/YEIa3YvXjGXPVqzZVguccuu7ga9KOE1J9rKPQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001481.tgz}
     name: caniuse-lite
-    version: 1.0.30001338
-    dev: true
-
-  registry.npmmirror.com/caniuse-lite@1.0.30001430:
-    resolution: {integrity: sha512-IB1BXTZKPDVPM7cnV4iaKaHxckvdr/3xtctB3f7Hmenx3qYBhGtTZ//7EllK66aKXW98Lx0+7Yr0kxBtIt3tzg==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/caniuse-lite/-/caniuse-lite-1.0.30001430.tgz}
-    name: caniuse-lite
-    version: 1.0.30001430
+    version: 1.0.30001481
     dev: true
 
   registry.npmmirror.com/chalk@1.1.3:
