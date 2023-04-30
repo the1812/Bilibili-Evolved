@@ -12,7 +12,16 @@ const styleID = 'custom-navbar-style'
 const options = defineOptionsMetadata({
   hidden: {
     hidden: true,
-    defaultValue: ['blank1', 'blank4', 'drawing', 'music', 'gamesIframe', 'bangumi', 'match'],
+    defaultValue: [
+      'blank1',
+      'blank4',
+      'drawing',
+      'music',
+      'gamesIframe',
+      'bangumi',
+      'match',
+      'creations',
+    ],
     displayName: '隐藏的元素',
   },
   order: {
