@@ -638,3 +638,36 @@ export const getRandomId = (length = 8) => {
     .join('')
     .substring(0, length)
 }
+
+/**
+ * 在未开发完成的代码处占位，抑制编译器、eslint、IDE 等的报错
+ *
+ * @example
+ * ```typescript
+ * const uncompleted = (arg1: number, arg2: string): number => {
+ *   return todo(arg1, arg2)
+ * }
+ * ```
+ */
+export const todo = (...args: unknown[]): never => {
+  throw new Error(`todo. args: ${JSON.stringify(args)}`)
+}
+
+/**
+ * 标记永远不会被执行到的位置
+ *
+ * @example
+ * ```typescript
+ * switch (code) {
+ *   case 0:
+ *     return 0
+ *   case 1:
+ *     return 1
+ *   default:
+ *     unreachable()
+ * }
+ * ```
+ */
+export const unreachable = (): never => {
+  throw new Error(`unreachable`)
+}
