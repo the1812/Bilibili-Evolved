@@ -129,6 +129,8 @@ export default Vue.extend({
   font-size: 12px;
   color: #000;
   background-color: #fff;
+  position: sticky;
+  top: 72px;
   body.dark & {
     background-color: #444;
     color: #eee;
@@ -196,6 +198,7 @@ export default Vue.extend({
   }
   &-item {
     @include h-center(8px);
+    padding: 4px 0;
     cursor: pointer;
     &-avatar {
       overflow: hidden;
