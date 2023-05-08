@@ -7,7 +7,7 @@ import { useScopedConsole } from '@/core/utils/log'
 const entry = async () => {
   const console = useScopedConsole('extendFeedsLive')
   const container = (await select(
-    '.bili-dyn-home--member aside.left section:last-child',
+    '.bili-dyn-home--member aside.left section.sticky',
   )) as HTMLElement
   if (!container) {
     console.error('container not found')
