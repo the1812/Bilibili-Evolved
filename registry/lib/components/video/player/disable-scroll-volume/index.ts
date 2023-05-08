@@ -5,11 +5,9 @@ let cancel: () => void
 const prevent = () => {
   cancel?.()
   cancel = preventEvent(unsafeWindow, 'mousewheel', () => {
-    const isFullscreen = [
-      'player-mode-webfullscreen',
-      'player-fullscreen-fix',
-      'player-full-win',
-    ].some(token => document.body.classList.contains(token))
+    const isFullscreen = ['player-mode-full', 'player-fullscreen-fix', 'player-full-win'].some(
+      token => document.body.classList.contains(token),
+    )
     return isFullscreen
   })
 }
