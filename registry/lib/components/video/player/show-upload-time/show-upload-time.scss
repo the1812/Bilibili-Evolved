@@ -1,0 +1,14 @@
+// 旧版css
+.video-page-card .card-box .info .count.up {
+    white-space: pre !important;
+    display: flex !important;
+    height: auto !important;
+}
+// 新版css
+.video-page-card-small .card-box .info .upname {
+    height: auto !important;
+    a .name {
+        -webkit-line-clamp: unset !important;
+        white-space: pre !important;
+    }
+}
