@@ -11,11 +11,14 @@ const playerModePolyfill = async () => {
   }
   attributes(bpxContainer, () => {
     const dataScreen = bpxContainer.getAttribute('data-screen')
-    document.body.classList.toggle(
-      'player-mode-webfullscreen',
-      dataScreen === 'full' || dataScreen === 'web',
-    )
-    dataScreen === 'wide' ? document.body.classList.add('player-mode-widescreen') : ''
+    const prefix = 'player-mode-'
+    const enumList = ['normal', 'wide', 'web', 'full'].map(it => `${prefix}${it}`)
+
+    // clear all class
+    document.body.classList.remove(...enumList)
+
+    // add class
+    document.body.classList.add(dataScreen !== 'normal' ? `${prefix}${dataScreen}` : '')
   })
 }
 const idPolyfill = async () => {
