@@ -29,7 +29,6 @@ function sideEffect() {
   // 弹幕列表的 marginTop 是动态的 需要即时获取
   let marginTop = '' // 记录弹幕列表原始marginTop
   const updateMarginTop = lodash.once(() => {
-    console.log('updateMarginTop')
     marginTop = getComputedStyle(danmuku).marginTop
   })
 
