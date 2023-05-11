@@ -12,7 +12,7 @@ const playerModePolyfill = async () => {
   }
   let lastScreen = 'normal' as PlayerMode
   attributes(bpxContainer, () => {
-    const dataScreen = bpxContainer.getAttribute('data-screen')
+    const dataScreen = bpxContainer.getAttribute('data-screen') as PlayerMode
     const prefix = 'player-mode-'
     const enumList = ['normal', 'wide', 'web', 'full'].map(it => `${prefix}${it}`)
 
@@ -21,7 +21,7 @@ const playerModePolyfill = async () => {
 
     // add class
     document.body.classList.add(dataScreen !== 'normal' ? `${prefix}${dataScreen}` : '')
-    
+
     if (dataScreen !== lastScreen) {
       window.dispatchEvent(playerModeChange(dataScreen))
       lastScreen = dataScreen
