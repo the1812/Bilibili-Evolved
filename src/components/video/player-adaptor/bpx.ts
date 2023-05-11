@@ -13,6 +13,8 @@ const playerModePolyfill = async () => {
   let lastScreen = 'normal' as PlayerMode
   attributes(bpxContainer, () => {
     const dataScreen = bpxContainer.getAttribute('data-screen') as PlayerMode
+    const prefix = 'player-mode-'
+    const enumList = ['normal', 'wide', 'web', 'full'].map(it => `${prefix}${it}`)
 
     document.body.classList.toggle(
       'player-mode-webfullscreen',
@@ -20,6 +22,12 @@ const playerModePolyfill = async () => {
     )
     dataScreen === 'wide' ? document.body.classList.add('player-mode-widescreen') : ''
 
+<<<<<<< HEAD
+=======
+    // add class
+    document.body.classList.add(dataScreen !== 'normal' ? `${prefix}${dataScreen}` : '')
+
+>>>>>>> 6330e00be (fix: 处理lint检查报错)
     if (dataScreen !== lastScreen) {
       window.dispatchEvent(playerModeChange(dataScreen))
       lastScreen = dataScreen
