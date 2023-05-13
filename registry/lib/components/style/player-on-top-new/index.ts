@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+import { playerModeChange } from '@/components/video/player-adaptor'
 import { getComponentSettings, addComponentListener } from '@/core/settings'
 import { playerReady, getNumberValidator } from '@/core/utils'
 import { videoUrls } from '@/core/utils/urls'
@@ -18,18 +19,66 @@ function moveElementAfter(element: Element, after: Element) {
 }
 
 /**
+ * 处理屏幕尺寸变化
+ * 实时获取到`#danmukuBox`的`marginTop`值
+ * 修改自B站内联的JS代码，请确保此函数在播放器宽屏模式下被调用
+ */
+function calcMarginTop() {
+  const e = window.innerHeight
+  const t = Math.max((document.body && document.body.clientWidth) || window.innerWidth, 1100)
+  const n = innerWidth > 1680 ? 411 : 350
+  const o = parseInt(String((16 * (e - (window.innerWidth > 1690 ? 318 : 308))) / 9))
+  const r = t - 112 - n
+  const d = r < o ? r : o
+  const a = Math.round((d + n) * (9 / 16)) + (innerWidth > 1680 ? 56 : 46)
+
+  return `${a}px`
+}
+
+/**
+ * 统一添加副作用处理
+ * 处理播放器宽屏切换后的UP信息与弹幕列表样式
+ */
+function sideEffect() {
+  const author = document.querySelector('.up-panel-container') as HTMLDivElement
+  const danmuku = document.querySelector('#danmukuBox') as HTMLDivElement
+
+  // 缓存当前播放器模式 用于判断是否为宽屏模式
+  let currentMode = 'normal'
+
+  // 监听播放器宽屏模式 调整UP信息与弹幕列表样式
+  window.addEventListener('playerModeChange', (ev: ReturnType<typeof playerModeChange>) => {
+    const { mode } = ev.detail
+
+    currentMode = mode
+
+    if (mode === 'wide') {
+      danmuku.style.marginTop = '0px'
+      author.style.marginTop = calcMarginTop()
+    } else {
+      // 恢复原始样式
+      author.style.marginTop = '0px'
+    }
+  })
+
+  // 监听屏幕尺寸变化
+  window.addEventListener('resize', () => {
+    // 播放器宽屏模式
+    if (currentMode === 'wide') {
+      author.style.marginTop = calcMarginTop()
+    }
+  })
+}
+
+/**
  * 播放器置顶
  * 从设置中获取顶部留白的高度
  */
-const playerOnTop = async ({ settings: { options: opt }, metadata }) => {
+async function playerOnTop({ settings: { options: opt }, metadata }) {
   await playerReady()
   const title = document.querySelector('#viewbox_report')
   const toolbar = document.querySelector('#arc_toolbar_report')
   moveElementAfter(title, toolbar)
-
-  const author = document.querySelector('#v_upinfo').parentElement
-  const danmuku = document.querySelector('#danmukuBox')
-  moveElementAfter(author, danmuku)
 
   const player = document.querySelector('#playerWrap') as HTMLDivElement
   player.style.marginTop = `${opt.marginTop}px`
@@ -38,6 +87,8 @@ const playerOnTop = async ({ settings: { options: opt }, metadata }) => {
   addComponentListener(`${metadata.name}.marginTop`, (value: number) => {
     player.style.marginTop = `${value}px`
   })
+
+  sideEffect()
 }
 
 export const component = defineComponentMetadata({
