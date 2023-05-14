@@ -18,7 +18,7 @@
 .video-page-special-card,
 .mascot,
 .rank-container .cm-module,
-body:not(.preserve-event-banner) .activity-m,
+body:not(.preserve-event-banner) :is(.activity-m,.activity-m-v1),
 body.remove-game-match-module .bili-wrapper > .home-match,
 body.remove-game-match-module #reportFirst3,
 .home-content .ad-panel,
