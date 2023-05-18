@@ -4,7 +4,6 @@ import { lightOff, lightOn } from '@/components/video/player-light'
 import { videoChange } from '@/core/observer'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { allVideoUrls } from '@/core/utils/urls'
-import { StarAnim } from './animation'
 
 enum IntersectionMode {
   Top = '视频顶部',
@@ -25,6 +24,7 @@ export const component = defineComponentMetadata({
       triggerLocation: IntersectionMode
       pause: boolean
       light: boolean
+      starAnim: boolean
     }
     Promise.resolve().then(async () => {
       const {
@@ -80,9 +80,6 @@ export const component = defineComponentMetadata({
           !videoEl.paused
         ) {
           lightOff()
-          if (settings.options.starAnimation) {
-            StarAnim(true)
-          }
         }
       }
 
@@ -96,7 +93,6 @@ export const component = defineComponentMetadata({
         }
         if (settings.light && getComponentSettings('playerAutoLight').enabled && !settings.pause) {
           lightOn()
-          StarAnim(false)
         }
       }
 
@@ -148,6 +144,10 @@ export const component = defineComponentMetadata({
     light: {
       defaultValue: true,
       displayName: '自动开灯',
+    },
+    starAnim: {
+      defaultValue: true,
+      displayName: '启用星光动画',
     },
   },
 })

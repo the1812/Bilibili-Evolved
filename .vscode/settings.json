@@ -116,7 +116,7 @@
   },
   "eslint.format.enable": true,
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[vue]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"

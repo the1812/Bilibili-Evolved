@@ -3,7 +3,7 @@ import { lightOn, lightOff } from '@/components/video/player-light'
 import { videoChange } from '@/core/observer'
 import { allVideoUrls } from '@/core/utils/urls'
 import type { PlayerAgent } from '@/components/video/player-agent/base'
-import { StarAnim } from './animation'
+import { StarAnim } from '@/components/video/player-animation'
 import { defineComponentMetadata } from '@/components/define'
 
 let playerAgentInstance: PlayerAgent
