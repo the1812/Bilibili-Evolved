@@ -77,10 +77,9 @@ function sideEffect() {
 async function playerOnTop({ settings: { options: opt }, metadata }) {
   await playerReady()
   const title = document.querySelector('#viewbox_report')
-  const toolbar = document.querySelector('#arc_toolbar_report')
-  moveElementAfter(title, toolbar)
-
   const player = document.querySelector('#playerWrap') as HTMLDivElement
+  // 将标题放到播放器和点赞中间位置
+  moveElementAfter(title, player)
   player.style.marginTop = `${opt.marginTop}px`
 
   // 监听设置变化 实时更新到页面
@@ -101,6 +100,10 @@ export const component = defineComponentMetadata({
     {
       name: 'ZiuChen',
       link: 'https://github.com/ZiuChen',
+    },
+    {
+      name: 'LockRim',
+      link: 'https://github.com/LockRim',
     },
   ],
   tags: [componentsTags.style, componentsTags.video],
