@@ -27,9 +27,10 @@
     &::before {
       content: '';
       position: absolute;
+      left: 0;
       bottom: 0;
       height: calc(100% - 17px);
-      width: calc(100% - 24px);
+      width: 100%;
       background-color: rgba(0, 0, 0, var(--video-control-opacity));
       z-index: -1;
       @include on-fullscreen {
