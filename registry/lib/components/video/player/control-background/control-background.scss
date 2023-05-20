@@ -27,6 +27,7 @@
     &::before {
       content: '';
       position: absolute;
+      left: 0;
       bottom: 0;
       height: calc(100% - 17px);
       width: 100%;
