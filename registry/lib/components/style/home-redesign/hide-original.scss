@@ -1,13 +1,5 @@
-.international-home > :not(.international-header),
-.international-header .b-wrap,
-.international-footer,
-#app > .bili-wrapper,
-#app > .elevator-module,
-#app > .bili-header-m.stardust-common > .bili-wrapper,
-.bili-header-m .head-banner .head-content .head-logo,
-#i_cecream .bili-header__channel,
-#i_cecream > .bili-feed4 > :not(.bili-header),
-.palette-button-wrap {
+// 将元素移到视图外来实现隐藏, 避免触发内部的 lazy load 内容
+@mixin layout-shift {
   position: fixed;
   visibility: hidden;
   top: 200vh;
@@ -16,4 +8,27 @@
   padding: 0 !important;
   margin: 0 !important;
   overflow: hidden !important;
+}
+.bili-header-m .head-banner .head-content .head-logo,
+.international-home > :not(.international-header),
+.international-header .b-wrap,
+.international-footer,
+.palette-button-wrap {
+  @include layout-shift();
+}
+#app {
+  > .bili-wrapper,
+  > .elevator-module,
+  > .bili-header-m.stardust-common > .bili-wrapper {
+    @include layout-shift();
+  }
+}
+#i_cecream {
+  > main,
+  .palette-button-outer,
+  .bili-header__channel,
+  > .bili-feed4 > :not(.bili-header),
+  .bili-footer {
+    @include layout-shift();
+  }
 }
