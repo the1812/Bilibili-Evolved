@@ -1,33 +1,33 @@
 import { defineComponentMetadata } from '@/components/define'
 import { videoChange, VideoChangeCallback } from '@/core/observer'
 import { createHook, isBwpVideo } from '@/core/utils'
-import { useScopedConsole } from '@/core/utils/log'
 import { playerUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   let lastAid: string
   const removeCover = () => document.documentElement.style.removeProperty('--cover-url')
-  const mainPlayer = dq(':is(.bilibili-player-area, .bpx-player-primary-area) :is(.bilibili-player-video , .bpx-player-video-wrap) video')
-  //主要区域的播放器，避免hook到`inline-player`(右边区域的接下来播放和推荐视频的预览播放器)
-  //话是这么说，但是执行`dq`的时候只有主播放器能选择到
-  mainPlayer.addEventListener('play',(e)=>{
+  const videoPrototype = (await isBwpVideo()) ? BwpElement.prototype : HTMLVideoElement.prototype
+  // bpx player 改了 video.play(), hook 直接挂 HTMLVideoElement.prototype 上没效果 (#3698)
+  const bpxPlayer = dq('.bpx-player-video-wrap')
+  const isBpxPlayer = Boolean(bpxPlayer)
+  createHook(videoPrototype, 'play', () => {
     removeCover()
     return true
   })
-  // if (isBpxPlayer) {
-  //   videoChange(() => {
-  //     console.debug('isBpxPlayer')
-  //     const currentBpxVideo = dq('.bpx-player-primary-area .bpx-player-video-wrap video') as HTMLVideoElement
-  //     if (!currentBpxVideo) {
-  //       console.warn('bpx player not found')
-  //       return
-  //     }
-  //     createHook(currentBpxVideo, 'play', () => {
-  //       removeCover()
-  //       return true
-  //     })
-  //   })
-  // }
+  if (isBpxPlayer) {
+    videoChange(() => {
+      console.debug('isBpxPlayer')
+      const currentBpxVideo = dq('.bpx-player-video-wrap video') as HTMLVideoElement
+      if (!currentBpxVideo) {
+        console.warn('bpx player not found')
+        return
+      }
+      createHook(currentBpxVideo, 'play', () => {
+        removeCover()
+        return true
+      })
+    })
+  }
   const showCover: VideoChangeCallback = async ({ aid }) => {
     if (!aid) {
       console.warn('[播放前显示封面] 未找到av号')
