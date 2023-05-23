@@ -184,9 +184,14 @@ export const addMenuItem = (
   const menuItem = document.createElement(isV2 ? 'div' : 'p')
   if (isV2) {
     menuItem.classList.add('bili-dyn-more__menu__item', className)
-    menuItem.style.height = '25px'
-    menuItem.style.padding = '2px 0'
-    menuItem.style.textAlign = 'center'
+    const styleReferenceElement = morePanel.children[0] as HTMLElement
+    if (styleReferenceElement) {
+      menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+    } else {
+      menuItem.style.height = '25px'
+      menuItem.style.padding = '2px 0'
+      menuItem.style.textAlign = 'center'
+    }
     menuItem.dataset.module = 'more'
     menuItem.dataset.type = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
     menuItem.dataset.params = '{}'
