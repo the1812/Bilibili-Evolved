@@ -174,15 +174,28 @@ export const addMenuItem = (
     action: (e: MouseEvent) => void
   },
 ) => {
-  const morePanel = dq(card.element, '.more-panel, .bili-dyn-more__menu') as HTMLElement
+  const morePanel = dq(
+    card.element,
+    '.more-panel, .bili-dyn-more__menu, .opus-more__menu',
+  ) as HTMLElement
   const { className, text, action } = config
   if (!morePanel || dq(morePanel, `.${className}`)) {
     console.warn('more panel not found', card.element)
     return
   }
-  const isV2 = morePanel.classList.contains('bili-dyn-more__menu')
+  const isV2 = !morePanel.classList.contains('more-panel')
+  const isOpus = morePanel.classList.contains('opus-more__menu')
   const menuItem = document.createElement(isV2 ? 'div' : 'p')
-  if (isV2) {
+  if (isOpus) {
+    menuItem.classList.add('opus-more__menu__item', className)
+    const styleReferenceElement = morePanel.children[0] as HTMLElement
+    if (styleReferenceElement) {
+      menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+    }
+    menuItem.dataset.type = 'more'
+    menuItem.dataset.stype = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
+    menuItem.dataset.params = '{}'
+  } else if (isV2) {
     menuItem.classList.add('bili-dyn-more__menu__item', className)
     const styleReferenceElement = morePanel.children[0] as HTMLElement
     if (styleReferenceElement) {
