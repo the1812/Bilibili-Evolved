@@ -453,3 +453,29 @@
     }
   }
 }
+#app .bgc {
+  @include background-color();
+}
+.bili-comment-container {
+  .view-all-reply {
+    @include color('e');
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .forward-to-dynamic {
+    @include color('a');
+  }
+}
+.bili-dyn-sidebar {
+  &__btn {
+    @include background-color('3');
+    @include color('a');
+    &:hover {
+      @include background-color('4');
+    }
+    span::before {
+      @include to-gray();
+    }
+  }
+}

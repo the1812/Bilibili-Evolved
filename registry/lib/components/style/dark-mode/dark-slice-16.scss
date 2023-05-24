@@ -48,15 +48,18 @@
     @include color('e');
   }
   &__stat__item {
-    &__count {
+    &__count,
+    .item-num {
       @include color('e');
     }
     &:hover {
-      .bili-dyn-my-info__stat__item__count {
+      .bili-dyn-my-info__stat__item__count,
+      .item-num {
         @include theme-color();
       }
     }
-    &__label {
+    &__label,
+    .item-desc {
       @include color('a');
     }
   }
@@ -117,6 +120,14 @@
       @include to-white();
     }
   }
+  &__shadow-left,
+  &__shadow-left .shadow {
+    background-image: linear-gradient(270deg, hsla(0, 0%, 100%, 0), #444) !important;
+  }
+  &__shadow-right,
+  &__shadow-right .shadow {
+    background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #444) !important;
+  }
   &__item {
     &__face {
       @include border-color();
@@ -127,6 +138,10 @@
         img {
           @include to-theme('blue');
         }
+      }
+      span {
+        @include theme-background-color();
+        @include border-color('4');
       }
     }
     &__name {
@@ -182,6 +197,9 @@
     }
   }
   .bili-dyn-more {
+    &__container:hover {
+      @include background-color('3');
+    }
     &__btn {
       &:hover {
         @include to-theme('blue');
@@ -310,7 +328,7 @@
   .bili-dyn-content {
     &__orig {
       &.reference {
-        @include background-color('2');
+        @include background-color('3');
       }
     }
     .dyn-none {
@@ -333,6 +351,9 @@
     &__following {
       @include theme-border-color();
       @include theme-color();
+      &::before {
+        @include to-theme('blue');
+      }
     }
   }
   .bili-dyn-forward {
@@ -587,6 +608,11 @@
     &__exposed {
       @include color('a');
     }
+    &-container__item {
+      &:hover {
+        @include background-color('5');
+      }
+    }
   }
 }
 .bili-dyn-list-loading {
@@ -687,6 +713,7 @@
   }
   &__footer {
     @include background-color();
+    @include border-color('4');
   }
   &__pkg {
     &:hover,
