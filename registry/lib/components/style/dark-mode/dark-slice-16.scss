@@ -356,66 +356,6 @@
       }
     }
   }
-  .bili-dyn-forward {
-    &__item {
-      @include border-color('6');
-    }
-    &-item {
-      &__uname:not([style*='color:']) {
-        @include color('e');
-      }
-      &__time {
-        @include color('a');
-      }
-      &__action {
-        @include theme-color();
-      }
-    }
-    &__more {
-      @include color('a');
-      @include border-color();
-    }
-    &-publishing {
-      &__action {
-        &__count {
-          @include color('a');
-        }
-        &__btn {
-          @include theme-background-color();
-          @include foreground-color();
-        }
-      }
-      &__emoji {
-        @include border-color();
-        @include no-shadow();
-        @include color('a');
-        @include background-color('2');
-        i {
-          @include to-gray();
-        }
-        &:hover {
-          @include color('e');
-          i {
-            @include to-white();
-          }
-        }
-      }
-      &__editor {
-        @include border-color();
-        @include background-color('2');
-        &:focus-within {
-          @include theme-border-color();
-        }
-        .bili-rich-textarea__inner {
-          @include color('e');
-          @include background-color();
-          &::before {
-            @include color('a');
-          }
-        }
-      }
-    }
-  }
   .bili-dyn-interaction {
     &::before {
       @include background-color('6');
@@ -531,6 +471,66 @@
   .dyn-card-opus {
     &__title {
       @include color('e');
+    }
+  }
+}
+.bili-dyn-forward {
+  &__item {
+    @include border-color('6');
+  }
+  &-item {
+    &__uname:not([style*='color:']) {
+      @include color('e');
+    }
+    &__time {
+      @include color('a');
+    }
+    &__action {
+      @include theme-color();
+    }
+  }
+  &__more {
+    @include color('a');
+    @include border-color();
+  }
+  &-publishing {
+    &__action {
+      &__count {
+        @include color('a');
+      }
+      &__btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+    &__emoji {
+      @include border-color();
+      @include no-shadow();
+      @include color('a');
+      @include background-color('2');
+      i {
+        @include to-gray();
+      }
+      &:hover {
+        @include color('e');
+        i {
+          @include to-white();
+        }
+      }
+    }
+    &__editor {
+      @include border-color();
+      @include background-color('2');
+      &:focus-within {
+        @include theme-border-color();
+      }
+      .bili-rich-textarea__inner {
+        @include color('e');
+        @include background-color();
+        &::before {
+          @include color('a');
+        }
+      }
     }
   }
 }

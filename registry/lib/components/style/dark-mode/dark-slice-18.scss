@@ -479,3 +479,95 @@
     }
   }
 }
+.opus-detail {
+  @include background-color('4');
+  @include no-shadow();
+  .bili-opus-view {
+    @include background-color('4');
+  }
+  .opus-module-author {
+    &__pub__text {
+      @include color('a');
+    }
+  }
+  .opus-module-content {
+    .opus-text-rich-hl {
+      @include theme-color();
+    }
+  }
+  .opus-tabs {
+    .bili-tabs {
+      &__header {
+        @include background-color();
+        @include border-color();
+      }
+    }
+    .bili-tabs__content {
+      .comment-wrap {
+        @include background-color();
+      }
+    }
+  }
+  .side-toolbar {
+    &__box,
+    &__btn {
+      @include background-color('3');
+      &.backtop span::before {
+        @include to-white();
+      }
+    }
+    &__action {
+      &,
+      & svg {
+        @include color('e');
+      }
+      &:hover,
+      &.is-active {
+        &,
+        & svg {
+          @include theme-color();
+          path {
+            @include theme-fill();
+          }
+        }
+      }
+    }
+  }
+}
+.bili-dyn-share {
+  &-publishing {
+    @include background-color('3');
+    @include border-color('4');
+    @include no-shadow();
+    &__title {
+      @include color('e');
+    }
+    &__input {
+      .bili-rich-textarea__inner {
+        @include background-color();
+        &.empty::before {
+          @include color('a');
+        }
+      }
+    }
+    &__reference {
+      @include background-color('2');
+      &__author__name {
+        @include color('e');
+      }
+    }
+    &__hint {
+      @include color('a');
+    }
+    &__tools__item {
+      &,
+      &:hover {
+        @include background-color();
+      }
+    }
+    &__action {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+}
