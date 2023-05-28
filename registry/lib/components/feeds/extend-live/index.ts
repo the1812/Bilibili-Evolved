@@ -11,7 +11,20 @@ const entry = async () => {
     console.error('aside not found')
   }
   let container: HTMLElement
-  if (aside.childNodes[aside.childNodes.length - 1].nodeType === Node.COMMENT_NODE) {
+  const isStickySection = (node: Node) => {
+    if (node.nodeType === Node.COMMENT_NODE) {
+      return false
+    }
+    if (
+      node instanceof HTMLElement &&
+      node.tagName.toLowerCase() === 'section' &&
+      node.classList.contains('sticky')
+    ) {
+      return true
+    }
+    return false
+  }
+  if (!isStickySection(aside.childNodes[aside.childNodes.length - 1])) {
     const stickySection = document.createElement('section')
     stickySection.classList.add('sticky')
     aside.appendChild(stickySection)
