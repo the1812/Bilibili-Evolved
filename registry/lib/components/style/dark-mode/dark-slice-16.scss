@@ -254,9 +254,9 @@
   .bili-dyn-card-common,
   .bili-dyn-card-live,
   .bili-dyn-card-video {
-    @include border-color();
+    @include border-color('4');
     &__body {
-      @include background-color('3');
+      @include background-color('38');
     }
     &__title {
       @include color('e');
@@ -328,7 +328,7 @@
   .bili-dyn-content {
     &__orig {
       &.reference {
-        @include background-color('3');
+        @include background-color('30');
       }
     }
     .dyn-none {
@@ -939,5 +939,8 @@
         }
       }
     }
+  }
+  &__preview__picture {
+    @include background-color();
   }
 }
