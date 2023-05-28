@@ -255,7 +255,7 @@ export default Vue.extend({
   }
   .title-text {
     font-size: 14px;
-    font-weight: bold;
+    @include semi-bold();
   }
   .item-url-result {
     color: var(--theme-color);
@@ -317,7 +317,7 @@ export default Vue.extend({
     }
     .title-text {
       font-size: 16px;
-      font-weight: bold;
+      @include semi-bold();
       flex: 1 0 auto;
     }
   }

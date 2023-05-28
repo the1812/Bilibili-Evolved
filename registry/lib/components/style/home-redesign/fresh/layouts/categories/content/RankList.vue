@@ -365,9 +365,9 @@ export default Vue.extend({
       content: attr(data-number);
       @include absolute-center();
       @include h-center();
+      @include semi-bold();
       justify-content: center;
       top: 0;
-      font-weight: bold;
       width: 28px;
       height: 28px;
       border-radius: 50%;

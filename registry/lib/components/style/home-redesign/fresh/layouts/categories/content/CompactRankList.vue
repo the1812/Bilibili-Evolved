@@ -171,7 +171,7 @@ export default Vue.extend({
       border-radius: 50%;
       background-color: #333;
       color: #eee;
-      font-weight: bold;
+      @include semi-bold();
       &.top-three {
         background-color: var(--theme-color);
         color: var(--foreground-color);

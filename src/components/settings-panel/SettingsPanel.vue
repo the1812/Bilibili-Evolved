@@ -294,7 +294,7 @@ export default {
       // }
       .title {
         font-size: 18px;
-        font-weight: bold;
+        @include semi-bold();
       }
       .collaspe {
         .be-icon {
