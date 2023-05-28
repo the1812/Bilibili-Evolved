@@ -22,7 +22,7 @@
           :name="action.name"
         ></component>
         <div v-else class="suggest-item-name">
-          {{ action.title || action.name }}
+          {{ action.displayName || action.name }}
         </div>
         <div v-if="action.description" class="suggest-item-description">
           {{ action.description }}
