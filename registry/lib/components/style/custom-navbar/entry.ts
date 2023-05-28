@@ -21,6 +21,13 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
     },
     true,
   )
+  addComponentListener(
+    `${name}.searchBarWidth`,
+    value => {
+      document.documentElement.style.setProperty('--navbar-search-width', `${value}vw`)
+    },
+    true,
+  )
   const globalFixedExclude = [
     'https://space.bilibili.com',
     'https://www.bilibili.com/read',
