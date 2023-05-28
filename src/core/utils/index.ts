@@ -353,6 +353,7 @@ export const preventEvent = (
 /**
  * 根据传入的对象拼接处 URL 查询字符串
  * @param obj 参数对象
+ * @deprecated 请使用 URLSearchParams
  */
 export const formData = (obj: Record<string, any>, config?: { encode?: boolean }) => {
   const { encode } = { encode: true, ...config }
