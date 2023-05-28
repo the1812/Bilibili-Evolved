@@ -111,10 +111,16 @@ export default Vue.extend({
     async nextPage() {
       try {
         const filter = this.filter as SubscriptionStatusFilter
+        const followStatus = filter.viewAll ? 0 : (filter.status as number)
+        const params = new URLSearchParams({
+          type: this.type !== SubscriptionTypes.Bangumi ? '2' : '1',
+          pn: this.page,
+          ps: '16',
+          vmid: getUID(),
+          follow_status: followStatus.toString(),
+        })
         const json = await getJsonWithCredentials(
-          `https://api.bilibili.com/x/space/bangumi/follow/list?type=${
-            this.type !== SubscriptionTypes.Bangumi ? '2' : '1'
-          }&pn=${this.page}&ps=16&vmid=${getUID()}`,
+          `https://api.bilibili.com/x/space/bangumi/follow/list?${params}`,
         )
         if (json.code !== 0) {
           logError(`加载订阅信息失败: ${json.message}`)
@@ -137,16 +143,10 @@ export default Vue.extend({
             ),
             card => card.id,
           )
-          .filter(card => {
-            if (filter.viewAll) {
-              return true
-            }
-            return card.status === filter.status
-          })
           .sort(subscriptionSorter)
         this.page++
         this.cards = this.cards.concat(newCards)
-        this.hasMorePage = newCards.length > 0
+        this.hasMorePage = this.cards.length < json.data.total
       } finally {
         this.loading = false
       }
