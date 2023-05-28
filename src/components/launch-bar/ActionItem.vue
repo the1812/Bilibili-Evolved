@@ -2,7 +2,7 @@
   <div
     tabindex="0"
     class="be-launch-bar-action-item suggest-item"
-    :title="action.name"
+    :title="action.displayName || action.name"
     :data-indexer="action.indexer"
     @click.self="performAction($event)"
     @keydown.enter.prevent.stop="performAction($event)"
