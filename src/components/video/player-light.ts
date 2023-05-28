@@ -2,6 +2,7 @@ import { matchUrlPattern, none } from '@/core/utils'
 import { loadLazyPlayerSettingsPanel } from '@/core/utils/lazy-panel'
 import { playerUrls } from '@/core/utils/urls'
 import { playerAgent } from './player-agent'
+import { StarAnim } from '@/components/video/player-animation'
 
 // let initialized = false
 

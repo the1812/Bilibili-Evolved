@@ -15,7 +15,7 @@ const CreateAnim = (): void => {
   // 添加一段css 样式到document最后
   const style = document.createElement('style')
   // generate random stars
-  function generate(numCtrl) {
+  function generate(numCtrl: number) {
     let star = ''
     const max = window.innerWidth * window.innerHeight
     for (let i = 0; i < max / numCtrl; i++) {

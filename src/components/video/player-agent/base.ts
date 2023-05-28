@@ -71,11 +71,11 @@ export abstract class PlayerAgent {
 
   /** true 开灯，false 关灯 */
   async toggleLight(on: boolean) {
-    const checkbox = (await this.query.control.settings.lightOff()) as HTMLInputElement
+    const checkboxLight = (await this.query.control.settings.lightOff()) as HTMLInputElement
     // 关灯状态 && 要开灯 -> 开灯
-    checkbox.checked && on && checkbox.click()
+    checkboxLight.checked && on && checkboxLight.click()
     // 开灯状态 && 要关灯 -> 关灯
-    !checkbox.checked && !on && checkbox.click()
+    !checkboxLight.checked && !on && checkboxLight.click()
   }
 
   // eslint-disable-next-line class-methods-use-this

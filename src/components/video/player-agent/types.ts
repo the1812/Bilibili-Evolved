@@ -59,6 +59,7 @@ export interface PlayerQuery<QueryResult> extends CustomNestedQuery<QueryResult>
     settings: {
       wrap: QueryResult
       lightOff: QueryResult
+      starAnimEnable: QueryResult
     }
   }
   toastWrap: QueryResult

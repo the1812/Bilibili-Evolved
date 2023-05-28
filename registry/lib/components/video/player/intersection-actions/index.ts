@@ -24,6 +24,7 @@ export const component = defineComponentMetadata({
       triggerLocation: IntersectionMode
       pause: boolean
       light: boolean
+      starAnim: boolean
     }
     Promise.resolve().then(async () => {
       const {
@@ -143,6 +144,10 @@ export const component = defineComponentMetadata({
     light: {
       defaultValue: true,
       displayName: '自动开灯',
+    },
+    starAnim: {
+      defaultValue: true,
+      displayName: '启用星光动画',
     },
   },
 })
