@@ -39,7 +39,7 @@ export const init = async () => {
     unsafeWindow.bangumi_area_limit_hack &&
     coreApis.settings.getComponentSettings<{ disableOnBalh: boolean }>('compatibilities').options
       .disableOnBalh &&
-    coreApis.utils.urls.bangumiUrls.some(url => coreApis.utils.matchUrlPattern(url))
+    coreApis.utils.matchUrlPattern('//www.bilibili.com/bangumi/play/')
   ) {
     console.log('BALH detected, Bilibili Evolved is disabled.')
     return

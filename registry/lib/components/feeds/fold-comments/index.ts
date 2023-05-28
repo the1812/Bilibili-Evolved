@@ -8,7 +8,7 @@ import { childListSubtree } from '@/core/observer'
 const entry = async () => {
   const { forEachFeedsCard } = await import('@/components/feeds/api')
   const { childList } = await import('@/core/observer')
-  const commentSelector = '.bb-comment'
+  const commentSelector = '.bb-comment, .bili-comment-container'
   const injectButton = (card: HTMLElement) => {
     const injectToComment = async (panelArea: HTMLElement, clickHandler: () => void) => {
       const commentBox = await select(() => dq(panelArea, commentSelector))

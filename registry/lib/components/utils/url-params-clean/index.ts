@@ -55,6 +55,7 @@ const entry = async () => {
     'hasBack',
     'noTitleBar',
     'msource',
+    'live_from',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
