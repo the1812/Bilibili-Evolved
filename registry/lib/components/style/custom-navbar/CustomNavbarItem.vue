@@ -314,9 +314,10 @@ export default Vue.extend({
     color: var(--foreground-color);
     border-radius: 0 0 8px 8px;
 
-    &:not(:empty):not(.hidden) {
+    html:not([data-navbar-notify-style='hidden']) &:not(:empty):not(.hidden) {
       opacity: 1;
     }
+    html[data-navbar-notify-style='dot'] &,
     &.dot {
       color: transparent;
       border-radius: 50%;
