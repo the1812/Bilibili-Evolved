@@ -61,10 +61,10 @@ import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { attributes, attributesSubtree } from '@/core/observer'
 import { VIcon, TextBox, VButton } from '@/ui'
-import { FeedsFilterOptions } from '.'
+import { FeedsFilterOptions } from './options'
 import { hasBlockedPattern } from './pattern'
 
-const options = getComponentSettings('feedsFilter').options as FeedsFilterOptions
+const { options } = getComponentSettings<FeedsFilterOptions>('feedsFilter')
 interface SideCardType {
   className: string
   displayName: string
