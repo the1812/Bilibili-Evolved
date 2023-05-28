@@ -3,16 +3,22 @@
 .bilibili-player-ending-panel-box-videos,
 .r-con .rcmd-list,
 <<<<<<< HEAD
+<<<<<<< HEAD
 .plp-r [class*="recommend_wrap"] {
 =======
 .playlist-container .recommend-list-container {
 >>>>>>> fcfcc18dd (Support watchlater list (#4174))
+=======
+.playlist-container .recommend-list-container,
+.bpx-player-ending-related {
+>>>>>>> 7d8ebf3a7 (Support bpx player (#4174))
   display: none !important;
 }
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-spans {
   position: static !important;
 }
-.bilibili-player-ending-panel-box {
+.bilibili-player-ending-panel-box,
+.bpx-player-ending-content {
   display: flex !important;
   justify-content: center !important;
   flex-direction: column !important;
