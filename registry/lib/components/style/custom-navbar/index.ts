@@ -7,6 +7,7 @@ import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-acti
 import { urlInclude, urlExclude } from './urls'
 import { entry } from './entry'
 import { getNumberValidator } from '@/core/utils'
+import { NavbarNotifyStyle } from './notify-style'
 
 const styleID = 'custom-navbar-style'
 const options = defineOptionsMetadata({
@@ -84,6 +85,11 @@ const options = defineOptionsMetadata({
     defaultValue: false,
     displayName: '显示已失效视频',
     hidden: true,
+  },
+  notifyStyle: {
+    defaultValue: NavbarNotifyStyle.Number,
+    dropdownEnum: NavbarNotifyStyle,
+    displayName: '消息提醒样式',
   },
 })
 export const component = defineComponentMetadata({
