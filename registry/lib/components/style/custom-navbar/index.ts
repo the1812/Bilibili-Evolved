@@ -91,6 +91,14 @@ const options = defineOptionsMetadata({
     dropdownEnum: NavbarNotifyStyle,
     displayName: '消息提醒样式',
   },
+  searchBarWidth: {
+    defaultValue: 15,
+    slider: {
+      min: 8,
+      max: 64,
+    },
+    displayName: '搜索栏宽度 (%)',
+  },
 })
 export const component = defineComponentMetadata({
   name: 'customNavbar',
