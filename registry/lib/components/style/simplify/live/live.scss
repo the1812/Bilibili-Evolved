@@ -1,4 +1,5 @@
 $prefix: 'simplifyLiveroom-switch';
+
 .#{$prefix} {
   &-vip .vip-icon,
   &-fansMedal .fans-medal-item-ctnr,
@@ -251,6 +252,11 @@ $prefix: 'simplifyLiveroom-switch';
     // }
     .skin-bg {
       height: 48px !important;
+    }
+  }
+  &.player-full-win {
+    #web-player__bottom-bar__container {
+      display: none !important;
     }
   }
 }
