@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { playerModeChange } from '@/components/video/player-adaptor'
+import { createPlayerModeChangeEvent } from '@/components/video/player-adaptor'
 import { getComponentSettings, addComponentListener } from '@/core/settings'
 import { playerReady, getNumberValidator } from '@/core/utils'
 import { videoUrls } from '@/core/utils/urls'
@@ -47,7 +47,7 @@ function sideEffect() {
   let currentMode = 'normal'
 
   // 监听播放器宽屏模式 调整UP信息与弹幕列表样式
-  window.addEventListener('playerModeChange', (ev: ReturnType<typeof playerModeChange>) => {
+  window.addEventListener('playerModeChange', (ev: ReturnType<typeof createPlayerModeChangeEvent>) => {
     const { mode } = ev.detail
 
     currentMode = mode
