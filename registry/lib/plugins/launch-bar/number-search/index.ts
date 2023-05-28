@@ -15,23 +15,42 @@ export const plugin: PluginMetadata = {
           if (!match) {
             return []
           }
-          const [aidJson, cvJson] = await Promise.all([
+          const [aidJson, cvJson, uidJson] = await Promise.all([
             await getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/view?aid=${id}`),
             await getJson(`https://api.bilibili.com/x/article/viewinfo?id=${id}`),
+            await getJson(`https://api.bilibili.com/x/web-interface/card?mid=${id}`),
           ])
           const { title: videoName } = lodash.get(aidJson, 'data', {})
           const { title: articleName } = lodash.get(cvJson, 'data', {})
+          const { name: userName } = lodash.get(uidJson, 'data.card', {})
+          const prefix = (name: string) => (name ? `numberSearchAction.${name}` : name)
           return [
             createLinkAction({
-              name: videoName,
+              name: prefix(videoName),
+              displayName: videoName,
               description: '视频跳转',
               link: `https://www.bilibili.com/av${id}`,
               indexer,
             }),
             createLinkAction({
-              name: articleName,
+              name: prefix(id),
+              displayName: id,
+              description: '直播间跳转',
+              link: `https://live.bilibili.com/${id}`,
+              indexer,
+            }),
+            createLinkAction({
+              name: prefix(articleName),
+              displayName: articleName,
               description: '专栏跳转',
               link: `https://www.bilibili.com/read/cv${id}`,
+              indexer,
+            }),
+            createLinkAction({
+              name: prefix(userName),
+              displayName: userName,
+              description: '用户跳转',
+              link: `https://space.bilibili.com/${id}`,
               indexer,
             }),
           ]
