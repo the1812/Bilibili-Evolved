@@ -59,7 +59,7 @@ import {
 } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
-import { attributes } from '@/core/observer'
+import { attributes, attributesSubtree } from '@/core/observer'
 import { VIcon, TextBox, VButton } from '@/ui'
 import { FeedsFilterOptions } from '.'
 import { hasBlockedPattern } from './pattern'
@@ -157,16 +157,13 @@ export default Vue.extend({
       })
     }
     if (cardsManager.managerType === 'v2') {
-      const firstTab = tabBar.children[0]
-      if (!firstTab) {
-        return
-      }
-      attributes(firstTab, () => {
-        document.body.classList.toggle(
-          // 'enable-feeds-filter',
-          'by-type',
-          !firstTab.classList.contains('active'),
-        )
+      const mainContainer = (await select('.bili-dyn-home--member main')) as HTMLElement
+      /** 类型过滤选中"全部" */
+      const isAllTypesSelected = () => Boolean(dq('.bili-dyn-list-tabs__item:first-child.active'))
+      /** 关注列表选中"全部动态" */
+      const isAllUpsSelected = () => Boolean(dq('.bili-dyn-up-list__item:first-child.active'))
+      attributesSubtree(mainContainer, () => {
+        document.body.classList.toggle('by-type', isAllUpsSelected() && !isAllTypesSelected())
       })
     }
   },
@@ -240,8 +237,6 @@ body.disable-feeds-filter {
   background-color: white;
   font-size: 12px;
   width: 100%;
-  padding: 12px 16px;
-  // float: left;
   border-radius: 4px;
   box-sizing: border-box;
   display: none;
@@ -257,13 +252,26 @@ body.disable-feeds-filter {
     transition: 0.2s ease-out;
     transition-property: border-color, color, background-color;
   }
+  & > * {
+    padding-left: 16px;
+    padding-right: 16px;
+    &:first-child {
+      padding-top: 12px;
+    }
+    &:last-child {
+      padding-bottom: 12px;
+    }
+  }
   body.dark & {
     color: #eee;
     background-color: #444;
   }
   .feeds-filter-header {
     cursor: pointer;
-    margin-bottom: 14px;
+    padding-bottom: 14px;
+    position: sticky;
+    top: 0;
+    background-color: inherit;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -275,7 +283,7 @@ body.disable-feeds-filter {
   }
   &.collapse {
     .feeds-filter-header {
-      margin-bottom: 0;
+      padding-bottom: 12px;
       .be-icon {
         transform: rotate(180deg);
       }

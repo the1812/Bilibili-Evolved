@@ -55,9 +55,6 @@ export type FeedsFilterOptions = OptionsOfMetadata<typeof options>
 export const component = defineComponentMetadata({
   name: 'feedsFilter',
   displayName: '动态过滤器',
-  description: {
-    'zh-CN': '按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.',
-  },
   entry,
   tags: [componentsTags.feeds],
   options,
