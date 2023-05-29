@@ -53,7 +53,8 @@ export const removeSettingsChangeListener = (path: string, listener: ValueChange
   handlers.splice(index, 1)
 }
 const componentPath = (path: string) => {
-  const [name, optionName] = path.split('.')
+  const [name, ...optionPath] = path.split('.')
+  const optionName = optionPath.join('.')
   if (!isUserComponent(name)) {
     if (optionName === undefined) {
       return `components.${name}.enabled`
