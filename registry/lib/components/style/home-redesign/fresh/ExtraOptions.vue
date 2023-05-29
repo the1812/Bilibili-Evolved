@@ -23,7 +23,7 @@
     </div>
     <div v-show="loaded" ref="sortList" class="fresh-home-extra-options-sort-list">
       <div
-        v-for="item of sortItems"
+        v-for="item of sortedItems"
         :key="item.layoutItem.name"
         :data-name="item.layoutItem.name"
         class="fresh-home-extra-options-sort-item"
@@ -44,12 +44,7 @@
         />
         <div class="fresh-home-extra-options-sort-item-name">{{ item.layoutItem.displayName }}</div>
         <div class="fresh-home-extra-options-sort-item-actions">
-          <VButton
-            type="transparent"
-            title="换行"
-            icon
-            @click="item.layoutSettings.linebreak = !item.layoutSettings.linebreak"
-          >
+          <VButton type="transparent" title="换行" icon @click="toggleLinebreak(item.layoutItem)">
             <VIcon v-if="item.layoutSettings.linebreak" icon="mdi-wrap" :size="16" />
             <VIcon v-else icon="mdi-wrap-disabled" :size="16" />
           </VButton>
@@ -78,11 +73,26 @@ export default Vue.extend({
     return {
       loaded: false,
       layouts,
+      sortedItems: [],
     }
   },
-  computed: {
+  async mounted() {
+    const list: HTMLElement = this.$refs.sortList
+    const Sortable = await SortableJSLibrary
+    console.log({ list })
+    Sortable.create(list, {
+      delay: 100,
+      forceFallback: true,
+      onEnd: (e: SortableEvent) => {
+        console.log(e)
+      },
+    })
+    this.sortItems()
+    this.loaded = true
+  },
+  methods: {
     sortItems() {
-      return (this.layouts as FreshLayoutItem[])
+      this.sortedItems = (this.layouts as FreshLayoutItem[])
         .map((layoutItem, index): SortItem => {
           const layoutSettings: FreshLayoutItemSettings = {
             linebreak: false,
@@ -97,19 +107,11 @@ export default Vue.extend({
         .filter(it => it !== null)
         .sort(ascendingSort(it => it.layoutSettings.order))
     },
-  },
-  async mounted() {
-    const list: HTMLElement = this.$refs.sortList
-    const Sortable = await SortableJSLibrary
-    console.log({ list })
-    Sortable.create(list, {
-      delay: 100,
-      forceFallback: true,
-      onEnd: (e: SortableEvent) => {
-        console.log(e)
-      },
-    })
-    this.loaded = true
+    toggleLinebreak(item: FreshLayoutItem) {
+      const options = freshHomeOptions.layoutOptions[item.name]
+      options.linebreak = !options.linebreak
+      this.sortItems()
+    },
   },
 })
 </script>
