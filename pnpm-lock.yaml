@@ -34,9 +34,6 @@ dependencies:
   vue:
     specifier: ^2.6.11
     version: registry.npmmirror.com/vue@2.6.14
-  vue-fragment:
-    specifier: ^1.5.2
-    version: registry.npmmirror.com/vue-fragment@1.5.2(vue@2.6.14)
 
 devDependencies:
   '@babel/core':
@@ -7242,17 +7239,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  registry.npmmirror.com/vue-fragment@1.5.2(vue@2.6.14):
-    resolution: {integrity: sha512-KEW0gkeNOLJjtXN4jqJhTazez5jtrwimHkE5Few/VxblH4F9EcvJiEsahrV5kg5uKd5U8du4ORKS6QjGE0piYA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-fragment/-/vue-fragment-1.5.2.tgz}
-    id: registry.npmmirror.com/vue-fragment/1.5.2
-    name: vue-fragment
-    version: 1.5.2
-    peerDependencies:
-      vue: ^2.5.16
-    dependencies:
-      vue: registry.npmmirror.com/vue@2.6.14
-    dev: false
 
   registry.npmmirror.com/vue-hot-reload-api@2.3.4:
     resolution: {integrity: sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz}
