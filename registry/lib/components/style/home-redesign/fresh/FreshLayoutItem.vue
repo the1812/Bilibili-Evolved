@@ -1,5 +1,8 @@
 <template>
-  <div class="fresh-home-content-layout-item-container">
+  <div
+    class="fresh-home-content-layout-item-container"
+    :class="{ 'fresh-home-content-layout-item-hidden': options.hidden }"
+  >
     <div
       class="fresh-home-content-layout-item"
       :class="{
@@ -40,6 +43,9 @@ export default Vue.extend({
     padding: 12px;
     &-container {
       display: contents;
+      &.fresh-home-content-layout-item-hidden {
+        display: none;
+      }
     }
     &.linebreak {
       padding: 0;
