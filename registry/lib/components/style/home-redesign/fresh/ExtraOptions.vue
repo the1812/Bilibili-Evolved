@@ -19,6 +19,10 @@
           <VIcon icon="mdi-wrap" :size="16" />
           <div class="fresh-home-extra-options-legend-text">切换换行</div>
         </div>
+        <div class="fresh-home-extra-options-legend">
+          <VIcon icon="mdi-eye-outline" :size="16" />
+          <div class="fresh-home-extra-options-legend-text">切换显示</div>
+        </div>
       </div>
     </div>
     <div v-show="loaded" ref="sortList" class="fresh-home-extra-options-sort-list">
@@ -27,6 +31,7 @@
         :key="item.layoutItem.name"
         :data-name="item.layoutItem.name"
         class="fresh-home-extra-options-sort-item"
+        :class="{ 'fresh-home-extra-options-sort-item-dimmed': item.layoutSettings.hidden }"
       >
         <VIcon
           v-if="item.layoutItem.grow"
@@ -44,9 +49,18 @@
         />
         <div class="fresh-home-extra-options-sort-item-name">{{ item.layoutItem.displayName }}</div>
         <div class="fresh-home-extra-options-sort-item-actions">
-          <VButton type="transparent" title="换行" icon @click="toggleLinebreak(item.layoutItem)">
+          <VButton
+            type="transparent"
+            title="切换换行"
+            icon
+            @click="toggleLinebreak(item.layoutItem)"
+          >
             <VIcon v-if="item.layoutSettings.linebreak" icon="mdi-wrap" :size="16" />
             <VIcon v-else icon="mdi-wrap-disabled" :size="16" />
+          </VButton>
+          <VButton type="transparent" title="切换显示" icon @click="toggleVisible(item.layoutItem)">
+            <VIcon v-if="item.layoutSettings.hidden" icon="mdi-eye-off-outline" :size="16" />
+            <VIcon v-else icon="mdi-eye-outline" :size="16" />
           </VButton>
         </div>
       </div>
@@ -106,6 +120,7 @@ export default Vue.extend({
           const layoutSettings: FreshLayoutItemSettings = {
             linebreak: false,
             order: index + 1,
+            hidden: false,
             ...freshHomeOptions.layoutOptions[layoutItem.name],
           }
           return {
@@ -119,6 +134,11 @@ export default Vue.extend({
     toggleLinebreak(item: FreshLayoutItem) {
       const options = freshHomeOptions.layoutOptions[item.name]
       options.linebreak = !options.linebreak
+      this.sortItems()
+    },
+    toggleVisible(item: FreshLayoutItem) {
+      const options = freshHomeOptions.layoutOptions[item.name]
+      options.hidden = !options.hidden
       this.sortItems()
     },
   },
@@ -138,7 +158,9 @@ export default Vue.extend({
     opacity: 0.6;
   }
   &-legends {
-    @include h-center(8px);
+    @include h-center();
+    column-gap: 6px;
+    row-gap: 2px;
     flex-wrap: wrap;
   }
   &-legend {
@@ -172,10 +194,13 @@ export default Vue.extend({
       border-color: var(--theme-color);
       cursor: move;
     }
+    &-dimmed {
+      opacity: 0.5;
+    }
     &-actions {
       @include h-center();
       flex-grow: 1;
-      justify-content: end;
+      justify-content: flex-end;
     }
   }
 }
