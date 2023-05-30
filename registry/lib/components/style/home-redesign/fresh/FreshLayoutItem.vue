@@ -5,10 +5,15 @@
       :class="{
         grow: item.grow,
       }"
+      :style="{ order: options.order }"
     >
       <component :is="item.component" />
     </div>
-    <div v-if="options.linebreak" class="fresh-home-content-layout-item linebreak"></div>
+    <div
+      v-if="options.linebreak"
+      class="fresh-home-content-layout-item linebreak"
+      :style="{ order: options.order }"
+    ></div>
   </div>
 </template>
 <script lang="ts">

@@ -84,7 +84,16 @@ export default Vue.extend({
       delay: 100,
       forceFallback: true,
       onEnd: (e: SortableEvent) => {
-        console.log(e)
+        const sortedItems = [...this.sortedItems] as SortItem[]
+        const [targetItem] = sortedItems.splice(e.oldIndex, 1)
+        console.log(targetItem.layoutItem.name, `${e.oldIndex} -> ${e.newIndex}`)
+        sortedItems.splice(e.newIndex, 0, targetItem)
+        const { layoutOptions } = freshHomeOptions
+        sortedItems.forEach((it, index) => {
+          ;(layoutOptions[it.layoutItem.name] as FreshLayoutItemSettings).order = index + 1
+          it.layoutSettings.order = index + 1
+        })
+        this.sortedItems = sortedItems
       },
     })
     this.sortItems()
