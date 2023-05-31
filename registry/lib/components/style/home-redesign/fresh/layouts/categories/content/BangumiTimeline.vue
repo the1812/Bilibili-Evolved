@@ -33,8 +33,18 @@
           TODAY
         </div>
       </div>
+      <VButton
+        v-if="item.episodes.length > 0"
+        icon
+        type="transparent"
+        title="上一页"
+        @click="offsetPage(item, -1)"
+      >
+        <VIcon icon="left-arrow" :size="16" />
+      </VButton>
       <div
         ref="seasonsList"
+        :data-date="item.date"
         class="fresh-home-categories-bangumi-timeline-seasons-container scroll-top scroll-bottom"
         :class="{ 'not-empty': item.episodes.length > 0 }"
       >
@@ -102,11 +112,20 @@
           </a>
         </div>
       </div>
+      <VButton
+        v-if="item.episodes.length > 0"
+        icon
+        type="transparent"
+        title="下一页"
+        @click="offsetPage(item, 1)"
+      >
+        <VIcon icon="right-arrow" :size="16" />
+      </VButton>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { DpiImage, VIcon, VEmpty, VLoading } from '@/ui'
+import { DpiImage, VIcon, VEmpty, VButton, VLoading } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
@@ -166,6 +185,7 @@ export default Vue.extend({
     VIcon,
     VEmpty,
     VLoading,
+    VButton,
   },
   mixins: [
     requestMixin({ requestMethod: getJsonWithCredentials }),
@@ -289,6 +309,16 @@ export default Vue.extend({
     dayOfWeekText(item: TimelineDay) {
       return `周${['日', '一', '二', '三', '四', '五', '六', '日'][item.day_of_week]}`
     },
+    offsetPage(item: TimelineDay, offset: number) {
+      const list = this.$refs.seasonsList as HTMLElement[]
+      const container = list.find(it => it.dataset.date === item.date)
+      const containerWidth = container.clientWidth
+      const pageWidth =
+        Math.trunc(containerWidth / timelineCssVars.seasonItemWidth) *
+        timelineCssVars.seasonItemWidth
+      const scrollArea = container.children[0]
+      scrollArea?.scrollBy(offset * pageWidth, 0)
+    },
   },
 })
 </script>
@@ -333,11 +363,12 @@ export default Vue.extend({
       }
     }
     &-item {
-      @include h-center(24px);
+      @include h-center(4px);
       @include border-card();
+      background-color: var(--home-base-color);
       scroll-snap-align: start;
       overflow: hidden;
-      padding: 0 16px;
+      padding: 0 4px 0 16px;
       position: relative;
       flex-shrink: 0;
       height: var(--timeline-item-height);
@@ -348,6 +379,7 @@ export default Vue.extend({
     &-date {
       display: grid;
       flex-shrink: 0;
+      margin-right: 8px;
       grid-template: 'icon number' 18px 'icon text' 22px / 50px auto;
       gap: 8px;
       &-icon {
@@ -444,7 +476,7 @@ export default Vue.extend({
       transition: 0.2s ease-out;
       &:not(:last-child) {
         padding-right: calc(var(--timeline-item-gap) / 2 + 6px);
-        border-right: 1px solid #e8e8e8;
+        // border-right: 1px solid #e8e8e8;
       }
 
       &-cover {
