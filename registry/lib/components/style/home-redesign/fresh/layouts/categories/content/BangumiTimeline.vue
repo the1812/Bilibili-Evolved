@@ -11,6 +11,10 @@
       class="fresh-home-categories-bangumi-timeline-item animation"
       :class="{ today: index === todayIndex }"
     >
+      <div
+        v-if="item.episodes.length === 0"
+        class="fresh-home-categories-bangumi-timeline-empty-background"
+      ></div>
       <div class="fresh-home-categories-bangumi-timeline-date">
         <div
           class="fresh-home-categories-bangumi-timeline-date-icon"
@@ -138,11 +142,11 @@ const rankListHeight = rankListCssVars.panelHeight - 2 * rankListCssVars.padding
 const timelineCssVars = (() => {
   const seasonItemWidth = 250
   const seasonTodayWidth = 250
-  const timelineItemHeight = 66
-  const timelineTodayHeight = 96
-  const timelineViewportItemsHeight = 6 * timelineItemHeight + timelineTodayHeight
-  const timelineItemGap = (rankListHeight - timelineViewportItemsHeight) / 6
-  const timelineViewportHeight = 6 * timelineItemGap + timelineViewportItemsHeight
+  const timelineItemHeight = 82
+  const timelineTodayHeight = 114
+  const timelineViewportItemsHeight = 5 * timelineItemHeight + timelineTodayHeight
+  const timelineItemGap = (rankListHeight - timelineViewportItemsHeight) / 5
+  const timelineViewportHeight = 5 * timelineItemGap + timelineViewportItemsHeight
   return {
     seasonItemWidth,
     seasonTodayWidth,
@@ -327,7 +331,11 @@ export default Vue.extend({
     }
     &-item {
       @include h-center(24px);
+      @include border-card();
       scroll-snap-align: start;
+      overflow: hidden;
+      padding: 0 16px;
+      position: relative;
       flex-shrink: 0;
       height: var(--timeline-item-height);
       &.today {
@@ -433,7 +441,7 @@ export default Vue.extend({
       transition: 0.2s ease-out;
       &:not(:last-child) {
         padding-right: calc(var(--timeline-item-gap) / 2 + 6px);
-        border-right: 1px solid #8884;
+        border-right: 1px solid #8882;
       }
 
       &-cover {
@@ -518,6 +526,24 @@ export default Vue.extend({
           opacity: 1;
         }
       }
+    }
+    &-empty-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        45deg,
+        transparent 25%,
+        #8882 0,
+        #8882 50%,
+        transparent 0,
+        transparent 75%,
+        #8882 0,
+        #8882 100%
+      );
+      background-size: 60px 60px;
     }
   }
 }
