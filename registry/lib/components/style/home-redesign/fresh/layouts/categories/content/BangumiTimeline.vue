@@ -59,7 +59,7 @@
             <div
               class="fresh-home-categories-bangumi-timeline-season-cover"
               :class="{
-                published: index === todayIndex && publishedToday(season),
+                published: index === todayIndex && isPublished(season),
                 today: index === todayIndex,
                 follow: season.follow,
               }"
@@ -82,15 +82,18 @@
             <div
               class="fresh-home-categories-bangumi-timeline-season-time"
               :class="{
-                published: index === todayIndex && publishedToday(season),
+                published: index === todayIndex && isPublished(season),
                 follow: season.follow,
+                today: index === todayIndex,
               }"
             >
               <div class="fresh-home-categories-bangumi-timeline-season-time-icon">
                 <VIcon
-                  :icon="season.follow ? 'mdi-heart-outline' : 'mdi-progress-clock'"
+                  v-if="!season.follow"
+                  :icon="isPublished(season) ? 'mdi-clock-check-outline' : 'mdi-progress-clock'"
                   :size="14"
                 />
+                <VIcon v-else :icon="mdi - heart - outline" :size="14" />
               </div>
               <div class="fresh-home-categories-bangumi-timeline-season-time-text">
                 {{ season.pub_time }}
@@ -256,7 +259,7 @@ export default Vue.extend({
       if (seasonsData.length === 0) {
         return
       }
-      const lastPublishedItem = [...seasonsData].reverse().find(it => this.publishedToday(it))
+      const lastPublishedItem = [...seasonsData].reverse().find(it => this.isPublished(it))
       if (!lastPublishedItem) {
         this.scrolled = true
         return
@@ -277,7 +280,7 @@ export default Vue.extend({
       }
       return season.pub_index
     },
-    publishedToday(season: TimelineSeason) {
+    isPublished(season: TimelineSeason) {
       if (season.delay) {
         return false
       }
@@ -423,7 +426,7 @@ export default Vue.extend({
       scroll-snap-type: x mandatory;
     }
     &-season {
-      --cover-size: 50px;
+      --cover-size: 56px;
       scroll-snap-align: start;
       flex-shrink: 0;
       padding: 7px;
@@ -437,11 +440,11 @@ export default Vue.extend({
       align-content: center;
       align-items: center;
       width: var(--season-item-width);
-      height: var(--timeline-item-height);
+      // height: var(--timeline-item-height);
       transition: 0.2s ease-out;
       &:not(:last-child) {
         padding-right: calc(var(--timeline-item-gap) / 2 + 6px);
-        border-right: 1px solid #8882;
+        border-right: 1px solid #e8e8e8;
       }
 
       &-cover {
@@ -472,7 +475,7 @@ export default Vue.extend({
         @include semi-bold();
         @include single-line();
         &.today {
-          @include max-line(2, 1.25);
+          @include max-line(2, 1.3);
         }
       }
       &-episode {
@@ -483,10 +486,11 @@ export default Vue.extend({
       }
       &-time {
         grid-area: time;
-        @include card(6px);
+        @include card();
+        @include round-bar(20);
         @include h-center(4px);
         box-shadow: none;
-        padding: 2px 4px;
+        padding: 2px 6px 2px 4px;
         &.published {
           border-color: var(--theme-color);
           &.follow {
@@ -501,6 +505,9 @@ export default Vue.extend({
         &.follow:not(.published) &-icon {
           color: var(--theme-color);
         }
+        &.today {
+          transform: translateX(-2px);
+        }
       }
 
       &:hover &-title {
@@ -512,8 +519,8 @@ export default Vue.extend({
 
       &.today {
         width: var(--season-today-width);
-        height: var(--timeline-today-height);
-        --cover-size: 80px;
+        // height: var(--timeline-today-height);
+        --cover-size: 84px;
         grid-template:
           'cover title title' 2fr
           'cover episode episode' 1fr
