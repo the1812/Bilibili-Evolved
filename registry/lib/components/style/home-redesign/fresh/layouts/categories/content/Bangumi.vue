@@ -123,14 +123,13 @@ export default Vue.extend({
     }
     &-header {
       @include h-center();
+      height: 26px;
       justify-content: space-between;
     }
   }
   &-rank-list {
     @include v-stretch(var(--fresh-home-categories-header-gap));
     &-header {
-      // Timeline 的 header 中, 图标为 20px, 上下 padding 共 8px, 这里的 line-height 需要保持一致来对齐
-      // line-height: calc(20px + 8px);
       @include h-center();
       justify-content: space-between;
       .be-icon {
