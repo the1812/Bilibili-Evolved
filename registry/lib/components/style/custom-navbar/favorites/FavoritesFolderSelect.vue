@@ -7,9 +7,7 @@
     :value="folder"
     @change="change($event)"
   >
-    <template #item="{ item }">
-      {{ item.name }}
-    </template>
+    <template #item="{ item }"> {{ item.name }} ({{ item.count }}) </template>
   </VDropdown>
 </template>
 <script lang="ts">

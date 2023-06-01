@@ -23,6 +23,8 @@ export interface CommentReplyItem {
 }
 /** 表示一条评论 */
 export interface CommentItem extends CommentReplyItem {
+  /** 评论图片 */
+  pictures?: string[]
   /** 回复 */
   replies: CommentReplyItem[]
   /** 回复有更新时调用此函数 */
@@ -101,6 +103,9 @@ const parseCommentItemV2 = (element: HTMLElement) => {
     content: vueData.content.message,
     time: vueData.ctime * 1000,
     likes: vueData.like,
+    pictures: vueData.content?.pictures?.map(img => {
+      return img.img_src
+    }),
     replies: parseReplies(),
   }
   if (item.replies.length < vueData.rcount) {
