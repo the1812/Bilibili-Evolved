@@ -1,0 +1,19 @@
+title: 功能建议
+labels: []
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 期望的效果
+      description: 描述你遇到的问题, 以及建议的解决方式
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: input
+    id: script-version
+    attributes:
+      label: 脚本版本
+      description: 可在设置面板的关于弹窗中找到脚本版本信息
+      placeholder: 请输入
+    validations:
+      required: true
