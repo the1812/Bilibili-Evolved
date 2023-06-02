@@ -175,3 +175,8 @@
     }
   }
 }
+
+// 适配控制栏着色
+.bpx-player-control-bottom.bpx-player-control-bottom::before {
+  width: 100%;
+}

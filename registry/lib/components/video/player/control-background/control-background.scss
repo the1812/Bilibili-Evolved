@@ -27,10 +27,9 @@
     &::before {
       content: '';
       position: absolute;
-      left: 0;
       bottom: 0;
       height: calc(100% - 17px);
-      width: 100%;
+      width: calc(100% - 24px);
       background-color: rgba(0, 0, 0, var(--video-control-opacity));
       z-index: -1;
       @include on-fullscreen {
