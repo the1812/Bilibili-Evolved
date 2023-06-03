@@ -1,13 +1,16 @@
 #recom_module,
 #reco_list,
 .bilibili-player-ending-panel-box-videos,
-.r-con .rcmd-list {
+.r-con .rcmd-list,
+.playlist-container .recommend-list-container,
+.bpx-player-ending-related {
   display: none !important;
 }
 .bilibili-player-ending-panel-box-functions .bilibili-player-upinfo-spans {
   position: static !important;
 }
-.bilibili-player-ending-panel-box {
+.bilibili-player-ending-panel-box,
+.bpx-player-ending-content {
   display: flex !important;
   justify-content: center !important;
   flex-direction: column !important;

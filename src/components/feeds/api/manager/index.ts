@@ -1,4 +1,4 @@
-import { getCookieValue } from '@/core/utils'
+import { getCookieValue, matchUrlPattern } from '@/core/utils'
 import { FeedsCardCallback } from '../types'
 import { feedsCardCallbacks } from './base'
 import { FeedsCardsManagerV1 } from './v1'
@@ -10,7 +10,11 @@ export const isV2Feeds = () => {
   if (!hasCookieValue) {
     return false
   }
-  return ['t.bilibili.com', 'space.bilibili.com'].some(host => location.host === host)
+  return [
+    't.bilibili.com',
+    'space.bilibili.com',
+    /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
+  ].some(pattern => matchUrlPattern(pattern))
 }
 export const feedsCardsManager = (() => {
   const isV2 = isV2Feeds()

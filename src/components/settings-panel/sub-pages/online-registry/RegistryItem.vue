@@ -226,7 +226,7 @@ export default Vue.extend({
     font-size: 12px;
   }
   .item-display-name {
-    font-weight: bold;
+    @include semi-bold();
   }
   .grow {
     flex: 1 0 0;

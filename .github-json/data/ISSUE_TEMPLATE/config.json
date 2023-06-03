@@ -1,0 +1,30 @@
+{
+  "blank_issues_enabled": false,
+  "contact_links": [
+    {
+      "name": "转到讨论区",
+      "url": "https://github.com/the1812/Bilibili-Evolved/discussions",
+      "about": "Issues 用于反馈 Bug, 新的功能建议和提问答疑请到讨论区发起"
+    },
+    {
+      "name": "查看 Issues 须知",
+      "url": "https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/issue-rules.md",
+      "about": "默认所有 Issues 发起者均已了解此处的内容"
+    },
+    {
+      "name": "查看讨论区指南",
+      "url": "https://github.com/the1812/Bilibili-Evolved/discussions/1297",
+      "about": "默认所有讨论发起者均已了解此处的内容"
+    },
+    {
+      "name": "查看置顶问题",
+      "url": "https://github.com/the1812/Bilibili-Evolved/issues",
+      "about": "在 Pinned issues 中会包含一些近期常见问题, 已有的其他问题也会在下面列出, 请务必查看避免重复发起"
+    },
+    {
+      "name": "查看常见问题",
+      "url": "https://github.com/the1812/Bilibili-Evolved/discussions/1301",
+      "about": "一些老生常谈的问题, 或许里面就有你想问的"
+    }
+  ]
+}

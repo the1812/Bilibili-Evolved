@@ -145,9 +145,10 @@
   left: 50%;
   transform: translateX(-50%) translateY(-50%);
 }
-@mixin on-fullscreen($bodyClass: "*") {
-  #{selector-unify("body.player-mode-webfullscreen", $bodyClass)} &,
+@mixin on-fullscreen($bodyClass: '*') {
+  #{selector-unify("body.player-mode-full", $bodyClass)} &,
   #{selector-unify("body.player-fullscreen-fix", $bodyClass)} &,
+  #{selector-unify("body.player-mode-web", $bodyClass)} &,
   #{selector-unify("body.player-full-win", $bodyClass)} & {
     @content;
   }

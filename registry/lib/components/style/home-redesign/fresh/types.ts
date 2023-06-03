@@ -14,22 +14,28 @@ export const freshHomeOptionsMetadata = defineOptionsMetadata({
       blackboard: {
         linebreak: false,
         order: 1,
+        // as boolean 一下, 不然 TS 会推断为只能 false
+        hidden: false as boolean,
       },
       trending: {
         linebreak: true,
         order: 2,
+        hidden: false,
       },
       feeds: {
         linebreak: false,
         order: 3,
+        hidden: false,
       },
       areas: {
         linebreak: true,
         order: 4,
+        hidden: false,
       },
       categories: {
         linebreak: false,
         order: 5,
+        hidden: false,
       },
     } satisfies Record<string, FreshLayoutItemSettings>,
     hidden: true,

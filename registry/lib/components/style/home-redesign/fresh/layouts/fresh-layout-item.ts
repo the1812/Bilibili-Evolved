@@ -7,4 +7,5 @@ export interface FreshLayoutItem extends WithName {
 export interface FreshLayoutItemSettings {
   linebreak: boolean
   order: number
+  hidden: boolean
 }

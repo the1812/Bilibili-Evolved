@@ -122,7 +122,7 @@ export default Vue.extend({
     color: #444;
     opacity: 0.5;
     margin: 12px;
-    font-weight: bold;
+    @include semi-bold();
     flex: 1 1 auto;
     body.dark & {
       color: #999;

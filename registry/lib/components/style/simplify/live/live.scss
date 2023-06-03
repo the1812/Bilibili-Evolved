@@ -1,4 +1,6 @@
+@import 'common';
 $prefix: 'simplifyLiveroom-switch';
+
 .#{$prefix} {
   &-vip .vip-icon,
   &-fansMedal .fans-medal-item-ctnr,
@@ -33,12 +35,12 @@ $prefix: 'simplifyLiveroom-switch';
   .control-panel-ctnr .dialog-ctnr {
     z-index: 800 !important;
   }
-  .player-ctnr .room-info-ctnr {
-    display: inline-flex !important;
-    flex: 1 0 auto;
-    align-items: center !important;
-    margin-left: 12px !important;
-  }
+  // .player-ctnr .room-info-ctnr {
+  //   display: inline-flex !important;
+  //   flex: 1 0 auto;
+  //   align-items: center !important;
+  //   margin-left: 12px !important;
+  // }
   .head-info-section {
     height: 52px !important;
     box-sizing: content-box !important;
@@ -52,14 +54,6 @@ $prefix: 'simplifyLiveroom-switch';
     .face-pendants {
       display: none !important;
     }
-    // .blive-avatar-icons {
-    //   right: -2px !important;
-    //   .blive-avatar-icon {
-    //     width: 12px !important;
-    //     height: 12px !important;
-    //     border-width: 1px !important;
-    //   }
-    // }
     .blive-avatar-pendant {
       width: 48px !important;
       height: 48px !important;
@@ -81,49 +75,18 @@ $prefix: 'simplifyLiveroom-switch';
   }
   .rows-ctnr .upper-row,
   .room-info-upper-row {
-    display: flex !important;
-    align-items: center !important;
-    flex: 1 0 auto !important;
-    flex-direction: row-reverse !important;
-    position: static !important;
-
-    .left-ctnr,
-    .normal-mode {
-      position: absolute !important;
-      left: 50% !important;
-      transform: translateX(-50%) !important;
-    }
-    .live-area,
-    .area-text {
-      display: inline-flex !important;
-    }
-    .right-ctnr,
-    .upper-right-ctnr {
-      position: static !important;
-      transform: none !important;
-    }
-    .live-title,
-    .room-title {
-      display: flex !important;
-      align-items: center !important;
-
-      .text {
-        line-height: normal !important;
+    .right-ctnr {
+      .action-text:not(.watched-text) {
+        display: none !important;
       }
-      @media screen and (max-width: 1750px) {
-        & .title-length-limit {
-          max-width: 250px !important;
-        }
-      }
-    }
-    .info-section {
-      display: none !important;
     }
   }
   .rows-ctnr .lower-row,
   .room-info-down-row {
     margin: 0 !important;
-    order: -1;
+    width: auto !important;
+    @include absolute-center();
+
     .right-ctnr,
     .left-ctnr > :nth-child(n + 3) {
       display: none !important;
@@ -251,6 +214,11 @@ $prefix: 'simplifyLiveroom-switch';
     // }
     .skin-bg {
       height: 48px !important;
+    }
+  }
+  &.player-full-win {
+    #web-player__bottom-bar__container {
+      display: none !important;
     }
   }
 }

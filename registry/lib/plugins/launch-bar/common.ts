@@ -1,3 +1,5 @@
+import type { LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
+
 export const matchInput = (input: string, pattern: RegExp) => {
   const match = input.match(pattern)
   if (!match) {
@@ -16,13 +18,15 @@ export const matchInput = (input: string, pattern: RegExp) => {
 
 export const createLinkAction = (input: {
   name: string
+  displayName?: string
   description?: string
   indexer: string
   link: string
-}) => {
-  const { name, description, indexer, link } = input
+}): LaunchBarAction => {
+  const { name, displayName, description, indexer, link } = input
   return {
     name: name || indexer,
+    displayName,
     icon: 'mdi-open-in-new',
     indexer,
     description,

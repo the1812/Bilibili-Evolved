@@ -50,6 +50,13 @@ const entry = async () => {
     'is_story_h5',
     'buvid',
     'plat_id',
+    'goFrom',
+    'jumpLinkType',
+    'hasBack',
+    'noTitleBar',
+    'msource',
+    'live_from',
+    'plat_id',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
@@ -73,6 +80,10 @@ const entry = async () => {
       match: /\/\/www\.bilibili\.com\/video\//,
       param: 'up_id',
     },
+    {
+      match: /\/\/mall\.bilibili\.com\//,
+      param: 'noReffer',
+    },
   ]
   const [siteSpecifiedParams] = registerAndGetData(
     'urlParamsClean.siteSpecifiedParams',
@@ -83,7 +94,9 @@ const entry = async () => {
 
   const getCleanUrl = (originalUrl: string) => {
     const url = new URL(originalUrl, location.origin)
-    const urlParams = url.search.substring(1).split('&')
+    const urlParams = [...new URLSearchParams(url.search).entries()].map(
+      ([key, value]) => `${key}=${value},`,
+    )
     if (urlParams.some(param => noClean.some(it => param.includes(it)))) {
       return originalUrl
     }

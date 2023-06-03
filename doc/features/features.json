@@ -27,7 +27,7 @@
     "type": "component",
     "name": "feedsFilter",
     "displayName": "动态过滤器",
-    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.",
+    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.\r\n",
     "fullRelativePath": "../../registry/dist/components/feeds/filter.js",
     "fullAbsolutePath": "registry/dist/components/feeds/filter.js"
   },
@@ -169,6 +169,14 @@
   },
   {
     "type": "component",
+    "name": "clear-home",
+    "displayName": "首页净化",
+    "description": "by [@RieN7](https://github.com/rien7)\n\n删除首页特定类型的卡片",
+    "fullRelativePath": "../../registry/dist/components/style/clear-home.js",
+    "fullAbsolutePath": "registry/dist/components/style/clear-home.js"
+  },
+  {
+    "type": "component",
     "name": "customNavbar",
     "displayName": "自定义顶栏",
     "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n",
@@ -241,6 +249,14 @@
   },
   {
     "type": "component",
+    "name": "hideVideoNotes",
+    "displayName": "隐藏记笔记",
+    "description": "隐藏视频页面中的 \"记笔记\" 按钮.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/video/notes.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/video/notes.js"
+  },
+  {
+    "type": "component",
     "name": "hideRecommendedLive",
     "displayName": "隐藏直播推荐",
     "description": "隐藏视频页面右侧下方的直播推荐.",
@@ -251,9 +267,17 @@
     "type": "component",
     "name": "hideRelatedVideos",
     "displayName": "隐藏视频推荐",
-    "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.",
+    "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
+  },
+  {
+    "type": "component",
+    "name": "hideVideoReport",
+    "displayName": "隐藏稿件投诉",
+    "description": "隐藏视频页面中的 \"稿件投诉\" 按钮.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/video/report.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/video/report.js"
   },
   {
     "type": "component",
@@ -291,7 +315,7 @@
     "type": "component",
     "name": "playerOnTopNew",
     "displayName": "播放器置顶（新）",
-    "description": "by [@RieN7](https://github.com/rien7)\n\n原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.",
+    "description": "by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@LockRim](https://github.com/LockRim)\n\n原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.",
     "fullRelativePath": "../../registry/dist/components/style/player-on-top-new.js",
     "fullAbsolutePath": "registry/dist/components/style/player-on-top-new.js"
   },
@@ -515,7 +539,7 @@
     "type": "component",
     "name": "removePromotions",
     "displayName": "删除广告",
-    "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.",
+    "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.",
     "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
     "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
   },
@@ -523,7 +547,7 @@
     "type": "component",
     "name": "urlParamsClean",
     "displayName": "网址参数清理",
-    "description": "自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.\r\n",
+    "description": "自动删除网址中的多余跟踪参数。请注意这会导致浏览器历史记录出现重复的标题（分别是转换前后的网址），并可能导致后退要多退几次。\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/url-params-clean.js",
     "fullAbsolutePath": "registry/dist/components/utils/url-params-clean.js"
   },
@@ -779,7 +803,7 @@
     "type": "component",
     "name": "showUploadTime",
     "displayName": "显示视频投稿时间",
-    "description": "by [@wisokey](https://github.com/wisokey)\n\n为视频播放页面的推荐列表中的视频添加显示视频投稿时间.\r\n\r\n`时间格式` 替换up名的文本格式 (默认为'up · yyyy-MM-dd'):\r\n  - y: 年\r\n  - M: 月\r\n  - d: 日\r\n  - h: 时\r\n  - m: 分\r\n  - s: 秒\r\n  - q: 季度\r\n  - up: up名\r\n",
+    "description": "by [@wisokey](https://github.com/wisokey)\n\n为视频播放页面的推荐列表中的视频添加显示视频投稿时间.\r\n\r\n`时间格式` 替换up名的文本格式 (默认为'up · yyyy-MM-dd'):\r\n  - y: 年\r\n  - M: 月\r\n  - d: 日\r\n  - h: 时\r\n  - m: 分\r\n  - s: 秒\r\n  - q: 季度\r\n  - up: up名\r\n  - \\r: 回车符\r\n  - \\n：换行符\r\n  - \\t：制表符",
     "fullRelativePath": "../../registry/dist/components/video/player/show-upload-time.js",
     "fullAbsolutePath": "registry/dist/components/video/player/show-upload-time.js"
   },
