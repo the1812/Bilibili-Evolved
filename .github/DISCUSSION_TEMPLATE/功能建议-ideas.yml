@@ -1,6 +1,11 @@
 title: 功能建议
 labels: []
 body:
+  - type: markdown
+    attributes:
+      value: |
+        默认您已阅读 [常见问题解答](https://github.com/the1812/Bilibili-Evolved/discussions/1301)
+        请勿重复发起, 发之前记得搜索一下. 如果需要反馈 Bug, 请前往 [Issues](https://github.com/the1812/Bilibili-Evolved/issues) 发起.
   - type: textarea
     id: description
     attributes:
