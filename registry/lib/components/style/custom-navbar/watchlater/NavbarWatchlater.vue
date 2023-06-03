@@ -1,6 +1,7 @@
 <template>
   <div class="watchlater-list">
     <div class="header">
+      <div class="watchlater-list-summary">共 {{ filteredCards.length }} 个</div>
       <div class="search">
         <TextBox v-model="search" linear placeholder="搜索"></TextBox>
       </div>
@@ -203,13 +204,17 @@ export default Vue.extend({
     cursor: pointer;
   }
   .header {
-    @include h-stretch();
+    @include h-center();
     justify-content: space-between;
     align-self: stretch;
     margin: 16px 12px;
+    .watchlater-list-summary {
+      margin-right: 6px;
+    }
     .search {
       position: relative;
       flex-grow: 1;
+      align-self: stretch;
       margin-right: 8px;
       .be-textbox {
         height: 100%;

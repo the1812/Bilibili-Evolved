@@ -110,6 +110,13 @@
     },
     {
       "type": "shell",
+      "command": "pnpm build-github-config",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "功能:生成 GitHub 配置 prod:build-github-config"
+    },
+    {
+      "type": "shell",
       "command": "pnpm webpack --config ./registry/webpack/docs.ts --progress",
       "group": "build",
       "problemMatcher": [],

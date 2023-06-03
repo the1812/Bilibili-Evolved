@@ -1,6 +1,4 @@
-[data-module="desc"][data-orig],
-.card[data-did] .content {
-  cursor: text;
+@mixin details() {
   .details {
     color: #222;
     font-size: 12px;
@@ -13,8 +11,19 @@
     }
   }
 }
+[data-module='desc'][data-orig],
+.card[data-did] .content {
+  cursor: text;
+  @include details();
+}
 .bili-rich-text-module {
   &.at {
     cursor: pointer;
+  }
+}
+
+.dyn-card-opus {
+  &__summary {
+    cursor: text;
   }
 }

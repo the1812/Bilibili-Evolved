@@ -107,4 +107,7 @@ export default Vue.extend({
     display: none !important;
   }
 }
+.video-tool-more-dropdown .video-watchlater.dropdown-item {
+  display: none !important;
+}
 </style>
