@@ -197,6 +197,17 @@
 
 自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.
 
+### [首页净化](../../registry/dist/components/style/clear-home.js)
+`clear-home`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/clear-home.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/clear-home.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/clear-home.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/clear-home.js)
+
+by [@RieN7](https://github.com/rien7)
+
+删除首页特定类型的卡片
+
 ### [自定义顶栏](../../registry/dist/components/style/custom-navbar.js)
 `customNavbar`
 
@@ -284,6 +295,15 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片
 
+### [隐藏记笔记](../../registry/dist/components/style/hide/video/notes.js)
+`hideVideoNotes`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/notes.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/notes.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/notes.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/notes.js)
+
+隐藏视频页面中的 "记笔记" 按钮.
+
 ### [隐藏直播推荐](../../registry/dist/components/style/hide/video/recommended-live.js)
 `hideRecommendedLive`
 
@@ -301,6 +321,15 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/related-videos.js)
 
 隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.
+
+### [隐藏稿件投诉](../../registry/dist/components/style/hide/video/report.js)
+`hideVideoReport`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/report.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/report.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/report.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/report.js)
+
+隐藏视频页面中的 "稿件投诉" 按钮.
 
 ### [隐藏视频分享](../../registry/dist/components/style/hide/video/share.js)
 `hideVideoShare`
@@ -355,7 +384,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-on-top-new.js)
 
-by [@RieN7](https://github.com/rien7)
+by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@LockRim](https://github.com/LockRim)
 
 原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
 
@@ -665,7 +694,7 @@ by [@aiden](https://github.com/swhoro)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/url-params-clean.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/url-params-clean.js)
 
-自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.
+自动删除网址中的多余跟踪参数。请注意这会导致浏览器历史记录出现重复的标题（分别是转换前后的网址），并可能导致后退要多退几次。
 
 ### [v1 设置迁移](../../registry/dist/components/utils/v1-migrate.js)
 `v1Migrate`
@@ -1050,6 +1079,9 @@ by [@wisokey](https://github.com/wisokey)
   - s: 秒
   - q: 季度
   - up: up名
+  - \r: 回车符
+  - \n：换行符
+  - \t：制表符
 
 ### [跳过充电鸣谢](../../registry/dist/components/video/player/skip-charge-list.js)
 `skipChargeList`
