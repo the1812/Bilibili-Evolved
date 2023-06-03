@@ -8,6 +8,7 @@ import * as installFeature from '@/core/install-feature'
 import * as horizontalScroll from '@/core/horizontal-scroll'
 import * as lifeCycle from '@/core/life-cycle'
 import * as loadingMode from '@/core/loading-mode'
+import * as localStorage from '@/core/local-storage'
 import * as meta from '@/core/meta'
 import * as observer from '@/core/observer'
 import * as reorder from '@/core/reorder'
@@ -47,6 +48,7 @@ export const coreApis = {
   horizontalScroll,
   lifeCycle,
   loadingMode,
+  localStorage,
   meta,
   observer,
   reorder,
@@ -87,6 +89,7 @@ export const externalApis = {
   ...horizontalScroll,
   lifeCycle,
   ...loadingMode,
+  ...localStorage,
   ...meta,
   observer,
   ...reorder,

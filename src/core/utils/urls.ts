@@ -52,7 +52,11 @@ export const feedsUrlsWithoutDetail = [
   /^https:\/\/live\.bilibili\.com\/(blanc\/)?[\d]+/,
 ]
 /** 含有动态的页面 */
-export const feedsUrls = [...feedsUrlsWithoutDetail, /^https:\/\/t\.bilibili\.com\//]
+export const feedsUrls = [
+  ...feedsUrlsWithoutDetail,
+  /^https:\/\/t\.bilibili\.com\//,
+  /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
+]
 /** 含有专栏的页面 */
 export const columnUrls = [/^https:\/\/www\.bilibili\.com\/read\/cv/]
 /** 含有播放器的页面 */

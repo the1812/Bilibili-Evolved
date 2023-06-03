@@ -49,6 +49,13 @@ const entry = async () => {
     'vd_source',
     'is_story_h5',
     'buvid',
+    'goFrom',
+    'jumpLinkType',
+    'hasBack',
+    'noTitleBar',
+    'msource',
+    'live_from',
+    'plat_id',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
@@ -72,6 +79,10 @@ const entry = async () => {
       match: /\/\/www\.bilibili\.com\/video\//,
       param: 'up_id',
     },
+    {
+      match: /\/\/mall\.bilibili\.com\//,
+      param: 'noReffer',
+    },
   ]
   const [siteSpecifiedParams] = registerAndGetData(
     'urlParamsClean.siteSpecifiedParams',
@@ -80,10 +91,13 @@ const entry = async () => {
   const builtInTailingSlash: { match: string | RegExp }[] = []
   const [tailingSlash] = registerAndGetData('urlParamsClean.tailingSlash', builtInTailingSlash)
 
-  const clean = () => {
-    const urlParams = window.location.search.substring(1).split('&')
+  const getCleanUrl = (originalUrl: string) => {
+    const url = new URL(originalUrl, location.origin)
+    const urlParams = [...new URLSearchParams(url.search).entries()].map(
+      ([key, value]) => `${key}=${value},`,
+    )
     if (urlParams.some(param => noClean.some(it => param.includes(it)))) {
-      return
+      return originalUrl
     }
     const filteredParams = urlParams.filter(p => {
       if (blockParams.some(b => p.startsWith(`${b}=`))) {
@@ -99,19 +113,47 @@ const entry = async () => {
       return true
     })
     const filteredParamsString = filteredParams.join('&')
-    let url = document.URL.replace(window.location.search, '')
     tailingSlash.forEach(({ match }) => {
-      if (matchPattern(url, match) && url.endsWith('/')) {
-        url = url.slice(0, url.length - 1)
+      const pathName = url.pathname
+      if (matchPattern(pathName, match) && pathName.endsWith('/')) {
+        url.pathname = pathName.slice(0, pathName.length - 1)
       }
     })
     const query = filteredParamsString ? `?${filteredParamsString}` : ''
-    const newUrl = url + query
+    url.search = query
+    return url.toString()
+  }
+
+  const createHistoryHook = (
+    original: (data: unknown, unused: string, url: string, ...restArgs: unknown[]) => void,
+  ) => {
+    return function historyHook(
+      data: unknown,
+      unused: string,
+      url: string,
+      ...restArgs: unknown[]
+    ) {
+      const newUrl = getCleanUrl(url)
+      if (newUrl !== url) {
+        console.log('History API 拦截', url, newUrl)
+        return original.call(this, data, unused, newUrl, ...restArgs)
+      }
+      return original.call(this, data, unused, url, ...restArgs)
+    }
+  }
+  const originalPushState = unsafeWindow.history.pushState
+  unsafeWindow.history.pushState = createHistoryHook(originalPushState)
+  const originalReplaceState = unsafeWindow.history.replaceState
+  unsafeWindow.history.replaceState = createHistoryHook(originalReplaceState)
+
+  const clean = () => {
+    const newUrl = getCleanUrl(document.URL)
     if (newUrl !== document.URL) {
-      console.log(document.URL, newUrl)
+      console.log('直接清理', document.URL, newUrl)
       window.history.replaceState(history.state, '', newUrl)
     }
   }
+
   const { fullyLoaded } = await import('@/core/life-cycle')
   const { urlChange } = await import('@/core/observer')
   fullyLoaded(() => {
@@ -122,10 +164,6 @@ export const component = defineComponentMetadata({
   name: 'urlParamsClean',
   displayName,
   entry,
-  description: {
-    'zh-CN':
-      '自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.',
-  },
   tags: [componentsTags.utils],
   urlExclude: [/game\.bilibili\.com\/fgo/, /live\.bilibili\.com\/p\/html\/live-app-hotrank\//],
 })

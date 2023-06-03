@@ -71,13 +71,13 @@
 <img alt="about-panel" src="images/v2/about-panel.jpg" width="450">
 
 # 推荐配置
-- 操作系统: 64-bit Windows 10+ / macOS 10.15+
-- 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 100+ / Firefox 103+ / Edge 100+ / Safari 15+
-- 处理器: 8代 Intel Core i7+ / AMD Ryzen 5000+
+- 操作系统: 64-bit Windows 10 / macOS Ventura
+- 分辨率: 3840x2160 / 192ppi
+- 浏览器: Chrome 100+ / Firefox 103+ / Edge 100+ / Safari 15.4+
+- 处理器: Intel Core i7-9750H / AMD Ryzen 5 5600H
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
-- 显卡: GeForce GTX 660 / Radeon HD 7870
+- 显卡: GeForce GTX 1050 / Radeon HD 7870
 - 网络: 10MB/s
 
 # 兼容性

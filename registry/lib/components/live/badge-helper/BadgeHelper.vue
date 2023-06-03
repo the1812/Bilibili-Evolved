@@ -90,8 +90,8 @@ export default Vue.extend({
   },
   methods: {
     updateColumnsCount() {
-      const maxColumnCount = 6
-      const columnLength = 12
+      const maxColumnCount = 15
+      const columnLength = 18
       const element = this.$el as HTMLElement
       const medalColumns = Math.min(Math.ceil(this.medalList.length / columnLength), maxColumnCount)
       element.style.setProperty('--medal-columns', medalColumns.toString())

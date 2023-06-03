@@ -5,6 +5,6 @@ export interface FreshLayoutItem extends WithName {
   grow?: boolean
 }
 export interface FreshLayoutItemSettings {
-  name: string
   linebreak: boolean
+  order: number
 }

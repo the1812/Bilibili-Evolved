@@ -53,15 +53,15 @@ export default Vue.extend({
     },
   },
   methods: {
-    performAction(event: KeyboardEvent | MouseEvent) {
-      this.action.action()
+    async performAction(event: KeyboardEvent | MouseEvent) {
+      await this.action.action()
       this.$emit('action', event)
     },
-    performDelete(event: KeyboardEvent | MouseEvent) {
+    async performDelete(event: KeyboardEvent | MouseEvent) {
       if (!this.action.deleteAction) {
         return
       }
-      this.action.deleteAction()
+      await this.action.deleteAction()
       this.$emit('delete-item', event)
     },
   },

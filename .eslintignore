@@ -3,4 +3,5 @@ typings/
 dist/
 dev/
 node_modules/
+!.github-json/
 .eslintrc.*

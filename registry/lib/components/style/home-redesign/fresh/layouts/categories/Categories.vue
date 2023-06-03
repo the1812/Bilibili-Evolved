@@ -39,7 +39,7 @@ import { ArrayContent } from '@/core/common-types'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
-import { freshHomeOptions } from '../../types'
+import { freshHomeOptions } from '../../options'
 import { supportedCategories } from './filter'
 import { getContent } from './content/content'
 
