@@ -47,19 +47,22 @@ function sideEffect() {
   let currentMode = 'normal'
 
   // 监听播放器宽屏模式 调整UP信息与弹幕列表样式
-  window.addEventListener('playerModeChange', (ev: ReturnType<typeof createPlayerModeChangeEvent>) => {
-    const { mode } = ev.detail
+  window.addEventListener(
+    'playerModeChange',
+    (ev: ReturnType<typeof createPlayerModeChangeEvent>) => {
+      const { mode } = ev.detail
 
-    currentMode = mode
+      currentMode = mode
 
-    if (mode === 'wide') {
-      danmuku.style.marginTop = '0px'
-      author.style.marginTop = calcMarginTop()
-    } else {
-      // 恢复原始样式
-      author.style.marginTop = '0px'
-    }
-  })
+      if (mode === 'wide') {
+        danmuku.style.marginTop = '0px'
+        author.style.marginTop = calcMarginTop()
+      } else {
+        // 恢复原始样式
+        author.style.marginTop = '0px'
+      }
+    },
+  )
 
   // 监听屏幕尺寸变化
   window.addEventListener('resize', () => {
