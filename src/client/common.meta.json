@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "version": "2.7.3",
+=======
+  "version": "2.8.0",
+>>>>>>> d661450dd (Update version number)
   "author": "Grant Howard, Coulomb-G",
   "copyright": "[year], Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)",
   "license": "MIT",
