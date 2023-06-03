@@ -56,13 +56,13 @@ const componentPath = (path: string) => {
   const [name, ...optionPath] = path.split('.')
   const optionName = optionPath.join('.')
   if (!isUserComponent(name)) {
-    if (optionName === undefined) {
+    if (!optionName) {
       return `components.${name}.enabled`
     }
     return `components.${name}.options.${optionName}`
   }
   // user components
-  if (optionName === undefined) {
+  if (!optionName) {
     return `userComponents.${name}.settings.enabled`
   }
   return `userComponents.${name}.settings.options.${optionName}`
