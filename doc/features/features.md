@@ -36,7 +36,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/filter.js)
 
-按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.
+按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.
 
 ### [强制固定动态侧栏](../../registry/dist/components/feeds/fixed-sidebars.js)
 `fixedFeedsSidebars`
@@ -656,6 +656,7 @@ by [@aiden](https://github.com/swhoro)
 
 - `占位文本`: 删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
 - `保留活动横幅`: 保留视频页面的活动横幅.
+- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.
 
 ### [网址参数清理](../../registry/dist/components/utils/url-params-clean.js)
 `urlParamsClean`
