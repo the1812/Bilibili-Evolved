@@ -94,7 +94,7 @@ const entry = async () => {
   const getCleanUrl = (originalUrl: string) => {
     const url = new URL(originalUrl, location.origin)
     const urlParams = [...new URLSearchParams(url.search).entries()].map(
-      ([key, value]) => `${key}=${value},`,
+      ([key, value]) => `${key}=${value}`,
     )
     if (urlParams.some(param => noClean.some(it => param.includes(it)))) {
       return originalUrl
