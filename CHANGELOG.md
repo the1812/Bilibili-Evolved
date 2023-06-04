@@ -22,7 +22,7 @@
 - `自定义顶栏` 增加 `创作中心` 入口, `排行` 新增 `全站音乐榜` 和 `短剧榜` 的入口. (#4101, PR #4154 by [星海](https://github.com/lovelyCARDINAL), PR #4155 by [星海](https://github.com/lovelyCARDINAL))
 - `播放器置顶（新）` 增加选项 `顶部留白`. (#4152, PR #4165 by [Ziu](https://github.com/ZiuChen))
 - `播放器置顶（新）` 的标题改为放置到播放器和点赞中间. (PR #4208 by [LockRim](https://github.com/LockRim))
-- `显示视频投稿时间` 支持转义字符. (#4160, PR #4167 [呼乎户](https://github.com/wisokey))
+- `显示视频投稿时间` 支持转义字符. (#4160, PR #4167 by [呼乎户](https://github.com/wisokey))
 - `隐藏视频推荐` 支持稍后再看和收藏夹播放页, 并适配 bpx 播放器. (#4174)
 - 新增功能 `隐藏记笔记` 和 `隐藏稿件投诉`. (#4124)
 - 优化了 `自定义顶栏` 中订阅在筛选时的 API 调用. (#4120)
