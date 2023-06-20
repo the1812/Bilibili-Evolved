@@ -4,6 +4,7 @@
     "strict": false,
     "sourceMap": true,
     "baseUrl": ".",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["webpack-env"],
     "paths": {
       "@/*": [
