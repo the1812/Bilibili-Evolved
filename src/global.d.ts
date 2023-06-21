@@ -1,5 +1,4 @@
 import type { LoDashStatic } from 'lodash'
-import type { CompatVue } from 'vue'
 
 import type { CdnConfig } from '../webpack/cdn/types'
 import type { CoreApis, ExternalApis } from './core/core-apis'
@@ -9,7 +8,6 @@ declare global {
   const _: LoDashStatic
 
   const lodash: LoDashStatic
-  const Vue: CompatVue
 
   interface GitInfo {
     commitHash: string
