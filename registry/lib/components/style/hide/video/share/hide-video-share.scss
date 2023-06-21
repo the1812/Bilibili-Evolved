@@ -1,0 +1,15 @@
+.video-toolbar-v1 {
+  .share-wrap {
+    display: none !important;
+  }
+}
+.video-toolbar-container {
+  .video-share-wrap {
+    display: none !important;
+  }
+}
+.player-left-components {
+  [class*="toolbar_share_info"] {
+    display: none !important;
+  }
+}

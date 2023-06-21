@@ -41,3 +41,8 @@ export const match = getSimpleLinkItem({
   displayName: '赛事',
   href: 'https://www.bilibili.com/v/game/match/',
 })
+export const creations = getSimpleLinkItem({
+  name: 'creations',
+  displayName: '创作中心',
+  href: 'https://member.bilibili.com/platform/home',
+})

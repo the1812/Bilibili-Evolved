@@ -11,10 +11,19 @@
       </div>
     </div>
     <div class="fresh-home-categories-default-rank-list">
-      <a :href="rankingsLink" target="_blank">
-        <SubHeader> 排行榜 </SubHeader>
-      </a>
-      <RankList :parse-json="parseJson" :api="rankingsApi" />
+      <div class="fresh-home-categories-default-rank-list-header">
+        <a :href="rankingsLink" target="_blank">
+          <SubHeader> 排行榜 </SubHeader>
+        </a>
+        <VButton v-if="isCompactRankList" icon title="显示较少项目" @click="toggleRankListMode">
+          <VIcon icon="mdi-poll" :size="16" />
+        </VButton>
+        <VButton v-else icon title="显示较多项目" @click="toggleRankListMode">
+          <VIcon icon="mdi-format-list-text" :size="16" />
+        </VButton>
+      </div>
+      <CompactRankList v-if="isCompactRankList" :parse-json="parseJson" :api="rankingsApi" />
+      <RankList v-else :parse-json="parseJson" :api="rankingsApi" />
     </div>
   </div>
 </template>
@@ -28,6 +37,9 @@ import type { RankListCard } from './rank-list'
 import type { TabType } from '../categories'
 import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
+import { VButton, VIcon } from '@/ui'
+import CompactRankList from './CompactRankList.vue'
+import { useCompactRankList } from '../../../../mixin'
 
 /*
 TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, 所以 RankList 也要换 API
@@ -38,9 +50,12 @@ TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, �
 
 export default defineComponent({
   components: {
+    CompactRankList,
     RankList,
     VideoSlides,
     SubHeader,
+    VButton,
+    VIcon,
   },
   props: {
     region: {
@@ -48,6 +63,7 @@ export default defineComponent({
       required: true,
     },
   },
+  setup: useCompactRankList,
   data() {
     const regionCode = this.region.id
     console.log(this.region.category)
@@ -59,7 +75,7 @@ export default defineComponent({
     }
   },
   methods: {
-    parseJson(json: any) {
+    parseJson(json: any): RankListCard[] {
       const items = (lodash.get(json, 'data', []) || []) as any[]
       const cards = items
         .map(
@@ -96,6 +112,18 @@ export default defineComponent({
   }
   &-rank-list {
     @include v-stretch(var(--fresh-home-categories-header-gap));
+    &-header {
+      @include h-center();
+      justify-content: space-between;
+      position: relative;
+      .be-button {
+        @include absolute-v-center();
+        right: 0;
+      }
+      .be-icon {
+        margin: 1px;
+      }
+    }
   }
 }
 </style>

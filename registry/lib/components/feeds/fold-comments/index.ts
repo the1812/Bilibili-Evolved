@@ -8,7 +8,7 @@ import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 const entry = async () => {
   const { forEachFeedsCard } = await import('@/components/feeds/api')
   const { childList } = await import('@/core/observer')
-  const commentSelector = '.bb-comment'
+  const commentSelector = '.bb-comment, .bili-comment-container'
   const injectButton = (card: HTMLElement) => {
     const injectToComment = async (panelArea: HTMLElement, clickHandler: () => void) => {
       const commentBox = await select(() => dq(panelArea, commentSelector))
@@ -24,7 +24,8 @@ const entry = async () => {
       button.innerHTML = '收起评论'
       button.addEventListener('click', () => {
         clickHandler()
-        card.scrollIntoView({ behavior: 'smooth' })
+        card.scrollIntoView()
+        window.scrollBy({ top: -75 })
       })
       commentBox.insertAdjacentElement('beforeend', button)
     }

@@ -32,6 +32,23 @@ const combineText = (...texts: string[]) =>
 const getType = (rawType: string): FeedsCardType =>
   feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypeMap.DynamicTypeWord
 const getText = (dynamicModule: any, cardType: FeedsCardType) => {
+  const isOpusModule = Object.hasOwn(dynamicModule, 'paragraphs')
+  if (isOpusModule) {
+    const paragraphs = dynamicModule.paragraphs as any[]
+    const textParagraph = paragraphs.find(it => it.para_type === 1)
+    const text = (textParagraph.text.nodes as any[])
+      .map(node => {
+        if (node.type === 'TEXT_NODE_TYPE_WORD') {
+          return lodash.get(node, 'word.words')
+        }
+        if (node.type === 'TEXT_NODE_TYPE_RICH') {
+          return lodash.get(node, 'rich.orig_text')
+        }
+        return ''
+      })
+      .join('')
+    return text
+  }
   const { desc: mainDesc, major } = dynamicModule
   const mainText = mainDesc?.text ?? ''
   let typeText = ''
@@ -40,8 +57,13 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
     case feedsCardTypes.column:
     case feedsCardTypes.video: {
       const target = major.archive ?? major.pgc ?? major.article
-      const { title, desc } = target
-      typeText = combineText(title, desc)
+      if (target) {
+        const { title, desc } = target
+        typeText = combineText(title, desc)
+      } else if (major.opus) {
+        const { title, summary } = major.opus
+        typeText = combineText(title, summary.text)
+      }
       break
     }
     default: {
@@ -52,7 +74,22 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
 }
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   const vueData = getVueData(element)
-  const { modules, id_str, type } = vueData.data
+  const parseModules = (rawModules: any) => {
+    if (Array.isArray(rawModules)) {
+      return Object.fromEntries(
+        rawModules.map(it => {
+          const [key] = Object.keys(it).filter(k => k !== 'module_type')
+          if (key === 'module_content') {
+            return ['module_dynamic', it[key]]
+          }
+          return [key, it[key]]
+        }),
+      )
+    }
+    return rawModules
+  }
+  const { modules: rawModules, id_str, type } = vueData.data
+  const modules = parseModules(rawModules)
   const { name } = modules.module_author
   const { like, forward, comment } = modules.module_stat
   const cardType = getType(type)
@@ -78,7 +115,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     const {
       module_author: { name: repostUsername },
       module_dynamic: repostDynamicModule,
-    } = vueData.data.orig.modules
+    } = parseModules(vueData.data.orig.modules)
     const repostCardType = getType(vueData.data.orig.type)
     card.repostUsername = repostUsername
     card.repostText = getText(repostDynamicModule, repostCardType)
@@ -94,7 +131,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   await selectAll(() => element.querySelectorAll('.bili-dyn-item *'), { queryInterval: 50 })
   return card
 }
-const isNodeValid = createNodeValidator('.bili-dyn-list__item, .bili-dyn-item')
+const isNodeValid = createNodeValidator('.bili-dyn-list__item, .bili-dyn-item, .bili-opus-view')
 
 /** 新版动态卡片管理器实现 */
 export class FeedsCardsManagerV2 extends FeedsCardsManager {
@@ -128,7 +165,8 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
     this.dispatchCardEvent(FeedsCardsManagerEventType.RemoveCard, card)
   }
   updateCards(cardsList: HTMLElement) {
-    const selector = '.bili-dyn-list__item, :not(.bili-dyn-list__item) > .bili-dyn-item'
+    const selector =
+      '.bili-dyn-list__item, :not(.bili-dyn-list__item) > .bili-dyn-item, .bili-opus-view'
     const cards = dqa(cardsList, selector)
     cards.forEach(it => this.addCard(it))
     const getCardNode = (node: Node) => {

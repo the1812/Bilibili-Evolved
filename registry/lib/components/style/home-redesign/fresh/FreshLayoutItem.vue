@@ -1,19 +1,29 @@
 <template>
   <div
-    class="fresh-home-content-layout-item"
-    :class="{
-      grow: item.grow,
-    }"
+    class="fresh-home-content-layout-item-container"
+    :class="{ 'fresh-home-content-layout-item-hidden': options.hidden }"
   >
-    <component :is="item.component" />
+    <div
+      class="fresh-home-content-layout-item"
+      :class="{
+        grow: item.grow,
+      }"
+      :style="{ order: options.order }"
+    >
+      <component :is="item.component" />
+    </div>
+    <div
+      v-if="options.linebreak"
+      class="fresh-home-content-layout-item linebreak"
+      :style="{ order: options.order }"
+    ></div>
   </div>
-  <div v-if="options.linebreak" class="fresh-home-content-layout-item linebreak"></div>
 </template>
 <script lang="ts">
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
-import { freshHomeOptions } from './types'
-import type { FreshLayoutItem } from './layouts/fresh-layout-item'
+import { freshHomeOptions } from './options'
+import type { FreshLayoutItem, FreshLayoutItemSettings } from './layouts/fresh-layout-item'
 
 export default defineComponent({
   props: {
@@ -24,7 +34,9 @@ export default defineComponent({
   },
   data() {
     return {
-      options: freshHomeOptions.layoutOptions[this.item.name] ?? { linebreak: false },
+      options: (freshHomeOptions.layoutOptions[this.item.name] ?? {
+        linebreak: false,
+      }) as FreshLayoutItemSettings | { linebreak: boolean; order?: number; hidden?: boolean },
     }
   },
 })
@@ -34,6 +46,12 @@ export default defineComponent({
   &-content-layout-item {
     flex: 0 0 auto;
     padding: 12px;
+    &-container {
+      display: contents;
+      &.fresh-home-content-layout-item-hidden {
+        display: none;
+      }
+    }
     &.linebreak {
       padding: 0;
       flex: 1 0 100%;

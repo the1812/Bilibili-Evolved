@@ -78,18 +78,24 @@ export default defineComponent({
   },
   emits: ['update:link'],
   data() {
+    const tabs = this.tabs as TabMappings
     return {
-      selectedTab: (this.tabs.find((t: TabMapping) => t.name === this.defaultTab) ??
-        this.tabs[0]) as TabMapping,
+      selectedTabName:
+        tabs.find((t: TabMapping) => t.name === this.defaultTab)?.name ?? tabs[0].name,
     }
+  },
+  computed: {
+    selectedTab() {
+      return this.tabs.find((t: TabMapping) => t.name === this.selectedTabName)
+    },
   },
   mounted() {
     this.$emit('update:link', this.selectedTab.activeLink)
   },
   methods: {
     selectTab(tab: TabMapping) {
-      if (this.selectedTab !== tab) {
-        this.selectedTab = tab
+      if (this.selectedTabName !== tab.name) {
+        this.selectedTabName = tab.name
         tab.count = 0
         this.$emit('update:link', this.selectedTab.activeLink)
       } else if (tab.activeLink) {

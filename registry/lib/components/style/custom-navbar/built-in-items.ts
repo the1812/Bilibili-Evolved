@@ -1,19 +1,19 @@
 import type { CustomNavbarItemInit } from './custom-navbar-item'
-import { favorites } from './favorites/favorites'
-import { feeds } from './feeds/feeds'
-import { blanks } from './flexible-blank/flexible-blank'
-import { history } from './history/history'
-import { home } from './home/home'
-import { gamesIframe, livesIframe, mangaIframe } from './iframe/iframe'
-import { logo } from './logo/logo'
 import { messages } from './messages/messages'
 import { ranking } from './ranking/ranking'
-import { search } from './search/search'
-import { bangumi, drawing, match, music, shop } from './simple-links/simple-links'
-import { subscriptions } from './subscriptions/subscriptions'
-import { upload } from './upload/upload'
 import { userInfo } from './user-info/user-info'
+import { logo } from './logo/logo'
+import { home } from './home/home'
+import { gamesIframe, livesIframe, mangaIframe } from './iframe/iframe'
+import { blanks } from './flexible-blank/flexible-blank'
+import { bangumi, music, drawing, shop, match, creations } from './simple-links/simple-links'
+import { upload } from './upload/upload'
+import { search } from './search/search'
+import { feeds } from './feeds/feeds'
+import { subscriptions } from './subscriptions/subscriptions'
 import { watchlater } from './watchlater/watchlater'
+import { favorites } from './favorites/favorites'
+import { history } from './history/history'
 
 const [blank1, blank2, blank3, blank4] = blanks
 export const getBuiltInItems = (): CustomNavbarItemInit[] => [
@@ -39,6 +39,7 @@ export const getBuiltInItems = (): CustomNavbarItemInit[] => [
   watchlater,
   favorites,
   history,
+  creations,
   upload,
   blank4,
 ]

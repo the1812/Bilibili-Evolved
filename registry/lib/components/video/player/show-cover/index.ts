@@ -1,34 +1,24 @@
 import { defineComponentMetadata } from '@/components/define'
 import type { VideoChangeCallback } from '@/core/observer'
 import { videoChange } from '@/core/observer'
-import { createHook, isBwpVideo } from '@/core/utils'
+import { createHook } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   let lastAid: string
   const removeCover = () => document.documentElement.style.removeProperty('--cover-url')
-  const videoPrototype = (await isBwpVideo()) ? BwpElement.prototype : HTMLVideoElement.prototype
-  // bpx player 改了 video.play(), hook 直接挂 HTMLVideoElement.prototype 上没效果 (#3698)
-  const bpxPlayer = dq('.bpx-player-video-wrap')
-  const isBpxPlayer = Boolean(bpxPlayer)
-  createHook(videoPrototype, 'play', () => {
-    removeCover()
-    return true
-  })
-  if (isBpxPlayer) {
-    videoChange(() => {
-      console.debug('isBpxPlayer')
-      const currentBpxVideo = dq('.bpx-player-video-wrap video') as HTMLVideoElement
-      if (!currentBpxVideo) {
-        console.warn('bpx player not found')
-        return
-      }
-      createHook(currentBpxVideo, 'play', () => {
-        removeCover()
-        return true
-      })
+  videoChange(() => {
+    console.debug('isBpxPlayer')
+    const currentBpxVideo = dq('.bpx-player-video-wrap video') as HTMLVideoElement
+    if (!currentBpxVideo) {
+      console.warn('bpx player not found')
+      return
+    }
+    createHook(currentBpxVideo, 'play', () => {
+      removeCover()
+      return true
     })
-  }
+  })
   const showCover: VideoChangeCallback = async ({ aid }) => {
     if (!aid) {
       console.warn('[播放前显示封面] 未找到av号')

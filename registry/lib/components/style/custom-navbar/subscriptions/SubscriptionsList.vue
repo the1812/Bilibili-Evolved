@@ -48,27 +48,20 @@ import { logError } from '@/core/utils/log'
 import { DpiImage, ScrollTrigger, VEmpty, VIcon, VLoading } from '@/ui'
 
 import { SubscriptionTypes } from './subscriptions'
+import { type SubscriptionItem, SubscriptionStatus, type SubscriptionStatusFilter } from './types'
 
-enum SubscriptionStatus {
-  ToView = 1,
-  Viewing,
-  Viewed,
-}
 const getStatusText = (status: SubscriptionStatus) => {
   switch (status) {
     case SubscriptionStatus.ToView:
       return '想看'
-    case SubscriptionStatus.Viewing:
     case SubscriptionStatus.Viewed:
       return '看过'
+    case SubscriptionStatus.Viewing:
     default:
       return '在看'
   }
 }
-const subscriptionSorter = (
-  a: { status: SubscriptionStatus },
-  b: { status: SubscriptionStatus },
-) => {
+const subscriptionSorter = (a: SubscriptionItem, b: SubscriptionItem) => {
   let statusA = a.status
   if (statusA !== SubscriptionStatus.Viewed) {
     statusA = SubscriptionStatus.Viewed - statusA
@@ -88,6 +81,10 @@ export default defineComponent({
     ScrollTrigger,
   },
   props: {
+    filter: {
+      type: [Object, null],
+      default: null,
+    },
     type: {
       type: String,
       default: SubscriptionTypes.Bangumi,
@@ -101,25 +98,40 @@ export default defineComponent({
       page: 1,
     }
   },
+  watch: {
+    filter() {
+      this.cards = []
+      this.loading = true
+      this.page = 1
+      this.nextPage()
+    },
+  },
   async created() {
     this.nextPage()
   },
   methods: {
     async nextPage() {
       try {
+        const filter = this.filter as SubscriptionStatusFilter
+        const followStatus = filter.viewAll ? 0 : (filter.status as number)
+        const params = new URLSearchParams({
+          type: this.type !== SubscriptionTypes.Bangumi ? '2' : '1',
+          pn: this.page.toString(),
+          ps: '16',
+          vmid: getUID(),
+          follow_status: followStatus.toString(),
+        })
         const json = await getJsonWithCredentials(
-          `https://api.bilibili.com/x/space/bangumi/follow/list?type=${
-            this.type !== SubscriptionTypes.Bangumi ? '2' : '1'
-          }&pn=${this.page}&ps=16&vmid=${getUID()}`,
+          `https://api.bilibili.com/x/space/bangumi/follow/list?${params}`,
         )
         if (json.code !== 0) {
           logError(`加载订阅信息失败: ${json.message}`)
           return
         }
-        const cards = lodash
+        const newCards: SubscriptionItem[] = lodash
           .uniqBy(
-            this.cards.concat(
-              (lodash.get(json, 'data.list') as any[]).map(item => ({
+            (lodash.get(json, 'data.list') as any[]).map(
+              (item): SubscriptionItem => ({
                 title: item.title,
                 coverUrl: item.square_cover.replace('http:', 'https:'),
                 latest: item.new_ep.index_show,
@@ -129,14 +141,14 @@ export default defineComponent({
                 statusText: getStatusText(item.follow_status),
                 playUrl: `https://www.bilibili.com/bangumi/play/ss${item.season_id}`,
                 mediaUrl: `https://www.bilibili.com/bangumi/media/md${item.media_id}`,
-              })),
+              }),
             ),
             card => card.id,
           )
           .sort(subscriptionSorter)
         this.page++
-        this.cards = cards
-        this.hasMorePage = lodash.get(json, 'data.total', 0) > this.cards.length
+        this.cards = this.cards.concat(newCards)
+        this.hasMorePage = this.cards.length < json.data.total
       } finally {
         this.loading = false
       }

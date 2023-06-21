@@ -41,8 +41,7 @@ import type { TabType } from './categories'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
-
-import { freshHomeOptions } from '../../types'
+import { freshHomeOptions } from '../../options'
 import { getContent } from './content/content'
 import { supportedCategories } from './filter'
 

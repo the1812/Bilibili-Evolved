@@ -18,12 +18,18 @@ export const bangumiBatchInput: DownloadVideoInput = {
   getInputs: async instance => instance?.checkedInputItems ?? [],
   component: defineAsyncComponent(async () =>
     createEpisodesPicker(async instance => {
-      const metaUrl = document.querySelector("meta[property='og:url']")
-      if (metaUrl === null) {
-        logError('获取番剧数据失败: 无法找到 Season ID')
+      const metadata = dq('script[type="application/ld+json"]')
+      if (!metadata) {
+        logError('获取番剧数据失败: 无法找到 Metadata')
         return []
       }
-      const seasonId = metaUrl.getAttribute('content')?.match(/play\/ss(\d+)/)?.[1]
+      const metadataJson = JSON.parse(metadata.innerHTML.trim())
+      const metaUrl: string = lodash.get(metadataJson, 'itemListElement.0.url', null)
+      if (metaUrl === null) {
+        logError('获取番剧数据失败: 无法找到 metaUrl')
+        return []
+      }
+      const seasonId = metaUrl.match(/play\/ss(\d+)/)?.[1]
       if (seasonId === undefined) {
         logError('获取番剧数据失败: 无法解析 Season ID')
         return []

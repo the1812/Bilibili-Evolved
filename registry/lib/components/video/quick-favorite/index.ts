@@ -1,10 +1,11 @@
 import type { OptionsOfMetadata } from '@/components/define'
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import type { ComponentEntry } from '@/components/types'
-import { matchUrlPattern } from '@/core/utils'
+import { getUID, matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { favoriteListUrls, videoUrls } from '@/core/utils/urls'
-
 import type { KeyBindingAction } from '../../utils/keymap/bindings'
+import { addVideoActionButton } from '@/components/video/video-actions'
+import { videoChange } from '@/core/observer'
 
 const options = defineOptionsMetadata({
   favoriteFolderID: {
@@ -24,29 +25,14 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (favoriteListUrls.some(matchUrlPattern) && !settings.options.showInFavoritePages) {
     return
   }
-  const { playerReady, mountVueComponent, getUID } = await import('@/core/utils')
   if (!getUID()) {
     return
   }
-
-  await playerReady()
-  const favoriteButton = dq(
-    '.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect',
-  )
-  if (!favoriteButton) {
-    return
-  }
-  const { default: QuickFavorite } = await import('./QuickFavorite.vue')
-  let quickFavorite: InstanceType<typeof QuickFavorite> | undefined
-  const { videoChange } = await import('@/core/observer')
+  const [el, vm] = mountVueComponent(await import('./QuickFavorite.vue'))
+  await addVideoActionButton(() => el)
   videoChange(() => {
-    if (!quickFavorite) {
-      const [el, vm] = mountVueComponent(QuickFavorite)
-      quickFavorite = vm
-      favoriteButton.insertAdjacentElement('afterend', el)
-    }
-    quickFavorite.aid = unsafeWindow.aid
-    quickFavorite.syncFavoriteState()
+    vm.aid = unsafeWindow.aid
+    vm.syncFavoriteState()
   })
 }
 export const component = defineComponentMetadata({

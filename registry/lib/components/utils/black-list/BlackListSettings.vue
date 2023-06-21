@@ -136,7 +136,7 @@ export default defineComponent({
     .title {
       margin-left: 6px;
       font-size: 18px;
-      font-weight: bold;
+      @include semi-bold();
     }
     .grow {
       flex: 1;

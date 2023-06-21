@@ -2,7 +2,6 @@ import { defineComponentMetadata } from '@/components/define'
 import { bisectorOptionsMetadata } from './options'
 import { LifeCycleEventTypes } from '@/core/life-cycle'
 import { componentsTags } from '@/components/types'
-import * as bisector from './api'
 import { useScopedConsole } from '@/core/utils/log'
 import type { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
 
@@ -13,6 +12,7 @@ export const component = defineComponentMetadata({
   hidden: true,
   configurable: false,
   entry: async ({ settings: { options } }) => {
+    const bisector = await import('./api')
     bisector.setOptions(options)
     bisector.setConsole(useScopedConsole('组件二等分'))
     unsafeWindow.addEventListener(LifeCycleEventTypes.ComponentsLoaded, () => {
@@ -34,6 +34,7 @@ export const component = defineComponentMetadata({
               description: 'Start/Continue component bisection',
               icon: 'mdi-view-split-horizontal',
               action: async () => {
+                const bisector = await import('./api')
                 await bisector.start()
               },
             },

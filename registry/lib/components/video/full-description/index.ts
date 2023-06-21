@@ -10,7 +10,7 @@ const name = 'fullVideoDescription'
 const entry = () => {
   addStyle(style, name)
   videoChange(async () => {
-    const desc = await select('.video-desc, .video-desc-v1')
+    const desc = await select('.video-desc, .video-desc-v1, .video-desc-container')
     if (!desc) {
       return
     }

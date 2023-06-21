@@ -54,7 +54,7 @@ export default defineComponent({
     }
     &-title {
       color: var(--home-color);
-      font-weight: bold;
+      @include semi-bold();
       font-size: 20px;
       line-height: 28px;
     }

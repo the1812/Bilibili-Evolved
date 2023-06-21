@@ -1,13 +1,15 @@
 import type { Ref, ComputedRef } from 'vue'
 import { ref, computed, onMounted } from 'vue'
 import { getJson } from '@/core/ajax'
+import { freshHomeOptions } from './fresh/options'
+import { RankListMode } from './fresh/types'
 
 export const requestProps = {
   api: {
     type: String,
     required: true,
   },
-}
+} as const
 
 /**
  * 封装一些 API 请求的通用行为, 使用者要定义 parseJson 方法将返回的 JSON 转换为数据数组, 会自动存到 items 里
@@ -72,4 +74,23 @@ export const useCssVariable = <V extends Record<string, string | number>>(
   })
 
   return { el, ui }
+}
+
+/** 使用 CompactRankList, 提供一些与其设置关联的接口 */
+export const useCompactRankList = (): {
+  rankListMode: Ref<RankListMode>
+  isCompactRankList: ComputedRef<boolean>
+  toggleRankListMode: () => void
+} => {
+  const rankListMode = ref(freshHomeOptions.rankListMode)
+  const isCompactRankList = computed(() => rankListMode.value === RankListMode.Compact)
+  const toggleRankListMode = () => {
+    if (rankListMode.value === RankListMode.Compact) {
+      rankListMode.value = RankListMode.Default
+    } else if (rankListMode.value === RankListMode.Default) {
+      rankListMode.value = RankListMode.Compact
+    }
+    freshHomeOptions.rankListMode = rankListMode.value
+  }
+  return { rankListMode, isCompactRankList, toggleRankListMode }
 }

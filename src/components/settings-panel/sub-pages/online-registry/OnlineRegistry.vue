@@ -235,7 +235,7 @@ export default ThisComponent
     &-title {
       flex: 1;
       font-size: 18px;
-      font-weight: bold;
+      @include semi-bold();
     }
     &-search {
       flex: 1;

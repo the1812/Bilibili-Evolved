@@ -65,7 +65,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" generic="">
 import type { Ref, PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
 import VPopup from './VPopup.vue'

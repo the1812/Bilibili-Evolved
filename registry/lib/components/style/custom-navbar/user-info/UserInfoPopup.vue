@@ -444,7 +444,7 @@ export default defineComponent({
     }
     span {
       font-size: 14px;
-      font-weight: bold;
+      @include semi-bold();
       opacity: 0.7;
     }
   }

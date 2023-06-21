@@ -29,7 +29,7 @@ export const searchProvider: LaunchBarActionProvider = {
         content: defineAsyncComponent(
           async () => () =>
             h('div', {
-              innerHTML: /* html */ `<span>${input}</span>`,
+              innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
             }),
         ),
         action: () => search(input),

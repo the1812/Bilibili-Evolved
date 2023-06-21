@@ -108,7 +108,7 @@ export default defineComponent({
   display: flex;
   flex: 1 0 0;
   width: 0;
-  @include scroll-mask-x(36px);
+  @include scroll-mask-x(36px, var(--home-base-color));
 
   &-content {
     @include h-center();

@@ -26,9 +26,8 @@ import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
 import { VButton, VIcon } from '@/ui'
-
 import { getTrendingVideos } from '../../../trending'
-import { freshHomeOptions } from '../../types'
+import { freshHomeOptions } from '../../options'
 import VideoList from '../../VideoList.vue'
 
 export default defineComponent({

@@ -71,8 +71,13 @@ export abstract class PlayerAgent {
   }
 
   /** true 开灯，false 关灯 */
-  async toggleLight(on: boolean) {
+  async toggleLight(on?: boolean) {
     const checkbox = (await this.query.control.settings.lightOff()) as HTMLInputElement
+    // 无指定参数, 直接 toggle
+    if (on === undefined) {
+      checkbox.click()
+      return
+    }
     // 关灯状态 && 要开灯 -> 开灯
     checkbox.checked && on && checkbox.click()
     // 开灯状态 && 要关灯 -> 关灯

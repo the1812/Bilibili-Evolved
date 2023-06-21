@@ -67,12 +67,17 @@
   }
   aside {
     position: fixed !important;
+    margin: 0 !important;
     &.left {
       right: var(--fixed-offset);
     }
     &.right {
       left: var(--fixed-offset);
     }
+  }
+  main {
+    width: var(--center-width);
+    margin: 0 var(--gap);
   }
   @media screen and (min-width: 1921px) {
     --center-width: 32.92vw;

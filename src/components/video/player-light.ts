@@ -6,7 +6,7 @@ import { playerAgent } from './player-agent'
 
 // let initialized = false
 
-const setLight = (on: boolean) => {
+const setLight = (on?: boolean) => {
   if (!playerUrls.some(url => matchUrlPattern(url))) {
     return none
   }
@@ -28,3 +28,4 @@ const setLight = (on: boolean) => {
 
 export const lightOn = setLight(true)
 export const lightOff = setLight(false)
+export const toggleLight = setLight()

@@ -7,14 +7,19 @@
       <BangumiTimeline :api="timelineApi" />
     </div>
     <div class="fresh-home-categories-bangumi-rank-list">
-      <a
-        class="fresh-home-categories-bangumi-rank-list-header"
-        :href="rankingsLink"
-        target="_blank"
-      >
-        <SubHeader> 排行榜 </SubHeader>
-      </a>
-      <RankList bangumi-mode :parse-json="parseJson" :api="rankingsApi" />
+      <div class="fresh-home-categories-bangumi-rank-list-header">
+        <a :href="rankingsLink" target="_blank">
+          <SubHeader> 排行榜 </SubHeader>
+        </a>
+        <VButton v-if="isCompactRankList" icon title="显示较少项目" @click="toggleRankListMode">
+          <VIcon icon="mdi-poll" :size="16" />
+        </VButton>
+        <VButton v-else icon title="显示较多项目" @click="toggleRankListMode">
+          <VIcon icon="mdi-format-list-text" :size="16" />
+        </VButton>
+      </div>
+      <CompactRankList v-if="isCompactRankList" :parse-json="parseJson" :api="rankingsApi" />
+      <RankList v-else bangumi-mode :parse-json="parseJson" :api="rankingsApi" />
     </div>
   </div>
 </template>
@@ -22,12 +27,15 @@
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { TabType } from '../categories'
+import { VButton, VIcon } from '@/ui'
 import { applyContentFilter } from '@/components/feeds/api'
 
 import SubHeader from '../../../SubHeader.vue'
+import CompactRankList from './CompactRankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
 import type { RankListCard } from './rank-list'
 import RankList from './RankList.vue'
+import { useCompactRankList } from '../../../../mixin'
 
 const bangumiDataMap = {
   anime: {
@@ -45,6 +53,9 @@ export default defineComponent({
     SubHeader,
     BangumiTimeline,
     RankList,
+    CompactRankList,
+    VButton,
+    VIcon,
   },
   props: {
     region: {
@@ -52,6 +63,7 @@ export default defineComponent({
       required: true,
     },
   },
+  setup: useCompactRankList,
   data() {
     const { route } = this.region.category
     const { rankingName, seasonType } = bangumiDataMap[route]
@@ -115,15 +127,19 @@ export default defineComponent({
     }
     &-header {
       @include h-center();
+      height: 26px;
       justify-content: space-between;
     }
   }
   &-rank-list {
     @include v-stretch(var(--fresh-home-categories-header-gap));
-    // &-header {
-    //   // Timeline 的 header 中, 图标为 20px, 上下 padding 共 8px, 这里的 line-height 需要保持一致来对齐
-    //   line-height: calc(20px + 8px);
-    // }
+    &-header {
+      @include h-center();
+      justify-content: space-between;
+      .be-icon {
+        margin: 1px;
+      }
+    }
   }
 }
 </style>

@@ -27,7 +27,7 @@ const entry = async () => {
         }
         const contents = dqa(
           element,
-          '.content, .bili-dyn-content [data-module="desc"] .bili-rich-text',
+          '.content, .bili-dyn-content [data-module="desc"] .bili-rich-text, .dyn-card-opus__summary',
         )
         const target = e.target as HTMLElement
         if (target.hasAttribute('click-title')) {

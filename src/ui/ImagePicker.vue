@@ -294,7 +294,7 @@ export default defineComponent({
             padding: 6px 8px;
           }
           .title {
-            font-weight: bold;
+            @include semi-bold();
             font-size: 16px;
           }
           &.buttons {

@@ -50,10 +50,14 @@ export default defineComponent({
   padding: 0 16px 16px 16px;
   &-markdown {
     font-size: 14px;
+    flex-grow: 1;
+    max-height: calc(100vh - 220px);
+    overflow: auto;
     @include markdown();
   }
   &-actions {
     @include h-center(6px);
+    flex-shrink: 0;
     font-size: 15px;
     justify-content: flex-end;
     .be-button {

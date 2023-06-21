@@ -133,7 +133,7 @@ export default defineComponent({
     margin-bottom: 12px;
     .title-text {
       font-size: 16px;
-      font-weight: bold;
+      @include semi-bold();
       flex: 1 0 auto;
     }
   }

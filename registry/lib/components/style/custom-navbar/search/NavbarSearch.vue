@@ -30,6 +30,7 @@ export default defineComponent({
     }
     .input-area .launch-bar-form .input {
       padding: 8px 6px;
+      width: var(--navbar-search-width);
     }
   }
 

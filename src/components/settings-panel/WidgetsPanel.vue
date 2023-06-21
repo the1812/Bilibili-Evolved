@@ -118,7 +118,7 @@ export default defineComponent({
   &-header {
     flex: 0 0 auto;
     @include h-center();
-    font-weight: bold;
+    @include semi-bold();
     font-size: 18px;
     margin-bottom: 18px;
     .be-icon {

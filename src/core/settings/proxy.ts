@@ -28,7 +28,7 @@ export const createProxy = (targetObj: any, valueChangeListener?: ValueChangeLis
         const isImplicitProp =
           !Object.prototype.hasOwnProperty.call(o, prop) && oldValue !== undefined
         if (unsafeWindow.proxyDebug) {
-          console.log({ isImplicitProp, prop, value })
+          console.log({ isImplicitProp, prop, rootProp, propPath, value, oldValue })
         }
         /**
          * 是否对 value 启用深层 Proxy

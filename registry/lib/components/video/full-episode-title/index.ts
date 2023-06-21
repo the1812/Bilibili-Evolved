@@ -39,6 +39,9 @@ export const component = defineComponentMetadata({
       select('.multi-page-v1 .head-left h3'),
       select('.base-video-sections-v1 .first-line-title'),
     ]).then(titleElement => {
+      if (!titleElement) {
+        return
+      }
       titleElement.addEventListener(
         'click',
         (e: MouseEvent) => {
