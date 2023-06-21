@@ -89,7 +89,15 @@ export const removeComponentListener = (path: string, listener: ValueChangeListe
 }
 
 state.settingsLoaded = true
-/** 脚本当前的设置 */
+/**
+ * 脚本当前的设置
+ *
+ * @remarks
+ *
+ * 可用于读取或设置脚本。
+ *
+ * 该对象同时也是 Vue 响应式对象。
+ */
 export const settings: Settings = state.internalSettings
 export * from './helpers'
 export * from './types'

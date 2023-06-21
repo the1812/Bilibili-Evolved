@@ -1,18 +1,20 @@
+import { reactive } from 'vue'
 import { components } from '@/components/component'
 import { plugins } from '@/plugins/plugin'
 
 import { componentToSettings } from './helpers'
 import type { Settings } from './types'
 
-/** 默认设置 */
-const internalSettings = {
+/** 默认设置（Vue 响应式对象） */
+const internalSettings = reactive({
   userStyles: {},
   userPlugins: {},
   userComponents: {},
   components: {},
   plugins: {},
-} as Settings
+}) as Settings
 export const settingsInternalState = {
+  // 默认设置（Vue 响应式对象）
   internalSettings,
   settingsLoaded: false,
 }
