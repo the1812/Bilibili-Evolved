@@ -104,7 +104,7 @@
                   :icon="isPublished(season) ? 'mdi-clock-check-outline' : 'mdi-progress-clock'"
                   :size="14"
                 />
-                <VIcon v-else :icon="mdi - heart - outline" :size="14" />
+                <VIcon v-else icon="mdi-heart-outline" :size="14" />
               </div>
               <div class="fresh-home-categories-bangumi-timeline-season-time-text">
                 {{ season.pub_time }}
