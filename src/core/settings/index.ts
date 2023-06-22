@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { isUserComponent } from './helpers'
 import { initInternalSettings, settingsInternalState as state } from './internal-state'
 import { registeredListeners, settingsChangedHandler } from './listener'
@@ -8,7 +9,9 @@ import type { Settings, ValueChangeListener } from './types'
 
 initInternalSettings()
 export { defaultSettings } from './internal-state'
-state.internalSettings = createProxy(readSettings(state.internalSettings), settingsChangedHandler)
+state.internalSettings = reactive(
+  createProxy(readSettings(state.internalSettings), settingsChangedHandler),
+)
 for (const [key, value] of Object.entries(state.internalSettings)) {
   GM_setValue(key, value)
 }
