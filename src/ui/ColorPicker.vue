@@ -218,6 +218,7 @@ import Color from 'color'
 import palette from '@/core/theme-color/palette.json'
 
 import { createColorWrapper } from './color-picker-wrapper'
+import { vueDirectives } from '@/core/utils'
 
 export default defineComponent({
   name: 'ColorPicker',
@@ -227,6 +228,7 @@ export default defineComponent({
     VButton: defineAsyncComponent(() => import('./VButton.vue')),
     VPopup: defineAsyncComponent(() => import('./VPopup.vue')),
   },
+  directives: { hit: vueDirectives.vHit },
   props: {
     color: {
       type: String,

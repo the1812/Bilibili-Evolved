@@ -184,26 +184,57 @@ export const matchUrlPattern = (pattern: string | RegExp) =>
   matchPattern(document.URL.replace(window.location.search, ''), pattern)
 
 /**
+ * 一些方便的 vue directive
+ *
+ * @examples
+ * ```vue
+ * <script setup>
+ * import { vueDirectives } from '@/core/utils'
+ * const vHit = vueDirectives.vHit
+ * </script>
+ *
+ * <template>
+ *   <input v-hit />
+ * </template>
+ * ```
+ *
+ * ```vue
+ * export default defineComponent({
+ *   directives: {
+ *     hit: vueDirectives.vHit,
+ *   }
+ * })
+ * ```
+ */
+export const vueDirectives = {
+  /**
+   * 接受一个事件监听器，当点击、空格按下或回车按下时调用。当触发方式是键盘触发时，会抑制 DOM 元素事件的默认行为。
+   *
+   * - **Expects:** {@link EventListener}
+   */
+  vHit: {
+    mounted: (el: Element, { value: listener }: { value: EventListener }) => {
+      el.addEventListener('click', listener)
+      el.addEventListener('keydown', function raw(this, event, ...rest) {
+        if (['Enter', ' '].includes((event as KeyboardEvent).key)) {
+          event.preventDefault()
+          Reflect.apply(listener, this, [event, ...rest])
+        }
+      })
+    },
+  },
+}
+
+/**
  * 创建 Vue 应用实例
  *
  * @remarks
  * 是 `createApp` 的包装。在创建实例时会进行一些配置。
- *
- * 自定义指令：
- * - `v-hit`：接受一个事件监听器，当点击、空格按下或回车按下时调用。当触发方式是键盘触发时，会抑制 DOM 元素事件的默认行为。监听器的类型参考 `addEventListener` 第二个参数。
  */
 export const createVueApp: CreateAppFunction<Element> = (rootComponent, rootProps?) => {
-  const hook = (el: Element, { value: listener }: { value: EventListener }) => {
-    el.addEventListener('click', listener)
-    el.addEventListener('keydown', function raw(this, event, ...rest) {
-      if (['Enter', ' '].includes((event as KeyboardEvent).key)) {
-        event.preventDefault()
-        Reflect.apply(listener, this, [event, ...rest])
-      }
-    })
-  }
-  const directive = { mounted: hook }
-  return createApp(rootComponent, rootProps).directive('hit', directive)
+  // 目前原样返回
+  // 如果以后有需要，可以在这里添加配置
+  return createApp(rootComponent, rootProps)
 }
 
 /**
@@ -211,6 +242,8 @@ export const createVueApp: CreateAppFunction<Element> = (rootComponent, rootProp
  *
  * @remarks
  * 新建的元素游离在 DOM 树之外，需要手动添加到 DOM 树中
+ *
+ * 该函数内部使用 {@link createVueApp} 创建实例
  *
  * @example
  * ```ts

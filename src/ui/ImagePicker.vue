@@ -110,6 +110,7 @@ import type { Ref, PropType } from 'vue'
 import { defineAsyncComponent, defineComponent, ref } from 'vue'
 import type { ImageItem } from './image-store'
 import { addImage, getEmptyImage, images, removeImage } from './image-store'
+import { vueDirectives } from '@/core/utils'
 
 const VButton = defineAsyncComponent(() => import('./VButton.vue'))
 const VPopup = defineAsyncComponent(() => import('./VPopup.vue'))
@@ -122,6 +123,7 @@ export default defineComponent({
     VPopup,
     TextBox,
   },
+  directives: { hit: vueDirectives.vHit },
   props: {
     image: {
       type: Object as PropType<ImageItem>,

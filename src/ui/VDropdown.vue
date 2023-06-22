@@ -69,6 +69,7 @@
 import type { Ref, PropType } from 'vue'
 import { defineComponent, ref } from 'vue'
 import VPopup from './VPopup.vue'
+import { vueDirectives } from '@/core/utils'
 
 interface Item {
   name: string | number | symbol
@@ -83,6 +84,7 @@ export default defineComponent({
   components: {
     VPopup,
   },
+  directives: { hit: vueDirectives.vHit },
   props: {
     value: {
       type: null as PropType<unknown>,
