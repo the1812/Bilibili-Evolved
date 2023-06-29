@@ -11,7 +11,7 @@
     "build-github-config": "ts-node ./.github-json/index.ts",
     "lint": "eslint --quiet --fix . --ext .ts,.vue",
     "lint-check": "eslint . --ext .ts,.vue",
-    "type": "tsc -p tsconfig.type-check.json --noEmit"
+    "type": "vue-tsc -p tsconfig.type-check.json --noEmit"
   },
   "devDependencies": {
     "@babel/core": "7.20.12",
