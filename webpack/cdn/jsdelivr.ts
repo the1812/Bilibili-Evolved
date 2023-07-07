@@ -1,7 +1,32 @@
 import { CdnConfig } from './types'
 
 const owner = 'the1812'
-const host = 'fastly.jsdelivr.net'
+let host: string = 'fastly.jsdelivr.net';
+const timeout = 50000; // 单位ms
+
+const controller = new AbortController();
+const signal = controller.signal;
+const timer = setTimeout(() => controller.abort(), timeout);
+
+fetch(`https://${host}/favicon.ico`, { 
+  signal,
+  cache: 'no-store'
+})
+  .then(response => {
+    clearTimeout(timer);
+    if (response.ok) {
+      // console.log('fastly.jsdelivr.net is accessible');
+      host = 'fastly.jsdelivr.net';
+    } else {
+      console.log('fastly.jsdelivr.net returned an error:', response.status);
+      host = 'testingcf.jsdelivr.net';
+    }
+  })
+  .catch(error => {
+    console.log('fastly.jsdelivr.net timed out or returned an error:', error.message);
+    host = 'testingcf.jsdelivr.net';
+  });
+
 export const jsDelivr: CdnConfig = {
   name: 'jsDelivr',
   owner,
