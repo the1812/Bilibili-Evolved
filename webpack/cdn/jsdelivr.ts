@@ -13,7 +13,7 @@ export const jsDelivr: CdnConfig = {
     protobuf: `https://${host}/npm/protobufjs@6.10.1/dist/light/protobuf.min.js`,
     jszip: `https://${host}/npm/jszip@3.7.1/dist/jszip.min.js`,
     sortable: `https://${host}/npm/sortablejs@1.14.0/Sortable.min.js`,
-    mdi: `https://${host}/gh/Templarian/MaterialDesign-Webfont@5.3.45/css/materialdesignicons.min.css`,
+    mdi: `https://${host}/gh/${owner}/Bilibili-Evolved@master/docs/static/mdi/mdi.css`,
     streamsaver: `https://${host}/npm/streamsaver@2.0.6/StreamSaver.min.js`,
   },
   smallLogo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo-small.png`,

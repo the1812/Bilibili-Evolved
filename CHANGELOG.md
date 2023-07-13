@@ -1,5 +1,10 @@
 # 更新日志
 
+## v2.7.3 / v2.8.1-preview
+`2023-07-13`
+
+- 修复 VideoInfo 报错 `Cannot read properties of null (reading 'list')`. (影响 `下载字幕`, `查看封面` 等功能) (#4291)
+
 ## v2.8.0-preview
 `2023-06-03`
 

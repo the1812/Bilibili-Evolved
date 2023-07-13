@@ -70,12 +70,13 @@ export class VideoInfo {
       title: it.part,
       pageNumber: it.page,
     }))
-    this.subtitles = data.subtitle.list.map((it: any) => ({
-      id: it.id,
-      languageCode: it.lan,
-      language: it.lan_doc,
-      url: it.subtitle_url.replace('http:', 'https:'),
-    }))
+    this.subtitles =
+      data.subtitle?.list?.map((it: any) => ({
+        id: it.id,
+        languageCode: it.lan,
+        language: it.lan_doc,
+        url: it.subtitle_url.replace('http:', 'https:'),
+      })) ?? []
     return this
   }
 }
