@@ -8,6 +8,7 @@ commonMeta.copyright = commonMeta.copyright.replace(
 /** 分支表 */
 export const branches = {
   stable: 'master',
+  stableCdn: 'master-cdn',
   preview: 'preview',
 }
 const compilationInfo = webpackCompilationInfo
@@ -24,10 +25,10 @@ export const meta = {
   /** 原文件名 */
   get originalFilename(): string {
     const { branch } = compilationInfo
-    if (branch === branches.stable) {
-      return 'bilibili-evolved.user.js'
+    if (branch === branches.preview) {
+      return `bilibili-evolved.${branches.preview}.user.js`
     }
-    return `bilibili-evolved.${branches.preview}.user.js`
+    return 'bilibili-evolved.user.js'
   },
   /** 检查更新的链接 */
   get updateURL(): string {

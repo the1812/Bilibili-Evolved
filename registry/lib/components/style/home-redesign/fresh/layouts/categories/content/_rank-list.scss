@@ -1,0 +1,24 @@
+@mixin rank-list-common {
+  & &-loading-container {
+    @include v-center();
+    justify-content: center;
+    padding: var(--padding);
+    border-radius: var(--home-card-radius);
+    border: 2px dashed #8884;
+    height: 100%;
+  }
+  & &-empty {
+    @include v-center(12px);
+    justify-content: center;
+    .be-button {
+      padding: 4px 10px 4px 6px !important;
+      &:hover .be-icon {
+        transform: rotate(1turn);
+      }
+    }
+    .be-icon {
+      margin-right: 6px;
+      transition: 0.5s ease-out;
+    }
+  }
+}

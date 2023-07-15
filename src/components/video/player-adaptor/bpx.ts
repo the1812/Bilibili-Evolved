@@ -1,8 +1,9 @@
 import { attributes } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { preventEvent } from '@/core/utils'
+import { playerReady, preventEvent } from '@/core/utils'
 
 const playerModePolyfill = async () => {
+  await playerReady()
   const bpxContainer = (await select('.bpx-player-container')) as HTMLElement
   if (!bpxContainer) {
     console.warn('[bpx player polyfill] bpxContainer not found')
@@ -10,11 +11,14 @@ const playerModePolyfill = async () => {
   }
   attributes(bpxContainer, () => {
     const dataScreen = bpxContainer.getAttribute('data-screen')
-    document.body.classList.toggle(
-      'player-mode-webfullscreen',
-      dataScreen === 'full' || dataScreen === 'web',
-    )
-    dataScreen === 'wide' ? document.body.classList.add('player-mode-widescreen') : ''
+    const prefix = 'player-mode-'
+    const enumList = ['normal', 'wide', 'web', 'full'].map(it => `${prefix}${it}`)
+
+    // clear all class
+    document.body.classList.remove(...enumList)
+
+    // add class
+    document.body.classList.add(dataScreen !== 'normal' ? `${prefix}${dataScreen}` : '')
   })
 }
 const idPolyfill = async () => {
@@ -29,8 +33,8 @@ const idPolyfill = async () => {
       cid: pbp.options.cid.toString(),
       bvid: pbp.options.bvid,
     }
-    if (Object.values(idData).some(it => it === '' || parseInt(it) <= 0)) {
-      console.warn('[bpx player polyfill] invalid pbp data')
+    if (Object.values(idData).some(it => !it || parseInt(it) <= 0)) {
+      console.warn('[bpx player polyfill] invalid pbp data', pbp.options)
     }
     Object.assign(unsafeWindow, idData)
   }

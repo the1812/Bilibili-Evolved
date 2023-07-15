@@ -27,7 +27,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/extend-live.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/extend-live.js)
 
-在动态的`正在直播`中, 为每一个直播间加上标题, 并且能够显示超过10个的直播间.
+替换动态的 `正在直播` 面板, 能够显示超过 10 个的直播间.
 
 ### [动态过滤器](../../registry/dist/components/feeds/filter.js)
 `feedsFilter`
@@ -36,7 +36,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/filter.js)
 
-按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.
+按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.
 
 ### [强制固定动态侧栏](../../registry/dist/components/feeds/fixed-sidebars.js)
 `fixedFeedsSidebars`
@@ -83,6 +83,15 @@
 
 隐藏动态评论按钮上方的精选评论预览. (详细可看 [#3322](https://github.com/the1812/Bilibili-Evolved/discussions/3322))
 
+### [动态看图自动回顶](../../registry/dist/components/feeds/image-auto-back-to-top.js)
+`imageAutoBackToTop`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/image-auto-back-to-top.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/image-auto-back-to-top.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/image-auto-back-to-top.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/image-auto-back-to-top.js)
+
+在动态里查看图片详情时 (非全屏), 切换图片自动回到图片顶部; 退出查看图片模式时, 自动将动态移入视图内.
+
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
 
@@ -115,15 +124,6 @@
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/danmaku-sendbar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/danmaku-sendbar.js)
 
 在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
-
-### [直播录像下载](../../registry/dist/components/live/download-records.js)
-`downloadLiveRecords`
-
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/download-records.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/download-records.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/download-records.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/download-records.js)
-
-在直播录像页面 `live.bilibili.com/record/` 中添加下载支持.
 
 ### [直播全屏包裹](../../registry/dist/components/live/gift-box.js)
 `liveGiftBox`
@@ -264,6 +264,26 @@
 
 隐藏首页顶部横幅.
 
+### [隐藏热搜](../../registry/dist/components/style/hide/trending-search.js)
+`hideTrendingSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/trending-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/trending-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/trending-search.js)
+
+隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 请注意这只是视觉上的隐藏, 如果不输入任何关键词就点 Enter 或搜索按钮, 仍然会跳转至推荐的热搜词.
+
+### [隐藏用户信息卡片](../../registry/dist/components/style/hide/user-card.js)
+`hideUserCard`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/user-card.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/user-card.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/user-card.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/user-card.js)
+
+by [@WakelessSloth56](https://github.com/WakelessSloth56)
+
+隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片
+
 ### [隐藏直播推荐](../../registry/dist/components/style/hide/video/recommended-live.js)
 `hideRecommendedLive`
 
@@ -281,6 +301,15 @@
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/related-videos.js)
 
 隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.
+
+### [隐藏视频分享](../../registry/dist/components/style/hide/video/share.js)
+`hideVideoShare`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/share.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/share.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/share.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/share.js)
+
+隐藏视频和番剧播放器下方的分享按钮.
 
 ### [隐藏视频标题层](../../registry/dist/components/style/hide/video/top-mask.js)
 `hideVideoTopMask`
@@ -318,6 +347,17 @@
 
 - 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频
 - 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数
+
+### [播放器置顶（新）](../../registry/dist/components/style/player-on-top-new.js)
+`playerOnTopNew`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-on-top-new.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-on-top-new.js)
+
+by [@RieN7](https://github.com/rien7)
+
+原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
 
 ### [播放器置顶](../../registry/dist/components/style/player-on-top.js)
 `playerOnTop`
@@ -364,7 +404,7 @@
 
 - 删除热评头像下方的关注按钮
 - 删除用户的等级标识
-- 删除发送源信息(`来自安卓客户端` 这种)
+- 删除发送源信息(\`来自安卓客户端\` 这种)
 - 删除用户名右边的勋章
 - 删除评论区顶部的横幅
 - 发送时间移动到右上角
@@ -458,6 +498,15 @@
 - 进度调整可在左上角和右上角取消
 - 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.
 
+### [自动点赞](../../registry/dist/components/utils/auto-like.js)
+`autoLike`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/auto-like.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/auto-like.js)
+
+进入视频 / 查看动态时, 自动点赞.
+
 ### [屏蔽黑名单up主](../../registry/dist/components/utils/black-list.js)
 `blackList`
 
@@ -487,14 +536,16 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 在功能面板中提供一些可以每日进行的操作.
 
-### [专栏文字选择](../../registry/dist/components/utils/column-unlock.js)
+### [专栏复制优化](../../registry/dist/components/utils/column-unlock.js)
 `columnUnlock`
 
 **jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/column-unlock.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/column-unlock.js)
 
-使专栏的文字可以选择.
+(原名: 专栏文字选择, 现在专栏已经不限制选中文字了)
+
+避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.
 
 ### [复制评论链接](../../registry/dist/components/utils/comments/copy-link.js)
 `copyCommentsLink`
@@ -504,6 +555,15 @@ by [@snowraincloud](https://github.com/snowraincloud)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/copy-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/copy-link.js)
 
 开启后, 可在每条评论的菜单中选择复制链接.
+
+### [禁用评论区搜索词](../../registry/dist/components/utils/comments/disable-search-link.js)
+`disableCommentsSearchLink`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/disable-search-link.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/disable-search-link.js)
+
+禁用评论区的搜索词链接.
 
 ### [DevClient](../../registry/dist/components/utils/dev-client.js)
 `devClient`
@@ -565,6 +625,17 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)
 
+### [批量导入合集](../../registry/dist/components/utils/import-series.js)
+`importSeries`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/import-series.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/import-series.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/import-series.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/import-series.js)
+
+by [@aiden](https://github.com/swhoro)
+
+在合集页面制作一个批量导入按钮，可以新增所有合集内视频至同名收藏夹
+
 ### [快捷键扩展](../../registry/dist/components/utils/keymap.js)
 `keymap`
 
@@ -585,6 +656,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 - `占位文本`: 删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
 - `保留活动横幅`: 保留视频页面的活动横幅.
+- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.
 
 ### [网址参数清理](../../registry/dist/components/utils/url-params-clean.js)
 `urlParamsClean`
@@ -676,7 +748,16 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/expand.js)
 
-每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿.
+每次加载视频时自动展开弹幕列表, 如果弹幕装载量超过 `最大弹幕数量`, 则不展开以免对页面造成卡顿. (`最大弹幕数量` 是和视频的总弹幕量对比, 不一定和播放器实际装载的弹幕量相等)
+
+### [弹幕转义](../../registry/dist/components/video/danmaku/unescape.js)
+`unescapeDanmaku`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/unescape.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/unescape.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/unescape.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/unescape.js)
+
+将弹幕中的 `\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.
 
 ### [视频页默认定位](../../registry/dist/components/video/default-location.js)
 `videoDefaultLocation`
@@ -774,6 +855,15 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))
 
+### [禁止滚轮调音量](../../registry/dist/components/video/player/disable-scroll-volume.js)
+`disableScrollVolume`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/disable-scroll-volume.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/disable-scroll-volume.js)
+
+在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.  请注意不能和 `反转滚轮调音量` 一同使用.
+
 ### [双击全屏](../../registry/dist/components/video/player/double-click-fullscreen.js)
 `doubleClickFullscreen`
 
@@ -799,6 +889,10 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### 🔧 **选项**
 
 - `隐藏滚动条`：如果添加的倍速过多，倍速菜单将出现滚动条，在 Windows 下，若没有安装并启用「细滚动条」组件会显得比较挤，建议开启此选项隐藏滚动条.
+
+- `隐藏移除图标`：如果认为倍速右侧的移除倍速图标有些突兀，可以开启此选项隐藏.
+
+- `隐藏新增图标`：如果认为顶部的新增倍速图标有些突兀，可以开启此选项隐藏.
 
 ### **新增倍速**
 
@@ -835,6 +929,19 @@ by [@JLoeve](https://github.com/LonelySteve)
 by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 
 设置当播放器移出视图的位置变化时执行的动作.
+
+### [反转滚轮调音量](../../registry/dist/components/video/player/invert-scroll-volume.js)
+`invertScrollVolume`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/invert-scroll-volume.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/invert-scroll-volume.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/invert-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/invert-scroll-volume.js)
+
+反转在网页全屏 / 全屏模式下使用滚轮调节音量的方向, 使其更符合使用触控板时的操作方向. 请注意不能和 `禁止滚轮调音量` 一同使用.
+
+- 手指向上推时, 增加音量
+- 手指向下推时, 减少音量
+- 可以自定义 `灵敏度`, 同样的滚动幅度下, 灵敏度越高变化的音量越多
 
 ### [传统连播模式](../../registry/dist/components/video/player/legacy-auto-play.js)
 `legacyAutoPlay`
@@ -934,6 +1041,16 @@ by [@wisokey](https://github.com/wisokey)
 
 为视频播放页面的推荐列表中的视频添加显示视频投稿时间.
 
+`时间格式` 替换up名的文本格式 (默认为'up · yyyy-MM-dd'):
+  - y: 年
+  - M: 月
+  - d: 日
+  - h: 时
+  - m: 分
+  - s: 秒
+  - q: 季度
+  - up: up名
+
 ### [跳过充电鸣谢](../../registry/dist/components/video/player/skip-charge-list.js)
 `skipChargeList`
 
@@ -982,6 +1099,44 @@ by FoundTheWOUT
 在视频播放器右上角显示系统时间.
 ## 插件
 
+### [搜索栏 - 音频跳转](../../registry/dist/plugins/launch-bar/audio-search.js)
+`launchBar.actions.audioSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/audio-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/audio-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/audio-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/audio-search.js)
+
+在输入音频的 au 号或播放列表的 am 号时, 提供对应的跳转选项.
+
+### [搜索栏 - 番剧跳转](../../registry/dist/plugins/launch-bar/bangumi-search.js)
+`launchBar.actions.bangumiSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/bangumi-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/bangumi-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/bangumi-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/bangumi-search.js)
+
+在输入番剧的 ss 号 / ep 号, 或番剧详情的 md 号时, 提供对应的跳转选项.
+
+### [搜索栏 - 专栏跳转](../../registry/dist/plugins/launch-bar/cv-search.js)
+`launchBar.actions.cvSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/cv-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/cv-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/cv-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/cv-search.js)
+
+在输入专栏的 cv 号或专栏文集的 rl 号时, 提供对应的跳转选项.
+
+### [搜索栏 - 数字联想](../../registry/dist/plugins/launch-bar/number-search.js)
+`launchBar.actions.numberSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/number-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/number-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/number-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/number-search.js)
+
+在输入纯数字时, 提供以下选项:
+- 跳转至相应的视频 (视为 av 号)
+- 跳转至相应的专栏 (视为 cv 号)
+
 ### [搜索栏 - 搜索推荐](../../registry/dist/plugins/launch-bar/trending-search.js)
 `launchBar.trendingSearch`
 
@@ -990,6 +1145,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/trending-search.js)
 
 在脚本的搜索栏中默认显示类似 b 站搜索栏的搜索推荐词, 替代原来的 "搜索" 两字.
+
+### [搜索栏 - UID 跳转](../../registry/dist/plugins/launch-bar/uid-search.js)
+`launchBar.actions.uidSearch`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/uid-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/uid-search.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/uid-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/uid-search.js)
+
+在输入 UID (用户 ID) 时, 提供对应的跳转选项.
 
 ### [设置面板 - "最近使用" 类别](../../registry/dist/plugins/settings-panel/recent-components.js)
 `settingsPanel.tagFilters.recentComponents`
@@ -1036,6 +1200,33 @@ by FoundTheWOUT
 
 在快捷键的动作列表里添加一个 "无动作", 将按键绑定到这个上面就可以阻止原有的快捷键行为.
 
+### [快捷键扩展 - 开关弹幕列表](../../registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
+`keymap.actions.toggleDanmakuList`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
+
+在快捷键的动作列表里添加一个 "开关弹幕列表".
+
+### [快捷键扩展 - 开关灯](../../registry/dist/plugins/utils/keymap-toggle-player-light.js)
+`keymap.actions.togglePlayerLight`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-player-light.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-player-light.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-player-light.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-player-light.js)
+
+在快捷键的动作列表里添加一个 "开关灯".
+
+### [快捷键扩展 - 开关 CC 字幕](../../registry/dist/plugins/utils/keymap-toggle-subtitle.js)
+`keymap.actions.toggleSubtitle`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-subtitle.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-subtitle.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-subtitle.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-subtitle.js)
+
+在快捷键的动作列表里添加一个 "开关 CC 字幕".
+
 ### [加载提示 - 灵梦油库里](../../registry/dist/plugins/v-loading/reimu.js)
 `vLoading.reimu`
 
@@ -1071,6 +1262,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/manual-input.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/manual-input.js)
 
 为下载视频增加手动输入支持.
+
+### [下载视频 - Motrix 输出支持](../../registry/dist/plugins/video/download/motrix-output.js)
+`downloadVideo.outputs.motrix`
+
+**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/motrix-output.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/motrix-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/motrix-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/motrix-output.js)
+
+为下载视频增加 Motrix 输出支持.
 
 ### [下载视频 - MPV 播放支持（列表）](../../registry/dist/plugins/video/download/mpv-output-playlist.js)
 `downloadVideo.outputs.mpv-playlist`

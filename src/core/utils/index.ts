@@ -330,15 +330,24 @@ export const createPostHook = <ParentType, HookParameters extends any[], ReturnT
 }
 /**
  * 阻止元素的对特定类型事件 (非 capture 类) 的处理
- * @param element 目标元素
+ * @param target 目标元素
  * @param event 事件类型
+ * @param extraAction 在阻止前的额外判断, 返回 false 或 undefined 可以不阻止
  * @returns 取消阻止的函数
  */
-export const preventEvent = (element: Element, event: keyof HTMLElementEventMap) => {
-  const listener = (e: Event) => e.stopImmediatePropagation()
-  element.addEventListener(event, listener, { capture: true })
+export const preventEvent = (
+  target: EventTarget,
+  event: keyof HTMLElementEventMap | string,
+  extraAction?: (e: Event) => boolean | void,
+) => {
+  const listener = (e: Event) => {
+    if (extraAction?.(e) ?? true) {
+      e.stopImmediatePropagation()
+    }
+  }
+  target.addEventListener(event, listener, { capture: true })
   return () => {
-    element.removeEventListener(event, listener, { capture: true })
+    target.removeEventListener(event, listener, { capture: true })
   }
 }
 /**
@@ -398,6 +407,7 @@ export class DoubleClickEvent {
   singleClickHandler: (e: MouseEvent) => void = none
 
   private clickedOnce = false
+  // eslint-disable-next-line class-methods-use-this
   private readonly stopPropagationHandler = (e: MouseEvent) => {
     e.stopImmediatePropagation()
   }
@@ -534,6 +544,9 @@ export const retrieveImageUrl = (element: HTMLElement) => {
     url = element.getAttribute('data-src')
   } else if (element instanceof HTMLImageElement) {
     url = element.src
+  } else if (dq(element, 'picture img')) {
+    const image = dq(element, 'picture img') as HTMLImageElement
+    url = image.src
   } else {
     const { backgroundImage } = element.style
     if (!backgroundImage) {

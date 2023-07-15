@@ -124,6 +124,18 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
       },
     },
     {
+      name: 'opus-detail',
+      match: ['https://www.bilibili.com/opus/'],
+      watchCardsList: async manager => {
+        const opusContainer = (await select('.opus-detail')) as HTMLElement
+        if (!opusContainer) {
+          return false
+        }
+        manager.updateCards(opusContainer)
+        return true
+      },
+    },
+    {
       name: 'default',
       match: ['https://t.bilibili.com/'],
       watchCardsList: async manager => {

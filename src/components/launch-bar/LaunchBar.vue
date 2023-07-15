@@ -75,11 +75,16 @@ import {
 } from './launch-bar-action'
 import { searchProvider, search } from './search-provider'
 import { historyProvider } from './history-provider'
+import { ascendingSort } from '@/core/utils/sort'
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
   historyProvider,
 ]) as [LaunchBarActionProvider[]]
+
+const sortActions = (actions: LaunchBarAction[]) => {
+  return [...actions].sort(ascendingSort(it => it.order ?? Infinity))
+}
 const generateKeys = (
   provider: LaunchBarActionProvider,
   actions: LaunchBarAction[],
@@ -111,13 +116,15 @@ async function getOnlineActions() {
   })
   const fuseResult = fuse.search(this.keyword)
   console.log(fuseResult)
-  this.actions = fuseResult.map(it => it.item).slice(0, 12)
+  this.actions = sortActions(fuseResult.map(it => it.item).slice(0, 12))
   this.noActions = this.actions.length === 0
 }
 async function getActions() {
   this.noActions = false
   if (this.isHistory) {
-    this.actions = generateKeys(historyProvider, await historyProvider.getActions(this.keyword))
+    this.actions = sortActions(
+      generateKeys(historyProvider, await historyProvider.getActions(this.keyword)),
+    )
     return
   }
   const actions: LaunchBarAction[] = []
@@ -187,7 +194,7 @@ export default Vue.extend({
       }
       if (this.actions.length > 0 && !this.isHistory) {
         const [first] = this.actions as LaunchBarAction[]
-        if (first.explicitSelect === false) {
+        if (first.explicitSelect !== true) {
           first.action()
           return
         }
@@ -214,24 +221,24 @@ export default Vue.extend({
       this.$refs.list.querySelector('.suggest-item').focus()
       e.preventDefault()
     },
-    previousItem(e: KeyboardEvent, index: number) {
+    previousItem(element: HTMLElement, index: number) {
       if (index === 0) {
         this.focus()
       } else {
-        ;((e.currentTarget as HTMLElement).previousElementSibling as HTMLElement).focus()
+        ;(element.previousElementSibling as HTMLElement).focus()
       }
     },
-    nextItem(e: KeyboardEvent, index: number) {
+    nextItem(element: HTMLElement, index: number) {
       const lastItemIndex = this.actions.length - 1
       if (index !== lastItemIndex) {
-        ;((e.currentTarget as HTMLElement).nextElementSibling as HTMLElement).focus()
+        ;(element.nextElementSibling as HTMLElement).focus()
       } else {
         this.focus()
       }
     },
     search,
-    onDeleteItem(e: Event, index: number) {
-      this.previousItem(e, index)
+    onDeleteItem(element: HTMLElement, index: number) {
+      this.previousItem(element, index)
       this.getActions()
     },
     onClearHistory() {

@@ -58,7 +58,7 @@ const optionsMetadata = defineOptionsMetadata({
   },
 })
 
-type Options = OptionsOfMetadata<typeof optionsMetadata>
+export type Options = OptionsOfMetadata<typeof optionsMetadata>
 
 const entry: ComponentEntry<Options> = async ({ settings: { options: opt } }) => {
   if (isIframe()) {

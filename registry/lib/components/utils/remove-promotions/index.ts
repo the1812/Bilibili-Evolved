@@ -68,6 +68,20 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
     true,
   )
   addComponentListener(
+    `${metadata.name}.preserveFeedGoods`,
+    (value: boolean) => {
+      document.body.classList.toggle('preserve-feed-goods', value)
+    },
+    true,
+  )
+  addComponentListener(
+    `${metadata.name}.preserveReplyNotice`,
+    (value: boolean) => {
+      document.body.classList.toggle('preserve-reply-notice', value)
+    },
+    true,
+  )
+  addComponentListener(
     `${metadata.name}.showPlaceholder`,
     (value: boolean) => {
       document.body.classList.toggle('promotion-show-placeholder', value)
@@ -92,6 +106,7 @@ export const component = defineComponentMetadata({
 
 - \`占位文本\`: 删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
 - \`保留活动横幅\`: 保留视频页面的活动横幅.
+- \`保留小喇叭\`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.
 `.trim(),
   },
   options: {
@@ -102,6 +117,14 @@ export const component = defineComponentMetadata({
     preserveEventBanner: {
       displayName: '保留活动横幅',
       defaultValue: false,
+    },
+    preserveFeedGoods: {
+      displayName: '保留动态商品推荐',
+      defaultValue: false,
+    },
+    preserveReplyNotice: {
+      displayName: '保留小喇叭通知',
+      defaultValue: true,
     },
   },
 })

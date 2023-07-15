@@ -60,12 +60,11 @@ const emptySettings: ComponentSettings = {
   ),
 }
 
-// TODO: 参考 discussion #3041。
-// 当不兼容代码替换完成后将 R 的默认类型替换为 UnknownOptions
 /**
  * 获取已加载组件的设置
  *
- * 若组件未安装，则返回一个默认的 ComponentSettings 对象：
+ * 使用此函数，应当确保该组件已被加载。
+ * 否则返回值是一个默认的 ComponentSettings 对象：
  * ```js
  * {
  *   enabled: false,
@@ -75,9 +74,9 @@ const emptySettings: ComponentSettings = {
  *
  * @param component 组件或组件名称
  */
-export const getComponentSettings = <R extends UnknownOptions = UnknownOptions>(
-  component: ComponentMetadata | string,
-): ComponentSettings<R> => {
+export const getComponentSettings = <O extends UnknownOptions>(
+  component: ComponentMetadata<O> | string,
+): ComponentSettings<O> => {
   let componentMetadata: ComponentMetadata
   if (typeof component === 'string') {
     if (componentsMap[component] === undefined) {

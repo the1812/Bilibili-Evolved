@@ -29,9 +29,9 @@ export const styles: Required<UserStyle>[] = Object.values(settings.userStyles)
 export const installStyle = async (input: UserStyle | string) => {
   try {
     let userStyle: UserStyle
-    const { parseExternalInput } = await import('../core/external-input')
+    const { loadFeatureCode } = await import('@/core/external-input')
     if (typeof input === 'string') {
-      userStyle = await parseExternalInput<UserStyle>(input)
+      userStyle = loadFeatureCode(input) as UserStyle
     } else {
       userStyle = input
     }
@@ -59,8 +59,8 @@ export const installStyle = async (input: UserStyle | string) => {
       metadata: userStyle,
       message: `已安装样式'${displayName || name}'`,
     }
-  } catch (error) {
-    throw new Error('无效的样式代码')
+  } catch (e) {
+    throw new Error('无效的样式代码', { cause: e })
   }
 }
 /**

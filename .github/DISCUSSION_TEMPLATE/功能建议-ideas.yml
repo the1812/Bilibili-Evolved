@@ -1,0 +1,24 @@
+title: 功能建议
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        默认您已阅读 [常见问题解答](https://github.com/the1812/Bilibili-Evolved/discussions/1301)
+        请勿重复发起, 发之前记得搜索一下. 如果需要反馈 Bug, 请前往 [Issues](https://github.com/the1812/Bilibili-Evolved/issues) 发起.
+  - type: textarea
+    id: description
+    attributes:
+      label: 期望的效果
+      description: 描述你遇到的问题, 以及建议的解决方式
+      placeholder: 请输入
+    validations:
+      required: true
+  - type: input
+    id: script-version
+    attributes:
+      label: 脚本版本
+      description: 可在设置面板的关于弹窗中找到脚本版本信息
+      placeholder: 请输入
+    validations:
+      required: true

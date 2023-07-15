@@ -1,6 +1,6 @@
-import { cdnRoots } from '@/core/cdn-types'
 import { defineComponentMetadata } from '@/components/define'
 import { componentsTags } from '../types'
+import { getReleaseContent, getUpdateUrl, showReleaseContent } from './release-content'
 
 export const component = defineComponentMetadata({
   name: 'notifyNewVersion',
@@ -24,7 +24,6 @@ export const component = defineComponentMetadata({
       const { monkey } = await import('@/core/ajax')
       const { meta } = await import('@/core/meta')
       const { Toast } = await import('@/core/toast')
-      const { getGeneralSettings } = await import('@/core/settings')
       const now = Number(new Date())
       const duration = now - options.lastUpdateCheck
       if (duration < options.minimumDuration) {
@@ -35,9 +34,7 @@ export const component = defineComponentMetadata({
       if (!GM_info.scriptUpdateURL) {
         return
       }
-      const updateUrl = `${cdnRoots[getGeneralSettings().cdnRoot](
-        meta.compilationInfo.branch,
-      )}dist/${meta.originalFilename}`
+      const updateUrl = await getUpdateUrl()
       const scriptText: string = await monkey({
         url: updateUrl,
         responseType: 'text',
@@ -53,10 +50,15 @@ export const component = defineComponentMetadata({
       if (!latestVersion.greaterThan(currentVersion)) {
         return
       }
-      Toast.info(
-        /* html */ `新版本 <span>${latestVersion.versionString}</span> 已发布. <a href='https://github.com/the1812/Bilibili-Evolved/releases' target='_blank' class='link'>更新说明</a><a href='${updateUrl}' target='_blank' class='link'>安装</a>`,
+      const releaseContent = await getReleaseContent(latestVersion.versionString)
+      const toast = Toast.info(
+        /* html */ `新版本 <span>${latestVersion.versionString}</span> 已发布. <span class="view-details link">查看详情</span>`,
         '检查更新',
       )
+      const element = await toast.element
+      element.querySelector('.view-details').addEventListener('click', () => {
+        showReleaseContent(releaseContent)
+      })
     } catch (error) {
       console.warn('[新版本提示] 检查更新时发生错误: ', error)
     }

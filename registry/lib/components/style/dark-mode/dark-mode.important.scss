@@ -1,4 +1,5 @@
 @import './dark-definitions';
+@import 'common';
 
 #disable-popup-modal,
 #vip-exchange-modal {
@@ -48,13 +49,18 @@
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap .bscroll-indicator {
   @include background-color('5');
 }
+.bpx-player-auxiliary .bpx-player-dm-wrap,
 .player-auxiliary-area .player-auxiliary-bscrollbar {
   .bscroll-vertical-scrollbar,
   .bscroll-vertical-scrollbar.mousedown,
   &:hover .bscroll-vertical-scrollbar {
     @include background-color();
   }
+  .bscroll-indicator {
+    @include background-color('5');
+  }
 }
+.bpx-player-auxiliary .bpx-player-dm-wrap,
 .danmaku-wrap .player-auxiliary-area .player-auxiliary-danmaku-wrap {
   .bscroll-vertical-scrollbar.mousedown,
   &:hover .bscroll-vertical-scrollbar {
@@ -305,8 +311,6 @@ blockquote {
   & .link-navbar {
     @include background-color('3');
   }
-  .calendar-checkin .calendar-wrapper,
-  .download-panel-ctnr,
   .nav-item,
   .nav-item .area-list-panel .list-item,
   .nav-logo,
@@ -316,16 +320,9 @@ blockquote {
     @include color('e');
   }
   .link-panel-ctnr .ps__thumb-x,
-  .link-panel-ctnr .ps__thumb-y,
-  .nav-item:hover,
-  .shortcuts-ctnr .shortcut-item:not(:last-child):hover {
+  .link-panel-ctnr .ps__thumb-y {
     @include background-color('4');
   }
-  .calendar-checkin,
-  .calendar-checkin .calendar-wrapper,
-  .calendar-checkin .title,
-  .download-panel-ctnr,
-  .link-panel-ctnr,
   .link-panel-ctnr .totally-empty-hint,
   .nav-item .area-list-panel,
   .user-panel-ctnr .user-panel,
@@ -341,6 +338,231 @@ blockquote {
     .items .item .name,
     .title {
       @include color('e');
+    }
+  }
+}
+
+.link-navbar-wrap,
+.link-navbar-ctnr {
+  .link-navbar {
+    @include background-color('2');
+    box-shadow: inset 0 -1px #333 !important;
+  }
+  .shortcut-item .list-item:hover {
+    @include background-color();
+  }
+  .link-navbar .main-ctnr .nav-item .area-list-panel {
+    @include background-color('2');
+    @include border-color('3');
+    .list-item:hover {
+      @include background-color('4');
+    }
+  }
+  .showmore-link {
+    .more-label-text {
+      @include color('e');
+    }
+    .down-arrow-icon-block .down-arrow {
+      @include to-white();
+    }
+    .more-tab-content {
+      @include background-color('2');
+      @include border-color('3');
+      .waterfall-item:hover {
+        @include background-color('4');
+      }
+    }
+  }
+  .list-item .startlive-btn {
+    span {
+      @include color('e');
+    }
+  }
+}
+.search-bar-ctnr {
+  .search-bar.search-bar {
+    @include no-shadow();
+    &:hover {
+      @include background-color();
+    }
+  }
+  #nav-searchform {
+    @include background-color();
+    @include border-color('3');
+    &.is-actived,
+    &.is-focus {
+      .nav-search-content {
+        @include background-color('4');
+      }
+    }
+  }
+  .nav-search-clean path {
+    @include fill('a');
+  }
+  .search-btn {
+    &:hover {
+      @include background-color('4');
+    }
+    .search-icon {
+      @include to-white();
+    }
+  }
+  .search-pannel {
+    @include background-color('2');
+    .header {
+      .title {
+        @include color('e');
+      }
+      .clear {
+        @include color('a');
+      }
+    }
+    .histories {
+      .history-item {
+        @include background-color('3');
+        @include color('e');
+      }
+    }
+    .history-fold-wrap {
+      .fold-text {
+        @include color('a');
+      }
+      .fold-icon {
+        @include fill('a');
+      }
+      &:hover {
+        .fold-text {
+          @include theme-color();
+        }
+        .fold-icon {
+          @include theme-fill();
+        }
+      }
+    }
+    .trending {
+      .trending-item {
+        &.active,
+        &:focus,
+        &:hover {
+          @include background-color('3');
+        }
+        .trendings-rank {
+          @include color('a');
+          &.search-rank-top {
+            @include color('e');
+          }
+        }
+        .trending-text {
+          @include color('e');
+        }
+      }
+    }
+  }
+}
+.user-panel-ctnr {
+  .user-panel {
+    @include border-color('3');
+    @include background-color('2');
+    .level-progress {
+      @include background-color('3');
+    }
+    .user-level {
+      @include theme-color();
+    }
+    .section-block {
+      @include background-color();
+    }
+    .battery-content {
+      @include color('e');
+    }
+    .pay-button {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+    .content-ctnr {
+      .control-block {
+        &:hover {
+          @include background-color('4');
+        }
+      }
+      .ctrl-btn {
+        @include color('e');
+        .icon {
+          @include to-white();
+        }
+      }
+      .cut-line {
+        @include border-color('4');
+      }
+      .loginout-btn {
+        @include color('e');
+        .login-out-icon {
+          @include to-white();
+        }
+      }
+    }
+  }
+}
+.link-panel-ctnr {
+  @include background-color('2');
+  @include border-color('3');
+  @include color('e');
+  .load-more-btn {
+    @include background-color();
+    @include color('e');
+    &:hover {
+      @include background-color('4');
+    }
+  }
+}
+.calendar-checkin {
+  @include background-color('2');
+  @include border-color('3');
+  @include color('e');
+  .divider {
+    @include background-color('3');
+  }
+  .title {
+    @include background-color();
+  }
+  .calendar-wrapper {
+    @include background-color();
+  }
+  .checkin-btn {
+    @include background-color();
+    @include color('e');
+    &:hover {
+      @include background-color('4');
+    }
+  }
+}
+.download-panel-ctnr {
+  @include background-color('2');
+  @include border-color('3');
+  @include color('e');
+  .content-ctnr {
+    .title {
+      @include color('e');
+    }
+    .item {
+      .name,
+      .light-name {
+        @include color('e');
+      }
+      .desc {
+        @include color('a');
+      }
+      .download-link {
+        @include color('a');
+        &:hover {
+          @include theme-color();
+        }
+      }
+      &:hover {
+        .light-name {
+          @include theme-color();
+        }
+      }
     }
   }
 }

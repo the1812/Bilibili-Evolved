@@ -1,4 +1,8 @@
-import { ComponentMetadata } from '@/components/types'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { fullyLoaded } from '@/core/life-cycle'
 import { ComponentSettings, getComponentSettings } from '@/core/settings'
 import { Range } from '@/ui/range'
@@ -87,7 +91,33 @@ class ScheduleTime {
     return result
   }
 }
-const checkTime = (settings: ComponentSettings) => {
+
+const options = defineOptionsMetadata({
+  range: {
+    defaultValue: {
+      start: '18:00',
+      end: '6:00',
+    },
+    displayName: '时间段',
+    validator: (range: Range<string>) => {
+      const { start, end } = range
+      const regex = /^(\d{1,2}):(\d{1,2})$/
+      if (!regex.test(start) || !regex.test(end)) {
+        return null
+      }
+      const startTime = new ScheduleTime(range.start)
+      const endTime = new ScheduleTime(range.end)
+      return {
+        start: startTime.toString(),
+        end: endTime.toString(),
+      }
+    },
+  },
+})
+
+type Options = OptionsOfMetadata<typeof options>
+
+const checkTime = (settings: ComponentSettings<Options>) => {
   const start = new ScheduleTime(settings.options.range.start)
   const end = new ScheduleTime(settings.options.range.end)
   const now = new ScheduleTime()
@@ -106,7 +136,8 @@ const checkTime = (settings: ComponentSettings) => {
     setTimeout(() => checkTime(settings), timeout)
   }
 }
-export const component: ComponentMetadata = {
+
+export const component = defineComponentMetadata({
   name: 'darkModeSchedule',
   displayName: '夜间模式计划时段',
   description:
@@ -114,26 +145,5 @@ export const component: ComponentMetadata = {
   tags: [componentsTags.style, componentsTags.general],
   entry: ({ settings }) => fullyLoaded(() => checkTime(settings)),
   urlExclude: darkExcludes,
-  options: {
-    range: {
-      defaultValue: {
-        start: '18:00',
-        end: '6:00',
-      },
-      displayName: '时间段',
-      validator: (range: Range<string>) => {
-        const { start, end } = range
-        const regex = /^(\d{1,2}):(\d{1,2})$/
-        if (!regex.test(start) || !regex.test(end)) {
-          return null
-        }
-        const startTime = new ScheduleTime(range.start)
-        const endTime = new ScheduleTime(range.end)
-        return {
-          start: startTime.toString(),
-          end: endTime.toString(),
-        }
-      },
-    },
-  },
-}
+  options,
+})

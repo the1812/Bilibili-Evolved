@@ -76,7 +76,7 @@ export default Vue.extend({
     justify-content: center;
     height: 24px;
     width: 18px;
-    margin: 0 -3px 0 3px;
+    margin-right: -3px;
   }
   &-name {
     @include single-line();

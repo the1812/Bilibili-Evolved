@@ -1,3 +1,4 @@
+import { CustomNavbarOptions } from 'registry/lib/components/style/custom-navbar'
 import { PluginMetadata } from '@/plugins/plugin'
 import { getComponentSettings } from '@/core/settings'
 import type { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
@@ -11,7 +12,7 @@ export const plugin: PluginMetadata = {
       const defaultLink = 'https://www.bilibili.com/v/channel/'
       const name = 'channel'
       const isOpenInNewTab = () => {
-        const { options } = getComponentSettings('customNavbar')
+        const { options } = getComponentSettings('customNavbar') as { options: CustomNavbarOptions }
         if (name in options.openInNewTabOverrides) {
           return options.openInNewTabOverrides[name]
         }

@@ -1,0 +1,91 @@
+@import 'common';
+
+$prefix: 'simplifyComments-switch';
+
+.bili-comment {
+  .reply-item {
+    // body.#{$prefix}-level & {
+    .user-level,
+    .sub-user-level {
+      display: none !important;
+    }
+    // }
+    // body.#{$prefix}-subReplyNewline & {
+    .sub-user-info {
+      display: flex !important;
+    }
+    // }
+    // body.#{$prefix}-layout & {
+    .reply-decorate {
+      display: none !important;
+    }
+    .sub-user-info,
+    .sub-user-name {
+      line-height: 1.5 !important;
+    }
+    .sub-user-info {
+      margin-bottom: 4px !important;
+      max-height: 19.5px !important;
+    }
+    .reply-content-container {
+      display: block !important;
+      flex-basis: 100% !important;
+    }
+    .root-reply:not(.reply-content-container) {
+      padding: 0 !important;
+      display: flex !important;
+      align-items: center !important;
+      flex-wrap: wrap !important;
+    }
+    .note-content {
+      flex-basis: 100% !important;
+      margin-bottom: 4px !important;
+    }
+    .image-exhibition {
+      flex-basis: 100% !important;
+      margin-bottom: 8px !important;
+    }
+    .root-reply,
+    .reply-info,
+    .sub-reply-info {
+      position: static !important;
+    }
+    .reply-info,
+    .sub-reply-info {
+      display: inline-flex !important;
+    }
+    .reply-time,
+    .sub-reply-time {
+      position: absolute !important;
+      top: 0 !important;
+      right: 0 !important;
+      margin-right: 0 !important;
+      line-height: 1.5 !important;
+    }
+    .sub-reply-time {
+      top: 8px !important;
+    }
+    .reply-operation-warp,
+    .sub-reply-operation-warp {
+      right: -5px !important;
+    }
+    .reply-tag-list {
+      display: inline-flex !important;
+      margin: 2px 0 0 18px !important;
+      .reply-tag-item {
+        padding: 4px 6px !important;
+      }
+    }
+    // }
+  }
+  // body.#{$prefix}-replyEditor & {
+  .reply-box-send {
+    .send-text {
+      font-size: 14px !important;
+    }
+  }
+  .reply-box-textarea {
+    line-height: normal !important;
+  }
+  // }
+}

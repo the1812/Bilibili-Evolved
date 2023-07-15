@@ -44,6 +44,8 @@
   }
   &.touch-video-control-show .bpx-player-pbp {
     opacity: 1 !important;
+    left: 0 !important;
+    width: 100% !important;
     bottom: calc(100% - 1px) !important;
     .bpx-player-pbp-pin {
       opacity: 1 !important;

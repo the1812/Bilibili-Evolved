@@ -1,6 +1,6 @@
 import { CustomNavbarItemInit } from '../custom-navbar-item'
 
-interface NavbarIframeConfig {
+export interface NavbarIframeConfig {
   src: string
   href: string
   width: number

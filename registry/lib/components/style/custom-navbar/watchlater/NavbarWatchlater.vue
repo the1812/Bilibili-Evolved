@@ -1,6 +1,7 @@
 <template>
   <div class="watchlater-list">
     <div class="header">
+      <div class="watchlater-list-summary">共 {{ filteredCards.length }} 个</div>
       <div class="search">
         <TextBox v-model="search" linear placeholder="搜索"></TextBox>
       </div>
@@ -158,13 +159,6 @@ export default Vue.extend({
     async remove(aid: number, index: number) {
       this.cards.splice(index, 1)
       await this.toggleWatchlater(aid)
-      this.lastRemovedAid = aid
-    },
-    async undo() {
-      const aid = this.lastRemovedAid
-      if (aid !== 0) {
-        await this.toggleWatchlater(aid)
-      }
     },
     updateFilteredCards: lodash.debounce(function updateFilteredCards() {
       const search = this.search.toLowerCase()
@@ -210,13 +204,17 @@ export default Vue.extend({
     cursor: pointer;
   }
   .header {
-    @include h-stretch();
+    @include h-center();
     justify-content: space-between;
     align-self: stretch;
     margin: 16px 12px;
+    .watchlater-list-summary {
+      margin-right: 6px;
+    }
     .search {
       position: relative;
       flex-grow: 1;
+      align-self: stretch;
       margin-right: 8px;
       .be-textbox {
         height: 100%;
@@ -371,17 +369,6 @@ export default Vue.extend({
           color: var(--theme-color);
         }
       }
-    }
-  }
-  .undo {
-    position: absolute;
-    bottom: 16px;
-    left: 50%;
-    opacity: 0;
-    transform: translateX(-50%) translateY(8px);
-    &.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0px);
     }
   }
 }

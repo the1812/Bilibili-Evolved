@@ -22,7 +22,7 @@ const entry = async () => {
 }
 export const component = defineComponentMetadata({
   name: 'columnUnlock',
-  displayName: '专栏文字选择',
+  displayName: '专栏复制优化',
   entry,
   reload: entry,
   unload: async () => {
@@ -30,8 +30,5 @@ export const component = defineComponentMetadata({
     enable = false
   },
   tags: [componentsTags.utils],
-  description: {
-    'zh-CN': '使专栏的文字可以选择.',
-  },
   urlInclude: ['//www.bilibili.com/read/'],
 })

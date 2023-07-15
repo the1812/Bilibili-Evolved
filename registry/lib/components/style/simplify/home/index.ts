@@ -1,5 +1,5 @@
-import { createSwitchOptions, SwitchOptions } from '@/components/switch-options'
-import { ComponentMetadata } from '@/components/types'
+import { newSwitchComponentWrapper, defineSwitchMetadata } from '@/components/switch-options'
+
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
 import { addStyle } from '@/core/style'
@@ -7,7 +7,7 @@ import { getCookieValue, matchUrlPattern } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { mainSiteUrls } from '@/core/utils/urls'
 
-const switchOptions: SwitchOptions = {
+const switchMetadata = defineSwitchMetadata({
   name: 'simplifyOptions',
   dimAt: 'checked',
   switchProps: {
@@ -44,9 +44,10 @@ const switchOptions: SwitchOptions = {
       displayName: '右侧分区导航(旧)',
     },
   },
-}
+})
 const console = useScopedConsole('简化首页')
-const metadata: ComponentMetadata = {
+
+export const component = newSwitchComponentWrapper(switchMetadata)({
   name: 'simplifyHome',
   displayName: '简化首页',
   description: '隐藏原版首页不需要的元素 / 分区.',
@@ -58,7 +59,7 @@ const metadata: ComponentMetadata = {
   ],
   urlInclude: mainSiteUrls,
   tags: [componentsTags.style],
-  entry: async () => {
+  entry: async ({ metadata }) => {
     // 正好是首页时提供首页分区的简化选项
     const isHome = matchUrlPattern('https://www.bilibili.com/')
     if (!isHome) {
@@ -144,10 +145,10 @@ const metadata: ComponentMetadata = {
         },
         true,
       )
-      switchOptions.switches[key] = option
+      switchMetadata.switches[key] = option
       generatedSwitches[key] = option
     })
-    options.simplifyOptions.switches = generatedSwitches
+    ;(options.simplifyOptions as any).switches = generatedSwitches
     const generatedStyles = Object.keys(generatedOptions)
       .map(name =>
         `
@@ -160,6 +161,4 @@ const metadata: ComponentMetadata = {
       .join('\n')
     addStyle(generatedStyles, 'simplify-home-generated')
   },
-}
-
-export const component = createSwitchOptions(switchOptions)(metadata)
+})

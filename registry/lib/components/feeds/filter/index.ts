@@ -1,6 +1,7 @@
+import { defineComponentMetadata } from '@/components/define'
 import { feedsCardsManager } from '@/components/feeds/api'
-import { ComponentMetadata, ComponentOptions } from '@/components/types'
 import { feedsFilterPlugin } from './plugin'
+import { options } from './options'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
@@ -21,41 +22,10 @@ const entry = async () => {
   const { mountVueComponent } = await import('@/core/utils')
   leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(FeedsFilterCard).$el)
 }
-const options: ComponentOptions = {
-  types: {
-    defaultValue: [],
-    displayName: '过滤动态类型',
-    hidden: true,
-  },
-  patterns: {
-    defaultValue: [],
-    displayName: '过滤关键词',
-    hidden: true,
-  },
-  sideCards: {
-    defaultValue: [],
-    displayName: '过滤侧边栏',
-    hidden: true,
-  },
-  specialTypes: {
-    defaultValue: [],
-    displayName: '过滤特殊动态类型',
-    hidden: true,
-  },
-}
-export type FeedsFilterOptions = {
-  types: number[]
-  patterns: string[]
-  /** FIXME: 虽然代码里按照`number[]`, 但其实存进去的是`string[]`? */
-  sideCards: number[]
-  specialTypes: number[]
-}
-export const component: ComponentMetadata = {
+
+export const component = defineComponentMetadata({
   name: 'feedsFilter',
   displayName: '动态过滤器',
-  description: {
-    'zh-CN': '按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片.',
-  },
   entry,
   tags: [componentsTags.feeds],
   options,
@@ -66,4 +36,4 @@ export const component: ComponentMetadata = {
     /^https:\/\/t\.bilibili\.com\/$/,
   ],
   plugin: feedsFilterPlugin,
-}
+})

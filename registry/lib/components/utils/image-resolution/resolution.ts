@@ -1,4 +1,5 @@
 import { styledComponentEntry } from '@/components/styled-component'
+import { Options } from '.'
 
 const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
 const excludeSelectors = ['#certify-img1', '#certify-img2']
@@ -26,6 +27,10 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
       return
     }
     if (excludeSelectors.some(it => element.matches(it))) {
+      return
+    }
+    // 带 , 的 srcset 不处理
+    if (value.includes(',')) {
       return
     }
     const match = value.match(resizeRegex)
@@ -57,12 +62,16 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
       (e, v) => e.setAttribute('src', v),
     )
     replaceSource(
+      e => e.getAttribute('srcset'),
+      (e, v) => e.setAttribute('srcset', v),
+    )
+    replaceSource(
       e => e.style.backgroundImage,
       (e, v) => (e.style.backgroundImage = v),
     )
   })
 }
-export const startResolution = styledComponentEntry(
+export const startResolution = styledComponentEntry<Options>(
   () => import('./fix.scss'),
   async ({ settings }) => {
     const { allMutations } = await import('@/core/observer')

@@ -1,12 +1,11 @@
-.bb-comment {
+.bb-comment,
+.bili-comment-container {
   .fold-comment {
-    position: -webkit-sticky;
     position: sticky;
     bottom: 0;
     height: 40px;
-    width: calc(100% + 48px);
+    width: 100%;
     font-size: 14px;
-    transform: translateX(-24px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,5 +25,17 @@
         color: var(--theme-color);
       }
     }
+  }
+}
+.bili-comment-container {
+  &.bili-dyn-comment .reply-list {
+    padding-bottom: 8px !important;
+  }
+  .fold-comment {
+    font-size: 13px;
+  }
+  .at-panel,
+  .emoji-panel {
+    z-index: 111;
   }
 }

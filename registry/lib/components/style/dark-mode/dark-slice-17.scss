@@ -60,6 +60,13 @@
       @include theme-color();
     }
   }
+  .follow-btn {
+    &.not-follow {
+      path {
+        @include foreground-fill();
+      }
+    }
+  }
 }
 .user-card-m-exp {
   @include background-color('3');
@@ -737,7 +744,7 @@
   .player-auxiliary-danmaku-multiple-control {
     @include background-color('2');
   }
-  [class*='player-auxiliary-danmaku-btn-'] {
+  #{contains('player-auxiliary-danmaku-btn-')} {
     @include background-color();
   }
 }
@@ -854,7 +861,8 @@
 .bili-comment.browser-pc {
   @include background-color();
 }
-.recommended-container {
+.recommended-container,
+.recommended-container_floor-aside {
   .container {
     @include background-color();
   }
@@ -888,9 +896,196 @@
 .startlive-icon {
   @include to-theme('blue');
 }
-.right-area .tip-wrap .icon path[fill="#00AEEC"] {
+.right-area .tip-wrap .icon path[fill='#00AEEC'] {
   @include theme-fill();
 }
 .bpx-player-pbp-videoshot rect[clip-path] {
   @include theme-fill();
+}
+
+#{contains('numberListItem_number_list_item')} {
+  @include background-color('5');
+  @include border-color();
+  &:hover {
+    @include theme-border-color();
+  }
+  &#{contains('numberListItem_select')} {
+    @include theme-border-color();
+    #{contains('numberListItem_title')} {
+      @include theme-color();
+    }
+  }
+}
+
+#{contains('review_review_module')} {
+  @include border-color('4');
+
+  #{contains('review_review_item_fill')} {
+    @include background-color('4');
+  }
+
+  #{contains('review_module_title')},
+  #{contains('review_review_title')} {
+    @include color('e');
+  }
+
+  #{contains('review_review_author')} {
+    @include color('e');
+    &#{contains('review_is-vip')} {
+      @include vip-color();
+    }
+  }
+  #{contains('review_review_content')} {
+    @include color('a');
+  }
+}
+
+#{contains('epitem_ep_item')} {
+  &:hover {
+    @include background-color('5');
+  }
+
+  a {
+    @include color('e');
+    &:hover {
+      @include theme-color();
+    }
+  }
+
+  &#{contains('epitem_cursor')} {
+    @include background-color('5');
+    path {
+      @include theme-fill();
+    }
+  }
+}
+
+#{contains('seasonlist_season_list')} {
+  #{contains('seasonlist_ss_title')} {
+    @include color('e');
+  }
+  #{contains('seasonlist_expand_more')} {
+    @include background-color('4');
+    @include color('e');
+  }
+}
+
+#{contains('mediainfo_media_info')} {
+  @include border-color('4');
+
+  #{contains('mediainfo_media_desc')} {
+    &,
+    & i {
+      @include color('e');
+    }
+  }
+  #{contains('mediainfo_media_title')} {
+    @include color('e');
+  }
+  #{contains('mediainfo_av_link')},
+  #{contains('mediainfo_home_link')},
+  #{contains('mediainfo_media_pub')} {
+    @include color('a');
+  }
+
+  #{contains('mediainfo_ellipsis')},
+  #{contains('mediainfo_media_desc')} i {
+    @include background();
+    @include theme-color();
+  }
+}
+
+#{contains('section_ep_section_module')} {
+  @include background-color('4');
+  #{contains('section_section_title')} {
+    @include color('e');
+  }
+}
+
+#{contains('RecommendItem_wrap')} {
+  #{contains('RecommendItem_title')} {
+    @include color('e');
+  }
+}
+
+#{contains('eplist_ep_list_wrapper')} {
+  @include background-color('4');
+  #{contains('eplist_list_title')} #{contains('eplist_left_wrap')} h4 {
+    @include color('e');
+  }
+  #{contains('numberListItem_title')} {
+    @include color('e');
+  }
+  #{contains('eplist_ep_list_order')} {
+    @include to-theme('blue');
+  }
+  #{contains('longListItem_wrap')} {
+    @include color('e');
+    &:hover {
+      @include background-color('5');
+      #{contains('longListItem_text')} {
+        @include theme-color();
+      }
+    }
+    &#{contains('longListItem_select')} {
+      @include background-color('5');
+    }
+    #{contains('longListItem_icon')} {
+      path {
+        @include theme-fill();
+      }
+    }
+  }
+  #{contains('modeChangeBtn_icon')} {
+    path {
+      @include fill('a');
+    }
+    &:hover path {
+      @include theme-fill();
+    }
+  }
+}
+#{contains('operation_split_line')} {
+  @include border-color('4');
+}
+#{contains('mediainfo_btn_rating')} {
+  @include background-color();
+}
+#{contains('DanmukuBox_wrap')} {
+  @include background();
+}
+#{contains('paybar_pay_bar')} {
+  #{contains('paybar_btn_pay')} {
+    @include border-color();
+    @include theme-background-color();
+    @include foreground-color();
+    &#{contains('paybar_active')} {
+      @include background-color('4');
+      @include color('e');
+    }
+  }
+}
+.player-left-components {
+  #{contains('toolbar_toolbar')} {
+    #{contains('toolbar_item_info')} {
+      #{contains('toolbar_icon')} path {
+        @include fill('a');
+      }
+      #{contains('toolbar_counts_num')} {
+        @include color('a');
+      }
+      &#{contains('toolbar_active')},
+      &:hover {
+        #{contains('toolbar_icon')}path {
+          @include theme-fill();
+        }
+        #{contains('toolbar_counts_num')} {
+          @include theme-color();
+        }
+      }
+    }
+  }
+}
+.b-img {
+  @include background-color('3');
 }

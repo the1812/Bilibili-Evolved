@@ -9,7 +9,7 @@
         </div>
         <div class="live-info">
           <div class="live-title" :title="c.title">{{ c.title }}</div>
-          <div class="live-name" :title="c.name">{{ c.upName }}</div>
+          <div class="live-name" :title="c.upName">{{ c.upName }}</div>
         </div>
       </a>
     </transition-group>

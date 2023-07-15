@@ -10,3 +10,7 @@ export type LanguagePack = {
   map?: [string, Translation][]
   regex?: RegexTranslation
 }
+export type Options = {
+  language: string
+  translator: string
+}

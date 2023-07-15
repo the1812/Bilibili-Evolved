@@ -29,12 +29,13 @@
       position: absolute;
       bottom: 0;
       height: calc(100% - 17px);
-      width: 100%;
+      width: calc(100% - 24px);
       background-color: rgba(0, 0, 0, var(--video-control-opacity));
       z-index: -1;
       @include on-fullscreen {
         height: calc(100% - 11px);
       }
+      .playlist-container &,
       .video-container-v1 & {
         height: calc(100% - 5px);
         @include on-fullscreen {
