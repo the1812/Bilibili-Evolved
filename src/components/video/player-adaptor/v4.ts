@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { allMutations } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
@@ -5,13 +6,13 @@ import { bangumiUrls } from '@/core/utils/urls'
 
 const idPolyfill = async () => {
   const player = await select(() => unsafeWindow.player)
-  if (!player?.getVideoMessage) {
+  if (!player?.__getUserParams()) {
     return
   }
   const { useScopedConsole } = await import('@/core/utils/log')
-  const console = useScopedConsole('v2 player polyfill')
+  const console = useScopedConsole('v4 player polyfill')
   allMutations(() => {
-    const input = player.getVideoMessage()
+    const { input } = player.__getUserParams()
     if (!input) {
       console.warn('invalid getUserParams data')
       return
@@ -28,7 +29,7 @@ const idPolyfill = async () => {
   })
 }
 
-export const v2PlayerPolyfill = lodash.once(() => {
+export const v4PlayerPolyfill = lodash.once(() => {
   if (bangumiUrls.some(url => matchUrlPattern(url))) {
     return
   }
