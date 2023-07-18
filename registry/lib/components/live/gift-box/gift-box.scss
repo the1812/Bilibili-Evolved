@@ -18,7 +18,8 @@
       line-height: inherit;
     }
 
-    .popup::before, .popup::after {
+    .popup::before,
+    .popup::after {
       left: auto;
       right: calc(1em + 33px);
       transform: translateX(50%);
@@ -29,25 +30,27 @@
   .gift-package {
     margin: auto;
     width: auto;
-    height: auto;
+    height: 100%;
     color: inherit;
     fill: inherit;
     background: inherit !important;
 
-    .bag-icon {
-      display: none;
+    &-btn {
+      padding-top: 0 !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+      &:hover {
+        background-color: transparent !important;
+        color: #fff !important;
+      }
     }
 
-    span {
-      font-size: inherit;
-      line-height: 36px;
-      padding: 0 6px;
-      color: rgba(255, 255, 255, 0.9);
-      cursor: pointer;
+    .bg-text {
+      height: auto !important;
+      line-height: normal !important;
+    }
 
-      &:hover {
-        color: #fff;
-      }
+    .bag-icon {
+      display: none;
     }
   }
 }

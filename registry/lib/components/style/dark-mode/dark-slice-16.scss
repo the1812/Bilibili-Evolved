@@ -48,29 +48,32 @@
     @include color('e');
   }
   &__stat__item {
-    &__count {
+    &__count,
+    .item-num {
       @include color('e');
     }
     &:hover {
-      .bili-dyn-my-info__stat__item__count {
+      .bili-dyn-my-info__stat__item__count,
+      .item-num {
         @include theme-color();
       }
     }
-    &__label {
+    &__label,
+    .item-desc {
       @include color('a');
     }
   }
 }
 .bili-dyn-publishing {
-  z-index: 1; // 下面的 to-theme filter 会改变层级, 这里修复一下
   @include dyn-container-skeleton();
   @include background-color('4');
   &__tools {
     &__item {
-      &.active,
-      &:hover {
-        @include to-theme('blue');
-      }
+      // 这里用 filter 会导致弹窗内容也被影响, 暂时先去掉了
+      // &.active,
+      // &:hover {
+      //   @include to-theme('blue');
+      // }
       &.emoji {
         @include background-color();
       }
@@ -117,6 +120,14 @@
       @include to-white();
     }
   }
+  &__shadow-left,
+  &__shadow-left .shadow {
+    background-image: linear-gradient(270deg, hsla(0, 0%, 100%, 0), #444) !important;
+  }
+  &__shadow-right,
+  &__shadow-right .shadow {
+    background-image: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #444) !important;
+  }
   &__item {
     &__face {
       @include border-color();
@@ -127,6 +138,10 @@
         img {
           @include to-theme('blue');
         }
+      }
+      span {
+        @include theme-background-color();
+        @include border-color('4');
       }
     }
     &__name {
@@ -182,6 +197,9 @@
     }
   }
   .bili-dyn-more {
+    &__container:hover {
+      @include background-color('3');
+    }
     &__btn {
       &:hover {
         @include to-theme('blue');
@@ -236,14 +254,15 @@
   .bili-dyn-card-common,
   .bili-dyn-card-live,
   .bili-dyn-card-video {
-    @include border-color();
+    @include border-color('4');
     &__body {
-      @include background-color('3');
+      @include background-color('38');
     }
     &__title {
       @include color('e');
     }
     &__desc,
+    &__text,
     &__stat {
       @include color('a');
     }
@@ -309,7 +328,7 @@
   .bili-dyn-content {
     &__orig {
       &.reference {
-        @include background-color('2');
+        @include background-color('30');
       }
     }
     .dyn-none {
@@ -332,65 +351,8 @@
     &__following {
       @include theme-border-color();
       @include theme-color();
-    }
-  }
-  .bili-dyn-forward {
-    &__item {
-      @include border-color('6');
-    }
-    &-item {
-      &__uname:not([style*='color:']) {
-        @include color('e');
-      }
-      &__time {
-        @include color('a');
-      }
-      &__action {
-        @include theme-color();
-      }
-    }
-    &__more {
-      @include color('a');
-      @include border-color();
-    }
-    &-publishing {
-      &__action {
-        &__count {
-          @include color('a');
-        }
-        &__btn {
-          @include theme-background-color();
-          @include foreground-color();
-        }
-      }
-      &__emoji {
-        @include border-color();
-        @include no-shadow();
-        @include color('a');
-        @include background-color('2');
-        i {
-          @include to-gray();
-        }
-        &:hover {
-          @include color('e');
-          i {
-            @include to-white();
-          }
-        }
-      }
-      &__editor {
-        @include border-color();
-        @include background-color('2');
-        &:focus-within {
-          @include theme-border-color();
-        }
-        .bili-rich-textarea__inner {
-          @include color('e');
-          @include background-color();
-          &::before {
-            @include color('a');
-          }
-        }
+      &::before {
+        @include to-theme('blue');
       }
     }
   }
@@ -506,6 +468,71 @@
       }
     }
   }
+  .dyn-card-opus {
+    &__title {
+      @include color('e');
+    }
+  }
+}
+.bili-dyn-forward {
+  &__item {
+    @include border-color('6');
+  }
+  &-item {
+    &__uname:not([style*='color:']) {
+      @include color('e');
+    }
+    &__time {
+      @include color('a');
+    }
+    &__action {
+      @include theme-color();
+    }
+  }
+  &__more {
+    @include color('a');
+    @include border-color();
+  }
+  &-publishing {
+    &__action {
+      &__count {
+        @include color('a');
+      }
+      &__btn {
+        @include theme-background-color();
+        @include foreground-color();
+      }
+    }
+    &__emoji {
+      @include border-color();
+      @include no-shadow();
+      @include color('a');
+      @include background-color('2');
+      i {
+        @include to-gray();
+      }
+      &:hover {
+        @include color('e');
+        i {
+          @include to-white();
+        }
+      }
+    }
+    &__editor {
+      @include border-color();
+      @include background-color('2');
+      &:focus-within {
+        @include theme-border-color();
+      }
+      .bili-rich-textarea__inner {
+        @include color('e');
+        @include background-color();
+        &::before {
+          @include color('a');
+        }
+      }
+    }
+  }
 }
 .bili-dyn-report {
   @include background-color('3');
@@ -580,6 +607,11 @@
     }
     &__exposed {
       @include color('a');
+    }
+    &-container__item {
+      &:hover {
+        @include background-color('5');
+      }
     }
   }
 }
@@ -681,6 +713,7 @@
   }
   &__footer {
     @include background-color();
+    @include border-color('4');
   }
   &__pkg {
     &:hover,
@@ -906,5 +939,8 @@
         }
       }
     }
+  }
+  &__preview__picture {
+    @include background-color();
   }
 }

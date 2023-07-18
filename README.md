@@ -39,9 +39,9 @@
 - 使用外部网站的链接时 (如将下载任务发送到自己的服务器 / 使用链接安装组件等) 可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
 - 需要在至少 1400 x 800 以上的逻辑分辨率下使用.
 
-| 正式版 (jsDelivr 源)                                                                                        | 正式版 (GitHub 源)                                                                                      | 预览版                                                                                                           |
-| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master-cdn/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
+| 正式版 (jsDelivr 源)                                                                                     | 正式版 (GitHub 源)                                                                                      | 预览版                                                                                                           |
+| -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| [安装](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master-cdn/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
 
 > 如果处于某种原因只能停在旧版, 可以参考[旧版本回退指南](./doc/rollback.md).
 
@@ -71,13 +71,13 @@
 <img alt="about-panel" src="images/v2/about-panel.jpg" width="450">
 
 # 推荐配置
-- 操作系统: 64-bit Windows 10+ / macOS 10.15+
-- 分辨率: 2K+ / 192ppi
-- 浏览器: Chrome 100+ / Firefox 103+ / Edge 100+ / Safari 15+
-- 处理器: 8代 Intel Core i7+ / AMD Ryzen 5000+
+- 操作系统: 64-bit Windows 10 / macOS Ventura
+- 分辨率: 3840x2160 / 192ppi
+- 浏览器: Chrome 100+ / Firefox 103+ / Edge 100+ / Safari 15.4+
+- 处理器: Intel Core i7-9750H / AMD Ryzen 5 5600H
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
-- 显卡: GeForce GTX 660 / Radeon HD 7870
+- 显卡: GeForce GTX 1050 / Radeon HD 7870
 - 网络: 10MB/s
 
 # 兼容性

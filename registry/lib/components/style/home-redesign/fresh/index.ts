@@ -1,8 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
 import { addComponentListener } from '@/core/settings'
-import { getNumberValidator, mountVueComponent } from '@/core/utils'
+import { mountVueComponent } from '@/core/utils'
 import { homeUrls } from '../urls'
+import { freshHomeOptionsMetadata } from './types'
 
 export const component = defineComponentMetadata({
   name: 'freshHome',
@@ -23,33 +24,8 @@ export const component = defineComponentMetadata({
       document.body.appendChild(freshHome.$el)
     })
   },
-  options: {
-    layoutOptions: {
-      displayName: '版块设置',
-      defaultValue: {
-        trending: {
-          linebreak: true,
-        },
-        areas: {
-          linebreak: true,
-        },
-      },
-      hidden: true,
-    },
-    personalized: {
-      displayName: '个性化推荐',
-      defaultValue: false,
-    },
-    horizontalWheelScroll: {
-      displayName: '启用横向滚动',
-      defaultValue: false,
-    },
-    maxWidth: {
-      displayName: '最大宽度 (px)',
-      defaultValue: 1440,
-      validator: getNumberValidator(1000, 3000),
-    },
-  },
+  options: freshHomeOptionsMetadata,
+  extraOptions: () => import('./ExtraOptions.vue'),
   unload: () => document.body.classList.add('home-redesign-off'),
   reload: () => document.body.classList.remove('home-redesign-off'),
   instantStyles: [

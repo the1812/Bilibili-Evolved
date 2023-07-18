@@ -2,13 +2,27 @@ import { matchUrlPattern } from '.'
 import { TestPattern } from '../common-types'
 
 /** 稍后再看页面 */
-export const watchlaterUrls = ['//www.bilibili.com/medialist/play/watchlater']
+export const watchlaterUrls = [
+  '//www.bilibili.com/medialist/play/watchlater',
+  '//www.bilibili.com/list/watchlater',
+]
 /** 收藏夹连播页面 */
-export const favoriteListUrls = ['//www.bilibili.com/medialist/play/ml']
+export const favoriteListUrls = [
+  '//www.bilibili.com/medialist/play/ml',
+  '//www.bilibili.com/list/ml',
+]
 /** UP 主视频连播页面 */
-export const upListUrls = [/\/\/www\.bilibili\.com\/medialist\/play\/\d+/]
+export const upListUrls = [
+  /\/\/www\.bilibili\.com\/medialist\/play\/\d+/,
+  /\/\/www\.bilibili\.com\/list\/\d+/,
+]
 /** 合集类页面 */
-export const mediaListUrls = [...watchlaterUrls, ...favoriteListUrls, ...upListUrls]
+export const mediaListUrls = [
+  ...watchlaterUrls,
+  ...favoriteListUrls,
+  ...upListUrls,
+  /\/\/www\.bilibili\.com\/list\//,
+]
 /** 拜年纪等类似活动页面 */
 export const festivalUrls = [/\/\/www\.bilibili\.com\/festival\//]
 /** 含有普通视频的页面 */
@@ -38,7 +52,11 @@ export const feedsUrlsWithoutDetail = [
   /^https:\/\/live\.bilibili\.com\/(blanc\/)?[\d]+/,
 ]
 /** 含有动态的页面 */
-export const feedsUrls = [...feedsUrlsWithoutDetail, /^https:\/\/t\.bilibili\.com\//]
+export const feedsUrls = [
+  ...feedsUrlsWithoutDetail,
+  /^https:\/\/t\.bilibili\.com\//,
+  /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
+]
 /** 含有专栏的页面 */
 export const columnUrls = [/^https:\/\/www\.bilibili\.com\/read\/cv/]
 /** 含有播放器的页面 */

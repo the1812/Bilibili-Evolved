@@ -1,5 +1,4 @@
 import { default as VueLibrary } from 'vue'
-import { Plugin as VueFragmentPlugin } from 'vue-fragment'
 
 export const initVue = () => {
   window.Vue = VueLibrary
@@ -25,5 +24,4 @@ export const initVue = () => {
       }
     },
   })
-  Vue.use(VueFragmentPlugin)
 }

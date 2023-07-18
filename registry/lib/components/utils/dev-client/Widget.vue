@@ -10,7 +10,7 @@
           断开连接
         </AsyncButton>
       </template>
-      <template v-else class="status">
+      <template v-else>
         <div class="status-dot disconnected" />
         <div class="status-text">未连接</div>
         <AsyncButton title="连接" @click="connect">
@@ -34,8 +34,6 @@ export default Vue.extend({
   data() {
     return {
       client: null,
-      // sessions: [],
-      // devRecords: options.devRecords,
       isConnected: false,
     }
   },
@@ -44,12 +42,10 @@ export default Vue.extend({
     this.client = devClient
     this.updateConnectionStatus()
     devClient.addEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
-    // devClient.addEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)
   },
   beforeDestroy() {
     const devClient = this.client as DevClient
     devClient.removeEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
-    // devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.updateSessionsStatus)
   },
   methods: {
     async connect() {
@@ -60,9 +56,6 @@ export default Vue.extend({
     },
     updateConnectionStatus() {
       this.isConnected = this.client.isConnected
-    },
-    updateSessionsStatus() {
-      this.sessions = [...this.client.sessions]
     },
   },
 })

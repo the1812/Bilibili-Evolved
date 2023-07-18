@@ -13,7 +13,7 @@
         margin-right: 16px;
       }
       &::after {
-        content: "";
+        content: '';
         position: absolute;
         top: calc(100% + 4px);
         left: 50%;
@@ -31,7 +31,7 @@
       }
       &.selected {
         .default-tab-name {
-          font-weight: bold;
+          @include semi-bold();
           transform: scale(1.1);
           opacity: 1;
         }

@@ -16,8 +16,16 @@ export const plugin: PluginMetadata = {
         },
       }
     })
-    addData('keymap.presets', (presetBase: Record<string, string>) => {
-      presetBase.toggleDanmakuList = 'shift d'
-    })
+    addData(
+      'keymap.presets',
+      (
+        presetBase: Record<string, string>,
+        builtInPresets: Record<string, Record<string, string>>,
+      ) => {
+        presetBase.toggleDanmakuList = 'shift d'
+        builtInPresets.HTML5Player.toggleDanmakuList = ''
+        builtInPresets.PotPlayer.toggleDanmakuList = ''
+      },
+    )
   },
 }

@@ -129,8 +129,8 @@ export default Vue.extend({
     &-title {
       flex: 1 0 auto;
       @include h-center();
+      @include semi-bold();
       font-size: 18px;
-      font-weight: bold;
       .be-icon {
         margin-right: 6px;
       }

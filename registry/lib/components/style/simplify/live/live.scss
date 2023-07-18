@@ -1,4 +1,6 @@
+@import 'common';
 $prefix: 'simplifyLiveroom-switch';
+
 .#{$prefix} {
   &-vip .vip-icon,
   &-fansMedal .fans-medal-item-ctnr,
@@ -33,12 +35,12 @@ $prefix: 'simplifyLiveroom-switch';
   .control-panel-ctnr .dialog-ctnr {
     z-index: 800 !important;
   }
-  .player-ctnr .room-info-ctnr {
-    display: inline-flex !important;
-    flex: 1 0 auto;
-    align-items: center !important;
-    margin-left: 12px !important;
-  }
+  // .player-ctnr .room-info-ctnr {
+  //   display: inline-flex !important;
+  //   flex: 1 0 auto;
+  //   align-items: center !important;
+  //   margin-left: 12px !important;
+  // }
   .head-info-section {
     height: 52px !important;
     box-sizing: content-box !important;
@@ -52,14 +54,6 @@ $prefix: 'simplifyLiveroom-switch';
     .face-pendants {
       display: none !important;
     }
-    // .blive-avatar-icons {
-    //   right: -2px !important;
-    //   .blive-avatar-icon {
-    //     width: 12px !important;
-    //     height: 12px !important;
-    //     border-width: 1px !important;
-    //   }
-    // }
     .blive-avatar-pendant {
       width: 48px !important;
       height: 48px !important;
@@ -81,49 +75,18 @@ $prefix: 'simplifyLiveroom-switch';
   }
   .rows-ctnr .upper-row,
   .room-info-upper-row {
-    display: flex !important;
-    align-items: center !important;
-    flex: 1 0 auto !important;
-    flex-direction: row-reverse !important;
-    position: static !important;
-
-    .left-ctnr,
-    .normal-mode {
-      position: absolute !important;
-      left: 50% !important;
-      transform: translateX(-50%) !important;
-    }
-    .live-area,
-    .area-text {
-      display: inline-flex !important;
-    }
-    .right-ctnr,
-    .upper-right-ctnr {
-      position: static !important;
-      transform: none !important;
-    }
-    .live-title,
-    .room-title {
-      display: flex !important;
-      align-items: center !important;
-
-      .text {
-        line-height: normal !important;
+    .right-ctnr {
+      .action-text:not(.watched-text) {
+        display: none !important;
       }
-      @media screen and (max-width: 1750px) {
-        & .title-length-limit {
-          max-width: 250px !important;
-        }
-      }
-    }
-    .info-section {
-      display: none !important;
     }
   }
   .rows-ctnr .lower-row,
   .room-info-down-row {
     margin: 0 !important;
-    order: -1;
+    width: auto !important;
+    @include absolute-center();
+
     .right-ctnr,
     .left-ctnr > :nth-child(n + 3) {
       display: none !important;
@@ -193,80 +156,14 @@ $prefix: 'simplifyLiveroom-switch';
   .gift-section.guard-ent,
   .seeds-wrap > .dp-i-block > .item:not(.seeds),
   .gift-control-panel .wish-icon,
-  .gift-control-panel .wish-tip {
+  .gift-control-panel .wish-tip,
+  .gift-control-panel .left-part-ctnr,
+  .web-live-player-gift-icon-wrap {
     display: none !important;
   }
   .gift-control-section,
-  .gift-control-panel {
+  #gift-control-vm .gift-control-panel {
     height: 48px !important;
-  }
-  .gift-left-part {
-    display: flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    width: auto !important;
-    height: auto !important;
-    padding: 10px 0 0 16px !important;
-    .entry-icon {
-      margin: 0 !important;
-      width: 24px !important;
-      height: 24px !important;
-    }
-    .wait-num {
-      display: none !important;
-    }
-    .time-span {
-      margin: 1px 0 0 0 !important;
-    }
-  }
-  .draw-box,
-  .anchor-lottery-entry,
-  .treasure-box {
-    display: flex !important;
-    align-items: center !important;
-    padding: 10px 0 0 16px !important;
-    max-height: 36px !important;
-    .draw-box-pic,
-    .anchor-lot-icon,
-    .box-icon {
-      margin: 0 !important;
-      width: 24px !important;
-      height: 24px !important;
-      background-position: 0 -2.5px !important;
-      &.open {
-        background-position: 0 -1px !important;
-      }
-    }
-    .draw-box-pic {
-      transform: scale(1.1);
-    }
-    #BLRHH_treasure_div_tip br {
-      display: none !important;
-    }
-    #BLRHH_treasure_div {
-      img,
-      canvas {
-        max-height: 24px !important;
-      }
-    }
-    .draw-box-text,
-    .anchor-lot-text,
-    .count-down,
-    #BLRHH_treasure_div_tip,
-    #BLRHH_treasure_div_timer {
-      margin-left: 12px !important;
-      padding: 4px 8px !important;
-      max-width: unset !important;
-    }
-    .awarding-panel {
-      bottom: 42px !important;
-    }
-  }
-  .draw-box {
-    padding-top: 11px !important;
-  }
-  .anchor-lottery-entry {
-    padding-top: 12px !important;
   }
   .gift-control-panel .right-part {
     height: 48px !important;
@@ -279,6 +176,49 @@ $prefix: 'simplifyLiveroom-switch';
       .supporting-info {
         transform: translateY(-2px) !important;
       }
+    }
+  }
+  .gift-control-panel {
+    .gift-presets {
+      .gift-section {
+        display: flex !important;
+      }
+    }
+    .more-gift-section {
+      position: static !important;
+      margin: 0 6px 0 0 !important;
+      height: auto !important;
+    }
+    .z-gift-package {
+      margin: auto 0 !important;
+      position: static !important;
+      .gift-package-btn {
+        padding: 0 !important;
+      }
+    }
+    .right-part {
+      padding-top: 0 !important;
+    }
+    .right-section {
+      display: none !important;
+    }
+    // .right-section {
+    //   align-self: stretch !important;
+    //   align-items: center !important;
+    //   .vertical-separator {
+    //     height: 100% !important;
+    //   }
+    //   > .gift-section {
+    //     height: 42px !important;
+    //   }
+    // }
+    .skin-bg {
+      height: 48px !important;
+    }
+  }
+  &.player-full-win {
+    #web-player__bottom-bar__container {
+      display: none !important;
     }
   }
 }

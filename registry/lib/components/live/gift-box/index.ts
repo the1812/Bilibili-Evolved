@@ -15,6 +15,7 @@ import componentStyle from './gift-box.scss'
 
 // 指示是否为全屏模式的 class，出现于 body 元素上
 const fullWinClass = 'player-full-win'
+const fullScreenClass = 'fullscreen-fix'
 
 // 直播播放器的 id
 const livePlayerId = 'live-player'
@@ -67,7 +68,10 @@ async function queryGiftBtnParent(): Promise<Element | null> {
 
 // 当前是否为全屏模式
 function isFullWin(): boolean {
-  return document.body.classList.contains(fullWinClass)
+  return (
+    document.body.classList.contains(fullWinClass) ||
+    document.body.classList.contains(fullScreenClass)
+  )
 }
 
 /**
@@ -84,7 +88,8 @@ function observeFullWinToggle(onToggle: FullWinToggleCallback): StopObservingCal
   function analyzeMutation(mutation: MutationRecord): boolean | null {
     const curContainsFullWinClass = isFullWin()
     const prevClassList = mutation.oldValue.split(' ')
-    const prevContainsFullWinClass = prevClassList.includes(fullWinClass)
+    const prevContainsFullWinClass =
+      prevClassList.includes(fullWinClass) || prevClassList.includes(fullScreenClass)
     // console.debug(`[${componentName}]`, { curContainsFullWinClass, prevContainsFullWinClass })
     if (curContainsFullWinClass === prevContainsFullWinClass) {
       return null

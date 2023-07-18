@@ -1,5 +1,10 @@
 <template>
-  <span title="稍后再看" class="watchlater be-outer-watchlater" :class="{ on }" @click="toggle()">
+  <span
+    title="稍后再看"
+    class="watchlater be-outer-watchlater video-toolbar-left-item"
+    :class="{ on }"
+    @click="toggle()"
+  >
     <VIcon class="icon" :size="28" icon="mdi-timetable"></VIcon>
     <span class="text">稍后再看</span>
     <div class="tip" :class="{ show: tipShowing }">{{ tipText }}</div>
@@ -49,15 +54,15 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+.video-toolbar-left,
 .video-toolbar .ops,
 .video-toolbar-v1 .toolbar-left {
   .watchlater {
     font-size: 14px;
-    font-weight: normal;
     margin-right: 28px !important;
     position: relative;
     width: auto !important;
-    @media screen and (max-width: 1320px), (max-height: 750px) {
+    @media screen and (max-width: 1340px), (max-height: 750px) {
       margin-right: max(calc(min(11vw, 11vh) - 117.2px), 6px) !important;
       .text {
         display: none;
@@ -89,6 +94,10 @@ export default Vue.extend({
     }
   }
 }
+.video-toolbar-left .watchlater .be-icon {
+  transform: translateY(1px);
+  margin-right: 8px;
+}
 .video-toolbar-v1 .watchlater .be-icon {
   transform: translateY(1px);
 }
@@ -97,5 +106,8 @@ export default Vue.extend({
   > li:nth-child(2) {
     display: none !important;
   }
+}
+.video-tool-more-dropdown .video-watchlater.dropdown-item {
+  display: none !important;
 }
 </style>

@@ -1,45 +1,29 @@
-# This is a basic workflow to help you get started with Actions
-
 name: Pull Request Check
-
-# Controls when the action will run. Triggers the workflow on push or pull request
-on: [pull_request]
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+on:
+  - pull_request
 jobs:
-  # This workflow contains a single job called "build"
   check:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-      with:
-        ref: ${{ github.event.pull_request.head.sha }}
-
-    - name: Install dependencies
-      uses: pnpm/action-setup@v2.2.4
-      with:
-        version: latest
-        run_install: true
-
-    - name: Type check
-      run: pnpm run type
-
-    - name: ESLint check
-      run: pnpm run lint-check
-
-    - name: Build core
-      run: pnpm run build-core
-
-    - name: Build features
-      run: |
-        cd registry
-        pnpm install
-        cd ../
-        pnpm run build-features
-
-    - name: Log
-      run: echo Check complete.
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - name: Install dependencies
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: latest
+          run_install: true
+      - name: Type check
+        run: pnpm run type
+      - name: ESLint check
+        run: pnpm run lint-check
+      - name: Build core
+        run: pnpm run build-core
+      - name: Build features
+        run: |
+          cd registry
+          pnpm install
+          cd ../
+          pnpm run build-features
+      - name: Log
+        run: echo Check complete.

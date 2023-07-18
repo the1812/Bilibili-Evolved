@@ -1,20 +1,38 @@
 import { attributes } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { preventEvent } from '@/core/utils'
+import { playerReady, preventEvent } from '@/core/utils'
+import { createPlayerModeChangeEvent, PlayerMode } from './events'
 
 const playerModePolyfill = async () => {
+  await playerReady()
   const bpxContainer = (await select('.bpx-player-container')) as HTMLElement
   if (!bpxContainer) {
     console.warn('[bpx player polyfill] bpxContainer not found')
     return
   }
+  let lastScreen = PlayerMode.Normal
   attributes(bpxContainer, () => {
-    const dataScreen = bpxContainer.getAttribute('data-screen')
-    document.body.classList.toggle(
-      'player-mode-webfullscreen',
-      dataScreen === 'full' || dataScreen === 'web',
-    )
-    dataScreen === 'wide' ? document.body.classList.add('player-mode-widescreen') : ''
+    const dataScreen = bpxContainer.getAttribute('data-screen') as PlayerMode
+    const prefix = 'player-mode-'
+    const enumList = [
+      PlayerMode.Normal,
+      PlayerMode.WideScreen,
+      PlayerMode.WebFullscreen,
+      PlayerMode.Fullscreen,
+    ].map(it => `${prefix}${it}`)
+
+    // clear all class
+    document.body.classList.remove(...enumList)
+
+    // add class
+    if (dataScreen !== PlayerMode.Normal) {
+      document.body.classList.add(`${prefix}${dataScreen}`)
+    }
+
+    if (dataScreen !== lastScreen) {
+      window.dispatchEvent(createPlayerModeChangeEvent(dataScreen))
+      lastScreen = dataScreen
+    }
   })
 }
 const idPolyfill = async () => {
@@ -29,8 +47,8 @@ const idPolyfill = async () => {
       cid: pbp.options.cid.toString(),
       bvid: pbp.options.bvid,
     }
-    if (Object.values(idData).some(it => it === '' || parseInt(it) <= 0)) {
-      console.warn('[bpx player polyfill] invalid pbp data')
+    if (Object.values(idData).some(it => !it || parseInt(it) <= 0)) {
+      console.warn('[bpx player polyfill] invalid pbp data', pbp.options)
     }
     Object.assign(unsafeWindow, idData)
   }

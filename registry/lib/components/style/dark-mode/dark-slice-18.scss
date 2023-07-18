@@ -1,0 +1,573 @@
+@import './dark-definitions';
+@import 'common';
+
+#{contains('mediainfo_media_toolbar')} {
+  #{contains('mediainfo_btn_rating')} {
+    @include color('a');
+    @include border-color('4');
+  }
+  #{contains('mediainfo_btn_follow')} {
+    &#{contains('mediainfo_follow_active')}#ogv-weslie-media-info-follow {
+      @include background-color('4');
+      @include color('a');
+    }
+  }
+  #{contains('mediainfo_follow_options_list')} {
+    @include background-color('3');
+    @include border-color();
+    li {
+      @include color('e');
+      &#{contains('mediainfo_disabled')} {
+        @include color('6');
+      }
+      &:hover {
+        @include background-color('5');
+      }
+    }
+  }
+}
+#{contains('upinfo_up_info')} {
+  #{contains('upinfo_btn_follow_up')} {
+    @include theme-color();
+  }
+}
+#{contains('seasonlist_ss_badge')} {
+  &#{contains('seasonlist_blue')} {
+    @include theme-background-color();
+  }
+}
+#{contains('navTools_wrap')} {
+  #{contains('navTools_item')} {
+    @include background-color('3');
+    @include border-color('4');
+    @include color('a');
+    path {
+      @include fill('a');
+    }
+    &:hover {
+      @include theme-background-color();
+      @include border-color();
+      @include foreground-color();
+      path {
+        @include foreground-fill();
+      }
+    }
+  }
+}
+#{contains('toolbar_watch_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  @include no-shadow();
+  #{contains('toolbar_title')} {
+    @include color('e');
+  }
+}
+#{contains('toolbar_mobile_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  @include no-shadow();
+  #{contains('toolbar_video_title')} {
+    @include color('e');
+  }
+  #{contains('toolbar_mobile_tip')} {
+    @include color('a');
+    #{contains('toolbar_mobile_link')} {
+      @include theme-color();
+    }
+  }
+  // 二维码需要加个边框才能识别
+  canvas {
+    padding: 4px;
+    background-color: #fff;
+  }
+}
+#{contains('toolbar_share_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  @include no-shadow();
+  #{contains('toolbar_share_desc')} {
+    @include color('e');
+  }
+  #{contains('toolbar_share_btn')} {
+    &:hover {
+      #{contains('toolbar_share_desc')} {
+        @include theme-color();
+      }
+    }
+    &:not(#share_tieba) {
+      svg {
+        circle {
+          @include fill('e');
+          // 这一排图标只有贴吧是做了减去顶层的... 其他的只能填个和背景相同的颜色假装是挖空的效果
+          ~ path {
+            @include fill('3');
+          }
+        }
+      }
+      &:hover {
+        circle {
+          @include theme-fill();
+        }
+      }
+    }
+  }
+  #share_tieba {
+    path {
+      @include fill('e');
+    }
+    &:hover path {
+      @include theme-fill();
+    }
+  }
+}
+#{contains('dialogcoin_coin_operated')} {
+  @include background-color('3');
+  #{contains('dialogcoin_icon_close')} {
+    path {
+      @include fill('a');
+    }
+  }
+  #{contains('dialogcoin_coin_title')} {
+    @include color('e');
+    span {
+      @include theme-color();
+    }
+  }
+  #{contains('dialogcoin_like_checkbox')} {
+    @include color('e');
+    input[type='checkbox']:checked + i {
+      @include to-theme('blue');
+    }
+  }
+  #{contains('dialogcoin_coin_btn')} {
+    @include theme-background-color();
+    @include border-color();
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color('90');
+    }
+  }
+  #{contains('dialogcoin_tips')} {
+    @include color('a');
+  }
+}
+
+.action-list-container {
+  @include background-color('4');
+  .action-list-header {
+    &:hover {
+      @include background-color();
+    }
+    .list-title {
+      @include color('e');
+    }
+    .list-count {
+      @include color('a');
+    }
+    .list-tool-btn {
+      &-icon {
+        @include color('a');
+      }
+      &:hover .list-tool-btn-icon {
+        @include theme-color();
+      }
+    }
+    .list-expand-btn {
+      &-icon {
+        @include color('e');
+      }
+    }
+  }
+  .list-display-name {
+    @include color('a');
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .split-line {
+    @include background-color('5');
+  }
+  .actionlist-item-inner {
+    .main {
+      .cover {
+        @include background-color('3');
+        .b-img {
+          @include background-color();
+        }
+      }
+      .info {
+        .views {
+          @include color('a');
+        }
+      }
+      .del-btn {
+        @include color('a');
+        &:hover {
+          @include theme-color();
+        }
+      }
+    }
+    &.siglep-active {
+      .title {
+        .playing-gif {
+          @include to-theme('blue');
+        }
+      }
+    }
+  }
+}
+.recommend-list-container .rec-footer {
+  @include background-color('3');
+  @include color('e');
+}
+.recommend-video-card {
+  .info {
+    .upname {
+      @include color('a');
+      &:hover {
+        @include theme-color();
+      }
+    }
+    .playinfo {
+      @include color('a');
+    }
+  }
+}
+.video-tag-container {
+  .tag-panel {
+    @include background-color();
+    .tag-link {
+      @include background-color('3');
+      @include color('e');
+    }
+    .show-more-btn {
+      @include background-color('3');
+      @include color('e');
+      &:hover {
+        @include theme-color();
+      }
+    }
+  }
+}
+.detail-channel-popup {
+  .channel-info {
+    .channel-desc {
+      @include color('a');
+    }
+  }
+  .channel-entry-btn {
+    @include theme-color();
+    &:hover {
+      @include foreground-color();
+    }
+  }
+  .toggle-sub-btn {
+    &.no-sub:hover {
+      @include border-color();
+      @include theme-background-color();
+    }
+  }
+}
+.playlist-comment {
+  .comment-container {
+    @include background-color();
+  }
+}
+.video-info-container {
+  .video-title {
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .video-info-detail {
+    @include color('a');
+    &-list {
+      .item path {
+        @include fill('a');
+      }
+    }
+  }
+}
+.video-toolbar-left-item {
+  @include color('a');
+  &:hover,
+  &.on {
+    @include theme-color();
+  }
+}
+.video-toolbar-right-item:not(.dropdown-item) {
+  @include color('a');
+  &:hover {
+    @include theme-color();
+  }
+}
+.video-tool-more-popover {
+  @include background-color('3');
+  .video-tool-more-dropdown {
+    .dropdown-item {
+      @include color('e');
+      &:hover {
+        @include background-color('4');
+      }
+      .video-toolbar-item-icon {
+        @include color('e');
+      }
+    }
+  }
+}
+
+.playlist-container--right {
+  .up-detail .up-description {
+    @include color('a');
+  }
+}
+.upinfo-btn-panel .new-charge-btn {
+  @include background-color('4');
+  @include color('e');
+  &.charge-btn-loaded {
+    @include background-color();
+    @include theme-color();
+    &:hover {
+      @include theme-background-color('20');
+    }
+  }
+}
+.magic-adventures .magic-adventures-text {
+  @include color('e');
+}
+.gift-panel {
+  .gift-item {
+    .gift-label {
+      @include color('e');
+    }
+    .panel-price {
+      @include color('a');
+    }
+  }
+}
+.gift-sender-panel {
+  .content {
+    @include background-color('2');
+  }
+  .feed-bar-section {
+    @include background-color('4');
+    @include border-color('4');
+  }
+}
+.gift-control-panel {
+  .vertical-separator {
+    @include border-color('5');
+  }
+  .m-guard-ent,
+  .m-recharge-ent {
+    &:hover {
+      @include background-color('3');
+    }
+    .guard-info,
+    .balance-info {
+      .title {
+        @include color('a');
+      }
+      .guard-ent-info,
+      .recharge-ent-info {
+        @include color('e');
+      }
+      .right-arrow {
+        @include border-color('e');
+      }
+    }
+  }
+}
+.gift-presets {
+  .gift-panel-switch {
+    @include background-color('3');
+    .arrow {
+      @include border-color('e');
+    }
+  }
+}
+.gift-package-btn {
+  @include color('e');
+  &:hover {
+    @include background-color('8884');
+  }
+}
+.gift-package {
+  @include color('e');
+  .gift-item-asset {
+    .b-img {
+      @include background-color();
+    }
+  }
+  .bag-icon {
+    @include border-color('e');
+  }
+  &:hover {
+    @include background-color('8884');
+  }
+  .silver-wallet {
+    @include background-color('3');
+    @include color('e');
+  }
+  .gift-item-wrap {
+    .gift-item {
+      &.free:hover {
+        @include background-color('3');
+      }
+    }
+    .num {
+      @include color('e');
+    }
+  }
+  .des {
+    @include color('a');
+  }
+}
+.room-introduction-tag {
+  .icon-label {
+    @include color('e');
+  }
+}
+.members-info-container {
+  .header {
+    @include background-color('4');
+    .staff-amt {
+      @include color('a');
+    }
+    .fold-btn path {
+      @include fill('e');
+    }
+  }
+  .container {
+    @include background-color();
+    .staff-info {
+      .staff-name {
+        @include color('e');
+        &.is-vip {
+          @include vip-color();
+        }
+      }
+      .info-tag {
+        @include color('a');
+      }
+    }
+  }
+}
+#app .bgc {
+  @include background-color();
+}
+.bili-comment-container {
+  .view-all-reply {
+    @include color('e');
+    &:hover {
+      @include theme-color();
+    }
+  }
+  .forward-to-dynamic {
+    @include color('a');
+  }
+}
+.bili-dyn-sidebar {
+  &__btn {
+    @include background-color('3');
+    @include color('a');
+    &:hover {
+      @include background-color('4');
+    }
+    span::before {
+      @include to-gray();
+    }
+  }
+}
+.opus-detail {
+  @include background-color('4');
+  @include no-shadow();
+  .bili-opus-view {
+    @include background-color('4');
+  }
+  .opus-module-author {
+    &__pub__text {
+      @include color('a');
+    }
+  }
+  .opus-module-content {
+    .opus-text-rich-hl {
+      @include theme-color();
+    }
+  }
+  .opus-tabs {
+    .bili-tabs {
+      &__header {
+        @include background-color();
+        @include border-color();
+      }
+    }
+    .bili-tabs__content {
+      .comment-wrap {
+        @include background-color();
+      }
+    }
+  }
+  .side-toolbar {
+    &__box,
+    &__btn {
+      @include background-color('3');
+      &.backtop span::before {
+        @include to-white();
+      }
+    }
+    &__action {
+      &,
+      & svg {
+        @include color('e');
+      }
+      &:hover,
+      &.is-active {
+        &,
+        & svg {
+          @include theme-color();
+          path {
+            @include theme-fill();
+          }
+        }
+      }
+    }
+  }
+}
+.bili-dyn-share {
+  &-publishing {
+    @include background-color('3');
+    @include border-color('4');
+    @include no-shadow();
+    &__title {
+      @include color('e');
+    }
+    &__input {
+      .bili-rich-textarea__inner {
+        @include background-color();
+        &.empty::before {
+          @include color('a');
+        }
+      }
+    }
+    &__reference {
+      @include background-color('2');
+      &__author__name {
+        @include color('e');
+      }
+    }
+    &__hint {
+      @include color('a');
+    }
+    &__tools__item {
+      &,
+      &:hover {
+        @include background-color();
+      }
+    }
+    &__action {
+      @include theme-background-color();
+      @include foreground-color();
+    }
+  }
+}
