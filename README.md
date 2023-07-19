@@ -91,7 +91,7 @@
 不兼容.
 
 ### [AdGuard](https://adguard.com/zh_cn/adguard-windows/overview.html)
-未测试.
+不兼容.
 
 ## 浏览器
 
