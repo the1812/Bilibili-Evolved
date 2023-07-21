@@ -137,7 +137,7 @@ observer.observe(document.head, { childList: true })
 
 const entry = async () => {
   const { forEachCommentItem } = await import('@/components/utils/comment-apis')
-  const addCopyLinkButton = (comment: CommentItem) => {
+  const addIpLocation = (comment: CommentItem) => {
     if (version === -1) {
       version = comment.timeText === undefined ? 2 : 1
       if (version === 1) {
@@ -153,7 +153,7 @@ const entry = async () => {
     }
   }
   forEachCommentItem({
-    added: addCopyLinkButton,
+    added: addIpLocation,
   })
 }
 
