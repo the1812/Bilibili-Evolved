@@ -132,10 +132,13 @@ const processItems = (items: CommentReplyItem[]) => {
       const replyTime =
         item.element.querySelector('.reply-info>.reply-time') ??
         item.element.querySelector('.sub-reply-info>.sub-reply-time')
-      const replyLocation = document.createElement('span')
-      replyLocation.style.marginLeft = '5px'
-      replyLocation.innerText = location
-      replyTime.appendChild(replyLocation)
+      if (replyTime.childElementCount === 0) {
+        // 避免在评论更新的情况下重复添加
+        const replyLocation = document.createElement('span')
+        replyLocation.style.marginLeft = '5px'
+        replyLocation.innerText = location
+        replyTime.appendChild(replyLocation)
+      }
     }
   })
 }
