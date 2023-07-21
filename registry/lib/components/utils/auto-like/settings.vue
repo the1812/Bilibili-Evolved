@@ -26,6 +26,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    toggle() {
+      this.$refs.popup.toggle()
+    },
     async setblackListProps() {
       if (this.isFirstLoad) {
         return

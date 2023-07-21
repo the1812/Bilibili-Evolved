@@ -5,6 +5,7 @@ import { getData } from '@/plugins/data'
 export const BlackListDataKey = 'like-black-List.data'
 
 type SettingsVmType = Vue & {
+  toggle: () => void
   triggerElement: HTMLElement
   list: string[]
   titleName: string
