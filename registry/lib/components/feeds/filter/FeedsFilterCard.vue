@@ -293,7 +293,7 @@ body.disable-feeds-filter {
     }
   }
   h2 {
-    font-weight: bold;
+    @include semi-bold();
     font-size: 13px;
     margin: 0;
     margin-bottom: 8px;

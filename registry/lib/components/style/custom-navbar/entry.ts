@@ -1,6 +1,7 @@
 import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 import { isIframe, isNotHtml, matchUrlPattern, mountVueComponent } from '@/core/utils'
+import { setupNotifyStyle } from './notify-style'
 
 export const entry: ComponentEntry = async ({ metadata: { name } }) => {
   // const url = document.URL.replace(location.search, '')
@@ -17,6 +18,13 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
     `${name}.padding`,
     value => {
       document.documentElement.style.setProperty('--navbar-bounds-padding', `${value}%`)
+    },
+    true,
+  )
+  addComponentListener(
+    `${name}.searchBarWidth`,
+    value => {
+      document.documentElement.style.setProperty('--navbar-search-width', `${value}vw`)
     },
     true,
   )
@@ -43,4 +51,5 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
   ;['fill', 'shadow', 'blur'].forEach(style => {
     addComponentListener(`${name}.${style}`, value => customNavbar.toggleStyle(value, style), true)
   })
+  setupNotifyStyle()
 }
