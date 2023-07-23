@@ -26,4 +26,7 @@ const targets = [mainConfig, previewConfig].map(config => {
   return config
 })
 
+// see src/client/init-vue.ts
+lodash.set(previewConfig, 'resolve.alias.vue$', 'vue/dist/vue.common.prod.js')
+
 export default targets

@@ -155,7 +155,7 @@ pnpm install
 ### 全局
 全局变量, 无需 `import` 就可以直接使用. (Tampermonkey API 这里不再列出了, 可根据代码提示使用)
 
-- `Vue`: Vue 2 提供的主要对象. 不再推荐使用. 项目正处于 Vue 2.7 到 Vue 3 的过渡阶段, 建议优先使用组合式 API. 如果需要以选项式方式定义 Vue 组件, 请使用 `defineComponent` 而非 `Vue.extend` 或 `new Vue`.
+- `Vue`: Vue 2 提供的主要对象. 不再推荐使用. 如果需要以选项式方式定义 Vue 组件, 请使用 `defineComponent` 而非 `Vue.extend` 或 `new Vue`.
 - `lodash`: 包含所有 Lodash 库提供的方法
 - `dq` / `dqa`: `document.querySelector` 和 `document.querySelectorAll` 的简写, `dqa` 会返回真实数组
 > 在 `bwp-video` 出现后, 这两个查询函数还会自动将对 `video` 的查询扩展到 `bwp-video`
