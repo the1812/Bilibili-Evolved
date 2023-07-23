@@ -1,3 +1,4 @@
+import lodash from 'lodash'
 import webpack, { Configuration } from 'webpack'
 import { getBanner, getDefaultConfig } from './webpack.config'
 import previewConfig from './webpack.dev'
