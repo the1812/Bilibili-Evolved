@@ -24,7 +24,7 @@
     <VEmpty v-else-if="!loading && cards.length === 0"></VEmpty>
     <transition-group v-else name="cards" tag="div" class="watchlater-list-content">
       <div v-for="(card, index) of filteredCards" :key="card.aid" class="watchlater-card">
-        <a class="cover-container" target="_blank" :href="card.href">
+        <a class="watchlater-cover-container" target="_blank" :href="card.href">
           <DpiImage
             class="cover"
             :src="card.coverUrl"
@@ -285,7 +285,7 @@ export default Vue.extend({
       &:hover .cover {
         transform: scale(1.05);
       }
-      .cover-container {
+      .watchlater-cover-container {
         grid-area: cover;
         overflow: hidden;
         border-radius: 8px 0 0 8px;

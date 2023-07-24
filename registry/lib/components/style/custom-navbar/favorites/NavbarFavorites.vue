@@ -22,7 +22,7 @@
       <transition-group v-else name="cards" tag="div" class="cards">
         <div v-for="card of filteredCards" :key="card.id" class="favorite-card">
           <a
-            class="cover-container"
+            class="favorites-cover-container"
             target="_blank"
             :href="'https://www.bilibili.com/video/' + card.bvid"
           >
@@ -376,7 +376,7 @@ export default Vue.extend({
         &:hover .cover {
           transform: scale(1.05);
         }
-        .cover-container {
+        .favorites-cover-container {
           grid-area: cover;
           overflow: hidden;
           border-radius: 8px 0 0 8px;
