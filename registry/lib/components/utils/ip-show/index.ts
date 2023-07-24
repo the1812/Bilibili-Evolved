@@ -148,7 +148,7 @@ const entry = async () => {
   const addIpLocation = (comment: CommentItem) => {
     if (version === 2) {
       processItems([comment, ...comment.replies])
-      comment.onRepliesUpdate = replies => processItems(replies)
+      comment.addEventListener('repliesUpdate', replies => processItems(replies.detail))
     }
   }
   forEachCommentItem({
