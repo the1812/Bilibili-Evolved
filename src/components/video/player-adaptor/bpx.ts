@@ -18,7 +18,7 @@ const playerModePolyfill = async () => {
     document.body.classList.remove(...enumList)
 
     // add class
-    document.body.classList.add(dataScreen !== 'normal' ? `${prefix}${dataScreen}` : '')
+    dataScreen !== 'normal' && document.body.classList.add(`${prefix}${dataScreen}`)
   })
 }
 const idPolyfill = async () => {
