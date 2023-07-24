@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="custom-black-list-extra-options">
-      <VButton v-if="login" ref="button" @mouseover="setblackListProps" @click="toggleblackList">
+      <VButton ref="button" @mouseover="setBlackListProps" @click="toggleBlackList">
         黑名单
         <VIcon icon="right-arrow" :size="16" />
       </VButton>
@@ -9,10 +9,8 @@
   </div>
 </template>
 <script lang="ts">
-import { getUID } from '@/core/utils'
 import { VIcon, VButton } from '@/ui'
-
-import { loadblackList, setblackListProps, toggleblackList } from './vm'
+import { loadBlackList, setBlackListProps, toggleBlackList } from './vm'
 
 export default Vue.extend({
   components: {
@@ -22,24 +20,23 @@ export default Vue.extend({
   data() {
     return {
       isFirstLoad: false,
-      login: Boolean(getUID()),
     }
   },
   methods: {
     toggle() {
       this.$refs.popup.toggle()
     },
-    async setblackListProps() {
+    async setBlackListProps() {
       if (this.isFirstLoad) {
         return
       }
-      this.isFirstLoad = await loadblackList()
+      this.isFirstLoad = await loadBlackList()
       if (this.isFirstLoad) {
         const triggerButton = this.$refs.button.$el as HTMLElement
-        setblackListProps(triggerButton)
+        setBlackListProps(triggerButton)
       }
     },
-    toggleblackList,
+    toggleBlackList,
   },
 })
 </script>

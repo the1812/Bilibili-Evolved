@@ -1,20 +1,12 @@
 <template>
   <VButton round class="manual-like" @click="like">
-    <div id="text" :class="{ like: is_like }">
-      正在点赞: {{ now_like_cnt }} / {{ tot_like_cnt }}
-    </div>
-    <VIcon v-show="!is_like" colored icon="like" :size="20" />
+    <div id="text" :class="{ like: isLike }">正在点赞: {{ curLikeCnt }} / {{ totalLikeCnt }}</div>
+    <VIcon v-show="!isLike" colored icon="like" :size="20" />
   </VButton>
 </template>
 
 <script lang="ts">
 import { VButton, VIcon } from '@/ui'
-import likeIcon from './like.svg'
-import { addData } from '@/plugins/data'
-
-addData('ui.icons', (icons: Record<string, string>) => {
-  icons.like = likeIcon
-})
 
 export default Vue.extend({
   components: {
@@ -29,19 +21,19 @@ export default Vue.extend({
   },
   data() {
     return {
-      is_click: false,
-      is_like: false,
-      tot_like_cnt: 0,
-      now_like_cnt: 0,
+      isClick: false,
+      isLike: false,
+      totalLikeCnt: 0,
+      curLikeCnt: 0,
       feedsLikeQueue: [] as HTMLElement[],
     }
   },
   methods: {
     like() {
-      if (this.is_click) {
+      if (this.isClick) {
         return
       }
-      this.is_click = true
+      this.isClick = true
       // forEachFeedsCard异步执行顺序有问题，不能及时同步，用dqa代替
       const likeButtons = (dqa('.bili-dyn-title__text') as HTMLElement[]).flatMap(e => {
         if (this.list.includes(e.textContent)) {
@@ -51,19 +43,19 @@ export default Vue.extend({
         return likeButton && !likeButton.classList.contains('active') ? likeButton : []
       })
       this.feedsLikeQueue.push(...likeButtons)
-      this.tot_like_cnt = this.feedsLikeQueue.length
-      this.now_like_cnt = 0
-      this.is_like = true
+      this.totalLikeCnt = this.feedsLikeQueue.length
+      this.curLikeCnt = 0
+      this.isLike = true
       const t = window.setInterval(() => {
         if (this.feedsLikeQueue.length === 0) {
-          this.is_like = false
-          this.is_click = false
+          this.isLike = false
+          this.isClick = false
           clearInterval(t)
           return
         }
         const button = this.feedsLikeQueue.shift()
         button?.click()
-        this.now_like_cnt++
+        this.curLikeCnt++
       }, 1200)
     },
   },

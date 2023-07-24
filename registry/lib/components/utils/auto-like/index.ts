@@ -13,7 +13,10 @@ export const component = defineComponentMetadata({
   displayName: '自动点赞',
   tags: [componentsTags.utils, componentsTags.feeds, componentsTags.video],
   urlInclude: [...videoAndBangumiUrls, ...feedsUrls],
-
+  author: {
+    name: 'CrazyboyQCD',
+    link: 'https://github.com/CrazyboyQCD',
+  },
   options: {
     video: {
       defaultValue: true,
@@ -64,7 +67,7 @@ export const component = defineComponentMetadata({
         const blackList = getData(BlackListDataKey)
         forEachFeedsCard({
           added: card => {
-            if (blackList.includes(dq(card.element, '.bili-dyn-title__text').textContent.trim())) {
+            if (blackList.includes(card.username)) {
               return
             }
             const likeButtons = dq(card.element, '.bili-dyn-action.like') as HTMLElement

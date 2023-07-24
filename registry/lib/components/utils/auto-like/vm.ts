@@ -12,7 +12,7 @@ type SettingsVmType = Vue & {
 }
 let blacklistVM: SettingsVmType = null
 
-export const setblackListProps = (element: HTMLElement) => {
+export const setBlackListProps = (element: HTMLElement) => {
   if (!blacklistVM) {
     return
   }
@@ -30,7 +30,7 @@ export const loadlikeButton = async () => {
   bg.insertAdjacentElement('afterbegin', likebuttonVM.$el)
 }
 
-export const loadblackList = async () => {
+export const loadBlackList = async () => {
   if (blacklistVM) {
     return false
   }
@@ -40,9 +40,9 @@ export const loadblackList = async () => {
   return true
 }
 
-export const toggleblackList = async () => {
+export const toggleBlackList = async () => {
   if (!blacklistVM) {
-    await loadblackList()
+    await loadBlackList()
   }
   blacklistVM?.toggle()
 }
