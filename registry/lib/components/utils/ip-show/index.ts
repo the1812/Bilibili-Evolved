@@ -9,7 +9,7 @@ const getIpLocation = (element: HTMLElement) => {
   return reply?.reply_control?.location ?? undefined
 }
 
-let version = -1
+let version = 2
 let bbComment: any
 
 // 带IP属地显示的评论创建
@@ -117,39 +117,38 @@ const observer = new MutationObserver(mutations => {
       bbComment = unsafeWindow.bbComment
       bbComment.prototype._createListCon = createListCon
       bbComment.prototype._createSubReplyItem = createSubReplyItem
+      version = 1
       observer.disconnect()
     }
   })
 })
 
+observer.observe(document.head, { childList: true })
+
 const processItems = (items: CommentReplyItem[]) => {
   items.forEach(item => {
     const location = getIpLocation(item.element)
     if (location !== undefined) {
-      item.element.querySelector(
-        '.reply-info>.reply-time',
-      ).innerHTML += `<span style="margin-left:5px;">${location}</span>`
+      const replyTime =
+        item.element.querySelector('.reply-info>.reply-time') ??
+        item.element.querySelector('.sub-reply-info>.sub-reply-time')
+      if (replyTime.childElementCount === 0) {
+        // 避免在评论更新的情况下重复添加
+        const replyLocation = document.createElement('span')
+        replyLocation.style.marginLeft = '5px'
+        replyLocation.innerText = location
+        replyTime.appendChild(replyLocation)
+      }
     }
   })
 }
 
-observer.observe(document.head, { childList: true })
-
 const entry = async () => {
   const { forEachCommentItem } = await import('@/components/utils/comment-apis')
   const addIpLocation = (comment: CommentItem) => {
-    if (version === -1) {
-      version = comment.timeText === undefined ? 2 : 1
-      if (version === 1) {
-        // 旧版评论区
-        observer.disconnect()
-        return
-      }
+    if (version === 2) {
       processItems([comment, ...comment.replies])
-    } else if (version === 2) {
-      // 新版评论区
-      processItems([comment, ...comment.replies])
-      comment.onRepliesUpdate = replies => processItems(replies)
+      comment.addEventListener('repliesUpdate', replies => processItems(replies.detail))
     }
   }
   forEachCommentItem({
