@@ -1,6 +1,47 @@
 import { videoChange } from '@/core/observer'
 import { matchUrlPattern } from '@/core/utils'
+import { useScopedConsole } from '@/core/utils/log'
 import { playerUrls } from '@/core/utils/urls'
+
+const curConsole = useScopedConsole('src/components/video/video-control-bar.ts')
+
+/**
+ * 监听元素的触摸移动事件
+ *
+ * @details
+ * deltaX 是两次 touchmove 事件触发时的 pageX 之差
+ */
+const observeTouchMove = (target: HTMLElement, onMove: (deltaX: number) => void): void => {
+  const calledOnlySingleTouch =
+    (callback: (pageX: number) => void): ((e: TouchEvent) => void) =>
+    e => {
+      if (e.touches.length !== 1) {
+        return
+      }
+      for (let i = 0; i < e.changedTouches.length; i++) {
+        const touch = e.changedTouches[i]
+        if (touch === e.touches[0]) {
+          callback(touch.pageX)
+          return
+        }
+      }
+    }
+
+  let lastX: number | undefined
+
+  target.addEventListener(
+    'touchstart',
+    calledOnlySingleTouch(pageX => (lastX = pageX)),
+  )
+
+  target.addEventListener(
+    'touchmove',
+    calledOnlySingleTouch(pageX => {
+      lastX !== undefined && onMove(pageX - lastX)
+      lastX = pageX
+    }),
+  )
+}
 
 export interface VideoControlBarItem {
   name: string
@@ -35,9 +76,11 @@ const initControlBar = lodash.once(async () => {
     const observeSizeChange = (el: Element, onChange: () => void) =>
       new ResizeObserver(onChange).observe(el)
 
-    // 设置原 control bar 的样式，添加事件等
+    // 设置原 control bar 的样式，添加事件等。必须在 wrapRawBottonInPlace 之前被调用
     const settingRawBottom = (rawBottom: HTMLElement): void => {
-      const parent = rawBottom.parentElement
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const parent = rawBottom.parentElement!
+
       // 设置与滚动相关的样式。scroll 值会自动限制到可滚动范围。返回当前实际的滚动值
       // 当容器或内容的宽度改变时，应调用该函数重设
       const resetScrollStyles = (scroll: number): number => {
@@ -64,11 +107,12 @@ const initControlBar = lodash.once(async () => {
         scroll = resetScrollStyles(scroll)
       })
       observeSizeChange(rawBottom, () => (scroll = resetScrollStyles(scroll)))
-      // 响应鼠标滚动
+      // 响应鼠标滚动与触摸滑动
       rawBottom.addEventListener('wheel', e => {
         e.preventDefault()
         scroll = resetScrollStyles(scroll + e.deltaY)
       })
+      observeTouchMove(rawBottom, deltaX => (scroll = resetScrollStyles(scroll + deltaX)))
     }
 
     // 就地包装原 control bar
@@ -85,14 +129,19 @@ const initControlBar = lodash.once(async () => {
       }
       placeholder.style.height = `${getMarginBoxHeight()}px`
       observeSizeChange(rawBottom, () => (placeholder.style.height = `${getMarginBoxHeight()}px`))
-      const parent = rawBottom.parentNode
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const parent = rawBottom.parentElement!
       parent.replaceChild(placeholder, rawBottom)
       placeholder.appendChild(rawBottom)
     }
 
     const rawBottom = await playerAgent.query.control.bottom()
-    settingRawBottom(rawBottom)
-    wrapRawBottonInPlace(rawBottom)
+    if (rawBottom) {
+      settingRawBottom(rawBottom)
+      wrapRawBottonInPlace(rawBottom)
+    } else {
+      curConsole.error("can't find the control bar")
+    }
   })()
 
   return new Promise<Vue>(resolve => {
