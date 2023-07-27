@@ -18,6 +18,10 @@ export const component = newSwitchComponentWrapper({
       defaultValue: true,
       displayName: '入场通知',
     },
+    wealthMedal: {
+      defaultValue: true,
+      displayName: '荣耀等级勋章',
+    },
     fansMedal: {
       defaultValue: true,
       displayName: '粉丝勋章',
