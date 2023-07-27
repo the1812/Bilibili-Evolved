@@ -11,7 +11,7 @@
           :href="card.playUrl"
           target="_blank"
         >
-          <div class="cover-container">
+          <div class="subscriptions-cover-container">
             <DpiImage class="cover" :src="card.coverUrl" :size="64"></DpiImage>
           </div>
           <div class="card-info">
@@ -186,7 +186,7 @@ export default Vue.extend({
         background-color: #2d2d2d;
         color: #eee;
       }
-      .cover-container {
+      .subscriptions-cover-container {
         height: 64px;
         width: 64px;
         border-radius: $radius 0 0 $radius;

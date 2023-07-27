@@ -9,9 +9,6 @@ import { getBlobByType, SubtitleDownloadType } from './utils'
 export const component = defineComponentMetadata({
   name: 'downloadSubtitle',
   displayName: '下载字幕',
-  description: {
-    'zh-CN': '启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.',
-  },
   tags: [componentsTags.video],
   entry: none,
   urlInclude: videoAndBangumiUrls,
