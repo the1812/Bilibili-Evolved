@@ -87,10 +87,13 @@ $prefix: 'simplifyLiveroom-switch';
     width: auto !important;
     @include absolute-center();
 
-    .right-ctnr,
+    .right-ctnr > :not(.popular-and-hot-rank),
     .left-ctnr > :nth-child(n + 3) {
       display: none !important;
     }
+  }
+  .popular-and-hot-rank {
+    width: 0 !important;
   }
   .room-owner-username {
     max-width: 150px !important;
