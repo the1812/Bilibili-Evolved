@@ -3,6 +3,7 @@ $prefix: 'simplifyLiveroom-switch';
 
 .#{$prefix} {
   &-vip .vip-icon,
+  &-wealthMedal .wealth-medal-ctnr,
   &-fansMedal .fans-medal-item-ctnr,
   &-title .title-label,
   &-userLevel .user-level-icon,
@@ -249,6 +250,9 @@ $prefix: 'simplifyLiveroom-switch';
     display: block !important;
     border-radius: 0 !important;
     background-color: transparent !important;
+  }
+  .wealth-medal-ctnr.medal-guard {
+    display: none !important;
   }
   .fans-medal-item.medal-guard {
     margin-left: 0 !important;
