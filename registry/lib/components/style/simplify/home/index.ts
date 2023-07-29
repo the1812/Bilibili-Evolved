@@ -1,4 +1,4 @@
-import { newSwitchComponentWrapper, defineSwitchMetadata } from '@/components/switch-options'
+import { wrapSwitchOptions, defineSwitchMetadata } from '@/components/switch-options'
 
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { sq } from '@/core/spin-query'
@@ -9,11 +9,6 @@ import { mainSiteUrls } from '@/core/utils/urls'
 
 const switchMetadata = defineSwitchMetadata({
   name: 'simplifyOptions',
-  dimAt: 'checked',
-  switchProps: {
-    checkedIcon: 'mdi-eye-off-outline',
-    notCheckedIcon: 'mdi-eye-outline',
-  },
   switches: {
     categories: {
       defaultValue: false,
@@ -47,7 +42,7 @@ const switchMetadata = defineSwitchMetadata({
 })
 const console = useScopedConsole('简化首页')
 
-export const component = newSwitchComponentWrapper(switchMetadata)({
+export const component = wrapSwitchOptions(switchMetadata)({
   name: 'simplifyHome',
   displayName: '简化首页',
   description: '隐藏原版首页不需要的元素 / 分区.',
