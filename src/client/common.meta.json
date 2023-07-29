@@ -22,7 +22,9 @@
     "GM_setValue",
     "GM_deleteValue",
     "GM_info",
-    "GM_xmlhttpRequest"
+    "GM_xmlhttpRequest",
+    "GM_registerMenuCommand",
+    "GM_unregisterMenuCommand"
   ],
   "connect": [
     "raw.githubusercontent.com",

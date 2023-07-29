@@ -142,4 +142,10 @@ declare global {
   function GM_deleteValue(name: string): void
   function GM_getResourceText(name: string): string
   function GM_getResourceURL(name: string): string
+  function GM_registerMenuCommand(
+    name: string,
+    callback: (event: MouseEvent | KeyboardEvent) => void,
+    accessKey?: string,
+  ): string
+  function GM_unregisterMenuCommand(menuId: string): void
 }
