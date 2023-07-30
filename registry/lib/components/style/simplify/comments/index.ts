@@ -33,6 +33,10 @@ export const component = wrapSwitchOptions({
       defaultValue: false,
       displayName: '粉丝勋章',
     },
+    eventBanner: {
+      defaultValue: true,
+      displayName: '活动横幅',
+    },
   },
 })({
   name,
