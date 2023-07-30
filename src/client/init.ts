@@ -73,7 +73,9 @@ export const init = async () => {
 
   await promiseLoadTrace('load components', async () => {
     const { loadAllComponents } = await import('@/components/component')
-    return Promise.allSettled([loadAllComponents(), loadAllCustomStyles()])
+    return Promise.all([loadAllComponents(), loadAllCustomStyles()]).catch(error => {
+      console.error(error)
+    })
   })
   raiseLifeCycleEvent(LifeCycleEventTypes.ComponentsLoaded)
 
