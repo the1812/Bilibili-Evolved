@@ -271,4 +271,4 @@ commit message 只需写明改动点, 中英文随意, 也不强求类似 [commi
 ## 发起 PR (合并请求)
 将你的分支往主仓库的 `preview-features` (新增功能) 或 `preview-fixes` (功能修复) 分支合并就行.
 
-或者, 也可以选择不将功能代码合并到主仓库, 因此也没有 ESlint 的限制. PR 时仅添加指向你的仓库中的组件信息即可, 具体来说, 是在 `registry/lib/docs/third-party.ts` 中, 往对应数组中添加你的功能的相关信息, 当然别忘了把 `owner` 设为你的 GitHub 用户名.
+或者, 也可以选择不将功能代码合并到主仓库, 因此也没有 ESLint 的限制. PR 时仅添加指向你的仓库中的组件信息即可, 具体来说, 是在 `registry/lib/docs/third-party.ts` 中, 往对应数组中添加你的功能的相关信息, 当然别忘了把 `owner` 设为你的 GitHub 用户名.
