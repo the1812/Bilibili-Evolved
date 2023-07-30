@@ -18,9 +18,12 @@ const observeFans = (node: Element) => {
     relationList.querySelectorAll('.list-item>.content').forEach(e => {
       // 防止重复添加元素
       if (!processed.has(e)) {
-        e.innerHTML += `<div style="color: #6d757a;position: absolute;margin-top: 5px;font-size: 8px;">关注时间：${new Date(
-          subscribeTime[i] * 1000,
-        ).toLocaleString()}</div>`
+        const time = subscribeTime[i]
+        if (time !== undefined) {
+          e.innerHTML += `<div style="color: #6d757a;position: absolute;margin-top: 5px;font-size: 8px;">关注时间：${new Date(
+            time * 1000,
+          ).toLocaleString()}</div>`
+        }
         processed.add(e)
       }
       i++
