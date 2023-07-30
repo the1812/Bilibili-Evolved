@@ -22,7 +22,7 @@ pnpm install
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), 用于格式化 TypeScript 和 Vue 文件.
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), 用于格式化 Scss 和其他文件.
   - [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar), 为 *.vue 文件提供支持.
-  - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin), 让 TS server 识别 *.vue 文件.(建议启用 take over 模式, 启用方式请参照插件说明)
+  - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin), 让 TS Server 识别 *.vue 文件.(建议启用 [Takeover 模式](https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode), 启用方式请参照插件说明)
 
 ### 本体
 需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发时在 `registry/dist/` 下产生文件.
@@ -156,6 +156,9 @@ pnpm install
 全局变量, 无需 `import` 就可以直接使用. (Tampermonkey API 这里不再列出了, 可根据代码提示使用)
 
 - `Vue`: Vue 2 提供的主要对象. 不再推荐使用. 如果需要以选项式方式定义 Vue 组件, 请使用 `defineComponent` 而非 `Vue.extend` 或 `new Vue`.
+
+> 出于历史原因, 项目中用的还是 Vue 2, 并经过[一次升级](https://github.com/the1812/Bilibili-Evolved/pull/4337)至 Vue 2.7, 在 IDE 中打开 *.vue 文件会看到很多类型报错 (之前没升级 2.7 的时候检测不出来), 属于正常现象, 类型是否正确以 `pnpm run type` 的结果为准.
+
 - `lodash`: 包含所有 Lodash 库提供的方法
 - `dq` / `dqa`: `document.querySelector` 和 `document.querySelectorAll` 的简写, `dqa` 会返回真实数组
 > 在 `bwp-video` 出现后, 这两个查询函数还会自动将对 `video` 的查询扩展到 `bwp-video`
