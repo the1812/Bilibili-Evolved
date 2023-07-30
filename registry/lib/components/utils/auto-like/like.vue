@@ -36,7 +36,7 @@ export default Vue.extend({
       this.isClick = true
       // forEachFeedsCard异步执行顺序有问题，不能及时同步，用dqa代替
       const likeButtons = (dqa('.bili-dyn-title__text') as HTMLElement[]).flatMap(e => {
-        if (this.list.includes(e.textContent)) {
+        if (this.list.includes(e.textContent?.trim())) {
           return []
         }
         const likeButton = e.closest('.bili-dyn-item__main').querySelector('.bili-dyn-action.like')
