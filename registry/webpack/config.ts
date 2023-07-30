@@ -34,6 +34,8 @@ export const buildByEntry = (params: {
     },
     cache: false,
     externals: [
+      // see src/client/init-vue.ts
+      { vue: 'global Vue' },
       ...(defaultConfig.externals as any[]),
       ({ request }, callback) => {
         const regexMatch = (regex: RegExp, base: string[]) => {
