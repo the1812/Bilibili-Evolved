@@ -63,6 +63,12 @@ $prefix: 'simplifyComments-switch';
       // }
     }
 
+    body.#{$prefix}-fansMedal & {
+      .fan-badge {
+        display: none !important;
+      }
+    }
+
     body.#{$prefix}-subReplyNewLine & {
       .root-reply:not(.reply-content-container) {
         padding: 0 !important;

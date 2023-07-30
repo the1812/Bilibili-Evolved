@@ -29,6 +29,10 @@ export const component = wrapSwitchOptions({
       defaultValue: true,
       displayName: '编辑框',
     },
+    fansMedal: {
+      defaultValue: false,
+      displayName: '粉丝勋章',
+    },
   },
 })({
   name,
