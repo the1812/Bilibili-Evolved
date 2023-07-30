@@ -2,9 +2,8 @@ import { defineComponentMetadata } from '@/components/define'
 import { childList } from '@/core/observer'
 
 let relationList: Element
-const processed = new WeakSet<Element>()
 
-const observeFans = (node: Element) => {
+const observeFans = async (node: Element) => {
   // 监听关注列表元素变化
   childList(node, () => {
     // 读取Vue属性里的关注列表
@@ -14,27 +13,27 @@ const observeFans = (node: Element) => {
     ).__vue__.relationList.map(l => l.mtime)
 
     // 为所有子元素添加关注时间显示
-    let i = 0
-    relationList.querySelectorAll('.list-item>.content').forEach(e => {
+    relationList.querySelectorAll('.list-item>.content').forEach((e, index) => {
       // 防止重复添加元素
-      if (!processed.has(e)) {
-        const time = subscribeTime[i]
+      if (e.querySelector('.subscribe-time-fix') === null) {
+        const time = subscribeTime[index]
         if (time !== undefined) {
-          e.innerHTML += `<div style="color: #6d757a;position: absolute;margin-top: 5px;font-size: 8px;">关注时间：${new Date(
-            time * 1000,
-          ).toLocaleString()}</div>`
+          e.querySelector('p').insertAdjacentHTML(
+            'afterend',
+            `<div class="desc subscribe-time-fix">关注时间:${new Date(
+              time * 1000,
+            ).toLocaleString()}</div>`,
+          )
         }
-        processed.add(e)
       }
-      i++
     })
   })
+
+  const { addImportantStyle } = await import('@/core/style')
+  const { default: style } = await import('./subscribe-time.scss')
+  addImportantStyle(style, 'subscribe-time-style')
 }
 const entry = async () => {
-  // 非粉丝/关注页面则不启动
-  if (!document.URL.match(/\/\/space\.bilibili\.com\/(\d+)\/fans/)) {
-    return
-  }
   relationList = dq('.relation-list')
   observeFans(relationList)
 }
@@ -47,6 +46,7 @@ export const component = defineComponentMetadata({
   },
   displayName: '关注时间显示',
   tags: [componentsTags.utils],
+  urlInclude: [/^https:\/\/space\.bilibili\.com\/\d+\/fans/],
   entry,
   description: {
     'zh-CN': '在粉丝/关注列表显示关注的具体时间',
