@@ -1,7 +1,8 @@
 import { defineComponentMetadata } from '@/components/define'
-import { attributesSubtree } from '@/core/observer'
+import { attributesSubtree, childList } from '@/core/observer'
 
 let albumList: Element
+const sleep = async () => new Promise(resolve => setTimeout(resolve, 200))
 
 const observeAlbum = async (node: Element) => {
   // 相簿更新时会复用原有元素，必须得监听子元素属性变化
@@ -32,7 +33,18 @@ const observeAlbum = async (node: Element) => {
 }
 const entry = async () => {
   albumList = dq('.album-list__content')
-  observeAlbum(albumList)
+
+  const spaceContainer = dq('.s-space')
+  childList(spaceContainer, async () => {
+    if (!document.URL.match(/^https:\/\/space\.bilibili\.com\/\d+\/album/)) {
+      return
+    }
+    // 相簿元素似乎并不是立刻被创建的，等待200ms再获取
+    await sleep()
+
+    albumList = dq('.album-list__content')
+    observeAlbum(albumList)
+  })
 }
 
 export const component = defineComponentMetadata({
@@ -43,7 +55,7 @@ export const component = defineComponentMetadata({
   },
   displayName: '相簿发布时间显示',
   tags: [componentsTags.utils],
-  urlInclude: [/^https:\/\/space\.bilibili\.com\/\d+\/album/],
+  urlInclude: [/^https:\/\/space\.bilibili\.com/],
   entry,
   description: {
     'zh-CN': '在相簿界面显示相簿的发布时间',

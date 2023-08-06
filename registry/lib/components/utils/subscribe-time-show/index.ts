@@ -35,7 +35,15 @@ const observeFans = async (node: Element) => {
 }
 const entry = async () => {
   relationList = dq('.relation-list')
-  observeFans(relationList)
+
+  const spaceContainer = dq('.s-space')
+  childList(spaceContainer, () => {
+    if (!document.URL.match(/^https:\/\/space\.bilibili\.com\/\d+\/fans/)) {
+      return
+    }
+    relationList = dq('.relation-list')
+    observeFans(relationList)
+  })
 }
 
 export const component = defineComponentMetadata({
@@ -46,7 +54,7 @@ export const component = defineComponentMetadata({
   },
   displayName: '关注时间显示',
   tags: [componentsTags.utils],
-  urlInclude: [/^https:\/\/space\.bilibili\.com\/\d+\/fans/],
+  urlInclude: [/^https:\/\/space\.bilibili\.com/],
   entry,
   description: {
     'zh-CN': '在粉丝/关注列表显示关注的具体时间',
