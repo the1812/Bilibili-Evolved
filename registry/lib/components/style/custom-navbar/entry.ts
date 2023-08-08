@@ -2,6 +2,7 @@ import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 import { isIframe, isNotHtml, matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { setupNotifyStyle } from './notify-style'
+import { setupLinkPopupContentAlignStyle } from './link-popup-content-align-style'
 
 export const entry: ComponentEntry = async ({ metadata: { name } }) => {
   // const url = document.URL.replace(location.search, '')
@@ -52,4 +53,5 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
     addComponentListener(`${name}.${style}`, value => customNavbar.toggleStyle(value, style), true)
   })
   setupNotifyStyle()
+  setupLinkPopupContentAlignStyle()
 }
