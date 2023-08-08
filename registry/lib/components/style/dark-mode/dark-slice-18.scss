@@ -571,3 +571,22 @@
     }
   }
 }
+.home-cell-desc-title {
+  @include color("ffffff");
+}
+.home-cell-desc-subtitle {
+  @include color("ffffff80");
+}
+.mediainfo_mediaRight__jv5hq .mediainfo_media_desc_section__bOFBw .mediainfo_display_area__CEKfP .mediainfo_ellipsis__xCKNd {
+  background: linear-gradient(90deg,hsla(0,0%,100%,0),#222 20%,#222);
+  @include theme_color();
+}
+.SectionSelector_SectionSelector__WS4H3 .SectionSelector_expand__Oh9Lt {
+  background: linear-gradient(270deg,#444444 46.21%,hsla(210,8%,95%,0));
+}
+.timeline-weekday-item .weekday-description .timeline-item-title{
+  @include color("ffffff");
+}
+.recommend_wrap__pgu8c .recommend_title__miCR4 {
+  @include color("ffffff")
+}
