@@ -8,7 +8,7 @@
   line-height: normal;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: calc(100% - 4px);
     left: 8px;
@@ -26,7 +26,7 @@
 
   html[data-navbar-link-popup-content-align-style='left'] &,
   &.left {
-    justify-content: left;
+    justify-content: flex-start;
   }
 
   html[data-navbar-link-popup-content-align-style='center'] &,
@@ -36,6 +36,6 @@
 
   html[data-navbar-link-popup-content-align-style='right'] &,
   &.right {
-    justify-content: right;
+    justify-content: flex-end;
   }
 }
