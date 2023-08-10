@@ -2,10 +2,11 @@ import { defineComponentMetadata } from '@/components/define'
 import { childList } from '@/core/observer'
 
 let relationList: Element
+let oldObserver: MutationObserver
 
 const observeFans = async (node: Element) => {
   // 监听关注列表元素变化
-  childList(node, () => {
+  const [observer] = childList(node, () => {
     // 读取Vue属性里的关注列表
     // eslint-disable-next-line no-underscore-dangle
     const subscribeTime = (
@@ -28,6 +29,10 @@ const observeFans = async (node: Element) => {
       }
     })
   })
+
+  // 移除旧的MutationObserver
+  oldObserver?.disconnect()
+  oldObserver = observer
 
   const { addImportantStyle } = await import('@/core/style')
   const { default: style } = await import('./subscribe-time.scss')

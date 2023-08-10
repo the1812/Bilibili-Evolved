@@ -1,12 +1,12 @@
 import { defineComponentMetadata } from '@/components/define'
 import { attributesSubtree, childList } from '@/core/observer'
+import { select } from '@/core/spin-query'
 
 let albumList: Element
-const sleep = async () => new Promise(resolve => setTimeout(resolve, 200))
-
+let oldObserver: MutationObserver
 const observeAlbum = async (node: Element) => {
   // 相簿更新时会复用原有元素，必须得监听子元素属性变化
-  attributesSubtree(node, () => {
+  const [observer] = attributesSubtree(node, () => {
     // 为所有相簿添加发布时间显示
     albumList.querySelectorAll('.album-card').forEach(e => {
       const pubTimeElement = e.querySelector('.album-pub-time')
@@ -27,6 +27,10 @@ const observeAlbum = async (node: Element) => {
     })
   })
 
+  // 移除旧的MutationObserver
+  oldObserver?.disconnect()
+  oldObserver = observer
+
   const { addImportantStyle } = await import('@/core/style')
   const { default: style } = await import('./album-time.scss')
   addImportantStyle(style, 'album-pub-time-style')
@@ -39,10 +43,8 @@ const entry = async () => {
     if (!document.URL.match(/^https:\/\/space\.bilibili\.com\/\d+\/album/)) {
       return
     }
-    // 相簿元素似乎并不是立刻被创建的，等待200ms再获取
-    await sleep()
 
-    albumList = dq('.album-list__content')
+    albumList = await select('.album-list__content')
     observeAlbum(albumList)
   })
 }

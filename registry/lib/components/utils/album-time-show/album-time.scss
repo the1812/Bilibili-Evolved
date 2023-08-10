@@ -11,6 +11,11 @@
 /* 相簿发布时间样式 */
 .album-pub-time {
     color: #99a2aa;
+
+    body.dark & {
+        color: #aaa;
+    }
+
     position: absolute;
     margin-top: -5px;
 }
