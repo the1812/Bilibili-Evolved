@@ -6,6 +6,38 @@ import {
 import { ComponentEntry } from '@/components/types'
 import { playerUrls } from '@/core/utils/urls'
 import { addComponentListener } from '@/core/settings'
+import { watchLocalStorage } from '@/core/local-storage'
+
+enum DanmakuBorderStyle {
+  Heavy,
+  Stroke,
+  Shadow,
+}
+const danmakuTextShadowMap = {
+  [DanmakuBorderStyle.Heavy]:
+    '1px 0 1px #000000,0 1px 1px #000000,0 -1px 1px #000000,-1px 0 1px #000000',
+  [DanmakuBorderStyle.Stroke]: '0px 0px 1px #000000,0 0 1px #000000,0 0 1px #000000',
+  [DanmakuBorderStyle.Shadow]: '1px 1px 2px #000000,0 0 1px #000000',
+}
+const watchDanmakuBorderSettings = () => {
+  const localStorageKey = 'bpx_player_profile'
+  const updateDanmakuTextShadow = (playerSettings: any) => {
+    const danmakuBorderStyle: DanmakuBorderStyle = lodash.get(
+      playerSettings,
+      'dmSetting.fontborder',
+    )
+    document.documentElement.style.setProperty(
+      '--danmaku-text-shadow',
+      danmakuTextShadowMap[danmakuBorderStyle],
+    )
+  }
+  updateDanmakuTextShadow(JSON.parse(localStorage.getItem(localStorageKey)))
+  watchLocalStorage((key, value) => {
+    if (key === localStorageKey) {
+      updateDanmakuTextShadow(JSON.parse(value))
+    }
+  })
+}
 
 const options = defineOptionsMetadata({
   highlight: {
@@ -14,6 +46,10 @@ const options = defineOptionsMetadata({
   },
   up: {
     displayName: '禁用UP主弹幕',
+    defaultValue: true,
+  },
+  vip: {
+    displayName: '禁用大会员弹幕',
     defaultValue: true,
   },
 })
@@ -30,6 +66,7 @@ const entry: ComponentEntry<Options> = ({ metadata, settings }) => {
       true,
     )
   })
+  watchDanmakuBorderSettings()
 }
 
 const name = 'disableSpecialDanmaku'
@@ -45,8 +82,5 @@ export const component = defineComponentMetadata({
     },
   ],
   urlInclude: playerUrls,
-  description: {
-    'zh-CN': '移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.',
-  },
   options,
 })
