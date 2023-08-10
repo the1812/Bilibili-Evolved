@@ -95,7 +95,7 @@ const options = defineOptionsMetadata({
   linkPopupContentAlignStyle: {
     defaultValue: NavbarLinkPopupContentAlignStyle.Left,
     dropdownEnum: NavbarLinkPopupContentAlignStyle,
-    displayName: '仅包含链接的导航栏弹窗文字对齐样式',
+    displayName: '链接对齐样式',
   },
   searchBarWidth: {
     defaultValue: 15,
