@@ -642,7 +642,6 @@
   }
 }
 #{contains('mediainfo_mediaInfo')}, #{contains('recommend_wrap')} {
-  // border-top: 1px solid #444444 !important;
   @include set-color('border-top-color', '4');
 }
 #{contains('mediainfo_mediaRight')} {
