@@ -577,7 +577,7 @@
 .home-cell-desc-subtitle {
   @include color('a');
 }
-.timeline-weekday-item .weekday-description .timeline-item-title{
+.timeline-weekday-item .weekday-description .timeline-item-title {
   @include color('e');
 }
 #{contains('recommend_wrap')} {
@@ -587,7 +587,7 @@
 }
 .section-title-v2-wrapper {
   .title-right {
-    @include set-color('border-color', '4');
+    @include border-color('4');
     .font {
       @include color('e');
     }
@@ -595,7 +595,8 @@
       @include color('0');
     }
     &:not(:hover) {
-      img,svg {
+      img,
+      svg {
         @include to-white();
       }
     }
@@ -621,7 +622,8 @@
     @include background-color('3');
     a {
       @include color('e');
-      img, svg {
+      img,
+      svg {
         @include to-white();
       }
       div {
@@ -641,11 +643,14 @@
     @include theme-background-color();
   }
 }
-#{contains('mediainfo_mediaInfo')}, #{contains('recommend_wrap')} {
+#{contains('mediainfo_mediaInfo')},
+#{contains('recommend_wrap')} {
   @include set-color('border-top-color', '4');
 }
 #{contains('mediainfo_mediaRight')} {
-  #{contains('mediainfo_media_desc_section')} #{contains('mediainfo_display_area')} #{contains('mediainfo_ellipsis')} {
+  #{contains('mediainfo_media_desc_section')}
+    #{contains('mediainfo_display_area')}
+    #{contains('mediainfo_ellipsis')} {
     background: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #222 20%, #222);
     @include theme-color();
   }
@@ -656,11 +661,11 @@
 }
 #{contains('SectionSelector_SectionSelector')} {
   #{contains('SectionSelector_expand')} {
-    background: linear-gradient(270deg,#444444 46.21%,hsla(210,8%,95%,0));
+    background: linear-gradient(270deg, #444444 46.21%, hsla(210, 8%, 95%, 0));
   }
 }
-#{contains('PlayingIcon_playIcon')} svg {
-  @include to-theme('blue');
+#{contains('PlayingIcon_playIcon')} svg path {
+  @include theme-stroke();
 }
 #{contains('Share_boxTop')} {
   @include background-color('3');
@@ -670,18 +675,40 @@
 }
 #{contains('WatchInfo_watch_more')} {
   @include background-color('3');
-  @include set-color('border-color', '4');
+  @include border-color('4');
   #{contains('WatchInfo_title')} {
     @include color('e');
+  }
+}
+#{contains('Phone_mobile_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  #{contains('Phone_top_wrapper')} {
+    canvas {
+      border: 5px solid #ffffff;
+    }
+    #{contains('Phone_video_title')} {
+      @include color('e');
+    }
+  }
+  #{contains('Phone_mobile_tip')} {
+    @include color('a');
+    a {
+      @include theme-color();
+    }
   }
 }
 #{contains('short_short_review_masker')} {
   #{contains('short_short_review_content')} {
     @include background-color('2');
     #{contains('header_review_edit_media_info')} {
-      h4,p {
+      h4,
+      p {
         @include color('e');
       }
+    }
+    #{contains('short_review_body_wrap')} {
+      @include border-color('4');
     }
     #{contains('short_review_footer')} {
       #{contains('short_mr_long_review')} {
