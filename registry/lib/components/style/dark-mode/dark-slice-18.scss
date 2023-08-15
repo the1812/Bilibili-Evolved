@@ -620,12 +620,19 @@
   @include color('e');
   div {
     @include background-color('3');
+    img {
+      @include fill('e');
+    }
+    svg {
+      circle {
+        @include stroke('e');
+      }
+      path {
+        @include fill('e');
+      }
+    }
     a {
       @include color('e');
-      img,
-      svg {
-        @include to-white();
-      }
       div {
         @include color('e');
       }
