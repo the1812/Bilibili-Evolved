@@ -647,7 +647,42 @@
     }
   }
   #{contains('follow_btnFollow')} {
-    @include theme-background-color();
+    background-color: var(--theme-color); //此处不能用!important
+  }
+  #{contains('follow_optionsList')} {
+    @include background-color('3');
+    @include border-color('4');
+  }
+}
+#{contains('rankList_sp_msg')} {
+  @include border-color('4');
+}
+#{contains('sponsor_sponsor_count')} span {
+  @include color('e');
+}
+#{contains('amountChoice_sp_pay_index')} {
+  #{contains('payHeader_sponsor_pay_header')} {
+    @include color('a');
+    @include background-color('2');
+    @include set-color('border-bottom-color', '4');
+  }
+  #{contains('amountChoice_sponsor_pay_body')} {
+    span,
+    div {
+      @include color('e');
+      input {
+        @include background-color('4');
+        @include color('e');
+        @include border-color('2');
+        &:focus {
+          @include theme-border-color();
+        }
+      }
+      a {
+        @include theme-color();
+      }
+    }
+    @include background-color('3');
   }
 }
 #{contains('mediainfo_mediaInfo')},
