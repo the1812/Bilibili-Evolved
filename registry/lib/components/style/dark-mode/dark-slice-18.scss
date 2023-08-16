@@ -647,12 +647,18 @@
     }
   }
   #{contains('follow_btnFollow')} {
-    background-color: var(--theme-color); //此处不能用!important
+    @include theme-background-color();
+  }
+  #{contains('follow_followed')} {
+    @include background-color('4');
   }
   #{contains('follow_optionsList')} {
     @include background-color('3');
     @include border-color('4');
   }
+}
+#{contains('sponsor_sponsor_module')} {
+  @include set-color('border-bottom-color','4');
 }
 #{contains('rankList_sp_msg')} {
   @include border-color('4');
