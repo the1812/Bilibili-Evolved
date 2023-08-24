@@ -2,7 +2,7 @@ import path from 'path'
 import glob from 'glob'
 import { buildByEntry } from './config'
 
-const shorten = (p: string) => path.dirname(p).replace('./registry/lib/', '')
+const shorten = (p: string, type: string) => path.dirname(p).replace(`./registry/lib/${type}s/`, '')
 
 export const builders = Object.fromEntries(
   ['component', 'plugin', 'doc'].map(type => {
@@ -11,7 +11,7 @@ export const builders = Object.fromEntries(
       type,
       async ({ buildAll = false } = {}) => {
         const entries = glob.sync(`${src}**/index.ts`).map(entry => ({
-          name: shorten(entry),
+          name: shorten(entry, type),
           value: entry,
         }))
 
