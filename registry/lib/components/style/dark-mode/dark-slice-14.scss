@@ -350,6 +350,9 @@ a {
 .main-container .bottom-brief-introduction {
   @include background-color("2");
 }
+.main-container {
+  @include background-color();
+}
 .fullscreen-loading .tv-bg + .container {
   @include background-color();
   .retry-btn {
@@ -772,7 +775,7 @@ body:not(.simplify-comment) .panel-area .bb-comment {
   }
 }
 .z-top-container {
-  @include background-color("3");
+  @include background-color("2");
 }
 .coin-dialog-wrapper {
   @include background-color("2");
