@@ -2,10 +2,11 @@ import { defineComponentMetadata } from '@/components/define'
 import { childList } from '@/core/observer'
 
 let relationList: Element
+let oldObserver: MutationObserver
 
 const observeFans = async (node: Element) => {
   // 监听关注列表元素变化
-  childList(node, () => {
+  const [observer] = childList(node, () => {
     // 读取Vue属性里的关注列表
     // eslint-disable-next-line no-underscore-dangle
     const subscribeTime = (
@@ -29,13 +30,25 @@ const observeFans = async (node: Element) => {
     })
   })
 
+  // 移除旧的MutationObserver
+  oldObserver?.disconnect()
+  oldObserver = observer
+
   const { addImportantStyle } = await import('@/core/style')
   const { default: style } = await import('./subscribe-time.scss')
   addImportantStyle(style, 'subscribe-time-style')
 }
 const entry = async () => {
   relationList = dq('.relation-list')
-  observeFans(relationList)
+
+  const spaceContainer = dq('.s-space')
+  childList(spaceContainer, () => {
+    if (!document.URL.match(/^https:\/\/space\.bilibili\.com\/\d+\/fans/)) {
+      return
+    }
+    relationList = dq('.relation-list')
+    observeFans(relationList)
+  })
 }
 
 export const component = defineComponentMetadata({
@@ -46,7 +59,7 @@ export const component = defineComponentMetadata({
   },
   displayName: '关注时间显示',
   tags: [componentsTags.utils],
-  urlInclude: [/^https:\/\/space\.bilibili\.com\/\d+\/fans/],
+  urlInclude: [/^https:\/\/space\.bilibili\.com/],
   entry,
   description: {
     'zh-CN': '在粉丝/关注列表显示关注的具体时间',
