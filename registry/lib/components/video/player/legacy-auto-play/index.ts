@@ -1,8 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
-import { videoChange } from '@/core/observer'
+import { childListSubtree, videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { playerReady } from '@/core/utils'
+import { useScopedConsole } from '@/core/utils/log'
 import { videoUrls } from '@/core/utils/urls'
 
 export const component = defineComponentMetadata({
@@ -12,6 +13,7 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.video],
   urlInclude: videoUrls,
   entry: async () => {
+    const console = useScopedConsole('传统连播模式')
     const autoPlayControls = {
       // 命中时应该打开连播: 传统分 P, 合集
       enable: [
@@ -65,5 +67,11 @@ export const component = defineComponentMetadata({
       const video = (await playerAgent.query.video.element()) as HTMLVideoElement
       video?.addEventListener('play', checkPlayMode, { once: true })
     })
+    const rightPanelContainer = await select('.right-container-inner')
+    if (!rightPanelContainer) {
+      console.warn('未找到 rightPanelContainer')
+      return
+    }
+    childListSubtree(rightPanelContainer, () => checkPlayMode())
   },
 })
