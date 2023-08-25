@@ -1,5 +1,106 @@
 # 更新日志
 
+## v2.8.3-preview
+`2023-08-26`
+
+包含 v2.7.5 的所有更新内容.
+
+✨新增
+- `网址参数清理` 更新对直播间的支持. (#1459)
+- `自动点赞` 转为由 [CrazyboyQCD](https://github.com/CrazyboyQCD) 维护, 支持手动控制点赞和黑名单功能. (PR #4343, PR #4358 by [CrazyboyQCD](https://github.com/CrazyboyQCD))
+
+- `简化直播间` 支持隐藏荣耀等级勋章. (PR #4348 by [CrunchyShark](https://github.com/CrunchyShark944))
+- 在设置面板中的组件管理等面板中, 搜索框移动至已安装列表的上方, 更符合直觉. (#3806)
+- 支持从 Tampermonkey 的菜单中唤起功能和设置面板. (#4170)
+- 搜索栏中添加了导入 / 导出设置的操作. (#4170)
+- `自定义顶栏` 新增选项 `链接对齐样式`, 可以自定义纯链接弹窗内链接文字的对齐样式. (PR #4365 by [Tinhone](https://github.com/Tinhone))
+- `简化评论区` 支持独立控制简化选项, 并支持隐藏粉丝勋章和活动横幅. (仅支持新版评论区) (#2381)
+- `清爽首页` 设置为隐藏的版块现在将彻底销毁, 减少资源占用.
+- `禁用特殊弹幕样式` 支持禁用大会员弹幕. (#4227)
+- `下载视频` 在批量下载番剧时, 支持下载多个不同板块的选集. (#2834)
+- 新增功能 `全屏直播礼物简化`. (PR #4306 by [TimmyOVO](https://github.com/TimmyOVO))
+
+> 移除全屏观看直播时的底部礼物栏
+
+- 新增功能 `评论区 IP 属地显示`. (PR #4331, PR #4334 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在评论区显示评论的IP属地信息
+
+- 新增功能 `直播间网页全屏自适应`. (#4216)
+
+> 在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果.
+>
+> - `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)
+>
+> > 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.
+
+- 新增功能 `关注时间显示`. (PR #4352 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的粉丝/关注列表显示关注的具体时间
+
+- 新增功能 `自动移出稍后再看`.
+
+> 在稍后再看页面播放结束时, 自动将当前视频移出稍后再看.
+> 注意:
+> - 一定要播放结束, 快结束时手动切走不算
+> - b 站的稍后再看列表不会实时刷新
+
+- 新增功能 `相簿发布时间显示`. (PR #4362 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的相簿界面显示相簿的发布时间
+
+🐛修复
+- 修复 `清爽首页` 番剧区图标不显示. (#4262)
+- 修复 `清爽首页` 番剧区时间线的遮罩颜色在夜间模式下不正确.
+- 修复 `隐藏记笔记` 功能打开后, 评论区的笔记弹窗无法显示. (#4285)
+
+☕开发者相关
+- SwitchOptions API 更新:
+  - 老的 `createSwitchOptions` 标记为已弃用.
+  - 新的 `newSwitchComponentWrapper` 更名为 `wrapSwitchOptions`.
+  - `checkedIcon` 拥有默认值: `mdi-eye-off-outline`.
+  - `notCheckedIcon` 拥有默认值: `mdi-eye-outline`.
+  - `dimAt` 选项功能更改为如下所示, 更符合直觉:
+```ts
+/**
+ * 控制开关变暗的时机
+ *
+ * `false`: 始终不变暗
+ * `'checked'`: 当开关开启时变暗
+ * `'notChecked'`: 当开关关闭时变暗
+ *
+ * @default 'checked'
+ */
+dimAt?: false | 'checked' | 'notChecked'
+```
+- Vue 升级到 2.7, 支持组合式 API 以及使用 Volar 提供代码提示. (PR #4337 by [timongh](https://github.com/timongh))
+- 修复组件加载失败时没有输出任何报错.
+
+## v2.7.5
+`2023-08-26`
+
+✨新增
+- 夜间模式适配新版番剧播放页面. (PR #4366 by [QwExZy@0xx1](https://github.com/qwaszx-WXY))
+
+🐛修复
+- 修复下载弹幕的数量比实际要少. (#4287)
+- jsDelivr 源域名由 `fastly.jsdelivr.net` 更换为 `cdn.jsdelivr.net`. (#4198)
+- 修复 `快速收起评论区` 在新版动态下宽度不正确. (#4282)
+- 修复删除搜索历史时选项不会立即消失. (#4268)
+- 修复 `直播全屏包裹` 的颜色问题. (#4166, PR #4323 by [CrazyboyQCD](https://github.com/CrazyboyQCD))
+- 修复 `下载字幕` 失效, 注意由于 b 站接口变更, AI 字幕可能无法下载. (#4319)
+- 修复 `隐藏视频推荐` 未能隐藏番剧页面的相关推荐. (#4247)
+- 修复 `自定义顶栏` 中封面图片在个人空间的样式异常. (#4312, PR #4338 by [timongh](https://github.com/timongh))
+- 修复 `简化直播间` 屏蔽标题栏活动后, 粉丝团打榜弹窗位置异常. (#4215)
+- 修复 `传统连播模式` 在点击右侧推荐视频时会延后一次. (#4256)
+
+☕开发者相关
+- 修复 VPopup 组件中 openHandler 的 this 绑定丢失. (#4264)
+- 重构了 Comments API. (#4334)
+  - `CommentReplyItem` 实现了 `EventTarget`, 评论更新事件 (`repliesUpdate`) 均通过 `EventTarget` 的事件订阅实现.
+  - 修复新版评论区下评论更新事件没触发.
+- 重构了 `playerModePolyfill` 的实现, 解决 empty class token 在页面上反复报错的问题.
+
 ## v2.7.4 / v2.8.2-preview
 `2023-07-16`
 
