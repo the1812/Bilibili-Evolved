@@ -11,6 +11,5 @@
 ## 预览版
 - 更新版本号, 打上 tag
 - 生成文档
-- 编译预览版
 - 带 tag 推送
 - 测下 Edge + Tampermonkey
