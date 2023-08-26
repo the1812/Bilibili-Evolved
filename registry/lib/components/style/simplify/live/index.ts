@@ -1,14 +1,9 @@
-import { newSwitchComponentWrapper } from '@/components/switch-options'
+import { wrapSwitchOptions } from '@/components/switch-options'
 import { styledComponentEntry } from '@/components/styled-component'
 import { liveUrls } from '@/core/utils/urls'
 
-export const component = newSwitchComponentWrapper({
+export const component = wrapSwitchOptions({
   name: 'simplifyOptions',
-  dimAt: 'checked',
-  switchProps: {
-    checkedIcon: 'mdi-eye-off-outline',
-    notCheckedIcon: 'mdi-eye-outline',
-  },
   switches: {
     vip: {
       defaultValue: true,
@@ -17,6 +12,10 @@ export const component = newSwitchComponentWrapper({
     enterPrompt: {
       defaultValue: true,
       displayName: '入场通知',
+    },
+    wealthMedal: {
+      defaultValue: true,
+      displayName: '荣耀等级勋章',
     },
     fansMedal: {
       defaultValue: true,

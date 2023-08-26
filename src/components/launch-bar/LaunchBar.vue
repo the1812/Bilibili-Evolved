@@ -221,24 +221,24 @@ export default Vue.extend({
       this.$refs.list.querySelector('.suggest-item').focus()
       e.preventDefault()
     },
-    previousItem(e: KeyboardEvent, index: number) {
+    previousItem(element: HTMLElement, index: number) {
       if (index === 0) {
         this.focus()
       } else {
-        ;((e.currentTarget as HTMLElement).previousElementSibling as HTMLElement).focus()
+        ;(element.previousElementSibling as HTMLElement).focus()
       }
     },
-    nextItem(e: KeyboardEvent, index: number) {
+    nextItem(element: HTMLElement, index: number) {
       const lastItemIndex = this.actions.length - 1
       if (index !== lastItemIndex) {
-        ;((e.currentTarget as HTMLElement).nextElementSibling as HTMLElement).focus()
+        ;(element.nextElementSibling as HTMLElement).focus()
       } else {
         this.focus()
       }
     },
     search,
-    onDeleteItem(e: Event, index: number) {
-      this.previousItem(e, index)
+    onDeleteItem(element: HTMLElement, index: number) {
+      this.previousItem(element, index)
       this.getActions()
     },
     onClearHistory() {

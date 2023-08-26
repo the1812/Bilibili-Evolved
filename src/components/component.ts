@@ -169,8 +169,8 @@ export const loadAllComponents = async () => {
   const { loadAllPlugins } = await import('@/plugins/plugin')
   const loadComponents = () =>
     loadAllPlugins(components)
-      .then(() => Promise.allSettled(components.map(loadI18n)))
-      .then(() => Promise.allSettled(components.map(loadComponent)))
+      .then(() => Promise.all(components.map(loadI18n)))
+      .then(() => Promise.all(components.map(loadComponent)))
       .then(async () => {
         if (generalSettings.devMode) {
           const { componentLoadTime, componentResolveTime } = await import(
@@ -181,12 +181,11 @@ export const loadAllComponents = async () => {
           logStats('components resolve', componentResolveTime)
         }
       })
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     if (generalSettings.scriptLoadingMode === LoadingMode.Delay) {
-      // requestIdleCallback(() => loadComponents())
-      fullyLoaded(() => loadComponents().then(resolve))
+      fullyLoaded(() => loadComponents().then(resolve).catch(reject))
     } else if (generalSettings.scriptLoadingMode === LoadingMode.Race) {
-      contentLoaded(() => loadComponents().then(resolve))
+      contentLoaded(() => loadComponents().then(resolve).catch(reject))
     }
   })
 }

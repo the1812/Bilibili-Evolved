@@ -21,6 +21,8 @@ pnpm install
 - [配置 VS Code 插件](https://code.visualstudio.com/docs/editor/extension-marketplace):
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), 用于格式化 TypeScript 和 Vue 文件.
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), 用于格式化 Scss 和其他文件.
+  - [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar), 为 *.vue 文件提供支持.
+  - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin), 让 TS Server 识别 *.vue 文件.(建议启用性能更好的 [Takeover 模式](https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode))
 
 ### 本体
 需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发时在 `registry/dist/` 下产生文件.
@@ -153,9 +155,7 @@ pnpm install
 ### 全局
 全局变量, 无需 `import` 就可以直接使用. (Tampermonkey API 这里不再列出了, 可根据代码提示使用)
 
-- `Vue`: Vue 库的主对象, 在创建 `.vue` 组件时, 其中的 `<script>` 可以直接使用 `Vue.extend()`
-> 出于历史原因, 项目中用的还是 Vue 2, 由于其糟糕的 TypeScript 支持, 在 VS Code + Vetur 的环境下浏览 `.vue` 文件可能会报各种奇奇怪怪的类型错误, 无视就好. (类型是否正确以 `pnpm run type` 的结果为准)
-
+- `Vue`: Vue 2 提供的主要对象. 不再推荐使用. 如果需要以选项式方式定义 Vue 组件, 请使用 `defineComponent` 而非 `Vue.extend` 或 `new Vue`.
 - `lodash`: 包含所有 Lodash 库提供的方法
 - `dq` / `dqa`: `document.querySelector` 和 `document.querySelectorAll` 的简写, `dqa` 会返回真实数组
 > 在 `bwp-video` 出现后, 这两个查询函数还会自动将对 `video` 的查询扩展到 `bwp-video`
@@ -240,6 +240,11 @@ pnpm install
 - `ui/VEmpty.vue`: 表示无数据, 界面可被插件更改
 - `ui/VLoading.vue`: 表示数据加载中, 界面可被插件更改
 - `ui/AsyncButton.vue`: `click` 事件为异步函数时, 执行期间自动使 `Button` 禁用, 其他和 `Button` 相同.
+
+## 代码类型检查
+提交 Pull Request 前, 请确保代码通过类型检查. 类型检查以 VS Code 任务: `生产:类型检查 prod:type` 为准.
+
+> 项目有[计划](https://github.com/the1812/Bilibili-Evolved/discussions/3939)从 Vue 2 迁移到 Vue 3, 因此虽然我们[启用](https://github.com/the1812/Bilibili-Evolved/pull/4337)了 Volar 对 *.vue 文件进行类型检查, 却未完全修复 Volar 报告的类型错误. 因此，开发时 VS Code 报错属正常现象. Pull Request 的类型检查标准仍以上述内容为准.
 
 ## 代码风格检查
 项目中含有 ESLint, 不通过 ESLint 是无法进行 Pull Request 的.

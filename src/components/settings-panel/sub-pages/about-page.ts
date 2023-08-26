@@ -6,13 +6,15 @@ export interface AboutPageAction {
   disabled?: boolean
   name: string
   displayName: string
-  run: (event: MouseEvent) => void | Promise<void>
+  actionName?: string
+  run: (event?: MouseEvent) => void | Promise<void>
 }
 export const builtInActions: AboutPageAction[] = [
   {
     icon: 'mdi-inbox-arrow-up-outline',
     name: 'exportSettings',
     displayName: '导出设置',
+    actionName: 'Export Settings',
     run: async () => {
       const { settings } = await import('@/core/settings')
       const { DownloadPackage } = await import('@/core/download')
@@ -23,6 +25,7 @@ export const builtInActions: AboutPageAction[] = [
     icon: 'mdi-inbox-arrow-down-outline',
     name: 'importSettings',
     displayName: '导入设置',
+    actionName: 'Import Settings',
     run: async () => {
       const { logError } = await import('@/core/utils/log')
       const { pickFile } = await import('@/core/file-picker')

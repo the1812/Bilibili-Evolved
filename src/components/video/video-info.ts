@@ -21,12 +21,6 @@ export class VideoInfo {
     title: string
     pageNumber: number
   }[]
-  subtitles: {
-    id: number
-    languageCode: string
-    language: string
-    url: string
-  }[]
 
   constructor(id: string, bvid = false) {
     if (bvid) {
@@ -70,14 +64,19 @@ export class VideoInfo {
       title: it.part,
       pageNumber: it.page,
     }))
-    this.subtitles =
-      data.subtitle?.list?.map((it: any) => ({
-        id: it.id,
-        languageCode: it.lan,
-        language: it.lan_doc,
-        url: it.subtitle_url.replace('http:', 'https:'),
-      })) ?? []
     return this
+  }
+
+  /** @deprecated */
+  // eslint-disable-next-line class-methods-use-this
+  get subtitles(): {
+    id: number
+    languageCode: string
+    language: string
+    url: string
+  }[] {
+    console.warn('VideoInfo.subtitles is deprecated')
+    return []
   }
 }
 export class BangumiInfo {

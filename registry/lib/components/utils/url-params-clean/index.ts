@@ -57,6 +57,10 @@ const entry = async () => {
     'msource',
     'live_from',
     'plat_id',
+    'extra_jump_from',
+    'subarea_rank',
+    'popular_rank',
+    'launch_id',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [

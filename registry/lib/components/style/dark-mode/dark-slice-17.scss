@@ -860,6 +860,9 @@
 }
 .bili-comment.browser-pc {
   @include background-color();
+  .comment-container {
+    @include background-color();
+  }
 }
 .recommended-container,
 .recommended-container_floor-aside {

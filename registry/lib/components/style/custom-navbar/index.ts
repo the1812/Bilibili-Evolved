@@ -8,6 +8,7 @@ import { urlInclude, urlExclude } from './urls'
 import { entry } from './entry'
 import { getNumberValidator } from '@/core/utils'
 import { NavbarNotifyStyle } from './notify-style'
+import { NavbarLinkPopupContentAlignStyle } from './link-popup-content-align-style'
 
 const styleID = 'custom-navbar-style'
 const options = defineOptionsMetadata({
@@ -90,6 +91,11 @@ const options = defineOptionsMetadata({
     defaultValue: NavbarNotifyStyle.Number,
     dropdownEnum: NavbarNotifyStyle,
     displayName: '消息提醒样式',
+  },
+  linkPopupContentAlignStyle: {
+    defaultValue: NavbarLinkPopupContentAlignStyle.Left,
+    dropdownEnum: NavbarLinkPopupContentAlignStyle,
+    displayName: '链接对齐样式',
   },
   searchBarWidth: {
     defaultValue: 15,
