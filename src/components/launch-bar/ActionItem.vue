@@ -7,8 +7,8 @@
     @click.self="performAction($event)"
     @keydown.enter.prevent.stop="performAction($event)"
     @keydown.shift.delete.prevent.stop="performDelete($event)"
-    @keydown.up.prevent.stop="$emit('previous-item', $event)"
-    @keydown.down.prevent.stop="$emit('next-item', $event)"
+    @keydown.up.prevent.stop="$emit('previous-item', $event.currentTarget)"
+    @keydown.down.prevent.stop="$emit('next-item', $event.currentTarget)"
   >
     <div class="suggest-item-content">
       <div v-if="action.icon" class="suggest-item-icon" @click="performAction($event)">
@@ -54,15 +54,17 @@ export default Vue.extend({
   },
   methods: {
     async performAction(event: KeyboardEvent | MouseEvent) {
+      const { currentTarget } = event
       await this.action.action()
-      this.$emit('action', event)
+      this.$emit('action', currentTarget)
     },
     async performDelete(event: KeyboardEvent | MouseEvent) {
+      const { currentTarget } = event
       if (!this.action.deleteAction) {
         return
       }
       await this.action.deleteAction()
-      this.$emit('delete-item', event)
+      this.$emit('delete-item', currentTarget)
     },
   },
 })

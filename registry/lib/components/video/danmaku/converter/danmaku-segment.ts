@@ -288,7 +288,7 @@ export const decodeDanmakuView = decode('DmWebViewReply')
 
 // 这里为了兼容 pakku, 只能用 fetch https://github.com/xmcp/pakku.js/issues/153
 const fetchBlob = async (url: string) => {
-  const response = await fetch(url)
+  const response = await fetch(url, { mode: 'cors', credentials: 'include' })
   return response.blob()
 }
 export const getDanmakuView = async (aid: string | number, cid: string | number) => {

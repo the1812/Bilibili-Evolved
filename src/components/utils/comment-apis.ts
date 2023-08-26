@@ -3,7 +3,7 @@ import { allMutations, childList, childListSubtree } from '@/core/observer'
 import { contentLoaded } from '@/core/life-cycle'
 
 /** 表示一条评论回复 */
-export interface CommentReplyItem {
+export class CommentReplyItem extends EventTarget {
   /** 对应元素 */
   element: HTMLElement
   /** 评论ID */
@@ -20,15 +20,62 @@ export interface CommentReplyItem {
   time?: number
   /** 点赞数 */
   likes: number
+
+  constructor(initParams: Omit<CommentReplyItem, keyof EventTarget>) {
+    super()
+    this.element = initParams.element
+    this.id = initParams.id
+    this.userId = initParams.userId
+    this.userName = initParams.userName
+    this.content = initParams.content
+    this.timeText = initParams.timeText
+    this.time = initParams.time
+    this.likes = initParams.likes
+  }
+}
+
+/** 评论更新的事件类型 */
+export const RepliesUpdateEventType = 'repliesUpdate'
+/** 评论更新的事件回调类型 */
+export type RepliesUpdateEventCallback = (event: CustomEvent<CommentReplyItem[]>) => void
+const createRepliesUpdateEvent = (replies: CommentReplyItem[]) => {
+  return new CustomEvent(RepliesUpdateEventType, {
+    detail: replies,
+  })
 }
 /** 表示一条评论 */
-export interface CommentItem extends CommentReplyItem {
+export class CommentItem extends CommentReplyItem {
   /** 评论图片 */
   pictures?: string[]
   /** 回复 */
   replies: CommentReplyItem[]
-  /** 回复有更新时调用此函数 */
-  onRepliesUpdate?: (replies: CommentReplyItem[]) => void
+
+  constructor(initParams: Omit<CommentItem, keyof EventTarget | 'dispatchRepliesUpdate'>) {
+    super(initParams)
+    this.pictures = initParams.pictures
+    this.replies = initParams.replies
+  }
+
+  addEventListener(
+    type: typeof RepliesUpdateEventType,
+    callback: RepliesUpdateEventCallback | null,
+    options?: EventListenerOptions | boolean,
+  ) {
+    super.addEventListener(type, callback, options)
+  }
+
+  removeEventListener(
+    type: typeof RepliesUpdateEventType,
+    callback: RepliesUpdateEventCallback | null,
+    options?: EventListenerOptions | boolean,
+  ) {
+    super.removeEventListener(type, callback, options)
+  }
+
+  /** 触发评论更新事件 */
+  dispatchRepliesUpdate(replies: CommentReplyItem[]) {
+    return super.dispatchEvent(createRepliesUpdateEvent(replies))
+  }
 }
 export type CommentItemCallback = (item: CommentItem) => void
 /** 表示一个评论区 */
@@ -84,7 +131,7 @@ const parseCommentItemV2 = (element: HTMLElement) => {
       return []
     }
     return vueData.replies.map((r: any): CommentReplyItem => {
-      return {
+      return new CommentReplyItem({
         id: r.rpid_str,
         element: getReplyItemElement(element, r.rpid_str),
         userId: r.member.mid,
@@ -92,10 +139,10 @@ const parseCommentItemV2 = (element: HTMLElement) => {
         content: r.content.message,
         time: r.ctime * 1000,
         likes: r.like,
-      }
+      })
     })
   }
-  const item: CommentItem = {
+  const item = new CommentItem({
     id: vueData.rpid_str,
     element,
     userId: vueData.member.mid,
@@ -107,11 +154,14 @@ const parseCommentItemV2 = (element: HTMLElement) => {
       return img.img_src
     }),
     replies: parseReplies(),
-  }
+  })
   if (item.replies.length < vueData.rcount) {
     const replyBox = dq(element, '.sub-reply-list')
-    childList(replyBox, () => {
+    childList(replyBox, records => {
       item.replies = parseReplies()
+      if (records.length !== 0) {
+        item.dispatchRepliesUpdate(item.replies)
+      }
     })
   }
   return item
@@ -126,7 +176,7 @@ const parseCommentItem = (element: HTMLElement) => {
   const parseReplyItem = (replyElement: HTMLElement) => {
     const replyFace = replyElement.querySelector('.reply-face') as HTMLElement
     const replyUser = replyElement.querySelector('.reply-con .user .name') as HTMLElement
-    return {
+    return new CommentReplyItem({
       id: replyElement.getAttribute('data-id'),
       element: replyElement,
       userId: replyFace.getAttribute('data-usercard-mid'),
@@ -134,9 +184,9 @@ const parseCommentItem = (element: HTMLElement) => {
       content: replyElement.querySelector('.text-con').textContent,
       timeText: replyElement.querySelector('.info .time, .info .time-location').textContent,
       likes: parseInt(replyElement.querySelector('.info .like span').textContent),
-    }
+    })
   }
-  const item: CommentItem = {
+  const item = new CommentItem({
     id: element.getAttribute('data-id'),
     element,
     userId: user.getAttribute('data-usercard-mid'),
@@ -145,13 +195,13 @@ const parseCommentItem = (element: HTMLElement) => {
     timeText: element.querySelector('.con .info .time, .info .time-location').textContent,
     likes: parseInt(element.querySelector('.con .like span').textContent),
     replies: [],
-  }
+  })
   if (dq(element, '.reply-box .view-more')) {
     const replyBox = dq(element, '.reply-box') as HTMLElement
     childList(replyBox, records => {
       item.replies = dqa(element, '.reply-box .reply-item').map(parseReplyItem)
       if (records.length !== 0) {
-        item.onRepliesUpdate?.(item.replies)
+        item.dispatchRepliesUpdate(item.replies)
       }
     })
   } else {

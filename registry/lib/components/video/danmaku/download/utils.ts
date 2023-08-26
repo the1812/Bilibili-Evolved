@@ -52,8 +52,12 @@ export class JsonDanmaku {
       new Array(total).fill(0).map(async (_, index) => {
         try {
           const result = await getDanmakuSegment(this.aid, this.cid, index)
-          console.log(`received blob for segment ${index + 1}`, result)
-          return result.elems ?? []
+          const elements: any[] = result.elems ?? []
+          console.log(
+            `received blob for segment ${index + 1}, count = ${elements.length}, result =`,
+            result,
+          )
+          return elements
         } catch (error) {
           logError(error)
           throw error

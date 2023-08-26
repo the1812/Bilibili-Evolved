@@ -1,6 +1,7 @@
 import { attributes } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { playerReady, preventEvent } from '@/core/utils'
+import { createPlayerModeChangeEvent, PlayerMode } from './events'
 
 const playerModePolyfill = async () => {
   await playerReady()
@@ -9,16 +10,29 @@ const playerModePolyfill = async () => {
     console.warn('[bpx player polyfill] bpxContainer not found')
     return
   }
+  let lastScreen = PlayerMode.Normal
   attributes(bpxContainer, () => {
-    const dataScreen = bpxContainer.getAttribute('data-screen')
+    const dataScreen = bpxContainer.getAttribute('data-screen') as PlayerMode
     const prefix = 'player-mode-'
-    const enumList = ['normal', 'wide', 'web', 'full'].map(it => `${prefix}${it}`)
+    const enumList = [
+      PlayerMode.Normal,
+      PlayerMode.WideScreen,
+      PlayerMode.WebFullscreen,
+      PlayerMode.Fullscreen,
+    ].map(it => `${prefix}${it}`)
 
     // clear all class
     document.body.classList.remove(...enumList)
 
     // add class
-    document.body.classList.add(dataScreen !== 'normal' ? `${prefix}${dataScreen}` : '')
+    if (dataScreen !== PlayerMode.Normal) {
+      document.body.classList.add(`${prefix}${dataScreen}`)
+    }
+
+    if (dataScreen !== lastScreen) {
+      window.dispatchEvent(createPlayerModeChangeEvent(dataScreen))
+      lastScreen = dataScreen
+    }
   })
 }
 const idPolyfill = async () => {

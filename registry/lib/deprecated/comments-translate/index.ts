@@ -23,7 +23,7 @@ const entry = async () => {
   forEachCommentItem({
     added: item => {
       const { element } = item
-      item.onRepliesUpdate = replies => replies.forEach(r => injectButton(r.element))
+      item.addEventListener('repliesUpdate', e => e.detail.forEach(r => injectButton(r.element)))
       injectButton(element)
     },
   })

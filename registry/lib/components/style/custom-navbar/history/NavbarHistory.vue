@@ -48,7 +48,7 @@
           </div>
           <transition-group name="time-group" tag="div" class="time-group-items">
             <div v-for="h of g.items" :key="h.id" class="time-group-item">
-              <a class="cover-container" target="_blank" :href="h.url">
+              <a class="history-cover-container" target="_blank" :href="h.url">
                 <DpiImage
                   class="cover"
                   :src="h.cover"
@@ -381,7 +381,7 @@ export default Vue.extend({
                 opacity: 1;
               }
             }
-            .cover-container {
+            .history-cover-container {
               $height: 55px;
               $padding: 2px;
               grid-area: cover;
