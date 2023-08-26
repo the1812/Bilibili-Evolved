@@ -5,7 +5,7 @@
 ### [复制动态链接](../../registry/dist/components/feeds/copy-link.js)
 `copyFeedsLink`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/copy-link.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/copy-link.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/copy-link.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/copy-link.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/copy-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/copy-link.js)
 
@@ -14,7 +14,7 @@
 ### [禁止跳转动态详情](../../registry/dist/components/feeds/disable-details.js)
 `disableFeedsDetails`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/disable-details.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/disable-details.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/disable-details.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/disable-details.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/disable-details.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/disable-details.js)
 
@@ -23,7 +23,7 @@
 ### [直播信息扩充](../../registry/dist/components/feeds/extend-live.js)
 `extendFeedsLive`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/extend-live.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/extend-live.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/extend-live.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/extend-live.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/extend-live.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/extend-live.js)
 
@@ -32,7 +32,7 @@
 ### [动态过滤器](../../registry/dist/components/feeds/filter.js)
 `feedsFilter`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/filter.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/filter.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/filter.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/filter.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/filter.js)
 
@@ -41,7 +41,7 @@
 ### [强制固定动态侧栏](../../registry/dist/components/feeds/fixed-sidebars.js)
 `fixedFeedsSidebars`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/fixed-sidebars.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/fixed-sidebars.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/fixed-sidebars.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/fixed-sidebars.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/fixed-sidebars.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/fixed-sidebars.js)
 
@@ -50,7 +50,7 @@
 ### [快速收起评论](../../registry/dist/components/feeds/fold-comments.js)
 `foldComments`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/fold-comments.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/fold-comments.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/fold-comments.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/fold-comments.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/fold-comments.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/fold-comments.js)
 
@@ -59,7 +59,7 @@
 ### [展开动态内容](../../registry/dist/components/feeds/full-content.js)
 `fullFeedsContent`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/full-content.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/full-content.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/full-content.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/full-content.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/full-content.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/full-content.js)
 
@@ -68,7 +68,7 @@
 ### [展开动态标题](../../registry/dist/components/feeds/full-title.js)
 `fullFeedsTitle`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/full-title.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/full-title.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/full-title.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/full-title.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/full-title.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/full-title.js)
 
@@ -77,7 +77,7 @@
 ### [隐藏动态评论预览](../../registry/dist/components/feeds/hide-comment-preview.js)
 `hideFeedsCommentPreview`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/hide-comment-preview.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/hide-comment-preview.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/hide-comment-preview.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/hide-comment-preview.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/hide-comment-preview.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/hide-comment-preview.js)
 
@@ -86,7 +86,7 @@
 ### [动态看图自动回顶](../../registry/dist/components/feeds/image-auto-back-to-top.js)
 `imageAutoBackToTop`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/image-auto-back-to-top.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/image-auto-back-to-top.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/image-auto-back-to-top.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/image-auto-back-to-top.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/image-auto-back-to-top.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/image-auto-back-to-top.js)
 
@@ -95,7 +95,7 @@
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/unfold.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/unfold.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/unfold.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/unfold.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/unfold.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/unfold.js)
 
@@ -110,7 +110,7 @@
 ### [直播勋章快速更换](../../registry/dist/components/live/badge-helper.js)
 `badgeHelper`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/badge-helper.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/badge-helper.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/badge-helper.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/badge-helper.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/badge-helper.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/badge-helper.js)
 
@@ -119,7 +119,7 @@
 ### [直播弹幕发送栏](../../registry/dist/components/live/danmaku-sendbar.js)
 `liveDanmakuSendbar`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/danmaku-sendbar.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/danmaku-sendbar.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/danmaku-sendbar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/danmaku-sendbar.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/danmaku-sendbar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/danmaku-sendbar.js)
 
@@ -128,7 +128,7 @@
 ### [直播全屏包裹](../../registry/dist/components/live/gift-box.js)
 `liveGiftBox`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/gift-box.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/gift-box.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/gift-box.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/gift-box.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/gift-box.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/gift-box.js)
 
@@ -137,7 +137,7 @@
 ### [直播首页静音](../../registry/dist/components/live/home-mute.js)
 `liveHomeMute`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/home-mute.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/home-mute.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/home-mute.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/home-mute.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/home-mute.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/home-mute.js)
 
@@ -146,7 +146,7 @@
 ### [返回原版直播间](../../registry/dist/components/live/original.js)
 `originalLiveroom`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/original.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/original.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/original.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/original.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/original.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/original.js)
 
@@ -155,7 +155,7 @@
 ### [删除直播水印](../../registry/dist/components/live/remove-watermark.js)
 `removeLiveWatermark`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/remove-watermark.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/remove-watermark.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/remove-watermark.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/remove-watermark.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/remove-watermark.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/remove-watermark.js)
 
@@ -164,7 +164,7 @@
 ### [直播看板娘高 DPI 适配](../../registry/dist/components/live/showgirl.js)
 `dpiLiveShowgirl`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/showgirl.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/showgirl.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/showgirl.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/showgirl.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/showgirl.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/showgirl.js)
 
@@ -173,7 +173,7 @@
 ### [自动收起直播侧栏](../../registry/dist/components/live/side-bar.js)
 `collapseLiveSideBar`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/side-bar.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/side-bar.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/side-bar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/side-bar.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/side-bar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/side-bar.js)
 
@@ -182,7 +182,7 @@
 ### [总是显示视频时长](../../registry/dist/components/style/always-show-duration.js)
 `alwaysShowDuration`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/always-show-duration.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/always-show-duration.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/always-show-duration.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/always-show-duration.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/always-show-duration.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/always-show-duration.js)
 
@@ -191,7 +191,7 @@
 ### [自动隐藏侧栏](../../registry/dist/components/style/auto-hide-sidebar.js)
 `autoHideSidebar`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/auto-hide-sidebar.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/auto-hide-sidebar.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/auto-hide-sidebar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/auto-hide-sidebar.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/auto-hide-sidebar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/auto-hide-sidebar.js)
 
@@ -200,7 +200,7 @@
 ### [自定义顶栏](../../registry/dist/components/style/custom-navbar.js)
 `customNavbar`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/custom-navbar.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/custom-navbar.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/custom-navbar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/custom-navbar.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/custom-navbar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/custom-navbar.js)
 
@@ -211,7 +211,7 @@
 ### [夜间模式跟随系统](../../registry/dist/components/style/dark-mode/follow-system.js)
 `darkModeFollowSystem`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode/follow-system.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode/follow-system.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode/follow-system.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode/follow-system.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/dark-mode/follow-system.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/follow-system.js)
 
@@ -222,7 +222,7 @@
 ### [夜间模式](../../registry/dist/components/style/dark-mode.js)
 `darkMode`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode.js)
 
@@ -231,7 +231,7 @@
 ### [夜间模式计划时段](../../registry/dist/components/style/dark-mode/schedule.js)
 `darkModeSchedule`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode/schedule.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode/schedule.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode/schedule.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode/schedule.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/dark-mode/schedule.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/schedule.js)
 
@@ -240,7 +240,7 @@
 ### [隐藏番剧点评](../../registry/dist/components/style/hide/bangumi/reviews.js)
 `hideBangumiReviews`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/bangumi/reviews.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/bangumi/reviews.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/bangumi/reviews.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/bangumi/reviews.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/bangumi/reviews.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/bangumi/reviews.js)
 
@@ -249,7 +249,7 @@
 ### [隐藏番剧承包](../../registry/dist/components/style/hide/bangumi/sponsors.js)
 `hideBangumiSponsors`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/bangumi/sponsors.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/bangumi/sponsors.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/bangumi/sponsors.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/bangumi/sponsors.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/bangumi/sponsors.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/bangumi/sponsors.js)
 
@@ -258,7 +258,7 @@
 ### [隐藏顶部横幅](../../registry/dist/components/style/hide/banner.js)
 `hideBanner`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/banner.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/banner.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/banner.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/banner.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/banner.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/banner.js)
 
@@ -267,7 +267,7 @@
 ### [隐藏热搜](../../registry/dist/components/style/hide/trending-search.js)
 `hideTrendingSearch`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/trending-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/trending-search.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/trending-search.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/trending-search.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/trending-search.js)
 
@@ -276,7 +276,7 @@
 ### [隐藏用户信息卡片](../../registry/dist/components/style/hide/user-card.js)
 `hideUserCard`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/user-card.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/user-card.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/user-card.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/user-card.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/user-card.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/user-card.js)
 
@@ -287,7 +287,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 ### [隐藏直播推荐](../../registry/dist/components/style/hide/video/recommended-live.js)
 `hideRecommendedLive`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/recommended-live.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/recommended-live.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/recommended-live.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/recommended-live.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/recommended-live.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/recommended-live.js)
 
@@ -296,7 +296,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 ### [隐藏视频推荐](../../registry/dist/components/style/hide/video/related-videos.js)
 `hideRelatedVideos`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/related-videos.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/related-videos.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/related-videos.js)
 
@@ -305,7 +305,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 ### [隐藏视频分享](../../registry/dist/components/style/hide/video/share.js)
 `hideVideoShare`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/share.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/share.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/share.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/share.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/share.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/share.js)
 
@@ -314,7 +314,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 ### [隐藏视频标题层](../../registry/dist/components/style/hide/video/top-mask.js)
 `hideVideoTopMask`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/top-mask.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/top-mask.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/top-mask.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/top-mask.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/top-mask.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/top-mask.js)
 
@@ -323,7 +323,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 ### [清爽首页](../../registry/dist/components/style/home-redesign/fresh.js)
 `freshHome`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/home-redesign/fresh.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/home-redesign/fresh.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/home-redesign/fresh.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/home-redesign/fresh.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/home-redesign/fresh.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/home-redesign/fresh.js)
 
@@ -337,7 +337,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 ### [极简首页](../../registry/dist/components/style/home-redesign/minimal.js)
 `minimalHome`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/home-redesign/minimal.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/home-redesign/minimal.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/home-redesign/minimal.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/home-redesign/minimal.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/home-redesign/minimal.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/home-redesign/minimal.js)
 
@@ -351,7 +351,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 ### [播放器置顶（新）](../../registry/dist/components/style/player-on-top-new.js)
 `playerOnTopNew`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-on-top-new.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-on-top-new.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-on-top-new.js)
 
@@ -362,7 +362,7 @@ by [@RieN7](https://github.com/rien7)
 ### [播放器置顶](../../registry/dist/components/style/player-on-top.js)
 `playerOnTop`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-on-top.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-on-top.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-on-top.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-on-top.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-on-top.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-on-top.js)
 
@@ -371,7 +371,7 @@ by [@RieN7](https://github.com/rien7)
 ### [播放器投影](../../registry/dist/components/style/player-shadow.js)
 `playerShadow`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-shadow.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-shadow.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/player-shadow.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/player-shadow.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-shadow.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-shadow.js)
 
@@ -380,7 +380,7 @@ by [@RieN7](https://github.com/rien7)
 ### [使用细滚动条](../../registry/dist/components/style/scrollbar.js)
 `elegantScrollbar`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/scrollbar.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/scrollbar.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/scrollbar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/scrollbar.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/scrollbar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/scrollbar.js)
 
@@ -389,7 +389,7 @@ by [@RieN7](https://github.com/rien7)
 ### [侧栏垂直偏移](../../registry/dist/components/style/sidebar-offset.js)
 `sidebarOffset`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/sidebar-offset.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/sidebar-offset.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/sidebar-offset.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/sidebar-offset.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/sidebar-offset.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/sidebar-offset.js)
 
@@ -398,7 +398,7 @@ by [@RieN7](https://github.com/rien7)
 ### [简化评论区](../../registry/dist/components/style/simplify/comments.js)
 `simplifyComments`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/comments.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/comments.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/comments.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/comments.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/simplify/comments.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/comments.js)
 
@@ -416,7 +416,7 @@ by [@RieN7](https://github.com/rien7)
 ### [简化首页](../../registry/dist/components/style/simplify/home.js)
 `simplifyHome`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/home.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/home.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/home.js)
 
@@ -425,7 +425,7 @@ by [@RieN7](https://github.com/rien7)
 ### [简化直播间](../../registry/dist/components/style/simplify/live.js)
 `simplifyLiveroom`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/live.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/live.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/live.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/live.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/simplify/live.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/live.js)
 
@@ -434,7 +434,7 @@ by [@RieN7](https://github.com/rien7)
 ### [禁用特殊弹幕样式](../../registry/dist/components/style/special-danmaku.js)
 `disableSpecialDanmaku`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/special-danmaku.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/special-danmaku.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/special-danmaku.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/special-danmaku.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/special-danmaku.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/special-danmaku.js)
 
@@ -443,7 +443,7 @@ by [@RieN7](https://github.com/rien7)
 ### [v1 风格设置面板](../../registry/dist/components/style/v1-panel.js)
 `v1PanelStyle`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/v1-panel.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/v1-panel.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/v1-panel.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/v1-panel.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/v1-panel.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/v1-panel.js)
 
@@ -452,7 +452,7 @@ by [@RieN7](https://github.com/rien7)
 ### [三连触摸支持](../../registry/dist/components/touch/combo-like.js)
 `touchComboLike`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/combo-like.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/combo-like.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/combo-like.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/combo-like.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/touch/combo-like.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/combo-like.js)
 
@@ -461,7 +461,7 @@ by [@RieN7](https://github.com/rien7)
 ### [启用双击控制](../../registry/dist/components/touch/double-click-control.js)
 `doubleClickControl`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/double-click-control.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/double-click-control.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/double-click-control.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/double-click-control.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/touch/double-click-control.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/double-click-control.js)
 
@@ -470,7 +470,7 @@ by [@RieN7](https://github.com/rien7)
 ### [迷你播放器触摸拖动](../../registry/dist/components/touch/mini-player.js)
 `touchMiniPlayer`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/mini-player.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/mini-player.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/mini-player.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/mini-player.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/touch/mini-player.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/mini-player.js)
 
@@ -479,7 +479,7 @@ by [@RieN7](https://github.com/rien7)
 ### [控制栏触摸优化](../../registry/dist/components/touch/player-control.js)
 `touchPlayerControl`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/player-control.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/player-control.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/player-control.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/player-control.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/touch/player-control.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/player-control.js)
 
@@ -488,7 +488,7 @@ by [@RieN7](https://github.com/rien7)
 ### [播放器触摸手势](../../registry/dist/components/touch/player-gestures.js)
 `touchPlayerGestures`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/player-gestures.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/player-gestures.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/touch/player-gestures.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/touch/player-gestures.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/touch/player-gestures.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/player-gestures.js)
 
@@ -501,7 +501,7 @@ by [@RieN7](https://github.com/rien7)
 ### [自动点赞](../../registry/dist/components/utils/auto-like.js)
 `autoLike`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/auto-like.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/auto-like.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/auto-like.js)
 
@@ -510,7 +510,7 @@ by [@RieN7](https://github.com/rien7)
 ### [屏蔽黑名单up主](../../registry/dist/components/utils/black-list.js)
 `blackList`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/black-list.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/black-list.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/black-list.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/black-list.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/black-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/black-list.js)
 
@@ -521,7 +521,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [更新链接替换](../../registry/dist/components/utils/change-update-urls.js)
 `changeUpdateUrls`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/change-update-urls.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/change-update-urls.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/change-update-urls.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/change-update-urls.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/change-update-urls.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/change-update-urls.js)
 
@@ -530,7 +530,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [签到助手](../../registry/dist/components/utils/check-in-center.js)
 `checkInCenter`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/check-in-center.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/check-in-center.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/check-in-center.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/check-in-center.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/check-in-center.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/check-in-center.js)
 
@@ -539,7 +539,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [专栏复制优化](../../registry/dist/components/utils/column-unlock.js)
 `columnUnlock`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/column-unlock.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/column-unlock.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/column-unlock.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/column-unlock.js)
 
@@ -550,7 +550,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [复制评论链接](../../registry/dist/components/utils/comments/copy-link.js)
 `copyCommentsLink`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/copy-link.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/copy-link.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/copy-link.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/copy-link.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/copy-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/copy-link.js)
 
@@ -559,7 +559,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [禁用评论区搜索词](../../registry/dist/components/utils/comments/disable-search-link.js)
 `disableCommentsSearchLink`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/disable-search-link.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/disable-search-link.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/disable-search-link.js)
 
@@ -568,7 +568,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [DevClient](../../registry/dist/components/utils/dev-client.js)
 `devClient`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/dev-client.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/dev-client.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/dev-client.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/dev-client.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/dev-client.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/dev-client.js)
 
@@ -589,7 +589,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [下载音频](../../registry/dist/components/utils/download-audio.js)
 `downloadAudio`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/download-audio.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/download-audio.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/download-audio.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/download-audio.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/download-audio.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/download-audio.js)
 
@@ -600,7 +600,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [图片批量导出](../../registry/dist/components/utils/image-exporter.js)
 `imageExporter`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/image-exporter.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-exporter.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/image-exporter.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-exporter.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/image-exporter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/image-exporter.js)
 
@@ -619,7 +619,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [高分辨率图片](../../registry/dist/components/utils/image-resolution.js)
 `imageResolution`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/image-resolution.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-resolution.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/image-resolution.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/image-resolution.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/image-resolution.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/image-resolution.js)
 
@@ -628,7 +628,7 @@ by [@snowraincloud](https://github.com/snowraincloud)
 ### [批量导入合集](../../registry/dist/components/utils/import-series.js)
 `importSeries`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/import-series.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/import-series.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/import-series.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/import-series.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/import-series.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/import-series.js)
 
@@ -639,7 +639,7 @@ by [@aiden](https://github.com/swhoro)
 ### [快捷键扩展](../../registry/dist/components/utils/keymap.js)
 `keymap`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/keymap.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/keymap.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/keymap.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/keymap.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/keymap.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/keymap.js)
 
@@ -648,7 +648,7 @@ by [@aiden](https://github.com/swhoro)
 ### [删除广告](../../registry/dist/components/utils/remove-promotions.js)
 `removePromotions`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/remove-promotions.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/remove-promotions.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/remove-promotions.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/remove-promotions.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/remove-promotions.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/remove-promotions.js)
 
@@ -661,7 +661,7 @@ by [@aiden](https://github.com/swhoro)
 ### [网址参数清理](../../registry/dist/components/utils/url-params-clean.js)
 `urlParamsClean`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/url-params-clean.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/url-params-clean.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/url-params-clean.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/url-params-clean.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/url-params-clean.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/url-params-clean.js)
 
@@ -670,7 +670,7 @@ by [@aiden](https://github.com/swhoro)
 ### [v1 设置迁移](../../registry/dist/components/utils/v1-migrate.js)
 `v1Migrate`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/v1-migrate.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/v1-migrate.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/v1-migrate.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/v1-migrate.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/v1-migrate.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/v1-migrate.js)
 
@@ -679,7 +679,7 @@ by [@aiden](https://github.com/swhoro)
 ### [查看封面](../../registry/dist/components/utils/view-cover.js)
 `viewCover`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/view-cover.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/view-cover.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/view-cover.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/view-cover.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/view-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/view-cover.js)
 
@@ -688,7 +688,7 @@ by [@aiden](https://github.com/swhoro)
 ### [稍后再看重定向](../../registry/dist/components/utils/watchlater-redirect.js)
 `watchlaterRedirect`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/watchlater-redirect.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/watchlater-redirect.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/watchlater-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/watchlater-redirect.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/watchlater-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/watchlater-redirect.js)
 
@@ -697,7 +697,7 @@ by [@aiden](https://github.com/swhoro)
 ### [网址AV号转换](../../registry/dist/components/video/av-url.js)
 `avUrl`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/av-url.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/av-url.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/av-url.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/av-url.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/av-url.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/av-url.js)
 
@@ -706,7 +706,7 @@ by [@aiden](https://github.com/swhoro)
 ### [BiliPlus 跳转支持](../../registry/dist/components/video/biliplus-redirect.js)
 `biliplusRedirect`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/biliplus-redirect.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/biliplus-redirect.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/biliplus-redirect.js)
 
@@ -715,7 +715,7 @@ by [@aiden](https://github.com/swhoro)
 ### [BV 号转换](../../registry/dist/components/video/bvid-convert.js)
 `bvidConvert`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/bvid-convert.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/bvid-convert.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/bvid-convert.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/bvid-convert.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/bvid-convert.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/bvid-convert.js)
 
@@ -724,7 +724,7 @@ by [@aiden](https://github.com/swhoro)
 ### [启用弹幕空降](../../registry/dist/components/video/danmaku/airborne.js)
 `danmakuAirborne`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/airborne.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/airborne.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/airborne.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/airborne.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/airborne.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/airborne.js)
 
@@ -735,7 +735,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [下载弹幕](../../registry/dist/components/video/danmaku/download.js)
 `downloadDanmaku`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/download.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/download.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/download.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/download.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/download.js)
 
@@ -744,7 +744,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [展开弹幕列表](../../registry/dist/components/video/danmaku/expand.js)
 `expandDanmakuList`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/expand.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/expand.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/expand.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/expand.js)
 
@@ -753,7 +753,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [弹幕转义](../../registry/dist/components/video/danmaku/unescape.js)
 `unescapeDanmaku`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/unescape.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/unescape.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/unescape.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/unescape.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/unescape.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/unescape.js)
 
@@ -762,7 +762,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [视频页默认定位](../../registry/dist/components/video/default-location.js)
 `videoDefaultLocation`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/default-location.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/default-location.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/default-location.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/default-location.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/default-location.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/default-location.js)
 
@@ -789,7 +789,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [下载视频](../../registry/dist/components/video/download.js)
 `downloadVideo`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/download.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/download.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/download.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/download.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/download.js)
 
@@ -800,7 +800,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [展开视频简介](../../registry/dist/components/video/full-description.js)
 `fullVideoDescription`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/full-description.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/full-description.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/full-description.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/full-description.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-description.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-description.js)
 
@@ -809,7 +809,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [选集区域优化](../../registry/dist/components/video/full-episode-title.js)
 `fullEpisodeTitle`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/full-episode-title.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/full-episode-title.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/full-episode-title.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/full-episode-title.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-title.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-title.js)
 
@@ -822,7 +822,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [外置稍后再看](../../registry/dist/components/video/outer-watchlater.js)
 `outerWatchlater`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/outer-watchlater.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/outer-watchlater.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/outer-watchlater.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/outer-watchlater.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/outer-watchlater.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/outer-watchlater.js)
 
@@ -831,7 +831,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [播放时自动关灯](../../registry/dist/components/video/player/auto-light.js)
 `playerAutoLight`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/auto-light.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/auto-light.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/auto-light.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/auto-light.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/auto-light.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/auto-light.js)
 
@@ -840,7 +840,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [播放器控制栏背景色](../../registry/dist/components/video/player/control-background.js)
 `playerControlBackground`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/control-background.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/control-background.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/control-background.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/control-background.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/control-background.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/control-background.js)
 
@@ -849,7 +849,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [默认播放器模式](../../registry/dist/components/video/player/default-mode.js)
 `defaultPlayerMode`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/default-mode.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/default-mode.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/default-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/default-mode.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/default-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/default-mode.js)
 
@@ -858,7 +858,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [禁止滚轮调音量](../../registry/dist/components/video/player/disable-scroll-volume.js)
 `disableScrollVolume`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/disable-scroll-volume.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/disable-scroll-volume.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/disable-scroll-volume.js)
 
@@ -867,7 +867,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [双击全屏](../../registry/dist/components/video/player/double-click-fullscreen.js)
 `doubleClickFullscreen`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/double-click-fullscreen.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/double-click-fullscreen.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/double-click-fullscreen.js)
 
@@ -876,7 +876,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 ### [扩展倍速](../../registry/dist/components/video/player/extend-speed.js)
 `extendVideoSpeed`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/extend-speed.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/extend-speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/extend-speed.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/extend-speed.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/extend-speed.js)
 
@@ -911,7 +911,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### [播放器定位](../../registry/dist/components/video/player/focus.js)
 `playerFocus`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/focus.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/focus.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/focus.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/focus.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/focus.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/focus.js)
 
@@ -922,7 +922,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### [播放器位置动作](../../registry/dist/components/video/player/intersection-actions.js)
 `playerIntersectionActions`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/intersection-actions.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/intersection-actions.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/intersection-actions.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/intersection-actions.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/intersection-actions.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/intersection-actions.js)
 
@@ -933,7 +933,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 ### [反转滚轮调音量](../../registry/dist/components/video/player/invert-scroll-volume.js)
 `invertScrollVolume`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/invert-scroll-volume.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/invert-scroll-volume.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/invert-scroll-volume.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/invert-scroll-volume.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/invert-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/invert-scroll-volume.js)
 
@@ -946,7 +946,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 ### [传统连播模式](../../registry/dist/components/video/player/legacy-auto-play.js)
 `legacyAutoPlay`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/legacy-auto-play.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/legacy-auto-play.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/legacy-auto-play.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/legacy-auto-play.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/legacy-auto-play.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/legacy-auto-play.js)
 
@@ -955,7 +955,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 ### [强制保留弹幕发送栏](../../registry/dist/components/video/player/preserve-danmaku-input.js)
 `preserveDanmakuInput`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/preserve-danmaku-input.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/preserve-danmaku-input.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/preserve-danmaku-input.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/preserve-danmaku-input.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/preserve-danmaku-input.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/preserve-danmaku-input.js)
 
@@ -964,7 +964,7 @@ by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
 ### [记忆倍速](../../registry/dist/components/video/player/remember-speed.js)
 `rememberVideoSpeed`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/remember-speed.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remember-speed.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/remember-speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remember-speed.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/remember-speed.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/remember-speed.js)
 
@@ -995,7 +995,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### [删除视频弹窗](../../registry/dist/components/video/player/remove-popup.js)
 `removePlayerPopup`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/remove-popup.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remove-popup.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/remove-popup.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remove-popup.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/remove-popup.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/remove-popup.js)
 
@@ -1004,7 +1004,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### [启用视频截图](../../registry/dist/components/video/player/screenshot.js)
 `videoScreenshot`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/screenshot.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/screenshot.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/screenshot.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/screenshot.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/screenshot.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/screenshot.js)
 
@@ -1013,7 +1013,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### [启用逐帧调整](../../registry/dist/components/video/player/seek-by-frames.js)
 `seekByFrames`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/seek-by-frames.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/seek-by-frames.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/seek-by-frames.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/seek-by-frames.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/seek-by-frames.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/seek-by-frames.js)
 
@@ -1024,7 +1024,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### [播放前显示封面](../../registry/dist/components/video/player/show-cover.js)
 `showCoverBeforePlay`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/show-cover.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/show-cover.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/show-cover.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/show-cover.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/show-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/show-cover.js)
 
@@ -1033,7 +1033,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 ### [显示视频投稿时间](../../registry/dist/components/video/player/show-upload-time.js)
 `showUploadTime`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/show-upload-time.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/show-upload-time.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/show-upload-time.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/show-upload-time.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/show-upload-time.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/show-upload-time.js)
 
@@ -1054,7 +1054,7 @@ by [@wisokey](https://github.com/wisokey)
 ### [跳过充电鸣谢](../../registry/dist/components/video/player/skip-charge-list.js)
 `skipChargeList`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/skip-charge-list.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/skip-charge-list.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/skip-charge-list.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/skip-charge-list.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/skip-charge-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/skip-charge-list.js)
 
@@ -1063,7 +1063,7 @@ by [@wisokey](https://github.com/wisokey)
 ### [启用快速收藏](../../registry/dist/components/video/quick-favorite.js)
 `quickFavorite`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/quick-favorite.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/quick-favorite.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/quick-favorite.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/quick-favorite.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/quick-favorite.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/quick-favorite.js)
 
@@ -1072,7 +1072,7 @@ by [@wisokey](https://github.com/wisokey)
 ### [SEO 页面重定向](../../registry/dist/components/video/seo-redirect.js)
 `seoRedirect`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/seo-redirect.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/seo-redirect.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/seo-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/seo-redirect.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/seo-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/seo-redirect.js)
 
@@ -1081,16 +1081,16 @@ by [@wisokey](https://github.com/wisokey)
 ### [下载字幕](../../registry/dist/components/video/subtitle/download.js)
 `downloadSubtitle`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/subtitle/download.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/subtitle/download.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/subtitle/download.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/subtitle/download.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/subtitle/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/subtitle/download.js)
 
-启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.
+启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)
 
 ### [视频内显示时间](../../registry/dist/components/video/player/localtime.js)
 `videoCurTime`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@master/registry/dist/components/video/player/localtime.js) / [`Preview`](https://fastly.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@preview/registry/dist/components/video/player/localtime.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@master/registry/dist/components/video/player/localtime.js) / [`Preview`](https://cdn.jsdelivr.net/gh/FoundTheWOUT/Bilibili-Evolved@preview/registry/dist/components/video/player/localtime.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/FoundTheWOUT/Bilibili-Evolved/master/registry/dist/components/video/player/localtime.js) / [`Preview`](https://raw.githubusercontent.com/FoundTheWOUT/Bilibili-Evolved/preview/registry/dist/components/video/player/localtime.js)
 
@@ -1102,7 +1102,7 @@ by FoundTheWOUT
 ### [搜索栏 - 音频跳转](../../registry/dist/plugins/launch-bar/audio-search.js)
 `launchBar.actions.audioSearch`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/audio-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/audio-search.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/audio-search.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/audio-search.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/audio-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/audio-search.js)
 
@@ -1111,7 +1111,7 @@ by FoundTheWOUT
 ### [搜索栏 - 番剧跳转](../../registry/dist/plugins/launch-bar/bangumi-search.js)
 `launchBar.actions.bangumiSearch`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/bangumi-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/bangumi-search.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/bangumi-search.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/bangumi-search.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/bangumi-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/bangumi-search.js)
 
@@ -1120,7 +1120,7 @@ by FoundTheWOUT
 ### [搜索栏 - 专栏跳转](../../registry/dist/plugins/launch-bar/cv-search.js)
 `launchBar.actions.cvSearch`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/cv-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/cv-search.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/cv-search.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/cv-search.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/cv-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/cv-search.js)
 
@@ -1129,7 +1129,7 @@ by FoundTheWOUT
 ### [搜索栏 - 数字联想](../../registry/dist/plugins/launch-bar/number-search.js)
 `launchBar.actions.numberSearch`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/number-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/number-search.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/number-search.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/number-search.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/number-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/number-search.js)
 
@@ -1140,7 +1140,7 @@ by FoundTheWOUT
 ### [搜索栏 - 搜索推荐](../../registry/dist/plugins/launch-bar/trending-search.js)
 `launchBar.trendingSearch`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/trending-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/trending-search.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/trending-search.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/trending-search.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/trending-search.js)
 
@@ -1149,7 +1149,7 @@ by FoundTheWOUT
 ### [搜索栏 - UID 跳转](../../registry/dist/plugins/launch-bar/uid-search.js)
 `launchBar.actions.uidSearch`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/uid-search.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/uid-search.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/launch-bar/uid-search.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/launch-bar/uid-search.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/launch-bar/uid-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/launch-bar/uid-search.js)
 
@@ -1158,7 +1158,7 @@ by FoundTheWOUT
 ### [设置面板 - "最近使用" 类别](../../registry/dist/plugins/settings-panel/recent-components.js)
 `settingsPanel.tagFilters.recentComponents`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/settings-panel/recent-components.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/settings-panel/recent-components.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/settings-panel/recent-components.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/settings-panel/recent-components.js)
 
@@ -1167,7 +1167,7 @@ by FoundTheWOUT
 ### [自定义顶栏 - 频道](../../registry/dist/plugins/style/custom-navbar-channel.js)
 `customNavbar.items.channel`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/style/custom-navbar-channel.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-channel.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/style/custom-navbar-channel.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-channel.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-channel.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-channel.js)
 
@@ -1176,7 +1176,7 @@ by FoundTheWOUT
 ### [自定义顶栏 - 夜间模式开关](../../registry/dist/plugins/style/custom-navbar-dark-mode.js)
 `customNavbar.items.darkMode`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/style/custom-navbar-dark-mode.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-dark-mode.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/style/custom-navbar-dark-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-dark-mode.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-dark-mode.js)
 
@@ -1185,7 +1185,7 @@ by FoundTheWOUT
 ### [快捷键扩展 - 夜间模式](../../registry/dist/plugins/utils/keymap-dark-mode.js)
 `keymap.actions.darkMode`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-dark-mode.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-dark-mode.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-dark-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-dark-mode.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-dark-mode.js)
 
@@ -1194,7 +1194,7 @@ by FoundTheWOUT
 ### [快捷键扩展 - 无动作](../../registry/dist/plugins/utils/keymap-empty-action.ts.js)
 `keymap.actions.empty`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-empty-action.ts.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-empty-action.ts.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-empty-action.ts.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-empty-action.ts.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-empty-action.ts.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-empty-action.ts.js)
 
@@ -1203,7 +1203,7 @@ by FoundTheWOUT
 ### [快捷键扩展 - 开关弹幕列表](../../registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
 `keymap.actions.toggleDanmakuList`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-danmaku-list.js)
 
@@ -1212,7 +1212,7 @@ by FoundTheWOUT
 ### [快捷键扩展 - 开关灯](../../registry/dist/plugins/utils/keymap-toggle-player-light.js)
 `keymap.actions.togglePlayerLight`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-player-light.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-player-light.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-player-light.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-player-light.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-player-light.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-player-light.js)
 
@@ -1221,7 +1221,7 @@ by FoundTheWOUT
 ### [快捷键扩展 - 开关 CC 字幕](../../registry/dist/plugins/utils/keymap-toggle-subtitle.js)
 `keymap.actions.toggleSubtitle`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-subtitle.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-subtitle.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/utils/keymap-toggle-subtitle.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/utils/keymap-toggle-subtitle.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/utils/keymap-toggle-subtitle.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/utils/keymap-toggle-subtitle.js)
 
@@ -1230,7 +1230,7 @@ by FoundTheWOUT
 ### [加载提示 - 灵梦油库里](../../registry/dist/plugins/v-loading/reimu.js)
 `vLoading.reimu`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/v-loading/reimu.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/v-loading/reimu.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/v-loading/reimu.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/v-loading/reimu.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/v-loading/reimu.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/v-loading/reimu.js)
 
@@ -1239,7 +1239,7 @@ by FoundTheWOUT
 ### [下载视频 - aria2 输出支持](../../registry/dist/plugins/video/download/aria2-output.js)
 `downloadVideo.outputs.aria2`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/aria2-output.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/aria2-output.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/aria2-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/aria2-output.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/aria2-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/aria2-output.js)
 
@@ -1248,7 +1248,7 @@ by FoundTheWOUT
 ### [下载视频 - IDM 输出支持](../../registry/dist/plugins/video/download/idm-output.js)
 `downloadVideo.outputs.idm`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/idm-output.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/idm-output.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/idm-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/idm-output.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/idm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/idm-output.js)
 
@@ -1257,7 +1257,7 @@ by FoundTheWOUT
 ### [下载视频 - 手动输入](../../registry/dist/plugins/video/download/manual-input.js)
 `downloadVideo.inputs.manual`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/manual-input.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/manual-input.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/manual-input.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/manual-input.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/manual-input.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/manual-input.js)
 
@@ -1266,7 +1266,7 @@ by FoundTheWOUT
 ### [下载视频 - Motrix 输出支持](../../registry/dist/plugins/video/download/motrix-output.js)
 `downloadVideo.outputs.motrix`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/motrix-output.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/motrix-output.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/motrix-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/motrix-output.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/motrix-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/motrix-output.js)
 
@@ -1275,7 +1275,7 @@ by FoundTheWOUT
 ### [下载视频 - MPV 播放支持（列表）](../../registry/dist/plugins/video/download/mpv-output-playlist.js)
 `downloadVideo.outputs.mpv-playlist`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/mpv-output-playlist.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output-playlist.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/mpv-output-playlist.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output-playlist.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/mpv-output-playlist.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/mpv-output-playlist.js)
 
@@ -1286,7 +1286,7 @@ by [@wuliic](https://github.com/wullic)
 ### [下载视频 - MPV 输出支持](../../registry/dist/plugins/video/download/mpv-output.js)
 `downloadVideo.outputs.mpv`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/mpv-output.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/mpv-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/mpv-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/mpv-output.js)
 
@@ -1297,7 +1297,7 @@ by [@diannaojiang](https://github.com/diannaojiang)
 ### [快捷键扩展 - 视频倍速](../../registry/dist/plugins/video/player/speed.js)
 `speed.keymap`
 
-**jsDelivr:** [`Stable`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js) / [`Preview`](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/player/speed.js)
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/player/speed.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/player/speed.js)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/player/speed.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/player/speed.js)
 

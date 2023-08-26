@@ -54,3 +54,23 @@
     }
   }
 }
+
+.new-silver-wallet {
+  background-color: var(--Ga1_u) !important;
+}
+
+.new-list-box * .num > span {
+  color: var(--text3) !important;
+}
+
+.click-root > .content-box {
+  color: #000 !important;
+  > .text {
+    color: #000 !important;
+  }
+}
+
+.new-list-box * .static-bg-root {
+  --static-bg-color: #ffecf1 !important;
+  --static-bg-border-color: #ff6699 !important;
+}

@@ -1,8 +1,19 @@
-import { getJson } from '@/core/ajax'
+import { bilibiliApi, getJson, getJsonWithCredentials } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { SubtitleConverterConfig } from '../subtitle-converter'
 
+export interface SubtitleInfo {
+  id: number
+  id_str: string
+  lan: string
+  lan_doc: string
+  is_lock: boolean
+  subtitle_url: string
+  type: number
+  ai_type: number
+  ai_status: number
+}
 export type SubtitleDownloadType = 'json' | 'ass'
 export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, string]> => {
   const { SubtitleConverter, SubtitleSize, SubtitleLocation } = await import(
@@ -64,11 +75,10 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
   return [config, language]
 }
 export const getSubtitleList = async (aid: string, cid: string | number) => {
-  const { VideoInfo } = await import('@/components/video/video-info')
-  const info = new VideoInfo(aid)
-  info.cid = typeof cid === 'string' ? parseInt(cid) : cid
-  await info.fetchInfo()
-  return info.subtitles
+  const data = await bilibiliApi(
+    getJsonWithCredentials(`https://api.bilibili.com/x/player/wbi/v2?aid=${aid}&cid=${cid}`),
+  )
+  return lodash.get(data, 'subtitle.subtitles', []) as SubtitleInfo[]
 }
 export const getBlobByType = async (
   type: SubtitleDownloadType,
@@ -88,8 +98,8 @@ export const getBlobByType = async (
     return null
   }
   const [config, language] = await getSubtitleConfig()
-  const subtitle = subtitles.find(s => s.languageCode === language) || subtitles[0]
-  const json = await getJson(subtitle.url)
+  const subtitle = subtitles.find(s => s.lan === language) || subtitles[0]
+  const json = await getJson(subtitle.subtitle_url)
   const rawData = json.body
   switch (type) {
     case 'ass': {
@@ -102,7 +112,7 @@ export const getBlobByType = async (
     }
     default:
     case 'json': {
-      return new Blob([JSON.stringify(rawData)], {
+      return new Blob([JSON.stringify(rawData, undefined, 2)], {
         type: 'text/json',
       })
     }
