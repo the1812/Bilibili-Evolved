@@ -1,16 +1,24 @@
 name: Build
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
       - master-cdn
+      - preview
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           fetch-depth: "0"
+      - name: Setup git
+        run: |-
+          git config --local user.email github-actions[bot]@users.noreply.github.com
+          git config --local user.name github-actions[bot]
+          git config --global core.autocrlf true
+          git config --global core.safecrlf false
       - name: Install dependencies
         uses: pnpm/action-setup@v2.2.4
         with:
@@ -28,15 +36,9 @@ jobs:
           pnpm install
           cd ../
           pnpm run build-features
-      - name: Build GitHub config
-        run: pnpm run build-github-config
       - name: Git commit
         id: commit
         run: |
-          git config --local user.email github-actions[bot]@users.noreply.github.com
-          git config --local user.name github-actions[bot]
-          git config --global core.autocrlf true
-          git config --global core.safecrlf false
           git add --all
           git commit -m "CI build"
         continue-on-error: true
