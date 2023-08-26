@@ -131,7 +131,7 @@
         "type": "component",
         "name": "downloadSubtitle",
         "displayName": "下载字幕",
-        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
+        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)\r\n",
         "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
         "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
       },
