@@ -40,9 +40,7 @@ export const component = defineComponentMetadata({
   entry: async ({ settings: { options } }) => {
     if (options.video && videoAndBangumiUrls.some(url => matchUrlPattern(url))) {
       await playerReady()
-      const likeButton = (await select(
-        '.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like',
-      )) as HTMLSpanElement
+      const likeButton = (await select('.video-like')) as HTMLSpanElement
       if (!likeButton || likeButton.classList.contains('on')) {
         return
       }
