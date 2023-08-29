@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { childList } from '@/core/observer'
+import { select } from '@/core/spin-query'
 
 let relationList: Element
 let oldObserver: MutationObserver
@@ -39,14 +40,12 @@ const observeFans = async (node: Element) => {
   addImportantStyle(style, 'subscribe-time-style')
 }
 const entry = async () => {
-  relationList = dq('.relation-list')
-
-  const spaceContainer = dq('.s-space')
-  childList(spaceContainer, () => {
+  const spaceContainer = await select('.s-space')
+  childList(spaceContainer, async () => {
     if (!document.URL.match(/^https:\/\/space\.bilibili\.com\/\d+\/fans/)) {
       return
     }
-    relationList = dq('.relation-list')
+    relationList = await select('.relation-list')
     observeFans(relationList)
   })
 }
