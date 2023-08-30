@@ -66,15 +66,19 @@ export const withContentFilter =
  * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
  */
 export const getFeedsUrl = (type: FeedsCardType | string, afterID?: string | number) => {
+  const params = new URLSearchParams()
   if (typeof type === 'string') {
-    return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type}`
+    params.set('type', type)
+  } else if (type.apiType) {
+    params.set('type', type.apiType)
+  } else {
+    console.warn(`unknown apiType for ${type.name}`)
+    params.set('type', 'all')
   }
-  const id = type.id.toString()
-  let api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${id}`
   if (afterID) {
-    api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${afterID}&type=${id}`
+    params.set('offset', afterID.toString())
   }
-  return api
+  return `https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all?${params.toString()}`
 }
 /**
  * 获取动态
