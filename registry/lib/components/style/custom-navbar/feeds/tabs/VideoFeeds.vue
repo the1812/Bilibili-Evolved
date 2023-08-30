@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
 import { VideoCard } from '@/components/feeds/video-card'
-import { formatDuration, formatCount } from '@/core/utils/formatters'
+import { formatDuration, formatCount, parseDuration } from '@/core/utils/formatters'
 import { isNewID } from '@/components/feeds/notify'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
@@ -80,24 +80,25 @@ export default Vue.extend({
   },
   mixins: [
     nextPageMixin(feedsCardTypes.video, (card: any) => {
-      const cardJson = JSON.parse(card.card)
+      const archive = lodash.get(card, 'modules.module_dynamic.major.archive')
+      const author = lodash.get(card, 'modules.module_author')
       return {
-        id: card.desc.dynamic_id_str,
-        aid: cardJson.aid,
-        bvid: card.desc.bvid,
-        videoUrl: `https://www.bilibili.com/${card.desc.bvid}`,
-        coverUrl: cardJson.pic,
-        title: cardJson.title,
-        duration: cardJson.duration,
-        durationText: formatDuration(cardJson.duration),
-        description: cardJson.desc,
-        pubTime: formatPubTime(cardJson.pubdate * 1000),
-        pubTimeText: formatPubTimeText(cardJson.pubdate * 1000),
-        upFaceUrl: card.desc.user_profile.info.face,
-        upName: card.desc.user_profile.info.uname,
-        upID: card.desc.user_profile.info.uid,
+        id: card.id_str,
+        aid: archive.aid,
+        bvid: archive.bvid,
+        videoUrl: `https://www.bilibili.com/${archive.bvid}`,
+        coverUrl: archive.cover,
+        title: archive.title,
+        duration: parseDuration(archive.duration_text),
+        durationText: formatDuration(parseDuration(archive.duration_text)),
+        description: archive.desc,
+        pubTime: formatPubTime(author.pub_ts * 1000),
+        pubTimeText: formatPubTimeText(author.pub_ts * 1000),
+        upFaceUrl: author.face,
+        upName: author.name,
+        upID: author.mid,
         watchlater: true,
-        playCount: formatCount(cardJson.stat.view),
+        playCount: formatCount(archive.stat.play),
         get new() {
           return isNewID(this.id)
         },
