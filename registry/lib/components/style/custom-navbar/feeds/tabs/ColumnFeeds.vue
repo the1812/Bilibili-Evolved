@@ -23,17 +23,18 @@ export default Vue.extend({
   },
   mixins: [
     nextPageMixin(feedsCardTypes.column, (card: any) => {
-      const cardJson = JSON.parse(card.card)
+      const article = lodash.get(card, 'modules.module_dynamic.major.article')
+      const author = lodash.get(card, 'modules.module_author')
       return {
-        id: card.desc.dynamic_id_str,
-        cvID: cardJson.id,
-        title: cardJson.title,
-        upName: cardJson.author.name,
-        upFaceUrl: cardJson.author.face,
-        upID: cardJson.author.mid,
-        description: cardJson.summary,
-        covers: cardJson.image_urls,
-        originalCovers: cardJson.origin_image_urls,
+        id: card.id_str,
+        cvID: article.id.toString(),
+        title: article.title,
+        upName: author.name,
+        upFaceUrl: author.face,
+        upID: author.mid,
+        description: article.desc,
+        covers: article.covers,
+        originalCovers: article.covers,
         get new() {
           return isNewID(this.id)
         },

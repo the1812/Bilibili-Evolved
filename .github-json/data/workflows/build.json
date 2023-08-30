@@ -49,10 +49,6 @@
           "run": "cd registry\npnpm install\ncd ../\npnpm run build-features\n"
         },
         {
-          "name": "Build GitHub config",
-          "run": "pnpm run build-github-config"
-        },
-        {
           "name": "Git commit",
           "id": "commit",
           "run": "git add --all\ngit commit -m \"CI build\"\n",
