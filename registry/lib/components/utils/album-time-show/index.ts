@@ -36,9 +36,7 @@ const observeAlbum = async (node: Element) => {
   addImportantStyle(style, 'album-pub-time-style')
 }
 const entry = async () => {
-  albumList = dq('.album-list__content')
-
-  const spaceContainer = dq('.s-space')
+  const spaceContainer = await select('.s-space')
   childList(spaceContainer, async () => {
     if (!document.URL.match(/^https:\/\/space\.bilibili\.com\/\d+\/album/)) {
       return

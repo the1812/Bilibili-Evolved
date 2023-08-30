@@ -91,6 +91,7 @@ export const component = defineComponentMetadata({
     {
       name,
       style: () => import('./chat-panel-fit.scss'),
+      important: true,
     },
   ],
   options,
