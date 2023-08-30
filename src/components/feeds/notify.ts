@@ -1,6 +1,5 @@
 import { getCookieValue, getUID } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
-import { navbarFeedsTypeList } from './api'
 
 export const updateInterval = 5 * 60 * 1000 // 每5分钟更新1次动态提醒数字
 export const getLatestID = () => getCookieValue(`bp_t_offset_${getUID()}`)
@@ -33,10 +32,8 @@ export const updateLatestID = (cards: { id: string }[]) => {
   const [id] = [...cards.map(c => c.id)].sort(compareID).reverse()
   setLatestID(id)
 }
-export const getNotifyCount = async (typeList?: string): Promise<number> => {
-  const api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_num?rsp_type=1&uid=${getUID()}&update_num_dy_id=${getLatestID()}&type_list=${
-    typeList || navbarFeedsTypeList
-  }`
+export const getNotifyCount = async (type = 'all'): Promise<number> => {
+  const api = `https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all/update?type=${type}&update_baseline=${getLatestID()}`
   const json = await getJsonWithCredentials(api)
   if (json.code !== 0) {
     return 0
