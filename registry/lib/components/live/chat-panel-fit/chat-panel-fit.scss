@@ -1,4 +1,4 @@
-.player-full-win {
+.player-full-win:not(.hide-aside-area) {
   .live-room-app {
     .aside-area {
       width: var(--live-chat-panel-width, 302px) !important;
