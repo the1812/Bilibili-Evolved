@@ -1,0 +1,16 @@
+$name: 'custom-font-family';
+
+html[#{$name}--options--disable-quotation-mark-text-indent='true']
+  :is(
+    p[title^='「'],
+    p[title^='『'],
+    p[title^='【'],
+    h1[title^='「'],
+    h1[title^='『'],
+    h1[title^='【'],
+    h3[title^='「'],
+    h3[title^='『'],
+    h3[title^='【']
+  ) {
+  text-indent: initial !important;
+}
