@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="draggerElement"
     class="chat-panel-fit-dragger"
     :class="{ dragging: isDragging }"
     :style="{ transform: `translateX(${-movement}px)` }"
@@ -29,6 +30,7 @@ onBeforeMount(() => {
 })
 const getAutoWidth = () =>
   parseFloat(document.documentElement.style.getPropertyValue('--live-chat-panel-width'))
+const draggerElement = ref<HTMLElement>()
 const startPoint = ref(0)
 const movement = ref(0)
 const previewWidth = computed(() => {
@@ -61,15 +63,12 @@ const startDragging = (e: PointerEvent) => {
   if (options.customWidth === 0) {
     options.customWidth = getAutoWidth()
   }
-  document.documentElement.style.cursor = 'ew-resize'
+  draggerElement.value.setPointerCapture(e.pointerId)
   document.documentElement.classList.add('custom-width-dragging')
-  document.documentElement.addEventListener('pointermove', handlePointerMove)
   document.documentElement.addEventListener(
     'pointerup',
     () => {
       document.documentElement.classList.remove('custom-width-dragging')
-      document.documentElement.style.cursor = ''
-      document.documentElement.removeEventListener('pointermove', handlePointerMove)
       isDragging.value = false
       startPoint.value = 0
       if (!movement.value) {
@@ -98,6 +97,7 @@ html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-ctnr {
 .chat-panel-fit-dragger {
   $dragger-width: 8px;
   pointer-events: none;
+  touch-action: none;
   height: 100%;
   width: 0;
   position: absolute;
