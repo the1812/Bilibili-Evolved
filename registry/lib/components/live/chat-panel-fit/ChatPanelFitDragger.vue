@@ -47,9 +47,6 @@ const handlePointerMove = (e: PointerEvent) => {
   if (!isDragging.value) {
     return
   }
-  if (options.customWidth === 0) {
-    options.customWidth = getAutoWidth()
-  }
   const currentMovement = startPoint.value - e.screenX
   movement.value =
     lodash.clamp(
@@ -61,6 +58,9 @@ const handlePointerMove = (e: PointerEvent) => {
 const startDragging = (e: PointerEvent) => {
   isDragging.value = true
   startPoint.value = e.screenX
+  if (options.customWidth === 0) {
+    options.customWidth = getAutoWidth()
+  }
   document.documentElement.style.cursor = 'ew-resize'
   document.documentElement.classList.add('custom-width-dragging')
   document.documentElement.addEventListener('pointermove', handlePointerMove)
@@ -75,9 +75,9 @@ const startDragging = (e: PointerEvent) => {
       if (!movement.value) {
         return
       }
-      movement.value = 0
       const newWidth = previewWidth.value
       options.customWidth = newWidth
+      movement.value = 0
       document.documentElement.style.setProperty('--live-chat-panel-width', `${newWidth}px`)
     },
     { once: true },
@@ -90,6 +90,10 @@ const startDragging = (e: PointerEvent) => {
 // 拖动时暂时提高 z-index, 否则预览区域会被挡住
 html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-ctnr {
   z-index: 1001 !important;
+}
+.aside-area-toggle-btn {
+  height: 90px;
+  @include absolute-v-center();
 }
 .chat-panel-fit-dragger {
   $dragger-width: 8px;
