@@ -1,46 +1,23 @@
-import {
-  OptionsOfMetadata,
-  defineComponentMetadata,
-  defineOptionsMetadata,
-} from '@/components/define'
+import { defineComponentMetadata } from '@/components/define'
 import {
   addComponentListener,
   getComponentSettings,
   removeComponentListener,
 } from '@/core/settings'
-import { sq } from '@/core/spin-query'
-import { getNumberValidator } from '@/core/utils'
+import { select, sq } from '@/core/spin-query'
+import { mountVueComponent } from '@/core/utils'
+import { useScopedConsole } from '@/core/utils/log'
 import { liveUrls } from '@/core/utils/urls'
+import { ChatPanelFitOptions, ChatPanelFitOptionsMinWidth, chatPanelFitOptions } from './options'
 
 const name = 'liveChatPanelFit'
-// const ratioRegex = /^(\d+):(\d+)$/
-const minWidth = 190
+const console = useScopedConsole(name)
 
-const options = defineOptionsMetadata({
-  // targetRatio: {
-  //   defaultValue: '16:9',
-  //   displayName: '视频区域宽高比',
-  //   validator: (value: string, oldValue: string) => {
-  //     if (ratioRegex.test(value)) {
-  //       return value
-  //     }
-  //     return oldValue
-  //   },
-  // },
-  maxWidth: {
-    defaultValue: 1000,
-    displayName: '侧边栏最大宽度 (px)',
-    validator: getNumberValidator(minWidth),
-  },
-})
 const calcPanelWidth = () => {
-  const { maxWidth } = getComponentSettings<OptionsOfMetadata<typeof options>>(name).options
-  // const match = targetRatio.match(ratioRegex)
-  // if (!match) {
-  //   return
-  // }
-  // const widthRatio = parseInt(match[1])
-  // const heightRatio = parseInt(match[2])
+  const { maxWidth, customWidth } = getComponentSettings<ChatPanelFitOptions>(name).options
+  if (customWidth !== 0) {
+    return
+  }
   const video = dq('.live-player-ctnr video') as HTMLVideoElement
   if (!video) {
     return
@@ -55,28 +32,47 @@ const calcPanelWidth = () => {
   console.log({ liveChatPanelWidth })
   document.documentElement.style.setProperty(
     '--live-chat-panel-width',
-    `${lodash.clamp(liveChatPanelWidth, minWidth, maxWidth)}px`,
+    `${lodash.clamp(liveChatPanelWidth, ChatPanelFitOptionsMinWidth, maxWidth)}px`,
   )
 }
 const debounceCalcPanelWidth = lodash.debounce(calcPanelWidth, 200)
+
+let draggerInstance: Vue
 const load = async () => {
   addComponentListener(`${name}.targetRatio`, calcPanelWidth)
   addComponentListener(`${name}.maxWidth`, calcPanelWidth)
+  window.addEventListener('customWidthReset', calcPanelWidth)
   window.addEventListener('resize', debounceCalcPanelWidth)
   const video = await sq(
     () => dq('.live-player-ctnr video') as HTMLVideoElement,
     v => v !== null && v.readyState !== HTMLMediaElement.HAVE_NOTHING,
   )
   if (!video) {
+    console.log('未找到 video 元素')
     return
   }
   calcPanelWidth()
+
+  const asideToggleButton = (await select('.aside-area-toggle-btn')) as HTMLElement
+  if (!asideToggleButton) {
+    console.log('未找到侧边栏按钮')
+    return
+  }
+  const { default: ChatPanelFitDragger } = await import('./ChatPanelFitDragger.vue')
+  draggerInstance = mountVueComponent(ChatPanelFitDragger)
+  asideToggleButton.insertAdjacentElement('afterend', draggerInstance.$el)
 }
 const unload = () => {
   removeComponentListener(`${name}.targetRatio`, calcPanelWidth)
   removeComponentListener(`${name}.maxWidth`, calcPanelWidth)
+  window.removeEventListener('customWidthReset', calcPanelWidth)
   window.removeEventListener('resize', debounceCalcPanelWidth)
   document.documentElement.style.removeProperty('--live-chat-panel-width')
+  if (draggerInstance) {
+    draggerInstance.$el.remove()
+    draggerInstance.$destroy()
+    draggerInstance = undefined
+  }
 }
 
 export const component = defineComponentMetadata({
@@ -94,5 +90,5 @@ export const component = defineComponentMetadata({
       important: true,
     },
   ],
-  options,
+  options: chatPanelFitOptions,
 })
