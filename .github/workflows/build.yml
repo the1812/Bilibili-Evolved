@@ -36,8 +36,6 @@ jobs:
           pnpm install
           cd ../
           pnpm run build-features
-      - name: Build GitHub config
-        run: pnpm run build-github-config
       - name: Git commit
         id: commit
         run: |
