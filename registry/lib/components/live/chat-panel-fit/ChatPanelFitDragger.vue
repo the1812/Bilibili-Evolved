@@ -70,14 +70,14 @@ const startDragging = (e: PointerEvent) => {
       document.documentElement.classList.remove('custom-width-dragging')
       document.documentElement.style.cursor = ''
       document.documentElement.removeEventListener('pointermove', handlePointerMove)
+      isDragging.value = false
+      startPoint.value = 0
       if (!movement.value) {
         return
       }
+      movement.value = 0
       const newWidth = previewWidth.value
       options.customWidth = newWidth
-      isDragging.value = false
-      startPoint.value = 0
-      movement.value = 0
       document.documentElement.style.setProperty('--live-chat-panel-width', `${newWidth}px`)
     },
     { once: true },
