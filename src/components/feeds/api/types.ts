@@ -4,6 +4,8 @@
 export interface FeedsCardType {
   id: number
   name: string
+  /** 用于新版动态 API 的 type (/x/polymer/web-dynamic/), 各种动态类型对应的 type 还不完善 */
+  apiType?: string
 }
 /**
  * 转发类型的动态卡片
@@ -16,68 +18,71 @@ export const feedsCardTypes = {
   repost: {
     id: 1,
     name: '转发',
-  } as FeedsCardType,
+  },
   textWithImages: {
     id: 2,
     name: '图文',
-  } as FeedsCardType,
+  },
   text: {
     id: 4,
     name: '文字',
-  } as FeedsCardType,
+  },
   video: {
     id: 8,
     name: '视频',
-  } as FeedsCardType,
+    apiType: 'video',
+  },
   miniVideo: {
     id: 16,
     name: '小视频',
-  } as FeedsCardType,
+  },
   column: {
     id: 64,
     name: '专栏',
-  } as FeedsCardType,
+    apiType: 'article',
+  },
   audio: {
     id: 256,
     name: '音频',
-  } as FeedsCardType,
+  },
   bangumi: {
     id: 512,
     name: '番剧',
-  } as FeedsCardType,
+    apiType: 'pgc',
+  },
   share: {
     id: 2048,
     name: '分享',
-  } as FeedsCardType,
+  },
   manga: {
     id: 2049,
     name: '漫画',
-  } as FeedsCardType,
+  },
   film: {
     id: 4098,
     name: '电影',
-  } as FeedsCardType,
+  },
   tv: {
     id: 4099,
     name: 'TV剧',
-  } as FeedsCardType,
+  },
   chinese: {
     id: 4100,
     name: '国创',
-  } as FeedsCardType,
+  },
   documentary: {
     id: 4101,
     name: '纪录片',
-  } as FeedsCardType,
+  },
   mediaList: {
     id: 4300,
     name: '收藏夹',
-  } as FeedsCardType,
+  },
   liveRecord: {
     id: 2047, // FIXME: 暂时随便写个 id 了, 这个东西目前找不到 type
     name: '开播记录',
-  } as FeedsCardType,
-}
+  },
+} satisfies Record<string, FeedsCardType>
 /** 是否是转发类型的卡片, 额外能够读取被转发动态的信息 */
 export const isRepostType = (card: FeedsCard): card is RepostFeedsCard =>
   card.type === feedsCardTypes.repost

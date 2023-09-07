@@ -926,7 +926,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/intersection-actions.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/intersection-actions.js)
 
-by [@FoundTheWOUT](https://github.com/FoundTheWOUT)
+by [@Waua](https://github.com/FoundTheWOUT)
 
 设置当播放器移出视图的位置变化时执行的动作.
 

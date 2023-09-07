@@ -707,7 +707,7 @@
     "type": "component",
     "name": "playerIntersectionActions",
     "displayName": "播放器位置动作",
-    "description": "by [@FoundTheWOUT](https://github.com/FoundTheWOUT)\n\n设置当播放器移出视图的位置变化时执行的动作.",
+    "description": "by [@Waua](https://github.com/FoundTheWOUT)\n\n设置当播放器移出视图的位置变化时执行的动作.",
     "fullRelativePath": "../../registry/dist/components/video/player/intersection-actions.js",
     "fullAbsolutePath": "registry/dist/components/video/player/intersection-actions.js"
   },
