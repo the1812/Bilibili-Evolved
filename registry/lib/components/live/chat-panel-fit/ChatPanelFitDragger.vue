@@ -10,7 +10,9 @@
   >
     <div class="chat-panel-fit-dragger-bar"></div>
     <div class="chat-panel-fit-dragger-preview-area" :style="{ width: `${previewWidth}px` }">
-      <div class="chat-panel-fit-dragger-preview-area-background">{{ previewWidth }}px</div>
+      <div class="chat-panel-fit-dragger-preview-area-background">
+        {{ previewWidth.toFixed(1) }}px
+      </div>
     </div>
   </div>
 </template>
@@ -64,10 +66,12 @@ const startDragging = (e: PointerEvent) => {
     options.customWidth = getAutoWidth()
   }
   draggerElement.value.setPointerCapture(e.pointerId)
+  document.documentElement.style.cursor = 'ew-resize'
   document.documentElement.classList.add('custom-width-dragging')
   document.documentElement.addEventListener(
     'pointerup',
     () => {
+      document.documentElement.style.cursor = ''
       document.documentElement.classList.remove('custom-width-dragging')
       isDragging.value = false
       startPoint.value = 0
@@ -89,6 +93,9 @@ const startDragging = (e: PointerEvent) => {
 // 拖动时暂时提高 z-index, 否则预览区域会被挡住
 html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-ctnr {
   z-index: 1001 !important;
+  .head-info-section {
+    display: none !important;
+  }
 }
 .aside-area-toggle-btn {
   height: 90px;
