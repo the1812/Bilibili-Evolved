@@ -4,7 +4,7 @@ import {
   applyContentFilter,
   isPreOrderedVideo,
 } from '@/components/feeds/api'
-import { descendingStringSort } from '@/core/utils/sort'
+import { descendingBigIntSort } from '@/core/utils/sort'
 import { logError } from '@/core/utils/log'
 import { setLatestID } from '@/components/feeds/notify'
 import { VLoading, VEmpty, ScrollTrigger } from '@/ui'
@@ -33,7 +33,7 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
     },
     computed: {
       sortedCards() {
-        return ([...this.cards] as MappedItem[]).sort(descendingStringSort(it => it.id))
+        return ([...this.cards] as MappedItem[]).sort(descendingBigIntSort(it => it.id))
       },
     },
     async created() {
@@ -56,12 +56,12 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
             this.hasMorePage = false
             throw new Error(json.message)
           }
-          const jsonCards = lodash.get(json, 'data.cards', []).map(jsonMapper) as MappedItem[]
+          const jsonCards = lodash.get(json, 'data.items', []).map(jsonMapper) as MappedItem[]
 
           let concatCards = applyContentFilter(
             cards
               .concat(jsonCards)
-              .sort(descendingStringSort(it => it.id))
+              .sort(descendingBigIntSort(it => it.id))
               .filter(card => !isPreOrderedVideo(card)),
           )
 

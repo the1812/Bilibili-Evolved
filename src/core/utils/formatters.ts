@@ -19,9 +19,27 @@ export const formatFileSize = (bytes: number, fixed = 1) => {
  */
 export const formatPercent = (percent: number, fixed = 1) =>
   `${Math.round(percent * 100 * 10 ** fixed) / 10 ** fixed}%`
-/** 格式化时长为`H:mm:ss.F`, 不足1小时则为`mm:ss.F`
- * @param time 时长
- * @param fixed 保留的小数位(毫秒), 默认不保留
+
+/**
+ * 将时长文本转换为秒数
+ * @param durationText 时长文本
+ */
+export const parseDuration = (durationText: string) => {
+  const parts = durationText.split(':')
+  let result = 0
+  parts.forEach((part, index) => {
+    const isLastPart = index === parts.length - 1
+    const partNumber = isLastPart ? parseFloat(part) : parseInt(part)
+    if (Number.isNaN(partNumber)) {
+      return
+    }
+    result += partNumber * 60 ** (parts.length - 1 - index)
+  })
+  return result
+}
+/** 格式化时长为 `H:mm:ss.F`, 不足1小时则为 `mm:ss.F`
+ * @param time 时长 (秒)
+ * @param fixed 保留的小数位 (毫秒), 默认不保留
  */
 export const formatDuration = (time: number, fixed = 0) => {
   const second = (time % 60).toFixed(fixed)

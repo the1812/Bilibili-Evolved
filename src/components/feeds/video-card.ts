@@ -23,6 +23,7 @@ export interface VideoCard {
   topics?: {
     id: number
     name: string
+    url?: string
   }[]
   type?: string
   points?: number
