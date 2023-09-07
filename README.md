@@ -16,8 +16,10 @@
 
 [🐛 版本历史与更新日志](CHANGELOG.md)
 
+[📌 更新计划](https://github.com/users/the1812/projects/1/views/3)
+
 [📕 文档站点](https://bilibili-evolved-doc.vercel.app/)
-> 文档站点由 [FoundTheWOUT](https://github.com/FoundTheWOUT) 开发, [点此进入 GitHub 仓库](https://github.com/FoundTheWOUT/bilibili-evolved-doc).
+> 文档站点由 [Waua](https://github.com/FoundTheWOUT) 开发, [点此进入 GitHub 仓库](https://github.com/FoundTheWOUT/bilibili-evolved-doc).
 
 [📖 参与开发](CONTRIBUTING.md)
 
