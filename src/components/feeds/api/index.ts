@@ -125,7 +125,7 @@ export const getVideoFeeds = withContentFilter(
             })
           return {
             id: card.id_str,
-            aid: archive.aid,
+            aid: parseInt(archive.aid),
             bvid: archive.bvid,
             title: archive.title,
             upFaceUrl: author.face,
