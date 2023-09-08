@@ -84,7 +84,7 @@ export default Vue.extend({
       const author = lodash.get(card, 'modules.module_author')
       return {
         id: card.id_str,
-        aid: archive.aid,
+        aid: parseInt(archive.aid),
         bvid: archive.bvid,
         videoUrl: `https://www.bilibili.com/${archive.bvid}`,
         coverUrl: archive.cover,
