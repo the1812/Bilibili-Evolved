@@ -51,6 +51,21 @@ export const formatDuration = (time: number, fixed = 0) => {
   }
   return `${hour}:${minute.padStart(2, '0')}:${second.padStart(secondTotalLength, '0')}`
 }
+export const parseCount = (countText: string | number) => {
+  if (typeof countText === 'number') {
+    return countText
+  }
+  const unit = (() => {
+    if (countText.match(/亿$/)) {
+      return 1e8
+    }
+    if (countText.match(/万$/)) {
+      return 1e4
+    }
+    return 1
+  })()
+  return parseFloat(countText) * unit
+}
 const formatCountData = (count: number | string) => {
   if (typeof count === 'string') {
     count = parseInt(count)
