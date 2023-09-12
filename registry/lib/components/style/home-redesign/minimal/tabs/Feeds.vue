@@ -4,7 +4,7 @@
       <VideoCard v-for="c of cards" :key="c.id" :data="c" />
     </div>
     <VEmpty v-if="!loading && cards.length === 0" />
-    <ScrollTrigger v-if="!error" @trigger="loadCards" />
+    <ScrollTrigger v-if="!error" ref="scrollTrigger" detect-viewport @trigger="loadCards" />
     <MinimalHomeOperations v-if="cards.length > 0" @refresh="refresh" />
   </div>
 </template>
@@ -43,6 +43,7 @@ export default Vue.extend({
       try {
         this.error = false
         this.loading = true
+        this.$refs.scrollTrigger.setLoadState('loading')
         this.cards = lodash.uniqBy(
           [...this.cards, ...(await getVideoFeeds('video', this.lastID))],
           it => it.id,
@@ -50,12 +51,17 @@ export default Vue.extend({
       } catch (error) {
         logError(error)
         this.error = true
+        this.$refs.scrollTrigger.setLoadState('error')
       } finally {
         this.loading = false
+        if (this.loaded) {
+          this.$refs.scrollTrigger.setLoadState('loaded')
+        }
       }
     },
     async refresh() {
       this.cards = []
+      this.$refs.scrollTrigger.resetIsFirstLoad()
     },
   },
 })
