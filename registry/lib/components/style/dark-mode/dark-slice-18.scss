@@ -769,3 +769,7 @@
     }
   }
 }
+
+#{contains('live-info-content')} {
+  background: transparent !important;
+}
