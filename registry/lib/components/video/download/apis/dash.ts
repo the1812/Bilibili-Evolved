@@ -11,9 +11,11 @@ import {
   DownloadVideoInputItem,
 } from '../types'
 import { bangumiApi, videoApi } from './url'
+import { Options } from '..'
+import { getComponentSettings } from '@/core/settings'
 
 /** dash 格式更明确的扩展名 */
-export const DashExtensions = {
+export const DefaultDashExtensions = {
   video: '.mp4',
   audio: '.m4a',
   flacAudio: '.flac',
@@ -27,7 +29,7 @@ export enum DashCodec {
   Av1 = 'AV1',
 }
 export interface Dash {
-  type: keyof typeof DashExtensions
+  type: keyof typeof DefaultDashExtensions
   bandWidth: number
   codecs: string
   codecId: number
@@ -50,12 +52,25 @@ export interface DashFilters {
   video?: (dash: VideoDash) => boolean
   audio?: (dash: AudioDash) => boolean
 }
+const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => {
+  const { options } = getComponentSettings<Options>('downloadVideo')
+  if (type === 'video') {
+    return options.dashVideoExtension
+  }
+  if (type === 'audio') {
+    return options.dashAudioExtension
+  }
+  if (type === 'flacAudio') {
+    return options.dashFlacAudioExtension
+  }
+  return DefaultDashExtensions[type] ?? DashFragmentExtension
+}
 const dashToFragment = (dash: Dash): DownloadVideoFragment => ({
   url: dash.downloadUrl,
   backupUrls: dash.backupUrls,
   length: dash.duration,
   size: Math.trunc((dash.bandWidth * dash.duration) / 8),
-  extension: DashExtensions[dash.type] ?? DashFragmentExtension,
+  extension: getDashExtensions(dash.type),
 })
 export const dashToFragments = (info: {
   videoDashes: VideoDash[]
