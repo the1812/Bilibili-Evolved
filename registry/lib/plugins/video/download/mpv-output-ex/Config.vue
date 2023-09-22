@@ -1,4 +1,3 @@
-
 <template>
   <div class="mpv-ex config">
     <div class="config-item">
@@ -46,4 +45,3 @@ export default Vue.extend<ConfigDataType>({
   }
 }
 </style>
-  
