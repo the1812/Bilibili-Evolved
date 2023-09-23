@@ -14,14 +14,14 @@
     "type": "tsc -p tsconfig.type-check.json --noEmit"
   },
   "devDependencies": {
-    "@babel/core": "7.20.12",
-    "@babel/parser": "^7.20.15",
+    "@babel/core": "7.22.10",
+    "@babel/parser": "^7.22.10",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
-    "@babel/preset-env": "^7.20.2",
-    "@babel/preset-typescript": "^7.18.6",
-    "@babel/types": "^7.20.7",
+    "@babel/preset-env": "^7.22.10",
+    "@babel/preset-typescript": "^7.22.5",
+    "@babel/types": "^7.22.10",
     "@types/async-exit-hook": "^2.0.0",
-    "@types/babel__core": "^7.20.0",
+    "@types/babel__core": "^7.20.1",
     "@types/color": "^3.0.1",
     "@types/glob": "^7.2.0",
     "@types/lodash": "^4.14.172",
@@ -36,7 +36,7 @@
     "@typescript-eslint/parser": "^5.50.0",
     "async-exit-hook": "^2.0.1",
     "autoprefixer": "^10.0.1",
-    "babel-loader": "^8.1.0",
+    "babel-loader": "^9.1.3",
     "browserslist": "^4.21.4",
     "css-loader": "^5.0.0",
     "eslint": "^7.32.0",
@@ -44,7 +44,7 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "7.1.0",
+    "eslint-plugin-vue": "^9.15.1",
     "fast-sass-loader": "^2.0.0",
     "glob": "^10.2.6",
     "postcss": "^8.1.0",
@@ -60,13 +60,13 @@
     "to-string-loader": "^1.2.0",
     "ts-node": "^10.7.0",
     "typescript": "^4.9.5",
-    "vue-loader": "^15.8.3",
-    "vue-template-compiler": "^2.6.11",
+    "vue-loader": "^15.10.1",
     "webpack": "^5.31.2",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.6.0",
     "ws": "^8.5.0",
-    "yaml": "^2.3.1"
+    "yaml": "^2.3.1",
+    "zx": "^7.2.3"
   },
   "dependencies": {
     "@popperjs/core": "^2.6.0",
@@ -78,12 +78,12 @@
     "protobufjs": "^6.11.2",
     "streamsaver": "^2.0.6",
     "tippy.js": "^6.3.1",
-    "vue": "^2.6.11",
-    "vue-fragment": "^1.5.2"
+    "vue": "^2.7.14"
   },
   "pnpm": {
     "overrides": {
-      "caniuse-lite": "^1.0.30001481"
+      "caniuse-lite": "^1.0.30001481",
+      "consolidate": "1.0.1"
     }
   },
   "keywords": [

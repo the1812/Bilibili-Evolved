@@ -20,7 +20,6 @@
 .rank-container .cm-module,
 body:not(.preserve-event-banner) .activity-m,
 body:not(.preserve-event-banner) .activity-m-v1,
-body:not(.preserve-reply-notice) .reply-notice,
 body.remove-game-match-module .bili-wrapper > .home-match,
 body.remove-game-match-module #reportFirst3,
 .home-content .ad-panel,
@@ -64,7 +63,7 @@ body:not(.preserve-feed-goods) .dyn-goods {
   color: #888;
   background-color: #8882;
   font-size: 24pt;
-  font-weight: bold;
+  @include semi-bold();
   align-items: center;
   justify-content: space-evenly;
 }
@@ -81,11 +80,11 @@ body.dark .blocked-ads.new {
   pointer-events: none !important;
   opacity: 0 !important;
 }
-body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-goods)  {
+body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-goods) {
   margin: 0 !important;
 }
 .bili-video-card__wrap {
-  a[href*="cm.bilibili.com"] {
+  a[href*='cm.bilibili.com'] {
     pointer-events: none !important;
     cursor: default !important;
 
@@ -96,7 +95,7 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
       display: none !important;
     }
     body.promotion-show-placeholder &::before {
-      content: "🚫已屏蔽广告";
+      content: '🚫已屏蔽广告';
       border-radius: 6px;
       @include h-center();
       justify-content: center;

@@ -11,3 +11,5 @@ export const playerPolyfill = lodash.once(() =>
     v4PlayerPolyfill(),
   ]),
 )
+
+export * from './events'

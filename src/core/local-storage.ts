@@ -1,5 +1,5 @@
 import { select } from './spin-query'
-import { deleteValue, getRandomId } from './utils'
+import { createPostHook, deleteValue, getRandomId } from './utils'
 
 interface CrossOriginMessage {
   type: string
@@ -131,4 +131,34 @@ export const crossOriginLocalStorage = {
       id: callbackId,
     })
   },
+}
+
+type LocalStorageListener = (key: string, value: string) => void
+const localStorageListeners: LocalStorageListener[] = []
+let currentWindowLocalStorageHooked = false
+
+/**
+ * 添加对 LocalStorage 的变化监听, 支持当前 window 和同源的其他 window 产生的 LocalStorage 变化
+ * @param onLocalStorageUpdate LocalStorage 变化回调
+ * @returns 取消监听的函数
+ */
+export const watchLocalStorage = (onLocalStorageUpdate: LocalStorageListener) => {
+  if (!currentWindowLocalStorageHooked) {
+    createPostHook(unsafeWindow.localStorage, 'setItem', (key: string, value: string) => {
+      localStorageListeners.forEach(listener => listener(key, value))
+    })
+    currentWindowLocalStorageHooked = true
+  }
+  localStorageListeners.push(onLocalStorageUpdate)
+  const otherWindowLocalStorageListener = (e: StorageEvent) => {
+    onLocalStorageUpdate(e.key, e.newValue)
+  }
+  window.addEventListener('storage', otherWindowLocalStorageListener)
+  return () => {
+    const index = localStorageListeners.indexOf(onLocalStorageUpdate)
+    if (index > -1) {
+      localStorageListeners.splice(index, 1)
+    }
+    window.removeEventListener('storage', otherWindowLocalStorageListener)
+  }
 }

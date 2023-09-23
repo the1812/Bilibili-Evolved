@@ -1,3 +1,4 @@
+import lodash from 'lodash'
 import webpack, { Configuration } from 'webpack'
 import { getBanner, getDefaultConfig } from './webpack.config'
 import previewConfig from './webpack.dev'
@@ -25,5 +26,8 @@ const targets = [mainConfig, previewConfig].map(config => {
   config.devtool = false
   return config
 })
+
+// see src/client/init-vue.ts
+lodash.set(previewConfig, 'resolve.alias.vue$', 'vue/dist/vue.common.prod.js')
 
 export default targets

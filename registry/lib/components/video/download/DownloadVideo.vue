@@ -385,7 +385,7 @@ export default Vue.extend({
 
     .title {
       font-size: 16px;
-      font-weight: bold;
+      @include semi-bold();
       flex-grow: 1;
       margin: 0 8px;
     }
