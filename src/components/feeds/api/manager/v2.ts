@@ -48,26 +48,33 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
     return text
   }
   const { desc: mainDesc, major } = dynamicModule
-  const mainText = mainDesc?.text ?? ''
-  let typeText = ''
-  switch (cardType) {
-    default: {
-      break
+  const mainText = (() => {
+    if (major?.opus) {
+      return lodash.get(major.opus, 'summary.text')
     }
-    case feedsCardTypes.bangumi:
-    case feedsCardTypes.column:
-    case feedsCardTypes.video: {
-      const target = major.archive ?? major.pgc ?? major.article
-      if (target) {
-        const { title, desc } = target
-        typeText = combineText(title, desc)
-      } else if (major.opus) {
-        const { title, summary } = major.opus
-        typeText = combineText(title, summary.text)
+    return mainDesc?.text ?? ''
+  })()
+  const typeText = (() => {
+    switch (cardType) {
+      default: {
+        return ''
       }
-      break
+      case feedsCardTypes.bangumi:
+      case feedsCardTypes.column:
+      case feedsCardTypes.video: {
+        const target = major.archive ?? major.pgc ?? major.article
+        if (target) {
+          const { title, desc } = target
+          return combineText(title, desc)
+        }
+        if (major.opus) {
+          const { title, summary } = major.opus
+          return combineText(title, summary.text)
+        }
+        return ''
+      }
     }
-  }
+  })()
   return combineText(mainText, typeText)
 }
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
