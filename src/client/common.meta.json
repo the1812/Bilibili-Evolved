@@ -1,5 +1,5 @@
 {
-  "version": "2.7.6",
+  "version": "2.8.5",
   "author": "Grant Howard, Coulomb-G",
   "copyright": "[year], Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)",
   "license": "MIT",
@@ -22,7 +22,9 @@
     "GM_setValue",
     "GM_deleteValue",
     "GM_info",
-    "GM_xmlhttpRequest"
+    "GM_xmlhttpRequest",
+    "GM_registerMenuCommand",
+    "GM_unregisterMenuCommand"
   ],
   "connect": [
     "raw.githubusercontent.com",

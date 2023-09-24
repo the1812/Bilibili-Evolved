@@ -25,7 +25,7 @@ export const component = defineComponentMetadata({
     })
   },
   options: freshHomeOptionsMetadata,
-  // extraOptions: () => import('./ExtraOptions.vue'),
+  extraOptions: () => import('./ExtraOptions.vue'),
   unload: () => document.body.classList.add('home-redesign-off'),
   reload: () => document.body.classList.remove('home-redesign-off'),
   instantStyles: [

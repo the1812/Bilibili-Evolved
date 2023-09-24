@@ -1,0 +1,14 @@
+/* 上移原名称 */
+#page-follows .list-item .content .title {
+    margin-top: -9px;
+}
+
+/* 上移原简介/官方认证 */
+#page-follows .list-item .content p {
+    margin-top: -1px;
+}
+
+/* 修复关注时间元素的高度带来的布局影响 */
+.subscribe-time-fix {
+    margin-bottom: -10px;
+}

@@ -21,6 +21,8 @@ export interface SwitchOptions {
     iconPosition?: 'left' | 'right'
   }
 }
+
+/** @deprecated */
 export const createSwitchOptions = (options: SwitchOptions) => {
   if (options.radio === undefined) {
     options.radio = false

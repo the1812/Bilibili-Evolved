@@ -1,3 +1,4 @@
+import lodash from 'lodash'
 import webpack, { Configuration } from 'webpack'
 import { getBanner, getDefaultConfig } from './webpack.config'
 import previewMeta from '../src/client/bilibili-evolved.preview.meta.json'
@@ -15,5 +16,8 @@ previewConfig.plugins.push(
     entryOnly: true,
   }),
 )
+
+// see src/client/init-vue.ts
+lodash.set(previewConfig, 'resolve.alias.vue$', 'vue/dist/vue.common.prod.js')
 
 export default previewConfig

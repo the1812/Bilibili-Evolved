@@ -3,6 +3,7 @@ $prefix: 'simplifyLiveroom-switch';
 
 .#{$prefix} {
   &-vip .vip-icon,
+  &-wealthMedal .wealth-medal-ctnr,
   &-fansMedal .fans-medal-item-ctnr,
   &-title .title-label,
   &-userLevel .user-level-icon,
@@ -24,6 +25,7 @@ $prefix: 'simplifyLiveroom-switch';
   &-enterPrompt .chat-history-panel .brush-prompt,
   &-enterPrompt .chat-item.convention-msg,
   &-pk .chaos-pk,
+  &-pk .awesome-pk-box,
   &-topRank .chat-item.top3-notice,
   &-topRank .chat-item .rank-icon {
     display: none !important;
@@ -249,6 +251,9 @@ $prefix: 'simplifyLiveroom-switch';
     display: block !important;
     border-radius: 0 !important;
     background-color: transparent !important;
+  }
+  .wealth-medal-ctnr.medal-guard {
+    display: none !important;
   }
   .fans-medal-item.medal-guard {
     margin-left: 0 !important;

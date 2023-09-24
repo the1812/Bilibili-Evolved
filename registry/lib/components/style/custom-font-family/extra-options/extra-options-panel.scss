@@ -1,0 +1,109 @@
+@import 'common';
+
+$pref: 'eop';
+$prefH: 'eop-h';
+$prefHL: 'eop-h-l';
+$prefHR: 'eop-h-r';
+$prefC: 'eop-c';
+$prefCS: 'eop-c-s';
+
+$panelPadding: 22px;
+
+@mixin extra-options-panel {
+  &.extra-options-panel {
+    @include popup();
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    max-height: 80vh;
+    padding: $panelPadding 0;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(0.95);
+    transition: all 0.2s ease-out;
+    font-size: 14px;
+    z-index: 100002;
+
+    &.open {
+      transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+
+    &.peek {
+      opacity: 0.1;
+    }
+
+    > .#{$pref}-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 $panelPadding 18px $panelPadding;
+      flex-shrink: 0;
+
+      > .#{$prefH}-left {
+        display: flex;
+        column-gap: 4px;
+
+        > .#{$prefHL}-title {
+          @include semi-bold();
+          font-size: 19px;
+          line-height: 20px;
+        }
+      }
+
+      > .#{$prefH}-right {
+        display: flex;
+        column-gap: 20px;
+
+        > [class*='#{$prefHR}'] {
+          cursor: pointer;
+          transition: all 0.2s ease-out;
+
+          &:hover {
+            color: var(--theme-color);
+          }
+        }
+      }
+    }
+
+    > .#{$pref}-separator {
+      height: 1px;
+      margin: 0 $panelPadding;
+      background: rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+
+      body.dark & {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    > .#{$pref}-content {
+      padding: 0 $panelPadding;
+      overflow: auto;
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      > .#{$prefC}-section {
+        margin: 18px 0;
+
+        &:nth-child(1):nth-last-child(1) {
+          margin-bottom: 12px;
+        }
+
+        > .#{$prefCS}-title {
+          margin-bottom: 2px;
+          font-size: 14px;
+        }
+
+        > .#{$prefCS}-description {
+          margin-bottom: 8px;
+          opacity: 0.6;
+          font-size: 12px;
+        }
+
+        > .#{$prefCS}-input {
+          @include h-center();
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+}

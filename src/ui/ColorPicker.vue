@@ -353,7 +353,7 @@ export default Vue.extend({
       display: flex;
       flex-direction: column;
       .item-title {
-        font-weight: bold;
+        @include semi-bold();
         margin-bottom: 8px;
       }
       &.info,
@@ -379,7 +379,6 @@ export default Vue.extend({
           margin-right: 4px;
         }
         .ok {
-          // font-weight: bold;
           margin-left: 4px;
         }
       }

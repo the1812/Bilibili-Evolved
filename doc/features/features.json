@@ -91,9 +91,17 @@
     "type": "component",
     "name": "badgeHelper",
     "displayName": "直播勋章快速更换",
-    "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.",
+    "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.\r\n",
     "fullRelativePath": "../../registry/dist/components/live/badge-helper.js",
     "fullAbsolutePath": "registry/dist/components/live/badge-helper.js"
+  },
+  {
+    "type": "component",
+    "name": "liveChatPanelFit",
+    "displayName": "直播间网页全屏自适应",
+    "description": "在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果.\r\n如果在侧边栏的边缘拖动, 可以自定义侧边栏的固定宽度, 双击边缘可以还原到自动宽度.\r\n\r\n- `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)\r\n\r\n> 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.\r\n",
+    "fullRelativePath": "../../registry/dist/components/live/chat-panel-fit.js",
+    "fullAbsolutePath": "registry/dist/components/live/chat-panel-fit.js"
   },
   {
     "type": "component",
@@ -110,6 +118,14 @@
     "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮.",
     "fullRelativePath": "../../registry/dist/components/live/gift-box.js",
     "fullAbsolutePath": "registry/dist/components/live/gift-box.js"
+  },
+  {
+    "type": "component",
+    "name": "hide-fullscreen-gift-bar",
+    "displayName": "全屏直播礼物简化",
+    "description": "by [@TimmyOVO](https://github.com/TimmyOVO)\n\n移除全屏观看直播时的底部礼物栏",
+    "fullRelativePath": "../../registry/dist/components/live/hide-gift-fullscreen.js",
+    "fullAbsolutePath": "registry/dist/components/live/hide-gift-fullscreen.js"
   },
   {
     "type": "component",
@@ -169,9 +185,25 @@
   },
   {
     "type": "component",
+    "name": "clear-home",
+    "displayName": "首页净化",
+    "description": "by [@RieN7](https://github.com/rien7)\n\n删除首页特定类型的卡片",
+    "fullRelativePath": "../../registry/dist/components/style/clear-home.js",
+    "fullAbsolutePath": "registry/dist/components/style/clear-home.js"
+  },
+  {
+    "type": "component",
+    "name": "customFontFamily",
+    "displayName": "自定义字体",
+    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明",
+    "fullRelativePath": "../../registry/dist/components/style/custom-font-family.js",
+    "fullAbsolutePath": "registry/dist/components/style/custom-font-family.js"
+  },
+  {
+    "type": "component",
     "name": "customNavbar",
     "displayName": "自定义顶栏",
-    "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n",
+    "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换).\r\n\r\n启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n\r\n选项说明:\r\n- `全局固定`: 将顶栏固定显示, 即使页面向下滚动也仍然可见. (除了一部分有 b 站定制顶栏的页面会忽略此选项)\r\n- `主题色填充`: 使用通用设置中的主题颜色填充顶栏的背景.\r\n- `透明填充`: 在首页和主站的部分页面中, 当存在顶部横幅图片时, 顶栏背景将变为透明 + 阴影的样式.\r\n- `背景模糊`: 启用背景模糊效果, 会使背景颜色变得半透明, 注意这个效果非常非常消耗图形性能, 慎用.\r\n- `投影`: 在顶栏下方增加一小段投影效果.\r\n- `使用季节 Logo`: 使用 b 站首页的特殊 Logo 图片替换顶栏的 Logo 图, 通常会对应当前季节, 特殊活动期间可能会有变化导致看不清. (比如搞了个全白的 Logo, 而顶栏正好也是白色的)\r\n- `触摸模式`: 启用后顶栏的一级入口点击时不进行跳转, 方便触屏使用.\r\n- `新标签页打开`: 控制顶栏内链接是否在新标签页打开.\r\n- `自动刷新数据`: 启用后, 部分有弹窗的顶栏入口在鼠标经过时会自动刷新数据.\r\n- `顶栏高度`: 自定义顶栏的高度 (b 站原版的为 64px)\r\n- `消息提醒样式`: 自定义顶栏入口的消息提醒样式.\r\n- `搜索栏宽度`: 自定义搜索栏占顶栏的比例.\r\n- `链接对齐样式`: 自定义纯链接弹窗内链接文字的对齐样式.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
     "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
   },
@@ -241,6 +273,14 @@
   },
   {
     "type": "component",
+    "name": "hideVideoNotes",
+    "displayName": "隐藏记笔记",
+    "description": "隐藏视频页面中的 \"记笔记\" 按钮.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/video/notes.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/video/notes.js"
+  },
+  {
+    "type": "component",
     "name": "hideRecommendedLive",
     "displayName": "隐藏直播推荐",
     "description": "隐藏视频页面右侧下方的直播推荐.",
@@ -251,9 +291,17 @@
     "type": "component",
     "name": "hideRelatedVideos",
     "displayName": "隐藏视频推荐",
-    "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.",
+    "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
+  },
+  {
+    "type": "component",
+    "name": "hideVideoReport",
+    "displayName": "隐藏稿件投诉",
+    "description": "隐藏视频页面中的 \"稿件投诉\" 按钮.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/video/report.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/video/report.js"
   },
   {
     "type": "component",
@@ -291,7 +339,7 @@
     "type": "component",
     "name": "playerOnTopNew",
     "displayName": "播放器置顶（新）",
-    "description": "by [@RieN7](https://github.com/rien7)\n\n原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.",
+    "description": "by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@LockRim](https://github.com/LockRim)\n\n原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.",
     "fullRelativePath": "../../registry/dist/components/style/player-on-top-new.js",
     "fullAbsolutePath": "registry/dist/components/style/player-on-top-new.js"
   },
@@ -331,7 +379,7 @@
     "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
-    "description": "- 删除热评头像下方的关注按钮\r\n- 删除用户的等级标识\r\n- 删除发送源信息(\\`来自安卓客户端\\` 这种)\r\n- 删除用户名右边的勋章\r\n- 删除评论区顶部的横幅\r\n- 发送时间移动到右上角\r\n- 位图图标全部换用矢量图标, 高分屏不会模糊\r\n- 投票仅显示链接, 隐藏下面的大框.\r\n\r\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.\r\n",
+    "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\r\n\r\n> 配置项仅对新版评论区有效\r\n\r\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\r\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\r\n- `头像框`: 隐藏头像框.\r\n- `回复换行`:\r\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\r\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\r\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\r\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\r\n- `活动横幅`: 隐藏评论区顶部的活动横幅\r\n",
     "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
   },
@@ -355,7 +403,7 @@
     "type": "component",
     "name": "disableSpecialDanmaku",
     "displayName": "禁用特殊弹幕样式",
-    "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.",
+    "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
     "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
   },
@@ -409,9 +457,17 @@
   },
   {
     "type": "component",
+    "name": "albumPubTimeShow",
+    "displayName": "相簿发布时间显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在相簿界面显示相簿的发布时间",
+    "fullRelativePath": "../../registry/dist/components/utils/album-time-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/album-time-show.js"
+  },
+  {
+    "type": "component",
     "name": "autoLike",
     "displayName": "自动点赞",
-    "description": "进入视频 / 查看动态时, 自动点赞.\r\n",
+    "description": "by [@CrazyboyQCD](https://github.com/CrazyboyQCD)\n\n进入视频 / 查看动态时, 自动点赞\\\r\n无法触发未加载动态的点赞，当启用手动对动态点赞后可手动触发，启用后不会触发动态自动点赞\\\r\n安装快捷键扩展后可以点击【l】键或【L】键触发\\\r\n还可以添加动态点赞的黑名单\\\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/auto-like.js",
     "fullAbsolutePath": "registry/dist/components/utils/auto-like.js"
   },
@@ -505,6 +561,14 @@
   },
   {
     "type": "component",
+    "name": "ipShow",
+    "displayName": "评论区IP属地显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在评论区显示评论的IP属地信息",
+    "fullRelativePath": "../../registry/dist/components/utils/ip-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/ip-show.js"
+  },
+  {
+    "type": "component",
     "name": "keymap",
     "displayName": "快捷键扩展",
     "description": "为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.",
@@ -521,9 +585,17 @@
   },
   {
     "type": "component",
+    "name": "subscribeTimeShow",
+    "displayName": "关注时间显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在粉丝/关注列表显示关注的具体时间",
+    "fullRelativePath": "../../registry/dist/components/utils/subscribe-time-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/subscribe-time-show.js"
+  },
+  {
+    "type": "component",
     "name": "urlParamsClean",
     "displayName": "网址参数清理",
-    "description": "自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.\r\n",
+    "description": "自动删除网址中的多余跟踪参数。请注意这会导致浏览器历史记录出现重复的标题（分别是转换前后的网址），并可能导致后退要多退几次。\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/url-params-clean.js",
     "fullAbsolutePath": "registry/dist/components/utils/url-params-clean.js"
   },
@@ -550,6 +622,14 @@
     "description": "将稍后再看的链接重定向为普通播放网址.",
     "fullRelativePath": "../../registry/dist/components/utils/watchlater-redirect.js",
     "fullAbsolutePath": "registry/dist/components/utils/watchlater-redirect.js"
+  },
+  {
+    "type": "component",
+    "name": "autoRemoveWatchlater",
+    "displayName": "自动移出稍后再看",
+    "description": "在稍后再看页面播放结束时, 自动将当前视频移出稍后再看.\r\n注意:\r\n- 一定要播放结束, 快结束时手动切走不算\r\n- b 站的稍后再看列表不会实时刷新\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/auto-remove-watchlater.js",
+    "fullAbsolutePath": "registry/dist/components/video/auto-remove-watchlater.js"
   },
   {
     "type": "component",
@@ -779,7 +859,7 @@
     "type": "component",
     "name": "showUploadTime",
     "displayName": "显示视频投稿时间",
-    "description": "by [@wisokey](https://github.com/wisokey)\n\n为视频播放页面的推荐列表中的视频添加显示视频投稿时间.\r\n\r\n`时间格式` 替换up名的文本格式 (默认为'up · yyyy-MM-dd'):\r\n  - y: 年\r\n  - M: 月\r\n  - d: 日\r\n  - h: 时\r\n  - m: 分\r\n  - s: 秒\r\n  - q: 季度\r\n  - up: up名\r\n",
+    "description": "by [@wisokey](https://github.com/wisokey)\n\n为视频播放页面的推荐列表中的视频添加显示视频投稿时间.\r\n\r\n`时间格式` 替换up名的文本格式 (默认为'up · yyyy-MM-dd'):\r\n  - y: 年\r\n  - M: 月\r\n  - d: 日\r\n  - h: 时\r\n  - m: 分\r\n  - s: 秒\r\n  - q: 季度\r\n  - up: up名\r\n  - \\r: 回车符\r\n  - \\n：换行符\r\n  - \\t：制表符",
     "fullRelativePath": "../../registry/dist/components/video/player/show-upload-time.js",
     "fullAbsolutePath": "registry/dist/components/video/player/show-upload-time.js"
   },

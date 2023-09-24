@@ -8,24 +8,32 @@
 @mixin h-center($gap: 0) {
   display: flex;
   align-items: center;
-  gap: $gap;
+  @if ($gap != 0) {
+    gap: $gap;
+  }
 }
 @mixin v-center($gap: 0) {
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: $gap;
+  @if ($gap != 0) {
+    gap: $gap;
+  }
 }
 @mixin h-stretch($gap: 0) {
   display: flex;
   align-items: stretch;
-  gap: $gap;
+  @if ($gap != 0) {
+    gap: $gap;
+  }
 }
 @mixin v-stretch($gap: 0) {
   display: flex;
   align-items: stretch;
   flex-direction: column;
-  gap: $gap;
+  @if ($gap != 0) {
+    gap: $gap;
+  }
 }
 @mixin round-bar($height) {
   box-sizing: border-box;

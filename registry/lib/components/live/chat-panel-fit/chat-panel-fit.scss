@@ -1,0 +1,10 @@
+.player-full-win:not(.hide-aside-area) {
+  .live-room-app {
+    .aside-area {
+      width: var(--live-chat-panel-width, 302px) !important;
+    }
+    .player-section {
+      width: calc(100% - var(--live-chat-panel-width, 302px)) !important;
+    }
+  }
+}

@@ -28,3 +28,12 @@ body.disable-up-danmaku-style {
     }
   }
 }
+body.disable-vip-danmaku-style {
+  .bili-dm-vip {
+    display: contents !important;
+    text-shadow: inherit !important;
+  }
+  .bili-dm:not([style*='--textShadow']) {
+    --textShadow: var(--danmaku-text-shadow);
+  }
+}
