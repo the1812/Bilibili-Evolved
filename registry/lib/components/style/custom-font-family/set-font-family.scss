@@ -1,0 +1,115 @@
+$name: 'custom-font-family';
+$fontFamilyCss: var(--#{$name}--options--font-family) !important;
+
+// 收集 CSS 路径为单一字符串
+@function collectPaths($pathList) {
+  $stringPath: '';
+  @each $path in $pathList {
+    $i: index($pathList, $path);
+    @if $i!=1 {
+      $stringPath: '#{$stringPath}, ';
+    }
+    $stringPath: '#{$stringPath}#{$path}';
+  }
+  @return $stringPath;
+}
+
+@function getOrnamentPath() {
+  $newVideo: '.reply-item .root-reply-container .content-warp .reply-decorate .user-sailing .user-sailing-text .sailing-text';
+  $dynamic: '.bili-dyn-ornament__type--3 span';
+  $dynamicCommentArea: '.bb-comment .sailing .sailing-info, .comment-bilibili-fold .sailing .sailing-info';
+  @return collectPaths(($newVideo, $dynamic, $dynamicCommentArea));
+}
+
+@function getFansMedalPath() {
+  $newVideo: '.badge-level';
+  @return collectPaths(($newVideo));
+}
+
+@function getDanmakuPath() {
+  $main: '.bili-dm';
+  @return collectPaths(($main));
+}
+
+@function getIconFontPath() {
+  $mainA: '.iconfont';
+  $mainB: '.icon-font';
+  $note: '.read-icon';
+  $noteEdit: '.bili-note-iconfont';
+  $footer: '.bili-footer-font';
+  $bangumiInfo: '[class^="icon-"]';
+  $history: '.bilifont';
+  $message: '.bp-icon-font';
+  $creativeCenterA: '.bcc-iconfont';
+  $creativeCenterB: '.fontvt';
+  @return collectPaths(
+    (
+      $mainA,
+      $mainB,
+      $note,
+      $noteEdit,
+      $footer,
+      $bangumiInfo,
+      $history,
+      $message,
+      $creativeCenterA,
+      $creativeCenterB
+    )
+  );
+}
+
+@function getColumnPath() {
+  $mainA: '.article-detail .article-container .article-container__content .article-content .read-article-holder';
+  $mainB: '.article-detail .article-container .article-container__content .article-content .read-article-holder *';
+  @return collectPaths(($mainA, $mainB));
+}
+
+@function getScorePath() {
+  $documentary: '.season-cover .score';
+  $big: '.season-cover .season-cover-score';
+  @return collectPaths(($documentary, $big));
+}
+
+// 装扮，在评论区、动态等界面显示
+$ornament: getOrnamentPath();
+
+// 粉丝勋章，在评论区界面显示
+$fansMedal: getFansMedalPath();
+
+// 弹幕，在播放器里显示
+$danmaku: getDanmakuPath();
+
+// 图标字体
+$iconFont: getIconFontPath();
+
+// 专栏阅读页可能出现的部分自定义字体
+$column: getColumnPath();
+
+// 分数，在部分剧集的右下角显示
+$score: getScorePath();
+
+// 收集所有路径
+$discardPaths: collectPaths(($ornament, $fansMedal, $danmaku, $iconFont, $column, $score));
+
+$onOptionNames: (
+  'on-ornament',
+  'on-fans-medal',
+  'on-danmaku',
+  'on-icon-font',
+  'on-column',
+  'on-score'
+);
+$onOptionPathLists: ($ornament, $fansMedal, $danmaku, $iconFont, $column, $score);
+$onOptionGroups: zip($onOptionNames, $onOptionPathLists);
+
+html[#{$name}--detect--is-input-empty='false'] {
+  :not(#{$discardPaths}) {
+    font-family: $fontFamilyCss;
+  }
+
+  @each $onOptionName, $onOptionPathList in $onOptionGroups {
+    &[#{$name}--options--#{$onOptionName}='true'] :is(#{$onOptionPathList}) {
+      font-family: $fontFamilyCss;
+    }
+  }
+}

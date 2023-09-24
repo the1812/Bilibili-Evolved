@@ -13,7 +13,7 @@
       "id": "feature",
       "attributes": {
         "label": "对应功能",
-        "description": "(指本脚本的某项具体功能, 不是指 b 站的) 可以在设置中尝试开启 / 关闭某项功能来排查. 最好能附上功能的 Commit 值 (在设置里功能选项的底部).\n<img src=\"https://user-images.githubusercontent.com/26504152/152666017-8a5acabc-2ad1-47ef-b0a2-cd5c54c867ab.jpg\" width=\"400\">\n请注意: 以下功能已不再维护 (不再修复 bug 和添加新功能), 但是你仍然可以为其提供 Pull Request.\n- 直播间自动抽奖\n- 默认播放器模式\n- 播放器置顶\n- 播放器定位\n",
+        "description": "(指本脚本的某项具体功能, 不是指 b 站的) 可以在设置中尝试开启 / 关闭某项功能来排查. 最好能附上功能的 Commit 值 (在设置里功能选项的底部).\n<img src=\"https://user-images.githubusercontent.com/26504152/152666017-8a5acabc-2ad1-47ef-b0a2-cd5c54c867ab.jpg\" width=\"400\">\n如果组件包含作者的信息 (by @xxx), 请在这里 at 他们\n请注意: 以下功能已不再维护 (不再修复 bug 和添加新功能), 但是你仍然可以为其提供 Pull Request.\n- 直播间自动抽奖\n- 默认播放器模式\n- 播放器置顶\n- 播放器定位\n",
         "placeholder": "请输入"
       },
       "validations": {

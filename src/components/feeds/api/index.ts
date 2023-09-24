@@ -1,6 +1,6 @@
 import { getUID, pascalCase } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
-import { formatCount, formatDuration, parseDuration } from '@/core/utils/formatters'
+import { formatCount, formatDuration, parseCount, parseDuration } from '@/core/utils/formatters'
 import { watchlaterList } from '@/components/video/watchlater'
 import { getData, registerData } from '@/plugins/data'
 import { descendingStringSort } from '@/core/utils/sort'
@@ -140,8 +140,8 @@ export const getVideoFeeds = withContentFilter(
             like: formatCount(stat.like.count),
             duration: parseDuration(archive.duration_text),
             durationText: formatDuration(parseDuration(archive.duration_text)),
-            playCount: formatCount(archive.stat.play),
-            danmakuCount: formatCount(archive.stat.danmaku),
+            playCount: formatCount(parseCount(archive.stat.play)),
+            danmakuCount: formatCount(parseCount(archive.stat.danmaku)),
             watchlater: watchlaterList.includes(archive.aid),
           }
         }),
@@ -164,8 +164,8 @@ export const getVideoFeeds = withContentFilter(
           time: new Date(author.pub_ts * 1000),
           like: formatCount(stat.like.count),
           durationText: '',
-          playCount: formatCount(pgc.stat.play),
-          danmakuCount: formatCount(pgc.stat.danmaku),
+          playCount: formatCount(parseCount(pgc.stat.play)),
+          danmakuCount: formatCount(parseCount(pgc.stat.danmaku)),
           watchlater: false,
         }
       })
