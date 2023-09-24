@@ -66,7 +66,7 @@ export const MPV_Ex: DownloadVideoOutput<ConfigDataType> = {
     }
 
     console.log(finalURL)
-    Toast.show(`<a class="link" href="${encodeURI(finalURL)}" >播放</a>`, 'MPV播放', 600e3)
+    window.open(finalURL)
   },
   component: () => import('./Config.vue').then(m => m.default),
 }
