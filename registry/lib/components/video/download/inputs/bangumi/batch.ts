@@ -45,7 +45,7 @@ export const bangumiBatchInput: DownloadVideoInput = {
           return {
             key: it.cid,
             title: `${nText} - ${title}`,
-            isChecked: index < instance.maxCheckedItems,
+            isChecked: index < instance.maxCheckedItems && totalLength <= instance.maxCheckedItems,
             inputItem: {
               aid: it.aid,
               cid: it.cid,

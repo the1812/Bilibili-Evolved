@@ -32,36 +32,46 @@
         </VButton>
       </div>
     </div>
-    <div class="episodes-picker-items">
-      <div v-for="(item, index) of episodeItems" :key="item.key" class="episodes-picker-item">
-        <CheckBox
-          v-model="item.isChecked"
-          icon-position="left"
-          :data-aid="item.inputItem.aid"
-          :data-cid="item.inputItem.cid"
-          :data-bvid="item.inputItem.bvid"
-          @click.native="shiftSelect($event, item, index)"
-        >
-          <span class="episode-title">
-            {{ item.title }}
-          </span>
-          <span v-if="item.durationText" class="episode-duration">
-            {{ item.durationText }}
-          </span>
-        </CheckBox>
-      </div>
-    </div>
+    <VirtualList class="episodes-picker-items" 
+      :items="episodeItems"
+      :item-height="24"
+      :stage-item-count="100"
+      :buffer-item-count="40"
+      :update-required-item-count="20"
+      :focuse-item-index="currentEpisodeIndex">
+      <template #item="{ item, index }">
+        <div class="episodes-picker-item">
+          <CheckBox
+            v-model="item.isChecked"
+            icon-position="left"
+            :data-aid="item.inputItem.aid"
+            :data-cid="item.inputItem.cid"
+            :data-bvid="item.inputItem.bvid"
+            @click.native="shiftSelect($event, item, index)"
+          >
+            <span class="episode-title">
+              {{ item.title }}
+            </span>
+            <span v-if="item.durationText" class="episode-duration">
+              {{ item.durationText }}
+            </span>
+          </CheckBox>
+        </div>
+      </template>
+    </VirtualList>
   </div>
 </template>
 <script lang="ts">
 import { VButton, VIcon, CheckBox } from '@/ui'
 import { EpisodeItem } from './episode-item'
+import VirtualList from './VirtualList.vue'
 
 export default Vue.extend({
   components: {
     VButton,
     VIcon,
     CheckBox,
+    VirtualList
   },
   props: {
     api: {
@@ -74,6 +84,7 @@ export default Vue.extend({
       episodeItems: [],
       maxCheckedItems: 32,
       lastCheckedEpisodeIndex: -1,
+      currentEpisodeIndex: 0 // 当前页面的剧集 index
     }
   },
   computed: {
@@ -89,8 +100,14 @@ export default Vue.extend({
       return items.filter(it => it.isChecked).map(it => it.inputItem)
     },
   },
-  created() {
-    this.getEpisodeItems()
+  async created() {
+    await this.getEpisodeItems()
+    const aid = unsafeWindow.aid
+    if (aid) {
+      this.currentEpisodeIndex = this.episodeItems.findIndex(ep => ep.inputItem.aid == aid) ?? 0
+      this.episodeItems[this.currentEpisodeIndex].isChecked = true
+    }
+    // console.log('dididi', this.episodeItems)
   },
   methods: {
     shiftSelect(e: MouseEvent, item: EpisodeItem, index: number) {
@@ -163,6 +180,12 @@ export default Vue.extend({
     }
     .be-check-box {
       padding: 2px 6px;
+    }
+    .episode-title {
+      max-width: 250px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .episode-duration {
       margin-right: 4px;
