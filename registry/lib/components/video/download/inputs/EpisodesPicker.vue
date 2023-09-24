@@ -32,13 +32,15 @@
         </VButton>
       </div>
     </div>
-    <VirtualList class="episodes-picker-items" 
+    <VirtualList
+      class="episodes-picker-items"
       :items="episodeItems"
       :item-height="24"
       :stage-item-count="100"
       :buffer-item-count="40"
       :update-required-item-count="20"
-      :focuse-item-index="currentEpisodeIndex">
+      :focuse-item-index="currentEpisodeIndex"
+    >
       <template #item="{ item, index }">
         <div class="episodes-picker-item">
           <CheckBox
@@ -71,7 +73,7 @@ export default Vue.extend({
     VButton,
     VIcon,
     CheckBox,
-    VirtualList
+    VirtualList,
   },
   props: {
     api: {
@@ -84,7 +86,7 @@ export default Vue.extend({
       episodeItems: [],
       maxCheckedItems: 32,
       lastCheckedEpisodeIndex: -1,
-      currentEpisodeIndex: 0 // 当前页面的剧集 index
+      currentEpisodeIndex: 0, // 当前页面的剧集 index
     }
   },
   computed: {
@@ -102,9 +104,9 @@ export default Vue.extend({
   },
   async created() {
     await this.getEpisodeItems()
-    const aid = unsafeWindow.aid
+    const { aid } = unsafeWindow
     if (aid) {
-      this.currentEpisodeIndex = this.episodeItems.findIndex(ep => ep.inputItem.aid == aid) ?? 0
+      this.currentEpisodeIndex = this.episodeItems.findIndex(ep => ep.inputItem.aid === +aid) ?? 0
       this.episodeItems[this.currentEpisodeIndex].isChecked = true
     }
     // console.log('dididi', this.episodeItems)
