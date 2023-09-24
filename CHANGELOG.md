@@ -1,5 +1,96 @@
 # 更新日志
 
+## v2.8.5 / v2.8.5-preview
+`2023-09-24`
+
+✨新增
+- 新增组件 `自定义字体`. (PR #4406 by [Tinhone](https://github.com/Tinhone))
+> 使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明
+
+- `简化直播间` 适配了新版 PK 条. (PR #4439 by [Pencil](https://github.com/pencilqaq))
+
+- `下载视频` 支持配置 DASH 格式下的文件扩展名. (PR #4449 by [小傅Fox](https://github.com/xfoxfu))
+
+
+<details>
+<summary>正式版用户将获得 v2.8.0-preview ~ v2.8.4-preview 的所有新功能, 点击展开查看</summary>
+
+- `清爽首页` 改进:
+  - 支持自定义板块的布局和可见性. (操作方式和自定义顶栏那个差不多)
+  - 番剧时间表优化样式, 增加翻页按钮.
+
+<div>
+  <img height="400" src="https://user-images.githubusercontent.com/26504152/242905984-895cb72c-b344-40c3-91a0-2a6b20d5f783.png">
+  <img height="400" src="https://user-images.githubusercontent.com/26504152/242905640-cbc948f1-734e-46f2-96a7-d57787b7cf47.png">
+</div>
+
+- 新增功能 `首页净化`. (PR #4153 by [RieN](https://github.com/rien7))
+> 删除首页特定类型的卡片.
+
+- `自定义顶栏` 增加 `创作中心` 入口, `排行` 新增 `全站音乐榜` 和 `短剧榜` 的入口. (#4101, PR #4154 by [星海](https://github.com/lovelyCARDINAL), PR #4155 by [星海](https://github.com/lovelyCARDINAL))
+- `播放器置顶（新）` 增加选项 `顶部留白`. (#4152, PR #4165 by [Ziu](https://github.com/ZiuChen))
+- `播放器置顶（新）` 的标题改为放置到播放器和点赞中间. (PR #4208 by [LockRim](https://github.com/LockRim))
+- `显示视频投稿时间` 支持转义字符. (#4160, PR #4167 by [呼乎户](https://github.com/wisokey))
+- `隐藏视频推荐` 支持稍后再看和收藏夹播放页, 并适配 bpx 播放器. (#4174)
+- 新增功能 `隐藏记笔记` 和 `隐藏稿件投诉`. (#4124)
+- 优化了 `自定义顶栏` 中订阅在筛选时的 API 调用. (#4120)
+- 优化粗体的显示: 优先调用 Semibold 字重, 若字体不支持则使用 Bold 字重.
+- `自定义顶栏` 增加选项:
+  - 支持自定义消息提醒样式, 可设置为 `数字`, `点状` 或 `隐藏`. (#4125)
+  - 支持自定义搜索栏宽度. (#4112)
+- 搜索在纯数字输入时, 增加对 UID 和直播间的搜索. (#677)
+- `网址参数清理` 更新对直播间的支持. (#1459)
+- `自动点赞` 转为由 [CrazyboyQCD](https://github.com/CrazyboyQCD) 维护, 支持手动控制点赞和黑名单功能. (PR #4343, PR #4358 by [CrazyboyQCD](https://github.com/CrazyboyQCD))
+
+- `简化直播间` 支持隐藏荣耀等级勋章. (PR #4348 by [CrunchyShark](https://github.com/CrunchyShark944))
+- 在设置面板中的组件管理等面板中, 搜索框移动至已安装列表的上方, 更符合直觉. (#3806)
+- 支持从 Tampermonkey 的菜单中唤起功能和设置面板. (#4170)
+- 搜索栏中添加了导入 / 导出设置的操作. (#4170)
+- `自定义顶栏` 新增选项 `链接对齐样式`, 可以自定义纯链接弹窗内链接文字的对齐样式. (PR #4365 by [Tinhone](https://github.com/Tinhone))
+- `简化评论区` 支持独立控制简化选项, 并支持隐藏粉丝勋章和活动横幅. (仅支持新版评论区) (#2381)
+- `清爽首页` 设置为隐藏的版块现在将彻底销毁, 减少资源占用.
+- `禁用特殊弹幕样式` 支持禁用大会员弹幕. (#4227)
+- `下载视频` 在批量下载番剧时, 支持下载多个不同板块的选集. (#2834)
+- 新增功能 `全屏直播礼物简化`. (PR #4306 by [TimmyOVO](https://github.com/TimmyOVO))
+
+> 移除全屏观看直播时的底部礼物栏
+
+- 新增功能 `评论区 IP 属地显示`. (PR #4331, PR #4334 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在评论区显示评论的IP属地信息
+
+- 新增功能 `直播间网页全屏自适应`. (#4216)
+
+> 在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果. 如果在侧边栏的边缘拖动, 可以自定义侧边栏的固定宽度, 双击边缘可以还原到自动宽度.
+>
+> - `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)
+>
+> > 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.
+
+- 新增功能 `关注时间显示`. (PR #4352 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的粉丝/关注列表显示关注的具体时间
+
+- 新增功能 `自动移出稍后再看`.
+
+> 在稍后再看页面播放结束时, 自动将当前视频移出稍后再看.
+> 注意:
+> - 一定要播放结束, 快结束时手动切走不算
+> - b 站的稍后再看列表不会实时刷新
+
+- 新增功能 `相簿发布时间显示`. (PR #4362 by [Light_Quanta](https://github.com/LightQuanta))
+
+> 在个人空间的相簿界面显示相簿的发布时间
+
+</details>
+
+🐛修复
+- 修复 `禁止滚轮调音量` 在网页全屏下失效. (#4381).
+- 修复 Feeds API 无法解析新版图文动态的文字内容. (主要是动态过滤器会受影响) (#4409)
+- 修复 `选集区域优化` 在部分视频合集页面上无法使用 <kbd>Alt</kbd> 来切换折叠. (#4429)
+- 修复被转发图文动态的 `详情 >` 功能失效. (PR #4452 by [sunfkny](https://github.com/sunfkny))
+
+
 ## v2.8.4-preview
 `2023-09-07`
 
