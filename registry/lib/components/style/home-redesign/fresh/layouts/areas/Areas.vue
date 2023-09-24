@@ -97,7 +97,16 @@ export default Vue.extend({
         bottom: 8px;
         font-size: 18px;
         @include semi-bold();
-        color: black;
+        transition: color 0.2s ease-out, text-shadow 0.2s ease-out;
+
+        html[fresh-home--options--area-primary-title-color='dark'] & {
+          color: black;
+        }
+
+        html[fresh-home--options--area-primary-title-color='light'] & {
+          color: #fafafa;
+          text-shadow: rgba(0, 0, 0, 0.2) 0 0 8px;
+        }
       }
     }
     &-other {

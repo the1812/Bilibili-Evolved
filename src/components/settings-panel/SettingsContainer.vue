@@ -61,6 +61,18 @@ export default {
       widgetsOpened: false,
     }
   },
+  mounted() {
+    GM_registerMenuCommand('功能', () => {
+      this.loadPanel('widgetsPanelPopup')
+      this.widgetsOpened = true
+      this.settingsOpened = false
+    })
+    GM_registerMenuCommand('设置', () => {
+      this.loadPanel('settingsPanelPopup')
+      this.widgetsOpened = false
+      this.settingsOpened = true
+    })
+  },
   methods: {
     theWorld() {
       externalApis.theWorld(0)

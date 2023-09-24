@@ -116,6 +116,20 @@
 
 在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.
 
+### [直播间网页全屏自适应](../../registry/dist/components/live/chat-panel-fit.js)
+`liveChatPanelFit`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/chat-panel-fit.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/chat-panel-fit.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/chat-panel-fit.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/chat-panel-fit.js)
+
+在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果.
+如果在侧边栏的边缘拖动, 可以自定义侧边栏的固定宽度, 双击边缘可以还原到自动宽度.
+
+- `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)
+
+> 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.
+
 ### [直播弹幕发送栏](../../registry/dist/components/live/danmaku-sendbar.js)
 `liveDanmakuSendbar`
 
@@ -133,6 +147,17 @@
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/gift-box.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/gift-box.js)
 
 在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮.
+
+### [全屏直播礼物简化](../../registry/dist/components/live/hide-gift-fullscreen.js)
+`hide-fullscreen-gift-bar`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/hide-gift-fullscreen.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/hide-gift-fullscreen.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/hide-gift-fullscreen.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/hide-gift-fullscreen.js)
+
+by [@TimmyOVO](https://github.com/TimmyOVO)
+
+移除全屏观看直播时的底部礼物栏
 
 ### [直播首页静音](../../registry/dist/components/live/home-mute.js)
 `liveHomeMute`
@@ -197,6 +222,28 @@
 
 自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.
 
+### [首页净化](../../registry/dist/components/style/clear-home.js)
+`clear-home`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/clear-home.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/clear-home.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/clear-home.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/clear-home.js)
+
+by [@RieN7](https://github.com/rien7)
+
+删除首页特定类型的卡片
+
+### [自定义字体](../../registry/dist/components/style/custom-font-family.js)
+`customFontFamily`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/custom-font-family.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/custom-font-family.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/custom-font-family.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/custom-font-family.js)
+
+by [@Tinhone](https://github.com/Tinhone)
+
+使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明
+
 ### [自定义顶栏](../../registry/dist/components/style/custom-navbar.js)
 `customNavbar`
 
@@ -204,9 +251,26 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/custom-navbar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/custom-navbar.js)
 
-使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:
+使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换).
+
+启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:
 - *://message.bilibili.com/pages/nav/index_new_pc_sync
 - *://message.bilibili.com/pages/nav/index_new_sync
+
+选项说明:
+- `全局固定`: 将顶栏固定显示, 即使页面向下滚动也仍然可见. (除了一部分有 b 站定制顶栏的页面会忽略此选项)
+- `主题色填充`: 使用通用设置中的主题颜色填充顶栏的背景.
+- `透明填充`: 在首页和主站的部分页面中, 当存在顶部横幅图片时, 顶栏背景将变为透明 + 阴影的样式.
+- `背景模糊`: 启用背景模糊效果, 会使背景颜色变得半透明, 注意这个效果非常非常消耗图形性能, 慎用.
+- `投影`: 在顶栏下方增加一小段投影效果.
+- `使用季节 Logo`: 使用 b 站首页的特殊 Logo 图片替换顶栏的 Logo 图, 通常会对应当前季节, 特殊活动期间可能会有变化导致看不清. (比如搞了个全白的 Logo, 而顶栏正好也是白色的)
+- `触摸模式`: 启用后顶栏的一级入口点击时不进行跳转, 方便触屏使用.
+- `新标签页打开`: 控制顶栏内链接是否在新标签页打开.
+- `自动刷新数据`: 启用后, 部分有弹窗的顶栏入口在鼠标经过时会自动刷新数据.
+- `顶栏高度`: 自定义顶栏的高度 (b 站原版的为 64px)
+- `消息提醒样式`: 自定义顶栏入口的消息提醒样式.
+- `搜索栏宽度`: 自定义搜索栏占顶栏的比例.
+- `链接对齐样式`: 自定义纯链接弹窗内链接文字的对齐样式.
 
 ### [夜间模式跟随系统](../../registry/dist/components/style/dark-mode/follow-system.js)
 `darkModeFollowSystem`
@@ -284,6 +348,15 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片
 
+### [隐藏记笔记](../../registry/dist/components/style/hide/video/notes.js)
+`hideVideoNotes`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/notes.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/notes.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/notes.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/notes.js)
+
+隐藏视频页面中的 "记笔记" 按钮.
+
 ### [隐藏直播推荐](../../registry/dist/components/style/hide/video/recommended-live.js)
 `hideRecommendedLive`
 
@@ -301,6 +374,15 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/related-videos.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/related-videos.js)
 
 隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.
+
+### [隐藏稿件投诉](../../registry/dist/components/style/hide/video/report.js)
+`hideVideoReport`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/video/report.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/video/report.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/video/report.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/video/report.js)
+
+隐藏视频页面中的 "稿件投诉" 按钮.
 
 ### [隐藏视频分享](../../registry/dist/components/style/hide/video/share.js)
 `hideVideoShare`
@@ -355,7 +437,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-on-top-new.js)
 
-by [@RieN7](https://github.com/rien7)
+by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@LockRim](https://github.com/LockRim)
 
 原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
 
@@ -402,16 +484,19 @@ by [@RieN7](https://github.com/rien7)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/simplify/comments.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/comments.js)
 
-- 删除热评头像下方的关注按钮
-- 删除用户的等级标识
-- 删除发送源信息(\`来自安卓客户端\` 这种)
-- 删除用户名右边的勋章
-- 删除评论区顶部的横幅
-- 发送时间移动到右上角
-- 位图图标全部换用矢量图标, 高分屏不会模糊
-- 投票仅显示链接, 隐藏下面的大框.
+去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):
 
-> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.
+> 配置项仅对新版评论区有效
+
+- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)
+- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.
+- `头像框`: 隐藏头像框.
+- `回复换行`:
+  - 楼中楼回复也另起一行显示, 和一级回复保持一致.
+  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.
+- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.
+- `粉丝勋章`: 隐藏用户的粉丝勋章.
+- `活动横幅`: 隐藏评论区顶部的活动横幅
 
 ### [简化首页](../../registry/dist/components/style/simplify/home.js)
 `simplifyHome`
@@ -498,6 +583,17 @@ by [@RieN7](https://github.com/rien7)
 - 进度调整可在左上角和右上角取消
 - 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.
 
+### [相簿发布时间显示](../../registry/dist/components/utils/album-time-show.js)
+`albumPubTimeShow`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/album-time-show.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/album-time-show.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/album-time-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/album-time-show.js)
+
+by [@Light_Quanta](https://github.com/LightQuanta)
+
+在相簿界面显示相簿的发布时间
+
 ### [自动点赞](../../registry/dist/components/utils/auto-like.js)
 `autoLike`
 
@@ -505,7 +601,12 @@ by [@RieN7](https://github.com/rien7)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/auto-like.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/auto-like.js)
 
-进入视频 / 查看动态时, 自动点赞.
+by [@CrazyboyQCD](https://github.com/CrazyboyQCD)
+
+进入视频 / 查看动态时, 自动点赞\
+无法触发未加载动态的点赞，当启用手动对动态点赞后可手动触发，启用后不会触发动态自动点赞\
+安装快捷键扩展后可以点击【l】键或【L】键触发\
+还可以添加动态点赞的黑名单\
 
 ### [屏蔽黑名单up主](../../registry/dist/components/utils/black-list.js)
 `blackList`
@@ -636,6 +737,17 @@ by [@aiden](https://github.com/swhoro)
 
 在合集页面制作一个批量导入按钮，可以新增所有合集内视频至同名收藏夹
 
+### [评论区IP属地显示](../../registry/dist/components/utils/ip-show.js)
+`ipShow`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/ip-show.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/ip-show.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/ip-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/ip-show.js)
+
+by [@Light_Quanta](https://github.com/LightQuanta)
+
+在评论区显示评论的IP属地信息
+
 ### [快捷键扩展](../../registry/dist/components/utils/keymap.js)
 `keymap`
 
@@ -658,6 +770,17 @@ by [@aiden](https://github.com/swhoro)
 - `保留活动横幅`: 保留视频页面的活动横幅.
 - `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.
 
+### [关注时间显示](../../registry/dist/components/utils/subscribe-time-show.js)
+`subscribeTimeShow`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/subscribe-time-show.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/subscribe-time-show.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/subscribe-time-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/subscribe-time-show.js)
+
+by [@Light_Quanta](https://github.com/LightQuanta)
+
+在粉丝/关注列表显示关注的具体时间
+
 ### [网址参数清理](../../registry/dist/components/utils/url-params-clean.js)
 `urlParamsClean`
 
@@ -665,7 +788,7 @@ by [@aiden](https://github.com/swhoro)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/url-params-clean.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/url-params-clean.js)
 
-自动删除网址中的多余跟踪参数. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.
+自动删除网址中的多余跟踪参数。请注意这会导致浏览器历史记录出现重复的标题（分别是转换前后的网址），并可能导致后退要多退几次。
 
 ### [v1 设置迁移](../../registry/dist/components/utils/v1-migrate.js)
 `v1Migrate`
@@ -693,6 +816,18 @@ by [@aiden](https://github.com/swhoro)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/watchlater-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/watchlater-redirect.js)
 
 将稍后再看的链接重定向为普通播放网址.
+
+### [自动移出稍后再看](../../registry/dist/components/video/auto-remove-watchlater.js)
+`autoRemoveWatchlater`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/auto-remove-watchlater.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/auto-remove-watchlater.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/auto-remove-watchlater.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/auto-remove-watchlater.js)
+
+在稍后再看页面播放结束时, 自动将当前视频移出稍后再看.
+注意:
+- 一定要播放结束, 快结束时手动切走不算
+- b 站的稍后再看列表不会实时刷新
 
 ### [网址AV号转换](../../registry/dist/components/video/av-url.js)
 `avUrl`
@@ -1050,6 +1185,9 @@ by [@wisokey](https://github.com/wisokey)
   - s: 秒
   - q: 季度
   - up: up名
+  - \r: 回车符
+  - \n：换行符
+  - \t：制表符
 
 ### [跳过充电鸣谢](../../registry/dist/components/video/player/skip-charge-list.js)
 `skipChargeList`

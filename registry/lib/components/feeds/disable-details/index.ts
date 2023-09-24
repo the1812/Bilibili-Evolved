@@ -69,7 +69,10 @@ const entry = async () => {
       return
     }
     if (postContent.classList.contains('repost') || card.type === feedsCardTypes.repost) {
-      const contents = dq(postContent, '.content, .bili-dyn-content__orig__desc') as HTMLElement
+      const contents = dq(
+        postContent,
+        '.content, .bili-dyn-content__orig__desc, .dyn-card-opus__summary',
+      ) as HTMLElement
       if (!contents) {
         return
       }

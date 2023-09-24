@@ -11,6 +11,10 @@
       class="fresh-home-categories-bangumi-timeline-item animation"
       :class="{ today: index === todayIndex }"
     >
+      <div
+        v-if="item.episodes.length === 0"
+        class="fresh-home-categories-bangumi-timeline-empty-background"
+      ></div>
       <div class="fresh-home-categories-bangumi-timeline-date">
         <div
           class="fresh-home-categories-bangumi-timeline-date-icon"
@@ -29,8 +33,18 @@
           TODAY
         </div>
       </div>
+      <VButton
+        v-if="item.episodes.length > 0"
+        icon
+        type="transparent"
+        title="上一页"
+        @click="offsetPage(item, -1)"
+      >
+        <VIcon icon="left-arrow" :size="16" />
+      </VButton>
       <div
         ref="seasonsList"
+        :data-date="item.date"
         class="fresh-home-categories-bangumi-timeline-seasons-container scroll-top scroll-bottom"
         :class="{ 'not-empty': item.episodes.length > 0 }"
       >
@@ -55,7 +69,7 @@
             <div
               class="fresh-home-categories-bangumi-timeline-season-cover"
               :class="{
-                published: index === todayIndex && publishedToday(season),
+                published: index === todayIndex && isPublished(season),
                 today: index === todayIndex,
                 follow: season.follow,
               }"
@@ -78,15 +92,18 @@
             <div
               class="fresh-home-categories-bangumi-timeline-season-time"
               :class="{
-                published: index === todayIndex && publishedToday(season),
+                published: index === todayIndex && isPublished(season),
                 follow: season.follow,
+                today: index === todayIndex,
               }"
             >
               <div class="fresh-home-categories-bangumi-timeline-season-time-icon">
                 <VIcon
-                  :icon="season.follow ? 'mdi-heart-outline' : 'mdi-progress-clock'"
+                  v-if="!season.follow"
+                  :icon="isPublished(season) ? 'mdi-clock-check-outline' : 'mdi-progress-clock'"
                   :size="14"
                 />
+                <VIcon v-else icon="mdi-heart-outline" :size="14" />
               </div>
               <div class="fresh-home-categories-bangumi-timeline-season-time-text">
                 {{ season.pub_time }}
@@ -95,11 +112,20 @@
           </a>
         </div>
       </div>
+      <VButton
+        v-if="item.episodes.length > 0"
+        icon
+        type="transparent"
+        title="下一页"
+        @click="offsetPage(item, 1)"
+      >
+        <VIcon icon="right-arrow" :size="16" />
+      </VButton>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { DpiImage, VIcon, VEmpty, VLoading } from '@/ui'
+import { DpiImage, VIcon, VEmpty, VButton, VLoading } from '@/ui'
 import { addComponentListener } from '@/core/settings'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
@@ -138,11 +164,11 @@ const rankListHeight = rankListCssVars.panelHeight - 2 * rankListCssVars.padding
 const timelineCssVars = (() => {
   const seasonItemWidth = 250
   const seasonTodayWidth = 250
-  const timelineItemHeight = 66
-  const timelineTodayHeight = 96
-  const timelineViewportItemsHeight = 6 * timelineItemHeight + timelineTodayHeight
-  const timelineItemGap = (rankListHeight - timelineViewportItemsHeight) / 6
-  const timelineViewportHeight = 6 * timelineItemGap + timelineViewportItemsHeight
+  const timelineItemHeight = 82
+  const timelineTodayHeight = 114
+  const timelineViewportItemsHeight = 5 * timelineItemHeight + timelineTodayHeight
+  const timelineItemGap = (rankListHeight - timelineViewportItemsHeight) / 5
+  const timelineViewportHeight = 5 * timelineItemGap + timelineViewportItemsHeight
   return {
     seasonItemWidth,
     seasonTodayWidth,
@@ -159,6 +185,7 @@ export default Vue.extend({
     VIcon,
     VEmpty,
     VLoading,
+    VButton,
   },
   mixins: [
     requestMixin({ requestMethod: getJsonWithCredentials }),
@@ -252,7 +279,7 @@ export default Vue.extend({
       if (seasonsData.length === 0) {
         return
       }
-      const lastPublishedItem = [...seasonsData].reverse().find(it => this.publishedToday(it))
+      const lastPublishedItem = [...seasonsData].reverse().find(it => this.isPublished(it))
       if (!lastPublishedItem) {
         this.scrolled = true
         return
@@ -273,7 +300,7 @@ export default Vue.extend({
       }
       return season.pub_index
     },
-    publishedToday(season: TimelineSeason) {
+    isPublished(season: TimelineSeason) {
       if (season.delay) {
         return false
       }
@@ -281,6 +308,16 @@ export default Vue.extend({
     },
     dayOfWeekText(item: TimelineDay) {
       return `周${['日', '一', '二', '三', '四', '五', '六', '日'][item.day_of_week]}`
+    },
+    offsetPage(item: TimelineDay, offset: number) {
+      const list = this.$refs.seasonsList as HTMLElement[]
+      const container = list.find(it => it.dataset.date === item.date)
+      const containerWidth = container.clientWidth
+      const pageWidth =
+        Math.trunc(containerWidth / timelineCssVars.seasonItemWidth) *
+        timelineCssVars.seasonItemWidth
+      const scrollArea = container.children[0]
+      scrollArea?.scrollBy(offset * pageWidth, 0)
     },
   },
 })
@@ -326,8 +363,12 @@ export default Vue.extend({
       }
     }
     &-item {
-      @include h-center(24px);
+      @include h-center(4px);
+      @include border-card();
       scroll-snap-align: start;
+      overflow: hidden;
+      padding: 0 4px 0 16px;
+      position: relative;
       flex-shrink: 0;
       height: var(--timeline-item-height);
       &.today {
@@ -337,6 +378,7 @@ export default Vue.extend({
     &-date {
       display: grid;
       flex-shrink: 0;
+      margin-right: 8px;
       grid-template: 'icon number' 18px 'icon text' 22px / 50px auto;
       gap: 8px;
       &-icon {
@@ -400,7 +442,12 @@ export default Vue.extend({
     }
     &-seasons-container {
       @include h-stretch();
-      @include scroll-mask-x(18px, var(--home-base-color));
+      body:not(.dark) & {
+        @include scroll-mask-x(18px, #fdfdfd);
+      }
+      body.dark & {
+        @include scroll-mask-x(18px, #222);
+      }
       width: 0;
       flex: 1 0 0;
       margin: 0 2px;
@@ -415,7 +462,7 @@ export default Vue.extend({
       scroll-snap-type: x mandatory;
     }
     &-season {
-      --cover-size: 50px;
+      --cover-size: 56px;
       scroll-snap-align: start;
       flex-shrink: 0;
       padding: 7px;
@@ -429,11 +476,11 @@ export default Vue.extend({
       align-content: center;
       align-items: center;
       width: var(--season-item-width);
-      height: var(--timeline-item-height);
+      // height: var(--timeline-item-height);
       transition: 0.2s ease-out;
       &:not(:last-child) {
         padding-right: calc(var(--timeline-item-gap) / 2 + 6px);
-        border-right: 1px solid #8884;
+        // border-right: 1px solid #e8e8e8;
       }
 
       &-cover {
@@ -464,7 +511,7 @@ export default Vue.extend({
         @include semi-bold();
         @include single-line();
         &.today {
-          @include max-line(2, 1.25);
+          @include max-line(2, 1.3);
         }
       }
       &-episode {
@@ -475,10 +522,11 @@ export default Vue.extend({
       }
       &-time {
         grid-area: time;
-        @include card(6px);
+        @include card();
+        @include round-bar(20);
         @include h-center(4px);
         box-shadow: none;
-        padding: 2px 4px;
+        padding: 2px 6px 2px 4px;
         &.published {
           border-color: var(--theme-color);
           &.follow {
@@ -493,6 +541,9 @@ export default Vue.extend({
         &.follow:not(.published) &-icon {
           color: var(--theme-color);
         }
+        &.today {
+          transform: translateX(-2px);
+        }
       }
 
       &:hover &-title {
@@ -504,8 +555,8 @@ export default Vue.extend({
 
       &.today {
         width: var(--season-today-width);
-        height: var(--timeline-today-height);
-        --cover-size: 80px;
+        // height: var(--timeline-today-height);
+        --cover-size: 84px;
         grid-template:
           'cover title title' 2fr
           'cover episode episode' 1fr
@@ -518,6 +569,24 @@ export default Vue.extend({
           opacity: 1;
         }
       }
+    }
+    &-empty-background {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        45deg,
+        transparent 25%,
+        #8882 0,
+        #8882 50%,
+        transparent 0,
+        transparent 75%,
+        #8882 0,
+        #8882 100%
+      );
+      background-size: 60px 60px;
     }
   }
 }

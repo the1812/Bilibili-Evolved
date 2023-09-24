@@ -27,7 +27,6 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
       alias: {
         '@': relativePath('src'),
         'fuse.js$': 'fuse.js/dist/fuse.basic.esm.min.js',
-        vue$: 'vue/dist/vue.esm.js',
       },
     },
     performance: {

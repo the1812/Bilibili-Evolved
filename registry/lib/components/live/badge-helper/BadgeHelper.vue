@@ -1,5 +1,5 @@
 <template>
-  <div class="multiple-widgets">
+  <div ref="element" class="multiple-widgets">
     <VPopup
       ref="medalPopup"
       v-model="medalOpen"
@@ -50,85 +50,76 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
 import { DefaultWidget, VPopup } from '@/ui'
 import { Medal, Title, Badge, getMedalList, getTitleList } from './badge'
+import { BadgeHelperOptions } from './options'
 
-const { options } = getComponentSettings('badgeHelper')
-export default Vue.extend({
-  components: {
-    DefaultWidget,
-    VPopup,
-  },
-  data() {
-    return {
-      medalList: [],
-      titleList: [],
-      medalOpen: false,
-      titleOpen: false,
-      grayEffect: true,
+const { options } = getComponentSettings<BadgeHelperOptions>('badgeHelper')
+const element = ref<HTMLElement>()
+const medalList = ref<Medal[]>([])
+const titleList = ref<Title[]>([])
+const medalOpen = ref(false)
+const titleOpen = ref(false)
+const grayEffect = ref(true)
+
+const updateColumnsCount = () => {
+  const maxColumnCount = 15
+  const columnLength = 18
+  const medalColumns = Math.min(Math.ceil(medalList.value.length / columnLength), maxColumnCount)
+  element.value.style.setProperty('--medal-columns', medalColumns.toString())
+  const titleColumns = Math.min(Math.ceil(titleList.value.length / columnLength), maxColumnCount)
+  element.value.style.setProperty('--title-columns', titleColumns.toString())
+}
+const loadMedalList = async () => {
+  medalList.value = (await getMedalList())
+    .sort(descendingSort(it => it.level))
+    .slice(0, options.maxBadgeCount)
+}
+const loadTitleList = async () => {
+  titleList.value = (await getTitleList()).slice(0, options.maxBadgeCount)
+}
+const toggleBadge = async (badge: Badge, list: Badge[]) => {
+  console.log(badge)
+  if (badge.isActive) {
+    badge.isActive = false
+    await badge.deactivate()
+  } else {
+    const activeBadge = list.find(b => b.isActive)
+    if (activeBadge) {
+      activeBadge.isActive = false
     }
-  },
-  async mounted() {
-    addComponentListener(
-      'badgeHelper.grayEffect',
-      (enable: boolean) => {
-        this.grayEffect = enable
-      },
-      true,
-    )
-    const init = async () => {
-      const medal = this.loadMedalList()
-      await Title.getImageMap()
-      const title = this.loadTitleList()
-      return Promise.all([medal, title])
+    badge.isActive = true
+    await badge.activate()
+    if (badge instanceof Medal) {
+      options.defaultMedalID = badge.id
     }
-    await init()
-    this.updateColumnsCount()
-  },
-  methods: {
-    updateColumnsCount() {
-      const maxColumnCount = 15
-      const columnLength = 18
-      const element = this.$el as HTMLElement
-      const medalColumns = Math.min(Math.ceil(this.medalList.length / columnLength), maxColumnCount)
-      element.style.setProperty('--medal-columns', medalColumns.toString())
-      const titleColumns = Math.min(Math.ceil(this.titleList.length / columnLength), maxColumnCount)
-      element.style.setProperty('--title-columns', titleColumns.toString())
+  }
+  if (badge instanceof Medal) {
+    await loadMedalList()
+  } else if (badge instanceof Title) {
+    await loadTitleList()
+  }
+}
+onMounted(async () => {
+  addComponentListener(
+    'badgeHelper.grayEffect',
+    (enable: boolean) => {
+      grayEffect.value = enable
     },
-    async loadMedalList() {
-      this.medalList = (await getMedalList())
-        .sort(descendingSort(it => it.level))
-        .slice(0, options.maxBadgeCount)
-    },
-    async loadTitleList() {
-      this.titleList = (await getTitleList()).slice(0, options.maxBadgeCount)
-    },
-    async toggleBadge(badge: Badge, list: Badge[]) {
-      console.log(badge)
-      if (badge.isActive) {
-        badge.isActive = false
-        await badge.deactivate()
-      } else {
-        const activeBadge = list.find(b => b.isActive)
-        if (activeBadge) {
-          activeBadge.isActive = false
-        }
-        badge.isActive = true
-        await badge.activate()
-        if (badge instanceof Medal) {
-          options.defaultMedalID = badge.id
-        }
-      }
-      if (badge instanceof Medal) {
-        await this.loadMedalList()
-      } else if (badge instanceof Title) {
-        await this.loadTitleList()
-      }
-    },
-  },
+    true,
+  )
+  const init = async () => {
+    const medal = loadMedalList()
+    await Title.getImageMap()
+    const title = loadTitleList()
+    return Promise.all([medal, title])
+  }
+  await init()
+  updateColumnsCount()
 })
 </script>
 

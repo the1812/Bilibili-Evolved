@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
 import { VideoCard } from '@/components/feeds/video-card'
-import { formatDuration, formatCount, parseDuration } from '@/core/utils/formatters'
+import { formatDuration, formatCount, parseDuration, parseCount } from '@/core/utils/formatters'
 import { isNewID } from '@/components/feeds/notify'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
@@ -98,7 +98,7 @@ export default Vue.extend({
         upName: author.name,
         upID: author.mid,
         watchlater: true,
-        playCount: formatCount(archive.stat.play),
+        playCount: formatCount(parseCount(archive.stat.play)),
         get new() {
           return isNewID(this.id)
         },

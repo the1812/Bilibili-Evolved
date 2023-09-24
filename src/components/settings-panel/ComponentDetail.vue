@@ -177,7 +177,7 @@ export default Vue.extend({
     z-index: 2;
 
     .display-name {
-      font-weight: bold;
+      @include semi-bold();
       font-size: 16px;
     }
     .close {
@@ -288,7 +288,7 @@ export default Vue.extend({
     // @include no-scrollbar();
 
     .component-detail-options-title {
-      font-weight: bold;
+      @include semi-bold();
       font-size: 14px;
       margin-bottom: 8px;
     }
