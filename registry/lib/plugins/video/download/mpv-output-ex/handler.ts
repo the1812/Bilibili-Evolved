@@ -1,4 +1,3 @@
-import { Toast } from '@/core/toast'
 import { monkey } from '@/core/ajax'
 import { logError } from '@/core/utils/log'
 import { DownloadVideoOutput } from '../../../../components/video/download/types'
