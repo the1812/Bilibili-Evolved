@@ -100,7 +100,7 @@ const options = {
   },
 }
 
-const extraOptions = () => import('./extra-options/entry.vue').then(m => m.default)
+const extraOptions = () => import('./extra-options/Entry1.vue').then(m => m.default)
 
 const instantStyles = [
   {

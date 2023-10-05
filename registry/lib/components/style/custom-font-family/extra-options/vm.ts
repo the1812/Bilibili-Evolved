@@ -14,7 +14,7 @@ export const getExtraOptionsLoadState = async () => {
 }
 
 export const loadExtraOptions = async () => {
-  const extraOptions = await import('./panel.vue').then(m => m.default)
+  const extraOptions = await import('./Panel1.vue').then(m => m.default)
   extraOptionsVm = mountVueComponent(extraOptions)
   document.body.insertAdjacentElement('beforeend', extraOptionsVm.$el)
 }
