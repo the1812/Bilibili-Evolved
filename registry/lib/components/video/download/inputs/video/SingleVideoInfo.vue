@@ -5,8 +5,8 @@
   </div>
 </template>
 <script lang="ts">
+import { getVideoCoverUrlByAid } from '@/components/video/video-cover'
 import { videoChange } from '@/core/observer'
-import { getVideoCoverUrlByAid } from '../../../../utils/view-cover/utils'
 
 export default Vue.extend({
   data() {

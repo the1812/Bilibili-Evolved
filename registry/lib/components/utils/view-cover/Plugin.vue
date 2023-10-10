@@ -12,13 +12,14 @@
 </template>
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
+import { UnknownOptions } from '@/components/component'
 import { VDropdown } from '@/ui'
-import { CoverDownloadType } from './utils'
+import { CoverDownloadType } from './types'
 
-interface Options {
+interface Options extends UnknownOptions {
   CoverType: CoverDownloadType | '无'
 }
-const options = getComponentSettings('downloadVideo').options as Options
+const { options } = getComponentSettings<Options>('downloadVideo')
 
 export default Vue.extend({
   components: {

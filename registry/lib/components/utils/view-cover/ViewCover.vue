@@ -9,11 +9,11 @@
 </template>
 
 <script lang="ts">
+import { getVideoCoverUrlByAid } from '@/components/video/video-cover'
 import { getJson } from '@/core/ajax'
 import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { showImage, DefaultWidget } from '@/ui'
-import { getVideoCoverUrlByAid } from './utils'
 
 export default Vue.extend({
   components: {

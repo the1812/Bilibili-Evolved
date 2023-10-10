@@ -1,9 +1,10 @@
 import { defineComponentMetadata } from '@/components/define'
+import { getBlobByAid } from '@/components/video/video-cover'
 import { PackageEntry } from '@/core/download'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { Toast } from '@/core/toast'
 import { DownloadVideoAssets } from '../../video/download/types'
-import { CoverDownloadType, getBlobByAid } from './utils'
+import { CoverDownloadType } from './types'
 
 export const component = defineComponentMetadata({
   name: 'viewCover',

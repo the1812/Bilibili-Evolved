@@ -1,8 +1,7 @@
 import { logError } from '@/core/utils/log'
-import { VideoInfo } from '@/components/video/video-info'
+import { VideoInfo } from './video-info'
 
-export type CoverDownloadType = 'jpg'
-
+/**  根据 aid 获取视频封面地址 */
 export const getVideoCoverUrlByAid = async (aid: string) => {
   const videoInfo = new VideoInfo(aid)
   try {
@@ -14,6 +13,7 @@ export const getVideoCoverUrlByAid = async (aid: string) => {
   return videoInfo.coverUrl.replace('http:', 'https:')
 }
 
+/** 根据 aid 下载视频封面为 Blob */
 export const getBlobByAid = async (aid: string) => {
   const url = await getVideoCoverUrlByAid(aid)
   const response = await fetch(url)
