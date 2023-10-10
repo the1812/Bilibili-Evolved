@@ -17,7 +17,7 @@
           "name": "Install dependencies",
           "uses": "pnpm/action-setup@v2.2.4",
           "with": {
-            "version": "latest",
+            "version": "8.6.12",
             "run_install": true
           }
         },
