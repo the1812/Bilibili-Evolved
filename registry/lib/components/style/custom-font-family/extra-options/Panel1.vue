@@ -1,86 +1,73 @@
 <template>
-  <VPopup
-    ref="popup"
-    v-model="popupOpen"
-    class="custom-font-family-extra-options-panel extra-options-panel"
-    fixed
-    :lazy="false"
-    :trigger-element="triggerElement"
+  <ExtraOptionsPanel
+    ref="extraOptionsPanel"
+    class="custom-font-family-extra-options-panel"
     :class="{ peek: isPeeking }"
+    :init-data="initData"
   >
-    <div class="eop-header">
-      <div class="eop-h-left">
-        <VIcon class="eop-h-l-symbol" icon="mdi-format-font" :size="24"></VIcon>
-        <div class="eop-h-l-title">字体设置</div>
-      </div>
-
-      <div class="eop-h-right">
-        <VIcon
-          class="eop-h-r-reset"
-          title="重置面板中的所有选项为默认值"
-          icon="mdi-cog-sync-outline"
-          :size="24"
-          @click="confirmResetOptions()"
-        ></VIcon>
-        <VIcon
-          class="eop-h-r-peek"
-          title="透视"
-          icon="mdi-eye-outline"
-          :size="24"
-          @mouseover="mouseOnPeekIcon = true"
-          @mouseout="mouseOnPeekIcon = false"
-        ></VIcon>
-        <VIcon
-          class="eop-h-r-close"
-          title="关闭"
-          icon="mdi-close"
-          :size="24"
-          @click="popupOpen = false"
-        ></VIcon>
-      </div>
-    </div>
-
-    <div class="eop-separator"></div>
-
-    <div class="eop-content">
-      <div class="eop-c-section">
-        <div class="eop-c-s-title">自定义字体</div>
-        <div class="eop-c-s-description">输入字体，不同字体之间必须以英文逗号分隔</div>
-        <div class="eop-c-s-input input-font-family">
-          <TextArea v-model="inputFontFamily" />
-        </div>
-      </div>
-    </div>
-  </VPopup>
+    <template #eop-c-o-input-slot-0>
+      <TextArea v-model="inputFontFamily" />
+    </template>
+  </ExtraOptionsPanel>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { VPopup, VIcon, TextArea } from '@/ui'
+import { TextArea } from '@/ui'
+import ExtraOptionsPanel from './ExtraOptionsPanel.vue'
 import { getComponentSettings } from '@/core/settings'
+import { Toast } from '@/core/toast'
 import { delay } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { fontFamilyDefaultValue } from '../font-family-default-value'
+import { ExtraOptionsPanelInitData } from './extra-options-panel'
+
+const initData: ExtraOptionsPanelInitData = {
+  header: {
+    title: {
+      text: '自定义字体',
+      icon: 'mdi-format-font',
+    },
+    actions: [
+      {
+        id: 0,
+        title: '重置面板中的所有选项为默认值',
+        icon: 'mdi-cog-sync-outline',
+        iconClassNameSuffix: 'reset',
+      },
+      {
+        id: 1,
+        title: '透视',
+        icon: 'mdi-eye-outline',
+        iconClassNameSuffix: 'peek',
+      },
+    ],
+  },
+  content: {
+    options: [
+      {
+        id: 0,
+        title: '自定义字体',
+        description: '输入需要设置的字体，不同字体之间必须以英文逗号分隔',
+        inputClassName: 'input-font-family',
+      },
+    ],
+  },
+}
+
+const console = useScopedConsole('自定义字体')
 
 export default defineComponent({
   components: {
-    VPopup,
-    VIcon,
+    ExtraOptionsPanel,
     TextArea,
-  },
-
-  props: {
-    triggerElement: {
-      type: HTMLElement,
-      default: null,
-    },
   },
 
   data() {
     return {
-      popupOpen: false,
       isPeeking: false,
-      mouseOnPeekIcon: false,
+      isMouseOverPeekIcon: false,
+      initData,
       // 设置 inputFontFamily 初始值为组件 fontFamily 选项的值
       inputFontFamily: getComponentSettings('customFontFamily').options.fontFamily,
     }
@@ -92,7 +79,7 @@ export default defineComponent({
       getComponentSettings('customFontFamily').options.fontFamily = value
     }, 500),
 
-    async mouseOnPeekIcon(value: boolean) {
+    async isMouseOverPeekIcon(value: boolean) {
       if (!value) {
         this.isPeeking = false
         return
@@ -100,13 +87,38 @@ export default defineComponent({
       if (value) {
         await delay(200)
       }
-      if (this.mouseOnPeekIcon) {
+      if (this.isMouseOverPeekIcon) {
         this.isPeeking = true
       }
     },
   },
 
+  mounted() {
+    // 当在 v-for 中使用模板引用时，相应的引用中包含的值是一个数组
+    // 但 ref 数组并不保证与源数组相同的顺序，所以统一命名且不加用以区分的后缀，仅靠数组选择元素是不现实的
+    // https://cn.vuejs.org/guide/essentials/template-refs.html#refs-inside-v-for
+
+    const action0Reset = this.$refs.extraOptionsPanel.$refs.action0[0].$el as HTMLElement
+    action0Reset.addEventListener('click', this.confirmResetOptions)
+
+    const action1Peek = this.$refs.extraOptionsPanel.$refs.action1[0].$el as HTMLElement
+    action1Peek.addEventListener('mouseover', this.setIsMouseOverPeekIconToTrue)
+    action1Peek.addEventListener('mouseout', this.setIsMouseOverPeekIconToFalse)
+  },
+
   methods: {
+    toggleDisplay() {
+      this.$refs.extraOptionsPanel.popupOpen = !this.$refs.extraOptionsPanel.popupOpen
+    },
+
+    setIsMouseOverPeekIconToTrue() {
+      this.isMouseOverPeekIcon = true
+    },
+
+    setIsMouseOverPeekIconToFalse() {
+      this.isMouseOverPeekIcon = false
+    },
+
     confirmResetOptions() {
       if (confirm('确定将面板中的所有选项重置为默认值吗？')) {
         this.resetOptions()
@@ -116,20 +128,20 @@ export default defineComponent({
     resetOptions() {
       getComponentSettings('customFontFamily').options.fontFamily = fontFamilyDefaultValue
       this.inputFontFamily = fontFamilyDefaultValue
-      const console = useScopedConsole('自定义字体')
-      console.log('已将字体设置面板中的所有选项重置为默认值')
+      Toast.success('成功将字体设置面板中的所有选项重置为默认值', '自定义字体', 2000)
+      console.log('成功将字体设置面板中的所有选项重置为默认值')
     },
   },
 })
 </script>
 
 <style lang="scss">
-@import './extra-options-panel';
-
 .custom-font-family-extra-options-panel {
-  @include extra-options-panel;
+  &.peek {
+    opacity: 0.1;
+  }
 
-  > .eop-content > .eop-c-section > .eop-c-s-input.input-font-family .be-text-area {
+  > .eop-content > .eop-c-option > .eop-c-o-input.input-font-family > .be-text-area {
     min-height: 160px;
   }
 }

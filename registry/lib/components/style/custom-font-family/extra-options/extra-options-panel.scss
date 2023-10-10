@@ -5,7 +5,7 @@ $prefH: 'eop-h';
 $prefHL: 'eop-h-l';
 $prefHR: 'eop-h-r';
 $prefC: 'eop-c';
-$prefCS: 'eop-c-s';
+$prefCO: 'eop-c-o';
 
 $panelPadding: 22px;
 
@@ -26,10 +26,6 @@ $panelPadding: 22px;
 
     &.open {
       transform: translateX(-50%) translateY(-50%) scale(1);
-    }
-
-    &.peek {
-      opacity: 0.1;
     }
 
     > .#{$pref}-header {
@@ -81,25 +77,25 @@ $panelPadding: 22px;
       flex-grow: 1;
       flex-shrink: 1;
 
-      > .#{$prefC}-section {
+      > .#{$prefC}-option {
         margin: 18px 0;
 
         &:nth-child(1):nth-last-child(1) {
           margin-bottom: 12px;
         }
 
-        > .#{$prefCS}-title {
+        > .#{$prefCO}-title {
           margin-bottom: 2px;
           font-size: 14px;
         }
 
-        > .#{$prefCS}-description {
+        > .#{$prefCO}-description {
           margin-bottom: 8px;
           opacity: 0.6;
           font-size: 12px;
         }
 
-        > .#{$prefCS}-input {
+        > .#{$prefCO}-input {
           @include h-center();
           flex-wrap: wrap;
         }

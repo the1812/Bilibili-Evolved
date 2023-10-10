@@ -1,24 +1,19 @@
 import { mountVueComponent } from '@/core/utils'
 
-let extraOptionsVm: Vue & {
-  popupOpen: boolean
-  triggerElement: HTMLElement
+let panelVm: Vue & {
+  toggleDisplay: () => void
 }
 
-export const setTriggerElement = (element: HTMLElement) => {
-  extraOptionsVm.triggerElement = element
+export const getPanelLoadState = async () => {
+  return Boolean(panelVm)
 }
 
-export const getExtraOptionsLoadState = async () => {
-  return Boolean(extraOptionsVm)
+export const mountPanel = async () => {
+  const panel = await import('./Panel1.vue').then(m => m.default)
+  panelVm = mountVueComponent(panel)
+  document.body.insertAdjacentElement('beforeend', panelVm.$el)
 }
 
-export const loadExtraOptions = async () => {
-  const extraOptions = await import('./Panel1.vue').then(m => m.default)
-  extraOptionsVm = mountVueComponent(extraOptions)
-  document.body.insertAdjacentElement('beforeend', extraOptionsVm.$el)
-}
-
-export const toggleExtraOptionsDisplay = async () => {
-  extraOptionsVm.popupOpen = !extraOptionsVm.popupOpen
+export const togglePanelDisplay = async () => {
+  panelVm.toggleDisplay()
 }
