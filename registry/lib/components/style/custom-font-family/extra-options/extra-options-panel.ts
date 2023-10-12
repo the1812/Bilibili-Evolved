@@ -7,26 +7,26 @@ export interface ExtraOptionsPanelInitData {
       icon: string
     }
     actions: {
-      /** 动作按钮序号，从 0 开始增长，重复将会导致渲染异常 */
+      /** 动作序号，从 0 开始增长，重复将会导致渲染异常 */
       id: number
-      /** 动作按钮标题 */
+      /** 动作标题 */
       title: string
-      /** 动作按钮图标 */
+      /** 动作图标 */
       icon: string
-      /** 动作按钮类名的后缀，直接写一个贴切的名字就好了 */
-      iconClassNameSuffix: string
+      /** 动作类名的后缀，前缀是 action- */
+      actionClassNameSuffix: string
     }[]
   }
   content: {
     options: {
-      /** 选项序号，从 0 开始增长，重复将会导致渲染异常。另外会在类似 eop-c-s-input-slot-0 的具名插槽用到 */
+      /** 选项序号，从 0 开始增长，重复将会导致渲染异常 */
       id: number
       /** 选项标题 */
       title: string
       /** 选项介绍 */
       description: string
-      /** 选项输入入口类名 */
-      inputClassName: string
+      /** 选项输入入口类名的后缀，前缀是 input- */
+      inputClassNameSuffix: string
     }[]
   }
 }
@@ -42,13 +42,13 @@ export const defaultInitData: ExtraOptionsPanelInitData = {
         id: 0,
         title: '默认动作 0',
         icon: 'mdi-cog-sync-outline',
-        iconClassNameSuffix: 'default-action-0',
+        actionClassNameSuffix: 'default-action-0',
       },
       {
         id: 1,
         title: '默认动作 1',
         icon: 'mdi-eye-outline',
-        iconClassNameSuffix: 'default-action-1',
+        actionClassNameSuffix: 'default-action-1',
       },
     ],
   },
@@ -58,13 +58,13 @@ export const defaultInitData: ExtraOptionsPanelInitData = {
         id: 0,
         title: '默认选项 0',
         description: '默认选项 0 的说明',
-        inputClassName: 'default-option-0',
+        inputClassNameSuffix: 'default-option-0',
       },
       {
         id: 1,
         title: '默认选项 1',
         description: '默认选项 1 的说明',
-        inputClassName: 'default-option-1',
+        inputClassNameSuffix: 'default-option-1',
       },
     ],
   },

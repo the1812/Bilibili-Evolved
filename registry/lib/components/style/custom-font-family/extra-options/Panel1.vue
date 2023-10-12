@@ -5,7 +5,7 @@
     :class="{ peek: isPeeking }"
     :init-data="initData"
   >
-    <template #eop-c-o-input-slot-0>
+    <template #input0>
       <TextArea v-model="inputFontFamily" />
     </template>
   </ExtraOptionsPanel>
@@ -33,13 +33,13 @@ const initData: ExtraOptionsPanelInitData = {
         id: 0,
         title: '重置面板中的所有选项为默认值',
         icon: 'mdi-cog-sync-outline',
-        iconClassNameSuffix: 'reset',
+        actionClassNameSuffix: 'reset',
       },
       {
         id: 1,
         title: '透视',
         icon: 'mdi-eye-outline',
-        iconClassNameSuffix: 'peek',
+        actionClassNameSuffix: 'peek',
       },
     ],
   },
@@ -49,7 +49,7 @@ const initData: ExtraOptionsPanelInitData = {
         id: 0,
         title: '自定义字体',
         description: '输入需要设置的字体，不同字体之间必须以英文逗号分隔',
-        inputClassName: 'input-font-family',
+        inputClassNameSuffix: 'input-font-family',
       },
     ],
   },
@@ -74,10 +74,10 @@ export default defineComponent({
   },
 
   watch: {
-    // 监听 inputFontFamily 修改动作，实时修改组件 fontFamily 选项为 inputFontFamily 修改后的新值，并拥有 500ms 防抖
+    // 监听 inputFontFamily 修改动作，实时修改组件 fontFamily 选项为 inputFontFamily 修改后的新值，并拥有 1000ms 防抖
     inputFontFamily: lodash.debounce(value => {
       getComponentSettings('customFontFamily').options.fontFamily = value
-    }, 500),
+    }, 1000),
 
     async isMouseOverPeekIcon(value: boolean) {
       if (!value) {
@@ -128,8 +128,8 @@ export default defineComponent({
     resetOptions() {
       getComponentSettings('customFontFamily').options.fontFamily = fontFamilyDefaultValue
       this.inputFontFamily = fontFamilyDefaultValue
-      Toast.success('成功将字体设置面板中的所有选项重置为默认值', '自定义字体', 2000)
-      console.log('成功将字体设置面板中的所有选项重置为默认值')
+      Toast.success('字体设置面板中的所有选项已成功被重置为默认值', '自定义字体', 2000)
+      console.log('字体设置面板中的所有选项已成功被重置为默认值')
     },
   },
 })
@@ -141,7 +141,7 @@ export default defineComponent({
     opacity: 0.1;
   }
 
-  > .eop-content > .eop-c-option > .eop-c-o-input.input-font-family > .be-text-area {
+  > .be-eop-content > .be-eop-c-option > .be-eop-c-o-input.input-input-font-family > .be-text-area {
     min-height: 160px;
   }
 }

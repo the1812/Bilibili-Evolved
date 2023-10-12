@@ -104,12 +104,12 @@ const extraOptions = () => import('./extra-options/Entry1.vue').then(m => m.defa
 
 const instantStyles = [
   {
-    name: `${name}--style--setFontFamily`,
+    name: `${kebabName}--style--set-font-family`, // style 标签 id
     style: () => import('./set-font-family.scss'),
     important: true,
   },
   {
-    name: `${name}--style--disableQuotationMarkTextIndent`,
+    name: `${kebabName}--style--disable-quotation-mark-text-indent`,
     style: () => import('./disable-quotation-mark-text-indent.scss'),
     important: true,
   },

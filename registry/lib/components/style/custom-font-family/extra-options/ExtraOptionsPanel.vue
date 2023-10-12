@@ -1,39 +1,41 @@
 <template>
-  <VPopup v-model="popupOpen" class="extra-options-panel" fixed :lazy="false">
-    <div class="eop-header">
-      <div class="eop-h-left">
-        <VIcon class="eop-h-l-symbol" :icon="initData.header.title.icon" :size="24"></VIcon>
-        <div class="eop-h-l-title">{{ initData.header.title.text }}</div>
+  <VPopup v-model="popupOpen" class="be-extra-options-panel" fixed :lazy="false">
+    <div class="be-eop-header">
+      <div class="be-eop-h-title">
+        <VIcon class="be-eop-h-t-icon" :icon="initData.header.title.icon" :size="24"></VIcon>
+        <div class="be-eop-h-t-text">{{ initData.header.title.text }}</div>
       </div>
 
-      <div class="eop-h-right">
-        <VIcon
-          v-for="action in initData.header.actions"
-          :key="action.id"
-          :ref="`action${action.id}`"
-          :class="`eop-h-r-${action.iconClassNameSuffix}`"
-          :title="action.title"
-          :icon="action.icon"
-          :size="24"
-        ></VIcon>
-        <VIcon
-          class="eop-h-r-close"
-          title="关闭"
-          icon="mdi-close"
-          :size="24"
-          @click="popupOpen = false"
-        ></VIcon>
+      <div class="be-eop-h-actions">
+        <div v-for="action in initData.header.actions" :key="action.id" class="be-eop-h-a-action">
+          <VIcon
+            :ref="`action${action.id}`"
+            :class="`action-${action.actionClassNameSuffix}`"
+            :title="action.title"
+            :icon="action.icon"
+            :size="24"
+          ></VIcon>
+        </div>
+        <div class="be-eop-h-a-action">
+          <VIcon
+            class="action-close"
+            title="关闭"
+            icon="mdi-close"
+            :size="24"
+            @click="popupOpen = false"
+          ></VIcon>
+        </div>
       </div>
     </div>
 
-    <div class="eop-separator"></div>
+    <div class="be-eop-separator"></div>
 
-    <div class="eop-content">
-      <div v-for="option in initData.content.options" :key="option.id" class="eop-c-option">
-        <div class="eop-c-o-title">{{ option.title }}</div>
-        <div class="eop-c-o-description">{{ option.description }}</div>
-        <div class="eop-c-o-input" :class="option.inputClassName">
-          <slot :name="`eop-c-o-input-slot-${option.id}`">
+    <div class="be-eop-content">
+      <div v-for="option in initData.content.options" :key="option.id" class="be-eop-c-option">
+        <div class="be-eop-c-o-title">{{ option.title }}</div>
+        <div class="be-eop-c-o-description">{{ option.description }}</div>
+        <div class="be-eop-c-o-input" :class="`input-${option.inputClassNameSuffix}`">
+          <slot :name="`input${option.id}`">
             选项输入入口默认文字，使用含 v-slot 指令的 template 元素以替换默认内容
           </slot>
         </div>
@@ -73,7 +75,7 @@ export default defineComponent({
 <style lang="scss">
 @import './extra-options-panel';
 
-.extra-options-panel {
-  @include extra-options-panel;
+.be-extra-options-panel {
+  @include extra-options-panel();
 }
 </style>
