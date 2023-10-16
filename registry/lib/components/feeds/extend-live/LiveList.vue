@@ -38,7 +38,7 @@
         </div>
         <div class="be-live-list-item-info">
           <div class="be-live-list-item-title" :title="item.title">
-            {{ item.title }}
+            {{ decodeTitle(item.title) }}
           </div>
           <div class="be-live-list-item-user" :title="item.uname">
             {{ item.uname }}
@@ -51,6 +51,12 @@
 <script lang="ts">
 import { VIcon, TextBox, DpiImage, VEmpty, VLoading } from '@/ui'
 import { getJsonWithCredentials, responsiveGetPages } from '@/core/ajax'
+
+const decodeTitle = (title: string) => {
+  const textArea = document.createElement('textarea')
+  textArea.innerHTML = title
+  return textArea.value
+}
 
 interface LiveInfo {
   cover: string
@@ -98,6 +104,7 @@ export default Vue.extend({
     this.refresh()
   },
   methods: {
+    decodeTitle,
     async refresh() {
       try {
         this.items = []
