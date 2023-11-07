@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { createPlayerModeChangeEvent } from '@/components/video/player-adaptor'
+import type { createPlayerModeChangeEvent } from '@/components/video/player-adaptor'
 import { getComponentSettings, addComponentListener } from '@/core/settings'
 import { playerReady, getNumberValidator } from '@/core/utils'
 import { videoUrls } from '@/core/utils/urls'

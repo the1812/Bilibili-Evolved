@@ -1,4 +1,6 @@
+import { defineAsyncComponent } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
+import { select } from '@/core/spin-query'
 import {
   allVideoUrls,
   bangumiUrls,
@@ -6,7 +8,7 @@ import {
   matchCurrentPage,
   mediaListUrls,
 } from '@/core/utils/urls'
-import { select } from '@/core/spin-query'
+
 import desc from './desc.md'
 
 const commonVideoUrlPattern = '//www.bilibili.com/video/'
@@ -151,7 +153,7 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.video],
   urlInclude: allVideoUrls,
   description: { 'zh-CN': desc },
-  extraOptions: () => import('./Options.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./Options.vue')),
   options: {
     locations: {
       defaultValue: lodash.mapValues(pageTypeInfos, () => 0),

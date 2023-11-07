@@ -1,7 +1,8 @@
 import { components } from '@/components/component'
 import { plugins } from '@/plugins/plugin'
+
 import { componentToSettings } from './helpers'
-import { Settings } from './types'
+import type { Settings } from './types'
 
 /** 默认设置 */
 const internalSettings = {
@@ -10,8 +11,9 @@ const internalSettings = {
   userComponents: {},
   components: {},
   plugins: {},
-} as Settings
+} satisfies Settings as Settings
 export const settingsInternalState = {
+  // 默认设置
   internalSettings,
   settingsLoaded: false,
 }

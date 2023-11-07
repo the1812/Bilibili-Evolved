@@ -3,7 +3,9 @@ import { LifeCycleEventTypes } from '@/core/life-cycle'
 import { videoChange } from '@/core/observer'
 import { des } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
-import { bindCallback, concat, firstValueFrom, fromEvent, of, subject, Subject } from '../mini-rxjs'
+
+import type { Subject } from '../mini-rxjs'
+import { bindCallback, concat, firstValueFrom, fromEvent, of, subject } from '../mini-rxjs'
 import { bufferSet } from '../mini-rxjs/operators/bufferSet'
 import { combineLatest } from '../mini-rxjs/operators/combineLatest'
 import { debounceTime } from '../mini-rxjs/operators/debounceTime'
@@ -385,7 +387,9 @@ const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
 
     if (timeoutArg > 0) {
       promises.push(
-        new Promise((resolve, reject) => setTimeout(() => setTimeout(reject, timeoutArg))),
+        new Promise((resolve, reject) => {
+          setTimeout(() => setTimeout(reject, timeoutArg))
+        }),
       )
     }
 

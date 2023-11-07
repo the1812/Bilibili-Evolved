@@ -1,12 +1,9 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { ComponentEntry } from '@/components/types'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
 import { getUID, matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { favoriteListUrls, videoUrls } from '@/core/utils/urls'
-import { KeyBindingAction } from '../../utils/keymap/bindings'
+import type { KeyBindingAction } from '../../utils/keymap/bindings'
 import { addVideoActionButton } from '@/components/video/video-actions'
 import { videoChange } from '@/core/observer'
 
@@ -31,12 +28,8 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (!getUID()) {
     return
   }
-  const QuickFavorite = await import('./QuickFavorite.vue')
-  const vm: Vue & {
-    aid: string
-    syncFavoriteState: () => Promise<void>
-  } = mountVueComponent(QuickFavorite)
-  await addVideoActionButton(() => vm.$el)
+  const [el, vm] = mountVueComponent(await import('./QuickFavorite.vue'))
+  await addVideoActionButton(() => el)
   videoChange(() => {
     vm.aid = unsafeWindow.aid
     vm.syncFavoriteState()

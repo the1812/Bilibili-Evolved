@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="el"
     class="fresh-home-categories-bangumi-timeline-content"
     :class="{ loading, loaded, scrolled, empty: items.length === 0 }"
   >
@@ -125,13 +126,16 @@
   </div>
 </template>
 <script lang="ts">
-import { DpiImage, VIcon, VEmpty, VButton, VLoading } from '@/ui'
-import { addComponentListener } from '@/core/settings'
-import { enableHorizontalScroll } from '@/core/horizontal-scroll'
-import { cssVariableMixin, requestMixin } from '../../../../mixin'
-import { rankListCssVars } from './rank-list'
-import { setupScrollMask, cleanUpScrollMask } from '../../../scroll-mask'
+import type { Ref } from 'vue'
+import { defineComponent, nextTick, ref } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
+import { enableHorizontalScroll } from '@/core/horizontal-scroll'
+import { addComponentListener } from '@/core/settings'
+import { DpiImage, VEmpty, VIcon, VButton, VLoading } from '@/ui'
+
+import { requestProps, useCssVariable, useRequest } from '../../../../mixin'
+import { cleanUpScrollMask, setupScrollMask } from '../../../scroll-mask'
+import { rankListCssVars } from './rank-list'
 
 interface TimelineSeason {
   cover: string
@@ -179,7 +183,7 @@ const timelineCssVars = (() => {
     timelineViewportHeight,
   }
 })()
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
     VIcon,
@@ -187,10 +191,16 @@ export default Vue.extend({
     VLoading,
     VButton,
   },
-  mixins: [
-    requestMixin({ requestMethod: getJsonWithCredentials }),
-    cssVariableMixin(timelineCssVars),
-  ],
+  props: requestProps,
+  setup: props => ({
+    ...useRequest<TimelineDay>({
+      api: props.api,
+      parseJson: (json: any) => json.result ?? [],
+      requestMethod: getJsonWithCredentials,
+    }),
+    ...useCssVariable(timelineCssVars),
+    seasonsList: ref(null) as Ref<HTMLDivElement[] | null>,
+  }),
   data() {
     return {
       observers: [],
@@ -200,13 +210,13 @@ export default Vue.extend({
     }
   },
   computed: {
-    todayIndex() {
-      return (this.items as TimelineDay[]).findIndex(it => it.is_today === 1)
+    todayIndex(): number {
+      return this.items.findIndex(it => it.is_today === 1)
     },
-    pastWeekItems() {
+    pastWeekItems(): TimelineDay[] {
       return this.items.slice(0, this.todayIndex + 1)
     },
-    currentWeekItems() {
+    currentWeekItems(): TimelineDay[] {
       return this.items.slice(this.todayIndex)
     },
   },
@@ -221,10 +231,10 @@ export default Vue.extend({
     this.timer = setInterval(() => {
       this.now = Number(new Date())
     }, 60 * 1000)
-    const element = this.$el as HTMLElement
+    const element = this.el
     let ended = 0
     const endHandler = () => {
-      ended++
+      ended += 1
       if (ended >= 7) {
         element.classList.add('snap')
         element.removeEventListener('animationend', endHandler)
@@ -232,26 +242,21 @@ export default Vue.extend({
     }
     element.addEventListener('animationend', endHandler)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (this.timer) {
       clearInterval(this.timer)
     }
-    const list: HTMLElement[] = this.$refs.seasonsList
-    cleanUpScrollMask(...list)
+    cleanUpScrollMask(...this.seasonsList)
   },
   methods: {
-    parseJson(json: any) {
-      return json.result ?? []
-    },
     async updateScrollPosition() {
-      await this.$nextTick()
-      const list: HTMLElement[] = this.$refs.seasonsList
+      await nextTick()
       let cancelAll: () => void
       addComponentListener(
         'freshHome.horizontalWheelScroll',
         (scroll: boolean) => {
           if (scroll) {
-            const cancel = list
+            const cancel = this.seasonsList
               .flatMap(it => [...it.children])
               .map(it => enableHorizontalScroll(it as HTMLElement))
             cancelAll = () => cancel.forEach(fn => fn())
@@ -261,11 +266,11 @@ export default Vue.extend({
         },
         true,
       )
-      const root: HTMLElement = this.$el
+      const root: HTMLElement = this.el
       root.scrollTop = 5 * timelineCssVars.timelineItemHeight + 5 * timelineCssVars.timelineItemGap
 
       const classPrefix = '.fresh-home-categories-bangumi-timeline'
-      list.forEach(seasons => {
+      this.seasonsList.forEach(seasons => {
         setupScrollMask({
           container: seasons,
           items: dqa(seasons, `${classPrefix}-season`) as HTMLElement[],
@@ -310,7 +315,7 @@ export default Vue.extend({
       return `周${['日', '一', '二', '三', '四', '五', '六', '日'][item.day_of_week]}`
     },
     offsetPage(item: TimelineDay, offset: number) {
-      const list = this.$refs.seasonsList as HTMLElement[]
+      const list = this.seasonsList as HTMLElement[]
       const container = list.find(it => it.dataset.date === item.date)
       const containerWidth = container.clientWidth
       const pageWidth =

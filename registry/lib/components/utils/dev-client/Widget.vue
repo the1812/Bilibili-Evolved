@@ -13,7 +13,7 @@
       <template v-else>
         <div class="status-dot disconnected" />
         <div class="status-text">未连接</div>
-        <AsyncButton title="连接" @click="connect">
+        <AsyncButton title="连接" :wait-on-click="connect">
           <VIcon icon="mdi-play" :size="14" />
           连接
         </AsyncButton>
@@ -22,18 +22,20 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { AsyncButton, VIcon } from '@/ui'
+
 import type { DevClient } from './client'
 import { DevClientEvents } from './client'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     AsyncButton,
     VIcon,
   },
   data() {
     return {
-      client: null,
+      client: null as DevClient | null,
       isConnected: false,
     }
   },
@@ -43,13 +45,13 @@ export default Vue.extend({
     this.updateConnectionStatus()
     devClient.addEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     const devClient = this.client as DevClient
     devClient.removeEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
   },
   methods: {
     async connect() {
-      return this.client.createSocket(true)
+      await this.client.createSocket(true)
     },
     disconnect() {
       this.client.closeSocket()

@@ -1,5 +1,5 @@
-import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
 import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'

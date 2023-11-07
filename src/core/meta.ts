@@ -1,4 +1,5 @@
 import commonMeta from '@/client/common.meta.json'
+
 import { cdnRoots } from './cdn-types'
 
 commonMeta.copyright = commonMeta.copyright.replace(

@@ -1,21 +1,24 @@
-<template>
-  <iframe :src="item.src" frameborder="0" :width="item.width" :height="item.height"></iframe>
-</template>
-
-<script lang="ts">
-import type { PropType } from 'vue'
+<script setup lang="ts">
 import type { NavbarIframeConfig } from './iframe'
-import { popperMixin } from '../mixins'
-import { CustomNavbarItem } from '../custom-navbar-item'
+import type { CustomNavbarItem } from '../custom-navbar-item'
+import { usePopup } from '../mixins'
 
-export default Vue.extend({
-  name: 'IframePopup',
-  mixins: [popperMixin],
-  props: {
-    item: {
-      type: CustomNavbarItem as unknown as PropType<CustomNavbarItem & NavbarIframeConfig>,
-      required: true,
-    },
-  },
-})
+const props = defineProps<{
+  item: CustomNavbarItem & NavbarIframeConfig
+  container: HTMLElement
+}>()
+
+const { el, popupShow } = usePopup(props)
+
+defineExpose({ popupShow })
 </script>
+
+<template>
+  <iframe
+    ref="el"
+    :src="item.src"
+    frameborder="0"
+    :width="item.width"
+    :height="item.height"
+  ></iframe>
+</template>

@@ -10,12 +10,15 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { FeedsCardType } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { VIcon } from '@/ui'
-import { FeedsFilterOptions } from './options'
+import type { FeedsFilterOptions } from './options'
 
 const { options } = getComponentSettings<FeedsFilterOptions>('feedsFilter')
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },
@@ -25,12 +28,12 @@ export default Vue.extend({
       required: true,
     },
     type: {
-      type: Object,
+      type: Object as PropType<FeedsCardType>,
       required: true,
     },
   },
   data() {
-    const optionKey = this.type.id >= 0 ? 'types' : 'specialTypes'
+    const optionKey = this.type.id >= 0 ? 'types' : ('specialTypes' as 'types' | 'specialTypes')
     const disabled = options[optionKey].includes(this.type.id)
     return {
       disabled,

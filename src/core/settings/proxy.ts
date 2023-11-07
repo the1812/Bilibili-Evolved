@@ -1,4 +1,4 @@
-import { Property, ValueChangeListener } from './types'
+import type { Property, ValueChangeListener } from './types'
 
 /** 标识经由 `createProxy` 控制的对象 */
 export const isProxy = Symbol('isProxy')
@@ -11,7 +11,7 @@ export const isProxy = Symbol('isProxy')
 export const createProxy = (targetObj: any, valueChangeListener?: ValueChangeListener) => {
   const applyProxy = (obj: any, rootProp?: Property, propPath: Property[] = []) => {
     for (const [key, value] of Object.entries(obj)) {
-      const shouldApplyProxy = typeof value === 'object' && !(value instanceof RegExp)
+      const shouldApplyProxy = lodash.isObjectLike(value) && !(value instanceof RegExp)
       if (shouldApplyProxy) {
         obj[key] = applyProxy(value, rootProp || key, [...propPath, key])
       }

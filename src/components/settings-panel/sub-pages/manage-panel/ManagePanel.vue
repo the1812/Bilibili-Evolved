@@ -34,14 +34,10 @@
           在线
         </OnlineRegistryButton>
       </div>
-      <VPopup
-        v-model="batchAddShow"
-        :trigger-element="$refs.batchAddButton"
-        class="batch-add-popup"
-      >
+      <VPopup v-model:open="batchAddShow" :trigger-element="batchAddButton" class="batch-add-popup">
         <TextArea
           ref="batchAddTextArea"
-          v-model="batchUrl"
+          v-model:text="batchUrl"
           class="batch-add-textarea"
           placeholder="批量粘贴功能链接, 可以混合其他类型的功能 (如合集包)"
         />
@@ -59,7 +55,7 @@
     </div>
     <div class="sub-page-row">
       <TextBox
-        v-model="url"
+        v-model:text="url"
         class="item-url"
         :placeholder="'粘贴' + config.title + '链接'"
         @keydown.enter="addItem()"
@@ -74,33 +70,37 @@
       <div class="title-text">已安装的{{ config.title }}:</div>
       <div class="exclude-built-in">
         隐藏内置{{ config.title }}
-        <SwitchBox v-model="excludeBuiltIn" />
+        <SwitchBox v-model:checked="excludeBuiltIn" />
       </div>
     </div>
     <div v-if="!loaded" class="sub-page-row">
-      <VLoading key="loading" />
+      <VLoading />
     </div>
     <div v-if="loaded" class="manage-item-list">
-      <VEmpty v-if="debouncedList.length === 0" key="empty" />
+      <VEmpty v-if="debouncedList.length === 0" />
       <ManageItem v-for="item of debouncedList" :key="item.name">
         <slot name="item" :item="item">
-          {{ item.displayName }}
+          {{ item?.displayName }}
         </slot>
       </ManageItem>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { installFeature, tryParseZip } from '@/core/install-feature'
+import { defineComponent, ref } from 'vue'
+import type { Ref, PropType } from 'vue'
 import { pickFile } from '@/core/file-picker'
+import type { ManagePanelConfig } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
+import { installFeature, tryParseZip } from '@/core/install-feature'
+import { JSZipLibrary } from '@/core/runtime-library'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import { JSZipLibrary } from '@/core/runtime-library'
-import { VIcon, VButton, TextBox, VEmpty, VLoading, VPopup, TextArea, SwitchBox } from '@/ui'
-import ManageItem from './ManageItem.vue'
-import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
+import { SwitchBox, TextArea, TextBox, VButton, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
 
-export default Vue.extend({
+import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
+import ManageItem from './ManageItem.vue'
+
+export default defineComponent({
   components: {
     VIcon,
     VButton,
@@ -115,10 +115,14 @@ export default Vue.extend({
   },
   props: {
     config: {
-      type: Object,
+      type: Object as PropType<ManagePanelConfig<{ name: string; displayName?: string }>>,
       required: true,
     },
   },
+  setup: () => ({
+    batchAddButton: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+    batchAddTextArea: ref(null) as Ref<InstanceType<typeof TextArea> | null>,
+  }),
   data() {
     return {
       search: '',
@@ -127,23 +131,26 @@ export default Vue.extend({
       batchAddShow: false,
       batchUrl: '',
       excludeBuiltIn: true,
-      debouncedList: [],
+      debouncedList: [] as { name: string; displayName?: string }[],
     }
   },
   computed: {
-    filteredList() {
+    filteredList(): { name: string; displayName?: string }[] {
       return this.config.list.filter(it =>
         this.config.listFilter(it, this.search, this.excludeBuiltIn),
       )
     },
   },
   watch: {
-    filteredList() {
-      this.loaded = false
-      window.setTimeout(() => {
-        this.debouncedList = this.filteredList
-        this.loaded = true
-      }, 200)
+    filteredList: {
+      handler() {
+        this.loaded = false
+        window.setTimeout(() => {
+          this.debouncedList = this.filteredList
+          this.loaded = true
+        }, 200)
+      },
+      deep: true,
     },
   },
   mounted() {
@@ -182,7 +189,7 @@ export default Vue.extend({
       this.batchAddShow = !this.batchAddShow
       if (this.batchAddShow) {
         await this.$nextTick()
-        this.$refs.batchAddTextArea?.focus()
+        this.batchAddTextArea?.focus()
       }
     },
     async addItem() {

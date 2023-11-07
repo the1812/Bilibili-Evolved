@@ -10,20 +10,22 @@
  * 可以通过 {@link SwitchOptionsOfMetadata} 或 {@link SwitchOptionsOfSwitchMetadata} 从包装器的设置中，获取被包装后的组件的 options 类型
  */
 
-import { getComponentSettings, addComponentListener } from '@/core/settings'
-import {
+import { defineAsyncComponent } from 'vue'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
+
+import type {
   ComponentEntry,
   ComponentMetadata,
   OptionsMetadata,
   OptionsOfMetadata,
   UnknownOptions,
 } from './component'
-import { Widget } from './widget'
+import type { Widget } from './widget'
 
 /**
  * 单个开关的设置
  */
-export type SwitchItemMetadata = {
+export interface SwitchItemMetadata {
   /** 开关的显示名称 */
   displayName: string
   /** 开关的默认开启状态 */
@@ -220,7 +222,7 @@ const newSwitchOptionsMetadataExtender = <S extends string>(
 const newWidget = <N extends string, S extends string>(
   options: SwitchMetadataOption<N, S>,
 ): Omit<Widget, 'name'> => ({
-  component: () => import('./SwitchOptions.vue').then(m => m.default),
+  component: defineAsyncComponent(() => import('./SwitchOptions.vue')),
   options,
 })
 

@@ -9,29 +9,37 @@
       :validator="option.validator"
       :text="value.toString()"
       :placeholder="value.toString()"
-      @change="type === 'text' ? valueChange($event) : numberChange($event)"
+      @update:text="type === 'text' ? valueChange($event) : numberChange($event)"
     ></TextBox>
-    <SwitchBox v-if="type === 'boolean'" :checked="value" @change="valueChange($event)"></SwitchBox>
+    <SwitchBox
+      v-if="type === 'boolean'"
+      :checked="value"
+      @update:checked="valueChange($event)"
+    ></SwitchBox>
     <ColorPicker
       v-if="type === 'color'"
       :compact="true"
       :popup-offset="-95"
       :color="value"
-      @change="valueChange($event)"
+      @update:color="valueChange($event)"
     ></ColorPicker>
     <RangeInput
       v-if="type === 'range'"
       :validator="option.validator"
       :range="value"
-      @change="valueChange($event)"
+      @update:range="valueChange($event)"
     ></RangeInput>
-    <ImagePicker v-if="type === 'image'" :image="value" @change="valueChange($event)"></ImagePicker>
+    <ImagePicker
+      v-if="type === 'image'"
+      :image="value"
+      @update:image="valueChange($event)"
+    ></ImagePicker>
     <VDropdown
       v-if="type === 'dropdown'"
       :value="value"
       :items="getDropdownItems(option.dropdownEnum)"
       :key-mapper="it => it"
-      @change="valueChange($event)"
+      @update:value="valueChange($event)"
     >
       <template #item="{ item }">
         {{ item }}
@@ -47,25 +55,29 @@
       v-if="type === 'slider'"
       v-bind="option.slider"
       :value="value"
-      @change="debounceValueChange($event)"
+      @update:value="debounceValueChange($event)"
     ></VSlider>
     <div v-if="type === 'unknown'" class="unknown-option-type">未知的选项类型</div>
   </div>
 </template>
 
 <script lang="ts">
-import { TextBox, SwitchBox, ColorPicker, RangeInput, VDropdown, ImagePicker, VSlider } from '@/ui'
-import { getComponentSettings, ComponentSettings } from '@/core/settings'
-import { OptionMetadata } from '../component'
-import { getDropdownItems } from './dropdown'
-import SwitchOptions from '../SwitchOptions.vue'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { ComponentSettings } from '@/core/settings'
+import { getComponentSettings } from '@/core/settings'
+import { ColorPicker, ImagePicker, RangeInput, SwitchBox, TextBox, VDropdown, VSlider } from '@/ui'
 
-function valueChange(newValue: unknown) {
+import type { ComponentMetadata, OptionMetadata } from '../component'
+import SwitchOptions from '../SwitchOptions.vue'
+import { getDropdownItems } from './dropdown'
+
+function valueChange(this: InstanceType<typeof ThisComponent>, newValue: unknown) {
   const settings = this.settings as ComponentSettings
   settings.options[this.name] = newValue
   this.value = newValue
 }
-export default {
+const ThisComponent = defineComponent({
   name: 'ComponentOption',
   components: {
     SwitchOptions,
@@ -87,11 +99,11 @@ export default {
       default: '',
     },
     option: {
-      type: Object,
+      type: Object as PropType<OptionMetadata>,
       required: true,
     },
     component: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },
@@ -103,7 +115,17 @@ export default {
     }
   },
   computed: {
-    type() {
+    type():
+      | 'boolean'
+      | 'dropdown'
+      | 'color'
+      | 'range'
+      | 'image'
+      | 'switch'
+      | 'slider'
+      | 'text'
+      | 'number'
+      | 'unknown' {
       const option = this.option as OptionMetadata
       const { defaultValue } = option
       // console.log(option)
@@ -153,10 +175,11 @@ export default {
       settings.options[this.name] = numberValue
       this.value = numberValue
     },
-    debounceValueChange: lodash.debounce(valueChange, 200),
-    valueChange,
+    debounceValueChange: lodash.debounce(valueChange, 200) as unknown as (value: unknown) => void,
+    valueChange: valueChange as unknown as (value: unknown) => void,
   },
-}
+})
+export default ThisComponent
 </script>
 
 <style lang="scss" scoped>

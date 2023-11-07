@@ -1,9 +1,9 @@
 <template>
-  <div class="favorites-list">
+  <div ref="el" class="favorites-list">
     <div class="header">
-      <FavoritesFolderSelect v-model="folder"></FavoritesFolderSelect>
+      <FavoritesFolderSelect v-model:folder="folder"></FavoritesFolderSelect>
       <div class="search">
-        <TextBox v-model="search" linear placeholder="搜索"></TextBox>
+        <TextBox v-model:text="search" linear placeholder="搜索"></TextBox>
       </div>
       <a class="operation" :href="playLink" title="播放全部" target="_blank">
         <VButton round class="play-all">
@@ -65,16 +65,18 @@
   </div>
 </template>
 <script lang="ts">
-import { VLoading, VEmpty, VIcon, VButton, TextBox, DpiImage, ScrollTrigger } from '@/ui'
-import { formatDate, formatDuration } from '@/core/utils/formatters'
-import { getUID } from '@/core/utils'
+import { defineComponent } from 'vue'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { getJsonWithCredentials } from '@/core/ajax'
-import { logError } from '@/core/utils/log'
-import { VideoCard } from '@/components/feeds/video-card'
 import { getComponentSettings } from '@/core/settings'
+import { getUID } from '@/core/utils'
+import { formatDate, formatDuration } from '@/core/utils/formatters'
+import { logError } from '@/core/utils/log'
+import { DpiImage, ScrollTrigger, TextBox, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
+import { popupProps, usePopup } from '../mixins'
 import { notSelectedFolder } from './favorites-folder'
 import FavoritesFolderSelect from './FavoritesFolderSelect.vue'
-import { popperMixin } from '../mixins'
 
 /*
 新版收藏夹 API
@@ -110,7 +112,7 @@ const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
   upFaceUrl: item.upper.face.replace('http:', 'https:'),
   upID: item.upper.mid,
 })
-async function searchAllList() {
+async function searchAllList(this: InstanceType<typeof ThisComponent>) {
   if (!this.searching) {
     return
   }
@@ -148,7 +150,7 @@ async function searchAllList() {
     this.loading = false
   }
 }
-export default Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     FavoritesFolderSelect,
     VLoading,
@@ -159,12 +161,13 @@ export default Vue.extend({
     DpiImage,
     ScrollTrigger,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       loading: true,
-      cards: [],
-      filteredCards: [],
+      cards: [] as FavoritesItemInfo[],
+      filteredCards: [] as FavoritesItemInfo[],
       page: 1,
       hasMorePage: true,
       searchPage: 1,
@@ -174,24 +177,24 @@ export default Vue.extend({
     }
   },
   computed: {
-    searching() {
+    searching(): boolean {
       return this.search !== ''
     },
-    moreLink() {
+    moreLink(): string {
       const { id } = this.folder
       if (id === 0) {
         return `https://space.bilibili.com/${getUID()}/favlist`
       }
       return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}`
     },
-    playLink() {
+    playLink(): string {
       const { id } = this.folder
       if (id === 0) {
         return undefined
       }
       return `https://www.bilibili.com/medialist/play/ml${id}`
     },
-    canLoadMore() {
+    canLoadMore(): boolean {
       if (this.searching) {
         return this.hasMoreSearchPage
       }
@@ -258,7 +261,7 @@ export default Vue.extend({
         logError(error)
       }
     },
-    debounceSearchAllList: lodash.debounce(searchAllList, 200),
+    debounceSearchAllList: lodash.debounce(searchAllList, 200) as unknown as () => Promise<void>,
     scrollTrigger() {
       if (this.searching) {
         this.debounceSearchAllList()
@@ -268,6 +271,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';
@@ -340,7 +344,7 @@ export default Vue.extend({
       @include no-scrollbar();
       padding: 0 12px;
       padding-bottom: 12px;
-      &-enter,
+      &-enter-from,
       &-leave-to {
         opacity: 0;
         transform: translateY(-16px) scale(0.9);

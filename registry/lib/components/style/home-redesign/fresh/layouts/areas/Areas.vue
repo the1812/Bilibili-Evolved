@@ -22,11 +22,13 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { addData } from '@/plugins/data'
 import { VButton, VIcon } from '@/ui'
+
+import BlackRoomColored from './black-room.svg'
 import LiveColored from './live.svg'
 import TopicColored from './topic.svg'
-import BlackRoomColored from './black-room.svg'
 
 addData('ui.icons', (icons: Record<string, string>) => {
   icons['live-colored'] = LiveColored
@@ -54,7 +56,7 @@ const others = [
     icon: 'black-room-colored',
   },
 ]
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

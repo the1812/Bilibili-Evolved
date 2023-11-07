@@ -5,9 +5,9 @@
       <b style="color: var(--theme-color)">{{ rouge }} </b>轮次，请确认当前情况：
     </div>
     <div class="bisector-dialog-button-group">
-      <VButton @click="onGood">正常</VButton>
-      <VButton @click="onBad">不正常</VButton>
-      <VButton type="primary" @click="onAbort">终止</VButton>
+      <VButton @click="$emit('good')">正常</VButton>
+      <VButton @click="$emit('bad')">不正常</VButton>
+      <VButton type="primary" @click="$emit('abort')">终止</VButton>
     </div>
     <div class="bisector-dialog-content-text weak">
       *可以点击×号关闭对话框，刷新页面后，会再次询问
@@ -16,28 +16,21 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent } from 'vue'
 import { VButton } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: { VButton },
   props: {
     rouge: {
       type: Number,
       required: true,
     },
-    onAbort: {
-      type: Function,
-      default: none,
-    },
-    onGood: {
-      type: Function,
-      default: none,
-    },
-    onBad: {
-      type: Function,
-      default: none,
-    },
+  },
+  emits: {
+    abort: null as () => void,
+    good: null as () => void,
+    bad: null as () => void,
   },
 })
 </script>

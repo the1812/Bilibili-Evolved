@@ -1,5 +1,5 @@
 /** 元素查询函数, 调用时执行 `SpinQuery.select` 查询, 可访问 `selector` 获取选择器 */
-export type ElementQuery<Target = HTMLElement> = {
+export interface ElementQuery<Target = HTMLElement> {
   (): Promise<Target | null>
   sync: () => Target | null
   selector: string

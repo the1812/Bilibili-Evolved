@@ -1,11 +1,10 @@
 <template>
   <div class="be-text-area" role="text">
     <textarea
-      ref="input"
+      ref="inputRef"
       type="text"
-      v-bind="$attrs"
+      v-bind="restAttrs"
       :value="text"
-      v-on="restListeners"
       @change.stop="change"
       @input.stop="input"
       @compositionstart="compositionStart"
@@ -14,11 +13,13 @@
   </div>
 </template>
 <script lang="ts">
-import { textControlMixin } from './text-control'
+import { defineComponent } from 'vue'
+import { textControlProps, useTextControl } from './text-control'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'TextArea',
-  mixins: [textControlMixin],
+  props: textControlProps,
+  setup: useTextControl,
 })
 </script>
 <style lang="scss">

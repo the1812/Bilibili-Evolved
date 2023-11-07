@@ -8,10 +8,12 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DefaultWidget } from '@/ui'
+import type DanmakuRecorder from './DanmakuRecorder.vue'
 
-let recorderVM: Vue & { opened: boolean }
-export default Vue.extend({
+let recorderVM: InstanceType<typeof DanmakuRecorder> | undefined
+export default defineComponent({
   components: {
     DefaultWidget,
   },
@@ -20,10 +22,10 @@ export default Vue.extend({
       if (dq('.live-danmaku-recorder')) {
         recorderVM.opened = !recorderVM.opened
       } else {
-        const DanmakuRecorder = await import('./DanmakuRecorder.vue')
         const { mountVueComponent } = await import('@/core/utils')
-        recorderVM = mountVueComponent(DanmakuRecorder)
-        document.body.insertAdjacentElement('beforeend', recorderVM.$el)
+        const [el, vm] = mountVueComponent(await import('./DanmakuRecorder.vue'))
+        recorderVM = vm
+        document.body.insertAdjacentElement('beforeend', el)
         recorderVM.opened = true
       }
     },

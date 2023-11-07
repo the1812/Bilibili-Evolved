@@ -1,7 +1,8 @@
 import { fixed } from '@/core/utils'
+
+import type { Duration, FontStyles, Resolution } from './ass-danmaku'
+import type { Danmaku } from './danmaku-data'
 import { DanmakuType } from './danmaku-type'
-import { Resolution, Duration, FontStyles } from './ass-danmaku'
-import { Danmaku } from './danmaku-data'
 
 interface TrackItem {
   start: number

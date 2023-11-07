@@ -8,9 +8,12 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getHook } from '@/plugins/hook'
-import { UserStyle, installStyle, uninstallStyle, styles } from '@/plugins/style'
-import { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
+import type { UserStyle } from '@/plugins/style'
+import { installStyle, styles, uninstallStyle } from '@/plugins/style'
+
+import type { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
 import ManagePanel from './manage-panel/ManagePanel.vue'
 import UserItem from './manage-panel/UserItem.vue'
 
@@ -50,7 +53,7 @@ const getItemConfig = (item: StyleType): ManageItem<StyleType> => ({
     await after()
   },
 })
-export default Vue.extend({
+export default defineComponent({
   components: {
     ManagePanel,
     UserItem,

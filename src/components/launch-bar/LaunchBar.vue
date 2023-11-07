@@ -32,8 +32,10 @@
           @next-item="nextItem($event, index)"
           @delete-item="onDeleteItem($event, index)"
           @action="
-            index === actions.length - 1 && onClearHistory()
-            onAction(a)
+            () => {
+              index === actions.length - 1 && onClearHistory()
+              onAction()
+            }
           "
         />
       </div>
@@ -55,7 +57,7 @@
           @previous-item="previousItem($event, index)"
           @next-item="nextItem($event, index)"
           @delete-item="onDeleteItem($event, index)"
-          @action="onAction(a)"
+          @action="onAction"
         />
       </div>
     </div>
@@ -63,18 +65,18 @@
 </template>
 <script lang="ts">
 import Fuse from 'fuse.js'
-import { VIcon, VLoading, VEmpty } from '@/ui'
-import { registerAndGetData } from '@/plugins/data'
+import { defineComponent, ref, reactive, type Ref } from 'vue'
+
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
+import { registerAndGetData } from '@/plugins/data'
+import { VEmpty, VIcon, VLoading } from '@/ui'
+
 import ActionItem from './ActionItem.vue'
-import {
-  LaunchBarActionProviders,
-  LaunchBarActionProvider,
-  LaunchBarAction,
-} from './launch-bar-action'
-import { searchProvider, search } from './search-provider'
 import { historyProvider } from './history-provider'
+import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
+import { LaunchBarActionProviders } from './launch-bar-action'
+import { search, searchProvider } from './search-provider'
 import { ascendingSort } from '@/core/utils/sort'
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
@@ -82,16 +84,18 @@ const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   historyProvider,
 ]) as [LaunchBarActionProvider[]]
 
-const sortActions = (actions: LaunchBarAction[]) => {
+interface LaunchBarActionData extends LaunchBarAction {
+  key: string
+  provider: LaunchBarActionProvider
+}
+
+const sortActions = (actions: LaunchBarActionData[]): LaunchBarActionData[] => {
   return [...actions].sort(ascendingSort(it => it.order ?? Infinity))
 }
 const generateKeys = (
   provider: LaunchBarActionProvider,
   actions: LaunchBarAction[],
-): ({
-  key: string
-  provider: LaunchBarActionProvider
-} & LaunchBarAction)[] =>
+): LaunchBarActionData[] =>
   actions.map(a => {
     const key = `${provider.name}.${a.name}`
     return {
@@ -100,7 +104,7 @@ const generateKeys = (
       provider,
     }
   })
-async function getOnlineActions() {
+async function getOnlineActions(this: InstanceType<typeof ThisComponent>) {
   const onlineActions = (
     await Promise.all(
       actionProviders.map(async provider =>
@@ -119,7 +123,7 @@ async function getOnlineActions() {
   this.actions = sortActions(fuseResult.map(it => it.item).slice(0, 12))
   this.noActions = this.actions.length === 0
 }
-async function getActions() {
+async function getActions(this: InstanceType<typeof ThisComponent>) {
   this.noActions = false
   if (this.isHistory) {
     this.actions = sortActions(
@@ -127,32 +131,42 @@ async function getActions() {
     )
     return
   }
-  const actions: LaunchBarAction[] = []
-  this.actions = actions
-  this.getOnlineActions()
+  this.actions = []
+  this.getOnlineActions().then()
 }
 
-const [recommended] = registerAndGetData('launchBar.recommended', {
-  word: '搜索',
-  href: 'https://search.bilibili.com/',
-})
-export default Vue.extend({
+const [recommended] = registerAndGetData(
+  'launchBar.recommended',
+  reactive({
+    word: '搜索',
+    href: 'https://search.bilibili.com/',
+  }),
+)
+const ThisComponent = defineComponent({
   components: {
     VIcon,
     VLoading,
     VEmpty,
     ActionItem,
   },
+  emits: ['close'],
+  setup: () => ({
+    input: ref(null) as Ref<HTMLInputElement | null>,
+    list: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       recommended,
-      actions: [],
+      actions: [] as ({
+        key: string
+        provider: LaunchBarActionProvider
+      } & LaunchBarAction)[],
       keyword: '',
       noActions: false,
     }
   },
   computed: {
-    isHistory() {
+    isHistory(): boolean {
       return this.keyword.length === 0
     },
   },
@@ -162,7 +176,7 @@ export default Vue.extend({
     },
   },
   async mounted() {
-    this.getActions()
+    this.getActions().then()
     if (!matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
       return
     }
@@ -182,19 +196,19 @@ export default Vue.extend({
     })
   },
   methods: {
-    getOnlineActions: lodash.debounce(getOnlineActions, 200),
+    getOnlineActions: lodash.debounce(getOnlineActions, 200) as unknown as () => Promise<void>,
     getActions,
     handleSelect() {
       this.$emit('close')
       this.getActions()
     },
-    async handleEnter(e: KeyboardEvent) {
-      if (e.isComposing) {
+    async handleEnter(e: KeyboardEvent | MouseEvent) {
+      if ('isComposing' in e && e.isComposing) {
         return
       }
       if (this.actions.length > 0 && !this.isHistory) {
-        const [first] = this.actions as LaunchBarAction[]
-        if (first.explicitSelect !== true) {
+        const [first] = this.actions
+        if (first.explicitSelect === false) {
           first.action()
           return
         }
@@ -211,17 +225,17 @@ export default Vue.extend({
       if (e.isComposing) {
         return
       }
-      this.$refs.list.querySelector('.suggest-item:last-child').focus()
+      ;(this.list.querySelector('.suggest-item:last-child') as HTMLElement).focus()
       e.preventDefault()
     },
     handleDown(e: KeyboardEvent) {
       if (e.isComposing) {
         return
       }
-      this.$refs.list.querySelector('.suggest-item').focus()
+      ;(this.list.querySelector('.suggest-item') as HTMLElement).focus()
       e.preventDefault()
     },
-    previousItem(e: KeyboardEvent, index: number) {
+    previousItem(e: KeyboardEvent | MouseEvent, index: number) {
       if (index === 0) {
         this.focus()
       } else {
@@ -237,7 +251,7 @@ export default Vue.extend({
       }
     },
     search,
-    onDeleteItem(e: Event, index: number) {
+    onDeleteItem(e: KeyboardEvent | MouseEvent, index: number) {
       this.previousItem(e, index)
       this.getActions()
     },
@@ -250,10 +264,11 @@ export default Vue.extend({
       this.handleSelect()
     },
     focus() {
-      this.$refs.input.focus()
+      this.input.focus()
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

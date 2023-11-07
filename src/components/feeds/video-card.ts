@@ -1,3 +1,13 @@
+export interface Topic {
+  id: number
+  name: string
+}
+export interface Cooperation {
+  id: number
+  name: string
+  faceUrl: string
+}
+
 /** 视频卡片信息 */
 export interface VideoCard {
   id: string
@@ -20,16 +30,9 @@ export interface VideoCard {
   favorites?: string
   timestamp?: number
   time?: Date
-  topics?: {
-    id: number
-    name: string
-  }[]
+  topics?: Topic[]
   type?: string
   points?: number
   watchlater?: boolean
-  cooperation?: {
-    id: number
-    name: string
-    faceUrl: string
-  }[]
+  cooperation?: Cooperation[]
 }

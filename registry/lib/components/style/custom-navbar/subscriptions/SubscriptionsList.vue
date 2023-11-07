@@ -41,22 +41,24 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { getJsonWithCredentials } from '@/core/ajax'
 import { getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
-import { DpiImage, VLoading, VEmpty, VIcon, ScrollTrigger } from '@/ui'
-import { getJsonWithCredentials } from '@/core/ajax'
+import { DpiImage, ScrollTrigger, VEmpty, VIcon, VLoading } from '@/ui'
+
 import { SubscriptionTypes } from './subscriptions'
-import { SubscriptionItem, SubscriptionStatus, SubscriptionStatusFilter } from './types'
+import { type SubscriptionItem, SubscriptionStatus, type SubscriptionStatusFilter } from './types'
 
 const getStatusText = (status: SubscriptionStatus) => {
   switch (status) {
     case SubscriptionStatus.ToView:
       return '想看'
+    case SubscriptionStatus.Viewed:
+      return '看过'
     case SubscriptionStatus.Viewing:
     default:
       return '在看'
-    case SubscriptionStatus.Viewed:
-      return '看过'
   }
 }
 const subscriptionSorter = (a: SubscriptionItem, b: SubscriptionItem) => {
@@ -70,7 +72,7 @@ const subscriptionSorter = (a: SubscriptionItem, b: SubscriptionItem) => {
   }
   return statusA - statusB
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
     VLoading,
@@ -92,7 +94,7 @@ export default Vue.extend({
     return {
       loading: true,
       hasMorePage: true,
-      cards: [],
+      cards: [] as any[],
       page: 1,
     }
   },
@@ -114,7 +116,7 @@ export default Vue.extend({
         const followStatus = filter.viewAll ? 0 : (filter.status as number)
         const params = new URLSearchParams({
           type: this.type !== SubscriptionTypes.Bangumi ? '2' : '1',
-          pn: this.page,
+          pn: this.page.toString(),
           ps: '16',
           vmid: getUID(),
           follow_status: followStatus.toString(),

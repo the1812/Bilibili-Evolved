@@ -1,8 +1,5 @@
-import {
-  OptionsOfMetadata,
-  defineComponentMetadata,
-  defineOptionsMetadata,
-} from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { disableScrollVolume } from '../disable-scroll-volume'
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'

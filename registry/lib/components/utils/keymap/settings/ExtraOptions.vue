@@ -12,14 +12,20 @@
   </div>
 </template>
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { VButton, VIcon } from '@/ui'
+
 import { loadKeymapSettings, toggleKeymapSettings } from './vm'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,
   },
+  setup: () => ({
+    button: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+  }),
   data() {
     return {
       popupOpen: false,
@@ -27,10 +33,10 @@ export default Vue.extend({
   },
   methods: {
     async loadSettings() {
-      await loadKeymapSettings(this.$refs.button)
+      await loadKeymapSettings(this.button.$el)
     },
     async toggleSettings() {
-      await toggleKeymapSettings(this.$refs.button)
+      await toggleKeymapSettings(this.button.$el)
     },
   },
 })

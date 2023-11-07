@@ -1,7 +1,9 @@
+import { reactive } from 'vue'
 import { Toast } from '@/core/toast'
 import { registerAndGetData } from '@/plugins/data'
+
 import { isBuiltInComponent } from '../built-in-components'
-import { ComponentMetadata } from '../types'
+import type { ComponentMetadata } from '../types'
 import { uninstallComponent } from '../user-component'
 
 export interface SearchBarActionContext {
@@ -39,6 +41,7 @@ const builtInActions: SearchBarAction[] = [
     },
   },
 ]
-export const [searchBarActions] = registerAndGetData('settingsPanel.searchBarActions', [
-  ...builtInActions,
-])
+export const [searchBarActions] = registerAndGetData(
+  'settingsPanel.searchBarActions',
+  reactive([...builtInActions]),
+)

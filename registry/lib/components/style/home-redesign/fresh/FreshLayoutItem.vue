@@ -20,18 +20,23 @@
   </div>
 </template>
 <script lang="ts">
+import type { PropType } from 'vue'
+import { defineComponent } from 'vue'
 import { freshHomeOptions } from './options'
+import type { FreshLayoutItem, FreshLayoutItemSettings } from './layouts/fresh-layout-item'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     item: {
       required: true,
-      type: Object,
+      type: Object as PropType<FreshLayoutItem>,
     },
   },
   data() {
     return {
-      options: freshHomeOptions.layoutOptions[this.item.name] ?? {},
+      options: (freshHomeOptions.layoutOptions[this.item.name] ?? {
+        linebreak: false,
+      }) as FreshLayoutItemSettings | { linebreak: boolean; order?: number; hidden?: boolean },
     }
   },
 })

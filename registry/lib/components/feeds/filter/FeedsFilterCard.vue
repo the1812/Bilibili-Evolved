@@ -12,22 +12,17 @@
     <div class="filter-patterns">
       <div v-for="p of patterns" :key="p" class="pattern">
         {{ p }}
-        <VIcon
-          title="删除"
-          icon="mdi-trash-can-outline"
-          :size="16"
-          @click.native="deletePattern(p)"
-        />
+        <VIcon title="删除" icon="mdi-trash-can-outline" :size="16" @click="deletePattern(p)" />
       </div>
     </div>
     <div class="add-pattern">
       <TextBox
-        v-model="newPattern"
+        v-model:text="newPattern"
         placeholder="支持正则表达式 /^xxx$/"
         type="text"
         @keydown.enter="addPattern(newPattern)"
       />
-      <VButton type="transparent" @click.native="addPattern(newPattern)">
+      <VButton type="transparent" @click="addPattern(newPattern)">
         <VIcon title="添加" icon="mdi-plus" :size="18" />
       </VButton>
     </div>
@@ -37,10 +32,12 @@
         v-for="[id, type] of Object.entries(allSideCards)"
         :key="id"
         class="filter-side-card-switch feeds-filter-switch"
-        @click="toggleBlockSide(id)"
+        @click="toggleBlockSide(Number(id))"
       >
-        <label :class="{ disabled: sideDisabled(id) }">
-          <span class="name" :class="{ disabled: sideDisabled(id) }">{{ type.displayName }}</span>
+        <label :class="{ disabled: sideDisabled(Number(id)) }">
+          <span class="name" :class="{ disabled: sideDisabled(Number(id)) }">{{
+            type.displayName
+          }}</span>
           <VIcon :size="16" class="disabled" icon="mdi-cancel"></VIcon>
           <VIcon :size="16" icon="mdi-check"></VIcon>
         </label>
@@ -50,18 +47,21 @@
 </template>
 
 <script lang="ts">
-import {
+import { defineAsyncComponent, defineComponent } from 'vue'
+import type {
+  feedsCardsManager,
   FeedsCard,
   FeedsCardType,
-  feedsCardTypes,
-  forEachFeedsCard,
   RepostFeedsCard,
 } from '@/components/feeds/api'
+
+import { feedsCardTypes, forEachFeedsCard } from '@/components/feeds/api'
+import { attributes, attributesSubtree } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
-import { attributes, attributesSubtree } from '@/core/observer'
-import { VIcon, TextBox, VButton } from '@/ui'
-import { FeedsFilterOptions } from './options'
+import { TextBox, VButton, VIcon } from '@/ui'
+
+import type { FeedsFilterOptions } from './options'
 import { hasBlockedPattern } from './pattern'
 
 const { options } = getComponentSettings<FeedsFilterOptions>('feedsFilter')
@@ -99,12 +99,12 @@ const sideCards: { [id: number]: SideCardType } = {
     displayName: '发布动态',
   },
 }
-let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
+let cardsManager: typeof feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
-    FilterTypeSwitch: () => import('./FilterTypeSwitch.vue'),
+    FilterTypeSwitch: defineAsyncComponent(() => import('./FilterTypeSwitch.vue')),
     VIcon,
     TextBox,
     VButton,
@@ -120,11 +120,14 @@ export default Vue.extend({
     }
   },
   watch: {
-    patterns() {
-      options.patterns = this.patterns
-      if (cardsManager) {
-        cardsManager.cards.forEach(card => this.updateCard(lodash.clone(card)))
-      }
+    patterns: {
+      handler() {
+        options.patterns = this.patterns
+        if (cardsManager) {
+          cardsManager.cards.forEach(card => this.updateCard(lodash.clone(card)))
+        }
+      },
+      deep: true,
     },
   },
   async mounted() {
@@ -197,7 +200,7 @@ export default Vue.extend({
     updateBlockSide() {
       Object.entries(sideCards).forEach(([id, type]) => {
         const name = sideBlock + type.className
-        document.body.classList[this.blockSideCards.includes(id) ? 'add' : 'remove'](name)
+        document.body.classList[this.blockSideCards.includes(Number(id)) ? 'add' : 'remove'](name)
       })
     },
     toggleBlockSide(id: number) {

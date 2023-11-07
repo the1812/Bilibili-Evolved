@@ -1,6 +1,7 @@
-import path from 'path'
 import lodash from 'lodash'
-import { Configuration } from 'webpack'
+import path from 'path'
+import type { Configuration } from 'webpack'
+
 import { getDefaultConfig } from '../../webpack/webpack.config'
 import { getId } from '../lib/id'
 
@@ -34,6 +35,8 @@ export const buildByEntry = (params: {
     },
     cache: false,
     externals: [
+      // The script body and features must use the same vue dependency. This is because there is shared state in the vue exported function.
+      { vue: 'window bevoVue' },
       ...(defaultConfig.externals as any[]),
       ({ request }, callback) => {
         const regexMatch = (regex: RegExp, base: string[]) => {

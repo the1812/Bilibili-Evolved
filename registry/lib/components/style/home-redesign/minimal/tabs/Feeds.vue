@@ -9,28 +9,30 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getVideoFeeds } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
+import type { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
 import { ascendingStringSort } from '@/core/utils/sort'
-import { VEmpty, ScrollTrigger } from '@/ui'
+import { ScrollTrigger, VEmpty } from '@/ui'
+
 import MinimalHomeOperations from '../MinimalHomeOperations.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: { ScrollTrigger, VEmpty, VideoCard: VideoCardComponent, MinimalHomeOperations },
   data() {
     return {
       loading: true,
-      cards: [],
+      cards: [] as VideoCard[],
       error: false,
     }
   },
   computed: {
-    loaded() {
+    loaded(): boolean {
       return !this.loading && !this.error
     },
-    lastID() {
+    lastID(): string | null {
       if (!this.cards.length) {
         return null
       }

@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
 
@@ -8,7 +10,7 @@ export const component = defineComponentMetadata({
   reload: none,
   unload: none,
   widget: {
-    component: () => import('./Widget.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./Widget.vue')),
     condition: () => hasVideo(),
   },
   tags: [componentsTags.video],

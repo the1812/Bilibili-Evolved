@@ -1,7 +1,8 @@
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
 import { addComponentListener } from '@/core/settings'
-import { mountVueComponent, getNumberValidator } from '@/core/utils'
+import { getNumberValidator, mountVueComponent } from '@/core/utils'
+
 import { homeUrls } from '../urls'
 import { MinimalHomeTabOption } from './types'
 
@@ -35,9 +36,8 @@ export const component = defineComponentMetadata({
       true,
     )
     contentLoaded(async () => {
-      const MinimalHome = await import('./MinimalHome.vue')
-      const minimalHome = mountVueComponent(MinimalHome)
-      document.body.appendChild(minimalHome.$el)
+      const [el] = mountVueComponent(await import('./MinimalHome.vue'))
+      document.body.appendChild(el)
     })
   },
   options: minimalHomeOptionsMetadata,

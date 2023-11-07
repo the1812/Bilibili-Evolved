@@ -1,10 +1,11 @@
+import { defineComponentMetadata } from '@/components/define'
 import { addControlBarButton } from '@/components/video/video-control-bar'
 import { attributesSubtree } from '@/core/observer'
 import { playerReady } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
-import { KeyBindingAction } from '../../../utils/keymap/bindings'
-import { defineComponentMetadata } from '@/components/define'
+
+import type { KeyBindingAction } from '../../../utils/keymap/bindings'
 import desc from './desc.md'
 import seekLeft from './seek-left.svg'
 import seekRight from './seek-right.svg'

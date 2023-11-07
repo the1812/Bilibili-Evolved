@@ -1,11 +1,32 @@
-import { defineComponentMetadata } from '@/components/define'
-import { mainSiteUrls } from '@/core/utils/urls'
+import { defineAsyncComponent } from 'vue'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  type OptionsOfMetadata,
+} from '@/components/define'
 import { allMutationsOn } from '@/core/observer'
 import { selectAll } from '@/core/spin-query'
-import { registerData, getData } from '@/plugins/data'
+import { mainSiteUrls } from '@/core/utils/urls'
+import { getData, registerData } from '@/plugins/data'
+
 import { BlackListDataKey } from './common'
 
 const name = 'blackList'
+
+const optionsMetadata = defineOptionsMetadata({
+  up: {
+    displayName: 'up主名称',
+    defaultValue: [],
+    hidden: true,
+  },
+  upRegex: {
+    displayName: '正则匹配up主名称',
+    defaultValue: [],
+    hidden: true,
+  },
+})
+
+export type Options = OptionsOfMetadata<typeof optionsMetadata>
 
 const entry = async ({ settings: { options } }) => {
   const blackListData = {
@@ -60,19 +81,8 @@ export const component = defineComponentMetadata({
   name,
   entry,
   // reload: entry,
-  extraOptions: () => import('./Settings.vue').then(m => m.default),
-  options: {
-    up: {
-      displayName: 'up主名称',
-      defaultValue: [],
-      hidden: true,
-    },
-    upRegex: {
-      displayName: '正则匹配up主名称',
-      defaultValue: [],
-      hidden: true,
-    },
-  },
+  extraOptions: defineAsyncComponent(() => import('./Settings.vue')),
+  options: optionsMetadata,
   displayName: '屏蔽黑名单up主',
   tags: [componentsTags.utils],
   description: {

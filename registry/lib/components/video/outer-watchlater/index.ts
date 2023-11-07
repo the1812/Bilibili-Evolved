@@ -1,12 +1,10 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { ComponentEntry } from '@/components/types'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
 import { getUID, matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
-import { KeyBindingAction } from '../../utils/keymap/bindings'
+
+import type { KeyBindingAction } from '../../utils/keymap/bindings'
 import { addVideoActionButton } from '@/components/video/video-actions'
 
 const options = defineOptionsMetadata({
@@ -25,11 +23,8 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (!getUID()) {
     return
   }
-  const OuterWatchlater = await import('./OuterWatchlater.vue')
-  const vm: Vue & {
-    aid: string
-  } = mountVueComponent(OuterWatchlater)
-  if (await addVideoActionButton(() => vm.$el)) {
+  const [el, vm] = mountVueComponent(await import('./OuterWatchlater.vue'))
+  if (await addVideoActionButton(() => el)) {
     const { videoChange } = await import('@/core/observer')
     videoChange(({ aid }) => {
       console.log('videoChange', unsafeWindow.aid, aid)

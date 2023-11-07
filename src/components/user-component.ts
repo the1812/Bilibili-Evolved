@@ -1,8 +1,10 @@
 import { componentToSettings } from '@/core/settings'
+
 import { isBuiltInComponent } from './built-in-components'
-import { ComponentMetadata, componentsMap } from './component'
+import type { ComponentMetadata } from './component'
+import { componentsMap } from './component'
 import * as bisector from './bisector/api'
-import { BisectorOptions } from './bisector/options'
+import type { BisectorOptions } from './bisector/options'
 
 /**
  * 安装自定义组件

@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { registerAndGetData } from '@/plugins/data'
 
 export const presetBase: Record<string, string> = {
@@ -49,4 +50,8 @@ export const builtInPresets: Record<string, Record<string, string>> = {
     seekBegin: 'backspace',
   },
 }
-export const [, presets] = registerAndGetData('keymap.presets', presetBase, builtInPresets)
+export const [, presets] = registerAndGetData(
+  'keymap.presets',
+  presetBase,
+  reactive(builtInPresets),
+)

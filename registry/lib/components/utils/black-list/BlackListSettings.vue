@@ -1,7 +1,7 @@
 <template>
   <VPopup
     ref="popup"
-    v-model="open"
+    v-model:open="open"
     class="custom-black-list-settings"
     fixed
     :lazy="false"
@@ -19,7 +19,7 @@
       <div class="black-list-settings-section">
         <div class="black-list-settings-section-title">添加到黑名单</div>
         <div class="black-list-settings-section-input">
-          <TextBox :text="name" @change="changeName" />
+          <TextBox :text="name" @update:text="changeName" />
           <VButton @click="add">添加</VButton>
         </div>
       </div>
@@ -32,7 +32,7 @@
           ref="black-listSortList"
           class="black-list-settings-section-content black-list-sort-list"
         >
-          <div v-for="item of list" :key="item" class="black-list-sort-item" :data-name="item">
+          <div v-for="item of list0" :key="item" class="black-list-sort-item" :data-name="item">
             <div class="item-name">
               {{ item }}
             </div>
@@ -46,9 +46,11 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { VPopup, TextBox, VIcon, VButton } from '@/ui'
+import { defineComponent, ref } from 'vue'
+import type { PropType, Ref } from 'vue'
+import { TextBox, VButton, VIcon, VPopup } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VPopup,
     TextBox,
@@ -61,11 +63,11 @@ export default Vue.extend({
       default: null,
     },
     list: {
-      type: Array,
+      type: Array as PropType<string[]>,
       default: null,
     },
     save: {
-      type: Function,
+      type: Function as PropType<(list: string[]) => void>,
       default: undefined,
     },
     titleName: {
@@ -73,17 +75,22 @@ export default Vue.extend({
       default: '',
     },
   },
+  setup: () => ({
+    popup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    'black-listSortList': ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       open: false,
       loaded: false,
       name: '',
+      list0: this.list,
     }
   },
   watch: {
     open(newVal: boolean) {
       if (!newVal) {
-        this.save(this.list)
+        this.save(this.list0)
       }
     },
   },
@@ -92,21 +99,18 @@ export default Vue.extend({
   },
   methods: {
     toggle() {
-      this.$refs.popup.toggle()
+      this.popup.toggle()
     },
     changeName(val: string) {
       this.name = val
     },
     add() {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.list.push(this.name)
-      // eslint-disable-next-line vue/no-mutating-props
-      this.list = lodash.uniq(this.list)
+      this.list0.push(this.name)
+      this.list0 = lodash.uniq(this.list0)
       this.name = ''
     },
     toggleVisible(item: any) {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.list.splice(this.list.indexOf(item), 1)
+      this.list0.splice(this.list0.indexOf(item), 1)
     },
   },
 })

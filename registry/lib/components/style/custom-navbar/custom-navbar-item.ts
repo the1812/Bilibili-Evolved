@@ -1,7 +1,19 @@
-import { createPopper, Instance as Popper } from '@popperjs/core'
-import { VueModule, Executable } from '@/core/common-types'
-import { getComponentSettings, addComponentListener } from '@/core/settings'
+import type { Instance as Popper } from '@popperjs/core'
+import { createPopper } from '@popperjs/core'
+
+import type { Component, ComponentPublicInstance } from 'vue'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
+
 import type { CustomNavbarOptions } from '.'
+
+export interface PopupContentInstance extends ComponentPublicInstance {
+  popupRefresh?(): void
+  popupShow(): void
+}
+
+export interface PopupContent {
+  new (): PopupContentInstance
+}
 
 export const CustomNavbarItems = 'customNavbar.items'
 export const CustomNavbarRenderedItems = 'customNavbar.renderedItems'
@@ -13,8 +25,8 @@ export interface CustomNavbarItemInit {
   name: string
   /** 显示名称 */
   displayName: string
-  /** 内容 */
-  content: Executable<VueModule> | string
+  /** 内容。被创建时传入属性：item: CustomNavbarItem */
+  content: Component | string
 
   /** 设定CSS flex样式 (grow, shrink, basis) */
   flexStyle?: string
@@ -27,7 +39,7 @@ export interface CustomNavbarItemInit {
   /** `content`指定的内容mount之后要执行的代码 */
   contentMounted?: (item: CustomNavbarItem) => Promise<void> | void
   /** 点击运行的代码段 */
-  clickAction?: Executable
+  clickAction?: (event: MouseEvent) => void
   /** 获取或设置提示数字, 将显示在顶部 */
   notifyCount?: number
   /** 是否在触屏状态下不响应点击 */
@@ -35,8 +47,8 @@ export interface CustomNavbarItemInit {
   /** 是否仅在登录后显示 */
   loginRequired?: boolean
 
-  /** 弹窗内容 */
-  popupContent?: Executable<VueModule>
+  /** 弹窗内容。创建其实例时传入参数有：container: HTMLElement, item: CustomNavbarItem */
+  popupContent?: PopupContent | undefined
   /** 设为大于0的值时, 表示预计的弹窗宽度, 将会用于边缘检测, 防止超出viewport */
   boundingWidth?: number
   /** 不使用默认的弹窗padding */
@@ -50,19 +62,19 @@ export interface CustomNavbarItemInit {
 export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
   name: string
   displayName: string
-  content: Executable<VueModule> | string
+  content: Component | string
 
   flexStyle = '0 0 auto'
   disabled = false
   href: string = null
   active = false
-  clickAction: Executable = none
+  clickAction: (event: MouseEvent) => void = none
   contentMounted: (item: CustomNavbarItem) => Promise<void> | void = none
   notifyCount = 0
   touch = false
   loginRequired = false
 
-  popupContent: Executable<VueModule> = null
+  popupContent: PopupContent | undefined
   popper: Popper = null
   boundingWidth = 0
   noPopupPadding = false

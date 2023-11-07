@@ -1,6 +1,6 @@
 <template>
   <VPopup
-    v-model="popupOpen"
+    v-model:open="popupOpen"
     fixed
     class="keymap-settings-popup be-settings-extra-options"
     :trigger-element="triggerElement"
@@ -29,7 +29,11 @@
             <div class="header-name">动作</div>
             <div class="header-default-binding">默认按键</div>
             <div class="header-preset-binding">
-              <VDropdown v-model="selectedPreset" :items="presetOptions" :key-mapper="it => it">
+              <VDropdown
+                v-model:value="selectedPreset"
+                :items="presetOptions"
+                :key-mapper="it => it as string"
+              >
                 <template #item="{ item }">
                   {{ item }}
                 </template>
@@ -49,16 +53,18 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
-import { VIcon, VDropdown, VPopup } from '@/ui'
-import KeymapSettingsRow from './KeymapSettingsRow.vue'
+import { VDropdown, VIcon, VPopup } from '@/ui'
+
 import { actions } from '../actions'
-import { KeyBindingAction } from '../bindings'
+import type { KeyBindingAction } from '../bindings'
 import { presets } from '../presets'
+import KeymapSettingsRow from './KeymapSettingsRow.vue'
 
 const keymapOptions = getComponentSettings('keymap').options
 console.log(presets, actions, keymapOptions.preset, keymapOptions.customKeyBindings)
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VDropdown,
@@ -81,8 +87,8 @@ export default Vue.extend({
   },
   computed: {
     selectedPreset: {
-      get() {
-        return keymapOptions.preset
+      get(): string {
+        return keymapOptions.preset as string
       },
       set(value: string) {
         keymapOptions.preset = value

@@ -6,9 +6,11 @@
   </HomeRedesignBase>
 </template>
 <script lang="ts">
+import { defineComponent, defineAsyncComponent } from 'vue'
 import { addComponentListener } from '@/core/settings'
 import { TabControl } from '@/ui'
-import { TabMappings } from '@/ui/tab-mapping'
+import type { TabMappings } from '@/ui/tab-mapping'
+
 import HomeRedesignBase from '../HomeRedesignBase.vue'
 import { minimalHomeOptions } from './options'
 import { MinimalHomeTabOption } from './types'
@@ -17,17 +19,17 @@ const tabs: TabMappings = [
   {
     name: MinimalHomeTabOption.Feeds,
     displayName: '动态',
-    component: () => import('./tabs/Feeds.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./tabs/Feeds.vue')),
     activeLink: 'https://t.bilibili.com/?tab=video',
   },
   {
     name: MinimalHomeTabOption.Trending,
     displayName: minimalHomeOptions.personalized ? '推荐' : '热门',
-    component: () => import('./tabs/Trending.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./tabs/Trending.vue')),
     activeLink: 'https://www.bilibili.com/v/popular/all',
   },
 ]
-export default Vue.extend({
+export default defineComponent({
   components: {
     HomeRedesignBase,
     TabControl,

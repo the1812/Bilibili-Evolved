@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { feedsCardsManager } from '@/components/feeds/api'
+
 import { feedsFilterPlugin } from './plugin'
 import { options } from './options'
 
@@ -18,9 +19,11 @@ const entry = async () => {
   if (leftPanel === null) {
     return
   }
-  const FeedsFilterCard = await import('./FeedsFilterCard.vue')
   const { mountVueComponent } = await import('@/core/utils')
-  leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(FeedsFilterCard).$el)
+  leftPanel.insertAdjacentElement(
+    'afterbegin',
+    mountVueComponent(await import('./FeedsFilterCard.vue'))[0],
+  )
 }
 
 export const component = defineComponentMetadata({

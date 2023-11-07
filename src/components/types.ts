@@ -1,12 +1,14 @@
-import { TestPattern, Executable, VueModule, I18nDescription } from '@/core/common-types'
-import { ComponentSettings } from '@/core/settings'
-import { CoreApis } from '@/core/core-apis'
-import { PluginMinimalData } from '@/plugins/plugin'
-import { Range } from '@/ui/range'
-import { Widget } from '@/components/widget'
-import { LanguagePack } from './i18n/types'
+import type { Component } from 'vue'
+import type { Widget } from '@/components/widget'
+import type { Executable, I18nDescription, TestPattern } from '@/core/common-types'
+import type { CoreApis } from '@/core/core-apis'
+import type { ComponentSettings } from '@/core/settings'
+import type { PluginMinimalData } from '@/plugins/plugin'
+import type { Range } from '@/ui/range'
 
-export type Author = {
+import type { LanguagePack } from './i18n/types'
+
+export interface Author {
   name: string
   link: string
 }
@@ -182,8 +184,8 @@ export interface FunctionalMetadata<O extends UnknownOptions = UnknownOptions> {
   unload?: Executable
   /** 插件化数据定义 */
   plugin?: Optional<PluginMinimalData, 'name'>
-  /** 额外想要展示在设置里的选项 UI */
-  extraOptions?: () => Promise<VueModule>
+  /** 额外想要展示在设置里的选项 UI，创建实例时有传入属性 'component-data': ComponentMetadata */
+  extraOptions?: Component
   /** 设置匹配的URL, 不匹配则不运行此组件 */
   urlInclude?: TestPattern
   /** 设置不匹配的URL, 不匹配则不运行此组件, 优先级高于`urlInclude` */

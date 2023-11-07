@@ -1,3 +1,104 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
+import { isNewID } from '@/components/feeds/notify'
+import type { VideoCard as VideoCardData } from '@/components/feeds/video-card'
+import VideoCard from '@/components/feeds/VideoCard.vue'
+import { formatCount, formatDuration } from '@/core/utils/formatters'
+import { VLoading, VEmpty, ScrollTrigger } from '@/ui'
+
+import { useNextPage } from './next-page'
+
+const formatPubTime = (pubTime: number) => {
+  const now = Number(new Date())
+  const pubDate = new Date(pubTime)
+  const time = [pubDate.getHours(), pubDate.getMinutes(), pubDate.getSeconds()]
+    .map(it => it.toString().padStart(2, '0'))
+    .join(':')
+  let date: number[]
+  if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+    date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+  } else {
+    date = [pubDate.getMonth() + 1, pubDate.getDate()]
+  }
+  return `${date.map(it => it.toString().padStart(2, '0')).join('-')} ${time}`
+}
+
+const formatPubTimeText = (pubTime: number) => {
+  const now = Number(new Date())
+  const oneDayBefore = now - 1000 * 3600 * 24
+  if (oneDayBefore < pubTime) {
+    const diffHours = Math.round((now - pubTime) / 1000 / 3600)
+    if (diffHours === 0) {
+      const diffMinutes = Math.round((now - pubTime) / 1000 / 60)
+      if (diffMinutes === 0) {
+        return '刚刚'
+      }
+      return `${diffMinutes}分钟前`
+    }
+    return `${diffHours}小时前`
+  }
+  const pubDate = new Date(pubTime)
+  let date: number[]
+  if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
+    date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
+  } else {
+    date = [pubDate.getMonth() + 1, pubDate.getDate()]
+  }
+  return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
+}
+
+const jsonMapper = (card: any): VideoCardData & { new: boolean } => {
+  const cardJson = JSON.parse(card.card)
+  return {
+    id: card.desc.dynamic_id_str,
+    aid: cardJson.aid,
+    bvid: card.desc.bvid,
+    videoUrl: `https://www.bilibili.com/${card.desc.bvid}`,
+    coverUrl: cardJson.pic,
+    title: cardJson.title,
+    duration: cardJson.duration,
+    durationText: formatDuration(cardJson.duration),
+    description: cardJson.desc,
+    pubTime: formatPubTime(cardJson.pubdate * 1000),
+    pubTimeText: formatPubTimeText(cardJson.pubdate * 1000),
+    upFaceUrl: card.desc.user_profile.info.face,
+    upName: card.desc.user_profile.info.uname,
+    upID: card.desc.user_profile.info.uid,
+    watchlater: true,
+    playCount: formatCount(cardJson.stat.view),
+    get new() {
+      return isNewID(this.id)
+    },
+  } as VideoCardData & { new: boolean }
+}
+
+const onCardsUpdate = (cards: (VideoCardData & { new: boolean })[]) => {
+  return groupVideoFeeds(cards)
+}
+
+const { loading, cards, hasMorePage, nextPage } = useNextPage<VideoCardData & { new: boolean }>(
+  feedsCardTypes.video,
+  jsonMapper,
+  onCardsUpdate,
+)
+
+const columnedCards = computed(
+  (): {
+    left: (VideoCardData & { new: boolean })[]
+    right: (VideoCardData & { new: boolean })[]
+  } => {
+    return {
+      left: cards.value.filter((_, index) => index % 2 === 0),
+      right: cards.value.filter((_, index) => index % 2 !== 0),
+    } as {
+      left: (VideoCardData & { new: boolean })[]
+      right: (VideoCardData & { new: boolean })[]
+    }
+  },
+)
+</script>
+
 <template>
   <div class="video-feeds">
     <VLoading v-if="loading"></VLoading>
@@ -29,97 +130,7 @@
     </template>
   </div>
 </template>
-<script lang="ts">
-import { VideoCard } from '@/components/feeds/video-card'
-import { formatDuration, formatCount } from '@/core/utils/formatters'
-import { isNewID } from '@/components/feeds/notify'
-import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
-import VideoCardComponent from '@/components/feeds/VideoCard.vue'
-import { nextPageMixin } from './next-page'
 
-const formatPubTime = (pubTime: number) => {
-  const now = Number(new Date())
-  const pubDate = new Date(pubTime)
-  const time = [pubDate.getHours(), pubDate.getMinutes(), pubDate.getSeconds()]
-    .map(it => it.toString().padStart(2, '0'))
-    .join(':')
-  let date: number[]
-  if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
-    date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
-  } else {
-    date = [pubDate.getMonth() + 1, pubDate.getDate()]
-  }
-  return `${date.map(it => it.toString().padStart(2, '0')).join('-')} ${time}`
-}
-const formatPubTimeText = (pubTime: number) => {
-  const now = Number(new Date())
-  const oneDayBefore = now - 1000 * 3600 * 24
-  if (oneDayBefore < pubTime) {
-    const diffHours = Math.round((now - pubTime) / 1000 / 3600)
-    if (diffHours === 0) {
-      const diffMinutes = Math.round((now - pubTime) / 1000 / 60)
-      if (diffMinutes === 0) {
-        return '刚刚'
-      }
-      return `${diffMinutes}分钟前`
-    }
-    return `${diffHours}小时前`
-  }
-  const pubDate = new Date(pubTime)
-  let date: number[]
-  if (new Date(now).getFullYear() !== pubDate.getFullYear()) {
-    date = [pubDate.getFullYear(), pubDate.getMonth() + 1, pubDate.getDate()]
-  } else {
-    date = [pubDate.getMonth() + 1, pubDate.getDate()]
-  }
-  return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
-}
-export default Vue.extend({
-  components: {
-    VideoCard: VideoCardComponent,
-  },
-  mixins: [
-    nextPageMixin(feedsCardTypes.video, (card: any) => {
-      const cardJson = JSON.parse(card.card)
-      return {
-        id: card.desc.dynamic_id_str,
-        aid: cardJson.aid,
-        bvid: card.desc.bvid,
-        videoUrl: `https://www.bilibili.com/${card.desc.bvid}`,
-        coverUrl: cardJson.pic,
-        title: cardJson.title,
-        duration: cardJson.duration,
-        durationText: formatDuration(cardJson.duration),
-        description: cardJson.desc,
-        pubTime: formatPubTime(cardJson.pubdate * 1000),
-        pubTimeText: formatPubTimeText(cardJson.pubdate * 1000),
-        upFaceUrl: card.desc.user_profile.info.face,
-        upName: card.desc.user_profile.info.uname,
-        upID: card.desc.user_profile.info.uid,
-        watchlater: true,
-        playCount: formatCount(cardJson.stat.view),
-        get new() {
-          return isNewID(this.id)
-        },
-      } as VideoCard
-    }),
-  ],
-  computed: {
-    columnedCards() {
-      const { cards } = this as { cards: VideoCard[] }
-      return {
-        left: cards.filter((_, index) => index % 2 === 0),
-        right: cards.filter((_, index) => index % 2 !== 0),
-      }
-    },
-  },
-  methods: {
-    onCardsUpdate(cards: VideoCard[]) {
-      return groupVideoFeeds(cards)
-    },
-  },
-})
-</script>
 <style lang="scss" scoped>
 .video-feeds {
   display: flex;
@@ -139,7 +150,7 @@ export default Vue.extend({
     justify-content: space-between;
     width: 356px;
     .cards {
-      &-enter,
+      &-enter-from,
       &-leave-to {
         opacity: 0;
         transform: translateY(-16px) scale(0.9);

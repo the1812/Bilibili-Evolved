@@ -1,9 +1,9 @@
 <template>
-  <div class="watchlater-list">
+  <div ref="el" class="watchlater-list">
     <div class="header">
       <div class="watchlater-list-summary">共 {{ filteredCards.length }} 个</div>
       <div class="search">
-        <TextBox v-model="search" linear placeholder="搜索"></TextBox>
+        <TextBox v-model:text="search" linear placeholder="搜索"></TextBox>
       </div>
       <a
         class="operation"
@@ -51,16 +51,14 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { RawWatchlaterItem } from '@/components/video/watchlater'
+import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getComponentSettings } from '@/core/settings'
 import { formatDuration } from '@/core/utils/formatters'
-import {
-  watchlaterList,
-  getWatchlaterList,
-  RawWatchlaterItem,
-  toggleWatchlater,
-} from '@/components/video/watchlater'
-import { VLoading, VEmpty, TextBox, VButton, VIcon, DpiImage } from '@/ui'
-import { popperMixin } from '../mixins'
+import { DpiImage, TextBox, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+
+import { popupProps, usePopup } from '../mixins'
 
 interface WatchlaterCard {
   aid: number
@@ -74,7 +72,15 @@ interface WatchlaterCard {
   upFaceUrl: string
   upID: number
 }
-export default Vue.extend({
+function updateFilteredCards(this: InstanceType<typeof ThisComponent>) {
+  const search = this.search.toLowerCase()
+  const cardsList = this.$el.querySelector('.watchlater-list-content') as HTMLElement
+  cardsList.scrollTo(0, 0)
+  this.filteredCards = (this.cards as WatchlaterCard[]).filter(
+    card => card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search),
+  )
+}
+const ThisComponent = defineComponent({
   components: {
     VLoading,
     VEmpty,
@@ -83,14 +89,15 @@ export default Vue.extend({
     VIcon,
     DpiImage,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     const redirect = getComponentSettings('watchlaterRedirect')
     return {
       watchlaterList,
       loading: true,
-      cards: [],
-      filteredCards: [],
+      cards: [] as WatchlaterCard[],
+      filteredCards: [] as WatchlaterCard[],
       search: '',
       redirect: redirect.enabled && redirect.options.navbar,
     }
@@ -160,17 +167,10 @@ export default Vue.extend({
       this.cards.splice(index, 1)
       await this.toggleWatchlater(aid)
     },
-    updateFilteredCards: lodash.debounce(function updateFilteredCards() {
-      const search = this.search.toLowerCase()
-      const cardsList = this.$el.querySelector('.watchlater-list-content') as HTMLElement
-      cardsList.scrollTo(0, 0)
-      this.filteredCards = (this.cards as WatchlaterCard[]).filter(
-        card =>
-          card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search),
-      )
-    }, 100),
+    updateFilteredCards: lodash.debounce(updateFilteredCards, 100) as unknown as () => void,
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';
@@ -250,7 +250,7 @@ export default Vue.extend({
     padding: 0 12px;
     padding-bottom: 12px;
     .watchlater-card {
-      &.cards-enter,
+      &.cards-enter-from,
       &.cards-leave-to {
         opacity: 0;
         transform: translateY(-16px) scale(0.9);

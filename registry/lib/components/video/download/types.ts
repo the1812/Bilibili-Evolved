@@ -1,11 +1,13 @@
-import { Executable, TestPattern, VueModule, WithName } from '@/core/common-types'
-import { DownloadPackage, PackageEntry } from '@/core/download'
+import type { Component } from 'vue'
+import type { VideoQuality } from '@/components/video/video-quality'
+import type { TestPattern, WithName } from '@/core/common-types'
+import type { PackageEntry } from '@/core/download'
+import { DownloadPackage } from '@/core/download'
 import { formatNumber } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { VideoQuality } from '@/components/video/video-quality'
 
 interface VueInstanceInput {
-  component?: Executable<VueModule>
+  component?: Component
 }
 /** 表示一个视频输入数据 */
 export interface DownloadVideoInputItem {

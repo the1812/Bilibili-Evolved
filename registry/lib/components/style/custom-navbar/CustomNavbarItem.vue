@@ -46,7 +46,7 @@
           :is="item.popupContent"
           v-if="item.requestedPopup"
           ref="popup"
-          :container="$refs.popupContainer"
+          :container="popupContainer"
           :item="item"
         ></component>
       </div>
@@ -56,9 +56,13 @@
 </template>
 
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
-import CustomNavbarLink from './CustomNavbarLink.vue'
+
+import type { PopupContentInstance } from './custom-navbar-item'
 import { CustomNavbarItem } from './custom-navbar-item'
+import CustomNavbarLink from './CustomNavbarLink.vue'
 
 const isOpenInNewTab = (item: CustomNavbarItem) => {
   const { name } = item
@@ -68,7 +72,23 @@ const isOpenInNewTab = (item: CustomNavbarItem) => {
   }
   return options.openInNewTab
 }
-export default Vue.extend({
+function trigger(this: InstanceType<typeof ThisComponent>, initialPopup: boolean) {
+  const { popup } = this
+  if (!popup) {
+    return
+  }
+  const allowRefresh =
+    CustomNavbarItem.navbarOptions.refreshOnPopup &&
+    popup.popupRefresh &&
+    typeof popup.popupRefresh === 'function'
+  if (!initialPopup && allowRefresh) {
+    popup.popupRefresh()
+  }
+  if (popup.popupShow && typeof popup.popupShow === 'function') {
+    popup.popupShow()
+  }
+}
+const ThisComponent = defineComponent({
   components: {
     CustomNavbarLink,
   },
@@ -78,6 +98,10 @@ export default Vue.extend({
       required: true,
     },
   },
+  setup: () => ({
+    popup: ref(null) as Ref<PopupContentInstance | null>,
+    popupContainer: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       newTab: isOpenInNewTab(this.item),
@@ -98,7 +122,7 @@ export default Vue.extend({
       removeComponentListener('customNavbar.openInNewTab', listener)
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.cancelListeners?.()
   },
   methods: {
@@ -119,22 +143,10 @@ export default Vue.extend({
         'iframe-container': item.iframeName,
       }
     },
-    triggerPopupShow: lodash.debounce(function trigger(initialPopup: boolean) {
-      const { popup } = this.$refs
-      if (!popup) {
-        return
-      }
-      const allowRefresh =
-        CustomNavbarItem.navbarOptions.refreshOnPopup &&
-        popup.popupRefresh &&
-        typeof popup.popupRefresh === 'function'
-      if (!initialPopup && allowRefresh) {
-        popup.popupRefresh()
-      }
-      if (popup.popupShow && typeof popup.popupShow === 'function') {
-        popup.popupShow()
-      }
-    }, 300),
+    triggerPopupShow: lodash.debounce(trigger, 300) as unknown as (
+      this: any,
+      initialPopup: boolean,
+    ) => void,
     async requestPopup() {
       const { item } = this as {
         item: CustomNavbarItem
@@ -165,6 +177,7 @@ export default Vue.extend({
     // },
   },
 })
+export default ThisComponent
 </script>
 
 <style lang="scss">

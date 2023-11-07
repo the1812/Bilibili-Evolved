@@ -4,9 +4,10 @@
   </a>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DefaultWidget } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DefaultWidget,
   },

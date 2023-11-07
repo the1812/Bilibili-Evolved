@@ -19,13 +19,15 @@
   </div>
 </template>
 <script lang="ts">
-import { getFriendlyTitle } from '@/core/utils/title'
+import { defineComponent } from 'vue'
 import { DownloadPackage } from '@/core/download'
+import { getFriendlyTitle } from '@/core/utils/title'
 import { VIcon } from '@/ui'
-import VideoScreenshot from './VideoScreenshot.vue'
-import { Screenshot } from './screenshot'
 
-export default Vue.extend({
+import type { Screenshot } from './screenshot'
+import VideoScreenshot from './VideoScreenshot.vue'
+
+export default defineComponent({
   components: {
     VIcon,
     VideoScreenshot,
@@ -36,7 +38,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    showBatch() {
+    showBatch(): boolean {
       return this.screenshots.length >= 2
     },
   },
@@ -117,7 +119,7 @@ export default Vue.extend({
     > * {
       pointer-events: initial;
     }
-    &-enter {
+    &-enter-from {
       opacity: 0;
       transform: translateX(var(--screenshot-width-negative));
     }

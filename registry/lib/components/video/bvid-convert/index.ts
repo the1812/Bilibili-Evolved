@@ -1,8 +1,7 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
+import { defineAsyncComponent } from 'vue'
+
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 
@@ -22,7 +21,7 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.video, componentsTags.utils],
   widget: {
-    component: () => import('./BvidConvert.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./BvidConvert.vue')),
     condition: hasVideo,
   },
   urlInclude: videoAndBangumiUrls,

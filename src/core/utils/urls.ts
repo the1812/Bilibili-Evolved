@@ -1,5 +1,5 @@
+import type { TestPattern } from '../common-types'
 import { matchUrlPattern } from '.'
-import { TestPattern } from '../common-types'
 
 /** 稍后再看页面 */
 export const watchlaterUrls = [

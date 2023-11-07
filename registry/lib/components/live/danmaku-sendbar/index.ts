@@ -1,14 +1,15 @@
-import { waitForControlBar } from '@/components/live/live-control-bar'
 import { defineComponentMetadata } from '@/components/define'
+import { waitForControlBar } from '@/components/live/live-control-bar'
 import { getUID } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
+
 import { leftControllerSelector } from './original-elements'
 
 const entry = async () => {
   if (!getUID()) {
     return
   }
-  let danmakuSendBarElement: Element
+  let danmakuSendBarElement: Element | undefined
   waitForControlBar({
     callback: async controlBar => {
       const leftController = dq(controlBar, leftControllerSelector) as HTMLDivElement
@@ -20,8 +21,7 @@ const entry = async () => {
       }
       if (!danmakuSendBarElement) {
         const { mountVueComponent } = await import('@/core/utils')
-        const DanmakuSendBar = await import('./DanmakuSendbar.vue')
-        danmakuSendBarElement = mountVueComponent(DanmakuSendBar).$el
+        danmakuSendBarElement = mountVueComponent(await import('./DanmakuSendbar.vue'))[0]
       }
       leftController.insertAdjacentElement('afterend', danmakuSendBarElement)
     },

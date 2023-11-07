@@ -1,18 +1,19 @@
-import { ComponentEntry, componentsTags } from '@/components/types'
+import { defineAsyncComponent } from 'vue'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { ComponentEntry } from '@/components/types'
+import { componentsTags } from '@/components/types'
 import { meta } from '@/core/meta'
 import { getComponentSettings, getGeneralSettings, isUserComponent } from '@/core/settings'
 import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
-import { ComponentAction } from '../settings-panel/component-actions/component-actions'
-import { isLocalItem, name, UpdateCheckItem } from './utils'
+
+import type { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
+import type { ComponentAction } from '../settings-panel/component-actions/component-actions'
+import type { SearchBarAction } from '../settings-panel/search-bar-actions'
 import * as checkerMethods from './checker'
-import { SearchBarAction } from '../settings-panel/search-bar-actions'
+import type { UpdateCheckItem } from './utils'
+import { isLocalItem, name } from './utils'
 
 const {
   checkComponentsUpdate,
@@ -90,7 +91,7 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.utils],
   options: optionsMetadata,
-  extraOptions: () => import('./ExtraOptions.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./ExtraOptions.vue')),
   entry,
   plugin: {
     displayName: '自动更新器 - 功能扩展',

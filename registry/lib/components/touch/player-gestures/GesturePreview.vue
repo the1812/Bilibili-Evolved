@@ -6,7 +6,7 @@
         <div class="label">
           <div class="name">亮度</div>
           <div class="value">
-            {{ preview.brightness | percent }}
+            {{ percent(preview.brightness) }}
           </div>
         </div>
       </div>
@@ -14,7 +14,7 @@
         <div class="videoshot" :style="videoshotStyle"></div>
         <div v-show="preview.progress !== null" class="preview">
           <div v-if="!progressNaN" class="diff">
-            {{ (preview.progress - store.progress) | progressDiff }}
+            {{ progressDiff(preview.progress - store.progress) }}
           </div>
           <div class="seek-mode">
             {{ !progressNaN ? preview.seekMode : '取消调整' }}
@@ -22,7 +22,7 @@
         </div>
         <div v-show="preview.progress === null" class="name">进度</div>
         <div class="progress-label">
-          {{ (progressValid ? preview.progress : store.progress) | progress }}
+          {{ progress(progressValid ? preview.progress : store.progress) }}
         </div>
       </div>
       <div class="volume">
@@ -30,7 +30,7 @@
         <div class="label">
           <div class="name">音量</div>
           <div class="value">
-            {{ preview.volume | percent }}
+            {{ percent(preview.volume) }}
           </div>
         </div>
       </div>
@@ -44,10 +44,13 @@
   </div>
 </template>
 <script lang="ts">
-import { ProgressBar, ProgressRing } from '@/ui'
+import { defineComponent } from 'vue'
 import { fixed } from '@/core/utils'
-import { formatPercent, formatDuration } from '@/core/utils/formatters'
-import { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
+import { formatDuration, formatPercent } from '@/core/utils/formatters'
+import { ProgressBar, ProgressRing } from '@/ui'
+
+import type { GesturePreviewParams } from './gesture-preview'
+import { ProgressSeekMode } from './gesture-preview'
 import { Videoshot } from './videoshot'
 import { syncVolumeUI } from './volume'
 
@@ -81,18 +84,10 @@ const normalize = (current: number, add: number, max = 1, min = 0) => {
   }
   return finalValue
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     ProgressRing,
     ProgressBar,
-  },
-  filters: {
-    percent: formatPercent,
-    progress: (p: number) => formatDuration(p, 1),
-    progressDiff(diff: number) {
-      const symbol = diff > 0 ? '+' : '-'
-      return `${symbol}${secondsToTime(diff)}`
-    },
   },
   data() {
     const defaultStore = {
@@ -102,7 +97,7 @@ export default Vue.extend({
     }
     return {
       opened: false,
-      video: dq('video'),
+      video: dq('video') as HTMLVideoElement,
       videoshot: new Videoshot(),
       videoshotStyle: {},
       store: defaultStore,
@@ -119,17 +114,23 @@ export default Vue.extend({
     }
   },
   computed: {
-    progressNaN() {
+    progressNaN(): boolean {
       return Number.isNaN(this.preview.progress)
     },
-    progressNull() {
+    progressNull(): boolean {
       return this.preview.progress === null
     },
-    progressValid() {
+    progressValid(): boolean {
       return !this.progressNaN && !this.progressNull
     },
   },
   methods: {
+    percent: formatPercent,
+    progress: (p: number) => formatDuration(p, 1),
+    progressDiff(diff: number) {
+      const symbol = diff > 0 ? '+' : '-'
+      return `${symbol}${secondsToTime(diff)}`
+    },
     sync() {
       const video = dq('video') as HTMLVideoElement
       this.video = video
@@ -183,7 +184,7 @@ export default Vue.extend({
       }
     },
     async apply({ brightness, volume, progress }: GesturePreviewParams) {
-      const video = this.video as HTMLVideoElement
+      const { video } = this
       if (!video) {
         return
       }

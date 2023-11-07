@@ -12,10 +12,11 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { VIcon } from '@/ui'
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },
@@ -29,7 +30,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    on() {
+    on(): boolean {
       console.log(this.watchlaterList, this.aid, this.watchlaterList.includes(parseInt(this.aid)))
       return this.watchlaterList.includes(parseInt(this.aid))
     },

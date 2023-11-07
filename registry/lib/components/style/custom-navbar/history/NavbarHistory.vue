@@ -1,9 +1,9 @@
 <template>
-  <div class="custom-navbar-history-list">
+  <div ref="el" class="custom-navbar-history-list">
     <div class="header">
       <div class="header-row">
         <div class="search">
-          <TextBox v-model="search" placeholder="搜索" linear></TextBox>
+          <TextBox v-model:text="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
           <div class="operation" @click="toggleHistoryPause">
@@ -30,7 +30,7 @@
               :class="{ checked: t.checked }"
               :checked="t.checked"
               :disabled="loading"
-              @change="toggleTypeFilter(t)"
+              @update:checked="toggleTypeFilter(t)"
             >
               {{ t.displayName }}
             </RadioButton>
@@ -105,23 +105,29 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { formData, getCsrf } from '@/core/utils'
 import { descendingSort } from '@/core/utils/sort'
 import {
-  VButton,
-  VIcon,
-  RadioButton,
-  TextBox,
-  VLoading,
-  VEmpty,
-  ScrollTrigger,
   DpiImage,
+  RadioButton,
+  ScrollTrigger,
+  TextBox,
+  VButton,
+  VEmpty,
+  VIcon,
+  VLoading,
 } from '@/ui'
-import { popperMixin } from '../mixins'
-import { types, TypeFilter, HistoryItem, getHistoryItems, group, HistoryType } from './types'
 
-export default Vue.extend({
+import { popupProps, usePopup } from '../mixins'
+import type { HistoryItem, TypeFilter } from './types'
+import { getHistoryItems, group, HistoryType, types } from './types'
+
+function search(this: InstanceType<typeof ThisComponent>) {
+  this.reloadHistoryItems()
+}
+const ThisComponent = defineComponent({
   components: {
     VButton,
     VIcon,
@@ -132,28 +138,27 @@ export default Vue.extend({
     ScrollTrigger,
     DpiImage,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       types,
       search: '',
       viewTime: 0,
-      cards: [],
-      groups: [],
+      cards: [] as HistoryItem[],
+      groups: [] as { name: string; items: HistoryItem[] }[],
       loading: true,
       hasMorePage: true,
       paused: false,
     }
   },
   computed: {
-    canNextPage() {
+    canNextPage(): boolean {
       return this.search === '' && !this.loading && this.hasMorePage
     },
   },
   watch: {
-    search: lodash.debounce(function search() {
-      this.reloadHistoryItems()
-    }, 200),
+    search: lodash.debounce(search, 200) as unknown as () => void,
   },
   async created() {
     try {
@@ -239,6 +244,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';
@@ -253,7 +259,7 @@ export default Vue.extend({
   @include v-stretch();
   justify-content: center;
   @mixin items-animation {
-    &-enter,
+    &-enter-from,
     &-leave-to {
       opacity: 0;
       transform: translateY(-16px) scale(0.9);

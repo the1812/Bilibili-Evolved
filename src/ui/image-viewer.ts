@@ -1,14 +1,11 @@
+import { mountVueComponent } from '@/core/utils'
 import ViewerComponent from './ImageViewer.vue'
 
-let vm: { open: boolean; image: string } & Vue
+let vm: InstanceType<typeof ViewerComponent> | undefined
 export const createContainer = async () => {
-  vm = new ViewerComponent({
-    propsData: {
-      image: '',
-      open: false,
-    },
-  }).$mount() as typeof vm
-  document.body.insertAdjacentElement('beforeend', vm.$el)
+  const [el, vm0] = mountVueComponent(ViewerComponent)
+  vm = vm0
+  document.body.insertAdjacentElement('beforeend', el)
   return vm
 }
 export const showImage = async (imageUrl: string) => {

@@ -1,18 +1,11 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.web.json",
   "compilerOptions": {
-    "outDir": "./dist/",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "target": "ESNext",
     "strict": false,
-    "noImplicitAny": false,
     "sourceMap": true,
     "baseUrl": ".",
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "types": ["webpack-env"],
     "paths": {
       "@/*": [
         "src/*"

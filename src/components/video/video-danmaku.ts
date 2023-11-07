@@ -1,5 +1,6 @@
 import { childListSubtree, videoChange } from '@/core/observer'
 import { hasVideo } from '@/core/spin-query'
+
 import { playerAgent } from './player-agent'
 
 export interface DanmakuRecord {

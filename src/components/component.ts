@@ -1,23 +1,26 @@
+import { reactive } from 'vue'
+import type { Widget } from '@/components/widget'
+import { contentLoaded, fullyLoaded } from '@/core/life-cycle'
+import { LoadingMode } from '@/core/loading-mode'
 import {
   addComponentListener,
   getComponentSettings,
   getGeneralSettings,
   isComponentEnabled,
 } from '@/core/settings'
-import { contentLoaded, fullyLoaded } from '@/core/life-cycle'
-import { LoadingMode } from '@/core/loading-mode'
-import { Widget } from '@/components/widget'
-import { ComponentMetadata } from './types'
+
 import { getBuiltInComponents } from './built-in-components'
+import type { ComponentMetadata } from './types'
 
 /** 可根据组件名称检索对应的`ComponentMetadata` */
 export const componentsMap: { [name: string]: ComponentMetadata } = {}
+/** 获取包含所有组件的响应式数组（单例） */
 const getAllComponents = lodash.once(() => {
   const builtIns = getBuiltInComponents()
   builtIns.forEach(c => (componentsMap[c.name] = c))
-  return builtIns
+  return reactive(builtIns)
 })
-/** 包含所有组件的数组 */
+/** 包含所有组件的响应式数组 */
 export const components: ComponentMetadata[] = getAllComponents()
 
 /** 载入组件的 i18n 数据 */
@@ -191,5 +194,5 @@ export const loadAllComponents = async () => {
   })
 }
 
-export * from './types'
 export * from './define'
+export * from './types'

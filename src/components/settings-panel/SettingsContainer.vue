@@ -23,18 +23,18 @@
     </div>
     <VPopup
       ref="widgetsPanelPopup"
-      v-model="widgetsOpened"
+      v-model:open="widgetsOpened"
       class="widgets-panel-popup"
-      :trigger-element="$refs.widgetsIcon"
+      :trigger-element="widgetsIcon"
       :fixed="true"
     >
       <WidgetsPanel />
     </VPopup>
     <VPopup
       ref="settingsPanelPopup"
-      v-model="settingsOpened"
+      v-model:open="settingsOpened"
       class="settings-panel-popup"
-      :trigger-element="$refs.settingsIcon"
+      :trigger-element="settingsIcon"
       :auto-close-predicate="settingsPanelClosePredicate"
       :fixed="true"
     >
@@ -44,17 +44,25 @@
 </template>
 
 <script lang="ts">
-import { VPopup, VIcon } from '@/ui'
+import type { Ref } from 'vue'
+import { ref, defineAsyncComponent, defineComponent } from 'vue'
 import { externalApis } from '@/core/core-apis'
+import { VIcon, VPopup } from '@/ui'
 
-export default {
+export default defineComponent({
   name: 'SettingsContainer',
   components: {
     VPopup,
     VIcon,
-    SettingsPanel: () => import('./SettingsPanel.vue').then(m => m.default),
-    WidgetsPanel: () => import('./WidgetsPanel.vue').then(m => m.default),
+    SettingsPanel: defineAsyncComponent(() => import('./SettingsPanel.vue')),
+    WidgetsPanel: defineAsyncComponent(() => import('./WidgetsPanel.vue')),
   },
+  setup: () => ({
+    widgetsIcon: ref(null) as Ref<HTMLDivElement | null>,
+    settingsIcon: ref(null) as Ref<HTMLDivElement | null>,
+    widgetsPanelPopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    settingsPanelPopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+  }),
   data() {
     return {
       settingsOpened: false,
@@ -77,8 +85,8 @@ export default {
       }
       return true
     },
-    loadPanel(refName: string) {
-      const popup = this.$refs[refName]
+    loadPanel(refName: 'widgetsPanelPopup' | 'settingsPanelPopup') {
+      const popup = this[refName]
       if (!popup) {
         return
       }
@@ -87,7 +95,7 @@ export default {
       }
     },
   },
-}
+})
 </script>
 
 <style lang="scss">

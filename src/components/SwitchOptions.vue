@@ -10,9 +10,9 @@
         {{ options.optionDisplayName }}
       </VButton>
       <VPopup
-        v-model="popupOpen"
+        v-model:open="popupOpen"
         class="switch-options-popup widgets-popup"
-        :trigger-element="$refs.button"
+        :trigger-element="button"
         esc-close
         auto-destroy
       >
@@ -20,10 +20,10 @@
           :is="options.radio ? 'RadioButton' : 'CheckBox'"
           v-for="name of Object.keys(options.switches)"
           :key="name"
-          :class="{ dim: isDim(name) }"
           v-bind="options.switchProps || {}"
+          :class="{ dim: isDim(name) }"
           :checked="componentOptions[`switch-${name}`]"
-          @change="componentOptions[`switch-${name}`] = $event"
+          @update:checked="componentOptions[`switch-${name}`] = $event"
         >
           {{ options.switches[name].displayName }}
         </component>
@@ -35,10 +35,10 @@
           :is="options.radio ? 'RadioButton' : 'CheckBox'"
           v-for="name of Object.keys(options.switches)"
           :key="name"
-          :class="{ dim: isDim(name) }"
           v-bind="options.switchProps || {}"
+          :class="{ dim: isDim(name) }"
           :checked="componentOptions[`switch-${name}`]"
-          @change="componentOptions[`switch-${name}`] = $event"
+          @update:checked="componentOptions[`switch-${name}`] = $event"
         >
           {{ options.switches[name].displayName }}
         </component>
@@ -48,10 +48,14 @@
 </template>
 
 <script lang="ts">
-import { VPopup, VButton, VIcon, CheckBox, RadioButton } from '@/ui'
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { CheckBox, RadioButton, VButton, VIcon, VPopup } from '@/ui'
+import type { SwitchMetadataOption } from '@/components/switch-options'
+
 import { getComponentSettings } from '../core/settings'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'SwitchOptions',
   components: {
     VPopup,
@@ -62,7 +66,7 @@ export default Vue.extend({
   },
   props: {
     options: {
-      type: Object,
+      type: Object as PropType<SwitchMetadataOption<string, string>>,
       required: true,
     },
     smallSize: {
@@ -74,6 +78,9 @@ export default Vue.extend({
       default: true,
     },
   },
+  setup: () => ({
+    button: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+  }),
   data() {
     const { componentName } = this.options
     const componentOptions = getComponentSettings(componentName).options

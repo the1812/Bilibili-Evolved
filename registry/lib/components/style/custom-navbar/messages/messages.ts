@@ -1,4 +1,5 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import { defineAsyncComponent } from 'vue'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 const messagesUrl = 'https://message.bilibili.com/'
 export const messages: CustomNavbarItemInit = {
@@ -11,6 +12,6 @@ export const messages: CustomNavbarItemInit = {
   loginRequired: true,
   touch: true,
 
-  popupContent: () => import('./NavbarMessages.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./NavbarMessages.vue')),
   lazy: false,
 }

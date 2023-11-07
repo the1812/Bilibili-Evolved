@@ -1,10 +1,12 @@
 <template>
-  <a v-bind="$attrs" :target="newTab ? '_blank' : null" v-on="$listeners">
+  <a :target="newTab ? '_blank' : null">
     <slot />
   </a>
 </template>
 <script lang="ts">
-export default Vue.extend({
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   props: {
     newTab: {
       type: Boolean,

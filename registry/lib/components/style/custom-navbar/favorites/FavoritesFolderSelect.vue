@@ -3,38 +3,39 @@
     class="favorites-folder-select"
     round
     :items="folders"
-    :key-mapper="f => f.id"
+    :key-mapper="f => (f as FavoritesFolder).id"
     :value="folder"
-    @change="change($event)"
+    @update:value="change($event)"
   >
     <template #item="{ item }"> {{ item.name }} ({{ item.count }}) </template>
   </VDropdown>
 </template>
 <script lang="ts">
-import { VDropdown } from '@/ui'
-import { getUID } from '@/core/utils'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { getComponentSettings } from '@/core/settings'
-import { FavoritesFolder, notSelectedFolder } from './favorites-folder'
+import { getUID } from '@/core/utils'
+import { VDropdown } from '@/ui'
+
+import type { FavoritesFolder } from './favorites-folder'
+import { notSelectedFolder } from './favorites-folder'
 
 const navbarOptions = getComponentSettings('customNavbar').options
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
   },
-  model: {
-    prop: 'folder',
-    event: 'change',
-  },
   props: {
     folder: {
-      type: Object,
+      type: Object as PropType<FavoritesFolder>,
       required: true,
     },
   },
+  emits: ['update:folder'],
   data() {
     return {
-      folders: [],
+      folders: [] as FavoritesFolder[],
     }
   },
   async created() {
@@ -59,16 +60,16 @@ export default Vue.extend({
       const { lastFavoriteFolder } = navbarOptions
       const folder = this.folders.find((f: FavoritesFolder) => f.id === lastFavoriteFolder)
       if (folder) {
-        this.$emit('change', folder)
+        this.$emit('update:folder', folder)
       } else {
-        this.$emit('change', this.folders[0])
+        this.$emit('update:folder', this.folders[0])
       }
     }
   },
   methods: {
     change(folder: FavoritesFolder) {
       navbarOptions.lastFavoriteFolder = folder.id
-      this.$emit('change', folder)
+      this.$emit('update:folder', folder)
     },
   },
 })

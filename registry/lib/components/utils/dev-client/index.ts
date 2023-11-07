@@ -1,6 +1,9 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { isIframe } from '@/core/utils'
-import { devClientOptionsMetadata, autoUpdateOptions } from './options'
+
+import { autoUpdateOptions, devClientOptionsMetadata } from './options'
 import { setupPlugin } from './plugin'
 
 export const component = defineComponentMetadata({
@@ -42,7 +45,7 @@ export const component = defineComponentMetadata({
   },
   options: devClientOptionsMetadata,
   widget: {
-    component: () => import('./Widget.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./Widget.vue')),
   },
   plugin: {
     setup: setupPlugin,

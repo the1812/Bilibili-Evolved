@@ -1,10 +1,14 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
-import { PackageEntry } from '@/core/download'
+import type { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
-import { DownloadVideoAssets } from '../../download/types'
-import { getBlobByType, SubtitleDownloadType } from './utils'
+
+import type { DownloadVideoAssets } from '../../download/types'
+import type { SubtitleDownloadType } from './utils'
+import { getBlobByType } from './utils'
 
 export const component = defineComponentMetadata({
   name: 'downloadSubtitle',
@@ -17,7 +21,7 @@ export const component = defineComponentMetadata({
   urlInclude: videoAndBangumiUrls,
   widget: {
     condition: hasVideo,
-    component: () => import('./DownloadSubtitle.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./DownloadSubtitle.vue')),
   },
   plugin: {
     displayName: '下载视频 - 下载字幕支持',
@@ -57,7 +61,7 @@ export const component = defineComponentMetadata({
             toast.message = `获取完成. 成功 ${success.length} 个, 失败 ${fail.length} 个.`
             return success.map(it => it.value)
           },
-          component: () => import('./Plugin.vue').then(m => m.default),
+          component: defineAsyncComponent(() => import('./Plugin.vue')),
         })
       })
     },

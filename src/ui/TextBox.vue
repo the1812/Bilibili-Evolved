@@ -1,11 +1,10 @@
 <template>
   <div class="be-textbox" role="textbox" :class="{ linear }">
     <input
-      ref="input"
+      ref="inputRef"
       type="text"
-      v-bind="$attrs"
+      v-bind="restAttrs"
       :value="text"
-      v-on="restListeners"
       @change.stop="change"
       @input.stop="input"
       @compositionstart="compositionStart"
@@ -16,17 +15,20 @@
 </template>
 
 <script lang="ts">
-import { textControlMixin } from './text-control'
+import { defineComponent } from 'vue'
+import { textControlProps, useTextControl } from './text-control'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'TextBox',
-  mixins: [textControlMixin],
   props: {
     linear: {
       type: Boolean,
       default: false,
     },
+    ...textControlProps,
   },
+  emits: ['update:text'],
+  setup: useTextControl,
 })
 </script>
 

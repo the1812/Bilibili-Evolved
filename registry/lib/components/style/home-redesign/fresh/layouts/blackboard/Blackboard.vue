@@ -52,10 +52,12 @@
   </div>
 </template>
 <script lang="ts">
-import { VButton, VIcon, DpiImage } from '@/ui'
-import { getBlackboards } from './api'
+import { defineComponent } from 'vue'
+import { DpiImage, VButton, VIcon } from '@/ui'
 
-export default Vue.extend({
+import { type Blackboard, getBlackboards } from './api'
+
+export default defineComponent({
   components: {
     VButton,
     VIcon,
@@ -63,12 +65,12 @@ export default Vue.extend({
   },
   data() {
     return {
-      blackboards: [],
+      blackboards: [] as Blackboard[],
       timer: 0,
     }
   },
   computed: {
-    cardsContainer() {
+    cardsContainer(): Element | null {
       return this.$el.querySelector('.fresh-home-blackboard-cards')
     },
   },
@@ -79,7 +81,7 @@ export default Vue.extend({
   mounted() {
     this.createTimer()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.destroyTimer()
   },
   methods: {

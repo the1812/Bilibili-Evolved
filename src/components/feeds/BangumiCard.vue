@@ -11,15 +11,18 @@
   </a>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { BangumiCard } from '@/components/feeds/bangumi-card'
 import { DpiImage } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
   },
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<BangumiCard>,
       required: true,
     },
     isNew: {

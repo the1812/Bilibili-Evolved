@@ -1,5 +1,7 @@
-import { Executable, VueModule } from '@/core/common-types'
-import { PluginMetadata } from '@/plugins/plugin'
+import type { Component } from 'vue'
+import { defineAsyncComponent } from 'vue'
+
+import type { PluginMetadata } from '@/plugins/plugin'
 
 export const plugin: PluginMetadata = {
   name: 'vLoading.reimu',
@@ -7,8 +9,8 @@ export const plugin: PluginMetadata = {
   description:
     '用灵梦油库里代替脚本的所有 "加载中" 提示, 油库里素材来自[东方我乐多从志](https://cn.touhougarakuta.com/).',
   setup: ({ addData }) => {
-    addData('vLoading', (config: { content: Executable<VueModule> | string }) => {
-      config.content = () => import('./ReimuLoading.vue').then(m => m.default)
+    addData('vLoading', (config: { content: Component | string }) => {
+      config.content = defineAsyncComponent(() => import('./ReimuLoading.vue'))
     })
   },
 }

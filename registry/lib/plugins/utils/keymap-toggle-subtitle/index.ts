@@ -1,6 +1,7 @@
-import { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
-import { PluginMetadata } from '@/plugins/plugin'
+import type { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
+
 import { playerAgent } from '@/components/video/player-agent'
+import type { PluginMetadata } from '@/plugins/plugin'
 
 export const plugin: PluginMetadata = {
   name: 'keymap.actions.toggleSubtitle',

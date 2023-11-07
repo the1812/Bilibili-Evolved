@@ -5,7 +5,9 @@
 </template>
 
 <script lang="ts">
-export default Vue.extend({
+import { defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'ProgressBar',
   props: {
     progress: {
@@ -26,7 +28,7 @@ export default Vue.extend({
     },
   },
   computed: {
-    width() {
+    width(): string | number {
       let progress = this.progress as number
       if (progress > this.max) {
         progress = this.max

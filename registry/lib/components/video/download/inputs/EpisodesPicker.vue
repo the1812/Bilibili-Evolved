@@ -35,12 +35,12 @@
     <div class="episodes-picker-items">
       <div v-for="(item, index) of episodeItems" :key="item.key" class="episodes-picker-item">
         <CheckBox
-          v-model="item.isChecked"
+          v-model:checked="item.isChecked"
           icon-position="left"
           :data-aid="item.inputItem.aid"
           :data-cid="item.inputItem.cid"
           :data-bvid="item.inputItem.bvid"
-          @click.native="shiftSelect($event, item, index)"
+          @click="shiftSelect($event, item, index)"
         >
           <span class="episode-title">
             {{ item.title }}
@@ -54,10 +54,14 @@
   </div>
 </template>
 <script lang="ts">
-import { VButton, VIcon, CheckBox } from '@/ui'
-import { EpisodeItem } from './episode-item'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { DownloadVideoInputItem } from 'registry/lib/components/video/download/types'
+import { CheckBox, VButton, VIcon } from '@/ui'
 
-export default Vue.extend({
+import type { EpisodeItem } from './episode-item'
+
+export default defineComponent({
   components: {
     VButton,
     VIcon,
@@ -65,26 +69,26 @@ export default Vue.extend({
   },
   props: {
     api: {
-      type: Function,
+      type: Function as PropType<(vm: any) => Promise<EpisodeItem[]>>,
       required: true,
     },
   },
   data() {
     return {
-      episodeItems: [],
+      episodeItems: [] as EpisodeItem[],
       maxCheckedItems: 32,
       lastCheckedEpisodeIndex: -1,
     }
   },
   computed: {
-    checkedRatio() {
+    checkedRatio(): string {
       const checked: number = this.episodeItems.filter((it: EpisodeItem) => it.isChecked).length
       return `(${checked}/${this.episodeItems.length})`
     },
-    inputItems() {
+    inputItems(): DownloadVideoInputItem[] {
       return this.episodeItems.map((it: EpisodeItem) => it.inputItem)
     },
-    checkedInputItems() {
+    checkedInputItems(): DownloadVideoInputItem[] {
       const items: EpisodeItem[] = this.episodeItems
       return items.filter(it => it.isChecked).map(it => it.inputItem)
     },

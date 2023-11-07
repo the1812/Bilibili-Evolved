@@ -10,7 +10,7 @@
     <div ref="selected" class="selected">
       <div class="selected-item">
         <slot v-if="value !== null && value !== undefined" name="item" :item="value">
-          {{ value.displayName }}
+          {{ (value as Item).displayName }}
         </slot>
       </div>
       <div class="arrow" :class="{ open: popupOpen }">
@@ -44,10 +44,10 @@
     </div>
     <VPopup
       ref="popup"
-      v-model="popupOpen"
+      v-model:open="popupOpen"
       class="dropdown-popup"
       :lazy="false"
-      :trigger-element="$refs.selected"
+      :trigger-element="selected"
       @keydown.esc="selectItem(value)"
     >
       <div
@@ -58,49 +58,64 @@
         :tabindex="popupOpen ? 0 : -1"
       >
         <slot name="item" :item="item">
-          {{ item.displayName }}
+          {{ (item as Item).displayName }}
         </slot>
       </div>
     </VPopup>
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" generic="">
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 import VPopup from './VPopup.vue'
+import { vueDirectives } from '@/core/utils'
 
-export default Vue.extend({
+interface Item {
+  name: string | number | symbol
+  displayName: string
+}
+
+/**
+ * 如果不自定义 item 插槽，则 item 必须能存在 displayName 属性，且其值为 `string` 类型
+ */
+export default defineComponent({
   name: 'VDropdown',
   components: {
     VPopup,
   },
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
+  directives: { hit: vueDirectives.vHit },
   props: {
     value: {
+      type: null as PropType<unknown>,
       required: true,
     },
     items: {
-      type: Array,
+      type: Array as PropType<unknown[]>,
       required: true,
     },
+    // 默认获取 item 中的 `name` 属性。因此使用默认值时，item 必须拥有 `string | number | symbol` 类型的 `name` 属性
     keyMapper: {
-      type: Function,
-      default: (item: any) => item.name,
+      type: Function as PropType<(item: unknown) => string | number | symbol>,
+      default: (item: unknown) => (item as Item).name,
     },
     round: {
       type: Boolean,
       default: false,
     },
   },
+  emits: ['update:value'],
+  setup: () => ({
+    selected: ref(null) as Ref<HTMLDivElement | null>,
+    popup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+  }),
   data() {
     return {
       popupOpen: false,
     }
   },
   computed: {
-    disabled() {
+    disabled(): boolean {
       return Boolean(this.$attrs.disabled)
     },
   },
@@ -113,13 +128,13 @@ export default Vue.extend({
   },
   created() {
     if (this.value === null || this.value === undefined) {
-      this.$emit('change', this.items[0] || '<No items>')
+      this.$emit('update:value', this.items[0] || '<No items>')
     }
   },
   methods: {
-    selectItem(item: any) {
+    selectItem(item: unknown) {
       if (item !== this.value) {
-        this.$emit('change', item)
+        this.$emit('update:value', item)
       }
       this.popupOpen = false
       this.$el.focus()
@@ -128,7 +143,7 @@ export default Vue.extend({
       if (this.disabled) {
         return
       }
-      const popup = this.$refs.popup.$el as HTMLElement
+      const popup = this.popup.$el as HTMLElement
       const target = event.target as HTMLElement
       if (popup !== target && !popup.contains(target)) {
         this.popupOpen = !this.popupOpen

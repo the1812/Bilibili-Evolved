@@ -1,8 +1,9 @@
-import { waitForControlBar } from '@/components/live/live-control-bar'
 import { defineComponentMetadata } from '@/components/define'
+import { waitForControlBar } from '@/components/live/live-control-bar'
 import { select as spinSelect } from '@/core/spin-query'
 import { addStyle, removeStyle } from '@/core/style'
 import { liveUrls } from '@/core/utils/urls'
+
 import componentStyle from './gift-box.scss'
 
 /**

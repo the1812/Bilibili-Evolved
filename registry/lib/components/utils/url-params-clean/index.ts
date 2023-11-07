@@ -1,7 +1,7 @@
-import { registerAndGetData } from '@/plugins/data'
 import { defineComponentMetadata } from '@/components/define'
 import { isIframe, isNotHtml, matchPattern } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
+import { registerAndGetData } from '@/plugins/data'
 
 const displayName = '网址参数清理'
 const console = useScopedConsole(displayName)
@@ -129,6 +129,7 @@ const entry = async () => {
     original: (data: unknown, unused: string, url: string, ...restArgs: unknown[]) => void,
   ) => {
     return function historyHook(
+      this: History,
       data: unknown,
       unused: string,
       url: string,

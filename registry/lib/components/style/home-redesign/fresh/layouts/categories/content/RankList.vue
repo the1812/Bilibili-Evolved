@@ -1,5 +1,5 @@
 <template>
-  <div class="fresh-home-rank-list" :class="{ loading, loaded }">
+  <div ref="el" class="fresh-home-rank-list" :class="{ loading, loaded }">
     <div v-if="!loaded" class="fresh-home-rank-list-loading-container">
       <VLoading v-if="loading" />
       <div v-if="(error || items.length === 0) && !loading" class="fresh-home-rank-list-empty">
@@ -37,7 +37,7 @@
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ firstItem.points | formatCount }}
+            {{ formatCount(firstItem.points) }}
           </div>
         </a>
         <div class="fresh-home-rank-list-laser" data-number="1"></div>
@@ -58,9 +58,9 @@
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ secondItem.points | formatCount }}
+            {{ formatCount(secondItem.points) }}
             <VIcon icon="play" :size="16" />
-            {{ secondItem.playCount | formatCount }}
+            {{ formatCount(secondItem.playCount) }}
           </div>
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="secondItem.videoHref">
@@ -87,9 +87,9 @@
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ thirdItem.points | formatCount }}
+            {{ formatCount(thirdItem.points) }}
             <VIcon icon="play" :size="16" />
-            {{ thirdItem.playCount | formatCount }}
+            {{ formatCount(thirdItem.playCount) }}
           </div>
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="thirdItem.videoHref">
@@ -104,13 +104,17 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
-import { DpiImage, VIcon, VLoading, VEmpty, VButton } from '@/ui'
-import { requestMixin, cssVariableMixin } from '../../../../mixin'
-import { rankListCssVars } from './rank-list'
+import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 
-export default Vue.extend({
+import { requestProps, useCssVariable, useRequest } from '../../../../mixin'
+import { rankListCssVars } from './rank-list'
+import type { RankListCard } from './rank-list'
+
+export default defineComponent({
   components: {
     DpiImage,
     UpInfo,
@@ -119,31 +123,32 @@ export default Vue.extend({
     VEmpty,
     VButton,
   },
-  filters: {
-    formatCount,
-  },
-  mixins: [requestMixin(), cssVariableMixin(rankListCssVars)],
   props: {
     parseJson: {
-      type: Function,
+      type: Function as PropType<(json: unknown) => RankListCard[]>,
       required: true,
     },
     bangumiMode: {
       type: Boolean,
       default: false,
     },
+    ...requestProps,
   },
+  setup: props => ({
+    ...useRequest<RankListCard>({ api: props.api, parseJson: props.parseJson }),
+    ...useCssVariable(rankListCssVars),
+  }),
   computed: {
-    firstItem() {
+    firstItem(): RankListCard | undefined {
       return this.items[0]
     },
-    secondItem() {
+    secondItem(): RankListCard | undefined {
       return this.items[1]
     },
-    thirdItem() {
+    thirdItem(): RankListCard | undefined {
       return this.items[2]
     },
-    upInfoProps() {
+    upInfoProps(): { size: number; icon: string; style: { transform: string } } {
       return {
         size: 18,
         icon: this.bangumiMode ? 'mdi-television-classic' : 'up-outline',
@@ -152,12 +157,15 @@ export default Vue.extend({
         },
       }
     },
-    firstRow() {
+    firstRow(): RankListCard[] {
       return this.items.slice(3, 6)
     },
-    secondRow() {
+    secondRow(): RankListCard[] {
       return this.items.slice(6, 10)
     },
+  },
+  methods: {
+    formatCount,
   },
 })
 </script>

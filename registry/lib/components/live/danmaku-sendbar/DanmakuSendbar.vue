@@ -6,17 +6,19 @@
       :value="value"
       maxlength="30"
       @keydown.enter="send()"
-      @input="updateValue($event.target.value)"
+      @input="updateValue(($event.target as HTMLInputElement).value)"
     />
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { select } from '@/core/spin-query'
 import { raiseEvent } from '@/core/utils'
+
 import { originalTextAreaSelector, sendButtonSelector } from './original-elements'
 
 let changeEventHook = false
-export default Vue.extend({
+export default defineComponent({
   data() {
     return {
       originalTextArea: null,
@@ -52,7 +54,7 @@ export default Vue.extend({
       changeEventHook = true
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     this.originalTextArea.removeEventListener('input', this.listenChange)
     this.originalTextArea.removeEventListener('change', this.listenChange)
   },

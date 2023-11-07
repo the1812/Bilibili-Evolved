@@ -25,25 +25,32 @@
   </div>
 </template>
 <script lang="ts">
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { ManageItem } from '@/components/settings-panel/sub-pages/manage-panel/manage-panel'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
 import VButton from '@/ui/VButton.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VButton,
   },
   props: {
     config: {
-      type: Object,
+      type: Object as PropType<ManageItem<{ displayName: string; name: string }>>,
       required: true,
     },
   },
+  setup: () => ({
+    removeIcon: ref(null) as Ref<HTMLDivElement | null>,
+    removeConfirmTemplate: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       removeConfirm: false,
-      settings: {},
+      settings: {} as { enabled: boolean },
     }
   },
   mounted() {
@@ -51,7 +58,7 @@ export default Vue.extend({
       this.settings = this.config.getSettings(this.config.item)
     }
     if (this.config.isUserItem) {
-      Toast.mini(this.$refs.removeConfirmTemplate, this.$refs.removeIcon, {
+      Toast.mini(this.removeConfirmTemplate, this.removeIcon, {
         trigger: 'click',
         hideOnClick: true,
       })

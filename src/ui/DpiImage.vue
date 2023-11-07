@@ -1,6 +1,5 @@
 <template>
   <img
-    v-bind="$attrs"
     :width="width"
     :height="height"
     :srcset="srcset"
@@ -9,14 +8,16 @@
   />
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'DpiImage',
   props: {
     size: {
-      type: [Object, Number],
+      type: [Object, Number] as PropType<number | { width?: number; height?: number }>,
       required: true,
     },
     src: {
@@ -40,18 +41,18 @@ export default Vue.extend({
     }
   },
   computed: {
-    width() {
+    width(): number | null {
       if (typeof this.size === 'object' && 'width' in this.size) {
-        return this.size.width
+        return (this.size as { width: number }).width
       }
       if (typeof this.size === 'number') {
         return this.size
       }
       return null
     },
-    height() {
+    height(): number | null {
       if (typeof this.size === 'object' && 'height' in this.size) {
-        return this.size.height
+        return (this.size as { height: number }).height
       }
       if (typeof this.size === 'number') {
         return this.size

@@ -3,24 +3,31 @@
 </template>
 
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { ComponentMetadata } from '@/components/types'
+
 import { getDescriptionHTML } from '../description'
 
-export default Vue.extend({
+export default defineComponent({
   props: {
     componentData: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },
   data() {
     return {
-      settings: getComponentSettings(this.componentData),
       html: '',
     }
   },
-  async created() {
-    this.html = await getDescriptionHTML(this.componentData)
+  watch: {
+    'componentData.description': {
+      async handler() {
+        this.html = await getDescriptionHTML(this.componentData)
+      },
+      immediate: true,
+    },
   },
 })
 </script>

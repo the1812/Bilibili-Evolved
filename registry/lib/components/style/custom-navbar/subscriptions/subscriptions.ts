@@ -1,5 +1,7 @@
+import { defineAsyncComponent } from 'vue'
 import { getUID } from '@/core/utils'
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export enum SubscriptionTypes {
   Bangumi = 'bangumi',
@@ -22,5 +24,5 @@ export const subscriptions: CustomNavbarItemInit = {
 
   boundingWidth: 380,
   noPopupPadding: true,
-  popupContent: () => import('./NavbarSubscriptions.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./NavbarSubscriptions.vue')),
 }

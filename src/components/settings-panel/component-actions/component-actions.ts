@@ -1,14 +1,15 @@
-import { registerAndGetData } from '@/plugins/data'
-import { Executable, VueModule } from '@/core/common-types'
-import { getHook } from '@/plugins/hook'
+import type { Component } from 'vue'
 import { isUserComponent } from '@/core/settings'
-import { ComponentMetadata } from '../../types'
+import { registerAndGetData } from '@/plugins/data'
+import { getHook } from '@/plugins/hook'
+
+import type { ComponentMetadata } from '../../types'
 import { uninstallComponent } from '../../user-component'
 
 export interface ComponentConfigAction {
   name: string
   displayName: string
-  action: Executable
+  action: (component: ComponentMetadata) => void
   icon: string
   visible?: boolean
   title?: string
@@ -16,7 +17,8 @@ export interface ComponentConfigAction {
 }
 export interface ComponentVueAction {
   name: string
-  component: Executable<VueModule>
+  /* 组件。创建其实例时会传入属性：item: ComponentVueAction, component: ComponentMetadata */
+  component: Component
 }
 export type ComponentAction = (
   metadata: ComponentMetadata,

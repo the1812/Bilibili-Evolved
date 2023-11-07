@@ -1,5 +1,5 @@
-import { dq } from '../utils'
 import { getGeneralSettings } from '../settings'
+import { dq } from '../utils'
 import { formatFilename } from './formatters'
 import { descendingSort } from './sort'
 

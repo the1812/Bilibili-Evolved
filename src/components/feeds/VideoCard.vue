@@ -125,16 +125,19 @@
 </template>
 
 <script lang="ts">
-import { DpiImage, VIcon } from '@/ui'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getUID } from '@/core/utils'
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import { DpiImage, VIcon } from '@/ui'
+import type { VideoCard as VideoCardData, Cooperation, Topic } from './video-card'
 
 /*
   ============
   祖 传 代 码
   ============
 */
-export default {
+export default defineComponent({
   // props: ['data', 'orientation'],
   components: {
     DpiImage,
@@ -142,7 +145,7 @@ export default {
   },
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<VideoCardData>,
       required: true,
     },
     orientation: {
@@ -168,10 +171,10 @@ export default {
       coins: '',
       favorites: '',
       dynamic: '',
-      topics: [],
+      topics: [] as Topic[],
       upID: 0,
       epID: 0,
-      cooperation: [],
+      cooperation: [] as Cooperation[],
       pubTime: 0,
       pubTimeText: '',
       ...lodash.omit(this.data, 'watchlater'),
@@ -180,23 +183,23 @@ export default {
     }
   },
   computed: {
-    vertical() {
+    vertical(): boolean {
       return this.orientation === 'vertical'
     },
-    watchlater() {
+    watchlater(): boolean | null {
       if (getUID() && this.watchlaterInit !== null) {
         return this.watchlaterList.includes(this.aid)
       }
       return null
     },
-    reversedCooperation() {
+    reversedCooperation(): Cooperation[] {
       return [...this.cooperation].reverse().slice(0, 3)
     },
   },
   methods: {
     toggleWatchlater,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

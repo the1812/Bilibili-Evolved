@@ -1,4 +1,4 @@
-import { Executable } from '@/core/common-types'
+import type { Executable } from '@/core/common-types'
 import { playerReady } from '@/core/utils'
 
 /**

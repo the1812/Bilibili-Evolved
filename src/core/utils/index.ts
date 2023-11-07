@@ -1,10 +1,11 @@
-import { VueModule } from '../common-types'
+import { type CreateAppFunction, type ComponentPublicInstance, type App, createApp } from 'vue'
+import type { ImportedType } from '@/core/common-types'
 
 /**
  * 当查询 video 元素且被灰度了 WasmPlayer 时, 更换为对 bwp-video 的查询, 否则会找不到 video 元素
  * @param selector 选择器
  */
-export const bwpVideoFilter = (selector: string) => {
+export const bwpVideoFilter = (selector: string): string => {
   // if (!unsafeWindow.__ENABLE_WASM_PLAYER__) {
   //   return selector
   // }
@@ -19,51 +20,53 @@ export const bwpVideoFilter = (selector: string) => {
   }
   return selector
 }
-type DocumentQuerySelector = {
+interface DocumentQuerySelector {
   /**
    * 同 `document.querySelector`, 对 `<bwp-video>` 有额外处理
    * @param selector 选择器
    */
-  (selector: string): Element | null
+  <E extends Element>(selector: string): E | null
   /**
    * 在指定元素上进行 `querySelector`, 对 `<bwp-video>` 有额外处理
-   * @param selector 元素
+   * @param element 元素
    * @param scopedSelector 选择器
    */
-  (element: Element, scopedSelector: string): Element | null
+  <E extends Element>(element: Element, scopedSelector: string): E | null
 }
-export const dq: DocumentQuerySelector = (
+export const dq: DocumentQuerySelector = <E extends Element>(
   selectorOrElement: string | Element,
   scopedSelector?: string,
-) => {
+): E => {
   if (!scopedSelector) {
-    return document.querySelector(bwpVideoFilter(selectorOrElement as string))
+    return document.querySelector<E>(bwpVideoFilter(selectorOrElement as string))
   }
-  return (selectorOrElement as Element).querySelector(bwpVideoFilter(scopedSelector))
+  return (selectorOrElement as Element).querySelector<E>(bwpVideoFilter(scopedSelector))
 }
-type DocumentQuerySelectorAll = {
+interface DocumentQuerySelectorAll {
   /**
    * 同 `document.querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
    * @param selector 选择器
    */
-  (selector: string): Element[]
+  <E extends Element>(selector: string): E[]
   /**
    * 在指定元素上进行`querySelectorAll` (返回转换过的真数组), 对 `<bwp-video>` 有额外处理
    * @param selector 元素
    * @param scopedSelector 选择器
    */
-  (element: Element, scopedSelector: string): Element[]
+  <E extends Element>(element: Element, scopedSelector: string): E[]
 }
-export const dqa: DocumentQuerySelectorAll = (
+export const dqa: DocumentQuerySelectorAll = <E extends Element>(
   selectorOrElement: Element | string,
   scopedSelector?: string,
-) => {
+): E[] => {
   if (!scopedSelector) {
-    return Array.from(document.querySelectorAll(bwpVideoFilter(selectorOrElement as string)))
+    return Array.from(document.querySelectorAll<E>(bwpVideoFilter(selectorOrElement as string)))
   }
-  return Array.from((selectorOrElement as Element).querySelectorAll(bwpVideoFilter(scopedSelector)))
+  return Array.from(
+    (selectorOrElement as Element).querySelectorAll<E>(bwpVideoFilter(scopedSelector)),
+  )
 }
-type DocumentEvaluate = {
+interface DocumentEvaluate {
   (xpathExpression: string): XPathResult
   (xpathExpression: string, contextNode: Node): XPathResult
   (xpathExpression: string, contextNode: Node, type: number): XPathResult
@@ -74,7 +77,7 @@ export const de: DocumentEvaluate = (
   contextNode?: Node,
   type?: number,
   result?: XPathResult,
-) => document.evaluate(xpathExpression, contextNode, null, type, result)
+): XPathResult => document.evaluate(xpathExpression, contextNode, null, type, result)
 type DocumentEvaluateAll = {
   (xpathExpression: string): Node[]
   (xpathExpression: string, contextNode: Node): Node[]
@@ -86,7 +89,7 @@ export const dea: DocumentEvaluateAll = (
   contextNode?: Node,
   order?: boolean,
   result?: XPathResult,
-) => {
+): Node[] => {
   const xpathResult = de(
     xpathExpression,
     contextNode,
@@ -96,18 +99,12 @@ export const dea: DocumentEvaluateAll = (
 
   return Array.from({ length: xpathResult.snapshotLength }, (_, i) => xpathResult.snapshotItem(i))
 }
-type DocumentEvaluateAllIterable = {
-  (xpathExpression: string): Iterable<Node>
-  (xpathExpression: string, contextNode: Node): Iterable<Node>
-  (xpathExpression: string, contextNode: Node, order: boolean): Iterable<Node>
-  (xpathExpression: string, contextNode: Node, order: boolean, result: XPathResult): Iterable<Node>
-}
-export const deai: DocumentEvaluateAllIterable = (
+function* deaiRaw(
   xpathExpression: string,
   contextNode?: Node,
   order?: boolean,
   result?: XPathResult,
-) => {
+): Generator<Node, void, void> {
   const xpathResult = de(
     xpathExpression,
     contextNode,
@@ -115,21 +112,29 @@ export const deai: DocumentEvaluateAllIterable = (
     result,
   )
 
-  return {
-    [Symbol.iterator]: () => ({
-      next: () => {
-        let node = null
-        do {
-          node = xpathResult.iterateNext()
-          return node
-            ? ({ done: false, value: node } as { done: false; value: Node })
-            : ({ done: true } as { done: true; value: any })
-        } while (node)
-      },
-    }),
+  let node = null
+  for (;;) {
+    node = xpathResult.iterateNext()
+    if (node) {
+      yield node
+    } else {
+      break
+    }
   }
 }
-type DocumentEvaluateSingle = {
+interface DocumentEvaluateAllIterable {
+  (xpathExpression: string): IterableIterator<Node>
+  (xpathExpression: string, contextNode: Node): IterableIterator<Node>
+  (xpathExpression: string, contextNode: Node, order: boolean): IterableIterator<Node>
+  (
+    xpathExpression: string,
+    contextNode: Node,
+    order: boolean,
+    result: XPathResult,
+  ): IterableIterator<Node>
+}
+export const deai: DocumentEvaluateAllIterable = deaiRaw
+interface DocumentEvaluateSingle {
   <T extends Node>(xpathExpression: string): T | null
   <T extends Node>(xpathExpression: string, contextNode: Node): T | null
   <T extends Node>(xpathExpression: string, contextNode: Node, result: XPathResult): T | null
@@ -138,7 +143,7 @@ export const des: DocumentEvaluateSingle = <T extends Node>(
   xpathExpression: string,
   contextNode?: Node,
   result?: XPathResult,
-) =>
+): T | null =>
   de(xpathExpression, contextNode, XPathResult.FIRST_ORDERED_NODE_TYPE, result)
     .singleNodeValue as T | null
 /** 空函数 */
@@ -160,7 +165,10 @@ export const isBwpVideo = async () => {
  * 等待一定时间
  * @param time 延迟的毫秒数
  */
-export const delay = (time = 0) => new Promise<void>(r => setTimeout(() => r(), time))
+export const delay = (time = 0) =>
+  new Promise<void>(r => {
+    setTimeout(() => r(), time)
+  })
 /** 测试字符串是否包含子串或匹配正则
  * @param str 字符串
  * @param pattern 子串或正则表达式
@@ -174,24 +182,94 @@ export const matchPattern = (str: string, pattern: string | RegExp) => {
 /** 以`document.URL`作为被测字符串, 移除URL查询参数并调用`matchPattern` */
 export const matchUrlPattern = (pattern: string | RegExp) =>
   matchPattern(document.URL.replace(window.location.search, ''), pattern)
-/** 创建Vue组件的实例
- * @param module Vue组件模块对象
- * @param target 组件的挂载目标元素, 省略时不挂载直接返回
+
+/**
+ * 一些方便的 vue directive
+ *
+ * @examples
+ * ```vue
+ * <script setup>
+ * import { vueDirectives } from '@/core/utils'
+ * const vHit = vueDirectives.vHit
+ * </script>
+ *
+ * <template>
+ *   <input v-hit />
+ * </template>
+ * ```
+ *
+ * ```vue
+ * export default defineComponent({
+ *   directives: {
+ *     hit: vueDirectives.vHit,
+ *   }
+ * })
+ * ```
  */
-export const mountVueComponent = <T>(module: VueModule, target?: Element | string): Vue & T => {
-  const obj = 'default' in module ? module.default : module
-  const getInstance = (o: any) => {
-    if (o instanceof Function) {
-      // eslint-disable-next-line new-cap
-      return new o()
-    }
-    if (o.functional) {
-      return new (Vue.extend(o))()
-    }
-    return new Vue(o)
-  }
-  return getInstance(obj).$mount(target) as Vue & T
+export const vueDirectives = {
+  /**
+   * 接受一个事件监听器，当点击、空格按下或回车按下时调用。当触发方式是键盘触发时，会抑制 DOM 元素事件的默认行为。
+   *
+   * - **Expects:** {@link EventListener}
+   */
+  vHit: {
+    mounted: (el: Element, { value: listener }: { value: EventListener }) => {
+      el.addEventListener('click', listener)
+      el.addEventListener('keydown', function raw(this, event, ...rest) {
+        if (['Enter', ' '].includes((event as KeyboardEvent).key)) {
+          event.preventDefault()
+          Reflect.apply(listener, this, [event, ...rest])
+        }
+      })
+    },
+  },
 }
+
+/**
+ * 创建 Vue 应用实例
+ *
+ * @remarks
+ * 是 `createApp` 的包装。在创建实例时会进行一些配置。
+ */
+export const createVueApp: CreateAppFunction<Element> = (rootComponent, rootProps?) => {
+  // 目前原样返回
+  // 如果以后有需要，可以在这里添加配置
+  return createApp(rootComponent, rootProps)
+}
+
+/**
+ * 创建 Vue 应用实例，并挂载到新建的元素上
+ *
+ * @remarks
+ * 新建的元素游离在 DOM 树之外，需要手动添加到 DOM 树中
+ *
+ * 该函数内部使用 {@link createVueApp} 创建实例
+ *
+ * @example
+ * ```ts
+ * // static import
+ * import MyComponent from './MyComponent.vue'
+ * const [el, vm, app] = mountVueComponent(MyComponent)
+ *
+ * // dynamic import
+ * const [el, vm, app] = mountVueComponent(await import('./MyComponent.vue'))
+ * ```
+ *
+ * @param component 组件
+ * @param rootProps 传递给根组件的 props
+ * @returns 被挂载的 DOM 元素、Vue 组件实例和 Vue 应用实例
+ */
+export const mountVueComponent = <I extends ComponentPublicInstance>(
+  component: ImportedType<new () => I>,
+  rootProps?: Record<string, unknown> | null,
+): [HTMLDivElement, I, App<HTMLDivElement>] => {
+  const container = document.createElement('div')
+  const component0 = 'default' in component ? component.default : component
+  const app = createVueApp(component0, rootProps) as App<HTMLDivElement>
+  const instance = app.mount(container) as I
+  return [container, instance, app]
+}
+
 /** 是否处于其他网站的内嵌播放器中 */
 export const isEmbeddedPlayer = () =>
   window.location.host === 'player.bilibili.com' ||
@@ -300,7 +378,7 @@ export const createHook = <ParentType, HookParameters extends any[], ReturnType 
   hookFunc: (...args: HookParameters) => boolean,
 ) => {
   const original: (...args: HookParameters) => ReturnType = type[target] as any
-  type[target] = function hook(...args: HookParameters) {
+  type[target] = function hook(this: any, ...args: HookParameters) {
     const shouldCallOriginal = hookFunc(...args)
     if (!shouldCallOriginal) {
       return undefined
@@ -321,7 +399,7 @@ export const createPostHook = <ParentType, HookParameters extends any[], ReturnT
   hookFunc: (...args: HookParameters) => unknown,
 ) => {
   const original: (...args: HookParameters) => ReturnType = type[target] as any
-  type[target] = function hook(...args: HookParameters) {
+  type[target] = function hook(this: any, ...args: HookParameters) {
     const result = original?.call(this, ...args)
     hookFunc(...args)
     return result

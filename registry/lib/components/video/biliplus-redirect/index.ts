@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 
@@ -11,6 +13,6 @@ export const component = defineComponentMetadata({
   entry: none,
   tags: [componentsTags.video, componentsTags.utils],
   widget: {
-    component: () => import('./BiliplusRedirect.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./BiliplusRedirect.vue')),
   },
 })

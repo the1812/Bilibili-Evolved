@@ -1,69 +1,95 @@
-export const textControlMixin = Vue.extend({
-  model: {
-    prop: 'text',
-    event: 'change',
+import type { SetupContext, Ref, PropType, ComputedRef } from 'vue'
+import { ref, computed } from 'vue'
+
+export const textControlProps = {
+  text: {
+    type: String,
+    required: false,
+    default: '',
   },
+  changeOnBlur: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  validator: {
+    type: Function as PropType<(value: string, oldValue: string) => string | undefined>,
+    default: undefined,
+  },
+}
+
+export const useTextControl = (
   props: {
-    text: {
-      type: String,
-      required: false,
-      default: '',
-    },
-    changeOnBlur: {
-      type: Boolean,
-      required: false,
-      default: false,
-    },
-    validator: {
-      type: Function,
-      default: undefined,
-    },
+    text: string
+    changeOnBlur: boolean
+    validator: (value: string, oldValue: string) => string | undefined
   },
-  data() {
-    return {
-      composing: false,
-      restListeners: lodash.omit(
-        this.$listeners,
-        'change',
-        'input',
-        'compositionstart',
-        'compositionend',
-      ),
+  { attrs, emit }: SetupContext<{ 'update:text': (value: string) => boolean }>,
+): {
+  inputRef: Ref<HTMLInputElement | null>
+  composing: Ref<boolean>
+  restAttrs: ComputedRef<Record<string, unknown>>
+  emitChange: () => void
+  input: () => void
+  change: () => void
+  compositionStart: () => void
+  compositionEnd: () => void
+  focus: () => void
+} => {
+  const inputRef = ref(null) as Ref<HTMLInputElement | null>
+  const composing = ref(false) as Ref<boolean>
+  const restAttrs = computed(() =>
+    lodash.omit(attrs, 'onChange', 'onInput', 'onCompositionstart', 'onCompositionend'),
+  )
+
+  const emitChange = () => {
+    let { value } = inputRef.value
+    if (props.validator) {
+      value = props.validator(value, props.text)
+      if (props.changeOnBlur) {
+        inputRef.value.value = value
+      }
     }
-  },
-  methods: {
-    emitChange() {
-      let { value } = this.$refs.input
-      if (this.validator) {
-        value = this.validator(value, this.text)
-        if (this.changeOnBlur) {
-          this.$refs.input.value = value
-        }
-      }
-      if (value === this.text) {
-        return
-      }
-      this.$emit('change', value)
-    },
-    input() {
-      if (!this.changeOnBlur && !this.composing) {
-        this.emitChange()
-      }
-    },
-    change() {
-      if (this.changeOnBlur && !this.composing) {
-        this.emitChange()
-      }
-    },
-    compositionStart() {
-      this.composing = true
-    },
-    compositionEnd() {
-      this.composing = false
-      this.input()
-    },
-    focus() {
-      this.$refs.input.focus()
-    },
-  },
-})
+    if (value === props.text) {
+      return
+    }
+    emit('update:text', value)
+  }
+
+  const input = () => {
+    if (!props.changeOnBlur && !composing.value) {
+      emitChange()
+    }
+  }
+
+  const change = () => {
+    if (props.changeOnBlur && !composing.value) {
+      emitChange()
+    }
+  }
+
+  const compositionStart = () => {
+    composing.value = true
+  }
+
+  const compositionEnd = () => {
+    composing.value = false
+    input()
+  }
+
+  const focus = () => {
+    inputRef.value.focus()
+  }
+
+  return {
+    inputRef,
+    composing,
+    restAttrs,
+    emitChange,
+    input,
+    change,
+    compositionStart,
+    compositionEnd,
+    focus,
+  }
+}

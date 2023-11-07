@@ -2,40 +2,39 @@
   <CheckBox
     class="be-radio-button"
     role="radio"
-    v-bind="$attrs"
     :checked="checked"
     :checked-icon="checkedIcon"
     :not-checked-icon="notCheckedIcon"
-    @change="emitChange($event)"
+    @update:checked="emitChange($event)"
   >
     <slot>RadioButton</slot>
   </CheckBox>
 </template>
 
 <script lang="ts">
-import { CurriedFunction2 } from 'lodash'
+import { type ComponentPublicInstance, defineComponent } from 'vue'
+import type { CurriedFunction2 } from 'lodash'
+
 import CheckBox from './CheckBox.vue'
 
-type RadioGroup = {
-  instance: Vue
+interface RadioGroup {
+  instance: ComponentPublicInstance
   uncheck: () => void
 }
 const groups = new Map<string | HTMLElement, RadioGroup[]>()
-const setGroup = lodash.curry((name: string | HTMLElement, instance: Vue, uncheck: () => void) => {
-  if (groups.has(name)) {
-    groups.get(name).push({ instance, uncheck })
-  } else {
-    groups.set(name, [{ instance, uncheck }])
-  }
-})
-export default Vue.extend({
+const setGroup = lodash.curry(
+  (name: string | HTMLElement, instance: ComponentPublicInstance, uncheck: () => void) => {
+    if (groups.has(name)) {
+      groups.get(name).push({ instance, uncheck })
+    } else {
+      groups.set(name, [{ instance, uncheck }])
+    }
+  },
+)
+export default defineComponent({
   name: 'RadioButton',
   components: {
     CheckBox,
-  },
-  model: {
-    prop: 'checked',
-    event: 'change',
   },
   props: {
     checked: {
@@ -59,6 +58,7 @@ export default Vue.extend({
       default: 'mdi-radiobox-blank',
     },
   },
+  emits: ['update:checked'],
   watch: {
     checked(newValue: boolean) {
       if (newValue) {
@@ -81,8 +81,8 @@ export default Vue.extend({
   mounted() {
     const group = this.group as string
     const element = this.$el as HTMLElement
-    const uncheck = () => this.$emit('change', false)
-    let curriedSet: CurriedFunction2<Vue, () => void, void>
+    const uncheck = () => this.$emit('update:checked', false)
+    let curriedSet: CurriedFunction2<ComponentPublicInstance, () => void, void>
     if (group === '') {
       curriedSet = setGroup(element.parentElement)
     } else {
@@ -93,7 +93,7 @@ export default Vue.extend({
   methods: {
     emitChange(value: boolean) {
       if ((this.checked && this.allowUncheck) || !this.checked) {
-        this.$emit('change', value)
+        this.$emit('update:checked', value)
       }
     },
   },

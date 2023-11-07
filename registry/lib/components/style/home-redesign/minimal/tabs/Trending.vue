@@ -9,29 +9,31 @@
   </div>
 </template>
 <script lang="ts">
-import { VideoCard } from '@/components/feeds/video-card'
+import { defineComponent } from 'vue'
+import type { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
 import { ascendingStringSort } from '@/core/utils/sort'
 import { VEmpty, VLoading } from '@/ui'
+
 import { getTrendingVideos } from '../../trending'
 import MinimalHomeOperations from '../MinimalHomeOperations.vue'
 import { minimalHomeOptions } from '../options'
 
-export default Vue.extend({
+export default defineComponent({
   components: { VLoading, VEmpty, VideoCard: VideoCardComponent, MinimalHomeOperations },
   data() {
     return {
       loading: true,
-      cards: [],
+      cards: [] as VideoCard[],
       error: false,
     }
   },
   computed: {
-    loaded() {
+    loaded(): boolean {
       return !this.loading && !this.error
     },
-    lastID() {
+    lastID(): string | null {
       if (!this.cards.length) {
         return null
       }

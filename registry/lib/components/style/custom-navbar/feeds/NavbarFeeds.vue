@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-feeds">
+  <div ref="el" class="navbar-feeds">
     <TabControl ref="tabControl" :tabs="tabs" more-link="https://t.bilibili.com/">
       <template #more-link>
         所有动态
@@ -9,18 +9,25 @@
   </div>
 </template>
 <script lang="ts">
-import { TabControl, VIcon } from '@/ui'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
 import { getNotifyCount } from '@/components/feeds/notify'
-import { popperMixin } from '../mixins'
+import { TabControl, VIcon } from '@/ui'
+
+import { popupProps, usePopup } from '../mixins'
 import { tabs } from './tabs/tabs'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     TabControl,
     VIcon,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: props => ({
+    ...usePopup(props),
+    tabControl: ref(null) as Ref<InstanceType<typeof TabControl> | null>,
+  }),
   data() {
     return {
       tabs,
@@ -37,7 +44,7 @@ export default Vue.extend({
     async refreshNotifyCount() {
       // const totalJson = await getFeeds(navbarFeedsTypeList)
       // this.item.notifyCount = lodash.get(totalJson, 'data.update_num', 0)
-      const { tabControl } = this.$refs
+      const { tabControl } = this
       tabs.forEach(async tab => {
         if (tabControl.selectedTab === tab) {
           return

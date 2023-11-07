@@ -1,4 +1,4 @@
-import { CustomNavbarItemInit } from './custom-navbar-item'
+import type { CustomNavbarItemInit } from './custom-navbar-item'
 import { messages } from './messages/messages'
 import { ranking } from './ranking/ranking'
 import { userInfo } from './user-info/user-info'

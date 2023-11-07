@@ -1,14 +1,15 @@
+import type { ComponentPublicInstance } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
-import { childList, urlChange } from '@/core/observer'
-import { playerReady } from '@/core/utils'
-import { videoUrls } from '@/core/utils/urls'
 import { getVueData } from '@/components/feeds/api'
 import { VideoInfo } from '@/components/video/video-info'
+import { childList, urlChange } from '@/core/observer'
+import { playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
+import { videoUrls } from '@/core/utils/urls'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import desc from './desc.md'
 
-interface RecommendList extends Vue {
+interface RecommendList extends ComponentPublicInstance {
   isOpen: boolean
   related: {
     aid: string
@@ -21,7 +22,7 @@ interface RecommendList extends Vue {
   $children: (RecommendList & VideoPageCard)[]
 }
 
-interface VideoPageCard extends Vue {
+interface VideoPageCard extends ComponentPublicInstance {
   name: string
   title: string
   // 组件添加元素，非b站自有元素

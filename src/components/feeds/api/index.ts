@@ -1,20 +1,22 @@
-import { getUID, pascalCase } from '@/core/utils'
-import { getJsonWithCredentials } from '@/core/ajax'
-import { formatCount, formatDuration } from '@/core/utils/formatters'
 import { watchlaterList } from '@/components/video/watchlater'
-import { getData, registerData } from '@/plugins/data'
+import { getJsonWithCredentials } from '@/core/ajax'
+import { getUID, pascalCase } from '@/core/utils'
+import { formatCount, formatDuration } from '@/core/utils/formatters'
 import { descendingStringSort } from '@/core/utils/sort'
-import { VideoCard } from '../video-card'
-import { FeedsCard, FeedsCardType, feedsCardTypes } from './types'
+import { getData, registerData } from '@/plugins/data'
 
-export * from './types'
+import type { VideoCard } from '../video-card'
+import type { FeedsCard, FeedsCardType } from './types'
+import { feedsCardTypes } from './types'
+
 export * from './manager'
+export * from './types'
 
 /**
  * 搜索视频卡片中重复的 aid, 合并为联合投稿
  * @param cards 视频卡片
  */
-export const groupVideoFeeds = (cards: VideoCard[]) => {
+export const groupVideoFeeds = <C extends VideoCard>(cards: C[]): C[] => {
   const groups = lodash.groupBy(cards, c => c.aid)
   const cardToCooperationItem = (card: VideoCard) => ({
     id: card.upID,
@@ -90,7 +92,10 @@ export const getFeeds = async (type: FeedsCardType | string, afterID?: string | 
  * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
  */
 export const getVideoFeeds = withContentFilter(
-  async (type: 'video' | 'bangumi' = 'video', afterID?: string | number): Promise<VideoCard[]> => {
+  async (
+    type: 'video' | 'bangumi' = 'video',
+    afterID: string | number | undefined = undefined,
+  ): Promise<VideoCard[]> => {
     if (!getUID()) {
       return []
     }

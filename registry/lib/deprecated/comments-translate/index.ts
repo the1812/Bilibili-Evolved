@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import MachineTranslator from '@/components/i18n/machine-translator/MachineTranslator.vue'
+import { mountVueComponent } from '@/core/utils'
 
 const entry = async () => {
   const injectButton = (element: HTMLElement) => {
@@ -11,12 +12,8 @@ const entry = async () => {
       if (textElement.nextElementSibling?.classList.contains('translate-container')) {
         return
       }
-      const translator = new MachineTranslator({
-        propsData: {
-          text: textElement.innerText,
-        },
-      }).$mount()
-      textElement.insertAdjacentElement('afterend', translator.$el)
+      const [el] = mountVueComponent(MachineTranslator, { text: textElement.innerText })
+      textElement.insertAdjacentElement('afterend', el)
     })
   }
   const { forEachCommentItem } = await import('@/components/utils/comment-apis')

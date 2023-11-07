@@ -2,13 +2,13 @@
   <div class="bvid-convert">
     <div v-if="aid" class="bvid-convert-item">
       {{ aid }}
-      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('aid')">
+      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink(copyIdType.aid)">
         <VIcon :size="16" :icon="aidCopied ? 'mdi-check' : 'mdi-link'" />
       </div>
     </div>
     <div v-if="bvid" class="bvid-convert-item">
       {{ bvid }}
-      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('bvid')">
+      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink(copyIdType.bvid)">
         <VIcon :size="16" :icon="bvidCopied ? 'mdi-check' : 'mdi-link'" />
       </div>
     </div>
@@ -16,6 +16,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, markRaw } from 'vue'
 import { videoChange } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
@@ -23,7 +24,8 @@ import { matchUrlPattern } from '@/core/utils'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { bangumiUrls } from '@/core/utils/urls'
 import { VIcon } from '@/ui'
-import { BvidConvertOptions } from '.'
+
+import type { BvidConvertOptions } from '.'
 
 const { options } = getComponentSettings<BvidConvertOptions>('bvidConvert')
 enum CopyIdType {
@@ -60,7 +62,7 @@ const linkProviders: LinkProvider[] = [
     return `https://www.bilibili.com/video/${id}${newQuery ? `?${newQuery.toString()}` : ''}`
   },
 ]
-export default Vue.extend({
+export default defineComponent({
   components: { VIcon },
   data() {
     return {
@@ -68,6 +70,10 @@ export default Vue.extend({
       aidCopied: false,
       bvid: '',
       bvidCopied: false,
+      copyIdType: markRaw({
+        aid: CopyIdType.Aid,
+        bvid: CopyIdType.Bvid,
+      }),
     }
   },
   async mounted() {

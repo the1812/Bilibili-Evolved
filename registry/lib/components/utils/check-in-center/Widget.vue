@@ -13,10 +13,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { DefaultWidget } from '@/ui'
-import { CheckInItem, checkInItems } from './check-in-item'
 
-export default Vue.extend({
+import type { CheckInItem } from './check-in-item'
+import { checkInItems } from './check-in-item'
+
+export default defineComponent({
   components: {
     DefaultWidget,
   },
@@ -28,8 +31,7 @@ export default Vue.extend({
   methods: {
     async runItemAction(item: CheckInItem, event: MouseEvent) {
       try {
-        // 一开始可能是 undefined
-        this.$set(item, 'disabled', true)
+        item.disabled = true
         const button = this.$el.querySelector(`[data-name='${item.name}']`) as HTMLDivElement
         await item.action(button, event)
       } finally {

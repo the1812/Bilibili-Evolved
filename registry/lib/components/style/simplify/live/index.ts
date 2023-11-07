@@ -1,5 +1,5 @@
-import { newSwitchComponentWrapper } from '@/components/switch-options'
 import { styledComponentEntry } from '@/components/styled-component'
+import { newSwitchComponentWrapper } from '@/components/switch-options'
 import { liveUrls } from '@/core/utils/urls'
 
 export const component = newSwitchComponentWrapper({

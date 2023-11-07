@@ -1,9 +1,10 @@
-import { TestPattern } from '@/core/common-types'
+import type { TestPattern } from '@/core/common-types'
 import { childList, childListSubtree } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { liveUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
-import { FeedsCardsManager } from './base'
+
+import type { FeedsCardsManager } from './base'
 
 /** 表示一个动态卡片列表适配器, 可以对在不同页面的地方里的动态列表提供支持 */
 export interface FeedsCardsListAdaptor {

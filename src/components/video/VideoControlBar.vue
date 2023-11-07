@@ -4,7 +4,7 @@
       v-for="item of items"
       :key="item.name"
       class="be-video-control-bar-extend-item bilibili-player-video-btn squirtle-block-wrap bpx-player-ctrl-btn"
-      :style="{ order: item.order.toString() }"
+      :style="{ order: item.order }"
       :data-name="item.name"
       @click="item.action($event)"
     >
@@ -20,15 +20,18 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { VideoControlBarItem } from '@/components/video/video-control-bar'
 import { VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },
   props: {
     items: {
-      type: Array,
+      type: Array as PropType<VideoControlBarItem[]>,
       required: true,
     },
   },

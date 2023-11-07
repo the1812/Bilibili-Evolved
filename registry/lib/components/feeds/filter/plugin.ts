@@ -1,7 +1,9 @@
-import { FeedsContentFilter } from '@/components/feeds/api'
+import type { FeedsContentFilter } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
-import { PluginMetadata } from '@/plugins/plugin'
-import { BlockableCard, hasBlockedPattern } from './pattern'
+import type { PluginMetadata } from '@/plugins/plugin'
+
+import type { BlockableCard } from './pattern'
+import { hasBlockedPattern } from './pattern'
 
 const bangumiFields = {
   username: 'title',

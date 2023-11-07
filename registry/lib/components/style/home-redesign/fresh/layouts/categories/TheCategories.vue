@@ -4,7 +4,7 @@
       <div class="fresh-home-header-title">分区</div>
       <div class="fresh-home-header-center-area">
         <div class="fresh-home-header-tabs">
-          <div ref="tabs" class="default-tabs">
+          <div ref="tabsRef" class="default-tabs">
             <div
               v-for="t of tabs"
               :key="t.name"
@@ -35,13 +35,15 @@
   </div>
 </template>
 <script lang="ts">
-import { ArrayContent } from '@/core/common-types'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { TabType } from './categories'
 import { Reorder } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
 import { freshHomeOptions } from '../../options'
-import { supportedCategories } from './filter'
 import { getContent } from './content/content'
+import { supportedCategories } from './filter'
 
 const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   id: category.code as number,
@@ -51,12 +53,14 @@ const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   href: category.link,
   order: 0,
 }))
-type TabType = ArrayContent<typeof tabs>
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,
   },
+  setup: () => ({
+    tabsRef: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     const orderMap = (freshHomeOptions.categoriesOrder ?? {}) as Record<string, number>
     const orderedTabs = [...tabs].sort(ascendingSort(t => orderMap[t.name]))
@@ -69,7 +73,7 @@ export default Vue.extend({
     }
   },
   mounted() {
-    const tabsContainer = this.$refs.tabs as HTMLElement
+    const tabsContainer = this.tabsRef as HTMLElement
     const reorder = new Reorder(tabsContainer)
     reorder.addEventListener('reorder', ({ detail: items }) => {
       const newOrder = Object.fromEntries(

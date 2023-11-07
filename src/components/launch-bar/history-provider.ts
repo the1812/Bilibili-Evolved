@@ -1,5 +1,5 @@
 import { crossOriginLocalStorage } from '@/core/local-storage'
-import { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
+import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 
 export interface HistoryItem {
   value: string

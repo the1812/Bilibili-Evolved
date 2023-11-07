@@ -16,11 +16,13 @@
   </div>
 </template>
 <script lang="ts">
-import { VLoading, VEmpty, DpiImage } from '@/ui'
-import { responsiveGetPages, getJsonWithCredentials } from '@/core/ajax'
-import { LiveFeedItem } from './live-feed-item'
+import { defineComponent } from 'vue'
+import { getJsonWithCredentials, responsiveGetPages } from '@/core/ajax'
+import { DpiImage, VEmpty, VLoading } from '@/ui'
 
-export default Vue.extend({
+import type { LiveFeedItem } from './live-feed-item'
+
+export default defineComponent({
   components: {
     VLoading,
     VEmpty,
@@ -29,7 +31,7 @@ export default Vue.extend({
   data() {
     return {
       loading: true,
-      rawItems: [],
+      rawItems: [] as unknown[],
       hasMorePage: true,
     }
   },
@@ -42,7 +44,7 @@ export default Vue.extend({
         upName: card.uname,
         url: card.link,
       })
-      return (this.rawItems as any[]).map(parseLiveCard)
+      return this.rawItems.map(parseLiveCard)
     },
   },
   async created() {
@@ -66,7 +68,7 @@ export default Vue.extend({
   @include v-center();
   .live-feeds-content {
     align-self: stretch;
-    &-enter,
+    &-enter-from,
     &-leave-to {
       opacity: 0;
       transform: translateY(-16px) scale(0.9);

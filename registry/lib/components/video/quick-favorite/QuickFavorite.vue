@@ -18,9 +18,9 @@
       <div class="lists">
         选择快速收藏夹:
         <VDropdown
-          v-model="selectedFavorite"
+          v-model:value="selectedFavorite"
           :items="lists.map(it => it.title)"
-          :key-mapper="it => it"
+          :key-mapper="it => it as string"
         >
           <template #item="{ item }">
             {{ item }}
@@ -33,18 +33,23 @@
   </span>
 </template>
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
-import { getUID, getCsrf } from '@/core/utils'
-import { logError } from '@/core/utils/log'
+import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
+import { getCsrf, getUID } from '@/core/utils'
+import { logError } from '@/core/utils/log'
 import { VDropdown } from '@/ui'
 
 const { options } = getComponentSettings('quickFavorite')
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
   },
+  setup: () => ({
+    selectList: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       aid: unsafeWindow.aid,
@@ -53,7 +58,7 @@ export default Vue.extend({
       tipText: '',
       tipShowing: false,
       tipHandle: 0,
-      lists: [],
+      lists: [] as { title: string; id: number }[],
       selectedFavorite: '<未选择>',
       listShowing: false,
     }

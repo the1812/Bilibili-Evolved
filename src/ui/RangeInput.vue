@@ -2,32 +2,32 @@
   <div class="be-range-input">
     <TextBox
       change-on-blur
-      :text="wrapper.range.start.toString()"
-      @change="wrapper.start = $event"
+      :text="wrapper.range.start"
+      @update:text="wrapper.start = $event"
     ></TextBox>
     <slot name="separator">
       <div class="default-separator">~</div>
     </slot>
-    <TextBox
-      change-on-blur
-      :text="wrapper.range.end.toString()"
-      @change="wrapper.end = $event"
-    ></TextBox>
+    <TextBox change-on-blur :text="wrapper.range.end" @update:text="wrapper.end = $event"></TextBox>
   </div>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { Range } from './range'
+
 const createWrapper = (instance: any) => {
   const wrapper = {
     range: instance.range,
     get start() {
-      return this.range.start.toString()
+      return this.range.start
     },
     set start(value: string) {
       this.createNewRange(value, this.end)
     },
     get end() {
-      return this.range.end.toString()
+      return this.range.end
     },
     set end(value: string) {
       this.createNewRange(this.start, value)
@@ -45,30 +45,27 @@ const createWrapper = (instance: any) => {
         return
       }
       this.range = newRange
-      instance.$emit('change', newRange)
+      instance.$emit('update:range', newRange)
     },
   }
   return wrapper
 }
-export default Vue.extend({
+export default defineComponent({
   name: 'RangeInput',
   components: {
     TextBox: () => import('./TextBox.vue'),
   },
-  model: {
-    prop: 'range',
-    event: 'change',
-  },
   props: {
     range: {
-      type: Object,
+      type: Object as PropType<Range<string>>,
       required: true,
     },
     validator: {
-      type: Function,
+      type: Function as PropType<(range: Range<string>) => Range<string> | null | undefined>,
       default: undefined,
     },
   },
+  emits: ['update:range'],
   data() {
     return {
       wrapper: createWrapper(this),

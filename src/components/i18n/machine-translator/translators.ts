@@ -1,10 +1,12 @@
+import { reactive } from 'vue'
 import { monkey } from '@/core/ajax'
-import { UserAgent } from '@/core/utils/constants'
 import { getComponentSettings } from '@/core/settings'
+import { formData } from '@/core/utils'
+import { UserAgent } from '@/core/utils/constants'
 import { languageNameToCode } from '@/core/utils/i18n'
 import { registerAndGetData } from '@/plugins/data'
-import { formData } from '@/core/utils'
-import { Options as I18nOptions } from '../types'
+
+import type { Options as I18nOptions } from '../types'
 
 export abstract class MachineTranslateProvider {
   abstract translate(text: string): Promise<string>
@@ -103,11 +105,14 @@ export class GoogleCNTranslate extends GoogleTranslate {
   protected apiUrl = 'https://translate.google.cn/translate_a/single'
 }
 
-export const [translateProviders] = registerAndGetData('i18n.machineTranslators', {
-  // Bing: new BingTranslate(),
-  GoogleCN: new GoogleCNTranslate(),
-  Google: new GoogleTranslate(),
-} as Record<string, MachineTranslateProvider>)
+export const [translateProviders] = registerAndGetData(
+  'i18n.machineTranslators',
+  reactive({
+    // Bing: new BingTranslate(),
+    GoogleCN: new GoogleCNTranslate(),
+    Google: new GoogleTranslate(),
+  } as Record<string, MachineTranslateProvider>),
+)
 export const translateProviderNames = Object.keys(translateProviders)
 export const getTranslator = (): MachineTranslateProvider => {
   const {

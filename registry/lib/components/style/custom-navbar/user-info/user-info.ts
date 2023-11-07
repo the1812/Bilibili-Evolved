@@ -1,15 +1,17 @@
+import { defineAsyncComponent } from 'vue'
 import { getUID } from '@/core/utils'
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export const userInfo: CustomNavbarItemInit = {
   name: 'userInfo',
   displayName: '个人信息',
-  content: () => import('./UserFace.vue').then(m => m.default),
+  content: defineAsyncComponent(() => import('./UserFace.vue')),
 
   href: getUID() ? 'https://space.bilibili.com' : null,
   touch: true,
 
-  popupContent: () => import('./UserInfoPopup.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./UserInfoPopup.vue')),
   lazy: false,
   noPopupPadding: true,
   boundingWidth: 240,

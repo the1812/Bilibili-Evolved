@@ -30,7 +30,7 @@
         class="video-default-location-form-item-grow"
         linear
         change-on-blur
-        @change="onLocationInput"
+        @update:text="onLocationInput"
       />
       <VButton @click="locateTo"> 定位 </VButton>
     </div>
@@ -43,7 +43,7 @@
         class="video-default-location-form-item-grow"
         linear
         change-on-blur
-        @change="onOffsetInput"
+        @update:text="onOffsetInput"
       />
       <VButton @click="offsetTo"> 偏移 </VButton>
     </div>
@@ -51,7 +51,8 @@
 </template>
 
 <script lang="ts">
-import { VButton, TextBox } from '@/ui'
+import { defineComponent } from 'vue'
+import { TextBox, VButton } from '@/ui'
 
 let scrollObserver = null
 
@@ -65,7 +66,7 @@ const stringIntoInt = (value: string): number | null => {
   return Math.round(num)
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: { VButton, TextBox },
   props: {
     observePosition: {
@@ -77,6 +78,7 @@ export default Vue.extend({
       required: true,
     },
   },
+  emits: ['set-default-location'],
   data() {
     return {
       curPosition: getScrollY(),
@@ -89,7 +91,7 @@ export default Vue.extend({
   created() {
     this.setupObserveScroll()
   },
-  beforeDestroy() {
+  beforeUnmount() {
     scrollObserver.stop()
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <div class="video-default-location-page-type-selector">
-    <VDropdown v-model="curItem" :items="items" @change="onChange">
+    <VDropdown v-model:value="curItem" :items="items" @update:value="onChange">
       <template #arrow>
         <div class="video-default-location-page-type-selector-icon">
           <VIcon :size="15" icon="mdi-chevron-down" />
@@ -11,7 +11,9 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VDropdown, VIcon } from '@/ui'
+
 import { pageTypeInfos } from '.'
 
 const itemsMap = lodash.mapValues(pageTypeInfos, (v, k) => ({
@@ -24,18 +26,15 @@ interface Item {
   displayName: string
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: { VDropdown, VIcon },
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
   props: {
     value: {
       type: String,
       required: true,
     },
   },
+  emits: ['update:value'],
   data() {
     return {
       items: Object.values(itemsMap),
@@ -50,8 +49,8 @@ export default Vue.extend({
     },
   },
   methods: {
-    onChange(item: string | Item) {
-      this.$emit('change', item.name)
+    onChange(item: Item) {
+      this.$emit('update:value', item.name)
     },
   },
 })

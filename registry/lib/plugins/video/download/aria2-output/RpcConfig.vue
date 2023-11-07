@@ -9,7 +9,7 @@
     </div>
     <div v-else class="profile-select">
       <div class="profile-item-name">RPC 预设:</div>
-      <VDropdown v-model="selectedRpcProfile" :items="rpcProfiles">
+      <VDropdown v-model:value="selectedRpcProfile" :items="rpcProfiles">
         <template #item="{ item }">
           {{ item.name }}
         </template>
@@ -33,26 +33,26 @@
     <template v-if="selectedRpcProfile">
       <div class="profile-secret-key">
         <div class="profile-item-name">密钥:</div>
-        <TextBox v-model="selectedRpcProfile.secretKey" change-on-blur />
+        <TextBox v-model:text="selectedRpcProfile.secretKey" change-on-blur />
       </div>
       <div class="profile-dir">
         <div class="profile-item-name">路径:</div>
-        <TextBox v-model="selectedRpcProfile.dir" change-on-blur />
+        <TextBox v-model:text="selectedRpcProfile.dir" change-on-blur />
       </div>
       <div class="profile-host">
         <div class="profile-item-name">主机:</div>
-        <TextBox v-model="selectedRpcProfile.host" change-on-blur />
+        <TextBox v-model:text="selectedRpcProfile.host" change-on-blur />
       </div>
       <div class="profile-port">
         <div class="profile-item-name">端口:</div>
-        <TextBox v-model="selectedRpcProfile.port" change-on-blur />
+        <TextBox v-model:text="selectedRpcProfile.port" change-on-blur />
       </div>
       <div class="profile-method">
         <div class="profile-item-name">方法:</div>
         <VDropdown
-          v-model="selectedRpcProfile.method"
+          v-model:value="selectedRpcProfile.method"
           :items="['get', 'post']"
-          :key-mapper="item => item"
+          :key-mapper="item => item as string"
         >
           <template #item="{ item }">
             {{ item }}
@@ -61,16 +61,24 @@
       </div>
       <div class="profile-other">
         <div class="profile-item-name">其他配置:</div>
-        <TextArea v-model="selectedRpcProfile.other" placeholder="some-key=value" change-on-blur />
+        <TextArea
+          v-model:text="selectedRpcProfile.other"
+          placeholder="some-key=value"
+          change-on-blur
+        />
       </div>
     </template>
   </div>
 </template>
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
-import { TextBox, VButton, VIcon, VDropdown, TextArea } from '@/ui'
-import { Aria2RpcProfile, defaultProfile } from './rpc-profiles'
+import { TextArea, TextBox, VButton, VDropdown, VIcon } from '@/ui'
+
+import type { Aria2RpcProfile } from './rpc-profiles'
+import { defaultProfile } from './rpc-profiles'
 
 interface Options {
   rpcProfiles: Aria2RpcProfile[]
@@ -92,7 +100,7 @@ const handleMissingProfile = () => {
 const lastSelectedProfile =
   options.rpcProfiles.find(p => p.name === options.selectedRpcProfileName) ?? handleMissingProfile()
 console.log(options, lastSelectedProfile)
-export default Vue.extend({
+export default defineComponent({
   components: {
     TextBox,
     VButton,
@@ -100,6 +108,9 @@ export default Vue.extend({
     VDropdown,
     TextArea,
   },
+  setup: () => ({
+    renameInput: ref(null) as Ref<InstanceType<typeof TextBox> | null>,
+  }),
   data() {
     return {
       isRenaming: false,
@@ -118,7 +129,7 @@ export default Vue.extend({
       this.profileRename = this.selectedRpcProfile.name
       this.isRenaming = true
       await this.$nextTick()
-      this.$refs.renameInput?.focus()
+      this.renameInput?.focus()
     },
     endRename() {
       const newName: string = this.profileRename

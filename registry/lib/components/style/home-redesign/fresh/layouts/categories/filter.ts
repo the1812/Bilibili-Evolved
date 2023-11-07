@@ -1,4 +1,5 @@
 import { categories } from '@/components/utils/categories/data'
+
 import supportedNames from './supported-names.json'
 
 const excludedNames = [

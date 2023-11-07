@@ -1,4 +1,4 @@
-import { getJsonWithCredentials, bilibiliApi } from '@/core/ajax'
+import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { fixed } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 

@@ -1,5 +1,7 @@
-import { PluginMetadata } from '@/plugins/plugin'
-import { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
+import { defineAsyncComponent } from 'vue'
+import type { PluginMetadata } from '@/plugins/plugin'
+
+import type { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
 
 export const plugin: PluginMetadata = {
   name: 'customNavbar.items.darkMode',
@@ -11,7 +13,7 @@ export const plugin: PluginMetadata = {
       items.push({
         name: 'darkMode',
         displayName: '夜间开关',
-        content: () => import('./NavbarDarkMode.vue'),
+        content: defineAsyncComponent(() => import('./NavbarDarkMode.vue')),
 
         clickAction: () => {
           const settings = getComponentSettings('darkMode')

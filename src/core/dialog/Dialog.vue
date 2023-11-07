@@ -21,9 +21,10 @@
   </div>
 </template>
 <script lang="ts">
-import { VIcon, VButton } from '@/ui'
+import { defineComponent } from 'vue'
+import { VButton, VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VButton,
@@ -47,10 +48,11 @@ export default Vue.extend({
       default: () => ({}),
     },
   },
+  emits: ['close'],
   data() {
     return {
       open: false,
-      closeListeners: [],
+      closeListeners: [] as (() => void)[],
     }
   },
   methods: {

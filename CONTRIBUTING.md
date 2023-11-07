@@ -153,9 +153,6 @@ pnpm install
 ### 全局
 全局变量, 无需 `import` 就可以直接使用. (Tampermonkey API 这里不再列出了, 可根据代码提示使用)
 
-- `Vue`: Vue 库的主对象, 在创建 `.vue` 组件时, 其中的 `<script>` 可以直接使用 `Vue.extend()`
-> 出于历史原因, 项目中用的还是 Vue 2, 由于其糟糕的 TypeScript 支持, 在 VS Code + Vetur 的环境下浏览 `.vue` 文件可能会报各种奇奇怪怪的类型错误, 无视就好. (类型是否正确以 `pnpm run type` 的结果为准)
-
 - `lodash`: 包含所有 Lodash 库提供的方法
 - `dq` / `dqa`: `document.querySelector` 和 `document.querySelectorAll` 的简写, `dqa` 会返回真实数组
 > 在 `bwp-video` 出现后, 这两个查询函数还会自动将对 `video` 的查询扩展到 `bwp-video`

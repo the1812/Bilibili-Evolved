@@ -1,8 +1,9 @@
-import { defaultLanguageCode, languageCodeToName } from '@/core/utils/i18n'
 import { defineComponentMetadata } from '@/components/define'
+import { defaultLanguageCode, languageCodeToName } from '@/core/utils/i18n'
+
 import { componentsTags } from '../types'
-import { translateProviderNames, translateProviders } from './machine-translator/translators'
 import { startTranslate } from './dom-translator'
+import { translateProviderNames, translateProviders } from './machine-translator/translators'
 
 export const component = defineComponentMetadata({
   name: 'i18n',

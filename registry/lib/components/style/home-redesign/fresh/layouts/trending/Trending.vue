@@ -8,10 +8,10 @@
         <VButton icon title="刷新" @click="reload">
           <VIcon icon="mdi-refresh" :size="18" />
         </VButton>
-        <VButton icon title="上一页" @click="$refs.videoList.offsetPage(-1)">
+        <VButton icon title="上一页" @click="videoList.offsetPage(-1)">
           <VIcon icon="left-arrow" :size="20" />
         </VButton>
-        <VButton icon title="下一页" @click="$refs.videoList.offsetPage(1)">
+        <VButton icon title="下一页" @click="videoList.offsetPage(1)">
           <VIcon icon="right-arrow" :size="20" />
         </VButton>
       </div>
@@ -22,25 +22,31 @@
   </div>
 </template>
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { VButton, VIcon } from '@/ui'
-import VideoList from '../../VideoList.vue'
-import { freshHomeOptions } from '../../options'
 import { getTrendingVideos } from '../../../trending'
+import { freshHomeOptions } from '../../options'
+import VideoList from '../../VideoList.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,
     VideoList,
   },
+  setup: () => ({
+    videoList: ref(null) as Ref<InstanceType<typeof VideoList> | null>,
+  }),
   data() {
     return {
-      videos: [],
+      videos: [] as VideoCard[],
       loading: true,
     }
   },
   computed: {
-    title() {
+    title(): string {
       if (freshHomeOptions.personalized) {
         return '推荐'
       }

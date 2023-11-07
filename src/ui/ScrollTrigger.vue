@@ -6,12 +6,14 @@
   </div>
 </template>
 <script lang="ts">
+import { defineAsyncComponent, defineComponent } from 'vue'
 import { useScopedConsole } from '@/core/utils/log'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
-    VLoading: () => import('./VLoading.vue').then(m => m.default),
+    VLoading: defineAsyncComponent(() => import('./VLoading.vue')),
   },
+  emits: ['trigger'],
   async mounted() {
     const console = useScopedConsole('ScrollTrigger')
     const element = this.$el as HTMLElement

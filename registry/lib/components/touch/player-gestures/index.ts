@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { playerUrls } from '@/core/utils/urls'
+
 import desc from './desc.md'
 import { entry } from './entry'
 

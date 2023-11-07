@@ -8,8 +8,7 @@
       <VDropdown
         :items="Object.values(translateProviders)"
         :value="activeTranslator"
-        :key-mapper="it => it.name"
-        @change="changeTranslator($event)"
+        @update:value="changeTranslator($event)"
       >
         <template #item="{ item }">
           {{ item.name }}
@@ -26,13 +25,16 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VDropdown, VIcon } from '@/ui'
-import { getTranslator, translateProviders, MachineTranslateProvider } from './translators'
+
+import type { MachineTranslateProvider } from './translators'
+import { getTranslator, translateProviders } from './translators'
 
 const MachineTranslatorClass = 'machine-translator-enabled'
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
     VIcon,
@@ -48,11 +50,11 @@ export default Vue.extend({
       result: '',
       working: false,
       translateProviders,
-      activeTranslator: {},
+      activeTranslator: {} as MachineTranslateProvider,
     }
   },
   computed: {
-    translated() {
+    translated(): boolean {
       return this.result !== ''
     },
   },

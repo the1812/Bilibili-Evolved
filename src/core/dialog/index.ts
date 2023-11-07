@@ -1,11 +1,13 @@
-import { Executable, VueModule } from '../common-types'
+import { defineComponent, type App, type Component } from 'vue'
+import { mountVueComponent } from '@/core/utils'
 import Dialog from './Dialog.vue'
 
 export interface DialogInputs {
   icon?: string
-  title?: string | Executable<VueModule>
+  title?: string | Component
   zIndex?: number
-  content: string | Executable<VueModule>
+  /* 若为组件，可接受属性：`contentProps`，可触发事件：dialog-close: () => void */
+  content: string | Component
   contentProps?: Record<string, unknown>
 }
 export interface DialogInstance extends Required<DialogInputs> {
@@ -13,29 +15,36 @@ export interface DialogInstance extends Required<DialogInputs> {
   close(): Promise<void>
   closeListeners: (() => void)[]
 }
-export const showDialog = (inputs: DialogInputs) => {
+export const showDialog = (inputs: DialogInputs): DialogInstance => {
   const { icon, title, zIndex, content, contentProps } = inputs
-  const dialogElement = new Dialog({
-    propsData: {
-      icon,
-      title,
-      zIndex,
-      content,
-      contentProps,
+  let dialogEl: HTMLDivElement | undefined
+  let dialogApp: App<HTMLDivElement> | undefined
+  const ExtendedDialog = defineComponent({
+    extends: Dialog,
+    data() {
+      return {
+        open: false,
+        closeListeners: [
+          () => {
+            dialogApp!.unmount()
+            dialogEl!.remove()
+          },
+        ],
+      }
     },
-    data: {
-      open: false,
-      closeListeners: [
-        () => {
-          dialogElement.$destroy()
-          dialogElement.$el.remove()
-        },
-      ],
-    },
-  }).$mount() as Vue & DialogInstance
-  document.body.appendChild(dialogElement.$el)
-  setTimeout(() => {
-    dialogElement.open = true
   })
-  return dialogElement
+  const [el, vm, app] = mountVueComponent(ExtendedDialog, {
+    icon,
+    title,
+    zIndex,
+    content,
+    contentProps,
+  })
+  dialogEl = el
+  dialogApp = app
+  document.body.appendChild(el)
+  setTimeout(() => {
+    vm.open = true
+  })
+  return vm as DialogInstance
 }

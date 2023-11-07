@@ -1,7 +1,8 @@
 import Color from 'color'
-import { getGeneralSettings, addComponentListener } from '../settings'
-import { makeImageFilter } from './image-filter'
+
+import { addComponentListener, getGeneralSettings } from '../settings'
 import { TextColor } from '../text-color'
+import { makeImageFilter } from './image-filter'
 
 export const initColors = () => {
   const colorStyle = document.createElement('style')

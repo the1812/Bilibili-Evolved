@@ -25,13 +25,15 @@
 </template>
 
 <script lang="ts">
-import { Widget } from '@/components/widget'
+import { defineComponent, reactive } from 'vue'
+import type { Widget } from '@/components/widget'
 import { deleteValue, matchUrlPattern } from '@/core/utils'
-import { VIcon, VEmpty } from '@/ui'
+import { VEmpty, VIcon } from '@/ui'
+
 import { registerAndGetData } from '../../plugins/data'
 import { WidgetsPlugin } from '.'
 
-const allWidgets: Widget[] = []
+const allWidgets: Widget[] = reactive([])
 const widgetFilter = async (w: Widget) => {
   if (w.urlExclude && w.urlExclude.some(matchUrlPattern)) {
     return false
@@ -48,7 +50,7 @@ const widgetFilter = async (w: Widget) => {
   }
   return true
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
     VEmpty,
@@ -62,16 +64,20 @@ export default Vue.extend({
     }
   },
   watch: {
-    allWidgets() {
-      this.allWidgets.forEach(async (w: Widget) => {
-        const add = await widgetFilter(w)
-        if (add) {
-          this.widgets.push(w)
-        } else {
-          deleteValue(this.widgets, (widget: Widget) => widget.name === w.name)
-        }
-      })
-      console.log('updated widgets', this.widgets)
+    // deep
+    allWidgets: {
+      handler() {
+        this.allWidgets.forEach(async (w: Widget) => {
+          const add = await widgetFilter(w)
+          if (add) {
+            this.widgets.push(w)
+          } else {
+            deleteValue(this.widgets, (widget: Widget) => widget.name === w.name)
+          }
+        })
+        console.log('updated widgets', this.widgets)
+      },
+      deep: true,
     },
   },
   created() {
@@ -134,7 +140,7 @@ export default Vue.extend({
       font-size: 14px;
       transition: 0.2s ease-out;
       display: flex;
-      &-enter,
+      &-enter-from,
       &-leave-to {
         opacity: 0;
         transform: scale(0.9);

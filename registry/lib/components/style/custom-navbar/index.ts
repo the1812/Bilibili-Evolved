@@ -1,13 +1,12 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
-import { urlInclude, urlExclude } from './urls'
-import { entry } from './entry'
+import { defineAsyncComponent } from 'vue'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { getNumberValidator } from '@/core/utils'
 import { NavbarNotifyStyle } from './notify-style'
+
+import { entry } from './entry'
+import { urlExclude, urlInclude } from './urls'
 
 const styleID = 'custom-navbar-style'
 const options = defineOptionsMetadata({
@@ -127,7 +126,7 @@ export const component = defineComponentMetadata({
     // const { addImportantStyle } = await import('@/core/style')
     // addImportantStyle(style, styleID)
   },
-  extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./settings/ExtraOptions.vue')),
   plugin: {
     displayName: '自定义顶栏 - 功能扩展',
     setup: ({ addData }) => {

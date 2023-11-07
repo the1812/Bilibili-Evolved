@@ -78,10 +78,13 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { meta } from '@/core/meta'
 import { formatDateTime } from '@/core/utils/formatters'
 import { VButton, VIcon } from '@/ui'
-import { AboutPageAction, aboutPageActions } from './about-page'
+
+import type { AboutPageAction } from './about-page'
+import { aboutPageActions } from './about-page'
 
 const feedbackSupported = (() => {
   const namespace = GM_info.scriptMetaStr.match(/@namespace\s*(.+)/)
@@ -94,7 +97,7 @@ const feedbackSupported = (() => {
   return true
 })()
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VButton,
     VIcon,

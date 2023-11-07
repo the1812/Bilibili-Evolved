@@ -1,6 +1,7 @@
-import { ComponentMetadata } from '@/components/types'
-import { DocSource, DocSourceItem } from '.'
+import type { ComponentMetadata } from '@/components/types'
+
 import { getId } from '../id'
+import type { DocSource, DocSourceItem } from '.'
 import { getThirdPartyDescription, thirdPartyComponents } from './third-party'
 
 export const getComponentsDoc: DocSource = async rootPath => {

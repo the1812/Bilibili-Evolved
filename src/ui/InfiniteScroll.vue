@@ -12,25 +12,33 @@
   </div>
 </template>
 <script lang="ts">
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
+
 /**
  * @deprecated use ScrollTrigger.vue instead.
  */
-export default Vue.extend({
+export default defineComponent({
   name: 'InfiniteScroll',
   props: {
     initialItems: {
-      type: Array,
+      type: Array as PropType<unknown[]>,
       default: () => [],
     },
     fetchData: {
-      type: Function,
+      type: Function as PropType<(page: number) => Promise<any[] | false>>,
       required: true,
     },
     keyMapper: {
-      type: Function,
+      type: Function as PropType<(item: unknown) => string | number>,
       default: () => (item: any) => item,
     },
   },
+  emits: ['next-page', 'prev-page'],
+  setup: () => ({
+    container: ref(null) as Ref<HTMLDivElement | null>,
+    scrollTrigger: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       items: [...this.initialItems],
@@ -41,8 +49,8 @@ export default Vue.extend({
     }
   },
   mounted() {
-    const scrollTrigger = this.$refs.scrollTrigger as HTMLElement
-    // const container = this.$refs.container as HTMLElement
+    const { scrollTrigger } = this
+    // const { container } = this
     const observer = new IntersectionObserver(
       lodash.debounce(records => {
         if (records.some(r => r.intersectionRatio > 0)) {
@@ -55,10 +63,11 @@ export default Vue.extend({
     this.observer = observer
   },
   methods: {
-    async loadNextPage(page: number = this.page) {
+    async loadNextPage(page?: number) {
+      const page0 = page || this.page
       try {
-        const func = this.fetchData as (page: number) => Promise<any[] | false>
-        const promise = func(page)
+        const func = this.fetchData
+        const promise = func(page0)
         this.page++
         this.$emit('next-page')
         this.loadingPromise = promise
@@ -71,8 +80,8 @@ export default Vue.extend({
         }
         this.items.push(...items)
         await this.$nextTick()
-        const scrollTrigger = this.$refs.scrollTrigger as HTMLElement
-        const container = this.$refs.container as HTMLElement
+        const { scrollTrigger } = this
+        const { container } = this
         // console.log(
         //   page,
         //   scrollTrigger.offsetTop,
@@ -85,7 +94,7 @@ export default Vue.extend({
         console.error(error)
         this.page--
         this.$emit('prev-page')
-        this.loadNextPage(page)
+        this.loadNextPage(page0)
       }
     },
   },

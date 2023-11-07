@@ -23,7 +23,11 @@
       <div ref="mainContainer" class="main">
         <div ref="componentList" class="component-list">
           <div class="settings-panel-search-bar">
-            <TextBox v-model="searchKeyword" class="settings-panel-search" placeholder="搜索" />
+            <TextBox
+              v-model:text="searchKeyword"
+              class="settings-panel-search"
+              placeholder="搜索"
+            />
             <VButton
               v-for="action of searchBarActions"
               :key="action.key"
@@ -47,7 +51,7 @@
               :class="{ selected: isComponentSelected(c.name) }"
               :component-data="c"
               :data-name="c.name"
-              @click.native="selectComponent(c)"
+              @click="selectComponent(c)"
             >
             </ComponentSettings>
           </div>
@@ -57,13 +61,12 @@
       <VPopup
         ref="detailsPopup"
         class="component-detail-panel"
-        :trigger-element="$refs.componentList"
+        :trigger-element="componentList"
         :open="componentDetailOpen"
-        @popup-change="!$event && closePopper()"
+        @update:open="!$event && closePopper()"
       >
         <ComponentDetail
           v-if="selectedComponent"
-          :key="selectedComponent.name"
           :component-data="selectedComponent"
           @close="closePopper()"
         />
@@ -73,18 +76,29 @@
 </template>
 
 <script lang="ts">
-import { VIcon, TextBox, VPopup, VEmpty, VButton } from '@/ui'
-import { getHook } from '@/plugins/hook'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { deleteValue } from '@/core/utils'
-import ComponentSettings from './ComponentSettings.vue'
-import { ComponentMetadata, ComponentTag, components } from '../component'
-import ComponentDetail from './ComponentDetail.vue'
-import ComponentTags from './ComponentTags.vue'
-import { getDescriptionText } from '../description'
-import { SearchBarActionContext, searchBarActions } from './search-bar-actions'
+import { getHook } from '@/plugins/hook'
+import { TextBox, VButton, VEmpty, VIcon, VPopup } from '@/ui'
 
+import type { ComponentMetadata, ComponentTag } from '../component'
+import { components } from '../component'
+import { getDescriptionText } from '../description'
+import ComponentDetail from './ComponentDetail.vue'
+import ComponentSettings from './ComponentSettings.vue'
+import ComponentTags from './ComponentTags.vue'
+import type { SearchBarActionContext } from './search-bar-actions'
+import { searchBarActions } from './search-bar-actions'
+
+function searchKeywordWatch(this: InstanceType<typeof ThisComponent>) {
+  // if (this.searchKeyword !== '') {
+  //   this.componentTags?.reset()
+  // }
+  this.updateRenderedComponents()
+}
 const defaultSearchFilter = (items: ComponentMetadata[]) => items
-export default {
+const ThisComponent = defineComponent({
   name: 'SettingsPanel',
   components: {
     VIcon,
@@ -96,12 +110,20 @@ export default {
     ComponentDetail,
     ComponentTags,
   },
+  emits: ['close'],
+  setup: () => ({
+    sidebarContainer: ref(null) as Ref<HTMLDivElement | null>,
+    componentTags: ref(null) as Ref<InstanceType<typeof ComponentTags> | null>,
+    mainContainer: ref(null) as Ref<HTMLDivElement | null>,
+    componentList: ref(null) as Ref<HTMLDivElement | null>,
+    detailsPopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+  }),
   data() {
     return {
       components,
       renderedComponents: components.filter(c => !c.hidden),
       selectedComponent: null,
-      selectedComponents: [],
+      selectedComponents: [] as ComponentMetadata[],
       componentDetailOpen: false,
       collapsed: false,
       peek: false,
@@ -111,11 +133,10 @@ export default {
     }
   },
   computed: {
-    isComponentSelected() {
-      return (name: string) =>
-        this.selectedComponents.some((c: ComponentMetadata) => c.name === name)
+    isComponentSelected(): (name: string) => boolean {
+      return (name: string) => this.selectedComponents.some(c => c.name === name)
     },
-    tags() {
+    tags(): (ComponentTag & { count: number })[] {
       const renderedComponents = this.renderedComponents as ComponentMetadata[]
       let tags = [] as (ComponentTag & { count: number })[]
       renderedComponents.forEach(it =>
@@ -140,12 +161,7 @@ export default {
     },
   },
   watch: {
-    searchKeyword: lodash.debounce(function searchKeywordWatch() {
-      // if (this.searchKeyword !== '') {
-      //   this.$refs.componentTags?.reset()
-      // }
-      this.updateRenderedComponents()
-    }, 200),
+    searchKeyword: lodash.debounce(searchKeywordWatch, 200) as unknown as () => void,
     searchFilter() {
       // if (this.searchFilter !== defaultSearchFilter) {
       this.searchKeyword = ''
@@ -153,14 +169,17 @@ export default {
       // }
       this.updateRenderedComponents()
     },
-    components() {
-      this.updateRenderedComponents()
-      this.$refs.componentTags.refreshTags()
-      if (
-        !this.components.some((c: ComponentMetadata) => c.name === this.selectedComponent?.name)
-      ) {
-        this.selectedComponent = null
-      }
+    components: {
+      handler() {
+        this.updateRenderedComponents()
+        this.componentTags.refreshTags()
+        if (
+          !this.components.some((c: ComponentMetadata) => c.name === this.selectedComponent?.name)
+        ) {
+          this.selectedComponent = null
+        }
+      },
+      deep: true,
     },
   },
   methods: {
@@ -184,7 +203,7 @@ export default {
         this.selectedComponents = list.slice(startIdx, endIdx + 1)
         return
       }
-      const selectedList = this.selectedComponents as ComponentMetadata[]
+      const selectedList = this.selectedComponents
       const selectedComponent = selectedList.find(c => c.name === component.name)
       if (selectedComponent) {
         deleteValue(selectedList, c => c.name === selectedComponent.name)
@@ -253,7 +272,8 @@ export default {
       this.renderedComponents = this.searchFilter(internalFiltered)
     },
   },
-}
+})
+export default ThisComponent
 </script>
 
 <style lang="scss">

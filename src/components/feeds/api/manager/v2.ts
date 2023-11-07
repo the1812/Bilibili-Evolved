@@ -1,14 +1,16 @@
 import { childList } from '@/core/observer'
-import { descendingStringSort } from '@/core/utils/sort'
+import { selectAll } from '@/core/spin-query'
 import { pascalCase } from '@/core/utils'
+import { descendingStringSort } from '@/core/utils/sort'
+
+import type { FeedsCard, FeedsCardType } from '../types'
+import { feedsCardTypes, isRepostType } from '../types'
 import {
   createNodeValidator,
   FeedsCardsManager,
   FeedsCardsManagerEventType,
   getVueData,
 } from './base'
-import { FeedsCard, FeedsCardType, feedsCardTypes, isRepostType } from '../types'
-import { selectAll } from '@/core/spin-query'
 
 /** b 站的动态卡片 type 标记 -> FeedsCard.type */
 const feedsCardTypeMap = {
@@ -51,9 +53,6 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   const mainText = mainDesc?.text ?? ''
   let typeText = ''
   switch (cardType) {
-    default: {
-      break
-    }
     case feedsCardTypes.bangumi:
     case feedsCardTypes.column:
     case feedsCardTypes.video: {
@@ -65,6 +64,9 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
         const { title, summary } = major.opus
         typeText = combineText(title, summary.text)
       }
+      break
+    }
+    default: {
       break
     }
   }

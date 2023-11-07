@@ -1,6 +1,10 @@
-import { LaunchBarActionProvider, LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
-import { PluginMetadata } from '../plugin'
-import { IdSearchProvider } from './types'
+import type {
+  LaunchBarAction,
+  LaunchBarActionProvider,
+} from '@/components/launch-bar/launch-bar-action'
+
+import type { PluginMetadata } from '../plugin'
+import type { IdSearchProvider } from './types'
 
 const getCopyItem = async (name: string, id: string, original: string) => {
   const item: LaunchBarAction = {

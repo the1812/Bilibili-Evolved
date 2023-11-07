@@ -1,4 +1,4 @@
-import { PluginMetadata } from '@/plugins/plugin'
+import type { PluginMetadata } from '@/plugins/plugin'
 
 export const plugin: PluginMetadata = {
   name: 'i18n.language.english',

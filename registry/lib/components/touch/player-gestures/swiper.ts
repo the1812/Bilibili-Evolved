@@ -5,6 +5,7 @@
 */
 
 import { getComponentSettings } from '@/core/settings'
+
 import { ProgressSeekMode } from './gesture-preview'
 
 type Position = { x: number; y: number; width: number; height: number }

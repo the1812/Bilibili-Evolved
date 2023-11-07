@@ -1,5 +1,5 @@
 <template>
-  <VPopup v-model="open" fixed class="download-video-panel" :trigger-element="triggerElement">
+  <VPopup v-model:open="open" fixed class="download-video-panel" :trigger-element="triggerElement">
     <div class="download-video-panel-header">
       <VIcon icon="mdi-download" />
       <div class="title">下载视频</div>
@@ -10,7 +10,7 @@
     <div class="download-video-panel-content">
       <div v-if="selectedInput" class="download-video-config-item">
         <div class="download-video-config-title">输入源:</div>
-        <VDropdown v-model="selectedInput" :items="inputs" />
+        <VDropdown v-model:value="selectedInput" :items="inputs" />
       </div>
       <div v-if="inputs.length === 0" class="download-video-config-item error">
         没有匹配的输入源, 请确保安装了适合此页面的插件.
@@ -22,7 +22,7 @@
       />
       <div v-if="selectedApi" class="download-video-config-item">
         <div class="download-video-config-title">格式:</div>
-        <VDropdown v-model="selectedApi" :items="apis" />
+        <VDropdown v-model:value="selectedApi" :items="apis" />
       </div>
       <div
         v-if="selectedApi && selectedApi.description"
@@ -32,9 +32,9 @@
       <div v-if="selectedQuality" class="download-video-config-item">
         <div class="download-video-config-title">清晰度:</div>
         <VDropdown
-          v-model="selectedQuality"
+          v-model:value="selectedQuality"
           :items="filteredQualities"
-          @change="saveSelectedQuality()"
+          @update:value="saveSelectedQuality()"
         />
       </div>
       <template v-if="!testData.multiple && selectedQuality">
@@ -47,7 +47,7 @@
       </template>
       <div class="download-video-config-item">
         <div class="download-video-config-title">使用备用下载地址:</div>
-        <SwitchBox v-model="useBackupUrls" />
+        <SwitchBox v-model:checked="useBackupUrls" />
       </div>
       <component
         :is="a.component"
@@ -58,7 +58,7 @@
       />
       <div v-if="selectedOutput" class="download-video-config-item">
         <div class="download-video-config-title">输出方式:</div>
-        <VDropdown v-model="selectedOutput" :items="outputs" />
+        <VDropdown v-model:value="selectedOutput" :items="outputs" />
       </div>
       <div
         v-if="selectedOutput && selectedOutput.description"
@@ -76,7 +76,7 @@
         class="run-download"
         type="primary"
         :disabled="!canStartDownload"
-        @click="startDownload($refs.outputOptions, selectedOutput)"
+        @click="startDownload(outputOptions, selectedOutput)"
       >
         开始
       </VButton>
@@ -84,31 +84,35 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { TestPattern } from '@/core/common-types'
+import type { Ref, ComponentPublicInstance } from 'vue'
+import { ref, defineComponent, reactive } from 'vue'
+import type { VideoQuality } from '@/components/video/video-quality'
+import { allQualities } from '@/components/video/video-quality'
+import type { TestPattern } from '@/core/common-types'
 import { getComponentSettings } from '@/core/settings'
-import { matchUrlPattern } from '@/core/utils'
-import { logError } from '@/core/utils/log'
-import { formatFileSize } from '@/core/utils/formatters'
-import { VPopup, VButton, VDropdown, VIcon, SwitchBox } from '@/ui'
-import { registerAndGetData } from '@/plugins/data'
-import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { Toast } from '@/core/toast'
+import { matchUrlPattern } from '@/core/utils'
+import { formatFileSize } from '@/core/utils/formatters'
+import { logError } from '@/core/utils/log'
 import { getFriendlyTitle } from '@/core/utils/title'
+import { registerAndGetData } from '@/plugins/data'
+import { SwitchBox, VButton, VDropdown, VIcon, VPopup } from '@/ui'
+
+import { videoAudioDash, videoDashAv1, videoDashAvc, videoDashHevc } from './apis/dash'
+import { videoFlv } from './apis/flv'
 import { bangumiBatchInput } from './inputs/bangumi/batch'
 import { videoBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
-import { videoDashAvc, videoDashHevc, videoDashAv1, videoAudioDash } from './apis/dash'
-import { videoFlv } from './apis/flv'
-import { toastOutput } from './outputs/toast'
 import { streamSaverOutput } from './outputs/stream-saver'
-import {
-  DownloadVideoAction,
+import { toastOutput } from './outputs/toast'
+import type {
   DownloadVideoApi,
   DownloadVideoAssets,
   DownloadVideoInput,
   DownloadVideoInputItem,
   DownloadVideoOutput,
 } from './types'
+import { DownloadVideoAction } from './types'
 
 const [inputs] = registerAndGetData('downloadVideo.inputs', [
   videoSingleInput,
@@ -122,11 +126,11 @@ const [apis] = registerAndGetData('downloadVideo.apis', [
   videoDashAv1,
   videoAudioDash,
 ] as DownloadVideoApi[])
-const [assets] = registerAndGetData('downloadVideo.assets', [] as DownloadVideoAssets[])
-const [outputs] = registerAndGetData('downloadVideo.outputs', [
-  toastOutput,
-  streamSaverOutput,
-] as DownloadVideoOutput[])
+const [assets] = registerAndGetData('downloadVideo.assets', reactive([]) as DownloadVideoAssets[])
+const [outputs] = registerAndGetData(
+  'downloadVideo.outputs',
+  reactive([toastOutput, streamSaverOutput]) as DownloadVideoOutput[],
+)
 const { basicConfig } = getComponentSettings('downloadVideo').options as {
   basicConfig: {
     api: string
@@ -146,7 +150,7 @@ const getFallbackTestVideoInfo = () =>
     title: getFriendlyTitle(true),
   } as DownloadVideoInputItem)
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VPopup,
     VButton,
@@ -159,6 +163,11 @@ export default Vue.extend({
       required: true,
     },
   },
+  setup: () => ({
+    inputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
+    assetsOptions: ref(null) as Ref<ComponentPublicInstance[] | null>,
+    outputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
+  }),
   data() {
     const lastOutput = basicConfig.output
     const lastUseBackupUrls = basicConfig.useBackupUrls
@@ -173,11 +182,11 @@ export default Vue.extend({
         multiple: false,
       },
       assets,
-      qualities: [],
+      qualities: [] as VideoQuality[],
       selectedQuality: undefined,
-      inputs: [],
+      inputs: [] as DownloadVideoInput[],
       selectedInput: undefined,
-      apis: [],
+      apis: [] as DownloadVideoApi[],
       selectedApi: undefined,
       outputs,
       selectedOutput: outputs.find(it => it.name === lastOutput) || outputs[0],
@@ -185,22 +194,25 @@ export default Vue.extend({
     }
   },
   computed: {
-    assetsWithOptions() {
+    assetsWithOptions(): DownloadVideoAssets[] {
       return (this.assets as DownloadVideoAssets[]).filter(a => a.component)
     },
-    filteredQualities() {
+    filteredQualities(): VideoQuality[] {
       if (this.qualities.length === 0) {
         return allQualities
       }
       return this.qualities
     },
-    canStartDownload() {
+    canStartDownload(): boolean {
       if (this.busy || !this.open) {
         return false
       }
-      const isAnySelectionEmpty = Object.entries(this)
-        .filter(([key]) => key.startsWith('selected'))
-        .some(([, value]) => !value)
+      const isAnySelectionEmpty = [
+        'selectedQuality',
+        'selectedInput',
+        'selectedApi',
+        'selectedOutput',
+      ].some(prop => !this[prop])
       if (isAnySelectionEmpty) {
         return false
       }
@@ -265,7 +277,7 @@ export default Vue.extend({
     },
     async getVideoItems() {
       const input = this.selectedInput as DownloadVideoInput
-      const videoItems = await input.getInputs(this.$refs.inputOptions)
+      const videoItems = await input.getInputs(this.inputOptions)
       return videoItems
     },
     async updateTestVideoInfo() {
@@ -302,12 +314,12 @@ export default Vue.extend({
         this.testData.videoInfo = undefined
       }
     },
-    async startDownload(instance: Vue, output: DownloadVideoOutput) {
+    async startDownload(instance: ComponentPublicInstance, output: DownloadVideoOutput) {
       try {
         this.busy = true
         const input = this.selectedInput as DownloadVideoInput
         const api = this.selectedApi as DownloadVideoApi
-        const videoInputs = await input.getInputs(this.$refs.inputOptions)
+        const videoInputs = await input.getInputs(this.inputOptions)
         if (videoInputs.length === 0) {
           Toast.info('未接收到视频, 如果输入源支持批量, 请至少选择一个视频.', '下载视频', 3000)
           return
@@ -336,7 +348,7 @@ export default Vue.extend({
             assets.map(a =>
               a.getAssets(
                 videoInfos,
-                this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
+                this.assetsOptions.find((c: any) => c.$attrs.name === a.name),
               ),
             ),
           )

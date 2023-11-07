@@ -1,5 +1,6 @@
-import { PluginMetadata } from '@/plugins/plugin'
-import { DownloadVideoOutput } from '../../../../components/video/download/types'
+import type { PluginMetadata } from '@/plugins/plugin'
+
+import type { DownloadVideoOutput } from '../../../../components/video/download/types'
 import { aria2Input } from './aria2-input'
 import { aria2Rpc } from './aria2-rpc'
 

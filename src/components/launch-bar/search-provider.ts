@@ -1,7 +1,10 @@
-import { formData, getUID } from '@/core/utils'
+import { defineAsyncComponent, h } from 'vue'
+
 import { getJson } from '@/core/ajax'
-import { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
+import { formData, getUID } from '@/core/utils'
+
 import { addHistoryItem } from './history-provider'
+import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 
 export const search = (keyword: string) => {
   if (!keyword) {
@@ -23,17 +26,12 @@ export const searchProvider: LaunchBarActionProvider = {
       {
         name: input,
         icon: 'search',
-        content: async () =>
-          Vue.extend({
-            render: h => {
-              const content = h('div', {
-                domProps: {
-                  innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
-                },
-              })
-              return content
-            },
-          }),
+        content: defineAsyncComponent(
+          async () => () =>
+            h('div', {
+              innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
+            }),
+        ),
         action: () => search(input),
       },
     ]
@@ -48,17 +46,12 @@ export const searchProvider: LaunchBarActionProvider = {
       ...suggests.map(result => ({
         name: result.value,
         icon: 'search',
-        content: async () =>
-          Vue.extend({
-            render: h => {
-              const content = h('div', {
-                domProps: {
-                  innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
-                },
-              })
-              return content
-            },
-          }),
+        content: defineAsyncComponent(
+          async () => () =>
+            h('div', {
+              innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
+            }),
+        ),
         action: () => search(result.value),
       })),
     )

@@ -28,7 +28,7 @@
           placeholder="禁用"
           change-on-blur
           :text="customKeyBindings[row.name]"
-          @change="updateCustomBinding"
+          @update:text="updateCustomBinding"
         />
         <VButton type="transparent" title="删除自定义键位" @click="removeCustomBinding()">
           <VIcon icon="mdi-trash-can-outline" :size="16" />
@@ -43,12 +43,17 @@
   </div>
 </template>
 <script lang="ts">
-import { TextBox, VButton, VIcon } from '@/ui'
+import { defineComponent, ref } from 'vue'
+import type { Ref, PropType } from 'vue'
 import { getComponentSettings } from '@/core/settings'
-import { presetBase, presets } from '../presets'
+import { TextBox, VButton, VIcon } from '@/ui'
 
-const keymapOptions = getComponentSettings('keymap').options
-export default Vue.extend({
+import { presetBase, presets } from '../presets'
+import type { KeyBindingAction } from '../bindings'
+import type { Options } from '../index'
+
+const keymapOptions = getComponentSettings<Options>('keymap').options
+export default defineComponent({
   components: {
     TextBox,
     VButton,
@@ -56,7 +61,7 @@ export default Vue.extend({
   },
   props: {
     row: {
-      type: Object,
+      type: Object as PropType<KeyBindingAction & { name: string }>,
       required: true,
     },
     selectedPreset: {
@@ -64,6 +69,9 @@ export default Vue.extend({
       required: true,
     },
   },
+  setup: () => ({
+    customBindingTextBox: ref(null) as Ref<InstanceType<typeof TextBox> | null>,
+  }),
   data() {
     return {
       presets,
@@ -99,7 +107,7 @@ export default Vue.extend({
       this.customKeyBindings[name] = ''
       this.checkEditable()
       await this.$nextTick()
-      this.$refs.customBindingTextBox.focus()
+      this.customBindingTextBox.focus()
     },
     removeCustomBinding() {
       const { name } = this.row

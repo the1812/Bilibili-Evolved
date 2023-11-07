@@ -1,6 +1,9 @@
-import { CustomNavbarOptions } from 'registry/lib/components/style/custom-navbar'
-import { PluginMetadata } from '@/plugins/plugin'
+import type { CustomNavbarOptions } from 'registry/lib/components/style/custom-navbar'
+
+import { defineAsyncComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
+import type { PluginMetadata } from '@/plugins/plugin'
+
 import type { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
 
 export const plugin: PluginMetadata = {
@@ -21,7 +24,7 @@ export const plugin: PluginMetadata = {
       items.push({
         name: 'channel',
         displayName: '频道',
-        content: () => import('./NavbarChannel.vue'),
+        content: defineAsyncComponent(() => import('./NavbarChannel.vue')),
         clickAction: () => {
           const channelId = dq('.navbar-channel').getAttribute('data-channel-id')
           window.open(

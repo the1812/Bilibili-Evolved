@@ -25,6 +25,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VIcon } from '@/ui'
 
 const getIconName = (hidden: boolean): string =>
@@ -32,12 +33,8 @@ const getIconName = (hidden: boolean): string =>
 
 const btnAnimationClass = 'video-default-location-extend-box-bar-btn-animation'
 
-export default Vue.extend({
+export default defineComponent({
   components: { VIcon },
-  model: {
-    prop: 'hidden',
-    event: 'change',
-  },
   props: {
     title: {
       type: String,
@@ -52,6 +49,7 @@ export default Vue.extend({
       default: true,
     },
   },
+  emits: ['update:hidden'],
   data() {
     return {
       realHidden: this.hidden,
@@ -71,7 +69,7 @@ export default Vue.extend({
     setRealHidden(value: boolean) {
       if (value !== this.realHidden) {
         this.realHidden = !this.realHidden
-        this.$emit('change', this.realHidden)
+        this.$emit('update:hidden', this.realHidden)
 
         this.btnClass[btnAnimationClass] = false
         this.$nextTick(() => {
@@ -146,13 +144,13 @@ $border-radius: 4px;
   transition: margin-top 0.2s ease-out;
 }
 
-.video-default-location-extend-box-content-transition-enter,
+.video-default-location-extend-box-content-transition-enter-from,
 .video-default-location-extend-box-content-transition-leave-to {
   margin-top: -100%;
 }
 
 // .video-default-location-extend-box-content-transition-enter-to,
-// .video-default-location-extend-box-content-transition-leave {
+// .video-default-location-extend-box-content-transition-leave-from {
 //   margin-top: 0;
 // }
 </style>

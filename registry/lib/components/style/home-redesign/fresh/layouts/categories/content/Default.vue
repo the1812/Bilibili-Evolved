@@ -28,14 +28,18 @@
   </div>
 </template>
 <script lang="ts">
-import { VButton, VIcon } from '@/ui'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 import { applyContentFilter } from '@/components/feeds/api'
-import { RankListCard } from './rank-list'
-import CompactRankList from './CompactRankList.vue'
+
+import SubHeader from '../../../SubHeader.vue'
+import type { RankListCard } from './rank-list'
+import type { TabType } from '../categories'
 import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
-import SubHeader from '../../../SubHeader.vue'
-import { compactRankListMixin } from '../../../../mixin'
+import { VButton, VIcon } from '@/ui'
+import CompactRankList from './CompactRankList.vue'
+import { useCompactRankList } from '../../../../mixin'
 
 /*
 TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, 所以 RankList 也要换 API
@@ -44,7 +48,7 @@ TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, �
 - seasonType: 1 番剧 2 电影 3 纪录片 4 国创 5 电视剧
 */
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     CompactRankList,
     RankList,
@@ -53,13 +57,13 @@ export default Vue.extend({
     VButton,
     VIcon,
   },
-  mixins: [compactRankListMixin()],
   props: {
     region: {
-      type: Object,
+      type: Object as PropType<TabType>,
       required: true,
     },
   },
+  setup: useCompactRankList,
   data() {
     const regionCode = this.region.id
     console.log(this.region.category)
@@ -71,7 +75,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    parseJson(json: any) {
+    parseJson(json: any): RankListCard[] {
       const items = (lodash.get(json, 'data', []) || []) as any[]
       const cards = items
         .map(

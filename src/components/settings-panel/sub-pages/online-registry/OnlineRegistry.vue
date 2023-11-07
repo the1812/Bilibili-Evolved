@@ -1,6 +1,6 @@
 <template>
   <VPopup
-    v-model="popupOpen"
+    v-model:open="popupOpen"
     class="online-registry be-settings-extra-options"
     fixed
     :auto-close="false"
@@ -26,11 +26,11 @@
     <div class="online-registry-header">
       <div class="online-registry-header-search">
         <VIcon icon="search" :size="18" />
-        <TextBox v-model="searchKeyword" :disabled="loading" placeholder="搜索功能" />
+        <TextBox v-model:text="searchKeyword" :disabled="loading" placeholder="搜索功能" />
       </div>
       <div class="online-registry-header-branch">
         分支:
-        <VDropdown v-model="selectedBranch" :disabled="loading" :items="registryBranches">
+        <VDropdown v-model:value="selectedBranch" :disabled="loading" :items="registryBranches">
           <template #item="{ item }">
             {{ item }}
           </template>
@@ -43,7 +43,7 @@
           :key="option.value"
           group="itemFilter"
           :checked="itemFilter === option.value"
-          @change="$event && (itemFilter = option.value)"
+          @update:checked="$event && (itemFilter = option.value)"
         >
           {{ option.label }}
         </RadioButton>
@@ -71,21 +71,25 @@
   </VPopup>
 </template>
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import Fuse from 'fuse.js'
-import { DocSourceItem } from 'registry/lib/docs'
+import type { DocSourceItem } from 'registry/lib/docs'
+
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty, RadioButton } from '@/ui'
+import { RadioButton, TextBox, VDropdown, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
+
+import { ItemFilter } from './item-filter'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
-import { ItemFilter } from './item-filter'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
 const general = getGeneralSettings() as ExtendedSettings
-function updateList(keyword: string) {
+function updateList(this: InstanceType<typeof ThisComponent>, keyword: string) {
   if (!keyword) {
     this.filteredList = this.list
     return
@@ -93,7 +97,7 @@ function updateList(keyword: string) {
   const fuse = this.fuse as Fuse<DocSourceItem>
   const fuseResult = fuse.search(keyword)
   this.filteredList = fuseResult.map(it => it.item)
-  this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
+  this.$nextTick().then(() => this.content.scrollTo(0, 0))
 }
 const itemFilterOptions = [
   {
@@ -110,7 +114,7 @@ const itemFilterOptions = [
   },
 ]
 
-export default Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     VIcon,
     VDropdown,
@@ -127,6 +131,10 @@ export default Vue.extend({
       type: Boolean,
     },
   },
+  setup: () => ({
+    content: ref(null) as Ref<HTMLDivElement | null>,
+    items: ref(null) as Ref<Array<InstanceType<typeof RegistryItem>[] | null>>,
+  }),
   data() {
     const branches = [
       general.registryBranch,
@@ -137,10 +145,10 @@ export default Vue.extend({
       searchKeyword: '',
       popupOpen: false,
       loading: false,
-      list: [],
+      list: [] as any[],
       itemFilter: ItemFilter.All,
       itemFilterOptions,
-      filteredList: [],
+      filteredList: [] as any[],
       // packList: [],
       fuse: null,
       registryBranches,
@@ -148,7 +156,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    searchKeyword: lodash.debounce(updateList, 200),
+    searchKeyword: lodash.debounce(updateList, 200) as unknown as (keyword: string) => void,
     selectedBranch(newBranch: string) {
       general.registryBranch = newBranch
       this.fetchFeatures()
@@ -193,10 +201,11 @@ export default Vue.extend({
       }
     },
     checkInstalled() {
-      this.$refs.items?.forEach((item: any) => item.checkInstalled())
+      this.items?.forEach((item: any) => item.checkInstalled())
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

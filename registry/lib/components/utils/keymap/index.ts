@@ -1,13 +1,13 @@
-import { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
+import { defineAsyncComponent } from 'vue'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import type { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { styledComponentEntry } from '@/components/styled-component'
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
 import { addComponentListener } from '@/core/settings'
+
 import { actions } from './actions'
-import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
+import type { KeyBinding, KeyBindingConfig } from './bindings'
+import { loadKeyBindings } from './bindings'
 import { presetBase, presets } from './presets'
 
 const options = defineOptionsMetadata({
@@ -76,7 +76,7 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.',
   },
-  extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
+  extraOptions: defineAsyncComponent(() => import('./settings/ExtraOptions.vue')),
   options,
   plugin: {
     displayName: '快捷键扩展 - 搜索支持',

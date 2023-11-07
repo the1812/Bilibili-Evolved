@@ -15,7 +15,7 @@
         type="checkbox"
         :disabled="disabled"
         :checked="checked"
-        @change.stop="$emit('change', $event.target.checked)"
+        @change.stop="onChange"
       />
       <div class="bar">
         <div class="thumb"></div>
@@ -25,12 +25,11 @@
 </template>
 
 <script lang="ts">
-export default Vue.extend({
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
   name: 'SwitchBox',
-  model: {
-    prop: 'checked',
-    event: 'change',
-  },
   props: {
     checked: {
       type: Boolean,
@@ -41,13 +40,20 @@ export default Vue.extend({
       default: false,
     },
   },
+  emits: ['update:checked'],
+  setup: () => ({
+    input: ref(null) as Ref<HTMLInputElement | null>,
+  }),
   methods: {
+    onChange() {
+      this.$emit('update:checked', this.input.checked)
+    },
     toggle() {
       if (this.disabled) {
         return
       }
-      this.$refs.input.checked = !this.$refs.input.checked
-      this.$emit('change', this.$refs.input.checked)
+      this.input.checked = !this.input.checked
+      this.$emit('update:checked', this.input.checked)
     },
   },
 })

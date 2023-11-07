@@ -8,21 +8,32 @@
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import { defineComponent, type PropType } from 'vue'
 
-export default Vue.extend({
+import type { UserComponent } from './api'
+
+export default defineComponent({
+  props: {
+    userComponent: {
+      type: Object as PropType<UserComponent>,
+      required: true,
+    },
+  },
+  emits: {
+    restore: null as () => void,
+  },
   data() {
     return {
       countdown: 30,
-      userComponent: undefined,
+      interval: undefined as number | undefined,
     }
   },
   computed: {
     displayName() {
-      return this.userComponent?.metadata?.displayName
+      return this.userComponent.metadata?.displayName
     },
     name() {
-      return this.userComponent?.metadata?.name
+      return this.userComponent.metadata?.name
     },
   },
   watch: {
@@ -41,7 +52,7 @@ export default Vue.extend({
       }
     }, 1e3)
   },
-  destroyed() {
+  unmounted() {
     clearInterval(this.interval)
   },
   methods: {

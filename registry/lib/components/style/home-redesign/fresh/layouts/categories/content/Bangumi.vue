@@ -24,14 +24,18 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { TabType } from '../categories'
 import { VButton, VIcon } from '@/ui'
 import { applyContentFilter } from '@/components/feeds/api'
+
 import SubHeader from '../../../SubHeader.vue'
-import RankList from './RankList.vue'
 import CompactRankList from './CompactRankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
-import { RankListCard } from './rank-list'
-import { compactRankListMixin } from '../../../../mixin'
+import type { RankListCard } from './rank-list'
+import RankList from './RankList.vue'
+import { useCompactRankList } from '../../../../mixin'
 
 const bangumiDataMap = {
   anime: {
@@ -44,7 +48,7 @@ const bangumiDataMap = {
     rankingName: 'guochan',
   },
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     SubHeader,
     BangumiTimeline,
@@ -53,13 +57,13 @@ export default Vue.extend({
     VButton,
     VIcon,
   },
-  mixins: [compactRankListMixin()],
   props: {
     region: {
-      type: Object,
+      type: Object as PropType<TabType>,
       required: true,
     },
   },
+  setup: useCompactRankList,
   data() {
     const { route } = this.region.category
     const { rankingName, seasonType } = bangumiDataMap[route]

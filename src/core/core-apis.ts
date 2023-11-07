@@ -1,11 +1,12 @@
+import { componentApis } from '@/components/api'
 import * as ajax from '@/core/ajax'
 import * as cdnTypes from '@/core/cdn-types'
 import * as download from '@/core/download'
 import * as dialog from '@/core/dialog'
 import * as externalInput from '@/core/external-input'
 import * as filePicker from '@/core/file-picker'
-import * as installFeature from '@/core/install-feature'
 import * as horizontalScroll from '@/core/horizontal-scroll'
+import * as installFeature from '@/core/install-feature'
 import * as lifeCycle from '@/core/life-cycle'
 import * as loadingMode from '@/core/loading-mode'
 import * as localStorage from '@/core/local-storage'
@@ -13,26 +14,25 @@ import * as meta from '@/core/meta'
 import * as observer from '@/core/observer'
 import * as reorder from '@/core/reorder'
 import * as runtimeLibrary from '@/core/runtime-library'
+import * as settings from '@/core/settings'
 import * as spinQuery from '@/core/spin-query'
 import * as style from '@/core/style'
 import * as textColor from '@/core/text-color'
-import * as settings from '@/core/settings'
+import * as themeColor from '@/core/theme-color'
+import * as toast from '@/core/toast'
 import * as userInfo from '@/core/user-info'
-import * as version from '@/core/version'
 import * as commonUtils from '@/core/utils'
 import * as constants from '@/core/utils/constants'
 import * as formatters from '@/core/utils/formatters'
-import * as title from '@/core/utils/title'
 import * as i18n from '@/core/utils/i18n'
 import * as lazyPanel from '@/core/utils/lazy-panel'
 import * as log from '@/core/utils/log'
 import * as sort from '@/core/utils/sort'
+import * as title from '@/core/utils/title'
 import * as urls from '@/core/utils/urls'
-import * as toast from '@/core/toast'
-import * as themeColor from '@/core/theme-color'
-import * as ui from '@/ui'
-import { componentApis } from '@/components/api'
+import * as version from '@/core/version'
 import { pluginApis } from '@/plugins/api'
+import * as ui from '@/ui'
 
 /**
  * 核心API
@@ -137,7 +137,6 @@ export const externalApis = {
     GM_info,
   },
   lodash,
-  Vue,
   sandboxWindow: window,
   theWorld: (time: number) => {
     setTimeout(() => {

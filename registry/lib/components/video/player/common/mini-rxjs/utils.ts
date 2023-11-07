@@ -1,4 +1,4 @@
-import { Subject as SubjectReturnType } from './subject'
+import type { Subject as SubjectReturnType } from './subject'
 
 export const firstValueFrom = <T>(subject: SubjectReturnType<T>) =>
   new Promise<T>((resolve, reject) => {

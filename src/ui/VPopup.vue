@@ -1,20 +1,15 @@
 <template>
-  <div
-    class="be-popup"
-    :class="{ open, fixed, close: !open, 'closed-style': closedStyle }"
-    v-on="$listeners"
-  >
+  <div class="be-popup" :class="{ open, fixed, close: !open, 'closed-style': closedStyle }">
     <slot v-if="loaded"></slot>
   </div>
 </template>
 
 <script lang="ts">
-export default Vue.extend({
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+
+export default defineComponent({
   name: 'VPopup',
-  model: {
-    prop: 'open',
-    event: 'popup-change',
-  },
   props: {
     open: {
       type: Boolean,
@@ -56,18 +51,25 @@ export default Vue.extend({
       default: false,
     },
     autoClosePredicate: {
-      type: Function,
+      type: Function as PropType<
+        (options: {
+          target: HTMLElement
+          element: HTMLElement
+          trigger: HTMLElement | null
+        }) => boolean
+      >,
       required: false,
       default: null,
     },
   },
+  emits: ['update:open'],
   data() {
     return {
       loaded: !this.lazy,
     }
   },
   computed: {
-    trigger() {
+    trigger(): HTMLElement | null {
       if (this.triggerElement === null) {
         return null
       }
@@ -93,7 +95,7 @@ export default Vue.extend({
     if (this.escClose) {
       element.addEventListener('keydown', e => {
         if (e.key === 'Escape') {
-          this.$emit('popup-change', false)
+          this.$emit('update:open', false)
         }
       })
     }
@@ -125,7 +127,7 @@ export default Vue.extend({
           })
       }
       if (isOutside) {
-        this.$emit('popup-change', false)
+        this.$emit('update:open', false)
       }
     },
     setAutoClose() {
@@ -141,7 +143,7 @@ export default Vue.extend({
       }
     },
     toggle() {
-      this.$emit('popup-change', !this.open)
+      this.$emit('update:open', !this.open)
     },
   },
 })

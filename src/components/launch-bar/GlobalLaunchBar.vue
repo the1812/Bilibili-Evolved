@@ -1,6 +1,6 @@
 <template>
   <VPopup
-    v-model="show"
+    v-model:open="show"
     :lazy="false"
     fixed
     class="global-launch-bar-container"
@@ -10,14 +10,20 @@
   </VPopup>
 </template>
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import VPopup from '@/ui/VPopup.vue'
+
 import LaunchBar from './LaunchBar.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     LaunchBar,
     VPopup,
   },
+  setup: () => ({
+    launchBar: ref(null) as Ref<InstanceType<typeof LaunchBar> | null>,
+  }),
   data() {
     return {
       show: true,
@@ -36,13 +42,13 @@ export default Vue.extend({
   },
   methods: {
     focus() {
-      const input = this.$refs.launchBar?.$refs.input as HTMLInputElement
+      const input = this.launchBar?.input
       input?.focus()
       input?.select()
     },
     close() {
       this.show = false
-      const input = this.$refs.launchBar?.$refs.input as HTMLInputElement
+      const input = this.launchBar?.input
       input?.blur()
     },
   },

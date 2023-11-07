@@ -82,18 +82,16 @@
  * coord：slider bar 上某一点到左端点的像素距离
  */
 
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
 import MiniToast from '@/core/toast/MiniToast.vue'
 
 // 将实数化为整数的函数，如 Math.round，Math.ceil
 type IntoIntCallback = (value: number) => number
 
-export default Vue.extend({
+export default defineComponent({
   name: 'VSlider',
   components: { MiniToast },
-  model: {
-    prop: 'value',
-    event: 'change',
-  },
   props: {
     focusable: {
       type: Boolean,
@@ -120,10 +118,16 @@ export default Vue.extend({
       default: 1,
     },
     displayFun: {
-      type: Function,
+      type: Function as PropType<(v: number) => string>,
       default: (v: number) => String(v),
     },
   },
+  emits: ['update:value', 'start', 'end'],
+  setup: () => ({
+    slider: ref(null) as Ref<HTMLDivElement | null>,
+    barContainer: ref(null) as Ref<HTMLDivElement | null>,
+    thumbContainer: ref(null) as Ref<InstanceType<typeof MiniToast> | null>,
+  }),
   data() {
     return {
       // 用户输入值通过各种处理后得到的最终值，
@@ -133,15 +137,15 @@ export default Vue.extend({
   },
   computed: {
     // 不大于 max 的对齐 step 与 center 的值
-    realMax() {
+    realMax(): number {
       return this.valueToRounded(this.max, Math.floor)
     },
     // 不小于 min 的对齐 step 与 center 的值
-    realMin() {
+    realMin(): number {
       return this.valueToRounded(this.min, Math.ceil)
     },
     // 最大与最小可取值的差。若没有可取值则输出错误日志并返回 0
-    valueLength() {
+    valueLength(): number {
       const len = this.realMax - this.realMin
       if (len < 0) {
         console.error('[VSlider] No desirable value between min and max')
@@ -149,7 +153,7 @@ export default Vue.extend({
       }
       return len
     },
-    thumbLeft() {
+    thumbLeft(): string | number {
       if (this.valueLength === 0) {
         return 0
       }
@@ -157,7 +161,7 @@ export default Vue.extend({
       return `${percent}%`
     },
     // center 处的 coord
-    centerCoord() {
+    centerCoord(): number {
       return this.valueToLength(this.center - this.realMin)
     },
   },
@@ -194,7 +198,7 @@ export default Vue.extend({
     },
     // 计算 slider bar 上 length 像素所对应的 value 偏移。（可计算负偏移）
     lengthToValue(length: number): number {
-      const bar = this.$refs.barContainer as HTMLElement
+      const bar = this.barContainer
       const totalLength = bar.getBoundingClientRect().width
       return this.valueLength * (length / totalLength)
     },
@@ -208,7 +212,7 @@ export default Vue.extend({
     },
     // 计算 slider bar 上 value 偏移所对应的 length 像素。（可计算负偏移）
     valueToLength(value: number): number {
-      const bar = this.$refs.barContainer as HTMLElement
+      const bar = this.barContainer
       const totalLength = bar.getBoundingClientRect().width
       if (this.valueLength === 0) {
         return 0
@@ -239,7 +243,7 @@ export default Vue.extend({
     setByLimited(limited: number) {
       if (limited !== this.realValue) {
         this.realValue = limited
-        this.$emit('change', this.realValue)
+        this.$emit('update:value', this.realValue)
       }
     },
     // 用 rounded 设置组件的值，设置前完成剩余步骤
@@ -281,7 +285,7 @@ export default Vue.extend({
       }
 
       // 注册拖拽相关事件
-      const thumb = this.$refs.thumbContainer.$el
+      const thumb = this.thumbContainer.$el
       const types = [
         { start: 'mousedown', move: 'mousemove', end: 'mouseup' },
         { start: 'touchstart', move: 'touchmove', end: 'touchend' },
@@ -291,7 +295,7 @@ export default Vue.extend({
         let startRealValue = 0
         startListen(thumb, type.start, pageX => {
           this.$emit('start', this.realValue)
-          this.$refs.slider.focus()
+          this.slider.focus()
           startPageX = pageX
           startRealValue = this.realValue
           const stopListenMove = startListen(window, type.move, pageX0 => {

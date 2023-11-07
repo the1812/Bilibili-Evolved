@@ -4,9 +4,9 @@ module.exports = {
     es2020: true,
   },
   extends: [
-    'plugin:vue/recommended',
-    'plugin:@typescript-eslint/recommended',
     'airbnb-base',
+    'plugin:vue/vue3-recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
   ],
   globals: {
@@ -30,10 +30,11 @@ module.exports = {
     'import/no-default-export': 'error',
     'import/no-named-default': 'off',
 
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/consistent-type-imports': 'error',
     '@typescript-eslint/member-delimiter-style': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-shadow': ['error', { builtinGlobals: false }],
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
@@ -52,6 +53,7 @@ module.exports = {
     'vue/require-prop-types': 'off',
     'vue/one-component-per-file': 'off',
     'vue/singleline-html-element-content-newline': 'off',
+    'vue/multi-word-component-names': 'off',
 
     // 使用 @typescript-eslint/no-unused-vars, 否则 interface 都是 unused
     'no-unused-vars': 'off',
@@ -77,6 +79,7 @@ module.exports = {
 
     'arrow-body-style': 'off',
     'prefer-arrow-callback': 'off',
+    'prefer-regex-literals': 'off',
     'object-curly-newline': 'off',
     'linebreak-style': 'off',
     camelcase: 'off',

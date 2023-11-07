@@ -1,13 +1,13 @@
 <template>
   <div class="component-tags-preview">
     <VPopup
-      v-model="selectedSubPageOpen"
+      v-model:open="selectedSubPageOpen"
       :lazy="false"
       :trigger-element="selectedSubPageTrigger"
       class="settings-panel-sub-page"
     >
-      <keep-alive>
-        <component :is="selectedSubPage" v-if="selectedSubPage" />
+      <keep-alive v-if="selectedSubPage">
+        <component :is="selectedSubPage" />
       </keep-alive>
     </VPopup>
     <div class="icon-list">
@@ -56,22 +56,32 @@
 </template>
 
 <script lang="ts">
-import { Executable, VueModule } from '@/core/common-types'
+import type { Component, Raw } from 'vue'
+import { defineComponent, markRaw } from 'vue'
 import { ascendingSort } from '@/core/utils/sort'
 import VIcon from '@/ui/icon/VIcon.vue'
 import VPopup from '@/ui/VPopup.vue'
-import { components, ComponentTag } from '../component'
-import { subPages } from './sub-pages'
-import { SettingsTag, tagFilters } from './tag-filter'
 
-export default Vue.extend({
+import type { ComponentTag } from '../component'
+import { components } from '../component'
+import { subPages } from './sub-pages'
+import type { SettingsTag } from './tag-filter'
+import { tagFilters } from './tag-filter'
+
+const subPagesWithRawComponent = subPages.map(page => ({
+  ...page,
+  component: markRaw(page.component),
+}))
+
+export default defineComponent({
   components: { VIcon, VPopup },
+  emits: ['change'],
+  setup: () => ({ subPages: subPagesWithRawComponent }),
   data() {
     return {
-      tags: [],
+      tags: [] as SettingsTag[],
       selectedTagName: '',
-      subPages,
-      selectedSubPage: null,
+      selectedSubPage: null as Raw<Component> | null,
       selectedSubPageOpen: false,
       selectedSubPageTrigger: null,
     }
@@ -99,10 +109,10 @@ export default Vue.extend({
     },
     selectTag(tag: ComponentTag) {
       this.selectedTagName = tag.name
-      const { filter } = (this.tags as SettingsTag[]).find(t => t.name === tag.name)
+      const { filter } = this.tags.find(t => t.name === tag.name)
       this.$emit('change', filter)
     },
-    async openSubPage(e: MouseEvent, component: Executable<VueModule>) {
+    async openSubPage(e: MouseEvent, component: Raw<Component>) {
       if (this.selectedSubPage === component) {
         this.selectedSubPageOpen = !this.selectedSubPageOpen
         return

@@ -5,8 +5,7 @@
     role="checkbox"
     :aria-checked="checked"
     type="transparent"
-    v-bind="$attrs"
-    @click="$emit('change', !checked)"
+    @click="$emit('update:checked', !checked)"
   >
     <div class="text-container">
       <slot>CheckBox</slot>
@@ -19,15 +18,13 @@
 </template>
 
 <script lang="ts">
-export default Vue.extend({
+import { defineAsyncComponent, defineComponent } from 'vue'
+
+export default defineComponent({
   name: 'CheckBox',
   components: {
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VIcon: () => import('./icon/VIcon.vue').then(m => m.default),
-  },
-  model: {
-    prop: 'checked',
-    event: 'change',
+    VButton: defineAsyncComponent(() => import('./VButton.vue')),
+    VIcon: defineAsyncComponent(() => import('./icon/VIcon.vue')),
   },
   props: {
     checked: {
@@ -47,6 +44,7 @@ export default Vue.extend({
       default: 'mdi-checkbox-blank-circle-outline',
     },
   },
+  emits: ['update:checked'],
 })
 </script>
 

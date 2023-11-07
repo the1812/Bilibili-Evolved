@@ -31,9 +31,10 @@
 </template>
 
 <script lang="ts">
-import { getComponentSettings, addComponentListener } from '@/core/settings'
+import { defineComponent } from 'vue'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 
-export default Vue.extend({
+export default defineComponent({
   data() {
     return {
       dark: getComponentSettings('darkMode').enabled,

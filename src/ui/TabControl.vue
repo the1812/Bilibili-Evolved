@@ -45,28 +45,21 @@
 </template>
 
 <script lang="ts">
-import { TabMappings, TabMapping } from './tab-mapping'
+import { defineAsyncComponent, defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { TabMapping, TabMappings } from './tab-mapping'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'TabControl',
   components: {
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VIcon: () => import('./icon/VIcon.vue').then(m => m.default),
-  },
-  model: {
-    prop: 'link',
-    event: 'change',
+    VButton: defineAsyncComponent(() => import('./VButton.vue')),
+    VIcon: defineAsyncComponent(() => import('./icon/VIcon.vue')),
   },
   props: {
     tabs: {
-      type: Array,
+      type: Array as PropType<TabMappings>,
       required: true,
-      validator(mappings: TabMappings) {
-        if (mappings.length === 0) {
-          return false
-        }
-        return true
-      },
+      validator: lodash.isArray,
     },
     defaultTab: {
       type: String,
@@ -79,10 +72,11 @@ export default Vue.extend({
       default: null,
     },
     moreLink: {
-      type: [String, Function],
+      type: [String, Function] as PropType<string | ((tab: TabMapping) => string) | null>,
       default: null,
     },
   },
+  emits: ['update:link'],
   data() {
     const tabs = this.tabs as TabMappings
     return {
@@ -96,14 +90,14 @@ export default Vue.extend({
     },
   },
   mounted() {
-    this.$emit('change', this.selectedTab.activeLink)
+    this.$emit('update:link', this.selectedTab.activeLink)
   },
   methods: {
     selectTab(tab: TabMapping) {
       if (this.selectedTabName !== tab.name) {
         this.selectedTabName = tab.name
         tab.count = 0
-        this.$emit('change', this.selectedTab.activeLink)
+        this.$emit('update:link', this.selectedTab.activeLink)
       } else if (tab.activeLink) {
         window.open(tab.activeLink, '_blank')
       }
@@ -151,7 +145,7 @@ export default Vue.extend({
       max-height: 100%;
       @include no-scrollbar();
       .content-transition {
-        &-enter,
+        &-enter-from,
         &-leave-to {
           opacity: 0;
           transform: translateY(-12px);

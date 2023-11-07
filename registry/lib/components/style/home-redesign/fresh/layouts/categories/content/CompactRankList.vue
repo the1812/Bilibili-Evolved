@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="el"
     class="fresh-home-compact-rank-list scroll-top scroll-bottom"
     :class="{ loading, loaded, 'not-empty': items.length > 0 }"
   >
@@ -40,9 +41,9 @@
           </UpInfo>
           <div class="compact-rank-list-card-stats">
             <VIcon icon="mdi-fire" :size="16" />
-            {{ video.points | formatCount }}
+            {{ formatCount(video.points) }}
             <VIcon icon="play" :size="16" />
-            {{ video.playCount | formatCount }}
+            {{ formatCount(video.playCount) }}
           </div>
         </div>
       </a>
@@ -50,14 +51,15 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent, ref, type PropType, type Ref, nextTick } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
 import { VIcon, VLoading, VEmpty, VButton, DpiImage } from '@/ui'
-import { cssVariableMixin, requestMixin } from '../../../../mixin'
+import { requestProps, useRequest, useCssVariable } from '../../../../mixin'
 import { cleanUpScrollMask, setupScrollMask } from '../../../scroll-mask'
-import { compactRankListCssVars } from './rank-list'
+import { compactRankListCssVars, type RankListCard } from './rank-list'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     DpiImage,
     UpInfo,
@@ -66,13 +68,10 @@ export default Vue.extend({
     VEmpty,
     VButton,
   },
-  filters: {
-    formatCount,
-  },
-  mixins: [requestMixin(), cssVariableMixin(compactRankListCssVars)],
   props: {
+    ...requestProps,
     parseJson: {
-      type: Function,
+      type: Function as PropType<(json: unknown) => RankListCard[]>,
       required: true,
     },
     bangumiMode: {
@@ -80,6 +79,15 @@ export default Vue.extend({
       default: false,
     },
   },
+  setup: props => ({
+    ...useRequest({
+      api: props.api,
+      parseJson: props.parseJson,
+    }),
+    ...useCssVariable(compactRankListCssVars),
+    content: ref(null) satisfies Ref<HTMLElement | null>,
+    cards: ref(null) satisfies Ref<HTMLElement[] | null>,
+  }),
   computed: {
     upInfoProps() {
       return {
@@ -98,16 +106,17 @@ export default Vue.extend({
       }
     },
   },
-  beforeDestroy() {
-    cleanUpScrollMask(this.$el)
+  beforeUnmount() {
+    cleanUpScrollMask(this.el)
   },
   methods: {
+    formatCount,
     async setupIntersection() {
-      await this.$nextTick()
-      console.log(this.$refs.cards)
+      await nextTick()
+      console.log(this.cards)
       setupScrollMask({
-        container: this.$el,
-        items: this.$refs.cards,
+        container: this.el,
+        items: this.cards,
       })
     },
   },

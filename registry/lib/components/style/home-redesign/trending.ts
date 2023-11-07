@@ -1,8 +1,8 @@
 import { applyContentFilter } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { getJson, getJsonWithCredentials } from '@/core/ajax'
 import { getUID } from '@/core/utils'
-import { formatDuration, formatCount } from '@/core/utils/formatters'
+import { formatCount, formatDuration } from '@/core/utils/formatters'
 
 export const getTrendingVideos = async (isPersonalized: boolean) => {
   const api = 'https://api.bilibili.com/x/web-interface/index/top/feed/rcmd'

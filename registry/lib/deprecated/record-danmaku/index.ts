@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 import { none } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
@@ -11,7 +13,7 @@ export const component = defineComponentMetadata({
   entry: none,
   tags: [componentsTags.live],
   widget: {
-    component: () => import('./RecordDanmaku.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./RecordDanmaku.vue')),
   },
   urlInclude: liveUrls,
 })

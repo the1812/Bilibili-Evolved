@@ -29,23 +29,23 @@
 </template>
 
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
+import { getBlob } from '../core/ajax'
 import { addComponentListener } from '../core/settings'
 import { getFriendlyTitle } from '../core/utils/title'
-import { getBlob } from '../core/ajax'
 import VIcon from './icon/VIcon.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },
-  props: {
-    image: {
-      type: String,
-      required: true,
-    },
-  },
+  setup: () => ({
+    viewer: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
+      image: '',
       filename: '',
       open: false,
       blobUrl: '',
@@ -81,7 +81,7 @@ export default Vue.extend({
       true,
     )
   },
-  beforeDestroy() {
+  beforeUnmount() {
     document.removeEventListener('keydown', this.keyHandler)
   },
   methods: {
@@ -99,7 +99,7 @@ export default Vue.extend({
     },
     detectOutside(e: MouseEvent) {
       const container = this.$el
-      const { viewer } = this.$refs
+      const { viewer } = this
       if (e.target === container || e.target === viewer) {
         // this.$emit('change', false)
         this.open = false

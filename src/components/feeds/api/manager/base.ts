@@ -1,7 +1,9 @@
 import { matchUrlPattern } from '@/core/utils'
 import { registerAndGetData } from '@/plugins/data'
-import { FeedsCardCallback, FeedsCard } from '../types'
-import { ListAdaptorKey, FeedsCardsListAdaptor } from './adaptor'
+
+import type { FeedsCard, FeedsCardCallback } from '../types'
+import type { FeedsCardsListAdaptor } from './adaptor'
+import { ListAdaptorKey } from './adaptor'
 
 export const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 

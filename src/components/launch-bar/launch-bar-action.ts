@@ -1,4 +1,5 @@
-import { Executable, VueModule } from '@/core/common-types'
+import type { Component } from 'vue'
+import type { Executable } from '@/core/common-types'
 
 /** 表示 LaunchBar 里的一个动作 */
 export interface LaunchBarAction {
@@ -12,8 +13,8 @@ export interface LaunchBarAction {
   description?: string
   /** 提供给搜索栏过滤的关键词 */
   indexer?: string
-  /** 自定义渲染的内容, 会覆盖其他一些字段 */
-  content?: Executable<VueModule>
+  /** 自定义渲染的内容, 会覆盖其他一些字段。创建其实例时传入属性：name: string */
+  content?: Component
   /** 用户选择此动作时要执行的代码 */
   action: Executable
   /** 设置删除动作, 用户可以在此动作右侧选择删除 */

@@ -9,13 +9,13 @@
       :style="{ backgroundColor: color, width: size + 'px', height: size + 'px' }"
     ></div>
     <VPopup
-      v-model="popupOpened"
+      v-model:open="popupOpened"
       esc-close
       :auto-close="false"
       class="picker"
       :class="{ compact }"
       :style="{ '--offset': popupOffset + 'px' }"
-      :trigger-element="$refs.button"
+      :trigger-element="button"
     >
       <div class="item-group">
         <div class="item-title">预设颜色</div>
@@ -41,7 +41,7 @@
                 :focusable="false"
                 :max="255"
                 :value="wrapper.red"
-                @change="wrapper.change('red', $event)"
+                @update:value="wrapper.change('red', $event)"
               >
                 <template #bar>
                   <div class="color-bar" :style="{ background: wrapper.redGradient }"></div>
@@ -56,7 +56,7 @@
                 change-on-blur
                 :disabled="!popupOpened"
                 :text="int(wrapper.red)"
-                @change="wrapper.change('red', $event)"
+                @update:text="wrapper.change('red', $event)"
               />
             </div>
             <div class="bar">
@@ -65,7 +65,7 @@
                 :focusable="false"
                 :max="255"
                 :value="wrapper.green"
-                @change="wrapper.change('green', $event)"
+                @update:value="wrapper.change('green', $event)"
               >
                 <template #bar>
                   <div class="color-bar" :style="{ background: wrapper.greenGradient }"></div>
@@ -80,7 +80,7 @@
                 change-on-blur
                 :disabled="!popupOpened"
                 :text="int(wrapper.green)"
-                @change="wrapper.change('green', $event)"
+                @update:text="wrapper.change('green', $event)"
               />
             </div>
             <div class="bar">
@@ -89,7 +89,7 @@
                 :focusable="false"
                 :max="255"
                 :value="wrapper.blue"
-                @change="wrapper.change('blue', $event)"
+                @update:value="wrapper.change('blue', $event)"
               >
                 <template #bar>
                   <div class="color-bar" :style="{ background: wrapper.blueGradient }"></div>
@@ -104,7 +104,7 @@
                 change-on-blur
                 :disabled="!popupOpened"
                 :text="int(wrapper.blue)"
-                @change="wrapper.change('blue', $event)"
+                @update:text="wrapper.change('blue', $event)"
               />
             </div>
           </template>
@@ -115,7 +115,7 @@
                 :focusable="false"
                 :max="359.9"
                 :value="wrapper.hue"
-                @change="wrapper.change('hue', $event)"
+                @update:value="wrapper.change('hue', $event)"
               >
                 <template #bar>
                   <div class="color-bar" :style="{ background: wrapper.hueGradient }"></div>
@@ -130,7 +130,7 @@
                 change-on-blur
                 :disabled="!popupOpened"
                 :text="fixed(wrapper.hue)"
-                @change="wrapper.change('hue', $event)"
+                @update:text="wrapper.change('hue', $event)"
               />
             </div>
             <div class="bar">
@@ -138,7 +138,7 @@
               <VSlider
                 :focusable="false"
                 :value="wrapper.saturation"
-                @change="wrapper.change('saturationv', $event)"
+                @update:value="wrapper.change('saturationv', $event)"
               >
                 <template #bar>
                   <div class="color-bar" :style="{ background: wrapper.saturationGradient }"></div>
@@ -153,7 +153,7 @@
                 change-on-blur
                 :disabled="!popupOpened"
                 :text="fixed(wrapper.saturation)"
-                @change="wrapper.change('saturationv', $event)"
+                @update:text="wrapper.change('saturationv', $event)"
               />
             </div>
             <div class="bar">
@@ -161,7 +161,7 @@
               <VSlider
                 :focusable="false"
                 :value="wrapper.brightness"
-                @change="wrapper.change('value', $event)"
+                @update:value="wrapper.change('value', $event)"
               >
                 <template #bar>
                   <div class="color-bar" :style="{ background: wrapper.brightnessGradient }"></div>
@@ -176,7 +176,7 @@
                 change-on-blur
                 :disabled="!popupOpened"
                 :text="fixed(wrapper.brightness)"
-                @change="wrapper.change('value', $event)"
+                @update:text="wrapper.change('value', $event)"
               />
             </div>
           </template>
@@ -199,7 +199,7 @@
           class="hex"
           :text="wrapper.hex"
           change-on-blur
-          @change="selectHexColor($event)"
+          @update:text="selectHexColor($event)"
         />
       </div>
       <div class="operations item-group" @click="popupOpened = !popupOpened">
@@ -211,22 +211,24 @@
 </template>
 
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineAsyncComponent, defineComponent, ref } from 'vue'
 import Color from 'color'
-import palette from '@/core/theme-color/palette.json'
-import { createColorWrapper } from './color-picker-wrapper'
 
-export default Vue.extend({
+import palette from '@/core/theme-color/palette.json'
+
+import { createColorWrapper } from './color-picker-wrapper'
+import { vueDirectives } from '@/core/utils'
+
+export default defineComponent({
   name: 'ColorPicker',
   components: {
-    TextBox: () => import('./TextBox.vue').then(m => m.default),
-    VSlider: () => import('./VSlider.vue').then(m => m.default),
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VPopup: () => import('./VPopup.vue').then(m => m.default),
+    TextBox: defineAsyncComponent(() => import('./TextBox.vue')),
+    VSlider: defineAsyncComponent(() => import('./VSlider.vue')),
+    VButton: defineAsyncComponent(() => import('./VButton.vue')),
+    VPopup: defineAsyncComponent(() => import('./VPopup.vue')),
   },
-  model: {
-    prop: 'color',
-    event: 'change',
-  },
+  directives: { hit: vueDirectives.vHit },
   props: {
     color: {
       type: String,
@@ -247,6 +249,10 @@ export default Vue.extend({
       default: 0,
     },
   },
+  emits: ['update:color'],
+  setup: () => ({
+    button: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
       popupOpened: false,
@@ -287,7 +293,7 @@ export default Vue.extend({
   },
   methods: {
     ok() {
-      this.$emit('change', this.wrapper.hex)
+      this.$emit('update:color', this.wrapper.hex)
     },
     reset() {
       this.wrapper.color = new Color(this.color)

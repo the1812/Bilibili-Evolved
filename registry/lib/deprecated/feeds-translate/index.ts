@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import { FeedsCard } from '@/components/feeds/api'
+import type { FeedsCard } from '@/components/feeds/api'
+import { mountVueComponent } from '@/core/utils'
 import { feedsUrls } from '@/core/utils/urls'
 
 const entry = async () => {
@@ -17,12 +18,8 @@ const entry = async () => {
       return
     }
     const cardContent = card.element.querySelector('.card-content') as HTMLElement
-    const translator = new MachineTranslator({
-      propsData: {
-        text,
-      },
-    }).$mount()
-    cardContent.insertAdjacentElement('beforeend', translator.$el)
+    const [el] = mountVueComponent(MachineTranslator, { text })
+    cardContent.insertAdjacentElement('beforeend', el)
   }
   forEachFeedsCard({
     added: injectButton,

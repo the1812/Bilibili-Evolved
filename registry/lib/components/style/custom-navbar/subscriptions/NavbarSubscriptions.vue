@@ -1,21 +1,25 @@
 <template>
-  <div class="navbar-subscriptions">
+  <div ref="el" class="navbar-subscriptions">
     <TabControl ref="tabControl" :tabs="tabs" :more-link="moreLink">
       <template #header-item>
         <div class="navbar-subscriptions-filter">
-          <VDropdown v-model="selectedFilter" round :items="filterItems" />
+          <VDropdown v-model:value="selectedFilter" round :items="filterItems" />
         </div>
       </template>
     </TabControl>
   </div>
 </template>
 <script lang="ts">
-import { TabControl, VDropdown } from '@/ui'
-import { TabMapping, TabMappings } from '@/ui/tab-mapping'
+import type { Ref } from 'vue'
+import { defineComponent, defineAsyncComponent, ref } from 'vue'
 import { getUID } from '@/core/utils'
-import { popperMixin } from '../mixins'
+import { TabControl, VDropdown } from '@/ui'
+import type { TabMapping, TabMappings } from '@/ui/tab-mapping'
+
+import { popupProps, usePopup } from '../mixins'
 import { SubscriptionTypes } from './subscriptions'
-import { SubscriptionStatus, SubscriptionStatusFilter } from './types'
+import type { SubscriptionStatusFilter } from './types'
+import { SubscriptionStatus } from './types'
 
 const filterItems: {
   name: string
@@ -55,12 +59,16 @@ const filterItems: {
     displayName: '看过',
   },
 ]
-export default Vue.extend({
+export default defineComponent({
   components: {
     TabControl,
     VDropdown,
   },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: props => ({
+    ...usePopup(props),
+    tabControl: ref(null) as Ref<InstanceType<typeof TabControl> | null>,
+  }),
   data() {
     const uid = getUID()
     return {
@@ -81,7 +89,7 @@ export default Vue.extend({
           name: SubscriptionTypes.Bangumi,
           displayName: '追番',
           activeLink: `https://space.bilibili.com/${this.uid}/bangumi`,
-          component: () => import('./BangumiSubscriptions.vue').then(m => m.default),
+          component: defineAsyncComponent(() => import('./BangumiSubscriptions.vue')),
           propsData: {
             filter: this.selectedFilter.value,
           },
@@ -90,7 +98,7 @@ export default Vue.extend({
           name: SubscriptionTypes.Cinema,
           displayName: '追剧',
           activeLink: `https://space.bilibili.com/${this.uid}/cinema`,
-          component: () => import('./CinemaSubscriptions.vue').then(m => m.default),
+          component: defineAsyncComponent(() => import('./CinemaSubscriptions.vue')),
           propsData: {
             filter: this.selectedFilter.value,
           },

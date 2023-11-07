@@ -1,7 +1,7 @@
 <template>
   <VPopup
     ref="popup"
-    v-model="open"
+    v-model:open="open"
     class="custom-navbar-settings"
     fixed
     :lazy="false"
@@ -27,7 +27,7 @@
           @mouseover="peekPadding(true)"
           @mouseout="peekPadding(false)"
         >
-          <VSlider v-model="padding" :min="0" :max="40" :step="0.5"></VSlider>
+          <VSlider v-model:value="padding" :min="0" :max="40" :step="0.5"></VSlider>
           <div class="padding-value">{{ padding.toFixed(1) }}%</div>
         </div>
       </div>
@@ -68,36 +68,42 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { SortableEvent } from 'sortablejs'
-import { VPopup, VIcon, VSlider, VLoading } from '@/ui'
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
+import type { SortableEvent } from 'sortablejs'
+
+import { SortableJSLibrary } from '@/core/runtime-library'
 import { addComponentListener } from '@/core/settings'
 import { dqa } from '@/core/utils'
-import { SortableJSLibrary } from '@/core/runtime-library'
 import { getData } from '@/plugins/data'
+import { VIcon, VLoading, VPopup, VSlider } from '@/ui'
+
 import { CustomNavbarItem, CustomNavbarRenderedItems } from '../custom-navbar-item'
 import { checkSequentialOrder, sortItems } from './orders'
 
 const { navbarOptions } = CustomNavbarItem
+function padding(this: InstanceType<typeof ThisComponent>, newValue: number) {
+  navbarOptions.padding = newValue
+}
 const [rendered] = getData(CustomNavbarRenderedItems) as [
   {
     items: CustomNavbarItem[]
   },
 ]
-export default Vue.extend({
+const ThisComponent = defineComponent({
   components: {
     VPopup,
     VIcon,
     VSlider,
     VLoading,
   },
-  props: {
-    triggerElement: {
-      type: HTMLElement,
-      default: null,
-    },
-  },
+  setup: () => ({
+    popup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    navbarSortList: ref(null) as Ref<HTMLDivElement | null>,
+  }),
   data() {
     return {
+      triggerElement: null as HTMLElement | null,
       open: false,
       padding: navbarOptions.padding,
       rendered,
@@ -106,9 +112,7 @@ export default Vue.extend({
     }
   },
   watch: {
-    padding: lodash.debounce((newValue: number) => {
-      navbarOptions.padding = newValue
-    }, 200),
+    padding: lodash.debounce(padding, 200) as unknown as (newValue: number) => void,
   },
   async mounted() {
     addComponentListener('customNavbar.padding', (newValue: number) => {
@@ -116,7 +120,7 @@ export default Vue.extend({
         this.padding = newValue
       }
     })
-    const list: HTMLElement = this.$refs.navbarSortList
+    const list: HTMLElement = this.navbarSortList
     const Sortable = await SortableJSLibrary
     Sortable.create(list, {
       delay: 100,
@@ -134,7 +138,7 @@ export default Vue.extend({
   },
   methods: {
     toggle() {
-      this.$refs.popup.toggle()
+      this.popup.toggle()
     },
     peekPadding(peek: boolean) {
       dqa('.custom-navbar .padding').forEach(it => it.classList.toggle('peek', peek))
@@ -143,7 +147,7 @@ export default Vue.extend({
       item.element?.classList.toggle('peek', peek)
     },
     onSort(e: SortableEvent) {
-      const container = this.$refs.navbarSortList as HTMLElement
+      const container = this.navbarSortList as HTMLElement
       const element = e.item
       console.log(`${element.getAttribute('data-name')} ${e.oldIndex}->${e.newIndex}`)
       const ordersMap = Object.fromEntries(
@@ -164,6 +168,7 @@ export default Vue.extend({
     },
   },
 })
+export default ThisComponent
 </script>
 <style lang="scss">
 @import 'common';

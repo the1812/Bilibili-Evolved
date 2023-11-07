@@ -10,11 +10,12 @@
 </template>
 
 <script lang="ts">
-import { addComponentListener } from '@/core/settings'
+import { defineComponent } from 'vue'
 import { getJson } from '@/core/ajax'
+import { addComponentListener } from '@/core/settings'
 import { VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'NavbarLogo',
   components: {
     VIcon,

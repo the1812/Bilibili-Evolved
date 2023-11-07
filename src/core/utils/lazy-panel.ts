@@ -1,5 +1,5 @@
 import { select } from '../spin-query'
-import { raiseEvent, dq, delay } from '.'
+import { delay, dq, raiseEvent } from '.'
 
 /** 懒加载面板的参数 */
 export interface LazyPanelParameters {

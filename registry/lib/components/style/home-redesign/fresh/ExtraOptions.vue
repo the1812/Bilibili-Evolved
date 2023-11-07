@@ -68,11 +68,12 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent, ref, type Ref } from 'vue'
 import type { SortableEvent } from 'sortablejs'
 import { SortableJSLibrary } from '@/core/runtime-library'
 import { ascendingSort } from '@/core/utils/sort'
 import { VLoading, VIcon, VButton } from '@/ui'
-import { FreshLayoutItem, FreshLayoutItemSettings } from './layouts/fresh-layout-item'
+import type { FreshLayoutItem, FreshLayoutItemSettings } from './layouts/fresh-layout-item'
 import { layouts } from './layouts/layouts'
 import { freshHomeOptions } from './options'
 
@@ -81,8 +82,11 @@ interface SortItem {
   layoutSettings: FreshLayoutItemSettings
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: { VLoading, VIcon, VButton },
+  setup: () => ({
+    sortList: ref(null) satisfies Ref<HTMLElement | null>,
+  }),
   data() {
     return {
       loaded: false,
@@ -91,7 +95,7 @@ export default Vue.extend({
     }
   },
   async mounted() {
-    const list: HTMLElement = this.$refs.sortList
+    const list = this.sortList
     const Sortable = await SortableJSLibrary
     console.log({ list })
     Sortable.create(list, {

@@ -62,21 +62,12 @@
             </div>
             <template #toast>
               <div class="extra-actions-list">
-                <div v-for="a of componentActions" :key="a.name">
-                  <component
-                    :is="a.component"
-                    v-if="a.component"
-                    :item="a"
-                    :component="componentData"
-                  />
-                  <ComponentAction
-                    v-else
-                    v-show="a.visible !== false"
-                    class="extra-action-item"
-                    :item="a"
-                    :component="componentData"
-                  />
-                </div>
+                <Action
+                  v-for="a in componentActions"
+                  :key="a.name"
+                  :item="a"
+                  :component="componentData"
+                />
               </div>
             </template>
           </MiniToast>
@@ -88,16 +79,50 @@
 </template>
 
 <script lang="ts">
-import { VButton, VIcon, SwitchBox, MiniToast } from '@/ui'
+import type { PropType } from 'vue'
+import { defineComponent, h, vShow, withDirectives } from 'vue'
+
+import { getComponentSettings } from '@/core/settings'
 import { visible } from '@/core/observer'
-import { OptionsMetadata } from '../component'
+import { MiniToast, SwitchBox, VButton, VIcon } from '@/ui'
+
+import type { ComponentMetadata, OptionMetadata, OptionsMetadata } from '../component'
+import type {
+  ComponentConfigAction,
+  ComponentVueAction,
+} from './component-actions/component-actions'
+import { componentActions } from './component-actions/component-actions'
+import ComponentAction from './component-actions/ComponentAction.vue'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
-import { componentSettingsMixin } from './mixins'
-import { componentActions, ComponentConfigAction } from './component-actions/component-actions'
-import ComponentAction from './component-actions/ComponentAction.vue'
 
-export default Vue.extend({
+const Action = defineComponent({
+  props: {
+    item: {
+      type: Object as PropType<ComponentConfigAction | ComponentVueAction>,
+      required: true,
+    },
+    component: {
+      type: Object as PropType<ComponentMetadata>,
+      required: true,
+    },
+  },
+  render() {
+    if ('component' in this.item) {
+      return h(this.item.component, { item: this.item, component: this.component })
+    }
+    return withDirectives(
+      h(ComponentAction, {
+        class: 'extra-item-item',
+        item: this.item,
+        component: this.component,
+      }),
+      [[vShow, !!this.item.visible]],
+    )
+  },
+})
+
+const ThisComponent = defineComponent({
   components: {
     ComponentDescription,
     ComponentOption,
@@ -106,26 +131,31 @@ export default Vue.extend({
     VIcon,
     SwitchBox,
     MiniToast,
+    Action,
   },
-  mixins: [componentSettingsMixin],
+  props: {
+    componentData: {
+      type: Object as PropType<ComponentMetadata>,
+      required: true,
+    },
+  },
+  emits: ['close', 'mounted'],
   data() {
     return {
       virtual: false,
       componentActions: componentActions
-        .map(factory => factory((this as any).componentData))
+        .map(factory => factory(this.componentData))
         .filter(it => {
           if (it === undefined) {
             return false
           }
-          if ((it as ComponentConfigAction).visible === false) {
-            return false
-          }
-          return true
+          return (it as ComponentConfigAction).visible !== false
         }),
+      settings: getComponentSettings(this.componentData),
     }
   },
   computed: {
-    generatedOptions() {
+    generatedOptions(): [string, OptionMetadata][] {
       return Object.entries((this.componentData.options ?? {}) as OptionsMetadata).filter(
         ([, option]) => !option.hidden,
       )
@@ -143,6 +173,7 @@ export default Vue.extend({
     console.log(this.componentActions)
   },
 })
+export default ThisComponent
 </script>
 
 <style lang="scss">

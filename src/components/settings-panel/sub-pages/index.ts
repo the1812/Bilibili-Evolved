@@ -1,34 +1,35 @@
-import { Executable, VueModule } from '@/core/common-types'
+import type { Component } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 export interface SubPage {
   name: string
   displayName: string
-  component: Executable<VueModule>
+  component: Component
   icon: string
 }
 export const subPages: SubPage[] = [
   {
     name: 'userComponentsManage',
     displayName: '组件',
-    component: () => import('./UserComponentsPage.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./UserComponentsPage.vue')),
     icon: 'mdi-cube-scan',
   },
   {
     name: 'userPluginsManage',
     displayName: '插件',
-    component: () => import('./UserPluginsPage.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./UserPluginsPage.vue')),
     icon: 'mdi-puzzle-outline',
   },
   {
     name: 'customStylesManage',
     displayName: '样式',
-    component: () => import('./UserStylesPage.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./UserStylesPage.vue')),
     icon: 'mdi-tune',
   },
   {
     name: 'about',
     displayName: '关于',
-    component: () => import('./AboutPage.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./AboutPage.vue')),
     icon: 'mdi-information-outline',
   },
 ]

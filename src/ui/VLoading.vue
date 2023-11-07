@@ -9,9 +9,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { loadingContent } from './v-loading'
 
-export default Vue.extend({
+export default defineComponent({
   name: 'VLoading',
   data() {
     return {

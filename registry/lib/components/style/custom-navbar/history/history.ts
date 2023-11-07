@@ -1,4 +1,5 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import { defineAsyncComponent } from 'vue'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 const href = 'https://www.bilibili.com/account/history'
 export const history: CustomNavbarItemInit = {
@@ -13,5 +14,5 @@ export const history: CustomNavbarItemInit = {
 
   boundingWidth: 400,
   noPopupPadding: true,
-  popupContent: () => import('./NavbarHistory.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./NavbarHistory.vue')),
 }

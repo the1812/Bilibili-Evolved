@@ -1,7 +1,8 @@
-import { defaultLanguageCode } from '@/core/utils/i18n'
 import { allMutations } from '@/core/observer'
-import { ComponentEntry } from '../types'
-import { RegexTranslation, Translation } from './types'
+import { defaultLanguageCode } from '@/core/utils/i18n'
+
+import type { ComponentEntry } from '../types'
+import type { RegexTranslation, Translation } from './types'
 
 // 基本照搬 v1 的代码 + ESLint 适配. 设计质量很一般, Translator 需要更巧妙的抽象
 export class Translator {

@@ -1,5 +1,5 @@
-import { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
-import { PluginMetadata } from '@/plugins/plugin'
+import type { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
+import type { PluginMetadata } from '@/plugins/plugin'
 import { toggleLight } from '@/components/video/player-light'
 
 export const plugin: PluginMetadata = {

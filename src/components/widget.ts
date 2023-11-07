@@ -1,5 +1,6 @@
-import { VueConstructor } from 'vue'
-import { TestPattern, Executable } from '@/core/common-types'
+import type { Component } from 'vue'
+
+import type { Executable, TestPattern } from '@/core/common-types'
 
 /**
  * 小组件(v1中称为附加功能), 可在组件中定义, 也可以由插件注入
@@ -8,7 +9,7 @@ export interface Widget {
   /** 名称 */
   name: string
   /** 要渲染的Vue组件 */
-  component: Executable<VueConstructor>
+  component: Component
   /** 传递给`component`的选项 */
   options?: any
   /** 设置匹配的URL, 与组件的`urlInclude`类似 */

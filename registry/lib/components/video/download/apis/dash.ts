@@ -1,15 +1,13 @@
+import type { VideoQuality } from '@/components/video/video-quality'
+import { allQualities } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formData, matchUrlPattern } from '@/core/utils'
 import { ascendingSort, descendingSort } from '@/core/utils/sort'
-import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { bangumiUrls } from '@/core/utils/urls'
+
 import { compareQuality } from '../error'
-import {
-  DownloadVideoApi,
-  DownloadVideoFragment,
-  DownloadVideoInfo,
-  DownloadVideoInputItem,
-} from '../types'
+import type { DownloadVideoApi, DownloadVideoFragment, DownloadVideoInputItem } from '../types'
+import { DownloadVideoInfo } from '../types'
 import { bangumiApi, videoApi } from './url'
 
 /** dash 格式更明确的扩展名 */
@@ -120,8 +118,8 @@ const downloadDash = async (
         return DashCodec.Hevc
       case 13:
         return DashCodec.Av1
-      default:
       case 7:
+      default:
         return DashCodec.Avc
     }
   }

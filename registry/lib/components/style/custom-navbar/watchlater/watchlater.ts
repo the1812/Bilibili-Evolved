@@ -1,4 +1,5 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import { defineAsyncComponent } from 'vue'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export const watchlater: CustomNavbarItemInit = {
   name: 'watchlater',
@@ -12,5 +13,5 @@ export const watchlater: CustomNavbarItemInit = {
 
   boundingWidth: 380,
   noPopupPadding: true,
-  popupContent: () => import('./NavbarWatchlater.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./NavbarWatchlater.vue')),
 }

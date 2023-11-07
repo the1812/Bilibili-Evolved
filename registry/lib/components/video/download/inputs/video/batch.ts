@@ -1,11 +1,14 @@
+import { defineAsyncComponent } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatDuration, formatNumber } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
 import { formatTitle } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
-import { DownloadVideoInput } from '../../types'
-import { createEpisodesPicker, EpisodeItem } from '../episode-item'
+
+import type { DownloadVideoInput } from '../../types'
+import type { EpisodeItem } from '../episode-item'
+import { createEpisodesPicker } from '../episode-item'
 
 export const videoBatchInput: DownloadVideoInput = {
   name: 'video.batch',
@@ -13,7 +16,7 @@ export const videoBatchInput: DownloadVideoInput = {
   match: videoUrls,
   batch: true,
   getInputs: async instance => instance?.checkedInputItems ?? [],
-  component: async () =>
+  component: defineAsyncComponent(async () =>
     createEpisodesPicker(async instance => {
       const { aid } = unsafeWindow
       const api = `https://api.bilibili.com/x/web-interface/view?aid=${aid}`
@@ -48,4 +51,5 @@ export const videoBatchInput: DownloadVideoInput = {
         } as EpisodeItem
       })
     }),
+  ),
 }

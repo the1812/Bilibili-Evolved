@@ -1,5 +1,5 @@
 <template>
-  <div class="ranking-popup" role="list">
+  <div ref="el" class="ranking-popup" role="list">
     <div v-for="e of entries" :key="e.name" class="ranking-entry" role="listitem">
       <a target="_blank" :href="e.href">{{ e.name }}</a>
     </div>
@@ -7,7 +7,8 @@
 </template>
 
 <script lang="ts">
-import { popperMixin } from '../mixins'
+import { defineComponent } from 'vue'
+import { popupProps, usePopup } from '../mixins'
 
 interface RankingEntry {
   href: string
@@ -39,9 +40,10 @@ const entries = [
     name: '短剧榜',
   },
 ] as RankingEntry[]
-export default Vue.extend({
+export default defineComponent({
   name: 'RankingPopup',
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       entries,

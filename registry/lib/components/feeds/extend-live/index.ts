@@ -35,9 +35,8 @@ const entry = async () => {
   if (!container) {
     console.error('container not found')
   }
-  const LiveList = await import('./LiveList.vue').then(m => m.default)
-  const liveList = mountVueComponent(LiveList)
-  container.appendChild(liveList.$el)
+  const [el] = mountVueComponent(await import('./LiveList.vue'))
+  container.appendChild(el)
 }
 
 export const component = defineComponentMetadata({

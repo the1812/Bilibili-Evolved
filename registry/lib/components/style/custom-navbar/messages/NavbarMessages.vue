@@ -1,5 +1,5 @@
 <template>
-  <div class="messages-popup" role="list">
+  <div ref="el" class="messages-popup" role="list">
     <div v-for="e of entries" :key="e.name" class="message-entry" role="listitem">
       <a
         :data-prop="e.prop"
@@ -14,8 +14,10 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials } from '@/core/ajax'
-import { popperMixin } from '../mixins'
+
+import { popupProps, usePopup } from '../mixins'
 
 interface MessageEntry {
   prop?: string
@@ -58,9 +60,10 @@ const entries = [
     name: '消息设置',
   },
 ] as MessageEntry[]
-export default Vue.extend({
+export default defineComponent({
   name: 'MessagesPopup',
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
       entries: entries.map(e => {

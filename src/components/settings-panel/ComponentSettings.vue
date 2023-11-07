@@ -6,7 +6,7 @@
         <div class="display-name">
           {{ componentData.displayName }}
         </div>
-        <SwitchBox v-if="componentData.configurable !== false" v-model="settings.enabled" />
+        <SwitchBox v-if="componentData.configurable !== false" v-model:checked="settings.enabled" />
         <VIcon v-else icon="right-arrow" class="details-arrow" :size="18" />
       </div>
     </template>
@@ -15,16 +15,20 @@
 
 <script lang="ts">
 import marked from 'marked'
-import { getComponentSettings } from '@/core/settings'
-import SwitchBox from '@/ui/SwitchBox.vue'
-import VIcon from '@/ui/icon/VIcon.vue'
-import { visibleInside } from '@/core/observer'
-import { dq } from '@/core/utils'
-import TagRing from './TagRing.vue'
-import { getSelectedLanguage } from '../i18n/helpers'
-import { ComponentMetadata } from '../component'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
 
-export default Vue.extend({
+import { visibleInside } from '@/core/observer'
+import { getComponentSettings } from '@/core/settings'
+import { dq } from '@/core/utils'
+import VIcon from '@/ui/icon/VIcon.vue'
+import SwitchBox from '@/ui/SwitchBox.vue'
+
+import type { ComponentMetadata } from '../component'
+import { getSelectedLanguage } from '../i18n/helpers'
+import TagRing from './TagRing.vue'
+
+export default defineComponent({
   components: {
     SwitchBox,
     TagRing,
@@ -32,7 +36,7 @@ export default Vue.extend({
   },
   props: {
     componentData: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },

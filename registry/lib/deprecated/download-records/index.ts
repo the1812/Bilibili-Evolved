@@ -1,3 +1,5 @@
+import { defineAsyncComponent } from 'vue'
+
 import { defineComponentMetadata } from '@/components/define'
 
 export const component = defineComponentMetadata({
@@ -9,7 +11,7 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.live],
   entry: none,
   widget: {
-    component: () => import('./DownloadRecords.vue').then(m => m.default),
+    component: defineAsyncComponent(() => import('./DownloadRecords.vue')),
   },
   urlInclude: [/^https:\/\/live\.bilibili\.com\/record\/(.+)/],
 })

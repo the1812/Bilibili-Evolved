@@ -1,6 +1,6 @@
+import { getJson } from '@/core/ajax'
 import { childList } from '@/core/observer'
 import { dq, getUID } from '@/core/utils'
-import { getJson } from '@/core/ajax'
 
 // https://github.com/lovelyyoshino/Bilibili-Live-API/blob/master/API.WebSocket.md
 const protocolVersionCodes = {
@@ -15,7 +15,7 @@ const liveOperationCodes = {
   enterRoom: 7,
   enterRoomResponse: 8,
 }
-type DecodeResult = {
+interface DecodeResult {
   packetLength: number
   headerLength: number
   protocolVersion: number

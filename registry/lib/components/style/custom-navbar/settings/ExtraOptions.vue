@@ -11,15 +11,21 @@
   </div>
 </template>
 <script lang="ts">
+import type { Ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { getUID } from '@/core/utils'
-import { VIcon, VButton } from '@/ui'
-import { setTriggerElement, loadNavbarSettings, toggleNavbarSettings } from './vm'
+import { VButton, VIcon } from '@/ui'
 
-export default Vue.extend({
+import { loadNavbarSettings, setTriggerElement, toggleNavbarSettings } from './vm'
+
+export default defineComponent({
   components: {
     VIcon,
     VButton,
   },
+  setup: () => ({
+    button: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+  }),
   data() {
     return {
       login: Boolean(getUID()),
@@ -29,7 +35,7 @@ export default Vue.extend({
     async loadNavbarSettings() {
       const isFirstLoad = await loadNavbarSettings()
       if (isFirstLoad) {
-        const triggerButton = this.$refs.button.$el as HTMLElement
+        const triggerButton = this.button.$el as HTMLElement
         setTriggerElement(triggerButton)
       }
     },

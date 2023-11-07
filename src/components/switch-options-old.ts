@@ -1,10 +1,12 @@
 /*
  * 旧版 Switch Options API, 暂时保留, 避免本体升级后组件未更新造成报错
  */
-import { getComponentSettings, addComponentListener } from '@/core/settings'
-import { ComponentMetadata, OptionsMetadata } from './component'
+import { defineAsyncComponent } from 'vue'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 
-type Switches = {
+import type { ComponentMetadata, OptionsMetadata } from './component'
+
+interface Switches {
   [key: string]: {
     displayName: string
     defaultValue: boolean
@@ -48,7 +50,7 @@ export const createSwitchOptions = (options: SwitchOptions) => {
     component.options = { ...component.options, ...extendComponentOptions }
     if (!component.widget) {
       component.widget = {
-        component: () => import('./SwitchOptions.vue').then(m => m.default),
+        component: defineAsyncComponent(() => import('./SwitchOptions.vue')),
         options,
       }
     }

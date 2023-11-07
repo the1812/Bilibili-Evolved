@@ -2,9 +2,9 @@
   <div class="multiple-widgets">
     <VPopup
       ref="medalPopup"
-      v-model="medalOpen"
+      v-model:open="medalOpen"
       class="badge-popup widgets-popup medal"
-      :trigger-element="$refs.medalButton"
+      :trigger-element="medalButton"
     >
       <ul>
         <li
@@ -28,9 +28,9 @@
 
     <VPopup
       ref="titlePopup"
-      v-model="titleOpen"
+      v-model:open="titleOpen"
       class="badge-popup widgets-popup title"
-      :trigger-element="$refs.titleButton"
+      :trigger-element="titleButton"
     >
       <ul>
         <li
@@ -51,21 +51,32 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, ref } from 'vue'
+import type { Ref } from 'vue'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { descendingSort } from '@/core/utils/sort'
 import { DefaultWidget, VPopup } from '@/ui'
-import { Medal, Title, Badge, getMedalList, getTitleList } from './badge'
 
-const { options } = getComponentSettings('badgeHelper')
-export default Vue.extend({
+import type { Badge } from './badge'
+import { getMedalList, getTitleList, Medal, Title } from './badge'
+import type { Options } from './index'
+
+const { options } = getComponentSettings<Options>('badgeHelper')
+export default defineComponent({
   components: {
     DefaultWidget,
     VPopup,
   },
+  setup: () => ({
+    medalPopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    titlePopup: ref(null) as Ref<InstanceType<typeof VPopup> | null>,
+    medalButton: ref(null) as Ref<InstanceType<typeof DefaultWidget> | null>,
+    titleButton: ref(null) as Ref<InstanceType<typeof DefaultWidget> | null>,
+  }),
   data() {
     return {
-      medalList: [],
-      titleList: [],
+      medalList: [] as Medal[],
+      titleList: [] as Title[],
       medalOpen: false,
       titleOpen: false,
       grayEffect: true,

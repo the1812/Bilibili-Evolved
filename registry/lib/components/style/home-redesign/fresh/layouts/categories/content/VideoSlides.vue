@@ -104,14 +104,42 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { applyContentFilter } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
+import type { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { formatDuration } from '@/core/utils/formatters'
-import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
-import { cssVariableMixin, requestMixin } from '../../../../mixin'
+import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 
-export default Vue.extend({
+import { requestProps, useCssVariable, useRequest } from '../../../../mixin'
+
+const parseJson = (json: any): VideoCard[] => {
+  const items = lodash.get(json, 'data.archives', [])
+  const cards = items.map(
+    (item: any): VideoCard => ({
+      id: item.aid,
+      aid: item.aid,
+      bvid: item.bvid,
+      coverUrl: item.pic,
+      title: item.title,
+      upName: item.owner.name,
+      upFaceUrl: item.owner.face,
+      upID: item.owner.mid,
+      playCount: item.stat.view,
+      danmakuCount: item.stat.danmaku,
+      like: item.stat.like,
+      coins: item.stat.coin,
+      description: item.desc,
+      dynamic: item.desc === '-' ? '' : item.desc,
+      type: item.tname,
+      duration: item.duration,
+      durationText: formatDuration(item.duration),
+    }),
+  )
+  return applyContentFilter(cards)
+}
+
+export default defineComponent({
   components: {
     VButton,
     VIcon,
@@ -119,9 +147,10 @@ export default Vue.extend({
     VLoading,
     VEmpty,
   },
-  mixins: [
-    requestMixin(),
-    cssVariableMixin({
+  props: requestProps,
+  setup: props => ({
+    ...useRequest({ api: props.api, parseJson }),
+    ...useCssVariable({
       mainCoverHeight: 185,
       mainCoverWidth: 287,
       otherCoverHeight: 100,
@@ -130,7 +159,7 @@ export default Vue.extend({
       mainPaddingY: 20,
       coverPadding: 16,
     }),
-  ],
+  }),
   data() {
     return {
       watchlaterList,
@@ -138,13 +167,13 @@ export default Vue.extend({
     }
   },
   computed: {
-    currentItem() {
+    currentItem(): VideoCard | undefined {
       return this.items[1]
     },
-    currentUrl() {
-      return this.url(this.currentItem.bvid)
+    currentUrl(): string {
+      return this.url(this.currentItem!.bvid)
     },
-    watchlaterAdded() {
+    watchlaterAdded(): boolean {
       return this.watchlaterList.includes(this.currentItem.aid)
     },
   },
@@ -152,31 +181,6 @@ export default Vue.extend({
     getWatchlaterList()
   },
   methods: {
-    parseJson(json: any) {
-      const items = lodash.get(json, 'data.archives', [])
-      const cards = items.map(
-        (item: any): VideoCard => ({
-          id: item.aid,
-          aid: item.aid,
-          bvid: item.bvid,
-          coverUrl: item.pic,
-          title: item.title,
-          upName: item.owner.name,
-          upFaceUrl: item.owner.face,
-          upID: item.owner.mid,
-          playCount: item.stat.view,
-          danmakuCount: item.stat.danmaku,
-          like: item.stat.like,
-          coins: item.stat.coin,
-          description: item.desc,
-          dynamic: item.desc === '-' ? '' : item.desc,
-          type: item.tname,
-          duration: item.duration,
-          durationText: formatDuration(item.duration),
-        }),
-      )
-      return applyContentFilter(cards)
-    },
     url(id: string) {
       return `https://www.bilibili.com/video/${id}`
     },
@@ -194,7 +198,7 @@ export default Vue.extend({
       let steps = index - 1
       const jump = () => {
         this.nextCard()
-        steps--
+        steps -= 1
         if (steps > 0) {
           setTimeout(jump)
         }

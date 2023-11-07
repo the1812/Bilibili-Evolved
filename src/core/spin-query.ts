@@ -212,7 +212,9 @@ let hasVideoPromiseCache: Promise<string>
  */
 export const hasVideo = async () => {
   if (!hasVideoPromiseCache) {
-    hasVideoPromiseCache = new Promise(resolve => videoChange(() => resolve(unsafeWindow.cid)))
+    hasVideoPromiseCache = new Promise(resolve => {
+      videoChange(() => resolve(unsafeWindow.cid))
+    })
   }
   const cid = await hasVideoPromiseCache
   return Boolean(cid)

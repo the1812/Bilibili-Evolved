@@ -1,7 +1,8 @@
 import exitHook from 'async-exit-hook'
-import { Server } from 'http'
+import type { Server } from 'http'
 import { WebSocketServer } from 'ws'
-import { Payload } from './payload'
+
+import type { Payload } from './payload'
 import { stopInstance, watchers } from './registry-watcher'
 
 let server: WebSocketServer
@@ -32,9 +33,6 @@ export const startWebSocketServer = (httpServer: Server) =>
           const payload: Payload = JSON.parse(data.toString())
           console.log('收到 DevClient 消息:', payload)
           switch (payload.type) {
-            default: {
-              break
-            }
             case 'itemStop': {
               const { path } = payload
               const watcherIndex = watchers.findIndex(it => it.url === path)
@@ -48,6 +46,9 @@ export const startWebSocketServer = (httpServer: Server) =>
             }
             case 'querySessions': {
               sendMessage({ type: 'querySessionsResponse', sessions: watchers.map(it => it.url) })
+              break
+            }
+            default: {
               break
             }
           }

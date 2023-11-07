@@ -1,19 +1,18 @@
 import { meta } from '@/core/meta'
-import { getGeneralSettings, getComponentSettings } from '@/core/settings'
+import { getComponentSettings, getGeneralSettings } from '@/core/settings'
 import { useScopedConsole } from '@/core/utils/log'
 import { descendingSort } from '@/core/utils/sort'
 import { isFeatureAcceptable } from '@/core/version'
-import {
-  name,
-  CheckUpdateConfig,
-  defaultExistPredicate,
-  localhost,
+
+import type { Options } from '.'
+import type {
   CheckSingleTypeUpdate,
-  UpdateRecord,
-  UpdateCheckItem,
   CheckSingleTypeUpdateConfig,
+  CheckUpdateConfig,
+  UpdateCheckItem,
+  UpdateRecord,
 } from './utils'
-import { Options } from '.'
+import { defaultExistPredicate, localhost, name } from './utils'
 
 export const checkUpdate = async (config: CheckUpdateConfig) => {
   const {

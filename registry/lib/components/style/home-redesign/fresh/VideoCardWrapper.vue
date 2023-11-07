@@ -1,14 +1,21 @@
 <template>
   <div class="fresh-home-video-card-wrapper">
-    <VideoCard v-bind="$attrs" orientation="vertical" />
+    <VideoCard v-bind="attrs" orientation="vertical" />
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import VideoCard from '@/components/feeds/VideoCard.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VideoCard,
+  },
+  inheritAttrs: false,
+  computed: {
+    attrs(): any {
+      return this.$attrs
+    },
   },
 })
 </script>

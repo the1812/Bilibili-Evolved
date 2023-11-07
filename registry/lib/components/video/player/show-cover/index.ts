@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import { videoChange, VideoChangeCallback } from '@/core/observer'
+import type { VideoChangeCallback } from '@/core/observer'
+import { videoChange } from '@/core/observer'
 import { createHook } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 

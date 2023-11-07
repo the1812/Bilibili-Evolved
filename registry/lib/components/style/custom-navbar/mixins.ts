@@ -1,27 +1,35 @@
+import { type Ref, ref, onMounted } from 'vue'
 import { CustomNavbarItem } from './custom-navbar-item'
 
-export const popperMixin = Vue.extend({
-  props: {
-    item: {
-      type: CustomNavbarItem,
-      required: true,
-    },
-    container: {
-      type: HTMLElement,
-      required: true,
-    },
+export const popupProps = {
+  item: {
+    type: CustomNavbarItem,
+    required: true,
   },
-  mounted() {
-    const navBarItem = this.item as CustomNavbarItem
-    const containerElement = this.container as HTMLElement
+  container: {
+    type: HTMLElement,
+    required: true,
+  },
+}
+
+export const usePopup = (props: {
+  item: CustomNavbarItem
+  container: HTMLElement
+}): {
+  el: Ref<HTMLElement | null>
+  popupShow: () => void
+} => {
+  const el = ref<HTMLElement | null>(null)
+  onMounted(() => {
+    const navBarItem = props.item
+    const containerElement = props.container
     if (containerElement) {
-      navBarItem?.usePopper(containerElement, this.$el.parentElement)
+      navBarItem?.usePopper(containerElement, el.value.parentElement)
     }
-  },
-  methods: {
-    popupShow() {
-      const navBarItem = this.item as CustomNavbarItem
-      navBarItem?.popper?.update()
-    },
-  },
-})
+  })
+  const popupShow = (): void => {
+    const navBarItem = props.item
+    navBarItem?.popper?.update().then()
+  }
+  return { el, popupShow }
+}

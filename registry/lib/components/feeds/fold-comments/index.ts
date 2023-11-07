@@ -1,9 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
-import { styledComponentEntry } from '@/components/styled-component'
-import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 import { feedsCardsManager } from '@/components/feeds/api'
-import { select } from '@/core/spin-query'
+import { styledComponentEntry } from '@/components/styled-component'
 import { childListSubtree } from '@/core/observer'
+import { select } from '@/core/spin-query'
+import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
 
 const entry = async () => {
   const { forEachFeedsCard } = await import('@/components/feeds/api')

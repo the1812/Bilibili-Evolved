@@ -13,16 +13,19 @@
   </div>
 </template>
 <script lang="ts">
-import { ComponentMetadata } from '@/components/types'
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { ComponentMetadata } from '@/components/types'
 import { Toast } from '@/core/toast'
 import { VIcon } from '@/ui'
+
 import { DevClientEvents } from './client'
-import { autoUpdateOptions, getDevClientOptions } from './options'
 import { urlConverter } from './converter'
+import { autoUpdateOptions, getDevClientOptions } from './options'
 
 const options = getDevClientOptions()
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },
@@ -32,7 +35,7 @@ export default Vue.extend({
       required: true,
     },
     component: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },
@@ -40,13 +43,13 @@ export default Vue.extend({
     return {
       busy: false,
       autoUpdateComponents: autoUpdateOptions.urls.components,
-      sessions: [],
+      sessions: [] as string[],
       isConnected: false,
     }
   },
   computed: {
     autoUpdateRecord() {
-      const metadata = this.component as ComponentMetadata
+      const metadata = this.component
       return this.autoUpdateComponents[metadata.name]
     },
     componentUpdateUrl() {
@@ -75,7 +78,7 @@ export default Vue.extend({
     devClient.addEventListener(DevClientEvents.ServerChange, this.handleServerChange)
     devClient.addEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
   },
-  async beforeDestroy() {
+  async beforeUnmount() {
     const { devClient } = await import('./client')
     devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
   },
@@ -100,7 +103,7 @@ export default Vue.extend({
     async startDebug() {
       await this.handleClick(async () => {
         const { devClient } = await import('./client')
-        const metadata = this.component as ComponentMetadata
+        const metadata = this.component
         const devUrl = urlConverter.toDevUrl(this.componentUpdateUrl)
         // console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
         if (this.autoUpdateRecord.url !== devUrl) {

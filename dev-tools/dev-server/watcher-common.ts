@@ -1,4 +1,4 @@
-import { Stats } from 'webpack'
+import type { Stats } from 'webpack'
 
 export const defaultWatcherHandler = (
   initCallback: (result: Stats) => void,

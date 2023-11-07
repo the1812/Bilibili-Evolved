@@ -40,28 +40,37 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { LaunchBarAction } from '@/components/launch-bar/launch-bar-action'
 import { VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },
   props: {
     action: {
-      type: Object,
+      type: Object as PropType<LaunchBarAction>,
       required: true,
     },
   },
+  emits: {
+    action: null as (e: KeyboardEvent | MouseEvent) => true,
+    'delete-item': null as (e: KeyboardEvent | MouseEvent) => true,
+    'previous-item': null as (e: KeyboardEvent) => true,
+    'next-item': null as (e: KeyboardEvent) => true,
+  },
   methods: {
-    async performAction(event: KeyboardEvent | MouseEvent) {
-      await this.action.action()
+    performAction(event: KeyboardEvent | MouseEvent) {
+      this.action.action()
       this.$emit('action', event)
     },
-    async performDelete(event: KeyboardEvent | MouseEvent) {
+    performDelete(event: KeyboardEvent | MouseEvent) {
       if (!this.action.deleteAction) {
         return
       }
-      await this.action.deleteAction()
+      this.action.deleteAction()
       this.$emit('delete-item', event)
     },
   },

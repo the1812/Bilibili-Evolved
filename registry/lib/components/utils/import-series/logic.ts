@@ -1,7 +1,7 @@
-import { getCsrf, delay } from '@/core/utils'
-import { select, sq } from '@/core/spin-query'
 import { urlChange } from '@/core/observer'
+import { select, sq } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
+import { delay, getCsrf } from '@/core/utils'
 
 const importSeries = async (sid, uid, csrf) => {
   // 获取合集所有视频

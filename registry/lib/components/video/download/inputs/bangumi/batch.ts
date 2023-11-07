@@ -1,11 +1,14 @@
+import { defineAsyncComponent } from 'vue'
 import { getJson } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatNumber } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
 import { formatTitle } from '@/core/utils/title'
 import { bangumiUrls } from '@/core/utils/urls'
-import { DownloadVideoInput } from '../../types'
-import { createEpisodesPicker, EpisodeItem } from '../episode-item'
+
+import type { DownloadVideoInput } from '../../types'
+import type { EpisodeItem } from '../episode-item'
+import { createEpisodesPicker } from '../episode-item'
 
 export const bangumiBatchInput: DownloadVideoInput = {
   name: 'bangumi.batch',
@@ -13,7 +16,7 @@ export const bangumiBatchInput: DownloadVideoInput = {
   match: bangumiUrls,
   batch: true,
   getInputs: async instance => instance?.checkedInputItems ?? [],
-  component: async () =>
+  component: defineAsyncComponent(async () =>
     createEpisodesPicker(async instance => {
       const metadata = dq('script[type="application/ld+json"]')
       if (!metadata) {
@@ -60,4 +63,5 @@ export const bangumiBatchInput: DownloadVideoInput = {
         } as EpisodeItem
       })
     }),
+  ),
 }

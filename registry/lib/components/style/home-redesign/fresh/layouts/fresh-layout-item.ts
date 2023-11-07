@@ -1,7 +1,8 @@
-import { Executable, VueModule, WithName } from '@/core/common-types'
+import type { Component } from 'vue'
+import type { WithName } from '@/core/common-types'
 
 export interface FreshLayoutItem extends WithName {
-  component: Executable<VueModule>
+  component: Component
   grow?: boolean
 }
 export interface FreshLayoutItemSettings {

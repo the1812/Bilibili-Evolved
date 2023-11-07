@@ -11,19 +11,23 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { ComponentMetadata } from '@/components/types'
+import type { ComponentConfigAction } from './component-actions'
 import { VIcon } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon,
   },
   props: {
     item: {
-      type: Object,
+      type: Object as PropType<ComponentConfigAction>,
       required: true,
     },
     component: {
-      type: Object,
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },

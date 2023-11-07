@@ -2,7 +2,7 @@
   <div class="download-subtitle-config download-video-config-section">
     <div class="download-video-config-item">
       <div class="download-video-config-title">字幕:</div>
-      <VDropdown v-model="type" :items="items">
+      <VDropdown v-model:value="type" :items="items">
         <template #item="{ item }">
           {{ item }}
         </template>
@@ -11,16 +11,19 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { VDropdown } from '@/ui'
-import { SubtitleDownloadType } from './utils'
+
+import type { SubtitleDownloadType } from './utils'
 
 interface Options {
+  [K: string]: unknown
   subtitleType: SubtitleDownloadType | '无'
 }
-const options = getComponentSettings('downloadVideo').options as Options
+const { options } = getComponentSettings<Options>('downloadVideo')
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VDropdown,
   },
@@ -31,7 +34,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    enabled() {
+    enabled(): boolean {
       return this.type !== '无'
     },
   },

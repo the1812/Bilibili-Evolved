@@ -1,3 +1,4 @@
+import { reactive } from 'vue'
 import { settings } from '@/core/settings'
 import { deleteValue } from '@/core/utils'
 
@@ -21,7 +22,8 @@ export interface UserStyle {
   /** 注入模式, 默认为`CustomStyleMode.default` */
   mode?: UserStyleMode
 }
-export const styles: Required<UserStyle>[] = Object.values(settings.userStyles)
+/** 包含所有样式的响应式数组 */
+export const styles: Required<UserStyle>[] = reactive(Object.values(settings.userStyles))
 /**
  * 安装自定义样式
  * @param input 自定义样式数据

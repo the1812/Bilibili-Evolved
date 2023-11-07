@@ -3,9 +3,9 @@
     <div class="video-default-location-form-line">
       <div class="video-default-location-form-item-not-grow">页面</div>
       <PageTypeSelector
-        v-model="pageType"
+        v-model:value="pageType"
         class="video-default-location-form-item-grow"
-        @change="onChangePageType"
+        @update:value="onChangePageType"
       />
     </div>
 
@@ -14,18 +14,18 @@
     <div class="video-default-location-form-line">
       <div class="video-default-location-form-item-not-grow">默认位置</div>
       <TextBox
-        v-model="defaultLocation"
+        v-model:text="defaultLocation"
         class="video-default-location-form-item-grow"
         linear
         change-on-blur
-        @change="onChangeDefaultLocation"
+        @update:text="onChangeDefaultLocation"
       />
     </div>
 
     <div class="video-default-location-vertical-space"></div>
 
     <div class="video-default-location-options-test">
-      <ExtendBox v-model="hiddenAdvance" @change="resetObservePosition">
+      <ExtendBox v-model:hidden="hiddenAdvance" @update:hidden="resetObservePosition">
         <div class="video-default-location-options-advanced">
           <Advanced
             :observe-position="observePosition"
@@ -39,12 +39,16 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import type { PropType } from 'vue'
+import type { ComponentMetadata } from '@/components/types'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox } from '@/ui'
-import ExtendBox from './ExtendBox.vue'
+
+import { getCurrentPageType, pageTypeInfos } from '.'
 import Advanced from './Advanced.vue'
+import ExtendBox from './ExtendBox.vue'
 import PageTypeSelector from './PageTypeSelector.vue'
-import { pageTypeInfos, getCurrentPageType } from '.'
 
 const maxLocation = 4000
 
@@ -58,7 +62,7 @@ const stringIntoInt = (value: string): number | null => {
   return Math.round(num)
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     TextBox,
     ExtendBox,
@@ -67,7 +71,7 @@ export default Vue.extend({
   },
   props: {
     componentData: {
-      type: Object, // ComponentMetadata
+      type: Object as PropType<ComponentMetadata>,
       required: true,
     },
   },
@@ -93,7 +97,7 @@ export default Vue.extend({
       panelObserver.start()
     }
   },
-  beforeDestroy() {
+  beforeUnmount() {
     if (panelObserver) {
       panelObserver.stop()
     }

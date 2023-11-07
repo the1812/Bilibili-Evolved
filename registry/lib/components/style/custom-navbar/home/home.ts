@@ -1,4 +1,5 @@
-import { CustomNavbarItemInit } from '../custom-navbar-item'
+import { defineAsyncComponent } from 'vue'
+import type { CustomNavbarItemInit } from '../custom-navbar-item'
 
 export const home: CustomNavbarItemInit = {
   name: 'home',
@@ -9,5 +10,5 @@ export const home: CustomNavbarItemInit = {
   touch: true,
 
   boundingWidth: 366,
-  popupContent: () => import('./NavbarHome.vue').then(m => m.default),
+  popupContent: defineAsyncComponent(() => import('./NavbarHome.vue')),
 }

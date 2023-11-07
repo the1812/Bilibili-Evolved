@@ -20,11 +20,11 @@ const [icons] = registerAndGetData(CustomIcons, customIcons)
 export const renderVIcon = (
   icon: string,
   size = 24,
-  config?: {
+  config: {
     slot?: string
     style?: string
     className?: string
-  },
+  } = {},
 ) => {
   const { slot, style, className } = {
     slot: '',

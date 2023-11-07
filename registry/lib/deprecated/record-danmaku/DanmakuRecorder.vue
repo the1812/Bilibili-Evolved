@@ -31,15 +31,16 @@
 </template>
 
 <script lang="ts">
-import { select } from '@/core/spin-query'
+import { defineComponent } from 'vue'
+import type { LiveDanmaku } from '@/components/live/live-socket'
 import { getJson } from '@/core/ajax'
-import { logError } from '@/core/utils/log'
-import { fixed } from '@/core/utils'
 import { DownloadPackage } from '@/core/download'
-import { LiveDanmaku } from '@/components/live/live-socket'
-import { VIcon, VButton } from '@/ui'
+import { select } from '@/core/spin-query'
+import { fixed } from '@/core/utils'
+import { logError } from '@/core/utils/log'
+import { VButton, VIcon } from '@/ui'
 
-export default {
+export default defineComponent({
   components: {
     VIcon,
     VButton,
@@ -47,7 +48,7 @@ export default {
   data() {
     return {
       isRecording: true,
-      danmakus: [],
+      danmakus: [] as LiveDanmaku[],
       opened: false,
       collapsed: false,
       loading: true,
@@ -115,7 +116,7 @@ export default {
       console.log(xml)
     },
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

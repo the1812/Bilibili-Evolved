@@ -8,10 +8,13 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { isUserPlugin } from '@/core/settings'
 import { getHook } from '@/plugins/hook'
-import { installPlugin, PluginMetadata, plugins, uninstallPlugin } from '@/plugins/plugin'
-import { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
+import type { PluginMetadata } from '@/plugins/plugin'
+import { installPlugin, plugins, uninstallPlugin } from '@/plugins/plugin'
+
+import type { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
 import ManagePanel from './manage-panel/ManagePanel.vue'
 import UserItem from './manage-panel/UserItem.vue'
 
@@ -53,7 +56,7 @@ const getItemConfig = (item: PluginMetadata): ManageItem<PluginMetadata> => ({
     await after()
   },
 })
-export default Vue.extend({
+export default defineComponent({
   components: {
     ManagePanel,
     UserItem,

@@ -13,13 +13,18 @@
   </div>
 </template>
 <script lang="ts">
-import { VEmpty, VLoading } from '@/ui'
+import type { Ref, PropType } from 'vue'
+import { defineComponent, ref } from 'vue'
+
+import type { VideoCard } from '@/components/feeds/video-card'
 import { enableHorizontalScroll } from '@/core/horizontal-scroll'
 import { addComponentListener } from '@/core/settings'
-import VideoCardWrapper from './VideoCardWrapper.vue'
-import { setupScrollMask, cleanUpScrollMask } from './scroll-mask'
+import { VEmpty, VLoading } from '@/ui'
 
-export default Vue.extend({
+import { cleanUpScrollMask, setupScrollMask } from './scroll-mask'
+import VideoCardWrapper from './VideoCardWrapper.vue'
+
+export default defineComponent({
   components: {
     VEmpty,
     VLoading,
@@ -27,7 +32,7 @@ export default Vue.extend({
   },
   props: {
     videos: {
-      type: Array,
+      type: Array as PropType<VideoCard[]>,
       default: () => [],
     },
     loading: {
@@ -35,21 +40,28 @@ export default Vue.extend({
       default: true,
     },
   },
+  setup: () => ({
+    content: ref(null) as Ref<HTMLDivElement | null>,
+    cards: ref(null) as Ref<InstanceType<typeof VideoCardWrapper>[] | null>,
+  }),
   watch: {
-    videos() {
-      this.setupIntersection()
+    videos: {
+      handler() {
+        this.setupIntersection()
+      },
+      deep: true,
     },
-    loaded() {
-      if (this.loaded) {
+    loaded(value) {
+      if (value) {
         this.setupIntersection()
       }
     },
   },
-  beforeDestroy() {
+  beforeUnmount() {
     cleanUpScrollMask(this.$el)
   },
   mounted() {
-    const container = this.$refs.content as HTMLElement
+    const container = this.content as HTMLElement
     let cancel: () => void
     addComponentListener(
       'freshHome.horizontalWheelScroll',
@@ -68,11 +80,11 @@ export default Vue.extend({
       await this.$nextTick()
       setupScrollMask({
         container: this.$el,
-        items: this.$refs.cards.map((c: Vue) => c.$el),
+        items: this.cards.map(c => c.$el),
       })
     },
     offsetPage(offset: number) {
-      const container = this.$refs.content as HTMLElement
+      const container = this.content as HTMLElement
       const style = getComputedStyle(container)
       const containerWidth = container.clientWidth
       const wrapperWidth =

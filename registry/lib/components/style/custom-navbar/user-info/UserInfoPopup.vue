@@ -1,5 +1,5 @@
 <template>
-  <div class="user-info-panel">
+  <div ref="el" class="user-info-panel">
     <div v-if="isLogin && userInfo.isLogin === true" class="logged-in">
       <a class="name" target="_blank" href="https://space.bilibili.com/">{{ userInfo.uname }}</a>
       <a class="type" target="_blank" href="https://account.bilibili.com/account/big">{{
@@ -83,7 +83,7 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/fans/follow'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.following | count }}</div>
+          <div class="stats-number">{{ count(stat.following) }}</div>
           关注
         </a>
         <a
@@ -91,7 +91,7 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/fans/fans'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.follower | count }}</div>
+          <div class="stats-number">{{ count(stat.follower) }}</div>
           粉丝
         </a>
         <a
@@ -99,7 +99,7 @@
           :href="'https://space.bilibili.com/' + userInfo.mid + '/dynamic'"
           target="_blank"
         >
-          <div class="stats-number">{{ stat.dynamic_count | count }}</div>
+          <div class="stats-number">{{ count(stat.dynamic_count) }}</div>
           动态
         </a>
       </div>
@@ -155,26 +155,26 @@
 </template>
 
 <script lang="ts">
-import { getUID, getCsrf, formData } from '@/core/utils'
-import { formatCount } from '@/core/utils/formatters'
-import { logError } from '@/core/utils/log'
+import { defineComponent } from 'vue'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUserInfo } from '@/core/user-info'
-import { popperMixin } from '../mixins'
+import { formData, getCsrf, getUID } from '@/core/utils'
+import { formatCount } from '@/core/utils/formatters'
+import { logError } from '@/core/utils/log'
+
+import { popupProps, usePopup } from '../mixins'
 
 type PrivilegeType = 1 | 2
-export default Vue.extend({
+export default defineComponent({
   components: {
     VIcon: coreApis.ui.VIcon,
   },
-  filters: {
-    count: formatCount,
-  },
-  mixins: [popperMixin],
+  props: popupProps,
+  setup: usePopup,
   data() {
     return {
-      userInfo: {},
-      stat: {},
+      userInfo: {} as any,
+      stat: {} as any,
       isLogin: Boolean(getUID()),
       privileges: {
         bCoin: {
@@ -189,7 +189,7 @@ export default Vue.extend({
     }
   },
   computed: {
-    level() {
+    level(): { icon: string; colored?: boolean } {
       const baseLevel = `lv${this.userInfo.level_info.current_level}`
       if (this.userInfo.is_senior_member) {
         return {
@@ -201,7 +201,14 @@ export default Vue.extend({
         icon: baseLevel,
       }
     },
-    userType() {
+    userType():
+      | '未登录'
+      | '注册会员'
+      | '正式会员'
+      | '小会员'
+      | '大会员'
+      | '年度小会员'
+      | '年度大会员' {
       if (!this.userInfo.isLogin) {
         return '未登录'
       }
@@ -218,7 +225,7 @@ export default Vue.extend({
       }
       return '正式会员'
     },
-    levelProgressStyle() {
+    levelProgressStyle(): Record<string, string> {
       if (!this.userInfo.isLogin) {
         return {}
       }
@@ -248,6 +255,7 @@ export default Vue.extend({
     }
   },
   methods: {
+    count: formatCount,
     async privilegeReceive(type: PrivilegeType) {
       const typeMapping = {
         1: 'bCoin',

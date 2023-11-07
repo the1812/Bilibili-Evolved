@@ -2,8 +2,10 @@ import { loadDanmakuSettingsPanel } from '@/core/utils/lazy-panel'
 import { logError } from '@/core/utils/log'
 import { ascendingSort } from '@/core/utils/sort'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { DanmakuConverterConfig, DanmakuConverter } from '../converter/danmaku-converter'
-import { DanmakuType } from '../converter/danmaku-type'
+
+import type { DanmakuConverterConfig } from '../converter/danmaku-converter'
+import { DanmakuConverter } from '../converter/danmaku-converter'
+import type { DanmakuType } from '../converter/danmaku-type'
 import { XmlDanmaku } from '../converter/xml-danmaku'
 
 export class JsonDanmaku {
@@ -165,8 +167,6 @@ export const getUserDanmakuConfig = async () => {
             continue
           }
           switch (b.t) {
-            default:
-              return true
             case 'keyword': {
               if (danmaku.content.includes(b.v)) {
                 return false
@@ -185,6 +185,8 @@ export const getUserDanmakuConfig = async () => {
               }
               break
             }
+            default:
+              return true
           }
         }
         return true
@@ -260,15 +262,15 @@ export const getBlobByType = async (
         type: 'text/xml',
       })
     }
-    default:
-    case 'json': {
-      return new Blob([JSON.stringify(danmaku.jsonDanmakus, undefined, 2)], {
-        type: 'text/json',
-      })
-    }
     case 'ass': {
       return new Blob([await convertToAssFromJson(danmaku)], {
         type: 'text/ass',
+      })
+    }
+    case 'json':
+    default: {
+      return new Blob([JSON.stringify(danmaku.jsonDanmakus, undefined, 2)], {
+        type: 'text/json',
       })
     }
   }

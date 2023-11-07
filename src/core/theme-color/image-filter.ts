@@ -1,4 +1,4 @@
-import Color from 'color'
+import type Color from 'color'
 
 export const makeImageFilter = (from: Color, to: Color) => {
   const hue = to.hue() - from.hue()

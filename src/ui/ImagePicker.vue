@@ -4,9 +4,9 @@
       <slot name="text"> 选择图片 </slot>
     </VButton>
     <VPopup
-      v-model="popupOpen"
+      v-model:open="popupOpen"
       class="popup"
-      :trigger-element="$refs.pickButton"
+      :trigger-element="pickButton"
       @keydown.esc="cancel()"
     >
       <transition-group name="image-list" tag="div" class="images" tabindex="-1">
@@ -25,7 +25,7 @@
       <div v-show="images.length === 0" class="empty-tip">空空如也哦 =￣ω￣=</div>
       <div class="operations">
         <VPopup
-          v-model="addImagePopupOpen"
+          v-model:open="addImagePopupOpen"
           tabindex="-1"
           class="add-image-popup"
           :lazy="false"
@@ -35,20 +35,22 @@
             名称:
             <TextBox
               ref="addImageInput"
-              v-model="newImage.name"
+              v-model:text="newImage.name"
               :disabled="!addImagePopupOpen"
             ></TextBox>
           </div>
           <div class="add-image-row">
             链接:
-            <TextBox v-model="newImage.url" :disabled="!addImagePopupOpen"></TextBox>
+            <TextBox v-model:text="newImage.url" :disabled="!addImagePopupOpen"></TextBox>
           </div>
           <div class="add-image-row buttons">
             <VButton
               :disabled="!addImagePopupOpen"
               @click="
-                addImagePopupOpen = false
-                clearNewImage()
+                () => {
+                  addImagePopupOpen = false
+                  clearNewImage()
+                }
               "
             >
               取消
@@ -57,9 +59,11 @@
               :disabled="!newImage.url || !newImage.name"
               type="primary"
               @click="
-                addImage(newImage)
-                addImagePopupOpen = false
-                clearNewImage()
+                () => {
+                  addImage(newImage)
+                  addImagePopupOpen = false
+                  clearNewImage()
+                }
               "
             >
               确定
@@ -83,8 +87,10 @@
         <VButton
           :disabled="!selectedImage.name"
           @click="
-            removeImage(selectedImage)
-            clearImage()
+            () => {
+              removeImage(selectedImage)
+              clearImage()
+            }
           "
         >
           删除
@@ -100,25 +106,36 @@
 </template>
 
 <script lang="ts">
-import { ImageItem, getEmptyImage, images, addImage, removeImage } from './image-store'
+import type { Ref, PropType } from 'vue'
+import { defineAsyncComponent, defineComponent, ref } from 'vue'
+import type { ImageItem } from './image-store'
+import { addImage, getEmptyImage, images, removeImage } from './image-store'
+import { vueDirectives } from '@/core/utils'
 
-export default Vue.extend({
+const VButton = defineAsyncComponent(() => import('./VButton.vue'))
+const VPopup = defineAsyncComponent(() => import('./VPopup.vue'))
+const TextBox = defineAsyncComponent(() => import('./TextBox.vue'))
+
+export default defineComponent({
   name: 'ImagePicker',
   components: {
-    VButton: () => import('./VButton.vue').then(m => m.default),
-    VPopup: () => import('./VPopup.vue').then(m => m.default),
-    TextBox: () => import('./TextBox.vue').then(m => m.default),
+    VButton,
+    VPopup,
+    TextBox,
   },
-  model: {
-    prop: 'image',
-    event: 'change',
-  },
+  directives: { hit: vueDirectives.vHit },
   props: {
     image: {
-      type: Object,
+      type: Object as PropType<ImageItem>,
       required: true,
     },
   },
+  emits: ['update:image'],
+  setup: () => ({
+    pickButton: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+    addImageInput: ref(null) as Ref<InstanceType<typeof TextBox> | null>,
+    addButton: ref(null) as Ref<InstanceType<typeof VButton> | null>,
+  }),
   data() {
     return {
       images,
@@ -132,7 +149,7 @@ export default Vue.extend({
     addImage,
     removeImage,
     ok() {
-      this.$emit('change', this.selectedImage)
+      this.$emit('update:image', this.selectedImage)
       this.popupOpen = false
     },
     cancel() {
@@ -154,13 +171,13 @@ export default Vue.extend({
     },
     editImage() {
       this.newImage = this.selectedImage
-      // this.$refs.addButton.$el.click()
+      // this.addButton.$el.click()
       this.openAddImagePopup()
     },
     async openAddImagePopup() {
       this.addImagePopupOpen = !this.addImagePopupOpen
       await this.$nextTick()
-      this.$refs.addImageInput.$refs.input.focus()
+      this.addImageInput.inputRef.focus()
     },
   },
 })
@@ -200,7 +217,7 @@ export default Vue.extend({
       padding-left: 6px;
       padding-top: 6px;
       .image {
-        &.image-list-enter,
+        &.image-list-enter-from,
         &.image-list-leave-to {
           opacity: 0;
         }
