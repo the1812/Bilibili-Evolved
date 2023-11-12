@@ -61,6 +61,7 @@ const entry = async () => {
     'subarea_rank',
     'popular_rank',
     'launch_id',
+    'spmid',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
