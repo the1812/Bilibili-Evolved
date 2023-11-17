@@ -12,11 +12,6 @@ const name = camelName
 
 const displayName = '自定义字体'
 
-const description = {
-  'zh-CN':
-    '使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明',
-}
-
 const tags = [componentsTags.style, componentsTags.general]
 
 const entry = () => {
@@ -123,7 +118,6 @@ const author = {
 export const component = defineComponentMetadata({
   name,
   displayName,
-  description,
   tags,
   entry,
   options,

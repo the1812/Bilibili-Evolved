@@ -31,6 +31,7 @@ export interface ExtraOptionsPanelInitData {
   }
 }
 
+// 当使用 ExtraOptionsPanel 组件时，如果不传入 initData 所使用的默认数据
 export const defaultInitData: ExtraOptionsPanelInitData = {
   header: {
     title: {
