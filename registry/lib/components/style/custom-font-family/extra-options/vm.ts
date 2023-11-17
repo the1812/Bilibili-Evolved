@@ -9,7 +9,7 @@ const getPanelLoadState = () => {
 }
 
 const mountPanel = async () => {
-  const panel = await import('./Panel1.vue').then(m => m.default)
+  const panel = await import('./Panel.vue').then(m => m.default)
   panelVm = mountVueComponent(panel)
   document.body.insertAdjacentElement('beforeend', panelVm.$el)
 }
