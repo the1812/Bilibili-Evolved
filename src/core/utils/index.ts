@@ -672,3 +672,8 @@ export const todo = (...args: unknown[]): never => {
 export const unreachable = (): never => {
   throw new Error(`unreachable`)
 }
+
+/** 是否为流量计费网络 (不支持的浏览器仍按 false 算) */
+export const isDataSaveMode = () => {
+  return navigator.connection?.saveData ?? false
+}
