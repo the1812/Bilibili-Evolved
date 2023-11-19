@@ -32,9 +32,12 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
   height: var(--navbar-height) !important;
 }
 #message-navbar,
-#biliMainHeader:not(.z-top-container),
+body:not(.history-page) #biliMainHeader:not(.z-top-container),
 .z-top-container:not(#biliMainHeader) {
   max-height: var(--navbar-height) !important;
+}
+body.history-page #biliMainHeader:not(.z-top-container) {
+  height: auto;
 }
 .link-top-container#tab-container {
   top: var(--navbar-height) !important;
