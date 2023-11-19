@@ -1,3 +1,5 @@
+<!-- spell-checker: disable -->
+
 <div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="./images/bilibili-evolved-wide-color.svg"></div>
 <br>
 <div align="center">

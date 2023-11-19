@@ -3,8 +3,14 @@
     <slot />
   </div>
 </template>
-<script lang="ts">
-export default Vue.extend({})
+<script setup lang="ts">
+const params = new URLSearchParams(location.search)
+if (params.has('bvid')) {
+  const restParams = new URLSearchParams([...params.entries()].filter(([name]) => name !== 'bvid'))
+  location.replace(
+    `/video/${params.get('bvid')}${restParams.size > 0 ? `?${restParams.toString()}` : ''}`,
+  )
+}
 </script>
 <style lang="scss">
 @import 'common';

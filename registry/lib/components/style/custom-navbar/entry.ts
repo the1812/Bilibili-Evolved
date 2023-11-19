@@ -43,6 +43,10 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
       true,
     )
   }
+  // https://github.com/the1812/Bilibili-Evolved/issues/4459
+  if (matchUrlPattern('https://www.bilibili.com/account/history')) {
+    document.body.classList.add('history-page')
+  }
   const CustomNavbar = await import('./CustomNavbar.vue')
   const customNavbar: Vue & {
     styles: string[]
