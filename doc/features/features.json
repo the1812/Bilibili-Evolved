@@ -195,7 +195,7 @@
     "type": "component",
     "name": "customFontFamily",
     "displayName": "自定义字体",
-    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明",
+    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。\r\n\r\n当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。\r\n\r\n而 `覆盖*` 选项相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的 `覆盖*` 选项后才会应用。\r\n\r\n字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。",
     "fullRelativePath": "../../registry/dist/components/style/custom-font-family.js",
     "fullAbsolutePath": "registry/dist/components/style/custom-font-family.js"
   },
@@ -1058,6 +1058,14 @@
   },
   {
     "type": "plugin",
+    "name": "downloadVideo.outputs.mpv-ex",
+    "displayName": "下载视频 - MPV 输出支持加强版",
+    "description": "by [@asuaaa](https://github.com/Asukaaaaaa)\n\n为下载视频增加 MPV 输出，支持导出列表, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/mpv-output-ex.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/mpv-output-ex.js"
+  },
+  {
+    "type": "plugin",
     "name": "downloadVideo.outputs.mpv-playlist",
     "displayName": "下载视频 - MPV 播放支持（列表）",
     "description": "by [@wuliic](https://github.com/wullic)\n\n为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)",
@@ -1071,6 +1079,14 @@
     "description": "by [@diannaojiang](https://github.com/diannaojiang)\n\n为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)",
     "fullRelativePath": "../../registry/dist/plugins/video/download/mpv-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/mpv-output.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.wasm",
+    "displayName": "下载视频 - WASM 混流输出",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n使用 WASM 在浏览器中下载并合并音视频",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/wasm-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/wasm-output.js"
   },
   {
     "type": "plugin",

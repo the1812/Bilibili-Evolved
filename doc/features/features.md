@@ -242,7 +242,13 @@ by [@RieN7](https://github.com/rien7)
 
 by [@Tinhone](https://github.com/Tinhone)
 
-使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明
+使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。
+
+当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。
+
+而 `覆盖*` 选项相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的 `覆盖*` 选项后才会应用。
+
+字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。
 
 ### [自定义顶栏](../../registry/dist/components/style/custom-navbar.js)
 `customNavbar`
@@ -1415,6 +1421,17 @@ by FoundTheWOUT
 
 为下载视频增加 Motrix 输出支持.
 
+### [下载视频 - MPV 输出支持加强版](../../registry/dist/plugins/video/download/mpv-output-ex.js)
+`downloadVideo.outputs.mpv-ex`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/mpv-output-ex.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output-ex.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/mpv-output-ex.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/mpv-output-ex.js)
+
+by [@asuaaa](https://github.com/Asukaaaaaa)
+
+为下载视频增加 MPV 输出，支持导出列表, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
+
 ### [下载视频 - MPV 播放支持（列表）](../../registry/dist/plugins/video/download/mpv-output-playlist.js)
 `downloadVideo.outputs.mpv-playlist`
 
@@ -1436,6 +1453,17 @@ by [@wuliic](https://github.com/wullic)
 by [@diannaojiang](https://github.com/diannaojiang)
 
 为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)
+
+### [下载视频 - WASM 混流输出](../../registry/dist/plugins/video/download/wasm-output.js)
+`downloadVideo.outputs.wasm`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/wasm-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/wasm-output.js)
+
+by [@WakelessSloth56](https://github.com/WakelessSloth56)
+
+使用 WASM 在浏览器中下载并合并音视频
 
 ### [快捷键扩展 - 视频倍速](../../registry/dist/plugins/video/player/speed.js)
 `speed.keymap`
