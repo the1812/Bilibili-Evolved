@@ -1,59 +1,52 @@
 @import 'common';
 
-$pref: 'eop';
-$prefH: 'eop-h';
-$prefHL: 'eop-h-l';
-$prefHR: 'eop-h-r';
-$prefC: 'eop-c';
-$prefCS: 'eop-c-s';
-
-$panelPadding: 22px;
+$pref: 'be-eop';
+$panel-padding: 18px;
+$internal-spacing: 14px;
 
 @mixin extra-options-panel {
-  &.extra-options-panel {
+  &.be-extra-options-panel {
     @include popup();
     display: flex;
     flex-direction: column;
     width: 500px;
+    max-width: 80vw;
     max-height: 80vh;
-    padding: $panelPadding 0;
+    padding: $panel-padding 0;
     left: 50%;
     top: 50%;
     transform: translateX(-50%) translateY(-50%) scale(0.95);
     transition: all 0.2s ease-out;
     font-size: 14px;
+    line-height: normal;
     z-index: 100002;
 
     &.open {
       transform: translateX(-50%) translateY(-50%) scale(1);
     }
 
-    &.peek {
-      opacity: 0.1;
-    }
-
     > .#{$pref}-header {
       display: flex;
       justify-content: space-between;
-      padding: 0 $panelPadding 18px $panelPadding;
+      padding: 0 $panel-padding $internal-spacing $panel-padding;
       flex-shrink: 0;
 
-      > .#{$prefH}-left {
+      > .#{$pref}-h-title {
         display: flex;
         column-gap: 4px;
 
-        > .#{$prefHL}-title {
+        > .#{$pref}-h-t-text {
           @include semi-bold();
           font-size: 19px;
           line-height: 20px;
         }
       }
 
-      > .#{$prefH}-right {
+      > .#{$pref}-h-actions {
         display: flex;
-        column-gap: 20px;
+        column-gap: ($internal-spacing + 4px);
 
-        > [class*='#{$prefHR}'] {
+        > .#{$pref}-h-a-action {
           cursor: pointer;
           transition: all 0.2s ease-out;
 
@@ -66,40 +59,41 @@ $panelPadding: 22px;
 
     > .#{$pref}-separator {
       height: 1px;
-      margin: 0 $panelPadding;
-      background: rgba(0, 0, 0, 0.1);
+      margin: 0 $panel-padding;
+      background-color: rgba(0, 0, 0, 0.1);
       flex-shrink: 0;
 
       body.dark & {
-        background: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.1);
       }
     }
 
     > .#{$pref}-content {
-      padding: 0 $panelPadding;
+      @include no-scrollbar();
+      padding: $internal-spacing $panel-padding 0 $panel-padding;
       overflow: auto;
       flex-grow: 1;
       flex-shrink: 1;
 
-      > .#{$prefC}-section {
-        margin: 18px 0;
+      > .#{$pref}-c-option {
+        margin-bottom: ($internal-spacing + 4px);
 
-        &:nth-child(1):nth-last-child(1) {
-          margin-bottom: 12px;
+        &:nth-last-child(1) {
+          margin-bottom: ($internal-spacing - 2px);
         }
 
-        > .#{$prefCS}-title {
+        > .#{$pref}-c-o-title {
           margin-bottom: 2px;
           font-size: 14px;
         }
 
-        > .#{$prefCS}-description {
+        > .#{$pref}-c-o-description {
           margin-bottom: 8px;
           opacity: 0.6;
           font-size: 12px;
         }
 
-        > .#{$prefCS}-input {
+        > .#{$pref}-c-o-input {
           @include h-center();
           flex-wrap: wrap;
         }

@@ -12,11 +12,6 @@ const name = camelName
 
 const displayName = '自定义字体'
 
-const description = {
-  'zh-CN':
-    '使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明',
-}
-
 const tags = [componentsTags.style, componentsTags.general]
 
 const entry = () => {
@@ -100,16 +95,16 @@ const options = {
   },
 }
 
-const extraOptions = () => import('./extra-options/entry.vue').then(m => m.default)
+const extraOptions = () => import('./extra-options/Entry.vue').then(m => m.default)
 
 const instantStyles = [
   {
-    name: `${name}--style--setFontFamily`,
+    name: `${kebabName}--style--set-font-family`, // style 标签 id
     style: () => import('./set-font-family.scss'),
     important: true,
   },
   {
-    name: `${name}--style--disableQuotationMarkTextIndent`,
+    name: `${kebabName}--style--disable-quotation-mark-text-indent`,
     style: () => import('./disable-quotation-mark-text-indent.scss'),
     important: true,
   },
@@ -123,7 +118,6 @@ const author = {
 export const component = defineComponentMetadata({
   name,
   displayName,
-  description,
   tags,
   entry,
   options,
