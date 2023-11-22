@@ -4,6 +4,8 @@
 ## v2.8.6-preview
 `2023-11-22`
 
+包含 [v2.8.6](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.6) 的所有更新内容.
+
 ✨新增
 - 新增插件 `下载视频 - MPV 输出支持加强版`. (PR #4448 by [weapon!](https://github.com/Asukaaaaaa))
 > 同时支持单文件和多文件, 不需要额外下载程序处理 mpv 协议, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
