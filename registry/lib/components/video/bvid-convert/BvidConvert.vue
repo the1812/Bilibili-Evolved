@@ -57,7 +57,9 @@ const linkProviders: LinkProvider[] = [
         newQuery.set(key, value)
       }
     }
-    return `https://www.bilibili.com/video/${id}${newQuery ? `?${newQuery.toString()}` : ''}`
+    return `https://www.bilibili.com/video/${id}${
+      newQuery.size > 0 ? `?${newQuery.toString()}` : ''
+    }`
   },
 ]
 export default Vue.extend({

@@ -82,7 +82,7 @@
   },
   "pnpm": {
     "overrides": {
-      "caniuse-lite": "^1.0.30001481",
+      "caniuse-lite": "1.0.30001547",
       "consolidate": "1.0.1"
     }
   },

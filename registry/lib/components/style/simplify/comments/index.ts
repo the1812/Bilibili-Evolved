@@ -35,7 +35,7 @@ export const component = wrapSwitchOptions({
     },
     eventBanner: {
       defaultValue: true,
-      displayName: '活动横幅',
+      displayName: '小喇叭横幅',
     },
   },
 })({
