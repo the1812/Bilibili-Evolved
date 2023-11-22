@@ -21,7 +21,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -53,7 +53,7 @@
         "type": "component",
         "name": "simplifyComments",
         "displayName": "简化评论区",
-        "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\r\n\r\n> 配置项仅对新版评论区有效\r\n\r\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\r\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\r\n- `头像框`: 隐藏头像框.\r\n- `回复换行`:\r\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\r\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\r\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\r\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\r\n- `活动横幅`: 隐藏评论区顶部的活动横幅\r\n",
+        "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\r\n\r\n> 配置项仅对新版评论区有效\r\n\r\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\r\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\r\n- `头像框`: 隐藏头像框.\r\n- `回复换行`:\r\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\r\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\r\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\r\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\r\n- `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅\r\n",
         "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
       },
@@ -200,7 +200,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -272,7 +272,7 @@
         "type": "component",
         "name": "fullFeedsContent",
         "displayName": "展开动态内容",
-        "description": "不管内容多长, 总是完全展开动态的内容.",
+        "description": "不管内容多长, 总是完全展开动态的内容. (专栏不算)\r\n",
         "fullRelativePath": "../../registry/dist/components/feeds/full-content.js",
         "fullAbsolutePath": "registry/dist/components/feeds/full-content.js"
       },
