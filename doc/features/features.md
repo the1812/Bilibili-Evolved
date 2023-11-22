@@ -63,7 +63,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/full-content.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/full-content.js)
 
-不管内容多长, 总是完全展开动态的内容.
+不管内容多长, 总是完全展开动态的内容. (专栏不算)
 
 ### [展开动态标题](../../registry/dist/components/feeds/full-title.js)
 `fullFeedsTitle`
@@ -242,7 +242,13 @@ by [@RieN7](https://github.com/rien7)
 
 by [@Tinhone](https://github.com/Tinhone)
 
-使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明
+使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。
+
+当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。
+
+而 `覆盖*` 选项相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的 `覆盖*` 选项后才会应用。
+
+字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。
 
 ### [自定义顶栏](../../registry/dist/components/style/custom-navbar.js)
 `customNavbar`
@@ -411,9 +417,12 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 使用重新设计的清爽风格首页替换原本的首页.
 
-请注意, 此功能与 `极简首页` 互斥, 请勿同时使用.
+请注意:
+- 此功能与 `极简首页` 互斥, 请勿同时使用.
+- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.
 
-- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频
+选项说明:
+- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频.
 - 启用横向滚动: 在可以横向滚动的列表中, 使鼠标滚轮可以做出横向滚动的效果, 请注意这会禁用卡片的边缘吸附效果.
 
 ### [极简首页](../../registry/dist/components/style/home-redesign/minimal.js)
@@ -425,8 +434,11 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 使用重新设计的极简首页替换原本的首页.
 
-请注意, 此功能与 `清爽首页` 互斥, 请勿同时使用.
+请注意:
+- 此功能与 `清爽首页` 互斥, 请勿同时使用.
+- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.
 
+选项说明:
 - 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频
 - 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数
 
@@ -496,7 +508,7 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
   - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.
 - `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.
 - `粉丝勋章`: 隐藏用户的粉丝勋章.
-- `活动横幅`: 隐藏评论区顶部的活动横幅
+- `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅
 
 ### [简化首页](../../registry/dist/components/style/simplify/home.js)
 `simplifyHome`
@@ -764,11 +776,10 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/remove-promotions.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/remove-promotions.js)
 
-删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.
+删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \`占位文本\` 选项.
 
-- `占位文本`: 删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
-- `保留活动横幅`: 保留视频页面的活动横幅.
-- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.
+- \`占位文本\`: 删除首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
+- \`保留活动横幅\`: 保留视频页面的活动横幅.
 
 ### [关注时间显示](../../registry/dist/components/utils/subscribe-time-show.js)
 `subscribeTimeShow`
@@ -1410,6 +1421,17 @@ by FoundTheWOUT
 
 为下载视频增加 Motrix 输出支持.
 
+### [下载视频 - MPV 输出支持加强版](../../registry/dist/plugins/video/download/mpv-output-ex.js)
+`downloadVideo.outputs.mpv-ex`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/mpv-output-ex.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output-ex.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/mpv-output-ex.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/mpv-output-ex.js)
+
+by [@asuaaa](https://github.com/Asukaaaaaa)
+
+为下载视频增加 MPV 输出，支持导出列表, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
+
 ### [下载视频 - MPV 播放支持（列表）](../../registry/dist/plugins/video/download/mpv-output-playlist.js)
 `downloadVideo.outputs.mpv-playlist`
 
@@ -1431,6 +1453,17 @@ by [@wuliic](https://github.com/wullic)
 by [@diannaojiang](https://github.com/diannaojiang)
 
 为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)
+
+### [下载视频 - WASM 混流输出](../../registry/dist/plugins/video/download/wasm-output.js)
+`downloadVideo.outputs.wasm`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/wasm-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/wasm-output.js)
+
+by [@WakelessSloth56](https://github.com/WakelessSloth56)
+
+使用 WASM 在浏览器中下载并合并音视频
 
 ### [快捷键扩展 - 视频倍速](../../registry/dist/plugins/video/player/speed.js)
 `speed.keymap`

@@ -3,6 +3,7 @@ import { selectorWrap } from './base'
 import { PlayerQuery, ElementQuery } from './types'
 import { VideoPlayerV2Agent } from './video-player-v2'
 
+/** 兼容旧版播放器和 BPX 播放器的 VideoPlayerAgent */
 export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
   query = selectorWrap({
     playerWrap: '.player-wrap',
@@ -62,22 +63,5 @@ export class VideoPlayerMixedAgent extends VideoPlayerV2Agent {
     super()
     this.checkBwpVideo()
     v3PlayerPolyfill()
-  }
-
-  seek(time: number) {
-    if (!this.nativeApi) {
-      return null
-    }
-    this.nativeApi.play()
-    setTimeout(() => {
-      this.nativeApi.seek(time)
-      const toastText = dq(
-        '.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)',
-      )
-      if (toastText) {
-        toastText.textContent = ' 00:00'
-      }
-    })
-    return this.nativeApi.getCurrentTime()
   }
 }

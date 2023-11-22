@@ -6,24 +6,24 @@ import { bangumiUrls } from '@/core/utils/urls'
 
 const idPolyfill = async () => {
   const player = await select(() => unsafeWindow.player)
-  if (!player?.__getUserParams()) {
+  if (!player?.getManifest) {
     return
   }
   const { useScopedConsole } = await import('@/core/utils/log')
   const console = useScopedConsole('v4 player polyfill')
   allMutations(() => {
-    const { input } = player.__getUserParams()
-    if (!input) {
-      console.warn('invalid getUserParams data')
+    const manifest = player.getManifest()
+    if (!manifest) {
+      console.warn('invalid getManifest data')
       return
     }
     const idData = {
-      aid: input.aid.toString(),
-      cid: input.cid.toString(),
-      bvid: input.bvid,
+      aid: manifest.aid.toString(),
+      cid: manifest.cid.toString(),
+      bvid: manifest.bvid ?? '',
     }
     if (Object.values(idData).some(it => it === '' || parseInt(it) <= 0)) {
-      console.warn('invalid input data')
+      console.warn('invalid manifest data', idData)
     }
     Object.assign(unsafeWindow, idData)
   })

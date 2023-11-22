@@ -205,8 +205,7 @@ export const isNotHtml = () => document.contentType !== 'text/html'
  * @param eventName 事件名称
  */
 export const raiseEvent = (element: HTMLElement, eventName: string) => {
-  const event = document.createEvent('HTMLEvents')
-  event.initEvent(eventName, true, true)
+  const event = new Event(eventName)
   element.dispatchEvent(event)
 }
 /** 根据图片URL生成 `srcset`, 范围从 `@1x` 至 `@4x`, 每 `0.25x` 产生一个 `src`
@@ -671,4 +670,9 @@ export const todo = (...args: unknown[]): never => {
  */
 export const unreachable = (): never => {
   throw new Error(`unreachable`)
+}
+
+/** 是否为流量计费网络 (不支持的浏览器仍按 false 算) */
+export const isDataSaveMode = () => {
+  return navigator.connection?.saveData ?? false
 }

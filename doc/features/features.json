@@ -51,7 +51,7 @@
     "type": "component",
     "name": "fullFeedsContent",
     "displayName": "展开动态内容",
-    "description": "不管内容多长, 总是完全展开动态的内容.",
+    "description": "不管内容多长, 总是完全展开动态的内容. (专栏不算)\r\n",
     "fullRelativePath": "../../registry/dist/components/feeds/full-content.js",
     "fullAbsolutePath": "registry/dist/components/feeds/full-content.js"
   },
@@ -195,7 +195,7 @@
     "type": "component",
     "name": "customFontFamily",
     "displayName": "自定义字体",
-    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明",
+    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。\r\n\r\n当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。\r\n\r\n而 `覆盖*` 选项相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的 `覆盖*` 选项后才会应用。\r\n\r\n字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。",
     "fullRelativePath": "../../registry/dist/components/style/custom-font-family.js",
     "fullAbsolutePath": "registry/dist/components/style/custom-font-family.js"
   },
@@ -323,7 +323,7 @@
     "type": "component",
     "name": "freshHome",
     "displayName": "清爽首页",
-    "description": "使用重新设计的清爽风格首页替换原本的首页.\r\n\r\n请注意, 此功能与 `极简首页` 互斥, 请勿同时使用.\r\n\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频\r\n- 启用横向滚动: 在可以横向滚动的列表中, 使鼠标滚轮可以做出横向滚动的效果, 请注意这会禁用卡片的边缘吸附效果.\r\n",
+    "description": "使用重新设计的清爽风格首页替换原本的首页.\r\n\r\n请注意:\r\n- 此功能与 `极简首页` 互斥, 请勿同时使用.\r\n- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.\r\n\r\n选项说明:\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频.\r\n- 启用横向滚动: 在可以横向滚动的列表中, 使鼠标滚轮可以做出横向滚动的效果, 请注意这会禁用卡片的边缘吸附效果.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/home-redesign/fresh.js",
     "fullAbsolutePath": "registry/dist/components/style/home-redesign/fresh.js"
   },
@@ -331,7 +331,7 @@
     "type": "component",
     "name": "minimalHome",
     "displayName": "极简首页",
-    "description": "使用重新设计的极简首页替换原本的首页.\r\n\r\n请注意, 此功能与 `清爽首页` 互斥, 请勿同时使用.\r\n\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频\r\n- 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数",
+    "description": "使用重新设计的极简首页替换原本的首页.\r\n\r\n请注意:\r\n- 此功能与 `清爽首页` 互斥, 请勿同时使用.\r\n- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.\r\n\r\n选项说明:\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频\r\n- 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数",
     "fullRelativePath": "../../registry/dist/components/style/home-redesign/minimal.js",
     "fullAbsolutePath": "registry/dist/components/style/home-redesign/minimal.js"
   },
@@ -379,7 +379,7 @@
     "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
-    "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\r\n\r\n> 配置项仅对新版评论区有效\r\n\r\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\r\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\r\n- `头像框`: 隐藏头像框.\r\n- `回复换行`:\r\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\r\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\r\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\r\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\r\n- `活动横幅`: 隐藏评论区顶部的活动横幅\r\n",
+    "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\r\n\r\n> 配置项仅对新版评论区有效\r\n\r\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\r\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\r\n- `头像框`: 隐藏头像框.\r\n- `回复换行`:\r\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\r\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\r\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\r\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\r\n- `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅\r\n",
     "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
   },
@@ -579,7 +579,7 @@
     "type": "component",
     "name": "removePromotions",
     "displayName": "删除广告",
-    "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.",
+    "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
     "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
   },
@@ -1058,6 +1058,14 @@
   },
   {
     "type": "plugin",
+    "name": "downloadVideo.outputs.mpv-ex",
+    "displayName": "下载视频 - MPV 输出支持加强版",
+    "description": "by [@asuaaa](https://github.com/Asukaaaaaa)\n\n为下载视频增加 MPV 输出，支持导出列表, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/mpv-output-ex.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/mpv-output-ex.js"
+  },
+  {
+    "type": "plugin",
     "name": "downloadVideo.outputs.mpv-playlist",
     "displayName": "下载视频 - MPV 播放支持（列表）",
     "description": "by [@wuliic](https://github.com/wullic)\n\n为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)",
@@ -1071,6 +1079,14 @@
     "description": "by [@diannaojiang](https://github.com/diannaojiang)\n\n为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)",
     "fullRelativePath": "../../registry/dist/plugins/video/download/mpv-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/mpv-output.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.wasm",
+    "displayName": "下载视频 - WASM 混流输出",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n使用 WASM 在浏览器中下载并合并音视频",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/wasm-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/wasm-output.js"
   },
   {
     "type": "plugin",

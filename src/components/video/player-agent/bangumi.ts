@@ -59,46 +59,18 @@ export class BangumiPlayerAgent extends PlayerAgent {
     super()
     bpxPlayerPolyfill()
   }
-  isMute() {
-    const icon = this.query.control.buttons.volume.sync() as HTMLElement
-    return icon?.classList.contains('squirtle-volume-mute-state') ?? false
-  }
-  changeVolume(change: number) {
-    const video = this.query.video.element.sync() as HTMLVideoElement
-    if (!video) {
-      return null
-    }
-    video.volume = lodash.clamp(video.volume + change / 100, 0, 1)
-    return Math.round(video.volume * 100)
-  }
+
   seek(time: number) {
-    const video = this.query.video.element.sync() as HTMLVideoElement
-    if (!video) {
-      return null
+    const seekResult = super.seek(time)
+    if (seekResult === null) {
+      return seekResult
     }
-    video.play()
     setTimeout(() => {
-      video.currentTime = lodash.clamp(time, 0, video.duration)
       const toastText = dq('.bpx-player-toast-row .bpx-player-toast-item .bpx-player-toast-text')
       if (toastText?.textContent?.startsWith('已为您定位至')) {
         toastText.textContent = '已为您定位至00:00'
       }
     })
-    return video.currentTime
-  }
-  changeTime(change: number) {
-    const video = this.query.video.element.sync() as HTMLVideoElement
-    if (!video) {
-      return null
-    }
-    video.currentTime = lodash.clamp(video.currentTime + change, 0, video.duration)
-    return video.currentTime
-  }
-  async toggleLight(on: boolean) {
-    const checkbox = this.query.control.settings.lightOff.sync()
-    //  开灯状态 && 关灯 -> 关灯
-    !checkbox.classList.contains('active') && !on && checkbox.click()
-    // 关灯状态 && 开灯 -> 开灯
-    checkbox.classList.contains('active') && on && checkbox.click()
+    return seekResult
   }
 }

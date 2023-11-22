@@ -1,97 +1,97 @@
 $name: 'custom-font-family';
-$fontFamilyCss: var(--#{$name}--options--font-family) !important;
+$font-family-css: var(--#{$name}--options--font-family) !important;
 
 // 收集 CSS 路径为单一字符串
-@function collectPaths($pathList) {
-  $stringPath: '';
-  @each $path in $pathList {
-    $i: index($pathList, $path);
+@function collect-paths($path-list) {
+  $string-path: '';
+  @each $path in $path-list {
+    $i: index($path-list, $path);
     @if $i!=1 {
-      $stringPath: '#{$stringPath}, ';
+      $string-path: '#{$string-path}, ';
     }
-    $stringPath: '#{$stringPath}#{$path}';
+    $string-path: '#{$string-path}#{$path}';
   }
-  @return $stringPath;
+  @return $string-path;
 }
 
-@function getOrnamentPath() {
-  $newVideo: '.reply-item .root-reply-container .content-warp .reply-decorate .user-sailing .user-sailing-text .sailing-text';
+@function get-ornament-path() {
+  $new-video: '.reply-item .root-reply-container .content-warp .reply-decorate .user-sailing .user-sailing-text .sailing-text';
   $dynamic: '.bili-dyn-ornament__type--3 span';
-  $dynamicCommentArea: '.bb-comment .sailing .sailing-info, .comment-bilibili-fold .sailing .sailing-info';
-  @return collectPaths(($newVideo, $dynamic, $dynamicCommentArea));
+  $dynamic-comment-area: '.bb-comment .sailing .sailing-info, .comment-bilibili-fold .sailing .sailing-info';
+  @return collect-paths(($new-video, $dynamic, $dynamic-comment-area));
 }
 
-@function getFansMedalPath() {
-  $newVideo: '.badge-level';
-  @return collectPaths(($newVideo));
+@function get-fans-medal-path() {
+  $new-video: '.badge-level';
+  @return collect-paths(($new-video));
 }
 
-@function getDanmakuPath() {
+@function get-danmaku-path() {
   $main: '.bili-dm';
-  @return collectPaths(($main));
+  @return collect-paths(($main));
 }
 
-@function getIconFontPath() {
-  $mainA: '.iconfont';
-  $mainB: '.icon-font';
+@function get-icon-font-path() {
+  $main-a: '.iconfont';
+  $main-b: '.icon-font';
   $note: '.read-icon';
-  $noteEdit: '.bili-note-iconfont';
+  $note-edit: '.bili-note-iconfont';
   $footer: '.bili-footer-font';
-  $bangumiInfo: '[class^="icon-"]';
+  $bangumi-info: '[class^="icon-"]';
   $history: '.bilifont';
   $message: '.bp-icon-font';
-  $creativeCenterA: '.bcc-iconfont';
-  $creativeCenterB: '.fontvt';
-  @return collectPaths(
+  $creative-center-a: '.bcc-iconfont';
+  $creative-center-b: '.fontvt';
+  @return collect-paths(
     (
-      $mainA,
-      $mainB,
+      $main-a,
+      $main-b,
       $note,
-      $noteEdit,
+      $note-edit,
       $footer,
-      $bangumiInfo,
+      $bangumi-info,
       $history,
       $message,
-      $creativeCenterA,
-      $creativeCenterB
+      $creative-center-a,
+      $creative-center-b
     )
   );
 }
 
-@function getColumnPath() {
-  $mainA: '.article-detail .article-container .article-container__content .article-content .read-article-holder';
-  $mainB: '.article-detail .article-container .article-container__content .article-content .read-article-holder *';
-  @return collectPaths(($mainA, $mainB));
+@function get-column-path() {
+  $main-a: '.article-detail .article-container .article-container__content .article-content .read-article-holder';
+  $main-b: '.article-detail .article-container .article-container__content .article-content .read-article-holder *';
+  @return collect-paths(($main-a, $main-b));
 }
 
-@function getScorePath() {
+@function get-score-path() {
   $documentary: '.season-cover .score';
   $big: '.season-cover .season-cover-score';
-  @return collectPaths(($documentary, $big));
+  @return collect-paths(($documentary, $big));
 }
 
 // 装扮，在评论区、动态等界面显示
-$ornament: getOrnamentPath();
+$ornament: get-ornament-path();
 
 // 粉丝勋章，在评论区界面显示
-$fansMedal: getFansMedalPath();
+$fans-medal: get-fans-medal-path();
 
 // 弹幕，在播放器里显示
-$danmaku: getDanmakuPath();
+$danmaku: get-danmaku-path();
 
 // 图标字体
-$iconFont: getIconFontPath();
+$icon-font: get-icon-font-path();
 
 // 专栏阅读页可能出现的部分自定义字体
-$column: getColumnPath();
+$column: get-column-path();
 
 // 分数，在部分剧集的右下角显示
-$score: getScorePath();
+$score: get-score-path();
 
 // 收集所有路径
-$discardPaths: collectPaths(($ornament, $fansMedal, $danmaku, $iconFont, $column, $score));
+$discard-paths: collect-paths(($ornament, $fans-medal, $danmaku, $icon-font, $column, $score));
 
-$onOptionNames: (
+$on-option-names: (
   'on-ornament',
   'on-fans-medal',
   'on-danmaku',
@@ -99,17 +99,17 @@ $onOptionNames: (
   'on-column',
   'on-score'
 );
-$onOptionPathLists: ($ornament, $fansMedal, $danmaku, $iconFont, $column, $score);
-$onOptionGroups: zip($onOptionNames, $onOptionPathLists);
+$on-option-path-lists: ($ornament, $fans-medal, $danmaku, $icon-font, $column, $score);
+$on-option-groups: zip($on-option-names, $on-option-path-lists);
 
 html[#{$name}--detect--is-input-empty='false'] {
-  :not(#{$discardPaths}) {
-    font-family: $fontFamilyCss;
+  :not(#{$discard-paths}) {
+    font-family: $font-family-css;
   }
 
-  @each $onOptionName, $onOptionPathList in $onOptionGroups {
-    &[#{$name}--options--#{$onOptionName}='true'] :is(#{$onOptionPathList}) {
-      font-family: $fontFamilyCss;
+  @each $on-option-name, $on-option-path-list in $on-option-groups {
+    &[#{$name}--options--#{$on-option-name}='true'] :is(#{$on-option-path-list}) {
+      font-family: $font-family-css;
     }
   }
 }
