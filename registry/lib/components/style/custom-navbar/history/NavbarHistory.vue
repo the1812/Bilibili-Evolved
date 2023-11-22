@@ -106,7 +106,7 @@
 </template>
 <script lang="ts">
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
-import { formData, getCsrf } from '@/core/utils'
+import { getCsrf } from '@/core/utils'
 import { descendingSort } from '@/core/utils/sort'
 import {
   VButton,
@@ -119,7 +119,14 @@ import {
   DpiImage,
 } from '@/ui'
 import { popperMixin } from '../mixins'
-import { types, TypeFilter, HistoryItem, getHistoryItems, group, HistoryType } from './types'
+import {
+  navbarFilterTypes,
+  TypeFilter,
+  HistoryItem,
+  getHistoryItems,
+  group,
+  HistoryType,
+} from './types'
 
 export default Vue.extend({
   components: {
@@ -135,7 +142,7 @@ export default Vue.extend({
   mixins: [popperMixin],
   data() {
     return {
-      types,
+      types: navbarFilterTypes,
       search: '',
       viewTime: 0,
       cards: [],
@@ -164,10 +171,11 @@ export default Vue.extend({
   },
   methods: {
     toggleTypeFilter(typeFilter: TypeFilter) {
-      types.forEach(t => (t.checked = t.name === typeFilter.name))
+      navbarFilterTypes.forEach(t => (t.checked = t.name === typeFilter.name))
       this.reloadHistoryItems()
     },
     async reloadHistoryItems() {
+      this.cards = []
       this.viewTime = 0
       this.hasMorePage = true
       this.loading = true
@@ -178,8 +186,8 @@ export default Vue.extend({
       }
     },
     filterFunc(item: HistoryItem) {
-      const isAllType = types.find(it => it.name === HistoryType.All).checked
-      if (!isAllType && types.some(t => t.name === item.type && !t.checked)) {
+      const isAllType = navbarFilterTypes.find(it => it.name === HistoryType.All).checked
+      if (!isAllType && navbarFilterTypes.some(t => t.name === item.type && !t.checked)) {
         return false
       }
       if (
@@ -196,7 +204,7 @@ export default Vue.extend({
     async nextPage() {
       const items = await getHistoryItems(
         this.viewTime,
-        types.find(t => t.checked),
+        navbarFilterTypes.find(t => t.checked),
       )
       const cards: HistoryItem[] = lodash.uniqBy(
         this.cards.concat(items).sort(descendingSort((item: HistoryItem) => item.viewAt)),
@@ -228,10 +236,10 @@ export default Vue.extend({
         this.paused = targetState
         await postTextWithCredentials(
           'https://api.bilibili.com/x/v2/history/shadow/set',
-          formData({
+          new URLSearchParams({
             csrf: getCsrf(),
-            switch: targetState,
-          }),
+            switch: targetState.toString(),
+          }).toString(),
         )
       } catch (error) {
         this.paused = !targetState

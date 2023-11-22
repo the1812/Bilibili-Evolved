@@ -27,6 +27,9 @@ export const checkTransparentFill = async (vm: {
         if ((banner as HTMLVideoElement | HTMLImageElement).src) {
           return true
         }
+        if (banner.querySelector('.animated-banner')) {
+          return true
+        }
         return false
       }
       if (banners.some(hasBannerImage)) {

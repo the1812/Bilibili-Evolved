@@ -1,3 +1,5 @@
+<!-- spell-checker: disable -->
+
 <div align="center"><img id="Bilibili-Evolved" width="500" alt="Bilibili Evolved" src="./images/bilibili-evolved-wide-color.svg"></div>
 <br>
 <div align="center">
@@ -30,9 +32,8 @@
 
 **注意事项**
 - **⚠ 使用正式版 (GitHub 源) 和预览版须翻墙.**
-- 默认不带任何具体功能, 需要在按[设置](#设置)中的说明添加感兴趣的功能.
+- 默认不预装任何组件, 需要在按[设置](#设置)中的说明添加感兴趣的功能.
 - 这个是一个综合性的脚本, 如果只是想下载视频建议去 [GreasyFork](https://greasyfork.org/zh-CN/scripts/by-site/bilibili.com) 找个更专业的.
-- 可能不能使用弹幕点赞和举报.
 - 全景视频不能用鼠标拖拽视角(只能用键盘操作).
 - 默认屏蔽双击全屏, 如有需要可以安装 `双击全屏` 组件来恢复.
 - 对性能有较大影响.
@@ -43,7 +44,7 @@
 
 | 正式版 (jsDelivr 源)                                                                                     | 正式版 (GitHub 源)                                                                                      | 预览版                                                                                                           |
 | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| [安装](https://fastly.jsdelivr.net/gh/the1812/Bilibili-Evolved@master-cdn/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
+| [安装](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master-cdn/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/dist/bilibili-evolved.user.js) | [安装](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js) |
 
 > 如果处于某种原因只能停在旧版, 可以参考[旧版本回退指南](./doc/rollback.md).
 
@@ -73,9 +74,9 @@
 <img alt="about-panel" src="images/v2/about-panel.jpg" width="450">
 
 # 推荐配置
-- 操作系统: 64-bit Windows 10 / macOS Ventura
+- 操作系统: 64-bit Windows 10 / macOS Sonoma
 - 分辨率: 3840x2160 / 192ppi
-- 浏览器: Chrome 100+ / Firefox 103+ / Edge 100+ / Safari 15.4+
+- 浏览器: Chrome 100+ / Firefox 103+ / Safari 15.4+ (仅理论上能运行, 没测试过)
 - 处理器: Intel Core i7-9750H / AMD Ryzen 5 5600H
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13

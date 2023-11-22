@@ -9,6 +9,7 @@ const entry = async () => {
   if (isNotHtml() || isIframe()) {
     return
   }
+  /* spell-checker: disable */
   const builtInNoClean = ['videocard_series']
   const [noClean] = registerAndGetData('urlParamsClean.noClean', builtInNoClean)
   const builtInBlockParams = [
@@ -61,6 +62,7 @@ const entry = async () => {
     'subarea_rank',
     'popular_rank',
     'launch_id',
+    'spmid',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
@@ -89,6 +91,7 @@ const entry = async () => {
       param: 'noReffer',
     },
   ]
+  /* spell-checker: enable */
   const [siteSpecifiedParams] = registerAndGetData(
     'urlParamsClean.siteSpecifiedParams',
     builtInSiteSpecifiedParams,
@@ -138,9 +141,17 @@ const entry = async () => {
       url: string,
       ...restArgs: unknown[]
     ) {
-      const newUrl = getCleanUrl(url)
+      const resolvedUrl = (() => {
+        try {
+          return new URL(url, location.origin + location.pathname).toString()
+        } catch (error) {
+          console.warn('History API URL', `解析失败: ${url}`)
+          return url
+        }
+      })()
+      const newUrl = getCleanUrl(resolvedUrl)
       if (newUrl !== url) {
-        console.log('History API 拦截', url, newUrl)
+        console.log('History API 拦截', resolvedUrl, newUrl)
         return original.call(this, data, unused, newUrl, ...restArgs)
       }
       return original.call(this, data, unused, url, ...restArgs)
@@ -170,5 +181,6 @@ export const component = defineComponentMetadata({
   displayName,
   entry,
   tags: [componentsTags.utils],
+  /* spell-checker: disable */
   urlExclude: [/game\.bilibili\.com\/fgo/, /live\.bilibili\.com\/p\/html\/live-app-hotrank\//],
 })

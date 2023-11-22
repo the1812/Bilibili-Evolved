@@ -1,4 +1,48 @@
+<!-- spell-checker: disable -->
 # 更新日志
+
+## v2.8.6-preview
+`2023-11-22`
+
+✨新增
+- 新增插件 `下载视频 - MPV 输出支持加强版`. (PR #4448 by [weapon!](https://github.com/Asukaaaaaa))
+> 同时支持单文件和多文件, 不需要额外下载程序处理 mpv 协议, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
+
+- `查看封面` 组件安装后可为 `下载视频` 提供下载封面支持. (#889, PR #4473 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增插件 `下载视频 - WASM 混流输出`. (PR #4521 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> 使用 WASM 在浏览器中下载并合并音视频，运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件
+
+- 使用流量计费网络时, 不再触发本体和功能的更新检查. (仅 Chrome) (#4477)
+- `快捷键扩展` 的音量调整支持自定义幅度. (#2594)
+- `自定义字体` 改善了组件代码和功能. (PR #4485 by [Tinhone](https://github.com/Tinhone))
+
+☕开发者相关
+- PlayerAgent API 重构为调用 `window.player` 和 `window.nano` API, 可以解决 #2544 的问题, 感谢 [timongh](https://github.com/timongh) 和 [WakelessSloth56](https://github.com/WakelessSloth56) 的发现. (#4330, #4341)
+
+## v2.8.6
+`2023-11-22`
+✨新增
+- `清爽首页` / `极简首页` 现在可以正确重定向 "悬浮视频". (#4404)
+- `网址参数清理` 增加 `spmid` 参数. (#4512)
+- `快捷键扩展` 默认不再启用前进/后退的快捷键 (默认使用 b 站的前进/后退). (#4501)
+- `展开动态内容` 现在不会展开专栏类型的动态, 并保留原来的 "全文" 按钮. (#4475)
+
+🐛修复
+- 修复了首页的正式版安装链接 CDN 不正确. (#4460)
+- 修复 `极简首页` 在特定情况下无法触发加载的问题. (#4302, PR #4430 by [Tinhone](https://github.com/Tinhone))
+- 调整了 `简化评论区` 和 `删除广告` 对评论区附近的活动横幅和小喇叭横幅的说明, 关于这两种元素的具体区别以及分配至的组件, 可以参考 #4444 中的讨论.
+- 修复 `直播信息扩充` 中的标题未处理转义的 HTML 特殊字符.
+- 修复 `BV 号转换` 复制的链接即使没有参数也会带上末尾的 `?`. (#4515)
+- 修复番剧片单页面出现报错. (#1999)
+- 修复 `自定义顶栏` 历史面板无法正确跳转课程. (#4484)
+- 修复 `自定义顶栏` 在历史记录页面产生的布局错位. (#4459)
+- 修复 `网址参数清理` 处理相对路径 URL 时产生了错误的结果. (#4471)
+- 修复 `自定义顶栏` 在专栏页面挡住了作者信息顶栏.
+
+☕开发者相关
+- 锁定了 PR Check 中的 pnpm 版本, 避免 pnpm 更新后出现不兼容 lockfile 导致 PR Check 失败.
+- `夜间模式` 增加了一篇详细的[开发文档](./registry/lib/components/style/dark-mode/README.md).
+- Microsoft Edge 不再作为首要兼容的浏览器. (和 Chrome 相同内核, 理论上兼容性不会有太大差别)
 
 ## v2.8.5 / v2.8.5-preview
 `2023-09-24`
