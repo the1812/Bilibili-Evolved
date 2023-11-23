@@ -11,14 +11,18 @@ export function toastProgress(toast: Toast, message: string): OnProgress {
   }
 }
 
-export async function httpget(url: string, onprogress: OnProgress) {
+export async function httpGet(url: string, onprogress: OnProgress) {
   const response = await fetch(url)
   if (!response.ok) {
     throw new Error(`${response.status} ${response.statusText}`)
   }
 
   const reader = response.body.getReader()
-  const length = parseInt(response.headers.get('Content-Length') || '0')
+
+  // https://github.com/the1812/Bilibili-Evolved/pull/4521#discussion_r1402127375
+  const length = response.headers.get('Content-Encoding')
+    ? -1
+    : parseInt(response.headers.get('Content-Length'))
 
   let received = 0
   const chunks = []
@@ -44,7 +48,7 @@ export async function httpget(url: string, onprogress: OnProgress) {
 }
 
 export async function toBlobUrl(url: string, mimeType: string, onprogress: OnProgress) {
-  const buffer = await httpget(url, onprogress)
+  const buffer = await httpGet(url, onprogress)
   const blob = new Blob([buffer], { type: mimeType })
   return URL.createObjectURL(blob)
 }
