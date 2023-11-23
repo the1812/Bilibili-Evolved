@@ -11,6 +11,11 @@ export interface CdnConfig {
     sortable: string
     mdi: string
     streamsaver: string
+    ffmpeg: {
+      worker: string
+      core: string
+      wasm: string
+    }
   }
   smallLogo: string
   logo: string
