@@ -19,6 +19,9 @@ mainConfig.plugins.push(
   }),
 )
 
+// see src/client/init-vue.ts
+lodash.set(mainConfig, 'resolve.alias.vue$', 'vue/dist/vue.runtime.common.prod.js')
+
 previewConfig.output.filename = 'bilibili-evolved.preview.user.js'
 previewConfig.mode = 'production'
 const targets = [mainConfig, previewConfig].map(config => {
@@ -26,8 +29,5 @@ const targets = [mainConfig, previewConfig].map(config => {
   config.devtool = false
   return config
 })
-
-// see src/client/init-vue.ts
-lodash.set(previewConfig, 'resolve.alias.vue$', 'vue/dist/vue.common.prod.js')
 
 export default targets
