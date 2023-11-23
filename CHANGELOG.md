@@ -1,6 +1,13 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.8.7 / v2.8.7-preview
+`2023-11-23`
+
+- 修复正式版中清爽首页无法加载的问题. (#4538)
+
+其他更新内容请看 [v2.8.6](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.6) / [v2.8.6-preview](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.6-preview).
+
 ## v2.8.6-preview
 `2023-11-22`
 
