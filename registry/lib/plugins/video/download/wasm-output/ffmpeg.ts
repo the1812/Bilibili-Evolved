@@ -7,8 +7,6 @@ Modified 2023 WakelessSloth56
 
 /* eslint-disable @typescript-eslint/naming-convention */
 
-export const VERSION = '0.12.4'
-
 const messageId = (() => {
   let messageID = 0
   return () => messageID++
@@ -46,7 +44,8 @@ export class FFmpeg {
             this.#rejects[id](data)
             break
           default:
-            throw new Error('Unknown FFmpeg message')
+            // https://github.com/the1812/Bilibili-Evolved/pull/4521#discussion_r1402041877
+            break
         }
         delete this.#resolves[id]
         delete this.#rejects[id]
