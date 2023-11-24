@@ -39,8 +39,7 @@ body:not(.history-page) #biliMainHeader:not(.z-top-container),
 body.history-page #biliMainHeader:not(.z-top-container) {
   height: auto;
 }
-.link-top-container#tab-container,
-.fixed-author-header {
+.link-top-container#tab-container {
   top: var(--navbar-height) !important;
 }
 .bili-feed4 .header-channel{

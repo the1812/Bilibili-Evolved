@@ -32,6 +32,7 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
   const globalFixedExclude = [
     'https://space.bilibili.com',
     'https://www.bilibili.com/read',
+    'https://www.bilibili.com/opus',
     'https://www.bilibili.com/account/history',
   ]
   if (!globalFixedExclude.some(p => matchUrlPattern(p))) {
