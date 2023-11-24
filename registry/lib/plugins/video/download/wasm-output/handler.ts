@@ -1,32 +1,25 @@
-import { CdnTypes } from '@/core/cdn-types'
 import { DownloadPackage } from '@/core/download'
 import { meta } from '@/core/meta'
 import { Toast } from '@/core/toast'
-import { FFmpeg, VERSION } from './ffmpeg'
-import { httpget, toBlobUrl, toastProgress } from './utils'
+import { FFmpeg } from './ffmpeg'
+import { httpGet, toBlobUrl, toastProgress } from './utils'
 
 const ffmpeg = new FFmpeg()
-
-function cdnUrl(p: string, file: string) {
-  return `https://${
-    meta.compilationInfo.allCdns[CdnTypes.jsDelivr].host
-  }/npm/@ffmpeg/${p}@${VERSION}/dist/umd/${file}`
-}
 
 async function load(toast: Toast) {
   await ffmpeg.load({
     workerLoadURL: await toBlobUrl(
-      cdnUrl('ffmpeg', '814.ffmpeg.js'),
+      meta.compilationInfo.altCdn.library.ffmpeg.worker,
       'text/javascript',
       toastProgress(toast, '正在加载 FFmpeg Worker'),
     ),
     coreURL: await toBlobUrl(
-      cdnUrl('core', 'ffmpeg-core.js'),
+      meta.compilationInfo.altCdn.library.ffmpeg.core,
       'text/javascript',
       toastProgress(toast, '正在加载 FFmpeg Core'),
     ),
     wasmURL: await toBlobUrl(
-      cdnUrl('core', 'ffmpeg-core.wasm'),
+      meta.compilationInfo.altCdn.library.ffmpeg.wasm,
       'application/wasm',
       toastProgress(toast, '正在加载 FFmpeg WASM'),
     ),
@@ -37,8 +30,8 @@ export async function run(name: string, videoUrl: string, audioUrl: string, toas
     await load(toast)
   }
 
-  ffmpeg.writeFile('video', await httpget(videoUrl, toastProgress(toast, '正在下载视频流')))
-  ffmpeg.writeFile('audio', await httpget(audioUrl, toastProgress(toast, '正在下载音频流')))
+  ffmpeg.writeFile('video', await httpGet(videoUrl, toastProgress(toast, '正在下载视频流')))
+  ffmpeg.writeFile('audio', await httpGet(audioUrl, toastProgress(toast, '正在下载音频流')))
 
   toast.message = '混流中……'
 
