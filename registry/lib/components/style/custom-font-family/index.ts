@@ -29,10 +29,10 @@ const entry = () => {
   )
 
   addComponentListener(
-    `${name}.disableQuotationMarkTextIndent`,
+    `${name}.disableTitlePunctuationTextIndent`,
     (value: boolean) => {
       docElement.setAttribute(
-        `${kebabName}--options--disable-quotation-mark-text-indent`,
+        `${kebabName}--options--disable-title-punctuation-text-indent`,
         `${value}`,
       )
     },
@@ -65,7 +65,7 @@ const options = {
     defaultValue: fontFamilyDefaultValue,
     hidden: true,
   },
-  disableQuotationMarkTextIndent: {
+  disableTitlePunctuationTextIndent: {
     displayName: '禁用引号缩进',
     defaultValue: true,
   },
@@ -104,8 +104,8 @@ const instantStyles = [
     important: true,
   },
   {
-    name: `${kebabName}--style--disable-quotation-mark-text-indent`,
-    style: () => import('./disable-quotation-mark-text-indent.scss'),
+    name: `${kebabName}--style--disable-title-punctuation-text-indent`,
+    style: () => import('./disable-title-punctuation-text-indent.scss'),
     important: true,
   },
 ]
