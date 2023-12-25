@@ -42,6 +42,7 @@ $font-family-css: var(--#{$name}--options--font-family) !important;
   $message: '.bp-icon-font';
   $creative-center-a: '.bcc-iconfont';
   $creative-center-b: '.fontvt';
+  $quick-favorite: 'span.quick-favorite.be-quick-favorite > i.quick-favorite-icon.icon'; // 组件-启用快速收藏的图标，参见 #4566
   @return collect-paths(
     (
       $main-a,
@@ -53,7 +54,8 @@ $font-family-css: var(--#{$name}--options--font-family) !important;
       $history,
       $message,
       $creative-center-a,
-      $creative-center-b
+      $creative-center-b,
+      $quick-favorite
     )
   );
 }
