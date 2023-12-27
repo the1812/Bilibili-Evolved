@@ -66,7 +66,7 @@ const options = {
     hidden: true,
   },
   disableTitlePunctuationTextIndent: {
-    displayName: '禁用引号缩进',
+    displayName: '禁用标题标点符号缩进',
     defaultValue: true,
   },
   onOrnament: {
