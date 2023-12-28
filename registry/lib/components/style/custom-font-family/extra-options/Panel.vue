@@ -60,7 +60,7 @@ const initData: ExtraOptionsPanelInitData = {
       {
         id: 1,
         title: '覆盖选项',
-        description: '下面的元素使用了特殊字体，启用选项可在对应的元素上应用组件提供的字体设置',
+        description: '下面的元素使用了特殊字体，启用选项后可在对应的元素上应用组件提供的字体设置',
         inputClassNameSuffix: 'cover-options',
       },
     ],
