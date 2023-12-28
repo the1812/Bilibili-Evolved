@@ -1,5 +1,5 @@
 export const fontFamilyDefaultValue =
-  'Microsoft Yahei, Helvetica Neue, Helvetica, Arial, Hiragino Sans GB, Heiti SC, WenQuanYi Micro Hei'
+  'Microsoft Yahei, Helvetica Neue, Helvetica, Arial, Hiragino Sans GB, Heiti SC, Malgun Gothic'
 
 export const coverOptionsName = [
   { camel: 'coverOrnament', kebab: 'cover-ornament', display: '装扮字体' },
