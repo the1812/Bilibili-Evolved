@@ -8,18 +8,24 @@
     <template #input0>
       <TextArea v-model="inputFontFamily" />
     </template>
+
+    <template #input1>
+      <SwitchOptionsMin :options="switchOptionsComponentOptions"></SwitchOptionsMin>
+    </template>
   </ExtraOptionsPanel>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { TextArea } from '@/ui'
+import SwitchOptionsMin from './SwitchOptionsMin.vue'
+import { SwitchMetadataOption } from '@/components/switch-options'
 import ExtraOptionsPanel from './ExtraOptionsPanel.vue'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { delay } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { fontFamilyDefaultValue } from '../font-family-default-value'
+import { fontFamilyDefaultValue, coverOptionsName, coverOptionsDefaultValue } from '../data'
 import { ExtraOptionsPanelInitData } from './extra-options-panel'
 
 const initData: ExtraOptionsPanelInitData = {
@@ -51,8 +57,34 @@ const initData: ExtraOptionsPanelInitData = {
         description: '输入需要设置的字体，不同字体之间必须以英文逗号分隔',
         inputClassNameSuffix: 'input-font-family',
       },
+      {
+        id: 1,
+        title: '覆盖选项',
+        description: '下面的元素使用了特殊字体，启用选项可在对应的元素上应用组件提供的字体设置',
+        inputClassNameSuffix: 'cover-options',
+      },
     ],
   },
+}
+
+const switchOptionsComponentOptions: SwitchMetadataOption<string, string> = {
+  name: 'customFontFamilyCoverOptions',
+  switches: {},
+  radio: false,
+  dimAt: 'notChecked',
+  switchProps: {
+    checkedIcon: 'mdi-checkbox-marked-circle',
+    notCheckedIcon: 'mdi-checkbox-blank-circle-outline',
+  },
+  componentName: 'customFontFamily',
+  optionDisplayName: '自定义字体覆盖选项',
+}
+
+for (const coverOptionName of coverOptionsName) {
+  switchOptionsComponentOptions.switches[coverOptionName.camel] = {
+    displayName: coverOptionName.display,
+    defaultValue: coverOptionsDefaultValue[coverOptionName.camel],
+  }
 }
 
 const console = useScopedConsole('自定义字体')
@@ -61,6 +93,7 @@ export default defineComponent({
   components: {
     ExtraOptionsPanel,
     TextArea,
+    SwitchOptionsMin,
   },
 
   data() {
@@ -70,6 +103,7 @@ export default defineComponent({
       initData,
       // 设置 inputFontFamily 初始值为组件 fontFamily 选项的值
       inputFontFamily: getComponentSettings('customFontFamily').options.fontFamily,
+      switchOptionsComponentOptions,
     }
   },
 
@@ -126,10 +160,18 @@ export default defineComponent({
     },
 
     resetOptions() {
+      // 重置字体选项
       getComponentSettings('customFontFamily').options.fontFamily = fontFamilyDefaultValue
       this.inputFontFamily = fontFamilyDefaultValue
-      Toast.success('字体设置面板中的所有选项已成功被重置为默认值', '自定义字体', 2000)
-      console.log('字体设置面板中的所有选项已成功被重置为默认值')
+
+      // 重置覆盖选项
+      for (const coverOptionName of coverOptionsName) {
+        const defaultValue = coverOptionsDefaultValue[coverOptionName.camel]
+        getComponentSettings('customFontFamily').options[coverOptionName.camel] = defaultValue
+      }
+
+      Toast.success('更多选项面板中的所有选项已成功被重置为默认值', '自定义字体', 2000)
+      console.log('更多选项面板中的所有选项已成功被重置为默认值')
     },
   },
 })
