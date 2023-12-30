@@ -42,6 +42,7 @@ $font-family-css: var(--#{$name}--options--font-family) !important;
   $message: '.bp-icon-font';
   $creative-center-a: '.bcc-iconfont';
   $creative-center-b: '.fontvt';
+  $quick-favorite: 'span.quick-favorite.be-quick-favorite > i.quick-favorite-icon.icon'; // 组件-启用快速收藏的图标，参见 #4566
   @return collect-paths(
     (
       $main-a,
@@ -53,7 +54,8 @@ $font-family-css: var(--#{$name}--options--font-family) !important;
       $history,
       $message,
       $creative-center-a,
-      $creative-center-b
+      $creative-center-b,
+      $quick-favorite
     )
   );
 }
@@ -91,24 +93,24 @@ $score: get-score-path();
 // 收集所有路径
 $discard-paths: collect-paths(($ornament, $fans-medal, $danmaku, $icon-font, $column, $score));
 
-$on-option-names: (
-  'on-ornament',
-  'on-fans-medal',
-  'on-danmaku',
-  'on-icon-font',
-  'on-column',
-  'on-score'
+$cover-option-names: (
+  'cover-ornament',
+  'cover-fans-medal',
+  'cover-danmaku',
+  'cover-icon-font',
+  'cover-column',
+  'cover-score'
 );
-$on-option-path-lists: ($ornament, $fans-medal, $danmaku, $icon-font, $column, $score);
-$on-option-groups: zip($on-option-names, $on-option-path-lists);
+$cover-option-path-lists: ($ornament, $fans-medal, $danmaku, $icon-font, $column, $score);
+$cover-option-groups: zip($cover-option-names, $cover-option-path-lists);
 
 html[#{$name}--detect--is-input-empty='false'] {
   :not(#{$discard-paths}) {
     font-family: $font-family-css;
   }
 
-  @each $on-option-name, $on-option-path-list in $on-option-groups {
-    &[#{$name}--options--#{$on-option-name}='true'] :is(#{$on-option-path-list}) {
+  @each $cover-option-name, $cover-option-path-list in $cover-option-groups {
+    &[#{$name}--options--#{$cover-option-name}='true'] :is(#{$cover-option-path-list}) {
       font-family: $font-family-css;
     }
   }
