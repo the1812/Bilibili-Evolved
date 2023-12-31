@@ -144,7 +144,6 @@ export default Vue.extend({
       const portalList = await getJsonWithCredentials(
         'https://api.bilibili.com/x/polymer/web-dynamic/v1/portal',
       )
-      console.log(portalList)
       const recommendLiveItems = portalList.data.live_users.items.map(item => {
         const { jump_url, room_id, face, title, uname, mid } = item
         return {
