@@ -144,7 +144,7 @@
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
 
-## bilibili网页端添加APP首页推荐
+## bilibili 网页端添加 APP 首页推荐
 作者: [indefined](https://github.com/indefined)
 - [GitHub](https://github.com/indefined/UserScripts/tree/master/bilibiliHome)
 - [GreasyFork](https://greasyfork.org/zh-CN/scripts/368446-bilibili%E7%BD%91%E9%A1%B5%E7%AB%AF%E6%B7%BB%E5%8A%A0app%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90)
@@ -161,7 +161,7 @@
 
 ----
 
-**喜欢的话就点个⭐Star吧(°∀°)ﾉ**
+**喜欢的话就点个⭐Star 吧(°∀°)ﾉ**
 
 **或者也可以考虑[捐助](https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/donate.md)支持一下哦(｀・ω・´)**
 
@@ -182,7 +182,7 @@
 # 我写的其他一些玩意
 
 ## [Touhou Tagger](https://github.com/the1812/Touhou-Tagger)
-☯ 从 [THBWiki](https://thwiki.cc/) 自动填写东方Project同人音乐CD曲目信息
+☯ 从 [THBWiki](https://thwiki.cc/) 自动填写东方 Project 同人音乐 CD 曲目信息
 
 ## [Malware Patch](https://github.com/the1812/Malware-Patch)
 阻止中国流氓软件的管理员授权
