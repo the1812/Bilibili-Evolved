@@ -227,6 +227,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   @include type-block();
   @include side-block();
   @include pattern-block();
+  @include plugin-block();
 }
 body.disable-feeds-filter {
   .feeds-filter-section {
