@@ -121,7 +121,8 @@ body.fixed-navbar {
       top: calc(var(--navbar-height) + 8px) !important;
     }
   }
-  .bili-feed4 .header-channel {
+  .bili-feed4 .header-channel,
+  .search-fixed-header {
     display: none !important;
   }
 }
