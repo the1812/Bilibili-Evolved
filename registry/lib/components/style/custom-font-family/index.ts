@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
-import { fontFamilyDefaultValue } from './font-family-default-value'
+import { fontFamilyDefaultValue, coverOptionsName, coverOptionsDefaultValue } from './data'
 
 const docElement = document.documentElement
 
@@ -29,34 +29,25 @@ const entry = () => {
   )
 
   addComponentListener(
-    `${name}.disableQuotationMarkTextIndent`,
+    `${name}.disableTitlePunctuationTextIndent`,
     (value: boolean) => {
       docElement.setAttribute(
-        `${kebabName}--options--disable-quotation-mark-text-indent`,
+        `${kebabName}--options--disable-title-punctuation-text-indent`,
         `${value}`,
       )
     },
     true,
   )
 
-  const onOptionNames = [
-    { camel: 'onOrnament', kebab: 'on-ornament' },
-    { camel: 'onFansMedal', kebab: 'on-fans-medal' },
-    { camel: 'onDanmaku', kebab: 'on-danmaku' },
-    { camel: 'onIconFont', kebab: 'on-icon-font' },
-    { camel: 'onColumn', kebab: 'on-column' },
-    { camel: 'onScore', kebab: 'on-score' },
-  ]
-
-  onOptionNames.forEach(onOptionName => {
+  for (const coverOptionName of coverOptionsName) {
     addComponentListener(
-      `${name}.${onOptionName.camel}`,
+      `${name}.${coverOptionName.camel}`,
       (value: boolean) => {
-        docElement.setAttribute(`${kebabName}--options--${onOptionName.kebab}`, `${value}`)
+        docElement.setAttribute(`${kebabName}--options--${coverOptionName.kebab}`, `${value}`)
       },
       true,
     )
-  })
+  }
 }
 
 const options = {
@@ -65,35 +56,23 @@ const options = {
     defaultValue: fontFamilyDefaultValue,
     hidden: true,
   },
-  disableQuotationMarkTextIndent: {
-    displayName: '禁用引号缩进',
+  disableTitlePunctuationTextIndent: {
+    displayName: '禁用标题标点符号缩进',
     defaultValue: true,
   },
-  onOrnament: {
-    displayName: '覆盖装扮字体',
-    defaultValue: false,
-  },
-  onFansMedal: {
-    displayName: '覆盖粉丝勋章字体',
-    defaultValue: false,
-  },
-  onDanmaku: {
-    displayName: '覆盖弹幕字体',
-    defaultValue: false,
-  },
-  onIconFont: {
-    displayName: '覆盖图标字体',
-    defaultValue: false,
-  },
-  onColumn: {
-    displayName: '覆盖专栏自定义字体',
-    defaultValue: false,
-  },
-  onScore: {
-    displayName: '覆盖评分字体',
-    defaultValue: false,
-  },
 }
+
+const invokeCoverOptions = () => {
+  for (const coverOptionName of coverOptionsName) {
+    options[coverOptionName.camel] = {
+      displayName: coverOptionName.display,
+      defaultValue: coverOptionsDefaultValue[coverOptionName.camel],
+      hidden: true,
+    }
+  }
+}
+
+invokeCoverOptions()
 
 const extraOptions = () => import('./extra-options/Entry.vue').then(m => m.default)
 
@@ -104,8 +83,8 @@ const instantStyles = [
     important: true,
   },
   {
-    name: `${kebabName}--style--disable-quotation-mark-text-indent`,
-    style: () => import('./disable-quotation-mark-text-indent.scss'),
+    name: `${kebabName}--style--disable-title-punctuation-text-indent`,
+    style: () => import('./disable-title-punctuation-text-indent.scss'),
     important: true,
   },
 ]
