@@ -51,5 +51,9 @@ export const component = defineComponentMetadata({
       defaultValue: true,
       displayName: '预告',
     },
+    promotions: {
+      defaultValue: true,
+      displayName: '心动',
+    },
   },
 })
