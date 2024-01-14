@@ -539,15 +539,21 @@ export const retrieveImageUrl = (element: HTMLElement) => {
   if (!(element instanceof HTMLElement)) {
     return null
   }
-  let url: string
-  if (element.hasAttribute('data-src')) {
-    url = element.getAttribute('data-src')
-  } else if (element instanceof HTMLImageElement) {
-    url = element.src
-  } else if (dq(element, 'picture img')) {
-    const image = dq(element, 'picture img') as HTMLImageElement
-    url = image.src
-  } else {
+  const url = (() => {
+    if (element.hasAttribute('data-src')) {
+      return element.getAttribute('data-src')
+    }
+    if (element instanceof HTMLImageElement) {
+      return element.src
+    }
+    if (element instanceof HTMLPictureElement && dq(element, 'img')) {
+      const image = dq(element, 'img') as HTMLImageElement
+      return image.src
+    }
+    if (dq(element, 'picture img')) {
+      const image = dq(element, 'picture img') as HTMLImageElement
+      return image.src
+    }
     const { backgroundImage } = element.style
     if (!backgroundImage) {
       return null
@@ -556,8 +562,9 @@ export const retrieveImageUrl = (element: HTMLElement) => {
     if (!match) {
       return null
     }
-    url = match[1]
-  }
+    return match[1]
+  })()
+
   const thumbMatch = url.match(/^(.+)(\..+?)(@.+)$/)
   if (thumbMatch) {
     return {
