@@ -37,7 +37,7 @@ export const addImportantStyle = (text: string, name?: string) =>
 export const removeStyle = (...names: string[]) => {
   names.forEach(name => {
     const id = getDefaultStyleID(name)
-    dqa(`#${id}`).forEach(it => it.remove())
+    document.getElementById(id)?.remove()
   })
 }
 /**
