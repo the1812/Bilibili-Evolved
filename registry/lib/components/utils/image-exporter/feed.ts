@@ -21,14 +21,15 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
       text: '导出图片',
       action: async () => {
         const imageUrls: { url: string; extension: string }[] = []
-        dqa(card.element, '.main-content .img-content, .bili-album__preview__picture__img').forEach(
-          (img: HTMLImageElement | HTMLDivElement) => {
-            const urlData = retrieveImageUrl(img)
-            if (urlData && !imageUrls.some(({ url }) => url === urlData.url)) {
-              imageUrls.push(urlData)
-            }
-          },
-        )
+        dqa(
+          card.element,
+          '.main-content .img-content, .bili-album__preview__picture__img, .bili-album .preview__picture__img',
+        ).forEach((img: HTMLImageElement | HTMLDivElement) => {
+          const urlData = retrieveImageUrl(img)
+          if (urlData && !imageUrls.some(({ url }) => url === urlData.url)) {
+            imageUrls.push(urlData)
+          }
+        })
         if (imageUrls.length === 0) {
           Toast.info('此条动态没有检测到任何图片.', '导出图片')
           return
