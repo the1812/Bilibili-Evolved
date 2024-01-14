@@ -773,3 +773,25 @@
 #{contains('live-info-content')} {
   background: transparent !important;
 }
+
+#{contains('upower-pay-container')} {
+  .header {
+    @include background-color('0');
+  }
+  #{contains('content')} {
+    @include background('2');
+    #{contains('tab-group')} {
+      #{contains('active')} {
+        @include color('f');
+      }
+    }
+    #{contains('month-charge-grade')} {
+      background: #333;
+    }
+    #{contains('charge-grad-container')} {
+      .charge-grad-item {
+        background: linear-gradient(45deg, #333, #444);
+      }
+    }
+  }
+}
