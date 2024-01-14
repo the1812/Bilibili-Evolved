@@ -4,6 +4,7 @@ import { PlayerAgent, selectorWrap } from './base'
 import { AgentType, PlayerQuery, ElementQuery } from './types'
 
 export class VideoPlayerV2Agent extends PlayerAgent {
+  isBpxPlayer = false
   // eslint-disable-next-line class-methods-use-this
   get nativeApi() {
     return unsafeWindow.player

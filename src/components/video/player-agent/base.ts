@@ -30,6 +30,7 @@ export const click = (target: ElementQuery) => {
   return button
 }
 export abstract class PlayerAgent {
+  isBpxPlayer = true
   abstract type: AgentType
   abstract query: PlayerQuery<ElementQuery>
   provideCustomQuery<CustomQueryType extends CustomQuery<string>>(
@@ -83,9 +84,12 @@ export abstract class PlayerAgent {
     !checkbox.checked && !on && checkbox.click()
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getPlayerConfig(target: string) {
-    return lodash.get(JSON.parse(localStorage.getItem('bilibili_player_settings')), target, false)
+  getPlayerConfig<DefaultValueType = unknown, ValueType = DefaultValueType>(
+    target: string,
+    defaultValue?: DefaultValueType,
+  ): ValueType | DefaultValueType {
+    const storageKey = this.isBpxPlayer ? 'bpx_player_profile' : 'bilibili_player_settings'
+    return lodash.get(JSON.parse(localStorage.getItem(storageKey)), target, defaultValue)
   }
 
   isAutoPlay() {
