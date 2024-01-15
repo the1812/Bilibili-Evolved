@@ -121,7 +121,7 @@ export abstract class PlayerAgent
 
   // https://github.com/the1812/Bilibili-Evolved/discussions/4341
   get nativeApi() {
-    return unsafeWindow.player || window.playerRaw
+    return unsafeWindow.player || unsafeWindow.playerRaw
   }
 
   get nanoApi() {
