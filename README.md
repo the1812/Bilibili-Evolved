@@ -74,7 +74,7 @@
 
 # 配置
 ## 最低配置
-- 操作系统: Windows 10 / macOS Big Sur
+- 操作系统: Windows 8.1 / macOS Big Sur
 - 分辨率: 1920x1080, 缩放 125%
 - 浏览器: Chrome 105+ / Firefox 121+ / Safari 15.4+ (仅理论上能运行, 没测试过)
 - 处理器: Intel Core i7-9750H / AMD Ryzen 5 5600H
