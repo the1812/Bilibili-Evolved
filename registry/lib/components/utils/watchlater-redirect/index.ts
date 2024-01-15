@@ -51,9 +51,6 @@ const entry: ComponentEntry = async ({ settings }) => {
 export const component = defineComponentMetadata({
   name: 'watchlaterRedirect',
   displayName: '稍后再看重定向',
-  description: {
-    'zh-CN': '将稍后再看的链接重定向为普通播放网址.',
-  },
   entry,
   options: {
     page: {
