@@ -8,6 +8,9 @@ export const clickElement = (target: string | HTMLElement, context: KeyBindingAc
   const { event } = context
   const mouseEvent = new MouseEvent('click', {
     ...lodash.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
+    bubbles: true,
+    cancelable: true,
+    view: unsafeWindow,
   })
   if (typeof target === 'string') {
     const targetElement = dq(target) as HTMLElement
@@ -129,7 +132,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   coin: {
     displayName: '投币',
     run: useClickElement(
-      '.video-toolbar .coin, .tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2), .video-toolbar-v1 .coin',
+      '.video-toolbar .coin, .tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2), .video-toolbar-v1 .coin, .toolbar .coin',
     ),
   },
   favorite: {
@@ -150,7 +153,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       return (context: KeyBindingActionContext) => {
         const { event } = context
         const likeButton = dq(
-          '.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like',
+          '.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like, .toolbar .like',
         ) as HTMLSpanElement
         if (!likeButton) {
           return false
