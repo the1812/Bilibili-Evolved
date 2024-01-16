@@ -4,6 +4,8 @@ import { AgentType, PlayerQuery, ElementQuery } from './types'
 
 export class BangumiPlayerAgent extends PlayerAgent {
   type: AgentType = 'bangumi'
+
+  // spell-checker: disable
   query = selectorWrap({
     playerWrap: '.player-module',
     bilibiliPlayer: '.bpx-player-container',
@@ -55,6 +57,8 @@ export class BangumiPlayerAgent extends PlayerAgent {
     danmakuTipLayer: '.bpx-player-dialog-wrap',
     danmakuSwitch: '.bpx-player-dm-switch input',
   }) as PlayerQuery<ElementQuery>
+  // spell-checker: enable
+
   constructor() {
     super()
     bpxPlayerPolyfill()
