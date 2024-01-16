@@ -1,4 +1,3 @@
-import { bpxPlayerPolyfill } from '../player-adaptor/bpx'
 import { PlayerAgent, selectorWrap } from './base'
 import { bpxSelectors } from './bpx'
 import { AgentType, PlayerQuery, ElementQuery } from './types'
@@ -14,7 +13,6 @@ export class BangumiPlayerAgent extends PlayerAgent {
 
   constructor() {
     super()
-    bpxPlayerPolyfill()
   }
 
   seek(time: number) {
