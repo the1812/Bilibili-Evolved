@@ -3,26 +3,30 @@ import { getComponentSettings } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
 import { Options } from '.'
 import { KeyBindingAction, KeyBindingActionContext } from './bindings'
+import { simulateClick } from '@/core/utils'
 
-export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
-  const { event } = context
-  const mouseEvent = new MouseEvent('click', {
+export const keyboardEventToPointer = (event: KeyboardEvent): PointerEventInit => {
+  return {
     ...lodash.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
     bubbles: true,
     cancelable: true,
     view: unsafeWindow,
-  })
+  }
+}
+export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
+  const { event } = context
+  const eventParams = keyboardEventToPointer(event)
   if (typeof target === 'string') {
     const targetElement = dq(target) as HTMLElement
     if (!targetElement) {
       return false
     }
-    targetElement.dispatchEvent(mouseEvent)
+    simulateClick(targetElement, eventParams)
   } else {
     if (!target) {
       return false
     }
-    target.dispatchEvent(mouseEvent)
+    simulateClick(target, eventParams)
   }
   return true
 }
@@ -148,7 +152,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   like: {
     displayName: '点赞',
     run: (() => {
-      /** 长按`L`三连使用的记忆变量 */
+      /** 长按 `L` 三连使用的记忆变量 */
       let likeClick = true
       return (context: KeyBindingActionContext) => {
         const { event } = context
@@ -159,20 +163,21 @@ export const builtInActions: Record<string, KeyBindingAction> = {
           return false
         }
         event.preventDefault()
-        const fireEvent = (name: string, args: Event) => {
-          const customEvent = new CustomEvent(name, args)
-          likeButton.dispatchEvent(customEvent)
+        const fireMouseEvent = (name: string, source: KeyboardEvent) => {
+          const eventParams: MouseEventInit = keyboardEventToPointer(source)
+          const mouseEvent = new MouseEvent(name, eventParams)
+          likeButton.dispatchEvent(mouseEvent)
         }
         likeClick = true
         setTimeout(() => (likeClick = false), 200)
-        fireEvent('mousedown', event)
+        fireMouseEvent('mousedown', event)
         document.body.addEventListener(
           'keyup',
           e => {
             e.preventDefault()
-            fireEvent('mouseup', e)
+            fireMouseEvent('mouseup', e)
             if (likeClick) {
-              fireEvent('click', e)
+              fireMouseEvent('click', e)
             }
           },
           { once: true },
