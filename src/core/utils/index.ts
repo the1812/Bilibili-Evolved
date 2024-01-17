@@ -683,3 +683,21 @@ export const unreachable = (): never => {
 export const isDataSaveMode = () => {
   return navigator.connection?.saveData ?? false
 }
+
+/**
+ * 模拟一次点击 (依次触发 `pointerdown`, `mousedown`, `pointerup`, `mouseup`, `click` 事件)
+ * @param target 点击的目标元素
+ * @param eventParams 事件参数
+ */
+export const simulateClick = (target: EventTarget, eventParams?: PointerEventInit) => {
+  const mouseDownEvent = new MouseEvent('mousedown', eventParams)
+  const mouseUpEvent = new MouseEvent('mouseup', eventParams)
+  const pointerDownEvent = new PointerEvent('pointerdown', eventParams)
+  const pointerUpEvent = new PointerEvent('pointerup', eventParams)
+  const clickEventEvent = new MouseEvent('click', eventParams)
+  target.dispatchEvent(pointerDownEvent)
+  target.dispatchEvent(mouseDownEvent)
+  target.dispatchEvent(pointerUpEvent)
+  target.dispatchEvent(mouseUpEvent)
+  target.dispatchEvent(clickEventEvent)
+}
