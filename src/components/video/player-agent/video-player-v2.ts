@@ -3,11 +3,9 @@ import { isBwpVideo } from '@/core/utils'
 import { PlayerAgent, selectorWrap } from './base'
 import { AgentType, PlayerQuery, ElementQuery } from './types'
 
+/** @deprecated Use `VideoPlayerBpxAgent` instead */
 export class VideoPlayerV2Agent extends PlayerAgent {
-  // eslint-disable-next-line class-methods-use-this
-  get nativeApi() {
-    return unsafeWindow.player
-  }
+  isBpxPlayer = false
   type: AgentType = 'video'
   query = selectorWrap({
     playerWrap: '.player-wrap',
@@ -89,35 +87,12 @@ export class VideoPlayerV2Agent extends PlayerAgent {
     })()
   }
 
-  isMute() {
-    if (!this.nativeApi) {
-      return null
-    }
-    if (this.nativeApi.isMuted) {
-      return this.nativeApi.isMuted()
-    }
-    return this.nativeApi.isMute()
-  }
-  changeVolume(change: number) {
-    if (!this.nativeApi) {
-      return null
-    }
-    if (this.nativeApi.getVolume) {
-      const current = this.nativeApi.getVolume()
-      this.nativeApi.setVolume(current + change / 100)
-      return Math.round(this.nativeApi.getVolume() * 100)
-    }
-    const current = this.nativeApi.volume()
-    this.nativeApi.volume(current + change / 100)
-    return Math.round(this.nativeApi.volume() * 100)
-  }
   seek(time: number) {
-    if (!this.nativeApi) {
-      return null
+    const seekResult = super.seek(time)
+    if (seekResult === null) {
+      return seekResult
     }
-    this.nativeApi.play()
     setTimeout(() => {
-      this.nativeApi.seek(time)
       const toastText = dq(
         '.bilibili-player-video-toast-bottom .bilibili-player-video-toast-item:first-child .bilibili-player-video-toast-item-text span:nth-child(2)',
       )
@@ -125,17 +100,6 @@ export class VideoPlayerV2Agent extends PlayerAgent {
         toastText.textContent = ' 00:00'
       }
     })
-    return this.nativeApi.getCurrentTime()
-  }
-  changeTime(change: number) {
-    if (!this.nativeApi) {
-      return null
-    }
-    const video = this.query.video.element.sync() as HTMLVideoElement
-    if (!video) {
-      return null
-    }
-    this.nativeApi.seek(video.currentTime + change, video.paused)
-    return this.nativeApi.getCurrentTime()
+    return seekResult
   }
 }

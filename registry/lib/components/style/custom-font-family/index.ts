@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
-import { fontFamilyDefaultValue } from './font-family-default-value'
+import { fontFamilyDefaultValue, coverOptionsName, coverOptionsDefaultValue } from './data'
 
 const docElement = document.documentElement
 
@@ -11,11 +11,6 @@ const camelName = 'customFontFamily'
 const name = camelName
 
 const displayName = '自定义字体'
-
-const description = {
-  'zh-CN':
-    '使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明',
-}
 
 const tags = [componentsTags.style, componentsTags.general]
 
@@ -34,34 +29,25 @@ const entry = () => {
   )
 
   addComponentListener(
-    `${name}.disableQuotationMarkTextIndent`,
+    `${name}.disableTitlePunctuationTextIndent`,
     (value: boolean) => {
       docElement.setAttribute(
-        `${kebabName}--options--disable-quotation-mark-text-indent`,
+        `${kebabName}--options--disable-title-punctuation-text-indent`,
         `${value}`,
       )
     },
     true,
   )
 
-  const onOptionNames = [
-    { camel: 'onOrnament', kebab: 'on-ornament' },
-    { camel: 'onFansMedal', kebab: 'on-fans-medal' },
-    { camel: 'onDanmaku', kebab: 'on-danmaku' },
-    { camel: 'onIconFont', kebab: 'on-icon-font' },
-    { camel: 'onColumn', kebab: 'on-column' },
-    { camel: 'onScore', kebab: 'on-score' },
-  ]
-
-  onOptionNames.forEach(onOptionName => {
+  for (const coverOptionName of coverOptionsName) {
     addComponentListener(
-      `${name}.${onOptionName.camel}`,
+      `${name}.${coverOptionName.camel}`,
       (value: boolean) => {
-        docElement.setAttribute(`${kebabName}--options--${onOptionName.kebab}`, `${value}`)
+        docElement.setAttribute(`${kebabName}--options--${coverOptionName.kebab}`, `${value}`)
       },
       true,
     )
-  })
+  }
 }
 
 const options = {
@@ -70,47 +56,35 @@ const options = {
     defaultValue: fontFamilyDefaultValue,
     hidden: true,
   },
-  disableQuotationMarkTextIndent: {
-    displayName: '禁用引号缩进',
+  disableTitlePunctuationTextIndent: {
+    displayName: '禁用标题标点符号缩进',
     defaultValue: true,
-  },
-  onOrnament: {
-    displayName: '覆盖装扮字体',
-    defaultValue: false,
-  },
-  onFansMedal: {
-    displayName: '覆盖粉丝勋章字体',
-    defaultValue: false,
-  },
-  onDanmaku: {
-    displayName: '覆盖弹幕字体',
-    defaultValue: false,
-  },
-  onIconFont: {
-    displayName: '覆盖图标字体',
-    defaultValue: false,
-  },
-  onColumn: {
-    displayName: '覆盖专栏自定义字体',
-    defaultValue: false,
-  },
-  onScore: {
-    displayName: '覆盖评分字体',
-    defaultValue: false,
   },
 }
 
-const extraOptions = () => import('./extra-options/entry.vue').then(m => m.default)
+const invokeCoverOptions = () => {
+  for (const coverOptionName of coverOptionsName) {
+    options[coverOptionName.camel] = {
+      displayName: coverOptionName.display,
+      defaultValue: coverOptionsDefaultValue[coverOptionName.camel],
+      hidden: true,
+    }
+  }
+}
+
+invokeCoverOptions()
+
+const extraOptions = () => import('./extra-options/Entry.vue').then(m => m.default)
 
 const instantStyles = [
   {
-    name: `${name}--style--setFontFamily`,
+    name: `${kebabName}--style--set-font-family`, // style 标签 id
     style: () => import('./set-font-family.scss'),
     important: true,
   },
   {
-    name: `${name}--style--disableQuotationMarkTextIndent`,
-    style: () => import('./disable-quotation-mark-text-indent.scss'),
+    name: `${kebabName}--style--disable-title-punctuation-text-indent`,
+    style: () => import('./disable-title-punctuation-text-indent.scss'),
     important: true,
   },
 ]
@@ -123,7 +97,6 @@ const author = {
 export const component = defineComponentMetadata({
   name,
   displayName,
-  description,
   tags,
   entry,
   options,

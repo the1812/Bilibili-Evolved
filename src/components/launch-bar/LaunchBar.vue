@@ -166,7 +166,7 @@ export default Vue.extend({
     if (!matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
       return
     }
-    select('#search-keyword').then((input: HTMLInputElement) => {
+    select('#search-keyword, .search-input-el').then((input: HTMLInputElement) => {
       if (!input) {
         return
       }

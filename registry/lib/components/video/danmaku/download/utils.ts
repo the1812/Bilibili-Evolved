@@ -5,6 +5,7 @@ import { getFriendlyTitle } from '@/core/utils/title'
 import { DanmakuConverterConfig, DanmakuConverter } from '../converter/danmaku-converter'
 import { DanmakuType } from '../converter/danmaku-type'
 import { XmlDanmaku } from '../converter/xml-danmaku'
+import { playerAgent } from '@/components/video/player-agent'
 
 export class JsonDanmaku {
   // static SegmentSize = 6 * 60
@@ -97,9 +98,6 @@ export const getUserDanmakuConfig = async () => {
     const playerSettingsJson = localStorage.getItem('bilibili_player_settings')
 
     if (playerSettingsJson) {
-      const playerSettings = JSON.parse(playerSettingsJson)
-      const getConfig = <T>(prop: string, defaultValue?: T): T =>
-        lodash.get(playerSettings, `setting_config.${prop}`, defaultValue)
       // 屏蔽类型
       config.blockTypes = (() => {
         const result: (DanmakuType | 'color')[] = []
@@ -111,7 +109,7 @@ export const getUserDanmakuConfig = async () => {
         }
 
         for (const [type, value] of Object.entries(blockValues)) {
-          if (lodash.get(playerSettings, `block.type_${type}`, true) === false) {
+          if (playerAgent.getPlayerConfig<boolean>(`block.type_${type}`, true) === false) {
             result.push(...(value as (DanmakuType | 'color')[]))
           }
         }
@@ -119,13 +117,17 @@ export const getUserDanmakuConfig = async () => {
       })()
 
       // 加粗
-      config.bold = getConfig('bold', false)
+      config.bold = playerAgent.getPlayerConfig('bold', false)
 
       // 透明度
-      config.alpha = lodash.clamp(1 - parseFloat(getConfig('opacity', '0.4')), 0, 1)
+      config.alpha = lodash.clamp(
+        1 - parseFloat(playerAgent.getPlayerConfig('opacity', '0.4')),
+        0,
+        1,
+      )
 
       // 分辨率
-      const resolutionFactor = 1.4 - 0.4 * getConfig('fontsize', 1)
+      const resolutionFactor = 1.4 - 0.4 * playerAgent.getPlayerConfig('fontsize', 1)
       config.resolution = {
         x: Math.round(1920 * resolutionFactor),
         y: Math.round(1080 * resolutionFactor),
@@ -133,7 +135,7 @@ export const getUserDanmakuConfig = async () => {
 
       // 弹幕持续时长
       config.duration = (() => {
-        const scrollDuration = 18 - 3 * getConfig('speedplus', 0)
+        const scrollDuration = 18 - 3 * playerAgent.getPlayerConfig('speedplus', 0)
         return (danmaku: { type: number }) => {
           switch (danmaku.type) {
             case 4:
@@ -146,23 +148,25 @@ export const getUserDanmakuConfig = async () => {
       })()
 
       // 底部间距
-      const bottomMargin = getConfig('danmakuArea', 0)
+      const bottomMargin = playerAgent.getPlayerConfig('danmakuArea', 0)
       config.bottomMarginPercent = bottomMargin >= 100 ? 0 : bottomMargin / 100
       // 无显示区域限制时要检查是否开启防挡字幕
-      if (config.bottomMarginPercent === 0 && getConfig('preventshade', false)) {
+      if (config.bottomMarginPercent === 0 && playerAgent.getPlayerConfig('preventshade', false)) {
         config.bottomMarginPercent = 0.15
       }
 
       // 用户屏蔽词
-      const blockSettings = lodash.get(playerSettings, 'block.list', []) as {
-        /** 类型 */
-        t: 'keyword' | 'regexp' | 'user'
-        /** 内容 */
-        v: string
-        /** 是否开启 */
-        s: boolean
-        id: number
-      }[]
+      const blockSettings = playerAgent.getPlayerConfig<
+        {
+          /** 类型 */
+          t: 'keyword' | 'regexp' | 'user'
+          /** 内容 */
+          v: string
+          /** 是否开启 */
+          s: boolean
+          id: number
+        }[]
+      >('block.list', [])
       config.blockFilter = danmaku => {
         for (const b of blockSettings) {
           if (!b.s) {

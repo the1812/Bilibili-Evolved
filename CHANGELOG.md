@@ -1,6 +1,75 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.8.8 / v2.8.8-preview
+`2024-01-18`
+
+<details>
+<summary>正式版用户将获得 v2.8.6-preview ~ v2.8.7-preview 的所有新功能, 点击展开查看</summary>
+
+✨新增
+- 新增插件 `下载视频 - MPV 输出支持加强版`. (PR #4448 by [weapon!](https://github.com/Asukaaaaaa))
+> 同时支持单文件和多文件, 不需要额外下载程序处理 mpv 协议, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
+
+- `查看封面` 组件安装后可为 `下载视频` 提供下载封面支持. (#889, PR #4473 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增插件 `下载视频 - WASM 混流输出`. (PR #4521 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> 使用 WASM 在浏览器中下载并合并音视频，运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件
+
+- 使用流量计费网络时, 不再触发本体和功能的更新检查. (仅 Chrome) (#4477)
+- `快捷键扩展` 的音量调整支持自定义幅度. (#2594)
+- `自定义字体` 改善了组件代码和功能. (PR #4485 by [Tinhone](https://github.com/Tinhone))
+
+☕开发者相关
+- PlayerAgent API 重构为调用 `window.player` 和 `window.nano` API, 可以解决 #2544 的问题, 感谢 [timongh](https://github.com/timongh) 和 [WakelessSloth56](https://github.com/WakelessSloth56) 的发现. (#4330, #4341)
+
+</details>
+
+⚠ 注意
+- Firefox 的最低版本要求提升至 121, 顺便更新了下配置要求, 分为了最低配置和推荐配置, CPU 统一为桌面级型号.
+- 移除对旧版视频播放器的支持, 仅支持新版视频播放器 (BPX 播放器)
+
+✨新增
+- 新增插件 `动态过滤器 - 移除充电专属动态`. (#4033)
+> 移除动态里的充电专属动态, 装有 `动态过滤器` 时生效.
+
+- `删除视频弹窗` 支持屏蔽 "心动" 弹窗, `禁用特殊弹幕样式` 支持屏蔽相应的带货弹幕. (#4565)
+- `删除广告` 支持屏蔽首页的桌面端弹窗广告. (#4590)
+- 新增插件 `下载视频 - 空输出`. (#4581)
+> 提供一个 "空" 的输出选项, 只想获取下载视频的附带产物 (弹幕, 字幕等) 时可以使用此插件.
+
+- `下载视频` 支持下载合集. (#3240)
+- 视频相关功能和快捷键扩展支持新版番剧播放器. (#4571)
+
+🐛修复
+- 修复 `评论区IP属地显示` 在小黑屋中失效的问题. (#4572, PR #4573 by [Light_Quanta](https://github.com/LightQuanta))
+- `自定义字体` 改进: (PR #4585 by [Tinhone](https://github.com/Tinhone))
+  - 修复 `自定义字体` 导致快速收藏图标消失. (#4566)
+  - 将 `覆盖选项` 迁移到了更多选项中.
+  - 因为文泉驿微米黑（WenQuanYi Micro Hei）字体的部分版本存在朝鲜语（韩语）显示不正确的问题，所以从默认设置中删除，使用 Malgun Gothic 字体替换.
+- 夜间模式适配播放页的充电卡片. (#4599, PR #4600 by [Pencil](https://github.com/pencilqaq))
+- `直播信息扩充` 使用新的 API, 能够显示悄悄关注的主播. (PR #4587 by [Oxygenくん](https://github.com/oxygenkun))
+- 修复自定义顶栏在搜索页面的表现: 关键词同步 & 禁用全局固定. (#1431)
+- `删除广告` 使用 CSS `:has` 功能实现了移除广告的空白占位区域. (#3997)
+- 修复新版的动态多图界面中 `图片批量导出` 检测不到图片. (#4586)
+- 修复使用 `pluginApis.installStyle` 安装带有特殊字符的名称的样式后, 无法删除的问题. (#4557)
+- 修复快速收起评论遮挡了评论的操作菜单. (#4595)
+- 更新了 `稍后再看重定向` 的说明文字, 明确了功能作用范围. (#4555)
+> 将稍后再看的链接重定向为普通播放网址.
+> - `重定向页面`: 对稍后再看列表页面里的链接重定向.
+> - `重定向顶栏`: 对 `自定义顶栏` 里的稍后再看链接重定向.
+
+- 修复文件命名格式中 `[title]`, `[ep]`, `[lid]` 变量的值获取不正确. (#4575)
+
+☕开发者相关
+- pnpm 更新至 8.12.1.
+- README 调整了一些中英文字符之间的空格. (PR #4602 by [Shen-Linwood](https://github.com/Shen-Linwood))
+- PlayerAgent.getPlayerConfig 支持 BPX 播放器, 且默认认为当前 Agent 为 BPX 类型.
+- 修复 DownloadPackage 中同名文件会互相覆盖. (#4576)
+- 动态过滤器中使用 CSS `.plugin-block` 可以隐藏某个动态卡片, 插件结合 `forEachFeedsCard` 等 API 可以实现自定义的过滤逻辑. (#4033)
+- retrieveImageUrl 支持传入 picture 元素本身.
+- 内置 UA 更新至 Firefox 123.
+- 增加了 simulateClick API, 可以模拟一次点击. (依次触发 `pointerdown`, `mousedown`, `pointerup`, `mouseup`, `click` 事件)
+
 ## v2.8.7 / v2.8.7-preview
 `2023-11-23`
 
@@ -46,7 +115,7 @@
 - 修复 `自定义顶栏` 历史面板无法正确跳转课程. (#4484)
 - 修复 `自定义顶栏` 在历史记录页面产生的布局错位. (#4459)
 - 修复 `网址参数清理` 处理相对路径 URL 时产生了错误的结果. (#4471)
-- 修复 `自定义顶栏` 在专栏页面挡住了作者信息顶栏.
+- 修复 `自定义顶栏` 在专栏页面挡住了作者信息顶栏. (#4540)
 
 ☕开发者相关
 - 锁定了 PR Check 中的 pnpm 版本, 避免 pnpm 更新后出现不兼容 lockfile 导致 PR Check 失败.

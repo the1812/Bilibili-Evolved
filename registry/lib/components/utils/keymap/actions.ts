@@ -3,23 +3,30 @@ import { getComponentSettings } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
 import { Options } from '.'
 import { KeyBindingAction, KeyBindingActionContext } from './bindings'
+import { simulateClick } from '@/core/utils'
 
+export const keyboardEventToPointer = (event: KeyboardEvent): PointerEventInit => {
+  return {
+    ...lodash.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
+    bubbles: true,
+    cancelable: true,
+    view: unsafeWindow,
+  }
+}
 export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
   const { event } = context
-  const mouseEvent = new MouseEvent('click', {
-    ...lodash.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
-  })
+  const eventParams = keyboardEventToPointer(event)
   if (typeof target === 'string') {
     const targetElement = dq(target) as HTMLElement
     if (!targetElement) {
       return false
     }
-    targetElement.dispatchEvent(mouseEvent)
+    simulateClick(targetElement, eventParams)
   } else {
     if (!target) {
       return false
     }
-    target.dispatchEvent(mouseEvent)
+    simulateClick(target, eventParams)
   }
   return true
 }
@@ -82,7 +89,8 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   volumeUp: {
     displayName: '增加音量',
     run: () => {
-      const volume = playerAgent.changeVolume(10)
+      const step = getComponentSettings<Options>('keymap').options.volumeStep
+      const volume = playerAgent.changeVolume(step)
       if (lodash.isNil(volume)) {
         return volume
       }
@@ -93,7 +101,8 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   volumeDown: {
     displayName: '降低音量',
     run: () => {
-      const volume = playerAgent.changeVolume(-10)
+      const step = getComponentSettings<Options>('keymap').options.volumeStep
+      const volume = playerAgent.changeVolume(-step)
       if (lodash.isNil(volume)) {
         return volume
       }
@@ -127,7 +136,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   coin: {
     displayName: '投币',
     run: useClickElement(
-      '.video-toolbar .coin, .tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2), .video-toolbar-v1 .coin',
+      '.video-toolbar .coin, .tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2), .video-toolbar-v1 .coin, .toolbar .coin',
     ),
   },
   favorite: {
@@ -143,31 +152,32 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   like: {
     displayName: '点赞',
     run: (() => {
-      /** 长按`L`三连使用的记忆变量 */
+      /** 长按 `L` 三连使用的记忆变量 */
       let likeClick = true
       return (context: KeyBindingActionContext) => {
         const { event } = context
         const likeButton = dq(
-          '.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like',
+          '.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like, .toolbar .like',
         ) as HTMLSpanElement
         if (!likeButton) {
           return false
         }
         event.preventDefault()
-        const fireEvent = (name: string, args: Event) => {
-          const customEvent = new CustomEvent(name, args)
-          likeButton.dispatchEvent(customEvent)
+        const fireMouseEvent = (name: string, source: KeyboardEvent) => {
+          const eventParams: MouseEventInit = keyboardEventToPointer(source)
+          const mouseEvent = new MouseEvent(name, eventParams)
+          likeButton.dispatchEvent(mouseEvent)
         }
         likeClick = true
         setTimeout(() => (likeClick = false), 200)
-        fireEvent('mousedown', event)
+        fireMouseEvent('mousedown', event)
         document.body.addEventListener(
           'keyup',
           e => {
             e.preventDefault()
-            fireEvent('mouseup', e)
+            fireMouseEvent('mouseup', e)
             if (likeClick) {
-              fireEvent('click', e)
+              fireMouseEvent('click', e)
             }
           },
           { once: true },

@@ -37,39 +37,64 @@ export const formatTitle = (
   extraVariables: StringMap = {},
 ) => {
   const now = new Date()
+  const getLegacyTitle = () => {
+    return (
+      document.title
+        .replace(
+          /第[0-9]*[零一二三四五六七八九十百千]*[集话]-[^-]+-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/,
+          '',
+        )
+        .replace(/-[^-]+-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
+        .replace(/-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
+        .replace(/：([^：]+?)_.+?_bilibili_哔哩哔哩$/, '')
+        .replace(/_哔哩哔哩_bilibili$/, '')
+        .replace(/ - 哔哩哔哩$/, '')
+        // b站不再有干杯了吗...
+        .replace(/_哔哩哔哩 \(゜-゜\)つロ 干杯~-bilibili$/, '')
+        .replace(/(.*?) - (.*?) - 哔哩哔哩直播，二次元弹幕直播平台$/, '$1')
+        .trim()
+    )
+  }
   const builtInVariables: StringMap = {
-    title: document.title
-      .replace(
-        /第[0-9]*[零一二三四五六七八九十百千]*[集话]-[^-]+-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/,
-        '',
-      )
-      .replace(/-[^-]+-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
-      .replace(/-[^-]+-[^-]+在线观看-bilibili-哔哩哔哩$/, '')
-      .replace(/：([^：]+?)_.+?_bilibili_哔哩哔哩$/, '')
-      .replace(/_哔哩哔哩_bilibili$/, '')
-      .replace(/ - 哔哩哔哩$/, '')
-      // b站不再有干杯了吗...
-      .replace(/_哔哩哔哩 \(゜-゜\)つロ 干杯~-bilibili$/, '')
-      .replace(/(.*?) - (.*?) - 哔哩哔哩直播，二次元弹幕直播平台$/, '$1')
-      .trim(),
+    title: (() => {
+      const videoPageTitle = dq('.video-info-container .video-title')
+      if (videoPageTitle !== null) {
+        return videoPageTitle.getAttribute('title')
+      }
+      const bangumiPageTitle = dq('[class*="mediainfo_mediaTitle"]')
+      if (bangumiPageTitle !== null) {
+        return bangumiPageTitle.getAttribute('title')
+      }
+      const livePageTitle = dq('.header-info-ctnr .live-title .text')
+      if (livePageTitle !== null) {
+        return livePageTitle.getAttribute('title')
+      }
+      return getLegacyTitle()
+    })(),
     ep: (() => {
       if (!includesPageTitle) {
         return undefined
       }
-      const bangumiPage = dq('#eplist_module li.cursor .ep-title') as HTMLElement
-      if (bangumiPage !== null) {
-        return bangumiPage.innerText
+      const bangumiPageEp = dq('#eplist_module li.cursor .ep-title') as HTMLElement
+      if (bangumiPageEp !== null) {
+        return bangumiPageEp.innerText
       }
-      const pageLink = dq('#multi_page .cur-list>ul li.on a')
-      if (pageLink !== null) {
-        return pageLink.getAttribute('title')
+      const videoPageEp = dq(
+        '#multi_page .cur-list>ul li.on a, .video-episode-card__info-playing .video-episode-card__info-title',
+      )
+      if (videoPageEp !== null) {
+        return videoPageEp.getAttribute('title')
+      }
+      const watchlaterPageEp = dq('.multip-list-item.multip-list-item-active')
+      if (watchlaterPageEp !== null) {
+        return watchlaterPageEp.getAttribute('title')
       }
       return undefined
     })(),
     aid: unsafeWindow.aid,
     bvid: unsafeWindow.bvid,
     cid: unsafeWindow.cid,
-    lid: document.URL.replace(/https:\/\/live\.bilibili\.com\/(blanc\/)?(\d)+/, '$2'),
+    lid: document.URL.replace(/https:\/\/live\.bilibili\.com\/(blanc\/)?([\d]+)/, '$2'),
     // 年月日这方法名真够乱的
     y: now.getFullYear().toString(),
     M: (now.getMonth() + 1).toString().padStart(2, '0'), // zero-based
