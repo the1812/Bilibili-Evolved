@@ -66,7 +66,6 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
       }
       const sections: { episodes: any[] }[] = lodash.get(json, 'data.View.ugc_season.sections', [])
       if (sections.length === 0) {
-        logError('获取视频合集列表失败, 没有找到合集信息.')
         return []
       }
       const totalEpisodesLength = lodash.sumBy(sections, it => it.episodes.length)
