@@ -1,3 +1,4 @@
+import { jsDelivr } from './jsdelivr'
 import { CdnConfig } from './types'
 
 const owner = 'the1812'
@@ -15,6 +16,8 @@ export const github: CdnConfig = {
     sortable: `https://${host}/SortableJS/Sortable/1.14.0/Sortable.min.js`,
     mdi: `https://${owner}.github.io/Bilibili-Evolved/static/mdi/mdi.css`,
     streamsaver: `https://${host}/jimmywarting/StreamSaver.js/2.0.6/StreamSaver.js`,
+    // https://github.com/the1812/Bilibili-Evolved/pull/4521#discussion_r1402084486
+    ffmpeg: jsDelivr.library.ffmpeg,
   },
   smallLogo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo-small.png`,
   logo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo.png`,

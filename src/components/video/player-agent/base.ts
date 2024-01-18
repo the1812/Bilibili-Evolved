@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 import { select } from '@/core/spin-query'
 import { raiseEvent } from '@/core/utils'
 import {
@@ -29,9 +30,23 @@ export const click = (target: ElementQuery) => {
   button?.click()
   return button
 }
-export abstract class PlayerAgent {
+
+export enum PlayerAgentEventTypes {
+  Play = 'play',
+}
+export abstract class PlayerAgent
+  extends EventTarget
+  implements EnumEventTarget<`${PlayerAgentEventTypes}`>
+{
+  isBpxPlayer = true
+
   abstract type: AgentType
   abstract query: PlayerQuery<ElementQuery>
+
+  constructor() {
+    super()
+  }
+
   provideCustomQuery<CustomQueryType extends CustomQuery<string>>(
     config: CustomQueryProvider<CustomQueryType>,
   ) {
@@ -71,32 +86,145 @@ export abstract class PlayerAgent {
 
   /** true 开灯，false 关灯 */
   async toggleLight(on?: boolean) {
-    const checkbox = (await this.query.control.settings.lightOff()) as HTMLInputElement
+    if (!this.nativeApi) {
+      return null
+    }
+    const isCurrentLightOff = this.nativeApi.getLightOff()
     // 无指定参数, 直接 toggle
     if (on === undefined) {
-      checkbox.click()
-      return
+      this.nativeApi.setLightOff(!isCurrentLightOff)
+      return !isCurrentLightOff
     }
     // 关灯状态 && 要开灯 -> 开灯
-    checkbox.checked && on && checkbox.click()
-    // 开灯状态 && 要关灯 -> 关灯
-    !checkbox.checked && !on && checkbox.click()
+    if (on && isCurrentLightOff) {
+      this.nativeApi.setLightOff(true)
+      return true
+    }
+    if (!on && !isCurrentLightOff) {
+      this.nativeApi.setLightOff(false)
+      return false
+    }
+    return null
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  getPlayerConfig(target: string) {
-    return lodash.get(JSON.parse(localStorage.getItem('bilibili_player_settings')), target, false)
+  getPlayerConfig<DefaultValueType = unknown, ValueType = DefaultValueType>(
+    target: string,
+    defaultValue?: DefaultValueType,
+  ): ValueType | DefaultValueType {
+    const storageKey = this.isBpxPlayer ? 'bpx_player_profile' : 'bilibili_player_settings'
+    return lodash.get(JSON.parse(localStorage.getItem(storageKey)), target, defaultValue)
   }
 
   isAutoPlay() {
     return this.getPlayerConfig('video_status.autoplay')
   }
 
-  abstract isMute(): boolean
+  // https://github.com/the1812/Bilibili-Evolved/discussions/4341
+  get nativeApi() {
+    return unsafeWindow.player || unsafeWindow.playerRaw
+  }
+
+  get nanoApi() {
+    return unsafeWindow.nano
+  }
+
+  private eventHandlerMap = new Map<
+    EventListenerOrEventListenerObject,
+    {
+      handler: () => void
+      options: boolean | AddEventListenerOptions
+    }
+  >()
+
+  addEventListener(
+    type: `${PlayerAgentEventTypes}`,
+    callback: EventListenerOrEventListenerObject,
+    options?: boolean | AddEventListenerOptions,
+  ): void {
+    super.addEventListener(type, callback, options)
+    switch (type) {
+      default: {
+        break
+      }
+      case PlayerAgentEventTypes.Play: {
+        const handler = () => {
+          this.dispatchEvent(new Event(PlayerAgentEventTypes.Play))
+        }
+        if (typeof options === 'object' && options.once) {
+          this.nativeApi.once(this.nanoApi.EventType.Player_Initialized, handler)
+        } else {
+          this.nativeApi.on(this.nanoApi.EventType.Player_Initialized, handler)
+        }
+        this.eventHandlerMap.set(callback, {
+          handler,
+          options,
+        })
+      }
+    }
+  }
+
+  removeEventListener(
+    type: `${PlayerAgentEventTypes}`,
+    callback: EventListenerOrEventListenerObject,
+    options?: boolean | EventListenerOptions,
+  ): void {
+    super.removeEventListener(type, callback, options)
+    switch (type) {
+      default: {
+        break
+      }
+      case PlayerAgentEventTypes.Play: {
+        const handlerData = this.eventHandlerMap.get(callback)
+        if (!handlerData || lodash.isEqual(options, handlerData.options)) {
+          break
+        }
+        this.nativeApi.off(this.nanoApi.EventType.Player_Initialized, handlerData.handler)
+      }
+    }
+  }
+
+  /** 获取是否静音 */
+  isMute() {
+    if (!this.nativeApi) {
+      return null
+    }
+    if (this.nativeApi.isMuted) {
+      return this.nativeApi.isMuted()
+    }
+    return this.nativeApi.isMute()
+  }
   /** 更改音量 (%) */
-  abstract changeVolume(change: number): number
+  changeVolume(change: number) {
+    if (!this.nativeApi) {
+      return null
+    }
+    if (this.nativeApi.getVolume) {
+      const current = this.nativeApi.getVolume()
+      this.nativeApi.setVolume(current + change / 100)
+      return Math.round(this.nativeApi.getVolume() * 100)
+    }
+    const current = this.nativeApi.volume()
+    this.nativeApi.volume(current + change / 100)
+    return Math.round(this.nativeApi.volume() * 100)
+  }
   /** 跳转到指定时间 */
-  abstract seek(time: number): number
+  seek(time: number) {
+    if (!this.nativeApi) {
+      return null
+    }
+    this.nativeApi.seek(time)
+    return this.nativeApi.getCurrentTime() as number
+  }
   /** 更改时间 */
-  abstract changeTime(change: number): number
+  changeTime(change: number) {
+    if (!this.nativeApi) {
+      return null
+    }
+    const video = this.query.video.element.sync() as HTMLVideoElement
+    if (!video) {
+      return null
+    }
+    this.nativeApi.seek(video.currentTime + change, video.paused)
+    return this.nativeApi.getCurrentTime()
+  }
 }

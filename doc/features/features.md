@@ -242,7 +242,15 @@ by [@RieN7](https://github.com/rien7)
 
 by [@Tinhone](https://github.com/Tinhone)
 
-使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family) 、默认设置与设置说明
+使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。
+
+当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。
+
+选项说明:
+- `禁用标题标点符号缩进`: 在新版视频页中，推荐视频栏中的视频标题，如果首个字符是特定的标点符号，则文本会缩入左侧。这个选项可以禁用这种样式
+- `更多选项`:
+  - `自定义字体`: 设置自定义字体。写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。
+  - `覆盖选项`: 相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的选项后才会应用。
 
 ### [自定义顶栏](../../registry/dist/components/style/custom-navbar.js)
 `customNavbar`
@@ -821,6 +829,8 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/watchlater-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/watchlater-redirect.js)
 
 将稍后再看的链接重定向为普通播放网址.
+- `重定向页面`: 对稍后再看列表页面里的链接重定向.
+- `重定向顶栏`: 对 `自定义顶栏` 里的稍后再看链接重定向.
 
 ### [自动移出稍后再看](../../registry/dist/components/video/auto-remove-watchlater.js)
 `autoRemoveWatchlater`
@@ -1242,6 +1252,15 @@ by FoundTheWOUT
 在视频播放器右上角显示系统时间.
 ## 插件
 
+### [动态过滤器 - 移除充电专属动态](../../registry/dist/plugins/feeds/filter/hide-charge-feeds.js)
+`feedsFilter.pluginBlocks.chargeFeeds`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/feeds/filter/hide-charge-feeds.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/feeds/filter/hide-charge-feeds.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/feeds/filter/hide-charge-feeds.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/feeds/filter/hide-charge-feeds.js)
+
+移除动态里的充电专属动态, 装有 `动态过滤器` 时生效.
+
 ### [搜索栏 - 音频跳转](../../registry/dist/plugins/launch-bar/audio-search.js)
 `launchBar.actions.audioSearch`
 
@@ -1388,6 +1407,15 @@ by FoundTheWOUT
 
 为下载视频增加 aria2 文件导出和 RPC 输出支持.
 
+### [下载视频 - 空输出](../../registry/dist/plugins/video/download/empty-output.js)
+`downloadVideo.outputs.empty`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/empty-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/empty-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/empty-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/empty-output.js)
+
+提供一个 "空" 的输出选项, 只想获取下载视频的附带产物 (弹幕, 字幕等) 时可以使用此插件.
+
 ### [下载视频 - IDM 输出支持](../../registry/dist/plugins/video/download/idm-output.js)
 `downloadVideo.outputs.idm`
 
@@ -1415,6 +1443,17 @@ by FoundTheWOUT
 
 为下载视频增加 Motrix 输出支持.
 
+### [下载视频 - MPV 输出支持加强版](../../registry/dist/plugins/video/download/mpv-output-ex.js)
+`downloadVideo.outputs.mpv-ex`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/mpv-output-ex.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/mpv-output-ex.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/mpv-output-ex.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/mpv-output-ex.js)
+
+by [@asuaaa](https://github.com/Asukaaaaaa)
+
+为下载视频增加 MPV 输出，支持导出列表, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)
+
 ### [下载视频 - MPV 播放支持（列表）](../../registry/dist/plugins/video/download/mpv-output-playlist.js)
 `downloadVideo.outputs.mpv-playlist`
 
@@ -1436,6 +1475,17 @@ by [@wuliic](https://github.com/wullic)
 by [@diannaojiang](https://github.com/diannaojiang)
 
 为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)
+
+### [下载视频 - WASM 混流输出](../../registry/dist/plugins/video/download/wasm-output.js)
+`downloadVideo.outputs.wasm`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/wasm-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/wasm-output.js)
+
+by [@WakelessSloth56](https://github.com/WakelessSloth56)
+
+使用 WASM 在浏览器中下载并合并音视频
 
 ### [快捷键扩展 - 视频倍速](../../registry/dist/plugins/video/player/speed.js)
 `speed.keymap`

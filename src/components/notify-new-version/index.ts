@@ -24,6 +24,10 @@ export const component = defineComponentMetadata({
       const { monkey } = await import('@/core/ajax')
       const { meta } = await import('@/core/meta')
       const { Toast } = await import('@/core/toast')
+      const { isDataSaveMode } = await import('@/core/utils')
+      if (isDataSaveMode()) {
+        return
+      }
       const now = Number(new Date())
       const duration = now - options.lastUpdateCheck
       if (duration < options.minimumDuration) {

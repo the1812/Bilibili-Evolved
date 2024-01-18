@@ -49,3 +49,52 @@ export const videoBatchInput: DownloadVideoInput = {
       })
     }),
 }
+export const videoSeasonBatchInput: DownloadVideoInput = {
+  name: 'video.seasonBatch',
+  displayName: '当前视频 (合集)',
+  match: videoUrls,
+  batch: true,
+  getInputs: async instance => instance?.checkedInputItems ?? [],
+  component: async () =>
+    createEpisodesPicker(async instance => {
+      const { aid, bvid } = unsafeWindow
+      const api = `https://api.bilibili.com/x/web-interface/wbi/view/detail?bvid=${bvid}&aid=${aid}`
+      const json = await getJsonWithCredentials(api)
+      if (json.code !== 0) {
+        logError(`获取视频合集列表失败, message = ${json.message}`)
+        return []
+      }
+      const sections: { episodes: any[] }[] = lodash.get(json, 'data.View.ugc_season.sections', [])
+      if (sections.length === 0) {
+        return []
+      }
+      const totalEpisodesLength = lodash.sumBy(sections, it => it.episodes.length)
+      return sections.flatMap((section, sectionIndex) => {
+        const { episodes = [] } = section
+        return episodes.map((episode, episodeIndex) => {
+          const currentIndex =
+            episodeIndex + lodash.sumBy(sections.slice(0, sectionIndex), it => it.episodes.length)
+          const key = episode.cid
+          const page = currentIndex + 1
+          const title = `P${page} ${episode.title}`
+          return {
+            key,
+            title,
+            isChecked: currentIndex < instance.maxCheckedItems,
+            durationText: formatDuration(episode.arc.duration),
+            inputItem: {
+              allowQualityDrop: true,
+              title: formatTitle(getGeneralSettings().batchFilenameFormat, false, {
+                title: episode.page.part,
+                cid: episode.cid,
+                n: formatNumber(page, totalEpisodesLength),
+                ep: episode.title,
+              }),
+              cid: episode.cid,
+              aid: episode.aid,
+            },
+          } as EpisodeItem
+        })
+      })
+    }),
+}

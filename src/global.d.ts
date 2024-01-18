@@ -9,6 +9,30 @@ declare global {
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
 
+  type EnumEventTarget<EventTypes extends string> = EventTarget & {
+    addEventListener(
+      type: EventTypes,
+      callback: EventListenerOrEventListenerObject | null,
+      options?: AddEventListenerOptions | boolean,
+    ): void
+    removeEventListener(
+      type: EventTypes,
+      callback: EventListenerOrEventListenerObject | null,
+      options?: EventListenerOptions | boolean,
+    ): void
+  }
+  interface NetworkInformation extends EnumEventTarget<'change'> {
+    downlink: number
+    downlinkMax: number
+    effectiveType: string
+    rtt: number
+    saveData: boolean
+    type: string
+  }
+  interface Navigator {
+    connection?: NetworkInformation
+  }
+
   interface GitInfo {
     commitHash: string
     branch: string

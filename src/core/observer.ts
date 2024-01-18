@@ -241,7 +241,6 @@ export const urlChange = (callback: (url: string) => void, config?: AddEventList
 /** 等待 cid */
 const selectCid = lodash.once(() =>
   select(() => {
-    import('@/components/video/player-adaptor').then(({ playerPolyfill }) => playerPolyfill())
     if (unsafeWindow.cid) {
       return unsafeWindow.cid
     }
@@ -264,8 +263,6 @@ export const videoChange = async (
   if (!matchCurrentPage(playerUrls)) {
     return false
   }
-  const { playerPolyfill } = await import('@/components/video/player-adaptor')
-  playerPolyfill()
   const cid = await selectCid()
   if (cid === null) {
     return false

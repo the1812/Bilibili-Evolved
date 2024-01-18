@@ -5,9 +5,8 @@
   </div>
 </template>
 <script lang="ts">
+import { getVideoCoverUrlByAid } from '@/components/video/video-cover'
 import { videoChange } from '@/core/observer'
-import { logError } from '@/core/utils/log'
-import { VideoInfo } from '@/components/video/video-info'
 
 export default Vue.extend({
   data() {
@@ -18,14 +17,7 @@ export default Vue.extend({
   created() {
     videoChange(async () => {
       const { aid } = unsafeWindow
-      const videoInfo = new VideoInfo(aid)
-      try {
-        await videoInfo.fetchInfo()
-      } catch (error) {
-        logError(error)
-        throw error
-      }
-      this.imageUrl = videoInfo.coverUrl.replace('http:', 'https:')
+      this.imageUrl = await getVideoCoverUrlByAid(aid)
     })
   },
 })

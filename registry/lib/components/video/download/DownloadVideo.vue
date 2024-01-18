@@ -95,7 +95,7 @@ import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { Toast } from '@/core/toast'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { bangumiBatchInput } from './inputs/bangumi/batch'
-import { videoBatchInput } from './inputs/video/batch'
+import { videoBatchInput, videoSeasonBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
 import { videoDashAvc, videoDashHevc, videoDashAv1, videoAudioDash } from './apis/dash'
 import { videoFlv } from './apis/flv'
@@ -113,6 +113,7 @@ import {
 const [inputs] = registerAndGetData('downloadVideo.inputs', [
   videoSingleInput,
   videoBatchInput,
+  videoSeasonBatchInput,
   bangumiBatchInput,
 ] as DownloadVideoInput[])
 const [apis] = registerAndGetData('downloadVideo.apis', [
