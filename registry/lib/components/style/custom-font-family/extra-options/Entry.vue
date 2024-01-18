@@ -1,7 +1,7 @@
 <template>
   <div class="custom-font-family-extra-options-entry">
     <VButton @mouseover="loadPanel()" @click="togglePanelDisplay()">
-      字体设置<VIcon icon="right-arrow" :size="16"></VIcon>
+      更多选项<VIcon icon="right-arrow" :size="16"></VIcon>
     </VButton>
   </div>
 </template>

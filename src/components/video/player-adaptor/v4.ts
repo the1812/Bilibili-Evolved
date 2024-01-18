@@ -1,9 +1,18 @@
-/* eslint-disable no-underscore-dangle */
 import { allMutations } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
 import { bangumiUrls } from '@/core/utils/urls'
 
+const isIdValid = (id: string) => {
+  if (id === '') {
+    return false
+  }
+  const idNumber = parseInt(id)
+  if (Number.isNaN(idNumber)) {
+    return true
+  }
+  return idNumber > 0
+}
 const idPolyfill = async () => {
   const player = await select(() => unsafeWindow.player)
   if (!player?.getManifest) {
@@ -22,7 +31,14 @@ const idPolyfill = async () => {
       cid: manifest.cid.toString(),
       bvid: manifest.bvid ?? '',
     }
-    if (Object.values(idData).some(it => it === '' || parseInt(it) <= 0)) {
+    const isIdDataValid = (() => {
+      const isBangumi = bangumiUrls.some(url => matchUrlPattern(url))
+      if (isBangumi) {
+        return isIdValid(idData.aid) && isIdValid(idData.cid)
+      }
+      return Object.values(idData).every(it => isIdValid(it))
+    })()
+    if (!isIdDataValid) {
       console.warn('invalid manifest data', idData)
     }
     Object.assign(unsafeWindow, idData)
@@ -30,9 +46,6 @@ const idPolyfill = async () => {
 }
 
 export const v4PlayerPolyfill = lodash.once(() => {
-  if (bangumiUrls.some(url => matchUrlPattern(url))) {
-    return
-  }
   if (unsafeWindow.aid || unsafeWindow.cid) {
     return
   }

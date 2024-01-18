@@ -38,6 +38,8 @@ export abstract class PlayerAgent
   extends EventTarget
   implements EnumEventTarget<`${PlayerAgentEventTypes}`>
 {
+  isBpxPlayer = true
+
   abstract type: AgentType
   abstract query: PlayerQuery<ElementQuery>
 
@@ -105,8 +107,12 @@ export abstract class PlayerAgent
     return null
   }
 
-  getPlayerConfig(target: string) {
-    return lodash.get(JSON.parse(localStorage.getItem('bilibili_player_settings')), target, false)
+  getPlayerConfig<DefaultValueType = unknown, ValueType = DefaultValueType>(
+    target: string,
+    defaultValue?: DefaultValueType,
+  ): ValueType | DefaultValueType {
+    const storageKey = this.isBpxPlayer ? 'bpx_player_profile' : 'bilibili_player_settings'
+    return lodash.get(JSON.parse(localStorage.getItem(storageKey)), target, defaultValue)
   }
 
   isAutoPlay() {
@@ -115,7 +121,7 @@ export abstract class PlayerAgent
 
   // https://github.com/the1812/Bilibili-Evolved/discussions/4341
   get nativeApi() {
-    return unsafeWindow.player || window.playerRaw
+    return unsafeWindow.player || unsafeWindow.playerRaw
   }
 
   get nanoApi() {

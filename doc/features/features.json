@@ -195,7 +195,7 @@
     "type": "component",
     "name": "customFontFamily",
     "displayName": "自定义字体",
-    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。\r\n\r\n当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。\r\n\r\n而 `覆盖*` 选项相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的 `覆盖*` 选项后才会应用。\r\n\r\n字体设置写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。",
+    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。\r\n\r\n当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。\r\n\r\n选项说明:\r\n- `禁用标题标点符号缩进`: 在新版视频页中，推荐视频栏中的视频标题，如果首个字符是特定的标点符号，则文本会缩入左侧。这个选项可以禁用这种样式\r\n- `更多选项`:\r\n  - `自定义字体`: 设置自定义字体。写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。\r\n  - `覆盖选项`: 相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的选项后才会应用。",
     "fullRelativePath": "../../registry/dist/components/style/custom-font-family.js",
     "fullAbsolutePath": "registry/dist/components/style/custom-font-family.js"
   },
@@ -619,7 +619,7 @@
     "type": "component",
     "name": "watchlaterRedirect",
     "displayName": "稍后再看重定向",
-    "description": "将稍后再看的链接重定向为普通播放网址.",
+    "description": "将稍后再看的链接重定向为普通播放网址.\r\n- `重定向页面`: 对稍后再看列表页面里的链接重定向.\r\n- `重定向顶栏`: 对 `自定义顶栏` 里的稍后再看链接重定向.\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/watchlater-redirect.js",
     "fullAbsolutePath": "registry/dist/components/utils/watchlater-redirect.js"
   },
@@ -906,6 +906,14 @@
   },
   {
     "type": "plugin",
+    "name": "feedsFilter.pluginBlocks.chargeFeeds",
+    "displayName": "动态过滤器 - 移除充电专属动态",
+    "description": "移除动态里的充电专属动态, 装有 `动态过滤器` 时生效.\r\n",
+    "fullRelativePath": "../../registry/dist/plugins/feeds/filter/hide-charge-feeds.js",
+    "fullAbsolutePath": "registry/dist/plugins/feeds/filter/hide-charge-feeds.js"
+  },
+  {
+    "type": "plugin",
     "name": "launchBar.actions.audioSearch",
     "displayName": "搜索栏 - 音频跳转",
     "description": "在输入音频的 au 号或播放列表的 am 号时, 提供对应的跳转选项.\r\n",
@@ -1031,6 +1039,14 @@
     "description": "为下载视频增加 aria2 文件导出和 RPC 输出支持.",
     "fullRelativePath": "../../registry/dist/plugins/video/download/aria2-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/aria2-output.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.empty",
+    "displayName": "下载视频 - 空输出",
+    "description": "提供一个 \"空\" 的输出选项, 只想获取下载视频的附带产物 (弹幕, 字幕等) 时可以使用此插件.\r\n",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/empty-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/empty-output.js"
   },
   {
     "type": "plugin",

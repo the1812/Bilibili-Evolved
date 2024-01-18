@@ -32,7 +32,8 @@ body.remove-game-match-module #reportFirst3,
 .video-page-game-card-small,
 .video-page-operator-card-small,
 [data-be-promotion-mark],
-body:not(.preserve-feed-goods) .dyn-goods {
+body:not(.preserve-feed-goods) .dyn-goods,
+.desktop-download-tip {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
@@ -83,28 +84,6 @@ body.dark .blocked-ads.new {
 body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-goods) {
   margin: 0 !important;
 }
-.bili-video-card__wrap {
-  a[href*='cm.bilibili.com'] {
-    pointer-events: none !important;
-    cursor: default !important;
-
-    > * {
-      visibility: hidden !important;
-    }
-    & ~ .bili-video-card__info {
-      display: none !important;
-    }
-    body.promotion-show-placeholder &::before {
-      content: '🚫已屏蔽广告';
-      border-radius: 6px;
-      @include h-center();
-      justify-content: center;
-      position: absolute;
-      z-index: 2;
-      font-size: 16px;
-      width: 100%;
-      height: 100%;
-      background-color: #8882;
-    }
-  }
+.bili-video-card__wrap:has(a[href*='cm.bilibili.com']) {
+  display: none !important;
 }

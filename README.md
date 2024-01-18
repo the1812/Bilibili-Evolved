@@ -32,15 +32,12 @@
 
 **注意事项**
 - **⚠ 使用正式版 (GitHub 源) 和预览版须翻墙.**
-- 默认不预装任何组件, 需要在按[设置](#设置)中的说明添加感兴趣的功能.
+- 默认不预装任何组件, 需要在按[设置](#设置)中的说明添加感兴趣的功能; 默认会屏蔽双击全屏, 如有需要可以安装 `双击全屏` 组件来恢复.
 - 这个是一个综合性的脚本, 如果只是想下载视频建议去 [GreasyFork](https://greasyfork.org/zh-CN/scripts/by-site/bilibili.com) 找个更专业的.
-- 全景视频不能用鼠标拖拽视角(只能用键盘操作).
-- 默认屏蔽双击全屏, 如有需要可以安装 `双击全屏` 组件来恢复.
-- 对性能有较大影响.
+- 对性能有较大影响, 详见[配置要求](#配置).
 - 默认不对未登录的状态做适配.
 - 新版本一旦正式发布, 就不再对旧版本做任何技术支持.
-- 使用外部网站的链接时 (如将下载任务发送到自己的服务器 / 使用链接安装组件等) 可能会提示"脚本试图访问跨域资源", 请选择"始终允许".
-- 需要在至少 1400 x 800 以上的逻辑分辨率下使用.
+- 使用外部网站的链接时 (如将下载任务发送到自己的服务器 / 使用链接安装组件等) 可能会提示"脚本试图访问跨域资源", 请选择"始终允许" 避免下次还提示.
 
 | 正式版 (jsDelivr 源)                                                                                     | 正式版 (GitHub 源)                                                                                      | 预览版                                                                                                           |
 | -------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
@@ -73,15 +70,26 @@
 
 <img alt="about-panel" src="images/v2/about-panel.jpg" width="450">
 
-# 推荐配置
-- 操作系统: 64-bit Windows 10 / macOS Sonoma
-- 分辨率: 3840x2160 / 192ppi
-- 浏览器: Chrome 100+ / Firefox 103+ / Safari 15.4+ (仅理论上能运行, 没测试过)
-- 处理器: Intel Core i7-9750H / AMD Ryzen 5 5600H
+# 配置
+## 最低配置
+- 操作系统: Windows 8.1 / macOS Big Sur
+- 分辨率: 1920x1080, 缩放 125%
+- 浏览器: Chrome 105+ / Firefox 121+ / Safari 15.4+ (仅理论上能运行, 没测试过)
+- 处理器: Intel Core i5-10500 / AMD Ryzen 5 3600
 - 内存: 8GB
-- 脚本管理器: Tampermonkey 4.14 / Violentmonkey 2.13
+- 脚本管理器: Tampermonkey 5.0 / Violentmonkey 2.18
 - 显卡: GeForce GTX 1050 / Radeon HD 7870
 - 网络: 10MB/s
+
+## 推荐配置
+- 操作系统: Windows 10 / macOS Sonoma
+- 分辨率: 3840x2160, 缩放 200%
+- 浏览器: Chrome 120+ / Firefox 121+
+- 处理器: Intel Core i7-11700 / AMD Ryzen 7 5800
+- 内存: 32GB
+- 脚本管理器: Tampermonkey 5.0 / Violentmonkey 2.18
+- 显卡: GeForce RTX 3060 / Radeon RX 6600XT
+- 网络: 20MB/s
 
 # 兼容性
 
@@ -144,7 +152,7 @@
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
 
-## bilibili网页端添加APP首页推荐
+## bilibili 网页端添加 APP 首页推荐
 作者: [indefined](https://github.com/indefined)
 - [GitHub](https://github.com/indefined/UserScripts/tree/master/bilibiliHome)
 - [GreasyFork](https://greasyfork.org/zh-CN/scripts/368446-bilibili%E7%BD%91%E9%A1%B5%E7%AB%AF%E6%B7%BB%E5%8A%A0app%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90)
@@ -161,7 +169,7 @@
 
 ----
 
-**喜欢的话就点个⭐Star吧(°∀°)ﾉ**
+**喜欢的话就点个⭐Star 吧(°∀°)ﾉ**
 
 **或者也可以考虑[捐助](https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/donate.md)支持一下哦(｀・ω・´)**
 
@@ -182,7 +190,7 @@
 # 我写的其他一些玩意
 
 ## [Touhou Tagger](https://github.com/the1812/Touhou-Tagger)
-☯ 从 [THBWiki](https://thwiki.cc/) 自动填写东方Project同人音乐CD曲目信息
+☯ 从 [THBWiki](https://thwiki.cc/) 自动填写东方 Project 同人音乐 CD 曲目信息
 
 ## [Malware Patch](https://github.com/the1812/Malware-Patch)
 阻止中国流氓软件的管理员授权

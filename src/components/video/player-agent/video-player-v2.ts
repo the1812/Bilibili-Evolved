@@ -3,7 +3,9 @@ import { isBwpVideo } from '@/core/utils'
 import { PlayerAgent, selectorWrap } from './base'
 import { AgentType, PlayerQuery, ElementQuery } from './types'
 
+/** @deprecated Use `VideoPlayerBpxAgent` instead */
 export class VideoPlayerV2Agent extends PlayerAgent {
+  isBpxPlayer = false
   type: AgentType = 'video'
   query = selectorWrap({
     playerWrap: '.player-wrap',

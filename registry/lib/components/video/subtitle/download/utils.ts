@@ -3,6 +3,17 @@ import { Toast } from '@/core/toast'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { SubtitleConverterConfig } from '../subtitle-converter'
 
+export interface SubtitleSettings {
+  bilingual: boolean
+  color: string
+  fade: boolean
+  fontsize: string
+  lan: string
+  opacity: number
+  position: string
+  scale: boolean
+  shadow: string
+}
 export interface SubtitleInfo {
   id: number
   id_str: string
@@ -20,14 +31,10 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
     '../subtitle-converter'
   )
   const { playerAgent } = await import('@/components/video/player-agent')
-  const isBpxPlayer = dq('.bpx-player-video-wrap')
-  const playerSettingsText = isBpxPlayer
-    ? localStorage.getItem('bpx_player_profile')
-    : localStorage.getItem('bilibili_player_settings')
-  if (!playerSettingsText) {
+  const subtitleSettings = playerAgent.getPlayerConfig<null, SubtitleSettings>('subtitle', null)
+  if (!subtitleSettings) {
     return [SubtitleConverter.defaultConfig, '']
   }
-  const subtitleSettings = JSON.parse(playerSettingsText).subtitle
   const language = subtitleSettings.lan
   const title = getFriendlyTitle(true)
   const fontSizeMapping: { [key: number]: number } = {
@@ -38,11 +45,8 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
     1.6: SubtitleSize.VeryLarge,
   }
   const size = fontSizeMapping[subtitleSettings.fontsize]
-  const color =
-    typeof subtitleSettings.color === 'number'
-      ? subtitleSettings.color.toString(16)
-      : parseInt(subtitleSettings.color).toString(16)
-  const opacity = subtitleSettings.backgroundopacity ?? subtitleSettings.opacity
+  const color = parseInt(subtitleSettings.color).toString(16)
+  const { opacity } = subtitleSettings
 
   const positions = {
     bc: SubtitleLocation.BottomCenter,

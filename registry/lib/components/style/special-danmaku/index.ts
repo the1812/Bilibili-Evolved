@@ -48,6 +48,10 @@ const options = defineOptionsMetadata({
     displayName: '禁用UP主弹幕',
     defaultValue: true,
   },
+  upSlogan: {
+    displayName: '禁用带货弹幕',
+    defaultValue: true,
+  },
   vip: {
     displayName: '禁用大会员弹幕',
     defaultValue: true,

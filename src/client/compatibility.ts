@@ -16,6 +16,12 @@ export const compatibilityPatch = () => {
       'iframe',
       isIframe() && transparentFrames.some(matchUrlPattern),
     )
+
+    const { allVideoUrls } = await import('@/core/utils/urls')
+    if (allVideoUrls.some(url => matchUrlPattern(url))) {
+      const { playerPolyfill } = await import('@/components/video/player-adaptor')
+      playerPolyfill()
+    }
   })
   fullyLoaded(() => {
     select('meta[name=spm_prefix]').then(spm => {
