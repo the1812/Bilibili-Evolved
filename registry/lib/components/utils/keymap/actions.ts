@@ -244,8 +244,18 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       if (!activeElement || !(activeElement instanceof HTMLTextAreaElement)) {
         return null
       }
-      const sendButton = (activeElement.nextElementSibling ??
-        activeElement.parentElement.nextElementSibling) as HTMLButtonElement
+      const sendButton = (() => {
+        const candidates = [
+          () => activeElement.nextElementSibling,
+          () => activeElement.parentElement.nextElementSibling,
+          () => dq('.reply-box:focus-within .reply-box-send'),
+        ]
+        const match = candidates.find(fn => fn() !== null)
+        if (match) {
+          return match() as HTMLElement
+        }
+        return null
+      })()
       if (!sendButton) {
         return null
       }
