@@ -8,6 +8,7 @@ import {
   PlayerQuery,
   CustomQuery,
   CustomQueryProvider,
+  PlayerAgentEventTypes,
 } from './types'
 
 export const elementQuery = (selector: string): ElementQuery => {
@@ -31,10 +32,6 @@ export const click = (target: ElementQuery) => {
   return button
 }
 
-export enum PlayerAgentEventTypes {
-  Play = 'play',
-  Pause = 'pause',
-}
 export abstract class PlayerAgent
   extends EventTarget
   implements EnumEventTarget<`${PlayerAgentEventTypes}`>
@@ -149,6 +146,7 @@ export abstract class PlayerAgent
     callback: EventListener,
     options?: boolean | AddEventListenerOptions,
   ): void {
+    console.log('addEventListener', type, callback, options)
     super.addEventListener(type, callback, options)
     const registerHandler = (nanoType: string) => {
       if (typeof options === 'object' && options.once) {
