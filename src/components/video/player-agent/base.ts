@@ -146,7 +146,6 @@ export abstract class PlayerAgent
     callback: EventListener,
     options?: boolean | AddEventListenerOptions,
   ): void {
-    console.log('addEventListener', type, callback, options)
     super.addEventListener(type, callback, options)
     const registerHandler = (nanoType: string) => {
       if (typeof options === 'object' && options.once) {
