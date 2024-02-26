@@ -97,11 +97,11 @@ export abstract class PlayerAgent
     }
     // 关灯状态 && 要开灯 -> 开灯
     if (on && isCurrentLightOff) {
-      this.nativeApi.setLightOff(true)
+      this.nativeApi.setLightOff(false)
       return true
     }
     if (!on && !isCurrentLightOff) {
-      this.nativeApi.setLightOff(false)
+      this.nativeApi.setLightOff(true)
       return false
     }
     return null
