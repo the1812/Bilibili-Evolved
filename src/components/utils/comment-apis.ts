@@ -101,25 +101,33 @@ const commentAreaCallbacks: CommentAreaCallback[] = []
 const getVueData = (element: HTMLElement) => {
   // eslint-disable-next-line no-underscore-dangle
   const props = (element as any).__vueParentComponent?.props
+  console.log('props', props)
   return props?.reply ?? props?.subReply
 }
-/** (v2) 获取回复对应的元素 */
-const getReplyItemElement = (parent: HTMLElement, replyId: string) => {
-  const [replyElement] = dqa(parent, '.sub-reply-item').filter(
-    (it: HTMLElement) => getVueData(it).rpid_str === replyId,
-  )
-  return replyElement as HTMLElement
-}
+
 /** (v1 / v2) 获取评论 ID */
 const getCommentId = (element: HTMLElement) => {
-  const attributeId = element.getAttribute('data-id')
+  const attributeId =
+    element.getAttribute('data-id') ??
+    element // 评论
+      .querySelector('.root-reply-container .root-reply-avatar')
+      .getAttribute('data-root-reply-id') ??
+    element // 评论回复
+      .querySelector('.sub-user-info .sub-user-avatar')
+      .getAttribute('data-root-user-id')
   if (attributeId) {
     return attributeId
   }
   const vueData = getVueData(element)
   return vueData?.rpid_str ?? ''
 }
-
+/** (v2) 获取回复对应的元素 */
+const getReplyItemElement = (parent: HTMLElement, replyId: string) => {
+  const [replyElement] = dqa(parent, '.sub-reply-item').filter(
+    (it: HTMLElement) => getVueData(it).rpid_str === replyId || getCommentId(it) === replyId,
+  )
+  return replyElement as HTMLElement
+}
 /** (v2) 解析评论对象 */
 const parseCommentItemV2 = (element: HTMLElement) => {
   const vueData = getVueData(element)
@@ -169,43 +177,46 @@ const parseCommentItemV2 = (element: HTMLElement) => {
 
 /** (v1 / v2) 解析评论对象 */
 const parseCommentItem = (element: HTMLElement) => {
-  const user = element.querySelector('.con .user .name') as HTMLElement
-  if (!user) {
+  const rootReplyContainer = element.querySelector('.root-reply-container') as HTMLElement
+  if (!rootReplyContainer) {
     return parseCommentItemV2(element)
   }
-  const parseReplyItem = (replyElement: HTMLElement) => {
-    const replyFace = replyElement.querySelector('.reply-face') as HTMLElement
-    const replyUser = replyElement.querySelector('.reply-con .user .name') as HTMLElement
+  const rootReplyAvatar = rootReplyContainer.querySelector('.root-reply-avatar') as HTMLElement
+  const contentWarp = rootReplyContainer.querySelector('.content-warp') as HTMLElement
+  const parseReplyItem = (subReplyElement: HTMLElement) => {
+    const subUserInfo = subReplyElement.querySelector('.sub-user-info') as HTMLElement
+    const subReplyContent = subReplyElement.querySelector('.sub-reply-content') as HTMLElement
+    // const subReplyInfo = subReplyElement.querySelector('.sub-reply-info') as HTMLElement
     return new CommentReplyItem({
-      id: replyElement.getAttribute('data-id'),
-      element: replyElement,
-      userId: replyFace.getAttribute('data-usercard-mid'),
-      userName: replyUser.textContent,
-      content: replyElement.querySelector('.text-con').textContent,
-      timeText: replyElement.querySelector('.info .time, .info .time-location').textContent,
-      likes: parseInt(replyElement.querySelector('.info .like span').textContent),
+      id: subUserInfo.querySelector('.sub-reply-avatar').getAttribute('data-root-reply-id'),
+      element: subReplyElement,
+      userId: subUserInfo.querySelector('.sub-reply-avatar').getAttribute('data-user-id'),
+      userName: subUserInfo.querySelector('.sub-user-name').textContent,
+      content: subReplyContent.querySelector('.reply-content').textContent,
+      timeText: subReplyElement.querySelector('.sub-reply-info .sub-reply-time').textContent,
+      likes: parseInt(subReplyElement.querySelector('.sub-reply-info .sub-reply-like').textContent),
     })
   }
   const item = new CommentItem({
-    id: element.getAttribute('data-id'),
+    id: rootReplyAvatar.getAttribute('data-root-reply-id'),
     element,
-    userId: user.getAttribute('data-usercard-mid'),
-    userName: user.textContent,
-    content: element.querySelector('.con .text').textContent,
-    timeText: element.querySelector('.con .info .time, .info .time-location').textContent,
-    likes: parseInt(element.querySelector('.con .like span').textContent),
+    userId: rootReplyAvatar.getAttribute('data-user-id'),
+    userName: contentWarp.querySelector('.user-name').textContent,
+    content: contentWarp.querySelector('.root-reply .reply-content').textContent,
+    timeText: contentWarp.querySelector('.root-reply .reply-info .reply-time').textContent,
+    likes: parseInt(contentWarp.querySelector('.root-reply .reply-info .reply-like').textContent),
     replies: [],
   })
-  if (dq(element, '.reply-box .view-more')) {
-    const replyBox = dq(element, '.reply-box') as HTMLElement
+  if (dq(element, '.sub-reply-list .view-more')) {
+    const replyBox = dq(element, '.sub-reply-list') as HTMLElement
     childList(replyBox, records => {
-      item.replies = dqa(element, '.reply-box .reply-item').map(parseReplyItem)
+      item.replies = dqa(element, '.sub-reply-list .sub-reply-item').map(parseReplyItem)
       if (records.length !== 0) {
         item.dispatchRepliesUpdate(item.replies)
       }
     })
   } else {
-    item.replies = dqa(element, '.reply-box .reply-item').map(parseReplyItem)
+    item.replies = dqa(element, '.sub-reply-list .sub-reply-item').map(parseReplyItem)
   }
   return item
 }
