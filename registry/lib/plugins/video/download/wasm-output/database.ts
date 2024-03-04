@@ -1,7 +1,5 @@
-import { meta } from '@/core/meta'
-
 const DB_NAME = 'bilibili-evolved-wasm-output'
-const DB_VERSION = parseInt(meta.compilationInfo.version.replaceAll('.', ''))
+const DB_VERSION = 124
 
 export const storeNames = {
   cache: 'cache',
