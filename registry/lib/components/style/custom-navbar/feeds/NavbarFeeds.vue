@@ -11,7 +11,7 @@
 <script lang="ts">
 import { TabControl, VIcon } from '@/ui'
 import { FeedsCardType, feedsCardTypes } from '@/components/feeds/api'
-import { getNotifyCount } from '@/components/feeds/notify'
+import { getNotifyCountByType } from '@/components/feeds/notify'
 import { popperMixin } from '../mixins'
 import { tabs } from './tabs/tabs'
 
@@ -49,7 +49,7 @@ export default Vue.extend({
         if (!feedsCardType.apiType) {
           return
         }
-        const count = await getNotifyCount(feedsCardType.apiType)
+        const count = await getNotifyCountByType(feedsCardType.apiType)
         tab.count = count
         console.log(tab)
       })
