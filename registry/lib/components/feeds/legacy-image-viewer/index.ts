@@ -15,7 +15,6 @@ export const component = defineComponentMetadata({
         // 普通动态
         const path = 'data.modules.module_dynamic.major.opus.style'
         const imageViewerStyle: number | null = lodash.get(vueData, path, null)
-        console.log({ imageViewerStyle })
         if (imageViewerStyle === 1) {
           lodash.set(vueData, path, undefined)
           return
