@@ -22,21 +22,23 @@ export const component = defineComponentMetadata({
         }
 
         // 动态详情
-        const modules: any[] = vueData?.data?.modules ?? []
-        const moduleTop = modules.find(m => m.module_type === 'MODULE_TYPE_TOP')
-        const moduleContent = modules.find(m => m.module_type === 'MODULE_TYPE_CONTENT')
-        const album = moduleTop?.module_top?.display?.album
-        const paragraphs: any[] = moduleContent?.module_content?.paragraphs
-        if (album && paragraphs) {
-          modules.splice(modules.indexOf(moduleTop), 1)
-          paragraphs.push({
-            align: 0,
-            para_type: 2,
-            pic: {
-              pics: album.pics,
-              style: 1,
-            },
-          })
+        const modules = vueData?.data?.modules
+        if (Array.isArray(modules)) {
+          const moduleTop = modules.find(m => m.module_type === 'MODULE_TYPE_TOP')
+          const moduleContent = modules.find(m => m.module_type === 'MODULE_TYPE_CONTENT')
+          const album = moduleTop?.module_top?.display?.album
+          const paragraphs: any[] = moduleContent?.module_content?.paragraphs
+          if (album && paragraphs) {
+            modules.splice(modules.indexOf(moduleTop), 1)
+            paragraphs.push({
+              align: 0,
+              para_type: 2,
+              pic: {
+                pics: album.pics,
+                style: 1,
+              },
+            })
+          }
         }
       },
     })
