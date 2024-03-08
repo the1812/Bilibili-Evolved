@@ -473,6 +473,29 @@
       @include color('e');
     }
   }
+  ~ .bili-tabs {
+    .bili-tabs__header {
+      @include background-color('4');
+      @include border-color('5');
+    }
+    .bili-tabs__nav__item {
+      @include color('e');
+      &.is-active,
+      &:hover {
+        @include theme-color();
+      }
+    }
+    // .bili-tabs__content {
+    //   .comment-wrap {
+    //     @include background-color();
+    //   }
+    // }
+  }
+}
+.reaction-list {
+  .reaction-item {
+    box-shadow: inset 0 -.5px 0 0 #666 !important;
+  }
 }
 .bili-dyn-forward {
   &__item {
