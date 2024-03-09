@@ -1,21 +1,17 @@
 import { defineComponentMetadata } from '@/components/define'
+import { playerAgent, PlayerAgentEventTypes } from '@/components/video/player-agent'
 import { videoChange, VideoChangeCallback } from '@/core/observer'
-import { createHook } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 
 const entry = async () => {
   let lastAid: string
   const removeCover = () => document.documentElement.style.removeProperty('--cover-url')
   videoChange(() => {
-    console.debug('isBpxPlayer')
-    const currentBpxVideo = dq('.bpx-player-video-wrap video') as HTMLVideoElement
-    if (!currentBpxVideo) {
-      console.warn('bpx player not found')
-      return
-    }
-    createHook(currentBpxVideo, 'play', () => {
+    playerAgent.addEventListener(PlayerAgentEventTypes.Pause, () => {
       removeCover()
-      return true
+    })
+    playerAgent.addEventListener(PlayerAgentEventTypes.Play, () => {
+      removeCover()
     })
   })
   const showCover: VideoChangeCallback = async ({ aid }) => {

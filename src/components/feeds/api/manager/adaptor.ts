@@ -71,15 +71,12 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
           if (vm.observer) {
             return vm.observer
           }
-          const newListPromise = select(
-            '.feed-card .content, .bili-dyn-list__items',
-          ) as Promise<HTMLElement>
+          const newListPromise = select('.bili-dyn-list__items') as Promise<HTMLElement>
           vm.observer = (async () => {
-            // const newList = await vm.listElement as HTMLElement
             const newList = await newListPromise
             if (newList !== (await vm.listElement)) {
               if (vm.listElement) {
-                await stop()
+                stop()
               }
               vm.listElement = newListPromise
               start()
@@ -91,7 +88,7 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
           return vm.observer
         }
         childListSubtree(container, async () => {
-          if (dq('.feed-card .content, .bili-dyn-list__items')) {
+          if (dq('.bili-dyn-list__items')) {
             start()
           } else {
             stop()

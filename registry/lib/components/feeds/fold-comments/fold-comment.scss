@@ -37,6 +37,6 @@
   .at-panel,
   .emoji-panel,
   .reply-operation .operation-list {
-    z-index: 111;
+    z-index: 111 !important;
   }
 }

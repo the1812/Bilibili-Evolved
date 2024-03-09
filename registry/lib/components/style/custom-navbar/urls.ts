@@ -22,4 +22,5 @@ export const urlExclude = [
   // '//www.bilibili.com/blackboard/',
   '//member.bilibili.com/v2',
   '//game.bilibili.com/',
+  '//www.bilibili.com/mooc/',
 ]

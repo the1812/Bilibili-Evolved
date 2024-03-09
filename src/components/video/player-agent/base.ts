@@ -8,6 +8,7 @@ import {
   PlayerQuery,
   CustomQuery,
   CustomQueryProvider,
+  PlayerAgentEventTypes,
 } from './types'
 
 export const elementQuery = (selector: string): ElementQuery => {
@@ -31,9 +32,6 @@ export const click = (target: ElementQuery) => {
   return button
 }
 
-export enum PlayerAgentEventTypes {
-  Play = 'play',
-}
 export abstract class PlayerAgent
   extends EventTarget
   implements EnumEventTarget<`${PlayerAgentEventTypes}`>
@@ -97,11 +95,11 @@ export abstract class PlayerAgent
     }
     // 关灯状态 && 要开灯 -> 开灯
     if (on && isCurrentLightOff) {
-      this.nativeApi.setLightOff(true)
+      this.nativeApi.setLightOff(false)
       return true
     }
     if (!on && !isCurrentLightOff) {
-      this.nativeApi.setLightOff(false)
+      this.nativeApi.setLightOff(true)
       return false
     }
     return null
@@ -128,59 +126,64 @@ export abstract class PlayerAgent
     return unsafeWindow.nano
   }
 
+  get nanoTypeMap(): Record<PlayerAgentEventTypes, string> {
+    return {
+      [PlayerAgentEventTypes.Play]: this.nanoApi.EventType.Player_Play,
+      [PlayerAgentEventTypes.Pause]: this.nanoApi.EventType.Player_Pause,
+    }
+  }
+
   private eventHandlerMap = new Map<
     EventListenerOrEventListenerObject,
     {
-      handler: () => void
+      handler: EventListener
       options: boolean | AddEventListenerOptions
     }
   >()
 
   addEventListener(
     type: `${PlayerAgentEventTypes}`,
-    callback: EventListenerOrEventListenerObject,
+    callback: EventListener,
     options?: boolean | AddEventListenerOptions,
   ): void {
     super.addEventListener(type, callback, options)
-    switch (type) {
-      default: {
-        break
+    const registerHandler = (nanoType: string) => {
+      if (typeof options === 'object' && options.once) {
+        this.nativeApi.once(nanoType, callback)
+      } else {
+        this.nativeApi.on(nanoType, callback)
       }
-      case PlayerAgentEventTypes.Play: {
-        const handler = () => {
-          this.dispatchEvent(new Event(PlayerAgentEventTypes.Play))
-        }
-        if (typeof options === 'object' && options.once) {
-          this.nativeApi.once(this.nanoApi.EventType.Player_Initialized, handler)
-        } else {
-          this.nativeApi.on(this.nanoApi.EventType.Player_Initialized, handler)
-        }
-        this.eventHandlerMap.set(callback, {
-          handler,
-          options,
-        })
-      }
+      this.eventHandlerMap.set(callback, {
+        handler: callback,
+        options,
+      })
     }
+    const nanoType = this.nanoTypeMap[type]
+    if (!nanoType) {
+      console.warn('[PlayerAgent] unknown event type', type)
+      return
+    }
+    registerHandler(nanoType)
   }
 
   removeEventListener(
     type: `${PlayerAgentEventTypes}`,
-    callback: EventListenerOrEventListenerObject,
+    callback: EventListener,
     options?: boolean | EventListenerOptions,
   ): void {
     super.removeEventListener(type, callback, options)
-    switch (type) {
-      default: {
-        break
+    const unregisterHandler = (nanoType: string) => {
+      const handlerData = this.eventHandlerMap.get(callback)
+      if (!handlerData || lodash.isEqual(options, handlerData.options)) {
+        return
       }
-      case PlayerAgentEventTypes.Play: {
-        const handlerData = this.eventHandlerMap.get(callback)
-        if (!handlerData || lodash.isEqual(options, handlerData.options)) {
-          break
-        }
-        this.nativeApi.off(this.nanoApi.EventType.Player_Initialized, handlerData.handler)
-      }
+      this.nativeApi.off(nanoType, handlerData.handler)
     }
+    const nanoType = this.nanoTypeMap[type]
+    if (!nanoType) {
+      return
+    }
+    unregisterHandler(nanoType)
   }
 
   /** 获取是否静音 */

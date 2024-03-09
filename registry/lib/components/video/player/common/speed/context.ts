@@ -17,22 +17,22 @@ import { convertToXPath, formatSpeedText, parseSpeedText, useShare } from './uti
 
 export const PLAYER_AGENT = playerAgent.provideCustomQuery({
   video: {
-    speedMenuList: '.bilibili-player-video-btn-speed-menu,.bpx-player-ctrl-playbackrate-menu',
+    speedMenuList: '.bilibili-player-video-btn-speed-menu, .bpx-player-ctrl-playbackrate-menu',
     speedMenuItem:
-      '.bilibili-player-video-btn-speed-menu-list,.bpx-player-ctrl-playbackrate-menu-item',
-    speedNameBtn: '.bilibili-player-video-btn-speed-name,.bpx-player-ctrl-playbackrate-result',
-    speedContainer: '.bilibili-player-video-btn-speed,.bpx-player-ctrl-playbackrate',
-    active: '.bilibili-player-active,.bpx-state-active',
-    show: '.bilibili-player-speed-show,.bpx-state-show',
+      '.bilibili-player-video-btn-speed-menu-list, .bpx-player-ctrl-playbackrate-menu-item',
+    speedNameBtn: '.bilibili-player-video-btn-speed-name, .bpx-player-ctrl-playbackrate-result',
+    speedContainer: '.bilibili-player-video-btn-speed, .bpx-player-ctrl-playbackrate',
+    active: '.bilibili-player-active, .bpx-state-active',
+    show: '.bilibili-player-speed-show, .bpx-state-show',
   },
   bangumi: {
-    speedMenuList: '.squirtle-speed-select-list',
-    speedMenuItem: '.squirtle-select-item',
-    speedNameBtn: '.squirtle-speed-select-result',
-    speedContainer: '.squirtle-speed-wrap',
-    active: '.active',
+    speedMenuList: '.squirtle-speed-select-list, .bpx-player-ctrl-playbackrate-menu',
+    speedMenuItem: '.squirtle-select-item, .bpx-player-ctrl-playbackrate-menu-item',
+    speedNameBtn: '.squirtle-speed-select-result, .bpx-player-ctrl-playbackrate-result',
+    speedContainer: '.squirtle-speed-wrap, .bpx-player-ctrl-playbackrate',
+    active: '.active, .bpx-state-active',
     // bangumi 那边没有这种 class, 随便填一个就行了
-    show: '.bilibili-player-speed-show',
+    show: '.bilibili-player-speed-show, .bpx-state-show',
   },
 })
 
