@@ -32,6 +32,9 @@ const entry = async () => {
         if (target.hasAttribute('click-title')) {
           return
         }
+        if (target.hasAttribute('data-pics')) {
+          return
+        }
         if (
           [
             'bili-rich-text__action',

@@ -2,26 +2,35 @@ import { DownloadPackage } from '@/core/download'
 import { meta } from '@/core/meta'
 import { Toast } from '@/core/toast'
 import { FFmpeg } from './ffmpeg'
-import { httpGet, toBlobUrl, toastProgress } from './utils'
+import { getCacheOrGet, httpGet, toastProgress, toBlobUrl } from './utils'
 
 const ffmpeg = new FFmpeg()
 
 async function load(toast: Toast) {
   await ffmpeg.load({
-    workerLoadURL: await toBlobUrl(
-      meta.compilationInfo.altCdn.library.ffmpeg.worker,
+    workerLoadURL: toBlobUrl(
+      await getCacheOrGet(
+        'ffmpeg-worker',
+        meta.compilationInfo.altCdn.library.ffmpeg.worker,
+        toastProgress(toast, '正在加载 FFmpeg Worker'),
+      ),
       'text/javascript',
-      toastProgress(toast, '正在加载 FFmpeg Worker'),
     ),
-    coreURL: await toBlobUrl(
-      meta.compilationInfo.altCdn.library.ffmpeg.core,
+    coreURL: toBlobUrl(
+      await getCacheOrGet(
+        'ffmpeg-core',
+        meta.compilationInfo.altCdn.library.ffmpeg.core,
+        toastProgress(toast, '正在加载 FFmpeg Core'),
+      ),
       'text/javascript',
-      toastProgress(toast, '正在加载 FFmpeg Core'),
     ),
-    wasmURL: await toBlobUrl(
-      meta.compilationInfo.altCdn.library.ffmpeg.wasm,
+    wasmURL: toBlobUrl(
+      await getCacheOrGet(
+        'ffmpeg-wasm',
+        meta.compilationInfo.altCdn.library.ffmpeg.wasm,
+        toastProgress(toast, '正在加载 FFmpeg WASM'),
+      ),
       'application/wasm',
-      toastProgress(toast, '正在加载 FFmpeg WASM'),
     ),
   })
 }
