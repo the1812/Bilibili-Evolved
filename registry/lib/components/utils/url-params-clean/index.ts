@@ -141,6 +141,9 @@ const entry = async () => {
       url: string,
       ...restArgs: unknown[]
     ) {
+      if (url === undefined || url === null) {
+        return original.call(this, data, unused, url, ...restArgs)
+      }
       const resolvedUrl = (() => {
         try {
           return new URL(url, location.origin + location.pathname).toString()
