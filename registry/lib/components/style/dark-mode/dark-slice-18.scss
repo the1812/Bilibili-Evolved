@@ -495,6 +495,16 @@
       @include theme-color();
     }
   }
+  .opus-module-topic {
+    @include theme-color();
+  }
+  .opus-more__btn {
+    @include color('a');
+    &:hover {
+      @include color('e');
+      @include background-color('3');
+    }
+  }
   .opus-tabs {
     .bili-tabs {
       &__header {
@@ -811,6 +821,48 @@
     @include foreground-color();
     &:hover {
       @include theme-background-color('80');
+    }
+  }
+}
+.be-shielding::after,
+.shielding::after {
+  @include color('e');
+  @include background-color();
+}
+.activity-game-list-item {
+  .activity-card {
+    @include background-color();
+    .activity-card-content-head-title {
+      @include color('e');
+    }
+    .activity-card-content-head-desc {
+      @include color('a');
+    }
+  }
+}
+.activity-game-list .game-card {
+  .game-card-content-head-title {
+    @include color('e');
+    .tag {
+      @include color('a');
+      @include border-color('a');
+    }
+  }
+  .game-card-content-head-text {
+    @include color('a');
+  }
+}
+.bangumi-pgc-list {
+  .media-card {
+    .media-card-content-head-title {
+      @include color('e');
+    }
+    .media-card-content-head-cv,
+    .media-card-content-head-label {
+      @include color('a');
+    }
+    .media-card-content-head-desc {
+      @include color('8');
     }
   }
 }

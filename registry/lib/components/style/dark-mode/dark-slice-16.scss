@@ -473,6 +473,9 @@
       @include color('e');
     }
   }
+}
+.bili-dyn-item,
+.bili-opus-view {
   ~ .bili-tabs {
     .bili-tabs__header {
       @include background-color('4');
@@ -494,7 +497,7 @@
 }
 .reaction-list {
   .reaction-item {
-    box-shadow: inset 0 -.5px 0 0 #666 !important;
+    box-shadow: inset 0 -0.5px 0 0 #666 !important;
   }
 }
 .bili-dyn-forward {
