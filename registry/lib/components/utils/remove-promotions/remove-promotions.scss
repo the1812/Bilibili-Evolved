@@ -81,9 +81,12 @@ body.dark .blocked-ads.new {
   pointer-events: none !important;
   opacity: 0 !important;
 }
+.recommended-container_floor-aside .container > *,
 body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-goods) {
   margin: 0 !important;
 }
+.feed-card:has(.bili-video-card a[href*='cm.bilibili.com']),
+.bili-video-card.is-rcmd:has(a[href*='cm.bilibili.com']),
 .bili-video-card__wrap:has(a[href*='cm.bilibili.com']) {
   display: none !important;
 }
