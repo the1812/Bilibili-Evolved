@@ -24,7 +24,7 @@
         <div v-else class="suggest-item-name">
           {{ action.displayName || action.name }}
         </div>
-        <div v-if="action.description" class="suggest-item-description">
+        <div v-if="action.description" class="suggest-item-description" :title="action.description">
           {{ action.description }}
         </div>
       </div>
@@ -111,6 +111,7 @@ export default Vue.extend({
   &-description {
     opacity: 0.5;
     font-size: smaller;
+    @include single-line();
   }
   &-delete {
     opacity: 0.5;
