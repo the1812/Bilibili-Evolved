@@ -2,7 +2,22 @@ import { styledComponentEntry } from '@/components/styled-component'
 import { Options } from '.'
 
 const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
+
+/** 排除 */
 const excludeSelectors = ['#certify-img1', '#certify-img2']
+/** 需要设置 height */
+const heightSelectors = [
+  // 动态头像框必须设高度
+  // https://github.com/the1812/Bilibili-Evolved/issues/2030
+  '.bili-avatar-img',
+]
+/** width 和 height 都得设置 */
+const widthAndHeightSelectors = [
+  // 首页 Logo
+  // https://github.com/the1812/Bilibili-Evolved/issues/4480
+  '.logo-img',
+]
+
 const walk = (rootElement: Node, action: (node: HTMLElement) => void) => {
   const walker = document.createNodeIterator(rootElement, NodeFilter.SHOW_ELEMENT)
   let node = walker.nextNode()
@@ -43,9 +58,10 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
       return
     }
     if (element.getAttribute('width') === null && element.getAttribute('height') === null) {
-      if (element.classList.contains('bili-avatar-img')) {
-        // 动态头像框必须设高度
-        // https://github.com/the1812/Bilibili-Evolved/issues/2030
+      if (widthAndHeightSelectors.some(selector => element.matches(selector))) {
+        element.setAttribute('height', currentHeight)
+        element.setAttribute('width', currentWidth)
+      } else if (heightSelectors.some(selector => element.matches(selector))) {
         element.setAttribute('height', currentHeight)
       } else {
         element.setAttribute('width', currentWidth)
