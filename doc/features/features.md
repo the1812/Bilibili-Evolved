@@ -92,6 +92,15 @@
 
 在动态里查看图片详情时 (非全屏), 切换图片自动回到图片顶部; 退出查看图片模式时, 自动将动态移入视图内.
 
+### [动态图片平铺展示](../../registry/dist/components/feeds/legacy-image-viewer.js)
+`legacyFeedsImageViewer`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/legacy-image-viewer.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/legacy-image-viewer.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/legacy-image-viewer.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/legacy-image-viewer.js)
+
+将动态中左右切换式的图片改回传统的平铺展示. (在动态详情中可能稍有延迟)
+
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
 
@@ -1260,6 +1269,15 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/feeds/filter/hide-charge-feeds.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/feeds/filter/hide-charge-feeds.js)
 
 移除动态里的充电专属动态, 装有 `动态过滤器` 时生效.
+
+### [动态过滤器 - 移除商品带货动态](../../registry/dist/plugins/feeds/filter/hide-goods.js)
+`feedsFilter.pluginBlocks.goods`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/feeds/filter/hide-goods.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/feeds/filter/hide-goods.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/feeds/filter/hide-goods.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/feeds/filter/hide-goods.js)
+
+移除动态里的商品带货动态 (UP主的推荐 · 来自 XX), 装有 `动态过滤器` 时生效.
 
 ### [搜索栏 - 音频跳转](../../registry/dist/plugins/launch-bar/audio-search.js)
 `launchBar.actions.audioSearch`
