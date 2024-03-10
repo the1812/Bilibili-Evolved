@@ -703,7 +703,6 @@ html {
       }
     }
     .note-content {
-      @include background-color('3');
       .note-card-container .note-card {
         @include background-color('2');
         .note-content {
@@ -712,6 +711,7 @@ html {
         }
       }
       .note-detail {
+        border-radius: 10px; // B 站写的容器溢出了
         @include background-color('3');
         @include color('e');
         .up-desc-container .desc-top .up-name {
