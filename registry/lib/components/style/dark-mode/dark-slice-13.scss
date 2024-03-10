@@ -733,13 +733,20 @@ html {
           @include background-color('2');
           @include color('e');
         }
-        // 对于编辑器的格式按钮，未选中时设为白色。选中后是蓝色，不需要修改
-        .ql-bar:not(.ql-active) {
-          i,
-          svg {
-            cursor: pointer;
-            &:not(:hover) {
-              @include to-white();
+        .ql-bar {
+          &:not(.ql-active) {
+            i,
+            svg {
+              cursor: pointer;
+              &:not(:hover) {
+                @include to-white();
+              }
+            }
+          }
+          &.ql-active {
+            i,
+            svg {
+              @include theme-color();
             }
           }
         }
