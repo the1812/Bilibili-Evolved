@@ -676,6 +676,76 @@ html {
       }
     }
   }
+  // B 站的父容器和 note-container 圆角没对齐，会漏一点白色出来
+  &.note-pc {
+    @include background-color('3');
+  }
+  .note-container {
+    border: none;
+    @include background-color('3'); // 修复上述圆角对齐问题
+    .note-header {
+      @include background-color('3');
+      .note-title,
+      .back-note-list,
+      .jump-note-package,
+      .close-note {
+        @include color('e');
+        @include background-color('3');
+        svg {
+          @include to-white();
+        }
+        &:active {
+          @include background-color('2');
+        }
+      }
+      .note-operation {
+        @include background-color('4');
+      }
+    }
+    .note-content {
+      @include background-color('3');
+      .note-card-container .note-card {
+        @include background-color('2');
+        .note-content {
+          @include background-color('2');
+          @include color('e');
+        }
+      }
+      .note-detail {
+        @include background-color('3');
+        @include color('e');
+        .up-desc-container .desc-top .up-name {
+          @include to-white();
+        }
+        .preview-editor {
+          @include color('e');
+        }
+        .note-operation .sanlian-box {
+          @include background-color('4');
+          @include border-color('3');
+        }
+      }
+      .note-editor {
+        .ql-editor,
+        .ql-toolbar,
+        .ql-picker-options,
+        .ql-picker-label {
+          @include background-color('2');
+          @include color('e');
+        }
+        // 对于编辑器的格式按钮，未选中时设为白色。选中后是蓝色，不需要修改
+        .ql-bar:not(.ql-active) {
+          i,
+          svg {
+            cursor: pointer;
+            &:not(:hover) {
+              @include to-white();
+            }
+          }
+        }
+      }
+    }
+  }
 }
 .bili-note {
   @include background-color('3');
