@@ -652,6 +652,30 @@ html {
       }
     }
   }
+
+  .ai-summary-popup {
+    @include border-color('3');
+    @include background-color('2');
+    .ai-summary-popup-tips-text {
+      @include color('e');
+    }
+    .ai-summary-popup-header {
+      &::after {
+        @include background-color('e');
+      }
+      .ai-summary-popup-header-clickable-area {
+        @include to-gray();
+      }
+    }
+    .ai-summary-popup-body {
+      .ai-summary-popup-body-abstracts {
+        @include color('e');
+      }
+      .ai-summary-popup-body-outline .section:hover {
+        @include background-color('3');
+      }
+    }
+  }
 }
 .bili-note {
   @include background-color('3');
