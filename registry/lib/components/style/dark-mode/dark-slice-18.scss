@@ -869,10 +869,15 @@
   }
 }
 
-.ai-summary-van-popover .tips-panel {
-  @include background-color('3');
-  @include color('e');
-  .tips-panel-title {
+.ai-summary-van-popover {
+  &.van-popover {
+    background-color: transparent !important; // 移除超出圆角的黑色背景
+  }
+  .tips-panel {
+    @include background-color('3');
     @include color('e');
+    .tips-panel-title {
+      @include color('e');
+    }
   }
 }
