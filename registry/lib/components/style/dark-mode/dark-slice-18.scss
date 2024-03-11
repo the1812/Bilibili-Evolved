@@ -871,7 +871,7 @@
 
 .ai-summary-van-popover {
   &.van-popover {
-    background-color: transparent !important; // 移除超出圆角的黑色背景
+    @include background-color(); // 移除超出圆角的黑色背景
   }
   .tips-panel {
     @include background-color('3');
