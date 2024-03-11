@@ -681,7 +681,8 @@ html {
     @include background-color('3');
   }
   .note-container {
-    border: none;
+    overflow: hidden; // B 站写的 .note-detail 容器溢出了
+    @include border-color();
     @include background-color('3'); // 修复上述圆角对齐问题
     .note-header {
       @include background-color('3');
@@ -711,7 +712,6 @@ html {
         }
       }
       .note-detail {
-        border-radius: 10px; // B 站写的容器溢出了
         @include background-color('3');
         @include color('e');
         .up-desc-container .desc-top .up-name {
