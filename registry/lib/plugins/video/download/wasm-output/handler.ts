@@ -25,17 +25,20 @@ async function load(toast: Toast) {
     ),
   })
 }
-export async function run(name: string, videoUrl: string, audioUrl: string, toast: Toast) {
+export async function run(name: string, toast: Toast, videoUrl: string, audioUrl?: string) {
   if (!ffmpeg.loaded) {
     await load(toast)
   }
 
   ffmpeg.writeFile('video', await httpGet(videoUrl, toastProgress(toast, '正在下载视频流')))
-  ffmpeg.writeFile('audio', await httpGet(audioUrl, toastProgress(toast, '正在下载音频流')))
-
-  toast.message = '混流中……'
-
-  await ffmpeg.exec(['-i', 'video', '-i', 'audio', '-c:v', 'copy', '-c:a', 'copy', 'output.mp4'])
+  if (!_.isNil(audioUrl)) {
+    ffmpeg.writeFile('audio', await httpGet(audioUrl, toastProgress(toast, '正在下载音频流')))
+    toast.message = '混流中……'
+    await ffmpeg.exec(['-i', 'video', '-i', 'audio', '-c:v', 'copy', '-c:a', 'copy', 'output.mp4'])
+  } else {
+    toast.message = '混流中……'
+    await ffmpeg.exec(['-i', 'video', '-c:v', 'copy', '-c:a', 'copy', 'output.mp4'])
+  }
 
   const output = await ffmpeg.readFile('output.mp4')
   const outputBlob = new Blob([output], {
