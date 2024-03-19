@@ -52,7 +52,7 @@ export interface DashFilters {
   video?: (dash: VideoDash) => boolean
   audio?: (dash: AudioDash) => boolean
 }
-const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => {
+export const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => {
   const { options } = getComponentSettings<Options>('downloadVideo')
   if (type === 'video') {
     return options.dashVideoExtension

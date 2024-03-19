@@ -1,7 +1,8 @@
 import { Toast } from '@/core/toast'
 import { PluginMetadata } from '@/plugins/plugin'
 import { DownloadVideoOutput } from '../../../../components/video/download/types'
-import { run } from './handler'
+import { downloadFromLink, run } from './handler'
+import { userDefinedExtension } from '../../../../components/video/download'
 
 const title = 'WASM 混流输出'
 const desc = '使用 WASM 在浏览器中下载并合并音视频'
@@ -22,20 +23,25 @@ export const plugin: PluginMetadata = {
         description: `${desc}，运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件`,
         runAction: async action => {
           const fragments = action.infos.flatMap(it => it.titledFragments)
+          const extensions = userDefinedExtension()
 
           if (
             fragments.length > 2 ||
             (fragments.length === 2 &&
-              !(fragments[0].extension === '.mp4' && fragments[1].extension === '.m4a'))
+              !(
+                fragments[0].extension === extensions.video &&
+                (fragments[1].extension === extensions.audio ||
+                  fragments[1].extension === extensions.flacAudio)
+              ))
           ) {
-            Toast.error('仅支持单个视频下载', title)
+            Toast.error('仅支持单个视频下载', title).duration = 1500
           } else {
             const toast = Toast.info('正在加载', title)
             try {
               if (fragments.length === 2) {
                 await run(fragments[0].title, toast, fragments[0].url, fragments[1].url) // [dash]
               } else {
-                await run(fragments[0].title, toast, fragments[0].url) // [flv | m4a]
+                await downloadFromLink(fragments[0].title, toast, fragments[0].url) // [flv | m4a | ...]
               }
             } catch (error) {
               toast.close()
