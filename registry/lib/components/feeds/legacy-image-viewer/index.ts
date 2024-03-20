@@ -13,7 +13,12 @@ export const component = defineComponentMetadata({
         const vueData = getVueData(card.element)
 
         // 普通动态
-        const path = 'data.modules.module_dynamic.major.opus.style'
+        const cardType = vueData?.data?.type
+        const path =
+          cardType === 'DYNAMIC_TYPE_FORWARD'
+            ? 'data.orig.modules.module_dynamic.major.opus.style'
+            : 'data.modules.module_dynamic.major.opus.style'
+
         const imageViewerStyle: number | null = lodash.get(vueData, path, null)
         if (imageViewerStyle === 1) {
           lodash.set(vueData, path, undefined)
