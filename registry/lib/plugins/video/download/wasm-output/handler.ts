@@ -25,7 +25,13 @@ async function load(toast: Toast) {
     ),
   })
 }
-export async function run(name: string, toast: Toast, videoUrl: string, audioUrl: string) {
+export async function run(
+  name: string,
+  toast: Toast,
+  videoUrl: string,
+  audioUrl: string,
+  isFlac: boolean,
+) {
   if (!ffmpeg.loaded) {
     await load(toast)
   }
@@ -33,23 +39,26 @@ export async function run(name: string, toast: Toast, videoUrl: string, audioUrl
   ffmpeg.writeFile('video', await httpGet(videoUrl, toastProgress(toast, '正在下载视频流')))
   ffmpeg.writeFile('audio', await httpGet(audioUrl, toastProgress(toast, '正在下载音频流')))
   toast.message = '混流中……'
-  await ffmpeg.exec(['-i', 'video', '-i', 'audio', '-c:v', 'copy', '-c:a', 'copy', 'output.mp4'])
 
-  const output = await ffmpeg.readFile('output.mp4')
+  const outputExt = isFlac ? 'mkv' : 'mp4'
+  name = isFlac ? name.replace(/.[^/.]+$/, `.${outputExt}`) : name
+  await ffmpeg.exec([
+    '-i',
+    'video',
+    '-i',
+    'audio',
+    '-c:v',
+    'copy',
+    '-c:a',
+    isFlac ? 'flac' : 'copy',
+    '-f',
+    isFlac ? 'matroska' : 'mp4',
+    `output.${outputExt}`,
+  ])
+
+  const output = await ffmpeg.readFile(`output.${outputExt}`)
   const outputBlob = new Blob([output], {
-    type: 'video/mp4',
-  })
-
-  toast.message = '完成！'
-  toast.duration = 1500
-
-  await DownloadPackage.single(name, outputBlob)
-}
-
-export async function downloadFromLink(name: string, toast: Toast, url: string) {
-  const output = await httpGet(url, toastProgress(toast, '正在直链下载'))
-  const outputBlob = new Blob([output], {
-    type: 'video/mp4',
+    type: isFlac ? 'video/x-matroska' : 'video/mp4',
   })
 
   toast.message = '完成！'

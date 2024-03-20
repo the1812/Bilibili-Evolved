@@ -4,7 +4,7 @@ import {
   defineOptionsMetadata,
 } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
-import { DefaultDashExtensions, getDashExtensions } from './apis/dash'
+import { DefaultDashExtensions } from './apis/dash'
 
 const options = defineOptionsMetadata({
   basicConfig: {
@@ -40,10 +40,3 @@ export const component = defineComponentMetadata({
   options,
   // plugin,
 })
-export const userDefinedExtension = () => {
-  return {
-    video: getDashExtensions('video'),
-    audio: getDashExtensions('audio'),
-    flacAudio: getDashExtensions('flacAudio'),
-  }
-}
