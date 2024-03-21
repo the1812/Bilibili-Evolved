@@ -2,8 +2,8 @@ import { Toast, ToastType } from '@/core/toast'
 import { PluginMetadata } from '@/plugins/plugin'
 import { DownloadVideoOutput } from '../../../../components/video/download/types'
 import { run } from './handler'
-import { component } from '../../../../components/video/download'
 import { getComponentSettings } from '@/core/settings'
+import type { Options } from '../../../../components/video/download'
 
 const title = 'WASM 混流输出'
 const desc = '使用 WASM 在浏览器中下载并合并音视频'
@@ -25,7 +25,7 @@ export const plugin: PluginMetadata = {
         runAction: async action => {
           const fragments = action.infos.flatMap(it => it.titledFragments)
           const { dashAudioExtension, dashFlacAudioExtension, dashVideoExtension } =
-            getComponentSettings(component).options
+            getComponentSettings<Options>('downloadVideo').options
 
           if (
             fragments.length > 2 ||
