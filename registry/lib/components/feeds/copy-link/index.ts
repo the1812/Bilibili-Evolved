@@ -9,7 +9,7 @@ const entry = async () => {
       className: 'copy-link',
       text: '复制链接',
       action: async () => {
-        await navigator.clipboard.writeText(`https://www.bilibili.com/opus/${card.id}`)
+        await navigator.clipboard.writeText(`https://t.bilibili.com/${card.id}`)
       },
     })
   }
