@@ -14,8 +14,7 @@ export const isV2Feeds = () => {
   return [
     't.bilibili.com',
     'space.bilibili.com',
-    /^https:\/\/www\.bilibili\.com\/opus\/\d+$/,
-    /^https:\/\/www\.bilibili\.com\/v\/topic\/detail\/\?topic_id=\d+$/,
+    /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
   ].some(pattern => matchUrlPattern(pattern))
 }
 export const feedsCardsManager = (() => {
