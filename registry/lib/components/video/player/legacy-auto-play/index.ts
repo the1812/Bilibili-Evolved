@@ -1,4 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
+import { getVueData } from '@/components/feeds/api'
 import { playerAgent } from '@/components/video/player-agent'
 import { childListSubtree, videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
@@ -44,9 +45,50 @@ export const component = defineComponentMetadata({
           ),
         ),
     ]
+
+    await playerReady()
+
+    // 初始化状态
+    const rightPanel = await Promise.any([
+      select('.right-container-inner'),
+      select('.playlist-container--right'),
+    ])
+    // 如果未找到元素，提前退出不执行后续动作
+    if (!rightPanel) {
+      console.warn('未找到 rightPanelContainer 或 playListContainer')
+      return
+    }
+
+    const checkPlayListPlayMode = async () => {
+      // 检查是不是播放列表中的最后一个分 P 的最后一个视频
+      const videoSequentialNumber = dq('.list-count')
+      const sequentialNumbers = videoSequentialNumber.innerHTML.split('/')
+      // 检查最后一个元素是单个视频还是多 P 视频
+      const lastVedioElement = dq(
+        '.action-list .action-list-inner .action-list-item-wrap:last-child .action-list-item .actionlist-item-inner',
+      )
+
+      let isLastVideo = false
+      if (lastVedioElement.classList.contains('singlep-list-item-inner')) {
+        isLastVideo = lastVedioElement.classList.contains('siglep-active')
+      } else {
+        isLastVideo =
+          lastVedioElement.children[1].lastElementChild.classList.contains(
+            'multip-list-item-active',
+          )
+      }
+
+      const shouldContinue = !(sequentialNumbers[0] >= sequentialNumbers[1] && isLastVideo)
+
+      const app = document.getElementById('app')
+      // 不用判断当前状态是什么，直接将将是否需要继续播放赋值 vue 实例中的 continuousPlay
+      const vueInstance = getVueData(app)
+      vueInstance.setContinuousPlay(shouldContinue)
+    }
+
     const isChecked = (container: HTMLElement) =>
       Boolean(container.querySelector('.switch-button.on') || container.matches(':checked'))
-    await playerReady()
+
     const checkPlayMode = async () => {
       const element = (await select(
         [...autoPlayControls.disable, ...autoPlayControls.enable].join(','),
@@ -62,16 +104,19 @@ export const component = defineComponentMetadata({
         element.click()
       }
     }
-    videoChange(async () => {
-      checkPlayMode()
-      const video = (await playerAgent.query.video.element()) as HTMLVideoElement
-      video?.addEventListener('play', checkPlayMode, { once: true })
-    })
-    const rightPanelContainer = await select('.right-container-inner')
-    if (!rightPanelContainer) {
-      console.warn('未找到 rightPanelContainer')
-      return
+
+    const checkRightPanelPlyMode = async () => {
+      rightPanel.classList.contains('right-container-inner')
+        ? checkPlayMode()
+        : checkPlayListPlayMode()
     }
-    childListSubtree(rightPanelContainer, () => checkPlayMode())
+
+    videoChange(async () => {
+      checkRightPanelPlyMode()
+      const video = (await playerAgent.query.video.element()) as HTMLVideoElement
+      video?.addEventListener('play', checkRightPanelPlyMode, { once: true })
+    })
+
+    childListSubtree(rightPanel, () => checkRightPanelPlyMode())
   },
 })
