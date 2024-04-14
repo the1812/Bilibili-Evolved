@@ -60,7 +60,7 @@ export const component = defineComponentMetadata({
     }
 
     const checkPlayListPlayMode = async () => {
-      // 检查是不是播放列表中的最后一个分 P 的最后一个视频
+      // 检查是不是播放列表中的最后一个视频或者最后一个分 P 视频的最后一个视频
       const videoSequentialNumber = dq('.list-count')
       const sequentialNumbers = videoSequentialNumber.innerHTML.split('/')
       // 检查最后一个元素是单个视频还是多 P 视频
@@ -81,8 +81,8 @@ export const component = defineComponentMetadata({
       const shouldContinue = !(sequentialNumbers[0] >= sequentialNumbers[1] && isLastVideo)
 
       const app = document.getElementById('app')
-      // 不用判断当前状态是什么，直接将将是否需要继续播放赋值 vue 实例中的 continuousPlay
       const vueInstance = getVueData(app)
+      // 不用判断当前状态是什么，直接将将是否需要继续播放赋值 vue 实例中的 continuousPlay
       vueInstance.setContinuousPlay(shouldContinue)
     }
 
@@ -105,18 +105,18 @@ export const component = defineComponentMetadata({
       }
     }
 
-    const checkRightPanelPlyMode = async () => {
+    const checkRightPanelPlayMode = async () => {
       rightPanel.classList.contains('right-container-inner')
         ? checkPlayMode()
         : checkPlayListPlayMode()
     }
 
     videoChange(async () => {
-      checkRightPanelPlyMode()
+      checkRightPanelPlayMode()
       const video = (await playerAgent.query.video.element()) as HTMLVideoElement
-      video?.addEventListener('play', checkRightPanelPlyMode, { once: true })
+      video?.addEventListener('play', checkRightPanelPlayMode, { once: true })
     })
 
-    childListSubtree(rightPanel, () => checkRightPanelPlyMode())
+    childListSubtree(rightPanel, () => checkRightPanelPlayMode())
   },
 })
