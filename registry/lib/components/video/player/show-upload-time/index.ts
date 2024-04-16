@@ -1,8 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { childList, urlChange } from '@/core/observer'
-import { playerReady } from '@/core/utils'
+import { playerReady, getVue2Data } from '@/core/utils'
 import { videoUrls } from '@/core/utils/urls'
-import { getVueData } from '@/components/feeds/api'
 import { VideoInfo } from '@/components/video/video-info'
 import { useScopedConsole } from '@/core/utils/log'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
@@ -147,7 +146,7 @@ export const component = defineComponentMetadata({
 
     const getRecoList = () => {
       const reco_list = dq('#reco_list')
-      let recoList: RecommendList = getVueData(reco_list)
+      let recoList: RecommendList = getVue2Data(reco_list)
       if (recoList.isOpen === undefined) {
         recoList = recoList.$children[0]
         if (recoList.isOpen === undefined) {

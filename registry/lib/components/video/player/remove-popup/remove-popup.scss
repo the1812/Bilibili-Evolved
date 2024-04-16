@@ -1,5 +1,9 @@
 body {
   &.remove-player-popup {
+    // https://www.bilibili.com/video/BV1WA4m1L7xa/
+    .bili-cmd-shrink {
+      display: none !important;
+    }
     // https://www.bilibili.com/video/BV1V54y1b7yW/
     &-combo-likes {
       .bili-guide,

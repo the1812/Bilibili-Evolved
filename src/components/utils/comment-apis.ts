@@ -1,4 +1,4 @@
-import { dqa } from '@/core/utils'
+import { dqa, getVue2Data } from '@/core/utils'
 import { allMutations, childList, childListSubtree } from '@/core/observer'
 import { contentLoaded } from '@/core/life-cycle'
 
@@ -98,15 +98,14 @@ const itemRemovedCallbacks: CommentItemCallback[] = []
 const commentAreaCallbacks: CommentAreaCallback[] = []
 
 /** (v2) 获取 Vue 数据 (评论 / 回复) */
-const getVueData = (element: HTMLElement) => {
-  // eslint-disable-next-line no-underscore-dangle
-  const props = (element as any).__vueParentComponent?.props
+const getReplyFromVueData = (element: HTMLElement) => {
+  const props = getVue2Data(element)?.props
   return props?.reply ?? props?.subReply
 }
 /** (v2) 获取回复对应的元素 */
 const getReplyItemElement = (parent: HTMLElement, replyId: string) => {
   const [replyElement] = dqa(parent, '.sub-reply-item').filter(
-    (it: HTMLElement) => getVueData(it).rpid_str === replyId,
+    (it: HTMLElement) => getReplyFromVueData(it).rpid_str === replyId,
   )
   return replyElement as HTMLElement
 }
@@ -116,13 +115,13 @@ const getCommentId = (element: HTMLElement) => {
   if (attributeId) {
     return attributeId
   }
-  const vueData = getVueData(element)
+  const vueData = getReplyFromVueData(element)
   return vueData?.rpid_str ?? ''
 }
 
 /** (v2) 解析评论对象 */
 const parseCommentItemV2 = (element: HTMLElement) => {
-  const vueData = getVueData(element)
+  const vueData = getReplyFromVueData(element)
   if (!vueData) {
     throw new Error('Invalid comment item')
   }

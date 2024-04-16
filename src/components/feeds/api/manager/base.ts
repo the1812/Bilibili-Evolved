@@ -5,9 +5,8 @@ import { ListAdaptorKey, FeedsCardsListAdaptor } from './adaptor'
 
 export const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 
-export const getVueData = (el: any) =>
-  // eslint-disable-next-line no-underscore-dangle
-  el.__vue__ ?? el.parentElement.__vue__ ?? el.children[0].__vue__
+// TODO: 仅做兼容性导出, v2.8.11 之后可移除
+export { getVue2Data as getVueData } from '@/core/utils'
 
 export const createNodeValidator =
   (className: string) =>
