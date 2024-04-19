@@ -30,11 +30,16 @@ export abstract class CommentArea {
     },
   ): void
 
+  protected prepareParse() {
+    // do nothing
+  }
+
   observeItems() {
     if (this.observer) {
       return
     }
     const replyItemSelector = CommentArea.replyItemClasses.map(c => `.${c}`).join(',')
+    this.prepareParse()
     this.items = dqa(this.element, replyItemSelector).map(it =>
       this.parseCommentItem(it as HTMLElement),
     )
@@ -42,6 +47,7 @@ export abstract class CommentArea {
       this.itemAddedCallbacks.forEach(c => c(item))
     })
     ;[this.observer] = childListSubtree(this.element, records => {
+      this.prepareParse()
       records.forEach(r => {
         const isCommentItem = (n: Node): n is HTMLElement =>
           n instanceof HTMLElement && n.matches(replyItemSelector)

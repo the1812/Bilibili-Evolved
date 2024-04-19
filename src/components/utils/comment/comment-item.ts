@@ -15,7 +15,7 @@ export class CommentItem extends CommentReplyItem {
 
   constructor(initParams: Omit<CommentItem, keyof EventTarget | 'dispatchRepliesUpdate'>) {
     super(initParams)
-    this.pictures = initParams.pictures
+    this.pictures = initParams.pictures ?? []
     this.replies = initParams.replies
   }
 

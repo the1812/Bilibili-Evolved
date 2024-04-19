@@ -3,21 +3,21 @@ import { CommentAreaManager } from './comment/comment-area-manager'
 import { CommentAreaCallback, CommentItemCallback } from './comment/types'
 import { CommentReplyItem } from './comment/reply-item'
 
-const manager = new CommentAreaManager()
+export const commentAreaManager = new CommentAreaManager()
 contentLoaded(() => {
-  manager.init()
+  commentAreaManager.init()
 })
 
 /** 为每一个评论区执行操作 */
 export const forEachCommentArea = (callback: CommentAreaCallback) => {
-  manager.forEachCommentArea(callback)
+  commentAreaManager.forEachCommentArea(callback)
 }
 /** 为每一条评论执行操作 (不包含评论的回复) */
 export const forEachCommentItem = (callbacks: {
   added?: CommentItemCallback
   removed?: CommentItemCallback
 }) => {
-  manager.forEachCommentItem(callbacks)
+  commentAreaManager.forEachCommentItem(callbacks)
 }
 
 /**
@@ -33,5 +33,5 @@ export const addMenuItem = (
     action: (e: MouseEvent) => void
   },
 ) => {
-  manager.forEachCommentArea(area => area.addMenuItem(item, config))
+  commentAreaManager.forEachCommentArea(area => area.addMenuItem(item, config))
 }
