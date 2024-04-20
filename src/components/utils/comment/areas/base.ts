@@ -2,6 +2,7 @@ import { childListSubtree } from '@/core/observer'
 import type { CommentItem } from '../comment-item'
 import type { CommentItemCallback } from '../types'
 import type { CommentReplyItem } from '../reply-item'
+import { getRandomId } from '@/core/utils'
 
 /** 表示一个评论区 */
 export abstract class CommentArea {
@@ -44,6 +45,7 @@ export abstract class CommentArea {
     if (this.observer) {
       return
     }
+    performance.mark('observeItems start')
     const elements = dqa(this.element, CommentArea.replyItemSelector) as HTMLElement[]
     if (elements.length > 0) {
       this.beforeParse(elements)
@@ -53,6 +55,8 @@ export abstract class CommentArea {
       this.itemAddedCallbacks.forEach(c => c(item))
     })
     ;[this.observer] = childListSubtree(this.element, records => {
+      const observerCallId = getRandomId()
+      performance.mark(`observeItems subtree start ${observerCallId}`)
       const addedCommentElements: HTMLElement[] = []
       const removedCommentElements: HTMLElement[] = []
       records.forEach(r => {
@@ -83,7 +87,15 @@ export abstract class CommentArea {
           this.itemRemovedCallbacks.forEach(c => c(commentItem))
         }
       })
+      performance.mark(`observeItems subtree end ${observerCallId}`)
+      performance.measure(
+        `observeItems subtree ${observerCallId}`,
+        `observeItems subtree start ${observerCallId}`,
+        `observeItems subtree end ${observerCallId}`,
+      )
     })
+    performance.mark('observeItems end')
+    performance.measure('observeItems', 'observeItems start', 'observeItems end')
   }
 
   forEachCommentItem(callbacks: { added?: CommentItemCallback; removed?: CommentItemCallback }) {

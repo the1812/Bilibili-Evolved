@@ -113,6 +113,7 @@ export class CommentAreaV2 extends CommentArea {
     if (item.replies.length < vueData.rcount) {
       const replyBox = dq(element, '.sub-reply-list')
       childList(replyBox, records => {
+        performance.mark(`parseReplies start ${item.id}`)
         const addedCommentElements: HTMLElement[] = []
         records.forEach(r => {
           r.addedNodes.forEach(n => {
@@ -129,6 +130,12 @@ export class CommentAreaV2 extends CommentArea {
         if (records.length !== 0) {
           item.dispatchRepliesUpdate(item.replies)
         }
+        performance.mark(`parseReplies end ${item.id}`)
+        performance.measure(
+          `parseReplies ${item.id}`,
+          `parseReplies start ${item.id}`,
+          `parseReplies end ${item.id}`,
+        )
       })
     }
     return item
