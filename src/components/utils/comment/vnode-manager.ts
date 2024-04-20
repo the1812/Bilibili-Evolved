@@ -32,6 +32,8 @@ export class VNodeManager {
         if (!currentElement.parentElement[VNodeTargets].includes(currentElement)) {
           currentElement.parentElement[VNodeTargets].push(currentElement)
         }
+        // 其他 element 已经标记过此处, 可以直接 break 掉完成循环
+        break
       } else {
         currentElement.parentElement[VNodeTargets] = [currentElement]
       }
@@ -39,6 +41,7 @@ export class VNodeManager {
     }
   }
 
+  /** 解开组件实例的包装 */
   private unwrapSubtree(vnode: Vue3Vnode): Vue3Vnode {
     if (vnode.component?.subTree) {
       return this.unwrapSubtree(vnode.component?.subTree)
