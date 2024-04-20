@@ -21,7 +21,9 @@ export class VNodeManager {
 
   constructor(public rootElement: HTMLElementWithVue) {}
 
+  /** 从结束元素向上写入递归范围 */
   traverseToRoot(element: HTMLElementWithVue): HTMLElementWithVue {
+    performance.mark('traverseToRoot')
     if (element._vnode) {
       return element
     }
@@ -50,6 +52,7 @@ export class VNodeManager {
   /** 解开组件实例的包装 */
   private unwrapSubtree(vnode: Vue3Vnode): Vue3Vnode {
     if (vnode.component?.subTree) {
+      performance.mark('unwrapSubtree')
       return this.unwrapSubtree(vnode.component?.subTree)
     }
     return vnode
@@ -60,6 +63,7 @@ export class VNodeManager {
    * @see https://github.com/the1812/Bilibili-Evolved/issues/4690#issuecomment-2059485344
    */
   exposeVNode(vnode: Vue3Vnode = this.rootElement._vnode) {
+    performance.mark('exposeVNode')
     if (vnode.el && !vnode.el._vnode) {
       vnode.el._vnode = vnode
     }
