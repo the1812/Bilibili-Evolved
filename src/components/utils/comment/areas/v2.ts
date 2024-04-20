@@ -3,19 +3,35 @@ import { childList } from '@/core/observer'
 import { CommentItem } from '../comment-item'
 import { CommentArea } from './base'
 import { CommentReplyItem } from '../reply-item'
+import { HTMLElementWithVue, VNodeManager } from '../vnode-manager'
 
-interface HTMLElementWithVue extends HTMLElement {
-  _vnode?: any
-  __vue_app__?: any
-  parentElement: HTMLElementWithVue | null
-}
 export class CommentAreaV2 extends CommentArea {
-  protected prepareParse() {
-    this.updateVNode()
+  private vnodeManager: VNodeManager
+
+  constructor(element: HTMLElement) {
+    super(element)
+    this.vnodeManager = new VNodeManager(this.getVNodeRoot(element as HTMLElementWithVue))
+    this.vnodeManager.isEnd = vnode => {
+      if (vnode.props?.reply) {
+        return vnode.props?.reply.replies.length === 0
+      }
+      return Boolean(vnode.props?.subReply)
+    }
+    this.vnodeManager.isVNodeReceiver = vnode => {
+      return Boolean(vnode.props?.reply || vnode.props?.subReply)
+    }
   }
 
-  protected get elementWithVue() {
-    return this.element as HTMLElementWithVue
+  protected beforeParse(elements: HTMLElementWithVue[]) {
+    console.log('beforeParse', elements)
+    elements.forEach(replyElement => {
+      this.vnodeManager.traverseToRoot(replyElement)
+      dqa(replyElement, '.sub-reply-item').forEach(subReplyElement => {
+        console.log('subReplyElement', subReplyElement)
+        this.vnodeManager.traverseToRoot(subReplyElement as HTMLElementWithVue)
+      })
+    })
+    this.vnodeManager.exposeVNode()
   }
 
   /** 获取 Vue 数据 (评论 / 回复) */
@@ -32,20 +48,14 @@ export class CommentAreaV2 extends CommentArea {
     return replyElement as HTMLElement
   }
 
-  protected updateVNode() {
-    const vnode = (() => {
-      if (this.elementWithVue.__vue_app__) {
-        return this.elementWithVue._vnode
-      }
-      if (this.elementWithVue.parentElement.__vue_app__) {
-        return this.elementWithVue.parentElement._vnode
-      }
-      return null
-    })()
-    if (!vnode) {
-      throw new Error('vnode not found')
+  protected getVNodeRoot(element: HTMLElementWithVue) {
+    if (element.__vue_app__) {
+      return element
     }
-    this.exposeVNode(vnode)
+    if (element.parentElement.__vue_app__) {
+      return element.parentElement
+    }
+    return null
   }
 
   addMenuItem(
@@ -99,7 +109,7 @@ export class CommentAreaV2 extends CommentArea {
       content: vueData.content.message,
       time: vueData.ctime * 1000,
       likes: vueData.like,
-      pictures: vueData.content?.pictures?.map(img => {
+      pictures: vueData.content?.pictures?.map((img: any) => {
         return img.img_src
       }),
       replies: parseReplies(),
@@ -107,6 +117,18 @@ export class CommentAreaV2 extends CommentArea {
     if (item.replies.length < vueData.rcount) {
       const replyBox = dq(element, '.sub-reply-list')
       childList(replyBox, records => {
+        const addedCommentElements: HTMLElement[] = []
+        records.forEach(r => {
+          r.addedNodes.forEach(n => {
+            if (n instanceof HTMLElement && n.matches('.sub-reply-item')) {
+              addedCommentElements.push(n)
+            }
+          })
+        })
+        if (addedCommentElements.length === 0) {
+          return
+        }
+        this.beforeParse(addedCommentElements)
         item.replies = parseReplies()
         if (records.length !== 0) {
           item.dispatchRepliesUpdate(item.replies)
@@ -121,29 +143,6 @@ export class CommentAreaV2 extends CommentArea {
       throw new Error('Invalid comment item')
     }
     return vueData.rpid_str
-  }
-
-  /**
-   * 将评论区 VNode 进行暴露
-   * @see https://github.com/the1812/Bilibili-Evolved/issues/4690#issuecomment-2059485344
-   */
-  protected exposeVNode(vnode: any) {
-    if (vnode.el && !vnode.el._vnode) {
-      vnode.el._vnode = vnode
-      const replyData = this.getReplyFromVueData(vnode.el)
-      const hasSubReplies = Boolean(replyData?.replies)
-      if (replyData && !hasSubReplies) {
-        return
-      }
-    }
-    // 该 vnode 为组件实例
-    if (vnode.component?.subTree) {
-      this.exposeVNode(vnode.component.subTree)
-    }
-    // 该 vnode 为模板树
-    else if (Array.isArray(vnode.children)) {
-      vnode.children.forEach((child: any) => this.exposeVNode(child))
-    }
   }
 
   static isV2Area(element: HTMLElement) {

@@ -14,6 +14,7 @@ export abstract class CommentArea {
   protected itemAddedCallbacks: CommentItemCallback[] = []
   protected itemRemovedCallbacks: CommentItemCallback[] = []
   protected static replyItemClasses = ['list-item.reply-wrap', 'reply-item']
+  protected static replyItemSelector = CommentArea.replyItemClasses.map(c => `.${c}`).join(',')
 
   constructor(element: HTMLElement) {
     this.element = element
@@ -30,44 +31,57 @@ export abstract class CommentArea {
     },
   ): void
 
-  protected prepareParse() {
-    // do nothing
+  protected isCommentItem(n: Node): n is HTMLElement {
+    return n instanceof HTMLElement && n.matches(CommentArea.replyItemSelector)
+  }
+
+  /** 在每一轮 CommentItem 解析前调用 */
+  protected beforeParse(elements: HTMLElement[]) {
+    return lodash.noop(elements)
   }
 
   observeItems() {
     if (this.observer) {
       return
     }
-    const replyItemSelector = CommentArea.replyItemClasses.map(c => `.${c}`).join(',')
-    this.prepareParse()
-    this.items = dqa(this.element, replyItemSelector).map(it =>
-      this.parseCommentItem(it as HTMLElement),
-    )
+    const elements = dqa(this.element, CommentArea.replyItemSelector) as HTMLElement[]
+    if (elements.length > 0) {
+      this.beforeParse(elements)
+      this.items = elements.map(it => this.parseCommentItem(it as HTMLElement))
+    }
     this.items.forEach(item => {
       this.itemAddedCallbacks.forEach(c => c(item))
     })
     ;[this.observer] = childListSubtree(this.element, records => {
-      this.prepareParse()
+      const addedCommentElements: HTMLElement[] = []
+      const removedCommentElements: HTMLElement[] = []
       records.forEach(r => {
-        const isCommentItem = (n: Node): n is HTMLElement =>
-          n instanceof HTMLElement && n.matches(replyItemSelector)
         r.addedNodes.forEach(n => {
-          if (isCommentItem(n)) {
-            const commentItem = this.parseCommentItem(n)
-            this.items.push(commentItem)
-            this.itemAddedCallbacks.forEach(c => c(commentItem))
+          if (this.isCommentItem(n)) {
+            addedCommentElements.push(n)
           }
         })
         r.removedNodes.forEach(n => {
-          if (isCommentItem(n)) {
-            const id = this.getCommentId(n)
-            const index = this.items.findIndex(item => item.id === id)
-            if (index !== -1) {
-              const [commentItem] = this.items.splice(index, 1)
-              this.itemRemovedCallbacks.forEach(c => c(commentItem))
-            }
+          if (this.isCommentItem(n)) {
+            removedCommentElements.push(n)
           }
         })
+      })
+      if (addedCommentElements.length > 0) {
+        this.beforeParse(addedCommentElements)
+      }
+      addedCommentElements.forEach(n => {
+        const commentItem = this.parseCommentItem(n)
+        this.items.push(commentItem)
+        this.itemAddedCallbacks.forEach(c => c(commentItem))
+      })
+      removedCommentElements.forEach(n => {
+        const id = this.getCommentId(n)
+        const index = this.items.findIndex(item => item.id === id)
+        if (index !== -1) {
+          const [commentItem] = this.items.splice(index, 1)
+          this.itemRemovedCallbacks.forEach(c => c(commentItem))
+        }
       })
     })
   }
