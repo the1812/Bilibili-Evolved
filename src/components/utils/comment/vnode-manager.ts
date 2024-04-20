@@ -18,13 +18,12 @@ export interface Vue3Vnode {
 
 export class VNodeManager {
   public isEnd: (vnode: Vue3Vnode) => boolean = () => true
-  public isVNodeReceiver: (vnode: Vue3Vnode) => boolean = () => false
 
   constructor(public rootElement: HTMLElementWithVue) {}
 
-  traverseToRoot(element: HTMLElementWithVue) {
+  traverseToRoot(element: HTMLElementWithVue): HTMLElementWithVue {
     if (element._vnode) {
-      return
+      return element
     }
     let currentElement = element
     while (currentElement.parentElement !== null && currentElement !== this.rootElement) {
@@ -32,13 +31,20 @@ export class VNodeManager {
         if (!currentElement.parentElement[VNodeTargets].includes(currentElement)) {
           currentElement.parentElement[VNodeTargets].push(currentElement)
         }
-        // 其他 element 已经标记过此处, 可以直接 break 掉完成循环
+        if (currentElement.parentElement._vnode) {
+          return currentElement.parentElement
+        }
+        // 如果其他 element 已经标记过此处, 可以直接 break 掉完成循环
         break
-      } else {
-        currentElement.parentElement[VNodeTargets] = [currentElement]
+      }
+
+      currentElement.parentElement[VNodeTargets] = [currentElement]
+      if (currentElement.parentElement._vnode) {
+        return currentElement.parentElement
       }
       currentElement = currentElement.parentElement
     }
+    return this.rootElement
   }
 
   /** 解开组件实例的包装 */
@@ -54,7 +60,7 @@ export class VNodeManager {
    * @see https://github.com/the1812/Bilibili-Evolved/issues/4690#issuecomment-2059485344
    */
   exposeVNode(vnode: Vue3Vnode = this.rootElement._vnode) {
-    if (this.isVNodeReceiver(vnode) && vnode.el && !vnode.el._vnode) {
+    if (vnode.el && !vnode.el._vnode) {
       vnode.el._vnode = vnode
     }
     if (this.isEnd(vnode)) {

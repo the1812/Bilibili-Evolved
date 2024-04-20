@@ -17,21 +17,17 @@ export class CommentAreaV2 extends CommentArea {
       }
       return Boolean(vnode.props?.subReply)
     }
-    this.vnodeManager.isVNodeReceiver = vnode => {
-      return Boolean(vnode.props?.reply || vnode.props?.subReply)
-    }
   }
 
   protected beforeParse(elements: HTMLElementWithVue[]) {
-    console.log('beforeParse', elements)
+    const rootElements = new Set<HTMLElementWithVue>()
     elements.forEach(replyElement => {
-      this.vnodeManager.traverseToRoot(replyElement)
+      rootElements.add(this.vnodeManager.traverseToRoot(replyElement))
       dqa(replyElement, '.sub-reply-item').forEach(subReplyElement => {
-        console.log('subReplyElement', subReplyElement)
-        this.vnodeManager.traverseToRoot(subReplyElement as HTMLElementWithVue)
+        rootElements.add(this.vnodeManager.traverseToRoot(subReplyElement as HTMLElementWithVue))
       })
     })
-    this.vnodeManager.exposeVNode()
+    rootElements.forEach(rootElement => this.vnodeManager.exposeVNode(rootElement._vnode))
   }
 
   /** 获取 Vue 数据 (评论 / 回复) */
