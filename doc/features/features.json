@@ -81,6 +81,14 @@
   },
   {
     "type": "component",
+    "name": "legacyFeedsImageViewer",
+    "displayName": "动态图片平铺展示",
+    "description": "将动态中左右切换式的图片改回传统的平铺展示. (在动态详情中可能稍有延迟)\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/legacy-image-viewer.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/legacy-image-viewer.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "\n自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠\n",
@@ -827,7 +835,7 @@
     "type": "component",
     "name": "removePlayerPopup",
     "displayName": "删除视频弹窗",
-    "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.\r\n",
+    "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择. 如果之前点了收起弹窗, 则收起后的小弹窗则会直接删除. (不受类别选择影响)\r\n",
     "fullRelativePath": "../../registry/dist/components/video/player/remove-popup.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remove-popup.js"
   },
@@ -911,6 +919,14 @@
     "description": "移除动态里的充电专属动态, 装有 `动态过滤器` 时生效.\r\n",
     "fullRelativePath": "../../registry/dist/plugins/feeds/filter/hide-charge-feeds.js",
     "fullAbsolutePath": "registry/dist/plugins/feeds/filter/hide-charge-feeds.js"
+  },
+  {
+    "type": "plugin",
+    "name": "feedsFilter.pluginBlocks.goods",
+    "displayName": "动态过滤器 - 移除商品带货动态",
+    "description": "移除动态里的商品带货动态 (UP主的推荐 · 来自 XX), 装有 `动态过滤器` 时生效.\r\n",
+    "fullRelativePath": "../../registry/dist/plugins/feeds/filter/hide-goods.js",
+    "fullAbsolutePath": "registry/dist/plugins/feeds/filter/hide-goods.js"
   },
   {
     "type": "plugin",
