@@ -35,3 +35,7 @@ export const addMenuItem = (
 ) => {
   commentAreaManager.forEachCommentArea(area => area.addMenuItem(item, config))
 }
+
+export * from './comment/comment-area'
+export * from './comment/comment-item'
+export * from './comment/reply-item'
