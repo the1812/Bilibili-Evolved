@@ -8,3 +8,7 @@ export const getCommentArea = (element: HTMLElement): CommentArea => {
   }
   return new CommentAreaV1(element)
 }
+
+export * from './areas/base'
+export * from './areas/v1'
+export * from './areas/v2'
