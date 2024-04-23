@@ -33,7 +33,7 @@ li.nav-item[report-id="playpage_dynamic"] .i-frame,
 }
 #message-navbar,
 body:not(.history-page) #biliMainHeader:not(.z-top-container),
-.z-top-container:not(#biliMainHeader) {
+.z-top-container:not(#biliMainHeader,.has-menu) {
   max-height: var(--navbar-height) !important;
 }
 body.history-page #biliMainHeader:not(.z-top-container) {

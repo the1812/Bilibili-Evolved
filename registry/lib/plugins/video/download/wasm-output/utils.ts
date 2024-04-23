@@ -1,5 +1,6 @@
 import { Toast } from '@/core/toast'
 import { formatFileSize, formatPercent } from '@/core/utils/formatters'
+import { getOrLoad, storeNames } from './database'
 
 type OnProgress = (received: number, length: number) => void
 
@@ -47,8 +48,11 @@ export async function httpGet(url: string, onprogress: OnProgress) {
   return chunksAll
 }
 
-export async function toBlobUrl(url: string, mimeType: string, onprogress: OnProgress) {
-  const buffer = await httpGet(url, onprogress)
+export async function getCacheOrGet(key: string, url: string, loading: OnProgress) {
+  return getOrLoad(storeNames.cache, key, async () => httpGet(url, loading))
+}
+
+export function toBlobUrl(buffer: Uint8Array, mimeType: string) {
   const blob = new Blob([buffer], { type: mimeType })
   return URL.createObjectURL(blob)
 }

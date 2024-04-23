@@ -1,12 +1,7 @@
 import { childList } from '@/core/observer'
 import { descendingStringSort } from '@/core/utils/sort'
-import { pascalCase } from '@/core/utils'
-import {
-  createNodeValidator,
-  FeedsCardsManager,
-  FeedsCardsManagerEventType,
-  getVueData,
-} from './base'
+import { pascalCase, getVue2Data } from '@/core/utils'
+import { createNodeValidator, FeedsCardsManager, FeedsCardsManagerEventType } from './base'
 import { FeedsCard, FeedsCardType, feedsCardTypes, isRepostType } from '../types'
 import { selectAll } from '@/core/spin-query'
 
@@ -78,7 +73,7 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   return combineText(mainText, typeText)
 }
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
-  const vueData = getVueData(element)
+  const vueData = getVue2Data(element)
   const parseModules = (rawModules: any) => {
     if (Array.isArray(rawModules)) {
       return Object.fromEntries(
@@ -157,7 +152,7 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
     if (!isNodeValid(node)) {
       return
     }
-    const vueData = getVueData(node)
+    const vueData = getVue2Data(node)
     if (!vueData) {
       return
     }
