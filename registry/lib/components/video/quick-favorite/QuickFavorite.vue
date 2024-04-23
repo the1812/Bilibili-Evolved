@@ -2,7 +2,7 @@
   <span
     class="quick-favorite be-quick-favorite video-toolbar-left-item"
     title="快速收藏"
-    :class="{ on: isFavorite }"
+    :class="{ on: isFavorite, ...displayModeClass }"
     @click.left.self="toggle()"
     @click.right.prevent.self="listShowing = !listShowing"
   >
@@ -33,12 +33,13 @@
   </span>
 </template>
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUID, getCsrf } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { Toast } from '@/core/toast'
 import { VDropdown } from '@/ui'
+import { DisplayMode, Options } from './options'
 
 const { options } = getComponentSettings('quickFavorite')
 export default Vue.extend({
@@ -46,6 +47,7 @@ export default Vue.extend({
     VDropdown,
   },
   data() {
+    const { displayMode } = getComponentSettings<Options>('outerWatchlater').options
     return {
       aid: unsafeWindow.aid,
       favoriteTitle: '',
@@ -56,7 +58,16 @@ export default Vue.extend({
       lists: [],
       selectedFavorite: '<未选择>',
       listShowing: false,
+      displayMode,
     }
+  },
+  computed: {
+    displayModeClass() {
+      return {
+        'icon-only': this.displayMode === DisplayMode.Icon,
+        'icon-and-text': this.displayMode === DisplayMode.IconAndText,
+      }
+    },
   },
   watch: {
     selectedFavorite(value: string) {
@@ -101,6 +112,9 @@ export default Vue.extend({
   },
   created() {
     this.syncFavoriteState()
+    addComponentListener('quickFavorite.displayMode', (value: DisplayMode) => {
+      this.displayMode = value
+    })
   },
   methods: {
     async syncFavoriteState() {
@@ -192,12 +206,22 @@ export default Vue.extend({
   .text {
     display: inline;
   }
-  @media screen and (max-width: 1340px), (max-height: 750px) {
+
+  @mixin icon-only {
     margin-right: max(calc(min(11vw, 11vh) - 117.2px), 6px) !important;
     .text {
       display: none;
     }
   }
+  &.icon-only {
+    @include icon-only();
+  }
+  &:not(.icon-and-text) {
+    @media screen and (max-width: 1340px), (max-height: 750px) {
+      @include icon-only();
+    }
+  }
+
   &-icon {
     font-family: 'quick-favorite' !important;
     font-size: 28px;
