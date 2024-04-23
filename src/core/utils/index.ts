@@ -407,7 +407,6 @@ export class DoubleClickEvent {
   singleClickHandler: (e: MouseEvent) => void = none
 
   private clickedOnce = false
-  // eslint-disable-next-line class-methods-use-this
   private readonly stopPropagationHandler = (e: MouseEvent) => {
     e.stopImmediatePropagation()
   }
@@ -701,3 +700,8 @@ export const simulateClick = (target: EventTarget, eventParams?: PointerEventIni
   target.dispatchEvent(mouseUpEvent)
   target.dispatchEvent(clickEventEvent)
 }
+
+/** 尝试获取元素对应的 Vue Data (仅适用于 Vue 2 组件) */
+export const getVue2Data = (el: any) =>
+  // eslint-disable-next-line no-underscore-dangle
+  el.__vue__ ?? el.parentElement.__vue__ ?? el.children[0].__vue__ ?? el.__vueParentComponent

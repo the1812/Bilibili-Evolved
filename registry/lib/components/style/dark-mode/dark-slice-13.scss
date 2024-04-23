@@ -940,6 +940,9 @@ html {
         @include set-theme-color('border-bottom-color');
         @include theme-color();
       }
+      .underline {
+        @include theme-border-color();
+      }
     }
     .name {
       @include set-color('border-bottom-color', 'a');

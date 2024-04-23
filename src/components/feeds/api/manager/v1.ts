@@ -1,6 +1,7 @@
 import { childList } from '@/core/observer'
+import { getVue2Data } from '@/core/utils'
 import { sq } from '@/core/spin-query'
-import { FeedsCardsManager, FeedsCardsManagerEventType, getVueData } from './base'
+import { FeedsCardsManager, FeedsCardsManagerEventType } from './base'
 import { feedsCardTypes, isRepostType, FeedsCard, FeedsCardType } from '../types'
 
 const getFeedsCardType = (element: HTMLElement) => {
@@ -85,7 +86,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     }
     const el = await sq(
       () => element,
-      (it: any) => Boolean(getVueData(it) || !element.parentNode),
+      (it: any) => Boolean(getVue2Data(it) || !element.parentNode),
       { queryInterval: 100 },
     )
     if (element.parentNode === null) {
@@ -93,10 +94,10 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
       return ''
     }
     if (el === null) {
-      console.warn(el, element, getVueData(el), element.parentNode)
+      console.warn(el, element, getVue2Data(el), element.parentNode)
       return ''
     }
-    const vueData = getVueData(el)
+    const vueData = getVue2Data(el)
     if (type === feedsCardTypes.repost) {
       const currentText = vueData.card.item.content
       const repostData = getRepostData(vueData)
@@ -135,7 +136,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   element.setAttribute('data-type', card.type.id.toString())
   if (isRepostType(card)) {
     const currentUsername = card.username
-    const vueData = getVueData(card.element)
+    const vueData = getVue2Data(card.element)
     const repostUsername = lodash.get(vueData, 'card.origin_user.info.uname', '')
     if (currentUsername === repostUsername) {
       element.setAttribute('data-self-repost', 'true')

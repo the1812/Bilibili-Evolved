@@ -1,4 +1,3 @@
-/* eslint-disable class-methods-use-this */
 import { select } from '@/core/spin-query'
 import { raiseEvent } from '@/core/utils'
 import {
