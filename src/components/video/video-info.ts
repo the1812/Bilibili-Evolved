@@ -68,7 +68,6 @@ export class VideoInfo {
   }
 
   /** @deprecated */
-  // eslint-disable-next-line class-methods-use-this
   get subtitles(): {
     id: number
     languageCode: string
