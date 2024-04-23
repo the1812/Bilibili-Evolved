@@ -245,11 +245,11 @@ blockquote {
     &,
     &:link,
     &:visited {
-      @include color('a');
+      @include color('e');
     }
   }
   .live-skin-normal-text {
-    @include color('a');
+    @include color('e');
   }
   .live-skin-main-text,
   .live-skin-highlight-text {

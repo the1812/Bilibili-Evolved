@@ -38,6 +38,8 @@
 
 按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.
 
+> 侧边卡片的 `正在直播` 指原版的板块, 如果你使用了 `直播信息扩充`, 则需要关闭该功能才能生效.
+
 ### [强制固定动态侧栏](../../registry/dist/components/feeds/fixed-sidebars.js)
 `fixedFeedsSidebars`
 
@@ -1158,7 +1160,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/remove-popup.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/remove-popup.js)
 
-删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.
+删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择. 如果之前点了收起弹窗, 则收起后的小弹窗则会直接删除. (不受类别选择影响)
 
 ### [启用视频截图](../../registry/dist/components/video/player/screenshot.js)
 `videoScreenshot`

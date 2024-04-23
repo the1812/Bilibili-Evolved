@@ -12,15 +12,11 @@ export class Translator {
   static map: Map<string, any>
   static regex: [RegExp, string][]
 
-  // eslint-disable-next-line class-methods-use-this
   protected accepts = (node: Node) => node.nodeType === Node.ELEMENT_NODE
-  // eslint-disable-next-line class-methods-use-this
   protected getValue = (node: Node) => node.nodeValue
-  // eslint-disable-next-line class-methods-use-this
   protected setValue = (node: Node, value: string) => {
     node.nodeValue = value
   }
-  // eslint-disable-next-line class-methods-use-this
   protected getElement = (node: Node) => node as Element
   translate(node: Node) {
     let value = this.getValue(node)
@@ -103,23 +99,17 @@ export class Translator {
   }
 }
 export class TextNodeTranslator extends Translator {
-  // eslint-disable-next-line class-methods-use-this
   accepts = (node: Node) => node.nodeType === Node.TEXT_NODE
-  // eslint-disable-next-line class-methods-use-this
   getElement = (node: Node) => node.parentElement
 }
 export class TitleTranslator extends Translator {
-  // eslint-disable-next-line class-methods-use-this
   getValue = (node: Node) => (node as Element).getAttribute('title')
-  // eslint-disable-next-line class-methods-use-this
   setValue = (node: Node, value: string) => {
     ;(node as Element).setAttribute('title', value)
   }
 }
 export class PlaceholderTranslator extends Translator {
-  // eslint-disable-next-line class-methods-use-this
   getValue = (node: Node) => (node as Element).getAttribute('placeholder')
-  // eslint-disable-next-line class-methods-use-this
   setValue = (node: Node, value: string) => {
     ;(node as Element).setAttribute('placeholder', value)
   }

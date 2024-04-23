@@ -27,7 +27,7 @@
     "type": "component",
     "name": "feedsFilter",
     "displayName": "动态过滤器",
-    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.\r\n",
+    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.\r\n\r\n> 侧边卡片的 `正在直播` 指原版的板块, 如果你使用了 `直播信息扩充`, 则需要关闭该功能才能生效.\r\n",
     "fullRelativePath": "../../registry/dist/components/feeds/filter.js",
     "fullAbsolutePath": "registry/dist/components/feeds/filter.js"
   },
@@ -835,7 +835,7 @@
     "type": "component",
     "name": "removePlayerPopup",
     "displayName": "删除视频弹窗",
-    "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.\r\n",
+    "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择. 如果之前点了收起弹窗, 则收起后的小弹窗则会直接删除. (不受类别选择影响)\r\n",
     "fullRelativePath": "../../registry/dist/components/video/player/remove-popup.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remove-popup.js"
   },
