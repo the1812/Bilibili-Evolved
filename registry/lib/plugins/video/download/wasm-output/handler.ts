@@ -1,12 +1,17 @@
 import { DownloadPackage } from '@/core/download'
 import { meta } from '@/core/meta'
+import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
+import { title as pluginTitle } from '.'
+import type { Options } from '../../../../components/video/download'
+import { DownloadVideoAction } from '../../../../components/video/download/types'
 import { FFmpeg } from './ffmpeg'
 import { getCacheOrGet, httpGet, toastProgress, toBlobUrl } from './utils'
 
 const ffmpeg = new FFmpeg()
 
-async function load(toast: Toast) {
+async function loadFFmpeg() {
+  const toast = Toast.info('初始化', pluginTitle)
   await ffmpeg.load({
     workerLoadURL: toBlobUrl(
       await getCacheOrGet(
@@ -33,24 +38,26 @@ async function load(toast: Toast) {
       'application/wasm',
     ),
   })
+  toast.message = '完成！'
+  toast.close()
 }
-export async function run(
+
+async function single(
   name: string,
-  toast: Toast,
   videoUrl: string,
   audioUrl: string,
   isFlac: boolean,
+  pageIndex = 1,
+  totalPages = 1,
 ) {
-  if (!ffmpeg.loaded) {
-    await load(toast)
-  }
+  const toast = Toast.info('', `${pluginTitle} - ${pageIndex} / ${totalPages}`)
 
   ffmpeg.writeFile('video', await httpGet(videoUrl, toastProgress(toast, '正在下载视频流')))
   ffmpeg.writeFile('audio', await httpGet(audioUrl, toastProgress(toast, '正在下载音频流')))
-  toast.message = '混流中……'
 
+  toast.message = '混流中……'
   const outputExt = isFlac ? 'mkv' : 'mp4'
-  name = isFlac ? name.replace(/.[^/.]+$/, `.${outputExt}`) : name
+  name = name.replace(/.[^/.]+$/, `.${outputExt}`)
   await ffmpeg.exec([
     '-i',
     'video',
@@ -59,7 +66,7 @@ export async function run(
     '-c:v',
     'copy',
     '-c:a',
-    isFlac ? 'flac' : 'copy',
+    'copy',
     '-f',
     isFlac ? 'matroska' : 'mp4',
     `output.${outputExt}`,
@@ -71,7 +78,44 @@ export async function run(
   })
 
   toast.message = '完成！'
-  toast.duration = 1500
+  toast.duration = 1000
 
   await DownloadPackage.single(name, outputBlob)
+}
+
+export async function run(action: DownloadVideoAction) {
+  if (!ffmpeg.loaded) {
+    await loadFFmpeg()
+  }
+
+  const pages = lodash.chunk(
+    action.infos.flatMap(it => it.titledFragments),
+    2,
+  )
+
+  const { dashAudioExtension, dashFlacAudioExtension, dashVideoExtension } =
+    getComponentSettings<Options>('downloadVideo').options
+
+  for (let i = 0; i < pages.length; i++) {
+    const page = pages[i]
+    const [video, audio] = page
+    if (
+      !(
+        page.length === 2 &&
+        video.extension === dashVideoExtension &&
+        (audio.extension === dashAudioExtension || audio.extension === dashFlacAudioExtension)
+      )
+    ) {
+      throw new Error('仅支持 DASH 格式视频和音频')
+    }
+
+    await single(
+      video.title,
+      video.url,
+      audio.url,
+      audio.extension === dashFlacAudioExtension,
+      i + 1,
+      pages.length,
+    )
+  }
 }
