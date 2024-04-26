@@ -11,7 +11,7 @@ import { getCacheOrGet, httpGet, toastProgress, toBlobUrl } from './utils'
 const ffmpeg = new FFmpeg()
 
 async function loadFFmpeg() {
-  const toast = Toast.info('初始化', pluginTitle)
+  const toast = Toast.info('正在加载 FFmpeg', `${pluginTitle} - 初始化`)
   await ffmpeg.load({
     workerLoadURL: toBlobUrl(
       await getCacheOrGet(
@@ -88,20 +88,16 @@ export async function run(action: DownloadVideoAction) {
     await loadFFmpeg()
   }
 
-  const pages = lodash.chunk(
-    action.infos.flatMap(it => it.titledFragments),
-    2,
-  )
-
   const { dashAudioExtension, dashFlacAudioExtension, dashVideoExtension } =
     getComponentSettings<Options>('downloadVideo').options
 
+  const pages = action.infos
   for (let i = 0; i < pages.length; i++) {
     const page = pages[i]
-    const [video, audio] = page
+    const [video, audio] = page.titledFragments
     if (
       !(
-        page.length === 2 &&
+        page.fragments.length === 2 &&
         video.extension === dashVideoExtension &&
         (audio.extension === dashAudioExtension || audio.extension === dashFlacAudioExtension)
       )
