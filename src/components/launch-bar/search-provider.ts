@@ -26,11 +26,13 @@ export const searchProvider: LaunchBarActionProvider = {
         content: async () =>
           Vue.extend({
             render: h => {
-              const content = h('div', {
-                domProps: {
-                  innerHTML: /* html */ `<em class="suggest-highlight">${input}</em>`,
+              const content = h(
+                'div',
+                {
+                  class: 'suggest-highlight',
                 },
-              })
+                [input],
+              )
               return content
             },
           }),
