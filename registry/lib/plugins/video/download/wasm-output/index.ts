@@ -4,7 +4,7 @@ import { DownloadVideoOutput } from '../../../../components/video/download/types
 import { run } from './handler'
 
 export const title = 'WASM 混流输出'
-const desc = '使用 WASM 在浏览器中下载并合并音视频'
+const desc = '使用 WASM 在浏览器中下载并合并音视频, 支持批量下载'
 
 export const plugin: PluginMetadata = {
   name: 'downloadVideo.outputs.wasm',
