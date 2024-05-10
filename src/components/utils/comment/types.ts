@@ -8,3 +8,7 @@ export const RepliesUpdateEventType = 'repliesUpdate'
 export type RepliesUpdateEventCallback = (event: CustomEvent<CommentReplyItem[]>) => void
 export type CommentItemCallback = (item: CommentItem) => void
 export type CommentAreaCallback = (area: CommentArea) => void
+export type CommentCallbackPair<T extends (...args: unknown[]) => void> = { added?: T; removed?: T }
+export type CommentCallbackInput<T extends (...args: unknown[]) => void> =
+  | CommentCallbackPair<T>
+  | T
