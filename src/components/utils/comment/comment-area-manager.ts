@@ -1,4 +1,4 @@
-import { allMutations } from '@/core/observer'
+import { allMutations, childList } from '@/core/observer'
 import { getCommentArea } from './comment-area'
 import {
   CommentAreaCallback,
@@ -7,6 +7,7 @@ import {
   CommentItemCallback,
 } from './types'
 import { CommentArea } from './areas/base'
+import { deleteValue } from '@/core/utils'
 
 export class CommentAreaManager {
   /** 当前页面所有的评论区列表 */
@@ -35,6 +36,18 @@ export class CommentAreaManager {
       this.commentAreas.push(area)
       area.observeItems()
       this.commentAreaCallbacks.forEach(c => c.added?.(area))
+      const [observer] = childList(area.element.parentElement, records => {
+        records.forEach(r => {
+          r.removedNodes.forEach(removedNode => {
+            if (removedNode === area.element) {
+              deleteValue(this.commentAreas, a => a === area)
+              this.commentAreaCallbacks.forEach(c => c.removed?.(area))
+              area.destroy()
+              observer.disconnect()
+            }
+          })
+        })
+      })
     }
   }
 

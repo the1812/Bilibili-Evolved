@@ -97,6 +97,13 @@ export abstract class CommentArea {
     performance.measure('observeItems', 'observeItems start', 'observeItems end')
   }
 
+  destroy() {
+    this.observer?.disconnect()
+    this.items.forEach(item => {
+      this.itemCallbacks.forEach(pair => pair.removed?.(item))
+    })
+  }
+
   static resolveCallbackPair<T extends (...args: unknown[]) => void>(
     input: CommentCallbackInput<T>,
   ): CommentCallbackPair<T> {
