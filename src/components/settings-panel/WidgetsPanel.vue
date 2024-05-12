@@ -63,6 +63,7 @@ export default Vue.extend({
   },
   watch: {
     allWidgets() {
+      this.widgets = []
       this.allWidgets.forEach(async (w: Widget) => {
         const add = await widgetFilter(w)
         if (add) {
