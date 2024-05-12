@@ -94,22 +94,10 @@ export default Vue.extend({
   @include v-center();
   justify-content: flex-start;
   align-items: flex-start;
-  flex-wrap: wrap;
   padding: 16px;
   padding-right: 20px;
-  // background-color: #f8f8f8;
-  // border-radius: 0 8px 8px 0;
-  // border: 1px solid #e8e8e8;
-  // border-left-width: 0;
-  // box-sizing: content-box;
-  // overflow: auto;
   @include popup();
   @include text-color();
-  // @include shadow();
-  // body.dark & {
-  //   background-color: #1a1a1a;
-  //   border-color: #333;
-  // }
   &-header {
     flex: 0 0 auto;
     @include h-center();
