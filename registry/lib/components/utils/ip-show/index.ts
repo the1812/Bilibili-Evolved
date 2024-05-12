@@ -4,9 +4,8 @@ import { defineComponentMetadata } from '@/components/define'
 import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
 
 // 新版评论区IP属地获取
-const getIpLocation = (element: HTMLElement) => {
-  const props = (element as any).__vueParentComponent?.props
-  const reply = props?.reply ?? props?.subReply
+const getIpLocation = (item: CommentReplyItem) => {
+  const reply = item.vueProps
   return reply?.reply_control?.location ?? undefined
 }
 
@@ -274,8 +273,7 @@ observer.observe(document.head, { childList: true })
 
 const processItems = (items: CommentReplyItem[]) => {
   items.forEach(item => {
-    const location = getIpLocation(item.element)
-    console.log(`location: ${location}`)
+    const location = getIpLocation(item)
     if (location !== undefined) {
       const replyTime =
         item.element.querySelector('.reply-info>.reply-time') ??

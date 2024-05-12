@@ -2,7 +2,14 @@
   <div class="video-screenshot-thumbnail">
     <img v-if="objectUrl" :src="objectUrl" />
     <div v-if="objectUrl" class="mask">
-      <a ref="link" class="link" style="display: none" :href="objectUrl" :download="filename"></a>
+      <a
+        ref="link"
+        target="_blank"
+        class="link"
+        style="display: none"
+        :href="objectUrl"
+        :download="filename"
+      ></a>
       <button class="save" title="保存" @click="save">
         <VIcon :size="28" icon="mdi-content-save-outline"></VIcon>
       </button>
@@ -40,7 +47,15 @@ export default Vue.extend({
       this.$emit('discard')
     },
     save() {
-      this.$refs.link.click()
+      const link = this.$refs.link as HTMLAnchorElement
+      link.addEventListener(
+        'click',
+        e => {
+          e.stopPropagation()
+        },
+        { capture: true, once: true },
+      )
+      link.click()
       this.discard()
     },
   },
