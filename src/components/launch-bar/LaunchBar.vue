@@ -68,6 +68,7 @@ import { registerAndGetData } from '@/plugins/data'
 import { select } from '@/core/spin-query'
 import { ascendingSort } from '@/core/utils/sort'
 import { matchUrlPattern } from '@/core/utils'
+import { urlChange } from '@/core/observer'
 import ActionItem from './ActionItem.vue'
 import {
   LaunchBarActionProviders,
@@ -169,30 +170,29 @@ export default Vue.extend({
   },
   async mounted() {
     await this.getActions()
+    if (matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
+      await this.setupSearchPageSync()
+    }
     this.focusTarget.addEventListener('index-change', () => {
       this.handleIndexUpdate()
-    })
-    if (!matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
-      return
-    }
-    select('#search-keyword, .search-input-el').then((input: HTMLInputElement) => {
-      if (!input) {
-        return
-      }
-      this.keyword = input.value
-      document.addEventListener('change', e => {
-        if (!(e.target instanceof HTMLInputElement)) {
-          return
-        }
-        if (e.target.id === 'search-keyword') {
-          this.keyword = e.target.value
-        }
-      })
     })
   },
   methods: {
     getOnlineActions: lodash.debounce(getOnlineActions, 200),
     getActions,
+    async setupSearchPageSync() {
+      const selector = '#search-keyword, .search-input-el'
+      const input = (await select(selector)) as HTMLInputElement
+      if (!input) {
+        return
+      }
+      this.keyword = input.value
+      urlChange(url => {
+        const params = new URLSearchParams(url)
+        this.keyword = params.get('keyword')
+      })
+      await this.$nextTick()
+    },
     handleSelect() {
       this.$emit('close')
       this.getActions()
