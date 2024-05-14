@@ -1495,7 +1495,7 @@ by [@diannaojiang](https://github.com/diannaojiang)
 
 by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
-使用 WASM 在浏览器中下载并合并音视频
+使用 WASM 在浏览器中下载并合并音视频, 支持批量下载
 
 ### [快捷键扩展 - 视频倍速](../../registry/dist/plugins/video/player/speed.js)
 `speed.keymap`

@@ -1116,7 +1116,7 @@
     "type": "plugin",
     "name": "downloadVideo.outputs.wasm",
     "displayName": "下载视频 - WASM 混流输出",
-    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n使用 WASM 在浏览器中下载并合并音视频",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n使用 WASM 在浏览器中下载并合并音视频, 支持批量下载",
     "fullRelativePath": "../../registry/dist/plugins/video/download/wasm-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/wasm-output.js"
   },
