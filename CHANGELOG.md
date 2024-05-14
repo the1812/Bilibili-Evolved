@@ -1,6 +1,33 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.8.11-preview
+`2024-05-14`
+
+包含 [v2.8.11](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.11) 的所有更新内容.
+
+✨新增
+- `下载视频 - WASM 混流输出` 支持批量下载. (PR #4726 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `夜间模式` 增加 `color-scheme` meta 信息, 适配 Chrome 的 [Fluent overlay scrollbars](chrome://flags/#fluent-overlay-scrollbars). (#4717)
+
+## v2.8.11
+`2024-05-14`
+
+🐛修复
+- 修复了搜索框中的 XSS 注入问题.
+- 修复 `评论区IP属地显示` 失效. (#4690)
+- 在搜索框中删除搜索历史时将不再收起下拉菜单. (#4732)
+- 修复功能反复开关时, 功能面板中的按钮重复出现. (#4731)
+- 修复功能面板空间不足时出现折行. (#4721)
+- 修复 `启用视频截图` 在番剧区失效. (#4719)
+
+☕开发者相关
+- Comment API 调整:
+  - 增加对 `CommentArea` 销毁的监测.
+  - `forEachCommentItem` / `forEechCommentArea` 参数统一支持 `added` 和 `removed` 回调.
+  - `CommentReplyItem` / `CommentItem` 增加属性 `vueProps`.
+
+
 ## v2.8.10-preview
 `2024-04-23`
 
