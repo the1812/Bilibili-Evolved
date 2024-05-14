@@ -31,7 +31,7 @@ export class CommentAreaV2 extends CommentArea {
   }
 
   /** 获取 Vue 数据 (评论 / 回复) */
-  protected getReplyFromVueData(element: HTMLElement) {
+  protected getReplyFromVueProps(element: HTMLElement) {
     const props = (element as HTMLElementWithVue)._vnode?.props
     return props?.reply ?? props?.subReply
   }
@@ -39,7 +39,7 @@ export class CommentAreaV2 extends CommentArea {
   /** 获取回复对应的元素 */
   protected getReplyItemElement(parent: HTMLElement, replyId: string) {
     const [replyElement] = dqa(parent, '.sub-reply-item').filter(
-      (it: HTMLElement) => this.getReplyFromVueData(it).rpid_str === replyId,
+      (it: HTMLElement) => this.getReplyFromVueProps(it).rpid_str === replyId,
     )
     return replyElement as HTMLElement
   }
@@ -77,15 +77,15 @@ export class CommentAreaV2 extends CommentArea {
   }
 
   parseCommentItem(element: HTMLElement): CommentItem {
-    const vueData = this.getReplyFromVueData(element)
-    if (!vueData) {
+    const vueProps = this.getReplyFromVueProps(element)
+    if (!vueProps) {
       throw new Error('Invalid comment item')
     }
     const parseReplies = () => {
-      if (!vueData.replies) {
+      if (!vueProps.replies) {
         return []
       }
-      return vueData.replies.map((r: any): CommentReplyItem => {
+      return vueProps.replies.map((r: any): CommentReplyItem => {
         return new CommentReplyItem({
           id: r.rpid_str,
           element: this.getReplyItemElement(element, r.rpid_str),
@@ -94,23 +94,25 @@ export class CommentAreaV2 extends CommentArea {
           content: r.content.message,
           time: r.ctime * 1000,
           likes: r.like,
+          vueProps,
         })
       })
     }
     const item = new CommentItem({
-      id: vueData.rpid_str,
+      id: vueProps.rpid_str,
       element,
-      userId: vueData.member.mid,
-      userName: vueData.member.uname,
-      content: vueData.content.message,
-      time: vueData.ctime * 1000,
-      likes: vueData.like,
-      pictures: vueData.content?.pictures?.map((img: any) => {
+      userId: vueProps.member.mid,
+      userName: vueProps.member.uname,
+      content: vueProps.content.message,
+      time: vueProps.ctime * 1000,
+      likes: vueProps.like,
+      pictures: vueProps.content?.pictures?.map((img: any) => {
         return img.img_src
       }),
       replies: parseReplies(),
+      vueProps,
     })
-    if (item.replies.length < vueData.rcount) {
+    if (item.replies.length < vueProps.rcount) {
       const replyBox = dq(element, '.sub-reply-list')
       childList(replyBox, records => {
         performance.mark(`parseReplies start ${item.id}`)
@@ -141,11 +143,11 @@ export class CommentAreaV2 extends CommentArea {
     return item
   }
   getCommentId(element: HTMLElement): string {
-    const vueData = this.getReplyFromVueData(element)
-    if (!vueData?.rpid_str) {
+    const vueProps = this.getReplyFromVueProps(element)
+    if (!vueProps?.rpid_str) {
       throw new Error('Invalid comment item')
     }
-    return vueData.rpid_str
+    return vueProps.rpid_str
   }
 
   static isV2Area(element: HTMLElement) {

@@ -1,6 +1,6 @@
 import { childListSubtree } from '@/core/observer'
 import type { CommentItem } from '../comment-item'
-import type { CommentItemCallback } from '../types'
+import type { CommentCallbackInput, CommentCallbackPair, CommentItemCallback } from '../types'
 import type { CommentReplyItem } from '../reply-item'
 import { getRandomId } from '@/core/utils'
 
@@ -12,8 +12,7 @@ export abstract class CommentArea {
   items: CommentItem[] = []
   /** 与之关联的 MutationObserver */
   protected observer?: MutationObserver
-  protected itemAddedCallbacks: CommentItemCallback[] = []
-  protected itemRemovedCallbacks: CommentItemCallback[] = []
+  protected itemCallbacks: CommentCallbackPair<CommentItemCallback>[] = []
   protected static replyItemClasses = ['list-item.reply-wrap', 'reply-item']
   protected static replyItemSelector = CommentArea.replyItemClasses.map(c => `.${c}`).join(',')
 
@@ -52,7 +51,7 @@ export abstract class CommentArea {
       this.items = elements.map(it => this.parseCommentItem(it as HTMLElement))
     }
     this.items.forEach(item => {
-      this.itemAddedCallbacks.forEach(c => c(item))
+      this.itemCallbacks.forEach(c => c.added?.(item))
     })
     ;[this.observer] = childListSubtree(this.element, records => {
       const observerCallId = getRandomId()
@@ -77,14 +76,14 @@ export abstract class CommentArea {
       addedCommentElements.forEach(n => {
         const commentItem = this.parseCommentItem(n)
         this.items.push(commentItem)
-        this.itemAddedCallbacks.forEach(c => c(commentItem))
+        this.itemCallbacks.forEach(c => c.added?.(commentItem))
       })
       removedCommentElements.forEach(n => {
         const id = this.getCommentId(n)
         const index = this.items.findIndex(item => item.id === id)
         if (index !== -1) {
           const [commentItem] = this.items.splice(index, 1)
-          this.itemRemovedCallbacks.forEach(c => c(commentItem))
+          this.itemCallbacks.forEach(c => c.removed?.(commentItem))
         }
       })
       performance.mark(`observeItems subtree end ${observerCallId}`)
@@ -98,14 +97,25 @@ export abstract class CommentArea {
     performance.measure('observeItems', 'observeItems start', 'observeItems end')
   }
 
-  forEachCommentItem(callbacks: { added?: CommentItemCallback; removed?: CommentItemCallback }) {
-    const { added, removed } = callbacks
-    if (added) {
-      this.items.forEach(item => added(item))
-      this.itemAddedCallbacks.push(added)
+  destroy() {
+    this.observer?.disconnect()
+    this.items.forEach(item => {
+      this.itemCallbacks.forEach(pair => pair.removed?.(item))
+    })
+  }
+
+  static resolveCallbackPair<T extends (...args: unknown[]) => void>(
+    input: CommentCallbackInput<T>,
+  ): CommentCallbackPair<T> {
+    if (typeof input === 'function') {
+      return { added: input }
     }
-    if (removed) {
-      this.itemRemovedCallbacks.push(removed)
-    }
+    return input
+  }
+
+  forEachCommentItem(input: CommentCallbackInput<CommentItemCallback>) {
+    const pair = CommentArea.resolveCallbackPair(input)
+    this.items.forEach(item => pair.added?.(item))
+    this.itemCallbacks.push(pair)
   }
 }
