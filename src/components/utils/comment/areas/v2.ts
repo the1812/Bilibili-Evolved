@@ -94,7 +94,7 @@ export class CommentAreaV2 extends CommentArea {
           content: r.content.message,
           time: r.ctime * 1000,
           likes: r.like,
-          vueProps,
+          vueProps: r,
         })
       })
     }
