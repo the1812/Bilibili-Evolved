@@ -12,7 +12,7 @@ interface RecommendList extends Vue {
   related: {
     aid: string
     title: string
-    ctime: number
+    pubdate: number
     owner: {
       name: string
     }
@@ -28,7 +28,7 @@ interface VideoPageCard extends Vue {
   oldname: string
   item: {
     aid: string
-    ctime: number
+    pubdate: number
     owner: {
       // 组件添加元素，非b站自有元素
       mark: boolean
@@ -123,16 +123,13 @@ export const component = defineComponentMetadata({
           // 确认推荐视频卡片是否被更新
           if (forceUpdate || !video.mark) {
             video.mark = true
-            let createTime: Date
-            if (video.item.ctime) {
-              createTime = new Date(video.item.ctime * 1000)
-            } else {
-              const videoinfo = new VideoInfo(video.item.aid)
-              await videoinfo.fetchInfo()
-              createTime = videoinfo.createTime
-              // 保存查询到的ctime，以便后续使用
-              video.item.ctime = createTime.getTime() / 1000
+            if (!video.item.pubdate) {
+              const info = new VideoInfo(video.item.aid)
+              await info.fetchInfo()
+              // 保存查询到的pubdate，以便后续使用
+              video.item.pubdate = info.pubdate
             }
+            const createTime: Date = new Date(video.item.pubdate * 1000)
             if (!video.oldname) {
               video.oldname = video.name
             }
