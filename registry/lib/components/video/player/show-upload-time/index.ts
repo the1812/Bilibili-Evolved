@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { childList, urlChange } from '@/core/observer'
+import { urlChange } from '@/core/observer'
 import { playerReady, getVue2Data } from '@/core/utils'
 import { videoUrls } from '@/core/utils/urls'
 import { VideoInfo } from '@/components/video/video-info'
@@ -9,6 +9,7 @@ import desc from './desc.md'
 
 interface RecommendList extends Vue {
   isOpen: boolean
+  mark: boolean
   related: {
     aid: string
     title: string
@@ -168,23 +169,24 @@ export const component = defineComponentMetadata({
     )
 
     urlChange(async () => {
+      console.debug('urlChange now url is', document.URL)
       await playerReady()
       const recoList: RecommendList = getRecoList()
-      const relist: VideoPageCard[] = recoList.$children.filter(
-        video => video.$el.className.indexOf('special') === -1,
-      )
-      showUploadTime(relist)
-    })
-
-    await playerReady()
-    // 监视推荐列表是否打开，如果打开则更新
-    childList(dq('#reco_list .rec-list'), async () => {
-      const recoList: RecommendList = getRecoList()
-      if (recoList.isOpen) {
-        const relist: VideoPageCard[] = recoList.$children.filter(
-          video => video.$el.className.indexOf('special') === -1,
+      console.debug('urlChange recoList.mark', recoList.mark)
+      if (!recoList.mark) {
+        recoList.mark = true
+        // 使用vue组件自带的$watch方法监视推荐列表信息是否变更，如果变更则更新
+        recoList.$watch(
+          'recListItems',
+          () => {
+            console.debug('recoListItems changed, now url is', document.URL)
+            const relist = recoList.$children.filter(
+              video => video.$el.className.indexOf('special') === -1,
+            )
+            showUploadTime(relist)
+          },
+          { deep: true, immediate: true },
         )
-        showUploadTime(relist)
       }
     })
   },
