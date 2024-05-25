@@ -957,3 +957,9 @@
     }
   }
 }
+
+.message-list-content {
+  .message-content {
+    @include color('f');
+  }
+}
