@@ -963,3 +963,18 @@
     @include color('f');
   }
 }
+
+.bili-dyn-card-vote,
+.bili-dyn-upower-lottery__card,
+.bili-dyn-card-link-common__wrap,
+.bili-dyn-card-goods .bili-dyn-card-goods__wrap,
+.bili-dyn-card-reserve .bili-dyn-card-reserve__card {
+  @include background-color('30');
+}
+.reference {
+  .bili-dyn-card-reserve__card,
+  .bili-dyn-card-link-common__wrap,
+  .bili-dyn-card-goods__wrap {
+    @include background-color('30');
+  }
+}
