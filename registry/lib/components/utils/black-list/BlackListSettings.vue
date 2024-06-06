@@ -115,7 +115,7 @@ export default Vue.extend({
 @import 'common';
 .custom-black-list-settings {
   @include popup();
-  width: 400px;
+  width: 800px;
   font-size: 14px;
   padding: 12px 12px 12px 18px;
   left: 50%;
@@ -147,6 +147,7 @@ export default Vue.extend({
     }
   }
   .black-list-settings-content {
+      
     .black-list-settings-section {
       margin-top: 12px;
       > :not(:last-child) {
@@ -167,6 +168,28 @@ export default Vue.extend({
         line-height: 1.5;
       }
       &-content {
+        margin-top: 20px;
+        max-height: 400px;
+        padding: 10px;
+        overflow: auto;
+
+        scrollbar-width: thin;
+        scrollbar-color: #888 #eee;
+
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+        &::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #eee;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: #888;
+            border-radius: 10px;
+            border: 3px solid #eee;
+        }
         @include h-center();
         flex-wrap: wrap;
         .be-slider {
