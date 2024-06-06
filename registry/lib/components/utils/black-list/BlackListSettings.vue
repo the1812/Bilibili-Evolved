@@ -147,7 +147,6 @@ export default Vue.extend({
     }
   }
   .black-list-settings-content {
-      
     .black-list-settings-section {
       margin-top: 12px;
       > :not(:last-child) {
@@ -178,17 +177,17 @@ export default Vue.extend({
 
         -ms-overflow-style: -ms-autohiding-scrollbar;
         &::-webkit-scrollbar {
-            width: 12px;
+          width: 12px;
         }
 
         &::-webkit-scrollbar-track {
-            background: #eee;
+          background: #eee;
         }
 
         &::-webkit-scrollbar-thumb {
-            background-color: #888;
-            border-radius: 10px;
-            border: 3px solid #eee;
+          background-color: #888;
+          border-radius: 10px;
+          border: 3px solid #eee;
         }
         @include h-center();
         flex-wrap: wrap;
