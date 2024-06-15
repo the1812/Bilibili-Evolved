@@ -175,7 +175,6 @@ export default Vue.extend({
         scrollbar-width: thin;
         scrollbar-color: #888 #eee;
 
-        -ms-overflow-style: -ms-autohiding-scrollbar;
         &::-webkit-scrollbar {
           width: 12px;
         }
