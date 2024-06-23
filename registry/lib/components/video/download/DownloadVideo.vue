@@ -332,18 +332,16 @@ export default Vue.extend({
           })
         }
         const action = new DownloadVideoAction(videoInfos)
-        const extraAssets = (
-          await Promise.all(
-            assets.map(a =>
-              a.getAssets(
-                videoInfos,
-                this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
-              ),
-            ),
-          )
-        ).flat()
-        action.extraAssets.push(...extraAssets)
-        await action.downloadExtraAssets()
+        assets.forEach(a => {
+          action.extraAssets.push({
+            asset: a,
+            instance: this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
+          })
+        })
+        /** 若视频输出的插件设置了proxyExtraAssets，则由插件在runAction中处理 */
+        if (!output?.proxyExtraAssets) {
+          await action.downloadExtraAssets()
+        }
         await output.runAction(action, instance)
       } catch (error) {
         logError(error)

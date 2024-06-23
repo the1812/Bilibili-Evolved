@@ -1,5 +1,9 @@
 <template>
   <div class="rpc-config download-video-config-section">
+    <div>
+    <div>aria2下载附属资源（若支持）:</div>
+    <SwitchBox v-model="isPluginDownloadAssets" @change="saveSettings"/>
+    </div>
     <div v-if="isRenaming" class="profile-select">
       <div class="profile-item-name">重命名 RPC 预设:</div>
       <TextBox ref="renameInput" v-model="profileRename" />
@@ -69,17 +73,19 @@
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
-import { TextBox, VButton, VIcon, VDropdown, TextArea } from '@/ui'
+import { TextBox, VButton, VIcon, VDropdown, TextArea, SwitchBox } from '@/ui'
 import { Aria2RpcProfile, defaultProfile } from './rpc-profiles'
 
 interface Options {
   rpcProfiles: Aria2RpcProfile[]
   selectedRpcProfileName: string
+  isPluginDownloadAssets: boolean
 }
 const { options: storedOptions } = getComponentSettings('downloadVideo')
 const defaultOptions: Options = {
   rpcProfiles: [defaultProfile],
   selectedRpcProfileName: defaultProfile.name,
+  isPluginDownloadAssets: false,
 }
 const options = { ...defaultOptions, ...storedOptions }
 const handleMissingProfile = () => {
@@ -99,6 +105,7 @@ export default Vue.extend({
     VIcon,
     VDropdown,
     TextArea,
+    SwitchBox,
   },
   data() {
     return {
@@ -106,12 +113,14 @@ export default Vue.extend({
       profileRename: '',
       rpcProfiles: options.rpcProfiles,
       selectedRpcProfile: lastSelectedProfile,
+      isPluginDownloadAssets: options.isPluginDownloadAssets,
     }
   },
   methods: {
     saveSettings() {
       options.selectedRpcProfileName = this.selectedRpcProfile.name
       options.rpcProfiles = this.rpcProfiles
+      options.isPluginDownloadAssets = this.isPluginDownloadAssets
       Object.assign(storedOptions, options)
     },
     async startRename() {
