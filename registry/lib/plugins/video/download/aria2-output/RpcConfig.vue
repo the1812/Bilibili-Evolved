@@ -1,8 +1,8 @@
 <template>
   <div class="rpc-config download-video-config-section">
     <div>
-    <div>aria2下载附属资源（若支持）:</div>
-    <SwitchBox v-model="isPluginDownloadAssets" @change="saveSettings"/>
+      <div>aria2下载附属资源（若支持）:</div>
+      <SwitchBox v-model="isPluginDownloadAssets" @change="saveSettings" />
     </div>
     <div v-if="isRenaming" class="profile-select">
       <div class="profile-item-name">重命名 RPC 预设:</div>
