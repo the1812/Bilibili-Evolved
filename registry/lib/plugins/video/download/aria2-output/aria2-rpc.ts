@@ -1,10 +1,11 @@
 import { getJson, monkey, postJson } from '@/core/ajax'
-import { DownloadPackage } from '@/core/download'
 import { Toast } from '@/core/toast'
 import { UserAgent } from '@/core/utils/constants'
 import { logError } from '@/core/utils/log'
-import { getFriendlyTitle } from '@/core/utils/title'
-import { DownloadVideoOutput } from '../../../../components/video/download/types'
+import {
+  DownloadVideoOutput,
+  DownloadVideoAction,
+} from '../../../../components/video/download/types'
 import { Aria2RpcProfile } from './rpc-profiles'
 
 interface RpcParam {
@@ -161,7 +162,7 @@ export const aria2Rpc: DownloadVideoOutput = {
       }
     }
 
-    // handle video
+    // handle video params
     const videoParams = infos
       .map(info =>
         info.titledFragments.map(fragment => {
@@ -173,7 +174,7 @@ export const aria2Rpc: DownloadVideoOutput = {
 
     // handle assets
     const assetsAriaParams = []
-    const assetsBrowserPromises = []
+    const extraAssetsForBrowerDownload = []
     for (const { asset, instance: assetInstance } of extraAssets) {
       if (isPluginDownloadAssets && 'getUrls' in asset) {
         // get asset from aria2
@@ -181,16 +182,16 @@ export const aria2Rpc: DownloadVideoOutput = {
         assetsAriaParams.push(...results.map(({ name, url }) => ariaParamsGenerator(url, name)))
       } else {
         // get asset from browser
-        assetsBrowserPromises.push(asset.getAssets(infos, assetInstance))
+        extraAssetsForBrowerDownload.push({ asset, instance: assetInstance })
       }
     }
 
     const totalParams = [...videoParams, ...assetsAriaParams]
     const results = await sendRpc(selectedRpcProfile, totalParams)
-    if (assetsBrowserPromises.length > 0) {
-      const extraAssetsBlob = (await Promise.all(assetsBrowserPromises)).flat()
-      const filename = `${getFriendlyTitle(false)}.zip`
-      await new DownloadPackage(extraAssetsBlob).emit(filename)
+    if (extraAssetsForBrowerDownload.length > 0) {
+      const actionForBrowserDownload = new DownloadVideoAction(infos)
+      actionForBrowserDownload.extraAssets = extraAssetsForBrowerDownload
+      await actionForBrowserDownload.downloadExtraAssets()
     }
     console.table(results)
     if (results.length === 1) {
