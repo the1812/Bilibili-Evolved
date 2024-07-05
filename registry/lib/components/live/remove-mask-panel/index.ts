@@ -3,20 +3,17 @@ import { liveUrls } from '@/core/utils/urls'
 
 const id = 'web-player-module-area-mask-panel'
 const entry = async () => {
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
+  const observer = new MutationObserver(mutations => {
+    mutations.forEach(mutation => {
+      mutation.addedNodes.forEach(node => {
         if ((node as Element).id === id) {
-          node.parentNode?.removeChild(node);
-          observer.disconnect();
+          node.parentNode?.removeChild(node)
+          observer.disconnect()
         }
-      });
-    });
-  });
-
-  const config = { childList: true, subtree: true };
-  const targetNode = document.body;
-  observer.observe(targetNode, config);
+      })
+    })
+  })
+  observer.observe(document.body, { childList: true, subtree: true })
 }
 
 export const component = defineComponentMetadata({
