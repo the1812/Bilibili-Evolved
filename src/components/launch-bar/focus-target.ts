@@ -16,8 +16,11 @@ export class FocusTarget extends EventTarget {
     return this.itemIndex
   }
   private set index(value: number) {
-    this.itemIndex = lodash.clamp(value, -1, this.itemLength - 1)
-    this.dispatchEvent(new CustomEvent('index-change', { detail: this }))
+    const newIndex = lodash.clamp(value, -1, this.itemLength - 1)
+    if (this.itemIndex !== newIndex) {
+      this.itemIndex = newIndex
+      this.dispatchEvent(new CustomEvent('index-change', { detail: this }))
+    }
   }
   get hasFocus() {
     return this.itemIndex > -1
