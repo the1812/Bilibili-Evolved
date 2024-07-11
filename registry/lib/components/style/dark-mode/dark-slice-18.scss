@@ -973,6 +973,12 @@
 .bili-dyn-card-reserve .bili-dyn-card-reserve__card {
   @include background-color('30');
 }
+.bili-dyn-card-goods {
+  &__mark,
+  &__one__detail__price {
+    @include color('a');
+  }
+}
 .reference {
   .bili-dyn-card-reserve__card,
   .bili-dyn-card-link-common__wrap,

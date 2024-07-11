@@ -473,6 +473,9 @@
       @include color('e');
     }
   }
+  #page-dynamic & {
+    @include border-color();
+  }
 }
 .bili-dyn-item,
 .bili-opus-view {
