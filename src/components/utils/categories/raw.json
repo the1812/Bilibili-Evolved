@@ -1674,6 +1674,10 @@
         {
           "name": "电视剧索引",
           "url": "//www.bilibili.com/tv/index/"
+        },
+        {
+          "name": "综艺索引",
+          "url": "//www.bilibili.com/variety/index/"
         }
       ]
     },
@@ -1854,9 +1858,18 @@
       "icon": "zhishi"
     },
     {
-      "name": "小黑屋",
-      "report": "blackroom",
-      "url": "//www.bilibili.com/blackroom/",
+      "name": "公益",
+      "url": "//love.bilibili.com/",
+      "icon": "love"
+    },
+    {
+      "name": "公开课",
+      "url": "//www.bilibili.com/mooc",
+      "icon": "mooc"
+    },
+    {
+      "name": "社区中心",
+      "url": "https://www.bilibili.com/blackboard/activity-5zJxM3spoS.html",
       "icon": "blackroom"
     },
     {
