@@ -173,9 +173,9 @@
   }
 }
 .bili-dyn-list {
-  &__notification {
-    @include theme-background-color();
-    @include foreground-color();
+  &-notification {
+    @include background-color('4');
+    @include theme-color();
   }
 }
 .bili-dyn-item {
