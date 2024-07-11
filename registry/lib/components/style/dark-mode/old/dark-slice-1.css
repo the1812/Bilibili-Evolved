@@ -196,7 +196,6 @@ div.con,
 .app-watch,
 #app .submit,
 .appeal-box,
-.fans-medal-item:not(.medal-guard) .fans-medal-level,
 .fans-medal-item .level
 {
     background-color: #222 !important;
@@ -1079,7 +1078,6 @@ li.tag > a,
     color: #00a1d6 !important
 }
 .fans-medal-item .label,
-.fans-medal-item:not(.medal-guard) .fans-medal-label,
 .calendar .day-item,
 .calendar .day-item.cur-day,
 .content-box .watermark-wrap .watermark
