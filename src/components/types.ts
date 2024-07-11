@@ -65,7 +65,7 @@ export interface OptionMetadata<V = unknown> {
     max?: number
     step?: number
   }
-  /** `number`, `string`或`Range`类型的选项, 可以添加验证函数来阻止非法输入 */
+  /** `number`, `string` 或 `Range` 类型的选项, 可以添加验证函数来阻止非法输入 */
   validator?:
     | ComponentOptionValidator<Range<string>>
     | ComponentOptionValidator<string>

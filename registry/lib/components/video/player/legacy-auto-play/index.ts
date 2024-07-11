@@ -64,16 +64,16 @@ export const component = defineComponentMetadata({
       const videoSequentialNumber = dq('.list-count')
       const sequentialNumbers = videoSequentialNumber.innerHTML.split('/')
       // 检查最后一个元素是单个视频还是多 P 视频
-      const lastVedioElement = dq(
+      const lastVideoElement = dq(
         '.action-list .action-list-inner .action-list-item-wrap:last-child .action-list-item .actionlist-item-inner',
       )
 
       let isLastVideo = false
-      if (lastVedioElement.classList.contains('singlep-list-item-inner')) {
-        isLastVideo = lastVedioElement.classList.contains('siglep-active')
+      if (lastVideoElement.classList.contains('singlep-list-item-inner')) {
+        isLastVideo = lastVideoElement.classList.contains('siglep-active')
       } else {
         isLastVideo =
-          lastVedioElement.children[1].lastElementChild.classList.contains(
+          lastVideoElement.children[1].lastElementChild.classList.contains(
             'multip-list-item-active',
           )
       }

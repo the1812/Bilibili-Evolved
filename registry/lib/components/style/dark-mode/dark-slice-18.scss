@@ -722,7 +722,9 @@
   @include set-color('border-top-color', '4');
 }
 #{contains('mediainfo_mediaRight')} {
-  #{contains('mediainfo_media_desc_section')} #{contains('mediainfo_display_area')} #{contains('mediainfo_ellipsis')} {
+  #{contains('mediainfo_media_desc_section')}
+    #{contains('mediainfo_display_area')}
+    #{contains('mediainfo_ellipsis')} {
     background: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #222 20%, #222);
     @include theme-color();
   }
@@ -955,5 +957,41 @@
     .item-icon {
       @include to-white();
     }
+  }
+}
+
+.message-list-content {
+  .message-content {
+    @include color('f');
+  }
+}
+
+.bili-dyn-card-vote,
+.bili-dyn-upower-lottery__card,
+.bili-dyn-card-link-common__wrap,
+.bili-dyn-card-goods .bili-dyn-card-goods__wrap,
+.bili-dyn-card-reserve .bili-dyn-card-reserve__card {
+  @include background-color('30');
+}
+.bili-dyn-card-goods {
+  &__mark,
+  &__one__detail__price {
+    @include color('a');
+  }
+}
+.reference {
+  .bili-dyn-card-reserve__card,
+  .bili-dyn-card-link-common__wrap,
+  .bili-dyn-card-goods__wrap {
+    @include background-color('30');
+  }
+}
+.article-content {
+  .ql-container {
+    background-color: rgba(0, 0, 0, 0) !important;
+    @include color('cf');
+  }
+  h1,h2,h3,h4,h5,h6{
+    @include color('e');
   }
 }

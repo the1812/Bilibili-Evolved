@@ -1,7 +1,7 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
-## v2.8.11-preview
+## v2.8.11-preview / v2.8.12-preview
 `2024-05-14`
 
 包含 [v2.8.11](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.11) 的所有更新内容.
@@ -10,7 +10,7 @@
 - `下载视频 - WASM 混流输出` 支持批量下载. (PR #4726 by [WakelessSloth56](https://github.com/WakelessSloth56))
 - `夜间模式` 增加 `color-scheme` meta 信息, 适配 Chrome 的 [Fluent overlay scrollbars](chrome://flags/#fluent-overlay-scrollbars). (#4717)
 
-## v2.8.11
+## v2.8.11 / v2.8.12
 `2024-05-14`
 
 🐛修复
