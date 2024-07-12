@@ -13,7 +13,10 @@
       <button class="save" title="保存" @click="save">
         <VIcon :size="28" icon="mdi-content-save-outline"></VIcon>
       </button>
-      <button title="丢弃" class="discard" @click="discard">
+      <button class="copy" title="复制" @click="copy">
+        <VIcon :size="24" :icon="showCopyTip ? 'mdi-check' : 'mdi-content-copy'"></VIcon>
+      </button>
+      <button class="discard" title="丢弃" @click="discard">
         <VIcon :size="28" icon="mdi-delete-forever-outline"></VIcon>
       </button>
       <span class="time">{{ time }}</span>
@@ -23,28 +26,47 @@
 </template>
 <script lang="ts">
 import { VIcon } from '@/ui'
+import { Screenshot } from './screenshot'
 
 export default Vue.extend({
   components: {
     VIcon,
   },
   props: {
-    objectUrl: {
-      type: String,
+    screenshot: {
+      type: Screenshot,
       required: true,
     },
-    filename: {
-      type: String,
-      required: true,
+  },
+  data() {
+    return {
+      showCopyTip: false,
+    }
+  },
+  computed: {
+    objectUrl() {
+      return this.screenshot.url
     },
-    time: {
-      type: String,
-      required: true,
+    filename() {
+      return this.screenshot.filename
+    },
+    time() {
+      return this.screenshot.time
     },
   },
   methods: {
     discard() {
       this.$emit('discard')
+    },
+    async copy() {
+      const screenshot = this.screenshot as Screenshot
+      await navigator.clipboard.write([
+        new ClipboardItem({ [screenshot.mimeType]: screenshot.blob }),
+      ])
+      this.showCopyTip = true
+      setTimeout(() => {
+        this.showCopyTip = false
+      }, 1000)
     },
     save() {
       const link = this.$refs.link as HTMLAnchorElement
