@@ -327,8 +327,12 @@
   &.charge-btn-loaded {
     @include background-color();
     @include theme-color();
+    @include theme-border-color();
     &:hover {
       @include theme-background-color('20');
+    }
+    .charge-btn-icon {
+      @include to-theme('pink');
     }
   }
 }
