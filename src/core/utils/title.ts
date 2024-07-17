@@ -31,12 +31,24 @@ const tokenSplit = (format: string) => {
   }
   return tokens.filter(it => it !== '')
 }
+
+export const getTitleVariablesFromDate = (date: Date, padStartLength = 2) => {
+  return {
+    year: date.getFullYear().toString(),
+    month: (date.getMonth() + 1).toString().padStart(padStartLength, '0'),
+    day: date.getDate().toString().padStart(padStartLength, '0'),
+    hour: date.getHours().toString().padStart(padStartLength, '0'),
+    minute: date.getMinutes().toString().padStart(padStartLength, '0'),
+    second: date.getSeconds().toString().padStart(padStartLength, '0'),
+    millisecond: date.getMilliseconds().toString().substring(0, 3),
+  }
+}
+
 export const formatTitle = (
   format: string,
   includesPageTitle = true,
   extraVariables: StringMap = {},
 ) => {
-  const now = new Date()
   const getLegacyTitle = () => {
     return (
       document.title
@@ -55,6 +67,7 @@ export const formatTitle = (
         .trim()
     )
   }
+  const dateVariables = getTitleVariablesFromDate(new Date())
   const builtInVariables: StringMap = {
     title: (() => {
       const videoPageTitle = dq('.video-info-container .video-title')
@@ -95,14 +108,13 @@ export const formatTitle = (
     bvid: unsafeWindow.bvid,
     cid: unsafeWindow.cid,
     lid: document.URL.replace(/https:\/\/live\.bilibili\.com\/(blanc\/)?([\d]+)/, '$2'),
-    // 年月日这方法名真够乱的
-    y: now.getFullYear().toString(),
-    M: (now.getMonth() + 1).toString().padStart(2, '0'), // zero-based
-    d: now.getDate().toString().padStart(2, '0'),
-    h: now.getHours().toString().padStart(2, '0'),
-    m: now.getMinutes().toString().padStart(2, '0'),
-    s: now.getSeconds().toString().padStart(2, '0'),
-    ms: now.getMilliseconds().toString().substring(0, 3),
+    y: dateVariables.year,
+    M: dateVariables.month,
+    d: dateVariables.day,
+    h: dateVariables.hour,
+    m: dateVariables.minute,
+    s: dateVariables.second,
+    ms: dateVariables.millisecond,
   }
   const variables = {
     ...builtInVariables,
