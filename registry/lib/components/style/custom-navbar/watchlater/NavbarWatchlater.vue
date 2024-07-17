@@ -291,6 +291,11 @@ export default Vue.extend({
         border-radius: 8px 0 0 8px;
         position: relative;
         $padding: 6px;
+        .floating {
+          position: absolute;
+          opacity: 0;
+          font-size: 11px;
+        }
         .remove {
           top: $padding;
           left: $padding;
@@ -303,14 +308,10 @@ export default Vue.extend({
         }
         .viewed {
           white-space: nowrap;
+          opacity: 1;
           right: $padding;
-          top: $padding;
+          bottom: $padding;
           padding: 0 6px;
-        }
-        .floating {
-          position: absolute;
-          opacity: 0;
-          font-size: 11px;
         }
         .cover {
           object-fit: cover;
