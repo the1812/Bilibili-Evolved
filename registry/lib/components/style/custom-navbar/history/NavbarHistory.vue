@@ -81,7 +81,7 @@
               </a>
               <div class="history-info">
                 <div v-if="h.progressText" class="progress-number">
-                  {{ h.progress >= 1 ? '已看完' : h.progressText }}
+                  {{ h.progress >= 0.95 ? '已看完' : h.progressText }}
                 </div>
                 <div
                   v-if="h.liveStatus !== undefined"

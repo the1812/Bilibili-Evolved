@@ -1,5 +1,4 @@
 import { getJsonWithCredentials, bilibiliApi } from '@/core/ajax'
-import { fixed } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 
 /** 历史项目类型, 值为 API 中的 `history.business` */
@@ -107,13 +106,13 @@ const getTimeData = () => {
   }
 }
 const formatTime = (date: Date) => {
-  const { yesterday } = getTimeData()
+  const { yesterday, today } = getTimeData()
   const timestamp = Number(date)
   if (timestamp >= yesterday) {
-    return `${date.getHours().toString().padStart(2, '0')}:${date
-      .getMinutes()
+    return `${timestamp >= today ? '今天' : '昨天'} ${date
+      .getHours()
       .toString()
-      .padStart(2, '0')}`
+      .padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`
   }
   return `${(date.getMonth() + 1).toString().padStart(2, '0')}-${date
     .getDate()
@@ -154,7 +153,9 @@ const parseHistoryItem = (item: any): HistoryItem => {
     cover,
     covers: item.covers?.map(https) ?? [],
     progress,
-    progressText: Number.isNaN(progress) ? null : `${fixed(progress * 100, 1)}%`,
+    progressText: Number.isNaN(progress)
+      ? null
+      : `${formatDuration(item.progress)} / ${formatDuration(item.duration)}`,
     duration: item.duration,
     durationText: item.duration ? formatDuration(item.duration) : null,
     upName: item.author_name,
