@@ -1,7 +1,51 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
-## v2.8.11-preview
+## v2.9.0-preview
+`2024-07-19`
+
+✨新增
+- `简化直播间` 支持屏蔽推荐直播间. (#4787)
+- 新增功能 `删除直播马赛克遮罩` (#4634, PR #4814)
+> 删除观看直播时某些分区的马赛克遮罩.
+
+- `启用视频截图` 截出来的图支持直接复制. (此功能需要 Firefox 127 版本以上) (#4806)
+- `图片批量导出`, `下载视频` 支持更多变量, 详情可在更新组件后查看设置中的说明: (#3852)
+  - 动态 ID, 用户 ID, 动态发布时间, 被转发动态相关数据
+  - 专栏 cv 号, 专栏发布时间
+  - (仅对批量视频下载 (分P / 合集) 有效) up 主名称, up 主 ID, 视频发布时间
+- `自定义顶栏` 的稍后再看和历史面板现在始终显示 "已观看" 状态. (#4346)
+- `自定义顶栏` 的稍后再看, 收藏和历史面板优化了分 P 数和观看进度的展示, 详见[此处](https://github.com/the1812/Bilibili-Evolved/discussions/1866#discussioncomment-10075203). (#1866)
+
+🗑️废弃
+- 删除 `下载视频` 的 Toast 输出方式.
+
+## v2.8.13
+`2024-07-19`
+
+<details>
+<summary>获得 v2.8.12-preview 的所有新功能, 点击展开查看</summary>
+
+✨新增
+- `下载视频 - WASM 混流输出` 支持批量下载. (PR #4726 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `夜间模式` 增加 `color-scheme` meta 信息, 适配 Chrome 的 [Fluent overlay scrollbars](chrome://flags/#fluent-overlay-scrollbars). (#4717)
+
+</details>
+
+✨新增
+- `删除广告` 支持屏蔽首页的 "广告已被屏蔽" 占位卡片.
+- `自定义顶栏` 增加公益、公开课、社区中心入口. (#1511)
+
+🐛修复
+- 修复 `显示视频投稿时间` 时间显示错误及不显示时间的问题. (#4755, PR #4756 by [呼乎户](https://github.com/wisokey))
+- 修复夜间模式的一些适配问题. (#4376, #4768, #4785, #4802, PR #4763, #4810 by [Pencil](https://github.com/pencilqaq))
+- 修复 `屏蔽黑名单up主` 弹窗高度溢出. (PR #4784 by [snowraincloud](https://github.com/snowraincloud))
+- 修复 `自定义顶栏` 搜索框在 b 站搜索页打字时自动弹出. (#4808)
+
+☕开发者相关
+- 修复 GitHub Workflow 中 pnpm 安装失败.
+
+## v2.8.11-preview / v2.8.12-preview
 `2024-05-14`
 
 包含 [v2.8.11](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.8.11) 的所有更新内容.
@@ -10,7 +54,7 @@
 - `下载视频 - WASM 混流输出` 支持批量下载. (PR #4726 by [WakelessSloth56](https://github.com/WakelessSloth56))
 - `夜间模式` 增加 `color-scheme` meta 信息, 适配 Chrome 的 [Fluent overlay scrollbars](chrome://flags/#fluent-overlay-scrollbars). (#4717)
 
-## v2.8.11
+## v2.8.11 / v2.8.12
 `2024-05-14`
 
 🐛修复

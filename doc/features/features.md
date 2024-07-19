@@ -188,6 +188,17 @@ by [@TimmyOVO](https://github.com/TimmyOVO)
 
 在直播间中提供返回原版直播间的按钮, 原版直播间将无视活动皮肤, 强制使用标准的直播页面.
 
+### [删除直播马赛克遮罩](../../registry/dist/components/live/remove-mask-panel.js)
+`removeLiveMaskPanel`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/remove-mask-panel.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/remove-mask-panel.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/remove-mask-panel.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/remove-mask-panel.js)
+
+by [@Liki4](https://github.com/Liki4)
+
+删除观看直播时某些分区的马赛克遮罩.
+
 ### [删除直播水印](../../registry/dist/components/live/remove-watermark.js)
 `removeLiveWatermark`
 
@@ -733,14 +744,43 @@ by [@snowraincloud](https://github.com/snowraincloud)
 可以批量导出某个地方的图片, 目前支持动态和专栏.
 
 动态文件名变量:
-- `user`: 用户名
-- `originalUser`: 被转发用户名, 如果不是转发类型的动态则等于 `user`
-- `id`: 动态 ID
 - `n`: 第 n 张图
+- `id`: 动态 ID
+- `user`: 用户名
+- `userID`: 用户 ID
+- 动态发布时间:
+  - `publishYear`
+  - `publishMonth`
+  - `publishDay`
+  - `publishHour`
+  - `publishMinute`
+  - `publishSecond`
+  - `publishMillisecond`
+- 被转发的数据 (如果不是转发类型的动态, 则和上面的对应变量相同):
+  - `originalID`: 被转发的动态 ID
+  - `originalUser`: 被转发的用户名
+  - `originalUserID`: 被转发用户 ID
+  - 被转发的动态发布时间:
+    - `originalPublishYear`
+    - `originalPublishMonth`
+    - `originalPublishDay`
+    - `originalPublishHour`
+    - `originalPublishMinute`
+    - `originalPublishSecond`
+    - `originalPublishMillisecond`
 
 专栏文件名变量:
-- `title`: 专栏标题
 - `n`: 第 n 张图
+- `title`: 专栏标题
+- `cv`: 专栏 cv 号
+- 专栏发布时间:
+  - `publishYear`
+  - `publishMonth`
+  - `publishDay`
+  - `publishHour`
+  - `publishMinute`
+  - `publishSecond`
+  - `publishMillisecond`
 
 ### [高分辨率图片](../../registry/dist/components/utils/image-resolution.js)
 `imageResolution`
@@ -947,6 +987,18 @@ by [@kdxcxs](https://github.com/kdxcxs)
 在功能面板中添加下载视频支持. 请注意:
 - 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.
 - 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.
+
+在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:
+- `user`: UP 主用户名
+- `userID`: UP 主用户 ID
+- 视频发布时间:
+  - `publishYear`
+  - `publishMonth`
+  - `publishDay`
+  - `publishHour`
+  - `publishMinute`
+  - `publishSecond`
+  - `publishMillisecond`
 
 ### [展开视频简介](../../registry/dist/components/video/full-description.js)
 `fullVideoDescription`

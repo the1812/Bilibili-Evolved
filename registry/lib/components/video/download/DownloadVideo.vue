@@ -99,7 +99,6 @@ import { videoBatchInput, videoSeasonBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
 import { videoDashAvc, videoDashHevc, videoDashAv1, videoAudioDash } from './apis/dash'
 import { videoFlv } from './apis/flv'
-import { toastOutput } from './outputs/toast'
 import { streamSaverOutput } from './outputs/stream-saver'
 import {
   DownloadVideoAction,
@@ -125,7 +124,6 @@ const [apis] = registerAndGetData('downloadVideo.apis', [
 ] as DownloadVideoApi[])
 const [assets] = registerAndGetData('downloadVideo.assets', [] as DownloadVideoAssets[])
 const [outputs] = registerAndGetData('downloadVideo.outputs', [
-  toastOutput,
   streamSaverOutput,
 ] as DownloadVideoOutput[])
 const { basicConfig } = getComponentSettings('downloadVideo').options as {
