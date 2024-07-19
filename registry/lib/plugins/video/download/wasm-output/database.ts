@@ -6,7 +6,7 @@ export const storeNames = {
 } as const
 
 async function database() {
-  return new Promise((reslove: (db: IDBDatabase) => void, reject) => {
+  return new Promise((resolve: (db: IDBDatabase) => void, reject) => {
     const req = unsafeWindow.indexedDB.open(DB_NAME, DB_VERSION)
     req.onerror = reject
     req.onupgradeneeded = () => {
@@ -18,34 +18,34 @@ async function database() {
         db.createObjectStore(v)
       })
     }
-    req.onsuccess = () => reslove(req.result)
+    req.onsuccess = () => resolve(req.result)
   })
 }
 
 async function objectStore(name: string, mode?: IDBTransactionMode) {
   return database().then(
     db =>
-      new Promise((reslove: (db: IDBObjectStore) => void, reject) => {
+      new Promise((resolve: (db: IDBObjectStore) => void, reject) => {
         const tr = db.transaction(name, mode)
-        reslove(tr.objectStore(name))
+        resolve(tr.objectStore(name))
         tr.onerror = reject
       }),
   )
 }
 
 async function get(store: IDBObjectStore, key: IDBValidKey | IDBKeyRange) {
-  return new Promise((reslove: (db: any) => void, reject) => {
+  return new Promise((resolve: (db: any) => void, reject) => {
     const res = store.get(key)
     res.onerror = reject
-    res.onsuccess = () => reslove(res.result)
+    res.onsuccess = () => resolve(res.result)
   })
 }
 
 async function put(store: IDBObjectStore, value: any, key?: IDBValidKey) {
-  return new Promise((reslove: (db: IDBValidKey) => void, reject) => {
+  return new Promise((resolve: (db: IDBValidKey) => void, reject) => {
     const res = store.put(value, key)
     res.onerror = reject
-    res.onsuccess = () => reslove(res.result)
+    res.onsuccess = () => resolve(res.result)
   })
 }
 

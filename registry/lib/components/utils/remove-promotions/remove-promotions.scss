@@ -87,6 +87,7 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
 }
 .feed-card:has(.bili-video-card a[href*='cm.bilibili.com']),
 .bili-video-card.is-rcmd:has(a[href*='cm.bilibili.com']),
-.bili-video-card__wrap:has(a[href*='cm.bilibili.com']) {
+.bili-video-card__wrap:has(a[href*='cm.bilibili.com']),
+.bili-video-card.is-rcmd:not(:has(.bili-video-card__wrap)) {
   display: none !important;
 }

@@ -6,27 +6,38 @@ const darkMetaColor = '#111'
 const add = async () => {
   document.body.classList.add('dark')
   localStorage.setItem('pbp_theme_v4', 'b')
-  const meta = dq('meta[name="theme-color"]') as HTMLMetaElement
-  if (!meta) {
+
+  const themeColorMeta = dq('meta[name="theme-color"]') as HTMLMetaElement
+  if (!themeColorMeta) {
     document.head.insertAdjacentHTML(
       'beforeend',
       `<meta name="theme-color" content="${darkMetaColor}">`,
     )
   } else {
-    meta.dataset.light = meta.content
-    meta.content = darkMetaColor
+    themeColorMeta.dataset.light = themeColorMeta.content
+    themeColorMeta.content = darkMetaColor
+  }
+
+  const colorSchemeMeta = dq('meta[name="color-scheme"]') as HTMLMetaElement
+  if (!colorSchemeMeta) {
+    document.head.insertAdjacentHTML('beforeend', `<meta name="color-scheme" content="dark">`)
+  } else {
+    colorSchemeMeta.content = 'dark'
   }
 }
 const remove = async () => {
   document.body.classList.remove('dark')
-  const meta = dq('meta[name="theme-color"]') as HTMLMetaElement
-  if (!meta) {
-    return
-  }
-  if (meta.dataset.light) {
-    meta.content = meta.dataset.light
+
+  const themeColorMeta = dq('meta[name="theme-color"]') as HTMLMetaElement
+  if (themeColorMeta?.dataset.light) {
+    themeColorMeta.content = themeColorMeta.dataset.light
   } else {
-    meta.remove()
+    themeColorMeta?.remove()
+  }
+
+  const colorSchemeMeta = dq('meta[name="color-scheme"]') as HTMLMetaElement
+  if (colorSchemeMeta) {
+    colorSchemeMeta.content = 'light'
   }
 }
 

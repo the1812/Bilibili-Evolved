@@ -4,6 +4,8 @@ export class VideoInfo {
   aid: string
   bvid: string
   cid: number
+  pubdate: number
+  ctime: number
   createTime: Date
   pageCount: number
   coverUrl: string
@@ -47,7 +49,8 @@ export class VideoInfo {
     this.aid = data.aid
     this.bvid = data.bvid
     this.cid = data.cid
-    this.createTime = new Date(data.ctime * 1000)
+    this.pubdate = data.pubdate
+    this.ctime = data.ctime
     this.pageCount = data.videos
     this.coverUrl = data.pic.replace('http:', 'https:')
     this.tagId = data.tid
