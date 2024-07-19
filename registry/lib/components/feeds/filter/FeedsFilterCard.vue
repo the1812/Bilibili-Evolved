@@ -99,6 +99,9 @@ const sideCards: { [id: number]: SideCardType } = {
     displayName: '发布动态',
   },
 }
+if (getComponentSettings('extendFeedsLive').enabled) {
+  delete sideCards[3]
+}
 let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 
