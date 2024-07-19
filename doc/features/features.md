@@ -38,6 +38,8 @@
 
 按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.
 
+> 侧边卡片的 `正在直播` 指原版的板块, 如果你使用了 `直播信息扩充`, 则需要关闭该功能才能生效.
+
 ### [强制固定动态侧栏](../../registry/dist/components/feeds/fixed-sidebars.js)
 `fixedFeedsSidebars`
 
@@ -1493,7 +1495,7 @@ by [@diannaojiang](https://github.com/diannaojiang)
 
 by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
-使用 WASM 在浏览器中下载并合并音视频
+使用 WASM 在浏览器中下载并合并音视频, 支持批量下载
 
 ### [快捷键扩展 - 视频倍速](../../registry/dist/plugins/video/player/speed.js)
 `speed.keymap`

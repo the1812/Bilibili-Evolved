@@ -58,7 +58,8 @@ body {
     // https://www.bilibili.com/video/BV1Qe411d7LM/?t=221
     &-promotions {
       .bili-cmtime,
-      .bpx-player-cmtime {
+      .bpx-player-cmtime,
+      .bpx-player-skipcard {
         display: none !important;
       }
     }

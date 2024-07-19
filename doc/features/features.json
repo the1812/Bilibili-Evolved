@@ -27,7 +27,7 @@
     "type": "component",
     "name": "feedsFilter",
     "displayName": "动态过滤器",
-    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.\r\n",
+    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.\r\n\r\n> 侧边卡片的 `正在直播` 指原版的板块, 如果你使用了 `直播信息扩充`, 则需要关闭该功能才能生效.\r\n",
     "fullRelativePath": "../../registry/dist/components/feeds/filter.js",
     "fullAbsolutePath": "registry/dist/components/feeds/filter.js"
   },
@@ -1116,7 +1116,7 @@
     "type": "plugin",
     "name": "downloadVideo.outputs.wasm",
     "displayName": "下载视频 - WASM 混流输出",
-    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n使用 WASM 在浏览器中下载并合并音视频",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n使用 WASM 在浏览器中下载并合并音视频, 支持批量下载",
     "fullRelativePath": "../../registry/dist/plugins/video/download/wasm-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/wasm-output.js"
   },
