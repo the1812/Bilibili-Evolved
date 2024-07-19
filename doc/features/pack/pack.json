@@ -123,7 +123,7 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
+        "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n\r\n在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:\r\n- `user`: UP 主用户名\r\n- `userID`: UP 主用户 ID\r\n- 视频发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n",
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },
