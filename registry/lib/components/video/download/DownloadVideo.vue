@@ -333,16 +333,14 @@ export default Vue.extend({
         }
         const action = new DownloadVideoAction(videoInfos)
         assets.forEach(a => {
-          action.extraAssets.push({
+          const assetsType = a?.getUrls ? action.extraOnlineAssets : action.extraAssets
+          assetsType.push({
             asset: a,
             instance: this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
           })
         })
-        /** 若视频输出的插件设置了proxyExtraAssets，则由插件在runAction中处理 */
-        if (!output?.proxyExtraAssets) {
-          await action.downloadExtraAssets()
-        }
         await output.runAction(action, instance)
+        await action.downloadExtraAssets()
       } catch (error) {
         logError(error)
       } finally {

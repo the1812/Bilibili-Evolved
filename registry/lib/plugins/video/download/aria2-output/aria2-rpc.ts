@@ -2,10 +2,7 @@ import { getJson, monkey, postJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { UserAgent } from '@/core/utils/constants'
 import { logError } from '@/core/utils/log'
-import {
-  DownloadVideoOutput,
-  DownloadVideoAction,
-} from '../../../../components/video/download/types'
+import { DownloadVideoOutput } from '../../../../components/video/download/types'
 import { Aria2RpcProfile } from './rpc-profiles'
 
 interface RpcParam {
@@ -130,7 +127,6 @@ export const aria2Rpc: DownloadVideoOutput = {
   name: 'aria2Rpc',
   displayName: 'aria2 RPC',
   description: '使用 aria2 RPC 功能发送下载请求.',
-  proxyExtraAssets: true,
   runAction: async (
     action,
     instance: Vue & {
@@ -138,7 +134,7 @@ export const aria2Rpc: DownloadVideoOutput = {
       isPluginDownloadAssets?: boolean
     },
   ) => {
-    const { infos, extraAssets } = action
+    const { infos, extraOnlineAssets } = action
     const { selectedRpcProfile, isPluginDownloadAssets } = instance
     const { secretKey, dir, other } = selectedRpcProfile
     const referer = document.URL.replace(window.location.search, '')
@@ -175,24 +171,20 @@ export const aria2Rpc: DownloadVideoOutput = {
     // handle assets
     const assetsAriaParams = []
     const extraAssetsForBrowerDownload = []
-    for (const { asset, instance: assetInstance } of extraAssets) {
+    for (const { asset, instance: assetInstance } of extraOnlineAssets) {
       if (isPluginDownloadAssets && 'getUrls' in asset) {
         // get asset from aria2
         const results = await asset.getUrls(infos, assetInstance)
         assetsAriaParams.push(...results.map(({ name, url }) => ariaParamsGenerator(url, name)))
       } else {
-        // get asset from browser
+        // remain asset in `extraOnlineAssets`
         extraAssetsForBrowerDownload.push({ asset, instance: assetInstance })
       }
     }
+    action.extraOnlineAssets = extraAssetsForBrowerDownload
 
     const totalParams = [...videoParams, ...assetsAriaParams]
     const results = await sendRpc(selectedRpcProfile, totalParams)
-    if (extraAssetsForBrowerDownload.length > 0) {
-      const actionForBrowserDownload = new DownloadVideoAction(infos)
-      actionForBrowserDownload.extraAssets = extraAssetsForBrowerDownload
-      await actionForBrowserDownload.downloadExtraAssets()
-    }
     console.table(results)
     if (results.length === 1) {
       const result = results[0]

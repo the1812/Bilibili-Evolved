@@ -86,8 +86,10 @@ export interface DownloadVideoAssets<AssetsParameter = any> extends VueInstanceI
 /** 表示视频的下载信息以及携带的额外产物 */
 export class DownloadVideoAction<AssetsParameter = any> {
   readonly inputs: DownloadVideoInputItem[] = []
-  /** 可下载的asset和对应的参数 */
+  /** 可调用处理的asset和对应的参数 */
   extraAssets: { asset: DownloadVideoAssets; instance: AssetsParameter }[] = []
+  /** 可直接下载的asset和对应的参数 */
+  extraOnlineAssets: { asset: DownloadVideoAssets; instance: AssetsParameter }[] = []
 
   constructor(public infos: DownloadVideoInfo[]) {
     this.inputs = infos.map(it => it.input)
@@ -101,7 +103,9 @@ export class DownloadVideoAction<AssetsParameter = any> {
     const { infos } = this
     const extraAssetsBlob = (
       await Promise.all(
-        this.extraAssets.map(({ asset, instance }) => asset.getAssets(infos, instance)),
+        [...this.extraAssets, ...this.extraOnlineAssets].map(({ asset, instance }) =>
+          asset.getAssets(infos, instance),
+        ),
       )
     ).flat()
     await new DownloadPackage(extraAssetsBlob).emit(filename)
@@ -111,6 +115,5 @@ export class DownloadVideoAction<AssetsParameter = any> {
 export interface DownloadVideoOutput<OutputParameter = any> extends VueInstanceInput, WithName {
   runAction: (action: DownloadVideoAction, instance: OutputParameter) => Promise<void>
   /** 是否需要代理下载assets */
-  proxyExtraAssets?: boolean
   description?: string
 }
