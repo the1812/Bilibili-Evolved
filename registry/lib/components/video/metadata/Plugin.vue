@@ -2,31 +2,42 @@
   <div class="download-video-config-section">
     <div class="download-video-config-item">
       <div>保存元数据：</div>
-      <SwitchBox v-model="saveMetadata" />
+      <VDropdown v-model="type" :items="items">
+        <template #item="{ item }">
+          {{ item }}
+        </template>
+      </VDropdown>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { SwitchBox } from '@/ui'
+import { VDropdown } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
+import { MetadataType } from './metadata'
 
 interface Options {
-  saveMetadata: boolean
+  metadataType: MetadataType | '无'
 }
 const options = getComponentSettings('downloadVideo').options as Options
 
 export default Vue.extend({
   components: {
-    SwitchBox,
+    VDropdown,
   },
   data() {
     return {
-      saveMetadata: options.saveMetadata,
+      type: options.metadataType ?? '无',
+      items: ['无', 'ffmetadata', 'ogm'],
     }
   },
+  computed: {
+    enabled() {
+      return this.type !== '无'
+    },
+  },
   watch: {
-    saveMetadata(saveMetadata: boolean) {
-      options.saveMetadata = saveMetadata
+    type(value: MetadataType) {
+      options.metadataType = value
     },
   },
 })

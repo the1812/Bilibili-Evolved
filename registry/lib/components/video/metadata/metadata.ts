@@ -2,23 +2,23 @@ import { VideoInfo, VideoPageInfo } from '@/components/video/video-info'
 import { VideoQuality } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { meta } from '@/core/meta'
+import { Toast } from '@/core/toast'
+import { title as pluginTitle } from '.'
+
+export type MetadataType = 'ffmetadata' | 'ogm'
 
 function escape(s: string) {
   return s.replace(/[=;#\\\n]/g, r => `\\${r}`)
 }
 
-function ff(key: string, value: any, prefix = true) {
-  return `${prefix ? 'bilibili_' : ''}${key}=${escape(lodash.toString(value))}`
-}
-
-export interface ViewPoint {
+interface ViewPoint {
   content: string
   from: number
   to: number
   image: string
 }
 
-export class VideoMetadata {
+class VideoMetadata {
   #aid: string
   #cid: number | string
 
@@ -48,12 +48,18 @@ export class VideoMetadata {
   }
 }
 
-export async function generateFFMetadata(
-  aid: string = unsafeWindow.aid,
-  cid: string = unsafeWindow.cid,
-) {
+async function fetchMetadata(aid: string = unsafeWindow.aid, cid: string = unsafeWindow.cid) {
   const data = new VideoMetadata(aid, cid)
   await data.fetch()
+  return data
+}
+
+function ff(key: string, value: any, prefix = true) {
+  return `${prefix ? 'bilibili_' : ''}${key}=${escape(lodash.toString(value))}`
+}
+
+async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = unsafeWindow.cid) {
+  const data = await fetchMetadata(aid, cid)
   const info = data.basic
 
   const lines = [
@@ -85,7 +91,7 @@ export async function generateFFMetadata(
     lines.push(ff('quality_label', data.quality.name))
   }
 
-  if (data.viewPoints) {
+  if (data.viewPoints.length > 0) {
     for (const chapter of data.viewPoints) {
       lines.push(
         ...[
@@ -105,11 +111,42 @@ export async function generateFFMetadata(
   return result
 }
 
-export async function generateFFMetadataBlob(
+async function generateChapterFile(aid: string = unsafeWindow.aid, cid: string = unsafeWindow.cid) {
+  const { viewPoints } = await fetchMetadata(aid, cid)
+  console.debug(viewPoints)
+  if (viewPoints.length > 0) {
+    const result = viewPoints
+      .reduce((p, v, i) => {
+        const n = `${i + 1}`.padStart(3, '0')
+        return [
+          ...p,
+          `CHAPTER${n}=${new Date(v.from * 1000).toISOString().slice(11, -1)}`,
+          `CHAPTER${n}NAME=${v.content}`,
+        ]
+      }, [])
+      .join('\n')
+
+    console.debug(result)
+    return result
+  }
+  Toast.info('此视频没有章节', pluginTitle, 3000)
+  return null
+}
+
+export async function generateByType(
+  type: MetadataType,
   aid: string = unsafeWindow.aid,
   cid: string = unsafeWindow.cid,
 ) {
-  return new Blob([await generateFFMetadata(aid, cid)], {
-    type: 'text/plain',
-  })
+  let method: (aid, cid) => Promise<string>
+  switch (type) {
+    case 'ogm':
+      method = generateChapterFile
+      break
+    default:
+    case 'ffmetadata':
+      method = generateFFMetadata
+      break
+  }
+  return method(aid, cid)
 }
