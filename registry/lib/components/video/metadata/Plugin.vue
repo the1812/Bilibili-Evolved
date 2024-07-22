@@ -1,7 +1,7 @@
 <template>
   <div class="download-video-config-section">
     <div class="download-video-config-item">
-      <div>保存元数据：</div>
+      <div>元数据：</div>
       <VDropdown v-model="type" :items="items">
         <template #item="{ item }">
           {{ item }}
