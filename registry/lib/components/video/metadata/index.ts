@@ -3,7 +3,7 @@ import { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
 import { videoUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../download/types'
-import { generateFFMetadataBlob } from './utils'
+import { generateFFMetadataBlob } from './metadata'
 
 const author = [
   {

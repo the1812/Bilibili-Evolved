@@ -15,7 +15,7 @@ import { DefaultWidget } from '@/ui'
 import { logError } from '@/core/utils/log'
 import { DownloadPackage } from '@/core/download'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { generateFFMetadataBlob } from './utils'
+import { generateFFMetadataBlob } from './metadata'
 
 export default Vue.extend({
   components: {
