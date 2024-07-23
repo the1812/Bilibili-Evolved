@@ -136,6 +136,5 @@
     "tsconfig.json": "tsconfig.*.json",
     "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .*",
     "index.ts": "index.*.ts, index.md, index.*.md"
-  },
-  "typescript.tsdk": "node_modules\\typescript\\lib"
+  }
 }
