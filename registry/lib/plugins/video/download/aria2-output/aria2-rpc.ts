@@ -131,35 +131,59 @@ export const aria2Rpc: DownloadVideoOutput = {
     action,
     instance: Vue & {
       selectedRpcProfile: Aria2RpcProfile
+      isPluginDownloadAssets?: boolean
     },
   ) => {
-    const { infos } = action
-    const { selectedRpcProfile } = instance
+    const { infos, extraOnlineAssets } = action
+    const { selectedRpcProfile, isPluginDownloadAssets } = instance
     const { secretKey, dir, other } = selectedRpcProfile
     const referer = document.URL.replace(window.location.search, '')
-    const totalParams = infos
+    const ariaParamsGenerator = (url: string, title: string) => {
+      const singleInfoParams = []
+      if (secretKey) {
+        singleInfoParams.push(`token:${secretKey}`)
+      }
+      singleInfoParams.push([url])
+      singleInfoParams.push({
+        referer,
+        'user-agent': UserAgent,
+        out: title,
+        dir: dir || undefined,
+        ...parseRpcOptions(other),
+      })
+      const id = encodeURIComponent(title)
+      return {
+        params: singleInfoParams,
+        id,
+      }
+    }
+
+    // handle video params
+    const videoParams = infos
       .map(info =>
         info.titledFragments.map(fragment => {
-          const singleInfoParams = []
-          if (secretKey) {
-            singleInfoParams.push(`token:${secretKey}`)
-          }
-          singleInfoParams.push([fragment.url])
-          singleInfoParams.push({
-            referer,
-            'user-agent': UserAgent,
-            out: fragment.title,
-            dir: dir || undefined,
-            ...parseRpcOptions(other),
-          })
-          const id = encodeURIComponent(fragment.title)
-          return {
-            params: singleInfoParams,
-            id,
-          }
+          const { url, title } = fragment
+          return ariaParamsGenerator(url, title)
         }),
       )
       .flat()
+
+    // handle assets
+    const assetsAriaParams = []
+    const extraAssetsForBrowerDownload = []
+    for (const { asset, instance: assetInstance } of extraOnlineAssets) {
+      if (isPluginDownloadAssets && 'getUrls' in asset) {
+        // get asset from aria2
+        const results = await asset.getUrls(infos, assetInstance)
+        assetsAriaParams.push(...results.map(({ name, url }) => ariaParamsGenerator(url, name)))
+      } else {
+        // remain asset in `extraOnlineAssets`
+        extraAssetsForBrowerDownload.push({ asset, instance: assetInstance })
+      }
+    }
+    action.extraOnlineAssets = extraAssetsForBrowerDownload
+
+    const totalParams = [...videoParams, ...assetsAriaParams]
     const results = await sendRpc(selectedRpcProfile, totalParams)
     console.table(results)
     if (results.length === 1) {
