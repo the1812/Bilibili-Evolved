@@ -6,6 +6,7 @@ import { DownloadVideoAssets } from '../download/types'
 import { generateByType, MetadataType } from './metadata'
 
 export const title = '保存视频元数据'
+export const name = 'saveVideoMetadata'
 
 const author = [
   {
@@ -19,7 +20,7 @@ const author = [
 ]
 
 export const component = defineComponentMetadata({
-  name: 'saveVideoMetadata',
+  name,
   displayName: title,
   description: '保存视频元数据（标题、描述、UP、章节等）',
   author,
@@ -36,7 +37,7 @@ export const component = defineComponentMetadata({
     setup: ({ addData }) => {
       addData('downloadVideo.assets', async (assets: DownloadVideoAssets[]) => {
         assets.push({
-          name: 'saveVideoMetadata',
+          name,
           displayName: title,
           getAssets: async (
             infos,

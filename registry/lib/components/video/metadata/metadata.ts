@@ -69,7 +69,7 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
     // Standard fields
     ff('title', `${info.title} - ${data.page.title}`, false),
     ff('description', info.description, false),
-    ff('author', info.up.name, false),
+    ff('artist', info.up.name, false),
     // Custom fields
     ff('title', info.title),
     ff('description', info.description),
