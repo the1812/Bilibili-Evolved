@@ -1,6 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
+import { Toast } from '@/core/toast'
 import { videoUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../download/types'
 import { generateByType, MetadataType } from './metadata'
@@ -48,6 +49,7 @@ export const component = defineComponentMetadata({
           ) => {
             const { type, enabled } = instance
             if (enabled) {
+              const toast = Toast.info('获取视频元数据中...', title)
               const result: PackageEntry[] = []
               for (const info of infos) {
                 result.push({
@@ -56,6 +58,8 @@ export const component = defineComponentMetadata({
                   options: {},
                 })
               }
+              toast.message = '完成！'
+              toast.duration = 1000
               return result
             }
             return []
