@@ -77,11 +77,19 @@ export interface DownloadVideoApi extends WithName {
 /** 表示下载时额外附带的产物, 如弹幕 / 字幕等 */
 export interface DownloadVideoAssets<AssetsParameter = any> extends VueInstanceInput, WithName {
   getAssets: (infos: DownloadVideoInfo[], instance: AssetsParameter) => Promise<PackageEntry[]>
+  /** 获取可直接下载的链接 */
+  getUrls?: (
+    infos: DownloadVideoInfo[],
+    instance: AssetsParameter,
+  ) => Promise<{ name: string; url: string }[]>
 }
 /** 表示视频的下载信息以及携带的额外产物 */
-export class DownloadVideoAction {
+export class DownloadVideoAction<AssetsParameter = any> {
   readonly inputs: DownloadVideoInputItem[] = []
-  extraAssets: PackageEntry[] = []
+  /** 可调用处理的asset和对应的参数 */
+  extraAssets: { asset: DownloadVideoAssets; instance: AssetsParameter }[] = []
+  /** 可直接下载的asset和对应的参数 */
+  extraOnlineAssets: { asset: DownloadVideoAssets; instance: AssetsParameter }[] = []
 
   constructor(public infos: DownloadVideoInfo[]) {
     this.inputs = infos.map(it => it.input)
@@ -92,7 +100,15 @@ export class DownloadVideoAction {
   async downloadExtraAssets() {
     console.log('[downloadExtraAssets]', this.extraAssets)
     const filename = `${getFriendlyTitle(false)}.zip`
-    await new DownloadPackage(this.extraAssets).emit(filename)
+    const { infos } = this
+    const extraAssetsBlob = (
+      await Promise.all(
+        [...this.extraAssets, ...this.extraOnlineAssets].map(({ asset, instance }) =>
+          asset.getAssets(infos, instance),
+        ),
+      )
+    ).flat()
+    await new DownloadPackage(extraAssetsBlob).emit(filename)
   }
 }
 /** 下载视频的最终输出处理 */

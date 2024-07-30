@@ -19,14 +19,15 @@ export const plugin: PluginMetadata = {
       outputs.push({
         name: 'wasm',
         displayName: 'WASM',
-        description: `${desc}，运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件`,
-        runAction: async action => {
+        description: `${desc}。运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件。`,
+        runAction: async (action, instance) => {
           try {
-            await run(action)
+            await run(action, instance.muxWithMetadata)
           } catch (error) {
             Toast.error(String(error), title)
           }
         },
+        component: () => import('./Config.vue').then(m => m.default),
       })
     })
   },

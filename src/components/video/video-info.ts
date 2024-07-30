@@ -1,5 +1,17 @@
 import { getJsonWithCredentials, getText } from '@/core/ajax'
 
+export interface UpInfo {
+  uid: number
+  name: string
+  faceUrl: string
+}
+
+export interface VideoPageInfo {
+  cid: number
+  title: string
+  pageNumber: number
+}
+
 export class VideoInfo {
   aid: string
   bvid: string
@@ -13,16 +25,8 @@ export class VideoInfo {
   tagName: string
   title: string
   description: string
-  up: {
-    uid: number
-    name: string
-    faceUrl: string
-  }
-  pages: {
-    cid: number
-    title: string
-    pageNumber: number
-  }[]
+  up: UpInfo
+  pages: VideoPageInfo[]
 
   constructor(id: string, bvid = false) {
     if (bvid) {
