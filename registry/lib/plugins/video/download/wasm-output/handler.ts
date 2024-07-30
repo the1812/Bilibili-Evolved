@@ -1,4 +1,4 @@
-import { DownloadPackage } from '@/core/download'
+import { DownloadPackage, PackageEntry } from '@/core/download'
 import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
@@ -46,7 +46,8 @@ async function single(
   name: string,
   videoUrl: string,
   audioUrl: string,
-  isFlac: boolean,
+  ffmetadata: string,
+  outputMkv: boolean,
   pageIndex = 1,
   totalPages = 1,
 ) {
@@ -55,43 +56,60 @@ async function single(
   ffmpeg.writeFile('video', await httpGet(videoUrl, toastProgress(toast, '正在下载视频流')))
   ffmpeg.writeFile('audio', await httpGet(audioUrl, toastProgress(toast, '正在下载音频流')))
 
-  toast.message = '混流中……'
-  const outputExt = isFlac ? 'mkv' : 'mp4'
-  name = name.replace(/.[^/.]+$/, `.${outputExt}`)
-  await ffmpeg.exec([
-    '-i',
-    'video',
-    '-i',
-    'audio',
-    '-c:v',
-    'copy',
-    '-c:a',
-    'copy',
-    '-f',
-    isFlac ? 'matroska' : 'mp4',
-    `output.${outputExt}`,
-  ])
+  const args = ['-i', 'video', '-i', 'audio']
 
-  const output = await ffmpeg.readFile(`output.${outputExt}`)
+  if (ffmetadata) {
+    ffmpeg.writeFile('ffmetadata', new TextEncoder().encode(ffmetadata))
+    args.push('-i', 'ffmetadata', '-map_metadata', '2')
+    if (!outputMkv) {
+      args.push('-movflags', '+use_metadata_tags')
+    }
+  }
+
+  args.push('-codec', 'copy', '-f', outputMkv ? 'matroska' : 'mp4', 'output')
+
+  console.debug('FFmpeg commandline args:', args.join(' '))
+
+  toast.message = '混流中……'
+  await ffmpeg.exec(args)
+
+  const output = await ffmpeg.readFile('output')
   const outputBlob = new Blob([output], {
-    type: isFlac ? 'video/x-matroska' : 'video/mp4',
+    type: outputMkv ? 'video/x-matroska' : 'video/mp4',
   })
 
   toast.message = '完成！'
   toast.duration = 1000
 
-  await DownloadPackage.single(name, outputBlob)
+  await DownloadPackage.single(
+    name.replace(/.[^/.]+$/, `.${outputMkv ? 'mkv' : 'mp4'}`),
+    outputBlob,
+  )
 }
 
-export async function run(action: DownloadVideoAction) {
+export async function run(action: DownloadVideoAction, muxWithMetadata: boolean) {
   if (!ffmpeg.loaded) {
     await loadFFmpeg()
+  }
+
+  const { infos: pages, extraAssets } = action
+
+  let ffmetadata: PackageEntry[]
+  if (muxWithMetadata) {
+    const extraAssetsForBrowser = []
+    for (const { asset, instance } of extraAssets) {
+      if (!ffmetadata && asset.name === 'saveVideoMetadata' && instance.type === 'ffmetadata') {
+        ffmetadata = await asset.getAssets(pages, instance)
+      } else {
+        extraAssetsForBrowser.push({ asset, instance })
+      }
+    }
+    action.extraAssets = extraAssetsForBrowser
   }
 
   const { dashAudioExtension, dashFlacAudioExtension, dashVideoExtension } =
     getComponentSettings<Options>('downloadVideo').options
 
-  const pages = action.infos
   for (let i = 0; i < pages.length; i++) {
     const page = pages[i]
     const [video, audio] = page.titledFragments
@@ -109,6 +127,7 @@ export async function run(action: DownloadVideoAction) {
       video.title,
       video.url,
       audio.url,
+      <string>ffmetadata?.[i]?.data,
       audio.extension === dashFlacAudioExtension,
       i + 1,
       pages.length,

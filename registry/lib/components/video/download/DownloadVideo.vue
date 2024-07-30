@@ -330,19 +330,15 @@ export default Vue.extend({
           })
         }
         const action = new DownloadVideoAction(videoInfos)
-        const extraAssets = (
-          await Promise.all(
-            assets.map(a =>
-              a.getAssets(
-                videoInfos,
-                this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
-              ),
-            ),
-          )
-        ).flat()
-        action.extraAssets.push(...extraAssets)
-        await action.downloadExtraAssets()
+        assets.forEach(a => {
+          const assetsType = a?.getUrls ? action.extraOnlineAssets : action.extraAssets
+          assetsType.push({
+            asset: a,
+            instance: this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
+          })
+        })
         await output.runAction(action, instance)
+        await action.downloadExtraAssets()
       } catch (error) {
         logError(error)
       } finally {
