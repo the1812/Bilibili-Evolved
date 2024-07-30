@@ -87,7 +87,7 @@ async function single(
   )
 }
 
-export async function run(action: DownloadVideoAction) {
+export async function run(action: DownloadVideoAction, muxWithMetadata: boolean) {
   if (!ffmpeg.loaded) {
     await loadFFmpeg()
   }
@@ -95,15 +95,17 @@ export async function run(action: DownloadVideoAction) {
   const { infos: pages, extraAssets } = action
 
   let ffmetadata: PackageEntry[]
-  const extraAssetsForBrowser = []
-  for (const { asset, instance } of extraAssets) {
-    if (!ffmetadata && asset.name === 'saveVideoMetadata' && instance.type === 'ffmetadata') {
-      ffmetadata = await asset.getAssets(pages, instance)
-    } else {
-      extraAssetsForBrowser.push({ asset, instance })
+  if (muxWithMetadata) {
+    const extraAssetsForBrowser = []
+    for (const { asset, instance } of extraAssets) {
+      if (!ffmetadata && asset.name === 'saveVideoMetadata' && instance.type === 'ffmetadata') {
+        ffmetadata = await asset.getAssets(pages, instance)
+      } else {
+        extraAssetsForBrowser.push({ asset, instance })
+      }
     }
+    action.extraAssets = extraAssetsForBrowser
   }
-  action.extraAssets = extraAssetsForBrowser
 
   const { dashAudioExtension, dashFlacAudioExtension, dashVideoExtension } =
     getComponentSettings<Options>('downloadVideo').options
