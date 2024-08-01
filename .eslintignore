@@ -1,6 +1,6 @@
 packages/
 typings/
-dist/
+**/dist/
 dev/
 node_modules/
 !.github-json/
