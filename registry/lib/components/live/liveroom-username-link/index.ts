@@ -33,14 +33,14 @@ const entry = async () => {
         subtreeLoaded = true
       }
 
-      const a = node.shadowRoot.querySelector('a')
-      const avatar: HTMLDivElement = node.shadowRoot.querySelector('.faceBox')
+      const aNode = node.shadowRoot.querySelector('a')
+      const avatarNode: HTMLDivElement = node.shadowRoot.querySelector('.faceBox')
 
-      a.href = `https://space.bilibili.com/${uid}`
-      a.style.textDecoration = 'none'
+      aNode.href = `https://space.bilibili.com/${uid}`
+      aNode.style.textDecoration = 'none'
 
-      avatar.style.cursor = 'pointer'
-      avatar.addEventListener('click', () => {
+      avatarNode.style.cursor = 'pointer'
+      avatarNode.addEventListener('click', () => {
         window.open(`https://space.bilibili.com/${uid}`)
       })
       processed.add(node)
@@ -56,20 +56,23 @@ const entry = async () => {
         continue
       }
 
-      // eslint-disable-next-line no-underscore-dangle
-      const { uid } = (node as any).__vue__.source
-      const nameNode: HTMLDivElement = node.querySelector('.common-nickname-wrapper .name')
+      // 观众列表元素似乎会原地更新，不能直接预先获取UID并绑定，这里通过点击时获取父元素动态读取UID
 
       // 名称
+      const nameNode: HTMLDivElement = node.querySelector('.common-nickname-wrapper .name')
       nameNode.style.cursor = 'pointer'
       nameNode.addEventListener('click', () => {
+        // eslint-disable-next-line no-underscore-dangle
+        const { uid } = (nameNode as any).parentNode.parentNode.parentNode.parentNode.__vue__.source
         window.open(`https://space.bilibili.com/${uid}`)
       })
 
       // 头像
-      const avatar: HTMLDivElement = node.querySelector('.face')
-      avatar.style.cursor = 'pointer'
-      avatar.addEventListener('click', () => {
+      const avatarNode: HTMLDivElement = node.querySelector('.face')
+      avatarNode.style.cursor = 'pointer'
+      avatarNode.addEventListener('click', () => {
+        // eslint-disable-next-line no-underscore-dangle
+        const { uid } = (avatarNode as any).parentNode.parentNode.__vue__.source
         window.open(`https://space.bilibili.com/${uid}`)
       })
       processed.add(node)
