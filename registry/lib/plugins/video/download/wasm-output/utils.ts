@@ -2,13 +2,21 @@ import { Toast } from '@/core/toast'
 import { formatFileSize, formatPercent } from '@/core/utils/formatters'
 import { getOrLoad, storeNames } from './database'
 
-type OnProgress = (received: number, length: number) => void
+type OnProgress = (received: number, total: number) => void
 
-export function toastProgress(toast: Toast, message: string): OnProgress {
-  return (r, l) => {
-    toast.message = `${message}: ${formatFileSize(r)}${
-      l > 0 ? ` / ${formatFileSize(l)} @ ${formatPercent(r / l)}` : ''
-    }`
+function formatProgress(received: number, total: number) {
+  return `${formatFileSize(received)}${
+    total > 0 ? ` / ${formatFileSize(total)} @ ${formatPercent(received / total)}` : ''
+  }`
+}
+
+export function toastProgress(toast: Toast) {
+  const lines = []
+  return (line: number, message: string): OnProgress => {
+    return (r, l) => {
+      lines[line] = `${message}: ${formatProgress(r, l)}`
+      toast.message = lines.join('\n')
+    }
   }
 }
 
@@ -48,7 +56,7 @@ export async function httpGet(url: string, onprogress: OnProgress) {
   return chunksAll
 }
 
-export async function getCacheOrGet(key: string, url: string, loading: OnProgress) {
+export async function getCacheOrFetch(key: string, url: string, loading: OnProgress) {
   return getOrLoad(storeNames.cache, key, async () => httpGet(url, loading))
 }
 
