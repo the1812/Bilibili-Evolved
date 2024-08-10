@@ -6,38 +6,38 @@ import { title as pluginTitle } from '.'
 import type { Options } from '../../../../components/video/download'
 import { DownloadVideoAction } from '../../../../components/video/download/types'
 import { FFmpeg } from './ffmpeg'
-import { getCacheOrGet, httpGet, toastProgress, toBlobUrl } from './utils'
+import { getCacheOrFetch, httpGet, toastProgress, toBlobUrl } from './utils'
 
 const ffmpeg = new FFmpeg()
 
 async function loadFFmpeg() {
   const toast = Toast.info('正在加载 FFmpeg', `${pluginTitle} - 初始化`)
+
+  const progress = toastProgress(toast)
+  const [worker, core, wasm] = await Promise.all([
+    getCacheOrFetch(
+      'ffmpeg-worker',
+      meta.compilationInfo.altCdn.library.ffmpeg.worker,
+      progress(0, '正在加载 FFmpeg Worker'),
+    ),
+    getCacheOrFetch(
+      'ffmpeg-core',
+      meta.compilationInfo.altCdn.library.ffmpeg.core,
+      progress(1, '正在加载 FFmpeg Core'),
+    ),
+    getCacheOrFetch(
+      'ffmpeg-wasm',
+      meta.compilationInfo.altCdn.library.ffmpeg.wasm,
+      progress(2, '正在加载 FFmpeg WASM'),
+    ),
+  ])
+
   await ffmpeg.load({
-    workerLoadURL: toBlobUrl(
-      await getCacheOrGet(
-        'ffmpeg-worker',
-        meta.compilationInfo.altCdn.library.ffmpeg.worker,
-        toastProgress(toast, '正在加载 FFmpeg Worker'),
-      ),
-      'text/javascript',
-    ),
-    coreURL: toBlobUrl(
-      await getCacheOrGet(
-        'ffmpeg-core',
-        meta.compilationInfo.altCdn.library.ffmpeg.core,
-        toastProgress(toast, '正在加载 FFmpeg Core'),
-      ),
-      'text/javascript',
-    ),
-    wasmURL: toBlobUrl(
-      await getCacheOrGet(
-        'ffmpeg-wasm',
-        meta.compilationInfo.altCdn.library.ffmpeg.wasm,
-        toastProgress(toast, '正在加载 FFmpeg WASM'),
-      ),
-      'application/wasm',
-    ),
+    workerLoadURL: toBlobUrl(worker, 'text/javascript'),
+    coreURL: toBlobUrl(core, 'text/javascript'),
+    wasmURL: toBlobUrl(wasm, 'application/wasm'),
   })
+
   toast.message = '完成！'
   toast.close()
 }
@@ -53,8 +53,14 @@ async function single(
 ) {
   const toast = Toast.info('', `${pluginTitle} - ${pageIndex} / ${totalPages}`)
 
-  ffmpeg.writeFile('video', await httpGet(videoUrl, toastProgress(toast, '正在下载视频流')))
-  ffmpeg.writeFile('audio', await httpGet(audioUrl, toastProgress(toast, '正在下载音频流')))
+  const progress = toastProgress(toast)
+  const [video, audio] = await Promise.all([
+    httpGet(videoUrl, progress(0, '正在下载视频流')),
+    httpGet(audioUrl, progress(1, '正在下载音频流')),
+  ])
+
+  ffmpeg.writeFile('video', video)
+  ffmpeg.writeFile('audio', audio)
 
   const args = ['-i', 'video', '-i', 'audio']
 
