@@ -163,7 +163,7 @@ export class ShadowDomStyles {
   addStyle(text: string) {
     const id = `shadow-dom-style-${getRandomId()}`
     const element = addStyle(text, id)
-    return this.observer.forEachShadowRoot({
+    const destroy = this.observer.forEachShadowRoot({
       added: shadowRoot => {
         if (this.shadowRoots.includes(shadowRoot)) {
           return
@@ -178,8 +178,13 @@ export class ShadowDomStyles {
         this.addEntry(shadowRoot, () => tryAddStyle())
       },
       removed: shadowRoot => {
+        shadowRoot.getElementById(id)?.remove()
         this.removeEntry(shadowRoot)
       },
     })
+    return () => {
+      destroy()
+      element.remove()
+    }
   }
 }
