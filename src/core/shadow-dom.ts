@@ -22,11 +22,12 @@ export class ShadowDomObserver extends EventTarget {
     }
   }
 
+  private observing = false
+
   entries: ShadowRootEntry[] = []
 
   constructor() {
     super()
-    this.observe()
   }
 
   protected queryAllShadowRoots(
@@ -122,20 +123,26 @@ export class ShadowDomObserver extends EventTarget {
   }
 
   observe() {
+    if (this.observing) {
+      return
+    }
     const existingRoots = this.queryAllShadowRoots()
     existingRoots.forEach(root => this.addEntry(root))
     allMutations(records => this.mutationHandler(records))
+    this.observing = true
   }
 
   disconnect() {
     this.entries.forEach(entry => entry.observer.disconnect())
     this.entries = []
+    this.observing = false
   }
 }
 
-export class ShadowDomStyles {
-  constructor(public observer: ShadowDomObserver) {}
+const shadowDomObserver = new ShadowDomObserver()
 
+export class ShadowDomStyles {
+  observer: ShadowDomObserver = shadowDomObserver
   entries: ShadowRootEntry[] = []
 
   get shadowRoots() {
@@ -161,6 +168,7 @@ export class ShadowDomStyles {
   }
 
   addStyle(text: string) {
+    this.observer.observe()
     const id = `shadow-dom-style-${getRandomId()}`
     const element = addStyle(text, id)
     const destroy = this.observer.forEachShadowRoot({
