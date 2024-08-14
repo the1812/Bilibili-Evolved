@@ -10,21 +10,25 @@ $prefix: 'simplifyComments-switch';
     }
   }
 
-  &:host-context(body.#{$prefix}-replyEditor):host(bili-comment-box) {
-    #pub button {
-      font-size: 14px;
+  &:host-context(body.#{$prefix}-replyEditor) {
+    &:host(bili-comment-box) {
+      #pub button {
+        font-size: 14px;
+      }
     }
-    #label {
-      font-size: 15px;
+    &:host(bili-checkbox) {
+      #label {
+        font-size: 15px;
+      }
     }
-  }
-  &:host-context(body.#{$prefix}-replyEditor):host(bili-comment-textarea) {
-    #input {
-      font-size: 13px;
-    }
-    #input,
-    #input::placeholder {
-      line-height: normal;
+    &:host(bili-comment-textarea) {
+      #input {
+        font-size: 13px;
+      }
+      #input,
+      #input::placeholder {
+        line-height: normal;
+      }
     }
   }
   &:host-context(body.#{$prefix}-userLevel):host(bili-comment-user-info) {
