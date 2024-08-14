@@ -11,6 +11,9 @@ interface ShadowRootEntry {
   shadowRoot: ShadowRoot
   observer: MutationObserver
 }
+interface ShadowRootStyleEntry {
+  shadowRoot: ShadowRoot
+}
 export class ShadowDomObserver extends EventTarget {
   static enforceOpenRoot() {
     const originalAttachShadow = Element.prototype.attachShadow
@@ -143,26 +146,21 @@ const shadowDomObserver = new ShadowDomObserver()
 
 export class ShadowDomStyles {
   observer: ShadowDomObserver = shadowDomObserver
-  entries: ShadowRootEntry[] = []
+  entries: ShadowRootStyleEntry[] = []
 
   get shadowRoots() {
     return this.entries.map(entry => entry.shadowRoot)
   }
 
-  protected addEntry(shadowRoot: ShadowRoot, callback: (records: MutationRecord[]) => void) {
-    const [observer] = childListSubtree(shadowRoot, records => {
-      callback(records)
-    })
+  protected addEntry(shadowRoot: ShadowRoot) {
     this.entries.push({
       shadowRoot,
-      observer,
     })
   }
 
   protected removeEntry(shadowRoot: ShadowRoot) {
     const entry = this.entries.find(it => it.shadowRoot === shadowRoot)
     if (entry !== undefined) {
-      entry.observer.disconnect()
       deleteValue(this.entries, it => it === entry)
     }
   }
@@ -172,18 +170,14 @@ export class ShadowDomStyles {
     const id = `shadow-dom-style-${getRandomId()}`
     const element = addStyle(text, id)
     const destroy = this.observer.forEachShadowRoot({
-      added: shadowRoot => {
+      added: async shadowRoot => {
         if (this.shadowRoots.includes(shadowRoot)) {
           return
         }
-        const tryAddStyle = () => {
-          if (shadowRoot.getElementById(id) !== null) {
-            return
-          }
-          shadowRoot.appendChild(element.cloneNode(true))
-        }
-        tryAddStyle()
-        this.addEntry(shadowRoot, () => tryAddStyle())
+        this.addEntry(shadowRoot)
+        const sheet = new CSSStyleSheet()
+        await sheet.replace(element.innerHTML)
+        shadowRoot.adoptedStyleSheets.push(sheet)
       },
       removed: shadowRoot => {
         shadowRoot.getElementById(id)?.remove()
