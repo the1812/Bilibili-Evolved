@@ -145,6 +145,14 @@
   },
   {
     "type": "component",
+    "name": "liveroomUsernameLink",
+    "displayName": "添加直播间用户超链接",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n为直播间的房间观众和大航海界面的用户列表添加可以点击的超链接",
+    "fullRelativePath": "../../registry/dist/components/live/liveroom-username-link.js",
+    "fullAbsolutePath": "registry/dist/components/live/liveroom-username-link.js"
+  },
+  {
+    "type": "component",
     "name": "originalLiveroom",
     "displayName": "返回原版直播间",
     "description": "在直播间中提供返回原版直播间的按钮, 原版直播间将无视活动皮肤, 强制使用标准的直播页面.",
@@ -734,6 +742,14 @@
     "description": "提供一些视频选集区域的优化, 对番剧无效.\r\n- `展开选集标题`: 总是完全展开视频选集列表项的标题\r\n- `展开选集列表`: 总是完全展开视频选集列表\r\n\r\n打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换展开/收起选集列表.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/full-episode-title.js",
     "fullAbsolutePath": "registry/dist/components/video/full-episode-title.js"
+  },
+  {
+    "type": "component",
+    "name": "saveVideoMetadata",
+    "displayName": "保存视频元数据",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://github.com/LainIO24)\n\n保存视频元数据（标题、描述、UP、章节等）",
+    "fullRelativePath": "../../registry/dist/components/video/metadata.js",
+    "fullAbsolutePath": "registry/dist/components/video/metadata.js"
   },
   {
     "type": "component",
