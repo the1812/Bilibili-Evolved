@@ -3,17 +3,24 @@ import { select } from './spin-query'
 import { matchCurrentPage, playerUrls } from './utils/urls'
 
 type ObserverTarget = string | Element[] | Element
-export const resolveTargets = (target: ObserverTarget) => {
+type MutationObserverTarget = string | Node[] | Node
+export const resolveTargets = <
+  T extends ObserverTarget | MutationObserverTarget,
+  ResultType = T extends ObserverTarget ? Element[] : Node[],
+>(
+  target: T,
+): ResultType => {
   if (typeof target === 'string') {
-    return dqa(target)
+    return dqa(target) as ResultType
   }
   if (Array.isArray(target)) {
-    return target
+    return target as ResultType
   }
-  return [target]
+  return [target] as ResultType
 }
+
 export const mutationObserve = (
-  targets: Element[],
+  targets: Node[],
   config: MutationObserverInit,
   callback: MutationCallback,
 ) => {
@@ -26,7 +33,7 @@ export const mutationObserve = (
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const childList = (target: ObserverTarget, callback: MutationCallback) =>
+export const childList = (target: MutationObserverTarget, callback: MutationCallback) =>
   mutationObserve(
     resolveTargets(target),
     {
@@ -40,7 +47,7 @@ export const childList = (target: ObserverTarget, callback: MutationCallback) =>
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const childListSubtree = (target: ObserverTarget, callback: MutationCallback) =>
+export const childListSubtree = (target: MutationObserverTarget, callback: MutationCallback) =>
   mutationObserve(
     resolveTargets(target),
     {
@@ -54,7 +61,7 @@ export const childListSubtree = (target: ObserverTarget, callback: MutationCallb
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const attributes = (target: ObserverTarget, callback: MutationCallback) =>
+export const attributes = (target: MutationObserverTarget, callback: MutationCallback) =>
   mutationObserve(
     resolveTargets(target),
     {
@@ -68,7 +75,7 @@ export const attributes = (target: ObserverTarget, callback: MutationCallback) =
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const attributesSubtree = (target: ObserverTarget, callback: MutationCallback) =>
+export const attributesSubtree = (target: MutationObserverTarget, callback: MutationCallback) =>
   mutationObserve(
     resolveTargets(target),
     {
@@ -82,7 +89,7 @@ export const attributesSubtree = (target: ObserverTarget, callback: MutationCall
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const characterData = (target: ObserverTarget, callback: MutationCallback) =>
+export const characterData = (target: MutationObserverTarget, callback: MutationCallback) =>
   mutationObserve(
     resolveTargets(target),
     {
@@ -97,7 +104,7 @@ export const characterData = (target: ObserverTarget, callback: MutationCallback
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const characterDataSubtree = (target: ObserverTarget, callback: MutationCallback) =>
+export const characterDataSubtree = (target: MutationObserverTarget, callback: MutationCallback) =>
   mutationObserve(
     resolveTargets(target),
     {
@@ -114,7 +121,7 @@ export const characterDataSubtree = (target: ObserverTarget, callback: MutationC
  * @param target 监听目标
  * @param callback 回调函数
  */
-export const allMutationsOn = (target: ObserverTarget, callback: MutationCallback) =>
+export const allMutationsOn = (target: MutationObserverTarget, callback: MutationCallback) =>
   mutationObserve(
     resolveTargets(target),
     {
