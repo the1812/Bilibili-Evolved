@@ -1,6 +1,43 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.9.1 / v2.9.1-preview
+
+<details>
+<summary>正式版用户将获得 v2.9.0-preview 的所有改动 (新功能以及一项废弃), 点击展开查看</summary>
+
+✨新增
+- `简化直播间` 支持屏蔽推荐直播间. (#4787)
+- 新增功能 `删除直播马赛克遮罩` (#4634, PR #4814)
+> 删除观看直播时某些分区的马赛克遮罩.
+
+- `启用视频截图` 截出来的图支持直接复制. (此功能需要 Firefox 127 版本以上) (#4806)
+- `图片批量导出`, `下载视频` 支持更多变量, 详情可在更新组件后查看设置中的说明: (#3852)
+  - 动态 ID, 用户 ID, 动态发布时间, 被转发动态相关数据
+  - 专栏 cv 号, 专栏发布时间
+  - (仅对批量视频下载 (分P / 合集) 有效) up 主名称, up 主 ID, 视频发布时间
+- `自定义顶栏` 的稍后再看和历史面板现在始终显示 "已观看" 状态. (#4346)
+- `自定义顶栏` 的稍后再看, 收藏和历史面板优化了分 P 数和观看进度的展示, 详见[此处](https://github.com/the1812/Bilibili-Evolved/discussions/1866#discussioncomment-10075203). (#1866)
+
+🗑️废弃
+- 删除 `下载视频` 的 Toast 输出方式.
+
+</details>
+
+🐛修复
+- 部分修复 `简化评论区` 在新版评论区下失效. (#4843)
+  - 头像框目前还没找到比较好的方式隐藏, 暂不支持.
+  - 时间由于 Shadow DOM 限制, 无法再挪到右上角了, `装扮 & 时间` 只对装扮有效.
+  - 样式实现依赖 [:host-context](https://developer.mozilla.org/en-US/docs/Web/CSS/:host-context), 因此目前还不支持 Firefox.
+- 修复 `删除视频弹窗` 和 `禁用特殊弹幕样式` 在新版播放器下失效. (#4843, #4823, PR #4839 by [festoney8](https://github.com/festoney8))
+- 修复 `快捷键扩展` 的部分操作和 `启用弹幕空降` 在新版播放器下失效.
+
+☕开发者相关
+- 新增 Shadow DOM 系列 API (`src/core/shadow-dom.ts`), 用于处理 Shadow DOM 相关的逻辑.
+  - `ShadowDomObserver`: 持续观测页面上的所有 Shadow DOM.
+  - `ShadowDomStyles`: 支持将样式注入页面, 包含所有 Shadow DOM 内部.
+- `MutationObserver` 相关的 API 支持使用 `Node` 类型作为目标.
+
 ## v2.9.0-preview
 `2024-07-19`
 
