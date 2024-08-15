@@ -1,7 +1,26 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
-## v2.9.1 / v2.9.1-preview
+## v2.9.1-preview
+`2024-08-15`
+
+包含 [v2.9.1](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.1) 的所有更新内容.
+
+✨新增
+- `查看封面` 可以为 aria2 输出提供直接的封面下载. (PR #4798 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增组件 `保存视频元数据`. (PR #4840 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> - 保存视频元数据为 [FFMETADATA](https://ffmpeg.org/ffmpeg-formats.html#Metadata-2) 格式
+>   - 使用组件 `下载视频` 时指定 `WASM` 输出方式（插件 `下载视频 - WASM 混流输出`）可选择是否直接混流入输出文件。
+> - 保存视频章节为 OGM 格式 (https://github.com/the1812/Bilibili-Evolved/discussions/2069#discussioncomment-10110916)
+
+- `简化首页` 支持隐藏轮播图. (PR #4852 by [Lime](https://github.com/Liumingxun))
+- 新增组件 `添加直播间用户超链接`. (PR #4856 by [Light_Quanta](https://github.com/LightQuanta))
+> 网页版直播间右上角的房间观众和大航海界面的用户列表只可查看用户名，不可进行点击。该组件为用户头像和用户名称处添加点击效果，允许通过点击直接查看用户空间。
+
+- 插件 `下载视频 - WASM 混流输出` 支持并行下载库和音视频流. (PR #4864 by [WakelessSloth56](https://github.com/WakelessSloth56))
+
+## v2.9.1
+`2024-08-15`
 
 <details>
 <summary>正式版用户将获得 v2.9.0-preview 的所有改动 (新功能以及一项废弃), 点击展开查看</summary>
