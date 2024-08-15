@@ -59,6 +59,8 @@ export interface OptionMetadata<V = unknown> {
   hidden?: boolean
   /** 设为 `true` 时, 将用颜色选取器替代文本框 */
   color?: boolean
+  /** 设为 `true` 时, 使用多行文本框 */
+  multiline?: boolean
   /** 设置范围, 可以显示为一个滑动条 */
   slider?: {
     min?: number

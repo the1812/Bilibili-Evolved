@@ -103,7 +103,10 @@ const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
   title: item.title,
   description: item.intro,
   duration: item.duration,
-  durationText: formatDuration(item.duration),
+  durationText:
+    item.page > 1
+      ? `${formatDuration(item.duration)} / ${item.page}P`
+      : formatDuration(item.duration),
   playCount: item.cnt_info.play,
   danmakuCount: item.cnt_info.danmaku,
   upName: item.upper.name,
