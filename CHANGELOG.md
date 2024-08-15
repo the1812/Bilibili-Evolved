@@ -1,6 +1,62 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.9.1-preview
+`2024-08-15`
+
+包含 [v2.9.1](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.1) 的所有更新内容.
+
+✨新增
+- `查看封面` 可以为 aria2 输出提供直接的封面下载. (PR #4798 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增组件 `保存视频元数据`. (PR #4840 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> - 保存视频元数据为 [FFMETADATA](https://ffmpeg.org/ffmpeg-formats.html#Metadata-2) 格式
+>   - 使用组件 `下载视频` 时指定 `WASM` 输出方式（插件 `下载视频 - WASM 混流输出`）可选择是否直接混流入输出文件。
+> - 保存视频章节为 OGM 格式 (https://github.com/the1812/Bilibili-Evolved/discussions/2069#discussioncomment-10110916)
+
+- `简化首页` 支持隐藏轮播图. (PR #4852 by [Lime](https://github.com/Liumingxun))
+- 新增组件 `添加直播间用户超链接`. (PR #4856 by [Light_Quanta](https://github.com/LightQuanta))
+> 网页版直播间右上角的房间观众和大航海界面的用户列表只可查看用户名，不可进行点击。该组件为用户头像和用户名称处添加点击效果，允许通过点击直接查看用户空间。
+
+- 插件 `下载视频 - WASM 混流输出` 支持并行下载库和音视频流. (PR #4864 by [WakelessSloth56](https://github.com/WakelessSloth56))
+
+## v2.9.1
+`2024-08-15`
+
+<details>
+<summary>正式版用户将获得 v2.9.0-preview 的所有改动 (新功能以及一项废弃), 点击展开查看</summary>
+
+✨新增
+- `简化直播间` 支持屏蔽推荐直播间. (#4787)
+- 新增功能 `删除直播马赛克遮罩` (#4634, PR #4814)
+> 删除观看直播时某些分区的马赛克遮罩.
+
+- `启用视频截图` 截出来的图支持直接复制. (此功能需要 Firefox 127 版本以上) (#4806)
+- `图片批量导出`, `下载视频` 支持更多变量, 详情可在更新组件后查看设置中的说明: (#3852)
+  - 动态 ID, 用户 ID, 动态发布时间, 被转发动态相关数据
+  - 专栏 cv 号, 专栏发布时间
+  - (仅对批量视频下载 (分P / 合集) 有效) up 主名称, up 主 ID, 视频发布时间
+- `自定义顶栏` 的稍后再看和历史面板现在始终显示 "已观看" 状态. (#4346)
+- `自定义顶栏` 的稍后再看, 收藏和历史面板优化了分 P 数和观看进度的展示, 详见[此处](https://github.com/the1812/Bilibili-Evolved/discussions/1866#discussioncomment-10075203). (#1866)
+
+🗑️废弃
+- 删除 `下载视频` 的 Toast 输出方式.
+
+</details>
+
+🐛修复
+- 部分修复 `简化评论区` 在新版评论区下失效. (#4843)
+  - 头像框目前还没找到比较好的方式隐藏, 暂不支持.
+  - 时间由于 Shadow DOM 限制, 无法再挪到右上角了, `装扮 & 时间` 只对装扮有效.
+  - 样式实现依赖 [:host-context](https://developer.mozilla.org/en-US/docs/Web/CSS/:host-context), 因此目前还不支持 Firefox.
+- 修复 `删除视频弹窗` 和 `禁用特殊弹幕样式` 在新版播放器下失效. (#4843, #4823, PR #4839 by [festoney8](https://github.com/festoney8))
+- 修复 `快捷键扩展` 的部分操作和 `启用弹幕空降` 在新版播放器下失效.
+
+☕开发者相关
+- 新增 Shadow DOM 系列 API (`src/core/shadow-dom.ts`), 用于处理 Shadow DOM 相关的逻辑.
+  - `ShadowDomObserver`: 持续观测页面上的所有 Shadow DOM.
+  - `ShadowDomStyles`: 支持将样式注入页面, 包含所有 Shadow DOM 内部.
+- `MutationObserver` 相关的 API 支持使用 `Node` 类型作为目标.
+
 ## v2.9.0-preview
 `2024-07-19`
 

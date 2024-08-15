@@ -11,6 +11,14 @@
       :placeholder="value.toString()"
       @change="type === 'text' ? valueChange($event) : numberChange($event)"
     ></TextBox>
+    <TextArea
+      v-if="type === 'textArea'"
+      change-on-blur
+      :validator="option.validator"
+      :text="value.toString()"
+      :placeholder="value.toString()"
+      @change="valueChange($event)"
+    ></TextArea>
     <SwitchBox v-if="type === 'boolean'" :checked="value" @change="valueChange($event)"></SwitchBox>
     <ColorPicker
       v-if="type === 'color'"
@@ -54,7 +62,16 @@
 </template>
 
 <script lang="ts">
-import { TextBox, SwitchBox, ColorPicker, RangeInput, VDropdown, ImagePicker, VSlider } from '@/ui'
+import {
+  TextBox,
+  TextArea,
+  SwitchBox,
+  ColorPicker,
+  RangeInput,
+  VDropdown,
+  ImagePicker,
+  VSlider,
+} from '@/ui'
 import { getComponentSettings, ComponentSettings } from '@/core/settings'
 import { OptionMetadata } from '../component'
 import { getDropdownItems } from './dropdown'
@@ -70,6 +87,7 @@ export default {
   components: {
     SwitchOptions,
     TextBox,
+    TextArea,
     SwitchBox,
     ColorPicker,
     RangeInput,
@@ -123,6 +141,9 @@ export default {
           if (option.dropdownEnum) {
             return 'dropdown'
           }
+          if (option.multiline) {
+            return 'textArea'
+          }
           return 'text'
         }
         case 'object': {
@@ -159,7 +180,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .component-option {
   display: flex;
   align-items: center;
@@ -186,6 +207,10 @@ export default {
   }
   .be-slider {
     margin: 0 8px;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 16px;
   }
 }
 </style>
