@@ -153,6 +153,14 @@
   },
   {
     "type": "component",
+    "name": "removeLiveMaskPanel",
+    "displayName": "删除直播马赛克遮罩",
+    "description": "by [@Liki4](https://github.com/Liki4)\n\n删除观看直播时某些分区的马赛克遮罩.",
+    "fullRelativePath": "../../registry/dist/components/live/remove-mask-panel.js",
+    "fullAbsolutePath": "registry/dist/components/live/remove-mask-panel.js"
+  },
+  {
+    "type": "component",
     "name": "removeLiveWatermark",
     "displayName": "删除直播水印",
     "description": "删除观看直播时角落的水印.",
@@ -547,7 +555,7 @@
     "type": "component",
     "name": "imageExporter",
     "displayName": "图片批量导出",
-    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `user`: 用户名\r\n- `originalUser`: 被转发用户名, 如果不是转发类型的动态则等于 `user`\r\n- `id`: 动态 ID\r\n- `n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n- `title`: 专栏标题\r\n- `n`: 第 n 张图",
+    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `n`: 第 n 张图\r\n- `id`: 动态 ID\r\n- `user`: 用户名\r\n- `userID`: 用户 ID\r\n- 动态发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n- 被转发的数据 (如果不是转发类型的动态, 则和上面的对应变量相同):\r\n  - `originalID`: 被转发的动态 ID\r\n  - `originalUser`: 被转发的用户名\r\n  - `originalUserID`: 被转发用户 ID\r\n  - 被转发的动态发布时间:\r\n    - `originalPublishYear`\r\n    - `originalPublishMonth`\r\n    - `originalPublishDay`\r\n    - `originalPublishHour`\r\n    - `originalPublishMinute`\r\n    - `originalPublishSecond`\r\n    - `originalPublishMillisecond`\r\n\r\n专栏文件名变量:\r\n- `n`: 第 n 张图\r\n- `title`: 专栏标题\r\n- `cv`: 专栏 cv 号\r\n- 专栏发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/image-exporter.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-exporter.js"
   },
@@ -707,7 +715,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
+    "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n\r\n在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:\r\n- `user`: UP 主用户名\r\n- `userID`: UP 主用户 ID\r\n- 视频发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
