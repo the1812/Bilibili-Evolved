@@ -136,13 +136,13 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   coin: {
     displayName: '投币',
     run: useClickElement(
-      '.video-toolbar .coin, .tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2), .video-toolbar-v1 .coin, .toolbar .coin',
+      '.video-toolbar .coin, .tool-bar .coin-info, .video-toolbar-module .coin-box, .play-options-ul > li:nth-child(2), .video-toolbar-v1 .coin, .toolbar .coin, .video-toolbar-container .video-coin',
     ),
   },
   favorite: {
     displayName: '收藏',
     run: useClickElement(
-      '.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3), .video-toolbar-v1 .collect',
+      '.video-toolbar .collect, .video-toolbar-module .fav-box, .play-options-ul > li:nth-child(3), .video-toolbar-v1 .collect, .video-toolbar-container .video-fav',
     ),
   },
   pause: {
@@ -157,7 +157,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       return (context: KeyBindingActionContext) => {
         const { event } = context
         const likeButton = dq(
-          '.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like, .toolbar .like',
+          '.video-toolbar .like, .tool-bar .like-info, .video-toolbar-v1 .like, .toolbar .like, .video-toolbar-container .video-like',
         ) as HTMLSpanElement
         if (!likeButton) {
           return false

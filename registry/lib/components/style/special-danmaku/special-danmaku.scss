@@ -1,9 +1,16 @@
 body.disable-highlight-danmaku-style {
   .bili-danmaku-x-high,
-  .bili-danmaku-x-high-top,
+  .bili-danmaku-x-high-top {
+    display: flex !important;
+  }
   .bili-dm.bili-high,
   .b-danmaku-high {
     display: block !important;
+  }
+  .bili-danmaku-x-high,
+  .bili-danmaku-x-high-top,
+  .bili-dm.bili-high,
+  .b-danmaku-high {
     padding: 0 !important;
     line-height: 1.125 !important;
     .bili-danmaku-x-high-icon,

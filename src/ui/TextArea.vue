@@ -36,6 +36,7 @@ export default Vue.extend({
   }
   textarea {
     resize: none;
+    field-sizing: content;
     width: 0;
     flex: 1 0 0;
     padding: 4px 6px;

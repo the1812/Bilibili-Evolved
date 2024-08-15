@@ -85,6 +85,10 @@ export const component = wrapSwitchOptions({
       defaultValue: false,
       displayName: '高能榜提示',
     },
+    recommendedRooms: {
+      defaultValue: false,
+      displayName: '推荐直播间',
+    },
     skin: {
       defaultValue: false,
       displayName: '房间皮肤',

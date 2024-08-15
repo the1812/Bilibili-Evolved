@@ -51,7 +51,11 @@ export const component = defineComponentMetadata({
           return
         }
         const target = e.target as HTMLElement
-        if (!['b-danmaku', 'bili-dm'].some(token => target.classList.contains(token))) {
+        if (
+          !['b-danmaku', 'bili-dm', 'bili-danmaku-x-dm'].some(token =>
+            target.classList.contains(token),
+          )
+        ) {
           return
         }
         const time = getAirborneTime(target.textContent)
