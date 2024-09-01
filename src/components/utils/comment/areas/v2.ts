@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { childList } from '@/core/observer'
 import { CommentItem } from '../comment-item'
-import { CommentArea } from './base'
+import { DomCommentArea } from './dom'
 import { CommentReplyItem } from '../reply-item'
 import { HTMLElementWithVue, VNodeManager } from '../vnode-manager'
 
-export class CommentAreaV2 extends CommentArea {
+export class CommentAreaV2 extends DomCommentArea {
   private vnodeManager: VNodeManager
 
   constructor(element: HTMLElement) {

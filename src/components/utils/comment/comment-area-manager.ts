@@ -34,7 +34,7 @@ export class CommentAreaManager {
     ) {
       const area = getCommentArea(node)
       this.commentAreas.push(area)
-      area.observeItems()
+      area.observe()
       this.commentAreaCallbacks.forEach(c => c.added?.(area))
       const [observer] = childList(area.element.parentElement, records => {
         records.forEach(r => {
@@ -42,7 +42,7 @@ export class CommentAreaManager {
             if (removedNode === area.element) {
               deleteValue(this.commentAreas, a => a === area)
               this.commentAreaCallbacks.forEach(c => c.removed?.(area))
-              area.destroy()
+              area.disconnect()
               observer.disconnect()
             }
           })

@@ -1,9 +1,9 @@
 import { childList } from '@/core/observer'
 import { CommentItem } from '../comment-item'
 import { CommentReplyItem } from '../reply-item'
-import { CommentArea } from './base'
+import { DomCommentArea } from './dom'
 
-export class CommentAreaV1 extends CommentArea {
+export class CommentAreaV1 extends DomCommentArea {
   addMenuItem(
     item: CommentReplyItem,
     config: { className: string; text: string; action: (e: MouseEvent) => void },
