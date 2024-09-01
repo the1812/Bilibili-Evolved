@@ -51,9 +51,9 @@ export const component = wrapSwitchOptions({
       true,
     )
 
-    const { ShadowDomStyles } = await import('@/core/shadow-dom')
+    const { ShadowRootStyles } = await import('@/core/shadow-root')
     const v3Styles = await import('./comments-v3.scss').then(m => m.default)
-    const shadowDom = new ShadowDomStyles()
+    const shadowDom = new ShadowRootStyles()
     shadowDom.addStyle(v3Styles)
   },
   instantStyles: [
