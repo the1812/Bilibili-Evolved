@@ -1,52 +1,37 @@
-import { addStyle } from '../style'
 import { deleteValue, getRandomId } from '../utils'
 import { ShadowDomObserver, shadowDomObserver } from './dom-observer'
 
-interface ShadowRootStyleEntry {
-  shadowRoot: ShadowRoot
-}
 export class ShadowRootStyles {
   observer: ShadowDomObserver = shadowDomObserver
-  entries: ShadowRootStyleEntry[] = []
+  protected stylesMap = new Map<string, CSSStyleSheet>()
 
-  get shadowRoots() {
-    return this.entries.map(entry => entry.shadowRoot)
+  protected addStyleRecord(id: string, style: CSSStyleSheet) {
+    this.stylesMap.set(id, style)
   }
 
-  protected addEntry(shadowRoot: ShadowRoot) {
-    this.entries.push({
-      shadowRoot,
-    })
-  }
-
-  protected removeEntry(shadowRoot: ShadowRoot) {
-    const entry = this.entries.find(it => it.shadowRoot === shadowRoot)
-    if (entry !== undefined) {
-      deleteValue(this.entries, it => it === entry)
+  protected removeStyleRecord(id: string) {
+    if (this.stylesMap.has(id)) {
+      this.stylesMap.delete(id)
     }
   }
 
-  addStyle(text: string) {
+  async addStyle(text: string) {
     this.observer.observe()
     const id = `shadow-dom-style-${getRandomId()}`
-    const element = addStyle(text, id)
+    const sheet = new CSSStyleSheet()
+    await sheet.replace(text)
+    document.adoptedStyleSheets.push(sheet)
+    this.addStyleRecord(id, sheet)
+
     const destroy = this.observer.watchShadowDom({
       added: async shadowDom => {
-        if (this.shadowRoots.includes(shadowDom.shadowRoot)) {
-          return
-        }
-        this.addEntry(shadowDom.shadowRoot)
-        const sheet = new CSSStyleSheet()
-        await sheet.replace(element.innerHTML)
         shadowDom.shadowRoot.adoptedStyleSheets.push(sheet)
-      },
-      removed: shadowDom => {
-        this.removeEntry(shadowDom.shadowRoot)
       },
     })
     return () => {
       destroy()
-      element.remove()
+      deleteValue(document.adoptedStyleSheets, it => it === sheet)
+      this.removeStyleRecord(id)
     }
   }
 }
