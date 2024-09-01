@@ -4,11 +4,11 @@ import type { ShadowDomObserver } from './dom-observer'
 import { ShadowRootObserver } from './root-observer'
 import { ShadowRootEvents } from './types'
 
+export const ShadowDomEntrySymbol = Symbol.for('ShadowDomEntry')
 export type ShadowDomParent = ShadowDomEntry | ShadowDomObserver
 export type ShadowDomCallback = (shadowDom: ShadowDomEntry) => void
 export class ShadowDomEntry extends ShadowRootObserver {
   readonly shadowRoot: ShadowRoot
-  readonly elementName: string
   readonly parent: ShadowDomParent | null = null
   readonly children: ShadowDomEntry[] = []
   protected observer: MutationObserver
@@ -18,9 +18,19 @@ export class ShadowDomEntry extends ShadowRootObserver {
     super()
     this.shadowRoot = shadowRoot
     this.parent = parent
-    this.elementName = shadowRoot.host.tagName.toLowerCase()
-    ShadowRootObserver.queryAllShadowRoots(shadowRoot).map(it => this.addChild(it))
+    this.element[ShadowDomEntrySymbol] = this
+    ShadowRootObserver.queryAllShadowRoots(shadowRoot)
+      .filter(it => it !== shadowRoot)
+      .map(it => this.addChild(it))
     this.observe()
+  }
+
+  get element() {
+    return this.shadowRoot.host
+  }
+
+  get elementName() {
+    return this.element.tagName.toLowerCase()
   }
 
   override dispatchEvent(event: Event): boolean {
@@ -51,6 +61,10 @@ export class ShadowDomEntry extends ShadowRootObserver {
   }
 
   addChild(childShadowRoot: ShadowRoot) {
+    const match = this.children.find(child => child.shadowRoot === childShadowRoot)
+    if (match) {
+      return match
+    }
     const child = new ShadowDomEntry(childShadowRoot, this)
     this.children.push(child)
     this.dispatchEvent(new CustomEvent(ShadowRootEvents.Added, { detail: child }))
@@ -61,6 +75,59 @@ export class ShadowDomEntry extends ShadowRootObserver {
     child.disconnect()
     deleteValue(this.children, it => it === child)
     this.dispatchEvent(new CustomEvent(ShadowRootEvents.Removed, { detail: child }))
+  }
+
+  protected queryThroughChildren<T>(predicate: (current: ShadowDomEntry) => T | null) {
+    const currentLevelResult = predicate(this)
+    if (currentLevelResult) {
+      return {
+        entry: this,
+        result: currentLevelResult,
+      }
+    }
+    for (const child of this.children) {
+      const childResult = predicate(child)
+      if (childResult !== null) {
+        return {
+          entry: child,
+          result: childResult,
+        }
+      }
+    }
+    return {
+      entry: null,
+      result: null,
+    }
+  }
+
+  querySelectorAsEntry(selectors: string): ShadowDomEntry | null {
+    const { entry } = this.queryThroughChildren(current => {
+      if (current === this) {
+        return null
+      }
+      return current.element.matches(selectors)
+    })
+    return entry
+  }
+
+  querySelectorAllAsEntry(selectors: string): ShadowDomEntry[] {
+    const currentMatch = this.children.filter(child => child.element.matches(selectors))
+    const childrenMatch = this.children.flatMap(child => child.querySelectorAllAsEntry(selectors))
+    return [...currentMatch, ...childrenMatch]
+  }
+
+  querySelector(selectors: string): Element | null {
+    const { result } = this.queryThroughChildren(current =>
+      current.shadowRoot.querySelector(selectors),
+    )
+    return result
+  }
+
+  querySelectorAll(selectors: string): Element[] {
+    return [
+      ...this.shadowRoot.querySelectorAll(selectors),
+      ...this.children.flatMap(child => child.querySelectorAll(selectors)),
+    ]
   }
 
   observe() {

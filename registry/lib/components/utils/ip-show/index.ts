@@ -5,7 +5,7 @@ import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
 
 // 新版评论区IP属地获取
 const getIpLocation = (item: CommentReplyItem) => {
-  const reply = item.vueProps
+  const reply = item.frameworkSpecificProps
   return reply?.reply_control?.location ?? undefined
 }
 

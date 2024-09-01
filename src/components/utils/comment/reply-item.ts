@@ -16,8 +16,8 @@ export class CommentReplyItem extends EventTarget {
   time?: number
   /** 点赞数 */
   likes: number
-  /** 对应的 Vue Props */
-  vueProps: any
+  /** 对应的框架特定 Props (可能是 Vue 或者 Lit) */
+  frameworkSpecificProps: any
 
   constructor(initParams: Omit<CommentReplyItem, keyof EventTarget>) {
     super()
@@ -29,6 +29,6 @@ export class CommentReplyItem extends EventTarget {
     this.timeText = initParams.timeText
     this.time = initParams.time
     this.likes = initParams.likes
-    this.vueProps = initParams.vueProps
+    this.frameworkSpecificProps = initParams.frameworkSpecificProps
   }
 }

@@ -94,7 +94,7 @@ export class CommentAreaV2 extends DomCommentArea {
           content: r.content.message,
           time: r.ctime * 1000,
           likes: r.like,
-          vueProps: r,
+          frameworkSpecificProps: r,
         })
       })
     }
@@ -110,7 +110,7 @@ export class CommentAreaV2 extends DomCommentArea {
         return img.img_src
       }),
       replies: parseReplies(),
-      vueProps,
+      frameworkSpecificProps: vueProps,
     })
     if (item.replies.length < vueProps.rcount) {
       const replyBox = dq(element, '.sub-reply-list')

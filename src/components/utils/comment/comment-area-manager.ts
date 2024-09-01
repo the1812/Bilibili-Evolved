@@ -14,7 +14,7 @@ export class CommentAreaManager {
   commentAreas: CommentArea[] = []
   commentAreaCallbacks: CommentCallbackPair<CommentAreaCallback>[] = []
 
-  protected static commentAreaClasses = ['bili-comment', 'bb-comment']
+  protected static commentAreaSelectors = '.bili-comment, .bb-comment, bili-comments'
 
   init() {
     allMutations(records => {
@@ -22,16 +22,11 @@ export class CommentAreaManager {
         r.addedNodes.forEach(n => this.observeAreas(n))
       })
     })
-    dqa(CommentAreaManager.commentAreaClasses.map(c => `.${c}`).join(',')).forEach(it =>
-      this.observeAreas(it),
-    )
+    dqa(CommentAreaManager.commentAreaSelectors).forEach(it => this.observeAreas(it))
   }
 
   observeAreas(node: Node) {
-    if (
-      node instanceof HTMLElement &&
-      CommentAreaManager.commentAreaClasses.some(c => node.classList.contains(c))
-    ) {
+    if (node instanceof HTMLElement && node.matches(CommentAreaManager.commentAreaSelectors)) {
       const area = getCommentArea(node)
       this.commentAreas.push(area)
       area.observe()

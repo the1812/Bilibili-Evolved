@@ -44,7 +44,7 @@ export class CommentAreaV1 extends DomCommentArea {
         content: replyElement.querySelector('.text-con').textContent,
         timeText: replyElement.querySelector('.info .time, .info .time-location').textContent,
         likes: parseInt(replyElement.querySelector('.info .like span').textContent),
-        vueProps: undefined,
+        frameworkSpecificProps: undefined,
       })
     }
     const item = new CommentItem({
@@ -56,7 +56,7 @@ export class CommentAreaV1 extends DomCommentArea {
       timeText: element.querySelector('.con .info .time, .info .time-location').textContent,
       likes: parseInt(element.querySelector('.con .like span').textContent),
       replies: [],
-      vueProps: undefined,
+      frameworkSpecificProps: undefined,
     })
     if (dq(element, '.reply-box .view-more')) {
       const replyBox = dq(element, '.reply-box') as HTMLElement
