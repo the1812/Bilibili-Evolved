@@ -91,8 +91,8 @@ export class ShadowDomObserver extends ShadowRootObserver {
 
   watchShadowDom(callbacks: { added?: ShadowDomCallback; removed?: ShadowDomCallback }) {
     this.forEachShadowDom(it => callbacks.added?.(it))
-    const addedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.added(e.detail)
-    const removedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.removed(e.detail)
+    const addedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.added?.(e.detail)
+    const removedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.removed?.(e.detail)
     this.addEventListener(ShadowRootEvents.Added, addedListener)
     this.addEventListener(ShadowRootEvents.Removed, removedListener)
     return () => {
