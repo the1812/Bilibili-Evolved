@@ -77,21 +77,21 @@ export class ShadowDomEntry extends ShadowRootObserver {
     this.dispatchEvent(new CustomEvent(ShadowRootEvents.Removed, { detail: child }))
   }
 
-  protected queryThroughChildren<T>(predicate: (current: ShadowDomEntry) => T | null) {
-    const currentLevelResult = predicate(this)
-    if (currentLevelResult) {
+  protected queryThroughChildren<T>(predicate: (current: ShadowDomEntry) => T | null): {
+    entry: ShadowDomEntry | null
+    result: T | null
+  } {
+    const selfResult = predicate(this)
+    if (selfResult !== null) {
       return {
         entry: this,
-        result: currentLevelResult,
+        result: selfResult,
       }
     }
     for (const child of this.children) {
-      const childResult = predicate(child)
-      if (childResult !== null) {
-        return {
-          entry: child,
-          result: childResult,
-        }
+      const childResult = child.queryThroughChildren(predicate)
+      if (childResult.result !== null) {
+        return childResult
       }
     }
     return {
@@ -105,7 +105,10 @@ export class ShadowDomEntry extends ShadowRootObserver {
       if (current === this) {
         return null
       }
-      return current.element.matches(selectors)
+      if (current.element.matches(selectors)) {
+        return current
+      }
+      return null
     })
     return entry
   }

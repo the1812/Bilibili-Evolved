@@ -4,10 +4,13 @@ import { CommentArea } from './base'
 import { ShadowDomEntry } from '@/core/shadow-root/dom-entry'
 import { CommentItem } from '../comment-item'
 import { deleteValue } from '@/core/utils'
+import { select } from '@/core/spin-query'
 
 export class CommentAreaV3 extends CommentArea {
   protected static commentItemSelectors = 'bili-comment-thread-renderer'
   protected static commentReplyItemSelectors = 'bili-comment-reply-renderer'
+  protected static commentActionsSelectors = 'bili-comment-action-buttons-renderer'
+  protected static commentMenuSelectors = 'bili-comment-menu'
   protected static getLitData(entry: ShadowDomEntry) {
     const host = entry.element as HTMLElement & { __data: any }
     // eslint-disable-next-line no-underscore-dangle
@@ -20,7 +23,7 @@ export class CommentAreaV3 extends CommentArea {
 
   protected shadowDomObserver: ShadowDomObserver
   protected commentAreaEntry: ShadowDomEntry
-  protected commentItemEntries: ShadowDomEntry[] = []
+  protected itemEntryMap = new Map<ShadowDomEntry, CommentItem>()
 
   private handleEntryAdded: (e: CustomEvent<ShadowDomEntry>) => void
   private handleEntryRemoved: (e: CustomEvent<ShadowDomEntry>) => void
@@ -32,9 +35,17 @@ export class CommentAreaV3 extends CommentArea {
     this.shadowDomObserver = shadowDomObserver
   }
 
+  protected matchChildEntryByReplyId(
+    parent: ShadowDomEntry,
+    childSelectors: string,
+    replyId: string,
+  ) {
+    const children = parent.querySelectorAllAsEntry(childSelectors)
+    return children.find(r => CommentAreaV3.getLitData(r).rpid_str === replyId)
+  }
+
   protected getReplyItemElement(parent: ShadowDomEntry, replyId: string): HTMLElement {
-    const replies = parent.querySelectorAllAsEntry(CommentAreaV3.commentReplyItemSelectors)
-    return replies.find(r => CommentAreaV3.getLitData(r).rpid_str === replyId)
+    return this.matchChildEntryByReplyId(parent, CommentAreaV3.commentReplyItemSelectors, replyId)
       ?.element as HTMLElement
   }
 
@@ -95,18 +106,18 @@ export class CommentAreaV3 extends CommentArea {
   }
 
   protected addCommentItem(entry: ShadowDomEntry) {
-    if (this.commentItemEntries.includes(entry)) {
+    if (this.itemEntryMap.has(entry)) {
       return
     }
-    this.commentItemEntries.push(entry)
     const commentItem = this.parseCommentItem(entry)
+    this.itemEntryMap.set(entry, commentItem)
     this.items.push(commentItem)
     this.itemCallbacks.forEach(c => c.added?.(commentItem))
   }
 
   protected removeCommentItem(entry: ShadowDomEntry) {
     const itemToRemove = this.items.find(it => it.element === entry.element)
-    deleteValue(this.commentItemEntries, it => it === entry)
+    this.itemEntryMap.delete(entry)
     deleteValue(this.items, it => it === itemToRemove)
     this.itemCallbacks.forEach(c => c.removed?.(itemToRemove))
   }
@@ -115,11 +126,7 @@ export class CommentAreaV3 extends CommentArea {
     const entries = this.commentAreaEntry.querySelectorAllAsEntry(
       CommentAreaV3.commentItemSelectors,
     )
-    this.commentItemEntries = entries
-    this.items = entries.map(it => this.parseCommentItem(it))
-    this.items.forEach(item => {
-      this.itemCallbacks.forEach(c => c.added?.(item))
-    })
+    entries.forEach(entry => this.addCommentItem(entry))
 
     this.handleEntryAdded = (e: CustomEvent<ShadowDomEntry>) => {
       const entry = e.detail
@@ -130,11 +137,10 @@ export class CommentAreaV3 extends CommentArea {
     this.commentAreaEntry.addEventListener(ShadowRootEvents.Added, this.handleEntryAdded)
     this.handleEntryRemoved = (e: CustomEvent<ShadowDomEntry>) => {
       const entry = e.detail
-      const match = this.commentItemEntries.find(it => it === entry)
-      if (match === undefined) {
+      if (!this.itemEntryMap.has(entry)) {
         return
       }
-      this.removeCommentItem(match)
+      this.removeCommentItem(entry)
     }
     this.commentAreaEntry.addEventListener(ShadowRootEvents.Removed, this.handleEntryRemoved)
   }
@@ -157,10 +163,33 @@ export class CommentAreaV3 extends CommentArea {
     this.areaObserverDisposer?.()
   }
 
-  addMenuItem(
+  async addMenuItem(
     item: CommentReplyItem,
     config: { className: string; text: string; action: (e: MouseEvent) => void },
   ) {
-    console.warn('Method not implemented.')
+    const itemEntry = [...this.itemEntryMap.entries()].find(
+      ([, savedItem]) => savedItem === item,
+    )?.[0]
+    if (!itemEntry) {
+      return
+    }
+
+    const actions = await select(() =>
+      this.matchChildEntryByReplyId(itemEntry, CommentAreaV3.commentActionsSelectors, item.id),
+    )
+    if (!actions) {
+      return
+    }
+
+    const menu = actions.querySelectorAsEntry(CommentAreaV3.commentMenuSelectors)
+    const list = menu?.querySelector('#options')
+    const listItem = document.createElement('li')
+    listItem.innerHTML = config.text
+    listItem.className = config.className
+    listItem.addEventListener('click', e => {
+      config.action(e)
+      ;(menu.element as HTMLElement).style.setProperty('--bili-comment-menu-display', null)
+    })
+    list?.appendChild(listItem)
   }
 }
