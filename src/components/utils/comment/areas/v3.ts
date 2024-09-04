@@ -49,31 +49,26 @@ export class CommentAreaV3 extends CommentArea {
       ?.element as HTMLElement
   }
 
+  protected parseCommentReplyItem(replyEntry: ShadowDomEntry): CommentReplyItem {
+    const replyLitData = CommentAreaV3.getLitData(replyEntry)
+    return new CommentReplyItem({
+      id: replyLitData.rpid_str,
+      element: replyEntry.element as HTMLElement,
+      userId: replyLitData.member.mid,
+      userName: replyLitData.member.uname,
+      content: replyLitData.content.message,
+      time: replyLitData.ctime * 1000,
+      likes: replyLitData.like,
+      frameworkSpecificProps: replyLitData,
+    })
+  }
+
   protected parseCommentItem(entry: ShadowDomEntry): CommentItem {
     const litData = CommentAreaV3.getLitData(entry)
-    const parseReplies = () => {
-      if (!litData.replies) {
-        return []
-      }
-      return (litData.replies as any[])
-        .map((r): CommentReplyItem | null => {
-          const element = this.getReplyItemElement(entry, r.rpid_str)
-          if (!element) {
-            return null
-          }
-          return new CommentReplyItem({
-            id: r.rpid_str,
-            element,
-            userId: r.member.mid,
-            userName: r.member.uname,
-            content: r.content.message,
-            time: r.ctime * 1000,
-            likes: r.like,
-            frameworkSpecificProps: r,
-          })
-        })
-        .filter((r): r is CommentReplyItem => r !== null)
-    }
+    const getReplies = () =>
+      entry
+        .querySelectorAllAsEntry(CommentAreaV3.commentReplyItemSelectors)
+        .map(replyEntry => this.parseCommentReplyItem(replyEntry))
     const item = new CommentItem({
       id: litData.rpid_str,
       element: entry.element as HTMLElement,
@@ -85,23 +80,16 @@ export class CommentAreaV3 extends CommentArea {
       pictures: litData.content?.pictures?.map((img: { img_src: string }) => {
         return img.img_src
       }),
-      replies: parseReplies(),
+      replies: getReplies(),
       frameworkSpecificProps: litData,
     })
-    if (item.replies.length < litData.rcount) {
-      const handler = (e: CustomEvent<ShadowDomEntry>) => {
-        const replyEntry = e.detail
-        if (!replyEntry.element.matches(CommentAreaV3.commentReplyItemSelectors)) {
-          return
-        }
-        item.replies = parseReplies()
+    entry.addEventListener(
+      ShadowRootEvents.Updated,
+      lodash.debounce(() => {
+        item.replies = getReplies()
         item.dispatchRepliesUpdate(item.replies)
-        if (item.replies.length >= litData.rcount) {
-          entry.removeEventListener(ShadowRootEvents.Added, handler)
-        }
-      }
-      entry.addEventListener(ShadowRootEvents.Added, handler)
-    }
+      }),
+    )
     return item
   }
 

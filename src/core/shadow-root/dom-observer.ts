@@ -24,6 +24,9 @@ export class ShadowDomObserver extends ShadowRootObserver {
   }
 
   protected mutationHandler(records: MutationRecord[]) {
+    if (records.length > 0) {
+      this.dispatchEvent(new CustomEvent(ShadowRootEvents.Updated, { detail: records }))
+    }
     records.forEach(record => {
       record.removedNodes.forEach(node => {
         if (node instanceof Element) {
