@@ -6,6 +6,7 @@ import { select } from '@/core/spin-query'
 import { childListSubtree } from '@/core/observer'
 
 const entry = async () => {
+  const { ShadowRootStyles } = await import('@/core/shadow-root')
   const { forEachFeedsCard } = await import('@/components/feeds/api')
   const { childList } = await import('@/core/observer')
   const commentSelector = '.bb-comment, .bili-comment-container'
@@ -30,20 +31,23 @@ const entry = async () => {
       commentBox.insertAdjacentElement('beforeend', button)
     }
     if (feedsCardsManager.managerType === 'v2') {
-      const existingComment = dq(card, commentSelector) as HTMLElement
+      const getExistingComment = () => dq(card, commentSelector) as HTMLElement
+      const isCommentAreaReady = () => {
+        const existingComment = getExistingComment()
+        return existingComment !== null && dq(existingComment, 'bili-comments')
+      }
       const handler = () => {
         const button = dq(card, '.bili-dyn-action.comment') as HTMLElement
         button?.click()
       }
-      if (!existingComment) {
+      if (!isCommentAreaReady()) {
         childListSubtree(card, () => {
-          const panel = dq(card, commentSelector)
-          if (panel) {
+          if (isCommentAreaReady()) {
             injectToComment(card, handler)
           }
         })
       } else {
-        injectToComment(existingComment, handler)
+        injectToComment(getExistingComment(), handler)
       }
       return
     }
@@ -75,6 +79,10 @@ const entry = async () => {
   forEachFeedsCard({
     added: c => injectButton(c.element),
   })
+
+  const styles = await import('./fold-comment-shadow.scss').then(m => m.default)
+  const shadowRootStyles = new ShadowRootStyles()
+  shadowRootStyles.addStyle(styles)
 }
 
 export const component = defineComponentMetadata({
