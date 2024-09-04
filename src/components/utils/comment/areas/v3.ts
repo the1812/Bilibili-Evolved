@@ -1,7 +1,7 @@
 import { ShadowDomObserver, shadowDomObserver, ShadowRootEvents } from '@/core/shadow-root'
 import { CommentReplyItem } from '../reply-item'
 import { CommentArea } from './base'
-import { ShadowDomEntry, ShadowDomEntrySymbol } from '@/core/shadow-root/dom-entry'
+import { ShadowDomEntry } from '@/core/shadow-root/dom-entry'
 import { CommentItem } from '../comment-item'
 import { deleteValue } from '@/core/utils'
 import { select } from '@/core/spin-query'
@@ -162,7 +162,7 @@ export class CommentAreaV3 extends CommentArea {
     item: CommentReplyItem,
     config: { className: string; text: string; action: (e: MouseEvent) => void },
   ) {
-    const itemEntry = item.element[ShadowDomEntrySymbol]
+    const itemEntry = item.shadowDomEntry
     if (itemEntry === undefined) {
       return
     }

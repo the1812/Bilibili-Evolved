@@ -13,7 +13,9 @@ export class CommentItem extends CommentReplyItem {
   /** 回复 */
   replies: CommentReplyItem[]
 
-  constructor(initParams: Omit<CommentItem, keyof EventTarget | 'dispatchRepliesUpdate'>) {
+  constructor(
+    initParams: Omit<CommentItem, keyof EventTarget | 'dispatchRepliesUpdate' | 'shadowDomEntry'>,
+  ) {
     super(initParams)
     this.pictures = initParams.pictures ?? []
     this.replies = initParams.replies

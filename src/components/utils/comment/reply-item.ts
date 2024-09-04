@@ -1,3 +1,5 @@
+import { ShadowDomEntry, ShadowDomEntrySymbol } from '@/core/shadow-root/dom-entry'
+
 /** 表示一条评论回复 */
 export class CommentReplyItem extends EventTarget {
   /** 对应元素 */
@@ -19,7 +21,7 @@ export class CommentReplyItem extends EventTarget {
   /** 对应的框架特定 Props (可能是 Vue 或者 Lit) */
   frameworkSpecificProps: any
 
-  constructor(initParams: Omit<CommentReplyItem, keyof EventTarget>) {
+  constructor(initParams: Omit<CommentReplyItem, keyof EventTarget | 'shadowDomEntry'>) {
     super()
     this.element = initParams.element
     this.id = initParams.id
@@ -30,5 +32,10 @@ export class CommentReplyItem extends EventTarget {
     this.time = initParams.time
     this.likes = initParams.likes
     this.frameworkSpecificProps = initParams.frameworkSpecificProps
+  }
+
+  /** 对应元素的 ShadowDomEntry */
+  get shadowDomEntry(): ShadowDomEntry {
+    return this.element[ShadowDomEntrySymbol]
   }
 }
