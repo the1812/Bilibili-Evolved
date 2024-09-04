@@ -1,7 +1,7 @@
 import { ShadowDomObserver, shadowDomObserver, ShadowRootEvents } from '@/core/shadow-root'
 import { CommentReplyItem } from '../reply-item'
 import { CommentArea } from './base'
-import { ShadowDomEntry } from '@/core/shadow-root/dom-entry'
+import { ShadowDomEntry, ShadowDomEntrySymbol } from '@/core/shadow-root/dom-entry'
 import { CommentItem } from '../comment-item'
 import { deleteValue } from '@/core/utils'
 import { select } from '@/core/spin-query'
@@ -11,6 +11,7 @@ export class CommentAreaV3 extends CommentArea {
   protected static commentReplyItemSelectors = 'bili-comment-reply-renderer'
   protected static commentActionsSelectors = 'bili-comment-action-buttons-renderer'
   protected static commentMenuSelectors = 'bili-comment-menu'
+  protected static MenuItemConfigSymbol = Symbol.for('CommentAreaV3.MenuItemConfigSymbol')
   protected static getLitData(entry: ShadowDomEntry) {
     const host = entry.element as HTMLElement & { __data: any }
     // eslint-disable-next-line no-underscore-dangle
@@ -86,8 +87,14 @@ export class CommentAreaV3 extends CommentArea {
     entry.addEventListener(
       ShadowRootEvents.Updated,
       lodash.debounce(() => {
-        item.replies = getReplies()
-        item.dispatchRepliesUpdate(item.replies)
+        const newReplies = getReplies()
+        const hasUpdate =
+          item.replies.length !== newReplies.length ||
+          !item.replies.every(r => newReplies.some(newReply => newReply.id === r.id))
+        if (hasUpdate) {
+          item.replies = newReplies
+          item.dispatchRepliesUpdate(item.replies)
+        }
       }),
     )
     return item
@@ -155,10 +162,8 @@ export class CommentAreaV3 extends CommentArea {
     item: CommentReplyItem,
     config: { className: string; text: string; action: (e: MouseEvent) => void },
   ) {
-    const itemEntry = [...this.itemEntryMap.entries()].find(
-      ([, savedItem]) => savedItem === item,
-    )?.[0]
-    if (!itemEntry) {
+    const itemEntry = item.element[ShadowDomEntrySymbol]
+    if (itemEntry === undefined) {
       return
     }
 
@@ -170,14 +175,24 @@ export class CommentAreaV3 extends CommentArea {
     }
 
     const menu = actions.querySelectorAsEntry(CommentAreaV3.commentMenuSelectors)
-    const list = menu?.querySelector('#options')
+    if (!menu) {
+      return
+    }
+
+    const list = menu.querySelector('#options')
+    const alreadyAdded = list.querySelector(`li.${config.className}`)
+    if (alreadyAdded) {
+      return
+    }
+
     const listItem = document.createElement('li')
     listItem.innerHTML = config.text
     listItem.className = config.className
+    listItem[CommentAreaV3.MenuItemConfigSymbol] = config
     listItem.addEventListener('click', e => {
       config.action(e)
       ;(menu.element as HTMLElement).style.setProperty('--bili-comment-menu-display', null)
     })
-    list?.appendChild(listItem)
+    list.appendChild(listItem)
   }
 }
