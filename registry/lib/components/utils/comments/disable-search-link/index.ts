@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import { forEachCommentArea } from '@/components/utils/comment-apis'
+import { forEachCommentArea, CommentAreaV3 } from '@/components/utils/comment-apis'
+import { ShadowRootEvents, ShadowRootStyles } from '@/core/shadow-root'
 import { preventEvent } from '@/core/utils'
 
 const name = 'disableCommentsSearchLink'
@@ -17,21 +18,45 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.utils, componentsTags.style],
   entry: async () => {
     prevent = true
-    forEachCommentArea(area => {
-      preventEvent(area.element, 'click', e => {
-        if (!(e.target instanceof HTMLElement) || !prevent) {
+    forEachCommentArea(async area => {
+      const isV3Area = area instanceof CommentAreaV3
+      if (isV3Area) {
+        const styles = await import('./disable-search-link-shadow.scss').then(m => m.default)
+        const shadowRootStyles = new ShadowRootStyles()
+        shadowRootStyles.addStyle(styles)
+        area.commentAreaEntry.addEventListener(
+          ShadowRootEvents.Updated,
+          (e: CustomEvent<MutationRecord[]>) => {
+            const records = e.detail
+            records.forEach(record => {
+              record.addedNodes.forEach(node => {
+                const isCommentLink =
+                  node instanceof HTMLAnchorElement && node.getAttribute('data-type') === 'search'
+                if (!isCommentLink) {
+                  return
+                }
+                node.removeAttribute('href')
+                node.removeAttribute('target')
+              })
+            })
+          },
+        )
+      } else {
+        preventEvent(area.element, 'click', e => {
+          if (!(e.target instanceof HTMLElement) || !prevent) {
+            return false
+          }
+          const element = e.target as HTMLElement
+          if (
+            ['.jump-link.search-word', '.icon.search-word'].some(selector =>
+              element.matches(selector),
+            )
+          ) {
+            return true
+          }
           return false
-        }
-        const element = e.target as HTMLElement
-        if (
-          ['.jump-link.search-word', '.icon.search-word'].some(selector =>
-            element.matches(selector),
-          )
-        ) {
-          return true
-        }
-        return false
-      })
+        })
+      }
     })
   },
   reload: () => {
