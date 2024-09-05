@@ -22,8 +22,9 @@ export class CommentAreaV3 extends CommentArea {
     return element.tagName.toLowerCase() === 'bili-comments'
   }
 
+  public commentAreaEntry: ShadowDomEntry
+
   protected shadowDomObserver: ShadowDomObserver
-  protected commentAreaEntry: ShadowDomEntry
   protected itemEntryMap = new Map<ShadowDomEntry, CommentItem>()
 
   private handleEntryAdded: (e: CustomEvent<ShadowDomEntry>) => void
@@ -141,14 +142,17 @@ export class CommentAreaV3 extends CommentArea {
   }
 
   observe() {
-    this.areaObserverDisposer = this.shadowDomObserver.watchShadowDom({
-      added: shadowDom => {
-        if (shadowDom.element !== this.element) {
-          return
-        }
-        this.commentAreaEntry = shadowDom
-        this.observeCommentItems()
-      },
+    return new Promise<void>(resolve => {
+      this.areaObserverDisposer = this.shadowDomObserver.watchShadowDom({
+        added: shadowDom => {
+          if (shadowDom.element !== this.element) {
+            return
+          }
+          this.commentAreaEntry = shadowDom
+          this.observeCommentItems()
+          resolve()
+        },
+      })
     })
   }
 

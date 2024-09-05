@@ -25,11 +25,11 @@ export class CommentAreaManager {
     dqa(CommentAreaManager.commentAreaSelectors).forEach(it => this.observeAreas(it))
   }
 
-  observeAreas(node: Node) {
+  async observeAreas(node: Node) {
     if (node instanceof HTMLElement && node.matches(CommentAreaManager.commentAreaSelectors)) {
       const area = getCommentArea(node)
       this.commentAreas.push(area)
-      area.observe()
+      await area.observe()
       this.commentAreaCallbacks.forEach(c => c.added?.(area))
       const [observer] = childList(area.element.parentElement, records => {
         records.forEach(r => {

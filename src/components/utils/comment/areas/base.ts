@@ -11,8 +11,8 @@ export abstract class CommentArea {
     this.element = element
   }
 
-  abstract observe(): void
-  abstract disconnect(): void
+  abstract observe(): void | Promise<void>
+  abstract disconnect(): void | Promise<void>
   abstract addMenuItem(
     item: CommentReplyItem,
     config: {
@@ -20,7 +20,7 @@ export abstract class CommentArea {
       text: string
       action: (e: MouseEvent) => void
     },
-  ): void
+  ): void | Promise<void>
 
   static resolveCallbackPair<T extends (...args: unknown[]) => void>(
     input: CommentCallbackInput<T>,
