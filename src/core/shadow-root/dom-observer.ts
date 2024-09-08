@@ -16,6 +16,7 @@ export class ShadowDomObserver extends ShadowRootObserver {
   }
 
   private observing = false
+  private rootObserver: MutationObserver | undefined = undefined
 
   entries: ShadowDomEntry[] = []
 
@@ -110,11 +111,12 @@ export class ShadowDomObserver extends ShadowRootObserver {
     }
     const existingRoots = ShadowRootObserver.queryAllShadowRoots()
     existingRoots.forEach(root => this.addEntry(root))
-    childListSubtree(document.body, records => this.mutationHandler(records))
+    ;[this.rootObserver] = childListSubtree(document.body, records => this.mutationHandler(records))
     this.observing = true
   }
 
   disconnect() {
+    this.rootObserver.disconnect()
     this.entries.forEach(entry => entry.disconnect())
     this.entries = []
     this.observing = false
