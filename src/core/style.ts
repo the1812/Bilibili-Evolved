@@ -68,7 +68,7 @@ export const loadInstantStyle = async (
 
     if ((it as ShadowDomInstantStyleDefinition).shadowDom) {
       shadowRootStyles.addStyle({
-        id: component.name,
+        id: it.name,
         style: styleContent,
       })
       return
