@@ -38,7 +38,7 @@
     "*"
   ],
   "require": [
-    "[altCdn.library.lodash]"
+    "[altCdn.library.lodash.url]#sha256=[altCdn.library.lodash.sha256]"
   ],
   "icon": "[altCdn.smallLogo]",
   "icon64": "[altCdn.logo]"

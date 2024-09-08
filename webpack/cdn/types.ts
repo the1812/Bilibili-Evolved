@@ -1,3 +1,4 @@
+export type ExternalLibrary = { url: string; sha256: string }
 export interface CdnConfig {
   name: string
   owner: string
@@ -5,16 +6,15 @@ export interface CdnConfig {
   stableClient: string
   previewClient: string
   library: {
-    lodash: string
-    protobuf: string
-    jszip: string
-    sortable: string
-    mdi: string
-    streamsaver: string
+    lodash: ExternalLibrary
+    protobuf: ExternalLibrary
+    jszip: ExternalLibrary
+    sortable: ExternalLibrary
+    streamsaver: ExternalLibrary
     ffmpeg: {
-      worker: string
-      core: string
-      wasm: string
+      worker: ExternalLibrary
+      core: ExternalLibrary
+      wasm: ExternalLibrary
     }
   }
   smallLogo: string
