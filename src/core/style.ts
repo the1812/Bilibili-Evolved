@@ -1,5 +1,10 @@
-import { ComponentMetadata } from '@/components/types'
+import {
+  ComponentMetadata,
+  DomInstantStyleDefinition,
+  ShadowDomInstantStyleDefinition,
+} from '@/components/types'
 import { contentLoaded } from './life-cycle'
+import { shadowRootStyles } from './shadow-root'
 
 /** 为`<style>`获取默认的ID (camelCase转为kebab-case) */
 export const getDefaultStyleID = (name: string) =>
@@ -53,21 +58,48 @@ export const loadInstantStyle = async (
   } = { head: document.head, body: document.body },
 ) => {
   component.instantStyles?.forEach(async it => {
+    const styleContent = await (async () => {
+      if (typeof it.style === 'string') {
+        return it.style
+      }
+      const module = await it.style()
+      return module.default
+    })()
+
+    if ((it as ShadowDomInstantStyleDefinition).shadowDom) {
+      shadowRootStyles.addStyle({
+        id: it.name,
+        style: styleContent,
+      })
+      return
+    }
+
     const style = document.createElement('style')
     style.id = getDefaultStyleID(it.name)
-    if (typeof it.style === 'string') {
-      style.textContent = it.style
-    } else {
-      const { default: styleContent } = await it.style()
-      style.textContent = styleContent
-    }
-    if (it.important) {
+    style.textContent = styleContent
+    if ((it as DomInstantStyleDefinition).important) {
       fragments.body.appendChild(style)
     } else {
       fragments.head.appendChild(style)
     }
   })
 }
+
+/**
+ * 移除首屏样式
+ */
+export const removeInstantStyle = (
+  ...instantStyles: (DomInstantStyleDefinition | ShadowDomInstantStyleDefinition)[]
+) => {
+  instantStyles.forEach(style => {
+    if ((style as ShadowDomInstantStyleDefinition).shadowDom) {
+      shadowRootStyles.removeStyle(style.name)
+    } else {
+      removeStyle(style.name)
+    }
+  })
+}
+
 /**
  * 注入组件中定义的首屏样式, MDI图标样式, 以及主题颜色样式
  *
@@ -94,7 +126,7 @@ export const preloadStyles = lodash.once(async () => {
           if (enabled) {
             return loadInstantStyle(component)
           }
-          return component.instantStyles?.forEach(style => removeStyle(style.name))
+          return component.instantStyles?.forEach(style => removeInstantStyle(style))
         }
         addComponentListener(component.name, listener)
         if (isUserComponent(component)) {
