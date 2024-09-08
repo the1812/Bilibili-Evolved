@@ -10,18 +10,18 @@ $prefix: 'simplifyComments-switch';
   }
 }
 
-:host-context(body.#{$prefix}-replyEditor) {
-  &:host(bili-comment-box) {
+@container style(--#{$prefix}-replyEditor: true) {
+  :host(bili-comment-box) {
     #pub button {
       font-size: 14px;
     }
   }
-  &:host(bili-checkbox) {
+  :host(bili-checkbox) {
     #label {
       font-size: 15px;
     }
   }
-  &:host(bili-comment-textarea) {
+  :host(bili-comment-textarea) {
     #input {
       font-size: 13px;
     }
@@ -31,28 +31,38 @@ $prefix: 'simplifyComments-switch';
     }
   }
 }
-:host-context(body.#{$prefix}-userLevel):host(bili-comment-user-info) {
-  #user-level {
-    display: none;
+@container style(--#{$prefix}-userLevel: true) {
+  :host(bili-comment-user-info) {
+    #user-level {
+      display: none;
+    }
   }
 }
-:host-context(body.#{$prefix}-decorateAndTime):host(bili-comment-renderer) {
-  bili-comment-user-sailing-card {
-    display: none;
+@container style(--#{$prefix}-decorateAndTime: true) {
+  :host(bili-comment-renderer) {
+    bili-comment-user-sailing-card {
+      display: none;
+    }
   }
 }
-:host-context(body.#{$prefix}-fansMedal):host(bili-comment-user-info) {
-  bili-comment-user-medal {
-    display: none;
+@container style(--#{$prefix}-fansMedal: true) {
+  :host(bili-comment-user-info) {
+    bili-comment-user-medal {
+      display: none;
+    }
   }
 }
-:host-context(body.#{$prefix}-subReplyNewLine):host(bili-comment-reply-renderer) {
-  bili-comment-user-info {
-    display: block;
+@container style(--#{$prefix}-subReplyNewLine: true) {
+  :host(bili-comment-reply-renderer) {
+    bili-comment-user-info {
+      display: block;
+    }
   }
 }
-:host-context(body.#{$prefix}-eventBanner):host(bili-comments-header-renderer) {
-  bili-comments-notice {
-    display: none;
+@container style(--#{$prefix}-eventBanner: true) {
+  :host(bili-comments-header-renderer) {
+    bili-comments-notice {
+      display: none;
+    }
   }
 }
