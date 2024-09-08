@@ -67,8 +67,28 @@
 .bili-dyn-publishing {
   @include dyn-container-skeleton();
   @include background-color('4');
+  &__title {
+    &__input {
+      @include background-color();
+      @include color('e');
+      &::placeholder {
+        @include color('a');
+      }
+    }
+    &__indicator {
+      @include color('a');
+    }
+    &__close {
+      @include background-color('6');
+    }
+  }
   &__tools {
     &__item {
+      @include color('e');
+      &.active,
+      &:hover {
+        @include theme-color();
+      }
       // 这里用 filter 会导致弹窗内容也被影响, 暂时先去掉了
       // &.active,
       // &:hover {
@@ -77,6 +97,13 @@
       &.emoji {
         @include background-color();
       }
+    }
+  }
+  &__settings__btn {
+    @include color('e');
+    &.active,
+    &:hover {
+      @include theme-color();
     }
   }
   .bili-rich-textarea__inner {

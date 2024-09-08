@@ -163,6 +163,21 @@ export type ComponentEntry<O extends UnknownOptions = UnknownOptions, T = unknow
   context: ComponentEntryContext<O>,
 ) => T | Promise<T>
 
+export interface InstantStyleDefinition {
+  /** 样式ID */
+  name: string
+  /** 样式内容, 可以是一个导入样式的函数 */
+  style: string | (() => Promise<{ default: string }>)
+}
+export interface DomInstantStyleDefinition extends InstantStyleDefinition {
+  /** 设为 `true` 则注入到 `document.body` 末尾, 否则注入到 `document.head` 末尾 */
+  important?: boolean
+}
+export interface ShadowDomInstantStyleDefinition extends InstantStyleDefinition {
+  /** 设为 `true` 则注入到 Shadow DOM 中 */
+  shadowDom?: boolean
+}
+
 /** 带有函数/复杂对象的组件信息 */
 export interface FunctionalMetadata<O extends UnknownOptions = UnknownOptions> {
   /** 主入口, 重新开启时不会再运行 */
@@ -170,14 +185,7 @@ export interface FunctionalMetadata<O extends UnknownOptions = UnknownOptions> {
   /** 导出小组件 */
   widget?: Omit<Widget, 'name'>
   /** 首屏样式, 会尽快注入 (before DCL) */
-  instantStyles?: {
-    /** 样式ID */
-    name: string
-    /** 样式内容, 可以是一个导入样式的函数 */
-    style: string | (() => Promise<{ default: string }>)
-    /** 设为`true`则注入到`document.body`末尾, 否则注入到`document.head`末尾 */
-    important?: boolean
-  }[]
+  instantStyles?: (DomInstantStyleDefinition | ShadowDomInstantStyleDefinition)[]
   /** 重新开启时执行 */
   reload?: Executable
   /** 关闭时执行 */

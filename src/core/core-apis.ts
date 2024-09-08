@@ -1,5 +1,6 @@
 import * as ajax from '@/core/ajax'
 import * as cdnTypes from '@/core/cdn-types'
+import * as containerQuery from '@/core/container-query'
 import * as download from '@/core/download'
 import * as dialog from '@/core/dialog'
 import * as externalInput from '@/core/external-input'
@@ -17,7 +18,7 @@ import * as spinQuery from '@/core/spin-query'
 import * as style from '@/core/style'
 import * as textColor from '@/core/text-color'
 import * as settings from '@/core/settings'
-import * as shadowDom from '@/core/shadow-dom'
+import * as shadowRoot from '@/core/shadow-root'
 import * as userInfo from '@/core/user-info'
 import * as version from '@/core/version'
 import * as commonUtils from '@/core/utils'
@@ -41,6 +42,7 @@ import { pluginApis } from '@/plugins/api'
 export const coreApis = {
   ajax,
   cdnTypes,
+  containerQuery,
   download,
   dialog,
   externalInput,
@@ -60,7 +62,7 @@ export const coreApis = {
   userInfo,
   version,
   settings,
-  shadowDom,
+  shadowRoot,
   toast,
   themeColor,
   utils: {
@@ -83,6 +85,7 @@ export type CoreApis = typeof coreApis
 export const externalApis = {
   ajax,
   ...cdnTypes,
+  ...containerQuery,
   ...download,
   ...dialog,
   ...externalInput,
@@ -101,7 +104,7 @@ export const externalApis = {
   ...textColor,
   ...userInfo,
   ...version,
-  ...shadowDom,
+  ...shadowRoot,
   settingsApis: settings,
   get settings() {
     return settings.settings

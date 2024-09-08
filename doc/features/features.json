@@ -707,7 +707,7 @@
     "type": "component",
     "name": "unescapeDanmaku",
     "displayName": "弹幕转义",
-    "description": "将弹幕中的 `\\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.\r\n",
+    "description": "将弹幕中的 `\\n` 或 `/n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/unescape.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/unescape.js"
   },

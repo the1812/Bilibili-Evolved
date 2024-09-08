@@ -1,6 +1,7 @@
 import { Toast } from '@/core/toast'
 import { formatFileSize, formatPercent } from '@/core/utils/formatters'
 import { getOrLoad, storeNames } from './database'
+import { RuntimeLibraryDefinition, RuntimeLibrary } from '@/core/runtime-library'
 
 type OnProgress = (received: number, total: number) => void
 
@@ -56,8 +57,21 @@ export async function httpGet(url: string, onprogress: OnProgress) {
   return chunksAll
 }
 
-export async function getCacheOrFetch(key: string, url: string, loading: OnProgress) {
-  return getOrLoad(storeNames.cache, key, async () => httpGet(url, loading))
+export async function getCacheOrFetch(
+  key: string,
+  library: RuntimeLibraryDefinition,
+  loading: OnProgress,
+) {
+  return getOrLoad(storeNames.cache, key, async () => {
+    const content = await httpGet(library.url, loading)
+    const sha256 = await RuntimeLibrary.sha256(content)
+    if (sha256 !== library.sha256) {
+      throw new Error(
+        `Check integrity failed from ${library.url}, expected = ${library.sha256}, actual = ${sha256}`,
+      )
+    }
+    return content
+  })
 }
 
 export function toBlobUrl(buffer: Uint8Array, mimeType: string) {

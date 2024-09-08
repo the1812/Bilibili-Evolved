@@ -969,7 +969,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/unescape.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/unescape.js)
 
-将弹幕中的 `\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.
+将弹幕中的 `\n` 或 `/n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.
 
 ### [视频页默认定位](../../registry/dist/components/video/default-location.js)
 `videoDefaultLocation`
