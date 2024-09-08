@@ -1,5 +1,6 @@
 import * as ajax from '@/core/ajax'
 import * as cdnTypes from '@/core/cdn-types'
+import * as containerQuery from '@/core/container-query'
 import * as download from '@/core/download'
 import * as dialog from '@/core/dialog'
 import * as externalInput from '@/core/external-input'
@@ -41,6 +42,7 @@ import { pluginApis } from '@/plugins/api'
 export const coreApis = {
   ajax,
   cdnTypes,
+  containerQuery,
   download,
   dialog,
   externalInput,
@@ -83,6 +85,7 @@ export type CoreApis = typeof coreApis
 export const externalApis = {
   ajax,
   ...cdnTypes,
+  ...containerQuery,
   ...download,
   ...dialog,
   ...externalInput,
