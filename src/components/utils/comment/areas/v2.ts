@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 import { childList } from '@/core/observer'
 import { CommentItem } from '../comment-item'
-import { CommentArea } from './base'
+import { DomCommentArea } from './dom'
 import { CommentReplyItem } from '../reply-item'
 import { HTMLElementWithVue, VNodeManager } from '../vnode-manager'
 
-export class CommentAreaV2 extends CommentArea {
+export class CommentAreaV2 extends DomCommentArea {
   private vnodeManager: VNodeManager
 
   constructor(element: HTMLElement) {
@@ -94,7 +94,7 @@ export class CommentAreaV2 extends CommentArea {
           content: r.content.message,
           time: r.ctime * 1000,
           likes: r.like,
-          vueProps: r,
+          frameworkSpecificProps: r,
         })
       })
     }
@@ -110,7 +110,7 @@ export class CommentAreaV2 extends CommentArea {
         return img.img_src
       }),
       replies: parseReplies(),
-      vueProps,
+      frameworkSpecificProps: vueProps,
     })
     if (item.replies.length < vueProps.rcount) {
       const replyBox = dq(element, '.sub-reply-list')

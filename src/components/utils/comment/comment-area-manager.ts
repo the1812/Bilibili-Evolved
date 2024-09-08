@@ -14,7 +14,7 @@ export class CommentAreaManager {
   commentAreas: CommentArea[] = []
   commentAreaCallbacks: CommentCallbackPair<CommentAreaCallback>[] = []
 
-  protected static commentAreaClasses = ['bili-comment', 'bb-comment']
+  protected static commentAreaSelectors = '.bili-comment, .bb-comment, bili-comments'
 
   init() {
     allMutations(records => {
@@ -22,19 +22,14 @@ export class CommentAreaManager {
         r.addedNodes.forEach(n => this.observeAreas(n))
       })
     })
-    dqa(CommentAreaManager.commentAreaClasses.map(c => `.${c}`).join(',')).forEach(it =>
-      this.observeAreas(it),
-    )
+    dqa(CommentAreaManager.commentAreaSelectors).forEach(it => this.observeAreas(it))
   }
 
-  observeAreas(node: Node) {
-    if (
-      node instanceof HTMLElement &&
-      CommentAreaManager.commentAreaClasses.some(c => node.classList.contains(c))
-    ) {
+  async observeAreas(node: Node) {
+    if (node instanceof HTMLElement && node.matches(CommentAreaManager.commentAreaSelectors)) {
       const area = getCommentArea(node)
       this.commentAreas.push(area)
-      area.observeItems()
+      await area.observe()
       this.commentAreaCallbacks.forEach(c => c.added?.(area))
       const [observer] = childList(area.element.parentElement, records => {
         records.forEach(r => {
@@ -42,7 +37,7 @@ export class CommentAreaManager {
             if (removedNode === area.element) {
               deleteValue(this.commentAreas, a => a === area)
               this.commentAreaCallbacks.forEach(c => c.removed?.(area))
-              area.destroy()
+              area.disconnect()
               observer.disconnect()
             }
           })

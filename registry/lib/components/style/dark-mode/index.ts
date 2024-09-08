@@ -1,6 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { darkExcludes } from './dark-urls'
 
+const name = 'darkMode'
 const changeDelay = 200
 const darkMetaColor = '#111'
 const add = async () => {
@@ -40,16 +41,15 @@ const remove = async () => {
     colorSchemeMeta.content = 'light'
   }
 }
+const entry = async () => {
+  setTimeout(add, changeDelay)
+}
 
 export const component = defineComponentMetadata({
-  name: 'darkMode',
+  name,
   displayName: '夜间模式',
-  entry: () => {
-    setTimeout(add, changeDelay)
-  },
-  reload: () => {
-    setTimeout(add, changeDelay)
-  },
+  entry,
+  reload: entry,
   unload: () => {
     setTimeout(remove, changeDelay)
   },
@@ -66,6 +66,11 @@ export const component = defineComponentMetadata({
       style: () => import('./dark-mode.important.scss'),
       important: true,
     },
+    {
+      name: 'dark-shadow-dom',
+      style: () => import('./dark-shadow-dom.scss'),
+      shadowDom: true,
+    },
   ],
   plugin: {
     displayName: '夜间模式 - 提前注入',
@@ -76,8 +81,8 @@ export const component = defineComponentMetadata({
       const { contentLoaded } = await import('@/core/life-cycle')
       const { isComponentEnabled } = await import('@/core/settings')
       contentLoaded(() => {
-        // 提前添加dark的class, 防止颜色抖动
-        if (isComponentEnabled('darkMode')) {
+        // 提前添加 dark 的 class, 防止颜色抖动
+        if (isComponentEnabled(name)) {
           document.body.classList.add('dark')
         }
       })

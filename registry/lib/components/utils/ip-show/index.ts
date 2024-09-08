@@ -2,10 +2,11 @@
 /* eslint-disable yoda */
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
+import { select } from '@/core/spin-query'
 
 // 新版评论区IP属地获取
 const getIpLocation = (item: CommentReplyItem) => {
-  const reply = item.vueProps
+  const reply = item.frameworkSpecificProps
   return reply?.reply_control?.location ?? undefined
 }
 
@@ -272,20 +273,37 @@ const observer = new MutationObserver(mutations => {
 observer.observe(document.head, { childList: true })
 
 const processItems = (items: CommentReplyItem[]) => {
-  items.forEach(item => {
+  items.forEach(async item => {
     const location = getIpLocation(item)
-    if (location !== undefined) {
-      const replyTime =
+    if (location === undefined) {
+      return
+    }
+    const replyTime = await (() => {
+      if (item.shadowDomEntry) {
+        return select(() => item.shadowDomEntry.querySelector('#pubdate'), {
+          queryInterval: 100,
+          maxRetry: 30,
+        })
+      }
+      return (
         item.element.querySelector('.reply-info>.reply-time') ??
         item.element.querySelector('.sub-reply-info>.sub-reply-time')
-      if (replyTime.childElementCount === 0) {
-        // 避免在评论更新的情况下重复添加
-        const replyLocation = document.createElement('span')
-        replyLocation.style.marginLeft = `${marginLeft}px`
-        replyLocation.innerText = location
-        replyTime.appendChild(replyLocation)
-      }
+      )
+    })()
+    if (replyTime === null) {
+      return
     }
+    const existingLocation = replyTime.querySelector('.ip-location') as HTMLElement | null
+    if (existingLocation !== null) {
+      existingLocation.innerText = location
+      return
+    }
+
+    const replyLocation = document.createElement('span')
+    replyLocation.className = 'ip-location'
+    replyLocation.style.marginLeft = `${marginLeft}px`
+    replyLocation.innerText = location
+    replyTime.appendChild(replyLocation)
   })
 }
 

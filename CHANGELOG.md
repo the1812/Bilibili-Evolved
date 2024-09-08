@@ -1,6 +1,43 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.9.2-preview
+`2024-09-08`
+
+包含 [v2.9.2](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.2) 的所有更新内容.
+
+✨新增
+- `弹幕转义` 支持对正斜杠的换行 (`/n`) 进行转义. (#4865)
+- `自定义顶栏` 支持直接在功能中打开布局设置. (#2666)
+- `高分辨率图片` 支持处理没有指定高度的图片, 支持在专栏页面中请求原图. (#2868)
+- `直播间网页全屏自适应` 样式适配较低的宽度值. (#4895)
+
+☕开发者相关
+- 外部资源接入 Subresource Integrity. (#4896)
+
+## v2.9.2
+`2024-09-08`
+
+✨新增
+- `网址参数清理` 支持清理 `is_room_feed`. (PR #4886 by [dreammu](https://github.com/dreammu))
+
+🐛修复
+- 新版评论区相关功能修复: (#4843)
+  - 修复 `快速收起评论` 按钮错位. (#4890)
+  - 恢复功能: `禁用评论区搜索词`, `评论区IP属地显示`, `复制动态链接`.
+  - `简化评论区` 支持 Firefox.
+  - 样式实现使用 [Container style queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_size_and_style_queries#container_style_queries_2) 替代 [:host-context](https://developer.mozilla.org/en-US/docs/Web/CSS/:host-context), 虽然 Firefox 还是不支持, 但是能稍微标准化一点.
+  - 夜间模式适配
+
+☕开发者相关
+- Shadow DOM API (`./src/core/shadow-dom`) 更名为 Shadow Root API (`./src/core/shadow-root`), 模块内的功能导出单例:
+  - `shadowDomObserver`: 持续观测页面上的所有 Shadow DOM.
+  - `shadowRootStyles`: 支持将样式注入到 Shadow DOM 内部.
+- Comments API 增加 `CommentAreaV3` 实现, 支持基于 Shadow DOM 的新版评论区. (#4843)
+- 增加 `isContainerStyleQuerySupported` 来检测当前浏览器对 [Container style queries](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_size_and_style_queries#container_style_queries_2) 的支持.
+- 组件样式支持在 `ComponentMetadata.instantStyles` 中声明 `shadowDom: true` 来插入到 Shadow DOM 中.
+
+
 ## v2.9.1-preview
 `2024-08-15`
 
