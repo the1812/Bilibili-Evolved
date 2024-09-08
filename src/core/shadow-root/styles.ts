@@ -76,7 +76,7 @@ export class ShadowRootStyles {
         this.removeStyle(entry.id)
       }
     }
-    addComponentListener(path, handler)
+    addComponentListener(path, handler, true)
     return () => removeComponentListener(path, handler)
   }
 }
