@@ -1,7 +1,7 @@
 import { styledComponentEntry } from '@/components/styled-component'
 import { Options } from '.'
 
-const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
+const resizeRegex = /@(\d+)[Ww](_(\d+)[Hh])?/
 
 /** 排除 */
 const excludeSelectors = ['#certify-img1', '#certify-img2']
@@ -48,16 +48,22 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     if (value.includes(',')) {
       return
     }
+
     const match = value.match(resizeRegex)
     if (!match) {
       return
     }
-    const [, currentWidth, currentHeight] = match
+    const [, currentWidth, , currentHeight] = match
     const lastWidth = parseInt(element.getAttribute('data-resolution-width') || '0')
     if (parseInt(currentWidth) >= lastWidth && lastWidth !== 0) {
       return
     }
-    if (element.getAttribute('width') === null && element.getAttribute('height') === null) {
+
+    if (
+      element.getAttribute('width') === null &&
+      element.getAttribute('height') === null &&
+      currentHeight !== undefined
+    ) {
       if (widthAndHeightSelectors.some(selector => element.matches(selector))) {
         element.setAttribute('height', currentHeight)
         element.setAttribute('width', currentWidth)
@@ -67,10 +73,17 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
         element.setAttribute('width', currentWidth)
       }
     }
-    const newWidth = Math.round(dpi * parseInt(currentWidth)).toString()
-    const newHeight = Math.round(dpi * parseInt(currentHeight)).toString()
-    element.setAttribute('data-resolution-width', newWidth)
-    setValue(element, value.replace(resizeRegex, `@${newWidth}w_${newHeight}h`))
+
+    if (currentHeight !== undefined) {
+      const newWidth = Math.round(dpi * parseInt(currentWidth)).toString()
+      const newHeight = Math.round(dpi * parseInt(currentHeight)).toString()
+      element.setAttribute('data-resolution-width', newWidth)
+      setValue(element, value.replace(resizeRegex, `@${newWidth}w_${newHeight}h`))
+    } else {
+      const newWidth = Math.round(dpi * parseInt(currentWidth)).toString()
+      element.setAttribute('data-resolution-width', newWidth)
+      setValue(element, value.replace(resizeRegex, `@${newWidth}w`))
+    }
   }
   attributes(element, () => {
     replaceSource(
