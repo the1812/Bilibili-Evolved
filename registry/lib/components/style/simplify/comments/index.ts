@@ -57,7 +57,7 @@ export const component = wrapSwitchOptions({
     if (isContainerStyleQuerySupported()) {
       const { shadowRootStyles } = await import('@/core/shadow-root')
       const v3Style = await import('./comments-v3.scss').then(m => m.default)
-      shadowRootStyles.addStyle({ id: name, style: v3Style })
+      shadowRootStyles.toggleWithComponent(metadata.name, { id: name, style: v3Style })
     } else {
       const { shadowRootStyles } = await import('@/core/shadow-root')
       const firefoxStyles = require.context('./comments-v3-firefox', false, /\.scss$/)

@@ -1,3 +1,4 @@
+import { addComponentListener, removeComponentListener } from '../settings'
 import { deleteValue, getRandomId } from '../utils'
 import { ShadowDomEntry } from './dom-entry'
 import { ShadowDomObserver, shadowDomObserver } from './dom-observer'
@@ -63,6 +64,20 @@ export class ShadowRootStyles {
       style.remove()
       this.removeEntry(id)
     }
+  }
+
+  toggleWithComponent(path: string, definition: ShadowRootStyleDefinition) {
+    let entry: ShadowRootStyleEntry | undefined
+    const handler = async (rawValue: unknown) => {
+      const value = Boolean(rawValue)
+      if (value) {
+        entry = await this.addStyle(definition)
+      } else if (entry !== undefined) {
+        this.removeStyle(entry.id)
+      }
+    }
+    addComponentListener(path, handler)
+    return () => removeComponentListener(path, handler)
   }
 }
 
