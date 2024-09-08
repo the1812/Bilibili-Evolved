@@ -249,7 +249,9 @@ const newSwitchEntry = <O extends UnknownOptions, N extends string, S extends st
         addComponentListener(
           `${component.name}.${key}`,
           (value: boolean) => {
-            document.body.classList.toggle(`${component.name}-${key}`, value)
+            const id = `${component.name}-${key}`
+            document.body.classList.toggle(id, value)
+            document.documentElement.style.setProperty(`--${id}`, value.toString())
           },
           true,
         )

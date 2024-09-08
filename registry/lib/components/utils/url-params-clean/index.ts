@@ -75,6 +75,10 @@ const entry = async () => {
       param: 'session_id',
     },
     {
+      match: /\/\/live\.bilibili\.com\//,
+      param: 'is_room_feed',
+    },
+    {
       match: /\/\/www\.bilibili\.com\/bangumi\//,
       param: 'theme',
     },
