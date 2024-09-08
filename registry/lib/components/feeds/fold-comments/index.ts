@@ -6,7 +6,7 @@ import { select } from '@/core/spin-query'
 import { childListSubtree } from '@/core/observer'
 
 const entry = async () => {
-  const { ShadowRootStyles } = await import('@/core/shadow-root')
+  const { shadowRootStyles } = await import('@/core/shadow-root')
   const { forEachFeedsCard } = await import('@/components/feeds/api')
   const { childList } = await import('@/core/observer')
   const commentSelector = '.bb-comment, .bili-comment-container'
@@ -80,9 +80,11 @@ const entry = async () => {
     added: c => injectButton(c.element),
   })
 
-  const styles = await import('./fold-comment-shadow.scss').then(m => m.default)
-  const shadowRootStyles = new ShadowRootStyles()
-  shadowRootStyles.addStyle(styles)
+  const style = await import('./fold-comment-shadow.scss').then(m => m.default)
+  shadowRootStyles.addStyle({
+    id: 'foldComments',
+    style,
+  })
 }
 
 export const component = defineComponentMetadata({

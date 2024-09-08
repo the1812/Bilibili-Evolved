@@ -2,58 +2,57 @@
 
 $prefix: 'simplifyComments-switch';
 
-:host-context(.comment-m-v1) {
-  &:host(bili-rich-text) {
-    #contents img, #contents a i {
-      max-width: 1.4em;
-      max-height: 1.4em;
-    }
+:host(bili-rich-text) {
+  #contents img,
+  #contents a i {
+    max-width: 1.4em;
+    max-height: 1.4em;
   }
+}
 
-  &:host-context(body.#{$prefix}-replyEditor) {
-    &:host(bili-comment-box) {
-      #pub button {
-        font-size: 14px;
-      }
-    }
-    &:host(bili-checkbox) {
-      #label {
-        font-size: 15px;
-      }
-    }
-    &:host(bili-comment-textarea) {
-      #input {
-        font-size: 13px;
-      }
-      #input,
-      #input::placeholder {
-        line-height: normal;
-      }
+:host-context(body.#{$prefix}-replyEditor) {
+  &:host(bili-comment-box) {
+    #pub button {
+      font-size: 14px;
     }
   }
-  &:host-context(body.#{$prefix}-userLevel):host(bili-comment-user-info) {
-    #user-level {
-      display: none;
+  &:host(bili-checkbox) {
+    #label {
+      font-size: 15px;
     }
   }
-  &:host-context(body.#{$prefix}-decorateAndTime):host(bili-comment-renderer) {
-    bili-comment-user-sailing-card {
-      display: none;
+  &:host(bili-comment-textarea) {
+    #input {
+      font-size: 13px;
+    }
+    #input,
+    #input::placeholder {
+      line-height: normal;
     }
   }
-  &:host-context(body.#{$prefix}-fansMedal):host(bili-comment-user-info) {
-    bili-comment-user-medal {
-      display: none;
-    }
+}
+:host-context(body.#{$prefix}-userLevel):host(bili-comment-user-info) {
+  #user-level {
+    display: none;
   }
-  &:host-context(body.#{$prefix}-subReplyNewLine):host(bili-comment-reply-renderer) {
-    bili-comment-user-info {
-      display: block;
-    }
+}
+:host-context(body.#{$prefix}-decorateAndTime):host(bili-comment-renderer) {
+  bili-comment-user-sailing-card {
+    display: none;
   }
-  &:host-context(body.#{$prefix}-eventBanner):host(bili-comments-header-renderer) {
-    bili-comments-notice {
-      display: none;
-    }
+}
+:host-context(body.#{$prefix}-fansMedal):host(bili-comment-user-info) {
+  bili-comment-user-medal {
+    display: none;
+  }
+}
+:host-context(body.#{$prefix}-subReplyNewLine):host(bili-comment-reply-renderer) {
+  bili-comment-user-info {
+    display: block;
+  }
+}
+:host-context(body.#{$prefix}-eventBanner):host(bili-comments-header-renderer) {
+  bili-comments-notice {
+    display: none;
   }
 }

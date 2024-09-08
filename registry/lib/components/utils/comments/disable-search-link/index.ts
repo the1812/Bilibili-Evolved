@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { forEachCommentArea, CommentAreaV3 } from '@/components/utils/comment-apis'
-import { ShadowRootEvents, ShadowRootStyles } from '@/core/shadow-root'
+import { ShadowRootEvents, shadowRootStyles } from '@/core/shadow-root'
 import { preventEvent } from '@/core/utils'
 
 const name = 'disableCommentsSearchLink'
@@ -21,9 +21,8 @@ export const component = defineComponentMetadata({
     forEachCommentArea(async area => {
       const isV3Area = area instanceof CommentAreaV3
       if (isV3Area) {
-        const styles = await import('./disable-search-link-shadow.scss').then(m => m.default)
-        const shadowRootStyles = new ShadowRootStyles()
-        shadowRootStyles.addStyle(styles)
+        const style = await import('./disable-search-link-shadow.scss').then(m => m.default)
+        shadowRootStyles.addStyle({ id: name, style })
         area.commentAreaEntry.addEventListener(
           ShadowRootEvents.Updated,
           (e: CustomEvent<MutationRecord[]>) => {

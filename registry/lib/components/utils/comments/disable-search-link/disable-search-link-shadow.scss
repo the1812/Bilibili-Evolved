@@ -1,8 +1,10 @@
-#contents a[data-type="search"] {
-  color: inherit;
-  cursor: inherit;
-  display: contents !important;
-  img {
-    display: none;
+:host(bili-rich-text) {
+  #contents a[data-type='search'] {
+    color: inherit;
+    cursor: inherit;
+    display: contents !important;
+    img {
+      display: none;
+    }
   }
 }

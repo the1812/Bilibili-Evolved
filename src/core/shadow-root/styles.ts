@@ -1,10 +1,16 @@
 import { deleteValue, getRandomId } from '../utils'
+import { ShadowDomEntry } from './dom-entry'
 import { ShadowDomObserver, shadowDomObserver } from './dom-observer'
 
-interface ShadowRootStyleEntry {
+export interface ShadowRootStyleEntry {
   id: string
   styleSheet: CSSStyleSheet
+  adoptedShadowDoms: ShadowDomEntry[]
   remove: () => void
+}
+export interface ShadowRootStyleDefinition {
+  id?: string
+  style: string
 }
 export class ShadowRootStyles {
   observer: ShadowDomObserver = shadowDomObserver
@@ -20,25 +26,30 @@ export class ShadowRootStyles {
     }
   }
 
-  async addStyle(text: string) {
+  async addStyle(definition: ShadowRootStyleDefinition) {
+    const { id, style } = definition
     this.observer.observe()
-    const id = `shadow-dom-style-${getRandomId()}`
+    const entryId = `shadow-dom-style-${id !== undefined ? lodash.kebabCase(id) : getRandomId()}`
     const styleSheet = new CSSStyleSheet()
-    await styleSheet.replace(text)
-    document.adoptedStyleSheets.push(styleSheet)
+    await styleSheet.replace(style)
 
+    const adoptedShadowDoms: ShadowDomEntry[] = []
     const destroy = this.observer.watchShadowDom({
       added: async shadowDom => {
         shadowDom.shadowRoot.adoptedStyleSheets.push(styleSheet)
+        adoptedShadowDoms.push(shadowDom)
       },
     })
 
     const entry: ShadowRootStyleEntry = {
-      id,
+      id: entryId,
       styleSheet,
+      adoptedShadowDoms,
       remove: () => {
         destroy()
-        deleteValue(document.adoptedStyleSheets, it => it === styleSheet)
+        adoptedShadowDoms.forEach(it =>
+          deleteValue(it.shadowRoot.adoptedStyleSheets, sheet => sheet === styleSheet),
+        )
         this.removeEntry(id)
       },
     }
@@ -46,3 +57,5 @@ export class ShadowRootStyles {
     return entry
   }
 }
+
+export const shadowRootStyles = new ShadowRootStyles()
