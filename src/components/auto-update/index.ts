@@ -60,16 +60,16 @@ const optionsMetadata = defineOptionsMetadata({
 
 export type Options = OptionsOfMetadata<typeof optionsMetadata>
 
-const entry: ComponentEntry<Options> = async ({ settings: { options: opt } }) => {
+const entry: ComponentEntry<Options> = async ({ settings: { options } }) => {
   if (isIframe()) {
     return checkerMethods
   }
   const now = Number(new Date())
-  const duration = now - opt.lastUpdateCheck
+  const duration = now - options.lastUpdateCheck
 
-  const isDurationExceeded = duration >= opt.minimumDuration
+  const isDurationExceeded = duration >= options.minimumDuration
   const isVersionOutdated = new Version(meta.version).greaterThan(
-    new Version(opt.lastInstalledVersion),
+    new Version(options.lastInstalledVersion),
   )
   if (isDurationExceeded) {
     coreApis.lifeCycle.fullyLoaded(() => silentCheckUpdate())
