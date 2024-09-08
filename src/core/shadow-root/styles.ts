@@ -56,6 +56,14 @@ export class ShadowRootStyles {
     this.addEntry(id, entry)
     return entry
   }
+
+  removeStyle(id: string) {
+    if (this.stylesMap.has(id)) {
+      const style = this.stylesMap.get(id)
+      style.remove()
+      this.removeEntry(id)
+    }
+  }
 }
 
 export const shadowRootStyles = new ShadowRootStyles()
