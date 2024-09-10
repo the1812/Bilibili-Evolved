@@ -33,7 +33,6 @@ export class CommentAreaV3 extends CommentArea {
 
   constructor(element: HTMLElement) {
     super(element)
-    shadowDomObserver.observe()
     this.shadowDomObserver = shadowDomObserver
   }
 

@@ -518,9 +518,18 @@ export const playerReady = async () => {
 //   unsafeWindow.aid = info.aid.toString()
 //   return info.aid as string
 // }
+
+/** 获取当前聚焦的元素 */
+export const getActiveElement = () => {
+  let { activeElement } = document
+  while (activeElement.shadowRoot !== null) {
+    activeElement = activeElement.shadowRoot.activeElement
+  }
+  return activeElement
+}
 /** 是否正在打字 */
 export const isTyping = () => {
-  const { activeElement } = document
+  const activeElement = getActiveElement()
   if (!activeElement) {
     return false
   }

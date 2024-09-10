@@ -81,6 +81,7 @@ export class ShadowDomObserver extends ShadowRootObserver {
   }
 
   forEachShadowDom(callback: ShadowDomCallback) {
+    this.observe()
     const callCurrentAndNextLevel = (currentEntry: ShadowDomEntry) => {
       callback(currentEntry)
       currentEntry.children.forEach(child => {
@@ -94,6 +95,7 @@ export class ShadowDomObserver extends ShadowRootObserver {
   }
 
   watchShadowDom(callbacks: { added?: ShadowDomCallback; removed?: ShadowDomCallback }) {
+    this.observe()
     this.forEachShadowDom(it => callbacks.added?.(it))
     const addedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.added?.(e.detail)
     const removedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.removed?.(e.detail)
