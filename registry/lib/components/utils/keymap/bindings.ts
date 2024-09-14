@@ -1,6 +1,7 @@
 import { isTyping, matchUrlPattern } from '@/core/utils'
 import { mediaListUrls, watchlaterUrls } from '@/core/utils/urls'
 import { clickElement, changeVideoTime, showTip } from './actions'
+import { shadowDomObserver } from '@/core/shadow-root'
 
 export interface KeyBindingActionContext {
   binding: KeyBinding
@@ -29,7 +30,7 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
     enable: true,
     bindings,
   }
-  document.body.addEventListener('keydown', (e: KeyboardEvent & { [key: string]: boolean }) => {
+  const keyboardHandler = (e: KeyboardEvent & { [key: string]: boolean }) => {
     if (!config.enable) {
       return
     }
@@ -87,10 +88,15 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
 
       const actionSuccess = !lodash.isNil(actionResult)
       if (binding.action.prevent ?? actionSuccess) {
-        e.stopPropagation()
+        e.stopImmediatePropagation()
         e.preventDefault()
       }
     })
+  }
+  document.body.addEventListener('keydown', keyboardHandler, { capture: true })
+  shadowDomObserver.watchShadowDom({
+    added: shadowDom =>
+      shadowDom.shadowRoot.addEventListener('keydown', keyboardHandler, { capture: true }),
   })
   return config
 })
