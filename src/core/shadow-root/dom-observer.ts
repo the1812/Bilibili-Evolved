@@ -1,3 +1,4 @@
+import { contentLoaded } from '../life-cycle'
 import { childListSubtree } from '../observer'
 import { deleteValue } from '../utils'
 import { ShadowDomCallback, ShadowDomEntry } from './dom-entry'
@@ -111,10 +112,14 @@ export class ShadowDomObserver extends ShadowRootObserver {
     if (this.observing) {
       return
     }
-    const existingRoots = ShadowRootObserver.queryAllShadowRoots()
-    existingRoots.forEach(root => this.addEntry(root))
-    ;[this.rootObserver] = childListSubtree(document.body, records => this.mutationHandler(records))
     this.observing = true
+    contentLoaded(() => {
+      const existingRoots = ShadowRootObserver.queryAllShadowRoots()
+      existingRoots.forEach(root => this.addEntry(root))
+      ;[this.rootObserver] = childListSubtree(document.body, records =>
+        this.mutationHandler(records),
+      )
+    })
   }
 
   disconnect() {
