@@ -49,6 +49,9 @@
         <div class="download-video-config-title">使用备用下载地址:</div>
         <SwitchBox v-model="useBackupUrls" />
       </div>
+      <div class="download-video-config-description">
+        若默认下载地址速度缓慢, 可以尝试更换备用下载地址.
+      </div>
       <component
         :is="a.component"
         v-for="a of assetsWithOptions"
