@@ -1,6 +1,45 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.9.3-preview
+主要是各种修复, 见 [v2.9.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.3).
+
+## v2.9.3
+
+<details>
+<summary>正式版用户将获得 v2.9.1-preview ~ v2.9.2-preview 的所有改动, 点击展开查看</summary>
+
+✨新增
+- `查看封面` 可以为 aria2 输出提供直接的封面下载. (PR #4798 by [Oxygenくん](https://github.com/oxygenkun))
+- 新增组件 `保存视频元数据`. (PR #4840 by [WakelessSloth56](https://github.com/WakelessSloth56))
+> - 保存视频元数据为 [FFMETADATA](https://ffmpeg.org/ffmpeg-formats.html#Metadata-2) 格式
+>   - 使用组件 `下载视频` 时指定 `WASM` 输出方式（插件 `下载视频 - WASM 混流输出`）可选择是否直接混流入输出文件。
+> - 保存视频章节为 OGM 格式 (https://github.com/the1812/Bilibili-Evolved/discussions/2069#discussioncomment-10110916)
+
+- `简化首页` 支持隐藏轮播图. (PR #4852 by [Lime](https://github.com/Liumingxun))
+- 新增组件 `添加直播间用户超链接`. (PR #4856 by [Light_Quanta](https://github.com/LightQuanta))
+> 网页版直播间右上角的房间观众和大航海界面的用户列表只可查看用户名，不可进行点击。该组件为用户头像和用户名称处添加点击效果，允许通过点击直接查看用户空间。
+
+- 插件 `下载视频 - WASM 混流输出` 支持并行下载库和音视频流. (PR #4864 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `弹幕转义` 支持对正斜杠的换行 (`/n`) 进行转义. (#4865)
+- `自定义顶栏` 支持直接在功能中打开布局设置. (#2666)
+- `高分辨率图片` 支持处理没有指定高度的图片, 支持在专栏页面中请求原图. (#2868)
+- `直播间网页全屏自适应` 样式适配较低的宽度值. (#4895)
+
+☕开发者相关
+- 外部资源接入 Subresource Integrity. (#4896)
+
+</details>
+
+🐛修复
+- 修复 `快速收起评论` 对旧版评论区的兼容性. (#4905)
+- 修复 `快捷键扩展` 的发送评论在新版评论区失效. (#4843)
+- 修复 `禁用评论区搜索词` 偶现样式失效. (#4843)
+
+☕开发者相关
+- `ShadowDomObserver` 在使用前无需再调用 `observe()`.
+- 增加工具方法 `getActiveElement` 检测当前页面的聚焦元素.
+
 ## v2.9.2-preview
 `2024-09-08`
 

@@ -32,10 +32,7 @@ const entry = async () => {
     }
     if (feedsCardsManager.managerType === 'v2') {
       const getExistingComment = () => dq(card, commentSelector) as HTMLElement
-      const isCommentAreaReady = () => {
-        const existingComment = getExistingComment()
-        return existingComment !== null && dq(existingComment, 'bili-comments')
-      }
+      const isCommentAreaReady = () => getExistingComment() !== null
       const handler = () => {
         const button = dq(card, '.bili-dyn-action.comment') as HTMLElement
         button?.click()

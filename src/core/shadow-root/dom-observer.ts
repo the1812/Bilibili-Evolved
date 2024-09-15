@@ -1,3 +1,4 @@
+import { contentLoaded } from '../life-cycle'
 import { childListSubtree } from '../observer'
 import { deleteValue } from '../utils'
 import { ShadowDomCallback, ShadowDomEntry } from './dom-entry'
@@ -81,6 +82,7 @@ export class ShadowDomObserver extends ShadowRootObserver {
   }
 
   forEachShadowDom(callback: ShadowDomCallback) {
+    this.observe()
     const callCurrentAndNextLevel = (currentEntry: ShadowDomEntry) => {
       callback(currentEntry)
       currentEntry.children.forEach(child => {
@@ -94,6 +96,7 @@ export class ShadowDomObserver extends ShadowRootObserver {
   }
 
   watchShadowDom(callbacks: { added?: ShadowDomCallback; removed?: ShadowDomCallback }) {
+    this.observe()
     this.forEachShadowDom(it => callbacks.added?.(it))
     const addedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.added?.(e.detail)
     const removedListener = (e: CustomEvent<ShadowDomEntry>) => callbacks?.removed?.(e.detail)
@@ -109,10 +112,14 @@ export class ShadowDomObserver extends ShadowRootObserver {
     if (this.observing) {
       return
     }
-    const existingRoots = ShadowRootObserver.queryAllShadowRoots()
-    existingRoots.forEach(root => this.addEntry(root))
-    ;[this.rootObserver] = childListSubtree(document.body, records => this.mutationHandler(records))
     this.observing = true
+    contentLoaded(() => {
+      const existingRoots = ShadowRootObserver.queryAllShadowRoots()
+      existingRoots.forEach(root => this.addEntry(root))
+      ;[this.rootObserver] = childListSubtree(document.body, records =>
+        this.mutationHandler(records),
+      )
+    })
   }
 
   disconnect() {

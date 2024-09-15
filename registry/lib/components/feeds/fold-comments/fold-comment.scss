@@ -28,10 +28,13 @@
   }
 }
 .bili-comment-container {
+  display: flex !important;
+  flex-direction: column !important;
   &.bili-dyn-comment .reply-list {
     padding-bottom: 8px !important;
   }
   .fold-comment {
+    order: 1;
     font-size: 13px;
   }
   .at-panel,

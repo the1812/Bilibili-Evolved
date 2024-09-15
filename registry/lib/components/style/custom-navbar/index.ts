@@ -133,6 +133,9 @@ export const component = defineComponentMetadata({
     // const { addImportantStyle } = await import('@/core/style')
     // addImportantStyle(style, styleID)
   },
+  widget: {
+    component: () => import('./settings/Widget.vue').then(m => m.default),
+  },
   extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
   plugin: {
     displayName: '自定义顶栏 - 功能扩展',
