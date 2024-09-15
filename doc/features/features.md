@@ -179,6 +179,17 @@ by [@TimmyOVO](https://github.com/TimmyOVO)
 
 禁止直播首页的推荐直播间自动开始播放.
 
+### [添加直播间用户超链接](../../registry/dist/components/live/liveroom-username-link.js)
+`liveroomUsernameLink`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/liveroom-username-link.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/liveroom-username-link.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/liveroom-username-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/liveroom-username-link.js)
+
+by [@Light_Quanta](https://github.com/LightQuanta)
+
+为直播间的房间观众和大航海界面的用户列表添加可以点击的超链接
+
 ### [返回原版直播间](../../registry/dist/components/live/original.js)
 `originalLiveroom`
 
@@ -958,7 +969,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/unescape.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/unescape.js)
 
-将弹幕中的 `\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.
+将弹幕中的 `\n` 或 `/n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.
 
 ### [视频页默认定位](../../registry/dist/components/video/default-location.js)
 `videoDefaultLocation`
@@ -1021,6 +1032,17 @@ by [@kdxcxs](https://github.com/kdxcxs)
 - `展开选集列表`: 总是完全展开视频选集列表
 
 打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换展开/收起选集列表.
+
+### [保存视频元数据](../../registry/dist/components/video/metadata.js)
+`saveVideoMetadata`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/metadata.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/metadata.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/metadata.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/metadata.js)
+
+by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://github.com/LainIO24)
+
+保存视频元数据（标题、描述、UP、章节等）
 
 ### [外置稍后再看](../../registry/dist/components/video/outer-watchlater.js)
 `outerWatchlater`

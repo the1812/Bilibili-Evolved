@@ -11,6 +11,10 @@ const options = defineOptionsMetadata({
     defaultValue: 'auto',
     hidden: true,
   },
+  originalImageInArticles: {
+    displayName: '在专栏中请求原图',
+    defaultValue: false,
+  },
 })
 
 export type Options = OptionsOfMetadata<typeof options>

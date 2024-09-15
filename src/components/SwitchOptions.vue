@@ -5,7 +5,7 @@
         <VIcon
           class="switch-icon"
           icon="mdi-checkbox-marked-circle-outline"
-          :size="smallSize ? 16 : 22"
+          :size="smallSize ? 16 : 24"
         ></VIcon>
         {{ options.optionDisplayName }}
       </VButton>
@@ -128,6 +128,7 @@ export default Vue.extend({
   }
   .switch-icon {
     margin-right: 8px;
+    opacity: 0.75;
     transform: scale(0.9);
   }
   .dim {
