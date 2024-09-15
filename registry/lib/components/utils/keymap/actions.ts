@@ -3,7 +3,7 @@ import { getComponentSettings } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
 import { Options } from '.'
 import { KeyBindingAction, KeyBindingActionContext } from './bindings'
-import { simulateClick } from '@/core/utils'
+import { getActiveElement, simulateClick } from '@/core/utils'
 
 export const keyboardEventToPointer = (event: KeyboardEvent): PointerEventInit => {
   return {
@@ -239,15 +239,24 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   sendComment: {
     displayName: '发送评论',
     ignoreTyping: false,
+    prevent: true,
     run: () => {
-      const { activeElement } = document
-      if (!activeElement || !(activeElement instanceof HTMLTextAreaElement)) {
+      const activeElement = getActiveElement()
+      if (!activeElement) {
         return null
       }
+      const isEditable =
+        activeElement instanceof HTMLTextAreaElement ||
+        activeElement.hasAttribute('contenteditable')
+      if (!isEditable) {
+        return null
+      }
+      const getShadowRoot = (node: Node) => node.getRootNode() as ShadowRoot | null
       const sendButton = (() => {
         const candidates = [
           () => activeElement.nextElementSibling,
           () => activeElement.parentElement.nextElementSibling,
+          () => getShadowRoot(getShadowRoot(activeElement)?.host)?.querySelector('#pub button'),
           () => dq('.reply-box:focus-within .reply-box-send'),
         ]
         const match = candidates.find(fn => fn() !== null)

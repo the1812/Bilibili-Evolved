@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { getBlobByAid } from '@/components/video/video-cover'
+import { getVideoCoverUrlByAid, getBlobByAid } from '@/components/video/video-cover'
 import { PackageEntry } from '@/core/download'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { Toast } from '@/core/toast'
@@ -54,6 +54,26 @@ export const component = defineComponentMetadata({
             const fail = results.filter(it => it.status === 'rejected') as PromiseRejectedResult[]
             toast.message = `获取完成. 成功 ${success.length} 个, 失败 ${fail.length} 个.`
             return success.map(it => it.value)
+          },
+          getUrls: async (
+            infos,
+            instance: {
+              type: CoverDownloadType
+              enabled: boolean
+            },
+          ) => {
+            const { type, enabled } = instance
+            if (!enabled) {
+              return []
+            }
+            return Promise.all(
+              infos.map(async info => {
+                return {
+                  name: `${info.input.title}.${type}`,
+                  url: await getVideoCoverUrlByAid(info.input.aid),
+                }
+              }),
+            )
           },
           component: () => import('./Plugin.vue').then(m => m.default),
         })
