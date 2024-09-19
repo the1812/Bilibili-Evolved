@@ -121,7 +121,7 @@ export interface RepostFeedsCard extends FeedsCard {
   repostUsername: string
   /** 被转发动态的内容 */
   repostText: string
-  /** 被转发动态的卡片 */
+  /** 被转发动态的 ID */
   repostId: string
   type: RepostFeedsCardType
 }

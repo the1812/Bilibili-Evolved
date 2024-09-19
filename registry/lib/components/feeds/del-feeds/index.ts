@@ -2,7 +2,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { getUID } from '@/core/utils'
 
 export const component = defineComponentMetadata({
-  name: 'delFeeds',
+  name: 'deleteFeeds',
   displayName: '删除动态',
   tags: [componentsTags.feeds],
   description: {
