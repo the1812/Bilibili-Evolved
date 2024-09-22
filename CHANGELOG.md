@@ -2,9 +2,12 @@
 # 更新日志
 
 ## v2.9.3-preview
+`2024-09-15`
+
 主要是各种修复, 见 [v2.9.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.3).
 
 ## v2.9.3
+`2024-09-15`
 
 <details>
 <summary>正式版用户将获得 v2.9.1-preview ~ v2.9.2-preview 的所有改动, 点击展开查看</summary>

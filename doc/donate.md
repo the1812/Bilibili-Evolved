@@ -18,7 +18,7 @@
 
 ## 爱发电
 
-https://afdian.net/@the1812?tab=sponsor
+https://afdian.com/a/the1812?tab=sponsor
 
 ## 微信/支付宝收款
 
