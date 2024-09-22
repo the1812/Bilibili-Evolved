@@ -2,7 +2,6 @@
   <div>
     <div class="custom-black-list-extra-options">
       <VButton
-        v-if="login"
         ref="button"
         @mouseover="loadNameBlackListSettings()"
         @click="toggleNameSettings()"
@@ -12,7 +11,6 @@
     </div>
     <div class="custom-black-list-extra-options">
       <VButton
-        v-if="login"
         ref="button"
         @mouseover="loadRegexBlackListSettings()"
         @click="toggleRegexSettings()"
@@ -23,7 +21,6 @@
   </div>
 </template>
 <script lang="ts">
-import { getUID } from '@/core/utils'
 import { VIcon, VButton } from '@/ui'
 import {
   loadNameSettings,
@@ -41,7 +38,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      login: Boolean(getUID()),
     }
   },
   methods: {
