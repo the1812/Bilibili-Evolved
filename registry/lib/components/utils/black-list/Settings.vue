@@ -1,20 +1,12 @@
 <template>
   <div>
     <div class="custom-black-list-extra-options">
-      <VButton
-        ref="button"
-        @mouseover="loadNameBlackListSettings()"
-        @click="toggleNameSettings()"
-      >
+      <VButton ref="button" @mouseover="loadNameBlackListSettings()" @click="toggleNameSettings()">
         精确匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
       </VButton>
     </div>
     <div class="custom-black-list-extra-options">
-      <VButton
-        ref="button"
-        @mouseover="loadRegexBlackListSettings()"
-        @click="toggleRegexSettings()"
-      >
+      <VButton @mouseover="loadRegexBlackListSettings()" @click="toggleRegexSettings()">
         正则匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
       </VButton>
     </div>
@@ -35,10 +27,6 @@ export default Vue.extend({
   components: {
     VIcon,
     VButton,
-  },
-  data() {
-    return {
-    }
   },
   methods: {
     async loadNameBlackListSettings() {
