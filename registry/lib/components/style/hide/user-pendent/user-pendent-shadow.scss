@@ -1,0 +1,13 @@
+:host(bili-avatar) {
+  container-type: size;
+  container-name: avatar;
+  // .layers:first-child,
+  .layer:not(:first-child),
+  .layer:not(:has(picture)) {
+    display: none;
+  }
+  .layer:has(picture) {
+    min-width: 100cqw;
+    min-height: 100cqh;
+  }
+}
