@@ -29,7 +29,7 @@ export class ShadowRootStyles {
 
   async addStyle(definition: ShadowRootStyleDefinition) {
     const { id, style } = definition
-    const entryId = `shadow-dom-style-${id !== undefined ? lodash.kebabCase(id) : getRandomId()}`
+    const entryId = id !== undefined ? lodash.kebabCase(id) : `shadow-dom-style-${getRandomId()}`
     const styleSheet = new CSSStyleSheet()
     await styleSheet.replace(style)
 
