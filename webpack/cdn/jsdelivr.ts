@@ -40,7 +40,7 @@ export const jsDelivr: CdnConfig = {
       },
       wasm: {
         url: `https://${host}/npm/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.wasm`,
-        sha256: '925bd7ef35d4e0f715254cd650f4cfc68c4ec6ecebf293face72b92da904ddda',
+        sha256: '81bdc645b71d7d74ff56fdc0979c5fcb2f92ffcc7f24573a79681fed4ea73905',
       },
     },
   },
