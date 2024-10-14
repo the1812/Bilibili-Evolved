@@ -117,17 +117,17 @@ export const getUserDanmakuConfig = async () => {
       })()
 
       // 加粗
-      config.bold = playerAgent.getPlayerConfig('bold', false)
+      config.bold = playerAgent.getPlayerConfig('dmSetting.bold', false)
 
       // 透明度
       config.alpha = lodash.clamp(
-        1 - parseFloat(playerAgent.getPlayerConfig('opacity', '0.4')),
+        1 - parseFloat(playerAgent.getPlayerConfig('dmSetting.opacity', '0.4')),
         0,
         1,
       )
 
       // 分辨率
-      const resolutionFactor = 1.4 - 0.4 * playerAgent.getPlayerConfig('fontsize', 1)
+      const resolutionFactor = 1.4 - 0.4 * playerAgent.getPlayerConfig('dmSetting.fontsize', 1)
       config.resolution = {
         x: Math.round(1920 * resolutionFactor),
         y: Math.round(1080 * resolutionFactor),
@@ -135,7 +135,7 @@ export const getUserDanmakuConfig = async () => {
 
       // 弹幕持续时长
       config.duration = (() => {
-        const scrollDuration = 18 - 3 * playerAgent.getPlayerConfig('speedplus', 0)
+        const scrollDuration = 18 - 3 * playerAgent.getPlayerConfig('dmSetting.speedplus', 0)
         return (danmaku: { type: number }) => {
           switch (danmaku.type) {
             case 4:
@@ -148,10 +148,13 @@ export const getUserDanmakuConfig = async () => {
       })()
 
       // 底部间距
-      const bottomMargin = playerAgent.getPlayerConfig('danmakuArea', 0)
+      const bottomMargin = playerAgent.getPlayerConfig('dmSetting.danmakuArea', 0)
       config.bottomMarginPercent = bottomMargin >= 100 ? 0 : bottomMargin / 100
       // 无显示区域限制时要检查是否开启防挡字幕
-      if (config.bottomMarginPercent === 0 && playerAgent.getPlayerConfig('preventshade', false)) {
+      if (
+        config.bottomMarginPercent === 0 &&
+        playerAgent.getPlayerConfig('dmSetting.preventshade', false)
+      ) {
         config.bottomMarginPercent = 0.15
       }
 
