@@ -1,4 +1,3 @@
-
 .b-avatar {
   container-type: size;
   container-name: avatar;
@@ -14,11 +13,13 @@
 .up-avatar {
   container-type: size;
   container-name: avatar;
+  .bili-avatar {
+    min-width: 100cqw;
+    min-height: 100cqh;
+    transform: none !important;
+  }
 }
 .bili-avatar {
-  min-width: 100cqw;
-  min-height: 100cqh;
-  transform: none !important;
   &-icon,
   &-pendent-dom {
     display: none !important;
