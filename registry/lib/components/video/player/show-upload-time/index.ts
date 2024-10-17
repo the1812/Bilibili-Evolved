@@ -1,3 +1,4 @@
+import Vue from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import { urlChange } from '@/core/observer'
 import { playerReady, getVue2Data } from '@/core/utils'
@@ -118,6 +119,8 @@ export const component = defineComponentMetadata({
         formatString = options.formatString?.toString()
       }
       relist.forEach(async video => {
+        // 使用临时变量保存视频名称，以避免计算属性导致的问题
+        let videoName: string = video.name
         // 确认存放推荐视频列表的List中的元素是否被更新
         if (forceUpdate || !video.item.owner.mark) {
           video.item.owner.mark = true
@@ -134,16 +137,21 @@ export const component = defineComponentMetadata({
             if (!video.oldname) {
               video.oldname = video.name
             }
-            video.name = getFormatStr(createTime, formatString, video.oldname)
+            videoName = getFormatStr(createTime, formatString, video.oldname)
+            video.name = videoName
           }
           // 保存生成后的name
-          video.item.owner.name = video.name
+          video.item.owner.name = videoName
         }
       })
     }
 
     const getRecoList = () => {
-      const reco_list = dq('#reco_list')
+      let reco_list = dq('#reco_list')
+      // 2024.10.17 兼容最近的b站前端改动
+      if (reco_list == null) {
+        reco_list = dq('.recommend-list-v1')
+      }
       let recoList: RecommendList = getVue2Data(reco_list)
       if (recoList.isOpen === undefined) {
         recoList = recoList.$children[0]
@@ -156,12 +164,14 @@ export const component = defineComponentMetadata({
       return recoList
     }
 
+    const videoClasses = ['video-page-operator-card-small', 'video-page-card-small']
+
     addComponentListener(
       `${metadata.name}.formatString`,
       (value: string) => {
         const recoList: RecommendList = getRecoList()
-        const relist: VideoPageCard[] = recoList.$children.filter(
-          video => video.$el.className.indexOf('special') === -1,
+        const relist: VideoPageCard[] = recoList.$children.filter(video =>
+          videoClasses.includes(video.$el.className),
         )
         showUploadTime(relist, true, value)
       },
@@ -180,8 +190,8 @@ export const component = defineComponentMetadata({
           'recListItems',
           () => {
             console.debug('recoListItems changed, now url is', document.URL)
-            const relist = recoList.$children.filter(
-              video => video.$el.className.indexOf('special') === -1,
+            const relist = recoList.$children.filter(video =>
+              videoClasses.includes(video.$el.className),
             )
             showUploadTime(relist)
           },
