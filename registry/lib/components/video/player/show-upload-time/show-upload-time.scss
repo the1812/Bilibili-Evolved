@@ -4,8 +4,16 @@
     display: flex !important;
     height: auto !important;
 }
-// 新版css
+// 2023.04.30 版本css
 .video-page-card-small .card-box .info .upname {
+    height: auto !important;
+    a .name {
+        -webkit-line-clamp: unset !important;
+        white-space: pre !important;
+    }
+}
+// 2024.10.17 版本css
+.video-page-operator-card-small .card-box .info .upname {
     height: auto !important;
     a .name {
         -webkit-line-clamp: unset !important;
