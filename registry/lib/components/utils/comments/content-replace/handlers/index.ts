@@ -1,4 +1,4 @@
-import { registerData } from '@/plugins/data'
+import { registerAndGetData } from '@/plugins/data'
 import { getComponentSettings } from '@/core/settings'
 import { CommentContentReplaceHandler } from './types'
 import { CommentContentReplaceOptions } from '../options'
@@ -19,10 +19,12 @@ const contentReplacers: NodeContentReplacer[] = [
   new RecursiveReplacer(),
 ]
 
-export const defaultHandler: CommentContentReplaceHandler = content => {
+export const CommentContentReplaceMap = 'commentContentReplace.map'
+const defaultHandler: CommentContentReplaceHandler = content => {
   const { replaceMap } = options
+  const [finalReplaceMap] = registerAndGetData(CommentContentReplaceMap, replaceMap)
   content.forEach(node => {
-    Object.entries(replaceMap).forEach(([from, to]) => {
+    Object.entries(finalReplaceMap).forEach(([from, to]) => {
       const replacer = contentReplacers.find(r => r.isKeywordMatch(node, from, to))
       if (!replacer) {
         return
@@ -34,4 +36,4 @@ export const defaultHandler: CommentContentReplaceHandler = content => {
 }
 
 export const CommentContentReplaceHandlers = 'commentContentReplace.handlers'
-export const handlers = registerData(CommentContentReplaceHandlers, [defaultHandler])
+export const handlers = registerAndGetData(CommentContentReplaceHandlers, [defaultHandler])
