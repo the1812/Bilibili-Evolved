@@ -25,6 +25,9 @@ const defaultHandler: CommentContentReplaceHandler = content => {
   const [finalReplaceMap] = registerAndGetData(CommentContentReplaceMap, replaceMap)
   content.forEach(node => {
     Object.entries(finalReplaceMap).forEach(([from, to]) => {
+      if (from === to || from === '') {
+        return
+      }
       const replacer = contentReplacers.find(r => r.isKeywordMatch(node, from, to))
       if (!replacer) {
         return
