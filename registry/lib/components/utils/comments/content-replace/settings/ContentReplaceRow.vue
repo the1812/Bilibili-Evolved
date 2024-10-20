@@ -1,7 +1,12 @@
 <template>
   <div class="comment-content-replace-row">
     <div class="comment-content-replace-row-from">
-      <TextBox :text="row.from" change-on-blur @change="emitChange({ from: $event, to: row.to })" />
+      <TextBox
+        placeholder="查找"
+        :text="row.from"
+        change-on-blur
+        @change="emitChange({ from: $event, to: row.to })"
+      />
       <VButton type="transparent" icon title="删除此项" @click="emitDelete">
         <VIcon :size="14" icon="mdi-trash-can-outline" />
       </VButton>
@@ -15,7 +20,12 @@
           />
         </svg>
       </VIcon>
-      <TextBox :text="row.to" change-on-blur @change="emitChange({ from: row.from, to: $event })" />
+      <TextBox
+        placeholder="替换为"
+        :text="row.to"
+        change-on-blur
+        @change="emitChange({ from: row.from, to: $event })"
+      />
     </div>
   </div>
 </template>
