@@ -11,7 +11,11 @@ export class EmoticonToTextReplacer extends NodeContentReplacer {
     if (!(node instanceof HTMLImageElement)) {
       return []
     }
-    node.replaceWith(new Text(target))
+    if (target === '') {
+      node.remove()
+    } else {
+      node.replaceWith(new Text(target))
+    }
     return []
   }
 }
