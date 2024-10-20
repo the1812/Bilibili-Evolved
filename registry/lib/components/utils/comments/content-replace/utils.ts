@@ -7,3 +7,12 @@ export const createEmotionImage = (src: string, alt: string) => {
   element.style.height = '50px'
   return element
 }
+
+export const isUrl = (text: string) => {
+  try {
+    const url = new URL(text)
+    return Boolean(url)
+  } catch (error) {
+    return false
+  }
+}
