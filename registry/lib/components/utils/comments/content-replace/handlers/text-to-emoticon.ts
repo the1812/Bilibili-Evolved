@@ -1,4 +1,4 @@
-import { createEmotionImage, isUrl } from '../utils'
+import { createEmoticonImage, isUrl } from '../utils'
 import { NodeContentReplacer } from './node-content-replacer'
 
 export class TextToEmoticonReplacer extends NodeContentReplacer {
@@ -14,7 +14,7 @@ export class TextToEmoticonReplacer extends NodeContentReplacer {
       return []
     }
     const leftPart = new Text(node.textContent.substring(0, index))
-    const imageElement = createEmotionImage(target, keyword)
+    const imageElement = createEmoticonImage(target, keyword)
     const rightPart = new Text(node.textContent.substring(index + keyword.length))
     node.replaceWith(leftPart, imageElement, rightPart)
     return [rightPart]

@@ -19,23 +19,30 @@ const contentReplacers: NodeContentReplacer[] = [
   new RecursiveReplacer(),
 ]
 
-export const CommentContentReplaceMap = 'commentContentReplace.map'
-const defaultHandler: CommentContentReplaceHandler = content => {
+export const CommentContentReplaceDefaultHandlerReplaceMap =
+  'commentContentReplace.defaultHandler.replaceMap'
+const defaultHandler: CommentContentReplaceHandler = ({ content }) => {
   const { replaceMap } = options
-  const [finalReplaceMap] = registerAndGetData(CommentContentReplaceMap, replaceMap)
-  content.forEach(node => {
-    Object.entries(finalReplaceMap).forEach(([from, to]) => {
-      if (from === to || from === '') {
-        return
-      }
-      const replacer = contentReplacers.find(r => r.isKeywordMatch(node, from, to))
-      if (!replacer) {
-        return
-      }
-      const restParts = replacer.replaceContent(node, from, to)
-      defaultHandler(restParts)
+  const [finalReplaceMap] = registerAndGetData(
+    CommentContentReplaceDefaultHandlerReplaceMap,
+    replaceMap,
+  )
+  const replaceNodes = (nodes: Node[]) => {
+    nodes.forEach(node => {
+      Object.entries(finalReplaceMap).forEach(([from, to]) => {
+        if (from === to || from === '') {
+          return
+        }
+        const replacer = contentReplacers.find(r => r.isKeywordMatch(node, from, to))
+        if (!replacer) {
+          return
+        }
+        const restParts = replacer.replaceContent(node, from, to)
+        replaceNodes(restParts)
+      })
     })
-  })
+  }
+  replaceNodes(content)
 }
 
 export const CommentContentReplaceHandlers = 'commentContentReplace.handlers'

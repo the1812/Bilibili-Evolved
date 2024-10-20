@@ -1,4 +1,4 @@
-export const createEmotionImage = (src: string, alt: string) => {
+export const createEmoticonImage = (src: string, alt: string) => {
   const element = document.createElement('img')
   element.src = src
   element.alt = alt

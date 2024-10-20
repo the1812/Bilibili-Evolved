@@ -28,7 +28,7 @@ export const component = defineComponentMetadata({
         const [handlers] = getData(CommentContentReplaceHandlers) as [
           CommentContentReplaceHandler[],
         ]
-        handlers.forEach(h => h(Array.from(content.childNodes)))
+        handlers.forEach(h => h({ commentItem, content: Array.from(content.childNodes) }))
       },
     })
   },
