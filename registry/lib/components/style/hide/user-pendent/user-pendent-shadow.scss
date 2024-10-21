@@ -3,11 +3,13 @@
   container-name: avatar;
   // .layers:first-child,
   .layer:not(:first-child),
-  .layer:not(:has(picture)) {
+  .layer:not(:has(picture), :has([style*="/face/"])) {
     display: none;
   }
-  .layer:has(picture) {
+  .layer:is(:has(picture), :has([style*="/face/"])) {
     min-width: 100cqw;
     min-height: 100cqh;
+    max-width: 100cqw;
+    max-height: 100cqh;
   }
 }
