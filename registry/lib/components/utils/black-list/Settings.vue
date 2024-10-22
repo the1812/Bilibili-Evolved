@@ -1,29 +1,18 @@
 <template>
   <div>
     <div class="custom-black-list-extra-options">
-      <VButton
-        v-if="login"
-        ref="button"
-        @mouseover="loadNameBlackListSettings()"
-        @click="toggleNameSettings()"
-      >
+      <VButton ref="button" @mouseover="loadNameBlackListSettings()" @click="toggleNameSettings()">
         精确匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
       </VButton>
     </div>
     <div class="custom-black-list-extra-options">
-      <VButton
-        v-if="login"
-        ref="button"
-        @mouseover="loadRegexBlackListSettings()"
-        @click="toggleRegexSettings()"
-      >
+      <VButton @mouseover="loadRegexBlackListSettings()" @click="toggleRegexSettings()">
         正则匹配列表<VIcon icon="right-arrow" :size="16"></VIcon>
       </VButton>
     </div>
   </div>
 </template>
 <script lang="ts">
-import { getUID } from '@/core/utils'
 import { VIcon, VButton } from '@/ui'
 import {
   loadNameSettings,
@@ -38,11 +27,6 @@ export default Vue.extend({
   components: {
     VIcon,
     VButton,
-  },
-  data() {
-    return {
-      login: Boolean(getUID()),
-    }
   },
   methods: {
     async loadNameBlackListSettings() {
