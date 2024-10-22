@@ -115,10 +115,12 @@ async function getOnlineActions() {
   }
   const fuse = new Fuse(onlineActions, {
     keys: ['indexer', 'displayName', 'name', 'description', 'key'],
+    includeScore: true,
+    threshold: 0.1,
   })
   const fuseResult = fuse.search(this.keyword)
   console.log(fuseResult)
-  this.actions = sortActions(fuseResult.map(it => it.item).slice(0, 12))
+  this.actions = sortActions(fuseResult.map(it => it.item).slice(0, 13))
   this.noActions = this.actions.length === 0
 }
 async function getActions() {

@@ -1,4 +1,4 @@
-import { formData, getUID } from '@/core/utils'
+import { getUID } from '@/core/utils'
 import { getJson } from '@/core/ajax'
 import { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
 import { addHistoryItem } from './history-provider'
@@ -12,7 +12,7 @@ export const search = (keyword: string) => {
     keyword,
     from_source: 'nav_suggest_new',
   }
-  window.open(`https://search.bilibili.com/all?${formData(params)}`, '_blank')
+  window.open(`https://search.bilibili.com/all?${new URLSearchParams(params)}`, '_blank')
 }
 export const searchProvider: LaunchBarActionProvider = {
   name: 'search',
@@ -48,7 +48,7 @@ export const searchProvider: LaunchBarActionProvider = {
     }
     results.push(
       ...suggests.map(result => ({
-        name: result.value,
+        name: `${input}.${result.value}`,
         icon: 'search',
         content: async () =>
           Vue.extend({

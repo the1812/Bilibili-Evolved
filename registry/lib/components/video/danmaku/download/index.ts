@@ -5,6 +5,7 @@ import { Toast } from '@/core/toast'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../../download/types'
 import { DanmakuDownloadType } from './utils'
+import { downloadDanmakuOptions } from './options'
 
 export const component = defineComponentMetadata({
   name: 'downloadDanmaku',
@@ -17,6 +18,7 @@ export const component = defineComponentMetadata({
   entry: none,
   reload: none,
   unload: none,
+  options: downloadDanmakuOptions,
   plugin: {
     displayName: '下载视频 - 下载弹幕支持',
     setup: ({ addData }) => {

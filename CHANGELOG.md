@@ -1,10 +1,58 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.9.4-preview
+`2024-10-22`
+
+包含 [v2.9.4](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.4) 的所有更新内容.
+
+✨新增
+- 新增组件 `隐藏头像框`.
+> 隐藏页面中用户的头像框 (包括角标), 目前支持动态和视频页面.
+
+- 新增组件 `隐藏直播马赛克`. (#4634)
+> 移除直播画面中的马赛克区域.
+
+- 优化了搜索框的搜索建议精准度. (#4833)
+- 新增组件 `删除动态`. (PR #4915 by [gouzil](https://github.com/gouzil))
+> 删除动态, 可选转发抽奖, 和全部删除.
+
+- `保存视频元数据` 增加 FFMETADATA 字段选项. (PR #4943 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- 新增组件 `评论内容替换`. (#4072)
+> 替换评论中的内容.
+> 可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情.
+>
+
+- `直播信息扩充` 更换新的 API 接口. (PR #4964 by [Oxygenくん](https://github.com/oxygenkun))
+
+## v2.9.4
+`2024-10-22`
+
+✨新增
+- `屏蔽黑名单up主` 去除了登录校验. (#4917, PR #4926 by [snowraincloud](https://github.com/snowraincloud))
+- `图片批量导出` 适配新型的图片动态. (#4830)
+- 更新评论区的 `夜间模式`. (#4931)
+
+🐛修复
+- 修复 StreamSaver 和 ffmpeg WASM 的 SRI 校验问题. (#4913, #4864)
+- 修复下载合集时 BV 号命名重复. (#4818)
+- 修复 `删除广告` 去除首页广告时没有遵循 `占位文本` 选项. (#4836)
+- 修复 `自定义顶栏` 历史面板中的多余 title 提示. (#4962)
+- 修复下载弹幕时播放器设置没有正确读取. (#4824)
+
+🗑️废弃
+- `自定义顶栏` 删除 `相簿` 入口.
+
+☕开发者相关
+- 修复 DevClient 无法重载 Shadow DOM 样式.
+
 ## v2.9.3-preview
+`2024-09-15`
+
 主要是各种修复, 见 [v2.9.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.3).
 
 ## v2.9.3
+`2024-09-15`
 
 <details>
 <summary>正式版用户将获得 v2.9.1-preview ~ v2.9.2-preview 的所有改动, 点击展开查看</summary>

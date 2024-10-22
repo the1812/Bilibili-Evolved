@@ -40,10 +40,6 @@
     a {
       @include theme-color();
     }
-    img,
-    a i {
-      @include to-theme('blue');
-    }
   }
 }
 :host(bili-comment-box) {
@@ -73,5 +69,15 @@
   .bili-comments-bottom-fixed-wrapper > div {
     @include background-color('2');
     @include border-color('3');
+  }
+}
+:host(bili-comment-renderer) {
+  i#note {
+    @include color('a');
+    @include background-color('3');
+  }
+  .tag:not(:empty) {
+    @include color('e');
+    @include background-color('4');
   }
 }

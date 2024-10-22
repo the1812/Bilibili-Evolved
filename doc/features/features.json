@@ -9,6 +9,14 @@
   },
   {
     "type": "component",
+    "name": "deleteFeeds",
+    "displayName": "删除动态",
+    "description": "删除动态, 可选转发抽奖, 和全部删除.\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/del-feeds.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/del-feeds.js"
+  },
+  {
+    "type": "component",
     "name": "disableFeedsDetails",
     "displayName": "禁止跳转动态详情",
     "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
@@ -134,6 +142,14 @@
     "description": "by [@TimmyOVO](https://github.com/TimmyOVO)\n\n移除全屏观看直播时的底部礼物栏",
     "fullRelativePath": "../../registry/dist/components/live/hide-gift-fullscreen.js",
     "fullAbsolutePath": "registry/dist/components/live/hide-gift-fullscreen.js"
+  },
+  {
+    "type": "component",
+    "name": "hideLivePlayerBlur",
+    "displayName": "隐藏直播马赛克",
+    "description": "移除直播画面中的马赛克区域.\r\n",
+    "fullRelativePath": "../../registry/dist/components/live/hide-player-blur.js",
+    "fullAbsolutePath": "registry/dist/components/live/hide-player-blur.js"
   },
   {
     "type": "component",
@@ -294,6 +310,14 @@
     "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片",
     "fullRelativePath": "../../registry/dist/components/style/hide/user-card.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/user-card.js"
+  },
+  {
+    "type": "component",
+    "name": "hideUserPendent",
+    "displayName": "隐藏头像框",
+    "description": "隐藏页面中用户的头像框 (包括角标), 目前支持动态和视频页面.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/user-pendent.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/user-pendent.js"
   },
   {
     "type": "component",
@@ -526,6 +550,14 @@
     "description": "(原名: 专栏文字选择, 现在专栏已经不限制选中文字了)\r\n\r\n避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/column-unlock.js",
     "fullAbsolutePath": "registry/dist/components/utils/column-unlock.js"
+  },
+  {
+    "type": "component",
+    "name": "commentContentReplace",
+    "displayName": "评论内容替换",
+    "description": "替换评论中的内容.\r\n\r\n可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情, 留空则会移除命中的关键词.\r\n",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/content-replace.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/content-replace.js"
   },
   {
     "type": "component",
