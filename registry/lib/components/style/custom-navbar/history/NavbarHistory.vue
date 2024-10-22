@@ -26,7 +26,6 @@
         <div class="type-filters">
           <div v-for="t of types" :key="t.name" class="type-filter">
             <RadioButton
-              :title="(t.checked ? '不显示' : '显示') + t.displayName"
               :class="{ checked: t.checked }"
               :checked="t.checked"
               :disabled="loading"
