@@ -177,7 +177,7 @@
 
 > 之前的支付宝付款码有点问题, 现已弃用 (不必担心, 转账均已收到), 在爱发电中仍然可以选择支付宝作为付款方式.
 
-<a href="https://afdian.net/@the1812" target="_blank">
+<a href="https://afdian.com/a/the1812" target="_blank">
   <img alt="爱发电" src="./images/compressed/afdian.jpg" width="400">
 </a>
 

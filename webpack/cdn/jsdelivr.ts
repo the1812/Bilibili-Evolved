@@ -26,8 +26,8 @@ export const jsDelivr: CdnConfig = {
       sha256: '0ea5a6fbfbf5434b606878533cb7a66bcf700f0f08afe908335d0978fb63ad94',
     },
     streamsaver: {
-      url: `https://${host}/npm/streamsaver@2.0.6/StreamSaver.min.js`,
-      sha256: '64f465e51e5992be894c5d42330b781544eda5462069fe6be4c7421f02d28c92',
+      url: `https://${host}/npm/streamsaver@2.0.6/StreamSaver.js`,
+      sha256: 'a110f78e0b092481dc372901c4d57ae50681d773bc9d55e62356f9a22f17e24b',
     },
     ffmpeg: {
       worker: {
@@ -40,7 +40,7 @@ export const jsDelivr: CdnConfig = {
       },
       wasm: {
         url: `https://${host}/npm/@ffmpeg/core@0.12.4/dist/umd/ffmpeg-core.wasm`,
-        sha256: '925bd7ef35d4e0f715254cd650f4cfc68c4ec6ecebf293face72b92da904ddda',
+        sha256: '81bdc645b71d7d74ff56fdc0979c5fcb2f92ffcc7f24573a79681fed4ea73905',
       },
     },
   },

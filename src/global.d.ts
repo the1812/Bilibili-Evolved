@@ -8,6 +8,7 @@ declare global {
 
   const lodash: LoDashStatic
   const Vue: typeof import('vue/types/umd')
+  type Vue = import('vue/types/umd')
 
   type EnumEventTarget<EventTypes extends string> = EventTarget & {
     addEventListener(

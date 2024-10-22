@@ -100,6 +100,8 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
                 n: formatNumber(page, totalEpisodesLength),
                 title: episode.page.part,
                 cid: episode.cid,
+                aid: episode.aid,
+                bvid: episode.bvid,
                 ep: episode.title,
                 user: owner.name,
                 userID: owner.mid?.toString(),
