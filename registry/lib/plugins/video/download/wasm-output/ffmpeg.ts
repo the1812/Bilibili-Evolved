@@ -17,6 +17,7 @@ enum FFMessageType {
   EXEC = 'EXEC',
   WRITE_FILE = 'WRITE_FILE',
   READ_FILE = 'READ_FILE',
+  DELETE_FILE = 'DELETE_FILE',
   ERROR = 'ERROR',
 }
 
@@ -38,6 +39,7 @@ export class FFmpeg {
           case FFMessageType.EXEC:
           case FFMessageType.WRITE_FILE:
           case FFMessageType.READ_FILE:
+          case FFMessageType.DELETE_FILE:
             this.#resolves[id](data)
             break
           case FFMessageType.ERROR:
@@ -140,6 +142,20 @@ export class FFmpeg {
       undefined,
       signal,
     ) as Promise<Uint8Array>
+
+  public deleteFile = (path: string, signal?: AbortSignal) =>
+    this.#send(
+      {
+        type: FFMessageType.DELETE_FILE,
+        data: { path },
+      },
+      undefined,
+      signal,
+    ) as Promise<boolean>
+
+  public onProgress(callback: (event: ProgressEvent) => void): void {
+    this.#progressEventCallback = callback
+  }
 }
 
 // ========================================================================== //
@@ -165,11 +181,16 @@ interface FFMessageReadFileData {
   encoding: string
 }
 
+interface FFMessageDeleteFileData {
+  path: string
+}
+
 type FFMessageData =
   | FFMessageLoadConfig
   | FFMessageExecData
   | FFMessageWriteFileData
   | FFMessageReadFileData
+  | FFMessageDeleteFileData
 
 interface Message {
   type: string
