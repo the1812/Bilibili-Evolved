@@ -2,6 +2,7 @@ import { DownloadPackage, PackageEntry } from '@/core/download'
 import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
+import { formatPercent } from '@/core/utils/formatters'
 import { title as pluginTitle } from '.'
 import type { Options } from '../../../../components/video/download'
 import { DownloadVideoAction } from '../../../../components/video/download/types'
@@ -76,7 +77,9 @@ async function single(
 
   console.debug('FFmpeg commandline args:', args.join(' '))
 
-  toast.message = '混流中……'
+  ffmpeg.onProgress(event => {
+    toast.message = `混流中: ${formatPercent(event.progress)}`
+  })
   await ffmpeg.exec(args)
 
   const output = await ffmpeg.readFile('output')

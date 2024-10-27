@@ -19,12 +19,15 @@ enum FFMessageType {
   READ_FILE = 'READ_FILE',
   DELETE_FILE = 'DELETE_FILE',
   ERROR = 'ERROR',
+  PROGRESS = 'PROGRESS',
 }
 
 export class FFmpeg {
   #worker: Worker | null = null
   #resolves: Callbacks = {}
   #rejects: Callbacks = {}
+
+  #progressEventCallback: (event: ProgressEvent) => void
 
   public loaded = false
 
@@ -41,6 +44,11 @@ export class FFmpeg {
           case FFMessageType.READ_FILE:
           case FFMessageType.DELETE_FILE:
             this.#resolves[id](data)
+            break
+          case FFMessageType.PROGRESS:
+            if (this.#progressEventCallback) {
+              this.#progressEventCallback(<ProgressEvent>data)
+            }
             break
           case FFMessageType.ERROR:
             this.#rejects[id](data)
@@ -197,7 +205,12 @@ interface Message {
   data?: FFMessageData
 }
 
-type CallbackData = Uint8Array | string | boolean | Error | undefined
+interface ProgressEvent {
+  progress: number
+  time: number
+}
+
+type CallbackData = Uint8Array | string | boolean | Error | ProgressEvent | undefined
 
 interface Callbacks {
   [id: number | string]: (data: CallbackData) => void
