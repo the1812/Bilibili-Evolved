@@ -164,7 +164,8 @@ $prefix: 'simplifyLiveroom-switch';
   .gift-control-panel .wish-icon,
   .gift-control-panel .wish-tip,
   .gift-control-panel .left-part-ctnr,
-  .web-live-player-gift-icon-wrap {
+  .web-live-player-gift-icon-wrap,
+  .gift-control-panel .gift-presets .gift-panel.gift-panel.gift-panel {
     display: none !important;
   }
   .gift-control-section,
@@ -188,6 +189,7 @@ $prefix: 'simplifyLiveroom-switch';
     .gift-presets {
       .gift-section {
         display: flex !important;
+        justify-content: end !important;
       }
     }
     .more-gift-section {
