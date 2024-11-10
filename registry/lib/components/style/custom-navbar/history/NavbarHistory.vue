@@ -59,7 +59,9 @@
                   class="progress"
                   :style="{ width: h.progress * 100 + '%' }"
                 ></div>
-                <div v-if="h.durationText" class="floating duration">{{ h.durationText }}</div>
+                <div v-if="h.pages !== undefined && h.pages > 1" class="floating pages">
+                  {{ h.page }}P / {{ h.pages }}P
+                </div>
               </a>
               <a class="title" target="_blank" :href="h.url" :title="h.title">{{
                 h.title || h.upName + '的直播间'
@@ -360,14 +362,18 @@ export default Vue.extend({
         &-items {
           padding: 0 12px;
           .floating {
-            @include round-bar(20);
+            @include round-bar(16);
             @include h-center();
             background-color: #000c;
             color: white;
             justify-content: center;
             position: absolute;
-            opacity: 0;
             font-size: 11px;
+            padding: 2px 4px;
+            &.pages {
+              bottom: 4px;
+              right: 4px;
+            }
           }
           .time-group-item {
             display: grid;
@@ -390,9 +396,6 @@ export default Vue.extend({
             &:hover {
               .cover {
                 transform: scale(1.05);
-              }
-              .floating {
-                opacity: 1;
               }
             }
             .history-cover-container {
