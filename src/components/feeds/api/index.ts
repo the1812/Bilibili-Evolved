@@ -1,4 +1,4 @@
-import { getUID, pascalCase } from '@/core/utils'
+import { getUID, pascalCase, raiseEvent } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { formatCount, formatDuration, parseCount, parseDuration } from '@/core/utils/formatters'
 import { watchlaterList } from '@/components/video/watchlater'
@@ -6,6 +6,8 @@ import { getData, registerData } from '@/plugins/data'
 import { descendingStringSort } from '@/core/utils/sort'
 import { VideoCard } from '../video-card'
 import { FeedsCard, FeedsCardType, feedsCardTypes } from './types'
+import { childList } from '@/core/observer'
+import { select } from '@/core/spin-query'
 
 export * from './types'
 export * from './manager'
@@ -189,7 +191,7 @@ export const addMenuItem = (
 ) => {
   const morePanel = dq(
     card.element,
-    '.more-panel, .bili-dyn-more__menu, .opus-more__menu',
+    '.more-panel, .bili-dyn-more__menu, .opus-more__menu, .bili-dyn-item__more, .opus-more',
   ) as HTMLElement
   const { className, text, action } = config
   if (!morePanel || dq(morePanel, `.${className}`)) {
@@ -198,43 +200,93 @@ export const addMenuItem = (
   }
   const isV2 = !morePanel.classList.contains('more-panel')
   const isOpus = morePanel.classList.contains('opus-more__menu')
-  const menuItem = document.createElement(isV2 ? 'div' : 'p')
-  if (isOpus) {
-    menuItem.classList.add('opus-more__menu__item', className)
-    const styleReferenceElement = morePanel.children[0] as HTMLElement
-    if (styleReferenceElement) {
-      menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+  const isCascader =
+    morePanel.classList.contains('bili-dyn-item__more') || morePanel.classList.contains('opus-more')
+
+  const createMenuItem = (): HTMLElement => {
+    if (isCascader) {
+      const menuItem = document.createElement('div')
+      menuItem.innerHTML = /* html */ `
+        <div class="bili-cascader-options__item">
+          <div class="bili-cascader-options__item-custom">
+            <div>
+              <div class="bili-cascader-options__item-label">
+                ${text}
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+      return menuItem
     }
-    menuItem.dataset.type = 'more'
-    menuItem.dataset.stype = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
-    menuItem.dataset.params = '{}'
-  } else if (isV2) {
-    menuItem.classList.add('bili-dyn-more__menu__item', className)
-    const styleReferenceElement = morePanel.children[0] as HTMLElement
-    if (styleReferenceElement) {
-      menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+
+    const menuItem = document.createElement(isV2 ? 'div' : 'p')
+    if (isOpus) {
+      menuItem.classList.add('opus-more__menu__item', className)
+      const styleReferenceElement = morePanel.children[0] as HTMLElement
+      if (styleReferenceElement) {
+        menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+      }
+      menuItem.dataset.type = 'more'
+      menuItem.dataset.stype = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
+      menuItem.dataset.params = '{}'
+    } else if (isV2) {
+      menuItem.classList.add('bili-dyn-more__menu__item', className)
+      const styleReferenceElement = morePanel.children[0] as HTMLElement
+      if (styleReferenceElement) {
+        menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+      } else {
+        menuItem.style.height = '25px'
+        menuItem.style.padding = '2px 0'
+        menuItem.style.textAlign = 'center'
+      }
+      menuItem.dataset.module = 'more'
+      menuItem.dataset.type = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
+      menuItem.dataset.params = '{}'
     } else {
-      menuItem.style.height = '25px'
-      menuItem.style.padding = '2px 0'
-      menuItem.style.textAlign = 'center'
+      menuItem.classList.add('child-button', 'c-pointer', className)
     }
-    menuItem.dataset.module = 'more'
-    menuItem.dataset.type = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
-    menuItem.dataset.params = '{}'
-  } else {
-    menuItem.classList.add('child-button', 'c-pointer', className)
+    menuItem.textContent = text
+    const vueScopeAttributes = [
+      ...new Set(
+        [...morePanel.children]
+          .map((element: HTMLElement) =>
+            element.getAttributeNames().filter(it => it.startsWith('data-v-')),
+          )
+          .flat(),
+      ),
+    ]
+    vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))
+    return menuItem
   }
-  menuItem.textContent = text
-  const vueScopeAttributes = [
-    ...new Set(
-      [...morePanel.children]
-        .map((element: HTMLElement) =>
-          element.getAttributeNames().filter(it => it.startsWith('data-v-')),
-        )
-        .flat(),
-    ),
-  ]
-  vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))
+
+  if (isCascader) {
+    ;(async () => {
+      const cascader = await select(() => dq(morePanel, '.bili-cascader'))
+      const [observer] = childList(cascader, records => {
+        const cascaderOptions = dq(cascader, '.bili-cascader-options')
+        console.log({ cascader: cascaderOptions, records })
+        if (cascaderOptions === null) {
+          return
+        }
+        observer.disconnect()
+        const menuItem = createMenuItem()
+        menuItem.addEventListener('click', e => {
+          action(e)
+          const triggerButton = dq(morePanel, '.bili-dyn-more__btn') as HTMLElement | null
+          if (triggerButton !== null) {
+            raiseEvent(triggerButton, 'mouseleave')
+          } else {
+            raiseEvent(morePanel, 'mouseleave')
+          }
+        })
+        cascaderOptions.appendChild(menuItem)
+      })
+    })()
+    return
+  }
+
+  const menuItem = createMenuItem()
   menuItem.addEventListener('click', e => {
     action(e)
     card.element.click()
