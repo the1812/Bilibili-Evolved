@@ -14,4 +14,5 @@ export const darkExcludes = [
   // 创作中心-收益管理-悬赏计划
   '//cm.bilibili.com/quests/#/task',
   '//live.bilibili.com/activity/live-activity-full/full-next/index.html',
+  '//gf.bilibili.com/',
 ]
