@@ -88,6 +88,6 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
 .feed-card:has(.bili-video-card a[href*='cm.bilibili.com']),
 .bili-video-card.is-rcmd:has(a[href*='cm.bilibili.com']),
 .bili-video-card__wrap:has(a[href*='cm.bilibili.com']),
-body:not(.promotion-show-placeholder) :is(.bili-video-card.is-rcmd, .feed-card):not(:has(.bili-video-card__wrap)) {
+body:not(.promotion-show-placeholder) :is(.bili-video-card.is-rcmd, .bili-feed4-layout .feed-card):not(:has(.bili-video-card__wrap)) {
   display: none !important;
 }
