@@ -1,8 +1,13 @@
 <template>
   <div class="rpc-config download-video-config-section">
-    <div>
-      <div>aria2下载附属资源（若支持）:</div>
-      <SwitchBox v-model="isPluginDownloadAssets" @change="saveSettings" />
+    <div class="online-assets-download">
+      <div class="download-video-config-item">
+        <div class="download-video-config-title">使用 aria2 下载附属资源:</div>
+        <SwitchBox v-model="isPluginDownloadAssets" @change="saveAssetsSettings" />
+      </div>
+      <div class="download-video-config-description">
+        存在于服务器的附属资源 (例如封面) 可以一并发送到 aria2 下载.
+      </div>
     </div>
     <div v-if="isRenaming" class="profile-select">
       <div class="profile-item-name">重命名 RPC 预设:</div>
@@ -117,11 +122,15 @@ export default Vue.extend({
     }
   },
   methods: {
-    saveSettings() {
+    saveProfileSettings() {
       options.selectedRpcProfileName = this.selectedRpcProfile.name
       options.rpcProfiles = this.rpcProfiles
+      storedOptions.selectedRpcProfileName = options.selectedRpcProfileName
+      storedOptions.rpcProfiles = options.rpcProfiles
+    },
+    saveAssetsSettings() {
       options.isPluginDownloadAssets = this.isPluginDownloadAssets
-      Object.assign(storedOptions, options)
+      storedOptions.isPluginDownloadAssets = options.isPluginDownloadAssets
     },
     async startRename() {
       this.profileRename = this.selectedRpcProfile.name
@@ -143,7 +152,7 @@ export default Vue.extend({
       }
       this.selectedRpcProfile.name = this.profileRename
       this.isRenaming = false
-      this.saveSettings()
+      this.saveProfileSettings()
     },
     newProfile() {
       const newProfile: Aria2RpcProfile = { ...this.selectedRpcProfile }
@@ -205,6 +214,10 @@ export default Vue.extend({
   }
   .profile-method {
     align-self: flex-start;
+  }
+  .online-assets-download {
+    flex-direction: column;
+    align-items: start;
   }
 }
 </style>

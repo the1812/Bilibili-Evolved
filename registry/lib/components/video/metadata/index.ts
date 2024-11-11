@@ -5,6 +5,7 @@ import { Toast } from '@/core/toast'
 import { videoUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../download/types'
 import { generateByType, MetadataType } from './metadata'
+import { options } from './options'
 
 export const title = '保存视频元数据'
 export const name = 'saveVideoMetadata'
@@ -28,6 +29,7 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.video],
   entry: none,
   urlInclude: videoUrls,
+  options,
   widget: {
     condition: hasVideo,
     component: () => import('./SaveMetadata.vue').then(m => m.default),

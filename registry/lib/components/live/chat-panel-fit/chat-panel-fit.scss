@@ -21,9 +21,13 @@
           }
         }
       }
-      .chat-input-ctnr-new .medal-section {
-        min-width: 0 !important;
-        max-width: 0 !important;
+      .chat-input-ctnr-new {
+        .medal-section {
+          display: none !important;
+        }
+        .chat-input-new:not(:has(textarea.focus)) {
+          padding-left: 12px !important;
+        }
       }
     }
   }

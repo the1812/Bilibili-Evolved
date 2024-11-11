@@ -50,7 +50,7 @@
 </template>
 <script lang="ts">
 import { VIcon, TextBox, DpiImage, VEmpty, VLoading } from '@/ui'
-import { getJsonWithCredentials, responsiveGetPages } from '@/core/ajax'
+import { getJsonWithCredentials } from '@/core/ajax'
 
 const decodeTitle = (title: string) => {
   const textArea = document.createElement('textarea')
@@ -109,64 +109,25 @@ export default Vue.extend({
       try {
         this.items = []
         this.loaded = false
-        const [, promise] = responsiveGetPages<LiveInfo>({
-          api: page =>
-            getJsonWithCredentials(
-              `https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=${page}`,
-            ),
-          getList: json =>
-            lodash.get(json, 'data.list', []).map(item => {
-              const { face, uname, title, room_id, cover_from_user, online, uid, link } = item
-              return {
-                cover: face,
-                face,
-                uname,
-                title,
-                roomid: room_id,
-                pic: cover_from_user,
-                online,
-                uid,
-                link,
-              }
-            }),
-          getTotal: json => lodash.get(json, 'data.count', 0),
+        const url = `https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?hit_ab=true&_=${Date.now()}`
+        const portalList = await getJsonWithCredentials(url)
+        this.items = portalList.data.rooms.map(item => {
+          const { room_id, face, title, uname, uid } = item
+          return {
+            cover: face,
+            face,
+            uname,
+            title,
+            roomid: room_id,
+            pic: '', // portal接口没有
+            online: 0, // portal接口没有
+            uid,
+            link: `https://live.bilibili.com/${room_id}`,
+          }
         })
-
-        const [allItems, recommendItems] = await Promise.all([promise, this.fetchRecommendItems()])
-        this.items = this.sortByRecommend(allItems, recommendItems)
       } finally {
         this.loaded = true
       }
-    },
-
-    async fetchRecommendItems(): Promise<LiveInfo[]> {
-      // 动态portal接口会获取推荐的top30直播。同时这个接口不会忽略悄悄关注的up的直播。
-      const portalList = await getJsonWithCredentials(
-        'https://api.bilibili.com/x/polymer/web-dynamic/v1/portal',
-      )
-      const recommendLiveItems = portalList.data.live_users.items.map(item => {
-        const { jump_url, room_id, face, title, uname, mid } = item
-        return {
-          cover: face,
-          face,
-          uname,
-          title,
-          roomid: room_id,
-          pic: '', // portal接口没有
-          online: 0, // portal接口没有
-          uid: mid,
-          link: jump_url,
-        }
-      })
-      return recommendLiveItems
-    },
-
-    sortByRecommend(feedItems: LiveInfo[], recommendItems: LiveInfo[]) {
-      // recommendItems里的pic和online为默认值，但是ui也没用到。
-      // 所以方便起见，直接拼接没出现在recommendItems里的item
-      const recommendRoomIds = recommendItems.map(item => item.roomid)
-      const feedConcatItems = feedItems.filter(item => !recommendRoomIds.includes(item.roomid))
-      return lodash.concat(recommendItems, feedConcatItems)
     },
   },
 })

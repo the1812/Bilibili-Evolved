@@ -17,10 +17,6 @@ export const component = wrapSwitchOptions({
       defaultValue: true,
       displayName: '装扮 & 时间',
     },
-    userPendent: {
-      defaultValue: false,
-      displayName: '头像框',
-    },
     subReplyNewLine: {
       defaultValue: true,
       displayName: '回复换行',
