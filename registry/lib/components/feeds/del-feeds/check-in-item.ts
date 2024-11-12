@@ -131,4 +131,4 @@ const builtInItems: CheckInItem[] = [
   },
 ]
 
-export const [checkInItems] = registerAndGetData('checkInCenter.items', builtInItems)
+export const [checkInItems] = registerAndGetData('deleteFeeds.items', builtInItems)
