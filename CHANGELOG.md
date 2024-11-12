@@ -6,6 +6,8 @@
 
 包含 [v2.9.5](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.9.5) 的所有更新内容.
 
+- `自定义顶栏` 的历史支持手动刷新. (#4948)
+
 ## v2.9.5
 `2024-11-12`
 
