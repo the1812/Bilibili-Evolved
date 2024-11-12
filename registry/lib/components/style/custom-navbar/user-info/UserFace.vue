@@ -9,9 +9,9 @@
 import { getUserInfo } from '@/core/user-info'
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
+import notLoginFaceUrl from './akari.jpg'
 
 const noFaceUrl = '//static.hdslb.com/images/member/noface.gif'
-const notLoginFaceUrl = 'https://static.hdslb.com/images/akari.jpg'
 export default Vue.extend({
   name: 'UserFace',
   data() {

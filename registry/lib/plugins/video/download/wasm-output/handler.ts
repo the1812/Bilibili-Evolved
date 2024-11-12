@@ -2,6 +2,7 @@ import { DownloadPackage, PackageEntry } from '@/core/download'
 import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
+import { formatPercent } from '@/core/utils/formatters'
 import { title as pluginTitle } from '.'
 import type { Options } from '../../../../components/video/download'
 import { DownloadVideoAction } from '../../../../components/video/download/types'
@@ -59,13 +60,13 @@ async function single(
     httpGet(audioUrl, progress(1, '正在下载音频流')),
   ])
 
-  ffmpeg.writeFile('video', video)
-  ffmpeg.writeFile('audio', audio)
+  await ffmpeg.writeFile('video', video)
+  await ffmpeg.writeFile('audio', audio)
 
   const args = ['-i', 'video', '-i', 'audio']
 
   if (ffmetadata) {
-    ffmpeg.writeFile('ffmetadata', new TextEncoder().encode(ffmetadata))
+    await ffmpeg.writeFile('ffmetadata', new TextEncoder().encode(ffmetadata))
     args.push('-i', 'ffmetadata', '-map_metadata', '2')
     if (!outputMkv) {
       args.push('-movflags', '+use_metadata_tags')
@@ -76,7 +77,9 @@ async function single(
 
   console.debug('FFmpeg commandline args:', args.join(' '))
 
-  toast.message = '混流中……'
+  ffmpeg.onProgress(event => {
+    toast.message = `混流中: ${formatPercent(event.progress)}`
+  })
   await ffmpeg.exec(args)
 
   const output = await ffmpeg.readFile('output')
@@ -86,6 +89,13 @@ async function single(
 
   toast.message = '完成！'
   toast.duration = 1000
+
+  await Promise.all([
+    ffmpeg.deleteFile('video'),
+    ffmpeg.deleteFile('audio'),
+    ffmpeg.deleteFile('output'),
+    ffmetadata ? ffmpeg.deleteFile('ffmetadata') : Promise.resolve(),
+  ])
 
   await DownloadPackage.single(
     name.replace(/.[^/.]+$/, `.${outputMkv ? 'mkv' : 'mp4'}`),

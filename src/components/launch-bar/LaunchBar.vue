@@ -188,10 +188,12 @@ export default Vue.extend({
       if (!input) {
         return
       }
-      this.keyword = input.value
       urlChange(url => {
         const params = new URLSearchParams(url)
-        this.keyword = params.get('keyword')
+        const keywordFromParam = params.get('keyword')
+        if (keywordFromParam !== null) {
+          this.keyword = params.get('keyword')
+        }
       })
       await this.$nextTick()
     },

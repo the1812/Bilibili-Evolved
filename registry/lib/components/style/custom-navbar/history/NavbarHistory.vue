@@ -14,6 +14,11 @@
               <VIcon icon="mdi-play" :size="14"></VIcon>
             </VButton>
           </div>
+          <div class="operation" @click="reloadHistoryItems">
+            <VButton title="刷新" round>
+              <VIcon icon="mdi-refresh" :size="16"></VIcon>
+            </VButton>
+          </div>
           <a class="operation" target="_blank" href="https://www.bilibili.com/account/history">
             <VButton title="查看更多" round>
               <VIcon icon="mdi-dots-horizontal" :size="18"></VIcon>
@@ -59,7 +64,9 @@
                   class="progress"
                   :style="{ width: h.progress * 100 + '%' }"
                 ></div>
-                <div v-if="h.durationText" class="floating duration">{{ h.durationText }}</div>
+                <div v-if="h.pages !== undefined && h.pages > 1" class="floating pages">
+                  {{ h.page }}P / {{ h.pages }}P
+                </div>
               </a>
               <a class="title" target="_blank" :href="h.url" :title="h.title">{{
                 h.title || h.upName + '的直播间'
@@ -360,14 +367,18 @@ export default Vue.extend({
         &-items {
           padding: 0 12px;
           .floating {
-            @include round-bar(20);
+            @include round-bar(16);
             @include h-center();
             background-color: #000c;
             color: white;
             justify-content: center;
             position: absolute;
-            opacity: 0;
             font-size: 11px;
+            padding: 2px 4px;
+            &.pages {
+              bottom: 4px;
+              right: 4px;
+            }
           }
           .time-group-item {
             display: grid;
@@ -390,9 +401,6 @@ export default Vue.extend({
             &:hover {
               .cover {
                 transform: scale(1.05);
-              }
-              .floating {
-                opacity: 1;
               }
             }
             .history-cover-container {

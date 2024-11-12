@@ -572,15 +572,6 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 - `粉丝勋章`: 隐藏用户的粉丝勋章.
 - `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅
 
-### [简化首页](../../registry/dist/components/style/simplify/home.js)
-`simplifyHome`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/home.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/home.js)
-
-隐藏原版首页不需要的元素 / 分区.
-
 ### [简化直播间](../../registry/dist/components/style/simplify/live.js)
 `simplifyLiveroom`
 
@@ -1066,10 +1057,10 @@ by [@kdxcxs](https://github.com/kdxcxs)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-title.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-title.js)
 
 提供一些视频选集区域的优化, 对番剧无效.
-- `展开选集标题`: 总是完全展开视频选集列表项的标题
+- `展开选集标题`: 总是完全展开视频选集列表项的标题, 若为传统分 P 列表, 还会恢复显示分 P 数的前缀.
 - `展开选集列表`: 总是完全展开视频选集列表
 
-打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换展开/收起选集列表.
+打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换此组件的效果.
 
 ### [保存视频元数据](../../registry/dist/components/video/metadata.js)
 `saveVideoMetadata`
