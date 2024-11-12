@@ -37,12 +37,6 @@ $prefix: 'simplifyComments-switch';
       }
     }
 
-    body.#{$prefix}-userPendent & {
-      .bili-avatar-pendent-dom {
-        display: none !important;
-      }
-    }
-
     body.#{$prefix}-decorateAndTime & {
       .reply-decorate {
         display: none !important;

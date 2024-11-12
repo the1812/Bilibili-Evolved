@@ -2,7 +2,7 @@
   {
     "name": "cleaner",
     "displayName": "简洁至上",
-    "description": "简化各种多余界面元素, 专注于内容本身.\n\n包含以下功能:\n删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层",
+    "description": "简化各种多余界面元素, 专注于内容本身.\n\n包含以下功能:\n删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层",
     "components": [
       "removePromotions",
       "removeLiveWatermark",
@@ -10,7 +10,6 @@
       "disableSpecialDanmaku",
       "simplifyComments",
       "simplifyLiveroom",
-      "simplifyHome",
       "collapseLiveSideBar",
       "hideRelatedVideos",
       "hideRecommendedLive",
@@ -64,14 +63,6 @@
         "description": "隐藏直播间中各种不需要的内容.",
         "fullRelativePath": "../../registry/dist/components/style/simplify/live.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/live.js"
-      },
-      {
-        "type": "component",
-        "name": "simplifyHome",
-        "displayName": "简化首页",
-        "description": "隐藏原版首页不需要的元素 / 分区.",
-        "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
-        "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
       },
       {
         "type": "component",

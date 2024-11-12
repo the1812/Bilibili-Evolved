@@ -152,10 +152,9 @@
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
 
-## bilibili 网页端添加 APP 首页推荐
-作者: [indefined](https://github.com/indefined)
-- [GitHub](https://github.com/indefined/UserScripts/tree/master/bilibiliHome)
-- [GreasyFork](https://greasyfork.org/zh-CN/scripts/368446-bilibili%E7%BD%91%E9%A1%B5%E7%AB%AF%E6%B7%BB%E5%8A%A0app%E9%A6%96%E9%A1%B5%E6%8E%A8%E8%8D%90)
+## BewlyBewly
+作者: [Hakadao](https://github.com/hakadao)
+- [GitHub](https://github.com/BewlyBewly/BewlyBewly)
 
 ## pakku.js 哔哩哔哩弹幕过滤器
 作者: [xmcp](https://github.com/xmcp)

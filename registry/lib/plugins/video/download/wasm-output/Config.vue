@@ -33,7 +33,7 @@ export default Vue.extend({
   },
   methods: {
     saveOptions() {
-      options.muxWithMetadata = this.muxExtraAssets
+      options.muxWithMetadata = this.muxWithMetadata
       Object.assign(storedOptions, options)
     },
   },

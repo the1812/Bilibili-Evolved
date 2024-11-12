@@ -1,5 +1,4 @@
 import { wrapSwitchOptions } from '@/components/switch-options'
-import { styledComponentEntry } from '@/components/styled-component'
 import { liveUrls } from '@/core/utils/urls'
 
 export const component = wrapSwitchOptions({
@@ -97,13 +96,17 @@ export const component = wrapSwitchOptions({
 })({
   name: 'simplifyLiveroom',
   displayName: '简化直播间',
-  entry: styledComponentEntry(
-    () => import('./live.scss'),
-    async () => {
-      const { setupSkinSimplify } = await import('./skin')
-      setupSkinSimplify()
+  entry: async () => {
+    const { setupSkinSimplify } = await import('./skin')
+    setupSkinSimplify()
+  },
+  instantStyles: [
+    {
+      name: 'simplify-liveroom',
+      style: () => import('./live.scss'),
+      important: true,
     },
-  ),
+  ],
   description: {
     'zh-CN': '隐藏直播间中各种不需要的内容.',
   },

@@ -41,6 +41,7 @@ const entry = async () => {
             'bili-rich-text-topic',
             'bili-rich-text-module',
             'bili-rich-text-link',
+            'bili-rich-text-viewpic',
           ].some(className => target.classList.contains(className))
         ) {
           return

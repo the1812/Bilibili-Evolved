@@ -2,7 +2,10 @@ import { getJson, monkey, postJson } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { UserAgent } from '@/core/utils/constants'
 import { logError } from '@/core/utils/log'
-import { DownloadVideoOutput } from '../../../../components/video/download/types'
+import {
+  DownloadVideoAssets,
+  DownloadVideoOutput,
+} from '../../../../components/video/download/types'
 import { Aria2RpcProfile } from './rpc-profiles'
 
 interface RpcParam {
@@ -138,7 +141,7 @@ export const aria2Rpc: DownloadVideoOutput = {
     const { selectedRpcProfile, isPluginDownloadAssets } = instance
     const { secretKey, dir, other } = selectedRpcProfile
     const referer = document.URL.replace(window.location.search, '')
-    const ariaParamsGenerator = (url: string, title: string) => {
+    const getAria2Params = (url: string, title: string) => {
       const singleInfoParams = []
       if (secretKey) {
         singleInfoParams.push(`token:${secretKey}`)
@@ -158,30 +161,29 @@ export const aria2Rpc: DownloadVideoOutput = {
       }
     }
 
-    // handle video params
     const videoParams = infos
       .map(info =>
         info.titledFragments.map(fragment => {
           const { url, title } = fragment
-          return ariaParamsGenerator(url, title)
+          return getAria2Params(url, title)
         }),
       )
       .flat()
 
-    // handle assets
-    const assetsAriaParams = []
-    const extraAssetsForBrowerDownload = []
-    for (const { asset, instance: assetInstance } of extraOnlineAssets) {
-      if (isPluginDownloadAssets && 'getUrls' in asset) {
-        // get asset from aria2
-        const results = await asset.getUrls(infos, assetInstance)
-        assetsAriaParams.push(...results.map(({ name, url }) => ariaParamsGenerator(url, name)))
-      } else {
-        // remain asset in `extraOnlineAssets`
-        extraAssetsForBrowerDownload.push({ asset, instance: assetInstance })
-      }
-    }
-    action.extraOnlineAssets = extraAssetsForBrowerDownload
+    const isAriaAsset = (asset: DownloadVideoAssets) =>
+      isPluginDownloadAssets && asset.getUrls !== undefined
+    const assetsAriaParams = (
+      await Promise.all(
+        extraOnlineAssets
+          .filter(it => isAriaAsset(it.asset))
+          .map(async it => {
+            const { asset, instance: assetInstance } = it
+            const results = await asset.getUrls(infos, assetInstance)
+            return results.map(({ name, url }) => getAria2Params(url, name))
+          }),
+      )
+    ).flat()
+    action.extraOnlineAssets = extraOnlineAssets.filter(it => !isAriaAsset(it.asset))
 
     const totalParams = [...videoParams, ...assetsAriaParams]
     const results = await sendRpc(selectedRpcProfile, totalParams)

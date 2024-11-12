@@ -11,6 +11,15 @@
 
 开启后, 可在每条动态的菜单中选择复制链接.
 
+### [删除动态](../../registry/dist/components/feeds/del-feeds.js)
+`deleteFeeds`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/del-feeds.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/del-feeds.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/del-feeds.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/del-feeds.js)
+
+删除动态, 可选转发抽奖, 和全部删除.
+
 ### [禁止跳转动态详情](../../registry/dist/components/feeds/disable-details.js)
 `disableFeedsDetails`
 
@@ -169,6 +178,15 @@
 by [@TimmyOVO](https://github.com/TimmyOVO)
 
 移除全屏观看直播时的底部礼物栏
+
+### [隐藏直播马赛克](../../registry/dist/components/live/hide-player-blur.js)
+`hideLivePlayerBlur`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/hide-player-blur.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/hide-player-blur.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/hide-player-blur.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/hide-player-blur.js)
+
+移除直播画面中的马赛克区域.
 
 ### [直播首页静音](../../registry/dist/components/live/home-mute.js)
 `liveHomeMute`
@@ -389,6 +407,15 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片
 
+### [隐藏头像框](../../registry/dist/components/style/hide/user-pendent.js)
+`hideUserPendent`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/user-pendent.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/user-pendent.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/user-pendent.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/user-pendent.js)
+
+隐藏页面中用户的头像框 (包括角标), 目前支持动态和视频页面.
+
 ### [隐藏记笔记](../../registry/dist/components/style/hide/video/notes.js)
 `hideVideoNotes`
 
@@ -545,15 +572,6 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 - `粉丝勋章`: 隐藏用户的粉丝勋章.
 - `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅
 
-### [简化首页](../../registry/dist/components/style/simplify/home.js)
-`simplifyHome`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/simplify/home.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/simplify/home.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/simplify/home.js)
-
-隐藏原版首页不需要的元素 / 分区.
-
 ### [简化直播间](../../registry/dist/components/style/simplify/live.js)
 `simplifyLiveroom`
 
@@ -694,6 +712,17 @@ by [@snowraincloud](https://github.com/snowraincloud)
 (原名: 专栏文字选择, 现在专栏已经不限制选中文字了)
 
 避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.
+
+### [评论内容替换](../../registry/dist/components/utils/comments/content-replace.js)
+`commentContentReplace`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/content-replace.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/content-replace.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/content-replace.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/content-replace.js)
+
+替换评论中的内容.
+
+可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情, 留空则会移除命中的关键词.
 
 ### [复制评论链接](../../registry/dist/components/utils/comments/copy-link.js)
 `copyCommentsLink`
@@ -1028,10 +1057,10 @@ by [@kdxcxs](https://github.com/kdxcxs)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/full-episode-title.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/full-episode-title.js)
 
 提供一些视频选集区域的优化, 对番剧无效.
-- `展开选集标题`: 总是完全展开视频选集列表项的标题
+- `展开选集标题`: 总是完全展开视频选集列表项的标题, 若为传统分 P 列表, 还会恢复显示分 P 数的前缀.
 - `展开选集列表`: 总是完全展开视频选集列表
 
-打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换展开/收起选集列表.
+打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换此组件的效果.
 
 ### [保存视频元数据](../../registry/dist/components/video/metadata.js)
 `saveVideoMetadata`
