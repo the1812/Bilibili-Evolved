@@ -22,7 +22,5 @@ export const pack: Package = {
     'disableFeedsDetails',
     'fullVideoDescription',
   ],
-  plugins: [
-    'settingsPanel.tagFilters.recentComponents',
-  ],
+  plugins: ['settingsPanel.tagFilters.recentComponents'],
 }

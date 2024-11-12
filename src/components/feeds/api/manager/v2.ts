@@ -124,6 +124,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     }
     card.getText = async () =>
       combineText(getText(modules.module_dynamic, cardType), getText(repostDynamicModule, cardType))
+    card.repostId = vueData.data.orig.id_str
   }
   card.text = await card.getText()
   card.element.setAttribute('data-did', card.id)

@@ -6,6 +6,8 @@ import { DanmakuConverterConfig, DanmakuConverter } from '../converter/danmaku-c
 import { DanmakuType } from '../converter/danmaku-type'
 import { XmlDanmaku } from '../converter/xml-danmaku'
 import { playerAgent } from '@/components/video/player-agent'
+import { getComponentSettings } from '@/core/settings'
+import { DownloadDanmakuOptions } from './options'
 
 export class JsonDanmaku {
   // static SegmentSize = 6 * 60
@@ -71,6 +73,8 @@ export class JsonDanmaku {
 }
 export type DanmakuDownloadType = 'json' | 'xml' | 'ass'
 export const getUserDanmakuConfig = async () => {
+  const downloadDanmakuOptions =
+    getComponentSettings<DownloadDanmakuOptions>('downloadDanmaku').options
   const title = getFriendlyTitle()
   const defaultConfig: Omit<DanmakuConverterConfig, 'title'> = {
     font: '微软雅黑',
@@ -135,7 +139,11 @@ export const getUserDanmakuConfig = async () => {
 
       // 弹幕持续时长
       config.duration = (() => {
-        const scrollDuration = 18 - 3 * playerAgent.getPlayerConfig('dmSetting.speedplus', 0)
+        const speed =
+          downloadDanmakuOptions.speed === 'auto'
+            ? playerAgent.getPlayerConfig('dmSetting.speedplus', 0)
+            : downloadDanmakuOptions.speed
+        const scrollDuration = 18 - 3 * speed
         return (danmaku: { type: number }) => {
           switch (danmaku.type) {
             case 4:

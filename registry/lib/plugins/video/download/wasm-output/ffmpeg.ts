@@ -17,13 +17,17 @@ enum FFMessageType {
   EXEC = 'EXEC',
   WRITE_FILE = 'WRITE_FILE',
   READ_FILE = 'READ_FILE',
+  DELETE_FILE = 'DELETE_FILE',
   ERROR = 'ERROR',
+  PROGRESS = 'PROGRESS',
 }
 
 export class FFmpeg {
   #worker: Worker | null = null
   #resolves: Callbacks = {}
   #rejects: Callbacks = {}
+
+  #progressEventCallback: (event: ProgressEvent) => void
 
   public loaded = false
 
@@ -38,7 +42,13 @@ export class FFmpeg {
           case FFMessageType.EXEC:
           case FFMessageType.WRITE_FILE:
           case FFMessageType.READ_FILE:
+          case FFMessageType.DELETE_FILE:
             this.#resolves[id](data)
+            break
+          case FFMessageType.PROGRESS:
+            if (this.#progressEventCallback) {
+              this.#progressEventCallback(<ProgressEvent>data)
+            }
             break
           case FFMessageType.ERROR:
             this.#rejects[id](data)
@@ -140,6 +150,20 @@ export class FFmpeg {
       undefined,
       signal,
     ) as Promise<Uint8Array>
+
+  public deleteFile = (path: string, signal?: AbortSignal) =>
+    this.#send(
+      {
+        type: FFMessageType.DELETE_FILE,
+        data: { path },
+      },
+      undefined,
+      signal,
+    ) as Promise<boolean>
+
+  public onProgress(callback: (event: ProgressEvent) => void): void {
+    this.#progressEventCallback = callback
+  }
 }
 
 // ========================================================================== //
@@ -165,18 +189,28 @@ interface FFMessageReadFileData {
   encoding: string
 }
 
+interface FFMessageDeleteFileData {
+  path: string
+}
+
 type FFMessageData =
   | FFMessageLoadConfig
   | FFMessageExecData
   | FFMessageWriteFileData
   | FFMessageReadFileData
+  | FFMessageDeleteFileData
 
 interface Message {
   type: string
   data?: FFMessageData
 }
 
-type CallbackData = Uint8Array | string | boolean | Error | undefined
+interface ProgressEvent {
+  progress: number
+  time: number
+}
+
+type CallbackData = Uint8Array | string | boolean | Error | ProgressEvent | undefined
 
 interface Callbacks {
   [id: number | string]: (data: CallbackData) => void

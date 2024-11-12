@@ -52,7 +52,7 @@
     <div class="online-registry-separator"></div>
     <div ref="content" class="online-registry-content">
       <VLoading v-if="loading" />
-      <VEmpty v-if="!loading && !list.length" />
+      <VEmpty v-if="!loading && !filteredList.length" />
       <RegistryItem
         v-for="item of filteredList"
         :key="item.name"
@@ -71,7 +71,6 @@
   </VPopup>
 </template>
 <script lang="ts">
-import Fuse from 'fuse.js'
 import { DocSourceItem } from 'registry/lib/docs'
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
@@ -82,6 +81,7 @@ import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty, RadioButton } from
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
 import { ItemFilter } from './item-filter'
+import { getDescriptionText } from '@/components/description'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
 const general = getGeneralSettings() as ExtendedSettings
@@ -90,9 +90,10 @@ function updateList(keyword: string) {
     this.filteredList = this.list
     return
   }
-  const fuse = this.fuse as Fuse<DocSourceItem>
-  const fuseResult = fuse.search(keyword)
-  this.filteredList = fuseResult.map(it => it.item)
+  this.filteredList = this.list.filter((it: DocSourceItem) => {
+    const text = [it.name, it.displayName, it.descriptionText].join('\n').toLowerCase()
+    return text.includes(keyword)
+  })
   this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
 }
 const itemFilterOptions = [
@@ -142,7 +143,6 @@ export default Vue.extend({
       itemFilterOptions,
       filteredList: [],
       // packList: [],
-      fuse: null,
       registryBranches,
       selectedBranch: branches[0],
     }
@@ -181,10 +181,15 @@ export default Vue.extend({
           console.error('Fetch failed:', featureList, packList, featureListUrl, packListUrl)
           throw new Error('获取在线仓库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
         }
-        this.list = [...packList, ...featureList]
-        this.fuse = new Fuse(this.list, {
-          keys: ['displayName', 'name', 'description'],
-        })
+        this.list = await Promise.all(
+          [...packList, ...featureList].map(async it => {
+            return {
+              ...it,
+              descriptionText: await getDescriptionText(it),
+            }
+          }),
+        )
+        console.log(this.list)
         updateList.call(this, this.searchKeyword)
       } catch (error) {
         logError(error)

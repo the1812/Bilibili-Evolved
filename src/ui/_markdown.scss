@@ -1,6 +1,17 @@
-@import "common";
+@import 'common';
 @mixin markdown {
   line-height: normal;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block-start: 1em;
+    margin-block-end: 0.75em;
+    @include semi-bold();
+    color: inherit;
+  }
   ul,
   ul li {
     list-style: disc;
@@ -71,7 +82,7 @@
       color: inherit !important;
     }
     &::before {
-      content: "";
+      content: '';
       position: absolute;
       display: block;
       width: 3px;
