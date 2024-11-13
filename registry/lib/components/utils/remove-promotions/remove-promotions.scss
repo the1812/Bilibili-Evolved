@@ -35,7 +35,8 @@ body.remove-game-match-module #reportFirst3,
 body:not(.preserve-feed-goods) .dyn-goods,
 .desktop-download-tip,
 .adcard,
-.palette-button-adcard {
+.palette-button-adcard,
+.palette-button-wrap .adcard-content {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
