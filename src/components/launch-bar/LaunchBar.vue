@@ -30,7 +30,7 @@
           :action="a"
           @previous-item="previousItem()"
           @next-item="nextItem()"
-          @delete-item="onDeleteItem()"
+          @delete-item="onDeleteItem(index)"
           @action="
             index === actions.length - 1 && onClearHistory()
             onAction(a)
@@ -49,12 +49,12 @@
           class="suggest-item disabled"
         ></VLoading>
         <ActionItem
-          v-for="a of actions"
+          v-for="(a, index) of actions"
           :key="a.key"
           :action="a"
           @previous-item="previousItem()"
           @next-item="nextItem()"
-          @delete-item="onDeleteItem()"
+          @delete-item="onDeleteItem(index)"
           @action="onAction(a)"
         />
       </div>
@@ -234,7 +234,8 @@ export default Vue.extend({
       this.focusTarget.next()
       e.preventDefault()
     },
-    handleIndexUpdate() {
+    async handleIndexUpdate() {
+      await this.$nextTick()
       if (!this.focusTarget.hasFocus) {
         this.focusInput()
         return
@@ -248,7 +249,8 @@ export default Vue.extend({
       this.focusTarget.next()
     },
     search,
-    onDeleteItem() {
+    onDeleteItem(index: number) {
+      this.focusTarget.setFocus(index)
       this.focusTarget.previous()
       this.getActions()
     },
