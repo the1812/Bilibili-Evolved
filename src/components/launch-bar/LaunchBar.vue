@@ -21,7 +21,7 @@
     </div>
     <div ref="list" class="launch-bar-suggest-list">
       <div v-if="isHistory" class="launch-bar-history-list">
-        <div v-if="actions.length === 0" class="history-empty suggest-item disabled" tabindex="0">
+        <div v-if="actions.length === 0" class="history-empty be-launch-bar-suggest-item disabled" tabindex="0">
           暂无搜索历史
         </div>
         <ActionItem
@@ -41,12 +41,12 @@
         <VEmpty
           v-if="actions.length === 0 && noActions"
           tabindex="0"
-          class="suggest-item disabled"
+          class="be-launch-bar-suggest-item disabled"
         ></VEmpty>
         <VLoading
           v-if="actions.length === 0 && !noActions"
           tabindex="0"
-          class="suggest-item disabled"
+          class="be-launch-bar-suggest-item disabled"
         ></VLoading>
         <ActionItem
           v-for="(a, index) of actions"
@@ -265,7 +265,7 @@ export default Vue.extend({
       this.$refs.input.focus()
     },
     focusSuggestItem(nth: number) {
-      this.$refs.list.querySelector(`.suggest-item:nth-child(${nth})`)?.focus()
+      this.$refs.list.querySelector(`.be-launch-bar-suggest-item:nth-child(${nth})`)?.focus()
     },
   },
 })
