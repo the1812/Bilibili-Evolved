@@ -123,7 +123,7 @@ export default Vue.extend({
           `https://api.bilibili.com/x/space/bangumi/follow/list?${params}`,
         )
         if (json.code !== 0) {
-          logError(`加载订阅信息失败: ${json.message}`)
+          logError(`加载番剧信息失败: ${json.message}`)
           return
         }
         const newCards: SubscriptionItem[] = lodash
