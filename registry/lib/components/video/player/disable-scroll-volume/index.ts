@@ -4,7 +4,7 @@ import { allVideoUrls } from '@/core/utils/urls'
 
 let cancel: () => void
 export const disableScrollVolume = () => {
-  return preventEvent(unsafeWindow, 'mousewheel', () => {
+  const shouldPrevent = () => {
     const isFullscreen = [
       'player-mode-full',
       'player-mode-web',
@@ -12,7 +12,13 @@ export const disableScrollVolume = () => {
       'player-full-win',
     ].some(token => document.body.classList.contains(token))
     return isFullscreen
-  })
+  }
+  const cancelFirefox = preventEvent(unsafeWindow, 'DOMMouseScroll', shouldPrevent)
+  const cancelStandard = preventEvent(unsafeWindow, 'wheel', shouldPrevent)
+  return () => {
+    cancelFirefox()
+    cancelStandard()
+  }
 }
 export const component = defineComponentMetadata({
   name: 'disableScrollVolume',
