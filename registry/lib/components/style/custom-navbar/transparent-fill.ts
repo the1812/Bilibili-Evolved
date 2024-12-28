@@ -20,7 +20,7 @@ const setupTransparentFill = (vm: { toggleStyle: (value: boolean, style: string)
   })
 }
 
-const transparentFillUrls = ['//music.bilibili.com/']
+const transparentFillUrls = ['//music.bilibili.com/', '//space.bilibili.com/']
 
 /**
  * 检查是否应用透明填充(有横幅时)
