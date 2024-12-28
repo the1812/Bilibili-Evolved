@@ -1466,6 +1466,15 @@ by FoundTheWOUT
 
 为自定义顶栏添加一个夜间模式开关, 方便快速切换夜间模式.
 
+### [自定义顶栏 - 版权内容](../../registry/dist/plugins/style/custom-navbar-pgc.js)
+`customNavbar.items.pgc`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/style/custom-navbar-pgc.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-pgc.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-pgc.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-pgc.js)
+
+为自定义顶栏扩充版权内容相关的快速入口, 包括国创 / 电影 / 电视剧 /综艺 / 纪录片
+
 ### [快捷键扩展 - 夜间模式](../../registry/dist/plugins/utils/keymap-dark-mode.js)
 `keymap.actions.darkMode`
 
