@@ -6,12 +6,22 @@
           <TextBox v-model="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
+          <div class="operation">
+            <VButton title="刷新" round @click="reloadHistoryItems()">
+              <VIcon icon="mdi-refresh" :size="16"></VIcon>
+            </VButton>
+          </div>
           <div class="operation" @click="toggleHistoryPause">
             <VButton v-if="!paused" title="暂停记录历史" round>
               <VIcon icon="mdi-pause" :size="14"></VIcon>
             </VButton>
             <VButton v-else title="继续记录历史" round>
               <VIcon icon="mdi-play" :size="14"></VIcon>
+            </VButton>
+          </div>
+          <div class="operation" @click="reloadHistoryItems">
+            <VButton title="刷新" round>
+              <VIcon icon="mdi-refresh" :size="16"></VIcon>
             </VButton>
           </div>
           <a class="operation" target="_blank" href="https://www.bilibili.com/account/history">

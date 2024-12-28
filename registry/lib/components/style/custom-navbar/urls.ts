@@ -11,6 +11,7 @@ export const urlInclude = [
   '//app.bilibili.com',
   '//passport.bilibili.com',
   '//live.bilibili.com/blackboard/',
+  '//music.bilibili.com',
 ]
 export const urlExclude = [
   '//t.bilibili.com/vote/h5/index/#/result',

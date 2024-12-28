@@ -21,7 +21,7 @@
     </div>
     <div ref="list" class="launch-bar-suggest-list">
       <div v-if="isHistory" class="launch-bar-history-list">
-        <div v-if="actions.length === 0" class="history-empty suggest-item disabled" tabindex="0">
+        <div v-if="actions.length === 0" class="history-empty be-launch-bar-suggest-item disabled" tabindex="0">
           暂无搜索历史
         </div>
         <ActionItem
@@ -30,7 +30,7 @@
           :action="a"
           @previous-item="previousItem()"
           @next-item="nextItem()"
-          @delete-item="onDeleteItem()"
+          @delete-item="onDeleteItem(index)"
           @action="
             index === actions.length - 1 && onClearHistory()
             onAction(a)
@@ -41,20 +41,20 @@
         <VEmpty
           v-if="actions.length === 0 && noActions"
           tabindex="0"
-          class="suggest-item disabled"
+          class="be-launch-bar-suggest-item disabled"
         ></VEmpty>
         <VLoading
           v-if="actions.length === 0 && !noActions"
           tabindex="0"
-          class="suggest-item disabled"
+          class="be-launch-bar-suggest-item disabled"
         ></VLoading>
         <ActionItem
-          v-for="a of actions"
+          v-for="(a, index) of actions"
           :key="a.key"
           :action="a"
           @previous-item="previousItem()"
           @next-item="nextItem()"
-          @delete-item="onDeleteItem()"
+          @delete-item="onDeleteItem(index)"
           @action="onAction(a)"
         />
       </div>
@@ -234,7 +234,8 @@ export default Vue.extend({
       this.focusTarget.next()
       e.preventDefault()
     },
-    handleIndexUpdate() {
+    async handleIndexUpdate() {
+      await this.$nextTick()
       if (!this.focusTarget.hasFocus) {
         this.focusInput()
         return
@@ -248,7 +249,8 @@ export default Vue.extend({
       this.focusTarget.next()
     },
     search,
-    onDeleteItem() {
+    onDeleteItem(index: number) {
+      this.focusTarget.setFocus(index)
       this.focusTarget.previous()
       this.getActions()
     },
@@ -263,7 +265,7 @@ export default Vue.extend({
       this.$refs.input.focus()
     },
     focusSuggestItem(nth: number) {
-      this.$refs.list.querySelector(`.suggest-item:nth-child(${nth})`)?.focus()
+      this.$refs.list.querySelector(`.be-launch-bar-suggest-item:nth-child(${nth})`)?.focus()
     },
   },
 })

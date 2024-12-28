@@ -1,17 +1,11 @@
 <template>
   <div class="custom-navbar-extra-options">
-    <VButton
-      v-if="login"
-      ref="button"
-      @mouseover="loadNavbarSettings()"
-      @click="toggleNavbarSettings()"
-    >
+    <VButton ref="button" @mouseover="loadNavbarSettings()" @click="toggleNavbarSettings()">
       布局设置<VIcon icon="right-arrow" :size="16"></VIcon>
     </VButton>
   </div>
 </template>
 <script lang="ts">
-import { getUID } from '@/core/utils'
 import { VIcon, VButton } from '@/ui'
 import { setTriggerElement, loadNavbarSettings, toggleNavbarSettings } from './vm'
 
@@ -19,11 +13,6 @@ export default Vue.extend({
   components: {
     VIcon,
     VButton,
-  },
-  data() {
-    return {
-      login: Boolean(getUID()),
-    }
   },
   methods: {
     async loadNavbarSettings() {

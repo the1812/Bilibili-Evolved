@@ -4,7 +4,7 @@ import {
   defineOptionsMetadata,
 } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
-import { DefaultDashExtensions } from './apis/dash'
+import { DashCodec, DefaultDashExtensions } from './apis/dash'
 
 const options = defineOptionsMetadata({
   basicConfig: {
@@ -23,6 +23,11 @@ const options = defineOptionsMetadata({
   dashFlacAudioExtension: {
     defaultValue: DefaultDashExtensions.flacAudio,
     displayName: 'DASH FLAC 音频扩展名',
+  },
+  dashCodecFallback: {
+    defaultValue: DashCodec.Avc,
+    dropdownEnum: DashCodec,
+    displayName: 'DASH 回退编码',
   },
 })
 export type Options = OptionsOfMetadata<typeof options>
