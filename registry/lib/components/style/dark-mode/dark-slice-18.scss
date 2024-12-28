@@ -1015,3 +1015,13 @@
     @include background-color();
   }
 }
+
+.header.space-header {
+  .header-toutu,
+  .header-upinfo-bg-shadow {
+    z-index: 0 !important;
+  }
+  .header-upinfo {
+    z-index: 1 !important;
+  }
+}

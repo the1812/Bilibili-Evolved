@@ -387,6 +387,15 @@ by [@Tinhone](https://github.com/Tinhone)
 
 隐藏首页顶部横幅.
 
+### [隐藏首页轮播图](../../registry/dist/components/style/hide/home-carousel.js)
+`hideHomeCarousel`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/home-carousel.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/home-carousel.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/home-carousel.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/home-carousel.js)
+
+隐藏首页的轮播图区域.
+
 ### [隐藏热搜](../../registry/dist/components/style/hide/trending-search.js)
 `hideTrendingSearch`
 
@@ -1536,7 +1545,7 @@ by FoundTheWOUT
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/idm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/idm-output.js)
 
-为下载视频增加 IDM 输出支持，建议配合 [ef2.exe](https://github.com/MotooriKashin/ef2) 以简化操作、保留文件名.
+为下载视频增加 IDM 输出支持.
 
 ### [下载视频 - 手动输入](../../registry/dist/plugins/video/download/manual-input.js)
 `downloadVideo.inputs.manual`
