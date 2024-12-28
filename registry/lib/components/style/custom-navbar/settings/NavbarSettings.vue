@@ -31,7 +31,7 @@
           <div class="padding-value">{{ padding.toFixed(1) }}%</div>
         </div>
       </div>
-      <div class="navbar-settings-section">
+      <div v-if="isLogin" class="navbar-settings-section">
         <div class="navbar-settings-section-title">元素呈现</div>
         <div class="navbar-settings-section-description">
           按住并拖动可以调整顺序, 点击眼睛图标可以切换隐藏/显示.
@@ -71,7 +71,7 @@
 import { SortableEvent } from 'sortablejs'
 import { VPopup, VIcon, VSlider, VLoading } from '@/ui'
 import { addComponentListener } from '@/core/settings'
-import { dqa } from '@/core/utils'
+import { dqa, getUID } from '@/core/utils'
 import { SortableJSLibrary } from '@/core/runtime-library'
 import { getData } from '@/plugins/data'
 import { CustomNavbarItem, CustomNavbarRenderedItems } from '../custom-navbar-item'
@@ -103,6 +103,7 @@ export default Vue.extend({
       rendered,
       hidden: navbarOptions.hidden,
       loaded: false,
+      isLogin: Boolean(getUID()),
     }
   },
   watch: {

@@ -6,6 +6,11 @@
           <TextBox v-model="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
+          <div class="operation">
+            <VButton title="刷新" round @click="reloadHistoryItems()">
+              <VIcon icon="mdi-refresh" :size="16"></VIcon>
+            </VButton>
+          </div>
           <div class="operation" @click="toggleHistoryPause">
             <VButton v-if="!paused" title="暂停记录历史" round>
               <VIcon icon="mdi-pause" :size="14"></VIcon>

@@ -297,6 +297,14 @@
   },
   {
     "type": "component",
+    "name": "hideHomeCarousel",
+    "displayName": "隐藏首页轮播图",
+    "description": "隐藏首页的轮播图区域.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/home-carousel.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/home-carousel.js"
+  },
+  {
+    "type": "component",
     "name": "hideTrendingSearch",
     "displayName": "隐藏热搜",
     "description": "隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 请注意这只是视觉上的隐藏, 如果不输入任何关键词就点 Enter 或搜索按钮, 仍然会跳转至推荐的热搜词.",
@@ -1050,6 +1058,14 @@
   },
   {
     "type": "plugin",
+    "name": "customNavbar.items.pgc",
+    "displayName": "自定义顶栏 - 版权内容",
+    "description": "为自定义顶栏扩充版权内容相关的快速入口, 包括国创 / 电影 / 电视剧 /综艺 / 纪录片",
+    "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-pgc.js",
+    "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-pgc.js"
+  },
+  {
+    "type": "plugin",
     "name": "keymap.actions.darkMode",
     "displayName": "快捷键扩展 - 夜间模式",
     "description": "在快捷键的动作列表里添加一个 \"夜间模式\", 可以通过快捷键切换夜间模式",
@@ -1116,7 +1132,7 @@
     "type": "plugin",
     "name": "downloadVideo.outputs.idm",
     "displayName": "下载视频 - IDM 输出支持",
-    "description": "为下载视频增加 IDM 输出支持，建议配合 [ef2.exe](https://github.com/MotooriKashin/ef2) 以简化操作、保留文件名.",
+    "description": "为下载视频增加 IDM 输出支持.",
     "fullRelativePath": "../../registry/dist/plugins/video/download/idm-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/idm-output.js"
   },
