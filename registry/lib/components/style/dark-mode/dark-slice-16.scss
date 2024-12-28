@@ -223,11 +223,20 @@
       @include theme-color();
     }
   }
+  &__more {
+    z-index: 1;
+  }
   .bili-dyn-more {
+    &:hover {
+      @include background-color();
+    }
     &__container:hover {
       @include background-color('3');
     }
     &__btn {
+      &.tp {
+        @include color('8');
+      }
       &:hover {
         @include to-theme('blue');
       }

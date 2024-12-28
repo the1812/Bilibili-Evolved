@@ -26,6 +26,9 @@ export class FocusTarget extends EventTarget {
     return this.itemIndex > -1
   }
 
+  setFocus(index: number) {
+    this.index = index
+  }
   reset(length: number, index = this.index) {
     this.itemLength = length
     this.index = index

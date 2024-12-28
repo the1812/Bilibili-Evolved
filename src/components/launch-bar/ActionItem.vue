@@ -1,7 +1,7 @@
 <template>
   <div
     tabindex="0"
-    class="be-launch-bar-action-item suggest-item"
+    class="be-launch-bar-action-item be-launch-bar-suggest-item"
     :title="action.displayName || action.name"
     :data-indexer="action.indexer"
     @click.self="performAction($event)"
@@ -10,27 +10,35 @@
     @keydown.up.prevent.stop="$emit('previous-item', $event.currentTarget)"
     @keydown.down.prevent.stop="$emit('next-item', $event.currentTarget)"
   >
-    <div class="suggest-item-content">
-      <div v-if="action.icon" class="suggest-item-icon" @click="performAction($event)">
+    <div class="be-launch-bar-suggest-item-content">
+      <div
+        v-if="action.icon"
+        class="be-launch-bar-suggest-item-icon"
+        @click="performAction($event)"
+      >
         <VIcon :icon="action.icon" :size="18" />
       </div>
-      <div class="suggest-item-title" @click="performAction($event)">
+      <div class="be-launch-bar-suggest-item-title" @click="performAction($event)">
         <component
           :is="action.content"
           v-if="action.content"
-          class="suggest-item-name"
+          class="be-launch-bar-suggest-item-name"
           :name="action.name"
         ></component>
-        <div v-else class="suggest-item-name">
+        <div v-else class="be-launch-bar-suggest-item-name">
           {{ action.displayName || action.name }}
         </div>
-        <div v-if="action.description" class="suggest-item-description" :title="action.description">
+        <div
+          v-if="action.description"
+          class="be-launch-bar-suggest-item-description"
+          :title="action.description"
+        >
           {{ action.description }}
         </div>
       </div>
       <div
         v-if="action.deleteAction"
-        class="suggest-item-delete"
+        class="be-launch-bar-suggest-item-delete"
         title="删除此项"
         @click="performDelete($event)"
       >
@@ -72,7 +80,7 @@ export default Vue.extend({
 <style lang="scss">
 @import 'common';
 
-.suggest-item {
+.be-launch-bar-suggest-item {
   outline: none !important;
   padding: 6px 6px 6px 10px;
   cursor: pointer;

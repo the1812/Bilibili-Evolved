@@ -1875,8 +1875,32 @@
     {
       "name": "新歌热榜",
       "report": "musicplus",
-      "url": "//www.bilibili.com/v/musicplus/",
+      "url": "//music.bilibili.com/pc/music-center/",
       "icon": "musicplus"
+    },
+    {
+      "name": "综艺",
+      "report": "variety",
+      "url": "//www.bilibili.com/variety/",
+      "icon": "zongyi"
+    },
+    {
+      "name": "VLOG",
+      "report": "vlog",
+      "url": "//www.bilibili.com/v/life/daily/?tag=530003",
+      "icon": "VLOG"
+    },
+    {
+      "name": "搞笑",
+      "report": "funny",
+      "url": "//www.bilibili.com/v/life/funny/",
+      "icon": "gaoxiao"
+    },
+    {
+      "name": "单机游戏",
+      "report": "stand_alone",
+      "url": "//www.bilibili.com/v/game/stand_alone/",
+      "icon": "danjiyouxi"
     }
   ]
 ]
