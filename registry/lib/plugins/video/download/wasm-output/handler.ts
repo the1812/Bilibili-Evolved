@@ -2,7 +2,7 @@ import { DownloadPackage, PackageEntry } from '@/core/download'
 import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
-import { formatPercent } from '@/core/utils/formatters'
+import { formatFileSize, formatPercent } from '@/core/utils/formatters'
 import { title as pluginTitle } from '.'
 import type { Options } from '../../../../components/video/download'
 import { DownloadVideoAction } from '../../../../components/video/download/types'
@@ -137,6 +137,10 @@ export async function run(action: DownloadVideoAction, muxWithMetadata: boolean)
       )
     ) {
       throw new Error('仅支持 DASH 格式视频和音频')
+    }
+
+    if (video.size + audio.size > 4294967295) {
+      throw new Error(`仅支持合并 4GB 内的音视频（${formatFileSize(video.size + audio.size)}）`)
     }
 
     await single(
