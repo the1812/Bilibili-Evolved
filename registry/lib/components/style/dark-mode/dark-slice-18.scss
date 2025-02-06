@@ -1025,3 +1025,7 @@
     z-index: 1 !important;
   }
 }
+
+.video-argue-inner{
+  @include background-color('3');
+}
