@@ -21,7 +21,11 @@
     </div>
     <div ref="list" class="launch-bar-suggest-list">
       <div v-if="isHistory" class="launch-bar-history-list">
-        <div v-if="actions.length === 0" class="history-empty be-launch-bar-suggest-item disabled" tabindex="0">
+        <div
+          v-if="actions.length === 0"
+          class="history-empty be-launch-bar-suggest-item disabled"
+          tabindex="0"
+        >
           暂无搜索历史
         </div>
         <ActionItem
