@@ -30,6 +30,21 @@ pnpm install
 
 配置本地调试环境:
 
+**启动开发服务 dev-server**
+1. 确保已安装 `ts-node`，如未安装，可通过 `npm install -g ts-node` 安装
+2. 进入项目根目录
+3. 运行 `ts-node dev-tools/dev-server/index.ts` 启动开发服务，没问题的话可以看到类似的输出：
+
+```bash
+$ ts-node dev-tools/dev-server/index.ts 
+DevServer 已启动, 端口: 23333
+本体编译中...
+(...可能有一长串输出)
+
+本体已编译: （一段 hash）
+```
+
+
 **如果使用的是基于 Chromium 的浏览器**
 1. VS Code 中运行 `启动开发服务 dev-server` 任务, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
 2. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
