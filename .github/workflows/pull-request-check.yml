@@ -11,7 +11,6 @@ jobs:
       - name: Install dependencies
         uses: pnpm/action-setup@v4
         with:
-          version: 8.12.1
           run_install: true
       - name: Type check
         run: pnpm run type
