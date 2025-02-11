@@ -1,5 +1,7 @@
 .search-panel {
-  > .trending {
-    display: none !important;
-  }
+  display: none !important;
+}
+
+#nav-searchform.is-focus {
+  border-radius: 8px !important;
 }
