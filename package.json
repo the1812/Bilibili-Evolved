@@ -92,5 +92,6 @@
     "dark-theme",
     "touchscreen",
     "tampermonkey"
-  ]
+  ],
+  "packageManager": "pnpm@8.12.1+sha512.6705ea1966adb6587053e6cfe6fddc377f81066228daf736c4490012f44f2ff1bf0c713bb8f3145fce0e3ef669c7c15f19a59ac157838951f234c17b81ca655d"
 }
