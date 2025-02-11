@@ -31,12 +31,17 @@ pnpm install
 配置本地调试环境:
 
 **启动开发服务 dev-server**
-1. 确保已安装 `ts-node`，如未安装，可通过 `npm install -g ts-node` 安装
-2. 进入项目根目录
-3. 运行 `ts-node dev-tools/dev-server/index.ts` 启动开发服务，没问题的话可以看到类似的输出：
 
+> 无论选择哪种方式, 下文均以 "运行 `启动开发服务 dev-server`" 指代这个步骤.
+
+方式 1 (推荐): 直接使用 [VS Code Tasks](https://code.visualstudio.com/docs/editor/tasks) 运行 `启动开发服务 dev-server`
+
+方式 2:
+1. 新建一个终端, 进入项目根目录
+2. 运行 `pnpm ts-node dev-tools/dev-server/index.ts` 启动开发服务
+
+两种方式都会看到类似下面的输出:
 ```bash
-$ ts-node dev-tools/dev-server/index.ts 
 DevServer 已启动, 端口: 23333
 本体编译中...
 (...可能有一长串输出)
@@ -46,7 +51,7 @@ DevServer 已启动, 端口: 23333
 
 
 **如果使用的是基于 Chromium 的浏览器**
-1. VS Code 中运行 `启动开发服务 dev-server` 任务, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
+1. 启动开发服务后, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
 2. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
 3. 打开 `允许访问文件网址`
 4. 新建脚本
@@ -96,7 +101,7 @@ DevServer 已启动, 端口: 23333
 // ==/UserScript==
 ```
 
-6. 将里面的 `{{ bilibili-evolved.dev.user.js的绝对路径 }}` 替换为第一步生成的文件的真实路径.
+1. 将里面的 `{{ bilibili-evolved.dev.user.js 的绝对路径 }}` 替换为第一步生成的文件的真实路径.
 > Windows 例子: `@require file://C:/xxx/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
 
 > macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
@@ -106,9 +111,9 @@ DevServer 已启动, 端口: 23333
 7. 进入 b 站, 安装 `DevClient` 组件, 功能中显示已连接时就是成功了
 
 **如果使用 Firefox 或 Safari**
-1. 运行 `启动开发服务 dev-server` 任务时, 假设得到的本体链接为 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`
-2. 继续 Chromium 指南中的第 3 ~ 6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
-3. 保存脚本, 运行 `启动开发服务 dev-server` 任务
+1. 启动开发服务后, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
+2. 开发服务会在默认的 `23333` 端口服务 `dist/` 文件夹下的内容, 因此上一步的文件链接就为 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
+3. 继续 Chromium 指南中的第 3 ~ 6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
 4. 进入 b 站, 安装 `DevClient` 组件, 将 `本体刷新策略` 设置为 `不刷新`, 功能中显示已连接时就是成功了
 5. 每次本体代码变动后, 需要在 Tampermonkey 中编辑脚本 - 外部, 删除 `localhost` 的缓存文件后刷新生效.
 
