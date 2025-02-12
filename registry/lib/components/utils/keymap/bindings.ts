@@ -1,4 +1,4 @@
-import { isTyping, matchUrlPattern } from '@/core/utils'
+import { getActiveElement, isTyping, matchUrlPattern } from '@/core/utils'
 import { mediaListUrls, watchlaterUrls } from '@/core/utils/urls'
 import { clickElement, changeVideoTime, showTip } from './actions'
 import { shadowDomObserver } from '@/core/shadow-root'
@@ -17,6 +17,7 @@ export interface KeyBindingAction {
   run: (context: KeyBindingActionContext) => unknown
   prevent?: boolean
   ignoreTyping?: boolean
+  ignoreFocus?: boolean
 }
 export interface KeyBinding {
   keys: string[]
@@ -43,6 +44,15 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
       if (binding.action.ignoreTyping !== false && isTyping()) {
         return
       }
+
+      // 忽略其他可聚焦元素
+      const hasElementFocus = !([document.body, null] as (Element | null)[]).includes(
+        getActiveElement(),
+      )
+      if (binding.action.ignoreFocus !== false && hasElementFocus) {
+        return
+      }
+
       const key = e.key.toLowerCase()
 
       // 全景视频禁用 WASD 快捷键
