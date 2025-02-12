@@ -181,6 +181,9 @@ importers:
       typescript:
         specifier: ^4.9.5
         version: 4.9.5
+      vue-eslint-parser:
+        specifier: ^9.4.3
+        version: 9.4.3(eslint@7.32.0)
       vue-loader:
         specifier: ^15.10.1
         version: 15.11.1(@babel/core@7.22.10)(css-loader@5.2.7(webpack@5.97.1))(lodash@4.17.21)(prettier@2.8.8)(webpack@5.97.1)
