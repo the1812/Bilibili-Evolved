@@ -36,7 +36,8 @@ body:not(.preserve-feed-goods) .dyn-goods,
 .desktop-download-tip,
 .adcard,
 .palette-button-adcard,
-.palette-button-wrap .adcard-content {
+.palette-button-wrap .adcard-content,
+.video-card-ad-small {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {
