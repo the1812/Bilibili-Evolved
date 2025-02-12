@@ -2,14 +2,12 @@ import { defineComponentMetadata } from '@/components/define'
 import { allMutations } from '@/core/observer'
 import { select } from '@/core/spin-query'
 
-
 const DEFAULT_PLACEHOLDER = '搜索'
 
-
 const resetPlaceholder = (input: HTMLInputElement) => {
-  input.placeholder = input.title = DEFAULT_PLACEHOLDER
+  input.placeholder = DEFAULT_PLACEHOLDER
+  input.title = DEFAULT_PLACEHOLDER
 }
-
 
 export const component = defineComponentMetadata({
   name: 'hideTrendingSearch',
@@ -23,11 +21,12 @@ export const component = defineComponentMetadata({
   ],
   entry: async () => {
     const input: HTMLInputElement = await select('input.nav-search-input', {
-      queryInterval: 500
-    });
+      queryInterval: 500,
+    })
 
     if (input) {
-      return resetPlaceholder(input)
+      resetPlaceholder(input)
+      return
     }
 
     // Fallback to observer
