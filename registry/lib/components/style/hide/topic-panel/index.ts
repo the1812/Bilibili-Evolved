@@ -10,5 +10,7 @@ export const component = defineComponentMetadata({
       style: () => import('./hide-topic-panel.scss'),
     },
   ],
-  entry: async () => {},
+  entry: async () => {
+    // pass lint
+  },
 })
