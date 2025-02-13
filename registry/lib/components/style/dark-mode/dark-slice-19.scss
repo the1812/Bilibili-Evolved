@@ -1,0 +1,8 @@
+@import './dark-definitions';
+@import 'common';
+
+.relation-card-info-option {
+  .follow-btn {
+    @include background-color();
+  }
+}
