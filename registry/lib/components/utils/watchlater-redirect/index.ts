@@ -1,52 +1,55 @@
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
+import type { RawWatchlaterItem } from '@/components/video/watchlater'
+
+const redirect = (element: Element, watchlaterItem: RawWatchlaterItem, index: number) => {
+  try {
+    const { bvid, cid, pages } = watchlaterItem
+    const page = pages.find(p => p.cid === cid)?.page ?? 1
+    const url =
+      page > 1
+        ? `https://www.bilibili.com/video/${bvid}?p=${page}`
+        : `https://www.bilibili.com/video/${bvid}`
+    const pic = element.querySelector('.av-pic, .bili-cover-card') as HTMLAnchorElement
+    pic.target = '_blank'
+    pic.href = url
+    const title = element.querySelector(
+      '.av-about .t, .bili-video-card__title a',
+    ) as HTMLAnchorElement
+    title.target = '_blank'
+    title.href = url
+  } catch (error) {
+    console.error(`[watchlater redirect] error at index ${index}`, element, error)
+  }
+}
 
 const entry: ComponentEntry = async ({ settings }) => {
-  if (settings.options.page) {
-    const { select } = await import('@/core/spin-query')
-    const { childList } = await import('@/core/observer')
-    const { getWatchlaterList } = await import('@/components/video/watchlater')
-    const list = await getWatchlaterList(true)
-    const listBox = await select('.watch-later-list .list-box > span')
-    if (!listBox) {
-      return
-    }
-    const redirect = (item: Element, index: number) => {
-      try {
-        const watchlaterItem = list[index]
-        const { bvid, cid, pages } = watchlaterItem
-        const page = pages.find(p => p.cid === cid)?.page ?? 1
-        const url =
-          page > 1
-            ? `https://www.bilibili.com/video/${bvid}?p=${page}`
-            : `https://www.bilibili.com/video/${bvid}`
-        const pic = item.querySelector('.av-pic') as HTMLAnchorElement
-        pic.target = '_blank'
-        pic.href = url
-        const title = item.querySelector('.av-about .t') as HTMLAnchorElement
-        title.target = '_blank'
-        title.href = url
-      } catch (error) {
-        console.error(`[watchlater redirect] error at index ${index}`, item, error)
-      }
-    }
-    const runRedirect = () => {
-      const avItems = listBox.querySelectorAll('.av-item')
-      avItems.forEach(redirect)
-    }
-    childList(listBox, records => {
-      records.forEach(record => {
-        record.removedNodes.forEach(node => {
-          if (node instanceof HTMLElement && !node.classList.contains('itemlist-move')) {
-            const index = parseInt(dq(node, '.key').textContent) - 1
-            console.log('remove index', index)
-            list.splice(index, 1)
-          }
-        })
-      })
-      runRedirect()
-    })
+  if (!settings.options.page) {
+    return
   }
+  const { select } = await import('@/core/spin-query')
+  const { childList } = await import('@/core/observer')
+  const { getWatchlaterList } = await import('@/components/video/watchlater')
+  let list: RawWatchlaterItem[]
+  const reloadList = async () => {
+    list = await getWatchlaterList(true)
+  }
+  const listBox = await select('.watch-later-list .list-box > span, .watchlater-list-container')
+  if (!listBox) {
+    return
+  }
+
+  await reloadList()
+  const runRedirect = () => {
+    const videoCards = listBox.querySelectorAll('.av-item, .video-card')
+    videoCards.forEach((it, index) => redirect(it, list[index], index))
+  }
+  childList(listBox, async records => {
+    if (records.some(r => r.removedNodes.length > 0)) {
+      await reloadList()
+    }
+    runRedirect()
+  })
 }
 export const component = defineComponentMetadata({
   name: 'watchlaterRedirect',
@@ -62,6 +65,9 @@ export const component = defineComponentMetadata({
       defaultValue: true,
     },
   },
-  urlInclude: ['https://www.bilibili.com/watchlater/#/list'],
+  urlInclude: [
+    'https://www.bilibili.com/watchlater/#/list',
+    'https://www.bilibili.com/watchlater/list#/list',
+  ],
   tags: [componentsTags.utils, componentsTags.video],
 })
