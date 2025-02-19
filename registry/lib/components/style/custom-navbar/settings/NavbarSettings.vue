@@ -118,20 +118,18 @@ export default Vue.extend({
       }
     })
     const list: HTMLElement = this.$refs.navbarSortList
-    const Sortable = await SortableJSLibrary
-    Sortable.create(list, {
-      delay: 100,
-      forceFallback: true,
-      onEnd: (e: SortableEvent) => {
-        this.onSort(e)
-      },
-    })
-    checkSequentialOrder(rendered.items)
+    if (list) {
+      const Sortable = await SortableJSLibrary
+      Sortable.create(list, {
+        delay: 100,
+        forceFallback: true,
+        onEnd: (e: SortableEvent) => {
+          this.onSort(e)
+        },
+      })
+      checkSequentialOrder(rendered.items)
+    }
     this.loaded = true
-    // unsafeWindow.nsTest = {
-    //   list,
-    //   Sortable,
-    // }
   },
   methods: {
     toggle() {

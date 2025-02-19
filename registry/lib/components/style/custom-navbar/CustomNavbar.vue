@@ -10,7 +10,6 @@
 
 <script lang="ts">
 import { addComponentListener } from '@/core/settings'
-import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import { registerAndGetData } from '@/plugins/data'
 import { getBuiltInItems } from './built-in-items'
@@ -28,14 +27,7 @@ const [renderedItems] = registerAndGetData(CustomNavbarRenderedItems, {
   items: [] as CustomNavbarItem[],
 })
 const getItems = () => {
-  const isLogin = Boolean(getUID())
   const items = (initItems as CustomNavbarItemInit[])
-    .filter(it => {
-      if (it.loginRequired && !isLogin) {
-        return false
-      }
-      return true
-    })
     .map(it => new CustomNavbarItem(it))
     .sort(ascendingSort(it => it.order))
   renderedItems.items = items
