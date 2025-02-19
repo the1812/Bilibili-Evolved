@@ -4,11 +4,11 @@ interface SimpleLinkConfig {
   name: string
   displayName: string
   href: string
+  content?: string
 }
 const getSimpleLinkItem = (config: SimpleLinkConfig): SimpleLinkConfig & CustomNavbarItemInit => ({
-  ...config,
   content: config.displayName,
-
+  ...config,
   active: document.URL.startsWith(config.href),
 })
 export const ranking = getSimpleLinkItem({
@@ -18,7 +18,8 @@ export const ranking = getSimpleLinkItem({
 })
 export const bangumi = getSimpleLinkItem({
   name: 'bangumi',
-  displayName: '番剧',
+  displayName: '番剧 (链接)',
+  content: '番剧',
   href: 'https://www.bilibili.com/anime/',
 })
 export const music = getSimpleLinkItem({

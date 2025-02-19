@@ -1,53 +1,87 @@
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
+import type { RawWatchlaterItem } from '@/components/video/watchlater'
 
-const entry: ComponentEntry = async ({ settings }) => {
-  if (settings.options.page) {
-    const { select } = await import('@/core/spin-query')
-    const { childList } = await import('@/core/observer')
-    const { getWatchlaterList } = await import('@/components/video/watchlater')
-    const list = await getWatchlaterList(true)
-    const listBox = await select('.watch-later-list .list-box > span')
-    if (!listBox) {
-      return
-    }
-    const redirect = (item: Element, index: number) => {
-      try {
-        const watchlaterItem = list[index]
-        const { bvid, cid, pages } = watchlaterItem
-        const page = pages.find(p => p.cid === cid)?.page ?? 1
-        const url =
-          page > 1
-            ? `https://www.bilibili.com/video/${bvid}?p=${page}`
-            : `https://www.bilibili.com/video/${bvid}`
-        const pic = item.querySelector('.av-pic') as HTMLAnchorElement
-        pic.target = '_blank'
-        pic.href = url
-        const title = item.querySelector('.av-about .t') as HTMLAnchorElement
-        title.target = '_blank'
-        title.href = url
-      } catch (error) {
-        console.error(`[watchlater redirect] error at index ${index}`, item, error)
-      }
-    }
-    const runRedirect = () => {
-      const avItems = listBox.querySelectorAll('.av-item')
-      avItems.forEach(redirect)
-    }
-    childList(listBox, records => {
-      records.forEach(record => {
-        record.removedNodes.forEach(node => {
-          if (node instanceof HTMLElement && !node.classList.contains('itemlist-move')) {
-            const index = parseInt(dq(node, '.key').textContent) - 1
-            console.log('remove index', index)
-            list.splice(index, 1)
-          }
-        })
-      })
-      runRedirect()
-    })
+const getBvidFromElement = (element: Element) => {
+  const pic = element.querySelector('.av-pic, .bili-cover-card') as HTMLAnchorElement
+  const bvid = pic.href.match(/bvid=([^&]+)/)?.[1]
+  return bvid
+}
+
+const redirect = (element: Element, watchlaterItem: RawWatchlaterItem) => {
+  try {
+    const { bvid, cid, pages } = watchlaterItem
+    const page = pages.find(p => p.cid === cid)?.page ?? 1
+    const url =
+      page > 1
+        ? `https://www.bilibili.com/video/${bvid}?p=${page}`
+        : `https://www.bilibili.com/video/${bvid}`
+    const pic = element.querySelector('.av-pic, .bili-cover-card') as HTMLAnchorElement
+    pic.target = '_blank'
+    pic.href = url
+    const title = element.querySelector(
+      '.av-about .t, .bili-video-card__title a, .video-card__right .title',
+    ) as HTMLAnchorElement
+    title.target = '_blank'
+    title.href = url
+  } catch (error) {
+    console.error(`[watchlater redirect] error at ${watchlaterItem.bvid}`, element, error)
   }
 }
+
+const entry: ComponentEntry = async ({ settings }) => {
+  if (!settings.options.page) {
+    return
+  }
+  const { select } = await import('@/core/spin-query')
+  const { childListSubtree } = await import('@/core/observer')
+  const { getWatchlaterList } = await import('@/components/video/watchlater')
+  const { useScopedConsole } = await import('@/core/utils/log')
+  const console = useScopedConsole('稍后再看重定向')
+  const list: RawWatchlaterItem[] = await getWatchlaterList(true)
+  const listContainer = await select('.watch-later-list .list-box > span, .watchlater-list')
+  if (!listContainer) {
+    return
+  }
+
+  const tryRedirect = (element: Element) => {
+    const bvid = getBvidFromElement(element)
+    if (bvid === undefined) {
+      console.warn('bvid not found for', element)
+      return
+    }
+    const listItem = list.find(it => it.bvid === bvid)
+    if (listItem === undefined) {
+      console.warn('bvid no match for', bvid)
+      return
+    }
+    redirect(element, listItem)
+  }
+
+  const runRedirect = lodash.debounce(() => {
+    const videoCards = listContainer.querySelectorAll('.av-item, .video-card')
+    console.log('run redirect, length =', videoCards.length)
+    videoCards.forEach(card => {
+      tryRedirect(card)
+    })
+  }, 200)
+
+  runRedirect()
+  childListSubtree(listContainer, async records => {
+    records.forEach(r => {
+      const hasVideoCardChange = [...r.addedNodes].some(
+        node =>
+          node instanceof HTMLElement &&
+          (node.classList.contains('bili-video-card__wrap') ||
+            node.classList.contains('watchlater-list-container')),
+      )
+      if (hasVideoCardChange) {
+        runRedirect()
+      }
+    })
+  })
+}
+
 export const component = defineComponentMetadata({
   name: 'watchlaterRedirect',
   displayName: '稍后再看重定向',
@@ -62,6 +96,9 @@ export const component = defineComponentMetadata({
       defaultValue: true,
     },
   },
-  urlInclude: ['https://www.bilibili.com/watchlater/#/list'],
+  urlInclude: [
+    'https://www.bilibili.com/watchlater/#/list',
+    'https://www.bilibili.com/watchlater/list#/list',
+  ],
   tags: [componentsTags.utils, componentsTags.video],
 })
