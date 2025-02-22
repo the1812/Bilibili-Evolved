@@ -74,6 +74,7 @@ export default Vue.extend({
 
 <style lang="scss">
 @import 'common';
+@import './scroll-animation';
 
 .van-message-box {
   z-index: 10002 !important;
