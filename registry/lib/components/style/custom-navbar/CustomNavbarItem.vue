@@ -170,6 +170,21 @@ export default Vue.extend({
 <style lang="scss">
 @import 'common';
 
+@keyframes navbar-popup-in {
+  to {
+    pointer-events: initial;
+  }
+}
+// @keyframes navbar-popup-out {
+//   from {
+//     pointer-events: none;
+//   }
+//   to {
+//     pointer-events: none;
+//     opacity: 0;
+//   }
+// }
+
 .custom-navbar-item {
   color: inherit;
   position: relative;
@@ -242,7 +257,7 @@ export default Vue.extend({
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
     border: 1px solid #8882;
     border-radius: 8px;
-    transition: all 0.2s ease-out 0.2s;
+    transition: opacity 0.2s ease-out 0.2s;
     position: absolute;
     top: 100%;
     left: 50%;
@@ -271,6 +286,9 @@ export default Vue.extend({
       background-color: transparent !important;
       box-shadow: none;
     }
+    > * {
+      @include default-transition();
+    }
   }
 
   &:not(.disabled) .popup-container {
@@ -278,7 +296,7 @@ export default Vue.extend({
     top: calc(100% - 8px);
     left: 50%;
     pointer-events: none;
-    @include default-transition();
+    transition: all 0.2s ease-out 0.2s;
   }
 
   &:not(.disabled):hover,
@@ -286,8 +304,7 @@ export default Vue.extend({
     .popup-container {
       top: 100%;
       > .popup {
-        // transform: translateY(0) translateX(-50%);
-        pointer-events: initial;
+        animation: navbar-popup-in 0.2s ease-out 0.2s both;
         opacity: 1;
       }
     }
