@@ -176,6 +176,7 @@ export default Vue.extend({
   height: 100%;
   display: flex;
   align-items: center;
+  transition: 0.2s background-color ease-out;
 
   .active-bar {
     position: absolute;
@@ -276,8 +277,8 @@ export default Vue.extend({
     position: absolute;
     top: calc(100% - 8px);
     left: 50%;
-    transition: all 0.2s ease-out 0.2s;
     pointer-events: none;
+    @include default-transition();
   }
 
   &:not(.disabled):hover,

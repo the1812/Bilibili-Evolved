@@ -333,7 +333,7 @@ export default Vue.extend({
     width: 100%;
     transform: translateX(-50%) translateY(-4px);
     pointer-events: none;
-    // transition: 0.2s ease-out;
+    transition: 0.2s all ease-out;
     border: 1px solid #8882;
     white-space: nowrap;
     border-radius: 8px;

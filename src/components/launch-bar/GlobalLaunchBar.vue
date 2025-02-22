@@ -73,7 +73,6 @@ export default Vue.extend({
       --color: #eee;
     }
     .launch-bar-suggest-list {
-      transition: 0.2s ease-out;
       top: calc(100% + 8px);
       max-height: calc(80vh - 16px - #{$barHeight});
       @include no-scrollbar();

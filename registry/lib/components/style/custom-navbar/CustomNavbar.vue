@@ -122,7 +122,6 @@ body.fixed-navbar {
 
 .custom-navbar *,
 .custom-navbar {
-  transition: all 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   outline: none !important;
 }

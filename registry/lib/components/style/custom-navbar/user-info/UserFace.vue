@@ -59,6 +59,7 @@ export default Vue.extend({
     position: absolute;
     width: 100%;
     height: 100%;
+    transition: 0.2s all ease-out;
     .custom-navbar-item:hover & {
       transform: scale(2) translateY(10px);
       z-index: 100;
