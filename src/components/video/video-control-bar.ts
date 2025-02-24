@@ -10,13 +10,14 @@ export interface VideoControlBarItem {
   action: (event: MouseEvent) => void | Promise<void>
 }
 const controlBarClass = '.be-video-control-bar-extend'
-let controlBarInstance: Promise<Vue> = null
-const controlBarItems: VideoControlBarItem[] = []
+type ControlBarComponent = { items: VideoControlBarItem[] }
+let controlBarInstance: Promise<unknown> | null = null
+
 const initControlBar = lodash.once(() => {
   if (!playerUrls.some(url => matchUrlPattern(url))) {
-    return Promise.resolve<Vue>(null)
+    return Promise.resolve<unknown>(null)
   }
-  return new Promise<Vue>(resolve => {
+  return new Promise<unknown>(resolve => {
     videoChange(async () => {
       const { playerAgent } = await import('@/components/video/player-agent')
       const time = await playerAgent.query.control.buttons.time()
@@ -24,11 +25,7 @@ const initControlBar = lodash.once(() => {
       if (time === null || time.parentElement?.querySelector(controlBarClass) !== null) {
         return
       }
-      const instance = new VideoControlBar({
-        propsData: {
-          items: controlBarItems,
-        },
-      }).$mount()
+      const instance = new VideoControlBar().$mount()
       time.insertAdjacentElement('afterend', instance.$el)
       resolve(instance)
     })
@@ -39,9 +36,9 @@ export const addControlBarButton = async (button: VideoControlBarItem) => {
   if (!controlBarInstance) {
     controlBarInstance = initControlBar()
   }
-  const created = await controlBarInstance
+  const created = (await controlBarInstance) as ControlBarComponent
   if (!created) {
     return
   }
-  controlBarItems.push(button)
+  created.items.push(button)
 }
