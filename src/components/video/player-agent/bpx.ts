@@ -26,7 +26,7 @@ export const bpxSelectors = {
     bottomRight: '.bpx-player-control-bottom-right',
     buttons: {
       start: '.bpx-player-ctrl-play',
-      next: '.bpx-player-ctrl-btn-next',
+      next: '.bpx-player-ctrl-next',
       time: '.bpx-player-ctrl-time',
       quality: '.bpx-player-ctrl-quality',
       pageList: '.bpx-player-ctrl-eplist',
