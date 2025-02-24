@@ -8,6 +8,11 @@ const getBvidFromElement = (element: Element) => {
   return bvid
 }
 
+const isRedirected = (element: Element) => {
+  const pic = element.querySelector('.av-pic, .bili-cover-card') as HTMLAnchorElement
+  return /video\/BV/.test(pic.href)
+}
+
 const redirect = (element: Element, watchlaterItem: RawWatchlaterItem) => {
   try {
     const { bvid, cid, pages } = watchlaterItem
@@ -45,9 +50,12 @@ const entry: ComponentEntry = async ({ settings }) => {
   }
 
   const tryRedirect = (element: Element) => {
+    if (isRedirected(element)) {
+      return
+    }
     const bvid = getBvidFromElement(element)
     if (bvid === undefined) {
-      console.warn('bvid not found for', element)
+      console.warn('bvid not found for', element.outerHTML)
       return
     }
     const listItem = list.find(it => it.bvid === bvid)
@@ -55,6 +63,7 @@ const entry: ComponentEntry = async ({ settings }) => {
       console.warn('bvid no match for', bvid)
       return
     }
+    console.log('redirect for', bvid)
     redirect(element, listItem)
   }
 
@@ -72,9 +81,11 @@ const entry: ComponentEntry = async ({ settings }) => {
       const hasVideoCardChange = [...r.addedNodes].some(
         node =>
           node instanceof HTMLElement &&
-          (node.classList.contains('bili-video-card__wrap') ||
-            node.classList.contains('watchlater-list-container')),
+          ['bili-video-card__wrap', 'video-card', 'watchlater-list-container'].some(value =>
+            node.classList.contains(value),
+          ),
       )
+      // console.log({ nodes: r.addedNodes, hasVideoCardChange })
       if (hasVideoCardChange) {
         runRedirect()
       }
