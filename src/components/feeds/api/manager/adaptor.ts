@@ -49,7 +49,7 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
       name: 'space',
       match: ['https://space.bilibili.com/'],
       watchCardsList: async manager => {
-        const container = (await select('.s-space')) as HTMLDivElement
+        const container = (await select('.s-space, .space-main')) as HTMLDivElement
         if (!container) {
           return false
         }

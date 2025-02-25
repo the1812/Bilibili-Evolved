@@ -263,7 +263,7 @@ export const addMenuItem = (
   if (isCascader) {
     ;(async () => {
       const cascader = await select(() => dq(morePanel, '.bili-cascader'))
-      const [observer] = childList(cascader, () => {
+      childList(cascader, (_, observer) => {
         const cascaderOptions = dq(cascader, '.bili-cascader-options')
         if (cascaderOptions === null) {
           return

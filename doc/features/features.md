@@ -838,7 +838,13 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/image-resolution.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/image-resolution.js)
 
-根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)
+对 200% 以上的屏幕 DPI 缩放请求更高分辨率的图片, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)
+
+由于 b 站在很多地方没有设置图片维持原比例, 如果计算后的图片尺寸超出原图尺寸则会产生错误的比例, 可以考虑在选项中手动降低缩放级别.
+
+`缩放级别` 选项:
+- `auto`: 根据 DPI 缩放超出 200% 的比例自动计算, 例如 250% 的缩放下会请求 1.5 倍尺寸的图片.
+- `数字`: 自定义尺寸的缩放倍率.
 
 ### [批量导入合集](../../registry/dist/components/utils/import-series.js)
 `importSeries`
@@ -1126,15 +1132,6 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/disable-scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/disable-scroll-volume.js)
 
 在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.  请注意不能和 `反转滚轮调音量` 一同使用.
-
-### [双击全屏](../../registry/dist/components/video/player/double-click-fullscreen.js)
-`doubleClickFullscreen`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/double-click-fullscreen.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/double-click-fullscreen.js)
-
-为视频播放器启用双击全屏功能, 请注意不能和 `启用双击控制` 一同使用.
 
 ### [扩展倍速](../../registry/dist/components/video/player/extend-speed.js)
 `extendVideoSpeed`

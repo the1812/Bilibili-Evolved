@@ -26,11 +26,10 @@ export default Vue.extend({
   components: {
     VIcon,
   },
-  props: {
-    items: {
-      type: Array,
-      required: true,
-    },
+  data() {
+    return {
+      items: [],
+    }
   },
 })
 </script>
