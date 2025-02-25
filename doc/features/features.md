@@ -1133,15 +1133,6 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 
 在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.  请注意不能和 `反转滚轮调音量` 一同使用.
 
-### [双击全屏](../../registry/dist/components/video/player/double-click-fullscreen.js)
-`doubleClickFullscreen`
-
-**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/double-click-fullscreen.js)
-
-**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/double-click-fullscreen.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/double-click-fullscreen.js)
-
-为视频播放器启用双击全屏功能, 请注意不能和 `启用双击控制` 一同使用.
-
 ### [扩展倍速](../../registry/dist/components/video/player/extend-speed.js)
 `extendVideoSpeed`
 
