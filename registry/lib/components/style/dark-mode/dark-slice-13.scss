@@ -619,7 +619,7 @@ html {
   &:not(.iframe) {
     &,
     body {
-      @include background-color('2');
+      background-color: var(--bg1, #222) !important;
     }
   }
 }

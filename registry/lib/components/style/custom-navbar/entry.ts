@@ -35,6 +35,7 @@ export const entry: ComponentEntry = async ({ metadata: { name } }) => {
     'https://www.bilibili.com/opus',
     'https://www.bilibili.com/account/history',
     'https://www.bilibili.com/v/topic/detail',
+    'https://www.bilibili.com/watchlater/list',
   ]
   if (!globalFixedExclude.some(p => matchUrlPattern(p))) {
     addComponentListener(

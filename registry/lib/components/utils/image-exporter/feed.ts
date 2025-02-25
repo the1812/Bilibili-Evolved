@@ -23,7 +23,7 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
         const imageUrls: { url: string; extension: string }[] = []
         dqa(
           card.element,
-          '.main-content .img-content, .bili-album__preview__picture__img, .bili-album .preview__picture__img, .bili-dyn-gallery__image img',
+          '.main-content .img-content, .bili-album__preview__picture__img, .bili-album .preview__picture__img, .bili-dyn-gallery__image img, .bili-album__watch__track__item img',
         ).forEach((img: HTMLImageElement | HTMLDivElement) => {
           const urlData = retrieveImageUrl(img)
           if (urlData && !imageUrls.some(({ url }) => url === urlData.url)) {

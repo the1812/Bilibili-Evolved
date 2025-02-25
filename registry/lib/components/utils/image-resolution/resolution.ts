@@ -19,6 +19,13 @@ const widthAndHeightSelectors = [
 ]
 const originalImageInArticlesSelectors = ['.article-detail .article-content img']
 
+const getAutoScale = () => {
+  if (window.devicePixelRatio <= 2) {
+    return 1
+  }
+  return window.devicePixelRatio / 2
+}
+
 const walk = (rootElement: Node, action: (node: HTMLElement) => void) => {
   const walker = document.createNodeIterator(rootElement, NodeFilter.SHOW_ELEMENT)
   let node = walker.nextNode()
@@ -123,10 +130,11 @@ export const startResolution = styledComponentEntry<Options>(
   () => import('./fix.scss'),
   async ({ settings }) => {
     const { allMutations } = await import('@/core/observer')
-    const dpi =
-      settings.options.scale === 'auto'
-        ? window.devicePixelRatio
-        : parseFloat(settings.options.scale)
+    const scale =
+      settings.options.scale === 'auto' ? getAutoScale() : parseFloat(settings.options.scale)
+    if (scale === 1) {
+      return
+    }
     const handleResolution: ImageResolutionHandler = {
       getWidth: (currentWidth, element) => {
         if (
@@ -135,7 +143,7 @@ export const startResolution = styledComponentEntry<Options>(
         ) {
           return Infinity
         }
-        return Math.round(dpi * currentWidth)
+        return Math.round(scale * currentWidth)
       },
       getHeight: (currentHeight, element) => {
         if (
@@ -144,7 +152,7 @@ export const startResolution = styledComponentEntry<Options>(
         ) {
           return Infinity
         }
-        return Math.round(dpi * currentHeight)
+        return Math.round(scale * currentHeight)
       },
     }
 
