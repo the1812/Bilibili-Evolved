@@ -6,7 +6,7 @@
 
 包含 [v2.10.0](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.0) 的所有更新内容.
 
-- `插件 - 下载视频 - WASM 混流输出` 在超过 4GB 时支持抛出错误提示. (PR #5102 [WakelessSloth56](https://github.com/WakelessSloth56))
+- `插件 - 下载视频 - WASM 混流输出` 在超过 4GB 时支持抛出错误提示. (PR #5102 by [WakelessSloth56](https://github.com/WakelessSloth56))
 - `自定义顶栏` 的透明填充在同时开启了全局固定时, 支持下拉后过渡到不透明状态. (#4996)
 - `自定义顶栏` 的弹窗增加了 0.2s 的触发延迟, 防止鼠标快速经过时误触. (#4949)
 - 废弃 `双击全屏` 组件, 本体也不再会屏蔽双击全屏. (#5095)
