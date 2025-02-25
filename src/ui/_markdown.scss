@@ -1,6 +1,9 @@
 @import 'common';
 @mixin markdown {
   line-height: normal;
+  > * {
+    font-size: inherit;
+  }
   h1,
   h2,
   h3,

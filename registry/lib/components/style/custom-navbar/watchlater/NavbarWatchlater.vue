@@ -40,7 +40,7 @@
           <div v-if="card.percent" class="progress" :style="{ width: card.percent * 100 + '%' }" />
         </a>
         <a class="title" target="_blank" :href="card.href" :title="card.title">{{ card.title }}</a>
-        <div class="info">
+        <div class="info-row">
           <a
             class="up"
             target="_blank"
@@ -352,7 +352,7 @@ export default Vue.extend({
           color: var(--theme-color) !important;
         }
       }
-      .info {
+      .info-row {
         display: flex;
         justify-content: space-between;
         align-items: flex-end;
