@@ -46,9 +46,16 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
       }
 
       // 忽略其他可聚焦元素
-      const hasElementFocus = !([document.body, null] as (Element | null)[]).includes(
-        getActiveElement(),
-      )
+      const hasElementFocus = (() => {
+        const activeElement = getActiveElement()
+        if (([document.body, null] as (Element | null)[]).includes(activeElement)) {
+          return false
+        }
+        if (activeElement instanceof HTMLMediaElement) {
+          return false
+        }
+        return true
+      })()
       if (
         (binding.action.ignoreFocus !== false || binding.action.ignoreTyping !== false) &&
         hasElementFocus
