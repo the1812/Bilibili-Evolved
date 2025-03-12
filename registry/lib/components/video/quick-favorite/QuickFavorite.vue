@@ -18,14 +18,11 @@
       <div class="lists">
         选择快速收藏夹:
         <VDropdown
-          v-model="selectedFavorite"
-          :items="lists.map(it => it.title)"
-          :key-mapper="it => it"
-        >
-          <template #item="{ item }">
-            {{ item }}
-          </template>
-        </VDropdown>
+          v-model="selectedFavoriteList"
+          :items="list"
+          :key-mapper="it => it.id"
+          @change="saveFavoriteList"
+        />
       </div>
       <div class="lists-tip" :class="{ show: listShowing }">右键点击快速收藏可再次打开</div>
     </div>
@@ -42,6 +39,20 @@ import { VDropdown } from '@/ui'
 import { DisplayMode, Options } from './options'
 
 const { options } = getComponentSettings('quickFavorite')
+interface RawFavoriteListItem {
+  id: number
+  title: string
+  fav_state: number
+}
+interface FavoriteListItem {
+  id: number
+  displayName: string
+}
+const EmptyFavoriteList: FavoriteListItem = {
+  id: 0,
+  displayName: '<未选择>',
+}
+
 export default Vue.extend({
   components: {
     VDropdown,
@@ -50,13 +61,12 @@ export default Vue.extend({
     const { displayMode } = getComponentSettings<Options>('outerWatchlater').options
     return {
       aid: unsafeWindow.aid,
-      favoriteTitle: '',
       isFavorite: false,
       tipText: '',
       tipShowing: false,
       tipHandle: 0,
-      lists: [],
-      selectedFavorite: '<未选择>',
+      list: [],
+      selectedFavoriteList: EmptyFavoriteList,
       listShowing: false,
       displayMode,
     }
@@ -70,21 +80,6 @@ export default Vue.extend({
     },
   },
   watch: {
-    selectedFavorite(value: string) {
-      if (this.lists.length === 0) {
-        return
-      }
-      const { lists } = this as {
-        lists: { title: string; id: number }[]
-      }
-      const list = lists.find(it => it.title === value)
-      if (list) {
-        options.favoriteFolderID = list.id
-        this.syncFavoriteState()
-      } else {
-        console.error('list not found in selectedFavorite(value)')
-      }
-    },
     async listShowing(value: boolean) {
       if (value) {
         document.addEventListener('click', e => {
@@ -94,29 +89,63 @@ export default Vue.extend({
             this.listShowing = false
           }
         })
-        if (this.lists.length === 0) {
-          try {
-            const json = await getJsonWithCredentials(
-              `https://api.bilibili.com/medialist/gateway/base/created?pn=1&ps=100&up_mid=${getUID()}&is_space=0`,
-            )
-            if (json.code !== 0) {
-              throw new Error(`获取收藏夹列表失败: ${json.message}`)
-            }
-            this.lists = lodash.get(json, 'data.list', [])
-          } catch (error) {
-            logError(error)
-          }
+        if (this.list.length === 0) {
+          this.loadFavoriteList()
         }
       }
     },
   },
   created() {
-    this.syncFavoriteState()
+    this.loadSavedList()
     addComponentListener('quickFavorite.displayMode', (value: DisplayMode) => {
       this.displayMode = value
     })
   },
   methods: {
+    async loadFavoriteList() {
+      try {
+        const json = await getJsonWithCredentials(
+          `https://api.bilibili.com/medialist/gateway/base/created?pn=1&ps=100&up_mid=${getUID()}&is_space=0`,
+        )
+        if (json.code !== 0) {
+          throw new Error(`获取收藏夹列表失败: ${json.message}`)
+        }
+        const list: RawFavoriteListItem[] = lodash.get(json, 'data.list', [])
+        this.list = list.map(it => ({ id: it.id, displayName: it.title }))
+      } catch (error) {
+        logError(error)
+      }
+    },
+    async loadSavedList() {
+      try {
+        const json = await getJsonWithCredentials(
+          `https://api.bilibili.com/x/v3/fav/folder/created/list-all?type=2&rid=${
+            this.aid
+          }&up_mid=${getUID()}`,
+        )
+        if (json.code !== 0) {
+          throw new Error(`获取收藏状态失败: ${json.message}`)
+        }
+
+        const list: RawFavoriteListItem[] = lodash.get(json, 'data.list', [])
+        const favoriteFolder = list.find(it => it.id === options.favoriteFolderID)
+        if (favoriteFolder === undefined) {
+          options.favoriteFolderID = 0
+          return
+        }
+        this.isFavorite = Boolean(favoriteFolder.fav_state)
+        this.selectedFavoriteList = {
+          id: favoriteFolder.id,
+          displayName: favoriteFolder.title,
+        } as FavoriteListItem
+      } catch (error) {
+        logError(error)
+      }
+    },
+    saveFavoriteList(list: FavoriteListItem) {
+      options.favoriteFolderID = list.id
+      this.syncFavoriteState()
+    },
     async syncFavoriteState() {
       if (options.favoriteFolderID === 0 || !this.aid) {
         return
@@ -135,14 +164,16 @@ export default Vue.extend({
           'data.list',
           [],
         )
-        const quickList = list.find(it => it.id === options.favoriteFolderID)
-        if (quickList === undefined) {
+        const favoriteFolder = list.find(it => it.id === options.favoriteFolderID)
+        if (favoriteFolder === undefined) {
           options.favoriteFolderID = 0
           return
         }
-        this.isFavorite = Boolean(quickList.fav_state)
-        this.favoriteTitle = quickList.title
-        this.selectedFavorite = quickList.title
+        this.isFavorite = Boolean(favoriteFolder.fav_state)
+        this.selectedFavoriteList = {
+          id: favoriteFolder.id,
+          displayName: favoriteFolder.title,
+        } as FavoriteListItem
       } catch (error) {
         logError(error)
       }
@@ -182,8 +213,8 @@ export default Vue.extend({
         this.isFavorite = !this.isFavorite
         this.showTip(
           this.isFavorite
-            ? `已添加至收藏夹: ${this.favoriteTitle}`
-            : `已移出收藏夹: ${this.favoriteTitle}`,
+            ? `已添加至收藏夹: ${this.selectedFavoriteList.displayName}`
+            : `已移出收藏夹: ${this.selectedFavoriteList.displayName}`,
         )
         // await this.syncFavoriteState()
       } catch (error) {
