@@ -7,7 +7,15 @@ import { getVue2Data, matchUrlPattern, retrieveImageUrl } from '@/core/utils'
 import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
 import { Options } from '.'
+import { useScopedConsole } from '@/core/utils/log'
 
+const isSameImage = (imageUrl: string, otherUrl: string) => {
+  try {
+    return new URL(imageUrl).pathname === new URL(otherUrl).pathname
+  } catch {
+    return false
+  }
+}
 export const setupFeedImageExporter: ComponentEntry<Options> = async ({
   settings: { options },
 }) => {
@@ -21,12 +29,13 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
       text: '导出图片',
       action: async () => {
         const imageUrls: { url: string; extension: string }[] = []
+        const console = useScopedConsole('导出图片')
         dqa(
           card.element,
           '.main-content .img-content, .bili-album__preview__picture__img, .bili-album .preview__picture__img, .bili-dyn-gallery__image img, .bili-album__watch__track__item img',
         ).forEach((img: HTMLImageElement | HTMLDivElement) => {
           const urlData = retrieveImageUrl(img)
-          if (urlData && !imageUrls.some(({ url }) => url === urlData.url)) {
+          if (urlData && !imageUrls.some(({ url }) => isSameImage(url, urlData.url))) {
             imageUrls.push(urlData)
           }
         })
@@ -34,6 +43,7 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
           Toast.info('此条动态没有检测到任何图片.', '导出图片')
           return
         }
+        console.log({ imageUrls })
         const toast = Toast.info('下载中...', '导出图片')
         let downloadedCount = 0
 
