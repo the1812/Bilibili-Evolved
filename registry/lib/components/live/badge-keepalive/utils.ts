@@ -11,12 +11,12 @@ export function validateRoomId(value: string): boolean {
   return /^\d+$/.test(value)
 }
 
-function validateJSON(data: object) {
-  if (data['code'] !== 0) {
-    throw data['message']
+function validateJSON(data) {
+  if (data.code !== 0) {
+    throw new Error(data.message)
   }
 
-  return data['data']
+  return data.data
 }
 
 export async function getLiveRoomUserInfo(room_id: string) {
@@ -31,12 +31,12 @@ export async function keepAliveRequest(room_id: string, click_time = '300') {
   // 需要先获取直播间房主的 UID
   const data = await getLiveRoomUserInfo(room_id)
 
-  const curr_weared = data['medal']['curr_weared']
+  const { curr_weared } = data.medal
   if (!curr_weared) {
-    throw `暂未获得直播间 ${room_id} 的粉丝勋章`
+    throw new Error(`暂未获得直播间 ${room_id} 的粉丝勋章`)
   }
 
-  const anchor_id = curr_weared['target_id']
+  const anchor_id = curr_weared.target_id
 
   const params = {
     click_time,
