@@ -1,7 +1,7 @@
 <template>
   <DefaultWidget
     :disabled="downloading"
-    name="'下载up主表情包'"
+    name="下载up主表情包"
     icon="mdi-emoticon-outline"
     @click="download()"
   ></DefaultWidget>

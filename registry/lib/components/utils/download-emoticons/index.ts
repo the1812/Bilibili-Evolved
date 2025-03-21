@@ -14,7 +14,3 @@ export const component = defineComponentMetadata({
   },
   urlInclude: [/^https:\/\/live\.bilibili\.com\/(\d+)/],
 })
-
-// https://api.bilibili.com/x/space/acc/info?mid=387636363
-
-// https://api.live.bilibili.com/ajax/msg?roomid=21013446

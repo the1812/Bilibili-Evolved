@@ -45,9 +45,7 @@ export class Emoticons {
         const realRoomId = await this.getRealRoomId(roomId)
         response = await this.getEmoticonsByRoomId(realRoomId)
       }
-      return response.data.data.filter(
-        item => item.pkg_name === 'UP主大表情' || item.pkg_name === '房间专属表情',
-      )
+      return response.data.data.slice(2)
     } catch (error) {
       throw new Error('获取表情包失败')
     }
