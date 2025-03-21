@@ -7,6 +7,10 @@ export const component = defineComponentMetadata({
   entry: none,
   reload: none,
   unload: none,
+  author: {
+    name: "magicFeirl",
+    link: "https://github.com/magicFeirl"
+  },
   tags: [componentsTags.live],
   widget: {
     component: () => import('./BadgeKeepalive.vue').then(m => m.default),
