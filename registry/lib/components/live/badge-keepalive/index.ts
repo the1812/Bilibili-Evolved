@@ -8,8 +8,8 @@ export const component = defineComponentMetadata({
   reload: none,
   unload: none,
   author: {
-    name: "magicFeirl",
-    link: "https://github.com/magicFeirl"
+    name: 'magicFeirl',
+    link: 'https://github.com/magicFeirl',
   },
   tags: [componentsTags.live],
   widget: {
