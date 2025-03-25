@@ -8,6 +8,33 @@ const getBvidFromElement = (element: Element) => {
   return bvid
 }
 
+const redirectFromFavList = (enabled: boolean): boolean => {
+  if (!enabled) {
+    return false
+  }
+
+  const getBvidFromWatcherLaterVideoPage = () => {
+    const { pathname, search } = window.location
+    const oidAndBvid = search.match(/\?oid=(\d+)&bvid=(\w+)/) ?? []
+
+    if (pathname === '/list/watchlater' && oidAndBvid.length === 3) {
+      return oidAndBvid[2]
+    }
+
+    return null
+  }
+
+  // 判断是否是稍后再看链接格式的视频页面，如果是则重定向
+  const bvid = getBvidFromWatcherLaterVideoPage()
+
+  if (bvid) {
+    location.href = `https://www.bilibili.com/video/${bvid}`
+    return true
+  }
+
+  return false
+}
+
 const isRedirected = (element: Element) => {
   const pic = element.querySelector('.av-pic, .bili-cover-card') as HTMLAnchorElement
   return /video\/BV/.test(pic.href)
@@ -38,6 +65,11 @@ const entry: ComponentEntry = async ({ settings }) => {
   if (!settings.options.page) {
     return
   }
+
+  if (redirectFromFavList(settings.options.favlist as boolean)) {
+    return
+  }
+
   const { select } = await import('@/core/spin-query')
   const { childListSubtree } = await import('@/core/observer')
   const { getWatchlaterList } = await import('@/components/video/watchlater')
@@ -102,12 +134,17 @@ export const component = defineComponentMetadata({
       displayName: '重定向页面',
       defaultValue: true,
     },
+    favlist: {
+      displayName: '重定向收藏夹列表',
+      defaultValue: true,
+    },
     navbar: {
       displayName: '重定向顶栏',
       defaultValue: true,
     },
   },
   urlInclude: [
+    'https://www.bilibili.com/list/watchlater',
     'https://www.bilibili.com/watchlater/#/list',
     'https://www.bilibili.com/watchlater/list#/list',
   ],
