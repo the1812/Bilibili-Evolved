@@ -1,6 +1,11 @@
 <template>
   <div class="custom-navbar-logo-container">
-    <VIcon v-if="!seasonLogoUrl" icon="logo" class="custom-navbar-logo"></VIcon>
+    <VIcon
+      v-if="!seasonLogoUrl"
+      icon="logo"
+      class="custom-navbar-logo"
+      :class="{ theme: useThemeColor }"
+    ></VIcon>
     <div
       v-else
       class="custom-navbar-logo season"
@@ -22,6 +27,7 @@ export default Vue.extend({
   data() {
     return {
       seasonLogoUrl: '',
+      useThemeColor: true,
     }
   },
   watch: {
@@ -46,6 +52,13 @@ export default Vue.extend({
       },
       true,
     )
+    addComponentListener(
+      'customNavbar.themeLogo',
+      async (value: boolean) => {
+        this.useThemeColor = value
+      },
+      true,
+    )
   },
 })
 </script>
@@ -63,9 +76,15 @@ export default Vue.extend({
   width: calc(var(--navbar-height) * 1.3);
 }
 .custom-navbar-logo {
-  .custom-navbar:not(.fill) & {
-    &:not(.season) {
+  .custom-navbar:not(.fill) &:not(.season) {
+    body.dark & {
+      color: #fff;
+    }
+    &.theme {
       color: var(--theme-color);
+      body.dark & {
+        color: var(--theme-color);
+      }
     }
   }
   &.be-icon {

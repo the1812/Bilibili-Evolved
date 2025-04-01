@@ -58,7 +58,11 @@ const options = defineOptionsMetadata({
   },
   seasonLogo: {
     defaultValue: false,
-    displayName: '使用季节Logo',
+    displayName: '使用季节 Logo',
+  },
+  themeLogo: {
+    defaultValue: true,
+    displayName: '使用主题色 Logo',
   },
   touch: {
     defaultValue: false,
