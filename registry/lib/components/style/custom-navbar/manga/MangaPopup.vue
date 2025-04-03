@@ -14,6 +14,7 @@ const popper = usePopper(props)
 const loading = ref(true)
 const recommendItems = ref<MangaRecommendItem[] | undefined>(undefined)
 const hotItems = ref<MangaHotItem[] | undefined>(undefined)
+const previewCard = ref<MangaHotItem | undefined>(undefined)
 const loadRecommendItems = async () => {
   if (recommendItems.value !== undefined) {
     return
@@ -90,11 +91,16 @@ defineExpose({
             class="hot-manga-card"
             :title="card.title"
             :href="'https://manga.bilibili.com/detail/mc' + card.comic_id"
+            @mouseover="previewCard = card"
+            @mouseout="previewCard = undefined"
           >
             <div class="hot-manga-card-title">
               {{ card.title }}
             </div>
           </a>
+        </div>
+        <div v-if="previewCard" class="hot-manga-card-preview">
+          <img :src="previewCard.vertical_cover + '@450h.jpg'" :alt="previewCard.title" />
         </div>
       </div>
     </div>
@@ -144,6 +150,7 @@ defineExpose({
       }
     }
     .custom-navbar-manga-right-panel {
+      position: relative;
       min-width: 0;
       flex: 1;
       @include v-stretch($gap);
@@ -189,6 +196,21 @@ defineExpose({
             opacity: 1;
             color: #ff9900;
           }
+        }
+      }
+      .hot-manga-card-preview {
+        position: absolute;
+        pointer-events: none;
+        top: calc(-1 * #{$gap});
+        right: calc(100% + #{$gap} + 1px);
+        height: calc(100% - #{$gap});
+        background-image: linear-gradient(to left, #fff 75%, transparent);
+        padding: 18px 18px 18px 60px;
+        img {
+          display: flex;
+          height: 100%;
+          aspect-ratio: 169 / 225;
+          @include round-corner();
         }
       }
     }
