@@ -4,7 +4,8 @@ import { ranking } from './ranking/ranking'
 import { userInfo } from './user-info/user-info'
 import { logo } from './logo/logo'
 import { home } from './home/home'
-import { gamesIframe, livesIframe, mangaIframe } from './iframe/iframe'
+import { livesIframe, mangaIframe } from './iframe/iframe'
+import { games } from './games/games'
 import { blanks } from './flexible-blank/flexible-blank'
 import { bangumi, music, shop, match, creations } from './simple-links/simple-links'
 import { upload } from './upload/upload'
@@ -23,7 +24,7 @@ export const getBuiltInItems = (): CustomNavbarItemInit[] => [
   bangumi,
   ranking,
   music,
-  gamesIframe,
+  games,
   livesIframe,
   shop,
   match,

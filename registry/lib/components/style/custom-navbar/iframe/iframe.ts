@@ -21,15 +21,6 @@ const getIframeItem = (config: NavbarIframeConfig): CustomNavbarItemInit & Navba
   noPopupPadding: true,
   transparentPopup: true,
 })
-export const gamesIframe = getIframeItem({
-  src: 'https://www.bilibili.com/page-proxy/game-nav.html',
-  href: 'https://game.bilibili.com/',
-  width: 680,
-  height: 260,
-  lazy: true,
-  displayName: '游戏中心',
-  iframeName: 'games',
-})
 export const livesIframe = getIframeItem({
   src: 'https://live.bilibili.com/blackboard/dropdown-menu.html',
   href: 'https://live.bilibili.com',
