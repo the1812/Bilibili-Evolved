@@ -4,7 +4,6 @@ import { ranking } from './ranking/ranking'
 import { userInfo } from './user-info/user-info'
 import { logo } from './logo/logo'
 import { home } from './home/home'
-import { mangaIframe } from './iframe/iframe'
 import { games } from './games/games'
 import { blanks } from './flexible-blank/flexible-blank'
 import { bangumi, music, shop, match, creations, lives } from './simple-links/simple-links'
@@ -15,6 +14,7 @@ import { subscriptions } from './subscriptions/subscriptions'
 import { watchlater } from './watchlater/watchlater'
 import { favorites } from './favorites/favorites'
 import { history } from './history/history'
+import { manga } from './manga/manga'
 
 const [blank1, blank2, blank3, blank4] = blanks
 export const getBuiltInItems = (): CustomNavbarItemInit[] => [
@@ -28,7 +28,7 @@ export const getBuiltInItems = (): CustomNavbarItemInit[] => [
   lives,
   shop,
   match,
-  mangaIframe,
+  manga,
   blank2,
   search,
   blank3,

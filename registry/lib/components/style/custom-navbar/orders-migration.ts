@@ -5,6 +5,7 @@ export const migrateOrders = () => {
   const migrations = [
     ['gamesIframe', 'games'],
     ['livesIframe', 'lives'],
+    ['mangaIframe', 'manga'],
   ]
 
   const { options } = getComponentSettings<CustomNavbarOptions>('customNavbar')
