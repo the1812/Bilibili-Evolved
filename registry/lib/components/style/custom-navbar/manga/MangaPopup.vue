@@ -89,7 +89,7 @@ defineExpose({
             :key="card.comic_id"
             class="hot-manga-card"
             :title="card.title"
-            href="'https://manga.bilibili.com/detail/mc' + card.comic_id"
+            :href="'https://manga.bilibili.com/detail/mc' + card.comic_id"
           >
             <div class="hot-manga-card-title">
               {{ card.title }}
