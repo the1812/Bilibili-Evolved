@@ -21,15 +21,6 @@ const getIframeItem = (config: NavbarIframeConfig): CustomNavbarItemInit & Navba
   noPopupPadding: true,
   transparentPopup: true,
 })
-export const livesIframe = getIframeItem({
-  src: 'https://live.bilibili.com/blackboard/dropdown-menu.html',
-  href: 'https://live.bilibili.com',
-  width: 528,
-  height: 266,
-  lazy: true,
-  displayName: '直播',
-  iframeName: 'lives',
-})
 export const mangaIframe = getIframeItem({
   src: 'https://manga.bilibili.com/eden/bilibili-nav-panel.html',
   href: 'https://manga.bilibili.com',

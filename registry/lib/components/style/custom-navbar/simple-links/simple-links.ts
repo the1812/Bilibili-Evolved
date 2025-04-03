@@ -42,3 +42,8 @@ export const creations = getSimpleLinkItem({
   displayName: '创作中心',
   href: 'https://member.bilibili.com/platform/home',
 })
+export const lives = getSimpleLinkItem({
+  name: 'lives',
+  displayName: '直播',
+  href: 'https://live.bilibili.com',
+})

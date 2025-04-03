@@ -4,10 +4,10 @@ import { ranking } from './ranking/ranking'
 import { userInfo } from './user-info/user-info'
 import { logo } from './logo/logo'
 import { home } from './home/home'
-import { livesIframe, mangaIframe } from './iframe/iframe'
+import { mangaIframe } from './iframe/iframe'
 import { games } from './games/games'
 import { blanks } from './flexible-blank/flexible-blank'
-import { bangumi, music, shop, match, creations } from './simple-links/simple-links'
+import { bangumi, music, shop, match, creations, lives } from './simple-links/simple-links'
 import { upload } from './upload/upload'
 import { search } from './search/search'
 import { feeds } from './feeds/feeds'
@@ -25,7 +25,7 @@ export const getBuiltInItems = (): CustomNavbarItemInit[] => [
   ranking,
   music,
   games,
-  livesIframe,
+  lives,
   shop,
   match,
   mangaIframe,
