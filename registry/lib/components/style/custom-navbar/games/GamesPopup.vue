@@ -104,10 +104,12 @@ defineExpose({
     .banner-game-card {
       position: relative;
       overflow: hidden;
+      background-color: #8882;
       @include v-stretch();
       @include round-corner();
       img {
         transition: transform 0.2s ease-out;
+        aspect-ratio: 15 / 8;
       }
       &:hover img {
         transform: scale(1.05);
@@ -130,6 +132,11 @@ defineExpose({
         min-width: 0;
         flex: 1;
         transition: color 0.2s ease-out;
+        img {
+          background-color: #8882;
+          border-radius: 16px;
+          aspect-ratio: 1 / 1;
+        }
         &:hover {
           color: var(--theme-color) !important;
         }
@@ -150,9 +157,10 @@ defineExpose({
       @include semi-bold();
     }
     .list-game-cards {
-      @include v-stretch(8px);
+      @include v-stretch();
       .list-game-card {
         @include single-line();
+        padding: 4px 0;
         opacity: 0.6;
         transition: all 0.2s ease-out;
         &:hover {

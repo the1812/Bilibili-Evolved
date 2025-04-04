@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { VLoading } from '@/ui'
 import { bilibiliApi } from '@/core/ajax'
 import { CustomNavbarItem } from '../custom-navbar-item'
 import { usePopper } from '../mixins'
@@ -91,8 +92,8 @@ defineExpose({
             class="hot-manga-card"
             :title="card.title"
             :href="'https://manga.bilibili.com/detail/mc' + card.comic_id"
-            @mouseover="previewCard = card"
-            @mouseout="previewCard = undefined"
+            @mouseenter="previewCard = card"
+            @mouseleave="previewCard = undefined"
           >
             <div class="hot-manga-card-title">
               {{ card.title }}
@@ -135,6 +136,8 @@ defineExpose({
         .recommend-manga-card-image {
           @include v-stretch();
           @include round-corner();
+          background: #8882;
+          aspect-ratio: 16 / 9;
           width: 100%;
           overflow: hidden;
         }
@@ -160,10 +163,11 @@ defineExpose({
         @include semi-bold();
       }
       .custom-navbar-manga-hot-list {
-        @include v-stretch(8px);
+        @include v-stretch();
         counter-reset: manga-item;
         .hot-manga-card {
           @include h-center(6px);
+          padding: 4px 0;
           &-title {
             @include single-line();
             transition: color 0.2s ease-out, opacity 0.2s ease-out;
@@ -206,8 +210,12 @@ defineExpose({
         height: calc(100% - #{$gap});
         background-image: linear-gradient(to left, #fff 75%, transparent);
         padding: 18px 18px 18px 60px;
+        body.dark & {
+          background-image: linear-gradient(to left, #222 75%, transparent);
+        }
         img {
           display: flex;
+          background: #8882;
           height: 100%;
           aspect-ratio: 169 / 225;
           @include round-corner();
