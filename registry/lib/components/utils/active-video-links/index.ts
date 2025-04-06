@@ -48,8 +48,7 @@ const processDescLinks = () => {
       continue
     }
 
-    // Use protocol-relative URL with // instead of http:// or https://
-    const link = matchText.startsWith('www.') ? `//${matchText}` : matchText.replace(/^https?:/, '')
+    const link = matchText.replace(/^https?:\/\//, '//').replace(/^www\./, '//')
     const replacement = `<a href='${link}' target='_blank'>${matchText}</a>`
 
     newContent =
