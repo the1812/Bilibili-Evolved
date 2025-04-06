@@ -95,9 +95,6 @@ const entry = () => {
 export const component = defineComponentMetadata({
   name: 'activeVideoLinks',
   displayName: '视频链接增强',
-  description: {
-    'zh-CN': '将视频简介中的普通网址转换为可点击的链接，同时修复 acg.tv 链接',
-  },
   tags: [componentsTags.utils],
   entry,
   reload: entry,
