@@ -4,11 +4,17 @@ export interface MatchInfo {
   preview: MatchPreviewItem[]
 }
 
+export enum MatchHotItemStatus {
+  NotStarted = 1,
+  InProgress,
+  Finished,
+}
+
 export interface MatchHotItem {
   index: number
   cid: number
   desc: string
-  status: number
+  status: MatchHotItemStatus
   name: string
   jump_url: string
 }

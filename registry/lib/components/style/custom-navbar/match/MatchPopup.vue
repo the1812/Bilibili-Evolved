@@ -4,7 +4,7 @@ import { VLoading, VButton } from '@/ui'
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { CustomNavbarItem } from '../custom-navbar-item'
 import { usePopper } from '../mixins'
-import type { MatchInfo, MatchPreviewItem } from './types'
+import { type MatchInfo, type MatchPreviewItem, MatchHotItemStatus } from './types'
 import { getCsrf } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 
@@ -83,6 +83,14 @@ defineExpose({
             :title="card.name"
             class="hot-match-card"
           >
+            <div
+              class="hot-match-card-status"
+              :class="{ 'in-progress': card.status === MatchHotItemStatus.InProgress }"
+            >
+              <template v-if="card.status === MatchHotItemStatus.NotStarted">未开始</template>
+              <template v-if="card.status === MatchHotItemStatus.InProgress">进行中</template>
+              <template v-if="card.status === MatchHotItemStatus.Finished">已结束</template>
+            </div>
             <div class="hot-match-card-title">
               {{ card.name }}
             </div>
@@ -183,6 +191,16 @@ defineExpose({
       .hot-match-card {
         @include h-center(6px);
         padding: 5px 0;
+        &-status {
+          font-size: 11px;
+          background-color: #8882;
+          padding: 1px 4px;
+          border-radius: 4px;
+          &.in-progress {
+            background-color: var(--theme-color);
+            color: var(--foreground-color);
+          }
+        }
         &-title {
           @include single-line();
           transition: color 0.2s ease-out;
