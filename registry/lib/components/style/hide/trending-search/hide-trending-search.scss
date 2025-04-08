@@ -1,5 +1,18 @@
 .search-panel {
+
   > .trending {
     display: none !important;
+  }
+
+  &:not(:has(.history)) {
+    padding: 0 !important;
+    border: none !important;
+  }
+}
+
+#nav-searchform.is-focus {
+  /* 搜索框 focusing 且有关键字列表 or 历史记录列表时不显示低边框*/
+  &:not(:has(+ .search-panel > .suggestions), :has(+ .search-panel > .history))  {
+   border-radius: 8px !important;
   }
 }
