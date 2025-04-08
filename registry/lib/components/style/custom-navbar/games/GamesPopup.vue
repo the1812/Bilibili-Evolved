@@ -65,7 +65,7 @@ defineExpose({
         <div class="list-game-cards-title">新游预告</div>
         <div class="list-game-cards">
           <a
-            v-for="card of gameInfo.list.slice(0, 9)"
+            v-for="card of gameInfo.list.slice(0, 8)"
             :key="card.href"
             class="list-game-card"
             :href="card.href"
@@ -126,11 +126,12 @@ defineExpose({
       }
     }
     .panel-game-cards {
-      @include h-stretch($gap);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: $gap;
       .panel-game-card {
         @include v-stretch(6px);
         min-width: 0;
-        flex: 1;
         transition: color 0.2s ease-out;
         img {
           background-color: #8882;

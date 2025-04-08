@@ -77,7 +77,7 @@ defineExpose({
           :href="'https://manga.bilibili.com/detail/mc' + card.season_id"
         >
           <div class="recommend-manga-card-image">
-            <img :src="card.horizontal_cover" :alt="card.title" />
+            <img :src="card.horizontal_cover + '@300w.jpg'" :alt="card.title" />
           </div>
           <div class="recommend-manga-card-title" :title="card.title">{{ card.title }}</div>
         </a>
