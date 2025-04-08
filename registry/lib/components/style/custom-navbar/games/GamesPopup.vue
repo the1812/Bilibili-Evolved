@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, defineExpose, defineProps } from 'vue'
+import { ref } from 'vue'
 import { VLoading } from '@/ui'
 import type { GameInfo } from './types'
 import { bilibiliApi, getJson } from '@/core/ajax'
