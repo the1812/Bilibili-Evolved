@@ -475,7 +475,7 @@
     "type": "component",
     "name": "doubleClickControl",
     "displayName": "启用双击控制",
-    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.",
+    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.\r\n",
     "fullRelativePath": "../../registry/dist/components/touch/double-click-control.js",
     "fullAbsolutePath": "registry/dist/components/touch/double-click-control.js"
   },
@@ -814,6 +814,14 @@
     "description": "控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))",
     "fullRelativePath": "../../registry/dist/components/video/player/default-mode.js",
     "fullAbsolutePath": "registry/dist/components/video/player/default-mode.js"
+  },
+  {
+    "type": "component",
+    "name": "disableDoubleClickFullscreen",
+    "displayName": "禁用双击全屏",
+    "description": "禁用播放器的双击全屏功能.\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/player/disable-double-click-fullscreen.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/disable-double-click-fullscreen.js"
   },
   {
     "type": "component",

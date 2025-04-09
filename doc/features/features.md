@@ -624,7 +624,7 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/touch/double-click-control.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/double-click-control.js)
 
-将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.
+将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.
 
 ### [迷你播放器触摸拖动](../../registry/dist/components/touch/mini-player.js)
 `touchMiniPlayer`
@@ -1123,6 +1123,15 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/default-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/default-mode.js)
 
 控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))
+
+### [禁用双击全屏](../../registry/dist/components/video/player/disable-double-click-fullscreen.js)
+`disableDoubleClickFullscreen`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/disable-double-click-fullscreen.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/disable-double-click-fullscreen.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/disable-double-click-fullscreen.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/disable-double-click-fullscreen.js)
+
+禁用播放器的双击全屏功能.
 
 ### [禁止滚轮调音量](../../registry/dist/components/video/player/disable-scroll-volume.js)
 `disableScrollVolume`
