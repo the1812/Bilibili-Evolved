@@ -15,6 +15,12 @@ const feedsCardTypeMap = {
   DynamicTypeArticle: feedsCardTypes.column,
   DynamicTypeMusic: feedsCardTypes.audio,
   DynamicTypeLiveRcmd: feedsCardTypes.liveRecord,
+  DynamicTypeCourses: feedsCardTypes.courses,
+  DynamicTypeOpus: feedsCardTypes.textWithImages,
+  DynamicTypeLive: feedsCardTypes.live,
+  DynamicTypeMedialist: feedsCardTypes.mediaList,
+  DynamicTypeSubscription: feedsCardTypes.mediaList,
+  DynamicTypeUgcSeason: feedsCardTypes.ugcSeason,
 }
 
 const combineText = (...texts: string[]) =>
@@ -23,7 +29,7 @@ const combineText = (...texts: string[]) =>
     .join('\n')
     .trim()
 const getType = (rawType: string): FeedsCardType =>
-  feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypeMap.DynamicTypeWord
+  feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypes.unknown
 const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   const isOpusModule = Object.hasOwn(dynamicModule, 'paragraphs')
   if (isOpusModule) {

@@ -113,6 +113,14 @@
   },
   {
     "type": "component",
+    "name": "badgeKeepalive",
+    "displayName": "一键点亮直播间粉丝勋章",
+    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。",
+    "fullRelativePath": "../../registry/dist/components/live/badge-keepalive.js",
+    "fullAbsolutePath": "registry/dist/components/live/badge-keepalive.js"
+  },
+  {
+    "type": "component",
     "name": "liveChatPanelFit",
     "displayName": "直播间网页全屏自适应",
     "description": "在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果.\r\n如果在侧边栏的边缘拖动, 可以自定义侧边栏的固定宽度, 双击边缘可以还原到自动宽度.\r\n\r\n- `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)\r\n\r\n> 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.\r\n",
@@ -475,7 +483,7 @@
     "type": "component",
     "name": "doubleClickControl",
     "displayName": "启用双击控制",
-    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.",
+    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.\r\n",
     "fullRelativePath": "../../registry/dist/components/touch/double-click-control.js",
     "fullAbsolutePath": "registry/dist/components/touch/double-click-control.js"
   },
@@ -502,6 +510,14 @@
     "description": "为播放器启用触摸手势支持:\r\n- 左右滑动可调整进度\r\n- 上下滑动可调整音量\r\n- 进度调整可在左上角和右上角取消\r\n- 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.",
     "fullRelativePath": "../../registry/dist/components/touch/player-gestures.js",
     "fullAbsolutePath": "registry/dist/components/touch/player-gestures.js"
+  },
+  {
+    "type": "component",
+    "name": "activeVideoLinks",
+    "displayName": "视频链接增强",
+    "description": "by [@Alan Ye](https://github.com/at-wr)\n\n这个组件会将视频简介中的普通网址转换为可点击的链接，并将<del>被 Bilibili 抛弃</del>已失效的 `acg.tv` 跳转链接修复为 `nicovideo.jp` 链接。\r\n\r\n例如: `https://acg.tv/sm37507315` → `https://www.nicovideo.jp/watch/sm37507315`\r\n\r\n<i>本组件不会保证目标链接的安全性，因此在点击前请自行验证其是否可信</i>\r\n",
+    "fullRelativePath": "../../registry/dist/components/utils/active-video-links.js",
+    "fullAbsolutePath": "registry/dist/components/utils/active-video-links.js"
   },
   {
     "type": "component",
@@ -590,6 +606,14 @@
     "description": "开启音频下载支持, 音频页面中可以在功能面板中下载当前音频.\n\n> 需要进入音频的详细信息页面才能下载, 在其他页面中此按钮将不可点击.",
     "fullRelativePath": "../../registry/dist/components/utils/download-audio.js",
     "fullAbsolutePath": "registry/dist/components/utils/download-audio.js"
+  },
+  {
+    "type": "component",
+    "name": "downloadEmoticons",
+    "displayName": "下载表情",
+    "description": "by [@Pencilqaq](https://github.com/pencilqaq)\n\n## 下载up主专属表情包\r\n\r\n支持下载up主专属表情包，处于任意直播间页面时，下载按钮会在`功能`面板显示，以压缩包形式保存。",
+    "fullRelativePath": "../../registry/dist/components/utils/download-emoticons.js",
+    "fullAbsolutePath": "registry/dist/components/utils/download-emoticons.js"
   },
   {
     "type": "component",
@@ -814,6 +838,14 @@
     "description": "控制是否使用默认播放器模式, 可以为`常规`, `宽屏`, `网页全屏`或`全屏`. 注意: 不能和其他影响定位的功能一同使用, 例如播放器定位. (相关讨论: [#483](https://github.com/the1812/Bilibili-Evolved/issues/483))",
     "fullRelativePath": "../../registry/dist/components/video/player/default-mode.js",
     "fullAbsolutePath": "registry/dist/components/video/player/default-mode.js"
+  },
+  {
+    "type": "component",
+    "name": "disableDoubleClickFullscreen",
+    "displayName": "禁用双击全屏",
+    "description": "禁用播放器的双击全屏功能.\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/player/disable-double-click-fullscreen.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/disable-double-click-fullscreen.js"
   },
   {
     "type": "component",

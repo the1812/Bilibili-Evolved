@@ -57,7 +57,8 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         return true
       })()
       if (
-        (binding.action.ignoreFocus !== false || binding.action.ignoreTyping !== false) &&
+        binding.action.ignoreFocus !== false &&
+        binding.action.ignoreTyping !== false &&
         hasElementFocus
       ) {
         return

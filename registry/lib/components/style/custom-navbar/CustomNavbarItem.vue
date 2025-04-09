@@ -171,6 +171,9 @@ export default Vue.extend({
 @import 'common';
 
 @keyframes navbar-popup-in {
+  1% {
+    pointer-events: initial;
+  }
   to {
     pointer-events: initial;
   }
@@ -304,7 +307,7 @@ export default Vue.extend({
     .popup-container {
       top: 100%;
       > .popup {
-        animation: navbar-popup-in 0.2s ease-out 0.2s both;
+        animation: navbar-popup-in 0.2s ease-out 0.15s both;
         opacity: 1;
       }
     }
