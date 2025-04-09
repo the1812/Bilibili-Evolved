@@ -475,7 +475,7 @@
     "type": "component",
     "name": "doubleClickControl",
     "displayName": "启用双击控制",
-    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.",
+    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.\r\n",
     "fullRelativePath": "../../registry/dist/components/touch/double-click-control.js",
     "fullAbsolutePath": "registry/dist/components/touch/double-click-control.js"
   },
@@ -817,19 +817,19 @@
   },
   {
     "type": "component",
+    "name": "disableDoubleClickFullscreen",
+    "displayName": "禁用双击全屏",
+    "description": "禁用播放器的双击全屏功能.\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/player/disable-double-click-fullscreen.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/disable-double-click-fullscreen.js"
+  },
+  {
+    "type": "component",
     "name": "disableScrollVolume",
     "displayName": "禁止滚轮调音量",
     "description": "在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.  请注意不能和 `反转滚轮调音量` 一同使用.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/player/disable-scroll-volume.js",
     "fullAbsolutePath": "registry/dist/components/video/player/disable-scroll-volume.js"
-  },
-  {
-    "type": "component",
-    "name": "doubleClickFullscreen",
-    "displayName": "双击全屏",
-    "description": "为视频播放器启用双击全屏功能, 请注意不能和 `启用双击控制` 一同使用.",
-    "fullRelativePath": "../../registry/dist/components/video/player/double-click-fullscreen.js",
-    "fullAbsolutePath": "registry/dist/components/video/player/double-click-fullscreen.js"
   },
   {
     "type": "component",
