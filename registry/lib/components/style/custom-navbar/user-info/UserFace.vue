@@ -59,10 +59,11 @@ export default Vue.extend({
     position: absolute;
     width: 100%;
     height: 100%;
+    transition: 0.2s all ease-out 0.2s;
+    opacity: 1;
+    z-index: 100;
     .custom-navbar-item:hover & {
       transform: scale(2) translateY(10px);
-      z-index: 100;
-      opacity: 1;
     }
   }
   .user-face {

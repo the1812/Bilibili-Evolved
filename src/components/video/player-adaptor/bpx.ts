@@ -1,6 +1,6 @@
 import { attributes } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { playerReady, preventEvent } from '@/core/utils'
+import { playerReady } from '@/core/utils'
 import { createPlayerModeChangeEvent, PlayerMode } from './events'
 
 /** 播放器模式标记同步 */
@@ -36,19 +36,8 @@ const playerModePolyfill = async () => {
     }
   })
 }
-/** 移除 3.x 的双击全屏.
- * 如果以后视频区兼容了弹幕点赞层, 需要将双击全屏组件更换为阻止双击全屏, 并取消对此函数的使用.
- */
-const doubleClickPolyfill = async () => {
-  const layer = (await select('.bpx-player-video-perch')) as HTMLElement
-  if (!layer) {
-    return
-  }
-  preventEvent(layer, 'dblclick')
-}
 
 /** 番剧 & 视频播放器 (BPX) 通用 polyfill */
 export const bpxPlayerPolyfill = lodash.once(async () => {
   playerModePolyfill()
-  doubleClickPolyfill()
 })

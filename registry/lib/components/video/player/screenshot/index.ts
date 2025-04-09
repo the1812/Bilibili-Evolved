@@ -8,10 +8,16 @@ import desc from './desc.md'
 import ScreenshotContainer from './VideoScreenshotContainer.vue'
 
 export const VideoScreenshotDisabledClass = 'video-screenshot-disable'
-const entry = async () => {
-  let screenShotsList: Vue & {
-    screenshots: Screenshot[]
+let screenShotsList: Vue & {
+  screenshots: Screenshot[]
+}
+const exitConfirmHandler = (e: BeforeUnloadEvent) => {
+  if (screenShotsList?.screenshots.length > 0) {
+    e.preventDefault()
   }
+}
+
+const entry = async () => {
   addControlBarButton({
     name: 'takeScreenshot',
     displayName: '截图',
@@ -35,6 +41,7 @@ const entry = async () => {
       }
     },
   })
+  window.addEventListener('beforeunload', exitConfirmHandler)
 }
 export const component = defineComponentMetadata({
   name: 'videoScreenshot',
@@ -45,8 +52,14 @@ export const component = defineComponentMetadata({
     'zh-CN': desc,
   },
   urlInclude: playerUrls,
-  reload: () => document.body.classList.remove(VideoScreenshotDisabledClass),
-  unload: () => document.body.classList.add(VideoScreenshotDisabledClass),
+  reload: () => {
+    document.body.classList.remove(VideoScreenshotDisabledClass)
+    window.addEventListener('beforeunload', exitConfirmHandler)
+  },
+  unload: () => {
+    document.body.classList.add(VideoScreenshotDisabledClass)
+    window.removeEventListener('beforeunload', exitConfirmHandler)
+  },
   plugin: {
     displayName: '视频截图 - 快捷键支持',
     setup: ({ addData }) => {
