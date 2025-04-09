@@ -74,6 +74,7 @@ export default Vue.extend({
 
 <style lang="scss">
 @import 'common';
+@import './scroll-animation';
 
 .van-message-box {
   z-index: 10002 !important;
@@ -121,7 +122,6 @@ body.fixed-navbar {
 
 .custom-navbar *,
 .custom-navbar {
-  transition: all 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   outline: none !important;
 }
