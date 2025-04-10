@@ -25,6 +25,10 @@ export const component = defineComponentMetadata({
   name: 'watchlaterPageRedirect',
   displayName: '稍后再看页面-重定向',
   entry,
+  author: {
+    name: 'magicFeirl',
+    link: 'https://github.com/magicFeirl',
+  },
   urlInclude: ['https://www.bilibili.com/list/watchlater'],
   tags: [componentsTags.utils, componentsTags.video],
 })
