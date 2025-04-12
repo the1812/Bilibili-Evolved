@@ -17,7 +17,7 @@ const getSearchInputClassName = () => {
   return isInLiveRoomPage() ? 'input.nav-search-content' : 'input.nav-search-input'
 }
 
-const isSearchInput = (target: any) => {
+const isSearchInput = (target: Node) => {
   if (!(target instanceof HTMLInputElement)) {
     return false
   }
