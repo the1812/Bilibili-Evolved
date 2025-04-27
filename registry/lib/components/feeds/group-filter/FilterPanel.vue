@@ -118,17 +118,19 @@ export default Vue.extend({
       // 从username获得tag
       const userTagIds: number[] = this.followingMap.get(card.username)
       if (!userTagIds.some(item => this.selectedGroupIds.includes(item))) {
-        card.element.classList.add('pattern-block')
+        card.element.classList.add('hide-feed')
       } else {
-        card.element.classList.remove('pattern-block')
+        card.element.classList.remove('hide-feed')
       }
     },
   },
 })
 </script>
 
-<style scoped lang="scss">
-@import './blocker';
+<style lang="scss">
+.hide-feed {
+  display: none !important;
+}
 
 .group-filter-panel {
   background-color: white;
