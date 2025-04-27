@@ -18,17 +18,6 @@ const processAcgLinks = () => {
   })
 }
 
-const isTextInsideLink = (html: string, position: number): boolean => {
-  const beforeText = html.substring(0, position)
-  const lastOpenTag = beforeText.lastIndexOf('<a ')
-  if (lastOpenTag === -1) {
-    return false
-  }
-
-  const lastCloseTag = beforeText.lastIndexOf('</a>')
-  return lastOpenTag > lastCloseTag
-}
-
 const processDescLinks = () => {
   const descContainer = document.querySelector('.desc-info-text')
   if (!descContainer) {
@@ -45,9 +34,10 @@ const processDescLinks = () => {
     },
   })
   const textNodes: Text[] = []
-  let currentNode: Node | null
-  while ((currentNode = walker.nextNode())) {
+  let currentNode: Node | null = walker.nextNode()
+  while (currentNode !== null) {
     textNodes.push(currentNode as Text)
+    currentNode = walker.nextNode()
   }
   textNodes.forEach(textNode => {
     const frag = document.createDocumentFragment()
@@ -55,7 +45,8 @@ const processDescLinks = () => {
     let lastIndex = 0
     let match: RegExpExecArray | null
     webRegex.lastIndex = 0
-    while ((match = webRegex.exec(text)) !== null) {
+    match = webRegex.exec(text)
+    while (match !== null) {
       const start = match.index
       if (lastIndex < start) {
         frag.appendChild(document.createTextNode(text.slice(lastIndex, start)))
@@ -68,6 +59,7 @@ const processDescLinks = () => {
       a.textContent = urlText
       frag.appendChild(a)
       lastIndex = start + urlText.length
+      match = webRegex.exec(text)
     }
     if (lastIndex < text.length) {
       frag.appendChild(document.createTextNode(text.slice(lastIndex)))
@@ -102,6 +94,7 @@ const normalizeNicoDescLinks = () => {
       a1.replaceWith(newA)
       a2.remove()
       console.log(`Merged Nico link: ${text2}`)
+      // skip the next element
       i++
     }
   }
