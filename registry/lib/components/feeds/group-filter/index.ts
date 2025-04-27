@@ -24,7 +24,7 @@ const entry = async () => {
 export const component = defineComponentMetadata({
   name: 'groupFilter',
   entry,
-  displayName: '动态分组',
+  displayName: '动态分组过滤',
   author: { name: 'Rinne', link: 'https://github.com/OharaRinneY' },
   urlInclude: [
     // 仅动态首页
