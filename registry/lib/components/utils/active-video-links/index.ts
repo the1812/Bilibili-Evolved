@@ -18,47 +18,85 @@ const processAcgLinks = () => {
   })
 }
 
-const isTextInsideLink = (html: string, position: number): boolean => {
-  const beforeText = html.substring(0, position)
-  const lastOpenTag = beforeText.lastIndexOf('<a ')
-  if (lastOpenTag === -1) {
-    return false
-  }
-
-  const lastCloseTag = beforeText.lastIndexOf('</a>')
-  return lastOpenTag > lastCloseTag
-}
-
 const processDescLinks = () => {
   const descContainer = document.querySelector('.desc-info-text')
   if (!descContainer) {
     return
   }
-
-  const content = descContainer.innerHTML
-  let newContent = content
-
-  const matches = [...content.matchAll(webRegex)]
-  for (let i = matches.length - 1; i >= 0; i--) {
-    const match = matches[i]
-    const matchText = match[0]
-    const startIndex = match.index ?? 0
-
-    if (isTextInsideLink(content, startIndex)) {
-      continue
-    }
-
-    const link = matchText.replace(/^https?:\/\//, '//').replace(/^www\./, '//')
-    const replacement = `<a href='${link}' target='_blank'>${matchText}</a>`
-
-    newContent =
-      newContent.substring(0, startIndex) +
-      replacement +
-      newContent.substring(startIndex + matchText.length)
+  const walker = document.createTreeWalker(descContainer, NodeFilter.SHOW_TEXT, {
+    acceptNode: node => {
+      if (node.parentElement?.closest('a')) {
+        return NodeFilter.FILTER_REJECT
+      }
+      return webRegex.test(node.textContent || '')
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT
+    },
+  })
+  const textNodes: Text[] = []
+  let currentNode: Node | null = walker.nextNode()
+  while (currentNode !== null) {
+    textNodes.push(currentNode as Text)
+    currentNode = walker.nextNode()
   }
+  textNodes.forEach(textNode => {
+    const frag = document.createDocumentFragment()
+    const text = textNode.textContent || ''
+    let lastIndex = 0
+    let match: RegExpExecArray | null
+    webRegex.lastIndex = 0
+    match = webRegex.exec(text)
+    while (match !== null) {
+      const start = match.index
+      if (lastIndex < start) {
+        frag.appendChild(document.createTextNode(text.slice(lastIndex, start)))
+      }
+      const urlText = match[0]
+      const linkHref = urlText.replace(/^https?:\/\//, '//').replace(/^www\./, '//')
+      const a = document.createElement('a')
+      a.href = linkHref
+      a.target = '_blank'
+      a.textContent = urlText
+      frag.appendChild(a)
+      lastIndex = start + urlText.length
+      match = webRegex.exec(text)
+    }
+    if (lastIndex < text.length) {
+      frag.appendChild(document.createTextNode(text.slice(lastIndex)))
+    }
+    textNode.parentNode?.replaceChild(frag, textNode)
+  })
+}
 
-  if (newContent !== content) {
-    descContainer.innerHTML = newContent
+const normalizeNicoDescLinks = () => {
+  const descContainer = document.querySelector('.desc-info-text')
+  if (!descContainer) {
+    return
+  }
+  const anchors = Array.from(descContainer.querySelectorAll('a'))
+  for (let i = 0; i < anchors.length - 1; i++) {
+    const a1 = anchors[i]
+    const a2 = anchors[i + 1]
+    const href1 = a1.getAttribute('href') || ''
+    const text2 = a2.textContent?.trim() || ''
+    const href2 = a2.getAttribute('href') || ''
+    // first link is base watch URL, second has sm ID text
+    if (
+      /^(https?:)?\/\/(www\.)?nicovideo\.jp\/watch\/?$/.test(href1) &&
+      /^sm\d+$/.test(text2) &&
+      href2.includes(`/watch/${text2}`)
+    ) {
+      const newHref = href2.replace(/^(https?:)?/, '//')
+      const newA = document.createElement('a')
+      newA.href = newHref
+      newA.target = '_blank'
+      newA.textContent = text2
+      a1.replaceWith(newA)
+      a2.remove()
+      console.log(`Merged Nico link: ${text2}`)
+      // skip the next element
+      i++
+    }
   }
 }
 
@@ -66,6 +104,7 @@ const processLinks = () => {
   try {
     processAcgLinks()
     processDescLinks()
+    normalizeNicoDescLinks()
   } catch (error) {
     console.error('处理链接时遇到 Error:', error)
   }
