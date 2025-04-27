@@ -1,0 +1,6 @@
+@mixin pattern-block {
+  .bili-dyn-list__item.pattern-block,
+  .feed-card .card.pattern-block {
+    display: none !important;
+  }
+}
