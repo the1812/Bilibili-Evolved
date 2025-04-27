@@ -36,9 +36,13 @@ const processDescLinks = () => {
   }
   const walker = document.createTreeWalker(descContainer, NodeFilter.SHOW_TEXT, {
     acceptNode: node => {
-      if (node.parentElement?.closest('a')) return NodeFilter.FILTER_REJECT
-      return webRegex.test(node.textContent || '') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT
-    }
+      if (node.parentElement?.closest('a')) {
+        return NodeFilter.FILTER_REJECT
+      }
+      return webRegex.test(node.textContent || '')
+        ? NodeFilter.FILTER_ACCEPT
+        : NodeFilter.FILTER_REJECT
+    },
   })
   const textNodes: Text[] = []
   let currentNode: Node | null
@@ -74,7 +78,9 @@ const processDescLinks = () => {
 
 const normalizeNicoDescLinks = () => {
   const descContainer = document.querySelector('.desc-info-text')
-  if (!descContainer) return
+  if (!descContainer) {
+    return
+  }
   const anchors = Array.from(descContainer.querySelectorAll('a'))
   for (let i = 0; i < anchors.length - 1; i++) {
     const a1 = anchors[i]
@@ -83,9 +89,11 @@ const normalizeNicoDescLinks = () => {
     const text2 = a2.textContent?.trim() || ''
     const href2 = a2.getAttribute('href') || ''
     // first link is base watch URL, second has sm ID text
-    if (/^(https?:)?\/\/(www\.)?nicovideo\.jp\/watch\/?$/.test(href1)
-        && /^sm\d+$/.test(text2)
-        && href2.includes(`/watch/${text2}`)) {
+    if (
+      /^(https?:)?\/\/(www\.)?nicovideo\.jp\/watch\/?$/.test(href1) &&
+      /^sm\d+$/.test(text2) &&
+      href2.includes(`/watch/${text2}`)
+    ) {
       const newHref = href2.replace(/^(https?:)?/, '//')
       const newA = document.createElement('a')
       newA.href = newHref
