@@ -1,4 +1,5 @@
 import { logError } from './utils/log'
+import { list } from 'postcss'
 
 type XhrBody = Document | XMLHttpRequestBodyInit
 type XhrConfig = (xhr: XMLHttpRequest) => { isText?: boolean; body?: XhrBody }
@@ -196,7 +197,6 @@ export const responsiveGetPages = <T = any>(config: {
         const { api, getList, getTotal } = config
         let total = Infinity
         const result: T[] = []
-        const tasks: Promise<T[]>[] = []
 
         const fetchPage = async (p: number): Promise<T[]> => {
           const json = await api(p)
@@ -209,6 +209,7 @@ export const responsiveGetPages = <T = any>(config: {
           }
           return getList(json)
         }
+
         // 请求第一次获得total
         const firstReq = await api(1)
         result.push(...getList(firstReq))
@@ -221,14 +222,18 @@ export const responsiveGetPages = <T = any>(config: {
           resolveTotal(result)
           return
         }
-        console.log(totalPages)
-        // 收集Promise
+        // 收集Promise，每5个为一个batch运行
+        const batchSize = 5
+        let batch: Promise<T[]>[] = []
         for (let i = 2; i <= totalPages; i++) {
-          tasks.push(fetchPage(i))
+          batch.push(fetchPage(i))
+          if (batch.length === batchSize || i === totalPages) {
+            const lists = await Promise.all(batch)
+            result.push(...lists.flat())
+            batch = []
+          }
         }
         // 等所有并发完成
-        const lists = await Promise.all(tasks)
-        result.push(...lists.flat())
         resolveTotal(result)
       })()
     })
