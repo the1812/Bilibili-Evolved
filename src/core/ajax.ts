@@ -1,5 +1,4 @@
 import { logError } from './utils/log'
-import { list } from 'postcss'
 
 type XhrBody = Document | XMLHttpRequestBodyInit
 type XhrConfig = (xhr: XMLHttpRequest) => { isText?: boolean; body?: XhrBody }
