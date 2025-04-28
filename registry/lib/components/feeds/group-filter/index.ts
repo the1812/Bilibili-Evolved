@@ -16,13 +16,13 @@ const entry = async () => {
   if (leftPanel === null) {
     return
   }
-  const FeedsFilterCard = await import('./FilterPanel.vue')
+  const FilterPanel = await import('./FilterPanel.vue')
   const { mountVueComponent } = await import('@/core/utils')
-  leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(FeedsFilterCard).$el)
+  leftPanel.insertAdjacentElement('afterbegin', mountVueComponent(FilterPanel).$el)
 }
 
 export const component = defineComponentMetadata({
-  name: 'groupFilter',
+  name: 'feedsGroupFilter',
   entry,
   displayName: '动态分组过滤',
   author: { name: 'Rinne', link: 'https://github.com/OharaRinneY' },

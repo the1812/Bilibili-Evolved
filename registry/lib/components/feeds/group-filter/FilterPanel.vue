@@ -14,8 +14,9 @@
 
 <script lang="ts">
 import { CheckBox, SwitchBox } from '@/ui'
-import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
+import { bilibiliApi, getJsonWithCredentials, getPages } from '@/core/ajax'
 import { FeedsCard, forEachFeedsCard } from '@/components/feeds/api'
+import { getUID } from '@/core/utils'
 
 interface Group {
   name: string
@@ -80,35 +81,16 @@ export default Vue.extend({
       })),
     )
 
-    // fetch uid
-    const uid = await getJsonWithCredentials('https://api.live.bilibili.com/User/getUserInfo').then(
-      res => res.data.uid,
-    )
+    const uid = getUID()
     // fetch following
-    const firstReq = await bilibiliApi(
-      getJsonWithCredentials(
-        `https://api.bilibili.com/x/relation/followings?vmid=${uid}&pn=1&ps=50`,
-      ),
-    )
-    const totalPages = Math.ceil(firstReq.total / 50)
-    let allPages: Array<any> = []
-    if (totalPages === 1) {
-      allPages = [firstReq.list]
-    }
-
-    const pagePromises = []
-    for (let page = 2; page <= totalPages; page++) {
-      pagePromises.push(
-        bilibiliApi(
-          getJsonWithCredentials(
-            `https://api.bilibili.com/x/relation/followings?vmid=${uid}&pn=${page}&ps=50`,
-          ),
-        ).then(res => res.list),
-      )
-    }
-
-    const otherPagesData = await Promise.all(pagePromises)
-    allPages = [firstReq.list, ...otherPagesData].flat()
+    const allPages = await getPages({
+      api: page =>
+        getJsonWithCredentials(
+          `https://api.bilibili.com/x/relation/followings?vmid=${uid}&pn=${page}&ps=50`,
+        ),
+      getList: json => json.data.list,
+      getTotal: json => json.data.total,
+    })
     allPages.forEach(user => {
       this.followingMap.set(user.uname, user.tag)
     })
@@ -117,10 +99,13 @@ export default Vue.extend({
     updateCard(card: FeedsCard) {
       // 从username获得tag
       const userTagIds: number[] = this.followingMap.get(card.username)
+      if (!userTagIds || !this.selectedGroupIds) {
+        return
+      }
       if (!userTagIds.some(item => this.selectedGroupIds.includes(item))) {
-        card.element.classList.add('hide-feed')
+        card.element.classList.add('group-filter-hide-feed')
       } else {
-        card.element.classList.remove('hide-feed')
+        card.element.classList.remove('group-filter-hide-feed')
       }
     },
   },
@@ -128,7 +113,7 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
-.hide-feed {
+.group-filter-hide-feed {
   display: none !important;
 }
 
