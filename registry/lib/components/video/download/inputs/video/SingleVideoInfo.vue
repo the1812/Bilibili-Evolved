@@ -6,9 +6,8 @@
 </template>
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { VideoInfo } from '@/components/video/video-info'
 import { videoChange } from '@/core/observer'
-import { logError } from '@/core/utils/log'
+import { getVideoCoverUrlByAid } from '@/components/video/video-cover'
 
 export default defineComponent({
   data() {
@@ -19,14 +18,7 @@ export default defineComponent({
   created() {
     videoChange(async () => {
       const { aid } = unsafeWindow
-      const videoInfo = new VideoInfo(aid)
-      try {
-        await videoInfo.fetchInfo()
-      } catch (error) {
-        logError(error)
-        throw error
-      }
-      this.imageUrl = videoInfo.coverUrl.replace('http:', 'https:')
+      this.imageUrl = await getVideoCoverUrlByAid(aid)
     })
   },
 })

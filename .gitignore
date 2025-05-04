@@ -8,3 +8,4 @@ dist/profile.json
 dist/bilibili-evolved.dev.user.js
 registry/dist/doc.js
 dev-tools/**/dist/
+.idea

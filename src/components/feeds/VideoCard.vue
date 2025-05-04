@@ -38,7 +38,7 @@
         :title="topic.name"
         class="topic"
         target="_blank"
-        :href="'https://t.bilibili.com/topic/name/' + topic.name + '/feed'"
+        :href="topic.url || 'https://t.bilibili.com/topic/name/' + topic.name + '/feed'"
       >
         <VIcon icon="mdi-tag-outline" :size="14" />
         <div class="topic-name">

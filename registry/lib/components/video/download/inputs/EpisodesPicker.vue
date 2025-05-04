@@ -33,6 +33,9 @@
       </div>
     </div>
     <div class="episodes-picker-items">
+      <div v-if="episodeItems.length === 0" class="episodes-picker-empty">
+        <VEmpty />
+      </div>
       <div v-for="(item, index) of episodeItems" :key="item.key" class="episodes-picker-item">
         <CheckBox
           v-model:checked="item.isChecked"
@@ -57,7 +60,7 @@
 import { defineComponent } from 'vue'
 import type { PropType } from 'vue'
 import type { DownloadVideoInputItem } from 'registry/lib/components/video/download/types'
-import { CheckBox, VButton, VIcon } from '@/ui'
+import { CheckBox, VButton, VIcon, VEmpty } from '@/ui'
 
 import type { EpisodeItem } from './episode-item'
 
@@ -66,6 +69,7 @@ export default defineComponent({
     VButton,
     VIcon,
     CheckBox,
+    VEmpty,
   },
   props: {
     api: {
@@ -174,6 +178,11 @@ export default defineComponent({
       flex: 1 1 0;
       opacity: 0.5;
     }
+  }
+  &-empty {
+    @include h-center();
+    justify-content: center;
+    padding: 4px 0;
   }
 }
 </style>

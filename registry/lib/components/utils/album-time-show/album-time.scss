@@ -1,0 +1,21 @@
+/* 保持相簿元素高度 */
+.album-card {
+    margin-bottom: 21px;
+}
+
+/* 上移原互动数据 */
+.album-card .album-card__info {
+    margin-top: -5px;
+}
+
+/* 相簿发布时间样式 */
+.album-pub-time {
+    color: #99a2aa;
+
+    body.dark & {
+        color: #aaa;
+    }
+
+    position: absolute;
+    margin-top: -5px;
+}

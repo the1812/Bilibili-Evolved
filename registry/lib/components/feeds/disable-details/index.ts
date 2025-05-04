@@ -33,12 +33,16 @@ const entry = async () => {
         if (target.hasAttribute('click-title')) {
           return
         }
+        if (target.hasAttribute('data-pics')) {
+          return
+        }
         if (
           [
             'bili-rich-text__action',
             'bili-rich-text-topic',
             'bili-rich-text-module',
             'bili-rich-text-link',
+            'bili-rich-text-viewpic',
           ].some(className => target.classList.contains(className))
         ) {
           return
@@ -70,7 +74,10 @@ const entry = async () => {
       return
     }
     if (postContent.classList.contains('repost') || card.type === feedsCardTypes.repost) {
-      const contents = dq(postContent, '.content, .bili-dyn-content__orig__desc') as HTMLElement
+      const contents = dq(
+        postContent,
+        '.content, .bili-dyn-content__orig__desc, .dyn-card-opus__summary',
+      ) as HTMLElement
       if (!contents) {
         return
       }

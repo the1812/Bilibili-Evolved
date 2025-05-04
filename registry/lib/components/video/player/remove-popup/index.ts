@@ -8,6 +8,13 @@ export const component = defineComponentMetadata({
   entry: ({ settings, metadata }) => {
     const { options } = settings
     const { kebabCase } = lodash
+    addComponentListener(
+      metadata.name,
+      (enabled: boolean) => {
+        document.body.classList.toggle(kebabCase(metadata.name), enabled)
+      },
+      true,
+    )
     Object.keys(options).forEach(optionName => {
       addComponentListener(
         `${metadata.name}.${optionName}`,
@@ -50,6 +57,10 @@ export const component = defineComponentMetadata({
     reservations: {
       defaultValue: true,
       displayName: '预告',
+    },
+    promotions: {
+      defaultValue: true,
+      displayName: '心动',
     },
   },
 })

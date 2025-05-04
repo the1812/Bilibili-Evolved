@@ -12,6 +12,9 @@
       ]
     }
   },
+  "vueCompilerOptions": {
+    "target": 2.7
+  },
   "include": [
     "src/**/*",
     "tests/**/*",

@@ -1,0 +1,83 @@
+@import './dark-definitions';
+
+:host(bili-comment-action-buttons-renderer) {
+  @include color('a');
+  button {
+    @include color('a');
+    &:hover {
+      @include theme-color();
+    }
+  }
+  bili-icon[style*='var(--brand_blue)'] ~ #count {
+    @include theme-color();
+  }
+}
+:host(bili-comment-replies-renderer) {
+  #view-more {
+    @include color('a');
+  }
+}
+:host(bili-comment-user-info) {
+  #user-name {
+    @include color('e');
+  }
+}
+:host(bili-comments) {
+  .bottombar {
+    @include color('e');
+    &.clickable:hover {
+      @include theme-color();
+    }
+  }
+}
+:host(bili-comment-menu) {
+  #options li:hover {
+    @include background-color('3');
+  }
+}
+:host(bili-rich-text) {
+  #contents {
+    a {
+      @include theme-color();
+    }
+  }
+}
+:host(bili-comment-box) {
+  #pub button {
+    @include theme-background-color();
+    @include foreground-color();
+    &:hover,
+    &.active {
+      @include theme-background-color('80');
+    }
+  }
+}
+:host(bili-comments-header-renderer) {
+  #title #count {
+    @include color('a');
+  }
+  bili-text-button {
+    @include set-color('--_label-text-color', 'e');
+    &:hover {
+      @include set-theme-color('--_label-text-color-hover');
+    }
+  }
+  #sort-actions.hot bili-text-button:first-child,
+  #sort-actions.time bili-text-button:last-child {
+    @include set-theme-color('--_label-text-color');
+  }
+  .bili-comments-bottom-fixed-wrapper > div {
+    @include background-color('2');
+    @include border-color('3');
+  }
+}
+:host(bili-comment-renderer) {
+  i#note {
+    @include color('a');
+    @include background-color('3');
+  }
+  .tag:not(:empty) {
+    @include color('e');
+    @include background-color('4');
+  }
+}

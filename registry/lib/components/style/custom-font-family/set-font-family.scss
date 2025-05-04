@@ -1,0 +1,117 @@
+$name: 'custom-font-family';
+$font-family-css: var(--#{$name}--options--font-family) !important;
+
+// 收集 CSS 路径为单一字符串
+@function collect-paths($path-list) {
+  $string-path: '';
+  @each $path in $path-list {
+    $i: index($path-list, $path);
+    @if $i!=1 {
+      $string-path: '#{$string-path}, ';
+    }
+    $string-path: '#{$string-path}#{$path}';
+  }
+  @return $string-path;
+}
+
+@function get-ornament-path() {
+  $new-video: '.reply-item .root-reply-container .content-warp .reply-decorate .user-sailing .user-sailing-text .sailing-text';
+  $dynamic: '.bili-dyn-ornament__type--3 span';
+  $dynamic-comment-area: '.bb-comment .sailing .sailing-info, .comment-bilibili-fold .sailing .sailing-info';
+  @return collect-paths(($new-video, $dynamic, $dynamic-comment-area));
+}
+
+@function get-fans-medal-path() {
+  $new-video: '.badge-level';
+  @return collect-paths(($new-video));
+}
+
+@function get-danmaku-path() {
+  $main: '.bili-dm';
+  @return collect-paths(($main));
+}
+
+@function get-icon-font-path() {
+  $main-a: '.iconfont';
+  $main-b: '.icon-font';
+  $note: '.read-icon';
+  $note-edit: '.bili-note-iconfont';
+  $footer: '.bili-footer-font';
+  $bangumi-info: '[class^="icon-"]';
+  $history: '.bilifont';
+  $message: '.bp-icon-font';
+  $creative-center-a: '.bcc-iconfont';
+  $creative-center-b: '.fontvt';
+  $quick-favorite: 'span.quick-favorite.be-quick-favorite > i.quick-favorite-icon.icon'; // 组件-启用快速收藏的图标，参见 #4566
+  @return collect-paths(
+    (
+      $main-a,
+      $main-b,
+      $note,
+      $note-edit,
+      $footer,
+      $bangumi-info,
+      $history,
+      $message,
+      $creative-center-a,
+      $creative-center-b,
+      $quick-favorite
+    )
+  );
+}
+
+@function get-column-path() {
+  $main-a: '.article-detail .article-container .article-container__content .article-content .read-article-holder';
+  $main-b: '.article-detail .article-container .article-container__content .article-content .read-article-holder *';
+  @return collect-paths(($main-a, $main-b));
+}
+
+@function get-score-path() {
+  $documentary: '.season-cover .score';
+  $big: '.season-cover .season-cover-score';
+  @return collect-paths(($documentary, $big));
+}
+
+// 装扮，在评论区、动态等界面显示
+$ornament: get-ornament-path();
+
+// 粉丝勋章，在评论区界面显示
+$fans-medal: get-fans-medal-path();
+
+// 弹幕，在播放器里显示
+$danmaku: get-danmaku-path();
+
+// 图标字体
+$icon-font: get-icon-font-path();
+
+// 专栏阅读页可能出现的部分自定义字体
+$column: get-column-path();
+
+// 分数，在部分剧集的右下角显示
+$score: get-score-path();
+
+// 收集所有路径
+$discard-paths: collect-paths(($ornament, $fans-medal, $danmaku, $icon-font, $column, $score));
+
+$cover-option-names: (
+  'cover-ornament',
+  'cover-fans-medal',
+  'cover-danmaku',
+  'cover-icon-font',
+  'cover-column',
+  'cover-score'
+);
+$cover-option-path-lists: ($ornament, $fans-medal, $danmaku, $icon-font, $column, $score);
+$cover-option-groups: zip($cover-option-names, $cover-option-path-lists);
+
+html[#{$name}--detect--is-input-empty='false'] {
+  :not(#{$discard-paths}) {
+    font-family: $font-family-css;
+  }
+
+  @each $cover-option-name, $cover-option-path-list in $cover-option-groups {
+    &[#{$name}--options--#{$cover-option-name}='true'] :is(#{$cover-option-path-list}) {
+      font-family: $font-family-css;
+    }
+  }
+}

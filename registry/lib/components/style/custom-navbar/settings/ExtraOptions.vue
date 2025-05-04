@@ -1,11 +1,6 @@
 <template>
   <div class="custom-navbar-extra-options">
-    <VButton
-      v-if="login"
-      ref="button"
-      @mouseover="loadNavbarSettings()"
-      @click="toggleNavbarSettings()"
-    >
+    <VButton ref="button" @mouseover="loadNavbarSettings()" @click="toggleNavbarSettings()">
       布局设置<VIcon icon="right-arrow" :size="16"></VIcon>
     </VButton>
   </div>

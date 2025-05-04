@@ -49,6 +49,9 @@
         <div class="download-video-config-title">使用备用下载地址:</div>
         <SwitchBox v-model:checked="useBackupUrls" />
       </div>
+      <div class="download-video-config-description">
+        若默认下载地址速度缓慢, 可以尝试更换备用下载地址.
+      </div>
       <component
         :is="a.component"
         v-for="a of assetsWithOptions"
@@ -101,10 +104,9 @@ import { SwitchBox, VButton, VDropdown, VIcon, VPopup } from '@/ui'
 import { videoAudioDash, videoDashAv1, videoDashAvc, videoDashHevc } from './apis/dash'
 import { videoFlv } from './apis/flv'
 import { bangumiBatchInput } from './inputs/bangumi/batch'
-import { videoBatchInput } from './inputs/video/batch'
+import { videoBatchInput, videoSeasonBatchInput } from './inputs/video/batch'
 import { videoSingleInput } from './inputs/video/input'
 import { streamSaverOutput } from './outputs/stream-saver'
-import { toastOutput } from './outputs/toast'
 import type {
   DownloadVideoApi,
   DownloadVideoAssets,
@@ -117,6 +119,7 @@ import { DownloadVideoAction } from './types'
 const [inputs] = registerAndGetData('downloadVideo.inputs', [
   videoSingleInput,
   videoBatchInput,
+  videoSeasonBatchInput,
   bangumiBatchInput,
 ] as DownloadVideoInput[])
 const [apis] = registerAndGetData('downloadVideo.apis', [
@@ -126,11 +129,10 @@ const [apis] = registerAndGetData('downloadVideo.apis', [
   videoDashAv1,
   videoAudioDash,
 ] as DownloadVideoApi[])
-const [assets] = registerAndGetData('downloadVideo.assets', reactive([]) as DownloadVideoAssets[])
-const [outputs] = registerAndGetData(
-  'downloadVideo.outputs',
-  reactive([toastOutput, streamSaverOutput]) as DownloadVideoOutput[],
-)
+const [assets] = registerAndGetData('downloadVideo.assets', [] as DownloadVideoAssets[])
+const [outputs] = registerAndGetData('downloadVideo.outputs', [
+  streamSaverOutput,
+] as DownloadVideoOutput[])
 const { basicConfig } = getComponentSettings('downloadVideo').options as {
   basicConfig: {
     api: string
@@ -343,19 +345,15 @@ export default defineComponent({
           })
         }
         const action = new DownloadVideoAction(videoInfos)
-        const extraAssets = (
-          await Promise.all(
-            assets.map(a =>
-              a.getAssets(
-                videoInfos,
-                this.assetsOptions.find((c: any) => c.$attrs.name === a.name),
-              ),
-            ),
-          )
-        ).flat()
-        action.extraAssets.push(...extraAssets)
-        await action.downloadExtraAssets()
+        assets.forEach(a => {
+          const assetsType = a?.getUrls ? action.extraOnlineAssets : action.extraAssets
+          assetsType.push({
+            asset: a,
+            instance: this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
+          })
+        })
         await output.runAction(action, instance)
+        await action.downloadExtraAssets()
       } catch (error) {
         logError(error)
       } finally {

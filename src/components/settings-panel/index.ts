@@ -48,10 +48,12 @@ const options = defineOptionsMetadata({
   filenameFormat: {
     defaultValue: '[title][ - ep]',
     displayName: '文件命名格式',
+    multiline: true,
   },
   batchFilenameFormat: {
     defaultValue: '[n - ][ep]',
     displayName: '批量命名格式',
+    multiline: true,
   },
   downloadPackageEmitMode: {
     defaultValue: DownloadPackageEmitMode.Packed,

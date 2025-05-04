@@ -1,25 +1,12 @@
-import type { OptionsOfMetadata } from '@/components/define'
-import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import { defineComponentMetadata } from '@/components/define'
 import type { ComponentEntry } from '@/components/types'
 import { getUID, matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { favoriteListUrls, videoUrls } from '@/core/utils/urls'
 import type { KeyBindingAction } from '../../utils/keymap/bindings'
 import { addVideoActionButton } from '@/components/video/video-actions'
 import { videoChange } from '@/core/observer'
-
-const options = defineOptionsMetadata({
-  favoriteFolderID: {
-    defaultValue: 0,
-    displayName: '快速收藏夹ID',
-    hidden: true,
-  },
-  showInFavoritePages: {
-    defaultValue: false,
-    displayName: '在收藏夹播放页面仍然显示',
-  },
-})
-
-type Options = OptionsOfMetadata<typeof options>
+import { options } from './options'
+import type { Options } from './options'
 
 const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (favoriteListUrls.some(matchUrlPattern) && !settings.options.showInFavoritePages) {

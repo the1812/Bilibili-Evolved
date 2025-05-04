@@ -1,13 +1,15 @@
 import { watchlaterList } from '@/components/video/watchlater'
 import { getJsonWithCredentials } from '@/core/ajax'
-import { getUID, pascalCase } from '@/core/utils'
-import { formatCount, formatDuration } from '@/core/utils/formatters'
+import { getUID, pascalCase, raiseEvent } from '@/core/utils'
+import { formatCount, formatDuration, parseCount, parseDuration } from '@/core/utils/formatters'
 import { descendingStringSort } from '@/core/utils/sort'
 import { getData, registerData } from '@/plugins/data'
 
 import type { VideoCard } from '../video-card'
 import type { FeedsCard, FeedsCardType } from './types'
 import { feedsCardTypes } from './types'
+import { select } from '@/core/spin-query'
+import { childList } from '@/core/observer'
 
 export * from './manager'
 export * from './types'
@@ -68,15 +70,19 @@ export const withContentFilter =
  * @param afterID 返回指定ID之前的动态历史, 省略则返回最新的动态
  */
 export const getFeedsUrl = (type: FeedsCardType | string, afterID?: string | number) => {
+  const params = new URLSearchParams()
   if (typeof type === 'string') {
-    return `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${type}`
+    params.set('type', type)
+  } else if (type.apiType) {
+    params.set('type', type.apiType)
+  } else {
+    console.warn(`unknown apiType for ${type.name}`)
+    params.set('type', 'all')
   }
-  const id = type.id.toString()
-  let api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=${getUID()}&type_list=${id}`
   if (afterID) {
-    api = `https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_history?uid=${getUID()}&offset_dynamic_id=${afterID}&type=${id}`
+    params.set('offset', afterID.toString())
   }
-  return api
+  return `https://api.bilibili.com/x/polymer/web-dynamic/v1/feed/all?${params.toString()}`
 }
 /**
  * 获取动态
@@ -105,59 +111,68 @@ export const getVideoFeeds = withContentFilter(
     if (json.code !== 0) {
       throw new Error(json.message)
     }
-    const dataCards = json.data.cards as any[]
-    const dataCardsWithoutPreOrder = dataCards.filter(it => !isPreOrderedVideo(JSON.parse(it.card)))
+    const dataCards = json.data.items as any[]
     if (type === 'video') {
       return groupVideoFeeds(
-        dataCards.map((c: any): VideoCard => {
-          const card = JSON.parse(c.card)
-          const topics = lodash.get(c, 'display.topic_info.topic_details', []).map((it: any) => ({
-            id: it.topic_id,
-            name: it.topic_name,
-          }))
+        dataCards.map((card: any): VideoCard => {
+          const archive = lodash.get(card, 'modules.module_dynamic.major.archive')
+          const author = lodash.get(card, 'modules.module_author')
+          const dynamic = lodash.get(card, 'modules.module_dynamic.desc.text', '')
+          const stat = lodash.get(card, 'modules.module_stat')
+          const topics = (
+            lodash.get(card, 'modules.module_dynamic.desc.rich_text_nodes', []) as any[]
+          )
+            .filter(node => node.type === 'RICH_TEXT_NODE_TYPE_TOPIC')
+            .map(node => {
+              return {
+                id: node.text,
+                name: node.text,
+                url: node.jump_url,
+              }
+            })
           return {
-            id: c.desc.dynamic_id_str,
-            aid: card.aid,
-            bvid: c.desc.bvid || card.bvid,
-            title: card.title,
-            upID: c.desc.user_profile.info.uid,
-            upName: c.desc.user_profile.info.uname,
-            upFaceUrl: c.desc.user_profile.info.face,
-            coverUrl: card.pic,
-            description: card.desc,
-            timestamp: c.timestamp,
-            time: new Date(c.timestamp * 1000),
+            id: card.id_str,
+            aid: parseInt(archive.aid),
+            bvid: archive.bvid,
+            title: archive.title,
+            upFaceUrl: author.face,
+            upName: author.name,
+            upID: author.mid,
+            coverUrl: archive.cover,
+            description: archive.desc,
+            timestamp: author.pub_ts * 1000,
+            time: new Date(author.pub_ts * 1000),
             topics,
-            dynamic: card.dynamic,
-            like: formatCount(c.desc.like),
-            duration: card.duration,
-            durationText: formatDuration(card.duration, 0),
-            playCount: formatCount(card.stat.view),
-            danmakuCount: formatCount(card.stat.danmaku),
-            watchlater: watchlaterList.includes(card.aid),
+            dynamic,
+            like: formatCount(stat.like.count),
+            duration: parseDuration(archive.duration_text),
+            durationText: formatDuration(parseDuration(archive.duration_text)),
+            playCount: formatCount(parseCount(archive.stat.play)),
+            danmakuCount: formatCount(parseCount(archive.stat.danmaku)),
+            watchlater: watchlaterList.includes(archive.aid),
           }
         }),
       )
     }
     if (type === 'bangumi') {
-      return dataCardsWithoutPreOrder.map((c: any): VideoCard => {
-        const card = JSON.parse(c.card)
+      return dataCards.map((card: any): VideoCard => {
+        const pgc = lodash.get(card, 'modules.module_dynamic.major.pgc')
+        const author = lodash.get(card, 'modules.module_author')
+        const stat = lodash.get(card, 'modules.module_stat')
         return {
-          id: c.desc.dynamic_id_str,
-          aid: card.aid,
-          bvid: c.desc.bvid || card.bvid,
-          epID: card.episode_id,
-          title: card.new_desc,
-          upName: card.apiSeasonInfo.title,
-          upFaceUrl: card.apiSeasonInfo.cover,
-          coverUrl: card.cover,
+          id: card.id_str,
+          epID: pgc.epid,
+          title: pgc.title.replace(new RegExp(`^${author.name}：`), ''),
+          upName: author.name,
+          upFaceUrl: author.face,
+          coverUrl: pgc.cover,
           description: '',
-          timestamp: c.timestamp,
-          time: new Date(c.timestamp * 1000),
-          like: formatCount(c.desc.like),
+          timestamp: author.pub_ts * 1000,
+          time: new Date(author.pub_ts * 1000),
+          like: formatCount(stat.like.count),
           durationText: '',
-          playCount: formatCount(card.play_count),
-          danmakuCount: formatCount(card.bullet_count),
+          playCount: formatCount(parseCount(pgc.stat.play)),
+          danmakuCount: formatCount(parseCount(pgc.stat.danmaku)),
           watchlater: false,
         }
       })
@@ -181,7 +196,7 @@ export const addMenuItem = (
 ) => {
   const morePanel = dq(
     card.element,
-    '.more-panel, .bili-dyn-more__menu, .opus-more__menu',
+    '.more-panel, .bili-dyn-more__menu, .opus-more__menu, .bili-dyn-item__more, .opus-more',
   ) as HTMLElement
   const { className, text, action } = config
   if (!morePanel || dq(morePanel, `.${className}`)) {
@@ -190,43 +205,92 @@ export const addMenuItem = (
   }
   const isV2 = !morePanel.classList.contains('more-panel')
   const isOpus = morePanel.classList.contains('opus-more__menu')
-  const menuItem = document.createElement(isV2 ? 'div' : 'p')
-  if (isOpus) {
-    menuItem.classList.add('opus-more__menu__item', className)
-    const styleReferenceElement = morePanel.children[0] as HTMLElement
-    if (styleReferenceElement) {
-      menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+  const isCascader =
+    morePanel.classList.contains('bili-dyn-item__more') || morePanel.classList.contains('opus-more')
+
+  const createMenuItem = (): HTMLElement => {
+    if (isCascader) {
+      const menuItem = document.createElement('div')
+      menuItem.innerHTML = /* html */ `
+        <div class="bili-cascader-options__item">
+          <div class="bili-cascader-options__item-custom">
+            <div>
+              <div class="bili-cascader-options__item-label">
+                ${text}
+              </div>
+            </div>
+          </div>
+        </div>
+      `
+      return menuItem
     }
-    menuItem.dataset.type = 'more'
-    menuItem.dataset.stype = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
-    menuItem.dataset.params = '{}'
-  } else if (isV2) {
-    menuItem.classList.add('bili-dyn-more__menu__item', className)
-    const styleReferenceElement = morePanel.children[0] as HTMLElement
-    if (styleReferenceElement) {
-      menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+
+    const menuItem = document.createElement(isV2 ? 'div' : 'p')
+    if (isOpus) {
+      menuItem.classList.add('opus-more__menu__item', className)
+      const styleReferenceElement = morePanel.children[0] as HTMLElement
+      if (styleReferenceElement) {
+        menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+      }
+      menuItem.dataset.type = 'more'
+      menuItem.dataset.stype = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
+      menuItem.dataset.params = '{}'
+    } else if (isV2) {
+      menuItem.classList.add('bili-dyn-more__menu__item', className)
+      const styleReferenceElement = morePanel.children[0] as HTMLElement
+      if (styleReferenceElement) {
+        menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
+      } else {
+        menuItem.style.height = '25px'
+        menuItem.style.padding = '2px 0'
+        menuItem.style.textAlign = 'center'
+      }
+      menuItem.dataset.module = 'more'
+      menuItem.dataset.type = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
+      menuItem.dataset.params = '{}'
     } else {
-      menuItem.style.height = '25px'
-      menuItem.style.padding = '2px 0'
-      menuItem.style.textAlign = 'center'
+      menuItem.classList.add('child-button', 'c-pointer', className)
     }
-    menuItem.dataset.module = 'more'
-    menuItem.dataset.type = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
-    menuItem.dataset.params = '{}'
-  } else {
-    menuItem.classList.add('child-button', 'c-pointer', className)
+    menuItem.textContent = text
+    const vueScopeAttributes = [
+      ...new Set(
+        [...morePanel.children]
+          .map((element: HTMLElement) =>
+            element.getAttributeNames().filter(it => it.startsWith('data-v-')),
+          )
+          .flat(),
+      ),
+    ]
+    vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))
+    return menuItem
   }
-  menuItem.textContent = text
-  const vueScopeAttributes = [
-    ...new Set(
-      [...morePanel.children]
-        .map((element: HTMLElement) =>
-          element.getAttributeNames().filter(it => it.startsWith('data-v-')),
-        )
-        .flat(),
-    ),
-  ]
-  vueScopeAttributes.forEach(attr => menuItem.setAttribute(attr, ''))
+
+  if (isCascader) {
+    ;(async () => {
+      const cascader = await select(() => dq(morePanel, '.bili-cascader'))
+      childList(cascader, (_, observer) => {
+        const cascaderOptions = dq(cascader, '.bili-cascader-options')
+        if (cascaderOptions === null) {
+          return
+        }
+        observer.disconnect()
+        const menuItem = createMenuItem()
+        menuItem.addEventListener('click', e => {
+          action(e)
+          const triggerButton = dq(morePanel, '.bili-dyn-more__btn') as HTMLElement | null
+          if (triggerButton !== null) {
+            raiseEvent(triggerButton, 'mouseleave')
+          } else {
+            raiseEvent(morePanel, 'mouseleave')
+          }
+        })
+        cascaderOptions.appendChild(menuItem)
+      })
+    })()
+    return
+  }
+
+  const menuItem = createMenuItem()
   menuItem.addEventListener('click', e => {
     action(e)
     card.element.click()

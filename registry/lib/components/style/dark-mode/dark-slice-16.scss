@@ -67,8 +67,28 @@
 .bili-dyn-publishing {
   @include dyn-container-skeleton();
   @include background-color('4');
+  &__title {
+    &__input {
+      @include background-color();
+      @include color('e');
+      &::placeholder {
+        @include color('a');
+      }
+    }
+    &__indicator {
+      @include color('a');
+    }
+    &__close {
+      @include background-color('6');
+    }
+  }
   &__tools {
     &__item {
+      @include color('e');
+      &.active,
+      &:hover {
+        @include theme-color();
+      }
       // 这里用 filter 会导致弹窗内容也被影响, 暂时先去掉了
       // &.active,
       // &:hover {
@@ -77,6 +97,13 @@
       &.emoji {
         @include background-color();
       }
+    }
+  }
+  &__settings__btn {
+    @include color('e');
+    &.active,
+    &:hover {
+      @include theme-color();
     }
   }
   .bili-rich-textarea__inner {
@@ -173,9 +200,9 @@
   }
 }
 .bili-dyn-list {
-  &__notification {
-    @include theme-background-color();
-    @include foreground-color();
+  &-notification {
+    @include background-color('4');
+    @include theme-color();
   }
 }
 .bili-dyn-item {
@@ -196,11 +223,20 @@
       @include theme-color();
     }
   }
+  &__more {
+    z-index: 1;
+  }
   .bili-dyn-more {
+    &:hover {
+      @include background-color();
+    }
     &__container:hover {
       @include background-color('3');
     }
     &__btn {
+      &.tp {
+        @include color('8');
+      }
       &:hover {
         @include to-theme('blue');
       }
@@ -472,6 +508,35 @@
     &__title {
       @include color('e');
     }
+  }
+  #page-dynamic & {
+    @include border-color();
+  }
+}
+.bili-dyn-item,
+.bili-opus-view {
+  ~ .bili-tabs {
+    .bili-tabs__header {
+      @include background-color('4');
+      @include border-color('5');
+    }
+    .bili-tabs__nav__item {
+      @include color('e');
+      &.is-active,
+      &:hover {
+        @include theme-color();
+      }
+    }
+    // .bili-tabs__content {
+    //   .comment-wrap {
+    //     @include background-color();
+    //   }
+    // }
+  }
+}
+.reaction-list {
+  .reaction-item {
+    box-shadow: inset 0 -0.5px 0 0 #666 !important;
   }
 }
 .bili-dyn-forward {

@@ -24,7 +24,7 @@
     <VEmpty v-else-if="!loading && cards.length === 0"></VEmpty>
     <transition-group v-else name="cards" tag="div" class="watchlater-list-content">
       <div v-for="(card, index) of filteredCards" :key="card.aid" class="watchlater-card">
-        <a class="cover-container" target="_blank" :href="card.href">
+        <a class="watchlater-cover-container" target="_blank" :href="card.href">
           <DpiImage
             class="cover"
             :src="card.coverUrl"
@@ -34,18 +34,24 @@
             <VIcon icon="mdi-close" :size="16"></VIcon>
           </div>
           <div class="floating duration">{{ card.durationText }}</div>
-          <div v-if="card.complete" class="floating viewed">已观看</div>
+          <div v-if="card.totalPages > 1" class="floating pages">
+            {{ card.currentPage }}P / {{ card.totalPages }}P
+          </div>
+          <div v-if="card.percent" class="progress" :style="{ width: card.percent * 100 + '%' }" />
         </a>
         <a class="title" target="_blank" :href="card.href" :title="card.title">{{ card.title }}</a>
-        <a
-          class="up"
-          target="_blank"
-          :href="'https://space.bilibili.com/' + card.upID"
-          :title="card.upName"
-        >
-          <DpiImage class="face" :src="card.upFaceUrl" :size="20"></DpiImage>
-          <div class="name">{{ card.upName }}</div>
-        </a>
+        <div class="info-row">
+          <a
+            class="up"
+            target="_blank"
+            :href="'https://space.bilibili.com/' + card.upID"
+            :title="card.upName"
+          >
+            <DpiImage class="face" :src="card.upFaceUrl" :size="20"></DpiImage>
+            <div class="name">{{ card.upName }}</div>
+          </a>
+          <div v-if="card.complete" class="viewed">已观看</div>
+        </div>
       </div>
     </transition-group>
   </div>
@@ -71,6 +77,9 @@ interface WatchlaterCard {
   upName: string
   upFaceUrl: string
   upID: number
+  currentPage?: number
+  totalPages: number
+  percent: number
 }
 function updateFilteredCards(this: InstanceType<typeof ThisComponent>) {
   const search = this.search.toLowerCase()
@@ -132,28 +141,31 @@ const ThisComponent = defineComponent({
         return `https://www.bilibili.com/medialist/play/watchlater/${item.bvid}`
       }
       const cards = rawList.map(item => {
+        const currentPage = item.pages?.find(p => p.cid === item.cid)
+        const duration = currentPage?.duration ?? item.duration
         const href = (() => {
-          if (item.pages === undefined || !this.redirect) {
+          if (!currentPage || !this.redirect) {
             return getLink(item)
           }
-          const pages = item.pages.map(it => it.cid)
-          const page = item.cid === 0 ? 1 : pages.indexOf(item.cid) + 1
-
+          const { page } = currentPage
           return page <= 1 ? getLink(item) : `${getLink(item)}?p=${page}`
         })()
-        const percent = Math.round((1000 * item.progress) / item.duration) / 1000
+        const percent = Math.round((1000 * item.progress) / duration) / 1000
+
         return {
           aid: item.aid,
           href,
           coverUrl: item.pic.replace('http:', 'https:'),
-          durationText: formatDuration(item.duration),
-          duration: item.duration,
-          // percent: `${fixed(percent * 100)}%`,
+          durationText: formatDuration(duration),
+          duration,
           complete: item.progress < 0 || percent > 0.95, // 进度过95%算看完, -1值表示100%
           title: item.title,
           upName: item.owner.name,
           upFaceUrl: item.owner.face.replace('http:', 'https:'),
           upID: item.owner.mid,
+          currentPage: currentPage?.page,
+          totalPages: item.videos,
+          percent,
         } as WatchlaterCard
       })
       this.cards = cards
@@ -285,12 +297,17 @@ export default ThisComponent
       &:hover .cover {
         transform: scale(1.05);
       }
-      .cover-container {
+      .watchlater-cover-container {
         grid-area: cover;
         overflow: hidden;
         border-radius: 8px 0 0 8px;
         position: relative;
         $padding: 6px;
+        .floating {
+          position: absolute;
+          opacity: 0;
+          font-size: 11px;
+        }
         .remove {
           top: $padding;
           left: $padding;
@@ -301,19 +318,21 @@ export default ThisComponent
           bottom: $padding;
           padding: 0 6px;
         }
-        .viewed {
-          white-space: nowrap;
-          right: $padding;
+        .pages {
           top: $padding;
+          right: $padding;
           padding: 0 6px;
-        }
-        .floating {
-          position: absolute;
-          opacity: 0;
-          font-size: 11px;
         }
         .cover {
           object-fit: cover;
+        }
+        .progress {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          border-radius: 1px;
+          background-color: var(--theme-color);
         }
       }
       &:hover {
@@ -333,17 +352,21 @@ export default ThisComponent
           color: var(--theme-color) !important;
         }
       }
-      // .info {
-      //   grid-area: info;
-      //   display: flex;
-      //   align-items: center;
-      //   justify-content: space-around;
-      //   margin: 8px;
-      // }
+      .info-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        grid-area: info;
+        margin: 6px 8px;
+        .viewed {
+          opacity: 0.75;
+          font-size: 11px;
+          margin: 2px 0;
+        }
+      }
       .up {
         flex: 0 1 auto;
         padding: 2px 10px 2px 2px;
-        margin: 0 8px 6px;
         justify-self: start;
         align-self: center;
         max-width: calc(100% - 16px);

@@ -5,12 +5,6 @@
       <div class="title-text">
         {{ config.title }}
       </div>
-      <VIcon icon="search" :size="18" />
-      <TextBox
-        v-model="search"
-        class="list-search"
-        :placeholder="`在 ${filteredList.length} 个${config.title}中搜索`"
-      />
     </div>
     <div v-if="config.description" class="sub-page-row">
       <div class="description-text">
@@ -72,6 +66,14 @@
         隐藏内置{{ config.title }}
         <SwitchBox v-model:checked="excludeBuiltIn" />
       </div>
+    </div>
+    <div class="sub-page-row search-item-row">
+      <VIcon icon="search" :size="18" />
+      <TextBox
+        v-model="search"
+        class="list-search"
+        :placeholder="`在 ${filteredList.length} 个${config.title}中搜索`"
+      />
     </div>
     <div v-if="!loaded" class="sub-page-row">
       <VLoading />
@@ -319,14 +321,15 @@ export default defineComponent({
     }
   }
   &-title {
-    .be-icon {
-      margin-right: 6px;
-    }
+    gap: 6px;
     .title-text {
       font-size: 16px;
       @include semi-bold();
       flex: 1 0 auto;
     }
+  }
+  .search-item-row {
+    gap: 6px;
   }
 }
 </style>

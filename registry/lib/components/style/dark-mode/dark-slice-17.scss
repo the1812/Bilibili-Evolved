@@ -413,6 +413,10 @@
   .reply-box-textarea::-webkit-input-placeholder {
     @include color('8');
   }
+  .reply-box-warp {
+    @include background-color('2');
+    @include border-color('5');
+  }
   .fixed-reply-box {
     .reply-box {
       @include background-color('2');
@@ -457,13 +461,28 @@
       }
     }
   }
+  .image-btn {
+    .image-icon path {
+      @include fill('a');
+    }
+    &:hover {
+      .image-icon path {
+        @include fill('e');
+      }
+    }
+  }
+  .image-btn,
   .emoji-btn,
   .at-btn {
     @include border-color('4');
+    @include background-color('3');
     @include color('a');
     &:hover {
       @include color('e');
     }
+  }
+  .reply-loading {
+    @include color('a');
   }
   .emoji-panel {
     @include border-color('8884');
@@ -860,6 +879,9 @@
 }
 .bili-comment.browser-pc {
   @include background-color();
+  .comment-container {
+    @include background-color();
+  }
 }
 .recommended-container,
 .recommended-container_floor-aside {

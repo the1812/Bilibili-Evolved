@@ -4,9 +4,8 @@
     position: sticky;
     bottom: 0;
     height: 40px;
-    width: calc(100% + 48px);
+    width: 100%;
     font-size: 14px;
-    transform: translateX(-24px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,14 +28,19 @@
   }
 }
 .bili-comment-container {
+  display: flex !important;
+  flex-direction: column !important;
   &.bili-dyn-comment .reply-list {
     padding-bottom: 8px !important;
   }
   .fold-comment {
+    order: 1;
     font-size: 13px;
   }
   .at-panel,
-  .emoji-panel {
-    z-index: 111;
+  .emoji-panel,
+  .reply-box .box-expand,
+  .reply-operation .operation-list {
+    z-index: 111 !important;
   }
 }

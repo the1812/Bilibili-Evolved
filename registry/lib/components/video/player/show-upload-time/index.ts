@@ -2,7 +2,7 @@ import type { ComponentPublicInstance } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import { getVueData } from '@/components/feeds/api'
 import { VideoInfo } from '@/components/video/video-info'
-import { childList, urlChange } from '@/core/observer'
+import { urlChange } from '@/core/observer'
 import { playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { videoUrls } from '@/core/utils/urls'
@@ -11,10 +11,11 @@ import desc from './desc.md'
 
 interface RecommendList extends ComponentPublicInstance {
   isOpen: boolean
+  mark: boolean
   related: {
     aid: string
     title: string
-    ctime: number
+    pubdate: number
     owner: {
       name: string
     }
@@ -30,7 +31,7 @@ interface VideoPageCard extends ComponentPublicInstance {
   oldname: string
   item: {
     aid: string
-    ctime: number
+    pubdate: number
     owner: {
       // 组件添加元素，非b站自有元素
       mark: boolean
@@ -119,35 +120,39 @@ export const component = defineComponentMetadata({
         formatString = options.formatString?.toString()
       }
       relist.forEach(async video => {
+        // 使用临时变量保存视频名称，以避免计算属性导致的问题
+        let videoName: string = video.name
         // 确认存放推荐视频列表的List中的元素是否被更新
         if (forceUpdate || !video.item.owner.mark) {
           video.item.owner.mark = true
           // 确认推荐视频卡片是否被更新
           if (forceUpdate || !video.mark) {
             video.mark = true
-            let createTime: Date
-            if (video.item.ctime) {
-              createTime = new Date(video.item.ctime * 1000)
-            } else {
-              const videoinfo = new VideoInfo(video.item.aid)
-              await videoinfo.fetchInfo()
-              createTime = videoinfo.createTime
-              // 保存查询到的ctime，以便后续使用
-              video.item.ctime = createTime.getTime() / 1000
+            if (!video.item.pubdate) {
+              const info = new VideoInfo(video.item.aid)
+              await info.fetchInfo()
+              // 保存查询到的pubdate，以便后续使用
+              video.item.pubdate = info.pubdate
             }
+            const createTime: Date = new Date(video.item.pubdate * 1000)
             if (!video.oldname) {
               video.oldname = video.name
             }
-            video.name = getFormatStr(createTime, formatString, video.oldname)
+            videoName = getFormatStr(createTime, formatString, video.oldname)
+            video.name = videoName
           }
           // 保存生成后的name
-          video.item.owner.name = video.name
+          video.item.owner.name = videoName
         }
       })
     }
 
     const getRecoList = () => {
-      const reco_list = dq('#reco_list')
+      let reco_list = dq('#reco_list')
+      // 2024.10.17 兼容最近的b站前端改动
+      if (reco_list == null) {
+        reco_list = dq('.recommend-list-v1')
+      }
       let recoList: RecommendList = getVueData(reco_list)
       if (recoList.isOpen === undefined) {
         recoList = recoList.$children[0]
@@ -160,12 +165,14 @@ export const component = defineComponentMetadata({
       return recoList
     }
 
+    const videoClasses = ['video-page-operator-card-small', 'video-page-card-small']
+
     addComponentListener(
       `${metadata.name}.formatString`,
       (value: string) => {
         const recoList: RecommendList = getRecoList()
-        const relist: VideoPageCard[] = recoList.$children.filter(
-          video => video.$el.className.indexOf('special') === -1,
+        const relist: VideoPageCard[] = recoList.$children.filter(video =>
+          videoClasses.includes(video.$el.className),
         )
         showUploadTime(relist, true, value)
       },
@@ -173,23 +180,24 @@ export const component = defineComponentMetadata({
     )
 
     urlChange(async () => {
+      console.debug('urlChange now url is', document.URL)
       await playerReady()
       const recoList: RecommendList = getRecoList()
-      const relist: VideoPageCard[] = recoList.$children.filter(
-        video => video.$el.className.indexOf('special') === -1,
-      )
-      showUploadTime(relist)
-    })
-
-    await playerReady()
-    // 监视推荐列表是否打开，如果打开则更新
-    childList(dq('#reco_list .rec-list'), async () => {
-      const recoList: RecommendList = getRecoList()
-      if (recoList.isOpen) {
-        const relist: VideoPageCard[] = recoList.$children.filter(
-          video => video.$el.className.indexOf('special') === -1,
+      console.debug('urlChange recoList.mark', recoList.mark)
+      if (!recoList.mark) {
+        recoList.mark = true
+        // 使用vue组件自带的$watch方法监视推荐列表信息是否变更，如果变更则更新
+        recoList.$watch(
+          'recListItems',
+          () => {
+            console.debug('recoListItems changed, now url is', document.URL)
+            const relist = recoList.$children.filter(video =>
+              videoClasses.includes(video.$el.className),
+            )
+            showUploadTime(relist)
+          },
+          { deep: true, immediate: true },
         )
-        showUploadTime(relist)
       }
     })
   },

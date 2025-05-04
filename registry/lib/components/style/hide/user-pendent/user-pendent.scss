@@ -1,0 +1,27 @@
+.b-avatar {
+  container-type: size;
+  container-name: avatar;
+  &__layers:not(:first-child),
+  &__layer:not(:first-child) {
+    display: none !important;
+  }
+  &__layer:first-child {
+    min-width: 100cqw;
+    min-height: 100cqh;
+  }
+}
+.up-avatar {
+  container-type: size;
+  container-name: avatar;
+  .bili-avatar {
+    min-width: 100cqw;
+    min-height: 100cqh;
+    transform: none !important;
+  }
+}
+.bili-avatar {
+  &-icon,
+  &-pendent-dom {
+    display: none !important;
+  }
+}

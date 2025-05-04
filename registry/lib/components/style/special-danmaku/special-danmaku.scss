@@ -1,13 +1,24 @@
 body.disable-highlight-danmaku-style {
+  .bili-danmaku-x-high,
+  .bili-danmaku-x-high-top {
+    display: flex !important;
+  }
   .bili-dm.bili-high,
   .b-danmaku-high {
     display: block !important;
+  }
+  .bili-danmaku-x-high,
+  .bili-danmaku-x-high-top,
+  .bili-dm.bili-high,
+  .b-danmaku-high {
     padding: 0 !important;
     line-height: 1.125 !important;
+    .bili-danmaku-x-high-icon,
     .bili-high-icon,
     .b-danmaku-high-icon {
       display: none !important;
     }
+    .bili-danmaku-x-high-text,
     .bili-high-text,
     .b-danmaku-high-text {
       margin: 0 !important;
@@ -16,6 +27,7 @@ body.disable-highlight-danmaku-style {
   }
 }
 body.disable-up-danmaku-style {
+  .bili-danmaku-x-up,
   .bili-dm.bili-up,
   .b-danmaku-up {
     padding: 0 !important;
@@ -24,6 +36,28 @@ body.disable-up-danmaku-style {
     border-radius: 0 !important;
     .bili-up-tip,
     .b-danmaku-up-tip {
+      display: none !important;
+    }
+  }
+}
+body.disable-vip-danmaku-style {
+  .bili-danmaku-x-dm-vip,
+  .bili-dm-vip {
+    display: contents !important;
+    text-shadow: inherit !important;
+  }
+  :where(.bili-dm, .bili-danmaku-x-dm):not([style*='--textShadow']) {
+    --textShadow: var(--danmaku-text-shadow);
+  }
+}
+body.disable-upSlogan-danmaku-style {
+  .bili-danmaku-x-upslogan,
+  .bili-upslogan {
+    padding: 0 !important;
+    opacity: var(--opacity) !important;
+    font-weight: var(--fontWeight) !important;
+    background-color: transparent !important;
+    img {
       display: none !important;
     }
   }

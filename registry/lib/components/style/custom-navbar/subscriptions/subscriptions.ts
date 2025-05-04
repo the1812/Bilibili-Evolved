@@ -10,8 +10,8 @@ export enum SubscriptionTypes {
 const uid = getUID()
 export const subscriptions: CustomNavbarItemInit = {
   name: 'subscriptions',
-  displayName: '订阅',
-  content: '订阅',
+  displayName: '番剧 (弹窗)',
+  content: () => import('./Content.vue').then(m => m.default),
 
   href: `https://space.bilibili.com/${uid}/bangumi`,
   touch: true,

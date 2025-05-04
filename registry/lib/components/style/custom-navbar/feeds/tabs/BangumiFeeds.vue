@@ -10,14 +10,15 @@ import { useNextPage } from './next-page'
 const { loading, cards, hasMorePage, nextPage } = useNextPage(
   feedsCardTypes.bangumi,
   (card: any): BangumiCardData & { new: boolean } => {
-    const cardJson = JSON.parse(card.card)
+    const pgc = lodash.get(card, 'modules.module_dynamic.major.pgc')
+    const author = lodash.get(card, 'modules.module_author')
     return {
-      id: card.desc.dynamic_id_str,
-      title: cardJson.apiSeasonInfo.title,
-      coverUrl: cardJson.apiSeasonInfo.cover,
-      epCoverUrl: cardJson.cover,
-      epTitle: cardJson.new_desc,
-      url: cardJson.url,
+      id: card.id_str,
+      title: author.name,
+      coverUrl: author.face,
+      epCoverUrl: pgc.cover,
+      epTitle: pgc.title.replace(new RegExp(`^${author.name}：`), ''),
+      url: pgc.jump_url,
       get new() {
         return isNewID(this.id)
       },

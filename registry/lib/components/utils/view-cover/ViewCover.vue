@@ -10,12 +10,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import { VideoInfo } from '@/components/video/video-info'
 import { getJson } from '@/core/ajax'
 import { videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { logError } from '@/core/utils/log'
 import { DefaultWidget, showImage } from '@/ui'
+import { getVideoCoverUrlByAid } from '@/components/video/video-cover'
 
 export default defineComponent({
   components: {
@@ -30,14 +29,7 @@ export default defineComponent({
     if (!document.URL.includes('live.bilibili.com')) {
       videoChange(async () => {
         const { aid } = unsafeWindow
-        const videoInfo = new VideoInfo(aid)
-        try {
-          await videoInfo.fetchInfo()
-        } catch (error) {
-          logError(error)
-          throw error
-        }
-        this.imageUrl = videoInfo.coverUrl.replace('http:', 'https:')
+        this.imageUrl = await getVideoCoverUrlByAid(aid)
       })
     } else {
       const spaceElementSelector = '.header-info-ctnr .room-cover, .header-info-ctnr .avatar'
@@ -46,7 +38,7 @@ export default defineComponent({
         return
       }
       const match = coverLink.getAttribute('href').match(/space\.bilibili\.com\/([\d]+)/)
-      if (match && match[1]) {
+      if (match?.[1]) {
         const uid = match[1]
         const url = `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${uid}`
         const json = await getJson(url)
