@@ -1,6 +1,6 @@
 import { CustomNavbarItemInit } from '../custom-navbar-item'
 
-const href = 'https://www.bilibili.com/account/history'
+const href = 'https://www.bilibili.com/history'
 export const history: CustomNavbarItemInit = {
   name: 'history',
   displayName: '历史',

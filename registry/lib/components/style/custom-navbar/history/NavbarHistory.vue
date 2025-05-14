@@ -19,7 +19,7 @@
               <VIcon icon="mdi-play" :size="14"></VIcon>
             </VButton>
           </div>
-          <a class="operation" target="_blank" href="https://www.bilibili.com/account/history">
+          <a class="operation" target="_blank" href="https://www.bilibili.com/history">
             <VButton title="查看更多" round>
               <VIcon icon="mdi-dots-horizontal" :size="18"></VIcon>
             </VButton>
