@@ -22,27 +22,26 @@
           <VIcon icon="mdi-format-list-text" :size="16" />
         </VButton>
       </div>
-      <CompactRankList v-if="isCompactRankList" :parse-json="parseJson" :api="rankingsApi" />
-      <RankList v-else :parse-json="parseJson" :api="rankingsApi" />
+      <CompactRankList
+        v-if="isCompactRankList"
+        :bangumi-mode="isPGC"
+        :parse-json="parseJson"
+        :api="rankingsApi"
+      />
+      <RankList v-else :bangumi-mode="isPGC" :parse-json="parseJson" :api="rankingsApi" />
     </div>
   </div>
 </template>
 <script lang="ts">
 import { VButton, VIcon } from '@/ui'
 import { applyContentFilter } from '@/components/feeds/api'
-import { RankListCard } from './rank-list'
+import { getBangumiRankListCards, getDefaultRankListCards, PGCSeasonTypeMap } from './rank-list'
 import CompactRankList from './CompactRankList.vue'
 import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
 import SubHeader from '../../../SubHeader.vue'
 import { compactRankListMixin } from '../../../../mixin'
-
-/*
-TODO: 有几个区表面上是普通视频, 但内容走的还是番剧那套, 所以 RankList 也要换 API
-视频排行: `https://api.bilibili.com/x/web-interface/ranking/region?day=3&original=0&rid=${regionCode}`
-番剧排行: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`
-- seasonType: 1 番剧 2 电影 3 纪录片 4 国创 5 电视剧
-*/
+import { categoryCodesV2 } from '@/components/utils/categories/data'
 
 export default Vue.extend({
   components: {
@@ -62,32 +61,29 @@ export default Vue.extend({
   },
   data() {
     const regionCode = this.region.id
-    console.log(this.region.category)
+    const tidV2 = categoryCodesV2[this.region.category.route]
+    const isPGC = Object.keys(PGCSeasonTypeMap).includes(this.region.category.route)
+    console.log({
+      category: this.region.category,
+      tidV2,
+      isPGC,
+    })
     return {
+      isPGC,
       activeVideosApi: `https://api.bilibili.com/x/web-interface/dynamic/region?ps=10&rid=${regionCode}`,
       newVideosApi: `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${regionCode}`,
-      rankingsApi: `https://api.bilibili.com/x/web-interface/ranking/region?rid=${regionCode}&day=3&original=0`,
+      rankingsApi: isPGC
+        ? `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${
+            PGCSeasonTypeMap[this.region.category.route]
+          }`
+        : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${tidV2}&type=all`,
       rankingsLink: `https://www.bilibili.com/v/popular/rank/${this.region.category.route}`,
     }
   },
   methods: {
     parseJson(json: any) {
-      const items = (lodash.get(json, 'data', []) || []) as any[]
-      const cards = items
-        .map(
-          (item): RankListCard => ({
-            id: item.aid,
-            title: item.title,
-            playCount: item.play,
-            points: item.pts,
-            upHref: `https://space.bilibili.com/${item.mid}`,
-            upName: item.author,
-            dynamic: item.description,
-            coverUrl: item.pic,
-            videoHref: `https://www.bilibili.com/video/${item.bvid}`,
-          }),
-        )
-        .slice(0, 10)
+      const allCards = this.isPGC ? getBangumiRankListCards(json) : getDefaultRankListCards(json)
+      const cards = allCards.slice(0, 10)
       return applyContentFilter(cards)
     },
   },

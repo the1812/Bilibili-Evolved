@@ -18,7 +18,12 @@
           <VIcon icon="mdi-format-list-text" :size="16" />
         </VButton>
       </div>
-      <CompactRankList v-if="isCompactRankList" :parse-json="parseJson" :api="rankingsApi" />
+      <CompactRankList
+        v-if="isCompactRankList"
+        bangumi-mode
+        :parse-json="parseJson"
+        :api="rankingsApi"
+      />
       <RankList v-else bangumi-mode :parse-json="parseJson" :api="rankingsApi" />
     </div>
   </div>
@@ -30,20 +35,9 @@ import SubHeader from '../../../SubHeader.vue'
 import RankList from './RankList.vue'
 import CompactRankList from './CompactRankList.vue'
 import BangumiTimeline from './BangumiTimeline.vue'
-import { RankListCard } from './rank-list'
+import { getBangumiRankListCards, PGCSeasonTypeMap } from './rank-list'
 import { compactRankListMixin } from '../../../../mixin'
 
-const bangumiDataMap = {
-  anime: {
-    seasonType: 1,
-    rankingName: 'bangumi',
-  },
-  guochuang: {
-    seasonType: 4,
-    // 你永远不知道"国创"在 b 站代码里有多少种叫法...
-    rankingName: 'guochan',
-  },
-}
 export default Vue.extend({
   components: {
     SubHeader,
@@ -62,34 +56,17 @@ export default Vue.extend({
   },
   data() {
     const { route } = this.region.category
-    const { rankingName, seasonType } = bangumiDataMap[route]
+    const seasonType = PGCSeasonTypeMap[route]
     return {
-      bangumiDataMap,
       route,
       timelineApi: `https://api.bilibili.com/pgc/web/timeline?types=${seasonType}&before=6&after=6`,
       rankingsApi: `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`,
-      rankingsLink: `https://www.bilibili.com/v/popular/rank/${rankingName}`,
+      rankingsLink: `https://www.bilibili.com/v/popular/rank/${route}`,
     }
   },
   methods: {
     parseJson(json: any) {
-      const items = (json.data?.list ?? []) as any[]
-      const cards = items
-        .map((item): RankListCard => {
-          const upName = item.new_ep?.index_show ?? item.title
-          return {
-            id: item.season_id,
-            title: item.title,
-            playCount: item.stat.view,
-            points: item.stat.follow,
-            upHref: item.url,
-            upName,
-            dynamic: upName,
-            coverUrl: item.new_ep?.cover ?? item.ss_horizontal_cover,
-            videoHref: item.url,
-          }
-        })
-        .slice(0, 10)
+      const cards = getBangumiRankListCards(json).slice(0, 10)
       return applyContentFilter(cards)
     },
   },

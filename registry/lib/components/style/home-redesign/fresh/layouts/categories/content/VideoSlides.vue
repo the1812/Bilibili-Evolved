@@ -169,7 +169,7 @@ export default Vue.extend({
           like: item.stat.like,
           coins: item.stat.coin,
           description: item.desc,
-          dynamic: item.desc === '-' ? '' : item.desc,
+          dynamic: item.dynamic || item.desc,
           type: item.tname,
           duration: item.duration,
           durationText: formatDuration(item.duration),

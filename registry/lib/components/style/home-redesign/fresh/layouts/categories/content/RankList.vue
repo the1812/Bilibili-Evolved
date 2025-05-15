@@ -36,8 +36,8 @@
             </template>
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
-            <VIcon icon="mdi-fire" :size="16" />
-            {{ firstItem.points | formatCount }}
+            <VIcon icon="play" :size="16" />
+            {{ firstItem.playCount | formatCount }}
           </div>
         </a>
         <div class="fresh-home-rank-list-laser" data-number="1"></div>
@@ -57,10 +57,10 @@
             </template>
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
-            <VIcon icon="mdi-fire" :size="16" />
-            {{ secondItem.points | formatCount }}
             <VIcon icon="play" :size="16" />
             {{ secondItem.playCount | formatCount }}
+            <VIcon icon="danmaku" :size="16" />
+            {{ secondItem.danmakuCount | formatCount }}
           </div>
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="secondItem.videoHref">
@@ -86,10 +86,10 @@
             </template>
           </UpInfo>
           <div class="fresh-home-rank-list-stats">
-            <VIcon icon="mdi-fire" :size="16" />
-            {{ thirdItem.points | formatCount }}
             <VIcon icon="play" :size="16" />
             {{ thirdItem.playCount | formatCount }}
+            <VIcon icon="danmaku" :size="16" />
+            {{ thirdItem.danmakuCount | formatCount }}
           </div>
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="thirdItem.videoHref">
