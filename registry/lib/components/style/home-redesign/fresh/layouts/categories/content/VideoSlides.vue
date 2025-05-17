@@ -375,6 +375,7 @@ export default Vue.extend({
     transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
     img {
       transition: 0.2s ease-out;
+      object-fit: cover;
       width: 100%;
       height: 100%;
     }

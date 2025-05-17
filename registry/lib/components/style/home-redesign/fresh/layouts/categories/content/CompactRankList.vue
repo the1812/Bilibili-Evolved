@@ -154,6 +154,7 @@ export default Vue.extend({
       position: relative;
       img {
         transition: 0.2s ease-out;
+        object-fit: cover;
       }
       &:hover img {
         transform: scale(1.05);
