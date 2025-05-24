@@ -41,7 +41,13 @@ export const installComponent = async (code: string) => {
     const defaultSettings = componentToSettings(component)
     lodash.defaultsDeep(
       existingComponent.settings.options,
-      lodash.pickBy(defaultSettings.options, value => !Array.isArray(value)),
+      lodash.pickBy(defaultSettings.options, (value, key) => {
+        const isArray = Array.isArray(value)
+        if (isArray) {
+          return lodash.get(existingComponent.settings.options, key) === undefined
+        }
+        return true
+      }),
     )
     return {
       metadata: component,
