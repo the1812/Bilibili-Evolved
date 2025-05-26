@@ -1,21 +1,28 @@
+import { RuntimeLibrary, RuntimeLibraryDefinition } from '@/core/runtime-library'
 import { Toast } from '@/core/toast'
-import { formatFileSize, formatPercent } from '@/core/utils/formatters'
+import { formatDuration, formatFileSize, formatPercent } from '@/core/utils/formatters'
 import { getOrLoad, storeNames } from './database'
-import { RuntimeLibraryDefinition, RuntimeLibrary } from '@/core/runtime-library'
 
-type OnProgress = (received: number, total: number) => void
+type OnProgress = (received: number, total: number, speed: number) => void
 
-function formatProgress(received: number, total: number) {
-  return `${formatFileSize(received)}${
-    total > 0 ? ` / ${formatFileSize(total)} @ ${formatPercent(received / total)}` : ''
-  }`
+function formatProgress(received: number, total: number, speed: number) {
+  const fReceived = formatFileSize(received)
+  const fTotal = total > 0 ? ` / ${formatFileSize(total)}` : ''
+  const percent = total > 0 ? ` @ ${formatPercent(received / total)}` : ''
+  let remTime = ''
+  let fSpeed = ''
+  if (total > received && speed > 0) {
+    fSpeed = ` (${formatFileSize(speed)}/s)`
+    remTime = ` - ${formatDuration((total - received) / speed)}`
+  }
+
+  return `${fReceived}${fTotal}${percent}${fSpeed}${remTime}`
 }
-
 export function toastProgress(toast: Toast) {
   const lines = []
   return (line: number, message: string): OnProgress => {
-    return (r, l) => {
-      lines[line] = `${message}: ${formatProgress(r, l)}`
+    return (r, l, s) => {
+      lines[line] = `${message}: ${formatProgress(r, l, s)}`
       toast.message = lines.join('\n')
     }
   }
@@ -40,6 +47,9 @@ export async function httpGet(url: string, onprogress: OnProgress) {
 
   let received = 0
   const chunks = []
+  let lastTime = Date.now()
+  let lastReceived = 0
+  let lastSpeed = 0
   // eslint-disable-next-line no-constant-condition
   while (true) {
     const { done, value } = await reader.read()
@@ -48,7 +58,18 @@ export async function httpGet(url: string, onprogress: OnProgress) {
     }
     chunks.push(value)
     received += value.length
-    onprogress(received, length)
+    const now = Date.now()
+    const deltaTime = (now - lastTime) / 1000
+    if (deltaTime > 1) {
+      const receivedDelta = received - lastReceived
+      const speed = receivedDelta / deltaTime
+      onprogress(received, length, speed)
+      lastTime = now
+      lastReceived = received
+      lastSpeed = speed
+    } else {
+      onprogress(received, length, lastReceived > 0 ? lastSpeed : 0)
+    }
   }
 
   const chunksAll = new Uint8Array(received)
