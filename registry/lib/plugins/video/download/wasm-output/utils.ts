@@ -21,6 +21,13 @@ export function toastProgress(toast: Toast) {
   }
 }
 
+function parseContentLength(response: Response) {
+  // https://github.com/the1812/Bilibili-Evolved/pull/4521#discussion_r1402127375
+  return response.headers.get('Content-Encoding')
+    ? -1
+    : parseInt(response.headers.get('Content-Length'))
+}
+
 export async function httpGet(url: string, onprogress: OnProgress) {
   const response = await fetch(url)
   if (!response.ok) {
@@ -29,10 +36,7 @@ export async function httpGet(url: string, onprogress: OnProgress) {
 
   const reader = response.body.getReader()
 
-  // https://github.com/the1812/Bilibili-Evolved/pull/4521#discussion_r1402127375
-  const length = response.headers.get('Content-Encoding')
-    ? -1
-    : parseInt(response.headers.get('Content-Length'))
+  const length = parseContentLength(response)
 
   let received = 0
   const chunks = []
@@ -55,6 +59,15 @@ export async function httpGet(url: string, onprogress: OnProgress) {
   }
 
   return chunksAll
+}
+
+export async function getContentLength(url: string) {
+  try {
+    const response = await fetch(url, { method: 'HEAD' })
+    return response.ok ? parseContentLength(response) : -1
+  } catch (_) {
+    return -1
+  }
 }
 
 export async function getCacheOrFetch(
