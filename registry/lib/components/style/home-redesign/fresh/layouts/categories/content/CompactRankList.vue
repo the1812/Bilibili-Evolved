@@ -39,10 +39,10 @@
             </template>
           </UpInfo>
           <div class="compact-rank-list-card-stats">
-            <VIcon icon="mdi-fire" :size="16" />
-            {{ video.points | formatCount }}
             <VIcon icon="play" :size="16" />
             {{ video.playCount | formatCount }}
+            <VIcon icon="danmaku" :size="16" />
+            {{ video.danmakuCount | formatCount }}
           </div>
         </div>
       </a>
@@ -82,6 +82,7 @@ export default Vue.extend({
   },
   computed: {
     upInfoProps() {
+      console.log({ bangumiMode: this.bangumiMode })
       return {
         size: 18,
         icon: this.bangumiMode ? 'mdi-television-classic' : 'up-outline',
@@ -153,6 +154,7 @@ export default Vue.extend({
       position: relative;
       img {
         transition: 0.2s ease-out;
+        object-fit: cover;
       }
       &:hover img {
         transform: scale(1.05);

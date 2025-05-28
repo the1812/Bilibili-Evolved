@@ -169,7 +169,7 @@ export default Vue.extend({
           like: item.stat.like,
           coins: item.stat.coin,
           description: item.desc,
-          dynamic: item.desc === '-' ? '' : item.desc,
+          dynamic: item.dynamic || item.desc,
           type: item.tname,
           duration: item.duration,
           durationText: formatDuration(item.duration),
@@ -375,6 +375,7 @@ export default Vue.extend({
     transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
     img {
       transition: 0.2s ease-out;
+      object-fit: cover;
       width: 100%;
       height: 100%;
     }

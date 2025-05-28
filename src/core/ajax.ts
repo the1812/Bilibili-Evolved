@@ -210,6 +210,11 @@ export const responsiveGetPages = <T = any>(config: {
           if (page === 1) {
             resolveResponsive(result)
           }
+
+          if (list.length === 0) {
+            resolveTotal(result)
+            break
+          }
           page++
           if (total === Infinity) {
             total = getTotal(json)

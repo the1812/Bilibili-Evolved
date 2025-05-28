@@ -146,7 +146,7 @@ export default Vue.extend({
     }
     this.allTypes = Object.entries(feedsCardTypes)
       .concat(Object.entries(specialTypes))
-      .filter(([, type]) => type.id <= 2048 && type.id > 0)
+      .filter(([, type]) => type.id <= 2048 && type.id !== 0)
       .map(([name, type]) => [name, lodash.clone(type)])
     cardsManager = await forEachFeedsCard({
       added: card => {
