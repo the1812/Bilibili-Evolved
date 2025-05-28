@@ -92,20 +92,21 @@ const fetchRecommendLiveInfos = async (): Promise<LiveInfo[]> => {
   const portalList = await getJsonWithCredentials(
     'https://api.bilibili.com/x/polymer/web-dynamic/v1/portal',
   )
-  const recommendLiveItems = portalList.data.live_users.items.map(item => {
-    const { jump_url, room_id, face, title, uname, mid } = item
-    return {
-      cover: face,
-      face,
-      uname,
-      title,
-      roomid: room_id,
-      pic: '', // portal 接口没有
-      online: 0, // portal 接口没有
-      uid: mid,
-      link: jump_url,
-    }
-  })
+  const recommendLiveItems =
+    portalList.data.live_users?.items?.map(item => {
+      const { jump_url, room_id, face, title, uname, mid } = item
+      return {
+        cover: face,
+        face,
+        uname,
+        title,
+        roomid: room_id,
+        pic: '', // portal 接口没有
+        online: 0, // portal 接口没有
+        uid: mid,
+        link: jump_url,
+      }
+    }) ?? []
   return recommendLiveItems
 }
 
