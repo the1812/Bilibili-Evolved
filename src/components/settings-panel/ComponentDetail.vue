@@ -16,7 +16,7 @@
           {{ t.displayName }}
         </div>
       </div>
-      <!-- <div class="component-detail-separator"></div> -->
+      <div class="component-detail-separator"></div>
       <template
         v-if="(componentData.options && generatedOptions.length > 0) || componentData.extraOptions"
       >
@@ -35,7 +35,7 @@
           </div>
           <slot></slot>
         </div>
-        <!-- <div class="component-detail-separator"></div> -->
+        <div class="component-detail-separator"></div>
       </template>
       <template v-if="!(componentData.options && !componentData.description)">
         <ComponentDescription
@@ -46,6 +46,7 @@
       </template>
       <div class="component-detail-grow"></div>
       <div class="component-detail-internal-data">
+        <div class="component-detail-separator"></div>
         <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
           <div class="internal-name">Commit: {{ componentData.commitHash.substring(0, 9) }}</div>
         </div>
@@ -82,7 +83,6 @@
           </MiniToast>
         </div>
       </div>
-      <!-- <div class="component-detail-separator"></div> -->
     </template>
   </div>
 </template>
@@ -155,6 +155,7 @@ export default Vue.extend({
   background-color: inherit;
   border-radius: 7px;
   overflow: auto;
+  overscroll-behavior: contain;
   @include v-stretch();
 
   .extra-option {
@@ -162,10 +163,11 @@ export default Vue.extend({
   }
   &-separator {
     height: 1px;
-    background-color: #8882;
-    margin-bottom: 12px;
+    border-bottom: 1px solid #8882;
+    margin: 8px 0;
     flex-shrink: 0;
     align-self: stretch;
+    box-sizing: border-box;
   }
   &-header {
     @include h-center();
@@ -188,10 +190,7 @@ export default Vue.extend({
     }
   }
   &-description:not(:last-child) {
-    padding: 12px 12px 0;
-    // max-height: 9em;
-    // line-height: 1.5;
-    // @include no-scrollbar();
+    padding: 6px 12px;
   }
   &-tags {
     @include h-center();
@@ -223,12 +222,17 @@ export default Vue.extend({
     min-height: 24px;
     box-sizing: content-box;
     background-color: inherit;
-    padding: 8px 12px;
+    padding-bottom: 8px;
+
+    .component-detail-separator {
+      margin-top: 0;
+    }
 
     &-row {
       @include h-center();
       justify-content: space-between;
       line-height: 24px;
+      padding: 0 12px;
     }
 
     .internal-name {
