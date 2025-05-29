@@ -19,7 +19,7 @@ export const plugin: PluginMetadata = {
       outputs.push({
         name: 'wasm',
         displayName: 'WASM',
-        description: `${desc}。运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件。由于浏览器限制，仅支持合并 4GB 以内的音视频。`,
+        description: `${desc}。运行过程中请勿关闭页面，初次使用或清除缓存后需要加载约 30 MB 的 WASM 文件。由于浏览器限制，仅支持合并 2GB 以内的音视频。`,
         runAction: async (action, instance) => {
           try {
             await run(action, instance.muxWithMetadata)
