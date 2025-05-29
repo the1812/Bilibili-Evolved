@@ -41,7 +41,7 @@ const watchDanmakuBorderSettings = () => {
 
 const options = defineOptionsMetadata({
   highlight: {
-    displayName: '禁用高亮弹幕',
+    displayName: '禁用高赞弹幕',
     defaultValue: true,
   },
   up: {
@@ -50,6 +50,10 @@ const options = defineOptionsMetadata({
   },
   upSlogan: {
     displayName: '禁用带货弹幕',
+    defaultValue: true,
+  },
+  vip: {
+    displayName: '禁用大会员弹幕',
     defaultValue: true,
   },
 })
