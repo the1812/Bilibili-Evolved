@@ -33,3 +33,15 @@
 #sections-vm .z-section-blocks {
   @include background-color();
 }
+
+.follow-sidebar-item {
+  .vui_sidebar-item {
+    &:hover {
+      @include background-color('3');
+    }
+    &.vui_sidebar-item--active,
+    &.vui_sidebar-item--active:hover {
+      @include theme-background-color();
+    }
+  }
+}
