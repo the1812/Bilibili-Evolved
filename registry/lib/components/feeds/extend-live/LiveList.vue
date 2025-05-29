@@ -67,6 +67,7 @@ const decodeTitle = (title: string) => {
   return textArea.value
 }
 
+const FollowingListPageSize = 500
 const { options } = getComponentSettings<ExtendFeedsLiveOptions>('extendFeedsLive')
 const items = ref<LiveInfo[]>([])
 const pinnedUsers = ref<FollowingUserInfo[]>([])
@@ -143,10 +144,13 @@ const fetchFollowingLists = async () => {
     const list = await bilibiliApi<RawFollowingListItem[]>(
       getJsonWithCredentials('https://api.bilibili.com/x/relation/tags'),
     )
+    if (!list.some(it => it.tagid === id)) {
+      return []
+    }
     const response = await getPages<FollowingUserInfo>({
       api: page =>
         getJsonWithCredentials(
-          `https://api.bilibili.com/x/relation/tag?tagid=${id}&pn=${page}&ps=500&mid=${getUID()}`,
+          `https://api.bilibili.com/x/relation/tag?tagid=${id}&pn=${page}&ps=${FollowingListPageSize}&mid=${getUID()}`,
         ),
       getList: json => lodash.get(json, 'data', []),
       getTotal: () => list.find(it => it.tagid === id)?.count ?? 0,

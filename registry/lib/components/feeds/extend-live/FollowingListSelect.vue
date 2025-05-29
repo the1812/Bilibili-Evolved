@@ -52,6 +52,16 @@ const loadFollowingList = async () => {
       count: item.count,
     })),
   ]
+  if (
+    props.value !== UnselectedListID &&
+    !followingList.value.some(item => item.id === props.value)
+  ) {
+    followingList.value.unshift({
+      id: props.value,
+      displayName: '<已删除的分组>',
+      count: 0,
+    })
+  }
 }
 
 loadFollowingList()
