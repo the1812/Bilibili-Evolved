@@ -20,7 +20,7 @@
   }
 }
 
-.scan-tips-icon{
+.scan-tips-icon {
   @include background-color('2');
 }
 
@@ -30,4 +30,6 @@
   @include color('f');
 }
 
-
+#sections-vm .z-section-blocks {
+  @include background-color();
+}
