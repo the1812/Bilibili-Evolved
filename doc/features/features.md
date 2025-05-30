@@ -608,7 +608,7 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/special-danmaku.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/special-danmaku.js)
 
-移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.
+移除高亮弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.
 
 ### [v1 风格设置面板](../../registry/dist/components/style/v1-panel.js)
 `v1PanelStyle`

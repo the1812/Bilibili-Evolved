@@ -25,7 +25,8 @@ body.disable-highlight-danmaku-style {
       text-shadow: inherit;
     }
   }
-
+}
+body.disable-vip-danmaku-style {
   .bili-danmaku-x-dm-vip,
   .bili-dm-vip {
     display: contents !important;
