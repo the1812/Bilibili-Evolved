@@ -64,7 +64,7 @@ export const component = defineComponentMetadata({
         const blackList = getData(BlackListDataKey)
         forEachFeedsCard({
           added: card => {
-            if (blackList.includes(card.username)) {
+            if (blackList[0].users.includes(card.username)) {
               return
             }
             const likeButtons = dq(card.element, '.bili-dyn-action.like') as HTMLElement

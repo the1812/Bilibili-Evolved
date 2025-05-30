@@ -67,7 +67,7 @@
     @include set-theme-color('--_label-text-color');
   }
   .bili-comments-bottom-fixed-wrapper > div {
-    @include background-color('2');
+    background-color: var(--bg1, #222) !important;
     @include border-color('3');
   }
 }

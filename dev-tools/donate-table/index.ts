@@ -1,5 +1,5 @@
-import parse from 'csv-parse/lib/sync'
-import fs from 'fs'
+import { parse } from 'csv-parse/sync'
+import * as fs from 'fs'
 
 const files = process.argv.slice(2)
 const parseAliPay = (csv: Record<string, string>[]) => {
@@ -48,7 +48,7 @@ const parseWeChat = (csv: Record<string, string>[]) => {
 const items = files
   .map(file => {
     const text = fs.readFileSync(file, { encoding: 'utf-8' })
-    const csv = parse(text, { columns: true })
+    const csv = parse(text, { columns: true, bom: true, trim: true })
     if (file.includes('支付宝')) {
       return parseAliPay(csv)
     }

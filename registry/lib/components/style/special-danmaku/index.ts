@@ -45,7 +45,7 @@ const options = defineOptionsMetadata({
     defaultValue: true,
   },
   up: {
-    displayName: '禁用UP主弹幕',
+    displayName: '禁用 UP 主弹幕',
     defaultValue: true,
   },
   upSlogan: {

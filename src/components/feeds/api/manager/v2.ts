@@ -15,7 +15,7 @@ const feedsCardTypeMap = {
   DynamicTypeArticle: feedsCardTypes.column,
   DynamicTypeMusic: feedsCardTypes.audio,
   DynamicTypeLiveRcmd: feedsCardTypes.liveRecord,
-  DynamicTypeCourses: feedsCardTypes.courses,
+  DynamicTypeCoursesSeason: feedsCardTypes.courses,
   DynamicTypeOpus: feedsCardTypes.textWithImages,
   DynamicTypeLive: feedsCardTypes.live,
   DynamicTypeMedialist: feedsCardTypes.mediaList,

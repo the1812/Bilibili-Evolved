@@ -48,15 +48,10 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue'
 import { VIcon, TextBox, DpiImage, VEmpty, VLoading } from '@/ui'
 import { getJsonWithCredentials, responsiveGetPages } from '@/core/ajax'
-
-const decodeTitle = (title: string) => {
-  const textArea = document.createElement('textarea')
-  textArea.innerHTML = title
-  return textArea.value
-}
 
 interface LiveInfo {
   cover: string
@@ -70,105 +65,95 @@ interface LiveInfo {
   link: string
 }
 
-export default Vue.extend({
-  components: {
-    VIcon,
-    TextBox,
-    DpiImage,
-    VEmpty,
-    VLoading,
-  },
-  data() {
+const decodeTitle = (title: string) => {
+  const textArea = document.createElement('textarea')
+  textArea.innerHTML = title
+  return textArea.value
+}
+
+const items = ref<LiveInfo[]>([])
+const loaded = ref(false)
+const keyword = ref('')
+
+const filteredItems = computed(() => {
+  if (keyword.value) {
+    return items.value.filter(it => {
+      const matchField = (field: keyof LiveInfo) => {
+        return it[field].toString().toLowerCase().includes(keyword.value.toLowerCase())
+      }
+
+      return matchField('title') || matchField('uname') || matchField('roomid') || matchField('uid')
+    })
+  }
+  return items.value
+})
+
+const fetchRecommendItems = async (): Promise<LiveInfo[]> => {
+  // 动态 portal 接口会获取推荐的 top30 直播。同时这个接口不会忽略悄悄关注的 up 的直播。
+  const portalList = await getJsonWithCredentials(
+    'https://api.bilibili.com/x/polymer/web-dynamic/v1/portal',
+  )
+  const recommendLiveItems = portalList.data.live_users.items.map(item => {
+    const { jump_url, room_id, face, title, uname, mid } = item
     return {
-      items: [],
-      loaded: false,
-      keyword: '',
+      cover: face,
+      face,
+      uname,
+      title,
+      roomid: room_id,
+      pic: '', // portal 接口没有
+      online: 0, // portal 接口没有
+      uid: mid,
+      link: jump_url,
     }
-  },
-  computed: {
-    filteredItems() {
-      if (this.keyword) {
-        return (this.items as LiveInfo[]).filter(it => {
-          const matchField = (field: keyof LiveInfo) => {
-            return it[field].toString().toLowerCase().includes(this.keyword.toLowerCase())
+  })
+  return recommendLiveItems
+}
+
+const sortByRecommend = (feedItems: LiveInfo[], recommendItems: LiveInfo[]) => {
+  // recommendItems 里的 pic 和 online 为默认值，但是 ui 也没用到。
+  // 所以方便起见，直接拼接没出现在 recommendItems 里的 item
+  const recommendRoomIds = recommendItems.map(item => item.roomid)
+  const feedConcatItems = feedItems.filter(item => !recommendRoomIds.includes(item.roomid))
+  return lodash.concat(recommendItems, feedConcatItems)
+}
+
+const refresh = async () => {
+  try {
+    items.value = []
+    loaded.value = false
+    const [, promise] = responsiveGetPages<LiveInfo>({
+      api: page =>
+        getJsonWithCredentials(
+          `https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=${page}`,
+        ),
+      getList: json =>
+        lodash.get(json, 'data.list', []).map(item => {
+          const { face, uname, title, room_id, cover_from_user, online, uid, link } = item
+          return {
+            cover: face,
+            face,
+            uname,
+            title,
+            roomid: room_id,
+            pic: cover_from_user,
+            online,
+            uid,
+            link,
           }
-          return (
-            matchField('title') || matchField('uname') || matchField('roomid') || matchField('uid')
-          )
-        })
-      }
-      return this.items
-    },
-  },
-  created() {
-    this.refresh()
-  },
-  methods: {
-    decodeTitle,
-    async refresh() {
-      try {
-        this.items = []
-        this.loaded = false
-        const [, promise] = responsiveGetPages<LiveInfo>({
-          api: page =>
-            getJsonWithCredentials(
-              `https://api.live.bilibili.com/xlive/web-ucenter/v1/xfetter/GetWebList?page=${page}`,
-            ),
-          getList: json =>
-            lodash.get(json, 'data.list', []).map(item => {
-              const { face, uname, title, room_id, cover_from_user, online, uid, link } = item
-              return {
-                cover: face,
-                face,
-                uname,
-                title,
-                roomid: room_id,
-                pic: cover_from_user,
-                online,
-                uid,
-                link,
-              }
-            }),
-          getTotal: json => lodash.get(json, 'data.count', 0),
-        })
+        }),
+      getTotal: json => lodash.get(json, 'data.count', 0),
+    })
 
-        const [allItems, recommendItems] = await Promise.all([promise, this.fetchRecommendItems()])
-        this.items = this.sortByRecommend(allItems, recommendItems)
-      } finally {
-        this.loaded = true
-      }
-    },
+    const [allItems, recommendItems] = await Promise.all([promise, fetchRecommendItems()])
+    items.value = sortByRecommend(allItems, recommendItems)
+  } finally {
+    loaded.value = true
+  }
+}
 
-    async fetchRecommendItems(): Promise<LiveInfo[]> {
-      // 动态portal接口会获取推荐的top30直播。同时这个接口不会忽略悄悄关注的up的直播。
-      const portalList = await getJsonWithCredentials(
-        'https://api.bilibili.com/x/polymer/web-dynamic/v1/portal',
-      )
-      const recommendLiveItems = portalList.data.live_users.items.map(item => {
-        const { jump_url, room_id, face, title, uname, mid } = item
-        return {
-          cover: face,
-          face,
-          uname,
-          title,
-          roomid: room_id,
-          pic: '', // portal接口没有
-          online: 0, // portal接口没有
-          uid: mid,
-          link: jump_url,
-        }
-      })
-      return recommendLiveItems
-    },
-
-    sortByRecommend(feedItems: LiveInfo[], recommendItems: LiveInfo[]) {
-      // recommendItems里的pic和online为默认值，但是ui也没用到。
-      // 所以方便起见，直接拼接没出现在recommendItems里的item
-      const recommendRoomIds = recommendItems.map(item => item.roomid)
-      const feedConcatItems = feedItems.filter(item => !recommendRoomIds.includes(item.roomid))
-      return lodash.concat(recommendItems, feedConcatItems)
-    },
-  },
+onMounted(() => {
+  refresh()
 })
 </script>
 <style lang="scss">
