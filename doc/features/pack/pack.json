@@ -44,7 +44,7 @@
         "type": "component",
         "name": "disableSpecialDanmaku",
         "displayName": "禁用特殊弹幕样式",
-        "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.\r\n",
+        "description": "移除高亮弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.",
         "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
         "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
       },

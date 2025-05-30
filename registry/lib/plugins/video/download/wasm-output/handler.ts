@@ -7,7 +7,7 @@ import { title as pluginTitle } from '.'
 import type { Options } from '../../../../components/video/download'
 import { DownloadVideoAction } from '../../../../components/video/download/types'
 import { FFmpeg } from './ffmpeg'
-import { getCacheOrFetch, httpGet, toastProgress, toBlobUrl } from './utils'
+import { getCacheOrFetch, getContentLength, httpGet, toastProgress, toBlobUrl } from './utils'
 
 const ffmpeg = new FFmpeg()
 
@@ -139,8 +139,14 @@ export async function run(action: DownloadVideoAction, muxWithMetadata: boolean)
       throw new Error('仅支持 DASH 格式视频和音频')
     }
 
-    if (video.size + audio.size > 4294967295) {
-      throw new Error(`仅支持合并 4GB 内的音视频（${formatFileSize(video.size + audio.size)}）`)
+    const [videoSize, audioSize] = await Promise.all([
+      getContentLength(video.url),
+      getContentLength(audio.url),
+    ])
+    const size = Math.max(videoSize, video.size) + Math.max(audioSize, audio.size)
+    // 2000 * 1024 * 1024
+    if (size > 2097152000) {
+      throw new Error(`仅支持合并 2GB 内的音视频（${formatFileSize(size)}）`)
     }
 
     await single(

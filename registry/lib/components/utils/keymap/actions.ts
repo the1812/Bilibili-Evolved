@@ -88,6 +88,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   volumeUp: {
     displayName: '增加音量',
+    ignoreFocus: false,
     run: () => {
       const step = getComponentSettings<Options>('keymap').options.volumeStep
       const volume = playerAgent.changeVolume(step)
@@ -100,6 +101,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   volumeDown: {
     displayName: '降低音量',
+    ignoreFocus: false,
     run: () => {
       const step = getComponentSettings<Options>('keymap').options.volumeStep
       const volume = playerAgent.changeVolume(-step)

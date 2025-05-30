@@ -1,0 +1,1840 @@
+[
+  {
+    "channelId": 12,
+    "tid": 1001,
+    "route": "cinephile",
+    "name": "影视",
+    "url": "//www.bilibili.com/c/cinephile/",
+    "icon": "homeicon/cinephile/1",
+    "sub": [
+      {
+        "subChannelId": 120001,
+        "tid": 2001,
+        "route": "commentary",
+        "name": "影视解读",
+        "url": ""
+      },
+      {
+        "subChannelId": 120002,
+        "tid": 2002,
+        "route": "montage",
+        "name": "影视剪辑",
+        "url": ""
+      },
+      {
+        "subChannelId": 120003,
+        "tid": 2003,
+        "route": "information",
+        "name": "影视资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 120004,
+        "tid": 2004,
+        "route": "porterage",
+        "name": "影视正片搬运",
+        "url": ""
+      },
+      {
+        "subChannelId": 120005,
+        "tid": 2005,
+        "route": "shortfilm",
+        "name": "短剧短片",
+        "url": ""
+      },
+      {
+        "subChannelId": 120006,
+        "tid": 2006,
+        "route": "ai",
+        "name": "AI影视",
+        "url": ""
+      },
+      {
+        "subChannelId": 120007,
+        "tid": 2007,
+        "route": "reaction",
+        "name": "影视reaction",
+        "url": ""
+      },
+      {
+        "subChannelId": 120008,
+        "tid": 2008,
+        "route": "other",
+        "name": "影视综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 13,
+    "tid": 1002,
+    "route": "ent",
+    "name": "娱乐",
+    "url": "//www.bilibili.com/c/ent/",
+    "icon": "homeicon/entertainment/1",
+    "sub": [
+      {
+        "subChannelId": 130001,
+        "tid": 2009,
+        "route": "commentary",
+        "name": "娱乐评论",
+        "url": ""
+      },
+      {
+        "subChannelId": 130002,
+        "tid": 2010,
+        "route": "montage",
+        "name": "明星剪辑",
+        "url": ""
+      },
+      {
+        "subChannelId": 130003,
+        "tid": 2011,
+        "route": "fans_video",
+        "name": "娱乐饭拍&现场",
+        "url": ""
+      },
+      {
+        "subChannelId": 130004,
+        "tid": 2012,
+        "route": "information",
+        "name": "娱乐资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 130005,
+        "tid": 2013,
+        "route": "reaction",
+        "name": "娱乐reaction",
+        "url": ""
+      },
+      {
+        "subChannelId": 130006,
+        "tid": 2014,
+        "route": "variety",
+        "name": "娱乐综艺正片",
+        "url": ""
+      },
+      {
+        "subChannelId": 130007,
+        "tid": 2015,
+        "route": "other",
+        "name": "娱乐综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 10,
+    "tid": 1003,
+    "route": "music",
+    "name": "音乐",
+    "url": "//www.bilibili.com/c/music/",
+    "icon": "homeicon/music/1",
+    "sub": [
+      {
+        "subChannelId": 100001,
+        "tid": 2016,
+        "route": "original",
+        "name": "原创音乐",
+        "url": ""
+      },
+      {
+        "subChannelId": 100002,
+        "tid": 2017,
+        "route": "mv",
+        "name": "MV",
+        "url": ""
+      },
+      {
+        "subChannelId": 100003,
+        "tid": 2018,
+        "route": "live",
+        "name": "音乐现场",
+        "url": ""
+      },
+      {
+        "subChannelId": 100004,
+        "tid": 2019,
+        "route": "fan_videos",
+        "name": "乐迷饭拍",
+        "url": ""
+      },
+      {
+        "subChannelId": 100005,
+        "tid": 2020,
+        "route": "cover",
+        "name": "翻唱",
+        "url": ""
+      },
+      {
+        "subChannelId": 100006,
+        "tid": 2021,
+        "route": "perform",
+        "name": "演奏",
+        "url": ""
+      },
+      {
+        "subChannelId": 100007,
+        "tid": 2022,
+        "route": "vocaloid",
+        "name": "VOCALOID",
+        "url": ""
+      },
+      {
+        "subChannelId": 100008,
+        "tid": 2023,
+        "route": "ai_music",
+        "name": "AI音乐",
+        "url": ""
+      },
+      {
+        "subChannelId": 100009,
+        "tid": 2024,
+        "route": "radio",
+        "name": "电台·歌单",
+        "url": ""
+      },
+      {
+        "subChannelId": 100010,
+        "tid": 2025,
+        "route": "tutorial",
+        "name": "音乐教学",
+        "url": ""
+      },
+      {
+        "subChannelId": 100011,
+        "tid": 2026,
+        "route": "commentary",
+        "name": "乐评盘点",
+        "url": ""
+      },
+      {
+        "subChannelId": 100012,
+        "tid": 2027,
+        "route": "other",
+        "name": "音乐综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 11,
+    "tid": 1004,
+    "route": "dance",
+    "name": "舞蹈",
+    "url": "//www.bilibili.com/c/dance/",
+    "icon": "homeicon/dance/1",
+    "sub": [
+      {
+        "subChannelId": 110001,
+        "tid": 2028,
+        "route": "otaku",
+        "name": "宅舞",
+        "url": ""
+      },
+      {
+        "subChannelId": 110002,
+        "tid": 2029,
+        "route": "hiphop",
+        "name": "街舞",
+        "url": ""
+      },
+      {
+        "subChannelId": 110003,
+        "tid": 2030,
+        "route": "gestures",
+        "name": "颜值·网红舞",
+        "url": ""
+      },
+      {
+        "subChannelId": 110004,
+        "tid": 2031,
+        "route": "star",
+        "name": "明星舞蹈",
+        "url": ""
+      },
+      {
+        "subChannelId": 110005,
+        "tid": 2032,
+        "route": "china",
+        "name": "国风舞蹈",
+        "url": ""
+      },
+      {
+        "subChannelId": 110006,
+        "tid": 2033,
+        "route": "tutorial",
+        "name": "舞蹈教学",
+        "url": ""
+      },
+      {
+        "subChannelId": 110007,
+        "tid": 2034,
+        "route": "ballet",
+        "name": "芭蕾舞",
+        "url": ""
+      },
+      {
+        "subChannelId": 110008,
+        "tid": 2035,
+        "route": "wota",
+        "name": "wota艺",
+        "url": ""
+      },
+      {
+        "subChannelId": 110009,
+        "tid": 2036,
+        "route": "other",
+        "name": "舞蹈综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 7,
+    "tid": 1005,
+    "route": "douga",
+    "name": "动画",
+    "url": "//www.bilibili.com/c/douga/",
+    "icon": "homeicon/douga/1",
+    "sub": [
+      {
+        "subChannelId": 70001,
+        "tid": 2037,
+        "route": "fan_anime",
+        "name": "同人动画",
+        "url": ""
+      },
+      {
+        "subChannelId": 70002,
+        "tid": 2038,
+        "route": "garage_kit",
+        "name": "模玩周边",
+        "url": ""
+      },
+      {
+        "subChannelId": 70003,
+        "tid": 2039,
+        "route": "cosplay",
+        "name": "cosplay",
+        "url": ""
+      },
+      {
+        "subChannelId": 70004,
+        "tid": 2040,
+        "route": "offline",
+        "name": "二次元线下",
+        "url": ""
+      },
+      {
+        "subChannelId": 70005,
+        "tid": 2041,
+        "route": "editing",
+        "name": "动漫剪辑",
+        "url": ""
+      },
+      {
+        "subChannelId": 70006,
+        "tid": 2042,
+        "route": "commentary",
+        "name": "动漫评论",
+        "url": ""
+      },
+      {
+        "subChannelId": 70007,
+        "tid": 2043,
+        "route": "quick_view",
+        "name": "动漫速读",
+        "url": ""
+      },
+      {
+        "subChannelId": 70008,
+        "tid": 2044,
+        "route": "voice",
+        "name": "动漫配音",
+        "url": ""
+      },
+      {
+        "subChannelId": 70009,
+        "tid": 2045,
+        "route": "information",
+        "name": "动漫资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 70010,
+        "tid": 2046,
+        "route": "interpret",
+        "name": "网文解读",
+        "url": ""
+      },
+      {
+        "subChannelId": 70011,
+        "tid": 2047,
+        "route": "vup",
+        "name": "虚拟up主",
+        "url": ""
+      },
+      {
+        "subChannelId": 70012,
+        "tid": 2048,
+        "route": "tokusatsu",
+        "name": "特摄",
+        "url": ""
+      },
+      {
+        "subChannelId": 70013,
+        "tid": 2049,
+        "route": "puppetry",
+        "name": "布袋戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 70014,
+        "tid": 2050,
+        "route": "comic",
+        "name": "漫画·动态漫",
+        "url": ""
+      },
+      {
+        "subChannelId": 70015,
+        "tid": 2051,
+        "route": "motion",
+        "name": "广播剧",
+        "url": ""
+      },
+      {
+        "subChannelId": 70016,
+        "tid": 2052,
+        "route": "reaction",
+        "name": "动漫reaction",
+        "url": ""
+      },
+      {
+        "subChannelId": 70017,
+        "tid": 2053,
+        "route": "tutorial",
+        "name": "动漫教学",
+        "url": ""
+      },
+      {
+        "subChannelId": 70018,
+        "tid": 2054,
+        "route": "other",
+        "name": "二次元其他",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 24,
+    "tid": 1006,
+    "route": "painting",
+    "name": "绘画",
+    "url": "//www.bilibili.com/c/painting/",
+    "icon": "homeicon/painting/1",
+    "sub": [
+      {
+        "subChannelId": 240001,
+        "tid": 2055,
+        "route": "acg",
+        "name": "二次元绘画",
+        "url": ""
+      },
+      {
+        "subChannelId": 240002,
+        "tid": 2056,
+        "route": "none_acg",
+        "name": "非二次元绘画",
+        "url": ""
+      },
+      {
+        "subChannelId": 240003,
+        "tid": 2057,
+        "route": "tutorial",
+        "name": "绘画学习",
+        "url": ""
+      },
+      {
+        "subChannelId": 240004,
+        "tid": 2058,
+        "route": "other",
+        "name": "绘画综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 9,
+    "tid": 1007,
+    "route": "kichiku",
+    "name": "鬼畜",
+    "url": "//www.bilibili.com/c/kichiku/",
+    "icon": "homeicon/kichiku/1",
+    "sub": [
+      {
+        "subChannelId": 90001,
+        "tid": 2059,
+        "route": "guide",
+        "name": "鬼畜调教",
+        "url": ""
+      },
+      {
+        "subChannelId": 90002,
+        "tid": 2060,
+        "route": "theatre",
+        "name": "鬼畜剧场",
+        "url": ""
+      },
+      {
+        "subChannelId": 90003,
+        "tid": 2061,
+        "route": "manual_vocaloid",
+        "name": "人力VOCALOID",
+        "url": ""
+      },
+      {
+        "subChannelId": 90004,
+        "tid": 2062,
+        "route": "mad",
+        "name": "音MAD",
+        "url": ""
+      },
+      {
+        "subChannelId": 90005,
+        "tid": 2063,
+        "route": "other",
+        "name": "鬼畜综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 8,
+    "tid": 1008,
+    "route": "game",
+    "name": "游戏",
+    "url": "//www.bilibili.com/c/game/",
+    "icon": "homeicon/game/1",
+    "sub": [
+      {
+        "subChannelId": 80001,
+        "tid": 2064,
+        "route": "rpg",
+        "name": "单人RPG游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80002,
+        "tid": 2065,
+        "route": "mmorpg",
+        "name": "MMORPG游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80003,
+        "tid": 2066,
+        "route": "stand_alone",
+        "name": "单机主机类游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80004,
+        "tid": 2067,
+        "route": "slg",
+        "name": "SLG游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80005,
+        "tid": 2068,
+        "route": "tbs",
+        "name": "回合制策略游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80006,
+        "tid": 2069,
+        "route": "rts",
+        "name": "即时策略游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80007,
+        "tid": 2070,
+        "route": "moba",
+        "name": "MOBA游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80008,
+        "tid": 2071,
+        "route": "stg",
+        "name": "射击游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80009,
+        "tid": 2072,
+        "route": "spg",
+        "name": "体育竞速游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80010,
+        "tid": 2073,
+        "route": "act",
+        "name": "动作竞技游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80011,
+        "tid": 2074,
+        "route": "msc",
+        "name": "音游舞游",
+        "url": ""
+      },
+      {
+        "subChannelId": 80012,
+        "tid": 2075,
+        "route": "sim",
+        "name": "模拟经营游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80013,
+        "tid": 2076,
+        "route": "otome",
+        "name": "女性向游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80014,
+        "tid": 2077,
+        "route": "puz",
+        "name": "休闲/小游戏",
+        "url": ""
+      },
+      {
+        "subChannelId": 80015,
+        "tid": 2078,
+        "route": "sandbox",
+        "name": "沙盒类",
+        "url": ""
+      },
+      {
+        "subChannelId": 80016,
+        "tid": 2079,
+        "route": "other",
+        "name": "其他游戏",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 16,
+    "tid": 1009,
+    "route": "information",
+    "name": "资讯",
+    "url": "//www.bilibili.com/c/information/",
+    "icon": "homeicon/information/1",
+    "sub": [
+      {
+        "subChannelId": 160001,
+        "tid": 2080,
+        "route": "politics",
+        "name": "时政资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 160002,
+        "tid": 2081,
+        "route": "overseas",
+        "name": "海外资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 160003,
+        "tid": 2082,
+        "route": "social",
+        "name": "社会资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 160004,
+        "tid": 2083,
+        "route": "other",
+        "name": "综合资讯",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 14,
+    "tid": 1010,
+    "route": "knowledge",
+    "name": "知识",
+    "url": "//www.bilibili.com/c/knowledge/",
+    "icon": "homeicon/knowledge/1",
+    "sub": [
+      {
+        "subChannelId": 140001,
+        "tid": 2084,
+        "route": "exam",
+        "name": "应试教育",
+        "url": ""
+      },
+      {
+        "subChannelId": 140002,
+        "tid": 2085,
+        "route": "lang_skill",
+        "name": "非应试语言学习",
+        "url": ""
+      },
+      {
+        "subChannelId": 140003,
+        "tid": 2086,
+        "route": "campus",
+        "name": "大学专业知识",
+        "url": ""
+      },
+      {
+        "subChannelId": 140004,
+        "tid": 2087,
+        "route": "business",
+        "name": "商业财经",
+        "url": ""
+      },
+      {
+        "subChannelId": 140005,
+        "tid": 2088,
+        "route": "social_observation",
+        "name": "社会观察",
+        "url": ""
+      },
+      {
+        "subChannelId": 140006,
+        "tid": 2089,
+        "route": "politics",
+        "name": "时政解读",
+        "url": ""
+      },
+      {
+        "subChannelId": 140007,
+        "tid": 2090,
+        "route": "humanity_history",
+        "name": "人文历史",
+        "url": ""
+      },
+      {
+        "subChannelId": 140008,
+        "tid": 2091,
+        "route": "design",
+        "name": "设计艺术",
+        "url": ""
+      },
+      {
+        "subChannelId": 140009,
+        "tid": 2092,
+        "route": "psychology",
+        "name": "心理杂谈",
+        "url": ""
+      },
+      {
+        "subChannelId": 140010,
+        "tid": 2093,
+        "route": "career",
+        "name": "职场发展",
+        "url": ""
+      },
+      {
+        "subChannelId": 140011,
+        "tid": 2094,
+        "route": "science",
+        "name": "科学科普",
+        "url": ""
+      },
+      {
+        "subChannelId": 140012,
+        "tid": 2095,
+        "route": "other",
+        "name": "其他知识杂谈",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 25,
+    "tid": 1011,
+    "route": "ai",
+    "name": "人工智能",
+    "url": "//www.bilibili.com/c/ai/",
+    "icon": "homeicon/ai/1",
+    "sub": [
+      {
+        "subChannelId": 250001,
+        "tid": 2096,
+        "route": "tutorial",
+        "name": "AI学习",
+        "url": ""
+      },
+      {
+        "subChannelId": 250002,
+        "tid": 2097,
+        "route": "information",
+        "name": "AI资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 250003,
+        "tid": 2098,
+        "route": "other",
+        "name": "AI杂谈",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 15,
+    "tid": 1012,
+    "route": "tech",
+    "name": "科技数码",
+    "url": "//www.bilibili.com/c/tech/",
+    "icon": "homeicon/tech/1",
+    "sub": [
+      {
+        "subChannelId": 150001,
+        "tid": 2099,
+        "route": "computer",
+        "name": "电脑",
+        "url": ""
+      },
+      {
+        "subChannelId": 150002,
+        "tid": 2100,
+        "route": "phone",
+        "name": "手机",
+        "url": ""
+      },
+      {
+        "subChannelId": 150003,
+        "tid": 2101,
+        "route": "pad",
+        "name": "平板电脑",
+        "url": ""
+      },
+      {
+        "subChannelId": 150004,
+        "tid": 2102,
+        "route": "photography",
+        "name": "摄影摄像",
+        "url": ""
+      },
+      {
+        "subChannelId": 150005,
+        "tid": 2103,
+        "route": "machine",
+        "name": "工程机械",
+        "url": ""
+      },
+      {
+        "subChannelId": 150006,
+        "tid": 2104,
+        "route": "create",
+        "name": "自制发明/设备",
+        "url": ""
+      },
+      {
+        "subChannelId": 150007,
+        "tid": 2105,
+        "route": "other",
+        "name": "科技数码综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 19,
+    "tid": 1013,
+    "route": "car",
+    "name": "汽车",
+    "url": "//www.bilibili.com/c/car",
+    "icon": "homeicon/car/1",
+    "sub": [
+      {
+        "subChannelId": 190001,
+        "tid": 2106,
+        "route": "commentary",
+        "name": "汽车测评",
+        "url": ""
+      },
+      {
+        "subChannelId": 190002,
+        "tid": 2107,
+        "route": "culture",
+        "name": "汽车文化",
+        "url": ""
+      },
+      {
+        "subChannelId": 190003,
+        "tid": 2108,
+        "route": "life",
+        "name": "汽车生活",
+        "url": ""
+      },
+      {
+        "subChannelId": 190004,
+        "tid": 2109,
+        "route": "tech",
+        "name": "汽车技术",
+        "url": ""
+      },
+      {
+        "subChannelId": 190005,
+        "tid": 2110,
+        "route": "other",
+        "name": "汽车综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 20,
+    "tid": 1014,
+    "route": "fashion",
+    "name": "时尚美妆",
+    "url": "//www.bilibili.com/c/fashion/",
+    "icon": "homeicon/fashion/1",
+    "sub": [
+      {
+        "subChannelId": 200001,
+        "tid": 2111,
+        "route": "makeup",
+        "name": "美妆",
+        "url": ""
+      },
+      {
+        "subChannelId": 200002,
+        "tid": 2112,
+        "route": "skincare",
+        "name": "护肤",
+        "url": ""
+      },
+      {
+        "subChannelId": 200003,
+        "tid": 2113,
+        "route": "cos",
+        "name": "仿装cos",
+        "url": ""
+      },
+      {
+        "subChannelId": 200004,
+        "tid": 2114,
+        "route": "outfits",
+        "name": "鞋服穿搭",
+        "url": ""
+      },
+      {
+        "subChannelId": 200005,
+        "tid": 2115,
+        "route": "accessories",
+        "name": "箱包配饰",
+        "url": ""
+      },
+      {
+        "subChannelId": 200006,
+        "tid": 2116,
+        "route": "jewelry",
+        "name": "珠宝首饰",
+        "url": ""
+      },
+      {
+        "subChannelId": 200007,
+        "tid": 2117,
+        "route": "trick",
+        "name": "三坑",
+        "url": ""
+      },
+      {
+        "subChannelId": 200008,
+        "tid": 2118,
+        "route": "commentary",
+        "name": "时尚解读",
+        "url": ""
+      },
+      {
+        "subChannelId": 200009,
+        "tid": 2119,
+        "route": "other",
+        "name": "时尚综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 26,
+    "tid": 1015,
+    "route": "home",
+    "name": "家装房产",
+    "url": "//www.bilibili.com/c/home/",
+    "icon": "homeicon/home/1",
+    "sub": [
+      {
+        "subChannelId": 260001,
+        "tid": 2120,
+        "route": "trade",
+        "name": "买房租房",
+        "url": ""
+      },
+      {
+        "subChannelId": 260002,
+        "tid": 2121,
+        "route": "renovation",
+        "name": "家庭装修",
+        "url": ""
+      },
+      {
+        "subChannelId": 260003,
+        "tid": 2122,
+        "route": "furniture",
+        "name": "家居展示",
+        "url": ""
+      },
+      {
+        "subChannelId": 260004,
+        "tid": 2123,
+        "route": "appliances",
+        "name": "家用电器",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 27,
+    "tid": 1016,
+    "route": "outdoors",
+    "name": "户外潮流",
+    "url": "//www.bilibili.com/c/outdoors/",
+    "icon": "homeicon/outdoors/1",
+    "sub": [
+      {
+        "subChannelId": 270001,
+        "tid": 2124,
+        "route": "camping",
+        "name": "露营",
+        "url": ""
+      },
+      {
+        "subChannelId": 270002,
+        "tid": 2125,
+        "route": "hiking",
+        "name": "徒步",
+        "url": ""
+      },
+      {
+        "subChannelId": 270003,
+        "tid": 2126,
+        "route": "explore",
+        "name": "户外探秘",
+        "url": ""
+      },
+      {
+        "subChannelId": 270004,
+        "tid": 2127,
+        "route": "other",
+        "name": "户外综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 28,
+    "tid": 1017,
+    "route": "gym",
+    "name": "健身",
+    "url": "//www.bilibili.com/c/gym/",
+    "icon": "homeicon/gym/1",
+    "sub": [
+      {
+        "subChannelId": 280001,
+        "tid": 2128,
+        "route": "science",
+        "name": "健身科普",
+        "url": ""
+      },
+      {
+        "subChannelId": 280002,
+        "tid": 2129,
+        "route": "tutorial",
+        "name": "健身跟练教学",
+        "url": ""
+      },
+      {
+        "subChannelId": 280003,
+        "tid": 2130,
+        "route": "record",
+        "name": "健身记录",
+        "url": ""
+      },
+      {
+        "subChannelId": 280004,
+        "tid": 2131,
+        "route": "figure",
+        "name": "健身身材展示",
+        "url": ""
+      },
+      {
+        "subChannelId": 280005,
+        "tid": 2132,
+        "route": "other",
+        "name": "健身综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 21,
+    "tid": 1018,
+    "route": "sports",
+    "name": "体育运动",
+    "url": "//www.bilibili.com/c/sports/",
+    "icon": "homeicon/sports/1",
+    "sub": [
+      {
+        "subChannelId": 210001,
+        "tid": 2133,
+        "route": "trend",
+        "name": "潮流运动",
+        "url": ""
+      },
+      {
+        "subChannelId": 210002,
+        "tid": 2134,
+        "route": "football",
+        "name": "足球",
+        "url": ""
+      },
+      {
+        "subChannelId": 210003,
+        "tid": 2135,
+        "route": "basketball",
+        "name": "篮球",
+        "url": ""
+      },
+      {
+        "subChannelId": 210004,
+        "tid": 2136,
+        "route": "running",
+        "name": "跑步",
+        "url": ""
+      },
+      {
+        "subChannelId": 210005,
+        "tid": 2137,
+        "route": "kungfu",
+        "name": "武术",
+        "url": ""
+      },
+      {
+        "subChannelId": 210006,
+        "tid": 2138,
+        "route": "fighting",
+        "name": "格斗",
+        "url": ""
+      },
+      {
+        "subChannelId": 210007,
+        "tid": 2139,
+        "route": "badminton",
+        "name": "羽毛球",
+        "url": ""
+      },
+      {
+        "subChannelId": 210008,
+        "tid": 2140,
+        "route": "information",
+        "name": "体育资讯",
+        "url": ""
+      },
+      {
+        "subChannelId": 210009,
+        "tid": 2141,
+        "route": "match",
+        "name": "体育赛事",
+        "url": ""
+      },
+      {
+        "subChannelId": 210010,
+        "tid": 2142,
+        "route": "other",
+        "name": "体育综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 29,
+    "tid": 1019,
+    "route": "handmake",
+    "name": "手工",
+    "url": "//www.bilibili.com/c/handmake/",
+    "icon": "homeicon/handmake/1",
+    "sub": [
+      {
+        "subChannelId": 290001,
+        "tid": 2143,
+        "route": "handbook",
+        "name": "文具手帐",
+        "url": ""
+      },
+      {
+        "subChannelId": 290002,
+        "tid": 2144,
+        "route": "light",
+        "name": "轻手作",
+        "url": ""
+      },
+      {
+        "subChannelId": 290003,
+        "tid": 2145,
+        "route": "traditional",
+        "name": "传统手工艺",
+        "url": ""
+      },
+      {
+        "subChannelId": 290004,
+        "tid": 2146,
+        "route": "relief",
+        "name": "解压手工",
+        "url": ""
+      },
+      {
+        "subChannelId": 290005,
+        "tid": 2147,
+        "route": "diy",
+        "name": "DIY玩具",
+        "url": ""
+      },
+      {
+        "subChannelId": 290006,
+        "tid": 2148,
+        "route": "other",
+        "name": "其他手工",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 17,
+    "tid": 1020,
+    "route": "food",
+    "name": "美食",
+    "url": "//www.bilibili.com/c/food/",
+    "icon": "homeicon/food/1",
+    "sub": [
+      {
+        "subChannelId": 170001,
+        "tid": 2149,
+        "route": "make",
+        "name": "美食制作",
+        "url": ""
+      },
+      {
+        "subChannelId": 170002,
+        "tid": 2150,
+        "route": "detective",
+        "name": "美食探店",
+        "url": ""
+      },
+      {
+        "subChannelId": 170003,
+        "tid": 2151,
+        "route": "commentary",
+        "name": "美食测评",
+        "url": ""
+      },
+      {
+        "subChannelId": 170004,
+        "tid": 2152,
+        "route": "record",
+        "name": "美食记录",
+        "url": ""
+      },
+      {
+        "subChannelId": 170005,
+        "tid": 2153,
+        "route": "other",
+        "name": "美食综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 18,
+    "tid": 1021,
+    "route": "shortplay",
+    "name": "小剧场",
+    "url": "//www.bilibili.com/c/shortplay/",
+    "icon": "homeicon/shortplay/1",
+    "sub": [
+      {
+        "subChannelId": 180001,
+        "tid": 2154,
+        "route": "plot",
+        "name": "剧情演绎",
+        "url": ""
+      },
+      {
+        "subChannelId": 180001,
+        "tid": 2155,
+        "route": "lang",
+        "name": "语言类小剧场",
+        "url": ""
+      },
+      {
+        "subChannelId": 180001,
+        "tid": 2156,
+        "route": "up_variety",
+        "name": "UP主小综艺",
+        "url": ""
+      },
+      {
+        "subChannelId": 180001,
+        "tid": 2157,
+        "route": "interview",
+        "name": "街头采访",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 30,
+    "tid": 1022,
+    "route": "travel",
+    "name": "旅游出行",
+    "url": "//www.bilibili.com/c/travel/",
+    "icon": "homeicon/travel/1",
+    "sub": [
+      {
+        "subChannelId": 300001,
+        "tid": 2158,
+        "route": "record",
+        "name": "旅游记录",
+        "url": ""
+      },
+      {
+        "subChannelId": 300002,
+        "tid": 2159,
+        "route": "strategy",
+        "name": "旅游攻略",
+        "url": ""
+      },
+      {
+        "subChannelId": 300003,
+        "tid": 2160,
+        "route": "city",
+        "name": "城市出行",
+        "url": ""
+      },
+      {
+        "subChannelId": 300004,
+        "tid": 2161,
+        "route": "transport",
+        "name": "公共交通",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 31,
+    "tid": 1023,
+    "route": "rural",
+    "name": "三农",
+    "url": "//www.bilibili.com/c/rural/",
+    "icon": "homeicon/rural/2",
+    "sub": [
+      {
+        "subChannelId": 310001,
+        "tid": 2162,
+        "route": "planting",
+        "name": "农村种植",
+        "url": ""
+      },
+      {
+        "subChannelId": 310002,
+        "tid": 2163,
+        "route": "fishing",
+        "name": "赶海捕鱼",
+        "url": ""
+      },
+      {
+        "subChannelId": 310003,
+        "tid": 2164,
+        "route": "harvest",
+        "name": "打野采摘",
+        "url": ""
+      },
+      {
+        "subChannelId": 310004,
+        "tid": 2165,
+        "route": "tech",
+        "name": "农业技术",
+        "url": ""
+      },
+      {
+        "subChannelId": 310005,
+        "tid": 2166,
+        "route": "life",
+        "name": "农村生活",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 22,
+    "tid": 1024,
+    "route": "animal",
+    "name": "动物",
+    "url": "//www.bilibili.com/c/animal/",
+    "icon": "homeicon/animal/1",
+    "sub": [
+      {
+        "subChannelId": 220001,
+        "tid": 2167,
+        "route": "cat",
+        "name": "猫",
+        "url": ""
+      },
+      {
+        "subChannelId": 220002,
+        "tid": 2168,
+        "route": "dog",
+        "name": "狗",
+        "url": ""
+      },
+      {
+        "subChannelId": 220003,
+        "tid": 2169,
+        "route": "reptiles",
+        "name": "小宠异宠",
+        "url": ""
+      },
+      {
+        "subChannelId": 220004,
+        "tid": 2170,
+        "route": "science",
+        "name": "野生动物·动物解说科普",
+        "url": ""
+      },
+      {
+        "subChannelId": 220005,
+        "tid": 2171,
+        "route": "other",
+        "name": "动物综合·二创",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 32,
+    "tid": 1025,
+    "route": "parenting",
+    "name": "亲子",
+    "url": "//www.bilibili.com/c/parenting/",
+    "icon": "homeicon/parenting/1",
+    "sub": [
+      {
+        "subChannelId": 320001,
+        "tid": 2172,
+        "route": "pregnant_care",
+        "name": "孕产护理",
+        "url": ""
+      },
+      {
+        "subChannelId": 320002,
+        "tid": 2173,
+        "route": "infant_care",
+        "name": "婴幼护理",
+        "url": ""
+      },
+      {
+        "subChannelId": 320003,
+        "tid": 2174,
+        "route": "talent",
+        "name": "儿童才艺",
+        "url": ""
+      },
+      {
+        "subChannelId": 320004,
+        "tid": 2175,
+        "route": "cute",
+        "name": "萌娃",
+        "url": ""
+      },
+      {
+        "subChannelId": 320005,
+        "tid": 2176,
+        "route": "interaction",
+        "name": "亲子互动",
+        "url": ""
+      },
+      {
+        "subChannelId": 320006,
+        "tid": 2177,
+        "route": "education",
+        "name": "亲子教育",
+        "url": ""
+      },
+      {
+        "subChannelId": 320007,
+        "tid": 2178,
+        "route": "other",
+        "name": "亲子综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 33,
+    "tid": 1026,
+    "route": "health",
+    "name": "健康",
+    "url": "//www.bilibili.com/c/health/",
+    "icon": "homeicon/health/1",
+    "sub": [
+      {
+        "subChannelId": 330001,
+        "tid": 2179,
+        "route": "science",
+        "name": "健康科普",
+        "url": ""
+      },
+      {
+        "subChannelId": 330002,
+        "tid": 2180,
+        "route": "regimen",
+        "name": "养生",
+        "url": ""
+      },
+      {
+        "subChannelId": 330003,
+        "tid": 2181,
+        "route": "sexes",
+        "name": "两性知识",
+        "url": ""
+      },
+      {
+        "subChannelId": 330004,
+        "tid": 2182,
+        "route": "psychology",
+        "name": "心理健康",
+        "url": ""
+      },
+      {
+        "subChannelId": 330005,
+        "tid": 2183,
+        "route": "asmr",
+        "name": "助眠视频·ASMR",
+        "url": ""
+      },
+      {
+        "subChannelId": 330006,
+        "tid": 2184,
+        "route": "other",
+        "name": "医疗保健综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 34,
+    "tid": 1027,
+    "route": "emotion",
+    "name": "情感",
+    "url": "//www.bilibili.com/c/emotion/",
+    "icon": "homeicon/emotion/1",
+    "sub": [
+      {
+        "subChannelId": 340001,
+        "tid": 2185,
+        "route": "family",
+        "name": "家庭关系",
+        "url": ""
+      },
+      {
+        "subChannelId": 340002,
+        "tid": 2186,
+        "route": "romantic",
+        "name": "恋爱关系",
+        "url": ""
+      },
+      {
+        "subChannelId": 340003,
+        "tid": 2187,
+        "route": "interpersonal",
+        "name": "人际关系",
+        "url": ""
+      },
+      {
+        "subChannelId": 340004,
+        "tid": 2188,
+        "route": "growth",
+        "name": "自我成长",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 44,
+    "tid": 1028,
+    "route": "mysticism",
+    "name": "神秘学",
+    "url": "//www.bilibili.com/c/mysticism/",
+    "icon": "",
+    "sub": [
+      {
+        "subChannelId": 440001,
+        "tid": 2189,
+        "route": "tarot",
+        "name": "塔罗占卜",
+        "url": ""
+      },
+      {
+        "subChannelId": 440002,
+        "tid": 2190,
+        "route": "horoscope",
+        "name": "星座占星",
+        "url": ""
+      },
+      {
+        "subChannelId": 440003,
+        "tid": 2191,
+        "route": "metaphysics",
+        "name": "传统玄学",
+        "url": ""
+      },
+      {
+        "subChannelId": 440004,
+        "tid": 2192,
+        "route": "healing",
+        "name": "疗愈成长",
+        "url": ""
+      },
+      {
+        "subChannelId": 440005,
+        "tid": 2193,
+        "route": "other",
+        "name": "其他神秘学",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 23,
+    "tid": 1029,
+    "route": "vlog",
+    "name": "vlog",
+    "url": "//www.bilibili.com/c/vlog/",
+    "icon": "homeicon/vlog/1",
+    "sub": [
+      {
+        "subChannelId": 230001,
+        "tid": 2194,
+        "route": "life",
+        "name": "中外生活vlog",
+        "url": ""
+      },
+      {
+        "subChannelId": 230002,
+        "tid": 2195,
+        "route": "student",
+        "name": "学生vlog",
+        "url": ""
+      },
+      {
+        "subChannelId": 230003,
+        "tid": 2196,
+        "route": "career",
+        "name": "职业vlog",
+        "url": ""
+      },
+      {
+        "subChannelId": 230004,
+        "tid": 2197,
+        "route": "other",
+        "name": "其他vlog",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 35,
+    "tid": 1030,
+    "route": "life_joy",
+    "name": "生活兴趣",
+    "url": "//www.bilibili.com/c/life_joy/",
+    "icon": "homeicon/life_joy/1",
+    "sub": [
+      {
+        "subChannelId": 350001,
+        "tid": 2198,
+        "route": "leisure",
+        "name": "休闲玩乐",
+        "url": ""
+      },
+      {
+        "subChannelId": 350002,
+        "tid": 2199,
+        "route": "on_site",
+        "name": "线下演出",
+        "url": ""
+      },
+      {
+        "subChannelId": 350003,
+        "tid": 2200,
+        "route": "artistic_products",
+        "name": "文玩文创",
+        "url": ""
+      },
+      {
+        "subChannelId": 350004,
+        "tid": 2201,
+        "route": "trendy_toys",
+        "name": "潮玩玩具",
+        "url": ""
+      },
+      {
+        "subChannelId": 350005,
+        "tid": 2202,
+        "route": "other",
+        "name": "兴趣综合",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  },
+  {
+    "channelId": 36,
+    "tid": 1031,
+    "route": "life_experience",
+    "name": "生活经验",
+    "url": "//www.bilibili.com/c/life_experience/",
+    "icon": "homeicon/life_experience/1",
+    "sub": [
+      {
+        "subChannelId": 360001,
+        "tid": 2203,
+        "route": "skills",
+        "name": "生活技能",
+        "url": ""
+      },
+      {
+        "subChannelId": 360002,
+        "tid": 2204,
+        "route": "procedures",
+        "name": "办事流程",
+        "url": ""
+      },
+      {
+        "subChannelId": 360003,
+        "tid": 2205,
+        "route": "marriage",
+        "name": "婚嫁",
+        "url": ""
+      }
+    ],
+    "config": {
+      "enableSub": 0
+    }
+  }
+]

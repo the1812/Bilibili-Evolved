@@ -85,6 +85,17 @@
 
 在顶栏的视频动态中, 无论标题多长总是完全展开.
 
+### [动态分组过滤](../../registry/dist/components/feeds/group-filter.js)
+`feedsGroupFilter`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/group-filter.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/group-filter.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/group-filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/group-filter.js)
+
+by [@Rinne](https://github.com/OharaRinneY)
+
+按照关注分组筛选动态
+
 ### [隐藏动态评论预览](../../registry/dist/components/feeds/hide-comment-preview.js)
 `hideFeedsCommentPreview`
 
@@ -608,7 +619,7 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/special-danmaku.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/special-danmaku.js)
 
-移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.
+移除高亮弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.
 
 ### [v1 风格设置面板](../../registry/dist/components/style/v1-panel.js)
 `v1PanelStyle`
@@ -965,6 +976,17 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/view-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/view-cover.js)
 
 在视频页面中, 可从功能面板中查看封面.
+
+### [稍后再看页面-重定向](../../registry/dist/components/utils/watchlater-page-redirect.js)
+`watchlaterPageRedirect`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/watchlater-page-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/watchlater-page-redirect.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/watchlater-page-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/watchlater-page-redirect.js)
+
+by [@magicFeirl](https://github.com/magicFeirl)
+
+重定向**稍后再看页面**到普通视频页面，和`稍后再看重定向`组件的区别在于，该组件是在进入稍后再看的视频页面后进行重定向，而非直接替换链接到普通视频的链接，用于补充`稍后再看重定向`组件的功能。
 
 ### [稍后再看重定向](../../registry/dist/components/utils/watchlater-redirect.js)
 `watchlaterRedirect`

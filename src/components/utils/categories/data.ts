@@ -1,4 +1,5 @@
 import raw from './raw.json'
+import tidV2 from './tid-v2.json'
 
 export interface SubCategory {
   name: string
@@ -90,6 +91,14 @@ secondaryCategories.forEach(it => {
 })
 export const categories = generalCategories
 export const categoryCodes = Object.fromEntries(mainCategories.map(it => [it.route, it.tid]))
+export const categoryCodesV2 = Object.fromEntries(
+  mainCategories
+    .map(it => {
+      const tid = tidV2.find(t => t.route === it.route)?.tid
+      return [it.route, tid]
+    })
+    .filter(it => it[1] !== undefined),
+)
 export const categoryLinks = Object.fromEntries(
   Object.values(generalCategories).map(data => [data.icon, data.link]),
 )

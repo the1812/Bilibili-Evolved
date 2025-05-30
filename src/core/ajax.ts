@@ -194,27 +194,45 @@ export const responsiveGetPages = <T = any>(config: {
     responsivePromise = new Promise(resolveResponsive => {
       ;(async () => {
         const { api, getList, getTotal } = config
-        let page = 1
         let total = Infinity
-        const result = []
-        while (result.length < total) {
-          const json = await api(page)
+        const result: T[] = []
+
+        const fetchPage = async (p: number): Promise<T[]> => {
+          const json = await api(p)
           if (json.code !== 0) {
             console.warn(
-              `api failed in ajax.getPages. message = ${json.message}, page = ${page}, total = ${total}, api = `,
+              `api failed in ajax.getPages. message = ${json.message}, page = ${p}, total = ${total}, api = `,
               api,
             )
+            return []
           }
-          const list = getList(json)
-          result.push(...list)
-          if (page === 1) {
-            resolveResponsive(result)
-          }
-          page++
-          if (total === Infinity) {
-            total = getTotal(json)
+          return getList(json)
+        }
+
+        // 请求第一次获得 total
+        const firstReq = await api(1)
+        result.push(...getList(firstReq))
+
+        total = getTotal(firstReq)
+        const pageSize = getList(firstReq).length || 1 // 防止为 0
+        const totalPages = Math.ceil(total / pageSize)
+        resolveResponsive(result) // 第一页
+        if (totalPages === 1) {
+          resolveTotal(result)
+          return
+        }
+        // 收集 Promise，每 5 个为一个 batch 运行
+        const batchSize = 5
+        let batch: Promise<T[]>[] = []
+        for (let i = 2; i <= totalPages; i++) {
+          batch.push(fetchPage(i))
+          if (batch.length === batchSize || i === totalPages) {
+            const lists = await Promise.all(batch)
+            result.push(...lists.flat())
+            batch = []
           }
         }
+        // 等所有并发完成
         resolveTotal(result)
       })()
     })
@@ -237,6 +255,7 @@ export const getPages = async <T = any>(config: {
   const result = await total
   return result
 }
+
 /** bilibili API 标准响应 */
 export interface BilibiliApiResponse {
   code: number
@@ -246,6 +265,7 @@ export interface BilibiliApiResponse {
   data: any
   result?: any
 }
+
 /**
  * 进行 bilibili API 标准响应处理
  * @param apiPromise 运行中的 API Promise
