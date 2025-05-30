@@ -26,6 +26,22 @@ body.disable-highlight-danmaku-style {
     }
   }
 }
+body.disable-vip-danmaku-style {
+  .bili-danmaku-x-dm-vip,
+  .bili-dm-vip {
+    display: contents !important;
+    text-shadow: inherit !important;
+  }
+  :where(.bili-dm, .bili-danmaku-x-dm):not([style*='--textShadow']) {
+    --textShadow: var(--danmaku-text-shadow);
+  }
+  .bili-danmaku-x-colorful {
+    background-clip: unset !important;
+    background-image: none !important;
+    --textShadow: var(--danmaku-text-shadow);
+    text-shadow: var(--textShadow) !important;
+  }
+}
 body.disable-up-danmaku-style {
   .bili-danmaku-x-up,
   .bili-dm.bili-up,
@@ -38,16 +54,6 @@ body.disable-up-danmaku-style {
     .b-danmaku-up-tip {
       display: none !important;
     }
-  }
-}
-body.disable-vip-danmaku-style {
-  .bili-danmaku-x-dm-vip,
-  .bili-dm-vip {
-    display: contents !important;
-    text-shadow: inherit !important;
-  }
-  :where(.bili-dm, .bili-danmaku-x-dm):not([style*='--textShadow']) {
-    --textShadow: var(--danmaku-text-shadow);
   }
 }
 body.disable-upSlogan-danmaku-style {

@@ -18,10 +18,12 @@
   ul,
   ul li {
     list-style: disc;
+    font-size: inherit;
   }
   ol,
   ol li {
     list-style: decimal;
+    font-size: inherit;
   }
   ul,
   ol {
