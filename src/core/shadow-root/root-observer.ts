@@ -1,4 +1,4 @@
-import { ShadowRootEvents } from './types'
+import type { ShadowRootEvents } from './types'
 
 export abstract class ShadowRootObserver extends EventTarget {
   static queryAllShadowRoots(

@@ -135,7 +135,7 @@ import {
 
 import { popupProps, usePopup } from '../mixins'
 import type { HistoryItem, TypeFilter } from './types'
-import { getHistoryItems, group, HistoryType } from './types'
+import { getHistoryItems, group, HistoryType, navbarFilterTypes } from './types'
 
 function search(this: InstanceType<typeof ThisComponent>) {
   this.reloadHistoryItems()

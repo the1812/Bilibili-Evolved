@@ -2,9 +2,9 @@
   <div ref="element" class="multiple-widgets">
     <VPopup
       ref="medalPopup"
-      v-model:open="medalOpen"
+      v-model="medalOpen"
       class="badge-popup widgets-popup medal"
-      :trigger-element="medalButton"
+      :trigger-element="$refs.medalButton"
     >
       <ul>
         <li
@@ -28,9 +28,9 @@
 
     <VPopup
       ref="titlePopup"
-      v-model:open="titleOpen"
+      v-model="titleOpen"
       class="badge-popup widgets-popup title"
-      :trigger-element="titleButton"
+      :trigger-element="$refs.titleButton"
     >
       <ul>
         <li

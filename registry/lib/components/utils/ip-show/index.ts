@@ -1,7 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable yoda */
 import { defineComponentMetadata } from '@/components/define'
-import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
+import type { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
 import { select } from '@/core/spin-query'
 
 // 新版评论区IP属地获取

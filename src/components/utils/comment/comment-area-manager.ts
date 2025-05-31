@@ -1,6 +1,6 @@
 import { allMutations, childList } from '@/core/observer'
 import { getCommentArea } from './comment-area'
-import {
+import type {
   CommentAreaCallback,
   CommentCallbackInput,
   CommentCallbackPair,

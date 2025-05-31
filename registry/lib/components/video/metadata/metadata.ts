@@ -1,15 +1,17 @@
-import { VideoInfo, VideoPageInfo } from '@/components/video/video-info'
-import { VideoQuality } from '@/components/video/video-quality'
+import type { VideoPageInfo } from '@/components/video/video-info'
+import { VideoInfo } from '@/components/video/video-info'
+import type { VideoQuality } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { name as componentName, title as pluginTitle } from '.'
-import { FieldsMode, Options } from './options'
+import type { Options } from './options'
+import { FieldsMode } from './options'
 
 export type MetadataType = 'ffmetadata' | 'ogm'
 
-function escape(s: string) {
+function mescape(s: string) {
   return s.replace(/[=;#\\\n]/g, r => `\\${r}`)
 }
 
@@ -57,7 +59,7 @@ async function fetchMetadata(aid: string = unsafeWindow.aid, cid: string = unsaf
 }
 
 function ff(key: string, value: any, prefix = true) {
-  return `${prefix ? 'bilibili_' : ''}${key}=${escape(lodash.toString(value))}`
+  return `${prefix ? 'bilibili_' : ''}${key}=${mescape(lodash.toString(value))}`
 }
 
 async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = unsafeWindow.cid) {

@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref, onBeforeMount } from 'vue'
 import { getComponentSettings } from '@/core/settings'
-import { ChatPanelFitOptions, ChatPanelFitOptionsMinWidth } from './options'
+import { type ChatPanelFitOptions, ChatPanelFitOptionsMinWidth } from './options'
 
 const options = reactive(getComponentSettings<ChatPanelFitOptions>('liveChatPanelFit').options)
 onBeforeMount(() => {

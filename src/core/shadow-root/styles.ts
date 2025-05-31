@@ -1,7 +1,8 @@
 import { addComponentListener, removeComponentListener } from '../settings'
 import { deleteValue, getRandomId } from '../utils'
-import { ShadowDomEntry } from './dom-entry'
-import { ShadowDomObserver, shadowDomObserver } from './dom-observer'
+import type { ShadowDomEntry } from './dom-entry'
+import type { ShadowDomObserver } from './dom-observer'
+import { shadowDomObserver } from './dom-observer'
 
 export interface ShadowRootStyleEntry {
   id: string

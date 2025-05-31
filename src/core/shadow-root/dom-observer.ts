@@ -1,7 +1,8 @@
 import { contentLoaded } from '../life-cycle'
 import { childListSubtree } from '../observer'
 import { deleteValue } from '../utils'
-import { ShadowDomCallback, ShadowDomEntry } from './dom-entry'
+import type { ShadowDomCallback } from './dom-entry'
+import { ShadowDomEntry } from './dom-entry'
 import { ShadowRootObserver } from './root-observer'
 import { ShadowRootEvents } from './types'
 

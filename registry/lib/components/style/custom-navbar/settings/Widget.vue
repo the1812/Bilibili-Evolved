@@ -6,19 +6,7 @@
     @click="toggleNavbarSettings()"
   />
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { DefaultWidget } from '@/ui'
 import { loadNavbarSettings, toggleNavbarSettings } from './vm'
-
-export default Vue.extend({
-  components: {
-    DefaultWidget,
-  },
-  methods: {
-    async loadNavbarSettings() {
-      await loadNavbarSettings()
-    },
-    toggleNavbarSettings,
-  },
-})
 </script>

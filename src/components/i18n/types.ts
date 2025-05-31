@@ -10,7 +10,7 @@ export interface LanguagePack {
   map?: [string, Translation][]
   regex?: RegexTranslation
 }
-export interface Options {
+export type Options = {
   language: string
   translator: string
 }

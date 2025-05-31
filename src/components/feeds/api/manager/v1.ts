@@ -112,9 +112,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     return [currentText, currentTitle].filter(it => Boolean(it)).join('\n')
   }
   const getNumber = async (selector: string) => {
-    const result = Number.parseIntarseIntarseIntarseIntarseIntarseIntarseIntarseIntarseIntarseInt(
-      await getSimpleText(selector),
-    )
+    const result = Number.parseInt(await getSimpleText(selector))
     if (isNaN(result)) {
       return 0
     }

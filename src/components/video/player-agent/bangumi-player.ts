@@ -1,6 +1,6 @@
 import { PlayerAgent, selectorWrap } from './base'
 import { bpxSelectors } from './bpx'
-import { AgentType, PlayerQuery, ElementQuery } from './types'
+import type { AgentType, PlayerQuery, ElementQuery } from './types'
 
 export class BangumiPlayerAgent extends PlayerAgent {
   type: AgentType = 'bangumi'
@@ -10,10 +10,6 @@ export class BangumiPlayerAgent extends PlayerAgent {
     bilibiliPlayer: '#bilibili-player',
     ...bpxSelectors,
   }) as PlayerQuery<ElementQuery>
-
-  constructor() {
-    super()
-  }
 
   seek(time: number) {
     const seekResult = super.seek(time)

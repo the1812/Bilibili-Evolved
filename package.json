@@ -80,7 +80,7 @@
     "protobufjs": "^6.11.2",
     "streamsaver": "^2.0.6",
     "tippy.js": "^6.3.1",
-    "vue": "^3.3.4"
+    "vue": "3.5.16"
   },
   "pnpm": {
     "overrides": {

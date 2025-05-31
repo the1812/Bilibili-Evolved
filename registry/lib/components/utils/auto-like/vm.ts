@@ -2,47 +2,34 @@ import { select } from '@/core/spin-query'
 import { mountVueComponent } from '@/core/utils'
 import { getData } from '@/plugins/data'
 
+import type blackListVue from './blackList.vue'
+
 export const BlackListDataKey = 'like-black-List.data'
+let blacklistVM: InstanceType<typeof blackListVue> | null = null
 
-type SettingsVmType = Vue & {
-  toggle: () => void
-  triggerElement: HTMLElement
-  list: string[]
-  titleName: string
+export const loadlikeButton = async () => {
+  const LikeButton = await import('./like.vue')
+  const [el] = mountVueComponent(LikeButton)
+  const bg = (await select('#app')) as HTMLElement
+  bg.insertAdjacentElement('afterbegin', el)
 }
-let blacklistVM: SettingsVmType = null
 
-export const setBlackListProps = (element: HTMLElement) => {
-  if (!blacklistVM) {
+export const loadBlackList = async (element: HTMLElement) => {
+  if (blacklistVM) {
     return
   }
-  blacklistVM.triggerElement = element
-  const blackList = getData(BlackListDataKey)
-  blacklistVM.list = blackList[0].users
-  blacklistVM.titleName = '黑名单'
-}
-export const loadlikeButton = async () => {
-  const LikeButton = await import('./like.vue').then(m => m.default)
-  const blackList = getData(BlackListDataKey)
-  const likebuttonVM: Vue & { list: string[] } = mountVueComponent(LikeButton)
-  likebuttonVM.list = blackList[0].users
-  const bg = (await select('#app')) as HTMLElement
-  bg.insertAdjacentElement('afterbegin', likebuttonVM.$el)
-}
-
-export const loadBlackList = async () => {
-  if (blacklistVM) {
-    return false
-  }
-  const blackList = await import('./blackList.vue').then(m => m.default)
-  blacklistVM = mountVueComponent(blackList)
-  document.body.insertAdjacentElement('beforeend', blacklistVM.$el)
-  return true
+  const blackList = await import('./blackList.vue')
+  const [el, vm] = mountVueComponent(blackList, {
+    triggerElement: element,
+    list: getData(BlackListDataKey)[0].users,
+    titleName: '黑名单',
+  })
+  blacklistVM = vm
+  document.body.insertAdjacentElement('beforeend', el)
 }
 
 export const toggleBlackList = async () => {
-  if (!blacklistVM) {
-    await loadBlackList()
+  if (blacklistVM) {
+    blacklistVM.isOpen = false
   }
-  blacklistVM?.toggle()
 }

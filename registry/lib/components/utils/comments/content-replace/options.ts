@@ -1,4 +1,4 @@
-import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import { defineOptionsMetadata, type OptionsOfMetadata } from '@/components/define'
 
 export const commentContentReplaceOptions = defineOptionsMetadata({
   replaceMap: {

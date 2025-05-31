@@ -166,7 +166,7 @@ export class FeedsCardsManagerV2 extends FeedsCardsManager {
     if (!isNodeValid(node)) {
       return
     }
-    const vueData = getVue2Data(node)
+    const vueData = getVueData(node)
     if (!vueData) {
       return
     }

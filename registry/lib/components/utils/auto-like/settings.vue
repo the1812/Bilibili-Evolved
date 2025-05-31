@@ -1,44 +1,23 @@
 <template>
   <div>
     <div class="custom-black-list-extra-options">
-      <VButton ref="button" @mouseover="setBlackListProps" @click="toggleBlackList">
+      <VButton ref="button" @mouseover="setBlackListPropsWrapper" @click="toggleBlackList">
         黑名单
         <VIcon icon="right-arrow" :size="16" />
       </VButton>
     </div>
   </div>
 </template>
-<script lang="ts">
-import { VIcon, VButton } from '@/ui'
-import { loadBlackList, setBlackListProps, toggleBlackList } from './vm'
+<script lang="ts" setup>
+import { useTemplateRef } from 'vue'
+import { VIcon, type VButton } from '@/ui'
+import { loadBlackList, toggleBlackList } from './vm'
 
-export default Vue.extend({
-  components: {
-    VIcon,
-    VButton,
-  },
-  data() {
-    return {
-      isFirstLoad: false,
-    }
-  },
-  methods: {
-    toggle() {
-      this.$refs.popup.toggle()
-    },
-    async setBlackListProps() {
-      if (this.isFirstLoad) {
-        return
-      }
-      this.isFirstLoad = await loadBlackList()
-      if (this.isFirstLoad) {
-        const triggerButton = this.$refs.button.$el as HTMLElement
-        setBlackListProps(triggerButton)
-      }
-    },
-    toggleBlackList,
-  },
-})
+const button = useTemplateRef<InstanceType<typeof VButton>>('button')
+
+const setBlackListPropsWrapper = async () => {
+  await loadBlackList(button.value.$el as HTMLElement)
+}
 </script>
 <style lang="scss">
 .custom-black-list-extra-options {

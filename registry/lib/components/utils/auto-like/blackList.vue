@@ -1,6 +1,5 @@
 <template>
   <VPopup
-    ref="popup"
     v-model="isOpen"
     class="like-black-list"
     fixed
@@ -44,59 +43,47 @@
     </div>
   </VPopup>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
+import { ref, defineProps, defineEmits, watch, useTemplateRef } from 'vue'
 import { VPopup, TextBox, VIcon, VButton } from '@/ui'
 
-export default Vue.extend({
-  components: {
-    VPopup,
-    TextBox,
-    VIcon,
-    VButton,
-  },
-  props: {
-    triggerElement: {
-      type: HTMLElement,
-      default: null,
-    },
-    list: {
-      type: Array,
-      default: null,
-    },
-    titleName: {
-      type: String,
-      default: '',
-    },
-  },
-  data() {
-    return {
-      isOpen: false,
-      isLoaded: false,
-      name: '',
-    }
-  },
-  async mounted() {
-    this.isLoaded = true
-  },
-  methods: {
-    toggle() {
-      this.$refs.popup.toggle()
-    },
-    changeName(val: string) {
-      this.name = val
-    },
-    add() {
-      if (this.name.length && !this.list.includes(this.name)) {
-        // eslint-disable-next-line vue/no-mutating-props
-        this.list.push(this.name)
-      }
-      this.name = ''
-    },
-    toggleVisible(item: string) {
-      // eslint-disable-next-line vue/no-mutating-props
-      this.list.splice(this.list.indexOf(item), 1)
-    },
-  },
+const props = defineProps<{
+  triggerElement?: HTMLElement | null
+  list?: string[]
+  titleName?: string
+}>()
+
+const emit = defineEmits(['update:list'])
+
+const isOpen = ref(false)
+const isLoaded = ref(false)
+const name = ref('')
+
+const list = ref<string[]>(props.list ? [...props.list] : [])
+
+const changeName = (val: string) => {
+  name.value = val
+}
+
+const add = () => {
+  if (name.value.length && !list.value.includes(name.value)) {
+    list.value.push(name.value)
+    emit('update:list', [...list.value])
+  }
+  name.value = ''
+}
+
+function toggleVisible(item: string) {
+  const idx = list.value.indexOf(item)
+  if (idx !== -1) {
+    list.value.splice(idx, 1)
+    emit('update:list', [...list.value])
+  }
+}
+
+isLoaded.value = true
+defineExpose({
+  isOpen,
 })
 </script>
 
