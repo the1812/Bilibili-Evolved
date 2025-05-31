@@ -460,10 +460,6 @@
       @include color("2");
     }
   }
-  .fans-medal-level {
-    @include background-color("2");
-    @include foreground-color();
-  }
 }
 .chat-control-panel .bottom{
   .content {

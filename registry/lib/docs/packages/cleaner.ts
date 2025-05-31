@@ -11,7 +11,6 @@ export const pack: Package = {
     'disableSpecialDanmaku',
     'simplifyComments',
     'simplifyLiveroom',
-    'simplifyHome',
     'collapseLiveSideBar',
     'hideRelatedVideos',
     'hideRecommendedLive',

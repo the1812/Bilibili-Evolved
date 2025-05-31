@@ -2,11 +2,21 @@
   <div class="video-screenshot-thumbnail">
     <img v-if="objectUrl" :src="objectUrl" />
     <div v-if="objectUrl" class="mask">
-      <a ref="link" class="link" style="display: none" :href="objectUrl" :download="filename"></a>
+      <a
+        ref="link"
+        target="_blank"
+        class="link"
+        style="display: none"
+        :href="objectUrl"
+        :download="filename"
+      ></a>
       <button class="save" title="保存" @click="save">
         <VIcon :size="28" icon="mdi-content-save-outline"></VIcon>
       </button>
-      <button title="丢弃" class="discard" @click="discard">
+      <button class="copy" title="复制" @click="copy">
+        <VIcon :size="24" :icon="showCopyTip ? 'mdi-check' : 'mdi-content-copy'"></VIcon>
+      </button>
+      <button class="discard" title="丢弃" @click="discard">
         <VIcon :size="28" icon="mdi-delete-forever-outline"></VIcon>
       </button>
       <span class="time">{{ time }}</span>
@@ -18,22 +28,15 @@
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
 import { VIcon } from '@/ui'
+import { Screenshot } from './screenshot'
 
 export default defineComponent({
   components: {
     VIcon,
   },
   props: {
-    objectUrl: {
-      type: String,
-      required: true,
-    },
-    filename: {
-      type: String,
-      required: true,
-    },
-    time: {
-      type: String,
+    screenshot: {
+      type: Screenshot,
       required: true,
     },
   },
@@ -41,12 +44,46 @@ export default defineComponent({
   setup: () => ({
     link: ref(null) as Ref<HTMLAnchorElement | null>,
   }),
+  data() {
+    return {
+      showCopyTip: false,
+    }
+  },
+  computed: {
+    objectUrl() {
+      return this.screenshot.url
+    },
+    filename() {
+      return this.screenshot.filename
+    },
+    time() {
+      return this.screenshot.time
+    },
+  },
   methods: {
     discard() {
       this.$emit('discard')
     },
+    async copy() {
+      const screenshot = this.screenshot as Screenshot
+      await navigator.clipboard.write([
+        new ClipboardItem({ [screenshot.mimeType]: screenshot.blob }),
+      ])
+      this.showCopyTip = true
+      setTimeout(() => {
+        this.showCopyTip = false
+      }, 1000)
+    },
     save() {
-      this.link.click()
+      const link = this.link as HTMLAnchorElement
+      link.addEventListener(
+        'click',
+        e => {
+          e.stopPropagation()
+        },
+        { capture: true, once: true },
+      )
+      link.click()
       this.discard()
     },
   },

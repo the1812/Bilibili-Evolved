@@ -37,6 +37,10 @@ export const component = defineComponentMetadata({
       'zh-CN': '提前执行代码以尽快静音.',
     },
     async setup() {
+      const { isComponentEnabled } = await import('@/core/settings')
+      if (!isComponentEnabled('liveHomeMute')) {
+        return
+      }
       const { matchUrlPattern } = await import('@/core/utils')
       if (!matchUrlPattern(liveHome)) {
         return

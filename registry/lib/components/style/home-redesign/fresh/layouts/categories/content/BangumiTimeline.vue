@@ -370,7 +370,6 @@ export default defineComponent({
     &-item {
       @include h-center(4px);
       @include border-card();
-      background-color: var(--home-base-color);
       scroll-snap-align: start;
       overflow: hidden;
       padding: 0 4px 0 16px;
@@ -448,7 +447,12 @@ export default defineComponent({
     }
     &-seasons-container {
       @include h-stretch();
-      @include scroll-mask-x(18px, var(--home-base-color));
+      body:not(.dark) & {
+        @include scroll-mask-x(18px, #fdfdfd);
+      }
+      body.dark & {
+        @include scroll-mask-x(18px, #222);
+      }
       width: 0;
       flex: 1 0 0;
       margin: 0 2px;

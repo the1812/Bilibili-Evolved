@@ -9,9 +9,11 @@ import { compareQuality } from '../error'
 import type { DownloadVideoApi, DownloadVideoFragment, DownloadVideoInputItem } from '../types'
 import { DownloadVideoInfo } from '../types'
 import { bangumiApi, videoApi } from './url'
+import type { Options } from '..'
+import { getComponentSettings } from '@/core/settings'
 
 /** dash 格式更明确的扩展名 */
-export const DashExtensions = {
+export const DefaultDashExtensions = {
   video: '.mp4',
   audio: '.m4a',
   flacAudio: '.flac',
@@ -25,7 +27,7 @@ export enum DashCodec {
   Av1 = 'AV1',
 }
 export interface Dash {
-  type: keyof typeof DashExtensions
+  type: keyof typeof DefaultDashExtensions
   bandWidth: number
   codecs: string
   codecId: number
@@ -48,12 +50,25 @@ export interface DashFilters {
   video?: (dash: VideoDash) => boolean
   audio?: (dash: AudioDash) => boolean
 }
+const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => {
+  const { options } = getComponentSettings<Options>('downloadVideo')
+  if (type === 'video') {
+    return options.dashVideoExtension
+  }
+  if (type === 'audio') {
+    return options.dashAudioExtension
+  }
+  if (type === 'flacAudio') {
+    return options.dashFlacAudioExtension
+  }
+  return DefaultDashExtensions[type] ?? DashFragmentExtension
+}
 const dashToFragment = (dash: Dash): DownloadVideoFragment => ({
   url: dash.downloadUrl,
   backupUrls: dash.backupUrls,
   length: dash.duration,
   size: Math.trunc((dash.bandWidth * dash.duration) / 8),
-  extension: DashExtensions[dash.type] ?? DashFragmentExtension,
+  extension: getDashExtensions(dash.type),
 })
 export const dashToFragments = (info: {
   videoDashes: VideoDash[]
@@ -171,13 +186,31 @@ const downloadDash = async (
     videoDashes,
     videoCodec: codec,
   })
-  const qualities = (data.accept_quality as number[])
-    // .filter(qn => (
-    //   // 去掉当前编码不匹配的 quality
-    //   (video as any[]).some(d => d.id === qn && parseVideoCodec(d.codecid) === codec)
-    // ))
-    .map(qn => allQualities.find(q => q.value === qn))
-    .filter(q => q !== undefined)
+  const qualities = (() => {
+    const filterByCodec = (preferredCodec: DashCodec | null) => {
+      return (data.accept_quality as number[])
+        .filter(qn => {
+          if (preferredCodec !== null) {
+            return (video as any[]).some(
+              d => d.id === qn && parseVideoCodec(d.codecid) === preferredCodec,
+            )
+          }
+          return true
+        })
+        .map(qn => allQualities.find(q => q.value === qn))
+        .filter(q => q !== undefined)
+    }
+    const allAvailableQualities = filterByCodec(codec)
+    if (allAvailableQualities.length > 0) {
+      return allAvailableQualities
+    }
+    const { options } = getComponentSettings<Options>('downloadVideo')
+    const fallbackQualities = filterByCodec(options.dashCodecFallback)
+    if (fallbackQualities.length > 0) {
+      return fallbackQualities
+    }
+    return filterByCodec(null)
+  })()
   const info = new DownloadVideoInfo({
     input,
     jsonData: data,
@@ -192,21 +225,21 @@ export const videoDashAvc: DownloadVideoApi = {
   name: 'video.dash.avc',
   displayName: 'dash (AVC/H.264)',
   description:
-    '音画分离的 mp4 格式, 编码为 H.264, 体积较大, 兼容性较好. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
+    '音画分离的 mp4 格式, 编码为 H.264, 体积较大, 兼容性较好. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会回退到设置中设定的 DASH 回退编码.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Avc }),
 }
 export const videoDashHevc: DownloadVideoApi = {
   name: 'video.dash.hevc',
   displayName: 'dash (HEVC/H.265)',
   description:
-    '音画分离的 mp4 格式, 编码为 H.265, 体积中等, 兼容性较差. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
+    '音画分离的 mp4 格式, 编码为 H.265, 体积中等, 兼容性较差. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会回退到设置中设定的 DASH 回退编码.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Hevc }),
 }
 export const videoDashAv1: DownloadVideoApi = {
   name: 'video.dash.av1',
   displayName: 'dash (AV1)',
   description:
-    '音画分离的 mp4 格式, 编码为 AV1, 体积较小, 兼容性中等. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会自动选择其他同清晰度的编码格式.',
+    '音画分离的 mp4 格式, 编码为 AV1, 体积较小, 兼容性中等. 下载后可以合并为单个 mp4 文件. 如果视频源没有此编码, 则会回退到设置中设定的 DASH 回退编码.',
   downloadVideoInfo: async input => downloadDash(input, { codec: DashCodec.Av1 }),
 }
 export const videoAudioDash: DownloadVideoApi = {

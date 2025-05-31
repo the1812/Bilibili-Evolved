@@ -4,9 +4,7 @@
       <VideoScreenshot
         v-for="screenshot of screenshots"
         :key="screenshot.id"
-        :filename="screenshot.filename"
-        :object-url="screenshot.url"
-        :time="screenshot.time"
+        :screenshot="screenshot"
         @discard="discard(screenshot)"
       ></VideoScreenshot>
     </transition-group>

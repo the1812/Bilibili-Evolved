@@ -1,0 +1,86 @@
+body.simplifyHome-switch {
+  &-carousel {
+    .recommended-swipe.grid-anchor {
+      display: none !important;
+    }
+  }
+
+  &-categories {
+    .z-top-container.has-menu {
+      height: auto !important;
+      min-height: unset !important;
+    }
+
+    .bili-header-m>.bili-wrapper {
+      visibility: hidden !important;
+      height: 18px !important;
+    }
+
+    .primary-menu-itnl {
+      visibility: hidden !important;
+      height: 24px !important;
+      padding: 0 !important;
+    }
+
+    .bili-header__channel {
+      height: 12px !important;
+    }
+
+    .bili-header__channel>* {
+      display: none !important;
+    }
+
+    &.header-v3 .bili-wrapper {
+      padding-top: 8px !important;
+      border-top: none !important;
+    }
+  }
+
+  &-trends {
+    .first-screen #reportFirst1 {
+      display: none !important;
+    }
+
+    .first-screen .space-between {
+      margin-bottom: 0 !important;
+    }
+
+    .bili-layout .bili-grid:first-child,
+    .recommended-container,
+    .rcmd-box-wrap {
+      display: none !important;
+    }
+  }
+
+  &-online {
+    .first-screen #reportFirst2 {
+      display: none !important;
+    }
+  }
+
+  &-ext-box {
+    .first-screen #reportFirst3 {
+      display: none !important;
+    }
+  }
+
+  &-special {
+    #bili_report_spe_rec {
+      display: none !important;
+    }
+  }
+
+  &-contact {
+
+    .bili-footer .b-footer-wrap,
+    .international-footer {
+      display: none !important;
+    }
+  }
+
+  &-elevator {
+    .storey-box .elevator {
+      display: none !important;
+    }
+  }
+}

@@ -9,6 +9,14 @@
   },
   {
     "type": "component",
+    "name": "deleteFeeds",
+    "displayName": "删除动态",
+    "description": "删除动态, 可选转发抽奖, 和全部删除.\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/del-feeds.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/del-feeds.js"
+  },
+  {
+    "type": "component",
     "name": "disableFeedsDetails",
     "displayName": "禁止跳转动态详情",
     "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
@@ -27,7 +35,7 @@
     "type": "component",
     "name": "feedsFilter",
     "displayName": "动态过滤器",
-    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.\r\n",
+    "description": "按照类型或者关键词过滤动态首页的内容, 也可以移除动态页的一些侧边卡片. 详细设置请前往[动态首页](https://t.bilibili.com/)查看.\r\n\r\n> 侧边卡片的 `正在直播` 指原版的板块, 如果你使用了 `直播信息扩充`, 则需要关闭该功能才能生效.\r\n",
     "fullRelativePath": "../../registry/dist/components/feeds/filter.js",
     "fullAbsolutePath": "registry/dist/components/feeds/filter.js"
   },
@@ -51,7 +59,7 @@
     "type": "component",
     "name": "fullFeedsContent",
     "displayName": "展开动态内容",
-    "description": "不管内容多长, 总是完全展开动态的内容.",
+    "description": "不管内容多长, 总是完全展开动态的内容. (专栏不算)\r\n",
     "fullRelativePath": "../../registry/dist/components/feeds/full-content.js",
     "fullAbsolutePath": "registry/dist/components/feeds/full-content.js"
   },
@@ -81,6 +89,14 @@
   },
   {
     "type": "component",
+    "name": "legacyFeedsImageViewer",
+    "displayName": "动态图片平铺展示",
+    "description": "将动态中左右切换式的图片改回传统的平铺展示. (在动态详情中可能稍有延迟)\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/legacy-image-viewer.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/legacy-image-viewer.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "\n自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠\n",
@@ -91,9 +107,17 @@
     "type": "component",
     "name": "badgeHelper",
     "displayName": "直播勋章快速更换",
-    "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.",
+    "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.\r\n",
     "fullRelativePath": "../../registry/dist/components/live/badge-helper.js",
     "fullAbsolutePath": "registry/dist/components/live/badge-helper.js"
+  },
+  {
+    "type": "component",
+    "name": "liveChatPanelFit",
+    "displayName": "直播间网页全屏自适应",
+    "description": "在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果.\r\n如果在侧边栏的边缘拖动, 可以自定义侧边栏的固定宽度, 双击边缘可以还原到自动宽度.\r\n\r\n- `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)\r\n\r\n> 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.\r\n",
+    "fullRelativePath": "../../registry/dist/components/live/chat-panel-fit.js",
+    "fullAbsolutePath": "registry/dist/components/live/chat-panel-fit.js"
   },
   {
     "type": "component",
@@ -113,6 +137,22 @@
   },
   {
     "type": "component",
+    "name": "hide-fullscreen-gift-bar",
+    "displayName": "全屏直播礼物简化",
+    "description": "by [@TimmyOVO](https://github.com/TimmyOVO)\n\n移除全屏观看直播时的底部礼物栏",
+    "fullRelativePath": "../../registry/dist/components/live/hide-gift-fullscreen.js",
+    "fullAbsolutePath": "registry/dist/components/live/hide-gift-fullscreen.js"
+  },
+  {
+    "type": "component",
+    "name": "hideLivePlayerBlur",
+    "displayName": "隐藏直播马赛克",
+    "description": "移除直播画面中的马赛克区域.\r\n",
+    "fullRelativePath": "../../registry/dist/components/live/hide-player-blur.js",
+    "fullAbsolutePath": "registry/dist/components/live/hide-player-blur.js"
+  },
+  {
+    "type": "component",
     "name": "liveHomeMute",
     "displayName": "直播首页静音",
     "description": "禁止直播首页的推荐直播间自动开始播放.",
@@ -121,11 +161,27 @@
   },
   {
     "type": "component",
+    "name": "liveroomUsernameLink",
+    "displayName": "添加直播间用户超链接",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n为直播间的房间观众和大航海界面的用户列表添加可以点击的超链接",
+    "fullRelativePath": "../../registry/dist/components/live/liveroom-username-link.js",
+    "fullAbsolutePath": "registry/dist/components/live/liveroom-username-link.js"
+  },
+  {
+    "type": "component",
     "name": "originalLiveroom",
     "displayName": "返回原版直播间",
     "description": "在直播间中提供返回原版直播间的按钮, 原版直播间将无视活动皮肤, 强制使用标准的直播页面.",
     "fullRelativePath": "../../registry/dist/components/live/original.js",
     "fullAbsolutePath": "registry/dist/components/live/original.js"
+  },
+  {
+    "type": "component",
+    "name": "removeLiveMaskPanel",
+    "displayName": "删除直播马赛克遮罩",
+    "description": "by [@Liki4](https://github.com/Liki4)\n\n删除观看直播时某些分区的马赛克遮罩.",
+    "fullRelativePath": "../../registry/dist/components/live/remove-mask-panel.js",
+    "fullAbsolutePath": "registry/dist/components/live/remove-mask-panel.js"
   },
   {
     "type": "component",
@@ -177,9 +233,17 @@
   },
   {
     "type": "component",
+    "name": "customFontFamily",
+    "displayName": "自定义字体",
+    "description": "by [@Tinhone](https://github.com/Tinhone)\n\n使用组件提供的字体设置覆盖原版的主站字体，并使主站字体可被自定义。\r\n\r\n当组件被启用后，几乎所有的元素会立即应用组件提供的字体设置。\r\n\r\n选项说明:\r\n- `禁用标题标点符号缩进`: 在新版视频页中，推荐视频栏中的视频标题，如果首个字符是特定的标点符号，则文本会缩入左侧。这个选项可以禁用这种样式\r\n- `更多选项`:\r\n  - `自定义字体`: 设置自定义字体。写法请参考 [MDN](https://developer.mozilla.org/zh-CN/docs/Web/CSS/font-family)、默认设置与设置说明。\r\n  - `覆盖选项`: 相当于一个白名单，使用了特殊字体的元素会被加入其中。默认情况下这些元素不会应用组件提供的字体设置，只有在启用对应的选项后才会应用。",
+    "fullRelativePath": "../../registry/dist/components/style/custom-font-family.js",
+    "fullAbsolutePath": "registry/dist/components/style/custom-font-family.js"
+  },
+  {
+    "type": "component",
     "name": "customNavbar",
     "displayName": "自定义顶栏",
-    "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n",
+    "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换).\r\n\r\n启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n\r\n选项说明:\r\n- `全局固定`: 将顶栏固定显示, 即使页面向下滚动也仍然可见. (除了一部分有 b 站定制顶栏的页面会忽略此选项)\r\n- `主题色填充`: 使用通用设置中的主题颜色填充顶栏的背景.\r\n- `透明填充`: 在首页和主站的部分页面中, 当存在顶部横幅图片时, 顶栏背景将变为透明 + 阴影的样式.\r\n- `背景模糊`: 启用背景模糊效果, 会使背景颜色变得半透明, 注意这个效果非常非常消耗图形性能, 慎用.\r\n- `投影`: 在顶栏下方增加一小段投影效果.\r\n- `使用季节 Logo`: 使用 b 站首页的特殊 Logo 图片替换顶栏的 Logo 图, 通常会对应当前季节, 特殊活动期间可能会有变化导致看不清. (比如搞了个全白的 Logo, 而顶栏正好也是白色的)\r\n- `触摸模式`: 启用后顶栏的一级入口点击时不进行跳转, 方便触屏使用.\r\n- `新标签页打开`: 控制顶栏内链接是否在新标签页打开.\r\n- `自动刷新数据`: 启用后, 部分有弹窗的顶栏入口在鼠标经过时会自动刷新数据.\r\n- `顶栏高度`: 自定义顶栏的高度 (b 站原版的为 64px)\r\n- `消息提醒样式`: 自定义顶栏入口的消息提醒样式.\r\n- `搜索栏宽度`: 自定义搜索栏占顶栏的比例.\r\n- `链接对齐样式`: 自定义纯链接弹窗内链接文字的对齐样式.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
     "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
   },
@@ -233,6 +297,14 @@
   },
   {
     "type": "component",
+    "name": "hideHomeCarousel",
+    "displayName": "隐藏首页轮播图",
+    "description": "隐藏首页的轮播图区域.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/home-carousel.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/home-carousel.js"
+  },
+  {
+    "type": "component",
     "name": "hideTrendingSearch",
     "displayName": "隐藏热搜",
     "description": "隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 请注意这只是视觉上的隐藏, 如果不输入任何关键词就点 Enter 或搜索按钮, 仍然会跳转至推荐的热搜词.",
@@ -246,6 +318,14 @@
     "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n隐藏鼠标指向用户名或用户头像时弹出的浮动用户信息卡片",
     "fullRelativePath": "../../registry/dist/components/style/hide/user-card.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/user-card.js"
+  },
+  {
+    "type": "component",
+    "name": "hideUserPendent",
+    "displayName": "隐藏头像框",
+    "description": "隐藏页面中用户的头像框 (包括角标), 目前支持动态和视频页面.\r\n",
+    "fullRelativePath": "../../registry/dist/components/style/hide/user-pendent.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/user-pendent.js"
   },
   {
     "type": "component",
@@ -299,7 +379,7 @@
     "type": "component",
     "name": "freshHome",
     "displayName": "清爽首页",
-    "description": "使用重新设计的清爽风格首页替换原本的首页.\r\n\r\n请注意, 此功能与 `极简首页` 互斥, 请勿同时使用.\r\n\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频\r\n- 启用横向滚动: 在可以横向滚动的列表中, 使鼠标滚轮可以做出横向滚动的效果, 请注意这会禁用卡片的边缘吸附效果.\r\n",
+    "description": "使用重新设计的清爽风格首页替换原本的首页.\r\n\r\n请注意:\r\n- 此功能与 `极简首页` 互斥, 请勿同时使用.\r\n- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.\r\n\r\n选项说明:\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频.\r\n- 启用横向滚动: 在可以横向滚动的列表中, 使鼠标滚轮可以做出横向滚动的效果, 请注意这会禁用卡片的边缘吸附效果.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/home-redesign/fresh.js",
     "fullAbsolutePath": "registry/dist/components/style/home-redesign/fresh.js"
   },
@@ -307,7 +387,7 @@
     "type": "component",
     "name": "minimalHome",
     "displayName": "极简首页",
-    "description": "使用重新设计的极简首页替换原本的首页.\r\n\r\n请注意, 此功能与 `清爽首页` 互斥, 请勿同时使用.\r\n\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频\r\n- 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数",
+    "description": "使用重新设计的极简首页替换原本的首页.\r\n\r\n请注意:\r\n- 此功能与 `清爽首页` 互斥, 请勿同时使用.\r\n- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.\r\n\r\n选项说明:\r\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频\r\n- 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数",
     "fullRelativePath": "../../registry/dist/components/style/home-redesign/minimal.js",
     "fullAbsolutePath": "registry/dist/components/style/home-redesign/minimal.js"
   },
@@ -355,17 +435,9 @@
     "type": "component",
     "name": "simplifyComments",
     "displayName": "简化评论区",
-    "description": "- 删除热评头像下方的关注按钮\r\n- 删除用户的等级标识\r\n- 删除发送源信息(\\`来自安卓客户端\\` 这种)\r\n- 删除用户名右边的勋章\r\n- 删除评论区顶部的横幅\r\n- 发送时间移动到右上角\r\n- 位图图标全部换用矢量图标, 高分屏不会模糊\r\n- 投票仅显示链接, 隐藏下面的大框.\r\n\r\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.\r\n",
+    "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\r\n\r\n> 配置项仅对新版评论区有效\r\n\r\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\r\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\r\n- `头像框`: 隐藏头像框.\r\n- `回复换行`:\r\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\r\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\r\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\r\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\r\n- `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅\r\n",
     "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
     "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
-  },
-  {
-    "type": "component",
-    "name": "simplifyHome",
-    "displayName": "简化首页",
-    "description": "隐藏原版首页不需要的元素 / 分区.",
-    "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
-    "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
   },
   {
     "type": "component",
@@ -379,7 +451,7 @@
     "type": "component",
     "name": "disableSpecialDanmaku",
     "displayName": "禁用特殊弹幕样式",
-    "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.",
+    "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.\r\n",
     "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
     "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
   },
@@ -403,7 +475,7 @@
     "type": "component",
     "name": "doubleClickControl",
     "displayName": "启用双击控制",
-    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停. 请注意不能和 `双击全屏` 一同使用.",
+    "description": "将视频播放器的操作方式更改为: 单击显示 / 隐藏控制栏, 双击播放 / 暂停.\r\n",
     "fullRelativePath": "../../registry/dist/components/touch/double-click-control.js",
     "fullAbsolutePath": "registry/dist/components/touch/double-click-control.js"
   },
@@ -433,9 +505,17 @@
   },
   {
     "type": "component",
+    "name": "albumPubTimeShow",
+    "displayName": "相簿发布时间显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在相簿界面显示相簿的发布时间",
+    "fullRelativePath": "../../registry/dist/components/utils/album-time-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/album-time-show.js"
+  },
+  {
+    "type": "component",
     "name": "autoLike",
     "displayName": "自动点赞",
-    "description": "进入视频 / 查看动态时, 自动点赞.\r\n",
+    "description": "by [@CrazyboyQCD](https://github.com/CrazyboyQCD)\n\n进入视频 / 查看动态时, 自动点赞\\\r\n无法触发未加载动态的点赞，当启用手动对动态点赞后可手动触发，启用后不会触发动态自动点赞\\\r\n安装快捷键扩展后可以点击【l】键或【L】键触发\\\r\n还可以添加动态点赞的黑名单\\\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/auto-like.js",
     "fullAbsolutePath": "registry/dist/components/utils/auto-like.js"
   },
@@ -473,6 +553,14 @@
   },
   {
     "type": "component",
+    "name": "commentContentReplace",
+    "displayName": "评论内容替换",
+    "description": "替换评论中的内容.\r\n\r\n可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情, 留空则会移除命中的关键词.\r\n",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/content-replace.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/content-replace.js"
+  },
+  {
+    "type": "component",
     "name": "copyCommentsLink",
     "displayName": "复制评论链接",
     "description": "开启后, 可在每条评论的菜单中选择复制链接.",
@@ -507,7 +595,7 @@
     "type": "component",
     "name": "imageExporter",
     "displayName": "图片批量导出",
-    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `user`: 用户名\r\n- `originalUser`: 被转发用户名, 如果不是转发类型的动态则等于 `user`\r\n- `id`: 动态 ID\r\n- `n`: 第 n 张图\r\n\r\n专栏文件名变量:\r\n- `title`: 专栏标题\r\n- `n`: 第 n 张图",
+    "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `n`: 第 n 张图\r\n- `id`: 动态 ID\r\n- `user`: 用户名\r\n- `userID`: 用户 ID\r\n- 动态发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n- 被转发的数据 (如果不是转发类型的动态, 则和上面的对应变量相同):\r\n  - `originalID`: 被转发的动态 ID\r\n  - `originalUser`: 被转发的用户名\r\n  - `originalUserID`: 被转发用户 ID\r\n  - 被转发的动态发布时间:\r\n    - `originalPublishYear`\r\n    - `originalPublishMonth`\r\n    - `originalPublishDay`\r\n    - `originalPublishHour`\r\n    - `originalPublishMinute`\r\n    - `originalPublishSecond`\r\n    - `originalPublishMillisecond`\r\n\r\n专栏文件名变量:\r\n- `n`: 第 n 张图\r\n- `title`: 专栏标题\r\n- `cv`: 专栏 cv 号\r\n- 专栏发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/image-exporter.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-exporter.js"
   },
@@ -515,7 +603,7 @@
     "type": "component",
     "name": "imageResolution",
     "displayName": "高分辨率图片",
-    "description": "根据屏幕 DPI 请求更高分辨率的图片, 例如 DPI 缩放 200% 则请求 2 倍的分辨率, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)",
+    "description": "对 200% 以上的屏幕 DPI 缩放请求更高分辨率的图片, 加载时间也会相应变长一些. (也会导致某些浏览器里出现图片闪动, 因为本质上是更换了图片源)\r\n\r\n由于 b 站在很多地方没有设置图片维持原比例, 如果计算后的图片尺寸超出原图尺寸则会产生错误的比例, 可以考虑在选项中手动降低缩放级别.\r\n\r\n`缩放级别` 选项:\r\n- `auto`: 根据 DPI 缩放超出 200% 的比例自动计算, 例如 250% 的缩放下会请求 1.5 倍尺寸的图片.\r\n- `数字`: 自定义尺寸的缩放倍率.\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/image-resolution.js",
     "fullAbsolutePath": "registry/dist/components/utils/image-resolution.js"
   },
@@ -529,6 +617,14 @@
   },
   {
     "type": "component",
+    "name": "ipShow",
+    "displayName": "评论区IP属地显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在评论区显示评论的IP属地信息",
+    "fullRelativePath": "../../registry/dist/components/utils/ip-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/ip-show.js"
+  },
+  {
+    "type": "component",
     "name": "keymap",
     "displayName": "快捷键扩展",
     "description": "为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.",
@@ -539,9 +635,17 @@
     "type": "component",
     "name": "removePromotions",
     "displayName": "删除广告",
-    "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.",
+    "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
     "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
+  },
+  {
+    "type": "component",
+    "name": "subscribeTimeShow",
+    "displayName": "关注时间显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在粉丝/关注列表显示关注的具体时间",
+    "fullRelativePath": "../../registry/dist/components/utils/subscribe-time-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/subscribe-time-show.js"
   },
   {
     "type": "component",
@@ -571,9 +675,17 @@
     "type": "component",
     "name": "watchlaterRedirect",
     "displayName": "稍后再看重定向",
-    "description": "将稍后再看的链接重定向为普通播放网址.",
+    "description": "将稍后再看的链接重定向为普通播放网址.\r\n- `重定向页面`: 对稍后再看列表页面里的链接重定向.\r\n- `重定向顶栏`: 对 `自定义顶栏` 里的稍后再看链接重定向.\r\n",
     "fullRelativePath": "../../registry/dist/components/utils/watchlater-redirect.js",
     "fullAbsolutePath": "registry/dist/components/utils/watchlater-redirect.js"
+  },
+  {
+    "type": "component",
+    "name": "autoRemoveWatchlater",
+    "displayName": "自动移出稍后再看",
+    "description": "在稍后再看页面播放结束时, 自动将当前视频移出稍后再看.\r\n注意:\r\n- 一定要播放结束, 快结束时手动切走不算\r\n- b 站的稍后再看列表不会实时刷新\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/auto-remove-watchlater.js",
+    "fullAbsolutePath": "registry/dist/components/video/auto-remove-watchlater.js"
   },
   {
     "type": "component",
@@ -627,7 +739,7 @@
     "type": "component",
     "name": "unescapeDanmaku",
     "displayName": "弹幕转义",
-    "description": "将弹幕中的 `\\n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.\r\n",
+    "description": "将弹幕中的 `\\n` 或 `/n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/unescape.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/unescape.js"
   },
@@ -635,7 +747,7 @@
     "type": "component",
     "name": "videoDefaultLocation",
     "displayName": "视频页默认定位",
-    "description": "打开视频/番剧时自动定位到指定位置\r\n\r\n<div class=\"video-default-location-desc-detail\">\r\n\r\n位置：距离页面顶部的像素距离\\\r\n默认位置：打开视频时自动定位到此处\\\r\n位置测试：查看、调整当前页面所在位置\r\n\r\n当前版本限制默认位置的最大值为 4000。\\\r\n若有其他希望支持的页面，请提交反馈。\\\r\n脚本不会等待评论完全加载，因此较大的默认位置将无法正确定位。\r\n\r\n</div>\r\n\r\n<style>\r\n.video-default-location-desc-detail.video-default-location-desc-detail p {\r\n  margin-top: 1ex;\r\n}\r\n</style>\r\n",
+    "description": "打开视频/番剧时自动定位到指定位置\r\n\r\n位置：距离页面顶部的像素距离\\\r\n默认位置：打开视频时自动定位到此处\\\r\n位置测试：查看、调整当前页面所在位置\r\n\r\n当前版本限制默认位置的最大值为 4000。\\\r\n若有其他希望支持的页面，请提交反馈。\\\r\n脚本不会等待评论完全加载，因此较大的默认位置将无法正确定位。\r\n",
     "fullRelativePath": "../../registry/dist/components/video/default-location.js",
     "fullAbsolutePath": "registry/dist/components/video/default-location.js"
   },
@@ -643,7 +755,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
+    "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n\r\n在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:\r\n- `user`: UP 主用户名\r\n- `userID`: UP 主用户 ID\r\n- 视频发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
@@ -659,9 +771,17 @@
     "type": "component",
     "name": "fullEpisodeTitle",
     "displayName": "选集区域优化",
-    "description": "提供一些视频选集区域的优化, 对番剧无效.\r\n- `展开选集标题`: 总是完全展开视频选集列表项的标题\r\n- `展开选集列表`: 总是完全展开视频选集列表\r\n\r\n打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换展开/收起选集列表.\r\n",
+    "description": "提供一些视频选集区域的优化, 对番剧无效.\r\n- `展开选集标题`: 总是完全展开视频选集列表项的标题, 若为传统分 P 列表, 还会恢复显示分 P 数的前缀.\r\n- `展开选集列表`: 总是完全展开视频选集列表\r\n\r\n打开 `展开选集列表` 时, 在选集区域的标题上按住 <kbd>Alt</kbd> 键点击可以临时切换此组件的效果.\r\n",
     "fullRelativePath": "../../registry/dist/components/video/full-episode-title.js",
     "fullAbsolutePath": "registry/dist/components/video/full-episode-title.js"
+  },
+  {
+    "type": "component",
+    "name": "saveVideoMetadata",
+    "displayName": "保存视频元数据",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://github.com/LainIO24)\n\n保存视频元数据（标题、描述、UP、章节等）",
+    "fullRelativePath": "../../registry/dist/components/video/metadata.js",
+    "fullAbsolutePath": "registry/dist/components/video/metadata.js"
   },
   {
     "type": "component",
@@ -697,6 +817,14 @@
   },
   {
     "type": "component",
+    "name": "disableDoubleClickFullscreen",
+    "displayName": "禁用双击全屏",
+    "description": "禁用播放器的双击全屏功能.\r\n",
+    "fullRelativePath": "../../registry/dist/components/video/player/disable-double-click-fullscreen.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/disable-double-click-fullscreen.js"
+  },
+  {
+    "type": "component",
     "name": "disableScrollVolume",
     "displayName": "禁止滚轮调音量",
     "description": "在网页全屏 / 全屏模式下, 禁止鼠标滚轮控制播放器的音量.  请注意不能和 `反转滚轮调音量` 一同使用.\r\n",
@@ -705,17 +833,9 @@
   },
   {
     "type": "component",
-    "name": "doubleClickFullscreen",
-    "displayName": "双击全屏",
-    "description": "为视频播放器启用双击全屏功能, 请注意不能和 `启用双击控制` 一同使用.",
-    "fullRelativePath": "../../registry/dist/components/video/player/double-click-fullscreen.js",
-    "fullAbsolutePath": "registry/dist/components/video/player/double-click-fullscreen.js"
-  },
-  {
-    "type": "component",
     "name": "extendVideoSpeed",
     "displayName": "扩展倍速",
-    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 扩展视频播放器的倍速菜单项，可用于突破原有播放倍数的上限或下限.\n\n### 🔧 **选项**\n\n- `隐藏滚动条`：如果添加的倍速过多，倍速菜单将出现滚动条，在 Windows 下，若没有安装并启用「细滚动条」组件会显得比较挤，建议开启此选项隐藏滚动条.\n\n- `隐藏移除图标`：如果认为倍速右侧的移除倍速图标有些突兀，可以开启此选项隐藏.\n\n- `隐藏新增图标`：如果认为顶部的新增倍速图标有些突兀，可以开启此选项隐藏.\n\n### **新增倍速**\n\n开启组件后，在默认情况下，播放器的倍速菜单就会新增 2.5x 和 3.0x 两个倍速选项.\n\n如果需要添加更多倍速，只需将鼠标指针移到菜单顶部的新增图标上，图标将变成一个输入框，根据需要键入新的倍速值，或通过滚轮增减数值，或直接使用推荐的数值，回车确认即可.\n\n新增倍速的范围要求在 0.0625 到 16 之间，数量则不受限制.\n\n**不推荐设置超高倍速（>3.0x）**：原生播放器内部没有针对超高倍速进行优化，可能导致音画不同步、播放卡顿、声音嘈杂/消失等一系列问题.\n\n### **删除倍速**\n\n将鼠标指针移到**自定义**的倍速菜单项上，其右侧将会显示一个移除图标，单击即可删除相应的倍速.\n\n",
+    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 扩展视频播放器的倍速菜单项，可用于突破原有播放倍数的上限或下限.\n\n#### 🔧 **选项**\n\n- `隐藏滚动条`：如果添加的倍速过多，倍速菜单将出现滚动条，在 Windows 下，若没有安装并启用「细滚动条」组件会显得比较挤，建议开启此选项隐藏滚动条.\n\n- `隐藏移除图标`：如果认为倍速右侧的移除倍速图标有些突兀，可以开启此选项隐藏.\n\n- `隐藏新增图标`：如果认为顶部的新增倍速图标有些突兀，可以开启此选项隐藏.\n\n#### **新增倍速**\n\n开启组件后，在默认情况下，播放器的倍速菜单就会新增 2.5x 和 3.0x 两个倍速选项.\n\n如果需要添加更多倍速，只需将鼠标指针移到菜单顶部的新增图标上，图标将变成一个输入框，根据需要键入新的倍速值，或通过滚轮增减数值，或直接使用推荐的数值，回车确认即可.\n\n新增倍速的范围要求在 0.0625 到 16 之间，数量则不受限制.\n\n**不推荐设置超高倍速（>3.0x）**：原生播放器内部没有针对超高倍速进行优化，可能导致音画不同步、播放卡顿、声音嘈杂/消失等一系列问题.\n\n#### **删除倍速**\n\n将鼠标指针移到**自定义**的倍速菜单项上，其右侧将会显示一个移除图标，单击即可删除相应的倍速.\n\n",
     "fullRelativePath": "../../registry/dist/components/video/player/extend-speed.js",
     "fullAbsolutePath": "registry/dist/components/video/player/extend-speed.js"
   },
@@ -731,7 +851,7 @@
     "type": "component",
     "name": "playerIntersectionActions",
     "displayName": "播放器位置动作",
-    "description": "by [@FoundTheWOUT](https://github.com/FoundTheWOUT)\n\n设置当播放器移出视图的位置变化时执行的动作.",
+    "description": "by [@Waua](https://github.com/FoundTheWOUT)\n\n设置当播放器移出视图的位置变化时执行的动作.",
     "fullRelativePath": "../../registry/dist/components/video/player/intersection-actions.js",
     "fullAbsolutePath": "registry/dist/components/video/player/intersection-actions.js"
   },
@@ -763,7 +883,7 @@
     "type": "component",
     "name": "rememberVideoSpeed",
     "displayName": "记忆倍速",
-    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n### 🌈 **温馨提示**\n\n「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.\n\n请根据自身需要：\n\n- 前往「组件」页面安装[「扩展倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/components/video/player/extend-speed.js)组件\n- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/plugins/video/player/speed.js)插件.\n\n*如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*\n",
+    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n#### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n#### 🌈 **温馨提示**\n\n「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.\n\n请根据自身需要：\n\n- 前往「组件」页面安装[「扩展倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/components/video/player/extend-speed.js)组件\n- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/plugins/video/player/speed.js)插件.\n\n*如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*\n",
     "fullRelativePath": "../../registry/dist/components/video/player/remember-speed.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remember-speed.js"
   },
@@ -771,7 +891,7 @@
     "type": "component",
     "name": "removePlayerPopup",
     "displayName": "删除视频弹窗",
-    "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.\r\n",
+    "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择. 如果之前点了收起弹窗, 则收起后的小弹窗则会直接删除. (不受类别选择影响)\r\n",
     "fullRelativePath": "../../registry/dist/components/video/player/remove-popup.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remove-popup.js"
   },
@@ -835,7 +955,7 @@
     "type": "component",
     "name": "downloadSubtitle",
     "displayName": "下载字幕",
-    "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
+    "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)\r\n",
     "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
     "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
   },
@@ -847,6 +967,22 @@
     "fullAbsolutePath": "registry/dist/components/video/player/localtime.js",
     "description": "by FoundTheWOUT\n\n在视频播放器右上角显示系统时间.",
     "owner": "FoundTheWOUT"
+  },
+  {
+    "type": "plugin",
+    "name": "feedsFilter.pluginBlocks.chargeFeeds",
+    "displayName": "动态过滤器 - 移除充电专属动态",
+    "description": "移除动态里的充电专属动态, 装有 `动态过滤器` 时生效.\r\n",
+    "fullRelativePath": "../../registry/dist/plugins/feeds/filter/hide-charge-feeds.js",
+    "fullAbsolutePath": "registry/dist/plugins/feeds/filter/hide-charge-feeds.js"
+  },
+  {
+    "type": "plugin",
+    "name": "feedsFilter.pluginBlocks.goods",
+    "displayName": "动态过滤器 - 移除商品带货动态",
+    "description": "移除动态里的商品带货动态 (UP主的推荐 · 来自 XX), 装有 `动态过滤器` 时生效.\r\n",
+    "fullRelativePath": "../../registry/dist/plugins/feeds/filter/hide-goods.js",
+    "fullAbsolutePath": "registry/dist/plugins/feeds/filter/hide-goods.js"
   },
   {
     "type": "plugin",
@@ -922,6 +1058,14 @@
   },
   {
     "type": "plugin",
+    "name": "customNavbar.items.pgc",
+    "displayName": "自定义顶栏 - 版权内容",
+    "description": "为自定义顶栏扩充版权内容相关的快速入口, 包括国创 / 电影 / 电视剧 /综艺 / 纪录片",
+    "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-pgc.js",
+    "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-pgc.js"
+  },
+  {
+    "type": "plugin",
     "name": "keymap.actions.darkMode",
     "displayName": "快捷键扩展 - 夜间模式",
     "description": "在快捷键的动作列表里添加一个 \"夜间模式\", 可以通过快捷键切换夜间模式",
@@ -978,6 +1122,14 @@
   },
   {
     "type": "plugin",
+    "name": "downloadVideo.outputs.empty",
+    "displayName": "下载视频 - 空输出",
+    "description": "提供一个 \"空\" 的输出选项, 只想获取下载视频的附带产物 (弹幕, 字幕等) 时可以使用此插件.\r\n",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/empty-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/empty-output.js"
+  },
+  {
+    "type": "plugin",
     "name": "downloadVideo.outputs.idm",
     "displayName": "下载视频 - IDM 输出支持",
     "description": "为下载视频增加 IDM 输出支持.",
@@ -1002,6 +1154,14 @@
   },
   {
     "type": "plugin",
+    "name": "downloadVideo.outputs.mpv-ex",
+    "displayName": "下载视频 - MPV 输出支持加强版",
+    "description": "by [@asuaaa](https://github.com/Asukaaaaaa)\n\n为下载视频增加 MPV 输出，支持导出列表, 配置方式请参考 [README](https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md)",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/mpv-output-ex.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/mpv-output-ex.js"
+  },
+  {
+    "type": "plugin",
     "name": "downloadVideo.outputs.mpv-playlist",
     "displayName": "下载视频 - MPV 播放支持（列表）",
     "description": "by [@wuliic](https://github.com/wullic)\n\n为下载视频增加 MPV 输出支持,支持列表播放，配置方式请参考 [playwithmpv](https://github.com/videoanywhere/playwithmpv)",
@@ -1015,6 +1175,14 @@
     "description": "by [@diannaojiang](https://github.com/diannaojiang)\n\n为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)",
     "fullRelativePath": "../../registry/dist/plugins/video/download/mpv-output.js",
     "fullAbsolutePath": "registry/dist/plugins/video/download/mpv-output.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.wasm",
+    "displayName": "下载视频 - WASM 混流输出",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56)\n\n使用 WASM 在浏览器中下载并合并音视频, 支持批量下载",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/wasm-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/wasm-output.js"
   },
   {
     "type": "plugin",

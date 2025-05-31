@@ -3,6 +3,7 @@ import { getFriendlyTitle } from '@/core/utils/title'
 
 const canvas = document.createElement('canvas')
 export class Screenshot {
+  readonly mimeType = 'image/png'
   url = ''
   blob: Blob
   timeStamp = new Date().getTime()
@@ -57,7 +58,7 @@ export class Screenshot {
         }
         this.blob = blob
         this.url = URL.createObjectURL(blob)
-      }, 'image/png')
+      }, this.mimeType)
     } catch (error) {
       logError(
         '视频截图失败: 操作被浏览器阻止. 这通常发生于电影的试看片段, 请在正片尝试使用截图功能.',

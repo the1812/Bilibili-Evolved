@@ -28,6 +28,7 @@ import * as videoActions from './video/video-actions'
 import * as videoDanmaku from './video/video-danmaku'
 import * as videoInfo from './video/video-info'
 import * as videoQuality from './video/video-quality'
+import * as videoCover from './video/video-cover'
 import * as watchlater from './video/watchlater'
 import * as xmlUtils from './video/xml-utils'
 
@@ -61,6 +62,7 @@ export const componentApis = {
     videoQuality,
     videoContextMenu,
     videoControlBar,
+    videoCover,
     watchlater,
     xmlUtils,
   },

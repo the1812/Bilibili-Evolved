@@ -1,0 +1,34 @@
+.player-full-win:not(.hide-aside-area) {
+  .live-room-app {
+    .aside-area {
+      container-name: aside-area;
+      container-type: size;
+      width: var(--live-chat-panel-width, 302px) !important;
+    }
+    .player-section {
+      width: calc(100% - var(--live-chat-panel-width, 302px)) !important;
+    }
+    @container aside-area (max-width: 290px) {
+      .control-panel-icon-row-new .icon-left-part-new {
+        .super-chat,
+        .like-btn {
+          width: 32px;
+          &-icon {
+            margin-right: 0 !important;
+          }
+          &-text {
+            display: none !important;
+          }
+        }
+      }
+      .chat-input-ctnr-new {
+        .medal-section {
+          display: none !important;
+        }
+        .chat-input-new:not(:has(textarea.focus)) {
+          padding-left: 12px !important;
+        }
+      }
+    }
+  }
+}

@@ -107,3 +107,9 @@
     display: none !important;
   }
 }
+@mixin plugin-block {
+  .bili-dyn-list__item.plugin-block,
+  .feed-card .card.plugin-block {
+    display: none !important;
+  }
+}

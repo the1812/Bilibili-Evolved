@@ -7,7 +7,7 @@ Bilibili Evolved 是一个基于 Web 前端技术构建的油猴脚本, 贡献�
 
 ## 搭建开发环境
 
-- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [pnpm](https://pnpm.io/installation) (>= 8.1.0).
+- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [pnpm](https://pnpm.io/installation) (>= 8.9.0).
 - 将项目 Fork 至自己账户后, 克隆至本地
 - 分支视情况切换或新建, 新功能以 `preview-features` 为基础分支, 功能修复以 `preview-fixes` 为基础分支.
 - 安装依赖:
@@ -21,6 +21,8 @@ pnpm install
 - [配置 VS Code 插件](https://code.visualstudio.com/docs/editor/extension-marketplace):
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), 用于格式化 TypeScript 和 Vue 文件.
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), 用于格式化 Scss 和其他文件.
+  - [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar), 为 *.vue 文件提供支持.
+  - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin), 让 TS Server 识别 *.vue 文件.(建议启用性能更好的 [Takeover 模式](https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode))
 
 ### 本体
 需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发时在 `registry/dist/` 下产生文件.
@@ -28,8 +30,28 @@ pnpm install
 
 配置本地调试环境:
 
+**启动开发服务 dev-server**
+
+> 无论选择哪种方式, 下文均以 "运行 `启动开发服务 dev-server`" 指代这个步骤.
+
+方式 1 (推荐): 直接使用 [VS Code Tasks](https://code.visualstudio.com/docs/editor/tasks) 运行 `启动开发服务 dev-server`
+
+方式 2:
+1. 新建一个终端, 进入项目根目录
+2. 运行 `pnpm ts-node dev-tools/dev-server/index.ts` 启动开发服务
+
+两种方式都会看到类似下面的输出:
+```bash
+DevServer 已启动, 端口: 23333
+本体编译中...
+(...可能有一长串输出)
+
+本体已编译: （一段 hash）
+```
+
+
 **如果使用的是基于 Chromium 的浏览器**
-1. VS Code 中运行 `启动开发服务 dev-server` 任务, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
+1. 启动开发服务后, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
 2. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
 3. 打开 `允许访问文件网址`
 4. 新建脚本
@@ -40,7 +62,7 @@ pnpm install
 // @description  Bilibili Evolved (本地)
 // @version      300.0
 // @author       Grant Howard, Coulomb-G
-// @copyright    2023, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+// @copyright    2024, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
 // @license      MIT
 // @match        *://*.bilibili.com/*
 // @exclude      *://*.bilibili.com/*/mobile.html
@@ -79,7 +101,7 @@ pnpm install
 // ==/UserScript==
 ```
 
-6. 将里面的 `{{ bilibili-evolved.dev.user.js的绝对路径 }}` 替换为第一步生成的文件的真实路径.
+1. 将里面的 `{{ bilibili-evolved.dev.user.js 的绝对路径 }}` 替换为第一步生成的文件的真实路径.
 > Windows 例子: `@require file://C:/xxx/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
 
 > macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
@@ -89,9 +111,9 @@ pnpm install
 7. 进入 b 站, 安装 `DevClient` 组件, 功能中显示已连接时就是成功了
 
 **如果使用 Firefox 或 Safari**
-1. 运行 `启动开发服务 dev-server` 任务时, 假设得到的本体链接为 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`
-2. 继续 Chromium 指南中的第 3 ~ 6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
-3. 保存脚本, 运行 `启动开发服务 dev-server` 任务
+1. 启动开发服务后, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
+2. 开发服务会在默认的 `23333` 端口服务 `dist/` 文件夹下的内容, 因此上一步的文件链接就为 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
+3. 继续 Chromium 指南中的第 3 ~ 6 步, 但在第 6 步时 `@require` 的链接使用 `http://localhost:23333/dist/bilibili-evolved.dev.user.js`.
 4. 进入 b 站, 安装 `DevClient` 组件, 将 `本体刷新策略` 设置为 `不刷新`, 功能中显示已连接时就是成功了
 5. 每次本体代码变动后, 需要在 Tampermonkey 中编辑脚本 - 外部, 删除 `localhost` 的缓存文件后刷新生效.
 
@@ -144,7 +166,7 @@ pnpm install
 
 ### 插件
 在 `registry/lib/plugins` 中是所有插件的源代码, 步骤和组件基本一致, 只有在第 4 步中, 导出的是 `plugin` 对象, 实现 `PluginMetadata` 接口.
-
+**
 > 关于如何判断要实现的是组件还是插件, 可以想想这个功能能否独立存在, 插件的定位是是增强组件的功能, 如果要开发的功能在没有安装某个组件的情况下毫无作用, 那么它就应该是一个插件; 如果可以独立存在并发挥一些作用, 那么它就应该是一个组件.
 
 ## 可用资源
@@ -237,6 +259,11 @@ pnpm install
 - `ui/VEmpty.vue`: 表示无数据, 界面可被插件更改
 - `ui/VLoading.vue`: 表示数据加载中, 界面可被插件更改
 - `ui/AsyncButton.vue`: `click` 事件为异步函数时, 执行期间自动使 `Button` 禁用, 其他和 `Button` 相同.
+
+## 代码类型检查
+提交 Pull Request 前, 请确保代码通过类型检查. 类型检查以 VS Code 任务: `生产:类型检查 prod:type` 为准.
+
+> 项目有[计划](https://github.com/the1812/Bilibili-Evolved/discussions/3939)从 Vue 2 迁移到 Vue 3, 因此虽然我们[启用](https://github.com/the1812/Bilibili-Evolved/pull/4337)了 Volar 对 *.vue 文件进行类型检查, 却未完全修复 Volar 报告的类型错误. 因此，开发时 VS Code 报错属正常现象. Pull Request 的类型检查标准仍以上述内容为准.
 
 ## 代码风格检查
 项目中含有 ESLint, 不通过 ESLint 是无法进行 Pull Request 的.

@@ -1,10 +1,10 @@
 > 1%
 last 2 versions
 not dead
-chrome > 100
-edge > 100
-firefox > 103
-safari > 15
+chrome > 105
+edge > 105
+firefox > 127
+safari > 15.4
 not and_chr > 0
 not and_ff > 0
 not and_qq > 0

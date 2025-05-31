@@ -327,8 +327,12 @@
   &.charge-btn-loaded {
     @include background-color();
     @include theme-color();
+    @include theme-border-color();
     &:hover {
       @include theme-background-color('20');
+    }
+    .charge-btn-icon {
+      @include to-theme('pink');
     }
   }
 }
@@ -342,6 +346,11 @@
     }
     .panel-price {
       @include color('a');
+    }
+  }
+  .gift-item-asset {
+    .b-img {
+      @include background-color();
     }
   }
 }
@@ -374,6 +383,9 @@
       }
       .right-arrow {
         @include border-color('e');
+        path {
+          @include fill('e');
+        }
       }
     }
   }
@@ -383,6 +395,9 @@
     @include background-color('3');
     .arrow {
       @include border-color('e');
+      path {
+        @include fill('e');
+      }
     }
   }
 }
@@ -401,6 +416,9 @@
   }
   .bag-icon {
     @include border-color('e');
+    path {
+      @include fill('e');
+    }
   }
   &:hover {
     @include background-color('8884');
@@ -495,6 +513,16 @@
       @include theme-color();
     }
   }
+  .opus-module-topic {
+    @include theme-color();
+  }
+  .opus-more__btn {
+    @include color('a');
+    &:hover {
+      @include color('e');
+      @include background-color('3');
+    }
+  }
   .opus-tabs {
     .bili-tabs {
       &__header {
@@ -508,27 +536,28 @@
       }
     }
   }
-  .side-toolbar {
-    &__box,
-    &__btn {
-      @include background-color('3');
-      &.backtop span::before {
-        @include to-white();
-      }
+}
+.side-toolbar {
+  &__box,
+  &__btn {
+    @include background-color('3');
+    &.backtop span::before {
+      @include to-white();
     }
-    &__action {
+  }
+  &__action {
+    &,
+    & svg {
+      @include color('e');
+    }
+    &:hover,
+    &.is-active {
       &,
+      .side-toolbar__action__text,
       & svg {
-        @include color('e');
-      }
-      &:hover,
-      &.is-active {
-        &,
-        & svg {
-          @include theme-color();
-          path {
-            @include theme-fill();
-          }
+        @include theme-color();
+        path {
+          @include theme-fill();
         }
       }
     }
@@ -570,4 +599,433 @@
       @include foreground-color();
     }
   }
+}
+.home-cell-desc-title {
+  @include color('e');
+}
+.home-cell-desc-subtitle {
+  @include color('a');
+}
+.timeline-weekday-item .weekday-description .timeline-item-title {
+  @include color('e');
+}
+#{contains('recommend_wrap')} {
+  #{contains('recommend_title')} {
+    @include color('e');
+  }
+}
+.section-title-v2-wrapper {
+  .title-right {
+    @include border-color('4');
+    .font {
+      @include color('e');
+    }
+    &:hover .font {
+      @include color('0');
+    }
+    &:not(:hover) {
+      img,
+      svg {
+        @include to-white();
+      }
+    }
+  }
+  .title-left {
+    .week-day-wrapper {
+      @include background-color('3');
+    }
+    .module-title-name {
+      @include color('e');
+    }
+  }
+}
+.index-categary-head {
+  @include color('e');
+}
+.item-link-a {
+  @include color('a');
+}
+.nav-tool {
+  @include color('e');
+  div {
+    @include background-color('3');
+    img {
+      @include fill('e');
+    }
+    svg {
+      circle {
+        @include stroke('e');
+      }
+      path {
+        @include fill('e');
+      }
+    }
+    a {
+      @include color('e');
+      div {
+        @include color('e');
+      }
+    }
+  }
+}
+#{contains('mediainfo_mediaToolbar')} {
+  #{contains('mediainfo_btnHome')} {
+    @include theme-background-color(20);
+    svg path {
+      @include theme-fill();
+    }
+  }
+  #{contains('follow_btnFollow')} {
+    @include theme-background-color();
+  }
+  #{contains('follow_followed')} {
+    @include background-color('4');
+  }
+  #{contains('follow_optionsList')} {
+    @include background-color('3');
+    @include border-color('4');
+  }
+}
+#{contains('sponsor_sponsor_module')} {
+  @include set-color('border-bottom-color', '4');
+}
+#{contains('rankList_sp_msg')} {
+  @include border-color('4');
+  @include color('e');
+}
+#{contains('sponsor_sponsor_count')} span {
+  @include color('e');
+}
+#{contains('amountChoice_sp_pay_index')} {
+  #{contains('payHeader_sponsor_pay_header')} {
+    @include color('a');
+    @include background-color('2');
+    @include set-color('border-bottom-color', '4');
+  }
+  #{contains('amountChoice_sponsor_pay_body')} {
+    span,
+    div {
+      @include color('e');
+      input {
+        @include background-color('4');
+        @include color('e');
+        @include border-color('2');
+        &:focus {
+          @include theme-border-color();
+        }
+      }
+      a {
+        @include theme-color();
+      }
+    }
+    @include background-color('3');
+  }
+}
+#{contains('mediainfo_mediaInfo')},
+#{contains('recommend_wrap')} {
+  @include set-color('border-top-color', '4');
+}
+#{contains('mediainfo_mediaRight')} {
+  #{contains('mediainfo_media_desc_section')} #{contains('mediainfo_display_area')} #{contains('mediainfo_ellipsis')} {
+    background: linear-gradient(90deg, hsla(0, 0%, 100%, 0), #222 20%, #222);
+    @include theme-color();
+  }
+  #{contains('mediainfo_media_desc')} i {
+    @include theme-color();
+    @include background-color();
+  }
+}
+#{contains('SectionSelector_SectionSelector')} {
+  #{contains('SectionSelector_expand')} {
+    background: linear-gradient(270deg, #444444 46.21%, hsla(210, 8%, 95%, 0));
+  }
+}
+#{contains('PlayingIcon_playIcon')} svg path {
+  @include theme-stroke();
+}
+#{contains('Share_boxTop')} {
+  @include background-color('3');
+}
+#{contains('Share_boxBottom')} {
+  @include background-color('4');
+}
+#{contains('WatchInfo_watch_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  #{contains('WatchInfo_title')} {
+    @include color('e');
+  }
+}
+#{contains('Phone_mobile_more')} {
+  @include background-color('3');
+  @include border-color('4');
+  #{contains('Phone_top_wrapper')} {
+    canvas {
+      border: 5px solid #ffffff;
+    }
+    #{contains('Phone_video_title')} {
+      @include color('e');
+    }
+  }
+  #{contains('Phone_mobile_tip')} {
+    @include color('a');
+    a {
+      @include theme-color();
+    }
+  }
+}
+#{contains('short_short_review_masker')} {
+  #{contains('short_short_review_content')} {
+    @include background-color('2');
+    #{contains('header_review_edit_media_info')} {
+      h4,
+      p {
+        @include color('e');
+      }
+    }
+    #{contains('short_review_body_wrap')} {
+      @include border-color('4');
+    }
+    #{contains('short_review_footer')} {
+      #{contains('short_mr_long_review')} {
+        @include theme-color();
+      }
+      #{contains('short_active')} {
+        @include theme-background-color();
+      }
+    }
+  }
+}
+
+#{contains('live-info-content')} {
+  background: transparent !important;
+}
+
+#{contains('upower-pay-container')} {
+  .header {
+    @include background-color('0');
+  }
+  #{contains('content')} {
+    @include background('2');
+    #{contains('tab-group')} {
+      #{contains('active')} {
+        @include color('f');
+      }
+    }
+    #{contains('month-charge-grade')} {
+      background: #333;
+    }
+    #{contains('charge-grad-container')} {
+      .charge-grad-item {
+        background: linear-gradient(45deg, #333, #444);
+      }
+    }
+  }
+}
+#bili-header-container {
+  @include background-color('2');
+}
+.bili-button {
+  &.primary {
+    &.plain {
+      @include background-color();
+    }
+  }
+}
+.vui_button {
+  &.blue {
+    @include theme-background-color();
+    @include border-color();
+    @include foreground-color();
+    &:hover {
+      @include theme-background-color('80');
+    }
+  }
+}
+.be-shielding::after,
+.shielding::after {
+  @include color('e');
+  @include background-color();
+}
+.activity-game-list-item {
+  .activity-card {
+    @include background-color();
+    .activity-card-content-head-title {
+      @include color('e');
+    }
+    .activity-card-content-head-desc {
+      @include color('a');
+    }
+  }
+}
+.activity-game-list .game-card {
+  .game-card-content-head-title {
+    @include color('e');
+    .tag {
+      @include color('a');
+      @include border-color('a');
+    }
+  }
+  .game-card-content-head-text {
+    @include color('a');
+  }
+}
+.bangumi-pgc-list {
+  .media-card {
+    .media-card-content-head-title {
+      @include color('e');
+    }
+    .media-card-content-head-cv,
+    .media-card-content-head-label {
+      @include color('a');
+    }
+    .media-card-content-head-desc {
+      @include color('8');
+    }
+  }
+}
+
+.ai-summary-van-popover {
+  &.van-popover {
+    @include background-color(); // 移除超出圆角的黑色背景
+  }
+  .tips-panel {
+    @include background-color('3');
+    @include color('e');
+    .tips-panel-title {
+      @include color('e');
+    }
+  }
+}
+.left-part-ctnr {
+  .gift-left-part > [class$='-text'] {
+    @include color('e');
+  }
+  .pointer.arrow-box {
+    @include set-color('--btnBg', '5');
+    @include set-color('--btnHoverBg', '6');
+    .arrow path {
+      @include fill('e');
+    }
+  }
+  .inner-part {
+    @include set-color('--wrapBg', '4');
+  }
+}
+.static-feed-number-list {
+  .feed-button-root .content-box {
+    @include color('e');
+  }
+}
+.feed-button-box .custom-feed-input {
+  @include color('e');
+}
+.gift-control-panel {
+  .gift-panel-box {
+    @include background-color();
+  }
+}
+.gift-panel-container-root {
+  @include set-color('--gift-panel-container_background-color', '4');
+  @include set-color('--gift-panel-container_container-border-color', '5');
+  @include set-color('--gift-panel-container_feed-user-info-text-color', 'e');
+}
+.left-container {
+  .new-tabs {
+    @include background-color('4');
+    @include border-color();
+  }
+}
+.card-box .switch-btn img {
+  filter: invert(0.8) !important;
+}
+.package-gift-root {
+  .des-box {
+    @include color('a');
+    .switch {
+      @include set-color('--toggle-switch-bg-color', '3');
+      &.activated {
+        @include set-theme-color('--toggle-switch-bg-color');
+      }
+    }
+  }
+  .new-silver-wallet {
+    @include color('e');
+    @include background-color('3');
+  }
+}
+.shortcuts-ctnr {
+  .shortcut-item {
+    .item-icon {
+      @include to-white();
+    }
+  }
+}
+
+.message-list-content {
+  .message-content {
+    @include color('f');
+  }
+}
+
+.bili-dyn-card-vote,
+.bili-dyn-upower-lottery__card,
+.bili-dyn-card-link-common__wrap,
+.bili-dyn-card-goods .bili-dyn-card-goods__wrap,
+.bili-dyn-card-reserve .bili-dyn-card-reserve__card {
+  @include background-color('30');
+}
+.bili-dyn-card-goods {
+  &__mark,
+  &__one__detail__price {
+    @include color('a');
+  }
+}
+.reference {
+  .bili-dyn-card-reserve__card,
+  .bili-dyn-card-link-common__wrap,
+  .bili-dyn-card-goods__wrap {
+    @include background-color('30');
+  }
+}
+.article-content {
+  .ql-container {
+    background-color: rgba(0, 0, 0, 0) !important;
+    @include color('cf');
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @include color('e');
+  }
+}
+.bili-header {
+  .notify-list-item,
+  .hot-list-item {
+    &:hover {
+      @include background-color('3');
+    }
+  }
+}
+.home-empty-content__pic {
+  .b-img {
+    @include background-color();
+  }
+}
+
+.header.space-header {
+  .header-toutu,
+  .header-upinfo-bg-shadow {
+    z-index: 0 !important;
+  }
+  .header-upinfo {
+    z-index: 1 !important;
+  }
+}
+
+.video-argue-inner{
+  @include background-color('3');
 }

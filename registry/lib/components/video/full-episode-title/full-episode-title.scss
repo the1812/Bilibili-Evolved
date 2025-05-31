@@ -41,6 +41,38 @@ body {
         }
       }
     }
+    .video-pod {
+      &__list.multip {
+        .simple-base-item {
+          counter-increment: page;
+          .title {
+            .title-txt {
+              &::before {
+                content: 'P' counter(page);
+                margin-right: 6px;
+              }
+            }
+          }
+        }
+      }
+      &__list {
+        .simple-base-item {
+          .title {
+            height: auto !important;
+            padding: 2px 0 !important;
+            .title-txt {
+              padding: 4px 0 !important;
+              width: auto !important;
+              max-height: unset !important;
+              height: auto !important;
+              white-space: normal !important;
+              line-height: 1.5 !important;
+              display: block !important;
+            }
+          }
+        }
+      }
+    }
   }
   &.full-episode-list:not(.disable-full-episode-list) {
     .video-sections-content-list {
@@ -60,6 +92,11 @@ body {
         ul {
           max-height: unset !important;
         }
+      }
+    }
+    .video-pod {
+      &__body {
+        max-height: unset !important;
       }
     }
   }

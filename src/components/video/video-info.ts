@@ -1,9 +1,23 @@
 import { getJsonWithCredentials, getText } from '@/core/ajax'
 
+export interface UpInfo {
+  uid: number
+  name: string
+  faceUrl: string
+}
+
+export interface VideoPageInfo {
+  cid: number
+  title: string
+  pageNumber: number
+}
+
 export class VideoInfo {
   aid: string
   bvid: string
   cid: number
+  pubdate: number
+  ctime: number
   createTime: Date
   pageCount: number
   coverUrl: string
@@ -11,22 +25,8 @@ export class VideoInfo {
   tagName: string
   title: string
   description: string
-  up: {
-    uid: number
-    name: string
-    faceUrl: string
-  }
-  pages: {
-    cid: number
-    title: string
-    pageNumber: number
-  }[]
-  subtitles: {
-    id: number
-    languageCode: string
-    language: string
-    url: string
-  }[]
+  up: UpInfo
+  pages: VideoPageInfo[]
 
   constructor(id: string, bvid = false) {
     if (bvid) {
@@ -53,7 +53,8 @@ export class VideoInfo {
     this.aid = data.aid
     this.bvid = data.bvid
     this.cid = data.cid
-    this.createTime = new Date(data.ctime * 1000)
+    this.pubdate = data.pubdate
+    this.ctime = data.ctime
     this.pageCount = data.videos
     this.coverUrl = data.pic.replace('http:', 'https:')
     this.tagId = data.tid
@@ -70,13 +71,18 @@ export class VideoInfo {
       title: it.part,
       pageNumber: it.page,
     }))
-    this.subtitles = data.subtitle.list.map((it: any) => ({
-      id: it.id,
-      languageCode: it.lan,
-      language: it.lan_doc,
-      url: it.subtitle_url.replace('http:', 'https:'),
-    }))
     return this
+  }
+
+  /** @deprecated */
+  get subtitles(): {
+    id: number
+    languageCode: string
+    language: string
+    url: string
+  }[] {
+    console.warn('VideoInfo.subtitles is deprecated')
+    return []
   }
 }
 export class BangumiInfo {

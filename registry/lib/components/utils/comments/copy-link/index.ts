@@ -36,7 +36,7 @@ const entry = async () => {
       })
     }
     processItems([comment, ...comment.replies])
-    comment.onRepliesUpdate = replies => processItems(replies)
+    comment.addEventListener('repliesUpdate', e => processItems(e.detail))
   }
   forEachCommentItem({
     added: addCopyLinkButton,

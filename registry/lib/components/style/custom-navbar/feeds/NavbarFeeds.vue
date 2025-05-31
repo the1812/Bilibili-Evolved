@@ -11,11 +11,11 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
-import { feedsCardTypes } from '@/components/feeds/api'
-import { getNotifyCount } from '@/components/feeds/notify'
 import { TabControl, VIcon } from '@/ui'
 
 import { popupProps, usePopup } from '../mixins'
+import { type FeedsCardType, feedsCardTypes } from '@/components/feeds/api'
+import { getNotifyCountByType } from '@/components/feeds/notify'
 import { tabs } from './tabs/tabs'
 
 export default defineComponent({
@@ -52,7 +52,11 @@ export default defineComponent({
         if (tab.name === 'live') {
           return
         }
-        const count = await getNotifyCount(feedsCardTypes[tab.name].id.toString())
+        const feedsCardType = feedsCardTypes[tab.name] as FeedsCardType
+        if (!feedsCardType.apiType) {
+          return
+        }
+        const count = await getNotifyCountByType(feedsCardType.apiType)
         tab.count = count
         console.log(tab)
       })

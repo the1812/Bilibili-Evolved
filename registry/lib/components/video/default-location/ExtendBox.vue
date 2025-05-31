@@ -3,7 +3,7 @@
     class="video-default-location-extend-box"
     :class="{ 'video-default-location-extend-box-hidden': realHidden }"
   >
-    <div class="video-default-location-extend-box-bar" @click="setRealHidden">
+    <div class="video-default-location-extend-box-bar" @click="setRealHidden(!realHidden)">
       <div class="video-default-location-extend-box-bar-text">位置测试</div>
       <div
         class="video-default-location-extend-box-bar-btn"

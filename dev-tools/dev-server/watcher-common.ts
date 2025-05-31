@@ -21,7 +21,7 @@ export const defaultWatcherHandler = (
           assets: false,
           modules: false,
           chunks: false,
-          color: true,
+          colors: true,
         }),
       )
     }

@@ -11,7 +11,6 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue'
 import { addComponentListener } from '@/core/settings'
-import { getUID } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import { registerAndGetData } from '@/plugins/data'
 
@@ -33,14 +32,7 @@ const [renderedItems] = registerAndGetData(
   }),
 )
 const getItems = () => {
-  const isLogin = Boolean(getUID())
   const items = (initItems as CustomNavbarItemInit[])
-    .filter(it => {
-      if (it.loginRequired && !isLogin) {
-        return false
-      }
-      return true
-    })
     .map(it => new CustomNavbarItem(it))
     .sort(ascendingSort(it => it.order))
   renderedItems.items = items
@@ -90,6 +82,7 @@ export default defineComponent({
 
 <style lang="scss">
 @import 'common';
+@import './scroll-animation';
 
 .van-message-box {
   z-index: 10002 !important;
@@ -129,14 +122,14 @@ body.fixed-navbar {
       top: calc(var(--navbar-height) + 8px) !important;
     }
   }
-  .bili-feed4 .header-channel {
+  .bili-feed4 .header-channel,
+  .search-fixed-header {
     display: none !important;
   }
 }
 
 .custom-navbar *,
 .custom-navbar {
-  transition: all 0.2s ease-out;
   -webkit-tap-highlight-color: transparent;
   outline: none !important;
 }

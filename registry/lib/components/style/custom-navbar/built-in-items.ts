@@ -6,7 +6,7 @@ import { logo } from './logo/logo'
 import { home } from './home/home'
 import { gamesIframe, livesIframe, mangaIframe } from './iframe/iframe'
 import { blanks } from './flexible-blank/flexible-blank'
-import { bangumi, music, drawing, shop, match, creations } from './simple-links/simple-links'
+import { bangumi, music, shop, match, creations } from './simple-links/simple-links'
 import { upload } from './upload/upload'
 import { search } from './search/search'
 import { feeds } from './feeds/feeds'
@@ -22,7 +22,6 @@ export const getBuiltInItems = (): CustomNavbarItemInit[] => [
   home,
   bangumi,
   ranking,
-  drawing,
   music,
   gamesIframe,
   livesIframe,

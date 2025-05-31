@@ -1,20 +1,11 @@
-import type { OptionsOfMetadata } from '@/components/define'
-import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import { defineComponentMetadata } from '@/components/define'
 import type { ComponentEntry } from '@/components/types'
 import { getUID, matchUrlPattern, mountVueComponent } from '@/core/utils'
 import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
 
 import type { KeyBindingAction } from '../../utils/keymap/bindings'
 import { addVideoActionButton } from '@/components/video/video-actions'
-
-const options = defineOptionsMetadata({
-  showInWatchlaterPages: {
-    defaultValue: false,
-    displayName: '在稍后再看页面中仍然显示',
-  },
-})
-
-type Options = OptionsOfMetadata<typeof options>
+import { type Options, options } from './options'
 
 const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (watchlaterUrls.some(matchUrlPattern) && !settings.options.showInWatchlaterPages) {

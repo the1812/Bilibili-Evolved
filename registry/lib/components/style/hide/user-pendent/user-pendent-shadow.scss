@@ -1,0 +1,15 @@
+:host(bili-avatar) {
+  container-type: size;
+  container-name: avatar;
+  // .layers:first-child,
+  .layer:not(:first-child),
+  .layer:not(:has(picture [src*="/face/"]), :has([style*="/face/"])) {
+    display: none;
+  }
+  .layer:is(:has(picture [src*="/face/"]), :has([style*="/face/"])) {
+    min-width: 100cqw;
+    min-height: 100cqh;
+    max-width: 100cqw;
+    max-height: 100cqh;
+  }
+}

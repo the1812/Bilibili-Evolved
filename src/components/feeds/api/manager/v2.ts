@@ -22,6 +22,12 @@ const feedsCardTypeMap = {
   DynamicTypeArticle: feedsCardTypes.column,
   DynamicTypeMusic: feedsCardTypes.audio,
   DynamicTypeLiveRcmd: feedsCardTypes.liveRecord,
+  DynamicTypeCourses: feedsCardTypes.courses,
+  DynamicTypeOpus: feedsCardTypes.textWithImages,
+  DynamicTypeLive: feedsCardTypes.live,
+  DynamicTypeMedialist: feedsCardTypes.mediaList,
+  DynamicTypeSubscription: feedsCardTypes.mediaList,
+  DynamicTypeUgcSeason: feedsCardTypes.ugcSeason,
 }
 
 const combineText = (...texts: string[]) =>
@@ -30,7 +36,7 @@ const combineText = (...texts: string[]) =>
     .join('\n')
     .trim()
 const getType = (rawType: string): FeedsCardType =>
-  feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypeMap.DynamicTypeWord
+  feedsCardTypeMap[pascalCase(rawType)] ?? feedsCardTypes.unknown
 const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   const isOpusModule = Object.hasOwn(dynamicModule, 'paragraphs')
   if (isOpusModule) {
@@ -50,26 +56,33 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
     return text
   }
   const { desc: mainDesc, major } = dynamicModule
-  const mainText = mainDesc?.text ?? ''
-  let typeText = ''
-  switch (cardType) {
-    case feedsCardTypes.bangumi:
-    case feedsCardTypes.column:
-    case feedsCardTypes.video: {
-      const target = major.archive ?? major.pgc ?? major.article
-      if (target) {
-        const { title, desc } = target
-        typeText = combineText(title, desc)
-      } else if (major.opus) {
-        const { title, summary } = major.opus
-        typeText = combineText(title, summary.text)
+  const mainText = (() => {
+    if (major?.opus) {
+      return lodash.get(major.opus, 'summary.text')
+    }
+    return mainDesc?.text ?? ''
+  })()
+  const typeText = (() => {
+    switch (cardType) {
+      case feedsCardTypes.bangumi:
+      case feedsCardTypes.column:
+      case feedsCardTypes.video: {
+        const target = major.archive ?? major.pgc ?? major.article
+        if (target) {
+          const { title, desc } = target
+          return combineText(title, desc)
+        }
+        if (major.opus) {
+          const { title, summary } = major.opus
+          return combineText(title, summary.text)
+        }
+        return ''
       }
-      break
+      default: {
+        return ''
+      }
     }
-    default: {
-      break
-    }
-  }
+  })()
   return combineText(mainText, typeText)
 }
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
@@ -124,6 +137,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     }
     card.getText = async () =>
       combineText(getText(modules.module_dynamic, cardType), getText(repostDynamicModule, cardType))
+    card.repostId = vueData.data.orig.id_str
   }
   card.text = await card.getText()
   card.element.setAttribute('data-did', card.id)

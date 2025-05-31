@@ -1,5 +1,6 @@
 import type { FeedsCardCallback } from '../types'
 import { getCookieValue, matchUrlPattern } from '@/core/utils'
+import { feedsUrls } from '@/core/utils/urls'
 import { feedsCardCallbacks } from './base'
 import { FeedsCardsManagerV1 } from './v1'
 import { FeedsCardsManagerV2 } from './v2'
@@ -28,6 +29,10 @@ export const feedsCardsManager = (() => {
  * @param callback 回调函数
  */
 export const forEachFeedsCard = async (callback: FeedsCardCallback) => {
+  if (feedsUrls.every(url => !matchUrlPattern(url))) {
+    return null
+  }
+
   const success = await feedsCardsManager.startWatching()
   if (!success) {
     console.error('feedsCardsManager.startWatching() failed')

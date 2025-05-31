@@ -1,5 +1,13 @@
 import { defineComponentMetadata } from '@/components/define'
 import { allMutations } from '@/core/observer'
+import { select } from '@/core/spin-query'
+
+const DEFAULT_PLACEHOLDER = '搜索'
+
+const resetPlaceholder = (input: HTMLInputElement) => {
+  input.placeholder = DEFAULT_PLACEHOLDER
+  input.title = DEFAULT_PLACEHOLDER
+}
 
 export const component = defineComponentMetadata({
   name: 'hideTrendingSearch',
@@ -12,14 +20,24 @@ export const component = defineComponentMetadata({
     },
   ],
   entry: async () => {
+    const input: HTMLInputElement = await select('input.nav-search-input', {
+      queryInterval: 500,
+    })
+
+    if (input) {
+      resetPlaceholder(input)
+      return
+    }
+
+    // Fallback to observer
     allMutations(records => {
       records.forEach(record => {
         if (
           record.target instanceof HTMLInputElement &&
           record.target.classList.contains('nav-search-input') &&
-          record.target.placeholder !== '搜索'
+          record.target.placeholder !== DEFAULT_PLACEHOLDER
         ) {
-          record.target.placeholder = '搜索'
+          resetPlaceholder(record.target)
         }
       })
     })

@@ -1,6 +1,7 @@
 import { defineOptionsMetadata } from '@/components/define'
 import { getNumberValidator } from '@/core/utils'
 import type { FreshLayoutItemSettings } from './layouts/fresh-layout-item'
+import { areaPrimaryTitleColorEnum } from './init-dropdown-options/area-primary-title-color'
 
 export enum RankListMode {
   Default = 'default',
@@ -47,6 +48,11 @@ export const freshHomeOptionsMetadata = defineOptionsMetadata({
   horizontalWheelScroll: {
     displayName: '启用横向滚动',
     defaultValue: false,
+  },
+  areaPrimaryTitleColor: {
+    displayName: '栏目主标题颜色',
+    dropdownEnum: areaPrimaryTitleColorEnum,
+    defaultValue: areaPrimaryTitleColorEnum.Dark,
   },
   maxWidth: {
     displayName: '最大宽度 (px)',

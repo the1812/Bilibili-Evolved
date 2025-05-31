@@ -1,14 +1,8 @@
-import { styledComponentEntry } from '@/components/styled-component'
-import { newSwitchComponentWrapper } from '@/components/switch-options'
+import { wrapSwitchOptions } from '@/components/switch-options'
 import { liveUrls } from '@/core/utils/urls'
 
-export const component = newSwitchComponentWrapper({
+export const component = wrapSwitchOptions({
   name: 'simplifyOptions',
-  dimAt: 'checked',
-  switchProps: {
-    checkedIcon: 'mdi-eye-off-outline',
-    notCheckedIcon: 'mdi-eye-outline',
-  },
   switches: {
     vip: {
       defaultValue: true,
@@ -17,6 +11,10 @@ export const component = newSwitchComponentWrapper({
     enterPrompt: {
       defaultValue: true,
       displayName: '入场通知',
+    },
+    wealthMedal: {
+      defaultValue: true,
+      displayName: '荣耀等级勋章',
     },
     fansMedal: {
       defaultValue: true,
@@ -86,6 +84,10 @@ export const component = newSwitchComponentWrapper({
       defaultValue: false,
       displayName: '高能榜提示',
     },
+    recommendedRooms: {
+      defaultValue: false,
+      displayName: '推荐直播间',
+    },
     skin: {
       defaultValue: false,
       displayName: '房间皮肤',
@@ -94,13 +96,17 @@ export const component = newSwitchComponentWrapper({
 })({
   name: 'simplifyLiveroom',
   displayName: '简化直播间',
-  entry: styledComponentEntry(
-    () => import('./live.scss'),
-    async () => {
-      const { setupSkinSimplify } = await import('./skin')
-      setupSkinSimplify()
+  entry: async () => {
+    const { setupSkinSimplify } = await import('./skin')
+    setupSkinSimplify()
+  },
+  instantStyles: [
+    {
+      name: 'simplify-liveroom',
+      style: () => import('./live.scss'),
+      important: true,
     },
-  ),
+  ],
   description: {
     'zh-CN': '隐藏直播间中各种不需要的内容.',
   },

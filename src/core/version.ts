@@ -2,6 +2,7 @@ import type { FeatureBase } from '@/components/types'
 
 import { loadFeatureCode } from './external-input'
 import { meta } from './meta'
+import { useScopedConsole } from './utils/log'
 
 export enum CompareResult {
   Less = -1,
@@ -51,6 +52,7 @@ export class Version {
  */
 export const isFeatureAcceptable = async (feature: FeatureBase | string) => {
   try {
+    const console = useScopedConsole('isFeatureAcceptable')
     if (typeof feature === 'string') {
       feature = loadFeatureCode(feature) as FeatureBase
     }
@@ -60,6 +62,7 @@ export const isFeatureAcceptable = async (feature: FeatureBase | string) => {
     }
     const { version: currentVersionText } = meta.compilationInfo
     const { coreVersion: requiredVersionText } = feature
+    console.log('currentVersion =', currentVersionText, ', requiredVersion =', requiredVersionText)
     // 没有版本信息, 按旧版行为默认通过检测
     if (!requiredVersionText || !currentVersionText) {
       return true
@@ -68,7 +71,7 @@ export const isFeatureAcceptable = async (feature: FeatureBase | string) => {
     const requiredVersion = new Version(requiredVersionText)
     return currentVersion.equals(requiredVersion) || currentVersion.greaterThan(requiredVersion)
   } catch (error) {
-    console.warn('[isFeatureAcceptable] check failed, feature =', feature)
+    console.warn('check failed, feature =', feature)
     // 版本号异常, 跳过检测
     return true
   }

@@ -14,7 +14,7 @@ enum IntersectionMode {
 export const component = defineComponentMetadata({
   name: 'playerIntersectionActions',
   author: {
-    name: 'FoundTheWOUT',
+    name: 'Waua',
     link: 'https://github.com/FoundTheWOUT',
   },
   tags: [componentsTags.video],

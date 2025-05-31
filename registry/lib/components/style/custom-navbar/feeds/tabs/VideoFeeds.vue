@@ -130,7 +130,6 @@ const columnedCards = computed(
     </template>
   </div>
 </template>
-
 <style lang="scss" scoped>
 .video-feeds {
   display: flex;

@@ -1,10 +1,12 @@
 {
   "name": "Build",
   "on": {
+    "workflow_dispatch": null,
     "push": {
       "branches": [
         "master",
-        "master-cdn"
+        "master-cdn",
+        "preview"
       ]
     }
   },
@@ -13,16 +15,19 @@
       "runs-on": "ubuntu-latest",
       "steps": [
         {
-          "uses": "actions/checkout@v2",
+          "uses": "actions/checkout@v3",
           "with": {
             "fetch-depth": "0"
           }
         },
         {
+          "name": "Setup git",
+          "run": "git config --local user.email github-actions[bot]@users.noreply.github.com\ngit config --local user.name github-actions[bot]\ngit config --global core.autocrlf true\ngit config --global core.safecrlf false"
+        },
+        {
           "name": "Install dependencies",
-          "uses": "pnpm/action-setup@v2.2.4",
+          "uses": "pnpm/action-setup@v4",
           "with": {
-            "version": "latest",
             "run_install": true
           }
         },
@@ -43,13 +48,9 @@
           "run": "cd registry\npnpm install\ncd ../\npnpm run build-features\n"
         },
         {
-          "name": "Build GitHub config",
-          "run": "pnpm run build-github-config"
-        },
-        {
           "name": "Git commit",
           "id": "commit",
-          "run": "git config --local user.email github-actions[bot]@users.noreply.github.com\ngit config --local user.name github-actions[bot]\ngit config --global core.autocrlf true\ngit config --global core.safecrlf false\ngit add --all\ngit commit -m \"CI build\"\n",
+          "run": "git add --all\ngit commit -m \"CI build\"\n",
           "continue-on-error": true
         },
         {

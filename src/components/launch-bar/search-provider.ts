@@ -1,7 +1,6 @@
 import { defineAsyncComponent, h } from 'vue'
-
 import { getJson } from '@/core/ajax'
-import { formData, getUID } from '@/core/utils'
+import { getUID } from '@/core/utils'
 
 import { addHistoryItem } from './history-provider'
 import type { LaunchBarAction, LaunchBarActionProvider } from './launch-bar-action'
@@ -15,7 +14,7 @@ export const search = (keyword: string) => {
     keyword,
     from_source: 'nav_suggest_new',
   }
-  window.open(`https://search.bilibili.com/all?${formData(params)}`, '_blank')
+  window.open(`https://search.bilibili.com/all?${new URLSearchParams(params)}`, '_blank')
 }
 export const searchProvider: LaunchBarActionProvider = {
   name: 'search',
@@ -44,7 +43,7 @@ export const searchProvider: LaunchBarActionProvider = {
     }
     results.push(
       ...suggests.map(result => ({
-        name: result.value,
+        name: `${input}.${result.value}`,
         icon: 'search',
         content: defineAsyncComponent(
           async () => () =>

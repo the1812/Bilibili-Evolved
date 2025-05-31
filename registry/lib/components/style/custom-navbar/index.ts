@@ -4,6 +4,7 @@ import { defineComponentMetadata, defineOptionsMetadata } from '@/components/def
 import type { LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
 import { getNumberValidator } from '@/core/utils'
 import { NavbarNotifyStyle } from './notify-style'
+import { NavbarLinkPopupContentAlignStyle } from './link-popup-content-align-style'
 
 import { entry } from './entry'
 import { urlExclude, urlInclude } from './urls'
@@ -90,6 +91,11 @@ const options = defineOptionsMetadata({
     dropdownEnum: NavbarNotifyStyle,
     displayName: '消息提醒样式',
   },
+  linkPopupContentAlignStyle: {
+    defaultValue: NavbarLinkPopupContentAlignStyle.Left,
+    dropdownEnum: NavbarLinkPopupContentAlignStyle,
+    displayName: '链接对齐样式',
+  },
   searchBarWidth: {
     defaultValue: 15,
     slider: {
@@ -117,14 +123,15 @@ export const component = defineComponentMetadata({
   unload: async () => {
     const navbar = document.querySelectorAll('.custom-navbar,.custom-navbar-settings')
     navbar.forEach((it: HTMLElement) => (it.style.display = 'none'))
-    // document.getElementById(styleID)?.remove()
   },
   reload: async () => {
-    const navbar = document.querySelectorAll('.custom-navbar,.custom-navbar-settings')
+    const navbar = document.querySelectorAll('.custom-navbar')
     navbar.forEach((it: HTMLElement) => (it.style.display = 'flex'))
-    // const { default: style } = await import('./hide-original.scss')
-    // const { addImportantStyle } = await import('@/core/style')
-    // addImportantStyle(style, styleID)
+    const navbarSettings = document.querySelectorAll('.custom-navbar-settings')
+    navbarSettings.forEach((it: HTMLElement) => (it.style.display = 'block'))
+  },
+  widget: {
+    component: () => import('./settings/Widget.vue').then(m => m.default),
   },
   extraOptions: defineAsyncComponent(() => import('./settings/ExtraOptions.vue')),
   plugin: {

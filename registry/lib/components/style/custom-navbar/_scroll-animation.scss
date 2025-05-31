@@ -1,0 +1,183 @@
+@property --navbar-foreground {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --navbar-background {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --foreground-color-d {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --theme-color {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+@property --theme-color-60 {
+  syntax: '<color>';
+  inherits: true;
+  initial-value: transparent;
+}
+
+@keyframes transparent-to-light {
+  to {
+    --navbar-foreground: #555;
+    --navbar-background: white;
+  }
+}
+@keyframes transparent-to-light-blur {
+  to {
+    --navbar-foreground: #555;
+    --navbar-background: #fffc;
+    backdrop-filter: blur(24px);
+  }
+}
+@keyframes transparent-to-dark {
+  to {
+    --navbar-foreground: #eee;
+    --navbar-background: #222;
+  }
+}
+@keyframes transparent-to-dark-blur {
+  to {
+    --navbar-foreground: #eee;
+    --navbar-background: #2228;
+    backdrop-filter: blur(24px);
+  }
+}
+@keyframes transparent-to-theme {
+  to {
+    --navbar-foreground: var(--foreground-color-d);
+    --navbar-background: var(--theme-color);
+  }
+}
+@keyframes transparent-to-theme-blur {
+  to {
+    --navbar-foreground: var(--foreground-color-d);
+    --navbar-background: var(--theme-color-60);
+    backdrop-filter: blur(24px);
+  }
+}
+@keyframes transparent-to-light-shadow {
+  to {
+    --navbar-foreground: #555;
+    --navbar-background: white;
+    box-shadow: #0002 0 1px 10px 1px;
+  }
+}
+@keyframes transparent-to-light-blur-shadow {
+  to {
+    --navbar-foreground: #555;
+    --navbar-background: #fffc;
+    backdrop-filter: blur(24px);
+    box-shadow: #0002 0 1px 10px 1px;
+  }
+}
+@keyframes transparent-to-dark-shadow {
+  to {
+    --navbar-foreground: #eee;
+    --navbar-background: #222;
+    box-shadow: #0004 0px 2px 10px 1px;
+  }
+}
+@keyframes transparent-to-dark-blur-shadow {
+  to {
+    --navbar-foreground: #eee;
+    --navbar-background: #2228;
+    backdrop-filter: blur(24px);
+    box-shadow: #0004 0px 2px 10px 1px;
+  }
+}
+@keyframes transparent-to-theme-shadow {
+  to {
+    --navbar-foreground: var(--foreground-color-d);
+    --navbar-background: var(--theme-color);
+    box-shadow: #0002 0 1px 10px 1px;
+  }
+}
+@keyframes transparent-to-theme-blur-shadow {
+  to {
+    --navbar-foreground: var(--foreground-color-d);
+    --navbar-background: var(--theme-color-60);
+    backdrop-filter: blur(24px);
+    box-shadow: #0002 0 1px 10px 1px;
+  }
+}
+@keyframes transparent-mask {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes launch-bar-colors {
+  to {
+    background-color: #8883;
+  }
+}
+@keyframes launch-bar-colors-fill {
+  to {
+    background-color: #0002;
+  }
+}
+
+@supports (animation-timeline: scroll()) {
+  .custom-navbar.transparent {
+    --animation-range: clamp(116px, 7vw, 180px) clamp(155px, 9.375vw, 240px);
+    &::before {
+      animation: transparent-mask linear both;
+      animation-timeline: scroll();
+      animation-range: var(--animation-range);
+    }
+    body.fixed-navbar & {
+      animation: transparent-to-light linear both;
+      animation-timeline: scroll();
+      animation-range: var(--animation-range);
+      .launch-bar {
+        animation: launch-bar-colors linear both;
+        animation-timeline: scroll();
+        animation-range: var(--animation-range);
+      }
+      &.shadow {
+        animation-name: transparent-to-light-shadow;
+      }
+      &.blur:not(.fill) {
+        animation-name: transparent-to-light-blur;
+        &.shadow {
+          animation-name: transparent-to-light-blur-shadow;
+        }
+      }
+      &.fill {
+        animation-name: transparent-to-theme;
+
+        .launch-bar {
+          animation-name: launch-bar-colors-fill;
+        }
+        &.shadow {
+          animation-name: transparent-to-theme-shadow;
+        }
+        &.blur {
+          animation-name: transparent-to-theme-blur;
+          &.shadow {
+            animation-name: transparent-to-theme-blur-shadow;
+          }
+        }
+      }
+    }
+    body.fixed-navbar.dark &:not(.fill) {
+      animation-name: transparent-to-dark;
+      &.shadow {
+        animation-name: transparent-to-dark-shadow;
+      }
+      &.blur {
+        animation-name: transparent-to-dark-blur;
+        &.shadow {
+          animation-name: transparent-to-dark-blur-shadow;
+        }
+      }
+    }
+  }
+}

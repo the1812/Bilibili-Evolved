@@ -1,0 +1,10 @@
+:host(bili-rich-text) {
+  #contents a[data-type='search'] {
+    color: inherit !important;
+    cursor: inherit !important;
+    display: contents !important;
+    img {
+      display: none;
+    }
+  }
+}

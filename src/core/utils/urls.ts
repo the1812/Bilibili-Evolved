@@ -28,7 +28,7 @@ export const festivalUrls = [/\/\/www\.bilibili\.com\/festival\//]
 /** 含有普通视频的页面 */
 export const videoUrls = ['//www.bilibili.com/video/', ...festivalUrls, ...mediaListUrls]
 /** 含有番剧的页面 */
-export const bangumiUrls = ['//www.bilibili.com/bangumi/']
+export const bangumiUrls = ['//www.bilibili.com/bangumi/play/']
 /** 含有课程的页面 */
 export const cheeseUrls = ['//www.bilibili.com/cheese/']
 /** 视频和番剧页面 */

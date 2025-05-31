@@ -21,7 +21,7 @@ const entry: ComponentEntry = async ({ settings: { options } }) => {
       return
     }
     const danmakuBox = await select('.bui-collapse-wrap')
-    if (dq('.multi-page-v1, .base-video-sections-v1') && options.ignoreWithEpisodes) {
+    if (dq('.multi-page-v1, .base-video-sections-v1, .video-pod') && options.ignoreWithEpisodes) {
       console.log('检测到选集, 跳过展开')
       return
     }

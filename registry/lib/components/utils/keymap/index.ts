@@ -9,11 +9,18 @@ import { actions } from './actions'
 import type { KeyBinding, KeyBindingConfig } from './bindings'
 import { loadKeyBindings } from './bindings'
 import { presetBase, presets } from './presets'
+import { getNumberValidator } from '@/core/utils'
 
 const options = defineOptionsMetadata({
   longJumpSeconds: {
     defaultValue: 85,
     displayName: '长跳跃秒数',
+    validator: getNumberValidator(1),
+  },
+  volumeStep: {
+    defaultValue: 10,
+    displayName: '音量调整幅度',
+    validator: getNumberValidator(1, 100),
   },
   customKeyBindings: {
     defaultValue: {} as Record<string, string>,

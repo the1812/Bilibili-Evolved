@@ -2,8 +2,31 @@ import { styledComponentEntry } from '@/components/styled-component'
 
 import type { Options } from '.'
 
-const resizeRegex = /@(\d+)[Ww]_(\d+)[Hh]/
+const resizeRegex = /@(\d+)[Ww](_(\d+)[Hh])?/
+
+/** 排除 */
 const excludeSelectors = ['#certify-img1', '#certify-img2']
+/** 需要设置 height */
+const heightSelectors = [
+  // 动态头像框必须设高度
+  // https://github.com/the1812/Bilibili-Evolved/issues/2030
+  '.bili-avatar-img',
+]
+/** width 和 height 都得设置 */
+const widthAndHeightSelectors = [
+  // 首页 Logo
+  // https://github.com/the1812/Bilibili-Evolved/issues/4480
+  '.logo-img',
+]
+const originalImageInArticlesSelectors = ['.article-detail .article-content img']
+
+const getAutoScale = () => {
+  if (window.devicePixelRatio <= 2) {
+    return 1
+  }
+  return window.devicePixelRatio / 2
+}
+
 const walk = (rootElement: Node, action: (node: HTMLElement) => void) => {
   const walker = document.createNodeIterator(rootElement, NodeFilter.SHOW_ELEMENT)
   let node = walker.nextNode()
@@ -12,12 +35,21 @@ const walk = (rootElement: Node, action: (node: HTMLElement) => void) => {
     node = walker.nextNode()
   }
 }
+
+interface ImageResolutionHandler {
+  getWidth: (width: number, element: HTMLElement) => number
+  getHeight: (height: number, element: HTMLElement) => number
+}
+
 /**
  * 从开始元素`element`向下遍历所有子节点, 更换其中的图片URL至目标DPI
  * @param dpi 目标DPI
  * @param element 开始元素
  */
-export const imageResolution = async (dpi: number, element: HTMLElement) => {
+export const imageResolution = async (
+  element: HTMLElement,
+  resolutionHandler: ImageResolutionHandler,
+) => {
   const { attributes } = await import('@/core/observer')
   const replaceSource = (
     getValue: (e: HTMLElement) => string | null,
@@ -34,28 +66,51 @@ export const imageResolution = async (dpi: number, element: HTMLElement) => {
     if (value.includes(',')) {
       return
     }
+
     const match = value.match(resizeRegex)
     if (!match) {
       return
     }
-    const [, currentWidth, currentHeight] = match
+    const [, currentWidth, , currentHeight] = match
     const lastWidth = parseInt(element.getAttribute('data-resolution-width') || '0')
     if (parseInt(currentWidth) >= lastWidth && lastWidth !== 0) {
       return
     }
-    if (element.getAttribute('width') === null && element.getAttribute('height') === null) {
-      if (element.classList.contains('bili-avatar-img')) {
-        // 动态头像框必须设高度
-        // https://github.com/the1812/Bilibili-Evolved/issues/2030
+
+    if (
+      element.getAttribute('width') === null &&
+      element.getAttribute('height') === null &&
+      currentHeight !== undefined
+    ) {
+      if (widthAndHeightSelectors.some(selector => element.matches(selector))) {
+        element.setAttribute('height', currentHeight)
+        element.setAttribute('width', currentWidth)
+      } else if (heightSelectors.some(selector => element.matches(selector))) {
         element.setAttribute('height', currentHeight)
       } else {
         element.setAttribute('width', currentWidth)
       }
     }
-    const newWidth = Math.round(dpi * parseInt(currentWidth)).toString()
-    const newHeight = Math.round(dpi * parseInt(currentHeight)).toString()
-    element.setAttribute('data-resolution-width', newWidth)
-    setValue(element, value.replace(resizeRegex, `@${newWidth}w_${newHeight}h`))
+
+    const getReplacedValue = (newWidth: number, newHeight?: number) => {
+      if (newWidth === Infinity || newHeight === Infinity) {
+        return value.replace(resizeRegex, '@')
+      }
+      if (newHeight === undefined) {
+        return value.replace(resizeRegex, `@${newWidth}w`)
+      }
+      return value.replace(resizeRegex, `@${newWidth}w_${newHeight}h`)
+    }
+    if (currentHeight !== undefined) {
+      const newWidth = resolutionHandler.getWidth(parseInt(currentWidth), element)
+      const newHeight = resolutionHandler.getHeight(parseInt(currentHeight), element)
+      element.setAttribute('data-resolution-width', newWidth.toString())
+      setValue(element, getReplacedValue(newWidth, newHeight))
+    } else {
+      const newWidth = resolutionHandler.getWidth(parseInt(currentWidth), element)
+      element.setAttribute('data-resolution-width', newWidth.toString())
+      setValue(element, getReplacedValue(newWidth))
+    }
   }
   attributes(element, () => {
     replaceSource(
@@ -76,18 +131,40 @@ export const startResolution = styledComponentEntry<Options>(
   () => import('./fix.scss'),
   async ({ settings }) => {
     const { allMutations } = await import('@/core/observer')
-    const dpi =
-      settings.options.scale === 'auto'
-        ? window.devicePixelRatio
-        : parseFloat(settings.options.scale)
-    walk(document.body, it => imageResolution(dpi, it))
+    const scale =
+      settings.options.scale === 'auto' ? getAutoScale() : parseFloat(settings.options.scale)
+    if (scale === 1) {
+      return
+    }
+    const handleResolution: ImageResolutionHandler = {
+      getWidth: (currentWidth, element) => {
+        if (
+          settings.options.originalImageInArticles &&
+          originalImageInArticlesSelectors.some(selector => element.matches(selector))
+        ) {
+          return Infinity
+        }
+        return Math.round(scale * currentWidth)
+      },
+      getHeight: (currentHeight, element) => {
+        if (
+          settings.options.originalImageInArticles &&
+          originalImageInArticlesSelectors.some(selector => element.matches(selector))
+        ) {
+          return Infinity
+        }
+        return Math.round(scale * currentHeight)
+      },
+    }
+
+    walk(document.body, it => imageResolution(it, handleResolution))
     allMutations(records => {
       records.forEach(record =>
         record.addedNodes.forEach(node => {
           if (node instanceof HTMLElement) {
-            imageResolution(dpi, node)
+            imageResolution(node, handleResolution)
             if (node.nodeName.toUpperCase() !== 'IMG') {
-              walk(node, it => imageResolution(dpi, it))
+              walk(node, it => imageResolution(it, handleResolution))
             }
           }
         }),

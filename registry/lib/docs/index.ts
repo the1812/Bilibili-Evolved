@@ -20,6 +20,7 @@ export interface DocSourceItem {
   name: string
   displayName: string
   description?: string
+  descriptionText?: string
   fullAbsolutePath: string
   fullRelativePath: string
   owner?: string

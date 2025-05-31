@@ -619,7 +619,7 @@ html {
   &:not(.iframe) {
     &,
     body {
-      @include background-color('2');
+      background-color: var(--bg1, #222) !important;
     }
   }
 }
@@ -648,6 +648,107 @@ html {
         @include color('d');
         &:hover {
           @include theme-color();
+        }
+      }
+    }
+  }
+
+  .ai-summary-popup {
+    @include border-color('3');
+    @include background-color('2');
+    .ai-summary-popup-tips-text {
+      @include color('e');
+    }
+    .ai-summary-popup-header {
+      &::after {
+        @include background-color('e');
+      }
+      .ai-summary-popup-header-clickable-area {
+        @include to-gray();
+      }
+    }
+    .ai-summary-popup-body {
+      .ai-summary-popup-body-abstracts {
+        @include color('e');
+      }
+      .ai-summary-popup-body-outline .section:hover {
+        @include background-color('3');
+      }
+    }
+  }
+  // B 站的父容器和 note-container 圆角没对齐，会漏一点白色出来
+  &.note-pc {
+    @include background-color('3');
+  }
+  .note-container {
+    overflow: hidden; // B 站写的 .note-detail 容器溢出了
+    @include border-color();
+    @include background-color('3'); // 修复上述圆角对齐问题
+    .note-header {
+      @include background-color('3');
+      .note-title,
+      .back-note-list,
+      .jump-note-package,
+      .close-note {
+        @include color('e');
+        @include background-color('3');
+        svg {
+          @include to-white();
+        }
+        &:active {
+          @include background-color('2');
+        }
+      }
+      .note-operation {
+        @include background-color('4');
+      }
+    }
+    .note-content {
+      .note-card-container .note-card {
+        @include background-color('2');
+        .note-content {
+          @include background-color('2');
+          @include color('e');
+        }
+      }
+      .note-detail {
+        @include background-color('3');
+        @include color('e');
+        .up-desc-container .desc-top .up-name {
+          @include to-white();
+        }
+        .preview-editor {
+          @include color('e');
+        }
+        .note-operation .sanlian-box {
+          @include background-color('4');
+          @include border-color('3');
+        }
+      }
+      .note-editor {
+        .ql-editor,
+        .ql-toolbar,
+        .ql-picker-options,
+        .ql-picker-label {
+          @include background-color('2');
+          @include color('e');
+        }
+        .ql-bar {
+          &:not(.ql-active) {
+            i,
+            svg {
+              cursor: pointer;
+              &:not(:hover) {
+                @include to-white();
+              }
+            }
+          }
+          &.ql-active {
+            i,
+            svg {
+              @include theme-color();
+            }
+          }
         }
       }
     }
@@ -838,6 +939,9 @@ html {
       .name {
         @include set-theme-color('border-bottom-color');
         @include theme-color();
+      }
+      .underline {
+        @include theme-border-color();
       }
     }
     .name {

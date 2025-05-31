@@ -6,8 +6,9 @@
   border-bottom: 2px solid transparent;
   font-size: 15px;
   line-height: normal;
+
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: calc(100% - 4px);
     left: 8px;
@@ -18,7 +19,23 @@
     transition: 0.16s 0.1s ease-out;
     transform: scaleX(0);
   }
+
   &:hover::before {
     transform: scaleX(1);
+  }
+
+  html[data-navbar-link-popup-content-align-style='left'] &,
+  &.left {
+    justify-content: flex-start;
+  }
+
+  html[data-navbar-link-popup-content-align-style='center'] &,
+  &.center {
+    justify-content: center;
+  }
+
+  html[data-navbar-link-popup-content-align-style='right'] &,
+  &.right {
+    justify-content: flex-end;
   }
 }

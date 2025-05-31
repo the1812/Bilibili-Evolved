@@ -11,7 +11,7 @@
           :href="card.playUrl"
           target="_blank"
         >
-          <div class="cover-container">
+          <div class="subscriptions-cover-container">
             <DpiImage class="cover" :src="card.coverUrl" :size="64"></DpiImage>
           </div>
           <div class="card-info">
@@ -125,7 +125,7 @@ export default defineComponent({
           `https://api.bilibili.com/x/space/bangumi/follow/list?${params}`,
         )
         if (json.code !== 0) {
-          logError(`加载订阅信息失败: ${json.message}`)
+          logError(`加载番剧信息失败: ${json.message}`)
           return
         }
         const newCards: SubscriptionItem[] = lodash
@@ -188,7 +188,7 @@ export default defineComponent({
         background-color: #2d2d2d;
         color: #eee;
       }
-      .cover-container {
+      .subscriptions-cover-container {
         height: 64px;
         width: 64px;
         border-radius: $radius 0 0 $radius;

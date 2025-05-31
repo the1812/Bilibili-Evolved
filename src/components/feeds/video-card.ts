@@ -1,6 +1,7 @@
 export interface Topic {
   id: number
   name: string
+  url?: string
 }
 export interface Cooperation {
   id: number
