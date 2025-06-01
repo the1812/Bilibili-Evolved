@@ -3,7 +3,6 @@
   "compilerOptions": { 
     "importsNotUsedAsValues": "remove",
     "preserveValueImports": false,
-    "verbatimModuleSyntax": true,
     "strict": false,
     "sourceMap": true,
     "baseUrl": ".",
