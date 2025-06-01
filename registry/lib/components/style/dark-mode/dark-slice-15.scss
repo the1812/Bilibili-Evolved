@@ -509,8 +509,8 @@
       }
       .channel-link__right {
         @include color('e');
-        svg path {
-          @include fill('e');
+        svg {
+          filter: invert(1) hue-rotate(180deg) brightness(1.5);
         }
       }
       .channel-entry-more__link,
