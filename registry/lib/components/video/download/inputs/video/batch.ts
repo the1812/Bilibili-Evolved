@@ -5,7 +5,8 @@ import { formatDuration, formatNumber } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
 import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { videoUrls } from '@/core/utils/urls'
-
+import type { BiliBiliQueryAidAndBvidResponse } from './types/aid-bvid-response'
+import type { BiliBiliQueryAidData } from './types/aid-response'
 import type { DownloadVideoInput } from '../../types'
 import type { EpisodeItem } from '../episode-item'
 import { createEpisodesPicker } from '../episode-item'
@@ -25,17 +26,17 @@ export const videoBatchInput: DownloadVideoInput = {
         logError(`获取视频选集列表失败, message = ${json.message}`)
         return []
       }
-      const { pages, owner, pubdate } = json.data
+      const { pages, owner, pubdate } = json.data as BiliBiliQueryAidData
       if (pages === undefined) {
         logError('获取视频选集列表失败, 没有找到选集信息.')
         return []
       }
       const date = getTitleVariablesFromDate(new Date(pubdate * 1000))
-      return pages.map((page: any, index: number) => {
-        const key = page.cid
+      return pages.map((page, index: number) => {
+        const cidString = page.cid.toString()
         const title = `P${page.page} ${page.part}`
         return {
-          key,
+          key: cidString,
           title,
           isChecked: index < instance.maxCheckedItems,
           durationText: formatDuration(page.duration),
@@ -43,7 +44,7 @@ export const videoBatchInput: DownloadVideoInput = {
             allowQualityDrop: true,
             title: formatTitle(getGeneralSettings().batchFilenameFormat, false, {
               n: formatNumber(page.page, pages.length),
-              cid: page.cid,
+              cid: cidString,
               ep: page.part,
               user: owner?.name,
               userID: owner?.mid?.toString(),
@@ -55,7 +56,7 @@ export const videoBatchInput: DownloadVideoInput = {
               publishSecond: date.second,
               publishMillisecond: date.millisecond,
             }),
-            cid: page.cid,
+            cid: cidString,
             aid,
           },
         } as EpisodeItem
@@ -73,13 +74,13 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
     createEpisodesPicker(async instance => {
       const { aid, bvid } = unsafeWindow
       const api = `https://api.bilibili.com/x/web-interface/wbi/view/detail?bvid=${bvid}&aid=${aid}`
-      const json = await getJsonWithCredentials(api)
+      const json = await getJsonWithCredentials<BiliBiliQueryAidAndBvidResponse>(api)
       if (json.code !== 0) {
         logError(`获取视频合集列表失败, message = ${json.message}`)
         return []
       }
-      const owner = lodash.get(json, 'data.View.owner', {})
-      const sections: { episodes: any[] }[] = lodash.get(json, 'data.View.ugc_season.sections', [])
+      const owner = json.data?.View?.owner || { name: '未知用户', mid: 0 }
+      const sections = json.data?.View?.ugc_season?.sections || []
       if (sections.length === 0) {
         return []
       }
@@ -89,12 +90,12 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
         return episodes.map((episode, episodeIndex) => {
           const currentIndex =
             episodeIndex + lodash.sumBy(sections.slice(0, sectionIndex), it => it.episodes.length)
-          const key = episode.cid
+          const cidString = episode.cid.toString()
           const page = currentIndex + 1
           const title = `P${page} ${episode.title}`
           const date = getTitleVariablesFromDate(new Date(episode.arc.pubdate * 1000))
           return {
-            key,
+            key: cidString,
             title,
             isChecked: currentIndex < instance.maxCheckedItems,
             durationText: formatDuration(episode.arc.duration),
@@ -103,9 +104,9 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
               title: formatTitle(getGeneralSettings().batchFilenameFormat, false, {
                 n: formatNumber(page, totalEpisodesLength),
                 title: episode.page.part,
-                cid: episode.cid,
-                aid: episode.aid,
-                bvid: episode.bvid,
+                cid: cidString,
+                aid: episode.aid.toString(),
+                bvid: episode.bvid.toString(),
                 ep: episode.title,
                 user: owner.name,
                 userID: owner.mid?.toString(),
@@ -117,8 +118,8 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
                 publishSecond: date.second,
                 publishMillisecond: date.millisecond,
               }),
-              cid: episode.cid,
-              aid: episode.aid,
+              cid: cidString,
+              aid: episode.aid.toString(),
             },
           } as EpisodeItem
         })

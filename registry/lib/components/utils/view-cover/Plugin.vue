@@ -2,7 +2,7 @@
   <div class="download-cover-config download-video-config-section">
     <div class="download-video-config-item">
       <div class="download-video-config-title">封面:</div>
-      <VDropdown v-model="type" :items="items">
+      <VDropdown v-model:value="type" :items="items">
         <template #item="{ item }">
           {{ item }}
         </template>
@@ -10,37 +10,22 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
+import { ref, watch } from 'vue'
 import { getComponentSettings } from '@/core/settings'
-import { UnknownOptions } from '@/components/component'
+import type { UnknownOptions } from '@/components/component'
 import { VDropdown } from '@/ui'
-import { CoverDownloadType } from './types'
+import type { CoverDownloadType } from './types'
 
 interface Options extends UnknownOptions {
   CoverType: CoverDownloadType | '无'
 }
 const { options } = getComponentSettings<Options>('downloadVideo')
 
-export default Vue.extend({
-  components: {
-    VDropdown,
-  },
-  data() {
-    return {
-      type: options.CoverType ?? '无',
-      items: ['无', 'jpg'],
-    }
-  },
-  computed: {
-    enabled() {
-      return this.type !== '无'
-    },
-  },
-  watch: {
-    type(newValue: CoverDownloadType) {
-      options.CoverType = newValue
-    },
-  },
+const type = ref(options.CoverType ?? '无')
+const items = ['无', 'jpg']
+watch(type, newValue => {
+  options.CoverType = newValue
 })
 </script>
 <style lang="scss">

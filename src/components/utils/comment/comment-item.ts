@@ -1,5 +1,5 @@
 import { CommentReplyItem } from './reply-item'
-import { RepliesUpdateEventCallback, RepliesUpdateEventType } from './types'
+import { type RepliesUpdateEventCallback, RepliesUpdateEventType } from './types'
 
 const createRepliesUpdateEvent = (replies: CommentReplyItem[]) => {
   return new CustomEvent(RepliesUpdateEventType, {

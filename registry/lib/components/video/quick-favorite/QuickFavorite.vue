@@ -18,9 +18,9 @@
       <div class="lists">
         选择快速收藏夹:
         <VDropdown
-          v-model="selectedFavoriteList"
+          v-model:value="selectedFavoriteList"
           :items="list"
-          :key-mapper="it => it.id"
+          :key-mapper="it => (it as DisplayItem).id"
           @change="saveFavoriteList"
         />
       </div>
@@ -40,6 +40,7 @@ import { logError } from '@/core/utils/log'
 import { VDropdown } from '@/ui'
 import { DisplayMode, type Options } from './options'
 
+type DisplayItem = { displayName: string; id: number }
 const { options } = getComponentSettings('quickFavorite')
 interface RawFavoriteListItem {
   id: number
@@ -70,7 +71,7 @@ export default defineComponent({
       tipText: '',
       tipShowing: false,
       tipHandle: 0,
-      list: [] as { displayName: string; id: number }[],
+      list: [] as DisplayItem[],
       selectedFavoriteList: EmptyFavoriteList,
       listShowing: false,
       displayMode,

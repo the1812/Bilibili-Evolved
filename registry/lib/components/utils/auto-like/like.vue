@@ -5,66 +5,53 @@
   </VButton>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
+import { ref } from 'vue'
 import { VButton, VIcon } from '@/ui'
+import { getData } from '@/plugins/data'
+import { BlackListDataKey } from './vm'
 
-export default Vue.extend({
-  components: {
-    VButton,
-    VIcon,
-  },
-  props: {
-    list: {
-      type: Array,
-      default: null,
-    },
-  },
-  data() {
-    return {
-      isClick: false,
-      isLike: false,
-      totalLikeCnt: 0,
-      curLikeCnt: 0,
-      feedsLikeQueue: [] as HTMLElement[],
+const isClick = ref(false)
+const isLike = ref(false)
+const totalLikeCnt = ref(0)
+const curLikeCnt = ref(0)
+const feedsLikeQueue = ref([] as HTMLElement[])
+
+const like = () => {
+  if (isClick.value) {
+    return
+  }
+  isClick.value = true
+  const list = getData(BlackListDataKey)[0].users as string[]
+  // forEachFeedsCard异步执行顺序有问题，不能及时同步，用dqa代替
+  const likeButtons = (
+    Array.from(document.getElementsByClassName('bili-dyn-title__text')) as HTMLElement[]
+  ).reduce((buttons, e) => {
+    if (list.includes(e.textContent.trim())) {
+      return buttons
     }
-  },
-  methods: {
-    like() {
-      if (this.isClick) {
-        return
-      }
-      this.isClick = true
-      // forEachFeedsCard异步执行顺序有问题，不能及时同步，用dqa代替
-      const likeButtons = (
-        Array.from(document.getElementsByClassName('bili-dyn-title__text')) as HTMLElement[]
-      ).reduce((buttons, e) => {
-        if (this.list.includes(e.textContent.trim())) {
-          return buttons
-        }
-        const likeButton = e.closest('.bili-dyn-item__main').querySelector('.bili-dyn-action.like')
-        if (likeButton && !likeButton.classList.contains('active')) {
-          buttons.push(likeButton as HTMLElement)
-        }
-        return buttons
-      }, [] as HTMLElement[])
-      this.feedsLikeQueue.push(...likeButtons)
-      this.totalLikeCnt = this.feedsLikeQueue.length
-      this.curLikeCnt = 0
-      this.isLike = true
-      const t = window.setInterval(() => {
-        if (this.feedsLikeQueue.length === 0) {
-          this.isLike = false
-          this.isClick = false
-          clearInterval(t)
-          return
-        }
-        const button = this.feedsLikeQueue.shift()
-        button?.click()
-        this.curLikeCnt++
-      }, 1200)
-    },
-  },
-})
+    const likeButton = e.closest('.bili-dyn-item__main').querySelector('.bili-dyn-action.like')
+    if (likeButton && !likeButton.classList.contains('active')) {
+      buttons.push(likeButton as HTMLElement)
+    }
+    return buttons
+  }, [] as HTMLElement[])
+  feedsLikeQueue.value.push(...likeButtons)
+  totalLikeCnt.value = feedsLikeQueue.value.length
+  curLikeCnt.value = 0
+  isLike.value = true
+  const t = window.setInterval(() => {
+    if (feedsLikeQueue.value.length === 0) {
+      isLike.value = false
+      isClick.value = false
+      clearInterval(t)
+      return
+    }
+    const button = feedsLikeQueue.value.shift()
+    button?.click()
+    curLikeCnt.value++
+  }, 1200)
+}
 </script>
 
 <style lang="scss">

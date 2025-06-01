@@ -1,10 +1,9 @@
 import { monkey } from '@/core/ajax'
 import { logError } from '@/core/utils/log'
-import { DownloadVideoOutput } from '../../../../components/video/download/types'
+import type { DownloadVideoOutput } from '../../../../components/video/download/types'
 
 const getPastebinUrl = async (str: string, config: ConfigDataType) => {
-  const sp = new URLSearchParams()
-  Object.entries({
+  const sp = new URLSearchParams({
     api_dev_key: config.api_dev_key,
     api_user_key: config.api_user_key, // ! 必须绑定一个账号，否则链接可能被吞
     api_folder_key: 'm3u',
@@ -12,7 +11,7 @@ const getPastebinUrl = async (str: string, config: ConfigDataType) => {
     api_paste_code: str,
     api_paste_private: '1',
     api_paste_expire_date: '10M',
-  }).forEach(([key, value]) => sp.append(key, value))
+  })
   const response = await monkey<string>({
     url: 'https://pastebin.com/api/api_post.php',
     method: 'POST',
@@ -24,7 +23,7 @@ const getPastebinUrl = async (str: string, config: ConfigDataType) => {
     responseType: 'text',
     fetch: true,
   })
-  if (/^Bad API request,/.test(response)) {
+  if (response.startsWith('Bad API request,')) {
     throw response
   }
 

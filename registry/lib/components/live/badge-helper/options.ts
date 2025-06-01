@@ -1,4 +1,4 @@
-import { OptionsOfMetadata, defineOptionsMetadata } from '@/components/define'
+import { type OptionsOfMetadata, defineOptionsMetadata } from '@/components/define'
 import { getNumberValidator } from '@/core/utils'
 
 export const badgeHelperOptions = defineOptionsMetadata({

@@ -9,7 +9,7 @@ import type { DanmakuType } from '../converter/danmaku-type'
 import { XmlDanmaku } from '../converter/xml-danmaku'
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
-import { DownloadDanmakuOptions } from './options'
+import type { DownloadDanmakuOptions } from './options'
 
 export class JsonDanmaku {
   // static SegmentSize = 6 * 60

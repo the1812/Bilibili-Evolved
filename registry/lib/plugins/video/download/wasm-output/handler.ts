@@ -1,11 +1,11 @@
-import { DownloadPackage, PackageEntry } from '@/core/download'
+import { DownloadPackage, type PackageEntry } from '@/core/download'
 import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { formatFileSize, formatPercent } from '@/core/utils/formatters'
 import { title as pluginTitle } from '.'
 import type { Options } from '../../../../components/video/download'
-import { DownloadVideoAction } from '../../../../components/video/download/types'
+import type { DownloadVideoAction } from '../../../../components/video/download/types'
 import { FFmpeg } from './ffmpeg'
 import { getCacheOrFetch, httpGet, toastProgress, toBlobUrl } from './utils'
 

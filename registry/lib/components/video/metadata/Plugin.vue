@@ -2,7 +2,7 @@
   <div class="download-video-config-section">
     <div class="download-video-config-item">
       <div>元数据：</div>
-      <VDropdown v-model="type" :items="items">
+      <VDropdown v-model:value="type" :items="items">
         <template #item="{ item }">
           {{ item }}
         </template>
@@ -10,35 +10,21 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
+import { ref, watch } from 'vue'
 import { VDropdown } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
-import { MetadataType } from './metadata'
+import type { MetadataType } from './metadata'
 
-interface Options {
+type Options = {
   metadataType: MetadataType | '无'
 }
-const options = getComponentSettings('downloadVideo').options as Options
+const { options } = getComponentSettings<Options>('downloadVideo')
 
-export default Vue.extend({
-  components: {
-    VDropdown,
-  },
-  data() {
-    return {
-      type: options.metadataType ?? '无',
-      items: ['无', 'ffmetadata', 'ogm'],
-    }
-  },
-  computed: {
-    enabled() {
-      return this.type !== '无'
-    },
-  },
-  watch: {
-    type(value: MetadataType) {
-      options.metadataType = value
-    },
-  },
+const type = ref(options.metadataType ?? '无')
+const items = ['无', 'ffmetadata', 'ogm']
+
+watch(type, newValue => {
+  options.metadataType = newValue
 })
 </script>

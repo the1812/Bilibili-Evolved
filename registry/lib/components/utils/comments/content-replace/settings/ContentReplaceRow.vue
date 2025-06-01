@@ -29,31 +29,23 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { VButton, TextBox, VIcon } from '@/ui'
 import { CommentContentReplaceRow } from './row'
 
-export default Vue.extend({
-  components: {
-    VButton,
-    VIcon,
-    TextBox,
-  },
-  props: {
-    row: {
-      required: true,
-      type: CommentContentReplaceRow,
-    },
-  },
-  methods: {
-    emitChange(event: { from: string; to: string }) {
-      this.$emit('change', event)
-    },
-    emitDelete() {
-      this.$emit('delete')
-    },
+const { row } = defineProps({
+  row: {
+    required: true,
+    type: CommentContentReplaceRow,
   },
 })
+const emits = defineEmits(['change', 'delete'])
+const emitChange = (event: { from: string; to: string }) => {
+  emits('change', event)
+}
+const emitDelete = () => {
+  emits('delete')
+}
 </script>
 <style lang="scss">
 @import 'common';

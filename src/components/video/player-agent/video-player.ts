@@ -1,6 +1,6 @@
 import { isBwpVideo } from '@/core/utils'
 import { PlayerAgent, selectorWrap } from './base'
-import { PlayerQuery, ElementQuery, AgentType } from './types'
+import type { PlayerQuery, ElementQuery, AgentType } from './types'
 import { select } from '@/core/spin-query'
 import { bpxSelectors } from './bpx'
 

@@ -1,6 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
-  "compilerOptions": {
+  "compilerOptions": { 
+    "importsNotUsedAsValues": "remove",
+    "preserveValueImports": false,
+    "verbatimModuleSyntax": true,
     "strict": false,
     "sourceMap": true,
     "baseUrl": ".",
@@ -13,7 +16,7 @@
     }
   },
   "vueCompilerOptions": {
-    "target": 2.7
+    "target": 3.5,
   },
   "include": [
     "src/**/*",

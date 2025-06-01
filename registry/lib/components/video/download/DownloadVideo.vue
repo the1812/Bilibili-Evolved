@@ -79,16 +79,16 @@
         class="run-download"
         type="primary"
         :disabled="!canStartDownload"
-        @click="startDownload(outputOptions, selectedOutput)"
+        @click="startDownload()"
       >
         开始
       </VButton>
     </div>
   </VPopup>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import type { Ref, ComponentPublicInstance } from 'vue'
-import { ref, defineComponent, reactive } from 'vue'
+import { ref, reactive, computed, watch, onMounted, useTemplateRef } from 'vue'
 import type { VideoQuality } from '@/components/video/video-quality'
 import { allQualities } from '@/components/video/video-quality'
 import type { TestPattern } from '@/core/common-types'
@@ -116,13 +116,13 @@ import type {
 } from './types'
 import { DownloadVideoAction } from './types'
 
-const [inputs] = registerAndGetData('downloadVideo.inputs', [
+const [inputsRaw] = registerAndGetData('downloadVideo.inputs', [
   videoSingleInput,
   videoBatchInput,
   videoSeasonBatchInput,
   bangumiBatchInput,
 ] as DownloadVideoInput[])
-const [apis] = registerAndGetData('downloadVideo.apis', [
+const [apisRaw] = registerAndGetData('downloadVideo.apis', [
   videoFlv,
   videoDashAvc,
   videoDashHevc,
@@ -130,7 +130,7 @@ const [apis] = registerAndGetData('downloadVideo.apis', [
   videoAudioDash,
 ] as DownloadVideoApi[])
 const [assets] = registerAndGetData('downloadVideo.assets', [] as DownloadVideoAssets[])
-const [outputs] = registerAndGetData('downloadVideo.outputs', [
+const [outputsRaw] = registerAndGetData('downloadVideo.outputs', [
   streamSaverOutput,
 ] as DownloadVideoOutput[])
 const { basicConfig } = getComponentSettings('downloadVideo').options as {
@@ -152,215 +152,196 @@ const getFallbackTestVideoInfo = () =>
     title: getFriendlyTitle(true),
   } as DownloadVideoInputItem)
 
-export default defineComponent({
-  components: {
-    VPopup,
-    VButton,
-    VDropdown,
-    VIcon,
-    SwitchBox,
-  },
-  props: {
-    triggerElement: {
-      required: true,
-    },
-  },
-  setup: () => ({
-    inputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
-    assetsOptions: ref(null) as Ref<ComponentPublicInstance[] | null>,
-    outputOptions: ref(null) as Ref<ComponentPublicInstance | null>,
-  }),
-  data() {
-    const lastOutput = basicConfig.output
-    const lastUseBackupUrls = basicConfig.useBackupUrls
-    return {
-      open: false,
-      busy: false,
-      // 测试 videoInfo, 用于获取清晰度列表和预计大小
-      testData: {
-        // undefined: 无法获取; null: 获取中;
-        videoInfo: null,
-        // 是否有多P
-        multiple: false,
-      },
-      assets,
-      qualities: [] as VideoQuality[],
-      selectedQuality: undefined,
-      inputs: [] as DownloadVideoInput[],
-      selectedInput: undefined,
-      apis: [] as DownloadVideoApi[],
-      selectedApi: undefined,
-      outputs,
-      selectedOutput: outputs.find(it => it.name === lastOutput) || outputs[0],
-      useBackupUrls: lastUseBackupUrls || false,
-    }
-  },
-  computed: {
-    assetsWithOptions(): DownloadVideoAssets[] {
-      return (this.assets as DownloadVideoAssets[]).filter(a => a.component)
-    },
-    filteredQualities(): VideoQuality[] {
-      if (this.qualities.length === 0) {
-        return allQualities
-      }
-      return this.qualities
-    },
-    canStartDownload(): boolean {
-      if (this.busy || !this.open) {
-        return false
-      }
-      const isAnySelectionEmpty = [
-        'selectedQuality',
-        'selectedInput',
-        'selectedApi',
-        'selectedOutput',
-      ].some(prop => !this[prop])
-      if (isAnySelectionEmpty) {
-        return false
-      }
-      return true
-    },
-  },
-  watch: {
-    selectedInput(input: DownloadVideoInput) {
-      if (input === undefined) {
-        return
-      }
-      this.updateTestVideoInfo()
-    },
-    selectedApi(api: DownloadVideoApi) {
-      if (api === undefined) {
-        return
-      }
-      this.updateTestVideoInfo()
-      basicConfig.api = api.name
-    },
-    selectedOutput(output: DownloadVideoOutput) {
-      if (output === undefined) {
-        return
-      }
-      basicConfig.output = output.name
-    },
-    useBackupUrls(useBackupUrls: boolean) {
-      if (useBackupUrls === undefined) {
-        return
-      }
-      basicConfig.useBackupUrls = useBackupUrls
-    },
-  },
-  mounted() {
-    coreApis.observer.videoChange(() => {
-      this.selectedInput = undefined
-      this.selectedApi = undefined
+const inputOptions = useTemplateRef('inputOptions')
+const assetsOptions = useTemplateRef<ComponentPublicInstance[]>('assetsOptions')
+const outputOptions = useTemplateRef('outputOptions')
 
-      const matchedInputs = filterData(inputs)
-      this.inputs = matchedInputs
-      this.selectedInput = matchedInputs[0]
-      const matchedApis = filterData(apis)
-      this.apis = matchedApis
-      const lastApi = matchedApis.find(api => api.name === basicConfig.api)
-      if (lastApi) {
-        this.selectedApi = lastApi
-      } else {
-        this.selectedApi = matchedApis[0]
+const { triggerElement } = defineProps<{ triggerElement: HTMLElement }>()
+
+const open = ref(false)
+const busy = ref(false)
+const testData = reactive({
+  // undefined: 无法获取; null: 获取中;
+  videoInfo: null,
+  // 是否有多P
+  multiple: false,
+})
+const qualities = ref<VideoQuality[]>([])
+const selectedQuality = ref<VideoQuality | undefined>(undefined)
+const inputs = ref<DownloadVideoInput[]>([])
+const selectedInput = ref<DownloadVideoInput | undefined>(undefined)
+const apis = ref<DownloadVideoApi[]>([])
+const selectedApi = ref<DownloadVideoApi | undefined>(undefined)
+const outputs = ref<DownloadVideoOutput[]>(outputsRaw)
+const selectedOutput = ref<DownloadVideoOutput>(
+  outputsRaw.find(it => it.name === basicConfig.output) || outputsRaw[0],
+)
+const useBackupUrls = ref<boolean>(basicConfig.useBackupUrls || false)
+
+const assetsWithOptions = computed(() => (assets as DownloadVideoAssets[]).filter(a => a.component))
+const filteredQualities = computed(() =>
+  qualities.value.length === 0 ? allQualities : qualities.value,
+)
+const canStartDownload = computed(() => {
+  if (busy.value || !open.value) {
+    return false
+  }
+  const isAnySelectionEmpty = [
+    selectedQuality.value,
+    selectedInput.value,
+    selectedApi.value,
+    selectedOutput.value,
+  ].some(v => !v)
+  if (isAnySelectionEmpty) {
+    return false
+  }
+  return true
+})
+
+const updateTestVideoInfo = async () => {
+  if (!selectedInput.value || !selectedApi.value) {
+    return
+  }
+  testData.videoInfo = null
+  const input = selectedInput.value as DownloadVideoInput
+  const testItem = input.getTestInput?.() ?? getFallbackTestVideoInfo()
+  console.log('[updateTestVideoInfo]', testItem)
+  testData.multiple = input.batch
+  const api = selectedApi.value as DownloadVideoApi
+  try {
+    const videoInfo = await api.downloadVideoInfo(testItem)
+    qualities.value = videoInfo.qualities
+    const isSelectedQualityOutdated =
+      !selectedQuality.value ||
+      !videoInfo.qualities.some(q => q.value === selectedQuality.value?.value)
+    if (isSelectedQualityOutdated) {
+      selectedQuality.value = videoInfo.qualities[0]
+      if (basicConfig.quality) {
+        const [matchedQuality] = videoInfo.qualities.filter(q => q.value <= basicConfig.quality)
+        if (matchedQuality) {
+          selectedQuality.value = matchedQuality
+        }
       }
+    }
+    // 填充 quality 后要再请求一次得到对应 quality 的统计数据
+    testItem.quality = selectedQuality.value
+    const qualityVideoInfo = await api.downloadVideoInfo(testItem)
+    testData.videoInfo = qualityVideoInfo
+  } catch (error) {
+    console.error('[updateTestVideoInfo] failed', error)
+    testData.videoInfo = undefined
+  }
+}
+
+watch(selectedInput, input => {
+  if (input === undefined) {
+    return
+  }
+  updateTestVideoInfo()
+})
+watch(selectedApi, api => {
+  if (api === undefined) {
+    return
+  }
+  updateTestVideoInfo()
+  basicConfig.api = api.name
+})
+watch(selectedOutput, output => {
+  if (output === undefined) {
+    return
+  }
+  basicConfig.output = output.name
+})
+watch(useBackupUrls, val => {
+  if (val === undefined) {
+    return
+  }
+  basicConfig.useBackupUrls = val
+})
+
+// 只有手动选择的清晰度要记录, 因此不能直接 watch
+const saveSelectedQuality = () => {
+  const quality = selectedQuality.value
+  if (quality === undefined) {
+    return
+  }
+  basicConfig.quality = quality.value
+  updateTestVideoInfo()
+}
+
+// const getVideoItems = async () => {
+//   const input = selectedInput.value as DownloadVideoInput
+//   const videoItems = await input.getInputs(inputOptions)
+//   return videoItems
+// }
+
+const startDownload = async () => {
+  const instance = outputOptions.value as ComponentPublicInstance
+  const output = selectedOutput.value
+  try {
+    busy.value = true
+    const input = selectedInput.value as DownloadVideoInput
+    const api = selectedApi.value as DownloadVideoApi
+    const videoInputs = await input.getInputs(inputOptions)
+    if (videoInputs.length === 0) {
+      Toast.info('未接收到视频, 如果输入源支持批量, 请至少选择一个视频.', '下载视频', 3000)
+      return
+    }
+    videoInputs.forEach(item => {
+      item.quality = selectedQuality.value
     })
-  },
-  methods: {
-    formatFileSize,
-    // 只有手动选择的清晰度要记录, 因此不能直接 watch
-    saveSelectedQuality() {
-      const quality: VideoQuality = this.selectedQuality
-      if (quality === undefined) {
-        return
-      }
-      basicConfig.quality = quality.value
-      this.updateTestVideoInfo()
-    },
-    async getVideoItems() {
-      const input = this.selectedInput as DownloadVideoInput
-      const videoItems = await input.getInputs(this.inputOptions)
-      return videoItems
-    },
-    async updateTestVideoInfo() {
-      if (!this.selectedInput || !this.selectedApi) {
-        return
-      }
-      this.testData.videoInfo = null
-      const input = this.selectedInput as DownloadVideoInput
-      const testItem = input.getTestInput?.() ?? getFallbackTestVideoInfo()
-      console.log('[updateTestVideoInfo]', testItem)
-      this.testData.multiple = input.batch
-      const api = this.selectedApi as DownloadVideoApi
-      try {
-        const videoInfo = await api.downloadVideoInfo(testItem)
-        this.qualities = videoInfo.qualities
-        const isSelectedQualityOutdated =
-          !this.selectedQuality ||
-          !videoInfo.qualities.some(q => q.value === this.selectedQuality.value)
-        if (isSelectedQualityOutdated) {
-          this.selectedQuality = videoInfo.qualities[0]
-          if (basicConfig.quality) {
-            const [matchedQuality] = videoInfo.qualities.filter(q => q.value <= basicConfig.quality)
-            if (matchedQuality) {
-              this.selectedQuality = matchedQuality
-            }
-          }
-        }
-        // 填充 quality 后要再请求一次得到对应 quality 的统计数据
-        testItem.quality = this.selectedQuality
-        const qualityVideoInfo = await api.downloadVideoInfo(testItem)
-        this.testData.videoInfo = qualityVideoInfo
-      } catch (error) {
-        console.error('[updateTestVideoInfo] failed', error)
-        this.testData.videoInfo = undefined
-      }
-    },
-    async startDownload(instance: ComponentPublicInstance, output: DownloadVideoOutput) {
-      try {
-        this.busy = true
-        const input = this.selectedInput as DownloadVideoInput
-        const api = this.selectedApi as DownloadVideoApi
-        const videoInputs = await input.getInputs(this.inputOptions)
-        if (videoInputs.length === 0) {
-          Toast.info('未接收到视频, 如果输入源支持批量, 请至少选择一个视频.', '下载视频', 3000)
-          return
-        }
-        videoInputs.forEach(item => {
-          item.quality = this.selectedQuality
+    const videoInfos = await Promise.all(videoInputs.map(i => api.downloadVideoInfo(i)))
+    if (videoInfos.length === 0 || lodash.sumBy(videoInfos, it => it.fragments.length) === 0) {
+      Toast.info('未接收到可下载数据, 请检查输入源和格式是否适用于当前视频.', '下载视频', 3000)
+      return
+    }
+    if (useBackupUrls.value) {
+      videoInfos.forEach(videoInfo => {
+        videoInfo.fragments.forEach(fragment => {
+          fragment.url =
+            fragment.backupUrls && fragment.backupUrls.length !== 0
+              ? fragment.backupUrls.at(0)
+              : fragment.url
         })
-        const videoInfos = await Promise.all(videoInputs.map(i => api.downloadVideoInfo(i)))
-        if (videoInfos.length === 0 || lodash.sumBy(videoInfos, it => it.fragments.length) === 0) {
-          Toast.info('未接收到可下载数据, 请检查输入源和格式是否适用于当前视频.', '下载视频', 3000)
-          return
-        }
-        if (this.useBackupUrls) {
-          videoInfos.forEach(videoInfo => {
-            videoInfo.fragments.forEach(fragment => {
-              fragment.url =
-                fragment.backupUrls && fragment.backupUrls.length !== 0
-                  ? fragment.backupUrls.at(0)
-                  : fragment.url
-            })
-          })
-        }
-        const action = new DownloadVideoAction(videoInfos)
-        assets.forEach(a => {
-          const assetsType = a?.getUrls ? action.extraOnlineAssets : action.extraAssets
-          assetsType.push({
-            asset: a,
-            instance: this.$refs.assetsOptions.find((c: any) => c.$attrs.name === a.name),
-          })
-        })
-        await output.runAction(action, instance)
-        await action.downloadExtraAssets()
-      } catch (error) {
-        logError(error)
-      } finally {
-        this.busy = false
-      }
-    },
-  },
+      })
+    }
+    const action = new DownloadVideoAction(videoInfos)
+    for (const a of assets) {
+      const assetsType = a?.getUrls ? action.extraOnlineAssets : action.extraAssets
+      assetsType.push({
+        asset: a,
+        instance: assetsOptions.value.find(c => (c.$attrs.name as string) === a.name),
+      })
+    }
+    await output.runAction(action, instance)
+    await action.downloadExtraAssets()
+  } catch (error) {
+    logError(error)
+  } finally {
+    busy.value = false
+  }
+}
+
+onMounted(() => {
+  coreApis.observer.videoChange(() => {
+    selectedInput.value = undefined
+    selectedApi.value = undefined
+
+    const matchedInputs = filterData(inputsRaw)
+    inputs.value = matchedInputs
+    selectedInput.value = matchedInputs[0]
+    const matchedApis = filterData(apisRaw)
+    apis.value = matchedApis
+    const lastApi = matchedApis.find(api => api.name === basicConfig.api)
+    if (lastApi) {
+      selectedApi.value = lastApi
+    } else {
+      selectedApi.value = matchedApis[0]
+    }
+  })
+})
+defineExpose({
+  open,
 })
 </script>
 <style lang="scss">

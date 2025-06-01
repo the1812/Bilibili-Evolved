@@ -39,7 +39,7 @@ export const addControlBarButton = async (button: VideoControlBarItem) => {
   if (!controlBarInstance) {
     controlBarInstance = initControlBar()
   }
-  const created = (await controlBarInstance) as ControlBarComponent
+  const created = await controlBarInstance
   if (!created) {
     return
   }

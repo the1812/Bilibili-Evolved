@@ -10,27 +10,22 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
+import { ref } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { TextBox } from '@/ui'
 
 const { options } = getComponentSettings<ConfigDataType>('downloadVideo')
 
-export default Vue.extend<ConfigDataType>({
-  components: {
-    TextBox,
-  },
-  data() {
-    return {
-      ...lodash.pick(options, ['api_dev_key', 'api_user_key']),
-    }
-  },
-  methods: {
-    onChange() {
-      Object.assign(options, lodash.pick(this, ['api_dev_key', 'api_user_key']))
-    },
-  },
-})
+const api_dev_key = ref(options.api_dev_key || '')
+const api_user_key = ref(options.api_user_key || '')
+
+const onChange = () => {
+  Object.assign(options, {
+    api_dev_key: api_dev_key.value,
+    api_user_key: api_user_key.value,
+  })
+}
 </script>
 <style lang="scss">
 @import 'common';
@@ -40,8 +35,6 @@ export default Vue.extend<ConfigDataType>({
   @include v-stretch(12px);
   > .config-item {
     @include h-center(8px);
-    > .item-name {
-    }
   }
 }
 </style>

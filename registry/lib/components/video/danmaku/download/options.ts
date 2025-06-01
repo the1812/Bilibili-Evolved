@@ -1,4 +1,5 @@
-import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import type { OptionsOfMetadata } from '@/components/define'
+import { defineOptionsMetadata } from '@/components/define'
 
 export const downloadDanmakuOptions = defineOptionsMetadata({
   speed: {

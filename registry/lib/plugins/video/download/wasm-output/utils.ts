@@ -1,7 +1,8 @@
-import { Toast } from '@/core/toast'
+import type { Toast } from '@/core/toast'
 import { formatFileSize, formatPercent } from '@/core/utils/formatters'
 import { getOrLoad, storeNames } from './database'
-import { RuntimeLibraryDefinition, RuntimeLibrary } from '@/core/runtime-library'
+import type { RuntimeLibraryDefinition } from '@/core/runtime-library'
+import { RuntimeLibrary } from '@/core/runtime-library'
 
 type OnProgress = (received: number, total: number) => void
 

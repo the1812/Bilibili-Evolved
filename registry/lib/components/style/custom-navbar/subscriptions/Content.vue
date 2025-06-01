@@ -1,7 +1,8 @@
 <template>
   <div class="">{{ content }}</div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import {
   addComponentListener,
   getComponentSettings,
@@ -9,34 +10,19 @@ import {
 } from '@/core/settings'
 import type { CustomNavbarOptions } from '..'
 
-export default Vue.extend({
-  data() {
-    return {
-      isBangumiLinkHidden:
-        getComponentSettings<CustomNavbarOptions>('customNavbar').options.hidden.includes(
-          'bangumi',
-        ),
-    }
-  },
-  computed: {
-    content() {
-      if (this.isBangumiLinkHidden) {
-        return '番剧'
-      }
-      return '追番追剧'
-    },
-  },
-  mounted() {
-    addComponentListener('customNavbar.hidden', this.updateBangumiLinkStatus)
-  },
-  beforeDestroy() {
-    removeComponentListener('customNavbar.hidden', this.updateBangumiLinkStatus)
-  },
-  methods: {
-    updateBangumiLinkStatus(hiddenItems: string[]) {
-      const isBangumiLinkHidden = hiddenItems.includes('bangumi')
-      this.isBangumiLinkHidden = isBangumiLinkHidden
-    },
-  },
+const isBangumiLinkHidden = ref(
+  getComponentSettings<CustomNavbarOptions>('customNavbar').options.hidden.includes('bangumi'),
+)
+
+const content = computed(() => (isBangumiLinkHidden.value ? '番剧' : '追番追剧'))
+const updateBangumiLinkStatus = (hiddenItems: string[]) => {
+  isBangumiLinkHidden.value = hiddenItems.includes('bangumi')
+}
+
+onMounted(() => {
+  addComponentListener('customNavbar.hidden', updateBangumiLinkStatus)
+})
+onBeforeUnmount(() => {
+  removeComponentListener('customNavbar.hidden', updateBangumiLinkStatus)
 })
 </script>

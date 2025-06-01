@@ -1,3 +1,4 @@
+import type { App } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import {
   addComponentListener,
@@ -8,7 +9,12 @@ import { select, sq } from '@/core/spin-query'
 import { mountVueComponent } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { liveUrls } from '@/core/utils/urls'
-import { ChatPanelFitOptions, ChatPanelFitOptionsMinWidth, chatPanelFitOptions } from './options'
+import {
+  type ChatPanelFitOptions,
+  ChatPanelFitOptionsMinWidth,
+  chatPanelFitOptions,
+} from './options'
+import type ChatPanelFitDraggerVue from './ChatPanelFitDragger.vue'
 
 const name = 'liveChatPanelFit'
 const console = useScopedConsole(name)
@@ -37,7 +43,8 @@ const calcPanelWidth = () => {
 }
 const debounceCalcPanelWidth = lodash.debounce(calcPanelWidth, 200)
 
-let draggerInstance: Vue
+let draggerInstance: InstanceType<typeof ChatPanelFitDraggerVue> | undefined
+let draggerApp: App<HTMLDivElement> | undefined
 const load = async () => {
   addComponentListener(`${name}.targetRatio`, calcPanelWidth)
   addComponentListener(`${name}.maxWidth`, calcPanelWidth)
@@ -59,8 +66,10 @@ const load = async () => {
     return
   }
   const { default: ChatPanelFitDragger } = await import('./ChatPanelFitDragger.vue')
-  draggerInstance = mountVueComponent(ChatPanelFitDragger)
-  asideToggleButton.insertAdjacentElement('afterend', draggerInstance.$el)
+  const [el, vm, app] = mountVueComponent(ChatPanelFitDragger)
+  draggerInstance = vm
+  draggerApp = app
+  asideToggleButton.insertAdjacentElement('afterend', el)
 }
 const unload = () => {
   removeComponentListener(`${name}.targetRatio`, calcPanelWidth)
@@ -70,8 +79,9 @@ const unload = () => {
   document.documentElement.style.removeProperty('--live-chat-panel-width')
   if (draggerInstance) {
     draggerInstance.$el.remove()
-    draggerInstance.$destroy()
+    draggerApp.unmount()
     draggerInstance = undefined
+    draggerApp = undefined
   }
 }
 

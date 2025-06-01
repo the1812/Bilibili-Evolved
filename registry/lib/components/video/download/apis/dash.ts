@@ -9,7 +9,7 @@ import { compareQuality } from '../error'
 import type { DownloadVideoApi, DownloadVideoFragment, DownloadVideoInputItem } from '../types'
 import { DownloadVideoInfo } from '../types'
 import { bangumiApi, videoApi } from './url'
-import { Options } from '..'
+import type { Options } from '..'
 import { getComponentSettings } from '@/core/settings'
 
 /** dash 格式更明确的扩展名 */
