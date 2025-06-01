@@ -73,7 +73,6 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
-import type Fuse from 'fuse.js'
 import type { DocSourceItem } from 'registry/lib/docs'
 
 import { monkey } from '@/core/ajax'

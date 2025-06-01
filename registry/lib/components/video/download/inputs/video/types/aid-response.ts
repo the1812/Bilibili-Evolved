@@ -52,7 +52,20 @@ export interface BiliBiliQueryAidData {
   is_view_self: boolean
 }
 
-interface Honorreply {}
+interface Honor {
+  /** 当前稿件aid */
+  aid: number
+  /** 1：入站必刷收录。2：第?期每周必看。3：全站排行榜最高第?名。4：热门 */
+  type: number
+  /** 描述 */
+  desc: string
+  /** 每周推荐数量 */
+  weeklyRecommendNum: number
+}
+
+interface Honorreply {
+  honor: Honor[]
+}
 
 interface Usergarb {
   url_image_ani_cut: string

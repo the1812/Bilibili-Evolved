@@ -77,7 +77,7 @@ https://api.bilibili.com/x/v3/fav/resource/list?media_id=media_id&pn=1&ps=20&key
 
 const navbarOptions = getComponentSettings('customNavbar').options
 interface FavoritesItemInfo extends Omit<VideoCard, 'type'> {
-  type: number
+  type: 2 | 12 // 2: 视频, 12: 音频
   favoriteTimestamp: number
   favoriteTime: string
 }
@@ -139,7 +139,6 @@ async function searchAllList(this: InstanceType<typeof ThisComponent>) {
     const lessThanPageSize = allItems.length < MaxPageSize
     if (noNewItems || lessThanPageSize) {
       this.hasMoreSearchPage = false
-      return
     }
   } catch (error) {
     console.error(error)
@@ -268,12 +267,14 @@ const ThisComponent = defineComponent({
     },
     getItemPlayLink(item: FavoritesItemInfo) {
       switch (item.type) {
-        default:
         case 2: {
           return `https://www.bilibili.com/video/${item.bvid}`
         }
         case 12: {
           return `https://www.bilibili.com/audio/au${item.id}`
+        }
+        default: {
+          return 'https://www.bilibili.com/404'
         }
       }
     },

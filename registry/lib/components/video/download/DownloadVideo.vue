@@ -87,7 +87,7 @@
   </VPopup>
 </template>
 <script lang="ts" setup>
-import type { Ref, ComponentPublicInstance } from 'vue'
+import type { ComponentPublicInstance } from 'vue'
 import { ref, reactive, computed, watch, onMounted, useTemplateRef } from 'vue'
 import type { VideoQuality } from '@/components/video/video-quality'
 import { allQualities } from '@/components/video/video-quality'

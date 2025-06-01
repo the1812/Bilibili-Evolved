@@ -102,7 +102,7 @@ const sideCards: { [id: number]: SideCardType } = {
 if (getComponentSettings('extendFeedsLive').enabled) {
   delete sideCards[3]
 }
-let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
+let cardsManager: typeof feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 
 export default defineComponent({

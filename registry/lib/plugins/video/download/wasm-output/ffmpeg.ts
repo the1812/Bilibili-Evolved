@@ -65,7 +65,7 @@ export class FFmpeg {
 
   #send = (
     { type, data }: Message,
-    trans: Transferable[] = [],
+    trans: Transferable[],
     signal?: AbortSignal,
   ): Promise<CallbackData> => {
     if (!this.#worker) {
@@ -74,7 +74,7 @@ export class FFmpeg {
 
     return new Promise((resolve, reject) => {
       const id = messageId()
-      this.#worker && this.#worker.postMessage({ id, type, data }, trans)
+      this.#worker?.postMessage({ id, type, data }, trans)
       this.#resolves[id] = resolve
       this.#rejects[id] = reject
 
@@ -98,18 +98,18 @@ export class FFmpeg {
         type: FFMessageType.LOAD,
         data: config,
       },
-      undefined,
+      [],
       signal,
     ) as Promise<boolean>
   }
 
-  public exec = (args: string[], timeout = -1, signal?: AbortSignal) =>
+  public exec = (args: string[], signal?: AbortSignal) =>
     this.#send(
       {
         type: FFMessageType.EXEC,
-        data: { args, timeout },
+        data: { args, timeout: -1 },
       },
-      undefined,
+      [],
       signal,
     ) as unknown as Promise<number>
 
@@ -147,7 +147,7 @@ export class FFmpeg {
         type: FFMessageType.READ_FILE,
         data: { path, encoding: 'binary' },
       },
-      undefined,
+      [],
       signal,
     ) as Promise<Uint8Array>
 
@@ -157,7 +157,7 @@ export class FFmpeg {
         type: FFMessageType.DELETE_FILE,
         data: { path },
       },
-      undefined,
+      [],
       signal,
     ) as Promise<boolean>
 

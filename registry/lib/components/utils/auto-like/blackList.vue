@@ -44,7 +44,7 @@
   </VPopup>
 </template>
 <script lang="ts" setup>
-import { ref, defineProps, defineEmits, watch, useTemplateRef } from 'vue'
+import { ref, defineProps, defineEmits } from 'vue'
 import { VPopup, TextBox, VIcon, VButton } from '@/ui'
 
 const props = defineProps<{

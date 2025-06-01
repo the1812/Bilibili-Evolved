@@ -106,13 +106,11 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
   if (data.viewPoints.length > 0) {
     for (const chapter of data.viewPoints) {
       lines.push(
-        ...[
-          '[CHAPTER]',
-          'TIMEBASE=1/1',
-          ff('START', chapter.from, false),
-          ff('END', chapter.to, false),
-          ff('title', chapter.content, false),
-        ],
+        '[CHAPTER]',
+        'TIMEBASE=1/1',
+        ff('START', chapter.from, false),
+        ff('END', chapter.to, false),
+        ff('title', chapter.content, false),
       )
     }
   }
@@ -156,7 +154,6 @@ export async function generateByType(
       method = generateChapterFile
       break
     default:
-    case 'ffmetadata':
       method = generateFFMetadata
       break
   }

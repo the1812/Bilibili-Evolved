@@ -4,7 +4,7 @@ import type { ComponentMetadata } from '@/components/component'
 import { componentsMap } from '@/components/component'
 import { useScopedConsole } from '@/core/utils/log'
 
-import { loadInstantStyle, removeInstantStyle, removeStyle } from '@/core/style'
+import { loadInstantStyle, removeInstantStyle } from '@/core/style'
 import { autoUpdateOptions, getDevClientOptions } from './options'
 import { RefreshMethod, HotReloadMethod } from './update-method'
 import { monkey } from '@/core/ajax'
