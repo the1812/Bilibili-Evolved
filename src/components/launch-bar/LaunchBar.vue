@@ -35,10 +35,7 @@
           @previous-item="previousItem()"
           @next-item="nextItem()"
           @delete-item="onDeleteItem(index)"
-          @action="
-            index === actions.length - 1 && onClearHistory()
-            onAction()
-          "
+          @action="onActionEmit(index)"
         />
       </div>
       <div v-if="!isHistory" class="launch-bar-action-list">
@@ -243,7 +240,6 @@ const onDeleteItem = (index: number) => {
   focusTarget.previous()
   getActions()
 }
-
 const onClearHistory = () => {
   focusInput()
   getActions()
@@ -251,7 +247,10 @@ const onClearHistory = () => {
 const onAction = () => {
   handleSelect()
 }
-
+const onActionEmit = (index: number) => {
+  index === actions.value.length - 1 && onClearHistory()
+  onAction()
+}
 onMounted(async () => {
   await getActions()
   if (matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {

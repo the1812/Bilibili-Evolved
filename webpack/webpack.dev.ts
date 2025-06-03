@@ -17,8 +17,4 @@ previewConfig.plugins.push(
     entryOnly: true,
   }),
 )
-
-// see src/client/init-vue.ts
-lodash.set(previewConfig, 'resolve.alias.vue$', 'vue/dist/vue.runtime.common.prod.js')
-
 export default previewConfig
