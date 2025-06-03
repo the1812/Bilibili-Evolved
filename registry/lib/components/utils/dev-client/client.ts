@@ -2,14 +2,16 @@ import type { ItemStopPayload, Payload } from 'dev-tools/dev-server/payload'
 
 import type { ComponentMetadata } from '@/components/component'
 import { componentsMap } from '@/components/component'
-import { monkey } from '@/core/ajax'
-import { loadInstantStyle, removeStyle } from '@/core/style'
-import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
-import { plugins } from '@/plugins/plugin'
 
+import { loadInstantStyle, removeInstantStyle } from '@/core/style'
 import { autoUpdateOptions, getDevClientOptions } from './options'
-import { HotReloadMethod, RefreshMethod } from './update-method'
+import { RefreshMethod, HotReloadMethod } from './update-method'
+import { monkey } from '@/core/ajax'
+
+import { Toast } from '@/core/toast'
+
+import { plugins } from '@/plugins/plugin'
 
 const options = getDevClientOptions()
 const console = useScopedConsole('DevClient')
@@ -164,10 +166,10 @@ export class DevClient extends EventTarget {
       }
       const reloadInstantStyles = () => {
         if (oldInstantStyles.length > 0 || newInstantStyles.length > 0) {
-          loadInstantStyle(newComponent)
           oldInstantStyles.forEach(style => {
-            removeStyle(style.name)
+            removeInstantStyle(style)
           })
+          loadInstantStyle(newComponent)
           // 修改旧的引用, 否则之前设的事件监听还是用旧样式
           oldComponent.instantStyles = newInstantStyles
           return true

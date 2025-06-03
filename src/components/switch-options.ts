@@ -70,13 +70,13 @@ export interface SwitchMetadata<N extends string, S extends string> {
   /**
    * 控制开关变暗的时机
    *
-   * `undefined`: 始终不变暗
-   * `'checked'`: 当开关关闭时变暗
-   * `'notChecked'`: 始终为变暗状态
+   * `false`: 始终不变暗
+   * `'checked'`: 当开关开启时变暗
+   * `'notChecked'`: 当开关关闭时变暗
    *
-   * @default undefined
+   * @default 'checked'
    */
-  dimAt?: undefined | 'checked' | 'notChecked'
+  dimAt?: false | 'checked' | 'notChecked'
   /** 配置每个开关的图标 */
   switchProps?: {
     checkedIcon?: string
@@ -104,7 +104,7 @@ export interface SwitchMetadataOption<N extends string, S extends string> {
   name: N
   switches: SwitchItemsMetadata<S>
   radio: boolean
-  dimAt: undefined | 'checked' | 'notChecked'
+  dimAt: false | 'checked' | 'notChecked'
   switchProps?: {
     checkedIcon?: string
     notCheckedIcon?: string
@@ -251,7 +251,9 @@ const newSwitchEntry = <O extends UnknownOptions, N extends string, S extends st
         addComponentListener(
           `${component.name}.${key}`,
           (value: boolean) => {
-            document.body.classList.toggle(`${component.name}-${key}`, value)
+            const id = `${component.name}-${key}`
+            document.body.classList.toggle(id, value)
+            document.documentElement.style.setProperty(`--${id}`, value.toString())
           },
           true,
         )
@@ -293,7 +295,7 @@ export type SwitchComponentWrapper<N extends string, S extends string> = <O exte
  * @param metadata - 相关配置元数据。可使用 {@link defineSwitchMetadata} 在外部定义
  * @returns 组件包装器
  */
-export const newSwitchComponentWrapper = <N extends string, S extends string>(
+export const wrapSwitchOptions = <N extends string, S extends string>(
   metadata: SwitchMetadata<N, S>,
 ): SwitchComponentWrapper<N, S> => {
   const extendOptions = newSwitchOptionsMetadataExtender(metadata.switches)
@@ -315,5 +317,6 @@ export const newSwitchComponentWrapper = <N extends string, S extends string>(
     return component as SwitchComponentMetadata<O, N, S>
   }
 }
+export const newSwitchComponentWrapper = wrapSwitchOptions
 
 export { createSwitchOptions } from './switch-options-old'

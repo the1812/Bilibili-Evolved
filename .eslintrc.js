@@ -46,7 +46,6 @@ module.exports = {
         format: ['PascalCase'],
       },
     ],
-
     'vue/max-attributes-per-line': 'off',
     'vue/html-self-closing': 'off',
     'vue/no-v-html': 'off',
@@ -86,6 +85,7 @@ module.exports = {
     'lines-between-class-members': 'off',
     radix: ['error', 'as-needed'],
     'max-classes-per-file': 'off',
+    'class-methods-use-this': 'off',
     'prefer-destructuring': [
       'error',
       {

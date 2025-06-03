@@ -106,6 +106,7 @@ export default defineComponent({
     cursor: pointer;
     position: relative;
     box-sizing: border-box;
+    transition: 0.2s background-color ease-out;
     &.loading {
       font-size: 10pt;
       cursor: initial;

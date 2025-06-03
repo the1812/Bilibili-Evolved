@@ -8,7 +8,6 @@ import { allMutationsOn } from '@/core/observer'
 import { selectAll } from '@/core/spin-query'
 import { mainSiteUrls } from '@/core/utils/urls'
 import { getData, registerData } from '@/plugins/data'
-
 import { BlackListDataKey } from './common'
 
 const name = 'blackList'
@@ -35,7 +34,7 @@ const entry = async ({ settings: { options } }) => {
   }
 
   registerData(BlackListDataKey, blackListData)
-  const billGrid = await selectAll('.bili-grid')
+  const billGrid = await selectAll('.feed2')
   allMutationsOn(billGrid, async () => {
     const videos = await selectAll('.bili-video-card')
     if (!videos) {

@@ -1,0 +1,66 @@
+$prefix: 'simplifyComments-switch';
+
+:host(bili-rich-text) {
+  #contents img,
+  #contents a i {
+    max-width: 1.4em;
+    max-height: 1.4em;
+  }
+}
+
+@container style(--#{$prefix}-replyEditor: true) {
+  :host(bili-comment-box) {
+    #pub button {
+      font-size: 14px;
+    }
+  }
+  :host(bili-checkbox) {
+    #label {
+      font-size: 15px;
+    }
+  }
+  :host(bili-comment-textarea) {
+    #input {
+      font-size: 13px;
+    }
+    #input,
+    #input::placeholder {
+      line-height: normal;
+    }
+  }
+}
+@container style(--#{$prefix}-userLevel: true) {
+  :host(bili-comment-user-info) {
+    #user-level {
+      display: none;
+    }
+  }
+}
+@container style(--#{$prefix}-decorateAndTime: true) {
+  :host(bili-comment-renderer) {
+    bili-comment-user-sailing-card {
+      display: none;
+    }
+  }
+}
+@container style(--#{$prefix}-fansMedal: true) {
+  :host(bili-comment-user-info) {
+    bili-comment-user-medal {
+      display: none;
+    }
+  }
+}
+@container style(--#{$prefix}-subReplyNewLine: true) {
+  :host(bili-comment-reply-renderer) {
+    bili-comment-user-info {
+      display: block;
+    }
+  }
+}
+@container style(--#{$prefix}-eventBanner: true) {
+  :host(bili-comments-header-renderer) {
+    bili-comments-notice {
+      display: none;
+    }
+  }
+}

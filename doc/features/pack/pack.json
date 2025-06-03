@@ -2,7 +2,7 @@
   {
     "name": "cleaner",
     "displayName": "简洁至上",
-    "description": "简化各种多余界面元素, 专注于内容本身.\n\n包含以下功能:\n删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 简化首页, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层",
+    "description": "简化各种多余界面元素, 专注于内容本身.\n\n包含以下功能:\n删除广告, 删除直播水印, 删除视频弹窗, 禁用特殊弹幕样式, 简化评论区, 简化直播间, 自动收起直播侧栏, 隐藏视频推荐, 隐藏直播推荐, 隐藏视频标题层",
     "components": [
       "removePromotions",
       "removeLiveWatermark",
@@ -10,7 +10,6 @@
       "disableSpecialDanmaku",
       "simplifyComments",
       "simplifyLiveroom",
-      "simplifyHome",
       "collapseLiveSideBar",
       "hideRelatedVideos",
       "hideRecommendedLive",
@@ -21,7 +20,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -37,7 +36,7 @@
         "type": "component",
         "name": "removePlayerPopup",
         "displayName": "删除视频弹窗",
-        "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择.\r\n",
+        "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择. 如果之前点了收起弹窗, 则收起后的小弹窗则会直接删除. (不受类别选择影响)\r\n",
         "fullRelativePath": "../../registry/dist/components/video/player/remove-popup.js",
         "fullAbsolutePath": "registry/dist/components/video/player/remove-popup.js"
       },
@@ -45,7 +44,7 @@
         "type": "component",
         "name": "disableSpecialDanmaku",
         "displayName": "禁用特殊弹幕样式",
-        "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.",
+        "description": "移除高赞弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.\r\n",
         "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
         "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
       },
@@ -53,7 +52,7 @@
         "type": "component",
         "name": "simplifyComments",
         "displayName": "简化评论区",
-        "description": "- 删除热评头像下方的关注按钮\r\n- 删除用户的等级标识\r\n- 删除发送源信息(\\`来自安卓客户端\\` 这种)\r\n- 删除用户名右边的勋章\r\n- 删除评论区顶部的横幅\r\n- 发送时间移动到右上角\r\n- 位图图标全部换用矢量图标, 高分屏不会模糊\r\n- 投票仅显示链接, 隐藏下面的大框.\r\n\r\n> 注: 关注和等级可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看.\r\n",
+        "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\r\n\r\n> 配置项仅对新版评论区有效\r\n\r\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\r\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\r\n- `头像框`: 隐藏头像框.\r\n- `回复换行`:\r\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\r\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\r\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\r\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\r\n- `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅\r\n",
         "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
       },
@@ -64,14 +63,6 @@
         "description": "隐藏直播间中各种不需要的内容.",
         "fullRelativePath": "../../registry/dist/components/style/simplify/live.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/live.js"
-      },
-      {
-        "type": "component",
-        "name": "simplifyHome",
-        "displayName": "简化首页",
-        "description": "隐藏原版首页不需要的元素 / 分区.",
-        "fullRelativePath": "../../registry/dist/components/style/simplify/home.js",
-        "fullAbsolutePath": "registry/dist/components/style/simplify/home.js"
       },
       {
         "type": "component",
@@ -123,7 +114,7 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n",
+        "description": "在功能面板中添加下载视频支持. 请注意:\r\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\r\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\r\n\r\n在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:\r\n- `user`: UP 主用户名\r\n- `userID`: UP 主用户 ID\r\n- 视频发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n",
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },
@@ -131,7 +122,7 @@
         "type": "component",
         "name": "downloadSubtitle",
         "displayName": "下载字幕",
-        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
+        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)\r\n",
         "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
         "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
       },
@@ -192,7 +183,7 @@
         "type": "component",
         "name": "customNavbar",
         "displayName": "自定义顶栏",
-        "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换), 启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n",
+        "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换).\r\n\r\n启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\r\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\r\n- *://message.bilibili.com/pages/nav/index_new_sync\r\n\r\n选项说明:\r\n- `全局固定`: 将顶栏固定显示, 即使页面向下滚动也仍然可见. (除了一部分有 b 站定制顶栏的页面会忽略此选项)\r\n- `主题色填充`: 使用通用设置中的主题颜色填充顶栏的背景.\r\n- `透明填充`: 在首页和主站的部分页面中, 当存在顶部横幅图片时, 顶栏背景将变为透明 + 阴影的样式.\r\n- `背景模糊`: 启用背景模糊效果, 会使背景颜色变得半透明, 注意这个效果非常非常消耗图形性能, 慎用.\r\n- `投影`: 在顶栏下方增加一小段投影效果.\r\n- `使用季节 Logo`: 使用 b 站首页的特殊 Logo 图片替换顶栏的 Logo 图, 通常会对应当前季节, 特殊活动期间可能会有变化导致看不清. (比如搞了个全白的 Logo, 而顶栏正好也是白色的)\r\n- `触摸模式`: 启用后顶栏的一级入口点击时不进行跳转, 方便触屏使用.\r\n- `新标签页打开`: 控制顶栏内链接是否在新标签页打开.\r\n- `自动刷新数据`: 启用后, 部分有弹窗的顶栏入口在鼠标经过时会自动刷新数据.\r\n- `顶栏高度`: 自定义顶栏的高度 (b 站原版的为 64px)\r\n- `消息提醒样式`: 自定义顶栏入口的消息提醒样式.\r\n- `搜索栏宽度`: 自定义搜索栏占顶栏的比例.\r\n- `链接对齐样式`: 自定义纯链接弹窗内链接文字的对齐样式.\r\n",
         "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
         "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
       },
@@ -200,7 +191,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 `占位文本` 选项.\n\n- `占位文本`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `保留小喇叭`: 保留视频页面的活动横幅下方评论区上方的黄色小喇叭通知以及动态的黄色小喇叭.",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -272,7 +263,7 @@
         "type": "component",
         "name": "fullFeedsContent",
         "displayName": "展开动态内容",
-        "description": "不管内容多长, 总是完全展开动态的内容.",
+        "description": "不管内容多长, 总是完全展开动态的内容. (专栏不算)\r\n",
         "fullRelativePath": "../../registry/dist/components/feeds/full-content.js",
         "fullAbsolutePath": "registry/dist/components/feeds/full-content.js"
       },

@@ -1,0 +1,19 @@
+:host(bili-comment-box) {
+  #pub button {
+    font-size: 14px;
+  }
+}
+:host(bili-checkbox) {
+  #label {
+    font-size: 15px;
+  }
+}
+:host(bili-comment-textarea) {
+  #input {
+    font-size: 13px;
+  }
+  #input,
+  #input::placeholder {
+    line-height: normal;
+  }
+}

@@ -17,5 +17,4 @@ previewConfig.plugins.push(
     entryOnly: true,
   }),
 )
-
 export default previewConfig

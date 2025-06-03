@@ -1,23 +1,41 @@
-import { getJson } from '@/core/ajax'
+import { bilibiliApi, getJson, getJsonWithCredentials } from '@/core/ajax'
 import { Toast } from '@/core/toast'
 import { getFriendlyTitle } from '@/core/utils/title'
 
 import type { SubtitleConverterConfig } from '../subtitle-converter'
 
+export interface SubtitleSettings {
+  bilingual: boolean
+  color: string
+  fade: boolean
+  fontsize: string
+  lan: string
+  opacity: number
+  position: string
+  scale: boolean
+  shadow: string
+}
+export interface SubtitleInfo {
+  id: number
+  id_str: string
+  lan: string
+  lan_doc: string
+  is_lock: boolean
+  subtitle_url: string
+  type: number
+  ai_type: number
+  ai_status: number
+}
 export type SubtitleDownloadType = 'json' | 'ass'
 export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, string]> => {
   const { SubtitleConverter, SubtitleSize, SubtitleLocation } = await import(
     '../subtitle-converter'
   )
   const { playerAgent } = await import('@/components/video/player-agent')
-  const isBpxPlayer = dq('.bpx-player-video-wrap')
-  const playerSettingsText = isBpxPlayer
-    ? localStorage.getItem('bpx_player_profile')
-    : localStorage.getItem('bilibili_player_settings')
-  if (!playerSettingsText) {
+  const subtitleSettings = playerAgent.getPlayerConfig<null, SubtitleSettings>('subtitle', null)
+  if (!subtitleSettings) {
     return [SubtitleConverter.defaultConfig, '']
   }
-  const subtitleSettings = JSON.parse(playerSettingsText).subtitle
   const language = subtitleSettings.lan
   const title = getFriendlyTitle(true)
   const fontSizeMapping: { [key: number]: number } = {
@@ -28,11 +46,8 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
     1.6: SubtitleSize.VeryLarge,
   }
   const size = fontSizeMapping[subtitleSettings.fontsize]
-  const color =
-    typeof subtitleSettings.color === 'number'
-      ? subtitleSettings.color.toString(16)
-      : parseInt(subtitleSettings.color).toString(16)
-  const opacity = subtitleSettings.backgroundopacity ?? subtitleSettings.opacity
+  const color = parseInt(subtitleSettings.color).toString(16)
+  const { opacity } = subtitleSettings
 
   const positions = {
     bc: SubtitleLocation.BottomCenter,
@@ -65,11 +80,10 @@ export const getSubtitleConfig = async (): Promise<[SubtitleConverterConfig, str
   return [config, language]
 }
 export const getSubtitleList = async (aid: string, cid: string | number) => {
-  const { VideoInfo } = await import('@/components/video/video-info')
-  const info = new VideoInfo(aid)
-  info.cid = typeof cid === 'string' ? parseInt(cid) : cid
-  await info.fetchInfo()
-  return info.subtitles
+  const data = await bilibiliApi(
+    getJsonWithCredentials(`https://api.bilibili.com/x/player/wbi/v2?aid=${aid}&cid=${cid}`),
+  )
+  return lodash.get(data, 'subtitle.subtitles', []) as SubtitleInfo[]
 }
 export const getBlobByType = async (
   type: SubtitleDownloadType,
@@ -89,8 +103,8 @@ export const getBlobByType = async (
     return null
   }
   const [config, language] = await getSubtitleConfig()
-  const subtitle = subtitles.find(s => s.languageCode === language) || subtitles[0]
-  const json = await getJson(subtitle.url)
+  const subtitle = subtitles.find(s => s.lan === language) || subtitles[0]
+  const json = await getJson(subtitle.subtitle_url)
   const rawData = json.body
   switch (type) {
     case 'ass': {
@@ -101,9 +115,8 @@ export const getBlobByType = async (
         type: 'text/ass',
       })
     }
-    case 'json':
     default: {
-      return new Blob([JSON.stringify(rawData)], {
+      return new Blob([JSON.stringify(rawData, undefined, 2)], {
         type: 'text/json',
       })
     }

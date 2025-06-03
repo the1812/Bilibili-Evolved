@@ -7,6 +7,9 @@ const normalizeMap = {
 }
 const escapeMap = Object.fromEntries(Object.entries(normalizeMap).map(entry => entry.reverse()))
 const replace = (content: string, map: Record<string, string>) => {
+  if (!content) {
+    return ''
+  }
   for (const [key, value] of Object.entries(map)) {
     content = content.replace(new RegExp(key, 'g'), value)
   }

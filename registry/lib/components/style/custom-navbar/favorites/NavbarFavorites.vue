@@ -21,11 +21,7 @@
       <VEmpty v-else-if="!loading && !canLoadMore && filteredCards.length === 0"></VEmpty>
       <transition-group v-else name="cards" tag="div" class="cards">
         <div v-for="card of filteredCards" :key="card.id" class="favorite-card">
-          <a
-            class="cover-container"
-            target="_blank"
-            :href="'https://www.bilibili.com/video/' + card.bvid"
-          >
+          <a class="favorites-cover-container" target="_blank" :href="getItemPlayLink(card)">
             <DpiImage
               class="cover"
               :src="card.coverUrl"
@@ -34,13 +30,9 @@
             <div class="floating duration">{{ card.durationText }}</div>
             <div class="floating favorite-time">{{ card.favoriteTime }}</div>
           </a>
-          <a
-            class="title"
-            target="_blank"
-            :href="'https://www.bilibili.com/video/' + card.bvid"
-            :title="card.title"
-            >{{ card.title }}</a
-          >
+          <a class="title" target="_blank" :href="getItemPlayLink(card)" :title="card.title">{{
+            card.title
+          }}</a>
           <a
             v-if="card.upID"
             class="up"
@@ -84,7 +76,8 @@ https://api.bilibili.com/x/v3/fav/resource/list?media_id=media_id&pn=1&ps=20&key
 */
 
 const navbarOptions = getComponentSettings('customNavbar').options
-interface FavoritesItemInfo extends VideoCard {
+interface FavoritesItemInfo extends Omit<VideoCard, 'type'> {
+  type: 2 | 12 // 2: 视频, 12: 音频
   favoriteTimestamp: number
   favoriteTime: string
 }
@@ -96,6 +89,7 @@ const favoriteItemFilter = (item: any): boolean => {
   return item.attr !== 9 && item.attr !== 1 // 过滤掉已失效视频
 }
 const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
+  type: item.type,
   id: item.id,
   aid: item.id,
   bvid: item.bvid,
@@ -105,7 +99,10 @@ const favoriteItemMapper = (item: any): FavoritesItemInfo => ({
   title: item.title,
   description: item.intro,
   duration: item.duration,
-  durationText: formatDuration(item.duration),
+  durationText:
+    item.page > 1
+      ? `${formatDuration(item.duration)} / ${item.page}P`
+      : formatDuration(item.duration),
   playCount: item.cnt_info.play,
   danmakuCount: item.cnt_info.danmaku,
   upName: item.upper.name,
@@ -142,7 +139,6 @@ async function searchAllList(this: InstanceType<typeof ThisComponent>) {
     const lessThanPageSize = allItems.length < MaxPageSize
     if (noNewItems || lessThanPageSize) {
       this.hasMoreSearchPage = false
-      return
     }
   } catch (error) {
     console.error(error)
@@ -269,6 +265,19 @@ const ThisComponent = defineComponent({
         this.loadNextPage()
       }
     },
+    getItemPlayLink(item: FavoritesItemInfo) {
+      switch (item.type) {
+        case 2: {
+          return `https://www.bilibili.com/video/${item.bvid}`
+        }
+        case 12: {
+          return `https://www.bilibili.com/audio/au${item.id}`
+        }
+        default: {
+          return 'https://www.bilibili.com/404'
+        }
+      }
+    },
   },
 })
 export default ThisComponent
@@ -380,7 +389,7 @@ export default ThisComponent
         &:hover .cover {
           transform: scale(1.05);
         }
-        .cover-container {
+        .favorites-cover-container {
           grid-area: cover;
           overflow: hidden;
           border-radius: 8px 0 0 8px;

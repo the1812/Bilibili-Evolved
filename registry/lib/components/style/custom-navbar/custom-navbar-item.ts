@@ -5,6 +5,7 @@ import type { Component, ComponentPublicInstance } from 'vue'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 import type { CustomNavbarOptions } from '.'
+import { getUID } from '@/core/utils'
 
 export interface PopupContentInstance extends ComponentPublicInstance {
   popupRefresh?(): void
@@ -102,7 +103,8 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
       },
       true,
     )
-    this.hidden = CustomNavbarItem.navbarOptions.hidden.includes(this.name)
+    this.hidden =
+      CustomNavbarItem.navbarOptions.hidden.includes(this.name) || (!getUID() && init.loginRequired)
     const orderMap = CustomNavbarItem.navbarOptions.order
     this.order = orderMap[this.name] || 0
     this.requestedPopup = !this.lazy

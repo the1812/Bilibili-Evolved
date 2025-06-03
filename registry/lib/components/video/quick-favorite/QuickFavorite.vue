@@ -2,7 +2,7 @@
   <span
     class="quick-favorite be-quick-favorite video-toolbar-left-item"
     title="快速收藏"
-    :class="{ on: isFavorite }"
+    :class="{ on: isFavorite, ...displayModeClass }"
     @click.left.self="toggle()"
     @click.right.prevent.self="listShowing = !listShowing"
   >
@@ -18,14 +18,11 @@
       <div class="lists">
         选择快速收藏夹:
         <VDropdown
-          v-model:value="selectedFavorite"
-          :items="lists.map(it => it.title)"
-          :key-mapper="it => it as string"
-        >
-          <template #item="{ item }">
-            {{ item }}
-          </template>
-        </VDropdown>
+          v-model:value="selectedFavoriteList"
+          :items="list"
+          :key-mapper="it => (it as DisplayItem).id"
+          @change="saveFavoriteList"
+        />
       </div>
       <div class="lists-tip" :class="{ show: listShowing }">右键点击快速收藏可再次打开</div>
     </div>
@@ -35,14 +32,30 @@
 <script lang="ts">
 import type { Ref } from 'vue'
 import { defineComponent, ref } from 'vue'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
-import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { getCsrf, getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { VDropdown } from '@/ui'
+import { DisplayMode, type Options } from './options'
 
+type DisplayItem = { displayName: string; id: number }
 const { options } = getComponentSettings('quickFavorite')
+interface RawFavoriteListItem {
+  id: number
+  title: string
+  fav_state: number
+}
+interface FavoriteListItem {
+  id: number
+  displayName: string
+}
+const EmptyFavoriteList: FavoriteListItem = {
+  id: 0,
+  displayName: '<未选择>',
+}
+
 export default defineComponent({
   components: {
     VDropdown,
@@ -51,34 +64,28 @@ export default defineComponent({
     selectList: ref(null) as Ref<HTMLDivElement | null>,
   }),
   data() {
+    const { displayMode } = getComponentSettings<Options>('outerWatchlater').options
     return {
       aid: unsafeWindow.aid,
-      favoriteTitle: '',
       isFavorite: false,
       tipText: '',
       tipShowing: false,
       tipHandle: 0,
-      lists: [] as { title: string; id: number }[],
-      selectedFavorite: '<未选择>',
+      list: [] as DisplayItem[],
+      selectedFavoriteList: EmptyFavoriteList,
       listShowing: false,
+      displayMode,
     }
   },
-  watch: {
-    selectedFavorite(value: string) {
-      if (this.lists.length === 0) {
-        return
-      }
-      const { lists } = this as {
-        lists: { title: string; id: number }[]
-      }
-      const list = lists.find(it => it.title === value)
-      if (list) {
-        options.favoriteFolderID = list.id
-        this.syncFavoriteState()
-      } else {
-        console.error('list not found in selectedFavorite(value)')
+  computed: {
+    displayModeClass() {
+      return {
+        'icon-only': this.displayMode === DisplayMode.Icon,
+        'icon-and-text': this.displayMode === DisplayMode.IconAndText,
       }
     },
+  },
+  watch: {
     async listShowing(value: boolean) {
       if (value) {
         document.addEventListener('click', e => {
@@ -88,26 +95,63 @@ export default defineComponent({
             this.listShowing = false
           }
         })
-        if (this.lists.length === 0) {
-          try {
-            const json = await getJsonWithCredentials(
-              `https://api.bilibili.com/medialist/gateway/base/created?pn=1&ps=100&up_mid=${getUID()}&is_space=0`,
-            )
-            if (json.code !== 0) {
-              throw new Error(`获取收藏夹列表失败: ${json.message}`)
-            }
-            this.lists = lodash.get(json, 'data.list', [])
-          } catch (error) {
-            logError(error)
-          }
+        if (this.list.length === 0) {
+          this.loadFavoriteList()
         }
       }
     },
   },
   created() {
-    this.syncFavoriteState()
+    this.loadSavedList()
+    addComponentListener('quickFavorite.displayMode', (value: DisplayMode) => {
+      this.displayMode = value
+    })
   },
   methods: {
+    async loadFavoriteList() {
+      try {
+        const json = await getJsonWithCredentials(
+          `https://api.bilibili.com/medialist/gateway/base/created?pn=1&ps=100&up_mid=${getUID()}&is_space=0`,
+        )
+        if (json.code !== 0) {
+          throw new Error(`获取收藏夹列表失败: ${json.message}`)
+        }
+        const list: RawFavoriteListItem[] = lodash.get(json, 'data.list', [])
+        this.list = list.map(it => ({ id: it.id, displayName: it.title }))
+      } catch (error) {
+        logError(error)
+      }
+    },
+    async loadSavedList() {
+      try {
+        const json = await getJsonWithCredentials(
+          `https://api.bilibili.com/x/v3/fav/folder/created/list-all?type=2&rid=${
+            this.aid
+          }&up_mid=${getUID()}`,
+        )
+        if (json.code !== 0) {
+          throw new Error(`获取收藏状态失败: ${json.message}`)
+        }
+
+        const list: RawFavoriteListItem[] = lodash.get(json, 'data.list', [])
+        const favoriteFolder = list.find(it => it.id === options.favoriteFolderID)
+        if (favoriteFolder === undefined) {
+          options.favoriteFolderID = 0
+          return
+        }
+        this.isFavorite = Boolean(favoriteFolder.fav_state)
+        this.selectedFavoriteList = {
+          id: favoriteFolder.id,
+          displayName: favoriteFolder.title,
+        } as FavoriteListItem
+      } catch (error) {
+        logError(error)
+      }
+    },
+    saveFavoriteList(list: FavoriteListItem) {
+      options.favoriteFolderID = list.id
+      this.syncFavoriteState()
+    },
     async syncFavoriteState() {
       if (options.favoriteFolderID === 0 || !this.aid) {
         return
@@ -126,14 +170,16 @@ export default defineComponent({
           'data.list',
           [],
         )
-        const quickList = list.find(it => it.id === options.favoriteFolderID)
-        if (quickList === undefined) {
+        const favoriteFolder = list.find(it => it.id === options.favoriteFolderID)
+        if (favoriteFolder === undefined) {
           options.favoriteFolderID = 0
           return
         }
-        this.isFavorite = Boolean(quickList.fav_state)
-        this.favoriteTitle = quickList.title
-        this.selectedFavorite = quickList.title
+        this.isFavorite = Boolean(favoriteFolder.fav_state)
+        this.selectedFavoriteList = {
+          id: favoriteFolder.id,
+          displayName: favoriteFolder.title,
+        } as FavoriteListItem
       } catch (error) {
         logError(error)
       }
@@ -173,8 +219,8 @@ export default defineComponent({
         this.isFavorite = !this.isFavorite
         this.showTip(
           this.isFavorite
-            ? `已添加至收藏夹: ${this.favoriteTitle}`
-            : `已移出收藏夹: ${this.favoriteTitle}`,
+            ? `已添加至收藏夹: ${this.selectedFavoriteList.displayName}`
+            : `已移出收藏夹: ${this.selectedFavoriteList.displayName}`,
         )
         // await this.syncFavoriteState()
       } catch (error) {
@@ -197,12 +243,22 @@ export default defineComponent({
   .text {
     display: inline;
   }
-  @media screen and (max-width: 1340px), (max-height: 750px) {
+
+  @mixin icon-only {
     margin-right: max(calc(min(11vw, 11vh) - 117.2px), 6px) !important;
     .text {
       display: none;
     }
   }
+  &.icon-only {
+    @include icon-only();
+  }
+  &:not(.icon-and-text) {
+    @media screen and (max-width: 1340px), (max-height: 750px) {
+      @include icon-only();
+    }
+  }
+
   &-icon {
     font-family: 'quick-favorite' !important;
     font-size: 28px;

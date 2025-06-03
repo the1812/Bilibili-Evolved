@@ -99,6 +99,9 @@ const sideCards: { [id: number]: SideCardType } = {
     displayName: '发布动态',
   },
 }
+if (getComponentSettings('extendFeedsLive').enabled) {
+  delete sideCards[3]
+}
 let cardsManager: typeof feedsCardsManager
 const sideBlock = 'feeds-filter-side-block-'
 
@@ -146,7 +149,7 @@ export default defineComponent({
     }
     this.allTypes = Object.entries(feedsCardTypes)
       .concat(Object.entries(specialTypes))
-      .filter(([, type]) => type.id <= 2048)
+      .filter(([, type]) => type.id <= 2048 && type.id > 0)
       .map(([name, type]) => [name, lodash.clone(type)])
     cardsManager = await forEachFeedsCard({
       added: card => {
@@ -230,6 +233,7 @@ body.enable-feeds-filter:not(.disable-feeds-filter) {
   @include type-block();
   @include side-block();
   @include pattern-block();
+  @include plugin-block();
 }
 body.disable-feeds-filter {
   .feeds-filter-section {

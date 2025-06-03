@@ -1,6 +1,7 @@
 import { componentApis } from '@/components/api'
 import * as ajax from '@/core/ajax'
 import * as cdnTypes from '@/core/cdn-types'
+import * as containerQuery from '@/core/container-query'
 import * as download from '@/core/download'
 import * as dialog from '@/core/dialog'
 import * as externalInput from '@/core/external-input'
@@ -14,6 +15,7 @@ import * as meta from '@/core/meta'
 import * as observer from '@/core/observer'
 import * as reorder from '@/core/reorder'
 import * as runtimeLibrary from '@/core/runtime-library'
+import * as shadowRoot from '@/core/shadow-root'
 import * as settings from '@/core/settings'
 import * as spinQuery from '@/core/spin-query'
 import * as style from '@/core/style'
@@ -40,6 +42,7 @@ import * as ui from '@/ui'
 export const coreApis = {
   ajax,
   cdnTypes,
+  containerQuery,
   download,
   dialog,
   externalInput,
@@ -59,6 +62,7 @@ export const coreApis = {
   userInfo,
   version,
   settings,
+  shadowRoot,
   toast,
   themeColor,
   utils: {
@@ -81,6 +85,7 @@ export type CoreApis = typeof coreApis
 export const externalApis = {
   ajax,
   ...cdnTypes,
+  ...containerQuery,
   ...download,
   ...dialog,
   ...externalInput,
@@ -99,6 +104,7 @@ export const externalApis = {
   ...textColor,
   ...userInfo,
   ...version,
+  ...shadowRoot,
   settingsApis: settings,
   get settings() {
     return settings.settings

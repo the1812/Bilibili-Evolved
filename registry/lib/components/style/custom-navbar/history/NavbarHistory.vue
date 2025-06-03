@@ -6,6 +6,11 @@
           <TextBox v-model:text="search" placeholder="搜索" linear></TextBox>
         </div>
         <div class="operations">
+          <div class="operation">
+            <VButton title="刷新" round @click="reloadHistoryItems()">
+              <VIcon icon="mdi-refresh" :size="16"></VIcon>
+            </VButton>
+          </div>
           <div class="operation" @click="toggleHistoryPause">
             <VButton v-if="!paused" title="暂停记录历史" round>
               <VIcon icon="mdi-pause" :size="14"></VIcon>
@@ -26,7 +31,6 @@
         <div class="type-filters">
           <div v-for="t of types" :key="t.name" class="type-filter">
             <RadioButton
-              :title="(t.checked ? '不显示' : '显示') + t.displayName"
               :class="{ checked: t.checked }"
               :checked="t.checked"
               :disabled="loading"
@@ -48,7 +52,7 @@
           </div>
           <transition-group name="time-group" tag="div" class="time-group-items">
             <div v-for="h of g.items" :key="h.id" class="time-group-item">
-              <a class="cover-container" target="_blank" :href="h.url">
+              <a class="history-cover-container" target="_blank" :href="h.url">
                 <DpiImage
                   class="cover"
                   :src="h.cover"
@@ -60,17 +64,9 @@
                   class="progress"
                   :style="{ width: h.progress * 100 + '%' }"
                 ></div>
-                <div v-if="h.progressText" class="floating progress-number">
-                  {{ h.progress >= 1 ? '已看完' : h.progressText }}
+                <div v-if="h.pages !== undefined && h.pages > 1" class="floating pages">
+                  {{ h.page }}P / {{ h.pages }}P
                 </div>
-                <div
-                  v-if="h.liveStatus !== undefined"
-                  class="floating duration live-status"
-                  :class="{ on: h.liveStatus === 1 }"
-                >
-                  {{ h.liveStatus === 1 ? '直播中' : '未开播' }}
-                </div>
-                <div v-if="h.durationText" class="floating duration">{{ h.durationText }}</div>
               </a>
               <a class="title" target="_blank" :href="h.url" :title="h.title">{{
                 h.title || h.upName + '的直播间'
@@ -89,8 +85,25 @@
                 ></DpiImage>
                 <div class="up-name">{{ h.upName }}</div>
               </a>
-              <div v-if="h.timeText" class="time" :title="new Date(h.viewAt).toLocaleString()">
-                {{ h.timeText }}
+              <div class="history-info">
+                <div v-if="h.progressText" class="progress-number">
+                  {{ h.progress >= 0.95 ? '已看完' : h.progressText }}
+                </div>
+                <div
+                  v-if="h.liveStatus !== undefined"
+                  class="duration live-status"
+                  :class="{ on: h.liveStatus === 1 }"
+                >
+                  {{ h.liveStatus === 1 ? '直播中' : '未开播' }}
+                </div>
+                <span
+                  v-if="h.progressText || h.liveStatus !== undefined"
+                  class="history-info-separator"
+                  >|</span
+                >
+                <div v-if="h.timeText" class="time" :title="new Date(h.viewAt).toLocaleString()">
+                  {{ h.timeText }}
+                </div>
               </div>
             </div>
           </transition-group>
@@ -107,7 +120,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
-import { formData, getCsrf } from '@/core/utils'
+import { getCsrf } from '@/core/utils'
 import { descendingSort } from '@/core/utils/sort'
 import {
   DpiImage,
@@ -122,7 +135,7 @@ import {
 
 import { popupProps, usePopup } from '../mixins'
 import type { HistoryItem, TypeFilter } from './types'
-import { getHistoryItems, group, HistoryType, types } from './types'
+import { getHistoryItems, group, HistoryType, navbarFilterTypes } from './types'
 
 function search(this: InstanceType<typeof ThisComponent>) {
   this.reloadHistoryItems()
@@ -142,7 +155,7 @@ const ThisComponent = defineComponent({
   setup: usePopup,
   data() {
     return {
-      types,
+      types: navbarFilterTypes,
       search: '',
       viewTime: 0,
       cards: [] as HistoryItem[],
@@ -169,10 +182,11 @@ const ThisComponent = defineComponent({
   },
   methods: {
     toggleTypeFilter(typeFilter: TypeFilter) {
-      types.forEach(t => (t.checked = t.name === typeFilter.name))
+      navbarFilterTypes.forEach(t => (t.checked = t.name === typeFilter.name))
       this.reloadHistoryItems()
     },
     async reloadHistoryItems() {
+      this.cards = []
       this.viewTime = 0
       this.hasMorePage = true
       this.loading = true
@@ -183,8 +197,8 @@ const ThisComponent = defineComponent({
       }
     },
     filterFunc(item: HistoryItem) {
-      const isAllType = types.find(it => it.name === HistoryType.All).checked
-      if (!isAllType && types.some(t => t.name === item.type && !t.checked)) {
+      const isAllType = navbarFilterTypes.find(it => it.name === HistoryType.All).checked
+      if (!isAllType && navbarFilterTypes.some(t => t.name === item.type && !t.checked)) {
         return false
       }
       if (
@@ -201,7 +215,7 @@ const ThisComponent = defineComponent({
     async nextPage() {
       const items = await getHistoryItems(
         this.viewTime,
-        types.find(t => t.checked),
+        navbarFilterTypes.find(t => t.checked),
       )
       const cards: HistoryItem[] = lodash.uniqBy(
         this.cards.concat(items).sort(descendingSort((item: HistoryItem) => item.viewAt)),
@@ -233,10 +247,10 @@ const ThisComponent = defineComponent({
         this.paused = targetState
         await postTextWithCredentials(
           'https://api.bilibili.com/x/v2/history/shadow/set',
-          formData({
+          new URLSearchParams({
             csrf: getCsrf(),
-            switch: targetState,
-          }),
+            switch: targetState.toString(),
+          }).toString(),
         )
       } catch (error) {
         this.paused = !targetState
@@ -352,14 +366,18 @@ export default ThisComponent
         &-items {
           padding: 0 12px;
           .floating {
-            @include round-bar(20);
+            @include round-bar(16);
             @include h-center();
             background-color: #000c;
             color: white;
             justify-content: center;
             position: absolute;
-            opacity: 0;
             font-size: 11px;
+            padding: 2px 4px;
+            &.pages {
+              bottom: 4px;
+              right: 4px;
+            }
           }
           .time-group-item {
             display: grid;
@@ -383,11 +401,8 @@ export default ThisComponent
               .cover {
                 transform: scale(1.05);
               }
-              .floating {
-                opacity: 1;
-              }
             }
-            .cover-container {
+            .history-cover-container {
               $height: 55px;
               $padding: 2px;
               grid-area: cover;
@@ -402,22 +417,6 @@ export default ThisComponent
                 body.dark &.placeholder {
                   filter: invert(0.9);
                 }
-              }
-              .duration {
-                left: $padding;
-                bottom: $padding;
-                padding: 0 6px;
-              }
-              .live-status {
-                &.on {
-                  background-color: var(--theme-color);
-                  color: var(--foreground-color);
-                }
-              }
-              .progress-number {
-                left: $padding;
-                top: $padding;
-                padding: 0 6px;
               }
               .progress {
                 position: absolute;
@@ -446,7 +445,7 @@ export default ThisComponent
               }
             }
             .up,
-            .time {
+            .history-info {
               font-size: 11px;
               opacity: 0.75;
               align-self: center;
@@ -477,10 +476,23 @@ export default ThisComponent
                 }
               }
             }
-            .time {
+            .history-info {
+              @include h-center(4px);
               font-size: 11px;
               grid-area: time;
               padding-right: 6px;
+              &-separator {
+                margin: 0 4px;
+              }
+            }
+            .progress-number,
+            .live-status {
+              @include single-line();
+            }
+            .live-status {
+              &.on {
+                color: var(--theme-color);
+              }
             }
           }
         }

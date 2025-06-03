@@ -86,6 +86,9 @@ $vip-color: 'FB7299';
 @mixin foreground-fill($level: '') {
   @include set-foreground-color('fill', $level);
 }
+@mixin foreground-stroke($level: '') {
+  @include set-foreground-color('stroke', $level);
+}
 
 @mixin to-white {
   filter: brightness(0) invert(1) !important;

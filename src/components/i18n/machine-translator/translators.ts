@@ -41,11 +41,11 @@ export class BingTranslate extends MachineTranslateProvider {
       const response = await monkey({
         url: 'https://cn.bing.com/ttranslatev3',
         method: 'POST',
-        data: formData({
+        data: new URLSearchParams({
           fromLang: 'auto-detect',
           to: targetLanguage,
           text,
-        }),
+        }).toString(),
         headers: {
           'User-Agent': UserAgent,
           'Content-Type': 'application/x-www-form-urlencoded',

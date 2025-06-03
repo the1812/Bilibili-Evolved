@@ -1,0 +1,103 @@
+@import 'common';
+
+$pref: 'be-eop';
+$panel-padding: 18px;
+$internal-spacing: 14px;
+
+@mixin extra-options-panel {
+  &.be-extra-options-panel {
+    @include popup();
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    max-width: 80vw;
+    max-height: 80vh;
+    padding: $panel-padding 0;
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(0.95);
+    transition: all 0.2s ease-out;
+    font-size: 14px;
+    line-height: normal;
+    z-index: 100002;
+
+    &.open {
+      transform: translateX(-50%) translateY(-50%) scale(1);
+    }
+
+    > .#{$pref}-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 $panel-padding $internal-spacing $panel-padding;
+      flex-shrink: 0;
+
+      > .#{$pref}-h-title {
+        display: flex;
+        column-gap: 4px;
+
+        > .#{$pref}-h-t-text {
+          @include semi-bold();
+          font-size: 19px;
+          line-height: 20px;
+        }
+      }
+
+      > .#{$pref}-h-actions {
+        display: flex;
+        column-gap: ($internal-spacing + 4px);
+
+        > .#{$pref}-h-a-action {
+          cursor: pointer;
+          transition: all 0.2s ease-out;
+
+          &:hover {
+            color: var(--theme-color);
+          }
+        }
+      }
+    }
+
+    > .#{$pref}-separator {
+      height: 1px;
+      margin: 0 $panel-padding;
+      background-color: rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+
+      body.dark & {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    > .#{$pref}-content {
+      @include no-scrollbar();
+      padding: $internal-spacing $panel-padding 0 $panel-padding;
+      overflow: auto;
+      flex-grow: 1;
+      flex-shrink: 1;
+
+      > .#{$pref}-c-option {
+        margin-bottom: ($internal-spacing + 4px);
+
+        &:nth-last-child(1) {
+          margin-bottom: ($internal-spacing - 2px);
+        }
+
+        > .#{$pref}-c-o-title {
+          margin-bottom: 2px;
+          font-size: 14px;
+        }
+
+        > .#{$pref}-c-o-description {
+          margin-bottom: 8px;
+          opacity: 0.6;
+          font-size: 12px;
+        }
+
+        > .#{$pref}-c-o-input {
+          @include h-center();
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+}

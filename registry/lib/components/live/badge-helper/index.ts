@@ -5,6 +5,7 @@ import { defineComponentMetadata, defineOptionsMetadata } from '@/components/def
 import { getNumberValidator, getUID, none } from '@/core/utils'
 
 import { autoMatchMedal } from './auto-match'
+import { badgeHelperOptions } from './options'
 
 const options = defineOptionsMetadata({
   autoMatchMedal: {
@@ -32,10 +33,6 @@ export type Options = OptionsOfMetadata<typeof options>
 export const component = defineComponentMetadata({
   name: 'badgeHelper',
   displayName: '直播勋章快速更换',
-  description: {
-    'zh-CN':
-      '在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.',
-  },
   entry: () => autoMatchMedal(),
   reload: none,
   unload: none,
@@ -44,6 +41,6 @@ export const component = defineComponentMetadata({
     component: defineAsyncComponent(() => import('./BadgeHelper.vue')),
     condition: () => Boolean(getUID()),
   },
-  options,
+  options: badgeHelperOptions,
   urlInclude: ['//live.bilibili.com'],
 })

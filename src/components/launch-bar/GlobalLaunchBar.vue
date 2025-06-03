@@ -9,49 +9,36 @@
     <LaunchBar ref="launchBar" @close="close()" />
   </VPopup>
 </template>
-<script lang="ts">
-import type { Ref } from 'vue'
-import { defineComponent, ref } from 'vue'
+<script lang="ts" setup>
+import { watch, onMounted, ref, useTemplateRef } from 'vue'
+import LaunchBar from './LaunchBar.vue'
+import type launchBarVue from './LaunchBar.vue'
 import VPopup from '@/ui/VPopup.vue'
 
-import LaunchBar from './LaunchBar.vue'
+const launchBar = useTemplateRef<InstanceType<typeof launchBarVue>>('launchBar')
+const show = ref(true)
 
-export default defineComponent({
-  components: {
-    LaunchBar,
-    VPopup,
-  },
-  setup: () => ({
-    launchBar: ref(null) as Ref<InstanceType<typeof LaunchBar> | null>,
-  }),
-  data() {
-    return {
-      show: true,
-    }
-  },
-  watch: {
-    show(value: boolean) {
-      if (value) {
-        this.focus()
-      }
-    },
-  },
-  async mounted() {
-    await this.$nextTick()
-    this.focus()
-  },
-  methods: {
-    focus() {
-      const input = this.launchBar?.input
-      input?.focus()
-      input?.select()
-    },
-    close() {
-      this.show = false
-      const input = this.launchBar?.input
-      input?.blur()
-    },
-  },
+const focus = () => {
+  const { input } = launchBar.value
+  input.focus()
+  input.select()
+}
+const close = () => {
+  show.value = false
+  const { input } = launchBar.value
+  input.blur()
+}
+
+watch(show, (value: boolean) => {
+  if (value) {
+    focus()
+  }
+})
+onMounted(() => {
+  focus()
+})
+defineExpose({
+  show,
 })
 </script>
 <style lang="scss">
@@ -79,7 +66,6 @@ export default defineComponent({
       --color: #eee;
     }
     .launch-bar-suggest-list {
-      transition: 0.2s ease-out;
       top: calc(100% + 8px);
       max-height: calc(80vh - 16px - #{$barHeight});
       @include no-scrollbar();

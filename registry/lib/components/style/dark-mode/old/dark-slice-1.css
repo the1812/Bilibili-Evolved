@@ -196,7 +196,6 @@ div.con,
 .app-watch,
 #app .submit,
 .appeal-box,
-.fans-medal-item:not(.medal-guard) .fans-medal-level,
 .fans-medal-item .level
 {
     background-color: #222 !important;
@@ -368,7 +367,6 @@ button.submit-button.disabled,
 .rank-list-ctnr .tabs,
 .player-and-aside-area .aside-area,
 .player-and-aside-area .aside-area .rank-list-section,
-.gift-presets .gift-panel-box,
 .bilibili-live-player-ending-panel-recommend-card-pic,
 .rank-list-ctnr .own,
 .rank-cntr .item.own,
@@ -1080,7 +1078,6 @@ li.tag > a,
     color: #00a1d6 !important
 }
 .fans-medal-item .label,
-.fans-medal-item:not(.medal-guard) .fans-medal-label,
 .calendar .day-item,
 .calendar .day-item.cur-day,
 .content-box .watermark-wrap .watermark

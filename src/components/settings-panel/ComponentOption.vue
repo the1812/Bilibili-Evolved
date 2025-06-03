@@ -11,11 +11,15 @@
       :placeholder="value.toString()"
       @update:text="type === 'text' ? valueChange($event) : numberChange($event)"
     ></TextBox>
-    <SwitchBox
-      v-if="type === 'boolean'"
-      :checked="value"
-      @update:checked="valueChange($event)"
-    ></SwitchBox>
+    <TextArea
+      v-if="type === 'textArea'"
+      change-on-blur
+      :validator="option.validator"
+      :text="value.toString()"
+      :placeholder="value.toString()"
+      @change="valueChange($event)"
+    ></TextArea>
+    <SwitchBox v-if="type === 'boolean'" :checked="value" @change="valueChange($event)"></SwitchBox>
     <ColorPicker
       v-if="type === 'color'"
       :compact="true"
@@ -62,15 +66,22 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
-import type { PropType } from 'vue'
-import type { ComponentSettings } from '@/core/settings'
-import { getComponentSettings } from '@/core/settings'
-import { ColorPicker, ImagePicker, RangeInput, SwitchBox, TextBox, VDropdown, VSlider } from '@/ui'
+import { defineComponent, type PropType } from 'vue'
+import {
+  TextBox,
+  TextArea,
+  SwitchBox,
+  ColorPicker,
+  RangeInput,
+  VDropdown,
+  ImagePicker,
+  VSlider,
+} from '@/ui'
+import { getComponentSettings, type ComponentSettings } from '@/core/settings'
+import { getDropdownItems } from './dropdown'
+import SwitchOptions from '../SwitchOptions.vue'
 
 import type { ComponentMetadata, OptionMetadata } from '../component'
-import SwitchOptions from '../SwitchOptions.vue'
-import { getDropdownItems } from './dropdown'
 
 function valueChange(this: InstanceType<typeof ThisComponent>, newValue: unknown) {
   const settings = this.settings as ComponentSettings
@@ -82,6 +93,7 @@ const ThisComponent = defineComponent({
   components: {
     SwitchOptions,
     TextBox,
+    TextArea,
     SwitchBox,
     ColorPicker,
     RangeInput,
@@ -115,17 +127,7 @@ const ThisComponent = defineComponent({
     }
   },
   computed: {
-    type():
-      | 'boolean'
-      | 'dropdown'
-      | 'color'
-      | 'range'
-      | 'image'
-      | 'switch'
-      | 'slider'
-      | 'text'
-      | 'number'
-      | 'unknown' {
+    type() {
       const option = this.option as OptionMetadata
       const { defaultValue } = option
       // console.log(option)
@@ -144,6 +146,9 @@ const ThisComponent = defineComponent({
           }
           if (option.dropdownEnum) {
             return 'dropdown'
+          }
+          if (option.multiline) {
+            return 'textArea'
           }
           return 'text'
         }
@@ -182,7 +187,7 @@ const ThisComponent = defineComponent({
 export default ThisComponent
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .component-option {
   display: flex;
   align-items: center;
@@ -209,6 +214,10 @@ export default ThisComponent
   }
   .be-slider {
     margin: 0 8px;
+  }
+  textarea {
+    resize: vertical;
+    min-height: 16px;
   }
 }
 </style>

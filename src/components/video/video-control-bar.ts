@@ -43,5 +43,5 @@ export const addControlBarButton = async (button: VideoControlBarItem) => {
   if (!created) {
     return
   }
-  controlBarItems.push(button)
+  created.items.push(button)
 }

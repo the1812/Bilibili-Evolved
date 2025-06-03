@@ -2,7 +2,7 @@
   <span
     title="稍后再看"
     class="watchlater be-outer-watchlater video-toolbar-left-item"
-    :class="{ on }"
+    :class="{ on, ...displayModeClass }"
     @click="toggle()"
   >
     <VIcon class="icon" :size="28" icon="mdi-timetable"></VIcon>
@@ -15,14 +15,18 @@
 import { defineComponent } from 'vue'
 import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { VIcon } from '@/ui'
+import { DisplayMode, type Options } from './options'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 export default defineComponent({
   components: {
     VIcon,
   },
   data() {
+    const { displayMode } = getComponentSettings<Options>('outerWatchlater').options
     return {
       watchlaterList,
+      displayMode,
       aid: unsafeWindow.aid,
       tipText: '',
       tipShowing: false,
@@ -34,6 +38,17 @@ export default defineComponent({
       console.log(this.watchlaterList, this.aid, this.watchlaterList.includes(parseInt(this.aid)))
       return this.watchlaterList.includes(parseInt(this.aid))
     },
+    displayModeClass() {
+      return {
+        'icon-only': this.displayMode === DisplayMode.Icon,
+        'icon-and-text': this.displayMode === DisplayMode.IconAndText,
+      }
+    },
+  },
+  created() {
+    addComponentListener('outerWatchlater.displayMode', (value: DisplayMode) => {
+      this.displayMode = value
+    })
   },
   methods: {
     showTip(text: string) {
@@ -63,12 +78,22 @@ export default defineComponent({
     margin-right: 28px !important;
     position: relative;
     width: auto !important;
-    @media screen and (max-width: 1340px), (max-height: 750px) {
+
+    @mixin icon-only {
       margin-right: max(calc(min(11vw, 11vh) - 117.2px), 6px) !important;
       .text {
         display: none;
       }
     }
+    &.icon-only {
+      @include icon-only();
+    }
+    &:not(.icon-and-text) {
+      @media screen and (max-width: 1340px), (max-height: 750px) {
+        @include icon-only();
+      }
+    }
+
     .tip {
       position: absolute;
       top: calc(100% + 8px);
