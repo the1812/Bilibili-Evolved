@@ -157,7 +157,7 @@ export default Vue.extend({
         })
       } else {
         if (brightness !== undefined) {
-          this.preview.brightness = normalize(this.store.brightness, brightness, Infinity)
+          this.preview.brightness = normalize(this.store.brightness, brightness)
         } else if (volume !== undefined) {
           this.preview.volume = normalize(this.store.volume, volume)
         }

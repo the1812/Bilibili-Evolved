@@ -1,5 +1,6 @@
 import { playerAgent } from '@/components/video/player-agent'
 import { GesturePreviewParams, ProgressSeekMode } from './gesture-preview'
+import { getComponentSettings } from '@/core/settings'
 
 export const entry = async () => {
   const { videoChange } = await import('@/core/observer')
@@ -38,9 +39,11 @@ export const entry = async () => {
     })
     ;['volume', 'brightness'].forEach(type => {
       swiper.action.addEventListener(type, (e: CustomEvent<number>) => {
-        gestureVM.startPreview({
-          [type]: e.detail,
-        })
+        if (getComponentSettings('touchPlayerGestures').options[`${type}Control`]) {
+          gestureVM.startPreview({
+            [type]: e.detail,
+          })
+        }
       })
     })
     swiper.action.addEventListener(
