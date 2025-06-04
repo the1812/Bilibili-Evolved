@@ -39,7 +39,8 @@ export const entry = async () => {
     })
     ;['volume', 'brightness'].forEach(type => {
       swiper.action.addEventListener(type, (e: CustomEvent<number>) => {
-        if (getComponentSettings('touchPlayerGestures').options[`${type}Control`]) {
+        const { options } = getComponentSettings('touchPlayerGestures').options
+        if (options[`${type}Control`]) {
           gestureVM.startPreview({
             [type]: e.detail,
           })
