@@ -80,8 +80,9 @@ export const component = defineComponentMetadata({
         }
         const target = e.target as HTMLElement
         if (
-          !['b-danmaku', 'bili-dm', 'bili-danmaku-x-dm'].some(token =>
-            target.classList.contains(token),
+          !['b-danmaku', 'bili-dm', 'bili-danmaku-x-dm'].some(
+            token =>
+              target.classList.contains(token) || target.parentElement?.classList.contains(token),
           )
         ) {
           return
