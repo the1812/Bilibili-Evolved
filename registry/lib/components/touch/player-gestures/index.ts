@@ -19,5 +19,13 @@ export const component = defineComponentMetadata({
       defaultValue: 10,
       hidden: true,
     },
+    volumeControl: {
+      displayName: '启用音量手势',
+      defaultValue: true,
+    },
+    brightnessControl: {
+      displayName: '启用亮度手势',
+      defaultValue: true,
+    },
   },
 })
