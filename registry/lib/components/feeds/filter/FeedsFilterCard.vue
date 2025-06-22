@@ -74,10 +74,10 @@ const sideCards: { [id: number]: SideCardType } = {
     className: 'profile',
     displayName: '个人资料',
   },
-  1: {
-    className: 'following-tags',
-    displayName: '话题',
-  },
+  // 1: {
+  //   className: 'following-tags',
+  //   displayName: '话题',
+  // },
   2: {
     className: 'notice',
     displayName: '公告栏',
@@ -97,6 +97,10 @@ const sideCards: { [id: number]: SideCardType } = {
   6: {
     className: 'compose',
     displayName: '发布动态',
+  },
+  7: {
+    className: 'search-trendings',
+    displayName: '热搜',
   },
 }
 if (getComponentSettings('extendFeedsLive').enabled) {
