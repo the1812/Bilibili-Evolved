@@ -30,7 +30,7 @@ const entry = async () => {
         const screenshot = takeScreenshot(video, e.shiftKey)
         if (!screenShotsList) {
           screenShotsList = mountVueComponent(ScreenshotContainer)
-          document.body.insertAdjacentElement('beforeend', screenShotsList.$el)
+          dq('.bpx-player-container').appendChild(screenShotsList.$el)
         }
         screenShotsList.screenshots.unshift(screenshot)
       } else {
