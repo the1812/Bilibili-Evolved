@@ -8,7 +8,7 @@ import PreviewButton from './PreviewButton.vue'
 
 const logger = useScopedConsole('biggerPreview')
 
-const entry: ComponentEntry = async () => {
+const entry: ComponentEntry = async ({ settings }) => {
   // 预览容器
   let videoContainer = null
 
@@ -56,10 +56,11 @@ const entry: ComponentEntry = async () => {
      * @param {Element} movingDom - 预览元素的 DOM
      */
     const toggleMouseExitHandler = (show: boolean, movingDom: Element) => {
-      if (show) {
+      if (settings.options.blockMouseExitHandler && show) {
         movingDom.addEventListener('mouseleave', onMouseExitHandler, true)
       } else {
         movingDom.removeEventListener('mouseleave', onMouseExitHandler, true)
+        // TODO: 首页无法停止
         // 触发mouseleave事件停止预览
         const mouseLeaveEvent = new MouseEvent('mouseleave')
         movingDom.dispatchEvent(mouseLeaveEvent)
@@ -72,9 +73,14 @@ const entry: ComponentEntry = async () => {
      * @param {boolean} show - 是否显示控件
      */
     const toggleVideoControls = (movingDom: Element, show: boolean) => {
+      // TODO: 控件无法点击
       const video = movingDom.querySelector('video')
       if (video) {
-        video.controls = show
+        if (settings.options.showVideoControls && show) {
+          video.controls = true
+        } else {
+          video.controls = false
+        }
       }
     }
 
@@ -118,6 +124,8 @@ const entry: ComponentEntry = async () => {
           if (instance.enlarged) {
             videoContainer.closePopup()
           } else {
+            videoContainer.$el.style.width = `${settings.options.popupWidth}%`
+
             videoContainer.$off('popup-change', popupChangeHandler)
             videoContainer.$on('popup-change', popupChangeHandler)
             videoContainer.openPopup(movingDom)
@@ -226,4 +234,23 @@ export const component = defineComponentMetadata({
   displayName: '预览放大',
   entry,
   tags: [componentsTags.utils],
+  options: {
+    popupWidth: {
+      displayName: '弹窗宽度（%）',
+      defaultValue: 90,
+      slider: {
+        min: 10,
+        max: 100,
+        step: 1,
+      },
+    },
+    blockMouseExitHandler: {
+      displayName: '鼠标移出弹窗不停止预览',
+      defaultValue: true,
+    },
+    showVideoControls: {
+      displayName: '显示视频控件（TODO）',
+      defaultValue: false,
+    },
+  },
 })

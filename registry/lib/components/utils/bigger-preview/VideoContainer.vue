@@ -86,9 +86,9 @@ export default defineComponent({
 <style lang="scss">
 .bigger-preview-video-container {
   position: fixed;
-  width: 80%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: 99999;
 }
 </style>
