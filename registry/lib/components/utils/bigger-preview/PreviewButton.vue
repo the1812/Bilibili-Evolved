@@ -19,10 +19,14 @@ export default defineComponent({
       type: String,
       required: true,
     },
+    btnOnClickCallback: {
+      type: Function,
+      required: true,
+    },
   },
   methods: {
     onClick(event: MouseEvent) {
-      event.preventDefault()
+      this.btnOnClickCallback(event)
     },
   },
 })

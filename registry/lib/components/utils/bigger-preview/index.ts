@@ -9,7 +9,23 @@ import PreviewButton from './PreviewButton.vue'
 const logger = useScopedConsole('biggerPreview')
 
 const entry: ComponentEntry = async () => {
+  // 预览容器
+  let videoContainer = null
+
   // #region functions
+  /**
+   * 初始化预览容器
+   */
+  async function initPreviewContainer() {
+    const VideoContainerModule = await import('./VideoContainer.vue')
+    const VideoContainer = VideoContainerModule.default
+
+    const ModalClass = Vue.extend(VideoContainer)
+    videoContainer = new ModalClass()
+    videoContainer.$mount()
+    document.body.appendChild(videoContainer.$el)
+  }
+
   /**
    *  创建预览按钮的容器元素（由 Vue 渲染）
    *  @param {string} className - 按钮的类名
@@ -19,7 +35,13 @@ const entry: ComponentEntry = async () => {
     const ComponentClass = Vue.extend(PreviewButton)
 
     const instance = new ComponentClass({
-      propsData: { btnClass: className },
+      propsData: {
+        btnClass: className,
+        btnOnClickCallback: (e: MouseEvent) => {
+          e.preventDefault()
+          videoContainer?.openPopup()
+        },
+      },
     })
 
     instance.$mount()
@@ -90,6 +112,10 @@ const entry: ComponentEntry = async () => {
   }
   // #endregion
 
+  // 初始化预览容器
+  logger.debug('初始化预览容器')
+  await initPreviewContainer()
+
   // 初始化预览放大按钮
   if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     logger.debug('初始化首页预览放大按钮')
@@ -117,10 +143,4 @@ export const component = defineComponentMetadata({
   displayName: '预览放大',
   entry,
   tags: [componentsTags.utils],
-  instantStyles: [
-    {
-      name: 'biggerPreview',
-      style: () => import('./bigger-preview.scss'),
-    },
-  ],
 })
