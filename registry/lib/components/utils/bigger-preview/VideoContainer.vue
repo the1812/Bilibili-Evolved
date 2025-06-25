@@ -1,6 +1,10 @@
 <template>
-  <VPopup v-model="showPopup" class="bigger-preview-video-container" @popup-change="onPopupChange">
-    <div ref="popupContent"></div>
+  <VPopup
+    ref="popup"
+    v-model="showPopup"
+    class="bigger-preview-video-container"
+    @popup-change="onPopupChange"
+  >
   </VPopup>
 </template>
 
@@ -36,19 +40,19 @@ export default defineComponent({
       this.originalParent = dom.parentNode
       this.originalNextSibling = dom.nextSibling
 
-      this.showPopup = true
-      // 移动到popupContent
+      this.togglePopup()
+      // 移动到popup
       this.$nextTick(() => {
-        const popupContent = this.$refs.popupContent as HTMLElement
-        if (popupContent && dom.parentNode !== popupContent) {
-          popupContent.appendChild(dom)
+        const popup = this.$refs.popup as any
+        if (popup && dom.parentNode !== popup) {
+          popup.$el.appendChild(dom)
           this.movedDom = dom
         }
       })
     },
     closePopup() {
       this.restoreDom()
-      this.showPopup = false
+      this.togglePopup()
     },
     restoreDom() {
       if (this.movedDom && this.originalParent) {
@@ -65,6 +69,14 @@ export default defineComponent({
     onPopupChange(val: boolean) {
       if (!val) {
         this.restoreDom()
+      }
+      this.$emit('popup-change', val)
+    },
+    togglePopup() {
+      // 调用VPopup的toggle方法
+      const popup = this.$refs.popup as any
+      if (popup && typeof popup.toggle === 'function') {
+        popup.toggle()
       }
     },
   },
