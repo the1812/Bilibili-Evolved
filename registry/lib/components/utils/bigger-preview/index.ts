@@ -39,7 +39,9 @@ const entry: ComponentEntry = async () => {
         btnClass: className,
         btnOnClickCallback: (e: MouseEvent) => {
           e.preventDefault()
-          videoContainer?.openPopup()
+
+          const video = instance.$el.parentElement.closest('.pic-box')
+          videoContainer?.openPopup(video)
         },
       },
     })
