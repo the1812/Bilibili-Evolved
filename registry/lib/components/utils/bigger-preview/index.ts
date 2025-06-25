@@ -32,38 +32,96 @@ const entry: ComponentEntry = async () => {
    * @returns {HTMLElement} 预览按钮的容器元素
    */
   function createPreviewButton(className: string): HTMLElement {
-    const ComponentClass = Vue.extend(PreviewButton)
+    // #region 局部定义
+    /**
+     * 切换预览按钮图标
+     * @param show 是否显示预览
+     * @param btn 预览按钮实例
+     */
+    const toggleButtonIcon = (show: boolean, btn: any) => {
+      btn.enlarged = show
+    }
 
+    /**
+     * 鼠标移出事件处理函数
+     * @param {MouseEvent} event - 鼠标事件
+     */
+    const onMouseExitHandler = (event: MouseEvent) => {
+      event.stopPropagation()
+    }
+
+    /**
+     * 切换鼠标移出事件监听
+     * @param {boolean} show - 是否显示预览
+     * @param {Element} movingDom - 预览元素的 DOM
+     */
+    const toggleMouseExitHandler = (show: boolean, movingDom: Element) => {
+      if (show) {
+        movingDom.addEventListener('mouseleave', onMouseExitHandler, true)
+      } else {
+        movingDom.removeEventListener('mouseleave', onMouseExitHandler, true)
+        // 触发mouseleave事件停止预览
+        const mouseLeaveEvent = new MouseEvent('mouseleave')
+        movingDom.dispatchEvent(mouseLeaveEvent)
+      }
+    }
+
+    /**
+     * 切换视频控件显示
+     * @param {Element} movingDom - 预览元素的 DOM
+     * @param {boolean} show - 是否显示控件
+     */
+    const toggleVideoControls = (movingDom: Element, show: boolean) => {
+      const video = movingDom.querySelector('video')
+      if (video) {
+        video.controls = show
+      }
+    }
+
+    // 提升 popupChangeHandler 到外部作用域，确保引用一致
+    let popupChangeHandler: (show: boolean) => void
+    // #endregion
+
+    // 创建 Vue 实例
+    const ComponentClass = Vue.extend(PreviewButton)
     const instance = new ComponentClass({
       propsData: {
         btnClass: className,
         btnOnClickCallback: (e: MouseEvent) => {
           e.preventDefault()
 
-          // 监听 popup-change 事件
-          const popupChangeHandler = (show: boolean) => {
-            // 关闭弹窗时重置图标
-            if (!show) {
-              instance.enlarged = false
+          if (!videoContainer) {
+            return
+          }
+
+          const movingDom = instance.$el.parentElement.closest('.bili-video-card__image,.pic-box')
+
+          // 监听弹窗状态变化事件
+          if (!popupChangeHandler) {
+            popupChangeHandler = (show: boolean) => {
+              // 切换按钮图标
+              toggleButtonIcon(show, instance)
+
+              // 切换鼠标移出事件监听
+              toggleMouseExitHandler(show, movingDom)
+
+              // 切换视频控件显示
+              toggleVideoControls(movingDom, show)
+
+              if (!show) {
+                videoContainer.$off('popup-change', popupChangeHandler)
+              }
             }
           }
 
           // 根据当前状态切换预览
           if (instance.enlarged) {
-            if (videoContainer) {
-              videoContainer.$off('popup-change', popupChangeHandler)
-              videoContainer.closePopup()
-            }
+            videoContainer.closePopup()
           } else {
-            const video = instance.$el.parentElement.closest('.bili-video-card__image,.pic-box')
-            if (videoContainer) {
-              videoContainer.$on('popup-change', popupChangeHandler)
-              videoContainer.openPopup(video)
-            }
+            videoContainer.$off('popup-change', popupChangeHandler)
+            videoContainer.$on('popup-change', popupChangeHandler)
+            videoContainer.openPopup(movingDom)
           }
-
-          // 切换按钮图标
-          instance.enlarged = !instance.enlarged
         },
       },
     })
@@ -81,7 +139,8 @@ const entry: ComponentEntry = async () => {
   function insertPreviewButton(node: HTMLElement, className: string) {
     const wrap = node.querySelectorAll('.v-inline-player,.v-recommend-inline-player')
     wrap.forEach(it => {
-      if (it.querySelector(`.${className}`)) {
+      // 检查父元素下是否已经有该按钮，避免重复插入
+      if (it.parentElement.querySelector(`.${className}`)) {
         return
       }
 
