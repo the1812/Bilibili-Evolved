@@ -1,0 +1,123 @@
+import { ComponentEntry } from '@/components/types'
+import { defineComponentMetadata } from '@/components/define'
+import { childListSubtree } from '@/core/observer'
+import { select } from '@/core/spin-query'
+import { useScopedConsole } from '@/core/utils/log'
+
+const logger = useScopedConsole('biggerPreview')
+
+const entry: ComponentEntry = async () => {
+  // #region functions
+  /**
+   *  创建预览按钮的容器元素
+   *  @param {string} className - 按钮的类名
+   * @returns {HTMLDivElement} 预览按钮的容器元素
+   */
+  function createPreviewButton(className: string): HTMLDivElement {
+    const div = document.createElement('div')
+    div.classList.add(className)
+
+    div.addEventListener('click', event => {
+      event.preventDefault()
+    })
+
+    return div
+  }
+
+  /**
+   * 插入预览放大按钮
+   * @param {HTMLElement} node - 要插入按钮的节点
+   * @param {string} className - 按钮的类名
+   */
+  function insertPreviewButton(node: HTMLElement, className: string) {
+    const wrap = node.querySelectorAll('.v-inline-player,.v-recommend-inline-player')
+    wrap.forEach(it => {
+      if (it.querySelector(`.${className}`)) {
+        return
+      }
+
+      const div = createPreviewButton(className)
+      it.parentElement.appendChild(div)
+    })
+  }
+
+  /**
+   * 初始化预览放大按钮（通用）
+   * @param btnClassName 按钮类名
+   * @param videoClassName 视频卡片类名
+   * @param containerSelector 容器选择器
+   * @param getInsertNode 获取插入按钮的节点
+   */
+  async function initPreviewButton(
+    btnClassName: string,
+    videoClassName: string,
+    containerSelector: string,
+    getInsertNode: (element: HTMLElement) => HTMLElement,
+  ) {
+    const containerNode = (await select(containerSelector)) as HTMLElement
+    if (!containerNode) {
+      logger.warn('未找到容器节点:', containerSelector)
+      return
+    }
+    const wrap = containerNode.querySelectorAll(`.${videoClassName}`)
+    logger.debug(`初始化已有卡片: `, wrap.length)
+    // 初始化已有卡片
+    insertPreviewButton(containerNode, btnClassName)
+
+    // 监听容器变化
+    childListSubtree(containerNode, records => {
+      records.forEach(record => {
+        record.addedNodes.forEach(n => {
+          if (n.nodeType !== Node.ELEMENT_NODE) {
+            return
+          }
+          const element = n as HTMLElement
+          if (
+            !element.classList.contains(videoClassName) &&
+            element.querySelector(`.${videoClassName}`) === null
+          ) {
+            return
+          }
+          logger.debug('初始化卡片')
+          // 初始化卡片
+          insertPreviewButton(getInsertNode(element), btnClassName)
+        })
+      })
+    })
+  }
+  // #endregion
+
+  // 初始化预览放大按钮
+  if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
+    logger.debug('初始化首页预览放大按钮')
+    // 首页
+    initPreviewButton(
+      'bigger-preview-button-index',
+      'v-inline-player',
+      '.container',
+      element => element,
+    )
+  } else if (document.URL.startsWith('https://www.bilibili.com/video/')) {
+    logger.debug('初始化视频页预览放大按钮')
+    // 视频页
+    initPreviewButton(
+      'bigger-preview-button-video',
+      'v-recommend-inline-player',
+      '.recommend-list-v1',
+      element => element.parentElement,
+    )
+  }
+}
+
+export const component = defineComponentMetadata({
+  name: 'biggerPreview',
+  displayName: '预览放大',
+  entry,
+  tags: [componentsTags.utils],
+  instantStyles: [
+    {
+      name: 'biggerPreview',
+      style: () => import('./bigger-preview.scss'),
+    },
+  ],
+})
