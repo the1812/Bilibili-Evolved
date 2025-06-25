@@ -175,7 +175,7 @@ const entry: ComponentEntry = async ({ settings }) => {
           }
         },
       },
-    })
+    }) as Vue & { enlarged: boolean }
 
     instance.$mount()
 
