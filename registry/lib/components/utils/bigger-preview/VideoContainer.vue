@@ -35,14 +35,16 @@ export default defineComponent({
       // 保存原父节点和下一个兄弟节点
       this.originalParent = dom.parentNode
       this.originalNextSibling = dom.nextSibling
-      // 移动到popupContent
-      const popupContent = this.$refs.popupContent as HTMLElement
-      if (popupContent && dom.parentNode !== popupContent) {
-        popupContent.appendChild(dom)
-        this.movedDom = dom
-      }
 
       this.showPopup = true
+      // 移动到popupContent
+      this.$nextTick(() => {
+        const popupContent = this.$refs.popupContent as HTMLElement
+        if (popupContent && dom.parentNode !== popupContent) {
+          popupContent.appendChild(dom)
+          this.movedDom = dom
+        }
+      })
     },
     closePopup() {
       this.restoreDom()
