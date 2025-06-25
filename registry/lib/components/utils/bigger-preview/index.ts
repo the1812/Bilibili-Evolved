@@ -84,6 +84,33 @@ const entry: ComponentEntry = async ({ settings }) => {
       }
     }
 
+    /**
+     * 视频事件更新事件处理函数
+     * @param {Event} event - 事件对象
+     */
+    const onTimeUpdateHandler = (event: Event) => {
+      event.stopImmediatePropagation()
+    }
+
+    /**
+     * 切换预览时长限制
+     * @param {Element} movingDom - 预览元素的 DOM
+     */
+    const togglePreviewTimeLimit = (movingDom: Element) => {
+      if (settings.options.removePreviewTimeLimit) {
+        const video = movingDom.querySelector('video')
+        if (video) {
+          video.removeEventListener('timeupdate', onTimeUpdateHandler, true)
+          video.addEventListener('timeupdate', onTimeUpdateHandler, true)
+        }
+      } else {
+        const video = movingDom.querySelector('video')
+        if (video) {
+          video.removeEventListener('timeupdate', onTimeUpdateHandler, true)
+        }
+      }
+    }
+
     // 提升 popupChangeHandler 到外部作用域，确保引用一致
     let popupChangeHandler: (show: boolean) => void
     // #endregion
@@ -115,6 +142,9 @@ const entry: ComponentEntry = async ({ settings }) => {
 
               // 切换视频控件显示
               toggleVideoControls(movingDom, show)
+
+              // 切换预览时长限制
+              togglePreviewTimeLimit(movingDom)
 
               if (!show) {
                 videoContainer.$off('popup-change', popupChangeHandler)
@@ -253,6 +283,10 @@ export const component = defineComponentMetadata({
     showVideoControls: {
       displayName: '显示视频控件',
       defaultValue: true,
+    },
+    removePreviewTimeLimit: {
+      displayName: '解除5分钟预览限制（弹幕会停止）',
+      defaultValue: false,
     },
   },
 })
