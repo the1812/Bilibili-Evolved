@@ -37,10 +37,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.bili-video-card__image:hover .bigger-preview-button-index {
-  opacity: 1;
-}
-
 // 通用放大按钮样式
 .bigger-preview-button {
   opacity: 0;
@@ -52,6 +48,10 @@ export default defineComponent({
   height: 28px;
   width: 28px;
   z-index: 9;
+}
+
+.bili-video-card__image--wrap:hover .bigger-preview-button-index {
+  opacity: 1;
 }
 
 // 首页视频卡片预览放大按钮

@@ -60,7 +60,6 @@ const entry: ComponentEntry = async ({ settings }) => {
         movingDom.addEventListener('mouseleave', onMouseExitHandler, true)
       } else {
         movingDom.removeEventListener('mouseleave', onMouseExitHandler, true)
-        // TODO: 首页无法停止
         // 触发mouseleave事件停止预览
         const mouseLeaveEvent = new MouseEvent('mouseleave')
         movingDom.dispatchEvent(mouseLeaveEvent)
@@ -100,7 +99,9 @@ const entry: ComponentEntry = async ({ settings }) => {
             return
           }
 
-          const movingDom = instance.$el.parentElement.closest('.bili-video-card__image,.pic-box')
+          const movingDom = instance.$el.parentElement.closest(
+            '.bili-video-card__image--wrap,.pic-box',
+          )
 
           // 监听弹窗状态变化事件
           if (!popupChangeHandler) {
