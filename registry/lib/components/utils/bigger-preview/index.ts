@@ -1,27 +1,30 @@
+import Vue from 'vue'
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
 import { childListSubtree } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { useScopedConsole } from '@/core/utils/log'
+import PreviewButton from './PreviewButton.vue'
 
 const logger = useScopedConsole('biggerPreview')
 
 const entry: ComponentEntry = async () => {
   // #region functions
   /**
-   *  创建预览按钮的容器元素
+   *  创建预览按钮的容器元素（由 Vue 渲染）
    *  @param {string} className - 按钮的类名
-   * @returns {HTMLDivElement} 预览按钮的容器元素
+   * @returns {HTMLElement} 预览按钮的容器元素
    */
-  function createPreviewButton(className: string): HTMLDivElement {
-    const div = document.createElement('div')
-    div.classList.add(className)
+  function createPreviewButton(className: string): HTMLElement {
+    const ComponentClass = Vue.extend(PreviewButton)
 
-    div.addEventListener('click', event => {
-      event.preventDefault()
+    const instance = new ComponentClass({
+      propsData: { btnClass: className },
     })
 
-    return div
+    instance.$mount()
+
+    return instance.$el as HTMLElement
   }
 
   /**
