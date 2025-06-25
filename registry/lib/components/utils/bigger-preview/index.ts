@@ -73,13 +73,24 @@ const entry: ComponentEntry = async ({ settings }) => {
      */
     const toggleVideoControls = (movingDom: Element, show: boolean) => {
       const video = movingDom.querySelector('video')
+      // 首页视频卡片的时间条
+      const controlWrap = movingDom.querySelector('.bpx-player-control-wrap') as HTMLElement
+
       if (video) {
         if (settings.options.showVideoControls && show) {
           video.controls = true
           video.style.pointerEvents = 'visible'
+
+          if (controlWrap) {
+            controlWrap.style.display = 'none'
+          }
         } else {
           video.controls = false
           video.style.pointerEvents = 'none'
+
+          if (controlWrap) {
+            controlWrap.style.display = 'unset'
+          }
         }
       }
     }
