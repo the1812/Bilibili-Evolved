@@ -40,8 +40,30 @@ const entry: ComponentEntry = async () => {
         btnOnClickCallback: (e: MouseEvent) => {
           e.preventDefault()
 
-          const video = instance.$el.parentElement.closest('.pic-box')
-          videoContainer?.openPopup(video)
+          // 监听 popup-change 事件
+          const popupChangeHandler = (show: boolean) => {
+            // 关闭弹窗时重置图标
+            if (!show) {
+              instance.enlarged = false
+            }
+          }
+
+          // 根据当前状态切换预览
+          if (instance.enlarged) {
+            if (videoContainer) {
+              videoContainer.$off('popup-change', popupChangeHandler)
+              videoContainer.closePopup()
+            }
+          } else {
+            const video = instance.$el.parentElement.closest('.bili-video-card__image,.pic-box')
+            if (videoContainer) {
+              videoContainer.$on('popup-change', popupChangeHandler)
+              videoContainer.openPopup(video)
+            }
+          }
+
+          // 切换按钮图标
+          instance.enlarged = !instance.enlarged
         },
       },
     })

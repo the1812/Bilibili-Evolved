@@ -13,6 +13,10 @@ export default defineComponent({
   components: {
     VPopup,
   },
+  model: {
+    prop: 'showPopup',
+    event: 'popup-change',
+  },
   data() {
     return {
       showPopup: false,
@@ -39,6 +43,10 @@ export default defineComponent({
       }
 
       this.showPopup = true
+    },
+    closePopup() {
+      this.restoreDom()
+      this.showPopup = false
     },
     restoreDom() {
       if (this.movedDom && this.originalParent) {

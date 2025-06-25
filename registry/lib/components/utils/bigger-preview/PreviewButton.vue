@@ -1,6 +1,6 @@
 <template>
   <VButton :class="['bigger-preview-button', btnClass]" style="padding: 0" @click="onClick">
-    <VIcon icon="mdi-magnify-plus" :size="16"></VIcon>
+    <VIcon :icon="enlarged ? 'mdi-magnify-minus' : 'mdi-magnify-plus'" :size="16"></VIcon>
   </VButton>
 </template>
 
@@ -22,6 +22,10 @@ export default defineComponent({
     btnOnClickCallback: {
       type: Function,
       required: true,
+    },
+    enlarged: {
+      type: Boolean,
+      default: false,
     },
   },
   methods: {
