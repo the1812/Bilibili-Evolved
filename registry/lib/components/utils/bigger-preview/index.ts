@@ -72,13 +72,14 @@ const entry: ComponentEntry = async ({ settings }) => {
      * @param {boolean} show - 是否显示控件
      */
     const toggleVideoControls = (movingDom: Element, show: boolean) => {
-      // TODO: 控件无法点击
       const video = movingDom.querySelector('video')
       if (video) {
         if (settings.options.showVideoControls && show) {
           video.controls = true
+          video.style.pointerEvents = 'visible'
         } else {
           video.controls = false
+          video.style.pointerEvents = 'none'
         }
       }
     }
@@ -250,8 +251,8 @@ export const component = defineComponentMetadata({
       defaultValue: true,
     },
     showVideoControls: {
-      displayName: '显示视频控件（TODO）',
-      defaultValue: false,
+      displayName: '显示视频控件',
+      defaultValue: true,
     },
   },
 })
