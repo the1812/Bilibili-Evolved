@@ -1,5 +1,25 @@
+.space-head-follow.b-follow {
+  position: relative;
+
+  .subscribe-time-text {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: #fff;
+    line-height: 16px;
+    user-select: none;
+    pointer-events: none;
+    white-space: nowrap;
+    font-weight: 500;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.7);
+  }
+}
+
 .relation-card-info__time {
   color: #888;
   font-size: 12px;
   margin-bottom: 4px;
+  user-select: none;
 }
