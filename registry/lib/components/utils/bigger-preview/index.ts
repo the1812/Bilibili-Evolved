@@ -6,7 +6,7 @@ import { select } from '@/core/spin-query'
 import { useScopedConsole } from '@/core/utils/log'
 import PreviewButton from './PreviewButton.vue'
 
-const logger = useScopedConsole('biggerPreview')
+const logger = useScopedConsole('biggerVideoPreview')
 
 const entry: ComponentEntry = async ({ settings }) => {
   // 预览容器
@@ -255,7 +255,7 @@ const entry: ComponentEntry = async ({ settings }) => {
     logger.debug('初始化首页预览放大按钮')
     // 首页
     initPreviewButton(
-      'bigger-preview-button-index',
+      'bigger-video-preview-button-index',
       'v-inline-player',
       '.container',
       element => element,
@@ -264,7 +264,7 @@ const entry: ComponentEntry = async ({ settings }) => {
     logger.debug('初始化视频页预览放大按钮')
     // 视频页
     initPreviewButton(
-      'bigger-preview-button-video',
+      'bigger-video-preview-button-video',
       'v-recommend-inline-player',
       '.recommend-list-v1',
       element => element.parentElement,
@@ -273,8 +273,8 @@ const entry: ComponentEntry = async ({ settings }) => {
 }
 
 export const component = defineComponentMetadata({
-  name: 'biggerPreview',
-  displayName: '预览放大',
+  name: 'biggerVideoPreview',
+  displayName: '视频预览放大',
   entry,
   tags: [componentsTags.utils, componentsTags.video],
   options: {

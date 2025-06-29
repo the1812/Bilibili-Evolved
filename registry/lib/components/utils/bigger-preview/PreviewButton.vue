@@ -1,5 +1,5 @@
 <template>
-  <VButton :class="['bigger-preview-button', btnClass]" style="padding: 0" @click="onClick">
+  <VButton :class="['bigger-video-preview-button', btnClass]" style="padding: 0" @click="onClick">
     <VIcon :icon="enlarged ? 'mdi-magnify-minus' : 'mdi-magnify-plus'" :size="16"></VIcon>
   </VButton>
 </template>
@@ -38,7 +38,7 @@ export default defineComponent({
 
 <style lang="scss">
 // 通用放大按钮样式
-.bigger-preview-button {
+.bigger-video-preview-button {
   opacity: 0;
   transition: opacity 0.3s ease;
   position: absolute;
@@ -50,21 +50,21 @@ export default defineComponent({
   z-index: 9;
 }
 
-.bili-video-card__image--wrap:hover .bigger-preview-button-index {
+.bili-video-card__image--wrap:hover .bigger-video-preview-button-index {
   opacity: 1;
 }
 
 // 首页视频卡片预览放大按钮
-.bigger-preview-button-index {
-  @extend .bigger-preview-button;
+.bigger-video-preview-button-index {
+  @extend .bigger-video-preview-button;
 }
 
-.pic-box:hover .bigger-preview-button-video {
+.pic-box:hover .bigger-video-preview-button-video {
   opacity: 1;
 }
 
 // 视频页视频卡片预览放大按钮
-.bigger-preview-button-video {
-  @extend .bigger-preview-button;
+.bigger-video-preview-button-video {
+  @extend .bigger-video-preview-button;
 }
 </style>

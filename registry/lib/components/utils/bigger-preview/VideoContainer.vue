@@ -2,7 +2,7 @@
   <VPopup
     ref="popup"
     v-model="showPopup"
-    class="bigger-preview-video-container"
+    class="bigger-video-preview-video-container"
     @popup-change="onPopupChange"
   >
   </VPopup>
@@ -84,7 +84,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.bigger-preview-video-container {
+.bigger-video-preview-video-container {
   position: fixed;
   top: 50%;
   left: 50%;
