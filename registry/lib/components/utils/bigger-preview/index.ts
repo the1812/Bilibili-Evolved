@@ -276,7 +276,7 @@ export const component = defineComponentMetadata({
   name: 'biggerPreview',
   displayName: '预览放大',
   entry,
-  tags: [componentsTags.utils],
+  tags: [componentsTags.utils, componentsTags.video],
   options: {
     popupWidth: {
       displayName: '弹窗宽度（%）',
