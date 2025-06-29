@@ -92,6 +92,11 @@
       display: none !important;
     }
   }
+  &.#{$side-block}-search-trendings {
+    .bili-dyn-search-trendings {
+      display: none !important;
+    }
+  }
   &.#{$side-block}-most-viewed {
     .bili-dyn-up-list,
     .card-list .most-viewed-panel {
