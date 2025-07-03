@@ -1,14 +1,16 @@
 import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
-import { select } from '@/core/spin-query'
+import { addComponentListener } from '@/core/settings'
 
-const entry: ComponentEntry = async ({ settings }) => {
-  select('.recommended-swipe').then((e: HTMLElement) => {
-    if (settings.options.keepPlaceholder) {
-      e.style.opacity = '0'
-    } else {
-      e.style.display = 'none'
-    }
+const entry: ComponentEntry = async ({ metadata, settings }) => {
+  Object.keys(settings.options).forEach(disableType => {
+    addComponentListener(
+      `${metadata.name}.${disableType}`,
+      (value: boolean) => {
+        document.body.classList.toggle(`hide-home-carousel-${disableType}`, value)
+      },
+      true,
+    )
   })
 }
 
@@ -18,9 +20,19 @@ export const component = defineComponentMetadata({
   entry,
   tags: [componentsTags.style],
   urlInclude: [/^https:\/\/www\.bilibili\.com\/$/, /^https:\/\/www\.bilibili\.com\/index\.html$/],
+  instantStyles: [
+    {
+      name: 'hide-home-carousel',
+      style: () => import('./hide-home-carousel.scss'),
+    },
+  ],
   options: {
-    keepPlaceholder: {
-      displayName: '保留占位',
+    full: {
+      displayName: '完全隐藏',
+      defaultValue: true,
+    },
+    transparent: {
+      displayName: '透明化（保留占位）',
       defaultValue: false,
     },
   },

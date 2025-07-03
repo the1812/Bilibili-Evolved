@@ -1,0 +1,11 @@
+body.hide-home-carousel-full {
+  .recommended-swipe {
+    display: none !important;
+  }
+}
+
+body.hide-home-carousel-transparent {
+  .recommended-swipe {
+    opacity: 0;
+  }
+}
