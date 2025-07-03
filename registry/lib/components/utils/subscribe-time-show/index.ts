@@ -1,7 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { useScopedConsole } from '@/core/utils/log'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { dqa, dq } from '@/core/utils'
 import { select } from '@/core/spin-query'
 import { allMutations } from '@/core/observer'
 import { getUserInfo } from '@/core/user-info'
