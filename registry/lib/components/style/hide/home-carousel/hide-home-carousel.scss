@@ -7,5 +7,6 @@ body.hide-home-carousel-full {
 body.hide-home-carousel-transparent {
   .recommended-swipe {
     opacity: 0;
+    pointer-events: none;
   }
 }
