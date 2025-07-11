@@ -1,7 +1,7 @@
 import { wrapSwitchOptions } from '@/components/switch-options'
 import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
-import { select } from '@/core/spin-query'
+import { select, selectAll } from '@/core/spin-query'
 import { useScopedConsole } from '@/core/utils/log'
 
 const logger = useScopedConsole('hideHomeCarousel')
@@ -33,6 +33,23 @@ const entry: ComponentEntry = async ({ metadata }) => {
         const event = new MouseEvent('mouseleave')
         node.dispatchEvent(event)
       }
+    },
+    true,
+  )
+
+  // 监听【图片模糊】选项
+  addComponentListener(
+    `${metadata.name}.blur`,
+    async (value: number) => {
+      const nodes = (await selectAll('.vui_carousel__slide')) as HTMLElement[]
+      if (!nodes || nodes.length === 0) {
+        logger.error('找不到轮播图片节点')
+        return
+      }
+
+      nodes.forEach(node => {
+        node.style.setProperty('--blur-amount', `${value}px`)
+      })
     },
     true,
   )
@@ -74,6 +91,15 @@ export const component = wrapSwitchOptions({
     disableCarousel: {
       displayName: '禁用轮播',
       defaultValue: false,
+    },
+    blur: {
+      displayName: '图片模糊',
+      defaultValue: 0,
+      slider: {
+        min: 0,
+        max: 100,
+        step: 1,
+      },
     },
   },
 })

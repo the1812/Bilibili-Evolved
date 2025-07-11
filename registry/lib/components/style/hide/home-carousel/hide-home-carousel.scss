@@ -18,3 +18,7 @@ $prefix: 'hideHomeCarousel-switch';
     display: none !important;
   }
 }
+
+.vui_carousel__slide {
+  filter: blur(var(--blur-amount, 0px));
+}
