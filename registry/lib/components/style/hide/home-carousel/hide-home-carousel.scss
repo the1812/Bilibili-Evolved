@@ -10,3 +10,15 @@ body.hide-home-carousel-transparent {
     pointer-events: none;
   }
 }
+
+body.hide-home-carousel-picture {
+  .vui_carousel__slide {
+    display: none !important;
+  }
+}
+
+body.hide-home-carousel-footerText {
+  .carousel-footer-text {
+    display: none !important;
+  }
+}
