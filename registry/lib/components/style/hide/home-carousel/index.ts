@@ -1,32 +1,8 @@
-import { defineComponentMetadata } from '@/components/define'
-import { ComponentEntry } from '@/components/types'
-import { addComponentListener } from '@/core/settings'
+import { wrapSwitchOptions } from '@/components/switch-options'
 
-const entry: ComponentEntry = async ({ metadata, settings }) => {
-  Object.keys(settings.options).forEach(disableType => {
-    addComponentListener(
-      `${metadata.name}.${disableType}`,
-      (value: boolean) => {
-        document.body.classList.toggle(`hide-home-carousel-${disableType}`, value)
-      },
-      true,
-    )
-  })
-}
-
-export const component = defineComponentMetadata({
-  name: 'hideHomeCarousel',
-  displayName: '隐藏首页轮播图',
-  entry,
-  tags: [componentsTags.style],
-  urlInclude: [/^https:\/\/www\.bilibili\.com\/$/, /^https:\/\/www\.bilibili\.com\/index\.html$/],
-  instantStyles: [
-    {
-      name: 'hide-home-carousel',
-      style: () => import('./hide-home-carousel.scss'),
-    },
-  ],
-  options: {
+export const component = wrapSwitchOptions({
+  name: 'hideHomeCarouselOptions',
+  switches: {
     full: {
       displayName: '隐藏轮播区域占位',
       defaultValue: true,
@@ -44,4 +20,16 @@ export const component = defineComponentMetadata({
       defaultValue: false,
     },
   },
+})({
+  name: 'hideHomeCarousel',
+  displayName: '隐藏首页轮播图',
+  entry: null,
+  tags: [componentsTags.style],
+  urlInclude: [/^https:\/\/www\.bilibili\.com\/$/, /^https:\/\/www\.bilibili\.com\/index\.html$/],
+  instantStyles: [
+    {
+      name: 'hide-home-carousel',
+      style: () => import('./hide-home-carousel.scss'),
+    },
+  ],
 })

@@ -1,24 +1,20 @@
-body.hide-home-carousel-full {
-  .recommended-swipe {
+$prefix: 'hideHomeCarousel-switch';
+
+.#{$prefix} {
+  &-full .recommended-swipe {
     display: none !important;
   }
-}
 
-body.hide-home-carousel-transparent {
-  .recommended-swipe {
+  &-transparent .recommended-swipe {
     opacity: 0;
     pointer-events: none;
   }
-}
 
-body.hide-home-carousel-picture {
-  .vui_carousel__slide {
+  &-picture .vui_carousel__slide {
     display: none !important;
   }
-}
 
-body.hide-home-carousel-footerText {
-  .carousel-footer-text {
+  &-footerText .carousel-footer-text {
     display: none !important;
   }
 }
