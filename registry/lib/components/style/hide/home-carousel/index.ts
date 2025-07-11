@@ -28,11 +28,11 @@ export const component = defineComponentMetadata({
   ],
   options: {
     full: {
-      displayName: '完全隐藏',
+      displayName: '隐藏占位',
       defaultValue: true,
     },
     transparent: {
-      displayName: '透明化（保留占位）',
+      displayName: '透明化',
       defaultValue: false,
     },
   },
