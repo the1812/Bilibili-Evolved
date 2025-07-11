@@ -1,4 +1,42 @@
 import { wrapSwitchOptions } from '@/components/switch-options'
+import { ComponentEntry } from '@/components/types'
+import { addComponentListener } from '@/core/settings'
+import { select } from '@/core/spin-query'
+import { useScopedConsole } from '@/core/utils/log'
+
+const logger = useScopedConsole('hideHomeCarousel')
+
+// 轮播容器 mouseleave 事件拦截
+const onCarouselMouseLeaveHandler = (event: MouseEvent) => {
+  event.stopPropagation()
+}
+
+const entry: ComponentEntry = async ({ metadata }) => {
+  // 监听【禁用轮播】选项
+  addComponentListener(
+    `${metadata.name}.disableCarousel`,
+    async (value: boolean) => {
+      const node = (await select('.vui_carousel')) as HTMLElement
+      if (!node) {
+        logger.error('找不到轮播容器节点')
+        return
+      }
+
+      if (value) {
+        node.addEventListener('mouseleave', onCarouselMouseLeaveHandler, true)
+        // 触发事件停止轮播
+        const event = new MouseEvent('mouseenter')
+        node.dispatchEvent(event)
+      } else {
+        node.removeEventListener('mouseleave', onCarouselMouseLeaveHandler, true)
+        // 触发事件恢复轮播
+        const event = new MouseEvent('mouseleave')
+        node.dispatchEvent(event)
+      }
+    },
+    true,
+  )
+}
 
 export const component = wrapSwitchOptions({
   name: 'hideHomeCarouselOptions',
@@ -23,7 +61,7 @@ export const component = wrapSwitchOptions({
 })({
   name: 'hideHomeCarousel',
   displayName: '隐藏首页轮播图',
-  entry: null,
+  entry,
   tags: [componentsTags.style],
   urlInclude: [/^https:\/\/www\.bilibili\.com\/$/, /^https:\/\/www\.bilibili\.com\/index\.html$/],
   instantStyles: [
@@ -32,4 +70,10 @@ export const component = wrapSwitchOptions({
       style: () => import('./hide-home-carousel.scss'),
     },
   ],
+  options: {
+    disableCarousel: {
+      displayName: '禁用轮播',
+      defaultValue: false,
+    },
+  },
 })
