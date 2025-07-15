@@ -1,0 +1,11 @@
+body.integrated-dark {
+  --be-text-title-color: var(--text1);
+  --be-text-content-color: var(--text1);
+  --be-card-background-color: var(--bg1);
+  --be-card-border-color: var(--line_regular);
+  --be-tag-background-color: rgba(var(--graph_medium_rgb), 0.1);
+  --be-tag-hover-background-color: rgba(var(--graph_medium_rgb), 0.2);
+  --be-tag-active-background-color: rgba(var(--graph_medium_rgb), 0.3);
+  --be-avatar-border-color: var(--line_light);
+  --be-hover-highlight-background-color: rgba(var(--graph_medium_rgb), 0.1);
+}
