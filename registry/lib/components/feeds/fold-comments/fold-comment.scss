@@ -19,8 +19,8 @@
       color: black;
     }
     body.dark & {
-      background-color: #444;
-      color: #eee;
+      color: var(--be-text-title-color, #eee);
+      background-color: var(--be-card-background-color, #444);
       &:hover {
         color: var(--theme-color);
       }

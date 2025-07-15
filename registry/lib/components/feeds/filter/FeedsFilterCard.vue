@@ -276,8 +276,8 @@ body.disable-feeds-filter {
     }
   }
   body.dark & {
-    color: #eee;
-    background-color: #444;
+    color: var(--be-text-title-color, #eee);
+    background-color: var(--be-card-background-color, #444);
   }
   .feeds-filter-header {
     cursor: pointer;

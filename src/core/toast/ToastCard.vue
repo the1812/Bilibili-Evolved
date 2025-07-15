@@ -29,66 +29,60 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { VIcon, ProgressRing } from '@/ui'
 import type { Toast } from '.'
 
-export default Vue.extend({
-  components: {
-    VIcon,
-    ProgressRing,
-  },
-  props: {
-    card: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      progressMax: 0,
-      remainingTime: 0,
-    }
-  },
-  created() {
-    this.readDuration()
-  },
-  methods: {
-    durationTick() {
-      const { closeTime } = this.card as Toast
-      if (!closeTime) {
-        return
-      }
-      this.remainingTime = closeTime - Number(new Date())
-      if (this.remainingTime > 0) {
-        requestAnimationFrame(() => this.durationTick())
-      }
-    },
-    readDuration() {
-      const { duration, closeTime } = this.card as Toast
-      if (duration) {
-        this.progressMax = closeTime - Number(new Date())
-        this.remainingTime = this.progressMax
-        requestAnimationFrame(() => this.durationTick())
-      }
-    },
-    stopTimer() {
-      ;(this.card as Toast).clearDuration()
-      this.progressMax = 0
-      this.remainingTime = 0
-    },
-    startTimer() {
-      ;(this.card as Toast).setDuration()
-      this.readDuration()
-    },
-  },
+interface Props {
+  card: Toast
+}
+
+const props = defineProps<Props>()
+
+const progressMax = ref(0)
+const remainingTime = ref(0)
+
+const durationTick = () => {
+  const { closeTime } = props.card
+  if (!closeTime) {
+    return
+  }
+  remainingTime.value = closeTime - Number(new Date())
+  if (remainingTime.value > 0) {
+    requestAnimationFrame(() => durationTick())
+  }
+}
+
+const readDuration = () => {
+  const { duration, closeTime } = props.card
+  if (duration) {
+    progressMax.value = closeTime - Number(new Date())
+    remainingTime.value = progressMax.value
+    requestAnimationFrame(() => durationTick())
+  }
+}
+
+const stopTimer = () => {
+  props.card.clearDuration()
+  progressMax.value = 0
+  remainingTime.value = 0
+}
+
+const startTimer = () => {
+  props.card.setDuration()
+  readDuration()
+}
+
+onMounted(() => {
+  readDuration()
 })
 </script>
 
 <style lang="scss">
 @import 'common';
 .toast-card {
-  background: #fff;
+  background: var(--be-card-background-color, #fff);
   min-width: var(--card-min-width);
   max-width: 60vw;
   min-height: 87px;
@@ -119,14 +113,11 @@ export default Vue.extend({
   }
   &-title {
     font-size: 18px;
-    color: #444;
+    color: var(--be-text-title-color, #444);
     opacity: 0.5;
     margin: 12px;
     @include semi-bold();
     flex: 1 1 auto;
-    body.dark & {
-      color: #999;
-    }
   }
   &-close {
     height: 24px;
@@ -166,7 +157,7 @@ export default Vue.extend({
     }
   }
   &-message {
-    color: #000;
+    color: var(--be-text-content-color, #000);
     font-size: 14px;
     margin: 0 16px 12px 12px;
     white-space: pre-wrap;
@@ -196,19 +187,19 @@ export default Vue.extend({
     display: inline-block;
     padding: 2px 4px;
     margin: 2px;
-    background-color: #8882;
+    background-color: var(--be-tag-background-color, #8882);
+    color: var(--be-text-content-color, #000);
     text-decoration: none;
-    color: #000;
     transition: all 0.2s ease-out;
     border-radius: 6px;
   }
   .link {
     cursor: pointer;
     &:hover {
-      background-color: #8883;
+      background-color: var(--be-tag-hover-background-color, #8883);
     }
     &:active {
-      background-color: #8884;
+      background-color: var(--be-tag-active-background-color, #8884);
     }
   }
   .download-link,
