@@ -82,7 +82,7 @@ onMounted(() => {
 <style lang="scss">
 @import 'common';
 .toast-card {
-  background: var(--be-card-background-color, #fff);
+  background: var(--be-color-card-bg, #fff);
   min-width: var(--card-min-width);
   max-width: 60vw;
   min-height: 87px;
@@ -113,7 +113,7 @@ onMounted(() => {
   }
   &-title {
     font-size: 18px;
-    color: var(--be-text-title-color, #444);
+    color: var(--be-color-text-title, #444);
     opacity: 0.5;
     margin: 12px;
     @include semi-bold();
@@ -157,7 +157,7 @@ onMounted(() => {
     }
   }
   &-message {
-    color: var(--be-text-content-color, #000);
+    color: var(--be-color-text-content, #000);
     font-size: 14px;
     margin: 0 16px 12px 12px;
     white-space: pre-wrap;
@@ -187,8 +187,8 @@ onMounted(() => {
     display: inline-block;
     padding: 2px 4px;
     margin: 2px;
-    background-color: var(--be-tag-background-color, #8882);
-    color: var(--be-text-content-color, #000);
+    background-color: var(--be-color-tag-bg, #8882);
+    color: var(--be-color-text-content, #000);
     text-decoration: none;
     transition: all 0.2s ease-out;
     border-radius: 6px;
@@ -196,10 +196,10 @@ onMounted(() => {
   .link {
     cursor: pointer;
     &:hover {
-      background-color: var(--be-tag-hover-background-color, #8883);
+      background-color: var(--be-color-tag-bg-hover, #8883);
     }
     &:active {
-      background-color: var(--be-tag-active-background-color, #8884);
+      background-color: var(--be-color-tag-bg-active, #8884);
     }
   }
   .download-link,

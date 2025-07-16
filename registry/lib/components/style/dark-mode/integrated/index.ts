@@ -82,6 +82,10 @@ export const component = defineComponentMetadata({
       name,
       style: () => import('./integrated-variables.scss'),
     },
+    {
+      name: 'integratedDarkModePatches',
+      style: () => import('./patches.scss'),
+    },
   ],
   plugin: {
     displayName: '深色模式 - 提前注入',

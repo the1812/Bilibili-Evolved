@@ -74,7 +74,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid var(--be-card-border-color, #8884);
+    border: 1px solid var(--be-color-card-border, #8884);
 
     .name {
       font-size: 12px;
@@ -83,7 +83,7 @@ onMounted(() => {
       color: var(--theme-color) !important;
     }
     &:hover {
-      background-color: var(--be-hover-highlight-background-color, #8882);
+      background-color: var(--be-color-highlight-bg-hover, #8882);
     }
     input {
       display: none;
