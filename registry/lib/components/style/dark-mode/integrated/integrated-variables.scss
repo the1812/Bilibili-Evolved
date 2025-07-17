@@ -11,6 +11,11 @@ body.integrated-dark {
   --be-color-button-bg-hover: var(--graph_bg_thick);
   --be-color-button-border: var(--line_regular);
 
+  --be-color-switch-bg: rgba(var(--graph_medium_rgb), 0.3);
+
+  --be-color-thumb-bg: var(--Ga4);
+  --be-color-thumb-border: var(--Ga3);
+
   --be-color-tag-bg: rgba(var(--graph_medium_rgb), 0.1);
   --be-color-tag-bg-hover: rgba(var(--graph_medium_rgb), 0.2);
   --be-color-tag-bg-active: rgba(var(--graph_medium_rgb), 0.3);

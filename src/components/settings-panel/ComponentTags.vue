@@ -197,7 +197,7 @@ export default Vue.extend({
     border-right: 1px solid #8882;
 
     body.dark & {
-      background-color: #222;
+      background-color: var(--be-color-panel-bg, #222);
     }
   }
   .icon-list:hover ~ .component-tags,
