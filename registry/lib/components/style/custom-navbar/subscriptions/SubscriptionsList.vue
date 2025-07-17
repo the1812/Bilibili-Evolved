@@ -183,8 +183,8 @@ export default Vue.extend({
       $radius: 8px;
       border-radius: $radius;
       body.dark & {
-        background-color: #2d2d2d;
-        color: #eee;
+        background-color: var(--be-color-card-bg, #2d2d2d);
+        color: var(--be-color-text-title, #eee);
       }
       .subscriptions-cover-container {
         height: 64px;

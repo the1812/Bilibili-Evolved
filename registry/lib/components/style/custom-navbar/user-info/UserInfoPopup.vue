@@ -465,7 +465,7 @@ export default Vue.extend({
     margin: 5px 10px;
     background: rgba(0, 0, 0, 0.1);
     body.dark & {
-      background: rgba(255, 255, 255, 0.1);
+      background: var(--be-color-panel-border, rgba(255, 255, 255, 0.1));
     }
   }
   .level-icon.plus {
@@ -531,9 +531,9 @@ export default Vue.extend({
       }
     }
     body.dark & {
-      background: #282828;
+      background-color: var(--be-color-button-bg, #282828);
       &:hover {
-        background: #333;
+        background-color: var(--be-color-button-bg-hover, #333);
       }
     }
   }

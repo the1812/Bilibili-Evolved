@@ -211,7 +211,11 @@ defineExpose({
         background-image: linear-gradient(to left, #fff 75%, transparent);
         padding: 18px 18px 18px 60px;
         body.dark & {
-          background-image: linear-gradient(to left, #222 75%, transparent);
+          background-image: linear-gradient(
+            to left,
+            var(--be-color-popup-bg, #222) 75%,
+            transparent
+          );
         }
         img {
           display: flex;

@@ -88,8 +88,8 @@ export default Vue.extend({
       width: auto;
       flex-shrink: 0;
       body.dark & {
-        background-color: #282828;
-        color: #eee;
+        background-color: var(--be-color-card-bg, #282828);
+        color: var(--be-color-text-title, #eee);
       }
       .face-container {
         flex-shrink: 0;

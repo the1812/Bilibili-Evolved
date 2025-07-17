@@ -240,7 +240,7 @@ onBeforeUnmount(() => {
 
   body.dark & {
     color: var(--be-color-text-title, #eee);
-    background-color: var(--be-color-card-bg, #444);
+    background-color: var(--be-color-popup-bg, #444);
   }
 
   &-header {

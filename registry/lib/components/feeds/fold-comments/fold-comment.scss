@@ -20,7 +20,7 @@
     }
     body.dark & {
       color: var(--be-color-text-title, #eee);
-      background-color: var(--be-color-card-bg, #444);
+      background-color: var(--be-color-panel-bg, #444);
       &:hover {
         color: var(--theme-color);
       }

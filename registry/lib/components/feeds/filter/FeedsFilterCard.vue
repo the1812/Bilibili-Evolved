@@ -277,7 +277,7 @@ body.disable-feeds-filter {
   }
   body.dark & {
     color: var(--be-color-text-title, #eee);
-    background-color: var(--be-color-card-bg, #444);
+    background-color: var(--be-color-panel-bg, #444);
   }
   .feeds-filter-header {
     cursor: pointer;
@@ -340,7 +340,7 @@ body.disable-feeds-filter {
       padding: 4px 6px;
       border-radius: 4px;
       font-size: 12px;
-      border: 1px solid #8884;
+      border: 1px solid var(--be-color-card-border, #8884);
       &:not(:last-child) {
         margin-bottom: 4px;
       }

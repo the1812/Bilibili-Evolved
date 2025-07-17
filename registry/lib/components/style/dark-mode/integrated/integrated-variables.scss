@@ -4,8 +4,12 @@ body.integrated-dark {
   --be-color-text-content: var(--text1);
   --be-color-text-placeholder: var(--text2);
 
-  --be-color-card-bg: var(--bg1);
+  --be-color-card-bg: var(--bg1_float);
   --be-color-card-border: var(--line_regular);
+
+  --be-color-button-bg: var(--bg1_float);
+  --be-color-button-bg-hover: var(--graph_bg_thick);
+  --be-color-button-border: var(--line_regular);
 
   --be-color-tag-bg: rgba(var(--graph_medium_rgb), 0.1);
   --be-color-tag-bg-hover: rgba(var(--graph_medium_rgb), 0.2);
@@ -13,4 +17,10 @@ body.integrated-dark {
 
   --be-color-avatar-border: var(--line_light);
   --be-color-highlight-bg-hover: rgba(var(--graph_medium_rgb), 0.1);
+
+  --be-color-panel-bg: var(--bg1);
+  --be-color-panel-border: var(--line_light);
+
+  --be-color-popup-bg: var(--bg1);
+  --be-color-popup-border: var(--line_light);
 }
