@@ -2,6 +2,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { bangumiUrls, videoUrls } from '@/core/utils/urls'
 import { useScopedConsole } from '@/core/utils/log'
+import { select } from '@/core/spin-query'
 
 const logger = useScopedConsole('customAutoPlay')
 
@@ -29,7 +30,7 @@ enum AutoplayActionType {
   ALWAYS = '总是',
 }
 
-const entry: ComponentEntry = () => {
+const entry: ComponentEntry = async () => {
   // #region 检测自动连播类型
 
   function isBangumi(): boolean {
@@ -117,8 +118,17 @@ const entry: ComponentEntry = () => {
 
   // #region 设置自动连播状态
 
-  function setupAutoPlay_Bangumi(shouldAutoplay: boolean) {
-    // TODO
+  async function setupAutoPlay_Bangumi(shouldAutoplay: boolean) {
+    const selector = shouldAutoplay
+      ? '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]'
+      : '.bpx-player-ctrl-setting-handoff input[type="radio"][value="2"]'
+    const radio = (await select(selector)) as HTMLInputElement
+
+    if (radio === null) {
+      logger.error(`${Function.name}：未找到对应的自动播放开关`)
+      return
+    }
+    radio.click()
   }
 
   function setupAutoPlay_Recommend(shouldAutoplay: boolean) {
@@ -134,10 +144,10 @@ const entry: ComponentEntry = () => {
   }
 
   /** 设置自动连播状态 */
-  function setupAutoPlay(autoplayType: AutoplayType, shouldAutoplay: boolean) {
+  async function setupAutoPlay(autoplayType: AutoplayType, shouldAutoplay: boolean) {
     switch (autoplayType) {
       case AutoplayType.BANGUMI:
-        setupAutoPlay_Bangumi(shouldAutoplay)
+        await setupAutoPlay_Bangumi(shouldAutoplay)
         break
       case AutoplayType.RECOMMEND:
         setupAutoPlay_Recommend(shouldAutoplay)
@@ -156,7 +166,7 @@ const entry: ComponentEntry = () => {
   // #endregion
 
   /** 每次视频切换时的初始化逻辑 */
-  function initScript() {
+  async function initScript() {
     logger.log(`导航变化（${document.URL}），重新初始化脚本`)
 
     // 检测自动连播类型
@@ -164,23 +174,23 @@ const entry: ComponentEntry = () => {
     // 检测是否应该自动连播
     const shouldAutoplay = checkShouldAutoplay(autoPlayType)
     // 设置自动连播状态
-    setupAutoPlay(autoPlayType, shouldAutoplay)
+    await setupAutoPlay(autoPlayType, shouldAutoplay)
   }
 
   // 监听pushState和replaceState事件
   const originPushState = history.pushState
   const originReplaceState = history.replaceState
-  history.pushState = (...args: unknown[]) => {
+  history.pushState = async (...args: unknown[]) => {
     originPushState.apply(history, args)
-    initScript()
+    await initScript()
   }
-  history.replaceState = (...args: unknown[]) => {
+  history.replaceState = async (...args: unknown[]) => {
     originReplaceState.apply(history, args)
-    initScript()
+    await initScript()
   }
 
   // 初始执行代码
-  initScript()
+  await initScript()
 }
 
 export const component = defineComponentMetadata({
