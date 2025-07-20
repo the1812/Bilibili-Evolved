@@ -4,6 +4,7 @@ import { bangumiUrls, videoUrls, watchlaterUrls } from '@/core/utils/urls'
 import { useScopedConsole } from '@/core/utils/log'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
+import { getVueData } from '@/components/feeds/api'
 
 const logger = useScopedConsole('customAutoPlay')
 
@@ -140,30 +141,58 @@ const entry: ComponentEntry = async () => {
 
   // #region 设置自动连播状态
 
-  async function setupAutoPlay_Bangumi(shouldAutoplay: boolean) {
+  // #region 按类型
+
+  /** 设置播放器自动连播状态（位于播放器设置 - 更多播放设置 - 播放方式） */
+  async function setupAutoPlay_Player(shouldAutoplay: boolean, logPrefix: string) {
     const selector = shouldAutoplay
       ? '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]'
       : '.bpx-player-ctrl-setting-handoff input[type="radio"][value="2"]'
     const radio = (await select(selector)) as HTMLInputElement
 
     if (radio === null) {
-      logger.error(`${Function.name}：未找到对应的自动播放开关`)
-      return
+      logger.error(`${logPrefix}：未找到对应的播放方式按钮`)
     }
     radio.click()
   }
 
+  /** 设置自动连播按钮状态（位于右上角） */
+  function setupAutoPlay_SwitchBtn(shouldAutoplay: boolean, logPrefix: string) {
+    try {
+      const app = document.getElementById('app')
+      const vueInstance = getVueData(app)
+      vueInstance.setContinuousPlay(shouldAutoplay)
+    } catch (e) {
+      logger.error(`${logPrefix}：设置自动连播按钮状态发生错误`)
+      throw e
+    }
+  }
+
+  // #endregion
+
+  // #region 按选项
+
+  /** 设置番剧自动连播状态 */
+  async function setupAutoPlay_Bangumi(shouldAutoplay: boolean) {
+    setupAutoPlay_Player(shouldAutoplay, Function.name)
+  }
+
+  /** 设置推荐视频自动连播状态 */
   function setupAutoPlay_Recommend(shouldAutoplay: boolean) {
-    // TODO
+    setupAutoPlay_SwitchBtn(shouldAutoplay, Function.name)
   }
 
+  /** 设置稍后再看自动连播状态 */
   function setupAutoPlay_WatchLater(shouldAutoplay: boolean) {
-    // TODO
+    setupAutoPlay_SwitchBtn(shouldAutoplay, Function.name)
   }
 
+  /** 设置分P视频自动连播状态 */
   function setupAutoPlay_Playlist(shouldAutoplay: boolean) {
-    // TODO
+    setupAutoPlay_SwitchBtn(shouldAutoplay, Function.name)
   }
+
+  // #endregion
 
   /** 设置自动连播状态 */
   async function setupAutoPlay(autoplayType: AutoplayType, shouldAutoplay: boolean) {
