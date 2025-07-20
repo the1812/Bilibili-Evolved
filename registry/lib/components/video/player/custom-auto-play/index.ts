@@ -1,8 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
-import { bangumiUrls, videoUrls } from '@/core/utils/urls'
+import { bangumiUrls, videoUrls, watchlaterUrls } from '@/core/utils/urls'
 import { useScopedConsole } from '@/core/utils/log'
 import { select } from '@/core/spin-query'
+import { matchUrlPattern } from '@/core/utils'
 
 const logger = useScopedConsole('customAutoPlay')
 
@@ -33,24 +34,45 @@ enum AutoplayActionType {
 const entry: ComponentEntry = async () => {
   // #region 检测自动连播类型
 
+  /** 视频页地址 */
+  const videoUrl = '//www.bilibili.com/video/'
+
+  /** 当前连播视频是否为番剧 */
   function isBangumi(): boolean {
-    // TODO
-    return false
+    return bangumiUrls.some(url => matchUrlPattern(url))
   }
 
+  /** 推荐视频自动连播状态是否开启，找不到相关信息则返回null */
+  function isAutoPlayOn_Recommend(): boolean | null {
+    const btn = document.querySelector('.recommend-list-v1 .switch-btn')
+    if (btn) {
+      return btn.classList.contains('on')
+    }
+    return null
+  }
+
+  /** 当前连播视频是否为推荐视频 */
   function isRecommend(): boolean {
-    // TODO
-    return false
+    return matchUrlPattern(videoUrl) && isAutoPlayOn_Recommend() !== null
   }
 
+  /** 当前连播视频是否为稍后再看 */
   function isWatchLater(): boolean {
-    // TODO
-    return false
+    return watchlaterUrls.some(url => matchUrlPattern(url))
   }
 
+  /** 分P视频自动连播状态是否开启，找不到相关信息则返回null */
+  function isAutoPlayOn_Playlist(): boolean | null {
+    const btn = document.querySelector('.video-pod .auto-play .switch-btn')
+    if (btn) {
+      return btn.classList.contains('on')
+    }
+    return null
+  }
+
+  /** 当前连播视频是否为分P视频 */
   function isPlaylist(): boolean {
-    // TODO
-    return false
+    return matchUrlPattern(videoUrl) && isAutoPlayOn_Playlist() !== null
   }
 
   /** 获取自动连播类型 */
