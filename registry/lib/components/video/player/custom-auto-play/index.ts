@@ -5,6 +5,7 @@ import { useScopedConsole } from '@/core/utils/log'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
 import { getVueData } from '@/components/feeds/api'
+import { addComponentListener } from '@/core/settings'
 
 const logger = useScopedConsole('customAutoPlay')
 
@@ -32,7 +33,7 @@ enum AutoplayActionType {
   ALWAYS = '总是',
 }
 
-const entry: ComponentEntry = async ({ settings }) => {
+const entry: ComponentEntry = async ({ metadata, settings }) => {
   // #region 检测自动连播类型
 
   /** 视频页地址 */
@@ -288,8 +289,16 @@ const entry: ComponentEntry = async ({ settings }) => {
     await initScript()
   }
 
-  // 初始执行代码
-  await initScript()
+  Object.keys(settings.options).forEach(option => {
+    addComponentListener(
+      `${metadata.name}.${option}`,
+      async () => {
+        // 初始执行代码
+        await initScript()
+      },
+      true,
+    )
+  })
 }
 
 export const component = defineComponentMetadata({
