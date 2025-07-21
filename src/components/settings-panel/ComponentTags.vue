@@ -133,7 +133,7 @@ export default Vue.extend({
     min-width: 372px;
     padding: 12px;
     box-sizing: border-box;
-    @include card();
+    @include popup();
     &.open {
       transform: translateX(0);
     }
