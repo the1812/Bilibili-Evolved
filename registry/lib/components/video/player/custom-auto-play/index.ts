@@ -32,7 +32,7 @@ enum AutoplayActionType {
   ALWAYS = '总是',
 }
 
-const entry: ComponentEntry = async () => {
+const entry: ComponentEntry = async ({ settings }) => {
   // #region 检测自动连播类型
 
   /** 视频页地址 */
@@ -101,37 +101,85 @@ const entry: ComponentEntry = async () => {
 
   // #region 检测是否应该自动连播
 
-  function checkShouldAutoplay_Bangumi(): boolean {
-    // TODO
-    return false
+  /** 解析分P序号（例如：1/10 => [1,10]） */
+  function parseSequentialNumbers() {
+    const videoSequentialNumber = document.querySelector('.list-count, .video-pod__header .amt')
+    return videoSequentialNumber.innerHTML
+      .replace(/[（）]/g, '')
+      .split('/')
+      .map(it => parseInt(it))
   }
 
-  function checkShouldAutoplay_Recommend(): boolean {
-    // TODO
-    return false
+  /** 是否最后1P视频 */
+  function isLastSequentialNumber(): boolean {
+    const sequentialNumbers = parseSequentialNumbers()
+    return sequentialNumbers[0] >= sequentialNumbers[1]
   }
 
-  function checkShouldAutoplay_WatchLater(): boolean {
-    // TODO
-    return false
+  /**
+   * 默认连播方式判断，自动连播行为类型为AUTO时使用回调处理
+   * @param actionType 自动连播行为类型
+   * @param autoTypeHandler 自动连播行为类型为AUTO时的处理回调
+   * @returns 是否应该自动连播
+   */
+  function shouldAutoplayWithAutoHandler(
+    actionType: AutoplayActionType,
+    autoTypeHandler: () => boolean,
+  ): boolean {
+    switch (actionType) {
+      case AutoplayActionType.ALWAYS:
+        return true
+      case AutoplayActionType.DISABLE:
+        return false
+      case AutoplayActionType.AUTO:
+      default:
+        return autoTypeHandler()
+    }
   }
 
-  function checkShouldAutoplay_Playlist(): boolean {
-    // TODO
-    return false
+  /** 检测番剧是否应该自动连播 */
+  function shouldAutoplay_Bangumi(): boolean {
+    return shouldAutoplayWithAutoHandler(
+      settings.options.bangumiAutoplayAction as AutoplayActionType,
+      () => true,
+    )
+  }
+
+  /** 检测推荐视频是否应该自动连播 */
+  function shouldAutoplay_Recommend(): boolean {
+    return shouldAutoplayWithAutoHandler(
+      settings.options.recommendAutoplayAction as AutoplayActionType,
+      () => false,
+    )
+  }
+
+  /** 检测稍后再看是否应该自动连播 */
+  function shouldAutoplay_WatchLater(): boolean {
+    return shouldAutoplayWithAutoHandler(
+      settings.options.watchLaterAutoplayAction as AutoplayActionType,
+      () => !isLastSequentialNumber(),
+    )
+  }
+
+  /** 检测分P视频是否应该自动连播 */
+  function shouldAutoplay_Playlist(): boolean {
+    return shouldAutoplayWithAutoHandler(
+      settings.options.playlistAutoplayAction as AutoplayActionType,
+      () => !isLastSequentialNumber(),
+    )
   }
 
   /** 是否应该自动连播 */
-  function checkShouldAutoplay(autoplayType: AutoplayType): boolean {
+  function shouldAutoplay(autoplayType: AutoplayType): boolean {
     switch (autoplayType) {
       case AutoplayType.BANGUMI:
-        return checkShouldAutoplay_Bangumi()
+        return shouldAutoplay_Bangumi()
       case AutoplayType.RECOMMEND:
-        return checkShouldAutoplay_Recommend()
+        return shouldAutoplay_Recommend()
       case AutoplayType.WATCHLATER:
-        return checkShouldAutoplay_WatchLater()
+        return shouldAutoplay_WatchLater()
       case AutoplayType.PLAYLIST:
-        return checkShouldAutoplay_Playlist()
+        return shouldAutoplay_Playlist()
       default:
         return false
     }
@@ -144,8 +192,8 @@ const entry: ComponentEntry = async () => {
   // #region 按类型
 
   /** 设置播放器自动连播状态（位于播放器设置 - 更多播放设置 - 播放方式） */
-  async function setupAutoPlay_Player(shouldAutoplay: boolean, logPrefix: string) {
-    const selector = shouldAutoplay
+  async function setupAutoPlay_Player(enableAutoplay: boolean, logPrefix: string) {
+    const selector = enableAutoplay
       ? '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]'
       : '.bpx-player-ctrl-setting-handoff input[type="radio"][value="2"]'
     const radio = (await select(selector)) as HTMLInputElement
@@ -157,11 +205,11 @@ const entry: ComponentEntry = async () => {
   }
 
   /** 设置自动连播按钮状态（位于右上角） */
-  function setupAutoPlay_SwitchBtn(shouldAutoplay: boolean, logPrefix: string) {
+  function setupAutoPlay_SwitchBtn(enableAutoplay: boolean, logPrefix: string) {
     try {
       const app = document.getElementById('app')
       const vueInstance = getVueData(app)
-      vueInstance.setContinuousPlay(shouldAutoplay)
+      vueInstance.setContinuousPlay(enableAutoplay)
     } catch (e) {
       logger.error(`${logPrefix}：设置自动连播按钮状态发生错误`)
       throw e
@@ -173,41 +221,41 @@ const entry: ComponentEntry = async () => {
   // #region 按选项
 
   /** 设置番剧自动连播状态 */
-  async function setupAutoPlay_Bangumi(shouldAutoplay: boolean) {
-    setupAutoPlay_Player(shouldAutoplay, Function.name)
+  async function setupAutoPlay_Bangumi(enableAutoplay: boolean) {
+    setupAutoPlay_Player(enableAutoplay, Function.name)
   }
 
   /** 设置推荐视频自动连播状态 */
-  function setupAutoPlay_Recommend(shouldAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(shouldAutoplay, Function.name)
+  function setupAutoPlay_Recommend(enableAutoplay: boolean) {
+    setupAutoPlay_SwitchBtn(enableAutoplay, Function.name)
   }
 
   /** 设置稍后再看自动连播状态 */
-  function setupAutoPlay_WatchLater(shouldAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(shouldAutoplay, Function.name)
+  function setupAutoPlay_WatchLater(enableAutoplay: boolean) {
+    setupAutoPlay_SwitchBtn(enableAutoplay, Function.name)
   }
 
   /** 设置分P视频自动连播状态 */
-  function setupAutoPlay_Playlist(shouldAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(shouldAutoplay, Function.name)
+  function setupAutoPlay_Playlist(enableAutoplay: boolean) {
+    setupAutoPlay_SwitchBtn(enableAutoplay, Function.name)
   }
 
   // #endregion
 
   /** 设置自动连播状态 */
-  async function setupAutoPlay(autoplayType: AutoplayType, shouldAutoplay: boolean) {
+  async function setupAutoPlay(autoplayType: AutoplayType, enableAutoplay: boolean) {
     switch (autoplayType) {
       case AutoplayType.BANGUMI:
-        await setupAutoPlay_Bangumi(shouldAutoplay)
+        await setupAutoPlay_Bangumi(enableAutoplay)
         break
       case AutoplayType.RECOMMEND:
-        setupAutoPlay_Recommend(shouldAutoplay)
+        setupAutoPlay_Recommend(enableAutoplay)
         break
       case AutoplayType.WATCHLATER:
-        setupAutoPlay_WatchLater(shouldAutoplay)
+        setupAutoPlay_WatchLater(enableAutoplay)
         break
       case AutoplayType.PLAYLIST:
-        setupAutoPlay_Playlist(shouldAutoplay)
+        setupAutoPlay_Playlist(enableAutoplay)
         break
       default:
         break
@@ -223,9 +271,9 @@ const entry: ComponentEntry = async () => {
     // 检测自动连播类型
     const autoPlayType = getAutoplayType()
     // 检测是否应该自动连播
-    const shouldAutoplay = checkShouldAutoplay(autoPlayType)
+    const enableAutoplay = shouldAutoplay(autoPlayType)
     // 设置自动连播状态
-    await setupAutoPlay(autoPlayType, shouldAutoplay)
+    await setupAutoPlay(autoPlayType, enableAutoplay)
   }
 
   // 监听pushState和replaceState事件
@@ -261,7 +309,7 @@ export const component = defineComponentMetadata({
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
-    watchlaterAutoplayAction: {
+    watchLaterAutoplayAction: {
       displayName: '自动连播行为-稍后再看',
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
