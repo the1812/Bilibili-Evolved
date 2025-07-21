@@ -2,8 +2,8 @@ import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { bangumiUrls, videoUrls, watchlaterUrls } from '@/core/utils/urls'
 import { useScopedConsole } from '@/core/utils/log'
-import { select } from '@/core/spin-query'
-import { matchUrlPattern } from '@/core/utils'
+import { select, sq } from '@/core/spin-query'
+import { matchUrlPattern, playerReady } from '@/core/utils'
 import { getVueData } from '@/components/feeds/api'
 import { addComponentListener } from '@/core/settings'
 
@@ -206,14 +206,18 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
   }
 
   /** 设置自动连播按钮状态（位于右上角） */
-  function setupAutoPlay_SwitchBtn(enableAutoplay: boolean, logPrefix: string) {
-    try {
-      const app = document.getElementById('app')
-      const vueInstance = getVueData(app)
-      vueInstance.setContinuousPlay(enableAutoplay)
-    } catch (e) {
-      logger.error(`${logPrefix}：设置自动连播按钮状态发生错误，错误信息：${e}`)
-    }
+  async function setupAutoPlay_SwitchBtn(enableAutoplay: boolean, logPrefix: string) {
+    sq(() => {
+      try {
+        const app = document.getElementById('app')
+        const vueInstance = getVueData(app)
+        vueInstance.setContinuousPlay(enableAutoplay)
+        return true
+      } catch (e) {
+        logger.debug(`${logPrefix}：设置自动连播按钮状态发生错误，错误信息：${e}`)
+        return false
+      }
+    })
   }
 
   // #endregion
@@ -222,22 +226,22 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
 
   /** 设置番剧自动连播状态 */
   async function setupAutoPlay_Bangumi(enableAutoplay: boolean) {
-    setupAutoPlay_Player(enableAutoplay, setupAutoPlay_Bangumi.name)
+    await setupAutoPlay_Player(enableAutoplay, setupAutoPlay_Bangumi.name)
   }
 
   /** 设置推荐视频自动连播状态 */
-  function setupAutoPlay_Recommend(enableAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Recommend.name)
+  async function setupAutoPlay_Recommend(enableAutoplay: boolean) {
+    await setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Recommend.name)
   }
 
   /** 设置稍后再看自动连播状态 */
-  function setupAutoPlay_WatchLater(enableAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_WatchLater.name)
+  async function setupAutoPlay_WatchLater(enableAutoplay: boolean) {
+    await setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_WatchLater.name)
   }
 
   /** 设置分P视频自动连播状态 */
-  function setupAutoPlay_Playlist(enableAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Playlist.name)
+  async function setupAutoPlay_Playlist(enableAutoplay: boolean) {
+    await setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Playlist.name)
   }
 
   // #endregion
@@ -249,13 +253,13 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
         await setupAutoPlay_Bangumi(enableAutoplay)
         break
       case AutoplayType.RECOMMEND:
-        setupAutoPlay_Recommend(enableAutoplay)
+        await setupAutoPlay_Recommend(enableAutoplay)
         break
       case AutoplayType.WATCHLATER:
-        setupAutoPlay_WatchLater(enableAutoplay)
+        await setupAutoPlay_WatchLater(enableAutoplay)
         break
       case AutoplayType.PLAYLIST:
-        setupAutoPlay_Playlist(enableAutoplay)
+        await setupAutoPlay_Playlist(enableAutoplay)
         break
       default:
         break
@@ -266,7 +270,7 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
 
   /** 每次视频切换时的初始化逻辑 */
   async function initScript() {
-    logger.log(`导航变化（${document.URL}），重新初始化脚本`)
+    await playerReady()
 
     // 检测自动连播类型
     const autoPlayType = getAutoplayType()
