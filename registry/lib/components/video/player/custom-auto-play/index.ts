@@ -212,8 +212,7 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
       const vueInstance = getVueData(app)
       vueInstance.setContinuousPlay(enableAutoplay)
     } catch (e) {
-      logger.error(`${logPrefix}：设置自动连播按钮状态发生错误`)
-      throw e
+      logger.error(`${logPrefix}：设置自动连播按钮状态发生错误，错误信息：${e}`)
     }
   }
 
@@ -223,22 +222,22 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
 
   /** 设置番剧自动连播状态 */
   async function setupAutoPlay_Bangumi(enableAutoplay: boolean) {
-    setupAutoPlay_Player(enableAutoplay, Function.name)
+    setupAutoPlay_Player(enableAutoplay, setupAutoPlay_Bangumi.name)
   }
 
   /** 设置推荐视频自动连播状态 */
   function setupAutoPlay_Recommend(enableAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(enableAutoplay, Function.name)
+    setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Recommend.name)
   }
 
   /** 设置稍后再看自动连播状态 */
   function setupAutoPlay_WatchLater(enableAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(enableAutoplay, Function.name)
+    setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_WatchLater.name)
   }
 
   /** 设置分P视频自动连播状态 */
   function setupAutoPlay_Playlist(enableAutoplay: boolean) {
-    setupAutoPlay_SwitchBtn(enableAutoplay, Function.name)
+    setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Playlist.name)
   }
 
   // #endregion
@@ -273,6 +272,9 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
     const autoPlayType = getAutoplayType()
     // 检测是否应该自动连播
     const enableAutoplay = shouldAutoplay(autoPlayType)
+    logger.log(
+      `导航变化（${document.URL}），重新初始化脚本\n自动连播类型：${AutoplayType[autoPlayType]}\n是否应该自动连播：${enableAutoplay}`,
+    )
     // 设置自动连播状态
     await setupAutoPlay(autoPlayType, enableAutoplay)
   }
