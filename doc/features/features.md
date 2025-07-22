@@ -946,9 +946,9 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/subscribe-time-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/subscribe-time-show.js)
 
-by [@Light_Quanta](https://github.com/LightQuanta)
+by [@CNOCM](https://github.com/CNOCM)
 
-在粉丝/关注列表显示关注的具体时间
+在粉丝/关注列表及用户主页显示关注的具体时间。
 
 ### [网址参数清理](../../registry/dist/components/utils/url-params-clean.js)
 `urlParamsClean`

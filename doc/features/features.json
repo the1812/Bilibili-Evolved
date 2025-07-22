@@ -675,7 +675,7 @@
     "type": "component",
     "name": "subscribeTimeShow",
     "displayName": "关注时间显示",
-    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在粉丝/关注列表显示关注的具体时间",
+    "description": "by [@CNOCM](https://github.com/CNOCM)\n\n在粉丝/关注列表及用户主页显示关注的具体时间。",
     "fullRelativePath": "../../registry/dist/components/utils/subscribe-time-show.js",
     "fullAbsolutePath": "registry/dist/components/utils/subscribe-time-show.js"
   },
