@@ -1,9 +1,8 @@
-.search-panel {
+.search-panel, .search-pannel {
 
   > .trending {
     display: none !important;
   }
-
   &:not(:has(.history)) {
     padding: 0 !important;
     border: none !important;
