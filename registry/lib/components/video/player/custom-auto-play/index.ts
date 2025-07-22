@@ -6,6 +6,7 @@ import { select, sq } from '@/core/spin-query'
 import { matchUrlPattern, playerReady } from '@/core/utils'
 import { getVueData } from '@/components/feeds/api'
 import { addComponentListener } from '@/core/settings'
+import { childListSubtree } from '@/core/observer'
 
 const logger = useScopedConsole('customAutoPlay')
 
@@ -283,23 +284,29 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
     await setupAutoPlay(autoPlayType, enableAutoplay)
   }
 
-  // 监听pushState和replaceState事件
-  const originPushState = history.pushState
-  const originReplaceState = history.replaceState
-  history.pushState = async (...args: unknown[]) => {
-    originPushState.apply(history, args)
-    await initScript()
-  }
-  history.replaceState = async (...args: unknown[]) => {
-    originReplaceState.apply(history, args)
-    await initScript()
-  }
+  // 入口代码
 
+  const debounce = lodash.debounce(initScript, 1000)
+
+  // 监听视频变化
+  const rightPanel = await Promise.any([
+    select('.right-container-inner'),
+    select('.playlist-container--right'),
+    select('.plp-r'),
+  ])
+  if (!rightPanel) {
+    logger.warn('未找到 rightPanelContainer 或 playListContainer')
+    return
+  }
+  childListSubtree(rightPanel, async () => {
+    debounce()
+  })
+
+  // 监听选项变化
   Object.keys(settings.options).forEach(option => {
     addComponentListener(
       `${metadata.name}.${option}`,
       async () => {
-        // 初始执行代码
         await initScript()
       },
       true,
