@@ -258,7 +258,7 @@ export default Vue.extend({
     color: black;
     background: white;
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
-    border: 1px solid #8882;
+    border: 1px solid var(--be-color-popup-border, #8882);
     border-radius: 8px;
     transition: opacity 0.2s ease-out 0.2s;
     position: absolute;
@@ -271,8 +271,8 @@ export default Vue.extend({
     cursor: default;
 
     body.dark & {
-      color: #eee;
-      background: #222;
+      color: var(--be-color-text-content, #eee);
+      background: var(--be-color-popup-bg, #222);
     }
 
     &.iframe-container {

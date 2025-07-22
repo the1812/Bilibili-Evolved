@@ -9,59 +9,56 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref, watch, onMounted, computed } from 'vue'
 import { getComponentSettings } from '@/core/settings'
 import { VIcon } from '@/ui'
 import { FeedsFilterOptions } from './options'
 
+interface Props {
+  name: string
+  type: {
+    id: number
+    name: string
+  }
+}
+
+const props = defineProps<Props>()
+
 const { options } = getComponentSettings<FeedsFilterOptions>('feedsFilter')
-export default Vue.extend({
-  components: {
-    VIcon,
-  },
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    type: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    const optionKey = this.type.id >= 0 ? 'types' : 'specialTypes'
-    const disabled = options[optionKey].includes(this.type.id)
-    return {
-      disabled,
-      optionKey,
+
+const optionKey = computed(() => (props.type.id >= 0 ? 'types' : 'specialTypes'))
+
+const disabled = ref(options[optionKey.value].includes(props.type.id))
+
+const setFilter = (isDisabled: boolean, updateSettings = true) => {
+  if (isDisabled) {
+    document.body.classList.add(`feeds-filter-block-${props.name}`)
+  } else {
+    document.body.classList.remove(`feeds-filter-block-${props.name}`)
+  }
+
+  if (!updateSettings) {
+    return
+  }
+
+  const key = optionKey.value as 'types' | 'specialTypes'
+  if (isDisabled) {
+    options[key].push(props.type.id)
+  } else {
+    const index = options[key].indexOf(props.type.id)
+    if (index !== -1) {
+      options[key].splice(index, 1)
     }
-  },
-  watch: {
-    disabled(newValue: boolean) {
-      this.setFilter(newValue)
-    },
-  },
-  created() {
-    this.setFilter(this.disabled, false)
-  },
-  methods: {
-    setFilter(disabled: boolean, updateSettings = true) {
-      document.body.classList[disabled ? 'add' : 'remove'](`feeds-filter-block-${this.name}`)
-      if (!updateSettings) {
-        return
-      }
-      const optionKey = this.optionKey as 'types' | 'specialTypes'
-      if (disabled) {
-        options[optionKey].push(this.type.id)
-      } else {
-        const index = options[optionKey].indexOf(this.type.id)
-        if (index !== -1) {
-          options[optionKey].splice(index, 1)
-        }
-      }
-    },
-  },
+  }
+}
+
+watch(disabled, (newValue: boolean) => {
+  setFilter(newValue)
+})
+
+onMounted(() => {
+  setFilter(disabled.value, false)
 })
 </script>
 <style lang="scss">
@@ -77,7 +74,7 @@ export default Vue.extend({
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid #8884;
+    border: 1px solid var(--be-color-card-border, #8884);
 
     .name {
       font-size: 12px;
@@ -86,7 +83,7 @@ export default Vue.extend({
       color: var(--theme-color) !important;
     }
     &:hover {
-      background-color: #8882;
+      background-color: var(--be-color-highlight-bg-hover, #8882);
     }
     input {
       display: none;

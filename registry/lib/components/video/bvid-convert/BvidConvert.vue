@@ -115,7 +115,10 @@ export default Vue.extend({
   user-select: text;
   box-sizing: border-box;
   box-shadow: 0 0 0 1px #8884;
-  @include default-background-color();
+  background-color: #fff;
+  body.dark & {
+    background-color: var(--be-color-card-bg, #333);
+  }
   &-item {
     font-size: 14px;
     @include h-center(6px);

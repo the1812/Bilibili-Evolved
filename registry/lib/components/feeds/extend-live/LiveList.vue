@@ -239,8 +239,8 @@ onBeforeUnmount(() => {
   background-color: #fff;
 
   body.dark & {
-    background-color: #444;
-    color: #eee;
+    color: var(--be-color-text-title, #eee);
+    background-color: var(--be-color-popup-bg, #444);
   }
 
   &-header {
@@ -327,7 +327,7 @@ onBeforeUnmount(() => {
       overflow: hidden;
       border-radius: 50%;
       display: flex;
-      border: 1px solid #8884;
+      border: 1px solid var(--be-color-avatar-border, #8884);
     }
 
     &-info {

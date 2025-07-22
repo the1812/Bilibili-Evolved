@@ -341,8 +341,8 @@ export default Vue.extend({
     color: black;
     background-color: #fff;
     body.dark & {
-      color: #eee;
-      background-color: #222;
+      color: var(--be-color-text-title, #eee);
+      background-color: var(--be-color-panel-bg, #222);
     }
     .suggest-highlight {
       color: var(--theme-color);
