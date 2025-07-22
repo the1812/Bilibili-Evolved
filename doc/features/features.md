@@ -373,6 +373,15 @@ by [@Tinhone](https://github.com/Tinhone)
 
 启用夜间模式能更好地适应光线暗的环境, 并会大量应用主题颜色.
 
+### [深色模式](../../registry/dist/components/style/dark-mode/integrated.js)
+`integratedDarkMode`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode/integrated.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode/integrated.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/dark-mode/integrated.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/integrated.js)
+
+简化版的夜间模式，跟随 b 站官方的深色主题。
+
 ### [夜间模式计划时段](../../registry/dist/components/style/dark-mode/schedule.js)
 `darkModeSchedule`
 
@@ -416,7 +425,20 @@ by [@Tinhone](https://github.com/Tinhone)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/home-carousel.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/home-carousel.js)
 
-隐藏首页的轮播图区域.
+隐藏首页的轮播图区域
+
+选项说明：
+
+- `禁用轮播`：禁用图片轮播，可以手动切换
+- `图片模糊`：模糊轮播图片，为0时不模糊
+- `样式开关`：
+  - `隐藏轮播区域占位`：完全隐藏整个轮播区域
+  - `透明化轮播区域`：完全透明化整个轮播区域，同时禁止点击打开链接
+  - `隐藏轮播图片`：隐藏轮播图片，同时禁止点击图片打开链接
+  - `隐藏图片标题`：隐藏图片标题，同时禁止点击标题打开链接
+
+  > 注：样式开关可以同时启用，但是最终显示效果以作用范围大的为准  
+  > 例如启用 `隐藏轮播区域占位`，由于整个区域都被隐藏，不管 `隐藏轮播图片`、`隐藏图片标题` 等选项是否启用都已经看不见了
 
 ### [隐藏热搜](../../registry/dist/components/style/hide/trending-search.js)
 `hideTrendingSearch`
@@ -718,6 +740,18 @@ by [@CrazyboyQCD](https://github.com/CrazyboyQCD)
 无法触发未加载动态的点赞，当启用手动对动态点赞后可手动触发，启用后不会触发动态自动点赞\
 安装快捷键扩展后可以点击【l】键或【L】键触发\
 还可以添加动态点赞的黑名单\
+
+### [视频预览放大](../../registry/dist/components/utils/bigger-video-preview.js)
+`biggerVideoPreview`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/bigger-video-preview.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/bigger-video-preview.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/bigger-video-preview.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/bigger-video-preview.js)
+
+放大鼠标悬停于视频卡片时播放的5分钟预览
+
+- 点击放大镜图标放大预览
+- 点击缩小图标或者预览框外空白处关闭预览
 
 ### [屏蔽黑名单up主](../../registry/dist/components/utils/black-list.js)
 `blackList`
