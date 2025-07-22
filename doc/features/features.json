@@ -73,6 +73,14 @@
   },
   {
     "type": "component",
+    "name": "feedsGroupFilter",
+    "displayName": "动态分组过滤",
+    "description": "by [@Rinne](https://github.com/OharaRinneY)\n\n按照关注分组筛选动态\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/group-filter.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/group-filter.js"
+  },
+  {
+    "type": "component",
     "name": "hideFeedsCommentPreview",
     "displayName": "隐藏动态评论预览",
     "description": "隐藏动态评论按钮上方的精选评论预览. (详细可看 [#3322](https://github.com/the1812/Bilibili-Evolved/discussions/3322))\r\n",
@@ -667,7 +675,7 @@
     "type": "component",
     "name": "subscribeTimeShow",
     "displayName": "关注时间显示",
-    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在粉丝/关注列表显示关注的具体时间",
+    "description": "by [@CNOCM](https://github.com/CNOCM)\n\n在粉丝/关注列表及用户主页显示关注的具体时间。",
     "fullRelativePath": "../../registry/dist/components/utils/subscribe-time-show.js",
     "fullAbsolutePath": "registry/dist/components/utils/subscribe-time-show.js"
   },
@@ -694,6 +702,14 @@
     "description": "在视频页面中, 可从功能面板中查看封面.",
     "fullRelativePath": "../../registry/dist/components/utils/view-cover.js",
     "fullAbsolutePath": "registry/dist/components/utils/view-cover.js"
+  },
+  {
+    "type": "component",
+    "name": "watchlaterPageRedirect",
+    "displayName": "稍后再看页面-重定向",
+    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n重定向**稍后再看页面**到普通视频页面，和`稍后再看重定向`组件的区别在于，该组件是在进入稍后再看的视频页面后进行重定向，而非直接替换链接到普通视频的链接，用于补充`稍后再看重定向`组件的功能。\r\n",
+    "fullRelativePath": "../../registry/dist/components/utils/watchlater-page-redirect.js",
+    "fullAbsolutePath": "registry/dist/components/utils/watchlater-page-redirect.js"
   },
   {
     "type": "component",

@@ -85,6 +85,17 @@
 
 在顶栏的视频动态中, 无论标题多长总是完全展开.
 
+### [动态分组过滤](../../registry/dist/components/feeds/group-filter.js)
+`feedsGroupFilter`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/group-filter.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/group-filter.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/group-filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/group-filter.js)
+
+by [@Rinne](https://github.com/OharaRinneY)
+
+按照关注分组筛选动态
+
 ### [隐藏动态评论预览](../../registry/dist/components/feeds/hide-comment-preview.js)
 `hideFeedsCommentPreview`
 
@@ -935,9 +946,9 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/subscribe-time-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/subscribe-time-show.js)
 
-by [@Light_Quanta](https://github.com/LightQuanta)
+by [@CNOCM](https://github.com/CNOCM)
 
-在粉丝/关注列表显示关注的具体时间
+在粉丝/关注列表及用户主页显示关注的具体时间。
 
 ### [网址参数清理](../../registry/dist/components/utils/url-params-clean.js)
 `urlParamsClean`
@@ -965,6 +976,17 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/view-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/view-cover.js)
 
 在视频页面中, 可从功能面板中查看封面.
+
+### [稍后再看页面-重定向](../../registry/dist/components/utils/watchlater-page-redirect.js)
+`watchlaterPageRedirect`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/watchlater-page-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/watchlater-page-redirect.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/watchlater-page-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/watchlater-page-redirect.js)
+
+by [@magicFeirl](https://github.com/magicFeirl)
+
+重定向**稍后再看页面**到普通视频页面，和`稍后再看重定向`组件的区别在于，该组件是在进入稍后再看的视频页面后进行重定向，而非直接替换链接到普通视频的链接，用于补充`稍后再看重定向`组件的功能。
 
 ### [稍后再看重定向](../../registry/dist/components/utils/watchlater-redirect.js)
 `watchlaterRedirect`
