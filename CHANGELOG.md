@@ -1,6 +1,69 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.10.3-preview
+
+包含 [v2.10.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.3) 的所有更新内容.
+
+- 新增 `深色模式` 组件, 用于跟随 b 站官方的内测深色模式. (#5272)
+> 脚本自身的元素配色也会逐步适配官方的配色, 目前仅适配设置面板、自定义顶栏和动态首页中的元素
+
+- `插件 - 下载视频 - WASM 混流输出` 修正下载限制为 2GB, 新增下载速度和剩余时间显示. (#5102, PR #5233 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `弹幕空降` 支持识别中文数字, 修复对特殊弹幕未触发的问题. (PR #5265 by [fixfeat](https://github.com/fixfeat))
+- 新增 `视频预览放大` 组件. (PR #5281 by [wsgh0202](https://github.com/wsgh0202))
+> 放大鼠标悬停于视频卡片时播放的 5 分钟预览
+>
+> - 点击放大镜图标放大预览
+> - 点击缩小图标或者预览框外空白处关闭预览
+
+- 修复 `隐藏首页轮播图` 失效, 并增加了一些局部元素控制功能. (PR #5287 [wsgh0202](https://github.com/wsgh0202))
+
+
+## v2.10.3
+`2025-07-22`
+
+<details>
+<summary>正式版用户将获得 v2.10.1-preview ~ v2.10.2-preview 的所有改动, 点击展开查看</summary>
+
+- 新增 `稍后再看页面-重定向` 组件. (PR #5205 by [undefined](https://github.com/magicFeirl))
+> 重定向**稍后再看页面**到普通视频页面，和`稍后再看重定向`组件的区别在于，该组件是在进入稍后再看的视频页面后进行重定向，而非直接替换链接到普通视频的链接，用于补充`稍后再看重定向`组件的功能。
+
+- `隐藏热搜` 支持隐藏直播间搜索框的热搜. (PR #5207 by [undefined](https://github.com/magicFeirl))
+- 修复 `视频链接增强` 对 niconico 链接的处理. (PR #5215 by [Alan Ye](https://github.com/at-wr))
+- 新增 `动态分组过滤` 组件. (PR #5217 by [Rinne](https://github.com/OharaRinneY))
+> 按照关注分组筛选动态
+
+- `直播信息扩充` 支持配置置顶和隐藏的关注列表. (#5183)
+- 新增组件 `一键点亮直播间粉丝勋章`. (PR #5171 by [undefined](https://github.com/magicFeirl))
+> 在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。
+
+- 新增组件 `下载表情`. (PR #5176 by [Pencil](https://github.com/pencilqaq))
+> 支持下载 up 主专属表情包，处于任意直播间页面时，下载按钮会在 `功能` 面板显示，以压缩包形式保存。
+
+- 新增组件 `视频链接增强`. (PR #5197 by [Alan Ye](https://github.com/at-wr))
+> 这个组件会将视频简介中的普通网址转换为可点击的链接，并将<del>被 Bilibili 抛弃</del>已失效的 `acg.tv` 跳转链接修复为 `nicovideo.jp` 链接。
+>
+> 例如: `https://acg.tv/sm37507315` → `https://www.nicovideo.jp/watch/sm37507315`
+>
+> <i>本组件不会保证目标链接的安全性，因此在点击前请自行验证其是否可信</i>
+
+- `自定义顶栏` 新增 `使用主题色 Logo` 选项, 关闭时可以使用黑白纯色的 Logo. (#4996)
+- `自定义顶栏` 更新 `游戏中心`, `漫画`, `赛事` 的弹窗, 废弃 `直播` 的弹窗. (#5055)
+
+</details>
+
+(以下其实都是 6 月就更新了, 只要你的 `自动更新器` 正常使用, 应该早已收到更新了, 这些改动无需更新本体)
+
+✨新增
+- `显示视频投稿时间` 支持在合集类页面显示. (#5247, PR #5266 by [呼乎户](https://github.com/wisokey))
+- `动态过滤` 支持过滤新出现的热搜面板. (#5273, PR #5276 by [Whalko](https://github.com/RtYkk))
+
+🐛修复
+- 修复 `夜间模式` 在首页 svg 图标的颜色. (PR #5240 by [hyrious](https://github.com/hyrious))
+- 修复 `自动移出稍后再看` 重复调用接口的 bug. (PR #5241 by [sunfkny](https://github.com/sunfkny))
+- 修复 `关注时间显示` 失效. (#5096, #5212, PR 5282 by [CNOCM](https://github.com/CNOCM))
+
+
 ## v2.10.2-preview
 `2025-05-30`
 
