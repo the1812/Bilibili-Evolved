@@ -5,24 +5,10 @@ import { useScopedConsole } from '@/core/utils/log'
 import { select, sq } from '@/core/spin-query'
 import { matchUrlPattern, playerReady } from '@/core/utils'
 import { getVueData } from '@/components/feeds/api'
-import { addComponentListener } from '@/core/settings'
+import { addComponentListener, ComponentSettings } from '@/core/settings'
 import { childListSubtree } from '@/core/observer'
 
-const logger = useScopedConsole('customAutoPlay')
-
-/** 自动连播类型 */
-enum AutoplayType {
-  /** 未知 */
-  UNKNOWN,
-  /** 番剧 */
-  BANGUMI,
-  /** 推荐视频 */
-  RECOMMEND,
-  /** 稍后再看 */
-  WATCHLATER,
-  /** 分P视频 */
-  PLAYLIST,
-}
+const logger = useScopedConsole('定制自动连播行为')
 
 /** 自动连播行为类型 */
 enum AutoplayActionType {
@@ -34,89 +20,56 @@ enum AutoplayActionType {
   ALWAYS = '总是',
 }
 
-const entry: ComponentEntry = async ({ metadata, settings }) => {
-  // #region 检测自动连播类型
+// #region 自动连播处理器
 
-  /** 视频页地址 */
-  const videoUrl = '//www.bilibili.com/video/'
+/** 自动连播处理器基类 */
+abstract class BaseAutoplayHandler {
+  // #region 初始化
 
-  /** 当前连播视频是否为番剧 */
-  function isBangumi(): boolean {
-    return bangumiUrls.some(url => matchUrlPattern(url))
+  /** 脚本设置 */
+  static settings: ComponentSettings
+
+  /** 自动连播处理器实例列表 */
+  protected static handlers: BaseAutoplayHandler[] = []
+
+  /** 添加自动连播处理器实例到列表 */
+  static register(handler: BaseAutoplayHandler) {
+    BaseAutoplayHandler.handlers.push(handler)
   }
 
-  /** 推荐视频自动连播状态是否开启，找不到相关信息则返回null */
-  function isAutoPlayOn_Recommend(): boolean | null {
-    const btn = document.querySelector('.recommend-list-v1 .switch-btn')
-    if (btn) {
-      return btn.classList.contains('on')
+  /** 获取匹配当前页面的自动连播处理器实例 */
+  static async getHandler(): Promise<BaseAutoplayHandler | null> {
+    for (const handler of BaseAutoplayHandler.handlers) {
+      if (await handler.match()) {
+        return handler
+      }
     }
+
     return null
-  }
-
-  /** 当前连播视频是否为推荐视频 */
-  function isRecommend(): boolean {
-    return matchUrlPattern(videoUrl) && isAutoPlayOn_Recommend() !== null
-  }
-
-  /** 当前连播视频是否为稍后再看 */
-  function isWatchLater(): boolean {
-    return watchlaterUrls.some(url => matchUrlPattern(url))
-  }
-
-  /** 分P视频自动连播状态是否开启，找不到相关信息则返回null */
-  function isAutoPlayOn_Playlist(): boolean | null {
-    const btn = document.querySelector('.video-pod .auto-play .switch-btn')
-    if (btn) {
-      return btn.classList.contains('on')
-    }
-    return null
-  }
-
-  /** 当前连播视频是否为分P视频 */
-  function isPlaylist(): boolean {
-    return matchUrlPattern(videoUrl) && isAutoPlayOn_Playlist() !== null
-  }
-
-  /** 获取自动连播类型 */
-  function getAutoplayType(): AutoplayType {
-    if (isBangumi()) {
-      return AutoplayType.BANGUMI
-    }
-
-    if (isRecommend()) {
-      return AutoplayType.RECOMMEND
-    }
-
-    if (isWatchLater()) {
-      return AutoplayType.WATCHLATER
-    }
-
-    if (isPlaylist()) {
-      return AutoplayType.PLAYLIST
-    }
-
-    return AutoplayType.UNKNOWN
   }
 
   // #endregion
 
-  // #region 检测是否应该自动连播
+  // #region 抽象
 
-  /** 解析分P序号（例如：1/10 => [1,10]） */
-  function parseSequentialNumbers() {
-    const videoSequentialNumber = document.querySelector('.list-count, .video-pod__header .amt')
-    return videoSequentialNumber.innerHTML
-      .replace(/[（）]/g, '')
-      .split('/')
-      .map(it => parseInt(it))
-  }
+  /** 自动连播类型 */
+  abstract type: string
 
-  /** 是否最后1P视频 */
-  function isLastSequentialNumber(): boolean {
-    const sequentialNumbers = parseSequentialNumbers()
-    return sequentialNumbers[0] >= sequentialNumbers[1]
-  }
+  /** 处理器是否适用当前页面 */
+  abstract match(): Promise<boolean>
+
+  /** 是否应启用自动连播 */
+  abstract shouldAutoplay(): Promise<boolean>
+
+  /**
+   * 设置自动连播状态
+   * @param enable true：启用，false：禁用
+   */
+  abstract setupAutoPlay(enable: boolean): Promise<void>
+
+  // #endregion
+
+  // #region 工具方法
 
   /**
    * 默认连播方式判断，自动连播行为类型为AUTO时使用回调处理
@@ -124,7 +77,7 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
    * @param autoTypeHandler 自动连播行为类型为AUTO时的处理回调
    * @returns 是否应该自动连播
    */
-  function shouldAutoplayWithAutoHandler(
+  static shouldAutoplayWithAutoHandler(
     actionType: AutoplayActionType,
     autoTypeHandler: () => boolean,
   ): boolean {
@@ -139,75 +92,23 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
     }
   }
 
-  /** 检测番剧是否应该自动连播 */
-  function shouldAutoplay_Bangumi(): boolean {
-    return shouldAutoplayWithAutoHandler(
-      settings.options.bangumiAutoplayAction as AutoplayActionType,
-      () => true,
-    )
+  /** 解析分P序号（例如：1/10 => [1,10]） */
+  static parseSequentialNumbers() {
+    const videoSequentialNumber = document.querySelector('.list-count, .video-pod__header .amt')
+    return videoSequentialNumber.innerHTML
+      .replace(/[（）]/g, '')
+      .split('/')
+      .map(it => parseInt(it))
   }
 
-  /** 检测推荐视频是否应该自动连播 */
-  function shouldAutoplay_Recommend(): boolean {
-    return shouldAutoplayWithAutoHandler(
-      settings.options.recommendAutoplayAction as AutoplayActionType,
-      () => false,
-    )
-  }
-
-  /** 检测稍后再看是否应该自动连播 */
-  function shouldAutoplay_WatchLater(): boolean {
-    return shouldAutoplayWithAutoHandler(
-      settings.options.watchLaterAutoplayAction as AutoplayActionType,
-      () => !isLastSequentialNumber(),
-    )
-  }
-
-  /** 检测分P视频是否应该自动连播 */
-  function shouldAutoplay_Playlist(): boolean {
-    return shouldAutoplayWithAutoHandler(
-      settings.options.playlistAutoplayAction as AutoplayActionType,
-      () => !isLastSequentialNumber(),
-    )
-  }
-
-  /** 是否应该自动连播 */
-  function shouldAutoplay(autoplayType: AutoplayType): boolean {
-    switch (autoplayType) {
-      case AutoplayType.BANGUMI:
-        return shouldAutoplay_Bangumi()
-      case AutoplayType.RECOMMEND:
-        return shouldAutoplay_Recommend()
-      case AutoplayType.WATCHLATER:
-        return shouldAutoplay_WatchLater()
-      case AutoplayType.PLAYLIST:
-        return shouldAutoplay_Playlist()
-      default:
-        return false
-    }
-  }
-
-  // #endregion
-
-  // #region 设置自动连播状态
-
-  // #region 按类型
-
-  /** 设置播放器自动连播状态（位于播放器设置 - 更多播放设置 - 播放方式） */
-  async function setupAutoPlay_Player(enableAutoplay: boolean, logPrefix: string) {
-    const selector = enableAutoplay
-      ? '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]'
-      : '.bpx-player-ctrl-setting-handoff input[type="radio"][value="2"]'
-    const radio = (await select(selector)) as HTMLInputElement
-
-    if (radio === null) {
-      logger.error(`${logPrefix}：未找到对应的播放方式按钮`)
-    }
-    radio.click()
+  /** 是否最后1P视频 */
+  static isLastSequentialNumber(): boolean {
+    const sequentialNumbers = BaseAutoplayHandler.parseSequentialNumbers()
+    return sequentialNumbers[0] >= sequentialNumbers[1]
   }
 
   /** 设置自动连播按钮状态（位于右上角） */
-  async function setupAutoPlay_SwitchBtn(enableAutoplay: boolean, logPrefix: string) {
+  protected async setupAutoPlay_SwitchBtn(enableAutoplay: boolean) {
     sq(() => {
       try {
         const app = document.getElementById('app')
@@ -215,77 +116,143 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
         vueInstance.setContinuousPlay(enableAutoplay)
         return true
       } catch (e) {
-        logger.debug(`${logPrefix}：设置自动连播按钮状态发生错误，错误信息：${e}`)
+        logger.debug(`${this.constructor.name}：设置自动连播按钮状态发生错误，错误信息：${e}`)
         return false
       }
     })
   }
 
-  // #endregion
-
-  // #region 按选项
-
   /** 设置番剧自动连播状态 */
-  async function setupAutoPlay_Bangumi(enableAutoplay: boolean) {
-    await setupAutoPlay_Player(enableAutoplay, setupAutoPlay_Bangumi.name)
-  }
+  protected async setupAutoPlay_Player(enableAutoplay: boolean) {
+    const selector = enableAutoplay
+      ? '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]'
+      : '.bpx-player-ctrl-setting-handoff input[type="radio"][value="2"]'
+    const radio = (await select(selector)) as HTMLInputElement
 
-  /** 设置推荐视频自动连播状态 */
-  async function setupAutoPlay_Recommend(enableAutoplay: boolean) {
-    await setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Recommend.name)
-  }
-
-  /** 设置稍后再看自动连播状态 */
-  async function setupAutoPlay_WatchLater(enableAutoplay: boolean) {
-    await setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_WatchLater.name)
-  }
-
-  /** 设置分P视频自动连播状态 */
-  async function setupAutoPlay_Playlist(enableAutoplay: boolean) {
-    await setupAutoPlay_SwitchBtn(enableAutoplay, setupAutoPlay_Playlist.name)
-  }
-
-  // #endregion
-
-  /** 设置自动连播状态 */
-  async function setupAutoPlay(autoplayType: AutoplayType, enableAutoplay: boolean) {
-    switch (autoplayType) {
-      case AutoplayType.BANGUMI:
-        await setupAutoPlay_Bangumi(enableAutoplay)
-        break
-      case AutoplayType.RECOMMEND:
-        await setupAutoPlay_Recommend(enableAutoplay)
-        break
-      case AutoplayType.WATCHLATER:
-        await setupAutoPlay_WatchLater(enableAutoplay)
-        break
-      case AutoplayType.PLAYLIST:
-        await setupAutoPlay_Playlist(enableAutoplay)
-        break
-      default:
-        break
+    if (radio === null) {
+      logger.error(`${this.constructor.name}：未找到对应的播放方式按钮`)
     }
+    radio.click()
   }
 
   // #endregion
+}
 
+// #region 子类实现
+
+/** 自动连播处理器-番剧 */
+class BangumiAutoplayHandler extends BaseAutoplayHandler {
+  type = '番剧'
+
+  async match() {
+    return bangumiUrls.some(url => matchUrlPattern(url))
+  }
+
+  async shouldAutoplay() {
+    return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
+      BaseAutoplayHandler.settings.options.bangumiAutoplayAction as AutoplayActionType,
+      () => true,
+    )
+  }
+
+  async setupAutoPlay(enable: boolean) {
+    await this.setupAutoPlay_Player(enable)
+  }
+}
+BaseAutoplayHandler.register(new BangumiAutoplayHandler())
+
+/** 自动连播处理器-推荐视频 */
+class RecommendAutoplayHandler extends BaseAutoplayHandler {
+  type = '推荐视频'
+
+  async match() {
+    const videoUrl = '//www.bilibili.com/video/'
+    const btn = document.querySelector('.recommend-list-v1 .switch-btn')
+    return matchUrlPattern(videoUrl) && btn !== null
+  }
+
+  async shouldAutoplay() {
+    return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
+      BaseAutoplayHandler.settings.options.recommendAutoplayAction as AutoplayActionType,
+      () => false,
+    )
+  }
+
+  async setupAutoPlay(enable: boolean) {
+    await this.setupAutoPlay_SwitchBtn(enable)
+  }
+}
+BaseAutoplayHandler.register(new RecommendAutoplayHandler())
+
+/** 自动连播处理器-稍后再看 */
+class WatchLaterAutoplayHandler extends BaseAutoplayHandler {
+  type = '稍后再看'
+
+  async match() {
+    return watchlaterUrls.some(url => matchUrlPattern(url))
+  }
+
+  async shouldAutoplay() {
+    return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
+      BaseAutoplayHandler.settings.options.watchLaterAutoplayAction as AutoplayActionType,
+      () => !BaseAutoplayHandler.isLastSequentialNumber(),
+    )
+  }
+
+  async setupAutoPlay(enable: boolean) {
+    await this.setupAutoPlay_SwitchBtn(enable)
+  }
+}
+BaseAutoplayHandler.register(new WatchLaterAutoplayHandler())
+
+/** 自动连播处理器-分P视频 */
+class PlaylistAutoplayHandler extends BaseAutoplayHandler {
+  type = '分P视频'
+
+  async match() {
+    const videoUrl = '//www.bilibili.com/video/'
+    const btn = document.querySelector('.video-pod .auto-play .switch-btn')
+    return matchUrlPattern(videoUrl) && btn !== null
+  }
+
+  async shouldAutoplay() {
+    return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
+      BaseAutoplayHandler.settings.options.playlistAutoplayAction as AutoplayActionType,
+      () => !BaseAutoplayHandler.isLastSequentialNumber(),
+    )
+  }
+
+  async setupAutoPlay(enable: boolean) {
+    await this.setupAutoPlay_SwitchBtn(enable)
+  }
+}
+BaseAutoplayHandler.register(new PlaylistAutoplayHandler())
+
+// #endregion
+
+// #endregion
+
+const entry: ComponentEntry = async ({ metadata, settings }) => {
   /** 每次视频切换时的初始化逻辑 */
   async function initScript() {
     await playerReady()
 
-    // 检测自动连播类型
-    const autoPlayType = getAutoplayType()
-    // 检测是否应该自动连播
-    const enableAutoplay = shouldAutoplay(autoPlayType)
+    const handler = await BaseAutoplayHandler.getHandler()
+    if (!handler) {
+      logger.warn('未找到匹配的自动播放处理器')
+      return
+    }
+
+    const enable = await handler.shouldAutoplay()
     logger.log(
-      `导航变化（${document.URL}），重新初始化脚本\n自动连播类型：${AutoplayType[autoPlayType]}\n是否应该自动连播：${enableAutoplay}`,
+      `导航变化（${document.URL}），重新初始化脚本\n自动连播类型：${handler.type}\n是否应该自动连播：${enable}`,
     )
-    // 设置自动连播状态
-    await setupAutoPlay(autoPlayType, enableAutoplay)
+    await handler.setupAutoPlay(enable)
   }
 
   // 入口代码
 
+  BaseAutoplayHandler.settings = settings
   const debounce = lodash.debounce(initScript, 1000)
 
   // 监听视频变化
@@ -298,7 +265,7 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
     logger.warn('未找到 rightPanelContainer 或 playListContainer')
     return
   }
-  childListSubtree(rightPanel, async () => {
+  childListSubtree(rightPanel, () => {
     debounce()
   })
 
