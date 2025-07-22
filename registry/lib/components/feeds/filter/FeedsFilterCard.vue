@@ -33,20 +33,14 @@
     </div>
     <h2>板块</h2>
     <div class="filter-side-card">
-      <div
+      <FilterSideCard
         v-for="[id, type] of Object.entries(allSideCards)"
+        :id="parseInt(id)"
         :key="id"
-        class="filter-side-card-switch feeds-filter-switch"
+        :name="type.displayName"
+        :block-side-cards="blockSideCards"
         @click="toggleBlockSide(parseInt(id))"
-      >
-        <label :class="{ disabled: sideDisabled(parseInt(id)) }">
-          <span class="name" :class="{ disabled: sideDisabled(parseInt(id)) }">{{
-            type.displayName
-          }}</span>
-          <VIcon :size="16" class="disabled" icon="mdi-cancel"></VIcon>
-          <VIcon :size="16" icon="mdi-check"></VIcon>
-        </label>
-      </div>
+      />
     </div>
   </div>
 </template>
@@ -68,6 +62,7 @@ import { FeedsFilterOptions } from './options'
 import { hasBlockedPattern } from './pattern'
 
 const FilterTypeSwitch = defineAsyncComponent(() => import('./FilterTypeSwitch.vue'))
+const FilterSideCard = defineAsyncComponent(() => import('./FilterSideCard.vue'))
 
 const { options } = getComponentSettings<FeedsFilterOptions>('feedsFilter')
 
@@ -183,10 +178,6 @@ const toggleBlockSide = (id: number) => {
     document.body.classList.add(sideBlock + type.className)
   }
   options.sideCards = blockSideCards
-}
-
-const sideDisabled = (id: number) => {
-  return blockSideCards.includes(id)
 }
 
 onMounted(async () => {
