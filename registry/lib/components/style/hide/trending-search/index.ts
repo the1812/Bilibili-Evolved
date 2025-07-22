@@ -9,6 +9,26 @@ const resetPlaceholder = (input: HTMLInputElement) => {
   input.title = DEFAULT_PLACEHOLDER
 }
 
+const isInLiveRoomPage = () => {
+  return window.location.host === 'live.bilibili.com'
+}
+
+const getSearchInputClassName = () => {
+  return isInLiveRoomPage() ? 'input.nav-search-content' : 'input.nav-search-input'
+}
+
+const isSearchInput = (target: Node) => {
+  if (!(target instanceof HTMLInputElement)) {
+    return false
+  }
+
+  const isSearch = ['nav-search-content', 'nav-search-input'].some(n =>
+    target.classList.contains(n),
+  )
+
+  return target.placeholder !== DEFAULT_PLACEHOLDER && isSearch
+}
+
 export const component = defineComponentMetadata({
   name: 'hideTrendingSearch',
   displayName: '隐藏热搜',
@@ -20,7 +40,8 @@ export const component = defineComponentMetadata({
     },
   ],
   entry: async () => {
-    const input: HTMLInputElement = await select('input.nav-search-input', {
+    const clsName = getSearchInputClassName()
+    const input: HTMLInputElement = await select(clsName, {
       queryInterval: 500,
     })
 
@@ -32,12 +53,8 @@ export const component = defineComponentMetadata({
     // Fallback to observer
     allMutations(records => {
       records.forEach(record => {
-        if (
-          record.target instanceof HTMLInputElement &&
-          record.target.classList.contains('nav-search-input') &&
-          record.target.placeholder !== DEFAULT_PLACEHOLDER
-        ) {
-          resetPlaceholder(record.target)
+        if (isSearchInput(record.target)) {
+          resetPlaceholder(record.target as HTMLInputElement)
         }
       })
     })

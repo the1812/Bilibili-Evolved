@@ -6,7 +6,7 @@
         <div class="be-live-list-count">({{ items.length }})</div>
       </div>
       <div class="be-live-list-actions">
-        <div v-if="loaded" class="be-live-list-refresh" title="刷新" @click="refresh">
+        <div v-if="loaded" class="be-live-list-refresh" title="刷新" @click="fetchLiveList">
           <VIcon icon="mdi-refresh" :size="16" />
         </div>
         <a
@@ -49,21 +49,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { VIcon, TextBox, DpiImage, VEmpty, VLoading } from '@/ui'
-import { getJsonWithCredentials, responsiveGetPages } from '@/core/ajax'
-
-interface LiveInfo {
-  cover: string
-  face: string
-  uname: string
-  title: string
-  roomid: number
-  pic: string
-  online: number
-  uid: number
-  link: string
-}
+import { bilibiliApi, getJsonWithCredentials, getPages, responsiveGetPages } from '@/core/ajax'
+import { FollowingListID, FollowingUserInfo, LiveInfo, RawFollowingListItem } from './types'
+import { getUID } from '@/core/utils'
+import { ExtendFeedsLiveOptions, UnselectedListID } from './options'
+import {
+  addComponentListener,
+  getComponentSettings,
+  removeComponentListener,
+} from '@/core/settings'
 
 const decodeTitle = (title: string) => {
   const textArea = document.createElement('textarea')
@@ -71,7 +67,11 @@ const decodeTitle = (title: string) => {
   return textArea.value
 }
 
+const FollowingListPageSize = 500
+const { options } = getComponentSettings<ExtendFeedsLiveOptions>('extendFeedsLive')
 const items = ref<LiveInfo[]>([])
+const pinnedUsers = ref<FollowingUserInfo[]>([])
+const hiddenUsers = ref<FollowingUserInfo[]>([])
 const loaded = ref(false)
 const keyword = ref('')
 
@@ -88,37 +88,95 @@ const filteredItems = computed(() => {
   return items.value
 })
 
-const fetchRecommendItems = async (): Promise<LiveInfo[]> => {
+const fetchRecommendLiveInfos = async (): Promise<LiveInfo[]> => {
   // 动态 portal 接口会获取推荐的 top30 直播。同时这个接口不会忽略悄悄关注的 up 的直播。
   const portalList = await getJsonWithCredentials(
     'https://api.bilibili.com/x/polymer/web-dynamic/v1/portal',
   )
-  const recommendLiveItems = portalList.data.live_users.items.map(item => {
-    const { jump_url, room_id, face, title, uname, mid } = item
-    return {
-      cover: face,
-      face,
-      uname,
-      title,
-      roomid: room_id,
-      pic: '', // portal 接口没有
-      online: 0, // portal 接口没有
-      uid: mid,
-      link: jump_url,
-    }
-  })
+  const recommendLiveItems =
+    portalList.data.live_users?.items?.map(item => {
+      const { jump_url, room_id, face, title, uname, mid } = item
+      return {
+        cover: face,
+        face,
+        uname,
+        title,
+        roomid: room_id,
+        pic: '', // portal 接口没有
+        online: 0, // portal 接口没有
+        uid: mid,
+        link: jump_url,
+      }
+    }) ?? []
   return recommendLiveItems
 }
 
-const sortByRecommend = (feedItems: LiveInfo[], recommendItems: LiveInfo[]) => {
+const mergeRecommendLiveInfos = (liveInfos: LiveInfo[], recommendLiveInfos: LiveInfo[]) => {
   // recommendItems 里的 pic 和 online 为默认值，但是 ui 也没用到。
   // 所以方便起见，直接拼接没出现在 recommendItems 里的 item
-  const recommendRoomIds = recommendItems.map(item => item.roomid)
-  const feedConcatItems = feedItems.filter(item => !recommendRoomIds.includes(item.roomid))
-  return lodash.concat(recommendItems, feedConcatItems)
+  const recommendRoomIds = recommendLiveInfos.map(item => item.roomid)
+  const feedConcatItems = liveInfos.filter(item => !recommendRoomIds.includes(item.roomid))
+  return lodash.concat(recommendLiveInfos, feedConcatItems)
 }
 
-const refresh = async () => {
+const sortByUsers = (users: FollowingUserInfo[], descending = false) => {
+  return (a: LiveInfo, b: LiveInfo) => {
+    const aPinnedIndex = users.findIndex(it => it.mid === a.uid)
+    const bPinnedIndex = users.findIndex(it => it.mid === b.uid)
+    if (bPinnedIndex === -1 && aPinnedIndex === -1) {
+      return 0
+    }
+    if (aPinnedIndex === -1) {
+      return descending ? -1 : 1
+    }
+    if (bPinnedIndex === -1) {
+      return descending ? 1 : -1
+    }
+    return aPinnedIndex - bPinnedIndex
+  }
+}
+
+const fetchFollowingLists = async () => {
+  const fetchFollowingList = async (id: FollowingListID) => {
+    if (id === UnselectedListID || id === undefined) {
+      return []
+    }
+    const list = await bilibiliApi<RawFollowingListItem[]>(
+      getJsonWithCredentials('https://api.bilibili.com/x/relation/tags'),
+    )
+    if (!list.some(it => it.tagid === id)) {
+      return []
+    }
+    const response = await getPages<FollowingUserInfo>({
+      api: page =>
+        getJsonWithCredentials(
+          `https://api.bilibili.com/x/relation/tag?tagid=${id}&pn=${page}&ps=${FollowingListPageSize}&mid=${getUID()}`,
+        ),
+      getList: json => lodash.get(json, 'data', []),
+      getTotal: () => list.find(it => it.tagid === id)?.count ?? 0,
+    })
+    return response
+  }
+
+  await Promise.all([
+    fetchFollowingList(options.pinnedListID)
+      .then(users => {
+        pinnedUsers.value = users
+      })
+      .catch(() => {
+        pinnedUsers.value = []
+      }),
+    fetchFollowingList(options.hiddenListID)
+      .then(users => {
+        hiddenUsers.value = users
+      })
+      .catch(() => {
+        hiddenUsers.value = []
+      }),
+  ])
+}
+
+const fetchLiveList = async () => {
   try {
     items.value = []
     loaded.value = false
@@ -145,15 +203,28 @@ const refresh = async () => {
       getTotal: json => lodash.get(json, 'data.count', 0),
     })
 
-    const [allItems, recommendItems] = await Promise.all([promise, fetchRecommendItems()])
-    items.value = sortByRecommend(allItems, recommendItems)
+    const [allItems, recommendItems] = await Promise.all([promise, fetchRecommendLiveInfos()])
+    const sortedItems = mergeRecommendLiveInfos(allItems, recommendItems)
+      .sort(sortByUsers(pinnedUsers.value, false))
+      .filter(item => !hiddenUsers.value.some(user => user.mid === item.uid))
+    items.value = sortedItems
   } finally {
     loaded.value = true
   }
 }
 
+const initializeLiveList = async () => {
+  await fetchFollowingLists()
+  await fetchLiveList()
+}
+addComponentListener('extendFeedsLive.pinnedListID', initializeLiveList)
+addComponentListener('extendFeedsLive.hiddenListID', initializeLiveList)
 onMounted(() => {
-  refresh()
+  initializeLiveList()
+})
+onBeforeUnmount(() => {
+  removeComponentListener('extendFeedsLive.pinnedListID', initializeLiveList)
+  removeComponentListener('extendFeedsLive.hiddenListID', initializeLiveList)
 })
 </script>
 <style lang="scss">
