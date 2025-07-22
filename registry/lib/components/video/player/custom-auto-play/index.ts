@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
-import { bangumiUrls, videoUrls, watchlaterUrls } from '@/core/utils/urls'
+import { bangumiUrls, favoriteListUrls, videoUrls, watchlaterUrls } from '@/core/utils/urls'
 import { useScopedConsole } from '@/core/utils/log'
 import { select, sq } from '@/core/spin-query'
 import { matchUrlPattern, playerReady } from '@/core/utils'
@@ -228,6 +228,26 @@ class PlaylistAutoplayHandler extends BaseAutoplayHandler {
 }
 BaseAutoplayHandler.register(new PlaylistAutoplayHandler())
 
+/** 自动连播处理器-收藏夹 */
+class FavoriteAutoplayHandler extends BaseAutoplayHandler {
+  type = '收藏夹'
+
+  async match() {
+    return favoriteListUrls.some(url => matchUrlPattern(url))
+  }
+
+  async shouldAutoplay() {
+    return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
+      BaseAutoplayHandler.settings.options.favoriteAutoplayAction as AutoplayActionType,
+      () => !BaseAutoplayHandler.isLastSequentialNumber(),
+    )
+  }
+
+  async setupAutoPlay(enable: boolean) {
+    await this.setupAutoPlay_SwitchBtn(enable)
+  }
+}
+BaseAutoplayHandler.register(new FavoriteAutoplayHandler())
 // #endregion
 
 // #endregion
@@ -305,6 +325,11 @@ export const component = defineComponentMetadata({
     },
     playlistAutoplayAction: {
       displayName: '自动连播行为-分p视频',
+      defaultValue: AutoplayActionType.AUTO,
+      dropdownEnum: AutoplayActionType,
+    },
+    favoriteAutoplayAction: {
+      displayName: '自动连播行为-收藏夹',
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
