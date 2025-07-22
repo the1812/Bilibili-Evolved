@@ -225,7 +225,7 @@ export class LiveSocket extends EventTarget {
 
     if (
       this.webSocket &&
-      [WebSocket.CONNECTING, WebSocket.OPEN].includes(this.webSocket.readyState)
+      ([WebSocket.CONNECTING, WebSocket.OPEN] as number[]).includes(this.webSocket.readyState)
     ) {
       this.stop()
     }
