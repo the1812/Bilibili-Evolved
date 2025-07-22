@@ -3,6 +3,7 @@ import { styledComponentEntry } from '@/components/styled-component'
 import { select } from '@/core/spin-query'
 import { mountVueComponent } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
+import { options } from './options'
 
 const entry = async () => {
   const console = useScopedConsole('extendFeedsLive')
@@ -46,4 +47,6 @@ export const component = defineComponentMetadata({
   entry: styledComponentEntry(() => import('./extend-feeds-live.scss'), entry),
   tags: [componentsTags.feeds, componentsTags.live],
   urlInclude: [/^https:\/\/t\.bilibili\.com\/$/],
+  extraOptions: () => import('./ExtraOptions.vue').then(m => m.default),
+  options,
 })

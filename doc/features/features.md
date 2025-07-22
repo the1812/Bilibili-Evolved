@@ -85,6 +85,17 @@
 
 在顶栏的视频动态中, 无论标题多长总是完全展开.
 
+### [动态分组过滤](../../registry/dist/components/feeds/group-filter.js)
+`feedsGroupFilter`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/group-filter.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/group-filter.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/group-filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/group-filter.js)
+
+by [@Rinne](https://github.com/OharaRinneY)
+
+按照关注分组筛选动态
+
 ### [隐藏动态评论预览](../../registry/dist/components/feeds/hide-comment-preview.js)
 `hideFeedsCommentPreview`
 
@@ -135,6 +146,17 @@
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/badge-helper.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/badge-helper.js)
 
 在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.
+
+### [一键点亮直播间粉丝勋章](../../registry/dist/components/live/badge-keepalive.js)
+`badgeKeepalive`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/badge-keepalive.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/badge-keepalive.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/badge-keepalive.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/badge-keepalive.js)
+
+by [@magicFeirl](https://github.com/magicFeirl)
+
+在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。
 
 ### [直播间网页全屏自适应](../../registry/dist/components/live/chat-panel-fit.js)
 `liveChatPanelFit`
@@ -657,6 +679,21 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 - 进度调整可在左上角和右上角取消
 - 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.
 
+### [视频链接增强](../../registry/dist/components/utils/active-video-links.js)
+`activeVideoLinks`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/active-video-links.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/active-video-links.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/active-video-links.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/active-video-links.js)
+
+by [@Alan Ye](https://github.com/at-wr)
+
+这个组件会将视频简介中的普通网址转换为可点击的链接，并将<del>被 Bilibili 抛弃</del>已失效的 `acg.tv` 跳转链接修复为 `nicovideo.jp` 链接。
+
+例如: `https://acg.tv/sm37507315` → `https://www.nicovideo.jp/watch/sm37507315`
+
+<i>本组件不会保证目标链接的安全性，因此在点击前请自行验证其是否可信</i>
+
 ### [相簿发布时间显示](../../registry/dist/components/utils/album-time-show.js)
 `albumPubTimeShow`
 
@@ -783,6 +820,19 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 > 需要进入音频的详细信息页面才能下载, 在其他页面中此按钮将不可点击.
 
+### [下载表情](../../registry/dist/components/utils/download-emoticons.js)
+`downloadEmoticons`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/download-emoticons.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/download-emoticons.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/download-emoticons.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/download-emoticons.js)
+
+by [@Pencilqaq](https://github.com/pencilqaq)
+
+## 下载up主专属表情包
+
+支持下载up主专属表情包，处于任意直播间页面时，下载按钮会在`功能`面板显示，以压缩包形式保存。
+
 ### [图片批量导出](../../registry/dist/components/utils/image-exporter.js)
 `imageExporter`
 
@@ -896,9 +946,9 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/subscribe-time-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/subscribe-time-show.js)
 
-by [@Light_Quanta](https://github.com/LightQuanta)
+by [@CNOCM](https://github.com/CNOCM)
 
-在粉丝/关注列表显示关注的具体时间
+在粉丝/关注列表及用户主页显示关注的具体时间。
 
 ### [网址参数清理](../../registry/dist/components/utils/url-params-clean.js)
 `urlParamsClean`
@@ -926,6 +976,17 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/view-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/view-cover.js)
 
 在视频页面中, 可从功能面板中查看封面.
+
+### [稍后再看页面-重定向](../../registry/dist/components/utils/watchlater-page-redirect.js)
+`watchlaterPageRedirect`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/watchlater-page-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/watchlater-page-redirect.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/watchlater-page-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/watchlater-page-redirect.js)
+
+by [@magicFeirl](https://github.com/magicFeirl)
+
+重定向**稍后再看页面**到普通视频页面，和`稍后再看重定向`组件的区别在于，该组件是在进入稍后再看的视频页面后进行重定向，而非直接替换链接到普通视频的链接，用于补充`稍后再看重定向`组件的功能。
 
 ### [稍后再看重定向](../../registry/dist/components/utils/watchlater-redirect.js)
 `watchlaterRedirect`

@@ -73,6 +73,14 @@
   },
   {
     "type": "component",
+    "name": "feedsGroupFilter",
+    "displayName": "动态分组过滤",
+    "description": "by [@Rinne](https://github.com/OharaRinneY)\n\n按照关注分组筛选动态\r\n",
+    "fullRelativePath": "../../registry/dist/components/feeds/group-filter.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/group-filter.js"
+  },
+  {
+    "type": "component",
     "name": "hideFeedsCommentPreview",
     "displayName": "隐藏动态评论预览",
     "description": "隐藏动态评论按钮上方的精选评论预览. (详细可看 [#3322](https://github.com/the1812/Bilibili-Evolved/discussions/3322))\r\n",
@@ -110,6 +118,14 @@
     "description": "在直播区中, 可从功能面板中直接切换勋章和头衔. 默认显示 256 个 (同时也是上限), 可在选项中修改.\r\n",
     "fullRelativePath": "../../registry/dist/components/live/badge-helper.js",
     "fullAbsolutePath": "registry/dist/components/live/badge-helper.js"
+  },
+  {
+    "type": "component",
+    "name": "badgeKeepalive",
+    "displayName": "一键点亮直播间粉丝勋章",
+    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。",
+    "fullRelativePath": "../../registry/dist/components/live/badge-keepalive.js",
+    "fullAbsolutePath": "registry/dist/components/live/badge-keepalive.js"
   },
   {
     "type": "component",
@@ -505,6 +521,14 @@
   },
   {
     "type": "component",
+    "name": "activeVideoLinks",
+    "displayName": "视频链接增强",
+    "description": "by [@Alan Ye](https://github.com/at-wr)\n\n这个组件会将视频简介中的普通网址转换为可点击的链接，并将<del>被 Bilibili 抛弃</del>已失效的 `acg.tv` 跳转链接修复为 `nicovideo.jp` 链接。\r\n\r\n例如: `https://acg.tv/sm37507315` → `https://www.nicovideo.jp/watch/sm37507315`\r\n\r\n<i>本组件不会保证目标链接的安全性，因此在点击前请自行验证其是否可信</i>\r\n",
+    "fullRelativePath": "../../registry/dist/components/utils/active-video-links.js",
+    "fullAbsolutePath": "registry/dist/components/utils/active-video-links.js"
+  },
+  {
+    "type": "component",
     "name": "albumPubTimeShow",
     "displayName": "相簿发布时间显示",
     "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在相簿界面显示相簿的发布时间",
@@ -593,6 +617,14 @@
   },
   {
     "type": "component",
+    "name": "downloadEmoticons",
+    "displayName": "下载表情",
+    "description": "by [@Pencilqaq](https://github.com/pencilqaq)\n\n## 下载up主专属表情包\r\n\r\n支持下载up主专属表情包，处于任意直播间页面时，下载按钮会在`功能`面板显示，以压缩包形式保存。",
+    "fullRelativePath": "../../registry/dist/components/utils/download-emoticons.js",
+    "fullAbsolutePath": "registry/dist/components/utils/download-emoticons.js"
+  },
+  {
+    "type": "component",
     "name": "imageExporter",
     "displayName": "图片批量导出",
     "description": "可以批量导出某个地方的图片, 目前支持动态和专栏.\r\n\r\n动态文件名变量:\r\n- `n`: 第 n 张图\r\n- `id`: 动态 ID\r\n- `user`: 用户名\r\n- `userID`: 用户 ID\r\n- 动态发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n- 被转发的数据 (如果不是转发类型的动态, 则和上面的对应变量相同):\r\n  - `originalID`: 被转发的动态 ID\r\n  - `originalUser`: 被转发的用户名\r\n  - `originalUserID`: 被转发用户 ID\r\n  - 被转发的动态发布时间:\r\n    - `originalPublishYear`\r\n    - `originalPublishMonth`\r\n    - `originalPublishDay`\r\n    - `originalPublishHour`\r\n    - `originalPublishMinute`\r\n    - `originalPublishSecond`\r\n    - `originalPublishMillisecond`\r\n\r\n专栏文件名变量:\r\n- `n`: 第 n 张图\r\n- `title`: 专栏标题\r\n- `cv`: 专栏 cv 号\r\n- 专栏发布时间:\r\n  - `publishYear`\r\n  - `publishMonth`\r\n  - `publishDay`\r\n  - `publishHour`\r\n  - `publishMinute`\r\n  - `publishSecond`\r\n  - `publishMillisecond`\r\n",
@@ -643,7 +675,7 @@
     "type": "component",
     "name": "subscribeTimeShow",
     "displayName": "关注时间显示",
-    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在粉丝/关注列表显示关注的具体时间",
+    "description": "by [@CNOCM](https://github.com/CNOCM)\n\n在粉丝/关注列表及用户主页显示关注的具体时间。",
     "fullRelativePath": "../../registry/dist/components/utils/subscribe-time-show.js",
     "fullAbsolutePath": "registry/dist/components/utils/subscribe-time-show.js"
   },
@@ -670,6 +702,14 @@
     "description": "在视频页面中, 可从功能面板中查看封面.",
     "fullRelativePath": "../../registry/dist/components/utils/view-cover.js",
     "fullAbsolutePath": "registry/dist/components/utils/view-cover.js"
+  },
+  {
+    "type": "component",
+    "name": "watchlaterPageRedirect",
+    "displayName": "稍后再看页面-重定向",
+    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n重定向**稍后再看页面**到普通视频页面，和`稍后再看重定向`组件的区别在于，该组件是在进入稍后再看的视频页面后进行重定向，而非直接替换链接到普通视频的链接，用于补充`稍后再看重定向`组件的功能。\r\n",
+    "fullRelativePath": "../../registry/dist/components/utils/watchlater-page-redirect.js",
+    "fullAbsolutePath": "registry/dist/components/utils/watchlater-page-redirect.js"
   },
   {
     "type": "component",
