@@ -17,7 +17,7 @@
 > - 点击放大镜图标放大预览
 > - 点击缩小图标或者预览框外空白处关闭预览
 
-- 修复 `隐藏首页轮播图` 失效, 并增加了一些局部元素控制功能. (PR #5287 [wsgh0202](https://github.com/wsgh0202))
+- 修复 `隐藏首页轮播图` 失效, 并增加了一些局部元素控制功能. (PR #5287 by [wsgh0202](https://github.com/wsgh0202))
 
 
 ## v2.10.3
@@ -62,7 +62,7 @@
 🐛修复
 - 修复 `夜间模式` 在首页 svg 图标的颜色. (PR #5240 by [hyrious](https://github.com/hyrious))
 - 修复 `自动移出稍后再看` 重复调用接口的 bug. (PR #5241 by [sunfkny](https://github.com/sunfkny))
-- 修复 `关注时间显示` 失效. (#5096, #5212, PR 5282 by [CNOCM](https://github.com/CNOCM))
+- 修复 `关注时间显示` 失效. (#5096, #5212, PR #5282 by [CNOCM](https://github.com/CNOCM))
 
 
 ## v2.10.2-preview
