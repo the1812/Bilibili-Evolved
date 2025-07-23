@@ -2,6 +2,7 @@
 # 更新日志
 
 ## v2.10.3-preview
+`2025-07-22`
 
 包含 [v2.10.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.3) 的所有更新内容.
 
