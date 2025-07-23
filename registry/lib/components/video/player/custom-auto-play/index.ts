@@ -92,18 +92,31 @@ abstract class BaseAutoplayHandler {
     }
   }
 
-  /** 解析分P序号（例如：1/10 => [1,10]） */
-  static parseSequentialNumbers() {
-    const videoSequentialNumber = document.querySelector('.list-count, .video-pod__header .amt')
-    return videoSequentialNumber.innerHTML
-      .replace(/[（）]/g, '')
+  /**
+   * 获取分P序号文本
+   * @returns 例如：'1/10' 或 '（1/10）'
+   */
+  protected getSequentialNumberString(): string {
+    return ''
+  }
+
+  /**
+   * 解析分P序号
+   * @returns 例如：[1,10]
+   */
+  protected parseSequentialNumbers(): number[] {
+    return this.getSequentialNumberString()
+      .replace(/[（）()]/g, '')
       .split('/')
       .map(it => parseInt(it))
   }
 
   /** 是否最后1P视频 */
-  static isLastSequentialNumber(): boolean {
-    const sequentialNumbers = BaseAutoplayHandler.parseSequentialNumbers()
+  protected isLastSequentialNumber(): boolean {
+    const sequentialNumbers = this.parseSequentialNumbers()
+    if (!sequentialNumbers || sequentialNumbers.length < 2) {
+      return true
+    }
     return sequentialNumbers[0] >= sequentialNumbers[1]
   }
 
@@ -148,10 +161,18 @@ class BangumiAutoplayHandler extends BaseAutoplayHandler {
     return bangumiUrls.some(url => matchUrlPattern(url))
   }
 
+  protected override isLastSequentialNumber(): boolean {
+    // PV、小剧场没有分P序号，因此统一用元素位置判断
+    const el = document
+      .querySelector('.plp-r img[class^=PlayingIcon_playIcon]')
+      .closest('div[class^=imageListItem_wrap]')
+    return !el.nextElementSibling
+  }
+
   async shouldAutoplay() {
     return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
       BaseAutoplayHandler.settings.options.bangumiAutoplayAction as AutoplayActionType,
-      () => true,
+      () => !this.isLastSequentialNumber(),
     )
   }
 
@@ -192,10 +213,14 @@ class WatchLaterAutoplayHandler extends BaseAutoplayHandler {
     return watchlaterUrls.some(url => matchUrlPattern(url))
   }
 
+  protected override getSequentialNumberString(): string {
+    return document.querySelector('.list-count').innerHTML
+  }
+
   async shouldAutoplay() {
     return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
       BaseAutoplayHandler.settings.options.watchLaterAutoplayAction as AutoplayActionType,
-      () => !BaseAutoplayHandler.isLastSequentialNumber(),
+      () => !this.isLastSequentialNumber(),
     )
   }
 
@@ -215,10 +240,14 @@ class PlaylistAutoplayHandler extends BaseAutoplayHandler {
     return matchUrlPattern(videoUrl) && btn !== null
   }
 
+  protected override getSequentialNumberString(): string {
+    return document.querySelector('.video-pod__header .amt').innerHTML
+  }
+
   async shouldAutoplay() {
     return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
       BaseAutoplayHandler.settings.options.playlistAutoplayAction as AutoplayActionType,
-      () => !BaseAutoplayHandler.isLastSequentialNumber(),
+      () => !this.isLastSequentialNumber(),
     )
   }
 
@@ -236,10 +265,14 @@ class FavoriteAutoplayHandler extends BaseAutoplayHandler {
     return favoriteListUrls.some(url => matchUrlPattern(url))
   }
 
+  protected override getSequentialNumberString(): string {
+    return document.querySelector('.list-count').innerHTML
+  }
+
   async shouldAutoplay() {
     return BaseAutoplayHandler.shouldAutoplayWithAutoHandler(
       BaseAutoplayHandler.settings.options.favoriteAutoplayAction as AutoplayActionType,
-      () => !BaseAutoplayHandler.isLastSequentialNumber(),
+      () => !this.isLastSequentialNumber(),
     )
   }
 
@@ -310,7 +343,7 @@ export const component = defineComponentMetadata({
   options: {
     bangumiAutoplayAction: {
       displayName: '自动连播行为-番剧',
-      defaultValue: AutoplayActionType.AUTO,
+      defaultValue: AutoplayActionType.ALWAYS,
       dropdownEnum: AutoplayActionType,
     },
     recommendAutoplayAction: {
