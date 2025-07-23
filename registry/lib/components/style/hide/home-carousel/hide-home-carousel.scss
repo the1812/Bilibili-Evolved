@@ -1,3 +1,24 @@
-.recommended-swipe.grid-anchor {
-  display: none !important;
+$prefix: 'hideHomeCarousel-switch';
+
+.#{$prefix} {
+  &-full .recommended-swipe {
+    display: none !important;
+  }
+
+  &-transparent .recommended-swipe {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &-picture .vui_carousel__slide {
+    display: none !important;
+  }
+
+  &-footerText .carousel-footer-text {
+    display: none !important;
+  }
+}
+
+.vui_carousel__slide {
+  filter: blur(var(--blur-amount, 0px));
 }
