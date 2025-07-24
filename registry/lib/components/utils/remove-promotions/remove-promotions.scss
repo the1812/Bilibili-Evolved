@@ -90,10 +90,7 @@ body.dark .blocked-ads.new {
 body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-goods) {
   margin: 0 !important;
 }
-.feed-card:has(.bili-video-card a[href*='cm.bilibili.com']),
-.bili-video-card.is-rcmd:has(a[href*='cm.bilibili.com']),
-.bili-video-card.is-rcmd:has(a:not([href])),
-.bili-video-card__wrap:has(a[href*='cm.bilibili.com']),
-body:not(.promotion-show-placeholder) :is(.bili-video-card.is-rcmd, .bili-feed4-layout .feed-card):not(:has(.bili-video-card__wrap)) {
-  display: none !important;
+
+.bili-video-card__wrap:has(:is(a[href*='cm.bilibili.com'], a:not([href]))) {
+  visibility: hidden;
 }
