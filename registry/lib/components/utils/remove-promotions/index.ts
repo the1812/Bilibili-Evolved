@@ -85,6 +85,10 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
 export const component = wrapSwitchOptions({
   name: 'removePromotionOptions',
   switches: {
+    showContainer: {
+      displayName: '卡片占位',
+      defaultValue: true,
+    },
     showPlaceholder: {
       displayName: '占位文本',
       defaultValue: true,
