@@ -91,6 +91,9 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
   margin: 0 !important;
 }
 
+// switch类型选项类名前缀
+$switchPrefix: 'removePromotions-switch';
+
 // 首页广告、推广
 .bili-video-card__wrap:has(.bili-video-card__stats > :is(.bili-video-card__stats--text, svg)),
 // 视频搜索页广告
@@ -116,16 +119,16 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
       background-color: #333;
     }
 
-    body.promotion-show-placeholder & {
+    body.#{$switchPrefix}-showPlaceholder & {
       visibility: visible;
     }
 
-    body.debug & {
+    body.#{$switchPrefix}-debug & {
       visibility: hidden !important;
     }
   }
 
-  body.debug & {
+  body.#{$switchPrefix}-debug & {
     visibility: visible;
     border: red 1px solid;
   }
