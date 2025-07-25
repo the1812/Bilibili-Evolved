@@ -88,6 +88,13 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
     },
     true,
   )
+  addComponentListener(
+    `${metadata.name}.debug`,
+    (value: boolean) => {
+      document.body.classList.toggle('debug', value)
+    },
+    true,
+  )
 }
 export const component = defineComponentMetadata({
   name: 'removePromotions',
@@ -111,6 +118,10 @@ export const component = defineComponentMetadata({
     },
     preserveFeedGoods: {
       displayName: '保留动态商品推荐',
+      defaultValue: false,
+    },
+    debug: {
+      displayName: '调试模式',
       defaultValue: false,
     },
   },
