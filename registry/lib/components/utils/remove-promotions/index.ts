@@ -121,7 +121,7 @@ export const component = defineComponentMetadata({
       defaultValue: false,
     },
     debug: {
-      displayName: 'debug',
+      displayName: '调试模式',
       defaultValue: false,
     },
   },
