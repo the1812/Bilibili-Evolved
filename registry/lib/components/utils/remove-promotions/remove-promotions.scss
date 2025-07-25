@@ -117,5 +117,14 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
     body.promotion-show-placeholder & {
       visibility: visible;
     }
+
+    body.debug & {
+      visibility: hidden !important;
+    }
+  }
+
+  body.debug & {
+    visibility: visible;
+    border: red 1px solid;
   }
 }
