@@ -91,6 +91,31 @@ body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-good
   margin: 0 !important;
 }
 
-.bili-video-card__wrap:has(:is(a[href*='cm.bilibili.com'], a:not([href]))) {
+// 首页广告、推广
+.bili-video-card__wrap:has(.bili-video-card__stats > :is(.bili-video-card__stats--text, svg)) {
   visibility: hidden;
+  pointer-events: none !important;
+
+  // 占位文本
+  & .bili-video-card__image::after {
+    @extend .blocked-ads;
+
+    content: '🚫已屏蔽广告';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    user-select: none;
+    visibility: hidden;
+    border-radius: 6px;
+    background-color: #eee;
+
+    body.dark & {
+      background-color: #333;
+    }
+
+    body.promotion-show-placeholder & {
+      visibility: visible;
+    }
+  }
 }
