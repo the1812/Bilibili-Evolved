@@ -355,7 +355,7 @@ export default Vue.extend({
 @import 'common';
 
 .download-video-panel {
-  @include card();
+  @include popup();
   font-size: 12px;
   padding: 6px;
   top: 100px;
