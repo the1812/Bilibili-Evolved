@@ -90,9 +90,51 @@ body.dark .blocked-ads.new {
 body:not(.preserve-feed-goods) .bili-dyn-content__orig__additional:has(.dyn-goods) {
   margin: 0 !important;
 }
-.feed-card:has(.bili-video-card a[href*='cm.bilibili.com']),
-.bili-video-card.is-rcmd:has(a[href*='cm.bilibili.com']),
-.bili-video-card__wrap:has(a[href*='cm.bilibili.com']),
-body:not(.promotion-show-placeholder) :is(.bili-video-card.is-rcmd, .bili-feed4-layout .feed-card):not(:has(.bili-video-card__wrap)) {
-  display: none !important;
+
+// switch类型选项类名前缀
+$switchPrefix: 'removePromotions-switch';
+
+// 首页广告、推广
+.container > :is(.feed-card, .bili-feed-card):has(.bili-video-card__stats > :is(.bili-video-card__stats--text, svg)),
+// 视频搜索页广告
+.video-list-item:has(.bili-video-card__info--ad) {
+  visibility: hidden;
+  pointer-events: none !important;
+
+  // 占位文本
+  & .bili-video-card__image::after {
+    @extend .blocked-ads;
+
+    content: '🚫已屏蔽广告';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    user-select: none;
+    visibility: hidden;
+    border-radius: 6px;
+    background-color: #eee;
+
+    body.dark & {
+      background-color: #333;
+    }
+
+    body.#{$switchPrefix}-showPlaceholder & {
+      visibility: visible;
+    }
+
+    body.#{$switchPrefix}-debug & {
+      visibility: hidden !important;
+    }
+  }
+
+  body:not(.#{$switchPrefix}-showContainer) & {
+    display: none;
+  }
+
+  body.#{$switchPrefix}-debug & {
+    display: unset;
+    visibility: visible;
+    border: red 1px solid;
+  }
 }
