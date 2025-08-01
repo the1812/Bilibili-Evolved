@@ -38,6 +38,7 @@ export const allVideoUrls = [...videoAndBangumiUrls, ...cheeseUrls]
 /** 主站及各分区页面 */
 export const mainSiteUrls = [
   'https://www.bilibili.com/v/',
+  'https://www.bilibili.com/c/',
   /^https:\/\/www\.bilibili\.com\/$/,
   /^https:\/\/www\.bilibili\.com\/([^\/]+)\.html$/,
   /^https:\/\/www\.bilibili\.com\/watchlater\/#\/list$/,
