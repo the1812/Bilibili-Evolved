@@ -29,7 +29,7 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from 'vue'
 import { OptionMetadata } from '@/components/types'
-import ComponentOption from './ComponentOption.vue'
+import ComponentOption from '@/components/settings-panel/ComponentOption.vue'
 import RadioGroupItem from './RadioGroupItem.vue'
 import CollapsibleContainer from './CollapsibleContainer.vue'
 import { getComponentSettings } from '@/core/settings'
