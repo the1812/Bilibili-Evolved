@@ -1,7 +1,6 @@
+import { createComponentWithProps, RadioItem } from '@/ui'
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
-import { createComponentWithProps } from './vue-component-factory'
-import { RadioItem } from './OptionRadioGroup.vue'
 
 const componentName = 'removePromotions'
 
@@ -177,13 +176,13 @@ export const component = defineComponentMetadata({
     },
   },
   extraOptions: () =>
-    import('./OptionRadioGroup.vue').then(m =>
-      createComponentWithProps(m.default, { ...props, isPopup: false }),
+    import('@/ui').then(m =>
+      createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: false }),
     ),
   widget: {
     component: () =>
-      import('./OptionRadioGroup.vue').then(m =>
-        createComponentWithProps(m.default, { ...props, isPopup: true }),
+      import('@/ui').then(m =>
+        createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: true }),
       ),
   },
 })
