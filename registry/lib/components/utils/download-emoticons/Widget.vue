@@ -24,7 +24,7 @@ export default Vue.extend({
     return {
       downloading: false,
       midRegex: /mid=(\d+)/,
-      roomIdRegex: /^https:\/\/live\.bilibili\.com\/(\d+)(?:\?.*)?$/,
+      roomIdRegex: /^https:\/\/live\.bilibili\.com\/(?:blanc\/)?(\d+)(?:\?\.*?)?$/,
     }
   },
   methods: {

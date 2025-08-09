@@ -12,5 +12,5 @@ export const component = defineComponentMetadata({
   widget: {
     component: () => import('./Widget.vue').then(m => m.default),
   },
-  urlInclude: [/^https:\/\/live\.bilibili\.com\/(\d+)/],
+  urlInclude: [/^https:\/\/live\.bilibili\.com\/(?:blanc)?\/\d+/],
 })
