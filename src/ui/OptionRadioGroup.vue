@@ -32,7 +32,7 @@ import { OptionMetadata } from '@/components/types'
 import ComponentOption from '@/components/settings-panel/ComponentOption.vue'
 import RadioGroupItem from './RadioGroupItem.vue'
 import CollapsibleContainer from './CollapsibleContainer.vue'
-import { getComponentSettings } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { componentsMap } from '@/components/component'
 import OptionWidgetLayout from './OptionWidgetLayout.vue'
 
@@ -144,6 +144,11 @@ export default defineComponent({
         if (item.isOption) {
           vm.displayName = optionDefs[item.name]?.displayName ?? item.name
           vm.checked = !!optionValues[item.name]
+
+          // 监测其他组件的选项值更新
+          addComponentListener(`${props.componentName}.${item.name}`, value => {
+            vm.checked = value
+          })
         } else {
           vm.displayName = item.name
         }
