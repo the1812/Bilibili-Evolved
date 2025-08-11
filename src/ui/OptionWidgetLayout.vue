@@ -1,6 +1,12 @@
 <template>
   <div>
-    <VPopup v-if="isPopup" v-model="popup" :trigger-element="$refs.popupButton" auto-destroy>
+    <VPopup
+      v-if="isPopup"
+      v-model="popup"
+      :trigger-element="$refs.popupButton"
+      auto-destroy
+      class="widget-popup"
+    >
       <slot />
     </VPopup>
     <DefaultWidget v-if="isPopup" ref="popupButton" :icon="icon" @click="popup = !popup">
@@ -43,3 +49,11 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.widget-popup {
+  left: 100%;
+  width: max-content;
+  transform: translate(8px, -50%);
+}
+</style>
