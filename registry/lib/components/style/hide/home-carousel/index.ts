@@ -1,10 +1,13 @@
-import { wrapSwitchOptions } from '@/components/switch-options'
+import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 import { select, selectAll } from '@/core/spin-query'
 import { useScopedConsole } from '@/core/utils/log'
+import { createComponentWithProps, RadioItem } from '@/ui'
 
-const logger = useScopedConsole('hideHomeCarousel')
+const componentName = 'hideHomeCarousel'
+
+const logger = useScopedConsole(componentName)
 
 // 轮播容器 mouseleave 事件拦截
 const onCarouselMouseLeaveHandler = (event: MouseEvent) => {
@@ -53,30 +56,46 @@ const entry: ComponentEntry = async ({ metadata }) => {
     },
     true,
   )
+
+  // 监听样式切换选项
+  const switchClasses = ['full', 'transparent', 'picture', 'footerText']
+  switchClasses.forEach(c => {
+    addComponentListener(
+      `${metadata.name}.${c}`,
+      (value: boolean) => {
+        document.body.classList.toggle(`hideHomeCarousel-switch-${c}`, value)
+      },
+      true,
+    )
+  })
 }
 
-export const component = wrapSwitchOptions({
-  name: 'hideHomeCarouselOptions',
-  switches: {
-    full: {
-      displayName: '隐藏轮播区域占位',
-      defaultValue: true,
-    },
-    transparent: {
-      displayName: '透明化轮播区域',
-      defaultValue: false,
-    },
-    picture: {
-      displayName: '隐藏轮播图片',
-      defaultValue: false,
-    },
-    footerText: {
-      displayName: '隐藏图片标题',
-      defaultValue: false,
-    },
+const items: Record<string, RadioItem> = {
+  full: {
+    name: 'full',
+    isOption: true,
   },
-})({
-  name: 'hideHomeCarousel',
+  transparent: {
+    name: 'transparent',
+    isOption: true,
+  },
+  custom: {
+    name: 'custom',
+    isOption: true,
+    optionsIncluded: ['disableCarousel', 'blur', 'picture', 'footerText'],
+  },
+}
+
+const props = {
+  title: '隐藏首页轮播图选项',
+  groupName: `${componentName}-promotions-card`,
+  items,
+  componentName,
+  icon: 'mdi-checkbox-marked-circle-outline',
+}
+
+export const component = defineComponentMetadata({
+  name: componentName,
   displayName: '隐藏首页轮播图',
   entry,
   tags: [componentsTags.style],
@@ -91,6 +110,7 @@ export const component = wrapSwitchOptions({
     disableCarousel: {
       displayName: '禁用轮播',
       defaultValue: false,
+      hidden: true,
     },
     blur: {
       displayName: '图片模糊',
@@ -100,6 +120,43 @@ export const component = wrapSwitchOptions({
         max: 100,
         step: 1,
       },
+      hidden: true,
     },
+    full: {
+      displayName: '完全隐藏',
+      defaultValue: true,
+      hidden: true,
+    },
+    transparent: {
+      displayName: '透明化',
+      defaultValue: false,
+      hidden: true,
+    },
+    picture: {
+      displayName: '隐藏轮播图片',
+      defaultValue: false,
+      hidden: true,
+    },
+    footerText: {
+      displayName: '隐藏图片标题',
+      defaultValue: false,
+      hidden: true,
+    },
+    /** 无实际作用，仅用于记录选项组状态 */
+    custom: {
+      displayName: '自定义',
+      defaultValue: false,
+      hidden: true,
+    },
+  },
+  extraOptions: () =>
+    import('@/ui').then(m =>
+      createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: false }),
+    ),
+  widget: {
+    component: () =>
+      import('@/ui').then(m =>
+        createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: true }),
+      ),
   },
 })
