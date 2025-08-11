@@ -151,7 +151,11 @@ export const component = defineComponentMetadata({
   },
   extraOptions: () =>
     import('@/ui').then(m =>
-      createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: false }),
+      createComponentWithProps(m.OptionRadioGroup, {
+        ...props,
+        isPopup: false,
+        hasContainer: false,
+      }),
     ),
   widget: {
     component: () =>
