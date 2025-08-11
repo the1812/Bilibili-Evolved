@@ -1,6 +1,13 @@
 <template>
   <OptionWidgetLayout :title="title" :is-popup="isPopup" :icon="icon">
-    <CollapsibleContainer :default-expanded="true" :title="title">
+    <component
+      :is="currentComponent"
+      v-bind="
+        currentComponent === 'div'
+          ? { class: 'container' }
+          : { defaultExpanded: true, title: title }
+      "
+    >
       <RadioGroupItem
         v-for="[key, itemVM] of Object.entries(itemVMs)"
         :key="key"
@@ -22,7 +29,7 @@
           />
         </div>
       </RadioGroupItem>
-    </CollapsibleContainer>
+    </component>
   </OptionWidgetLayout>
 </template>
 
@@ -108,6 +115,11 @@ export default defineComponent({
       type: String,
       default: '',
     },
+    /** 是否包含容器（CollapsibleContainer） */
+    hasContainer: {
+      type: Boolean,
+      default: true,
+    },
   },
   setup(props) {
     const componentData = componentsMap[props.componentName]
@@ -186,7 +198,16 @@ export default defineComponent({
       componentData,
       itemVMs,
       onRadioChange,
+      currentComponent: props.hasContainer ? CollapsibleContainer : 'div',
     }
   },
 })
 </script>
+
+<style lang="scss" scoped>
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+</style>
