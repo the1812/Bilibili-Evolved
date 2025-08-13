@@ -5,7 +5,7 @@ import { getCsrf, getUID } from '@/core/utils'
 export function getLiveRoomId(): string {
   let matched = location.href.match(/live.bilibili.com\/(\d+)/)
   if (matched) {
-      return matched[1]
+    return matched[1]
   }
   matched = location.href.match(/live.bilibili.com\/blanc\/(\d+)/)
   return matched ? matched[1] : ''
