@@ -148,6 +148,7 @@ export default defineComponent({
       display: flex;
       justify-content: space-between;
       width: 100%;
+      gap: 8px;
 
       &-title {
         align-content: center;
