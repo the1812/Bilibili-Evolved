@@ -16,6 +16,7 @@
         :hide-expand-button="!itemVM.optionsFiltered"
         :checked="itemVM.checked"
         :group="groupName"
+        :disable-content="disableContent ? !itemVM.checked : false"
         @change="checked => onRadioChange(itemVM, checked)"
       >
         <div v-if="itemVM.optionsFiltered">
@@ -119,6 +120,11 @@ export default defineComponent({
     hasContainer: {
       type: Boolean,
       default: true,
+    },
+    /** 禁用内容区域 */
+    disableContent: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props) {

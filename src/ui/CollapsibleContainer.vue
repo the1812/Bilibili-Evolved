@@ -19,7 +19,7 @@
       </slot>
     </div>
     <transition name="collapse">
-      <div v-show="computedExpanded" class="content">
+      <div v-show="computedExpanded" class="content" :class="{ disabled: disableContent }">
         <slot />
       </div>
     </transition>
@@ -67,6 +67,12 @@ export default defineComponent({
 
     /** 隐藏展开按钮 */
     hideExpandButton: {
+      type: Boolean,
+      default: false,
+    },
+
+    /** 禁用内容区域 */
+    disableContent: {
       type: Boolean,
       default: false,
     },
@@ -170,6 +176,11 @@ export default defineComponent({
 
     & > *:not(:last-child) {
       margin-bottom: 8px;
+    }
+
+    &.disabled {
+      opacity: 0.6;
+      pointer-events: none;
     }
   }
 

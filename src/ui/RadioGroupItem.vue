@@ -4,6 +4,7 @@
     :default-expanded="defaultExpanded"
     :hide-expand-button="hideExpandButton"
     :enable-expand-by-header="false"
+    :disable-content="disableContent"
     @expanded="onExpanded"
   >
     <template #title>
@@ -53,6 +54,11 @@ export default defineComponent({
     },
     /** 隐藏展开按钮 */
     hideExpandButton: {
+      type: Boolean,
+      default: false,
+    },
+    /** 禁用内容区域 */
+    disableContent: {
       type: Boolean,
       default: false,
     },
