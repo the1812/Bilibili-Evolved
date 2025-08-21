@@ -1,10 +1,11 @@
-import { registerAndGetData } from '@/plugins/data'
 import { defineComponentMetadata } from '@/components/define'
 import { isIframe, isNotHtml, matchPattern } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
+import { registerAndGetData } from '@/plugins/data'
+import { cleanAnchors } from './anchor'
 
 const displayName = '网址参数清理'
-const console = useScopedConsole(displayName)
+export const console = useScopedConsole(displayName)
 const entry = async () => {
   if (isNotHtml() || isIframe()) {
     return
@@ -177,6 +178,7 @@ const entry = async () => {
     }
   }
 
+  cleanAnchors(getCleanUrl)
   const { fullyLoaded } = await import('@/core/life-cycle')
   const { urlChange } = await import('@/core/observer')
   fullyLoaded(() => {
