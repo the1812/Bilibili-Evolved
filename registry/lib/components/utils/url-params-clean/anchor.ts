@@ -33,7 +33,7 @@ export const cleanAnchors = async (getCleanUrl: (u: string) => string) => {
     if (a.href === newUrl) {
       return
     }
-    console.info('清理a标签', a, a.href, newUrl)
+    console.info('清理A标签', a, a.href, newUrl)
     a.href = newUrl
   }
 
@@ -50,7 +50,6 @@ export const cleanAnchors = async (getCleanUrl: (u: string) => string) => {
   }
 
   contentLoaded(() => {
-    console.log('contentLoaded')
     // DOMContentLoaded 时标签的垃圾参数在 HTML 中自带, 不会触发 MutationObserver
     cleanAll(dqa('.tag-panel .tag-link'))
 
