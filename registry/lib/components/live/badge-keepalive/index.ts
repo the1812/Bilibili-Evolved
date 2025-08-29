@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { getUID } from '@/core/utils'
+import { liveUrls } from '@/core/utils/urls'
 
 export const component = defineComponentMetadata({
   name: 'badgeKeepalive',
@@ -16,5 +17,5 @@ export const component = defineComponentMetadata({
     component: () => import('./BadgeKeepalive.vue').then(m => m.default),
     condition: () => Boolean(getUID()),
   },
-  urlInclude: ['//live.bilibili.com'],
+  urlInclude: liveUrls,
 })
