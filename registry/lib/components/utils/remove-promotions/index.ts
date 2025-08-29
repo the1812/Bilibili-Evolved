@@ -1,6 +1,7 @@
-import { createComponentWithProps, RadioItem } from '@/ui'
+import { RadioItem } from '@/ui'
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
+import { createComponentWithProps } from '@/core/utils'
 
 const componentName = 'removePromotions'
 

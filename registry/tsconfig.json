@@ -10,5 +10,5 @@
   "include": [
     "../src/**/*.d.ts",
     "lib/**/*.ts"
-, "../src/ui/vue-component-factory.ts"  ],
+  ],
 }

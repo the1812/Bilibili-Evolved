@@ -2,8 +2,9 @@ import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 import { select, selectAll } from '@/core/spin-query'
+import { createComponentWithProps } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { createComponentWithProps, RadioItem } from '@/ui'
+import { RadioItem } from '@/ui'
 
 const componentName = 'hideHomeCarousel'
 
