@@ -1,26 +1,9 @@
-// 视频缩放模式类型定义
-export type ScalingMode = 'none' | 'fill' | 'cover' | 'contain' | 'custom'
+// 定义缩放预设选项类型
+import { SCALE_PRESETS } from './constants'
 
-// 缩放样式配置类型
-export type ScalingStyles = {
-  [key in ScalingMode]: string
-}
+export type ScalePreset = (typeof SCALE_PRESETS)[number]
 
-// 控制栏下拉菜单项接口
-export interface DropdownItem {
-  id: ScalingMode
-  text: string
-  onClick: () => void
-}
-
-// 缩放选项配置接口
-export interface ScalingOptions {
-  scalingMode: ScalingMode
-  customScale: number
-}
-
-// 缩放状态接口
-export interface ScalingState {
-  currentScalingMode: ScalingMode
-  isCustomScaling: boolean
+// 为Toast元素添加超时ID类型
+export interface ToastWithTimeout extends HTMLDivElement {
+  timeoutId?: number
 }
