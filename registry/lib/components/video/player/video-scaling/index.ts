@@ -1,193 +1,147 @@
-import {
-  defineComponentMetadata,
-  defineOptionsMetadata,
-  OptionsOfMetadata,
-} from '@/components/define'
-import { componentsTags } from '@/components/types'
-import { addStyle } from '@/core/style'
-import { addMenuItem } from '@/components/video/video-context-menu'
-import { addControlBarButton } from '@/components/video/video-control-bar'
-import { ScalingMode, DropdownItem } from './types'
-
-// 导入样式
+import { defineComponentMetadata } from '@/components/define'
+import { playerAgent } from '@/components/video/player-agent'
+import { addComponentListener } from '@/core/settings'
 import './styles.scss'
 
-const options = defineOptionsMetadata({
-  scalingMode: {
-    defaultValue: 'none' as ScalingMode,
-    displayName: '缩放模式',
-    dropdownEnum: [
-      { label: '默认', value: 'none' },
-      { label: '拉伸填充', value: 'fill' },
-      { label: '保持比例填充', value: 'cover' },
-      { label: '保持比例显示', value: 'contain' },
-      { label: '自定义缩放', value: 'custom' },
-    ],
-  },
-  customScale: {
-    defaultValue: 1.2,
-    displayName: '自定义缩放比例',
-    hidden: false,
-    slider: {
-      min: 1,
-      max: 2,
-      step: 0.05,
-    },
-  },
-})
+// 定义缩放预设选项类型
+type ScalePreset = '1.0x' | '1.25x' | '1.5x' | '2.0x' | 'custom'
 
-export type Options = OptionsOfMetadata<typeof options>
-
-// 全局变量存储当前缩放模式
-let currentScalingMode: ScalingMode = 'none'
-let cleanupMenuItems: HTMLElement[] = []
+const SCALE_MAPPING: Record<ScalePreset, number> = {
+  '1.0x': 1.0,
+  '1.25x': 1.25,
+  '1.5x': 1.5,
+  '2.0x': 2.0,
+  custom: 1.0,
+}
 
 export const component = defineComponentMetadata({
   name: 'videoScaling',
-  displayName: '视频内容缩放',
-  description: '调整视频显示比例，去除黑边，提供多种缩放模式',
+  displayName: '视频缩放',
+  description: '允许调整视频的显示缩放比例',
   tags: [componentsTags.video],
-  author: { name: 'weedy233', link: 'https://github.com/weedy233' },
-  entry: async () => {
-    // 获取当前设置
-    currentScalingMode = component.options.scalingMode.defaultValue
-
-    // 获取缩放样式
-    function getScalingStyles(mode: ScalingMode): string {
-      switch (mode) {
-        case 'fill':
-          return `
-            .bilibili-player-video video,
-            video[class^="bpx-player-video-element"],
-            .bilibili-player-video .bpx-player-video-element {
-              object-fit: fill !important;
-            }
-          `
-        case 'cover':
-          return `
-            .bilibili-player-video video,
-            video[class^="bpx-player-video-element"],
-            .bilibili-player-video .bpx-player-video-element {
-              object-fit: cover !important;
-            }
-          `
-        case 'contain':
-          return `
-            .bilibili-player-video video,
-            video[class^="bpx-player-video-element"],
-            .bilibili-player-video .bpx-player-video-element {
-              object-fit: contain !important;
-            }
-          `
-        case 'custom':
-          return `
-            .bilibili-player-video video,
-            video[class^="bpx-player-video-element"],
-            .bilibili-player-video .bpx-player-video-element {
-              object-fit: fill !important;
-              transform: scale(${component.options.customScale.defaultValue}) !important;
-              transform-origin: center !important;
-            }
-          `
-        default:
-          return ''
-      }
-    }
-
-    // 应用缩放样式
-    function applyScaling(mode: ScalingMode) {
-      // 移除之前的样式
-      document.head.querySelector('[data-id="video-scaling"]')?.remove()
-
-      if (mode === 'none') {
-        return
-      }
-
-      const styles = getScalingStyles(mode)
-      addStyle(styles, 'video-scaling')
-    }
-
-    // 切换缩放模式
-    function switchScalingMode(mode: ScalingMode) {
-      currentScalingMode = mode
-      applyScaling(mode)
-    }
-
-    // 下拉菜单项配置
-    const dropdownItems: DropdownItem[] = [
-      { id: 'none', text: '默认', onClick: () => switchScalingMode('none') },
-      { id: 'fill', text: '拉伸填充', onClick: () => switchScalingMode('fill') },
-      { id: 'cover', text: '保持比例填充', onClick: () => switchScalingMode('cover') },
-      { id: 'contain', text: '保持比例显示', onClick: () => switchScalingMode('contain') },
-      { id: 'custom', text: '自定义缩放', onClick: () => switchScalingMode('custom') },
-    ]
-
-    // 注册控制栏按钮
-    await addControlBarButton({
-      name: 'video-scaling',
-      displayName: '缩放',
-      icon: '\u{ea42}', // 缩放图标
-      order: 900,
-      action: () => {
-        // 在实际实现中，这里会打开下拉菜单
-        console.log('缩放按钮被点击')
+  options: {
+    scalePreset: {
+      defaultValue: '1.0x' as ScalePreset,
+      displayName: '缩放比例预设',
+      dropdownEnum: ['1.0x', '1.25x', '1.5x', '2.0x', 'custom'],
+    },
+    customScale: {
+      defaultValue: 1.0,
+      displayName: '自定义缩放比例',
+      slider: {
+        min: 0.5,
+        max: 3.0,
+        step: 0.1,
       },
-    })
+    },
+  },
+  entry: ({ settings }) => {
+    // 当前缩放比例
+    let currentScale = 1.0
+    const maxScale = 3.0
+    const minScale = 0.5
 
-    // 添加右键菜单
-    const scalingMenuDiv = document.createElement('div')
-    scalingMenuDiv.textContent = '视频缩放'
-    cleanupMenuItems = []
+    // 显示缩放比例提示
+    const showScaleToast = (scale: number) => {
+      try {
+        // 创建一个临时的toast元素显示缩放比例
+        let toast = document.querySelector('.be-video-scale-toast') as HTMLDivElement
+        if (!toast) {
+          toast = document.createElement('div')
+          toast.className = 'be-video-scale-toast'
+          toast.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            z-index: 9999;
+            font-size: 16px;
+            pointer-events: none;
+          `
+          document.body.appendChild(toast)
+        }
+        toast.textContent = `缩放: ${Math.round(scale * 100)}%`
 
-    await addMenuItem(scalingMenuDiv, menu => {
-      // 清理之前添加的菜单项
-      cleanupMenuItems.forEach(item => item.remove())
-      cleanupMenuItems.length = 0
-
-      if (!menu.isOpen) {
-        return
+        // 3秒后移除提示
+        clearTimeout((toast as any).timeoutId)
+        ;(toast as any).timeoutId = setTimeout(() => {
+          toast.remove()
+        }, 3000)
+      } catch (error) {
+        console.error('显示缩放提示失败', error)
       }
-
-      // 添加子菜单项
-      dropdownItems.forEach((item, index) => {
-        const subMenuItem = document.createElement('li')
-        subMenuItem.classList.add('context-line', 'context-menu-function')
-        subMenuItem.setAttribute('data-append', '1')
-        subMenuItem.style.paddingLeft = '40px'
-
-        const linkWrapper = document.createElement('a')
-        linkWrapper.classList.add('context-menu-a', 'js-action')
-        linkWrapper.href = 'javascript:void(0);'
-        linkWrapper.textContent = item.text
-        linkWrapper.addEventListener('click', e => {
-          e.preventDefault()
-          e.stopPropagation()
-          item.onClick()
-          // 关闭菜单
-          menu.containerElement.classList.remove('active')
-        })
-
-        subMenuItem.appendChild(linkWrapper)
-        menu.listElement.insertBefore(
-          subMenuItem,
-          menu.listElement.children[menu.itemElements.length + index],
-        )
-        cleanupMenuItems.push(subMenuItem)
-      })
-    })
-
-    // 准备清理函数
-    const cleanup = () => {
-      // 移除样式
-      document.head.querySelector('[data-id="video-scaling"]')?.remove()
-      scalingMenuDiv.remove()
-      cleanupMenuItems.forEach(item => item.remove())
     }
 
-    // 初始应用缩放
-    applyScaling(currentScalingMode)
+    // 获取视频元素并应用缩放
+    const applyScale = async () => {
+      try {
+        // 使用playerAgent API获取视频元素
+        const videoElement = await playerAgent.query.video.element()
+        if (videoElement) {
+          // 应用transform: scale()样式
+          videoElement.style.transform = `scale(${currentScale})`
+          videoElement.style.transformOrigin = 'center'
+        }
+      } catch (error) {
+        console.error('视频缩放: 无法获取视频元素', error)
+      }
+    }
 
-    return cleanup
+    // 根据设置更新缩放
+    const updateScaleFromSettings = async () => {
+      const preset = settings.options.scalePreset as ScalePreset
+
+      if (preset === 'custom') {
+        currentScale = settings.options.customScale as number
+      } else {
+        currentScale = SCALE_MAPPING[preset]
+      }
+
+      await applyScale()
+      showScaleToast(currentScale)
+    }
+
+    // 监听缩放预设变化
+    const onScalePresetChange = async () => {
+      await updateScaleFromSettings()
+    }
+
+    // 监听自定义缩放变化
+    const onCustomScaleChange = async (newValue: number) => {
+      // 确保值在有效范围内
+      currentScale = Math.max(minScale, Math.min(maxScale, newValue))
+      await applyScale()
+      showScaleToast(currentScale)
+    }
+
+    // 使用addComponentListener监听设置变化
+    addComponentListener('videoScaling.scalePreset', onScalePresetChange)
+    addComponentListener('videoScaling.customScale', onCustomScaleChange)
+
+    // 初始化缩放
+    updateScaleFromSettings().catch(err => {
+      console.error('初始化视频缩放失败', err)
+    })
+
+    // 监听视频切换，重置缩放
+    import('@/core/observer')
+      .then(({ videoChange }) => {
+        videoChange(() => {
+          updateScaleFromSettings().catch(err => {
+            console.error('重置视频缩放失败', err)
+          })
+        })
+      })
+      .catch(err => {
+        console.error('导入observer失败', err)
+      })
   },
-  options,
+  reload: () => {
+    // 重新加载组件时执行清理
+    document.querySelectorAll('.be-video-scale-toast').forEach(el => el.remove())
+  },
 })
