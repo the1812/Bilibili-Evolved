@@ -166,7 +166,7 @@ export default defineComponent({
 
       if (itemVM.isOption) {
         // 如果是脚本设置选项，更新值
-        optionValues[itemVM.name] = checked
+        setTimeout(() => (optionValues[itemVM.name] = checked), 200)
       }
 
       // 回调
@@ -186,9 +186,9 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import 'common';
+
 .container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include v-stretch(8px);
 }
 </style>

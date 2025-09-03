@@ -7,33 +7,30 @@
             <span class="default-header-title">{{ title }}</span>
           </slot>
 
-          <VButton v-if="!hideExpandButton" @click="onBtnClick">
-            <VIcon
-              :size="16"
-              class="arrow"
-              :class="{ expanded: computedExpanded }"
-              icon="mdi-chevron-down"
-            />
-          </VButton>
+          <VIcon
+            v-if="!hideExpandButton"
+            :size="18"
+            class="arrow"
+            :class="{ expanded: computedExpanded }"
+            icon="mdi-chevron-down"
+            @click="onBtnClick"
+          />
         </div>
       </slot>
     </div>
-    <transition name="collapse">
-      <div v-show="computedExpanded" class="content" :class="{ disabled: disableContent }">
-        <slot />
-      </div>
-    </transition>
+    <div v-show="computedExpanded" class="content" :class="{ disabled: disableContent }">
+      <slot />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, shallowRef, computed } from 'vue'
-import { VButton, VIcon } from '@/ui'
+import { VIcon } from '@/ui'
 
 export default defineComponent({
   name: 'CollapsibleContainer',
   components: {
-    VButton,
     VIcon,
   },
   props: {
@@ -117,8 +114,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import 'common';
+
 .collapsible-container {
-  border: 1px solid #ccc;
+  border: 1px solid #8884;
   border-radius: 4px;
   overflow: hidden;
 
@@ -131,31 +130,30 @@ export default defineComponent({
   }
 
   .header {
-    padding: 10px;
+    @include h-center();
+    justify-content: space-between;
     cursor: pointer;
     user-select: none;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 
-    background-color: #eee;
+    background-color: #8882;
 
     body.dark & {
       background-color: var(--be-color-popup-bg, #333);
     }
 
     .default-header {
-      display: flex;
+      @include h-center(8px);
       justify-content: space-between;
       width: 100%;
-      gap: 8px;
 
       &-title {
         align-content: center;
+        padding: 8px 10px;
       }
 
       .arrow {
         transition: transform 0.3s ease;
+        padding: 7px 10px;
 
         &.expanded {
           transform: rotate(180deg);
@@ -183,24 +181,6 @@ export default defineComponent({
       opacity: 0.6;
       pointer-events: none;
     }
-  }
-
-  .collapse-enter-active,
-  .collapse-leave-active {
-    transition: max-height 0.3s ease, opacity 0.3s ease;
-  }
-
-  .collapse-enter,
-  .collapse-leave-to {
-    max-height: 0;
-    opacity: 0;
-  }
-
-  .collapse-leave,
-  .collapse-enter-to {
-    // 需要一个确切数值才能被 transition 动画直接过渡
-    // 给定一个较大的值以尽可能完整显示内容，使过渡平滑
-    max-height: 1000px;
   }
 }
 </style>

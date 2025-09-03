@@ -9,6 +9,8 @@
   >
     <template #title>
       <RadioButton
+        class="group-title"
+        no-effects
         :checked="computedChecked"
         :allow-uncheck="allowUncheck"
         :group="group"
@@ -126,3 +128,11 @@ export default defineComponent({
   },
 })
 </script>
+<style lang="scss" scoped>
+@import 'common';
+
+.group-title {
+  flex-grow: 1;
+  padding: 6px 8px;
+}
+</style>

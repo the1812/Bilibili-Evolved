@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="option-widget-layout">
     <VPopup
       v-if="isPopup"
       v-model="popup"
       :trigger-element="$refs.popupButton"
       auto-destroy
-      class="widget-popup"
+      class="option-widget-popup"
     >
       <slot />
     </VPopup>
@@ -50,10 +50,39 @@ export default Vue.extend({
 })
 </script>
 
-<style lang="scss" scoped>
-.widget-popup {
-  left: 100%;
+<style lang="scss">
+@import 'common';
+
+.option-widget-layout {
+  position: relative;
+}
+
+.option-widget-popup {
+  font-size: 12px;
+  transition: 0.2s ease-out;
+  transform-origin: left;
+  transform: translateY(-50%) scale(0.9);
+  top: 50%;
+  left: calc(100% + 8px);
+  @include default-background-color();
+  @include shadow();
+  white-space: nowrap;
+  display: grid;
   width: max-content;
-  transform: translate(8px, -50%);
+  min-width: 180px;
+  grid-template-columns: repeat(var(--columns), auto);
+  border-radius: 4px;
+  border: none;
+  max-height: calc(100vh - 100px);
+  @include no-scrollbar();
+
+  &.open {
+    transform: translateY(-50%) scale(1);
+  }
+  body.settings-panel-dock-right & {
+    right: calc(100% + 8px);
+    left: unset;
+    transform-origin: right;
+  }
 }
 </style>
