@@ -4,7 +4,12 @@ import { componentsTags } from '@/components/component'
 import { videoChange } from '@/core/observer'
 import { ScaleState, applyScale, updateScaleFromSettings } from './scale-service'
 import { showScaleToast, cleanupToasts, handleError } from './ui-utils'
-import { CUSTOM_SCALE_CONFIG, SCALE_PRESETS, TOAST_DURATION_CONFIG } from './constants'
+import {
+  CUSTOM_SCALE_CONFIG,
+  SCALE_PRESETS,
+  TOAST_DURATION_CONFIG,
+  NO_TOAST_TIME_THRESHOLD,
+} from './constants'
 import { ScalePreset } from './types'
 import './styles.scss'
 
@@ -55,6 +60,9 @@ export const component = defineComponentMetadata({
     // 缩放状态管理
     const scaleState = new ScaleState()
 
+    // 记录页面加载时间
+    const pageLoadTime = Date.now()
+
     // 初始化时根据showToast状态设置toastDuration的可见性
     toastDurationOption.hidden = !settings.options.showToast
 
@@ -68,8 +76,11 @@ export const component = defineComponentMetadata({
       try {
         await applyScale(scale)
 
-        // 检查是否启用了toast显示
-        if (settings.options.showToast) {
+        // 检查是否启用了toast显示，且缩放比例不是100%，且已过3秒加载时间
+        const currentTime = Date.now()
+        const hasPassedInitialTime = currentTime - pageLoadTime >= NO_TOAST_TIME_THRESHOLD
+
+        if (settings.options.showToast && scale !== 100 && hasPassedInitialTime) {
           showScaleToast(scale, settings.options.toastDuration as number)
         }
       } catch (error) {

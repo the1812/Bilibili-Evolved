@@ -41,3 +41,6 @@ export const TOAST_DURATION_CONFIG = {
 
 // Toast显示类名
 export const TOAST_CLASS_NAME = 'be-video-scale-toast'
+
+// 页面加载后不显示toast的时间阈值（毫秒）
+export const NO_TOAST_TIME_THRESHOLD = 3000
