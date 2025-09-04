@@ -1,11 +1,13 @@
 import { addComponentListener } from '@/core/settings'
+import { videoChange } from '@/core/observer'
 import { defineComponentMetadata } from '@/components/define'
 import { componentsTags } from '@/components/component'
-import { videoChange } from '@/core/observer'
+import { addControlBarButton } from '@/components/video/video-control-bar'
 import { ScaleState, applyScale, updateScaleFromSettings } from './scale-service'
 import { showScaleToast, cleanupToasts, handleError } from './ui-utils'
 import {
   CUSTOM_SCALE_CONFIG,
+  SCALE_MAPPING,
   SCALE_PRESETS,
   TOAST_DURATION_CONFIG,
   NO_TOAST_TIME_THRESHOLD,
@@ -55,18 +57,18 @@ export const component = defineComponentMetadata({
       displayName: '显示缩放提示',
     },
     toastDuration: toastDurationOption,
+    showControlBarButton: {
+      defaultValue: true,
+      displayName: '显示控制栏按钮',
+    },
   },
   entry: async ({ settings }) => {
-    // 缩放状态管理
     const scaleState = new ScaleState()
 
-    // 记录页面加载时间
     const pageLoadTime = Date.now()
 
-    // 初始化时根据showToast状态设置toastDuration的可见性
     toastDurationOption.hidden = !settings.options.showToast
 
-    // 监听showToast变化，动态控制toastDuration的可见性
     const onShowToastChange = (showToast: boolean) => {
       toastDurationOption.hidden = !showToast
     }
@@ -149,14 +151,89 @@ export const component = defineComponentMetadata({
       handleError('导入observer', error)
     }
 
-    // 清理函数，在组件卸载时调用
+    // 添加控制栏按钮开关的监听器
+    let controlBarButtonAdded = false
+
+    const toggleControlBarButton = async (showButton: boolean) => {
+      try {
+        if (showButton && !controlBarButtonAdded) {
+          await addControlBarButton({
+            name: 'videoScaling',
+            displayName: '视频缩放',
+            icon: 'mdi-magnify',
+            order: 100,
+            action: async () => {
+              console.log('视频缩放按钮被点击！')
+              try {
+                // 获取当前的缩放比例
+                const currentScale = scaleState.get()
+                console.log(`当前缩放比例: ${currentScale}`)
+
+                // 创建不包含"自定义"的预设比例数组
+                const presetScales = SCALE_PRESETS.filter(preset => preset !== '自定义')
+
+                // 找到当前缩放比例在数组中的索引
+                let currentIndex = -1
+                for (let i = 0; i < presetScales.length; i++) {
+                  if (SCALE_MAPPING[presetScales[i]] === currentScale) {
+                    currentIndex = i
+                    break
+                  }
+                }
+
+                // 如果找不到完全匹配的缩放比例，从当前最接近的比例开始
+                if (currentIndex === -1) {
+                  console.log('未找到完全匹配的预设比例，从100%开始')
+                  currentIndex = presetScales.indexOf('100%')
+                }
+
+                // 计算下一个缩放比例的索引（循环）
+                const nextIndex = (currentIndex + 1) % presetScales.length
+                const nextPreset = presetScales[nextIndex]
+                const nextScale = SCALE_MAPPING[nextPreset]
+
+                console.log(
+                  `将缩放比例从 ${currentScale} (${presetScales[currentIndex]}) 调整为 ${nextScale} (${nextPreset})`,
+                )
+
+                // 更新设置中的缩放预设
+                settings.options.scalePreset = nextPreset
+
+                // 应用新的缩放比例
+                await applyScaleAndShowToast(nextScale)
+              } catch (error) {
+                console.error('视频缩放: 循环切换缩放倍数时出错', error)
+              }
+            },
+          })
+          controlBarButtonAdded = true
+          console.log('视频缩放控制栏按钮已添加')
+        } else if (!showButton && controlBarButtonAdded) {
+          controlBarButtonAdded = false
+          console.log('视频缩放控制栏按钮已移除')
+        }
+      } catch (error) {
+        handleError('切换视频缩放控制栏按钮显示状态', error)
+      }
+    }
+
+    // 添加showControlBarButton设置的监听器
+    addComponentListener('videoScaling.showControlBarButton', toggleControlBarButton)
+
+    // 初始化时根据设置决定是否添加控制栏按钮
+    try {
+      if (settings.options.showControlBarButton) {
+        await toggleControlBarButton(true)
+      }
+    } catch (error) {
+      handleError('初始化视频缩放控制栏按钮', error)
+    }
+
     return () => {
-      // 清理所有toast元素
       cleanupToasts()
     }
   },
   reload: () => {
-    // 重新加载组件时执行清理
     cleanupToasts()
   },
 })
