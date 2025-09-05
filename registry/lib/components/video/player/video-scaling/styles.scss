@@ -17,21 +17,3 @@ video[class^="bpx-player-video-element"],
 .bilibili-player-video .bpx-player-video-element {
   transition: transform 0.3s ease;
 }
-
-/* 控制栏按钮样式优化 */
-.bilibili-player-video-control-bottom-right {
-  display: flex;
-  align-items: center;
-}
-
-/* 右键菜单样式补充 */
-.bilibili-player-context-menu-item {
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-/* 确保在全屏模式下缩放功能正常 */
-.bilibili-player-video:-webkit-full-screen video,
-.bilibili-player-video:fullscreen video {
-  position: relative;
-}

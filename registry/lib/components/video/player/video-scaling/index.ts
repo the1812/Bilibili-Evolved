@@ -42,6 +42,7 @@ const toastDurationOption = {
 }
 
 export const component = defineComponentMetadata({
+  author: { name: 'weedy233', link: 'https://github.com/weedy233' },
   name: 'videoScaling',
   displayName: '视频缩放',
   description: desc,
@@ -174,11 +175,9 @@ export const component = defineComponentMetadata({
             icon: 'mdi-magnify',
             order: 100,
             action: async () => {
-              console.log('视频缩放按钮被点击！')
               try {
                 // 获取当前的缩放比例
                 const currentScale = scaleState.get()
-                console.log(`当前缩放比例: ${currentScale}`)
 
                 // 创建不包含"自定义"的预设比例数组
                 const presetScales = SCALE_PRESETS.filter(preset => preset !== '自定义')
@@ -194,7 +193,6 @@ export const component = defineComponentMetadata({
 
                 // 如果找不到完全匹配的缩放比例，从当前最接近的比例开始
                 if (currentIndex === -1) {
-                  console.log('未找到完全匹配的预设比例，从100%开始')
                   currentIndex = presetScales.indexOf('100%')
                 }
 
@@ -202,10 +200,6 @@ export const component = defineComponentMetadata({
                 const nextIndex = (currentIndex + 1) % presetScales.length
                 const nextPreset = presetScales[nextIndex]
                 const nextScale = SCALE_MAPPING[nextPreset]
-
-                console.log(
-                  `将缩放比例从 ${currentScale} (${presetScales[currentIndex]}) 调整为 ${nextScale} (${nextPreset})`,
-                )
 
                 // 更新设置中的缩放预设
                 settings.options.scalePreset = nextPreset
@@ -218,10 +212,8 @@ export const component = defineComponentMetadata({
             },
           })
           controlBarButtonAdded = true
-          console.log('视频缩放控制栏按钮已添加')
         } else if (!showButton && controlBarButtonAdded) {
           controlBarButtonAdded = false
-          console.log('视频缩放控制栏按钮已移除')
         }
       } catch (error) {
         handleError('切换视频缩放控制栏按钮显示状态', error)
