@@ -14,6 +14,7 @@ import {
 } from './constants'
 import { ScalePreset } from './types'
 import './styles.scss'
+import desc from './desc.md'
 
 // 创建选项元数据对象，用于动态修改
 const customScaleOption = {
@@ -43,12 +44,12 @@ const toastDurationOption = {
 export const component = defineComponentMetadata({
   name: 'videoScaling',
   displayName: '视频缩放',
-  description: '允许调整视频的显示缩放比例',
+  description: desc,
   tags: [componentsTags.video],
   options: {
     scalePreset: {
       defaultValue: '100%' as ScalePreset,
-      displayName: '缩放比例预设',
+      displayName: '缩放比例',
       dropdownEnum: [...SCALE_PRESETS],
     },
     customScale: customScaleOption,
@@ -65,7 +66,9 @@ export const component = defineComponentMetadata({
   entry: async ({ settings }) => {
     const scaleState = new ScaleState()
 
+    // 记录页面加载时间和视频切换时间
     const pageLoadTime = Date.now()
+    let videoChangeTime = pageLoadTime
 
     toastDurationOption.hidden = !settings.options.showToast
 
@@ -78,11 +81,17 @@ export const component = defineComponentMetadata({
       try {
         await applyScale(scale)
 
-        // 检查是否启用了toast显示，且缩放比例不是100%，且已过3秒加载时间
+        // 检查是否启用了toast显示，且缩放比例不是100%，且已过3秒加载时间或视频切换时间
         const currentTime = Date.now()
-        const hasPassedInitialTime = currentTime - pageLoadTime >= NO_TOAST_TIME_THRESHOLD
+        const hasPassedPageLoadTime = currentTime - pageLoadTime >= NO_TOAST_TIME_THRESHOLD
+        const hasPassedVideoChangeTime = currentTime - videoChangeTime >= NO_TOAST_TIME_THRESHOLD
 
-        if (settings.options.showToast && scale !== 100 && hasPassedInitialTime) {
+        if (
+          settings.options.showToast &&
+          scale !== 100 &&
+          hasPassedPageLoadTime &&
+          hasPassedVideoChangeTime
+        ) {
           showScaleToast(scale, settings.options.toastDuration as number)
         }
       } catch (error) {
@@ -142,6 +151,8 @@ export const component = defineComponentMetadata({
       // 不存储返回值，直接调用videoChange
       videoChange(async () => {
         try {
+          // 记录视频切换时间
+          videoChangeTime = Date.now()
           await handleUpdateScaleFromSettings()
         } catch (error) {
           handleError('重置视频缩放', error)
