@@ -30,14 +30,14 @@
         </div>
         <ActionItem
           v-for="(a, index) of actions"
-          :key="a.key"
+          :key="a.name"
           :action="a"
           @previous-item="previousItem()"
           @next-item="nextItem()"
           @delete-item="onDeleteItem(index)"
           @action="
             index === actions.length - 1 && onClearHistory()
-            onAction(a)
+            onAction()
           "
         />
       </div>
@@ -54,18 +54,19 @@
         ></VLoading>
         <ActionItem
           v-for="(a, index) of actions"
-          :key="a.key"
+          :key="a.name"
           :action="a"
           @previous-item="previousItem()"
           @next-item="nextItem()"
           @delete-item="onDeleteItem(index)"
-          @action="onAction(a)"
+          @action="onAction()"
         />
       </div>
     </div>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { ref, computed, watch, nextTick, onMounted } from 'vue'
 import Fuse from 'fuse.js'
 import { VIcon, VLoading, VEmpty } from '@/ui'
 import { registerAndGetData } from '@/plugins/data'
@@ -83,22 +84,42 @@ import { searchProvider, search } from './search-provider'
 import { historyProvider } from './history-provider'
 import { FocusTarget } from './focus-target'
 
+const emit = defineEmits<{
+  (event: 'close'): void
+}>()
+
+const input = ref<HTMLInputElement>()
+const list = ref<HTMLElement>()
+
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
   historyProvider,
 ]) as [LaunchBarActionProvider[]]
 
-const sortActions = (actions: LaunchBarAction[]) => {
-  return [...actions].sort(ascendingSort(it => it.order ?? Infinity))
+const [recommended] = registerAndGetData('launchBar.recommended', {
+  word: '搜索',
+  href: 'https://search.bilibili.com/',
+})
+
+const actions = ref<LaunchBarAction[]>([])
+const keyword = ref('')
+const focusTarget = new FocusTarget(0)
+const noActions = ref(false)
+
+const isHistory = computed(() => keyword.value.length === 0)
+
+const sortActions = (actionsList: LaunchBarAction[]) => {
+  return [...actionsList].sort(ascendingSort(it => it.order ?? Infinity))
 }
+
 const generateKeys = (
   provider: LaunchBarActionProvider,
-  actions: LaunchBarAction[],
+  actionsList: LaunchBarAction[],
 ): ({
   key: string
   provider: LaunchBarActionProvider
 } & LaunchBarAction)[] =>
-  actions.map(a => {
+  actionsList.map(a => {
     const key = `${provider.name}.${a.name}`
     return {
       ...a,
@@ -106,15 +127,16 @@ const generateKeys = (
       provider,
     }
   })
-async function getOnlineActions() {
+
+const getOnlineActionsInternal = async () => {
   const onlineActions = (
     await Promise.all(
       actionProviders.map(async provider =>
-        generateKeys(provider, await provider.getActions(this.keyword)),
+        generateKeys(provider, await provider.getActions(keyword.value)),
       ),
     )
   ).flat()
-  if (this.isHistory) {
+  if (isHistory.value) {
     return
   }
   const fuse = new Fuse(onlineActions, {
@@ -122,156 +144,142 @@ async function getOnlineActions() {
     includeScore: true,
     threshold: 0.1,
   })
-  const fuseResult = fuse.search(this.keyword)
+  const fuseResult = fuse.search(keyword.value)
   console.log(fuseResult)
-  this.actions = sortActions(fuseResult.map(it => it.item).slice(0, 13))
-  this.noActions = this.actions.length === 0
+  actions.value = sortActions(fuseResult.map(it => it.item).slice(0, 13))
+  noActions.value = actions.value.length === 0
 }
-async function getActions() {
-  this.noActions = false
-  if (this.isHistory) {
-    this.actions = sortActions(
-      generateKeys(historyProvider, await historyProvider.getActions(this.keyword)),
+
+const getOnlineActions = lodash.debounce(getOnlineActionsInternal, 200)
+
+const getActions = async () => {
+  noActions.value = false
+  if (isHistory.value) {
+    actions.value = sortActions(
+      generateKeys(historyProvider, await historyProvider.getActions(keyword.value)),
     )
     return
   }
-  const actions: LaunchBarAction[] = []
-  this.actions = actions
-  this.getOnlineActions()
+  const actionsArray: LaunchBarAction[] = []
+  actions.value = actionsArray
+  getOnlineActions()
 }
 
-const [recommended] = registerAndGetData('launchBar.recommended', {
-  word: '搜索',
-  href: 'https://search.bilibili.com/',
+const setupSearchPageSync = async () => {
+  const selector = '#search-keyword, .search-input-el'
+  const inputElement = (await select(selector)) as HTMLInputElement
+  if (!inputElement) {
+    return
+  }
+  urlChange(url => {
+    const params = new URLSearchParams(url)
+    const keywordFromParam = params.get('keyword')
+    if (keywordFromParam !== null) {
+      keyword.value = params.get('keyword') || ''
+    }
+  })
+  await nextTick()
+}
+
+const handleSelect = () => {
+  emit('close')
+  getActions()
+}
+
+const handleEnter = async (e?: KeyboardEvent | MouseEvent) => {
+  if ((e as KeyboardEvent)?.isComposing) {
+    return
+  }
+  if (actions.value.length > 0 && !isHistory.value) {
+    const [first] = actions.value as LaunchBarAction[]
+    if (first.explicitSelect !== true) {
+      first.action()
+      return
+    }
+  }
+  if (keyword.value) {
+    search(keyword.value)
+    handleSelect()
+    return
+  }
+  window.open(recommended.href, '_blank')
+  handleSelect()
+}
+
+const handleUp = (e: KeyboardEvent) => {
+  if (e.isComposing) {
+    return
+  }
+  focusTarget.previous()
+  e.preventDefault()
+}
+
+const handleDown = (e: KeyboardEvent) => {
+  if (e.isComposing) {
+    return
+  }
+  focusTarget.next()
+  e.preventDefault()
+}
+
+const focusInput = () => {
+  input.value?.focus()
+}
+
+const focusSuggestItem = (nth: number) => {
+  ;(
+    list.value?.querySelector(`.be-launch-bar-suggest-item:nth-child(${nth})`) as HTMLElement
+  )?.focus()
+}
+
+const handleIndexUpdate = async () => {
+  await nextTick()
+  if (!focusTarget.hasFocus) {
+    focusInput()
+    return
+  }
+  focusSuggestItem(focusTarget.index + 1)
+}
+
+const previousItem = () => {
+  focusTarget.previous()
+}
+
+const nextItem = () => {
+  focusTarget.next()
+}
+
+const onDeleteItem = (index: number) => {
+  focusTarget.setFocus(index)
+  focusTarget.previous()
+  getActions()
+}
+
+const onClearHistory = () => {
+  focusInput()
+  getActions()
+}
+
+const onAction = () => {
+  handleSelect()
+}
+
+watch(keyword, () => {
+  getActions()
 })
-export default Vue.extend({
-  components: {
-    VIcon,
-    VLoading,
-    VEmpty,
-    ActionItem,
-  },
-  data() {
-    const focusTarget = new FocusTarget(0)
-    return {
-      recommended,
-      actions: [],
-      keyword: '',
-      focusTarget,
-      noActions: false,
-    }
-  },
-  computed: {
-    isHistory() {
-      return this.keyword.length === 0
-    },
-  },
-  watch: {
-    keyword() {
-      this.getActions()
-    },
-    actions() {
-      this.focusTarget.reset(this.actions.length)
-    },
-  },
-  async mounted() {
-    await this.getActions()
-    if (matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
-      await this.setupSearchPageSync()
-    }
-    this.focusTarget.addEventListener('index-change', () => {
-      this.handleIndexUpdate()
-    })
-  },
-  methods: {
-    getOnlineActions: lodash.debounce(getOnlineActions, 200),
-    getActions,
-    async setupSearchPageSync() {
-      const selector = '#search-keyword, .search-input-el'
-      const input = (await select(selector)) as HTMLInputElement
-      if (!input) {
-        return
-      }
-      urlChange(url => {
-        const params = new URLSearchParams(url)
-        const keywordFromParam = params.get('keyword')
-        if (keywordFromParam !== null) {
-          this.keyword = params.get('keyword')
-        }
-      })
-      await this.$nextTick()
-    },
-    handleSelect() {
-      this.$emit('close')
-      this.getActions()
-    },
-    async handleEnter(e: KeyboardEvent) {
-      if (e.isComposing) {
-        return
-      }
-      if (this.actions.length > 0 && !this.isHistory) {
-        const [first] = this.actions as LaunchBarAction[]
-        if (first.explicitSelect !== true) {
-          first.action()
-          return
-        }
-      }
-      if (this.keyword) {
-        search(this.keyword)
-        this.handleSelect()
-        return
-      }
-      window.open(this.recommended.href, '_blank')
-      this.handleSelect()
-    },
-    handleUp(e: KeyboardEvent) {
-      if (e.isComposing) {
-        return
-      }
-      this.focusTarget.previous()
-      e.preventDefault()
-    },
-    handleDown(e: KeyboardEvent) {
-      if (e.isComposing) {
-        return
-      }
-      this.focusTarget.next()
-      e.preventDefault()
-    },
-    async handleIndexUpdate() {
-      await this.$nextTick()
-      if (!this.focusTarget.hasFocus) {
-        this.focusInput()
-        return
-      }
-      this.focusSuggestItem(this.focusTarget.index + 1)
-    },
-    previousItem() {
-      this.focusTarget.previous()
-    },
-    nextItem() {
-      this.focusTarget.next()
-    },
-    search,
-    onDeleteItem(index: number) {
-      this.focusTarget.setFocus(index)
-      this.focusTarget.previous()
-      this.getActions()
-    },
-    onClearHistory() {
-      this.focusInput()
-      this.getActions()
-    },
-    onAction() {
-      this.handleSelect()
-    },
-    focusInput() {
-      this.$refs.input.focus()
-    },
-    focusSuggestItem(nth: number) {
-      this.$refs.list.querySelector(`.be-launch-bar-suggest-item:nth-child(${nth})`)?.focus()
-    },
-  },
+
+watch(actions, () => {
+  focusTarget.reset(actions.value.length)
+})
+
+onMounted(async () => {
+  await getActions()
+  if (matchUrlPattern(/^https?:\/\/search\.bilibili\.com/)) {
+    await setupSearchPageSync()
+  }
+  focusTarget.addEventListener('index-change', () => {
+    handleIndexUpdate()
+  })
 })
 </script>
 <style lang="scss">
