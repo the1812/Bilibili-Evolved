@@ -1,5 +1,5 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { formData, matchUrlPattern } from '@/core/utils'
+import { matchUrlPattern } from '@/core/utils'
 import { allQualities } from '@/components/video/video-quality'
 import { bangumiUrls } from '@/core/utils/urls'
 import { compareQuality } from '../error'
@@ -24,7 +24,7 @@ const parseInfoFromJson = (data: any, extensions: string[]) => {
         length: it.length,
         size: it.size,
         url: it.url,
-        backupUrls: it.backup_url,
+        allUrls: [it.url, ...(it.backup_url ?? [])],
         extension: getExtension(index),
       } as DownloadVideoFragment),
   )
@@ -45,11 +45,13 @@ const downloadFlv = async (input: DownloadVideoInputItem) => {
   const params = {
     avid: aid,
     cid,
-    qn: quality?.value ?? '',
+    qn: quality?.value?.toString() ?? '',
     otype: 'json',
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
-  const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
+  const api = isBanugmi
+    ? bangumiApi(new URLSearchParams(params).toString())
+    : videoApi(new URLSearchParams(params).toString())
   const data = await bilibiliApi(getJsonWithCredentials(api), '获取视频链接失败')
   const info = new DownloadVideoInfo({
     input,
