@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar-dark-mode" :title="dark ? '关闭夜间模式' : '开启夜间模式'">
+  <div class="navbar-integrated-dark-mode" :title="dark ? '关闭深色模式' : '开启深色模式'">
     <svg
       v-if="dark"
       style="width: 18px"
@@ -32,18 +32,22 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { getComponentSettings, addComponentListener } from '@/core/settings'
+import { getCookieValue } from '@/core/utils'
 
-const dark = ref(getComponentSettings('darkMode').enabled)
+const dark = ref(getCookieValue('theme_style') === 'dark')
 
 onMounted(() => {
-  addComponentListener('darkMode', (value: boolean) => {
-    dark.value = value
+  cookieStore.addEventListener('change', event => {
+    for (const { name, value } of event.changed) {
+      if (name === 'theme_style') {
+        dark.value = value === 'dark'
+      }
+    }
   })
 })
 </script>
 <style lang="scss">
-.navbar-dark-mode {
+.navbar-integrated-dark-mode {
   display: flex;
   svg {
     height: 18px;
