@@ -2,7 +2,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
-import { videoUrls } from '@/core/utils/urls'
+import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../download/types'
 import { generateByType, MetadataType } from './metadata'
 import { options } from './options'
@@ -28,7 +28,7 @@ export const component = defineComponentMetadata({
   author,
   tags: [componentsTags.video],
   entry: none,
-  urlInclude: videoUrls,
+  urlInclude: videoAndBangumiUrls,
   options,
   widget: {
     condition: hasVideo,
