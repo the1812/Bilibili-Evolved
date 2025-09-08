@@ -27,6 +27,7 @@ export class VideoInfo {
   description: string
   up: UpInfo
   pages: VideoPageInfo[]
+  redirectUrl?: string
 
   constructor(id: string, bvid = false) {
     if (bvid) {
@@ -71,6 +72,7 @@ export class VideoInfo {
       title: it.part,
       pageNumber: it.page,
     }))
+    this.redirectUrl = data.redirect_url
     return this
   }
 
