@@ -98,6 +98,10 @@ export interface EpisodeInfo {
   epid: number
   title: string
   cover: string
+  duration: number
+  skip: {
+    [x in 'ed' | 'op']: { start: number; end: number }
+  }
   info?: VideoInfo
 }
 
@@ -117,6 +121,7 @@ export class BangumiInfo {
   title: string
   cover: string
   squareCover: string
+  areas: { id: number; name: string }[]
   /** 简介 */
   evaluate: string
   isFinish: boolean
@@ -165,14 +170,17 @@ export class BangumiInfo {
     this.isFinish = data.publish.is_finish === 1
     this.isStarted = data.publish.is_started === 1
     this.styles = data.styles
+    this.areas = data.areas
     this.episodes = data.episodes.map(x => {
-      const r = {
+      const r: EpisodeInfo = {
         aid: x.aid,
         bvid: x.bvid,
         cid: x.cid,
         epid: x.ep_id,
         title: x.show_title,
         cover: x.cover,
+        duration: x.duration / 1000,
+        skip: x.skip,
       }
       if (r.epid === this.epid) {
         this.episode = r
