@@ -281,6 +281,11 @@ onMounted(async () => {
     handleIndexUpdate()
   })
 })
+
+defineExpose({
+  input,
+  focusInput,
+})
 </script>
 <style lang="scss">
 @import 'common';

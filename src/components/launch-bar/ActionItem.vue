@@ -47,35 +47,45 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
 import { VIcon } from '@/ui'
 
-export default Vue.extend({
-  components: {
-    VIcon,
-  },
-  props: {
-    action: {
-      type: Object,
-      required: true,
-    },
-  },
-  methods: {
-    async performAction(event: KeyboardEvent | MouseEvent) {
-      const { currentTarget } = event
-      await this.action.action()
-      this.$emit('action', currentTarget)
-    },
-    async performDelete(event: KeyboardEvent | MouseEvent) {
-      const { currentTarget } = event
-      if (!this.action.deleteAction) {
-        return
-      }
-      await this.action.deleteAction()
-      this.$emit('delete-item', currentTarget)
-    },
-  },
-})
+interface Props {
+  action: {
+    name: string
+    displayName?: string
+    icon?: string
+    description?: string
+    indexer?: string
+    content?: any
+    action: () => Promise<void> | void
+    deleteAction?: () => Promise<void> | void
+  }
+}
+
+const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  (event: 'previous-item', currentTarget: EventTarget | null): void
+  (event: 'next-item', currentTarget: EventTarget | null): void
+  (event: 'action', currentTarget: EventTarget | null): void
+  (event: 'delete-item', currentTarget: EventTarget | null): void
+}>()
+
+const performAction = async (event: KeyboardEvent | MouseEvent) => {
+  const { currentTarget } = event
+  await props.action.action()
+  emit('action', currentTarget)
+}
+
+const performDelete = async (event: KeyboardEvent | MouseEvent) => {
+  const { currentTarget } = event
+  if (!props.action.deleteAction) {
+    return
+  }
+  await props.action.deleteAction()
+  emit('delete-item', currentTarget)
+}
 </script>
 <style lang="scss">
 @import 'common';
