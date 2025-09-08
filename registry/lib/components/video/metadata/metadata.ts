@@ -6,47 +6,50 @@ import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { name as componentName, title as pluginTitle } from '.'
 import { FieldsMode, Options } from './options'
+import { MetadataType, Tag, ViewPoint } from './types'
 
-export type MetadataType = 'ffmetadata' | 'ogm'
-
-function escape(s: string) {
-  return s.replace(/[=;#\\\n]/g, r => `\\${r}`)
-}
-
-interface ViewPoint {
-  content: string
-  from: number
-  to: number
-  image: string
+function escape(x: any) {
+  return lodash.toString(x).replace(/[=;#\\\n]/g, r => `\\${r}`)
 }
 
 class VideoMetadata {
-  #aid: string
-  #cid: number | string
+  private readonly aid: string
+  private readonly cid: number | string
 
   basic: VideoInfo
-
   viewPoints: ViewPoint[]
+  tags: {
+    tag?: Tag[]
+    topic?: Tag[]
+    bgm?: Tag[]
+  } = {}
   page: VideoPageInfo
   quality?: VideoQuality
 
   constructor(aid: string, cid: number | string) {
-    this.#aid = aid
-    this.#cid = cid
+    this.aid = aid
+    this.cid = cid
     this.basic = new VideoInfo(aid)
   }
 
   async fetch() {
     await this.basic.fetchInfo()
-    this.page = this.basic.pages.filter(p => p.cid === parseInt(<any>this.#cid))[0]
+    this.page = this.basic.pages.filter(p => p.cid === parseInt(<any>this.cid))[0]
 
     const playInfo = await bilibiliApi(
+      getJsonWithCredentials(`//api.bilibili.com/x/player/wbi/v2?aid=${this.aid}&cid=${this.cid}`),
+    )
+    this.viewPoints = lodash.get(playInfo, 'view_points', []) as ViewPoint[]
+
+    const tags = await bilibiliApi(
       getJsonWithCredentials(
-        `https://api.bilibili.com/x/player/wbi/v2?aid=${this.#aid}&cid=${this.#cid}`,
+        `//api.bilibili.com/x/web-interface/view/detail/tag?aid=${this.aid}&cid=${this.cid}`,
       ),
     )
-
-    this.viewPoints = lodash.get(playInfo, 'view_points', []) as ViewPoint[]
+    const groupedTags = lodash.groupBy(tags, 'tag_type')
+    this.tags.tag = groupedTags.old_channel
+    this.tags.topic = groupedTags.topic
+    this.tags.bgm = groupedTags.bgm
   }
 }
 
@@ -56,12 +59,26 @@ async function fetchMetadata(aid: string = unsafeWindow.aid, cid: string = unsaf
   return data
 }
 
+function tag(tags: Tag[]) {
+  return tags.map(x => `${x.tag_name}(${x.tag_id})`)
+}
+
+function fixBgmTag(bgmTags: Tag[]) {
+  return bgmTags.map(
+    x => `${x.tag_name.match(/^发现《([^》]+)》/)?.[1] ?? x.tag_name}(${x.music_id})`,
+  )
+}
+
 function ff(key: string, value: any, prefix = true) {
-  return `${prefix ? 'bilibili_' : ''}${key}=${escape(lodash.toString(value))}`
+  return `${prefix ? 'bilibili_' : ''}${key}=${
+    Array.isArray(value) ? value.map(escape).join(',') : escape(value)
+  }`
 }
 
 async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = unsafeWindow.cid) {
   const data = await fetchMetadata(aid, cid)
+  console.debug(data)
+
   const info = data.basic
 
   const {
@@ -87,14 +104,23 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
       ff('aid', info.aid),
       ff('bvid', info.bvid),
       ff('cid', data.page.cid),
-      ff('category_id', info.tagId),
-      ff('category_name', info.tagName),
-      ff('page_title', data.page.title),
-      ff('page', data.page.pageNumber),
-      ff('pages', info.pages.length),
       ff('up_name', info.up.name),
       ff('up_uid', info.up.uid),
+      ff('page_title', data.page.title),
+      ff('pages', info.pages.length),
+      ff('page', data.page.pageNumber),
+      ff('category_id', info.tagId),
+      ff('category_name', info.tagName),
     )
+    if (data.tags.tag) {
+      lines.push(ff('tags', tag(data.tags.tag)))
+    }
+    if (data.tags.topic) {
+      lines.push(ff('topic', tag(data.tags.topic)))
+    }
+    if (data.tags.bgm) {
+      lines.push(ff('bgm', fixBgmTag(data.tags.bgm)))
+    }
     if (data.quality) {
       lines.push(ff('quality', data.quality.value))
       lines.push(ff('quality_label', data.quality.name))
