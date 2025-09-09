@@ -1,4 +1,4 @@
-import { VideoInfo, VideoPageInfo } from '@/components/video/video-info'
+import { BangumiInfo, VideoInfo, VideoPageInfo } from '@/components/video/video-info'
 import { VideoQuality } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { meta } from '@/core/meta'
@@ -13,8 +13,8 @@ function escape(x: any) {
 }
 
 class VideoMetadata {
-  private readonly aid: string
-  private readonly cid: number | string
+  private readonly aid: number
+  private readonly cid: number
 
   basic: VideoInfo
   viewPoints: ViewPoint[]
@@ -25,16 +25,17 @@ class VideoMetadata {
   } = {}
   page: VideoPageInfo
   quality?: VideoQuality
+  bangumi?: BangumiInfo
 
   constructor(aid: string, cid: number | string) {
-    this.aid = aid
-    this.cid = cid
+    this.aid = parseInt(aid)
+    this.cid = parseInt(<any>cid)
     this.basic = new VideoInfo(aid)
   }
 
   async fetch() {
     await this.basic.fetchInfo()
-    this.page = this.basic.pages.filter(p => p.cid === parseInt(<any>this.cid))[0]
+    this.page = this.basic.pages.filter(p => p.cid === this.cid)[0]
 
     const playInfo = await bilibiliApi(
       getJsonWithCredentials(`//api.bilibili.com/x/player/wbi/v2?aid=${this.aid}&cid=${this.cid}`),
@@ -50,6 +51,13 @@ class VideoMetadata {
     this.tags.tag = groupedTags.old_channel
     this.tags.topic = groupedTags.topic
     this.tags.bgm = groupedTags.bgm
+
+    if (this.basic.redirectUrl) {
+      const epid = parseInt(this.basic.redirectUrl.match(/ep(\d+)/)?.[1] ?? '')
+      if (epid) {
+        this.bangumi = await BangumiInfo.byEpisodeId(epid).fetchInfo()
+      }
+    }
   }
 }
 
@@ -120,6 +128,22 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
     }
     if (data.tags.bgm) {
       lines.push(ff('bgm', fixBgmTag(data.tags.bgm)))
+    }
+    if (data.bangumi) {
+      const d = data.bangumi
+      lines.push(
+        ff('bangumi_media_id', d.mediaId),
+        ff('bangumi_season_id', d.seasonId),
+        ff('bangumi_season_title', d.seasonTitle),
+        ff('bangumi_series_id', d.seriesId),
+        ff('bangumi_series_title', d.seriesTitle),
+        ff('bangumi_episode_id', d.episode.epid),
+        ff('bangumi_episode_title', d.episode.title),
+        ff(
+          'bangumi_area',
+          d.areas.map(x => x.name),
+        ),
+      )
     }
     if (data.quality) {
       lines.push(ff('quality', data.quality.value))
