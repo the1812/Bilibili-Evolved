@@ -4,7 +4,7 @@ export interface ViewPoint {
   content: string
   from: number
   to: number
-  image: string
+  image?: string
 }
 
 export type TagType = 'old_channel' | 'topic' | 'bgm'
