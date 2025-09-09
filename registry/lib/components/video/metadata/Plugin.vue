@@ -13,7 +13,7 @@
 <script lang="ts">
 import { VDropdown } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
-import { MetadataType } from './metadata'
+import { MetadataType } from './types'
 
 interface Options {
   metadataType: MetadataType | '无'
