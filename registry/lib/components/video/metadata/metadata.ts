@@ -53,7 +53,10 @@ class VideoMetadata {
       const epid = parseInt(this.basic.redirectUrl.match(/ep(\d+)/)?.[1] ?? '')
       if (epid) {
         this.bangumi = await BangumiInfo.byEpisodeId(epid).fetchInfo()
-        if (this.viewPoints.length === 0) {
+        if (
+          getComponentSettings<Options>(componentName).options.convertBangumiSkips &&
+          this.viewPoints.length === 0
+        ) {
           this.viewPoints = bangumiSkipToViewPoints(
             this.bangumi.episode.skip,
             this.bangumi.episode.duration,
