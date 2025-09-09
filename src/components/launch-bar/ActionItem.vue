@@ -2,6 +2,7 @@
   <div
     tabindex="0"
     class="be-launch-bar-action-item be-launch-bar-suggest-item"
+    :class="{ focused }"
     :title="action.displayName || action.name"
     :data-indexer="action.indexer"
     @click.self="performAction($event)"
@@ -51,6 +52,7 @@
 import { VIcon } from '@/ui'
 
 interface Props {
+  focused?: boolean
   action: {
     name: string
     displayName?: string
@@ -99,6 +101,7 @@ const performDelete = async (event: KeyboardEvent | MouseEvent) => {
     @include h-center();
     justify-content: center;
   }
+  &:not(.disabled).focused,
   &:not(.disabled):hover,
   &:not(.disabled):focus-within {
     background-color: #8882;
