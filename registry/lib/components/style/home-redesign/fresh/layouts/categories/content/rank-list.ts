@@ -33,8 +33,8 @@ export const compactRankListCssVars = {
 export const PGCSeasonTypeMap = {
   anime: 1,
   movie: 2,
-  guochuang: 3,
-  documentary: 4,
+  documentary: 3,
+  guochuang: 4,
   tv: 5,
 }
 export const getDefaultRankListCards = (json: any): RankListCard[] => {
