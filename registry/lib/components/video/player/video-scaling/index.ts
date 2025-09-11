@@ -1,7 +1,6 @@
-import { addComponentListener } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { videoChange } from '@/core/observer'
 import { defineComponentMetadata } from '@/components/define'
-import { componentsTags } from '@/components/component'
 import { addControlBarButton } from '@/components/video/video-control-bar'
 import { ScaleState, applyScale, updateScaleFromSettings } from './scale-service'
 import { showScaleToast, cleanupToasts, handleError } from './ui-utils'
@@ -13,8 +12,7 @@ import {
   NO_TOAST_TIME_THRESHOLD,
 } from './constants'
 import { ScalePreset } from './types'
-import './styles.scss'
-import desc from './desc.md'
+import desc from './index.md'
 
 // 创建选项元数据对象，用于动态修改
 const customScaleOption = {
@@ -41,12 +39,19 @@ const toastDurationOption = {
   hidden: false, // 默认显示
 }
 
+// 维护控制栏按钮状态的变量
+let controlBarButtonAdded = false
+
+// 切换控制栏按钮显示状态的函数
+let toggleControlBarButton: ((showButton: boolean) => Promise<void>) | null = null
+
 export const component = defineComponentMetadata({
   author: { name: 'weedy233', link: 'https://github.com/weedy233' },
   name: 'videoScaling',
   displayName: '视频缩放',
   description: desc,
   tags: [componentsTags.video],
+  instantStyles: [{ name: 'videoScaling', style: () => import('./styles.scss') }],
   options: {
     scalePreset: {
       defaultValue: '100%' as ScalePreset,
@@ -163,10 +168,8 @@ export const component = defineComponentMetadata({
       handleError('导入observer', error)
     }
 
-    // 添加控制栏按钮开关的监听器
-    let controlBarButtonAdded = false
-
-    const toggleControlBarButton = async (showButton: boolean) => {
+    // 创建切换控制栏按钮显示状态的函数
+    toggleControlBarButton = async (showButton: boolean) => {
       try {
         if (showButton && !controlBarButtonAdded) {
           await addControlBarButton({
@@ -231,12 +234,20 @@ export const component = defineComponentMetadata({
     } catch (error) {
       handleError('初始化视频缩放控制栏按钮', error)
     }
-
-    return () => {
-      cleanupToasts()
-    }
   },
-  reload: () => {
+  unload: () => {
     cleanupToasts()
+  },
+  reload: async () => {
+    const settings = getComponentSettings('videoScaling')
+    if (settings && settings.options.scalePreset) {
+      if (
+        settings.options.scalePreset &&
+        typeof settings.options.scalePreset === 'string' &&
+        settings.options.scalePreset in SCALE_MAPPING
+      ) {
+        await applyScale(SCALE_MAPPING[settings.options.scalePreset as keyof typeof SCALE_MAPPING])
+      }
+    }
   },
 })
