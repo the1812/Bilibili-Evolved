@@ -10,6 +10,7 @@
 - 新增组件 `定制自动连播行为`, 可根据自动连播视频类型分别配置. (PR #5303 by [wsgh0202](https://github.com/wsgh0202))
 - `网址参数清理` 新增选项 `清理页面中的 A 标签`. (PR #5339 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
 - `保存视频元数据` 支持标签和番剧信息, 支持番剧OPED转换为章节. (PR #5355 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
+- 新增组件 `替换标题党封面`, 可将视频卡片的封面替换为视频预览帧. (PR #5226 by [UcnacDx2](https://github.com/UcnacDx2))
 - 新增组件 `会员购链接转换`, 可将移动端的会员购链接转换为 PC 端的链接. (#5310)
 - `下载视频` 支持配置下载地址偏好. (#3234)
 - 搜索栏支持自动补全关键词和搜索历史. (#822)
