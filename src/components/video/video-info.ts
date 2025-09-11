@@ -1,4 +1,4 @@
-import { getJsonWithCredentials, getText } from '@/core/ajax'
+import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 
 export interface UpInfo {
   uid: number
@@ -27,6 +27,7 @@ export class VideoInfo {
   description: string
   up: UpInfo
   pages: VideoPageInfo[]
+  redirectUrl?: string
 
   constructor(id: string, bvid = false) {
     if (bvid) {
@@ -71,6 +72,7 @@ export class VideoInfo {
       title: it.part,
       pageNumber: it.page,
     }))
+    this.redirectUrl = data.redirect_url
     return this
   }
 
@@ -85,37 +87,118 @@ export class VideoInfo {
     return []
   }
 }
+
+/**
+ * @author WakelessSloth56, LainIO24
+ */
+export interface EpisodeInfo {
+  aid: string
+  bvid: string
+  cid: number
+  epid: number
+  title: string
+  cover: string
+  duration: number
+  skip: {
+    [x in 'ed' | 'op']: { start: number; end: number }
+  }
+  info?: VideoInfo
+}
+
+/**
+ * @author WakelessSloth56, LainIO24
+ */
 export class BangumiInfo {
-  ep: number
+  private readonly epid: number
+  private readonly ssid: number
+
+  mediaId: number
+  seasonId: number
+  seasonTitle: string
+  seriesId: number
+  seriesTitle: string
+  /** @deprecated use {@link BangumiInfo.seasonTitle} instead */
+  title: string
+  cover: string
+  squareCover: string
+  areas: { id: number; name: string }[]
+  /** 简介 */
+  evaluate: string
+  isFinish: boolean
+  isStarted: boolean
+  styles: string[]
+  episode?: EpisodeInfo
+  episodes: EpisodeInfo[]
+  /** @deprecated use {@link BangumiInfo.episodes} instead */
   videos: {
     title: string
     aid: number
     cid: number
     info: VideoInfo
-  }[]
-  title: string
-  cover: string
-  squareCover: string
-  aid: number
-  cid: number
-  constructor(ep: number) {
-    this.ep = ep
-    this.videos = []
+  }[] = []
+
+  private constructor(epid: number, ssid: number) {
+    this.epid = epid
+    this.ssid = ssid
   }
+
+  public static byEpisodeId(epid: number) {
+    return new BangumiInfo(epid, null)
+  }
+
+  public static bySeasonId(ssid: number) {
+    return new BangumiInfo(null, ssid)
+  }
+
   async fetchInfo() {
-    const data = await getText(`https://www.bilibili.com/bangumi/play/ep${this.ep}/`)
-    const json = JSON.parse(data.match(/window\.__INITIAL_STATE__=(.*);\(function\(\){/)[1])
-    this.title = json.mediaInfo.title
-    this.cover = json.mediaInfo.cover
-    this.squareCover = json.mediaInfo.square_cover
-    this.aid = json.epInfo.aid
-    this.cid = json.epInfo.cid
-    this.videos = json.epList.map(async (it: any) => ({
-      title: it.index_title,
-      aid: it.aid,
-      cid: it.cid,
-      info: await new VideoInfo(it.aid).fetchInfo(),
-    }))
+    let url = 'https://api.bilibili.com/pgc/view/web/season?'
+    if (this.epid) {
+      url += `ep_id=${this.epid}`
+    } else if (this.ssid) {
+      url += `season_id=${this.ssid}`
+    }
+    const data = await bilibiliApi(getJsonWithCredentials(url))
+    this.mediaId = data.media_id
+    this.seasonId = data.season_id
+    this.seasonTitle = data.season_title
+    this.title = data.season_title
+    this.seriesId = data.series.series_id
+    this.seriesTitle = data.series.series_title
+    this.cover = data.cover
+    this.squareCover = data.square_cover
+    this.evaluate = data.evaluate
+    this.isFinish = data.publish.is_finish === 1
+    this.isStarted = data.publish.is_started === 1
+    this.styles = data.styles
+    this.areas = data.areas
+    this.episodes = data.episodes.map(x => {
+      const r: EpisodeInfo = {
+        aid: x.aid,
+        bvid: x.bvid,
+        cid: x.cid,
+        epid: x.ep_id,
+        title: x.show_title,
+        cover: x.cover,
+        duration: x.duration / 1000,
+        skip: x.skip,
+      }
+      if (r.epid === this.epid) {
+        this.episode = r
+      }
+      return r
+    })
     return this
+  }
+
+  async fetchInfoWithEpisodes() {
+    await this.fetchInfo()
+    this.episodes.forEach(async r => {
+      const info = new VideoInfo(r.aid)
+      info.cid = r.cid
+      r.info = await info.fetchInfo()
+      if (r.epid === this.epid) {
+        this.episode = r
+      }
+    })
   }
 }

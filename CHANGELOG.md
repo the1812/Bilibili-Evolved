@@ -1,7 +1,38 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.10.4-preview
+`2025-09-11`
+
+包含 [v2.10.4](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.4) 的所有更新内容.
+
+✨新增
+- 新增组件 `定制自动连播行为`, 可根据自动连播视频类型分别配置. (PR #5303 by [wsgh0202](https://github.com/wsgh0202))
+- `网址参数清理` 新增选项 `清理页面中的 A 标签`. (PR #5339 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
+- `保存视频元数据` 支持标签和番剧信息, 支持番剧OPED转换为章节. (PR #5355 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
+- 新增组件 `替换标题党封面`, 可将视频卡片的封面替换为视频预览帧. (PR #5226 by [UcnacDx2](https://github.com/UcnacDx2))
+- 新增组件 `会员购链接转换`, 可将移动端的会员购链接转换为 PC 端的链接. (#5310)
+- `下载视频` 支持配置下载地址偏好. (#3234)
+- 搜索栏支持自动补全关键词和搜索历史. (#822)
+
+## v2.10.4
+`2025-09-11`
+
+✨新增
+- `隐藏用户信息卡片` 适配新版评论区. (#5324, PR #5327 by [WakelessSloth56](https://github.com/WakelessSloth56))
+
+🐛修复
+- 修复 `隐藏首页轮播图` 失效. (PR #5287 by [wsgh0202](https://github.com/wsgh0202))
+- 修复 `删除广告` 在首页无法屏蔽部分广告, 新增移除占位的选项. (PR #5307, #5309 by [wsgh0202](https://github.com/wsgh0202))
+- 修复部分功能未能识别主站分区页面的问题.
+- 修复 `下载表情` 失效. (#5320, PR #5325 by [Pencil](https://github.com/pencilqaq))
+- 修复 `点亮粉丝勋章` 在原版直播间失效. (PR #5328 by [k](https://github.com/kkkkkkkk566))
+- 修复 `清爽首页` 中的国创分区内容显示错误. (#5292)
+- 修复 `评论内容替换` 在 Firefox 中不生效. (#4843)
+- `夜间模式` 排除商家平台 (`shop.bilibili.com`). (PR #5354 by [ImAyxs](https://github.com/Ayx03))
+
 ## v2.10.3-preview
+`2025-07-22`
 
 包含 [v2.10.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.3) 的所有更新内容.
 
@@ -15,9 +46,6 @@
 >
 > - 点击放大镜图标放大预览
 > - 点击缩小图标或者预览框外空白处关闭预览
-
-- 修复 `隐藏首页轮播图` 失效, 并增加了一些局部元素控制功能. (PR #5287 [wsgh0202](https://github.com/wsgh0202))
-
 
 ## v2.10.3
 `2025-07-22`
@@ -52,6 +80,8 @@
 
 </details>
 
+- 修复 `隐藏首页轮播图` 失效, 并增加了一些局部元素控制功能. (PR #5287 by [wsgh0202](https://github.com/wsgh0202))
+
 (以下其实都是 6 月就更新了, 只要你的 `自动更新器` 正常使用, 应该早已收到更新了, 这些改动无需更新本体)
 
 ✨新增
@@ -61,7 +91,7 @@
 🐛修复
 - 修复 `夜间模式` 在首页 svg 图标的颜色. (PR #5240 by [hyrious](https://github.com/hyrious))
 - 修复 `自动移出稍后再看` 重复调用接口的 bug. (PR #5241 by [sunfkny](https://github.com/sunfkny))
-- 修复 `关注时间显示` 失效. (#5096, #5212, PR 5282 by [CNOCM](https://github.com/CNOCM))
+- 修复 `关注时间显示` 失效. (#5096, #5212, PR #5282 by [CNOCM](https://github.com/CNOCM))
 
 
 ## v2.10.2-preview

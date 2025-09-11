@@ -20,6 +20,8 @@ export interface LaunchBarAction {
   deleteAction?: Executable
   /** 显式选中模式: 开启后可以禁止在列表第一项时直接由 Enter 触发 */
   explicitSelect?: boolean
+  /** 用于搜索建议的名称, 在搜索结果中选中时会回填到输入框中 */
+  suggestName?: string
   /** 手动指定在搜索结果中的顺序, 数字越小越排前面 */
   order?: number
 }

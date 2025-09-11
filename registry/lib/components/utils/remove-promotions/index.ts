@@ -1,5 +1,9 @@
+import { RadioItem } from '@/ui'
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
+import { createComponentWithProps } from '@/core/utils'
+
+const componentName = 'removePromotions'
 
 // const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {
@@ -82,29 +86,64 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
     true,
   )
   addComponentListener(
+    `${metadata.name}.hideContainer`,
+    (value: boolean) => {
+      document.body.classList.toggle('remove-promotions-hide-container', value)
+    },
+    true,
+  )
+  addComponentListener(
     `${metadata.name}.showPlaceholder`,
     (value: boolean) => {
-      document.body.classList.toggle('promotion-show-placeholder', value)
+      document.body.classList.toggle('remove-promotions-show-placeholder', value)
+    },
+    true,
+  )
+  addComponentListener(
+    `${metadata.name}.debug`,
+    (value: boolean) => {
+      document.body.classList.toggle('remove-promotions-debug', value)
     },
     true,
   )
 }
+
+const items: Record<string, RadioItem> = {
+  hide: {
+    name: 'hideContainer',
+    isOption: true,
+  },
+  custom: {
+    name: 'custom',
+    isOption: true,
+    optionsIncluded: ['showPlaceholder'],
+  },
+  debug: {
+    name: 'debug',
+    isOption: true,
+  },
+}
+
+const props = {
+  title: '广告卡片选项',
+  groupName: `${componentName}-promotions-card`,
+  items,
+  componentName,
+  icon: 'mdi-checkbox-marked-circle-outline',
+}
+
 export const component = defineComponentMetadata({
-  name: 'removePromotions',
+  name: componentName,
   displayName: '删除广告',
   entry,
   instantStyles: [
     {
-      name: 'removePromotions',
+      name: componentName,
       style: () => import('./remove-promotions.scss'),
     },
   ],
   tags: [componentsTags.utils],
   options: {
-    showPlaceholder: {
-      displayName: '占位文本',
-      defaultValue: true,
-    },
     preserveEventBanner: {
       displayName: '保留活动横幅',
       defaultValue: false,
@@ -113,5 +152,38 @@ export const component = defineComponentMetadata({
       displayName: '保留动态商品推荐',
       defaultValue: false,
     },
+
+    // 以下选项在 extraOptions 中显示，设置 hidden: true 以免重复渲染
+    hideContainer: {
+      displayName: '完全隐藏',
+      defaultValue: true,
+      hidden: true,
+    },
+    /** 无实际作用，仅用于记录选项组状态 */
+    custom: {
+      displayName: '自定义',
+      defaultValue: false,
+      hidden: true,
+    },
+    showPlaceholder: {
+      displayName: '占位文本',
+      defaultValue: true,
+      hidden: true,
+    },
+    debug: {
+      displayName: '调试模式',
+      defaultValue: false,
+      hidden: true,
+    },
+  },
+  extraOptions: () =>
+    import('@/ui').then(m =>
+      createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: false }),
+    ),
+  widget: {
+    component: () =>
+      import('@/ui').then(m =>
+        createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: true }),
+      ),
   },
 })

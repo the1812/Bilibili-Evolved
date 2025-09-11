@@ -1,0 +1,38 @@
+.bili-video-card .bili-video-card__image--wrap {
+  position: relative;
+}
+
+.bili-video-card .bili-video-card__image--wrap picture {
+  visibility: hidden !important;
+}
+
+.bili-video-card .bili-video-card__image--wrap .custom-preview-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: inherit; /* 继承父元素的圆角 */
+}
+
+.bili-video-card .bili-video-card__image--wrap .custom-preview-img.loaded {
+  opacity: 1;
+}
+
+/* 鼠标悬停时隐藏自定义预览图，显示原始图片 */
+.bili-video-card .bili-video-card__image--wrap:hover .custom-preview-img.loaded {
+  opacity: 0;
+}
+
+.bili-video-card .bili-video-card__image--wrap:hover picture {
+  visibility: visible !important;
+}
+
+/* 可选: 添加占位符背景色或加载动画 */
+.bili-video-card .bili-video-card__image--wrap .custom-preview-img:not(.loaded) {
+  background-color: #f0f0f0;
+}
