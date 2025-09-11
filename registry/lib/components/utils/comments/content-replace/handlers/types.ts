@@ -1,7 +1,7 @@
-import type { CommentItem } from '@/components/utils/comment-apis'
+import { CommentReplyItem } from '@/components/utils/comment/reply-item'
 
 export interface CommentContentReplaceContext {
-  commentItem: CommentItem
+  commentItem: CommentReplyItem
   content: Node[]
 }
 export type CommentContentReplaceHandler = (

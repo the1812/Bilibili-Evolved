@@ -20,7 +20,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等.\r\n\r\n- `保留活动横幅`: 保留视频页面的活动横幅.\r\n- `选项`\r\n  - `卡片占位`: 关闭时广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置\r\n  - `占位文本`: 屏蔽首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n  - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效\r\n",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -191,7 +191,7 @@
         "type": "component",
         "name": "removePromotions",
         "displayName": "删除广告",
-        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等. 注意: 首页推广模块删除后留下空白区域是正常现象, 如果觉得怪可以开启 \\`占位文本\\` 选项.\r\n\r\n- \\`占位文本\\`: 删除首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n- \\`保留活动横幅\\`: 保留视频页面的活动横幅.\r\n",
+        "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等.\r\n\r\n- `保留活动横幅`: 保留视频页面的活动横幅.\r\n- `选项`\r\n  - `卡片占位`: 关闭时广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置\r\n  - `占位文本`: 屏蔽首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\r\n  - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效\r\n",
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },

@@ -1,5 +1,5 @@
 import { ComponentEntry } from '@/components/types'
-import { defineComponentMetadata } from '@/components/define'
+import { wrapSwitchOptions } from '@/components/switch-options'
 
 // const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {
@@ -81,15 +81,24 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
     },
     true,
   )
-  addComponentListener(
-    `${metadata.name}.showPlaceholder`,
-    (value: boolean) => {
-      document.body.classList.toggle('promotion-show-placeholder', value)
-    },
-    true,
-  )
 }
-export const component = defineComponentMetadata({
+export const component = wrapSwitchOptions({
+  name: 'removePromotionOptions',
+  switches: {
+    showContainer: {
+      displayName: '卡片占位',
+      defaultValue: true,
+    },
+    showPlaceholder: {
+      displayName: '占位文本',
+      defaultValue: true,
+    },
+    debug: {
+      displayName: '调试模式',
+      defaultValue: false,
+    },
+  },
+})({
   name: 'removePromotions',
   displayName: '删除广告',
   entry,
@@ -101,10 +110,6 @@ export const component = defineComponentMetadata({
   ],
   tags: [componentsTags.utils],
   options: {
-    showPlaceholder: {
-      displayName: '占位文本',
-      defaultValue: true,
-    },
     preserveEventBanner: {
       displayName: '保留活动横幅',
       defaultValue: false,

@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import { forEachCommentItem } from '@/components/utils/comment-apis'
-import { select } from '@/core/spin-query'
+import { CommentReplyItem, forEachCommentItem } from '@/components/utils/comment-apis'
+import { sq } from '@/core/spin-query'
 import { getData } from '@/plugins/data'
 import type { CommentContentReplaceHandler } from './handlers/types'
 import { commentContentReplaceOptions } from './options'
@@ -14,21 +14,33 @@ export const component = defineComponentMetadata({
     forEachCommentItem({
       added: async commentItem => {
         const { CommentContentReplaceHandlers } = await import('./handlers')
-        if (commentItem.shadowDomEntry === undefined) {
-          return
+        const replaceContent = async (item: CommentReplyItem) => {
+          if (item.shadowDomEntry === undefined) {
+            return
+          }
+          const content = await sq(
+            () => item.shadowDomEntry.querySelector(':host(bili-rich-text) #contents'),
+            contents => contents.childNodes.length > 0,
+            { queryInterval: 100 },
+          )
+          if (content === null) {
+            return
+          }
+          const [handlers] = getData(CommentContentReplaceHandlers) as [
+            CommentContentReplaceHandler[],
+          ]
+          handlers.forEach(h => h({ commentItem: item, content: Array.from(content.childNodes) }))
         }
-        const content = await select(
-          () => commentItem.shadowDomEntry.querySelector(':host(bili-rich-text) #contents'),
-          { queryInterval: 200 },
-        )
-        if (content === null) {
-          return
-        }
-        content.childNodes
-        const [handlers] = getData(CommentContentReplaceHandlers) as [
-          CommentContentReplaceHandler[],
-        ]
-        handlers.forEach(h => h({ commentItem, content: Array.from(content.childNodes) }))
+        await replaceContent(commentItem)
+        commentItem.replies.forEach(reply => {
+          replaceContent(reply)
+        })
+        commentItem.addEventListener('repliesUpdate', e => {
+          const replies = (e as CustomEvent).detail as CommentReplyItem[]
+          replies.forEach(reply => {
+            replaceContent(reply)
+          })
+        })
       },
     })
   },

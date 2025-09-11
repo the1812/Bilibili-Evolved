@@ -3,7 +3,11 @@ import { getCsrf, getUID } from '@/core/utils'
 
 // 获取当前直播间号
 export function getLiveRoomId(): string {
-  const matched = location.href.match(/live.bilibili.com\/(\d+)/)
+  let matched = location.href.match(/live.bilibili.com\/(\d+)/)
+  if (matched) {
+    return matched[1]
+  }
+  matched = location.href.match(/live.bilibili.com\/blanc\/(\d+)/)
   return matched ? matched[1] : ''
 }
 
