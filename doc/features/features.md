@@ -429,16 +429,13 @@ by [@Tinhone](https://github.com/Tinhone)
 
 选项说明：
 
-- `禁用轮播`：禁用图片轮播，可以手动切换
-- `图片模糊`：模糊轮播图片，为0时不模糊
-- `样式开关`：
-  - `隐藏轮播区域占位`：完全隐藏整个轮播区域
-  - `透明化轮播区域`：完全透明化整个轮播区域，同时禁止点击打开链接
+- `完全隐藏`：完全隐藏整个轮播区域
+- `透明化`：完全透明化整个轮播区域，同时禁止点击打开链接
+- `自定义`：
+  - `禁用轮播`：禁用图片轮播，可以手动切换
+  - `图片模糊`：模糊轮播图片，为0时不模糊
   - `隐藏轮播图片`：隐藏轮播图片，同时禁止点击图片打开链接
   - `隐藏图片标题`：隐藏图片标题，同时禁止点击标题打开链接
-
-  > 注：样式开关可以同时启用，但是最终显示效果以作用范围大的为准  
-  > 例如启用 `隐藏轮播区域占位`，由于整个区域都被隐藏，不管 `隐藏轮播图片`、`隐藏图片标题` 等选项是否启用都已经看不见了
 
 ### [隐藏热搜](../../registry/dist/components/style/hide/trending-search.js)
 `hideTrendingSearch`
@@ -585,6 +582,17 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-shadow.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-shadow.js)
 
 为播放器添加主题色投影.
+
+### [替换标题党封面](../../registry/dist/components/style/replace-cover.js)
+`replaceCover`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/replace-cover.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/replace-cover.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/replace-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/replace-cover.js)
+
+by [@UcnacDx2](https://github.com/UcnacDx2)
+
+将视频卡片的封面替换为视频预览帧，杜绝图文不符。致敬DeArrow。
 
 ### [使用细滚动条](../../registry/dist/components/style/scrollbar.js)
 `elegantScrollbar`
@@ -961,6 +969,15 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 
 为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.
 
+### [会员购链接重定向](../../registry/dist/components/utils/mall-link-redirect.js)
+`mallLinkRedirect`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/mall-link-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/mall-link-redirect.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/mall-link-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/mall-link-redirect.js)
+
+将移动端的会员购链接转换为 PC 端的链接
+
 ### [删除广告](../../registry/dist/components/utils/remove-promotions.js)
 `removePromotions`
 
@@ -971,9 +988,10 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等.
 
 - `保留活动横幅`: 保留视频页面的活动横幅.
-- `选项`
-  - `卡片占位`: 关闭时广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置
-  - `占位文本`: 屏蔽首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
+- `广告卡片选项`
+  - `完全隐藏`: 广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置
+  - `自定义`
+    - `占位文本`: 屏蔽首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
   - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效
 
 ### [关注时间显示](../../registry/dist/components/utils/subscribe-time-show.js)
@@ -995,6 +1013,8 @@ by [@CNOCM](https://github.com/CNOCM)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/url-params-clean.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/url-params-clean.js)
 
 自动删除网址中的多余跟踪参数。请注意这会导致浏览器历史记录出现重复的标题（分别是转换前后的网址），并可能导致后退要多退几次。
+
+- `清理页面中的 A 标签`: 清理视频简介、推荐列表、标签、评论中的链接。
 
 ### [v1 设置迁移](../../registry/dist/components/utils/v1-migrate.js)
 `v1Migrate`
@@ -1212,6 +1232,25 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/control-background.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/control-background.js)
 
 给视频播放器控制栏附上半透明的黑色, 代替原来的阴影.
+
+### [定制自动连播行为](../../registry/dist/components/video/player/custom-auto-play.js)
+`customAutoPlay`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/custom-auto-play.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/custom-auto-play.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/custom-auto-play.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/custom-auto-play.js)
+
+定制自动连播行为，可根据自动连播视频类型分别配置
+
+---
+
+自动连播行为：
+
+- 自动：类似 `传统连播模式`，区别是多P视频包括番剧，具体如下
+  - 单P视频放完禁止连播其他推荐视频
+  - 多P视频（番剧、多P列表、收藏夹等）连播到最后1P停止
+- 禁用：不自动连播
+- 总是：总是自动连播
 
 ### [默认播放器模式](../../registry/dist/components/video/player/default-mode.js)
 `defaultPlayerMode`
