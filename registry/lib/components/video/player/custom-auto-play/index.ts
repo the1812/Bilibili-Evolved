@@ -13,6 +13,7 @@ import { FavoriteAutoplayHandler } from './handlers/FavoriteAutoplayHandler'
 import { PlaylistAutoplayHandler } from './handlers/PlaylistAutoplayHandler'
 import { RecommendAutoplayHandler } from './handlers/RecommendAutoplayHandler'
 import { WatchLaterAutoplayHandler } from './handlers/WatchLaterAutoplayHandler'
+import { MultipartAutoplayHandler } from './handlers/MultipartAutoplayHandler'
 
 export const logger = useScopedConsole('定制自动连播行为')
 
@@ -38,6 +39,7 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
   function registerHandlers() {
     BaseAutoplayHandler.register(new BangumiAutoplayHandler())
     BaseAutoplayHandler.register(new FavoriteAutoplayHandler())
+    BaseAutoplayHandler.register(new MultipartAutoplayHandler())
     BaseAutoplayHandler.register(new PlaylistAutoplayHandler())
     BaseAutoplayHandler.register(new RecommendAutoplayHandler())
     BaseAutoplayHandler.register(new WatchLaterAutoplayHandler())
@@ -97,8 +99,13 @@ export const component = defineComponentMetadata({
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
-    playlistAutoplayAction: {
+    multipartAutoplayAction: {
       displayName: '自动连播行为-分p视频',
+      defaultValue: AutoplayActionType.AUTO,
+      dropdownEnum: AutoplayActionType,
+    },
+    playlistAutoplayAction: {
+      displayName: '自动连播行为-视频合集',
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
