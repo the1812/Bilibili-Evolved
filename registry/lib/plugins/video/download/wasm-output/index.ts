@@ -11,10 +11,16 @@ export const plugin: PluginMetadata = {
   name: 'downloadVideo.outputs.wasm',
   displayName: `下载视频 - ${title}`,
   description: desc,
-  author: {
-    name: 'WakelessSloth56',
-    link: 'https://github.com/WakelessSloth56',
-  },
+  author: [
+    {
+      name: 'WakelessSloth56',
+      link: 'https://github.com/WakelessSloth56',
+    },
+    {
+      name: 'LainIO24',
+      link: 'https://github.com/LainIO24',
+    },
+  ],
   setup: ({ addData }) => {
     addData('downloadVideo.outputs', (outputs: DownloadVideoOutput[]) => {
       outputs.push({

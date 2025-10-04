@@ -10,6 +10,7 @@ const mp4Format: Format = {
       args.push('-i', 'cover', '-i', 'metadata')
       args.push('-map', '0', '-map', '1', '-map', '2')
       args.push('-map_metadata', '3', '-disposition:2', 'attached_pic')
+      // mdta atom 格式元数据和封面互相干扰，不启用 +use_metadata_tags
     } else if (hasCover && !hasMetadata) {
       args.push('-i', 'cover')
       args.push('-map', '0', '-map', '1', '-map', '2')
@@ -19,7 +20,7 @@ const mp4Format: Format = {
       args.push('-map_metadata', '2', '-movflags', '+use_metadata_tags')
     }
     args.push('-codec:v', 'copy')
-    args.push('-codec:a', isFlac ? 'alac' : 'copy')
+    args.push('-codec:a', isFlac ? 'alac' : 'copy') // MP4不支持FLAC，使用ALAC重新编码FLAC
     args.push('-f', 'mp4')
     return args
   },
@@ -62,6 +63,9 @@ export async function mux(
   metadata: Uint8Array,
 ) {
   if (outputType === 'auto') {
+    // 自动选择格式：
+    // FLAC音轨   -> MKV
+    // 元数据+封面 -> MKV
     outputType = isFlac ? 'matroska' : 'mp4'
     outputType = cover && metadata ? 'matroska' : outputType
   }
