@@ -11,3 +11,9 @@ export interface Format {
 export type OutputFormats = {
   [x in Exclude<OutputType, Auto>]: Format
 }
+
+export interface Options {
+  muxWithMetadata: boolean
+  attachCover: boolean
+  outputType: OutputType
+}
