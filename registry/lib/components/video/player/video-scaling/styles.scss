@@ -1,0 +1,19 @@
+/* 视频缩放组件样式补充 */
+
+/* 确保缩放功能在不同播放器版本中都能正常工作 */
+.bilibili-player-video {
+  position: relative;
+  overflow: hidden;
+}
+
+.bpx-player-video-container {
+  position: relative;
+  overflow: hidden;
+}
+
+/* 自定义缩放时的平滑过渡效果 */
+.bilibili-player-video video,
+video[class^="bpx-player-video-element"],
+.bilibili-player-video .bpx-player-video-element {
+  transition: transform 0.3s ease;
+}
