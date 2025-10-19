@@ -57,3 +57,17 @@ export function bangumiSkipToViewPoints(skip: EpisodeInfo['skip'], duration: num
 
   return p
 }
+
+export function formatTime(date: Date, format: TimeFormat) {
+  switch (format) {
+    case TimeFormat.Timestmp:
+      return date.getTime()
+    case TimeFormat.Local:
+      return date.toLocaleString()
+    case TimeFormat.IOS:
+      return date.toISOString()
+    default:
+      break
+  }
+  return 0
+}

@@ -5,11 +5,22 @@ export enum FieldsMode {
   Standard = '仅标准字段',
 }
 
+export enum TimeFormat {
+  Timestmp = '时间戳',
+  Local = '本地时间',
+  IOS = 'ISO时间',
+}
+
 export const options = defineOptionsMetadata({
   fieldsMode: {
-    defaultValue: FieldsMode.ALL,
     displayName: 'FFMETADATA 字段',
     dropdownEnum: FieldsMode,
+    defaultValue: FieldsMode.ALL,
+  },
+  timeFormat: {
+    displayName: '时间格式',
+    dropdownEnum: TimeFormat,
+    defaultValue: TimeFormat.Local,
   },
   convertBangumiSkips: {
     displayName: '将番剧的「跳过头尾」转换为章节', //
