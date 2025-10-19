@@ -85,7 +85,7 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
   console.debug(data)
 
   const {
-    options: { fieldsMode, timeFormat },
+    options: { fieldsMode, timeFormat, includeStat },
   } = getComponentSettings<Options>(componentName)
 
   const generated = new Date()
@@ -147,8 +147,7 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
         ),
       )
     }
-    // TODO option for includeStat
-    if (true) {
+    if (includeStat) {
       const s = basic.stat
       lines.push(
         ff('stat_view', s.view),

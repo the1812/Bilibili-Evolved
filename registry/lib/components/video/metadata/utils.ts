@@ -1,4 +1,5 @@
 import { EpisodeInfo } from '@/components/video/video-info'
+import { TimeFormat } from './options'
 import { Tag, ViewPoint } from './types'
 
 export function escape(x: any) {

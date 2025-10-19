@@ -26,6 +26,10 @@ export const options = defineOptionsMetadata({
     displayName: '将番剧的「跳过头尾」转换为章节', //
     defaultValue: true,
   },
+  includeStat: {
+    displayName: '包含状态数（播放数、点赞数等）', //
+    defaultValue: true,
+  },
 })
 
 export type Options = OptionsOfMetadata<typeof options>
