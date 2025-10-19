@@ -141,6 +141,22 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
         ),
       )
     }
+    // TODO option for includeStat
+    if (true) {
+      const s = basic.stat
+      lines.push(
+        ff('stat_view', s.view),
+        ff('stat_like', s.like),
+        ff('stat_coin', s.coin),
+        ff('stat_favorite', s.favorite),
+        ff('stat_share', s.share),
+        ff('stat_danmaku', s.danmaku),
+        ff('stat_reply', s.reply),
+      )
+      if (s.his_rank > 0) {
+        lines.push(ff('stat_highest_rank', s.his_rank))
+      }
+    }
     if (data.quality) {
       lines.push(ff('quality', data.quality.value))
       lines.push(ff('quality_label', data.quality.name))
