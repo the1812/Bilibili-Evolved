@@ -12,6 +12,18 @@ export interface VideoPageInfo {
   pageNumber: number
 }
 
+export interface VideoStat {
+  view: number
+  like: number
+  coin: number
+  favorite: number
+  share: number
+  danmaku: number
+  reply: number
+  /** 历史最高排名 */
+  his_rank: number
+}
+
 export class VideoInfo {
   aid: string
   bvid: string
@@ -28,6 +40,7 @@ export class VideoInfo {
   up: UpInfo
   pages: VideoPageInfo[]
   redirectUrl?: string
+  stat: VideoStat
 
   constructor(id: string, bvid = false) {
     if (bvid) {
@@ -73,6 +86,7 @@ export class VideoInfo {
       pageNumber: it.page,
     }))
     this.redirectUrl = data.redirect_url
+    this.stat = data.stat
     return this
   }
 
