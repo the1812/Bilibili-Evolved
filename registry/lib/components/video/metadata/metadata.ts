@@ -132,6 +132,7 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
         ff('bangumi_season_title', d.seasonTitle),
         ff('bangumi_series_id', d.seriesId),
         ff('bangumi_series_title', d.seriesTitle),
+        ff('bangumi_section_title', d.episode.section),
         ff('bangumi_episode_id', d.episode.epid),
         ff('bangumi_episode_title', d.episode.title),
         ff(
