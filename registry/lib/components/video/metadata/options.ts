@@ -8,7 +8,7 @@ export enum FieldsMode {
 export enum TimeFormat {
   Timestmp = '时间戳',
   Local = '本地时间',
-  IOS = 'ISO时间',
+  ISO = 'ISO时间',
 }
 
 export const options = defineOptionsMetadata({

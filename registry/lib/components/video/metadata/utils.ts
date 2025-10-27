@@ -65,7 +65,7 @@ export function formatTime(date: Date, format: TimeFormat) {
       return date.getTime()
     case TimeFormat.Local:
       return date.toLocaleString()
-    case TimeFormat.IOS:
+    case TimeFormat.ISO:
       return date.toISOString()
     default:
       break
