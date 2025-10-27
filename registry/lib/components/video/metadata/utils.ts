@@ -1,4 +1,5 @@
 import { EpisodeInfo } from '@/components/video/video-info'
+import { TimeFormat } from './options'
 import { Tag, ViewPoint } from './types'
 
 export function escape(x: any) {
@@ -56,4 +57,18 @@ export function bangumiSkipToViewPoints(skip: EpisodeInfo['skip'], duration: num
   }
 
   return p
+}
+
+export function formatTime(date: Date, format: TimeFormat) {
+  switch (format) {
+    case TimeFormat.Timestmp:
+      return date.getTime()
+    case TimeFormat.Local:
+      return date.toLocaleString()
+    case TimeFormat.ISO:
+      return date.toISOString()
+    default:
+      break
+  }
+  return 0
 }
