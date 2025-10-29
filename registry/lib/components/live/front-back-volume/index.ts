@@ -1,17 +1,52 @@
-import { defineComponentMetadata } from '@/components/define'
+import {
+  defineComponentMetadata,
+  defineOptionsMetadata,
+  OptionsOfMetadata,
+} from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
 import { select } from '@/core/spin-query'
 import { delay } from '@/core/utils'
-import { addComponentListener } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 
 // 音量常数配置
 const DEFAULT_FOREGROUND_VOLUME = 10
 const DEFAULT_BACKGROUND_VOLUME = 3
 
+const options = defineOptionsMetadata({
+  foregroundVolume: {
+    displayName: '前台音量',
+    defaultValue: DEFAULT_FOREGROUND_VOLUME,
+    validator: (value: number) => {
+      const num = Math.round(value)
+      return num >= 0 && num <= 100 ? num : DEFAULT_FOREGROUND_VOLUME
+    },
+  },
+  backgroundVolume: {
+    displayName: '后台音量',
+    defaultValue: DEFAULT_BACKGROUND_VOLUME,
+    validator: (value: number) => {
+      const num = Math.round(value)
+      return num >= 0 && num <= 100 ? num : DEFAULT_BACKGROUND_VOLUME
+    },
+  },
+  enableLogging: {
+    displayName: '启用日志输出',
+    defaultValue: true,
+  },
+})
+
+export type Options = OptionsOfMetadata<typeof options>
+
 let videoElement: HTMLVideoElement | null = null
 let isInitialized = false
 let currentForegroundVolume = DEFAULT_FOREGROUND_VOLUME / 100
 let currentBackgroundVolume = DEFAULT_BACKGROUND_VOLUME / 100
+
+// 事件处理函数
+let handleLoadedMetadata: (() => void) | null = null
+let handleVisibilityChange: (() => void) | null = null
+let handleFocus: (() => void) | null = null
+let handleBlur: (() => void) | null = null
 
 // 获取当前直播间号
 const getLiveRoomId = (): string => {
@@ -71,18 +106,17 @@ const setupVolumeControl = async (enableLogging: boolean): Promise<void> => {
     adjustVolume(enableLogging)
 
     if (!isInitialized) {
-      const handleLoadedMetadata = () => {
+      handleLoadedMetadata = () => {
         if (videoElement) {
           adjustVolume(enableLogging)
         }
       }
 
+      handleVisibilityChange = () => adjustVolume(enableLogging)
+      handleFocus = () => adjustVolume(enableLogging)
+      handleBlur = () => adjustVolume(enableLogging)
+
       videoElement.addEventListener('loadedmetadata', handleLoadedMetadata)
-
-      const handleVisibilityChange = () => adjustVolume(enableLogging)
-      const handleFocus = () => adjustVolume(enableLogging)
-      const handleBlur = () => adjustVolume(enableLogging)
-
       document.addEventListener('visibilitychange', handleVisibilityChange)
       window.addEventListener('focus', handleFocus)
       window.addEventListener('blur', handleBlur)
@@ -144,31 +178,57 @@ export const component = defineComponentMetadata({
     await delay(2000)
     await setupVolumeControl(enableLogging)
   },
-  options: {
-    foregroundVolume: {
-      displayName: '前台音量',
-      defaultValue: DEFAULT_FOREGROUND_VOLUME,
-      validator: (value: number) => {
-        const num = Math.round(value)
-        return num >= 0 && num <= 100 ? num : DEFAULT_FOREGROUND_VOLUME
-      },
-    },
-    backgroundVolume: {
-      displayName: '后台音量',
-      defaultValue: DEFAULT_BACKGROUND_VOLUME,
-      validator: (value: number) => {
-        const num = Math.round(value)
-        return num >= 0 && num <= 100 ? num : DEFAULT_BACKGROUND_VOLUME
-      },
-    },
-    enableLogging: {
-      displayName: '启用日志输出',
-      defaultValue: true,
-    },
-  },
-  unload: () => {
+  options,
+  reload: async () => {
+    const settings = getComponentSettings<Options>('frontBackVolume')
+
+    if (videoElement && handleLoadedMetadata) {
+      videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata)
+    }
+    if (handleVisibilityChange) {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+    if (handleFocus) {
+      window.removeEventListener('focus', handleFocus)
+    }
+    if (handleBlur) {
+      window.removeEventListener('blur', handleBlur)
+    }
+
     isInitialized = false
     videoElement = null
+
+    handleLoadedMetadata = null
+    handleVisibilityChange = null
+    handleFocus = null
+    handleBlur = null
+
+    currentForegroundVolume = settings.options.foregroundVolume / 100
+    currentBackgroundVolume = settings.options.backgroundVolume / 100
+
+    await setupVolumeControl(settings.options.enableLogging)
+  },
+  unload: () => {
+    if (videoElement && handleLoadedMetadata) {
+      videoElement.removeEventListener('loadedmetadata', handleLoadedMetadata)
+    }
+    if (handleVisibilityChange) {
+      document.removeEventListener('visibilitychange', handleVisibilityChange)
+    }
+    if (handleFocus) {
+      window.removeEventListener('focus', handleFocus)
+    }
+    if (handleBlur) {
+      window.removeEventListener('blur', handleBlur)
+    }
+
+    isInitialized = false
+    videoElement = null
+
+    handleLoadedMetadata = null
+    handleVisibilityChange = null
+    handleFocus = null
+    handleBlur = null
 
     currentForegroundVolume = DEFAULT_FOREGROUND_VOLUME / 100
     currentBackgroundVolume = DEFAULT_BACKGROUND_VOLUME / 100
