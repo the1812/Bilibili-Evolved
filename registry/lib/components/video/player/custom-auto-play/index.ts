@@ -14,6 +14,7 @@ import { PlaylistAutoplayHandler } from './handlers/PlaylistAutoplayHandler'
 import { RecommendAutoplayHandler } from './handlers/RecommendAutoplayHandler'
 import { WatchLaterAutoplayHandler } from './handlers/WatchLaterAutoplayHandler'
 import { MultipartAutoplayHandler } from './handlers/MultipartAutoplayHandler'
+import { RecommendListAutoplayHandler } from './handlers/RecommendListAutoplayHandler'
 
 export const logger = useScopedConsole('定制自动连播行为')
 
@@ -43,6 +44,7 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
     BaseAutoplayHandler.register(new PlaylistAutoplayHandler())
     BaseAutoplayHandler.register(new RecommendAutoplayHandler())
     BaseAutoplayHandler.register(new WatchLaterAutoplayHandler())
+    BaseAutoplayHandler.register(new RecommendListAutoplayHandler())
   }
 
   // 入口代码
@@ -90,7 +92,12 @@ export const component = defineComponentMetadata({
       dropdownEnum: AutoplayActionType,
     },
     recommendAutoplayAction: {
-      displayName: '自动连播行为-推荐视频',
+      displayName: '自动连播行为-推荐视频（接下来播放）',
+      defaultValue: AutoplayActionType.AUTO,
+      dropdownEnum: AutoplayActionType,
+    },
+    recommendListAutoplayAction: {
+      displayName: '自动连播行为-推荐视频（列表第一个）',
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
