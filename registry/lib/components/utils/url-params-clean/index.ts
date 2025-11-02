@@ -143,7 +143,13 @@ const entry = async () => {
     })
     const query = filteredParamsString ? `?${filteredParamsString}` : ''
     url.search = query
-    return url.toString()
+
+    // 移除末尾'/'
+    const urlString = url.toString()
+    if (urlString.endsWith('/')) {
+      return urlString.slice(0, -1)
+    }
+    return urlString
   }
 
   const createHistoryHook = (
