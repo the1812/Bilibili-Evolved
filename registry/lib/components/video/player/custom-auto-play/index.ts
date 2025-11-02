@@ -23,17 +23,44 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
   async function initScript() {
     await playerReady()
 
-    const handler = await BaseAutoplayHandler.getHandler()
-    if (!handler) {
+    const handlers = await BaseAutoplayHandler.getHandlers()
+    if (handlers.length === 0) {
       logger.warn('未找到匹配的自动播放处理器')
       return
     }
 
-    const enable = await handler.shouldAutoplay()
-    logger.log(
-      `导航变化（${document.URL}），重新初始化脚本\n自动连播类型：${handler.type}\n是否应该自动连播：${enable}`,
-    )
-    await handler.setupAutoPlay(enable)
+    logger.log(`导航变化（${document.URL}），重新初始化脚本`)
+    let enableHandler: BaseAutoplayHandler | null = null
+    const disableHandlers: BaseAutoplayHandler[] = []
+    // 分类所有匹配的处理器
+    for (const handler of handlers) {
+      const enable = await handler.shouldAutoplay()
+      if (enable) {
+        // 找到首个应连播的处理器
+        if (enableHandler === null) {
+          logger.log(`自动连播类型：${handler.type}\n是否应该自动连播：${enable}`)
+          enableHandler = handler
+          continue
+        }
+
+        logger.log(
+          `自动连播类型：${handler.type}\n是否应该自动连播：${enable}，已有启用的连播类型，自动设置为不连播`,
+        )
+      } else {
+        logger.log(`自动连播类型：${handler.type}\n是否应该自动连播：${enable}`)
+      }
+
+      // 其余加入禁用列表
+      disableHandlers.push(handler)
+    }
+
+    // 先设置禁用连播，以防覆盖掉启用的处理器
+    for (const handler of disableHandlers) {
+      await handler.setupAutoPlay(false)
+    }
+
+    // 设置应连播的类型
+    await enableHandler.setupAutoPlay(true)
   }
 
   /** 注册自动播放处理器 */
