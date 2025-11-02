@@ -69,8 +69,8 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
     BaseAutoplayHandler.register(new FavoriteAutoplayHandler())
     BaseAutoplayHandler.register(new MultipartAutoplayHandler())
     BaseAutoplayHandler.register(new PlaylistAutoplayHandler())
-    BaseAutoplayHandler.register(new RecommendAutoplayHandler())
     BaseAutoplayHandler.register(new WatchLaterAutoplayHandler())
+    BaseAutoplayHandler.register(new RecommendAutoplayHandler())
     BaseAutoplayHandler.register(new RecommendListAutoplayHandler())
   }
 
@@ -118,18 +118,8 @@ export const component = defineComponentMetadata({
       defaultValue: AutoplayActionType.ALWAYS,
       dropdownEnum: AutoplayActionType,
     },
-    recommendAutoplayAction: {
-      displayName: '自动连播行为-推荐视频（接下来播放）',
-      defaultValue: AutoplayActionType.AUTO,
-      dropdownEnum: AutoplayActionType,
-    },
-    recommendListAutoplayAction: {
-      displayName: '自动连播行为-推荐视频（列表第一个）',
-      defaultValue: AutoplayActionType.AUTO,
-      dropdownEnum: AutoplayActionType,
-    },
-    watchLaterAutoplayAction: {
-      displayName: '自动连播行为-稍后再看',
+    favoriteAutoplayAction: {
+      displayName: '自动连播行为-收藏夹',
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
@@ -143,8 +133,18 @@ export const component = defineComponentMetadata({
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
-    favoriteAutoplayAction: {
-      displayName: '自动连播行为-收藏夹',
+    watchLaterAutoplayAction: {
+      displayName: '自动连播行为-稍后再看',
+      defaultValue: AutoplayActionType.AUTO,
+      dropdownEnum: AutoplayActionType,
+    },
+    recommendAutoplayAction: {
+      displayName: '自动连播行为-推荐视频（接下来播放）',
+      defaultValue: AutoplayActionType.AUTO,
+      dropdownEnum: AutoplayActionType,
+    },
+    recommendListAutoplayAction: {
+      displayName: '自动连播行为-推荐视频（列表第一个）',
       defaultValue: AutoplayActionType.AUTO,
       dropdownEnum: AutoplayActionType,
     },
