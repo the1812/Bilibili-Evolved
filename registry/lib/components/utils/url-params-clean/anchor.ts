@@ -64,7 +64,11 @@ export const cleanAnchors = async (getCleanUrl: (u: string) => string) => {
     })
 
     // 视频推荐列表
-    observe(dq('.rcmd-tab'), observeChildListSubtreeHref, cleanMutationAnchors)
+    observe(
+      dq('.rcmd-tab,.playlist-container--right'),
+      observeChildListSubtreeHref,
+      cleanMutationAnchors,
+    )
 
     // 评论区
     forEachCommentArea(async area => {
