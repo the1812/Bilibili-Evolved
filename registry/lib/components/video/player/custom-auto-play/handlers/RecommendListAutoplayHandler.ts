@@ -24,23 +24,23 @@ export class RecommendListAutoplayHandler extends BaseAutoplayHandler {
     )
   }
 
+  /** 视频结束回调 */
+  private onVideoEnded = () => {
+    const a = this.getFirstRecommend() as HTMLElement
+    window.location.assign(a.getAttribute('href'))
+  }
+
   async setupAutoPlay(enable: boolean) {
-    // 原网页不存在的功能，不需要专门禁用
-    if (!enable) {
+    const video = document.querySelector('video')
+    if (!video) {
       return
     }
 
-    const video = document.querySelector('video')
-
-    // 在视频播放完时触发一次
-    video.addEventListener(
-      'ended',
-      () => {
-        const a = this.getFirstRecommend() as HTMLElement
-        a.click()
-      },
-      { once: true },
-    )
+    if (enable) {
+      video.addEventListener('ended', this.onVideoEnded, { once: true })
+    } else {
+      video.removeEventListener('ended', this.onVideoEnded)
+    }
   }
 
   /** 获取推荐视频列表首个视频链接 */
