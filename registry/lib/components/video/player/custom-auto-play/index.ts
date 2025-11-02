@@ -60,7 +60,7 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
     }
 
     // 设置应连播的类型
-    await enableHandler.setupAutoPlay(true)
+    await enableHandler?.setupAutoPlay(true)
   }
 
   /** 注册自动播放处理器 */
