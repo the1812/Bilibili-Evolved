@@ -64,8 +64,9 @@ export const cleanAnchors = async (getCleanUrl: (u: string) => string) => {
     })
 
     // 视频推荐列表
+    cleanAll(dqa('.recommend-list-container a'))
     observe(
-      dq('.rcmd-tab,.playlist-container--right'),
+      dq('.rcmd-tab,.recommend-list-container'),
       observeChildListSubtreeHref,
       cleanMutationAnchors,
     )
