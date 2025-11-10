@@ -52,9 +52,11 @@ function sideEffect() {
     (ev: ReturnType<typeof createPlayerModeChangeEvent>) => {
       const { mode } = ev.detail
 
-      currentMode = mode
+      if (mode !== 'mini') {
+        currentMode = mode
+      }
 
-      if (mode === 'wide') {
+      if (currentMode === 'wide') {
         danmuku.style.marginTop = '0px'
         author.style.marginTop = calcMarginTop()
       } else {
