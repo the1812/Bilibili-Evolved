@@ -16,4 +16,5 @@ export const darkExcludes = [
   '//live.bilibili.com/activity/live-activity-full/full-next/index.html',
   '//gf.bilibili.com/',
   '//shop.bilibili.com/',
+  '//live.bilibili.com/p/html/live-lottery/anchor-join.html',
 ]
