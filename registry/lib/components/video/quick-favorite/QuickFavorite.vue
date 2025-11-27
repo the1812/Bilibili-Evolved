@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
 import { addComponentListener, getComponentSettings } from '@/core/settings'
-import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
+import { BilibiliApiResponse, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getUID, getCsrf } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { Toast } from '@/core/toast'
@@ -203,12 +203,20 @@ export default Vue.extend({
       formData[this.isFavorite ? 'del_media_ids' : 'add_media_ids'] =
         options.favoriteFolderID.toString()
       try {
-        await postTextWithCredentials(
-          'https://api.bilibili.com/x/v3/fav/resource/deal',
-          Object.entries(formData)
-            .map(([k, v]) => `${k}=${v}`)
+        const request = new Request('https://api.bilibili.com/x/v3/fav/resource/deal', {
+          method: 'POST',
+          body: Object.entries(formData)
+            .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
             .join('&'),
-        )
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          credentials: 'include',
+        })
+        const response: BilibiliApiResponse = await (await fetch(request)).json()
+        if (response.code !== 0) {
+          throw new Error(response.message)
+        }
         // favoriteButton.classList.toggle('on', this.isFavorite)
         this.isFavorite = !this.isFavorite
         this.showTip(
