@@ -4,7 +4,7 @@ import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../../download/types'
-import { getBlobByType, SubtitleDownloadType } from './utils'
+import { getSubtitleBlob, SubtitleDownloadType } from './utils'
 
 export const component = defineComponentMetadata({
   name: 'downloadSubtitle',
@@ -38,7 +38,7 @@ export const component = defineComponentMetadata({
             let downloadedItemCount = 0
             const results = await Promise.allSettled(
               infos.map(async info => {
-                const blob = await getBlobByType(type, info.input)
+                const blob = await getSubtitleBlob(type, info.input)
                 downloadedItemCount++
                 toast.message = `获取字幕中... (${downloadedItemCount}/${infos.length})`
                 return {

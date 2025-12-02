@@ -232,10 +232,13 @@ const observer = new MutationObserver(mutations => {
         // 三个谜之函数的polyfill（不知为何无法直接调用，会报错）
         bbComment.prototype._unhtmlFix = function unhtml(e, n) {
           return e
-            ? // eslint-disable-next-line @typescript-eslint/no-shadow
-              e.replace(n || /[&<">'](?:(amp|lt|quot|gt|#39|nbsp|#\\d+);)?/g, function (e, n) {
-                return n ? e : { '<': '', '&': '', '"': '', '>': '', "'": '' }[e]
-              })
+            ? e.replace(
+                n || /[&<">'](?:(amp|lt|quot|gt|#39|nbsp|#\\d+);)?/g,
+                // eslint-disable-next-line @typescript-eslint/no-shadow
+                function replaceHtmlCharacters(e, n) {
+                  return n ? e : { '<': '', '&': '', '"': '', '>': '', "'": '' }[e]
+                },
+              )
             : ''
         }
         bbComment.prototype._trimHttpFix = function trimHttp(e) {
