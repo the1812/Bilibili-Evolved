@@ -20,14 +20,15 @@ export abstract class BaseAutoplayHandler {
   }
 
   /** 获取匹配当前页面的自动连播处理器实例 */
-  static async getHandler(): Promise<BaseAutoplayHandler | null> {
+  static async getHandlers(): Promise<BaseAutoplayHandler[]> {
+    const handlers: BaseAutoplayHandler[] = []
     for (const handler of BaseAutoplayHandler.handlers) {
       if (await handler.match()) {
-        return handler
+        handlers.push(handler)
       }
     }
 
-    return null
+    return handlers
   }
 
   // #endregion

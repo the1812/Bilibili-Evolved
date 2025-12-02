@@ -2,9 +2,9 @@ import { matchUrlPattern } from '@/core/utils'
 import { AutoplayActionType } from '../AutoplayActionType'
 import { BaseAutoplayHandler } from './BaseAutoplayHandler'
 
-/** 自动连播处理器-推荐视频 */
+/** 自动连播处理器-推荐视频（接下来播放） */
 export class RecommendAutoplayHandler extends BaseAutoplayHandler {
-  type = '推荐视频'
+  type = '推荐视频（接下来播放）'
 
   async match() {
     const videoUrl = '//www.bilibili.com/video/'
