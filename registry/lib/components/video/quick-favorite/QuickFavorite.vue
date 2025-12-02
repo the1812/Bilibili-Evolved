@@ -31,7 +31,7 @@
 </template>
 <script lang="ts">
 import { addComponentListener, getComponentSettings } from '@/core/settings'
-import { BilibiliApiResponse, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
+import { BilibiliApiResponse, getJsonWithCredentials } from '@/core/ajax'
 import { getUID, getCsrf } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { Toast } from '@/core/toast'
