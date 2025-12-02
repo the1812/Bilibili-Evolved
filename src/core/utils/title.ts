@@ -104,6 +104,10 @@ export const formatTitle = (
       }
       return undefined
     })(),
+    upuid: (() => {
+      const link = (dq('a.avatar') || dq('a.up-avatar')) as HTMLAnchorElement
+      return link?.href?.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1') || '未知UID'
+    })(),
     aid: unsafeWindow.aid,
     bvid: unsafeWindow.bvid,
     cid: unsafeWindow.cid,
