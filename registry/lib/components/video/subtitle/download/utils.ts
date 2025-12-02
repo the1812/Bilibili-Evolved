@@ -84,17 +84,23 @@ export const getSubtitleList = async (aid: string, cid: string | number) => {
   )
   return lodash.get(data, 'subtitle.subtitles', []) as SubtitleInfo[]
 }
-export const getBlobByType = async (
+export const getSubtitleBlob = async (
   type: SubtitleDownloadType,
   input: {
-    aid: string
-    cid: string
-    title: string
-  } = { ...lodash.pick(unsafeWindow, 'aid', 'cid'), title: getFriendlyTitle(true) },
+    aid?: string
+    cid?: string
+    title?: string
+    language?: string
+  } = {},
 ) => {
-  const { aid, cid } = input
+  const {
+    aid = unsafeWindow.aid,
+    cid = unsafeWindow.cid,
+    title = getFriendlyTitle(true),
+    language: languageOverride,
+  } = input
   if (!aid || !cid) {
-    throw new Error('未找到视频AID和CID')
+    throw new Error('未找到视频 AID 和 CID')
   }
   const subtitles = await getSubtitleList(aid, cid)
   if (subtitles.length === 0) {
@@ -102,13 +108,13 @@ export const getBlobByType = async (
     return null
   }
   const [config, language] = await getSubtitleConfig()
-  const subtitle = subtitles.find(s => s.lan === language) || subtitles[0]
+  const subtitle = subtitles.find(s => s.lan === (languageOverride ?? language)) || subtitles[0]
   const json = await getJson(subtitle.subtitle_url)
   const rawData = json.body
   switch (type) {
     case 'ass': {
       const { SubtitleConverter } = await import('../subtitle-converter')
-      const converter = new SubtitleConverter({ ...config, title: input.title })
+      const converter = new SubtitleConverter({ ...config, title })
       const assText = await converter.convertToAss(rawData)
       return new Blob([assText], {
         type: 'text/ass',

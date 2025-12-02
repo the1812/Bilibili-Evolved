@@ -4,8 +4,8 @@
     <TextBox
       placeholder="直播间ID"
       :text="roomid"
+      :change-on-blur="true"
       @change="handleRoomIdChange"
-      :changeOnBlur="true"
     ></TextBox>
     <AsyncButton @click="handleKeepAliveRequest">点亮!</AsyncButton>
   </div>
