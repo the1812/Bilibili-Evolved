@@ -17,9 +17,7 @@
   cursor: text;
   @include details();
 }
-.dyn-card-opus__summary__action {
-  display: none;
-}
+
 .dyn-card-opus__title[data-module="desc"] {
   cursor: pointer;
 }
