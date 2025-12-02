@@ -1,9 +1,21 @@
-.bili-rich-text__content.folded {
+@mixin show-full-content {
   -webkit-line-clamp: unset !important;
   display: block !important;
   height: auto !important;
   max-height: unset !important;
+}
+
+.bili-rich-text__content.folded {
+  @include show-full-content();
   ~ .bili-rich-text__action {
+    display: none !important;
+  }
+}
+.dyn-card-opus__summary.folded {
+  .bili-ellipsis {
+    @include show-full-content();
+  }
+  .dyn-card-opus__summary__action {
     display: none !important;
   }
 }
@@ -13,9 +25,6 @@
     display: none !important;
   }
   .content-full {
-    -webkit-line-clamp: unset !important;
-    display: block !important;
-    height: auto !important;
-    max-height: unset !important;
+    @include show-full-content();
   }
 }
