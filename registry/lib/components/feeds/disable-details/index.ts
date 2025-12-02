@@ -35,6 +35,9 @@ const entry = async () => {
         if (target.hasAttribute('data-pics')) {
           return
         }
+        if (target.parentElement?.classList.contains('dyn-card-opus__summary__action')) {
+          return
+        }
         if (
           [
             'bili-rich-text__action',
