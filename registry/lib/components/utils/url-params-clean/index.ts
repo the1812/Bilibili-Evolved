@@ -70,6 +70,9 @@ const entry = async () => {
     'popular_rank',
     'launch_id',
     'spmid',
+    'trackid',
+    'from_avid',
+    'from_comid',
   ]
   const [blockParams] = registerAndGetData('urlParamsClean.params', builtInBlockParams)
   const builtInSiteSpecifiedParams = [
