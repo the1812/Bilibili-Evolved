@@ -1,4 +1,4 @@
-import { EpisodeInfo } from '@/components/video/video-info'
+import { EpisodeInfo, UpInfo } from '@/components/video/video-info'
 import { TimeFormat } from './options'
 import { Tag, ViewPoint } from './types'
 
@@ -14,6 +14,10 @@ export function fixBgmTag(bgmTags: Tag[]) {
   return bgmTags.map(
     x => `${x.tag_name.match(/^发现《([^》]+)》/)?.[1] ?? x.tag_name}(${x.music_id})`,
   )
+}
+
+export function formatStaffs(staffs: UpInfo[]) {
+  return staffs.map(x => `${x.role}:${x.name}(${x.uid})`)
 }
 
 export function bangumiSkipToViewPoints(skip: EpisodeInfo['skip'], duration: number) {
