@@ -104,9 +104,26 @@ export const formatTitle = (
       }
       return undefined
     })(),
-    upuid: (() => {
-      const link = (dq('a.avatar') || dq('a.up-avatar')) as HTMLAnchorElement
-      return link?.href?.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1') || '未知UID'
+    userID: (() => {
+      // 先按照单人投稿获取userID
+      const normalLink = dq('a.up-name') as HTMLAnchorElement
+      if (normalLink?.href) {
+        return normalLink.href.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1')
+      }
+      // 联合投稿userID通过staff-info中text对比单独获取
+      const upStaffInfo = Array.from(document.querySelectorAll<HTMLDivElement>('.staff-info')).find(
+        div => {
+          const tag = div.querySelector<HTMLSpanElement>('.info-tag')
+          return tag?.textContent?.trim() === 'UP主'
+        },
+      )
+      if (upStaffInfo) {
+        const link = upStaffInfo.querySelector<HTMLAnchorElement>('a.staff-name')
+        if (link?.href) {
+          return link.href.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1')
+        }
+      }
+      return undefined
     })(),
     aid: unsafeWindow.aid,
     bvid: unsafeWindow.bvid,
