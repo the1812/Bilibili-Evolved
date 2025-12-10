@@ -129,9 +129,9 @@ export default Vue.extend({
       }
       const getLink = (item: RawWatchlaterItem) => {
         if (this.redirect) {
-          return `https://www.bilibili.com/video/${item.bvid}`
+          return `https://www.bilibili.com/video/${item.bvid}/`
         }
-        return `https://www.bilibili.com/medialist/play/watchlater/${item.bvid}`
+        return `https://www.bilibili.com/list/watchlater?bvid=${item.bvid}`
       }
       const cards = rawList.map(item => {
         const currentPage = item.pages?.find(p => p.cid === item.cid)
