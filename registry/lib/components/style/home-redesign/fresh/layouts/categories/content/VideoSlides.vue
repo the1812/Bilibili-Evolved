@@ -178,7 +178,7 @@ export default Vue.extend({
       return applyContentFilter(cards)
     },
     url(id: string) {
-      return `https://www.bilibili.com/video/${id}`
+      return `https://www.bilibili.com/video/${id}/`
     },
     toggleWatchlater,
     nextCard() {
