@@ -228,7 +228,7 @@ export const addMenuItem = (
         menuItem.setAttribute('style', styleReferenceElement.getAttribute('style'))
       }
       menuItem.dataset.type = 'more'
-      menuItem.dataset.stype = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
+      menuItem.dataset.style = lodash.snakeCase(`ThreePoint${pascalCase(className)}`).toUpperCase()
       menuItem.dataset.params = '{}'
     } else if (isV2) {
       menuItem.classList.add('bili-dyn-more__menu__item', className)
