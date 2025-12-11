@@ -1,6 +1,10 @@
 <template>
   <div v-if="folded">
-    <DefaultWidget name="下载字幕" icon="mdi-subtitles" @click="folded = false"></DefaultWidget>
+    <DefaultWidget
+      name="下载字幕"
+      icon="mdi-subtitles"
+      @click="expandDownloadOptions()"
+    ></DefaultWidget>
   </div>
   <div v-else class="subtitle-download">
     <div class="subtitle-download-header">
@@ -42,6 +46,7 @@ import { DownloadPackage } from '@/core/download'
 import { WithName } from '@/core/common-types'
 import { SubtitleDownloadType, getSubtitleBlob, getSubtitleConfig, getSubtitleList } from './utils'
 import { ascendingBigIntSort } from '@/core/utils/sort'
+import { Toast } from '@/core/toast'
 
 type LanguageOption = WithName
 
@@ -69,10 +74,21 @@ Promise.all([getSubtitleLanguageOptions(), getSubtitleConfig()]).then(([options,
   }
 })
 
+const expandDownloadOptions = () => {
+  if (subtitleLanguageOptions.value.length === 0) {
+    Toast.info('当前视频没有字幕.', '下载字幕', 3000)
+    return
+  }
+  folded.value = false
+}
+
 const download = async (type: SubtitleDownloadType) => {
   try {
     disabled.value = true
     const blob = await getSubtitleBlob(type, { language: selectedLanguage.value?.name })
+    if (blob === null) {
+      return
+    }
     DownloadPackage.single(`${getFriendlyTitle(true)}.${type}`, blob)
   } catch (error) {
     logError(error)
