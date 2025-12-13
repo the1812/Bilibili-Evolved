@@ -8,23 +8,24 @@ export enum DownloadVideoUrlType {
 
 export const MirrorCdnHostPattern =
   // spell-checker: disable-next-line
-  /^upos-(sz|hz|bstar)-mirror([0-9,a-z]+)\.(bilivideo\.com|akamaized\.net)$/
+  /^upos-([0-9a-z]+?)-mirror([0-9a-z]+)\.(bilivideo\.com|akamaized\.net)$/
 
 /** @see https://github.com/the1812/Bilibili-Evolved/issues/3234#issuecomment-1504764774 */
 export const parseVideoUrlType = (url: string): DownloadVideoUrlType => {
   try {
-    const { hostname, searchParams } = new URL(url)
+    const { hostname, port, searchParams } = new URL(url)
     if (MirrorCdnHostPattern.test(hostname)) {
       return DownloadVideoUrlType.Mirror
     }
     const os = searchParams.get('os')?.toLowerCase()
-    if (os === 'upos') {
+    if (os === 'upos' || hostname.includes('upos')) {
       return DownloadVideoUrlType.UPOS
     }
     if (os === 'bcache') {
       return DownloadVideoUrlType.BCache
     }
-    if (os === 'mcdn') {
+    const hasNonHTTPPort = port !== '' && port !== '80' && port !== '443'
+    if (os === 'mcdn' || hostname.includes('mcdn') || hasNonHTTPPort) {
       return DownloadVideoUrlType.MCDN
     }
     return DownloadVideoUrlType.Other

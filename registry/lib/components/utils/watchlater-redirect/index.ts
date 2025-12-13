@@ -19,8 +19,8 @@ const redirect = (element: Element, watchlaterItem: RawWatchlaterItem) => {
     const page = pages.find(p => p.cid === cid)?.page ?? 1
     const url =
       page > 1
-        ? `https://www.bilibili.com/video/${bvid}?p=${page}`
-        : `https://www.bilibili.com/video/${bvid}`
+        ? `https://www.bilibili.com/video/${bvid}/?p=${page}`
+        : `https://www.bilibili.com/video/${bvid}/`
     const pic = element.querySelector('.av-pic, .bili-cover-card') as HTMLAnchorElement
     pic.target = '_blank'
     pic.href = url

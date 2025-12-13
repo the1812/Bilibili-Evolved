@@ -80,6 +80,9 @@ export abstract class PlayerAgent
     raiseEvent(checkbox, 'change')
     return checkbox.checked
   }
+  toggleSubtitle() {
+    return click(this.query.control.buttons.subtitle)
+  }
 
   /** true 开灯，false 关灯 */
   async toggleLight(on?: boolean) {

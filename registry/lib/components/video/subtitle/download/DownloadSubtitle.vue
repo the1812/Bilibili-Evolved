@@ -1,54 +1,133 @@
 <template>
-  <div class="multiple-widgets">
+  <div v-if="folded">
     <DefaultWidget
-      :disabled="disabled"
-      name="下载字幕 (JSON)"
-      icon="subtitle"
-      @click="download('json')"
+      name="下载字幕"
+      icon="mdi-subtitles"
+      @click="expandDownloadOptions()"
     ></DefaultWidget>
-    <DefaultWidget
-      :disabled="disabled"
-      name="下载字幕 (ASS)"
-      icon="subtitle"
-      @click="download('ass')"
-    ></DefaultWidget>
+  </div>
+  <div v-else class="subtitle-download">
+    <div class="subtitle-download-header">
+      <div class="subtitle-download-title">
+        <VIcon :size="24" icon="mdi-subtitles" />
+        <span>下载字幕</span>
+      </div>
+      <VButton round icon type="transparent" @click="folded = true">
+        <VIcon :size="18" icon="mdi-close" />
+      </VButton>
+    </div>
+    <div v-if="subtitleLanguageOptions.length > 0" class="subtitle-download-language">
+      <div class="">语言:</div>
+      <VDropdown v-model="selectedLanguage" :items="subtitleLanguageOptions" :disabled="disabled" />
+    </div>
+    <div class="subtitle-download-formats">
+      <DefaultWidget
+        :disabled="disabled"
+        name="下载 JSON"
+        icon="mdi-download"
+        @click="download('json')"
+      ></DefaultWidget>
+      <DefaultWidget
+        :disabled="disabled"
+        name="下载 ASS"
+        icon="mdi-download"
+        @click="download('ass')"
+      ></DefaultWidget>
+    </div>
   </div>
 </template>
 
-<script lang="ts">
-import { addData } from '@/plugins/data'
-import { DefaultWidget } from '@/ui'
+<script setup lang="ts">
+import { ref } from 'vue'
+import { DefaultWidget, VButton, VDropdown, VIcon } from '@/ui'
 import { logError } from '@/core/utils/log'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { DownloadPackage } from '@/core/download'
-import { SubtitleDownloadType, getBlobByType } from './utils'
-import subtitleIcon from './cc-subtitle.svg'
+import { WithName } from '@/core/common-types'
+import { SubtitleDownloadType, getSubtitleBlob, getSubtitleConfig, getSubtitleList } from './utils'
+import { ascendingBigIntSort } from '@/core/utils/sort'
+import { Toast } from '@/core/toast'
 
-addData('ui.icons', (icons: Record<string, string>) => {
-  icons.subtitle = subtitleIcon
-})
+type LanguageOption = WithName
 
-export default Vue.extend({
-  components: {
-    DefaultWidget,
-  },
-  data() {
+const folded = ref(true)
+const disabled = ref(false)
+const subtitleLanguageOptions = ref<LanguageOption[]>([])
+const selectedLanguage = ref<LanguageOption | undefined>(undefined)
+
+const getSubtitleLanguageOptions = async () => {
+  const subtitles = await getSubtitleList(unsafeWindow.aid, unsafeWindow.cid)
+  return subtitles.toSorted(ascendingBigIntSort(it => it.id_str)).map(subtitle => {
+    const displayName = subtitle.ai_status !== 0 ? `${subtitle.lan_doc} (AI)` : subtitle.lan_doc
     return {
-      disabled: false,
+      displayName,
+      name: subtitle.lan,
     }
-  },
-  methods: {
-    async download(type: SubtitleDownloadType) {
-      try {
-        this.disabled = true
-        const blob = await getBlobByType(type)
-        DownloadPackage.single(`${getFriendlyTitle(true)}.${type}`, blob)
-      } catch (error) {
-        logError(error)
-      } finally {
-        this.disabled = false
-      }
-    },
-  },
+  })
+}
+
+Promise.all([getSubtitleLanguageOptions(), getSubtitleConfig()]).then(([options, [, language]]) => {
+  subtitleLanguageOptions.value = options
+  const matchOption = options.find(option => option.name === language)
+  if (matchOption !== undefined) {
+    selectedLanguage.value = matchOption
+  }
 })
+
+const expandDownloadOptions = () => {
+  if (subtitleLanguageOptions.value.length === 0) {
+    Toast.info('当前视频没有字幕.', '下载字幕', 3000)
+    return
+  }
+  folded.value = false
+}
+
+const download = async (type: SubtitleDownloadType) => {
+  try {
+    disabled.value = true
+    const blob = await getSubtitleBlob(type, { language: selectedLanguage.value?.name })
+    if (blob === null) {
+      return
+    }
+    DownloadPackage.single(`${getFriendlyTitle(true)}.${type}`, blob)
+  } catch (error) {
+    logError(error)
+  } finally {
+    disabled.value = false
+  }
+}
 </script>
+<style lang="scss">
+@import 'common';
+
+.subtitle-download {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 6px;
+  border-radius: 4px;
+  padding: 8px;
+  box-sizing: border-box;
+  box-shadow: 0 0 0 1px #8884;
+  @include default-background-color();
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    align-self: stretch;
+  }
+  &-title {
+    @include h-center(8px);
+    .be-icon {
+      opacity: 0.75;
+    }
+  }
+  &-language {
+    @include h-center(6px);
+  }
+  &-formats {
+    @include h-center(6px);
+    flex-wrap: wrap;
+  }
+}
+</style>

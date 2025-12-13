@@ -17,7 +17,7 @@ const entry: ComponentEntry = async () => {
   const bvid = getBvidFromWatcherLaterVideoPage()
 
   if (bvid) {
-    location.href = `https://www.bilibili.com/video/${bvid}`
+    location.href = `https://www.bilibili.com/video/${bvid}/`
   }
 }
 

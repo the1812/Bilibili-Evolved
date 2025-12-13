@@ -1,4 +1,3 @@
-import { DocSourceItem } from 'registry/lib/docs'
 import { componentsMap } from '@/components/component'
 import { installComponent } from '@/components/user-component'
 import { monkey } from '@/core/ajax'
@@ -11,6 +10,7 @@ import { logError } from '@/core/utils/log'
 import { getHook } from '@/plugins/hook'
 import { installPlugin, pluginsMap } from '@/plugins/plugin'
 import { UserStyle } from '@/plugins/style'
+import type { DocSourceItem } from '../../../docs'
 
 export const runMigrate = async (v1Settings: any) => {
   const toast = Toast.info('下载功能列表中', '导入 v1 设置')

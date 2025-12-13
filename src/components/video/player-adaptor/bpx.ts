@@ -20,6 +20,7 @@ const playerModePolyfill = async () => {
       PlayerMode.WideScreen,
       PlayerMode.WebFullscreen,
       PlayerMode.Fullscreen,
+      PlayerMode.Mini,
     ].map(it => `${prefix}${it}`)
 
     // clear all class

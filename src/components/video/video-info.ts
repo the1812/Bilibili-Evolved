@@ -12,6 +12,18 @@ export interface VideoPageInfo {
   pageNumber: number
 }
 
+export interface VideoStat {
+  view: number
+  like: number
+  coin: number
+  favorite: number
+  share: number
+  danmaku: number
+  reply: number
+  /** 历史最高排名 */
+  his_rank: number
+}
+
 export class VideoInfo {
   aid: string
   bvid: string
@@ -28,6 +40,7 @@ export class VideoInfo {
   up: UpInfo
   pages: VideoPageInfo[]
   redirectUrl?: string
+  stat: VideoStat
 
   constructor(id: string, bvid = false) {
     if (bvid) {
@@ -73,6 +86,7 @@ export class VideoInfo {
       pageNumber: it.page,
     }))
     this.redirectUrl = data.redirect_url
+    this.stat = data.stat
     return this
   }
 
@@ -102,7 +116,16 @@ export interface EpisodeInfo {
   skip: {
     [x in 'ed' | 'op']: { start: number; end: number }
   }
+  section: string
   info?: VideoInfo
+}
+
+/**
+ * @author WakelessSloth56
+ */
+export interface SectionInfo {
+  title: string
+  episodes: EpisodeInfo[]
 }
 
 /**
@@ -127,8 +150,12 @@ export class BangumiInfo {
   isFinish: boolean
   isStarted: boolean
   styles: string[]
+  /** 通过 {@link BangumiInfo.byEpisodeId()} 指定的 `epid` 对应的集，若通过 {@link BangumiInfo.bySeasonId()} 则不存在 */
   episode?: EpisodeInfo
+  /** 包含正片及花絮、PV、番外等非正片内容 */
   episodes: EpisodeInfo[]
+  /** 花絮、PV、番外等非正片内容 */
+  sections?: SectionInfo[]
   /** @deprecated use {@link BangumiInfo.episodes} instead */
   videos: {
     title: string
@@ -171,7 +198,23 @@ export class BangumiInfo {
     this.isStarted = data.publish.is_started === 1
     this.styles = data.styles
     this.areas = data.areas
-    this.episodes = data.episodes.map(x => {
+    this.sections = data.section
+    const episodes = [
+      ...data.episodes.map((ep: EpisodeInfo) => {
+        ep.section = data.positive.title
+        return ep
+      }),
+      ...(data.section ?? [])
+        .flatMap((x: SectionInfo) => {
+          return x.episodes.map((ep: EpisodeInfo) => {
+            ep.section = x.title
+            return ep
+          })
+        })
+        // 有些内容（例如次元发电机专访）是链接，cid、aid等为0
+        .filter(x => x.cid > 0),
+    ]
+    this.episodes = episodes.map(x => {
       const r: EpisodeInfo = {
         aid: x.aid,
         bvid: x.bvid,
@@ -181,6 +224,7 @@ export class BangumiInfo {
         cover: x.cover,
         duration: x.duration / 1000,
         skip: x.skip,
+        section: x.section,
       }
       if (r.epid === this.epid) {
         this.episode = r

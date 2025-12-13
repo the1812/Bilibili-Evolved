@@ -36,14 +36,14 @@ const linkProviders: LinkProvider[] = [
   // 参数类页面, 如 festival
   ({ id, query }) => {
     if (copyIds.some(copyId => query.includes(`${copyId}=`))) {
-      return `https://www.bilibili.com/video/${id}`
+      return `https://www.bilibili.com/video/${id}/`
     }
     return null
   },
   // 番剧
   ({ id }) => {
     if (bangumiUrls.some(u => matchUrlPattern(u))) {
-      return `https://www.bilibili.com/video/${id}`
+      return `https://www.bilibili.com/video/${id}/`
     }
     return null
   },
@@ -57,7 +57,7 @@ const linkProviders: LinkProvider[] = [
         newQuery.set(key, value)
       }
     }
-    return `https://www.bilibili.com/video/${id}${
+    return `https://www.bilibili.com/video/${id}/${
       newQuery.size > 0 ? `?${newQuery.toString()}` : ''
     }`
   },

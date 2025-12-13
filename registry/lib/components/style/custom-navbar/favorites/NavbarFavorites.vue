@@ -267,10 +267,10 @@ export default Vue.extend({
       switch (item.type) {
         default:
         case 2: {
-          return `https://www.bilibili.com/video/${item.bvid}`
+          return `https://www.bilibili.com/video/${item.bvid}/`
         }
         case 12: {
-          return `https://www.bilibili.com/audio/au${item.id}`
+          return `https://www.bilibili.com/audio/au${item.id}/`
         }
       }
     },
