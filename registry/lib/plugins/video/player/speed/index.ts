@@ -1,7 +1,3 @@
-import type {
-  KeyBindingAction,
-  KeyBindingActionContext,
-} from 'registry/lib/components/utils/keymap/bindings'
 import { Toast } from '@/core/toast'
 import type { PluginMetadata } from '@/plugins/plugin'
 import {
@@ -11,6 +7,10 @@ import {
 import { formatSpeedText } from '../../../../components/video/player/common/speed/utils'
 import type { RememberSpeedComponent } from '../../../../components/video/player/remember-speed/component'
 import '../../../../components/video/player/common/speed'
+import type {
+  KeyBindingAction,
+  KeyBindingActionContext,
+} from '../../../../components/utils/keymap/bindings'
 
 interface CommonKeyBindingAction {
   videoSpeedIncrease: KeyBindingAction
