@@ -181,6 +181,24 @@ by [@magicFeirl](https://github.com/magicFeirl)
 
 在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
 
+### [直播前后台音量自动调节](../../registry/dist/components/live/front-back-volume.js)
+`frontBackVolume`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/front-back-volume.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/front-back-volume.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/front-back-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/front-back-volume.js)
+
+by [@KDH-KDHKDH](https://github.com/KDH-KDHKDH)
+
+# 使用说明
+
+<!-- (http://localhost:23333/registry/dist/components/live/front-back-volume.js) -->
+
+1. 分别设定前台/后台音量
+2. 当你切换到其他标签页或最小化窗口时，播放器会自动改用“后台音量”
+3. 若未生效，请先点击一下直播页面再试。
+4. 手动调音量不受影响
+
 ### [直播全屏包裹](../../registry/dist/components/live/gift-box.js)
 `liveGiftBox`
 
@@ -1247,10 +1265,24 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 自动连播行为：
 
 - 自动：类似 `传统连播模式`，区别是多P视频包括番剧，具体如下
-  - 单P视频放完禁止连播其他推荐视频
+  - 推荐视频都不自动连播
   - 多P视频（番剧、多P列表、收藏夹等）连播到最后1P停止
 - 禁用：不自动连播
-- 总是：总是自动连播
+- 总是：总是自动连播，具体由B站本身决定，如 `分p视频` 会自动连播推荐视频，但 `番剧` 会到最后1集停止
+
+---
+
+优先级说明：
+
+目前只有 `推荐视频（列表第一个）` 会和其他类型同时出现，`推荐视频（列表第一个）` 的优先级是最低的，并且需要设置为 `总是` 且其他匹配类型不是 `总是` 时才会生效
+
+下面举例说明当 `推荐视频（列表第一个）` 为 `总是` 时，其他类型的设置及最终联动行为：
+
+| 设置 | 分P视频 |
+| :--- | :--- |
+| `自动` | 连播下一P，播完所有P后连播推荐视频 |
+| `禁用` | 当前分P播放完后自动连播推荐视频 |
+| `总是` | 保持分p视频类型原行为，具体参考 `自动连播行为` 中的说明 |
 
 ### [默认播放器模式](../../registry/dist/components/video/player/default-mode.js)
 `defaultPlayerMode`
@@ -1468,6 +1500,40 @@ by [@wisokey](https://github.com/wisokey)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/skip-charge-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/skip-charge-list.js)
 
 自动跳过视频结尾的充电鸣谢. 注意: 不包括番剧承包鸣谢.
+
+### [视频缩放](../../registry/dist/components/video/player/video-scaling.js)
+`videoScaling`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/video-scaling.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/video-scaling.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/video-scaling.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/video-scaling.js)
+
+by [@weedy233](https://github.com/weedy233)
+
+> 允许调整视频的显示缩放比例，让您根据屏幕大小和个人偏好自定义视频播放体验。
+
+#### 🔧 **选项**
+
+- \`缩放比例\`：选择预设的视频缩放比例，包括 75%、100%（默认）、110%、125%、150% 以及自定义选项。
+
+- \`自定义缩放比 (%)\`：当选择 "自定义" 选项时显示，可在 50%-300% 范围内以 10% 为步长自由调整缩放比例。
+
+- \`显示缩放提示\`：启用后，在调整缩放比例时会显示短暂提示，告知当前缩放比例。
+
+- \`提示显示时间 (秒)\`：控制缩放提示的显示时长，可在 0.5-5 秒范围内以 0.5 秒为步长调整。
+
+- \`显示控制栏按钮\`：在播放器控制栏添加一个缩放按钮，点击可循环切换预设的缩放比例。
+
+#### **使用方法**
+
+1. **通过设置面板**：在组件设置中直接选择预设的缩放比例，或选择 "自定义" 后调整滑动条设置特定比例。
+
+2. **通过控制栏按钮**：如果启用了控制栏按钮，点击播放器控制栏上的缩放图标（放大镜图标）可循环切换预设缩放比例。
+
+#### **注意事项**
+
+- 视频切换时，缩放比例会自动重置为当前设置的值。
+- 过高的缩放比例可能导致视频内容超出屏幕范围，建议根据实际屏幕尺寸适当调整。
 
 ### [启用快速收藏](../../registry/dist/components/video/quick-favorite.js)
 `quickFavorite`
@@ -1757,7 +1823,7 @@ by [@diannaojiang](https://github.com/diannaojiang)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/wasm-output.js)
 
-by [@WakelessSloth56](https://github.com/WakelessSloth56)
+by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://github.com/LainIO24)
 
 使用 WASM 在浏览器中下载并合并音视频, 支持批量下载
 
