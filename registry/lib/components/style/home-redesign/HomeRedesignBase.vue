@@ -8,7 +8,7 @@ const params = new URLSearchParams(location.search)
 if (params.has('bvid')) {
   const restParams = new URLSearchParams([...params.entries()].filter(([name]) => name !== 'bvid'))
   location.replace(
-    `/video/${params.get('bvid')}${restParams.size > 0 ? `?${restParams.toString()}` : ''}`,
+    `/video/${params.get('bvid')}/${restParams.size > 0 ? `?${restParams.toString()}` : ''}`,
   )
 }
 </script>
