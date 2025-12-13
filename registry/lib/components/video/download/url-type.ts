@@ -13,7 +13,7 @@ export const MirrorCdnHostPattern =
 /** @see https://github.com/the1812/Bilibili-Evolved/issues/3234#issuecomment-1504764774 */
 export const parseVideoUrlType = (url: string): DownloadVideoUrlType => {
   try {
-    const { hostname, searchParams } = new URL(url)
+    const { hostname, port, searchParams } = new URL(url)
     if (MirrorCdnHostPattern.test(hostname)) {
       return DownloadVideoUrlType.Mirror
     }
@@ -24,7 +24,8 @@ export const parseVideoUrlType = (url: string): DownloadVideoUrlType => {
     if (os === 'bcache') {
       return DownloadVideoUrlType.BCache
     }
-    if (os === 'mcdn' || hostname.includes('mcdn')) {
+    const hasNonHTTPPort = port !== '' && port !== '80' && port !== '443'
+    if (os === 'mcdn' || hostname.includes('mcdn') || hasNonHTTPPort) {
       return DownloadVideoUrlType.MCDN
     }
     return DownloadVideoUrlType.Other

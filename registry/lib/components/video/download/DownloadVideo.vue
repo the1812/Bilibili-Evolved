@@ -151,7 +151,7 @@ const urlTypeOptions: { displayName: string; name: DownloadVideoUrlType }[] = [
   { displayName: 'Mirror', name: DownloadVideoUrlType.Mirror },
   { displayName: 'UPOS', name: DownloadVideoUrlType.UPOS },
   { displayName: 'BCache', name: DownloadVideoUrlType.BCache },
-  { displayName: 'MCDN', name: DownloadVideoUrlType.MCDN },
+  { displayName: 'MCDN / PCDN', name: DownloadVideoUrlType.MCDN },
 ]
 
 const getFallbackTestVideoInfo = () =>
