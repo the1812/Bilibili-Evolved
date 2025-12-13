@@ -4,8 +4,8 @@
     target="_blank"
     :href="
       epID
-        ? 'https://www.bilibili.com/bangumi/play/ep' + epID
-        : 'https://www.bilibili.com/video/' + bvid
+        ? `https://www.bilibili.com/bangumi/play/ep${epID}`
+        : `https://www.bilibili.com/video/${bvid}/`
     "
     :class="{ vertical: orientation === 'vertical', 'no-stats': !showStats }"
   >

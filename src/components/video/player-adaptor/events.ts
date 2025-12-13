@@ -3,6 +3,7 @@ export enum PlayerMode {
   WideScreen = 'wide',
   WebFullscreen = 'web',
   Fullscreen = 'full',
+  Mini = 'mini',
 }
 
 export const createPlayerModeChangeEvent = (mode: PlayerMode) =>

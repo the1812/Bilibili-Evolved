@@ -40,4 +40,22 @@ export class VideoPlayerBpxAgent extends PlayerAgent {
       return func
     })()
   }
+
+  toggleSubtitle(): HTMLElement {
+    const closeSwitch = dq('.bpx-player-ctrl-subtitle-close-switch') as HTMLDivElement | null
+    const isDisabled = closeSwitch?.classList.contains('bpx-state-active')
+    if (!isDisabled) {
+      closeSwitch?.click()
+      return
+    }
+    const subtitleOptions = dqa(
+      '.bpx-player-ctrl-subtitle-major .bpx-player-ctrl-subtitle-language-item',
+    ) as HTMLDivElement[]
+    const subtitleLanguage = this.getPlayerConfig<null, string>('subtitle.lan', null)
+    if (subtitleLanguage === null) {
+      subtitleOptions.at(0)?.click()
+      return
+    }
+    subtitleOptions.find(it => it.dataset.lan === subtitleLanguage)?.click()
+  }
 }

@@ -50,7 +50,7 @@ export const getDefaultRankListCards = (json: any): RankListCard[] => {
       upName: item.owner.name,
       dynamic: item.dynamic || item.desc,
       coverUrl: item.pic,
-      videoHref: `https://www.bilibili.com/video/${item.bvid}`,
+      videoHref: `https://www.bilibili.com/video/${item.bvid}/`,
     }),
   )
   return cards

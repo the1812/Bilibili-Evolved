@@ -11,9 +11,7 @@ export const plugin: PluginMetadata = {
       actions.toggleSubtitle = {
         displayName: '开关 CC 字幕',
         run: async () => {
-          const button = playerAgent.query.control.buttons.subtitle.sync()
-          button?.click()
-          return button
+          return playerAgent.toggleSubtitle()
         },
       }
     })
