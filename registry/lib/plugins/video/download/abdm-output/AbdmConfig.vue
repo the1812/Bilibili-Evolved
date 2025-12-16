@@ -24,7 +24,7 @@ const defaultConfig: AbdmConfig = {
   host: 'localhost',
   port: '15151',
 }
-const abdmConfig = { ...defaultConfig, ...storedOptions }
+const abdmConfig = { ...defaultConfig, ...storedOptions.abdmConfig }
 
 export default Vue.extend({
   components: {
