@@ -89,10 +89,19 @@ export default Vue.extend({
       },
     },
     rows() {
-      return Object.entries(this.actions).map(([name, action]) => ({
-        name,
-        ...(action as KeyBindingAction),
-      }))
+      const { showSeekShortcuts } = keymapOptions
+      return Object.entries(this.actions)
+        .map(([name, action]) => ({
+          name,
+          ...(action as KeyBindingAction),
+        }))
+        .filter(action => {
+          // 如果是跳转百分比的动作，仅在开启显示时显示
+          if (action.name.startsWith('seekProgress')) {
+            return showSeekShortcuts
+          }
+          return true
+        })
     },
     presetOptions() {
       return Object.keys(this.presets)
