@@ -56,6 +56,7 @@ import { VIcon, VLoading, VEmpty, VButton, DpiImage } from '@/ui'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
 import { cleanUpScrollMask, setupScrollMask } from '../../../scroll-mask'
 import { compactRankListCssVars } from './rank-list'
+import { getJsonWithCredentials } from '@/core/ajax'
 
 export default Vue.extend({
   components: {
@@ -69,7 +70,10 @@ export default Vue.extend({
   filters: {
     formatCount,
   },
-  mixins: [requestMixin(), cssVariableMixin(compactRankListCssVars)],
+  mixins: [
+    requestMixin({ requestMethod: getJsonWithCredentials }),
+    cssVariableMixin(compactRankListCssVars),
+  ],
   props: {
     parseJson: {
       type: Function,

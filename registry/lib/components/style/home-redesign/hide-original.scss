@@ -22,8 +22,10 @@
   > .bili-header-m.stardust-common > .bili-wrapper {
     @include layout-shift();
   }
+  margin: 0 !important;
 }
-#i_cecream {
+#i_cecream,
+.bili-feed4 {
   > main,
   .palette-button-outer,
   .bili-header__channel,
