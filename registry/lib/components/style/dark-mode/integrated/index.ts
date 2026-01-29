@@ -100,7 +100,6 @@ export const component = defineComponentMetadata({
       const { isComponentEnabled } = await import('@/core/settings')
       contentLoaded(() => {
         if (isComponentEnabled(name)) {
-          cookieStore.addEventListener('change', cookieChangeHandler)
           toggleDarkModeByCookie()
         }
       })
