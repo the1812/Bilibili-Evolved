@@ -30,20 +30,25 @@
   </div>
 </template>
 
-<script lang="ts">
-import { getComponentSettings, addComponentListener } from '@/core/settings'
+<script setup lang="ts">
+import { onBeforeUnmount, ref } from 'vue'
+import { getCookieValue } from '@/core/utils'
 
-export default Vue.extend({
-  data() {
-    return {
-      dark: getComponentSettings('integratedDarkMode').enabled,
-    }
-  },
-  created() {
-    addComponentListener('integratedDarkMode', (value: boolean) => {
-      this.dark = value
-    })
-  },
+const isOfficialDarkModeEnabled = () => {
+  return getCookieValue('theme_style') === 'dark'
+}
+
+const dark = ref(isOfficialDarkModeEnabled())
+
+const cookieChangeHandler = (e: CookieChangedEvent) => {
+  if (e.changed.some(cookie => cookie.name === 'theme_style')) {
+    dark.value = isOfficialDarkModeEnabled()
+  }
+}
+
+cookieStore.addEventListener('change', cookieChangeHandler)
+onBeforeUnmount(() => {
+  cookieStore.removeEventListener('change', cookieChangeHandler)
 })
 </script>
 <style lang="scss">
