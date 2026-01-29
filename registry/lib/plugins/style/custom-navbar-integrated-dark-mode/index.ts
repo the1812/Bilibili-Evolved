@@ -14,7 +14,8 @@ const updateHostCookie = (targetMode: string) => {
 export const plugin: PluginMetadata = {
   name: 'customNavbar.items.integratedDarkMode',
   displayName: '自定义顶栏 - 深色模式开关',
-  description: '为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分)',
+  description:
+    '为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分; 受限于 b 站深色模式实现, 这个开关无法实时切换, 会刷新页面)',
   async setup({ addData }) {
     addData('customNavbar.items', (items: CustomNavbarItemInit[]) => {
       items.push({
