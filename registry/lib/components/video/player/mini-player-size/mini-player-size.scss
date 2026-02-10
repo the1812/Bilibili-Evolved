@@ -1,0 +1,125 @@
+:root {
+  --mini-player-width: 320px;
+  --mini-player-height: 180px;
+  --mini-player-scale: 1;
+  --mini-player-icon-size: 100px;
+}
+
+.bpx-player-container[data-screen='mini'] {
+  &,
+  .bpx-player-primary-area,
+  .bpx-player-video-area,
+  .bpx-player-video-perch,
+  .bpx-player-video-wrap {
+    width: var(--mini-player-width) !important;
+    height: var(--mini-player-height) !important;
+  }
+
+  .bpx-player-video-wrap video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+  }
+}
+
+.bpx-player-mini-warp {
+  width: var(--mini-player-width) !important;
+  height: var(--mini-player-height) !important;
+
+  .bpx-player-mini-state {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: var(--mini-player-icon-size) !important;
+    height: var(--mini-player-icon-size) !important;
+    margin-left: calc(var(--mini-player-icon-size) / -2) !important;
+    margin-top: calc(var(--mini-player-icon-size) / -2) !important;
+  }
+
+  .bpx-player-mini-state-play,
+  .bpx-player-mini-state-pause {
+    width: var(--mini-player-icon-size) !important;
+    height: var(--mini-player-icon-size) !important;
+    background-size: contain !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+  }
+
+  > .be-mini-player-resize-handle {
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    z-index: 100000;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    background: transparent;
+    pointer-events: all !important;
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border: 2px solid rgba(255, 255, 255, 0.7);
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+    }
+  }
+
+  &:hover > .be-mini-player-resize-handle,
+  &.be-resizing > .be-mini-player-resize-handle {
+    opacity: 1;
+  }
+
+  > .be-mini-player-resize-nw {
+    top: 0;
+    left: 0;
+    cursor: nw-resize;
+
+    &::before {
+      top: 2px;
+      left: 2px;
+      border-right: none;
+      border-bottom: none;
+    }
+  }
+
+  > .be-mini-player-resize-ne {
+    top: 0;
+    right: 0;
+    cursor: ne-resize;
+
+    &::before {
+      top: 2px;
+      right: 2px;
+      border-left: none;
+      border-bottom: none;
+    }
+  }
+
+  > .be-mini-player-resize-sw {
+    bottom: 0;
+    left: 0;
+    cursor: sw-resize;
+
+    &::before {
+      bottom: 2px;
+      left: 2px;
+      border-right: none;
+      border-top: none;
+    }
+  }
+
+  > .be-mini-player-resize-se {
+    bottom: 0;
+    right: 0;
+    cursor: se-resize;
+
+    &::before {
+      bottom: 2px;
+      right: 2px;
+      border-left: none;
+      border-top: none;
+    }
+  }
+}
