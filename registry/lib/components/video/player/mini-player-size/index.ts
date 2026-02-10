@@ -3,7 +3,6 @@ import {
   defineOptionsMetadata,
   OptionsOfMetadata,
 } from '@/components/define'
-import { allMutations } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 
@@ -26,17 +25,16 @@ const options = defineOptionsMetadata({
 })
 
 type Options = OptionsOfMetadata<typeof options>
-type ResizeDirection = 'nw' | 'ne' | 'sw' | 'se'
 
 const clamp = (value: number, min: number) => Math.max(value, min)
 
 const applySize = (width: number, height: number) => {
-  const root = document.documentElement
-  root.style.setProperty('--mini-player-width', `${width}px`)
-  root.style.setProperty('--mini-player-height', `${height}px`)
   const scale = width / 640
-  root.style.setProperty('--mini-player-scale', `${scale}`)
-  root.style.setProperty('--mini-player-icon-size', `${Math.round(100 * scale)}px`)
+  const root = document.documentElement.style
+  root.setProperty('--mini-player-width', `${width}px`)
+  root.setProperty('--mini-player-height', `${height}px`)
+  root.setProperty('--mini-player-scale', `${scale}`)
+  root.setProperty('--mini-player-icon-size', `${Math.round(100 * scale)}px`)
 }
 
 const setupResizeHandles = (miniPlayer: HTMLElement, componentSettings: { options: Options }) => {
@@ -44,11 +42,9 @@ const setupResizeHandles = (miniPlayer: HTMLElement, componentSettings: { option
     return
   }
 
-  const directions: ResizeDirection[] = ['nw', 'ne', 'sw', 'se']
-
-  directions.forEach(dir => {
+  ;(['nw', 'ne', 'sw', 'se'] as const).forEach(dir => {
     const handle = document.createElement('div')
-    handle.className = ['be-mini-player-resize-handle', `be-mini-player-resize-${dir}`].join(' ')
+    handle.className = `be-mini-player-resize-handle be-mini-player-resize-${dir}`
     handle.dataset.direction = dir
     miniPlayer.appendChild(handle)
 
@@ -106,7 +102,6 @@ const setupResizeHandles = (miniPlayer: HTMLElement, componentSettings: { option
 
     const onMouseDown = (e: MouseEvent) => {
       e.preventDefault()
-
       startX = e.clientX
       startY = e.clientY
       startWidth = miniPlayer.offsetWidth
@@ -125,7 +120,7 @@ const setupResizeHandles = (miniPlayer: HTMLElement, componentSettings: { option
 export const component = defineComponentMetadata({
   name: 'miniPlayerSize',
   displayName: '小窗播放器大小',
-   author: {
+  author: {
     name: 'GH4NG',
     link: 'https://github.com/GH4NG',
   },
@@ -147,12 +142,13 @@ export const component = defineComponentMetadata({
 
     applySize(width, height)
 
-    allMutations(() => {
+    const setupHandles = () => {
       const miniPlayer = dq('.bpx-player-mini-warp') as HTMLElement
-      const hasHandle = miniPlayer?.querySelector('.be-mini-player-resize-handle')
-      if (miniPlayer && !hasHandle) {
+      if (miniPlayer && !miniPlayer.querySelector('.be-mini-player-resize-handle')) {
         setupResizeHandles(miniPlayer, componentSettings)
       }
-    })
+    }
+
+    window.addEventListener('playerModeChange', setupHandles as EventListener)
   },
 })
