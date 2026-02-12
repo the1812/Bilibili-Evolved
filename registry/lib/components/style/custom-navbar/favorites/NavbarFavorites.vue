@@ -179,7 +179,7 @@ export default Vue.extend({
       if (id === 0) {
         return `https://space.bilibili.com/${getUID()}/favlist`
       }
-      return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}`
+      return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}&ftype=create`
     },
     playLink() {
       const { id } = this.folder
