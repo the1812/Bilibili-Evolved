@@ -3,6 +3,9 @@
   --mini-player-height: 180px;
   --mini-player-scale: 1;
   --mini-player-icon-size: 100px;
+  --mini-player-handle-size: 24px;
+  --mini-player-handle-icon-size: 10px;
+  --mini-player-handle-offset: 2px;
 }
 
 .bpx-player-container[data-screen='mini'] {
@@ -47,8 +50,8 @@
 
   > .be-mini-player-resize-handle {
     position: absolute;
-    width: 24px;
-    height: 24px;
+    width: var(--mini-player-handle-size);
+    height: var(--mini-player-handle-size);
     z-index: 100000;
     opacity: 0;
     transition: opacity 0.2s ease;
@@ -58,8 +61,8 @@
     &::before {
       content: '';
       position: absolute;
-      width: 10px;
-      height: 10px;
+      width: var(--mini-player-handle-icon-size);
+      height: var(--mini-player-handle-icon-size);
       border: 2px solid rgba(255, 255, 255, 0.7);
       border-radius: 2px;
     }
@@ -76,8 +79,8 @@
     cursor: nw-resize;
 
     &::before {
-      top: 2px;
-      left: 2px;
+      top: var(--mini-player-handle-offset);
+      left: var(--mini-player-handle-offset);
       border-right: none;
       border-bottom: none;
     }
@@ -89,8 +92,8 @@
     cursor: ne-resize;
 
     &::before {
-      top: 2px;
-      right: 2px;
+      top: var(--mini-player-handle-offset);
+      right: var(--mini-player-handle-offset);
       border-left: none;
       border-bottom: none;
     }
@@ -102,8 +105,8 @@
     cursor: sw-resize;
 
     &::before {
-      bottom: 2px;
-      left: 2px;
+      bottom: var(--mini-player-handle-offset);
+      left: var(--mini-player-handle-offset);
       border-right: none;
       border-top: none;
     }
@@ -115,8 +118,8 @@
     cursor: se-resize;
 
     &::before {
-      bottom: 2px;
-      right: 2px;
+      bottom: var(--mini-player-handle-offset);
+      right: var(--mini-player-handle-offset);
       border-left: none;
       border-top: none;
     }

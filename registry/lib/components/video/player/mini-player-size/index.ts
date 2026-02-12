@@ -9,6 +9,8 @@ import { videoAndBangumiUrls } from '@/core/utils/urls'
 const MIN_WIDTH = 160
 const MIN_HEIGHT = 90
 
+const ASPECT_RATIO = 16 / 9
+
 const options = defineOptionsMetadata({
   width: {
     displayName: '宽度 (px)',
@@ -26,9 +28,7 @@ const options = defineOptionsMetadata({
 
 type Options = OptionsOfMetadata<typeof options>
 
-const clamp = (value: number, min: number) => Math.max(value, min)
-
-const applySize = (width: number, height: number) => {
+const updatePlayerSize = (width: number, height: number) => {
   const scale = width / 640
   const root = document.documentElement.style
   root.setProperty('--mini-player-width', `${width}px`)
@@ -72,15 +72,15 @@ const setupResizeHandles = (miniPlayer: HTMLElement, componentSettings: { option
         newHeight = startHeight - deltaY
       }
 
-      newWidth = clamp(newWidth, MIN_WIDTH)
-      newHeight = clamp(newHeight, MIN_HEIGHT)
+      newWidth = lodash.clamp(newWidth, MIN_WIDTH, window.innerWidth)
+      newHeight = lodash.clamp(newHeight, MIN_HEIGHT, window.innerHeight)
 
       if (componentSettings.options.keepAspectRatio) {
-        newHeight = Math.round((newWidth * 9) / 16)
-        newHeight = clamp(newHeight, MIN_HEIGHT)
+        newHeight = Math.round(newWidth / ASPECT_RATIO)
+        newHeight = lodash.clamp(newHeight, MIN_HEIGHT, window.innerHeight)
       }
 
-      applySize(newWidth, newHeight)
+      updatePlayerSize(newWidth, newHeight)
     }
 
     const onMouseUp = () => {
@@ -88,16 +88,16 @@ const setupResizeHandles = (miniPlayer: HTMLElement, componentSettings: { option
       document.removeEventListener('mouseup', onMouseUp)
       miniPlayer.classList.remove('be-resizing')
 
-      const finalWidth = clamp(miniPlayer.offsetWidth, MIN_WIDTH)
-      let finalHeight = clamp(miniPlayer.offsetHeight, MIN_HEIGHT)
+      const finalWidth = lodash.clamp(miniPlayer.offsetWidth, MIN_WIDTH, window.innerWidth)
+      let finalHeight = lodash.clamp(miniPlayer.offsetHeight, MIN_HEIGHT, window.innerHeight)
 
       if (componentSettings.options.keepAspectRatio) {
-        finalHeight = Math.round((finalWidth * 9) / 16)
+        finalHeight = Math.round(finalWidth / ASPECT_RATIO)
       }
 
       componentSettings.options.width = finalWidth
       componentSettings.options.height = finalHeight
-      applySize(finalWidth, finalHeight)
+      updatePlayerSize(finalWidth, finalHeight)
     }
 
     const onMouseDown = (e: MouseEvent) => {
@@ -140,15 +140,15 @@ export const component = defineComponentMetadata({
     const componentSettings = getComponentSettings<Options>(metadata.name)
     const { width, height } = componentSettings.options
 
-    applySize(width, height)
+    updatePlayerSize(width, height)
 
-    const setupHandles = () => {
+    const initializeHandles = () => {
       const miniPlayer = dq('.bpx-player-mini-warp') as HTMLElement
       if (miniPlayer && !miniPlayer.querySelector('.be-mini-player-resize-handle')) {
         setupResizeHandles(miniPlayer, componentSettings)
       }
     }
 
-    window.addEventListener('playerModeChange', setupHandles as EventListener)
+    window.addEventListener('playerModeChange', initializeHandles as EventListener)
   },
 })
