@@ -45,6 +45,7 @@ const entry = async () => {
             'bili-rich-text-module',
             'bili-rich-text-link',
             'bili-rich-text-viewpic',
+            'opus-text-rich-hl',
           ].some(className => target.classList.contains(className))
         ) {
           return
