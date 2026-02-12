@@ -20,9 +20,7 @@ export const presetBase: Record<string, string> = {
   danmaku: 'd',
   seekBegin: '0',
   // 1-9 跳转到对应百分比
-  ...lodash.fromPairs(
-    lodash.range(1, 10).map(i => [`seekProgress${i}0`, String(i)]),
-  ),
+  ...lodash.fromPairs(lodash.range(1, 10).map(i => [`seekProgress${i}0`, String(i)])),
   sendComment: 'ctrl enter',
 }
 export const builtInPresets: Record<string, Record<string, string>> = {
@@ -34,9 +32,7 @@ export const builtInPresets: Record<string, Record<string, string>> = {
     longJumpBackward: 'j',
     seekBegin: '0 Home',
     // 1-9 跳转到对应百分比
-    ...lodash.fromPairs(
-      lodash.range(1, 10).map(i => [`seekProgress${i}0`, String(i)])
-    ),
+    ...lodash.fromPairs(lodash.range(1, 10).map(i => [`seekProgress${i}0`, String(i)])),
   },
   HTML5Player: {
     coin: 'shift c',
