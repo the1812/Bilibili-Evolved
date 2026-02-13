@@ -205,7 +205,7 @@ interface Message {
   data?: FFMessageData
 }
 
-interface ProgressEvent {
+export interface ProgressEvent {
   progress: number
   time: number
 }

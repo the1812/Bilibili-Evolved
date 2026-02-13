@@ -4,7 +4,7 @@
     role="button"
     :aria-disabled="disabled"
     :tabindex="disabled ? -1 : 0"
-    :class="{ [type]: true, disabled, round, icon }"
+    :class="{ [type]: true, disabled, round, icon, 'no-effects': noEffects }"
     v-on="disabled ? null : $listeners"
     @keydown.enter.prevent="$listeners.click && $listeners.click($event)"
     @keydown.space.prevent="$listeners.click && $listeners.click($event)"
@@ -28,6 +28,10 @@ export default Vue.extend({
       default: false,
     },
     icon: {
+      type: Boolean,
+      default: false,
+    },
+    noEffects: {
       type: Boolean,
       default: false,
     },
@@ -59,7 +63,7 @@ export default Vue.extend({
     -webkit-tap-highlight-color: transparent;
   }
   body.dark & {
-    color: #eee;
+    color: var(--be-color-text-title, #eee);
   }
   &.round {
     border-radius: calc(1em + 8px);
@@ -93,10 +97,10 @@ export default Vue.extend({
     transition: box-shadow 0.2s ease-out;
   }
   body.dark &.light {
-    background-color: #333;
+    background-color: var(--be-color-button-bg, #333);
     // box-shadow: 0 0 0 1px transparent;
   }
-  &:not(.disabled) {
+  &:not(.disabled):not(.no-effects) {
     &:hover,
     &:focus-within {
       background-color: #8884;
@@ -135,12 +139,12 @@ export default Vue.extend({
     }
     body.dark &.light {
       &:hover {
-        background-color: #333;
+        background-color: var(--be-color-button-bg, #333);
         box-shadow: 0 0 0 1px var(--theme-color);
       }
       &:active,
       &:focus-within {
-        background-color: #333;
+        background-color: var(--be-color-button-bg, #333);
         box-shadow: 0 0 0 1px var(--theme-color), 0 0 0 3px var(--theme-color-20);
       }
     }

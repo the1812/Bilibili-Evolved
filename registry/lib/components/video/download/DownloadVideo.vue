@@ -46,11 +46,16 @@
         </div>
       </template>
       <div class="download-video-config-item">
-        <div class="download-video-config-title">使用备用下载地址:</div>
-        <SwitchBox v-model="useBackupUrls" />
+        <div class="download-video-config-title">下载地址偏好:</div>
+        <VDropdown v-model="preferredUrlType" :items="urlTypeOptions" />
       </div>
       <div class="download-video-config-description">
-        若默认下载地址速度缓慢, 可以尝试更换备用下载地址.
+        当视频有多个源时, 配置优先使用的源, 各类视频源区别请参考
+        <a
+          href="https://github.com/the1812/Bilibili-Evolved/issues/3234#issuecomment-1504764774"
+          target="_blank"
+          >此处</a
+        >
       </div>
       <component
         :is="a.component"
@@ -111,6 +116,7 @@ import {
   DownloadVideoInputItem,
   DownloadVideoOutput,
 } from './types'
+import { DownloadVideoUrlType, parseVideoUrlType, sortVideoUrlByType } from './url-type'
 
 const [inputs] = registerAndGetData('downloadVideo.inputs', [
   videoSingleInput,
@@ -134,13 +140,20 @@ const { basicConfig } = getComponentSettings('downloadVideo').options as {
     api: string
     quality: number
     output: string
-    useBackupUrls: boolean
+    preferredUrlType: DownloadVideoUrlType
   }
 }
 const filterData = <T extends { match?: TestPattern }>(items: T[]) => {
   const matchedItems = items.filter(it => it.match?.some(p => matchUrlPattern(p)) ?? true)
   return matchedItems
 }
+const urlTypeOptions: { displayName: string; name: DownloadVideoUrlType }[] = [
+  { displayName: 'Mirror', name: DownloadVideoUrlType.Mirror },
+  { displayName: 'UPOS', name: DownloadVideoUrlType.UPOS },
+  { displayName: 'BCache', name: DownloadVideoUrlType.BCache },
+  { displayName: 'MCDN / PCDN', name: DownloadVideoUrlType.MCDN },
+]
+
 const getFallbackTestVideoInfo = () =>
   ({
     aid: unsafeWindow.aid,
@@ -163,7 +176,11 @@ export default Vue.extend({
   },
   data() {
     const lastOutput = basicConfig.output
-    const lastUseBackupUrls = basicConfig.useBackupUrls
+    const lastPreferredUrlType = basicConfig.preferredUrlType
+    console.log({
+      lastPreferredUrlType,
+      optionValue: lastPreferredUrlType ?? DownloadVideoUrlType.Mirror,
+    })
     return {
       open: false,
       busy: false,
@@ -183,7 +200,9 @@ export default Vue.extend({
       selectedApi: undefined,
       outputs,
       selectedOutput: outputs.find(it => it.name === lastOutput) || outputs[0],
-      useBackupUrls: lastUseBackupUrls || false,
+      urlTypeOptions,
+      preferredUrlType:
+        lastPreferredUrlType ?? urlTypeOptions.find(it => it.name === DownloadVideoUrlType.Mirror),
     }
   },
   computed: {
@@ -229,11 +248,11 @@ export default Vue.extend({
       }
       basicConfig.output = output.name
     },
-    useBackupUrls(useBackupUrls: boolean) {
-      if (useBackupUrls === undefined) {
+    preferredUrlType(urlType: DownloadVideoUrlType) {
+      if (urlType === undefined) {
         return
       }
-      basicConfig.useBackupUrls = useBackupUrls
+      basicConfig.preferredUrlType = urlType
     },
   },
   mounted() {
@@ -299,6 +318,7 @@ export default Vue.extend({
         testItem.quality = this.selectedQuality
         const qualityVideoInfo = await api.downloadVideoInfo(testItem)
         this.testData.videoInfo = qualityVideoInfo
+        console.log('[qualityVideoInfo]', qualityVideoInfo)
       } catch (error) {
         console.error('[updateTestVideoInfo] failed', error)
         this.testData.videoInfo = undefined
@@ -322,16 +342,20 @@ export default Vue.extend({
           Toast.info('未接收到可下载数据, 请检查输入源和格式是否适用于当前视频.', '下载视频', 3000)
           return
         }
-        if (this.useBackupUrls) {
-          videoInfos.forEach(videoInfo => {
-            videoInfo.fragments.forEach(fragment => {
-              fragment.url =
-                fragment.backupUrls && fragment.backupUrls.length !== 0
-                  ? fragment.backupUrls.at(0)
-                  : fragment.url
-            })
+        videoInfos.forEach(videoInfo => {
+          videoInfo.fragments.forEach(fragment => {
+            if (this.preferredUrlType !== undefined) {
+              const preferredUrl = fragment.allUrls.find(
+                url => parseVideoUrlType(url) === this.preferredUrlType,
+              )
+              if (preferredUrl !== undefined) {
+                fragment.url = preferredUrl
+              } else {
+                fragment.url = sortVideoUrlByType(fragment.allUrls)[0]
+              }
+            }
           })
-        }
+        })
         const action = new DownloadVideoAction(videoInfos)
         assets.forEach(a => {
           const assetsType = a?.getUrls ? action.extraOnlineAssets : action.extraAssets
@@ -355,7 +379,7 @@ export default Vue.extend({
 @import 'common';
 
 .download-video-panel {
-  @include card();
+  @include popup();
   font-size: 12px;
   padding: 6px;
   top: 100px;

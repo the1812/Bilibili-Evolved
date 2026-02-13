@@ -1,4 +1,4 @@
-import type { ItemStopPayload, Payload } from 'dev-tools/dev-server/payload'
+import type { ItemStopPayload, Payload } from '../../../../../dev-tools/dev-server/payload'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeInstantStyle } from '@/core/style'

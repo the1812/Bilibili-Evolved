@@ -84,14 +84,14 @@
   box-sizing: border-box;
   @include shadow();
   body.dark & {
-    background-color: #282828;
-    color: #eee;
+    background-color: var(--be-color-card-bg, #282828);
+    color: var(--be-color-text-title, #eee);
   }
 }
 @mixin popup($radius: 8px) {
   @include card($radius);
   body.dark & {
-    background-color: #222;
+    background-color: var(--be-color-popup-bg, #222);
   }
 }
 @mixin border-card($radius: 8px) {
@@ -100,9 +100,9 @@
   border-radius: $radius;
   border: 1px solid #e8e8e8;
   body.dark & {
-    background-color: #222;
-    color: #eee;
-    border-color: #333;
+    background-color: var(--be-color-card-bg, #222);
+    color: var(--be-color-text-title, #eee);
+    border-color: var(--be-color-card-border, #333);
   }
 }
 // @mixin popup($radius: 8px) {
@@ -123,15 +123,15 @@
   fill: black;
   stroke: black;
   body.dark & {
-    color: #eee;
-    fill: #eee;
-    stroke: #eee;
+    color: var(--be-color-text-title, #eee);
+    fill: var(--be-color-text-title, #eee);
+    stroke: var(--be-color-text-title, #eee);
   }
 }
 @mixin semi-bold {
   font-weight: 600;
 }
-@mixin default-background-color($dark-color: #333) {
+@mixin default-background-color($dark-color: var(--be-color-panel-bg, #333)) {
   background-color: #fff;
   body.dark & {
     background-color: $dark-color;

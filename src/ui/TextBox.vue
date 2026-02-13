@@ -56,14 +56,14 @@ export default Vue.extend({
     width: 0;
     font-size: inherit;
     body.dark & {
-      color: #eee;
+      color: var(--be-color-text-content, #eee);
     }
     &:disabled {
       opacity: 0.3;
       cursor: not-allowed;
     }
     &::-webkit-input-placeholder {
-      color: #888;
+      color: var(--be-color-text-placeholder, #888);
     }
   }
   &.linear {

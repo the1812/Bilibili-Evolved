@@ -12,10 +12,9 @@
     "strict": false,
     "noImplicitAny": false,
     "sourceMap": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "src/*"
+        "./src/*"
       ]
     }
   },

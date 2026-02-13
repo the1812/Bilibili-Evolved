@@ -322,7 +322,7 @@ export default Vue.extend({
     -webkit-tap-highlight-color: transparent;
   }
   body.dark & {
-    color: #eee;
+    color: var(--be-color-text-title, #eee);
   }
   .selected-color {
     cursor: pointer;
