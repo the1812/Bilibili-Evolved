@@ -47,22 +47,25 @@ export const searchProvider: LaunchBarActionProvider = {
       return results
     }
     results.push(
-      ...suggests.map(result => ({
-        name: `${input}.${result.value}`,
-        icon: 'search',
-        content: async () =>
-          Vue.extend({
-            render: h => {
-              const content = h('div', {
-                domProps: {
-                  innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
-                },
-              })
-              return content
-            },
-          }),
-        action: () => search(result.value),
-      })),
+      ...suggests.map(
+        (result): LaunchBarAction => ({
+          name: `${input}.${result.value}`,
+          icon: 'search',
+          suggestName: result.value,
+          content: async () =>
+            Vue.extend({
+              render: h => {
+                const content = h('div', {
+                  domProps: {
+                    innerHTML: result.name.replace(/suggest_high_light/g, 'suggest-highlight'),
+                  },
+                })
+                return content
+              },
+            }),
+          action: () => search(result.value),
+        }),
+      ),
     )
     return lodash.uniqBy(results, it => it.name)
   },

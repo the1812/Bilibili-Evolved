@@ -2,10 +2,11 @@ import { defineComponentMetadata } from '@/components/define'
 import { PackageEntry } from '@/core/download'
 import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
-import { videoUrls } from '@/core/utils/urls'
+import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { DownloadVideoAssets } from '../download/types'
-import { generateByType, MetadataType } from './metadata'
+import { generateByType } from './metadata'
 import { options } from './options'
+import { MetadataType } from './types'
 
 export const title = '保存视频元数据'
 export const name = 'saveVideoMetadata'
@@ -28,7 +29,7 @@ export const component = defineComponentMetadata({
   author,
   tags: [componentsTags.video],
   entry: none,
-  urlInclude: videoUrls,
+  urlInclude: videoAndBangumiUrls,
   options,
   widget: {
     condition: hasVideo,

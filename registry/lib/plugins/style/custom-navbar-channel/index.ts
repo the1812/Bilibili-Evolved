@@ -1,7 +1,7 @@
-import { CustomNavbarOptions } from 'registry/lib/components/style/custom-navbar'
 import { PluginMetadata } from '@/plugins/plugin'
 import { getComponentSettings } from '@/core/settings'
 import type { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
+import type { CustomNavbarOptions } from '../../../components/style/custom-navbar'
 
 export const plugin: PluginMetadata = {
   name: 'customNavbar.items.channel',

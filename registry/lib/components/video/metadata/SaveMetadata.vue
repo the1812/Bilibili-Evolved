@@ -21,7 +21,8 @@ import { DefaultWidget } from '@/ui'
 import { logError } from '@/core/utils/log'
 import { DownloadPackage } from '@/core/download'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { MetadataType, generateByType } from './metadata'
+import { generateByType } from './metadata'
+import { MetadataType } from './types'
 
 export default Vue.extend({
   components: {

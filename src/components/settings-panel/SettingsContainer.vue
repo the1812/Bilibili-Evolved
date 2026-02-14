@@ -163,14 +163,14 @@ export default {
         transform: translateX(calc(60% * var(--direction))) scale(1.1);
         background-color: #fff;
         body.dark & {
-          background-color: #333;
+          background-color: var(--be-color-button-bg, #333);
         }
         .be-icon {
           color: #222;
           fill: #222;
           body.dark & {
-            color: #eee;
-            fill: #eee;
+            color: var(--be-color-text-title, #eee);
+            fill: var(--be-color-text-title, #eee);
           }
         }
       }

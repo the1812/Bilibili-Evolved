@@ -160,7 +160,7 @@ export default Vue.extend({
     outline: none !important;
   }
   body.dark & {
-    background-color: #333;
+    background-color: var(--be-color-button-bg, #333);
   }
   &:not(.disabled) {
     &:hover {

@@ -40,13 +40,13 @@
 @keyframes transparent-to-dark {
   to {
     --navbar-foreground: #eee;
-    --navbar-background: #222;
+    --navbar-background: var(--be-color-navbar-bg, #222);
   }
 }
 @keyframes transparent-to-dark-blur {
   to {
     --navbar-foreground: #eee;
-    --navbar-background: #2228;
+    --navbar-background: var(--be-color-navbar-bg-blur, #2228);
     backdrop-filter: blur(24px);
   }
 }
@@ -81,14 +81,14 @@
 @keyframes transparent-to-dark-shadow {
   to {
     --navbar-foreground: #eee;
-    --navbar-background: #222;
+    --navbar-background: var(--be-color-navbar-bg, #222);
     box-shadow: #0004 0px 2px 10px 1px;
   }
 }
 @keyframes transparent-to-dark-blur-shadow {
   to {
     --navbar-foreground: #eee;
-    --navbar-background: #2228;
+    --navbar-background: var(--be-color-navbar-bg-blur, #2228);
     backdrop-filter: blur(24px);
     box-shadow: #0004 0px 2px 10px 1px;
   }

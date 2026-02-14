@@ -67,7 +67,7 @@ const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => 
 }
 const dashToFragment = (dash: Dash): DownloadVideoFragment => ({
   url: dash.downloadUrl,
-  backupUrls: dash.backupUrls,
+  allUrls: [dash.downloadUrl, ...(dash.backupUrls ?? [])],
   length: dash.duration,
   size: Math.trunc((dash.bandWidth * dash.duration) / 8),
   extension: getDashExtensions(dash.type),

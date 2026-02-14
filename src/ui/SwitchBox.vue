@@ -71,7 +71,7 @@ export default Vue.extend({
 
   .bar {
     position: relative;
-    background-color: #8884;
+    background-color: var(--be-color-switch-bg, #8884);
     // box-shadow: 0 1px 4px 0 #0004 inset;
     @include round-bar(12);
     .thumb {
@@ -86,8 +86,8 @@ export default Vue.extend({
       border: 1px solid #ddd;
       // box-shadow: 0 1px 8px 0px #0004;
       body.dark & {
-        border-color: #555;
-        background-color: #666;
+        border-color: var(--be-color-thumb-border, #555);
+        background-color: var(--be-color-thumb-bg, #666);
       }
     }
   }

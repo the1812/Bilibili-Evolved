@@ -179,7 +179,7 @@ export default Vue.extend({
       if (id === 0) {
         return `https://space.bilibili.com/${getUID()}/favlist`
       }
-      return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}`
+      return `https://space.bilibili.com/${getUID()}/favlist?fid=${id}&ftype=create`
     },
     playLink() {
       const { id } = this.folder
@@ -375,8 +375,8 @@ export default Vue.extend({
           'cover info' 1fr / 130px 1fr;
         height: 85px;
         body.dark & {
-          background-color: #282828;
-          color: #eee;
+          background-color: var(--be-color-card-bg, #282828);
+          color: var(--be-color-text-title, #eee);
         }
         &:not(:last-child) {
           margin-bottom: 12px;

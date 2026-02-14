@@ -1,5 +1,5 @@
-import { KeyBindingAction } from 'registry/lib/components/utils/keymap/bindings'
 import { PluginMetadata } from '@/plugins/plugin'
+import type { KeyBindingAction } from '../../../components/utils/keymap/bindings'
 
 export const plugin: PluginMetadata = {
   name: 'keymap.actions.toggleDanmakuList',

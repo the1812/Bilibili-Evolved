@@ -68,6 +68,7 @@ export const historyProvider: LaunchBarActionProvider = {
           icon: 'mdi-history',
           // description: `在 ${formatDate(new Date(it.timestamp))} 搜索过`,
           explicitSelect: true,
+          suggestName: it.value,
           action: () => {
             search(it.value)
           },

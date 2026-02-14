@@ -156,9 +156,15 @@ defineExpose({
     .list-game-cards-title {
       font-size: large;
       @include semi-bold();
+      body.dark & {
+        color: var(--be-color-text-title, #eee);
+      }
     }
     .list-game-cards {
       @include v-stretch();
+      body.dark & {
+        color: var(--be-color-text-content, #aaa);
+      }
       .list-game-card {
         @include single-line();
         padding: 4px 0;
