@@ -35,8 +35,8 @@ export interface DownloadVideoFragment {
   length: number
   size: number
   url: string
+  allUrls: string[]
   extension: string
-  backupUrls?: string[]
 }
 /** 调用 API 后得到的视频详细信息, 包括下载链接, 清晰度, 分段等 */
 export class DownloadVideoInfo {

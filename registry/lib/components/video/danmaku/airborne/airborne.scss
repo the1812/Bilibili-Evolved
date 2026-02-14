@@ -1,6 +1,8 @@
 .bili-dm,
 .b-danmaku,
-.bili-danmaku-x-dm {
+.bili-danmaku-x-dm,
+.bili-danmaku-x-dm > div,
+.bili-danmaku-x-dm > span {
   &.airborne {
     text-decoration: underline;
     cursor: pointer;

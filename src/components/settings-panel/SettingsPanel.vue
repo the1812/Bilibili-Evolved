@@ -278,8 +278,8 @@ export default {
     height: var(--panel-height);
     transition: opacity 0.2s 0.2s ease-out;
     body.dark & {
-      --settings-panel-background: #222;
-      color: #eee;
+      --settings-panel-background: var(--be-color-panel-bg, #222);
+      color: var(--be-color-text-title, #eee);
       // border-color: #333;
     }
     .settings-panel-header {
@@ -386,7 +386,7 @@ export default {
       }
     }
     .component-detail-panel {
-      @include card();
+      @include popup();
       @include v-stretch();
       top: 50%;
       left: calc(100% - 12px);

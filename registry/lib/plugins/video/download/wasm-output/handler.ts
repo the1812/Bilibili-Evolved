@@ -7,7 +7,9 @@ import { title as pluginTitle } from '.'
 import type { Options } from '../../../../components/video/download'
 import { DownloadVideoAction } from '../../../../components/video/download/types'
 import { FFmpeg } from './ffmpeg'
-import { getCacheOrFetch, httpGet, toastProgress, toBlobUrl } from './utils'
+import { mux } from './muxer'
+import { OutputType } from './types'
+import { getCacheOrFetch, getContentLength, httpGet, toastProgress, toBlobUrl } from './utils'
 
 const ffmpeg = new FFmpeg()
 
@@ -47,8 +49,10 @@ async function single(
   name: string,
   videoUrl: string,
   audioUrl: string,
+  coverUrl: string,
   ffmetadata: string,
-  outputMkv: boolean,
+  outputType: OutputType,
+  isFlac: boolean,
   pageIndex = 1,
   totalPages = 1,
 ) {
@@ -60,55 +64,42 @@ async function single(
     httpGet(audioUrl, progress(1, '正在下载音频流')),
   ])
 
-  await ffmpeg.writeFile('video', video)
-  await ffmpeg.writeFile('audio', audio)
-
-  const args = ['-i', 'video', '-i', 'audio']
-
-  if (ffmetadata) {
-    await ffmpeg.writeFile('ffmetadata', new TextEncoder().encode(ffmetadata))
-    args.push('-i', 'ffmetadata', '-map_metadata', '2')
-    if (!outputMkv) {
-      args.push('-movflags', '+use_metadata_tags')
-    }
+  let cover: Uint8Array
+  if (coverUrl) {
+    cover = await httpGet(coverUrl, progress(0, '正在下载封面'))
   }
 
-  args.push('-codec', 'copy', '-f', outputMkv ? 'matroska' : 'mp4', 'output')
+  let metadata: Uint8Array
+  if (ffmetadata) {
+    metadata = new TextEncoder().encode(ffmetadata)
+  }
 
-  console.debug('FFmpeg commandline args:', args.join(' '))
-
-  ffmpeg.onProgress(event => {
+  const muxProgress = event => {
     toast.message = `混流中: ${formatPercent(event.progress)}`
-  })
-  await ffmpeg.exec(args)
+  }
 
-  const output = await ffmpeg.readFile('output')
-  const outputBlob = new Blob([output], {
-    type: outputMkv ? 'video/x-matroska' : 'video/mp4',
-  })
+  const {
+    data: output,
+    format: { extension },
+  } = await mux(ffmpeg, outputType, muxProgress, video, audio, isFlac, cover, metadata)
 
   toast.message = '完成！'
   toast.duration = 1000
 
-  await Promise.all([
-    ffmpeg.deleteFile('video'),
-    ffmpeg.deleteFile('audio'),
-    ffmpeg.deleteFile('output'),
-    ffmetadata ? ffmpeg.deleteFile('ffmetadata') : Promise.resolve(),
-  ])
-
-  await DownloadPackage.single(
-    name.replace(/.[^/.]+$/, `.${outputMkv ? 'mkv' : 'mp4'}`),
-    outputBlob,
-  )
+  await DownloadPackage.single(name.replace(/.[^/.]+$/, `.${extension}`), output)
 }
 
-export async function run(action: DownloadVideoAction, muxWithMetadata: boolean) {
+export async function run(
+  action: DownloadVideoAction,
+  outputType: OutputType,
+  muxWithMetadata: boolean,
+  attachCover: boolean,
+) {
   if (!ffmpeg.loaded) {
     await loadFFmpeg()
   }
 
-  const { infos: pages, extraAssets } = action
+  const { infos: pages, extraAssets, extraOnlineAssets } = action
 
   let ffmetadata: PackageEntry[]
   if (muxWithMetadata) {
@@ -121,6 +112,19 @@ export async function run(action: DownloadVideoAction, muxWithMetadata: boolean)
       }
     }
     action.extraAssets = extraAssetsForBrowser
+  }
+
+  let cover: { name: string; url: string }[]
+  if (attachCover) {
+    const extraOnlineAssetsForBrowser = []
+    for (const { asset, instance } of extraOnlineAssets) {
+      if (!cover && asset.name === 'downloadCover' && instance.type === 'jpg') {
+        cover = await asset.getUrls(pages, instance)
+      } else {
+        extraOnlineAssetsForBrowser.push({ asset, instance })
+      }
+    }
+    action.extraOnlineAssets = extraOnlineAssetsForBrowser
   }
 
   const { dashAudioExtension, dashFlacAudioExtension, dashVideoExtension } =
@@ -139,15 +143,23 @@ export async function run(action: DownloadVideoAction, muxWithMetadata: boolean)
       throw new Error('仅支持 DASH 格式视频和音频')
     }
 
-    if (video.size + audio.size > 4294967295) {
-      throw new Error(`仅支持合并 4GB 内的音视频（${formatFileSize(video.size + audio.size)}）`)
+    const [videoSize, audioSize] = await Promise.all([
+      getContentLength(video.url),
+      getContentLength(audio.url),
+    ])
+    const size = Math.max(videoSize, video.size) + Math.max(audioSize, audio.size)
+    // 2000 * 1024 * 1024
+    if (size > 2097152000) {
+      throw new Error(`仅支持合并 2GB 内的音视频（${formatFileSize(size)}）`)
     }
 
     await single(
       video.title,
       video.url,
       audio.url,
+      cover?.[i]?.url,
       <string>ffmetadata?.[i]?.data,
+      outputType,
       audio.extension === dashFlacAudioExtension,
       i + 1,
       pages.length,

@@ -74,7 +74,7 @@
 ## 最低配置
 - 操作系统: Windows 8.1 / macOS Big Sur
 - 分辨率: 1920x1080, 缩放 125%
-- 浏览器: Chrome 110+ / Firefox 127+ / Safari 16.0+ (仅理论上能运行, 没测试过)
+- 浏览器: Chrome 110+ / Firefox 140+ / Safari 18.4+ (仅理论上能运行, 没测试过)
 - 处理器: Intel Core i5-10500 / AMD Ryzen 5 3600
 - 内存: 8GB
 - 脚本管理器: Tampermonkey 5.0 / Violentmonkey 2.18

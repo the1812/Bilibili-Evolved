@@ -1,5 +1,11 @@
 import { OptionsOfMetadata, defineOptionsMetadata } from '@/components/define'
 
+export interface FeedsFilterPatternConfig {
+  key: string
+  pattern: string
+  enabled: boolean
+}
+
 export const options = defineOptionsMetadata({
   types: {
     defaultValue: [] as number[],
@@ -7,7 +13,7 @@ export const options = defineOptionsMetadata({
     hidden: true,
   },
   patterns: {
-    defaultValue: [] as string[],
+    defaultValue: [] as FeedsFilterPatternConfig[],
     displayName: '过滤关键词',
     hidden: true,
   },

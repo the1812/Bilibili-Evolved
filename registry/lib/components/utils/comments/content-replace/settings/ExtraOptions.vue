@@ -76,6 +76,9 @@ export default Vue.extend({
   }
   &-rows {
     @include v-stretch(8px);
+    .be-icon {
+      fill: var(--be-color-text-title, #eee);
+    }
   }
   &-separator {
     align-self: center;

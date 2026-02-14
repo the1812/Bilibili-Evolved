@@ -714,3 +714,19 @@ export const simulateClick = (target: EventTarget, eventParams?: PointerEventIni
 export const getVue2Data = (el: any) =>
   // eslint-disable-next-line no-underscore-dangle
   el.__vue__ ?? el.parentElement.__vue__ ?? el.children[0].__vue__ ?? el.__vueParentComponent
+
+/**
+ * 创建一个vue组件并动态注入 props
+ *
+ * 示例（脚本组件额外设置、小组件中传入参数值）：
+ *   extraOptions: () => import('./Setting.vue').then(m => createComponentWithProps(m.default, { isWidget: false })),
+ */
+export function createComponentWithProps(component: any, props: Record<string, any>) {
+  return Vue.extend({
+    render(h) {
+      return h(component, {
+        props,
+      })
+    },
+  })
+}

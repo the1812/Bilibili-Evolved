@@ -21,17 +21,45 @@ export const component = defineComponentMetadata({
     () => import('./airborne.scss'),
     async ({ settings }) => {
       const { enabled } = settings
+      const cnChars = '零一二三四五六七八九'.split('')
+      const parseNumber = (text: string | null) => {
+        if (!text) {
+          return NaN
+        }
+        // 单位只考虑十
+        const parts = text.split('十')
+        if (parts.length === 1) {
+          // 简单转换
+          const t = text.replace(/[零一二三四五六七八九]/g, a => {
+            return `${cnChars.indexOf(a)}`
+          })
+          return parseInt(t)
+        }
+        if (parts.length === 2) {
+          // 单位十前后只允许最多一个数字
+          const first = parts[0] === '' ? 1 : cnChars.indexOf(parts[0])
+          const second = parts[1] === '' ? 0 : cnChars.indexOf(parts[1])
+          if (first === -1 || second === -1) {
+            return NaN
+          }
+          return first * 10 + second
+        }
+
+        return NaN
+      }
       const getAirborneTime = (text: string | null) => {
         if (!text) {
           return NaN
         }
-        const airborneMatch = text.match(/(\d+)[ ]*[:：时分][ ]*(\d+)([ ]*[:：分][ ]*(\d+))?/)
+        const airborneMatch = text.match(
+          /([\d零一二三四五六七八九十]+)[ ]*(小时|[:：时分])[ ]*([\d零一二三四五六七八九十]+)([ ]*[:：分][ ]*([\d零一二三四五六七八九十]+))?/,
+        )
         if (!airborneMatch) {
           return NaN
         }
-        if (airborneMatch[3]) {
+        if (airborneMatch[4]) {
           // 含有小时
-          const [, hour, minute, , second] = airborneMatch.map(r => parseInt(r))
+          const [, hour, , minute, , second] = airborneMatch.map(r => parseNumber(r))
           if ([hour, minute, second].some(v => Number.isNaN(v))) {
             return NaN
           }
@@ -40,7 +68,7 @@ export const component = defineComponentMetadata({
           }
           return hour * 3600 + minute * 60 + second
         }
-        const [, minute, second] = airborneMatch.map(r => parseInt(r))
+        const [, minute, , second] = airborneMatch.map(r => parseNumber(r))
         if ([minute, second].some(v => Number.isNaN(v))) {
           return NaN
         }
@@ -52,8 +80,9 @@ export const component = defineComponentMetadata({
         }
         const target = e.target as HTMLElement
         if (
-          !['b-danmaku', 'bili-dm', 'bili-danmaku-x-dm'].some(token =>
-            target.classList.contains(token),
+          !['b-danmaku', 'bili-dm', 'bili-danmaku-x-dm'].some(
+            token =>
+              target.classList.contains(token) || target.parentElement?.classList.contains(token),
           )
         ) {
           return

@@ -361,7 +361,7 @@ export default Vue.extend({
           z-index: 1;
           background-color: #fff;
           body.dark & {
-            background-color: #222;
+            background-color: var(--be-color-popup-bg, #222);
           }
         }
         &-items {
@@ -392,8 +392,8 @@ export default Vue.extend({
             border: 1px solid #8882;
             box-sizing: border-box;
             body.dark & {
-              background-color: #282828;
-              color: #eee;
+              background-color: var(--be-color-card-bg, #282828);
+              color: var(--be-color-text-title, #eee);
             }
             &:not(:last-child) {
               margin-bottom: 8px;

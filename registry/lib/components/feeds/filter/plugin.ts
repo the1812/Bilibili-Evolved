@@ -2,6 +2,7 @@ import { FeedsContentFilter } from '@/components/feeds/api'
 import { getComponentSettings } from '@/core/settings'
 import { PluginMetadata } from '@/plugins/plugin'
 import { BlockableCard, hasBlockedPattern } from './pattern'
+import type { FeedsFilterOptions } from './options'
 
 const bangumiFields = {
   username: 'title',
@@ -23,9 +24,7 @@ export const feedsFilterPlugin: PluginMetadata = {
     addData('feeds.contentFilters', (filters: FeedsContentFilter[]) => {
       filters.push({
         filter: (items: any[]) => {
-          const { patterns } = getComponentSettings('feedsFilter').options as {
-            patterns: string[]
-          }
+          const { patterns } = getComponentSettings('feedsFilter').options as FeedsFilterOptions
           return items.filter(item => {
             const field = filterableFields.find(it =>
               Object.values(it).every(fields => {
@@ -49,7 +48,9 @@ export const feedsFilterPlugin: PluginMetadata = {
                 return [key, item[value].trim() as string]
               }),
             ) as Record<keyof BlockableCard, string>
-            return patterns.every(p => !hasBlockedPattern(p, card as BlockableCard))
+            return patterns.every(
+              p => !hasBlockedPattern(typeof p === 'string' ? p : p.pattern, card as BlockableCard),
+            )
           })
         },
       })

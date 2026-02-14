@@ -87,6 +87,11 @@ html {
   --navbar-bounds-padding: 10%;
   // --navbar-blur-opacity: 0.7;
   --navbar-icon-size: 24px;
+
+  --be-color-navbar-bg: var(--bg1);
+  --be-color-navbar-skeleton-bg: var(--bg1_float);
+  --be-color-navbar-shadow: rgba(var(--shadow_rgb), 0.4);
+  --be-color-navbar-bg-blur: rgba(var(--bg1_rgb), 0.8);
 }
 
 body.custom-navbar-loading::after {
@@ -100,7 +105,7 @@ body.custom-navbar-loading::after {
   z-index: 10001;
 }
 body.dark.custom-navbar-loading::after {
-  background-color: #333;
+  background-color: var(--be-color-navbar-skeleton-bg, #333);
 }
 body.fixed-navbar {
   .left-panel {
@@ -182,7 +187,7 @@ body.fixed-navbar {
     box-shadow: #0002 0 1px 10px 1px;
   }
   body.dark &.shadow:not(.transparent) {
-    box-shadow: #0004 0px 2px 10px 1px;
+    box-shadow: var(--be-color-navbar-shadow, #0004) 0px 2px 10px 1px;
   }
 
   &.blur:not(.transparent) {
@@ -191,10 +196,10 @@ body.fixed-navbar {
   }
 
   body.dark &:not(.fill):not(.transparent) {
-    --navbar-background: #222;
+    --navbar-background: var(--be-color-navbar-bg, #222);
     --navbar-foreground: #eee;
     &.blur {
-      --navbar-background: #2228;
+      --navbar-background: var(--be-color-navbar-bg-blur, #2228);
     }
   }
   &.transparent {

@@ -18,7 +18,7 @@ interface CrossOriginStorageListener {
 
 const postMessage = async (message: CrossOriginMessage) => {
   const iframe = (await select(
-    'iframe[src^="https://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html"][data-loaded="true"]',
+    'iframe[src^="https://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html"][data-loaded="true"], iframe[src^="https://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html"][data-count]',
   )) as HTMLIFrameElement
   if (!iframe) {
     throw new Error('COLS iframe not found')

@@ -181,6 +181,24 @@ by [@magicFeirl](https://github.com/magicFeirl)
 
 在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.
 
+### [直播前后台音量自动调节](../../registry/dist/components/live/front-back-volume.js)
+`frontBackVolume`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/front-back-volume.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/front-back-volume.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/front-back-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/front-back-volume.js)
+
+by [@KDH-KDHKDH](https://github.com/KDH-KDHKDH)
+
+# 使用说明
+
+<!-- (http://localhost:23333/registry/dist/components/live/front-back-volume.js) -->
+
+1. 分别设定前台/后台音量
+2. 当你切换到其他标签页或最小化窗口时，播放器会自动改用“后台音量”
+3. 若未生效，请先点击一下直播页面再试。
+4. 手动调音量不受影响
+
 ### [直播全屏包裹](../../registry/dist/components/live/gift-box.js)
 `liveGiftBox`
 
@@ -373,6 +391,15 @@ by [@Tinhone](https://github.com/Tinhone)
 
 启用夜间模式能更好地适应光线暗的环境, 并会大量应用主题颜色.
 
+### [深色模式](../../registry/dist/components/style/dark-mode/integrated.js)
+`integratedDarkMode`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/dark-mode/integrated.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/dark-mode/integrated.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/dark-mode/integrated.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/integrated.js)
+
+简化版的夜间模式，跟随 b 站官方的深色主题。
+
 ### [夜间模式计划时段](../../registry/dist/components/style/dark-mode/schedule.js)
 `darkModeSchedule`
 
@@ -420,16 +447,13 @@ by [@Tinhone](https://github.com/Tinhone)
 
 选项说明：
 
-- `禁用轮播`：禁用图片轮播，可以手动切换
-- `图片模糊`：模糊轮播图片，为0时不模糊
-- `样式开关`：
-  - `隐藏轮播区域占位`：完全隐藏整个轮播区域
-  - `透明化轮播区域`：完全透明化整个轮播区域，同时禁止点击打开链接
+- `完全隐藏`：完全隐藏整个轮播区域
+- `透明化`：完全透明化整个轮播区域，同时禁止点击打开链接
+- `自定义`：
+  - `禁用轮播`：禁用图片轮播，可以手动切换
+  - `图片模糊`：模糊轮播图片，为0时不模糊
   - `隐藏轮播图片`：隐藏轮播图片，同时禁止点击图片打开链接
   - `隐藏图片标题`：隐藏图片标题，同时禁止点击标题打开链接
-
-  > 注：样式开关可以同时启用，但是最终显示效果以作用范围大的为准  
-  > 例如启用 `隐藏轮播区域占位`，由于整个区域都被隐藏，不管 `隐藏轮播图片`、`隐藏图片标题` 等选项是否启用都已经看不见了
 
 ### [隐藏热搜](../../registry/dist/components/style/hide/trending-search.js)
 `hideTrendingSearch`
@@ -576,6 +600,17 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-shadow.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-shadow.js)
 
 为播放器添加主题色投影.
+
+### [替换标题党封面](../../registry/dist/components/style/replace-cover.js)
+`replaceCover`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/replace-cover.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/replace-cover.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/replace-cover.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/replace-cover.js)
+
+by [@UcnacDx2](https://github.com/UcnacDx2)
+
+将视频卡片的封面替换为视频预览帧，杜绝图文不符。致敬DeArrow。
 
 ### [使用细滚动条](../../registry/dist/components/style/scrollbar.js)
 `elegantScrollbar`
@@ -731,6 +766,18 @@ by [@CrazyboyQCD](https://github.com/CrazyboyQCD)
 无法触发未加载动态的点赞，当启用手动对动态点赞后可手动触发，启用后不会触发动态自动点赞\
 安装快捷键扩展后可以点击【l】键或【L】键触发\
 还可以添加动态点赞的黑名单\
+
+### [视频预览放大](../../registry/dist/components/utils/bigger-video-preview.js)
+`biggerVideoPreview`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/bigger-video-preview.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/bigger-video-preview.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/bigger-video-preview.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/bigger-video-preview.js)
+
+放大鼠标悬停于视频卡片时播放的5分钟预览
+
+- 点击放大镜图标放大预览
+- 点击缩小图标或者预览框外空白处关闭预览
 
 ### [屏蔽黑名单up主](../../registry/dist/components/utils/black-list.js)
 `blackList`
@@ -940,6 +987,15 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 
 为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.
 
+### [会员购链接重定向](../../registry/dist/components/utils/mall-link-redirect.js)
+`mallLinkRedirect`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/mall-link-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/mall-link-redirect.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/mall-link-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/mall-link-redirect.js)
+
+将移动端的会员购链接转换为 PC 端的链接
+
 ### [删除广告](../../registry/dist/components/utils/remove-promotions.js)
 `removePromotions`
 
@@ -950,9 +1006,10 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等.
 
 - `保留活动横幅`: 保留视频页面的活动横幅.
-- `选项`
-  - `卡片占位`: 关闭时广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置
-  - `占位文本`: 屏蔽首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
+- `广告卡片选项`
+  - `完全隐藏`: 广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置
+  - `自定义`
+    - `占位文本`: 屏蔽首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
   - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效
 
 ### [关注时间显示](../../registry/dist/components/utils/subscribe-time-show.js)
@@ -974,6 +1031,8 @@ by [@CNOCM](https://github.com/CNOCM)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/url-params-clean.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/url-params-clean.js)
 
 自动删除网址中的多余跟踪参数。请注意这会导致浏览器历史记录出现重复的标题（分别是转换前后的网址），并可能导致后退要多退几次。
+
+- `清理页面中的 A 标签`: 清理视频简介、推荐列表、标签、评论中的链接。
 
 ### [v1 设置迁移](../../registry/dist/components/utils/v1-migrate.js)
 `v1Migrate`
@@ -1192,6 +1251,39 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 
 给视频播放器控制栏附上半透明的黑色, 代替原来的阴影.
 
+### [定制自动连播行为](../../registry/dist/components/video/player/custom-auto-play.js)
+`customAutoPlay`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/custom-auto-play.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/custom-auto-play.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/custom-auto-play.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/custom-auto-play.js)
+
+定制自动连播行为，可根据自动连播视频类型分别配置
+
+---
+
+自动连播行为：
+
+- 自动：类似 `传统连播模式`，区别是多P视频包括番剧，具体如下
+  - 推荐视频都不自动连播
+  - 多P视频（番剧、多P列表、收藏夹等）连播到最后1P停止
+- 禁用：不自动连播
+- 总是：总是自动连播，具体由B站本身决定，如 `分p视频` 会自动连播推荐视频，但 `番剧` 会到最后1集停止
+
+---
+
+优先级说明：
+
+目前只有 `推荐视频（列表第一个）` 会和其他类型同时出现，`推荐视频（列表第一个）` 的优先级是最低的，并且需要设置为 `总是` 且其他匹配类型不是 `总是` 时才会生效
+
+下面举例说明当 `推荐视频（列表第一个）` 为 `总是` 时，其他类型的设置及最终联动行为：
+
+| 设置 | 分P视频 |
+| :--- | :--- |
+| `自动` | 连播下一P，播完所有P后连播推荐视频 |
+| `禁用` | 当前分P播放完后自动连播推荐视频 |
+| `总是` | 保持分p视频类型原行为，具体参考 `自动连播行为` 中的说明 |
+
 ### [默认播放器模式](../../registry/dist/components/video/player/default-mode.js)
 `defaultPlayerMode`
 
@@ -1408,6 +1500,40 @@ by [@wisokey](https://github.com/wisokey)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/skip-charge-list.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/skip-charge-list.js)
 
 自动跳过视频结尾的充电鸣谢. 注意: 不包括番剧承包鸣谢.
+
+### [视频缩放](../../registry/dist/components/video/player/video-scaling.js)
+`videoScaling`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/video-scaling.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/video-scaling.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/video-scaling.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/video-scaling.js)
+
+by [@weedy233](https://github.com/weedy233)
+
+> 允许调整视频的显示缩放比例，让您根据屏幕大小和个人偏好自定义视频播放体验。
+
+#### 🔧 **选项**
+
+- \`缩放比例\`：选择预设的视频缩放比例，包括 75%、100%（默认）、110%、125%、150% 以及自定义选项。
+
+- \`自定义缩放比 (%)\`：当选择 "自定义" 选项时显示，可在 50%-300% 范围内以 10% 为步长自由调整缩放比例。
+
+- \`显示缩放提示\`：启用后，在调整缩放比例时会显示短暂提示，告知当前缩放比例。
+
+- \`提示显示时间 (秒)\`：控制缩放提示的显示时长，可在 0.5-5 秒范围内以 0.5 秒为步长调整。
+
+- \`显示控制栏按钮\`：在播放器控制栏添加一个缩放按钮，点击可循环切换预设的缩放比例。
+
+#### **使用方法**
+
+1. **通过设置面板**：在组件设置中直接选择预设的缩放比例，或选择 "自定义" 后调整滑动条设置特定比例。
+
+2. **通过控制栏按钮**：如果启用了控制栏按钮，点击播放器控制栏上的缩放图标（放大镜图标）可循环切换预设缩放比例。
+
+#### **注意事项**
+
+- 视频切换时，缩放比例会自动重置为当前设置的值。
+- 过高的缩放比例可能导致视频内容超出屏幕范围，建议根据实际屏幕尺寸适当调整。
 
 ### [启用快速收藏](../../registry/dist/components/video/quick-favorite.js)
 `quickFavorite`
@@ -1697,7 +1823,7 @@ by [@diannaojiang](https://github.com/diannaojiang)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/wasm-output.js)
 
-by [@WakelessSloth56](https://github.com/WakelessSloth56)
+by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://github.com/LainIO24)
 
 使用 WASM 在浏览器中下载并合并音视频, 支持批量下载
 

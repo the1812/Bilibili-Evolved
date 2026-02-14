@@ -70,7 +70,7 @@ export default Vue.extend({
   padding: 6px 6px 6px 10px;
   @include v-stretch(6px);
   body.dark & {
-    background-color: #333;
+    background-color: var(--be-color-card-bg, #333);
   }
   .title {
     @include semi-bold();
