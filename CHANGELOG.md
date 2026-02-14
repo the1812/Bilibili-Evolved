@@ -22,14 +22,13 @@
 <summary>正式版用户将获得 v2.10.4-preview ~ v2.10.5-preview 的所有改动, 点击展开查看</summary>
 
 ✨新增
-- 新增组件 `定制自动连播行为`, 可根据自动连播视频类型分别配置. (PR #5303 by [wsgh0202](https://github.com/wsgh0202))
+- 新增组件 `定制自动连播行为`, 可根据自动连播视频类型分别配置. (PR #5303 by [wsgh0202](https://github.com/wsgh0202), PR #5410 by [wsgh0202](https://github.com/wsgh0202))
 - `网址参数清理` 新增选项 `清理页面中的 A 标签`. (PR #5339 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
-- `保存视频元数据` 支持标签和番剧信息, 支持番剧OPED转换为章节. (PR #5355 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
+- `保存视频元数据` 支持标签和番剧信息, 支持番剧 OPED 转换为章节. (PR #5355 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
 - 新增组件 `替换标题党封面`, 可将视频卡片的封面替换为视频预览帧. (PR #5226 by [UcnacDx2](https://github.com/UcnacDx2))
 - 新增组件 `会员购链接转换`, 可将移动端的会员购链接转换为 PC 端的链接. (#5310)
 - `下载视频` 支持配置下载地址偏好. (#3234)
 - 搜索栏支持自动补全关键词和搜索历史. (#822)
-- `定制自动连播行为` 支持推荐列表的自动连播. (PR #5410 by [wsgh0202](https://github.com/wsgh0202))
 - 新增组件 `直播前后台音量调节`, 支持在直播间前后台切换时自动调节音量. (PR #5407 by [KDH-KDHKDH](https://github.com/KDH-KDHKDH))
 - `保存视频元数据` 支持保存视频统计数据、番剧非正片内容、自定义时间格式. (PR #5399 by [WakelessSloth56](https://github.com/WakelessSloth56))
 - `下载视频 - WASM 混流输出` 新增输出格式选项, 支持嵌入封面. (PR #5388 by [WakelessSloth56](https://github.com/WakelessSloth56))
