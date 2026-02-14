@@ -24,4 +24,5 @@ export const urlExclude = [
   '//member.bilibili.com/v2',
   '//game.bilibili.com/',
   '//www.bilibili.com/mooc/',
+  '//www.bilibili.com/bubble/publish',
 ]

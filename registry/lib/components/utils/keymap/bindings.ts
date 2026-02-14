@@ -53,6 +53,10 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         if (([document.body, null] as (Element | null)[]).includes(activeElement)) {
           return false
         }
+        if (activeElement instanceof HTMLInputElement) {
+          const textInputTypes = ['text', 'password', 'email', 'number', 'search', 'tel', 'url']
+          return textInputTypes.includes(activeElement.type)
+        }
         if (activeElement instanceof HTMLMediaElement) {
           return false
         }

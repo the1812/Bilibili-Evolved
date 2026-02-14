@@ -291,7 +291,7 @@
     "type": "component",
     "name": "integratedDarkMode",
     "displayName": "深色模式",
-    "description": "简化版的夜间模式，跟随 b 站官方的深色主题。\r\n",
+    "description": "简化版的夜间模式，可以跟随 b 站官方的深色/浅色主题。请注意这个组件仅用于将脚本的界面主题和 b 站官方主题同步，如需在自定义顶栏中切换 b 站官方主题，可以安装 `自定义顶栏 - 深色模式开关` 插件。\r\n",
     "fullRelativePath": "../../registry/dist/components/style/dark-mode/integrated.js",
     "fullAbsolutePath": "registry/dist/components/style/dark-mode/integrated.js"
   },
@@ -715,7 +715,7 @@
     "type": "component",
     "name": "subscribeTimeShow",
     "displayName": "关注时间显示",
-    "description": "by [@CNOCM](https://github.com/CNOCM)\n\n在粉丝/关注列表及用户主页显示关注的具体时间。",
+    "description": "by [@GH4NG](https://github.com/GH4NG)\n\n在粉丝/关注列表及用户主页显示关注的具体时间。",
     "fullRelativePath": "../../registry/dist/components/utils/subscribe-time-show.js",
     "fullAbsolutePath": "registry/dist/components/utils/subscribe-time-show.js"
   },
@@ -961,6 +961,14 @@
   },
   {
     "type": "component",
+    "name": "miniPlayerSize",
+    "displayName": "小窗播放器大小",
+    "description": "by [@GH4NG](https://github.com/GH4NG)\n\n自定义视频小窗播放器的大小, 可通过拖拽四角调整, 支持保持 16:9 宽高比.",
+    "fullRelativePath": "../../registry/dist/components/video/player/mini-player-size.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/mini-player-size.js"
+  },
+  {
+    "type": "component",
     "name": "preserveDanmakuInput",
     "displayName": "强制保留弹幕发送栏",
     "description": "在视频播放器网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.",
@@ -1148,9 +1156,17 @@
     "type": "plugin",
     "name": "customNavbar.items.darkMode",
     "displayName": "自定义顶栏 - 夜间模式开关",
-    "description": "为自定义顶栏添加一个夜间模式开关, 方便快速切换夜间模式.",
+    "description": "为自定义顶栏添加一个夜间模式开关, 方便快速切换夜间模式. (请注意和深色模式区分)",
     "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-dark-mode.js",
     "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-dark-mode.js"
+  },
+  {
+    "type": "plugin",
+    "name": "customNavbar.items.integratedDarkMode",
+    "displayName": "自定义顶栏 - 深色模式开关",
+    "description": "为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分; 受限于 b 站深色模式实现, 这个开关无法实时切换, 会刷新页面)",
+    "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js",
+    "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js"
   },
   {
     "type": "plugin",
@@ -1207,6 +1223,14 @@
     "description": "用灵梦油库里代替脚本的所有 \"加载中\" 提示, 油库里素材来自[东方我乐多从志](https://cn.touhougarakuta.com/).",
     "fullRelativePath": "../../registry/dist/plugins/v-loading/reimu.js",
     "fullAbsolutePath": "registry/dist/plugins/v-loading/reimu.js"
+  },
+  {
+    "type": "plugin",
+    "name": "downloadVideo.outputs.abdm",
+    "displayName": "下载视频 - ABDM 输出支持",
+    "description": "by [@Dragon1573 (with Amazon Q)](https://github.com/Dragon1573)\n\n为下载视频增加 ABDM 外部下载器支持.",
+    "fullRelativePath": "../../registry/dist/plugins/video/download/abdm-output.js",
+    "fullAbsolutePath": "registry/dist/plugins/video/download/abdm-output.js"
   },
   {
     "type": "plugin",

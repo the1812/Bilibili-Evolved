@@ -1,3 +1,4 @@
+import type { ShadowDomEntry } from '@/core/shadow-root/dom-entry'
 import type { CommentItem } from '../comment-item'
 import type { CommentReplyItem } from '../reply-item'
 import type { CommentCallbackInput, CommentCallbackPair, CommentItemCallback } from '../types'
@@ -13,6 +14,9 @@ export abstract class CommentArea {
 
   abstract observe(): void | Promise<void>
   abstract disconnect(): void | Promise<void>
+  abstract getMenuElement(
+    item: CommentReplyItem,
+  ): HTMLElement | ShadowDomEntry | null | Promise<HTMLElement | ShadowDomEntry | null>
   abstract addMenuItem(
     item: CommentReplyItem,
     config: {

@@ -4,6 +4,8 @@ export interface UpInfo {
   uid: number
   name: string
   faceUrl: string
+  /** 联合投稿的角色 */
+  role?: string
 }
 
 export interface VideoPageInfo {
@@ -38,7 +40,10 @@ export class VideoInfo {
   title: string
   description: string
   up: UpInfo
+  /** 联合投稿创作团队 */
+  staffs?: UpInfo[]
   pages: VideoPageInfo[]
+  /** 跳转到番剧的URL */
   redirectUrl?: string
   stat: VideoStat
 
@@ -79,6 +84,17 @@ export class VideoInfo {
       uid: data.owner.mid,
       name: data.owner.name,
       faceUrl: data.owner.face.replace('http:', 'https:'),
+    }
+    if (data.staff) {
+      this.staffs = data.staff.map(
+        x =>
+          <UpInfo>{
+            uid: x.mid,
+            name: x.name,
+            faceUrl: x.face.replace('http:', 'https:'),
+            role: x.title,
+          },
+      )
     }
     this.pages = data.pages.map((it: any) => ({
       cid: it.cid,
