@@ -1,6 +1,50 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.10.6-preview
+`2026-02-14`
+
+包含 [v2.10.6](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.6) 的所有更新内容.
+
+✨新增
+- 新增插件 `自定义顶栏 - 深色模式开关`, 可以快捷开关 b 站的深色模式 (会刷新页面).
+- 新增插件 `下载视频 - ABDM 输出支持`, 支持 ABDM 格式输出. (PR #5447 by [❤是纱雾酱哟～](https://github.com/Dragon1573))
+- `快捷键扩展` 增加更多的视频进度百分比跳转点. (PR #5458 by [paradox8599](https://github.com/paradox8599))
+- 新增组件 `小窗播放器大小`, 支持调节视频小窗播放器的大小. (PR #5489 by [GH4NG](https://github.com/GH4NG))
+- `保存视频元数据` 支持联合投稿创作团队信息. (PR #5436 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `自定义文件命名` 支持添加 up 主的 uid 选项. (PR #5435 by [AyanamiSho](https://github.com/AyanamiSho))
+- `复制评论链接` 开启时, 支持隐藏原版的复制评论按钮. (#5470)
+
+## v2.10.6
+`2026-02-14`
+
+<details>
+<summary>正式版用户将获得 v2.10.4-preview ~ v2.10.5-preview 的所有改动, 点击展开查看</summary>
+
+✨新增
+- 新增组件 `定制自动连播行为`, 可根据自动连播视频类型分别配置. (PR #5303 by [wsgh0202](https://github.com/wsgh0202))
+- `网址参数清理` 新增选项 `清理页面中的 A 标签`. (PR #5339 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
+- `保存视频元数据` 支持标签和番剧信息, 支持番剧OPED转换为章节. (PR #5355 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
+- 新增组件 `替换标题党封面`, 可将视频卡片的封面替换为视频预览帧. (PR #5226 by [UcnacDx2](https://github.com/UcnacDx2))
+- 新增组件 `会员购链接转换`, 可将移动端的会员购链接转换为 PC 端的链接. (#5310)
+- `下载视频` 支持配置下载地址偏好. (#3234)
+- 搜索栏支持自动补全关键词和搜索历史. (#822)
+- `定制自动连播行为` 支持推荐列表的自动连播. (PR #5410 by [wsgh0202](https://github.com/wsgh0202))
+- 新增组件 `直播前后台音量调节`, 支持在直播间前后台切换时自动调节音量. (PR #5407 by [KDH-KDHKDH](https://github.com/KDH-KDHKDH))
+- `保存视频元数据` 支持保存视频统计数据、番剧非正片内容、自定义时间格式. (PR #5399 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- `下载视频 - WASM 混流输出` 新增输出格式选项, 支持嵌入封面. (PR #5388 by [WakelessSloth56](https://github.com/WakelessSloth56))
+- 新增组件 `视频缩放`, 支持自定义视频播放器缩放比例和预设选项. (PR #5352 by [Weedy233](https://github.com/Weedy233))
+- `动态过滤器` 支持编辑和开关过滤关键词. (#5394)
+- 改进 `下载视频` 中对 MCDN 的检测方式. (#5390, #5438)
+
+</details>
+
+🐛修复
+- 修复 `自定义顶栏` 的收藏夹链接打开后无法分页导航. (#5459)
+- 更新 `自定义顶栏` 排除的 URL 列表. (#5415)
+- 改进 `快捷键扩展` 的焦点元素检测, 修复点击过弹幕开关失效的问题. (#5413)
+- 修复 `禁止跳转动态详情` 导致动态抽奖无法点击的问题. (#5467)
+
 ## v2.10.5-preview
 `2025-12-13`
 
