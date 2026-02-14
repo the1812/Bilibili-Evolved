@@ -398,7 +398,7 @@ by [@Tinhone](https://github.com/Tinhone)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/dark-mode/integrated.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/dark-mode/integrated.js)
 
-简化版的夜间模式，跟随 b 站官方的深色主题。
+简化版的夜间模式，可以跟随 b 站官方的深色/浅色主题。请注意这个组件仅用于将脚本的界面主题和 b 站官方主题同步，如需在自定义顶栏中切换 b 站官方主题，可以安装 `自定义顶栏 - 深色模式开关` 插件。
 
 ### [夜间模式计划时段](../../registry/dist/components/style/dark-mode/schedule.js)
 `darkModeSchedule`
@@ -1019,7 +1019,7 @@ by [@Light_Quanta](https://github.com/LightQuanta)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/subscribe-time-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/subscribe-time-show.js)
 
-by [@CNOCM](https://github.com/CNOCM)
+by [@GH4NG](https://github.com/GH4NG)
 
 在粉丝/关注列表及用户主页显示关注的具体时间。
 
@@ -1390,6 +1390,17 @@ by [@Waua](https://github.com/FoundTheWOUT)
 
 模拟传统的多 P 连播策略: 仅连播视频的分 P, 最后 1P 放完禁止连播其他推荐视频.
 
+### [小窗播放器大小](../../registry/dist/components/video/player/mini-player-size.js)
+`miniPlayerSize`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/mini-player-size.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/mini-player-size.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/mini-player-size.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/mini-player-size.js)
+
+by [@GH4NG](https://github.com/GH4NG)
+
+自定义视频小窗播放器的大小, 可通过拖拽四角调整, 支持保持 16:9 宽高比.
+
 ### [强制保留弹幕发送栏](../../registry/dist/components/video/player/preserve-danmaku-input.js)
 `preserveDanmakuInput`
 
@@ -1673,7 +1684,16 @@ by FoundTheWOUT
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-dark-mode.js)
 
-为自定义顶栏添加一个夜间模式开关, 方便快速切换夜间模式.
+为自定义顶栏添加一个夜间模式开关, 方便快速切换夜间模式. (请注意和深色模式区分)
+
+### [自定义顶栏 - 深色模式开关](../../registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js)
+`customNavbar.items.integratedDarkMode`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js)
+
+为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分; 受限于 b 站深色模式实现, 这个开关无法实时切换, 会刷新页面)
 
 ### [自定义顶栏 - 版权内容](../../registry/dist/plugins/style/custom-navbar-pgc.js)
 `customNavbar.items.pgc`
@@ -1737,6 +1757,17 @@ by FoundTheWOUT
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/v-loading/reimu.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/v-loading/reimu.js)
 
 用灵梦油库里代替脚本的所有 "加载中" 提示, 油库里素材来自[东方我乐多从志](https://cn.touhougarakuta.com/).
+
+### [下载视频 - ABDM 输出支持](../../registry/dist/plugins/video/download/abdm-output.js)
+`downloadVideo.outputs.abdm`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/plugins/video/download/abdm-output.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/plugins/video/download/abdm-output.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/abdm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/abdm-output.js)
+
+by [@Dragon1573 (with Amazon Q)](https://github.com/Dragon1573)
+
+为下载视频增加 ABDM 外部下载器支持.
 
 ### [下载视频 - aria2 输出支持](../../registry/dist/plugins/video/download/aria2-output.js)
 `downloadVideo.outputs.aria2`
