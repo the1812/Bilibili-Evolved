@@ -566,3 +566,6 @@ blockquote {
     }
   }
 }
+.comment-wrapper {
+  @include background-color("2");
+}
