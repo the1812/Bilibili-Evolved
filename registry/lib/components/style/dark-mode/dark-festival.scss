@@ -1,0 +1,9 @@
+@import './dark-definitions';
+
+.comment-wrapper {
+  @include background-color("2");
+}
+
+.collection-wrapper {
+  @extend .collection-m-exp
+}
