@@ -1,6 +1,6 @@
 @import './dark-definitions';
 
-.comment-wrapper {
+.page-festival-bg ~ .page-main-content .comment-wrapper {
   @include background-color("2");
 }
 
