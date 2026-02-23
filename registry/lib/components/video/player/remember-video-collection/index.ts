@@ -136,6 +136,10 @@ export const component = defineComponentMetadata({
   name,
   displayName: '记忆合集',
   tags: [componentsTags.video],
+  author: {
+    name: 'JLoeve (with Kilo Code)',
+    link: 'https://github.com/LonelySteve',
+  },
   urlInclude: playerUrls,
   instantStyles: [{ name, style }],
   options: {
