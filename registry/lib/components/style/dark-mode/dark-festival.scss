@@ -1,0 +1,9 @@
+@import './dark-definitions';
+
+.page-festival-bg ~ .page-main-content .comment-wrapper {
+  @include background-color("2");
+}
+
+.collection-wrapper {
+  @extend .collection-m-exp
+}
