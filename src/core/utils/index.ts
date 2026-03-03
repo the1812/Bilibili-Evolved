@@ -536,7 +536,11 @@ export const isTyping = () => {
   if (activeElement.hasAttribute('contenteditable')) {
     return true
   }
-  return ['input', 'textarea'].includes(activeElement.nodeName.toLowerCase())
+  if (activeElement instanceof HTMLInputElement) {
+    const textInputTypes = ['text', 'password', 'email', 'number', 'search', 'tel', 'url']
+    return textInputTypes.includes(activeElement.type)
+  }
+  return activeElement instanceof HTMLTextAreaElement
 }
 /**
  * 提取元素中的可能的图片信息 (src, data-src, background-image 等). 如果是经过缩放的图, 会自动去除缩放参数返回原图链接
