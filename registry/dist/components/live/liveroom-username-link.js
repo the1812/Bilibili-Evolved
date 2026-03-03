@@ -4,4 +4,4 @@ const{uid:e}=t.__vue__.source.uinfo;if(!o){for(;null===t.shadowRoot.querySelecto
 // eslint-disable-next-line no-underscore-dangle
 const{uid:e}=o.parentNode.parentNode.parentNode.parentNode.__vue__.source;window.open(`https://space.bilibili.com/${e}`)}));const t=e.querySelector(".face");t.style.cursor="pointer",t.addEventListener("click",(()=>{
 // eslint-disable-next-line no-underscore-dangle
-const{uid:e}=t.parentNode.parentNode.__vue__.source;window.open(`https://space.bilibili.com/${e}`)})),r.add(e)}})).observe(e,{childList:!0,subtree:!0})},tags:[componentsTags.live],urlInclude:[/^https:\/\/live\.bilibili\.com\/\d+/],description:{"zh-CN":"为直播间的房间观众和大航海界面的用户列表添加可以点击的超链接"},commitHash:"8cc0fba727a4522f7a24251d0451da910bd11b4f",coreVersion:"2.10.6"});return o=o.component})()));
+const{uid:e}=t.parentNode.parentNode.__vue__.source;window.open(`https://space.bilibili.com/${e}`)})),r.add(e)}})).observe(e,{childList:!0,subtree:!0})},tags:[componentsTags.live],urlInclude:[/^https:\/\/live\.bilibili\.com\/\d+/],description:{"zh-CN":"为直播间的房间观众和大航海界面的用户列表添加可以点击的超链接"},commitHash:"49ed3da72309bc7ff13aaf7029837c26d9546067",coreVersion:"2.10.7"});return o=o.component})()));
