@@ -156,13 +156,12 @@ DevServer 已启动, 端口: 23333
 
     在 `@/components/define.ts` 中还提供了几个方法用于辅助定义.
 
-    > `author` 字段记得填, 这个因为我自己写的组件不需要所以就不是 required 的
-
-5. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
-6. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可.
-7. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
-8. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
-9. 后续同 [修改](##修改) 中的 2 ~ 3 步.
+5. 填写 `defineComponentMetadata` 中的 `author` 字段, 通常是你的 GitHub 用户名和 Profile 页地址. 如果希望注明使用 AI 辅助开发, 可以再添加 AI 的名称及其官网, `author` 字段可以是一个数组.
+6. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
+7. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可.
+8. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
+9. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
+10. 后续同 [修改](##修改) 中的 2 ~ 3 步.
 
 ### 插件
 在 `registry/lib/plugins` 中是所有插件的源代码, 步骤和组件基本一致, 只有在第 4 步中, 导出的是 `plugin` 对象, 实现 `PluginMetadata` 接口.
