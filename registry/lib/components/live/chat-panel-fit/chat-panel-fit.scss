@@ -5,6 +5,7 @@
       container-type: size;
       width: var(--live-chat-panel-width, 302px) !important;
     }
+    #fullscreen-container,
     .player-section {
       width: calc(100% - var(--live-chat-panel-width, 302px)) !important;
     }
