@@ -171,6 +171,7 @@ $prefix: 'simplifyLiveroom-switch';
   .gift-control-section,
   #gift-control-vm .gift-control-panel {
     height: 48px !important;
+    border-radius: 0 0 12px 12px;
   }
   .gift-control-panel .right-part {
     height: 48px !important;
@@ -203,6 +204,9 @@ $prefix: 'simplifyLiveroom-switch';
       .gift-package-btn {
         padding: 0 !important;
       }
+      .package-gift-panel-position {
+        transform: translate(-180px, 50px);
+      }
     }
     .right-part {
       padding-top: 0 !important;
@@ -227,6 +231,15 @@ $prefix: 'simplifyLiveroom-switch';
   &.player-full-win {
     #web-player__bottom-bar__container {
       display: none !important;
+    }
+  }
+  &:not(.fullscreen-fix):not(.player-full-win) {
+    .fullscreen-container-paddingbox {
+      height: 48px !important;
+    }
+    #fullscreen-container {
+      border-radius: 0 0 12px 12px;
+      grid-template-rows: minmax(0, 1fr) auto !important;
     }
   }
 }
