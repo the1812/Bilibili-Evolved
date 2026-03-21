@@ -5,6 +5,7 @@ import path from 'path'
 import get from 'lodash/get'
 import { cssStyleLoaders, sassStyleLoaders } from './loaders/style-loaders'
 import { tsLoaders } from './loaders/ts-loader'
+import { altCdn } from './cdn'
 import { runtimeInfo } from './compilation-info/runtime'
 import commonMeta from '../src/client/common.meta.json'
 import * as gitInfo from './compilation-info/git'
@@ -128,6 +129,19 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
       },
     },
   }
+}
+
+export const enableProductionSourceMap = (config: Configuration, cdnPath: string) => {
+  config.devtool = false
+  config.plugins ??= []
+  config.plugins.push(
+    new webpack.SourceMapDevToolPlugin({
+      filename: '[file].map',
+      publicPath: altCdn.root(gitInfo.branch, altCdn.owner) + cdnPath,
+      append: '\n//# sourceMappingURL=[url]',
+    }),
+  )
+  return config
 }
 
 const replaceVariables = (text: string) => {

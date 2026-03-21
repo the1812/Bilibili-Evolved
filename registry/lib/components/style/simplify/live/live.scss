@@ -242,6 +242,11 @@ $prefix: 'simplifyLiveroom-switch';
       grid-template-rows: minmax(0, 1fr) auto !important;
     }
   }
+  &:not(.fullscreen-fix).player-full-win {
+    #fullscreen-container {
+      grid-template-rows: minmax(0, 1fr) 0px !important;
+    }
+  }
 }
 .#{$prefix}-guard {
   .guard-danmaku::before {
