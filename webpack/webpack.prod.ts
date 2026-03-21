@@ -1,6 +1,6 @@
 import lodash from 'lodash'
 import webpack, { Configuration } from 'webpack'
-import { getBanner, getDefaultConfig } from './webpack.config'
+import { enableProductionSourceMap, getBanner, getDefaultConfig } from './webpack.config'
 import previewConfig from './webpack.dev'
 import mainMeta from '../src/client/bilibili-evolved.meta.json'
 
@@ -26,8 +26,7 @@ previewConfig.output.filename = 'bilibili-evolved.preview.user.js'
 previewConfig.mode = 'production'
 const targets = [mainConfig, previewConfig].map(config => {
   config.cache = { type: 'memory' }
-  config.devtool = false
-  return config
+  return enableProductionSourceMap(config, 'dist/')
 })
 
 export default targets
