@@ -1,1 +1,2 @@
 !function(e,o){"object"==typeof exports&&"object"==typeof module?module.exports=o():"function"==typeof define&&define.amd?define([],o):"object"==typeof exports?exports["video/player/common/mini-rxjs"]=o():e["video/player/common/mini-rxjs"]=o()}(globalThis,(()=>(()=>{"use strict";var e={};coreApis.settings;return e=e.component})()));
+//# sourceMappingURL=https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/common/mini-rxjs.js.map
