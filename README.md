@@ -141,9 +141,9 @@
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
 
-## pakku.js 哔哩哔哩弹幕过滤器
+## pakku：哔哩哔哩弹幕过滤器
 作者: [xmcp](https://github.com/xmcp)
-- [主页](https://s.xmcp.ml/pakkujs/)
+- [主页](https://s.xmcp.ltd/pakkujs/)
 - [GitHub](https://github.com/xmcp/pakku.js)
 
 ## BLTH - Bilibili Live Tasks Helper
