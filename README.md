@@ -156,9 +156,9 @@
 作者: [Hakadao](https://github.com/hakadao)
 - [GitHub](https://github.com/BewlyBewly/BewlyBewly)
 
-## pakku.js 哔哩哔哩弹幕过滤器
+## pakku：哔哩哔哩弹幕过滤器
 作者: [xmcp](https://github.com/xmcp)
-- [主页](https://s.xmcp.ml/pakkujs/)
+- [主页](https://s.xmcp.ltd/pakkujs/)
 - [GitHub](https://github.com/xmcp/pakku.js)
 
 ## BLTH - Bilibili Live Tasks Helper
