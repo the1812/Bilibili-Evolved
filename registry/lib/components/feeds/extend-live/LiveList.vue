@@ -193,7 +193,7 @@ const fetchLiveList = async () => {
             face,
             uname,
             title,
-            roomid: room_id,
+            roomid: room_id.toString(),
             pic: cover_from_user,
             online,
             uid,
