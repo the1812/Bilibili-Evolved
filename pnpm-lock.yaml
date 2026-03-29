@@ -118,6 +118,9 @@ importers:
       css-loader:
         specifier: ^5.0.0
         version: 5.2.7(webpack@5.97.1)
+      enquirer:
+        specifier: 2.4.1
+        version: 2.4.1
       eslint:
         specifier: ^7.32.0
         version: 7.32.0
