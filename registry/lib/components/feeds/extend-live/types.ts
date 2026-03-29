@@ -5,7 +5,7 @@ export interface LiveInfo {
   face: string
   uname: string
   title: string
-  roomid: number
+  roomid: string
   pic: string
   online: number
   uid: number
