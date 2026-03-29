@@ -87,6 +87,7 @@ DevServer 已启动, 端口: 23333
 // @grant        GM_deleteValue
 // @grant        GM_info
 // @grant        GM_xmlhttpRequest
+// @grant        GM_registerMenuCommand
 // @connect      raw.githubusercontent.com
 // @connect      cn.bing.com
 // @connect      www.bing.com
