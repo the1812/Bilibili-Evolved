@@ -1,6 +1,6 @@
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
-import type { VideoDataChangeDetail } from '@/core/observer'
+import type { VideoInfo } from '@/components/video/video-info'
 import {
   clearHistoryInScope,
   getClearHistoryDescription,
@@ -20,7 +20,7 @@ const componentName = 'rememberVideoCollection'
 const componentDisplayName = '记忆合集进度'
 
 type RuntimeContext = {
-  currentDetail?: VideoDataChangeDetail
+  currentDetail?: VideoInfo
   currentMemory?: ComponentMemory | null
   currentInstructions: MarkingInstruction[]
   historyScope: HistoryScope | null

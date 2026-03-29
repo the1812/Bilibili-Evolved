@@ -1,16 +1,16 @@
 import type {
-  VideoDataChangeDetail,
-  VideoDataChangeEpisode,
-  VideoDataChangePage,
-} from '@/core/observer'
+  VideoInfo,
+  VideoPageInfo,
+  VideoSeasonEpisodeInfo,
+} from '@/components/video/video-info'
 import { clickInstructionTarget } from './dom'
 import { getLastPlayedInstruction } from './marking'
 import { SectionMode, type ComponentMemory, type MarkingInstruction } from './types'
 
 export type JumpInstruction = Pick<MarkingInstruction, 'bvid' | 'cid' | 'page'>
 type CollectionTarget = {
-  episode?: VideoDataChangeEpisode
-  page?: VideoDataChangePage
+  episode?: VideoSeasonEpisodeInfo
+  page?: VideoPageInfo
   pageIndex?: number
   episodeOrder: number
   episodeIndex: number
@@ -20,11 +20,17 @@ const normalizeText = (text?: string) => text?.trim() || undefined
 
 const getPageIndexLabel = (page?: number) => (page ? `第 ${page} P` : undefined)
 
-const getCollectionPageTitle = (page?: VideoDataChangePage) =>
-  normalizeText(page?.part) ?? normalizeText(page?.title)
+const getEpisodePages = (episode?: Pick<VideoSeasonEpisodeInfo, 'page' | 'pages'>) => {
+  if (!episode) {
+    return []
+  }
+  return episode.pages ?? (episode.page ? [episode.page] : [])
+}
 
-const findMultiPageTarget = (detail: VideoDataChangeDetail, instruction: JumpInstruction) => {
-  const pages = detail.videoData?.pages ?? []
+const getCollectionPageTitle = (page?: VideoPageInfo) => normalizeText(page?.title)
+
+const findMultiPageTarget = (detail: VideoInfo, instruction: JumpInstruction) => {
+  const pages = detail.pages ?? []
   const matchedPageIndex = pages.findIndex(page => page.cid === instruction.cid)
   if (matchedPageIndex >= 0) {
     return {
@@ -63,8 +69,8 @@ export const isSameAsCurrentMemory = (
 export const isJumpInstructionValid = (instruction?: JumpInstruction) =>
   instruction !== undefined && (instruction.bvid !== undefined || instruction.cid !== undefined)
 
-const findCollectionTarget = (detail: VideoDataChangeDetail, instruction: JumpInstruction) => {
-  const sections = detail.sectionsInfo?.sections ?? []
+const findCollectionTarget = (detail: VideoInfo, instruction: JumpInstruction) => {
+  const sections = detail.ugcSeason?.sections ?? []
   let episodeOrder = 0
   let episodeIndex = -1
   let fallbackMatch: CollectionTarget | undefined
@@ -73,7 +79,7 @@ const findCollectionTarget = (detail: VideoDataChangeDetail, instruction: JumpIn
     for (const episode of section.episodes ?? []) {
       episodeOrder++
       episodeIndex++
-      const pages = episode.pages ?? []
+      const pages = getEpisodePages(episode)
       const matchedPageIndex = pages.findIndex(page => page.cid === instruction.cid)
       if (matchedPageIndex >= 0) {
         return {
@@ -89,7 +95,7 @@ const findCollectionTarget = (detail: VideoDataChangeDetail, instruction: JumpIn
           episode,
           page:
             instruction.page && instruction.page > 0
-              ? episode.pages?.[instruction.page - 1]
+              ? getEpisodePages(episode)[instruction.page - 1]
               : undefined,
           pageIndex: instruction.page,
           episodeOrder,
@@ -102,11 +108,8 @@ const findCollectionTarget = (detail: VideoDataChangeDetail, instruction: JumpIn
   return fallbackMatch
 }
 
-export const getInstructionLabel = (
-  instruction: JumpInstruction,
-  detail: VideoDataChangeDetail,
-) => {
-  const hasSections = (detail.sectionsInfo?.sections?.length ?? 0) > 0
+export const getInstructionLabel = (instruction: JumpInstruction, detail: VideoInfo) => {
+  const hasSections = (detail.ugcSeason?.sections?.length ?? 0) > 0
   if (!hasSections) {
     const target = findMultiPageTarget(detail, instruction)
     const pageTitle = getCollectionPageTitle(target.page)
@@ -120,8 +123,8 @@ export const getInstructionLabel = (
   const target = findCollectionTarget(detail, instruction)
   const episodeTitle = normalizeText(target?.episode?.title)
   const pageTitle = getCollectionPageTitle(target?.page)
-  const pageCount = target?.episode?.pages?.length
-  const shouldShowPageIndex = pageCount === undefined || pageCount > 1
+  const pageCount = getEpisodePages(target?.episode).length
+  const shouldShowPageIndex = pageCount === 0 || pageCount > 1
   const pageIndexLabel = shouldShowPageIndex
     ? getPageIndexLabel(target?.pageIndex ?? instruction.page)
     : undefined
@@ -147,10 +150,10 @@ export const getInstructionLabel = (
 }
 
 const getNextInstructionInMultiPage = (
-  detail: VideoDataChangeDetail,
+  detail: VideoInfo,
   instruction: JumpInstruction,
 ): JumpInstruction | undefined => {
-  const pages = detail.videoData?.pages ?? []
+  const pages = detail.pages ?? []
   if (pages.length <= 1) {
     return undefined
   }
@@ -171,17 +174,17 @@ const getNextInstructionInMultiPage = (
 }
 
 const getNextInstructionInCollection = (
-  detail: VideoDataChangeDetail,
+  detail: VideoInfo,
   instruction: JumpInstruction,
 ): JumpInstruction | undefined => {
-  const episodes = detail.sectionsInfo?.sections?.flatMap(section => section.episodes ?? []) ?? []
+  const episodes = detail.ugcSeason?.sections?.flatMap(section => section.episodes ?? []) ?? []
   const target = findCollectionTarget(detail, instruction)
   const episode = target?.episode
   if (!target || !episode) {
     return undefined
   }
 
-  const pages = episode.pages ?? []
+  const pages = getEpisodePages(episode)
   const currentPageIndex =
     typeof target.pageIndex === 'number' && target.pageIndex > 0 ? target.pageIndex - 1 : -1
   if (pages.length > 1 && currentPageIndex >= 0 && currentPageIndex < pages.length - 1) {
@@ -200,7 +203,7 @@ const getNextInstructionInCollection = (
   if (!nextEpisode) {
     return undefined
   }
-  const nextEpisodePages = nextEpisode.pages ?? []
+  const nextEpisodePages = getEpisodePages(nextEpisode)
   const firstPage = nextEpisodePages[0]
   if (nextEpisode.bvid === undefined && firstPage?.cid === undefined) {
     return undefined
@@ -214,9 +217,9 @@ const getNextInstructionInCollection = (
 
 export const getNextInstruction = (
   instruction: JumpInstruction,
-  detail: VideoDataChangeDetail,
+  detail: VideoInfo,
 ): JumpInstruction | undefined => {
-  const hasSections = (detail.sectionsInfo?.sections?.length ?? 0) > 0
+  const hasSections = (detail.ugcSeason?.sections?.length ?? 0) > 0
   return hasSections
     ? getNextInstructionInCollection(detail, instruction)
     : getNextInstructionInMultiPage(detail, instruction)
@@ -251,7 +254,7 @@ export const resolveJumpTargets = ({
 }: {
   currentInstructions: MarkingInstruction[]
   currentMemory?: ComponentMemory | null
-  currentDetail: VideoDataChangeDetail
+  currentDetail: VideoInfo
   sectionMode: SectionMode
 }) => {
   if (!currentMemory) {

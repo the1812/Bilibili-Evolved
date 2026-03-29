@@ -1,4 +1,4 @@
-import { VideoDataChangeDetail } from '@/core/observer'
+import type { VideoInfo, VideoSeasonEpisodeInfo } from '@/components/video/video-info'
 import {
   SectionMode,
   type ComponentHistory,
@@ -18,41 +18,48 @@ const getPageByCid = (pages: Array<{ cid?: number }> | undefined, cid: number) =
   return pageIndex + 1
 }
 
-const findTargetEpisode = (detail: VideoDataChangeDetail) => {
-  const { bvid, cid, sectionsInfo } = detail
-  const episodes = sectionsInfo?.sections?.flatMap(section => section.episodes ?? []) ?? []
+const getEpisodePages = (episode?: Pick<VideoSeasonEpisodeInfo, 'page' | 'pages'>) => {
+  if (!episode) {
+    return []
+  }
+  return episode.pages ?? (episode.page ? [episode.page] : [])
+}
+
+const findTargetEpisode = (detail: VideoInfo) => {
+  const { bvid, cid, ugcSeason } = detail
+  const episodes = ugcSeason?.sections?.flatMap(section => section.episodes ?? []) ?? []
 
   return (
-    episodes.find(episode => (episode.pages ?? []).some(page => page.cid === cid)) ??
+    episodes.find(episode => getEpisodePages(episode).some(page => page.cid === cid)) ??
     episodes.find(episode => episode.bvid === bvid)
   )
 }
 
-const getCurrentPage = (state: VideoDataChangeDetail): number | undefined => {
+const getCurrentPage = (state: VideoInfo): number | undefined => {
   if (typeof state.cid !== 'number') {
     return undefined
   }
   return (
-    getPageByCid(state.videoData?.pages, state.cid) ??
-    getPageByCid(findTargetEpisode(state)?.pages, state.cid)
+    getPageByCid(state.pages, state.cid) ??
+    getPageByCid(getEpisodePages(findTargetEpisode(state)), state.cid)
   )
 }
 
-const findTargetSection = (detail: VideoDataChangeDetail) => {
-  const { sectionsInfo } = detail
+const findTargetSection = (detail: VideoInfo) => {
+  const { ugcSeason } = detail
   const targetEpisode = findTargetEpisode(detail)
   if (!targetEpisode) {
     return undefined
   }
 
-  return sectionsInfo?.sections?.find(section =>
+  return ugcSeason?.sections?.find(section =>
     (section.episodes ?? []).some(episode => episode === targetEpisode),
   )
 }
 
-const getSectionInfo = (detail: VideoDataChangeDetail) => {
-  const { sectionsInfo } = detail
-  if (lodash.isEmpty(sectionsInfo)) {
+const getSectionInfo = (detail: VideoInfo) => {
+  const { ugcSeason } = detail
+  if (lodash.isEmpty(ugcSeason)) {
     return {
       sectionId: undefined,
       sectionRootId: undefined,
@@ -62,14 +69,14 @@ const getSectionInfo = (detail: VideoDataChangeDetail) => {
 
   return {
     sectionId: findTargetSection(detail)?.id,
-    sectionRootId: sectionsInfo?.id,
-    sectionsCount: sectionsInfo?.sections?.length ?? 0,
+    sectionRootId: ugcSeason?.id,
+    sectionsCount: ugcSeason?.sections?.length ?? 0,
   }
 }
 
 const normalizeText = (text?: string) => text?.trim() || undefined
 
-export const buildCurrentMemory = (state: VideoDataChangeDetail): ComponentMemory | null => {
+export const buildCurrentMemory = (state: VideoInfo): ComponentMemory | null => {
   if (!state.bvid || typeof state.cid !== 'number') {
     return null
   }
@@ -85,11 +92,11 @@ export const buildCurrentMemory = (state: VideoDataChangeDetail): ComponentMemor
   }
 }
 
-export const getHistoryScope = (detail: VideoDataChangeDetail): HistoryScope | null => {
-  const { bvid, videoData } = detail
+export const getHistoryScope = (detail: VideoInfo): HistoryScope | null => {
+  const { bvid } = detail
   const { sectionRootId, sectionsCount } = getSectionInfo(detail)
   if (sectionsCount === 0) {
-    if ((videoData?.pages?.length ?? 0) > 1) {
+    if ((detail.pages?.length ?? 0) > 1) {
       // 普通多P视频
       return { bvid, type: 'multi-p' }
     }
@@ -223,7 +230,7 @@ export const getClearHistoryDescription = (
 }
 
 export const getHistoryScopeLabel = (
-  detail: VideoDataChangeDetail | undefined,
+  detail: VideoInfo | undefined,
   scope: HistoryScope | null,
   sectionMode: SectionMode,
   currentMemory?: Pick<ComponentMemory, 'sectionId'> | null,
@@ -232,20 +239,20 @@ export const getHistoryScopeLabel = (
     return undefined
   }
   if (scope.type === 'multi-p') {
-    return normalizeText(detail.videoData?.title)
+    return normalizeText(detail.title)
   }
   if (scope.type === 'sections') {
-    return normalizeText(detail.sectionsInfo?.title)
+    return normalizeText(detail.ugcSeason?.title)
   }
   if (scope.type === 'multi-sections') {
-    const sections = detail.sectionsInfo?.sections ?? []
+    const sections = detail.ugcSeason?.sections ?? []
     const matchedSection =
       sections.find(section => section.id === currentMemory?.sectionId) ??
       (currentMemory?.sectionId !== undefined ? sections[currentMemory.sectionId] : undefined)
     if (sectionMode === SectionMode.Split) {
-      return normalizeText(matchedSection?.title) ?? normalizeText(detail.sectionsInfo?.title)
+      return normalizeText(matchedSection?.title) ?? normalizeText(detail.ugcSeason?.title)
     }
-    return normalizeText(detail.sectionsInfo?.title)
+    return normalizeText(detail.ugcSeason?.title)
   }
   return undefined
 }

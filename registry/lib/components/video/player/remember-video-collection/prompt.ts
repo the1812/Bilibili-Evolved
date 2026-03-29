@@ -1,5 +1,5 @@
 import { Toast } from '@/core/toast'
-import type { VideoDataChangeDetail } from '@/core/observer'
+import type { VideoInfo } from '@/components/video/video-info'
 import { SectionMode, type ComponentMemory, type MarkingInstruction } from './types'
 import { jumpToInstruction, resolveJumpTargets, type JumpInstruction } from './navigation'
 import { isSameAsLastPlayedInstruction } from './marking'
@@ -9,7 +9,7 @@ const firstLoadPromptDuration = 10e3
 const promptJumpToLastPlayed = async (
   instruction: MarkingInstruction,
   currentMemory: ComponentMemory,
-  detail: VideoDataChangeDetail,
+  detail: VideoInfo,
   title: string,
   signal?: AbortSignal,
 ) => {
@@ -112,7 +112,7 @@ export const handleFirstLoadPrompt = async ({
 }: {
   currentInstructions: MarkingInstruction[]
   currentMemory: ComponentMemory
-  currentDetail: VideoDataChangeDetail
+  currentDetail: VideoInfo
   enabled: boolean
   signal?: AbortSignal
   title: string

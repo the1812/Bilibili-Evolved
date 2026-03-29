@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import type { VideoDataChangeDetail } from '@/core/observer'
-import { isVideoDataChangeDetail, videoDataChange } from '@/core/observer'
+import { VideoInfo } from '@/components/video/video-info'
+import { videoChange } from '@/core/observer'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
@@ -39,7 +39,7 @@ let currentSettings: { options: ComponentOptions } | null = null
 let stopMarkingObserver = lodash.noop
 let videoDataAbortController: AbortController | null = null
 let runId = 0
-let currentDetail: VideoDataChangeDetail | null = null
+let currentDetail: VideoInfo | null = null
 let currentHistoryScope: HistoryScope | null = null
 let currentMemory: ComponentMemory | null = null
 
@@ -115,18 +115,37 @@ const activateRememberVideoCollection = async (title: string) => {
   const activeRunId = ++runId
   const abortController = new AbortController()
   videoDataAbortController = abortController
-  await videoDataChange(
-    async payload => {
+  let latestFetchId = 0
+  let isFirst = true
+  await videoChange(
+    async detail => {
       if (abortController.signal.aborted || activeRunId !== runId) {
         return
       }
-      if (!isVideoDataChangeDetail(payload)) {
+      const fetchId = ++latestFetchId
+      const info = new VideoInfo(detail.aid)
+      info.cid = Number(detail.cid)
+
+      let videoDetail: VideoInfo
+      try {
+        videoDetail = await info.fetchInfo()
+      } catch (error) {
+        if (!abortController.signal.aborted && activeRunId === runId && fetchId === latestFetchId) {
+          logger.warn('failed to fetch video info', error)
+        }
         return
       }
-      const { detail } = payload
-      currentDetail = detail
-      logger.info('video data detail', detail)
-      currentHistoryScope = getHistoryScope(detail)
+
+      if (abortController.signal.aborted || activeRunId !== runId || fetchId !== latestFetchId) {
+        return
+      }
+
+      const isFirstLoad = isFirst
+      isFirst = false
+
+      currentDetail = videoDetail
+      logger.info('video detail', videoDetail)
+      currentHistoryScope = getHistoryScope(videoDetail)
       logger.info('historyScope', currentHistoryScope)
       if (!currentHistoryScope) {
         currentInstructions = []
@@ -141,20 +160,20 @@ const activateRememberVideoCollection = async (title: string) => {
       let currentHistory = currentSettings.options.history
       updateInstructionsForCurrentScope()
       restartMarkingObserver()
-      currentMemory = buildCurrentMemory(detail)
+      currentMemory = buildCurrentMemory(videoDetail)
       logger.info('currentMemory', currentMemory)
       if (!currentMemory) {
-        if (payload.isFirst) {
+        if (isFirstLoad) {
           clearRememberVideoCollectionPendingJumpTargets()
         }
         syncRuntimeState()
         return
       }
-      if (payload.isFirst) {
+      if (isFirstLoad) {
         const pendingJumpTargets = resolveJumpTargets({
           currentInstructions,
           currentMemory,
-          currentDetail: detail,
+          currentDetail: videoDetail,
           sectionMode: currentSettings.options.sectionMode,
         })
         setRememberVideoCollectionPendingJumpTargets(
@@ -163,11 +182,11 @@ const activateRememberVideoCollection = async (title: string) => {
       }
       syncRuntimeState()
 
-      if (payload.isFirst) {
+      if (isFirstLoad) {
         const promptResult = await handleFirstLoadPrompt({
           currentInstructions,
           currentMemory,
-          currentDetail: detail,
+          currentDetail: videoDetail,
           enabled: currentSettings.options.showPrompt,
           signal: abortController.signal,
           title,

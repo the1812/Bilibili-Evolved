@@ -84,6 +84,17 @@ export const observeVideoPod = (callback: () => void) => {
   if (!target) {
     return lodash.noop
   }
-  const [observer] = childListSubtree(target, lodash.debounce(callback, 50))
+  const [observer] = childListSubtree(
+    target,
+    lodash.debounce(records => {
+      // childListSubtree 在创建 observer 后会立即用空 records 调一次回调。
+      // remember-video-collection 在启动 observer 前已经手动 render 过一次，
+      // 这里跳过初始化首调，避免对同一批指令重复 apply。
+      if (records.length === 0) {
+        return
+      }
+      callback()
+    }, 50),
+  )
   return () => observer.disconnect()
 }
