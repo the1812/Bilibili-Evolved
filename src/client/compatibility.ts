@@ -12,6 +12,7 @@ export const compatibilityPatch = () => {
       'https://manga.bilibili.com/eden/bilibili-nav-panel.html',
       'https://live.bilibili.com/blackboard/dropdown-menu.html',
       'https://www.bilibili.com/page-proxy/game-nav.html',
+      'https://live.bilibili.com/p/html/live-lottery/',
     ]
     document.documentElement.classList.toggle(
       'iframe',
