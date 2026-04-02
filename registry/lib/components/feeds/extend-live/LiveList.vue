@@ -101,7 +101,7 @@ const fetchRecommendLiveInfos = async (): Promise<LiveInfo[]> => {
         face,
         uname,
         title,
-        roomid: room_id,
+        roomid: room_id.toString(),
         pic: '', // portal 接口没有
         online: 0, // portal 接口没有
         uid: mid,
