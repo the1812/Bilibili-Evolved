@@ -8,11 +8,12 @@ export const plugin: PluginMetadata = {
     forEachFeedsCard({
       added: card => {
         const vueData = getVueData(card.element)
-        const additionalType: string | null = lodash.get(
-          vueData,
-          'data.modules.module_dynamic.additional.type',
-          null,
-        )
+        const isForward =
+          card.type.id === 1 || lodash.get(vueData, 'data.type', null) === 'DYNAMIC_TYPE_FORWARD'
+        const additionalTypePath = isForward
+          ? 'data.orig.modules.module_dynamic.additional.type'
+          : 'data.modules.module_dynamic.additional.type'
+        const additionalType: string | null = lodash.get(vueData, additionalTypePath, null)
         const isGoods = additionalType === 'ADDITIONAL_TYPE_GOODS'
         if (!isGoods) {
           return
