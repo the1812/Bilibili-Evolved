@@ -124,11 +124,11 @@ const activateRememberVideoCollection = async (title: string) => {
       }
       const fetchId = ++latestFetchId
       const info = new VideoInfo(detail.aid)
-      info.cid = Number(detail.cid)
 
       let videoDetail: VideoInfo
       try {
         videoDetail = await info.fetchInfo()
+        videoDetail.cid = Number(detail.cid)
       } catch (error) {
         if (!abortController.signal.aborted && activeRunId === runId && fetchId === latestFetchId) {
           logger.warn('failed to fetch video info', error)
