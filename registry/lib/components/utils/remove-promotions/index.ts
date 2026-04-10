@@ -152,6 +152,10 @@ export const component = defineComponentMetadata({
       displayName: '保留动态商品推荐',
       defaultValue: false,
     },
+    showWidget: {
+      displayName: '显示小组件（刷新后生效）',
+      defaultValue: false,
+    },
 
     // 以下选项在 extraOptions 中显示，设置 hidden: true 以免重复渲染
     hideContainer: {
@@ -185,5 +189,9 @@ export const component = defineComponentMetadata({
       import('@/ui').then(m =>
         createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: true }),
       ),
+    condition: async () => {
+      const { getComponentSettings } = await import('@/core/settings')
+      return Boolean(getComponentSettings(componentName).options.showWidget)
+    },
   },
 })
