@@ -1,10 +1,15 @@
 import { defineComponentMetadata } from '@/components/define'
 import { VideoInfo } from '@/components/video/video-info'
 import { videoChange } from '@/core/observer'
-import { addComponentListener, removeComponentListener } from '@/core/settings'
+import {
+  addComponentListener,
+  getComponentSettings,
+  removeComponentListener,
+} from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
 import { playerUrls } from '@/core/utils/urls'
+import type { KeyBindingAction } from '../../../utils/keymap/bindings'
 import {
   buildCurrentMemory,
   filterHistory,
@@ -22,6 +27,10 @@ import {
 import { handleFirstLoadPrompt } from './prompt'
 import {
   clearRememberVideoCollectionPendingJumpTargets,
+  clearCurrentRememberedVideoHistory,
+  getRememberVideoCollectionRuntimeState,
+  jumpToRememberedNextVideo,
+  jumpToRememberedVideo,
   resetRememberVideoCollectionRuntime,
   setRememberVideoCollectionPendingJumpTargets,
   updateRememberVideoCollectionRuntime,
@@ -66,6 +75,38 @@ const syncRuntimeState = () => {
     sectionMode: currentSettings?.options.sectionMode ?? SectionMode.Split,
   })
 }
+
+const getRememberVideoCollectionUnavailableMessage = () => {
+  const settings = getComponentSettings<ComponentOptions>(componentName)
+  if (!settings.enabled) {
+    return '组件已禁用，不能使用播放记忆快捷键'
+  }
+  const state = getRememberVideoCollectionRuntimeState()
+  if (!state.available) {
+    return '当前页面没有可用的播放记忆'
+  }
+  return undefined
+}
+
+const createRememberVideoCollectionKeyAction = (
+  displayName: string,
+  action: () => boolean,
+  getFailureMessage: () => string,
+): KeyBindingAction => ({
+  displayName,
+  run: () => {
+    const unavailableMessage = getRememberVideoCollectionUnavailableMessage()
+    if (unavailableMessage) {
+      Toast.error(unavailableMessage, componentDisplayName, 5e3)
+      return true
+    }
+    if (action()) {
+      return true
+    }
+    Toast.info(getFailureMessage(), componentDisplayName, 3e3)
+    return true
+  },
+})
 
 const updateInstructionsForCurrentScope = () => {
   if (!currentSettings || !currentHistoryScope) {
@@ -256,6 +297,48 @@ export const component = defineComponentMetadata<ComponentOptions>({
   ],
   widget: {
     component: () => import('./Widget.vue').then(m => m.default),
+  },
+  plugin: {
+    displayName: '播放记忆 - 快捷键支持',
+    setup: ({ addData }) => {
+      addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
+        actions.rememberVideoCollectionJumpLast = createRememberVideoCollectionKeyAction(
+          '播放记忆：跳转到上次播放',
+          () => {
+            const state = getRememberVideoCollectionRuntimeState()
+            if (!state.canJumpLast) {
+              return false
+            }
+            return jumpToRememberedVideo()
+          },
+          () => {
+            const state = getRememberVideoCollectionRuntimeState()
+            return state.lastPlayedLabel ? '当前已经位于上次播放位置' : '当前作用域暂无上次播放记录'
+          },
+        )
+        actions.rememberVideoCollectionJumpNext = createRememberVideoCollectionKeyAction(
+          '播放记忆：跳转到下一个',
+          () => {
+            const state = getRememberVideoCollectionRuntimeState()
+            if (!state.canJumpNext) {
+              return false
+            }
+            return jumpToRememberedNextVideo()
+          },
+          () => '没有可跳转的下一个视频',
+        )
+        actions.rememberVideoCollectionClearCurrent = createRememberVideoCollectionKeyAction(
+          '播放记忆：清除当前视频记忆',
+          clearCurrentRememberedVideoHistory,
+          () => '当前视频暂无可清除的播放记忆',
+        )
+      })
+      addData('keymap.presets', (presetBase: Record<string, string>) => {
+        presetBase.rememberVideoCollectionJumpLast = 'shift h'
+        presetBase.rememberVideoCollectionJumpNext = 'shift n'
+        presetBase.rememberVideoCollectionClearCurrent = 'shift delete'
+      })
+    },
   },
   options: {
     history: {

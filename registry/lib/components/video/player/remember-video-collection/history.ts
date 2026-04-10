@@ -306,11 +306,20 @@ const getMemoryKey = (
     memory.sectionRootId ?? '',
   ].join('|')
 
+export const clearHistoryByMemory = (
+  history: ComponentHistory,
+  memory?: Pick<ComponentMemory, 'bvid' | 'cid' | 'page' | 'sectionId' | 'sectionRootId'> | null,
+) => {
+  if (!memory) {
+    return history
+  }
+  const memoryKey = getMemoryKey(memory)
+  return history.filter(item => getMemoryKey(item) !== memoryKey)
+}
+
 export const upsertHistory = (
   history: ComponentOptions['history'],
   memory: ComponentMemory,
 ): ComponentOptions['history'] => {
-  const memoryKey = getMemoryKey(memory)
-  const filtered = history.filter(item => getMemoryKey(item) !== memoryKey)
-  return [...filtered, memory]
+  return [...clearHistoryByMemory(history, memory), memory]
 }
