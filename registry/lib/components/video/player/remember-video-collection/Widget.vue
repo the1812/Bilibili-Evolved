@@ -58,13 +58,17 @@
           <div class="be-rvc-widget-card">
             <div class="be-rvc-widget-label">当前作用域</div>
             <div class="be-rvc-widget-value">
-              {{ scopeSummaryText }}
+              <span>{{ scopeSummaryPrefixText }}</span>
+              <span class="be-rvc-widget-count">{{ scopeSummaryCountText }}</span>
             </div>
             <div class="be-rvc-widget-hint">{{ state.clearDescription }}</div>
           </div>
           <div class="be-rvc-widget-card">
             <div class="be-rvc-widget-label">全部记忆</div>
-            <div class="be-rvc-widget-value">全部记忆 • {{ state.totalHistoryCount }} 个视频</div>
+            <div class="be-rvc-widget-value">
+              <span>全部记忆 • </span>
+              <span class="be-rvc-widget-count">{{ state.totalHistoryCount }} 个视频</span>
+            </div>
             <div class="be-rvc-widget-hint">清除全部记忆是危险操作，确认后无法恢复。</div>
           </div>
           <div class="be-rvc-widget-actions">
@@ -147,11 +151,14 @@ export default Vue.extend({
       }
       return this.state.available ? '没有可跳转的下一个视频' : '当前页面没有可用的播放记忆'
     },
-    scopeSummaryText(): string {
+    scopeSummaryPrefixText(): string {
       if (this.state.scopeTitle) {
-        return `${this.state.scopeTitle} \u2022 ${this.state.scopedHistoryCount} 个视频`
+        return `${this.state.scopeTitle} \u2022 `
       }
-      return `${this.state.scopeLabel} \u2022 ${this.state.scopedHistoryCount} 个视频`
+      return `${this.state.scopeLabel} \u2022 `
+    },
+    scopeSummaryCountText(): string {
+      return `${this.state.scopedHistoryCount} 个视频`
     },
   },
   watch: {
@@ -298,6 +305,11 @@ export default Vue.extend({
   &.empty {
     opacity: 0.65;
   }
+}
+
+.be-rvc-widget-count {
+  color: var(--theme-color);
+  font-weight: 600;
 }
 
 .be-rvc-widget-tip,
