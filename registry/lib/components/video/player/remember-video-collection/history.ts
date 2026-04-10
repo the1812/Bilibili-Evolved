@@ -110,6 +110,39 @@ export const getHistoryScope = (detail: VideoInfo): HistoryScope | null => {
   return { sectionRootId, type: 'sections' }
 }
 
+export const getHistoryVisitKey = (
+  scope: HistoryScope | null,
+  sectionMode: SectionMode,
+  currentMemory?: Pick<ComponentMemory, 'bvid' | 'sectionId' | 'sectionRootId'> | null,
+) => {
+  if (!scope) {
+    return undefined
+  }
+
+  if (scope.type === 'multi-p') {
+    return `multi-p:${scope.bvid ?? currentMemory?.bvid ?? ''}`
+  }
+
+  if (scope.type === 'sections') {
+    return `sections:${scope.sectionRootId ?? currentMemory?.sectionRootId ?? ''}`
+  }
+
+  if (scope.type === 'multi-sections') {
+    const rootId = scope.sectionRootId ?? currentMemory?.sectionRootId ?? ''
+    if (sectionMode === SectionMode.Split) {
+      return `multi-sections:split:${rootId}:${currentMemory?.sectionId ?? scope.sectionId ?? ''}`
+    }
+    return `multi-sections:unified:${rootId}`
+  }
+
+  return [
+    scope.type,
+    scope.bvid ?? currentMemory?.bvid ?? '',
+    scope.sectionRootId ?? currentMemory?.sectionRootId ?? '',
+    sectionMode === SectionMode.Split ? currentMemory?.sectionId ?? scope.sectionId ?? '' : '',
+  ].join(':')
+}
+
 export const filterHistory = (history: ComponentHistory, scope: HistoryScope): ComponentHistory => {
   if (!Array.isArray(history) || history.length === 0 || !scope) {
     return []

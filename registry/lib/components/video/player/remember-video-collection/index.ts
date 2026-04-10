@@ -5,7 +5,13 @@ import { addComponentListener, removeComponentListener } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
 import { playerUrls } from '@/core/utils/urls'
-import { buildCurrentMemory, filterHistory, getHistoryScope, upsertHistory } from './history'
+import {
+  buildCurrentMemory,
+  filterHistory,
+  getHistoryScope,
+  getHistoryVisitKey,
+  upsertHistory,
+} from './history'
 import {
   clearMarkings,
   getMarkedInstructions,
@@ -117,6 +123,7 @@ const activateRememberVideoCollection = async (title: string) => {
   videoDataAbortController = abortController
   let latestFetchId = 0
   let isFirst = true
+  let lastVisitKey: string | undefined
   await videoChange(
     async detail => {
       if (abortController.signal.aborted || activeRunId !== runId) {
@@ -124,11 +131,11 @@ const activateRememberVideoCollection = async (title: string) => {
       }
       const fetchId = ++latestFetchId
       const info = new VideoInfo(detail.aid)
-      info.cid = Number(detail.cid)
 
       let videoDetail: VideoInfo
       try {
         videoDetail = await info.fetchInfo()
+        videoDetail.cid = Number(detail.cid)
       } catch (error) {
         if (!abortController.signal.aborted && activeRunId === runId && fetchId === latestFetchId) {
           logger.warn('failed to fetch video info', error)
@@ -140,14 +147,13 @@ const activateRememberVideoCollection = async (title: string) => {
         return
       }
 
-      const isFirstLoad = isFirst
-      isFirst = false
-
       currentDetail = videoDetail
       logger.info('video detail', videoDetail)
       currentHistoryScope = getHistoryScope(videoDetail)
       logger.info('historyScope', currentHistoryScope)
       if (!currentHistoryScope) {
+        isFirst = false
+        lastVisitKey = undefined
         currentInstructions = []
         currentMemory = null
         clearRememberVideoCollectionPendingJumpTargets()
@@ -162,6 +168,16 @@ const activateRememberVideoCollection = async (title: string) => {
       restartMarkingObserver()
       currentMemory = buildCurrentMemory(videoDetail)
       logger.info('currentMemory', currentMemory)
+      const visitKey = getHistoryVisitKey(
+        currentHistoryScope,
+        currentSettings.options.sectionMode,
+        currentMemory,
+      )
+      logger.info('visitKey', visitKey)
+      const isFirstLoad = isFirst || visitKey !== lastVisitKey
+      logger.info('isFirstLoad', isFirstLoad)
+      isFirst = false
+      lastVisitKey = visitKey
       if (!currentMemory) {
         if (isFirstLoad) {
           clearRememberVideoCollectionPendingJumpTargets()
