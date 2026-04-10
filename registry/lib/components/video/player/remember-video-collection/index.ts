@@ -47,7 +47,7 @@ import {
 
 const logger = useScopedConsole('rememberVideoCollection')
 const componentName = 'rememberVideoCollection'
-const componentDisplayName = '记忆合集进度'
+const componentDisplayName = '记忆合集'
 
 let currentInstructions: MarkingInstruction[] = []
 let currentSettings: { options: ComponentOptions } | null = null
@@ -79,11 +79,11 @@ const syncRuntimeState = () => {
 const getRememberVideoCollectionUnavailableMessage = () => {
   const settings = getComponentSettings<ComponentOptions>(componentName)
   if (!settings.enabled) {
-    return '组件已禁用，不能使用播放记忆快捷键'
+    return '组件已禁用，不能使用合集记忆快捷键'
   }
   const state = getRememberVideoCollectionRuntimeState()
   if (!state.available) {
-    return '当前页面没有可用的播放记忆'
+    return '当前页面没有可用的合集记忆'
   }
   return undefined
 }
@@ -299,11 +299,11 @@ export const component = defineComponentMetadata<ComponentOptions>({
     component: () => import('./Widget.vue').then(m => m.default),
   },
   plugin: {
-    displayName: '播放记忆 - 快捷键支持',
+    displayName: '合集记忆 - 快捷键支持',
     setup: ({ addData }) => {
       addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
         actions.rememberVideoCollectionJumpLast = createRememberVideoCollectionKeyAction(
-          '播放记忆：跳转到上次播放',
+          '合集记忆：跳转到上次播放',
           () => {
             const state = getRememberVideoCollectionRuntimeState()
             if (!state.canJumpLast) {
@@ -317,7 +317,7 @@ export const component = defineComponentMetadata<ComponentOptions>({
           },
         )
         actions.rememberVideoCollectionJumpNext = createRememberVideoCollectionKeyAction(
-          '播放记忆：跳转到下一个',
+          '合集记忆：跳转到下一个',
           () => {
             const state = getRememberVideoCollectionRuntimeState()
             if (!state.canJumpNext) {
@@ -328,9 +328,9 @@ export const component = defineComponentMetadata<ComponentOptions>({
           () => '没有可跳转的下一个视频',
         )
         actions.rememberVideoCollectionClearCurrent = createRememberVideoCollectionKeyAction(
-          '播放记忆：清除当前视频记忆',
+          '合集记忆：清除当前视频记忆',
           clearCurrentRememberedVideoHistory,
-          () => '当前视频暂无可清除的播放记忆',
+          () => '当前视频暂无可清除的合集记忆',
         )
       })
       addData('keymap.presets', (presetBase: Record<string, string>) => {

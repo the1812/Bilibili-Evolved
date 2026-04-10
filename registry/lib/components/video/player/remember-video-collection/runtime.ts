@@ -72,7 +72,7 @@ let runtimeState: RememberVideoCollectionRuntimeState = {
   canJumpNext: false,
   canClear: false,
   canClearAll: false,
-  clearDescription: '当前页面没有可管理的播放记忆',
+  clearDescription: '当前页面没有可管理的合集记忆',
   clearScopeButtonText: '清除当前作用域记忆',
   scopeLabel: '当前作用域',
   scopeTitle: undefined,
@@ -236,7 +236,7 @@ export const clearRememberedHistory = () => {
   }
   settings.options.history = nextHistory
   clearRememberVideoCollectionPendingJumpTargets()
-  Toast.success('已清除当前作用域的播放记忆', componentDisplayName, 3e3)
+  Toast.success('已清除当前作用域的合集记忆', componentDisplayName, 3e3)
   return true
 }
 
@@ -247,6 +247,6 @@ export const clearAllRememberedHistory = () => {
   }
   settings.options.history = []
   clearRememberVideoCollectionPendingJumpTargets()
-  Toast.success('已清除全部播放记忆', componentDisplayName, 3e3)
+  Toast.success('已清除全部合集记忆', componentDisplayName, 3e3)
   return true
 }

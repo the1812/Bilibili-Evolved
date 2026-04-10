@@ -247,19 +247,19 @@ export const getClearHistoryDescription = (
   currentMemory?: Pick<ComponentMemory, 'sectionId'> | null,
 ) => {
   if (!scope) {
-    return '当前页面没有可管理的播放记忆'
+    return '当前页面没有可管理的合集记忆'
   }
   if (
     sectionMode === SectionMode.Split &&
     scope.type === 'multi-sections' &&
     currentMemory?.sectionId !== undefined
   ) {
-    return '将清除当前 TAB 下的播放记忆'
+    return '将清除当前 TAB 下的合集记忆'
   }
   if (scope.type === 'multi-p') {
-    return '将清除当前视频的播放记忆'
+    return '将清除当前视频的合集记忆'
   }
-  return '将清除当前合集的播放记忆'
+  return '将清除当前合集的合集记忆'
 }
 
 export const getHistoryScopeLabel = (
