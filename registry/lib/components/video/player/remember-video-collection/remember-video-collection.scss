@@ -1,130 +1,166 @@
-.be-rvc-watched:not(.be-rvc-multi-page) .title-txt,
-.be-rvc-last:not(.be-rvc-multi-page) .title-txt,
-.be-rvc-multi-page.be-rvc-multi-page-all-watched .title-txt {
-  opacity: 0.65;
+// 标题置灰以及小圆点状态
+.be-rvc-watched,
+.be-rvc-last {
+  &:not(.be-rvc-multi-page) {
+    .title-txt,
+    .title:not(:has(.title-txt)) {
+      opacity: 0.65;
+    }
+
+    .title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      min-width: 6px;
+      margin-right: 6px;
+      border-radius: 50%;
+      vertical-align: middle;
+      background: #9aa0a6;
+    }
+  }
 }
 
-.be-rvc-watched:not(.be-rvc-multi-page) .title::before,
-.be-rvc-last:not(.be-rvc-multi-page) .title::before,
-.be-rvc-multi-page .head .title::before {
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  min-width: 6px;
-  margin-right: 6px;
-  border-radius: 50%;
-  vertical-align: middle;
-  background: #9aa0a6;
-}
-.video-pod.be-rvc-style-distinguish .be-rvc-last:not(.be-rvc-multi-page) .title::before,
-.video-pod.be-rvc-style-distinguish .be-rvc-multi-page.be-rvc-last .head .title::before {
-  background: var(--theme-color, #00a1d6);
+.be-rvc-multi-page {
+  &.be-rvc-multi-page-all-watched {
+    .title-txt {
+      opacity: 0.65;
+    }
+  }
+
+  .head .title::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    min-width: 6px;
+    margin-right: 6px;
+    border-radius: 50%;
+    vertical-align: middle;
+    background: #9aa0a6;
+  }
 }
 
-.video-pod__list.grid .page.be-rvc-watched,
-.video-pod__list.grid .page.be-rvc-last {
-  position: relative;
-  opacity: 0.65;
+// 主题色小圆点表示上次观看
+.video-pod.be-rvc-style-distinguish {
+  .be-rvc-last {
+    &:not(.be-rvc-multi-page) .title::before,
+    &.be-rvc-multi-page .head .title::before {
+      background: var(--theme-color, #00a1d6);
+    }
+  }
+
+  .video-pod__list.grid .page.be-rvc-last::before {
+    background: var(--theme-color, #00a1d6);
+  }
 }
 
-.video-pod__list.grid .page.be-rvc-watched::before,
-.video-pod__list.grid .page.be-rvc-last::before {
-  content: '';
-  position: absolute;
-  top: -3px;
-  right: -3px;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #9aa0a6;
-  box-shadow: 0 0 0 2px var(--be-color-bg1, #2f3238);
-  pointer-events: none;
-}
+// 纯分P视频的网格模式
+.video-pod__list.grid {
+  .page {
+    &.be-rvc-watched,
+    &.be-rvc-last {
+      position: relative;
+      opacity: 0.65;
 
-.video-pod.be-rvc-style-distinguish .video-pod__list.grid .page.be-rvc-last::before {
-  background: var(--theme-color, #00a1d6);
+      &::before {
+        content: '';
+        position: absolute;
+        top: -3px;
+        right: -3px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: #9aa0a6;
+        box-shadow: 0 0 0 2px var(--be-color-bg1, #2f3238);
+        pointer-events: none;
+      }
+    }
+  }
 }
 
 .video-pod__body:has(.multip.grid) {
   overflow: visible !important;
 }
 
+// 提示消息
 .toast-card,
 .toast-card-message {
   overflow: visible;
 }
 
-.toast-card .be-rvc-prompt {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 8px;
-  width: 100%;
-}
+.toast-card {
+  .be-rvc-prompt {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
 
-.toast-card .be-rvc-prompt-summary {
-  color: var(--be-color-text-content, #000);
-  line-height: 1.6;
-}
+    &-summary {
+      color: var(--be-color-text-content, #000);
+      line-height: 1.6;
+    }
 
-.toast-card .be-rvc-prompt-targets {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 1px 0 2px;
-}
+    &-targets {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 1px 0 2px;
+    }
 
-.toast-card .be-rvc-prompt-target {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
-  margin: 0;
-  padding: 9px 10px;
-  border: 1px solid rgba(128, 128, 128, 0.18);
-  border-radius: 8px;
-  background: rgba(128, 128, 128, 0.08);
-  color: var(--be-color-text-content, #000);
-  text-align: left;
-  line-height: 1.5;
-  word-break: break-word;
-  cursor: pointer;
-  appearance: none;
-  transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease,
-    background-color 0.16s ease;
-}
+    &-target {
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 6px;
+      margin: 0;
+      padding: 9px 10px;
+      border: 1px solid rgba(128, 128, 128, 0.18);
+      border-radius: 8px;
+      background: rgba(128, 128, 128, 0.08);
+      color: var(--be-color-text-content, #000);
+      text-align: left;
+      line-height: 1.5;
+      word-break: break-word;
+      cursor: pointer;
+      appearance: none;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease,
+        background-color 0.16s ease;
 
-.toast-card .be-rvc-prompt-target strong {
-  font-weight: 600;
-}
+      strong {
+        font-weight: 600;
+      }
 
-.toast-card .be-rvc-prompt-target-caption {
-  display: inline-flex;
-  align-items: center;
-  padding: 1px 6px;
-  border-radius: 999px;
-  background: rgba(128, 128, 128, 0.1);
-  color: inherit;
-  font-size: 12px;
-  line-height: 1.4;
-  opacity: 0.72;
-}
+      &-caption {
+        display: inline-flex;
+        align-items: center;
+        padding: 1px 6px;
+        border-radius: 999px;
+        background: rgba(128, 128, 128, 0.1);
+        color: inherit;
+        font-size: 12px;
+        line-height: 1.4;
+        opacity: 0.72;
+      }
 
-.toast-card .be-rvc-prompt-target-text {
-  display: block;
-}
+      &-text {
+        display: block;
+      }
 
-.toast-card .be-rvc-prompt-target:hover {
-  transform: translateY(-1px);
-  border-color: rgba(128, 128, 128, 0.28);
-  background: rgba(128, 128, 128, 0.12);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-}
+      &:hover {
+        transform: translateY(-1px);
+        border-color: rgba(128, 128, 128, 0.28);
+        background: rgba(128, 128, 128, 0.12);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      }
 
-.toast-card .be-rvc-prompt-target:active {
-  transform: translateY(0);
-  background: rgba(128, 128, 128, 0.16);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      &:active {
+        transform: translateY(0);
+        background: rgba(128, 128, 128, 0.16);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
 }
