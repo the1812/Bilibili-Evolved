@@ -187,14 +187,14 @@ export default Vue.extend({
     this.unsubscribe = null
   },
   methods: {
-    handleJumpLast() {
-      if (jumpToRememberedVideo()) {
+    async handleJumpLast() {
+      if (await jumpToRememberedVideo()) {
         this.confirmClearAll = false
         this.open = false
       }
     },
-    handleJumpNext() {
-      if (jumpToRememberedNextVideo()) {
+    async handleJumpNext() {
+      if (await jumpToRememberedNextVideo()) {
         this.confirmClearAll = false
         this.open = false
       }

@@ -151,7 +151,7 @@ export const handleFirstLoadPrompt = async ({
   const jumpInstruction: JumpInstruction =
     action === 'jump-next' && canJumpNext ? nextInstruction : lastPlayedInstruction
 
-  const jumpSucceeded = jumpToInstruction(jumpInstruction)
+  const jumpSucceeded = await jumpToInstruction(jumpInstruction)
   return {
     action,
     lastPlayedInstruction,

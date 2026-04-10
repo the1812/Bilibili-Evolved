@@ -183,11 +183,11 @@ export const clearRememberVideoCollectionPendingJumpTargets = () => {
   setRememberVideoCollectionPendingJumpTargets(undefined)
 }
 
-const runJump = (instruction: JumpInstruction | undefined, successMessage: string) => {
+const runJump = async (instruction: JumpInstruction | undefined, successMessage: string) => {
   if (!instruction) {
     return false
   }
-  const jumpSucceeded = jumpToInstruction(instruction)
+  const jumpSucceeded = await jumpToInstruction(instruction)
   if (!jumpSucceeded) {
     Toast.error('跳转失败', componentDisplayName, 3e3)
     return false

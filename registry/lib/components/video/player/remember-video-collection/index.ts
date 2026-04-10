@@ -90,17 +90,17 @@ const getRememberVideoCollectionUnavailableMessage = () => {
 
 const createRememberVideoCollectionKeyAction = (
   displayName: string,
-  action: () => boolean,
+  action: () => boolean | Promise<boolean>,
   getFailureMessage: () => string,
 ): KeyBindingAction => ({
   displayName,
-  run: () => {
+  run: async () => {
     const unavailableMessage = getRememberVideoCollectionUnavailableMessage()
     if (unavailableMessage) {
       Toast.error(unavailableMessage, componentDisplayName, 5e3)
       return true
     }
-    if (action()) {
+    if (await action()) {
       return true
     }
     Toast.info(getFailureMessage(), componentDisplayName, 3e3)
