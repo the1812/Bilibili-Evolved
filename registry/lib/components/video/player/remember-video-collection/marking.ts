@@ -21,25 +21,37 @@ const multiPagePodItemClass = 'be-rvc-multi-page'
 const multiPageAllWatchedClass = 'be-rvc-multi-page-all-watched'
 const styleDefaultClass = 'be-rvc-style-default'
 const styleDistinguishClass = 'be-rvc-style-distinguish'
+const renderedMarkClasses = [
+  watchedClass,
+  lastClass,
+  multiPagePodItemClass,
+  multiPageAllWatchedClass,
+] as const
+const markingStyleClasses = [styleDefaultClass, styleDistinguishClass] as const
+const markingRetryConfig = {
+  maxRetry: 15,
+  queryInterval: 200,
+} as const
 
 let frame = 0
-let renderToken = 0
-let styleToken = 0
+let markingLifecycleToken = 0
 
-const clearMarks = () => {
-  getMarkedElements([
-    watchedClass,
-    lastClass,
-    multiPagePodItemClass,
-    multiPageAllWatchedClass,
-  ]).forEach(element => {
-    element.classList.remove(
-      watchedClass,
-      lastClass,
-      multiPagePodItemClass,
-      multiPageAllWatchedClass,
-    )
+const clearElementMarkingStyle = (element?: Element | null) => {
+  element?.classList.remove(...markingStyleClasses)
+}
+
+const clearRenderedMarks = () => {
+  getMarkedElements([...renderedMarkClasses]).forEach(element => {
+    element.classList.remove(...renderedMarkClasses)
   })
+}
+
+const clearMarkingDomState = ({ includeStyle }: { includeStyle: boolean }) => {
+  clearRenderedMarks()
+  if (!includeStyle) {
+    return
+  }
+  clearElementMarkingStyle(getVideoPodElement())
 }
 
 const applyMultiPageCompletionState = () => {
@@ -88,10 +100,7 @@ const waitForRenderableMarkings = async (instructions: MarkingInstruction[]) => 
       return instructions.some(canRenderInstruction) ? root : null
     },
     root => root !== null,
-    {
-      maxRetry: 8,
-      queryInterval: 50,
-    },
+    markingRetryConfig,
   )
 }
 
@@ -133,7 +142,7 @@ const applyInstruction = (instruction: MarkingInstruction) => {
 
 const runRender = (instructions: MarkingInstruction[]) => {
   frame = 0
-  clearMarks()
+  clearMarkingDomState({ includeStyle: false })
   let appliedCount = 0
   for (const instruction of instructions) {
     if (applyInstruction(instruction)) {
@@ -147,36 +156,26 @@ const runRender = (instructions: MarkingInstruction[]) => {
   }
 }
 
-const abortRunningRender = () => {
-  renderToken++
+const isLifecycleCurrent = (token: number) => token === markingLifecycleToken
+
+const invalidateMarkingLifecycle = () => {
+  markingLifecycleToken++
   if (frame !== 0) {
     cancelAnimationFrame(frame)
     frame = 0
   }
 }
 
-export const clearMarkings = () => {
-  abortRunningRender()
-  styleToken++
-  clearMarks()
-  const root = getVideoPodElement()
-  root?.classList.remove(styleDefaultClass, styleDistinguishClass)
-}
-
-export const setMarkingStyle = (style: MarkingStyle) => {
-  const currentStyleToken = ++styleToken
+const applyMarkingStyle = (style: MarkingStyle, lifecycleToken: number) => {
   sq(
     () => getVideoPodElement(),
     root => root !== null,
-    {
-      maxRetry: 8,
-      queryInterval: 100,
-    },
+    markingRetryConfig,
   ).then(root => {
-    if (!root || currentStyleToken !== styleToken) {
+    if (!root || !isLifecycleCurrent(lifecycleToken)) {
       return
     }
-    root.classList.remove(styleDefaultClass, styleDistinguishClass)
+    clearElementMarkingStyle(root)
     root.classList.add(
       style === MarkingStyle.Distinguish ? styleDistinguishClass : styleDefaultClass,
     )
@@ -184,16 +183,14 @@ export const setMarkingStyle = (style: MarkingStyle) => {
   })
 }
 
-export const renderMarkings = (instructions: MarkingInstruction[]) => {
-  abortRunningRender()
-  const currentRenderToken = renderToken
+const scheduleMarkingRender = (instructions: MarkingInstruction[], lifecycleToken: number) => {
   waitForRenderableMarkings(instructions).then(async () => {
-    if (currentRenderToken !== renderToken) {
+    if (!isLifecycleCurrent(lifecycleToken)) {
       return
     }
     await sq(
       () => {
-        if (currentRenderToken !== renderToken) {
+        if (!isLifecycleCurrent(lifecycleToken)) {
           return {
             appliedCount: 0,
             totalCount: 0,
@@ -202,18 +199,26 @@ export const renderMarkings = (instructions: MarkingInstruction[]) => {
         return runRender(instructions)
       },
       (result, stop) => {
-        if (currentRenderToken !== renderToken) {
+        if (!isLifecycleCurrent(lifecycleToken)) {
           stop()
           return true
         }
         return result.totalCount === 0 || result.appliedCount > 0
       },
-      {
-        maxRetry: 8,
-        queryInterval: 100,
-      },
+      markingRetryConfig,
     )
   })
+}
+
+export const clearMarkings = () => {
+  invalidateMarkingLifecycle()
+  clearMarkingDomState({ includeStyle: true })
+}
+
+export const syncMarkings = (instructions: MarkingInstruction[], style: MarkingStyle) => {
+  const lifecycleToken = ++markingLifecycleToken
+  applyMarkingStyle(style, lifecycleToken)
+  scheduleMarkingRender(instructions, lifecycleToken)
 }
 
 const mapGroupToInstructions = (history: ComponentHistory): MarkingInstruction[] => {

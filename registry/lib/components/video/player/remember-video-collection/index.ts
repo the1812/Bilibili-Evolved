@@ -17,13 +17,7 @@ import {
   getHistoryVisitKey,
   upsertHistory,
 } from './history'
-import {
-  clearMarkings,
-  getMarkedInstructions,
-  renderMarkings,
-  setMarkingStyle,
-  startMarkingObserver,
-} from './marking'
+import { clearMarkings, getMarkedInstructions, syncMarkings, startMarkingObserver } from './marking'
 import { handleFirstLoadPrompt } from './prompt'
 import {
   clearRememberVideoCollectionPendingJumpTargets,
@@ -58,12 +52,11 @@ let currentDetail: VideoInfo | null = null
 let currentHistoryScope: HistoryScope | null = null
 let currentMemory: ComponentMemory | null = null
 
-const rerenderMarkings = () => {
+const rerenderMarkings = (overrides?: { markingStyle?: MarkingStyle }) => {
   if (!currentSettings) {
     return
   }
-  setMarkingStyle(currentSettings.options.markingStyle)
-  renderMarkings(currentInstructions)
+  syncMarkings(currentInstructions, overrides?.markingStyle ?? currentSettings.options.markingStyle)
 }
 
 const syncRuntimeState = () => {
@@ -130,7 +123,7 @@ const restartMarkingObserver = () => {
   })
 }
 
-const markingStyleListener = (style: MarkingStyle) => setMarkingStyle(style)
+const markingStyleListener = (style: MarkingStyle) => rerenderMarkings({ markingStyle: style })
 const historyListener = () => updateInstructionsForCurrentScope()
 const sectionModeListener = () => updateInstructionsForCurrentScope()
 
