@@ -10,6 +10,7 @@ import { MetadataType, Tag, ViewPoint } from './types'
 import {
   bangumiSkipToViewPoints,
   escape,
+  findCidInUgcSeason,
   fixBgmTag,
   formatStaffs,
   formatTime,
@@ -137,6 +138,15 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
       ff('category_id', basic.tagId),
       ff('category_name', basic.tagName),
     )
+    if (basic.ugcSeason) {
+      const d = findCidInUgcSeason(basic.ugcSeason, data.page.cid)
+      if (d) {
+        lines.push(ff('collection_id', d.seasonId))
+        lines.push(ff('collection_title', d.seasonTitle))
+        lines.push(ff('collection_section_id', d.sectionId))
+        lines.push(ff('collection_section_title', d.sectionTitle))
+      }
+    }
     if (data.tags.tag) {
       lines.push(ff('tags', tagWithId(data.tags.tag)))
     }

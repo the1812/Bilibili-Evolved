@@ -1,4 +1,4 @@
-import { EpisodeInfo, UpInfo } from '@/components/video/video-info'
+import { EpisodeInfo, UpInfo, VideoSeasonInfo } from '@/components/video/video-info'
 import { TimeFormat } from './options'
 import { Tag, ViewPoint } from './types'
 
@@ -14,6 +14,25 @@ export function fixBgmTag(bgmTags: Tag[]) {
   return bgmTags.map(
     x => `${x.tag_name.match(/^发现《([^》]+)》/)?.[1] ?? x.tag_name}(${x.music_id})`,
   )
+}
+
+export function findCidInUgcSeason(season: VideoSeasonInfo, cid: number) {
+  for (const section of season.sections) {
+    for (const ep of section.episodes) {
+      for (const page of ep.pages) {
+        if (page.cid === cid) {
+          return {
+            ...page,
+            seasonId: season.id,
+            seasonTitle: season.title,
+            sectionId: section.id,
+            sectionTitle: section.title,
+          }
+        }
+      }
+    }
+  }
+  return null
 }
 
 export function formatStaffs(staffs: UpInfo[]) {
