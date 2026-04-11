@@ -32,7 +32,12 @@ export const component = defineComponentMetadata({
   urlInclude: videoAndBangumiUrls,
   options,
   widget: {
-    condition: hasVideo,
+    condition: async () => {
+      return (
+        (await hasVideo()) &&
+        Boolean((await import('@/core/settings')).getComponentSettings(name).options.showWidget)
+      )
+    },
     component: () => import('./SaveMetadata.vue').then(m => m.default),
   },
   plugin: {
