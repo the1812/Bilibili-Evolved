@@ -105,7 +105,11 @@ async function generateFFMetadata(aid: string = unsafeWindow.aid, cid: string = 
       { timeZoneName: 'short' },
     )}`,
     // Standard fields
-    ff('title', `${basic.title} - ${data.page.title}`, false),
+    ff(
+      'title',
+      `${basic.title}${basic.title !== data.page.title ? ` - ${data.page.title}` : ''}`,
+      false,
+    ),
     ff('description', basic.description, false),
     ff('artist', basic.up.name, false),
   ]
