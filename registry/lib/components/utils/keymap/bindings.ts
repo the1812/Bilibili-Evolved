@@ -89,6 +89,13 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         ) {
           return false
         }
+        // 忽略播放器弹幕开关按钮元素的焦点
+        if (
+          activeElement instanceof HTMLInputElement &&
+          activeElement.classList.contains('bui-danmaku-switch-input')
+        ) {
+          return false
+        }
         return true
       })()
       if (
