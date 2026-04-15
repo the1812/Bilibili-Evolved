@@ -61,24 +61,10 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         if (activeElement instanceof HTMLMediaElement) {
           return false
         }
-        // 忽略播放器“宽屏”按钮焦点
+        // 忽略播放器相关按钮元素的焦点
         if (
           activeElement instanceof HTMLDivElement &&
-          activeElement.classList.contains('bpx-player-ctrl-wide')
-        ) {
-          return false
-        }
-        // 忽略播放器“网页全屏”按钮焦点
-        if (
-          activeElement instanceof HTMLDivElement &&
-          activeElement.classList.contains('bpx-player-ctrl-web')
-        ) {
-          return false
-        }
-        // 忽略播放器“全屏”按钮焦点
-        if (
-          activeElement instanceof HTMLDivElement &&
-          activeElement.classList.contains('bpx-player-ctrl-full')
+          activeElement.classList.contains('bpx-player-ctrl-btn')
         ) {
           return false
         }
