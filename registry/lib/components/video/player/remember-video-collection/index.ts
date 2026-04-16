@@ -1,10 +1,15 @@
 import { defineComponentMetadata } from '@/components/define'
 import { VideoInfo } from '@/components/video/video-info'
 import { videoChange } from '@/core/observer'
-import { addComponentListener, removeComponentListener } from '@/core/settings'
+import {
+  addComponentListener,
+  getComponentSettings,
+  removeComponentListener,
+} from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
 import { playerUrls } from '@/core/utils/urls'
+import type { KeyBindingAction } from '../../../utils/keymap/bindings'
 import {
   buildCurrentMemory,
   filterHistory,
@@ -12,16 +17,14 @@ import {
   getHistoryVisitKey,
   upsertHistory,
 } from './history'
-import {
-  clearMarkings,
-  getMarkedInstructions,
-  renderMarkings,
-  setMarkingStyle,
-  startMarkingObserver,
-} from './marking'
+import { clearMarkings, getMarkedInstructions, syncMarkings, startMarkingObserver } from './marking'
 import { handleFirstLoadPrompt } from './prompt'
 import {
   clearRememberVideoCollectionPendingJumpTargets,
+  clearCurrentRememberedVideoHistory,
+  getRememberVideoCollectionRuntimeState,
+  jumpToRememberedNextVideo,
+  jumpToRememberedVideo,
   resetRememberVideoCollectionRuntime,
   setRememberVideoCollectionPendingJumpTargets,
   updateRememberVideoCollectionRuntime,
@@ -38,7 +41,7 @@ import {
 
 const logger = useScopedConsole('rememberVideoCollection')
 const componentName = 'rememberVideoCollection'
-const componentDisplayName = '记忆合集进度'
+const componentDisplayName = '记忆合集'
 
 let currentInstructions: MarkingInstruction[] = []
 let currentSettings: { options: ComponentOptions } | null = null
@@ -49,12 +52,11 @@ let currentDetail: VideoInfo | null = null
 let currentHistoryScope: HistoryScope | null = null
 let currentMemory: ComponentMemory | null = null
 
-const rerenderMarkings = () => {
+const rerenderMarkings = (overrides?: { markingStyle?: MarkingStyle }) => {
   if (!currentSettings) {
     return
   }
-  setMarkingStyle(currentSettings.options.markingStyle)
-  renderMarkings(currentInstructions)
+  syncMarkings(currentInstructions, overrides?.markingStyle ?? currentSettings.options.markingStyle)
 }
 
 const syncRuntimeState = () => {
@@ -66,6 +68,38 @@ const syncRuntimeState = () => {
     sectionMode: currentSettings?.options.sectionMode ?? SectionMode.Split,
   })
 }
+
+const getRememberVideoCollectionUnavailableMessage = () => {
+  const settings = getComponentSettings<ComponentOptions>(componentName)
+  if (!settings.enabled) {
+    return '组件已禁用，不能使用合集记忆快捷键'
+  }
+  const state = getRememberVideoCollectionRuntimeState()
+  if (!state.available) {
+    return '当前页面没有可用的合集记忆'
+  }
+  return undefined
+}
+
+const createRememberVideoCollectionKeyAction = (
+  displayName: string,
+  action: () => boolean | Promise<boolean>,
+  getFailureMessage: () => string,
+): KeyBindingAction => ({
+  displayName,
+  run: async () => {
+    const unavailableMessage = getRememberVideoCollectionUnavailableMessage()
+    if (unavailableMessage) {
+      Toast.error(unavailableMessage, componentDisplayName, 5e3)
+      return true
+    }
+    if (await action()) {
+      return true
+    }
+    Toast.info(getFailureMessage(), componentDisplayName, 3e3)
+    return true
+  },
+})
 
 const updateInstructionsForCurrentScope = () => {
   if (!currentSettings || !currentHistoryScope) {
@@ -89,7 +123,7 @@ const restartMarkingObserver = () => {
   })
 }
 
-const markingStyleListener = (style: MarkingStyle) => setMarkingStyle(style)
+const markingStyleListener = (style: MarkingStyle) => rerenderMarkings({ markingStyle: style })
 const historyListener = () => updateInstructionsForCurrentScope()
 const sectionModeListener = () => updateInstructionsForCurrentScope()
 
@@ -256,6 +290,48 @@ export const component = defineComponentMetadata<ComponentOptions>({
   ],
   widget: {
     component: () => import('./Widget.vue').then(m => m.default),
+  },
+  plugin: {
+    displayName: '合集记忆 - 快捷键支持',
+    setup: ({ addData }) => {
+      addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
+        actions.rememberVideoCollectionJumpLast = createRememberVideoCollectionKeyAction(
+          '合集记忆：跳转到上次播放',
+          () => {
+            const state = getRememberVideoCollectionRuntimeState()
+            if (!state.canJumpLast) {
+              return false
+            }
+            return jumpToRememberedVideo()
+          },
+          () => {
+            const state = getRememberVideoCollectionRuntimeState()
+            return state.lastPlayedLabel ? '当前已经位于上次播放位置' : '当前作用域暂无上次播放记录'
+          },
+        )
+        actions.rememberVideoCollectionJumpNext = createRememberVideoCollectionKeyAction(
+          '合集记忆：跳转到下一个',
+          () => {
+            const state = getRememberVideoCollectionRuntimeState()
+            if (!state.canJumpNext) {
+              return false
+            }
+            return jumpToRememberedNextVideo()
+          },
+          () => '没有可跳转的下一个视频',
+        )
+        actions.rememberVideoCollectionClearCurrent = createRememberVideoCollectionKeyAction(
+          '合集记忆：清除当前视频记忆',
+          clearCurrentRememberedVideoHistory,
+          () => '当前视频暂无可清除的合集记忆',
+        )
+      })
+      addData('keymap.presets', (presetBase: Record<string, string>) => {
+        presetBase.rememberVideoCollectionJumpLast = 'shift h'
+        presetBase.rememberVideoCollectionJumpNext = 'shift n'
+        presetBase.rememberVideoCollectionClearCurrent = 'shift delete'
+      })
+    },
   },
   options: {
     history: {
