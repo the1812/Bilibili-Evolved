@@ -61,39 +61,15 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         if (activeElement instanceof HTMLMediaElement) {
           return false
         }
-        // 忽略播放器外显按钮元素的焦点
+        // 播放器内各种控制按钮的焦点
         if (
           activeElement instanceof HTMLDivElement &&
           activeElement.classList.contains('bpx-player-ctrl-btn')
         ) {
           return false
         }
-        // 忽略播放器设置按钮一层开关元素的焦点
-        if (
-          activeElement instanceof HTMLInputElement &&
-          activeElement.classList.contains('bui-switch-input')
-        ) {
-          return false
-        }
-        // 忽略播放器设置-更多播放设置单选按钮元素的焦点
-        if (
-          activeElement instanceof HTMLInputElement &&
-          activeElement.classList.contains('bui-radio-input')
-        ) {
-          return false
-        }
-        // 忽略播放器设置-更多播放设置复选按钮元素的焦点
-        if (
-          activeElement instanceof HTMLInputElement &&
-          activeElement.classList.contains('bui-checkbox-input')
-        ) {
-          return false
-        }
-        // 忽略播放器弹幕开关按钮元素的焦点
-        if (
-          activeElement instanceof HTMLInputElement &&
-          activeElement.classList.contains('bui-danmaku-switch-input')
-        ) {
+        // 播放器内各种设置项按钮的焦点
+        if (activeElement instanceof HTMLInputElement && activeElement.classList.contains('bui')) {
           return false
         }
         return true
