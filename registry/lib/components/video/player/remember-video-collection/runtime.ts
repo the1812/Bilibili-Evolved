@@ -2,6 +2,7 @@ import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import type { VideoInfo } from '@/components/video/video-info'
 import {
+  clearHistoryByMemory,
   clearHistoryInScope,
   getClearHistoryDescription,
   getHistoryInScope,
@@ -71,7 +72,7 @@ let runtimeState: RememberVideoCollectionRuntimeState = {
   canJumpNext: false,
   canClear: false,
   canClearAll: false,
-  clearDescription: '当前页面没有可管理的播放记忆',
+  clearDescription: '当前页面没有可管理的合集记忆',
   clearScopeButtonText: '清除当前作用域记忆',
   scopeLabel: '当前作用域',
   scopeTitle: undefined,
@@ -182,22 +183,41 @@ export const clearRememberVideoCollectionPendingJumpTargets = () => {
   setRememberVideoCollectionPendingJumpTargets(undefined)
 }
 
-const runJump = (instruction?: JumpInstruction) => {
+const runJump = async (instruction: JumpInstruction | undefined, successMessage: string) => {
   if (!instruction) {
     return false
   }
-  const jumpSucceeded = jumpToInstruction(instruction)
+  const jumpSucceeded = await jumpToInstruction(instruction)
   if (!jumpSucceeded) {
     Toast.error('跳转失败', componentDisplayName, 3e3)
     return false
   }
   clearRememberVideoCollectionPendingJumpTargets()
+  Toast.success(successMessage, componentDisplayName, 3e3)
   return true
 }
 
-export const jumpToRememberedVideo = () => runJump(runtimeState.lastPlayedInstruction)
+export const jumpToRememberedVideo = () =>
+  runJump(runtimeState.lastPlayedInstruction, '已跳转到上次播放')
 
-export const jumpToRememberedNextVideo = () => runJump(runtimeState.nextInstruction)
+export const jumpToRememberedNextVideo = () =>
+  runJump(runtimeState.nextInstruction, '已跳转到下一个视频')
+
+export const clearCurrentRememberedVideoHistory = () => {
+  const { currentMemory } = runtimeContext
+  if (!currentMemory) {
+    return false
+  }
+  const settings = getComponentSettings<ComponentOptions>(componentName)
+  const nextHistory = clearHistoryByMemory(settings.options.history, currentMemory)
+  if (nextHistory.length === settings.options.history.length) {
+    return false
+  }
+  settings.options.history = nextHistory
+  clearRememberVideoCollectionPendingJumpTargets()
+  Toast.success('已清除当前视频记忆', componentDisplayName, 3e3)
+  return true
+}
 
 export const clearRememberedHistory = () => {
   const { historyScope, currentMemory, sectionMode } = runtimeContext
@@ -216,7 +236,7 @@ export const clearRememberedHistory = () => {
   }
   settings.options.history = nextHistory
   clearRememberVideoCollectionPendingJumpTargets()
-  Toast.success('已清除当前作用域的播放记忆', componentDisplayName, 3e3)
+  Toast.success('已清除当前作用域的合集记忆', componentDisplayName, 3e3)
   return true
 }
 
@@ -227,6 +247,6 @@ export const clearAllRememberedHistory = () => {
   }
   settings.options.history = []
   clearRememberVideoCollectionPendingJumpTargets()
-  Toast.success('已清除全部播放记忆', componentDisplayName, 3e3)
+  Toast.success('已清除全部合集记忆', componentDisplayName, 3e3)
   return true
 }

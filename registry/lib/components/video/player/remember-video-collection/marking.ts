@@ -1,4 +1,5 @@
 import { useScopedConsole } from '@/core/utils/log'
+import { sq } from '@/core/spin-query'
 import { sortHistory } from './history'
 import { MarkingStyle, SectionMode } from './types'
 import type { ComponentHistory, ComponentMemory, MarkingInstruction } from './types'
@@ -18,27 +19,39 @@ const watchedClass = 'be-rvc-watched'
 const lastClass = 'be-rvc-last'
 const multiPagePodItemClass = 'be-rvc-multi-page'
 const multiPageAllWatchedClass = 'be-rvc-multi-page-all-watched'
-// const gridWatchedClass = 'be-rvc-grid-watched'
-// const gridLastClass = 'be-rvc-grid-last'
 const styleDefaultClass = 'be-rvc-style-default'
 const styleDistinguishClass = 'be-rvc-style-distinguish'
+const renderedMarkClasses = [
+  watchedClass,
+  lastClass,
+  multiPagePodItemClass,
+  multiPageAllWatchedClass,
+] as const
+const markingStyleClasses = [styleDefaultClass, styleDistinguishClass] as const
+const markingRetryConfig = {
+  maxRetry: 15,
+  queryInterval: 200,
+} as const
 
 let frame = 0
+let markingLifecycleToken = 0
 
-const clearMarks = () => {
-  getMarkedElements([
-    watchedClass,
-    lastClass,
-    multiPagePodItemClass,
-    multiPageAllWatchedClass,
-  ]).forEach(element => {
-    element.classList.remove(
-      watchedClass,
-      lastClass,
-      multiPagePodItemClass,
-      multiPageAllWatchedClass,
-    )
+const clearElementMarkingStyle = (element?: Element | null) => {
+  element?.classList.remove(...markingStyleClasses)
+}
+
+const clearRenderedMarks = () => {
+  getMarkedElements([...renderedMarkClasses]).forEach(element => {
+    element.classList.remove(...renderedMarkClasses)
   })
+}
+
+const clearMarkingDomState = ({ includeStyle }: { includeStyle: boolean }) => {
+  clearRenderedMarks()
+  if (!includeStyle) {
+    return
+  }
+  clearElementMarkingStyle(getVideoPodElement())
 }
 
 const applyMultiPageCompletionState = () => {
@@ -54,13 +67,50 @@ const applyMultiPageCompletionState = () => {
   })
 }
 
+const getInstructionIds = (instruction: Pick<MarkingInstruction, 'bvid' | 'cid'>) =>
+  [instruction.bvid, instruction.cid]
+    .filter((id): id is string | number => id !== undefined && id !== null)
+    .map(String)
+
+const canRenderInstruction = (instruction: MarkingInstruction) => {
+  const ids = getInstructionIds(instruction)
+  for (const id of ids) {
+    const podItemElement = getPodItemById(id)
+    if (!podItemElement) {
+      continue
+    }
+    if (isHasMultiPagePodItem(podItemElement) && instruction.page !== undefined) {
+      return getMultiPagePodItemPageItem(podItemElement, instruction.page) !== null
+    }
+    return true
+  }
+  return false
+}
+
+const waitForRenderableMarkings = async (instructions: MarkingInstruction[]) => {
+  if (instructions.length === 0) {
+    return
+  }
+  await sq(
+    () => {
+      const root = getVideoPodElement()
+      if (!root) {
+        return null
+      }
+      return instructions.some(canRenderInstruction) ? root : null
+    },
+    root => root !== null,
+    markingRetryConfig,
+  )
+}
+
 const applyInstruction = (instruction: MarkingInstruction) => {
   const ids = [instruction.bvid, instruction.cid]
     .filter((id): id is string | number => id !== undefined && id !== null)
     .map(String)
   if (ids.length === 0) {
     logger.warn('applyInstruction skipped: empty instruction id.', instruction)
-    return
+    return false
   }
   let podItemElement: HTMLElement | null = null
   for (const id of ids) {
@@ -71,58 +121,104 @@ const applyInstruction = (instruction: MarkingInstruction) => {
   }
   if (!podItemElement) {
     logger.warn('applyInstruction skipped: target not found.', { ids, instruction })
-    return
+    return false
   }
 
   const markingClass = instruction.type === 'last-played' ? lastClass : watchedClass
   if (isHasMultiPagePodItem(podItemElement) && instruction.page !== undefined) {
-    podItemElement.classList.add(multiPagePodItemClass)
+    podItemElement.classList.add(multiPagePodItemClass, markingClass)
+    logger.log('multipage podItemElement', podItemElement)
     const pageItemElement = getMultiPagePodItemPageItem(podItemElement, instruction.page)
     if (pageItemElement) {
       pageItemElement.classList.add(markingClass)
+      return true
     }
+    return false
   }
 
   podItemElement.classList.add(markingClass)
+  return true
 }
 
 const runRender = (instructions: MarkingInstruction[]) => {
   frame = 0
-  clearMarks()
+  clearMarkingDomState({ includeStyle: false })
+  let appliedCount = 0
   for (const instruction of instructions) {
-    applyInstruction(instruction)
+    if (applyInstruction(instruction)) {
+      appliedCount++
+    }
   }
   applyMultiPageCompletionState()
+  return {
+    appliedCount,
+    totalCount: instructions.length,
+  }
 }
 
-const abortRunningRender = () => {
+const isLifecycleCurrent = (token: number) => token === markingLifecycleToken
+
+const invalidateMarkingLifecycle = () => {
+  markingLifecycleToken++
   if (frame !== 0) {
     cancelAnimationFrame(frame)
     frame = 0
   }
 }
 
-export const clearMarkings = () => {
-  abortRunningRender()
-  clearMarks()
-  const root = getVideoPodElement()
-  root?.classList.remove(styleDefaultClass, styleDistinguishClass)
-}
-
-export const setMarkingStyle = (style: MarkingStyle) => {
-  const root = getVideoPodElement()
-  if (!root) {
-    return
-  }
-  root.classList.remove(styleDefaultClass, styleDistinguishClass)
-  root.classList.add(style === MarkingStyle.Distinguish ? styleDistinguishClass : styleDefaultClass)
-}
-
-export const renderMarkings = (instructions: MarkingInstruction[]) => {
-  abortRunningRender()
-  frame = requestAnimationFrame(() => {
-    runRender(instructions)
+const applyMarkingStyle = (style: MarkingStyle, lifecycleToken: number) => {
+  sq(
+    () => getVideoPodElement(),
+    root => root !== null,
+    markingRetryConfig,
+  ).then(root => {
+    if (!root || !isLifecycleCurrent(lifecycleToken)) {
+      return
+    }
+    clearElementMarkingStyle(root)
+    root.classList.add(
+      style === MarkingStyle.Distinguish ? styleDistinguishClass : styleDefaultClass,
+    )
+    logger.log('setMarkingStyle root', root)
   })
+}
+
+const scheduleMarkingRender = (instructions: MarkingInstruction[], lifecycleToken: number) => {
+  waitForRenderableMarkings(instructions).then(async () => {
+    if (!isLifecycleCurrent(lifecycleToken)) {
+      return
+    }
+    await sq(
+      () => {
+        if (!isLifecycleCurrent(lifecycleToken)) {
+          return {
+            appliedCount: 0,
+            totalCount: 0,
+          }
+        }
+        return runRender(instructions)
+      },
+      (result, stop) => {
+        if (!isLifecycleCurrent(lifecycleToken)) {
+          stop()
+          return true
+        }
+        return result.totalCount === 0 || result.appliedCount > 0
+      },
+      markingRetryConfig,
+    )
+  })
+}
+
+export const clearMarkings = () => {
+  invalidateMarkingLifecycle()
+  clearMarkingDomState({ includeStyle: true })
+}
+
+export const syncMarkings = (instructions: MarkingInstruction[], style: MarkingStyle) => {
+  const lifecycleToken = ++markingLifecycleToken
+  applyMarkingStyle(style, lifecycleToken)
+  scheduleMarkingRender(instructions, lifecycleToken)
 }
 
 const mapGroupToInstructions = (history: ComponentHistory): MarkingInstruction[] => {

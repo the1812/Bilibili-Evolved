@@ -7,7 +7,7 @@ import { clickInstructionTarget } from './dom'
 import { getLastPlayedInstruction } from './marking'
 import { SectionMode, type ComponentMemory, type MarkingInstruction } from './types'
 
-export type JumpInstruction = Pick<MarkingInstruction, 'bvid' | 'cid' | 'page'>
+export type JumpInstruction = Pick<MarkingInstruction, 'bvid' | 'cid' | 'page' | 'sectionId'>
 type CollectionTarget = {
   episode?: VideoSeasonEpisodeInfo
   page?: VideoPageInfo
@@ -56,15 +56,17 @@ export const isSameInstruction = (
 ) =>
   currentInstruction?.bvid === targetInstruction?.bvid &&
   currentInstruction?.cid === targetInstruction?.cid &&
-  currentInstruction?.page === targetInstruction?.page
+  currentInstruction?.page === targetInstruction?.page &&
+  currentInstruction?.sectionId === targetInstruction?.sectionId
 
 export const isSameAsCurrentMemory = (
-  currentMemory: Pick<ComponentMemory, 'bvid' | 'cid' | 'page'>,
+  currentMemory: Pick<ComponentMemory, 'bvid' | 'cid' | 'page' | 'sectionId'>,
   instruction?: JumpInstruction,
 ) =>
   currentMemory.bvid === instruction?.bvid &&
   currentMemory.cid === instruction?.cid &&
-  currentMemory.page === instruction?.page
+  currentMemory.page === instruction?.page &&
+  currentMemory.sectionId === instruction?.sectionId
 
 export const isJumpInstructionValid = (instruction?: JumpInstruction) =>
   instruction !== undefined && (instruction.bvid !== undefined || instruction.cid !== undefined)
@@ -196,6 +198,7 @@ const getNextInstructionInCollection = (
       bvid: episode.bvid ?? instruction.bvid,
       cid: nextPage.cid,
       page: currentPageIndex + 2,
+      sectionId: episode.section_id,
     }
   }
 
@@ -212,6 +215,7 @@ const getNextInstructionInCollection = (
     bvid: nextEpisode.bvid,
     cid: firstPage?.cid,
     page: nextEpisodePages.length > 1 ? 1 : undefined,
+    sectionId: nextEpisode.section_id,
   }
 }
 
@@ -238,8 +242,8 @@ const redirectToInstruction = (instruction: JumpInstruction) => {
   return true
 }
 
-export const jumpToInstruction = (instruction: JumpInstruction) => {
-  const clickSucceeded = clickInstructionTarget(instruction)
+export const jumpToInstruction = async (instruction: JumpInstruction) => {
+  const clickSucceeded = await clickInstructionTarget(instruction)
   if (clickSucceeded) {
     return true
   }

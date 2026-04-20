@@ -247,19 +247,19 @@ export const getClearHistoryDescription = (
   currentMemory?: Pick<ComponentMemory, 'sectionId'> | null,
 ) => {
   if (!scope) {
-    return '当前页面没有可管理的播放记忆'
+    return '当前页面没有可管理的合集记忆'
   }
   if (
     sectionMode === SectionMode.Split &&
     scope.type === 'multi-sections' &&
     currentMemory?.sectionId !== undefined
   ) {
-    return '将清除当前 TAB 下的播放记忆'
+    return '将清除当前 TAB 下的合集记忆'
   }
   if (scope.type === 'multi-p') {
-    return '将清除当前视频的播放记忆'
+    return '将清除当前视频的合集记忆'
   }
-  return '将清除当前合集的播放记忆'
+  return '将清除当前合集的合集记忆'
 }
 
 export const getHistoryScopeLabel = (
@@ -306,11 +306,20 @@ const getMemoryKey = (
     memory.sectionRootId ?? '',
   ].join('|')
 
+export const clearHistoryByMemory = (
+  history: ComponentHistory,
+  memory?: Pick<ComponentMemory, 'bvid' | 'cid' | 'page' | 'sectionId' | 'sectionRootId'> | null,
+) => {
+  if (!memory) {
+    return history
+  }
+  const memoryKey = getMemoryKey(memory)
+  return history.filter(item => getMemoryKey(item) !== memoryKey)
+}
+
 export const upsertHistory = (
   history: ComponentOptions['history'],
   memory: ComponentMemory,
 ): ComponentOptions['history'] => {
-  const memoryKey = getMemoryKey(memory)
-  const filtered = history.filter(item => getMemoryKey(item) !== memoryKey)
-  return [...filtered, memory]
+  return [...clearHistoryByMemory(history, memory), memory]
 }

@@ -6,9 +6,9 @@
       :trigger-element="$refs.button"
     >
       <div class="be-rvc-widget-panel">
-        <div class="be-rvc-widget-title">播放记忆</div>
+        <div class="be-rvc-widget-title">合集记忆</div>
 
-        <div class="be-rvc-widget-tabs" role="tablist" aria-label="播放记忆功能页签">
+        <div class="be-rvc-widget-tabs" role="tablist" aria-label="合集记忆功能页签">
           <button
             type="button"
             class="be-rvc-widget-tab"
@@ -77,7 +77,7 @@
             </VButton>
             <template v-if="confirmClearAll">
               <div class="be-rvc-widget-danger-tip">
-                这是危险操作，会清除所有播放记忆。确认后无法恢复。
+                这是危险操作，会清除所有合集记忆。确认后无法恢复。
               </div>
               <div class="be-rvc-widget-danger-actions">
                 <VButton
@@ -104,7 +104,7 @@
       </div>
     </VPopup>
     <DefaultWidget ref="button" icon="mdi-history" @click="open = !open">
-      <span>播放记忆</span>
+      <span>合集记忆</span>
     </DefaultWidget>
   </div>
 </template>
@@ -143,13 +143,13 @@ export default Vue.extend({
       if (this.state.lastPlayedLabel) {
         return this.state.lastPlayedLabel
       }
-      return this.state.available ? '当前作用域暂无上次播放记录' : '当前页面没有可用的播放记忆'
+      return this.state.available ? '当前作用域暂无上次播放记录' : '当前页面没有可用的合集记忆'
     },
     nextText(): string {
       if (this.state.nextLabel) {
         return this.state.nextLabel
       }
-      return this.state.available ? '没有可跳转的下一个视频' : '当前页面没有可用的播放记忆'
+      return this.state.available ? '没有可跳转的下一个视频' : '当前页面没有可用的合集记忆'
     },
     scopeSummaryPrefixText(): string {
       if (this.state.scopeTitle) {
@@ -187,14 +187,14 @@ export default Vue.extend({
     this.unsubscribe = null
   },
   methods: {
-    handleJumpLast() {
-      if (jumpToRememberedVideo()) {
+    async handleJumpLast() {
+      if (await jumpToRememberedVideo()) {
         this.confirmClearAll = false
         this.open = false
       }
     },
-    handleJumpNext() {
-      if (jumpToRememberedNextVideo()) {
+    async handleJumpNext() {
+      if (await jumpToRememberedNextVideo()) {
         this.confirmClearAll = false
         this.open = false
       }
