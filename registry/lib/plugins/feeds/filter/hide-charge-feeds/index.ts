@@ -9,15 +9,20 @@ export const plugin: PluginMetadata = {
     forEachFeedsCard({
       added: card => {
         const vueData = getVue2Data(card.element)
-        const blockedType: number | null = lodash.get(
-          vueData,
-          'data.modules.module_dynamic.major.blocked.blocked_type',
-          null,
-        )
-        const isBlockedByCharge = blockedType === 3
-        if (!isBlockedByCharge) {
+
+        const isBlockedByCharge =
+          lodash.get(vueData, 'data.modules.module_dynamic.major.blocked.blocked_type', null) === 3
+        const isChargedVideo =
+          lodash.get(vueData, 'data.modules.module_dynamic.major.archive.badge.text', null) ===
+          '充电专属'
+        const isChargedCommonCard =
+          lodash.get(vueData, 'data.modules.module_dynamic.major.type', null) ===
+          'MAJOR_TYPE_UPOWER_COMMON'
+
+        if (isBlockedByCharge || isChargedVideo || isChargedCommonCard) {
           return
         }
+
         card.element.classList.add('plugin-block')
       },
     })
