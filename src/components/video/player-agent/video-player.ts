@@ -3,6 +3,7 @@ import { PlayerAgent, selectorWrap } from './base'
 import { PlayerQuery, ElementQuery, AgentType } from './types'
 import { select } from '@/core/spin-query'
 import { bpxSelectors } from './bpx'
+import { Toast } from '@/core/toast'
 
 export class VideoPlayerBpxAgent extends PlayerAgent {
   type: AgentType = 'video'
@@ -54,6 +55,11 @@ export class VideoPlayerBpxAgent extends PlayerAgent {
     const subtitleLanguage = this.getPlayerConfig<null, string>('subtitle.lan', null)
     if (subtitleLanguage === null) {
       subtitleOptions.at(0)?.click()
+      return
+    }
+    // 增加无字幕时的提示
+    if (!subtitleOptions?.length) {
+      Toast.info('当前视频没有字幕可供选择', '提示', 5000)
       return
     }
     // 优先选择用过的选项，其次选择与用过的选项相近的选项，最后考虑 AI 生成选项，都不满足则尝试选择可选项第一个
