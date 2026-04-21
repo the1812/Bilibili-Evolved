@@ -56,6 +56,29 @@ export class VideoPlayerBpxAgent extends PlayerAgent {
       subtitleOptions.at(0)?.click()
       return
     }
-    subtitleOptions.find(it => it.dataset.lan === subtitleLanguage)?.click()
+    // 优先选择用过的选项，其次选择与用过的选项相近的选项，最后考虑 AI 生成选项，都不满足则尝试选择可选项第一个
+    if (subtitleOptions.find(it => it.dataset.lan === subtitleLanguage)) {
+      subtitleOptions.find(it => it.dataset.lan === subtitleLanguage)?.click()
+    } else if (
+      subtitleOptions.find(
+        it =>
+          !it.dataset.lan?.startsWith('ai-') &&
+          it.dataset.lan?.includes(subtitleLanguage.split('-')[0]),
+      )
+    ) {
+      subtitleOptions
+        .find(
+          it =>
+            !it.dataset.lan?.startsWith('ai-') &&
+            it.dataset.lan?.includes(subtitleLanguage.split('-')[0]),
+        )
+        ?.click()
+    } else if (
+      subtitleOptions.find(it => it.dataset.lan === `ai-${subtitleLanguage.split('-')[0]}`)
+    ) {
+      subtitleOptions.find(it => it.dataset.lan === `ai-${subtitleLanguage.split('-')[0]}`)?.click()
+    } else {
+      subtitleOptions.at(0)?.click()
+    }
   }
 }
