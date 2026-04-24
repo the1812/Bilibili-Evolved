@@ -6,9 +6,9 @@
       :trigger-element="$refs.button"
     >
       <div class="be-rvc-widget-panel">
-        <div class="be-rvc-widget-title">播放记忆</div>
+        <div class="be-rvc-widget-title">合集记忆</div>
 
-        <div class="be-rvc-widget-tabs" role="tablist" aria-label="播放记忆功能页签">
+        <div class="be-rvc-widget-tabs" role="tablist" aria-label="合集记忆功能页签">
           <button
             type="button"
             class="be-rvc-widget-tab"
@@ -58,13 +58,17 @@
           <div class="be-rvc-widget-card">
             <div class="be-rvc-widget-label">当前作用域</div>
             <div class="be-rvc-widget-value">
-              {{ scopeSummaryText }}
+              <span>{{ scopeSummaryPrefixText }}</span>
+              <span class="be-rvc-widget-count">{{ scopeSummaryCountText }}</span>
             </div>
             <div class="be-rvc-widget-hint">{{ state.clearDescription }}</div>
           </div>
           <div class="be-rvc-widget-card">
             <div class="be-rvc-widget-label">全部记忆</div>
-            <div class="be-rvc-widget-value">全部记忆 • {{ state.totalHistoryCount }} 个视频</div>
+            <div class="be-rvc-widget-value">
+              <span>全部记忆 • </span>
+              <span class="be-rvc-widget-count">{{ state.totalHistoryCount }} 个视频</span>
+            </div>
             <div class="be-rvc-widget-hint">清除全部记忆是危险操作，确认后无法恢复。</div>
           </div>
           <div class="be-rvc-widget-actions">
@@ -73,7 +77,7 @@
             </VButton>
             <template v-if="confirmClearAll">
               <div class="be-rvc-widget-danger-tip">
-                这是危险操作，会清除所有播放记忆。确认后无法恢复。
+                这是危险操作，会清除所有合集记忆。确认后无法恢复。
               </div>
               <div class="be-rvc-widget-danger-actions">
                 <VButton
@@ -100,7 +104,7 @@
       </div>
     </VPopup>
     <DefaultWidget ref="button" icon="mdi-history" @click="open = !open">
-      <span>播放记忆</span>
+      <span>合集记忆</span>
     </DefaultWidget>
   </div>
 </template>
@@ -139,19 +143,22 @@ export default Vue.extend({
       if (this.state.lastPlayedLabel) {
         return this.state.lastPlayedLabel
       }
-      return this.state.available ? '当前作用域暂无上次播放记录' : '当前页面没有可用的播放记忆'
+      return this.state.available ? '当前作用域暂无上次播放记录' : '当前页面没有可用的合集记忆'
     },
     nextText(): string {
       if (this.state.nextLabel) {
         return this.state.nextLabel
       }
-      return this.state.available ? '没有可跳转的下一个视频' : '当前页面没有可用的播放记忆'
+      return this.state.available ? '没有可跳转的下一个视频' : '当前页面没有可用的合集记忆'
     },
-    scopeSummaryText(): string {
+    scopeSummaryPrefixText(): string {
       if (this.state.scopeTitle) {
-        return `${this.state.scopeTitle} \u2022 ${this.state.scopedHistoryCount} 个视频`
+        return `${this.state.scopeTitle} \u2022 `
       }
-      return `${this.state.scopeLabel} \u2022 ${this.state.scopedHistoryCount} 个视频`
+      return `${this.state.scopeLabel} \u2022 `
+    },
+    scopeSummaryCountText(): string {
+      return `${this.state.scopedHistoryCount} 个视频`
     },
   },
   watch: {
@@ -180,14 +187,14 @@ export default Vue.extend({
     this.unsubscribe = null
   },
   methods: {
-    handleJumpLast() {
-      if (jumpToRememberedVideo()) {
+    async handleJumpLast() {
+      if (await jumpToRememberedVideo()) {
         this.confirmClearAll = false
         this.open = false
       }
     },
-    handleJumpNext() {
-      if (jumpToRememberedNextVideo()) {
+    async handleJumpNext() {
+      if (await jumpToRememberedNextVideo()) {
         this.confirmClearAll = false
         this.open = false
       }
@@ -298,6 +305,11 @@ export default Vue.extend({
   &.empty {
     opacity: 0.65;
   }
+}
+
+.be-rvc-widget-count {
+  color: var(--theme-color);
+  font-weight: 600;
 }
 
 .be-rvc-widget-tip,

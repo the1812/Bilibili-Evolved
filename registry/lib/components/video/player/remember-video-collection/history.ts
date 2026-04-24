@@ -110,6 +110,39 @@ export const getHistoryScope = (detail: VideoInfo): HistoryScope | null => {
   return { sectionRootId, type: 'sections' }
 }
 
+export const getHistoryVisitKey = (
+  scope: HistoryScope | null,
+  sectionMode: SectionMode,
+  currentMemory?: Pick<ComponentMemory, 'bvid' | 'sectionId' | 'sectionRootId'> | null,
+) => {
+  if (!scope) {
+    return undefined
+  }
+
+  if (scope.type === 'multi-p') {
+    return `multi-p:${scope.bvid ?? currentMemory?.bvid ?? ''}`
+  }
+
+  if (scope.type === 'sections') {
+    return `sections:${scope.sectionRootId ?? currentMemory?.sectionRootId ?? ''}`
+  }
+
+  if (scope.type === 'multi-sections') {
+    const rootId = scope.sectionRootId ?? currentMemory?.sectionRootId ?? ''
+    if (sectionMode === SectionMode.Split) {
+      return `multi-sections:split:${rootId}:${currentMemory?.sectionId ?? scope.sectionId ?? ''}`
+    }
+    return `multi-sections:unified:${rootId}`
+  }
+
+  return [
+    scope.type,
+    scope.bvid ?? currentMemory?.bvid ?? '',
+    scope.sectionRootId ?? currentMemory?.sectionRootId ?? '',
+    sectionMode === SectionMode.Split ? currentMemory?.sectionId ?? scope.sectionId ?? '' : '',
+  ].join(':')
+}
+
 export const filterHistory = (history: ComponentHistory, scope: HistoryScope): ComponentHistory => {
   if (!Array.isArray(history) || history.length === 0 || !scope) {
     return []
@@ -214,19 +247,19 @@ export const getClearHistoryDescription = (
   currentMemory?: Pick<ComponentMemory, 'sectionId'> | null,
 ) => {
   if (!scope) {
-    return '当前页面没有可管理的播放记忆'
+    return '当前页面没有可管理的合集记忆'
   }
   if (
     sectionMode === SectionMode.Split &&
     scope.type === 'multi-sections' &&
     currentMemory?.sectionId !== undefined
   ) {
-    return '将清除当前 TAB 下的播放记忆'
+    return '将清除当前 TAB 下的合集记忆'
   }
   if (scope.type === 'multi-p') {
-    return '将清除当前视频的播放记忆'
+    return '将清除当前视频的合集记忆'
   }
-  return '将清除当前合集的播放记忆'
+  return '将清除当前合集的合集记忆'
 }
 
 export const getHistoryScopeLabel = (
@@ -273,11 +306,20 @@ const getMemoryKey = (
     memory.sectionRootId ?? '',
   ].join('|')
 
+export const clearHistoryByMemory = (
+  history: ComponentHistory,
+  memory?: Pick<ComponentMemory, 'bvid' | 'cid' | 'page' | 'sectionId' | 'sectionRootId'> | null,
+) => {
+  if (!memory) {
+    return history
+  }
+  const memoryKey = getMemoryKey(memory)
+  return history.filter(item => getMemoryKey(item) !== memoryKey)
+}
+
 export const upsertHistory = (
   history: ComponentOptions['history'],
   memory: ComponentMemory,
 ): ComponentOptions['history'] => {
-  const memoryKey = getMemoryKey(memory)
-  const filtered = history.filter(item => getMemoryKey(item) !== memoryKey)
-  return [...filtered, memory]
+  return [...clearHistoryByMemory(history, memory), memory]
 }

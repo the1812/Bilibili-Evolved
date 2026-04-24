@@ -21,6 +21,7 @@ const feedsCardTypeMap = {
   DynamicTypeMedialist: feedsCardTypes.mediaList,
   DynamicTypeSubscription: feedsCardTypes.mediaList,
   DynamicTypeUgcSeason: feedsCardTypes.ugcSeason,
+  DynamicTypeCommonSquare: feedsCardTypes.commonSquare,
 }
 
 const combineText = (...texts: string[]) =>
