@@ -19,7 +19,7 @@ export const plugin: PluginMetadata = {
           lodash.get(vueData, 'data.modules.module_dynamic.major.type', null) ===
           'MAJOR_TYPE_UPOWER_COMMON'
 
-        if (isBlockedByCharge || isChargedVideo || isChargedCommonCard) {
+        if (!(isBlockedByCharge || isChargedVideo || isChargedCommonCard)) {
           return
         }
 
