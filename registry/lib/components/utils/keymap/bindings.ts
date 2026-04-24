@@ -61,6 +61,17 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         if (activeElement instanceof HTMLMediaElement) {
           return false
         }
+        // 播放器内各种控制按钮的焦点
+        if (
+          activeElement instanceof HTMLDivElement &&
+          activeElement.classList.contains('bpx-player-ctrl-btn')
+        ) {
+          return false
+        }
+        // 播放器内各种设置项按钮的焦点
+        if (activeElement instanceof HTMLInputElement && activeElement.classList.contains('bui')) {
+          return false
+        }
         return true
       })()
       if (

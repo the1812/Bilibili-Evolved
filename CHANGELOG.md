@@ -1,6 +1,34 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.10.8-preview
+`2026-04-24`
+
+包含 [v2.10.8](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.8) 的所有更新内容.
+
+✨新增
+- 新增组件 `查看头像`, 可在个人空间页面查看当前用户的高分辨率头像. (PR #5526 by [Chains.Z](https://github.com/Chains-Z))
+- 新增组件 `记忆合集`, 支持记忆合集 / 多 P 视频的播放进度, 在列表中标记已观看和上次播放位置, 提示跳转到上次播放, 并提供记忆管理和快捷键支持. (PR #5505, #5551, #5552 by [JLoeve](https://github.com/LonelySteve))
+- `动态过滤器` 支持在设置面板中直接编辑过滤规则, 并可单独关闭动态首页中的选项卡片显示. (#5546)
+- `删除广告` 和 `隐藏首页轮播图` 支持配置是否显示小组件. (是否在功能面板展示) (#5544, PR #5549 by [wsgh0202](https://github.com/wsgh0202))
+- `保存视频元数据` 的 FFMETADATA 支持合集信息, 并可配置是否显示小组件; 修复在单 P 视频下导出的 FFMETADATA 标题重复问题. (PR #5553 by [LainIO24](https://github.com/lainio24))
+- `动态过滤器 - 移除商品带货动态` 支持过滤转发的商品带货动态. (PR #5548 by [LTruth](https://github.com/Truthss))
+- `动态过滤器 - 移除充电专属动态` 支持移除动态中的充电问答和充电视频. (#4821)
+
+## v2.10.8
+`2026-04-24`
+
+🐛修复
+- 修复 `简化直播间` 和 `直播间网页全屏自适应` 在开启 `全屏直播礼物简化` 后布局异常的问题. (#5529)
+- 修复 `删除直播水印` 在直播首页失效的问题. (#5249, PR #5539 by [shugen002](https://github.com/shugen002))
+- 修复 `直播信息扩充` 中直播间列表出现重复直播间的问题. (#5541, PR #5538 by [shugen002](https://github.com/shugen002), PR #5542 by [SoulGI](https://github.com/SoulGI))
+- 修复 `快捷键扩展` 在播放器内部分按钮获得焦点时失效的问题. (PR #5557 by [SoulGI](https://github.com/SoulGI))
+- 改进 `启用弹幕空降` 的时间识别, 支持更多时间格式并减少误判. (PR #5558 by [Chains.Z](https://github.com/Chains-Z))
+- `夜间模式` 排除直播剪辑和 SRC 安全中心等未适配页面. (#5457, PR #5540 by [shugen002](https://github.com/shugen002))
+
+☕开发者相关
+- 修复依赖缺失 `enquirer` 和路径不规范的问题.
+
 ## v2.10.7 / v2.10.7-preview
 `2026-03-03`
 
