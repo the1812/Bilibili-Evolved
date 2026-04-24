@@ -1043,6 +1043,17 @@ by [@GH4NG](https://github.com/GH4NG)
 
 在设置的 `关于` 面板中添加 `导入 v1 设置` 按钮, 点击导入可以导入 v1 的设置, 并根据打开的选项自动下载安装 v2 中对应的功能.
 
+### [查看头像](../../registry/dist/components/utils/view-avatar.js)
+`viewAvatar`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/view-avatar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/view-avatar.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/view-avatar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/view-avatar.js)
+
+by [@Chains.Z](https://github.com/Chains-Z)
+
+在个人空间页面中, 可从功能面板中查看当前用户的高分辨率头像.
+
 ### [查看封面](../../registry/dist/components/utils/view-cover.js)
 `viewCover`
 
@@ -1440,6 +1451,17 @@ by [@JLoeve](https://github.com/LonelySteve)
 - 前往「插件」页面安装[「快捷键扩展 - 视频倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/plugins/video/player/speed.js)插件.
 
 *如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*
+
+### [记忆合集](../../registry/dist/components/video/player/remember-video-collection.js)
+`rememberVideoCollection`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/remember-video-collection.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/remember-video-collection.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/remember-video-collection.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/remember-video-collection.js)
+
+by [@JLoeve (with Kilo Code & Codex)](https://github.com/LonelySteve)
+
+记忆合集与多P视频的播放进度, 在列表中标记已观看/上次播放位置, 并提供跳转提示与记忆管理功能面板.
 
 ### [删除视频弹窗](../../registry/dist/components/video/player/remove-popup.js)
 `removePlayerPopup`
