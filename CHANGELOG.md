@@ -1,6 +1,22 @@
 <!-- spell-checker: disable -->
 # 更新日志
 
+## v2.10.9-preview
+`2026-04-30`
+
+包含 [v2.10.9](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.10.9) 的所有更新内容.
+
+🐛修复
+- 修复 `动态过滤器 - 移除充电专属动态` 的过滤方向错误. (PR #5565 by [koagaroon](https://github.com/koagaroon))
+
+## v2.10.9
+`2026-04-30`
+
+🐛修复
+- 修复 `快捷键扩展 - 开关 CC 字幕` 在最近使用的字幕语言不可用时无法正确开启字幕的问题, 并在当前视频没有可选字幕时显示提示. (#5560, PR #5561 by [SoulGI](https://github.com/SoulGI))
+- 修复 `极简首页` 内容区域无法滚动的问题. (#5512)
+- 修复 `夜间模式` 下视频争议提示的背景色异常. (PR #5567 by [cscnk52](https://github.com/cscnk52))
+
 ## v2.10.8-preview
 `2026-04-24`
 
