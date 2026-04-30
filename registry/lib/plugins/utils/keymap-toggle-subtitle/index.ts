@@ -10,8 +10,11 @@ export const plugin: PluginMetadata = {
     addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
       actions.toggleSubtitle = {
         displayName: '开关 CC 字幕',
-        run: async () => {
-          return playerAgent.toggleSubtitle()
+        run: async ({ showTip }) => {
+          const { result } = playerAgent.toggleSubtitle()
+          if (result === 'no-subtitle-configured') {
+            showTip('当前视频没有可选字幕', 'mdi-subtitles')
+          }
         },
       }
     })

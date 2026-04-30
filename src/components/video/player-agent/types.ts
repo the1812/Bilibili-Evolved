@@ -70,3 +70,8 @@ export enum PlayerAgentEventTypes {
   Play = 'play',
   Pause = 'pause',
 }
+
+export type PlayerAgentToggleSubtitleResult = { element: HTMLElement | null } & (
+  | { result: 'success' }
+  | { result: 'no-subtitle-configured' }
+)

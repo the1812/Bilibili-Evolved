@@ -8,6 +8,7 @@ import {
   CustomQuery,
   CustomQueryProvider,
   PlayerAgentEventTypes,
+  PlayerAgentToggleSubtitleResult,
 } from './types'
 
 export const elementQuery = (selector: string): ElementQuery => {
@@ -80,8 +81,72 @@ export abstract class PlayerAgent
     raiseEvent(checkbox, 'change')
     return checkbox.checked
   }
-  toggleSubtitle() {
-    return click(this.query.control.buttons.subtitle)
+  toggleSubtitle(): PlayerAgentToggleSubtitleResult {
+    const closeSwitch = dq('.bpx-player-ctrl-subtitle-close-switch') as HTMLDivElement | null
+
+    const isNoSubtitleConfigured = !closeSwitch
+    if (isNoSubtitleConfigured) {
+      return {
+        element: null,
+        result: 'no-subtitle-configured',
+      }
+    }
+
+    const isSubtitleDisabled = closeSwitch?.classList.contains('bpx-state-active')
+    if (!isSubtitleDisabled) {
+      closeSwitch?.click()
+      return {
+        element: closeSwitch,
+        result: 'success',
+      }
+    }
+
+    const subtitleOptions = dqa(
+      '.bpx-player-ctrl-subtitle-major .bpx-player-ctrl-subtitle-language-item',
+    ) as HTMLDivElement[]
+    if ((subtitleOptions?.length ?? 0) === 0) {
+      return {
+        element: null,
+        result: 'no-subtitle-configured',
+      }
+    }
+
+    const subtitleLanguage = this.getPlayerConfig<null, string>('subtitle.lan', null)
+    if (subtitleLanguage === null) {
+      const firstOption = subtitleOptions.at(0)
+      firstOption?.click()
+      return {
+        element: firstOption,
+        result: 'success',
+      }
+    }
+
+    // 优先选择用过的选项，其次选择与用过的选项相近的选项，最后考虑 AI 生成选项，都不满足则尝试选择可选项第一个
+    const matchers = [
+      () => subtitleOptions.find(it => it.dataset.lan === subtitleLanguage),
+      () =>
+        subtitleOptions.find(
+          it =>
+            !it.dataset.lan?.startsWith('ai-') &&
+            it.dataset.lan?.includes(subtitleLanguage.split('-')[0]),
+        ),
+      () => subtitleOptions.find(it => it.dataset.lan === `ai-${subtitleLanguage.split('-')[0]}`),
+      () => subtitleOptions.at(0),
+    ]
+
+    const option = matchers.map(match => match()).find(Boolean)
+    if (!option) {
+      return {
+        element: null,
+        result: 'no-subtitle-configured',
+      }
+    }
+
+    option.click()
+    return {
+      element: option,
+      result: 'success',
+    }
   }
 
   /** true 开灯，false 关灯 */
