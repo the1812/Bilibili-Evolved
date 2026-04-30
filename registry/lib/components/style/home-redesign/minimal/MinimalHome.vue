@@ -84,6 +84,9 @@ export default Vue.extend({
       var(--card-width) * var(--minimal-home-card-column) + var(--minimal-home-grid-gap) *
         (var(--minimal-home-card-column) - 1) + 2 * var(--minimal-home-grid-padding)
     );
+    .default-content {
+      overflow: visible;
+    }
     .minimal-home-tab {
       &-cards {
         display: grid;
