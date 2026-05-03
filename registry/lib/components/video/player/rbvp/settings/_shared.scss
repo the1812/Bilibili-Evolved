@@ -1,0 +1,98 @@
+// === Placeholder selectors (use with @extend) ===
+
+// Pill button base
+%rbvp-btn-pill {
+  border: none;
+  border-radius: 999px;
+  padding: 6px 10px;
+  background-color: #8881;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.2s ease-out;
+
+  &:hover {
+    background-color: #8882;
+  }
+}
+
+// Hint / description text
+%rbvp-hint-text {
+  line-height: 1.6;
+  opacity: 0.78;
+}
+
+// Form field layout (label + input vertical stack)
+%rbvp-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+// Dark mode input/textarea background
+%rbvp-dark-input-bg {
+  body.dark & {
+    background-color: rgb(34 34 34 / 72%);
+  }
+}
+
+// Card / panel base
+%rbvp-card-base {
+  border: 1px solid #8882;
+  border-radius: 8px;
+  background-color: #8881;
+  padding: 12px;
+}
+
+// Flex header (space-between row)
+%rbvp-flex-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+// Flex column gap 12
+%rbvp-flex-col-12 {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// === Direct shared rules ===
+
+.rbvp-namespace-main-name,
+.rbvp-namespace-tag,
+.rbvp-namespace-code {
+  font-family: consolas, 'Courier New', monospace;
+}
+
+.rbvp-namespace-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rbvp-namespace-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background-color: rgb(127 127 127 / 8%);
+  white-space: nowrap;
+}
+
+.rbvp-namespace-code {
+  padding: 8px 10px;
+  border-radius: 6px;
+  background-color: rgb(127 127 127 / 8%);
+  white-space: nowrap;
+}
+
+.rbvp-rule-create-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  flex-wrap: wrap;
+}

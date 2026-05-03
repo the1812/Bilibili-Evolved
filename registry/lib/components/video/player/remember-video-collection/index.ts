@@ -20,6 +20,14 @@ import {
 import { clearMarkings, getMarkedInstructions, syncMarkings, startMarkingObserver } from './marking'
 import { handleFirstLoadPrompt } from './prompt'
 import {
+  clearRememberVideoCollectionPendingApply,
+  clearRememberVideoCollectionRbvpMode,
+  getRememberVideoCollectionRbvpVideoKey,
+  isRememberVideoCollectionUsingRbvp,
+  setRememberVideoCollectionPendingApply,
+  shouldRememberVideoCollectionApply,
+} from './rbvp'
+import {
   clearRememberVideoCollectionPendingJumpTargets,
   clearCurrentRememberedVideoHistory,
   getRememberVideoCollectionRuntimeState,
@@ -101,14 +109,25 @@ const createRememberVideoCollectionKeyAction = (
   },
 })
 
-const updateInstructionsForCurrentScope = () => {
+const updateInstructionsForCurrentScope = (options?: {
+  forceApply?: boolean
+  videoKey?: string
+}) => {
   if (!currentSettings || !currentHistoryScope) {
     currentInstructions = []
     rerenderMarkings()
     syncRuntimeState()
     return
   }
-  const scopedHistory = filterHistory(currentSettings.options.history, currentHistoryScope)
+  const shouldApplyHistory =
+    options?.forceApply ||
+    shouldRememberVideoCollectionApply(
+      options?.videoKey ??
+        getRememberVideoCollectionRbvpVideoKey(currentDetail?.aid, currentDetail?.cid),
+    )
+  const scopedHistory = shouldApplyHistory
+    ? filterHistory(currentSettings.options.history, currentHistoryScope)
+    : []
   logger.info('scopedHistory', scopedHistory)
   currentInstructions = getMarkedInstructions(scopedHistory, currentSettings.options.sectionMode)
   logger.info('currentInstructions', currentInstructions)
@@ -126,6 +145,9 @@ const restartMarkingObserver = () => {
 const markingStyleListener = (style: MarkingStyle) => rerenderMarkings({ markingStyle: style })
 const historyListener = () => updateInstructionsForCurrentScope()
 const sectionModeListener = () => updateInstructionsForCurrentScope()
+const useRbvpListener = () => {
+  void activateRememberVideoCollection(componentDisplayName)
+}
 
 const unloadRememberVideoCollection = () => {
   runId++
@@ -134,12 +156,15 @@ const unloadRememberVideoCollection = () => {
   removeComponentListener(`${componentName}.markingStyle`, markingStyleListener)
   removeComponentListener(`${componentName}.history`, historyListener)
   removeComponentListener(`${componentName}.sectionMode`, sectionModeListener)
+  removeComponentListener(`${componentName}.useRbvp`, useRbvpListener)
   stopMarkingObserver()
   stopMarkingObserver = lodash.noop
   currentInstructions = []
   currentDetail = null
   currentHistoryScope = null
   currentMemory = null
+  clearRememberVideoCollectionPendingApply()
+  clearRememberVideoCollectionRbvpMode()
   clearMarkings()
   resetRememberVideoCollectionRuntime()
 }
@@ -152,6 +177,7 @@ const activateRememberVideoCollection = async (title: string) => {
   addComponentListener(`${componentName}.markingStyle`, markingStyleListener, true)
   addComponentListener(`${componentName}.history`, historyListener)
   addComponentListener(`${componentName}.sectionMode`, sectionModeListener)
+  addComponentListener(`${componentName}.useRbvp`, useRbvpListener)
   const activeRunId = ++runId
   const abortController = new AbortController()
   videoDataAbortController = abortController
@@ -181,6 +207,7 @@ const activateRememberVideoCollection = async (title: string) => {
         return
       }
 
+      const rbvpVideoKey = getRememberVideoCollectionRbvpVideoKey(videoDetail.aid, videoDetail.cid)
       currentDetail = videoDetail
       logger.info('video detail', videoDetail)
       currentHistoryScope = getHistoryScope(videoDetail)
@@ -190,6 +217,7 @@ const activateRememberVideoCollection = async (title: string) => {
         lastVisitKey = undefined
         currentInstructions = []
         currentMemory = null
+        clearRememberVideoCollectionPendingApply(rbvpVideoKey)
         clearRememberVideoCollectionPendingJumpTargets()
         rerenderMarkings()
         stopMarkingObserver()
@@ -198,7 +226,7 @@ const activateRememberVideoCollection = async (title: string) => {
       }
 
       let currentHistory = currentSettings.options.history
-      updateInstructionsForCurrentScope()
+      updateInstructionsForCurrentScope({ videoKey: rbvpVideoKey })
       restartMarkingObserver()
       currentMemory = buildCurrentMemory(videoDetail)
       logger.info('currentMemory', currentMemory)
@@ -214,56 +242,83 @@ const activateRememberVideoCollection = async (title: string) => {
       lastVisitKey = visitKey
       if (!currentMemory) {
         if (isFirstLoad) {
+          clearRememberVideoCollectionPendingApply(rbvpVideoKey)
           clearRememberVideoCollectionPendingJumpTargets()
         }
         syncRuntimeState()
         return
       }
-      if (isFirstLoad) {
-        const pendingJumpTargets = resolveJumpTargets({
-          currentInstructions,
-          currentMemory,
-          currentDetail: videoDetail,
-          sectionMode: currentSettings.options.sectionMode,
-        })
-        setRememberVideoCollectionPendingJumpTargets(
-          pendingJumpTargets.canJumpLast ? pendingJumpTargets : undefined,
-        )
-      }
-      syncRuntimeState()
-
-      if (isFirstLoad) {
-        const promptResult = await handleFirstLoadPrompt({
-          currentInstructions,
-          currentMemory,
-          currentDetail: videoDetail,
-          enabled: currentSettings.options.showPrompt,
-          signal: abortController.signal,
-          title,
-          sectionMode: currentSettings.options.sectionMode,
-        })
-        if (abortController.signal.aborted || activeRunId !== runId) {
+      let applied = false
+      const applyCurrentMemory = async () => {
+        if (applied || abortController.signal.aborted || activeRunId !== runId) {
           return
         }
-        logger.info('first load prompt result', promptResult)
-        if (promptResult.action === 'jump' || promptResult.action === 'jump-next') {
-          if (!promptResult.jumpSucceeded) {
-            logger.warn(
-              'failed to jump to last played instruction',
-              promptResult.lastPlayedInstruction,
-            )
-            Toast.error('跳转失败', componentDisplayName)
-          } else {
-            clearRememberVideoCollectionPendingJumpTargets()
+        applied = true
+        updateInstructionsForCurrentScope({ videoKey: rbvpVideoKey })
+        if (isFirstLoad) {
+          const pendingJumpTargets = resolveJumpTargets({
+            currentInstructions,
+            currentMemory,
+            currentDetail: videoDetail,
+            sectionMode: currentSettings.options.sectionMode,
+          })
+          setRememberVideoCollectionPendingJumpTargets(
+            pendingJumpTargets.canJumpLast ? pendingJumpTargets : undefined,
+          )
+        }
+        syncRuntimeState()
+
+        if (isFirstLoad) {
+          const promptResult = await handleFirstLoadPrompt({
+            currentInstructions,
+            currentMemory,
+            currentDetail: videoDetail,
+            enabled: currentSettings.options.showPrompt,
+            signal: abortController.signal,
+            title,
+            sectionMode: currentSettings.options.sectionMode,
+          })
+          if (abortController.signal.aborted || activeRunId !== runId) {
+            return
           }
-          return
+          logger.info('first load prompt result', promptResult)
+          if (promptResult.action === 'jump' || promptResult.action === 'jump-next') {
+            if (!promptResult.jumpSucceeded) {
+              logger.warn(
+                'failed to jump to last played instruction',
+                promptResult.lastPlayedInstruction,
+              )
+              Toast.error('跳转失败', componentDisplayName)
+            } else {
+              clearRememberVideoCollectionPendingJumpTargets()
+            }
+            clearRememberVideoCollectionPendingApply(rbvpVideoKey)
+            return
+          }
         }
+
+        currentHistory = upsertHistory(currentHistory, currentMemory)
+        currentSettings.options.history = currentHistory
+        logger.info('currentHistory', currentHistory)
+        updateInstructionsForCurrentScope()
+        clearRememberVideoCollectionPendingApply(rbvpVideoKey)
       }
 
-      currentHistory = upsertHistory(currentHistory, currentMemory)
-      currentSettings.options.history = currentHistory
-      logger.info('currentHistory', currentHistory)
-      updateInstructionsForCurrentScope()
+      if (isRememberVideoCollectionUsingRbvp()) {
+        setRememberVideoCollectionPendingApply(applyCurrentMemory, rbvpVideoKey)
+        if (shouldRememberVideoCollectionApply(rbvpVideoKey)) {
+          await applyCurrentMemory()
+          return
+        }
+        if (isFirstLoad) {
+          clearRememberVideoCollectionPendingJumpTargets()
+        }
+        syncRuntimeState()
+        return
+      }
+
+      clearRememberVideoCollectionPendingApply(rbvpVideoKey)
+      await applyCurrentMemory()
     },
     { signal: abortController.signal },
   )
@@ -274,7 +329,7 @@ export const component = defineComponentMetadata<ComponentOptions>({
   displayName: componentDisplayName,
   description: {
     'zh-CN':
-      '记忆合集与多P视频的播放进度, 在列表中标记已观看/上次播放位置, 并提供跳转提示与记忆管理功能面板.',
+      '记忆合集与多P视频的播放进度, 在列表中标记已观看/上次播放位置, 并提供跳转提示与记忆管理功能面板. 支持交由 RBVP 通过 rememberVideoCollection:ON / OFF 控制当前视频是否恢复与记录合集记忆.',
   },
   author: {
     name: 'JLoeve (with Kilo Code & Codex)',
@@ -293,7 +348,8 @@ export const component = defineComponentMetadata<ComponentOptions>({
   },
   plugin: {
     displayName: '合集记忆 - 快捷键支持',
-    setup: ({ addData }) => {
+    setup: async ({ addData }) => {
+      const { rememberVideoCollectionNamespaceProvider } = await import('./rbvp-provider')
       addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
         actions.rememberVideoCollectionJumpLast = createRememberVideoCollectionKeyAction(
           '合集记忆：跳转到上次播放',
@@ -331,6 +387,10 @@ export const component = defineComponentMetadata<ComponentOptions>({
         presetBase.rememberVideoCollectionJumpNext = 'shift n'
         presetBase.rememberVideoCollectionClearCurrent = 'shift delete'
       })
+      addData('rbvp.namespaces', namespaces => {
+        delete namespaces.collection
+        namespaces.rememberVideoCollection = rememberVideoCollectionNamespaceProvider
+      })
     },
   },
   options: {
@@ -352,7 +412,13 @@ export const component = defineComponentMetadata<ComponentOptions>({
       defaultValue: true,
       displayName: '提示是否跳转到上次播放',
     },
+    useRbvp: {
+      defaultValue: false,
+      displayName: '交由 RBVP 决定恢复策略',
+      hidden: true,
+    },
   },
+  extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
   entry: async ({ metadata, settings }) => {
     currentSettings = settings
     await activateRememberVideoCollection(metadata.displayName)

@@ -20,6 +20,7 @@ export const component = RememberSpeedComponent.create<Options>({
 - \`全局记忆倍速值\`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.
 - \`固定全局倍速值\`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.
 - \`各视频分别记忆\`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.
+- \`交由 RBVP 决定还原策略\`：打开此选项后，「记忆倍速」不再自行决定何时还原倍速，而是作为 RBVP 的兼容存储层使用；此时 \`固定全局倍速值\` 和 \`各视频分别记忆\` 不再参与自动策略.
 - \`弹出还原倍速提示\`：打开此选项后，每次成功还原倍速后都会弹出提示.
 
 #### 🌈 **温馨提示**
@@ -51,6 +52,11 @@ export const component = RememberSpeedComponent.create<Options>({
       displayName: '各视频分别记忆',
       defaultValue: false,
     },
+    useRbvp: {
+      displayName: '交由 RBVP 决定还原策略',
+      defaultValue: false,
+      hidden: true,
+    },
     individualRememberRecord: {
       displayName: '独立记忆倍速记录',
       defaultValue: {},
@@ -59,6 +65,17 @@ export const component = RememberSpeedComponent.create<Options>({
     showRestoreTip: {
       displayName: '弹出还原倍速提示',
       defaultValue: true,
+    },
+  },
+  extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
+  plugin: {
+    displayName: '记忆倍速 - RBVP 兼容',
+    setup: async ({ addData }) => {
+      const { rememberVideoSpeedNamespaceProvider } = await import('./rbvp-provider')
+      addData('rbvp.namespaces', namespaces => {
+        delete namespaces.speed
+        namespaces.rememberVideoSpeed = rememberVideoSpeedNamespaceProvider
+      })
     },
   },
 })
