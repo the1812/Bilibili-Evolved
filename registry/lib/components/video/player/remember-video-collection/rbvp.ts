@@ -20,8 +20,8 @@ let currentMode: ModeState | null = null
 let pendingApplyTask: PendingApplyTask | null = null
 
 export const getRememberVideoCollectionRbvpVideoKey = (
-  aid = unsafeWindow.aid,
-  cid = unsafeWindow.cid,
+  aid: string | number = unsafeWindow.aid,
+  cid: string | number = unsafeWindow.cid,
 ) => `${aid ?? ''}:${cid ?? ''}`
 
 const getRememberVideoCollectionOptions = () =>
