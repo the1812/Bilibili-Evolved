@@ -1,8 +1,9 @@
+import { VideoQuality } from '@/components/video/video-quality'
 import { Executable, TestPattern, VueModule, WithName } from '@/core/common-types'
 import { DownloadPackage, PackageEntry } from '@/core/download'
 import { formatNumber } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { VideoQuality } from '@/components/video/video-quality'
+import { DashCodec } from './apis/dash'
 
 interface VueInstanceInput {
   component?: Executable<VueModule>
@@ -44,6 +45,7 @@ export class DownloadVideoInfo {
   public fragments: DownloadVideoFragment[]
   public qualities: VideoQuality[]
   public currentQuality: VideoQuality
+  public currentCodec?: DashCodec
   public jsonData: any
   constructor(
     parameters: Omit<DownloadVideoInfo, 'totalSize' | 'totalLength' | 'titledFragments'>,

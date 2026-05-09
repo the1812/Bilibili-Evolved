@@ -40,6 +40,9 @@
       <template v-if="!testData.multiple && selectedQuality">
         <div v-if="testData.videoInfo" class="download-video-config-description">
           预计大小: {{ formatFileSize(testData.videoInfo.totalSize) }}
+          <span v-if="testData.videoInfo.currentCodec">
+            &nbsp;({{ testData.videoInfo.currentCodec }})</span
+          >
         </div>
         <div v-if="testData.videoInfo === null" class="download-video-config-description">
           正在计算大小

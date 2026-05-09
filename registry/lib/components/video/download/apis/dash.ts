@@ -1,8 +1,10 @@
+import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
+import { getComponentSettings } from '@/core/settings'
 import { formData, matchUrlPattern } from '@/core/utils'
 import { ascendingSort, descendingSort } from '@/core/utils/sort'
-import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { bangumiUrls } from '@/core/utils/urls'
+import { Options } from '..'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi,
@@ -11,8 +13,6 @@ import {
   DownloadVideoInputItem,
 } from '../types'
 import { bangumiApi, videoApi } from './url'
-import { Options } from '..'
-import { getComponentSettings } from '@/core/settings'
 
 /** dash 格式更明确的扩展名 */
 export const DefaultDashExtensions = {
@@ -76,25 +76,28 @@ export const dashToFragments = (info: {
   videoDashes: VideoDash[]
   audioDashes: AudioDash[]
   videoCodec: DashCodec
-}) => {
+}): [DownloadVideoFragment[], DashCodec] => {
   const { videoDashes, audioDashes, videoCodec } = info
   const results: DownloadVideoFragment[] = []
+  let currentCodec: DashCodec
   // 画面按照首选编码选择, 若没有相应编码则选择第一个编码
   if (videoDashes.length !== 0) {
     const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
+    let dash: VideoDash
     if (videoDashes.some(matchPreferredCodec)) {
-      const dash = videoDashes.filter(matchPreferredCodec).sort(ascendingSort(d => d.bandWidth))[0]
-      results.push(dashToFragment(dash))
+      dash = videoDashes.filter(matchPreferredCodec).sort(ascendingSort(d => d.bandWidth))[0]
     } else {
-      results.push(dashToFragment(videoDashes.sort(ascendingSort(d => d.bandWidth))[0]))
+      dash = videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
     }
+    currentCodec = dash.videoCodec
+    results.push(dashToFragment(dash))
   }
   if (audioDashes.length !== 0) {
     // 声音倒序排, 选择最高音质
     const audio = audioDashes.sort(descendingSort(d => d.bandWidth))[0]
     results.push(dashToFragment(audio))
   }
-  return results
+  return [results, currentCodec]
 }
 
 /* spell-checker: disable */
@@ -183,7 +186,7 @@ const downloadDash = async (
   if (flac) {
     audioDashes.push(...(flac.audio ? [mapAudioDash(flac.audio, 'flacAudio')] : []))
   }
-  const fragments: DownloadVideoFragment[] = dashToFragments({
+  const [fragments, currentCodec] = dashToFragments({
     audioDashes,
     videoDashes,
     videoCodec: codec,
@@ -219,6 +222,7 @@ const downloadDash = async (
     fragments,
     qualities,
     currentQuality,
+    currentCodec,
   })
   compareQuality(input, info)
   return info
