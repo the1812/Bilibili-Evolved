@@ -76,10 +76,11 @@ export const dashToFragments = (info: {
   videoDashes: VideoDash[]
   audioDashes: AudioDash[]
   videoCodec: DashCodec
-}): [DownloadVideoFragment[], DashCodec] => {
+}): [DownloadVideoFragment[], DashCodec, number] => {
   const { videoDashes, audioDashes, videoCodec } = info
   const results: DownloadVideoFragment[] = []
   let currentCodec: DashCodec
+  let currentBandWidth = 0
   // 画面按照首选编码选择, 若没有相应编码则选择第一个编码
   if (videoDashes.length !== 0) {
     const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
@@ -90,14 +91,16 @@ export const dashToFragments = (info: {
       dash = videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
     }
     currentCodec = dash.videoCodec
+    currentBandWidth += dash.bandWidth
     results.push(dashToFragment(dash))
   }
   if (audioDashes.length !== 0) {
     // 声音倒序排, 选择最高音质
-    const audio = audioDashes.sort(descendingSort(d => d.bandWidth))[0]
-    results.push(dashToFragment(audio))
+    const dash = audioDashes.sort(descendingSort(d => d.bandWidth))[0]
+    currentBandWidth += dash.bandWidth
+    results.push(dashToFragment(dash))
   }
-  return [results, currentCodec]
+  return [results, currentCodec, currentBandWidth]
 }
 
 /* spell-checker: disable */
@@ -186,7 +189,7 @@ const downloadDash = async (
   if (flac) {
     audioDashes.push(...(flac.audio ? [mapAudioDash(flac.audio, 'flacAudio')] : []))
   }
-  const [fragments, currentCodec] = dashToFragments({
+  const [fragments, currentCodec, currentBandWidth] = dashToFragments({
     audioDashes,
     videoDashes,
     videoCodec: codec,
@@ -223,6 +226,7 @@ const downloadDash = async (
     qualities,
     currentQuality,
     currentCodec,
+    currentBandWidth,
   })
   compareQuality(input, info)
   return info

@@ -46,6 +46,7 @@ export class DownloadVideoInfo {
   public qualities: VideoQuality[]
   public currentQuality: VideoQuality
   public currentCodec?: DashCodec
+  public currentBandWidth?: number
   public jsonData: any
   constructor(
     parameters: Omit<DownloadVideoInfo, 'totalSize' | 'totalLength' | 'titledFragments'>,
