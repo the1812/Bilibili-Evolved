@@ -492,10 +492,14 @@ export default Vue.extend({
       for (let i = 0; i < this.visualRules.length; i++) {
         const rule = this.visualRules[i]
         if (rule.title.trim()) {
-          if (errorLine === line) return i
+          if (errorLine === line) {
+            return i
+          }
           line++
         }
-        if (errorLine === line) return i
+        if (errorLine === line) {
+          return i
+        }
         line++
       }
       return -1
