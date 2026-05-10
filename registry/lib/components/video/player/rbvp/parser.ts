@@ -89,7 +89,10 @@ const splitTopLevel = (source: string, line?: number, context = '表达式') => 
 const parseAction = (source: string, line: number): RBVPActionNode => {
   const index = source.indexOf(':')
   if (index === -1) {
-    throw new RBVPParseError(line, `动作 "${source.trim()}" 缺少命名空间，正确格式为 namespace:value`)
+    throw new RBVPParseError(
+      line,
+      `动作 "${source.trim()}" 缺少命名空间，正确格式为 namespace:value`,
+    )
   }
   const namespace = source.slice(0, index).trim()
   const value = source.slice(index + 1).trim()
@@ -105,7 +108,9 @@ const parseAction = (source: string, line: number): RBVPActionNode => {
 const parseActions = (source: string, line: number) => {
   const text = source.trim()
   if (text.startsWith('{')) {
-    return splitTopLevel(unwrap(text, '{', '}'), line, '动作列表').map(item => parseAction(item, line))
+    return splitTopLevel(unwrap(text, '{', '}'), line, '动作列表').map(item =>
+      parseAction(item, line),
+    )
   }
   return [parseAction(text, line)]
 }

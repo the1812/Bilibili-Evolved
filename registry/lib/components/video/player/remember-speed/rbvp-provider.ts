@@ -1,11 +1,7 @@
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { getSpeedContext } from '../common/speed/context'
 import type { RBVPEngineContext, RBVPRuntime, RBVPResolvedAction } from '../rbvp/types'
-import {
-  getRememberSpeedRbvpApi,
-  readRememberSpeedGlobal,
-  readRememberSpeedLocal,
-} from './api'
+import { getRememberSpeedRbvpApi, readRememberSpeedGlobal, readRememberSpeedLocal } from './api'
 import type { Options } from './component'
 
 const getRememberSpeedOptions = () => getComponentSettings<Options>('rememberVideoSpeed').options

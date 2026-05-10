@@ -61,11 +61,17 @@ flowchart LR
 示例：
 
 ```
-UP, 123456, rememberVideoSpeed:1.5
-TAG, 教程, rememberVideoSpeed:1.25
-TITLE, 速通, rememberVideoSpeed:2.0
-TIME, >600, rememberVideoSpeed:1.5
-RULE-SET, study-list, rememberVideoSpeed:1.0
+# 根据视频标题进行匹配，命中后应用 1.5 倍速
+TITLE, 教程, rememberVideoSpeed:1.5
+
+# 根据 UP 主 UID 匹配，命中后应用 2 倍速
+UP, 123456, rememberVideoSpeed:2.0
+
+# 匹配合集条目标题，同时控制倍速和记忆合集开关
+SECTION-NAME, OP, {rememberVideoSpeed:1.0, rememberVideoCollection:true}
+
+# FINAL 是兜底规则，没有匹配参数，始终命中
+# 适合放在规则列表末尾作为未匹配任何规则时的回退方案
 FINAL, rememberVideoSpeed:MEMORY_GLOBAL
 ```
 
@@ -82,8 +88,13 @@ NOT, (条件), 动作
 示例：
 
 ```
-AND, (UP, 123456), (TAG, 教程), rememberVideoSpeed:1.5
+# 同时满足视频标题以"速通"开头（正则）且 UP 为指定 UID，应用 1.5 倍速
+AND, (TITLE, /^速通/), (UP, 123456), rememberVideoSpeed:1.5
+
+# 满足任一条件即命中
 OR, (PARTITION, 影视), (TAG, 电影), rememberVideoSpeed:1.0
+
+# 排除指定标签
 NOT, (TAG, 4K), rememberVideoSpeed:1.25
 ```
 
@@ -93,6 +104,15 @@ NOT, (TAG, 4K), rememberVideoSpeed:1.25
 
 ```
 UP, 666, {rememberVideoSpeed:1.0, otherNamespace:value}
+```
+
+### TAG-MUSIC 音乐标签匹配
+
+`TAG-MUSIC` 匹配视频的音乐标签（BGM 等），参数格式与其他文本匹配类型一致：
+
+```
+# 若视频带有任意音乐标签，则使用 1x 倍速
+TAG-MUSIC, /.*/, rememberVideoSpeed:1.0
 ```
 
 ## 匹配器类型
@@ -107,6 +127,7 @@ UP, 666, {rememberVideoSpeed:1.0, otherNamespace:value}
 | `SECTION-ROOT-NAME` | 文本匹配   | 合集标题（对应 ugcSeason title）                                                      |
 | `UP`                | 精确匹配   | UP 主 UID                                                                             |
 | `TAG`               | 文本匹配   | 视频标签，大小写不敏感                                                                |
+| `TAG-MUSIC`          | 文本匹配   | 视频音乐标签（BGM 等），匹配 `musicId`，大小写不敏感                                   |
 | `PARTITION`         | 精确匹配   | 分区 ID（tid）                                                                        |
 | `TITLE`             | 文本匹配   | 视频标题，大小写不敏感                                                                |
 | `PART`              | 文本匹配   | 分 P 标题，大小写不敏感                                                               |
@@ -114,7 +135,8 @@ UP, 666, {rememberVideoSpeed:1.0, otherNamespace:value}
 | `RULE-SET`          | 引用规则集 | 引用本地规则集名称，由规则集内部的条目和匹配类型进行判定                              |
 | `FINAL`             | 始终命中   | 不需参数，作为兜底规则                                                                |
 
-> **注意**：`TITLE`、`TAG`、`PART`、`SECTION-NAME`、`SECTION-ROOT-NAME` 均为**文本匹配**类型，大小写不敏感。文本匹配参数支持三种格式：
+> **注意**：`TITLE`、`TAG`、`TAG-MUSIC`、`PART`、`SECTION-NAME`、`SECTION-ROOT-NAME` 均为**文本匹配**类型，大小写不敏感。文本匹配参数支持三种格式：
+>
 > - `/正则/` — 正则表达式匹配（如 `/^速通.*$/`）
 > - `"精确"` — 精确匹配（如 `"4K"`）
 > - `模糊` — 模糊匹配，包含即命中（如 `速通`）

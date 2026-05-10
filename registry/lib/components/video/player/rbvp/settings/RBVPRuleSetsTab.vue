@@ -50,8 +50,8 @@
             : '请粘贴 JSON 内容。导入时会按规则集名称合并，同名规则集会被覆盖。'
         }}
       </div>
-      <textarea
-        :value="state.ruleSetTransferText"
+      <TextArea
+        :text="state.ruleSetTransferText"
         class="rbvp-textarea"
         rows="10"
         :readonly="state.ruleSetTransferMode === 'export'"
@@ -60,8 +60,8 @@
             ? '导出内容会显示在这里'
             : '请粘贴导入的规则集 JSON'
         "
-        @input="updateRuleSetTransferText"
-      ></textarea>
+        @change="updateRuleSetTransferText"
+      />
       <div class="rbvp-rule-set-transfer-actions">
         <VButton v-if="state.ruleSetTransferMode === 'export'" @click="copyRuleSetTransferText()">
           复制内容
@@ -108,31 +108,31 @@
       <div v-if="state.selectedRuleSet" class="rbvp-rule-set-editor">
         <label class="rbvp-field">
           <span class="rbvp-field-label">名称</span>
-          <input
-            :value="state.selectedRuleSetNameInput"
-            class="rbvp-input"
-            @input="updateSelectedRuleSetNameInput"
+          <TextBox
+            :text="state.selectedRuleSetNameInput"
+            @change="updateSelectedRuleSetNameInput"
           />
         </label>
         <label class="rbvp-field">
           <span class="rbvp-field-label">匹配类型</span>
-          <select
+          <VDropdown
             :value="state.selectedRuleSet.matcherType"
-            class="rbvp-input"
+            :items="state.matcherTypes"
+            :key-mapper="item => item"
             @change="updateSelectedRuleSetMatcherType"
           >
-            <option v-for="type in state.matcherTypes" :key="type" :value="type">{{ type }}</option>
-          </select>
+            <template #item="{ item }">{{ item }}</template>
+          </VDropdown>
         </label>
         <label class="rbvp-field">
           <span class="rbvp-field-label">条目</span>
-          <textarea
-            :value="state.selectedRuleSetEntries"
+          <TextArea
+            :text="state.selectedRuleSetEntries"
             class="rbvp-textarea"
             rows="10"
             placeholder="每行一条规则集条目，例如 UID、标签名、分区名或标题关键字"
-            @input="updateSelectedRuleSetEntries"
-          ></textarea>
+            @change="updateSelectedRuleSetEntries"
+          />
         </label>
         <div class="rbvp-field-hint">
           每行一个匹配条目，保存时会自动去掉空行。重命名不会覆盖现有同名规则集。
@@ -153,7 +153,7 @@
 </template>
 <script lang="ts">
 import { Toast } from '@/core/toast'
-import { VButton, VIcon } from '@/ui'
+import { TextArea, TextBox, VButton, VDropdown, VIcon } from '@/ui'
 import {
   createRuleSetTransferPayload,
   hasUnsavedSelectedRuleSetChanges,
@@ -163,7 +163,10 @@ import {
 export default Vue.extend({
   name: 'RBVPRuleSetsTab',
   components: {
+    TextArea,
+    TextBox,
     VButton,
+    VDropdown,
     VIcon,
   },
   props: {
@@ -173,21 +176,17 @@ export default Vue.extend({
     },
   },
   methods: {
-    updateSelectedRuleSetNameInput(event: Event) {
-      const target = event.target as HTMLInputElement | null
-      this.state.setSelectedRuleSetNameInput(target?.value ?? '')
+    updateSelectedRuleSetNameInput(value: string) {
+      this.state.setSelectedRuleSetNameInput(value ?? '')
     },
-    updateSelectedRuleSetEntries(event: Event) {
-      const target = event.target as HTMLTextAreaElement | null
-      this.state.setSelectedRuleSetEntries(target?.value ?? '')
+    updateSelectedRuleSetEntries(value: string) {
+      this.state.setSelectedRuleSetEntries(value ?? '')
     },
-    updateSelectedRuleSetMatcherType(event: Event) {
-      const target = event.target as HTMLSelectElement | null
-      this.state.setSelectedRuleSetMatcherType(target?.value ?? 'UP')
+    updateSelectedRuleSetMatcherType(value: string) {
+      this.state.setSelectedRuleSetMatcherType(value ?? 'UP')
     },
-    updateRuleSetTransferText(event: Event) {
-      const target = event.target as HTMLTextAreaElement | null
-      this.state.setRuleSetTransferText(target?.value ?? '')
+    updateRuleSetTransferText(value: string) {
+      this.state.setRuleSetTransferText(value ?? '')
     },
     async copyRuleSetTransferText() {
       if (!this.state.ruleSetTransferText.trim()) {

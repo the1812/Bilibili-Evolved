@@ -163,42 +163,38 @@
             <div class="rbvp-rule-card-body">
               <label class="rbvp-field">
                 <span class="rbvp-field-label">规则类型</span>
-                <select
+                <VDropdown
                   v-model="rule.matcher.matcherType"
-                  class="rbvp-input"
-                  @change="handleBasicMatcherTypeChange(rule.matcher)"
+                  :items="state.visualMatcherTypes"
+                  :key-mapper="item => item"
+                  @change="newType => handleBasicMatcherTypeChange(rule.matcher, newType)"
                 >
-                  <option v-for="type in state.visualMatcherTypes" :key="type" :value="type">
-                    {{ type }}
-                  </option>
-                </select>
+                  <template #item="{ item }">{{ item }}</template>
+                </VDropdown>
               </label>
               <label v-if="needsMatcherArgument(rule.matcher)" class="rbvp-field">
                 <span class="rbvp-field-label">匹配参数</span>
-                <select
+                <VDropdown
                   v-if="rule.matcher.matcherType === 'RULE-SET'"
                   v-model="rule.matcher.matcherArgument"
-                  class="rbvp-input"
+                  :items="state.ruleSetNames"
+                  :key-mapper="item => item"
+                  :disabled="state.ruleSetNames.length === 0"
                 >
-                  <option v-if="state.ruleSetNames.length === 0" disabled value="">
-                    暂无可用规则集
-                  </option>
-                  <option v-for="name in state.ruleSetNames" :key="name" :value="name">
-                    {{ name }}
-                  </option>
-                </select>
-                <input
+                  <template #item="{ item }">{{ item }}</template>
+                </VDropdown>
+                <TextBox
                   v-else
-                  v-model.trim="rule.matcher.matcherArgument"
-                  class="rbvp-input"
+                  v-model="rule.matcher.matcherArgument"
+                  :validator="v => v.trim()"
                   :placeholder="getMatcherArgumentPlaceholder(rule.matcher.matcherType)"
                 />
               </label>
               <label class="rbvp-field">
                 <span class="rbvp-field-label">执行动作</span>
-                <input
-                  v-model.trim="rule.actions"
-                  class="rbvp-input"
+                <TextBox
+                  v-model="rule.actions"
+                  :validator="v => v.trim()"
                   placeholder="rememberVideoSpeed:1"
                 />
               </label>
@@ -206,7 +202,7 @@
           </div>
           <RBVPLogicConditionEditor
             v-else
-            :condition="rule.matcher"
+            v-model="rule.matcher"
             :default-matcher-arguments="state.defaultMatcherArguments"
             :rule-set-names="state.ruleSetNames"
             :visual-matcher-types="state.visualMatcherTypes"
@@ -244,9 +240,9 @@
           >
             <label class="rbvp-field">
               <span class="rbvp-field-label">执行动作</span>
-              <input
-                v-model.trim="rule.actions"
-                class="rbvp-input"
+              <TextBox
+                v-model="rule.actions"
+                :validator="v => v.trim()"
                 placeholder="rememberVideoSpeed:1"
               />
             </label>
@@ -266,7 +262,7 @@
   </div>
 </template>
 <script lang="ts">
-import { VButton, VIcon } from '@/ui'
+import { TextBox, VButton, VDropdown, VIcon } from '@/ui'
 import RBVPContextTab from './RBVPContextTab.vue'
 import RBVPDebugTab from './RBVPDebugTab.vue'
 import {
@@ -287,7 +283,9 @@ export default Vue.extend({
     RBVPDebugTab,
     RBVPLogicConditionEditor,
     RBVPTextTab,
+    TextBox,
     VButton,
+    VDropdown,
     VIcon,
   },
   props: {
@@ -309,8 +307,11 @@ export default Vue.extend({
     toRuleIndex(index: string | number) {
       return Number(index)
     },
-    handleBasicMatcherTypeChange(condition: { matcherType: string; matcherArgument: string }) {
-      condition.matcherArgument = this.state.defaultMatcherArguments[condition.matcherType] ?? ''
+    handleBasicMatcherTypeChange(
+      condition: { matcherType: string; matcherArgument: string },
+      type: string,
+    ) {
+      condition.matcherArgument = this.state.defaultMatcherArguments[type] ?? ''
     },
     startRuleTitleEdit(rule: VisualRuleItem) {
       rule.editingTitle = true

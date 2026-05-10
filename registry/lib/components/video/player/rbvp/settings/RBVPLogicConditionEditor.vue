@@ -1,8 +1,8 @@
 <template>
-  <div class="rbvp-condition-editor" :class="[`depth-${depth}`, condition.matcherKind]">
+  <div class="rbvp-condition-editor" :class="[`depth-${depth}`, internalCondition.matcherKind]">
     <div class="rbvp-condition-header">
       <div class="rbvp-condition-badge">
-        {{ condition.matcherKind === 'logic' ? '逻辑组合' : '基础匹配' }}
+        {{ internalCondition.matcherKind === 'logic' ? '逻辑组合' : '基础匹配' }}
       </div>
       <button
         v-if="allowRemove"
@@ -15,69 +15,71 @@
       </button>
     </div>
 
-    <template v-if="condition.matcherKind === 'basic'">
+    <template v-if="internalCondition.matcherKind === 'basic'">
       <div class="rbvp-condition-grid">
         <label class="rbvp-condition-field">
           <span class="rbvp-condition-label">规则类型</span>
-          <select
-            v-model="condition.matcherType"
-            class="rbvp-condition-input"
-            @change="handleMatcherTypeChange"
+          <VDropdown
+            v-model="localMatcherType"
+            :items="visualMatcherTypes"
+            :key-mapper="item => item"
           >
-            <option v-for="type in visualMatcherTypes" :key="type" :value="type">
-              {{ type }}
-            </option>
-          </select>
+            <template #item="{ item }">{{ item }}</template>
+          </VDropdown>
         </label>
-        <label v-if="condition.matcherType !== 'FINAL'" class="rbvp-condition-field">
+        <label v-if="internalCondition.matcherType !== 'FINAL'" class="rbvp-condition-field">
           <span class="rbvp-condition-label">匹配参数</span>
-          <select
-            v-if="condition.matcherType === 'RULE-SET'"
-            v-model="condition.matcherArgument"
-            class="rbvp-condition-input"
+          <VDropdown
+            v-if="internalCondition.matcherType === 'RULE-SET'"
+            v-model="localMatcherArgument"
+            :items="ruleSetNames"
+            :key-mapper="item => item"
+            :disabled="ruleSetNames.length === 0"
           >
-            <option v-if="ruleSetNames.length === 0" disabled value="">暂无可用规则集</option>
-            <option v-for="name in ruleSetNames" :key="name" :value="name">
-              {{ name }}
-            </option>
-          </select>
-          <input
+            <template #item="{ item }">{{ item }}</template>
+          </VDropdown>
+          <TextBox
             v-else
-            v-model.trim="condition.matcherArgument"
-            class="rbvp-condition-input"
-            :placeholder="getMatcherArgumentPlaceholder(condition.matcherType)"
+            v-model="localMatcherArgument"
+            :validator="v => v.trim()"
+            :placeholder="getMatcherArgumentPlaceholder(internalCondition.matcherType)"
           />
         </label>
       </div>
-      <div class="rbvp-condition-hint">{{ getMatcherTypeHint(condition.matcherType) }}</div>
+      <div class="rbvp-condition-hint">{{ getMatcherTypeHint(internalCondition.matcherType) }}</div>
     </template>
 
     <template v-else>
       <div class="rbvp-condition-grid">
         <label class="rbvp-condition-field">
           <span class="rbvp-condition-label">逻辑运算</span>
-          <select v-model="condition.logicOperator" class="rbvp-condition-input">
-            <option v-for="operator in logicMatcherTypes" :key="operator" :value="operator">
-              {{ operator }}
-            </option>
-          </select>
+          <VDropdown
+            v-model="localLogicOperator"
+            :items="logicMatcherTypes"
+            :key-mapper="item => item"
+          >
+            <template #item="{ item }">{{ item }}</template>
+          </VDropdown>
         </label>
       </div>
-      <div class="rbvp-condition-hint">{{ getLogicMatcherHint(condition.logicOperator) }}</div>
+      <div class="rbvp-condition-hint">
+        {{ getLogicMatcherHint(internalCondition.logicOperator) }}
+      </div>
       <div class="rbvp-condition-children">
-        <div v-if="condition.conditions.length === 0" class="rbvp-condition-empty">
+        <div v-if="internalCondition.conditions.length === 0" class="rbvp-condition-empty">
           还没有子条件，请新增一个基础匹配或逻辑组合。
         </div>
         <RBVPLogicConditionEditor
-          v-for="(child, index) in condition.conditions"
+          v-for="(child, index) in internalCondition.conditions"
           :key="child.id"
-          :condition="child"
+          v-model="internalCondition.conditions[index]"
           :default-matcher-arguments="defaultMatcherArguments"
           :rule-set-names="ruleSetNames"
           :visual-matcher-types="visualMatcherTypes"
           :logic-matcher-types="logicMatcherTypes"
           :depth="depth + 1"
           allow-remove
+          @input="emitChange"
           @remove="removeChild(index)"
         />
         <div v-if="showInsertChooser" class="rbvp-condition-insert">
@@ -104,6 +106,8 @@
 </template>
 
 <script lang="ts">
+import { TextBox, VDropdown } from '@/ui'
+
 const createConditionId = () => `rbvp-condition-${Math.random().toString(36).slice(2, 10)}`
 const createBasicCondition = (defaultMatcherArguments: Record<string, string>) => ({
   id: createConditionId(),
@@ -124,8 +128,12 @@ const createLogicCondition = (defaultMatcherArguments: Record<string, string>) =
 
 export default Vue.extend({
   name: 'RBVPLogicConditionEditor',
+  components: {
+    TextBox,
+    VDropdown,
+  },
   props: {
-    condition: {
+    value: {
       type: Object,
       required: true,
     },
@@ -156,13 +164,59 @@ export default Vue.extend({
   },
   data() {
     return {
+      internalCondition: {
+        ...this.value,
+        conditions: [...this.value.conditions],
+      },
       showInsertChooser: false,
     }
   },
+  computed: {
+    localMatcherType: {
+      get(): string {
+        return this.internalCondition.matcherType
+      },
+      set(val: string) {
+        this.internalCondition.matcherType = val
+        this.internalCondition.matcherArgument = this.defaultMatcherArguments[val] ?? ''
+        this.emitChange()
+      },
+    },
+    localMatcherArgument: {
+      get(): string {
+        return this.internalCondition.matcherArgument
+      },
+      set(val: string) {
+        this.internalCondition.matcherArgument = val
+        this.emitChange()
+      },
+    },
+    localLogicOperator: {
+      get(): string {
+        return this.internalCondition.logicOperator
+      },
+      set(val: string) {
+        this.internalCondition.logicOperator = val
+        this.emitChange()
+      },
+    },
+  },
+  watch: {
+    'value.id': function watchValueId(newId: string) {
+      if (newId !== this.internalCondition.id) {
+        this.internalCondition = {
+          ...this.value,
+          conditions: [...this.value.conditions],
+        }
+      }
+    },
+  },
   methods: {
-    handleMatcherTypeChange() {
-      this.condition.matcherArgument =
-        this.defaultMatcherArguments[this.condition.matcherType] ?? ''
+    emitChange() {
+      this.$emit('input', {
+        ...this.internalCondition,
+        conditions: [...this.internalCondition.conditions],
+      })
     },
     getMatcherArgumentPlaceholder(type: string) {
       switch (type) {
@@ -247,15 +301,18 @@ export default Vue.extend({
       }
     },
     addBasicChild() {
-      this.condition.conditions.push(createBasicCondition(this.defaultMatcherArguments))
+      this.internalCondition.conditions.push(createBasicCondition(this.defaultMatcherArguments))
       this.showInsertChooser = false
+      this.emitChange()
     },
     addLogicChild() {
-      this.condition.conditions.push(createLogicCondition(this.defaultMatcherArguments))
+      this.internalCondition.conditions.push(createLogicCondition(this.defaultMatcherArguments))
       this.showInsertChooser = false
+      this.emitChange()
     },
     removeChild(index: number) {
-      this.condition.conditions.splice(index, 1)
+      this.internalCondition.conditions.splice(index, 1)
+      this.emitChange()
     },
   },
 })

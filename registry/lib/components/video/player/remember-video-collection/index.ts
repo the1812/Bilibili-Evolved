@@ -146,7 +146,8 @@ const markingStyleListener = (style: MarkingStyle) => rerenderMarkings({ marking
 const historyListener = () => updateInstructionsForCurrentScope()
 const sectionModeListener = () => updateInstructionsForCurrentScope()
 const useRbvpListener = () => {
-  void activateRememberVideoCollection(componentDisplayName)
+  // eslint-disable-next-line @typescript-eslint/no-use-before-define
+  activateRememberVideoCollection(componentDisplayName)
 }
 
 const unloadRememberVideoCollection = () => {

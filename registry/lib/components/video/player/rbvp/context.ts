@@ -14,9 +14,11 @@ const fetchTags = async (aid: string, cid: string) => {
   const tagNames = list
     .map(tag => tag.tag_name?.trim())
     .filter((tag): tag is string => Boolean(tag))
-  const musicTags = list
-    .filter(tag => tag.tag_name?.trim() && tag.music_id?.trim())
-    .map(tag => ({ name: tag.tag_name!.trim(), musicId: tag.music_id!.trim() }))
+  const musicTags = list.flatMap(tag => {
+    const name = tag.tag_name?.trim()
+    const musicId = tag.music_id?.trim()
+    return name && musicId ? [{ name, musicId }] : []
+  })
   return { tagNames, musicTags }
 }
 

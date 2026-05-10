@@ -21,7 +21,9 @@ export type Options = {
 }
 
 const formatMatchInfo = (message: string) => `最近命中: ${message}`
-const createDebugSnapshotContext = (context: Awaited<ReturnType<typeof createRbvpEngineContext>>) => ({
+const createDebugSnapshotContext = (
+  context: Awaited<ReturnType<typeof createRbvpEngineContext>>,
+) => ({
   video: context.video,
   localRuleSets: lodash.cloneDeep(context.localRuleSets),
 })
@@ -50,6 +52,7 @@ const entry = async ({ settings }: { settings: { enabled: boolean; options: Opti
     leaveGuard: (name: string) => {
       runtimeGuards.delete(name)
     },
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     requestApplyRules: () => applyRules(),
   }
   const initializedNamespaces = new Set<string>()

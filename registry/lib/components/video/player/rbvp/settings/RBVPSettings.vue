@@ -749,9 +749,49 @@ export default Vue.extend({
 }
 
 .rbvp-textarea {
-  resize: vertical;
+  flex: 1 1 auto;
   min-height: 160px;
   line-height: 1.6;
+  box-shadow: none;
+  overflow: hidden;
+  resize: vertical;
+
+  &:focus-within {
+    box-shadow: 0 0 0 1px var(--theme-color-40);
+    border-color: var(--theme-color);
+  }
+
+  textarea {
+    height: 100%;
+    resize: none;
+    field-sizing: fixed;
+  }
+}
+
+.rbvp-field,
+.rbvp-condition-field {
+  .be-dropdown.be-dropdown,
+  .be-textbox.be-textbox,
+  .be-text-area.be-text-area {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .be-textbox.be-textbox,
+  .be-text-area.be-text-area {
+    flex: 0 0 auto;
+    background-color: #fff;
+  }
+}
+
+body.dark {
+  .rbvp-field,
+  .rbvp-condition-field {
+    .be-textbox.be-textbox,
+    .be-text-area.be-text-area {
+      background-color: var(--be-color-button-bg, #333);
+    }
+  }
 }
 
 .rbvp-field {
