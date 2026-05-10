@@ -1,5 +1,12 @@
 <template>
   <div class="rbvp-rules-editor">
+    <input
+      ref="ruleFileInput"
+      type="file"
+      class="rbvp-hidden-file-input"
+      accept=".txt,text/plain"
+      @change="handleRuleFileChange"
+    />
     <div class="rbvp-rules-toolbar">
       <div class="rbvp-rules-toolbar-meta">
         <span>文本视图保留逐行编辑能力</span>
@@ -14,7 +21,10 @@
             保存主规则
           </VButton>
         </div>
-        <div class="rbvp-rule-create-actions"></div>
+        <div class="rbvp-rule-create-actions">
+          <VButton @click="actions.exportRules()">导出主规则</VButton>
+          <VButton @click="triggerRuleFileImport()">导入主规则</VButton>
+        </div>
       </div>
     </div>
     <TextArea
@@ -27,6 +37,7 @@
   </div>
 </template>
 <script lang="ts">
+import { Toast } from '@/core/toast'
 import { TextArea, VButton } from '@/ui'
 
 export default Vue.extend({
@@ -49,6 +60,37 @@ export default Vue.extend({
     updateRulesText(value: string) {
       this.actions.setRulesText(value ?? '')
     },
+    triggerRuleFileImport() {
+      const input = this.$refs.ruleFileInput as HTMLInputElement | undefined
+      if (!input) {
+        Toast.error('文件选择器不可用', 'RBVP', 3000)
+        return
+      }
+      input.value = ''
+      input.click()
+    },
+    async handleRuleFileChange(event: Event) {
+      const input = event.target as HTMLInputElement | null
+      const file = input?.files?.[0]
+      if (!file) {
+        return
+      }
+      try {
+        const text = await file.text()
+        this.actions.importRules(text)
+      } catch {
+        Toast.error('读取文件失败', 'RBVP', 3000)
+      } finally {
+        if (input) {
+          input.value = ''
+        }
+      }
+    },
   },
 })
 </script>
+<style lang="scss">
+.rbvp-hidden-file-input {
+  display: none;
+}
+</style>

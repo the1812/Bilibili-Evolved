@@ -267,6 +267,8 @@ export default Vue.extend({
         setRulesText: (value: string) => {
           this.rulesText = value
         },
+        exportRules: () => this.exportRules(),
+        importRules: (text: string) => this.importRules(text),
       }
     },
     ruleSetsTabState() {
@@ -549,6 +551,49 @@ export default Vue.extend({
       }
       rbvpOptions.rulesText = this.rulesText
       Toast.success('RBVP 主规则已保存', 'RBVP', 2000)
+    },
+    exportRules() {
+      const text = this.rulesText.trim()
+      if (!text) {
+        Toast.error('当前没有可导出的主规则', 'RBVP', 3000)
+        return
+      }
+      const blob = new Blob([text], { type: 'text/plain;charset=utf-8' })
+      const url = URL.createObjectURL(blob)
+      const link = document.createElement('a')
+      link.href = url
+      link.download = 'rbvp-rules.txt'
+      document.body.appendChild(link)
+      link.click()
+      document.body.removeChild(link)
+      URL.revokeObjectURL(url)
+      Toast.success('RBVP 主规则已导出', 'RBVP', 2000)
+    },
+    importRules(text: string) {
+      if (!text.trim()) {
+        Toast.error('导入内容不能为空', 'RBVP', 3000)
+        return
+      }
+      if (this.rulesText.trim() && !confirm('当前主规则不为空，导入将覆盖现有规则，确认继续吗？')) {
+        return
+      }
+      try {
+        parseRbvpRules(text)
+      } catch (error) {
+        Toast.error(
+          error instanceof Error ? `导入失败: ${error.message}` : '主规则解析失败',
+          'RBVP',
+          3000,
+        )
+        return
+      }
+      this.rulesText = text
+      try {
+        this.syncVisualRulesFromText()
+      } catch {
+        // 已经过解析校验，这里不会失败
+      }
+      Toast.success('RBVP 主规则已导入，请记得保存', 'RBVP', 2000)
     },
   },
 })
