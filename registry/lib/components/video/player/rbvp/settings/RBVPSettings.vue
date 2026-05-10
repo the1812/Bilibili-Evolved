@@ -72,7 +72,7 @@ import { VIcon, VPopup } from '@/ui'
 import RBVPNamespacesTab from './RBVPNamespacesTab.vue'
 import RBVPRuleSetsTab from './RBVPRuleSetsTab.vue'
 import RBVPRulesTab from './RBVPRulesTab.vue'
-import { parseRbvpRules } from '../parser'
+import { parseRbvpRules, RBVPParseError } from '../parser'
 import {
   createBasicRule,
   createInitialRuleEditorState,
@@ -485,26 +485,62 @@ export default Vue.extend({
       }
       return null
     },
+    mapLineToVisualRule(errorLine: number): number {
+      let line = 1
+      for (let i = 0; i < this.visualRules.length; i++) {
+        const rule = this.visualRules[i]
+        if (rule.title.trim()) {
+          if (errorLine === line) return i
+          line++
+        }
+        if (errorLine === line) return i
+        line++
+      }
+      return -1
+    },
     saveRules() {
       if (this.ruleEditorMode === 'visual') {
+        for (const rule of this.visualRules) {
+          rule.validationError = ''
+        }
         for (const [index, rule] of this.visualRules.entries()) {
           const conditionError = this.validateCondition(rule.matcher, `第 ${index + 1} 条规则`)
           if (conditionError) {
+            rule.validationError = conditionError
+            rule.collapsed = false
             Toast.error(conditionError, 'RBVP', 3000)
             return
           }
           if (!rule.actions.trim()) {
+            rule.validationError = `第 ${index + 1} 条规则还没有填写执行动作`
+            rule.collapsed = false
             Toast.error(`第 ${index + 1} 条规则还没有填写执行动作`, 'RBVP', 3000)
             return
           }
         }
         this.syncRulesTextFromVisualRules()
-      }
-      try {
-        parseRbvpRules(this.rulesText)
-      } catch (error) {
-        Toast.error(error instanceof Error ? error.message : '主规则解析失败', 'RBVP', 3000)
-        return
+        try {
+          parseRbvpRules(this.rulesText)
+        } catch (error) {
+          if (error instanceof RBVPParseError) {
+            const ruleIndex = this.mapLineToVisualRule(error.line)
+            if (ruleIndex >= 0) {
+              const rule = this.visualRules[ruleIndex]
+              const msg = error.message.replace(/^第 \d+ 行: /, '')
+              rule.validationError = msg
+              rule.collapsed = false
+            }
+          }
+          Toast.error(error instanceof Error ? error.message : '主规则解析失败', 'RBVP', 3000)
+          return
+        }
+      } else {
+        try {
+          parseRbvpRules(this.rulesText)
+        } catch (error) {
+          Toast.error(error instanceof Error ? error.message : '主规则解析失败', 'RBVP', 3000)
+          return
+        }
       }
       try {
         this.syncVisualRulesFromText()
@@ -533,10 +569,6 @@ export default Vue.extend({
   flex-direction: column;
   z-index: 100002;
   padding: 0;
-  border: none;
-  @include default-background-color();
-  @include shadow();
-  @include round-corner(8px);
 
   &.open {
     transform: translateX(-50%) translateY(-50%) scale(1);
@@ -603,7 +635,7 @@ export default Vue.extend({
   border-radius: 12px;
   min-height: 72px;
   padding: 10px 8px;
-  background-color: #8881;
+  background-color: #8882;
   color: inherit;
   font-size: 12px;
   font-weight: 500;
@@ -617,7 +649,7 @@ export default Vue.extend({
   text-align: center;
 
   &:hover {
-    background-color: #8882;
+    background-color: #8883;
   }
 
   &.active {
@@ -711,13 +743,13 @@ export default Vue.extend({
   height: 28px;
   border: none;
   border-radius: 999px;
-  background-color: #8881;
+  background-color: #8882;
   color: inherit;
   cursor: pointer;
   transition: 0.2s ease-out;
 
   &:hover {
-    background-color: #8882;
+    background-color: #8884;
     color: var(--theme-color);
   }
 

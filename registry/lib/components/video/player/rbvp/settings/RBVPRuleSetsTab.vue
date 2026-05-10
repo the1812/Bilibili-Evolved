@@ -422,7 +422,7 @@ export default Vue.extend({
   flex-direction: column;
   gap: 4px;
   border: 1px solid #8884;
-  background-color: transparent;
+  background-color: #8882;
   color: inherit;
   border-radius: 6px;
   padding: 8px 10px;
@@ -432,7 +432,7 @@ export default Vue.extend({
 
   &:hover {
     border-color: #8886;
-    background-color: #8881;
+    background-color: #8883;
   }
 
   &.active {

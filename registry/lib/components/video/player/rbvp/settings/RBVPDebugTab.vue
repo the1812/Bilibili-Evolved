@@ -205,7 +205,7 @@ export default Vue.extend({
   padding-top: 6px;
   padding-bottom: 6px;
   border-radius: 6px;
-  background-color: #8881;
+  background-color: #8882;
   line-height: 1.5;
 
   &.matched {

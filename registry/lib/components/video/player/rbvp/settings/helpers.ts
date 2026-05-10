@@ -27,6 +27,7 @@ export type VisualRuleItem = {
   actions: string
   collapsed: boolean
   editingTitle: boolean
+  validationError: string
 }
 export type RBVPMatcherDefaultArguments = Record<RBVPBasicMatcherType, string>
 
@@ -104,6 +105,7 @@ export const createVisualRule = (
   actions,
   collapsed: false,
   editingTitle: false,
+  validationError: '',
 })
 
 export const createBasicRule = (defaultMatcherArguments: RBVPMatcherDefaultArguments) =>
@@ -295,6 +297,23 @@ export const formatVisualRule = (rule: VisualRuleItem) => {
   const matcher = stringifyVisualCondition(rule.matcher)
   const actions = rule.actions.trim() || '未填写执行动作'
   return `${matcher}, ${actions}`
+}
+
+const isConditionIncomplete = (condition: VisualConditionItem): boolean => {
+  if (condition.matcherKind === 'basic') {
+    return condition.matcherType !== 'FINAL' && !condition.matcherArgument.trim()
+  }
+  if (condition.logicOperator === 'NOT' && condition.conditions.length !== 1) {
+    return true
+  }
+  return condition.conditions.some(child => isConditionIncomplete(child))
+}
+
+export const isRuleIncomplete = (rule: VisualRuleItem): boolean => {
+  if (!rule.actions.trim()) {
+    return true
+  }
+  return isConditionIncomplete(rule.matcher)
 }
 
 export const getRuleDisplayTitle = (rule: VisualRuleItem, index: number) =>

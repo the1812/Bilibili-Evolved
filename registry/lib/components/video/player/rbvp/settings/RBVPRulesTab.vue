@@ -247,11 +247,26 @@
               />
             </label>
           </div>
+          <div
+            v-if="!rule.collapsed"
+            class="rbvp-rule-card-preview"
+            :class="{
+              incomplete: isRuleIncomplete(rule),
+              'has-error': rule.validationError,
+            }"
+          >
+            <div class="rbvp-rule-card-preview-text">{{ formatVisualRule(rule) }}</div>
+            <div v-if="rule.validationError" class="rbvp-rule-card-preview-error">
+              <VIcon
+                icon="mdi-alert-circle-outline"
+                :size="14"
+                class="rbvp-rule-card-preview-alert"
+              />
+              {{ rule.validationError }}
+            </div>
+          </div>
           <div v-if="!rule.collapsed" class="rbvp-rule-card-hint">
             {{ getMatcherHint(rule.matcher) }}
-          </div>
-          <div v-if="!rule.collapsed" class="rbvp-rule-card-preview">
-            {{ formatVisualRule(rule) }}
           </div>
         </div>
       </div>
@@ -270,6 +285,7 @@ import {
   getMatcherArgumentPlaceholder,
   getMatcherHint,
   getRuleDisplayTitle,
+  isRuleIncomplete,
   needsMatcherArgument,
   type VisualRuleItem,
 } from './helpers'
@@ -303,6 +319,7 @@ export default Vue.extend({
     getMatcherArgumentPlaceholder,
     getMatcherHint,
     getRuleDisplayTitle,
+    isRuleIncomplete,
     needsMatcherArgument,
     toRuleIndex(index: string | number) {
       return Number(index)
@@ -383,13 +400,13 @@ export default Vue.extend({
   border: none;
   border-radius: 999px;
   padding: 6px 12px;
-  background-color: #8881;
+  background-color: #8882;
   color: inherit;
   cursor: pointer;
   transition: 0.2s ease-out;
 
   &:hover {
-    background-color: #8882;
+    background-color: #8883;
   }
 
   &.active {
@@ -438,7 +455,7 @@ export default Vue.extend({
   flex-direction: column;
   gap: 12px;
   padding: 12px;
-  border: 1px solid #8883;
+  border: 1px solid #8884;
   border-radius: 10px;
   background-color: #8881;
   transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out, background-color 0.2s ease-out;
@@ -465,7 +482,7 @@ export default Vue.extend({
 .rbvp-rule-card-type {
   padding: 4px 8px;
   border-radius: 999px;
-  background-color: #8882;
+  background-color: #8883;
   font-size: 12px;
   font-weight: 600;
   line-height: 1;
@@ -532,20 +549,41 @@ export default Vue.extend({
 }
 
 .rbvp-rule-card-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   padding: 10px 12px;
   border-radius: 8px;
   background-color: rgb(127 127 127 / 8%);
   font-family: consolas, 'Courier New', monospace;
   line-height: 1.5;
   word-break: break-word;
+  color: inherit;
+
+  &.incomplete {
+    .rbvp-rule-card-preview-text {
+      color: #d14343;
+    }
+  }
+}
+
+.rbvp-rule-card-preview-alert {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.rbvp-rule-card-preview-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  color: #d14343;
 }
 
 .rbvp-rule-card-hint {
+  @extend %rbvp-hint-text;
   padding: 10px 12px;
   border-radius: 8px;
-  background-color: var(--theme-color-10);
-  color: var(--theme-color);
-  line-height: 1.6;
+  background-color: rgb(127 127 127 / 8%);
 }
 
 .rbvp-rule-insert {

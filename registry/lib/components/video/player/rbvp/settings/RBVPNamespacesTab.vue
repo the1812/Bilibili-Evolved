@@ -102,9 +102,9 @@ export default Vue.extend({
   display: flex;
   flex-direction: column;
   gap: 12px;
-  border: 1px solid #8882;
+  border: 1px solid #8883;
   border-radius: 8px;
-  background-color: #8881;
+  background-color: #8882;
   padding: 12px;
 }
 
@@ -150,7 +150,7 @@ export default Vue.extend({
 .rbvp-namespace-takeover-status {
   padding: 4px 8px;
   border-radius: 999px;
-  background-color: #8882;
+  background-color: #8883;
   font-weight: 500;
 
   &.active {
@@ -167,13 +167,13 @@ export default Vue.extend({
   border: none;
   border-radius: 999px;
   padding: 6px 12px;
-  background-color: #8881;
+  background-color: #8882;
   color: inherit;
   cursor: pointer;
   transition: background-color 0.2s ease-out, box-shadow 0.2s ease-out, color 0.2s ease-out;
 
   &:hover {
-    background-color: #8882;
+    background-color: #8884;
   }
 
   &.active {
