@@ -13,8 +13,8 @@
           <VIcon icon="mdi-tune" :size="18" />
           RBVP 设置
         </div>
-        <div class="rbvp-settings-close" title="关闭">
-          <VIcon :size="18" icon="close" @click="requestClosePopup()" />
+        <div class="rbvp-settings-close" title="关闭" @click="requestClosePopup()">
+          <VIcon :size="18" icon="close" />
         </div>
       </div>
       <div class="rbvp-settings-content">
