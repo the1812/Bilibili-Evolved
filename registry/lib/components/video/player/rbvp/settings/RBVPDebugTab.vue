@@ -1,12 +1,7 @@
 <template>
   <div class="rbvp-rules-editor">
-    <div
-      v-if="!state.rbvpEnabled"
-      class="rbvp-namespace-disabled-banner"
-    >
-      <div class="rbvp-namespace-disabled-banner-title">
-        RBVP 组件当前已关闭
-      </div>
+    <div v-if="!state.rbvpEnabled" class="rbvp-namespace-disabled-banner">
+      <div class="rbvp-namespace-disabled-banner-title">RBVP 组件当前已关闭</div>
       <div class="rbvp-namespace-disabled-banner-text">
         即使存在已注册且已接管的命名空间，RBVP 也不会生效。请先在组件设置中启用 RBVP。
       </div>
