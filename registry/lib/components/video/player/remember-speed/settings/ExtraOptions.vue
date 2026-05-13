@@ -22,7 +22,7 @@ export default Vue.extend({
   },
   computed: {
     hasRbvp() {
-      return Boolean(componentsMap.rbvp)
+      return Boolean(componentsMap.rbvp) && getComponentSettings('rbvp').enabled
     },
     useRbvp: {
       get() {

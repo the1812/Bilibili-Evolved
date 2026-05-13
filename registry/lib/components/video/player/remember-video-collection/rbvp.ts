@@ -29,7 +29,12 @@ const getRememberVideoCollectionOptions = () =>
 
 export const isRememberVideoCollectionUsingRbvp = () => {
   const settings = getComponentSettings<ComponentOptions>(componentName)
-  return settings.enabled && settings.options.useRbvp && Boolean(componentsMap.rbvp)
+  return (
+    settings.enabled &&
+    settings.options.useRbvp &&
+    Boolean(componentsMap.rbvp) &&
+    getComponentSettings('rbvp').enabled
+  )
 }
 
 export const setRememberVideoCollectionRbvpMode = (

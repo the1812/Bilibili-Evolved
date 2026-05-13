@@ -19,7 +19,12 @@ const aidComparator = (a: string | number, b: string | number) => a.toString() =
 
 export const isRememberSpeedUsingRbvp = () => {
   const settings = getRememberSpeedSettings()
-  return settings.enabled && settings.options.useRbvp && Boolean(componentsMap.rbvp)
+  return (
+    settings.enabled &&
+    settings.options.useRbvp &&
+    Boolean(componentsMap.rbvp) &&
+    getComponentSettings('rbvp').enabled
+  )
 }
 
 export const readRememberSpeedGlobal = () => {

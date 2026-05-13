@@ -9,6 +9,7 @@
 </template>
 <script lang="ts">
 import { componentsMap } from '@/components/component'
+import { getComponentSettings } from '@/core/settings'
 import { CheckBox } from '@/ui'
 import {
   getRememberVideoCollectionRbvpTakeoverState,
@@ -21,7 +22,7 @@ export default Vue.extend({
   },
   computed: {
     hasRbvp() {
-      return Boolean(componentsMap.rbvp)
+      return Boolean(componentsMap.rbvp) && getComponentSettings('rbvp').enabled
     },
     useRbvp: {
       get() {

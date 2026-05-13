@@ -1,14 +1,21 @@
 <template>
   <div class="rbvp-rules-editor">
+    <div
+      v-if="!state.rbvpEnabled"
+      class="rbvp-namespace-disabled-banner"
+    >
+      <div class="rbvp-namespace-disabled-banner-title">
+        RBVP 组件当前已关闭
+      </div>
+      <div class="rbvp-namespace-disabled-banner-text">
+        即使存在已注册且已接管的命名空间，RBVP 也不会生效。请先在组件设置中启用 RBVP。
+      </div>
+    </div>
     <div class="rbvp-guide-card">
       <div class="rbvp-guide-title">调试视图</div>
       <div class="rbvp-guide-text">
         这里会展示最近一次规则匹配时，对各命名空间的尝试路径，便于确认命中的是哪一行、为什么生效或为什么跳过。
       </div>
-    </div>
-    <div class="rbvp-status-card">
-      <div class="rbvp-status-card-label">最近匹配结果</div>
-      <div class="rbvp-status-card-value">{{ state.lastMatchInfoText }}</div>
     </div>
     <div class="rbvp-status-card rbvp-debug-card">
       <div class="rbvp-status-card-label">调试面板</div>
@@ -146,6 +153,26 @@ export default Vue.extend({
 </script>
 <style lang="scss">
 @import 'shared';
+
+.rbvp-namespace-disabled-banner {
+  border: 1px solid #f5a6234d;
+  border-radius: 8px;
+  background-color: #f5a6231a;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &-title {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  &-text {
+    line-height: 1.6;
+    opacity: 0.78;
+  }
+}
 
 .rbvp-debug-card {
   gap: 10px;

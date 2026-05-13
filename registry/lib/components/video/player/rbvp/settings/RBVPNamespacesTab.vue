@@ -1,5 +1,11 @@
 <template>
   <div class="rbvp-section-content">
+    <div v-if="!state.rbvpEnabled" class="rbvp-namespace-disabled-banner">
+      <div class="rbvp-namespace-disabled-banner-title">RBVP 组件当前已关闭</div>
+      <div class="rbvp-namespace-disabled-banner-text">
+        即使存在已注册且已接管的命名空间，RBVP 也不会生效。请先在组件设置中启用 RBVP。
+      </div>
+    </div>
     <div class="rbvp-guide-card">
       <div class="rbvp-guide-title">命名空间</div>
       <div class="rbvp-guide-text">
@@ -29,20 +35,20 @@
             <span
               class="rbvp-namespace-takeover-status"
               :class="{
-                active: item.takeoverSupported && item.takeoverState,
-                disabled: !item.takeoverSupported,
+                active: item.takeoverState && item.componentEnabled,
+                disabled: !item.componentEnabled,
               }"
             >
               {{
-                item.takeoverSupported
-                  ? item.takeoverState
-                    ? 'RBVP 已接管'
-                    : 'RBVP 未接管'
-                  : '不支持接管切换'
+                !item.componentEnabled
+                  ? '组件已关闭'
+                  : item.takeoverState
+                  ? 'RBVP 已接管'
+                  : 'RBVP 未接管'
               }}
             </span>
             <button
-              v-if="item.takeoverSupported"
+              v-if="item.componentEnabled"
               type="button"
               class="rbvp-namespace-toggle"
               :class="{ active: item.takeoverState }"
@@ -185,6 +191,26 @@ export default Vue.extend({
 
 .rbvp-namespace-empty {
   min-height: 220px;
+}
+
+.rbvp-namespace-disabled-banner {
+  border: 1px solid #f5a6234d;
+  border-radius: 8px;
+  background-color: #f5a6231a;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &-title {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  &-text {
+    line-height: 1.6;
+    opacity: 0.78;
+  }
 }
 
 @media (max-width: 900px) {

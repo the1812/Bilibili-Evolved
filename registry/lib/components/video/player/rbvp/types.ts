@@ -140,8 +140,9 @@ export interface RBVPNamespaceProvider {
   description?: string
   aliases?: string[]
   prepare?: (context: RBVPEngineContext) => Promise<void> | void
-  getTakeoverState?: () => boolean
-  setTakeoverState?: (value: boolean) => void
+  isComponentEnabled: () => boolean
+  getTakeoverState: () => boolean
+  setTakeoverState: (value: boolean) => void
   setup?: (runtime: RBVPRuntime) => Promise<void> | void
   validateAction?: (rawValue: string) => void
   resolveAction: (

@@ -35,6 +35,7 @@ export const rememberVideoSpeedNamespaceProvider = {
   setTakeoverState: (value: boolean) => {
     getRememberSpeedOptions().useRbvp = value
   },
+  isComponentEnabled: () => getComponentSettings<Options>('rememberVideoSpeed').enabled,
   setup: async (runtime: RBVPRuntime) => {
     const speedContext = await getSpeedContext()
     speedContext.videoSpeedChange$.subscribe(value => {

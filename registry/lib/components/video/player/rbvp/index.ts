@@ -77,8 +77,8 @@ const entry = async ({ settings }: { settings: { enabled: boolean; options: Opti
       const context = await createRbvpEngineContext(settings.options.localRuleSets, runtime)
       const namespaces = Object.keys(rbvpNamespaces).filter(namespace => {
         const provider = rbvpNamespaces[namespace]
-        if (!provider.getTakeoverState) {
-          return true
+        if (!provider.isComponentEnabled()) {
+          return false
         }
         return provider.getTakeoverState()
       })

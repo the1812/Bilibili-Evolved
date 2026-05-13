@@ -138,8 +138,8 @@ type RBVPNamespaceItem = {
   displayName: string
   description: string
   aliases: string[]
-  takeoverSupported: boolean
   takeoverState: boolean
+  componentEnabled: boolean
 }
 
 export default Vue.extend({
@@ -181,6 +181,7 @@ export default Vue.extend({
       ruleSetTransferText: '',
       ruleSetTransferScope: 'all' as 'all' | 'current',
       namespaceStateVersion: 0,
+      rbvpEnabled: getComponentSettings<Options>('rbvp').enabled,
       beforeUnloadGuardActive: false,
     }
   },
@@ -250,6 +251,7 @@ export default Vue.extend({
         hasUnsavedRulesChanges: this.hasUnsavedRulesChanges,
         debugContext: this.debugContext,
         debugNamespaces: this.debugNamespaces,
+        rbvpEnabled: this.rbvpEnabled,
       }
     },
     rulesTabActions() {
@@ -312,6 +314,7 @@ export default Vue.extend({
     namespacesTabState() {
       return {
         namespaceItems: this.namespaceItems,
+        rbvpEnabled: this.rbvpEnabled,
       }
     },
     namespacesTabActions() {
@@ -327,8 +330,8 @@ export default Vue.extend({
         displayName: provider.displayName || provider.primaryName || name,
         description: provider.description?.trim() || '暂无描述',
         aliases: provider.aliases ?? [],
-        takeoverSupported: Boolean(provider.getTakeoverState && provider.setTakeoverState),
-        takeoverState: provider.getTakeoverState?.() ?? false,
+        takeoverState: provider.getTakeoverState(),
+        componentEnabled: provider.isComponentEnabled(),
       }))
     },
   },
@@ -337,6 +340,7 @@ export default Vue.extend({
       this.updateBeforeUnloadGuard()
       if (value) {
         this.refreshNamespaceState()
+        this.rbvpEnabled = getComponentSettings<Options>('rbvp').enabled
         return
       }
       if (!value) {
@@ -413,7 +417,7 @@ export default Vue.extend({
       this.namespaceStateVersion++
     },
     toggleNamespaceTakeover(item: RBVPNamespaceItem) {
-      if (!item.provider.getTakeoverState || !item.provider.setTakeoverState) {
+      if (!item.componentEnabled) {
         return
       }
       try {

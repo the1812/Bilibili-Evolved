@@ -1,4 +1,4 @@
-import { addComponentListener } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 import type { RBVPEngineContext, RBVPRuntime, RBVPResolvedAction } from '../rbvp/types'
 import {
   clearRememberVideoCollectionRbvpMode,
@@ -31,6 +31,7 @@ export const rememberVideoCollectionNamespaceProvider = {
   setTakeoverState: (value: boolean) => {
     setRememberVideoCollectionRbvpTakeoverState(value)
   },
+  isComponentEnabled: () => getComponentSettings(componentName).enabled,
   setup: (runtime: RBVPRuntime) => {
     addComponentListener(`${componentName}.useRbvp`, () => {
       runtime.requestApplyRules()
