@@ -66,21 +66,22 @@ const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => 
   return DefaultDashExtensions[type] ?? DashFragmentExtension
 }
 const dashToFragment = (dash: Dash): DownloadVideoFragment => ({
+  type: dash.type,
   url: dash.downloadUrl,
   allUrls: [dash.downloadUrl, ...(dash.backupUrls ?? [])],
   length: dash.duration,
   size: Math.trunc((dash.bandWidth * dash.duration) / 8),
   extension: getDashExtensions(dash.type),
+  codec: 'videoCodec' in dash ? <string>dash.videoCodec : undefined,
+  bandWidth: dash.bandWidth,
 })
 export const dashToFragments = (info: {
   videoDashes: VideoDash[]
   audioDashes: AudioDash[]
   videoCodec: DashCodec
-}): [DownloadVideoFragment[], DashCodec, number] => {
+}): DownloadVideoFragment[] => {
   const { videoDashes, audioDashes, videoCodec } = info
   const results: DownloadVideoFragment[] = []
-  let currentCodec: DashCodec
-  let currentBandWidth = 0
   // 画面按照首选编码选择, 若没有相应编码则选择第一个编码
   if (videoDashes.length !== 0) {
     const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
@@ -90,17 +91,14 @@ export const dashToFragments = (info: {
     } else {
       dash = videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
     }
-    currentCodec = dash.videoCodec
-    currentBandWidth += dash.bandWidth
     results.push(dashToFragment(dash))
   }
   if (audioDashes.length !== 0) {
     // 声音倒序排, 选择最高音质
     const dash = audioDashes.sort(descendingSort(d => d.bandWidth))[0]
-    currentBandWidth += dash.bandWidth
     results.push(dashToFragment(dash))
   }
-  return [results, currentCodec, currentBandWidth]
+  return results
 }
 
 /* spell-checker: disable */
@@ -189,7 +187,7 @@ const downloadDash = async (
   if (flac) {
     audioDashes.push(...(flac.audio ? [mapAudioDash(flac.audio, 'flacAudio')] : []))
   }
-  const [fragments, currentCodec, currentBandWidth] = dashToFragments({
+  const fragments = dashToFragments({
     audioDashes,
     videoDashes,
     videoCodec: codec,
@@ -219,6 +217,8 @@ const downloadDash = async (
     }
     return filterByCodec(null)
   })()
+  const currentCodec = fragments.find(x => x.type === 'video')?.codec
+  const currentBandWidth = fragments.reduce((p, c) => p + c.bandWidth, 0)
   const info = new DownloadVideoInfo({
     input,
     jsonData: data,

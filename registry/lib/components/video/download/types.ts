@@ -3,7 +3,7 @@ import { Executable, TestPattern, VueModule, WithName } from '@/core/common-type
 import { DownloadPackage, PackageEntry } from '@/core/download'
 import { formatNumber } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { DashCodec } from './apis/dash'
+import { DefaultDashExtensions } from './apis/dash'
 
 interface VueInstanceInput {
   component?: Executable<VueModule>
@@ -33,11 +33,14 @@ export interface DownloadVideoInput<InputParameter = any> extends VueInstanceInp
 }
 /** 表示一个视频分段 */
 export interface DownloadVideoFragment {
+  type: keyof typeof DefaultDashExtensions | 'flv'
   length: number
   size: number
   url: string
   allUrls: string[]
   extension: string
+  codec?: string
+  bandWidth?: number
 }
 /** 调用 API 后得到的视频详细信息, 包括下载链接, 清晰度, 分段等 */
 export class DownloadVideoInfo {
@@ -45,7 +48,7 @@ export class DownloadVideoInfo {
   public fragments: DownloadVideoFragment[]
   public qualities: VideoQuality[]
   public currentQuality: VideoQuality
-  public currentCodec?: DashCodec
+  public currentCodec?: string
   public currentBandWidth?: number
   public jsonData: any
   constructor(
