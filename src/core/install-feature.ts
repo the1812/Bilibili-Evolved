@@ -42,19 +42,19 @@ export const installFeatureFromCode = async (
     if (isComponent(item)) {
       return {
         type: 'component',
-        installer: () => installComponent(code),
+        installer: () => installComponent(code, item),
       }
     }
     if (isPlugin(item)) {
       return {
         type: 'plugin',
-        installer: () => installPlugin(code),
+        installer: () => installPlugin(code, item),
       }
     }
     if (isStyle(item)) {
       return {
         type: 'style',
-        installer: () => installStyle(code),
+        installer: () => installStyle(item),
       }
     }
     throw new Error('无效的功能代码')
