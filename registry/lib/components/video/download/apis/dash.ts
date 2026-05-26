@@ -1,8 +1,10 @@
+import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
+import { getComponentSettings } from '@/core/settings'
 import { formData, matchUrlPattern } from '@/core/utils'
 import { ascendingSort, descendingSort } from '@/core/utils/sort'
-import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { bangumiUrls } from '@/core/utils/urls'
+import { Options } from '..'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi,
@@ -11,8 +13,6 @@ import {
   DownloadVideoInputItem,
 } from '../types'
 import { bangumiApi, videoApi } from './url'
-import { Options } from '..'
-import { getComponentSettings } from '@/core/settings'
 
 /** dash 格式更明确的扩展名 */
 export const DefaultDashExtensions = {
@@ -66,33 +66,37 @@ const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => 
   return DefaultDashExtensions[type] ?? DashFragmentExtension
 }
 const dashToFragment = (dash: Dash): DownloadVideoFragment => ({
+  type: dash.type,
   url: dash.downloadUrl,
   allUrls: [dash.downloadUrl, ...(dash.backupUrls ?? [])],
   length: dash.duration,
   size: Math.trunc((dash.bandWidth * dash.duration) / 8),
   extension: getDashExtensions(dash.type),
+  codec: 'videoCodec' in dash ? <string>dash.videoCodec : undefined,
+  bandWidth: dash.bandWidth,
 })
 export const dashToFragments = (info: {
   videoDashes: VideoDash[]
   audioDashes: AudioDash[]
   videoCodec: DashCodec
-}) => {
+}): DownloadVideoFragment[] => {
   const { videoDashes, audioDashes, videoCodec } = info
   const results: DownloadVideoFragment[] = []
   // 画面按照首选编码选择, 若没有相应编码则选择第一个编码
   if (videoDashes.length !== 0) {
     const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
+    let dash: VideoDash
     if (videoDashes.some(matchPreferredCodec)) {
-      const dash = videoDashes.filter(matchPreferredCodec).sort(ascendingSort(d => d.bandWidth))[0]
-      results.push(dashToFragment(dash))
+      dash = videoDashes.filter(matchPreferredCodec).sort(ascendingSort(d => d.bandWidth))[0]
     } else {
-      results.push(dashToFragment(videoDashes.sort(ascendingSort(d => d.bandWidth))[0]))
+      dash = videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
     }
+    results.push(dashToFragment(dash))
   }
   if (audioDashes.length !== 0) {
     // 声音倒序排, 选择最高音质
-    const audio = audioDashes.sort(descendingSort(d => d.bandWidth))[0]
-    results.push(dashToFragment(audio))
+    const dash = audioDashes.sort(descendingSort(d => d.bandWidth))[0]
+    results.push(dashToFragment(dash))
   }
   return results
 }
@@ -183,7 +187,7 @@ const downloadDash = async (
   if (flac) {
     audioDashes.push(...(flac.audio ? [mapAudioDash(flac.audio, 'flacAudio')] : []))
   }
-  const fragments: DownloadVideoFragment[] = dashToFragments({
+  const fragments = dashToFragments({
     audioDashes,
     videoDashes,
     videoCodec: codec,
@@ -213,12 +217,16 @@ const downloadDash = async (
     }
     return filterByCodec(null)
   })()
+  const currentCodec = fragments.find(x => x.type === 'video')?.codec
+  const currentBandWidth = fragments.reduce((p, c) => p + c.bandWidth, 0)
   const info = new DownloadVideoInfo({
     input,
     jsonData: data,
     fragments,
     qualities,
     currentQuality,
+    currentCodec,
+    currentBandWidth,
   })
   compareQuality(input, info)
   return info
