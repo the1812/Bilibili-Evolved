@@ -51,38 +51,46 @@ const findTargetSection = (info: VideoInfo, cid: string) => {
   )
 }
 
+const fetchVideoContext = async (
+  aid: string,
+  cid: string,
+  cacheKey: string,
+): Promise<RBVPVideoContext> => {
+  try {
+    const info = await new VideoInfo(aid).fetchInfo()
+    const tagData = await fetchTags(aid, cid)
+    const currentPageIndex = info.pages.findIndex(page => String(page.cid) === cid)
+    const currentPage = currentPageIndex === -1 ? undefined : info.pages[currentPageIndex]
+    const targetEpisode = findTargetEpisode(info, cid)
+    return {
+      aid: String(info.aid),
+      bvid: String(info.bvid ?? ''),
+      cid,
+      sectionId: String(findTargetSection(info, cid)?.id ?? ''),
+      sectionRootId: String(info.ugcSeason?.id ?? ''),
+      sectionName: String(targetEpisode?.title ?? ''),
+      sectionRootName: String(info.ugcSeason?.title ?? ''),
+      partIndex: currentPageIndex === -1 ? 0 : currentPageIndex + 1,
+      upUid: String(info.up?.uid ?? ''),
+      upName: String(info.up?.name ?? ''),
+      partitionId: String(info.tagId ?? ''),
+      partitionName: String(info.tagName ?? ''),
+      title: String(info.title ?? ''),
+      partTitle: String(currentPage?.title ?? ''),
+      duration: Number(currentPage?.duration ?? 0),
+      tags: tagData.tagNames,
+      musicTags: tagData.musicTags,
+    } as RBVPVideoContext
+  } catch (e) {
+    videoContextCache.delete(cacheKey)
+    throw new Error('构建 RBVP 视频上下文失败', { cause: e })
+  }
+}
+
 export const buildRbvpVideoContext = async (aid = unsafeWindow.aid, cid = unsafeWindow.cid) => {
   const key = `${aid}:${cid}`
   if (!videoContextCache.has(key)) {
-    videoContextCache.set(
-      key,
-      (async () => {
-        const info = await new VideoInfo(aid).fetchInfo()
-        const tagData = await fetchTags(aid, String(cid))
-        const currentPageIndex = info.pages.findIndex(page => String(page.cid) === String(cid))
-        const currentPage = currentPageIndex === -1 ? undefined : info.pages[currentPageIndex]
-        const targetEpisode = findTargetEpisode(info, String(cid))
-        return {
-          aid: String(info.aid),
-          bvid: String(info.bvid ?? ''),
-          cid: String(cid),
-          sectionId: String(findTargetSection(info, String(cid))?.id ?? ''),
-          sectionRootId: String(info.ugcSeason?.id ?? ''),
-          sectionName: String(targetEpisode?.title ?? ''),
-          sectionRootName: String(info.ugcSeason?.title ?? ''),
-          partIndex: currentPageIndex === -1 ? 0 : currentPageIndex + 1,
-          upUid: String(info.up?.uid ?? ''),
-          upName: String(info.up?.name ?? ''),
-          partitionId: String(info.tagId ?? ''),
-          partitionName: String(info.tagName ?? ''),
-          title: String(info.title ?? ''),
-          partTitle: String(currentPage?.title ?? ''),
-          duration: Number(currentPage?.duration ?? 0),
-          tags: tagData.tagNames,
-          musicTags: tagData.musicTags,
-        } as RBVPVideoContext
-      })(),
-    )
+    videoContextCache.set(key, fetchVideoContext(aid, String(cid), key))
   }
   return videoContextCache.get(key)
 }
