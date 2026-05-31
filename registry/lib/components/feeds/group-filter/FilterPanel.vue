@@ -1,8 +1,11 @@
 <template>
-  <div class="group-filter-panel">
-    <div class="group-filter-header">
-      <h1>分组</h1>
-      <switch-box v-model="allChecked" />
+  <div class="group-filter-panel" :class="{ collapse }">
+    <div class="group-filter-header" @click="collapse = !collapse">
+      <h1>动态分组过滤</h1>
+      <VIcon icon="mdi-chevron-up" />
+    </div>
+    <div class="group-item group-select-all">
+      <CheckBox v-model="allChecked"> 全选 </CheckBox>
     </div>
     <div v-for="(group, index) in groups" :key="index" class="group-item">
       <CheckBox v-model="group.checked">
@@ -13,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { CheckBox, SwitchBox } from '@/ui'
+import { CheckBox, VIcon } from '@/ui'
 import { bilibiliApi, getJsonWithCredentials, getPages } from '@/core/ajax'
 import { FeedsCard, forEachFeedsCard } from '@/components/feeds/api'
 import { getUID } from '@/core/utils'
@@ -28,8 +31,8 @@ let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
 
 export default Vue.extend({
   components: {
-    SwitchBox,
     CheckBox,
+    VIcon,
   },
   data() {
     return {
@@ -37,11 +40,13 @@ export default Vue.extend({
       followingMap: new Map<string, number[]>(), // username -> tagid[]
       selectedGroupIds: [],
       allChecked: true,
+      collapse: true,
     } as {
       groups: Group[]
       followingMap: Map<string, number[]>
       selectedGroupIds: number[]
       allChecked: boolean
+      collapse: boolean
     }
   },
   watch: {
@@ -123,6 +128,7 @@ export default Vue.extend({
   width: 100%;
   border-radius: 4px;
   box-sizing: border-box;
+  display: flex;
   flex-direction: column;
   padding: 12px 16px;
 
@@ -131,14 +137,29 @@ export default Vue.extend({
     padding-bottom: 14px;
     position: sticky;
     top: 0;
+    background-color: inherit;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     h1 {
       font-weight: normal;
-      font-size: 16px;
+      font-size: 14px;
       margin: 0;
+    }
+  }
+
+  &.collapse {
+    .group-filter-header {
+      padding-bottom: 0;
+
+      .be-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    > :not(.group-filter-header) {
+      display: none;
     }
   }
 
@@ -146,6 +167,10 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
     font-size: 14px;
+  }
+
+  .group-select-all {
+    padding-bottom: 6px;
   }
 
   body.dark & {
