@@ -1,0 +1,85 @@
+.danmaku-action-bar {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 4px;
+  z-index: 100;
+  background-color: rgba(40, 40, 40, 0.7);
+  backdrop-filter: blur(6px) saturate(1.2);
+  -webkit-backdrop-filter: blur(6px) saturate(1.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  animation: danmaku-action-bar-in 0.15s ease-out;
+
+  .danmaku-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.15s ease-out;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &.plus-one:hover {
+      background-color: var(--theme-color, #00a1d6);
+    }
+
+    &.favorite:hover {
+      background-color: #f6be18;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+}
+
+@keyframes danmaku-action-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.danmaku-action-bar.player-action-bar {
+  position: fixed !important;
+  white-space: nowrap;
+  pointer-events: auto !important;
+  z-index: 2147483647 !important;
+  animation: none !important;
+  width: auto !important;
+  height: auto !important;
+
+  .danmaku-action-btn {
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0 !important;
+  }
+}
+
+.chat-history-panel .chat-history-list .chat-item.danmaku-item {
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+body.dark .chat-history-panel .chat-history-list .chat-item.danmaku-item:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
