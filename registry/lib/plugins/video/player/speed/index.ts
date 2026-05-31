@@ -97,9 +97,9 @@ export const plugin: PluginMetadata = {
                   )
                   return
                 }
-                if (!component.options.individualRemember) {
+                if (!component.usesRbvp() && !component.options.individualRemember) {
                   Toast.error(
-                    '选项「各视频分别记忆」已禁用，不能清除当前视频倍速记忆值',
+                    '选项「各视频分别记忆」已禁用，且当前未启用 RBVP 接管，不能清除当前视频倍速记忆值',
                     component.metadata.displayName,
                     5000,
                   )
