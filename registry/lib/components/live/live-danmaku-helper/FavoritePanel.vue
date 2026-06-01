@@ -52,8 +52,6 @@ const element = ref<HTMLElement>()
 const open = ref(false)
 const keyword = ref('')
 
-// 收藏写入发生在非 Vue 上下文（index.ts）且经由自定义设置代理，
-// 这里通过设置监听同步到本地 ref，确保收藏后面板立即更新（规避响应式断裂）。
 const favorites = ref<string[]>([...(options.favorites ?? [])])
 const syncFavorites = (value: string[]) => {
   favorites.value = [...(value ?? [])]

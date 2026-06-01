@@ -74,7 +74,6 @@
   }
 }
 
-// 统一开启播放器内弹幕的 pointer-events（旋转弹幕除外），
 // 替代对每条弹幕逐个写 style 的 MutationObserver，避免高人气直播间掉帧。
 .live-danmaku-helper-layer > *:not(.bili-danmaku-x-dm-rotate) {
   pointer-events: auto !important;

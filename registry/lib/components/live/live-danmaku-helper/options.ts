@@ -9,6 +9,10 @@ export const liveDanmakuHelperOptions = defineOptionsMetadata({
     displayName: '启用播放器弹幕悬停',
     defaultValue: false,
   },
+  compatibleSend: {
+    displayName: '兼容发送',
+    defaultValue: false,
+  },
   favorites: {
     displayName: '收藏的弹幕',
     hidden: true,

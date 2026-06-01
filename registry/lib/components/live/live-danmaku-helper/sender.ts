@@ -84,7 +84,14 @@ const sendByXPath = async (text: string) => {
   return true
 }
 
-export const sendDanmaku = async (text: string): Promise<boolean> => {
+export const sendDanmaku = async (text: string, compatible = false): Promise<boolean> => {
+  if (compatible) {
+    if (await sendByXPath(text)) {
+      return true
+    }
+    console.warn('弹幕发送失败')
+    return false
+  }
   if (await sendByApi(text)) {
     return true
   }

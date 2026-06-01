@@ -23,6 +23,11 @@ const addFavorite = (text: string) => {
   }
 }
 
+const plusOne = (text: string) => {
+  const { options } = getComponentSettings<LiveDanmakuHelperOptions>(name)
+  return sendDanmaku(text, options.compatibleSend)
+}
+
 const createActionBar = (onPlusOne: () => void, onFavorite: () => void) => {
   const actionBar = document.createElement('div')
   actionBar.setAttribute('class', 'danmaku-action-bar')
@@ -114,7 +119,7 @@ const setupSidebarActions = () => {
     removeActionBar()
     currentChatItem = chatItem
     currentActionBar = createActionBar(
-      () => sendDanmaku(text),
+      () => plusOne(text),
       () => addFavorite(text),
     )
     chatItem.style.position = 'relative'
@@ -288,7 +293,7 @@ const setupPlayerActions = () => {
     currentDanmakuText = text
 
     currentActionBar = createActionBar(
-      () => sendDanmaku(text),
+      () => plusOne(text),
       () => addFavorite(text),
     )
     currentActionBar.classList.add('player-action-bar')
@@ -319,8 +324,6 @@ const setupPlayerActions = () => {
     }
   }
 
-  // 仅给弹幕容器打标记类，由 CSS 统一开启子弹幕的 pointer-events（不触碰祖先链，
-  // 保留 B 站透明遮罩层的 pointer-events: none，确保点击/双击穿透到视频）。
   danmakuContainer.classList.add(playerLayerClass)
 
   danmakuContainer.addEventListener('mouseover', handleMouseEnter, true)
