@@ -186,58 +186,8 @@ const setupPlayerActions = () => {
 
   const positionActionBar = (bar: HTMLElement, anchor: HTMLElement) => {
     const rect = anchor.getBoundingClientRect()
-    bar.setAttribute(
-      'style',
-      `
-      all: initial !important;
-      position: fixed !important;
-      top: ${rect.top + rect.height / 2}px !important;
-      left: ${rect.right + 6}px !important;
-      transform: translateY(-50%) !important;
-      z-index: 2147483647 !important;
-      display: flex !important;
-      flex-direction: row !important;
-      align-items: center !important;
-      gap: 2px !important;
-      padding: 2px !important;
-      width: fit-content !important;
-      height: fit-content !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      pointer-events: auto !important;
-      background-color: rgba(40, 40, 40, 0.7) !important;
-      backdrop-filter: blur(6px) saturate(1.2) !important;
-      -webkit-backdrop-filter: blur(6px) saturate(1.2) !important;
-      border-radius: 4px !important;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
-      white-space: nowrap !important;
-      box-sizing: border-box !important;
-    `,
-    )
-
-    bar.querySelectorAll('button').forEach(btn => {
-      btn.setAttribute(
-        'style',
-        `
-        all: initial !important;
-        width: 24px !important;
-        height: 24px !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex-shrink: 0 !important;
-        border: none !important;
-        border-radius: 3px !important;
-        background-color: transparent !important;
-        color: #fff !important;
-        cursor: pointer !important;
-        box-sizing: border-box !important;
-        transition: background-color 0.15s ease-out !important;
-      `,
-      )
-    })
+    bar.style.setProperty('top', `${rect.top + rect.height / 2}px`, 'important')
+    bar.style.setProperty('left', `${rect.right + 6}px`, 'important')
   }
 
   const restore = () => {
@@ -362,7 +312,6 @@ const unload = () => {
 }
 
 const reload = async () => {
-  unload()
   await entry()
 }
 
@@ -381,7 +330,6 @@ export const component = defineComponentMetadata({
   reload,
   unload,
   widget: {
-     // @ts-ignore
     component: () => import('./FavoritePanel.vue').then(m => m.default),
     condition: () => Boolean(getUID()),
   },

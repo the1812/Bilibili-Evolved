@@ -1,17 +1,38 @@
+import { getCsrf } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 
 const console = useScopedConsole('liveDanmakuHelper')
-
-const liveInputXPath =
-  '/html/body/div[1]/main/div[2]/section/div[2]/div[15]/div/div[3]/div[2]/textarea'
-const liveSendXPath =
-  '/html/body/div[1]/main/div[2]/section/div[2]/div[15]/div/div[3]/div[3]/button'
 
 export const queryXPath = (xpath: string) =>
   document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
     .singleNodeValue as HTMLElement | null
 
-const getCsrfToken = () => document.cookie.match(/bili_jct=([^;]+)/)?.[1] ?? ''
+//  live/danmaku-sendbar
+const liveInputSelector = [
+  '.control-panel-ctnr .chat-input-ctnr .chat-input',
+  '.chat-input-ctnr .chat-input',
+  '.chat-input',
+  '[class*="chat-input"] textarea',
+  '[class*="chat-input"] input',
+  '[class*="chat-input"][contenteditable="true"]',
+  '.chat-input-ctnr [contenteditable="true"]',
+].join(', ')
+
+const liveSendButtonSelector = [
+  '.control-panel-ctnr .chat-input-ctnr ~ .bottom-actions .bl-button--primary',
+  '.bottom-actions .bl-button--primary',
+  '.chat-input-ctnr ~ .bottom-actions button',
+  '.control-panel-ctnr button[class*="send"]',
+  '.chat-input-ctnr button',
+].join(', ')
+
+const isVisible = (element: Element): element is HTMLElement =>
+  element instanceof HTMLElement &&
+  (element.offsetParent !== null || element.getClientRects().length > 0)
+
+const queryVisible = (selector: string): HTMLElement | null =>
+  [...document.querySelectorAll(selector)].find(isVisible) ?? null
+
 const getRoomId = () => window.location.pathname.match(/\/(\d+)/)?.[1] ?? ''
 
 const setNativeValue = (input: HTMLElement, text: string) => {
@@ -32,7 +53,7 @@ const setNativeValue = (input: HTMLElement, text: string) => {
 const sendByApi = async (text: string) => {
   try {
     const roomid = getRoomId()
-    const csrf = getCsrfToken()
+    const csrf = getCsrf()
     if (!roomid || !csrf) {
       return false
     }
@@ -72,21 +93,28 @@ const sendByApi = async (text: string) => {
   }
 }
 
-const sendByXPath = async (text: string) => {
-  const input = queryXPath(liveInputXPath)
-  const sendButton = queryXPath(liveSendXPath)
-  if (!input || !sendButton) {
+const sendByDom = async (text: string) => {
+  const input = queryVisible(liveInputSelector)
+  if (!input) {
     return false
   }
   setNativeValue(input, text)
   await new Promise(resolve => setTimeout(resolve, 100))
+
+  const sendButton = [...document.querySelectorAll(liveSendButtonSelector)].find(
+    (button): button is HTMLButtonElement =>
+      isVisible(button) && !(button as HTMLButtonElement).disabled,
+  )
+  if (!sendButton) {
+    return false
+  }
   sendButton.click()
   return true
 }
 
 export const sendDanmaku = async (text: string, compatible = false): Promise<boolean> => {
   if (compatible) {
-    if (await sendByXPath(text)) {
+    if (await sendByDom(text)) {
       return true
     }
     console.warn('弹幕发送失败')
@@ -95,9 +123,9 @@ export const sendDanmaku = async (text: string, compatible = false): Promise<boo
   if (await sendByApi(text)) {
     return true
   }
-  if (await sendByXPath(text)) {
+  if (await sendByDom(text)) {
     return true
   }
-  console.warn('弹幕发送失败：API 与 DOM均不可用')
+  console.warn('弹幕发送失败：API 与 DOM 均不可用')
   return false
 }
