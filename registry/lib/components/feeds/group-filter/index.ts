@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { feedsCardsManager } from '@/components/feeds/api'
+import { options } from './options'
 
 const entry = async () => {
   const { select } = await import('@/core/spin-query')
@@ -26,6 +27,7 @@ export const component = defineComponentMetadata({
   entry,
   displayName: '动态分组过滤',
   author: { name: 'Rinne', link: 'https://github.com/OharaRinneY' },
+  options,
   urlInclude: [
     // 仅动态首页
     /^https:\/\/t\.bilibili\.com\/$/,

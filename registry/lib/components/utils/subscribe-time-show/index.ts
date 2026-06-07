@@ -176,8 +176,8 @@ export const component = defineComponentMetadata({
   name: 'subscribeTimeShow',
   displayName: '关注时间显示',
   author: {
-    name: 'CNOCM',
-    link: 'https://github.com/CNOCM',
+    name: 'GH4NG',
+    link: 'https://github.com/GH4NG',
   },
   tags: [componentsTags.utils],
   urlInclude: [

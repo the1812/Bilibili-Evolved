@@ -7,6 +7,10 @@ export interface FeedsFilterPatternConfig {
 }
 
 export const options = defineOptionsMetadata({
+  showInFeedsHome: {
+    defaultValue: true,
+    displayName: '在动态首页显示选项卡片',
+  },
   types: {
     defaultValue: [] as number[],
     displayName: '过滤动态类型',
