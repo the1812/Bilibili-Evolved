@@ -313,9 +313,24 @@ onBeforeUnmount(() => {
       max-height: calc(100vh - 414px);
     }
 
+    // 开启动态分组过滤
+    .group-filter-section ~ .sticky & {
+      max-height: calc(100vh - 414px);
+    }
+
+    // 同时开启动态过滤器和动态分组过滤
+    body.enable-feeds-filter .group-filter-section ~ .sticky & {
+      max-height: calc(100vh - 470px);
+    }
+
     // 禁掉 profile 后
     body.feeds-filter-side-block-profile & {
       max-height: calc(100vh - 218px);
+    }
+
+    // 禁掉 profile 后开启动态分组过滤
+    body.feeds-filter-side-block-profile .group-filter-section ~ .sticky & {
+      max-height: calc(100vh - 274px);
     }
   }
 
