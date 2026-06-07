@@ -197,7 +197,6 @@ export const component = defineComponentMetadata({
             const { isBuiltInComponent } = await import('@/components/built-in-components')
             if (context.selectedComponents.length === 0) {
               const toast = Toast.info('正在检查更新...', '检查所有更新')
-              forceCheckUpdateAndReload()
               await forceCheckUpdateAndReload()
               toast.close()
             } else {

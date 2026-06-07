@@ -110,6 +110,7 @@ export const component = defineComponentMetadata({
   urlInclude: [
     'https://www.bilibili.com/watchlater/#/list',
     'https://www.bilibili.com/watchlater/list#/list',
+    'https://www.bilibili.com/watchlater/list',
   ],
   tags: [componentsTags.utils, componentsTags.video],
 })

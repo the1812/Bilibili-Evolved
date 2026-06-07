@@ -1,8 +1,11 @@
 <template>
-  <div class="group-filter-panel">
-    <div class="group-filter-header">
-      <h1>分组</h1>
-      <switch-box v-model="allChecked" />
+  <div class="group-filter-panel" :class="{ collapse }">
+    <div class="group-filter-header" @click="collapse = !collapse">
+      <h1>动态分组过滤</h1>
+      <VIcon icon="mdi-chevron-up" />
+    </div>
+    <div class="group-item group-select-all">
+      <CheckBox v-model="allChecked"> 全选 </CheckBox>
     </div>
     <div v-for="(group, index) in groups" :key="index" class="group-item">
       <CheckBox v-model="group.checked">
@@ -13,10 +16,12 @@
 </template>
 
 <script lang="ts">
-import { CheckBox, SwitchBox } from '@/ui'
+import { CheckBox, VIcon } from '@/ui'
 import { bilibiliApi, getJsonWithCredentials, getPages } from '@/core/ajax'
 import { FeedsCard, forEachFeedsCard } from '@/components/feeds/api'
+import { getComponentSettings } from '@/core/settings'
 import { getUID } from '@/core/utils'
+import { FeedsGroupFilterOptions } from './options'
 
 interface Group {
   name: string
@@ -24,43 +29,54 @@ interface Group {
   id: number
 }
 
-let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager
+let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager | undefined
+const { options } = getComponentSettings<FeedsGroupFilterOptions>('feedsGroupFilter')
 
 export default Vue.extend({
   components: {
-    SwitchBox,
     CheckBox,
+    VIcon,
   },
   data() {
     return {
       groups: [],
       followingMap: new Map<string, number[]>(), // username -> tagid[]
       selectedGroupIds: [],
-      allChecked: true,
+      collapse: true,
+      isRestoringGroups: true,
     } as {
       groups: Group[]
       followingMap: Map<string, number[]>
       selectedGroupIds: number[]
-      allChecked: boolean
+      collapse: boolean
+      isRestoringGroups: boolean
     }
+  },
+  computed: {
+    allChecked: {
+      get(): boolean {
+        return this.groups.every(group => group.checked)
+      },
+      set(newChecked: boolean) {
+        for (const group of this.groups) {
+          group.checked = newChecked
+        }
+      },
+    },
   },
   watch: {
     groups: {
       handler(newGroups: Group[]) {
         this.selectedGroupIds = newGroups.filter(group => group.checked).map(group => group.id)
-        cardsManager.cards.forEach(card => {
-          this.updateCard(lodash.clone(card))
-        })
+        this.updateCards()
+        if (!this.isRestoringGroups) {
+          options.disabledGroupIds = newGroups
+            .filter(group => !group.checked)
+            .map(group => group.id)
+        }
       },
       deep: true,
       immediate: true,
-    },
-    allChecked: {
-      handler(newChecked: boolean) {
-        for (const group of this.groups) {
-          group.checked = newChecked
-        }
-      },
     },
   },
   async mounted() {
@@ -70,16 +86,19 @@ export default Vue.extend({
       },
     })
     // fetch groups
+    const disabledGroupIds = options.disabledGroupIds ?? []
+    this.isRestoringGroups = true
     this.groups = await bilibiliApi<Array<any>>(
       getJsonWithCredentials('https://api.bilibili.com/x/relation/tags'),
       '分组信息获取失败',
     ).then(res =>
       res.map(value => ({
         name: value.name,
-        checked: true,
+        checked: !disabledGroupIds.includes(value.tagid),
         id: value.tagid,
       })),
     )
+    this.isRestoringGroups = false
 
     const uid = getUID()
     // fetch following
@@ -94,8 +113,17 @@ export default Vue.extend({
     allPages.forEach(user => {
       this.followingMap.set(user.uname, user.tag)
     })
+    this.updateCards()
   },
   methods: {
+    updateCards() {
+      if (!cardsManager) {
+        return
+      }
+      cardsManager.cards.forEach(card => {
+        this.updateCard(lodash.clone(card))
+      })
+    },
     updateCard(card: FeedsCard) {
       // 从username获得tag
       const userTagIds: number[] = this.followingMap.get(card.username)
@@ -123,6 +151,7 @@ export default Vue.extend({
   width: 100%;
   border-radius: 4px;
   box-sizing: border-box;
+  display: flex;
   flex-direction: column;
   padding: 12px 16px;
 
@@ -131,14 +160,29 @@ export default Vue.extend({
     padding-bottom: 14px;
     position: sticky;
     top: 0;
+    background-color: inherit;
     display: flex;
     align-items: center;
     justify-content: space-between;
 
     h1 {
       font-weight: normal;
-      font-size: 16px;
+      font-size: 14px;
       margin: 0;
+    }
+  }
+
+  &.collapse {
+    .group-filter-header {
+      padding-bottom: 0;
+
+      .be-icon {
+        transform: rotate(180deg);
+      }
+    }
+
+    > :not(.group-filter-header) {
+      display: none;
     }
   }
 
@@ -146,6 +190,10 @@ export default Vue.extend({
     display: flex;
     flex-direction: row;
     font-size: 14px;
+  }
+
+  .group-select-all {
+    padding-bottom: 6px;
   }
 
   body.dark & {

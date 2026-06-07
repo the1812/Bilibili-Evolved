@@ -3,10 +3,9 @@ import { defineComponentMetadata } from '@/components/define'
 
 const getBvidFromWatcherLaterVideoPage = () => {
   const { pathname, search } = window.location
-  const oidAndBvid = search.match(/\?oid=(\d+)&bvid=(\w+)/) ?? []
 
-  if (pathname === '/list/watchlater' && oidAndBvid.length === 3) {
-    return oidAndBvid[2]
+  if (pathname.startsWith('/list/watchlater')) {
+    return new URLSearchParams(search).get('bvid')
   }
 
   return null
