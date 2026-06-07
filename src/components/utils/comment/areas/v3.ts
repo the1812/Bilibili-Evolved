@@ -53,6 +53,7 @@ export class CommentAreaV3 extends CommentArea {
   protected parseCommentReplyItem(replyEntry: ShadowDomEntry): CommentReplyItem {
     const replyLitData = CommentAreaV3.getLitData(replyEntry)
     return new CommentReplyItem({
+      parent: this,
       id: replyLitData.rpid_str,
       element: replyEntry.element as HTMLElement,
       userId: replyLitData.member.mid,
@@ -71,6 +72,7 @@ export class CommentAreaV3 extends CommentArea {
         .querySelectorAllAsEntry(CommentAreaV3.commentReplyItemSelectors)
         .map(replyEntry => this.parseCommentReplyItem(replyEntry))
     const item = new CommentItem({
+      parent: this,
       id: litData.rpid_str,
       element: entry.element as HTMLElement,
       userId: litData.member.mid,
@@ -161,28 +163,33 @@ export class CommentAreaV3 extends CommentArea {
     this.areaObserverDisposer?.()
   }
 
-  async addMenuItem(
-    item: CommentReplyItem,
-    config: { className: string; text: string; action: (e: MouseEvent) => void },
-  ) {
+  async getMenuElement(item: CommentReplyItem): Promise<ShadowDomEntry | null> {
     const itemEntry = item.shadowDomEntry
     if (itemEntry === undefined) {
-      return
+      return null
     }
 
     const actions = await select(() =>
       this.matchChildEntryByReplyId(itemEntry, CommentAreaV3.commentActionsSelectors, item.id),
     )
     if (!actions) {
-      return
+      return null
     }
 
     const menu = actions.querySelectorAsEntry(CommentAreaV3.commentMenuSelectors)
-    if (!menu) {
+    return menu ?? null
+  }
+
+  async addMenuItem(
+    item: CommentReplyItem,
+    config: { className: string; text: string; action: (e: MouseEvent) => void },
+  ) {
+    const menu = await this.getMenuElement(item)
+    const list = menu?.querySelector('#options') as HTMLElement | null
+    if (!list) {
       return
     }
 
-    const list = menu.querySelector('#options')
     const alreadyAdded = list.querySelector(`li.${config.className}`)
     if (alreadyAdded) {
       return

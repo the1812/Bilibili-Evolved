@@ -108,6 +108,10 @@ export const component = defineComponentMetadata({
     },
   ],
   options: {
+    showWidget: {
+      displayName: '显示小组件（刷新后生效）',
+      defaultValue: false,
+    },
     disableCarousel: {
       displayName: '禁用轮播',
       defaultValue: false,
@@ -163,5 +167,9 @@ export const component = defineComponentMetadata({
       import('@/ui').then(m =>
         createComponentWithProps(m.OptionRadioGroup, { ...props, isPopup: true }),
       ),
+    condition: async () => {
+      const { getComponentSettings } = await import('@/core/settings')
+      return Boolean(getComponentSettings(componentName).options.showWidget)
+    },
   },
 })

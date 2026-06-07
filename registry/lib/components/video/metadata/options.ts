@@ -30,6 +30,10 @@ export const options = defineOptionsMetadata({
     displayName: '包含状态数（播放数、点赞数等）', //
     defaultValue: true,
   },
+  showWidget: {
+    displayName: '显示小组件（刷新后生效）',
+    defaultValue: true,
+  },
 })
 
 export type Options = OptionsOfMetadata<typeof options>

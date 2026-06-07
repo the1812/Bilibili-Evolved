@@ -54,14 +54,22 @@ export class CommentAreaV2 extends DomCommentArea {
     return null
   }
 
+  getMenuElement(item: CommentReplyItem): HTMLElement | null {
+    if (!this.element.contains(item.element)) {
+      return null
+    }
+    const operationList = dq(item.element, '.operation-list') as HTMLUListElement | null
+    return operationList
+  }
+
   addMenuItem(
     item: CommentReplyItem,
     config: { className: string; text: string; action: (e: MouseEvent) => void },
   ): void {
-    if (!this.element.contains(item.element)) {
+    const operationList = this.getMenuElement(item)
+    if (!operationList) {
       return
     }
-    const operationList = dq(item.element, '.operation-list') as HTMLUListElement
     const { className, text, action } = config
     if (!operationList || dq(operationList, `.${className}`)) {
       return
@@ -87,6 +95,7 @@ export class CommentAreaV2 extends DomCommentArea {
       }
       return vueProps.replies.map((r: any): CommentReplyItem => {
         return new CommentReplyItem({
+          parent: this,
           id: r.rpid_str,
           element: this.getReplyItemElement(element, r.rpid_str),
           userId: r.member.mid,
@@ -99,6 +108,7 @@ export class CommentAreaV2 extends DomCommentArea {
       })
     }
     const item = new CommentItem({
+      parent: this,
       id: vueProps.rpid_str,
       element,
       userId: vueProps.member.mid,
