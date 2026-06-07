@@ -1,0 +1,47 @@
+html {
+  background-color: var(--be-video-page-background-color, #17181a) !important;
+}
+
+body {
+  background-color: transparent !important;
+  isolation: isolate;
+}
+
+#app.app-v1,
+#video-page-app,
+.video-page-container,
+.video-container-v1 {
+  background-color: transparent !important;
+}
+
+#be-video-page-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  &::before {
+    inset: calc(var(--be-video-page-background-blur, 0px) * -2);
+    background-image: var(--be-video-page-background-image, none);
+    background-position: var(--be-video-page-background-position, center bottom);
+    background-repeat: no-repeat;
+    background-size: var(--be-video-page-background-size, cover);
+    filter: blur(var(--be-video-page-background-blur, 0px));
+    opacity: var(--be-video-page-background-image-opacity, 1);
+    transform: scale(1.02);
+  }
+
+  &::after {
+    background-color: var(--be-video-page-background-mask-color, #17181a);
+    opacity: var(--be-video-page-background-mask-opacity, 0);
+  }
+}
