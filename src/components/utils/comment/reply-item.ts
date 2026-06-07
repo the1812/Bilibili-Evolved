@@ -1,9 +1,12 @@
 import { ShadowDomEntry, ShadowDomEntrySymbol } from '@/core/shadow-root/dom-entry'
+import type { CommentArea } from './comment-area'
 
 /** 表示一条评论回复 */
 export class CommentReplyItem extends EventTarget {
   /** 对应元素 */
   element: HTMLElement
+  /** 所属评论区 */
+  parent: CommentArea
   /** 评论ID */
   id: string
   /** 评论者UID */
@@ -24,6 +27,7 @@ export class CommentReplyItem extends EventTarget {
   constructor(initParams: Omit<CommentReplyItem, keyof EventTarget | 'shadowDomEntry'>) {
     super()
     this.element = initParams.element
+    this.parent = initParams.parent
     this.id = initParams.id
     this.userId = initParams.userId
     this.userName = initParams.userName

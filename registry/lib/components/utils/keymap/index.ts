@@ -22,6 +22,11 @@ const options = defineOptionsMetadata({
     displayName: '音量调整幅度',
     validator: getNumberValidator(1, 100),
   },
+  /** 是否显示跳转快捷键 */
+  showSeekShortcuts: {
+    defaultValue: true,
+    displayName: '显示跳转快捷键',
+  },
   customKeyBindings: {
     defaultValue: {} as Record<string, string>,
     displayName: '自定义键位',

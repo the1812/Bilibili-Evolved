@@ -98,6 +98,10 @@ export const feedsCardTypes = {
     id: 2047,
     name: '开播记录',
   },
+  commonSquare: {
+    id: 2050,
+    name: '通用卡片',
+  },
 } satisfies Record<string, FeedsCardType>
 /** 是否是转发类型的卡片, 额外能够读取被转发动态的信息 */
 export const isRepostType = (card: FeedsCard): card is RepostFeedsCard =>

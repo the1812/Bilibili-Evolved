@@ -4,16 +4,20 @@ import { CommentReplyItem } from '../reply-item'
 import { DomCommentArea } from './dom'
 
 export class CommentAreaV1 extends DomCommentArea {
+  getMenuElement(item: CommentReplyItem): HTMLElement | null {
+    if (!this.element.contains(item.element)) {
+      return null
+    }
+    const operationList = dq(item.element, '.opera-list ul') as HTMLUListElement | null
+    return operationList
+  }
   addMenuItem(
     item: CommentReplyItem,
     config: { className: string; text: string; action: (e: MouseEvent) => void },
   ): void {
-    if (!this.element.contains(item.element)) {
-      return
-    }
-    const operationList = dq(item.element, '.opera-list ul') as HTMLUListElement
+    const operationList = this.getMenuElement(item)
     if (!operationList) {
-      throw new Error('Invalid operation list')
+      return
     }
     const { className, text, action } = config
     if (dq(operationList, `.${className}`)) {
@@ -37,6 +41,7 @@ export class CommentAreaV1 extends DomCommentArea {
       const replyFace = replyElement.querySelector('.reply-face') as HTMLElement
       const replyUser = replyElement.querySelector('.reply-con .user .name') as HTMLElement
       return new CommentReplyItem({
+        parent: this,
         id: replyElement.getAttribute('data-id'),
         element: replyElement,
         userId: replyFace.getAttribute('data-usercard-mid'),
@@ -48,6 +53,7 @@ export class CommentAreaV1 extends DomCommentArea {
       })
     }
     const item = new CommentItem({
+      parent: this,
       id: element.getAttribute('data-id'),
       element,
       userId: user.getAttribute('data-usercard-mid'),
