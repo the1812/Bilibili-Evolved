@@ -286,20 +286,29 @@ const setupPlayerActions = () => {
   }
 }
 
+let entryToken = 0
 const entry = async () => {
   if (!getUID()) {
     return
   }
+  const token = ++entryToken
 
   
   await select('.chat-history-panel')
+  if (token !== entryToken) {
+    return
+  }
   setupSidebarActions()
 
   await select(danmakuTrackSelector)
+  if (token !== entryToken) {
+    return
+  }
   setupPlayerActions()
 }
 
 const unload = () => {
+  entryToken++
   sidebarCleanup?.()
   sidebarCleanup = null
   playerCleanup?.()

@@ -1,7 +1,6 @@
-import { getCsrf } from '@/core/utils'
-import { useScopedConsole } from '@/core/utils/log'
-
-const console = useScopedConsole('liveDanmakuHelper')
+import { getCsrf, getUID, delay, dq, dqa } from '@/core/utils'
+import { childListSubtree } from '@/core/observer'
+import { Toast } from '@/core/toast'
 
 //  live/danmaku-sendbar
 const liveInputSelector = [
@@ -26,8 +25,7 @@ const isVisible = (element: Element): element is HTMLElement =>
   element instanceof HTMLElement &&
   (element.offsetParent !== null || element.getClientRects().length > 0)
 
-const queryVisible = (selector: string): HTMLElement | null =>
-  [...document.querySelectorAll(selector)].find(isVisible) ?? null
+const queryVisible = (selector: string): HTMLElement | null => dqa(selector).find(isVisible) ?? null
 
 const getRoomId = () => window.location.pathname.match(/\/(\d+)/)?.[1] ?? ''
 
@@ -95,9 +93,9 @@ const sendByDom = async (text: string) => {
     return false
   }
   setNativeValue(input, text)
-  await new Promise(resolve => setTimeout(resolve, 100))
+  await delay(100)
 
-  const sendButton = [...document.querySelectorAll(liveSendButtonSelector)].find(
+  const sendButton = dqa(liveSendButtonSelector).find(
     (button): button is HTMLButtonElement =>
       isVisible(button) && !(button as HTMLButtonElement).disabled,
   )
@@ -108,20 +106,92 @@ const sendByDom = async (text: string) => {
   return true
 }
 
+const normalizeText = (s: string) => s.replace(/\s+/g, ' ').trim()
+
+type EchoResult = 'confirmed' | 'dropped' | 'inconclusive'
+const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
+  const panel = dq('.chat-history-panel')
+  const myUid = String(getUID() ?? '')
+  if (!panel || !myUid) {
+    return Promise.resolve('inconclusive')
+  }
+  const target = normalizeText(text)
+  return new Promise<EchoResult>(resolve => {
+    let otherCount = 0
+    let done = false
+    const finish = (result: EchoResult) => {
+      if (done) {
+        return
+      }
+      done = true
+      observer.disconnect()
+      clearTimeout(timer)
+      resolve(result)
+    }
+    const classify = (item: Element): 'mine' | 'other' | null => {
+      if (!item.matches?.('.chat-item')) {
+        return null
+      }
+      const uid = item.getAttribute('data-uid')
+      if (!uid) {
+        return null
+      }
+      if (uid === myUid && normalizeText(item.getAttribute('data-danmaku') ?? '') === target) {
+        return 'mine'
+      }
+      return 'other'
+    }
+    const scan = (node: HTMLElement) => {
+      const items = node.matches?.('.chat-item') ? [node] : dqa(node, '.chat-item')
+      for (const item of items) {
+        const kind = classify(item)
+        if (kind === 'mine') {
+          finish('confirmed')
+          return
+        }
+        if (kind === 'other') {
+          otherCount += 1
+        }
+      }
+    }
+    const [observer] = childListSubtree(panel, mutations => {
+      for (const mutation of mutations) {
+        for (const node of mutation.addedNodes) {
+          if (node instanceof HTMLElement) {
+            scan(node)
+          }
+          if (done) {
+            return
+          }
+        }
+      }
+    })
+    const timer = setTimeout(() => finish(otherCount >= 3 ? 'dropped' : 'inconclusive'), timeout)
+  })
+}
+
+const notifySendFailed = (text: string, hint: string) => {
+  Toast.error(`弹幕「${text}」可能未发送成功。${hint}`, '直播弹幕助手', 5000)
+}
+
 export const sendDanmaku = async (text: string, compatible = false): Promise<boolean> => {
+  const echo = waitForOwnEcho(text)
+
   if (compatible) {
-    if (await sendByDom(text)) {
+    if (!(await sendByDom(text))) {
+      notifySendFailed(text, '未找到直播间输入框，请确认输入框可用。')
+      return false
+    }
+    if ((await echo) !== 'dropped') {
       return true
     }
-    console.warn('弹幕发送失败')
+    notifySendFailed(text, '弹幕可能发送失败。')
     return false
   }
-  if (await sendByApi(text)) {
+
+  if ((await sendByApi(text)) && (await echo) !== 'dropped') {
     return true
   }
-  if (await sendByDom(text)) {
-    return true
-  }
-  console.warn('弹幕发送失败：API 与 DOM 均不可用')
+  notifySendFailed(text, '可在该组件设置中开启「兼容发送」后重试。')
   return false
 }
