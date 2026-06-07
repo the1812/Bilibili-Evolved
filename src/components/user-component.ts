@@ -8,14 +8,18 @@ import { BisectorOptions } from './bisector/options'
  * 安装自定义组件
  * @param code 组件代码
  */
-export const installComponent = async (code: string) => {
+export const installComponent = async (code: string, parsedComponent?: ComponentMetadata) => {
   const { components } = await import('./component')
-  const { loadFeatureCode } = await import('@/core/external-input')
   let component: ComponentMetadata
-  try {
-    component = loadFeatureCode(code) as ComponentMetadata
-  } catch (e) {
-    throw new Error('无效的组件代码', { cause: e })
+  if (parsedComponent) {
+    component = parsedComponent
+  } else {
+    try {
+      const { loadFeatureCode } = await import('@/core/external-input')
+      component = loadFeatureCode(code) as ComponentMetadata
+    } catch (e) {
+      throw new Error('无效的组件代码', { cause: e })
+    }
   }
   const { settings } = await import('@/core/settings')
   if (isBuiltInComponent(component.name)) {
