@@ -3,10 +3,6 @@ import { useScopedConsole } from '@/core/utils/log'
 
 const console = useScopedConsole('liveDanmakuHelper')
 
-export const queryXPath = (xpath: string) =>
-  document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null)
-    .singleNodeValue as HTMLElement | null
-
 //  live/danmaku-sendbar
 const liveInputSelector = [
   '.control-panel-ctnr .chat-input-ctnr .chat-input',

@@ -59,6 +59,7 @@
 }
 
 .danmaku-action-bar.player-action-bar {
+  all: initial !important;
   position: fixed !important;
   right: auto !important;
   transform: translateY(-50%) !important;
@@ -83,6 +84,7 @@
   animation: none !important;
 
   .danmaku-action-btn {
+    all: initial !important;
     width: 24px !important;
     height: 24px !important;
     padding: 0 !important;

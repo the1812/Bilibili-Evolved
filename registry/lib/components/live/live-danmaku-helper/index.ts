@@ -6,15 +6,14 @@ import { select } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
 import { useScopedConsole } from '@/core/utils/log'
 import { LiveDanmakuHelperOptions, liveDanmakuHelperOptions } from './options'
-import { queryXPath, sendDanmaku } from './sender'
+import { sendDanmaku } from './sender'
 
 const name = 'liveDanmakuHelper'
 const console = useScopedConsole(name)
 
 const playerLayerClass = 'live-danmaku-helper-layer'
 
-const liveDanmakuTrackXPath =
-  '/html/body/div[1]/main/div[2]/section/div[1]/div[2]/div/div[2]/div[1]/div/div[2]/div[3]/div'
+const danmakuTrackSelector = '.danmaku-item-container'
 
 const addFavorite = (text: string) => {
   const { options } = getComponentSettings<LiveDanmakuHelperOptions>(name)
@@ -166,7 +165,7 @@ const unfreezeDanmaku = (el: HTMLElement) => {
 
 let playerCleanup: (() => void) | null = null
 const setupPlayerActions = () => {
-  const danmakuContainer = queryXPath(liveDanmakuTrackXPath)
+  const danmakuContainer = document.querySelector<HTMLElement>(danmakuTrackSelector)
   if (!danmakuContainer) {
     if (document.querySelector('.live-player-ctnr canvas')) {
       Toast.info(
@@ -292,16 +291,12 @@ const entry = async () => {
     return
   }
 
-  const { options } = getComponentSettings<LiveDanmakuHelperOptions>(name)
+  
+  await select('.chat-history-panel')
+  setupSidebarActions()
 
-  if (options.enableSidebarActions) {
-    await select('.chat-history-panel')
-    setupSidebarActions()
-  }
-  if (options.enablePlayerActions) {
-    await select('.live-player-ctnr')
-    setupPlayerActions()
-  }
+  await select(danmakuTrackSelector)
+  setupPlayerActions()
 }
 
 const unload = () => {
