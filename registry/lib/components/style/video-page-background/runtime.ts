@@ -39,6 +39,7 @@ const backgroundPositionMap: Record<BackgroundPosition, string> = {
 let currentOptions: Options
 let listenersAdded = false
 let themeObserver: MutationObserver | null = null
+let lastDarkState: boolean | null = null
 
 const isDarkMode = () => {
   // B 站官方深色主题：新版页用 `<html class="bili_dark">`，老版视频页用 `<html class="night-mode">`。
@@ -75,6 +76,10 @@ const applyThemeColors = () => {
     return
   }
   const dark = currentOptions.followDarkMode && isDarkMode()
+  if (dark === lastDarkState) {
+    return
+  }
+  lastDarkState = dark
   setProperty(
     '--be-video-page-background-color',
     dark ? currentOptions.darkBackgroundColor : currentOptions.backgroundColor,
@@ -98,6 +103,8 @@ const applyOptions = () => {
     '--be-video-page-background-position',
     backgroundPositionMap[currentOptions.backgroundPosition],
   )
+  // 选项变更时主题状态可能没变但配色值变了，重置缓存以强制刷新一次。
+  lastDarkState = null
   applyThemeColors()
 }
 
@@ -169,6 +176,7 @@ export const reload = start
 export const unload = () => {
   removeListeners()
   unobserveTheme()
+  lastDarkState = null
   document.getElementById(layerId)?.remove()
   cssProperties.forEach(name => document.documentElement.style.removeProperty(name))
 }
