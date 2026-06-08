@@ -65,14 +65,28 @@ export const options = defineOptionsMetadata({
     defaultValue: BackgroundPosition.CenterBottom,
     dropdownEnum: BackgroundPosition,
   },
+  followDarkMode: {
+    displayName: '随深色模式切换配色',
+    defaultValue: true,
+  },
   backgroundColor: {
-    displayName: '页面底色',
-    defaultValue: '#17181a',
+    displayName: '页面底色（浅色）',
+    defaultValue: '#d6ebea',
     color: true,
   },
   maskColor: {
-    displayName: '遮罩颜色',
-    defaultValue: '#17181a',
+    displayName: '遮罩颜色（浅色）',
+    defaultValue: '#d6ebea',
+    color: true,
+  },
+  darkBackgroundColor: {
+    displayName: '页面底色（深色）',
+    defaultValue: '#1d2736',
+    color: true,
+  },
+  darkMaskColor: {
+    displayName: '遮罩颜色（深色）',
+    defaultValue: '#1d2736',
     color: true,
   },
 })

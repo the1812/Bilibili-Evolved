@@ -1,17 +1,21 @@
-html {
+// 用 `:root:not(.iframe)` 提升 specificity 到 (0,2,0,0)，
+// 比 B 站官方 / 夜间模式同形规则 `html:not(.iframe)` 的 (0,1,1,0) 高一档，
+// 不再依赖 instantStyle 的注入顺序。
+:root:not(.iframe) {
   background-color: var(--be-video-page-background-color, #17181a) !important;
-}
 
-body {
-  background-color: transparent !important;
-  isolation: isolate;
-}
+  body {
+    background-color: transparent !important;
+    isolation: isolate;
+  }
 
-#app.app-v1,
-#video-page-app,
-.video-page-container,
-.video-container-v1 {
-  background-color: transparent !important;
+  #app.app-v1,
+  #video-page-app,
+  .video-page-container,
+  .video-container-v1,
+  .video-container {
+    background-color: transparent !important;
+  }
 }
 
 #be-video-page-background {
