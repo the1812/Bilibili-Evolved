@@ -62,10 +62,26 @@ watch(
   },
 )
 
+const isAllowedImageUrl = (url: string): boolean => {
+  if (/^data:image\//i.test(url)) {
+    return true
+  }
+  try {
+    const parsed = new URL(url)
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:'
+  } catch {
+    return false
+  }
+}
+
 const updateUrl = (url: string) => {
   const trimmed = url.trim()
   if (!trimmed) {
     options.backgroundImage = emptyBackgroundImage()
+    return
+  }
+  if (!isAllowedImageUrl(trimmed)) {
+    Toast.error('仅支持 http(s) 链接或 data:image/ 形式的图片', title, 3000)
     return
   }
   options.backgroundImage = { name: trimmed, url: trimmed }
