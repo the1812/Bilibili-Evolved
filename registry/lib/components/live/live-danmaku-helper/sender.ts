@@ -117,7 +117,6 @@ const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
   }
   const target = normalizeText(text)
   return new Promise<EchoResult>(resolve => {
-    let otherCount = 0
     let done = false
     const finish = (result: EchoResult) => {
       if (done) {
@@ -128,15 +127,30 @@ const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
       clearTimeout(timer)
       resolve(result)
     }
+    const getItemText = (item: Element): string => {
+      const dataDanmaku = item.getAttribute('data-danmaku')
+      if (dataDanmaku) {
+        return dataDanmaku
+      }
+      return item.querySelector('.danmaku-content, .chat-item-content')?.textContent ?? ''
+    }
     const classify = (item: Element): 'mine' | 'other' | null => {
       if (!item.matches?.('.chat-item')) {
+        return null
+      }
+      if (
+        item.classList.contains('system-msg') ||
+        item.classList.contains('gift-item') ||
+        item.classList.contains('welcome-msg') ||
+        item.classList.contains('entry-effect')
+      ) {
         return null
       }
       const uid = item.getAttribute('data-uid')
       if (!uid) {
         return null
       }
-      if (uid === myUid && normalizeText(item.getAttribute('data-danmaku') ?? '') === target) {
+      if (uid === myUid && normalizeText(getItemText(item)) === target) {
         return 'mine'
       }
       return 'other'
@@ -144,13 +158,9 @@ const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
     const scan = (node: HTMLElement) => {
       const items = node.matches?.('.chat-item') ? [node] : dqa(node, '.chat-item')
       for (const item of items) {
-        const kind = classify(item)
-        if (kind === 'mine') {
+        if (classify(item) === 'mine') {
           finish('confirmed')
           return
-        }
-        if (kind === 'other') {
-          otherCount += 1
         }
       }
     }
@@ -166,7 +176,7 @@ const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
         }
       }
     })
-    const timer = setTimeout(() => finish(otherCount >= 3 ? 'dropped' : 'inconclusive'), timeout)
+    const timer = setTimeout(() => finish('dropped'), timeout)
   })
 }
 
@@ -182,16 +192,23 @@ export const sendDanmaku = async (text: string, compatible = false): Promise<boo
       notifySendFailed(text, '未找到直播间输入框，请确认输入框可用。')
       return false
     }
-    if ((await echo) !== 'dropped') {
+    const echoResult = await echo
+    if (echoResult === 'confirmed' || echoResult === 'inconclusive') {
       return true
     }
-    notifySendFailed(text, '弹幕可能发送失败。')
+    notifySendFailed(text, '弹幕可能发送失败')
     return false
   }
 
-  if ((await sendByApi(text)) && (await echo) !== 'dropped') {
+  const apiOk = await sendByApi(text)
+  if (!apiOk) {
+    notifySendFailed(text, '可在该组件设置中开启「兼容发送」后重试。')
+    return false
+  }
+  const echoResult = await echo
+  if (echoResult === 'confirmed' || echoResult === 'inconclusive') {
     return true
   }
-  notifySendFailed(text, '可在该组件设置中开启「兼容发送」后重试。')
+  notifySendFailed(text, '弹幕可能发送失败')
   return false
 }
