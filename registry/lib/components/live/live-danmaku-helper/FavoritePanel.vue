@@ -42,6 +42,7 @@ import {
   getComponentSettings,
   removeComponentListener,
 } from '@/core/settings'
+import { Toast } from '@/core/toast'
 import { DefaultWidget, VPopup, VIcon, TextBox } from '@/ui'
 import { LiveDanmakuHelperOptions } from './options'
 import { sendDanmaku } from './sender'
@@ -68,11 +69,12 @@ const filteredFavorites = computed(() => {
 })
 
 const send = (text: string) => {
-  sendDanmaku(text)
+  sendDanmaku(text, options.compatibleSend)
 }
 
 const remove = (text: string) => {
   options.favorites = (options.favorites ?? []).filter(item => item !== text)
+  Toast.success('已删除收藏', '直播弹幕助手', 1000)
 }
 </script>
 
