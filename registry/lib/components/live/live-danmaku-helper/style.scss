@@ -1,0 +1,131 @@
+.danmaku-action-bar {
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 4px;
+  z-index: 100;
+  background-color: rgba(40, 40, 40, 0.7);
+  backdrop-filter: blur(6px) saturate(1.2);
+  -webkit-backdrop-filter: blur(6px) saturate(1.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  animation: danmaku-action-bar-in 0.15s ease-out;
+
+  .danmaku-action-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    border-radius: 3px;
+    background-color: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.15s ease-out;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+
+    &.plus-one:hover {
+      background-color: var(--theme-color, #00a1d6);
+    }
+
+    &.favorite:hover {
+      background-color: #f6be18;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
+  }
+}
+
+@keyframes danmaku-action-bar-in {
+  from {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+.danmaku-action-bar.player-action-bar {
+  all: initial !important;
+  position: fixed !important;
+  right: auto !important;
+  transform: translateY(-50%) !important;
+  z-index: 2147483647 !important;
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 2px !important;
+  padding: 2px !important;
+  width: fit-content !important;
+  height: fit-content !important;
+  white-space: nowrap !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  box-sizing: border-box !important;
+  background-color: rgba(40, 40, 40, 0.7) !important;
+  backdrop-filter: blur(6px) saturate(1.2) !important;
+  -webkit-backdrop-filter: blur(6px) saturate(1.2) !important;
+  border-radius: 4px !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+  animation: none !important;
+
+  .danmaku-action-btn {
+    all: initial !important;
+    width: 24px !important;
+    height: 24px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    border: none !important;
+    border-radius: 3px !important;
+    background-color: transparent !important;
+    color: #fff !important;
+    cursor: pointer !important;
+    box-sizing: border-box !important;
+    transition: background-color 0.15s ease-out !important;
+  }
+
+  .danmaku-action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  .danmaku-action-btn.plus-one:hover {
+    background-color: var(--theme-color, #00a1d6) !important;
+  }
+
+  .danmaku-action-btn.favorite:hover {
+    background-color: #f6be18 !important;
+  }
+}
+
+// 替代对每条弹幕逐个写 style 的 MutationObserver，避免高人气直播间掉帧。
+.live-danmaku-helper-layer > *:not(.bili-danmaku-x-dm-rotate) {
+  pointer-events: auto !important;
+}
+
+.chat-history-panel .chat-history-list .chat-item.danmaku-item {
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+  }
+}
+
+body.dark .chat-history-panel .chat-history-list .chat-item.danmaku-item:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
