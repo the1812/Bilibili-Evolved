@@ -35,7 +35,7 @@ const handleRoomIdChange = (value: string) => {
 }
 const handleClickTimesChange = (value: string) => {
   const parsedNum = parseInt(value)
-  if (!isNaN(parsedNum)){
+  if (!isNaN(parsedNum)) {
     clickTimes.value = parsedNum.toString()
   }
 }
