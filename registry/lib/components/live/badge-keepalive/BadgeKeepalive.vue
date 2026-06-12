@@ -21,11 +21,11 @@
 import { ref } from 'vue'
 import { TextBox, AsyncButton } from '@/ui'
 
-import { validateRoomId, getLiveRoomId, keepAliveRequest } from './utils'
+import { validateRoomId, getLiveRoomId, keepAliveRequest, defaultClickTimes } from './utils'
 import { Toast } from '@/core/toast'
 
 const roomid = ref(getLiveRoomId())
-const clickTimes = ref('300')
+const clickTimes = ref(defaultClickTimes)
 const handleRoomIdChange = (value: string) => {
   if (validateRoomId(value)) {
     roomid.value = value
