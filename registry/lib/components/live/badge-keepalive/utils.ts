@@ -31,7 +31,9 @@ export async function getLiveRoomUserInfo(room_id: string) {
   return validateJSON(data)
 }
 
-export async function keepAliveRequest(room_id: string, click_time = '300') {
+export const defaultClickTimes = '300'
+
+export async function keepAliveRequest(room_id: string, click_time = defaultClickTimes) {
   // 需要先获取直播间房主的 UID
   const data = await getLiveRoomUserInfo(room_id)
 
