@@ -100,7 +100,7 @@ export default Vue.extend({
         return
       }
       const [mainJson, messageJson] = await Promise.all([
-        getJsonWithCredentials('https://api.bilibili.com/x/msgfeed/unread'),
+        getJsonWithCredentials('https://api.vc.bilibili.com/x/im/web/msgfeed/unread'),
         getJsonWithCredentials(
           'https://api.vc.bilibili.com/session_svr/v1/session_svr/single_unread',
         ),
@@ -117,13 +117,11 @@ export default Vue.extend({
       if (!this.item.notifyCount) {
         return
       }
-      console.log(entries)
       entries.forEach(e => {
         if (!e.prop) {
           return
         }
         const count = mainJson.data[e.prop] as number
-        console.log(e.prop, e.count, count)
         if (count > 0) {
           e.count = count
         }
