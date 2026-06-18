@@ -1,11 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment, no-underscore-dangle, no-empty, no-empty-function, @typescript-eslint/no-empty-function, no-extend-native, no-loop-func, func-names, @typescript-eslint/no-use-before-define */
 // @ts-nocheck
-import { useScopedConsole } from '@/core/utils/log'
-
 export const DM_MERGER_VERSION = '2.2'
-
-const scopedConsole = useScopedConsole('弹幕合并器')
-const dmLog = (...args) => scopedConsole.log(...args)
 
 // --- 播放器 Store 捕获：注入页面主世界（油猴隔离沙箱 + blob 桥接）---
 function dmMergerPageBridgeMain() {
@@ -19,7 +14,7 @@ function dmMergerPageBridgeMain() {
   w.__dmMergerStores = w.__dmMergerStores || null
 
   let lastWebpackPatchAt = 0
-  const dmPageLog = (...args) => console.log('[弹幕合并器][页面]', ...args)
+  const dmPageLog = () => {}
 
   const captureStores = (target, from) => {
     if (!target || typeof target !== 'object') {
@@ -552,5 +547,4 @@ export const injectPageBridge = (pageWin: () => Window) => {
   } catch (e) {
     injectInline()
   }
-  dmLog('页面桥接注入请求已发送')
 }
