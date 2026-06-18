@@ -70,7 +70,7 @@
         </div>
 
         <div
-          v-else-if="!loading && searched && !sortedResults.length"
+          v-else-if="!loading && searched && !displayResults.length"
           style="text-align: center; color: var(--text3, #999); margin-top: 20px"
         >
           未找到相关视频
@@ -78,7 +78,7 @@
 
         <template v-else>
           <VideoResultCard
-            v-for="video in sortedResults"
+            v-for="video in displayResults"
             :key="video.bvid"
             :video="video"
             :checked="isBvidSelected(video.bvid)"
@@ -197,6 +197,9 @@ export default Vue.extend({
       hasMore: true,
       searchInput: '',
       localSortMode: 'default' as SortMode,
+      displayResults: [] as MergerSearchVideo[],
+      sortingGuard: false,
+      scrollDebounceTimer: null as ReturnType<typeof setTimeout> | null,
       searched: false,
       loadMorePage: 1,
       partModeState: {} as Record<string, boolean>,
@@ -211,18 +214,8 @@ export default Vue.extend({
         { value: 'danmaku', label: '弹幕量' },
       ]
     },
-    sortedResults(): MergerSearchVideo[] {
-      const list = [...this.results]
-      if (this.localSortMode === 'play') {
-        return list.sort((a, b) => (b.play || 0) - (a.play || 0))
-      }
-      if (this.localSortMode === 'danmaku') {
-        return list.sort((a, b) => (b.video_review || 0) - (a.video_review || 0))
-      }
-      return list
-    },
     showActions(): boolean {
-      return this.sortedResults.length > 0 || this.hasExpandedPageLists
+      return this.displayResults.length > 0 || this.hasExpandedPageLists
     },
     hasExpandedPageLists(): boolean {
       return Object.values(this.expandedPages).some(pages => pages.length > 0)
@@ -281,12 +274,16 @@ export default Vue.extend({
       this.searchInput = value
     },
     sortMode(value: SortMode) {
-      this.localSortMode = value
+      if (this.localSortMode !== value) {
+        this.localSortMode = value
+        this.applyDisplaySort()
+      }
     },
-    results(value: MergerSearchVideo[]) {
-      if (value.length > 0 || this.errorMessage) {
+    results() {
+      if (this.results.length > 0 || this.errorMessage) {
         this.searched = true
       }
+      this.applyDisplaySort()
     },
     errorMessage(value: string) {
       if (value) {
@@ -319,11 +316,26 @@ export default Vue.extend({
         transition: 'all 0.2s',
       }
     },
+    applyDisplaySort() {
+      const list = [...this.results]
+      if (this.localSortMode === 'play') {
+        list.sort((a, b) => (b.play || 0) - (a.play || 0))
+      } else if (this.localSortMode === 'danmaku') {
+        list.sort((a, b) => (b.video_review || 0) - (a.video_review || 0))
+      }
+      this.displayResults = list
+    },
     onSortChange(mode: SortMode) {
-      if (!this.results.length) {
+      if (!this.results.length || this.localSortMode === mode) {
         return
       }
+      this.sortingGuard = true
       this.localSortMode = mode
+      this.applyDisplaySort()
+      this.$emit(MERGER_MODAL_EVENTS.SORT_CHANGE, { mode })
+      this.$nextTick(() => {
+        this.sortingGuard = false
+      })
     },
     normalizeKeyword(raw: string): string {
       const trimmed = raw.trim()
@@ -354,24 +366,35 @@ export default Vue.extend({
       this.$emit(MERGER_MODAL_EVENTS.SEARCH, { keyword, page: 1 })
     },
     onResultsScroll(event: Event) {
-      if (this.loadingMore || !this.hasMore || this.loading) {
+      if (this.loadingMore || !this.hasMore || this.loading || this.sortingGuard) {
         return
       }
 
-      const el = event.target as HTMLElement
-      const { scrollTop, scrollHeight, clientHeight } = el
-      if (scrollTop + clientHeight < scrollHeight - 100) {
-        return
+      if (this.scrollDebounceTimer) {
+        clearTimeout(this.scrollDebounceTimer)
       }
 
-      const keyword = this.normalizeKeyword(this.searchInput)
-      if (!keyword) {
-        return
-      }
+      this.scrollDebounceTimer = setTimeout(() => {
+        this.scrollDebounceTimer = null
+        if (this.sortingGuard) {
+          return
+        }
 
-      const nextPage = this.loadMorePage + 1
-      this.loadMorePage = nextPage
-      this.$emit(MERGER_MODAL_EVENTS.LOAD_MORE, { keyword, page: nextPage })
+        const el = event.target as HTMLElement
+        const { scrollTop, scrollHeight, clientHeight } = el
+        if (scrollTop + clientHeight < scrollHeight - 100) {
+          return
+        }
+
+        const keyword = this.normalizeKeyword(this.searchInput)
+        if (!keyword) {
+          return
+        }
+
+        const nextPage = this.loadMorePage + 1
+        this.loadMorePage = nextPage
+        this.$emit(MERGER_MODAL_EVENTS.LOAD_MORE, { keyword, page: nextPage })
+      }, 150)
     },
     isBvidExpanded(bvid: string): boolean {
       return !!this.expandedBvids[bvid]
@@ -474,11 +497,11 @@ export default Vue.extend({
       this.$emit('part-duration-change', payload)
     },
     onSelectAll() {
-      if (!this.sortedResults.length) {
+      if (!this.displayResults.length) {
         return
       }
 
-      const allBvids = this.sortedResults.map(v => v.bvid)
+      const allBvids = this.displayResults.map(v => v.bvid)
       const allSelected = allBvids.every(bvid => this.selectedBvids.includes(bvid))
 
       const next = allSelected
