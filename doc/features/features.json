@@ -841,6 +841,14 @@
   },
   {
     "type": "component",
+    "name": "danmakuMerger",
+    "displayName": "弹幕合并器",
+    "description": "将其他 B 站视频的弹幕合并进原生播放器画面与右侧弹幕列表（不自绘）。支持多源合并、分P有效顺延、BV 前缀列表显示。",
+    "fullRelativePath": "../../registry/dist/components/video/danmaku/merger.js",
+    "fullAbsolutePath": "registry/dist/components/video/danmaku/merger.js"
+  },
+  {
+    "type": "component",
     "name": "videoDefaultLocation",
     "displayName": "视频页默认定位",
     "description": "打开视频/番剧时自动定位到指定位置\r\n\r\n位置：距离页面顶部的像素距离\\\r\n默认位置：打开视频时自动定位到此处\\\r\n位置测试：查看、调整当前页面所在位置\r\n\r\n当前版本限制默认位置的最大值为 4000。\\\r\n若有其他希望支持的页面，请提交反馈。\\\r\n脚本不会等待评论完全加载，因此较大的默认位置将无法正确定位。\r\n",

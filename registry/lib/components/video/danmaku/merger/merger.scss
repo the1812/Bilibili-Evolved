@@ -1,0 +1,372 @@
+// 弹幕合并器组件样式（弹窗、角标、快合按钮等）
+
+#dm-merger-btn {
+    cursor: pointer;
+    color: var(--text2, #61666d);
+    font-size: 13px;
+    margin-left: -20px;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+#dm-merger-btn:hover {
+    color: #00AEEC;
+}
+.dm-merger-modal-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 2147483000;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+
+}
+.dm-merger-modal {
+    background: var(--bg1, #ffffff);
+    color: var(--text1, #222222);
+    border-radius: 12px;
+    width: 850px;
+    max-width: 90vw;
+    max-height: 85vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    overflow: hidden;
+    border: 1px solid var(--line_light, #f1f1f1);
+}
+.dm-merger-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--line_regular, #e7e7e7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dm-merger-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+.dm-merger-close {
+    cursor: pointer;
+    font-size: 20px;
+    color: var(--text3, #999);
+    padding: 0 5px;
+}
+.dm-merger-close:hover {
+    color: var(--text1, #222);
+}
+.dm-merger-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+.dm-merger-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+#dm-search-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--line_regular, #ccd0d7);
+    background: var(--bg2, #f4f5f7);
+    color: var(--text1, #222222);
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s;
+}
+#dm-search-input:focus {
+    border-color: #00AEEC;
+    background: var(--bg1, #ffffff);
+}
+#dm-search-btn {
+    padding: 8px 20px;
+    background: #00AEEC;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+#dm-search-btn:hover {
+    background: #00a1d6;
+}
+.dm-result-item {
+    display: flex;
+    gap: 16px;
+    padding: 12px;
+    border-bottom: 1px solid var(--line_light, #f0f0f0);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.dm-result-item:hover {
+    background: var(--bg2, #f4f5f7);
+    transform: translateX(4px);
+}
+.dm-result-cover {
+    width: 160px;
+    height: 100px;
+    border-radius: 6px;
+    object-fit: cover;
+    background: #e7e7e7;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+.dm-result-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.dm-result-title {
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.5;
+    max-height: 45px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    color: var(--text1, #222);
+    margin-bottom: 4px;
+}
+.dm-result-meta {
+    font-size: 12px;
+    color: var(--text3, #999);
+}
+.dm-page-list {
+    padding-left: 10px;
+    margin-top: 5px;
+    border-left: 2px solid #00AEEC;
+}
+.dm-page-item {
+    padding: 6px 10px;
+    font-size: 13px;
+    color: var(--text2, #505050);
+    cursor: pointer;
+    border-radius: 4px;
+}
+.dm-page-item:hover {
+    background: var(--bg2, #e3e5e7);
+    color: #00AEEC;
+}
+/* 自定义弹幕层 */
+.custom-dm-layer {
+    pointer-events: none;
+    overflow: hidden;
+}
+.dm-interactive {
+    pointer-events: auto !important;
+    cursor: pointer;
+    text-decoration: underline;
+}
+.dm-interactive:hover {
+    color: #00AEEC !important;
+    z-index: 100;
+}
+/* 自定义确认弹窗 */
+.dm-confirm-modal {
+    background: var(--bg1, #fff);
+    border-radius: 8px;
+    width: 400px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    text-align: center;
+}
+.dm-confirm-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--text1, #222); }
+.dm-confirm-content { font-size: 14px; color: var(--text2, #555); margin-bottom: 24px; line-height: 1.5; }
+.dm-confirm-btns { display: flex; justify-content: center; gap: 12px; }
+.dm-confirm-btn { padding: 8px 24px; border-radius: 4px; cursor: pointer; border: none; font-size: 14px; transition: opacity 0.2s;}
+.dm-confirm-btn.primary { background: #00AEEC; color: #fff; }
+.dm-confirm-btn.cancel { background: var(--bg2, #e7e7e7); color: var(--text2, #555); }
+.dm-confirm-btn:hover { opacity: 0.8; }
+
+/* 复选框样式 */
+.dm-page-item { display:flex; align-items:center; }
+.dm-checkbox {
+    width:16px; height:16px; border:2px solid #ccc; border-radius:3px; margin-right:10px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; transition:all 0.2s;
+}
+.dm-checkbox.checked { background:#00AEEC; border-color:#00AEEC; }
+.dm-checkbox.checked::after { content:''; display:block; width:4px; height:8px; border:solid #fff; border-width:0 2px 2px 0; transform:rotate(45deg) translate(0,-1px); }
+
+/* 深色模式适配 */
+html[data-dark-theme="true"] .dm-merger-modal,
+body.dark .dm-merger-modal,
+html[data-dark-theme="true"] .dm-confirm-modal,
+body.dark .dm-confirm-modal {
+    --dm-bg1: #222;
+    --dm-bg2: #333;
+    --dm-text1: #eee;
+    --dm-text2: #ccc;
+    --dm-text3: #999;
+    --dm-line-regular: #444;
+    --dm-line-light: #333;
+    --bg1: var(--dm-bg1);
+    --bg2: var(--dm-bg2);
+    --text1: var(--dm-text1);
+    --text2: var(--dm-text2);
+    --text3: var(--dm-text3);
+    --line_regular: var(--dm-line-regular);
+    --line_light: var(--dm-line-light);
+    background: var(--dm-bg1);
+    color: var(--dm-text1);
+}
+
+/* 输入框与下拉框深色模式 */
+html[data-dark-theme="true"] .dm-merger-modal .dm-offset-input,
+body.dark .dm-merger-modal .dm-offset-input,
+html[data-dark-theme="true"] .dm-merger-modal select,
+body.dark .dm-merger-modal select,
+html[data-dark-theme="true"] .dm-merger-modal input[type=text],
+body.dark .dm-merger-modal input[type=text],
+html[data-dark-theme="true"] .dm-merger-modal input[type=number],
+body.dark .dm-merger-modal input[type=number] {
+    color: var(--dm-text1, #eee) !important;
+    background: var(--dm-bg2, #333) !important;
+    border-color: var(--dm-line-regular, #444) !important;
+}
+.dm-part-mode-panel {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--line_regular, #e3e5e7);
+    border-radius: 6px;
+    background: var(--bg2, #f9f9f9);
+}
+.dm-part-mode-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+.dm-part-mode-fields {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--line_regular, #ddd);
+}
+.dm-part-duration-input {
+    width: 64px;
+    padding: 2px 6px;
+    border: 1px solid var(--line_regular, #ccd0d7);
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    background: var(--bg1, #fff);
+    color: var(--text1, #222);
+}
+.dm-part-calc-btn {
+    padding: 4px 12px;
+    background: #00AEEC;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.dm-part-calc-btn:hover { opacity: 0.85; }
+
+html[data-dark-theme="true"] .dm-result-item:hover,
+body.dark .dm-result-item:hover {
+    background: var(--bg2);
+}
+
+/* ── 推荐位 / 稍后再看快合按钮 ── */
+
+.dm-quick-merge-btn {
+    position: absolute !important;
+    right: 6px !important;
+    bottom: 6px !important;
+    width: 28px !important;
+    height: 28px !important;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 100 !important;
+    color: #fff !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 确保父容器拥有定位上下文，覆盖首页新版卡片和旧版列表 */
+.pic-box,
+.video-card .pic,
+.video-card-common .pic,
+.bili-video-card__cover,
+.bili-video-card .cover,
+.video-page-card-small .pic-box,
+.recommend-video-card .pic-box,
+.card-box .pic-box {
+    position: relative !important;
+}
+
+/* 各种卡片容器的 Hover 触发 */
+.pic-box:hover .dm-quick-merge-btn,
+.video-card .pic:hover .dm-quick-merge-btn,
+.video-card-common .pic:hover .dm-quick-merge-btn,
+.bili-video-card__cover:hover .dm-quick-merge-btn,
+.bili-video-card .cover:hover .dm-quick-merge-btn,
+.video-page-card-small .pic-box:hover .dm-quick-merge-btn,
+.recommend-video-card .pic-box:hover .dm-quick-merge-btn,
+.card-box .pic-box:hover .dm-quick-merge-btn {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+.dm-quick-merge-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8) !important;
+    transform: scale(1.05) !important;
+}
+
+.dm-quick-merge-btn.active {
+    color: #fff !important;
+    background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+/* 状态提示小气泡 */
+.dm-quick-tip {
+    position: absolute !important;
+    right: 34px !important;
+    top: 50% !important;
+    transform: translateY(-50%) translateX(10px) scale(0.8) !important;
+    white-space: nowrap !important;
+    background: rgba(21, 21, 21, 0.9) !important;
+    color: #fff !important;
+    padding: 5px 10px !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    pointer-events: none !important;
+    opacity: 0 !important;
+    transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) !important;
+    z-index: 200 !important;
+}
+
+.dm-quick-merge-btn:hover .dm-quick-tip {
+    opacity: 1 !important;
+    transform: translateY(-50%) translateX(0) scale(1) !important;
+}
+
+/* 强制对齐并修正原生「稍后再看」提示（.wl-tips） */
+.wl-tips {
+    left: auto !important;
+    right: 34px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin-left: 0 !important;
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    background: rgba(21, 21, 21, 0.9) !important;
+    height: auto !important;
+    border-radius: 4px !important;
+}
