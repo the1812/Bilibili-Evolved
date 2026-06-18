@@ -1,17 +1,22 @@
-import { removeStyle } from '@/core/style'
+import { styledComponentEntry } from '@/components/styled-component'
 import { defineComponentMetadata } from '@/components/define'
-import type { ComponentEntry } from '@/components/types'
+import { removeStyle } from '@/core/style'
 import { videoAndBangumiUrls, watchlaterUrls } from '@/core/utils/urls'
 import { createMergerContext } from './entry'
+import { options } from './options'
 
-const DM_MERGER_STYLE_NAME = 'danmakuMerger'
+const STYLE_NAME = 'danmakuMerger'
 
 let cleanup: (() => void) | null = null
 
-const entry: ComponentEntry = async context => {
-  cleanup?.()
-  cleanup = await createMergerContext(context)
-}
+const mergerEntry = styledComponentEntry(
+  () => import('./merger.scss'),
+  async context => {
+    cleanup?.()
+    cleanup = await createMergerContext(context)
+    return cleanup
+  },
+)
 
 export const component = defineComponentMetadata({
   name: 'danmakuMerger',
@@ -25,12 +30,13 @@ export const component = defineComponentMetadata({
     name: 'XianYuDaXian',
     link: 'https://github.com/XianYuDaXian',
   },
-  entry,
-  reload: entry,
+  options,
+  extraOptions: () => import('./ui/MaintenanceOptions.vue').then(m => m.default),
+  entry: mergerEntry,
   unload: () => {
     cleanup?.()
     cleanup = null
-    removeStyle(DM_MERGER_STYLE_NAME)
+    removeStyle(STYLE_NAME)
   },
   urlInclude: [...videoAndBangumiUrls, ...watchlaterUrls],
 })

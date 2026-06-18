@@ -1,6 +1,6 @@
 import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
 
-/** 弹幕合并器组件设置（Phase 3 扩展维护操作区） */
+/** 弹幕合并器组件设置 */
 export const options = defineOptionsMetadata({
   showMaintenanceActions: {
     defaultValue: true,
