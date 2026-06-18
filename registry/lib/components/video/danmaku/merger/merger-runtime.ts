@@ -1,14 +1,40 @@
 /* eslint-disable */
 // @ts-nocheck
+import { addStyle, removeStyle } from '@/core/style'
 import { useScopedConsole } from '@/core/utils/log'
 
+const DM_MERGER_STYLE_NAME = 'danmakuMerger'
+const DM_MERGER_KEYS_INDEX = 'dm_merger_keys_index'
+
+const trackMergerStorageKey = key => {
+  try {
+    const keys = JSON.parse(String(GM_getValue(DM_MERGER_KEYS_INDEX, '[]')))
+    if (!keys.includes(key)) {
+      keys.push(key)
+      GM_setValue(DM_MERGER_KEYS_INDEX, JSON.stringify(keys))
+    }
+  } catch (e) { /* ignore */ }
+}
+
+const listMergerStorageKeys = () => {
+  try {
+    return JSON.parse(String(GM_getValue(DM_MERGER_KEYS_INDEX, '[]')))
+  } catch (e) {
+    return []
+  }
+}
+
 const console = useScopedConsole('弹幕合并器')
-const dmLog = (...args: unknown[]) => console.log(...args)
-const dmWarn = (...args: unknown[]) => console.warn(...args)
+const dmLog = (...args) => console.log(...args)
+const dmWarn = (...args) => console.warn(...args)
 
 export type MergerCleanup = () => void
 
 export const initDanmakuMerger = (): MergerCleanup => {
+  const menuCommandIds = []
+  const registerMergerMenu = (name, fn) => {
+    menuCommandIds.push(GM_registerMenuCommand(name, fn))
+  }
         const pageWin = () => unsafeWindow
     try { pageWin().__dmMergerLoadedVersion = '1.6'; } catch (e) { }
 
@@ -1197,7 +1223,7 @@ export const initDanmakuMerger = (): MergerCleanup => {
 
     // --- 样式定义 ---
     // 强制指定颜色以适配深色/浅色模式
-    GM_addStyle(`
+    addStyle(`
         #dm-merger-btn {
             cursor: pointer;
             color: var(--text2, #61666d);
@@ -1466,7 +1492,7 @@ export const initDanmakuMerger = (): MergerCleanup => {
         body.dark .dm-result-item:hover {
             background: var(--bg2);
         }
-    `);
+    `, 'danmakuMerger');
 
     // --- 自定义弹幕引擎 ---
     class DanmakuEngine {
@@ -1653,7 +1679,8 @@ export const initDanmakuMerger = (): MergerCleanup => {
             const videoId = this.getCurrentVideoId();
             const key = `dm_merger_store_${videoId}`;
             const sourcesMeta = this.getSources();
-            GM_setValue(key, JSON.stringify(sourcesMeta));
+            GM_setValue(key, JSON.stringify(sourcesMeta));
+            trackMergerStorageKey(key);
         }
 
         // 重置引擎（用于 SPA 导航切换视频）
@@ -2015,7 +2042,8 @@ export const initDanmakuMerger = (): MergerCleanup => {
     function savePartModeState(bvid, state) {
         if (!bvid) return;
         try {
-            GM_setValue(getPartModeStorageKey(bvid), JSON.stringify(state));
+            GM_setValue(getPartModeStorageKey(bvid), JSON.stringify(state));
+            trackMergerStorageKey(getPartModeStorageKey(bvid));
         } catch (e) { }
     }
 
@@ -4024,13 +4052,13 @@ export const initDanmakuMerger = (): MergerCleanup => {
 
 
     // --- 脚本菜单 ---
-    GM_registerMenuCommand('🔍 弹幕列表诊断', async () => {
+    registerMergerMenu('🔍 弹幕列表诊断', async () => {
         const diag = await NativeDanmaku.diagAsync(8000);
         dmLog('菜单诊断', diag);
         alert(diag ? JSON.stringify(diag, null, 2) : '诊断失败');
     });
 
-    GM_registerMenuCommand('🔄 重新同步右侧列表', async () => {
+    registerMergerMenu('🔄 重新同步右侧列表', async () => {
         if (!await NativeDanmaku.waitForPlayer(20000)) {
             const r = NativeDanmaku.getPlayerReadiness();
             const hint = !r.hasBpx && !r.hasVideo
@@ -4052,9 +4080,8 @@ export const initDanmakuMerger = (): MergerCleanup => {
         alert(`同步完成：画面 ${result.screen} 条，列表 ${result.list ? '已写入' : '未写入'}\nallDm: ${NativeDanmaku.getStores()?.dmListStore?.allDm?.length ?? '无'}`);
     });
 
-    GM_registerMenuCommand('🗑️ 清除所有弹幕合并记忆', () => {
-        const allKeys = GM_listValues();
-        const dmKeys = allKeys.filter(k => k.startsWith('dm_merger_store_'));
+    registerMergerMenu('🗑️ 清除所有弹幕合并记忆', () => {
+        const dmKeys = listMergerStorageKeys().filter(k => k.startsWith('dm_merger_store_'));
 
         if (dmKeys.length === 0) {
             alert('没有已保存的数据。');
@@ -4077,6 +4104,8 @@ export const initDanmakuMerger = (): MergerCleanup => {
   })
   init()
   return () => {
+    removeStyle(DM_MERGER_STYLE_NAME)
+    menuCommandIds.forEach(id => GM_unregisterMenuCommand(id))
     engine.reset()
     const btn = document.getElementById('dm-merger-btn')
     if (btn) btn.remove()
