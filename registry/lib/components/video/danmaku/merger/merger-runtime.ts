@@ -30,7 +30,32 @@ const dmWarn = (...args) => console.warn(...args)
 
 export type MergerCleanup = () => void
 
+const bindMonkeyApisFromBe = () => {
+  const host = (
+    typeof unsafeWindow !== 'undefined' ? unsafeWindow : globalThis
+  ) as typeof globalThis & {
+    bilibiliEvolved?: {
+      monkeyApis?: {
+        GM_getValue?: typeof GM_getValue
+        GM_setValue?: typeof GM_setValue
+        GM_deleteValue?: typeof GM_deleteValue
+        GM_xmlhttpRequest?: typeof GM_xmlhttpRequest
+        GM_info?: typeof GM_info
+      }
+    }
+  }
+  const monkey = host.bilibiliEvolved?.monkeyApis
+  if (!monkey) return
+  const g = globalThis as Record<string, unknown>
+  for (const [name, fn] of Object.entries(monkey)) {
+    if (typeof fn === 'function' && typeof g[name] !== 'function') {
+      g[name] = fn
+    }
+  }
+}
+
 export const initDanmakuMerger = (): MergerCleanup => {
+  bindMonkeyApisFromBe()
   dmLog('BE 组件版 v1.6 已加载（addStyle）')
   const menuCommandIds = []
   const registerMergerMenu = (name, fn) => {
