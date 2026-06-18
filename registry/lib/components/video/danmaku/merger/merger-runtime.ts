@@ -31,8 +31,13 @@ const dmWarn = (...args) => console.warn(...args)
 export type MergerCleanup = () => void
 
 export const initDanmakuMerger = (): MergerCleanup => {
+  dmLog('BE 组件版 v1.6 已加载（addStyle）')
   const menuCommandIds = []
   const registerMergerMenu = (name, fn) => {
+    if (typeof GM_registerMenuCommand !== 'function') {
+      dmWarn('GM_registerMenuCommand 不可用，跳过菜单项:', name)
+      return
+    }
     menuCommandIds.push(GM_registerMenuCommand(name, fn))
   }
         const pageWin = () => unsafeWindow
@@ -4105,7 +4110,9 @@ export const initDanmakuMerger = (): MergerCleanup => {
   init()
   return () => {
     removeStyle(DM_MERGER_STYLE_NAME)
-    menuCommandIds.forEach(id => GM_unregisterMenuCommand(id))
+    if (typeof GM_unregisterMenuCommand === 'function') {
+      menuCommandIds.forEach(id => GM_unregisterMenuCommand(id))
+    }
     engine.reset()
     const btn = document.getElementById('dm-merger-btn')
     if (btn) btn.remove()
