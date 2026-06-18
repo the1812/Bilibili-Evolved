@@ -146,6 +146,7 @@
 
 <script lang="ts">
 import ModalShell from './shared/ModalShell.vue'
+import { normalizeHttpsUrl } from './shared/media-url'
 import { MANAGER_MODAL_EVENTS, type MergerManagerGroup, type MergerOffsetType } from './contracts'
 
 export default Vue.extend({
@@ -185,7 +186,7 @@ export default Vue.extend({
   },
   methods: {
     coverUrl(cover: string): string {
-      return cover.startsWith('//') ? `https:${cover}` : cover
+      return normalizeHttpsUrl(cover)
     },
     isGroupExpanded(groupKey: string): boolean {
       return this.expandedGroups.includes(groupKey)

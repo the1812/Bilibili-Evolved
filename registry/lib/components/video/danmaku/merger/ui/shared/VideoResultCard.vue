@@ -41,6 +41,7 @@
 
 <script lang="ts">
 import type { MergerSearchVideo } from '../contracts'
+import { normalizeHttpsUrl } from './media-url'
 
 function formatDuration(duration?: number | string): string {
   if (!duration) {
@@ -90,8 +91,7 @@ export default Vue.extend({
       return stripHtmlTags(this.video.title)
     },
     coverUrl(): string {
-      const { pic } = this.video
-      return pic.startsWith('//') ? `https:${pic}` : pic
+      return normalizeHttpsUrl(this.video.pic)
     },
     durationText(): string {
       return formatDuration(this.video.duration)

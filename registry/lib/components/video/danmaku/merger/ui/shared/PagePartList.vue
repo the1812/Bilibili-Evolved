@@ -268,6 +268,7 @@
 
 <script lang="ts">
 import type { MergerOffsetType, PagePartListRow } from '../contracts'
+import { normalizeHttpsUrl } from './media-url'
 
 /** 视频元信息（搜索展开分 P 区 data-* 与展示用） */
 export interface MergerVideoMeta {
@@ -318,8 +319,7 @@ export default Vue.extend({
       return [...this.pages].sort((a, b) => a.page - b.page)
     },
     coverUrl(): string {
-      const pic = this.videoMeta.pic || ''
-      return pic.startsWith('//') ? `https:${pic}` : pic
+      return normalizeHttpsUrl(this.videoMeta.pic || '')
     },
     partModeHintText(): string {
       return this.partModeHint || DEFAULT_PART_MODE_HINT
