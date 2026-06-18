@@ -2,7 +2,7 @@
 // @ts-nocheck
 import { useScopedConsole } from '@/core/utils/log'
 
-export const DM_MERGER_VERSION = '2.1'
+export const DM_MERGER_VERSION = '2.2'
 
 const scopedConsole = useScopedConsole('弹幕合并器')
 const dmLog = (...args) => scopedConsole.log(...args)

@@ -238,25 +238,72 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       ]),
     )
 
+  const applySearchSort = (
+    results: MergerSearchVideo[],
+    mode: SearchUiState['sortMode'],
+  ): MergerSearchVideo[] => {
+    const list = [...results]
+    if (mode === 'play') {
+      return list.sort((a, b) => (b.play || 0) - (a.play || 0))
+    }
+    if (mode === 'danmaku') {
+      return list.sort((a, b) => (b.video_review || 0) - (a.video_review || 0))
+    }
+    return list
+  }
+
+  const isSameSearchResults = (
+    current: MergerSearchVideo[],
+    next: MergerSearchVideo[],
+  ): boolean => {
+    if (current.length !== next.length) {
+      return false
+    }
+    return current.every((item, index) => item.bvid === next[index]?.bvid)
+  }
+
+  const syncExpandedPagesToVm = (bvid?: string) => {
+    if (!searchVm) {
+      return
+    }
+    if (bvid) {
+      const pages = searchState.expandedPages[bvid]
+      if (pages) {
+        Vue.set(
+          searchVm.$data.expandedPages,
+          bvid,
+          pages.map(page => ({ ...page })),
+        )
+      } else {
+        Vue.delete(searchVm.$data.expandedPages, bvid)
+      }
+      return
+    }
+    Vue.set(searchVm.$data, 'expandedPages', cloneExpandedPages())
+  }
+
   const syncSearchVm = () => {
     if (!searchVm) {
       return
     }
-    // 写入 $data，确保根实例上的响应式字段能驱动模板更新
-    Object.assign(searchVm.$data, {
-      visible: searchState.visible,
-      keyword: searchState.keyword,
-      loading: searchState.loading,
-      loadingMore: searchState.loadingMore,
-      results: [...searchState.results],
-      selectedBvids: [...searchState.selectedBvids],
-      expandedBvids: { ...searchState.expandedBvids },
-      expandedPages: cloneExpandedPages(),
-      sortMode: searchState.sortMode,
-      errorMessage: searchState.errorMessage,
-      hasMore: searchState.hasMore,
-      searchInput: searchState.keyword,
-    })
+    const data = searchVm.$data as Record<string, unknown>
+    const currentResults = (data.results as MergerSearchVideo[]) || []
+    const nextResults = searchState.results
+
+    Vue.set(data, 'visible', searchState.visible)
+    Vue.set(data, 'keyword', searchState.keyword)
+    Vue.set(data, 'loading', searchState.loading)
+    Vue.set(data, 'loadingMore', searchState.loadingMore)
+    if (!isSameSearchResults(currentResults, nextResults)) {
+      Vue.set(data, 'results', [...nextResults])
+    }
+    Vue.set(data, 'selectedBvids', [...searchState.selectedBvids])
+    Vue.set(data, 'expandedBvids', { ...searchState.expandedBvids })
+    Vue.set(data, 'expandedPages', cloneExpandedPages())
+    Vue.set(data, 'sortMode', searchState.sortMode)
+    Vue.set(data, 'errorMessage', searchState.errorMessage)
+    Vue.set(data, 'hasMore', searchState.hasMore)
+    Vue.set(data, 'searchInput', searchState.keyword)
   }
 
   const syncManagerVm = () => {
@@ -458,7 +505,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       mergerToast('有效时长顺延已计算', 'success')
     }
 
-    syncSearchVm()
+    syncExpandedPagesToVm(bvid)
     return valid
   }
 
@@ -477,7 +524,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       }),
     )
     searchState.expandedPages[bvid] = [...pages]
-    syncSearchVm()
+    syncExpandedPagesToVm(bvid)
   }
 
   const fetchPageDurations = async (bvid: string, pages: PagePartListRow[]) => {
@@ -494,7 +541,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         }
       })
       searchState.expandedPages[bvid] = [...pages]
-      syncSearchVm()
+      syncExpandedPagesToVm(bvid)
     } catch {
       // 忽略片长拉取失败
     }
@@ -586,7 +633,8 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       const result = await deps.api.search(keyword, page)
       const videos = result.find(r => r.result_type === 'video')
       if (videos?.data?.length) {
-        searchState.results = append ? [...searchState.results, ...videos.data] : videos.data
+        const merged = append ? [...searchState.results, ...videos.data] : videos.data
+        searchState.results = applySearchSort(merged, searchState.sortMode)
         searchState.hasMore = videos.data.length >= 30
         searchState.currentPage = page
       } else if (!append) {
@@ -800,6 +848,18 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         doSearch(keyword, page, true)
       },
     )
+    vm.$on(MERGER_MODAL_EVENTS.SORT_CHANGE, ({ mode }: { mode: SearchUiState['sortMode'] }) => {
+      searchState.sortMode = mode
+      if (!searchVm) {
+        return
+      }
+      const data = searchVm.$data as Record<string, unknown>
+      Vue.set(data, 'sortMode', mode)
+      if (searchState.results.length) {
+        searchState.results = applySearchSort(searchState.results, mode)
+        Vue.set(data, 'results', [...searchState.results])
+      }
+    })
     vm.$on(MERGER_MODAL_EVENTS.EXPAND_VIDEO, ({ bvid }: { bvid: string }) => {
       loadVideoPages(bvid)
     })
@@ -831,8 +891,9 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         page.selected = selected
         if (searchState.partModeEnabled[bvid]) {
           applyPartModeOffsets(bvid, true)
+        } else {
+          syncExpandedPagesToVm(bvid)
         }
-        syncSearchVm()
       },
     )
     vm.$on(
@@ -858,15 +919,16 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         }
         page.offset = offset
         page.offsetType = offsetType
-        syncSearchVm()
+        syncExpandedPagesToVm(bvid)
       },
     )
     vm.$on('update:partModeEnabled', ({ bvid, enabled }: { bvid: string; enabled: boolean }) => {
       searchState.partModeEnabled[bvid] = enabled
       if (enabled) {
         applyPartModeOffsets(bvid, true)
+      } else {
+        syncSearchVm()
       }
-      syncSearchVm()
     })
     vm.$on('calc-offsets', ({ bvid }: { bvid: string }) => {
       if (!searchState.partModeEnabled[bvid]) {
@@ -891,8 +953,12 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       }
       if (searchState.partModeEnabled[bvid]) {
         applyPartModeOffsets(bvid, true)
+      } else {
+        syncExpandedPagesToVm(bvid)
+        Vue.set(searchVm?.$data as Record<string, unknown>, 'selectedBvids', [
+          ...searchState.selectedBvids,
+        ])
       }
-      syncSearchVm()
     })
     vm.$on(
       'part-duration-change',
@@ -924,8 +990,11 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         deps.savePartModeState(payload.bvid, { total: fields.total, uniform: fields.uniform })
         if (searchState.partModeEnabled[payload.bvid]) {
           applyPartModeOffsets(payload.bvid, true)
+        } else if (payload.field === 'part' && payload.cid != null) {
+          syncExpandedPagesToVm(payload.bvid)
+        } else {
+          syncSearchVm()
         }
-        syncSearchVm()
       },
     )
   }
