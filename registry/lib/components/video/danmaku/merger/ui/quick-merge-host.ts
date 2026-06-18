@@ -8,6 +8,7 @@ import { addStyle, removeStyle } from '@/core/style'
 import { dmWarn } from '../danmaku/log'
 import { QUICK_MERGE_BUTTON_EVENTS } from './contracts'
 import { mergerToast } from './notify'
+import { normalizeHttpsUrl } from './shared/media-url'
 
 const QUICK_MERGE_STYLE_NAME = 'danmakuMergerQuickMerge'
 
@@ -138,7 +139,7 @@ export const createQuickMergeHost = (deps: QuickMergeHostDeps) => {
           cid: p1.cid,
           bvid,
           title: data.title + (data.pages.length > 1 ? ' P1' : ''),
-          pic: data.pic,
+          pic: normalizeHttpsUrl(data.pic),
           author: data.owner?.name || '',
           groupTitle: data.title,
         },

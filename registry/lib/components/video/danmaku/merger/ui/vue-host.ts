@@ -23,6 +23,7 @@ import {
   mergerProgressToastDone,
   mergerToast,
 } from './notify'
+import { normalizeHttpsUrl } from './shared/media-url'
 
 const PREVIEW_PAGE_SIZE = 50
 
@@ -161,7 +162,7 @@ function buildManagerGroups(
         groupKey: key,
         bvid: resolvedBvid,
         title: source.groupTitle || source.title || '未知视频',
-        cover: source.pic || '',
+        cover: normalizeHttpsUrl(source.pic || ''),
         author: source.author || '',
         items: [],
       }
@@ -237,6 +238,11 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         pages.map(page => ({ ...page })),
       ]),
     )
+
+  const normalizeSearchVideo = (video: MergerSearchVideo): MergerSearchVideo => ({
+    ...video,
+    pic: normalizeHttpsUrl(video.pic),
+  })
 
   const applySearchSort = (
     results: MergerSearchVideo[],
@@ -594,7 +600,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       const video: MergerSearchVideo = {
         bvid: data.bvid,
         title: data.title,
-        pic: data.pic,
+        pic: normalizeHttpsUrl(data.pic),
         author: data.owner?.name || '',
       }
       searchState.results = [video]
@@ -633,7 +639,8 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       const result = await deps.api.search(keyword, page)
       const videos = result.find(r => r.result_type === 'video')
       if (videos?.data?.length) {
-        const merged = append ? [...searchState.results, ...videos.data] : videos.data
+        const incoming = videos.data.map(normalizeSearchVideo)
+        const merged = append ? [...searchState.results, ...incoming] : incoming
         searchState.results = applySearchSort(merged, searchState.sortMode)
         searchState.hasMore = videos.data.length >= 30
         searchState.currentPage = page
@@ -698,7 +705,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
               Object.assign(workingTask, {
                 cid,
                 title,
-                pic: data.pic,
+                pic: normalizeHttpsUrl(data.pic),
                 author: data.owner?.name || '',
                 groupTitle: data.title,
               })
