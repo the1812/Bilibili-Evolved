@@ -15,24 +15,69 @@ body = body.replace(
   'const pageWin = () => unsafeWindow',
 )
 body = body.replace(/dmLog\('v1\.6 已加载', location\.href\);\r?\n\r?\n/, '')
-body = body.replace(/    const dmLog = \(\.\.\.args\) => console\.log\('\[弹幕合并器\]', \.\.\.args\);\r?\n    const dmWarn = \(\.\.\.args\) => console\.warn\('\[弹幕合并器\]', \.\.\.args\);\r?\n/, '')
+body = body.replace(
+  /    const dmLog = \(\.\.\.args\) => console\.log\('\[弹幕合并器\]', \.\.\.args\);\r?\n    const dmWarn = \(\.\.\.args\) => console\.warn\('\[弹幕合并器\]', \.\.\.args\);\r?\n/,
+  '',
+)
 body = body.replace(
   /    injectPageBridge\(\);\r?\n    document\.addEventListener\('DOMContentLoaded',[\s\S]*?\}\);\r?\n\r?\n/,
   '',
 )
 body = body.replace(/    const boot = \(\) => init\(\);[\s\S]*$/, '')
 
+// Bilibili Evolved 无 GM_addStyle / GM_listValues，改用 BE API 与自建索引
+body = body.replace(/GM_addStyle\((`[\s\S]*?`)\);/, "addStyle($1, 'danmakuMerger');")
+body = body.replace(
+  /const allKeys = GM_listValues\(\);\s*\r?\n\s*const dmKeys = allKeys\.filter/,
+  'const dmKeys = listMergerStorageKeys().filter',
+)
+body = body.replace(
+  /GM_setValue\(key, JSON\.stringify\(sourcesMeta\)\);/,
+  "GM_setValue(key, JSON.stringify(sourcesMeta));\n            trackMergerStorageKey(key);",
+)
+body = body.replace(
+  /GM_setValue\(getPartModeStorageKey\(bvid\), JSON\.stringify\(state\)\);/,
+  "GM_setValue(getPartModeStorageKey(bvid), JSON.stringify(state));\n            trackMergerStorageKey(getPartModeStorageKey(bvid));",
+)
+body = body.replace(/GM_registerMenuCommand\(/g, 'registerMergerMenu(')
+
 const header = `/* eslint-disable */
 // @ts-nocheck
+import { addStyle, removeStyle } from '@/core/style'
 import { useScopedConsole } from '@/core/utils/log'
 
+const DM_MERGER_STYLE_NAME = 'danmakuMerger'
+const DM_MERGER_KEYS_INDEX = 'dm_merger_keys_index'
+
+const trackMergerStorageKey = key => {
+  try {
+    const keys = JSON.parse(String(GM_getValue(DM_MERGER_KEYS_INDEX, '[]')))
+    if (!keys.includes(key)) {
+      keys.push(key)
+      GM_setValue(DM_MERGER_KEYS_INDEX, JSON.stringify(keys))
+    }
+  } catch (e) { /* ignore */ }
+}
+
+const listMergerStorageKeys = () => {
+  try {
+    return JSON.parse(String(GM_getValue(DM_MERGER_KEYS_INDEX, '[]')))
+  } catch (e) {
+    return []
+  }
+}
+
 const console = useScopedConsole('弹幕合并器')
-const dmLog = (...args: unknown[]) => console.log(...args)
-const dmWarn = (...args: unknown[]) => console.warn(...args)
+const dmLog = (...args) => console.log(...args)
+const dmWarn = (...args) => console.warn(...args)
 
 export type MergerCleanup = () => void
 
 export const initDanmakuMerger = (): MergerCleanup => {
+  const menuCommandIds = []
+  const registerMergerMenu = (name, fn) => {
+    menuCommandIds.push(GM_registerMenuCommand(name, fn))
+  }
 `
 
 const footer = `
@@ -45,6 +90,8 @@ const footer = `
   })
   init()
   return () => {
+    removeStyle(DM_MERGER_STYLE_NAME)
+    menuCommandIds.forEach(id => GM_unregisterMenuCommand(id))
     engine.reset()
     const btn = document.getElementById('dm-merger-btn')
     if (btn) btn.remove()
