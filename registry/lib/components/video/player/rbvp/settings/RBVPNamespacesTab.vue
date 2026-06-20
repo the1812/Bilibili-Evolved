@@ -103,11 +103,11 @@
               >
                 <VIcon icon="mdi-plus" :size="16" />
               </button>
-           </div>
+            </div>
           </div>
         </div>
-        </div>
-       </div>
+      </div>
+    </div>
   </div>
 </template>
 <script lang="ts">
