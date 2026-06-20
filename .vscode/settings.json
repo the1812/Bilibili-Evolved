@@ -87,6 +87,7 @@
     "preload",
     "protobuf",
     "pubdate",
+    "rbvp",
     "rcount",
     "reimu",
     "reloadable",
