@@ -1,4 +1,4 @@
-import { parseRbvpRules } from '../parser'
+import { parseAliasDirectiveLine, parseRbvpRuleLine } from '../parser'
 import type {
   RBVPActionNode,
   RBVPBasicMatcherType,
@@ -28,6 +28,11 @@ export type VisualRuleItem = {
   collapsed: boolean
   editingTitle: boolean
   validationError: string
+}
+
+export type VisualAliasItem = {
+  alias: string
+  canonical: string
 }
 export type RBVPMatcherDefaultArguments = Record<RBVPBasicMatcherType, string>
 
@@ -142,6 +147,7 @@ export const parsedRuleToVisualRule = (rule: RBVPParsedRule) =>
 
 export const parseVisualRulesFromText = (text: string) => {
   const lines = text.split('\n')
+  const aliases: VisualAliasItem[] = []
   const rules: VisualRuleItem[] = []
   let pendingTitle: string | null = null
   for (let index = 0; index < lines.length; index++) {
@@ -154,13 +160,24 @@ export const parseVisualRulesFromText = (text: string) => {
       pendingTitle = trimmed.slice(1).trim()
       continue
     }
-    const parsedRule = parseRbvpRules(trimmed)[0]
+    if (trimmed.startsWith('@alias')) {
+      try {
+        const parsed = parseAliasDirectiveLine(trimmed, index + 1)
+        if (parsed) {
+          aliases.push(parsed)
+        }
+      } catch {
+        // 忽略非法 @alias 行
+      }
+      continue
+    }
+    const parsedRule = parseRbvpRuleLine(trimmed, index + 1)
     const visualRule = parsedRuleToVisualRule(parsedRule)
     visualRule.title = pendingTitle ?? ''
     rules.push(visualRule)
     pendingTitle = null
   }
-  return rules
+  return { aliases, rules }
 }
 
 export const stringifyVisualCondition = (condition: VisualConditionItem): string => {
@@ -180,21 +197,31 @@ export const stringifyVisualRule = (rule: VisualRuleItem) =>
     rule.matcher,
   )}, ${rule.actions.trim()}`
 
-export const stringifyVisualRules = (rules: VisualRuleItem[]) =>
-  rules
+export const stringifyVisualRules = (program: {
+  aliases?: VisualAliasItem[]
+  rules: VisualRuleItem[]
+}) => {
+  const aliasLines = (program.aliases ?? []).map(
+    item => `@alias ${item.alias} => ${item.canonical}`,
+  )
+  const ruleLines = program.rules
     .map(rule => stringifyVisualRule(rule))
     .filter(line => line !== ',' && line !== '# ')
-    .join('\n')
+  return [...aliasLines, ...ruleLines].join('\n')
+}
 
 export const createInitialRuleEditorState = (rulesText: string) => {
   try {
+    const { aliases, rules } = parseVisualRulesFromText(rulesText)
     return {
       ruleEditorMode: 'visual' as RuleEditorMode,
-      visualRules: parseVisualRulesFromText(rulesText),
+      visualAliases: aliases,
+      visualRules: rules,
     }
   } catch {
     return {
       ruleEditorMode: 'text' as RuleEditorMode,
+      visualAliases: [] as VisualAliasItem[],
       visualRules: [] as VisualRuleItem[],
     }
   }

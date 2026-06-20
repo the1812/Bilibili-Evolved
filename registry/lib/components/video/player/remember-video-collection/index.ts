@@ -358,7 +358,7 @@ export const component = defineComponentMetadata<ComponentOptions>({
 
 #### 🔗 **RBVP 联动**
 
-在 RBVP 规则中可通过命名空间 \`rememberVideoCollection\`（别名 \`collection\`）调用本组件，支持以下动作值：
+在 RBVP 规则中可通过命名空间 \`rememberVideoCollection\` 调用本组件（别名可在 RBVP 设置 - 命名空间页自定义，写入主规则文本），支持以下动作值：
 
 - \`ON\`：按原逻辑恢复并记录合集进度
 - \`OFF\`：跳过恢复且不记录当前合集记忆进度

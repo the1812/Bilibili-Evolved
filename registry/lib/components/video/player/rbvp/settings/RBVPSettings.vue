@@ -72,7 +72,13 @@ import { VIcon, VPopup } from '@/ui'
 import RBVPNamespacesTab from './RBVPNamespacesTab.vue'
 import RBVPRuleSetsTab from './RBVPRuleSetsTab.vue'
 import RBVPRulesTab from './RBVPRulesTab.vue'
-import { parseRbvpRules, RBVPParseError } from '../parser'
+import {
+  parseRbvpAliases,
+  parseRbvpProgramLenient,
+  parseRbvpRules,
+  RBVPParseError,
+} from '../parser'
+import { unparseRbvpProgram } from '../unparser'
 import {
   createBasicRule,
   createInitialRuleEditorState,
@@ -85,7 +91,7 @@ import {
   type VisualConditionItem,
 } from './helpers'
 import type { Options } from '..'
-import { rbvpNamespaces } from '../registry'
+import { getCanonicalNamespaceName, getProviderNamespaceNames, rbvpNamespaces } from '../registry'
 import type {
   RBVPBasicMatcherType,
   RBVPDebugContextSnapshot,
@@ -167,6 +173,7 @@ export default Vue.extend({
       rulesText,
       ruleEditorMode: initialRuleEditorState.ruleEditorMode,
       visualRules: initialRuleEditorState.visualRules,
+      visualAliases: initialRuleEditorState.visualAliases,
       pendingInsertIndex: null as null | number,
       localRuleSets,
       matcherTypes,
@@ -232,7 +239,12 @@ export default Vue.extend({
     },
     hasUnsavedRulesChanges() {
       if (this.ruleEditorMode === 'visual') {
-        return stringifyVisualRules(this.visualRules) !== this.normalizedSavedRulesText
+        return (
+          stringifyVisualRules({
+            aliases: this.visualAliases,
+            rules: this.visualRules,
+          }) !== this.normalizedSavedRulesText
+        )
       }
       return this.rulesText !== this.normalizedSavedRulesText
     },
@@ -320,16 +332,33 @@ export default Vue.extend({
     namespacesTabActions() {
       return {
         toggleNamespaceTakeover: (item: RBVPNamespaceItem) => this.toggleNamespaceTakeover(item),
+        addNamespaceAlias: (item: RBVPNamespaceItem, alias: string) =>
+          this.addNamespaceAlias(item, alias),
+        removeNamespaceAlias: (item: RBVPNamespaceItem, alias: string) =>
+          this.removeNamespaceAlias(item, alias),
       }
+    },
+    aliasByCanonical(): Record<string, string[]> {
+      this.namespaceStateVersion
+      this.rulesText
+      const result: Record<string, string[]> = {}
+      for (const { alias, canonical } of parseRbvpAliases(this.rulesText)) {
+        if (!result[canonical]) {
+          result[canonical] = []
+        }
+        result[canonical].push(alias)
+      }
+      return result
     },
     namespaceItems(): RBVPNamespaceItem[] {
       this.namespaceStateVersion
+      this.rulesText
       return Object.entries(rbvpNamespaces).map(([name, provider]) => ({
         name: provider.primaryName || name,
         provider,
         displayName: provider.displayName || provider.primaryName || name,
         description: provider.description?.trim() || '暂无描述',
-        aliases: provider.aliases ?? [],
+        aliases: this.aliasByCanonical[getCanonicalNamespaceName(name, provider)] ?? [],
         takeoverState: provider.getTakeoverState(),
         componentEnabled: provider.isComponentEnabled(),
       }))
@@ -390,6 +419,7 @@ export default Vue.extend({
       const initialRuleEditorState = createInitialRuleEditorState(savedRulesText)
       this.rulesText = savedRulesText
       this.visualRules = initialRuleEditorState.visualRules
+      this.visualAliases = initialRuleEditorState.visualAliases
       this.ruleEditorMode = initialRuleEditorState.ruleEditorMode
       this.pendingInsertIndex = null
     },
@@ -437,11 +467,110 @@ export default Vue.extend({
         )
       }
     },
+    resolveCanonicalName(item: RBVPNamespaceItem) {
+      const [registryKey] =
+        Object.entries(rbvpNamespaces).find(([, provider]) => provider === item.provider) ?? []
+      if (!registryKey) {
+        return item.name
+      }
+      return getCanonicalNamespaceName(registryKey, item.provider)
+    },
+    addNamespaceAlias(item: RBVPNamespaceItem, alias: string) {
+      const trimmed = alias.trim()
+      if (!trimmed) {
+        Toast.error('别名不能为空', 'RBVP', 3000)
+        return
+      }
+      if (!/^[A-Za-z0-9_-]+$/.test(trimmed)) {
+        Toast.error(
+          `别名 "${trimmed}" 包含非法字符，仅允许字母、数字、下划线与连字符`,
+          'RBVP',
+          3000,
+        )
+        return
+      }
+      const canonical = this.resolveCanonicalName(item)
+      const normalize = (value: string) => value.trim().replace(/[-_]/g, '').toLowerCase()
+      const normalizedAlias = normalize(trimmed)
+      const ownNames = [canonical, ...(this.aliasByCanonical[canonical] ?? [])].map(normalize)
+      if (ownNames.includes(normalizedAlias)) {
+        Toast.error(`别名 "${trimmed}" 与该命名空间已有名称重复`, 'RBVP', 3000)
+        return
+      }
+      for (const [name, provider] of Object.entries(rbvpNamespaces)) {
+        if (provider === item.provider) {
+          continue
+        }
+        const otherCanonical = getCanonicalNamespaceName(name, provider)
+        const otherNames = [
+          ...getProviderNamespaceNames(name, provider),
+          ...(this.aliasByCanonical[otherCanonical] ?? []),
+        ].map(normalize)
+        if (otherNames.includes(normalizedAlias)) {
+          Toast.error(
+            `别名 "${trimmed}" 与命名空间 "${provider.displayName}" 的已有名称冲突`,
+            'RBVP',
+            3000,
+          )
+          return
+        }
+      }
+      if (this.ruleEditorMode === 'visual') {
+        this.syncRulesTextFromVisualRules()
+      }
+      const program = parseRbvpProgramLenient(this.rulesText)
+      program.nodes.unshift({ kind: 'alias', alias: trimmed, canonical })
+      this.rulesText = unparseRbvpProgram(program)
+      try {
+        this.syncVisualRulesFromText()
+      } catch {
+        // 忽略同步错误，别名已写入文本
+      }
+      rbvpOptions.rulesText = this.rulesText
+      this.refreshNamespaceState()
+      Toast.success(`已添加别名 "${trimmed}" → ${canonical}`, 'RBVP', 2000)
+    },
+    removeNamespaceAlias(item: RBVPNamespaceItem, alias: string) {
+      const canonical = this.resolveCanonicalName(item)
+      const normalize = (value: string) => value.trim().replace(/[-_]/g, '').toLowerCase()
+      const normalizedAlias = normalize(alias)
+      if (this.ruleEditorMode === 'visual') {
+        this.syncRulesTextFromVisualRules()
+      }
+      const program = parseRbvpProgramLenient(this.rulesText)
+      program.nodes = program.nodes.filter(node => {
+        if (node.kind === 'alias') {
+          return !(normalize(node.alias) === normalizedAlias && node.canonical === canonical)
+        }
+        if (node.kind === 'rule') {
+          for (const action of node.actions) {
+            if (normalize(action.namespace) === normalizedAlias) {
+              action.namespace = canonical
+            }
+          }
+        }
+        return true
+      })
+      this.rulesText = unparseRbvpProgram(program)
+      try {
+        this.syncVisualRulesFromText()
+      } catch {
+        // 忽略同步错误
+      }
+      rbvpOptions.rulesText = this.rulesText
+      this.refreshNamespaceState()
+      Toast.success(`已移除别名 "${alias}"`, 'RBVP', 2000)
+    },
     syncRulesTextFromVisualRules() {
-      this.rulesText = stringifyVisualRules(this.visualRules)
+      this.rulesText = stringifyVisualRules({
+        aliases: this.visualAliases,
+        rules: this.visualRules,
+      })
     },
     syncVisualRulesFromText() {
-      this.visualRules = parseVisualRulesFromText(this.rulesText)
+      const { aliases, rules } = parseVisualRulesFromText(this.rulesText)
+      this.visualAliases = aliases
+      this.visualRules = rules
     },
     setRuleEditorMode(mode: RuleEditorMode) {
       if (mode === this.ruleEditorMode) {

@@ -30,7 +30,6 @@ export const rememberVideoSpeedNamespaceProvider = {
   primaryName: 'rememberVideoSpeed',
   description:
     '兼容「记忆倍速」组件的存储与执行能力。可用动作值：填写倍速数值（如 1.5、2）、MAX（最高可用倍速）、MIN（最低可用倍速）、MEMORY_LOCAL（当前视频记忆的倍速）、MEMORY_GLOBAL（全局记忆的倍速）。',
-  aliases: ['speed'],
   getTakeoverState: () => getRememberSpeedOptions().useRbvp,
   setTakeoverState: (value: boolean) => {
     getRememberSpeedOptions().useRbvp = value
