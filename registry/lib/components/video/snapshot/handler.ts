@@ -2,6 +2,7 @@
 import { VideoInfo } from '@/components/video/video-info'
 import { VideoSnapshot } from '@/components/video/video-snapshot'
 import { PackageEntry } from '@/core/download'
+import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { formatDateTime, formatDuration } from '@/core/utils/formatters'
@@ -44,7 +45,7 @@ async function createSnapshotGrid(aid: string, cid: number) {
 
   const gridCanvas = await snapshot.createGrid(options.gridColumns, options.gridRows, {
     header: infoLines,
-    footer: true,
+    footer: [`${formatDateTime(new Date())} @ Bilibili-Evolved v${meta.compilationInfo.version}`],
     timestamp: true,
     backgroundColor: options.gridBackgroundColor,
     textColor: options.gridTextColor,

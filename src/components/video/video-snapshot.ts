@@ -1,7 +1,6 @@
 /* spellchecker:words pvdata */
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { meta } from '@/core/meta'
-import { formatDateTime, formatDuration } from '@/core/utils/formatters'
+import { formatDuration } from '@/core/utils/formatters'
 
 /**
  * 解析二进制格式的 pvdata
@@ -162,8 +161,31 @@ export interface DrawOptions {
 
 export interface GridInfoOptions {
   header?: string[]
-  footer?: boolean
+  footer?: string[]
   timestamp?: boolean
+}
+
+/**
+ * CanvasState **UNSAFE**
+ * @author WakelessSloth56
+ */
+function calcTextWidth(ctx: CanvasText, text?: string[]) {
+  if (text && text.length > 0) {
+    const w = lodash.max(text.map(s => ctx.measureText(s).width))
+    return w
+  }
+  return 0
+}
+
+/**
+ * CanvasState **UNSAFE**
+ * @author WakelessSloth56
+ */
+function drawText(ctx: CanvasText, text: string[], x: number, y0: number, lineHeight: number) {
+  for (let i = 0; i < text.length; i++) {
+    const y = i * lineHeight + y0
+    ctx.fillText(text[i], x, y)
+  }
 }
 
 /**
@@ -185,7 +207,7 @@ function drawTimestamp(snapshot: SnapshotSprite, options: DrawOptions = {}) {
     backgroundColor = '#00000033',
   } = options
 
-  ctx.font = `${fontSize}px '${font}'`
+  ctx.font = `${fontSize}px ${font}`
   const textW = ctx.measureText(timeStr).width
 
   const bgW = textW + paddingX * 2
@@ -223,43 +245,26 @@ function createGrid(
     textColor = '#ffffff',
     backgroundColor = '#000000',
     header = [],
-    footer = false,
+    footer = [],
     timestamp = true,
   } = options
-  const font = `${fontSize}px '${fontName}'`
+  const font = `${fontSize}px ${fontName}`
+  const lineHeight = fontSize + paddingY
 
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
 
-  // 信息栏
-  let headerCanvas: HTMLCanvasElement
-  if (header && header.length > 0) {
-    headerCanvas = document.createElement('canvas')
-    const infoCtx = headerCanvas.getContext('2d')
-    infoCtx.font = font
-    const maxWidth = Math.max(...header.map(x => infoCtx.measureText(x).width))
-    headerCanvas.width = maxWidth
-    headerCanvas.height = header.length * (fontSize + paddingY) + paddingY
-    infoCtx.font = font
-    infoCtx.fillStyle = textColor
-    infoCtx.textBaseline = 'top'
-    let y = 0
-    for (const info of header) {
-      infoCtx.fillText(info, 0, y)
-      y += fontSize + paddingY
-    }
-  }
-
-  const headerW = headerCanvas ? headerCanvas.width : 0
-  const headerH = headerCanvas ? headerCanvas.height : 0
+  ctx.font = font
+  const headerW = calcTextWidth(ctx, header)
+  const headerH = headerW ? header.length * fontSize + header.length * paddingY + paddingY : 0
 
   const gridW = cols * spriteWidth + (cols - 1) * paddingX
   const gridH = rows * spriteHeight + (rows - 1) * paddingY
 
-  // const footerW = gridW
-  const footerH = footer ? fontSize + paddingY * 2 : 0
+  const footerW = calcTextWidth(ctx, footer)
+  const footerH = footerW ? footer.length * fontSize + footer.length * paddingY + paddingY : 0
 
-  const w = Math.max(headerW, gridW) + marginX * 2 // 防止超长标题溢出
+  const w = Math.max(headerW, gridW, footerW) + marginX * 2 // 防止超长标题溢出
   const h = headerH + gridH + footerH + marginY * 2
   canvas.width = w
   canvas.height = h
@@ -270,25 +275,24 @@ function createGrid(
   const gridX = (w - gridW) / 2 // 图片网格居中
   const gridY = headerY + headerH
 
+  const footerX = w - marginX
+  const footerY = gridY + gridH + paddingY * 2
+
   ctx.fillStyle = backgroundColor
   ctx.fillRect(0, 0, w, h)
 
-  // 顶栏
-  if (headerCanvas) {
-    ctx.drawImage(headerCanvas, headerX, headerY)
+  ctx.font = font
+  ctx.textBaseline = 'top'
+  ctx.fillStyle = textColor
+
+  if (headerW) {
+    ctx.textAlign = 'left'
+    drawText(ctx, header, headerX, headerY, lineHeight)
   }
 
-  // 底栏
-  if (footer) {
-    ctx.font = font
-    ctx.fillStyle = textColor
-    ctx.textBaseline = 'top'
-    const generatedAt = `${formatDateTime(new Date())} @ Bilibili-Evolved v${
-      meta.compilationInfo.version
-    }`
-    const footerX = w - marginX - ctx.measureText(generatedAt).width
-    const footerY = gridY + gridH + paddingY * 2
-    ctx.fillText(generatedAt, footerX, footerY) // 右下角
+  if (footerW) {
+    ctx.textAlign = 'right'
+    drawText(ctx, footer, footerX, footerY, lineHeight)
   }
 
   for (let row = 0; row < rows; row++) {
