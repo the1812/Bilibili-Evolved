@@ -340,9 +340,8 @@ export default Vue.extend({
     },
     aliasByCanonical(): Record<string, string[]> {
       this.namespaceStateVersion
-      this.rulesText
       const result: Record<string, string[]> = {}
-      for (const { alias, canonical } of parseRbvpAliases(this.rulesText)) {
+      for (const { alias, canonical } of parseRbvpAliases(rbvpOptions.rulesText)) {
         if (!result[canonical]) {
           result[canonical] = []
         }
@@ -352,7 +351,6 @@ export default Vue.extend({
     },
     namespaceItems(): RBVPNamespaceItem[] {
       this.namespaceStateVersion
-      this.rulesText
       return Object.entries(rbvpNamespaces).map(([name, provider]) => ({
         name: provider.primaryName || name,
         provider,
@@ -519,7 +517,13 @@ export default Vue.extend({
         this.syncRulesTextFromVisualRules()
       }
       const program = parseRbvpProgramLenient(this.rulesText)
-      program.nodes.unshift({ kind: 'alias', alias: trimmed, canonical })
+      let insertIndex = 0
+      for (let i = 0; i < program.nodes.length; i++) {
+        if (program.nodes[i].kind === 'alias') {
+          insertIndex = i + 1
+        }
+      }
+      program.nodes.splice(insertIndex, 0, { kind: 'alias', alias: trimmed, canonical })
       this.rulesText = unparseRbvpProgram(program)
       try {
         this.syncVisualRulesFromText()
@@ -687,6 +691,7 @@ export default Vue.extend({
         // 文本已经过解析校验，这里理论上不会失败；忽略以避免影响保存流程。
       }
       rbvpOptions.rulesText = this.rulesText
+      this.refreshNamespaceState()
       Toast.success('RBVP 主规则已保存', 'RBVP', 2000)
     },
     exportRules() {
