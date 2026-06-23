@@ -1,6 +1,7 @@
 /* spellchecker:words pvdata */
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { formatDuration } from '@/core/utils/formatters'
+import { meta } from '@/core/meta'
+import { formatDateTime, formatDuration } from '@/core/utils/formatters'
 
 /**
  * 解析二进制格式的 pvdata
@@ -159,6 +160,12 @@ export interface DrawOptions {
   marginY?: number
 }
 
+export interface GridInfoOptions {
+  header?: string[]
+  footer?: boolean
+  timestamp?: boolean
+}
+
 /**
  * 在快照图上绘制对应的时间点
  * @author WakelessSloth56
@@ -204,29 +211,84 @@ function createGrid(
   rows: number,
   spriteWidth: number,
   spriteHeight: number,
-  options: DrawOptions = {},
+  options: DrawOptions & GridInfoOptions = {},
 ) {
   const {
     paddingX = 4,
     paddingY = 4,
     marginX = 12,
     marginY = 12,
+    fontSize = 22,
+    font: fontName = 'monospace',
+    textColor = '#ffffff',
     backgroundColor = '#000000',
+    header = [],
+    footer = false,
+    timestamp = true,
   } = options
+  const font = `${fontSize}px '${fontName}'`
 
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
 
-  const w = cols * spriteWidth + (cols - 1) * paddingX + marginX * 2
-  const h = rows * spriteHeight + (rows - 1) * paddingY + marginY * 2
+  // 信息栏
+  const headerCanvas = document.createElement('canvas')
+  if (header && header.length > 0) {
+    const infoCtx = headerCanvas.getContext('2d')
+    infoCtx.font = font
+    const maxWidth = Math.max(...header.map(x => infoCtx.measureText(x).width))
+    headerCanvas.width = maxWidth
+    headerCanvas.height = header.length * (fontSize + paddingY)
+    infoCtx.font = font
+    infoCtx.fillStyle = textColor
+    infoCtx.textBaseline = 'top'
+    let y = 0
+    for (const info of header) {
+      infoCtx.fillText(info, 0, y)
+      y += fontSize + paddingY
+    }
+  } else {
+    headerCanvas.width = 0
+    headerCanvas.height = 0
+  }
+
+  const w =
+    Math.max(
+      // 防止超长标题溢出
+      headerCanvas.width,
+      cols * spriteWidth + (cols - 1) * paddingX, // 快照图宽度 + 列间距
+    ) +
+    marginX * 2 // 边框
+  const h =
+    headerCanvas.height + // 信息栏高度
+    rows * spriteHeight + // 快照图高度
+    (rows - 1) * paddingY + // 行间距
+    (footer ? fontSize + paddingY * 2 : 0) + // 底栏
+    marginY * 2 // 边框
   const x0 = marginX
-  const y0 = marginY
+  let y0 = marginY
 
   canvas.width = w
   canvas.height = h
 
   ctx.fillStyle = backgroundColor
   ctx.fillRect(0, 0, w, h)
+
+  // 顶栏
+  ctx.drawImage(headerCanvas, x0, y0)
+  y0 += headerCanvas.height
+
+  // 底栏
+  if (footer) {
+    ctx.font = font
+    ctx.fillStyle = textColor
+    ctx.textBaseline = 'bottom'
+    const generatedAt = `${formatDateTime(new Date())} @ Bilibili-Evolved v${
+      meta.compilationInfo.version
+    }`
+    // 右下角
+    ctx.fillText(generatedAt, w - marginX - ctx.measureText(generatedAt).width, h - marginY)
+  }
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
@@ -236,7 +298,9 @@ function createGrid(
       }
       const x = col * (spriteWidth + paddingX) + x0
       const y = row * (spriteHeight + paddingY) + y0
-      drawTimestamp(snapshots[i])
+      if (timestamp) {
+        drawTimestamp(snapshots[i])
+      }
       ctx.drawImage(snapshots[i].canvas, x, y)
     }
   }
@@ -307,7 +371,7 @@ export class VideoSnapshot {
     return this
   }
 
-  async createGridWithInfo(cols = 5, rows = 6, options: DrawOptions = {}) {
+  async createGrid(cols = 5, rows = 6, options: DrawOptions & GridInfoOptions = {}) {
     if (!this.ready || !this.snapshots[0].canvas) {
       throw new Error('[VideoSnapshot] snapshots not ready')
     }
