@@ -11,7 +11,7 @@
 <script lang="ts">
 import { DefaultWidget } from '@/ui'
 import { logError } from '@/core/utils/log'
-import { viewSnapshotGrid } from './handler'
+import { view } from './handler'
 
 export default Vue.extend({
   components: {
@@ -27,7 +27,7 @@ export default Vue.extend({
       try {
         this.disabled = true
         const { aid, cid } = unsafeWindow
-        await viewSnapshotGrid(aid, parseInt(cid))
+        await view(aid, parseInt(cid))
       } catch (error) {
         logError(error)
       } finally {
