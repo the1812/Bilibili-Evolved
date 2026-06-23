@@ -238,7 +238,7 @@ function createGrid(
     infoCtx.font = font
     const maxWidth = Math.max(...header.map(x => infoCtx.measureText(x).width))
     headerCanvas.width = maxWidth
-    headerCanvas.height = header.length * (fontSize + paddingY)
+    headerCanvas.height = header.length * (fontSize + paddingY) + paddingY
     infoCtx.font = font
     infoCtx.fillStyle = textColor
     infoCtx.textBaseline = 'top'

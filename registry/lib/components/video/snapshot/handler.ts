@@ -47,7 +47,12 @@ async function createSnapshotGrid(aid: string, cid: number) {
     footer: true,
     timestamp: true,
     backgroundColor: options.gridBackgroundColor,
-    textColor: options.gridtextColor,
+    textColor: options.gridTextColor,
+    fontSize: options.gridTextSize,
+    paddingX: options.gridGap,
+    paddingY: options.gridGap,
+    marginX: options.gridBorder,
+    marginY: options.gridBorder,
   })
 
   return gridCanvas
