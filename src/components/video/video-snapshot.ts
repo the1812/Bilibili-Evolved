@@ -275,8 +275,10 @@ function createGrid(
   ctx.fillRect(0, 0, w, h)
 
   // 顶栏
-  ctx.drawImage(headerCanvas, x0, y0)
-  y0 += headerCanvas.height
+  if (header && header.length > 0) {
+    ctx.drawImage(headerCanvas, x0, y0)
+    y0 += headerCanvas.height
+  }
 
   // 底栏
   if (footer) {
