@@ -22,7 +22,7 @@ async function createSnapshotGrid(aid: string, cid: number) {
   const snapshot = await VideoSnapshot.byAid(aid, cid).fetchInfo(true)
 
   const infoLines: string[] = []
-  if (options.gridInfoHeader) {
+  if (options.showInfoHeader) {
     const info = await new VideoInfo(aid).fetchInfo()
     const page = info.pages.find(p => p.cid === cid)
     infoLines.push(`${info.bvid}　AV${info.aid}　CID ${page.cid}`, `稿件标题：${info.title}`)
@@ -48,8 +48,9 @@ async function createSnapshotGrid(aid: string, cid: number) {
     footer: [`${formatDateTime(new Date())} @ Bilibili-Evolved v${meta.compilationInfo.version}`],
     timestamp: true,
     backgroundColor: options.gridBackgroundColor,
-    textColor: options.gridTextColor,
-    fontSize: options.gridTextSize,
+    textColor: options.textColor,
+    fontSize: options.textSize,
+    fontFamily: options.textFont,
     paddingX: options.gridGap,
     paddingY: options.gridGap,
     marginX: options.gridBorder,

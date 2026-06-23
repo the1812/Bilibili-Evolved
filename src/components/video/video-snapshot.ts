@@ -150,7 +150,7 @@ function sampleByTime<T extends { time: number }>(snapshots: T[], count: number)
 
 export interface DrawOptions {
   fontSize?: number
-  font?: string
+  fontFamily?: string
   textColor?: string
   backgroundColor?: string
   paddingX?: number
@@ -165,10 +165,6 @@ export interface GridInfoOptions {
   timestamp?: boolean
 }
 
-/**
- * CanvasState **UNSAFE**
- * @author WakelessSloth56
- */
 function calcTextWidth(ctx: CanvasText, text?: string[]) {
   if (text && text.length > 0) {
     const w = lodash.max(text.map(s => ctx.measureText(s).width))
@@ -177,10 +173,6 @@ function calcTextWidth(ctx: CanvasText, text?: string[]) {
   return 0
 }
 
-/**
- * CanvasState **UNSAFE**
- * @author WakelessSloth56
- */
 function drawText(ctx: CanvasText, text: string[], x: number, y0: number, lineHeight: number) {
   for (let i = 0; i < text.length; i++) {
     const y = i * lineHeight + y0
@@ -202,12 +194,12 @@ function drawTimestamp(snapshot: SnapshotSprite, options: DrawOptions = {}) {
     marginX = 6,
     marginY = 3,
     fontSize = 22,
-    font = 'monospace',
+    fontFamily = 'monospace',
     textColor = '#ffffff',
     backgroundColor = '#00000033',
   } = options
 
-  ctx.font = `${fontSize}px ${font}`
+  ctx.font = `${fontSize}px ${fontFamily}`
   const textW = ctx.measureText(timeStr).width
 
   const bgW = textW + paddingX * 2
@@ -241,7 +233,7 @@ function createGrid(
     marginX = 12,
     marginY = 12,
     fontSize = 22,
-    font: fontName = 'monospace',
+    fontFamily: fontName = 'monospace',
     textColor = '#ffffff',
     backgroundColor = '#000000',
     header = [],
