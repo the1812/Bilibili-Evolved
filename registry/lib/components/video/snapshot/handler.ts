@@ -3,6 +3,7 @@ import { VideoInfo } from '@/components/video/video-info'
 import { VideoSnapshot } from '@/components/video/video-snapshot'
 import { getComponentSettings } from '@/core/settings'
 import { formatDateTime, formatDuration } from '@/core/utils/formatters'
+import { getFriendlyTitle } from '@/core/utils/title'
 import { showImage } from '@/ui'
 import { componentName } from '.'
 import { Options } from './options'
@@ -38,17 +39,20 @@ export async function viewSnapshotGrid(aid: string, cid: number) {
     )
   }
 
-  const canvas = await snapshot.createGrid(options.gridColumns, options.gridRows, {
+  const gridCanvas = await snapshot.createGrid(options.gridColumns, options.gridRows, {
     header: infoLines,
     footer: true,
     timestamp: true,
     backgroundColor: options.gridBackgroundColor,
     textColor: options.gridtextColor,
   })
+
   return new Promise((resolve, reject) => {
-    canvas.toBlob(blob => {
+    gridCanvas.toBlob(blob => {
       const blobURL = URL.createObjectURL(blob)
-      showImage(blobURL).then(resolve).catch(reject)
+      showImage(blobURL, `${getFriendlyTitle(true)}_snapshots.jpg`)
+        .then(resolve)
+        .catch(reject)
     }, 'image/jpeg')
   })
 }
