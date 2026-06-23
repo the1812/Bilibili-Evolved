@@ -232,8 +232,9 @@ function createGrid(
   const ctx = canvas.getContext('2d')
 
   // 信息栏
-  const headerCanvas = document.createElement('canvas')
+  let headerCanvas: HTMLCanvasElement
   if (header && header.length > 0) {
+    headerCanvas = document.createElement('canvas')
     const infoCtx = headerCanvas.getContext('2d')
     infoCtx.font = font
     const maxWidth = Math.max(...header.map(x => infoCtx.measureText(x).width))
@@ -247,49 +248,47 @@ function createGrid(
       infoCtx.fillText(info, 0, y)
       y += fontSize + paddingY
     }
-  } else {
-    headerCanvas.width = 0
-    headerCanvas.height = 0
   }
 
-  const w =
-    Math.max(
-      // 防止超长标题溢出
-      headerCanvas.width,
-      cols * spriteWidth + (cols - 1) * paddingX, // 快照图宽度 + 列间距
-    ) +
-    marginX * 2 // 边框
-  const h =
-    headerCanvas.height + // 信息栏高度
-    rows * spriteHeight + // 快照图高度
-    (rows - 1) * paddingY + // 行间距
-    (footer ? fontSize + paddingY * 2 : 0) + // 底栏
-    marginY * 2 // 边框
-  const x0 = marginX
-  let y0 = marginY
+  const headerW = headerCanvas ? headerCanvas.width : 0
+  const headerH = headerCanvas ? headerCanvas.height : 0
 
+  const gridW = cols * spriteWidth + (cols - 1) * paddingX
+  const gridH = rows * spriteHeight + (rows - 1) * paddingY
+
+  // const footerW = gridW
+  const footerH = footer ? fontSize + paddingY * 2 : 0
+
+  const w = Math.max(headerW, gridW) + marginX * 2 // 防止超长标题溢出
+  const h = headerH + gridH + footerH + marginY * 2
   canvas.width = w
   canvas.height = h
+
+  const headerX = marginX
+  const headerY = marginY
+
+  const gridX = (w - gridW) / 2 // 图片网格居中
+  const gridY = headerY + headerH
 
   ctx.fillStyle = backgroundColor
   ctx.fillRect(0, 0, w, h)
 
   // 顶栏
-  if (header && header.length > 0) {
-    ctx.drawImage(headerCanvas, x0, y0)
-    y0 += headerCanvas.height
+  if (headerCanvas) {
+    ctx.drawImage(headerCanvas, headerX, headerY)
   }
 
   // 底栏
   if (footer) {
     ctx.font = font
     ctx.fillStyle = textColor
-    ctx.textBaseline = 'bottom'
+    ctx.textBaseline = 'top'
     const generatedAt = `${formatDateTime(new Date())} @ Bilibili-Evolved v${
       meta.compilationInfo.version
     }`
-    // 右下角
-    ctx.fillText(generatedAt, w - marginX - ctx.measureText(generatedAt).width, h - marginY)
+    const footerX = w - marginX - ctx.measureText(generatedAt).width
+    const footerY = gridY + gridH + paddingY * 2
+    ctx.fillText(generatedAt, footerX, footerY) // 右下角
   }
 
   for (let row = 0; row < rows; row++) {
@@ -298,11 +297,11 @@ function createGrid(
       if (i >= snapshots.length) {
         return canvas
       }
-      const x = col * (spriteWidth + paddingX) + x0
-      const y = row * (spriteHeight + paddingY) + y0
       if (timestamp) {
         drawTimestamp(snapshots[i])
       }
+      const x = col * (spriteWidth + paddingX) + gridX
+      const y = row * (spriteHeight + paddingY) + gridY
       ctx.drawImage(snapshots[i].canvas, x, y)
     }
   }
