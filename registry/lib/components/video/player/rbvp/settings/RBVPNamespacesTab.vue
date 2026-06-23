@@ -29,7 +29,6 @@
         <div class="rbvp-namespace-header">
           <div class="rbvp-namespace-title-area">
             <div class="rbvp-section-title">{{ item.displayName }}</div>
-            <div class="rbvp-namespace-main-name">{{ item.name }}</div>
           </div>
           <div class="rbvp-namespace-takeover">
             <span
@@ -55,54 +54,66 @@
           </div>
         </div>
         <div class="rbvp-namespace-description">{{ item.description }}</div>
-        <div class="rbvp-namespace-meta-grid">
-          <div class="rbvp-field">
-            <span class="rbvp-field-label">主名称</span>
-            <div class="rbvp-namespace-code">{{ item.name }}</div>
-          </div>
-          <div class="rbvp-field">
-            <span class="rbvp-field-label">别名</span>
-            <div class="rbvp-namespace-alias-area">
-              <div v-if="item.aliases.length > 0" class="rbvp-namespace-tags">
-                <span
-                  v-for="alias in item.aliases"
-                  :key="`${item.name}-${alias}`"
-                  class="rbvp-namespace-tag"
-                >
-                  {{ alias }}
-                  <button
-                    type="button"
-                    class="rbvp-namespace-tag-remove"
-                    title="移除别名"
-                    @click.stop="actions.removeNamespaceAlias(item, alias)"
-                  >
-                    <VIcon icon="close" :size="12" />
-                  </button>
-                </span>
-              </div>
-              <div v-if="aliasEditing === item.name" class="rbvp-namespace-alias-input-row">
-                <TextBox
-                  ref="aliasInput"
-                  :text="aliasInputs[item.name] ?? ''"
-                  class="rbvp-namespace-alias-input"
-                  placeholder="添加别名"
-                  @change="setAliasInput(item.name, $event)"
-                  @keyup.enter.native="submitAlias(item)"
-                  @keyup.esc.native="cancelAliasInput(item.name)"
-                />
-                <VButton type="primary" round @click="submitAlias(item)">
-                  <VIcon icon="mdi-check" :size="14" />
-                </VButton>
-              </div>
+        <div class="rbvp-namespace-alias-area">
+          <div class="rbvp-namespace-tags">
+            <span class="rbvp-namespace-name-tag" :title="item.name">
+              <span class="rbvp-namespace-name-flag">主名称</span>
+              <span class="rbvp-namespace-tag-text">{{ item.name }}</span>
+              <VIcon icon="mdi-lock" :size="12" class="rbvp-namespace-name-lock" />
+            </span>
+            <span
+              v-for="alias in item.aliases"
+              :key="`${item.name}-${alias}`"
+              class="rbvp-namespace-tag"
+              :title="alias"
+            >
+              <span class="rbvp-namespace-tag-text">{{ alias }}</span>
               <button
-                v-else
                 type="button"
-                class="rbvp-namespace-alias-add-toggle"
-                title="添加别名"
-                @click.stop="startAliasInput(item.name)"
+                class="rbvp-namespace-tag-remove"
+                title="移除别名"
+                @click.stop="actions.removeNamespaceAlias(item, alias)"
               >
-                <VIcon icon="mdi-plus" :size="16" />
+                <VIcon icon="close" :size="12" />
               </button>
+            </span>
+            <button
+              v-if="aliasEditing !== item.name"
+              type="button"
+              class="rbvp-namespace-alias-add"
+              title="添加别名"
+              @click.stop="startAliasInput(item.name)"
+            >
+              <VIcon icon="mdi-plus" :size="16" />
+              <span>添加别名</span>
+            </button>
+            <div v-if="aliasEditing === item.name" class="rbvp-namespace-alias-input-row">
+              <TextBox
+                ref="aliasInput"
+                :text="aliasInputs[item.name] ?? ''"
+                class="rbvp-namespace-alias-input"
+                placeholder="添加别名"
+                @change="setAliasInput(item.name, $event)"
+                @keyup.enter.native="submitAlias(item)"
+                @keyup.esc.native="cancelAliasInput(item.name)"
+              />
+              <VButton
+                type="primary"
+                icon
+                class="rbvp-namespace-alias-confirm"
+                title="确认"
+                @click="submitAlias(item)"
+              >
+                <VIcon icon="mdi-check" :size="14" />
+              </VButton>
+              <VButton
+                icon
+                class="rbvp-namespace-alias-cancel"
+                title="取消"
+                @click="cancelAliasInput(item.name)"
+              >
+                <VIcon icon="close" :size="12" />
+              </VButton>
             </div>
           </div>
         </div>
@@ -130,11 +141,7 @@ export default Vue.extend({
     return {
       aliasInputs: {} as Record<string, string>,
       aliasEditing: '' as string,
-      aliasOutsideHandler: null as ((e: MouseEvent) => void) | null,
     }
-  },
-  beforeDestroy() {
-    this.removeAliasOutsideHandler()
   },
   methods: {
     submitAlias(item: { name: string }) {
@@ -145,7 +152,6 @@ export default Vue.extend({
       this.actions.addNamespaceAlias(item, value)
       this.$set(this.aliasInputs, item.name, '')
       this.aliasEditing = ''
-      this.removeAliasOutsideHandler()
     },
     setAliasInput(name: string, value: string) {
       this.$set(this.aliasInputs, name, value)
@@ -163,39 +169,11 @@ export default Vue.extend({
           focus.call(target)
         }
       })
-      this.installAliasOutsideHandler()
     },
     cancelAliasInput(name: string) {
       this.$set(this.aliasInputs, name, '')
       if (this.aliasEditing === name) {
         this.aliasEditing = ''
-      }
-      this.removeAliasOutsideHandler()
-    },
-    installAliasOutsideHandler() {
-      this.removeAliasOutsideHandler()
-      const handler = (e: MouseEvent) => {
-        const target = e.target as HTMLElement | null
-        if (!target) {
-          return
-        }
-        const area = target.closest('.rbvp-namespace-alias-area')
-        if (!area) {
-          const name = this.aliasEditing
-          if (name) {
-            this.$set(this.aliasInputs, name, '')
-            this.aliasEditing = ''
-          }
-          this.removeAliasOutsideHandler()
-        }
-      }
-      this.aliasOutsideHandler = handler
-      document.addEventListener('click', handler, true)
-    },
-    removeAliasOutsideHandler() {
-      if (this.aliasOutsideHandler) {
-        document.removeEventListener('click', this.aliasOutsideHandler, true)
-        this.aliasOutsideHandler = null
       }
     },
   },
@@ -231,39 +209,71 @@ export default Vue.extend({
   gap: 8px;
 }
 
-.rbvp-namespace-main-name {
-  width: fit-content;
-  padding: 4px 8px;
-  border-radius: 999px;
-  background-color: var(--theme-color-10);
-  color: var(--theme-color);
-}
-
 .rbvp-namespace-description {
   line-height: 1.6;
-}
-
-.rbvp-namespace-meta-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
 }
 
 .rbvp-namespace-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  min-width: 0;
 }
 
 .rbvp-namespace-tag {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 4px 8px;
+  padding: 2px 8px;
   border-radius: 999px;
-  background-color: var(--theme-color-10);
-  color: var(--theme-color);
+  background-color: rgb(127 127 127 / 10%);
+  color: inherit;
   font-size: 12px;
+  height: 28.5px;
+  box-sizing: border-box;
+  max-width: 100px;
+  min-width: 0;
+}
+
+.rbvp-namespace-name-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 6px;
+  padding-right: 12px;
+  border-radius: 999px;
+  background-color: rgb(127 127 127 / 10%);
+  color: inherit;
+  font-size: 12px;
+  height: 28.5px;
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.rbvp-namespace-name-flag {
+  flex: 0 0 auto;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background-color: rgb(127 127 127 / 14%);
+  font-size: 11px;
+  opacity: 0.78;
+}
+
+.rbvp-namespace-name-lock {
+  flex: 0 0 auto;
+  opacity: 0.6;
+}
+.rbvp-namespace-tag-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.rbvp-namespace-name-tag .rbvp-namespace-tag-text {
+  overflow: visible;
+  text-overflow: clip;
 }
 
 .rbvp-namespace-tag-remove {
@@ -288,39 +298,51 @@ export default Vue.extend({
 
 .rbvp-namespace-alias-input-row {
   display: flex;
+  align-items: center;
   gap: 6px;
-  margin-top: 6px;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
 }
 
-.rbvp-namespace-alias-input {
-  flex: 1 1 auto;
-  min-width: 0;
+.rbvp-namespace-alias-input-row .rbvp-namespace-alias-input {
+  flex: 0 0 160px;
+  max-width: 100%;
+}
+
+.rbvp-namespace-alias-confirm,
+.rbvp-namespace-alias-cancel {
+  flex: 0 0 auto;
+  width: 28.5px !important;
+  height: 28.5px !important;
+  min-width: 28.5px !important;
+  min-height: 28.5px !important;
+  padding: 0 !important;
 }
 
 .rbvp-namespace-alias-area {
   display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 6px;
 }
 
-.rbvp-namespace-alias-add-toggle {
+.rbvp-namespace-alias-add {
   flex: 0 0 auto;
-  border: none;
-  border-radius: 999px;
-  padding: 0;
-  width: 26px;
-  height: 26px;
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  background-color: #8882;
+  gap: 4px;
+  padding: 2px 10px;
+  border: 1px dashed var(--theme-color);
+  border-radius: 999px;
+  background-color: var(--theme-color-10);
   color: var(--theme-color);
   cursor: pointer;
-  transition: background-color 0.2s ease-out, color 0.2s ease-out;
+  height: 28.5px;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease-out, border-color 0.2s ease-out;
 
   &:hover {
-    background-color: #8884;
+    background-color: var(--theme-color-20);
   }
 }
 
@@ -375,10 +397,6 @@ export default Vue.extend({
 @media (max-width: 900px) {
   .rbvp-namespace-header {
     flex-wrap: wrap;
-  }
-
-  .rbvp-namespace-meta-grid {
-    grid-template-columns: 1fr;
   }
 }
 </style>
