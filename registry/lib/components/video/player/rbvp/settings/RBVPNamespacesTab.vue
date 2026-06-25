@@ -123,6 +123,7 @@
 </template>
 <script lang="ts">
 import { SwitchBox, TextBox, VButton, VIcon } from '@/ui'
+import { Toast } from '@/core/toast'
 
 export default Vue.extend({
   name: 'RBVPNamespacesTab',
@@ -147,6 +148,7 @@ export default Vue.extend({
     submitAlias(item: { name: string }) {
       const value = (this.aliasInputs[item.name] ?? '').trim()
       if (!value) {
+        Toast.error('别名不能为空', 'RBVP', 3000)
         return
       }
       this.actions.addNamespaceAlias(item, value)
