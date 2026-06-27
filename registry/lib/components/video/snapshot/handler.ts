@@ -4,7 +4,7 @@ import { VideoSnapshot } from '@/components/video/video-snapshot'
 import { PackageEntry } from '@/core/download'
 import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
-import { Toast } from '@/core/toast'
+import { Toast, ToastType } from '@/core/toast'
 import { formatDateTime, formatDuration } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { showImage } from '@/ui'
@@ -90,11 +90,15 @@ export async function generateDownloadAssets(infos: DownloadVideoInfo[], toast: 
       }
     }),
   )
-  const success = results.filter(
-    it => it.status === 'fulfilled',
-  ) as PromiseFulfilledResult<PackageEntry>[]
-  const fail = results.filter(it => it.status === 'rejected') as PromiseRejectedResult[]
+  const success = results.filter(x => x.status === 'fulfilled')
+  const fail = results.filter(x => x.status === 'rejected')
   toast.message = `生成视频快照完成。成功 ${success.length} 个, 失败 ${fail.length} 个。`
-  toast.duration = 1000
-  return success.map(x => x.value)
+  if (fail.length > 0) {
+    toast.type = ToastType.Error
+    toast.clearDuration()
+  } else {
+    toast.type = ToastType.Success
+    toast.duration = 1000
+  }
+  return success.map(x => <PackageEntry>x.value)
 }

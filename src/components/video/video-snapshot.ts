@@ -191,12 +191,12 @@ function drawTimestamp(snapshot: SnapshotSprite, options: DrawOptions = {}) {
   const {
     paddingX = 8,
     paddingY = 4,
-    marginX = 6,
-    marginY = 3,
+    marginX = 2,
+    marginY = 2,
     fontSize = 22,
     fontFamily = 'monospace',
     textColor = '#ffffff',
-    backgroundColor = '#00000033',
+    backgroundColor = 'rgba(0,0,0,0.5)',
   } = options
 
   ctx.font = `${fontSize}px ${fontFamily}`
@@ -344,7 +344,7 @@ export class VideoSnapshot {
       url += `bvid=${this.bvid}`
     }
     url += `&cid=${this.cid}`
-    const data = await bilibiliApi(getJsonWithCredentials(url))
+    const data = await bilibiliApi(getJsonWithCredentials(url), '[VideoSnapshot]', false)
     const pvData = await fetch(data.pvdata, {})
       .then(res => res.arrayBuffer())
       .then(b => parsePVData(b))
