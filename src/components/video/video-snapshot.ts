@@ -21,7 +21,7 @@ const parsePVData = async (data: ArrayBuffer) => {
 
 export interface SnapshotTile {
   time: number
-  col: number
+  column: number
   row: number
   x: number
   y: number
@@ -38,8 +38,12 @@ export interface SnapshotTileWithCanvas extends SnapshotTile {
 export interface SnapshotAtlas {
   index: number
   url: string
+  width: number
+  height: number
+  columns: number
+  rows: number
+  tiles: SnapshotTile[]
   image?: CanvasImageSource
-  tiles?: SnapshotTile[]
 }
 
 /**
@@ -48,19 +52,19 @@ export interface SnapshotAtlas {
 function parseTiles(
   atlas: SnapshotAtlas,
   times: number[],
-  cols: number,
+  columns: number,
   rows: number,
   width: number,
   height: number,
 ) {
   const s: SnapshotTile[] = []
   for (let row = 0; row < rows; row++) {
-    for (let col = 0; col < cols; col++) {
-      const i = row * cols + col
+    for (let column = 0; column < columns; column++) {
+      const i = row * columns + column
       if (i >= times.length) {
         return s
       }
-      const x = col * width
+      const x = column * width
       const y = row * height
       s.push({
         atlas,
@@ -69,7 +73,7 @@ function parseTiles(
         y,
         width,
         height,
-        col,
+        column,
         row,
       })
     }
@@ -83,20 +87,31 @@ function parseTiles(
 async function parseAtlases(
   allTimes: number[],
   atlasUrls: string[],
-  cols: number,
+  columns: number,
   rows: number,
-  width: number,
-  height: number,
+  tileWidth: number,
+  tileHeight: number,
 ) {
-  const spriteSheets = lodash.zip(atlasUrls, lodash.chunk(allTimes, cols * rows))
-  return spriteSheets.map(([url, times], index) => {
-    const atlas: SnapshotAtlas = { index, url }
-    const tiles = parseTiles(atlas, times, cols, rows, width, height)
+  const atlases = lodash.zip(atlasUrls, lodash.chunk(allTimes, columns * rows))
+  return atlases.map(([url, times], index) => {
+    const atlas: SnapshotAtlas = {
+      index,
+      url,
+      rows,
+      columns,
+      width: columns * tileWidth,
+      height: rows * tileHeight,
+      tiles: [],
+    }
+    const tiles = parseTiles(atlas, times, columns, rows, tileWidth, tileHeight)
     atlas.tiles = tiles
     return atlas
   })
 }
 
+/**
+ * @author WakelessSloth56
+ */
 async function loadAtlasImage(atlas: SnapshotAtlas) {
   return new Promise((resolve: (atlas: SnapshotAtlas) => void, reject) => {
     if (atlas.image) {
@@ -148,7 +163,7 @@ async function splitTileImage(tile: SnapshotTile) {
  * @author WakelessSloth56
  * @param count 需要的快照图数量
  */
-function sample<T extends { time: number }>(snapshots: T[], count: number): T[] {
+function sampleByTime<T extends { time: number }>(snapshots: T[], count: number): T[] {
   if (snapshots.length <= count) {
     return snapshots
   }
@@ -343,8 +358,6 @@ export class VideoSnapshot {
   bvid?: string
   cid: number
   atlases: SnapshotAtlas[]
-  atlasWidth: number
-  atlasHeight: number
   atlasColumns: number
   atlasRows: number
   tileWidth: number
@@ -382,8 +395,6 @@ export class VideoSnapshot {
     this.atlasRows = data.img_y_len
     this.tileWidth = data.img_x_size
     this.tileHeight = data.img_y_size
-    this.atlasWidth = this.atlasColumns * this.tileWidth
-    this.atlasHeight = this.atlasRows * this.tileHeight
 
     this.atlases = await parseAtlases(
       allTimes,
@@ -418,11 +429,31 @@ export class VideoSnapshot {
 
   async createGrid(cols = 5, rows = 6, options: DrawOptions & GridInfoOptions = {}) {
     await this.loadAtlasImage()
-    const tiles = await Promise.all(this.sample(cols * rows).map(splitTileImage))
+    const tiles = await Promise.all(this.sampleByTime(cols * rows).map(splitTileImage))
     return createGrid(tiles, cols, rows, this.tileWidth, this.tileHeight, options)
   }
 
-  sample(count: number) {
-    return sample(this.snapshots, count)
+  sampleByTime(count: number) {
+    return sampleByTime(this.snapshots, count)
+  }
+
+  getByTime(time: number) {
+    this.checkReady()
+    for (const atlas of this.atlases) {
+      for (const tile of atlas.tiles) {
+        if (time >= tile.time) {
+          return tile
+        }
+      }
+    }
+    return null
+  }
+
+  static async loadAtlasImage(atlas: SnapshotAtlas) {
+    return loadAtlasImage(atlas)
+  }
+
+  static async loadTileImage(tile: SnapshotTile) {
+    return loadAtlasImage(tile.atlas).then(() => splitTileImage(tile))
   }
 }
