@@ -19,7 +19,7 @@ function getOptions() {
 async function createSnapshotGrid(aid: string, cid: number) {
   const options = getOptions()
 
-  const snapshot = await VideoSnapshot.byAid(aid, cid).fetchInfo(true)
+  const snapshot = await VideoSnapshot.byAid(aid, cid).fetchInfo()
 
   const infoLines: string[] = []
   if (options.showInfoHeader) {

@@ -19,30 +19,41 @@ const parsePVData = async (data: ArrayBuffer) => {
 
 // =========================================================================== /
 
-export interface SnapshotSprite {
+export interface SnapshotTile {
   time: number
-  spriteSheet: string
   col: number
   row: number
   x: number
   y: number
   width: number
   height: number
+  atlas: SnapshotAtlas
   canvas?: HTMLCanvasElement
+}
+
+export interface SnapshotTileWithCanvas extends SnapshotTile {
+  canvas: HTMLCanvasElement
+}
+
+export interface SnapshotAtlas {
+  index: number
+  url: string
+  image?: CanvasImageSource
+  tiles?: SnapshotTile[]
 }
 
 /**
  * @author WakelessSloth56
  */
-function parseSpriteData(
-  spriteSheet: string,
+function parseTiles(
+  atlas: SnapshotAtlas,
   times: number[],
   cols: number,
   rows: number,
   width: number,
   height: number,
 ) {
-  const s: SnapshotSprite[] = []
+  const s: SnapshotTile[] = []
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const i = row * cols + col
@@ -52,15 +63,14 @@ function parseSpriteData(
       const x = col * width
       const y = row * height
       s.push({
+        atlas,
         time: times[i],
-        spriteSheet,
         x,
         y,
         width,
         height,
         col,
         row,
-        canvas: undefined,
       })
     }
   }
@@ -68,51 +78,69 @@ function parseSpriteData(
 }
 
 /**
- * 分割视频快照精灵图
  * @author WakelessSloth56
- * @param pvData 每个快照图的时间点 {@link parsePVData}
- * @param spriteUrls 精灵图的URL
- * @param cols 精灵图的列数
- * @param rows 精灵图的行数
- * @param width 快照图片的宽度
- * @param height 快照图片的长度
  */
-async function splitSnapshots(
-  pvData: number[],
-  spriteUrls: string[],
+async function parseAtlases(
+  allTimes: number[],
+  atlasUrls: string[],
   cols: number,
   rows: number,
   width: number,
   height: number,
-  toCanvas = true,
 ) {
-  const spriteSheets = lodash.zip(spriteUrls, lodash.chunk(pvData, cols * rows))
-  const sprites = spriteSheets.map(([url, times]) => {
-    const data = parseSpriteData(url, times, cols, rows, width, height)
-    if (toCanvas) {
-      return new Promise((resolve: (img: CanvasImageSource) => void, reject) => {
-        const img = new Image()
-        img.crossOrigin = 'anonymous'
-        img.onload = () => resolve(img)
-        img.onerror = reject
-        img.src = url
-      }).then(img => {
-        data.forEach(d => {
-          const canvas = document.createElement('canvas')
-          canvas.width = d.width
-          canvas.height = d.height
-          const ctx = canvas.getContext('2d')
-          ctx.drawImage(img, d.x, d.y, d.width, d.width, 0, 0, d.width, d.width)
-          d.canvas = canvas
-        })
-        return data
-      })
-    }
-    return new Promise((resolve: (value: SnapshotSprite[]) => void) => {
-      resolve(data)
-    })
+  const spriteSheets = lodash.zip(atlasUrls, lodash.chunk(allTimes, cols * rows))
+  return spriteSheets.map(([url, times], index) => {
+    const atlas: SnapshotAtlas = { index, url }
+    const tiles = parseTiles(atlas, times, cols, rows, width, height)
+    atlas.tiles = tiles
+    return atlas
   })
-  return Promise.all(sprites).then(x => x.flat().sort((a, b) => a.time - b.time))
+}
+
+async function loadAtlasImage(atlas: SnapshotAtlas) {
+  return new Promise((resolve: (atlas: SnapshotAtlas) => void, reject) => {
+    if (atlas.image) {
+      resolve(atlas)
+    } else {
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      img.onload = () => {
+        atlas.image = img
+        resolve(atlas)
+      }
+      img.onerror = reject
+      img.src = atlas.url
+    }
+  })
+}
+
+/**
+ * @author WakelessSloth56
+ */
+async function splitTileImage(tile: SnapshotTile) {
+  if (tile.canvas) {
+    return tile as SnapshotTileWithCanvas
+  }
+  if (!tile.atlas.image) {
+    throw new Error('[VideoSnapshot] snapshot atlas not loaded')
+  }
+  const canvas = document.createElement('canvas')
+  canvas.width = tile.width
+  canvas.height = tile.height
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(
+    tile.atlas.image,
+    tile.x,
+    tile.y,
+    tile.width,
+    tile.width,
+    0,
+    0,
+    tile.width,
+    tile.width,
+  )
+  tile.canvas = canvas
+  return tile as SnapshotTileWithCanvas
 }
 
 /**
@@ -120,7 +148,7 @@ async function splitSnapshots(
  * @author WakelessSloth56
  * @param count 需要的快照图数量
  */
-function sampleByTime<T extends { time: number }>(snapshots: T[], count: number): T[] {
+function sample<T extends { time: number }>(snapshots: T[], count: number): T[] {
   if (snapshots.length <= count) {
     return snapshots
   }
@@ -184,7 +212,7 @@ function drawText(ctx: CanvasText, text: string[], x: number, y0: number, lineHe
  * 在快照图上绘制对应的时间点
  * @author WakelessSloth56
  */
-function drawTimestamp(snapshot: SnapshotSprite, options: DrawOptions = {}) {
+function drawTimestamp(snapshot: SnapshotTileWithCanvas, options: DrawOptions = {}) {
   const timeStr = formatDuration(snapshot.time)
   const ctx = snapshot.canvas.getContext('2d')
 
@@ -220,11 +248,11 @@ function drawTimestamp(snapshot: SnapshotSprite, options: DrawOptions = {}) {
  * @author WakelessSloth56
  */
 function createGrid(
-  snapshots: SnapshotSprite[],
+  tiles: SnapshotTileWithCanvas[],
   cols: number,
   rows: number,
-  spriteWidth: number,
-  spriteHeight: number,
+  tileWidth: number,
+  tileHeight: number,
   options: DrawOptions & GridInfoOptions = {},
 ) {
   const {
@@ -250,8 +278,8 @@ function createGrid(
   const headerW = calcTextWidth(ctx, header)
   const headerH = headerW ? header.length * fontSize + header.length * paddingY + paddingY : 0
 
-  const gridW = cols * spriteWidth + (cols - 1) * paddingX
-  const gridH = rows * spriteHeight + (rows - 1) * paddingY
+  const gridW = cols * tileWidth + (cols - 1) * paddingX
+  const gridH = rows * tileHeight + (rows - 1) * paddingY
 
   const footerW = calcTextWidth(ctx, footer)
   const footerH = footerW ? footer.length * fontSize + footer.length * paddingY + paddingY : 0
@@ -290,15 +318,15 @@ function createGrid(
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
       const i = row * cols + col
-      if (i >= snapshots.length) {
+      if (i >= tiles.length) {
         return canvas
       }
       if (timestamp) {
-        drawTimestamp(snapshots[i])
+        drawTimestamp(tiles[i])
       }
-      const x = col * (spriteWidth + paddingX) + gridX
-      const y = row * (spriteHeight + paddingY) + gridY
-      ctx.drawImage(snapshots[i].canvas, x, y)
+      const x = col * (tileWidth + paddingX) + gridX
+      const y = row * (tileHeight + paddingY) + gridY
+      ctx.drawImage(tiles[i].canvas, x, y)
     }
   }
   return canvas
@@ -314,13 +342,13 @@ export class VideoSnapshot {
   aid?: string
   bvid?: string
   cid: number
-  times: number[]
-  snapshots: SnapshotSprite[]
-  spriteSheets: string[]
-  spriteColumns: number
-  spriteRows: number
-  spriteWidth: number
-  spriteHeight: number
+  atlases: SnapshotAtlas[]
+  atlasWidth: number
+  atlasHeight: number
+  atlasColumns: number
+  atlasRows: number
+  tileWidth: number
+  tileHeight: number
 
   private constructor(aid: string, bvid: string, cid: number) {
     this.aid = aid
@@ -336,7 +364,7 @@ export class VideoSnapshot {
     return new VideoSnapshot(null, bvid, cid)
   }
 
-  async fetchInfo(toCanvas = false): Promise<VideoSnapshot> {
+  async fetchInfo() {
     let url = 'https://api.bilibili.com/x/player/videoshot?'
     if (this.aid) {
       url += `aid=${this.aid}`
@@ -345,43 +373,56 @@ export class VideoSnapshot {
     }
     url += `&cid=${this.cid}`
     const data = await bilibiliApi(getJsonWithCredentials(url), '[VideoSnapshot]', false)
-    const pvData = await fetch(data.pvdata, {})
+
+    const allTimes = await fetch(data.pvdata, {})
       .then(res => res.arrayBuffer())
       .then(b => parsePVData(b))
-    this.times = pvData
-    this.spriteSheets = data.image
-    this.spriteColumns = data.img_x_len
-    this.spriteRows = data.img_y_len
-    this.spriteWidth = data.img_x_size
-    this.spriteHeight = data.img_y_size
-    this.snapshots = await splitSnapshots(
-      this.times,
-      this.spriteSheets,
-      this.spriteColumns,
-      this.spriteRows,
-      this.spriteWidth,
-      this.spriteHeight,
-      toCanvas,
+
+    this.atlasColumns = data.img_x_len
+    this.atlasRows = data.img_y_len
+    this.tileWidth = data.img_x_size
+    this.tileHeight = data.img_y_size
+    this.atlasWidth = this.atlasColumns * this.tileWidth
+    this.atlasHeight = this.atlasRows * this.tileHeight
+
+    this.atlases = await parseAtlases(
+      allTimes,
+      data.image,
+      this.atlasColumns,
+      this.atlasRows,
+      this.tileWidth,
+      this.tileHeight,
     )
+
     this.ready = true
     console.debug(this)
     return this
   }
 
-  async createGrid(cols = 5, rows = 6, options: DrawOptions & GridInfoOptions = {}) {
-    if (!this.ready || !this.snapshots[0].canvas) {
+  checkReady() {
+    if (!this.ready) {
       throw new Error('[VideoSnapshot] snapshots not ready')
     }
+  }
 
-    const canvas = createGrid(
-      sampleByTime(this.snapshots, cols * rows),
-      cols,
-      rows,
-      this.spriteWidth,
-      this.spriteHeight,
-      options,
-    )
+  get snapshots(): SnapshotTile[] {
+    this.checkReady()
+    return this.atlases.flatMap(x => x.tiles)
+  }
 
-    return canvas
+  async loadAtlasImage() {
+    this.checkReady()
+    await Promise.all(this.atlases.map(loadAtlasImage))
+    return this
+  }
+
+  async createGrid(cols = 5, rows = 6, options: DrawOptions & GridInfoOptions = {}) {
+    await this.loadAtlasImage()
+    const tiles = await Promise.all(this.sample(cols * rows).map(splitTileImage))
+    return createGrid(tiles, cols, rows, this.tileWidth, this.tileHeight, options)
+  }
+
+  sample(count: number) {
+    return sample(this.snapshots, count)
   }
 }
