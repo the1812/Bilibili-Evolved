@@ -9,9 +9,11 @@
 </template>
 
 <script lang="ts">
-import { DefaultWidget } from '@/ui'
+import { DefaultWidget, showImage } from '@/ui'
 import { logError } from '@/core/utils/log'
-import { view } from './handler'
+import { renderSnapshotGridToBlobUrl } from './handler'
+import { videoChange } from '@/core/observer'
+import { getFriendlyTitle } from '@/core/utils/title'
 
 export default Vue.extend({
   components: {
@@ -20,14 +22,24 @@ export default Vue.extend({
   data() {
     return {
       disabled: false,
+      imageBlobUrl: '',
     }
+  },
+  mounted() {
+    videoChange(() => {
+      URL.revokeObjectURL(this.imageBlobUrl)
+      this.imageBlobUrl = ''
+    })
   },
   methods: {
     async viewSnapshotGrid() {
       try {
         this.disabled = true
-        const { aid, cid } = unsafeWindow
-        await view(aid, parseInt(cid))
+        if (!this.imageBlobUrl) {
+          const { aid, cid } = unsafeWindow
+          this.imageBlobUrl = await renderSnapshotGridToBlobUrl(aid, parseInt(cid))
+        }
+        showImage(this.imageBlobUrl, `${getFriendlyTitle(true)}_snapshot.jpg`)
       } catch (error) {
         logError(error)
       } finally {

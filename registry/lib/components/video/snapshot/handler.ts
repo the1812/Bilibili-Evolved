@@ -6,8 +6,6 @@ import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast, ToastType } from '@/core/toast'
 import { formatDateTime, formatDuration } from '@/core/utils/formatters'
-import { getFriendlyTitle } from '@/core/utils/title'
-import { showImage } from '@/ui'
 import { componentName } from '.'
 import { DownloadVideoInfo } from '../download/types'
 import { Options } from './options'
@@ -72,10 +70,8 @@ async function toBlob(canvas: HTMLCanvasElement) {
   })
 }
 
-export async function view(aid: string, cid: number) {
-  return createSnapshotGrid(aid, cid)
-    .then(toBlob)
-    .then(blob => showImage(URL.createObjectURL(blob), `${getFriendlyTitle(true)}_snapshot.jpg`))
+export async function renderSnapshotGridToBlobUrl(aid: string, cid: number) {
+  return createSnapshotGrid(aid, cid).then(toBlob).then(URL.createObjectURL)
 }
 
 export async function generateDownloadAssets(infos: DownloadVideoInfo[], toast: Toast) {
