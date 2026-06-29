@@ -118,7 +118,7 @@ export abstract class BaseAutoplayHandler {
     })
   }
 
-  /** 设置番剧自动连播状态 */
+  /** 设置播放器自动连播状态（位于播放器设置浮窗内） */
   protected async setupAutoPlay_Player(enableAutoplay: boolean) {
     const selector = enableAutoplay
       ? '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]'
