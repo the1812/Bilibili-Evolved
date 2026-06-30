@@ -9,8 +9,6 @@ const liveInputSelector = [
   '.chat-input',
   '[class*="chat-input"] textarea',
   '[class*="chat-input"] input',
-  '[class*="chat-input"][contenteditable="true"]',
-  '.chat-input-ctnr [contenteditable="true"]',
 ].join(', ')
 
 const liveSendButtonSelector = [
@@ -32,11 +30,14 @@ const getRoomId = () => window.location.pathname.match(/\/(\d+)/)?.[1] ?? ''
 const setNativeValue = (input: HTMLElement, text: string) => {
   input.focus()
   if (input instanceof HTMLTextAreaElement || input instanceof HTMLInputElement) {
-    const prototype = input instanceof HTMLTextAreaElement ? HTMLTextAreaElement : HTMLInputElement
-    const setter = Object.getOwnPropertyDescriptor(prototype.prototype, 'value')?.set
-    setter ? setter.call(input, text) : (input.value = text)
-  } else if (input.isContentEditable) {
-    input.textContent = text
+    const proto = (input instanceof HTMLTextAreaElement ? HTMLTextAreaElement : HTMLInputElement)
+      .prototype
+    const setter = Object.getOwnPropertyDescriptor(proto, 'value')?.set
+    if (setter) {
+      setter.call(input, text)
+    } else {
+      input.value = text
+    }
   }
   input.dispatchEvent(
     new InputEvent('input', { bubbles: true, inputType: 'insertText', data: text }),
@@ -118,6 +119,8 @@ const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
   const target = normalizeText(text)
   return new Promise<EchoResult>(resolve => {
     let done = false
+    let observer!: MutationObserver
+    let timer!: ReturnType<typeof setTimeout>
     const finish = (result: EchoResult) => {
       if (done) {
         return
@@ -164,7 +167,7 @@ const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
         }
       }
     }
-    const [observer] = childListSubtree(panel, mutations => {
+    ;[observer] = childListSubtree(panel, mutations => {
       for (const mutation of mutations) {
         for (const node of mutation.addedNodes) {
           if (node instanceof HTMLElement) {
@@ -176,7 +179,7 @@ const waitForOwnEcho = (text: string, timeout = 3000): Promise<EchoResult> => {
         }
       }
     })
-    const timer = setTimeout(() => finish('dropped'), timeout)
+    timer = setTimeout(() => finish('dropped'), timeout)
   })
 }
 

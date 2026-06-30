@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
-import { getUID, isIframe } from '@/core/utils'
+import { getUID } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 import { select } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
@@ -15,8 +15,6 @@ const playerLayerClass = 'live-danmaku-helper-layer'
 
 const danmakuTrackSelector = '.danmaku-item-container'
 
-const FAVORITE_MSG_TYPE = 'liveDanmakuHelper:addFavorite'
-
 const addFavoriteLocal = (text: string) => {
   const { options } = getComponentSettings<LiveDanmakuHelperOptions>(name)
   if (!options.favorites.includes(text)) {
@@ -26,14 +24,6 @@ const addFavoriteLocal = (text: string) => {
 }
 
 const addFavorite = (text: string) => {
-  if (isIframe()) {
-    try {
-      window.top?.postMessage({ type: FAVORITE_MSG_TYPE, text }, '*')
-    } catch {
-      addFavoriteLocal(text)
-    }
-    return
-  }
   addFavoriteLocal(text)
 }
 
@@ -301,29 +291,12 @@ const setupPlayerActions = () => {
   }
 }
 
-let messageCleanup: (() => void) | null = null
 let entryToken = 0
 const entry = async () => {
   if (!getUID()) {
     return
   }
   const token = ++entryToken
-
-  if (!isIframe() && !messageCleanup) {
-    const handleFavoriteMessage = (e: MessageEvent) => {
-      if (
-        e.data?.type === FAVORITE_MSG_TYPE &&
-        typeof e.data.text === 'string' &&
-        e.data.text.trim()
-      ) {
-        addFavoriteLocal(e.data.text)
-      }
-    }
-    window.addEventListener('message', handleFavoriteMessage)
-    messageCleanup = () => {
-      window.removeEventListener('message', handleFavoriteMessage)
-    }
-  }
 
   await select('.chat-history-panel')
   if (token !== entryToken) {
@@ -340,8 +313,6 @@ const entry = async () => {
 
 const unload = () => {
   entryToken++
-  messageCleanup?.()
-  messageCleanup = null
   sidebarCleanup?.()
   sidebarCleanup = null
   playerCleanup?.()
