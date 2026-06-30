@@ -8,19 +8,14 @@ export const component = defineComponentMetadata({
   description: {
     'zh-CN': '暂停直播首页的推荐直播间.',
   },
+  author: {
+    name: 'YeJay99',
+    link: 'https://github.com/YeJay99',
+  },
   entry: async () => {
-    const { isComponentEnabled } = await import('@/core/settings')
-    if (!isComponentEnabled('liveHomePause')) {
-      return
-    }
-    const { matchUrlPattern } = await import('@/core/utils')
-    if (!matchUrlPattern(liveHome)) {
-      return
-    }
     const { select } = await import('@/core/spin-query')
     select('video').then((video: HTMLVideoElement) => {
       video.pause()
-      console.log('video.pause()')
     })
   },
   urlInclude: [liveHome],
