@@ -38,12 +38,7 @@ import { pickFile } from '@/core/file-picker'
 import { getComponentSettings } from '@/core/settings'
 import { Toast } from '@/core/toast'
 import { TextBox, VButton } from '@/ui'
-import {
-  BackgroundImage,
-  emptyBackgroundImage,
-  LOCAL_UPLOAD_LIMIT_KIB,
-  Options,
-} from './options'
+import { BackgroundImage, emptyBackgroundImage, LOCAL_UPLOAD_LIMIT_KIB, Options } from './options'
 
 const componentName = 'videoPageBackground'
 const title = '播放页自定义背景'
