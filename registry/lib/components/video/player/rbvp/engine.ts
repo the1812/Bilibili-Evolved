@@ -289,7 +289,7 @@ export const executeRbvpRules = async (
       rule.line,
     )
     try {
-      provider.validateAction?.(action.value)
+      await provider.validateAction?.(action.value)
       const resolved = await provider.resolveAction(action.value, context)
       if (!resolved) {
         addDebugStep(

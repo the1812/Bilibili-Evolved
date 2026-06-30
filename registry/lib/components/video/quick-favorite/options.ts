@@ -6,6 +6,11 @@ export enum DisplayMode {
   IconAndText = '图标 + 文字',
 }
 export const options = defineOptionsMetadata({
+  useRbvp: {
+    defaultValue: false,
+    displayName: '使用 RBVP',
+    hidden: true,
+  },
   favoriteFolderID: {
     defaultValue: 0,
     displayName: '快速收藏夹ID',

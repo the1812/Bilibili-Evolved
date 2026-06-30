@@ -177,7 +177,7 @@ export interface RBVPNamespaceProvider {
   getTakeoverState: () => boolean
   setTakeoverState: (value: boolean) => void
   setup?: (runtime: RBVPRuntime) => Promise<void> | void
-  validateAction?: (rawValue: string) => void
+  validateAction?: (rawValue: string) => Promise<void> | void
   resolveAction: (
     rawValue: string,
     context: RBVPEngineContext,
