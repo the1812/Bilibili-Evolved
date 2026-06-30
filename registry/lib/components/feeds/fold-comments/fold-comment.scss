@@ -27,6 +27,9 @@
     }
   }
 }
+.space-dynamic__content {
+  overflow: visible !important;
+}
 .bili-comment-container {
   display: flex !important;
   flex-direction: column !important;
