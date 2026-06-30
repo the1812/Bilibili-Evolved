@@ -14,10 +14,11 @@ declare global {
   }
 }
 
-/** Store 就绪后自动补同步画面与列表 */
+/** Store 就绪后自动补同步画面与列表，或在无内存源时尝试恢复会话 */
 export function bindStoreReadyListener(
   nativeDanmaku: NativeDanmakuRuntime,
   engine: DanmakuEngine,
+  tryRestoreSession?: () => Promise<void>,
 ): void {
   if (window.__dmMergerStoreReadyListener) {
     return
@@ -27,7 +28,11 @@ export function bindStoreReadyListener(
   document.addEventListener('dm-merger-store-ready', () => {
     clearTimeout(nativeDanmaku._storeReadyRetryTimer)
     nativeDanmaku._storeReadyRetryTimer = window.setTimeout(async () => {
-      if (!engine.sources?.size || nativeDanmaku._fullSyncing) {
+      if (nativeDanmaku._fullSyncing) {
+        return
+      }
+      if (!engine.sources?.size) {
+        await tryRestoreSession?.()
         return
       }
       if (!nativeDanmaku.getDataBase() || !nativeDanmaku.hasListStore()) {

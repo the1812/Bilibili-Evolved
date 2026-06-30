@@ -146,7 +146,13 @@ export const createQuickMergeHost = (deps: QuickMergeHostDeps) => {
         true,
       )
 
-      if (result.ok) {
+      const sourceId = `${bvid}_${p1.cid}`
+      const mergedOk =
+        result.ok ||
+        (result.screen || 0) > 0 ||
+        result.list ||
+        deps.getSources().some(source => String((source as { id?: string }).id) === sourceId)
+      if (mergedOk) {
         const hint = deps.formatInjectHint(result)
         mergerToast(`已并入：${data.title}${hint ? `（${hint}）` : ''}`)
       } else {
@@ -154,7 +160,14 @@ export const createQuickMergeHost = (deps: QuickMergeHostDeps) => {
       }
     } catch (err) {
       console.error('快速合并失败:', err)
-      mergerToast(vm.merged ? '移除失败' : '合并失败', 'error')
+      const recovered = bvid
+        ? deps.getSources().some(source => (source as { bvid?: string }).bvid === bvid)
+        : false
+      if (!vm.merged && recovered) {
+        mergerToast('已并入（检测延迟，实际写入成功）')
+      } else {
+        mergerToast(vm.merged ? '移除失败' : '合并失败', 'error')
+      }
     } finally {
       Object.assign(vm, { busy: false })
     }

@@ -691,8 +691,14 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
 
     mergerProgressToast(`正在合并 0/${items.length}`)
 
+    const hasSourceId = (sourceId: string) =>
+      deps.engine.getSources().some(source => String(source.id) === sourceId)
+
     try {
       for (const task of items) {
+        const sourcesBefore = deps.engine.getSources().length
+        let resolvedSourceId = ''
+        let resolvedTitle = task.title
         try {
           let { cid, title } = task
           const workingTask = { ...task }
@@ -717,13 +723,14 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           if (cid == null) {
             throw new Error('缺少 cid')
           }
+          resolvedTitle = title
+          resolvedSourceId = workingTask.bvid ? `${workingTask.bvid}_${cid}` : String(cid)
           const xml = await deps.api.getDanmaku(cid)
           const list = deps.parseDanmaku(xml)
-          const sourceId = workingTask.bvid ? `${workingTask.bvid}_${cid}` : String(cid)
           const injectIndex = success + fail + 1
           const result = await deps.injectDanmaku(
             list,
-            { ...workingTask, id: sourceId },
+            { ...workingTask, id: resolvedSourceId },
             true,
             phase => {
               mergerProgressToast(
@@ -732,7 +739,14 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
             },
           )
 
-          if (result.ok) {
+          const sourceGrew = deps.engine.getSources().length > sourcesBefore
+          const sourceExists = hasSourceId(resolvedSourceId) || sourceGrew
+          const mergedOk =
+            result.ok ||
+            (result.screen || 0) > 0 ||
+            result.list ||
+            sourceExists
+          if (mergedOk) {
             success++
             totalDm += result.count
             screenDm += result.screen || 0
@@ -740,10 +754,28 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
             fail++
             lastFailReason = result.reason || 'inject_failed'
           }
-          mergerProgressToast(`进度 ${success + fail}/${items.length}：${title}`)
-        } catch {
-          fail++
-          mergerProgressToast(`进度 ${success + fail}/${items.length}：失败`)
+          mergerProgressToast(`进度 ${success + fail}/${items.length}：${resolvedTitle}`)
+        } catch (err) {
+          const sourceGrew = deps.engine.getSources().length > sourcesBefore
+          const recovered =
+            sourceGrew ||
+            (resolvedSourceId ? hasSourceId(resolvedSourceId) : false) ||
+            (task.bvid
+              ? deps.engine
+                  .getSources()
+                  .some(
+                    source =>
+                      source.bvid === task.bvid &&
+                      (task.cid == null || String(source.cid) === String(task.cid)),
+                  )
+              : false)
+          if (recovered) {
+            success++
+          } else {
+            fail++
+            lastFailReason = err instanceof Error ? err.message : 'inject_failed'
+          }
+          mergerProgressToast(`进度 ${success + fail}/${items.length}：${resolvedTitle || '失败'}`)
         }
       }
     } finally {
@@ -813,9 +845,6 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       syncPreviewVm()
       managerState.visible = true
       syncManagerVm()
-      const maskEl = managerVm.$el as HTMLElement
-      maskEl?.style?.removeProperty('display')
-      document.body.appendChild(maskEl)
       Vue.nextTick(() => {
         refreshManagerGroups()
         syncManagerVm()
@@ -1122,7 +1151,14 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     })
   }
 
+  const removeStaleModalNodes = () => {
+    document.querySelectorAll('.dm-merger-modal-mask').forEach(node => node.remove())
+  }
+
   const mount = async () => {
+    destroyMergerConfirm()
+    removeStaleModalNodes()
+
     const [MergerModal, ManagerModal, PreviewModal, MergerCountBadge] = await Promise.all([
       import('./MergerModal.vue'),
       import('./ManagerModal.vue'),

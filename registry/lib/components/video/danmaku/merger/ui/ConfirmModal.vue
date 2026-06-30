@@ -1,5 +1,11 @@
 <template>
-  <ModalShell :visible="visible" :title="title" width="420px" @close="onCancel">
+  <ModalShell
+    mask-class="dm-merger-confirm-mask"
+    :visible="visible"
+    :title="title"
+    width="420px"
+    @close="onCancel"
+  >
     <div class="dm-confirm-content">{{ body }}</div>
     <template #footer>
       <div class="dm-confirm-btns">

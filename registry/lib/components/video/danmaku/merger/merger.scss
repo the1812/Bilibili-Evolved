@@ -20,7 +20,8 @@
     height: 100vh;
     background: rgba(0, 0, 0, 0.6);
     z-index: 2147483000;
-    display: flex !important;
+    /* 勿加 display !important，否则会覆盖 v-show 的 display:none，导致弹窗无法关闭 */
+    display: flex;
     align-items: center;
     justify-content: center;
 
@@ -180,6 +181,11 @@
 }
 .dm-confirm-title { font-size: 18px; font-weight: 600; margin-bottom: 12px; color: var(--text1, #222); }
 .dm-confirm-content { font-size: 14px; color: var(--text2, #555); margin-bottom: 24px; line-height: 1.5; }
+/* 确认框叠在搜索/管理弹窗之上 */
+.dm-merger-confirm-mask {
+    z-index: 2147483010;
+}
+
 .dm-confirm-btns { display: flex; justify-content: center; gap: 12px; }
 .dm-confirm-btn { padding: 8px 24px; border-radius: 4px; cursor: pointer; border: none; font-size: 14px; transition: opacity 0.2s;}
 .dm-confirm-btn.primary { background: #00AEEC; color: #fff; }

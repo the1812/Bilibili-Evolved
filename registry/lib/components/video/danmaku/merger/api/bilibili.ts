@@ -1,24 +1,10 @@
-import { getJsonWithCredentials, getText } from '@/core/ajax'
-import type { BilibiliApiResponse, PageItem, SearchResult, ViewResult } from './types'
+import { bilibiliApi, getJsonWithCredentials, getText } from '@/core/ajax'
+import type { PageItem, SearchResult, ViewResult } from './types'
 
 const SEARCH_URL = 'https://api.bilibili.com/x/web-interface/search/type'
 const VIEW_URL = 'https://api.bilibili.com/x/web-interface/view'
 const PAGE_LIST_URL = 'https://api.bilibili.com/x/player/pagelist'
 const DANMAKU_XML_URL = 'https://comment.bilibili.com'
-
-/**
- * 带登录态的 B 站 JSON 请求。
- * 搜索等接口缺 Cookie 会返回 HTTP 412，须 withCredentials。
- */
-const biliGetJson = async <T>(url: string): Promise<BilibiliApiResponse<T>> => {
-  const data = await getJsonWithCredentials<BilibiliApiResponse<T>>(url)
-
-  if (data == null) {
-    throw new Error('接口返回为空')
-  }
-
-  return data
-}
 
 /** 解析 view 查询参数：支持 BV 与 av 号（与 runtime 直输 BV/av 一致） */
 const buildViewUrl = (id: string): string => {
@@ -40,33 +26,23 @@ export const searchVideos = async (keyword: string, page = 1): Promise<SearchRes
     `&keyword=${encodeURIComponent(keyword)}` +
     `&page=${page}&page_size=30`
 
-  const data = await biliGetJson<{ result?: SearchResult[0]['data'] }>(url)
+  const data = await bilibiliApi<{ result?: SearchResult[0]['data'] }>(
+    getJsonWithCredentials(url),
+    '搜索失败',
+  )
 
-  if (data.code === 0) {
-    return [{ result_type: 'video', data: data.data?.result ?? [] }]
-  }
-  throw new Error(data.message || '搜索失败')
+  return [{ result_type: 'video', data: data.result ?? [] }]
 }
 
 /** 获取视频详情（view 接口） */
 export const getView = async (bvid: string): Promise<ViewResult> => {
-  const data = await biliGetJson<ViewResult>(buildViewUrl(bvid))
-
-  if (data.code === 0) {
-    return data.data
-  }
-  throw new Error(data.message || '获取视频信息失败')
+  return bilibiliApi<ViewResult>(getJsonWithCredentials(buildViewUrl(bvid)), '获取视频信息失败')
 }
 
 /** 获取分 P 列表（pagelist 接口） */
 export const getPageList = async (bvid: string): Promise<PageItem[]> => {
   const url = `${PAGE_LIST_URL}?bvid=${encodeURIComponent(bvid)}`
-  const data = await biliGetJson<PageItem[]>(url)
-
-  if (data.code === 0) {
-    return data.data ?? []
-  }
-  throw new Error(data.message || '获取分P列表失败')
+  return bilibiliApi<PageItem[]>(getJsonWithCredentials(url), '获取分P列表失败')
 }
 
 /** 获取弹幕 XML（comment.bilibili.com，与 runtime getDanmaku 一致） */

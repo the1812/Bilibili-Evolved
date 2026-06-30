@@ -2,21 +2,8 @@ import type { ComponentEntryContext } from '@/components/types'
 import { mountVueComponent } from '@/core/utils'
 import { addVideoActionButton } from '@/components/video/video-actions'
 import { videoChange } from '@/core/observer'
-import { initStorage } from './storage'
+import { initStorageFromContext } from './storage'
 import { MERGER_BUTTON_EVENTS, type MergerUiHost } from './ui/contracts'
-
-type BeMonkeyApis = {
-  GM_getValue?: <T>(name: string, defaultValue?: T) => T
-  GM_setValue?: (name: string, value: unknown) => void
-  GM_deleteValue?: (name: string) => void
-}
-
-const getMonkeyApis = (): BeMonkeyApis | undefined => {
-  const host = unsafeWindow as typeof unsafeWindow & {
-    bilibiliEvolved?: { monkeyApis?: BeMonkeyApis }
-  }
-  return host.bilibiliEvolved?.monkeyApis
-}
 
 const wireMergerButton = (buttonVm: Vue, getHost: () => MergerUiHost | null) => {
   buttonVm.$off(MERGER_BUTTON_EVENTS.OPEN)
@@ -40,17 +27,9 @@ const wireMergerButtonWhenReady = (
 }
 
 export const createMergerContext = async (
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _context: ComponentEntryContext,
+  context: ComponentEntryContext,
 ): Promise<() => void> => {
-  const monkey = getMonkeyApis()
-  if (monkey?.GM_getValue && monkey?.GM_setValue && monkey?.GM_deleteValue) {
-    initStorage({
-      GM_getValue: monkey.GM_getValue,
-      GM_setValue: monkey.GM_setValue,
-      GM_deleteValue: monkey.GM_deleteValue,
-    })
-  }
+  initStorageFromContext(context)
 
   const MergerButton = await import('./ui/MergerButton.vue')
   const buttonVm = mountVueComponent(MergerButton)

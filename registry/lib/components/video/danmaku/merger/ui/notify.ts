@@ -70,6 +70,7 @@ export const mergerProgressToastDone = (): void => {
 /** 确认对话框，使用与搜索/管理弹窗一致的 ModalShell */
 export const mergerConfirm = async (title: string, content: string): Promise<boolean> => {
   const vm = await getConfirmModal()
+  document.body.appendChild(vm.$el)
   return vm.showConfirm(title, content)
 }
 

@@ -8,6 +8,7 @@
 
 import { getStorage } from '../storage'
 import type { NativeDanmakuApi } from './inject'
+import { dmLog, dmWarn } from './log'
 
 /** 弹幕合并引擎：多源聚合 + 原生列表同步 */
 export class DanmakuEngine {
@@ -144,14 +145,14 @@ export class DanmakuEngine {
     // 优先从 URL 参数获取 BVID（适配稍后再看等列表页）
     const params = new URLSearchParams(location.search)
     const bvidParam = params.get('bvid')
-    if (bvidParam) {
-      return bvidParam
+    if (bvidParam && /^BV[a-zA-Z0-9]{10}$/i.test(bvidParam)) {
+      return bvidParam.toUpperCase()
     }
 
     // 其次从路径获取（适配普通视频页）
     const pathMatch = location.pathname.match(/\/video\/(BV[a-zA-Z0-9]{10})/i)
     if (pathMatch) {
-      return pathMatch[1]
+      return pathMatch[1].toUpperCase()
     }
 
     // 兜底使用路径名（适配番剧等）
@@ -241,14 +242,23 @@ export class DanmakuEngine {
   // --- 状态持久化 ---
 
   saveState() {
-    if (!this.video) {
-      return
+    try {
+      const videoId = this.getCurrentVideoId()
+      if (!videoId) {
+        return
+      }
+      const key = `dm_merger_store_${videoId}`
+      if (!this.sources?.size) {
+        getStorage().delete(key)
+        return
+      }
+      const sourcesMeta = this.getSources()
+      getStorage().set(key, JSON.stringify(sourcesMeta))
+      getStorage().trackKey(key)
+      dmLog('saveState', { key, count: sourcesMeta.length })
+    } catch (err) {
+      dmWarn('saveState 失败', err)
     }
-    const videoId = this.getCurrentVideoId()
-    const key = `dm_merger_store_${videoId}`
-    const sourcesMeta = this.getSources()
-    getStorage().set(key, JSON.stringify(sourcesMeta))
-    getStorage().trackKey(key)
   }
 
   // 重置引擎（用于 SPA 导航切换视频）
