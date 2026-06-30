@@ -13,6 +13,8 @@ export interface VideoPageInfo {
   title: string
   pageNumber: number
   duration: number
+  ctime: number
+  dimension: { width: number; height: number }
 }
 
 export interface VideoSeasonEpisodeInfo {
@@ -45,6 +47,8 @@ const normalizeVideoPage = (page: any): VideoPageInfo => ({
   title: page.title ?? page.part,
   pageNumber: page.pageNumber ?? page.page,
   duration: page.duration ?? 0,
+  dimension: page.dimension,
+  ctime: page.ctime,
 })
 
 const normalizeVideoSeasonEpisode = (episode: any): VideoSeasonEpisodeInfo => {
