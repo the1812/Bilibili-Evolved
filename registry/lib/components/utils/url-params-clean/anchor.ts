@@ -33,7 +33,7 @@ export const cleanAnchors = async (getCleanUrl: (u: string) => string) => {
     if (a.href === newUrl) {
       return
     }
-    console.info('清理A标签', a, a.href, newUrl)
+    console.debug('清理A标签', a, a.href, newUrl)
     a.href = newUrl
   }
 

@@ -129,6 +129,14 @@
   },
   {
     "type": "component",
+    "name": "blockLiveVisibilityDetection",
+    "displayName": "禁止直播可见性检测",
+    "description": "直播页面不在前台时会被自动切换到低画质，切回前台后再恢复原画质，这会导致不必要的卡顿，本功能可以阻止直播画质根据前后台自动切换。\r\n",
+    "fullRelativePath": "../../registry/dist/components/live/block-live-visibility-detection.js",
+    "fullAbsolutePath": "registry/dist/components/live/block-live-visibility-detection.js"
+  },
+  {
+    "type": "component",
     "name": "liveChatPanelFit",
     "displayName": "直播间网页全屏自适应",
     "description": "在直播网页全屏时, 自动调整侧边栏的宽度, 使得视频区域的比例和视频源相匹配, 达到无黑边的效果.\r\n如果在侧边栏的边缘拖动, 可以自定义侧边栏的固定宽度, 双击边缘可以还原到自动宽度.\r\n\r\n- `侧边栏最大宽度 (px)`: 限制侧边栏可被拉伸到的最大宽度. (最小宽度固定为 190px, 再小的话布局就要出问题了)\r\n\r\n> 注意, 由于有最大宽度和最小宽度的限制, 部分窗口尺寸下仍然无法做到无黑边.\r\n",
@@ -985,6 +993,14 @@
   },
   {
     "type": "component",
+    "name": "rbvp",
+    "displayName": "RBVP 视频策略",
+    "description": "by [@JLoeve (with Claude Code & Codex)](https://github.com/LonelySteve)\n\n> 基于规则的视频策略引擎，根据当前视频的 UP 主、分区、标签、标题、时长等信息自动匹配预设规则并执行对应动作，可实现倍速自动切换、合集记忆行为控制等场景.\r\n\r\n#### 🔧 **选项**\r\n\r\n- `显示命中提示`：打开此选项后，每次规则匹配成功时会在播放器弹出提示，显示命中的规则行号和动作信息.\r\n\r\n#### ⚙️ **RBVP 设置面板**\r\n\r\n点击组件选项下方的「RBVP 设置」按钮可打开设置面板，包含三个页签：\r\n\r\n- **规则**：管理主规则，支持可视化视图（逐条编辑、排序、上下移动）、文本视图（批量编辑、导入导出）、上下文视图（查看当前视频的匹配上下文）和调试视图（查看最近一次规则匹配的追踪路径）.\r\n- **规则集**：管理可复用的本地规则集，支持按名称、匹配类型和条目进行编辑，也支持导入导出.\r\n- **命名空间**：查看已注册的命名空间（如「记忆倍速」「记忆合集」），可在此直接切换各命名空间是否交由 RBVP 接管，并查看其主名称、别名与描述.\r\n\r\n#### 📝 **规则语法**\r\n\r\n每条规则占一行，格式为 `匹配条件, 参数, 动作`，以 `#` 开头的行为注释行.\r\n\r\n**匹配器类型**：\r\n\r\n- `UP, UID`：匹配 UP 主的 UID\r\n- `TAG, 关键词`：匹配视频标签，支持模糊匹配、精确匹配（`\"关键词\"`）和正则（`/pattern/`）\r\n- `TAG-MUSIC, music_id`：匹配音乐标签的 music_id\r\n- `PARTITION, 分区ID`：匹配视频分区 ID\r\n- `TITLE, 关键词`：匹配视频标题，支持与 TAG 相同的匹配模式\r\n- `PART, 关键词`：匹配分 P 标题\r\n- `BVID, bvid`  / `AID, aid`：匹配特定视频，支持 `#页码` 指定分 P\r\n- `SECTION, ID` / `SECTION-ROOT, ID`：匹配合集的 TAB 或根 ID\r\n- `SECTION-NAME, 关键词` / `SECTION-ROOT-NAME, 关键词`：匹配合集 TAB 或根名称\r\n- `TIME, 表达式`：匹配视频时长，支持比较（`>=3600`、`<600`）和范围（`300-1800`），单位为秒\r\n- `RULE-SET, 规则集名称`：引用本地规则集\r\n- `FINAL`：兜底规则，始终匹配\r\n\r\n**逻辑组合**：`AND(条件1, 条件2)`、`OR(条件1, 条件2)`、`NOT(条件)` 可嵌套使用.\r\n\r\n**动作格式**：`命名空间:动作值`，如 `rememberVideoSpeed:2`、`rememberVideoCollection:OFF`。动作值含义由各命名空间定义，可前往「命名空间」页签查看.\r\n\r\n#### 🔗 **联动组件**\r\n\r\nRBVP 通过命名空间机制与兼容组件联动，首批支持「记忆倍速」和「记忆合集」。具体动作值说明请参见对应组件的描述.\r\n\r\n#### 🌈 **温馨提示**\r\n\r\n规则按从上到下的顺序匹配，命中第一条即停止，因此请将更具体的规则放在上方，通用规则（如 `FINAL`）放在最末尾.\r\n\r\n上下文视图和调试视图仅在最近一次匹配后才有数据显示，刚安装时为空.",
+    "fullRelativePath": "../../registry/dist/components/video/player/rbvp.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/rbvp.js"
+  },
+  {
+    "type": "component",
     "name": "rememberVideoSpeed",
     "displayName": "记忆倍速",
     "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n#### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n#### 🌈 **温馨提示**\n\n「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.\n\n请根据自身需要：\n\n- 前往「组件」页面安装[「扩展倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/components/video/player/extend-speed.js)组件\n- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/plugins/video/player/speed.js)插件.\n\n*如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*\n",
@@ -1051,7 +1067,7 @@
     "type": "component",
     "name": "videoScaling",
     "displayName": "视频缩放",
-    "description": "by [@weedy233](https://github.com/weedy233)\n\n> 允许调整视频的显示缩放比例，让您根据屏幕大小和个人偏好自定义视频播放体验。\r\n\r\n#### 🔧 **选项**\r\n\r\n- \\`缩放比例\\`：选择预设的视频缩放比例，包括 75%、100%（默认）、110%、125%、150% 以及自定义选项。\r\n\r\n- \\`自定义缩放比 (%)\\`：当选择 \"自定义\" 选项时显示，可在 50%-300% 范围内以 10% 为步长自由调整缩放比例。\r\n\r\n- \\`显示缩放提示\\`：启用后，在调整缩放比例时会显示短暂提示，告知当前缩放比例。\r\n\r\n- \\`提示显示时间 (秒)\\`：控制缩放提示的显示时长，可在 0.5-5 秒范围内以 0.5 秒为步长调整。\r\n\r\n- \\`显示控制栏按钮\\`：在播放器控制栏添加一个缩放按钮，点击可循环切换预设的缩放比例。\r\n\r\n#### **使用方法**\r\n\r\n1. **通过设置面板**：在组件设置中直接选择预设的缩放比例，或选择 \"自定义\" 后调整滑动条设置特定比例。\r\n\r\n2. **通过控制栏按钮**：如果启用了控制栏按钮，点击播放器控制栏上的缩放图标（放大镜图标）可循环切换预设缩放比例。\r\n\r\n#### **注意事项**\r\n\r\n- 视频切换时，缩放比例会自动重置为当前设置的值。\r\n- 过高的缩放比例可能导致视频内容超出屏幕范围，建议根据实际屏幕尺寸适当调整。\r\n",
+    "description": "by [@weedy233](https://github.com/weedy233)\n\n> 允许调整视频的显示缩放比例，让您根据屏幕大小和个人偏好自定义视频播放体验。\r\n\r\n#### 🔧 **选项**\r\n\r\n- `缩放比例`：选择预设的视频缩放比例，包括 75%、100%（默认）、110%、125%、150% 以及自定义选项。\r\n\r\n- `自定义缩放比 (%)`：当选择 \"自定义\" 选项时显示，可在 50%-300% 范围内以 10% 为步长自由调整缩放比例。\r\n\r\n- `显示缩放提示`：启用后，在调整缩放比例时会显示短暂提示，告知当前缩放比例。\r\n\r\n- `提示显示时间 (秒)`：控制缩放提示的显示时长，可在 0.5-5 秒范围内以 0.5 秒为步长调整。\r\n\r\n- `显示控制栏按钮`：在播放器控制栏添加一个缩放按钮，点击可循环切换预设的缩放比例。\r\n\r\n#### **使用方法**\r\n\r\n1. **通过设置面板**：在组件设置中直接选择预设的缩放比例，或选择 \"自定义\" 后调整滑动条设置特定比例。\r\n\r\n2. **通过控制栏按钮**：如果启用了控制栏按钮，点击播放器控制栏上的缩放图标（放大镜图标）可循环切换预设缩放比例。\r\n\r\n#### **注意事项**\r\n\r\n- 视频切换时，缩放比例会自动重置为当前设置的值。\r\n- 过高的缩放比例可能导致视频内容超出屏幕范围，建议根据实际屏幕尺寸适当调整。\r\n",
     "fullRelativePath": "../../registry/dist/components/video/player/video-scaling.js",
     "fullAbsolutePath": "registry/dist/components/video/player/video-scaling.js"
   },

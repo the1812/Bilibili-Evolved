@@ -158,6 +158,15 @@ by [@magicFeirl](https://github.com/magicFeirl)
 
 在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。
 
+### [禁止直播可见性检测](../../registry/dist/components/live/block-live-visibility-detection.js)
+`blockLiveVisibilityDetection`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/block-live-visibility-detection.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/block-live-visibility-detection.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/block-live-visibility-detection.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/block-live-visibility-detection.js)
+
+直播页面不在前台时会被自动切换到低画质，切回前台后再恢复原画质，这会导致不必要的卡顿，本功能可以阻止直播画质根据前后台自动切换。
+
 ### [直播间网页全屏自适应](../../registry/dist/components/live/chat-panel-fit.js)
 `liveChatPanelFit`
 
@@ -1421,6 +1430,62 @@ by [@GH4NG](https://github.com/GH4NG)
 
 在视频播放器网页全屏时, 即使宽度过小也强制保留弹幕发送栏, 注意这可能导致右侧的功能按钮挤出边界.
 
+### [RBVP 视频策略](../../registry/dist/components/video/player/rbvp.js)
+`rbvp`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/rbvp.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/rbvp.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/rbvp.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/rbvp.js)
+
+by [@JLoeve (with Claude Code & Codex)](https://github.com/LonelySteve)
+
+> 基于规则的视频策略引擎，根据当前视频的 UP 主、分区、标签、标题、时长等信息自动匹配预设规则并执行对应动作，可实现倍速自动切换、合集记忆行为控制等场景.
+
+#### 🔧 **选项**
+
+- `显示命中提示`：打开此选项后，每次规则匹配成功时会在播放器弹出提示，显示命中的规则行号和动作信息.
+
+#### ⚙️ **RBVP 设置面板**
+
+点击组件选项下方的「RBVP 设置」按钮可打开设置面板，包含三个页签：
+
+- **规则**：管理主规则，支持可视化视图（逐条编辑、排序、上下移动）、文本视图（批量编辑、导入导出）、上下文视图（查看当前视频的匹配上下文）和调试视图（查看最近一次规则匹配的追踪路径）.
+- **规则集**：管理可复用的本地规则集，支持按名称、匹配类型和条目进行编辑，也支持导入导出.
+- **命名空间**：查看已注册的命名空间（如「记忆倍速」「记忆合集」），可在此直接切换各命名空间是否交由 RBVP 接管，并查看其主名称、别名与描述.
+
+#### 📝 **规则语法**
+
+每条规则占一行，格式为 `匹配条件, 参数, 动作`，以 `#` 开头的行为注释行.
+
+**匹配器类型**：
+
+- `UP, UID`：匹配 UP 主的 UID
+- `TAG, 关键词`：匹配视频标签，支持模糊匹配、精确匹配（`"关键词"`）和正则（`/pattern/`）
+- `TAG-MUSIC, music_id`：匹配音乐标签的 music_id
+- `PARTITION, 分区ID`：匹配视频分区 ID
+- `TITLE, 关键词`：匹配视频标题，支持与 TAG 相同的匹配模式
+- `PART, 关键词`：匹配分 P 标题
+- `BVID, bvid`  / `AID, aid`：匹配特定视频，支持 `#页码` 指定分 P
+- `SECTION, ID` / `SECTION-ROOT, ID`：匹配合集的 TAB 或根 ID
+- `SECTION-NAME, 关键词` / `SECTION-ROOT-NAME, 关键词`：匹配合集 TAB 或根名称
+- `TIME, 表达式`：匹配视频时长，支持比较（`>=3600`、`<600`）和范围（`300-1800`），单位为秒
+- `RULE-SET, 规则集名称`：引用本地规则集
+- `FINAL`：兜底规则，始终匹配
+
+**逻辑组合**：`AND(条件1, 条件2)`、`OR(条件1, 条件2)`、`NOT(条件)` 可嵌套使用.
+
+**动作格式**：`命名空间:动作值`，如 `rememberVideoSpeed:2`、`rememberVideoCollection:OFF`。动作值含义由各命名空间定义，可前往「命名空间」页签查看.
+
+#### 🔗 **联动组件**
+
+RBVP 通过命名空间机制与兼容组件联动，首批支持「记忆倍速」和「记忆合集」。具体动作值说明请参见对应组件的描述.
+
+#### 🌈 **温馨提示**
+
+规则按从上到下的顺序匹配，命中第一条即停止，因此请将更具体的规则放在上方，通用规则（如 `FINAL`）放在最末尾.
+
+上下文视图和调试视图仅在最近一次匹配后才有数据显示，刚安装时为空.
+
 ### [记忆倍速](../../registry/dist/components/video/player/remember-speed.js)
 `rememberVideoSpeed`
 
@@ -1547,15 +1612,15 @@ by [@weedy233](https://github.com/weedy233)
 
 #### 🔧 **选项**
 
-- \`缩放比例\`：选择预设的视频缩放比例，包括 75%、100%（默认）、110%、125%、150% 以及自定义选项。
+- `缩放比例`：选择预设的视频缩放比例，包括 75%、100%（默认）、110%、125%、150% 以及自定义选项。
 
-- \`自定义缩放比 (%)\`：当选择 "自定义" 选项时显示，可在 50%-300% 范围内以 10% 为步长自由调整缩放比例。
+- `自定义缩放比 (%)`：当选择 "自定义" 选项时显示，可在 50%-300% 范围内以 10% 为步长自由调整缩放比例。
 
-- \`显示缩放提示\`：启用后，在调整缩放比例时会显示短暂提示，告知当前缩放比例。
+- `显示缩放提示`：启用后，在调整缩放比例时会显示短暂提示，告知当前缩放比例。
 
-- \`提示显示时间 (秒)\`：控制缩放提示的显示时长，可在 0.5-5 秒范围内以 0.5 秒为步长调整。
+- `提示显示时间 (秒)`：控制缩放提示的显示时长，可在 0.5-5 秒范围内以 0.5 秒为步长调整。
 
-- \`显示控制栏按钮\`：在播放器控制栏添加一个缩放按钮，点击可循环切换预设的缩放比例。
+- `显示控制栏按钮`：在播放器控制栏添加一个缩放按钮，点击可循环切换预设的缩放比例。
 
 #### **使用方法**
 

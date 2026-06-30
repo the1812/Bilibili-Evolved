@@ -53,13 +53,17 @@ export const plugins: PluginMetadata[] = getBuiltInPlugins()
  * 安装插件
  * @param code 插件代码
  */
-export const installPlugin = async (code: string) => {
-  const { loadFeatureCode } = await import('@/core/external-input')
+export const installPlugin = async (code: string, parsedPlugin?: PluginMetadata) => {
   let plugin: PluginMetadata
-  try {
-    plugin = loadFeatureCode(code) as PluginMetadata
-  } catch (e) {
-    throw new Error('无效的插件代码', e)
+  if (parsedPlugin) {
+    plugin = parsedPlugin
+  } else {
+    try {
+      const { loadFeatureCode } = await import('@/core/external-input')
+      plugin = loadFeatureCode(code) as PluginMetadata
+    } catch (e) {
+      throw new Error('无效的插件代码', e)
+    }
   }
   const { settings } = await import('@/core/settings')
   const existingPlugin = settings.userPlugins[plugin.name]

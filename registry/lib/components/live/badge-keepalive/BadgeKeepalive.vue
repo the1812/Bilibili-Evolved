@@ -7,6 +7,12 @@
       :change-on-blur="true"
       @change="handleRoomIdChange"
     ></TextBox>
+    <TextBox
+      placeholder="点赞次数"
+      :text="clickTimes"
+      :change-on-blur="true"
+      @change="handleClickTimesChange"
+    ></TextBox>
     <AsyncButton @click="handleKeepAliveRequest">点亮!</AsyncButton>
   </div>
 </template>
@@ -15,15 +21,22 @@
 import { ref } from 'vue'
 import { TextBox, AsyncButton } from '@/ui'
 
-import { validateRoomId, getLiveRoomId, keepAliveRequest } from './utils'
+import { validateRoomId, getLiveRoomId, keepAliveRequest, defaultClickTimes } from './utils'
 import { Toast } from '@/core/toast'
 
 const roomid = ref(getLiveRoomId())
+const clickTimes = ref(defaultClickTimes)
 const handleRoomIdChange = (value: string) => {
   if (validateRoomId(value)) {
     roomid.value = value
   } else {
     roomid.value = ''
+  }
+}
+const handleClickTimesChange = (value: string) => {
+  const parsedNum = parseInt(value)
+  if (!isNaN(parsedNum)) {
+    clickTimes.value = parsedNum.toString()
   }
 }
 
@@ -33,7 +46,7 @@ const handleKeepAliveRequest = async () => {
   }
 
   try {
-    await keepAliveRequest(roomid.value)
+    await keepAliveRequest(roomid.value, clickTimes.value)
     Toast.success('发送点亮勋章请求成功', '提示')
   } catch ({ message }) {
     Toast.error(`勋章点亮失败，原因: ${message}`, '提示')
