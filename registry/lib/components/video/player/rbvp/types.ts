@@ -53,10 +53,44 @@ export interface RBVPActionNode {
 }
 
 export interface RBVPParsedRule {
+  kind: 'rule'
   line: number
   raw: string
   matcher: RBVPMatcherNode
   actions: RBVPActionNode[]
+}
+
+export interface RBVPCommentNode {
+  kind: 'comment'
+  text: string
+}
+
+export interface RBVPBlankNode {
+  kind: 'blank'
+}
+
+export interface RBVPAliasNode {
+  kind: 'alias'
+  alias: string
+  canonical: string
+}
+
+export interface RBVPRawNode {
+  kind: 'raw'
+  text: string
+}
+
+export type RBVPProgramNode =
+  | RBVPCommentNode
+  | RBVPBlankNode
+  | RBVPAliasNode
+  | RBVPRawNode
+  | RBVPParsedRule
+
+export interface RBVPParsedProgram {
+  aliases: Record<string, string>
+  rules: RBVPParsedRule[]
+  nodes: RBVPProgramNode[]
 }
 
 export interface RBVPLocalRuleSet {
@@ -138,7 +172,6 @@ export interface RBVPNamespaceProvider {
   displayName: string
   primaryName?: string
   description?: string
-  aliases?: string[]
   prepare?: (context: RBVPEngineContext) => Promise<void> | void
   isComponentEnabled: () => boolean
   getTakeoverState: () => boolean

@@ -25,7 +25,7 @@ export const component = RememberSpeedComponent.create<Options>({
 
 #### 🔗 **RBVP 联动**
 
-在 RBVP 规则中可通过命名空间 \`rememberVideoSpeed\`（别名 \`speed\`）调用本组件，支持以下动作值：
+在 RBVP 规则中可通过命名空间 \`rememberVideoSpeed\` 调用本组件（别名可在 RBVP 设置 - 命名空间页自定义，写入主规则文本），支持以下动作值：
 
 - 具体倍速数值，如 \`1.5\`、\`2\`
 - \`MAX\`：最高可用倍速

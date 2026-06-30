@@ -73,7 +73,7 @@ const entry = async ({ settings }: { settings: { enabled: boolean; options: Opti
     }
     try {
       await setupNamespaces()
-      const rules = parseRbvpRules(settings.options.rulesText)
+      const program = parseRbvpRules(settings.options.rulesText)
       const context = await createRbvpEngineContext(settings.options.localRuleSets, runtime)
       const namespaces = Object.keys(rbvpNamespaces).filter(namespace => {
         const provider = rbvpNamespaces[namespace]
@@ -95,7 +95,7 @@ const entry = async ({ settings }: { settings: { enabled: boolean; options: Opti
       logger.info('context', context)
       await Promise.all(namespaces.map(namespace => rbvpNamespaces[namespace].prepare?.(context)))
       const results = await Promise.all(
-        namespaces.map(namespace => executeRbvpRules(rules, namespace, context)),
+        namespaces.map(namespace => executeRbvpRules(program, namespace, context)),
       )
       const errors = results.filter(result => result.error)
       if (errors.length > 0) {

@@ -21,7 +21,6 @@ export const rememberVideoCollectionNamespaceProvider = {
   primaryName: componentName,
   description:
     '兼容「记忆合集」组件的恢复策略控制。ON 按原逻辑恢复并记忆合集进度，OFF 则跳过恢复且不记录当前合集记忆进度。',
-  aliases: ['collection'],
   prepare: (context: RBVPEngineContext) => {
     clearRememberVideoCollectionRbvpMode(
       getRememberVideoCollectionRbvpVideoKey(context.video.aid, context.video.cid),

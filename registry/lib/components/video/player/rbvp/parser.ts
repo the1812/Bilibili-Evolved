@@ -3,7 +3,9 @@ import type {
   RBVPBasicMatcherType,
   RBVPLogicMatcherType,
   RBVPMatcherNode,
+  RBVPParsedProgram,
   RBVPParsedRule,
+  RBVPProgramNode,
 } from './types'
 
 const basicMatcherTypes: RBVPBasicMatcherType[] = [
@@ -168,7 +170,7 @@ parseMatcher = (source: string, line: number): RBVPMatcherNode => {
   }
 }
 
-const parseRule = (source: string, line: number): RBVPParsedRule => {
+export const parseRbvpRuleLine = (source: string, line: number): RBVPParsedRule => {
   const parts = splitTopLevel(source, line, '规则')
   if (parts.length < 2) {
     throw new RBVPParseError(line, '规则至少需要匹配器和动作')
@@ -177,6 +179,7 @@ const parseRule = (source: string, line: number): RBVPParsedRule => {
   const matcherSource = isFinalShortcut ? parts[0] : parts.slice(0, -1).join(', ')
   const actionSource = parts[parts.length - 1]
   return {
+    kind: 'rule' as const,
     line,
     raw: source,
     matcher: parseMatcher(matcherSource, line),
@@ -184,9 +187,143 @@ const parseRule = (source: string, line: number): RBVPParsedRule => {
   }
 }
 
-export const parseRbvpRules = (source: string) =>
-  source
-    .split('\n')
-    .map((lineText, index) => ({ lineText: lineText.trim(), line: index + 1 }))
-    .filter(({ lineText }) => lineText !== '' && !lineText.startsWith('#'))
-    .map(({ lineText, line }) => parseRule(lineText, line))
+// @alias <alias> => <canonicalNamespace>
+const aliasNamePattern = /^[A-Za-z0-9_-]+$/
+
+export const parseAliasDirectiveLine = (
+  source: string,
+  lineNo: number,
+): { alias: string; canonical: string } | null => {
+  const text = source.trim()
+  if (!text.startsWith('@alias')) {
+    return null
+  }
+  const rest = text.slice('@alias'.length).trim()
+  const eqIndex = rest.indexOf('=>')
+  if (eqIndex === -1) {
+    throw new RBVPParseError(
+      lineNo,
+      '@alias 指令缺少 "=>"，正确格式为 @alias <别名> => <主命名空间>',
+    )
+  }
+  const alias = rest.slice(0, eqIndex).trim()
+  const canonical = rest.slice(eqIndex + 2).trim()
+  if (!alias || !canonical) {
+    throw new RBVPParseError(lineNo, '@alias 指令缺少别名或主命名空间')
+  }
+  if (!aliasNamePattern.test(alias)) {
+    throw new RBVPParseError(
+      lineNo,
+      `@alias 别名 "${alias}" 包含非法字符，仅允许字母、数字、下划线与连字符`,
+    )
+  }
+  if (!aliasNamePattern.test(canonical)) {
+    throw new RBVPParseError(
+      lineNo,
+      `@alias 主命名空间 "${canonical}" 包含非法字符，仅允许字母、数字、下划线与连字符`,
+    )
+  }
+  return { alias, canonical }
+}
+
+// 仅扫描 @alias 指令行，跳过其它行与解析错误，供 UI 安全读取别名
+export const parseRbvpAliases = (source: string): { alias: string; canonical: string }[] => {
+  const aliases: { alias: string; canonical: string }[] = []
+  source.split('\n').forEach((lineText, index) => {
+    const trimmed = lineText.trim()
+    if (!trimmed.startsWith('@alias')) {
+      return
+    }
+    try {
+      const parsed = parseAliasDirectiveLine(trimmed, index + 1)
+      if (parsed) {
+        aliases.push(parsed)
+      }
+    } catch {
+      // 忽略非法 @alias 行，UI 仅展示合法别名
+    }
+  })
+  return aliases
+}
+
+export const parseRbvpRules = (source: string): RBVPParsedProgram => {
+  const aliases: Record<string, string> = {}
+  const rules: RBVPParsedRule[] = []
+  const nodes: RBVPProgramNode[] = []
+  source.split('\n').forEach((lineText, index) => {
+    const trimmed = lineText.trim()
+    const lineNo = index + 1
+    if (trimmed === '') {
+      nodes.push({ kind: 'blank' })
+      return
+    }
+    if (trimmed.startsWith('#')) {
+      nodes.push({ kind: 'comment', text: lineText })
+      return
+    }
+    if (trimmed.startsWith('@alias')) {
+      const parsed = parseAliasDirectiveLine(trimmed, lineNo)
+      if (!parsed) {
+        nodes.push({ kind: 'raw', text: lineText })
+        return
+      }
+      const existing = aliases[parsed.alias]
+      if (existing !== undefined && existing !== parsed.canonical) {
+        throw new RBVPParseError(
+          lineNo,
+          `别名 "${parsed.alias}" 重复声明且指向不同主命名空间（${existing} 与 ${parsed.canonical}）`,
+        )
+      }
+      aliases[parsed.alias] = parsed.canonical
+      nodes.push({ kind: 'alias', alias: parsed.alias, canonical: parsed.canonical })
+      return
+    }
+    const rule = parseRbvpRuleLine(trimmed, lineNo)
+    rules.push(rule)
+    nodes.push(rule)
+  })
+  return { aliases, rules, nodes }
+}
+
+export const parseRbvpProgramLenient = (source: string): RBVPParsedProgram => {
+  const aliases: Record<string, string> = {}
+  const rules: RBVPParsedRule[] = []
+  const nodes: RBVPProgramNode[] = []
+  source.split('\n').forEach((lineText, index) => {
+    const trimmed = lineText.trim()
+    const lineNo = index + 1
+    if (trimmed === '') {
+      nodes.push({ kind: 'blank' })
+      return
+    }
+    if (trimmed.startsWith('#')) {
+      nodes.push({ kind: 'comment', text: lineText })
+      return
+    }
+    if (trimmed.startsWith('@alias')) {
+      try {
+        const parsed = parseAliasDirectiveLine(trimmed, lineNo)
+        if (parsed) {
+          if (aliases[parsed.alias] === undefined) {
+            aliases[parsed.alias] = parsed.canonical
+          }
+          nodes.push({ kind: 'alias', alias: parsed.alias, canonical: parsed.canonical })
+          return
+        }
+      } catch {
+        nodes.push({ kind: 'raw', text: lineText })
+        return
+      }
+      nodes.push({ kind: 'raw', text: lineText })
+      return
+    }
+    try {
+      const rule = parseRbvpRuleLine(trimmed, lineNo)
+      rules.push(rule)
+      nodes.push(rule)
+    } catch {
+      nodes.push({ kind: 'raw', text: lineText })
+    }
+  })
+  return { aliases, rules, nodes }
+}
