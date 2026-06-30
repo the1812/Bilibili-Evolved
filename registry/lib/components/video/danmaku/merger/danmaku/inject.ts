@@ -525,6 +525,8 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       async burstCaptureStore() {
 
+          if (this._allowBurstCapture === false) return false;
+
           const p = this.page().player;
 
           if (!p) return false;
@@ -803,11 +805,15 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
                   this._playbackSavedState = null;
 
-                  await this.yieldUI();
+                  try {
 
-                  await new Promise((r) => setTimeout(r, 50));
+                      await this.yieldUI();
 
-                  this.restorePlaybackState(saved);
+                      await new Promise((r) => setTimeout(r, 50));
+
+                      this.restorePlaybackState(saved);
+
+                  } catch (e) { /* 恢复播放失败不影响注入结果 */ }
 
               }
 
@@ -1041,7 +1047,15 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
               this.ensureCapture(true);
 
-              await this.burstCaptureStore();
+              if (this._allowBurstCapture === false) {
+
+                  await this.waitForListStore(15000, onProgress);
+
+              } else {
+
+                  await this.burstCaptureStore();
+
+              }
 
           }
 
@@ -1057,7 +1071,15 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
               if (!ok && !this.hasListStore()) {
 
-                  await this.burstCaptureStore();
+                  if (this._allowBurstCapture === false) {
+
+                      await this.waitForListStore(8000, onProgress);
+
+                  } else {
+
+                      await this.burstCaptureStore();
+
+                  }
 
                   ok = this.injectList(chunk) || ok;
 
@@ -1123,6 +1145,12 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
           let screen = this.countMergedInjected(db, items);
 
+          if (screen === 0) {
+
+              screen = this.countMergedOnScreen();
+
+          }
+
           if (screen === 0 && items?.length) {
 
               const probe = items[Math.min(2, items.length - 1)];
@@ -1133,7 +1161,25 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
           }
 
-          const ok = screen > 0;
+          if (!listOk) {
+
+              listOk = this.hasMergedInList();
+
+          }
+
+          const ok = screen > 0 || listOk;
+
+          let reason = null;
+
+          if (!ok) {
+
+              reason = 'inject_failed';
+
+          } else if (screen > 0 && !listOk) {
+
+              reason = 'list_only_failed';
+
+          }
 
           return {
 
@@ -1149,7 +1195,7 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
               firstSec: items?.[0] ? items[0].stime / 1000 : null,
 
-              reason: ok ? (listOk ? null : 'list_only_failed') : 'inject_failed',
+              reason,
 
           };
 
@@ -1220,6 +1266,16 @@ export function createNativeDanmaku(pageWin: () => Window) {
           const db = this.getDataBase();
 
           return this.countMergedInjected(db, null);
+
+      },
+
+      hasMergedInList() {
+
+          const prefix = DM_MERGER_PREFIX;
+
+          const allDm = this.getStores()?.dmListStore?.allDm;
+
+          return !!allDm?.some((d) => String(d.dmid).startsWith(prefix));
 
       },
 
@@ -1367,7 +1423,11 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       },
 
-      async fullSyncAsync(sourcesMap, onProgress) {
+      async fullSyncAsync(sourcesMap, onProgress, opts = {}) {
+
+          const allowBurstCapture = opts?.allowBurstCapture !== false;
+
+          const skipPlaybackPreserve = !!opts?.skipPlaybackPreserve;
 
           if (this._fullSyncing && this._fullSyncPromise) {
 
@@ -1377,7 +1437,11 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
           this._fullSyncing = true;
 
-          this._fullSyncPromise = this.withPlaybackPreserved(async () => {
+          const runSync = async () => {
+
+              this._allowBurstCapture = allowBurstCapture;
+
+              try {
 
               const db = this.getDataBase();
 
@@ -1391,7 +1455,15 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
                   onProgress?.('捕获列表 Store');
 
-                  await this.burstCaptureStore();
+                  if (allowBurstCapture) {
+
+                      await this.burstCaptureStore();
+
+                  } else {
+
+                      await this.waitForListStore(15000, onProgress);
+
+                  }
 
               }
 
@@ -1499,7 +1571,19 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
               return result;
 
-          });
+              } finally {
+
+                  this._allowBurstCapture = undefined;
+
+              }
+
+          };
+
+          this._fullSyncPromise = skipPlaybackPreserve
+
+              ? runSync()
+
+              : this.withPlaybackPreserved(runSync);
 
 
 

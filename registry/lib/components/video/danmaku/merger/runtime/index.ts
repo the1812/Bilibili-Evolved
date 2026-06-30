@@ -18,8 +18,8 @@ import {
   resolveSourceBvid,
   savePartModeState,
 } from './helpers'
-import { createInjectDanmaku } from './inject-flow'
-import { createSessionRestore } from './session-restore'
+import { createBatchRestoreDanmaku, createInjectDanmaku } from './inject-flow'
+import { createSessionRestore, readMergerSessionRaw } from './session-restore'
 import { bindStoreReadyListener } from './store-ready'
 
 let mergerUiHost: MergerUiHost | null = null
@@ -27,6 +27,7 @@ let mergerVueHostCtrl: ReturnType<typeof createMergerVueHost> | null = null
 let quickMergeHost: ReturnType<typeof initQuickMerge> | null = null
 let mergerVideoChangeHandler: (() => void) | null = null
 let mergerBadgeClickHandler: ((event: MouseEvent) => void) | null = null
+let mergerLastVideoId: string | null = null
 
 export const getMergerUiHost = (): MergerUiHost | null => mergerUiHost
 
@@ -57,16 +58,49 @@ export const initDanmakuMerger = (): MergerCleanup => {
 
   const parseDanmaku = parseDanmakuXml
   const injectDanmaku = createInjectDanmaku(nativeDanmaku, engine)
+  const batchRestoreDanmaku = createBatchRestoreDanmaku(nativeDanmaku, engine)
 
   const tryRestoreSession = createSessionRestore({
     engine,
     api: API,
     parseDanmaku,
-    injectDanmaku,
+    batchRestoreDanmaku,
     onRestored: () => mergerVueHostCtrl?.refreshBadge(),
   })
 
-  bindStoreReadyListener(nativeDanmaku as Parameters<typeof bindStoreReadyListener>[0], engine)
+  bindStoreReadyListener(
+    nativeDanmaku as Parameters<typeof bindStoreReadyListener>[0],
+    engine,
+    tryRestoreSession,
+  )
+
+  const scheduleInitialRestore = () => {
+    let attempts = 0
+    const maxAttempts = 120
+    const tick = async () => {
+      try {
+        attempts += 1
+        const videoId = engine.getCurrentVideoId()
+        const raw = readMergerSessionRaw(videoId)
+        if (!raw) {
+          return
+        }
+        if (engine.sources?.size) {
+          return
+        }
+        await tryRestoreSession()
+        if (!engine.sources?.size && attempts < maxAttempts) {
+          window.setTimeout(tick, 500)
+        }
+      } catch (err) {
+        dmWarn('恢复调度失败', err)
+        if (attempts < maxAttempts) {
+          window.setTimeout(tick, 500)
+        }
+      }
+    }
+    window.setTimeout(tick, 300)
+  }
 
   registerMergerMaintenance({
     diagAsync: timeout => nativeDanmaku.diagAsync(timeout) as Promise<unknown>,
@@ -84,9 +118,13 @@ export const initDanmakuMerger = (): MergerCleanup => {
   })
 
   mergerVideoChangeHandler = () => {
-    engine.reset()
-    mergerVueHostCtrl?.handleVideoChange()
-    tryRestoreSession()
+    const videoId = engine.getCurrentVideoId()
+    if (mergerLastVideoId !== null && mergerLastVideoId !== videoId) {
+      engine.reset()
+      mergerVueHostCtrl?.handleVideoChange()
+    }
+    mergerLastVideoId = videoId
+    void tryRestoreSession()
   }
 
   mergerVueHostCtrl = createMergerVueHost({
@@ -109,8 +147,21 @@ export const initDanmakuMerger = (): MergerCleanup => {
     pageWin().__dmMergerDebug = () => {
       const managerMask = document.querySelector('.dm-manager-modal-mask')
       const sampleBtn = document.querySelector('.dm-quick-merge-btn') as HTMLElement | null
+      const videoId = engine.getCurrentVideoId()
+      const storeKey = `dm_merger_store_${videoId}`
+      const storedRaw = readMergerSessionRaw(videoId)
+      let storedCount = 0
+      try {
+        storedCount = storedRaw ? (JSON.parse(storedRaw) as unknown[]).length : 0
+      } catch {
+        storedCount = -1
+      }
       return {
         version: DM_MERGER_VERSION,
+        videoId,
+        storeKey,
+        storedCount,
+        memorySources: engine.getSources().length,
         badge: !!document.querySelector('#dm-merger-count'),
         badgeText: document.querySelector('#dm-merger-count')?.textContent?.trim() ?? null,
         managerMask: !!managerMask,
@@ -134,7 +185,11 @@ export const initDanmakuMerger = (): MergerCleanup => {
     mergerUiHost?.openManagerModal()
   }
   document.addEventListener('click', mergerBadgeClickHandler, true)
-  mergerVueHostCtrl.mount().then(() => mergerVueHostCtrl?.refreshBadge())
+  // 恢复不依赖弹窗挂载，提前调度避免等 Vue chunk 加载
+  scheduleInitialRestore()
+  mergerVueHostCtrl.mount().then(() => {
+    mergerVueHostCtrl?.refreshBadge()
+  })
 
   quickMergeHost = initQuickMerge({
     getSources: () => engine.getSources() as Array<{ bvid?: string }>,
@@ -168,6 +223,7 @@ export const initDanmakuMerger = (): MergerCleanup => {
     mergerVueHostCtrl = null
     mergerUiHost = null
     mergerVideoChangeHandler = null
+    mergerLastVideoId = null
     engine.reset()
   }
 }

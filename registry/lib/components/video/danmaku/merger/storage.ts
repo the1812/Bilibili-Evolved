@@ -1,72 +1,78 @@
-/** 合并器存储键索引，用于批量列举/清理会话数据 */
-export const DM_MERGER_KEYS_INDEX = 'dm_merger_keys_index'
+import type { ComponentEntryContext } from '@/components/types'
+import type { MergerOptions } from './options'
 
-/** 由 entry 注入的 monkeyApis 存储能力（禁止 globalThis GM 垫片） */
-export type MonkeyStorageSource = {
-  GM_getValue: <T>(name: string, defaultValue?: T) => T
-  GM_setValue: (name: string, value: unknown) => void
-  GM_deleteValue: (name: string) => void
+/** 组件设置内嵌的持久化桶 */
+export interface MergerPersistState {
+  keys: string[]
+  data: Record<string, unknown>
 }
 
-let storageSource: MonkeyStorageSource | null = null
-
-/** 注入 BE monkeyApis 存储实现，须在 getStorage 之前调用 */
-export const initStorage = (source: MonkeyStorageSource): void => {
-  storageSource = source
+type MergerOptionsWithPersist = MergerOptions & {
+  _mergerPersist: MergerPersistState
 }
 
-const requireSource = (): MonkeyStorageSource => {
-  if (!storageSource) {
-    throw new Error('[弹幕合并器] storage 未初始化，请先调用 initStorage(monkeyApis)')
+interface StorageBackend {
+  get<T>(key: string, defaultValue?: T): T
+  set(key: string, value: unknown): void
+  delete(key: string): void
+  trackKey(key: string): void
+  listMergerKeys(): string[]
+}
+
+let storageBackend: StorageBackend | null = null
+
+const ensurePersistState = (context: ComponentEntryContext): MergerPersistState => {
+  const options = context.settings.options as MergerOptionsWithPersist
+  if (!options._mergerPersist || typeof options._mergerPersist !== 'object') {
+    options._mergerPersist = { keys: [], data: {} }
   }
-  return storageSource
-}
-
-const readKeysIndex = (source: MonkeyStorageSource): string[] => {
-  try {
-    return JSON.parse(String(source.GM_getValue(DM_MERGER_KEYS_INDEX, '[]'))) as string[]
-  } catch {
-    return []
+  const persist = options._mergerPersist
+  if (!persist.data || typeof persist.data !== 'object') {
+    persist.data = {}
   }
+  if (!Array.isArray(persist.keys)) {
+    persist.keys = []
+  }
+  return persist
 }
 
-const writeKeysIndex = (source: MonkeyStorageSource, keys: string[]): void => {
-  source.GM_setValue(DM_MERGER_KEYS_INDEX, JSON.stringify(keys))
+const createSettingsBackend = (persist: MergerPersistState): StorageBackend => ({
+  get<T>(key: string, defaultValue?: T): T {
+    if (Object.prototype.hasOwnProperty.call(persist.data, key)) {
+      return persist.data[key] as T
+    }
+    return defaultValue as T
+  },
+  set(key: string, value: unknown): void {
+    persist.data[key] = value
+    this.trackKey(key)
+  },
+  delete(key: string): void {
+    delete persist.data[key]
+    persist.keys = persist.keys.filter(k => k !== key)
+  },
+  trackKey(key: string): void {
+    if (!persist.keys.includes(key)) {
+      persist.keys.push(key)
+    }
+  },
+  listMergerKeys(): string[] {
+    return [...persist.keys]
+  },
+})
+
+/**
+ * 经组件设置代理持久化，适配 loadFeatureCode 沙箱（沙箱内无法直接访问 GM_*）。
+ * 写入会触发 BE settings 代理，最终由主包 GM_setValue 落盘。
+ */
+export const initStorageFromContext = (context: ComponentEntryContext): void => {
+  storageBackend = createSettingsBackend(ensurePersistState(context))
 }
 
-/** 获取存储门面；须先 initStorage */
+/** 获取存储门面；须先 initStorageFromContext */
 export const getStorage = () => {
-  const source = requireSource()
-
-  return {
-    get<T>(key: string, defaultValue?: T): T {
-      return source.GM_getValue(key, defaultValue as T)
-    },
-
-    set(key: string, value: unknown): void {
-      source.GM_setValue(key, value)
-    },
-
-    delete(key: string): void {
-      source.GM_deleteValue(key)
-    },
-
-    /** 将键登记到索引，便于 listMergerKeys / 维护清理 */
-    trackKey(key: string): void {
-      try {
-        const keys = readKeysIndex(source)
-        if (!keys.includes(key)) {
-          keys.push(key)
-          writeKeysIndex(source, keys)
-        }
-      } catch {
-        /* 索引写入失败不影响主流程 */
-      }
-    },
-
-    /** 返回索引中登记过的所有合并器存储键 */
-    listMergerKeys(): string[] {
-      return readKeysIndex(source)
-    },
+  if (!storageBackend) {
+    throw new Error('[弹幕合并器] storage 未初始化，请先调用 initStorageFromContext')
   }
+  return storageBackend
 }
