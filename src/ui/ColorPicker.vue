@@ -295,9 +295,9 @@ export default Vue.extend({
     selectHexColor(hex: string) {
       let normalized = (hex ?? '').trim()
       if (
-        normalized
-        && !normalized.startsWith('#')
-        && /^(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(normalized)
+        normalized &&
+        !normalized.startsWith('#') &&
+        /^(?:[0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/.test(normalized)
       ) {
         normalized = `#${normalized}`
       }
