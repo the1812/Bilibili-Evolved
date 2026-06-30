@@ -86,7 +86,10 @@ export function createSessionRestore(deps: {
         const fetchResults = await Promise.all(
           metas.map(async meta => {
             try {
-              const xml = await deps.api.getDanmaku(meta.cid!)
+              if (meta.cid == null || meta.cid === '') {
+                return null
+              }
+              const xml = await deps.api.getDanmaku(meta.cid)
               return { list: deps.parseDanmaku(xml), meta }
             } catch (err) {
               dmLog('单源弹幕拉取失败', { id: meta.id, err })
@@ -95,8 +98,7 @@ export function createSessionRestore(deps: {
           }),
         )
         const entries = fetchResults.filter(
-          (entry): entry is { list: ParsedDanmakuItem[]; meta: InjectDanmakuMeta } =>
-            entry != null,
+          (entry): entry is { list: ParsedDanmakuItem[]; meta: InjectDanmakuMeta } => entry != null,
         )
 
         if (!entries.length) {

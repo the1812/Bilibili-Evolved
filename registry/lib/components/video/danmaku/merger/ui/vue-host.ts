@@ -741,11 +741,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
 
           const sourceGrew = deps.engine.getSources().length > sourcesBefore
           const sourceExists = hasSourceId(resolvedSourceId) || sourceGrew
-          const mergedOk =
-            result.ok ||
-            (result.screen || 0) > 0 ||
-            result.list ||
-            sourceExists
+          const mergedOk = result.ok || (result.screen || 0) > 0 || result.list || sourceExists
           if (mergedOk) {
             success++
             totalDm += result.count

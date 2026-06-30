@@ -124,7 +124,9 @@ export const initDanmakuMerger = (): MergerCleanup => {
       mergerVueHostCtrl?.handleVideoChange()
     }
     mergerLastVideoId = videoId
-    void tryRestoreSession()
+    tryRestoreSession().catch(err => {
+      dmLog('恢复触发异常', err)
+    })
   }
 
   mergerVueHostCtrl = createMergerVueHost({

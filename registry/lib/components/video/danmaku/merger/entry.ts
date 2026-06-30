@@ -26,9 +26,7 @@ const wireMergerButtonWhenReady = (
   }
 }
 
-export const createMergerContext = async (
-  context: ComponentEntryContext,
-): Promise<() => void> => {
+export const createMergerContext = async (context: ComponentEntryContext): Promise<() => void> => {
   initStorageFromContext(context)
 
   const MergerButton = await import('./ui/MergerButton.vue')
