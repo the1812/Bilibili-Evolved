@@ -30,10 +30,7 @@ const nestedSyncOpts = { skipPlaybackPreserve: true } as const
 
 const restoreSyncOpts = { allowBurstCapture: false, skipPlaybackPreserve: true } as const
 
-export function createBatchRestoreDanmaku(
-  nativeDanmaku: NativeDanmakuApi,
-  engine: DanmakuEngine,
-) {
+export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engine: DanmakuEngine) {
   return async function batchRestoreDanmaku(
     entries: Array<{ list: ParsedDanmakuItem[]; meta: InjectDanmakuMeta }>,
   ): Promise<InjectDanmakuResult> {
@@ -96,11 +93,7 @@ export function createBatchRestoreDanmaku(
       }
 
       nativeDanmaku.installResyncHook(() => engine.sources)
-      const sync = await nativeDanmaku.fullSyncAsync(
-        engine.sources,
-        null,
-        restoreSyncOpts,
-      )
+      const sync = await nativeDanmaku.fullSyncAsync(engine.sources, null, restoreSyncOpts)
       engine.lastListSync = !!sync.list
       engine.lastSyncResult = sync
 
@@ -224,7 +217,11 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
             if (!late || !engine.sources?.size) {
               return
             }
-            const retry = await nativeDanmaku.fullSyncAsync(engine.sources, undefined, nestedSyncOpts)
+            const retry = await nativeDanmaku.fullSyncAsync(
+              engine.sources,
+              undefined,
+              nestedSyncOpts,
+            )
             engine.lastListSync = !!retry.list
             engine.lastSyncResult = retry
             document.dispatchEvent(new CustomEvent('dm-sources-updated'))

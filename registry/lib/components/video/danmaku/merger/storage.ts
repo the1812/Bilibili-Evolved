@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import type { ComponentEntryContext } from '@/components/types'
 import type { MergerOptions } from './options'
 
