@@ -4,8 +4,7 @@
     "lib": ["ESNext"],
     "module": "CommonJS",
     "noEmit": true,
-    "strict": true,
     "types": ["node"],
   },
-  "include": ["./index.ts"],
+  "include": ["./**/*.ts"],
 }

@@ -10,7 +10,8 @@
         {
           "uses": "actions/checkout@v3",
           "with": {
-            "ref": "${{ github.event.pull_request.head.sha }}"
+            "ref": "${{ github.event.pull_request.head.sha }}",
+            "fetch-depth": "0"
           }
         },
         {
@@ -19,6 +20,10 @@
           "with": {
             "run_install": true
           }
+        },
+        {
+          "name": "PR file check",
+          "run": "pnpm run check-pr-files"
         },
         {
           "name": "Type check",
