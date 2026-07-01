@@ -1,5 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
-import { forEachFeedsCard, getVueData } from '@/components/feeds/api'
+import { forEachFeedsCard } from '@/components/feeds/api'
+import { getVue2Data } from '@/core/utils'
 import { feedsUrls } from '@/core/utils/urls'
 
 export const component = defineComponentMetadata({
@@ -10,7 +11,7 @@ export const component = defineComponentMetadata({
   entry: () => {
     forEachFeedsCard({
       added: card => {
-        const vueData = getVueData(card.element)
+        const vueData = getVue2Data(card.element)
 
         // 普通动态
         const cardType = vueData?.data?.type

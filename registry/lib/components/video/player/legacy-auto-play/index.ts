@@ -1,9 +1,8 @@
 import { defineComponentMetadata } from '@/components/define'
-import { getVueData } from '@/components/feeds/api'
 import { playerAgent } from '@/components/video/player-agent'
 import { childListSubtree, videoChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { matchUrlPattern, playerReady } from '@/core/utils'
+import { getVue2Data, matchUrlPattern, playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { bangumiUrls, videoUrls } from '@/core/utils/urls'
 
@@ -123,7 +122,7 @@ class VideoLegacyAutoPlay extends LegacyAutoPlay {
 
     console.log('checkPlayListPlayMode', { isLastVideo, sequentialNumbers, shouldContinue })
     const app = document.getElementById('app')
-    const vueInstance = getVueData(app)
+    const vueInstance = getVue2Data(app)
     // 不用判断当前状态是什么，直接将将是否需要继续播放赋值 vue 实例中的 continuousPlay
     vueInstance.setContinuousPlay(shouldContinue)
     // spell-checker: enable
