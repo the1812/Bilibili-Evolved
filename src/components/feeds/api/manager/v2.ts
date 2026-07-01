@@ -85,11 +85,13 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     if (Array.isArray(rawModules)) {
       return Object.fromEntries(
         rawModules.map(it => {
-          const [key] = Object.keys(it).filter(k => k !== 'module_type')
+          const [[key, value]] = Object.entries(it).filter(
+            ([k, v]) => k !== 'module_type' && Boolean(v),
+          )
           if (key === 'module_content') {
-            return ['module_dynamic', it[key]]
+            return ['module_dynamic', value]
           }
-          return [key, it[key]]
+          return [key, value]
         }),
       )
     }
