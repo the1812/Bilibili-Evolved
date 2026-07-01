@@ -1,4 +1,4 @@
-import { readFileSync, writeFileSync } from 'fs'
+import { existsSync, readFileSync, writeFileSync } from 'fs'
 import { glob } from 'glob'
 import { basename, dirname, extname, join, resolve } from 'path'
 import { stringify } from 'yaml'
@@ -12,6 +12,7 @@ const transformPath = (sourcePath: string) => {
   const path = resolve(sourcePath).replace(resolve('./.github-json/data'), resolve('./.github'))
   return changeExtension(path, '.yml')
 }
+const normalizeLineEndings = (content: string) => content.replace(/\r\n/g, '\n')
 jsonFiles.forEach(jsonFile => {
   const json = JSON.parse(readFileSync(jsonFile, { encoding: 'utf-8' }))
   const yaml = stringify(json, {
@@ -22,5 +23,11 @@ jsonFiles.forEach(jsonFile => {
   })
   const yamlFile = transformPath(jsonFile)
   // console.log(`${jsonFile} -> ${yamlFile}`)
+  if (existsSync(yamlFile)) {
+    const currentYaml = readFileSync(yamlFile, { encoding: 'utf-8' })
+    if (normalizeLineEndings(currentYaml) === normalizeLineEndings(yaml)) {
+      return
+    }
+  }
   writeFileSync(yamlFile, yaml)
 })

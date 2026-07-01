@@ -141,7 +141,9 @@ DevServer 已启动, 端口: 23333
 
     > 此名称不可更改, webpack 配置中将搜索所有 index.ts 作为组件编译入口
 
-4. 在 `index.ts` 中导出 `component` 对象, 用 `defineComponentMetadata` 定义组件.
+4. 新建文件 `index.md` 作为组件描述. 编译时会自动将 `index.md` 注入到组件的 `description` 中, 因此不需要在 `defineComponentMetadata` 中手写 `description` 字段.
+
+5. 在 `index.ts` 中导出 `component` 对象, 用 `defineComponentMetadata` 定义组件.
 
     ```ts
     import { defineComponentMetadata } from '@/components/define'
@@ -157,15 +159,18 @@ DevServer 已启动, 端口: 23333
 
     在 `@/components/define.ts` 中还提供了几个方法用于辅助定义.
 
-5. 填写 `defineComponentMetadata` 中的 `author` 字段, 通常是你的 GitHub 用户名和 Profile 页地址. 如果希望注明使用 AI 辅助开发, 可以再添加 AI 的名称及其官网, `author` 字段可以是一个数组.
-6. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
-7. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可.
-8. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
-9. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
-10. 后续同 [修改](##修改) 中的 2 ~ 3 步.
+6. 填写 `defineComponentMetadata` 中的 `author` 字段, 通常是你的 GitHub 用户名和 Profile 页地址. 如果希望注明使用 AI 辅助开发, 可以再添加 AI 的名称及其官网, `author` 字段可以是一个数组.
+7. 如果组件需要支持无需刷新的实时关闭 / 开启, 应使用 `reload` / `unload`, 不要依赖 `entry` 的返回值来销毁组件. `reload` / `unload` 必须成对使用才会生效.
+8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
+9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可.
+10. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
+11. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
+12. 后续同 [修改](##修改) 中的 2 ~ 3 步.
 
 ### 插件
 在 `registry/lib/plugins` 中是所有插件的源代码, 步骤和组件基本一致, 只有在第 4 步中, 导出的是 `plugin` 对象, 实现 `PluginMetadata` 接口.
+
+插件也应使用 `index.md` 作为描述文件, 不要在 `PluginMetadata` 中手写 `description` 字段. 如果插件需要处理关闭 / 重新开启, `reload` 和 `unload` 也应成对出现.
 
 > 关于如何判断要实现的是组件还是插件, 可以想想这个功能能否独立存在, 插件的定位是是增强组件的功能, 如果要开发的功能在没有安装某个组件的情况下毫无作用, 那么它就应该是一个插件; 如果可以独立存在并发挥一些作用, 那么它就应该是一个组件.
 
@@ -261,30 +266,32 @@ DevServer 已启动, 端口: 23333
 - `ui/VLoading.vue`: 表示数据加载中, 界面可被插件更改
 - `ui/AsyncButton.vue`: `click` 事件为异步函数时, 执行期间自动使 `Button` 禁用, 其他和 `Button` 相同.
 
-## 代码类型检查
-提交 Pull Request 前, 请确保代码通过类型检查. 类型检查以 VS Code 任务: `生产:类型检查 prod:type` 为准.
+## 代码检查
+发起 Pull Request 前, 请确保 PR 文件检查、类型检查和代码风格检查全部通过.
 
-> 项目有[计划](https://github.com/the1812/Bilibili-Evolved/discussions/3939)从 Vue 2 迁移到 Vue 3, 因此虽然我们[启用](https://github.com/the1812/Bilibili-Evolved/pull/4337)了 Volar 对 *.vue 文件进行类型检查, 却未完全修复 Volar 报告的类型错误. 因此，开发时 VS Code 报错属正常现象. Pull Request 的类型检查标准仍以上述内容为准.
+PR 文件检查:
+> PR 文件检查用于发现常见的 PR 结构问题, 如提交构建产物、手动编辑生成的功能文档、组件 / 插件描述文件缺失、`reload` / `unload` 未成对等.
+```powershell
+pnpm run check-pr-files
+```
 
-## 代码风格检查
-项目中含有 ESLint, 不通过 ESLint 是无法进行 Pull Request 的.
+类型检查:
+> 项目有[计划](https://github.com/the1812/Bilibili-Evolved/discussions/3939)从 Vue 2 迁移到 Vue 3, 因此虽然我们[启用](https://github.com/the1812/Bilibili-Evolved/pull/4337)了 Volar 对 *.vue 文件进行类型检查, 却未完全修复 Volar 报告的类型错误. 因此，开发时你可能看到 VSCode 出现类型报错, 但是 `pnpm run type` 通过, 这是正常现象.
 
-你可以使用 [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) 插件实时检查当前代码, 也可以运行 `生产:代码检查 prod:lint` 或 `生产:代码修复 prod:lint-fix` 来使用 ESLint 的命令行进行检查.
+```powershell
+pnpm run type
+```
 
-配置基于 `airbnb-base`, `typescript-eslint/recommended`, `vue/recommended` 修改而来, 几个比较特殊的规则如下:
-
-### 强制性
-- 除了 Vue 单文件组件, 禁止使用 `export default`, 所有导出必须命名.
-- 参数列表, 数组, 对象等的尾随逗号必须添加.
-- 如非必要禁止在末尾添加分号.
-- 任何控制流语句主体必须添加大括号.
-
-### 建议性
-- 一行代码最长 80 字符.
-- 不需要使用 `this` 特性的函数, 均使用箭头函数.
+代码风格检查:
+> 可自动修复的问题也可以运行 `pnpm run lint` 修复.
+```powershell
+pnpm run lint-check
+```
 
 ## 提交 commit
 仅提交源代码上的修改即可, 不要把 dist 文件夹里的产物也提交, 产物会在发布新版本时在对应的生产分支上构建.
+
+`doc/features/` 下的功能列表和合集包文档是生成文件, 普通功能或修复 PR 中不要手动修改.
 
 commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式.
 
