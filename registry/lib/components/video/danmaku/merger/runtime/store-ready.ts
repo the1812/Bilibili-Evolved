@@ -35,6 +35,10 @@ export function bindStoreReadyListener(
         await tryRestoreSession?.()
         return
       }
+      const activeSources = engine.getActiveSources()
+      if (!activeSources?.size) {
+        return
+      }
       if (!nativeDanmaku.getDataBase() || !nativeDanmaku.hasListStore()) {
         return
       }
@@ -43,8 +47,8 @@ export function bindStoreReadyListener(
       if (screen > 0 && listLen > 0) {
         return
       }
-      dmLog('Store 就绪，自动补同步', { screen, listLen, sources: engine.sources.size })
-      const result = await nativeDanmaku.fullSyncAsync(engine.sources, undefined)
+      dmLog('Store 就绪，自动补同步', { screen, listLen, sources: activeSources.size })
+      const result = await nativeDanmaku.fullSyncAsync(activeSources, undefined)
       engine.lastListSync = !!result.list
       engine.lastSyncResult = result
       document.dispatchEvent(new CustomEvent('dm-sources-updated'))

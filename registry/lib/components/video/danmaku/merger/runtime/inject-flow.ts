@@ -2,13 +2,15 @@ import { dmLog } from '../danmaku/log'
 import type { DanmakuEngine } from '../danmaku/engine'
 import type { NativeDanmakuApi } from '../danmaku/inject'
 import type { ParsedDanmakuItem } from '../danmaku/parse'
-import { formatPlayerNotReadyHint } from './helpers'
+import { formatPlayerNotReadyHint, getCurrentPageCid } from './helpers'
 import { mergerToast } from '../ui/notify'
 
 export interface InjectDanmakuMeta {
   id: string
   title?: string
   cid?: number | string
+  /** 合并时所在分 P，用于分 P 切换时隔离注入 */
+  viewCid?: number | string
   author?: string
   pic?: string
   offset?: number
@@ -72,6 +74,7 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
         }
       }
 
+      const viewCid = getCurrentPageCid()
       for (const { list, meta } of entries) {
         const sourceId = String(meta.id)
         engine.addSource(
@@ -82,6 +85,7 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
             title: meta.title,
             count: list.length,
             cid: meta.cid,
+            viewCid: meta.viewCid ?? viewCid ?? undefined,
             author: meta.author,
             pic: meta.pic,
             offset: meta.offset || 0,
@@ -92,8 +96,15 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
         )
       }
 
-      nativeDanmaku.installResyncHook(() => engine.sources)
-      const sync = await nativeDanmaku.fullSyncAsync(engine.sources, null, restoreSyncOpts)
+      if (viewCid) {
+        engine.setActiveViewCid(viewCid)
+      }
+      nativeDanmaku.installResyncHook(() => engine.getActiveSources())
+      const sync = await nativeDanmaku.fullSyncAsync(
+        engine.getActiveSources(),
+        null,
+        restoreSyncOpts,
+      )
       engine.lastListSync = !!sync.list
       engine.lastSyncResult = sync
 
@@ -181,6 +192,7 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
         await nativeDanmaku.burstCaptureStore()
       }
 
+      const viewCid = getCurrentPageCid()
       engine.addSource(
         meta.id,
         danmakuList,
@@ -189,6 +201,7 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
           title: meta.title,
           count: danmakuList.length,
           cid: meta.cid,
+          viewCid: meta.viewCid ?? viewCid ?? undefined,
           author: meta.author,
           pic: meta.pic,
           offset: meta.offset || 0,
@@ -198,8 +211,15 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
         true,
       )
 
-      nativeDanmaku.installResyncHook(() => engine.sources)
-      let sync = await nativeDanmaku.fullSyncAsync(engine.sources, onProgress, nestedSyncOpts)
+      if (viewCid) {
+        engine.setActiveViewCid(viewCid)
+      }
+      nativeDanmaku.installResyncHook(() => engine.getActiveSources())
+      let sync = await nativeDanmaku.fullSyncAsync(
+        engine.getActiveSources(),
+        onProgress,
+        nestedSyncOpts,
+      )
       engine.lastListSync = !!sync.list
       engine.lastSyncResult = sync
 
@@ -209,16 +229,20 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
           (await nativeDanmaku.waitForListStore(8000, onProgress)) ||
           (await nativeDanmaku.burstCaptureStore())
         if (gotList || nativeDanmaku.hasListStore()) {
-          sync = await nativeDanmaku.fullSyncAsync(engine.sources, onProgress, nestedSyncOpts)
+          sync = await nativeDanmaku.fullSyncAsync(
+            engine.getActiveSources(),
+            onProgress,
+            nestedSyncOpts,
+          )
           engine.lastListSync = !!sync.list
           engine.lastSyncResult = sync
         } else {
           nativeDanmaku.waitForListStore(20000, onProgress).then(async late => {
-            if (!late || !engine.sources?.size) {
+            if (!late || !engine.getActiveSources()?.size) {
               return
             }
             const retry = await nativeDanmaku.fullSyncAsync(
-              engine.sources,
+              engine.getActiveSources(),
               undefined,
               nestedSyncOpts,
             )
@@ -228,7 +252,11 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
           })
         }
       } else if (!sync.list && nativeDanmaku.hasListStore()) {
-        sync = await nativeDanmaku.fullSyncAsync(engine.sources, onProgress, nestedSyncOpts)
+        sync = await nativeDanmaku.fullSyncAsync(
+          engine.getActiveSources(),
+          onProgress,
+          nestedSyncOpts,
+        )
         engine.lastListSync = !!sync.list
         engine.lastSyncResult = sync
       }

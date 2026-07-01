@@ -37,8 +37,8 @@ export const createMergerContext = async (context: ComponentEntryContext): Promi
   const cleanup = runtime.initDanmakuMerger()
   wireMergerButtonWhenReady(buttonVm, runtime.getMergerUiHost)
 
-  videoChange(() => {
-    runtime.handleMergerVideoChange()
+  videoChange(ids => {
+    runtime.handleMergerVideoChange(ids)
   })
 
   return () => {
