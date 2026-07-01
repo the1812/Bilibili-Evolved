@@ -90,7 +90,8 @@
   },
   "pnpm": {
     "overrides": {
-      "caniuse-lite": "1.0.30001731",
+      "@babel/types": "7.26.8",
+      "caniuse-lite": "1.0.30001800",
       "consolidate": "1.0.1"
     },
     "onlyBuiltDependencies": [
