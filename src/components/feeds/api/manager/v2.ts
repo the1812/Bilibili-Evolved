@@ -79,26 +79,40 @@ const getText = (dynamicModule: any, cardType: FeedsCardType) => {
   })()
   return combineText(mainText, typeText)
 }
+
+/** 将动态卡片的 modules 标准化为键值对
+ * > 键值对的形式是动态卡片曾经的形式, 后来 b 站改为数组形式, 为方便脚本操作, 仍然提供此方法转换为键值对方便读取.
+ */
+export const normalizeFeedsCardModules = (
+  modules: any[],
+  keyMapper: (key: string) => string = key => key,
+): Record<string, any> => {
+  if (!Array.isArray(modules)) {
+    return modules
+  }
+  return Object.fromEntries(
+    modules.map(it => {
+      const [[key, value]] = Object.entries(it).filter(
+        ([k, v]) => k !== 'module_type' && Boolean(v),
+      )
+      if (key === 'module_content') {
+        return ['module_dynamic', value]
+      }
+      return [keyMapper(key), value]
+    }),
+  )
+}
+
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   const vueData = getVue2Data(element)
-  const parseModules = (rawModules: any) => {
-    if (Array.isArray(rawModules)) {
-      return Object.fromEntries(
-        rawModules.map(it => {
-          const [[key, value]] = Object.entries(it).filter(
-            ([k, v]) => k !== 'module_type' && Boolean(v),
-          )
-          if (key === 'module_content') {
-            return ['module_dynamic', value]
-          }
-          return [key, value]
-        }),
-      )
-    }
-    return rawModules
-  }
   const { modules: rawModules, id_str, type } = vueData.data
-  const modules = parseModules(rawModules)
+  const keyMapper = (key: string) => {
+    if (key === 'module_content') {
+      return 'module_dynamic'
+    }
+    return key
+  }
+  const modules = normalizeFeedsCardModules(rawModules, keyMapper)
   const { name } = modules.module_author
   const { like, forward, comment } = modules.module_stat
   const cardType = getType(type)
@@ -124,7 +138,7 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     const {
       module_author: { name: repostUsername },
       module_dynamic: repostDynamicModule,
-    } = parseModules(vueData.data.orig.modules)
+    } = normalizeFeedsCardModules(vueData.data.orig.modules)
     const repostCardType = getType(vueData.data.orig.type)
     card.repostUsername = repostUsername
     card.repostText = getText(repostDynamicModule, repostCardType)
