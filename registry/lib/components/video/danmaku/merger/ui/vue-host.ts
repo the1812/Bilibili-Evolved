@@ -23,6 +23,7 @@ import {
   mergerProgressToastDone,
   mergerToast,
 } from './notify'
+import { getCurrentPageCid, sourceMatchesViewCid } from '../runtime/helpers'
 import { normalizeHttpsUrl } from './shared/media-url'
 
 const PREVIEW_PAGE_SIZE = 50
@@ -37,6 +38,7 @@ export interface MergerEngineSource {
   count?: number
   offset?: number
   cid?: number | string
+  viewCid?: number | string
 }
 
 export interface MergerVueHostDeps {
@@ -351,8 +353,17 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     badgeVm.$on(MERGER_COUNT_BADGE_EVENTS.OPEN, handleBadgeOpen)
   }
 
-  const refreshBadge = () => {
+  const getBadgeSources = () => {
+    const viewCid = getCurrentPageCid()
     const sources = deps.engine.getSources()
+    if (!viewCid) {
+      return sources
+    }
+    return sources.filter(source => sourceMatchesViewCid(source, viewCid))
+  }
+
+  const refreshBadge = () => {
+    const sources = getBadgeSources()
     const totalCount = sources.reduce((acc, s) => acc + (s.count || 0), 0)
     if (!badgeVm) {
       return

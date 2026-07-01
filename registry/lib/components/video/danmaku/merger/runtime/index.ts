@@ -13,6 +13,7 @@ import { createMergerVueHost, type MergerVueHostDeps } from '../ui/vue-host'
 import {
   extractBvid,
   formatDurationShort,
+  getCurrentPageCid,
   loadPartModeState,
   parseDurationText,
   resolveSourceBvid,
@@ -25,14 +26,15 @@ import { bindStoreReadyListener } from './store-ready'
 let mergerUiHost: MergerUiHost | null = null
 let mergerVueHostCtrl: ReturnType<typeof createMergerVueHost> | null = null
 let quickMergeHost: ReturnType<typeof initQuickMerge> | null = null
-let mergerVideoChangeHandler: (() => void) | null = null
+let mergerVideoChangeHandler: ((ids?: { aid: string; cid: string }) => void) | null = null
 let mergerBadgeClickHandler: ((event: MouseEvent) => void) | null = null
 let mergerLastVideoId: string | null = null
+let mergerLastCid: string | null = null
 
 export const getMergerUiHost = (): MergerUiHost | null => mergerUiHost
 
-export const handleMergerVideoChange = (): void => {
-  mergerVideoChangeHandler?.()
+export const handleMergerVideoChange = (ids?: { aid: string; cid: string }): void => {
+  mergerVideoChangeHandler?.(ids)
 }
 
 export type MergerCleanup = () => void
@@ -102,6 +104,51 @@ export const initDanmakuMerger = (): MergerCleanup => {
     window.setTimeout(tick, 300)
   }
 
+  /** 同 BV 切换分 P：先清除合并弹幕，仅注入属于当前分 P 的源 */
+  const schedulePartResync = (targetCid: string) => {
+    engine.setActiveViewCid(targetCid)
+    let attempts = 0
+    const maxAttempts = 60
+    const tick = async () => {
+      attempts += 1
+      try {
+        const playerReady = await nativeDanmaku.waitForPlayer(8000, null)
+        if (!playerReady) {
+          if (attempts < maxAttempts) {
+            window.setTimeout(tick, 500)
+          }
+          return
+        }
+        nativeDanmaku.purgeMerged()
+        const activeSources = engine.getActiveSources()
+        if (!activeSources?.size) {
+          mergerVueHostCtrl?.refreshBadge()
+          dmLog('分P切换，当前分P无合并源', { targetCid })
+          return
+        }
+        nativeDanmaku.ensureCapture(true)
+        if (!nativeDanmaku.hasListStore()) {
+          await nativeDanmaku.burstCaptureStore()
+        }
+        nativeDanmaku.installResyncHook(() => engine.getActiveSources())
+        const result = await nativeDanmaku.fullSyncAsync(activeSources, undefined)
+        engine.lastListSync = !!result.list
+        engine.lastSyncResult = result
+        if (result.screen > 0 || result.list || attempts >= maxAttempts) {
+          mergerVueHostCtrl?.refreshBadge()
+          dmLog('分P切换补同步完成', { targetCid, attempts, result })
+          return
+        }
+      } catch (err) {
+        dmWarn('分P切换补同步失败', err)
+      }
+      if (attempts < maxAttempts) {
+        window.setTimeout(tick, 500)
+      }
+    }
+    window.setTimeout(tick, 300)
+  }
+
   registerMergerMaintenance({
     diagAsync: timeout => nativeDanmaku.diagAsync(timeout) as Promise<unknown>,
     waitForPlayer: (timeout, onProgress) =>
@@ -110,23 +157,47 @@ export const initDanmakuMerger = (): MergerCleanup => {
     ensureCapture: force => nativeDanmaku.ensureCapture(force),
     hasListStore: () => nativeDanmaku.hasListStore(),
     burstCaptureStore: () => nativeDanmaku.burstCaptureStore(),
-    fullSyncAsync: sources => nativeDanmaku.fullSyncAsync(sources, undefined),
+    fullSyncAsync: sources =>
+      nativeDanmaku.fullSyncAsync(sources ?? engine.getActiveSources(), undefined),
     getStores: () => nativeDanmaku.getStores(),
-    getEngineSources: () => engine.sources,
+    getEngineSources: () => engine.getActiveSources(),
     listMergerStoreKeys: () => getStorage().listMergerKeys(),
     deleteStorageKey: key => getStorage().delete(key),
   })
 
-  mergerVideoChangeHandler = () => {
+  mergerVideoChangeHandler = ids => {
     const videoId = engine.getCurrentVideoId()
-    if (mergerLastVideoId !== null && mergerLastVideoId !== videoId) {
+    const cid = ids?.cid != null && !Array.isArray(ids.cid) ? String(ids.cid) : null
+    const videoChanged = mergerLastVideoId !== null && mergerLastVideoId !== videoId
+    const partChanged =
+      !videoChanged && cid !== null && mergerLastCid !== null && mergerLastCid !== cid
+
+    if (videoChanged) {
       engine.reset()
       mergerVueHostCtrl?.handleVideoChange()
+      mergerLastCid = null
+    } else if (partChanged && cid !== null) {
+      dmLog('分P切换', { from: mergerLastCid, to: cid })
+      nativeDanmaku.purgeMerged()
+      schedulePartResync(cid)
     }
+
     mergerLastVideoId = videoId
-    tryRestoreSession().catch(err => {
-      dmLog('恢复触发异常', err)
-    })
+    if (cid !== null) {
+      mergerLastCid = cid
+      engine.setActiveViewCid(cid)
+    } else {
+      const pageCid = getCurrentPageCid()
+      if (pageCid) {
+        engine.setActiveViewCid(pageCid)
+      }
+    }
+
+    if (!partChanged && !engine.sources?.size) {
+      tryRestoreSession().catch(err => {
+        dmLog('恢复触发异常', err)
+      })
+    }
   }
 
   mergerVueHostCtrl = createMergerVueHost({
@@ -188,6 +259,10 @@ export const initDanmakuMerger = (): MergerCleanup => {
   }
   document.addEventListener('click', mergerBadgeClickHandler, true)
   // 恢复不依赖弹窗挂载，提前调度避免等 Vue chunk 加载
+  const initialCid = getCurrentPageCid()
+  if (initialCid) {
+    engine.setActiveViewCid(initialCid)
+  }
   scheduleInitialRestore()
   mergerVueHostCtrl.mount().then(() => {
     mergerVueHostCtrl?.refreshBadge()
@@ -226,6 +301,7 @@ export const initDanmakuMerger = (): MergerCleanup => {
     mergerUiHost = null
     mergerVideoChangeHandler = null
     mergerLastVideoId = null
+    mergerLastCid = null
     engine.reset()
   }
 }

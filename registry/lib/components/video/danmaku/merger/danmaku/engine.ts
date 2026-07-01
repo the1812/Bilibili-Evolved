@@ -7,6 +7,7 @@
  */
 
 import { getStorage } from '../storage'
+import { filterSourcesMapByViewCid, getCurrentPageCid } from '../runtime/helpers'
 import type { NativeDanmakuApi } from './inject'
 import { dmLog, dmWarn } from './log'
 
@@ -27,6 +28,7 @@ export class DanmakuEngine {
   lastListSync: boolean
   lastSyncResult: unknown
   sources?: Map<string, { list: unknown[]; meta: Record<string, unknown> }>
+  activeViewCid: string | null
 
   constructor(nativeDanmaku: NativeDanmakuApi) {
     this.nativeDanmaku = nativeDanmaku
@@ -43,6 +45,15 @@ export class DanmakuEngine {
     this.nativeMode = false
     this.lastListSync = false
     this.lastSyncResult = null
+    this.activeViewCid = null
+  }
+
+  setActiveViewCid(cid: string | null) {
+    this.activeViewCid = cid != null ? String(cid) : null
+  }
+
+  getActiveSources() {
+    return filterSourcesMapByViewCid(this.sources, this.activeViewCid)
   }
 
   init() {
@@ -165,6 +176,12 @@ export class DanmakuEngine {
     if (meta.offset === undefined) {
       meta.offset = 0
     }
+    if (meta.viewCid == null || meta.viewCid === '') {
+      const pageCid = getCurrentPageCid()
+      if (pageCid) {
+        meta.viewCid = pageCid
+      }
+    }
     this.sources.set(key, { list, meta })
     this.rebuildListMeta()
     if (!deferNativeSync) {
@@ -228,8 +245,8 @@ export class DanmakuEngine {
       this.lastSyncResult = { ok: false, reason: 'no_db', count: 0, screen: 0, list: false }
       return
     }
-    this.nativeDanmaku.installResyncHook(() => this.sources)
-    const sync = this.nativeDanmaku.fullSync(this.sources)
+    this.nativeDanmaku.installResyncHook(() => this.getActiveSources())
+    const sync = this.nativeDanmaku.fullSync(this.getActiveSources())
     this.lastListSync = !!sync.list
     this.lastSyncResult = sync
   }
@@ -273,6 +290,7 @@ export class DanmakuEngine {
     this.nativeMode = false
     this.lastListSync = false
     this.lastSyncResult = null
+    this.activeViewCid = null
     // 角标 DOM 由 ui/vue-host 管理，此处不操作 #dm-merger-count
   }
 

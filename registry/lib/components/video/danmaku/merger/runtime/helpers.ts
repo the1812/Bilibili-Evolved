@@ -26,6 +26,51 @@ export function resolveSourceBvid(source: { bvid?: string; id?: string }): strin
   return extractBvid(source?.bvid || source?.id || '')
 }
 
+/** 读取当前播放分 P 的 cid */
+export function getCurrentPageCid(): string | null {
+  try {
+    const { cid } = unsafeWindow as { cid?: unknown }
+    if (cid == null || Array.isArray(cid)) {
+      return null
+    }
+    const text = String(cid).trim()
+    return text || null
+  } catch {
+    return null
+  }
+}
+
+/** 判断合并源是否属于指定分 P 的观看上下文 */
+export function sourceMatchesViewCid(
+  meta: { viewCid?: number | string; cid?: number | string },
+  viewCid: string,
+): boolean {
+  if (meta.viewCid != null && String(meta.viewCid) !== '') {
+    return String(meta.viewCid) === String(viewCid)
+  }
+  // 旧数据无 viewCid：仅当源 cid 与当前分 P 一致时展示
+  if (meta.cid != null && String(meta.cid) !== '') {
+    return String(meta.cid) === String(viewCid)
+  }
+  return false
+}
+
+/** 按观看分 P 过滤内存中的合并源 */
+export function filterSourcesMapByViewCid<
+  T extends { meta: { viewCid?: number | string; cid?: number | string } },
+>(sources: Map<string, T> | undefined, viewCid: string | null): Map<string, T> | undefined {
+  if (!sources?.size || !viewCid) {
+    return sources
+  }
+  const filtered = new Map<string, T>()
+  sources.forEach((source, key) => {
+    if (sourceMatchesViewCid(source.meta, viewCid)) {
+      filtered.set(key, source)
+    }
+  })
+  return filtered
+}
+
 export function parseDurationText(text: string | null | undefined): number | null {
   if (text == null) {
     return null

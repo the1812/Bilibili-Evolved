@@ -1,4 +1,5 @@
 import { dmLog } from '../danmaku/log'
+import { getCurrentPageCid } from './helpers'
 import type { DanmakuEngine } from '../danmaku/engine'
 import type { ParsedDanmakuItem } from '../danmaku/parse'
 import { getStorage } from '../storage'
@@ -38,7 +39,8 @@ const normalizeRestoreMeta = (meta: InjectDanmakuMeta): InjectDanmakuMeta | null
     return null
   }
   const id = meta.id || (meta.bvid ? `${meta.bvid}_${cid}` : String(cid))
-  return { ...meta, id: String(id) }
+  const viewCid = meta.viewCid ?? getCurrentPageCid() ?? undefined
+  return { ...meta, id: String(id), viewCid }
 }
 
 export function createSessionRestore(deps: {
