@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import type { ComponentEntryContext } from '@/components/types'
 import type { MergerOptions } from './options'
 
@@ -6,10 +5,6 @@ import type { MergerOptions } from './options'
 export interface MergerPersistState {
   keys: string[]
   data: Record<string, unknown>
-}
-
-type MergerOptionsWithPersist = MergerOptions & {
-  _mergerPersist: MergerPersistState
 }
 
 interface StorageBackend {
@@ -23,11 +18,11 @@ interface StorageBackend {
 let storageBackend: StorageBackend | null = null
 
 const ensurePersistState = (context: ComponentEntryContext): MergerPersistState => {
-  const options = context.settings.options as MergerOptionsWithPersist
-  if (!options._mergerPersist || typeof options._mergerPersist !== 'object') {
-    options._mergerPersist = { keys: [], data: {} }
+  const options = context.settings.options as MergerOptions
+  if (!options.mergerPersist || typeof options.mergerPersist !== 'object') {
+    options.mergerPersist = { keys: [], data: {} }
   }
-  const persist = options._mergerPersist
+  const persist = options.mergerPersist
   if (!persist.data || typeof persist.data !== 'object') {
     persist.data = {}
   }

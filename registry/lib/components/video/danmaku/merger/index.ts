@@ -34,5 +34,6 @@ export const component = defineComponentMetadata({
     cleanup = null
     removeStyle(STYLE_NAME)
   },
+  reload: mergerEntry,
   urlInclude: [...videoAndBangumiUrls, ...watchlaterUrls],
 })
