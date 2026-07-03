@@ -1,7 +1,7 @@
 import webpack from 'webpack'
 import exitHook from 'async-exit-hook'
 import webpackConfig from '../../webpack/webpack.dev'
-import { sendMessage } from './web-socket-server'
+import { broadcastMessage } from './web-socket-server'
 import { defaultWatcherHandler } from './watcher-common'
 
 export const startCoreWatcher = () =>
@@ -14,7 +14,7 @@ export const startCoreWatcher = () =>
         () => resolve(),
         result => {
           console.log('本体已编译:', result.hash)
-          sendMessage({
+          broadcastMessage({
             type: 'coreUpdate',
           })
         },

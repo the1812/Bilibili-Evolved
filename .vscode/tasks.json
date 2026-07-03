@@ -5,7 +5,7 @@
   "tasks": [
     {
       "type": "shell",
-      "command": "pnpm ts-node ./dev-tools/dev-server/index.ts",
+      "command": "pnpm tsx ./dev-tools/dev-server/index.ts",
       "group": "build",
       "problemMatcher": [],
       "label": "启动开发服务 dev-server"

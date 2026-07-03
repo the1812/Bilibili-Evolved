@@ -1,4 +1,7 @@
-import type { ItemStopPayload, Payload } from '../../../../../dev-tools/dev-server/payload'
+import type {
+  Payload,
+  StopFeatureSessionPayload,
+} from '../../../../../dev-tools/dev-server/payload'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeInstantStyle } from '@/core/style'
@@ -23,15 +26,17 @@ const handleSocketMessage = (event: MessageEvent, callback: (payload: Payload) =
 export enum DevClientEvents {
   CoreUpdate = 'coreUpdate',
   ItemUpdate = 'itemUpdate',
-  SessionsUpdate = 'sessionsUpdate',
+  FeatureSessionsUpdate = 'featureSessionsUpdate',
   ServerChange = 'serverChange',
   ServerConnected = 'serverConnected',
   ServerDisconnected = 'serverDisconnected',
+  ServerStop = 'serverStop',
 }
 
 export class DevClient extends EventTarget {
   socket: WebSocket
-  sessions: string[] = []
+  featureSessions: string[] = []
+  private pendingFeatureSessionQueries: ((featureSessions: string[]) => void)[] = []
 
   addEventListener(
     type: DevClientEvents,
@@ -80,15 +85,18 @@ export class DevClient extends EventTarget {
             default: {
               break
             }
-            case 'start': {
-              this.sessions = payload.sessions
-              this.dispatchEvent(
-                new CustomEvent(DevClientEvents.SessionsUpdate, { detail: this.sessions }),
-              )
+            case 'serverReady': {
+              this.updateFeatureSessions(payload.featureSessions)
               break
             }
-            case 'stop': {
+            case 'serverStop': {
+              this.dispatchEvent(new CustomEvent(DevClientEvents.ServerStop))
               this.closeSocket()
+              break
+            }
+            case 'featureSessionsChanged':
+            case 'queryFeatureSessionsResponse': {
+              this.updateFeatureSessions(payload.featureSessions)
               break
             }
             case 'coreUpdate': {
@@ -97,6 +105,7 @@ export class DevClient extends EventTarget {
             }
             case 'itemUpdate': {
               const { path } = payload
+              this.updateFeatureSessions(payload.featureSessions)
               this.handleItemUpdate(path)
               break
             }
@@ -113,8 +122,7 @@ export class DevClient extends EventTarget {
     }
     this.socket.close()
     this.socket = null
-    this.sessions = []
-    this.dispatchEvent(new CustomEvent(DevClientEvents.SessionsUpdate, { detail: this.sessions }))
+    this.updateFeatureSessions([])
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerDisconnected))
   }
@@ -212,39 +220,38 @@ export class DevClient extends EventTarget {
     }
   }
 
-  private async querySessions() {
+  private async queryFeatureSessions() {
     return new Promise<string[]>(resolve => {
-      this.socket?.addEventListener(
-        'message',
-        e => {
-          handleSocketMessage(e, payload => {
-            if (payload.type === 'querySessionsResponse') {
-              this.sessions = payload.sessions
-              this.dispatchEvent(
-                new CustomEvent(DevClientEvents.SessionsUpdate, { detail: payload.sessions }),
-              )
-              resolve(payload.sessions)
-            }
-          })
-        },
-        { once: true },
-      )
-      this.socket?.send(JSON.stringify({ type: 'querySessions' }))
+      if (!this.isConnected) {
+        this.updateFeatureSessions([])
+        resolve([])
+        return
+      }
+      this.pendingFeatureSessionQueries.push(resolve)
+      this.socket?.send(JSON.stringify({ type: 'queryFeatureSessions' }))
     })
+  }
+
+  private updateFeatureSessions(featureSessions: string[]) {
+    this.featureSessions = featureSessions
+    this.dispatchEvent(
+      new CustomEvent(DevClientEvents.FeatureSessionsUpdate, { detail: this.featureSessions }),
+    )
+    this.pendingFeatureSessionQueries.splice(0).forEach(resolve => resolve(this.featureSessions))
   }
 
   async startDebug(url: string) {
     await monkey({ url })
-    return this.querySessions()
+    return this.queryFeatureSessions()
   }
 
   async stopDebug(path: string) {
-    const stopPayload: ItemStopPayload = {
-      type: 'itemStop',
+    const stopPayload: StopFeatureSessionPayload = {
+      type: 'stopFeatureSession',
       path,
     }
     this.socket?.send(JSON.stringify(stopPayload))
-    return this.querySessions()
+    return this.queryFeatureSessions()
   }
 }
 export const devClient = new DevClient()

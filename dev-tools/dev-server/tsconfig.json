@@ -1,7 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "Node16",
+    "moduleResolution": "Node16",
     "noEmit": true,
-  }
+    "rootDir": "../.."
+  },
+  "include": ["./**/*.ts", "../../registry/lib/id.ts", "../../registry/webpack/config.ts"]
 }

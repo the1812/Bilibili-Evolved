@@ -38,7 +38,7 @@ pnpm install
 
 方式 2:
 1. 新建一个终端, 进入项目根目录
-2. 运行 `pnpm ts-node dev-tools/dev-server/index.ts` 启动开发服务
+2. 运行 `pnpm tsx dev-tools/dev-server/index.ts` 启动开发服务
 
 两种方式都会看到类似下面的输出:
 ```bash
@@ -48,6 +48,17 @@ DevServer 已启动, 端口: 23333
 
 本体已编译: （一段 hash）
 ```
+
+开发服务的 HTTP 部分只负责提供静态资源. 请求 `registry/dist/components/<id>.js` 或 `registry/dist/plugins/<id>.js` 时, 开发服务会在返回文件前按需编译对应功能. 其他控制能力通过 WebSocket 指令完成, 例如单独编译、监听或创建功能脚手架:
+
+```powershell
+pnpm tsx dev-tools/dev-server/command.ts sessions
+pnpm tsx dev-tools/dev-server/command.ts build component style/hide/banner
+pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
+pnpm tsx dev-tools/dev-server/command.ts stop component style/hide/banner
+```
+
+更完整的协议和指令说明见 `dev-tools/dev-server/README.md`.
 
 
 **如果使用的是基于 Chromium 的浏览器**
@@ -126,6 +137,13 @@ DevServer 已启动, 端口: 23333
 2. 在脚本的设置面板 - 组件详情中, 从右下角的菜单中选择 `开始调试`.
 3. 找到对应的代码文件修改, 可以搜索组件的 `name` 或 `displayName` 定位文件, 修改后会自动更新.
 
+也可以在开发服务运行时用指令监听单个功能:
+
+```powershell
+pnpm tsx dev-tools/dev-server/command.ts watch component style/hide/banner
+pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
+```
+
 ## 新增
 ### 本体
 本体内容的新增, 可以在 `src/` 中进行, v2 中不再有 v1 的奇怪限制, 你可以直接增加文件, 在代码中使用 `import` / `export` 等.
@@ -162,7 +180,7 @@ DevServer 已启动, 端口: 23333
 6. 填写 `defineComponentMetadata` 中的 `author` 字段, 通常是你的 GitHub 用户名和 Profile 页地址. 如果希望注明使用 AI 辅助开发, 可以再添加 AI 的名称及其官网, `author` 字段可以是一个数组.
 7. 如果组件需要支持无需刷新的实时关闭 / 开启, 应使用 `reload` / `unload`, 不要依赖 `entry` 的返回值来销毁组件. `reload` / `unload` 必须成对使用才会生效.
 8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
-9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可.
+9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可. 如果开发服务已经运行, 也可以用 `pnpm tsx dev-tools/dev-server/command.ts build component <id>` 或 `pnpm tsx dev-tools/dev-server/command.ts build plugin <id>` 单独编译.
 10. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
 11. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
 12. 后续同 [修改](##修改) 中的 2 ~ 3 步.
