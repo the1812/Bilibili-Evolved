@@ -4,7 +4,6 @@ import { playerUrls } from '@/core/utils/urls'
 import { KeyBindingAction } from '../../../utils/keymap/bindings'
 import { Screenshot, takeScreenshot } from './screenshot'
 import { defineComponentMetadata } from '@/components/define'
-import desc from './desc.md'
 import ScreenshotContainer from './VideoScreenshotContainer.vue'
 
 export const VideoScreenshotDisabledClass = 'video-screenshot-disable'
@@ -48,9 +47,6 @@ export const component = defineComponentMetadata({
   displayName: '启用视频截图',
   tags: [componentsTags.video],
   entry,
-  description: {
-    'zh-CN': desc,
-  },
   urlInclude: playerUrls,
   reload: () => {
     document.body.classList.remove(VideoScreenshotDisabledClass)

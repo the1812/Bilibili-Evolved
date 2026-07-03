@@ -21,9 +21,6 @@ export const component = defineComponentMetadata({
   name: 'dpiLiveShowgirl',
   displayName: '直播看板娘高 DPI 适配',
   enabledByDefault: window.devicePixelRatio > 1,
-  description: {
-    'zh-CN': '根据屏幕 DPI 缩放直播看板娘的大小, 避免像素锯齿.',
-  },
   tags: [componentsTags.live, componentsTags.style],
   entry,
   reload: entry,

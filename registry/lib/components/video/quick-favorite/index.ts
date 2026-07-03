@@ -32,10 +32,6 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
 export const component = defineComponentMetadata({
   name: componentName,
   displayName: '启用快速收藏',
-  description: {
-    'zh-CN':
-      '启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹. 请注意如果在在收藏夹播放页面仍然显示, 是不会实时同步右侧的播放列表的.',
-  },
   entry,
   unload: () => {
     dqa('.be-quick-favorite').forEach((it: HTMLElement) => (it.style.display = ''))

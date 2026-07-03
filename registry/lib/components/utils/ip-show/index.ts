@@ -332,7 +332,4 @@ export const component = defineComponentMetadata({
   displayName: '评论区IP属地显示',
   tags: [componentsTags.utils],
   entry,
-  description: {
-    'zh-CN': '在评论区显示评论的IP属地信息',
-  },
 })

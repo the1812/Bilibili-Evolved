@@ -1,12 +1,19 @@
 import exitHook from 'async-exit-hook'
 import { Server } from 'http'
-import { WebSocketServer } from 'ws'
+import { WebSocket, WebSocketServer } from 'ws'
 import { Payload } from './payload'
-import { stopInstance, watchers } from './registry-watcher'
+import {
+  buildFeature,
+  getFeatureSessionPaths,
+  startFeatureSession,
+  stopFeatureSession,
+  stopFeatureSessionByPath,
+} from './registry-watcher'
+import { createFeature } from './scaffold'
 
 let server: WebSocketServer
 
-export const sendMessage = (message: Payload) => {
+export const broadcastMessage = (message: Payload) => {
   if (!server) {
     return
   }
@@ -19,40 +26,93 @@ export const exitWebSocketServer = () => {
   if (!server) {
     return
   }
-  sendMessage({ type: 'stop' })
+  broadcastMessage({ type: 'serverStop' })
   server.clients.forEach(c => c.close())
 }
+const sendMessage = (client: WebSocket, payload: Payload) => {
+  client.send(JSON.stringify(payload))
+}
+
+const sendCommandResult = (
+  client: WebSocket,
+  payload: { requestId?: string },
+  result: Omit<Extract<Payload, { type: 'commandResult' }>, 'type' | 'requestId'>,
+) => {
+  sendMessage(client, {
+    type: 'commandResult',
+    requestId: payload.requestId,
+    featureSessions: getFeatureSessionPaths(),
+    ...result,
+  })
+}
+
 export const startWebSocketServer = (httpServer: Server) =>
   new Promise<void>(resolve => {
     server = new WebSocketServer({ server: httpServer })
     server.on('connection', client => {
-      sendMessage({ type: 'start', sessions: watchers.map(it => it.url) })
-      client.on('message', data => {
+      sendMessage(client, { type: 'serverReady', featureSessions: getFeatureSessionPaths() })
+      client.on('message', async data => {
+        let payload: Payload | undefined
         try {
-          const payload: Payload = JSON.parse(data.toString())
+          payload = JSON.parse(data.toString())
           console.log('收到 DevClient 消息:', payload)
           switch (payload.type) {
             default: {
               break
             }
-            case 'itemStop': {
-              const { path } = payload
-              const watcherIndex = watchers.findIndex(it => it.url === path)
-              if (watcherIndex !== -1) {
-                const [watcher] = watchers.splice(watcherIndex, 1)
-                stopInstance(watcher.instance, () => {
-                  console.log(`功能编译器已退出: ${watcher.url}`)
-                })
-              }
+            case 'startFeatureSession': {
+              await startFeatureSession(payload.kind, payload.id)
+              sendCommandResult(client, payload, {
+                ok: true,
+                message: `功能调试已启动: ${payload.kind}/${payload.id}`,
+              })
               break
             }
-            case 'querySessions': {
-              sendMessage({ type: 'querySessionsResponse', sessions: watchers.map(it => it.url) })
+            case 'stopFeatureSession': {
+              if (!payload.path && (!payload.kind || !payload.id)) {
+                throw new Error('stopFeatureSession 需要 path 或 kind + id')
+              }
+              const stopped = payload.path
+                ? await stopFeatureSessionByPath(payload.path)
+                : await stopFeatureSession(payload.kind, payload.id)
+              sendCommandResult(client, payload, {
+                ok: true,
+                message: stopped ? '功能调试已停止' : '功能调试未运行',
+              })
+              break
+            }
+            case 'buildFeature': {
+              await buildFeature(payload.kind, payload.id, payload.mode)
+              sendCommandResult(client, payload, {
+                ok: true,
+                message: `功能已编译: ${payload.kind}/${payload.id}`,
+              })
+              break
+            }
+            case 'createFeature': {
+              const directory = createFeature(payload)
+              sendCommandResult(client, payload, {
+                ok: true,
+                message: `功能已创建: ${directory}`,
+              })
+              break
+            }
+            case 'queryFeatureSessions': {
+              sendMessage(client, {
+                type: 'queryFeatureSessionsResponse',
+                featureSessions: getFeatureSessionPaths(),
+              })
               break
             }
           }
         } catch (error) {
           console.error('无效信息', data)
+          if (payload && 'requestId' in payload) {
+            sendCommandResult(client, payload, {
+              ok: false,
+              error: (error as Error).message,
+            })
+          }
         }
       })
     })

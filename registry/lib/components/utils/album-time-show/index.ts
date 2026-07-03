@@ -57,7 +57,4 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.utils],
   urlInclude: [/^https:\/\/space\.bilibili\.com/],
   entry,
-  description: {
-    'zh-CN': '在相簿界面显示相簿的发布时间',
-  },
 })

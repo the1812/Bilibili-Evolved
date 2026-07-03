@@ -160,9 +160,6 @@ export const component = defineComponentMetadata({
     name: 'kdxcxs',
     link: 'https://github.com/kdxcxs',
   },
-  description: {
-    'zh-CN': '为可能含有时间点的弹幕添加下划线, 点击可以跳到视频对应时间.',
-  },
   tags: [componentsTags.video],
   urlInclude: playerUrls,
   ...toggleStyle(

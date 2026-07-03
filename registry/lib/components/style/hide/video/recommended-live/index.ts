@@ -12,8 +12,5 @@ export const component = defineComponentMetadata({
   ],
   displayName: '隐藏直播推荐',
   tags: [componentsTags.style, componentsTags.video],
-  description: {
-    'zh-CN': '隐藏视频页面右侧下方的直播推荐.',
-  },
   urlInclude: videoUrls,
 })

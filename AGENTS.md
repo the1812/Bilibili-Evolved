@@ -25,10 +25,11 @@ pnpm run type
 pnpm run lint-check
 pnpm run build-core
 pnpm run build-features
-pnpm ts-node dev-tools/dev-server/index.ts
+pnpm tsx dev-tools/dev-server/index.ts
+pnpm tsx dev-tools/dev-server/command.ts sessions
 ```
 
-The dev server serves the local userscript and registry build output for browser testing. See `CONTRIBUTING.md` for Tampermonkey setup details.
+The dev server serves the local userscript and registry build output for browser testing. HTTP only serves static resources, with build-on-request for registry feature URLs. WebSocket is the command and event control plane; use `dev-tools/dev-server/command.ts` for single-feature build, watch, stop, and scaffold commands. See `dev-tools/dev-server/README.md` for protocol details and `CONTRIBUTING.md` for Tampermonkey setup details.
 
 ## Component And Plugin Guidelines
 
@@ -73,6 +74,7 @@ Choose validation based on the risk and scope of the change.
 - Run `pnpm run lint-check` for lint validation.
 - Run `pnpm run build-core` for core userscript changes.
 - Run `pnpm run build-features` for registry component or plugin changes.
+- Run `pnpm exec tsc -p dev-tools/dev-server/tsconfig.json` for dev server TypeScript changes.
 - For browser-facing behavior, verify the changed feature in a real browser with the local userscript installed.
 - For API-shape or Bilibili-rollout-dependent changes, record what page or account state was actually self-tested.
 
