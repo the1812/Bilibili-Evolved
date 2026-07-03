@@ -20,6 +20,7 @@ const parsePVData = async (data: ArrayBuffer) => {
 // =========================================================================== /
 
 export interface SnapshotTile {
+  index: number
   time: number
   column: number
   row: number
@@ -67,6 +68,7 @@ function parseTiles(
       const x = column * width
       const y = row * height
       s.push({
+        index: atlas.index * columns * rows + i,
         atlas,
         time: times[i],
         x,

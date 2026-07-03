@@ -1,17 +1,19 @@
 <template>
-  <DefaultWidget
-    :disabled="disabled"
-    name="查看预览图"
-    icon="mdi-image-outline"
-    class="view-video-snapshot-grid"
-    @click="viewSnapshotGrid()"
-  ></DefaultWidget>
+  <div>
+    <DefaultWidget
+      :disabled="disabled"
+      name="查看预览图"
+      icon="mdi-image-outline"
+      class="view-video-snapshot-grid"
+      @click="viewSnapshotGrid()"
+    ></DefaultWidget>
+  </div>
 </template>
 
 <script lang="ts">
-import { DefaultWidget, showImage } from '@/ui'
+import { DefaultWidget, showCanvas } from '@/ui'
 import { logError } from '@/core/utils/log'
-import { renderSnapshotGridToBlobUrl } from './handler'
+import { createSnapshotGrid } from './handler'
 import { videoChange } from '@/core/observer'
 import { getFriendlyTitle } from '@/core/utils/title'
 
@@ -22,24 +24,23 @@ export default Vue.extend({
   data() {
     return {
       disabled: false,
-      imageBlobUrl: '',
+      canvas: <HTMLCanvasElement>null,
     }
   },
   mounted() {
     videoChange(() => {
-      URL.revokeObjectURL(this.imageBlobUrl)
-      this.imageBlobUrl = ''
+      this.canvas = null
     })
   },
   methods: {
     async viewSnapshotGrid() {
       try {
         this.disabled = true
-        if (!this.imageBlobUrl) {
-          const { aid, cid } = unsafeWindow
-          this.imageBlobUrl = await renderSnapshotGridToBlobUrl(aid, parseInt(cid))
+        const { aid, cid } = unsafeWindow
+        if (!this.canvas) {
+          this.canvas = await createSnapshotGrid(aid, parseInt(cid))
         }
-        showImage(this.imageBlobUrl, `${getFriendlyTitle(true)}_snapshot.jpg`)
+        await showCanvas(this.canvas, `${getFriendlyTitle(true)}_snapshot.jpg`)
       } catch (error) {
         logError(error)
       } finally {

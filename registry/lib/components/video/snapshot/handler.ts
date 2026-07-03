@@ -76,10 +76,6 @@ async function toBlob(canvas: HTMLCanvasElement) {
   })
 }
 
-export async function renderSnapshotGridToBlobUrl(aid: string, cid: number) {
-  return createSnapshotGrid(aid, cid).then(toBlob).then(URL.createObjectURL)
-}
-
 export async function generateDownloadAssets(infos: DownloadVideoInfo[], toast: Toast) {
   let count = 0
   const results = await Promise.allSettled(
