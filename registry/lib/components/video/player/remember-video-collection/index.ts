@@ -272,10 +272,6 @@ const activateRememberVideoCollection = async (title: string) => {
 export const component = defineComponentMetadata<ComponentOptions>({
   name: componentName,
   displayName: componentDisplayName,
-  description: {
-    'zh-CN':
-      '记忆合集与多P视频的播放进度, 在列表中标记已观看/上次播放位置, 并提供跳转提示与记忆管理功能面板.',
-  },
   author: {
     name: 'JLoeve (with Kilo Code & Codex)',
     link: 'https://github.com/LonelySteve',

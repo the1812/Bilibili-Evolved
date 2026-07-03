@@ -127,9 +127,6 @@ export const component = defineComponentMetadata({
     })
   },
   displayName: '播放器位置动作',
-  description: {
-    'zh-CN': '设置当播放器移出视图的位置变化时执行的动作.',
-  },
   options: {
     triggerLocation: {
       defaultValue: IntersectionMode.Medium,

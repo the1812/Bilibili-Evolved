@@ -190,7 +190,4 @@ export const component = defineComponentMetadata({
     /https:\/\/space\.bilibili\.com\/\d+/,
   ],
   entry,
-  description: {
-    'zh-CN': '在粉丝/关注列表及用户主页显示关注的具体时间。',
-  },
 })

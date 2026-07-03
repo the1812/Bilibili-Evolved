@@ -5,7 +5,6 @@ import { DownloadVideoOutput } from '../../../../components/video/download/types
 export const plugin: PluginMetadata = {
   name: 'downloadVideo.outputs.motrix',
   displayName: '下载视频 - Motrix 输出支持',
-  description: '为下载视频增加 Motrix 输出支持.',
   setup: ({ addData }) => {
     addData('downloadVideo.outputs', (outputs: DownloadVideoOutput[]) => {
       outputs.push({

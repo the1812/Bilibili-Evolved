@@ -85,9 +85,6 @@ export const component = defineComponentMetadata({
   reload: () => {
     config && (config.enable = true)
   },
-  description: {
-    'zh-CN': '为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.',
-  },
   extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
   options,
   plugin: {

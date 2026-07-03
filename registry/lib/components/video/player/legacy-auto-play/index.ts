@@ -157,7 +157,6 @@ class BangumiLegacyAutoPlay extends LegacyAutoPlay {
 export const component = defineComponentMetadata({
   name: 'legacyAutoPlay',
   displayName: '传统连播模式',
-  description: '模拟传统的多 P 连播策略: 仅连播视频的分 P, 最后 1P 放完禁止连播其他推荐视频.',
   tags: [componentsTags.video],
   urlInclude: [...videoUrls, ...bangumiUrls],
   entry: async () => {

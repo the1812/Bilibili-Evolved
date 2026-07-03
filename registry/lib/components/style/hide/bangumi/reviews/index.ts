@@ -7,7 +7,4 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.style],
   ...toggleStyle('hideBangumiReviews', () => import('./reviews.scss')),
   urlInclude: bangumiUrls,
-  description: {
-    'zh-CN': '隐藏番剧播放页面里的点评板块.',
-  },
 })
