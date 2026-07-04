@@ -162,7 +162,12 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.video],
   urlInclude: playerUrls,
-  instantStyles: [{ name: 'danmakuAirborne', style: () => import('./airborne.scss') }],
+  instantStyles: [
+    {
+      name: 'danmakuAirborne',
+      style: () => import('./airborne.scss'),
+    },
+  ],
   entry: async ({ settings }) => {
     const { enabled } = settings
     const airborneHandler = (e: MouseEvent) => {

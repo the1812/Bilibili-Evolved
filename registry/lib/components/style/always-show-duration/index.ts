@@ -5,7 +5,10 @@ export const component = defineComponentMetadata({
   displayName: '总是显示视频时长',
   tags: [componentsTags.video, componentsTags.style],
   instantStyles: [
-    { name: 'alwaysShowDuration', style: () => import('./always-show-duration.scss') },
+    {
+      name: 'alwaysShowDuration',
+      style: () => import('./always-show-duration.scss'),
+    },
   ],
   entry: none,
 })

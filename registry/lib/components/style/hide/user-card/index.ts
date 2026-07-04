@@ -10,6 +10,11 @@ export const component = defineComponentMetadata({
     link: 'https://github.com/WakelessSloth56',
   },
   tags: [componentsTags.style],
-  instantStyles: [{ name, style: () => import('./user-card.scss') }],
+  instantStyles: [
+    {
+      name,
+      style: () => import('./user-card.scss'),
+    },
+  ],
   entry: none,
 })

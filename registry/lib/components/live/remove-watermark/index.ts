@@ -7,7 +7,12 @@ export const component = defineComponentMetadata({
   name: 'removeLiveWatermark',
   displayName: '删除直播水印',
   tags: [componentsTags.live, componentsTags.style],
-  instantStyles: [{ name: 'removeLiveWatermark', style: () => import('./remove-watermark.scss') }],
-  entry: none,
   urlInclude: liveUrlsWithHome,
+  instantStyles: [
+    {
+      name: 'removeLiveWatermark',
+      style: () => import('./remove-watermark.scss'),
+    },
+  ],
+  entry: none,
 })
