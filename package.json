@@ -8,6 +8,7 @@
   "scripts": {
     "build-core": "webpack --config ./webpack/webpack.prod.ts --bail",
     "build-features": "webpack --config ./registry/webpack/all.ts --bail",
+    "build-docs": "tsx dev-tools/feature-docs/index.ts",
     "build-github-config": "tsx ./.github-json/index.ts",
     "check-pr-files": "tsx dev-tools/pr-check/index.ts",
     "donate-table": "tsx dev-tools/donate-table/index.ts",

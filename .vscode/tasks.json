@@ -96,7 +96,7 @@
     },
     {
       "type": "shell",
-      "command": "pnpm webpack --config ./registry/webpack/docs.ts --progress",
+      "command": "pnpm run build-docs",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译功能文档 prod:build-docs"
