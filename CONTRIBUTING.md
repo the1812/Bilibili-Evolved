@@ -56,6 +56,8 @@ pnpm tsx dev-tools/dev-server/command.ts sessions
 pnpm tsx dev-tools/dev-server/command.ts build component style/hide/banner
 pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
 pnpm tsx dev-tools/dev-server/command.ts stop component style/hide/banner
+pnpm tsx dev-tools/dev-server/command.ts start-debug component style/hide/banner dev-client-1
+pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 ```
 
 更完整的协议和指令说明见 `dev-tools/dev-server/README.md`.
@@ -142,6 +144,8 @@ pnpm tsx dev-tools/dev-server/command.ts stop component style/hide/banner
 ```powershell
 pnpm tsx dev-tools/dev-server/command.ts watch component style/hide/banner
 pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
+pnpm tsx dev-tools/dev-server/command.ts start-debug component style/hide/banner dev-client-1
+pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 ```
 
 ## 新增
@@ -179,7 +183,7 @@ pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
 
 6. 填写 `defineComponentMetadata` 中的 `author` 字段, 通常是你的 GitHub 用户名和 Profile 页地址. 如果希望注明使用 AI 辅助开发, 可以再添加 AI 的名称及其官网, `author` 字段可以是一个数组.
 7. 如果组件需要支持无需刷新的实时关闭 / 开启, 应使用 `reload` / `unload`, 不要依赖 `entry` 的返回值来销毁组件. `reload` / `unload` 必须成对使用才会生效.
-8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发.
+8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发. 编写 SCSS 时可以使用公共 Sass 文件, 例如通过 `@import "common"` 使用 `ui/_common.scss` 中的 mixin.
 9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可. 如果开发服务已经运行, 也可以用 `pnpm tsx dev-tools/dev-server/command.ts build component <id>` 或 `pnpm tsx dev-tools/dev-server/command.ts build plugin <id>` 单独编译.
 10. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
 11. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
@@ -277,7 +281,7 @@ pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
 所有的 UI 组件建议使用 `'@/ui'` 导入, 大部分看名字就知道是什么, 这里只列几个特殊的.
 
 - `ui/icon/VIcon.vue`: 图标组件, 自带 MDI 图标集, b 站图标集, 支持自定义图标注入
-- `ui/_common.scss`: 一些通用的 Sass Mixin, 在代码中可以直接使用 `@import "common"` 导入
+- `ui/_common.scss`: 一些通用的 Sass Mixin, 编写 SCSS 时可以直接使用 `@import "common"` 导入
 - `ui/_markdown.scss`: 提供一个 Markdown Mixin, 导入这个 Mixin 的地方将获得为各种 HTML 元素适配的 Markdown 样式. 在代码中可以直接使用 `@import "markdown"` 导入
 - `ui/ScrollTrigger.vue`: 进入视图时触发事件, 通常用于实现无限滚动
 - `ui/VEmpty.vue`: 表示无数据, 界面可被插件更改

@@ -1,17 +1,32 @@
 import exitHook from 'async-exit-hook'
+import { randomBytes } from 'crypto'
 import { Server } from 'http'
 import { WebSocket, WebSocketServer } from 'ws'
 import { Payload } from './payload'
 import {
   buildFeature,
+  getRegistryFeature,
   getFeatureSessionPaths,
   startFeatureSession,
   stopFeatureSession,
   stopFeatureSessionByPath,
 } from './registry-watcher'
 import { createFeature } from './scaffold'
+import { devServerConfig } from './config'
 
 let server: WebSocketServer
+const clients = new Map<string, WebSocket>()
+const pendingDebugFeatureClients = new Map<
+  string,
+  {
+    client: WebSocket
+    payload: Extract<Payload, { type: 'startDebugFeature' }>
+    lastError?: string
+    timer: ReturnType<typeof setTimeout>
+  }
+>()
+
+const createClientId = () => `dev-client-${randomBytes(4).toString('hex')}`
 
 export const broadcastMessage = (message: Payload) => {
   if (!server) {
@@ -50,7 +65,16 @@ export const startWebSocketServer = (httpServer: Server) =>
   new Promise<void>(resolve => {
     server = new WebSocketServer({ server: httpServer })
     server.on('connection', client => {
-      sendMessage(client, { type: 'serverReady', featureSessions: getFeatureSessionPaths() })
+      const clientId = createClientId()
+      clients.set(clientId, client)
+      sendMessage(client, {
+        type: 'serverReady',
+        clientId,
+        featureSessions: getFeatureSessionPaths(),
+      })
+      client.on('close', () => {
+        clients.delete(clientId)
+      })
       client.on('message', async data => {
         let payload: Payload | undefined
         try {
@@ -64,7 +88,7 @@ export const startWebSocketServer = (httpServer: Server) =>
               await startFeatureSession(payload.kind, payload.id)
               sendCommandResult(client, payload, {
                 ok: true,
-                message: `功能调试已启动: ${payload.kind}/${payload.id}`,
+                message: `功能监听已启动: ${payload.kind}/${payload.id}`,
               })
               break
             }
@@ -77,7 +101,7 @@ export const startWebSocketServer = (httpServer: Server) =>
                 : await stopFeatureSession(payload.kind, payload.id)
               sendCommandResult(client, payload, {
                 ok: true,
-                message: stopped ? '功能调试已停止' : '功能调试未运行',
+                message: stopped ? '功能监听已停止' : '功能监听未运行',
               })
               break
             }
@@ -86,6 +110,72 @@ export const startWebSocketServer = (httpServer: Server) =>
               sendCommandResult(client, payload, {
                 ok: true,
                 message: `功能已编译: ${payload.kind}/${payload.id}`,
+              })
+              break
+            }
+            case 'startDebugFeature': {
+              const debugPayload = payload
+              await startFeatureSession(debugPayload.kind, debugPayload.id)
+              const feature = getRegistryFeature(debugPayload.kind, debugPayload.id)
+              const { requestId } = debugPayload
+              const targetClient = debugPayload.targetClientId
+                ? clients.get(debugPayload.targetClientId)
+                : undefined
+              if (debugPayload.targetClientId && !targetClient) {
+                throw new Error(`未找到 DevClient: ${debugPayload.targetClientId}`)
+              }
+              if (requestId) {
+                const timer = setTimeout(() => {
+                  const pending = pendingDebugFeatureClients.get(requestId)
+                  if (!pending) {
+                    return
+                  }
+                  pendingDebugFeatureClients.delete(requestId)
+                  sendCommandResult(pending.client, pending.payload, {
+                    ok: false,
+                    error:
+                      pending.lastError ??
+                      `没有收到 DevClient 调试安装响应: ${debugPayload.kind}/${debugPayload.id}`,
+                  })
+                }, 15000)
+                pendingDebugFeatureClients.set(requestId, {
+                  client,
+                  payload: debugPayload,
+                  timer,
+                })
+              }
+              const startDebugPayload: Payload = {
+                type: 'startDebugFeature',
+                kind: feature.kind,
+                id: feature.id,
+                path: feature.path,
+                url: `http://localhost:${devServerConfig.port}${feature.path}`,
+                requestId,
+              }
+              if (targetClient) {
+                sendMessage(targetClient, startDebugPayload)
+              } else {
+                broadcastMessage(startDebugPayload)
+              }
+              break
+            }
+            case 'startDebugFeatureResult': {
+              if (!payload.requestId) {
+                break
+              }
+              const pending = pendingDebugFeatureClients.get(payload.requestId)
+              if (!pending) {
+                break
+              }
+              if (!payload.ok) {
+                pending.lastError = payload.error
+                break
+              }
+              clearTimeout(pending.timer)
+              pendingDebugFeatureClients.delete(payload.requestId)
+              sendCommandResult(pending.client, pending.payload, {
+                ok: true,
+                message: payload.message,
               })
               break
             }

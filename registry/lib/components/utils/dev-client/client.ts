@@ -1,10 +1,8 @@
-import type {
-  Payload,
-  StopFeatureSessionPayload,
-} from '../../../../../dev-tools/dev-server/payload'
+import type { Payload, StopFeatureSessionPayload } from './protocol'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeInstantStyle } from '@/core/style'
+import { getComponentSettings, isComponentEnabled } from '@/core/settings'
 import { autoUpdateOptions, getDevClientOptions } from './options'
 import { RefreshMethod, HotReloadMethod } from './update-method'
 import { monkey } from '@/core/ajax'
@@ -13,6 +11,7 @@ import { Toast } from '@/core/toast'
 
 const options = getDevClientOptions()
 const console = useScopedConsole('DevClient')
+const createRequestId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`
 const handleSocketMessage = (event: MessageEvent, callback: (payload: Payload) => void) => {
   const { data } = event
   try {
@@ -27,6 +26,7 @@ export enum DevClientEvents {
   CoreUpdate = 'coreUpdate',
   ItemUpdate = 'itemUpdate',
   FeatureSessionsUpdate = 'featureSessionsUpdate',
+  ClientIdUpdate = 'clientIdUpdate',
   ServerChange = 'serverChange',
   ServerConnected = 'serverConnected',
   ServerDisconnected = 'serverDisconnected',
@@ -35,8 +35,13 @@ export enum DevClientEvents {
 
 export class DevClient extends EventTarget {
   socket: WebSocket
+  clientId: string | null = null
   featureSessions: string[] = []
   private pendingFeatureSessionQueries: ((featureSessions: string[]) => void)[] = []
+  private pendingCommandResults = new Map<
+    string,
+    (payload: Extract<Payload, { type: 'commandResult' }>) => void
+  >()
 
   addEventListener(
     type: DevClientEvents,
@@ -86,6 +91,7 @@ export class DevClient extends EventTarget {
               break
             }
             case 'serverReady': {
+              this.updateClientId(payload.clientId)
               this.updateFeatureSessions(payload.featureSessions)
               break
             }
@@ -99,6 +105,13 @@ export class DevClient extends EventTarget {
               this.updateFeatureSessions(payload.featureSessions)
               break
             }
+            case 'commandResult': {
+              if (payload.requestId) {
+                this.pendingCommandResults.get(payload.requestId)?.(payload)
+                this.pendingCommandResults.delete(payload.requestId)
+              }
+              break
+            }
             case 'coreUpdate': {
               this.handleCoreUpdate()
               break
@@ -107,6 +120,10 @@ export class DevClient extends EventTarget {
               const { path } = payload
               this.updateFeatureSessions(payload.featureSessions)
               this.handleItemUpdate(path)
+              break
+            }
+            case 'startDebugFeature': {
+              this.handleStartDebugFeature(payload)
               break
             }
           }
@@ -122,6 +139,7 @@ export class DevClient extends EventTarget {
     }
     this.socket.close()
     this.socket = null
+    this.updateClientId(null)
     this.updateFeatureSessions([])
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerDisconnected))
@@ -232,12 +250,34 @@ export class DevClient extends EventTarget {
     })
   }
 
+  private async sendCommand(payload: Payload & { requestId?: string }) {
+    return new Promise<Extract<Payload, { type: 'commandResult' }>>(resolve => {
+      if (!this.isConnected) {
+        resolve({
+          type: 'commandResult',
+          requestId: payload.requestId,
+          ok: false,
+        })
+        return
+      }
+      if (payload.requestId) {
+        this.pendingCommandResults.set(payload.requestId, resolve)
+      }
+      this.socket?.send(JSON.stringify(payload))
+    })
+  }
+
   private updateFeatureSessions(featureSessions: string[]) {
     this.featureSessions = featureSessions
     this.dispatchEvent(
       new CustomEvent(DevClientEvents.FeatureSessionsUpdate, { detail: this.featureSessions }),
     )
     this.pendingFeatureSessionQueries.splice(0).forEach(resolve => resolve(this.featureSessions))
+  }
+
+  private updateClientId(clientId: string | null) {
+    this.clientId = clientId
+    this.dispatchEvent(new CustomEvent(DevClientEvents.ClientIdUpdate, { detail: clientId }))
   }
 
   async startDebug(url: string) {
@@ -249,9 +289,88 @@ export class DevClient extends EventTarget {
     const stopPayload: StopFeatureSessionPayload = {
       type: 'stopFeatureSession',
       path,
+      requestId: createRequestId(),
     }
-    this.socket?.send(JSON.stringify(stopPayload))
+    const result = await this.sendCommand(stopPayload)
+    if (result.featureSessions) {
+      this.updateFeatureSessions(result.featureSessions)
+      return result.featureSessions
+    }
     return this.queryFeatureSessions()
+  }
+
+  private async handleStartDebugFeature(payload: Extract<Payload, { type: 'startDebugFeature' }>) {
+    const { kind, path, requestId, url } = payload
+    if (!path || !url) {
+      this.socket?.send(
+        JSON.stringify({
+          type: 'startDebugFeatureResult',
+          requestId,
+          ok: false,
+          error: 'startDebugFeature 缺少 path 或 url',
+        } satisfies Payload),
+      )
+      return
+    }
+    let debugStage = 'load code'
+    try {
+      const code: string = await monkey({ url })
+      debugStage = 'parse code'
+      const { loadFeatureCode } = await import('@/core/external-input')
+      const parsedFeature = loadFeatureCode(code) as { name: string }
+      debugStage = 'install code'
+      const { installFeatureFromCode } = await import('@/core/install-feature')
+      const autoUpdateRecords = autoUpdateOptions.urls[`${kind}s`]
+      const originalAutoUpdateUrl = autoUpdateRecords[parsedFeature.name]?.url
+      const oldComponent = kind === 'component' ? componentsMap[parsedFeature.name] : undefined
+      const { metadata } = await installFeatureFromCode(code, url)
+      debugStage = 'update auto update record'
+      const existingDevRecord = options.devRecords[metadata.name]
+      const existingAutoUpdateRecord = autoUpdateRecords[metadata.name]
+      if (!existingDevRecord && originalAutoUpdateUrl && originalAutoUpdateUrl !== url) {
+        options.devRecords[metadata.name] = {
+          name: metadata.name,
+          originalUrl: originalAutoUpdateUrl,
+        }
+      }
+      if (existingAutoUpdateRecord) {
+        existingAutoUpdateRecord.url = url
+      }
+      if (kind === 'component') {
+        debugStage = 'load component style'
+        const component = metadata as ComponentMetadata
+        const settings = getComponentSettings(component)
+        settings.enabled = true
+        oldComponent?.instantStyles?.forEach(style => removeInstantStyle(style))
+        componentsMap[component.name] = component
+        if (isComponentEnabled(component)) {
+          await loadInstantStyle(component)
+        }
+      }
+      this.updateFeatureSessions([...new Set([...this.featureSessions, path])])
+      this.socket?.send(
+        JSON.stringify({
+          type: 'startDebugFeatureResult',
+          requestId,
+          ok: true,
+          message: `功能已安装并启用调试: ${kind}/${payload.id}`,
+        } satisfies Payload),
+      )
+    } catch (error) {
+      console.error('调试功能安装失败', error)
+      const message =
+        error instanceof Error && error.message
+          ? error.message
+          : String(error) || Object.prototype.toString.call(error)
+      this.socket?.send(
+        JSON.stringify({
+          type: 'startDebugFeatureResult',
+          requestId,
+          ok: false,
+          error: `${debugStage}: ${message}`,
+        } satisfies Payload),
+      )
+    }
   }
 }
 export const devClient = new DevClient()
