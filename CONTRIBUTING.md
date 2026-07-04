@@ -25,7 +25,7 @@ pnpm install
   - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin), 让 TS Server 识别 *.vue 文件.(建议启用性能更好的 [Takeover 模式](https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode))
 
 ### 本体
-需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发时在 `registry/dist/` 下产生文件.
+需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发服务会按需编译功能并从内存中返回产物, `registry/dist/` 只会由发布分支上的 CI 构建产生.
 > 如果不使用 Visual Studio Code, 则需要根据 `.vscode/tasks.json` 中各个任务定义的命令手动在终端执行. (npm scripts 仅用于 CI)
 
 配置本地调试环境:
@@ -132,7 +132,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 5. 每次本体代码变动后, 需要在 Tampermonkey 中编辑脚本 - 外部, 删除 `localhost` 的缓存文件后刷新生效.
 
 ### 组件
-组件除了本体内置的几个(内置的按照本体的调试方法就行), 其他都是和本体分离的, 本节包括这些组件的编译和调试方法, 同样适用于插件. 组件的源代码和产物均位于 `registry` 文件夹中.
+组件除了本体内置的几个(内置的按照本体的调试方法就行), 其他都是和本体分离的, 本节包括这些组件的编译和调试方法, 同样适用于插件. 组件和插件的源代码位于 `registry` 文件夹中.
 
 ## 修改
 1. 运行 `启动开发服务 dev-server`
@@ -311,7 +311,7 @@ pnpm run lint-check
 ```
 
 ## 提交 commit
-仅提交源代码上的修改即可, 不要把 dist 文件夹里的产物也提交, 产物会在发布新版本时在对应的生产分支上构建.
+仅提交源代码上的修改即可, 不要把 `dist/` 或 `registry/dist/` 里的产物也提交, 产物会在发布新版本时由 `preview` / `master` / `master-cdn` 等发布输出分支的 CI 构建.
 
 `doc/features/` 下的功能列表和合集包文档是生成文件, 普通功能或修复 PR 中不要手动修改.
 

@@ -33,27 +33,6 @@
     },
     {
       "type": "shell",
-      "command": "pnpm serve registry/dist -p ${input:serverPort}",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "功能:启动服务器 dev:serve-features"
-    },
-    {
-      "type": "shell",
-      "command": "pnpm webpack --watch --config ./registry/webpack/components.ts --progress --mode=development",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "功能:监视组件 dev:watch-components"
-    },
-    {
-      "type": "shell",
-      "command": "pnpm webpack --watch --config ./registry/webpack/plugins.ts --progress --mode=development",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "功能:监视插件 dev:watch-plugins"
-    },
-    {
-      "type": "shell",
       "command": "pnpm tsc -p tsconfig.type-check.json --noEmit",
       "group": "build",
       "problemMatcher": [],
