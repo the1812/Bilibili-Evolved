@@ -1,5 +1,4 @@
 import { defineComponentMetadata } from '@/components/define'
-import { none } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 
 const liveUrlsWithHome = [...liveUrls, /^https:\/\/live\.bilibili\.com\/(index\.html)?$/]

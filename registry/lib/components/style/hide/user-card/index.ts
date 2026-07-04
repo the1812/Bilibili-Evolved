@@ -1,5 +1,4 @@
 import { defineComponentMetadata } from '@/components/define'
-import { none } from '@/core/utils'
 
 const name = 'hideUserCard'
 
