@@ -1,3 +1,5 @@
+import nodePath from 'path'
+import { createFsFromVolume, Volume } from 'memfs'
 import { Watching, Configuration, Stats, webpack } from 'webpack'
 import exitHook from 'async-exit-hook'
 import { fromId } from '../../registry/lib/id'
@@ -19,12 +21,12 @@ export const featureSessions: {
   feature: RegistryFeature
   path: string
   watcher: Watching
+  ready: Promise<void>
 }[] = []
 
 export const getFeatureSessionPaths = () => featureSessions.map(it => it.path)
 
 const normalizeId = (id: string) => id.replace(/\\/g, '/').replace(/^\/+/, '')
-
 export const getRegistryFeature = (kind: FeatureKind, id: string): RegistryFeature => {
   const normalizedId = normalizeId(id)
   const src = `./registry/lib/${kind}s/`
@@ -44,6 +46,27 @@ const getBuildConfig = (feature: RegistryFeature, mode: Configuration['mode'] = 
     entry: feature.entry,
     mode,
   }) as Configuration
+
+const registryVolume = new Volume()
+const registryOutputFileSystem = createFsFromVolume(registryVolume)
+
+const createFeatureCompiler = (
+  feature: RegistryFeature,
+  mode: Configuration['mode'] = 'development',
+) => {
+  const config = getBuildConfig(feature, mode)
+  const compiler = webpack(config)
+  compiler.outputFileSystem = registryOutputFileSystem as any
+  return compiler
+}
+
+export const readRegistryOutput = (requestPath: string) => {
+  try {
+    return registryOutputFileSystem.readFileSync(nodePath.resolve(`.${requestPath}`)) as Buffer
+  } catch {
+    return null
+  }
+}
 
 const notifyFeatureSessionsChanged = () => {
   broadcastMessage({
@@ -75,37 +98,42 @@ export const stopInstance = (instance: Watching, onClose: () => void) => {
 
 export const startFeatureSessionWatcher = (
   feature: RegistryFeature,
-  config = getBuildConfig(feature),
+  mode: Configuration['mode'] = 'development',
 ) =>
   new Promise<void>(resolve => {
-    const { path } = feature
-    const existingSession = featureSessions.find(s => s.path === path)
+    const outputPath = feature.path
+    const existingSession = featureSessions.find(s => s.path === outputPath)
     if (existingSession) {
-      console.log(`已复用功能编译器: ${path}`)
-      resolve()
+      console.log(`已复用功能编译器: ${outputPath}`)
+      existingSession.ready.then(resolve)
       return
     }
-    console.log(`功能编译中... ${path}`)
+    console.log(`功能编译中... ${outputPath}`)
     const { maxWatchers } = devServerConfig
-    const watcher = webpack(config)
+    const watcher = createFeatureCompiler(feature, mode)
+    let readyResolve: () => void
+    const ready = new Promise<void>(resolveReady => {
+      readyResolve = resolveReady
+    })
     const watcherInstance = watcher.watch(
       {},
       defaultWatcherHandler(
         () => {
+          readyResolve()
           resolve()
         },
         result => {
-          console.log('功能已编译:', result.hash, path)
+          console.log('功能已编译:', result.hash, outputPath)
           broadcastMessage({
             type: 'itemUpdate',
-            path,
+            path: outputPath,
             featureSessions: getFeatureSessionPaths(),
           })
           broadcastMessage({
             type: 'featureBuilt',
             kind: feature.kind,
             id: feature.id,
-            path,
+            path: outputPath,
             hash: result.hash,
             featureSessions: getFeatureSessionPaths(),
           })
@@ -115,7 +143,7 @@ export const startFeatureSessionWatcher = (
     exitHook(exit => {
       if (!watcherInstance.closed) {
         watcherInstance.close(() => {
-          console.log(`功能编译器已退出: ${path}`)
+          console.log(`功能编译器已退出: ${outputPath}`)
           exit()
         })
       }
@@ -129,20 +157,12 @@ export const startFeatureSessionWatcher = (
         notifyFeatureSessionsChanged()
       })
     }
-    featureSessions.push({ feature, path, watcher: watcherInstance })
+    featureSessions.push({ feature, path: outputPath, watcher: watcherInstance, ready })
     notifyFeatureSessionsChanged()
   })
 
 export const startFeatureSession = (kind: FeatureKind, id: string) =>
   startFeatureSessionWatcher(getRegistryFeature(kind, id))
-
-export const startFeatureSessionFromUrl = (url: string) => {
-  const feature = parseRegistryUrl(url)
-  if (!feature) {
-    return null
-  }
-  return startFeatureSessionWatcher(feature)
-}
 
 export const stopFeatureSessionByPath = (path: string) =>
   new Promise<boolean>(resolve => {
@@ -169,7 +189,7 @@ export const buildFeature = (
 ) =>
   new Promise<Stats>((resolve, reject) => {
     const feature = getRegistryFeature(kind, id)
-    const compiler = webpack(getBuildConfig(feature, mode))
+    const compiler = createFeatureCompiler(feature, mode)
     console.log(`功能单次编译中... ${feature.path}`)
     compiler.run((error, result) => {
       compiler.close(closeError => {

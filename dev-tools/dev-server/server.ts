@@ -3,7 +3,12 @@ import exitHook from 'async-exit-hook'
 import handler from 'serve-handler'
 import { devServerConfig } from './config'
 import { exitWebSocketServer } from './web-socket-server'
-import { featureSessions, parseRegistryUrl, startFeatureSessionFromUrl } from './registry-watcher'
+import {
+  featureSessions,
+  parseRegistryUrl,
+  readRegistryOutput,
+  startFeatureSessionWatcher,
+} from './registry-watcher'
 
 export const startDevServer = () =>
   new Promise<Server>(resolve => {
@@ -15,8 +20,24 @@ export const startDevServer = () =>
       const serveStatic = () => {
         handler(request, response, {
           public: '.',
-          directoryListing: ['/dist', '/dist/**', '/registry/dist', '/registry/dist/**'],
+          directoryListing: ['/dist', '/dist/**'],
         })
+      }
+      const serveNotFound = () => {
+        response.statusCode = 404
+        response.end('Not found')
+      }
+      const serveRegistryOutput = (path: string, notFound = false) => {
+        const output = readRegistryOutput(path)
+        if (!output) {
+          if (notFound) {
+            serveNotFound()
+          }
+          return false
+        }
+        response.setHeader('Content-Type', 'application/javascript; charset=utf-8')
+        response.end(output)
+        return true
       }
       if (url.startsWith('/registry')) {
         const feature = parseRegistryUrl(url)
@@ -24,15 +45,10 @@ export const startDevServer = () =>
         if (existingSession && feature) {
           console.log(`已复用功能编译器: ${url}`)
         }
-        if (existingSession || !feature) {
-          serveStatic()
-        } else {
-          const session = startFeatureSessionFromUrl(url)
-          if (session) {
-            session.then(() => serveStatic())
-          } else {
-            serveStatic()
-          }
+        if (!feature) {
+          serveNotFound()
+        } else if (!serveRegistryOutput(feature.path)) {
+          startFeatureSessionWatcher(feature).then(() => serveRegistryOutput(feature.path, true))
         }
       } else {
         serveStatic()
