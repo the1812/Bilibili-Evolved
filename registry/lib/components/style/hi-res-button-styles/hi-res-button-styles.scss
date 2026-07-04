@@ -1,0 +1,57 @@
+@import 'common';
+
+$hi-res-icon: url('./hi-res.svg?inline');
+
+.bpx-player-ctrl-flac {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 22px !important;
+  width: 22px !important;
+  min-width: 22px !important;
+  height: 22px !important;
+
+  @include on-fullscreen {
+    display: block !important;
+    flex: 0 1 auto !important;
+    width: 54px !important;
+    min-width: 54px !important;
+    height: 43px !important;
+  }
+
+  .bpx-player-ctrl-btn-icon,
+  .bpx-common-svg-icon {
+    display: block !important;
+    width: 22px;
+    height: 22px;
+
+    @include on-fullscreen {
+      width: 54px !important;
+      height: 32px !important;
+    }
+  }
+
+  .bpx-common-svg-icon {
+    position: relative;
+
+    &::before {
+      @include absolute-center;
+      width: 20px;
+      height: 20px;
+      content: '';
+      background-color: currentColor;
+      mask: $hi-res-icon center / contain no-repeat;
+      -webkit-mask: $hi-res-icon center / contain no-repeat;
+
+      @include on-fullscreen {
+        width: 32px;
+        height: 32px;
+      }
+    }
+  }
+
+  svg {
+    opacity: 0;
+  }
+}
