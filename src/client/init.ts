@@ -20,7 +20,10 @@ export const init = async () => {
 
   const { headLoaded, raiseLifeCycleEvent, LifeCycleEventTypes } = await import('@/core/life-cycle')
   raiseLifeCycleEvent(LifeCycleEventTypes.Start)
-  const { none } = await import('@/core/utils')
+  const { none, dq, dqa } = await import('@/core/utils')
+  // dq/dqa 需要先于 core-apis 挂载, 避免其模块初始化时访问未定义的全局 (如评论区初始化)
+  window.dq = dq
+  window.dqa = dqa
   const { promiseLoadTrace } = await import('@/core/performance/promise-trace')
 
   await promiseLoadTrace('wait for <head>', async () => {
@@ -48,8 +51,6 @@ export const init = async () => {
   unsafeWindow.bilibiliEvolved = externalApis
   /** sand-boxed window, safe to use original name */
   window.coreApis = coreApis
-  window.dq = coreApis.utils.dq
-  window.dqa = coreApis.utils.dqa
   window.de = coreApis.utils.de
   window.des = coreApis.utils.des
   window.dea = coreApis.utils.dea
