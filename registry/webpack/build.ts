@@ -5,7 +5,7 @@ import { buildByEntry } from './config'
 const shorten = (p: string, type: string) => path.dirname(p).replace(`./registry/lib/${type}s/`, '')
 
 export const builders = Object.fromEntries(
-  ['component', 'plugin', 'doc'].map(type => {
+  ['component', 'plugin'].map(type => {
     const src = `./registry/lib/${type}s/`
     return [
       type,

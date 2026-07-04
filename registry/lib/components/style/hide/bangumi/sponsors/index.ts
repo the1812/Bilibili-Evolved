@@ -1,10 +1,17 @@
 import { defineComponentMetadata } from '@/components/define'
-import { toggleStyle } from '@/components/styled-component'
+import { none } from '@/core/utils'
 import { bangumiUrls } from '@/core/utils/urls'
 
 export const component = defineComponentMetadata({
+  name: 'hideBangumiSponsors',
   displayName: '隐藏番剧承包',
   tags: [componentsTags.style],
-  ...toggleStyle('hideBangumiSponsors', () => import('./sponsors.scss')),
   urlInclude: bangumiUrls,
+  instantStyles: [
+    {
+      name: 'hideBangumiSponsors',
+      style: () => import('./sponsors.scss'),
+    },
+  ],
+  entry: none,
 })

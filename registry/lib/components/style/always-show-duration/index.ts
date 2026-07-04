@@ -1,8 +1,15 @@
-import { toggleStyle } from '@/components/styled-component'
 import { defineComponentMetadata } from '@/components/define'
+import { none } from '@/core/utils'
 
 export const component = defineComponentMetadata({
-  ...toggleStyle('alwaysShowDuration', () => import('./always-show-duration.scss')),
+  name: 'alwaysShowDuration',
   displayName: '总是显示视频时长',
   tags: [componentsTags.video, componentsTags.style],
+  instantStyles: [
+    {
+      name: 'alwaysShowDuration',
+      style: () => import('./always-show-duration.scss'),
+    },
+  ],
+  entry: none,
 })

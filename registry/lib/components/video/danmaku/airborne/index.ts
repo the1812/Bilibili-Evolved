@@ -1,4 +1,3 @@
-import { toggleStyle } from '@/components/styled-component'
 import { defineComponentMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
 import { DanmakuRecord, forEachVideoDanmaku } from '@/components/video/video-danmaku'
@@ -155,6 +154,7 @@ const getDanmakuElementFromEventTarget = (target: HTMLElement | null) => {
 }
 
 export const component = defineComponentMetadata({
+  name: 'danmakuAirborne',
   displayName: '启用弹幕空降',
   author: {
     name: 'kdxcxs',
@@ -162,37 +162,39 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.video],
   urlInclude: playerUrls,
-  ...toggleStyle(
-    'danmakuAirborne',
-    () => import('./airborne.scss'),
-    async ({ settings }) => {
-      const { enabled } = settings
-      const airborneHandler = (e: MouseEvent) => {
-        if (!enabled) {
-          return
-        }
-        const danmakuElement = getDanmakuElementFromEventTarget(e.target as HTMLElement | null)
-        if (!danmakuElement) {
-          return
-        }
-        const time = getAirborneTime(danmakuElement.textContent)
-        if (!Number.isNaN(time)) {
-          unsafeWindow.player.seek(time, false)
-        }
-      }
-      const detectAirborne = (danmaku: DanmakuRecord) => {
-        const canAirborne = !Number.isNaN(getAirborneTime(danmaku.text))
-        danmaku.element.classList.toggle('airborne', canAirborne)
-      }
-      forEachVideoDanmaku({ added: detectAirborne })
-      videoChange(async () => {
-        const wrapper = (await playerAgent.query.video.wrap()) as HTMLElement
-        if (wrapper.classList.contains('airborne-enabled')) {
-          return
-        }
-        wrapper.classList.add('airborne-enabled')
-        wrapper.addEventListener('click', airborneHandler)
-      })
+  instantStyles: [
+    {
+      name: 'danmakuAirborne',
+      style: () => import('./airborne.scss'),
     },
-  ),
+  ],
+  entry: async ({ settings }) => {
+    const { enabled } = settings
+    const airborneHandler = (e: MouseEvent) => {
+      if (!enabled) {
+        return
+      }
+      const danmakuElement = getDanmakuElementFromEventTarget(e.target as HTMLElement | null)
+      if (!danmakuElement) {
+        return
+      }
+      const time = getAirborneTime(danmakuElement.textContent)
+      if (!Number.isNaN(time)) {
+        unsafeWindow.player.seek(time, false)
+      }
+    }
+    const detectAirborne = (danmaku: DanmakuRecord) => {
+      const canAirborne = !Number.isNaN(getAirborneTime(danmaku.text))
+      danmaku.element.classList.toggle('airborne', canAirborne)
+    }
+    forEachVideoDanmaku({ added: detectAirborne })
+    videoChange(async () => {
+      const wrapper = (await playerAgent.query.video.wrap()) as HTMLElement
+      if (wrapper.classList.contains('airborne-enabled')) {
+        return
+      }
+      wrapper.classList.add('airborne-enabled')
+      wrapper.addEventListener('click', airborneHandler)
+    })
+  },
 })

@@ -18,7 +18,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/del-feeds.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/del-feeds.js)
 
-删除动态, 可选转发抽奖, 和全部删除.
+删除动态, 可选转发抽奖(不会删除自己中奖的动态), 和全部删除.
 
 ### [禁止跳转动态详情](../../registry/dist/components/feeds/disable-details.js)
 `disableFeedsDetails`
@@ -130,10 +130,10 @@ by [@Rinne](https://github.com/OharaRinneY)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/unfold.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/unfold.js)
 
-
 自动展开被折叠的动态.
 
 动态被折叠可能是因为:
+
 - 短时间内大量更新作品
 - 多人转发同一个作品
 - 被审核折叠
@@ -579,7 +579,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/player-on-top-new.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/player-on-top-new.js)
 
-by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@LockRim](https://github.com/LockRim)
+by [@RieN7](https://github.com/rien7), [@ZiuChen](https://github.com/ZiuChen), [@LockRim](https://github.com/LockRim)
 
 原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.
 
@@ -610,7 +610,7 @@ by [@RieN7](https://github.com/rien7),[@ZiuChen](https://github.com/ZiuChen),[@L
 
 by [@UcnacDx2](https://github.com/UcnacDx2)
 
-将视频卡片的封面替换为视频预览帧，杜绝图文不符。致敬DeArrow。
+将视频卡片的封面替换为视频预览帧，杜绝图文不符。致敬 DeArrow。
 
 ### [使用细滚动条](../../registry/dist/components/style/scrollbar.js)
 `elegantScrollbar`
@@ -722,10 +722,11 @@ by [@UcnacDx2](https://github.com/UcnacDx2)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/touch/player-gestures.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/touch/player-gestures.js)
 
 为播放器启用触摸手势支持:
+
 - 左右滑动可调整进度
 - 上下滑动可调整音量
 - 进度调整可在左上角和右上角取消
-- 进度调整时在不同位置滑动, 可以使用3档不同的灵敏度.
+- 进度调整时在不同位置滑动, 可以使用 3 档不同的灵敏度.
 
 ### [视频链接增强](../../registry/dist/components/utils/active-video-links.js)
 `activeVideoLinks`
@@ -788,7 +789,7 @@ by [@CrazyboyQCD](https://github.com/CrazyboyQCD)
 
 by [@snowraincloud](https://github.com/snowraincloud)
 
-屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配. 请注意只能在首页中使用或调整设置.
+屏蔽黑名单 up 主, 根据 up 主的名称进行匹配，支持精确匹配和正则匹配. 请注意只能在首页中使用或调整设置.
 
 ### [更新链接替换](../../registry/dist/components/utils/change-update-urls.js)
 `changeUpdateUrls`
@@ -905,6 +906,7 @@ by [@Pencilqaq](https://github.com/pencilqaq)
 动态文件名变量:
 - `n`: 第 n 张图
 - `id`: 动态 ID
+- `title`: 专栏标题 (对于被转为图文动态的专栏, 可以获取到专栏标题)
 - `user`: 用户名
 - `userID`: 用户 ID
 - 动态发布时间:
@@ -976,7 +978,7 @@ by [@aiden](https://github.com/swhoro)
 
 by [@Light_Quanta](https://github.com/LightQuanta)
 
-在评论区显示评论的IP属地信息
+在评论区显示评论的 IP 属地信息
 
 ### [快捷键扩展](../../registry/dist/components/utils/keymap.js)
 `keymap`
@@ -1104,7 +1106,7 @@ by [@magicFeirl](https://github.com/magicFeirl)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/av-url.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/av-url.js)
 
-当视频的链接是BV号时, 自动转换为AV号. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.
+当视频的链接是 BV 号时, 自动转换为 AV 号. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.
 
 ### [BiliPlus 跳转支持](../../registry/dist/components/video/biliplus-redirect.js)
 `biliplusRedirect`
@@ -1231,7 +1233,7 @@ by [@kdxcxs](https://github.com/kdxcxs)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/metadata.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/metadata.js)
 
-by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://github.com/LainIO24)
+by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)
 
 保存视频元数据（标题、描述、UP、章节等）
 
@@ -1331,8 +1333,6 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 
 by [@JLoeve](https://github.com/LonelySteve)
 
-
-
 > 扩展视频播放器的倍速菜单项，可用于突破原有播放倍数的上限或下限.
 
 #### 🔧 **选项**
@@ -1430,8 +1430,6 @@ by [@GH4NG](https://github.com/GH4NG)
 
 by [@JLoeve](https://github.com/LonelySteve)
 
-
-
 > 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.
 
 #### 🔧 **选项**
@@ -1447,10 +1445,10 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 请根据自身需要：
 
-- 前往「组件」页面安装[「扩展倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/components/video/player/extend-speed.js)组件
-- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」]((branch, ownerOverride) => `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`registry/dist/plugins/video/player/speed.js)插件.
+- 前往「组件」页面安装[「扩展倍速」](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/extend-speed.js)组件
+- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/player/speed.js)插件.
 
-*如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.*
+_如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件._
 
 ### [记忆合集](../../registry/dist/components/video/player/remember-video-collection.js)
 `rememberVideoCollection`
@@ -1461,7 +1459,7 @@ by [@JLoeve](https://github.com/LonelySteve)
 
 by [@JLoeve (with Kilo Code & Codex)](https://github.com/LonelySteve)
 
-记忆合集与多P视频的播放进度, 在列表中标记已观看/上次播放位置, 并提供跳转提示与记忆管理功能面板.
+记忆合集与多 P 视频的播放进度, 在列表中标记已观看/上次播放位置, 并提供跳转提示与记忆管理功能面板.
 
 ### [删除视频弹窗](../../registry/dist/components/video/player/remove-popup.js)
 `removePlayerPopup`
@@ -1512,18 +1510,19 @@ by [@wisokey](https://github.com/wisokey)
 
 为视频播放页面的推荐列表中的视频添加显示视频投稿时间.
 
-`时间格式` 替换up名的文本格式 (默认为'up · yyyy-MM-dd'):
-  - y: 年
-  - M: 月
-  - d: 日
-  - h: 时
-  - m: 分
-  - s: 秒
-  - q: 季度
-  - up: up名
-  - \r: 回车符
-  - \n：换行符
-  - \t：制表符
+`时间格式` 替换 up 名的文本格式 (默认为'up · yyyy-MM-dd'):
+
+- y: 年
+- M: 月
+- d: 日
+- h: 时
+- m: 分
+- s: 秒
+- q: 季度
+- up: up 名
+- \r: 回车符
+- \n：换行符
+- \t：制表符
 
 ### [跳过充电鸣谢](../../registry/dist/components/video/player/skip-charge-list.js)
 `skipChargeList`
@@ -1876,7 +1875,7 @@ by [@diannaojiang](https://github.com/diannaojiang)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/download/wasm-output.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/download/wasm-output.js)
 
-by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://github.com/LainIO24)
+by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)
 
 使用 WASM 在浏览器中下载并合并音视频, 支持批量下载
 
@@ -1888,8 +1887,6 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56),[@LainIO24](https://gi
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/video/player/speed.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/player/speed.js)
 
 by [@JLoeve](https://github.com/LonelySteve)
-
-
 
 为操作视频倍速提供快捷键支持：
 
