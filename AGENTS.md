@@ -29,7 +29,7 @@ pnpm tsx dev-tools/dev-server/index.ts
 pnpm tsx dev-tools/dev-server/command.ts sessions
 ```
 
-The dev server serves the local userscript and registry build output for browser testing. HTTP only serves static resources, with build-on-request for registry feature URLs. WebSocket is the command and event control plane; use `dev-tools/dev-server/command.ts` for single-feature build, watch, stop, and scaffold commands. See `dev-tools/dev-server/README.md` for protocol details and `CONTRIBUTING.md` for Tampermonkey setup details.
+The dev server serves the local userscript and registry feature URLs for browser testing. HTTP serves core outputs from disk, while registry feature URLs are virtual build-on-request outputs served from memory. WebSocket is the command and event control plane; use `dev-tools/dev-server/command.ts` for single-feature build, watch, stop, start-debug, stop-debug, and scaffold commands. See `dev-tools/dev-server/README.md` for protocol details and `CONTRIBUTING.md` for Tampermonkey setup details.
 
 ## Component And Plugin Guidelines
 

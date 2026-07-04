@@ -2,13 +2,11 @@
 
 ## HTTP
 
-The HTTP server serves static files from the repository root.
+The HTTP server serves static files from the repository root only for core outputs.
 
 - `dist/*` -> core userscript outputs
-- `registry/dist/components/*` -> component outputs
-- `registry/dist/plugins/*` -> plugin outputs
 
-Requests to `registry/dist/components/<id>.js` and `registry/dist/plugins/<id>.js` are still static resource requests, but they may trigger build-on-request before the file is served. HTTP does not expose control APIs.
+Requests to `registry/dist/components/<id>.js` and `registry/dist/plugins/<id>.js` are virtual output URLs. They trigger build-on-request when the memory output is missing, then return the compiled output from memory. Other `/registry/*` URLs are not served from disk. HTTP does not expose control APIs.
 
 ## WebSocket
 

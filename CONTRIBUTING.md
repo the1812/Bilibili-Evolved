@@ -49,7 +49,7 @@ DevServer 已启动, 端口: 23333
 本体已编译: （一段 hash）
 ```
 
-开发服务的 HTTP 部分只负责提供静态资源. 请求 `registry/dist/components/<id>.js` 或 `registry/dist/plugins/<id>.js` 时, 开发服务会在返回文件前按需编译对应功能. 其他控制能力通过 WebSocket 指令完成, 例如单独编译、监听或创建功能脚手架:
+开发服务的 HTTP 部分负责提供本体静态资源. 请求 `registry/dist/components/<id>.js` 或 `registry/dist/plugins/<id>.js` 时, 开发服务会在返回文件前按需编译对应功能, 并从内存中返回编译产物. 其他控制能力通过 WebSocket 指令完成, 例如单独编译、监听或创建功能脚手架:
 
 ```powershell
 pnpm tsx dev-tools/dev-server/command.ts sessions
@@ -185,7 +185,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 7. 如果组件需要支持无需刷新的实时关闭 / 开启, 应使用 `reload` / `unload`, 不要依赖 `entry` 的返回值来销毁组件. `reload` / `unload` 必须成对使用才会生效.
 8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发. 编写 SCSS 时可以使用公共 Sass 文件, 例如通过 `@import "common"` 使用 `ui/_common.scss` 中的 mixin.
 9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可. 如果开发服务已经运行, 也可以用 `pnpm tsx dev-tools/dev-server/command.ts build component <id>` 或 `pnpm tsx dev-tools/dev-server/command.ts build plugin <id>` 单独编译.
-10. 然后运行 `启动开发服务 dev-server`, 访问 `http://localhost:23333/registry/dist`, 可以找到组件的 localhost 连接.
+10. 然后运行 `启动开发服务 dev-server`, 组件的 localhost 连接格式为 `http://localhost:23333/registry/dist/components/<id>.js`, 插件则为 `http://localhost:23333/registry/dist/plugins/<id>.js`.
 11. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
 12. 后续同 [修改](##修改) 中的 2 ~ 3 步.
 
