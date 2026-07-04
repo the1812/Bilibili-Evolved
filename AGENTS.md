@@ -8,7 +8,7 @@ This file gives coding agents repository-specific guidance for working on Bilibi
 - `registry/lib/components/` contains installable components. New components should be placed under the appropriate category directory and use `index.ts` as the webpack entry.
 - `registry/lib/plugins/` contains plugins. Use a plugin when the feature only makes sense as an extension of another component.
 - Third-party components that are meant to remain outside the main repository should be added through `registry/lib/docs/third-party.ts` instead of mixing external component registration with in-repo source changes.
-- `dist/` and `registry/dist/` are build outputs. Do not include generated dist files in normal development changes.
+- `dist/` and `registry/dist/` are build outputs. Development branches should not keep generated dist files; release output branches such as `preview`, `master`, and `master-cdn` get them from CI builds.
 - Feature documentation outputs under `doc/features/` are generated from metadata. Update them only when the task is explicitly about generated docs or release preparation.
 
 ## Development Setup
