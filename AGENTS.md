@@ -43,6 +43,7 @@ The dev server serves the local userscript and registry build output for browser
 - Do not rely on the return value of `entry` for cleanup. Put teardown logic in `unload`; use `reload` together with `unload` when a component must support disable and re-enable behavior.
 - Use existing helpers such as `styledComponentEntry`, `toggleStyle`, shared core APIs, component APIs, and plugin APIs before adding new infrastructure.
 - Put fixed component styles in SCSS files instead of constructing style text in business logic. Use `instantStyles`, `styledComponentEntry`, or `toggleStyle` so styles are only applied when intended.
+- When writing SCSS, check shared Sass files before adding local helpers. For example, `ui/_common.scss` is available through `@import "common"` and provides common mixins such as fullscreen and centering helpers.
 - For options, follow existing `defineOptionsMetadata` and `options` patterns so defaults, labels, and validators stay close to metadata.
 - Model exclusive choices as one option, usually with an enum or dropdown, instead of multiple mutually exclusive boolean options.
 - If settings need to control CSS, prefer toggling a class on `html` or `body` and writing SCSS against that class.

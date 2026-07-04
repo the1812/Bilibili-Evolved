@@ -9,6 +9,8 @@ const usage = () => {
 pnpm tsx dev-tools/dev-server/command.ts build <component|plugin> <id> [development|production]
 pnpm tsx dev-tools/dev-server/command.ts watch <component|plugin> <id>
 pnpm tsx dev-tools/dev-server/command.ts stop <component|plugin> <id>
+pnpm tsx dev-tools/dev-server/command.ts start-debug <component|plugin> <id> [targetClientId]
+pnpm tsx dev-tools/dev-server/command.ts stop-debug <component|plugin> <id>
 pnpm tsx dev-tools/dev-server/command.ts sessions
 pnpm tsx dev-tools/dev-server/command.ts create <component|plugin> <id> <name> <displayName> <authorName> [authorLink] [description]`)
 }
@@ -57,6 +59,23 @@ const createPayload = (): Payload => {
       requestId,
     }
   }
+  if (command === 'start-debug') {
+    return {
+      type: 'startDebugFeature',
+      kind: kindText,
+      id,
+      targetClientId: modeOrName,
+      requestId,
+    }
+  }
+  if (command === 'stop-debug') {
+    return {
+      type: 'stopFeatureSession',
+      kind: kindText,
+      id,
+      requestId,
+    }
+  }
   if (command === 'create') {
     if (!modeOrName || !displayName || !authorName) {
       usage()
@@ -97,7 +116,9 @@ socket.addEventListener('message', event => {
       return
     }
     if (response.message) {
-      console.log(response.message)
+      console.log(
+        command === 'stop-debug' ? response.message.replace('监听', '调试') : response.message,
+      )
     }
     if (response.featureSessions) {
       console.log(`featureSessions: ${response.featureSessions.join(', ')}`)

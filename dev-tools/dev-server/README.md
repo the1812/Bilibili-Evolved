@@ -36,6 +36,16 @@ Client commands:
 
 ```json
 {
+  "type": "startDebugFeature",
+  "kind": "component",
+  "id": "style/hide/banner",
+  "targetClientId": "dev-client-1",
+  "requestId": "..."
+}
+```
+
+```json
+{
   "type": "createFeature",
   "kind": "component",
   "id": "style/my-feature",
@@ -50,7 +60,7 @@ Client commands:
 
 Server events:
 
-- `serverReady`: initial connection event with active `featureSessions`.
+- `serverReady`: initial connection event with `clientId` and active `featureSessions`.
 - `featureSessionsChanged`: active watched feature paths changed.
 - `itemUpdate`: watched feature compiled and DevClient should update.
 - `featureBuilt`: explicit feature build or watched build completed.
@@ -67,4 +77,6 @@ pnpm tsx dev-tools/dev-server/command.ts sessions
 pnpm tsx dev-tools/dev-server/command.ts build component style/hide/banner
 pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
 pnpm tsx dev-tools/dev-server/command.ts stop component style/hide/banner
+pnpm tsx dev-tools/dev-server/command.ts start-debug component style/hide/banner dev-client-1
+pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 ```
