@@ -1,5 +1,9 @@
 import { postTextWithCredentials, getJsonWithCredentials } from '@/core/ajax'
 import { getCsrf, getUID } from '@/core/utils'
+import { getComponentSettings } from '@/core/settings'
+import { Options } from './index'
+
+const { options } = getComponentSettings<Options>('badgeKeepalive')
 
 // 获取当前直播间号
 export function getLiveRoomId(): string {
@@ -31,9 +35,10 @@ export async function getLiveRoomUserInfo(room_id: string) {
   return validateJSON(data)
 }
 
-export const defaultClickTimes = '300'
-
-export async function keepAliveRequest(room_id: string, click_time = defaultClickTimes) {
+export async function keepAliveRequest(
+  room_id: string,
+  click_time: typeof options.defaultClickTimes,
+) {
   // 需要先获取直播间房主的 UID
   const data = await getLiveRoomUserInfo(room_id)
 

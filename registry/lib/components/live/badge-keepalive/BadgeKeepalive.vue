@@ -18,14 +18,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { TextBox, AsyncButton } from '@/ui'
-
-import { validateRoomId, getLiveRoomId, keepAliveRequest, defaultClickTimes } from './utils'
+import { validateRoomId, getLiveRoomId, keepAliveRequest } from './utils'
 import { Toast } from '@/core/toast'
+import {
+  getComponentSettings,
+  addComponentListener,
+  removeComponentListener,
+} from '@/core/settings'
+import { Options } from './index'
 
+const { options } = getComponentSettings<Options>('badgeKeepalive')
 const roomid = ref(getLiveRoomId())
-const clickTimes = ref(defaultClickTimes)
+const clickTimes = ref(options.defaultClickTimes)
 const handleRoomIdChange = (value: string) => {
   if (validateRoomId(value)) {
     roomid.value = value
@@ -40,6 +46,16 @@ const handleClickTimesChange = (value: string) => {
   }
 }
 
+const syncClickTimes = (newValue: unknown) => (clickTimes.value = String(newValue))
+
+onMounted(() => {
+  addComponentListener('badgeKeepalive.defaultClickTimes', syncClickTimes, true)
+})
+
+onBeforeUnmount(() => {
+  removeComponentListener('badgeKeepalive.defaultClickTimes', syncClickTimes)
+})
+
 const handleKeepAliveRequest = async () => {
   if (!roomid.value) {
     return
@@ -47,7 +63,7 @@ const handleKeepAliveRequest = async () => {
 
   try {
     await keepAliveRequest(roomid.value, clickTimes.value)
-    Toast.success('发送点亮勋章请求成功', '提示')
+    Toast.success('发送点亮勋章请求成功', '提示', 3000)
   } catch ({ message }) {
     Toast.error(`勋章点亮失败，原因: ${message}`, '提示')
   }
