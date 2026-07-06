@@ -1,13 +1,11 @@
 {
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "target": "ESNext",
-    "esModuleInterop": true,
-    "module": "commonjs",
+    "lib": ["ESNext"],
+    "module": "CommonJS",
+    "noEmit": true,
     "strict": true,
-    "sourceMap": false,
-    "skipLibCheck": true
+    "types": ["node"],
   },
-  "include": [
-    "index.ts"
-  ]
+  "include": ["./index.ts"],
 }

@@ -12,30 +12,24 @@ export const component = defineComponentMetadata({
       return
     }
     const { devClient, DevClientEvents } = await import('./client')
-    const cleanUpDevRecords = () => {
+    const restoreInactiveDevRecords = () => {
       Object.entries(options.devRecords).forEach(([, { name, originalUrl }]) => {
         const autoUpdateRecord = autoUpdateOptions.urls.components[name]
         if (!autoUpdateRecord) {
           return
         }
         const devUrl = autoUpdateRecord.url
-        if (devClient.sessions.find(s => devUrl.endsWith(s))) {
+        if (devClient.featureSessions.find(s => devUrl.endsWith(s))) {
           return
         }
         autoUpdateRecord.url = originalUrl
-        console.log('cleanUpDevRecords', name, devUrl, originalUrl, autoUpdateRecord)
+        console.log('restoreInactiveDevRecords', name, devUrl, originalUrl, autoUpdateRecord)
         delete options.devRecords[name]
       })
     }
-    devClient.addEventListener(DevClientEvents.ServerConnected, () => {
-      devClient.addEventListener(
-        DevClientEvents.SessionsUpdate,
-        () => {
-          cleanUpDevRecords()
-        },
-        { once: true },
-      )
-    })
+    devClient.addEventListener(DevClientEvents.FeatureSessionsUpdate, restoreInactiveDevRecords)
+    devClient.addEventListener(DevClientEvents.ServerDisconnected, restoreInactiveDevRecords)
+    devClient.addEventListener(DevClientEvents.ServerStop, restoreInactiveDevRecords)
     if (options.autoConnect) {
       devClient.createSocket()
     }

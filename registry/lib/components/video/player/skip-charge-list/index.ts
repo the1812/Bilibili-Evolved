@@ -29,9 +29,6 @@ export const component = defineComponentMetadata({
   displayName: '跳过充电鸣谢',
   tags: [componentsTags.video],
   entry,
-  description: {
-    'zh-CN': '自动跳过视频结尾的充电鸣谢. 注意: 不包括番剧承包鸣谢.',
-  },
   reload: () => document.body.classList.remove(SkipChargeListDisabledClass),
   unload: () => document.body.classList.add(SkipChargeListDisabledClass),
   urlInclude: playerUrls,

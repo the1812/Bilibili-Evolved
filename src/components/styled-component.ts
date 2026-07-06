@@ -18,11 +18,7 @@ export const styledComponentEntry =
     return entry(context)
   }
 
-/**
- * 创建仅切换样式的组件`entry`, `reload`和`unload`, 展开至组件定义中即可, 也可以提供可选的组件入口函数
- * @param styleImport 动态导入样式的函数
- * @param entry 组件入口函数
- */
+/** @deprecated 使用组件 metadata 的 `instantStyles` 字段声明固定样式. */
 export const toggleStyle = <O extends UnknownOptions>(
   name: string,
   styleImport: () => Promise<{ default: string }>,

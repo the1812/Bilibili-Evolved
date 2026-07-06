@@ -19,9 +19,6 @@ export const component = defineComponentMetadata({
       displayName: '启用星光动画',
     },
   },
-  description: {
-    'zh-CN': '在视频播放时自动关灯, 暂停或结束时再自动打开.',
-  },
   entry: async ({ settings }) => {
     const { isEmbeddedPlayer } = await import('@/core/utils')
 

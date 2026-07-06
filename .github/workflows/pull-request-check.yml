@@ -2,16 +2,31 @@ name: Pull Request Check
 on:
   - pull_request
 jobs:
+  auto-publish-classify:
+    name: Auto Publishable Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: '0'
+      - name: Classify auto publish
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          AUTO_PUBLISH_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node .github/scripts/auto-publish-classify.mjs
   check:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: '0'
       - name: Install dependencies
         uses: pnpm/action-setup@v4
         with:
           run_install: true
+      - name: PR file check
+        run: pnpm run check-pr-files
       - name: Type check
         run: pnpm run type
       - name: ESLint check

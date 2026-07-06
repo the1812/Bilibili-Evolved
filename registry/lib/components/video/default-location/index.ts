@@ -7,7 +7,6 @@ import {
   mediaListUrls,
 } from '@/core/utils/urls'
 import { select } from '@/core/spin-query'
-import desc from './desc.md'
 
 const commonVideoUrlPattern = '//www.bilibili.com/video/'
 
@@ -150,7 +149,6 @@ export const component = defineComponentMetadata({
   displayName: '视频页默认定位',
   tags: [componentsTags.video],
   urlInclude: allVideoUrls,
-  description: { 'zh-CN': desc },
   extraOptions: () => import('./Options.vue').then(m => m.default),
   options: {
     locations: {

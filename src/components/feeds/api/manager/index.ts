@@ -6,6 +6,7 @@ import { FeedsCardsManagerV1 } from './v1'
 import { FeedsCardsManagerV2 } from './v2'
 
 export * from './base'
+export { normalizeFeedsCardModules } from './v2'
 export const isV2Feeds = () => {
   const hasCookieValue = parseInt(getCookieValue('hit-dyn-v2')) > 0
   if (!hasCookieValue) {

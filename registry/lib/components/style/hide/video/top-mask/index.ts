@@ -13,8 +13,5 @@ export const component = defineComponentMetadata({
     },
   ],
   tags: [componentsTags.style, componentsTags.video],
-  description: {
-    'zh-CN': '隐藏视频里鼠标经过时出现在右上角的覆盖层.',
-  },
   urlInclude: playerUrls,
 })

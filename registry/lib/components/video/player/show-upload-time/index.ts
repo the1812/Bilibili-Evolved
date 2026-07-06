@@ -5,7 +5,6 @@ import { videoUrls, mediaListUrls } from '@/core/utils/urls'
 import { useScopedConsole } from '@/core/utils/log'
 import { addComponentListener } from '@/core/settings'
 import { TestPattern } from '@/core/common-types'
-import desc from './desc.md'
 import { Video } from './video'
 import { DefaultVideo } from './defaultVideo'
 import { MediaListVideo } from './mediaListVideo'
@@ -16,7 +15,6 @@ export const component = defineComponentMetadata({
   author: { name: 'wisokey', link: 'https://github.com/wisokey' },
   name: 'showUploadTime',
   displayName,
-  description: desc,
   tags: [componentsTags.video],
   urlInclude: videoUrls,
   options: {
