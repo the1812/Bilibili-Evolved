@@ -12,8 +12,7 @@ export type Author = {
 }
 
 export interface FeatureBase {
-  // TODO: 可在编译时转换 Markdown 以提高运行时性能
-  /** 描述 (支持 markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
+  /** 功能描述, 由 index.md 注入, 不需要手动填写 */
   description?: I18nDescription
   /** 作者信息 */
   author?: Author | Author[]

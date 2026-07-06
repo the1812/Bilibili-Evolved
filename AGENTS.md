@@ -8,7 +8,7 @@ This file gives coding agents repository-specific guidance for working on Bilibi
 - `registry/lib/components/` contains installable components. New components should be placed under the appropriate category directory and use `index.ts` as the webpack entry.
 - `registry/lib/plugins/` contains plugins. Use a plugin when the feature only makes sense as an extension of another component.
 - Third-party components that are meant to remain outside the main repository should be added through `registry/lib/docs/third-party.ts` instead of mixing external component registration with in-repo source changes.
-- `dist/` and `registry/dist/` are build outputs. Do not include generated dist files in normal development changes.
+- `dist/` and `registry/dist/` are build outputs. Development branches should not keep generated dist files; release output branches such as `preview`, `master`, and `master-cdn` get them from CI builds.
 - Feature documentation outputs under `doc/features/` are generated from metadata. Update them only when the task is explicitly about generated docs or release preparation.
 
 ## Development Setup
@@ -25,10 +25,11 @@ pnpm run type
 pnpm run lint-check
 pnpm run build-core
 pnpm run build-features
-pnpm ts-node dev-tools/dev-server/index.ts
+pnpm tsx dev-tools/dev-server/index.ts
+pnpm tsx dev-tools/dev-server/command.ts sessions
 ```
 
-The dev server serves the local userscript and registry build output for browser testing. See `CONTRIBUTING.md` for Tampermonkey setup details.
+The dev server serves the local userscript and registry feature URLs for browser testing. HTTP serves core outputs from disk, while registry feature URLs are virtual build-on-request outputs served from memory. WebSocket is the command and event control plane; use `dev-tools/dev-server/command.ts` for single-feature build, watch, stop, start-debug, stop-debug, and scaffold commands. See `dev-tools/dev-server/README.md` for protocol details and `CONTRIBUTING.md` for Tampermonkey setup details.
 
 ## Component And Plugin Guidelines
 
@@ -42,6 +43,7 @@ The dev server serves the local userscript and registry build output for browser
 - Do not rely on the return value of `entry` for cleanup. Put teardown logic in `unload`; use `reload` together with `unload` when a component must support disable and re-enable behavior.
 - Use existing helpers such as `styledComponentEntry`, `toggleStyle`, shared core APIs, component APIs, and plugin APIs before adding new infrastructure.
 - Put fixed component styles in SCSS files instead of constructing style text in business logic. Use `instantStyles`, `styledComponentEntry`, or `toggleStyle` so styles are only applied when intended.
+- When writing SCSS, check shared Sass files before adding local helpers. For example, `ui/_common.scss` is available through `@import "common"` and provides common mixins such as fullscreen and centering helpers.
 - For options, follow existing `defineOptionsMetadata` and `options` patterns so defaults, labels, and validators stay close to metadata.
 - Model exclusive choices as one option, usually with an enum or dropdown, instead of multiple mutually exclusive boolean options.
 - If settings need to control CSS, prefer toggling a class on `html` or `body` and writing SCSS against that class.
@@ -73,6 +75,7 @@ Choose validation based on the risk and scope of the change.
 - Run `pnpm run lint-check` for lint validation.
 - Run `pnpm run build-core` for core userscript changes.
 - Run `pnpm run build-features` for registry component or plugin changes.
+- Run `pnpm exec tsc -p dev-tools/dev-server/tsconfig.json` for dev server TypeScript changes.
 - For browser-facing behavior, verify the changed feature in a real browser with the local userscript installed.
 - For API-shape or Bilibili-rollout-dependent changes, record what page or account state was actually self-tested.
 

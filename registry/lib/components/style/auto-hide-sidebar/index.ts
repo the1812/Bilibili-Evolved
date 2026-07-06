@@ -29,8 +29,4 @@ export const component = defineComponentMetadata({
       validator: getNumberValidator(1, 1000),
     },
   },
-  description: {
-    'zh-CN':
-      '自动隐藏脚本的侧栏 (功能和设置图标). 设置面板停靠在右侧时不建议使用, 因为网页的滚动条会占用右边缘的触发区域.',
-  },
 })

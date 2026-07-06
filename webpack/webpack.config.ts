@@ -54,7 +54,16 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
         },
         {
           test: /\.(svg|md)$/,
-          type: 'asset/source',
+          oneOf: [
+            {
+              resource: /\.svg$/,
+              resourceQuery: /inline/,
+              type: 'asset/inline',
+            },
+            {
+              type: 'asset/source',
+            },
+          ],
           include: [src],
         },
         {

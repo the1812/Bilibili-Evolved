@@ -8,7 +8,7 @@
   "scripts": {
     "build-core": "webpack --config ./webpack/webpack.prod.ts --bail",
     "build-features": "webpack --config ./registry/webpack/all.ts --bail",
-    "build-github-config": "tsx ./.github-json/index.ts",
+    "build-docs": "tsx dev-tools/feature-docs/index.ts",
     "check-pr-files": "tsx dev-tools/pr-check/index.ts",
     "donate-table": "tsx dev-tools/donate-table/index.ts",
     "lint": "eslint --quiet --fix . --ext .ts,.vue",
@@ -53,6 +53,7 @@
     "eslint-plugin-vue": "^9.15.1",
     "fast-sass-loader": "^2.0.0",
     "glob": "^10.2.6",
+    "memfs": "4.57.8",
     "postcss": "^8.1.0",
     "postcss-loader": "^4.0.4",
     "postcss-preset-env": "^7.5.0",
@@ -72,9 +73,7 @@
     "webpack": "^5.31.2",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.6.0",
-    "ws": "^8.5.0",
-    "yaml": "^2.3.1",
-    "zx": "^7.2.3"
+    "ws": "^8.5.0"
   },
   "dependencies": {
     "@popperjs/core": "^2.6.0",
@@ -90,7 +89,8 @@
   },
   "pnpm": {
     "overrides": {
-      "caniuse-lite": "1.0.30001731",
+      "@babel/types": "7.26.8",
+      "caniuse-lite": "1.0.30001800",
       "consolidate": "1.0.1"
     },
     "onlyBuiltDependencies": [

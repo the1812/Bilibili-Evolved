@@ -4,10 +4,11 @@ export const plugin: PluginMetadata = {
   name: 'feedsFilter.pluginBlocks.goods',
   displayName: '动态过滤器 - 移除商品带货动态',
   async setup() {
-    const { forEachFeedsCard, getVueData } = await import('@/components/feeds/api')
+    const { getVue2Data } = await import('@/core/utils')
+    const { forEachFeedsCard } = await import('@/components/feeds/api')
     forEachFeedsCard({
       added: card => {
-        const vueData = getVueData(card.element)
+        const vueData = getVue2Data(card.element)
         const isForward =
           card.type.id === 1 || lodash.get(vueData, 'data.type', null) === 'DYNAMIC_TYPE_FORWARD'
         const additionalTypePath = isForward

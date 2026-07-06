@@ -53,7 +53,6 @@ export const component = defineComponentMetadata({
   unload: () => {
     setTimeout(remove, changeDelay)
   },
-  description: '启用夜间模式能更好地适应光线暗的环境, 并会大量应用主题颜色.',
   tags: [componentsTags.style, componentsTags.general],
   instantStyles: [
     {

@@ -327,9 +327,6 @@ export const component = defineComponentMetadata({
   name,
   displayName: '直播弹幕助手 (+1 & 收藏)',
   tags: [componentsTags.live],
-  description: {
-    'zh-CN': '为直播间添加弹幕鼠标悬浮 +1 发送、收藏功能。支持侧栏与弹幕。',
-  },
   author: {
     name: 'oooolcepsed',
     link: 'https://github.com/cccccccccooool',

@@ -264,7 +264,6 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.style],
   displayName: '首页净化',
-  description: '删除首页特定类型的卡片',
   entry: clearHome,
   options,
 })

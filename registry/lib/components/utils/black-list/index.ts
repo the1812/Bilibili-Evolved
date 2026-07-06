@@ -75,10 +75,6 @@ export const component = defineComponentMetadata({
   },
   displayName: '屏蔽黑名单up主',
   tags: [componentsTags.utils],
-  description: {
-    'zh-CN':
-      '屏蔽黑名单up主, 根据up主的名称进行匹配，支持精确匹配和正则匹配. 请注意只能在首页中使用或调整设置.',
-  },
   author: {
     name: 'snowraincloud',
     link: 'https://github.com/snowraincloud',

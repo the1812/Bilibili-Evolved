@@ -44,9 +44,6 @@ export const component = defineComponentMetadata({
   name: 'playerControlBackground',
   displayName: '播放器控制栏背景色',
   tags: [componentsTags.video, componentsTags.style],
-  description: {
-    'zh-CN': '给视频播放器控制栏附上半透明的黑色, 代替原来的阴影.',
-  },
   entry,
   instantStyles: [
     {

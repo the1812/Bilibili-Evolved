@@ -10,7 +10,6 @@ type ExtendedOptions = SettingPanelOptions & {
 export const plugin: PluginMetadata = {
   name: 'settingsPanel.tagFilters.recentComponents',
   displayName: '设置面板 - "最近使用" 类别',
-  description: '在设置面板中添加 "最近使用" 类别, 方便检索最近操作过的组件.',
   setup: ({ addData, addHook }) => {
     const getRecentComponents = async () => {
       const { getGeneralSettings } = await import('@/core/settings')

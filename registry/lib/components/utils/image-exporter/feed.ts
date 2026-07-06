@@ -1,4 +1,10 @@
-import { FeedsCard, addMenuItem, forEachFeedsCard, RepostFeedsCard } from '@/components/feeds/api'
+import {
+  FeedsCard,
+  addMenuItem,
+  forEachFeedsCard,
+  RepostFeedsCard,
+  normalizeFeedsCardModules,
+} from '@/components/feeds/api'
 import { ComponentEntry } from '@/components/types'
 import { getBlob } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
@@ -32,7 +38,7 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
         const console = useScopedConsole('导出图片')
         dqa(
           card.element,
-          '.main-content .img-content, .bili-album__preview__picture__img, .bili-album .preview__picture__img, .bili-dyn-gallery__image img, .bili-album__watch__track__item img',
+          '.main-content .img-content, .bili-album__preview__picture__img, .bili-album .preview__picture__img, .bili-dyn-gallery__image img, .bili-album__watch__track__item img, .bili-dyn-pic__img .b-img__inner',
         ).forEach((img: HTMLImageElement | HTMLDivElement) => {
           const urlData = retrieveImageUrl(img)
           if (urlData && !imageUrls.some(({ url }) => isSameImage(url, urlData.url))) {
@@ -48,7 +54,10 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
         let downloadedCount = 0
 
         const vueData = getVue2Data(card.element)
-        const authorModule = lodash.get(vueData, 'data.modules.module_author', {})
+        const modules = normalizeFeedsCardModules(vueData.data.modules)
+
+        const titleModule = modules.module_title ?? {}
+        const authorModule = modules.module_author ?? {}
         const repostAuthorModule = lodash.get(vueData, 'data.orig.modules.module_author', {})
         const date = getTitleVariablesFromDate(new Date(authorModule.pub_ts * 1000))
         const repostDate = getTitleVariablesFromDate(
@@ -56,6 +65,7 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
         )
         const variables = {
           id: card.id,
+          title: titleModule.text,
           user: card.username,
           userID: authorModule.mid?.toString(),
           originalUser: (card as RepostFeedsCard).repostUsername ?? card.username,

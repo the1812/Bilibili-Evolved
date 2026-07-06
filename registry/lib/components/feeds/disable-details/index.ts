@@ -102,9 +102,6 @@ export const component = defineComponentMetadata({
   displayName: '禁止跳转动态详情',
   tags: [componentsTags.feeds],
   urlInclude: feedsUrls,
-  description: {
-    'zh-CN': '禁止动态点击后跳转详情页, 方便选择其中的文字.',
-  },
   entry,
   unload: () => {
     document.getElementById(id)?.remove()

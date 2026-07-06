@@ -1,0 +1,111 @@
+name: Auto Publish
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches:
+      - preview-fixes
+      - preview-features
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: auto-publish
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  auto-publish-classify:
+    if: ${{ github.event.pull_request.merged == true }}
+    runs-on: ubuntu-latest
+    outputs:
+      base_ref: ${{ steps.classify.outputs.base_ref }}
+      publishable: ${{ steps.classify.outputs.publishable }}
+      reason: ${{ steps.classify.outputs.reason }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Classify branch diff
+        id: classify
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: node .github/scripts/auto-publish-classify.mjs
+
+  auto-publish-preview-fixes:
+    needs: auto-publish-classify
+    if: ${{ needs.auto-publish-classify.outputs.publishable == 'true' && needs.auto-publish-classify.outputs.base_ref == 'preview-fixes' }}
+    runs-on: ubuntu-latest
+    env:
+      AUTO_PUBLISH_TOKEN: ${{ secrets.AUTO_PUBLISH_TOKEN }}
+    steps:
+      - name: Check publish token
+        run: |
+          if [ -z "${AUTO_PUBLISH_TOKEN}" ]; then
+            echo "AUTO_PUBLISH_TOKEN is required for auto publish pushes."
+            exit 1
+          fi
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.AUTO_PUBLISH_TOKEN }}
+      - name: Configure git
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git remote set-url origin "https://x-access-token:${AUTO_PUBLISH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+      - name: Publish preview-fixes
+        run: |
+          git fetch origin preview-fixes preview-features preview master master-cdn
+
+          git switch --detach origin/preview-features
+          git merge --no-edit origin/preview-fixes
+          git push origin HEAD:preview-features
+          preview_features_head=$(git rev-parse HEAD)
+
+          git switch --detach origin/preview
+          git merge --no-edit "${preview_features_head}"
+          git push origin HEAD:preview
+
+          git switch --detach origin/master
+          git merge --no-edit origin/preview-fixes
+          git push origin HEAD:master
+
+          git switch --detach origin/master-cdn
+          git merge --no-edit origin/preview-fixes
+          git push origin HEAD:master-cdn
+
+  auto-publish-preview-features:
+    needs: auto-publish-classify
+    if: ${{ needs.auto-publish-classify.outputs.publishable == 'true' && needs.auto-publish-classify.outputs.base_ref == 'preview-features' }}
+    runs-on: ubuntu-latest
+    env:
+      AUTO_PUBLISH_TOKEN: ${{ secrets.AUTO_PUBLISH_TOKEN }}
+    steps:
+      - name: Check publish token
+        run: |
+          if [ -z "${AUTO_PUBLISH_TOKEN}" ]; then
+            echo "AUTO_PUBLISH_TOKEN is required for auto publish pushes."
+            exit 1
+          fi
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.AUTO_PUBLISH_TOKEN }}
+      - name: Configure git
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git remote set-url origin "https://x-access-token:${AUTO_PUBLISH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+      - name: Publish preview-features
+        run: |
+          git fetch origin preview-features preview
+
+          git switch --detach origin/preview
+          git merge --no-edit origin/preview-features
+          git push origin HEAD:preview
