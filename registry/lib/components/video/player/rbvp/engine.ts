@@ -6,7 +6,7 @@ import type {
   RBVPLocalRuleSet,
   RBVPMatchResult,
   RBVPMatcherNode,
-  RBVPParsedRule,
+  RBVPParsedProgram,
   RBVPNamespaceDebugInfo,
   RBVPRuleSetMatcherType,
   RBVPVideoContext,
@@ -234,7 +234,7 @@ const matchMatcher = (
 }
 
 export const executeRbvpRules = async (
-  rules: RBVPParsedRule[],
+  program: RBVPParsedProgram,
   namespace: string,
   context: RBVPEngineContext,
 ): Promise<RBVPMatchResult> => {
@@ -260,13 +260,15 @@ export const executeRbvpRules = async (
       debug: createDebugResult(false, `未注册命名空间 ${namespace}`),
     }
   }
-  for (const rule of rules) {
+  for (const rule of program.rules) {
     addDebugStep(steps, 'rule', 0, `尝试第 ${rule.line} 行: ${rule.raw}`, undefined, rule.line)
     if (!matchMatcher(rule.matcher, context, steps, 1)) {
       addDebugStep(steps, 'info', 1, `第 ${rule.line} 行匹配失败，继续尝试下一行`, false, rule.line)
       continue
     }
-    const action = rule.actions.find(item => matchRbvpNamespace(namespace, item.namespace))
+    const action = rule.actions.find(item =>
+      matchRbvpNamespace(namespace, item.namespace, program.aliases),
+    )
     if (!action) {
       addDebugStep(
         steps,
@@ -287,7 +289,7 @@ export const executeRbvpRules = async (
       rule.line,
     )
     try {
-      provider.validateAction?.(action.value)
+      await provider.validateAction?.(action.value)
       const resolved = await provider.resolveAction(action.value, context)
       if (!resolved) {
         addDebugStep(

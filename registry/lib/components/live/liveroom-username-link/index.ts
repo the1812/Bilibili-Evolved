@@ -98,7 +98,4 @@ export const component = defineComponentMetadata({
   entry,
   tags: [componentsTags.live],
   urlInclude: [/^https:\/\/live\.bilibili\.com\/\d+/],
-  description: {
-    'zh-CN': '为直播间的房间观众和大航海界面的用户列表添加可以点击的超链接',
-  },
 })

@@ -87,9 +87,6 @@ const entry = async () => {
 export const component = defineComponentMetadata({
   name: 'foldComments',
   displayName: '快速收起评论',
-  description: {
-    'zh-CN': '动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.',
-  },
   urlInclude: feedsUrlsWithoutDetail,
   tags: [componentsTags.feeds],
   entry: styledComponentEntry(() => import('./fold-comment.scss'), entry),

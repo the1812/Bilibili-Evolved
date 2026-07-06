@@ -1,30 +1,99 @@
 export interface PayloadBase<Type extends string = string> {
   type: Type
 }
-export type StartPayload = PayloadBase<'start'> & {
-  sessions: string[]
+export type FeatureKind = 'component' | 'plugin'
+
+export interface FeaturePayload {
+  kind: FeatureKind
+  id: string
+}
+export type ServerReadyPayload = PayloadBase<'serverReady'> & {
+  clientId: string
+  featureSessions: string[]
 }
 export type CoreUpdatePayload = PayloadBase<'coreUpdate'>
 export type ItemUpdatePayload = PayloadBase<'itemUpdate'> & {
   path: string
-  sessions: string[]
+  featureSessions: string[]
 }
-export type ItemStopPayload = PayloadBase<'itemStop'> & {
-  path: string
+export type StartFeatureSessionPayload = PayloadBase<'startFeatureSession'> &
+  FeaturePayload & {
+    requestId?: string
+  }
+export type StopFeatureSessionPayload = PayloadBase<'stopFeatureSession'> &
+  Partial<FeaturePayload> & {
+    path?: string
+    requestId?: string
+  }
+export type BuildFeaturePayload = PayloadBase<'buildFeature'> &
+  FeaturePayload & {
+    mode?: 'development' | 'production'
+    requestId?: string
+  }
+export type StartDebugFeaturePayload = PayloadBase<'startDebugFeature'> &
+  FeaturePayload & {
+    targetClientId?: string
+    path?: string
+    url?: string
+    requestId?: string
+  }
+export type StartDebugFeatureResultPayload = PayloadBase<'startDebugFeatureResult'> & {
+  requestId?: string
+  ok: boolean
+  message?: string
+  error?: string
 }
-export type QuerySessionsPayload = PayloadBase<'querySessions'>
-export type QuerySessionsResponsePayload = PayloadBase<'querySessionsResponse'> & {
-  sessions: string[]
+export type CreateFeaturePayload = PayloadBase<'createFeature'> &
+  FeaturePayload & {
+    name?: string
+    displayName: string
+    authorName: string
+    authorLink?: string
+    description: string
+    requestId?: string
+  }
+export type QueryFeatureSessionsPayload = PayloadBase<'queryFeatureSessions'>
+export type QueryFeatureSessionsResponsePayload = PayloadBase<'queryFeatureSessionsResponse'> & {
+  featureSessions: string[]
 }
-export type StopPayload = PayloadBase<'stop'>
+export type FeatureSessionsChangedPayload = PayloadBase<'featureSessionsChanged'> & {
+  featureSessions: string[]
+}
+export type FeatureBuiltPayload = PayloadBase<'featureBuilt'> &
+  FeaturePayload & {
+    path: string
+    hash?: string
+    featureSessions: string[]
+  }
+export type FeatureBuildFailedPayload = PayloadBase<'featureBuildFailed'> &
+  FeaturePayload & {
+    message: string
+  }
+export type CommandResultPayload = PayloadBase<'commandResult'> & {
+  requestId?: string
+  ok: boolean
+  message?: string
+  error?: string
+  featureSessions?: string[]
+}
+export type ServerStopPayload = PayloadBase<'serverStop'>
 
 export type Payload =
-  | StartPayload
+  | ServerReadyPayload
   | CoreUpdatePayload
   | ItemUpdatePayload
-  | StopPayload
-  | ItemStopPayload
-  | QuerySessionsPayload
-  | QuerySessionsResponsePayload
+  | ServerStopPayload
+  | StartFeatureSessionPayload
+  | StopFeatureSessionPayload
+  | BuildFeaturePayload
+  | StartDebugFeaturePayload
+  | StartDebugFeatureResultPayload
+  | CreateFeaturePayload
+  | QueryFeatureSessionsPayload
+  | QueryFeatureSessionsResponsePayload
+  | FeatureSessionsChangedPayload
+  | FeatureBuiltPayload
+  | FeatureBuildFailedPayload
+  | CommandResultPayload
 
 export type MessageHandler<P extends Payload = Payload> = (payload: P) => void

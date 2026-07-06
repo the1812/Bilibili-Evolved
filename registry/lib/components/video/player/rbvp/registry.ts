@@ -8,18 +8,37 @@ export const [rbvpNamespaces] = registerAndGetData(
 
 const normalizeNamespaceName = (value: string) => value.trim().replace(/[-_]/g, '').toLowerCase()
 
-const getProviderNamespaceNames = (providerName: string, provider: RBVPNamespaceProvider) =>
+export const getCanonicalNamespaceName = (providerName: string, provider: RBVPNamespaceProvider) =>
+  provider.primaryName ?? providerName
+
+export const getProviderNamespaceNames = (providerName: string, provider: RBVPNamespaceProvider) =>
   lodash
-    .uniq([provider.primaryName ?? providerName, providerName, ...(provider.aliases ?? [])])
+    .uniq([getCanonicalNamespaceName(providerName, provider), providerName])
     .filter(name => name.trim() !== '')
 
-export const matchRbvpNamespace = (providerName: string, actionNamespace: string) => {
+const resolveActionNamespace = (actionNamespace: string, aliases?: Record<string, string>) => {
+  if (!aliases) {
+    return actionNamespace
+  }
+  const normalizedActionNamespace = normalizeNamespaceName(actionNamespace)
+  const matchedAlias = Object.keys(aliases).find(
+    alias => normalizeNamespaceName(alias) === normalizedActionNamespace,
+  )
+  return matchedAlias ? aliases[matchedAlias] : actionNamespace
+}
+
+export const matchRbvpNamespace = (
+  providerName: string,
+  actionNamespace: string,
+  aliases?: Record<string, string>,
+) => {
   const provider = rbvpNamespaces[providerName]
   if (!provider) {
     return false
   }
-  const normalizedActionNamespace = normalizeNamespaceName(actionNamespace)
+  const canonical = resolveActionNamespace(actionNamespace, aliases)
+  const normalizedCanonical = normalizeNamespaceName(canonical)
   return getProviderNamespaceNames(providerName, provider).some(
-    name => normalizeNamespaceName(name) === normalizedActionNamespace,
+    name => normalizeNamespaceName(name) === normalizedCanonical,
   )
 }

@@ -1,6 +1,6 @@
 import { ComponentMetadata, FeatureBase } from '@/components/component'
-import { deleteValue } from '@/core/utils'
 import { CoreApis } from '@/core/core-apis'
+import { deleteValue } from '@/core/utils'
 import { addData, registerAndGetData, registerData } from './data'
 import { addHook, getHook } from './hook'
 
@@ -128,11 +128,14 @@ export const extractPluginFromComponent = (component: ComponentMetadata) => {
   if (!component.plugin) {
     return null
   }
-  return {
-    name: `${component.name}.plugin`,
-    displayName: `${component.displayName} - 附带插件`,
-    ...component.plugin,
-  } as PluginMetadata
+  return (Array.isArray(component.plugin) ? component.plugin : [component.plugin]).map(
+    plugin =>
+      ({
+        name: `${component.name}.plugin`,
+        displayName: `${component.displayName} - 附带插件`,
+        ...plugin,
+      } as PluginMetadata),
+  )
 }
 /**
  * 载入单个插件
@@ -165,7 +168,7 @@ export const loadAllPlugins = async (components: ComponentMetadata[]) => {
   for (const component of components) {
     const plugin = extractPluginFromComponent(component)
     if (plugin) {
-      plugins.push(plugin)
+      plugins.push(...plugin)
     }
   }
   for (const [name, setting] of Object.entries(settings.userPlugins)) {

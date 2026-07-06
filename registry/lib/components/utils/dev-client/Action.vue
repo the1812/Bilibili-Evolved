@@ -40,7 +40,7 @@ export default Vue.extend({
     return {
       busy: false,
       autoUpdateComponents: autoUpdateOptions.urls.components,
-      sessions: [],
+      featureSessions: [],
       isConnected: false,
     }
   },
@@ -55,7 +55,7 @@ export default Vue.extend({
     isDebugging() {
       return (
         this.componentUpdateUrl &&
-        this.sessions.some((path: string) => {
+        this.featureSessions.some((path: string) => {
           const { pathname } = new URL(this.componentUpdateUrl)
           return path === pathname
         })
@@ -70,18 +70,24 @@ export default Vue.extend({
   },
   async created() {
     const { devClient } = await import('./client')
-    this.sessions = devClient.sessions
+    this.featureSessions = devClient.featureSessions
     this.isConnected = devClient.isConnected
     devClient.addEventListener(DevClientEvents.ServerChange, this.handleServerChange)
-    devClient.addEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
+    devClient.addEventListener(
+      DevClientEvents.FeatureSessionsUpdate,
+      this.handleFeatureSessionsUpdate,
+    )
   },
   async beforeDestroy() {
     const { devClient } = await import('./client')
-    devClient.removeEventListener(DevClientEvents.SessionsUpdate, this.handleSessionsUpdate)
+    devClient.removeEventListener(
+      DevClientEvents.FeatureSessionsUpdate,
+      this.handleFeatureSessionsUpdate,
+    )
   },
   methods: {
-    handleSessionsUpdate(e: CustomEvent<string[]>) {
-      this.sessions = e.detail
+    handleFeatureSessionsUpdate(e: CustomEvent<string[]>) {
+      this.featureSessions = e.detail
     },
     handleServerChange(e: CustomEvent<boolean>) {
       this.isConnected = e.detail
