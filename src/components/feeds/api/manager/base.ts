@@ -5,8 +5,10 @@ import { ListAdaptorKey, FeedsCardsListAdaptor } from './adaptor'
 
 export const feedsCardCallbacks: Required<FeedsCardCallback>[] = []
 
-// TODO: 仅做兼容性导出, v2.8.11 之后可移除
-export { getVue2Data as getVueData } from '@/core/utils'
+export {
+  /** @deprecated use getVue2Data from '@/core/utils' instead */
+  getVue2Data as getVueData,
+} from '@/core/utils'
 
 export const createNodeValidator =
   (className: string) =>

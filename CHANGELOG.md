@@ -1,5 +1,45 @@
 <!-- spell-checker: disable -->
 # 更新日志
+## v2.11.0-preview
+`2026-07-06`
+
+包含 [v2.11.0](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.11.0) 的所有更新内容.
+
+✨新增
+- 新增组件 `弹幕合并器`, 可将其他 B 站视频的弹幕合并到当前播放页的原生播放器画面和右侧弹幕列表中, 支持关键词 / BV 号搜索、多 P 勾选、分 P 弹幕延迟顺延和播放进度对齐. (PR #5617 by [XianYuDaXian](https://github.com/XianYuDaXian))
+- 新增组件 `视频快照`, 可查看视频多个时间点的快照预览图, 并支持作为 `下载视频` 的输出资源生成快照网格. (PR #5623 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24))
+- 新增组件 `播放页自定义背景`, 可为视频、番剧等播放页设置远程或本地背景图, 并支持不透明度、遮罩、模糊、缩放、位置和深色模式配色切换. (PR #5606 by [Andy_Allan](https://github.com/andya1lan))
+- 新增组件 `直播弹幕助手 (+1 & 收藏)`, 可在直播间对弹幕执行 +1 发送和收藏, 并提供收藏弹幕面板. (PR #5597 by [oooolcepsed](https://github.com/cccccccccooool))
+- 新增组件 `直播首页暂停`, 可暂停直播首页的推荐直播间自动播放. (PR #5610 by [YeJay99](https://github.com/YeJay99))
+- 新增组件 `Hi-Res 音质按钮布局调整`, 可将播放器 Hi-Res 音质按钮调整为只保留图标. (#5609)
+- `RBVP 视频策略` 支持异步校验、规则导入导出和别名编辑体验改进, 并支持 `快速收藏` 作为内置插件. (PR #5619 by [LainIO24](https://github.com/lainio24), PR #5620 by [JLoeve](https://github.com/LonelySteve))
+
+🐛修复
+- 修复 `直播勋章保活` 中部分勋章对应直播间无法正常识别的问题, 并支持导出默认点赞次数和修改点赞次数. (PR #5612 by [k](https://github.com/kkkkkkkk566))
+
+## v2.11.0
+`2026-07-06`
+
+✨新增
+- `动态图片导出` 支持识别 opus 专栏页标题, 并适配 opus 动态页卡片模块解析. (#5618)
+
+🐛修复
+- 修复评论区初始化时 `dqa` 未定义的问题. (PR #5633 by [grcOvO](https://github.com/koagaroon))
+- 修复 `自定义顶栏` 动态列表未过滤屏蔽内容的问题. (#5600)
+- 修复 `极简首页` 中首页横幅未居中的问题. (#5613)
+- 修复 `定制自动连播行为` 在新版合集页面失效的问题. (by [wsgh0202](https://github.com/wsgh0202))
+- 修复 `折叠评论区` 按钮显示异常和层级异常的问题. (PR #5629, PR #5630 by [punc0319](https://github.com/SoulGI))
+- 修复 `扩展直播列表` 的 UID 匹配错误. (PR #5622 by [乡下来的喵](https://github.com/xxldm))
+- 修复 `关注时间显示` 显示错误的问题. (PR #5615 by [punc0319](https://github.com/SoulGI))
+- 修复 `ColorPicker` 十六进制颜色输入框未自动补全 `#`, 以及可输入非法长度颜色值的问题. (PR #5607 by [Andy_Allan](https://github.com/andya1lan))
+
+☕开发者相关
+改进了现有的一些开发流程工具, 方便贡献者及其 Agent 能够编写出更符合规范的代码:
+- 重构本地开发服务器和调试命令, 支持直接在内存中提供功能产物, 并增加了本地调试 URL 的提示. 两个开发分支上的产物文件现已删除.
+- 功能文档生成流程改用 AST 扫描方式, 增加 `build-docs` 脚本.
+- 增加 PR 时的文件检查和热更新自动发布流水线.
+- 更新贡献说明、仓库工作指引和本地 dev server 技能, 让后续开发、验证和自动化协作流程更明确.
+
 
 ## v2.10.10-preview
 `2026-06-07`

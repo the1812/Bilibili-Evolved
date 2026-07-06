@@ -30,10 +30,6 @@ export const component = defineComponentMetadata({
   displayName: '外置稍后再看',
   entry,
   tags: [componentsTags.video],
-  description: {
-    'zh-CN':
-      '将视频页面菜单里的 `稍后再看` 移到外面. 请注意如果在稍后再看页面中仍然显示, 是不会实时同步右侧的播放列表的.',
-  },
   urlInclude: videoUrls,
   // urlExclude: watchlaterUrls,
   options,

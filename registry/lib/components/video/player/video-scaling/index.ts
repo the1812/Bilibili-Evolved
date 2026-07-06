@@ -12,7 +12,6 @@ import {
   NO_TOAST_TIME_THRESHOLD,
 } from './constants'
 import { ScalePreset } from './types'
-import desc from './index.md'
 
 // 创建选项元数据对象，用于动态修改
 const customScaleOption = {
@@ -49,7 +48,6 @@ export const component = defineComponentMetadata({
   author: { name: 'weedy233', link: 'https://github.com/weedy233' },
   name: 'videoScaling',
   displayName: '视频缩放',
-  description: desc,
   tags: [componentsTags.video],
   instantStyles: [{ name: 'videoScaling', style: () => import('./styles.scss') }],
   options: {

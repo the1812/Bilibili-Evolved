@@ -5,7 +5,7 @@
   "tasks": [
     {
       "type": "shell",
-      "command": "pnpm ts-node ./dev-tools/dev-server/index.ts",
+      "command": "pnpm tsx ./dev-tools/dev-server/index.ts",
       "group": "build",
       "problemMatcher": [],
       "label": "启动开发服务 dev-server"
@@ -30,27 +30,6 @@
       "group": "build",
       "problemMatcher": [],
       "label": "本体:启动服务器 dev:serve-core"
-    },
-    {
-      "type": "shell",
-      "command": "pnpm serve registry/dist -p ${input:serverPort}",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "功能:启动服务器 dev:serve-features"
-    },
-    {
-      "type": "shell",
-      "command": "pnpm webpack --watch --config ./registry/webpack/components.ts --progress --mode=development",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "功能:监视组件 dev:watch-components"
-    },
-    {
-      "type": "shell",
-      "command": "pnpm webpack --watch --config ./registry/webpack/plugins.ts --progress --mode=development",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "功能:监视插件 dev:watch-plugins"
     },
     {
       "type": "shell",
@@ -110,14 +89,7 @@
     },
     {
       "type": "shell",
-      "command": "pnpm build-github-config",
-      "group": "build",
-      "problemMatcher": [],
-      "label": "功能:生成 GitHub 配置 prod:build-github-config"
-    },
-    {
-      "type": "shell",
-      "command": "pnpm webpack --config ./registry/webpack/docs.ts --progress",
+      "command": "pnpm run build-docs",
       "group": "build",
       "problemMatcher": [],
       "label": "功能:编译功能文档 prod:build-docs"
