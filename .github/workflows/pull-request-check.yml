@@ -3,7 +3,7 @@ on:
   - pull_request
 jobs:
   auto-publish-classify:
-    name: Auto Publishable Check
+    name: Auto Publish Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -15,6 +15,7 @@ jobs:
           AUTO_PUBLISH_PR_NUMBER: ${{ github.event.pull_request.number }}
         run: node .github/scripts/auto-publish-classify.mjs
   check:
+    name: Pull Request Check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
