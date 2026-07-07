@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   auto-publish-classify:
+    name: Auto Publish Check
     if: ${{ github.event.pull_request.merged == true }}
     runs-on: ubuntu-latest
     outputs:
@@ -36,6 +37,7 @@ jobs:
         run: node .github/scripts/auto-publish-classify.mjs
 
   auto-publish-preview-fixes:
+    name: Publish Preview Fixes
     needs: auto-publish-classify
     if: ${{ needs.auto-publish-classify.outputs.publishable == 'true' && needs.auto-publish-classify.outputs.base_ref == 'preview-fixes' }}
     runs-on: ubuntu-latest
@@ -80,6 +82,7 @@ jobs:
           git push origin HEAD:master-cdn
 
   auto-publish-preview-features:
+    name: Publish Preview Features
     needs: auto-publish-classify
     if: ${{ needs.auto-publish-classify.outputs.publishable == 'true' && needs.auto-publish-classify.outputs.base_ref == 'preview-features' }}
     runs-on: ubuntu-latest

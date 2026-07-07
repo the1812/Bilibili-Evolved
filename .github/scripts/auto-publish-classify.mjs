@@ -34,7 +34,29 @@ const appendSummary = value => {
   }
 }
 
-const report = ({ publishable, candidateRef, registryCount = 0, disallowedCount = 0, reason }) => {
+const scriptBuildOutputPathPrefixes = ['dist/', 'src/', 'webpack/']
+const scriptBuildOutputFiles = new Set([
+  '.browserslistrc',
+  'package.json',
+  'pnpm-lock.yaml',
+  'tsconfig.json',
+  'tsconfig.type-check.json',
+])
+
+const affectsScriptBuildOutput = path => {
+  return (
+    scriptBuildOutputFiles.has(path) ||
+    scriptBuildOutputPathPrefixes.some(prefix => path.startsWith(prefix))
+  )
+}
+
+const report = ({
+  publishable,
+  candidateRef,
+  safeCount = 0,
+  scriptBuildOutputCount = 0,
+  reason,
+}) => {
   appendOutput('base_ref', baseRef)
   appendOutput('publishable', String(publishable))
   appendOutput('reason', reason)
@@ -43,8 +65,8 @@ const report = ({ publishable, candidateRef, registryCount = 0, disallowedCount 
 
 - Base: \`${baseRef}\`
 - Candidate: \`${candidateRef || 'none'}\`
-- Registry source changes: \`${registryCount}\`
-- Blocked changes: \`${disallowedCount}\`
+- Safe changes: \`${safeCount}\`
+- Script build output changes: \`${scriptBuildOutputCount}\`
 
 \`\`\`text
 ${reason}
@@ -102,46 +124,30 @@ for (const range of rangesByBaseRef[baseRef] ?? []) {
     .forEach(line => diffEntries.add(line))
 }
 
-const allowedEntries = []
-const disallowedEntries = []
-const registryEntries = []
+const safeEntries = []
+const scriptBuildOutputEntries = []
 
 for (const entry of [...diffEntries].sort()) {
   const [status, first, second] = entry.split('\t')
   const paths = status.startsWith('R') || status.startsWith('C') ? [first, second] : [first]
 
-  let isAllowed = true
-  let isRegistry = false
-  for (const path of paths) {
-    if (path.startsWith('registry/lib/components/') || path.startsWith('registry/lib/plugins/')) {
-      isRegistry = true
-      continue
-    }
-    isAllowed = false
-  }
-
   const displayEntry = `${status} ${paths.join(' ')}`
-  if (isAllowed) {
-    allowedEntries.push(displayEntry)
+  if (paths.some(affectsScriptBuildOutput)) {
+    scriptBuildOutputEntries.push(displayEntry)
   } else {
-    disallowedEntries.push(displayEntry)
-  }
-  if (isRegistry) {
-    registryEntries.push(displayEntry)
+    safeEntries.push(displayEntry)
   }
 }
 
-const publishable = registryEntries.length > 0 && disallowedEntries.length === 0
-const reasonEntries = publishable
-  ? registryEntries
-  : disallowedEntries.length > 0
-  ? disallowedEntries
-  : allowedEntries
-const reasonHeader = publishable
-  ? 'publishable branch diff'
-  : disallowedEntries.length > 0
-  ? 'blocked branch diff'
-  : 'no registry source changes'
+const publishable = safeEntries.length > 0 && scriptBuildOutputEntries.length === 0
+let reasonEntries = safeEntries
+let reasonHeader = 'no safe changes'
+if (publishable) {
+  reasonHeader = 'publishable branch diff'
+} else if (scriptBuildOutputEntries.length > 0) {
+  reasonEntries = scriptBuildOutputEntries
+  reasonHeader = 'script build output branch diff'
+}
 const visibleEntries = reasonEntries.slice(0, 20)
 const overflow = Math.max(0, reasonEntries.length - visibleEntries.length)
 const reasonLines = [
@@ -155,7 +161,7 @@ if (overflow > 0) {
 report({
   publishable,
   candidateRef,
-  registryCount: registryEntries.length,
-  disallowedCount: disallowedEntries.length,
+  safeCount: safeEntries.length,
+  scriptBuildOutputCount: scriptBuildOutputEntries.length,
   reason: reasonLines.join('\n'),
 })
