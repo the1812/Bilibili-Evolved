@@ -356,7 +356,7 @@ function createGrid(
  */
 export class VideoSnapshot {
   private ready = false
-  aid?: string
+  aid?: number
   bvid?: string
   cid: number
   atlases: SnapshotAtlas[]
@@ -365,13 +365,13 @@ export class VideoSnapshot {
   tileWidth: number
   tileHeight: number
 
-  private constructor(aid: string, bvid: string, cid: number) {
+  private constructor(aid: number, bvid: string, cid: number) {
     this.aid = aid
     this.bvid = bvid
     this.cid = cid
   }
 
-  public static byAid(aid: string, cid: number) {
+  public static byAid(aid: number, cid: number) {
     return new VideoSnapshot(aid, null, cid)
   }
 

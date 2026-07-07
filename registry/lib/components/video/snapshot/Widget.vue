@@ -38,7 +38,7 @@ export default Vue.extend({
         this.disabled = true
         const { aid, cid } = unsafeWindow
         if (!this.canvas) {
-          this.canvas = await createSnapshotGrid(aid, parseInt(cid))
+          this.canvas = await createSnapshotGrid(parseInt(aid), parseInt(cid))
         }
         await showCanvas(this.canvas, `${getFriendlyTitle(true)}_snapshot.jpg`)
       } catch (error) {

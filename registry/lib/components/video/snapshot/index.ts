@@ -54,7 +54,7 @@ export const component = defineComponentMetadata({
   options,
   widget: {
     condition: hasVideo,
-    component: () => import('./ViewSnapshots.vue').then(m => m.default),
+    component: () => import('./Widget.vue').then(m => m.default),
   },
   plugin: {
     displayName: `下载视频 - ${displayName}支持`,
