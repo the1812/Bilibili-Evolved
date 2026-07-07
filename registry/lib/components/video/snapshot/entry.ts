@@ -1,11 +1,14 @@
 import { ComponentEntry } from '@/components/types'
 import { urlChange } from '@/core/observer'
 import { getVue2Data, playerReady } from '@/core/utils'
+import { useScopedConsole } from '@/core/utils/log'
 import { matchCurrentPage, videoUrls } from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
 import { getOptions } from './handler'
 import { ButtonPosition, parseButtonPosition } from './options'
 import { RecommendList } from './types'
+
+let console: ReturnType<typeof useScopedConsole> = null
 
 async function createButton(aid: number, cid: number, title: string, position: ButtonPosition) {
   const vm = new (Vue.extend(ViewButton))({
@@ -22,8 +25,20 @@ async function createButton(aid: number, cid: number, title: string, position: B
 
 const videoPageCardSelector = '.video-page-card-small'
 
+function getRecommendListVue() {
+  let vm: RecommendList = getVue2Data(dq('.recommend-list-v1'))
+  if (!vm.recListItems) {
+    vm = vm.$children[0] as any as RecommendList
+    if (!vm.recListItems) {
+      console.warn('获取视频推荐列表失败')
+      vm = undefined
+    }
+  }
+  return vm
+}
+
 async function addButtonOnRecommendList() {
-  const recommendList: RecommendList = getVue2Data(dq('.recommend-list-v1'))
+  const recommendList = getRecommendListVue()
   if (!recommendList || recommendList.bilibiliEvolved_viewSnapshot_watched) {
     return
   }
@@ -51,7 +66,8 @@ async function addButtonOnRecommendList() {
   )
 }
 
-export const entry: ComponentEntry = async () => {
+export const entry: ComponentEntry = async ctx => {
+  console = useScopedConsole(ctx.metadata.displayName)
   urlChange(() => {
     if (matchCurrentPage(videoUrls) && getOptions().enableForRecommendList) {
       playerReady().then(addButtonOnRecommendList)
