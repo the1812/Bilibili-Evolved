@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import { ComponentMetadata } from '@/components/types'
 import { getFormatStr, Video } from './video'
-import { getVue2Data } from '@/core/utils'
+import { getVue2Data, matchUrlPattern } from '@/core/utils'
 import { getComponentSettings } from '@/core/settings'
 import { VideoInfo } from '@/components/video/video-info'
+import { watchlaterUrls } from '@/core/utils/urls'
 
 interface RecommendListUgc extends Vue {
   isFolded: boolean
@@ -108,7 +109,7 @@ export class MediaListVideo implements Video {
           const relist = recoList.$children.filter(video =>
             this.videoClasses.includes(video.$el.className),
           )
-          this.showUploadTime(relist)
+          this.showUploadTime(relist, watchlaterUrls.some(matchUrlPattern))
         },
         { deep: true, immediate: true },
       )
