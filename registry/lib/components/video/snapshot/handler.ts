@@ -10,7 +10,7 @@ import { componentName } from '.'
 import { DownloadVideoInfo } from '../download/types'
 import { Options } from './options'
 
-function getOptions() {
+export function getOptions() {
   return getComponentSettings<Options>(componentName).options
 }
 

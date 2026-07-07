@@ -1,4 +1,27 @@
 import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
+import { unreachable } from '@/core/utils'
+
+export enum ButtonPosition {
+  TopLeft = '左上',
+  TopRight = '右上',
+  BottomLeft = '左下',
+  BottomRight = '右下',
+}
+
+export function parseButtonPosition(position: ButtonPosition) {
+  switch (position) {
+    case ButtonPosition.TopLeft:
+      return 'top left'
+    case ButtonPosition.TopRight:
+      return 'top right'
+    case ButtonPosition.BottomLeft:
+      return 'bottom left'
+    case ButtonPosition.BottomRight:
+      return 'bottom right'
+    default:
+      return unreachable()
+  }
+}
 
 export const options = defineOptionsMetadata({
   gridRows: {
@@ -38,6 +61,15 @@ export const options = defineOptionsMetadata({
   showInfoHeader: {
     displayName: '快照图呈现视频信息',
     defaultValue: true,
+  },
+  enableForRecommendList: {
+    displayName: '启用视频推荐列表按钮',
+    defaultValue: true,
+  },
+  recommendListButtonPosition: {
+    displayName: '推荐列表按钮位置',
+    dropdownEnum: ButtonPosition,
+    defaultValue: ButtonPosition.TopLeft,
   },
 })
 

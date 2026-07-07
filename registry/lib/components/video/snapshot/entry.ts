@@ -3,14 +3,17 @@ import { urlChange } from '@/core/observer'
 import { getVue2Data, playerReady } from '@/core/utils'
 import { matchCurrentPage, videoUrls } from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
+import { getOptions } from './handler'
+import { ButtonPosition, parseButtonPosition } from './options'
 import { RecommendList } from './types'
 
-async function createButton(aid: number, cid: number, title: string) {
+async function createButton(aid: number, cid: number, title: string, position: ButtonPosition) {
   const vm = new (Vue.extend(ViewButton))({
     propsData: {
       aid,
       cid,
       title,
+      position: parseButtonPosition(position),
     },
   })
   vm.$mount()
@@ -28,6 +31,7 @@ async function addButtonOnRecommendList() {
   recommendList.$watch(
     'recListItems',
     () => {
+      const position = getOptions().recommendListButtonPosition
       Promise.allSettled(
         recommendList.$children
           .filter(c => c.$el.matches(videoPageCardSelector))
@@ -36,7 +40,7 @@ async function addButtonOnRecommendList() {
               return Promise.resolve()
             }
             const { aid, cid, title } = videoCard.$props.item
-            return createButton(aid, cid, title).then(btn => {
+            return createButton(aid, cid, title, position).then(btn => {
               videoCard.$el.querySelector('.card-box>.pic-box')?.appendChild(btn)
               videoCard.bilibiliEvolved_viewSnapshot_btn = true
             })
@@ -49,7 +53,7 @@ async function addButtonOnRecommendList() {
 
 export const entry: ComponentEntry = async () => {
   urlChange(() => {
-    if (matchCurrentPage(videoUrls)) {
+    if (matchCurrentPage(videoUrls) && getOptions().enableForRecommendList) {
       playerReady().then(addButtonOnRecommendList)
     }
   })

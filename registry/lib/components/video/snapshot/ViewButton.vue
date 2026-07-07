@@ -2,6 +2,7 @@
   <div
     role="button"
     class="view-snapshot-button"
+    :class="position"
     tabindex="-1"
     :aria-disabled="disabled"
     :data-aid="aid"
@@ -23,6 +24,10 @@ export default Vue.extend({
     VIcon,
   },
   props: {
+    position: {
+      type: String,
+      default: 'top left',
+    },
     title: {
       type: String,
       required: true,
@@ -76,8 +81,6 @@ export default Vue.extend({
   background-color: rgba(0, 0, 0, 0.6);
   height: 28px;
   width: 28px;
-  top: 6px;
-  left: 6px;
   z-index: 21;
   display: flex;
   justify-content: center;
@@ -85,6 +88,19 @@ export default Vue.extend({
   border: 1px solid #0000;
   border-radius: 6px;
   cursor: pointer;
+
+  &.top {
+    top: 6px;
+  }
+  &.bottom {
+    bottom: 6px;
+  }
+  &.left {
+    left: 6px;
+  }
+  &.right {
+    right: 6px;
+  }
 
   .tip {
     opacity: 0;
