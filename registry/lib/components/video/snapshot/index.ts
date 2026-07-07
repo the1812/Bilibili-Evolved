@@ -49,7 +49,7 @@ export const component = defineComponentMetadata({
   name: componentName,
   displayName,
   author,
-  tags: [componentsTags.video],
+  tags: [componentsTags.utils, componentsTags.video],
   entry,
   urlInclude: videoAndBangumiUrls,
   options,
