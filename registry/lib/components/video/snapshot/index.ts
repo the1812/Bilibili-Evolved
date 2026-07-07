@@ -4,6 +4,7 @@ import { Toast } from '@/core/toast'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { PluginMinimalData } from '@/plugins/plugin'
 import { DownloadVideoAssets } from '../download/types'
+import { entry } from './entry'
 import { generateDownloadAssets } from './handler'
 import { options } from './options'
 
@@ -49,7 +50,7 @@ export const component = defineComponentMetadata({
   displayName,
   author,
   tags: [componentsTags.video],
-  entry: none,
+  entry,
   urlInclude: videoAndBangumiUrls,
   options,
   widget: {

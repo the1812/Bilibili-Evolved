@@ -5,7 +5,7 @@
       name="查看预览图"
       icon="mdi-image-outline"
       class="view-video-snapshot-grid"
-      @click="viewSnapshotGrid()"
+      @click="viewSnapshotGrid"
     ></DefaultWidget>
   </div>
 </template>
