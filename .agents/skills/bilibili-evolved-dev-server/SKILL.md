@@ -43,9 +43,13 @@ pnpm tsx dev-tools/dev-server/command.ts stop component style/hide/banner
 Create new registry component/plugin scaffolds through the dev server command:
 
 ```powershell
-pnpm tsx dev-tools/dev-server/command.ts create component style/my-feature myFeature "My Feature" "Author Name" "https://example.com" "Feature description."
-pnpm tsx dev-tools/dev-server/command.ts create plugin video/player/my-plugin myPlugin "My Plugin" "Author Name" "https://example.com" "Plugin description."
+$authorName = gh api user --jq ".login"
+$authorLink = gh api user --jq ".html_url"
+pnpm tsx dev-tools/dev-server/command.ts create component style/my-feature myFeature "My Feature" $authorName $authorLink "Feature description."
+pnpm tsx dev-tools/dev-server/command.ts create plugin video/player/my-plugin myPlugin "My Plugin" $authorName $authorLink "Plugin description."
 ```
+
+Before creating a feature, get the current GitHub user from `gh` with `gh api user --jq ".login"` and use that as `authorName`; get the profile URL with `gh api user --jq ".html_url"` and use that as `authorLink`. If `gh` is unavailable, not authenticated, or returns a blank value, ask the user for the GitHub username/profile link before running `create`. Do not use the code agent name, local OS username, or local Git `user.name` / `user.email` for author metadata.
 
 After creation, inspect and edit the generated `index.ts` and `index.md`. Keep component/plugin names specific and camelCase, include author metadata for contributor-created features, and keep descriptions in `index.md`.
 
