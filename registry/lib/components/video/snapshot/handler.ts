@@ -18,10 +18,10 @@ function getFooterText() {
   return `${formatDateTime(new Date())} @ Bilibili-Evolved v${meta.compilationInfo.version}`
 }
 
-async function getVideoInfoText(aid: number, cid: number) {
+async function getVideoInfoText(vid: number | string, cid?: number) {
   const lines: string[] = []
-  const info = await new VideoInfo(String(aid)).fetchInfo()
-  const page = info.pages.find(p => p.cid === cid)
+  const info = await new VideoInfo(String(vid), typeof vid === 'string').fetchInfo()
+  const page = cid ? info.pages.find(p => p.cid === cid) : info.pages[0]
   lines.push(`${info.bvid}　AV${info.aid}　CID ${page.cid}`, `稿件标题：${info.title}`)
   if (info.pages.length > 1) {
     lines.push(
@@ -41,12 +41,11 @@ async function getVideoInfoText(aid: number, cid: number) {
   return lines
 }
 
-export async function createSnapshotGrid(aid: number, cid: number) {
+export async function createSnapshotGrid(vid: number | string, cid?: number) {
   const options = getOptions()
-
   const [snapshot, header] = await Promise.all([
-    VideoSnapshot.byAid(aid, cid).fetchInfo(),
-    options.showInfoHeader ? getVideoInfoText(aid, cid) : null,
+    VideoSnapshot.byAidOrBvid(vid, cid).fetchInfo(),
+    options.showInfoHeader ? getVideoInfoText(vid, cid) : null,
   ])
 
   return snapshot.createGrid(options.gridColumns, options.gridRows, {

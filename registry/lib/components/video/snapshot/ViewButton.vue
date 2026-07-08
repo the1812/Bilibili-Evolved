@@ -5,8 +5,6 @@
     :class="position"
     tabindex="-1"
     :aria-disabled="disabled"
-    :data-aid="aid"
-    :data-cid="cid"
     @click="onClick"
   >
     <VIcon icon="mdi-image-multiple" size="20"></VIcon>
@@ -32,13 +30,13 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    aid: {
-      type: String,
+    vid: {
+      type: [Number, String],
       required: true,
     },
     cid: {
       type: Number,
-      required: true,
+      default: -1,
     },
   },
   data() {
@@ -58,7 +56,7 @@ export default Vue.extend({
         this.disabled = true
         this.tip = '预览图加载中…'
         if (!this.canvas) {
-          this.canvas = await createSnapshotGrid(this.aid, this.cid)
+          this.canvas = await createSnapshotGrid(this.vid, this.cid)
         }
         await showCanvas(this.canvas, `${this.title}_snapshot.jpg`)
       } catch (error) {

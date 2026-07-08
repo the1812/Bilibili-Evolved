@@ -10,10 +10,15 @@ import { RecommendList } from './types'
 
 let console: ReturnType<typeof useScopedConsole> = null
 
-async function createButton(aid: number, cid: number, title: string, position: ButtonPosition) {
+async function createButton(
+  vid: number | string,
+  cid: number,
+  title: string,
+  position: ButtonPosition,
+) {
   const vm = new (Vue.extend(ViewButton))({
     propsData: {
-      aid,
+      vid,
       cid,
       title,
       position: parseButtonPosition(position),

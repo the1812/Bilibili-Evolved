@@ -358,7 +358,7 @@ export class VideoSnapshot {
   private ready = false
   aid?: number
   bvid?: string
-  cid: number
+  cid?: number
   atlases: SnapshotAtlas[]
   atlasColumns: number
   atlasRows: number
@@ -371,11 +371,18 @@ export class VideoSnapshot {
     this.cid = cid
   }
 
-  public static byAid(aid: number, cid: number) {
+  public static byAidOrBvid(vid: number | string, cid?: number) {
+    if (typeof vid === 'number') {
+      return VideoSnapshot.byAid(vid, cid)
+    }
+    return VideoSnapshot.byBvid(vid, cid)
+  }
+
+  public static byAid(aid: number, cid?: number) {
     return new VideoSnapshot(aid, null, cid)
   }
 
-  public static byBvid(bvid: string, cid: number) {
+  public static byBvid(bvid: string, cid?: number) {
     return new VideoSnapshot(null, bvid, cid)
   }
 
@@ -386,7 +393,9 @@ export class VideoSnapshot {
     } else if (this.bvid) {
       url += `bvid=${this.bvid}`
     }
-    url += `&cid=${this.cid}`
+    if (this.cid) {
+      url += `&cid=${this.cid}`
+    }
     const data = await bilibiliApi(getJsonWithCredentials(url), '[VideoSnapshot]', false)
 
     const allTimes = await fetch(data.pvdata, {})
