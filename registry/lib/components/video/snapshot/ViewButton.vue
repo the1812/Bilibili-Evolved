@@ -120,6 +120,12 @@ export default Vue.extend({
   }
 }
 
+.video-page-card-small .pic-box .view-snapshot-button {
+  &.top.right {
+    right: 36px;
+  }
+}
+
 .video-page-card-small .pic-box:hover .view-snapshot-button {
   transition-delay: 0.3s;
   opacity: 1;
@@ -130,8 +136,17 @@ export default Vue.extend({
   &.top {
     top: 8px;
   }
-  &.right {
+  &.top.right {
     right: 38px;
+  }
+
+  &.left .tip {
+    top: 0;
+    left: 28px;
+  }
+  &.right.bottom .tip {
+    top: 0;
+    right: 28px;
   }
 }
 .fav-list-main .bili-video-card .bili-video-card__cover:hover .view-snapshot-button {

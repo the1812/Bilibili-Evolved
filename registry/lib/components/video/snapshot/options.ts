@@ -69,7 +69,7 @@ export const options = defineOptionsMetadata({
   recommendListButtonPosition: {
     displayName: '推荐列表视频按钮位置',
     dropdownEnum: ButtonPosition,
-    defaultValue: ButtonPosition.TopLeft,
+    defaultValue: ButtonPosition.TopRight,
   },
   enableForFavoriteList: {
     displayName: '启用收藏夹视频按钮',
@@ -78,7 +78,7 @@ export const options = defineOptionsMetadata({
   favoriteListButtonPosition: {
     displayName: '收藏夹视频按钮位置',
     dropdownEnum: ButtonPosition,
-    defaultValue: ButtonPosition.TopLeft,
+    defaultValue: ButtonPosition.TopRight,
   },
 })
 
