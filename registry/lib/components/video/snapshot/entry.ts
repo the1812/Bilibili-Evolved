@@ -78,7 +78,8 @@ async function addButtonOnRecommendList() {
 // ========================================================================== //
 
 const favoriteListMainSelector = '.fav-list-main>.items'
-const favVideoCardSelector = '.items__item:has(.bili-video-card)'
+const favVideoCardSelector =
+  '.items__item:has(.bili-video-card):not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
 const favVideoCardAnchorSelector = '.bili-video-card__title>a'
 const favVideoCardCoverSelector = '.bili-video-card__cover'
 
