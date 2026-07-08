@@ -14,7 +14,7 @@
 
 <script lang="ts">
 import { showCanvas, VIcon } from '@/ui'
-import { createSnapshotGrid } from './handler'
+import { createSnapshotGrid, getOptions } from './handler'
 import { logError } from '@/core/utils/log'
 
 export default Vue.extend({
@@ -58,7 +58,10 @@ export default Vue.extend({
         if (!this.canvas) {
           this.canvas = await createSnapshotGrid(this.vid, this.cid)
         }
-        await showCanvas(this.canvas, `${this.title}_snapshot.jpg`)
+        await showCanvas(
+          this.canvas,
+          getOptions().enablePreviewDownload ? `${this.title}_snapshot.jpg` : null,
+        )
       } catch (error) {
         logError(error)
       } finally {

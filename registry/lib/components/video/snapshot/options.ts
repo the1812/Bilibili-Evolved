@@ -62,6 +62,10 @@ export const options = defineOptionsMetadata({
     displayName: '快照图呈现视频信息',
     defaultValue: true,
   },
+  enablePreviewDownload: {
+    displayName: '预览快照图时可下载',
+    defaultValue: true,
+  },
   enableForRecommendList: {
     displayName: '启用推荐列表视频按钮',
     defaultValue: true,

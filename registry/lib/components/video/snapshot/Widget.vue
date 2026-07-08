@@ -13,7 +13,7 @@
 <script lang="ts">
 import { DefaultWidget, showCanvas } from '@/ui'
 import { logError } from '@/core/utils/log'
-import { createSnapshotGrid } from './handler'
+import { createSnapshotGrid, getOptions } from './handler'
 import { videoChange } from '@/core/observer'
 import { getFriendlyTitle } from '@/core/utils/title'
 
@@ -40,7 +40,10 @@ export default Vue.extend({
         if (!this.canvas) {
           this.canvas = await createSnapshotGrid(parseInt(aid), parseInt(cid))
         }
-        await showCanvas(this.canvas, `${getFriendlyTitle(true)}_snapshot.jpg`)
+        await showCanvas(
+          this.canvas,
+          getOptions().enablePreviewDownload ? `${getFriendlyTitle(true)}_snapshot.jpg` : null,
+        )
       } catch (error) {
         logError(error)
       } finally {
