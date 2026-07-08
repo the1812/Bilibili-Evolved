@@ -11,12 +11,7 @@ import { RecommendList } from './types'
 
 let console: ReturnType<typeof useScopedConsole> = null
 
-async function createButton(
-  vid: number | string,
-  cid: number,
-  title: string,
-  position: ButtonPosition,
-) {
+function createButton(vid: number | string, cid: number, title: string, position: ButtonPosition) {
   const vm = new (Vue.extend(ViewButton))({
     propsData: {
       vid,
@@ -56,20 +51,20 @@ async function addButtonOnRecommendList() {
     'recListItems',
     () => {
       const position = getOptions().recommendListButtonPosition
-      Promise.allSettled(
-        recommendList.$children
-          .filter(c => c.$el.matches(videoPageCardSelector))
-          .map(async videoCard => {
-            if (videoCard.bilibiliEvolved_viewSnapshot_btn) {
-              return Promise.resolve()
-            }
-            const { aid, cid, title } = videoCard.$props.item
-            return createButton(aid, cid, title, position).then(btn => {
-              videoCard.$el.querySelector(videoPageCardPicBoxSelector)?.appendChild(btn)
-              videoCard.bilibiliEvolved_viewSnapshot_btn = true
-            })
-          }),
-      )
+      requestAnimationFrame(() => {
+        recommendList.$children.forEach(async videoCard => {
+          if (videoCard.bilibiliEvolved_viewSnapshot_btn) {
+            return
+          }
+          if (!videoCard.$el.matches(videoPageCardSelector)) {
+            return
+          }
+          const { aid, cid, title } = videoCard.$props.item
+          const button = createButton(aid, cid, title, position)
+          videoCard.$el.querySelector(videoPageCardPicBoxSelector)?.appendChild(button)
+          videoCard.bilibiliEvolved_viewSnapshot_btn = true
+        })
+      })
     },
     { immediate: true },
   )
@@ -101,19 +96,18 @@ async function addButtonOnFavoriteList() {
   childList(v, mutation => {
     const videoCards = getVideoCards(mutation)
     const position = getOptions().favoriteListButtonPosition
-    Promise.allSettled(
-      videoCards.map(async videoCard => {
+    requestAnimationFrame(() => {
+      videoCards.forEach(async videoCard => {
         const titleAnchor = videoCard.querySelector(favVideoCardAnchorSelector) as HTMLAnchorElement
-        return createButton(
+        const button = createButton(
           parseBvidFromUrl(titleAnchor.href),
           0,
           titleAnchor.innerText,
           position,
-        ).then(btn => {
-          videoCard.querySelector(favVideoCardCoverSelector)?.appendChild(btn)
-        })
-      }),
-    )
+        )
+        videoCard.querySelector(favVideoCardCoverSelector)?.appendChild(button)
+      })
+    })
   })
 }
 
