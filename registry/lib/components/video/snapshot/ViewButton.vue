@@ -124,4 +124,17 @@ export default Vue.extend({
   transition-delay: 0.3s;
   opacity: 1;
 }
+
+.fav-list-main .bili-video-card .bili-video-card__cover .view-snapshot-button {
+  transition: opacity 0.2s linear;
+  &.top {
+    top: 8px;
+  }
+  &.right {
+    right: 38px;
+  }
+}
+.fav-list-main .bili-video-card .bili-video-card__cover:hover .view-snapshot-button {
+  opacity: 1;
+}
 </style>

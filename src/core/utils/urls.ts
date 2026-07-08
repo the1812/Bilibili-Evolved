@@ -68,6 +68,7 @@ export const playerUrls = [
   ...bangumiUrls,
   ...cheeseUrls,
 ]
+export const spaceFavoriteListUrls = [/^https:\/\/space\.bilibili\.com\/[\d]+\/favlist/]
 /**
  * 测试当前页面网址是否符合传入的 URL 匹配列表
  * @param urlLists URL 匹配列表

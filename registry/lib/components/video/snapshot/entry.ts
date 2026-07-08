@@ -1,8 +1,9 @@
 import { ComponentEntry } from '@/components/types'
-import { urlChange } from '@/core/observer'
+import { childList, urlChange } from '@/core/observer'
+import { select } from '@/core/spin-query'
 import { getVue2Data, playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { matchCurrentPage, videoUrls } from '@/core/utils/urls'
+import { matchCurrentPage, spaceFavoriteListUrls, videoUrls } from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
 import { getOptions } from './handler'
 import { ButtonPosition, parseButtonPosition } from './options'
@@ -28,7 +29,10 @@ async function createButton(
   return vm.$el
 }
 
+// ========================================================================== //
+
 const videoPageCardSelector = '.video-page-card-small'
+const videoPageCardPicBoxSelector = '.card-box>.pic-box'
 
 function getRecommendListVue() {
   let vm: RecommendList = getVue2Data(dq('.recommend-list-v1'))
@@ -55,13 +59,13 @@ async function addButtonOnRecommendList() {
       Promise.allSettled(
         recommendList.$children
           .filter(c => c.$el.matches(videoPageCardSelector))
-          .map(videoCard => {
+          .map(async videoCard => {
             if (videoCard.bilibiliEvolved_viewSnapshot_btn) {
               return Promise.resolve()
             }
             const { aid, cid, title } = videoCard.$props.item
             return createButton(aid, cid, title, position).then(btn => {
-              videoCard.$el.querySelector('.card-box>.pic-box')?.appendChild(btn)
+              videoCard.$el.querySelector(videoPageCardPicBoxSelector)?.appendChild(btn)
               videoCard.bilibiliEvolved_viewSnapshot_btn = true
             })
           }),
@@ -71,11 +75,55 @@ async function addButtonOnRecommendList() {
   )
 }
 
+// ========================================================================== //
+
+const favoriteListMainSelector = '.fav-list-main>.items'
+const favVideoCardSelector = '.items__item:has(.bili-video-card)'
+const favVideoCardAnchorSelector = '.bili-video-card__title>a'
+const favVideoCardCoverSelector = '.bili-video-card__cover'
+
+function parseBvidFromUrl(url: string) {
+  return url.match(/bilibili\.com\/video\/(\w+)/i)[1]
+}
+
+function getVideoCards(mutation: MutationRecord[]) {
+  if (mutation.length > 0) {
+    return mutation
+      .flatMap(r => [...r.addedNodes])
+      .filter(x => x instanceof HTMLElement && x.matches(favVideoCardSelector)) as HTMLElement[]
+  }
+  return dqa(favVideoCardSelector)
+}
+
+async function addButtonOnFavoriteList() {
+  const v = await select(favoriteListMainSelector)
+  childList(v, mutation => {
+    const videoCards = getVideoCards(mutation)
+    Promise.allSettled(
+      videoCards.map(async videoCard => {
+        const titleAnchor = videoCard.querySelector(favVideoCardAnchorSelector) as HTMLAnchorElement
+        return createButton(
+          parseBvidFromUrl(titleAnchor.href),
+          0,
+          titleAnchor.innerText,
+          ButtonPosition.TopRight,
+        ).then(btn => {
+          videoCard.querySelector(favVideoCardCoverSelector)?.appendChild(btn)
+        })
+      }),
+    )
+  })
+}
+
+// ========================================================================== //
+
 export const entry: ComponentEntry = async ctx => {
   console = useScopedConsole(ctx.metadata.displayName)
   urlChange(() => {
     if (matchCurrentPage(videoUrls) && getOptions().enableForRecommendList) {
       playerReady().then(addButtonOnRecommendList)
+    } else if (matchCurrentPage(spaceFavoriteListUrls)) {
+      addButtonOnFavoriteList()
     }
   })
 }
