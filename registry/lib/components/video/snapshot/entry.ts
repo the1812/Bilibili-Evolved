@@ -100,6 +100,7 @@ async function addButtonOnFavoriteList() {
   const v = await select(favoriteListMainSelector)
   childList(v, mutation => {
     const videoCards = getVideoCards(mutation)
+    const position = getOptions().favoriteListButtonPosition
     Promise.allSettled(
       videoCards.map(async videoCard => {
         const titleAnchor = videoCard.querySelector(favVideoCardAnchorSelector) as HTMLAnchorElement
@@ -107,7 +108,7 @@ async function addButtonOnFavoriteList() {
           parseBvidFromUrl(titleAnchor.href),
           0,
           titleAnchor.innerText,
-          ButtonPosition.TopRight,
+          position,
         ).then(btn => {
           videoCard.querySelector(favVideoCardCoverSelector)?.appendChild(btn)
         })
@@ -123,7 +124,7 @@ export const entry: ComponentEntry = async ctx => {
   urlChange(() => {
     if (matchCurrentPage(videoUrls) && getOptions().enableForRecommendList) {
       playerReady().then(addButtonOnRecommendList)
-    } else if (matchCurrentPage(spaceFavoriteListUrls)) {
+    } else if (matchCurrentPage(spaceFavoriteListUrls) && getOptions().enableForFavoriteList) {
       addButtonOnFavoriteList()
     }
   })
