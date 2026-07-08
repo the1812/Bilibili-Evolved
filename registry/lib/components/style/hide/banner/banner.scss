@@ -32,9 +32,9 @@ div.blur-bg,
     color: #eee !important;
   }
 }
-// 隐藏顶部横幅后, 新版首页顶栏 (.bili-header) 各入口仍停留在"横幅上"的白色文字状态, 但背景已变白,
-// 导致白底白字不可见 (需下滑才恢复). 各入口自带显式白色, 故需逐类覆盖为深色 (暗色模式保持浅色).
-// 见 issue #5496.
+// 隐藏顶部横幅后, 新版首页顶栏 (.bili-header) 各入口仍停留在"横幅上"的白色文字/图标状态,
+// 但背景已变白, 导致白底白字不可见 (需下滑才恢复). 逐类将文字与图标覆盖为深色 (暗色模式保持浅色).
+// 粉色投稿按钮 (.header-upload-entry) 本就是白字白图标配粉底, 不在覆盖范围内. 见 issue #5496.
 .bili-header {
   .left-entry,
   .right-entry {
@@ -42,7 +42,6 @@ div.blur-bg,
     .default-entry,
     .download-entry,
     .right-entry-text,
-    .header-upload-entry__text,
     .header-login-entry,
     .go-login-btn {
       color: black !important;
@@ -50,6 +49,14 @@ div.blur-bg,
       body.dark & {
         color: #eee !important;
       }
+    }
+  }
+  // 图标为 SVG 且使用 currentColor, 设 color 即可连带修正 fill: 左侧小电视 logo 与右侧入口图标
+  .left-entry .zhuzhan-icon,
+  .right-entry .right-entry-icon {
+    color: black !important;
+    body.dark & {
+      color: #eee !important;
     }
   }
 }
