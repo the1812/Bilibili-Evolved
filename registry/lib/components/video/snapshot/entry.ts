@@ -7,18 +7,18 @@ import { useScopedConsole } from '@/core/utils/log'
 import { feedsUrls, matchCurrentPage, spaceFavoriteListUrls, videoUrls } from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
 import { getOptions } from './handler'
-import { ButtonPosition, parseButtonPosition } from './options'
+import { isButtonEnabled, parseButtonPosition } from './options'
 import { RecommendList } from './types'
 
 let console: ReturnType<typeof useScopedConsole> = null
 
-function createButton(vid: number | string, cid: number, title: string, position: ButtonPosition) {
+function createButton(vid: number | string, cid: number, title: string, position: string) {
   const vm = new (Vue.extend(ViewButton))({
     propsData: {
       vid,
       cid,
       title,
-      position: parseButtonPosition(position),
+      position,
     },
   })
   vm.$mount()
@@ -52,10 +52,10 @@ async function addButtonOnRecommendList() {
     return
   }
   recommendList.bilibiliEvolved_viewSnapshot_watched = true
+  const position = parseButtonPosition(getOptions().recommendListButton)
   recommendList.$watch(
     'recListItems',
     () => {
-      const position = getOptions().recommendListButtonPosition
       requestAnimationFrame(() => {
         recommendList.$children.forEach(async videoCard => {
           if (videoCard.bilibiliEvolved_viewSnapshot_btn) {
@@ -96,7 +96,7 @@ async function addButtonOnFavoriteList() {
   const v = await select(favoriteListMainSelector)
   childList(v, mutation => {
     const videoCards = getVideoCards(mutation)
-    const position = getOptions().favoriteListButtonPosition
+    const position = parseButtonPosition(getOptions().favoriteListButton)
     requestAnimationFrame(() => {
       videoCards.forEach(async videoCard => {
         const titleAnchor = videoCard.querySelector(favVideoCardAnchorSelector) as HTMLAnchorElement
@@ -119,7 +119,7 @@ const feedVideoCardTitleSelector = '.bili-dyn-card-video__title'
 const feedVideoCardCoverSelector = '.bili-dyn-card-video__cover'
 
 function addButtonOnFeedCards() {
-  const position = getOptions().feedCardButtonPosition
+  const position = parseButtonPosition(getOptions().feedCardButton)
   forEachFeedsCard({
     added: card => {
       console.log(card)
@@ -141,12 +141,16 @@ function addButtonOnFeedCards() {
 
 export const entry: ComponentEntry = async ctx => {
   console = useScopedConsole(ctx.metadata.displayName)
+  const options = getOptions()
   urlChange(() => {
-    if (matchCurrentPage(videoUrls) && getOptions().enableForRecommendList) {
+    if (matchCurrentPage(videoUrls) && isButtonEnabled(options.recommendListButton)) {
       playerReady().then(addButtonOnRecommendList)
-    } else if (matchCurrentPage(spaceFavoriteListUrls) && getOptions().enableForFavoriteList) {
+    } else if (
+      matchCurrentPage(spaceFavoriteListUrls) &&
+      isButtonEnabled(options.favoriteListButton)
+    ) {
       addButtonOnFavoriteList()
-    } else if (matchCurrentPage(feedsUrls) && getOptions().enableForFeedCard) {
+    } else if (matchCurrentPage(feedsUrls) && isButtonEnabled(options.feedCardButton)) {
       addButtonOnFeedCards()
     }
   })

@@ -2,6 +2,7 @@ import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
 import { unreachable } from '@/core/utils'
 
 export enum ButtonPosition {
+  Off = '关',
   TopLeft = '左上',
   TopRight = '右上',
   BottomLeft = '左下',
@@ -21,6 +22,10 @@ export function parseButtonPosition(position: ButtonPosition) {
     default:
       return unreachable()
   }
+}
+
+export function isButtonEnabled(position: ButtonPosition) {
+  return position !== ButtonPosition.Off
 }
 
 export const options = defineOptionsMetadata({
@@ -66,30 +71,18 @@ export const options = defineOptionsMetadata({
     displayName: '预览快照图时可下载',
     defaultValue: false,
   },
-  enableForRecommendList: {
-    displayName: '启用推荐列表视频按钮',
-    defaultValue: true,
-  },
-  recommendListButtonPosition: {
-    displayName: '推荐列表视频按钮位置',
+  recommendListButton: {
+    displayName: '推荐列表视频按钮',
     dropdownEnum: ButtonPosition,
     defaultValue: ButtonPosition.TopRight,
   },
-  enableForFavoriteList: {
-    displayName: '启用收藏夹视频按钮',
-    defaultValue: true,
-  },
-  favoriteListButtonPosition: {
-    displayName: '收藏夹视频按钮位置',
+  favoriteListButton: {
+    displayName: '收藏夹视频按钮',
     dropdownEnum: ButtonPosition,
     defaultValue: ButtonPosition.TopRight,
   },
-  enableForFeedCard: {
-    displayName: '启用动态视频按钮',
-    defaultValue: true,
-  },
-  feedCardButtonPosition: {
-    displayName: '动态视频按钮位置',
+  feedCardButton: {
+    displayName: '动态视频按钮',
     dropdownEnum: ButtonPosition,
     defaultValue: ButtonPosition.TopRight,
   },
