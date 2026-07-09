@@ -1,15 +1,18 @@
 <template>
   <div class="canvas-viewer-container" :class="{ open }" @click="detectOutside">
     <div ref="viewer" class="viewer">
-      <div ref="canvasContainer" class="canvas-container"></div>
+      <div v-show="!canvas" class="loading-container">
+        <VLoading />
+      </div>
+      <div v-show="canvas" ref="canvasContainer" class="canvas-container"></div>
       <div class="close icon" title="关闭" @click="open = false">
         <VIcon :size="48" icon="mdi-close"></VIcon>
       </div>
       <a
-        v-if="filename"
+        v-if="canvas && filename"
         class="download icon"
-        :class="status"
-        :title="statusMessage"
+        :class="blobStatus"
+        :title="downloadMessage"
         :href="blobUrl || 'javascript:void(0)'"
         :download="filename"
       >
@@ -20,11 +23,14 @@
 </template>
 
 <script lang="ts">
+import { nextTick } from 'vue'
 import VIcon from './icon/VIcon.vue'
+import VLoading from './VLoading.vue'
 
 export default Vue.extend({
   components: {
     VIcon,
+    VLoading,
   },
   data() {
     return {
@@ -33,8 +39,8 @@ export default Vue.extend({
       canvas: <HTMLCanvasElement>null,
       filename: '',
       blobUrl: '',
-      status: '',
-      statusMessage: '',
+      blobStatus: '',
+      downloadMessage: '',
     }
   },
   mounted() {
@@ -50,39 +56,57 @@ export default Vue.extend({
   },
   methods: {
     detectOutside(e: MouseEvent) {
-      const container = this.$el
-      const { viewer } = this.$refs
-      if (e.target === container || e.target === viewer) {
+      if (e.target === this.$el || e.target === this.$refs.viewer) {
         this.open = false
       }
     },
-    setCanvas(canvas: HTMLCanvasElement, filename?: string, forceUpdate = false) {
-      if (!forceUpdate && canvas === this.canvas) {
-        return
+    async setCanvas(canvas: HTMLCanvasElement, update = false) {
+      if (!update && canvas === this.canvas) {
+        return false
       }
       if (this.blobUrl) {
         URL.revokeObjectURL(this.blobUrl)
       }
       this.canvas = canvas
-      this.blobUrl = ''
+      this.blobUrl = null
+      this.filename = null
       const container: HTMLElement = this.$refs.canvasContainer
       container.innerHTML = ''
       container.appendChild(canvas)
-      this.filename = filename
-      if (filename) {
-        this.status = 'wait'
-        this.statusMessage = '正在创建图片……'
-        canvas.toBlob(blob => {
-          if (!blob) {
-            this.status = 'error'
-            this.statusMessage = `无法下载图片：为Canvas创建图片失败`
-            throw new Error('[CanvasViewer] 为 Canvas 创建图片失败')
-          }
-          this.status = 'ready'
-          this.statusMessage = `下载 ${filename}`
-          this.blobUrl = URL.createObjectURL(blob)
-        }, 'image/jpeg')
+      await nextTick()
+      return new Promise<boolean>(resolve => {
+        requestAnimationFrame(() => {
+          resolve(true)
+        })
+      })
+    },
+    async setDownloadable(filename: string) {
+      if (!this.canvas) {
+        throw new Error('[CanvasViewer] Canvas not ready')
       }
+      if (!filename) {
+        return Promise.resolve()
+      }
+      this.filename = filename
+      this.blobStatus = 'wait'
+      this.downloadMessage = '正在创建图片……'
+      await nextTick()
+      return new Promise<void>((resolve, reject) => {
+        requestAnimationFrame(() => {
+          this.canvas.toBlob(blob => {
+            if (!blob) {
+              this.blobStatus = 'error'
+              this.downloadMessage = `无法下载图片：为Canvas创建图片失败`
+              reject(new Error('[CanvasViewer] Failed to create image from canvas'))
+            } else {
+              this.blobStatus = 'ready'
+              this.downloadMessage = `下载 ${filename}`
+              this.blobUrl = URL.createObjectURL(blob)
+              resolve()
+            }
+          }, 'image/jpeg')
+        })
+      })
     },
   },
 })
@@ -126,6 +150,9 @@ export default Vue.extend({
     align-items: center;
     align-content: stretch;
     transform: scale(0.95);
+    .loading-container {
+      grid-area: image;
+    }
     .canvas-container {
       grid-area: image;
       width: 100%;
@@ -150,16 +177,21 @@ export default Vue.extend({
       height: 100%;
       transition: 0.2s ease-out;
       color: #eee;
-      &.ready:hover .be-icon {
+      &:hover .be-icon {
         color: var(--theme-color);
       }
       &.wait {
         cursor: wait;
         opacity: 0.8;
+        .be-icon {
+          color: #eee;
+        }
       }
       &.error {
         cursor: not-allowed;
-        color: #f44336;
+        .be-icon {
+          color: #f44336;
+        }
       }
     }
   }

@@ -8,12 +8,12 @@
     @click="onClick"
   >
     <VIcon icon="mdi-image-multiple" size="20"></VIcon>
-    <span class="tip">{{ tip }}</span>
+    <span class="tip">查看预览图</span>
   </div>
 </template>
 
 <script lang="ts">
-import { showCanvas, VIcon } from '@/ui'
+import { openCanvasViewer, VIcon } from '@/ui'
 import { createSnapshotGrid, getOptions } from './handler'
 import { logError } from '@/core/utils/log'
 
@@ -43,7 +43,6 @@ export default Vue.extend({
     return {
       disabled: false,
       canvas: <HTMLCanvasElement>null,
-      tip: '查看预览图',
     }
   },
   methods: {
@@ -54,18 +53,16 @@ export default Vue.extend({
       }
       try {
         this.disabled = true
-        this.tip = '预览图加载中…'
+        const viewer = await openCanvasViewer()
         if (!this.canvas) {
           this.canvas = await createSnapshotGrid(this.vid, this.cid)
         }
-        await showCanvas(
-          this.canvas,
-          getOptions().enablePreviewDownload ? `${this.title}_snapshot.jpg` : null,
-        )
+        if ((await viewer.setCanvas(this.canvas)) && getOptions().enablePreviewDownload) {
+          await viewer.setDownloadable(`${this.title}_snapshot.jpg`)
+        }
       } catch (error) {
         logError(error)
       } finally {
-        this.tip = '查看预览图'
         this.disabled = false
       }
     },

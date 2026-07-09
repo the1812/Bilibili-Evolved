@@ -1,13 +1,40 @@
-import CanvasViewer from './CanvasViewer.vue'
+import CanvasViewerVue from './CanvasViewer.vue'
+
+interface CanvasViewer {
+  setCanvas: (canvas: HTMLCanvasElement, update?: boolean) => Promise<boolean>
+  setDownloadable: (filename?: string) => Promise<void>
+}
 
 let vm: {
   open: boolean
-  setCanvas: (canvas: HTMLCanvasElement, filename?: string) => void
-} & Vue
+  canvas: HTMLCanvasElement
+} & CanvasViewer &
+  Vue
 const createCanvasViewer = async () => {
-  vm = new CanvasViewer().$mount() as typeof vm
+  vm = new CanvasViewerVue().$mount() as typeof vm
   document.body.insertAdjacentElement('beforeend', vm.$el)
   return vm
+}
+
+export const openCanvasViewer = async () => {
+  if (!vm) {
+    await createCanvasViewer()
+  }
+  return new Promise<CanvasViewer>((resolve, reject) => {
+    requestAnimationFrame(() => {
+      try {
+        vm.open = true
+        vm.canvas = null
+        vm.$nextTick(() => {
+          requestAnimationFrame(() => {
+            resolve(vm)
+          })
+        })
+      } catch (err) {
+        reject(err)
+      }
+    })
+  })
 }
 
 /**
@@ -17,18 +44,8 @@ const createCanvasViewer = async () => {
  * @author LainIO24
  */
 export const showCanvas = async (canvas: HTMLCanvasElement, filename?: string) => {
-  if (!vm) {
-    await createCanvasViewer()
+  const viewer = await openCanvasViewer()
+  if (await viewer.setCanvas(canvas, true)) {
+    await viewer.setDownloadable(filename)
   }
-  return new Promise<typeof vm>((resolve, reject) => {
-    setTimeout(() => {
-      try {
-        vm.setCanvas(canvas, filename)
-        vm.open = true
-        resolve(vm)
-      } catch (err) {
-        reject(err)
-      }
-    })
-  })
 }

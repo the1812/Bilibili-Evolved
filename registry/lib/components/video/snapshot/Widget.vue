@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { DefaultWidget, showCanvas } from '@/ui'
+import { DefaultWidget, openCanvasViewer } from '@/ui'
 import { logError } from '@/core/utils/log'
 import { createSnapshotGrid, getOptions } from './handler'
 import { videoChange } from '@/core/observer'
@@ -37,13 +37,13 @@ export default Vue.extend({
       try {
         this.disabled = true
         const { aid, cid } = unsafeWindow
+        const viewer = await openCanvasViewer()
         if (!this.canvas) {
           this.canvas = await createSnapshotGrid(parseInt(aid), parseInt(cid))
         }
-        await showCanvas(
-          this.canvas,
-          getOptions().enablePreviewDownload ? `${getFriendlyTitle(true)}_snapshot.jpg` : null,
-        )
+        if ((await viewer.setCanvas(this.canvas)) && getOptions().enablePreviewDownload) {
+          await viewer.setDownloadable(`${getFriendlyTitle(true)}_snapshot.jpg`)
+        }
       } catch (error) {
         logError(error)
       } finally {
