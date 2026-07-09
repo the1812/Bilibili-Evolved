@@ -1,7 +1,12 @@
 import { defineComponentMetadata } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
-import { feedsUrls, spaceFavoriteListUrls, videoAndBangumiUrls } from '@/core/utils/urls'
+import {
+  feedsUrls,
+  spaceFavoriteListUrls,
+  spaceUploadVideosUrls,
+  videoAndBangumiUrls,
+} from '@/core/utils/urls'
 import { PluginMinimalData } from '@/plugins/plugin'
 import { DownloadVideoAssets } from '../download/types'
 import { entry } from './entry'
@@ -51,7 +56,7 @@ export const component = defineComponentMetadata({
   author,
   tags: [componentsTags.utils, componentsTags.video],
   entry,
-  urlInclude: [videoAndBangumiUrls, spaceFavoriteListUrls, feedsUrls].flat(),
+  urlInclude: [videoAndBangumiUrls, spaceFavoriteListUrls, spaceUploadVideosUrls, feedsUrls].flat(),
   options,
   widget: {
     condition: hasVideo,

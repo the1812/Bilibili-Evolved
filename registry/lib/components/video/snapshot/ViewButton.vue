@@ -80,7 +80,7 @@ export default Vue.extend({
   background-color: rgba(0, 0, 0, 0.6);
   height: 28px;
   width: 28px;
-  z-index: 21;
+  z-index: 999;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -132,7 +132,7 @@ export default Vue.extend({
   opacity: 1;
 }
 
-.fav-list-main .bili-video-card .bili-video-card__cover .view-snapshot-button {
+.space-main .bili-video-card .bili-video-card__cover .view-snapshot-button {
   transition: opacity 0.2s linear;
   &.top {
     top: 8px;
@@ -150,7 +150,7 @@ export default Vue.extend({
     right: 28px;
   }
 }
-.fav-list-main .bili-video-card .bili-video-card__cover:hover .view-snapshot-button {
+.space-main .bili-video-card .bili-video-card__cover:hover .view-snapshot-button {
   opacity: 1;
 }
 

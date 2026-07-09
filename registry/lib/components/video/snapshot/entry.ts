@@ -4,10 +4,16 @@ import { childList, urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { getVue2Data, playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { feedsUrls, matchCurrentPage, spaceFavoriteListUrls, videoUrls } from '@/core/utils/urls'
+import {
+  feedsUrls,
+  matchCurrentPage,
+  spaceFavoriteListUrls,
+  spaceUploadVideosUrls,
+  videoUrls,
+} from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
 import { getOptions } from './handler'
-import { isButtonEnabled, parseButtonPosition } from './options'
+import { ButtonPosition, isButtonEnabled, parseButtonPosition } from './options'
 import { RecommendList } from './types'
 
 let console: ReturnType<typeof useScopedConsole> = null
@@ -77,36 +83,40 @@ async function addButtonOnRecommendList() {
 
 // ========================================================================== //
 
-const favoriteListMainSelector = '.fav-list-main>.items'
-const favVideoCardSelector =
-  '.items__item:has(.bili-video-card):not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
-const favVideoCardAnchorSelector = '.bili-video-card__title>a'
-const favVideoCardCoverSelector = '.bili-video-card__cover'
+const spaceVideoListMainSelector = '.fav-list-main>.items,.space-upload .video-list'
+const spaceVideoCardSelector =
+  '.bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
+const spaceVideoCardAnchorSelector = '.bili-video-card__title>a'
+const spaceVideoCardCoverSelector = '.bili-video-card__cover'
 
 function getVideoCards(mutation: MutationRecord[]) {
   if (mutation.length > 0) {
     return mutation
       .flatMap(r => [...r.addedNodes])
-      .filter(x => x instanceof HTMLElement && x.matches(favVideoCardSelector)) as HTMLElement[]
+      .filter(
+        x => x instanceof HTMLElement && x.querySelector(spaceVideoCardSelector),
+      ) as HTMLElement[]
   }
-  return dqa(favVideoCardSelector)
+  return dqa(spaceVideoCardSelector)
 }
 
-async function addButtonOnFavoriteList() {
-  const v = await select(favoriteListMainSelector)
-  childList(v, mutation => {
+async function addButtonOnSpaceVideoList(position: ButtonPosition) {
+  const list = await select(spaceVideoListMainSelector)
+  const positionStr = parseButtonPosition(position)
+  childList(list, mutation => {
     const videoCards = getVideoCards(mutation)
-    const position = parseButtonPosition(getOptions().favoriteListButton)
     requestAnimationFrame(() => {
       videoCards.forEach(async videoCard => {
-        const titleAnchor = videoCard.querySelector(favVideoCardAnchorSelector) as HTMLAnchorElement
+        const titleAnchor = videoCard.querySelector(
+          spaceVideoCardAnchorSelector,
+        ) as HTMLAnchorElement
         const button = createButton(
           parseBvidFromUrl(titleAnchor.href),
           0,
           titleAnchor.innerText,
-          position,
+          positionStr,
         )
-        videoCard.querySelector(favVideoCardCoverSelector)?.appendChild(button)
+        videoCard.querySelector(spaceVideoCardCoverSelector)?.appendChild(button)
       })
     })
   })
@@ -122,7 +132,6 @@ function addButtonOnFeedCards() {
   const position = parseButtonPosition(getOptions().feedCardButton)
   forEachFeedsCard({
     added: card => {
-      console.log(card)
       const videoCard: HTMLAnchorElement = card.element.querySelector(feedVideoCardSelector)
       if (videoCard) {
         const button = createButton(
@@ -149,7 +158,12 @@ export const entry: ComponentEntry = async ctx => {
       matchCurrentPage(spaceFavoriteListUrls) &&
       isButtonEnabled(options.favoriteListButton)
     ) {
-      addButtonOnFavoriteList()
+      addButtonOnSpaceVideoList(options.favoriteListButton)
+    } else if (
+      matchCurrentPage(spaceUploadVideosUrls) &&
+      isButtonEnabled(options.uploadListButton)
+    ) {
+      addButtonOnSpaceVideoList(options.uploadListButton)
     } else if (matchCurrentPage(feedsUrls) && isButtonEnabled(options.feedCardButton)) {
       addButtonOnFeedCards()
     }

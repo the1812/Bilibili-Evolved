@@ -76,6 +76,11 @@ export const options = defineOptionsMetadata({
     dropdownEnum: ButtonPosition,
     defaultValue: ButtonPosition.TopRight,
   },
+  uploadListButton: {
+    displayName: 'UP主投稿视频按钮',
+    dropdownEnum: ButtonPosition,
+    defaultValue: ButtonPosition.TopRight,
+  },
   favoriteListButton: {
     displayName: '收藏夹视频按钮',
     dropdownEnum: ButtonPosition,
