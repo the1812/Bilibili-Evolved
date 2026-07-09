@@ -48,6 +48,7 @@ export default Vue.extend({
   methods: {
     async onClick(event: MouseEvent) {
       event.preventDefault()
+      event.stopPropagation()
       if (this.disabled) {
         return
       }
@@ -150,6 +151,24 @@ export default Vue.extend({
   }
 }
 .fav-list-main .bili-video-card .bili-video-card__cover:hover .view-snapshot-button {
+  opacity: 1;
+}
+
+.bili-dyn-card-video__cover .view-snapshot-button {
+  transition: opacity 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  &.top.right {
+    right: 36px;
+  }
+  &.left .tip {
+    top: 0;
+    left: 28px;
+  }
+  &.right.bottom .tip {
+    top: 0;
+    right: 28px;
+  }
+}
+.bili-dyn-card-video__cover:hover .view-snapshot-button {
   opacity: 1;
 }
 </style>

@@ -1,9 +1,10 @@
+import { forEachFeedsCard } from '@/components/feeds/api'
 import { ComponentEntry } from '@/components/types'
 import { childList, urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { getVue2Data, playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { matchCurrentPage, spaceFavoriteListUrls, videoUrls } from '@/core/utils/urls'
+import { feedsUrls, matchCurrentPage, spaceFavoriteListUrls, videoUrls } from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
 import { getOptions } from './handler'
 import { ButtonPosition, parseButtonPosition } from './options'
@@ -22,6 +23,10 @@ function createButton(vid: number | string, cid: number, title: string, position
   })
   vm.$mount()
   return vm.$el
+}
+
+function parseBvidFromUrl(url: string) {
+  return url.match(/bilibili\.com\/video\/(\w+)/i)[1]
 }
 
 // ========================================================================== //
@@ -78,10 +83,6 @@ const favVideoCardSelector =
 const favVideoCardAnchorSelector = '.bili-video-card__title>a'
 const favVideoCardCoverSelector = '.bili-video-card__cover'
 
-function parseBvidFromUrl(url: string) {
-  return url.match(/bilibili\.com\/video\/(\w+)/i)[1]
-}
-
 function getVideoCards(mutation: MutationRecord[]) {
   if (mutation.length > 0) {
     return mutation
@@ -113,6 +114,31 @@ async function addButtonOnFavoriteList() {
 
 // ========================================================================== //
 
+const feedVideoCardSelector = 'a.bili-dyn-card-video'
+const feedVideoCardTitleSelector = '.bili-dyn-card-video__title'
+const feedVideoCardCoverSelector = '.bili-dyn-card-video__cover'
+
+function addButtonOnFeedCards() {
+  const position = getOptions().feedCardButtonPosition
+  forEachFeedsCard({
+    added: card => {
+      console.log(card)
+      const videoCard: HTMLAnchorElement = card.element.querySelector(feedVideoCardSelector)
+      if (videoCard) {
+        const button = createButton(
+          parseBvidFromUrl(videoCard.href),
+          0,
+          videoCard.querySelector(feedVideoCardTitleSelector).innerHTML,
+          position,
+        )
+        videoCard.querySelector(feedVideoCardCoverSelector)?.appendChild(button)
+      }
+    },
+  })
+}
+
+// ========================================================================== //
+
 export const entry: ComponentEntry = async ctx => {
   console = useScopedConsole(ctx.metadata.displayName)
   urlChange(() => {
@@ -120,6 +146,8 @@ export const entry: ComponentEntry = async ctx => {
       playerReady().then(addButtonOnRecommendList)
     } else if (matchCurrentPage(spaceFavoriteListUrls) && getOptions().enableForFavoriteList) {
       addButtonOnFavoriteList()
+    } else if (matchCurrentPage(feedsUrls) && getOptions().enableForFeedCard) {
+      addButtonOnFeedCards()
     }
   })
 }

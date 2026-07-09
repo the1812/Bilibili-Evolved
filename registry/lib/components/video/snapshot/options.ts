@@ -84,6 +84,15 @@ export const options = defineOptionsMetadata({
     dropdownEnum: ButtonPosition,
     defaultValue: ButtonPosition.TopRight,
   },
+  enableForFeedCard: {
+    displayName: '启用动态视频按钮',
+    defaultValue: true,
+  },
+  feedCardButtonPosition: {
+    displayName: '动态视频按钮位置',
+    dropdownEnum: ButtonPosition,
+    defaultValue: ButtonPosition.TopRight,
+  },
 })
 
 export type Options = OptionsOfMetadata<typeof options>
