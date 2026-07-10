@@ -226,12 +226,22 @@ function drawText(ctx: CanvasText, text: string[], x: number, y0: number, lineHe
 }
 
 /**
- * 在快照图上绘制对应的时间点
+ * 在快照图网格上绘制时间标记（上下文安全）
  * @author WakelessSloth56
+ * @param ctx 快照图网格的渲染上下文
+ * @param time 该快照图对应的时间点
+ * @param x0 该快照图在网格上的右下角 X 坐标
+ * @param y0 该快照图在网格上的右下角 Y 坐标
  */
-function drawTimestamp(snapshot: SnapshotTileWithCanvas, options: DrawOptions = {}) {
-  const timeStr = formatDuration(snapshot.time)
-  const ctx = snapshot.canvas.getContext('2d')
+function drawTimestamp(
+  ctx: CanvasRenderingContext2D,
+  x0: number,
+  y0: number,
+  time: number,
+  options: DrawOptions = {},
+) {
+  const timeStr = formatDuration(time)
+  ctx.save()
 
   const {
     paddingX = 8,
@@ -250,15 +260,18 @@ function drawTimestamp(snapshot: SnapshotTileWithCanvas, options: DrawOptions = 
   const bgW = textW + paddingX * 2
   const bgH = fontSize + paddingY * 2
 
-  const x = snapshot.canvas.width - bgW - marginX
-  const y = snapshot.canvas.height - bgH - marginY
+  const x = x0 - bgW - marginX
+  const y = y0 - bgH - marginY
 
   ctx.fillStyle = backgroundColor
   ctx.fillRect(x, y, bgW, bgH)
 
   ctx.fillStyle = textColor
   ctx.textBaseline = 'top'
+  ctx.textAlign = 'left'
   ctx.fillText(timeStr, x + paddingX, y + paddingY)
+
+  ctx.restore()
 }
 
 /**
@@ -338,12 +351,12 @@ function createGrid(
       if (i >= tiles.length) {
         return canvas
       }
-      if (timestamp) {
-        drawTimestamp(tiles[i])
-      }
       const x = col * (tileWidth + paddingX) + gridX
       const y = row * (tileHeight + paddingY) + gridY
-      ctx.drawImage(tiles[i].canvas, x, y)
+      ctx.drawImage(tiles[i].canvas, x, y, tileWidth, tileHeight)
+      if (timestamp) {
+        drawTimestamp(ctx, x + tileWidth, y + tileHeight, tiles[i].time)
+      }
     }
   }
   return canvas
