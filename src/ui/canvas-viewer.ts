@@ -1,8 +1,10 @@
+import { getData } from '@/plugins/data'
 import CanvasViewerVue from './CanvasViewer.vue'
 
 interface CanvasViewer {
   setCanvas: (canvas: HTMLCanvasElement, update?: boolean) => Promise<boolean>
   setDownloadable: (filename?: string) => Promise<void>
+  setLoadingMessage: (messags: string | Error) => void
 }
 
 let vm: {
@@ -16,7 +18,7 @@ const createCanvasViewer = async () => {
   return vm
 }
 
-export const openCanvasViewer = async () => {
+export const openCanvasViewer = async (loadingMessage?: string) => {
   if (!vm) {
     await createCanvasViewer()
   }
@@ -25,6 +27,7 @@ export const openCanvasViewer = async () => {
       try {
         vm.open = true
         vm.canvas = null
+        vm.setLoadingMessage(loadingMessage ?? getData('vLoading')[0].content)
         vm.$nextTick(() => {
           requestAnimationFrame(() => {
             resolve(vm)

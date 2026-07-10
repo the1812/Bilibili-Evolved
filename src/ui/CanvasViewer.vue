@@ -1,8 +1,8 @@
 <template>
   <div class="canvas-viewer-container" :class="{ open }" @click="detectOutside">
     <div ref="viewer" class="viewer">
-      <div v-show="!canvas" class="loading-container">
-        <VLoading />
+      <div v-show="!canvas" class="loading-container" :class="{ error: loadingError }">
+        <VLoading ref="vLoading" />
       </div>
       <div v-show="canvas" ref="canvasContainer" class="canvas-container"></div>
       <div class="close icon" title="关闭" @click="open = false">
@@ -28,6 +28,7 @@ import VIcon from './icon/VIcon.vue'
 import VLoading from './VLoading.vue'
 
 export default Vue.extend({
+  name: 'CanvasViewer',
   components: {
     VIcon,
     VLoading,
@@ -41,6 +42,7 @@ export default Vue.extend({
       blobUrl: '',
       blobStatus: '',
       downloadMessage: '',
+      loadingError: false,
     }
   },
   mounted() {
@@ -108,6 +110,15 @@ export default Vue.extend({
         })
       })
     },
+    setLoadingMessage(msg: string | Error) {
+      if (msg instanceof Error) {
+        msg = msg.message
+        this.loadingError = true
+      } else {
+        this.loadingError = false
+      }
+      this.$refs.vLoading.config.content = msg
+    },
   },
 })
 </script>
@@ -120,7 +131,7 @@ export default Vue.extend({
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100002;
+  z-index: 100000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -152,6 +163,9 @@ export default Vue.extend({
     transform: scale(0.95);
     .loading-container {
       grid-area: image;
+      &.error {
+        color: #f44336;
+      }
     }
     .canvas-container {
       grid-area: image;

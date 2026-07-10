@@ -6,12 +6,24 @@ import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast, ToastType } from '@/core/toast'
 import { formatDateTime, formatDuration } from '@/core/utils/formatters'
-import { componentName } from '.'
+import { useScopedConsole } from '@/core/utils/log'
+import { openCanvasViewer } from '@/ui'
+import { componentName, displayName } from '.'
 import { DownloadVideoInfo } from '../download/types'
 import { Options } from './options'
 
 export function getOptions() {
   return getComponentSettings<Options>(componentName).options
+}
+
+let scopedConsole: ReturnType<typeof useScopedConsole>
+
+export function getConsole() {
+  return scopedConsole ?? (scopedConsole = useScopedConsole(displayName))
+}
+
+export async function openViewer() {
+  return openCanvasViewer('视频快照加载中……')
 }
 
 function getFooterText() {

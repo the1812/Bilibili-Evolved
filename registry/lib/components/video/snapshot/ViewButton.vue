@@ -13,9 +13,8 @@
 </template>
 
 <script lang="ts">
-import { openCanvasViewer, VIcon } from '@/ui'
-import { createSnapshotGrid, getOptions } from './handler'
-import { logError } from '@/core/utils/log'
+import { VIcon } from '@/ui'
+import { createSnapshotGrid, getOptions, openViewer, getConsole } from './handler'
 
 export default Vue.extend({
   components: {
@@ -52,9 +51,9 @@ export default Vue.extend({
       if (this.disabled) {
         return
       }
+      const viewer = await openViewer()
+      this.disabled = true
       try {
-        this.disabled = true
-        const viewer = await openCanvasViewer()
         if (!this.canvas) {
           this.canvas = await createSnapshotGrid(this.vid, this.cid)
         }
@@ -62,7 +61,8 @@ export default Vue.extend({
           await viewer.setDownloadable(`${this.title}_snapshot.jpg`)
         }
       } catch (error) {
-        logError(error)
+        viewer.setLoadingMessage(error)
+        getConsole().error(error)
       } finally {
         this.disabled = false
       }

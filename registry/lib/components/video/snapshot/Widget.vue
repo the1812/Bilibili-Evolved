@@ -11,9 +11,8 @@
 </template>
 
 <script lang="ts">
-import { DefaultWidget, openCanvasViewer } from '@/ui'
-import { logError } from '@/core/utils/log'
-import { createSnapshotGrid, getOptions } from './handler'
+import { DefaultWidget } from '@/ui'
+import { createSnapshotGrid, getOptions, openViewer, getConsole } from './handler'
 import { videoChange } from '@/core/observer'
 import { getFriendlyTitle } from '@/core/utils/title'
 
@@ -34,10 +33,13 @@ export default Vue.extend({
   },
   methods: {
     async viewSnapshotGrid() {
+      if (this.disabled) {
+        return
+      }
+      const viewer = await openViewer()
+      this.disabled = true
       try {
-        this.disabled = true
         const { aid, cid } = unsafeWindow
-        const viewer = await openCanvasViewer()
         if (!this.canvas) {
           this.canvas = await createSnapshotGrid(parseInt(aid), parseInt(cid))
         }
@@ -45,7 +47,8 @@ export default Vue.extend({
           await viewer.setDownloadable(`${getFriendlyTitle(true)}_snapshot.jpg`)
         }
       } catch (error) {
-        logError(error)
+        viewer.setLoadingMessage(error)
+        getConsole().error(error)
       } finally {
         this.disabled = false
       }

@@ -3,7 +3,6 @@ import { ComponentEntry } from '@/components/types'
 import { childList, urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { getVue2Data, playerReady } from '@/core/utils'
-import { useScopedConsole } from '@/core/utils/log'
 import {
   feedsUrls,
   matchCurrentPage,
@@ -12,11 +11,9 @@ import {
   videoUrls,
 } from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
-import { getOptions } from './handler'
+import { getConsole, getOptions } from './handler'
 import { ButtonPosition, isButtonEnabled, parseButtonPosition } from './options'
 import { RecommendList } from './types'
-
-let console: ReturnType<typeof useScopedConsole> = null
 
 function createButton(vid: number | string, cid: number, title: string, position: string) {
   const vm = new (Vue.extend(ViewButton))({
@@ -45,7 +42,7 @@ function getRecommendListVue() {
   if (!vm.recListItems) {
     vm = vm.$children[0] as any as RecommendList
     if (!vm.recListItems) {
-      console.warn('获取视频推荐列表失败')
+      getConsole().warn('获取视频推荐列表失败')
       vm = undefined
     }
   }
@@ -148,8 +145,7 @@ function addButtonOnFeedCards() {
 
 // ========================================================================== //
 
-export const entry: ComponentEntry = async ctx => {
-  console = useScopedConsole(ctx.metadata.displayName)
+export const entry: ComponentEntry = async () => {
   const options = getOptions()
   urlChange(() => {
     if (matchCurrentPage(videoUrls) && isButtonEnabled(options.recommendListButton)) {
