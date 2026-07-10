@@ -269,6 +269,15 @@ const entry: ComponentEntry = async ({ settings }) => {
       '.recommend-list-v1',
       element => element.parentElement,
     )
+  } else if (document.URL.startsWith('https://www.bilibili.com/list')) {
+    logger.debug('初始化合集页预览放大按钮')
+    // 合集页
+    initPreviewButton(
+      'bigger-video-preview-button-list',
+      'v-recommend-inline-player',
+      '.recommend-list-container',
+      element => element.parentElement,
+    )
   }
 }
 
@@ -280,7 +289,7 @@ export const component = defineComponentMetadata({
   options: {
     popupWidth: {
       displayName: '弹窗宽度（%）',
-      defaultValue: 90,
+      defaultValue: 80,
       slider: {
         min: 10,
         max: 100,

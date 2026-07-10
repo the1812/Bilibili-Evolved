@@ -3,6 +3,7 @@
     ref="popup"
     v-model="showPopup"
     class="bigger-video-preview-video-container"
+    esc-close
     @popup-change="onPopupChange"
   >
   </VPopup>
@@ -48,6 +49,9 @@ export default defineComponent({
           popup.$el.appendChild(dom)
           this.movedDom = dom
         }
+        const popupEl = this.$el as HTMLElement
+        popupEl.setAttribute('tabindex', '-1')
+        popupEl.focus()
       })
     },
     closePopup() {
@@ -90,5 +94,11 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
+}
+
+.watch-later-video.van-watchlater.black {
+  border-radius: 6px;
+  right: 6px;
+  bottom: 6px;
 }
 </style>
