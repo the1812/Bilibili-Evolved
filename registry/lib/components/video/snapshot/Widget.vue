@@ -3,7 +3,7 @@
     <DefaultWidget
       :disabled="disabled"
       name="查看预览图"
-      icon="mdi-image-outline"
+      icon="mdi-image-multiple-outline"
       class="view-video-snapshot-grid"
       @click="viewSnapshotGrid"
     ></DefaultWidget>
