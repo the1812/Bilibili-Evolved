@@ -72,6 +72,7 @@ export async function createSnapshotGrid(vid: number | string, cid?: number) {
     paddingY: options.gridGap,
     marginX: options.gridBorder,
     marginY: options.gridBorder,
+    minTileWidth: options.enlargeSmallImage ? 480 : -1,
   })
 }
 

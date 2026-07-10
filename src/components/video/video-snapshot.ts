@@ -202,6 +202,7 @@ export interface DrawOptions {
   paddingY?: number
   marginX?: number
   marginY?: number
+  minTileWidth?: number
 }
 
 export interface GridInfoOptions {
@@ -297,6 +298,7 @@ function createGrid(
     header = [],
     footer = [],
     timestamp = true,
+    minTileWidth = -1,
   } = options
   const font = `${fontSize}px ${fontName}`
   const lineHeight = fontSize + paddingY
@@ -308,6 +310,10 @@ function createGrid(
   const headerW = calcTextWidth(ctx, header)
   const headerH = headerW ? header.length * fontSize + header.length * paddingY + paddingY : 0
 
+  if (tileWidth < minTileWidth) {
+    tileHeight *= minTileWidth / tileWidth
+    tileWidth = minTileWidth
+  }
   const gridW = cols * tileWidth + (cols - 1) * paddingX
   const gridH = rows * tileHeight + (rows - 1) * paddingY
 

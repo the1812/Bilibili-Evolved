@@ -63,6 +63,10 @@ export const options = defineOptionsMetadata({
     displayName: '快照图文字字体',
     defaultValue: 'sans-serif',
   },
+  enlargeSmallImage: {
+    displayName: '放大过小的快照图',
+    defaultValue: true,
+  },
   showInfoHeader: {
     displayName: '快照图呈现视频信息',
     defaultValue: true,
