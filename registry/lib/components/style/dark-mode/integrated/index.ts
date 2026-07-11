@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/component'
-import { getCookieValue } from '@/core/utils'
+import { getCookieValue, matchUrlPattern } from '@/core/utils'
 
 const name = 'integratedDarkMode'
 const darkModeClass = 'dark'
@@ -8,6 +8,14 @@ const darkMetaColor = '#111'
 
 const isOfficialDarkModeEnabled = () => {
   return getCookieValue('theme_style') === 'dark'
+}
+
+const isLiveroomDarkModeEnabled = () => {
+  if (!matchUrlPattern(/^https:\/\/live\.bilibili\.com\/([\d]+)/)) {
+    return true
+  }
+  const htmlElement = document.documentElement
+  return htmlElement.getAttribute('lab-style') === 'dark'
 }
 
 const enableDarkMode = () => {
@@ -93,7 +101,7 @@ export const component = defineComponentMetadata({
       'zh-CN': '提前注入深色模式的 .dark class 以减少一些组件首屏仍然是白色的问题.',
     },
     async setup() {
-      if (!isOfficialDarkModeEnabled()) {
+      if (!isOfficialDarkModeEnabled() || !isLiveroomDarkModeEnabled()) {
         return
       }
       const { contentLoaded } = await import('@/core/life-cycle')
