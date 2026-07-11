@@ -6,16 +6,20 @@ const darkModeClass = 'dark'
 const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
 
-const isOfficialDarkModeEnabled = () => {
-  return getCookieValue('theme_style') === 'dark'
-}
-
+// 判断直播间是否启用深色模式
 const isLiveroomDarkModeEnabled = () => {
   if (!matchUrlPattern(/^https:\/\/live\.bilibili\.com\/([\d]+)/)) {
     return true
   }
   const htmlElement = document.documentElement
   return htmlElement.getAttribute('lab-style') === 'dark'
+}
+
+const isOfficialDarkModeEnabled = () => {
+  if (!isLiveroomDarkModeEnabled()) {
+    return false
+  }
+  return getCookieValue('theme_style') === 'dark'
 }
 
 const enableDarkMode = () => {
@@ -101,7 +105,7 @@ export const component = defineComponentMetadata({
       'zh-CN': '提前注入深色模式的 .dark class 以减少一些组件首屏仍然是白色的问题.',
     },
     async setup() {
-      if (!isOfficialDarkModeEnabled() || !isLiveroomDarkModeEnabled()) {
+      if (!isOfficialDarkModeEnabled()) {
         return
       }
       const { contentLoaded } = await import('@/core/life-cycle')
