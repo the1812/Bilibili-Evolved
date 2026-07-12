@@ -6,7 +6,6 @@ import { Toast } from '@/core/toast'
 import { matchUrlPattern } from '@/core/utils'
 import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
-import { getWbiSignedUrl } from '@/core/wbi'
 import { Options } from '.'
 import { useScopedConsole } from '@/core/utils/log'
 
@@ -30,6 +29,11 @@ interface DynamicDetailResponse {
             opus?: {
               summary?: { text: string }
               pics?: Array<{ url: string; width: number; height: number }>
+            }
+            article?: {
+              id: number
+              title: string
+              covers?: string[]
             }
           }
         }
@@ -55,6 +59,11 @@ interface DynamicDetailResponse {
                 summary?: { text: string }
                 pics?: Array<{ url: string; width: number; height: number }>
               }
+              article?: {
+                id: number
+                title: string
+                covers?: string[]
+              }
             }
           }
         }
@@ -70,17 +79,18 @@ const getExtensionFromUrl = (url: string): string => {
 }
 
 const fetchDynamicDetail = async (dynamicId: string): Promise<DynamicDetailResponse | null> => {
-  const signedUrl = await getWbiSignedUrl(
+  const json = await getJsonWithCredentials(
     `https://api.bilibili.com/x/polymer/web-dynamic/v1/detail?id=${dynamicId}`,
   )
-  const json = await getJsonWithCredentials(signedUrl)
   if (json.code !== 0) {
     return null
   }
   return json as DynamicDetailResponse
 }
 
-const extractImagesFromMajor = (major: DynamicDetailResponse['data']['item']['modules']['module_dynamic']['major']): string[] => {
+const extractImagesFromMajor = (
+  major: DynamicDetailResponse['data']['item']['modules']['module_dynamic']['major'],
+): string[] => {
   if (!major) {
     return []
   }
@@ -91,6 +101,29 @@ const extractImagesFromMajor = (major: DynamicDetailResponse['data']['item']['mo
     return major.opus.pics.map(p => p.url.replace(/^http:/, 'https:'))
   }
   return []
+}
+
+const stripThumbnailSuffix = (url: string): string =>
+  url
+    .replace(/^http:/, 'https:')
+    .replace(/@\d+w.*$/, '')
+    .replace(/@\d+h.*$/, '')
+    .replace(/@\..*$/, '')
+
+const extractImagesFromDom = (): string[] => {
+  const contentArea = document.querySelector('.opus-module-content')
+  if (!contentArea) {
+    return []
+  }
+  const images = contentArea.querySelectorAll('img')
+  const urls = new Set<string>()
+  images.forEach((img: HTMLImageElement) => {
+    const src = img.src || (img.dataset as any)?.src || ''
+    if (src.includes('/new_dyn/') && !src.includes('/face/')) {
+      urls.add(stripThumbnailSuffix(src))
+    }
+  })
+  return [...urls]
 }
 
 const extractImagesFromItem = (
@@ -114,6 +147,13 @@ const extractImagesFromItem = (
         titleModule,
         origItem: item.orig,
       }
+    }
+  }
+
+  if (modules.module_dynamic?.major?.type === 'MAJOR_TYPE_ARTICLE') {
+    const domUrls = extractImagesFromDom()
+    if (domUrls.length > 0) {
+      return { urls: domUrls, authorModule, titleModule }
     }
   }
 
