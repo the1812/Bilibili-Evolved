@@ -1,7 +1,14 @@
 import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
 
-export const emptyBackgroundImage = () => ({
+export interface BackgroundImage {
+  name: string
+  url: string
+}
+
+export const LOCAL_UPLOAD_LIMIT_KIB = 1024
+
+export const emptyBackgroundImage = (): BackgroundImage => ({
   name: '',
   url: '',
 })
@@ -15,6 +22,7 @@ export const searchHomeOptionsMetadata = defineOptionsMetadata({
   backgroundImage: {
     displayName: '背景图片',
     defaultValue: emptyBackgroundImage(),
+    hidden: true,
   },
 })
 

@@ -14,6 +14,7 @@ export const component = defineComponentMetadata({
   urlInclude: homeUrls,
   tags: [componentsTags.style],
   options: searchHomeOptionsMetadata,
+  extraOptions: () => import('./ExtraOptions.vue').then(m => m.default),
   entry: () => {
     contentLoaded(async () => {
       const SearchHome = await import('./SearchHome.vue')
@@ -21,6 +22,7 @@ export const component = defineComponentMetadata({
       document.body.appendChild(searchHome.$el)
     })
   },
+
   unload: () => document.body.classList.add('home-redesign-off'),
   reload: () => document.body.classList.remove('home-redesign-off'),
   instantStyles: [
