@@ -16,7 +16,7 @@ export const emptyBackgroundImage = (): BackgroundImage => ({
 export const searchHomeOptionsMetadata = defineOptionsMetadata({
   backgroundColor: {
     displayName: '背景颜色',
-    defaultValue: '#ffffff',
+    defaultValue: '#000000',
     color: true,
   },
   backgroundImage: {

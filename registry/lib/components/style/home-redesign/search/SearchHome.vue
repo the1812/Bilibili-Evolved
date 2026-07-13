@@ -20,14 +20,14 @@ export default Vue.extend({
   },
   data() {
     return {
-      backgroundColor: '#ffffff',
+      backgroundColor: '#000000',
       backgroundImageUrl: '',
     }
   },
   computed: {
     pageStyle(): Record<string, string> {
       const style: Record<string, string> = {
-        backgroundColor: this.backgroundColor || '#ffffff',
+        backgroundColor: this.backgroundColor || '#000000',
         backgroundSize: 'cover',
         backgroundPosition: 'center center',
         backgroundRepeat: 'no-repeat',
@@ -52,7 +52,7 @@ export default Vue.extend({
   methods: {
     syncBackground() {
       const options = getSearchHomeOptions()
-      this.backgroundColor = options.backgroundColor || '#ffffff'
+      this.backgroundColor = options.backgroundColor || '#000000'
       this.backgroundImageUrl = options.backgroundImage?.url?.trim() || ''
     },
   },
