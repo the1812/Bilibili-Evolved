@@ -37,6 +37,15 @@
           @change="saveSelectedQuality()"
         />
       </div>
+      <div v-if="audioTracks && audioTracks.length > 0" class="download-video-config-item">
+        <div class="download-video-config-title">AI 原声翻译:</div>
+        <VDropdown
+          v-model="selectedAudioTrack"
+          :items="audioTrackOptions"
+          value-key="name"
+          @change="saveSelectedAudioTrack()"
+        />
+      </div>
       <template v-if="!testData.multiple && selectedQuality">
         <div v-if="testData.videoInfo" class="download-video-config-description">
           预计大小: {{ formatFileSize(testData.videoInfo.totalSize) }}
@@ -166,6 +175,8 @@ const getFallbackTestVideoInfo = () =>
     title: getFriendlyTitle(true),
   } as DownloadVideoInputItem)
 
+const DEFAULT_AUDIO_TRACK = { name: '', displayName: '原声' }
+
 export default Vue.extend({
   components: {
     VPopup,
@@ -199,6 +210,8 @@ export default Vue.extend({
       assets,
       qualities: [],
       selectedQuality: undefined,
+      audioTracks: [],
+      selectedAudioTrack: undefined,
       inputs: [],
       selectedInput: undefined,
       apis: [],
@@ -220,12 +233,19 @@ export default Vue.extend({
       }
       return this.qualities
     },
+    audioTrackOptions() {
+      const options = this.audioTracks.map(t => ({ name: t.id, displayName: t.name }))
+      if (options.length > 0) {
+        options.unshift(DEFAULT_AUDIO_TRACK)
+      }
+      return options
+    },
     canStartDownload() {
       if (this.busy || !this.open) {
         return false
       }
       const isAnySelectionEmpty = Object.entries(this)
-        .filter(([key]) => key.startsWith('selected'))
+        .filter(([key]) => key.startsWith('selected') && key !== 'selectedAudioTrack')
         .some(([, value]) => !value)
       if (isAnySelectionEmpty) {
         return false
@@ -289,6 +309,11 @@ export default Vue.extend({
       basicConfig.quality = quality.value
       this.updateTestVideoInfo()
     },
+    saveSelectedAudioTrack() {
+      // 避免冗余请求：这里不再使用引用对比，依赖 VDropdown 的 value-key="name" 属性
+      // 它能够正确阻止触发不需要的 change 事件
+      this.updateTestVideoInfo()
+    },
     async getVideoItems() {
       const input = this.selectedInput as DownloadVideoInput
       const videoItems = await input.getInputs(this.$refs.inputOptions)
@@ -307,6 +332,8 @@ export default Vue.extend({
       try {
         const videoInfo = await api.downloadVideoInfo(testItem)
         this.qualities = videoInfo.qualities
+        this.audioTracks = videoInfo.audioTracks || []
+
         const isSelectedQualityOutdated =
           !this.selectedQuality ||
           !videoInfo.qualities.some(q => q.value === this.selectedQuality.value)
@@ -319,8 +346,22 @@ export default Vue.extend({
             }
           }
         }
+
+        const isSelectedAudioTrackOutdated =
+          !this.selectedAudioTrack ||
+          (this.selectedAudioTrack.name !== '' &&
+            !this.audioTracks.some(t => t.id === this.selectedAudioTrack.name))
+
+        if (isSelectedAudioTrackOutdated) {
+          if (this.audioTracks.length > 0) {
+            this.selectedAudioTrack = DEFAULT_AUDIO_TRACK
+          } else {
+            this.selectedAudioTrack = undefined
+          }
+        }
         // 填充 quality 后要再请求一次得到对应 quality 的统计数据
         testItem.quality = this.selectedQuality
+        testItem.audioTrack = this.selectedAudioTrack?.name
         const qualityVideoInfo = await api.downloadVideoInfo(testItem)
         this.testData.videoInfo = qualityVideoInfo
         console.log('[qualityVideoInfo]', qualityVideoInfo)
@@ -341,6 +382,7 @@ export default Vue.extend({
         }
         videoInputs.forEach(item => {
           item.quality = this.selectedQuality
+          item.audioTrack = this.selectedAudioTrack?.name
         })
         const videoInfos = await Promise.all(videoInputs.map(i => api.downloadVideoInfo(i)))
         if (videoInfos.length === 0 || lodash.sumBy(videoInfos, it => it.fragments.length) === 0) {

@@ -8,6 +8,7 @@ import { Options } from '..'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi,
+  DownloadVideoAudioTrack,
   DownloadVideoFragment,
   DownloadVideoInfo,
   DownloadVideoInputItem,
@@ -115,8 +116,8 @@ const downloadDash = async (
     audio: () => true,
     ...filters,
   }
-  const { aid, cid, quality } = input
-  const params = {
+  const { aid, cid, quality, audioTrack } = input
+  const params: Record<string, string | number> = {
     avid: aid,
     cid,
     qn: quality?.value ?? '',
@@ -124,6 +125,9 @@ const downloadDash = async (
     fourk: 1,
     fnver: 0,
     fnval: 4048,
+  }
+  if (audioTrack) {
+    params.cur_language = audioTrack
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
   const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
@@ -219,6 +223,13 @@ const downloadDash = async (
   })()
   const currentCodec = fragments.find(x => x.type === 'video')?.codec
   const currentBandWidth = fragments.reduce((p, c) => p + c.bandWidth, 0)
+  let audioTracks: DownloadVideoAudioTrack[] | undefined
+  if (data.language?.items?.length) {
+    audioTracks = data.language.items.map((item: any) => ({
+      id: item.lang,
+      name: item.title,
+    }))
+  }
   const info = new DownloadVideoInfo({
     input,
     jsonData: data,
@@ -227,6 +238,7 @@ const downloadDash = async (
     currentQuality,
     currentCodec,
     currentBandWidth,
+    audioTracks,
   })
   compareQuality(input, info)
   return info

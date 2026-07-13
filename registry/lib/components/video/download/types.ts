@@ -19,6 +19,12 @@ export interface DownloadVideoInputItem {
   quality?: VideoQuality
   /** 是否允许画质回退, 当实际画质和期望画质不符时此项将决定是否抛出异常 */
   allowQualityDrop?: boolean
+  /** 请求的音轨语言 */
+  audioTrack?: string
+}
+export interface DownloadVideoAudioTrack {
+  id: string
+  name: string
 }
 /** 页面数据提供者 */
 export interface DownloadVideoInput<InputParameter = any> extends VueInstanceInput, WithName {
@@ -50,6 +56,7 @@ export class DownloadVideoInfo {
   public currentQuality: VideoQuality
   public currentCodec?: string
   public currentBandWidth?: number
+  public audioTracks?: DownloadVideoAudioTrack[]
   public jsonData: any
   constructor(
     parameters: Omit<DownloadVideoInfo, 'totalSize' | 'totalLength' | 'titledFragments'>,

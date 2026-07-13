@@ -89,6 +89,10 @@ export default Vue.extend({
       type: Function,
       default: (item: any) => item.name,
     },
+    valueKey: {
+      type: String,
+      default: '',
+    },
     round: {
       type: Boolean,
       default: false,
@@ -118,7 +122,14 @@ export default Vue.extend({
   },
   methods: {
     selectItem(item: any) {
-      if (item !== this.value) {
+      let isChanged = false
+      if (this.valueKey && item && this.value) {
+        isChanged = item[this.valueKey] !== this.value[this.valueKey]
+      } else {
+        isChanged = item !== this.value
+      }
+
+      if (isChanged) {
         this.$emit('change', item)
       }
       this.popupOpen = false
