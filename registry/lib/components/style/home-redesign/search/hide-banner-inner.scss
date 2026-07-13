@@ -1,4 +1,4 @@
-// 隐藏首页动画横幅 / Logo, 保留顶栏功能入口
+// 仅隐藏动画横幅层与 Logo 区, 不改动顶栏容器与功能入口
 @mixin layout-shift {
   position: fixed;
   visibility: hidden;
@@ -13,20 +13,4 @@
 .animated-banner,
 .header-banner__inner {
   @include layout-shift();
-}
-
-// 收起横幅占位高度, 不改动 .bili-header__bar 顶栏本身
-.bili-header__banner,
-.header-banner {
-  display: none !important;
-}
-
-#biliMainHeader {
-  min-height: unset !important;
-}
-
-.bili-header {
-  min-height: 0 !important;
-  // 给固定顶栏留出高度, 避免内容顶到顶栏下面
-  padding-top: 64px !important;
 }
