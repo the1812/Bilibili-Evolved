@@ -11,6 +11,8 @@
 }
 
 .animated-banner,
-.header-banner__inner {
+.header-banner__inner,
+#bili-header-banner-img,
+picture.banner-img {
   @include layout-shift();
 }
