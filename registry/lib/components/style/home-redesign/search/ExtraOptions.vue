@@ -47,7 +47,7 @@ import {
 } from './options'
 
 const componentName = 'searchHome'
-const title = '搜索首页'
+const title = '仅搜索首页'
 const { options } = getComponentSettings<SearchHomeOptions>(componentName)
 const backgroundImage = computed(() => options.backgroundImage)
 const isLocalImage = computed(() => backgroundImage.value.url.startsWith('data:image/'))

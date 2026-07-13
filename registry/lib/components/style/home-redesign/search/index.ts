@@ -6,7 +6,7 @@ import { searchHomeOptionsMetadata } from './options'
 
 export const component = defineComponentMetadata({
   name: 'searchHome',
-  displayName: '搜索首页',
+  displayName: '仅搜索首页',
   author: {
     name: 'mintonight',
     link: 'https://github.com/mintonight',
