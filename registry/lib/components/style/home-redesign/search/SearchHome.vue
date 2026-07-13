@@ -61,18 +61,33 @@ export default Vue.extend({
 <style lang="scss">
 @import 'common';
 
-// 让首页改造容器铺满视口并使用子元素背景
+// 避免「顶栏高度 + 再叠一层 100vh」把页面撑出底部空白滚动区
+html:has(.search-home),
+body:has(.search-home) {
+  height: 100%;
+  overflow: hidden;
+}
+
+body:has(.search-home) {
+  min-height: 100%;
+}
+
+// 固定铺满视口, 不参与文档流高度叠加; z-index 低于顶栏
 .home-redesign-base:has(.search-home) {
-  background-color: transparent !important;
-  align-self: stretch;
+  position: fixed;
+  inset: 0;
+  z-index: 0;
   width: 100%;
-  min-height: 100vh;
+  min-height: 0 !important;
+  background-color: transparent !important;
+  @include v-stretch();
 }
 
 .search-home {
-  flex-grow: 1;
+  flex: 1 1 auto;
   width: 100%;
-  min-height: 100vh;
+  min-height: 0;
+  height: 100%;
   padding: 24px 16px 48px;
   box-sizing: border-box;
   @include v-center();
