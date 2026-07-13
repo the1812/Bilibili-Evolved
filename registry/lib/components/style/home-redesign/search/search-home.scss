@@ -1,0 +1,40 @@
+// 将元素移到视图外来实现隐藏, 避免触发内部的 lazy load 内容
+@mixin layout-shift {
+  position: fixed;
+  visibility: hidden;
+  top: 200vh;
+  left: 0;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+// 隐藏首页顶栏横幅 / Logo 区
+.bili-header__banner,
+.header-banner,
+.header-banner__inner {
+  @include layout-shift();
+}
+
+html,
+body {
+  background-color: var(--search-home-bg-color, #ffffff) !important;
+  background-image: var(--search-home-bg-image, none) !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
+  background-attachment: fixed !important;
+}
+
+// 避免原顶栏残留底色挡住自定义背景
+.bili-header,
+.bili-header .bili-header__bar {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.home-redesign-base {
+  background-color: transparent !important;
+  background-image: none !important;
+}

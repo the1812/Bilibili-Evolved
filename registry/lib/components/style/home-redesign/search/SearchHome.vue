@@ -27,6 +27,7 @@ export default Vue.extend({
   min-height: calc(100vh - 64px);
   padding: 24px 16px 48px;
   box-sizing: border-box;
+  background: transparent;
   @include v-center();
   justify-content: center;
 
@@ -38,9 +39,14 @@ export default Vue.extend({
       padding: 10px 16px;
       border-radius: 24px;
       border: 1px solid #8884;
-      background-color: var(--home-background-color, #fff);
+      background-color: rgba(255, 255, 255, 0.92);
       box-shadow: var(--home-card-shadow, 0 4px 12px 0 rgba(0, 0, 0, 0.05));
       transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
+
+      body.dark & {
+        background-color: rgba(40, 40, 40, 0.92);
+        color: #eee;
+      }
 
       &:hover,
       &:focus-within {
