@@ -1,0 +1,15 @@
+// 仅隐藏横幅中的 Logo 区域, 不改动顶栏其他可交互元素
+@mixin layout-shift {
+  position: fixed;
+  visibility: hidden;
+  top: 200vh;
+  left: 0;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.header-banner__inner {
+  @include layout-shift();
+}

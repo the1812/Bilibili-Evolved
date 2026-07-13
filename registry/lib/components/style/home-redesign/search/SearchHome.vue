@@ -1,6 +1,6 @@
 <template>
   <HomeRedesignBase>
-    <div class="search-home">
+    <div class="search-home" :style="pageStyle">
       <div class="search-home-bar">
         <LaunchBar />
       </div>
@@ -8,26 +8,73 @@
   </HomeRedesignBase>
 </template>
 <script lang="ts">
+import { addComponentListener, removeComponentListener } from '@/core/settings'
 import LaunchBar from '@/components/launch-bar/LaunchBar.vue'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
+import { getSearchHomeOptions } from './options'
 
 export default Vue.extend({
   components: {
     HomeRedesignBase,
     LaunchBar,
   },
+  data() {
+    return {
+      backgroundColor: '#ffffff',
+      backgroundImageUrl: '',
+    }
+  },
+  computed: {
+    pageStyle(): Record<string, string> {
+      const style: Record<string, string> = {
+        backgroundColor: this.backgroundColor || '#ffffff',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center center',
+        backgroundRepeat: 'no-repeat',
+      }
+      if (this.backgroundImageUrl) {
+        style.backgroundImage = `url(${JSON.stringify(this.backgroundImageUrl)})`
+      } else {
+        style.backgroundImage = 'none'
+      }
+      return style
+    },
+  },
+  created() {
+    this.syncBackground()
+    addComponentListener('searchHome.backgroundColor', this.syncBackground)
+    addComponentListener('searchHome.backgroundImage', this.syncBackground)
+  },
+  beforeDestroy() {
+    removeComponentListener('searchHome.backgroundColor', this.syncBackground)
+    removeComponentListener('searchHome.backgroundImage', this.syncBackground)
+  },
+  methods: {
+    syncBackground() {
+      const options = getSearchHomeOptions()
+      this.backgroundColor = options.backgroundColor || '#ffffff'
+      this.backgroundImageUrl = options.backgroundImage?.url?.trim() || ''
+    },
+  },
 })
 </script>
 <style lang="scss">
 @import 'common';
 
+// 让首页改造容器铺满视口并使用子元素背景
+.home-redesign-base:has(.search-home) {
+  background-color: transparent !important;
+  align-self: stretch;
+  width: 100%;
+  min-height: 100vh;
+}
+
 .search-home {
   flex-grow: 1;
   width: 100%;
-  min-height: calc(100vh - 64px);
+  min-height: 100vh;
   padding: 24px 16px 48px;
   box-sizing: border-box;
-  background: transparent;
   @include v-center();
   justify-content: center;
 

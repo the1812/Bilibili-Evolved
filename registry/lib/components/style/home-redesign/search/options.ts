@@ -1,6 +1,11 @@
 import { defineOptionsMetadata, OptionsOfMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
 
+export const emptyBackgroundImage = () => ({
+  name: '',
+  url: '',
+})
+
 export const searchHomeOptionsMetadata = defineOptionsMetadata({
   backgroundColor: {
     displayName: '背景颜色',
@@ -8,11 +13,12 @@ export const searchHomeOptionsMetadata = defineOptionsMetadata({
     color: true,
   },
   backgroundImage: {
-    displayName: '背景图片 URL',
-    defaultValue: '',
+    displayName: '背景图片',
+    defaultValue: emptyBackgroundImage(),
   },
 })
 
 export type SearchHomeOptions = OptionsOfMetadata<typeof searchHomeOptionsMetadata>
 
-export const searchHomeOptions = getComponentSettings<SearchHomeOptions>('searchHome').options
+export const getSearchHomeOptions = () =>
+  getComponentSettings<SearchHomeOptions>('searchHome').options
