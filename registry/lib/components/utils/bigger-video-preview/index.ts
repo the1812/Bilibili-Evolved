@@ -8,6 +8,14 @@ import PreviewButton from './PreviewButton.vue'
 
 const logger = useScopedConsole('biggerVideoPreview')
 
+interface InlinePlayerContainer extends HTMLElement {
+  __INLINE_PLAYER__?: {
+    config?: {
+      duration?: number
+    }
+  }
+}
+
 const entry: ComponentEntry = async ({ settings }) => {
   // 预览容器
   let videoContainer = null
@@ -24,6 +32,23 @@ const entry: ComponentEntry = async ({ settings }) => {
     videoContainer = new ModalClass()
     videoContainer.$mount()
     document.body.appendChild(videoContainer.$el)
+  }
+
+  /**
+   * 解除预览时长限制
+   * @param movingDom 预览元素的 DOM
+   */
+  const removePreviewTimeLimit = (movingDom: Element) => {
+    if (!settings.options.removePreviewTimeLimit) {
+      return
+    }
+
+    // B 站定义的名称，屏蔽 ESLint 规则
+    // eslint-disable-next-line no-underscore-dangle
+    const inlinePlayer = (movingDom as InlinePlayerContainer).__INLINE_PLAYER__
+    if (inlinePlayer?.config) {
+      inlinePlayer.config.duration = Number.POSITIVE_INFINITY
+    }
   }
 
   /**
@@ -95,33 +120,6 @@ const entry: ComponentEntry = async ({ settings }) => {
       }
     }
 
-    /**
-     * 视频事件更新事件处理函数
-     * @param {Event} event - 事件对象
-     */
-    const onTimeUpdateHandler = (event: Event) => {
-      event.stopImmediatePropagation()
-    }
-
-    /**
-     * 切换预览时长限制
-     * @param {Element} movingDom - 预览元素的 DOM
-     */
-    const togglePreviewTimeLimit = (movingDom: Element) => {
-      if (settings.options.removePreviewTimeLimit) {
-        const video = movingDom.querySelector('video')
-        if (video) {
-          video.removeEventListener('timeupdate', onTimeUpdateHandler, true)
-          video.addEventListener('timeupdate', onTimeUpdateHandler, true)
-        }
-      } else {
-        const video = movingDom.querySelector('video')
-        if (video) {
-          video.removeEventListener('timeupdate', onTimeUpdateHandler, true)
-        }
-      }
-    }
-
     // 提升 popupChangeHandler 到外部作用域，确保引用一致
     let popupChangeHandler: (show: boolean) => void
     // #endregion
@@ -155,7 +153,7 @@ const entry: ComponentEntry = async ({ settings }) => {
               toggleVideoControls(movingDom, show)
 
               // 切换预览时长限制
-              togglePreviewTimeLimit(movingDom)
+              removePreviewTimeLimit(movingDom)
 
               if (!show) {
                 videoContainer.$off('popup-change', popupChangeHandler)
@@ -190,13 +188,16 @@ const entry: ComponentEntry = async ({ settings }) => {
   function insertPreviewButton(node: HTMLElement, className: string) {
     const wrap = node.querySelectorAll('.v-inline-player,.v-recommend-inline-player')
     wrap.forEach(it => {
+      const movingDom = it.parentElement
+      removePreviewTimeLimit(movingDom)
+
       // 检查父元素下是否已经有该按钮，避免重复插入
-      if (it.parentElement.querySelector(`.${className}`)) {
+      if (movingDom.querySelector(`.${className}`)) {
         return
       }
 
       const div = createPreviewButton(className)
-      it.parentElement.appendChild(div)
+      movingDom.appendChild(div)
     })
   }
 
@@ -305,7 +306,7 @@ export const component = defineComponentMetadata({
       defaultValue: true,
     },
     removePreviewTimeLimit: {
-      displayName: '解除5分钟预览限制（弹幕会停止）',
+      displayName: '解除5分钟预览限制',
       defaultValue: false,
     },
   },
