@@ -65,7 +65,10 @@ export class DownloadPackage {
         typeof data === 'string'
           ? new TextEncoder().encode(data)
           : new Uint8Array(await data.arrayBuffer())
-      zippable[finalName] = [bytes, options]
+      // 二进制媒体文件使用 store only，文本文件使用默认压缩
+      const isBinaryMedia = data instanceof Blob && /^(image|video|audio)\//.test(data.type)
+      const finalOptions = isBinaryMedia ? { ...options, level: 0 as const } : options
+      zippable[finalName] = [bytes, finalOptions]
     }
     const result = fflate.zipSync(zippable)
     return new Blob([result])
