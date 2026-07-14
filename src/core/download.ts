@@ -1,6 +1,6 @@
-import { JSZipFileOptions } from 'jszip'
+import { ZipOptions } from 'fflate'
 import { DownloadPackageEmitMode } from './download-mode'
-import { JSZipLibrary } from './runtime-library'
+import { FflateLibrary } from './runtime-library'
 import { getGeneralSettings } from './settings'
 import { formatFilename } from './utils/formatters'
 import { useScopedConsole } from './utils/log'
@@ -12,8 +12,8 @@ export interface PackageEntry {
   name: string
   /** 文件内容 */
   data: Blob | string
-  /** 其他文件属性 */
-  options: JSZipFileOptions
+  /** 压缩选项 */
+  options: ZipOptions
 }
 /** 打包下载多个文件 */
 export class DownloadPackage {
@@ -29,7 +29,7 @@ export class DownloadPackage {
    * @param name 文件名
    * @param data 文件内容
    */
-  add(name: string, data: string | Blob, options: JSZipFileOptions = {}) {
+  add(name: string, data: string | Blob, options: ZipOptions = {}) {
     if (data === null || data === undefined) {
       return
     }
@@ -45,25 +45,30 @@ export class DownloadPackage {
       const { data } = this.entries[0]
       return typeof data === 'string' ? new Blob([data]) : data
     }
-    const JSZip = await JSZipLibrary
-    const zip = new JSZip()
-    const fileExists = (name: string) => zip.filter((_, file) => file.name === name).length > 0
-    this.entries.forEach(({ name, data, options }) => {
-      if (fileExists(name)) {
-        let tempName = name
+    const fflate = await FflateLibrary
+    const zippable: Record<string, [Uint8Array, ZipOptions]> = {}
+    const fileExists = (name: string) => Object.prototype.hasOwnProperty.call(zippable, name)
+    for (const { name, data, options } of this.entries) {
+      let finalName = name
+      if (fileExists(finalName)) {
+        let tempName = finalName
         while (fileExists(tempName)) {
-          const extensionIndex = name.lastIndexOf('.')
-          tempName = `${name.substring(0, extensionIndex)}.${getRandomId(8)}${name.substring(
-            extensionIndex,
-          )}`
+          const extensionIndex = finalName.lastIndexOf('.')
+          tempName = `${finalName.substring(0, extensionIndex)}.${getRandomId(
+            8,
+          )}${finalName.substring(extensionIndex)}`
         }
-        console.warn(`文件名 "${name}" 和已有文件冲突, 已临时更换为 "${tempName}"`)
-        zip.file(tempName, data, options)
-        return
+        console.warn(`文件名 "${finalName}" 和已有文件冲突, 已临时更换为 "${tempName}"`)
+        finalName = tempName
       }
-      zip.file(name, data, options)
-    })
-    return zip.generateAsync({ type: 'blob' })
+      const bytes =
+        typeof data === 'string'
+          ? new TextEncoder().encode(data)
+          : new Uint8Array(await data.arrayBuffer())
+      zippable[finalName] = [bytes, options]
+    }
+    const result = fflate.zipSync(zippable)
+    return new Blob([result])
   }
   /**
    * 触发浏览器下载, 若只有一个文件则不会打包, 而是直接下载此文件
@@ -117,7 +122,7 @@ export class DownloadPackage {
    * @param filename 文件名
    * @param data 文件内容
    */
-  static async single(filename: string, data: string | Blob, options: JSZipFileOptions = {}) {
+  static async single(filename: string, data: string | Blob, options: ZipOptions = {}) {
     const pack = new DownloadPackage()
     pack.add(filename, data, options)
     return pack.emit()

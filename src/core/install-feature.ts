@@ -13,7 +13,7 @@ const isStyle = (item: FeatureType): item is UserStyle => Boolean((item as UserS
 
 /** 如果输入的功能链接是 .zip, 则尝试解压. 仅支持单个功能, 不能批量, 只是为了能方便在 GitHub 直接以 .zip 格式分享功能. */
 export const tryParseZip = async (url: string) => {
-  const { JSZipLibrary } = await import('./runtime-library')
+  const { FflateLibrary } = await import('./runtime-library')
   const { monkey } = await import('../core/ajax')
   const isZip = url.endsWith('.zip')
   const responseType = isZip ? 'blob' : 'text'
@@ -21,13 +21,14 @@ export const tryParseZip = async (url: string) => {
   if (!isZip || typeof response === 'string') {
     return response as string
   }
-  const JSZip = await JSZipLibrary
-  const zip = await JSZip.loadAsync(response)
-  const files = Object.values(zip.files)
-  if (files.length === 0) {
+  const fflate = await FflateLibrary
+  const buffer = new Uint8Array(await response.arrayBuffer())
+  const files = fflate.unzipSync(buffer)
+  const fileNames = Object.keys(files)
+  if (fileNames.length === 0) {
     throw new Error('Empty zip file')
   }
-  return files[0].async('text')
+  return new TextDecoder().decode(files[fileNames[0]])
 }
 export const installFeatureFromCode = async (
   code: string,
