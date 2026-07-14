@@ -1,12 +1,24 @@
 import { defineComponentMetadata } from '@/components/component'
-import { getCookieValue } from '@/core/utils'
+import { getCookieValue, matchUrlPattern } from '@/core/utils'
 
 const name = 'integratedDarkMode'
 const darkModeClass = 'dark'
 const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
 
+// 判断直播间是否启用深色模式
+const isLiveroomDarkModeEnabled = () => {
+  if (!matchUrlPattern(/^https:\/\/live\.bilibili\.com\/([\d]+)/)) {
+    return true
+  }
+  const htmlElement = document.documentElement
+  return htmlElement.getAttribute('lab-style') === 'dark'
+}
+
 const isOfficialDarkModeEnabled = () => {
+  if (!isLiveroomDarkModeEnabled()) {
+    return false
+  }
   return getCookieValue('theme_style') === 'dark'
 }
 
