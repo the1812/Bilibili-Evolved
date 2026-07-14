@@ -94,6 +94,9 @@ export default defineComponent({
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 99999;
+  width: var(--popup-width);
+  height: var(--popup-height);
+  aspect-ratio: var(--popup-aspect-ratio);
 }
 
 .watch-later-video.van-watchlater.black {

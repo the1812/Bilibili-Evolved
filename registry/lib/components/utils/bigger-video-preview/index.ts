@@ -2,6 +2,7 @@ import Vue from 'vue'
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
 import { childListSubtree } from '@/core/observer'
+import { addComponentListener } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { useScopedConsole } from '@/core/utils/log'
 import PreviewButton from './PreviewButton.vue'
@@ -17,9 +18,10 @@ interface InlinePlayerContainer extends HTMLElement {
   }
 }
 
-const entry: ComponentEntry = async ({ settings }) => {
+const entry: ComponentEntry = async ({ metadata: { name }, settings }) => {
   // 预览容器
   let videoContainer = null
+  let activeMovingDom: Element | null = null
 
   // B 站首次悬停时会缓存 duration，使用动态数值转换以支持选项实时生效
   const previewDuration = {
@@ -51,6 +53,33 @@ const entry: ComponentEntry = async ({ settings }) => {
     const inlinePlayer = (movingDom as InlinePlayerContainer).__INLINE_PLAYER__
     if (inlinePlayer?.config) {
       inlinePlayer.config.duration = previewDuration
+    }
+  }
+
+  /**
+   * 根据宽高上限和预览框比例计算弹窗尺寸
+   * @param movingDom 预览元素的 DOM
+   */
+  const updatePopupSize = (movingDom: Element) => {
+    const { width, height } = movingDom.getBoundingClientRect()
+    if (width === 0 || height === 0) {
+      return
+    }
+
+    const popupElement = videoContainer.$el as HTMLElement
+    // 保持长宽比
+    popupElement.style.setProperty('--popup-aspect-ratio', `${width} / ${height}`)
+
+    // 计算缩放后的宽高，选择较低的一方设置百分比，避免超出屏幕
+    const popupSize = Number(settings.options.popupSize)
+    const widthScale = (window.innerWidth * popupSize) / 100 / width
+    const heightScale = (window.innerHeight * popupSize) / 100 / height
+    if (widthScale <= heightScale) {
+      popupElement.style.setProperty('--popup-width', `${popupSize}vw`)
+      popupElement.style.setProperty('--popup-height', 'auto')
+    } else {
+      popupElement.style.setProperty('--popup-width', 'auto')
+      popupElement.style.setProperty('--popup-height', `${popupSize}vh`)
     }
   }
 
@@ -159,6 +188,7 @@ const entry: ComponentEntry = async ({ settings }) => {
               updatePreviewTimeLimit(movingDom)
 
               if (!show) {
+                activeMovingDom = null
                 videoContainer.$off('popup-change', popupChangeHandler)
               }
             }
@@ -168,7 +198,8 @@ const entry: ComponentEntry = async ({ settings }) => {
           if (instance.enlarged) {
             videoContainer.closePopup()
           } else {
-            videoContainer.$el.style.width = `${settings.options.popupWidth}%`
+            activeMovingDom = movingDom
+            updatePopupSize(movingDom)
 
             videoContainer.$off('popup-change', popupChangeHandler)
             videoContainer.$on('popup-change', popupChangeHandler)
@@ -254,6 +285,12 @@ const entry: ComponentEntry = async ({ settings }) => {
   logger.debug('初始化预览容器')
   await initPreviewContainer()
 
+  addComponentListener(`${name}.popupSize`, () => {
+    if (activeMovingDom) {
+      updatePopupSize(activeMovingDom)
+    }
+  })
+
   // 初始化预览放大按钮
   if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     logger.debug('初始化首页预览放大按钮')
@@ -291,8 +328,8 @@ export const component = defineComponentMetadata({
   entry,
   tags: [componentsTags.utils, componentsTags.video],
   options: {
-    popupWidth: {
-      displayName: '弹窗宽度（%）',
+    popupSize: {
+      displayName: '弹窗最大尺寸（%）',
       defaultValue: 80,
       slider: {
         min: 10,
