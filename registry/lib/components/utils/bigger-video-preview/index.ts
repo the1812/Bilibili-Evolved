@@ -7,11 +7,12 @@ import { useScopedConsole } from '@/core/utils/log'
 import PreviewButton from './PreviewButton.vue'
 
 const logger = useScopedConsole('biggerVideoPreview')
+const defaultPreviewDuration = 5 * 60 * 1000
 
 interface InlinePlayerContainer extends HTMLElement {
   __INLINE_PLAYER__?: {
     config?: {
-      duration?: number
+      duration?: number | { [Symbol.toPrimitive]: () => number }
     }
   }
 }
@@ -19,6 +20,12 @@ interface InlinePlayerContainer extends HTMLElement {
 const entry: ComponentEntry = async ({ settings }) => {
   // 预览容器
   let videoContainer = null
+
+  // B 站首次悬停时会缓存 duration，使用动态数值转换以支持选项实时生效
+  const previewDuration = {
+    [Symbol.toPrimitive]: () =>
+      settings.options.removePreviewTimeLimit ? Number.POSITIVE_INFINITY : defaultPreviewDuration,
+  }
 
   // #region functions
   /**
@@ -38,16 +45,12 @@ const entry: ComponentEntry = async ({ settings }) => {
    * 解除预览时长限制
    * @param movingDom 预览元素的 DOM
    */
-  const removePreviewTimeLimit = (movingDom: Element) => {
-    if (!settings.options.removePreviewTimeLimit) {
-      return
-    }
-
+  const updatePreviewTimeLimit = (movingDom: Element) => {
     // B 站定义的名称，屏蔽 ESLint 规则
     // eslint-disable-next-line no-underscore-dangle
     const inlinePlayer = (movingDom as InlinePlayerContainer).__INLINE_PLAYER__
     if (inlinePlayer?.config) {
-      inlinePlayer.config.duration = Number.POSITIVE_INFINITY
+      inlinePlayer.config.duration = previewDuration
     }
   }
 
@@ -153,7 +156,7 @@ const entry: ComponentEntry = async ({ settings }) => {
               toggleVideoControls(movingDom, show)
 
               // 切换预览时长限制
-              removePreviewTimeLimit(movingDom)
+              updatePreviewTimeLimit(movingDom)
 
               if (!show) {
                 videoContainer.$off('popup-change', popupChangeHandler)
@@ -189,7 +192,7 @@ const entry: ComponentEntry = async ({ settings }) => {
     const wrap = node.querySelectorAll('.v-inline-player,.v-recommend-inline-player')
     wrap.forEach(it => {
       const movingDom = it.parentElement
-      removePreviewTimeLimit(movingDom)
+      updatePreviewTimeLimit(movingDom)
 
       // 检查父元素下是否已经有该按钮，避免重复插入
       if (movingDom.querySelector(`.${className}`)) {
