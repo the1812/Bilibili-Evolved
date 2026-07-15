@@ -33,3 +33,15 @@
     }
   }
 }
+
+html:not(.pc-app) body.player-full-win:not(.hide-aside-area) .aside-area {
+  left: auto !important;
+  right: 0 !important;
+}
+
+@media screen and (min-width: 1440px) and (max-width: 2559px) {
+  html:not(.pc-app) body.player-full-win:not(.hide-aside-area) .aside-area {
+    left: auto !important;
+    right: 0 !important;
+  }
+}
