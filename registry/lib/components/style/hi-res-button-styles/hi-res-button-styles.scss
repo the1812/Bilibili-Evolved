@@ -55,3 +55,9 @@ $hi-res-icon: url('./hi-res.svg?inline');
     opacity: 0;
   }
 }
+
+.bpx-player-ctrl-flac.bpx-state-active {
+  .bpx-common-svg-icon {
+    color: var(--theme-color, #00a1d6);
+  }
+}
