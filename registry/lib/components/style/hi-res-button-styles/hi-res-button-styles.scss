@@ -58,6 +58,6 @@ $hi-res-icon: url('./hi-res.svg?inline');
 
 .bpx-player-ctrl-flac.bpx-state-active {
   .bpx-common-svg-icon {
-    color: var(--be-color-button-hires);
+    color: var(--theme-color, #00a1d6);
   }
 }
