@@ -3,7 +3,7 @@ import { ComponentEntry } from '@/components/types'
 import { getBlob, getJsonWithCredentials } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
 import { Toast } from '@/core/toast'
-import { matchUrlPattern } from '@/core/utils'
+import { matchUrlPattern, retrieveImageUrl } from '@/core/utils'
 import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
 import { Options } from '.'
@@ -72,12 +72,6 @@ interface DynamicDetailResponse {
   }
 }
 
-const getExtensionFromUrl = (url: string): string => {
-  const cleanUrl = url.replace(/^http:/, 'https:').split('?')[0]
-  const match = cleanUrl.match(/\.([a-zA-Z0-9]+)$/)
-  return match ? `.${match[1]}` : '.jpg'
-}
-
 const fetchDynamicDetail = async (dynamicId: string): Promise<DynamicDetailResponse | null> => {
   const json = await getJsonWithCredentials(
     `https://api.bilibili.com/x/polymer/web-dynamic/v1/detail?id=${dynamicId}`,
@@ -103,13 +97,6 @@ const extractImagesFromMajor = (
   return []
 }
 
-const stripThumbnailSuffix = (url: string): string =>
-  url
-    .replace(/^http:/, 'https:')
-    .replace(/@\d+w.*$/, '')
-    .replace(/@\d+h.*$/, '')
-    .replace(/@\..*$/, '')
-
 const extractImagesFromDom = (): string[] => {
   const contentArea = document.querySelector('.opus-module-content')
   if (!contentArea) {
@@ -120,7 +107,10 @@ const extractImagesFromDom = (): string[] => {
   images.forEach((img: HTMLImageElement) => {
     const src = img.src || (img.dataset as any)?.src || ''
     if (src.includes('/new_dyn/') && !src.includes('/face/')) {
-      urls.add(stripThumbnailSuffix(src))
+      const imageInfo = retrieveImageUrl(src)
+      if (imageInfo) {
+        urls.add(imageInfo.url)
+      }
     }
   })
   return [...urls]
@@ -249,8 +239,9 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
             n: (index + 1).toString(),
             ...variables,
           }
+          const imageInfo = retrieveImageUrl(imageUrls[index])
           pack.add(
-            `${formatTitle(feedFormat, false, titleData)}${getExtensionFromUrl(imageUrls[index])}`,
+            `${formatTitle(feedFormat, false, titleData)}${imageInfo?.extension ?? '.jpg'}`,
             blob,
           )
         })
