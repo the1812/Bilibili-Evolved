@@ -27,8 +27,9 @@ $font-family-css: var(--#{$name}--options--font-family) !important;
 }
 
 @function get-danmaku-path() {
-  $main: '.bili-dm';
-  @return collect-paths(($main));
+  $legacy: '.bili-dm';
+  $new-player: '.bili-danmaku-x-dm';
+  @return collect-paths(($legacy, $new-player));
 }
 
 @function get-icon-font-path() {
