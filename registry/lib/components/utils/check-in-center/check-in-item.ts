@@ -5,14 +5,14 @@ import { registerAndGetData } from '@/plugins/data'
 import { getComponentSettings } from '@/core/settings'
 import { CheckInOptions } from './options'
 
-const getCheckInOptions = () => getComponentSettings<CheckInOptions>('checkInCenter').options
+export const getCheckInOptions = () => getComponentSettings<CheckInOptions>('checkInCenter').options
 
 export interface CheckInItem {
   name: string
   displayName: string
   icon: string
-  autoRun: boolean
-  lastRun: number
+  autoRunKey: keyof CheckInOptions
+  lastRunKey: keyof CheckInOptions
   action: (button: HTMLDivElement, event: MouseEvent) => Promise<void>
   disabled?: boolean
 }
@@ -21,8 +21,8 @@ const builtInItems: CheckInItem[] = [
     name: 'seeds-to-coins',
     displayName: '瓜子换硬币',
     icon: 'mdi-seed-outline',
-    autoRun: getCheckInOptions().autoSeedsToCoins,
-    lastRun: getCheckInOptions().lastSeedsToCoins,
+    autoRunKey: 'autoSeedsToCoins',
+    lastRunKey: 'lastSeedsToCoins',
     action: async () => {
       const seedsToCoinsApi = 'https://api.live.bilibili.com/xlive/revenue/v1/wallet/silver2coin'
       const text = await postTextWithCredentials(
