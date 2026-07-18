@@ -20,6 +20,7 @@ const parsePVData = async (data: ArrayBuffer) => {
 // =========================================================================== /
 
 export interface SnapshotTile {
+  index: number
   time: number
   column: number
   row: number
@@ -67,6 +68,7 @@ function parseTiles(
       const x = column * width
       const y = row * height
       s.push({
+        index: atlas.index * columns * rows + i,
         atlas,
         time: times[i],
         x,
@@ -200,6 +202,7 @@ export interface DrawOptions {
   paddingY?: number
   marginX?: number
   marginY?: number
+  minTileWidth?: number
 }
 
 export interface GridInfoOptions {
@@ -224,12 +227,22 @@ function drawText(ctx: CanvasText, text: string[], x: number, y0: number, lineHe
 }
 
 /**
- * 在快照图上绘制对应的时间点
+ * 在快照图网格上绘制时间标记（上下文安全）
  * @author WakelessSloth56
+ * @param ctx 快照图网格的渲染上下文
+ * @param time 该快照图对应的时间点
+ * @param x0 该快照图在网格上的右下角 X 坐标
+ * @param y0 该快照图在网格上的右下角 Y 坐标
  */
-function drawTimestamp(snapshot: SnapshotTileWithCanvas, options: DrawOptions = {}) {
-  const timeStr = formatDuration(snapshot.time)
-  const ctx = snapshot.canvas.getContext('2d')
+function drawTimestamp(
+  ctx: CanvasRenderingContext2D,
+  x0: number,
+  y0: number,
+  time: number,
+  options: DrawOptions = {},
+) {
+  const timeStr = formatDuration(time)
+  ctx.save()
 
   const {
     paddingX = 8,
@@ -248,15 +261,18 @@ function drawTimestamp(snapshot: SnapshotTileWithCanvas, options: DrawOptions = 
   const bgW = textW + paddingX * 2
   const bgH = fontSize + paddingY * 2
 
-  const x = snapshot.canvas.width - bgW - marginX
-  const y = snapshot.canvas.height - bgH - marginY
+  const x = x0 - bgW - marginX
+  const y = y0 - bgH - marginY
 
   ctx.fillStyle = backgroundColor
   ctx.fillRect(x, y, bgW, bgH)
 
   ctx.fillStyle = textColor
   ctx.textBaseline = 'top'
+  ctx.textAlign = 'left'
   ctx.fillText(timeStr, x + paddingX, y + paddingY)
+
+  ctx.restore()
 }
 
 /**
@@ -282,6 +298,7 @@ function createGrid(
     header = [],
     footer = [],
     timestamp = true,
+    minTileWidth = -1,
   } = options
   const font = `${fontSize}px ${fontName}`
   const lineHeight = fontSize + paddingY
@@ -293,6 +310,10 @@ function createGrid(
   const headerW = calcTextWidth(ctx, header)
   const headerH = headerW ? header.length * fontSize + header.length * paddingY + paddingY : 0
 
+  if (tileWidth < minTileWidth) {
+    tileHeight *= minTileWidth / tileWidth
+    tileWidth = minTileWidth
+  }
   const gridW = cols * tileWidth + (cols - 1) * paddingX
   const gridH = rows * tileHeight + (rows - 1) * paddingY
 
@@ -336,12 +357,12 @@ function createGrid(
       if (i >= tiles.length) {
         return canvas
       }
-      if (timestamp) {
-        drawTimestamp(tiles[i])
-      }
       const x = col * (tileWidth + paddingX) + gridX
       const y = row * (tileHeight + paddingY) + gridY
-      ctx.drawImage(tiles[i].canvas, x, y)
+      ctx.drawImage(tiles[i].canvas, x, y, tileWidth, tileHeight)
+      if (timestamp) {
+        drawTimestamp(ctx, x + tileWidth, y + tileHeight, tiles[i].time)
+      }
     }
   }
   return canvas
@@ -354,26 +375,33 @@ function createGrid(
  */
 export class VideoSnapshot {
   private ready = false
-  aid?: string
+  aid?: number
   bvid?: string
-  cid: number
+  cid?: number
   atlases: SnapshotAtlas[]
   atlasColumns: number
   atlasRows: number
   tileWidth: number
   tileHeight: number
 
-  private constructor(aid: string, bvid: string, cid: number) {
+  private constructor(aid: number, bvid: string, cid: number) {
     this.aid = aid
     this.bvid = bvid
     this.cid = cid
   }
 
-  public static byAid(aid: string, cid: number) {
+  public static byAidOrBvid(vid: number | string, cid?: number) {
+    if (typeof vid === 'number') {
+      return VideoSnapshot.byAid(vid, cid)
+    }
+    return VideoSnapshot.byBvid(vid, cid)
+  }
+
+  public static byAid(aid: number, cid?: number) {
     return new VideoSnapshot(aid, null, cid)
   }
 
-  public static byBvid(bvid: string, cid: number) {
+  public static byBvid(bvid: string, cid?: number) {
     return new VideoSnapshot(null, bvid, cid)
   }
 
@@ -384,7 +412,9 @@ export class VideoSnapshot {
     } else if (this.bvid) {
       url += `bvid=${this.bvid}`
     }
-    url += `&cid=${this.cid}`
+    if (this.cid) {
+      url += `&cid=${this.cid}`
+    }
     const data = await bilibiliApi(getJsonWithCredentials(url), '[VideoSnapshot]', false)
 
     const allTimes = await fetch(data.pvdata, {})
