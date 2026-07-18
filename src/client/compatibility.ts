@@ -45,4 +45,19 @@ export const compatibilityPatch = () => {
       window.clearTimeout(handle)
     }
   }
+  // 沙箱 window 的补丁不影响页面作用域, 而 B 站页面自身代码也会调用 requestIdleCallback,
+  // 在缺少原生实现的浏览器 (如 Safari) 中需要在 unsafeWindow 上同样补充
+  if (typeof unsafeWindow.requestIdleCallback === 'undefined') {
+    unsafeWindow.requestIdleCallback = (callback: IdleRequestCallback) =>
+      unsafeWindow.setTimeout(() => {
+        const start = performance.now()
+        callback({
+          didTimeout: false,
+          timeRemaining: () => Math.max(0, 50 - (performance.now() - start)),
+        })
+      }, 0)
+    unsafeWindow.cancelIdleCallback = (handle: number) => {
+      unsafeWindow.clearTimeout(handle)
+    }
+  }
 }
