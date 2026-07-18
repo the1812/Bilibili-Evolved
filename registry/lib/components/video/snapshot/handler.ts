@@ -6,44 +6,63 @@ import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import { Toast, ToastType } from '@/core/toast'
 import { formatDateTime, formatDuration } from '@/core/utils/formatters'
-import { componentName } from '.'
+import { useScopedConsole } from '@/core/utils/log'
+import { openCanvasViewer } from '@/ui'
+import { componentName, displayName } from '.'
 import { DownloadVideoInfo } from '../download/types'
 import { Options } from './options'
 
-function getOptions() {
+export function getOptions() {
   return getComponentSettings<Options>(componentName).options
 }
 
-async function createSnapshotGrid(aid: string, cid: number) {
-  const options = getOptions()
+let scopedConsole: ReturnType<typeof useScopedConsole>
 
-  const snapshot = await VideoSnapshot.byAid(aid, cid).fetchInfo()
+export function getConsole() {
+  return scopedConsole ?? (scopedConsole = useScopedConsole(displayName))
+}
 
-  const infoLines: string[] = []
-  if (options.showInfoHeader) {
-    const info = await new VideoInfo(aid).fetchInfo()
-    const page = info.pages.find(p => p.cid === cid)
-    infoLines.push(`${info.bvid}　AV${info.aid}　CID ${page.cid}`, `稿件标题：${info.title}`)
-    if (info.pages.length > 1) {
-      infoLines.push(
-        `分页：${page.pageNumber} / ${info.pages.length}　投稿时间：${formatDateTime(
-          new Date(page.ctime * 1000),
-        )}　标题：${page.title}`,
-      )
-    }
-    infoLines.push(
-      `尺寸：${page.dimension.width}x${page.dimension.height}　时长：${formatDuration(
-        page.duration,
-      )}`,
-      `UP主：${info.up.name} (UID ${info.up.uid})　发布时间：${formatDateTime(
-        new Date(info.pubdate * 1000),
-      )}`,
+export async function openViewer() {
+  return openCanvasViewer('视频快照加载中……')
+}
+
+function getFooterText() {
+  return `${formatDateTime(new Date())} @ Bilibili-Evolved v${meta.compilationInfo.version}`
+}
+
+async function getVideoInfoText(vid: number | string, cid?: number) {
+  const lines: string[] = []
+  const info = await new VideoInfo(String(vid), typeof vid === 'string').fetchInfo()
+  const page = cid ? info.pages.find(p => p.cid === cid) : info.pages[0]
+  lines.push(`${info.bvid}　AV${info.aid}　CID ${page.cid}`, `稿件标题：${info.title}`)
+  if (info.pages.length > 1) {
+    lines.push(
+      `分页：${page.pageNumber} / ${info.pages.length}　投稿时间：${formatDateTime(
+        new Date(page.ctime * 1000),
+      )}　标题：${page.title}`,
     )
   }
+  lines.push(
+    `尺寸：${page.dimension.width}x${page.dimension.height}　时长：${formatDuration(
+      page.duration,
+    )}`,
+    `UP主：${info.up.name} (UID ${info.up.uid})　发布时间：${formatDateTime(
+      new Date(info.pubdate * 1000),
+    )}`,
+  )
+  return lines
+}
 
-  const gridCanvas = await snapshot.createGrid(options.gridColumns, options.gridRows, {
-    header: infoLines,
-    footer: [`${formatDateTime(new Date())} @ Bilibili-Evolved v${meta.compilationInfo.version}`],
+export async function createSnapshotGrid(vid: number | string, cid?: number) {
+  const options = getOptions()
+  const [snapshot, header] = await Promise.all([
+    VideoSnapshot.byAidOrBvid(vid, cid).fetchInfo(),
+    options.showInfoHeader ? getVideoInfoText(vid, cid) : null,
+  ])
+
+  return snapshot.createGrid(options.gridColumns, options.gridRows, {
+    header,
+    footer: [getFooterText()],
     timestamp: true,
     backgroundColor: options.gridBackgroundColor,
     textColor: options.textColor,
@@ -53,9 +72,8 @@ async function createSnapshotGrid(aid: string, cid: number) {
     paddingY: options.gridGap,
     marginX: options.gridBorder,
     marginY: options.gridBorder,
+    minTileWidth: options.enlargeSmallImage ? 480 : -1,
   })
-
-  return gridCanvas
 }
 
 async function toBlob(canvas: HTMLCanvasElement) {
@@ -70,10 +88,6 @@ async function toBlob(canvas: HTMLCanvasElement) {
   })
 }
 
-export async function renderSnapshotGridToBlobUrl(aid: string, cid: number) {
-  return createSnapshotGrid(aid, cid).then(toBlob).then(URL.createObjectURL)
-}
-
 export async function generateDownloadAssets(infos: DownloadVideoInfo[], toast: Toast) {
   let count = 0
   const results = await Promise.allSettled(
@@ -82,11 +96,13 @@ export async function generateDownloadAssets(infos: DownloadVideoInfo[], toast: 
       toast.message = `生成视频快照中... (${count}/${infos.length})`
       return {
         name: `${input.title}_snapshot.jpg`,
-        data: await createSnapshotGrid(input.aid, parseInt(input.cid)).then(toBlob),
+        data: await createSnapshotGrid(parseInt(input.aid), parseInt(input.cid)).then(toBlob),
       }
     }),
   )
-  const success = results.filter(x => x.status === 'fulfilled')
+  const success = results.filter(
+    x => x.status === 'fulfilled',
+  ) as PromiseFulfilledResult<PackageEntry>[]
   const fail = results.filter(x => x.status === 'rejected')
   toast.message = `生成视频快照完成。成功 ${success.length} 个, 失败 ${fail.length} 个。`
   if (fail.length > 0) {
@@ -96,5 +112,5 @@ export async function generateDownloadAssets(infos: DownloadVideoInfo[], toast: 
     toast.type = ToastType.Success
     toast.duration = 1000
   }
-  return success.map(x => <PackageEntry>x.value)
+  return success.map(x => x.value)
 }
