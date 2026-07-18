@@ -9,7 +9,7 @@ import { playerReady } from '@/core/utils'
 export const addVideoActionButton = async (getButton: Executable<Element>) => {
   await playerReady()
   const favoriteButton = dq(
-    '.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect, .video-toolbar-left-item.video-fav',
+    '.video-toolbar .ops .collect, .video-toolbar-v1 .toolbar-left .collect, .video-toolbar-left-item.video-fav, .toolbar .toolbar-left .favorite',
   ) as HTMLElement
   if (!favoriteButton) {
     return null
