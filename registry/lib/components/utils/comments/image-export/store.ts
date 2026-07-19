@@ -23,3 +23,8 @@ export const addCommentImage = (item: CommentItem) => {
 }
 
 export const getCommentImageData = (id: string) => imageMap.get(id)
+
+export const clearCommentImages = () => {
+  imageMap.clear()
+  commentImageList.value = []
+}

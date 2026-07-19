@@ -1,8 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem } from '@/components/utils/comment-apis'
-import { addCommentImage, panelVisible, getCommentImageData } from './store'
+import { addCommentImage, panelVisible, getCommentImageData, clearCommentImages } from './store'
 import { downloadSingleComment } from './download'
 import { select } from '@/core/spin-query'
+import { videoChange } from '@/core/observer'
 import { mountVueComponent } from '@/core/utils'
 import Panel from './Panel.vue'
 
@@ -69,6 +70,10 @@ const entry = async () => {
   const { forEachCommentItem, forEachCommentArea, addMenuItem } = await import(
     '@/components/utils/comment-apis'
   )
+
+  videoChange(() => {
+    clearCommentImages()
+  })
 
   forEachCommentArea(area => {
     addNavButton(area.element)
