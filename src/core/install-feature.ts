@@ -23,7 +23,15 @@ export const tryParseZip = async (url: string) => {
   }
   const fflate = await FflateLibrary
   const buffer = new Uint8Array(await response.arrayBuffer())
-  const files = fflate.unzipSync(buffer)
+  const files = await new Promise<Record<string, Uint8Array>>((resolve, reject) => {
+    fflate.unzip(buffer, (err, data) => {
+      if (err) {
+        reject(err)
+      } else {
+        resolve(data)
+      }
+    })
+  })
   const fileNames = Object.keys(files)
   if (fileNames.length === 0) {
     throw new Error('Empty zip file')
