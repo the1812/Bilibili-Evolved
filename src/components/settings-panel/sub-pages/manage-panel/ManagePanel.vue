@@ -165,7 +165,15 @@ export default Vue.extend({
       if (codeFile.name.endsWith('.zip')) {
         const fflate = await FflateLibrary
         const buffer = new Uint8Array(await codeFile.arrayBuffer())
-        const files = fflate.unzipSync(buffer)
+        const files = await new Promise<Record<string, Uint8Array>>((resolve, reject) => {
+          fflate.unzip(buffer, (err, data) => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(data)
+            }
+          })
+        })
         const fileNames = Object.keys(files)
         if (fileNames.length === 0) {
           Toast.info('不能打开空文件', `添加${this.config.title}`)

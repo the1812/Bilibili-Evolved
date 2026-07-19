@@ -68,7 +68,15 @@ export class DownloadPackage {
       const finalOptions = { ...options, level: 0 as const }
       zippable[finalName] = [bytes, finalOptions]
     }
-    const result = fflate.zipSync(zippable)
+    const result = await new Promise<Uint8Array>((resolve, reject) => {
+      fflate.zip(zippable, (err, data) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(data)
+        }
+      })
+    })
     return new Blob([result])
   }
   /**
