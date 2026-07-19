@@ -1,9 +1,8 @@
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem } from '@/components/utils/comment-apis'
-import { addCommentImage, panelVisible, getCommentImageData, clearCommentImages } from './store'
+import { setCommentImages, panelVisible } from './store'
 import { downloadSingleComment } from './download'
 import { select } from '@/core/spin-query'
-import { videoChange } from '@/core/observer'
 import { mountVueComponent } from '@/core/utils'
 import Panel from './Panel.vue'
 
@@ -13,11 +12,34 @@ const mountPanel = () => {
   if (panelMounted) {
     return
   }
-  mountVueComponent(Panel, document.body)
+  const instance = mountVueComponent(Panel)
+  document.body.appendChild(instance.$el)
   panelMounted = true
 }
 
-const showPanel = () => {
+const collectImagesFromArea = async (commentAreaElement: HTMLElement) => {
+  const { getCommentArea } = await import('@/components/utils/comment/comment-area')
+  const area = getCommentArea(commentAreaElement)
+  const images: CommentItem[] = []
+  area.forEachCommentItem(item => {
+    if (item.pictures?.length) {
+      images.push(item)
+    }
+  })
+  return images
+}
+
+const showPanel = async (commentAreaElement: HTMLElement) => {
+  const images = await collectImagesFromArea(commentAreaElement)
+  const imageData = images.map(item => ({
+    commentId: item.id,
+    userName: item.userName,
+    userId: item.userId,
+    content: item.content,
+    time: item.time,
+    pictures: item.pictures!.map(url => url.replace(/^http:/, 'https:')),
+  }))
+  setCommentImages(imageData)
   mountPanel()
   panelVisible.value = true
 }
@@ -43,7 +65,7 @@ export const addNavButton = async (commentAreaElement: HTMLElement) => {
       const newButton = document.createElement('bili-text-button')
       newButton.className = 'cie-nav-trigger'
       newButton.textContent = '解析评论区图片'
-      newButton.addEventListener('click', showPanel)
+      newButton.addEventListener('click', () => showPanel(commentAreaElement))
       lastButton.after(newButton)
     }
     return
@@ -56,7 +78,7 @@ export const addNavButton = async (commentAreaElement: HTMLElement) => {
   const button = document.createElement('div')
   button.className = 'cie-nav-trigger bili-tabs__nav__item'
   button.textContent = '解析评论区图片'
-  button.addEventListener('click', showPanel)
+  button.addEventListener('click', () => showPanel(commentAreaElement))
 
   const navContainer = commentAreaElement.querySelector('.bili-tabs__nav__items')
   if (navContainer) {
@@ -67,21 +89,15 @@ export const addNavButton = async (commentAreaElement: HTMLElement) => {
 }
 
 const entry = async () => {
-  const { forEachCommentItem, forEachCommentArea, addMenuItem } = await import(
+  const { forEachCommentArea, addMenuItem } = await import(
     '@/components/utils/comment-apis'
   )
-
-  videoChange(() => {
-    clearCommentImages()
-  })
 
   forEachCommentArea(area => {
     addNavButton(area.element)
   })
 
   const addExportButton = (comment: CommentItem) => {
-    addCommentImage(comment)
-
     if (!comment.pictures?.length) {
       return
     }
@@ -89,14 +105,20 @@ const entry = async () => {
       className: 'image-export',
       text: '导出图片',
       action: () => {
-        const data = getCommentImageData(comment.id)
-        if (data) {
-          downloadSingleComment(data)
+        const data = {
+          commentId: comment.id,
+          userName: comment.userName,
+          userId: comment.userId,
+          content: comment.content,
+          time: comment.time,
+          pictures: comment.pictures.map(url => url.replace(/^http:/, 'https:')),
         }
+        downloadSingleComment(data)
       },
     })
   }
 
+  const { forEachCommentItem } = await import('@/components/utils/comment-apis')
   forEachCommentItem({
     added: addExportButton,
   })
