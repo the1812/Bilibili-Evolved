@@ -74,6 +74,18 @@ export const component = defineComponentMetadata({
       console.debug('[showArea] 分区信息已存在，跳过')
       return
     }
+    let mainColor = 'rgba(255,255,255,1)'
+    const colorSelector1 = '.live-skin-coloration-area .live-skin-normal-a-text'
+    const colorSelector2 = '.left-anchor-section .room-owner-username'
+    const el1 = document.querySelector(colorSelector1)
+    if (el1) {
+      mainColor = getComputedStyle(el1).color
+    } else {
+      const el2 = document.querySelector(colorSelector2)
+      if (el2) {
+        mainColor = getComputedStyle(el2).color
+      }
+    }
 
     // ---------- 构建分区显示 ----------
     const { areaId, areaName, parentAreaId, parentAreaName } = areaInfo
@@ -86,7 +98,7 @@ export const component = defineComponentMetadata({
       display: 'inline-flex',
       alignItems: 'center',
       marginLeft: '8px',
-      color: 'rgba(255,255,255,1)',
+      color: mainColor,
       fontSize: '14px',
       whiteSpace: 'nowrap',
     })
@@ -103,7 +115,7 @@ export const component = defineComponentMetadata({
       parentA.style.color = '#f69'
     })
     parentA.addEventListener('mouseleave', () => {
-      parentA.style.color = 'rgba(255,255,255,1)'
+      parentA.style.color = mainColor
     })
 
     const separator = document.createElement('span')
@@ -124,7 +136,7 @@ export const component = defineComponentMetadata({
       childA.style.color = '#f69'
     })
     childA.addEventListener('mouseleave', () => {
-      childA.style.color = 'rgba(255,255,255,1)'
+      childA.style.color = mainColor
     })
 
     areaEl.appendChild(parentA)
