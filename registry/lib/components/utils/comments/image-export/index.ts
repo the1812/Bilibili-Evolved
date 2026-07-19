@@ -23,13 +23,7 @@ const collectImagesFromArea = async (commentAreaElement: HTMLElement) => {
   if (!area) {
     return []
   }
-  const images: CommentItem[] = []
-  area.forEachCommentItem(item => {
-    if (item.pictures?.length) {
-      images.push(item)
-    }
-  })
-  return images
+  return area.items.filter(item => item.pictures?.length)
 }
 
 const showPanel = async (commentAreaElement: HTMLElement) => {
