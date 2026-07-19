@@ -18,10 +18,7 @@ export const github: CdnConfig = {
       url: `https://${host}/protobufjs/protobuf.js/v6.10.1/dist/light/protobuf.min.js`,
       sha256: '8978daf871b02d683ecaee371861702a6f31d0a4c52925b7db2bb1655a8bc7d1',
     },
-    fflate: {
-      url: `https://${host}/101arrowz/fflate/v0.8.3/umd/index.js`,
-      sha256: '462ef8041fc970e3615a20a9dd2b2e3047a073b2da729ef4f02b634bba8b7b83',
-    },
+    fflate: jsDelivr.library.fflate,
     sortable: {
       url: `https://${host}/SortableJS/Sortable/1.14.0/Sortable.min.js`,
       sha256: '0ea5a6fbfbf5434b606878533cb7a66bcf700f0f08afe908335d0978fb63ad94',
