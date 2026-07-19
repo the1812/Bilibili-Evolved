@@ -1,12 +1,14 @@
+import { watch } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem } from '@/components/utils/comment-apis'
-import { setCommentImages, panelVisible } from './store'
+import { setCommentImages, addCommentImages, panelVisible, clearCommentImages } from './store'
 import { downloadSingleComment } from './download'
 import { select } from '@/core/spin-query'
 import { mountVueComponent } from '@/core/utils'
 import Panel from './Panel.vue'
 
 let panelMounted = false
+let listenerRegistered = false
 
 const mountPanel = () => {
   if (panelMounted) {
@@ -26,20 +28,45 @@ const collectImagesFromArea = async (commentAreaElement: HTMLElement) => {
   return area.items.filter(item => item.pictures?.length)
 }
 
+const toImageData = (item: CommentItem) => ({
+  commentId: item.id,
+  userName: item.userName,
+  userId: item.userId,
+  content: item.content,
+  time: item.time,
+  pictures: item.pictures.map(url => url.replace(/^http:/, 'https:')),
+})
+
+const registerNewCommentListener = async () => {
+  if (listenerRegistered) {
+    return
+  }
+  const { forEachCommentItem } = await import('@/components/utils/comment-apis')
+  forEachCommentItem({
+    added: (item: CommentItem) => {
+      if (!panelVisible.value || !item.pictures?.length) {
+        return
+      }
+      addCommentImages([toImageData(item)])
+    },
+  })
+  listenerRegistered = true
+}
+
 const showPanel = async (commentAreaElement: HTMLElement) => {
   const images = await collectImagesFromArea(commentAreaElement)
-  const imageData = images.map(item => ({
-    commentId: item.id,
-    userName: item.userName,
-    userId: item.userId,
-    content: item.content,
-    time: item.time,
-    pictures: item.pictures.map(url => url.replace(/^http:/, 'https:')),
-  }))
+  const imageData = images.map(toImageData)
   setCommentImages(imageData)
   mountPanel()
+  await registerNewCommentListener()
   panelVisible.value = true
 }
+
+watch(panelVisible, visible => {
+  if (!visible) {
+    clearCommentImages()
+  }
+})
 
 export const addNavButton = async (commentAreaElement: HTMLElement) => {
   if (commentAreaElement.tagName.toLowerCase() === 'bili-comments') {
