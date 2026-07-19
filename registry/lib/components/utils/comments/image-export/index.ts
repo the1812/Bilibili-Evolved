@@ -18,8 +18,11 @@ const mountPanel = () => {
 }
 
 const collectImagesFromArea = async (commentAreaElement: HTMLElement) => {
-  const { getCommentArea } = await import('@/components/utils/comment/comment-area')
-  const area = getCommentArea(commentAreaElement)
+  const { commentAreaManager } = await import('@/components/utils/comment-apis')
+  const area = commentAreaManager.commentAreas.find(a => a.element === commentAreaElement)
+  if (!area) {
+    return []
+  }
   const images: CommentItem[] = []
   area.forEachCommentItem(item => {
     if (item.pictures?.length) {
@@ -89,9 +92,7 @@ export const addNavButton = async (commentAreaElement: HTMLElement) => {
 }
 
 const entry = async () => {
-  const { forEachCommentArea, addMenuItem } = await import(
-    '@/components/utils/comment-apis'
-  )
+  const { forEachCommentArea, addMenuItem } = await import('@/components/utils/comment-apis')
 
   forEachCommentArea(area => {
     addNavButton(area.element)
