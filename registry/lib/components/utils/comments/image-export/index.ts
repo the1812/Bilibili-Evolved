@@ -3,6 +3,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { CommentItem } from '@/components/utils/comment-apis'
 import { addCommentImage, panelVisible, getCommentImageData } from './store'
 import { downloadSingleComment } from './download'
+import { select } from '@/core/spin-query'
 import Panel from './Panel.vue'
 
 let panelMounted = false
@@ -23,13 +24,13 @@ const showPanel = () => {
   panelVisible.value = true
 }
 
-export const addNavButton = (commentAreaElement: HTMLElement) => {
+export const addNavButton = async (commentAreaElement: HTMLElement) => {
   if (commentAreaElement.tagName.toLowerCase() === 'bili-comments') {
-    const headerRenderer = commentAreaElement.shadowRoot?.querySelector(
-      'bili-comments-header-renderer',
-    )?.shadowRoot
+    const headerRenderer = await select(
+      () =>
+        commentAreaElement.shadowRoot?.querySelector('bili-comments-header-renderer')?.shadowRoot,
+    )
     if (!headerRenderer) {
-      setTimeout(() => addNavButton(commentAreaElement), 2000)
       return
     }
 
