@@ -40,7 +40,7 @@ const showPanel = async (commentAreaElement: HTMLElement) => {
     userId: item.userId,
     content: item.content,
     time: item.time,
-    pictures: item.pictures!.map(url => url.replace(/^http:/, 'https:')),
+    pictures: item.pictures.map(url => url.replace(/^http:/, 'https:')),
   }))
   setCommentImages(imageData)
   mountPanel()
