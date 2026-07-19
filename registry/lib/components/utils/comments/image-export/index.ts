@@ -1,9 +1,9 @@
-import Vue from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem } from '@/components/utils/comment-apis'
 import { addCommentImage, panelVisible, getCommentImageData } from './store'
 import { downloadSingleComment } from './download'
 import { select } from '@/core/spin-query'
+import { mountVueComponent } from '@/core/utils'
 import Panel from './Panel.vue'
 
 let panelMounted = false
@@ -12,10 +12,7 @@ const mountPanel = () => {
   if (panelMounted) {
     return
   }
-  const PanelClass = Vue.extend(Panel)
-  const instance = new PanelClass()
-  instance.$mount()
-  document.body.appendChild(instance.$el)
+  mountVueComponent(Panel, document.body)
   panelMounted = true
 }
 
