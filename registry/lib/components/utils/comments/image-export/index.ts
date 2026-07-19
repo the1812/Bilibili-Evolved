@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import { defineComponentMetadata } from '@/components/define'
-import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
+import { CommentItem } from '@/components/utils/comment-apis'
 import { addCommentImage, panelVisible, getCommentImageData } from './store'
 import { downloadSingleComment } from './download'
 import Panel from './Panel.vue'
@@ -79,25 +79,19 @@ const entry = async () => {
   const addExportButton = (comment: CommentItem) => {
     addCommentImage(comment)
 
-    const processItems = (items: CommentReplyItem[]) => {
-      items.forEach(item => {
-        if (!(item instanceof CommentItem) || !item.pictures?.length) {
-          return
-        }
-        addMenuItem(item, {
-          className: 'image-export',
-          text: '导出图片',
-          action: () => {
-            const data = getCommentImageData(item.id)
-            if (data) {
-              downloadSingleComment(data)
-            }
-          },
-        })
-      })
+    if (!comment.pictures?.length) {
+      return
     }
-    processItems([comment, ...comment.replies])
-    comment.addEventListener('repliesUpdate', e => processItems(e.detail))
+    addMenuItem(comment, {
+      className: 'image-export',
+      text: '导出图片',
+      action: () => {
+        const data = getCommentImageData(comment.id)
+        if (data) {
+          downloadSingleComment(data)
+        }
+      },
+    })
   }
 
   forEachCommentItem({
