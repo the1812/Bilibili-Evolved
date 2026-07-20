@@ -7,27 +7,29 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.live],
   urlInclude: liveUrls,
   entry: async () => {
-    if (document.readyState === 'loading') {
-      await new Promise(resolve => {
-        document.addEventListener('DOMContentLoaded', resolve, { once: true })
-      })
-    }
-
     const waitForElement = (selector: string): Promise<Element> => {
       return new Promise(resolve => {
-        const existing = document.querySelector(selector)
-        if (existing) {
-          resolve(existing)
-          return
-        }
-        const observer = new MutationObserver(() => {
-          const matched = document.querySelector(selector)
-          if (matched) {
-            observer.disconnect()
-            resolve(matched)
+        const startObserving = () => {
+          const existing = document.querySelector(selector)
+          if (existing) {
+            resolve(existing)
+            return
           }
-        })
-        observer.observe(document.body, { childList: true, subtree: true })
+          const observer = new MutationObserver(() => {
+            const matched = document.querySelector(selector)
+            if (matched) {
+              observer.disconnect()
+              resolve(matched)
+            }
+          })
+          observer.observe(document.body, { childList: true, subtree: true })
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', startObserving, { once: true })
+        } else {
+          startObserving()
+        }
       })
     }
 
@@ -106,6 +108,7 @@ export const component = defineComponentMetadata({
     const parentA = document.createElement('a')
     parentA.href = parentLink
     parentA.target = '_blank'
+    parentA.rel = 'noopener'
     parentA.textContent = parentAreaName || '父分区'
     Object.assign(parentA.style, {
       color: 'inherit',
@@ -127,6 +130,7 @@ export const component = defineComponentMetadata({
     const childA = document.createElement('a')
     childA.href = childLink
     childA.target = '_blank'
+    childA.rel = 'noopener'
     childA.textContent = areaName || '子分区'
     Object.assign(childA.style, {
       color: 'inherit',
