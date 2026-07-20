@@ -15,31 +15,28 @@ export const component = defineComponentMetadata({
         )
       }
 
-      if (isPlayerReady()) {
-        resolve()
-        return
-      }
-
-      const observer = new MutationObserver(() => {
+      const waitForPlayer = setInterval(() => {
         if (isPlayerReady()) {
-          observer.disconnect()
+          clearInterval(waitForPlayer)
           resolve()
         }
-      })
-      observer.observe(document.documentElement, {
-        childList: true,
-        subtree: true,
-      })
+      }, 500)
     })
+    console.debug('[直播自动切换最高画质] 播放器已就绪')
 
     const player = unsafeWindow.livePlayer
     const { qualityCandidates } = player.getPlayerInfo()
     const highestQualityNumber = qualityCandidates[0].qn
-    const currentQualityNumber = player.getPlayerInfo().quality
 
-    if (currentQualityNumber !== highestQualityNumber) {
+    const intervalId = setInterval(() => {
+      if (player.getPlayerInfo().quality === highestQualityNumber) {
+        console.debug('[直播自动切换最高画质] 已是最高画质')
+        clearInterval(intervalId)
+        return
+      }
       player.switchQuality(highestQualityNumber)
-    }
+      console.debug('[直播自动切换最高画质] 切换画质')
+    }, 1000)
   },
   tags: [componentsTags.live],
   urlInclude: liveUrls,
