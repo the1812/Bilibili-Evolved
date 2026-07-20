@@ -70,12 +70,18 @@ export const component = defineComponentMetadata({
     if (!areaInfo) {
       return
     }
-    const leftAnchor = await waitForElement('.head-info-section .left-anchor-section')
-    const existing = leftAnchor.parentElement?.querySelector('.show-area-info')
-    if (existing) {
+
+    // 同时等待两种可能存在的容器，谁先出现就用谁
+    const anchor = await Promise.race([
+      waitForElement('.head-info-section .left-anchor-section'),
+      waitForElement('.left-ctnr .live-title'),
+    ])
+    // 检查是否已经插入过（避免重复）
+    if (anchor.parentElement?.querySelector('.show-area-info')) {
       console.debug('[showArea] 分区信息已存在，跳过')
       return
     }
+
     let mainColor = 'rgba(255,255,255,1)'
     const colorSelector1 = '.live-skin-coloration-area .live-skin-normal-a-text'
     const colorSelector2 = '.left-anchor-section .room-owner-username'
@@ -147,11 +153,12 @@ export const component = defineComponentMetadata({
     areaEl.appendChild(separator)
     areaEl.appendChild(childA)
 
-    const parent = leftAnchor.parentNode
+    // 插入到锚点元素之后（作为其下一个兄弟节点）
+    const parent = anchor.parentNode
     if (parent) {
-      parent.insertBefore(areaEl, leftAnchor.nextSibling)
+      parent.insertBefore(areaEl, anchor.nextSibling)
     } else {
-      leftAnchor.parentNode?.appendChild(areaEl)
+      anchor.parentNode?.appendChild(areaEl)
     }
 
     console.debug('[showArea] 分区信息已显示：', `${parentAreaName} - ${areaName}`)
