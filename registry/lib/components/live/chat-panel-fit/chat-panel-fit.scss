@@ -32,55 +32,79 @@
       }
     }
   }
+
+  // 房间观众榜单栏
+  .gift-rank-cntr {
+    // Top3 榜单用户名宽度自适应
+    .top3-cntr .top3 {
+      .top3-item .right .top3-name {
+        max-width: calc((var(--live-chat-panel-width, 302px) - 112px) / 3) !important;
+      }
+    }
+    // 标签居中 / 容器横向滚动
+    .list-cntr {
+      .toolbox .tab-box {
+        overflow-x: auto;
+        overflow-y: hidden;
+        .sub-tab-item {
+          flex: 1;
+          width: 100%;
+          min-width: 65px;
+          .sub-tab-item-bg,
+          .sub-tab-item-text {
+            width: 100%;
+          }
+        }
+        .sub-tab-item:last-child {
+          margin-right: 0;
+        }
+      }
+      .list-body {
+        overflow-x: auto;
+        overflow-y: hidden;
+        .list {
+          min-width: 100%;
+          display: inline-block;
+          .gift-rank-list-item .gift-rank-list-item-content {
+            display: grid;
+            grid-template-columns: auto auto 1fr auto;
+          }
+        }
+      }
+    }
+  }
+
+  // 大航海榜单栏
+  .guard-rank-cntr .rank-cntr {
+    .rank-list-cntr {
+      // Top3 榜单用户名宽度自适应
+      .rank-list-box .top3-cntr {
+        .item {
+          width: fit-content;
+          .right .uname a {
+            width: auto;
+            max-width: calc((var(--live-chat-panel-width, 302px) - 121px) / 3);
+          }
+        }
+      }
+    }
+  }
+
+  // 聊天工具栏错位问题修复
+  .control-panel-ctnr .control-panel-icon-row {
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    gap: 4px;
+    .icon-right-part {
+      margin-left: auto;
+    }
+  }
 }
 
 // 面板错位问题修复
 html:not(.pc-app) body.player-full-win:not(.hide-aside-area) .aside-area {
   left: auto !important;
   right: 0 !important;
-}
-
-// 榜单标签居中 / 容器横向滚动
-.gift-rank-cntr .list-cntr {
-  .toolbox .tab-box {
-    overflow-x: auto;
-    overflow-y: hidden;
-    .sub-tab-item {
-      flex: 1;
-      width: 100%;
-      min-width: 65px;
-      .sub-tab-item-bg,
-      .sub-tab-item-text {
-        width: 100%;
-      }
-    }
-    .sub-tab-item:last-child {
-      margin-right: 0;
-    }
-  }
-
-  .list-body {
-    overflow-x: auto;
-    overflow-y: hidden;
-    .list {
-      min-width: 100%;
-      display: inline-block;
-      .gift-rank-list-item .gift-rank-list-item-content {
-        display: grid;
-        grid-template-columns: auto auto 1fr auto;
-      }
-    }
-  }
-}
-
-// 聊天工具栏错位问题修复
-.control-panel-ctnr .control-panel-icon-row {
-  display: flex;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  gap: 4px;
-  .icon-right-part {
-    margin-left: auto;
-  }
 }
