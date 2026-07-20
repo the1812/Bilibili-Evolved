@@ -33,3 +33,54 @@
     }
   }
 }
+
+// 面板错位问题修复
+html:not(.pc-app) body.player-full-win:not(.hide-aside-area) .aside-area {
+  left: auto !important;
+  right: 0 !important;
+}
+
+// 榜单标签居中 / 容器横向滚动
+.gift-rank-cntr .list-cntr {
+  .toolbox .tab-box {
+    overflow-x: auto;
+    overflow-y: hidden;
+    .sub-tab-item {
+      flex: 1;
+      width: 100%;
+      min-width: 65px;
+      .sub-tab-item-bg,
+      .sub-tab-item-text {
+        width: 100%;
+      }
+    }
+    .sub-tab-item:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .list-body {
+    overflow-x: auto;
+    overflow-y: hidden;
+    .list {
+      min-width: 100%;
+      display: inline-block;
+      .gift-rank-list-item .gift-rank-list-item-content {
+        display: grid;
+        grid-template-columns: auto auto 1fr auto;
+      }
+    }
+  }
+}
+
+// 聊天工具栏错位问题修复
+.control-panel-ctnr .control-panel-icon-row {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  gap: 4px;
+  .icon-right-part {
+    margin-left: auto;
+  }
+}
