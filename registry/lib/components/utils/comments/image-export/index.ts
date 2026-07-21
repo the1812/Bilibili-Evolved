@@ -1,6 +1,7 @@
 import { watch } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
-import { CommentItem } from '@/components/utils/comment-apis'
+import { CommentItem, CommentAreaV3, commentAreaManager } from '@/components/utils/comment-apis'
+import { ShadowRootEvents } from '@/core/shadow-root'
 import { setCommentImages, addCommentImages, panelVisible, clearCommentImages } from './store'
 import { downloadSingleComment } from './download'
 import { select } from '@/core/spin-query'
@@ -20,7 +21,6 @@ const mountPanel = () => {
 }
 
 const collectImagesFromArea = async (commentAreaElement: HTMLElement) => {
-  const { commentAreaManager } = await import('@/components/utils/comment-apis')
   const area = commentAreaManager.commentAreas.find(a => a.element === commentAreaElement)
   if (!area) {
     return []
@@ -70,10 +70,15 @@ watch(panelVisible, visible => {
 
 export const addNavButton = async (commentAreaElement: HTMLElement) => {
   if (commentAreaElement.tagName.toLowerCase() === 'bili-comments') {
-    const headerRenderer = await select(
-      () =>
-        commentAreaElement.shadowRoot?.querySelector('bili-comments-header-renderer')?.shadowRoot,
-    )
+    const headerRenderer = await select(() => {
+      const sr = commentAreaElement.shadowRoot?.querySelector(
+        'bili-comments-header-renderer',
+      )?.shadowRoot
+      if (!sr) {
+        return null
+      }
+      return sr.querySelectorAll('bili-text-button').length > 0 ? sr : null
+    })
     if (!headerRenderer) {
       return
     }
@@ -114,9 +119,25 @@ export const addNavButton = async (commentAreaElement: HTMLElement) => {
 
 const entry = async () => {
   const { forEachCommentArea, addMenuItem } = await import('@/components/utils/comment-apis')
+  const { videoChange } = await import('@/core/observer')
 
   forEachCommentArea(area => {
     addNavButton(area.element)
+    if (area instanceof CommentAreaV3) {
+      area.commentAreaEntry.addEventListener(
+        ShadowRootEvents.Updated,
+        lodash.debounce(() => addNavButton(area.element), 300),
+      )
+    }
+  })
+
+  videoChange(() => {
+    if (panelVisible.value) {
+      panelVisible.value = false
+    }
+    commentAreaManager.commentAreas.forEach(area => {
+      addNavButton(area.element)
+    })
   })
 
   const addExportButton = (comment: CommentItem) => {
