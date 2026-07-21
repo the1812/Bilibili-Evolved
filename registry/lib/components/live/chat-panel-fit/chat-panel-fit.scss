@@ -169,7 +169,7 @@
 
   .control-panel-ctnr {
     // 聊天工具栏错位问题修复
-    .control-panel-icon-row {
+    .control-panel-icon-row:has(.super-chat.has-ship) {
       container-type: inline-size;
       @container (max-width: 242px) {
         display: flex;
