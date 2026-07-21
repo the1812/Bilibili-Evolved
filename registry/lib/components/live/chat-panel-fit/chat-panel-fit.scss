@@ -9,7 +9,7 @@
     .player-section {
       width: calc(100% - var(--live-chat-panel-width, 302px)) !important;
     }
-    @container aside-area (max-width: 290px) {
+    /* @container aside-area (max-width: 290px) {
       .control-panel-icon-row-new .icon-left-part-new {
         .super-chat,
         .like-btn {
@@ -30,7 +30,7 @@
           padding-left: 12px !important;
         }
       }
-    }
+    } */
   }
 
   // 房间观众榜单栏
@@ -46,7 +46,7 @@
       }
       .top3-item .right .top3-name {
         max-width: calc(
-          (var(--live-chat-panel-width, 300px) - 120x) / var(--be-count-top3-gift)
+          (var(--live-chat-panel-width, 300px) - 120px) / var(--be-count-top3-gift)
         ) !important;
       }
     }
@@ -167,6 +167,7 @@
     }
   }
 
+  // 聊天工具栏
   .control-panel-ctnr {
     // 聊天工具栏错位问题修复
     .control-panel-icon-row:has(.super-chat.has-ship) {
@@ -179,7 +180,41 @@
         gap: 4px;
       }
     }
+    // 限制聊天工具栏弹窗大小
+    @container (max-width: 300px) {
+      .border-box.top-left {
+        transform-origin: left bottom !important;
+        scale: calc(var(--live-chat-panel-width) / 300px);
+      }
+      .border-box.top-right {
+        transform-origin: right bottom !important;
+        scale: calc(var(--live-chat-panel-width) / 300px);
+      }
+      .border-box.superChat {
+        height: calc(563px * var(--live-chat-panel-width) / 300px);
+        .superchat-content {
+          display: grid;
+          justify-content: center;
+          .home-page {
+            transform-origin: center top !important;
+            scale: calc(var(--live-chat-panel-width) / 300px);
+            .header > * {
+              flex-shrink: 0;
+              white-space: nowrap;
+            }
+          }
+        }
+      }
+    }
+    .border-box.superChat .bespoke {
+      width: 270px;
+    }
   }
+}
+
+// SC 主页关闭按钮
+#chat-control-panel-vm .close-btn[class] {
+  padding-right: 0 !important;
 }
 
 // 面板错位问题修复
