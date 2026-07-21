@@ -38,25 +38,38 @@
     // Top3 榜单用户名宽度自适应
     .top3-cntr .top3 {
       .top3-item .right .top3-name {
-        max-width: calc((var(--live-chat-panel-width, 302px) - 112px) / 3) !important;
+        max-width: calc((var(--live-chat-panel-width, 300px) - 112px) / 3) !important;
       }
     }
     // 标签居中 / 容器横向滚动
     .list-cntr {
-      .toolbox .tab-box {
-        overflow-x: auto;
-        overflow-y: hidden;
-        .sub-tab-item {
-          flex: 1;
-          width: 100%;
-          min-width: 65px;
-          .sub-tab-item-bg,
-          .sub-tab-item-text {
+      .toolbox {
+        .tab-box {
+          overflow-x: auto;
+          overflow-y: hidden;
+          .sub-tab-item {
+            flex: 1;
             width: 100%;
+            min-width: 65px;
+            .sub-tab-item-bg,
+            .sub-tab-item-text {
+              width: 100%;
+            }
+          }
+          .sub-tab-item:last-child {
+            margin-right: 0;
           }
         }
-        .sub-tab-item:last-child {
-          margin-right: 0;
+        // 宽度不足时隐藏提示文字
+        .switch-box {
+          container-type: inline-size;
+          gap: 10px;
+          @container (max-width: 260px) {
+            justify-content: flex-end;
+            > :first-child {
+              display: none;
+            }
+          }
         }
       }
       .list-body {
@@ -71,34 +84,82 @@
           }
         }
       }
-    }
-  }
-
-  // 大航海榜单栏
-  .guard-rank-cntr .rank-cntr {
-    .rank-list-cntr {
-      // Top3 榜单用户名宽度自适应
-      .rank-list-box .top3-cntr {
-        .item {
-          width: fit-content;
-          .right .uname a {
-            width: auto;
-            max-width: calc((var(--live-chat-panel-width, 302px) - 121px) / 3);
+      // “我的”栏
+      .list-mine {
+        overflow-x: auto;
+        overflow-y: hidden;
+        .ranking {
+          > * {
+            flex-shrink: 0;
           }
         }
       }
     }
   }
 
-  // 聊天工具栏错位问题修复
-  .control-panel-ctnr .control-panel-icon-row {
-    display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
-    white-space: nowrap;
-    gap: 4px;
-    .icon-right-part {
-      margin-left: auto;
+  // 大航海榜单栏
+  .guard-rank-cntr .rank-cntr {
+    // 宽度不足时隐藏提示文字
+    .select-virtual {
+      container-type: inline-size;
+      gap: 10px;
+      @container (max-width: 260px) {
+        justify-content: flex-end;
+        .title {
+          font-size: 0;
+          .tip-icon {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+    .rank-list-cntr {
+      // Top3 榜单用户名宽度自适应
+      .rank-list-box {
+        .top3-cntr {
+          .item {
+            width: fit-content;
+            .right .uname a {
+              width: auto;
+              max-width: calc((var(--live-chat-panel-width, 300px) - 121px) / 3);
+            }
+          }
+        }
+        // 容器横向滚动
+        .list {
+          overflow-x: auto;
+          overflow-y: auto;
+          webcomponent-userinfo {
+            min-width: max(100%, 260px);
+            display: flex;
+          }
+        }
+      }
+    }
+    // “我的”栏
+    .btn-box {
+      overflow-x: auto;
+      overflow-y: hidden;
+      .guard-daily-record {
+        gap: 10px;
+        > * {
+          flex-shrink: 0;
+        }
+      }
+    }
+  }
+
+  .control-panel-ctnr {
+    // 聊天工具栏错位问题修复
+    .control-panel-icon-row {
+      container-type: inline-size;
+      @container (max-width: 242px) {
+        display: flex;
+        white-space: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        gap: 4px;
+      }
     }
   }
 }
