@@ -37,8 +37,17 @@
   .gift-rank-cntr {
     // Top3 榜单用户名宽度自适应
     .top3-cntr .top3 {
+      --be-count-top3-gift: 3;
+      &:has(> .top3-item:only-child) {
+        --be-count-top3-gift: 1;
+      }
+      &:has(> .top3-item:first-child:nth-last-child(2)) {
+        --be-count-top3-gift: 2;
+      }
       .top3-item .right .top3-name {
-        max-width: calc((var(--live-chat-panel-width, 300px) - 112px) / 3) !important;
+        max-width: calc(
+          (var(--live-chat-panel-width, 300px) - 120x) / var(--be-count-top3-gift)
+        ) !important;
       }
     }
     // 标签居中 / 容器横向滚动
@@ -117,11 +126,20 @@
       // Top3 榜单用户名宽度自适应
       .rank-list-box {
         .top3-cntr {
+          --be-count-top3-guard: 3;
+          &:has(> .item:only-child) {
+            --be-count-top3-guard: 1;
+          }
+          &:has(> .item:first-child:nth-last-child(2)) {
+            --be-count-top3-guard: 2;
+          }
           .item {
             width: fit-content;
-            .right .uname a {
+            .right .uname > a {
               width: auto;
-              max-width: calc((var(--live-chat-panel-width, 300px) - 121px) / 3);
+              max-width: calc(
+                (var(--live-chat-panel-width, 300px) - 130px) / var(--be-count-top3-guard)
+              );
             }
           }
         }
