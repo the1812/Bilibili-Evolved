@@ -40,6 +40,7 @@ jobs:
         id: commit
         run: |
           git add --all
+          git add -f registry/dist/
           git commit -m "CI build"
         continue-on-error: true
       - name: Git push

@@ -7,4 +7,5 @@ dist/stats.html
 dist/profile.json
 dist/bilibili-evolved.dev.user.js
 dev-tools/**/dist/
+registry/dist/
 .idea
