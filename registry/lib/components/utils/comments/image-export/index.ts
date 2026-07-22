@@ -1,0 +1,179 @@
+import { watch } from 'vue'
+import { defineComponentMetadata } from '@/components/define'
+import { CommentItem, CommentAreaV3, commentAreaManager } from '@/components/utils/comment-apis'
+import { ShadowRootEvents } from '@/core/shadow-root'
+import { setCommentImages, addCommentImages, panelVisible, clearCommentImages } from './store'
+import { downloadSingleComment } from './download'
+import { select } from '@/core/spin-query'
+import { mountVueComponent } from '@/core/utils'
+import Panel from './Panel.vue'
+
+let panelMounted = false
+let listenerRegistered = false
+
+const mountPanel = () => {
+  if (panelMounted) {
+    return
+  }
+  const instance = mountVueComponent(Panel)
+  document.body.appendChild(instance.$el)
+  panelMounted = true
+}
+
+const collectImagesFromArea = async (commentAreaElement: HTMLElement) => {
+  const area = commentAreaManager.commentAreas.find(a => a.element === commentAreaElement)
+  if (!area) {
+    return []
+  }
+  return area.items.filter(item => item.pictures?.length)
+}
+
+const toImageData = (item: CommentItem) => ({
+  commentId: item.id,
+  userName: item.userName,
+  userId: item.userId,
+  content: item.content,
+  time: item.time,
+  pictures: item.pictures.map(url => url.replace(/^http:/, 'https:')),
+})
+
+const registerNewCommentListener = async () => {
+  if (listenerRegistered) {
+    return
+  }
+  const { forEachCommentItem } = await import('@/components/utils/comment-apis')
+  forEachCommentItem({
+    added: (item: CommentItem) => {
+      if (!panelVisible.value || !item.pictures?.length) {
+        return
+      }
+      addCommentImages([toImageData(item)])
+    },
+  })
+  listenerRegistered = true
+}
+
+const showPanel = async (commentAreaElement: HTMLElement) => {
+  const images = await collectImagesFromArea(commentAreaElement)
+  const imageData = images.map(toImageData)
+  setCommentImages(imageData)
+  mountPanel()
+  await registerNewCommentListener()
+  panelVisible.value = true
+}
+
+watch(panelVisible, visible => {
+  if (!visible) {
+    clearCommentImages()
+  }
+})
+
+export const addNavButton = async (commentAreaElement: HTMLElement) => {
+  if (commentAreaElement.tagName.toLowerCase() === 'bili-comments') {
+    const headerRenderer = await select(() => {
+      const sr = commentAreaElement.shadowRoot?.querySelector(
+        'bili-comments-header-renderer',
+      )?.shadowRoot
+      if (!sr) {
+        return null
+      }
+      return sr.querySelectorAll('bili-text-button').length > 0 ? sr : null
+    })
+    if (!headerRenderer) {
+      return
+    }
+
+    if (headerRenderer.querySelector('.cie-nav-trigger')) {
+      return
+    }
+
+    const buttons = headerRenderer.querySelectorAll('bili-text-button')
+    const lastButton = buttons[buttons.length - 1]
+
+    if (lastButton) {
+      const newButton = document.createElement('bili-text-button')
+      newButton.className = 'cie-nav-trigger'
+      newButton.textContent = '解析评论区图片'
+      newButton.addEventListener('click', () => showPanel(commentAreaElement))
+      lastButton.after(newButton)
+    }
+    return
+  }
+
+  if (commentAreaElement.querySelector('.cie-nav-trigger')) {
+    return
+  }
+
+  const button = document.createElement('div')
+  button.className = 'cie-nav-trigger bili-tabs__nav__item'
+  button.textContent = '解析评论区图片'
+  button.addEventListener('click', () => showPanel(commentAreaElement))
+
+  const navContainer = commentAreaElement.querySelector('.bili-tabs__nav__items')
+  if (navContainer) {
+    navContainer.appendChild(button)
+  } else {
+    commentAreaElement.insertBefore(button, commentAreaElement.firstChild)
+  }
+}
+
+const entry = async () => {
+  const { forEachCommentArea, addMenuItem } = await import('@/components/utils/comment-apis')
+  const { videoChange } = await import('@/core/observer')
+
+  forEachCommentArea(area => {
+    addNavButton(area.element)
+    if (area instanceof CommentAreaV3) {
+      area.commentAreaEntry.addEventListener(
+        ShadowRootEvents.Updated,
+        lodash.debounce(() => addNavButton(area.element), 300),
+      )
+    }
+  })
+
+  videoChange(() => {
+    if (panelVisible.value) {
+      panelVisible.value = false
+    }
+    commentAreaManager.commentAreas.forEach(area => {
+      addNavButton(area.element)
+    })
+  })
+
+  const addExportButton = (comment: CommentItem) => {
+    if (!comment.pictures?.length) {
+      return
+    }
+    addMenuItem(comment, {
+      className: 'image-export',
+      text: '导出图片',
+      action: () => {
+        const data = {
+          commentId: comment.id,
+          userName: comment.userName,
+          userId: comment.userId,
+          content: comment.content,
+          time: comment.time,
+          pictures: comment.pictures.map(url => url.replace(/^http:/, 'https:')),
+        }
+        downloadSingleComment(data)
+      },
+    })
+  }
+
+  const { forEachCommentItem } = await import('@/components/utils/comment-apis')
+  forEachCommentItem({
+    added: addExportButton,
+  })
+}
+
+export const component = defineComponentMetadata({
+  name: 'commentImageExport',
+  displayName: '评论图片导出',
+  author: {
+    name: 'kaixinol',
+    link: 'https://github.com/kaixinol',
+  },
+  entry,
+  tags: [componentsTags.utils],
+})
