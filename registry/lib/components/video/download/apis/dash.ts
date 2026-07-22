@@ -121,6 +121,7 @@ const downloadDash = async (
     avid: aid,
     cid,
     qn: quality?.value ?? '',
+    otype: 'json',
     fourk: 1,
     fnver: 0,
     fnval: 4048,
