@@ -8,3 +8,6 @@ dist/profile.json
 dist/bilibili-evolved.dev.user.js
 dev-tools/**/dist/
 .idea
+
+# Local standalone userscripts (not part of Evolved PR)
+userscripts/
