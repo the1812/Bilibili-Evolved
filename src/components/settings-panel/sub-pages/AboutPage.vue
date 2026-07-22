@@ -30,16 +30,10 @@
             主页
           </VButton>
         </a>
-        <a
-          target="_blank"
-          href="https://github.com/the1812/Bilibili-Evolved/issues"
-          class="feedback script-link"
-        >
-          <VButton>
-            <VIcon icon="mdi-message-text-outline" :size="18" />
-            反馈
-          </VButton>
-        </a>
+        <VButton class="feedback script-link" @click="openFeedback">
+          <VIcon icon="mdi-message-text-outline" :size="18" />
+          反馈
+        </VButton>
         <a
           target="_blank"
           href="https://github.com/the1812/Bilibili-Evolved/releases"
@@ -82,6 +76,7 @@ import { meta } from '@/core/meta'
 import { formatDateTime } from '@/core/utils/formatters'
 import { VButton, VIcon } from '@/ui'
 import { AboutPageAction, aboutPageActions } from './about-page'
+import { openFeedback } from './feedback'
 
 const feedbackSupported = (() => {
   const namespace = GM_info.scriptMetaStr.match(/@namespace\s*(.+)/)
@@ -108,6 +103,7 @@ export default Vue.extend({
   },
   methods: {
     formatDateTime,
+    openFeedback,
     async runAction(action: AboutPageAction, event: MouseEvent) {
       action.disabled = true
       try {
