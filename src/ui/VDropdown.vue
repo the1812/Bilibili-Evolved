@@ -87,11 +87,8 @@ export default Vue.extend({
     },
     keyMapper: {
       type: Function,
-      default: (item: any) => item.name,
-    },
-    valueKey: {
-      type: String,
-      default: '',
+      default: (item: any) =>
+        item !== null && typeof item === 'object' && 'name' in item ? item.name : item,
     },
     round: {
       type: Boolean,
@@ -123,8 +120,8 @@ export default Vue.extend({
   methods: {
     selectItem(item: any) {
       let isChanged = false
-      if (this.valueKey && item && this.value) {
-        isChanged = item[this.valueKey] !== this.value[this.valueKey]
+      if (item && this.value && this.keyMapper) {
+        isChanged = this.keyMapper(item) !== this.keyMapper(this.value)
       } else {
         isChanged = item !== this.value
       }

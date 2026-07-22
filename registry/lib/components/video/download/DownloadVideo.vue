@@ -37,12 +37,11 @@
           @change="saveSelectedQuality()"
         />
       </div>
-      <div v-if="audioTracks && audioTracks.length > 0" class="download-video-config-item">
-        <div class="download-video-config-title">AI 原声翻译:</div>
+      <div v-if="audioLanguages && audioLanguages.length > 0" class="download-video-config-item">
+        <div class="download-video-config-title">选择音轨:</div>
         <VDropdown
           v-model="selectedAudioTrack"
           :items="audioTrackOptions"
-          value-key="name"
           @change="saveSelectedAudioTrack()"
         />
       </div>
@@ -210,7 +209,7 @@ export default Vue.extend({
       assets,
       qualities: [],
       selectedQuality: undefined,
-      audioTracks: [],
+      audioLanguages: [],
       selectedAudioTrack: undefined,
       inputs: [],
       selectedInput: undefined,
@@ -234,7 +233,10 @@ export default Vue.extend({
       return this.qualities
     },
     audioTrackOptions() {
-      const options = this.audioTracks.map(t => ({ name: t.id, displayName: t.name }))
+      const options = this.audioLanguages.map(item => ({
+        name: item.language,
+        displayName: item.title,
+      }))
       if (options.length > 0) {
         options.unshift(DEFAULT_AUDIO_TRACK)
       }
@@ -310,8 +312,6 @@ export default Vue.extend({
       this.updateTestVideoInfo()
     },
     saveSelectedAudioTrack() {
-      // 避免冗余请求：这里不再使用引用对比，依赖 VDropdown 的 value-key="name" 属性
-      // 它能够正确阻止触发不需要的 change 事件
       this.updateTestVideoInfo()
     },
     async getVideoItems() {
@@ -332,7 +332,7 @@ export default Vue.extend({
       try {
         const videoInfo = await api.downloadVideoInfo(testItem)
         this.qualities = videoInfo.qualities
-        this.audioTracks = videoInfo.audioTracks || []
+        this.audioLanguages = videoInfo.audioLanguages || []
 
         const isSelectedQualityOutdated =
           !this.selectedQuality ||
@@ -350,10 +350,10 @@ export default Vue.extend({
         const isSelectedAudioTrackOutdated =
           !this.selectedAudioTrack ||
           (this.selectedAudioTrack.name !== '' &&
-            !this.audioTracks.some(t => t.id === this.selectedAudioTrack.name))
+            !this.audioLanguages.some(item => item.language === this.selectedAudioTrack.name))
 
         if (isSelectedAudioTrackOutdated) {
-          if (this.audioTracks.length > 0) {
+          if (this.audioLanguages.length > 0) {
             this.selectedAudioTrack = DEFAULT_AUDIO_TRACK
           } else {
             this.selectedAudioTrack = undefined
@@ -361,7 +361,7 @@ export default Vue.extend({
         }
         // 填充 quality 后要再请求一次得到对应 quality 的统计数据
         testItem.quality = this.selectedQuality
-        testItem.audioTrack = this.selectedAudioTrack?.name
+        testItem.audioLanguage = this.selectedAudioTrack?.name
         const qualityVideoInfo = await api.downloadVideoInfo(testItem)
         this.testData.videoInfo = qualityVideoInfo
         console.log('[qualityVideoInfo]', qualityVideoInfo)
@@ -382,7 +382,7 @@ export default Vue.extend({
         }
         videoInputs.forEach(item => {
           item.quality = this.selectedQuality
-          item.audioTrack = this.selectedAudioTrack?.name
+          item.audioLanguage = this.selectedAudioTrack?.name
         })
         const videoInfos = await Promise.all(videoInputs.map(i => api.downloadVideoInfo(i)))
         if (videoInfos.length === 0 || lodash.sumBy(videoInfos, it => it.fragments.length) === 0) {

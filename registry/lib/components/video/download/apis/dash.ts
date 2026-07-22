@@ -8,7 +8,7 @@ import { Options } from '..'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi,
-  DownloadVideoAudioTrack,
+  DownloadVideoAudioLanguage,
   DownloadVideoFragment,
   DownloadVideoInfo,
   DownloadVideoInputItem,
@@ -116,18 +116,17 @@ const downloadDash = async (
     audio: () => true,
     ...filters,
   }
-  const { aid, cid, quality, audioTrack } = input
+  const { aid, cid, quality, audioLanguage } = input
   const params: Record<string, string | number> = {
     avid: aid,
     cid,
     qn: quality?.value ?? '',
-    otype: 'json',
     fourk: 1,
     fnver: 0,
     fnval: 4048,
   }
-  if (audioTrack) {
-    params.cur_language = audioTrack
+  if (audioLanguage) {
+    params.cur_language = audioLanguage
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
   const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
@@ -223,11 +222,11 @@ const downloadDash = async (
   })()
   const currentCodec = fragments.find(x => x.type === 'video')?.codec
   const currentBandWidth = fragments.reduce((p, c) => p + c.bandWidth, 0)
-  let audioTracks: DownloadVideoAudioTrack[] | undefined
+  let audioLanguages: DownloadVideoAudioLanguage[] | undefined
   if (data.language?.items?.length) {
-    audioTracks = data.language.items.map((item: any) => ({
-      id: item.lang,
-      name: item.title,
+    audioLanguages = data.language.items.map((item: any) => ({
+      language: item.lang,
+      title: item.title,
     }))
   }
   const info = new DownloadVideoInfo({
@@ -238,7 +237,7 @@ const downloadDash = async (
     currentQuality,
     currentCodec,
     currentBandWidth,
-    audioTracks,
+    audioLanguages,
   })
   compareQuality(input, info)
   return info
