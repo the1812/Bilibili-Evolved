@@ -7,6 +7,7 @@ import { cssStyleLoaders, sassStyleLoaders } from './loaders/style-loaders'
 import { tsLoaders } from './loaders/ts-loader'
 import { altCdn } from './cdn'
 import { runtimeInfo } from './compilation-info/runtime'
+import { InlineAssetBufferPlugin } from './inline-asset-buffer'
 import commonMeta from '../src/client/common.meta.json'
 import * as gitInfo from './compilation-info/git'
 
@@ -119,20 +120,20 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
     },
     plugins: [
       new VueLoaderPlugin(),
+      new InlineAssetBufferPlugin(),
       new webpack.ProvidePlugin({
         webpackCompilationInfo: [relativePath('webpack/compilation-info'), 'compilationInfo'],
       }),
       new webpack.DefinePlugin({
         webpackGitInfo: JSON.stringify(gitInfo),
       }),
-      // new WebpackBar(),
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 1,
       }),
-      // new HardSourcePlugin(),
     ],
     cache: {
       type: 'filesystem',
+      version: 'inline-asset-buffer-v2',
       buildDependencies: {
         config: [__filename],
       },
