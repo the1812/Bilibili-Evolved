@@ -2,15 +2,32 @@ import Vue from 'vue'
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
 import { childListSubtree } from '@/core/observer'
+import { addComponentListener } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { useScopedConsole } from '@/core/utils/log'
 import PreviewButton from './PreviewButton.vue'
 
 const logger = useScopedConsole('biggerVideoPreview')
+const defaultPreviewDuration = 5 * 60 * 1000
 
-const entry: ComponentEntry = async ({ settings }) => {
+interface InlinePlayerContainer extends HTMLElement {
+  __INLINE_PLAYER__?: {
+    config?: {
+      duration?: number | { [Symbol.toPrimitive]: () => number }
+    }
+  }
+}
+
+const entry: ComponentEntry = async ({ metadata: { name }, settings }) => {
   // 预览容器
   let videoContainer = null
+  let activeMovingDom: Element | null = null
+
+  // B 站首次悬停时会缓存 duration，使用动态数值转换以支持选项实时生效
+  const previewDuration = {
+    [Symbol.toPrimitive]: () =>
+      settings.options.removePreviewTimeLimit ? Number.POSITIVE_INFINITY : defaultPreviewDuration,
+  }
 
   // #region functions
   /**
@@ -24,6 +41,46 @@ const entry: ComponentEntry = async ({ settings }) => {
     videoContainer = new ModalClass()
     videoContainer.$mount()
     document.body.appendChild(videoContainer.$el)
+  }
+
+  /**
+   * 解除预览时长限制
+   * @param movingDom 预览元素的 DOM
+   */
+  const updatePreviewTimeLimit = (movingDom: Element) => {
+    // B 站定义的名称，屏蔽 ESLint 规则
+    // eslint-disable-next-line no-underscore-dangle
+    const inlinePlayer = (movingDom as InlinePlayerContainer).__INLINE_PLAYER__
+    if (inlinePlayer?.config) {
+      inlinePlayer.config.duration = previewDuration
+    }
+  }
+
+  /**
+   * 根据宽高上限和预览框比例计算弹窗尺寸
+   * @param movingDom 预览元素的 DOM
+   */
+  const updatePopupSize = (movingDom: Element) => {
+    const { width, height } = movingDom.getBoundingClientRect()
+    if (width === 0 || height === 0) {
+      return
+    }
+
+    const popupElement = videoContainer.$el as HTMLElement
+    // 保持长宽比
+    popupElement.style.setProperty('--popup-aspect-ratio', `${width} / ${height}`)
+
+    // 计算缩放后的宽高，选择较低的一方设置百分比，避免超出屏幕
+    const popupSize = Number(settings.options.popupSize)
+    const widthScale = (window.innerWidth * popupSize) / 100 / width
+    const heightScale = (window.innerHeight * popupSize) / 100 / height
+    if (widthScale <= heightScale) {
+      popupElement.style.setProperty('--popup-width', `${popupSize}vw`)
+      popupElement.style.setProperty('--popup-height', 'auto')
+    } else {
+      popupElement.style.setProperty('--popup-width', 'auto')
+      popupElement.style.setProperty('--popup-height', `${popupSize}vh`)
+    }
   }
 
   /**
@@ -95,33 +152,6 @@ const entry: ComponentEntry = async ({ settings }) => {
       }
     }
 
-    /**
-     * 视频事件更新事件处理函数
-     * @param {Event} event - 事件对象
-     */
-    const onTimeUpdateHandler = (event: Event) => {
-      event.stopImmediatePropagation()
-    }
-
-    /**
-     * 切换预览时长限制
-     * @param {Element} movingDom - 预览元素的 DOM
-     */
-    const togglePreviewTimeLimit = (movingDom: Element) => {
-      if (settings.options.removePreviewTimeLimit) {
-        const video = movingDom.querySelector('video')
-        if (video) {
-          video.removeEventListener('timeupdate', onTimeUpdateHandler, true)
-          video.addEventListener('timeupdate', onTimeUpdateHandler, true)
-        }
-      } else {
-        const video = movingDom.querySelector('video')
-        if (video) {
-          video.removeEventListener('timeupdate', onTimeUpdateHandler, true)
-        }
-      }
-    }
-
     // 提升 popupChangeHandler 到外部作用域，确保引用一致
     let popupChangeHandler: (show: boolean) => void
     // #endregion
@@ -155,9 +185,10 @@ const entry: ComponentEntry = async ({ settings }) => {
               toggleVideoControls(movingDom, show)
 
               // 切换预览时长限制
-              togglePreviewTimeLimit(movingDom)
+              updatePreviewTimeLimit(movingDom)
 
               if (!show) {
+                activeMovingDom = null
                 videoContainer.$off('popup-change', popupChangeHandler)
               }
             }
@@ -167,7 +198,8 @@ const entry: ComponentEntry = async ({ settings }) => {
           if (instance.enlarged) {
             videoContainer.closePopup()
           } else {
-            videoContainer.$el.style.width = `${settings.options.popupWidth}%`
+            activeMovingDom = movingDom
+            updatePopupSize(movingDom)
 
             videoContainer.$off('popup-change', popupChangeHandler)
             videoContainer.$on('popup-change', popupChangeHandler)
@@ -190,13 +222,16 @@ const entry: ComponentEntry = async ({ settings }) => {
   function insertPreviewButton(node: HTMLElement, className: string) {
     const wrap = node.querySelectorAll('.v-inline-player,.v-recommend-inline-player')
     wrap.forEach(it => {
+      const movingDom = it.parentElement
+      updatePreviewTimeLimit(movingDom)
+
       // 检查父元素下是否已经有该按钮，避免重复插入
-      if (it.parentElement.querySelector(`.${className}`)) {
+      if (movingDom.querySelector(`.${className}`)) {
         return
       }
 
       const div = createPreviewButton(className)
-      it.parentElement.appendChild(div)
+      movingDom.appendChild(div)
     })
   }
 
@@ -250,6 +285,12 @@ const entry: ComponentEntry = async ({ settings }) => {
   logger.debug('初始化预览容器')
   await initPreviewContainer()
 
+  addComponentListener(`${name}.popupSize`, () => {
+    if (activeMovingDom) {
+      updatePopupSize(activeMovingDom)
+    }
+  })
+
   // 初始化预览放大按钮
   if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     logger.debug('初始化首页预览放大按钮')
@@ -287,8 +328,8 @@ export const component = defineComponentMetadata({
   entry,
   tags: [componentsTags.utils, componentsTags.video],
   options: {
-    popupWidth: {
-      displayName: '弹窗宽度（%）',
+    popupSize: {
+      displayName: '弹窗最大尺寸（%）',
       defaultValue: 80,
       slider: {
         min: 10,
@@ -305,7 +346,7 @@ export const component = defineComponentMetadata({
       defaultValue: true,
     },
     removePreviewTimeLimit: {
-      displayName: '解除5分钟预览限制（弹幕会停止）',
+      displayName: '解除5分钟预览限制',
       defaultValue: false,
     },
   },

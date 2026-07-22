@@ -542,16 +542,18 @@ export const isTyping = () => {
   }
   return activeElement instanceof HTMLTextAreaElement
 }
+interface RetrievedImageUrl {
+  url: string
+  extension: string
+}
+
 /**
- * 提取元素中的可能的图片信息 (src, data-src, background-image 等). 如果是经过缩放的图, 会自动去除缩放参数返回原图链接
- * @param element 元素
+ * 提取元素或URL字符串中的可能的图片信息 (src, data-src, background-image 等). 如果是经过缩放的图, 会自动去除缩放参数返回原图链接
+ * @param source 元素或图片URL字符串
  * @returns 图片的链接和扩展名
  */
-export const retrieveImageUrl = (element: HTMLElement) => {
-  if (!(element instanceof HTMLElement)) {
-    return null
-  }
-  const url = (() => {
+export const retrieveImageUrl = (source: string | HTMLElement): RetrievedImageUrl | null => {
+  const retrieveUrlFromElement = (element: HTMLElement) => {
     if (element.hasAttribute('data-src')) {
       return element.getAttribute('data-src')
     }
@@ -575,7 +577,16 @@ export const retrieveImageUrl = (element: HTMLElement) => {
       return null
     }
     return match[1]
-  })()
+  }
+
+  const url =
+    typeof source === 'string'
+      ? source.replace(/^http:/, 'https:').split('?')[0]
+      : retrieveUrlFromElement(source)
+
+  if (!url) {
+    return null
+  }
 
   const thumbMatch = url.match(/^(.+)(\..+?)(@.+)$/)
   if (thumbMatch) {
@@ -584,10 +595,12 @@ export const retrieveImageUrl = (element: HTMLElement) => {
       extension: thumbMatch[2],
     }
   }
+
   const noThumbMatch = url.match(/^(.+)(\..+?)$/)
   if (!noThumbMatch) {
     return null
   }
+
   return {
     url: noThumbMatch[1] + noThumbMatch[2],
     extension: noThumbMatch[2],
