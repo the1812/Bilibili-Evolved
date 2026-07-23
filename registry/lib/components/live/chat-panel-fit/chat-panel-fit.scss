@@ -1,218 +1,220 @@
 .player-full-win:not(.hide-aside-area) {
   .live-room-app {
+    #fullscreen-container {
+      --live-player-width: calc(100vw - var(--live-chat-panel-width, 302px));
+      width: var(--live-player-width) !important;
+      min-width: var(--live-player-width) !important;
+      .player-section {
+        width: var(--live-player-width) !important;
+      }
+    }
+
     .aside-area {
       container-name: aside-area;
       container-type: size;
       width: var(--live-chat-panel-width, 302px) !important;
-    }
-    #fullscreen-container,
-    .player-section {
-      width: calc(100% - var(--live-chat-panel-width, 302px)) !important;
-    }
-    /* @container aside-area (max-width: 290px) {
-      .control-panel-icon-row-new .icon-left-part-new {
-        .super-chat,
-        .like-btn {
-          width: 32px;
-          &-icon {
-            margin-right: 0 !important;
+      --live-chat-panel-scale: calc(var(--live-chat-panel-width) / 300px);
+      .rank-list-section .rank-list-ctnr .tab-content {
+        // 房间观众榜单栏
+        .gift-rank-cntr {
+          // Top3 榜单用户名宽度自适应
+          .top3-cntr .top3 {
+            --be-count-top3-gift: 3;
+            &:has(> .top3-item:only-child) {
+              --be-count-top3-gift: 1;
+            }
+            &:has(> .top3-item:first-child:nth-last-child(2)) {
+              --be-count-top3-gift: 2;
+            }
+            .top3-item .right .top3-name {
+              max-width: calc(
+                (var(--live-chat-panel-width, 300px) - 120px) / var(--be-count-top3-gift)
+              ) !important;
+            }
           }
-          &-text {
+          // 标签居中 / 容器横向滚动
+          .list-cntr {
+            .toolbox {
+              .tab-box {
+                overflow-x: auto;
+                overflow-y: hidden;
+                .sub-tab-item {
+                  flex: 1;
+                  width: 100%;
+                  min-width: 65px;
+                  .sub-tab-item-bg,
+                  .sub-tab-item-text {
+                    width: 100%;
+                  }
+                }
+                .sub-tab-item:last-child {
+                  margin-right: 0;
+                }
+              }
+              // 宽度不足时隐藏提示文字
+              .switch-box {
+                container-type: inline-size;
+                gap: 10px;
+                @container (max-width: 260px) {
+                  justify-content: flex-end;
+                  > :first-child {
+                    display: none;
+                  }
+                }
+              }
+            }
+            .list-body {
+              overflow-x: auto;
+              overflow-y: hidden;
+              .list {
+                min-width: 100%;
+                display: inline-block;
+                .gift-rank-list-item .gift-rank-list-item-content {
+                  display: grid;
+                  grid-template-columns: auto auto 1fr auto;
+                }
+              }
+            }
+            // “我的”栏
+            .list-mine {
+              overflow-x: auto;
+              overflow-y: hidden;
+              .ranking {
+                > * {
+                  flex-shrink: 0;
+                }
+              }
+            }
+          }
+        }
+
+        // 大航海榜单栏
+        .guard-rank-cntr .rank-cntr {
+          // 宽度不足时隐藏提示文字
+          .select-virtual {
+            container-type: inline-size;
+            gap: 10px;
+            @container (max-width: 260px) {
+              justify-content: flex-end;
+              .title {
+                font-size: 0;
+                .tip-icon {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+          .rank-list-cntr {
+            // Top3 榜单用户名宽度自适应
+            .rank-list-box {
+              .top3-cntr {
+                --be-count-top3-guard: 3;
+                &:has(> .item:only-child) {
+                  --be-count-top3-guard: 1;
+                }
+                &:has(> .item:first-child:nth-last-child(2)) {
+                  --be-count-top3-guard: 2;
+                }
+                .item {
+                  width: fit-content;
+                  .right .uname > a {
+                    width: auto;
+                    max-width: calc(
+                      (var(--live-chat-panel-width, 300px) - 130px) / var(--be-count-top3-guard)
+                    );
+                  }
+                }
+              }
+              // 容器横向滚动
+              .list {
+                overflow-x: auto;
+                overflow-y: auto;
+                webcomponent-userinfo {
+                  min-width: max(100%, 260px);
+                  display: flex;
+                }
+              }
+            }
+          }
+          // “我的”栏
+          .btn-box {
+            overflow-x: auto;
+            overflow-y: hidden;
+            .guard-daily-record {
+              gap: 10px;
+              > * {
+                flex-shrink: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // SC 定制按钮宽度
+    .border-box.superChat .bespoke {
+      width: 270px;
+    }
+
+    @container aside-area (max-width: 300px) {
+      .chat-history-panel {
+        // SC / 礼物 / 进场广播栏
+        .chat-overlay-layer {
+          transform-origin: left top;
+          min-width: 300px;
+          scale: var(--live-chat-panel-scale);
+        }
+      }
+
+      // 聊天 / 工具栏
+      .chat-control-panel .control-panel-ctnr {
+        // 工具栏错位问题修复
+        .control-panel-icon-row:has(.super-chat.has-ship) {
+          container-type: inline-size;
+          @container (max-width: 242px) {
+            display: flex;
+            white-space: nowrap;
+            overflow-x: auto;
+            overflow-y: hidden;
+            gap: 4px;
+          }
+        }
+        // 工具栏弹窗缩小
+        .border-box.top-left {
+          transform-origin: left bottom !important;
+          scale: var(--live-chat-panel-scale);
+        }
+        .border-box.top-right {
+          transform-origin: right bottom !important;
+          scale: var(--live-chat-panel-scale);
+        }
+        .border-box.superChat {
+          height: calc(563px * var(--live-chat-panel-scale));
+          .superchat-content {
+            display: grid;
+            justify-content: center;
+            .home-page {
+              transform-origin: center top !important;
+              scale: var(--live-chat-panel-scale);
+              .header > * {
+                flex-shrink: 0;
+                white-space: nowrap;
+              }
+            }
+          }
+        }
+        // 聊天栏
+        .chat-input-ctnr {
+          .medal-section {
             display: none !important;
           }
         }
       }
-      .chat-input-ctnr-new {
-        .medal-section {
-          display: none !important;
-        }
-        .chat-input-new:not(:has(textarea.focus)) {
-          padding-left: 12px !important;
-        }
-      }
-    } */
-  }
-
-  // 房间观众榜单栏
-  .gift-rank-cntr {
-    // Top3 榜单用户名宽度自适应
-    .top3-cntr .top3 {
-      --be-count-top3-gift: 3;
-      &:has(> .top3-item:only-child) {
-        --be-count-top3-gift: 1;
-      }
-      &:has(> .top3-item:first-child:nth-last-child(2)) {
-        --be-count-top3-gift: 2;
-      }
-      .top3-item .right .top3-name {
-        max-width: calc(
-          (var(--live-chat-panel-width, 300px) - 120px) / var(--be-count-top3-gift)
-        ) !important;
-      }
-    }
-    // 标签居中 / 容器横向滚动
-    .list-cntr {
-      .toolbox {
-        .tab-box {
-          overflow-x: auto;
-          overflow-y: hidden;
-          .sub-tab-item {
-            flex: 1;
-            width: 100%;
-            min-width: 65px;
-            .sub-tab-item-bg,
-            .sub-tab-item-text {
-              width: 100%;
-            }
-          }
-          .sub-tab-item:last-child {
-            margin-right: 0;
-          }
-        }
-        // 宽度不足时隐藏提示文字
-        .switch-box {
-          container-type: inline-size;
-          gap: 10px;
-          @container (max-width: 260px) {
-            justify-content: flex-end;
-            > :first-child {
-              display: none;
-            }
-          }
-        }
-      }
-      .list-body {
-        overflow-x: auto;
-        overflow-y: hidden;
-        .list {
-          min-width: 100%;
-          display: inline-block;
-          .gift-rank-list-item .gift-rank-list-item-content {
-            display: grid;
-            grid-template-columns: auto auto 1fr auto;
-          }
-        }
-      }
-      // “我的”栏
-      .list-mine {
-        overflow-x: auto;
-        overflow-y: hidden;
-        .ranking {
-          > * {
-            flex-shrink: 0;
-          }
-        }
-      }
-    }
-  }
-
-  // 大航海榜单栏
-  .guard-rank-cntr .rank-cntr {
-    // 宽度不足时隐藏提示文字
-    .select-virtual {
-      container-type: inline-size;
-      gap: 10px;
-      @container (max-width: 260px) {
-        justify-content: flex-end;
-        .title {
-          font-size: 0;
-          .tip-icon {
-            font-size: 12px;
-          }
-        }
-      }
-    }
-    .rank-list-cntr {
-      // Top3 榜单用户名宽度自适应
-      .rank-list-box {
-        .top3-cntr {
-          --be-count-top3-guard: 3;
-          &:has(> .item:only-child) {
-            --be-count-top3-guard: 1;
-          }
-          &:has(> .item:first-child:nth-last-child(2)) {
-            --be-count-top3-guard: 2;
-          }
-          .item {
-            width: fit-content;
-            .right .uname > a {
-              width: auto;
-              max-width: calc(
-                (var(--live-chat-panel-width, 300px) - 130px) / var(--be-count-top3-guard)
-              );
-            }
-          }
-        }
-        // 容器横向滚动
-        .list {
-          overflow-x: auto;
-          overflow-y: auto;
-          webcomponent-userinfo {
-            min-width: max(100%, 260px);
-            display: flex;
-          }
-        }
-      }
-    }
-    // “我的”栏
-    .btn-box {
-      overflow-x: auto;
-      overflow-y: hidden;
-      .guard-daily-record {
-        gap: 10px;
-        > * {
-          flex-shrink: 0;
-        }
-      }
-    }
-  }
-
-  // 聊天工具栏
-  .control-panel-ctnr {
-    // 聊天工具栏错位问题修复
-    .control-panel-icon-row:has(.super-chat.has-ship) {
-      container-type: inline-size;
-      @container (max-width: 242px) {
-        display: flex;
-        white-space: nowrap;
-        overflow-x: auto;
-        overflow-y: hidden;
-        gap: 4px;
-      }
-    }
-    // 限制聊天工具栏弹窗大小
-    @container (max-width: 300px) {
-      .border-box.top-left {
-        transform-origin: left bottom !important;
-        scale: calc(var(--live-chat-panel-width) / 300px);
-      }
-      .border-box.top-right {
-        transform-origin: right bottom !important;
-        scale: calc(var(--live-chat-panel-width) / 300px);
-      }
-      .border-box.superChat {
-        height: calc(563px * var(--live-chat-panel-width) / 300px);
-        .superchat-content {
-          display: grid;
-          justify-content: center;
-          .home-page {
-            transform-origin: center top !important;
-            scale: calc(var(--live-chat-panel-width) / 300px);
-            .header > * {
-              flex-shrink: 0;
-              white-space: nowrap;
-            }
-          }
-        }
-      }
-    }
-    .border-box.superChat .bespoke {
-      width: 270px;
     }
   }
 }
 
-// SC 主页关闭按钮
+// SC 发送页关闭按钮
 #chat-control-panel-vm .close-btn[class] {
   padding-right: 0 !important;
 }
