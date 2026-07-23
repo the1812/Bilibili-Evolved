@@ -1,19 +1,23 @@
+:root {
+  --be-live-chat-panel-width: var(--live-chat-panel-width, 300px);
+  --be-live-player-width: calc(100vw - var(--be-live-chat-panel-width));
+}
+
 .player-full-win:not(.hide-aside-area) {
   .live-room-app {
     #fullscreen-container {
-      --live-player-width: calc(100vw - var(--live-chat-panel-width, 302px));
-      width: var(--live-player-width) !important;
-      min-width: var(--live-player-width) !important;
+      width: var(--be-live-player-width) !important;
+      min-width: var(--be-live-player-width) !important;
       .player-section {
-        width: var(--live-player-width) !important;
+        width: var(--be-live-player-width) !important;
       }
     }
 
     .aside-area {
       container-name: aside-area;
       container-type: size;
-      width: var(--live-chat-panel-width, 302px) !important;
-      --live-chat-panel-scale: calc(var(--live-chat-panel-width) / 300px);
+      width: var(--be-live-chat-panel-width) !important;
+      --live-chat-panel-scale: calc(var(--be-live-chat-panel-width) / 300px);
       .rank-list-section .rank-list-ctnr .tab-content {
         // 房间观众榜单栏
         .gift-rank-cntr {
@@ -28,7 +32,7 @@
             }
             .top3-item .right .top3-name {
               max-width: calc(
-                (var(--live-chat-panel-width, 300px) - 120px) / var(--be-count-top3-gift)
+                (var(--be-live-chat-panel-width) - 120px) / var(--be-count-top3-gift)
               ) !important;
             }
           }
@@ -120,7 +124,7 @@
                   .right .uname > a {
                     width: auto;
                     max-width: calc(
-                      (var(--live-chat-panel-width, 300px) - 130px) / var(--be-count-top3-guard)
+                      (var(--be-live-chat-panel-width) - 130px) / var(--be-count-top3-guard)
                     );
                   }
                 }
