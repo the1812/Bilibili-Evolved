@@ -37,7 +37,7 @@ const startPoint = ref(0)
 const movement = ref(0)
 const previewWidth = computed(() => {
   if (options.customWidth) {
-    return options.customWidth + movement.value
+    return Math.round(options.customWidth + movement.value)
   }
   return getAutoWidth()
 })
@@ -52,12 +52,13 @@ const handlePointerMove = (e: PointerEvent) => {
     return
   }
   const currentMovement = startPoint.value - e.screenX
-  movement.value =
+  movement.value = Math.round(
     lodash.clamp(
       options.customWidth + currentMovement,
       ChatPanelFitOptionsMinWidth,
       options.maxWidth,
-    ) - options.customWidth
+    ) - options.customWidth,
+  )
 }
 const startDragging = (e: PointerEvent) => {
   isDragging.value = true
@@ -104,6 +105,7 @@ html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-and-as
 .chat-panel-fit-dragger {
   z-index: 1001;
   $dragger-width: 8px;
+  user-select: none;
   pointer-events: none;
   touch-action: none;
   height: 100vh;
