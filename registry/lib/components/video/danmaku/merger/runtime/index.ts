@@ -180,6 +180,8 @@ export const initDanmakuMerger = (): MergerCleanup => {
       dmLog('分P切换', { from: mergerLastCid, to: cid })
       nativeDanmaku.purgeMerged()
       schedulePartResync(cid)
+      // 分 P 切换时刷新搜索预填，不关闭已打开的搜索弹窗
+      mergerVueHostCtrl?.handlePartChange()
     }
 
     mergerLastVideoId = videoId

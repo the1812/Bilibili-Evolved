@@ -188,6 +188,7 @@ export interface MergerVueHostCtrl {
   host: MergerUiHost
   mount: () => Promise<void>
   handleVideoChange: () => void
+  handlePartChange: () => void
   destroy: () => void
   refreshBadge: () => void
 }
@@ -422,11 +423,28 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   }
 
   const getInitialKeyword = (): string => {
-    const title =
-      document.querySelector('.video-title')?.getAttribute('title') ||
-      document.querySelector('title')?.innerText.replace('_哔哩哔哩_bilibili', '') ||
-      ''
-    return title
+    const candidates = [
+      document.querySelector('.video-title')?.getAttribute('title'),
+      document.querySelector('.video-title')?.textContent,
+      document.querySelector('h1.video-title, h1[title], .video-info-title')?.getAttribute('title'),
+      document.querySelector('h1.video-title, h1[title], .video-info-title')?.textContent,
+      document.querySelector(
+        '.video-pod__item.active .title-txt, .video-pod__item.active .title, .multipage-list .on .part, .page-list .on',
+      )?.textContent,
+      document.title
+        .replace(/_哔哩哔哩_bilibili.*$/, '')
+        .replace(/-哔哩哔哩.*$/, '')
+        .replace(/_哔哩哔哩.*$/, ''),
+    ]
+    for (const raw of candidates) {
+      const title = String(raw || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+      if (title) {
+        return title
+      }
+    }
+    return ''
   }
 
   const resolvePartDurations = (
@@ -690,7 +708,6 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     let success = 0
     let fail = 0
     let totalDm = 0
-    let screenDm = 0
     let lastFailReason = ''
     const reasonText: Record<string, string> = {
       player_not_ready: '播放器未就绪',
@@ -756,7 +773,6 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           if (mergedOk) {
             success++
             totalDm += result.count
-            screenDm += result.screen || 0
           } else {
             fail++
             lastFailReason = result.reason || 'inject_failed'
@@ -792,11 +808,6 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     let finalMsg = `合并完成：${success}/${items.length} 个源`
     if (totalDm > 0) {
       finalMsg += `，共 ${totalDm} 条`
-    }
-    if (screenDm > 0) {
-      finalMsg += `，画面已写入 ${screenDm} 条`
-    } else if (success > 0) {
-      finalMsg += '，原生画面未写入（请确认 DanmakuX 已加载）'
     }
     if (fail > 0) {
       finalMsg += `，${fail} 个失败`
@@ -836,9 +847,8 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   const host: MergerUiHost = {
     openSearchModal() {
       searchState.visible = true
-      if (!searchState.keyword) {
-        searchState.keyword = getInitialKeyword()
-      }
+      // 每次打开都按当前分 P / 当前视频标题刷新预填
+      searchState.keyword = getInitialKeyword()
       syncSearchVm()
     },
     openManagerModal() {
@@ -1219,16 +1229,30 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     searchState.visible = false
     managerState.visible = false
     previewState.visible = false
+    // 换视频或分 P 后，清空旧预填，下次打开再读新标题
+    searchState.keyword = ''
     syncSearchVm()
     syncManagerVm()
     syncPreviewVm()
     refreshBadge()
   }
 
+  const handlePartChange = () => {
+    // 分 P 标题可能稍后才写入 DOM，短延迟后刷新预填
+    const applyKeyword = () => {
+      searchState.keyword = getInitialKeyword()
+      syncSearchVm()
+    }
+    applyKeyword()
+    window.setTimeout(applyKeyword, 300)
+    window.setTimeout(applyKeyword, 1000)
+  }
+
   return {
     host,
     mount,
     handleVideoChange,
+    handlePartChange,
     destroy,
     refreshBadge,
   }

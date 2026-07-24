@@ -93,7 +93,7 @@ function dmMergerPageBridgeMain() {
 
   const scanFiberForStore = () => {
     try {
-      w.player?.auxiliary?.openTabList?.()
+      // 不要在捕获阶段调用 openTabList：会反复展开弹幕列表，导致刚加载时无法折叠
     } catch (x) {}
     const seeds = [
       document.querySelector('.dm-info-row'),
