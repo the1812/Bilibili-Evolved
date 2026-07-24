@@ -128,10 +128,16 @@ export const initDanmakuMerger = (): MergerCleanup => {
         }
         nativeDanmaku.ensureCapture(true)
         if (!nativeDanmaku.hasListStore()) {
-          await nativeDanmaku.burstCaptureStore()
+          if (BiliApi.isPakkuActive()) {
+            await nativeDanmaku.waitForListStore(12000, null)
+          } else {
+            await nativeDanmaku.burstCaptureStore()
+          }
         }
         nativeDanmaku.installResyncHook(() => engine.getActiveSources())
-        const result = await nativeDanmaku.fullSyncAsync(activeSources, undefined)
+        const result = await nativeDanmaku.fullSyncAsync(activeSources, undefined, {
+          allowBurstCapture: !BiliApi.isPakkuActive(),
+        })
         engine.lastListSync = !!result.list
         engine.lastSyncResult = result
         if (result.screen > 0 || result.list || attempts >= maxAttempts) {
@@ -158,7 +164,9 @@ export const initDanmakuMerger = (): MergerCleanup => {
     hasListStore: () => nativeDanmaku.hasListStore(),
     burstCaptureStore: () => nativeDanmaku.burstCaptureStore(),
     fullSyncAsync: sources =>
-      nativeDanmaku.fullSyncAsync(sources ?? engine.getActiveSources(), undefined),
+      nativeDanmaku.fullSyncAsync(sources ?? engine.getActiveSources(), undefined, {
+        allowBurstCapture: !BiliApi.isPakkuActive(),
+      }),
     getStores: () => nativeDanmaku.getStores(),
     getEngineSources: () => engine.getActiveSources(),
     listMergerStoreKeys: () => getStorage().listMergerKeys(),

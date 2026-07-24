@@ -6,6 +6,22 @@ import { getStorage } from '../storage'
 import { mergerProgressToast, mergerProgressToastDone, mergerToast } from '../ui/notify'
 import type { InjectDanmakuMeta, InjectDanmakuResult } from './inject-flow'
 
+const withTimeout = async <T>(promise: Promise<T>, ms: number, label: string): Promise<T> => {
+  let timer: number | undefined
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timer = window.setTimeout(() => reject(new Error(`${label}超时（${ms}ms）`)), ms)
+      }),
+    ])
+  } finally {
+    if (timer != null) {
+      window.clearTimeout(timer)
+    }
+  }
+}
+
 export interface MergerApi {
   getDanmaku: (cid: number | string) => Promise<string>
 }
@@ -91,7 +107,11 @@ export function createSessionRestore(deps: {
               if (meta.cid == null || meta.cid === '') {
                 return null
               }
-              const xml = await deps.api.getDanmaku(meta.cid)
+              const xml = await withTimeout(
+                deps.api.getDanmaku(meta.cid),
+                20000,
+                `拉取弹幕 ${meta.cid}`,
+              )
               return { list: deps.parseDanmaku(xml), meta }
             } catch (err) {
               dmLog('单源弹幕拉取失败', { id: meta.id, err })
@@ -109,7 +129,11 @@ export function createSessionRestore(deps: {
           return
         }
 
-        const result = await deps.batchRestoreDanmaku(entries)
+        const result = await withTimeout(
+          deps.batchRestoreDanmaku(entries),
+          60000,
+          '注入恢复弹幕',
+        )
         const restored = deps.engine.sources?.size || 0
 
         mergerProgressToastDone()
@@ -122,6 +146,7 @@ export function createSessionRestore(deps: {
       } catch (err) {
         dmLog('恢复会话异常', err)
         mergerProgressToastDone()
+        mergerToast('恢复超时或失败，可手动重新合并', 'error')
       }
     })()
 

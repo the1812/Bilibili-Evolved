@@ -4,6 +4,7 @@ import type { NativeDanmakuApi } from '../danmaku/inject'
 import type { ParsedDanmakuItem } from '../danmaku/parse'
 import { formatPlayerNotReadyHint, getCurrentPageCid } from './helpers'
 import { mergerToast } from '../ui/notify'
+import { isPakkuActive } from '../api/bilibili'
 
 export interface InjectDanmakuMeta {
   id: string
@@ -28,9 +29,32 @@ export interface InjectDanmakuResult {
   native?: boolean
 }
 
-const nestedSyncOpts = { skipPlaybackPreserve: true } as const
-
 const restoreSyncOpts = { allowBurstCapture: false, skipPlaybackPreserve: true } as const
+
+/** pakku 共存时禁用 seek 式 burst，避免与其弹幕重载互相卡住 */
+const getInjectSyncOpts = () => ({
+  skipPlaybackPreserve: true as const,
+  allowBurstCapture: !isPakkuActive(),
+})
+
+const ensureListStoreReady = async (
+  nativeDanmaku: NativeDanmakuApi,
+  onProgress: ((phase: string) => void) | null,
+) => {
+  if (nativeDanmaku.hasListStore()) {
+    return true
+  }
+  nativeDanmaku.ensureCapture(true)
+  if (isPakkuActive()) {
+    onProgress?.('检测到 pakku，等待列表 Store…')
+    return nativeDanmaku.waitForListStore(12000, onProgress)
+  }
+  onProgress?.('捕获列表 Store')
+  if (await nativeDanmaku.burstCaptureStore()) {
+    return true
+  }
+  return nativeDanmaku.waitForListStore(8000, onProgress)
+}
 
 export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engine: DanmakuEngine) {
   return async function batchRestoreDanmaku(
@@ -63,12 +87,14 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
       dmLog('恢复前 Store', storeResolved)
       if (!storeResolved?.ok) {
         nativeDanmaku.ensureCapture(true)
-        await nativeDanmaku.burstCaptureStore()
+        if (!isPakkuActive()) {
+          await nativeDanmaku.burstCaptureStore()
+        }
       }
       if (!nativeDanmaku.hasListStore()) {
         const gotList =
           (await nativeDanmaku.waitForListStore(8000, null)) ||
-          (await nativeDanmaku.burstCaptureStore())
+          (!isPakkuActive() && (await nativeDanmaku.burstCaptureStore()))
         if (!gotList && !nativeDanmaku.hasListStore()) {
           await nativeDanmaku.waitForListStore(12000, null)
         }
@@ -187,9 +213,7 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
       const storeResolved = nativeDanmaku.resolveStoresDirect()
       dmLog('合并前 Store', storeResolved)
       if (!storeResolved?.ok) {
-        onProgress?.('捕获列表 Store')
-        nativeDanmaku.ensureCapture(true)
-        await nativeDanmaku.burstCaptureStore()
+        await ensureListStoreReady(nativeDanmaku, onProgress)
       }
 
       const viewCid = getCurrentPageCid()
@@ -215,10 +239,11 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
         engine.setActiveViewCid(viewCid)
       }
       nativeDanmaku.installResyncHook(() => engine.getActiveSources())
+      const injectSyncOpts = getInjectSyncOpts()
       let sync = await nativeDanmaku.fullSyncAsync(
         engine.getActiveSources(),
         onProgress,
-        nestedSyncOpts,
+        injectSyncOpts,
       )
       engine.lastListSync = !!sync.list
       engine.lastSyncResult = sync
@@ -227,12 +252,12 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
         onProgress?.('等待列表 Store')
         const gotList =
           (await nativeDanmaku.waitForListStore(8000, onProgress)) ||
-          (await nativeDanmaku.burstCaptureStore())
+          (!isPakkuActive() && (await nativeDanmaku.burstCaptureStore()))
         if (gotList || nativeDanmaku.hasListStore()) {
           sync = await nativeDanmaku.fullSyncAsync(
             engine.getActiveSources(),
             onProgress,
-            nestedSyncOpts,
+            injectSyncOpts,
           )
           engine.lastListSync = !!sync.list
           engine.lastSyncResult = sync
@@ -244,7 +269,7 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
             const retry = await nativeDanmaku.fullSyncAsync(
               engine.getActiveSources(),
               undefined,
-              nestedSyncOpts,
+              injectSyncOpts,
             )
             engine.lastListSync = !!retry.list
             engine.lastSyncResult = retry
@@ -255,7 +280,7 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
         sync = await nativeDanmaku.fullSyncAsync(
           engine.getActiveSources(),
           onProgress,
-          nestedSyncOpts,
+          injectSyncOpts,
         )
         engine.lastListSync = !!sync.list
         engine.lastSyncResult = sync

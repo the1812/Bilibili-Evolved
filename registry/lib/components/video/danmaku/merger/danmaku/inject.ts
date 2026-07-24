@@ -21,6 +21,20 @@ function extractBvid(raw) {
  * @param pageWin 返回页面 window（通常为 unsafeWindow）
  */
 export function createNativeDanmaku(pageWin: () => Window) {
+  const detectPakku = () => {
+    try {
+      if (document.querySelector('.__pakku_injected')) {
+        return true
+      }
+      if ((XMLHttpRequest.prototype as { pakku_open?: unknown }).pakku_open) {
+        return true
+      }
+    } catch {
+      // ignore
+    }
+    return false
+  }
+
   const NativeDanmaku = {
 
       page() {
@@ -525,7 +539,7 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       async burstCaptureStore() {
 
-          if (this._allowBurstCapture === false) return false;
+          if (this._allowBurstCapture === false || detectPakku()) return false;
 
           const p = this.page().player;
 
@@ -1425,7 +1439,9 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       async fullSyncAsync(sourcesMap, onProgress, opts = {}) {
 
-          const allowBurstCapture = opts?.allowBurstCapture !== false;
+          // pakku 共存时默认禁用 seek 捕获，避免与其弹幕管道互相卡住
+          const allowBurstCapture =
+              opts?.allowBurstCapture !== false && !detectPakku();
 
           const skipPlaybackPreserve = !!opts?.skipPlaybackPreserve;
 
