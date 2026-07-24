@@ -37,7 +37,7 @@ const startPoint = ref(0)
 const movement = ref(0)
 const previewWidth = computed(() => {
   if (options.customWidth) {
-    return options.customWidth + movement.value
+    return Math.round(options.customWidth + movement.value)
   }
   return getAutoWidth()
 })
@@ -52,12 +52,13 @@ const handlePointerMove = (e: PointerEvent) => {
     return
   }
   const currentMovement = startPoint.value - e.screenX
-  movement.value =
+  movement.value = Math.round(
     lodash.clamp(
       options.customWidth + currentMovement,
       ChatPanelFitOptionsMinWidth,
       options.maxWidth,
-    ) - options.customWidth
+    ) - options.customWidth,
+  )
 }
 const startDragging = (e: PointerEvent) => {
   isDragging.value = true
@@ -91,7 +92,7 @@ const startDragging = (e: PointerEvent) => {
 @import 'common';
 
 // 拖动时暂时提高 z-index, 否则预览区域会被挡住
-html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-ctnr {
+html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-and-aside-area {
   z-index: 1001 !important;
   .head-info-section {
     display: none !important;
@@ -102,13 +103,15 @@ html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-ctnr {
   @include absolute-v-center();
 }
 .chat-panel-fit-dragger {
+  z-index: 1001;
   $dragger-width: 8px;
+  user-select: none;
   pointer-events: none;
   touch-action: none;
-  height: 100%;
+  height: 100vh;
   width: 0;
   position: absolute;
-  right: 0;
+  right: var(--live-chat-panel-width);
   top: 0;
   @include v-stretch();
   .player-full-win:not(.hide-aside-area) & {
@@ -151,7 +154,7 @@ html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-ctnr {
     }
   }
   &.dragging &-preview-area {
-    opacity: 1;
+    opacity: 0.8;
   }
 }
 </style>

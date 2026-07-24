@@ -44,7 +44,7 @@ const load = async () => {
   window.addEventListener('customWidthReset', calcPanelWidth)
   window.addEventListener('resize', debounceCalcPanelWidth)
   const video = await sq(
-    () => dq('.live-player-ctnr video') as HTMLVideoElement,
+    () => dq('.player-ctnr video') as HTMLVideoElement,
     v => v !== null && v.readyState !== HTMLMediaElement.HAVE_NOTHING,
   )
   if (!video) {
@@ -53,14 +53,14 @@ const load = async () => {
   }
   calcPanelWidth()
 
-  const asideToggleButton = (await select('.aside-area-toggle-btn')) as HTMLElement
-  if (!asideToggleButton) {
-    console.log('未找到侧边栏按钮')
+  const aside = (await select('.aside-area')) as HTMLElement
+  if (!aside) {
+    console.log('未找到侧边栏')
     return
   }
   const { default: ChatPanelFitDragger } = await import('./ChatPanelFitDragger.vue')
   draggerInstance = mountVueComponent(ChatPanelFitDragger)
-  asideToggleButton.insertAdjacentElement('afterend', draggerInstance.$el)
+  aside.insertAdjacentElement('afterend', draggerInstance.$el)
 }
 const unload = () => {
   removeComponentListener(`${name}.targetRatio`, calcPanelWidth)
