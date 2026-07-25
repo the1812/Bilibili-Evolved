@@ -48,6 +48,11 @@ let injectTimer = 0
 let hideTimer = 0
 /** 是否由我们强制显示了 tip（仅克隆场景） */
 let forcedTipVisible = false
+/** 最近一次指针屏幕坐标：enter/release 后用于重同步 tip */
+let lastPointerX = 0
+let lastPointerY = 0
+/** 正在写 tip 定位，避免 MutationObserver 回环 */
+let writingForcedTip = false
 
 const isActiveForSource = (sourceId: string): boolean => getActiveSourceId() === sourceId
 
@@ -142,6 +147,18 @@ const clearMergedTipLayout = (tipRoot: Element): void => {
     })
 }
 
+/** 清掉强制 tip 写入的定位属性，交还原生 absolute 布局 */
+const clearForcedTipPosition = (tip: HTMLElement): void => {
+  tip.style.removeProperty('position')
+  tip.style.removeProperty('left')
+  tip.style.removeProperty('top')
+  tip.style.removeProperty('right')
+  tip.style.removeProperty('bottom')
+  tip.style.removeProperty('transform')
+  tip.style.removeProperty('z-index')
+  tip.style.removeProperty('margin')
+}
+
 /** 收回我们强制显示的 tip，避免恢复后残留 */
 const hideForcedTip = (): void => {
   const tip = document.querySelector('.bpx-player-dm-tip') as HTMLElement | null
@@ -157,11 +174,7 @@ const hideForcedTip = (): void => {
     tip.style.visibility = 'hidden'
     tip.style.opacity = '0'
     tip.style.pointerEvents = 'none'
-    // 清掉我们写的定位，交还原生
-    tip.style.removeProperty('left')
-    tip.style.removeProperty('top')
-    tip.style.removeProperty('transform')
-    tip.style.removeProperty('z-index')
+    clearForcedTipPosition(tip)
   }
   forcedTipVisible = false
 }
@@ -307,34 +320,121 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
   return best?.node || null
 }
 
-/** 仅克隆场景：手动把原生 tip 放到目标旁（跟随当前 hover 的 clone） */
+/**
+ * 仅克隆场景：用 fixed 按 clone 屏幕矩形定位 tip。
+ * 原生 tip 是 absolute + offsetParent=video-area；定格 clone 在 body 覆盖层，
+ * 继续用 offsetParent 坐标会和悬停弹幕脱节。fixed 直接跟屏幕矩形。
+ */
 const forceShowTipNearClone = (el: HTMLElement): void => {
   const tip = document.querySelector('.bpx-player-dm-tip') as HTMLElement | null
   if (!tip) {
     return
   }
-  const parent = (tip.offsetParent as HTMLElement | null) || tip.parentElement || document.body
-  const parentRect = parent.getBoundingClientRect()
   const dmRect = el.getBoundingClientRect()
-  const tipH = 48
-  const placeBelow = dmRect.bottom + 10 + tipH < window.innerHeight - 8
-  const left = dmRect.left + dmRect.width / 2 - parentRect.left
-  const top = placeBelow
-    ? dmRect.bottom + 8 - parentRect.top
-    : dmRect.top - tipH - 8 - parentRect.top
+  if (dmRect.width <= 0 || dmRect.height <= 0) {
+    return
+  }
+  const tipH = tip.offsetHeight || 48
+  const tipW = tip.offsetWidth || 162
+  const gap = 8
+  const placeBelow = dmRect.bottom + gap + tipH < window.innerHeight - 8
+  // 水平：弹幕中心；贴边时钳制，避免整颗 tip 出屏
+  let left = dmRect.left + dmRect.width / 2
+  const half = tipW / 2
+  left = Math.min(Math.max(left, half + 4), window.innerWidth - half - 4)
+  let top = placeBelow ? dmRect.bottom + gap : dmRect.top - tipH - gap
+  top = Math.min(Math.max(top, 4), window.innerHeight - tipH - 4)
 
-  tip.setAttribute(FORCED_TIP_ATTR, '1')
-  forcedTipVisible = true
-  tip.classList.remove('bpx-player-hide')
-  tip.classList.remove('bpx-player-showT', 'bpx-player-showB', 'bpx-player-showL', 'bpx-player-showR')
-  tip.classList.add(placeBelow ? 'bpx-player-showB' : 'bpx-player-showT')
-  tip.style.left = `${left}px`
-  tip.style.top = `${Math.max(0, top)}px`
-  tip.style.transform = 'translateX(-50%)'
-  tip.style.visibility = 'visible'
-  tip.style.opacity = '1'
-  tip.style.pointerEvents = 'auto'
-  tip.style.zIndex = '1000000'
+  writingForcedTip = true
+  try {
+    tip.setAttribute(FORCED_TIP_ATTR, '1')
+    forcedTipVisible = true
+    tip.classList.remove('bpx-player-hide')
+    tip.classList.remove('bpx-player-showT', 'bpx-player-showB', 'bpx-player-showL', 'bpx-player-showR')
+    tip.classList.add(placeBelow ? 'bpx-player-showB' : 'bpx-player-showT')
+    // fixed + 屏幕坐标：与覆盖层 clone 同一坐标系
+    tip.style.setProperty('position', 'fixed', 'important')
+    tip.style.setProperty('left', `${left}px`, 'important')
+    tip.style.setProperty('top', `${top}px`, 'important')
+    tip.style.setProperty('right', 'auto', 'important')
+    tip.style.setProperty('bottom', 'auto', 'important')
+    tip.style.setProperty('margin', '0', 'important')
+    tip.style.setProperty('transform', 'translateX(-50%)', 'important')
+    tip.style.setProperty('visibility', 'visible', 'important')
+    tip.style.setProperty('opacity', '1', 'important')
+    tip.style.setProperty('pointer-events', 'auto', 'important')
+    tip.style.setProperty('z-index', '1000000', 'important')
+  } finally {
+    // 属性变更异步进 observer，延后一帧再放行
+    window.requestAnimationFrame(() => {
+      writingForcedTip = false
+    })
+  }
+}
+
+/** 在当前指针位置重新命中并定位 tip（普通移动后调用） */
+export const resyncTimeStopTipAtPointer = (): void => {
+  if (!onClickHandler) {
+    return
+  }
+  onPointerMove({
+    clientX: lastPointerX,
+    clientY: lastPointerY,
+    target: document.elementFromPoint(lastPointerX, lastPointerY),
+  } as MouseEvent)
+}
+
+/**
+ * enter 后强制把 tip 贴到定格 clone。
+ * 点击时停时指针常在 tip 按钮上，bbox 命中拿不到 clone，必须主动选最近 clone。
+ */
+export const attachForcedTipToClones = (sourceId?: string | null): void => {
+  if (!onClickHandler) {
+    return
+  }
+  const active = sourceId || getActiveSourceId()
+  if (!active) {
+    hideForcedTip()
+    return
+  }
+  const clones = Array.from(
+    document.querySelectorAll(`.dm-merger-time-stop-clone`),
+  ).filter((node): node is HTMLElement => node instanceof HTMLElement)
+  if (!clones.length) {
+    hideForcedTip()
+    return
+  }
+
+  // 优先：仍可见的 lastHoveredEl 若是 clone；否则取距指针最近的 clone
+  let target: HTMLElement | null = null
+  if (lastHoveredEl?.isConnected && lastHoveredEl.classList.contains('dm-merger-time-stop-clone')) {
+    target = lastHoveredEl
+  } else {
+    let bestDist = Number.POSITIVE_INFINITY
+    clones.forEach(clone => {
+      const r = clone.getBoundingClientRect()
+      if (r.width <= 0 || r.height <= 0) {
+        return
+      }
+      const cx = r.left + r.width / 2
+      const cy = r.top + r.height / 2
+      const dx = cx - lastPointerX
+      const dy = cy - lastPointerY
+      const d = dx * dx + dy * dy
+      if (d < bestDist) {
+        bestDist = d
+        target = clone
+      }
+    })
+  }
+  if (!target) {
+    target = clones[0]
+  }
+
+  lastHoveredSourceId = active
+  lastHoveredEl = target
+  forceShowTipNearClone(target)
+  injectIfNeeded()
 }
 
 const isOverTipOrClone = (target: EventTarget | null, x: number, y: number): boolean => {
@@ -355,6 +455,8 @@ const isOverTipOrClone = (target: EventTarget | null, x: number, y: number): boo
 
 const onPointerMove = (event: MouseEvent): void => {
   const { clientX: x, clientY: y, target } = event
+  lastPointerX = x
+  lastPointerY = y
 
   // 仍在 tip / 当前克隆上：保持
   if (isOverTipOrClone(target, x, y)) {
@@ -367,6 +469,14 @@ const onPointerMove = (event: MouseEvent): void => {
       if (dm?.classList.contains('dm-merger-time-stop-clone')) {
         lastHoveredEl = dm
         forceShowTipNearClone(dm)
+        injectIfNeeded()
+      } else if (
+        forcedTipVisible &&
+        lastHoveredEl?.isConnected &&
+        lastHoveredEl.classList.contains('dm-merger-time-stop-clone')
+      ) {
+        // 指针在 tip 上时 hit 不到 clone：继续按上次 clone 贴位
+        forceShowTipNearClone(lastHoveredEl)
         injectIfNeeded()
       } else {
         scheduleInject()
@@ -433,7 +543,16 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
       return
     }
     tipObserver = new MutationObserver(() => {
+      if (writingForcedTip) {
+        return
+      }
       // 原生 tip 显示/隐藏时同步我们的双按钮
+      if (forcedTipVisible && lastHoveredEl?.classList.contains('dm-merger-time-stop-clone')) {
+        // 原生可能回写 left/top/class：重新按 clone 贴位
+        forceShowTipNearClone(lastHoveredEl)
+        injectIfNeeded()
+        return
+      }
       if (lastHoveredSourceId) {
         scheduleInject()
       } else if (!forcedTipVisible) {

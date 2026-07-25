@@ -412,6 +412,17 @@ html.dm-merger-time-stop-on {
     pointer-events: auto !important;
 }
 
+/* 定格克隆强制 tip：fixed 跟屏幕，避免 offsetParent=video-area 与 body 覆盖层错位 */
+.bpx-player-dm-tip[data-dm-merger-forced-tip='1'] {
+    position: fixed !important;
+    right: auto !important;
+    bottom: auto !important;
+    margin: 0 !important;
+    transform: translateX(-50%) !important;
+    pointer-events: auto !important;
+    z-index: 1000000 !important;
+}
+
 /* 不要同时 display 两张 SVG；朝向由 JS 只亮一张 */
 .bpx-player-dm-tip.dm-merger-time-stop-tip .dm-merger-time-stop-tip-bg {
     display: none !important;

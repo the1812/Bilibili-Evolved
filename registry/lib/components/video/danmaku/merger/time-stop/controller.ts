@@ -4,7 +4,11 @@
  * 本模块只改状态与画面副作用，不负责 tip 注入。
  */
 
-import { startTimeStopMenu } from './menu'
+import {
+  attachForcedTipToClones,
+  resyncTimeStopTipAtPointer,
+  startTimeStopMenu,
+} from './menu'
 import {
   getActiveSourceId,
   getTimeStopState,
@@ -142,6 +146,11 @@ export const enterTimeStop = async (sourceId: string, deps: TimeStopDeps): Promi
   hideOthers(sourceId, deps)
   setTimeStopActive({ status: 'active', sourceId, t0, pinned })
   startTimeStopMaintain(deps)
+  // 点击时停时指针多在 tip 上：直接按 clone 贴位，不能只靠 pointer hit
+  window.requestAnimationFrame(() => {
+    attachForcedTipToClones(sourceId)
+    window.setTimeout(() => attachForcedTipToClones(sourceId), 40)
+  })
 }
 
 /**
@@ -160,6 +169,10 @@ export const releaseTimeStop = async (deps: TimeStopDeps): Promise<void> => {
   stopTimeStopMaintain()
   clearView(s.pinned)
   setTimeStopIdle()
+  // 恢复后强制 tip 立刻收起；若指针仍在合并弹幕上，由 resync 等原生 tip
+  window.requestAnimationFrame(() => {
+    resyncTimeStopTipAtPointer()
+  })
 
   if (!deps.hasSource(sourceId)) {
     deps.toast('源已移除', 'error')
@@ -189,6 +202,9 @@ export const discardTimeStop = (): void => {
   stopTimeStopMaintain()
   clearView(s.pinned)
   setTimeStopIdle()
+  window.requestAnimationFrame(() => {
+    resyncTimeStopTipAtPointer()
+  })
 }
 
 /**
