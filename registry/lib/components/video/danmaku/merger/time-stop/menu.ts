@@ -35,12 +35,11 @@ const TIP_ROOT_SELECTORS = [
  * 默认值按常见 bpx 命名启发式；实测后可增删。
  */
 const TIP_ACTION_SELECTORS = [
+  // 2026-07-25 页面实测：bpx tip 子节点为 like/copy/recall 等平铺按钮，
+  // 没有单独 operation 容器；优先在 tip 根末尾追加即可。
+  // 下列为兼容旧版/变体的启发式，找不到则退回 tip 根。
   '.bpx-player-dm-tip-operation',
-  '.bpx-player-dm-tip-btns',
-  '.bpx-player-dm-tip-action',
-  '.bpx-player-dm-tip-ops',
   '.bilibili-player-dm-tip-operation',
-  '.bilibili-player-dm-tip-btns',
 ]
 
 /**
