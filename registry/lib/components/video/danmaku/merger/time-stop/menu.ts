@@ -149,7 +149,12 @@ const ensureTimeStopButton = (tip: HTMLElement, sourceId: string): void => {
 }
 
 const tipIsUsable = (tip: HTMLElement): boolean => {
-  if (tip.classList.contains('bpx-player-hide')) {
+  // 我们手动显示时可能还带着 hide class 一帧，以 opacity/尺寸为准
+  const s = getComputedStyle(tip)
+  if (s.display === 'none') {
+    return false
+  }
+  if (tip.classList.contains('bpx-player-hide') && Number(s.opacity || '0') === 0) {
     return false
   }
   const r = tip.getBoundingClientRect()
@@ -250,6 +255,34 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
   return best?.node || null
 }
 
+/** 时停克隆：原生 tip 不会弹出，需手动放到克隆附近 */
+const forceShowTipNearClone = (el: HTMLElement): void => {
+  const tip = document.querySelector('.bpx-player-dm-tip') as HTMLElement | null
+  if (!tip) {
+    return
+  }
+  const parent = (tip.offsetParent as HTMLElement | null) || tip.parentElement || document.body
+  const parentRect = parent.getBoundingClientRect()
+  const dmRect = el.getBoundingClientRect()
+  const tipH = tip.offsetHeight || 48
+  const placeBelow = dmRect.bottom + 10 + tipH < window.innerHeight - 8
+  const left = dmRect.left + dmRect.width / 2 - parentRect.left
+  const top = placeBelow
+    ? dmRect.bottom + 8 - parentRect.top
+    : dmRect.top - tipH - 8 - parentRect.top
+
+  tip.classList.remove('bpx-player-hide')
+  tip.classList.remove(placeBelow ? 'bpx-player-showT' : 'bpx-player-showB')
+  tip.classList.add(placeBelow ? 'bpx-player-showB' : 'bpx-player-showT')
+  tip.style.left = `${left}px`
+  tip.style.top = `${Math.max(0, top)}px`
+  tip.style.transform = 'translateX(-50%)'
+  tip.style.visibility = 'visible'
+  tip.style.opacity = '1'
+  tip.style.pointerEvents = 'auto'
+  tip.style.zIndex = '1000000'
+}
+
 const onPointerMove = (event: MouseEvent): void => {
   const target = event.target
   if (target instanceof Element && target.closest('.bpx-player-dm-tip, .dm-merger-time-stop-btn')) {
@@ -266,15 +299,26 @@ const onPointerMove = (event: MouseEvent): void => {
   if (!dmNode) {
     dmNode = hitDanmakuElementAtPoint(event.clientX, event.clientY)
   }
-  if (!dmNode) {
+  if (!dmNode || !(dmNode instanceof HTMLElement)) {
     return
   }
 
   const sourceId = resolveSourceIdFromDanmakuNode(dmNode)
   lastHoveredSourceId = sourceId
-  if (sourceId) {
-    scheduleInject()
+  if (!sourceId) {
+    return
   }
+
+  // 定格克隆：原节点已隐藏，原生 tip 不会出现，必须手动显示
+  if (dmNode.classList.contains('dm-merger-time-stop-clone')) {
+    forceShowTipNearClone(dmNode)
+    // 立刻注入，不等 50ms，避免鼠标移开前看不到
+    injectIfNeeded()
+    scheduleInject()
+    return
+  }
+
+  scheduleInject()
 }
 
 export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) => {
