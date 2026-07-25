@@ -20,8 +20,6 @@ const LABEL_IDLE = '时停'
 const LABEL_ACTIVE = '恢复'
 /** 按钮 class（样式可在后续 scss 补齐） */
 const BTN_CLASS = 'dm-merger-time-stop-btn'
-/** tip 根节点标记：扩宽气泡并重排原生图标位 */
-const TIP_HOST_CLASS = 'dm-merger-time-stop-tip'
 
 /**
  * 原生 tip 根节点选择器（多版本探测）。
@@ -139,15 +137,12 @@ export const ensureTimeStopButton = (
 ): void => {
   if (!options.sourceId) {
     tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
-    tipRoot.classList.remove(TIP_HOST_CLASS)
     return
   }
 
-  // 直接挂 tip 根：bpx 动作项均为 absolute，无独立 operation 容器
-  const mount = tipRoot
-  tipRoot.classList.add(TIP_HOST_CLASS)
-
-  let btn = tipRoot.querySelector(`[${BTN_ATTR}]`) as ButtonHost | null
+  const mount = resolveActionMount(tipRoot)
+  let btn = (tipRoot.querySelector(`[${BTN_ATTR}]`) ||
+    mount.querySelector(`[${BTN_ATTR}]`)) as ButtonHost | null
 
   if (!btn) {
     btn = document.createElement('div') as ButtonHost
@@ -161,21 +156,16 @@ export const ensureTimeStopButton = (
       e.stopPropagation()
       btn?.__dmMergerTimeStopOnClick?.()
     })
-    // 与原生 like/copy/back 同级，样式按绝对定位对齐到最右侧
-    const back = tipRoot.querySelector('.bpx-player-dm-tip-back, .bpx-player-dm-tip-recall')
-    if (back?.parentElement === tipRoot) {
-      tipRoot.insertBefore(btn, back.nextSibling)
-    } else {
-      tipRoot.appendChild(btn)
-    }
-  } else if (btn.parentElement !== tipRoot) {
-    tipRoot.appendChild(btn)
+    // 插入到 tip 动作区最右侧
+    mount.appendChild(btn)
+  } else if (btn.parentElement !== mount && mount !== tipRoot) {
+    // tip 内部结构重建后把按钮挪回动作区
+    mount.appendChild(btn)
   }
 
   btn.__dmMergerTimeStopOnClick = options.onClick
   btn.textContent = options.isActiveForSource ? LABEL_ACTIVE : LABEL_IDLE
   btn.dataset.sourceId = options.sourceId
-  btn.setAttribute('aria-label', options.isActiveForSource ? LABEL_ACTIVE : LABEL_IDLE)
 }
 
 /** tip 是否当前可见（有盒模型且未 display:none / visibility:hidden） */
@@ -202,7 +192,6 @@ const processVisibleTips = (onClick: ClickHandler): void => {
     if (!isTipVisuallyActive(tipRoot)) {
       // 隐藏 tip 上若残留按钮则清掉，避免下次显示瞬间错文案
       tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
-      tipRoot.classList.remove(TIP_HOST_CLASS)
       return
     }
 
@@ -402,9 +391,6 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
     document.removeEventListener('mouseover', onPointerSample, true)
     document.removeEventListener('mousemove', onPointerSample, true)
     document.querySelectorAll(`[${BTN_ATTR}]`).forEach(node => node.remove())
-    document.querySelectorAll(`.${TIP_HOST_CLASS}`).forEach(node => {
-      node.classList.remove(TIP_HOST_CLASS)
-    })
     lastHoveredSourceId = null
     lastHoveredText = null
     resolveFromElement = null
