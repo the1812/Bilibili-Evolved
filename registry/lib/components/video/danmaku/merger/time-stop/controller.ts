@@ -34,7 +34,6 @@ const stopTimeStopMaintain = (): void => {
   maintainObserver = null
   document.removeEventListener('seeking', onSeekLike, true)
   document.removeEventListener('seeked', onSeekLike, true)
-  document.removeEventListener('timeupdate', onSeekLike, true)
   window.removeEventListener('keydown', onArrowSeekKey, true)
   maintainDeps = null
 }
@@ -63,9 +62,9 @@ const onSeekLike = (): void => {
   if (!isTimeStopActive()) {
     return
   }
+  // seek 后少量补帧即可，避免 timeout 风暴
   runMaintainOnce()
-  scheduleMaintain()
-  ;[16, 48, 100, 200, 360].forEach(ms => {
+  ;[50, 150, 300].forEach(ms => {
     window.setTimeout(() => {
       if (isTimeStopActive()) {
         runMaintainOnce()
@@ -74,7 +73,7 @@ const onSeekLike = (): void => {
   })
 }
 
-/** 方向键左右 seek：拦截后仍让播放器 seek，但立刻维持时停画面 */
+/** 方向键左右 seek */
 const onArrowSeekKey = (event: KeyboardEvent): void => {
   if (!isTimeStopActive()) {
     return
@@ -82,7 +81,6 @@ const onArrowSeekKey = (event: KeyboardEvent): void => {
   if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
     return
   }
-  // 输入框内不处理
   const t = event.target
   if (t instanceof HTMLElement) {
     const tag = t.tagName
@@ -90,15 +88,7 @@ const onArrowSeekKey = (event: KeyboardEvent): void => {
       return
     }
   }
-  // 立即钉住，并在原生 seek 改写坐标的窗口内高频回写
-  runMaintainOnce()
-  ;[0, 16, 32, 48, 80, 120, 180, 260, 400, 600].forEach(ms => {
-    window.setTimeout(() => {
-      if (isTimeStopActive()) {
-        runMaintainOnce()
-      }
-    }, ms)
-  })
+  onSeekLike()
 }
 
 const startTimeStopMaintain = (deps: TimeStopDeps): void => {
@@ -106,7 +96,7 @@ const startTimeStopMaintain = (deps: TimeStopDeps): void => {
   maintainDeps = deps
   document.addEventListener('seeking', onSeekLike, true)
   document.addEventListener('seeked', onSeekLike, true)
-  document.addEventListener('timeupdate', onSeekLike, true)
+  // 不监听 timeupdate（过于频繁）
   window.addEventListener('keydown', onArrowSeekKey, true)
   maintainObserver = new MutationObserver(() => {
     scheduleMaintain()
@@ -115,14 +105,14 @@ const startTimeStopMaintain = (deps: TimeStopDeps): void => {
     document.querySelector('.bpx-player-row-dm-wrap, .bpx-player-dm-mask-wrap, .bpx-player-video-area') ||
     document.body
   maintainObserver.observe(root, { childList: true, subtree: true })
-  // 轻量轮询兜底：原生可能批量替换节点而不触发 seeking
+  // 低频兜底即可
   maintainTimer = window.setInterval(() => {
     if (!isTimeStopActive()) {
       stopTimeStopMaintain()
       return
     }
     runMaintainOnce()
-  }, 50)
+  }, 500)
 }
 
 
