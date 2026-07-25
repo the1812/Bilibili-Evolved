@@ -61,7 +61,10 @@ export interface MergerVueHostDeps {
       owner?: { name: string }
       pages?: Array<{ cid: number; part: string; page: number; duration?: number }>
     }>
-    getDanmaku: (cid: number | string) => Promise<string>
+    getDanmaku: (
+      cid: number | string,
+      aid?: number | string,
+    ) => Promise<Array<{ time: number; text: string; type?: number; color?: number; size?: number; date?: number; uid?: string; dmid?: string }>>
     getPageList: (bvid: string) => Promise<Array<{ cid: number; duration?: number }>>
   }
   parseDanmaku: (xml: string) => Array<{ time: number; text: string }>
@@ -548,8 +551,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     await Promise.all(
       pages.map(async page => {
         try {
-          const xml = await deps.api.getDanmaku(page.cid)
-          const list = deps.parseDanmaku(xml)
+          const list = await deps.api.getDanmaku(page.cid)
           page.danmakuCount = list.length
           page.danmakuError = false
         } catch {
@@ -742,6 +744,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
                 pic: normalizeHttpsUrl(data.pic),
                 author: data.owner?.name || '',
                 groupTitle: data.title,
+                aid: (data as { aid?: number | string }).aid,
               })
             } else {
               throw new Error('没有分P数据')
@@ -753,8 +756,10 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           }
           resolvedTitle = title
           resolvedSourceId = workingTask.bvid ? `${workingTask.bvid}_${cid}` : String(cid)
-          const xml = await deps.api.getDanmaku(cid)
-          const list = deps.parseDanmaku(xml)
+          const list = await deps.api.getDanmaku(cid, workingTask.aid)
+          if (!list.length) {
+            throw new Error('弹幕为空')
+          }
           const injectIndex = success + fail + 1
           const result = await deps.injectDanmaku(
             list,

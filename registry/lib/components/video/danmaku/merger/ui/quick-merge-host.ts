@@ -49,7 +49,10 @@ export interface QuickMergeHostDeps {
       owner?: { name: string }
       pages?: Array<{ cid: number; part: string; page: number }>
     }>
-    getDanmaku: (cid: number | string) => Promise<string>
+    getDanmaku: (
+      cid: number | string,
+      aid?: number | string,
+    ) => Promise<Array<{ time: number; text: string }>>
   }
   parseDanmaku: (xml: string) => Array<{ time: number; text: string }>
   injectDanmaku: (
@@ -129,8 +132,14 @@ export const createQuickMergeHost = (deps: QuickMergeHostDeps) => {
       }
 
       const p1 = data.pages[0]
-      const xml = await deps.api.getDanmaku(p1.cid)
-      const list = deps.parseDanmaku(xml)
+      const list = await deps.api.getDanmaku(
+        p1.cid,
+        (data as { aid?: number | string }).aid,
+      )
+      if (!list.length) {
+        mergerToast(`并入失败：${data.title}（弹幕为空）`, 'error')
+        return
+      }
 
       const result = await deps.injectDanmaku(
         list,
@@ -138,6 +147,7 @@ export const createQuickMergeHost = (deps: QuickMergeHostDeps) => {
           id: `${bvid}_${p1.cid}`,
           cid: p1.cid,
           bvid,
+          aid: (data as { aid?: number | string }).aid,
           title: data.title + (data.pages.length > 1 ? ' P1' : ''),
           pic: normalizeHttpsUrl(data.pic),
           author: data.owner?.name || '',
