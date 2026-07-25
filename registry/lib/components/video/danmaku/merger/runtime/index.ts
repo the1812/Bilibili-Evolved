@@ -7,8 +7,10 @@ import { parseDanmakuXml } from '../danmaku/parse'
 import { registerMergerMaintenance } from '../maintenance'
 import { getStorage } from '../storage'
 import type { MergerUiHost } from '../ui/contracts'
+import { mergerToast } from '../ui/notify'
 import { initQuickMerge } from '../ui/quick-merge-host'
 import { createMergerVueHost, type MergerVueHostDeps } from '../ui/vue-host'
+import { discardTimeStop, initTimeStop } from '../time-stop'
 /* eslint-disable no-underscore-dangle */
 import {
   extractBvid,
@@ -61,6 +63,37 @@ export const initDanmakuMerger = (): MergerCleanup => {
   const parseDanmaku = parseDanmakuXml
   const injectDanmaku = createInjectDanmaku(nativeDanmaku, engine)
   const batchRestoreDanmaku = createBatchRestoreDanmaku(nativeDanmaku, engine)
+
+  // 时停：悬停已合并弹幕后点「时停」，拖进度再「恢复」写回源偏移
+  const timeStopCleanup = initTimeStop({
+    getCurrentTime: () => {
+      const p = unsafeWindow.player as
+        | { getCurrentTime?: () => number }
+        | undefined
+      if (p && typeof p.getCurrentTime === 'function') {
+        return Number(p.getCurrentTime()) || 0
+      }
+      const v = document.querySelector('video')
+      return v ? Number(v.currentTime) || 0 : 0
+    },
+    hasSource: id => !!engine.sources?.has(String(id)),
+    applyOffsetDelta: async (sourceId, delta) => {
+      try {
+        const source = engine.sources?.get(String(sourceId))
+        if (!source) {
+          return
+        }
+        const oldOffset = Number(source.meta.offset) || 0
+        // updateSource 内会 rebuildList + saveState
+        engine.updateSource(sourceId, { offset: oldOffset + delta })
+        document.dispatchEvent(new CustomEvent('dm-sources-updated'))
+      } catch (err) {
+        dmWarn('时停写回偏移失败', err)
+        mergerToast('时停写回偏移失败', 'error')
+      }
+    },
+    toast: (message, level = 'info') => mergerToast(message, level),
+  })
 
   const tryRestoreSession = createSessionRestore({
     engine,
@@ -181,10 +214,12 @@ export const initDanmakuMerger = (): MergerCleanup => {
       !videoChanged && cid !== null && mergerLastCid !== null && mergerLastCid !== cid
 
     if (videoChanged) {
+      discardTimeStop()
       engine.reset()
       mergerVueHostCtrl?.handleVideoChange()
       mergerLastCid = null
     } else if (partChanged && cid !== null) {
+      discardTimeStop()
       dmLog('分P切换', { from: mergerLastCid, to: cid })
       nativeDanmaku.purgeMerged()
       schedulePartResync(cid)
@@ -303,6 +338,7 @@ export const initDanmakuMerger = (): MergerCleanup => {
       document.removeEventListener('click', mergerBadgeClickHandler, true)
       mergerBadgeClickHandler = null
     }
+    timeStopCleanup()
     registerMergerMaintenance(null)
     quickMergeHost?.destroy()
     quickMergeHost = null
