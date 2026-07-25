@@ -376,3 +376,19 @@ body.dark .dm-result-item:hover {
     height: auto !important;
     border-radius: 4px !important;
 }
+
+/* ── 时停：钉住高亮 / 隐藏其他 ── */
+/* 挂在 html 上的根 class，避免弹窗作用域限制；visibility 降低布局抖动 */
+html.dm-merger-time-stop-on {
+    .dm-merger-time-stop-hidden {
+        visibility: hidden !important;
+        pointer-events: none !important;
+    }
+
+    .dm-merger-time-stop-active {
+        outline: 2px solid #7ee787 !important;
+        box-shadow: 0 0 12px rgba(126, 231, 135, 0.55) !important;
+        border-radius: 4px;
+        z-index: 20 !important;
+    }
+}
