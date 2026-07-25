@@ -184,8 +184,8 @@ const tipLooksShown = (tip: HTMLElement): boolean => {
   if (s.display === 'none') {
     return false
   }
-  // 动画过程 opacity 可能 <1，只要不是 hide 且有尺寸就处理
   const r = tip.getBoundingClientRect()
+  // 动画中 opacity 可能仍是 0，只要盒子在就视为可注入
   return r.width > 0 && r.height > 0
 }
 
@@ -194,18 +194,41 @@ const injectIfMergedTipVisible = (): void => {
   if (!tip || !onClickHandler) {
     return
   }
-  const sourceId = lastHoveredSourceId
+
+  // tip 可见时，若还没有 source，按 tip 中心反查下方弹幕
+  let sourceId = lastHoveredSourceId
+  if (!sourceId && tipLooksShown(tip)) {
+    const tr = tip.getBoundingClientRect()
+    // tip 上方是弹幕，取 tip 上方一点
+    const probeX = tr.left + tr.width / 2
+    const probeY = tr.top - 12
+    const dm = hitDanmakuElementAtPoint(probeX, probeY)
+    if (dm) {
+      sourceId = resolveSourceIdFromDanmakuNode(dm)
+      if (sourceId) {
+        lastHoveredSourceId = sourceId
+        lastHoveredEl = dm as HTMLElement
+      }
+    }
+  }
+
   if (!sourceId) {
-    // 非合并源：若我们改过，还原
     if (tip.classList.contains(TIP_HOST_CLASS) && Date.now() > holdTipUntil) {
       tip.querySelector(`[${BTN_ATTR}]`)?.remove()
       clearMergedTipLayout(tip)
     }
     return
   }
-  if (!tipLooksShown(tip) && Date.now() > holdTipUntil) {
+
+  // 合并源：tip 一出现就注入，不必等 opacity 动画结束
+  const shown =
+    tipLooksShown(tip) ||
+    !tip.classList.contains('bpx-player-hide') ||
+    Date.now() <= holdTipUntil
+  if (!shown) {
     return
   }
+
   ensureTimeStopButton(tip, {
     sourceId,
     isActiveForSource: isActiveForSource(sourceId),
@@ -244,6 +267,7 @@ const resolveSourceIdFromDanmakuNode = (dmNode: Element): string | null => {
 }
 
 const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | null => {
+  // 1) 优先命中 pe:auto 的克隆
   try {
     for (const node of document.elementsFromPoint(clientX, clientY)) {
       if (!(node instanceof Element)) {
@@ -260,7 +284,33 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
   } catch {
     // ignore
   }
-  return null
+
+  // 2) 原生弹幕 pe:none，elementsFromPoint 常扫不到：按包围盒回退
+  let best: { node: Element; area: number } | null = null
+  document.querySelectorAll(DANMAKU_HOVER_SELECTOR).forEach(node => {
+    if (!(node instanceof HTMLElement)) {
+      return
+    }
+    if (node.classList.contains('dm-merger-time-stop-hidden')) {
+      return
+    }
+    const style = getComputedStyle(node)
+    if (style.display === 'none' || style.visibility === 'hidden') {
+      return
+    }
+    const rect = node.getBoundingClientRect()
+    if (rect.width <= 0 || rect.height <= 0) {
+      return
+    }
+    if (clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom) {
+      return
+    }
+    const area = rect.width * rect.height
+    if (!best || area < best.area) {
+      best = { node, area }
+    }
+  })
+  return best?.node || null
 }
 
 /**
