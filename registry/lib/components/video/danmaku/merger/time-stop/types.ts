@@ -26,6 +26,8 @@ export interface PinnedDanmakuRef {
     width: number
     height: number
   }
+  /** 覆盖层克隆节点：避免 DanmakuX seek/clear 冲掉定格画面 */
+  cloneEl?: HTMLElement
 }
 
 export interface TimeStopIdleState {

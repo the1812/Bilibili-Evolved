@@ -553,3 +553,22 @@ html.dm-merger-time-stop-on .dm-merger-time-stop-active {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+/* 时停覆盖层：独立于 DanmakuX，seek 也不会被原生层清掉 */
+.dm-merger-time-stop-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: visible;
+  z-index: 35;
+}
+
+.dm-merger-time-stop-overlay .dm-merger-time-stop-clone,
+.dm-merger-time-stop-clone {
+  pointer-events: none !important;
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
