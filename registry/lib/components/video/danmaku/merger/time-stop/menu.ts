@@ -180,6 +180,12 @@ export const ensureTimeStopButton = (
     btn.className = BTN_CLASS
     btn.setAttribute('role', 'button')
     btn.setAttribute('tabindex', '0')
+    // 阻止鼠标在按钮上时原生 tip 因 leave 弹幕而收起
+    ;['mouseenter', 'mouseover', 'mousemove'].forEach(type => {
+      btn!.addEventListener(type, e => {
+        e.stopPropagation()
+      })
+    })
     btn.addEventListener('click', e => {
       e.preventDefault()
       e.stopPropagation()
@@ -292,20 +298,51 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
   return best?.node || null
 }
 
+/** 指针是否在 tip / 时停按钮（含扩大热区）上 */
+const isPointerOverTimeStopUi = (target: EventTarget | null, clientX?: number, clientY?: number): boolean => {
+  if (target instanceof Element) {
+    if (target.closest(`.${BTN_CLASS}, .${TIP_HOST_CLASS}, ${TIP_ROOT_SELECTOR}`)) {
+      return true
+    }
+  }
+  if (Number.isFinite(clientX) && Number.isFinite(clientY)) {
+    const tip = document.querySelector(`.${TIP_HOST_CLASS}, ${TIP_ROOT_SELECTOR}`) as HTMLElement | null
+    if (tip) {
+      const rect = tip.getBoundingClientRect()
+      // 扩大 20px 热区，避免移到图标边缘 tip 立刻收起
+      const pad = 20
+      if (
+        clientX! >= rect.left - pad &&
+        clientX! <= rect.right + pad &&
+        clientY! >= rect.top - pad &&
+        clientY! <= rect.bottom + pad
+      ) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
 /** 从事件目标或坐标回溯弹幕节点并更新 lastHoveredSourceId */
 const updateHoveredSourceFromEvent = (event: Event): void => {
   const target = event.target
+  const clientX = 'clientX' in event ? Number((event as MouseEvent).clientX) : NaN
+  const clientY = 'clientY' in event ? Number((event as MouseEvent).clientY) : NaN
+
+  // 仍在 tip/按钮热区内：保持上一次合并源，防止 tip 因鼠标移入按钮而消失
+  if (isPointerOverTimeStopUi(target, clientX, clientY)) {
+    return
+  }
+
   let dmNode: Element | null = null
   if (target instanceof Element) {
     dmNode = target.closest(DANMAKU_HOVER_SELECTOR)
   }
 
   // 画面层 pe:none：用 mouse 坐标扫可见弹幕盒
-  if (!dmNode && 'clientX' in event && 'clientY' in event) {
-    const { clientX, clientY } = event as MouseEvent
-    if (Number.isFinite(clientX) && Number.isFinite(clientY)) {
-      dmNode = hitDanmakuElementAtPoint(clientX, clientY)
-    }
+  if (!dmNode && Number.isFinite(clientX) && Number.isFinite(clientY)) {
+    dmNode = hitDanmakuElementAtPoint(clientX, clientY)
   }
 
   if (!dmNode) {

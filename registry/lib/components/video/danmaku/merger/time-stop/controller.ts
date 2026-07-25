@@ -63,7 +63,15 @@ const onSeekLike = (): void => {
   if (!isTimeStopActive()) {
     return
   }
+  runMaintainOnce()
   scheduleMaintain()
+  ;[16, 48, 100, 200, 360].forEach(ms => {
+    window.setTimeout(() => {
+      if (isTimeStopActive()) {
+        runMaintainOnce()
+      }
+    }, ms)
+  })
 }
 
 /** 方向键左右 seek：拦截后仍让播放器 seek，但立刻维持时停画面 */
@@ -82,10 +90,15 @@ const onArrowSeekKey = (event: KeyboardEvent): void => {
       return
     }
   }
-  scheduleMaintain()
-  window.setTimeout(scheduleMaintain, 30)
-  window.setTimeout(scheduleMaintain, 120)
-  window.setTimeout(scheduleMaintain, 280)
+  // 立即钉住，并在原生 seek 改写坐标的窗口内高频回写
+  runMaintainOnce()
+  ;[0, 16, 32, 48, 80, 120, 180, 260, 400, 600].forEach(ms => {
+    window.setTimeout(() => {
+      if (isTimeStopActive()) {
+        runMaintainOnce()
+      }
+    }, ms)
+  })
 }
 
 const startTimeStopMaintain = (deps: TimeStopDeps): void => {
@@ -109,7 +122,7 @@ const startTimeStopMaintain = (deps: TimeStopDeps): void => {
       return
     }
     runMaintainOnce()
-  }, 200)
+  }, 50)
 }
 
 

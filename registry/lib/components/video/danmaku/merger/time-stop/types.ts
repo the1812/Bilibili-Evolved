@@ -8,7 +8,23 @@ export interface PinnedDanmakuRef {
     transform: string
     left: string
     top: string
+    width: string
+    height: string
+    position: string
+    right: string
+    bottom: string
+    margin: string
+    zIndex: string
+    animation: string
+    transition: string
     animationPlayState: string
+  }
+  /** 进入时停时的屏幕坐标，seek 后仍按此定格 */
+  freezeRect: {
+    left: number
+    top: number
+    width: number
+    height: number
   }
 }
 

@@ -37,7 +37,7 @@ export const queryDanmakuElements = (): HTMLElement[] => {
   return Array.from(set)
 }
 
-/** 暂停 Web Animation 与 CSS animation */
+/** 暂停 Web Animation / CSS animation / transition */
 const pauseElementMotion = (el: HTMLElement): void => {
   try {
     el.getAnimations?.().forEach(a => {
@@ -47,6 +47,8 @@ const pauseElementMotion = (el: HTMLElement): void => {
     // 部分环境无 getAnimations
   }
   el.style.animationPlayState = 'paused'
+  el.style.animation = 'none'
+  el.style.transition = 'none'
 }
 
 /** 恢复 Web Animation 与 CSS animation */
@@ -61,16 +63,29 @@ const resumeElementMotion = (el: HTMLElement, prevPlayState: string): void => {
   el.style.animationPlayState = prevPlayState
 }
 
-/**
- * 把当前 computed transform 固化到 inline style。
- * 优先保留完整 matrix / transform 字符串；无法读取时不改写。
- */
-const freezeTransform = (el: HTMLElement): void => {
-  const computed = getComputedStyle(el).transform
-  if (!computed || computed === 'none') {
-    return
+/** 读取屏幕矩形 */
+const readFreezeRect = (el: HTMLElement): PinnedDanmakuRef['freezeRect'] => {
+  const rect = el.getBoundingClientRect()
+  return {
+    left: rect.left,
+    top: rect.top,
+    width: Math.max(rect.width, 1),
+    height: Math.max(rect.height, 1),
   }
-  el.style.transform = computed
+}
+
+/** 按进入时停时的屏幕坐标强制定格（不受 seek/方向键影响） */
+const applyFreezeRect = (el: HTMLElement, rect: PinnedDanmakuRef['freezeRect']): void => {
+  el.style.position = 'fixed'
+  el.style.left = `${rect.left}px`
+  el.style.top = `${rect.top}px`
+  el.style.right = 'auto'
+  el.style.bottom = 'auto'
+  el.style.width = `${rect.width}px`
+  el.style.height = `${rect.height}px`
+  el.style.margin = '0'
+  el.style.transform = 'none'
+  el.style.zIndex = '30'
 }
 
 /** 备份钉住前的关键 inline style */
@@ -78,6 +93,15 @@ const backupPrevStyle = (el: HTMLElement): PinnedDanmakuRef['prevStyle'] => ({
   transform: el.style.transform,
   left: el.style.left,
   top: el.style.top,
+  width: el.style.width,
+  height: el.style.height,
+  position: el.style.position,
+  right: el.style.right,
+  bottom: el.style.bottom,
+  margin: el.style.margin,
+  zIndex: el.style.zIndex,
+  animation: el.style.animation,
+  transition: el.style.transition,
   animationPlayState: el.style.animationPlayState,
 })
 
@@ -86,6 +110,15 @@ const restorePrevStyle = (el: HTMLElement, prev: PinnedDanmakuRef['prevStyle']):
   el.style.transform = prev.transform
   el.style.left = prev.left
   el.style.top = prev.top
+  el.style.width = prev.width
+  el.style.height = prev.height
+  el.style.position = prev.position
+  el.style.right = prev.right
+  el.style.bottom = prev.bottom
+  el.style.margin = prev.margin
+  el.style.zIndex = prev.zIndex
+  el.style.animation = prev.animation
+  el.style.transition = prev.transition
   el.style.animationPlayState = prev.animationPlayState
 }
 
@@ -126,12 +159,13 @@ export const pinAndHighlight = (
 
     const dmid = readDmidFromElement(el) || `text:${sourceId}:${pinned.length}`
     const prevStyle = backupPrevStyle(el)
+    const freezeRect = readFreezeRect(el)
     pauseElementMotion(el)
-    freezeTransform(el)
+    applyFreezeRect(el, freezeRect)
     el.classList.add(TIME_STOP_ACTIVE_CLASS)
     el.classList.remove(TIME_STOP_HIDDEN_CLASS)
 
-    pinned.push({ dmid, el, prevStyle })
+    pinned.push({ dmid, el, prevStyle, freezeRect })
   })
 
   return pinned
@@ -160,58 +194,48 @@ export const hideOthers = (
 }
 
 /**
- * 清理时停画面效果：还原钉住节点、去掉 hidden、去掉根 class。
- * @param pinned 进入时停时记录的钉住列表；缺省时按 class 查找 active 节点做尽力还原
- */
-
-/**
- * 时停维持：seek / 方向键后新冒出的无关弹幕继续隐藏；
- * 同源弹幕重新钉住；已钉住节点保持定格。
+ * 时停维持：seek / 方向键后
+ * - 已定格节点继续按进入时的屏幕坐标钉住
+ * - 新冒出的弹幕（含同源新节点）一律隐藏，避免跟着进度跑
  */
 export const maintainTimeStopView = (
   sourceId: string,
   pinned: PinnedDanmakuRef[],
-  deps?: Pick<TimeStopDeps, 'isElementOfSource'>,
+  _deps?: Pick<TimeStopDeps, 'isElementOfSource'>,
 ): PinnedDanmakuRef[] => {
   document.documentElement.classList.add(TIME_STOP_ROOT_CLASS)
 
-  // 已钉住节点：断连的丢掉；仍在则继续 pause + freeze
   const nextPinned: PinnedDanmakuRef[] = []
   const seen = new Set<HTMLElement>()
+
   pinned.forEach(ref => {
     if (!ref.el.isConnected) {
       return
     }
     pauseElementMotion(ref.el)
-    freezeTransform(ref.el)
+    applyFreezeRect(ref.el, ref.freezeRect)
     ref.el.classList.add(TIME_STOP_ACTIVE_CLASS)
     ref.el.classList.remove(TIME_STOP_HIDDEN_CLASS)
     nextPinned.push(ref)
     seen.add(ref.el)
   })
 
-  // 扫描画面：同源新节点钉住；其余隐藏
+  // seek 后新出现的节点：不跟进度显示，全部隐藏（定格集合保持进入时的那批）
   queryDanmakuElements().forEach(el => {
     if (seen.has(el)) {
       return
     }
-    if (matchSourceElement(sourceId, el, deps)) {
-      const dmid = readDmidFromElement(el) || `text:${sourceId}:${nextPinned.length}`
-      const prevStyle = backupPrevStyle(el)
-      pauseElementMotion(el)
-      freezeTransform(el)
-      el.classList.add(TIME_STOP_ACTIVE_CLASS)
-      el.classList.remove(TIME_STOP_HIDDEN_CLASS)
-      nextPinned.push({ dmid, el, prevStyle })
-      seen.add(el)
-      return
-    }
+    el.classList.remove(TIME_STOP_ACTIVE_CLASS)
     el.classList.add(TIME_STOP_HIDDEN_CLASS)
   })
 
   return nextPinned
 }
 
+/**
+ * 清理时停画面效果：还原钉住节点、去掉 hidden、去掉根 class。
+ * @param pinned 进入时停时记录的钉住列表；缺省时按 class 查找 active 节点做尽力还原
+ */
 export const clearView = (pinned?: PinnedDanmakuRef[]): void => {
   const list =
     pinned && pinned.length > 0
@@ -225,8 +249,18 @@ export const clearView = (pinned?: PinnedDanmakuRef[]): void => {
               transform: '',
               left: '',
               top: '',
+              width: '',
+              height: '',
+              position: '',
+              right: '',
+              bottom: '',
+              margin: '',
+              zIndex: '',
+              animation: '',
+              transition: '',
               animationPlayState: '',
             },
+            freezeRect: { left: 0, top: 0, width: 0, height: 0 },
           }))
 
   list.forEach(ref => {
