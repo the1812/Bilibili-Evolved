@@ -1,6 +1,6 @@
 /**
- * 原生弹幕 tip 注入「时停 / 恢复」。
- * 合并弹幕 tip 仅保留：复制 + 时停，外观尽量复刻原生胶囊。
+ * 合并弹幕 tip：复用原生胶囊 SVG，只保留「复制 + 时停」。
+ * 不替换底板、不硬抢显示动画，减少闪烁。
  */
 
 import {
@@ -17,31 +17,17 @@ const LABEL_ACTIVE = '恢复'
 const BTN_CLASS = 'dm-merger-time-stop-btn'
 const TIP_HOST_CLASS = 'dm-merger-time-stop-tip'
 const TIP_BUBBLE_CLASS = 'dm-merger-time-stop-tip-bubble'
-const TIP_BG_CLASS = 'dm-merger-time-stop-tip-bg'
-
-/** 两槽宽度：贴近原生「少按钮」胶囊，可完整盖住复制+时停 */
-const MERGED_TIP_WIDTH = 108
-const MERGED_TIP_HEIGHT = 42
 
 const SVG_IDLE = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" data-pointer="none" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#fff" d="M8 5.25c-.69 0-1.25.56-1.25 1.25v11c0 .69.56 1.25 1.25 1.25h1.5c.69 0 1.25-.56 1.25-1.25v-11c0-.69-.56-1.25-1.25-1.25H8Zm6.5 0c-.69 0-1.25.56-1.25 1.25v11c0 .69.56 1.25 1.25 1.25H16c.69 0 1.25-.56 1.25-1.25v-11c0-.69-.56-1.25-1.25-1.25h-1.5Z"/></svg>`
 const SVG_ACTIVE = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" data-pointer="none" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#fff" d="M8.25 5.43a1.5 1.5 0 0 1 2.28-1.28l9.12 5.82a1.5 1.5 0 0 1 0 2.56l-9.12 5.82A1.5 1.5 0 0 1 8.25 16.97V5.43Z"/></svg>`
-const TITLE_IDLE = '时停'
-const TITLE_ACTIVE = '恢复'
 
-const TIP_ROOT_SELECTORS = ['.bpx-player-dm-tip', '.bilibili-player-dm-tip-wrap', '.bilibili-player-dm-tip']
+const TIP_ROOT_SELECTORS = ['.bpx-player-dm-tip']
 const DANMAKU_HOVER_SELECTORS = [
   '.bili-danmaku-x-dm',
   '.bili-dm',
   '.b-danmaku',
   '.bpx-player-dm-itm',
   '.dm-merger-time-stop-clone',
-]
-const PLAYER_AREA_SELECTORS = [
-  '.bpx-player-primary-area',
-  '.bpx-player-container',
-  '.bilibili-player',
-  '#bilibili-player',
-  '.player-wrap',
 ]
 const TIP_ROOT_SELECTOR = TIP_ROOT_SELECTORS.join(', ')
 const DANMAKU_HOVER_SELECTOR = DANMAKU_HOVER_SELECTORS.join(', ')
@@ -57,30 +43,15 @@ interface ButtonHost extends HTMLElement {
 
 let lastHoveredSourceId: string | null = null
 let lastHoveredText: string | null = null
+let lastHoveredEl: HTMLElement | null = null
 let resolveFromElement: TimeStopDeps['resolveSourceIdFromElement'] | null = null
-let processTipsHandler: ClickHandler | null = null
+let onClickHandler: ClickHandler | null = null
+let holdTipUntil = 0
 
-const isActiveForSource = (sourceId: string): boolean => {
-  const activeId = getActiveSourceId()
-  return activeId !== null && activeId === sourceId
-}
-
-const parseSourceIdFromTip = (tipRoot: Element): string | null => {
-  const fromTip = parseSourceIdFromDmid(readDmidFromContext(tipRoot))
-  if (fromTip) {
-    return fromTip
-  }
-  const withData = tipRoot.querySelector('[data-dmid],[data-id-str],[data-id]')
-  if (withData) {
-    const fromChild = parseSourceIdFromDmid(readDmidFromContext(withData))
-    if (fromChild) {
-      return fromChild
-    }
-  }
-  return lastHoveredSourceId
-}
+const isActiveForSource = (sourceId: string): boolean => getActiveSourceId() === sourceId
 
 const renderButtonContent = (btn: HTMLElement, isActive: boolean): void => {
+  const label = isActive ? LABEL_ACTIVE : LABEL_IDLE
   btn.innerHTML = isActive ? SVG_ACTIVE : SVG_IDLE
   let bubble = btn.querySelector(`.${TIP_BUBBLE_CLASS}`) as HTMLElement | null
   if (!bubble) {
@@ -89,50 +60,42 @@ const renderButtonContent = (btn: HTMLElement, isActive: boolean): void => {
     bubble.setAttribute('role', 'tooltip')
     btn.appendChild(bubble)
   }
-  bubble.textContent = isActive ? TITLE_ACTIVE : TITLE_IDLE
-  btn.setAttribute('aria-label', isActive ? LABEL_ACTIVE : LABEL_IDLE)
+  bubble.textContent = label
+  btn.setAttribute('aria-label', label)
   btn.removeAttribute('title')
 }
 
-/** 取得 tip 定位参考系（原生 left/top 相对 offsetParent，不是 viewport） */
-const getTipPositionParent = (tip: HTMLElement): HTMLElement => {
-  const parent = (tip.offsetParent as HTMLElement | null) || tip.parentElement
-  return parent || document.body
-}
+/**
+ * 只用原生 tip 外壳：
+ * - 保留原生 svgm 胶囊（不改 SVG、不自定义底板）
+ * - 隐藏点赞/举报
+ * - 复制 + 时停按原生三槽中间两格位置排布
+ */
+const applyMergedTipLayout = (tip: HTMLElement): void => {
+  tip.classList.add(TIP_HOST_CLASS)
+  // 去掉我们以前写坏的尺寸/强制显示
+  tip.style.removeProperty('width')
+  tip.style.removeProperty('height')
+  tip.querySelector(`.dm-merger-time-stop-tip-bg`)?.remove()
 
-const toParentPoint = (tip: HTMLElement, clientX: number, clientY: number): { x: number; y: number } => {
-  const parent = getTipPositionParent(tip)
-  const pr = parent.getBoundingClientRect()
-  return { x: clientX - pr.left, y: clientY - pr.top }
-}
-
-/** 合并弹幕 tip 布局：原生胶囊外观 + 仅复制/时停 */
-const applyMergedTipLayout = (tipRoot: HTMLElement): void => {
-  tipRoot.classList.add(TIP_HOST_CLASS)
-  tipRoot.style.setProperty('width', `${MERGED_TIP_WIDTH}px`, 'important')
-  tipRoot.style.setProperty('height', `${MERGED_TIP_HEIGHT}px`, 'important')
-  tipRoot.style.setProperty('pointer-events', 'auto', 'important')
-  tipRoot.style.setProperty('visibility', 'visible', 'important')
-  tipRoot.style.setProperty('opacity', '1', 'important')
-  tipRoot.style.setProperty('z-index', '1000000', 'important')
-
-  // 隐藏原生 SVG（固定 162 拉伸会变形），改用复刻胶囊底板
-  tipRoot.querySelectorAll('.bpx-player-dm-tip-svgm, .bpx-player-dm-tip-svgl').forEach(node => {
+  // 确保原生胶囊可见
+  tip.querySelectorAll('.bpx-player-dm-tip-svgm, .bpx-player-dm-tip-svgl').forEach(node => {
     if (node instanceof HTMLElement) {
-      node.style.setProperty('display', 'none', 'important')
+      node.style.removeProperty('display')
+      node.style.removeProperty('opacity')
+      node.style.removeProperty('width')
+      node.style.removeProperty('height')
     }
   })
-
-  let bg = tipRoot.querySelector(`.${TIP_BG_CLASS}`) as HTMLElement | null
-  if (!bg) {
-    bg = document.createElement('div')
-    bg.className = TIP_BG_CLASS
-    bg.setAttribute('data-pointer', 'none')
-    tipRoot.insertBefore(bg, tipRoot.firstChild)
+  // 双按钮时用中等胶囊 svgl（原生 145），更接近两动作密度
+  const svgm = tip.querySelector('.bpx-player-dm-tip-svgm') as HTMLElement | null
+  const svgl = tip.querySelector('.bpx-player-dm-tip-svgl') as HTMLElement | null
+  if (svgm && svgl) {
+    // showB/showT 用 svgm；showL/R 用 svgl。常规下方 tip 保持 svgm
+    // 不改 path，仅确保当前朝向那张显示
   }
 
-  // 仅复制 + 时停
-  tipRoot
+  tip
     .querySelectorAll(
       '.bpx-player-dm-tip-like, .bpx-player-dm-tip-like-num, .bpx-player-dm-tip-recall, .bpx-player-dm-tip-back',
     )
@@ -142,34 +105,25 @@ const applyMergedTipLayout = (tipRoot: HTMLElement): void => {
       }
     })
 
-  const copy = tipRoot.querySelector('.bpx-player-dm-tip-copy') as HTMLElement | null
+  const copy = tip.querySelector('.bpx-player-dm-tip-copy') as HTMLElement | null
   if (copy) {
+    // 原生三槽：like=13, copy=64, back=120。两按钮时把 copy/时停收到中间更均衡
     copy.style.setProperty('display', 'flex', 'important')
-    copy.style.setProperty('left', '14px', 'important')
-    copy.style.setProperty('top', '5px', 'important')
+    copy.style.setProperty('left', '36px', 'important')
+    copy.style.setProperty('top', '8px', 'important')
     copy.style.setProperty('width', '32px', 'important')
     copy.style.setProperty('height', '32px', 'important')
     copy.style.setProperty('pointer-events', 'auto', 'important')
     copy.style.setProperty('z-index', '3', 'important')
-    copy.style.setProperty('cursor', 'pointer', 'important')
   }
 }
 
 const clearMergedTipLayout = (tipRoot: Element): void => {
   tipRoot.classList.remove(TIP_HOST_CLASS)
-  tipRoot.querySelector(`.${TIP_BG_CLASS}`)?.remove()
-  if (tipRoot instanceof HTMLElement) {
-    tipRoot.style.removeProperty('width')
-    tipRoot.style.removeProperty('height')
-    tipRoot.style.removeProperty('pointer-events')
-    tipRoot.style.removeProperty('visibility')
-    tipRoot.style.removeProperty('opacity')
-    tipRoot.style.removeProperty('z-index')
-    tipRoot.style.removeProperty('transform')
-  }
+  tipRoot.querySelector(`.dm-merger-time-stop-tip-bg`)?.remove()
   tipRoot
     .querySelectorAll(
-      '.bpx-player-dm-tip-like, .bpx-player-dm-tip-like-num, .bpx-player-dm-tip-recall, .bpx-player-dm-tip-back, .bpx-player-dm-tip-copy, .bpx-player-dm-tip-svgm, .bpx-player-dm-tip-svgl',
+      '.bpx-player-dm-tip-like, .bpx-player-dm-tip-like-num, .bpx-player-dm-tip-recall, .bpx-player-dm-tip-back, .bpx-player-dm-tip-copy',
     )
     .forEach(node => {
       if (node instanceof HTMLElement) {
@@ -180,28 +134,18 @@ const clearMergedTipLayout = (tipRoot: Element): void => {
         node.style.removeProperty('height')
         node.style.removeProperty('pointer-events')
         node.style.removeProperty('z-index')
-        node.style.removeProperty('cursor')
       }
     })
 }
 
-export const ensureTimeStopButton = (
+const ensureTimeStopButton = (
   tipRoot: Element,
-  options: {
-    sourceId: string | null
-    isActiveForSource: boolean
-    onClick: () => void
-  },
+  options: { sourceId: string; isActiveForSource: boolean; onClick: () => void },
 ): void => {
-  if (!options.sourceId) {
-    tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
-    clearMergedTipLayout(tipRoot)
+  if (!(tipRoot instanceof HTMLElement)) {
     return
   }
-
-  if (tipRoot instanceof HTMLElement) {
-    applyMergedTipLayout(tipRoot)
-  }
+  applyMergedTipLayout(tipRoot)
 
   let btn = tipRoot.querySelector(`[${BTN_ATTR}]`) as ButtonHost | null
   if (!btn) {
@@ -210,91 +154,72 @@ export const ensureTimeStopButton = (
     btn.className = BTN_CLASS
     btn.setAttribute('role', 'button')
     btn.setAttribute('tabindex', '0')
-    ;['mouseenter', 'mouseover', 'mousemove'].forEach(type => {
-      btn!.addEventListener(type, e => {
-        e.stopPropagation()
-      })
-    })
     btn.addEventListener('click', e => {
       e.preventDefault()
       e.stopPropagation()
       btn?.__dmMergerTimeStopOnClick?.()
     })
-    tipRoot.appendChild(btn)
-  } else if (btn.parentElement !== tipRoot) {
+    ;['mouseenter', 'mousemove', 'mouseover'].forEach(type => {
+      btn!.addEventListener(type, e => e.stopPropagation())
+    })
     tipRoot.appendChild(btn)
   }
 
-  btn.style.setProperty('left', '58px', 'important')
-  btn.style.setProperty('top', '5px', 'important')
+  btn.style.setProperty('left', '90px', 'important')
+  btn.style.setProperty('top', '8px', 'important')
   btn.style.setProperty('width', '32px', 'important')
   btn.style.setProperty('height', '32px', 'important')
   btn.style.setProperty('pointer-events', 'auto', 'important')
   btn.style.setProperty('z-index', '4', 'important')
-  btn.style.setProperty('cursor', 'pointer', 'important')
-
   btn.__dmMergerTimeStopOnClick = options.onClick
   btn.dataset.sourceId = options.sourceId
   renderButtonContent(btn, options.isActiveForSource)
 }
 
-const isTipVisuallyActive = (tipRoot: Element): boolean => {
-  if (!(tipRoot instanceof HTMLElement)) {
+const tipLooksShown = (tip: HTMLElement): boolean => {
+  if (tip.classList.contains('bpx-player-hide') && Date.now() > holdTipUntil) {
     return false
   }
-  if (tipRoot.classList.contains('bpx-player-hide')) {
-    // 我们手动显示时会去掉 hide；仍 hide 则视为不可用
-    const op = Number(getComputedStyle(tipRoot).opacity || '0')
-    if (op === 0) {
-      return false
-    }
-  }
-  const style = getComputedStyle(tipRoot)
-  if (style.display === 'none') {
+  const s = getComputedStyle(tip)
+  if (s.display === 'none') {
     return false
   }
-  const rect = tipRoot.getBoundingClientRect()
-  return rect.width > 0 && rect.height > 0
+  // 动画过程 opacity 可能 <1，只要不是 hide 且有尺寸就处理
+  const r = tip.getBoundingClientRect()
+  return r.width > 0 && r.height > 0
 }
 
-const processVisibleTips = (onClick: ClickHandler): void => {
-  document.querySelectorAll(TIP_ROOT_SELECTOR).forEach(tipRoot => {
-    const tipEl = tipRoot as HTMLElement
-    const shown =
-      !tipEl.classList.contains('bpx-player-hide') ||
-      Number(getComputedStyle(tipEl).opacity || '0') > 0 ||
-      getComputedStyle(tipEl).visibility === 'visible'
-
-    // 优先用悬停记录的合并源，避免 tip 本体无 dmid 时退回原生三按钮
-    const sourceId = lastHoveredSourceId || parseSourceIdFromTip(tipRoot)
-
-    if (!shown && !sourceId) {
-      tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
-      return
+const injectIfMergedTipVisible = (): void => {
+  const tip = document.querySelector('.bpx-player-dm-tip') as HTMLElement | null
+  if (!tip || !onClickHandler) {
+    return
+  }
+  const sourceId = lastHoveredSourceId
+  if (!sourceId) {
+    // 非合并源：若我们改过，还原
+    if (tip.classList.contains(TIP_HOST_CLASS) && Date.now() > holdTipUntil) {
+      tip.querySelector(`[${BTN_ATTR}]`)?.remove()
+      clearMergedTipLayout(tip)
     }
-
-    // 有合并源就强制两按钮布局，即使 tip 刚显示、几何尚未稳定
-    if (sourceId) {
-      ensureTimeStopButton(tipRoot, {
-        sourceId,
-        isActiveForSource: isActiveForSource(sourceId),
-        onClick: () => {
-          const currentId = lastHoveredSourceId || parseSourceIdFromTip(tipRoot) || sourceId
-          if (currentId) {
-            onClick(currentId)
-            const btnNow = tipRoot.querySelector(`[${BTN_ATTR}]`) as HTMLElement | null
-            if (btnNow) {
-              renderButtonContent(btnNow, getActiveSourceId() === currentId)
-            }
-          }
-        },
-      })
-      return
-    }
-
-    // 无合并源：清掉我们的改动，还原原生 tip
-    tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
-    clearMergedTipLayout(tipRoot)
+    return
+  }
+  if (!tipLooksShown(tip) && Date.now() > holdTipUntil) {
+    return
+  }
+  ensureTimeStopButton(tip, {
+    sourceId,
+    isActiveForSource: isActiveForSource(sourceId),
+    onClick: () => {
+      const id = lastHoveredSourceId || sourceId
+      if (!id || !onClickHandler) {
+        return
+      }
+      onClickHandler(id)
+      const btn = tip.querySelector(`[${BTN_ATTR}]`) as HTMLElement | null
+      if (btn) {
+        renderButtonContent(btn, getActiveSourceId() === id)
+      }
+    },
   })
 }
 
@@ -320,12 +245,10 @@ const resolveSourceIdFromDanmakuNode = (dmNode: Element): string | null => {
 
 const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | null => {
   try {
-    const stack = document.elementsFromPoint(clientX, clientY)
-    for (const node of stack) {
+    for (const node of document.elementsFromPoint(clientX, clientY)) {
       if (!(node instanceof Element)) {
         continue
       }
-      // tip 本身不计入弹幕命中
       if (node.closest('.bpx-player-dm-tip')) {
         continue
       }
@@ -341,33 +264,23 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
 }
 
 /**
- * 在弹幕下方/上方显示 tip。
- * 关键：left/top 必须相对 tip.offsetParent，与原生一致，并带 translateX(-50%)。
+ * 仅在「原生 tip 不会出现」时（时停克隆）手动定位 tip。
+ * 普通合并弹幕交给原生 tip 弹出，我们只改内容，避免抢动画导致闪烁。
  */
-const forceShowTipNearElement = (el: HTMLElement): void => {
+const forceShowTipForClone = (el: HTMLElement): void => {
   const tip = document.querySelector('.bpx-player-dm-tip') as HTMLElement | null
   if (!tip) {
     return
   }
-
-  const dmRect = el.getBoundingClientRect()
-  const parent = getTipPositionParent(tip)
+  const parent = (tip.offsetParent as HTMLElement | null) || tip.parentElement || document.body
   const parentRect = parent.getBoundingClientRect()
-
-  // 先套合并布局，确保 tip 盒尺寸正确再算位置
-  applyMergedTipLayout(tip)
-
-  const tipW = MERGED_TIP_WIDTH
-  const tipH = MERGED_TIP_HEIGHT
-  const centerClientX = dmRect.left + dmRect.width / 2
-  const placeBelow = dmRect.bottom + 8 + tipH < window.innerHeight - 8
-  const centerClientY = placeBelow ? dmRect.bottom + 8 + tipH / 2 : dmRect.top - 8 - tipH / 2
-
-  // 原生 tip 的 top 是盒子顶部，left 是中心（配合 translateX(-50%)）
-  const left = centerClientX - parentRect.left
+  const dmRect = el.getBoundingClientRect()
+  const tipH = 48
+  const placeBelow = dmRect.bottom + 10 + tipH < window.innerHeight - 8
+  const left = dmRect.left + dmRect.width / 2 - parentRect.left
   const top = placeBelow
     ? dmRect.bottom + 8 - parentRect.top
-    : dmRect.top - 8 - tipH - parentRect.top
+    : dmRect.top - tipH - 8 - parentRect.top
 
   tip.classList.remove('bpx-player-hide')
   tip.classList.remove(placeBelow ? 'bpx-player-showT' : 'bpx-player-showB')
@@ -378,48 +291,19 @@ const forceShowTipNearElement = (el: HTMLElement): void => {
   tip.style.visibility = 'visible'
   tip.style.opacity = '1'
   tip.style.pointerEvents = 'auto'
-  tip.style.zIndex = '1000000'
-
-  // 从节点再解析一次 source，防止 lastHovered 丢失
-  const sid = resolveSourceIdFromDanmakuNode(el) || lastHoveredSourceId
-  if (sid) {
-    lastHoveredSourceId = sid
-  }
-
-  // 同步 source 并注入按钮；原生 tip 可能异步重绘，连续补两次
-  if (processTipsHandler) {
-    processVisibleTips(processTipsHandler)
-    window.requestAnimationFrame(() => {
-      if (processTipsHandler) {
-        processVisibleTips(processTipsHandler)
-      }
-    })
-    window.setTimeout(() => {
-      if (processTipsHandler) {
-        processVisibleTips(processTipsHandler)
-      }
-    }, 50)
-    window.setTimeout(() => {
-      if (processTipsHandler) {
-        processVisibleTips(processTipsHandler)
-      }
-    }, 120)
-  }
+  holdTipUntil = Date.now() + 400
+  injectIfMergedTipVisible()
 }
 
-const isPointerOverTimeStopUi = (
-  target: EventTarget | null,
-  clientX?: number,
-  clientY?: number,
-): boolean => {
-  if (target instanceof Element && target.closest(`.${BTN_CLASS}, .bpx-player-dm-tip`)) {
+const isOverTip = (target: EventTarget | null, x?: number, y?: number): boolean => {
+  if (target instanceof Element && target.closest('.bpx-player-dm-tip, .dm-merger-time-stop-btn')) {
     return true
   }
-  if (Number.isFinite(clientX) && Number.isFinite(clientY)) {
+  if (Number.isFinite(x) && Number.isFinite(y)) {
     const tip = document.querySelector('.bpx-player-dm-tip') as HTMLElement | null
     if (tip && !tip.classList.contains('bpx-player-hide')) {
       const r = tip.getBoundingClientRect()
-      if (clientX! >= r.left && clientX! <= r.right && clientY! >= r.top && clientY! <= r.bottom) {
+      if (x! >= r.left && x! <= r.right && y! >= r.top && y! <= r.bottom) {
         return true
       }
     }
@@ -429,10 +313,14 @@ const isPointerOverTimeStopUi = (
 
 const updateHoveredSourceFromEvent = (event: Event): void => {
   const target = event.target
-  const clientX = 'clientX' in event ? Number((event as MouseEvent).clientX) : NaN
-  const clientY = 'clientY' in event ? Number((event as MouseEvent).clientY) : NaN
-
-  if (isPointerOverTimeStopUi(target, clientX, clientY)) {
+  const x = 'clientX' in event ? Number((event as MouseEvent).clientX) : NaN
+  const y = 'clientY' in event ? Number((event as MouseEvent).clientY) : NaN
+  if (isOverTip(target, x, y)) {
+    // 停在 tip 上：保持合并布局
+    if (lastHoveredSourceId) {
+      holdTipUntil = Date.now() + 300
+      injectIfMergedTipVisible()
+    }
     return
   }
 
@@ -440,130 +328,103 @@ const updateHoveredSourceFromEvent = (event: Event): void => {
   if (target instanceof Element) {
     dmNode = target.closest(DANMAKU_HOVER_SELECTOR)
   }
-  if (!dmNode && Number.isFinite(clientX) && Number.isFinite(clientY)) {
-    dmNode = hitDanmakuElementAtPoint(clientX, clientY)
+  if (!dmNode && Number.isFinite(x) && Number.isFinite(y)) {
+    dmNode = hitDanmakuElementAtPoint(x, y)
   }
-  if (!dmNode) {
+  if (!dmNode || !(dmNode instanceof HTMLElement)) {
     return
   }
 
   const sourceId = resolveSourceIdFromDanmakuNode(dmNode)
   lastHoveredText = readDanmakuTextFromElement(dmNode) || lastHoveredText
   lastHoveredSourceId = sourceId
+  lastHoveredEl = dmNode
 
-  if (sourceId && dmNode instanceof HTMLElement) {
-    forceShowTipNearElement(dmNode)
+  if (!sourceId) {
+    return
   }
+
+  // 克隆：原生不会弹 tip，需要我们补
+  if (dmNode.classList.contains('dm-merger-time-stop-clone')) {
+    forceShowTipForClone(dmNode)
+    return
+  }
+
+  // 普通合并弹幕：等原生 tip 弹出后注入（不抢位置，不闪）
+  holdTipUntil = Date.now() + 250
+  injectIfMergedTipVisible()
+  window.requestAnimationFrame(injectIfMergedTipVisible)
+  window.setTimeout(injectIfMergedTipVisible, 32)
+  window.setTimeout(injectIfMergedTipVisible, 80)
+  window.setTimeout(injectIfMergedTipVisible, 160)
 }
 
 export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) => {
-  const { onClick } = options
+  onClickHandler = options.onClick
   resolveFromElement = options.resolveSourceIdFromElement || null
-  processTipsHandler = onClick
   let stopped = false
-  let rafId = 0
-  let mouseoverTimer = 0
-  let pointerSampleRaf = 0
-  let lastPointerEvent: Event | null = null
+  let pointerRaf = 0
+  let lastEv: Event | null = null
 
-  const scheduleProcess = () => {
-    if (stopped || rafId) {
+  const onPointer = (event: Event) => {
+    lastEv = event
+    if (pointerRaf) {
       return
     }
-    rafId = window.requestAnimationFrame(() => {
-      rafId = 0
-      if (!stopped) {
-        processVisibleTips(onClick)
+    pointerRaf = window.requestAnimationFrame(() => {
+      pointerRaf = 0
+      if (!stopped && lastEv) {
+        updateHoveredSourceFromEvent(lastEv)
       }
     })
   }
 
-  const onPointerSample = (event: Event) => {
-    lastPointerEvent = event
-    if (pointerSampleRaf) {
-      return
-    }
-    pointerSampleRaf = window.requestAnimationFrame(() => {
-      pointerSampleRaf = 0
-      if (stopped || !lastPointerEvent) {
-        return
-      }
-      updateHoveredSourceFromEvent(lastPointerEvent)
-      window.clearTimeout(mouseoverTimer)
-      mouseoverTimer = window.setTimeout(() => scheduleProcess(), 16)
-    })
-  }
-
-  const resolveObserveRoot = (): Element => {
-    for (const sel of PLAYER_AREA_SELECTORS) {
-      const el = document.querySelector(sel)
-      if (el) {
-        return el
-      }
-    }
-    return document.body
-  }
-
-  const observer = new MutationObserver(mutations => {
-    for (const m of mutations) {
-      if (m.type === 'childList' && (m.addedNodes.length || m.removedNodes.length)) {
-        scheduleProcess()
-        return
-      }
+  const tipObserver = new MutationObserver(() => {
+    if (!stopped) {
+      injectIfMergedTipVisible()
     }
   })
-  const observeRoot = resolveObserveRoot()
-  observer.observe(observeRoot, { childList: true, subtree: true })
 
-  document.addEventListener('mouseover', onPointerSample, true)
-  document.addEventListener('mousemove', onPointerSample, true)
-
-  // 原生 tip 显示/隐藏 class 变化时重注入（避免退回三按钮）
-  const tipAttrObserver = new MutationObserver(() => {
-    scheduleProcess()
-  })
-  const tipNode = document.querySelector('.bpx-player-dm-tip')
-  if (tipNode) {
-    tipAttrObserver.observe(tipNode, { attributes: true, attributeFilter: ['class', 'style'] })
-  } else {
-    // tip 尚未挂载：等 body 出现后再观察
-    const waitTip = new MutationObserver(() => {
-      const t = document.querySelector('.bpx-player-dm-tip')
-      if (t) {
-        tipAttrObserver.observe(t, { attributes: true, attributeFilter: ['class', 'style'] })
-        waitTip.disconnect()
-        scheduleProcess()
-      }
+  const watchTip = (tip: Element) => {
+    tipObserver.observe(tip, {
+      attributes: true,
+      attributeFilter: ['class', 'style'],
+      childList: true,
+      subtree: true,
     })
-    waitTip.observe(document.body, { childList: true, subtree: true })
-    // 随 cleanup 释放
-    ;(observer as unknown as { __waitTip?: MutationObserver }).__waitTip = waitTip
   }
-  ;(observer as unknown as { __tipAttr?: MutationObserver }).__tipAttr = tipAttrObserver
 
-  scheduleProcess()
+  const bodyObserver = new MutationObserver(() => {
+    const tip = document.querySelector('.bpx-player-dm-tip')
+    if (tip) {
+      watchTip(tip)
+      injectIfMergedTipVisible()
+    }
+  })
+  bodyObserver.observe(document.documentElement, { childList: true, subtree: true })
+  const existed = document.querySelector('.bpx-player-dm-tip')
+  if (existed) {
+    watchTip(existed)
+  }
+
+  document.addEventListener('mouseover', onPointer, true)
+  document.addEventListener('mousemove', onPointer, true)
 
   return () => {
     stopped = true
-    if (rafId) {
-      window.cancelAnimationFrame(rafId)
+    if (pointerRaf) {
+      window.cancelAnimationFrame(pointerRaf)
     }
-    if (pointerSampleRaf) {
-      window.cancelAnimationFrame(pointerSampleRaf)
-    }
-    window.clearTimeout(mouseoverTimer)
-    observer.disconnect()
-    const tipAttr = (observer as unknown as { __tipAttr?: MutationObserver }).__tipAttr
-    tipAttr?.disconnect()
-    const waitTip = (observer as unknown as { __waitTip?: MutationObserver }).__waitTip
-    waitTip?.disconnect()
-    document.removeEventListener('mouseover', onPointerSample, true)
-    document.removeEventListener('mousemove', onPointerSample, true)
+    tipObserver.disconnect()
+    bodyObserver.disconnect()
+    document.removeEventListener('mouseover', onPointer, true)
+    document.removeEventListener('mousemove', onPointer, true)
     document.querySelectorAll(`[${BTN_ATTR}]`).forEach(n => n.remove())
     document.querySelectorAll(`.${TIP_HOST_CLASS}`).forEach(n => clearMergedTipLayout(n))
     lastHoveredSourceId = null
     lastHoveredText = null
+    lastHoveredEl = null
     resolveFromElement = null
-    processTipsHandler = null
+    onClickHandler = null
   }
 }
