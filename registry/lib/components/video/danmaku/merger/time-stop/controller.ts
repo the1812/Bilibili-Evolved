@@ -1,0 +1,121 @@
+/**
+ * 时停业务控制器：enter / release / discard 与按钮点击分发。
+ *
+ * 本模块只改状态与画面副作用，不负责 tip 注入。
+ */
+
+import { startTimeStopMenu } from './menu'
+import {
+  getActiveSourceId,
+  getTimeStopState,
+  isTimeStopActive,
+  setTimeStopActive,
+  setTimeStopIdle,
+} from './state'
+import type { TimeStopDeps } from './types'
+import { clearView, hideOthers, pinAndHighlight } from './view'
+
+/**
+ * 进入时停：钉住 sourceId 弹幕并隐藏其余。
+ * pin 失败时 toast 且不进入 active。
+ */
+export const enterTimeStop = async (
+  sourceId: string,
+  deps: TimeStopDeps,
+): Promise<void> => {
+  if (!deps.hasSource(sourceId)) {
+    deps.toast('未找到合并源，无法时停', 'error')
+    return
+  }
+
+  // 已有 active：先 discard（不写 offset）
+  if (isTimeStopActive()) {
+    discardTimeStop()
+  }
+
+  const t0 = deps.getCurrentTime()
+  const pinned = pinAndHighlight(sourceId)
+  if (!pinned.length) {
+    clearView()
+    deps.toast('无法时停该弹幕（未找到画面节点）', 'error')
+    return
+  }
+
+  hideOthers(sourceId)
+  setTimeStopActive({ status: 'active', sourceId, t0, pinned })
+}
+
+/**
+ * 恢复时停：计算 delta，清理画面；delta !== 0 时写 offset。
+ */
+export const releaseTimeStop = async (deps: TimeStopDeps): Promise<void> => {
+  const s = getTimeStopState()
+  if (s.status !== 'active') {
+    return
+  }
+
+  const t1 = deps.getCurrentTime()
+  const delta = t1 - s.t0
+  const { sourceId } = s
+
+  clearView(s.pinned)
+  setTimeStopIdle()
+
+  if (!deps.hasSource(sourceId)) {
+    deps.toast('源已移除', 'error')
+    return
+  }
+
+  if (delta !== 0) {
+    await deps.applyOffsetDelta(sourceId, delta)
+  }
+
+  deps.toast(
+    `已恢复，源偏移 ${delta >= 0 ? '+' : ''}${delta.toFixed(1)} 秒`,
+    'success',
+  )
+}
+
+/**
+ * 放弃时停：清理画面与状态，不写 offset。
+ */
+export const discardTimeStop = (): void => {
+  const s = getTimeStopState()
+  if (s.status !== 'active') {
+    return
+  }
+  clearView(s.pinned)
+  setTimeStopIdle()
+}
+
+/**
+ * tip 按钮点击：同源 release，异源/空闲 enter。
+ */
+export const handleTimeStopButtonClick = async (
+  sourceId: string,
+  deps: TimeStopDeps,
+): Promise<void> => {
+  const activeId = getActiveSourceId()
+  if (activeId && activeId === sourceId) {
+    await releaseTimeStop(deps)
+    return
+  }
+  await enterTimeStop(sourceId, deps)
+}
+
+/**
+ * 启动 tip 菜单并接线 onClick。
+ * @returns cleanup：停止菜单观察 + discard 当前时停
+ */
+export const initTimeStop = (deps: TimeStopDeps): (() => void) => {
+  const stopMenu = startTimeStopMenu({
+    onClick: sourceId => {
+      void handleTimeStopButtonClick(sourceId, deps)
+    },
+  })
+
+  return () => {
+    stopMenu()
+    discardTimeStop()
+  }
+}
