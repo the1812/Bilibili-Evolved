@@ -43,6 +43,10 @@ type PlayerDanmakuApi = {
 let engineWasRunning: boolean | null = null
 /** 是否用 close 关掉过原生弹幕开关 */
 let closedNativeSwitch = false
+/** 是否已安装 seek 拦截补丁 */
+let seekPatchInstalled = false
+/** 补丁前的原始方法 */
+const patchedOriginals: Array<{ target: Record<string, unknown>; key: string; value: unknown }> = []
 
 /** 从节点取 dmid（dataset / 属性） */
 const readDmidFromElement = (el: HTMLElement): string | null => readDmidFromContext(el)
@@ -83,9 +87,118 @@ const getDanmakuX = (): DanmakuXLike | null => {
   }
 }
 
+const patchMethod = (target: object | null | undefined, key: string, wrapper: (orig: (...args: unknown[]) => unknown) => (...args: unknown[]) => unknown): void => {
+  if (!target || typeof target !== 'object') {
+    return
+  }
+  const rec = target as Record<string, unknown>
+  const orig = rec[key]
+  if (typeof orig !== 'function') {
+    return
+  }
+  // 避免重复包
+  if ((orig as { __dmMergerTimeStopPatched?: boolean }).__dmMergerTimeStopPatched) {
+    return
+  }
+  const bound = (orig as (...args: unknown[]) => unknown).bind(target)
+  const next = wrapper(bound) as ((...args: unknown[]) => unknown) & {
+    __dmMergerTimeStopPatched?: boolean
+  }
+  next.__dmMergerTimeStopPatched = true
+  patchedOriginals.push({ target: rec, key, value: orig })
+  rec[key] = next
+}
+
+/** 清空原生层可见弹幕（不动我们的覆盖层） */
+const clearNativeVisibleDanmaku = (): void => {
+  try {
+    const dx = getDanmakuX() as (DanmakuXLike & {
+      clear?: () => void
+      fresh?: () => void
+      manager?: { clear?: () => void; endClear?: () => void; clearVisualArray?: () => void }
+    }) | null
+    dx?.manager?.clearVisualArray?.()
+    dx?.manager?.clear?.()
+    dx?.manager?.endClear?.()
+    dx?.clear?.()
+  } catch {
+    // ignore
+  }
+  // DOM 兜底：隐藏原生容器内节点
+  queryDanmakuElements().forEach(el => {
+    el.classList.add(TIME_STOP_HIDDEN_CLASS)
+    el.classList.remove(TIME_STOP_ACTIVE_CLASS)
+  })
+}
+
+/** seek/play 后原生会重刷：立刻再停、再清 */
+const suppressNativeAfterSeek = (): void => {
+  try {
+    getDanmakuX()?.pause?.()
+  } catch {
+    // ignore
+  }
+  const api = getPlayerDanmakuApi()
+  try {
+    if (api && typeof api.isOpen === 'function' && api.isOpen() && typeof api.close === 'function') {
+      api.close()
+      closedNativeSwitch = true
+    }
+  } catch {
+    // ignore
+  }
+  clearNativeVisibleDanmaku()
+}
+
+const installSeekPatches = (): void => {
+  if (seekPatchInstalled) {
+    return
+  }
+  seekPatchInstalled = true
+  const dx = getDanmakuX() as (DanmakuXLike & Record<string, unknown>) | null
+  const mgr = (dx as { manager?: Record<string, unknown> } | null)?.manager
+
+  // seek / play / fresh 后阻止新弹幕出现
+  ;['seek', 'play', 'fresh', 'reset'].forEach(key => {
+    patchMethod(dx, key, orig => (...args) => {
+      const ret = orig(...args)
+      // 异步重刷窗口内反复压制
+      suppressNativeAfterSeek()
+      ;[0, 16, 32, 64, 120, 240, 400].forEach(ms => {
+        window.setTimeout(suppressNativeAfterSeek, ms)
+      })
+      return ret
+    })
+  })
+  ;['fresh', 'render', 'fetchAndInitDm', 'insert', 'add', 'addList', 'multipleAdd'].forEach(key => {
+    patchMethod(mgr, key, orig => (...args) => {
+      // 时停期间直接吞掉会刷屏的写入/渲染
+      suppressNativeAfterSeek()
+      return undefined
+    })
+  })
+}
+
+const uninstallSeekPatches = (): void => {
+  while (patchedOriginals.length) {
+    const item = patchedOriginals.pop()
+    if (!item) {
+      continue
+    }
+    try {
+      item.target[item.key] = item.value
+    } catch {
+      // ignore
+    }
+  }
+  seekPatchInstalled = false
+}
+
 /**
- * 暂停原生弹幕引擎，阻止 seek/方向键后继续刷出新弹幕。
- * 优先 dx.pause()；失败再 close 开关（恢复时会 open）。
+ * 冻结原生弹幕输出：
+ * 1) pause DanmakuX
+ * 2) close 原生弹幕开关（防止 seek 重开渲染）
+ * 3) 安装 seek/play/fresh 补丁，seek 后继续压制
  */
 export const pauseNativeDanmakuEngine = (): void => {
   const dx = getDanmakuX()
@@ -97,9 +210,8 @@ export const pauseNativeDanmakuEngine = (): void => {
     }
     try {
       dx.pause?.()
-      return
     } catch {
-      // fallthrough
+      // ignore
     }
   }
 
@@ -112,10 +224,15 @@ export const pauseNativeDanmakuEngine = (): void => {
   } catch {
     // ignore
   }
+
+  installSeekPatches()
+  clearNativeVisibleDanmaku()
 }
 
 /** 恢复原生弹幕引擎 */
 export const resumeNativeDanmakuEngine = (): void => {
+  uninstallSeekPatches()
+
   const api = getPlayerDanmakuApi()
   if (closedNativeSwitch) {
     try {
@@ -127,7 +244,7 @@ export const resumeNativeDanmakuEngine = (): void => {
   }
 
   const dx = getDanmakuX()
-  if (dx && engineWasRunning) {
+  if (dx && engineWasRunning !== false) {
     try {
       dx.play?.()
     } catch {
