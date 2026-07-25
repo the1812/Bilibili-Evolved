@@ -90,6 +90,8 @@ export const initDanmakuMerger = (): MergerCleanup => {
       } catch (err) {
         dmWarn('时停写回偏移失败', err)
         mergerToast('时停写回偏移失败', 'error')
+        // 抛回给 release，避免错误 toast 后再弹成功
+        throw err
       }
     },
     toast: (message, level = 'info') => mergerToast(message, level),

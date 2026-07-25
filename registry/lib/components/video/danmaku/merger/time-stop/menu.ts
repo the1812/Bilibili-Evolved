@@ -197,6 +197,12 @@ const processVisibleTips = (onClick: ClickHandler): void => {
         const currentId = resolveSourceIdFromTip(tipRoot) || sourceId
         if (currentId) {
           onClick(currentId)
+          // 状态切换后立刻刷新本按钮文案（时停 ↔ 恢复）
+          const btnNow = tipRoot.querySelector(`[${BTN_ATTR}]`) as HTMLElement | null
+          if (btnNow) {
+            const activeId = getActiveSourceId()
+            btnNow.textContent = activeId === currentId ? LABEL_ACTIVE : LABEL_IDLE
+          }
         }
       },
     })

@@ -67,7 +67,12 @@ export const releaseTimeStop = async (deps: TimeStopDeps): Promise<void> => {
   }
 
   if (delta !== 0) {
-    await deps.applyOffsetDelta(sourceId, delta)
+    try {
+      await deps.applyOffsetDelta(sourceId, delta)
+    } catch {
+      // applyOffsetDelta 侧已 toast 失败；此处不再弹成功
+      return
+    }
   }
 
   deps.toast(
