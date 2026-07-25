@@ -163,6 +163,55 @@ export const hideOthers = (
  * 清理时停画面效果：还原钉住节点、去掉 hidden、去掉根 class。
  * @param pinned 进入时停时记录的钉住列表；缺省时按 class 查找 active 节点做尽力还原
  */
+
+/**
+ * 时停维持：seek / 方向键后新冒出的无关弹幕继续隐藏；
+ * 同源弹幕重新钉住；已钉住节点保持定格。
+ */
+export const maintainTimeStopView = (
+  sourceId: string,
+  pinned: PinnedDanmakuRef[],
+  deps?: Pick<TimeStopDeps, 'isElementOfSource'>,
+): PinnedDanmakuRef[] => {
+  document.documentElement.classList.add(TIME_STOP_ROOT_CLASS)
+
+  // 已钉住节点：断连的丢掉；仍在则继续 pause + freeze
+  const nextPinned: PinnedDanmakuRef[] = []
+  const seen = new Set<HTMLElement>()
+  pinned.forEach(ref => {
+    if (!ref.el.isConnected) {
+      return
+    }
+    pauseElementMotion(ref.el)
+    freezeTransform(ref.el)
+    ref.el.classList.add(TIME_STOP_ACTIVE_CLASS)
+    ref.el.classList.remove(TIME_STOP_HIDDEN_CLASS)
+    nextPinned.push(ref)
+    seen.add(ref.el)
+  })
+
+  // 扫描画面：同源新节点钉住；其余隐藏
+  queryDanmakuElements().forEach(el => {
+    if (seen.has(el)) {
+      return
+    }
+    if (matchSourceElement(sourceId, el, deps)) {
+      const dmid = readDmidFromElement(el) || `text:${sourceId}:${nextPinned.length}`
+      const prevStyle = backupPrevStyle(el)
+      pauseElementMotion(el)
+      freezeTransform(el)
+      el.classList.add(TIME_STOP_ACTIVE_CLASS)
+      el.classList.remove(TIME_STOP_HIDDEN_CLASS)
+      nextPinned.push({ dmid, el, prevStyle })
+      seen.add(el)
+      return
+    }
+    el.classList.add(TIME_STOP_HIDDEN_CLASS)
+  })
+
+  return nextPinned
+}
+
 export const clearView = (pinned?: PinnedDanmakuRef[]): void => {
   const list =
     pinned && pinned.length > 0

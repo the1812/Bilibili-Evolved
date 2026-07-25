@@ -382,6 +382,17 @@ body.dark .dm-result-item:hover {
 html.dm-merger-time-stop-on {
     .dm-merger-time-stop-hidden {
         visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    /* 时停中：未标记 active 的画面弹幕一律不显示（兜底原生新节点） */
+    .bili-danmaku-x-dm:not(.dm-merger-time-stop-active),
+    .bili-dm:not(.dm-merger-time-stop-active),
+    .b-danmaku:not(.dm-merger-time-stop-active),
+    .bpx-player-dm-itm:not(.dm-merger-time-stop-active) {
+        visibility: hidden !important;
+        opacity: 0 !important;
         pointer-events: none !important;
     }
 
@@ -390,10 +401,9 @@ html.dm-merger-time-stop-on {
         box-shadow: 0 0 12px rgba(126, 231, 135, 0.55) !important;
         border-radius: 4px;
         z-index: 20 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
-
-    /* 原生 tip 最右侧追加的时停/恢复按钮 */
-    /* 注：按钮挂在 tip 上，不依赖时停根 class；这里补一份全局样式 */
 }
 
 /* 有时停按钮时：扩宽原生 tip，把第 4 个动作位排进气泡 */
@@ -411,7 +421,7 @@ html.dm-merger-time-stop-on {
     left: 108px !important;
 }
 
-/* 与 like/copy/back 同构：absolute 图标槽 + 白字/hover 灰底 */
+/* 与 like/copy/back 同构：absolute 图标槽 + hover 灰底 + 悬停用途弹层 */
 .bpx-player-dm-tip .dm-merger-time-stop-btn {
     position: absolute;
     left: 158px;
@@ -421,25 +431,51 @@ html.dm-merger-time-stop-on {
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    min-width: 32px;
+    width: 32px;
     height: 32px;
-    padding: 0 2px;
+    padding: 0;
     border-radius: 4px;
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 1;
-    letter-spacing: 0;
     color: #fff;
     background: transparent;
     cursor: pointer;
     user-select: none;
-    white-space: nowrap;
     pointer-events: auto;
 }
 
+.bpx-player-dm-tip .dm-merger-time-stop-btn svg {
+    width: 20px;
+    height: 20px;
+    display: block;
+    pointer-events: none;
+}
+
 .bpx-player-dm-tip .dm-merger-time-stop-btn:hover {
-    color: #fff;
     background: rgba(47, 50, 56, 0.898);
+}
+
+.bpx-player-dm-tip .dm-merger-time-stop-btn .dm-merger-time-stop-tip-bubble {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    transform: translateX(-50%) translateY(4px);
+    padding: 5px 10px;
+    border-radius: 4px;
+    background: rgba(21, 21, 21, 0.92);
+    color: #fff;
+    font-size: 12px;
+    line-height: 1.4;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.12s ease, transform 0.12s ease;
+    z-index: 5;
+}
+
+.bpx-player-dm-tip .dm-merger-time-stop-btn:hover .dm-merger-time-stop-tip-bubble {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
 }
 
 /* 顶部朝向 tip：与原生图标同一 top/height */
@@ -450,24 +486,29 @@ html.dm-merger-time-stop-on {
     height: 20px;
 }
 
-/* 旧播放器 tip：保留轻量文字按钮，避免 absolute 错位 */
+/* 旧播放器 tip：图标按钮 */
 .bilibili-player-dm-tip-wrap .dm-merger-time-stop-btn,
 .bilibili-player-dm-tip .dm-merger-time-stop-btn {
+    position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-left: 8px;
-    padding: 0 8px;
-    min-width: 36px;
-    height: 24px;
-    border-radius: 12px;
-    font-size: 12px;
-    line-height: 24px;
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
     color: #fff;
     background: rgba(255, 255, 255, 0.08);
     cursor: pointer;
     user-select: none;
-    white-space: nowrap;
+}
+
+.bilibili-player-dm-tip-wrap .dm-merger-time-stop-btn svg,
+.bilibili-player-dm-tip .dm-merger-time-stop-btn svg {
+    width: 18px;
+    height: 18px;
+    display: block;
+    pointer-events: none;
 }
 
 .bilibili-player-dm-tip-wrap .dm-merger-time-stop-btn:hover,

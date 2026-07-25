@@ -54,8 +54,13 @@ export const searchVideos = async (keyword: string, page = 1): Promise<SearchRes
   return [{ result_type: 'video', data: data.result ?? [] }]
 }
 
-export const getView = async (bvid: string): Promise<ViewResult> => {
-  return bilibiliApi<ViewResult>(getJsonWithCredentials(buildViewUrl(bvid)), '获取视频信息失败')
+export const getView = async (bvid: string, options?: { silent?: boolean }): Promise<ViewResult> => {
+  // silent=true：检测可用性时不弹全局 Error Toast（62002 稿件不可见等）
+  return bilibiliApi<ViewResult>(
+    getJsonWithCredentials(buildViewUrl(bvid)),
+    '获取视频信息失败',
+    !options?.silent,
+  )
 }
 
 export const getPageList = async (bvid: string): Promise<PageItem[]> => {
@@ -70,18 +75,18 @@ export type VideoAvailability =
 
 export const checkVideoAvailable = async (id: string): Promise<VideoAvailability> => {
   try {
-    const view = await getView(id)
+    const view = await getView(id, { silent: true })
     if (!view?.bvid && !view?.pages?.length) {
       return { ok: false, reason: 'not_found', message: '视频不存在或已删除' }
     }
     return { ok: true, view }
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
-    // B 站常见：稿件不存在 code=-404 / 62002 等
+    // B 站常见：稿件不存在 code=-404 / 62002 等 —— 只回短文案，不抛堆栈
     if (/code\s*=\s*-?404\b|62002|不存在|已删除|不可见|稿件/i.test(message)) {
       return { ok: false, reason: 'not_found', message: '视频不存在或已删除' }
     }
-    return { ok: false, reason: 'error', message: message || '视频状态检测失败' }
+    return { ok: false, reason: 'error', message: '视频状态检测失败' }
   }
 }
 

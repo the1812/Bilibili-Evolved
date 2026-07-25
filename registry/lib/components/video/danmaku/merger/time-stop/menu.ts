@@ -22,6 +22,17 @@ const LABEL_ACTIVE = '恢复'
 const BTN_CLASS = 'dm-merger-time-stop-btn'
 /** tip 根节点标记：扩宽气泡并重排原生图标位 */
 const TIP_HOST_CLASS = 'dm-merger-time-stop-tip'
+/** 悬停说明气泡 class */
+const TIP_BUBBLE_CLASS = 'dm-merger-time-stop-tip-bubble'
+
+/** 时停：暂停双竖条（白填充，对齐原生 tip 图标风格） */
+const SVG_IDLE = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" data-pointer="none" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#fff" d="M8 5.25c-.69 0-1.25.56-1.25 1.25v11c0 .69.56 1.25 1.25 1.25h1.5c.69 0 1.25-.56 1.25-1.25v-11c0-.69-.56-1.25-1.25-1.25H8Zm6.5 0c-.69 0-1.25.56-1.25 1.25v11c0 .69.56 1.25 1.25 1.25H16c.69 0 1.25-.56 1.25-1.25v-11c0-.69-.56-1.25-1.25-1.25h-1.5Z"/></svg>`
+
+/** 恢复：播放三角 */
+const SVG_ACTIVE = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" data-pointer="none" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="#fff" d="M8.25 5.43a1.5 1.5 0 0 1 2.28-1.28l9.12 5.82a1.5 1.5 0 0 1 0 2.56l-9.12 5.82A1.5 1.5 0 0 1 8.25 16.97V5.43Z"/></svg>`
+
+const TITLE_IDLE = '时停：定格该合并源弹幕，拖进度后点恢复写入时间偏移'
+const TITLE_ACTIVE = '恢复：解除定格，并按拖动进度写入时间偏移'
 
 /**
  * 原生 tip 根节点选择器（多版本探测）。
@@ -129,6 +140,21 @@ const resolveActionMount = (tipRoot: Element): Element => {
  * 在 tip 根上确保存在时停按钮，并按状态更新文案。
  * sourceId 为空时移除按钮（原生弹幕 / 无法识别的合并源）。
  */
+const renderButtonContent = (btn: HTMLElement, isActive: boolean): void => {
+  btn.innerHTML = isActive ? SVG_ACTIVE : SVG_IDLE
+  let bubble = btn.querySelector(`.${TIP_BUBBLE_CLASS}`) as HTMLElement | null
+  if (!bubble) {
+    bubble = document.createElement('div')
+    bubble.className = TIP_BUBBLE_CLASS
+    bubble.setAttribute('role', 'tooltip')
+    btn.appendChild(bubble)
+  }
+  bubble.textContent = isActive ? TITLE_ACTIVE : TITLE_IDLE
+  btn.setAttribute('aria-label', isActive ? LABEL_ACTIVE : LABEL_IDLE)
+  // 不用原生 title，改用自定义弹层，避免系统 tooltip 抢戏
+  btn.removeAttribute('title')
+}
+
 export const ensureTimeStopButton = (
   tipRoot: Element,
   options: {
@@ -144,7 +170,6 @@ export const ensureTimeStopButton = (
   }
 
   // 直接挂 tip 根：bpx 动作项均为 absolute，无独立 operation 容器
-  const mount = tipRoot
   tipRoot.classList.add(TIP_HOST_CLASS)
 
   let btn = tipRoot.querySelector(`[${BTN_ATTR}]`) as ButtonHost | null
@@ -155,13 +180,12 @@ export const ensureTimeStopButton = (
     btn.className = BTN_CLASS
     btn.setAttribute('role', 'button')
     btn.setAttribute('tabindex', '0')
-    btn.title = '时停：定格该合并源弹幕，拖进度后点恢复写入时间偏移'
     btn.addEventListener('click', e => {
       e.preventDefault()
       e.stopPropagation()
       btn?.__dmMergerTimeStopOnClick?.()
     })
-    // 与原生 like/copy/back 同级，样式按绝对定位对齐到最右侧
+    // 与原生 like/copy/back 同级
     const back = tipRoot.querySelector('.bpx-player-dm-tip-back, .bpx-player-dm-tip-recall')
     if (back?.parentElement === tipRoot) {
       tipRoot.insertBefore(btn, back.nextSibling)
@@ -173,9 +197,8 @@ export const ensureTimeStopButton = (
   }
 
   btn.__dmMergerTimeStopOnClick = options.onClick
-  btn.textContent = options.isActiveForSource ? LABEL_ACTIVE : LABEL_IDLE
   btn.dataset.sourceId = options.sourceId
-  btn.setAttribute('aria-label', options.isActiveForSource ? LABEL_ACTIVE : LABEL_IDLE)
+  renderButtonContent(btn, options.isActiveForSource)
 }
 
 /** tip 是否当前可见（有盒模型且未 display:none / visibility:hidden） */
@@ -219,7 +242,7 @@ const processVisibleTips = (onClick: ClickHandler): void => {
           const btnNow = tipRoot.querySelector(`[${BTN_ATTR}]`) as HTMLElement | null
           if (btnNow) {
             const activeId = getActiveSourceId()
-            btnNow.textContent = activeId === currentId ? LABEL_ACTIVE : LABEL_IDLE
+            renderButtonContent(btnNow, activeId === currentId)
           }
         }
       },

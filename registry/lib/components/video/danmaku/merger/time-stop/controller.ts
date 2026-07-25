@@ -13,7 +13,105 @@ import {
   setTimeStopIdle,
 } from './state'
 import type { TimeStopDeps } from './types'
-import { clearView, hideOthers, pinAndHighlight } from './view'
+import { clearView, hideOthers, maintainTimeStopView, pinAndHighlight } from './view'
+
+/** 时停维持定时器 / 观察器，seek 时继续钉住并隐藏无关弹幕 */
+let maintainTimer = 0
+let maintainRaf = 0
+let maintainObserver: MutationObserver | null = null
+let maintainDeps: TimeStopDeps | null = null
+
+const stopTimeStopMaintain = (): void => {
+  if (maintainTimer) {
+    window.clearInterval(maintainTimer)
+    maintainTimer = 0
+  }
+  if (maintainRaf) {
+    window.cancelAnimationFrame(maintainRaf)
+    maintainRaf = 0
+  }
+  maintainObserver?.disconnect()
+  maintainObserver = null
+  document.removeEventListener('seeking', onSeekLike, true)
+  document.removeEventListener('seeked', onSeekLike, true)
+  document.removeEventListener('timeupdate', onSeekLike, true)
+  window.removeEventListener('keydown', onArrowSeekKey, true)
+  maintainDeps = null
+}
+
+const runMaintainOnce = (): void => {
+  const s = getTimeStopState()
+  if (s.status !== 'active' || !maintainDeps) {
+    return
+  }
+  const nextPinned = maintainTimeStopView(s.sourceId, s.pinned, maintainDeps)
+  // 仅更新 pinned 列表，t0 不变
+  setTimeStopActive({ ...s, pinned: nextPinned })
+}
+
+const scheduleMaintain = (): void => {
+  if (maintainRaf) {
+    return
+  }
+  maintainRaf = window.requestAnimationFrame(() => {
+    maintainRaf = 0
+    runMaintainOnce()
+  })
+}
+
+const onSeekLike = (): void => {
+  if (!isTimeStopActive()) {
+    return
+  }
+  scheduleMaintain()
+}
+
+/** 方向键左右 seek：拦截后仍让播放器 seek，但立刻维持时停画面 */
+const onArrowSeekKey = (event: KeyboardEvent): void => {
+  if (!isTimeStopActive()) {
+    return
+  }
+  if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+    return
+  }
+  // 输入框内不处理
+  const t = event.target
+  if (t instanceof HTMLElement) {
+    const tag = t.tagName
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || t.isContentEditable) {
+      return
+    }
+  }
+  scheduleMaintain()
+  window.setTimeout(scheduleMaintain, 30)
+  window.setTimeout(scheduleMaintain, 120)
+  window.setTimeout(scheduleMaintain, 280)
+}
+
+const startTimeStopMaintain = (deps: TimeStopDeps): void => {
+  stopTimeStopMaintain()
+  maintainDeps = deps
+  document.addEventListener('seeking', onSeekLike, true)
+  document.addEventListener('seeked', onSeekLike, true)
+  document.addEventListener('timeupdate', onSeekLike, true)
+  window.addEventListener('keydown', onArrowSeekKey, true)
+  maintainObserver = new MutationObserver(() => {
+    scheduleMaintain()
+  })
+  const root =
+    document.querySelector('.bpx-player-row-dm-wrap, .bpx-player-dm-mask-wrap, .bpx-player-video-area') ||
+    document.body
+  maintainObserver.observe(root, { childList: true, subtree: true })
+  // 轻量轮询兜底：原生可能批量替换节点而不触发 seeking
+  maintainTimer = window.setInterval(() => {
+    if (!isTimeStopActive()) {
+      stopTimeStopMaintain()
+      return
+    }
+    runMaintainOnce()
+  }, 200)
+}
+
 
 /**
  * 进入时停：钉住 sourceId 弹幕并隐藏其余。
@@ -40,6 +138,7 @@ export const enterTimeStop = async (sourceId: string, deps: TimeStopDeps): Promi
 
   hideOthers(sourceId, deps)
   setTimeStopActive({ status: 'active', sourceId, t0, pinned })
+  startTimeStopMaintain(deps)
 }
 
 /**
@@ -55,6 +154,7 @@ export const releaseTimeStop = async (deps: TimeStopDeps): Promise<void> => {
   const delta = t1 - s.t0
   const { sourceId } = s
 
+  stopTimeStopMaintain()
   clearView(s.pinned)
   setTimeStopIdle()
 
@@ -83,6 +183,7 @@ export const discardTimeStop = (): void => {
   if (s.status !== 'active') {
     return
   }
+  stopTimeStopMaintain()
   clearView(s.pinned)
   setTimeStopIdle()
 }
@@ -119,6 +220,7 @@ export const initTimeStop = (deps: TimeStopDeps): (() => void) => {
 
   return () => {
     stopMenu()
+    stopTimeStopMaintain()
     discardTimeStop()
   }
 }
