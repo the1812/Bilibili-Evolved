@@ -293,30 +293,41 @@ const readFreezeRect = (el: HTMLElement): PinnedDanmakuRef['freezeRect'] => {
 
 /** 播放器画面宿主：用于挂覆盖层与裁剪 */
 const resolveVideoHost = (): HTMLElement => {
-  return (
-    (document.querySelector(
-      '.bpx-player-video-area, .bpx-player-primary-area, .bpx-player-container, #bilibili-player, .player-wrap',
-    ) as HTMLElement | null) || document.body
-  )
+  const preferred = [
+    '.bpx-player-video-area',
+    '.bpx-player-video-wrap',
+    '.bpx-player-primary-area',
+    '.bpx-player-container',
+    '#bilibili-player',
+    '.player-wrap',
+  ]
+  for (const sel of preferred) {
+    const el = document.querySelector(sel)
+    if (el instanceof HTMLElement) {
+      return el
+    }
+  }
+  return document.body
 }
 
 /** 确保存在独立覆盖层（不在 DanmakuX 容器内，避免被 clear/seek 清掉） */
 const ensureOverlay = (): HTMLElement => {
-  let overlay = document.querySelector(`.${TIME_STOP_OVERLAY_CLASS}`) as HTMLElement | null
-  if (overlay) {
-    return overlay
-  }
-  overlay = document.createElement('div')
-  overlay.className = TIME_STOP_OVERLAY_CLASS
-  overlay.setAttribute('data-dm-merger-time-stop-overlay', '1')
-
   const host = resolveVideoHost()
+  let overlay = document.querySelector(`.${TIME_STOP_OVERLAY_CLASS}`) as HTMLElement | null
+  if (!overlay) {
+    overlay = document.createElement('div')
+    overlay.className = TIME_STOP_OVERLAY_CLASS
+    overlay.setAttribute('data-dm-merger-time-stop-overlay', '1')
+  }
   // 宿主需可定位，覆盖层才能 absolute 填满并 overflow 裁剪
   const hostPos = getComputedStyle(host).position
   if (hostPos === 'static') {
     host.style.position = 'relative'
   }
-  host.appendChild(overlay)
+  // 挂错父节点时挪回画面区
+  if (overlay.parentElement !== host) {
+    host.appendChild(overlay)
+  }
   return overlay
 }
 
@@ -381,7 +392,8 @@ const createFrozenClone = (
   clone.style.transition = 'none'
   clone.style.zIndex = '40'
   clone.style.pointerEvents = 'none'
-  clone.style.opacity = computed.opacity || '1'
+  clone.style.visibility = 'visible'
+  clone.style.opacity = computed.opacity && computed.opacity !== '0' ? computed.opacity : '1'
   clone.style.color = computed.color
   clone.style.fontSize = computed.fontSize
   clone.style.fontFamily = computed.fontFamily

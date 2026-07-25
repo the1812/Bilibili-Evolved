@@ -386,11 +386,12 @@ html.dm-merger-time-stop-on {
         pointer-events: none !important;
     }
 
-    /* 时停中：未标记 active 的画面弹幕一律不显示（兜底原生新节点） */
-    .bili-danmaku-x-dm:not(.dm-merger-time-stop-active),
-    .bili-dm:not(.dm-merger-time-stop-active),
-    .b-danmaku:not(.dm-merger-time-stop-active),
-    .bpx-player-dm-itm:not(.dm-merger-time-stop-active) {
+    /* 时停中：隐藏原生层弹幕；覆盖层克隆不受影响 */
+    .bpx-player-row-dm-wrap .bili-danmaku-x-dm,
+    .bpx-player-dm-mask-wrap .bili-danmaku-x-dm,
+    .bpx-player-dm-wrap .bili-dm,
+    .bpx-player-dm-wrap .b-danmaku,
+    .bpx-player-dm-wrap .bpx-player-dm-itm {
         visibility: hidden !important;
         opacity: 0 !important;
         pointer-events: none !important;
@@ -543,13 +544,15 @@ html.dm-merger-time-stop-on {
     height: 20px !important;
 }
 
-/* 时停中：克隆仍 fixed，但由覆盖层 overflow 裁剪到播放器内 */
+/* 时停中：克隆用 absolute 挂在覆盖层内，由 overflow:hidden 裁剪越界 */
 html.dm-merger-time-stop-on .dm-merger-time-stop-clone {
-    position: fixed !important;
+    position: absolute !important;
     transform: none !important;
     animation: none !important;
     transition: none !important;
     margin: 0 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
 /* 旧播放器 tip：图标按钮 */
@@ -615,7 +618,7 @@ html.dm-merger-time-stop-on .dm-merger-time-stop-clone {
   height: 100%;
   pointer-events: none;
   overflow: hidden;
-  z-index: 35;
+  z-index: 50;
 }
 
 .dm-merger-time-stop-overlay .dm-merger-time-stop-clone,
