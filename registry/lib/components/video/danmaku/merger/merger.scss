@@ -406,26 +406,46 @@ html.dm-merger-time-stop-on {
     }
 }
 
-/* 有时停按钮：略扩 tip，并拉伸胶囊 SVG 底板，避免右侧透明死区 */
+/* 有时停按钮：扩 tip + 自定义胶囊底板（原生 SVG 固定 162 盖不住第 4 按钮） */
 .bpx-player-dm-tip.dm-merger-time-stop-tip {
     width: 214px !important;
     height: 48px !important;
     overflow: visible;
 }
 
-.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgm,
-.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgl {
-    width: 100% !important;
-    height: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
+.bpx-player-dm-tip.dm-merger-time-stop-tip .dm-merger-time-stop-tip-bg {
+    position: absolute;
+    left: 0;
+    top: 7px;
+    width: 100%;
+    height: 34px;
+    border-radius: 17px;
+    background: rgba(0, 0, 0, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 1;
 }
 
-.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgm svg,
-.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgl svg {
-    width: 100% !important;
-    height: 100% !important;
-    display: block;
+/* 顶部朝向时，胶囊略下移给箭头留位（箭头仍可没有，但按钮对齐） */
+.bpx-player-dm-tip.dm-merger-time-stop-tip.bpx-player-showT .dm-merger-time-stop-tip-bg,
+.bpx-player-dm-tip.dm-merger-time-stop-tip.bpx-player-showRT .dm-merger-time-stop-tip-bg,
+.bpx-player-dm-tip.dm-merger-time-stop-tip.bpx-player-showLT .dm-merger-time-stop-tip-bg {
+    top: 7px;
+}
+
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgm,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgl {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-like,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-copy,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-back,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-recall,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .dm-merger-time-stop-btn {
+    z-index: 2;
 }
 
 /* 保持原生 like 位置；略收 copy/back 间距，第 4 槽与 back 对齐节奏 */

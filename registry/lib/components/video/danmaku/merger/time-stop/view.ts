@@ -475,33 +475,31 @@ export const pinAndHighlight = (
   deps?: Pick<TimeStopDeps, 'isElementOfSource'>,
 ): PinnedDanmakuRef[] => {
   document.documentElement.classList.add(TIME_STOP_ROOT_CLASS)
-  pauseNativeDanmakuEngine()
 
+  // 关键：先量位置并生成覆盖层克隆，再暂停/关闭原生弹幕。
+  // 若先 close/pause，原生层可能瞬间重排，导致定格坐标漂移。
   const overlay = ensureOverlay()
   overlay.innerHTML = ''
 
   const pinned: PinnedDanmakuRef[] = []
   const elements = queryDanmakuElements()
+  const hostRect = overlay.getBoundingClientRect()
 
   elements.forEach(el => {
     if (!matchSourceElement(sourceId, el, deps)) {
       return
     }
 
-    const dmid = readDmidFromElement(el) || `text:${sourceId}:${pinned.length}`
-    const prevStyle = backupPrevStyle(el)
-    const screenRect = readFreezeRect(el)
+    // 先冻结动画并读当前几何，避免 close 后坐标跳变
     pauseElementMotion(el)
-
-    // 原节点隐藏（仍可能被原生层回收）；画面显示用克隆
-    el.classList.add(TIME_STOP_HIDDEN_CLASS)
-    el.classList.remove(TIME_STOP_ACTIVE_CLASS)
-
-    const hostRect = overlay.getBoundingClientRect()
+    const screenRect = readFreezeRect(el)
     if (!intersectsHost(screenRect, hostRect)) {
+      el.classList.add(TIME_STOP_HIDDEN_CLASS)
       return
     }
-    // freezeRect 存播放器本地坐标：窗口缩放后仍可裁剪
+
+    const dmid = readDmidFromElement(el) || `text:${sourceId}:${pinned.length}`
+    const prevStyle = backupPrevStyle(el)
     const freezeRect = {
       left: screenRect.left - hostRect.left,
       top: screenRect.top - hostRect.top,
@@ -511,7 +509,19 @@ export const pinAndHighlight = (
     const clone = createFrozenClone(el, screenRect, overlay)
     overlay.appendChild(clone)
 
+    // 原节点隐藏；画面显示用克隆
+    el.classList.add(TIME_STOP_HIDDEN_CLASS)
+    el.classList.remove(TIME_STOP_ACTIVE_CLASS)
+
     pinned.push({ dmid, el, prevStyle, freezeRect, cloneEl: clone })
+  })
+
+  // 克隆完成后再压制原生引擎
+  pauseNativeDanmakuEngine()
+  // 再藏一轮 close 后可能新冒出的原生节点
+  queryDanmakuElements().forEach(el => {
+    el.classList.add(TIME_STOP_HIDDEN_CLASS)
+    el.classList.remove(TIME_STOP_ACTIVE_CLASS)
   })
 
   return pinned

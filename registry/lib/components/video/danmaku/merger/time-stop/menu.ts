@@ -22,6 +22,8 @@ const LABEL_ACTIVE = '恢复'
 const BTN_CLASS = 'dm-merger-time-stop-btn'
 /** tip 根节点标记：扩宽气泡并重排原生图标位 */
 const TIP_HOST_CLASS = 'dm-merger-time-stop-tip'
+/** 自定义胶囊底板（原生 SVG 固定 162 宽，扩宽后盖不住第 4 按钮） */
+const TIP_BG_CLASS = 'dm-merger-time-stop-tip-bg'
 /** 悬停说明气泡 class */
 const TIP_BUBBLE_CLASS = 'dm-merger-time-stop-tip-bubble'
 
@@ -155,6 +157,34 @@ const renderButtonContent = (btn: HTMLElement, isActive: boolean): void => {
   btn.removeAttribute('title')
 }
 
+
+/** 扩宽 tip 并补自定义胶囊底板；原生 SVG viewBox 固定 162，单纯拉宽盖不住第 4 槽 */
+const ensureTipBackground = (tipRoot: Element): void => {
+  if (!(tipRoot instanceof HTMLElement)) {
+    return
+  }
+  // 强制盒尺寸，避免依赖 scss 未刷新
+  tipRoot.style.setProperty('width', '214px', 'important')
+  tipRoot.style.setProperty('height', '48px', 'important')
+
+  // 隐藏原生 SVG 底板（仍保留占位），改用可拉伸 CSS 胶囊
+  tipRoot.querySelectorAll('.bpx-player-dm-tip-svgm, .bpx-player-dm-tip-svgl').forEach(node => {
+    if (node instanceof HTMLElement) {
+      node.style.setProperty('opacity', '0', 'important')
+      node.style.setProperty('pointer-events', 'none', 'important')
+    }
+  })
+
+  let bg = tipRoot.querySelector(`.${TIP_BG_CLASS}`) as HTMLElement | null
+  if (!bg) {
+    bg = document.createElement('div')
+    bg.className = TIP_BG_CLASS
+    bg.setAttribute('data-pointer', 'none')
+    // 插到最前，在图标下面
+    tipRoot.insertBefore(bg, tipRoot.firstChild)
+  }
+}
+
 export const ensureTimeStopButton = (
   tipRoot: Element,
   options: {
@@ -165,12 +195,18 @@ export const ensureTimeStopButton = (
 ): void => {
   if (!options.sourceId) {
     tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
+    tipRoot.querySelector(`.${TIP_BG_CLASS}`)?.remove()
     tipRoot.classList.remove(TIP_HOST_CLASS)
+    if (tipRoot instanceof HTMLElement) {
+      tipRoot.style.removeProperty('width')
+      tipRoot.style.removeProperty('height')
+    }
     return
   }
 
   // 直接挂 tip 根：bpx 动作项均为 absolute，无独立 operation 容器
   tipRoot.classList.add(TIP_HOST_CLASS)
+  ensureTipBackground(tipRoot)
 
   let btn = tipRoot.querySelector(`[${BTN_ATTR}]`) as ButtonHost | null
 
@@ -231,7 +267,12 @@ const processVisibleTips = (onClick: ClickHandler): void => {
     if (!isTipVisuallyActive(tipRoot)) {
       // 隐藏 tip 上若残留按钮则清掉，避免下次显示瞬间错文案
       tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
+      tipRoot.querySelector(`.${TIP_BG_CLASS}`)?.remove()
       tipRoot.classList.remove(TIP_HOST_CLASS)
+      if (tipRoot instanceof HTMLElement) {
+        tipRoot.style.removeProperty('width')
+        tipRoot.style.removeProperty('height')
+      }
       return
     }
 
