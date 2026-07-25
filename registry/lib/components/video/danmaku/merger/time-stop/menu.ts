@@ -66,6 +66,8 @@ const DANMAKU_HOVER_SELECTORS = [
   '.bili-dm',
   '.b-danmaku',
   '.bpx-player-dm-itm',
+  // 时停覆盖层克隆：定格后原生节点隐藏，靠克隆承接悬停 tip
+  '.dm-merger-time-stop-clone',
 ]
 
 /** 观察挂载点：播放器区域优先，缺失则退回 body */
@@ -299,7 +301,21 @@ const processVisibleTips = (onClick: ClickHandler): void => {
 
 /** 从弹幕节点解析合并源 id */
 const resolveSourceIdFromDanmakuNode = (dmNode: Element): string | null => {
-  const dmid = readDmidFromContext(dmNode)
+  // 覆盖层克隆带 data-dm-merger-source-id
+  if (dmNode instanceof HTMLElement) {
+    const fromDataset = dmNode.dataset.dmMergerSourceId
+    if (fromDataset) {
+      return fromDataset
+    }
+    const active = getActiveSourceId()
+    if (dmNode.classList.contains('dm-merger-time-stop-clone') && active) {
+      return active
+    }
+  }
+
+  const dmid =
+    readDmidFromContext(dmNode) ||
+    (dmNode instanceof HTMLElement ? dmNode.dataset.dmMergerDmid || null : null)
   let sourceId = parseSourceIdFromDmid(dmid)
   if (!sourceId && resolveFromElement) {
     sourceId = resolveFromElement(dmNode)
@@ -312,10 +328,34 @@ const resolveSourceIdFromDanmakuNode = (dmNode: Element): string | null => {
  * 用坐标命中可见弹幕节点，再反查合并源。
  */
 const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | null => {
+  // 优先 elementsFromPoint：时停克隆 pe:auto，可直接命中
+  try {
+    const stack = document.elementsFromPoint(clientX, clientY)
+    for (const node of stack) {
+      if (!(node instanceof Element)) {
+        continue
+      }
+      const hit = node.closest(DANMAKU_HOVER_SELECTOR)
+      if (hit) {
+        return hit
+      }
+    }
+  } catch {
+    // fallthrough
+  }
+
   const nodes = document.querySelectorAll(DANMAKU_HOVER_SELECTOR)
   let best: { node: Element; area: number } | null = null
   nodes.forEach(node => {
     if (!(node instanceof HTMLElement)) {
+      return
+    }
+    // 隐藏中的原生节点不参与命中
+    if (node.classList.contains('dm-merger-time-stop-hidden')) {
+      return
+    }
+    const style = getComputedStyle(node)
+    if (style.visibility === 'hidden' || style.display === 'none' || Number(style.opacity || '1') === 0) {
       return
     }
     const rect = node.getBoundingClientRect()
@@ -331,7 +371,6 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
       return
     }
     const area = rect.width * rect.height
-    // 重叠时取面积更小的节点，减少大号居中弹幕误伤
     if (!best || area < best.area) {
       best = { node, area }
     }
@@ -424,6 +463,15 @@ const updateHoveredSourceFromEvent = (event: Event): void => {
   lastHoveredText = readDanmakuTextFromElement(dmNode) || lastHoveredText
   // 仅记录合并源；原生弹幕清空，避免 tip 误用上一次合并源
   lastHoveredSourceId = sourceId
+
+  // 时停克隆：原生 tip 不会因 pe:none/hidden 原节点而弹出，需手动唤起
+  if (
+    dmNode instanceof HTMLElement &&
+    dmNode.classList.contains('dm-merger-time-stop-clone') &&
+    sourceId
+  ) {
+    forceShowTipNearElement(dmNode)
+  }
 }
 
 /**

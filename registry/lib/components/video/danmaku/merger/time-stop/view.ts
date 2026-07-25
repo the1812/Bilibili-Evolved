@@ -254,7 +254,7 @@ export const resumeNativeDanmakuEngine = (): void => {
   engineWasRunning = null
 }
 
-/** 暂停 Web Animation / CSS animation / transition */
+/** 仅暂停动画，不清除 animation 名（避免 transform 回弹导致取样漂移） */
 const pauseElementMotion = (el: HTMLElement): void => {
   try {
     el.getAnimations?.().forEach(a => {
@@ -264,8 +264,14 @@ const pauseElementMotion = (el: HTMLElement): void => {
     // 部分环境无 getAnimations
   }
   el.style.animationPlayState = 'paused'
+  el.style.transition = 'none'
+}
+
+/** 取样完成后，彻底冻住原生节点（可回弹，反正已隐藏） */
+const hardFreezeNativeElement = (el: HTMLElement): void => {
   el.style.animation = 'none'
   el.style.transition = 'none'
+  el.style.transform = 'none'
 }
 
 /** 恢复 Web Animation 与 CSS animation */
@@ -310,24 +316,36 @@ const resolveVideoHost = (): HTMLElement => {
   return document.body
 }
 
-/** 确保存在独立覆盖层（不在 DanmakuX 容器内，避免被 clear/seek 清掉） */
-const ensureOverlay = (): HTMLElement => {
+/** 用 fixed 覆盖层对齐当前播放器画面，overflow 裁剪越界克隆 */
+const syncOverlayToVideoHost = (overlay: HTMLElement): DOMRect => {
   const host = resolveVideoHost()
+  const rect = host.getBoundingClientRect()
+  overlay.style.position = 'fixed'
+  overlay.style.left = `${rect.left}px`
+  overlay.style.top = `${rect.top}px`
+  overlay.style.width = `${rect.width}px`
+  overlay.style.height = `${rect.height}px`
+  overlay.style.right = 'auto'
+  overlay.style.bottom = 'auto'
+  overlay.style.overflow = 'hidden'
+  overlay.style.pointerEvents = 'none'
+  overlay.style.zIndex = '50'
+  if (overlay.parentElement !== document.body) {
+    document.body.appendChild(overlay)
+  }
+  return rect
+}
+
+/** 确保存在独立覆盖层（挂 body + fixed，避免被播放器内部布局影响） */
+const ensureOverlay = (): HTMLElement => {
   let overlay = document.querySelector(`.${TIME_STOP_OVERLAY_CLASS}`) as HTMLElement | null
   if (!overlay) {
     overlay = document.createElement('div')
     overlay.className = TIME_STOP_OVERLAY_CLASS
     overlay.setAttribute('data-dm-merger-time-stop-overlay', '1')
+    document.body.appendChild(overlay)
   }
-  // 宿主需可定位，覆盖层才能 absolute 填满并 overflow 裁剪
-  const hostPos = getComputedStyle(host).position
-  if (hostPos === 'static') {
-    host.style.position = 'relative'
-  }
-  // 挂错父节点时挪回画面区
-  if (overlay.parentElement !== host) {
-    host.appendChild(overlay)
-  }
+  syncOverlayToVideoHost(overlay)
   return overlay
 }
 
@@ -335,7 +353,7 @@ const removeOverlay = (): void => {
   document.querySelectorAll(`.${TIME_STOP_OVERLAY_CLASS}`).forEach(node => node.remove())
 }
 
-/** 屏幕坐标 → 覆盖层本地坐标 */
+/** 屏幕坐标 → 覆盖层本地坐标（覆盖层本身是 fixed 对齐播放器） */
 const toOverlayLocalRect = (
   overlay: HTMLElement,
   screenRect: PinnedDanmakuRef['freezeRect'],
@@ -359,15 +377,11 @@ const intersectsHost = (screenRect: PinnedDanmakuRef['freezeRect'], host: DOMRec
   )
 }
 
-/** 本地矩形是否仍在覆盖层可见范围（允许部分越界，由 overflow 裁剪） */
-const isLocalVisibleInOverlay = (
-  local: PinnedDanmakuRef['freezeRect'],
-  overlay: HTMLElement,
-): boolean => {
-  const w = overlay.clientWidth || overlay.getBoundingClientRect().width
-  const h = overlay.clientHeight || overlay.getBoundingClientRect().height
-  return !(local.left + local.width <= 0 || local.left >= w || local.top + local.height <= 0 || local.top >= h)
-}
+/** freezeRect 现为屏幕坐标：是否仍与当前播放器画面相交 */
+const isScreenVisibleInHost = (
+  screenRect: PinnedDanmakuRef['freezeRect'],
+  host: DOMRect,
+): boolean => intersectsHost(screenRect, host)
 
 /** 把节点样式复制到覆盖层克隆，并按覆盖层本地坐标钉死 */
 const createFrozenClone = (
@@ -391,7 +405,9 @@ const createFrozenClone = (
   clone.style.animation = 'none'
   clone.style.transition = 'none'
   clone.style.zIndex = '40'
-  clone.style.pointerEvents = 'none'
+  // 允许悬停命中，以唤起 tip（点击仍可穿透到下层的由 menu 处理）
+  clone.style.pointerEvents = 'auto'
+  clone.style.cursor = 'default'
   clone.style.visibility = 'visible'
   clone.style.opacity = computed.opacity && computed.opacity !== '0' ? computed.opacity : '1'
   clone.style.color = computed.color
@@ -502,26 +518,27 @@ export const pinAndHighlight = (
       return
     }
 
-    // 先冻结动画并读当前几何，避免 close 后坐标跳变
-    pauseElementMotion(el)
+    // 关键顺序：先读几何（含 transform 位移）→ 再 pause → 再克隆
+    // 禁止在取样前 animation:none，否则滚动弹幕会瞬间回弹导致漂移
+    const prevStyle = backupPrevStyle(el)
     const screenRect = readFreezeRect(el)
     if (!intersectsHost(screenRect, hostRect)) {
       el.classList.add(TIME_STOP_HIDDEN_CLASS)
       return
     }
 
+    pauseElementMotion(el)
+
     const dmid = readDmidFromElement(el) || `text:${sourceId}:${pinned.length}`
-    const prevStyle = backupPrevStyle(el)
-    const freezeRect = {
-      left: screenRect.left - hostRect.left,
-      top: screenRect.top - hostRect.top,
-      width: screenRect.width,
-      height: screenRect.height,
-    }
+    // freezeRect 存屏幕坐标，维持/resize 时再换算到覆盖层
+    const freezeRect = { ...screenRect }
     const clone = createFrozenClone(el, screenRect, overlay)
+    clone.dataset.dmMergerSourceId = String(sourceId)
+    clone.dataset.dmMergerDmid = dmid
     overlay.appendChild(clone)
 
-    // 原节点隐藏；画面显示用克隆
+    // 取样完成后再硬冻并隐藏原节点
+    hardFreezeNativeElement(el)
     el.classList.add(TIME_STOP_HIDDEN_CLASS)
     el.classList.remove(TIME_STOP_ACTIVE_CLASS)
 
@@ -579,45 +596,41 @@ export const maintainTimeStopView = (
   const overlay = ensureOverlay()
   const nextPinned: PinnedDanmakuRef[] = []
 
+  // 每次维持先对齐覆盖层到当前播放器盒
+  const hostRect = syncOverlayToVideoHost(overlay)
+
   pinned.forEach(ref => {
-    // 原节点若还在，继续隐藏
     if (ref.el.isConnected) {
       ref.el.classList.add(TIME_STOP_HIDDEN_CLASS)
       ref.el.classList.remove(TIME_STOP_ACTIVE_CLASS)
       pauseElementMotion(ref.el)
+      hardFreezeNativeElement(ref.el)
     }
 
-    if (!isLocalVisibleInOverlay(ref.freezeRect, overlay)) {
-      // 完全在播放器外：不显示
+    if (!isScreenVisibleInHost(ref.freezeRect, hostRect)) {
       ref.cloneEl?.remove()
       nextPinned.push({ ...ref, cloneEl: undefined })
       return
     }
 
+    const local = toOverlayLocalRect(overlay, ref.freezeRect)
     let clone = ref.cloneEl
     if (!clone || !clone.isConnected) {
       const sourceForStyle = ref.el.isConnected ? ref.el : null
       if (sourceForStyle) {
-        // 用当前节点样式重建，但位置仍用进入时本地坐标
-        const hostRect = overlay.getBoundingClientRect()
-        const screenRect = {
-          left: hostRect.left + ref.freezeRect.left,
-          top: hostRect.top + ref.freezeRect.top,
-          width: ref.freezeRect.width,
-          height: ref.freezeRect.height,
-        }
-        clone = createFrozenClone(sourceForStyle, screenRect, overlay)
+        clone = createFrozenClone(sourceForStyle, ref.freezeRect, overlay)
       } else {
-        const node = document.createElement('div')
-        node.className = `${TIME_STOP_CLONE_CLASS} ${TIME_STOP_ACTIVE_CLASS}`
-        applyLocalCloneRect(node, ref.freezeRect)
-        clone = node
+        clone = document.createElement('div')
+        clone.className = `${TIME_STOP_CLONE_CLASS} ${TIME_STOP_ACTIVE_CLASS}`
+        applyLocalCloneRect(clone, local)
       }
+      clone.dataset.dmMergerSourceId = clone.dataset.dmMergerSourceId || ''
       overlay.appendChild(clone)
     } else {
-      applyLocalCloneRect(clone, ref.freezeRect)
+      applyLocalCloneRect(clone, local)
       clone.classList.add(TIME_STOP_CLONE_CLASS, TIME_STOP_ACTIVE_CLASS)
     }
+    clone.style.pointerEvents = 'auto'
 
     nextPinned.push({ ...ref, cloneEl: clone })
   })

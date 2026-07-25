@@ -553,6 +553,7 @@ html.dm-merger-time-stop-on .dm-merger-time-stop-clone {
     margin: 0 !important;
     visibility: visible !important;
     opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 /* 旧播放器 tip：图标按钮 */
@@ -612,10 +613,11 @@ html.dm-merger-time-stop-on .dm-merger-time-stop-clone {
 
 /* 时停覆盖层：裁剪到播放器画面，越界定格不显示 */
 .dm-merger-time-stop-overlay {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
   pointer-events: none;
   overflow: hidden;
   z-index: 50;
@@ -623,7 +625,7 @@ html.dm-merger-time-stop-on .dm-merger-time-stop-clone {
 
 .dm-merger-time-stop-overlay .dm-merger-time-stop-clone,
 .dm-merger-time-stop-clone {
-  pointer-events: none !important;
+  pointer-events: auto !important;
   animation: none !important;
   transition: none !important;
   transform: none !important;
