@@ -396,7 +396,61 @@ html.dm-merger-time-stop-on {
     /* 注：按钮挂在 tip 上，不依赖时停根 class；这里补一份全局样式 */
 }
 
-.bpx-player-dm-tip .dm-merger-time-stop-btn,
+/* 有时停按钮时：扩宽原生 tip，把第 4 个动作位排进气泡 */
+.bpx-player-dm-tip.dm-merger-time-stop-tip {
+    width: 210px !important;
+}
+
+/* 压缩原生三图标间距，腾出最右侧给时停 */
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-copy {
+    left: 58px !important;
+}
+
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-back,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-recall {
+    left: 108px !important;
+}
+
+/* 与 like/copy/back 同构：absolute 图标槽 + 白字/hover 灰底 */
+.bpx-player-dm-tip .dm-merger-time-stop-btn {
+    position: absolute;
+    left: 158px;
+    top: 16px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-width: 32px;
+    height: 32px;
+    padding: 0 2px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: 0;
+    color: #fff;
+    background: transparent;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    pointer-events: auto;
+}
+
+.bpx-player-dm-tip .dm-merger-time-stop-btn:hover {
+    color: #fff;
+    background: rgba(47, 50, 56, 0.898);
+}
+
+/* 顶部朝向 tip：与原生图标同一 top/height */
+.bpx-player-dm-tip.bpx-player-showT .dm-merger-time-stop-btn,
+.bpx-player-dm-tip.bpx-player-showRT .dm-merger-time-stop-btn,
+.bpx-player-dm-tip.bpx-player-showLT .dm-merger-time-stop-btn {
+    top: 10px;
+    height: 20px;
+}
+
+/* 旧播放器 tip：保留轻量文字按钮，避免 absolute 错位 */
 .bilibili-player-dm-tip-wrap .dm-merger-time-stop-btn,
 .bilibili-player-dm-tip .dm-merger-time-stop-btn {
     display: inline-flex;
@@ -409,18 +463,16 @@ html.dm-merger-time-stop-on {
     border-radius: 12px;
     font-size: 12px;
     line-height: 24px;
-    color: #7ee787;
-    background: rgba(126, 231, 135, 0.12);
+    color: #fff;
+    background: rgba(255, 255, 255, 0.08);
     cursor: pointer;
     user-select: none;
     white-space: nowrap;
 }
 
-.bpx-player-dm-tip .dm-merger-time-stop-btn:hover,
 .bilibili-player-dm-tip-wrap .dm-merger-time-stop-btn:hover,
 .bilibili-player-dm-tip .dm-merger-time-stop-btn:hover {
-    color: #9af0a0;
-    background: rgba(126, 231, 135, 0.22);
+    background: rgba(47, 50, 56, 0.898);
 }
 /* 管理面板：视频不可用时的历史弹幕兜底提示 */
 .dm-source-fallback-tag {
