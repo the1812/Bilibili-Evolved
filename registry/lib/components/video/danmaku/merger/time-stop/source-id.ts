@@ -31,3 +31,48 @@ export const readDmidFromContext = (node: Element | null): string | null => {
     withData.getAttribute('data-id')
   return dmid ? String(dmid) : null
 }
+
+/**
+ * 读取弹幕节点可见文案。
+ * bpx 画面层节点通常只有 textContent，没有 dmid 属性。
+ */
+export const readDanmakuTextFromElement = (node: Element | null): string => {
+  if (!node) {
+    return ''
+  }
+  return String((node as HTMLElement).innerText || node.textContent || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
+/**
+ * 在合并源列表中按文案反查 sourceId。
+ * 优先唯一精确匹配；多源命中同一文案时返回 null，避免误绑。
+ */
+export const resolveSourceIdByText = (
+  text: string,
+  sources: Iterable<{ id: string; texts: Iterable<string> }>,
+): string | null => {
+  const needle = String(text || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (!needle) {
+    return null
+  }
+  const hits: string[] = []
+  for (const source of sources) {
+    for (const raw of source.texts) {
+      const item = String(raw || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+      if (item && item === needle) {
+        hits.push(String(source.id))
+        break
+      }
+    }
+  }
+  if (hits.length === 1) {
+    return hits[0]
+  }
+  return null
+}

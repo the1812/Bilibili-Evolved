@@ -19,10 +19,7 @@ import { clearView, hideOthers, pinAndHighlight } from './view'
  * 进入时停：钉住 sourceId 弹幕并隐藏其余。
  * pin 失败时 toast 且不进入 active。
  */
-export const enterTimeStop = async (
-  sourceId: string,
-  deps: TimeStopDeps,
-): Promise<void> => {
+export const enterTimeStop = async (sourceId: string, deps: TimeStopDeps): Promise<void> => {
   if (!deps.hasSource(sourceId)) {
     deps.toast('未找到合并源，无法时停', 'error')
     return
@@ -34,14 +31,14 @@ export const enterTimeStop = async (
   }
 
   const t0 = deps.getCurrentTime()
-  const pinned = pinAndHighlight(sourceId)
+  const pinned = pinAndHighlight(sourceId, deps)
   if (!pinned.length) {
     clearView()
     deps.toast('无法时停该弹幕（未找到画面节点）', 'error')
     return
   }
 
-  hideOthers(sourceId)
+  hideOthers(sourceId, deps)
   setTimeStopActive({ status: 'active', sourceId, t0, pinned })
 }
 
@@ -75,10 +72,7 @@ export const releaseTimeStop = async (deps: TimeStopDeps): Promise<void> => {
     }
   }
 
-  deps.toast(
-    `已恢复，源偏移 ${delta >= 0 ? '+' : ''}${delta.toFixed(1)} 秒`,
-    'success',
-  )
+  deps.toast(`已恢复，源偏移 ${delta >= 0 ? '+' : ''}${delta.toFixed(1)} 秒`, 'success')
 }
 
 /**
@@ -115,8 +109,12 @@ export const handleTimeStopButtonClick = async (
 export const initTimeStop = (deps: TimeStopDeps): (() => void) => {
   const stopMenu = startTimeStopMenu({
     onClick: sourceId => {
-      void handleTimeStopButtonClick(sourceId, deps)
+      void handleTimeStopButtonClick(sourceId, deps).catch(err => {
+        // 防止 applyOffsetDelta 等异步错误变成 unhandled rejection
+        console.error('[danmakuMerger][time-stop]', err)
+      })
     },
+    resolveSourceIdFromElement: deps.resolveSourceIdFromElement,
   })
 
   return () => {

@@ -33,6 +33,13 @@ export interface TimeStopDeps {
   getCurrentTime: () => number
   /** 源是否存在 */
   hasSource: (sourceId: string) => boolean
+  /**
+   * 从弹幕节点反查合并源 ID。
+   * bpx 画面层通常不挂 data-dmid，需用文案/运行时对象回落识别。
+   */
+  resolveSourceIdFromElement: (el: Element) => string | null
+  /** 判断画面弹幕节点是否属于指定合并源（用于钉住/隐藏） */
+  isElementOfSource: (sourceId: string, el: HTMLElement) => boolean
   /** 累加并应用 offset；内部应 updateSource + rebuild/sync */
   applyOffsetDelta: (sourceId: string, deltaSeconds: number) => void | Promise<void>
   /** 轻提示 */

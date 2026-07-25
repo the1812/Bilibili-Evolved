@@ -1,4 +1,4 @@
-import type { PinnedDanmakuRef } from './types'
+import type { PinnedDanmakuRef, TimeStopDeps } from './types'
 import { parseSourceIdFromDmid, readDmidFromContext } from './source-id'
 
 /** 时停高亮节点 class */
@@ -89,26 +89,42 @@ const restorePrevStyle = (el: HTMLElement, prev: PinnedDanmakuRef['prevStyle']):
   el.style.animationPlayState = prev.animationPlayState
 }
 
+/** 节点是否属于指定合并源：优先 dmid，其次 deps 回落 */
+const matchSourceElement = (
+  sourceId: string,
+  el: HTMLElement,
+  deps?: Pick<TimeStopDeps, 'isElementOfSource'>,
+): boolean => {
+  const dmid = readDmidFromElement(el)
+  const sid = parseSourceIdFromDmid(dmid)
+  if (sid) {
+    return sid === sourceId
+  }
+  if (deps?.isElementOfSource) {
+    return deps.isElementOfSource(sourceId, el)
+  }
+  return false
+}
+
 /**
  * 钉住并高亮指定 sourceId 的合并弹幕。
  * 返回已钉住的节点列表，供状态机与 clearView 使用。
  */
-export const pinAndHighlight = (sourceId: string): PinnedDanmakuRef[] => {
+export const pinAndHighlight = (
+  sourceId: string,
+  deps?: Pick<TimeStopDeps, 'isElementOfSource'>,
+): PinnedDanmakuRef[] => {
   document.documentElement.classList.add(TIME_STOP_ROOT_CLASS)
 
   const pinned: PinnedDanmakuRef[] = []
   const elements = queryDanmakuElements()
 
   elements.forEach(el => {
-    const dmid = readDmidFromElement(el)
-    if (!dmid) {
-      return
-    }
-    const sid = parseSourceIdFromDmid(dmid)
-    if (sid !== sourceId) {
+    if (!matchSourceElement(sourceId, el, deps)) {
       return
     }
 
+    const dmid = readDmidFromElement(el) || `text:${sourceId}:${pinned.length}`
     const prevStyle = backupPrevStyle(el)
     pauseElementMotion(el)
     freezeTransform(el)
@@ -125,17 +141,18 @@ export const pinAndHighlight = (sourceId: string): PinnedDanmakuRef[] => {
  * 隐藏非当前源的合并弹幕与全部原生弹幕。
  * 当前 sourceId 的节点保持可见（已由 pinAndHighlight 标记 active）。
  */
-export const hideOthers = (sourceId: string): void => {
+export const hideOthers = (
+  sourceId: string,
+  deps?: Pick<TimeStopDeps, 'isElementOfSource'>,
+): void => {
   document.documentElement.classList.add(TIME_STOP_ROOT_CLASS)
 
   queryDanmakuElements().forEach(el => {
     if (el.classList.contains(TIME_STOP_ACTIVE_CLASS)) {
       return
     }
-    const dmid = readDmidFromElement(el)
-    const sid = parseSourceIdFromDmid(dmid)
     // 同源合并弹幕不隐藏；其余（其他合并源 + 原生）全部隐藏
-    if (sid === sourceId) {
+    if (matchSourceElement(sourceId, el, deps)) {
       return
     }
     el.classList.add(TIME_STOP_HIDDEN_CLASS)

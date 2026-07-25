@@ -4,8 +4,13 @@
  * 本模块只负责 DOM 注入与点击回调，不进入 enter/release 业务逻辑。
  */
 
-import { parseSourceIdFromDmid, readDmidFromContext } from './source-id'
+import {
+  parseSourceIdFromDmid,
+  readDanmakuTextFromElement,
+  readDmidFromContext,
+} from './source-id'
 import { getActiveSourceId } from './state'
+import type { TimeStopDeps } from './types'
 
 /** 按钮标记属性，避免重复注入 */
 const BTN_ATTR = 'data-dm-merger-time-stop'
@@ -21,8 +26,6 @@ const BTN_CLASS = 'dm-merger-time-stop-btn'
  * 默认：
  * - bpx 播放器：`.bpx-player-dm-tip`（见 player-agent/bpx.ts danmakuTipLayer）
  * - 旧版播放器：`.bilibili-player-dm-tip-wrap`
- * 子结构（点赞数等）实测见 GreasyFork 脚本引用 `bpx-player-dm-tip-like-num`；
- * 完整动作区 class 未在仓库内锁定，任务 6 浏览器验收前以本列表为准。
  */
 const TIP_ROOT_SELECTORS = [
   '.bpx-player-dm-tip',
@@ -32,12 +35,9 @@ const TIP_ROOT_SELECTORS = [
 
 /**
  * tip 内动作区（优先插到动作区末尾，找不到则退回 tip 根节点）。
- * 默认值按常见 bpx 命名启发式；实测后可增删。
+ * 2026-07-25 实测：bpx tip 子节点是 like/copy/recall 平铺，无独立 operation 容器。
  */
 const TIP_ACTION_SELECTORS = [
-  // 2026-07-25 页面实测：bpx tip 子节点为 like/copy/recall 等平铺按钮，
-  // 没有单独 operation 容器；优先在 tip 根末尾追加即可。
-  // 下列为兼容旧版/变体的启发式，找不到则退回 tip 根。
   '.bpx-player-dm-tip-operation',
   '.bilibili-player-dm-tip-operation',
 ]
@@ -71,6 +71,8 @@ type ClickHandler = (sourceId: string) => void
 export interface TimeStopMenuOptions {
   /** 用户点击时停/恢复时回调；enter/release 由 controller 处理 */
   onClick: ClickHandler
+  /** 从弹幕节点反查合并源（bpx 无 data-dmid 时必需） */
+  resolveSourceIdFromElement?: TimeStopDeps['resolveSourceIdFromElement']
 }
 
 interface ButtonHost extends HTMLElement {
@@ -80,6 +82,10 @@ interface ButtonHost extends HTMLElement {
 
 /** 最近一次悬停到的合并源 id；tip 自身常无 dmid 时作回退 */
 let lastHoveredSourceId: string | null = null
+/** 最近一次悬停弹幕文案（调试与二次解析） */
+let lastHoveredText: string | null = null
+/** 运行时注入的节点反查 */
+let resolveFromElement: TimeStopDeps['resolveSourceIdFromElement'] | null = null
 
 /** 从 tip 或其祖先/子树尽量解析 sourceId */
 const resolveSourceIdFromTip = (tipRoot: Element): string | null => {
@@ -96,6 +102,7 @@ const resolveSourceIdFromTip = (tipRoot: Element): string | null => {
     }
   }
 
+  // tip 自身常无 dmid：回落到悬停弹幕反查结果
   return lastHoveredSourceId
 }
 
@@ -143,6 +150,7 @@ export const ensureTimeStopButton = (
     btn.className = BTN_CLASS
     btn.setAttribute('role', 'button')
     btn.setAttribute('tabindex', '0')
+    btn.title = '时停：定格该合并源弹幕，拖进度后点恢复写入时间偏移'
     btn.addEventListener('click', e => {
       e.preventDefault()
       e.stopPropagation()
@@ -217,8 +225,19 @@ const updateHoveredSourceFromEvent = (target: EventTarget | null): void => {
   if (!dmNode) {
     return
   }
+
+  // 1) 优先 dmid 前缀
   const dmid = readDmidFromContext(dmNode)
-  const sourceId = parseSourceIdFromDmid(dmid)
+  let sourceId = parseSourceIdFromDmid(dmid)
+
+  // 2) bpx 画面层通常无 dmid：用运行时文案反查
+  if (!sourceId && resolveFromElement) {
+    sourceId = resolveFromElement(dmNode)
+  }
+
+  // 3) 再退一步：若 tip 尚未出现，至少记下文案供调试
+  lastHoveredText = readDanmakuTextFromElement(dmNode) || lastHoveredText
+
   // 仅记录合并源；原生弹幕清空，避免 tip 误用上一次合并源
   lastHoveredSourceId = sourceId
 }
@@ -229,6 +248,7 @@ const updateHoveredSourceFromEvent = (target: EventTarget | null): void => {
  */
 export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) => {
   const { onClick } = options
+  resolveFromElement = options.resolveSourceIdFromElement || null
   let stopped = false
   let rafId = 0
   let mouseoverTimer = 0
@@ -310,5 +330,7 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
     document.removeEventListener('mouseover', onMouseOver, true)
     document.querySelectorAll(`[${BTN_ATTR}]`).forEach(node => node.remove())
     lastHoveredSourceId = null
+    lastHoveredText = null
+    resolveFromElement = null
   }
 }

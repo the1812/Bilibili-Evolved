@@ -391,4 +391,34 @@ html.dm-merger-time-stop-on {
         border-radius: 4px;
         z-index: 20 !important;
     }
+
+    /* 原生 tip 最右侧追加的时停/恢复按钮 */
+    /* 注：按钮挂在 tip 上，不依赖时停根 class；这里补一份全局样式 */
+}
+
+.bpx-player-dm-tip .dm-merger-time-stop-btn,
+.bilibili-player-dm-tip-wrap .dm-merger-time-stop-btn,
+.bilibili-player-dm-tip .dm-merger-time-stop-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    padding: 0 8px;
+    min-width: 36px;
+    height: 24px;
+    border-radius: 12px;
+    font-size: 12px;
+    line-height: 24px;
+    color: #7ee787;
+    background: rgba(126, 231, 135, 0.12);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+}
+
+.bpx-player-dm-tip .dm-merger-time-stop-btn:hover,
+.bilibili-player-dm-tip-wrap .dm-merger-time-stop-btn:hover,
+.bilibili-player-dm-tip .dm-merger-time-stop-btn:hover {
+    color: #9af0a0;
+    background: rgba(126, 231, 135, 0.22);
 }

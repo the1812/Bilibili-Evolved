@@ -11,6 +11,12 @@ import { mergerToast } from '../ui/notify'
 import { initQuickMerge } from '../ui/quick-merge-host'
 import { createMergerVueHost, type MergerVueHostDeps } from '../ui/vue-host'
 import { discardTimeStop, initTimeStop } from '../time-stop'
+import {
+  parseSourceIdFromDmid,
+  readDanmakuTextFromElement,
+  readDmidFromContext,
+  resolveSourceIdByText,
+} from '../time-stop/source-id'
 /* eslint-disable no-underscore-dangle */
 import {
   extractBvid,
@@ -77,6 +83,35 @@ export const initDanmakuMerger = (): MergerCleanup => {
       return v ? Number(v.currentTime) || 0 : 0
     },
     hasSource: id => !!engine.sources?.has(String(id)),
+    // bpx 画面层通常不挂 data-dmid：用弹幕文案在合并源中反查
+    resolveSourceIdFromElement: el => {
+      const text = readDanmakuTextFromElement(el)
+      if (!text || !engine.sources?.size) {
+        return null
+      }
+      const sources = Array.from(engine.sources.entries()).map(([id, source]) => ({
+        id: String(id),
+        texts: (source.list || []).map((dm: { text?: string }) => String(dm?.text || '')),
+      }))
+      return resolveSourceIdByText(text, sources)
+    },
+    isElementOfSource: (sourceId, el) => {
+      const byDmid = parseSourceIdFromDmid(readDmidFromContext(el))
+      if (byDmid) {
+        return byDmid === String(sourceId)
+      }
+      const text = readDanmakuTextFromElement(el)
+      const source = engine.sources?.get(String(sourceId))
+      if (!source || !text) {
+        return false
+      }
+      return (source.list || []).some((dm: { text?: string }) => {
+        const item = String(dm?.text || '')
+          .replace(/\s+/g, ' ')
+          .trim()
+        return item === text
+      })
+    },
     applyOffsetDelta: async (sourceId, delta) => {
       try {
         const source = engine.sources?.get(String(sourceId))
