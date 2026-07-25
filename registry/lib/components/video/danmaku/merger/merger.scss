@@ -406,34 +406,63 @@ html.dm-merger-time-stop-on {
     }
 }
 
-/* 有时停按钮时：扩宽原生 tip，把第 4 个动作位排进气泡 */
+/* 有时停按钮：略扩 tip，并拉伸胶囊 SVG 底板，避免右侧透明死区 */
 .bpx-player-dm-tip.dm-merger-time-stop-tip {
-    width: 210px !important;
+    width: 214px !important;
+    height: 48px !important;
+    overflow: visible;
 }
 
-/* 压缩原生三图标间距，腾出最右侧给时停 */
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgm,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgl {
+    width: 100% !important;
+    height: 100% !important;
+    left: 0 !important;
+    top: 0 !important;
+}
+
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgm svg,
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgl svg {
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+}
+
+/* 保持原生 like 位置；略收 copy/back 间距，第 4 槽与 back 对齐节奏 */
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-like {
+    left: 13px !important;
+    top: 8px !important;
+    width: 32px !important;
+    height: 32px !important;
+}
+
 .bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-copy {
-    left: 58px !important;
+    left: 61px !important;
+    top: 8px !important;
+    width: 32px !important;
+    height: 32px !important;
 }
 
 .bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-back,
 .bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-recall {
-    left: 108px !important;
+    left: 114px !important;
+    top: 8px !important;
+    width: 32px !important;
+    height: 32px !important;
 }
 
-/* 与 like/copy/back 同构：absolute 图标槽 + 扩大热区 + 悬停用途弹层 */
+/* 时停按钮：与 like/copy/back 同尺寸同 top，不撑高 tip */
 .bpx-player-dm-tip .dm-merger-time-stop-btn {
     position: absolute;
-    left: 152px;
+    left: 167px;
     top: 8px;
     z-index: 4;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    /* 热区比图标更大，避免移出 SVG 就收 tip */
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     padding: 0;
     border-radius: 4px;
     color: #fff;
@@ -448,7 +477,7 @@ html.dm-merger-time-stop-on {
     width: 20px;
     height: 20px;
     display: block;
-    margin: 0 auto;
+    margin: 0;
     flex: 0 0 auto;
     pointer-events: none;
 }
@@ -460,7 +489,7 @@ html.dm-merger-time-stop-on {
 .bpx-player-dm-tip .dm-merger-time-stop-btn .dm-merger-time-stop-tip-bubble {
     position: absolute;
     left: 50%;
-    bottom: calc(100% + 6px);
+    bottom: calc(100% + 8px);
     transform: translateX(-50%) translateY(4px);
     padding: 5px 10px;
     border-radius: 4px;
@@ -482,16 +511,20 @@ html.dm-merger-time-stop-on {
     transform: translateX(-50%) translateY(0);
 }
 
-/* 顶部朝向 tip：与原生图标同一带 */
+/* 顶部朝向 tip */
 .bpx-player-dm-tip.bpx-player-showT .dm-merger-time-stop-btn,
 .bpx-player-dm-tip.bpx-player-showRT .dm-merger-time-stop-btn,
-.bpx-player-dm-tip.bpx-player-showLT .dm-merger-time-stop-btn {
-    top: 2px;
-    height: 36px;
+.bpx-player-dm-tip.bpx-player-showLT .dm-merger-time-stop-btn,
+.bpx-player-dm-tip.bpx-player-showT.dm-merger-time-stop-tip .bpx-player-dm-tip-like,
+.bpx-player-dm-tip.bpx-player-showT.dm-merger-time-stop-tip .bpx-player-dm-tip-copy,
+.bpx-player-dm-tip.bpx-player-showT.dm-merger-time-stop-tip .bpx-player-dm-tip-back,
+.bpx-player-dm-tip.bpx-player-showT.dm-merger-time-stop-tip .bpx-player-dm-tip-recall {
+    top: 10px !important;
+    height: 20px !important;
 }
 
-/* 时停中：定格节点强制固定，避免原生 seek 改写 transform/left */
-html.dm-merger-time-stop-on .dm-merger-time-stop-active {
+/* 时停中：克隆仍 fixed，但由覆盖层 overflow 裁剪到播放器内 */
+html.dm-merger-time-stop-on .dm-merger-time-stop-clone {
     position: fixed !important;
     transform: none !important;
     animation: none !important;
@@ -554,14 +587,14 @@ html.dm-merger-time-stop-on .dm-merger-time-stop-active {
   white-space: nowrap;
 }
 
-/* 时停覆盖层：独立于 DanmakuX，seek 也不会被原生层清掉 */
+/* 时停覆盖层：裁剪到播放器画面，越界定格不显示 */
 .dm-merger-time-stop-overlay {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  overflow: visible;
+  overflow: hidden;
   z-index: 35;
 }
 

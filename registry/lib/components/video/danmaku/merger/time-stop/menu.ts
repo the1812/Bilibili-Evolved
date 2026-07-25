@@ -298,24 +298,54 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
   return best?.node || null
 }
 
-/** 指针是否在 tip / 时停按钮（含扩大热区）上 */
+/** 指针是否在 tip 胶囊 / 时停按钮上（不含胶囊外透明死区） */
 const isPointerOverTimeStopUi = (target: EventTarget | null, clientX?: number, clientY?: number): boolean => {
   if (target instanceof Element) {
-    if (target.closest(`.${BTN_CLASS}, .${TIP_HOST_CLASS}, ${TIP_ROOT_SELECTOR}`)) {
+    // 只认 tip 根或我们的按钮，避免外扩热区
+    if (target.closest(`.${BTN_CLASS}, .bpx-player-dm-tip, .bilibili-player-dm-tip-wrap, .bilibili-player-dm-tip`)) {
+      // 若在 tip 上但落在右端透明区（按钮槽之外），不保活
+      if (Number.isFinite(clientX) && Number.isFinite(clientY)) {
+        const tip = target.closest('.bpx-player-dm-tip, .bilibili-player-dm-tip-wrap, .bilibili-player-dm-tip') as HTMLElement | null
+        const btn = tip?.querySelector(`.${BTN_CLASS}`) as HTMLElement | null
+        if (tip && btn) {
+          const tipRect = tip.getBoundingClientRect()
+          const btnRect = btn.getBoundingClientRect()
+          // tip 内且 x 不超过按钮右缘 + 4
+          if (
+            clientX! >= tipRect.left &&
+            clientX! <= Math.max(btnRect.right, tipRect.right) + 2 &&
+            clientY! >= tipRect.top &&
+            clientY! <= tipRect.bottom
+          ) {
+            return true
+          }
+          // 直接在按钮上
+          if (
+            clientX! >= btnRect.left &&
+            clientX! <= btnRect.right &&
+            clientY! >= btnRect.top &&
+            clientY! <= btnRect.bottom
+          ) {
+            return true
+          }
+          return false
+        }
+      }
       return true
     }
   }
   if (Number.isFinite(clientX) && Number.isFinite(clientY)) {
-    const tip = document.querySelector(`.${TIP_HOST_CLASS}, ${TIP_ROOT_SELECTOR}`) as HTMLElement | null
+    const tip = document.querySelector(`.${TIP_HOST_CLASS}`) as HTMLElement | null
+    const btn = tip?.querySelector(`.${BTN_CLASS}`) as HTMLElement | null
     if (tip) {
-      const rect = tip.getBoundingClientRect()
-      // 扩大 20px 热区，避免移到图标边缘 tip 立刻收起
-      const pad = 20
+      const tipRect = tip.getBoundingClientRect()
+      const btnRect = btn?.getBoundingClientRect()
+      const right = btnRect ? Math.max(btnRect.right, tipRect.left + 200) : tipRect.right
       if (
-        clientX! >= rect.left - pad &&
-        clientX! <= rect.right + pad &&
-        clientY! >= rect.top - pad &&
-        clientY! <= rect.bottom + pad
+        clientX! >= tipRect.left &&
+        clientX! <= right + 2 &&
+        clientY! >= tipRect.top &&
+        clientY! <= tipRect.bottom
       ) {
         return true
       }
