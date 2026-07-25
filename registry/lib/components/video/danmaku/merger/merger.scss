@@ -422,3 +422,28 @@ html.dm-merger-time-stop-on {
     color: #9af0a0;
     background: rgba(126, 231, 135, 0.22);
 }
+/* 管理面板：视频不可用时的历史弹幕兜底提示 */
+.dm-source-fallback-tag {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 0 6px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 18px;
+  color: #ffb020;
+  background: rgba(255, 176, 32, 0.14);
+  vertical-align: middle;
+}
+
+.dm-source-fallback-note {
+  margin-top: 4px;
+  max-width: 420px;
+  color: var(--text3, #999);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

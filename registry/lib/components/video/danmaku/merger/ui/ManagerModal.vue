@@ -88,6 +88,20 @@
                 >
                   {{ item.count }} 条弹幕
                 </span>
+                <span
+                  v-if="item.fetchMode === 'protobuf-fallback' || item.fetchNotice"
+                  class="dm-source-fallback-tag"
+                  :title="item.fetchNotice || '视频不可用，已使用历史弹幕兜底'"
+                >
+                  历史兜底
+                </span>
+              </div>
+              <div
+                v-if="item.fetchNotice"
+                class="dm-source-fallback-note"
+                :title="item.fetchNotice"
+              >
+                {{ item.fetchNotice }}
               </div>
             </div>
 

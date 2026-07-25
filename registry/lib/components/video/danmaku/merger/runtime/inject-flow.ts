@@ -16,7 +16,12 @@ export interface InjectDanmakuMeta {
   pic?: string
   offset?: number
   bvid?: string
+  aid?: number | string
   groupTitle?: string
+  /** xml | protobuf-fallback */
+  fetchMode?: string
+  /** 拉取提示，管理面板展示 */
+  fetchNotice?: string
 }
 
 export interface InjectDanmakuResult {
@@ -116,7 +121,10 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
             pic: meta.pic,
             offset: meta.offset || 0,
             bvid: meta.bvid,
+            aid: meta.aid,
             groupTitle: meta.groupTitle || meta.title,
+            fetchMode: meta.fetchMode,
+            fetchNotice: meta.fetchNotice,
           },
           true,
         )
@@ -230,7 +238,10 @@ export function createInjectDanmaku(nativeDanmaku: NativeDanmakuApi, engine: Dan
           pic: meta.pic,
           offset: meta.offset || 0,
           bvid: meta.bvid,
+          aid: meta.aid,
           groupTitle: meta.groupTitle || meta.title,
+          fetchMode: meta.fetchMode,
+          fetchNotice: meta.fetchNotice,
         },
         true,
       )

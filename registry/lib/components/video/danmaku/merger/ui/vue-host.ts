@@ -39,6 +39,9 @@ export interface MergerEngineSource {
   offset?: number
   cid?: number | string
   viewCid?: number | string
+  aid?: number | string
+  fetchMode?: string
+  fetchNotice?: string
 }
 
 export interface MergerVueHostDeps {
@@ -61,7 +64,19 @@ export interface MergerVueHostDeps {
       owner?: { name: string }
       pages?: Array<{ cid: number; part: string; page: number; duration?: number }>
     }>
-    getDanmaku: (cid: number | string) => Promise<string>
+    getDanmaku: (
+      cid: number | string,
+      options?: {
+        videoId?: string
+        aid?: number | string
+        forceFallback?: boolean
+        unavailableReason?: string
+      },
+    ) => Promise<{
+      list: Array<{ time: number; text: string }>
+      mode: string
+      notice?: string
+    }>
     getPageList: (bvid: string) => Promise<Array<{ cid: number; duration?: number }>>
   }
   parseDanmaku: (xml: string) => Array<{ time: number; text: string }>
@@ -178,6 +193,8 @@ function buildManagerGroups(
       title: source.title || '',
       count: source.count || 0,
       offset: source.offset,
+      fetchMode: source.fetchMode,
+      fetchNotice: source.fetchNotice,
     })
   })
 
@@ -548,8 +565,8 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     await Promise.all(
       pages.map(async page => {
         try {
-          const xml = await deps.api.getDanmaku(page.cid)
-          const list = deps.parseDanmaku(xml)
+          const fetched = await deps.api.getDanmaku(page.cid, { videoId: bvid })
+          const list = fetched.list
           page.danmakuCount = list.length
           page.danmakuError = false
         } catch {
@@ -732,19 +749,33 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           const workingTask = { ...task }
 
           if (task.fetchRequired) {
-            const data = await deps.api.getView(task.bvid)
-            if (data?.pages?.length) {
-              cid = data.pages[0].cid
-              title = `P1 ${data.pages[0].part}`
-              Object.assign(workingTask, {
-                cid,
-                title,
-                pic: normalizeHttpsUrl(data.pic),
-                author: data.owner?.name || '',
-                groupTitle: data.title,
-              })
-            } else {
-              throw new Error('没有分P数据')
+            try {
+              const data = await deps.api.getView(task.bvid)
+              if (data?.pages?.length) {
+                cid = data.pages[0].cid
+                title = `P1 ${data.pages[0].part}`
+                Object.assign(workingTask, {
+                  cid,
+                  title,
+                  pic: normalizeHttpsUrl(data.pic),
+                  author: data.owner?.name || '',
+                  groupTitle: data.title,
+                  aid: (data as { aid?: number | string }).aid,
+                })
+              } else {
+                throw new Error('没有分P数据')
+              }
+            } catch (viewErr) {
+              // 视频已删时 view 失败：若任务已有 cid 仍可走历史弹幕兜底
+              if (cid == null) {
+                const msg = viewErr instanceof Error ? viewErr.message : String(viewErr)
+                throw new Error(
+                  /不存在|已删除|404|62002|不可见/i.test(msg)
+                    ? '视频不存在或已删除，且缺少 cid 无法兜底'
+                    : msg || '获取视频信息失败',
+                )
+              }
+              workingTask.fetchNotice = '视频不存在或已删除，将尝试历史弹幕兜底'
             }
           }
 
@@ -753,12 +784,31 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           }
           resolvedTitle = title
           resolvedSourceId = workingTask.bvid ? `${workingTask.bvid}_${cid}` : String(cid)
-          const xml = await deps.api.getDanmaku(cid)
-          const list = deps.parseDanmaku(xml)
+          const fetched = await deps.api.getDanmaku(cid, {
+            videoId: workingTask.bvid || String(cid),
+            aid: workingTask.aid,
+            forceFallback: !!workingTask.fetchNotice,
+            unavailableReason:
+              typeof workingTask.fetchNotice === 'string'
+                ? workingTask.fetchNotice
+                : undefined,
+          })
+          const list = fetched.list
+          if (!list.length) {
+            throw new Error('弹幕为空')
+          }
+          if (fetched.notice) {
+            mergerToast(fetched.notice, 'warn')
+          }
           const injectIndex = success + fail + 1
           const result = await deps.injectDanmaku(
             list,
-            { ...workingTask, id: resolvedSourceId },
+            {
+              ...workingTask,
+              id: resolvedSourceId,
+              fetchMode: fetched.mode,
+              fetchNotice: fetched.notice,
+            },
             true,
             phase => {
               mergerProgressToast(
@@ -878,6 +928,8 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         bvid: deps.resolveSourceBvid(s),
         title: s.title || '',
         count: s.count || 0,
+        fetchMode: s.fetchMode,
+        fetchNotice: s.fetchNotice,
       }))
     },
     getTotalMergedCount(): number {

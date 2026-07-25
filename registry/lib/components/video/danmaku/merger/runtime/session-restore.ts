@@ -23,7 +23,15 @@ const withTimeout = async <T>(promise: Promise<T>, ms: number, label: string): P
 }
 
 export interface MergerApi {
-  getDanmaku: (cid: number | string) => Promise<string>
+  getDanmaku: (
+    cid: number | string,
+    options?: {
+      videoId?: string
+      aid?: number | string
+      forceFallback?: boolean
+      unavailableReason?: string
+    },
+  ) => Promise<{ list: import('../danmaku/parse').ParsedDanmakuItem[]; mode: string; notice?: string } | string>
 }
 
 /** 读取会话存储，兼容历史大小写 BV 键名 */
@@ -107,12 +115,30 @@ export function createSessionRestore(deps: {
               if (meta.cid == null || meta.cid === '') {
                 return null
               }
-              const xml = await withTimeout(
-                deps.api.getDanmaku(meta.cid),
-                20000,
+              const fetched = await withTimeout(
+                deps.api.getDanmaku(meta.cid, {
+                  videoId: meta.bvid || String(meta.cid),
+                  aid: meta.aid,
+                }),
+                45000,
                 `拉取弹幕 ${meta.cid}`,
               )
-              return { list: deps.parseDanmaku(xml), meta }
+              const list =
+                typeof fetched === 'string'
+                  ? deps.parseDanmaku(fetched)
+                  : fetched.list
+              if (!list.length) {
+                return null
+              }
+              const nextMeta = { ...meta }
+              if (typeof fetched !== 'string') {
+                nextMeta.fetchMode = fetched.mode
+                nextMeta.fetchNotice = fetched.notice
+                if (fetched.notice) {
+                  // 恢复阶段统一在结束后提示；这里先写入 meta
+                }
+              }
+              return { list, meta: nextMeta }
             } catch (err) {
               dmLog('单源弹幕拉取失败', { id: meta.id, err })
               return null
@@ -138,7 +164,16 @@ export function createSessionRestore(deps: {
 
         mergerProgressToastDone()
         if (result.ok || restored > 0) {
-          mergerToast(`已恢复 ${restored}/${sources.length} 个弹幕源`)
+          const fallbackCount = entries.filter(
+            entry => entry.meta.fetchMode === 'protobuf-fallback',
+          ).length
+          let msg = `已恢复 ${restored}/${sources.length} 个弹幕源`
+          if (fallbackCount > 0) {
+            msg += `（其中 ${fallbackCount} 个视频不可用，已走历史弹幕兜底）`
+            mergerToast(msg, 'warn')
+          } else {
+            mergerToast(msg)
+          }
         } else {
           mergerToast('恢复失败，请手动重新合并', 'error')
         }

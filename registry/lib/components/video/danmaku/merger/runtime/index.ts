@@ -63,11 +63,14 @@ export const initDanmakuMerger = (): MergerCleanup => {
   const API = {
     search: BiliApi.searchVideos,
     getView: BiliApi.getView,
-    getDanmaku: BiliApi.getDanmakuXml,
+    // 视频仍在走 XML；已删/空壳走 protobuf 兜底
+    getDanmaku: BiliApi.fetchDanmakuForMerge,
     getPageList: BiliApi.getPageList,
   }
 
-  const parseDanmaku = parseDanmakuXml
+  // 兼容旧路径：若仍传入 xml 字符串则本地解析
+  const parseDanmaku = (input: string | ReturnType<typeof parseDanmakuXml>) =>
+    typeof input === 'string' ? parseDanmakuXml(input) : input
   const injectDanmaku = createInjectDanmaku(nativeDanmaku, engine)
   const batchRestoreDanmaku = createBatchRestoreDanmaku(nativeDanmaku, engine)
 

@@ -16,6 +16,9 @@ export interface MergerSourceSummary {
   title: string
   count: number
   pages?: number
+  /** 拉取方式提示，如视频已删走兜底 */
+  fetchNotice?: string
+  fetchMode?: string
 }
 
 /**
