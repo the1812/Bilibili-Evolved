@@ -53,6 +53,11 @@ let lastPointerX = 0
 let lastPointerY = 0
 /** 正在写 tip 定位，避免 MutationObserver 回环 */
 let writingForcedTip = false
+/**
+ * enter 后 tip 已贴到 clone，但指针仍停在旧点击坐标。
+ * sticky 期间不因「指针不在 tip/clone 上」自动隐藏，直到指针重新进入 tip/clone。
+ */
+let stickyForcedTip = false
 
 const isActiveForSource = (sourceId: string): boolean => getActiveSourceId() === sourceId
 
@@ -161,6 +166,7 @@ const clearForcedTipPosition = (tip: HTMLElement): void => {
 
 /** 收回我们强制显示的 tip，避免恢复后残留 */
 const hideForcedTip = (): void => {
+  stickyForcedTip = false
   const tip = document.querySelector('.bpx-player-dm-tip') as HTMLElement | null
   if (!tip) {
     forcedTipVisible = false
@@ -433,6 +439,9 @@ export const attachForcedTipToClones = (sourceId?: string | null): void => {
 
   lastHoveredSourceId = active
   lastHoveredEl = target
+  // enter 瞬间指针不在 clone 上：先粘住，避免被 leave 定时器立刻藏掉
+  stickyForcedTip = true
+  window.clearTimeout(hideTimer)
   forceShowTipNearClone(target)
   injectIfNeeded()
 }
@@ -450,7 +459,24 @@ const isOverTipOrClone = (target: EventTarget | null, x: number, y: number): boo
       return true
     }
   }
+  // sticky 阶段也要把当前 clone 矩形算进 hover 区
+  if (forcedTipVisible && lastHoveredEl?.classList.contains('dm-merger-time-stop-clone')) {
+    const r = lastHoveredEl.getBoundingClientRect()
+    if (r.width > 0 && r.height > 0 && x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) {
+      return true
+    }
+  }
   return false
+}
+
+const keepStickyForcedTip = (): void => {
+  if (!stickyForcedTip || !forcedTipVisible) {
+    return
+  }
+  if (lastHoveredEl?.isConnected && lastHoveredEl.classList.contains('dm-merger-time-stop-clone')) {
+    forceShowTipNearClone(lastHoveredEl)
+    injectIfNeeded()
+  }
 }
 
 const onPointerMove = (event: MouseEvent): void => {
@@ -460,6 +486,8 @@ const onPointerMove = (event: MouseEvent): void => {
 
   // 仍在 tip / 当前克隆上：保持
   if (isOverTipOrClone(target, x, y)) {
+    // 指针已回到 tip/clone：结束 sticky，之后按正常离开逻辑
+    stickyForcedTip = false
     if (lastHoveredSourceId) {
       // 若还在某个 clone 上，跟随更新位置
       const dm =
@@ -495,9 +523,18 @@ const onPointerMove = (event: MouseEvent): void => {
   }
 
   if (!dmNode || !(dmNode instanceof HTMLElement)) {
+    // enter 后 tip 已贴到 clone，指针仍在旧坐标：先粘住不藏
+    if (stickyForcedTip && forcedTipVisible) {
+      window.clearTimeout(hideTimer)
+      keepStickyForcedTip()
+      return
+    }
     // 离开弹幕：延迟隐藏强制 tip，避免移向 tip 按钮时闪断
     window.clearTimeout(hideTimer)
     hideTimer = window.setTimeout(() => {
+      if (stickyForcedTip && forcedTipVisible) {
+        return
+      }
       lastHoveredSourceId = null
       lastHoveredEl = null
       hideForcedTip()
@@ -604,6 +641,7 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
     }
     tipObserver?.disconnect()
     document.removeEventListener('mousemove', onMove, true)
+    stickyForcedTip = false
     hideForcedTip()
     document.querySelectorAll(`[${BTN_ATTR}]`).forEach(n => n.remove())
     document.querySelectorAll(`.${TIP_HOST_CLASS}`).forEach(n => clearMergedTipLayout(n))
