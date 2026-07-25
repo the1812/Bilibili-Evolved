@@ -216,28 +216,70 @@ const processVisibleTips = (onClick: ClickHandler): void => {
   })
 }
 
-/** 从事件目标回溯弹幕节点并更新 lastHoveredSourceId */
-const updateHoveredSourceFromEvent = (target: EventTarget | null): void => {
-  if (!(target instanceof Element)) {
-    return
+/** 从弹幕节点解析合并源 id */
+const resolveSourceIdFromDanmakuNode = (dmNode: Element): string | null => {
+  const dmid = readDmidFromContext(dmNode)
+  let sourceId = parseSourceIdFromDmid(dmid)
+  if (!sourceId && resolveFromElement) {
+    sourceId = resolveFromElement(dmNode)
   }
-  const dmNode = target.closest(DANMAKU_HOVER_SELECTOR)
+  return sourceId
+}
+
+/**
+ * bpx 画面弹幕节点 pointer-events:none，event.target 往往是 video。
+ * 用坐标命中可见弹幕节点，再反查合并源。
+ */
+const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | null => {
+  const nodes = document.querySelectorAll(DANMAKU_HOVER_SELECTOR)
+  let best: { node: Element; area: number } | null = null
+  nodes.forEach(node => {
+    if (!(node instanceof HTMLElement)) {
+      return
+    }
+    const rect = node.getBoundingClientRect()
+    if (rect.width <= 0 || rect.height <= 0) {
+      return
+    }
+    if (
+      clientX < rect.left ||
+      clientX > rect.right ||
+      clientY < rect.top ||
+      clientY > rect.bottom
+    ) {
+      return
+    }
+    const area = rect.width * rect.height
+    // 重叠时取面积更小的节点，减少大号居中弹幕误伤
+    if (!best || area < best.area) {
+      best = { node, area }
+    }
+  })
+  return best?.node || null
+}
+
+/** 从事件目标或坐标回溯弹幕节点并更新 lastHoveredSourceId */
+const updateHoveredSourceFromEvent = (event: Event): void => {
+  const target = event.target
+  let dmNode: Element | null = null
+  if (target instanceof Element) {
+    dmNode = target.closest(DANMAKU_HOVER_SELECTOR)
+  }
+
+  // 画面层 pe:none：用 mouse 坐标扫可见弹幕盒
+  if (!dmNode && 'clientX' in event && 'clientY' in event) {
+    const { clientX, clientY } = event as MouseEvent
+    if (Number.isFinite(clientX) && Number.isFinite(clientY)) {
+      dmNode = hitDanmakuElementAtPoint(clientX, clientY)
+    }
+  }
+
   if (!dmNode) {
     return
   }
 
-  // 1) 优先 dmid 前缀
-  const dmid = readDmidFromContext(dmNode)
-  let sourceId = parseSourceIdFromDmid(dmid)
-
-  // 2) bpx 画面层通常无 dmid：用运行时文案反查
-  if (!sourceId && resolveFromElement) {
-    sourceId = resolveFromElement(dmNode)
-  }
-
-  // 3) 再退一步：若 tip 尚未出现，至少记下文案供调试
+  const sourceId = resolveSourceIdFromDanmakuNode(dmNode)
   lastHoveredText = readDanmakuTextFromElement(dmNode) || lastHoveredText
-
   // 仅记录合并源；原生弹幕清空，避免 tip 误用上一次合并源
   lastHoveredSourceId = sourceId
 }
@@ -268,13 +310,26 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
     })
   }
 
-  const onMouseOver = (event: Event) => {
-    updateHoveredSourceFromEvent(event.target)
-    // tip 常在悬停后异步挂载，短延迟再扫一次
-    window.clearTimeout(mouseoverTimer)
-    mouseoverTimer = window.setTimeout(() => {
-      scheduleProcess()
-    }, 50)
+  // 指针在 video 上移动时 target 不变，必须用 mousemove 持续命中弹幕盒
+  let pointerSampleRaf = 0
+  let lastPointerEvent: Event | null = null
+  const onPointerSample = (event: Event) => {
+    lastPointerEvent = event
+    if (pointerSampleRaf) {
+      return
+    }
+    pointerSampleRaf = window.requestAnimationFrame(() => {
+      pointerSampleRaf = 0
+      if (stopped || !lastPointerEvent) {
+        return
+      }
+      updateHoveredSourceFromEvent(lastPointerEvent)
+      // tip 常在悬停后异步挂载，短延迟再扫一次
+      window.clearTimeout(mouseoverTimer)
+      mouseoverTimer = window.setTimeout(() => {
+        scheduleProcess()
+      }, 50)
+    })
   }
 
   const resolveObserveRoot = (): Element => {
@@ -312,7 +367,8 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
     bodyObserver.observe(document.body, { childList: true, subtree: false })
   }
 
-  document.addEventListener('mouseover', onMouseOver, true)
+  document.addEventListener('mouseover', onPointerSample, true)
+  document.addEventListener('mousemove', onPointerSample, true)
 
   // 首扫：页面上若已有 tip
   scheduleProcess()
@@ -324,13 +380,20 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
       rafId = 0
     }
     window.clearTimeout(mouseoverTimer)
+    if (pointerSampleRaf) {
+      window.cancelAnimationFrame(pointerSampleRaf)
+      pointerSampleRaf = 0
+    }
+    lastPointerEvent = null
     observer.disconnect()
     bodyObserver?.disconnect()
     bodyObserver = null
-    document.removeEventListener('mouseover', onMouseOver, true)
+    document.removeEventListener('mouseover', onPointerSample, true)
+    document.removeEventListener('mousemove', onPointerSample, true)
     document.querySelectorAll(`[${BTN_ATTR}]`).forEach(node => node.remove())
     lastHoveredSourceId = null
     lastHoveredText = null
     resolveFromElement = null
   }
 }
+

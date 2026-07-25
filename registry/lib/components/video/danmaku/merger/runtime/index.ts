@@ -12,6 +12,7 @@ import { initQuickMerge } from '../ui/quick-merge-host'
 import { createMergerVueHost, type MergerVueHostDeps } from '../ui/vue-host'
 import { discardTimeStop, initTimeStop } from '../time-stop'
 import {
+  isSameDanmakuText,
   parseSourceIdFromDmid,
   readDanmakuTextFromElement,
   readDmidFromContext,
@@ -83,17 +84,53 @@ export const initDanmakuMerger = (): MergerCleanup => {
       return v ? Number(v.currentTime) || 0 : 0
     },
     hasSource: id => !!engine.sources?.has(String(id)),
-    // bpx 画面层通常不挂 data-dmid：用弹幕文案在合并源中反查
+    // bpx 画面层通常不挂 data-dmid：文案反查 + 原生 allDm dmid 回落
     resolveSourceIdFromElement: el => {
       const text = readDanmakuTextFromElement(el)
-      if (!text || !engine.sources?.size) {
+      if (!text) {
         return null
       }
-      const sources = Array.from(engine.sources.entries()).map(([id, source]) => ({
-        id: String(id),
-        texts: (source.list || []).map((dm: { text?: string }) => String(dm?.text || '')),
-      }))
-      return resolveSourceIdByText(text, sources)
+      // 1) 引擎源 list 文案（XML 原文，无列表前缀）
+      if (engine.sources?.size) {
+        const sources = Array.from(engine.sources.entries()).map(([id, source]) => ({
+          id: String(id),
+          texts: (source.list || []).map((dm: { text?: string }) => String(dm?.text || '')),
+        }))
+        const fromEngine = resolveSourceIdByText(text, sources)
+        if (fromEngine) {
+          return fromEngine
+        }
+      }
+      // 2) 原生列表已注入项：text 可能带【BVxxx】前缀，dmid 带 dmmerger_
+      try {
+        const page = pageWin() as Window & {
+          __dmMergerStores?: { dmListStore?: { allDm?: Array<{ dmid?: string; text?: string }> } }
+        }
+        const allDm = page.__dmMergerStores?.dmListStore?.allDm
+        if (!Array.isArray(allDm) || !allDm.length) {
+          return null
+        }
+        const hits = new Set<string>()
+        for (const item of allDm) {
+          const dmid = String(item?.dmid || '')
+          if (!dmid.startsWith('dmmerger_')) {
+            continue
+          }
+          if (!isSameDanmakuText(text, item?.text)) {
+            continue
+          }
+          const sid = parseSourceIdFromDmid(dmid)
+          if (sid) {
+            hits.add(sid)
+            if (hits.size > 1) {
+              return null
+            }
+          }
+        }
+        return hits.size === 1 ? Array.from(hits)[0] : null
+      } catch {
+        return null
+      }
     },
     isElementOfSource: (sourceId, el) => {
       const byDmid = parseSourceIdFromDmid(readDmidFromContext(el))
@@ -101,16 +138,32 @@ export const initDanmakuMerger = (): MergerCleanup => {
         return byDmid === String(sourceId)
       }
       const text = readDanmakuTextFromElement(el)
-      const source = engine.sources?.get(String(sourceId))
-      if (!source || !text) {
+      if (!text) {
         return false
       }
-      return (source.list || []).some((dm: { text?: string }) => {
-        const item = String(dm?.text || '')
-          .replace(/\s+/g, ' ')
-          .trim()
-        return item === text
-      })
+      const source = engine.sources?.get(String(sourceId))
+      if (source && (source.list || []).some((dm: { text?: string }) => isSameDanmakuText(text, dm?.text))) {
+        return true
+      }
+      // 引擎 list 未命中时，用原生 allDm 的 dmid 归属判断
+      try {
+        const page = pageWin() as Window & {
+          __dmMergerStores?: { dmListStore?: { allDm?: Array<{ dmid?: string; text?: string }> } }
+        }
+        const allDm = page.__dmMergerStores?.dmListStore?.allDm
+        if (!Array.isArray(allDm)) {
+          return false
+        }
+        return allDm.some(item => {
+          const dmid = String(item?.dmid || '')
+          if (parseSourceIdFromDmid(dmid) !== String(sourceId)) {
+            return false
+          }
+          return isSameDanmakuText(text, item?.text)
+        })
+      } catch {
+        return false
+      }
     },
     applyOffsetDelta: async (sourceId, delta) => {
       try {

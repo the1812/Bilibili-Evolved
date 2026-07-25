@@ -45,6 +45,38 @@ export const readDanmakuTextFromElement = (node: Element | null): string => {
     .trim()
 }
 
+/** 规范化弹幕文案：去空白，并去掉列表前缀【xxx】 */
+export const normalizeDanmakuText = (text: string | null | undefined): string => {
+  const raw = String(text || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (!raw) {
+    return ''
+  }
+  // 右侧列表 / allDm 合并项常见「【BVxxx】正文」；画面层通常只有正文
+  return raw.replace(/^【[^】]+】/, '').trim() || raw
+}
+
+/** 两条弹幕文案是否等价（允许一侧带列表前缀） */
+export const isSameDanmakuText = (
+  a: string | null | undefined,
+  b: string | null | undefined,
+): boolean => {
+  const left = String(a || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  const right = String(b || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+  if (!left || !right) {
+    return false
+  }
+  if (left === right) {
+    return true
+  }
+  return normalizeDanmakuText(left) === normalizeDanmakuText(right)
+}
+
 /**
  * 在合并源列表中按文案反查 sourceId。
  * 优先唯一精确匹配；多源命中同一文案时返回 null，避免误绑。
@@ -59,13 +91,17 @@ export const resolveSourceIdByText = (
   if (!needle) {
     return null
   }
+  const needleNorm = normalizeDanmakuText(needle)
   const hits: string[] = []
   for (const source of sources) {
     for (const raw of source.texts) {
       const item = String(raw || '')
         .replace(/\s+/g, ' ')
         .trim()
-      if (item && item === needle) {
+      if (!item) {
+        continue
+      }
+      if (item === needle || normalizeDanmakuText(item) === needleNorm) {
         hits.push(String(source.id))
         break
       }
