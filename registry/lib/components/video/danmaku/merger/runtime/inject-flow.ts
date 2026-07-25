@@ -16,8 +16,6 @@ export interface InjectDanmakuMeta {
   pic?: string
   offset?: number
   bvid?: string
-  /** 源稿件 avid，protobuf 弹幕拉取用 */
-  aid?: number | string
   groupTitle?: string
 }
 

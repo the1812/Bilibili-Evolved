@@ -23,11 +23,7 @@ const withTimeout = async <T>(promise: Promise<T>, ms: number, label: string): P
 }
 
 export interface MergerApi {
-  /** 直接返回解析后的弹幕列表（protobuf 优先） */
-  getDanmaku: (
-    cid: number | string,
-    aid?: number | string,
-  ) => Promise<ParsedDanmakuItem[]>
+  getDanmaku: (cid: number | string) => Promise<string>
 }
 
 /** 读取会话存储，兼容历史大小写 BV 键名 */
@@ -66,6 +62,7 @@ const normalizeRestoreMeta = (meta: InjectDanmakuMeta): InjectDanmakuMeta | null
 export function createSessionRestore(deps: {
   engine: DanmakuEngine
   api: MergerApi
+  parseDanmaku: (xml: string) => ParsedDanmakuItem[]
   batchRestoreDanmaku: (
     entries: Array<{ list: ParsedDanmakuItem[]; meta: InjectDanmakuMeta }>,
   ) => Promise<InjectDanmakuResult>
@@ -81,18 +78,8 @@ export function createSessionRestore(deps: {
     if (!raw) {
       return
     }
-    // 已有源但全部 list 为空：视为恢复失败残留，允许重新拉取
     if (deps.engine.sources?.size) {
-      const hasAnyDm = Array.from(deps.engine.sources.values()).some(
-        source => Array.isArray(source.list) && source.list.length > 0,
-      )
-      if (hasAnyDm) {
-        return
-      }
-      dmLog('内存源均为空列表，重新拉取恢复', {
-        storeKey,
-        sources: deps.engine.sources.size,
-      })
+      return
     }
 
     if (restoreSessionPromise && restoreSessionStoreKey === storeKey) {
@@ -120,16 +107,12 @@ export function createSessionRestore(deps: {
               if (meta.cid == null || meta.cid === '') {
                 return null
               }
-              const list = await withTimeout(
-                deps.api.getDanmaku(meta.cid, meta.aid),
-                45000,
+              const xml = await withTimeout(
+                deps.api.getDanmaku(meta.cid),
+                20000,
                 `拉取弹幕 ${meta.cid}`,
               )
-              if (!list.length) {
-                dmLog('单源弹幕为空，跳过', { id: meta.id, cid: meta.cid })
-                return null
-              }
-              return { list, meta }
+              return { list: deps.parseDanmaku(xml), meta }
             } catch (err) {
               dmLog('单源弹幕拉取失败', { id: meta.id, err })
               return null
@@ -146,27 +129,16 @@ export function createSessionRestore(deps: {
           return
         }
 
-        // 清掉空 list 残留，避免 addSource 覆盖前仍显示 0 条
-        if (deps.engine.sources?.size) {
-          Array.from(deps.engine.sources.keys()).forEach(id => {
-            const source = deps.engine.sources?.get(id)
-            if (!source?.list?.length) {
-              deps.engine.sources?.delete(id)
-            }
-          })
-        }
-
         const result = await withTimeout(
           deps.batchRestoreDanmaku(entries),
           60000,
           '注入恢复弹幕',
         )
         const restored = deps.engine.sources?.size || 0
-        const restoredWithDm = entries.filter(e => e.list.length > 0).length
 
         mergerProgressToastDone()
         if (result.ok || restored > 0) {
-          mergerToast(`已恢复 ${restoredWithDm}/${sources.length} 个弹幕源`)
+          mergerToast(`已恢复 ${restored}/${sources.length} 个弹幕源`)
         } else {
           mergerToast('恢复失败，请手动重新合并', 'error')
         }

@@ -63,14 +63,11 @@ export const initDanmakuMerger = (): MergerCleanup => {
   const API = {
     search: BiliApi.searchVideos,
     getView: BiliApi.getView,
-    // protobuf 优先；空结果时 fetchDanmakuItems 内部回落 XML
-    getDanmaku: BiliApi.fetchDanmakuItems,
+    getDanmaku: BiliApi.getDanmakuXml,
     getPageList: BiliApi.getPageList,
   }
 
-  // 兼容仍传入 xml 字符串的旧路径；新路径 getDanmaku 已直接返回列表
-  const parseDanmaku = (input: string | ReturnType<typeof parseDanmakuXml>) =>
-    typeof input === 'string' ? parseDanmakuXml(input) : input
+  const parseDanmaku = parseDanmakuXml
   const injectDanmaku = createInjectDanmaku(nativeDanmaku, engine)
   const batchRestoreDanmaku = createBatchRestoreDanmaku(nativeDanmaku, engine)
 
@@ -191,6 +188,7 @@ export const initDanmakuMerger = (): MergerCleanup => {
   const tryRestoreSession = createSessionRestore({
     engine,
     api: API,
+    parseDanmaku,
     batchRestoreDanmaku,
     onRestored: () => mergerVueHostCtrl?.refreshBadge(),
   })
@@ -212,22 +210,11 @@ export const initDanmakuMerger = (): MergerCleanup => {
         if (!raw) {
           return
         }
-        // 有源但全空时仍继续恢复
-        if (
-          engine.sources?.size &&
-          Array.from(engine.sources.values()).some(
-            source => Array.isArray(source.list) && source.list.length > 0,
-          )
-        ) {
+        if (engine.sources?.size) {
           return
         }
         await tryRestoreSession()
-        const hasLoadedDm =
-          !!engine.sources?.size &&
-          Array.from(engine.sources.values()).some(
-            source => Array.isArray(source.list) && source.list.length > 0,
-          )
-        if (!hasLoadedDm && attempts < maxAttempts) {
+        if (!engine.sources?.size && attempts < maxAttempts) {
           window.setTimeout(tick, 500)
         }
       } catch (err) {
