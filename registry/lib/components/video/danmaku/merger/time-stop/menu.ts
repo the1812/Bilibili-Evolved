@@ -195,20 +195,64 @@ const injectIfMergedTipVisible = (): void => {
     return
   }
 
-  // tip 可见时，若还没有 source，按 tip 中心反查下方弹幕
+  // tip 可见时补 source：附近探测 + 全屏可见弹幕反查
   let sourceId = lastHoveredSourceId
   if (!sourceId && tipLooksShown(tip)) {
     const tr = tip.getBoundingClientRect()
-    // tip 上方是弹幕，取 tip 上方一点
-    const probeX = tr.left + tr.width / 2
-    const probeY = tr.top - 12
-    const dm = hitDanmakuElementAtPoint(probeX, probeY)
-    if (dm) {
-      sourceId = resolveSourceIdFromDanmakuNode(dm)
-      if (sourceId) {
-        lastHoveredSourceId = sourceId
-        lastHoveredEl = dm as HTMLElement
+    const probes: Array<[number, number]> = [
+      [tr.left + tr.width / 2, tr.top - 8],
+      [tr.left + tr.width / 2, tr.top - 24],
+      [tr.left + tr.width / 2, tr.top - 40],
+      [tr.left + tr.width / 2, tr.top + tr.height + 8],
+      [tr.left + 20, tr.top - 12],
+      [tr.right - 20, tr.top - 12],
+    ]
+    for (const [px, py] of probes) {
+      const dm = hitDanmakuElementAtPoint(px, py)
+      if (!dm) {
+        continue
       }
+      const sid = resolveSourceIdFromDanmakuNode(dm)
+      if (sid) {
+        sourceId = sid
+        lastHoveredSourceId = sid
+        lastHoveredEl = dm as HTMLElement
+        break
+      }
+    }
+  }
+  if (!sourceId && tipLooksShown(tip) && resolveFromElement) {
+    // 最后手段：扫所有可见弹幕，谁能解析成合并源就用谁（优先距离 tip 锚点最近）
+    const tr = tip.getBoundingClientRect()
+    const anchorX = tr.left + tr.width / 2
+    const anchorY = tr.top - 10
+    let best: { sid: string; el: HTMLElement; dist: number } | null = null
+    document.querySelectorAll(DANMAKU_HOVER_SELECTOR).forEach(node => {
+      if (!(node instanceof HTMLElement)) {
+        return
+      }
+      if (node.classList.contains('dm-merger-time-stop-hidden')) {
+        return
+      }
+      const rect = node.getBoundingClientRect()
+      if (rect.width <= 0 || rect.height <= 0) {
+        return
+      }
+      const sid = resolveSourceIdFromDanmakuNode(node)
+      if (!sid) {
+        return
+      }
+      const cx = rect.left + rect.width / 2
+      const cy = rect.top + rect.height / 2
+      const dist = (cx - anchorX) * (cx - anchorX) + (cy - anchorY) * (cy - anchorY)
+      if (!best || dist < best.dist) {
+        best = { sid, el: node, dist }
+      }
+    })
+    if (best) {
+      sourceId = best.sid
+      lastHoveredSourceId = best.sid
+      lastHoveredEl = best.el
     }
   }
 
@@ -415,6 +459,7 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
   let stopped = false
   let pointerRaf = 0
   let lastEv: Event | null = null
+  let pollTimer = 0
 
   const onPointer = (event: Event) => {
     lastEv = event
@@ -459,11 +504,70 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
 
   document.addEventListener('mouseover', onPointer, true)
   document.addEventListener('mousemove', onPointer, true)
+  // 兜底轮询：原生 tip 有时只改 transform/opacity 不触发我们需要的时序
+  pollTimer = window.setInterval(() => {
+    if (!stopped) {
+      injectIfMergedTipVisible()
+    }
+  }, 200)
+
+  // 调试入口挂到页面 window（TM 沙箱 window 与页面隔离）
+  const publishDebugHook = () => {
+    const api = {
+      version: 'tip-inject-4',
+      getState: () => ({
+        lastHoveredSourceId,
+        lastHoveredText,
+        hasHandler: !!onClickHandler,
+        hasResolver: !!resolveFromElement,
+        tipHost: !!document.querySelector(`.${TIP_HOST_CLASS}`),
+        hasBtn: !!document.querySelector(`[${BTN_ATTR}]`),
+      }),
+      injectNow: () => injectIfMergedTipVisible(),
+      resolveAt: (x: number, y: number) => {
+        const dm = hitDanmakuElementAtPoint(x, y)
+        return {
+          dmText: dm ? readDanmakuTextFromElement(dm) : null,
+          sourceId: dm ? resolveSourceIdFromDanmakuNode(dm) : null,
+        }
+      },
+      setSourceId: (id: string | null) => {
+        lastHoveredSourceId = id
+        holdTipUntil = Date.now() + 2000
+        injectIfMergedTipVisible()
+      },
+    }
+    const targets: Array<Record<string, unknown>> = []
+    try {
+      targets.push(window as unknown as Record<string, unknown>)
+    } catch {
+      // ignore
+    }
+    try {
+      const uw = (window as unknown as { unsafeWindow?: Record<string, unknown> }).unsafeWindow
+      if (uw) {
+        targets.push(uw)
+      }
+    } catch {
+      // ignore
+    }
+    targets.forEach(t => {
+      try {
+        t.__dmMergerTimeStopMenu = api
+      } catch {
+        // ignore
+      }
+    })
+  }
+  publishDebugHook()
 
   return () => {
     stopped = true
     if (pointerRaf) {
       window.cancelAnimationFrame(pointerRaf)
+    }
+    if (pollTimer) {
+      window.clearInterval(pollTimer)
     }
     tipObserver.disconnect()
     bodyObserver.disconnect()
@@ -476,5 +580,18 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
     lastHoveredEl = null
     resolveFromElement = null
     onClickHandler = null
+    try {
+      delete (window as unknown as { __dmMergerTimeStopMenu?: unknown }).__dmMergerTimeStopMenu
+    } catch {
+      // ignore
+    }
+    try {
+      const uw = (window as unknown as { unsafeWindow?: Record<string, unknown> }).unsafeWindow
+      if (uw) {
+        delete uw.__dmMergerTimeStopMenu
+      }
+    } catch {
+      // ignore
+    }
   }
 }
