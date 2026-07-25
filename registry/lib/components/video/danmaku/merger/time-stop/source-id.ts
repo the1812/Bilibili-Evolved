@@ -92,8 +92,9 @@ export const resolveSourceIdByText = (
     return null
   }
   const needleNorm = normalizeDanmakuText(needle)
+  const all = Array.from(sources)
   const hits: string[] = []
-  for (const source of sources) {
+  for (const source of all) {
     for (const raw of source.texts) {
       const item = String(raw || '')
         .replace(/\s+/g, ' ')
@@ -109,6 +110,21 @@ export const resolveSourceIdByText = (
   }
   if (hits.length === 1) {
     return hits[0]
+  }
+  // 仅有一个合并源时，唯一源命中即可（避免多源策略误伤）
+  if (all.length === 1 && hits.length === 0) {
+    // 再宽松：包含匹配（短文本）
+    const only = all[0]
+    for (const raw of only.texts) {
+      const item = normalizeDanmakuText(String(raw || ''))
+      if (item && (item === needleNorm || item.includes(needleNorm) || needleNorm.includes(item))) {
+        return String(only.id)
+      }
+    }
+  }
+  // 多源同文案：仍拒绝，防误绑
+  if (hits.length > 1 && all.length === 1) {
+    return String(all[0].id)
   }
   return null
 }

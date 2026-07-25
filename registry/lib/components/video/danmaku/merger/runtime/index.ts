@@ -110,30 +110,42 @@ export const initDanmakuMerger = (): MergerCleanup => {
           __dmMergerStores?: { dmListStore?: { allDm?: Array<{ dmid?: string; text?: string }> } }
         }
         const allDm = page.__dmMergerStores?.dmListStore?.allDm
-        if (!Array.isArray(allDm) || !allDm.length) {
-          return null
-        }
-        const hits = new Set<string>()
-        for (const item of allDm) {
-          const dmid = String(item?.dmid || '')
-          if (!dmid.startsWith('dmmerger_')) {
-            continue
-          }
-          if (!isSameDanmakuText(text, item?.text)) {
-            continue
-          }
-          const sid = parseSourceIdFromDmid(dmid)
-          if (sid) {
-            hits.add(sid)
-            if (hits.size > 1) {
-              return null
+        if (Array.isArray(allDm) && allDm.length) {
+          const hits = new Set<string>()
+          for (const item of allDm) {
+            const dmid = String(item?.dmid || '')
+            if (!dmid.startsWith('dmmerger_')) {
+              continue
+            }
+            if (!isSameDanmakuText(text, item?.text)) {
+              continue
+            }
+            const sid = parseSourceIdFromDmid(dmid)
+            if (sid) {
+              hits.add(sid)
             }
           }
+          if (hits.size === 1) {
+            return Array.from(hits)[0]
+          }
+          // 仅一个合并源时，放宽为该源
+          if (engine.sources?.size === 1 && hits.size > 0) {
+            return String(Array.from(engine.sources.keys())[0])
+          }
         }
-        return hits.size === 1 ? Array.from(hits)[0] : null
       } catch {
-        return null
+        // ignore
       }
+      // 3) 只有一个合并源：任意命中合并弹幕文本即归到该源
+      if (engine.sources?.size === 1) {
+        const onlyId = String(Array.from(engine.sources.keys())[0])
+        const source = engine.sources.get(onlyId)
+        const ok = (source?.list || []).some((dm: { text?: string }) => isSameDanmakuText(text, dm?.text))
+        if (ok) {
+          return onlyId
+        }
+      }
+      return null
     },
     isElementOfSource: (sourceId, el) => {
       const byDmid = parseSourceIdFromDmid(readDmidFromContext(el))

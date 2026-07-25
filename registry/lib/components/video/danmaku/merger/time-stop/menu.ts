@@ -259,26 +259,42 @@ const isTipVisuallyActive = (tipRoot: Element): boolean => {
 
 const processVisibleTips = (onClick: ClickHandler): void => {
   document.querySelectorAll(TIP_ROOT_SELECTOR).forEach(tipRoot => {
-    if (!isTipVisuallyActive(tipRoot)) {
+    const tipEl = tipRoot as HTMLElement
+    const shown =
+      !tipEl.classList.contains('bpx-player-hide') ||
+      Number(getComputedStyle(tipEl).opacity || '0') > 0 ||
+      getComputedStyle(tipEl).visibility === 'visible'
+
+    // 优先用悬停记录的合并源，避免 tip 本体无 dmid 时退回原生三按钮
+    const sourceId = lastHoveredSourceId || parseSourceIdFromTip(tipRoot)
+
+    if (!shown && !sourceId) {
       tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
-      // 不清理 layout：forceShow 可能刚显示，下一帧再处理
       return
     }
-    const sourceId = parseSourceIdFromTip(tipRoot)
-    ensureTimeStopButton(tipRoot, {
-      sourceId,
-      isActiveForSource: sourceId ? isActiveForSource(sourceId) : false,
-      onClick: () => {
-        const currentId = parseSourceIdFromTip(tipRoot) || sourceId
-        if (currentId) {
-          onClick(currentId)
-          const btnNow = tipRoot.querySelector(`[${BTN_ATTR}]`) as HTMLElement | null
-          if (btnNow) {
-            renderButtonContent(btnNow, getActiveSourceId() === currentId)
+
+    // 有合并源就强制两按钮布局，即使 tip 刚显示、几何尚未稳定
+    if (sourceId) {
+      ensureTimeStopButton(tipRoot, {
+        sourceId,
+        isActiveForSource: isActiveForSource(sourceId),
+        onClick: () => {
+          const currentId = lastHoveredSourceId || parseSourceIdFromTip(tipRoot) || sourceId
+          if (currentId) {
+            onClick(currentId)
+            const btnNow = tipRoot.querySelector(`[${BTN_ATTR}]`) as HTMLElement | null
+            if (btnNow) {
+              renderButtonContent(btnNow, getActiveSourceId() === currentId)
+            }
           }
-        }
-      },
-    })
+        },
+      })
+      return
+    }
+
+    // 无合并源：清掉我们的改动，还原原生 tip
+    tipRoot.querySelector(`[${BTN_ATTR}]`)?.remove()
+    clearMergedTipLayout(tipRoot)
   })
 }
 
@@ -364,9 +380,30 @@ const forceShowTipNearElement = (el: HTMLElement): void => {
   tip.style.pointerEvents = 'auto'
   tip.style.zIndex = '1000000'
 
-  // 同步 source 并注入按钮
+  // 从节点再解析一次 source，防止 lastHovered 丢失
+  const sid = resolveSourceIdFromDanmakuNode(el) || lastHoveredSourceId
+  if (sid) {
+    lastHoveredSourceId = sid
+  }
+
+  // 同步 source 并注入按钮；原生 tip 可能异步重绘，连续补两次
   if (processTipsHandler) {
     processVisibleTips(processTipsHandler)
+    window.requestAnimationFrame(() => {
+      if (processTipsHandler) {
+        processVisibleTips(processTipsHandler)
+      }
+    })
+    window.setTimeout(() => {
+      if (processTipsHandler) {
+        processVisibleTips(processTipsHandler)
+      }
+    }, 50)
+    window.setTimeout(() => {
+      if (processTipsHandler) {
+        processVisibleTips(processTipsHandler)
+      }
+    }, 120)
   }
 }
 
@@ -480,6 +517,30 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
 
   document.addEventListener('mouseover', onPointerSample, true)
   document.addEventListener('mousemove', onPointerSample, true)
+
+  // 原生 tip 显示/隐藏 class 变化时重注入（避免退回三按钮）
+  const tipAttrObserver = new MutationObserver(() => {
+    scheduleProcess()
+  })
+  const tipNode = document.querySelector('.bpx-player-dm-tip')
+  if (tipNode) {
+    tipAttrObserver.observe(tipNode, { attributes: true, attributeFilter: ['class', 'style'] })
+  } else {
+    // tip 尚未挂载：等 body 出现后再观察
+    const waitTip = new MutationObserver(() => {
+      const t = document.querySelector('.bpx-player-dm-tip')
+      if (t) {
+        tipAttrObserver.observe(t, { attributes: true, attributeFilter: ['class', 'style'] })
+        waitTip.disconnect()
+        scheduleProcess()
+      }
+    })
+    waitTip.observe(document.body, { childList: true, subtree: true })
+    // 随 cleanup 释放
+    ;(observer as unknown as { __waitTip?: MutationObserver }).__waitTip = waitTip
+  }
+  ;(observer as unknown as { __tipAttr?: MutationObserver }).__tipAttr = tipAttrObserver
+
   scheduleProcess()
 
   return () => {
@@ -492,6 +553,10 @@ export const startTimeStopMenu = (options: TimeStopMenuOptions): (() => void) =>
     }
     window.clearTimeout(mouseoverTimer)
     observer.disconnect()
+    const tipAttr = (observer as unknown as { __tipAttr?: MutationObserver }).__tipAttr
+    tipAttr?.disconnect()
+    const waitTip = (observer as unknown as { __waitTip?: MutationObserver }).__waitTip
+    waitTip?.disconnect()
     document.removeEventListener('mouseover', onPointerSample, true)
     document.removeEventListener('mousemove', onPointerSample, true)
     document.querySelectorAll(`[${BTN_ATTR}]`).forEach(n => n.remove())
