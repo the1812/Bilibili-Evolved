@@ -407,29 +407,58 @@ html.dm-merger-time-stop-on {
     }
 }
 
-/* 合并弹幕 tip：仅 复制 + 时停，尺寸/外观贴近原生胶囊 */
+/* 合并弹幕 tip：复刻原生胶囊，仅复制 + 时停 */
 .bpx-player-dm-tip.dm-merger-time-stop-tip {
-    width: 120px !important;
-    height: 48px !important;
-    overflow: visible;
+    width: 108px !important;
+    height: 42px !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+    z-index: 1000000 !important;
 }
 
+/* 隐藏原生固定 162 SVG，改用可拉伸胶囊，避免拉伸变形 */
 .bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgm,
 .bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgl {
-    width: 100% !important;
-    height: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
-    opacity: 1 !important;
+    display: none !important;
 }
 
-.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgm svg,
-.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-svgl svg {
-    width: 100% !important;
-    height: 100% !important;
-    display: block !important;
-    /* 允许横向拉伸，底板盖住两槽 */
-    preserveAspectRatio: none;
+.bpx-player-dm-tip.dm-merger-time-stop-tip .dm-merger-time-stop-tip-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 顶部朝向时保留小尖角感（CSS 伪元素） */
+.bpx-player-dm-tip.dm-merger-time-stop-tip.bpx-player-showB .dm-merger-time-stop-tip-bg::before,
+.bpx-player-dm-tip.dm-merger-time-stop-tip.bpx-player-showT .dm-merger-time-stop-tip-bg::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    background: rgba(0, 0, 0, 0.72);
+    border-left: 1px solid rgba(255, 255, 255, 0.45);
+    border-top: 1px solid rgba(255, 255, 255, 0.45);
+    transform: translateX(-50%) rotate(45deg);
+    pointer-events: none;
+}
+
+.bpx-player-dm-tip.dm-merger-time-stop-tip.bpx-player-showB .dm-merger-time-stop-tip-bg::before {
+    top: -5px;
+}
+
+.bpx-player-dm-tip.dm-merger-time-stop-tip.bpx-player-showT .dm-merger-time-stop-tip-bg::before {
+    bottom: -5px;
+    top: auto;
+    transform: translateX(-50%) rotate(225deg);
 }
 
 .bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-like,
@@ -441,19 +470,27 @@ html.dm-merger-time-stop-on {
 
 .bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-copy {
     display: flex !important;
-    left: 18px !important;
-    top: 8px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    left: 14px !important;
+    top: 5px !important;
     width: 32px !important;
     height: 32px !important;
-    z-index: 2;
+    pointer-events: auto !important;
+    z-index: 3 !important;
+    cursor: pointer !important;
 }
 
-/* 时停按钮：与复制同尺寸同 top，紧挨第二槽 */
+.bpx-player-dm-tip.dm-merger-time-stop-tip .bpx-player-dm-tip-copy:hover {
+    background: rgba(47, 50, 56, 0.9) !important;
+    border-radius: 4px;
+}
+
 .bpx-player-dm-tip.dm-merger-time-stop-tip .dm-merger-time-stop-btn,
 .bpx-player-dm-tip .dm-merger-time-stop-btn {
     position: absolute;
-    left: 66px;
-    top: 8px;
+    left: 58px;
+    top: 5px;
     z-index: 4;
     display: flex;
     align-items: center;
@@ -467,7 +504,7 @@ html.dm-merger-time-stop-on {
     background: transparent;
     cursor: pointer;
     user-select: none;
-    pointer-events: auto;
+    pointer-events: auto !important;
     line-height: 0;
 }
 
@@ -475,13 +512,11 @@ html.dm-merger-time-stop-on {
     width: 20px;
     height: 20px;
     display: block;
-    margin: 0;
-    flex: 0 0 auto;
     pointer-events: none;
 }
 
 .bpx-player-dm-tip .dm-merger-time-stop-btn:hover {
-    background: rgba(47, 50, 56, 0.898);
+    background: rgba(47, 50, 56, 0.9);
 }
 
 .bpx-player-dm-tip .dm-merger-time-stop-btn .dm-merger-time-stop-tip-bubble {
@@ -507,15 +542,6 @@ html.dm-merger-time-stop-on {
     opacity: 1;
     visibility: visible;
     transform: translateX(-50%) translateY(0);
-}
-
-/* 顶部朝向 tip：与原生按钮同一高度带 */
-.bpx-player-dm-tip.bpx-player-showT.dm-merger-time-stop-tip .bpx-player-dm-tip-copy,
-.bpx-player-dm-tip.bpx-player-showT.dm-merger-time-stop-tip .dm-merger-time-stop-btn,
-.bpx-player-dm-tip.bpx-player-showRT.dm-merger-time-stop-tip .dm-merger-time-stop-btn,
-.bpx-player-dm-tip.bpx-player-showLT.dm-merger-time-stop-tip .dm-merger-time-stop-btn {
-    top: 10px !important;
-    height: 20px !important;
 }
 
 /* 时停中：克隆 absolute 在覆盖层内，可悬停唤 tip */
