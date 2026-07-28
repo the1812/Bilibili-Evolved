@@ -5,7 +5,7 @@
 
 .player-full-win:not(.hide-aside-area) {
   .live-room-app {
-    #fullscreen-container {
+    #fullscreen-container:not(.no-aside) {
       width: var(--be-live-player-width) !important;
       min-width: var(--be-live-player-width) !important;
     }
