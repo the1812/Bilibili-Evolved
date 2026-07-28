@@ -71,7 +71,10 @@ export default Vue.extend({
 <style lang="scss">
 .video-toolbar-left,
 .video-toolbar .ops,
-.video-toolbar-v1 .toolbar-left {
+.video-toolbar-v1 .toolbar-left,
+.toolbar .toolbar-left {
+  display: flex;
+  align-items: center;
   .watchlater {
     font-size: 14px;
     margin-right: 28px !important;
@@ -98,6 +101,7 @@ export default Vue.extend({
       top: calc(100% + 8px);
       left: 50%;
       transform: translateX(-50%);
+      line-height: 28px;
       z-index: 1000;
       background: #000d;
       padding: 4px 8px;
@@ -119,9 +123,12 @@ export default Vue.extend({
     }
   }
 }
-.video-toolbar-left .watchlater .be-icon {
-  transform: translateY(1px);
-  margin-right: 8px;
+.video-toolbar-left,
+.toolbar {
+  .watchlater .be-icon {
+    transform: translateY(1px);
+    margin-right: 8px;
+  }
 }
 .video-toolbar-v1 .watchlater .be-icon {
   transform: translateY(1px);
@@ -133,6 +140,10 @@ export default Vue.extend({
   }
 }
 .video-tool-more-dropdown .video-watchlater.dropdown-item {
+  display: none !important;
+}
+
+[class*='moreTool_popupWrap'] > [class*='moreTool_toolItem']:nth-child(2) {
   display: none !important;
 }
 </style>
