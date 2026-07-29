@@ -54,15 +54,16 @@ body:
       placeholder: 请输入
     validations:
       required: true
-  - type: input
-    id: player-version
+  - type: textarea
+    id: player-logs
     attributes:
-      label: 播放器版本
+      label: 播放器日志
       description: |
-        在 b 站播放器上右键可以看到播放器版本号
+        处于视频页面时, 可在脚本设置面板的关于弹窗中通过反馈按钮自动带入
+      render: Shell
       placeholder: 请输入
     validations:
-      required: true
+      required: false
   - type: dropdown
     id: player-codec
     attributes:

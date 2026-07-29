@@ -1,7 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { ComponentEntry } from '@/components/types'
 import { getUID, matchUrlPattern, mountVueComponent } from '@/core/utils'
-import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
+import { videoAndBangumiUrls, watchlaterUrls } from '@/core/utils/urls'
 import { KeyBindingAction } from '../../utils/keymap/bindings'
 import { addVideoActionButton } from '@/components/video/video-actions'
 import { Options, options } from './options'
@@ -30,7 +30,7 @@ export const component = defineComponentMetadata({
   displayName: '外置稍后再看',
   entry,
   tags: [componentsTags.video],
-  urlInclude: videoUrls,
+  urlInclude: videoAndBangumiUrls,
   // urlExclude: watchlaterUrls,
   options,
   reload: () => {
