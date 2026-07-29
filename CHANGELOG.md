@@ -1,5 +1,39 @@
 <!-- spell-checker: disable -->
 # 更新日志
+## v2.11.1-preview
+`2026-07-29`
+
+包含 [v2.11.1](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.11.1) 的所有更新内容.
+
+✨新增
+- 新增组件 `评论图片导出`, 可汇总评论区中的图片并批量下载, 也可单独导出某条评论的图片. (PR #5661 by [塵埃殘憶](https://github.com/kaixinol))
+- 新增组件 `楼中楼回复“UP主觉得很赞”显示`, 可为楼中楼回复补充显示 UP 主点赞标识. (PR #5648 by [Light_Quanta](https://github.com/LightQuanta))
+- `下载视频` 支持选择和下载 AI 原声翻译等多音轨. (PR #5660 by [EricZhou](https://github.com/EricZhou05))
+- `视频快照` 支持从推荐、动态、空间投稿和收藏夹视频卡片中打开快照预览, 并改进小尺寸快照放大、预览速度和下载选项. (PR #5645 by [LainIO24](https://github.com/lainio24))
+- `视频预览放大` 支持解除 5 分钟预览限制, 并完善预览框尺寸限制. (PR #5664 by [wsgh0202](https://github.com/wsgh0202))
+- `快捷键扩展` 新增 `屏蔽 B 站播放器原生快捷键` 选项.
+- `快捷键扩展 - 开关 CC 字幕` 支持读取新的最近使用字幕语言配置. (#5685)
+- `Hi-Res 音质按钮布局调整` 支持在启用 Hi-Res 音质时将按钮填充为主题色. (PR #5653 by [WhiteTeal55](https://github.com/WhiteTeal55))
+- `直播勋章保活` 支持修改默认点赞次数, 并为请求成功通知增加自动关闭. (PR #5634 by [WhiteTeal55](https://github.com/WhiteTeal55))
+
+☕开发者相关
+- 将压缩和解压运行库从 JSZip 替换为 fflate, 减小体积并改进压缩包处理性能. (PR #5662 by [塵埃殘憶](https://github.com/kaixinol))
+
+## v2.11.1
+`2026-07-29`
+
+🐛修复
+- 修复 `清爽首页` 的分区动态、最新发布和排行榜接口失效问题. (#5632)
+- 修复 `自定义顶栏` 搜索栏删除历史条目后自动关闭, 无法连续删除的问题. (#5643)
+- 修复 `隐藏顶部横幅` 在新版首页顶栏出现白底白字和图标不可见的问题. (#5496, PR #5641 by [T0M](https://github.com/T0MYYY))
+- 修复 `显示视频投稿时间` 在稍后再看页面切换视频时不显示的问题. (PR #5637 by [WhiteTeal55](https://github.com/WhiteTeal55))
+- 修复 `视频预览放大` 在合集页面无法使用, `返回原版直播间` 小组件按钮下划线, `深色模式` 在活动样式直播间判断错误, 以及 `显示视频投稿时间` 在合集切换播放顺序后不显示的问题. (PR #5649 by [WhiteTeal55](https://github.com/WhiteTeal55))
+- 修复 `显示视频投稿时间` 在合集页面频繁请求 API, 以及 `外置稍后再看` 在番剧页无法工作的问题. (#5668, PR #5665 by [WhiteTeal55](https://github.com/WhiteTeal55))
+- 修复 `定制自动连播行为` 无法按配置处理视频合集分集内嵌分 P 的问题. (PR #5652 by [dot-super](https://github.com/dot-super))
+- 修复 `图片批量导出` 在专栏转动态、部分 opus 动态等页面无法正确提取图片的问题. (#4757, #5184, #5658, #5669, PR #5655 by [塵埃殘憶](https://github.com/kaixinol))
+- 修复 `自定义字体` 在新版播放器中错误覆盖弹幕字体的问题. (#5614, PR #5667 by [Liu Xingyu](https://github.com/Meteor-3))
+- 修复 `直播间网页全屏自适应` 在宽窄聊天栏、更多礼物面板和特殊样式直播间中的播放器尺寸、拖动区域与各类面板布局问题. (#5663, PR #5678, PR #5682, PR #5683 by [WhiteTeal55](https://github.com/WhiteTeal55))
+
 ## v2.11.0-preview
 `2026-07-06`
 

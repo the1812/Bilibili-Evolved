@@ -1,16 +1,24 @@
 <template>
-  <div class="launch-bar">
+  <div ref="container" class="launch-bar" :class="{ open: isOpen }" @focusout="handleFocusOut">
     <div class="input-area">
       <div class="launch-bar-form">
         <input
           ref="input"
           class="input"
           type="text"
+          role="combobox"
           autocomplete="off"
+          aria-autocomplete="list"
+          :aria-controls="listId"
+          :aria-expanded="isOpen"
+          :aria-activedescendant="activeItemId"
           :placeholder="recommended.word"
-          :value="keyword"
+          :value="inputValue"
+          @focus="openSuggestList"
           @input="handleSearch($event)"
           @keydown.enter.stop="handleEnter"
+          @keydown.esc.stop="closeSuggestList"
+          @keydown.shift.delete="handleDeleteActive"
           @keydown.up.stop="handleUp"
           @keydown.down.stop="handleDown"
         />
@@ -20,21 +28,18 @@
       </div>
       <!-- <div class="input-active-bar"></div> -->
     </div>
-    <div class="launch-bar-suggest-list">
+    <div :id="listId" class="launch-bar-suggest-list" role="listbox">
       <div v-if="isHistory" class="launch-bar-history-list">
-        <div
-          v-if="actions.length === 0"
-          class="history-empty be-launch-bar-suggest-item disabled"
-          tabindex="0"
-        >
+        <div v-if="actions.length === 0" class="history-empty be-launch-bar-suggest-item disabled">
           暂无搜索历史
         </div>
         <ActionItem
           v-for="(a, index) of actions"
-          :key="a.name"
+          :id="getItemId(index)"
+          :key="a.key"
           :action="a"
-          :focused="index === itemIndex"
-          @delete-item="onDeleteItem()"
+          :focused="a.key === activeActionKey"
+          @delete-item="onDeleteItem(a.key)"
           @action="
             index === actions.length - 1 && onClearHistory()
             onAction()
@@ -44,20 +49,19 @@
       <div v-if="!isHistory" class="launch-bar-action-list">
         <VEmpty
           v-if="actions.length === 0 && noOnlineActions"
-          tabindex="0"
           class="be-launch-bar-suggest-item disabled"
         ></VEmpty>
         <VLoading
           v-if="actions.length === 0 && !noOnlineActions"
-          tabindex="0"
           class="be-launch-bar-suggest-item disabled"
         ></VLoading>
         <ActionItem
           v-for="(a, index) of actions"
-          :key="a.name"
+          :id="getItemId(index)"
+          :key="a.key"
           :action="a"
-          :focused="index === itemIndex"
-          @delete-item="onDeleteItem()"
+          :focused="a.key === activeActionKey"
+          @delete-item="onDeleteItem(a.key)"
           @action="onAction()"
         />
       </div>
@@ -86,8 +90,14 @@ const emit = defineEmits<{
   (event: 'close'): void
 }>()
 
+type LaunchBarActionEntry = LaunchBarAction & {
+  key: string
+}
+
+const container = ref<HTMLElement>()
 const input = ref<HTMLInputElement>()
-const itemIndex = ref(-1)
+const listId = lodash.uniqueId('be-launch-bar-list-')
+const getItemId = (index: number) => `${listId}-item-${index}`
 
 const [actionProviders] = registerAndGetData(LaunchBarActionProviders, [
   searchProvider,
@@ -99,67 +109,70 @@ const [recommended] = registerAndGetData('launchBar.recommended', {
   href: 'https://search.bilibili.com/',
 })
 
-const actions = ref<LaunchBarAction[]>([])
-const lastKeyword = ref('')
-const keyword = ref('')
+const actions = ref<LaunchBarActionEntry[]>([])
+const activeActionKey = ref('')
+const query = ref('')
+const isOpen = ref(false)
 const noOnlineActions = ref(false)
+
+const activeActionIndex = computed(() =>
+  actions.value.findIndex(action => action.key === activeActionKey.value),
+)
+const activeAction = computed(() => actions.value[activeActionIndex.value])
+const activeItemId = computed(() =>
+  activeActionIndex.value === -1 ? undefined : getItemId(activeActionIndex.value),
+)
+const inputValue = computed(() => activeAction.value?.suggestName ?? query.value)
+const isHistory = computed(() => query.value.length === 0)
 
 const setItemIndex = (index: number) => {
   const newIndex = lodash.clamp(index, -1, actions.value.length - 1)
-  if (itemIndex.value !== newIndex) {
-    itemIndex.value = newIndex
-    if (newIndex > -1 && actions.value[newIndex].suggestName) {
-      keyword.value = actions.value[newIndex].suggestName
+  const newAction = actions.value[newIndex]
+  const newActionKey = newAction?.key ?? ''
+  if (activeActionKey.value !== newActionKey) {
+    activeActionKey.value = newActionKey
+    if (newAction?.suggestName) {
       if (
-        lastKeyword.value !== '' &&
-        keyword.value.toLowerCase().startsWith(lastKeyword.value.toLowerCase())
+        query.value !== '' &&
+        newAction.suggestName.toLowerCase().startsWith(query.value.toLowerCase())
       ) {
         nextTick(() => {
-          input.value?.setSelectionRange(lastKeyword.value.length, keyword.value.length)
+          input.value?.setSelectionRange(query.value.length, newAction.suggestName.length)
         })
       }
-    } else {
-      keyword.value = lastKeyword.value
     }
   }
 }
 const resetFocus = () => setItemIndex(-1)
-const nextItem = () => setItemIndex(itemIndex.value + 1)
-const previousItem = () => setItemIndex(itemIndex.value - 1)
+const nextItem = () => setItemIndex(activeActionIndex.value + 1)
+const previousItem = () => setItemIndex(activeActionIndex.value - 1)
 
-const hasFocus = computed(() => itemIndex.value > -1)
-const focusedItem = computed(() => actions.value[itemIndex.value])
-const isHistory = computed(() => keyword.value.length === 0)
-
-const sortActions = (actionsList: LaunchBarAction[]) => {
+const sortActions = <T extends LaunchBarAction>(actionsList: T[]) => {
   return [...actionsList].sort(ascendingSort(it => it.order ?? Infinity))
 }
 
 const generateKeys = (
   provider: LaunchBarActionProvider,
   actionsList: LaunchBarAction[],
-): ({
-  key: string
-  provider: LaunchBarActionProvider
-} & LaunchBarAction)[] =>
+): LaunchBarActionEntry[] =>
   actionsList.map(a => {
     const key = `${provider.name}.${a.name}`
     return {
       ...a,
       key,
-      provider,
     }
   })
 
 const getOnlineActionsInternal = async () => {
+  const currentQuery = query.value
   const onlineActions = (
     await Promise.all(
       actionProviders.map(async provider =>
-        generateKeys(provider, await provider.getActions(keyword.value)),
+        generateKeys(provider, await provider.getActions(currentQuery)),
       ),
     )
   ).flat()
-  if (isHistory.value) {
+  if (currentQuery !== query.value || isHistory.value) {
     return
   }
   const fuse = new Fuse(onlineActions, {
@@ -167,9 +180,12 @@ const getOnlineActionsInternal = async () => {
     includeScore: true,
     threshold: 0.1,
   })
-  const fuseResult = fuse.search(keyword.value)
+  const fuseResult = fuse.search(currentQuery)
   console.log(fuseResult)
   actions.value = sortActions(fuseResult.map(it => it.item).slice(0, 13))
+  if (activeActionIndex.value === -1) {
+    resetFocus()
+  }
   noOnlineActions.value = actions.value.length === 0
 }
 
@@ -179,11 +195,11 @@ const getActions = async () => {
   noOnlineActions.value = false
   if (isHistory.value) {
     actions.value = sortActions(
-      generateKeys(historyProvider, await historyProvider.getActions(keyword.value)),
+      generateKeys(historyProvider, await historyProvider.getActions(query.value)),
     )
     return
   }
-  const actionsArray: LaunchBarAction[] = []
+  const actionsArray: LaunchBarActionEntry[] = []
   actions.value = actionsArray
   getOnlineActions()
 }
@@ -198,23 +214,47 @@ const setupSearchPageSync = async () => {
     const params = new URLSearchParams(url)
     const keywordFromParam = params.get('keyword')
     if (keywordFromParam !== null) {
-      keyword.value = params.get('keyword') || ''
+      query.value = keywordFromParam
+      resetFocus()
+      getActions()
     }
   })
   await nextTick()
 }
 
+const focusInput = () => {
+  input.value?.focus()
+}
+
+const openSuggestList = () => {
+  isOpen.value = true
+}
+
+const closeSuggestList = () => {
+  isOpen.value = false
+  resetFocus()
+}
+
+const handleFocusOut = (event: FocusEvent) => {
+  const nextTarget = event.relatedTarget as Node | null
+  if (nextTarget && container.value?.contains(nextTarget)) {
+    return
+  }
+  closeSuggestList()
+}
+
 const handleSelect = () => {
+  isOpen.value = false
+  resetFocus()
   emit('close')
-  // getActions()
 }
 
 const handleEnter = async (e?: KeyboardEvent | MouseEvent) => {
   if ((e as KeyboardEvent)?.isComposing) {
     return
   }
-  if (hasFocus.value) {
-    await focusedItem.value?.action()
+  if (activeAction.value) {
+    await activeAction.value.action()
     handleSelect()
     return
   }
@@ -225,8 +265,8 @@ const handleEnter = async (e?: KeyboardEvent | MouseEvent) => {
       return
     }
   }
-  if (keyword.value) {
-    search(keyword.value)
+  if (query.value) {
+    search(query.value)
     handleSelect()
     return
   }
@@ -238,6 +278,7 @@ const handleUp = (e: KeyboardEvent) => {
   if (e.isComposing) {
     return
   }
+  openSuggestList()
   previousItem()
   e.preventDefault()
 }
@@ -246,20 +287,40 @@ const handleDown = (e: KeyboardEvent) => {
   if (e.isComposing) {
     return
   }
+  openSuggestList()
   nextItem()
   e.preventDefault()
 }
 
 const handleSearch = (e: Event) => {
-  keyword.value = (e.target as HTMLInputElement).value
-  lastKeyword.value = keyword.value
+  query.value = (e.target as HTMLInputElement).value
   resetFocus()
+  openSuggestList()
   getActions()
 }
 
-const onDeleteItem = () => {
-  previousItem()
-  getActions()
+const onDeleteItem = async (actionKey: string) => {
+  const deletedIndex = actions.value.findIndex(action => action.key === actionKey)
+  const wasActive = activeActionKey.value === actionKey
+  await getActions()
+  if (wasActive) {
+    setItemIndex(Math.min(deletedIndex, actions.value.length - 1))
+  } else if (activeActionIndex.value === -1) {
+    resetFocus()
+  }
+  openSuggestList()
+  await nextTick()
+  focusInput()
+}
+
+const handleDeleteActive = async (event: KeyboardEvent) => {
+  const action = activeAction.value
+  if (!action?.deleteAction) {
+    return
+  }
+  event.preventDefault()
+  await action.deleteAction()
+  await onDeleteItem(action.key)
 }
 
 const onClearHistory = () => {
@@ -280,7 +341,7 @@ onMounted(async () => {
 
 defineExpose({
   input,
-  focusInput: resetFocus,
+  focusInput,
 })
 </script>
 <style lang="scss">
@@ -358,13 +419,12 @@ defineExpose({
       font-style: normal;
     }
   }
-  &:focus-within {
+  &.open {
     .input-active-bar {
       width: 100%;
     }
   }
-  &:focus-within .launch-bar-suggest-list,
-  .launch-bar-suggest-list:focus-within {
+  &.open .launch-bar-suggest-list {
     opacity: 1;
     transform: translateX(-50%);
     pointer-events: initial;
