@@ -24,7 +24,6 @@ Common commands:
 pnpm run type
 pnpm run lint-check
 pnpm run build-core
-pnpm run build-features
 pnpm tsx dev-tools/dev-server/index.ts
 pnpm tsx dev-tools/dev-server/command.ts sessions
 ```
@@ -74,7 +73,6 @@ Choose validation based on the risk and scope of the change.
 - Run `pnpm run type` for TypeScript type checking.
 - Run `pnpm run lint-check` for lint validation.
 - Run `pnpm run build-core` for core userscript changes.
-- Run `pnpm run build-features` for registry component or plugin changes.
 - Run `pnpm exec tsc -p dev-tools/dev-server/tsconfig.json` for dev server TypeScript changes.
 - For browser-facing behavior, verify the changed feature in a real browser with the local userscript installed.
 - For API-shape or Bilibili-rollout-dependent changes, record what page or account state was actually self-tested.
