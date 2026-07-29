@@ -113,6 +113,7 @@ export default Vue.extend({
     padding: 4px 8px;
     background: rgba(0, 0, 0, 0.8);
     white-space: nowrap;
+    pointer-events: none;
   }
 
   &:hover .tip {
