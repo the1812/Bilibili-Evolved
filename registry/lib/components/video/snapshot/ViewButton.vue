@@ -134,7 +134,6 @@ export default Vue.extend({
     }
   }
 }
-
 .video-page-card-small .pic-box:hover .view-snapshot-button {
   transition-delay: 0.3s;
   opacity: 1;
@@ -180,15 +179,15 @@ export default Vue.extend({
   }
   .tip {
     background: var(--Ga9_u);
-    &:hover {
-      opacity: 0.9;
-    }
   }
 }
 .bili-dyn-card-video__cover:hover .view-snapshot-button {
   opacity: 1;
   &:hover {
     background-color: rgba(51, 51, 51, 0.8);
+    .tip {
+      opacity: 0.9;
+    }
   }
 }
 </style>
