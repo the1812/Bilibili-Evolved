@@ -186,6 +186,10 @@ function addButtonOnFeedCards() {
     added: card => {
       const videoCard: HTMLAnchorElement = card.element.querySelector(feedVideoCardSelector)
       if (videoCard) {
+        // 去重
+        if (videoCard.querySelector('.view-snapshot-button')) {
+          return
+        }
         const button = createButton(
           parseBvidFromUrl(videoCard.href),
           0,
