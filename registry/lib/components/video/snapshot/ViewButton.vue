@@ -121,9 +121,17 @@ export default Vue.extend({
   }
 }
 
-.video-page-card-small .pic-box .view-snapshot-button {
-  &.top.right {
-    right: 36px;
+.video-page-card-small .pic-box {
+  .view-snapshot-button {
+    border: none;
+    &.top.right {
+      right: 36px;
+    }
+  }
+  &:has(.bigger-video-preview-button) {
+    .view-snapshot-button.top.left {
+      left: 36px;
+    }
   }
 }
 
@@ -134,6 +142,7 @@ export default Vue.extend({
 
 .space-main .bili-video-card .bili-video-card__cover .view-snapshot-button {
   transition: opacity 0.2s linear;
+  background-color: rgba(33, 33, 33, 0.8);
   &.top {
     top: 8px;
   }
@@ -156,6 +165,8 @@ export default Vue.extend({
 
 .bili-dyn-card-video__cover .view-snapshot-button {
   transition: opacity 0.2s cubic-bezier(0.22, 0.58, 0.12, 0.98);
+  background-color: rgb(43, 43, 43);
+  border-radius: 4px;
   &.top.right {
     right: 36px;
   }
@@ -167,8 +178,17 @@ export default Vue.extend({
     top: 0;
     right: 28px;
   }
+  .tip {
+    background: var(--Ga9_u);
+    &:hover {
+      opacity: 0.9;
+    }
+  }
 }
 .bili-dyn-card-video__cover:hover .view-snapshot-button {
   opacity: 1;
+  &:hover {
+    background-color: rgba(51, 51, 51, 0.8);
+  }
 }
 </style>

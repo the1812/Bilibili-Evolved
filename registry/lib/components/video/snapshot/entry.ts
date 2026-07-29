@@ -1,6 +1,6 @@
 import { forEachFeedsCard } from '@/components/feeds/api'
 import { ComponentEntry } from '@/components/types'
-import { childList, urlChange } from '@/core/observer'
+import { urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { getVue2Data, playerReady } from '@/core/utils'
 import {
@@ -86,37 +86,92 @@ const spaceVideoCardSelector =
 const spaceVideoCardAnchorSelector = '.bili-video-card__title>a'
 const spaceVideoCardCoverSelector = '.bili-video-card__cover'
 
-function getVideoCards(mutation: MutationRecord[]) {
-  if (mutation.length > 0) {
-    return mutation
-      .flatMap(r => [...r.addedNodes])
-      .filter(
-        x => x instanceof HTMLElement && x.querySelector(spaceVideoCardSelector),
-      ) as HTMLElement[]
-  }
-  return dqa(spaceVideoCardSelector)
-}
+// 全局管理空间列表的观察器，避免残留
+let spaceListObserver: MutationObserver | null = null
+let currentListElement: Element | null = null
 
-async function addButtonOnSpaceVideoList(position: ButtonPosition) {
-  const list = await select(spaceVideoListMainSelector)
+function addButtonOnSpaceVideoList(position: ButtonPosition) {
+  // 清除之前的 observer
+  if (spaceListObserver) {
+    spaceListObserver.disconnect()
+    spaceListObserver = null
+  }
+  currentListElement = null
+
   const positionStr = parseButtonPosition(position)
-  childList(list, mutation => {
-    const videoCards = getVideoCards(mutation)
+  let processing = false
+
+  // 扫描当前容器中的所有卡片，为缺少按钮的卡片添加按钮
+  const processCards = () => {
+    if (processing) {
+      return
+    }
+    processing = true
     requestAnimationFrame(() => {
-      videoCards.forEach(async videoCard => {
-        const titleAnchor = videoCard.querySelector(
-          spaceVideoCardAnchorSelector,
-        ) as HTMLAnchorElement
-        const button = createButton(
-          parseBvidFromUrl(titleAnchor.href),
-          0,
-          titleAnchor.innerText,
-          positionStr,
-        )
-        videoCard.querySelector(spaceVideoCardCoverSelector)?.appendChild(button)
-      })
+      try {
+        // 检查当前容器是否有效，若无效则重新获取并重新绑定
+        let list = currentListElement
+        if (!list || !document.contains(list)) {
+          // 重新查找容器
+          const newList = document.querySelector(spaceVideoListMainSelector)
+          if (!newList) {
+            return
+          }
+          // 更新容器和 observer
+          list = newList
+          currentListElement = list
+          if (spaceListObserver) {
+            spaceListObserver.disconnect()
+            spaceListObserver = null
+          }
+          const observer = new MutationObserver(() => {
+            processCards()
+          })
+          observer.observe(list, { childList: true, subtree: true })
+          spaceListObserver = observer
+        }
+
+        // 扫描所有卡片，添加按钮
+        const cards = list.querySelectorAll(spaceVideoCardSelector)
+        for (const card of cards) {
+          // 若已有按钮，则跳过
+          if (card.querySelector('.view-snapshot-button')) {
+            continue
+          }
+          const titleAnchor = card.querySelector(spaceVideoCardAnchorSelector) as HTMLAnchorElement
+          if (!titleAnchor) {
+            continue
+          }
+          const button = createButton(
+            parseBvidFromUrl(titleAnchor.href),
+            0,
+            titleAnchor.innerText,
+            positionStr,
+          )
+          card.querySelector(spaceVideoCardCoverSelector)?.appendChild(button)
+        }
+      } finally {
+        processing = false
+      }
     })
-  })
+  }
+
+  // 初始建立观察
+  const init = async () => {
+    const list = await select(spaceVideoListMainSelector)
+    if (!list) {
+      return
+    }
+    currentListElement = list
+    const observer = new MutationObserver(() => {
+      processCards()
+    })
+    observer.observe(list, { childList: true, subtree: true })
+    spaceListObserver = observer
+    // 立即执行一次
+    processCards()
+  }
+  init()
 }
 
 // ========================================================================== //
