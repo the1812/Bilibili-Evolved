@@ -1,9 +1,15 @@
 import { defineComponentMetadata } from '@/components/define'
 import { hasVideo } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
-import { videoAndBangumiUrls } from '@/core/utils/urls'
+import {
+  feedsUrls,
+  spaceFavoriteListUrls,
+  spaceUploadVideosUrls,
+  videoAndBangumiUrls,
+} from '@/core/utils/urls'
 import { PluginMinimalData } from '@/plugins/plugin'
 import { DownloadVideoAssets } from '../download/types'
+import { entry } from './entry'
 import { generateDownloadAssets } from './handler'
 import { options } from './options'
 
@@ -48,13 +54,13 @@ export const component = defineComponentMetadata({
   name: componentName,
   displayName,
   author,
-  tags: [componentsTags.video],
-  entry: none,
-  urlInclude: videoAndBangumiUrls,
+  tags: [componentsTags.utils, componentsTags.video],
+  entry,
+  urlInclude: [videoAndBangumiUrls, spaceFavoriteListUrls, spaceUploadVideosUrls, feedsUrls].flat(),
   options,
   widget: {
     condition: hasVideo,
-    component: () => import('./ViewSnapshots.vue').then(m => m.default),
+    component: () => import('./Widget.vue').then(m => m.default),
   },
   plugin: {
     displayName: `下载视频 - ${displayName}支持`,

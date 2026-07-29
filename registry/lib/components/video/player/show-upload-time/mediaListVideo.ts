@@ -38,6 +38,9 @@ export class MediaListVideo implements Video {
   console: any
   metadata: ComponentMetadata
 
+  // 新增：存储每个视频卡片对应的 IntersectionObserver 实例
+  private lazyLoadObserverMap = new WeakMap<VideoCard, IntersectionObserver>()
+
   constructor(console: any) {
     this.console = console
   }
@@ -49,32 +52,86 @@ export class MediaListVideo implements Video {
       const { options } = getComponentSettings(this.metadata.name)
       formatString = options.formatString?.toString()
     }
-    relist.forEach(async video => {
-      // 使用临时变量保存视频名称，以避免计算属性导致的问题
-      let videoName: string = video.info.owner.name
-      // 确认存放推荐视频列表的List中的元素是否被更新
-      if (forceUpdate || !video.info.owner.mark) {
-        video.info.owner.mark = true
-        // 确认推荐视频卡片是否被更新
-        if (forceUpdate || !video.mark) {
-          video.mark = true
-          if (!video.info.pubdate) {
-            const info = new VideoInfo(video.info.aid)
-            await info.fetchInfo()
-            // 保存查询到的pubdate，以便后续使用
-            video.info.pubdate = info.pubdate
-          }
-          const createTime: Date = new Date(video.info.pubdate * 1000)
-          if (!video.info.owner.oldname) {
-            video.info.owner.oldname = video.info.owner.name
-          }
-          videoName = getFormatStr(createTime, formatString, video.info.owner.oldname)
-        }
-        // 保存生成后的name
-        video.info.owner.name = videoName
+
+    relist.forEach(video => {
+      // 已经处理完成且非强制更新，跳过
+      if (!forceUpdate && video.info.owner.mark) {
+        return
       }
+      // 已经绑定观察者且非强制更新，等待懒加载
+      if (!forceUpdate && this.lazyLoadObserverMap.has(video)) {
+        return
+      }
+
+      // 强制更新
+      if (forceUpdate) {
+        const oldObserver = this.lazyLoadObserverMap.get(video)
+        if (oldObserver) {
+          oldObserver.disconnect()
+          this.lazyLoadObserverMap.delete(video)
+        }
+        video.info.owner.mark = false
+      }
+
+      const processAndUpdate = async (v: VideoCard) => {
+        // 请求 pubdate
+        if (!v.info.pubdate) {
+          const info = new VideoInfo(v.info.aid)
+          await info.fetchInfo()
+          v.info.pubdate = info.pubdate
+        }
+        // 保存原始名称
+        if (!v.info.owner.oldname) {
+          v.info.owner.oldname = v.info.owner.name
+        }
+        const createTime = new Date(v.info.pubdate * 1000)
+        const newName = getFormatStr(createTime, formatString, v.info.owner.oldname)
+        v.info.owner.name = newName
+        // 标记完成
+        v.info.owner.mark = true
+        v.mark = true
+      }
+
+      // 已有 pubdate => 直接同步更新
+      if (video.info.pubdate) {
+        if (!video.info.owner.oldname) {
+          video.info.owner.oldname = video.info.owner.name
+        }
+        const createTime = new Date(video.info.pubdate * 1000)
+        const newName = getFormatStr(createTime, formatString, video.info.owner.oldname)
+        video.info.owner.name = newName
+        video.info.owner.mark = true
+        video.mark = true
+        return
+      }
+
+      // 无 pubdate => 绑定观察者
+      const observer = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              processAndUpdate(video)
+                .then(() => {
+                  observer.disconnect()
+                  this.lazyLoadObserverMap.delete(video)
+                })
+                .catch(err => {
+                  this.console.error('懒加载获取视频信息失败:', err)
+                  observer.disconnect()
+                  this.lazyLoadObserverMap.delete(video)
+                })
+            }
+          })
+        },
+        { threshold: 0.1 },
+      )
+
+      observer.observe(video.$el)
+      this.lazyLoadObserverMap.set(video, observer)
+      video.mark = true
     })
   }
+
   readonly getRecoList = () => {
     const reco_list = dq('.recommend-list-container')
     const recoList: RecommendListUgc = getVue2Data(reco_list)

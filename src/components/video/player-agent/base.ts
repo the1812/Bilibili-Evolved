@@ -111,7 +111,9 @@ export abstract class PlayerAgent
       }
     }
 
-    const subtitleLanguage = this.getPlayerConfig<null, string>('subtitle.lan', null)
+    const subtitleLanguage =
+      this.getPlayerConfig<null, string>('subtitle.preferred_language', null) ??
+      this.getPlayerConfig<null, string>('subtitle.lan', null)
     if (subtitleLanguage === null) {
       const firstOption = subtitleOptions.at(0)
       firstOption?.click()

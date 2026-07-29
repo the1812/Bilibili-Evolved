@@ -9,6 +9,7 @@ const excludedNames = [
   '漫画',
   '课堂',
   '专栏',
+  '资讯',
   '特别推荐',
 ]
 export const supportedCategories = Object.fromEntries(

@@ -71,5 +71,4 @@ After creation, inspect and edit the generated `index.ts` and `index.md`. Keep c
 - For TypeScript changes, run `pnpm run type`.
 - For lint-sensitive changes, run `pnpm run lint-check`.
 - For core userscript changes, run `pnpm run build-core`.
-- For registry-wide confidence, run `pnpm run build-features`.
-- For one feature, prefer `pnpm tsx dev-tools/dev-server/command.ts build <component|plugin> <id>` while the dev server is running.
+- For registry feature changes, run `pnpm tsx dev-tools/dev-server/command.ts build <component|plugin> <id>` while the dev server is running; the compiled output is served from memory.
