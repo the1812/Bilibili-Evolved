@@ -7,7 +7,7 @@ import {
 } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { actions } from './actions'
-import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
+import { KeyBinding, KeymapConfig, loadKeymap } from './bindings'
 import { presetBase, presets } from './presets'
 import { getNumberValidator } from '@/core/utils'
 
@@ -27,6 +27,10 @@ const options = defineOptionsMetadata({
     defaultValue: true,
     displayName: '显示跳转快捷键',
   },
+  disableBilibiliPlayerShortcuts: {
+    defaultValue: false,
+    displayName: '屏蔽 B 站播放器原生快捷键',
+  },
   customKeyBindings: {
     defaultValue: {} as Record<string, string>,
     displayName: '自定义键位',
@@ -39,7 +43,7 @@ const options = defineOptionsMetadata({
   },
 })
 export type Options = OptionsOfMetadata<typeof options>
-let config: KeyBindingConfig = null
+let config: KeymapConfig = null
 const parseBindings = (bindings: Record<string, string>): KeyBinding[] => {
   const parseBinding = (actionName: string, keyString: string) => {
     const keys = keyString.split(' ').filter(it => it !== '')
@@ -50,6 +54,7 @@ const parseBindings = (bindings: Record<string, string>): KeyBinding[] => {
 const entry = styledComponentEntry<Options>(
   () => import('./playback-tip.scss'),
   async ({ settings }) => {
+    config = loadKeymap()
     const update = () => {
       const presetName = settings.options.preset
       const preset = presets[presetName] || {}
@@ -58,15 +63,13 @@ const entry = styledComponentEntry<Options>(
         ...preset,
         ...settings.options.customKeyBindings,
       })
-      if (config) {
-        config.bindings = bindings
-      } else {
-        config = loadKeyBindings(bindings)
-      }
+      config.bindings = bindings
+      config.disableBilibiliPlayerShortcuts = settings.options.disableBilibiliPlayerShortcuts
     }
 
     addComponentListener('keymap.preset', update, true)
     addComponentListener('keymap.customKeyBindings', update)
+    addComponentListener('keymap.disableBilibiliPlayerShortcuts', update)
   },
 )
 export const component = defineComponentMetadata({

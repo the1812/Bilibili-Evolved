@@ -2,6 +2,7 @@ import { getActiveElement, isTyping, matchUrlPattern } from '@/core/utils'
 import { mediaListUrls, watchlaterUrls } from '@/core/utils/urls'
 import { clickElement, changeVideoTime, showTip } from './actions'
 import { shadowDomObserver } from '@/core/shadow-root'
+import { shouldBlockBilibiliPlayerShortcut } from './bilibili-player-shortcuts'
 
 export interface KeyBindingActionContext {
   binding: KeyBinding
@@ -26,12 +27,13 @@ export interface KeyBinding {
   action: KeyBindingAction
 }
 const modifyKeys = ['shift', 'alt', 'ctrl', 'meta']
-export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
+export const loadKeymap = lodash.once(() => {
   const isWatchlater = watchlaterUrls.some(url => matchUrlPattern(url))
   const isMediaList = mediaListUrls.some(url => matchUrlPattern(url))
   const config = {
     enable: true,
-    bindings,
+    bindings: [] as KeyBinding[],
+    disableBilibiliPlayerShortcuts: false,
   }
   const keyboardHandler = (e: KeyboardEvent & { [key: string]: boolean }) => {
     if (!config.enable) {
@@ -131,6 +133,10 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
         e.preventDefault()
       }
     })
+    if (config.disableBilibiliPlayerShortcuts && shouldBlockBilibiliPlayerShortcut(e)) {
+      e.stopImmediatePropagation()
+      e.preventDefault()
+    }
   }
   document.body.addEventListener('keydown', keyboardHandler, { capture: true })
   shadowDomObserver.watchShadowDom({
@@ -139,4 +145,4 @@ export const loadKeyBindings = lodash.once((bindings: KeyBinding[]) => {
   })
   return config
 })
-export type KeyBindingConfig = ReturnType<typeof loadKeyBindings>
+export type KeymapConfig = ReturnType<typeof loadKeymap>
