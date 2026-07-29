@@ -5,13 +5,16 @@
 
 .player-full-win:not(.hide-aside-area) {
   .live-room-app {
-    #fullscreen-container {
+    #fullscreen-container:not(.no-aside) {
       width: var(--be-live-player-width) !important;
       min-width: var(--be-live-player-width) !important;
     }
 
     .app-content {
       padding-top: 0 !important;
+      .app-body {
+        margin: 0 !important;
+      }
     }
 
     .aside-area {
