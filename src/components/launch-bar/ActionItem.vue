@@ -6,6 +6,7 @@
     :data-indexer="action.indexer"
     role="option"
     :aria-selected="focused"
+    @pointerdown.prevent
     @click.self="performAction"
   >
     <div class="be-launch-bar-suggest-item-content">
@@ -34,7 +35,6 @@
         v-if="action.deleteAction"
         class="be-launch-bar-suggest-item-delete"
         title="删除此项"
-        @pointerdown.prevent
         @click="performDelete"
       >
         <VIcon icon="cancel" :size="18" />
