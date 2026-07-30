@@ -58,29 +58,37 @@ export const loadInstantStyle = async (
   } = { head: document.head, body: document.body },
 ) => {
   component.instantStyles?.forEach(async it => {
-    const styleContent = await (async () => {
-      if (typeof it.style === 'string') {
-        return it.style
+    try {
+      const styleContent = await (async () => {
+        if (typeof it.style === 'string') {
+          return it.style
+        }
+        const module = await it.style()
+        return module.default
+      })()
+
+      if ((it as ShadowDomInstantStyleDefinition).shadowDom) {
+        shadowRootStyles.addStyle({
+          id: it.name,
+          style: styleContent,
+        })
+        return
       }
-      const module = await it.style()
-      return module.default
-    })()
 
-    if ((it as ShadowDomInstantStyleDefinition).shadowDom) {
-      shadowRootStyles.addStyle({
-        id: it.name,
-        style: styleContent,
+      const style = document.createElement('style')
+      style.id = getDefaultStyleID(it.name)
+      style.textContent = styleContent
+      if ((it as DomInstantStyleDefinition).important) {
+        fragments.body.appendChild(style)
+      } else {
+        fragments.head.appendChild(style)
+      }
+    } catch (error) {
+      console.error('加载组件首屏样式失败。', {
+        componentName: component.name,
+        styleName: it.name,
+        error,
       })
-      return
-    }
-
-    const style = document.createElement('style')
-    style.id = getDefaultStyleID(it.name)
-    style.textContent = styleContent
-    if ((it as DomInstantStyleDefinition).important) {
-      fragments.body.appendChild(style)
-    } else {
-      fragments.head.appendChild(style)
     }
   })
 }
@@ -122,26 +130,45 @@ export const preloadStyles = lodash.once(async () => {
     const bodyFragment = document.createDocumentFragment()
     await Promise.all(
       components.map(component => {
-        const listener = (enabled: boolean) => {
-          if (enabled) {
-            return loadInstantStyle(component)
-          }
-          return component.instantStyles?.forEach(style => removeInstantStyle(style))
-        }
-        addComponentListener(component.name, listener)
-        if (isUserComponent(component)) {
-          addHook('userComponents.remove', {
-            after: (metadata: ComponentMetadata) => {
-              if (metadata.name === component.name) {
-                removeComponentListener(component.name, listener)
-              }
-            },
-          })
-        }
-        if (!isComponentEnabled(component)) {
+        if (!component.instantStyles?.length) {
           return undefined
         }
-        return loadInstantStyle(component, { head: fragment, body: bodyFragment })
+        const { instantStyles } = component
+        try {
+          const listener = (enabled: boolean) => {
+            if (enabled) {
+              return loadInstantStyle(component)
+            }
+            return instantStyles.forEach(style => removeInstantStyle(style))
+          }
+          addComponentListener(component.name, listener)
+          if (isUserComponent(component)) {
+            addHook('userComponents.remove', {
+              after: (metadata: ComponentMetadata) => {
+                if (metadata.name === component.name) {
+                  removeComponentListener(component.name, listener)
+                }
+              },
+            })
+          }
+          if (!isComponentEnabled(component)) {
+            return undefined
+          }
+          return loadInstantStyle(component, { head: fragment, body: bodyFragment }).catch(
+            error => {
+              console.error('初始化组件首屏样式失败。', {
+                componentName: component.name,
+                error,
+              })
+            },
+          )
+        } catch (error) {
+          console.error('初始化组件首屏样式失败。', {
+            componentName: component.name,
+            error,
+          })
+          return undefined
+        }
       }),
     )
     const { UserStyleMode: CustomStyleMode } = await import('@/plugins/style')
