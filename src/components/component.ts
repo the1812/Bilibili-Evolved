@@ -138,6 +138,22 @@ export const loadComponent = async (component: ComponentMetadata) => {
     await load()
   }
 }
+
+const loadComponentStage = async (
+  loader: (component: ComponentMetadata) => Promise<unknown>,
+  message: string,
+) => {
+  const results = await Promise.allSettled(components.map(loader))
+  results.forEach((result, index) => {
+    if (result.status === 'rejected') {
+      console.error(message, {
+        componentName: components[index].name,
+        error: result.reason,
+      })
+    }
+  })
+}
+
 /** 加载所有用户组件的定义 (不运行) */
 export const loadAllUserComponents = async () => {
   const { settings } = await import('@/core/settings')
@@ -169,8 +185,8 @@ export const loadAllComponents = async () => {
   const { loadAllPlugins } = await import('@/plugins/plugin')
   const loadComponents = () =>
     loadAllPlugins(components)
-      .then(() => Promise.all(components.map(loadI18n)))
-      .then(() => Promise.all(components.map(loadComponent)))
+      .then(() => loadComponentStage(loadI18n, '加载组件 i18n 失败。'))
+      .then(() => loadComponentStage(loadComponent, '加载组件失败。'))
       .then(async () => {
         if (generalSettings.devMode) {
           const { componentLoadTime, componentResolveTime } = await import(

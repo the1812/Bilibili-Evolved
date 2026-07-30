@@ -117,6 +117,13 @@ export const isComponentEnabled = (component: ComponentMetadata | string) => {
   if (!component) {
     return false
   }
+  if (component.configurable === false) {
+    if (!(component.enabledByDefault ?? true)) {
+      return false
+    }
+  } else if (!getComponentSettings(component).enabled) {
+    return false
+  }
   // 若指定了排除URL, 任意URL匹配就不加载
   if (component.urlExclude && component.urlExclude.some(matchUrlPattern)) {
     return false
@@ -125,9 +132,5 @@ export const isComponentEnabled = (component: ComponentMetadata | string) => {
   if (component.urlInclude && component.urlInclude.every(lodash.negate(matchUrlPattern))) {
     return false
   }
-  // 不可更改的组件永远返回默认值
-  if (component.configurable === false) {
-    return component.enabledByDefault ?? true
-  }
-  return getComponentSettings(component).enabled
+  return true
 }
