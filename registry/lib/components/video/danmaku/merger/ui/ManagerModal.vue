@@ -117,14 +117,24 @@
                 </select>
                 <input
                   type="number"
-                  step="0.5"
+                  step="0.1"
                   min="0"
                   class="dm-offset-input"
                   :class="{ 'dm-offset-flash': flashOffsetId === item.id }"
                   :value="offsetValue(item)"
+                  title="偏移秒数，步进 0.1"
                   @change="onOffsetValueChange(item, $event)"
                 />
                 <span class="dm-offset-unit">秒</span>
+                <button
+                  v-if="offsetValue(item) > 0"
+                  type="button"
+                  class="dm-offset-clear-btn"
+                  title="清除偏移"
+                  @click.stop="onClearOffset(item)"
+                >
+                  清除
+                </button>
               </div>
               <button type="button" class="dm-delete-btn" @click.stop="onRemoveSource(item.id)">
                 移除
@@ -224,7 +234,8 @@ export default Vue.extend({
       return (item.offset ?? 0) < 0 ? -1 : 1
     },
     offsetValue(item: MergerManagerSourceItem): number {
-      return Math.abs(item.offset ?? 0)
+      // 与时停写回一致：展示也只保留 1 位小数
+      return Math.round(Math.abs(item.offset ?? 0) * 10) / 10
     },
     emitSelectionChange(nextIds: string[]) {
       this.$emit(MANAGER_MODAL_EVENTS.SELECTION_CHANGE, { selectedIds: nextIds })
@@ -279,7 +290,9 @@ export default Vue.extend({
       this.$emit(MANAGER_MODAL_EVENTS.REMOVE_SOURCE, { sourceId })
     },
     emitOffset(sourceId: string, offsetType: MergerOffsetType, seconds: number) {
-      const offset = offsetType * Math.max(0, seconds)
+      // 秒数只保留 1 位小数，与 number input step=0.1 对齐
+      const rounded = Math.round(Math.max(0, seconds) * 10) / 10
+      const offset = offsetType * rounded
       this.$emit(MANAGER_MODAL_EVENTS.UPDATE_OFFSET, { sourceId, offset })
       this.flashOffsetId = sourceId
       if (this.flashTimer) {
@@ -299,6 +312,9 @@ export default Vue.extend({
       const raw = (event.target as HTMLInputElement).value
       const seconds = parseFloat(raw) || 0
       this.emitOffset(item.id, this.offsetType(item), seconds)
+    },
+    onClearOffset(item: MergerManagerSourceItem) {
+      this.emitOffset(item.id, 1, 0)
     },
   },
 })
@@ -464,7 +480,7 @@ export default Vue.extend({
 }
 
 .dm-offset-input {
-  width: 40px;
+  width: 48px;
   background: transparent;
   border: none;
   border-bottom: 1px solid #ddd;
@@ -482,6 +498,24 @@ export default Vue.extend({
   font-size: 12px;
   color: var(--text3, #999);
   margin-left: 2px;
+}
+
+.dm-offset-clear-btn {
+  margin-left: 4px;
+  padding: 0 6px;
+  height: 22px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text3, #999);
+  font-size: 12px;
+  line-height: 22px;
+  cursor: pointer;
+}
+
+.dm-offset-clear-btn:hover {
+  color: #ff4d4f;
+  background: rgba(255, 77, 79, 0.08);
 }
 
 .dm-delete-btn {

@@ -242,13 +242,14 @@
           </select>
           <input
             type="number"
-            step="0.5"
+            step="0.1"
             min="0"
             class="dm-offset-input"
             :data-cid="page.cid"
             :value="pageOffsetValue(page)"
+            title="偏移秒数，步进 0.1"
             style="
-              width: 40px;
+              width: 48px;
               background: transparent;
               border: none;
               border-bottom: 1px solid #ddd;
@@ -260,6 +261,27 @@
             @input="onOffsetValueChange(page, $event)"
           />
           <span style="font-size: 12px; color: var(--text3, #999); margin-left: 2px">秒</span>
+          <button
+            v-if="pageOffsetValue(page) > 0"
+            type="button"
+            class="dm-offset-clear-btn"
+            title="清除偏移"
+            style="
+              margin-left: 4px;
+              padding: 0 6px;
+              height: 22px;
+              border: none;
+              border-radius: 4px;
+              background: transparent;
+              color: var(--text3, #999);
+              font-size: 12px;
+              line-height: 22px;
+              cursor: pointer;
+            "
+            @click.stop="onClearOffset(page)"
+          >
+            清除
+          </button>
         </div>
       </div>
     </div>
@@ -340,7 +362,8 @@ export default Vue.extend({
       return page.offsetType === -1 ? -1 : 1
     },
     pageOffsetValue(page: PagePartListRow): number {
-      return page.offset ?? 0
+      // 与时停写回一致：展示也只保留 1 位小数
+      return Math.round(Math.max(0, page.offset ?? 0) * 10) / 10
     },
     showOffsetControl(page: PagePartListRow): boolean {
       return !this.partModeEnabled || !!page.selected
@@ -393,12 +416,21 @@ export default Vue.extend({
     },
     onOffsetValueChange(page: PagePartListRow, event: Event) {
       const raw = (event.target as HTMLInputElement).value
-      const offset = Math.max(0, parseFloat(raw) || 0)
+      // 秒数只保留 1 位小数，与 number input step=0.1 对齐
+      const offset = Math.round(Math.max(0, parseFloat(raw) || 0) * 10) / 10
       this.$emit('update:offset', {
         bvid: this.videoMeta.bvid,
         cid: page.cid,
         offset,
         offsetType: this.pageOffsetType(page),
+      })
+    },
+    onClearOffset(page: PagePartListRow) {
+      this.$emit('update:offset', {
+        bvid: this.videoMeta.bvid,
+        cid: page.cid,
+        offset: 0,
+        offsetType: 1,
       })
     },
     onCalcOffsets() {
