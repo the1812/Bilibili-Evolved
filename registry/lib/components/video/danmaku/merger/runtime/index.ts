@@ -285,27 +285,72 @@ export const initDanmakuMerger = (): MergerCleanup => {
   }
 
   /** 同 BV 切换分 P：先清除合并弹幕，仅注入属于当前分 P 的源 */
+  let partResyncTimer = 0
+  let partResyncToken = 0
+  const resolvePartResyncCid = (requestedCid: string, fromCid: string | null) => {
+    const requested = String(requestedCid || '')
+    const pageCid = getCurrentPageCid()
+    if (!pageCid) {
+      return requested
+    }
+    if (pageCid === requested) {
+      return requested
+    }
+    // 页面 cid 仍停在切换前：videoChange 的 detail 已是新 cid，但 unsafeWindow.cid 尚未跟上
+    if (fromCid && pageCid === String(fromCid)) {
+      return requested || pageCid
+    }
+    // 页面到了第三种 cid：用户又切了分P，跟随页面
+    return pageCid
+  }
   const schedulePartResync = (targetCid: string) => {
-    engine.setActiveViewCid(targetCid)
+    const requestedCid = String(targetCid)
+    const fromCid = mergerLastCid
+    const initialCid = resolvePartResyncCid(requestedCid, fromCid)
+    engine.setActiveViewCid(initialCid)
+    // 连续切 P 时只保留最后一次
+    if (partResyncTimer) {
+      window.clearTimeout(partResyncTimer)
+      partResyncTimer = 0
+    }
+    const token = ++partResyncToken
     let attempts = 0
     const maxAttempts = 60
     const tick = async () => {
+      if (token !== partResyncToken) {
+        return
+      }
       attempts += 1
       try {
+        const liveCid = resolvePartResyncCid(requestedCid, fromCid)
+        engine.setActiveViewCid(liveCid)
+
         const playerReady = await nativeDanmaku.waitForPlayer(8000, null)
+        if (token !== partResyncToken) {
+          return
+        }
         if (!playerReady) {
           if (attempts < maxAttempts) {
-            window.setTimeout(tick, 500)
+            partResyncTimer = window.setTimeout(tick, 500)
           }
           return
         }
-        nativeDanmaku.purgeMerged()
+
         const activeSources = engine.getActiveSources()
         if (!activeSources?.size) {
+          // 无当前分P源时仍清理上一P合并弹幕，并刷新角标
+          nativeDanmaku.purgeMerged()
           mergerVueHostCtrl?.refreshBadge()
-          dmLog('分P切换，当前分P无合并源', { targetCid })
+          document.dispatchEvent(new CustomEvent('dm-sources-updated'))
+          dmLog('分P切换，当前分P无合并源', {
+            targetCid: liveCid,
+            requestedCid,
+            pageCid: getCurrentPageCid(),
+            totalSources: engine.sources?.size || 0,
+          })
           return
         }
+
         nativeDanmaku.ensureCapture(true)
         if (!nativeDanmaku.hasListStore()) {
           if (BiliApi.isPakkuActive()) {
@@ -314,25 +359,63 @@ export const initDanmakuMerger = (): MergerCleanup => {
             await nativeDanmaku.burstCaptureStore()
           }
         }
-        nativeDanmaku.installResyncHook(() => engine.getActiveSources())
-        const result = await nativeDanmaku.fullSyncAsync(activeSources, undefined, {
-          allowBurstCapture: !BiliApi.isPakkuActive(),
-        })
-        engine.lastListSync = !!result.list
-        engine.lastSyncResult = result
-        if (result.screen > 0 || result.list || attempts >= maxAttempts) {
-          mergerVueHostCtrl?.refreshBadge()
-          dmLog('分P切换补同步完成', { targetCid, attempts, result })
+        if (token !== partResyncToken) {
           return
         }
+
+        // Store 等待后再解析一次目标分P
+        const latestCid = resolvePartResyncCid(requestedCid, fromCid)
+        engine.setActiveViewCid(latestCid)
+        const sourcesToSync = engine.getActiveSources()
+        if (!sourcesToSync?.size) {
+          nativeDanmaku.purgeMerged()
+          mergerVueHostCtrl?.refreshBadge()
+          document.dispatchEvent(new CustomEvent('dm-sources-updated'))
+          dmLog('分P切换，等待后当前分P无合并源', {
+            targetCid: latestCid,
+            requestedCid,
+            pageCid: getCurrentPageCid(),
+          })
+          return
+        }
+
+        nativeDanmaku.installResyncHook(() => engine.getActiveSources())
+        const result = await nativeDanmaku.fullSyncAsync(sourcesToSync, undefined, {
+          allowBurstCapture: !BiliApi.isPakkuActive(),
+        })
+        if (token !== partResyncToken) {
+          return
+        }
+        engine.lastListSync = !!result.list
+        engine.lastSyncResult = result
+        mergerVueHostCtrl?.refreshBadge()
+        document.dispatchEvent(new CustomEvent('dm-sources-updated'))
+
+        const injected = result.screen > 0 || result.list || nativeDanmaku.hasMergedInList()
+        if (injected || attempts >= maxAttempts) {
+          dmLog('分P切换补同步完成', {
+            targetCid: latestCid,
+            requestedCid,
+            attempts,
+            active: sourcesToSync.size,
+            result,
+          })
+          return
+        }
+        dmLog('分P切换补同步未完成，重试', {
+          targetCid: latestCid,
+          requestedCid,
+          attempts,
+          result,
+        })
       } catch (err) {
         dmWarn('分P切换补同步失败', err)
       }
-      if (attempts < maxAttempts) {
-        window.setTimeout(tick, 500)
+      if (token === partResyncToken && attempts < maxAttempts) {
+        partResyncTimer = window.setTimeout(tick, 500)
       }
     }
-    window.setTimeout(tick, 300)
+    partResyncTimer = window.setTimeout(tick, 200)
   }
 
   registerMergerMaintenance({
@@ -408,9 +491,11 @@ export const initDanmakuMerger = (): MergerCleanup => {
     } else if (partChanged && cid !== null) {
       discardTimeStop()
       dmLog('分P切换', { from: mergerLastCid, to: cid })
+      // 先切换活跃分P并清理画面，再异步注入当前分P源
+      engine.setActiveViewCid(cid)
       nativeDanmaku.purgeMerged()
       schedulePartResync(cid)
-      // 分 P 切换时刷新搜索预填，不关闭已打开的搜索弹窗
+      // 分 P 切换时刷新搜索预填 / 管理页范围，不关闭已打开的搜索弹窗
       mergerVueHostCtrl?.handlePartChange()
 
       // 稍后再看：先到 cid 后到 bvid 时，延迟复核是否其实已换视频
@@ -466,9 +551,20 @@ export const initDanmakuMerger = (): MergerCleanup => {
     }
 
     if (!partChanged && !engine.sources?.size) {
-      tryRestoreSession().catch(err => {
-        dmLog('恢复触发异常', err)
-      })
+      tryRestoreSession()
+        .then(() => {
+          const cidNow = getCurrentPageCid() || cid
+          if (cidNow && engine.sources?.size) {
+            // 会话恢复后按当前分P再注入，避免只 toast 不写画面/列表
+            schedulePartResync(cidNow)
+          }
+        })
+        .catch(err => {
+          dmLog('恢复触发异常', err)
+        })
+    } else if (!partChanged && engine.sources?.size && cid) {
+      // 换视频后内存源已在：仍按新分P补同步
+      schedulePartResync(cid)
     }
   }
 
@@ -501,12 +597,34 @@ export const initDanmakuMerger = (): MergerCleanup => {
       } catch {
         storedCount = -1
       }
+      const pageCid = getCurrentPageCid()
+      const allSources = engine.getSources()
+      const activeMap = engine.getActiveSources()
+      const stores = pageWin().__dmMergerStores as
+        | { dmListStore?: { allDm?: Array<{ dmid?: string }> } }
+        | undefined
+      const allDm = stores?.dmListStore?.allDm
+      const mergedListLen = Array.isArray(allDm)
+        ? allDm.filter(item => String(item?.dmid || '').startsWith('dmmerger_')).length
+        : null
       return {
         version: DM_MERGER_VERSION,
         videoId,
         storeKey,
         storedCount,
-        memorySources: engine.getSources().length,
+        pageCid,
+        activeViewCid: engine.activeViewCid,
+        memorySources: allSources.length,
+        activeSources: activeMap?.size || 0,
+        sourceMetas: allSources.map(s => ({
+          id: s.id,
+          cid: s.cid,
+          viewCid: s.viewCid,
+          count: s.count,
+          offset: s.offset,
+        })),
+        lastSyncResult: engine.lastSyncResult,
+        mergedListLen,
         badge: !!document.querySelector('#dm-merger-count'),
         badgeText: document.querySelector('#dm-merger-count')?.textContent?.trim() ?? null,
         managerMask: !!managerMask,
@@ -515,6 +633,28 @@ export const initDanmakuMerger = (): MergerCleanup => {
         quickMerge: quickMergeHost?.getDebugInfo?.() ?? null,
         sampleQuickBtnOpacity: sampleBtn ? getComputedStyle(sampleBtn).opacity : null,
         openManager: () => mergerUiHost?.openManagerModal(),
+        forcePartResync: (cid?: string) => {
+          const target = String(cid || getCurrentPageCid() || '')
+          if (!target) {
+            return { ok: false, reason: 'no_cid' }
+          }
+          // 调试入口：把当前页视为 from，强制目标 to，验证分P注入
+          if (mergerLastCid == null) {
+            mergerLastCid = getCurrentPageCid()
+          }
+          engine.setActiveViewCid(target)
+          schedulePartResync(target)
+          mergerVueHostCtrl?.handlePartChange()
+          return {
+            ok: true,
+            target,
+            from: mergerLastCid,
+            pageCid: getCurrentPageCid(),
+          }
+        },
+        handleVideoChange: (ids?: { aid?: string; cid?: string }) => {
+          mergerVideoChangeHandler?.(ids as { aid: string; cid: string })
+        },
       }
     }
   } catch {

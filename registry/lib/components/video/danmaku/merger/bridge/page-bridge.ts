@@ -9,7 +9,10 @@ function dmMergerPageBridgeMain() {
     return
   }
   w.__dmMergerBridge = true
-  w.__dmMergerLoadedVersion = '1.6'
+  // 桥接层版本标记；组件入口会再写成 DM_MERGER_VERSION
+  if (!w.__dmMergerLoadedVersion) {
+    w.__dmMergerLoadedVersion = 'bridge'
+  }
   w.__dmMergerBridgeInstalled = true
   w.__dmMergerStores = w.__dmMergerStores || null
 

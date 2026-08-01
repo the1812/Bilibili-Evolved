@@ -134,11 +134,20 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
         engine.setActiveViewCid(viewCid)
       }
       nativeDanmaku.installResyncHook(() => engine.getActiveSources())
-      const sync = await nativeDanmaku.fullSyncAsync(
-        engine.getActiveSources(),
-        null,
-        restoreSyncOpts,
-      )
+      let active = engine.getActiveSources()
+      let sync = await nativeDanmaku.fullSyncAsync(active, null, restoreSyncOpts)
+      // 恢复后若活跃源存在但未写入，再同步一次（应对切P/Store 未稳）
+      if (
+        active?.size &&
+        !sync.list &&
+        !(sync.screen > 0) &&
+        nativeDanmaku.hasListStore()
+      ) {
+        active = engine.getActiveSources()
+        if (active?.size) {
+          sync = await nativeDanmaku.fullSyncAsync(active, null, restoreSyncOpts)
+        }
+      }
       engine.lastListSync = !!sync.list
       engine.lastSyncResult = sync
 
@@ -151,7 +160,11 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
         listSynced = nativeDanmaku.hasMergedInList()
       }
       const totalCount = entries.reduce((sum, e) => sum + e.list.length, 0)
-      const ok = !!(sync.ok || screenCount > 0 || listSynced || engine.sources?.size)
+      const activeCount = engine.getActiveSources()?.size || 0
+      // 有活跃源时必须以注入结果为准；仅内存登记不算注入成功
+      const ok = activeCount
+        ? !!(sync.ok || screenCount > 0 || listSynced)
+        : !!(engine.sources?.size || screenCount > 0 || listSynced)
 
       try {
         engine.saveState()

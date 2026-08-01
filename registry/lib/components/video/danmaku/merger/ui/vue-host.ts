@@ -470,7 +470,10 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   }
 
   const getBadgeSources = () => {
-    const viewCid = getCurrentPageCid()
+    // 优先引擎当前活跃分P（切P过程中可能比 unsafeWindow.cid 更及时）
+    const viewCid =
+      (deps.engine.activeViewCid != null && String(deps.engine.activeViewCid)) ||
+      getCurrentPageCid()
     const sources = deps.engine.getSources()
     if (!viewCid) {
       return sources

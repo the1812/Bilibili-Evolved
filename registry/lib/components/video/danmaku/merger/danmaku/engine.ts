@@ -7,7 +7,7 @@
  */
 
 import { getStorage } from '../storage'
-import { filterSourcesMapByViewCid, getCurrentPageCid } from '../runtime/helpers'
+import { filterSourcesMapByViewCid, getCurrentPageCid, isLegacyUnscopedSource, sourceMatchesViewCid } from '../runtime/helpers'
 import type { NativeDanmakuApi } from './inject'
 import { dmLog, dmWarn } from './log'
 
@@ -53,7 +53,22 @@ export class DanmakuEngine {
   }
 
   getActiveSources() {
-    return filterSourcesMapByViewCid(this.sources, this.activeViewCid)
+    const scoped = filterSourcesMapByViewCid(this.sources, this.activeViewCid)
+    if (scoped?.size || !this.sources?.size || !this.activeViewCid) {
+      return scoped
+    }
+    // 当前分P无严格匹配源时：回落注入「无 viewCid」旧源，避免切P后只 toast 不写入
+    const fallback = new Map()
+    this.sources.forEach((source, key) => {
+      if (isLegacyUnscopedSource(source.meta)) {
+        fallback.set(key, source)
+        return
+      }
+      if (sourceMatchesViewCid(source.meta, this.activeViewCid)) {
+        fallback.set(key, source)
+      }
+    })
+    return fallback
   }
 
   init() {

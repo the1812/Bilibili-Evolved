@@ -1,5 +1,4 @@
 import { dmLog } from '../danmaku/log'
-import { getCurrentPageCid } from './helpers'
 import type { DanmakuEngine } from '../danmaku/engine'
 import type { ParsedDanmakuItem } from '../danmaku/parse'
 import { getStorage } from '../storage'
@@ -63,7 +62,10 @@ const normalizeRestoreMeta = (meta: InjectDanmakuMeta): InjectDanmakuMeta | null
     return null
   }
   const id = meta.id || (meta.bvid ? `${meta.bvid}_${cid}` : String(cid))
-  const viewCid = meta.viewCid ?? getCurrentPageCid() ?? undefined
+  // 保留存储里的 viewCid。缺失时不要整批写成当前分P，否则多分P源会串到同一P。
+  // 旧数据无 viewCid 时，sourceMatchesViewCid 会回落到 meta.cid 比对。
+  const viewCid =
+    meta.viewCid != null && String(meta.viewCid) !== '' ? meta.viewCid : undefined
   return { ...meta, id: String(id), viewCid }
 }
 
@@ -161,6 +163,8 @@ export function createSessionRestore(deps: {
           '注入恢复弹幕',
         )
         const restored = deps.engine.sources?.size || 0
+        const activeCount = deps.engine.getActiveSources()?.size || 0
+        const injected = !!(result.list || result.screen > 0)
 
         mergerProgressToastDone()
         if (result.ok || restored > 0) {
@@ -168,7 +172,13 @@ export function createSessionRestore(deps: {
             entry => entry.meta.fetchMode === 'protobuf-fallback',
           ).length
           let msg = `已恢复 ${restored}/${sources.length} 个弹幕源`
-          if (fallbackCount > 0) {
+          if (activeCount === 0 && restored > 0) {
+            msg += '（当前分P无匹配源，切回对应分P后自动注入）'
+            mergerToast(msg, 'warn')
+          } else if (!injected && activeCount > 0) {
+            msg += '（注入未完成，将自动重试）'
+            mergerToast(msg, 'warn')
+          } else if (fallbackCount > 0) {
             msg += `（其中 ${fallbackCount} 个视频不可用，已走历史弹幕兜底）`
             mergerToast(msg, 'warn')
           } else {
