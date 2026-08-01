@@ -86,24 +86,41 @@ export const initDanmakuMerger = (): MergerCleanup => {
       const v = document.querySelector('video')
       return v ? Number(v.currentTime) || 0 : 0
     },
-    hasSource: id => !!engine.sources?.has(String(id)),
-    // bpx 画面层通常不挂 data-dmid：文案反查 + 原生 allDm dmid 回落
+    // 只认当前分P活跃源，避免多分P时跨集钉住/写偏移
+    hasSource: id => {
+      const active = engine.getActiveSources()
+      return !!active?.has(String(id))
+    },
+    // bpx 画面层通常不挂 data-dmid：文案反查 + 原生 allDm dmid 回落（均限当前分P）
     resolveSourceIdFromElement: el => {
+      const activeSources = engine.getActiveSources()
+      if (!activeSources?.size) {
+        return null
+      }
+      const activeIds = new Set(Array.from(activeSources.keys()).map(id => String(id)))
+
+      // 0) 节点上若直接带 dmid，优先解析，且必须属于当前分P
+      const dmidOnNode = readDmidFromContext(el)
+      const sidFromDmid = parseSourceIdFromDmid(dmidOnNode)
+      if (sidFromDmid && activeIds.has(String(sidFromDmid))) {
+        return String(sidFromDmid)
+      }
+
       const text = readDanmakuTextFromElement(el)
       if (!text) {
         return null
       }
-      // 1) 引擎源 list 文案（XML 原文，无列表前缀）
-      if (engine.sources?.size) {
-        const sources = Array.from(engine.sources.entries()).map(([id, source]) => ({
-          id: String(id),
-          texts: (source.list || []).map((dm: { text?: string }) => String(dm?.text || '')),
-        }))
-        const fromEngine = resolveSourceIdByText(text, sources)
-        if (fromEngine) {
-          return fromEngine
-        }
+
+      // 1) 仅在当前分P活跃源 list 里按文案反查
+      const sources = Array.from(activeSources.entries()).map(([id, source]) => ({
+        id: String(id),
+        texts: (source.list || []).map((dm: { text?: string }) => String(dm?.text || '')),
+      }))
+      const fromEngine = resolveSourceIdByText(text, sources)
+      if (fromEngine && activeIds.has(String(fromEngine))) {
+        return String(fromEngine)
       }
+
       // 2) 原生列表已注入项：text 可能带【BVxxx】前缀，dmid 带 dmmerger_
       try {
         const page = pageWin() as Window & {
@@ -121,26 +138,29 @@ export const initDanmakuMerger = (): MergerCleanup => {
               continue
             }
             const sid = parseSourceIdFromDmid(dmid)
-            if (sid) {
-              hits.add(sid)
+            if (sid && activeIds.has(String(sid))) {
+              hits.add(String(sid))
             }
           }
           if (hits.size === 1) {
             return Array.from(hits)[0]
           }
-          // 仅一个合并源时，放宽为该源
-          if (engine.sources?.size === 1 && hits.size > 0) {
-            return String(Array.from(engine.sources.keys())[0])
+          // 当前分P仅一个活跃源时，放宽为该源
+          if (activeIds.size === 1 && hits.size > 0) {
+            return Array.from(activeIds)[0]
           }
         }
       } catch {
         // ignore
       }
-      // 3) 只有一个合并源：任意命中合并弹幕文本即归到该源
-      if (engine.sources?.size === 1) {
-        const onlyId = String(Array.from(engine.sources.keys())[0])
-        const source = engine.sources.get(onlyId)
-        const ok = (source?.list || []).some((dm: { text?: string }) => isSameDanmakuText(text, dm?.text))
+
+      // 3) 当前分P只有一个活跃源：文案命中即归到该源
+      if (activeIds.size === 1) {
+        const onlyId = Array.from(activeIds)[0]
+        const source = activeSources.get(onlyId)
+        const ok = (source?.list || []).some((dm: { text?: string }) =>
+          isSameDanmakuText(text, dm?.text),
+        )
         if (ok) {
           return onlyId
         }
@@ -148,6 +168,10 @@ export const initDanmakuMerger = (): MergerCleanup => {
       return null
     },
     isElementOfSource: (sourceId, el) => {
+      const active = engine.getActiveSources()
+      if (!active?.has(String(sourceId))) {
+        return false
+      }
       const byDmid = parseSourceIdFromDmid(readDmidFromContext(el))
       if (byDmid) {
         return byDmid === String(sourceId)
@@ -156,11 +180,14 @@ export const initDanmakuMerger = (): MergerCleanup => {
       if (!text) {
         return false
       }
-      const source = engine.sources?.get(String(sourceId))
-      if (source && (source.list || []).some((dm: { text?: string }) => isSameDanmakuText(text, dm?.text))) {
+      const source = active.get(String(sourceId))
+      if (
+        source &&
+        (source.list || []).some((dm: { text?: string }) => isSameDanmakuText(text, dm?.text))
+      ) {
         return true
       }
-      // 引擎 list 未命中时，用原生 allDm 的 dmid 归属判断
+      // 引擎 list 未命中时，用原生 allDm 的 dmid 归属判断（仍限当前源）
       try {
         const page = pageWin() as Window & {
           __dmMergerStores?: { dmListStore?: { allDm?: Array<{ dmid?: string; text?: string }> } }
@@ -182,7 +209,13 @@ export const initDanmakuMerger = (): MergerCleanup => {
     },
     applyOffsetDelta: async (sourceId, delta) => {
       try {
-        const source = engine.sources?.get(String(sourceId))
+        // 只允许写回当前分P活跃源，防止跨分P串偏移
+        const active = engine.getActiveSources()
+        if (!active?.has(String(sourceId))) {
+          mergerToast('当前分P无该合并源，未写入偏移', 'warn')
+          return
+        }
+        const source = active.get(String(sourceId)) || engine.sources?.get(String(sourceId))
         if (!source) {
           return
         }
