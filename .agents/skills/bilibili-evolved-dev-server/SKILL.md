@@ -70,5 +70,6 @@ After creation, inspect and edit the generated `index.ts` and `index.md`. Keep c
 
 - For TypeScript changes, run `pnpm run type`.
 - For lint-sensitive changes, run `pnpm run lint-check`.
-- For core userscript changes, run `pnpm run build-core`.
+- For core userscript changes, use the dev server's core watcher, which automatically compiles the development build.
 - For registry feature changes, run `pnpm tsx dev-tools/dev-server/command.ts build <component|plugin> <id>` while the dev server is running; the compiled output is served from memory.
+- `pnpm run build-core` and `pnpm run build-features` are production CI or release validations. Run them locally only when explicitly requested, reproducing a CI failure, changing shared build infrastructure, or preparing a release.
