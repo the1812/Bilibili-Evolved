@@ -35,6 +35,10 @@ export const useClickElement =
     clickElement(target, context)
 export const changeVideoTime = (delta: number | (() => number)) => () =>
   playerAgent.changeTime(typeof delta === 'number' ? delta : delta())
+
+const JumpForwardLongPressDelay = 300
+const JumpForwardLongPressRate = 3
+
 /** 提示框用的`setTimeout`句柄 */
 let tipTimeoutHandle: number
 /**
@@ -208,7 +212,79 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   jumpForward: {
     displayName: '前进',
-    run: () => playerAgent.changeTime(5),
+    run: (() => {
+      let activeCode: string = null
+      let timer: number = null
+      let originalPlaybackRate: number = null
+      let onKeyUp: (event: KeyboardEvent) => void
+
+      const reset = () => {
+        if (timer !== null) {
+          clearTimeout(timer)
+        }
+        if (originalPlaybackRate !== null) {
+          playerAgent.nativeApi?.setPlaybackRate(originalPlaybackRate)
+        }
+        activeCode = null
+        timer = null
+        originalPlaybackRate = null
+        window.removeEventListener('keyup', onKeyUp, true)
+        window.removeEventListener('blur', reset)
+      }
+      onKeyUp = (event: KeyboardEvent) => {
+        if (event.code !== activeCode) {
+          return
+        }
+        const isShortPress = timer !== null
+        reset()
+        if (isShortPress) {
+          playerAgent.changeTime(5)
+        }
+      }
+
+      return ({ event }: KeyBindingActionContext) => {
+        if (activeCode !== null) {
+          return true
+        }
+        if (!getComponentSettings<Options>('keymap').options.enableLongPressSpeed) {
+          return playerAgent.changeTime(5)
+        }
+        activeCode = event.code
+        window.addEventListener('keyup', onKeyUp, true)
+        window.addEventListener('blur', reset)
+        timer = window.setTimeout(() => {
+          timer = null
+          const api = playerAgent.nativeApi
+          if (!api?.getPlaybackRate || !api?.setPlaybackRate) {
+            return
+          }
+          originalPlaybackRate = api.getPlaybackRate()
+          if (api.isPaused?.()) {
+            api.play()
+          }
+          api.setPlaybackRate(JumpForwardLongPressRate)
+        }, JumpForwardLongPressDelay)
+        return true
+      }
+    })(),
+  },
+  previousPart: {
+    displayName: '上一 P',
+    run: () => playerAgent.previousPart(),
+  },
+  nextPart: {
+    displayName: '下一 P',
+    run: () => playerAgent.nextPart(),
+  },
+  focusDanmakuInput: {
+    displayName: '聚焦弹幕输入框',
+    run: () => {
+      const input = playerAgent.query.bilibiliPlayer
+        .sync()
+        ?.querySelector<HTMLInputElement>('.bpx-player-dm-input')
+      input?.focus()
+      return input
+    },
   },
   playerMenu: {
     displayName: '播放器菜单',
