@@ -1,10 +1,14 @@
 import { defineComponentMetadata } from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
+import { getUID } from '@/core/utils'
 
 export const component = defineComponentMetadata({
   name: 'autoHighestQuality',
   displayName: '直播自动切换最高画质',
   entry: async () => {
+    if (!getUID()) {
+      return
+    }
     await new Promise<void>(resolve => {
       const isPlayerReady = () => {
         return (
