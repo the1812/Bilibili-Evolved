@@ -100,8 +100,9 @@ export default Vue.extend({
 </script>
 
 <style scoped>
+/* 预览叠在管理弹窗之上（ModalShell 默认 2147483000） */
 .dm-preview-mask {
-  z-index: 100020;
+  z-index: 2147483100 !important;
 }
 
 ::v-deep .dm-merger-modal {
