@@ -56,6 +56,9 @@ export type QueryFeatureSessionsPayload = PayloadBase<'queryFeatureSessions'>
 export type QueryFeatureSessionsResponsePayload = PayloadBase<'queryFeatureSessionsResponse'> & {
   featureSessions: string[]
 }
+export type ShutdownServerPayload = PayloadBase<'shutdownServer'> & {
+  requestId?: string
+}
 export type FeatureSessionsChangedPayload = PayloadBase<'featureSessionsChanged'> & {
   featureSessions: string[]
 }
@@ -91,6 +94,7 @@ export type Payload =
   | CreateFeaturePayload
   | QueryFeatureSessionsPayload
   | QueryFeatureSessionsResponsePayload
+  | ShutdownServerPayload
   | FeatureSessionsChangedPayload
   | FeatureBuiltPayload
   | FeatureBuildFailedPayload

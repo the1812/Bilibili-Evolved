@@ -12,6 +12,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop <component|plugin> <id>
 pnpm tsx dev-tools/dev-server/command.ts start-debug <component|plugin> <id> [targetClientId]
 pnpm tsx dev-tools/dev-server/command.ts stop-debug <component|plugin> <id>
 pnpm tsx dev-tools/dev-server/command.ts sessions
+pnpm tsx dev-tools/dev-server/command.ts shutdown
 pnpm tsx dev-tools/dev-server/command.ts create <component|plugin> <id> <name> <displayName> <authorName> [authorLink] [description]`)
 }
 
@@ -23,6 +24,9 @@ const createRequestId = () => `${Date.now()}-${Math.random().toString(36).slice(
 const createPayload = (): Payload => {
   if (command === 'sessions') {
     return { type: 'queryFeatureSessions' }
+  }
+  if (command === 'shutdown') {
+    return { type: 'shutdownServer', requestId: createRequestId() }
   }
   if (!isFeatureKind(kindText)) {
     usage()
