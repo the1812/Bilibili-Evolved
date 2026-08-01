@@ -144,6 +144,8 @@ export const MERGER_MODAL_EVENTS = {
   COLLAPSE_VIDEO: 'collapse-video',
   /** 本地排序切换（默认 / 播放量 / 弹幕量） */
   SORT_CHANGE: 'sort-change',
+  /** 删除已选中的已合并源（按 BV） */
+  DELETE_MERGED: 'delete-merged',
 } as const
 
 /** `ManagerModal.vue`（已合并源管理） */
@@ -213,6 +215,7 @@ export interface MergerModalEventPayloads {
   [MERGER_MODAL_EVENTS.EXPAND_VIDEO]: { bvid: string }
   [MERGER_MODAL_EVENTS.COLLAPSE_VIDEO]: { bvid: string }
   [MERGER_MODAL_EVENTS.SORT_CHANGE]: { mode: 'default' | 'play' | 'danmaku' }
+  [MERGER_MODAL_EVENTS.DELETE_MERGED]: { bvids: string[] }
 }
 
 export interface ManagerModalEventPayloads {

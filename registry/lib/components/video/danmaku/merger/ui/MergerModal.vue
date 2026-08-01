@@ -148,6 +148,15 @@
                 {{ selectAllLabel }}
               </button>
               <button
+                v-if="hasMergedSelection"
+                id="dm-search-delete-merged"
+                type="button"
+                class="dm-selected-danger-btn"
+                @click="onDeleteMergedSelection"
+              >
+                删除已合并
+              </button>
+              <button
                 id="dm-search-batch-btn"
                 type="button"
                 :style="batchBtnStyle"
@@ -351,6 +360,10 @@ export default Vue.extend({
     },
     hasSelection(): boolean {
       return this.selectedCount > 0
+    },
+    /** 当前已选中是否包含已合并源，用于显示删除按钮 */
+    hasMergedSelection(): boolean {
+      return this.selectedCardBvids.some(bvid => this.isBvidMerged(bvid))
     },
     actionsPanelStyle(): Record<string, string> {
       return {
@@ -643,16 +656,20 @@ export default Vue.extend({
       }
     },
     /**
-     * 分P勾选只改分P，不改父勾选。
-     * 仍把该视频摘要交给 host，保证底部已选区可展示。
+     * 分P勾选副作用：全选分P则父勾选，否则父取消。
+     * 仅勾部分分P时父不勾，底部已选仍展示该视频。
      */
     emitPartSelectionSideEffects(bvid: string) {
       const pages = this.expandedPages[bvid]
-      // 父已勾选时，若分P不再全选，则取消父勾选（避免半选态）
+      // 全部分P勾选 → 父勾选；否则父不勾（避免半选态）
       let nextSelected = [...this.selectedBvids]
-      if (pages?.length && nextSelected.includes(bvid)) {
+      if (pages?.length) {
         const allSelected = pages.every(page => page.selected)
-        if (!allSelected) {
+        if (allSelected) {
+          if (!nextSelected.includes(bvid)) {
+            nextSelected.push(bvid)
+          }
+        } else {
           nextSelected = nextSelected.filter(id => id !== bvid)
         }
       }
@@ -813,6 +830,14 @@ export default Vue.extend({
       }
       this.$emit(MERGER_MODAL_EVENTS.BATCH_MERGE, { items })
     },
+    /** 删除当前已选中的已合并源（按 BV 聚合的分P源） */
+    onDeleteMergedSelection() {
+      const bvids = this.selectedCardBvids.filter(bvid => this.isBvidMerged(bvid))
+      if (!bvids.length) {
+        return
+      }
+      this.$emit(MERGER_MODAL_EVENTS.DELETE_MERGED, { bvids })
+    },
   },
 })
 </script>
@@ -876,6 +901,21 @@ export default Vue.extend({
 .dm-selected-secondary-btn:disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+.dm-selected-danger-btn {
+  padding: 6px 14px;
+  cursor: pointer;
+  background: rgba(255, 77, 79, 0.12);
+  border: 1px solid rgba(255, 77, 79, 0.45);
+  border-radius: 6px;
+  font-size: 13px;
+  color: #ff4d4f;
+  transition: all 0.2s;
+}
+
+.dm-selected-danger-btn:hover {
+  background: rgba(255, 77, 79, 0.2);
 }
 
 .dm-selected-chips {
