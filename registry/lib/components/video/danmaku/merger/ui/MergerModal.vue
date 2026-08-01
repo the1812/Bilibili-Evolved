@@ -121,6 +121,46 @@
 
       <div id="dm-search-actions" :style="actionsPanelStyle">
         <div class="dm-selected-bar">
+          <!-- 已选卡片放按钮上方，避免勾选时底部按钮组被顶起跳动 -->
+          <div v-if="selectedVideoCards.length" class="dm-selected-chips">
+            <div
+              v-for="video in selectedVideoCards"
+              :key="video.bvid"
+              class="dm-selected-chip"
+              :title="plainTitle(video)"
+            >
+              <img
+                class="dm-selected-chip-cover"
+                :src="coverUrl(video)"
+                alt=""
+                referrerpolicy="no-referrer"
+              />
+              <div class="dm-selected-chip-meta">
+                <div class="dm-selected-chip-title">{{ plainTitle(video) }}</div>
+                <div class="dm-selected-chip-sub">
+                  <span v-if="video.author">UP: {{ video.author }}</span>
+                  <span v-if="video.author && selectedDanmakuLabel(video)"> · </span>
+                  <span v-if="selectedDanmakuLabel(video)">{{ selectedDanmakuLabel(video) }}</span>
+                  <span
+                    v-if="(video.author || selectedDanmakuLabel(video)) && selectedPartLabel(video.bvid)"
+                  >
+                    ·
+                  </span>
+                  <span v-if="selectedPartLabel(video.bvid)">{{ selectedPartLabel(video.bvid) }}</span>
+                  <span v-if="isBvidMerged(video.bvid)" class="dm-selected-chip-merged">已合并</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="dm-selected-chip-remove"
+                title="取消选择"
+                @click.stop="onRemoveSelected(video.bvid)"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+
           <div class="dm-selected-bar-head">
             <div class="dm-selected-summary">
               已选
@@ -165,48 +205,6 @@
                 合并选中
               </button>
             </div>
-          </div>
-
-          <div v-if="selectedVideoCards.length" class="dm-selected-chips">
-            <div
-              v-for="video in selectedVideoCards"
-              :key="video.bvid"
-              class="dm-selected-chip"
-              :title="plainTitle(video)"
-            >
-              <img
-                class="dm-selected-chip-cover"
-                :src="coverUrl(video)"
-                alt=""
-                referrerpolicy="no-referrer"
-              />
-              <div class="dm-selected-chip-meta">
-                <div class="dm-selected-chip-title">{{ plainTitle(video) }}</div>
-                <div class="dm-selected-chip-sub">
-                  <span v-if="video.author">UP: {{ video.author }}</span>
-                  <span v-if="video.author && selectedDanmakuLabel(video)"> · </span>
-                  <span v-if="selectedDanmakuLabel(video)">{{ selectedDanmakuLabel(video) }}</span>
-                  <span
-                    v-if="(video.author || selectedDanmakuLabel(video)) && selectedPartLabel(video.bvid)"
-                  >
-                    ·
-                  </span>
-                  <span v-if="selectedPartLabel(video.bvid)">{{ selectedPartLabel(video.bvid) }}</span>
-                  <span v-if="isBvidMerged(video.bvid)" class="dm-selected-chip-merged">已合并</span>
-                </div>
-              </div>
-              <button
-                type="button"
-                class="dm-selected-chip-remove"
-                title="取消选择"
-                @click.stop="onRemoveSelected(video.bvid)"
-              >
-                ×
-              </button>
-            </div>
-          </div>
-          <div v-else-if="hasSelection" class="dm-selected-empty-hint">
-            已选内容来自分 P 勾选，可继续搜索追加更多视频
           </div>
         </div>
       </div>
@@ -857,6 +855,7 @@ export default Vue.extend({
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  flex-shrink: 0;
 }
 
 .dm-selected-summary {
@@ -996,11 +995,6 @@ export default Vue.extend({
 .dm-selected-chip-remove:hover {
   color: #ff4d4f;
   background: rgba(255, 77, 79, 0.08);
-}
-
-.dm-selected-empty-hint {
-  font-size: 12px;
-  color: var(--text3, #999);
 }
 
 html[data-dark-theme='true'] .dm-selected-chip,
