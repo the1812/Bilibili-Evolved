@@ -1118,25 +1118,29 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         }
         page.selected = selected
 
-        // 分P勾选驱动父级已选：有勾选则加入，全无则移除
-        const anySelected = pages.some(item => item.selected)
-        if (anySelected && !searchState.selectedBvids.includes(bvid)) {
-          searchState.selectedBvids = [...searchState.selectedBvids, bvid]
+        // 分P勾选不改父勾选；仅缓存摘要供底部已选区展示
+        if (pages.some(item => item.selected)) {
           const video = searchState.results.find(item => item.bvid === bvid)
           if (video) {
             rememberSelectedVideos([video])
           }
-        } else if (!anySelected) {
-          searchState.selectedBvids = searchState.selectedBvids.filter(id => id !== bvid)
         }
-        syncSelectedVideoCache(searchState.selectedBvids)
+
+        // 父已勾选时，分P不再全选则取消父勾选
+        if (
+          searchState.selectedBvids.includes(bvid) &&
+          !pages.every(item => item.selected)
+        ) {
+          searchState.selectedBvids = searchState.selectedBvids.filter(id => id !== bvid)
+          syncSelectedVideoCache(searchState.selectedBvids)
+        }
 
         if (searchState.partModeEnabled[bvid]) {
           applyPartModeOffsets(bvid, true)
         } else {
           syncExpandedPagesToVm(bvid)
         }
-        // 回写 selectedBvids / selectedVideos，保证父勾选与底部已选即时更新
+        // 回写 expandedPages / selectedVideos，父勾选状态保持不变
         syncSearchVm()
       },
     )
@@ -1189,17 +1193,13 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       pages.forEach(page => {
         page.selected = select
       })
-      if (select && !searchState.selectedBvids.includes(bvid)) {
-        searchState.selectedBvids = [...searchState.selectedBvids, bvid]
+      // 全选/取消分P 不改父勾选
+      if (select) {
         const video = searchState.results.find(item => item.bvid === bvid)
         if (video) {
           rememberSelectedVideos([video])
         }
       }
-      if (!select) {
-        searchState.selectedBvids = searchState.selectedBvids.filter(id => id !== bvid)
-      }
-      syncSelectedVideoCache(searchState.selectedBvids)
       if (searchState.partModeEnabled[bvid]) {
         applyPartModeOffsets(bvid, true)
       } else {
