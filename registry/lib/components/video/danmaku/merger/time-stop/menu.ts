@@ -387,7 +387,7 @@ export const resyncTimeStopTipAtPointer = (): void => {
     clientX: lastPointerX,
     clientY: lastPointerY,
     target: document.elementFromPoint(lastPointerX, lastPointerY),
-  } as MouseEvent)
+  } as unknown as MouseEvent)
 }
 
 /**

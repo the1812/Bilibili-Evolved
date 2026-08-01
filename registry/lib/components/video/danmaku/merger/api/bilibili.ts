@@ -244,12 +244,15 @@ export const fetchDanmakuForMerge = async (
 
   if (!videoGone && videoId) {
     const availability = await checkVideoAvailable(videoId)
-    if (!availability.ok) {
+    if (availability.ok === false) {
       videoGone = true
       goneMessage = availability.message
-    } else if (aid == null && (availability.view as { aid?: number }).aid != null) {
-      // 可从 view 补 aid，提升 protobuf 成功率
-      options.aid = (availability.view as { aid?: number }).aid
+    } else {
+      const viewAid = (availability.view as { aid?: number }).aid
+      if (aid == null && viewAid != null) {
+        // 可从 view 补 aid，提升 protobuf 成功率
+        options.aid = viewAid
+      }
     }
   }
 

@@ -122,6 +122,10 @@ export interface MergerBatchMergeItem {
   offset?: number
   /** 为 true 时表示仅勾选整 BV、需 runtime 拉取 view / pagelist */
   fetchRequired?: boolean
+  /** 源 avid，protobuf 兜底时可选 */
+  aid?: number | string
+  /** 拉取/可用性提示，写入管理面板 */
+  fetchNotice?: string
 }
 
 // ── Vue emit 事件名常量（Wave 2 统一引用，避免字符串漂移）──────
