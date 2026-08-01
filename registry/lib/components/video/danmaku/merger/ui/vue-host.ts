@@ -365,7 +365,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     Vue.set(data, 'sortMode', searchState.sortMode)
     Vue.set(data, 'errorMessage', searchState.errorMessage)
     Vue.set(data, 'hasMore', searchState.hasMore)
-    Vue.set(data, 'searchInput', searchState.keyword)
+    // 不在这里写 searchInput：输入框由用户编辑，避免同步时被预填标题冲掉
   }
 
   const syncManagerVm = () => {
@@ -947,6 +947,10 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       // 每次打开都按当前分 P / 当前视频标题刷新预填
       searchState.keyword = getInitialKeyword()
       syncSearchVm()
+      // 仅打开瞬间写入输入框；之后用户改词不再被 host 覆盖
+      if (searchVm) {
+        Vue.set(searchVm.$data as Record<string, unknown>, 'searchInput', searchState.keyword)
+      }
     },
     openManagerModal() {
       if (!managerVm) {
@@ -992,6 +996,8 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       syncSearchVm()
     })
     vm.$on(MERGER_MODAL_EVENTS.SEARCH, ({ keyword, page }: { keyword: string; page?: number }) => {
+      // 记录用户实际搜索词，避免后续同步仍拿页面原标题
+      searchState.keyword = keyword
       doSearch(keyword, page || 1, false)
     })
     vm.$on(
@@ -1366,10 +1372,16 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   }
 
   const handlePartChange = () => {
-    // 分 P 标题可能稍后才写入 DOM，短延迟后刷新预填
+    // 弹窗打开时用户可能正在改搜索词，不覆盖输入框
+    if (searchState.visible) {
+      return
+    }
+    // 分 P 标题可能稍后才写入 DOM，短延迟后只更新下次打开用的预填
     const applyKeyword = () => {
+      if (searchState.visible) {
+        return
+      }
       searchState.keyword = getInitialKeyword()
-      syncSearchVm()
     }
     applyKeyword()
     window.setTimeout(applyKeyword, 300)

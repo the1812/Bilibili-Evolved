@@ -356,9 +356,7 @@ export default Vue.extend({
     },
   },
   watch: {
-    keyword(value: string) {
-      this.searchInput = value
-    },
+    // 不再监听 keyword 回写 searchInput，避免搜索结果同步时把用户输入冲成原标题
     sortMode(value: SortMode) {
       if (this.localSortMode !== value) {
         this.localSortMode = value
