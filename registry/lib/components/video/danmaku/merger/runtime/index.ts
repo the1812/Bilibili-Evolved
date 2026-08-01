@@ -616,13 +616,22 @@ export const initDanmakuMerger = (): MergerCleanup => {
         activeViewCid: engine.activeViewCid,
         memorySources: allSources.length,
         activeSources: activeMap?.size || 0,
-        sourceMetas: allSources.map(s => ({
-          id: s.id,
-          cid: s.cid,
-          viewCid: s.viewCid,
-          count: s.count,
-          offset: s.offset,
-        })),
+        sourceMetas: allSources.map(s => {
+          const meta = s as {
+            id?: unknown
+            cid?: unknown
+            viewCid?: unknown
+            count?: unknown
+            offset?: unknown
+          }
+          return {
+            id: meta.id,
+            cid: meta.cid,
+            viewCid: meta.viewCid,
+            count: meta.count,
+            offset: meta.offset,
+          }
+        }),
         lastSyncResult: engine.lastSyncResult,
         mergedListLen,
         badge: !!document.querySelector('#dm-merger-count'),

@@ -52,6 +52,8 @@ export interface MergerVueHostDeps {
     updateSource: (id: string, updates: Record<string, unknown>) => void
     /** 偏移写回后立刻重刷当前进度弹幕 */
     applyOffsetAndReshow?: (id: string, offset: number) => void
+    /** 当前观看分 P 的 cid，切 P 时可能比页面 cid 更及时 */
+    activeViewCid?: string | null
     sources?: Map<string, { list: Array<{ time: number; text: string }>; meta: MergerEngineSource }>
   }
   api: {
