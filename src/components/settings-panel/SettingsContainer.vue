@@ -72,6 +72,10 @@ export default {
       this.widgetsOpened = false
       this.settingsOpened = true
     })
+    window.addEventListener('blur', this.handleWindowBlur)
+  },
+  beforeDestroy() {
+    window.removeEventListener('blur', this.handleWindowBlur)
   },
   methods: {
     theWorld() {
@@ -97,6 +101,10 @@ export default {
       if (!(popup?.loaded ?? true)) {
         popup.loaded = true
       }
+    },
+    handleWindowBlur() {
+      this.settingsOpened = false
+      this.widgetsOpened = false
     },
   },
 }
