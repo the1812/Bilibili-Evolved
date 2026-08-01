@@ -187,8 +187,10 @@ export const initDanmakuMerger = (): MergerCleanup => {
           return
         }
         const oldOffset = Number(source.meta.offset) || 0
+        // 偏移只保留 1 位小数，避免浮点尾巴写进状态
+        const nextOffset = Math.round((oldOffset + delta) * 10) / 10
         // updateSource 内会 rebuildList + saveState
-        engine.updateSource(sourceId, { offset: oldOffset + delta })
+        engine.updateSource(sourceId, { offset: nextOffset })
         document.dispatchEvent(new CustomEvent('dm-sources-updated'))
       } catch (err) {
         dmWarn('时停写回偏移失败', err)

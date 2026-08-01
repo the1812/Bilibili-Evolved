@@ -286,14 +286,46 @@ const resumeElementMotion = (el: HTMLElement, prevPlayState: string): void => {
   el.style.animationPlayState = prevPlayState
 }
 
-/** 读取屏幕矩形 */
-const readFreezeRect = (el: HTMLElement): PinnedDanmakuRef['freezeRect'] => {
+/** 读取元素屏幕矩形（仅取样瞬间用） */
+const readScreenRect = (el: HTMLElement): PinnedDanmakuRef['freezeRect'] => {
   const rect = el.getBoundingClientRect()
   return {
     left: rect.left,
     top: rect.top,
     width: Math.max(rect.width, 1),
     height: Math.max(rect.height, 1),
+  }
+}
+
+/** 屏幕矩形 → 相对播放器画面的本地矩形 */
+const screenToLocalRect = (
+  screenRect: PinnedDanmakuRef['freezeRect'],
+  hostRect: DOMRect,
+): PinnedDanmakuRef['freezeRect'] => ({
+  left: screenRect.left - hostRect.left,
+  top: screenRect.top - hostRect.top,
+  width: screenRect.width,
+  height: screenRect.height,
+})
+
+/**
+ * 按钉住时 hostSize → 当前 host 尺寸等比映射本地矩形。
+ * F12 / 缩放 / 全屏切换时播放器盒会变，绝对像素会错位。
+ */
+const mapLocalRectToHost = (
+  localRect: PinnedDanmakuRef['freezeRect'],
+  hostSize: PinnedDanmakuRef['hostSize'],
+  hostRect: DOMRect,
+): PinnedDanmakuRef['freezeRect'] => {
+  const baseW = Math.max(hostSize.width, 1)
+  const baseH = Math.max(hostSize.height, 1)
+  const scaleX = hostRect.width / baseW
+  const scaleY = hostRect.height / baseH
+  return {
+    left: localRect.left * scaleX,
+    top: localRect.top * scaleY,
+    width: Math.max(localRect.width * scaleX, 1),
+    height: Math.max(localRect.height * scaleY, 1),
   }
 }
 
@@ -353,65 +385,41 @@ const removeOverlay = (): void => {
   document.querySelectorAll(`.${TIME_STOP_OVERLAY_CLASS}`).forEach(node => node.remove())
 }
 
-/** 屏幕坐标 → 覆盖层本地坐标（覆盖层本身是 fixed 对齐播放器） */
-const toOverlayLocalRect = (
-  overlay: HTMLElement,
-  screenRect: PinnedDanmakuRef['freezeRect'],
-): PinnedDanmakuRef['freezeRect'] => {
-  const hostRect = overlay.getBoundingClientRect()
-  return {
-    left: screenRect.left - hostRect.left,
-    top: screenRect.top - hostRect.top,
-    width: screenRect.width,
-    height: screenRect.height,
-  }
-}
-
-/** 屏幕矩形是否与播放器画面有交集 */
-const intersectsHost = (screenRect: PinnedDanmakuRef['freezeRect'], host: DOMRect): boolean => {
+/** 本地矩形是否仍在当前播放器画面内（含部分越界仍显示） */
+const isLocalVisibleInHost = (
+  localRect: PinnedDanmakuRef['freezeRect'],
+  hostRect: DOMRect,
+): boolean => {
   return !(
-    screenRect.left + screenRect.width <= host.left ||
-    screenRect.left >= host.right ||
-    screenRect.top + screenRect.height <= host.top ||
-    screenRect.top >= host.bottom
+    localRect.left + localRect.width <= 0 ||
+    localRect.left >= hostRect.width ||
+    localRect.top + localRect.height <= 0 ||
+    localRect.top >= hostRect.height
   )
 }
 
-/** freezeRect 现为屏幕坐标：是否仍与当前播放器画面相交 */
-const isScreenVisibleInHost = (
-  screenRect: PinnedDanmakuRef['freezeRect'],
-  host: DOMRect,
-): boolean => intersectsHost(screenRect, host)
-
-/** 把节点样式复制到覆盖层克隆，并按覆盖层本地坐标钉死 */
+/** 把节点样式复制到覆盖层克隆，并按本地坐标钉死（rect 已是 overlay 本地坐标） */
 const createFrozenClone = (
   sourceEl: HTMLElement,
-  rect: PinnedDanmakuRef['freezeRect'],
-  overlay: HTMLElement,
+  localRect: PinnedDanmakuRef['freezeRect'],
+  fontScale = 1,
 ): HTMLElement => {
   const clone = sourceEl.cloneNode(true) as HTMLElement
   clone.classList.add(TIME_STOP_CLONE_CLASS, TIME_STOP_ACTIVE_CLASS)
   clone.classList.remove(TIME_STOP_HIDDEN_CLASS)
   clone.style.cssText = ''
   const computed = getComputedStyle(sourceEl)
-  const local = toOverlayLocalRect(overlay, rect)
-  clone.style.position = 'absolute'
-  clone.style.left = `${local.left}px`
-  clone.style.top = `${local.top}px`
-  clone.style.width = `${local.width}px`
-  clone.style.height = `${local.height}px`
+  const baseFontPx = Number.parseFloat(computed.fontSize) || 25
+  applyLocalCloneRect(clone, localRect)
   clone.style.margin = '0'
-  clone.style.transform = 'none'
-  clone.style.animation = 'none'
-  clone.style.transition = 'none'
   clone.style.zIndex = '40'
-  // 允许悬停命中，以唤起 tip（点击仍可穿透到下层的由 menu 处理）
+  // 允许悬停命中，以唤起 tip
   clone.style.pointerEvents = 'auto'
   clone.style.cursor = 'default'
   clone.style.visibility = 'visible'
   clone.style.opacity = computed.opacity && computed.opacity !== '0' ? computed.opacity : '1'
   clone.style.color = computed.color
-  clone.style.fontSize = computed.fontSize
+  clone.style.fontSize = `${Math.max(baseFontPx * fontScale, 1)}px`
   clone.style.fontFamily = computed.fontFamily
   clone.style.fontWeight = computed.fontWeight
   clone.style.lineHeight = computed.lineHeight
@@ -422,6 +430,13 @@ const createFrozenClone = (
   ;['--opacity', '--fontSize', '--fontFamily', '--color'].forEach(key => {
     const val = sourceEl.style.getPropertyValue(key) || computed.getPropertyValue(key)
     if (val) {
+      if (key === '--fontSize') {
+        const n = Number.parseFloat(val)
+        if (Number.isFinite(n)) {
+          clone.style.setProperty(key, `${Math.max(n * fontScale, 1)}px`)
+          return
+        }
+      }
       clone.style.setProperty(key, val)
     }
   })
@@ -511,7 +526,9 @@ export const pinAndHighlight = (
 
   const pinned: PinnedDanmakuRef[] = []
   const elements = queryDanmakuElements()
-  const hostRect = overlay.getBoundingClientRect()
+  // 钉住瞬间的播放器盒：本地坐标与 hostSize 都基于它
+  const hostRect = syncOverlayToVideoHost(overlay)
+  const hostSize = { width: Math.max(hostRect.width, 1), height: Math.max(hostRect.height, 1) }
 
   elements.forEach(el => {
     if (!matchSourceElement(sourceId, el, deps)) {
@@ -521,8 +538,9 @@ export const pinAndHighlight = (
     // 关键顺序：先读几何（含 transform 位移）→ 再 pause → 再克隆
     // 禁止在取样前 animation:none，否则滚动弹幕会瞬间回弹导致漂移
     const prevStyle = backupPrevStyle(el)
-    const screenRect = readFreezeRect(el)
-    if (!intersectsHost(screenRect, hostRect)) {
+    const screenRect = readScreenRect(el)
+    const localRect = screenToLocalRect(screenRect, hostRect)
+    if (!isLocalVisibleInHost(localRect, hostRect)) {
       el.classList.add(TIME_STOP_HIDDEN_CLASS)
       return
     }
@@ -530,9 +548,10 @@ export const pinAndHighlight = (
     pauseElementMotion(el)
 
     const dmid = readDmidFromElement(el) || `text:${sourceId}:${pinned.length}`
-    // freezeRect 存屏幕坐标，维持/resize 时再换算到覆盖层
-    const freezeRect = { ...screenRect }
-    const clone = createFrozenClone(el, screenRect, overlay)
+    // freezeRect 存相对播放器本地坐标；resize 时按 hostSize 比例映射
+    const freezeRect = { ...localRect }
+    const baseFontSize = Number.parseFloat(getComputedStyle(el).fontSize) || freezeRect.height
+    const clone = createFrozenClone(el, freezeRect, 1)
     clone.dataset.dmMergerSourceId = String(sourceId)
     clone.dataset.dmMergerDmid = dmid
     overlay.appendChild(clone)
@@ -542,7 +561,15 @@ export const pinAndHighlight = (
     el.classList.add(TIME_STOP_HIDDEN_CLASS)
     el.classList.remove(TIME_STOP_ACTIVE_CLASS)
 
-    pinned.push({ dmid, el, prevStyle, freezeRect, cloneEl: clone })
+    pinned.push({
+      dmid,
+      el,
+      prevStyle,
+      freezeRect,
+      hostSize: { ...hostSize },
+      baseFontSize,
+      cloneEl: clone,
+    })
   })
 
   // 克隆完成后再压制原生引擎
@@ -580,9 +607,10 @@ export const hideOthers = (
 }
 
 /**
- * 时停维持：seek / 方向键后
+ * 时停维持：seek / 方向键 / resize 后
  * - 继续暂停原生引擎
- * - 覆盖层克隆按进入时坐标钉住
+ * - 覆盖层对齐当前播放器盒
+ * - 克隆按钉住时本地坐标 + hostSize 等比映射
  * - 原生层新冒出的弹幕全部隐藏
  */
 export const maintainTimeStopView = (
@@ -596,7 +624,7 @@ export const maintainTimeStopView = (
   const overlay = ensureOverlay()
   const nextPinned: PinnedDanmakuRef[] = []
 
-  // 每次维持先对齐覆盖层到当前播放器盒
+  // 每次维持先对齐覆盖层到当前播放器盒（F12 / 缩放会改盒）
   const hostRect = syncOverlayToVideoHost(overlay)
 
   pinned.forEach(ref => {
@@ -607,32 +635,41 @@ export const maintainTimeStopView = (
       hardFreezeNativeElement(ref.el)
     }
 
-    if (!isScreenVisibleInHost(ref.freezeRect, hostRect)) {
+    const hostSize = ref.hostSize || {
+      width: Math.max(hostRect.width, 1),
+      height: Math.max(hostRect.height, 1),
+    }
+    const local = mapLocalRectToHost(ref.freezeRect, hostSize, hostRect)
+    if (!isLocalVisibleInHost(local, hostRect)) {
       ref.cloneEl?.remove()
-      nextPinned.push({ ...ref, cloneEl: undefined })
+      nextPinned.push({ ...ref, hostSize, cloneEl: undefined })
       return
     }
 
-    const local = toOverlayLocalRect(overlay, ref.freezeRect)
+    const fontScale = hostRect.height / Math.max(hostSize.height, 1)
+    const baseFontSize = ref.baseFontSize || local.height
     let clone = ref.cloneEl
     if (!clone || !clone.isConnected) {
       const sourceForStyle = ref.el.isConnected ? ref.el : null
       if (sourceForStyle) {
-        clone = createFrozenClone(sourceForStyle, ref.freezeRect, overlay)
+        clone = createFrozenClone(sourceForStyle, local, fontScale)
       } else {
         clone = document.createElement('div')
         clone.className = `${TIME_STOP_CLONE_CLASS} ${TIME_STOP_ACTIVE_CLASS}`
         applyLocalCloneRect(clone, local)
+        clone.style.fontSize = `${Math.max(baseFontSize * fontScale, 1)}px`
       }
       clone.dataset.dmMergerSourceId = clone.dataset.dmMergerSourceId || ''
       overlay.appendChild(clone)
     } else {
       applyLocalCloneRect(clone, local)
       clone.classList.add(TIME_STOP_CLONE_CLASS, TIME_STOP_ACTIVE_CLASS)
+      // 始终按钉住时 baseFontSize * 当前高度比，避免累乘漂移
+      clone.style.fontSize = `${Math.max(baseFontSize * fontScale, 1)}px`
     }
     clone.style.pointerEvents = 'auto'
 
-    nextPinned.push({ ...ref, cloneEl: clone })
+    nextPinned.push({ ...ref, hostSize, baseFontSize, cloneEl: clone })
   })
 
   // 原生层一切未定格节点隐藏
@@ -673,6 +710,8 @@ export const clearView = (pinned?: PinnedDanmakuRef[]): void => {
               animationPlayState: '',
             },
             freezeRect: { left: 0, top: 0, width: 0, height: 0 },
+            hostSize: { width: 1, height: 1 },
+            baseFontSize: 25,
             cloneEl: undefined,
           }))
 

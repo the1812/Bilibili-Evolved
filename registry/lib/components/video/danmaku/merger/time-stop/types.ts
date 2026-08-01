@@ -19,13 +19,23 @@ export interface PinnedDanmakuRef {
     transition: string
     animationPlayState: string
   }
-  /** 进入时停时的屏幕坐标，seek 后仍按此定格 */
+  /**
+   * 进入时停时相对播放器画面的本地坐标（非屏幕坐标）。
+   * resize / 打开 F12 导致画面盒变化时，按 hostSize 比例映射。
+   */
   freezeRect: {
     left: number
     top: number
     width: number
     height: number
   }
+  /** 钉住时播放器画面宽高，用于 resize 后等比还原 */
+  hostSize: {
+    width: number
+    height: number
+  }
+  /** 钉住时字号（px），resize 后按高度比例缩放 */
+  baseFontSize: number
   /** 覆盖层克隆节点：避免 DanmakuX seek/clear 冲掉定格画面 */
   cloneEl?: HTMLElement
 }

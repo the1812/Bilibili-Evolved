@@ -22,8 +22,13 @@ import { clearView, hideOthers, maintainTimeStopView, pinAndHighlight } from './
 /** 时停维持定时器 / 观察器，seek 时继续钉住并隐藏无关弹幕 */
 let maintainTimer = 0
 let maintainRaf = 0
+let resizeTimer = 0
 let maintainObserver: MutationObserver | null = null
+let hostResizeObserver: ResizeObserver | null = null
 let maintainDeps: TimeStopDeps | null = null
+
+/** 偏移秒数只保留 1 位小数，避免 27.1679… 这种浮点尾巴 */
+const roundOffsetSeconds = (value: number): number => Math.round(value * 10) / 10
 
 const stopTimeStopMaintain = (): void => {
   if (maintainTimer) {
@@ -34,11 +39,19 @@ const stopTimeStopMaintain = (): void => {
     window.cancelAnimationFrame(maintainRaf)
     maintainRaf = 0
   }
+  if (resizeTimer) {
+    window.clearTimeout(resizeTimer)
+    resizeTimer = 0
+  }
   maintainObserver?.disconnect()
   maintainObserver = null
+  hostResizeObserver?.disconnect()
+  hostResizeObserver = null
   document.removeEventListener('seeking', onSeekLike, true)
   document.removeEventListener('seeked', onSeekLike, true)
   window.removeEventListener('keydown', onArrowSeekKey, true)
+  window.removeEventListener('resize', onViewportResize, true)
+  window.visualViewport?.removeEventListener('resize', onViewportResize)
   maintainDeps = null
 }
 
@@ -50,6 +63,8 @@ const runMaintainOnce = (): void => {
   const nextPinned = maintainTimeStopView(s.sourceId, s.pinned, maintainDeps)
   // 仅更新 pinned 列表，t0 不变
   setTimeStopActive({ ...s, pinned: nextPinned })
+  // resize 后 clone 位置变了：若 tip 正开着，跟一次
+  attachForcedTipToClones(s.sourceId)
 }
 
 const scheduleMaintain = (): void => {
@@ -95,6 +110,26 @@ const onArrowSeekKey = (event: KeyboardEvent): void => {
   onSeekLike()
 }
 
+/** 视口 / 播放器盒变化：F12、缩放、分屏都会触发 */
+const onViewportResize = (): void => {
+  if (!isTimeStopActive()) {
+    return
+  }
+  window.clearTimeout(resizeTimer)
+  resizeTimer = window.setTimeout(() => {
+    if (!isTimeStopActive()) {
+      return
+    }
+    runMaintainOnce()
+    // 布局可能连跳两帧（开发者工具抽屉动画）
+    window.requestAnimationFrame(() => {
+      if (isTimeStopActive()) {
+        runMaintainOnce()
+      }
+    })
+  }, 50)
+}
+
 const startTimeStopMaintain = (deps: TimeStopDeps): void => {
   stopTimeStopMaintain()
   maintainDeps = deps
@@ -102,6 +137,8 @@ const startTimeStopMaintain = (deps: TimeStopDeps): void => {
   document.addEventListener('seeked', onSeekLike, true)
   // 不监听 timeupdate（过于频繁）
   window.addEventListener('keydown', onArrowSeekKey, true)
+  window.addEventListener('resize', onViewportResize, true)
+  window.visualViewport?.addEventListener('resize', onViewportResize)
   maintainObserver = new MutationObserver(() => {
     scheduleMaintain()
   })
@@ -109,6 +146,17 @@ const startTimeStopMaintain = (deps: TimeStopDeps): void => {
     document.querySelector('.bpx-player-row-dm-wrap, .bpx-player-dm-mask-wrap, .bpx-player-video-area') ||
     document.body
   maintainObserver.observe(root, { childList: true, subtree: true })
+  // 播放器盒本身尺寸变化（F12 改布局、网页全屏切换）
+  if (typeof ResizeObserver !== 'undefined') {
+    hostResizeObserver = new ResizeObserver(() => {
+      onViewportResize()
+    })
+    const host =
+      document.querySelector(
+        '.bpx-player-video-area, .bpx-player-container, #bilibili-player, .player-wrap',
+      ) || document.documentElement
+    hostResizeObserver.observe(host)
+  }
   // 低频兜底即可
   maintainTimer = window.setInterval(() => {
     if (!isTimeStopActive()) {
@@ -118,7 +166,6 @@ const startTimeStopMaintain = (deps: TimeStopDeps): void => {
     runMaintainOnce()
   }, 500)
 }
-
 
 /**
  * 进入时停：钉住 sourceId 弹幕并隐藏其余。
@@ -163,7 +210,7 @@ export const releaseTimeStop = async (deps: TimeStopDeps): Promise<void> => {
   }
 
   const t1 = deps.getCurrentTime()
-  const delta = t1 - s.t0
+  const delta = roundOffsetSeconds(t1 - s.t0)
   const { sourceId } = s
 
   stopTimeStopMaintain()
@@ -188,7 +235,8 @@ export const releaseTimeStop = async (deps: TimeStopDeps): Promise<void> => {
     }
   }
 
-  deps.toast(`已恢复，源偏移 ${delta >= 0 ? '+' : ''}${delta.toFixed(1)} 秒`, 'success')
+  const sign = delta > 0 ? '+' : ''
+  deps.toast(`已恢复，源偏移 ${sign}${delta.toFixed(1)} 秒`, 'success')
 }
 
 /**
