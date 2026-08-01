@@ -1496,6 +1496,20 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     previewState.visible = false
     // 换视频或分 P 后，清空旧预填，下次打开再读新标题
     searchState.keyword = ''
+    // 清空搜索已选与管理页缓存，避免稍后再看切集后仍显示上一集合并源
+    searchState.selectedBvids = []
+    searchState.selectedVideos = {}
+    searchState.expandedBvids = {}
+    searchState.expandedPages = {}
+    searchState.results = []
+    searchState.errorMessage = ''
+    managerState.groups = []
+    managerState.selectedIds = []
+    managerState.expandedGroups = []
+    previewState.items = []
+    previewState.fullList = []
+    previewState.displayedCount = 0
+    previewState.title = ''
     syncSearchVm()
     syncManagerVm()
     syncPreviewVm()

@@ -39,6 +39,9 @@ let mergerVideoChangeHandler: ((ids?: { aid: string; cid: string }) => void) | n
 let mergerBadgeClickHandler: ((event: MouseEvent) => void) | null = null
 let mergerLastVideoId: string | null = null
 let mergerLastCid: string | null = null
+let mergerLastAid: string | null = null
+/** 稍后再看 SPA 切集时 bvid 可能晚于 cid 更新，延迟复核换视频 */
+let mergerVideoRecheckTimer = 0
 
 export const getMergerUiHost = (): MergerUiHost | null => mergerUiHost
 
@@ -350,18 +353,58 @@ export const initDanmakuMerger = (): MergerCleanup => {
     deleteStorageKey: key => getStorage().delete(key),
   })
 
+  const normalizeId = (value: unknown): string | null => {
+    if (value == null || Array.isArray(value)) {
+      return null
+    }
+    const text = String(value).trim()
+    return text || null
+  }
+
+  /** 稍后再看列表页：URL bvid 可能晚于 unsafeWindow.aid/cid 更新 */
+  const readPageAid = (ids?: { aid?: unknown; cid?: unknown }): string | null =>
+    normalizeId(ids?.aid) || normalizeId((unsafeWindow as { aid?: unknown }).aid)
+
+  const readPageCid = (ids?: { aid?: unknown; cid?: unknown }): string | null =>
+    normalizeId(ids?.cid) || getCurrentPageCid()
+
+  const clearVideoRecheck = () => {
+    if (mergerVideoRecheckTimer) {
+      window.clearTimeout(mergerVideoRecheckTimer)
+      mergerVideoRecheckTimer = 0
+    }
+  }
+
+  const applyVideoChanged = (videoId: string, reason: string) => {
+    dmLog('视频切换，清空合并源与管理页', {
+      reason,
+      from: mergerLastVideoId,
+      to: videoId,
+      fromAid: mergerLastAid,
+    })
+    discardTimeStop()
+    engine.reset()
+    // 强制清空管理页缓存，避免稍后再看切集后仍显示上一集源
+    mergerVueHostCtrl?.handleVideoChange()
+    mergerLastCid = null
+  }
+
   mergerVideoChangeHandler = ids => {
+    clearVideoRecheck()
     const videoId = engine.getCurrentVideoId()
-    const cid = ids?.cid != null && !Array.isArray(ids.cid) ? String(ids.cid) : null
-    const videoChanged = mergerLastVideoId !== null && mergerLastVideoId !== videoId
+    const aid = readPageAid(ids)
+    const cid = readPageCid(ids)
+
+    // bvid 变化，或 aid 变化（稍后再看列表页 bvid 可能尚未更新）都算换视频
+    const videoIdChanged = mergerLastVideoId !== null && mergerLastVideoId !== videoId
+    const aidChanged =
+      aid !== null && mergerLastAid !== null && mergerLastAid !== aid && !/^0+$/.test(aid)
+    const videoChanged = videoIdChanged || aidChanged
     const partChanged =
       !videoChanged && cid !== null && mergerLastCid !== null && mergerLastCid !== cid
 
     if (videoChanged) {
-      discardTimeStop()
-      engine.reset()
-      mergerVueHostCtrl?.handleVideoChange()
-      mergerLastCid = null
+      applyVideoChanged(videoId, videoIdChanged ? 'bvid' : 'aid')
     } else if (partChanged && cid !== null) {
       discardTimeStop()
       dmLog('分P切换', { from: mergerLastCid, to: cid })
@@ -369,15 +412,55 @@ export const initDanmakuMerger = (): MergerCleanup => {
       schedulePartResync(cid)
       // 分 P 切换时刷新搜索预填，不关闭已打开的搜索弹窗
       mergerVueHostCtrl?.handlePartChange()
+
+      // 稍后再看：先到 cid 后到 bvid 时，延迟复核是否其实已换视频
+      const snapshotCid = cid
+      const snapshotAid = aid
+      const snapshotVideoId = videoId
+      mergerVideoRecheckTimer = window.setTimeout(() => {
+        mergerVideoRecheckTimer = 0
+        const laterVideoId = engine.getCurrentVideoId()
+        const laterAid = readPageAid()
+        const laterCid = readPageCid()
+        const lateVideoIdChanged = laterVideoId !== snapshotVideoId
+        const lateAidChanged =
+          laterAid !== null &&
+          snapshotAid !== null &&
+          laterAid !== snapshotAid &&
+          !/^0+$/.test(laterAid)
+        if (lateVideoIdChanged || lateAidChanged) {
+          applyVideoChanged(laterVideoId, lateVideoIdChanged ? 'late-bvid' : 'late-aid')
+          mergerLastVideoId = laterVideoId
+          if (laterAid) {
+            mergerLastAid = laterAid
+          }
+          if (laterCid) {
+            mergerLastCid = laterCid
+            engine.setActiveViewCid(laterCid)
+          }
+          if (!engine.sources?.size) {
+            tryRestoreSession().catch(err => dmLog('延迟换视频后恢复异常', err))
+          }
+          return
+        }
+        // 仍是同分P路径：若 cid 又变了再同步一次
+        if (laterCid && laterCid !== snapshotCid) {
+          mergerVideoChangeHandler?.({ aid: laterAid || '', cid: laterCid })
+        }
+      }, 400)
     }
 
     mergerLastVideoId = videoId
+    if (aid) {
+      mergerLastAid = aid
+    }
     if (cid !== null) {
       mergerLastCid = cid
       engine.setActiveViewCid(cid)
     } else {
       const pageCid = getCurrentPageCid()
       if (pageCid) {
+        mergerLastCid = pageCid
         engine.setActiveViewCid(pageCid)
       }
     }
@@ -492,6 +575,11 @@ export const initDanmakuMerger = (): MergerCleanup => {
     mergerVideoChangeHandler = null
     mergerLastVideoId = null
     mergerLastCid = null
+    mergerLastAid = null
+    if (mergerVideoRecheckTimer) {
+      window.clearTimeout(mergerVideoRecheckTimer)
+      mergerVideoRecheckTimer = 0
+    }
     engine.reset()
   }
 }
