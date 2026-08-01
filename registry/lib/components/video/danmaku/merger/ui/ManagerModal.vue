@@ -54,6 +54,13 @@
                 {{ group.bvid }}
               </a>
               <span>UP: {{ group.author || '未知' }} · {{ group.items.length }}个分P</span>
+              <span
+                v-if="groupOffsetCount(group) > 0"
+                class="dm-offset-badge dm-group-offset-badge"
+                :title="groupOffsetTitle(group)"
+              >
+                {{ groupOffsetLabel(group) }}
+              </span>
             </div>
           </div>
         </div>
@@ -63,6 +70,7 @@
             v-for="item in group.items"
             :key="item.id"
             class="dm-source-item"
+            :class="{ 'dm-source-item-offset': offsetValue(item) > 0 }"
             :data-source-id="item.id"
             :data-group="group.groupKey"
           >
@@ -87,6 +95,13 @@
                   @click.stop="onPreviewSource(item.id)"
                 >
                   {{ item.count }} 条弹幕
+                </span>
+                <span
+                  v-if="offsetValue(item) > 0"
+                  class="dm-offset-badge"
+                  :title="offsetBadgeTitle(item)"
+                >
+                  {{ offsetBadgeLabel(item) }}
                 </span>
                 <span
                   v-if="item.fetchMode === 'protobuf-fallback' || item.fetchNotice"
@@ -171,7 +186,12 @@
 <script lang="ts">
 import ModalShell from './shared/ModalShell.vue'
 import { normalizeHttpsUrl } from './shared/media-url'
-import { MANAGER_MODAL_EVENTS, type MergerManagerGroup, type MergerOffsetType } from './contracts'
+import {
+  MANAGER_MODAL_EVENTS,
+  type MergerManagerGroup,
+  type MergerManagerSourceItem,
+  type MergerOffsetType,
+} from './contracts'
 
 export default Vue.extend({
   name: 'ManagerModal',
@@ -236,6 +256,41 @@ export default Vue.extend({
     offsetValue(item: MergerManagerSourceItem): number {
       // 与时停写回一致：展示也只保留 1 位小数
       return Math.round(Math.abs(item.offset ?? 0) * 10) / 10
+    },
+    offsetBadgeLabel(item: MergerManagerSourceItem): string {
+      const seconds = this.offsetValue(item)
+      if (seconds <= 0) {
+        return ''
+      }
+      const dir = this.offsetType(item) === -1 ? '提前' : '推迟'
+      return `${dir} ${seconds.toFixed(1)}s`
+    },
+    offsetBadgeTitle(item: MergerManagerSourceItem): string {
+      const label = this.offsetBadgeLabel(item)
+      return label ? `该分P已设置时间偏移：${label}` : ''
+    },
+    groupOffsetItems(group: MergerManagerGroup): MergerManagerSourceItem[] {
+      return group.items.filter(item => this.offsetValue(item) > 0)
+    },
+    groupOffsetCount(group: MergerManagerGroup): number {
+      return this.groupOffsetItems(group).length
+    },
+    groupOffsetLabel(group: MergerManagerGroup): string {
+      const items = this.groupOffsetItems(group)
+      if (!items.length) {
+        return ''
+      }
+      if (items.length === 1) {
+        return this.offsetBadgeLabel(items[0])
+      }
+      return `已偏移 ${items.length} 项`
+    },
+    groupOffsetTitle(group: MergerManagerGroup): string {
+      const items = this.groupOffsetItems(group)
+      if (!items.length) {
+        return ''
+      }
+      return items.map(item => `${item.title || item.id}: ${this.offsetBadgeLabel(item)}`).join('\n')
     },
     emitSelectionChange(nextIds: string[]) {
       this.$emit(MANAGER_MODAL_EVENTS.SELECTION_CHANGE, { selectedIds: nextIds })
@@ -413,6 +468,28 @@ export default Vue.extend({
   padding: 8px 12px;
   align-items: center;
   padding-left: 42px;
+}
+
+.dm-source-item-offset {
+  background: rgba(0, 174, 236, 0.06);
+}
+
+.dm-offset-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 6px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #00aeec;
+  background: rgba(0, 174, 236, 0.14);
+  white-space: nowrap;
+}
+
+.dm-group-offset-badge {
+  margin-left: 2px;
 }
 
 .dm-item-checkbox {
