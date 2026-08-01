@@ -156,6 +156,23 @@
             P{{ page.page }} - {{ page.part }}
           </div>
           <div
+            v-if="page.merged"
+            class="dm-page-merged-badge"
+            style="
+              display: inline-block;
+              margin-top: 4px;
+              padding: 0 6px;
+              border-radius: 3px;
+              background: rgba(0, 174, 236, 0.14);
+              color: #00aeec;
+              font-size: 11px;
+              font-weight: 600;
+              line-height: 18px;
+            "
+          >
+            已合并
+          </div>
+          <div
             style="
               font-size: 12px;
               color: var(--text2, #555);

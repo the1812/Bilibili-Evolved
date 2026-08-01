@@ -107,6 +107,8 @@ export interface PagePartListRow extends MergerPagePart {
   partDurationText?: string
   danmakuCount?: number
   danmakuError?: boolean
+  /** 该分 P 是否已在当前页合并源中 */
+  merged?: boolean
 }
 
 /** 批量合并单条任务（`MergerModal` emit `batch-merge` 载荷元素） */

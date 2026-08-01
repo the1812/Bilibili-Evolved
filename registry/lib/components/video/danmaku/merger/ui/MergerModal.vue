@@ -84,6 +84,8 @@
             :checked="isBvidSelected(video.bvid)"
             :expanded="isBvidExpanded(video.bvid)"
             :details-loading="isDetailsLoading(video.bvid)"
+            :merged="isBvidMerged(video.bvid)"
+            :merged-count="mergedCountOf(video.bvid)"
             @toggle-select="onToggleBvidSelect(video)"
             @open-video="onOpenVideo(video.bvid)"
             @toggle-expand="onToggleExpand(video.bvid)"
@@ -172,8 +174,16 @@
               <div class="dm-selected-chip-meta">
                 <div class="dm-selected-chip-title">{{ plainTitle(video) }}</div>
                 <div class="dm-selected-chip-sub">
-                  {{ video.bvid }}
-                  <span v-if="selectedPartLabel(video.bvid)"> · {{ selectedPartLabel(video.bvid) }}</span>
+                  <span v-if="video.author">UP: {{ video.author }}</span>
+                  <span v-if="video.author && selectedDanmakuLabel(video)"> · </span>
+                  <span v-if="selectedDanmakuLabel(video)">{{ selectedDanmakuLabel(video) }}</span>
+                  <span
+                    v-if="(video.author || selectedDanmakuLabel(video)) && selectedPartLabel(video.bvid)"
+                  >
+                    ·
+                  </span>
+                  <span v-if="selectedPartLabel(video.bvid)">{{ selectedPartLabel(video.bvid) }}</span>
+                  <span v-if="isBvidMerged(video.bvid)" class="dm-selected-chip-merged">已合并</span>
                 </div>
               </div>
               <button
@@ -237,6 +247,10 @@ export default Vue.extend({
       selectedBvids: [] as string[],
       /** 跨搜索保留的已选视频摘要（由 vue-host 同步） */
       selectedVideos: [] as MergerSearchVideo[],
+      /** 已合并源 BV 列表（由 vue-host 同步） */
+      mergedBvids: [] as string[],
+      /** 各 BV 已合并源条数 */
+      mergedCountByBvid: {} as Record<string, number>,
       expandedBvids: {} as Record<string, boolean>,
       expandedPages: {} as Record<string, MergerPagePart[]>,
       sortMode: 'default' as SortMode,
@@ -486,6 +500,12 @@ export default Vue.extend({
     isBvidSelected(bvid: string): boolean {
       return this.selectedBvids.includes(bvid)
     },
+    isBvidMerged(bvid: string): boolean {
+      return this.mergedBvids.includes(bvid)
+    },
+    mergedCountOf(bvid: string): number {
+      return this.mergedCountByBvid[bvid] || 0
+    },
     isDetailsLoading(bvid: string): boolean {
       return this.isBvidExpanded(bvid) && this.expandedPages[bvid] === undefined
     },
@@ -528,6 +548,25 @@ export default Vue.extend({
         return `全部分P ${selectedPages.length}`
       }
       return `分P ${selectedPages.length}`
+    },
+    /** 已选卡片副标题：优先展示已加载分P弹幕数合计，否则用搜索结果弹幕量 */
+    selectedDanmakuLabel(video: MergerSearchVideo): string {
+      const pages = this.expandedPages[video.bvid]
+      if (pages?.length) {
+        const selected = pages.filter(page => page.selected)
+        const targets = selected.length ? selected : pages
+        const known = targets
+          .map(page => page.danmakuCount)
+          .filter((n): n is number => typeof n === 'number' && n >= 0)
+        if (known.length) {
+          const sum = known.reduce((a, b) => a + b, 0)
+          return `${sum} 条弹幕`
+        }
+      }
+      if (typeof video.video_review === 'number' && video.video_review >= 0) {
+        return `${video.video_review} 条弹幕`
+      }
+      return ''
     },
     onRemoveSelected(bvid: string) {
       const next = this.selectedBvids.filter(id => id !== bvid)
@@ -875,6 +914,16 @@ export default Vue.extend({
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.dm-selected-chip-merged {
+  margin-left: 4px;
+  padding: 0 5px;
+  border-radius: 8px;
+  background: rgba(0, 174, 236, 0.14);
+  color: #00aeec;
+  font-size: 10px;
+  line-height: 16px;
 }
 
 .dm-selected-chip-remove {

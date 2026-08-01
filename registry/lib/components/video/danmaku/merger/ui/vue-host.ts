@@ -267,6 +267,56 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     pic: normalizeHttpsUrl(video.pic),
   })
 
+  /** 当前已合并源的 BV 集合（搜索列表打标用） */
+  const getMergedBvidSet = (): Set<string> => {
+    const set = new Set<string>()
+    deps.engine.getSources().forEach(source => {
+      const bvid = deps.resolveSourceBvid(source) || source.bvid || ''
+      if (bvid) {
+        set.add(String(bvid))
+      }
+    })
+    return set
+  }
+
+  /** 当前已合并源的 cid 集合（分 P 行打标用） */
+  const getMergedCidSet = (): Set<string> => {
+    const set = new Set<string>()
+    deps.engine.getSources().forEach(source => {
+      if (source.cid != null && source.cid !== '') {
+        set.add(String(source.cid))
+      }
+      // id 形如 BVxxx_cid
+      const fromId = String(source.id || '').match(/_(\d+)$/)
+      if (fromId?.[1]) {
+        set.add(fromId[1])
+      }
+    })
+    return set
+  }
+
+  /** 已合并源条数按 BV 汇总，供搜索卡展示 */
+  const getMergedCountByBvid = (): Record<string, number> => {
+    const map: Record<string, number> = {}
+    deps.engine.getSources().forEach(source => {
+      const bvid = deps.resolveSourceBvid(source) || source.bvid || ''
+      if (!bvid) {
+        return
+      }
+      map[bvid] = (map[bvid] || 0) + 1
+    })
+    return map
+  }
+
+  /** 给分 P 行打上 merged 标记 */
+  const markMergedPages = (pages: PagePartListRow[]): PagePartListRow[] => {
+    const mergedCids = getMergedCidSet()
+    return pages.map(page => ({
+      ...page,
+      merged: mergedCids.has(String(page.cid)),
+    }))
+  }
+
   /** 记住已选视频摘要，换关键词后底部仍可查看/合并 */
   const rememberSelectedVideos = (videos: MergerSearchVideo[]): void => {
     videos.forEach(video => {
@@ -347,6 +397,13 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     if (!searchVm) {
       return
     }
+    // 源列表变化时，刷新已展开分P的 merged 标记
+    Object.keys(searchState.expandedPages).forEach(bvid => {
+      const pages = searchState.expandedPages[bvid]
+      if (pages?.length) {
+        searchState.expandedPages[bvid] = markMergedPages(pages)
+      }
+    })
     const data = searchVm.$data as Record<string, unknown>
     const currentResults = (data.results as MergerSearchVideo[]) || []
     const nextResults = searchState.results
@@ -365,6 +422,9 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     Vue.set(data, 'sortMode', searchState.sortMode)
     Vue.set(data, 'errorMessage', searchState.errorMessage)
     Vue.set(data, 'hasMore', searchState.hasMore)
+    // 已合并 BV 标记，供搜索列表与底部已选区展示
+    Vue.set(data, 'mergedBvids', Array.from(getMergedBvidSet()))
+    Vue.set(data, 'mergedCountByBvid', getMergedCountByBvid())
     // 不在这里写 searchInput：输入框由用户编辑，避免同步时被预填标题冲掉
   }
 
@@ -611,7 +671,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         }
       }),
     )
-    searchState.expandedPages[bvid] = [...pages]
+    searchState.expandedPages[bvid] = markMergedPages(pages)
     syncExpandedPagesToVm(bvid)
   }
 
@@ -628,7 +688,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           page.duration = sec
         }
       })
-      searchState.expandedPages[bvid] = [...pages]
+      searchState.expandedPages[bvid] = markMergedPages(pages)
       syncExpandedPagesToVm(bvid)
     } catch {
       // 忽略片长拉取失败
@@ -655,7 +715,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         searchState.partModeFields[bvid] = defaultPartModeFields(bvid, deps.loadPartModeState)
       }
 
-      searchState.expandedPages[bvid] = pages
+      searchState.expandedPages[bvid] = markMergedPages(pages)
       syncSearchVm()
 
       if (pages.length > 1) {
