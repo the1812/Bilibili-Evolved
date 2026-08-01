@@ -118,13 +118,15 @@ export default Vue.extend({
 }
 
 .dm-preview-content {
-  padding: 10px;
+  padding: 0;
   overflow-y: auto;
   flex: 1;
+  min-height: 0;
 }
 
 .dm-preview-table {
   width: 100%;
+  table-layout: fixed;
   border-collapse: collapse;
   font-size: 13px;
 }
@@ -133,22 +135,36 @@ export default Vue.extend({
   position: sticky;
   top: 0;
   background: var(--bg1, #fff);
-  box-shadow: 0 1px 0 #eee;
+  box-shadow: 0 1px 0 var(--line_regular, #eee);
   z-index: 1;
 }
 
-.dm-preview-sort-time {
+.dm-preview-sort-time,
+.dm-preview-time {
+  width: 72px;
+  box-sizing: border-box;
   text-align: left;
-  padding: 8px;
+  padding: 10px 12px;
   color: #00aeec;
-  width: 80px;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.dm-preview-sort-time {
   cursor: pointer;
   user-select: none;
 }
 
-.dm-preview-col-text {
+.dm-preview-col-text,
+.dm-preview-text {
+  width: auto;
+  box-sizing: border-box;
   text-align: left;
-  padding: 8px;
+  padding: 10px 12px 10px 8px;
+  vertical-align: top;
+}
+
+.dm-preview-col-text {
   color: var(--text3, #999);
 }
 
@@ -157,13 +173,10 @@ export default Vue.extend({
 }
 
 .dm-preview-time {
-  padding: 8px;
-  color: #00aeec;
   font-family: monospace;
 }
 
 .dm-preview-text {
-  padding: 8px;
   color: var(--text1, #222);
   word-break: break-all;
 }
