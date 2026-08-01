@@ -478,6 +478,9 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     return sources.filter(source => sourceMatchesViewCid(source, viewCid))
   }
 
+  /** 管理页 / 角标 / 汇总：只展示当前分 P 观看上下文的合并源 */
+  const getViewScopedSources = (): MergerEngineSource[] => getBadgeSources()
+
   const refreshBadge = () => {
     const sources = getBadgeSources()
     const totalCount = sources.reduce((acc, s) => acc + (s.count || 0), 0)
@@ -527,7 +530,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
 
   const refreshManagerGroups = () => {
     managerState.groups = buildManagerGroups(
-      deps.engine.getSources(),
+      getViewScopedSources(),
       deps.extractBvid,
       deps.resolveSourceBvid,
     )
@@ -1050,7 +1053,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       }
     },
     getSourceSummaries(): MergerSourceSummary[] {
-      return deps.engine.getSources().map(s => ({
+      return getViewScopedSources().map(s => ({
         bvid: deps.resolveSourceBvid(s),
         title: s.title || '',
         count: s.count || 0,
@@ -1059,7 +1062,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       }))
     },
     getTotalMergedCount(): number {
-      return deps.engine.getSources().reduce((acc, s) => acc + (s.count || 0), 0)
+      return getViewScopedSources().reduce((acc, s) => acc + (s.count || 0), 0)
     },
   }
 
@@ -1348,13 +1351,14 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     vm.$on(MANAGER_MODAL_EVENTS.CLEAR_ALL, async () => {
       const confirmed = await mergerConfirm(
         '清除全部',
-        '确定要移除当前视频所有已合并的弹幕吗？此操作不可撤销。',
+        '确定要移除当前分P所有已合并的弹幕吗？此操作不可撤销。',
       )
       if (!confirmed) {
         return
       }
-      deps.engine.getSources().forEach(s => deps.engine.removeSource(s.id))
-      mergerToast('已清除所有合并的弹幕', 'success')
+      const scoped = getViewScopedSources()
+      scoped.forEach(s => deps.engine.removeSource(s.id))
+      mergerToast(`已清除当前分P的 ${scoped.length} 个合并源`, 'success')
       refreshManagerGroups()
     })
     vm.$on(MANAGER_MODAL_EVENTS.ADD_MORE, () => {
@@ -1517,20 +1521,23 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   }
 
   const handlePartChange = () => {
-    // 弹窗打开时用户可能正在改搜索词，不覆盖输入框
-    if (searchState.visible) {
-      return
-    }
-    // 分 P 标题可能稍后才写入 DOM，短延迟后只更新下次打开用的预填
-    const applyKeyword = () => {
-      if (searchState.visible) {
-        return
+    // 切分 P：管理页/角标只保留当前分 P 源
+    managerState.selectedIds = []
+    managerState.expandedGroups = []
+    refreshManagerGroups()
+
+    // 搜索框：弹窗打开时不覆盖用户输入；关闭时刷新预填
+    if (!searchState.visible) {
+      const applyKeyword = () => {
+        if (searchState.visible) {
+          return
+        }
+        searchState.keyword = getInitialKeyword()
       }
-      searchState.keyword = getInitialKeyword()
+      applyKeyword()
+      window.setTimeout(applyKeyword, 300)
+      window.setTimeout(applyKeyword, 1000)
     }
-    applyKeyword()
-    window.setTimeout(applyKeyword, 300)
-    window.setTimeout(applyKeyword, 1000)
   }
 
   return {
