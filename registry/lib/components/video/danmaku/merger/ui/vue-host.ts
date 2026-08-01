@@ -50,6 +50,8 @@ export interface MergerVueHostDeps {
     getCurrentVideoId: () => string
     removeSource: (id: string) => void
     updateSource: (id: string, updates: Record<string, unknown>) => void
+    /** 偏移写回后立刻重刷当前进度弹幕 */
+    applyOffsetAndReshow?: (id: string, offset: number) => void
     sources?: Map<string, { list: Array<{ time: number; text: string }>; meta: MergerEngineSource }>
   }
   api: {
@@ -1376,7 +1378,11 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     vm.$on(
       MANAGER_MODAL_EVENTS.UPDATE_OFFSET,
       ({ sourceId, offset }: { sourceId: string; offset: number }) => {
-        deps.engine.updateSource(sourceId, { offset })
+        if (deps.engine.applyOffsetAndReshow) {
+          deps.engine.applyOffsetAndReshow(sourceId, offset)
+        } else {
+          deps.engine.updateSource(sourceId, { offset })
+        }
         refreshManagerGroups()
       },
     )

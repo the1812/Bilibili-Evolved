@@ -256,6 +256,19 @@ export class DanmakuEngine {
     this.syncNative()
   }
 
+  /**
+   * 偏移变更后：重建并同步，再轻触时间轴让当前进度立刻出现新位置弹幕。
+   * 不额外改写永久 offset，避免影响后续弹幕相对关系。
+   */
+  applyOffsetAndReshow(id, offset) {
+    this.updateSource(id, { offset })
+    try {
+      this.nativeDanmaku?.nudgeTimelineForReshow?.(0.08)
+    } catch {
+      // ignore
+    }
+  }
+
   // --- 状态持久化 ---
 
   saveState() {

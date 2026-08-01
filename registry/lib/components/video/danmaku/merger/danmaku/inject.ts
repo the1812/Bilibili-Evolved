@@ -795,6 +795,45 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       },
 
+      /**
+       * 偏移写回后轻触时间轴，促使 DanmakuX 按新 stime 重排当前可见弹幕。
+       * 不修改永久 offset，只做一次极小 seek 往返。
+       */
+      nudgeTimelineForReshow(padSec = 0.08) {
+          const state = this.capturePlaybackState();
+          const now = Math.max(0, Number(state.time) || 0);
+          const pad = Math.max(0.05, Number(padSec) || 0.08);
+          const back = Math.max(0, now - pad);
+          const p = this.getPlayer();
+          const v = document.querySelector('video');
+
+          const seekTo = (t) => {
+              try { p?.seek?.(t); } catch (e) { /* ignore */ }
+              if (v) {
+                  try { v.currentTime = t; } catch (e) { /* ignore */ }
+              }
+          };
+
+          // 先退后一点触发弹幕重算，再回到原进度
+          seekTo(back);
+          const restore = () => {
+              this.restorePlaybackState({
+                  ...state,
+                  time: now,
+              });
+              // 再点一次 DanmakuX fresh/play，避免仍停在空窗
+              try {
+                  const dx = this.getPlayer()?.danmaku?.getDanmakuX?.();
+                  dx?.fresh?.();
+                  if (!state.paused) {
+                      dx?.play?.();
+                  }
+              } catch (e) { /* ignore */ }
+          };
+          setTimeout(restore, 40);
+          setTimeout(restore, 120);
+      },
+
       async withPlaybackPreserved(fn) {
 
           this._playbackPreserveDepth = (this._playbackPreserveDepth || 0) + 1;
