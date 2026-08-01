@@ -1051,11 +1051,27 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           return
         }
         page.selected = selected
+
+        // 分P勾选驱动父级已选：有勾选则加入，全无则移除
+        const anySelected = pages.some(item => item.selected)
+        if (anySelected && !searchState.selectedBvids.includes(bvid)) {
+          searchState.selectedBvids = [...searchState.selectedBvids, bvid]
+          const video = searchState.results.find(item => item.bvid === bvid)
+          if (video) {
+            rememberSelectedVideos([video])
+          }
+        } else if (!anySelected) {
+          searchState.selectedBvids = searchState.selectedBvids.filter(id => id !== bvid)
+        }
+        syncSelectedVideoCache(searchState.selectedBvids)
+
         if (searchState.partModeEnabled[bvid]) {
           applyPartModeOffsets(bvid, true)
         } else {
           syncExpandedPagesToVm(bvid)
         }
+        // 回写 selectedBvids / selectedVideos，保证父勾选与底部已选即时更新
+        syncSearchVm()
       },
     )
     vm.$on(
@@ -1109,18 +1125,21 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       })
       if (select && !searchState.selectedBvids.includes(bvid)) {
         searchState.selectedBvids = [...searchState.selectedBvids, bvid]
+        const video = searchState.results.find(item => item.bvid === bvid)
+        if (video) {
+          rememberSelectedVideos([video])
+        }
       }
       if (!select) {
         searchState.selectedBvids = searchState.selectedBvids.filter(id => id !== bvid)
       }
+      syncSelectedVideoCache(searchState.selectedBvids)
       if (searchState.partModeEnabled[bvid]) {
         applyPartModeOffsets(bvid, true)
       } else {
         syncExpandedPagesToVm(bvid)
-        Vue.set(searchVm?.$data as Record<string, unknown>, 'selectedBvids', [
-          ...searchState.selectedBvids,
-        ])
       }
+      syncSearchVm()
     })
     vm.$on(
       'part-duration-change',

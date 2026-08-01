@@ -593,9 +593,37 @@ export default Vue.extend({
         this.$emit(MERGER_MODAL_EVENTS.EXPAND_VIDEO, { bvid })
       }
     },
+    /**
+     * 分P勾选变化后，同步父级是否进入已选。
+     * 任一分P勾选 → 父级勾选；全部分P取消 → 父级取消。
+     * 单P视频勾选分P时，父勾选会立刻亮起。
+     */
+    syncParentSelectionFromPages(bvid: string) {
+      const pages = this.expandedPages[bvid]
+      if (!pages) {
+        this.emitSelectionChange([...this.selectedBvids])
+        return
+      }
+      const anySelected = pages.some(page => page.selected)
+      const next = new Set(this.selectedBvids)
+      if (anySelected) {
+        next.add(bvid)
+      } else {
+        next.delete(bvid)
+      }
+      this.emitSelectionChange([...next])
+    },
     onPageSelectionChange(bvid: string, payload: { bvid: string; cid: number; selected: boolean }) {
       this.$emit('update:pageSelection', payload)
-      this.emitSelectionChange([...this.selectedBvids])
+      // 本地先改，避免等 host 回写前底部已选无反应
+      const pages = this.expandedPages[bvid]
+      if (pages) {
+        const page = pages.find(item => item.cid === payload.cid)
+        if (page) {
+          this.$set(page, 'selected', payload.selected)
+        }
+      }
+      this.syncParentSelectionFromPages(bvid)
     },
     onPageOffsetChange(
       bvid: string,
@@ -612,7 +640,14 @@ export default Vue.extend({
     },
     onSelectAllPages(bvid: string, payload: { bvid: string; select: boolean }) {
       this.$emit('select-all-pages', payload)
-      this.emitSelectionChange([...this.selectedBvids])
+      // 本地同步分P勾选状态，再推父级已选
+      const pages = this.expandedPages[bvid]
+      if (pages) {
+        pages.forEach(page => {
+          this.$set(page, 'selected', payload.select)
+        })
+      }
+      this.syncParentSelectionFromPages(bvid)
     },
     onPartDurationChange(
       bvid: string,
