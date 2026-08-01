@@ -17,8 +17,52 @@ export const builtInActions: AboutPageAction[] = [
     actionName: 'Export Settings',
     run: async () => {
       const { settings } = await import('@/core/settings')
-      const { DownloadPackage } = await import('@/core/download')
-      DownloadPackage.single('settings.json', JSON.stringify(settings, undefined, 2))
+      const { meta } = await import('@/core/meta')
+      const { Toast } = await import('@/core/toast')
+
+      const version = meta.compilationInfo.versionWithTag.replace(/-.*/, '')
+      const now = new Date()
+      const pad = (value: number) => String(value).padStart(2, '0')
+      const date = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`
+      const time = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`
+
+      const fileName = `${meta.name}_${version}_${date}_${time}.json`
+      const content = JSON.stringify(settings, undefined, 2)
+
+      const defaultDownload = async () => {
+        // 兼容不支持 File System Access API 的浏览器
+        const { DownloadPackage } = await import('@/core/download')
+        DownloadPackage.single(fileName, content)
+      }
+
+      if ('showSaveFilePicker' in unsafeWindow) {
+        try {
+          const handle = await unsafeWindow.showSaveFilePicker({
+            suggestedName: fileName,
+            types: [
+              {
+                description: 'JSON 文件',
+                accept: {
+                  'application/json': ['.json'],
+                },
+              },
+            ],
+          })
+
+          const writable = await handle.createWritable()
+          await writable.write(content)
+          await writable.close()
+        } catch (e) {
+          if (String(e).includes('AbortError')) {
+            return
+          }
+          Toast.error('自定义导出失败, 已使用浏览器默认方式导出。', '导出设置')
+          console.error(e)
+          await defaultDownload()
+        }
+      } else {
+        await defaultDownload()
+      }
     },
   },
   {

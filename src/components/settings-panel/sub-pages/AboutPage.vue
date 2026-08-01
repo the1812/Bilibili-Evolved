@@ -153,6 +153,7 @@ export default Vue.extend({
     .script-links {
       .script-link {
         @include h-stretch();
+        text-decoration: none;
         .be-button {
           flex: 1;
         }
