@@ -706,7 +706,7 @@ export default Vue.extend({
     },
     onSelectAllPages(bvid: string, payload: { bvid: string; select: boolean }) {
       this.$emit('select-all-pages', payload)
-      // 本地同步分P勾选；父勾选不随动
+      // 本地同步分P勾选，并由 emitPartSelectionSideEffects 同步父勾选
       const pages = this.expandedPages[bvid]
       if (pages) {
         pages.forEach(page => {

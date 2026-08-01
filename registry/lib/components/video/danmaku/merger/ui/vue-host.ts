@@ -1172,8 +1172,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         }
         page.selected = selected
 
-        // 分P勾选不改父勾选；仅缓存摘要供底部已选区展示
-        // 全部分P勾选 → 父勾选；否则父不勾
+        // 全部分P勾选 → 父勾选；否则父不勾（仅部分分P时父保持不勾）
         const allSelected = pages.every(item => item.selected)
         if (allSelected) {
           if (!searchState.selectedBvids.includes(bvid)) {
@@ -1199,7 +1198,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         } else {
           syncExpandedPagesToVm(bvid)
         }
-        // 回写 expandedPages / selectedVideos，父勾选状态保持不变
+        // 回写 expandedPages / selectedBvids / selectedVideos
         syncSearchVm()
       },
     )
