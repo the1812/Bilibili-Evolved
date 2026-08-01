@@ -23,12 +23,11 @@ Common commands:
 ```sh
 pnpm run type
 pnpm run lint-check
-pnpm run build-core
 pnpm tsx dev-tools/dev-server/index.ts
 pnpm tsx dev-tools/dev-server/command.ts sessions
 ```
 
-The dev server serves the local userscript and registry feature URLs for browser testing. HTTP serves core outputs from disk, while registry feature URLs are virtual build-on-request outputs served from memory. WebSocket is the command and event control plane; use `dev-tools/dev-server/command.ts` for single-feature build, watch, stop, start-debug, stop-debug, and scaffold commands. See `dev-tools/dev-server/README.md` for protocol details and `CONTRIBUTING.md` for Tampermonkey setup details.
+The dev server starts and watches the development core build, serves the local userscript, and provides registry feature URLs for browser testing. Registry feature URLs are virtual build-on-request outputs served from memory. WebSocket is the command and event control plane; use `dev-tools/dev-server/command.ts` for single-feature build, watch, stop, start-debug, stop-debug, and scaffold commands. See `dev-tools/dev-server/README.md` for protocol details and `CONTRIBUTING.md` for Tampermonkey setup details.
 
 ## Component And Plugin Guidelines
 
@@ -72,12 +71,13 @@ Choose validation based on the risk and scope of the change.
 
 - Run `pnpm run type` for TypeScript type checking.
 - Run `pnpm run lint-check` for lint validation.
-- Run `pnpm run build-core` for core userscript changes.
+- For core userscript changes, use the dev server's core watcher, which automatically compiles the development build.
+- For registry feature changes, run `pnpm tsx dev-tools/dev-server/command.ts build <component|plugin> <id>` while the dev server is running.
 - Run `pnpm exec tsc -p dev-tools/dev-server/tsconfig.json` for dev server TypeScript changes.
 - For browser-facing behavior, verify the changed feature in a real browser with the local userscript installed.
 - For API-shape or Bilibili-rollout-dependent changes, record what page or account state was actually self-tested.
 
-The pull request workflow runs:
+The pull request CI workflow runs the following production builds. Do not repeat them as routine local validation; run them locally only when explicitly requested, reproducing a CI failure, changing shared build infrastructure, or preparing a release.
 
 1. `pnpm run type`
 2. `pnpm run lint-check`
