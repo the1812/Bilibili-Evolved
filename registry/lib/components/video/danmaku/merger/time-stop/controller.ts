@@ -1,14 +1,11 @@
+/* eslint-disable @typescript-eslint/no-use-before-define, no-void */
 /**
  * 时停业务控制器：enter / release / discard 与按钮点击分发。
  *
  * 本模块只改状态与画面副作用，不负责 tip 注入。
  */
 
-import {
-  attachForcedTipToClones,
-  resyncTimeStopTipAtPointer,
-  startTimeStopMenu,
-} from './menu'
+import { attachForcedTipToClones, resyncTimeStopTipAtPointer, startTimeStopMenu } from './menu'
 import {
   getActiveSourceId,
   getTimeStopState,
@@ -143,8 +140,9 @@ const startTimeStopMaintain = (deps: TimeStopDeps): void => {
     scheduleMaintain()
   })
   const root =
-    document.querySelector('.bpx-player-row-dm-wrap, .bpx-player-dm-mask-wrap, .bpx-player-video-area') ||
-    document.body
+    document.querySelector(
+      '.bpx-player-row-dm-wrap, .bpx-player-dm-mask-wrap, .bpx-player-video-area',
+    ) || document.body
   maintainObserver.observe(root, { childList: true, subtree: true })
   // 播放器盒本身尺寸变化（F12 改布局、网页全屏切换）
   if (typeof ResizeObserver !== 'undefined') {
@@ -277,7 +275,7 @@ export const handleTimeStopButtonClick = async (
 export const initTimeStop = (deps: TimeStopDeps): (() => void) => {
   const stopMenu = startTimeStopMenu({
     onClick: sourceId => {
-      void handleTimeStopButtonClick(sourceId, deps).catch(err => {
+      handleTimeStopButtonClick(sourceId, deps).catch(err => {
         // 防止 applyOffsetDelta 等异步错误变成 unhandled rejection
         console.error('[danmakuMerger][time-stop]', err)
       })

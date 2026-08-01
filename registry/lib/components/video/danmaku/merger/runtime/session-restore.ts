@@ -30,7 +30,9 @@ export interface MergerApi {
       forceFallback?: boolean
       unavailableReason?: string
     },
-  ) => Promise<{ list: import('../danmaku/parse').ParsedDanmakuItem[]; mode: string; notice?: string } | string>
+  ) => Promise<
+    { list: import('../danmaku/parse').ParsedDanmakuItem[]; mode: string; notice?: string } | string
+  >
 }
 
 /** 读取会话存储，兼容历史大小写 BV 键名 */
@@ -64,8 +66,7 @@ const normalizeRestoreMeta = (meta: InjectDanmakuMeta): InjectDanmakuMeta | null
   const id = meta.id || (meta.bvid ? `${meta.bvid}_${cid}` : String(cid))
   // 保留存储里的 viewCid。缺失时不要整批写成当前分P，否则多分P源会串到同一P。
   // 旧数据无 viewCid 时，sourceMatchesViewCid 会回落到 meta.cid 比对。
-  const viewCid =
-    meta.viewCid != null && String(meta.viewCid) !== '' ? meta.viewCid : undefined
+  const viewCid = meta.viewCid != null && String(meta.viewCid) !== '' ? meta.viewCid : undefined
   return { ...meta, id: String(id), viewCid }
 }
 
@@ -125,10 +126,7 @@ export function createSessionRestore(deps: {
                 45000,
                 `拉取弹幕 ${meta.cid}`,
               )
-              const list =
-                typeof fetched === 'string'
-                  ? deps.parseDanmaku(fetched)
-                  : fetched.list
+              const list = typeof fetched === 'string' ? deps.parseDanmaku(fetched) : fetched.list
               if (!list.length) {
                 return null
               }
@@ -157,11 +155,7 @@ export function createSessionRestore(deps: {
           return
         }
 
-        const result = await withTimeout(
-          deps.batchRestoreDanmaku(entries),
-          60000,
-          '注入恢复弹幕',
-        )
+        const result = await withTimeout(deps.batchRestoreDanmaku(entries), 60000, '注入恢复弹幕')
         const restored = deps.engine.sources?.size || 0
         const activeCount = deps.engine.getActiveSources()?.size || 0
         const injected = !!(result.list || result.screen > 0)

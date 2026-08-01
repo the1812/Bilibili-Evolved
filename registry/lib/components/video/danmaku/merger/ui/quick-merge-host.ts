@@ -141,7 +141,7 @@ export const createQuickMergeHost = (deps: QuickMergeHostDeps) => {
         videoId: bvid,
         aid: (data as { aid?: number | string }).aid,
       })
-      const list = fetched.list
+      const { list } = fetched
       if (!list.length) {
         mergerToast(`并入失败：${data.title}（弹幕为空）`, 'error')
         return

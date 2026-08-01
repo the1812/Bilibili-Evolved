@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle, @typescript-eslint/no-use-before-define, @typescript-eslint/no-unused-vars */
 import type { PinnedDanmakuRef, TimeStopDeps } from './types'
 import { parseSourceIdFromDmid, readDmidFromContext } from './source-id'
 
@@ -87,7 +88,11 @@ const getDanmakuX = (): DanmakuXLike | null => {
   }
 }
 
-const patchMethod = (target: object | null | undefined, key: string, wrapper: (orig: (...args: unknown[]) => unknown) => (...args: unknown[]) => unknown): void => {
+const patchMethod = (
+  target: object | null | undefined,
+  key: string,
+  wrapper: (orig: (...args: unknown[]) => unknown) => (...args: unknown[]) => unknown,
+): void => {
   if (!target || typeof target !== 'object') {
     return
   }
@@ -112,11 +117,13 @@ const patchMethod = (target: object | null | undefined, key: string, wrapper: (o
 /** 清空原生层可见弹幕（不动我们的覆盖层） */
 const clearNativeVisibleDanmaku = (): void => {
   try {
-    const dx = getDanmakuX() as (DanmakuXLike & {
-      clear?: () => void
-      fresh?: () => void
-      manager?: { clear?: () => void; endClear?: () => void; clearVisualArray?: () => void }
-    }) | null
+    const dx = getDanmakuX() as
+      | (DanmakuXLike & {
+          clear?: () => void
+          fresh?: () => void
+          manager?: { clear?: () => void; endClear?: () => void; clearVisualArray?: () => void }
+        })
+      | null
     dx?.manager?.clearVisualArray?.()
     dx?.manager?.clear?.()
     dx?.manager?.endClear?.()
@@ -140,7 +147,12 @@ const suppressNativeAfterSeek = (): void => {
   }
   const api = getPlayerDanmakuApi()
   try {
-    if (api && typeof api.isOpen === 'function' && api.isOpen() && typeof api.close === 'function') {
+    if (
+      api &&
+      typeof api.isOpen === 'function' &&
+      api.isOpen() &&
+      typeof api.close === 'function'
+    ) {
       api.close()
       closedNativeSwitch = true
     }
@@ -171,7 +183,7 @@ const installSeekPatches = (): void => {
     })
   })
   ;['fresh', 'render', 'fetchAndInitDm', 'insert', 'add', 'addList', 'multipleAdd'].forEach(key => {
-    patchMethod(mgr, key, orig => (...args) => {
+    patchMethod(mgr, key, () => () => {
       // 时停期间直接吞掉会刷屏的写入/渲染
       suppressNativeAfterSeek()
       return undefined
@@ -217,7 +229,12 @@ export const pauseNativeDanmakuEngine = (): void => {
 
   const api = getPlayerDanmakuApi()
   try {
-    if (api && typeof api.isOpen === 'function' && api.isOpen() && typeof api.close === 'function') {
+    if (
+      api &&
+      typeof api.isOpen === 'function' &&
+      api.isOpen() &&
+      typeof api.close === 'function'
+    ) {
       api.close()
       closedNativeSwitch = true
     }
@@ -425,8 +442,8 @@ const createFrozenClone = (
   clone.style.lineHeight = computed.lineHeight
   clone.style.whiteSpace = computed.whiteSpace || 'nowrap'
   clone.style.textShadow = computed.textShadow
-  clone.style.webkitTextStroke = (computed as CSSStyleDeclaration & { webkitTextStroke?: string })
-    .webkitTextStroke || ''
+  clone.style.webkitTextStroke =
+    (computed as CSSStyleDeclaration & { webkitTextStroke?: string }).webkitTextStroke || ''
   ;['--opacity', '--fontSize', '--fontFamily', '--color'].forEach(key => {
     const val = sourceEl.style.getPropertyValue(key) || computed.getPropertyValue(key)
     if (val) {
@@ -444,10 +461,7 @@ const createFrozenClone = (
 }
 
 /** 按覆盖层本地坐标应用位置 */
-const applyLocalCloneRect = (
-  clone: HTMLElement,
-  local: PinnedDanmakuRef['freezeRect'],
-): void => {
+const applyLocalCloneRect = (clone: HTMLElement, local: PinnedDanmakuRef['freezeRect']): void => {
   clone.style.position = 'absolute'
   clone.style.left = `${local.left}px`
   clone.style.top = `${local.top}px`

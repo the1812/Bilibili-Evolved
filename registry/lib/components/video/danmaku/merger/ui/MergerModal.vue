@@ -142,12 +142,18 @@
                   <span v-if="video.author && selectedDanmakuLabel(video)"> · </span>
                   <span v-if="selectedDanmakuLabel(video)">{{ selectedDanmakuLabel(video) }}</span>
                   <span
-                    v-if="(video.author || selectedDanmakuLabel(video)) && selectedPartLabel(video.bvid)"
+                    v-if="
+                      (video.author || selectedDanmakuLabel(video)) && selectedPartLabel(video.bvid)
+                    "
                   >
                     ·
                   </span>
-                  <span v-if="selectedPartLabel(video.bvid)">{{ selectedPartLabel(video.bvid) }}</span>
-                  <span v-if="isBvidMerged(video.bvid)" class="dm-selected-chip-merged">已合并</span>
+                  <span v-if="selectedPartLabel(video.bvid)">{{
+                    selectedPartLabel(video.bvid)
+                  }}</span>
+                  <span v-if="isBvidMerged(video.bvid)" class="dm-selected-chip-merged"
+                    >已合并</span
+                  >
                 </div>
               </div>
               <button
@@ -765,8 +771,7 @@ export default Vue.extend({
         }
 
         const video =
-          this.results.find(v => v.bvid === bvid) ||
-          this.selectedVideos.find(v => v.bvid === bvid)
+          this.results.find(v => v.bvid === bvid) || this.selectedVideos.find(v => v.bvid === bvid)
         const plainTitle = video ? stripHtmlTags(video.title) : bvid
 
         pages
@@ -794,8 +799,7 @@ export default Vue.extend({
 
         // 跨搜索已选可能不在当前 results 里，回落 selectedVideos 缓存
         const video =
-          this.results.find(v => v.bvid === bvid) ||
-          this.selectedVideos.find(v => v.bvid === bvid)
+          this.results.find(v => v.bvid === bvid) || this.selectedVideos.find(v => v.bvid === bvid)
         if (!video) {
           items.push({
             bvid,

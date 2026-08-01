@@ -290,7 +290,9 @@ export default Vue.extend({
       if (!items.length) {
         return ''
       }
-      return items.map(item => `${item.title || item.id}: ${this.offsetBadgeLabel(item)}`).join('\n')
+      return items
+        .map(item => `${item.title || item.id}: ${this.offsetBadgeLabel(item)}`)
+        .join('\n')
     },
     emitSelectionChange(nextIds: string[]) {
       this.$emit(MANAGER_MODAL_EVENTS.SELECTION_CHANGE, { selectedIds: nextIds })

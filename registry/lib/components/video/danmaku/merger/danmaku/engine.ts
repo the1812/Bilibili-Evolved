@@ -7,7 +7,12 @@
  */
 
 import { getStorage } from '../storage'
-import { filterSourcesMapByViewCid, getCurrentPageCid, isLegacyUnscopedSource, sourceMatchesViewCid } from '../runtime/helpers'
+import {
+  filterSourcesMapByViewCid,
+  getCurrentPageCid,
+  isLegacyUnscopedSource,
+  sourceMatchesViewCid,
+} from '../runtime/helpers'
 import type { NativeDanmakuApi } from './inject'
 import { dmLog, dmWarn } from './log'
 

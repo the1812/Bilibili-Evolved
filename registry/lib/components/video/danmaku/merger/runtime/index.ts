@@ -80,9 +80,7 @@ export const initDanmakuMerger = (): MergerCleanup => {
   // 时停：悬停已合并弹幕后点「时停」，拖进度再「恢复」写回源偏移
   const timeStopCleanup = initTimeStop({
     getCurrentTime: () => {
-      const p = unsafeWindow.player as
-        | { getCurrentTime?: () => number }
-        | undefined
+      const p = unsafeWindow.player as { getCurrentTime?: () => number } | undefined
       if (p && typeof p.getCurrentTime === 'function') {
         return Number(p.getCurrentTime()) || 0
       }

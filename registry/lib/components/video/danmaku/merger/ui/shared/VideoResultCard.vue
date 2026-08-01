@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="dm-result-wrapper"
-    :class="{ 'dm-result-merged': merged }"
-    :data-bvid="video.bvid"
-  >
+  <div class="dm-result-wrapper" :class="{ 'dm-result-merged': merged }" :data-bvid="video.bvid">
     <div class="dm-result-item" @click="onItemClick">
       <div class="dm-checkbox" :class="{ checked }" @click.stop="onToggleSelect"></div>
 

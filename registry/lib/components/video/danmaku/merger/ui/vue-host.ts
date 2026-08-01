@@ -672,7 +672,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       pages.map(async page => {
         try {
           const fetched = await deps.api.getDanmaku(page.cid, { videoId: bvid })
-          const list = fetched.list
+          const { list } = fetched
           page.danmakuCount = list.length
           page.danmakuError = false
         } catch {
@@ -900,11 +900,9 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
             aid: workingTask.aid,
             forceFallback: !!workingTask.fetchNotice,
             unavailableReason:
-              typeof workingTask.fetchNotice === 'string'
-                ? workingTask.fetchNotice
-                : undefined,
+              typeof workingTask.fetchNotice === 'string' ? workingTask.fetchNotice : undefined,
           })
-          const list = fetched.list
+          const { list } = fetched
           if (!list.length) {
             throw new Error('弹幕为空')
           }
@@ -1129,7 +1127,9 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       runBatchMerge(items)
     })
     vm.$on(MERGER_MODAL_EVENTS.DELETE_MERGED, async ({ bvids }: { bvids: string[] }) => {
-      const targets = Array.from(new Set((bvids || []).map(b => String(b || '').trim()).filter(Boolean)))
+      const targets = Array.from(
+        new Set((bvids || []).map(b => String(b || '').trim()).filter(Boolean)),
+      )
       if (!targets.length) {
         return
       }

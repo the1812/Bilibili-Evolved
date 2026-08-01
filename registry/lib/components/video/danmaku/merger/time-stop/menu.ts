@@ -1,14 +1,11 @@
+/* eslint-disable no-underscore-dangle, @typescript-eslint/no-use-before-define */
 /**
  * 合并弹幕 tip：复用原生胶囊，仅保留「复制 + 时停」。
  * - 普通合并弹幕：不抢定位，等原生 tip 弹出后只改按钮
  * - 时停克隆：原生不会弹 tip，才手动显示；鼠标离开必须收回
  */
 
-import {
-  parseSourceIdFromDmid,
-  readDanmakuTextFromElement,
-  readDmidFromContext,
-} from './source-id'
+import { parseSourceIdFromDmid, readDmidFromContext } from './source-id'
 import { getActiveSourceId } from './state'
 import type { TimeStopDeps } from './types'
 
@@ -176,7 +173,12 @@ const hideForcedTip = (): void => {
   if (forcedTipVisible || tip.getAttribute(FORCED_TIP_ATTR) === '1') {
     tip.setAttribute(FORCED_TIP_ATTR, '0')
     tip.classList.add('bpx-player-hide')
-    tip.classList.remove('bpx-player-showB', 'bpx-player-showT', 'bpx-player-showL', 'bpx-player-showR')
+    tip.classList.remove(
+      'bpx-player-showB',
+      'bpx-player-showT',
+      'bpx-player-showL',
+      'bpx-player-showR',
+    )
     tip.style.visibility = 'hidden'
     tip.style.opacity = '0'
     tip.style.pointerEvents = 'none'
@@ -233,7 +235,11 @@ const tipIsUsable = (tip: HTMLElement): boolean => {
   if (s.display === 'none') {
     return false
   }
-  if (tip.classList.contains('bpx-player-hide') && Number(s.opacity || '0') === 0 && !forcedTipVisible) {
+  if (
+    tip.classList.contains('bpx-player-hide') &&
+    Number(s.opacity || '0') === 0 &&
+    !forcedTipVisible
+  ) {
     return false
   }
   const r = tip.getBoundingClientRect()
@@ -315,7 +321,12 @@ const hitDanmakuElementAtPoint = (clientX: number, clientY: number): Element | n
     if (rect.width <= 0 || rect.height <= 0) {
       return
     }
-    if (clientX < rect.left || clientX > rect.right || clientY < rect.top || clientY > rect.bottom) {
+    if (
+      clientX < rect.left ||
+      clientX > rect.right ||
+      clientY < rect.top ||
+      clientY > rect.bottom
+    ) {
       return
     }
     const area = rect.width * rect.height
@@ -356,7 +367,12 @@ const forceShowTipNearClone = (el: HTMLElement): void => {
     tip.setAttribute(FORCED_TIP_ATTR, '1')
     forcedTipVisible = true
     tip.classList.remove('bpx-player-hide')
-    tip.classList.remove('bpx-player-showT', 'bpx-player-showB', 'bpx-player-showL', 'bpx-player-showR')
+    tip.classList.remove(
+      'bpx-player-showT',
+      'bpx-player-showB',
+      'bpx-player-showL',
+      'bpx-player-showR',
+    )
     tip.classList.add(placeBelow ? 'bpx-player-showB' : 'bpx-player-showT')
     // fixed + 屏幕坐标：与覆盖层 clone 同一坐标系
     tip.style.setProperty('position', 'fixed', 'important')
@@ -403,9 +419,9 @@ export const attachForcedTipToClones = (sourceId?: string | null): void => {
     hideForcedTip()
     return
   }
-  const clones = Array.from(
-    document.querySelectorAll(`.dm-merger-time-stop-clone`),
-  ).filter((node): node is HTMLElement => node instanceof HTMLElement)
+  const clones = Array.from(document.querySelectorAll(`.dm-merger-time-stop-clone`)).filter(
+    (node): node is HTMLElement => node instanceof HTMLElement,
+  )
   if (!clones.length) {
     hideForcedTip()
     return
@@ -448,7 +464,9 @@ export const attachForcedTipToClones = (sourceId?: string | null): void => {
 
 const isOverTipOrClone = (target: EventTarget | null, x: number, y: number): boolean => {
   if (target instanceof Element) {
-    if (target.closest('.bpx-player-dm-tip, .dm-merger-time-stop-btn, .dm-merger-time-stop-clone')) {
+    if (
+      target.closest('.bpx-player-dm-tip, .dm-merger-time-stop-btn, .dm-merger-time-stop-clone')
+    ) {
       return true
     }
   }

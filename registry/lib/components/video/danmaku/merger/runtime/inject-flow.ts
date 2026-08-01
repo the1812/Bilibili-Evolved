@@ -137,12 +137,7 @@ export function createBatchRestoreDanmaku(nativeDanmaku: NativeDanmakuApi, engin
       let active = engine.getActiveSources()
       let sync = await nativeDanmaku.fullSyncAsync(active, null, restoreSyncOpts)
       // 恢复后若活跃源存在但未写入，再同步一次（应对切P/Store 未稳）
-      if (
-        active?.size &&
-        !sync.list &&
-        !(sync.screen > 0) &&
-        nativeDanmaku.hasListStore()
-      ) {
+      if (active?.size && !sync.list && !(sync.screen > 0) && nativeDanmaku.hasListStore()) {
         active = engine.getActiveSources()
         if (active?.size) {
           sync = await nativeDanmaku.fullSyncAsync(active, null, restoreSyncOpts)

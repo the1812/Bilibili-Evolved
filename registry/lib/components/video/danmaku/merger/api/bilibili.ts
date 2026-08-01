@@ -1,8 +1,5 @@
 import { bilibiliApi, getJsonWithCredentials, monkey } from '@/core/ajax'
-import {
-  decodeDanmakuSegment,
-  decodeDanmakuView,
-} from '../../converter/danmaku-segment'
+import { decodeDanmakuSegment, decodeDanmakuView } from '../../converter/danmaku-segment'
 import type { ParsedDanmakuItem } from '../danmaku/parse'
 import { parseDanmakuXml } from '../danmaku/parse'
 import { dmLog, dmWarn } from '../danmaku/log'
@@ -54,7 +51,10 @@ export const searchVideos = async (keyword: string, page = 1): Promise<SearchRes
   return [{ result_type: 'video', data: data.result ?? [] }]
 }
 
-export const getView = async (bvid: string, options?: { silent?: boolean }): Promise<ViewResult> => {
+export const getView = async (
+  bvid: string,
+  options?: { silent?: boolean },
+): Promise<ViewResult> => {
   // silent=true：检测可用性时不弹全局 Error Toast（62002 稿件不可见等）
   return bilibiliApi<ViewResult>(
     getJsonWithCredentials(buildViewUrl(bvid)),
@@ -275,9 +275,7 @@ export const fetchDanmakuForMerge = async (
     return {
       list: [],
       mode: 'protobuf-fallback',
-      notice: videoGone
-        ? `${goneMessage}，历史弹幕接口也无数据`
-        : '该分P弹幕为 0 条',
+      notice: videoGone ? `${goneMessage}，历史弹幕接口也无数据` : '该分P弹幕为 0 条',
     }
   }
 
