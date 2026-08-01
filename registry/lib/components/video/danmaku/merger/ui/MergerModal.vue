@@ -118,33 +118,77 @@
       </div>
 
       <div id="dm-search-actions" :style="actionsPanelStyle">
-        <div style="font-size: 13px; color: var(--text2, #555); font-weight: 500">
-          已选
-          <span id="dm-search-count" style="color: #00aeec; font-weight: bold">{{
-            selectedCount
-          }}</span>
-          项
-        </div>
-        <div style="display: flex; gap: 12px">
-          <button
-            id="dm-search-select-all"
-            style="
-              padding: 6px 16px;
-              cursor: pointer;
-              background: var(--bg1, #fff);
-              border: 1px solid var(--line_regular, #ccd0d7);
-              border-radius: 6px;
-              font-size: 13px;
-              color: var(--text1, #222);
-              transition: all 0.2s;
-            "
-            @click="onSelectAll"
-          >
-            全选
-          </button>
-          <button id="dm-search-batch-btn" :style="batchBtnStyle" @click="onBatchMerge">
-            合并选中
-          </button>
+        <div class="dm-selected-bar">
+          <div class="dm-selected-bar-head">
+            <div class="dm-selected-summary">
+              已选
+              <span id="dm-search-count" class="dm-selected-count">{{ selectedCount }}</span>
+              项
+              <span v-if="hasSelection" class="dm-selected-hint">可继续搜索追加</span>
+            </div>
+            <div class="dm-selected-actions">
+              <button
+                v-if="hasSelection"
+                id="dm-search-clear-selected"
+                type="button"
+                class="dm-selected-secondary-btn"
+                @click="onClearSelected"
+              >
+                清空已选
+              </button>
+              <button
+                id="dm-search-select-all"
+                type="button"
+                class="dm-selected-secondary-btn"
+                :disabled="!displayResults.length"
+                @click="onSelectAll"
+              >
+                {{ selectAllLabel }}
+              </button>
+              <button
+                id="dm-search-batch-btn"
+                type="button"
+                :style="batchBtnStyle"
+                @click="onBatchMerge"
+              >
+                合并选中
+              </button>
+            </div>
+          </div>
+
+          <div v-if="selectedVideoCards.length" class="dm-selected-chips">
+            <div
+              v-for="video in selectedVideoCards"
+              :key="video.bvid"
+              class="dm-selected-chip"
+              :title="plainTitle(video)"
+            >
+              <img
+                class="dm-selected-chip-cover"
+                :src="coverUrl(video)"
+                alt=""
+                referrerpolicy="no-referrer"
+              />
+              <div class="dm-selected-chip-meta">
+                <div class="dm-selected-chip-title">{{ plainTitle(video) }}</div>
+                <div class="dm-selected-chip-sub">
+                  {{ video.bvid }}
+                  <span v-if="selectedPartLabel(video.bvid)"> · {{ selectedPartLabel(video.bvid) }}</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                class="dm-selected-chip-remove"
+                title="取消选择"
+                @click.stop="onRemoveSelected(video.bvid)"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+          <div v-else-if="hasSelection" class="dm-selected-empty-hint">
+            已选内容来自分 P 勾选，可继续搜索追加更多视频
+          </div>
         </div>
       </div>
     </div>
@@ -155,6 +199,7 @@
 import ModalShell from './shared/ModalShell.vue'
 import VideoResultCard from './shared/VideoResultCard.vue'
 import PagePartList from './shared/PagePartList.vue'
+import { normalizeHttpsUrl } from './shared/media-url'
 import {
   MERGER_MODAL_EVENTS,
   type MergerBatchMergeItem,
@@ -190,6 +235,8 @@ export default Vue.extend({
       loadingMore: false,
       results: [] as MergerSearchVideo[],
       selectedBvids: [] as string[],
+      /** 跨搜索保留的已选视频摘要（由 vue-host 同步） */
+      selectedVideos: [] as MergerSearchVideo[],
       expandedBvids: {} as Record<string, boolean>,
       expandedPages: {} as Record<string, MergerPagePart[]>,
       sortMode: 'default' as SortMode,
@@ -215,10 +262,38 @@ export default Vue.extend({
       ]
     },
     showActions(): boolean {
-      return this.displayResults.length > 0 || this.hasExpandedPageLists
+      return (
+        this.displayResults.length > 0 ||
+        this.hasExpandedPageLists ||
+        this.selectedBvids.length > 0 ||
+        this.selectedVideos.length > 0
+      )
     },
     hasExpandedPageLists(): boolean {
       return Object.values(this.expandedPages).some(pages => pages.length > 0)
+    },
+    selectedVideoCards(): MergerSearchVideo[] {
+      const map = new Map<string, MergerSearchVideo>()
+      this.selectedVideos.forEach(video => {
+        if (video?.bvid) {
+          map.set(video.bvid, video)
+        }
+      })
+      // 当前页结果优先覆盖摘要，保证标题/封面最新
+      this.results.forEach(video => {
+        if (this.selectedBvids.includes(video.bvid)) {
+          map.set(video.bvid, video)
+        }
+      })
+      return this.selectedBvids.map(bvid => map.get(bvid)).filter((v): v is MergerSearchVideo => !!v)
+    },
+    selectAllLabel(): string {
+      if (!this.displayResults.length) {
+        return '全选本页'
+      }
+      const allBvids = this.displayResults.map(v => v.bvid)
+      const allSelected = allBvids.every(bvid => this.selectedBvids.includes(bvid))
+      return allSelected ? '取消本页' : '全选本页'
     },
     selectedCount(): number {
       let count = 0
@@ -226,11 +301,21 @@ export default Vue.extend({
       this.selectedBvids.forEach(bvid => {
         if (!this.isBvidExpanded(bvid)) {
           count += 1
+          return
         }
+        const pages = this.expandedPages[bvid]
+        if (!pages?.length) {
+          // 已展开但分P尚未加载完：仍计为 1 项
+          count += 1
+          return
+        }
+        const pageSelected = pages.filter(page => page.selected).length
+        count += pageSelected > 0 ? pageSelected : 0
       })
 
+      // 仅勾了分P、未进 selectedBvids 的兜底（一般不会发生）
       Object.entries(this.expandedPages).forEach(([bvid, pages]) => {
-        if (!this.isBvidExpanded(bvid)) {
+        if (this.selectedBvids.includes(bvid) || !this.isBvidExpanded(bvid)) {
           return
         }
         count += pages.filter(page => page.selected).length
@@ -248,8 +333,9 @@ export default Vue.extend({
         borderTop: '1px solid var(--line_regular, #eee)',
         background: 'var(--bg2, #f4f5f7)',
         flexShrink: '0',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        gap: '10px',
       }
     },
     batchBtnStyle(): Record<string, string> {
@@ -414,7 +500,52 @@ export default Vue.extend({
       }
     },
     emitSelectionChange(nextSelected: string[]) {
-      this.$emit(MERGER_MODAL_EVENTS.SELECTION_CHANGE, { selectedBvids: nextSelected })
+      const selectedVideos = nextSelected
+        .map(bvid => {
+          const fromCache = this.selectedVideos.find(v => v.bvid === bvid)
+          const fromResults = this.results.find(v => v.bvid === bvid)
+          return fromResults || fromCache
+        })
+        .filter((v): v is MergerSearchVideo => !!v)
+      this.$emit(MERGER_MODAL_EVENTS.SELECTION_CHANGE, {
+        selectedBvids: nextSelected,
+        selectedVideos,
+      })
+    },
+    plainTitle(video: MergerSearchVideo): string {
+      return stripHtmlTags(video.title || '')
+    },
+    coverUrl(video: MergerSearchVideo): string {
+      return normalizeHttpsUrl(video.pic || '')
+    },
+    selectedPartLabel(bvid: string): string {
+      if (!this.isBvidExpanded(bvid) || !this.expandedPages[bvid]) {
+        return ''
+      }
+      const selectedPages = this.expandedPages[bvid].filter(page => page.selected)
+      if (!selectedPages.length) {
+        return '未勾选分P'
+      }
+      if (selectedPages.length === this.expandedPages[bvid].length) {
+        return `全部分P ${selectedPages.length}`
+      }
+      return `分P ${selectedPages.length}`
+    },
+    onRemoveSelected(bvid: string) {
+      const next = this.selectedBvids.filter(id => id !== bvid)
+      if (this.isBvidExpanded(bvid) && this.expandedPages[bvid]) {
+        this.emitPageSelectionForBvid(bvid, false)
+      }
+      this.emitSelectionChange(next)
+    },
+    onClearSelected() {
+      // 分P勾选一并清掉
+      Object.keys(this.expandedPages).forEach(bvid => {
+        if (this.isBvidExpanded(bvid)) {
+          this.emitPageSelectionForBvid(bvid, false)
+        }
+      })
+      this.emitSelectionChange([])
     },
     onToggleBvidSelect(video: MergerSearchVideo) {
       const { bvid } = video
@@ -532,8 +663,10 @@ export default Vue.extend({
           return
         }
 
-        const video = this.results.find(v => v.bvid === bvid)
-        const plainTitle = video ? stripHtmlTags(video.title) : ''
+        const video =
+          this.results.find(v => v.bvid === bvid) ||
+          this.selectedVideos.find(v => v.bvid === bvid)
+        const plainTitle = video ? stripHtmlTags(video.title) : bvid
 
         pages
           .filter(page => page.selected)
@@ -558,8 +691,17 @@ export default Vue.extend({
           return
         }
 
-        const video = this.results.find(v => v.bvid === bvid)
+        // 跨搜索已选可能不在当前 results 里，回落 selectedVideos 缓存
+        const video =
+          this.results.find(v => v.bvid === bvid) ||
+          this.selectedVideos.find(v => v.bvid === bvid)
         if (!video) {
+          items.push({
+            bvid,
+            fetchRequired: true,
+            title: bvid,
+            groupTitle: bvid,
+          })
           return
         }
 
@@ -591,4 +733,150 @@ export default Vue.extend({
 
 <style lang="scss">
 @import './shared/merger-global.scss';
+
+.dm-selected-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.dm-selected-bar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dm-selected-summary {
+  font-size: 13px;
+  color: var(--text2, #555);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.dm-selected-count {
+  color: #00aeec;
+  font-weight: bold;
+}
+
+.dm-selected-hint {
+  font-size: 12px;
+  color: var(--text3, #999);
+  font-weight: 400;
+}
+
+.dm-selected-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.dm-selected-secondary-btn {
+  padding: 6px 14px;
+  cursor: pointer;
+  background: var(--bg1, #fff);
+  border: 1px solid var(--line_regular, #ccd0d7);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text1, #222);
+  transition: all 0.2s;
+}
+
+.dm-selected-secondary-btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.dm-selected-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.dm-selected-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 220px;
+  max-width: 280px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: var(--bg1, #fff);
+  border: 1px solid var(--line_light, #e3e5e7);
+  flex-shrink: 0;
+}
+
+.dm-selected-chip-cover {
+  width: 54px;
+  height: 34px;
+  object-fit: cover;
+  border-radius: 4px;
+  background: #ddd;
+  flex-shrink: 0;
+}
+
+.dm-selected-chip-meta {
+  min-width: 0;
+  flex: 1;
+}
+
+.dm-selected-chip-title {
+  font-size: 12px;
+  color: var(--text1, #222);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dm-selected-chip-sub {
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text3, #999);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dm-selected-chip-remove {
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text3, #999);
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.dm-selected-chip-remove:hover {
+  color: #ff4d4f;
+  background: rgba(255, 77, 79, 0.08);
+}
+
+.dm-selected-empty-hint {
+  font-size: 12px;
+  color: var(--text3, #999);
+}
+
+html[data-dark-theme='true'] .dm-selected-chip,
+body.dark .dm-selected-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html[data-dark-theme='true'] .dm-selected-secondary-btn,
+body.dark .dm-selected-secondary-btn {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: var(--text1, #e7e9eb);
+}
 </style>

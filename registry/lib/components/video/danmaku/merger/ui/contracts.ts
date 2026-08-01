@@ -203,7 +203,11 @@ export interface MergerModalEventPayloads {
   [MERGER_MODAL_EVENTS.LOAD_MORE]: { keyword: string; page: number }
   [MERGER_MODAL_EVENTS.BATCH_MERGE]: { items: MergerBatchMergeItem[] }
   [MERGER_MODAL_EVENTS.CLOSE]: void
-  [MERGER_MODAL_EVENTS.SELECTION_CHANGE]: { selectedBvids: string[] }
+  [MERGER_MODAL_EVENTS.SELECTION_CHANGE]: {
+    selectedBvids: string[]
+    /** 本次变更涉及的视频摘要，供跨搜索底部已选区缓存 */
+    selectedVideos?: MergerSearchVideo[]
+  }
   [MERGER_MODAL_EVENTS.EXPAND_VIDEO]: { bvid: string }
   [MERGER_MODAL_EVENTS.COLLAPSE_VIDEO]: { bvid: string }
   [MERGER_MODAL_EVENTS.SORT_CHANGE]: { mode: 'default' | 'play' | 'danmaku' }

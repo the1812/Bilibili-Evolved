@@ -123,6 +123,8 @@ interface SearchUiState {
   loadingMore: boolean
   results: MergerSearchVideo[]
   selectedBvids: string[]
+  /** 跨搜索保留已选视频卡片信息（bvid → 摘要） */
+  selectedVideos: Record<string, MergerSearchVideo>
   expandedBvids: Record<string, boolean>
   expandedPages: Record<string, PagePartListRow[]>
   sortMode: 'default' | 'play' | 'danmaku'
@@ -218,6 +220,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     loadingMore: false,
     results: [],
     selectedBvids: [],
+    selectedVideos: {},
     expandedBvids: {},
     expandedPages: {},
     sortMode: 'default',
@@ -263,6 +266,38 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     ...video,
     pic: normalizeHttpsUrl(video.pic),
   })
+
+  /** 记住已选视频摘要，换关键词后底部仍可查看/合并 */
+  const rememberSelectedVideos = (videos: MergerSearchVideo[]): void => {
+    videos.forEach(video => {
+      if (!video?.bvid) {
+        return
+      }
+      searchState.selectedVideos[video.bvid] = normalizeSearchVideo(video)
+    })
+  }
+
+  /** 选中列表变化时同步摘要字典，去掉已取消项 */
+  const syncSelectedVideoCache = (selectedBvids: string[]): void => {
+    const next: Record<string, MergerSearchVideo> = {}
+    selectedBvids.forEach(bvid => {
+      const cached = searchState.selectedVideos[bvid]
+      const fromResults = searchState.results.find(item => item.bvid === bvid)
+      if (fromResults) {
+        next[bvid] = normalizeSearchVideo(fromResults)
+        return
+      }
+      if (cached) {
+        next[bvid] = cached
+      }
+    })
+    searchState.selectedVideos = next
+  }
+
+  const selectedVideosList = (): MergerSearchVideo[] =>
+    searchState.selectedBvids
+      .map(bvid => searchState.selectedVideos[bvid])
+      .filter((item): item is MergerSearchVideo => !!item)
 
   const applySearchSort = (
     results: MergerSearchVideo[],
@@ -324,6 +359,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       Vue.set(data, 'results', [...nextResults])
     }
     Vue.set(data, 'selectedBvids', [...searchState.selectedBvids])
+    Vue.set(data, 'selectedVideos', selectedVideosList())
     Vue.set(data, 'expandedBvids', { ...searchState.expandedBvids })
     Vue.set(data, 'expandedPages', cloneExpandedPages())
     Vue.set(data, 'sortMode', searchState.sortMode)
@@ -639,6 +675,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     searchState.errorMessage = ''
     searchState.results = []
     searchState.hasMore = false
+    // 直接 BV/av 打开时不清空跨搜索已选，便于继续追加
     syncSearchVm()
 
     try {
@@ -650,7 +687,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         author: data.owner?.name || '',
       }
       searchState.results = [video]
-      searchState.selectedBvids = []
+      rememberSelectedVideos([video])
       await loadVideoPages(data.bvid)
     } catch (err) {
       searchState.errorMessage = String(err)
@@ -670,9 +707,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       searchState.loading = true
       searchState.errorMessage = ''
       searchState.results = []
-      searchState.selectedBvids = []
-      searchState.expandedBvids = {}
-      searchState.expandedPages = {}
+      // 换关键词只刷新结果列表；已选与分P勾选跨搜索保留
       searchState.currentKeyword = keyword
       searchState.currentPage = 1
       searchState.hasMore = true
@@ -688,6 +723,10 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         const incoming = videos.data.map(normalizeSearchVideo)
         const merged = append ? [...searchState.results, ...incoming] : incoming
         searchState.results = applySearchSort(merged, searchState.sortMode)
+        // 新结果若命中已选 bvid，刷新封面/标题摘要
+        rememberSelectedVideos(
+          incoming.filter(item => searchState.selectedBvids.includes(item.bvid)),
+        )
         searchState.hasMore = videos.data.length >= 30
         searchState.currentPage = page
       } else if (!append) {
@@ -873,6 +912,14 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     }
 
     mergerToast(finalMsg, success > 0 ? 'success' : 'error')
+    if (success > 0) {
+      // 合并成功后清空跨搜索已选，避免底部残留
+      searchState.selectedBvids = []
+      searchState.selectedVideos = {}
+      searchState.expandedBvids = {}
+      searchState.expandedPages = {}
+      syncSearchVm()
+    }
     refreshManagerGroups()
   }
 
@@ -974,8 +1021,18 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     })
     vm.$on(
       MERGER_MODAL_EVENTS.SELECTION_CHANGE,
-      ({ selectedBvids }: { selectedBvids: string[] }) => {
+      ({
+        selectedBvids,
+        selectedVideos,
+      }: {
+        selectedBvids: string[]
+        selectedVideos?: MergerSearchVideo[]
+      }) => {
         searchState.selectedBvids = selectedBvids
+        if (selectedVideos?.length) {
+          rememberSelectedVideos(selectedVideos)
+        }
+        syncSelectedVideoCache(selectedBvids)
         syncSearchVm()
       },
     )
