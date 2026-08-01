@@ -398,6 +398,9 @@ export default Vue.extend({
       if (page.danmakuCount === undefined) {
         return '· 弹幕加载中...'
       }
+      if (page.danmakuCount === 0) {
+        return '· 0 条弹幕'
+      }
       return `· ${page.danmakuCount} 条弹幕`
     },
     danmakuBadgeStyle(page: PagePartListRow): Record<string, string> {
@@ -407,6 +410,9 @@ export default Vue.extend({
       }
       if (page.danmakuError) {
         return { ...base, color: '#ff6b6b' }
+      }
+      if (page.danmakuCount === 0) {
+        return { ...base, color: 'var(--text3, #999)' }
       }
       return { ...base, color: '#00AEEC' }
     },

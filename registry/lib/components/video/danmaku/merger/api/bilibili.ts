@@ -267,8 +267,15 @@ export const fetchDanmakuForMerge = async (
   }
 
   const list = await fetchDanmakuByProtobuf(cid, options.aid ?? aid)
+  // 空列表也是成功结果：区分「0 条弹幕」与接口异常
   if (!list.length) {
-    throw new Error(videoGone ? `${goneMessage}，且无法拉取历史弹幕` : '弹幕为空')
+    return {
+      list: [],
+      mode: 'protobuf-fallback',
+      notice: videoGone
+        ? `${goneMessage}，历史弹幕接口也无数据`
+        : '该分P弹幕为 0 条',
+    }
   }
 
   return {

@@ -666,6 +666,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           page.danmakuCount = list.length
           page.danmakuError = false
         } catch {
+          // 仅网络/接口异常算获取失败；空列表在上游已作为成功返回
           page.danmakuCount = undefined
           page.danmakuError = true
         }
