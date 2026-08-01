@@ -21,6 +21,10 @@ Client commands:
 ```
 
 ```json
+{ "type": "shutdownServer", "requestId": "..." }
+```
+
+```json
 { "type": "buildFeature", "kind": "component", "id": "style/hide/banner", "requestId": "..." }
 ```
 
@@ -77,4 +81,7 @@ pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
 pnpm tsx dev-tools/dev-server/command.ts stop component style/hide/banner
 pnpm tsx dev-tools/dev-server/command.ts start-debug component style/hide/banner dev-client-1
 pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
+pnpm tsx dev-tools/dev-server/command.ts shutdown
 ```
+
+`shutdown` responds to the command client, broadcasts `serverStop`, and then gracefully closes core and feature watchers, WebSocket connections, and the HTTP server.

@@ -22,10 +22,13 @@ const options = defineOptionsMetadata({
     displayName: '音量调整幅度',
     validator: getNumberValidator(1, 100),
   },
-  /** 是否显示跳转快捷键 */
+  enableLongPressSpeed: {
+    defaultValue: true,
+    displayName: '长按前进倍速播放',
+  },
   showSeekShortcuts: {
     defaultValue: true,
-    displayName: '显示跳转快捷键',
+    displayName: '显示百分比跳转快捷键',
   },
   disableBilibiliPlayerShortcuts: {
     defaultValue: false,

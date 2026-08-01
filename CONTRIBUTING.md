@@ -58,7 +58,10 @@ pnpm tsx dev-tools/dev-server/command.ts watch plugin video/player/speed
 pnpm tsx dev-tools/dev-server/command.ts stop component style/hide/banner
 pnpm tsx dev-tools/dev-server/command.ts start-debug component style/hide/banner dev-client-1
 pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
+pnpm tsx dev-tools/dev-server/command.ts shutdown
 ```
+
+完成开发后使用 `shutdown` 指令退出开发服务, 让本体和功能编译器先完成清理, 不需要手动结束 Node.js 子进程.
 
 更完整的协议和指令说明见 `dev-tools/dev-server/README.md`.
 
