@@ -67,6 +67,9 @@
           {{ action.displayName }}
         </VButton>
       </div>
+      <div style="text-align: center; margin-top: -12px; opacity: 0.5">
+        导出设置的文件命名格式可在通用设置中修改
+      </div>
     </div>
   </div>
 </template>
