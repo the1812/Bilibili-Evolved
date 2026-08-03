@@ -38,7 +38,6 @@ const calcPanelWidth = () => {
 const scheduleCalcPanelWidth = () => {
   requestAnimationFrame(calcPanelWidth)
 }
-window.addEventListener('resize', scheduleCalcPanelWidth)
 
 let draggerInstance: Vue
 const load = async () => {
