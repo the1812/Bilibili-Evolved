@@ -57,38 +57,42 @@ export default defineComponent({
 }
 
 // 首页视频卡片预览放大按钮
-.bili-video-card__image--wrap:hover .bigger-video-preview-button-index,
-.bigger-video-preview-button-index.bigger-video-preview-button-show {
-  opacity: 1;
-  transition: opacity 0.2s linear 0.2s;
+.bigger-video-preview-button-index {
+  @extend .bigger-video-preview-button;
+  transition: opacity 0.2s linear !important;
   top: 8px;
   left: 8px;
 }
-.bigger-video-preview-button-index {
-  @extend .bigger-video-preview-button;
+.bili-video-card__image--wrap:hover .bigger-video-preview-button-index,
+.bigger-video-preview-button-index.bigger-video-preview-button-show {
+  opacity: 1;
+  transition: opacity 0.2s linear 0.2s, box-shadow 0.2s ease-out !important;
 }
 
 // 视频页视频卡片预览放大按钮
+.bigger-video-preview-button-video {
+  @extend .bigger-video-preview-button;
+  transition: opacity 0.3s !important;
+  top: 6px;
+  left: 6px;
+}
 .pic-box:hover .bigger-video-preview-button-video,
 .bigger-video-preview-button-video.bigger-video-preview-button-show {
   opacity: 1;
-  transition: opacity 0.3s linear 0.3s;
-  top: 6px;
-  left: 6px;
-}
-.bigger-video-preview-button-video {
-  @extend .bigger-video-preview-button;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  transition: opacity 0.3s 0.3s, box-shadow 0.2s ease-out !important;
 }
 
 // 合集页视频卡片预览放大按钮
-.pic-box:hover .bigger-video-preview-button-list,
-.bigger-video-preview-button-list.bigger-video-preview-button-show {
-  opacity: 1;
-  transition: opacity 0.3s linear 0.3s;
+.bigger-video-preview-button-list {
+  @extend .bigger-video-preview-button;
+  transition: opacity 0.3s !important;
   top: 6px;
   left: 6px;
 }
-.bigger-video-preview-button-list {
-  @extend .bigger-video-preview-button;
+.pic-box:hover .bigger-video-preview-button-list,
+.bigger-video-preview-button-list.bigger-video-preview-button-show {
+  opacity: 1;
+  transition: opacity 0.3s 0.3s, box-shadow 0.2s ease-out !important;
 }
 </style>
