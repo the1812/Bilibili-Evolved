@@ -11,8 +11,9 @@ import {
   videoUrls,
 } from '@/core/utils/urls'
 import ViewButton from './ViewButton.vue'
-import { getConsole, getOptions } from './handler'
+import { getConsole, getOptions, clearSnapshotCanvasCache } from './handler'
 import { ButtonPosition, isButtonEnabled, parseButtonPosition } from './options'
+import { addComponentListener } from '@/core/settings'
 
 function createButton(vid: number | string, cid: number, title: string, position: string) {
   const vm = new (Vue.extend(ViewButton))({
@@ -218,7 +219,29 @@ function addButtonOnFeedCards() {
 
 // ========================================================================== //
 
+const snapshotCacheInvalidationOptions = [
+  'gridRows',
+  'gridColumns',
+  'gridGap',
+  'gridBorder',
+  'gridBackgroundColor',
+  'textColor',
+  'textSize',
+  'textFont',
+  'enlargeSmallImage',
+  'showInfoHeader',
+] as const
+
+let snapshotCacheListenersRegistered = false
+
 export const entry: ComponentEntry = async () => {
+  if (!snapshotCacheListenersRegistered) {
+    snapshotCacheListenersRegistered = true
+    snapshotCacheInvalidationOptions.forEach(optionName => {
+      addComponentListener(`videoSnapshot.${optionName}`, clearSnapshotCanvasCache)
+    })
+  }
+
   const options = getOptions()
   urlChange(() => {
     if (matchCurrentPage(videoUrls) && isButtonEnabled(options.recommendListButton)) {

@@ -14,7 +14,13 @@
 
 <script lang="ts">
 import { VIcon } from '@/ui'
-import { createSnapshotGrid, getOptions, openViewer, getConsole } from './handler'
+import {
+  createSnapshotGrid,
+  getOptions,
+  openViewer,
+  getConsole,
+  registerSnapshotCanvasCacheClearer,
+} from './handler'
 
 export default Vue.extend({
   components: {
@@ -42,7 +48,16 @@ export default Vue.extend({
     return {
       disabled: false,
       canvas: <HTMLCanvasElement>null,
+      unregisterCacheClearer: null as (() => void) | null,
     }
+  },
+  mounted() {
+    this.unregisterCacheClearer = registerSnapshotCanvasCacheClearer(() => {
+      this.canvas = null
+    })
+  },
+  beforeDestroy() {
+    this.unregisterCacheClearer?.()
   },
   methods: {
     async onClick(event: MouseEvent) {
