@@ -106,7 +106,7 @@ const extractImagesFromDom = (): string[] => {
   const urls = new Set<string>()
   images.forEach((img: HTMLImageElement) => {
     const src = img.src || (img.dataset as any)?.src || ''
-    if (src.includes('/new_dyn/') && !src.includes('/face/')) {
+    if ((src.includes('/new_dyn/') || src.includes('/bfs/article/')) && !src.includes('/face/')) {
       const imageInfo = retrieveImageUrl(src)
       if (imageInfo) {
         urls.add(imageInfo.url)
