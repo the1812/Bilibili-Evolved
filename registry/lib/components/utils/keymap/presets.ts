@@ -15,8 +15,11 @@ export const presetBase: Record<string, string> = {
   playerMenu: '`',
   longJumpForward: 'j',
   longJumpBackward: 'shift j',
-  jumpBackward: '',
-  jumpForward: '',
+  jumpBackward: 'arrowLeft',
+  jumpForward: 'arrowRight',
+  previousPart: '[',
+  nextPart: ']',
+  focusDanmakuInput: 'enter',
   danmaku: 'd',
   seekBegin: '0',
   // 1-9 跳转到对应百分比
@@ -25,6 +28,17 @@ export const presetBase: Record<string, string> = {
 }
 export const builtInPresets: Record<string, Record<string, string>> = {
   Default: {},
+  Bilibili: {
+    webFullscreen: '',
+    like: 'q',
+    coin: 'w',
+    favorite: 'e',
+    jumpBackward: 'arrowLeft',
+    jumpForward: 'arrowRight',
+    previousPart: '[',
+    nextPart: ']',
+    focusDanmakuInput: 'enter',
+  },
   YouTube: {
     like: '',
     pause: 'space k',

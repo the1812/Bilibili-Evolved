@@ -299,4 +299,18 @@ export abstract class PlayerAgent
     this.nativeApi.seek(video.currentTime + change, video.paused)
     return this.nativeApi.getCurrentTime()
   }
+  /** 切换到上一分 P */
+  previousPart() {
+    if (!this.nativeApi?.getManifest?.().hasPrev) {
+      return null
+    }
+    return this.nativeApi.prev()
+  }
+  /** 切换到下一分 P */
+  nextPart() {
+    if (!this.nativeApi?.getManifest?.().hasNext) {
+      return null
+    }
+    return this.nativeApi.next()
+  }
 }

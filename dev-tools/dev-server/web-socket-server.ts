@@ -194,6 +194,14 @@ export const startWebSocketServer = (httpServer: Server) =>
               })
               break
             }
+            case 'shutdownServer': {
+              sendCommandResult(client, payload, {
+                ok: true,
+                message: 'DevServer 正在退出',
+              })
+              setImmediate(() => process.emit('SIGTERM'))
+              break
+            }
           }
         } catch (error) {
           console.error('无效信息', data)

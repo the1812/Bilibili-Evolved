@@ -123,7 +123,7 @@
     "type": "component",
     "name": "badgeKeepalive",
     "displayName": "一键点亮直播间粉丝勋章",
-    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。",
+    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。本功能点亮粉丝勋章只需要点赞 30 次即可达到效果，默认点赞 300 次，可在选项中修改。",
     "fullRelativePath": "../../registry/dist/components/live/badge-keepalive.js",
     "fullAbsolutePath": "registry/dist/components/live/badge-keepalive.js"
   },
@@ -649,6 +649,14 @@
   },
   {
     "type": "component",
+    "name": "commentReplyUpLikeShow",
+    "displayName": "楼中楼回复“UP主觉得很赞”显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在楼中楼回复显示“UP主觉得很赞”标识",
+    "fullRelativePath": "../../registry/dist/components/utils/comment-reply-up-like-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comment-reply-up-like-show.js"
+  },
+  {
+    "type": "component",
     "name": "commentContentReplace",
     "displayName": "评论内容替换",
     "description": "替换评论中的内容.\n\n可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情, 留空则会移除命中的关键词.",
@@ -670,6 +678,14 @@
     "description": "禁用评论区的搜索词链接.",
     "fullRelativePath": "../../registry/dist/components/utils/comments/disable-search-link.js",
     "fullAbsolutePath": "registry/dist/components/utils/comments/disable-search-link.js"
+  },
+  {
+    "type": "component",
+    "name": "commentImageExport",
+    "displayName": "评论图片导出",
+    "description": "by [@kaixinol](https://github.com/kaixinol)\n\n开启后, 可批量导出评论区中带图片的评论.\n\n在评论区标签栏点击「解析评论区图片」打开下载面板, 或在每条评论的菜单中选择「导出图片」单独下载.",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/image-export.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/image-export.js"
   },
   {
     "type": "component",
@@ -1131,7 +1147,7 @@
     "type": "component",
     "name": "videoSnapshot",
     "displayName": "视频快照",
-    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)\n\n查看视频多个时间点的快照预览图",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)\n\n查看视频多个时间点的快照预览图。\n\n### 选项\n\n**注意：所有选项修改均需要刷新后生效。**\n\n- `推荐列表视频按钮`：\n  - 「左上」位置可能与组件「视频预览放大`biggerVideoPreview`」冲突",
     "fullRelativePath": "../../registry/dist/components/video/snapshot.js",
     "fullAbsolutePath": "registry/dist/components/video/snapshot.js"
   },
