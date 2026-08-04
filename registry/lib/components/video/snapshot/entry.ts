@@ -97,8 +97,9 @@ async function addButtonOnRecommendList() {
 const spaceVideoListMainSelector =
   '.fav-list-main>.items, .space-upload .video-list, .space-home .content, .space-lists .lists-content, .space-list-details .list-content'
 const spaceVideoCardSelector =
-  '.top-video, .bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
-const spaceVideoCardAnchorSelector = '.top-video__title, .bili-video-card__title>a'
+  '.top-video, .upload-video-card.list-mode, .bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
+const spaceVideoCardAnchorSelector =
+  '.top-video__title, .info__top>.title, .bili-video-card__title>a'
 const spaceVideoCardCoverSelector = '.bili-video-card__cover'
 
 // 全局管理空间列表的观察器，避免残留
