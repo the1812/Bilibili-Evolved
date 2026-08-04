@@ -122,7 +122,8 @@ export default Vue.extend({
   }
 }
 
-.video-page-card-small .pic-box {
+.video-page-card-small .pic-box,
+.recommend-video-card.video-card .pic-box {
   .view-snapshot-button {
     border: none;
     &.top.right {
@@ -135,7 +136,8 @@ export default Vue.extend({
     }
   }
 }
-.video-page-card-small .pic-box:hover .view-snapshot-button {
+.video-page-card-small .pic-box:hover .view-snapshot-button,
+.recommend-video-card.video-card .pic-box:hover .view-snapshot-button {
   transition-delay: 0.3s;
   opacity: 1;
 }

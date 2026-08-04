@@ -1,8 +1,8 @@
 import { forEachFeedsCard } from '@/components/feeds/api'
 import { ComponentEntry } from '@/components/types'
-import { urlChange } from '@/core/observer'
+import { childListSubtree, urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { getVue2Data, playerReady } from '@/core/utils'
+import { playerReady } from '@/core/utils'
 import {
   feedsUrls,
   matchCurrentPage,
@@ -13,7 +13,6 @@ import {
 import ViewButton from './ViewButton.vue'
 import { getConsole, getOptions } from './handler'
 import { ButtonPosition, isButtonEnabled, parseButtonPosition } from './options'
-import { RecommendList } from './types'
 
 function createButton(vid: number | string, cid: number, title: string, position: string) {
   const vm = new (Vue.extend(ViewButton))({
@@ -29,59 +28,74 @@ function createButton(vid: number | string, cid: number, title: string, position
 }
 
 function parseBvidFromUrl(url: string) {
-  return url.match(/bilibili\.com\/video\/(\w+)/i)[1]
+  return url.match(/bilibili\.com\/video\/(\w+)/i)?.[1] ?? ''
 }
 
 // ========================================================================== //
 
-const videoPageCardSelector = '.video-page-card-small'
-const videoPageCardPicBoxSelector = '.card-box>.pic-box'
+const recommendListContainerSelector = '.recommend-list-v1, .recommend-list-container'
+const recommendCardSelector = '.video-page-card-small, .recommend-video-card.video-card'
+const recommendCardPicBoxSelector = '.card-box>.pic-box'
 
-function getRecommendListVue() {
-  let vm: RecommendList = getVue2Data(dq('.recommend-list-v1'))
-  if (!vm.recListItems) {
-    vm = vm.$children[0] as any as RecommendList
-    if (!vm.recListItems) {
-      getConsole().warn('获取视频推荐列表失败')
-      vm = undefined
+function getRecommendCardInfo(card: Element) {
+  const item = (
+    card as Element & {
+      $props?: { item?: { aid?: number; cid?: number; title?: string } }
+    }
+  ).$props?.item
+  if (item?.aid !== null && item?.cid !== null && item?.title) {
+    return {
+      vid: item.aid,
+      cid: item.cid,
+      title: item.title,
     }
   }
-  return vm
+  const titleElement = card.querySelector('.title, [title]') as HTMLElement | null
+  const title =
+    titleElement?.textContent?.trim() || titleElement?.getAttribute('title')?.trim() || ''
+  const link = card.querySelector('a[href*="/video/"]') as HTMLAnchorElement | null
+  if (!title || !link?.href) {
+    return null
+  }
+  return {
+    vid: parseBvidFromUrl(link.href),
+    cid: 0,
+    title,
+  }
+}
+
+function addButtonOnRecommendCards(container: Element, position: string) {
+  container.querySelectorAll(recommendCardSelector).forEach(card => {
+    if (card.querySelector('.view-snapshot-button')) {
+      return
+    }
+    const info = getRecommendCardInfo(card)
+    if (!info) {
+      return
+    }
+    const button = createButton(info.vid, info.cid, info.title, position)
+    card.querySelector(recommendCardPicBoxSelector)?.appendChild(button)
+  })
 }
 
 async function addButtonOnRecommendList() {
-  const recommendList = getRecommendListVue()
-  if (!recommendList || recommendList.bilibiliEvolved_viewSnapshot_watched) {
+  const position = parseButtonPosition(getOptions().recommendListButton)
+  const container = await select(recommendListContainerSelector)
+  if (!container) {
+    getConsole().warn('未找到推荐列表容器')
     return
   }
-  recommendList.bilibiliEvolved_viewSnapshot_watched = true
-  const position = parseButtonPosition(getOptions().recommendListButton)
-  recommendList.$watch(
-    'recListItems',
-    () => {
-      requestAnimationFrame(() => {
-        recommendList.$children.forEach(async videoCard => {
-          if (videoCard.bilibiliEvolved_viewSnapshot_btn) {
-            return
-          }
-          if (!videoCard.$el.matches(videoPageCardSelector)) {
-            return
-          }
-          const { aid, cid, title } = videoCard.$props.item
-          const button = createButton(aid, cid, title, position)
-          videoCard.$el.querySelector(videoPageCardPicBoxSelector)?.appendChild(button)
-          videoCard.bilibiliEvolved_viewSnapshot_btn = true
-        })
-      })
-    },
-    { immediate: true },
-  )
+  const addCards = () => addButtonOnRecommendCards(container, position)
+  addCards()
+  childListSubtree(container, () => {
+    requestAnimationFrame(addCards)
+  })
 }
 
 // ========================================================================== //
 
 const spaceVideoListMainSelector =
-  '.fav-list-main>.items,.space-upload .video-list, .space-home .content, .space-lists .lists-content, .space-list-details .list-content'
+  '.fav-list-main>.items, .space-upload .video-list, .space-home .content, .space-lists .lists-content, .space-list-details .list-content'
 const spaceVideoCardSelector =
   '.top-video, .bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
 const spaceVideoCardAnchorSelector = '.top-video__title, .bili-video-card__title>a'
@@ -187,7 +201,6 @@ function addButtonOnFeedCards() {
     added: card => {
       const videoCard: HTMLAnchorElement = card.element.querySelector(feedVideoCardSelector)
       if (videoCard) {
-        // 去重
         if (videoCard.querySelector('.view-snapshot-button')) {
           return
         }
@@ -216,9 +229,11 @@ export const entry: ComponentEntry = async () => {
     ) {
       addButtonOnSpaceVideoList(options.favoriteListButton)
     } else if (
-      (matchCurrentPage(spaceUploadVideosUrls) ||
-        matchCurrentPage(/^https:\/\/space\.bilibili\.com\/\d+\/?$/) ||
-        matchCurrentPage(/^https:\/\/space\.bilibili\.com\/[\d]+\/list/)) &&
+      matchCurrentPage([
+        ...spaceUploadVideosUrls,
+        /^https:\/\/space\.bilibili\.com\/\d+\/?$/,
+        /^https:\/\/space\.bilibili\.com\/[\d]+\/list/,
+      ]) &&
       isButtonEnabled(options.uploadListButton)
     ) {
       addButtonOnSpaceVideoList(options.uploadListButton)
