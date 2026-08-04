@@ -21,6 +21,20 @@ function extractBvid(raw) {
  * @param pageWin 返回页面 window（通常为 unsafeWindow）
  */
 export function createNativeDanmaku(pageWin: () => Window) {
+  const detectPakku = () => {
+    try {
+      if (document.querySelector('.__pakku_injected')) {
+        return true
+      }
+      if ((XMLHttpRequest.prototype as { pakku_open?: unknown }).pakku_open) {
+        return true
+      }
+    } catch {
+      // ignore
+    }
+    return false
+  }
+
   const NativeDanmaku = {
 
       page() {
@@ -137,7 +151,7 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
           const w = this.page();
 
-          try { w.player?.auxiliary?.openTabList?.(); } catch (e) { }
+          // 不要在捕获阶段调用 openTabList：会反复展开弹幕列表，导致刚加载时无法折叠
 
           const seeds = [
 
@@ -525,7 +539,7 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       async burstCaptureStore() {
 
-          if (this._allowBurstCapture === false) return false;
+          if (this._allowBurstCapture === false || detectPakku()) return false;
 
           const p = this.page().player;
 
@@ -779,6 +793,45 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
           setTimeout(apply, 250);
 
+      },
+
+      /**
+       * 偏移写回后轻触时间轴，促使 DanmakuX 按新 stime 重排当前可见弹幕。
+       * 不修改永久 offset，只做一次极小 seek 往返。
+       */
+      nudgeTimelineForReshow(padSec = 0.08) {
+          const state = this.capturePlaybackState();
+          const now = Math.max(0, Number(state.time) || 0);
+          const pad = Math.max(0.05, Number(padSec) || 0.08);
+          const back = Math.max(0, now - pad);
+          const p = this.getPlayer();
+          const v = document.querySelector('video');
+
+          const seekTo = (t) => {
+              try { p?.seek?.(t); } catch (e) { /* ignore */ }
+              if (v) {
+                  try { v.currentTime = t; } catch (e) { /* ignore */ }
+              }
+          };
+
+          // 先退后一点触发弹幕重算，再回到原进度
+          seekTo(back);
+          const restore = () => {
+              this.restorePlaybackState({
+                  ...state,
+                  time: now,
+              });
+              // 再点一次 DanmakuX fresh/play，避免仍停在空窗
+              try {
+                  const dx = this.getPlayer()?.danmaku?.getDanmakuX?.();
+                  dx?.fresh?.();
+                  if (!state.paused) {
+                      dx?.play?.();
+                  }
+              } catch (e) { /* ignore */ }
+          };
+          setTimeout(restore, 40);
+          setTimeout(restore, 120);
       },
 
       async withPlaybackPreserved(fn) {
@@ -1291,13 +1344,20 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       installResyncHook(getSourcesFn) {
 
-          if (this._resyncHooked || typeof getSourcesFn !== 'function') return;
+          if (typeof getSourcesFn !== 'function') return;
+
+          // 允许更新源获取函数，避免分P切换后仍用旧闭包里的 Map 快照
+          this._getSourcesForResync = getSourcesFn;
+
+          if (this._resyncHooked) return;
 
           this._resyncHooked = true;
 
           const resync = () => {
 
-              const sources = getSourcesFn();
+              const sources = typeof this._getSourcesForResync === 'function'
+                  ? this._getSourcesForResync()
+                  : null;
 
               if (!sources?.size || this._fullSyncing) return;
 
@@ -1307,9 +1367,15 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
                   if (!this.getDataBase() || this._fullSyncing) return;
 
+                  // 再次取当前活跃源，避免定时器等待期间分P已切换
+                  const latest = typeof this._getSourcesForResync === 'function'
+                      ? this._getSourcesForResync()
+                      : sources;
+                  if (!latest?.size) return;
+
                   const before = this.countMergedOnScreen();
 
-                  const result = await this.fullSyncAsync(sources);
+                  const result = await this.fullSyncAsync(latest);
 
                   if (result.count > 0 && result.screen === 0) {
 
@@ -1425,181 +1491,207 @@ export function createNativeDanmaku(pageWin: () => Window) {
 
       async fullSyncAsync(sourcesMap, onProgress, opts = {}) {
 
-          const allowBurstCapture = opts?.allowBurstCapture !== false;
+          // pakku 共存时默认禁用 seek 捕获，避免与其弹幕管道互相卡住
+          const allowBurstCapture =
+              opts?.allowBurstCapture !== false && !detectPakku();
 
           const skipPlaybackPreserve = !!opts?.skipPlaybackPreserve;
 
+          // 进行中只保留最新参数；结束后统一用最新参数再跑，避免分P吃到旧 Promise
           if (this._fullSyncing && this._fullSyncPromise) {
-
-              return this._fullSyncPromise;
-
+              this._pendingFullSyncArgs = { sourcesMap, onProgress, opts };
+              if (!this._fullSyncDrainPromise) {
+                  this._fullSyncDrainPromise = this._fullSyncPromise
+                      .catch(() => null)
+                      .then(async previous => {
+                          this._fullSyncDrainPromise = null;
+                          const pending = this._pendingFullSyncArgs;
+                          this._pendingFullSyncArgs = null;
+                          if (!pending) {
+                              return (
+                                  previous ||
+                                  this._lastAsyncResult || {
+                                      ok: false,
+                                      reason: 'superseded',
+                                      count: 0,
+                                      screen: 0,
+                                      list: false,
+                                  }
+                              );
+                          }
+                          return this.fullSyncAsync(
+                              pending.sourcesMap,
+                              pending.onProgress,
+                              pending.opts,
+                          );
+                      });
+              }
+              return this._fullSyncDrainPromise;
           }
 
           this._fullSyncing = true;
 
           const runSync = async () => {
-
               this._allowBurstCapture = allowBurstCapture;
-
               try {
-
-              const db = this.getDataBase();
-
-              if (!db) return { ok: false, reason: 'no_db', count: 0, screen: 0, list: false };
-
-
-
-              this.ensureCapture(true);
-
-              if (!this.hasListStore()) {
-
-                  onProgress?.('捕获列表 Store');
-
-                  if (allowBurstCapture) {
-
-                      await this.burstCaptureStore();
-
-                  } else {
-
-                      await this.waitForListStore(15000, onProgress);
-
+                  const db = this.getDataBase();
+                  if (!db) {
+                      return { ok: false, reason: 'no_db', count: 0, screen: 0, list: false };
                   }
 
-              }
-
-
-
-              onProgress?.('清理旧弹幕');
-
-              this.purgeMerged();
-
-              await this.yieldUI();
-
-
-
-              onProgress?.('准备数据');
-
-              const items = this.buildNativeItems(sourcesMap);
-
-              if (!items.length) {
-
-                  return { ok: true, count: 0, screen: 0, list: this.hasListStore(), firstSec: null };
-
-              }
-
-
-
-              const CHUNK = 120;
-
-              try {
-
-                  for (let i = 0; i < items.length; i += CHUNK) {
-
-                      const chunk = this.filterNewItems(items.slice(i, i + CHUNK));
-
-                      if (!chunk.length) continue;
-
-                      db.addList(chunk);
-
-                      onProgress?.(`写入画面 ${Math.min(i + CHUNK, items.length)}/${items.length}`);
-
-                      await this.yieldUI();
-
+                  this.ensureCapture(true);
+                  if (!this.hasListStore()) {
+                      onProgress?.('捕获列表 Store');
+                      if (allowBurstCapture) {
+                          await this.burstCaptureStore();
+                      } else {
+                          await this.waitForListStore(15000, onProgress);
+                      }
                   }
 
-              } catch (e) {
+                  // 等待期间已有更新请求：本轮尽快结束，交给 drain 用新源重跑
+                  if (this._pendingFullSyncArgs) {
+                      return {
+                          ok: false,
+                          reason: 'interrupted',
+                          count: 0,
+                          screen: 0,
+                          list: false,
+                      };
+                  }
 
-                  console.warn('[弹幕合并器] addList 失败', e);
+                  onProgress?.('清理旧弹幕');
+                  this.purgeMerged();
+                  await this.yieldUI();
 
-                  return { ok: false, reason: 'addList_error', count: items.length, screen: 0, list: false, firstSec: items[0].stime / 1000 };
+                  if (this._pendingFullSyncArgs) {
+                      return {
+                          ok: false,
+                          reason: 'interrupted',
+                          count: 0,
+                          screen: 0,
+                          list: false,
+                      };
+                  }
 
-              }
+                  onProgress?.('准备数据');
+                  const items = this.buildNativeItems(sourcesMap);
+                  if (!items.length) {
+                      return {
+                          ok: true,
+                          count: 0,
+                          screen: 0,
+                          list: this.hasListStore(),
+                          firstSec: null,
+                      };
+                  }
 
-
-
-              let listOk = await this.injectListAsync(items, onProgress);
-
-              let result = this.evaluateSyncResult(db, items, listOk);
-
-
-
-              // 分批写入偶发漏检时，整批重试一次
-
-              if (!result.ok && items.length > 0) {
-
-                  onProgress?.('重试写入');
-
+                  const CHUNK = 120;
                   try {
-
-                      this.purgeMerged();
-
-                      const retryItems = this.filterNewItems(items);
-
-                      if (retryItems.length) db.addList(retryItems);
-
-                      listOk = await this.injectListAsync(items, onProgress) || listOk;
-
-                      result = this.evaluateSyncResult(db, items, listOk);
-
+                      for (let i = 0; i < items.length; i += CHUNK) {
+                          if (this._pendingFullSyncArgs) {
+                              // 已写入部分旧分P数据，清掉后交给新一轮
+                              this.purgeMerged();
+                              return {
+                                  ok: false,
+                                  reason: 'interrupted',
+                                  count: items.length,
+                                  screen: 0,
+                                  list: false,
+                                  firstSec: items[0].stime / 1000,
+                              };
+                          }
+                          const chunk = this.filterNewItems(items.slice(i, i + CHUNK));
+                          if (!chunk.length) continue;
+                          db.addList(chunk);
+                          onProgress?.(
+                              `写入画面 ${Math.min(i + CHUNK, items.length)}/${items.length}`,
+                          );
+                          await this.yieldUI();
+                      }
                   } catch (e) {
-
-                      console.warn('[弹幕合并器] 重试 addList 失败', e);
-
+                      console.warn('[弹幕合并器] addList 失败', e);
+                      return {
+                          ok: false,
+                          reason: 'addList_error',
+                          count: items.length,
+                          screen: 0,
+                          list: false,
+                          firstSec: items[0].stime / 1000,
+                      };
                   }
 
-              }
+                  if (this._pendingFullSyncArgs) {
+                      this.purgeMerged();
+                      return {
+                          ok: false,
+                          reason: 'interrupted',
+                          count: items.length,
+                          screen: 0,
+                          list: false,
+                          firstSec: items[0].stime / 1000,
+                      };
+                  }
 
+                  let listOk = await this.injectListAsync(items, onProgress);
+                  let result = this.evaluateSyncResult(db, items, listOk);
 
+                  if (!result.ok && items.length > 0 && !this._pendingFullSyncArgs) {
+                      onProgress?.('重试写入');
+                      try {
+                          this.purgeMerged();
+                          const retryItems = this.filterNewItems(items);
+                          if (retryItems.length) db.addList(retryItems);
+                          listOk = (await this.injectListAsync(items, onProgress)) || listOk;
+                          result = this.evaluateSyncResult(db, items, listOk);
+                      } catch (e) {
+                          console.warn('[弹幕合并器] 重试 addList 失败', e);
+                      }
+                  }
 
-              this._lastAsyncResult = result;
-
-              dmLog('fullSyncAsync 完成', {
-
-                  ok: result.ok,
-
-                  count: result.count,
-
-                  screen: result.screen,
-
-                  list: result.list,
-
-                  hasStore: this.hasListStore(),
-
-                  allDmLen: this.getStores()?.dmListStore?.allDm?.length ?? null,
-
-              });
-
-              return result;
-
+                  this._lastAsyncResult = result;
+                  dmLog('fullSyncAsync 完成', {
+                      ok: result.ok,
+                      count: result.count,
+                      screen: result.screen,
+                      list: result.list,
+                      hasStore: this.hasListStore(),
+                      allDmLen: this.getStores()?.dmListStore?.allDm?.length ?? null,
+                  });
+                  return result;
               } finally {
-
                   this._allowBurstCapture = undefined;
-
               }
-
           };
 
           this._fullSyncPromise = skipPlaybackPreserve
-
               ? runSync()
-
               : this.withPlaybackPreserved(runSync);
 
-
-
           try {
-
-              return await this._fullSyncPromise;
-
+              const result = await this._fullSyncPromise;
+              // 无并发调用方时，若仍挂着 pending（理论上少见），这里兜底再跑
+              if (this._pendingFullSyncArgs && !this._fullSyncDrainPromise) {
+                  const pending = this._pendingFullSyncArgs;
+                  this._pendingFullSyncArgs = null;
+                  this._fullSyncing = false;
+                  this._fullSyncPromise = null;
+                  return this.fullSyncAsync(
+                      pending.sourcesMap,
+                      pending.onProgress,
+                      pending.opts,
+                  );
+              }
+              return result;
           } finally {
-
               this._fullSyncing = false;
-
+              this._fullSyncPromise = null;
           }
 
       },
 
-      formatInjectHint(result) {
+      
+formatInjectHint(result) {
 
           const parts = [];
 

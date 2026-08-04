@@ -7,7 +7,12 @@
  */
 
 import { getStorage } from '../storage'
-import { filterSourcesMapByViewCid, getCurrentPageCid } from '../runtime/helpers'
+import {
+  filterSourcesMapByViewCid,
+  getCurrentPageCid,
+  isLegacyUnscopedSource,
+  sourceMatchesViewCid,
+} from '../runtime/helpers'
 import type { NativeDanmakuApi } from './inject'
 import { dmLog, dmWarn } from './log'
 
@@ -53,7 +58,22 @@ export class DanmakuEngine {
   }
 
   getActiveSources() {
-    return filterSourcesMapByViewCid(this.sources, this.activeViewCid)
+    const scoped = filterSourcesMapByViewCid(this.sources, this.activeViewCid)
+    if (scoped?.size || !this.sources?.size || !this.activeViewCid) {
+      return scoped
+    }
+    // 当前分P无严格匹配源时：回落注入「无 viewCid」旧源，避免切P后只 toast 不写入
+    const fallback = new Map()
+    this.sources.forEach((source, key) => {
+      if (isLegacyUnscopedSource(source.meta)) {
+        fallback.set(key, source)
+        return
+      }
+      if (sourceMatchesViewCid(source.meta, this.activeViewCid)) {
+        fallback.set(key, source)
+      }
+    })
+    return fallback
   }
 
   init() {
@@ -254,6 +274,19 @@ export class DanmakuEngine {
   rebuildList() {
     this.rebuildListMeta()
     this.syncNative()
+  }
+
+  /**
+   * 偏移变更后：重建并同步，再轻触时间轴让当前进度立刻出现新位置弹幕。
+   * 不额外改写永久 offset，避免影响后续弹幕相对关系。
+   */
+  applyOffsetAndReshow(id, offset) {
+    this.updateSource(id, { offset })
+    try {
+      this.nativeDanmaku?.nudgeTimelineForReshow?.(0.08)
+    } catch {
+      // ignore
+    }
   }
 
   // --- 状态持久化 ---
