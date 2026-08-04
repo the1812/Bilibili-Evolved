@@ -22,23 +22,6 @@ export function getConsole() {
   return scopedConsole ?? (scopedConsole = useScopedConsole(displayName))
 }
 
-const snapshotCanvasCacheClearers = new Set<() => void>()
-
-export function registerSnapshotCanvasCacheClearer(clearer: () => void) {
-  snapshotCanvasCacheClearers.add(clearer)
-  return () => snapshotCanvasCacheClearers.delete(clearer)
-}
-
-export function clearSnapshotCanvasCache() {
-  for (const clearer of snapshotCanvasCacheClearers) {
-    try {
-      clearer()
-    } catch (error) {
-      getConsole().error(error)
-    }
-  }
-}
-
 export async function openViewer() {
   return openCanvasViewer('视频快照加载中……')
 }

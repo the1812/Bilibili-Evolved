@@ -12,13 +12,7 @@
 
 <script lang="ts">
 import { DefaultWidget } from '@/ui'
-import {
-  createSnapshotGrid,
-  getOptions,
-  openViewer,
-  getConsole,
-  registerSnapshotCanvasCacheClearer,
-} from './handler'
+import { createSnapshotGrid, getOptions, openViewer, getConsole } from './handler'
 import { videoChange } from '@/core/observer'
 import { getFriendlyTitle } from '@/core/utils/title'
 
@@ -30,19 +24,12 @@ export default Vue.extend({
     return {
       disabled: false,
       canvas: <HTMLCanvasElement>null,
-      unregisterCacheClearer: null as (() => void) | null,
     }
   },
   mounted() {
-    this.unregisterCacheClearer = registerSnapshotCanvasCacheClearer(() => {
-      this.canvas = null
-    })
     videoChange(() => {
       this.canvas = null
     })
-  },
-  beforeDestroy() {
-    this.unregisterCacheClearer?.()
   },
   methods: {
     async viewSnapshotGrid() {
