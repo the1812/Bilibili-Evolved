@@ -131,6 +131,16 @@ async function loadAtlasImage(atlas: SnapshotAtlas) {
   })
 }
 
+async function loadImage(url: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => resolve(img)
+    img.onerror = reject
+    img.src = url.startsWith('//') ? `https:${url}` : url
+  })
+}
+
 /**
  * @author WakelessSloth56
  */
@@ -150,11 +160,11 @@ async function splitTileImage(tile: SnapshotTile) {
     tile.x,
     tile.y,
     tile.width,
-    tile.width,
+    tile.height,
     0,
     0,
     tile.width,
-    tile.width,
+    tile.height,
   )
   tile.canvas = canvas
   return tile as SnapshotTileWithCanvas
@@ -425,6 +435,12 @@ export class VideoSnapshot {
     this.atlasRows = data.img_y_len
     this.tileWidth = data.img_x_size
     this.tileHeight = data.img_y_size
+
+    if ((this.tileWidth ?? 0) <= 0 || (this.tileHeight ?? 0) <= 0) {
+      const atlasImage = await loadImage(data.image[0])
+      this.tileWidth = Math.floor(atlasImage.width / this.atlasColumns)
+      this.tileHeight = Math.floor(atlasImage.height / this.atlasRows)
+    }
 
     this.atlases = await parseAtlases(
       allTimes,
