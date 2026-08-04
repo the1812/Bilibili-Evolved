@@ -53,7 +53,7 @@ const options = defineOptionsMetadata({
     multiline: true,
   },
   exportSettingsFormat: {
-    defaultValue: '/n_/v_yyyy-MM-dd_hh-mm-ss',
+    defaultValue: '[n]_[v] [y]-[M]-[d] [h]-[m]-[s]',
     displayName: '导出设置文件命名格式',
     multiline: true,
   },

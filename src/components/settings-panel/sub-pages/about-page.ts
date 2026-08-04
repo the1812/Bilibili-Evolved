@@ -1,5 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
 import { getGeneralSettings } from '@/core/settings'
+import { formatFilename } from '@/core/utils/formatters'
 
 export interface AboutPageAction {
   icon: string
@@ -11,56 +12,68 @@ export interface AboutPageAction {
   run: (event?: MouseEvent) => void | Promise<void>
 }
 
+const tokenSplit = (format: string) => {
+  let startIndex = 0
+  let depth = 0
+  const tokens: string[] = []
+  format.split('').forEach((char, index) => {
+    if (char === '[') {
+      if (depth === 0) {
+        tokens.push(format.substring(startIndex, index))
+        startIndex = index
+      } else {
+        depth++
+      }
+    }
+    if (char === ']') {
+      if (depth === 0) {
+        tokens.push(format.substring(startIndex, index + 1))
+        startIndex = index + 1
+      } else {
+        depth--
+      }
+    }
+  })
+  if (startIndex < format.length) {
+    tokens.push(format.substring(startIndex))
+  }
+  return tokens.filter(it => it !== '')
+}
+
 export const getFormatStr = async (format: string) => {
   const { meta } = await import('@/core/meta')
   const time = new Date()
-  const formatMap = {
-    'M+': time.getMonth() + 1, // 月
-    'd+': time.getDate(), // 日
-    'h+': time.getHours(), // 时
-    'm+': time.getMinutes(), // 分
-    's+': time.getSeconds(), // 秒
-    'q+': Math.floor((time.getMonth() + 3) / 3), // 季度
+  const variables = {
+    n: meta.name,
+    v: `v${meta.compilationInfo.version}`,
+    V: meta.compilationInfo.versionWithTag,
+    y: time.getFullYear().toString(),
+    M: (time.getMonth() + 1).toString().padStart(2, '0'),
+    d: time.getDate().toString().padStart(2, '0'),
+    h: time.getHours().toString().padStart(2, '0'),
+    m: time.getMinutes().toString().padStart(2, '0'),
+    s: time.getSeconds().toString().padStart(2, '0'),
+    ms: time.getMilliseconds().toString().substring(0, 3),
   }
-  const constMap = {
-    '/n': meta.name, // 组件名
-    '/v': `v${meta.compilationInfo.version}`,
-    '/V': meta.compilationInfo.versionWithTag,
-  }
-  // 处理年份
-  let matchResult: RegExpMatchArray | null = format.match(/(y+)/)
-  if (matchResult !== null) {
-    format = format.replace(
-      matchResult[0],
-      `${time.getFullYear()}`.substring(4 - matchResult[0].length),
-    )
-  }
-  // 处理除年份外的时间
-  for (const key in formatMap) {
-    if (!key) {
-      continue
+  const tokens = tokenSplit(format)
+  const sortedVariables = Object.entries(variables).sort(([, valueA], [, valueB]) => {
+    return valueB.length - valueA.length
+  })
+  const processedTokens = tokens.map(token => {
+    if (!token.startsWith('[') || !token.endsWith(']')) {
+      return token
     }
-    matchResult = format.match(new RegExp(`(${key})`))
-    if (matchResult !== null) {
-      format = format.replace(
-        matchResult[0],
-        matchResult[0].length === 1
-          ? formatMap[key]
-          : `00${formatMap[key]}`.substring(`${formatMap[key]}`.length),
-      )
+    for (const [name, value] of sortedVariables) {
+      const regex = new RegExp(`^\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]$`)
+      const match = token.match(regex)
+      if (match && Boolean(value)) {
+        return `${match[1] ?? ''}${value}${match[2] ?? ''}`
+      }
     }
-  }
-  // 处理自定义替换文本
-  for (const key in constMap) {
-    if (!key) {
-      continue
-    }
-    matchResult = format.match(new RegExp(`(${key})`))
-    if (matchResult !== null) {
-      format = format.replace(matchResult[0], constMap[key])
-    }
-  }
-  return format
+    return ''
+  })
+  const finalValue = processedTokens.join('')
+  return formatFilename(finalValue, ' ')
 }
 
 export const builtInActions: AboutPageAction[] = [
