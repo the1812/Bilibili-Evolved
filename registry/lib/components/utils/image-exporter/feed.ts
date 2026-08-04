@@ -3,7 +3,7 @@ import { ComponentEntry } from '@/components/types'
 import { getBlob, getJsonWithCredentials } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
 import { Toast } from '@/core/toast'
-import { matchUrlPattern, retrieveImageUrl } from '@/core/utils'
+import { dq, dqa, matchUrlPattern, retrieveImageUrl } from '@/core/utils'
 import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
 import { Options } from '.'
@@ -89,24 +89,30 @@ const extractImagesFromMajor = (
     return []
   }
   if (major.draw?.items) {
-    return major.draw.items.map(p => p.src.replace(/^http:/, 'https:'))
+    return major.draw.items.flatMap(p => {
+      const r = retrieveImageUrl(p.src)
+      return r ? [r.url] : []
+    })
   }
   if (major.opus?.pics) {
-    return major.opus.pics.map(p => p.url.replace(/^http:/, 'https:'))
+    return major.opus.pics.flatMap(p => {
+      const r = retrieveImageUrl(p.url)
+      return r ? [r.url] : []
+    })
   }
   return []
 }
 
 const extractImagesFromDom = (): string[] => {
-  const contentArea = document.querySelector('.opus-module-content')
+  const contentArea = dq('.opus-module-content')
   if (!contentArea) {
     return []
   }
-  const images = contentArea.querySelectorAll('img')
+  const images = dqa(contentArea, 'img')
   const urls = new Set<string>()
   images.forEach((img: HTMLImageElement) => {
     const src = img.src || (img.dataset as any)?.src || ''
-    if ((src.includes('/new_dyn/') || src.includes('/bfs/article/')) && !src.includes('/face/')) {
+    if (src.includes('/article/') && !src.includes('/face/')) {
       const imageInfo = retrieveImageUrl(src)
       if (imageInfo) {
         urls.add(imageInfo.url)
