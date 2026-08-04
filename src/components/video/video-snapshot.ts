@@ -114,22 +114,6 @@ async function parseAtlases(
 /**
  * @author WakelessSloth56
  */
-async function loadAtlasImage(atlas: SnapshotAtlas) {
-  return new Promise((resolve: (atlas: SnapshotAtlas) => void, reject) => {
-    if (atlas.image) {
-      resolve(atlas)
-    } else {
-      const img = new Image()
-      img.crossOrigin = 'anonymous'
-      img.onload = () => {
-        atlas.image = img
-        resolve(atlas)
-      }
-      img.onerror = reject
-      img.src = atlas.url
-    }
-  })
-}
 
 async function loadImage(url: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
@@ -137,8 +121,18 @@ async function loadImage(url: string) {
     img.crossOrigin = 'anonymous'
     img.onload = () => resolve(img)
     img.onerror = reject
-    img.src = url.startsWith('//') ? `https:${url}` : url
+    img.src = url
   })
+}
+
+async function loadAtlasImage(atlas: SnapshotAtlas) {
+  if (atlas.image) {
+    return atlas
+  }
+
+  const img = await loadImage(atlas.url)
+  atlas.image = img
+  return atlas
 }
 
 /**
