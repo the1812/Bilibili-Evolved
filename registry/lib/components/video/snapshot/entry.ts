@@ -80,10 +80,11 @@ async function addButtonOnRecommendList() {
 
 // ========================================================================== //
 
-const spaceVideoListMainSelector = '.fav-list-main>.items,.space-upload .video-list'
+const spaceVideoListMainSelector =
+  '.fav-list-main>.items,.space-upload .video-list, .space-home .content, .space-lists .lists-content, .space-list-details .list-content'
 const spaceVideoCardSelector =
-  '.bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
-const spaceVideoCardAnchorSelector = '.bili-video-card__title>a'
+  '.top-video, .bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
+const spaceVideoCardAnchorSelector = '.top-video__title, .bili-video-card__title>a'
 const spaceVideoCardCoverSelector = '.bili-video-card__cover'
 
 // 全局管理空间列表的观察器，避免残留
@@ -215,7 +216,9 @@ export const entry: ComponentEntry = async () => {
     ) {
       addButtonOnSpaceVideoList(options.favoriteListButton)
     } else if (
-      matchCurrentPage(spaceUploadVideosUrls) &&
+      (matchCurrentPage(spaceUploadVideosUrls) ||
+        matchCurrentPage(/^https:\/\/space\.bilibili\.com\/\d+\/?$/) ||
+        matchCurrentPage(/^https:\/\/space\.bilibili\.com\/[\d]+\/list/)) &&
       isButtonEnabled(options.uploadListButton)
     ) {
       addButtonOnSpaceVideoList(options.uploadListButton)
