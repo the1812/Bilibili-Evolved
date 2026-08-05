@@ -66,16 +66,21 @@ export const component = defineComponentMetadata({
 
     // ---------- 主逻辑 ----------
     const roomId = getLiveRoomId()
+    if (!roomId) {
+      console.warn('[showArea] 未检测到房间号，退出')
+      return
+    }
+
     const areaInfo = await fetchAreaInfo(roomId)
     if (!areaInfo) {
       return
     }
 
     // 同时等待两种可能存在的容器，谁先出现就用谁
-    const anchor = await Promise.race([
+    const anchor = (await Promise.race([
       waitForElement('.head-info-section .left-anchor-section'),
       waitForElement('.left-ctnr .live-title'),
-    ])
+    ])) as Element
     // 检查是否已经插入过（避免重复）
     if (anchor.parentElement?.querySelector('.show-area-info')) {
       console.debug('[showArea] 分区信息已存在，跳过')
@@ -154,11 +159,11 @@ export const component = defineComponentMetadata({
     areaEl.appendChild(childA)
 
     // 插入到锚点元素之后（作为其下一个兄弟节点）
-    const parent = anchor.parentNode
-    if (parent) {
-      parent.insertBefore(areaEl, anchor.nextSibling)
+    const parentEl = anchor.parentElement
+    if (parentEl) {
+      parentEl.insertBefore(areaEl, anchor.nextSibling)
     } else {
-      anchor.parentNode?.appendChild(areaEl)
+      anchor.parentElement?.appendChild(areaEl)
     }
 
     console.debug('[showArea] 分区信息已显示：', `${parentAreaName} - ${areaName}`)
