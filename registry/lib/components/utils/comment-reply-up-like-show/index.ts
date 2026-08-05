@@ -1,45 +1,27 @@
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
 
-// 获取是否有“UP主觉得很赞”标识
-const isCommentLiked = (item: CommentReplyItem) => {
-  /* eslint-disable no-underscore-dangle */
-  return item.frameworkSpecificProps?.up_action?.like ?? false
-}
+const isCommentLiked = (item: CommentReplyItem) =>
+  item.frameworkSpecificProps?.up_action?.like === true
 
-// 仿制普通评论标识的“UP主觉得很赞”
-const createUpLiked = (rootElement: HTMLDivElement) => {
-  const existingTagsElement = rootElement.querySelector('#tags') as HTMLDivElement | null
+const createUpLiked = (footer: HTMLDivElement) => {
+  const tagsContainerElement =
+    (footer.querySelector('#tags') as HTMLDivElement | null) ?? document.createElement('div')
+  tagsContainerElement.id = 'tags'
 
-  const tagsContainerElement = existingTagsElement ?? document.createElement('div')
-  tagsContainerElement.style.cssText = `
-        margin-top: 6px;
-        display: flex;
-        align-items: center;
-    `
+  if (tagsContainerElement.querySelector('.tag') !== null) {
+    if (footer.contains(tagsContainerElement)) {
+      return
+    }
+  }
 
   const mainTag = document.createElement('div')
-  mainTag.style.cssText = `
-        --bili-comment-tag-color-light: #757575;
-        --bili-comment-tag-color-dark: #939393;
-        --bili-comment-tag-bg-light: #F4F4F4;
-        --bili-comment-tag-bg-dark: #1E1E1E;
-        --bili-comment-tag-color: var(--bili-comment-tag-color-light);
-        --bili-comment-tag-bg: var(--bili-comment-tag-bg-light);
-        color: var(--bili-comment-tag-color, --brand_pink);
-        background-color: var(--bili-comment-tag-bg, ----brand_pink_thin);
-        padding: 6px;
-        border-radius: 2px;
-        box-sizing: border-box;
-        font-size: 12px;
-        line-height: 1;
-    `
+  mainTag.className = 'tag'
   mainTag.textContent = 'UP主觉得很赞'
 
   tagsContainerElement.appendChild(mainTag)
-
-  if (existingTagsElement === null) {
-    rootElement.appendChild(tagsContainerElement)
+  if (!footer.contains(tagsContainerElement)) {
+    footer.appendChild(tagsContainerElement)
   }
 }
 
@@ -49,7 +31,11 @@ const processItems = (items: CommentReplyItem[]) => {
       return
     }
 
-    const footer = item.shadowDomEntry.shadowRoot.getElementById('footer') as HTMLDivElement
+    const footer = item.shadowDomEntry.shadowRoot.getElementById('footer') as HTMLDivElement | null
+    if (footer === null) {
+      return
+    }
+
     createUpLiked(footer)
   })
 }
@@ -58,11 +44,9 @@ const entry = async () => {
   const { forEachCommentItem } = await import('@/components/utils/comment-apis')
   const addUpLikedMark = (comment: CommentItem) => {
     processItems(comment.replies)
-    comment.addEventListener('repliesUpdate', replies => processItems(replies.detail))
+    comment.addEventListener('repliesUpdate', event => processItems(event.detail))
   }
-  forEachCommentItem({
-    added: addUpLikedMark,
-  })
+  forEachCommentItem({ added: addUpLikedMark })
 }
 
 export const component = defineComponentMetadata({
@@ -73,5 +57,12 @@ export const component = defineComponentMetadata({
   },
   displayName: '楼中楼回复“UP主觉得很赞”显示',
   tags: [componentsTags.utils],
+  instantStyles: [
+    {
+      name: 'comment-reply-up-like-show',
+      style: () => import('./comment-reply-up-like-show.scss'),
+      shadowDom: true,
+    },
+  ],
   entry,
 })
