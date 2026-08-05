@@ -43,5 +43,6 @@ body.history-page #biliMainHeader:not(.z-top-container) {
   top: var(--navbar-height) !important;
 }
 .bili-feed4 .header-channel{
+  display: none !important;
   top: 0 !important;
 }
