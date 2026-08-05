@@ -1,6 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
-import { getUID } from '@/core/utils'
+import { delay, getUID } from '@/core/utils'
+
+const getPlayer = () => unsafeWindow.livePlayer as any
+const isPlayerReady = (player: any) => player?.getPlayerInfo?.().playurl && player.switchQuality
 
 export const component = defineComponentMetadata({
   name: 'autoHighestQuality',
@@ -9,38 +12,26 @@ export const component = defineComponentMetadata({
     if (!getUID()) {
       return
     }
-    await new Promise<void>(resolve => {
-      const isPlayerReady = () => {
-        return (
-          unsafeWindow.livePlayer &&
-          unsafeWindow.livePlayer.getPlayerInfo &&
-          unsafeWindow.livePlayer.getPlayerInfo().playurl &&
-          unsafeWindow.livePlayer.switchQuality
-        )
-      }
 
-      const waitForPlayer = setInterval(() => {
-        if (isPlayerReady()) {
-          clearInterval(waitForPlayer)
-          resolve()
-        }
-      }, 500)
-    })
+    let player = getPlayer()
+    while (!isPlayerReady(player)) {
+      await delay(500)
+      player = getPlayer()
+    }
     console.debug('[直播自动切换最高画质] 播放器已就绪')
 
-    const player = unsafeWindow.livePlayer
-    const { qualityCandidates } = player.getPlayerInfo()
-    const highestQualityNumber = qualityCandidates[0].qn
+    const playerInfo = player.getPlayerInfo()
+    const highestQualityNumber = playerInfo.qualityCandidates?.[0]?.qn
+    if (highestQualityNumber == null) {
+      return
+    }
 
-    const intervalId = setInterval(() => {
-      if (player.getPlayerInfo().quality === highestQualityNumber) {
-        console.debug('[直播自动切换最高画质] 已是最高画质')
-        clearInterval(intervalId)
-        return
-      }
+    const hasAutoQuality = playerInfo.qualityCandidates?.some((item: any) => item?.qn === '-1')
+
+    if (hasAutoQuality || playerInfo.quality !== highestQualityNumber) {
       player.switchQuality(highestQualityNumber)
       console.debug('[直播自动切换最高画质] 切换画质')
-    }, 1000)
+    }
   },
   tags: [componentsTags.live],
   urlInclude: liveUrls,
