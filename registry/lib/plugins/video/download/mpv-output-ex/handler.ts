@@ -31,6 +31,9 @@ const getPastebinUrl = async (str: string, config: ConfigDataType) => {
   return response
 }
 
+const buildMpvUrl = (...args: string[]) => `mpv://${encodeURIComponent(args.join(' '))}`
+const mpvHttpHeaders = '--http-header-fields="referer:https://www.bilibili.com/"'
+
 export const MPV_Ex: DownloadVideoOutput<ConfigDataType> = {
   name: 'mpv-ex',
   displayName: 'MPV 输出支持加强版',
@@ -38,14 +41,13 @@ export const MPV_Ex: DownloadVideoOutput<ConfigDataType> = {
     '多文件时格式选择 flv，使用前请先阅读 <a href="https://github.com/Asukaaaaaa/tricks/blob/main/Bilibili-Evolved%20mpv-ex%20%E6%8F%92%E4%BB%B6.md" target="blank">README</a>',
   runAction: async (action, instance) => {
     let finalURL: string
-    const mpv_protocol = 'mpv://--http-header-fields="referer:https://www.bilibili.com/"'
     if (action.isSingleVideo) {
       // 单文件直接生成 url
       const frag = action.infos[0].fragments
       if (frag.length === 1) {
-        finalURL = `${mpv_protocol} ${frag[0].url}`
+        finalURL = buildMpvUrl(mpvHttpHeaders, `"${frag[0].url}"`)
       } else if (frag.length === 2) {
-        finalURL = `${mpv_protocol} ${frag[0].url} --audio-file=${frag[1].url}`
+        finalURL = buildMpvUrl(mpvHttpHeaders, `"${frag[0].url}"`, `--audio-file="${frag[1].url}"`)
       }
     } else {
       // 多文件生成 .m3u 播放列表
@@ -57,7 +59,7 @@ export const MPV_Ex: DownloadVideoOutput<ConfigDataType> = {
           /^(https:\/\/pastebin.com)\/(.*)/,
           '$1/raw/$2?.m3u',
         )
-        finalURL = `${mpv_protocol} ${playlist}`
+        finalURL = buildMpvUrl(mpvHttpHeaders, `"${playlist}"`)
       } catch (error) {
         logError(error)
         return
