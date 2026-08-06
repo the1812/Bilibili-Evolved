@@ -154,6 +154,7 @@ const clearImage = () => {
     }
 
     .be-textbox {
+      flex-basis: auto;
       width: 100%;
       min-width: 0;
     }

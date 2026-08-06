@@ -21,7 +21,10 @@ export const searchHomeOptionsMetadata = defineOptionsMetadata({
   },
   backgroundImage: {
     displayName: '背景图片',
-    defaultValue: emptyBackgroundImage(),
+    defaultValue: {
+      name: '',
+      url: 'https://i1.hdslb.com/bfs/static/jinkela/long/images/dynamic/bg.png',
+    },
     hidden: true,
   },
 })

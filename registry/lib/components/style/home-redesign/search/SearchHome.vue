@@ -62,13 +62,13 @@ export default Vue.extend({
 @import 'common';
 
 // 避免「顶栏高度 + 再叠一层 100vh」把页面撑出底部空白滚动区
-html:has(.search-home),
-body:has(.search-home) {
+html:has(body:not(.home-redesign-off) .search-home),
+body:not(.home-redesign-off):has(.search-home) {
   height: 100%;
   overflow: hidden;
 }
 
-body:has(.search-home) {
+body:not(.home-redesign-off):has(.search-home) {
   min-height: 100%;
 }
 
