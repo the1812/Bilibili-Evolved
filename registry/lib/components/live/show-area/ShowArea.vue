@@ -1,29 +1,30 @@
 <template>
   <div class="show-area-info" :style="{ color: mainColor }">
-    <a :href="parentLink" target="_blank">{{ parentAreaName || '父分区' }}</a>
+    <a
+      :href="`https://live.bilibili.com/p/eden/area-tags?parentAreaId=${areaInfo.parent_area_id}`"
+      target="_blank"
+      >{{ areaInfo.parent_area_name || '父分区' }}</a
+    >
     <span class="sep">-</span>
-    <a :href="childLink" target="_blank">{{ areaName || '子分区' }}</a>
+    <a
+      :href="`https://live.bilibili.com/p/eden/area-tags?parentAreaId=${areaInfo.parent_area_id}&areaId=${areaInfo.area_id}`"
+      target="_blank"
+      >{{ areaInfo.area_name || '子分区' }}</a
+    >
   </div>
 </template>
 
 <script lang="ts">
 export default Vue.extend({
   props: {
-    parentAreaName: {
-      type: String,
-      default: '',
-    },
-    areaName: {
-      type: String,
-      default: '',
-    },
-    parentLink: {
-      type: String,
-      default: '',
-    },
-    childLink: {
-      type: String,
-      default: '',
+    areaInfo: {
+      type: Object as () => {
+        area_id: number
+        area_name: string
+        parent_area_id: number
+        parent_area_name: string
+      },
+      required: true,
     },
   },
   data() {
@@ -37,11 +38,11 @@ export default Vue.extend({
     const el1 = document.querySelector(colorSelector1) as HTMLElement | null
     if (el1) {
       this.mainColor = getComputedStyle(el1).color
-      return
-    }
-    const el2 = document.querySelector(colorSelector2) as HTMLElement | null
-    if (el2) {
-      this.mainColor = getComputedStyle(el2).color
+    } else {
+      const el2 = document.querySelector(colorSelector2) as HTMLElement | null
+      if (el2) {
+        this.mainColor = getComputedStyle(el2).color
+      }
     }
   },
 })

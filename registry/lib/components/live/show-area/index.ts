@@ -29,12 +29,7 @@ export const component = defineComponentMetadata({
         )
         const json = await res.json()
         if (json.code === 0 && json.data) {
-          return {
-            areaId: json.data.area_id,
-            areaName: json.data.area_name,
-            parentAreaId: json.data.parent_area_id,
-            parentAreaName: json.data.parent_area_name,
-          }
+          return json.data
         }
         throw new Error(json.message || '请求失败')
       } catch (error) {
@@ -73,10 +68,6 @@ export const component = defineComponentMetadata({
     }
 
     // ---------- 构建分区显示 ----------
-    const { areaId, areaName, parentAreaId, parentAreaName } = areaInfo
-    const parentLink = `https://live.bilibili.com/p/eden/area-tags?parentAreaId=${parentAreaId}`
-    const childLink = `https://live.bilibili.com/p/eden/area-tags?parentAreaId=${parentAreaId}&areaId=${areaId}`
-
     let parentEl = anchor.parentElement as Element | null
     if (!parentEl) {
       parentEl = (anchor.parentNode as Element) || null
@@ -85,10 +76,7 @@ export const component = defineComponentMetadata({
     const ShowArea = await import('./ShowArea.vue').then(m => m.default)
     const instance = new ShowArea({
       propsData: {
-        parentAreaName,
-        areaName,
-        parentLink,
-        childLink,
+        areaInfo,
       },
     })
     instance.$mount()
