@@ -1,6 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
 import { getGeneralSettings } from '@/core/settings'
-import { formatFilename } from '@/core/utils/formatters'
+import { formatTitle } from '@/core/utils/title'
 
 export interface AboutPageAction {
   icon: string
@@ -10,34 +10,6 @@ export interface AboutPageAction {
   displayName: string
   actionName?: string
   run: (event?: MouseEvent) => void | Promise<void>
-}
-
-const tokenSplit = (format: string) => {
-  let startIndex = 0
-  let depth = 0
-  const tokens: string[] = []
-  format.split('').forEach((char, index) => {
-    if (char === '[') {
-      if (depth === 0) {
-        tokens.push(format.substring(startIndex, index))
-        startIndex = index
-      } else {
-        depth++
-      }
-    }
-    if (char === ']') {
-      if (depth === 0) {
-        tokens.push(format.substring(startIndex, index + 1))
-        startIndex = index + 1
-      } else {
-        depth--
-      }
-    }
-  })
-  if (startIndex < format.length) {
-    tokens.push(format.substring(startIndex))
-  }
-  return tokens.filter(it => it !== '')
 }
 
 export const getFormatStr = async (format: string) => {
@@ -55,25 +27,7 @@ export const getFormatStr = async (format: string) => {
     s: time.getSeconds().toString().padStart(2, '0'),
     ms: time.getMilliseconds().toString().substring(0, 3),
   }
-  const tokens = tokenSplit(format)
-  const sortedVariables = Object.entries(variables).sort(([, valueA], [, valueB]) => {
-    return valueB.length - valueA.length
-  })
-  const processedTokens = tokens.map(token => {
-    if (!token.startsWith('[') || !token.endsWith(']')) {
-      return token
-    }
-    for (const [name, value] of sortedVariables) {
-      const regex = new RegExp(`^\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]$`)
-      const match = token.match(regex)
-      if (match && Boolean(value)) {
-        return `${match[1] ?? ''}${value}${match[2] ?? ''}`
-      }
-    }
-    return ''
-  })
-  const finalValue = processedTokens.join('')
-  return formatFilename(finalValue, ' ')
+  return formatTitle(format, false, variables, Object.keys(variables))
 }
 
 export const builtInActions: AboutPageAction[] = [
