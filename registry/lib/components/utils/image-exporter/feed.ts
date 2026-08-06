@@ -8,6 +8,7 @@ import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
 import { Options } from '.'
 import { useScopedConsole } from '@/core/utils/log'
+import { extractImagesFromArticle } from './article'
 
 interface DynamicDetailResponse {
   code: number
@@ -122,9 +123,9 @@ const extractImagesFromDom = (): string[] => {
   return [...urls]
 }
 
-const extractImagesFromItem = (
+const extractImagesFromItem = async (
   item: DynamicDetailResponse['data']['item'],
-): { urls: string[]; authorModule: any; titleModule: any; origItem?: any } => {
+): Promise<{ urls: string[]; authorModule: any; titleModule: any; origItem?: any }> => {
   const { modules } = item
   const authorModule = modules.module_author ?? {}
   const titleModule = modules.module_title ?? {}
@@ -150,6 +151,14 @@ const extractImagesFromItem = (
     const domUrls = extractImagesFromDom()
     if (domUrls.length > 0) {
       return { urls: domUrls, authorModule, titleModule }
+    }
+
+    const articleId = modules.module_dynamic?.major?.article?.id
+    if (articleId) {
+      const articleUrls = await extractImagesFromArticle(articleId)
+      if (articleUrls.length > 0) {
+        return { urls: articleUrls, authorModule, titleModule }
+      }
     }
   }
 
@@ -183,7 +192,7 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
           authorModule,
           titleModule,
           origItem,
-        } = extractImagesFromItem(detail.data.item)
+        } = await extractImagesFromItem(detail.data.item)
 
         if (imageUrls.length === 0) {
           toast.close()
