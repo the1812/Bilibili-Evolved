@@ -48,6 +48,7 @@ export const formatTitle = (
   format: string,
   includesPageTitle = true,
   extraVariables: StringMap = {},
+  allowedVariables?: string[],
 ) => {
   const getLegacyTitle = () => {
     return (
@@ -141,8 +142,16 @@ export const formatTitle = (
     ...builtInVariables,
     ...extraVariables,
   }
+  const filteredVariables =
+    allowedVariables === undefined
+      ? variables
+      : Object.fromEntries(
+          Object.entries(variables).filter(([name]) => allowedVariables.includes(name)),
+        )
   const tokens = tokenSplit(format)
-  const sortedVariables = Object.entries(variables).sort(descendingSort(([name]) => name.length))
+  const sortedVariables = Object.entries(filteredVariables).sort(
+    descendingSort(([name]) => name.length),
+  )
   const processedTokens = tokens.map(token => {
     if (!token.startsWith('[') || !token.endsWith(']')) {
       return token

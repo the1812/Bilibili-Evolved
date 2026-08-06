@@ -1,4 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
+import { getGeneralSettings } from '@/core/settings'
+import { formatTitle } from '@/core/utils/title'
 
 export interface AboutPageAction {
   icon: string
@@ -9,6 +11,25 @@ export interface AboutPageAction {
   actionName?: string
   run: (event?: MouseEvent) => void | Promise<void>
 }
+
+export const getFormatStr = async (format: string) => {
+  const { meta } = await import('@/core/meta')
+  const time = new Date()
+  const variables = {
+    n: meta.name,
+    v: `v${meta.compilationInfo.version}`,
+    V: meta.compilationInfo.versionWithTag,
+    y: time.getFullYear().toString(),
+    M: (time.getMonth() + 1).toString().padStart(2, '0'),
+    d: time.getDate().toString().padStart(2, '0'),
+    h: time.getHours().toString().padStart(2, '0'),
+    m: time.getMinutes().toString().padStart(2, '0'),
+    s: time.getSeconds().toString().padStart(2, '0'),
+    ms: time.getMilliseconds().toString().substring(0, 3),
+  }
+  return formatTitle(format, false, variables, Object.keys(variables))
+}
+
 export const builtInActions: AboutPageAction[] = [
   {
     icon: 'mdi-inbox-arrow-up-outline',
@@ -18,7 +39,8 @@ export const builtInActions: AboutPageAction[] = [
     run: async () => {
       const { settings } = await import('@/core/settings')
       const { DownloadPackage } = await import('@/core/download')
-      DownloadPackage.single('settings.json', JSON.stringify(settings, undefined, 2))
+      const fileName = await getFormatStr(getGeneralSettings().exportSettingsFormat)
+      DownloadPackage.single(`${fileName}.json`, JSON.stringify(settings, undefined, 2))
     },
   },
   {
