@@ -8,6 +8,10 @@ const isPlayerReady = (player: any) => player?.getPlayerInfo?.().playurl && play
 export const component = defineComponentMetadata({
   name: 'autoHighestQuality',
   displayName: '直播自动切换最高画质',
+  author: {
+    name: 'WhiteTeal55',
+    link: 'https://github.com/WhiteTeal55',
+  },
   entry: async () => {
     if (!getUID()) {
       return
