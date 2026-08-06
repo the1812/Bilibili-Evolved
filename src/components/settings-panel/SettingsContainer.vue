@@ -72,34 +72,23 @@ export default {
       this.widgetsOpened = false
       this.settingsOpened = true
     })
-    document.addEventListener('focusin', this.handleDocumentFocusIn, true)
     window.addEventListener('blur', this.handleWindowBlur)
   },
   beforeDestroy() {
-    document.removeEventListener('focusin', this.handleDocumentFocusIn, true)
     window.removeEventListener('blur', this.handleWindowBlur)
   },
   methods: {
     theWorld() {
       externalApis.theWorld(0)
     },
-    handleDocumentFocusIn(event: FocusEvent) {
-      const target = event.target as Element | null
-      if (target instanceof HTMLIFrameElement && document.contains(target)) {
-        this.closePanels()
-      }
-    },
     handleWindowBlur() {
       setTimeout(() => {
         const active = document.activeElement
         if (active instanceof HTMLIFrameElement && document.contains(active)) {
-          this.closePanels()
+          this.settingsOpened = false
+          this.widgetsOpened = false
         }
       }, 0)
-    },
-    closePanels() {
-      this.settingsOpened = false
-      this.widgetsOpened = false
     },
     settingsPanelClosePredicate(data: {
       target: HTMLElement
