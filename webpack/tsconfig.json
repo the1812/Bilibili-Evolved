@@ -7,5 +7,5 @@
     "noEmit": true,
     "types": ["node"],
   },
-  "include": ["./**/*.ts", "../registry/webpack/*.ts", "../webpack-globals.d.ts"],
+  "include": ["./**/*.ts", "../webpack-globals.d.ts"],
 }
