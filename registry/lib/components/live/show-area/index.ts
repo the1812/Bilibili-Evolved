@@ -1,38 +1,17 @@
 import { defineComponentMetadata } from '@/components/define'
+import { select } from '@/core/spin-query'
 import { liveUrls } from '@/core/utils/urls'
 
 export const component = defineComponentMetadata({
   name: 'showArea',
   displayName: '直播显示分区信息',
+  author: {
+    name: 'WhiteTeal55',
+    link: 'https://github.com/WhiteTeal55',
+  },
   tags: [componentsTags.live],
   urlInclude: liveUrls,
   entry: async () => {
-    const waitForElement = (selector: string): Promise<Element> => {
-      return new Promise(resolve => {
-        const startObserving = () => {
-          const existing = document.querySelector(selector)
-          if (existing) {
-            resolve(existing)
-            return
-          }
-          const observer = new MutationObserver(() => {
-            const matched = document.querySelector(selector)
-            if (matched) {
-              observer.disconnect()
-              resolve(matched)
-            }
-          })
-          observer.observe(document.body, { childList: true, subtree: true })
-        }
-
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', startObserving, { once: true })
-        } else {
-          startObserving()
-        }
-      })
-    }
-
     // 获取当前直播间号
     const getLiveRoomId = (): string => {
       let matched = location.href.match(/live.bilibili.com\/(\d+)/)
@@ -67,7 +46,7 @@ export const component = defineComponentMetadata({
     // ---------- 主逻辑 ----------
     const roomId = getLiveRoomId()
     if (!roomId) {
-      console.warn('[showArea] 未检测到房间号，退出')
+      console.warn('[showArea] 未检测到房间号')
       return
     }
 
@@ -78,26 +57,18 @@ export const component = defineComponentMetadata({
 
     // 同时等待两种可能存在的容器，谁先出现就用谁
     const anchor = (await Promise.race([
-      waitForElement('.head-info-section .left-anchor-section'),
-      waitForElement('.left-ctnr .live-title'),
-    ])) as Element
+      select('.head-info-section .left-anchor-section'),
+      select('.left-ctnr .live-title'),
+    ])) as Element | null
+    if (!anchor) {
+      console.warn('[showArea] 未找到可插入的锚点元素')
+      return
+    }
+
     // 检查是否已经插入过（避免重复）
     if (anchor.parentElement?.querySelector('.show-area-info')) {
       console.debug('[showArea] 分区信息已存在，跳过')
       return
-    }
-
-    let mainColor = 'rgba(255,255,255,1)'
-    const colorSelector1 = '.live-skin-coloration-area .live-skin-normal-a-text'
-    const colorSelector2 = '.left-anchor-section .room-owner-username'
-    const el1 = document.querySelector(colorSelector1)
-    if (el1) {
-      mainColor = getComputedStyle(el1).color
-    } else {
-      const el2 = document.querySelector(colorSelector2)
-      if (el2) {
-        mainColor = getComputedStyle(el2).color
-      }
     }
 
     // ---------- 构建分区显示 ----------
@@ -105,67 +76,27 @@ export const component = defineComponentMetadata({
     const parentLink = `https://live.bilibili.com/p/eden/area-tags?parentAreaId=${parentAreaId}`
     const childLink = `https://live.bilibili.com/p/eden/area-tags?parentAreaId=${parentAreaId}&areaId=${areaId}`
 
-    const areaEl = document.createElement('div')
-    areaEl.className = 'show-area-info'
-    Object.assign(areaEl.style, {
-      display: 'inline-flex',
-      alignItems: 'center',
-      marginLeft: '8px',
-      color: mainColor,
-      fontSize: '14px',
-      whiteSpace: 'nowrap',
-    })
-
-    const parentA = document.createElement('a')
-    parentA.href = parentLink
-    parentA.target = '_blank'
-    parentA.rel = 'noopener'
-    parentA.textContent = parentAreaName || '父分区'
-    Object.assign(parentA.style, {
-      color: 'inherit',
-      textDecoration: 'none',
-    })
-    parentA.addEventListener('mouseenter', () => {
-      parentA.style.color = '#f69'
-    })
-    parentA.addEventListener('mouseleave', () => {
-      parentA.style.color = mainColor
-    })
-
-    const separator = document.createElement('span')
-    separator.textContent = '-'
-    Object.assign(separator.style, {
-      margin: '0 6px',
-    })
-
-    const childA = document.createElement('a')
-    childA.href = childLink
-    childA.target = '_blank'
-    childA.rel = 'noopener'
-    childA.textContent = areaName || '子分区'
-    Object.assign(childA.style, {
-      color: 'inherit',
-      textDecoration: 'none',
-    })
-    childA.addEventListener('mouseenter', () => {
-      childA.style.color = '#f69'
-    })
-    childA.addEventListener('mouseleave', () => {
-      childA.style.color = mainColor
-    })
-
-    areaEl.appendChild(parentA)
-    areaEl.appendChild(separator)
-    areaEl.appendChild(childA)
-
-    // 插入到锚点元素之后（作为其下一个兄弟节点）
-    const parentEl = anchor.parentElement
-    if (parentEl) {
-      parentEl.insertBefore(areaEl, anchor.nextSibling)
-    } else {
-      anchor.parentElement?.appendChild(areaEl)
+    let parentEl = anchor.parentElement as Element | null
+    if (!parentEl) {
+      parentEl = (anchor.parentNode as Element) || null
     }
 
-    console.debug('[showArea] 分区信息已显示：', `${parentAreaName} - ${areaName}`)
+    const ShowArea = await import('./ShowArea.vue').then(m => m.default)
+    const instance = new ShowArea({
+      propsData: {
+        parentAreaName,
+        areaName,
+        parentLink,
+        childLink,
+      },
+    })
+    instance.$mount()
+    if (parentEl) {
+      parentEl.insertBefore(instance.$el, anchor.nextSibling)
+    } else {
+      anchor.insertAdjacentElement('afterend', instance.$el)
+    }
+
+    console.debug('[showArea] 分区信息已显示')
   },
 })
