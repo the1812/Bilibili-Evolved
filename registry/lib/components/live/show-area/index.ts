@@ -56,12 +56,13 @@ export const component = defineComponentMetadata({
     }
 
     // 同时等待两种可能存在的容器，谁先出现就用谁
+    console.debug('[showArea] 开始查找元素')
     const anchor = (await Promise.race([
       select('.head-info-section .left-anchor-section'),
       select('.left-ctnr .live-title'),
     ])) as Element | null
     if (!anchor) {
-      console.warn('[showArea] 未找到可插入的锚点元素')
+      console.debug('[showArea] 未找到可插入的锚点元素')
       return
     }
 
