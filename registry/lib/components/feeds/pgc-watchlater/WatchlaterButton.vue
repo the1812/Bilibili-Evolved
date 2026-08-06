@@ -44,21 +44,15 @@ export default {
           return null
         }
 
-        const vueData = getVue2Data(feedCard)
-        const modules = lodash.get(vueData, 'data.modules')
-        const dynamicModule = Array.isArray(modules)
-          ? modules.find(it => it.module_type === 'MODULE_TYPE_CONTENT')?.module_content
-          : modules?.module_dynamic
-        const pgc = dynamicModule?.major?.pgc
-        const epid = Number(pgc?.epid ?? 0)
-        const seasonId = Number(pgc?.season_id ?? 0)
-        if (!epid && !seasonId) {
+        const modules = lodash.get(getVue2Data(feedCard), 'data.modules')
+        const dynamicModule = modules?.module_dynamic
+        const epid = Number(dynamicModule?.major?.pgc?.epid ?? null)
+        if (!epid) {
           return null
         }
 
-        const fetchBangumi = epid ? BangumiInfo.byEpisodeId(epid) : BangumiInfo.bySeasonId(seasonId)
-        const bangumi = await fetchBangumi.fetchInfo()
-        return bangumi.episode?.aid ?? bangumi.episodes?.[0]?.aid ?? null
+        const bangumi = await BangumiInfo.byEpisodeId(epid).fetchInfo()
+        return bangumi.episode?.aid ?? null
       } catch (e) {
         console.error('获取番剧 aid 失败:', e)
         return null
