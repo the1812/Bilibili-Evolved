@@ -13,6 +13,8 @@
 
 <script>
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import { BangumiInfo } from '@/components/video/video-info'
+import { getVue2Data } from '@/core/utils'
 
 export default {
   data() {
@@ -37,30 +39,27 @@ export default {
   methods: {
     async getAidFromCard() {
       try {
-        const link = this.$el.closest('a.bili-dyn-card-pgc')
-        if (!link || !link.href) {
+        const feedCard = this.$el.closest('.bili-dyn-list__item, .bili-dyn-item')
+        if (!feedCard) {
           return null
         }
 
-        const response = await fetch(link.href, {
-          credentials: 'include',
-        })
-        if (!response.ok) {
+        const vueData = getVue2Data(feedCard)
+        const modules = lodash.get(vueData, 'data.modules')
+        const dynamicModule = Array.isArray(modules)
+          ? modules.find(it => it.module_content)?.module_content
+          : modules?.module_dynamic
+        const pgc = dynamicModule?.major?.pgc
+        const epid = Number(pgc?.epid ?? 0)
+        const seasonId = Number(pgc?.season_id ?? 0)
+        if (!epid && !seasonId) {
           return null
         }
 
-        const html = await response.text()
-        const doc = new DOMParser().parseFromString(html, 'text/html')
-        const scripts = Array.from(doc.querySelectorAll('script'))
-
-        for (const script of scripts) {
-          const text = script.textContent || ''
-          const match = text.match(/"aid"\s*:\s*(\d+)/)
-          if (match) {
-            return Number(match[1])
-          }
-        }
-        return null
+        const bangumi = epid
+          ? await BangumiInfo.byEpisodeId(epid).fetchInfo()
+          : await BangumiInfo.bySeasonId(seasonId).fetchInfo()
+        return bangumi.episode?.aid ?? bangumi.episodes?.[0]?.aid ?? null
       } catch (e) {
         console.error('获取番剧 aid 失败:', e)
         return null
@@ -76,6 +75,9 @@ export default {
       try {
         if (!this.aid) {
           this.aid = await this.getAidFromCard()
+        }
+        if (!this.aid) {
+          return
         }
 
         await toggleWatchlater(this.aid, !this.isActive)
