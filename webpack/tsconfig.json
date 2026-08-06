@@ -1,12 +1,11 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
     "lib": ["ESNext"],
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "noEmit": true,
-    "strict": true,
     "types": ["node"],
   },
-  "include": ["./index.ts"],
+  "include": ["./**/*.ts", "../webpack-globals.d.ts"],
 }
