@@ -122,23 +122,31 @@ export default Vue.extend({
   }
 }
 
-.video-page-card-small .pic-box,
-.recommend-video-card.video-card .pic-box {
-  .view-snapshot-button {
-    border: none;
-    &.top.right {
-      right: 36px;
+.be-popup,
+.video-page-card-small,
+.recommend-video-card.video-card {
+  .pic-box {
+    .view-snapshot-button {
+      border: none;
+      &.top.right {
+        right: 36px;
+      }
     }
-  }
-  &:has(.bigger-video-preview-button) {
-    .view-snapshot-button.top.left {
-      left: 36px;
+    &:has(.bigger-video-preview-button) {
+      .view-snapshot-button.top.left {
+        left: 36px;
+      }
     }
   }
 }
-.video-page-card-small .pic-box:hover .view-snapshot-button,
-.recommend-video-card.video-card .pic-box:hover .view-snapshot-button {
-  transition-delay: 0.3s;
+.video-page-card-small,
+.recommend-video-card.video-card {
+  .pic-box:hover .view-snapshot-button {
+    transition-delay: 0.3s;
+    opacity: 1;
+  }
+}
+.be-popup .pic-box .view-snapshot-button {
   opacity: 1;
 }
 
