@@ -114,21 +114,25 @@ async function parseAtlases(
 /**
  * @author WakelessSloth56
  */
-async function loadAtlasImage(atlas: SnapshotAtlas) {
-  return new Promise((resolve: (atlas: SnapshotAtlas) => void, reject) => {
-    if (atlas.image) {
-      resolve(atlas)
-    } else {
-      const img = new Image()
-      img.crossOrigin = 'anonymous'
-      img.onload = () => {
-        atlas.image = img
-        resolve(atlas)
-      }
-      img.onerror = reject
-      img.src = atlas.url
-    }
+
+async function loadImage(url: string) {
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    const img = new Image()
+    img.crossOrigin = 'anonymous'
+    img.onload = () => resolve(img)
+    img.onerror = reject
+    img.src = url
   })
+}
+
+async function loadAtlasImage(atlas: SnapshotAtlas) {
+  if (atlas.image) {
+    return atlas
+  }
+
+  const img = await loadImage(atlas.url)
+  atlas.image = img
+  return atlas
 }
 
 /**
@@ -150,11 +154,11 @@ async function splitTileImage(tile: SnapshotTile) {
     tile.x,
     tile.y,
     tile.width,
-    tile.width,
+    tile.height,
     0,
     0,
     tile.width,
-    tile.width,
+    tile.height,
   )
   tile.canvas = canvas
   return tile as SnapshotTileWithCanvas
@@ -425,6 +429,12 @@ export class VideoSnapshot {
     this.atlasRows = data.img_y_len
     this.tileWidth = data.img_x_size
     this.tileHeight = data.img_y_size
+
+    if ((this.tileWidth ?? 0) <= 0 || (this.tileHeight ?? 0) <= 0) {
+      const atlasImage = await loadImage(data.image[0])
+      this.tileWidth = Math.floor(atlasImage.width / this.atlasColumns)
+      this.tileHeight = Math.floor(atlasImage.height / this.atlasRows)
+    }
 
     this.atlases = await parseAtlases(
       allTimes,
