@@ -97,6 +97,12 @@ export default defineComponent({
   width: var(--popup-width);
   height: var(--popup-height);
   aspect-ratio: var(--popup-aspect-ratio);
+  .rcmd-cover {
+    display: none;
+  }
+  .v-recommend-inline-player {
+    opacity: 1;
+  }
 }
 
 .watch-later-video.van-watchlater.black {

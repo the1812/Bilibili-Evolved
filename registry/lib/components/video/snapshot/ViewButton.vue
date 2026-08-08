@@ -148,6 +148,12 @@ export default Vue.extend({
 }
 .be-popup .pic-box .view-snapshot-button {
   opacity: 1;
+  &.top.right {
+    right: 6px;
+  }
+  &.bottom.right {
+    right: 36px;
+  }
 }
 
 .space-main .bili-video-card .bili-video-card__cover .view-snapshot-button {
