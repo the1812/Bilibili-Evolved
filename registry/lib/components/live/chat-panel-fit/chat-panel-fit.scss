@@ -188,6 +188,13 @@
           min-width: 300px;
           scale: var(--live-chat-panel-scale);
         }
+
+        // 底部卡片栏
+        .relocated-cards-area .relocated-card-slot {
+          scale: var(--live-chat-panel-scale);
+          min-width: 300px;
+          transform-origin: left bottom;
+        }
       }
 
       // 聊天 / 工具栏
