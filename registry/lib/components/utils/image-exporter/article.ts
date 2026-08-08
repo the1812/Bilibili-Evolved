@@ -1,5 +1,8 @@
 import { getJsonWithCredentials } from '@/core/ajax'
+import { useScopedConsole } from '@/core/utils/log'
 import { retrieveImageUrl } from '@/core/utils'
+
+const console = useScopedConsole('图片导出')
 
 interface ArticleImageOp {
   insert?: {
