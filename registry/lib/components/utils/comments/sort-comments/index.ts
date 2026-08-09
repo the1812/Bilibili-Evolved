@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { addComponentListener, getComponentSettings } from '@/core/settings'
+import { addComponentListener, getComponentSettings, removeComponentListener } from '@/core/settings'
 import {
   CommentArea,
   CommentItem,
@@ -190,6 +190,22 @@ const destroyPanel = () => {
 
 // ============ 入口 ============
 
+const onSortModeChange = (mode: CommentSortMode) => {
+  currentMode = mode
+  sortAllAreas(mode)
+  updatePanelProps()
+}
+
+const onAutoSortChange = (value: boolean) => {
+  autoSort = value
+  updatePanelProps()
+}
+
+const onShowPanelChange = (value: boolean) => {
+  panelVisible = value
+  updatePanelProps()
+}
+
 const entry = async () => {
   const settings = getComponentSettings<SortCommentsOptions>('sortComments')
   currentMode = settings.options.sortMode
@@ -198,29 +214,19 @@ const entry = async () => {
 
   addComponentListener(
     'sortComments.sortMode',
-    (mode: CommentSortMode) => {
-      currentMode = mode
-      sortAllAreas(mode)
-      updatePanelProps()
-    },
+    onSortModeChange,
     true,
   )
 
   addComponentListener(
     'sortComments.autoSort',
-    (value: boolean) => {
-      autoSort = value
-      updatePanelProps()
-    },
+    onAutoSortChange,
     true,
   )
 
   addComponentListener(
     'sortComments.showPanel',
-    (value: boolean) => {
-      panelVisible = value
-      updatePanelProps()
-    },
+    onShowPanelChange,
     true,
   )
 
@@ -248,16 +254,11 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.utils],
   options: sortCommentsOptions,
   entry,
-  reload: async () => {
-    const settings = getComponentSettings<SortCommentsOptions>('sortComments')
-    autoSort = settings.options.autoSort
-    panelVisible = settings.options.showPanel
-    currentMode = settings.options.sortMode
-    await createPanel()
-    updatePanelProps()
-    sortAllAreas(currentMode)
-  },
+  reload: entry,
   unload: () => {
+    removeComponentListener('sortComments.sortMode', onSortModeChange)
+    removeComponentListener('sortComments.autoSort', onAutoSortChange)
+    removeComponentListener('sortComments.showPanel', onShowPanelChange)
     destroyPanel()
     cleanupAllStyles()
   },
