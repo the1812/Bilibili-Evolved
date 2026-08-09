@@ -160,7 +160,8 @@ const createPanel = async () => {
   panelContainer.id = 'sort-comments-panel-container'
   document.body.appendChild(panelContainer)
   const SortPanel = await import('./SortPanel.vue')
-  panelInstance = mountVueComponent(SortPanel, panelContainer)
+  panelInstance = mountVueComponent(SortPanel)
+  panelContainer.appendChild(panelInstance.$el)
   const vm = panelInstance as any
   vm.$on('mode-change', (mode: CommentSortMode) => {
     setSortMode(mode)
