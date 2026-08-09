@@ -30,8 +30,8 @@ type CompareFn = (a: CommentItem, b: CommentItem) => number
 
 const compareFns: Record<CommentSortMode, CompareFn> = {
   [CommentSortMode.Default]: (a, b) => {
-    const idA = parseInt(a.id, 10)
-    const idB = parseInt(b.id, 10)
+    const idA = parseInt(a.id)
+    const idB = parseInt(b.id)
     if (!Number.isNaN(idA) && !Number.isNaN(idB)) {
       return idA - idB
     }
@@ -248,9 +248,12 @@ export const component = defineComponentMetadata({
   options: sortCommentsOptions,
   entry,
   reload: async () => {
-    autoSort = true
-    panelVisible = true
+    const settings = getComponentSettings<SortCommentsOptions>('sortComments')
+    autoSort = settings.options.autoSort
+    panelVisible = settings.options.showPanel
+    currentMode = settings.options.sortMode
     await createPanel()
+    updatePanelProps()
     sortAllAreas(currentMode)
   },
   unload: () => {
