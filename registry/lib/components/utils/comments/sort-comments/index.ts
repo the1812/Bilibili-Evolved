@@ -6,14 +6,18 @@ import {
   CommentReplyItem,
   forEachCommentArea,
   forEachCommentItem,
+  commentAreaManager,
 } from '@/components/utils/comment-apis'
+import { mountVueComponent } from '@/core/utils'
 import { CommentSortMode, SortCommentsOptions, sortCommentsOptions } from './options'
 
 // ============ 辅助函数 ============
 
 const getUserLevel = (item: CommentReplyItem): number => {
   const props = item.frameworkSpecificProps
-  if (!props) return 0
+  if (!props) {
+    return 0
+  }
   if (props.member?.level_info?.current_level !== undefined) {
     return props.member.level_info.current_level
   }
@@ -28,26 +32,33 @@ const compareFns: Record<CommentSortMode, CompareFn> = {
   [CommentSortMode.Default]: (a, b) => {
     const idA = parseInt(a.id, 10)
     const idB = parseInt(b.id, 10)
-    if (!Number.isNaN(idA) && !Number.isNaN(idB)) return idA - idB
+    if (!Number.isNaN(idA) && !Number.isNaN(idB)) {
+      return idA - idB
+    }
     return 0
   },
   [CommentSortMode.LikesDescending]: (a, b) => b.likes - a.likes || parseInt(a.id) - parseInt(b.id),
   [CommentSortMode.LikesAscending]: (a, b) => a.likes - b.likes || parseInt(a.id) - parseInt(b.id),
-  [CommentSortMode.TimeDescending]: (a, b) => getTime(b) - getTime(a) || parseInt(a.id) - parseInt(b.id),
-  [CommentSortMode.TimeAscending]: (a, b) => getTime(a) - getTime(b) || parseInt(a.id) - parseInt(b.id),
-  [CommentSortMode.LevelDescending]: (a, b) => getUserLevel(b) - getUserLevel(a) || parseInt(a.id) - parseInt(b.id),
-  [CommentSortMode.LevelAscending]: (a, b) => getUserLevel(a) - getUserLevel(b) || parseInt(a.id) - parseInt(b.id),
+  [CommentSortMode.TimeDescending]: (a, b) =>
+    getTime(b) - getTime(a) || parseInt(a.id) - parseInt(b.id),
+  [CommentSortMode.TimeAscending]: (a, b) =>
+    getTime(a) - getTime(b) || parseInt(a.id) - parseInt(b.id),
+  [CommentSortMode.LevelDescending]: (a, b) =>
+    getUserLevel(b) - getUserLevel(a) || parseInt(a.id) - parseInt(b.id),
+  [CommentSortMode.LevelAscending]: (a, b) =>
+    getUserLevel(a) - getUserLevel(b) || parseInt(a.id) - parseInt(b.id),
 }
 
 // ============ CSS order 排序（避免 DOM 移动导致 Lit 重渲染闪烁） ============
 
-const FLEX_CONTAINER_STYLE_ID = 'sort-comments-flex-container'
-
 const ensureFlexContainer = (area: CommentArea) => {
-  if (area.items.length === 0) return null
+  if (area.items.length === 0) {
+    return null
+  }
   const parent = area.items[0].element.parentElement
-  if (!parent) return null
-
+  if (!parent) {
+    return null
+  }
   if (!parent.dataset.sortCommentsFlex) {
     parent.dataset.sortCommentsFlex = '1'
     parent.style.display = 'flex'
@@ -57,193 +68,79 @@ const ensureFlexContainer = (area: CommentArea) => {
 }
 
 const applySortByCssOrder = (area: CommentArea, mode: CommentSortMode) => {
-  if (area.items.length === 0) return
+  if (area.items.length === 0) {
+    return
+  }
   const parent = ensureFlexContainer(area)
-  if (!parent) return
-
-  const compareFn = compareFns[mode]
+  if (!parent) {
+    return
+  }
   area.items.forEach(item => {
     item.element.style.order = ''
   })
-
-  if (mode === CommentSortMode.Default) return
-
-  const sorted = [...area.items].sort(compareFn)
+  if (mode === CommentSortMode.Default) {
+    return
+  }
+  const sorted = [...area.items].sort(compareFns[mode])
   sorted.forEach((item, index) => {
     item.element.style.order = String(index)
   })
 }
 
-// ============ 悬浮面板 ============
-
-const PANEL_ID = 'sort-comments-panel'
-const MODE_LABELS: Record<CommentSortMode, string> = {
-  [CommentSortMode.Default]: '默认',
-  [CommentSortMode.LikesDescending]: '👍高',
-  [CommentSortMode.LikesAscending]: '👍低',
-  [CommentSortMode.TimeDescending]: '🕐新',
-  [CommentSortMode.TimeAscending]: '🕐旧',
-  [CommentSortMode.LevelDescending]: '⭐高',
-  [CommentSortMode.LevelAscending]: '⭐低',
+const sortAllAreas = (mode: CommentSortMode) => {
+  commentAreaManager.commentAreas.forEach(area => {
+    applySortByCssOrder(area, mode)
+  })
 }
 
-const MODE_CYCLE: CommentSortMode[] = [
-  CommentSortMode.Default,
-  CommentSortMode.LikesDescending,
-  CommentSortMode.TimeDescending,
-  CommentSortMode.LevelDescending,
-]
+const cleanupAllStyles = () => {
+  commentAreaManager.commentAreas.forEach(area => {
+    area.items.forEach(item => {
+      item.element.style.order = ''
+    })
+    if (area.items.length > 0) {
+      const parent = area.items[0].element.parentElement
+      if (parent?.dataset.sortCommentsFlex) {
+        delete parent.dataset.sortCommentsFlex
+        parent.style.display = ''
+        parent.style.flexDirection = ''
+      }
+    }
+  })
+}
+
+// ============ 状态 ============
 
 let currentMode = CommentSortMode.Default
 let autoSort = true
 let panelVisible = true
+let panelInstance: Vue | null = null
+let panelContainer: HTMLElement | null = null
+let sortScheduled = false
 
-const createPanel = () => {
-  if (document.getElementById(PANEL_ID)) return
-
-  const panel = document.createElement('div')
-  panel.id = PANEL_ID
-  panel.innerHTML = `
-    <style>
-      #${PANEL_ID} {
-        position: fixed;
-        bottom: 120px;
-        right: 20px;
-        z-index: 99999;
-        background: rgba(0, 0, 0, 0.75);
-        backdrop-filter: blur(8px);
-        border-radius: 12px;
-        padding: 8px 10px;
-        color: #fff;
-        font-size: 13px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-        min-width: 140px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        transition: opacity 0.2s, transform 0.2s;
-        user-select: none;
-        -webkit-user-select: none;
-      }
-      #${PANEL_ID}.hidden {
-        opacity: 0;
-        transform: translateX(20px);
-        pointer-events: none;
-      }
-      #${PANEL_ID} .panel-header {
-        font-weight: 600;
-        font-size: 12px;
-        opacity: 0.7;
-        text-align: center;
-        letter-spacing: 1px;
-      }
-      #${PANEL_ID} .panel-btn {
-        background: rgba(255,255,255,0.1);
-        border: none;
-        border-radius: 6px;
-        color: #fff;
-        padding: 6px 8px;
-        cursor: pointer;
-        font-size: 12px;
-        transition: background 0.15s;
-        text-align: center;
-        white-space: nowrap;
-      }
-      #${PANEL_ID} .panel-btn:hover {
-        background: rgba(255,255,255,0.25);
-      }
-      #${PANEL_ID} .panel-btn.active {
-        background: rgba(0, 161, 214, 0.5);
-      }
-      #${PANEL_ID} .panel-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        font-size: 11px;
-        opacity: 0.8;
-        cursor: pointer;
-        padding: 3px 0;
-      }
-      #${PANEL_ID} .panel-toggle:hover {
-        opacity: 1;
-      }
-      #${PANEL_ID} .panel-toggle .dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: #4caf50;
-        transition: background 0.2s;
-      }
-      #${PANEL_ID} .panel-toggle .dot.manual {
-        background: #ff9800;
-      }
-    </style>
-    <div class="panel-header">评论排序</div>
-    <div class="panel-modes"></div>
-    <div class="panel-toggle" id="sort-auto-toggle">
-      <span class="dot" id="sort-auto-dot"></span>
-      <span id="sort-auto-label">自动</span>
-    </div>
-  `
-  document.body.appendChild(panel)
-
-  // 渲染模式按钮
-  const modesContainer = panel.querySelector('.panel-modes')!
-  const renderModes = () => {
-    modesContainer.innerHTML = ''
-    MODE_CYCLE.forEach(mode => {
-      const btn = document.createElement('button')
-      btn.className = `panel-btn${mode === currentMode ? ' active' : ''}`
-      btn.textContent = MODE_LABELS[mode]
-      btn.addEventListener('click', () => {
-        setSortMode(mode)
-      })
-      modesContainer.appendChild(btn)
-    })
+const scheduleSort = () => {
+  if (sortScheduled || !autoSort) {
+    return
   }
-
-  // 自动/手动切换
-  const autoToggle = panel.querySelector('#sort-auto-toggle') as HTMLElement
-  const autoDot = panel.querySelector('#sort-auto-dot') as HTMLElement
-  const autoLabel = panel.querySelector('#sort-auto-label') as HTMLElement
-
-  const updateAutoToggle = () => {
-    if (autoSort) {
-      autoDot.classList.remove('manual')
-      autoLabel.textContent = '自动排序'
-    } else {
-      autoDot.classList.add('manual')
-      autoLabel.textContent = '点击排序'
+  sortScheduled = true
+  requestAnimationFrame(() => {
+    sortScheduled = false
+    if (!autoSort) {
+      return
     }
-  }
-
-  autoToggle.addEventListener('click', () => {
-    autoSort = !autoSort
-    updateAutoToggle()
-    // 同步到设置
-    const settings = getComponentSettings<SortCommentsOptions>('sortComments')
-    if (settings) {
-      settings.options.autoSort = autoSort
-    }
+    sortAllAreas(currentMode)
   })
-
-  const updatePanel = () => {
-    renderModes()
-    updateAutoToggle()
-    if (!panelVisible) {
-      panel.classList.add('hidden')
-    } else {
-      panel.classList.remove('hidden')
-    }
-  }
-
-  updatePanel()
-  return { updatePanel, panel }
 }
 
-let panelApi: ReturnType<typeof createPanel> | null = null
+const updatePanelProps = () => {
+  if (!panelInstance) {
+    return
+  }
+  const vm = panelInstance as any
+  vm.currentMode = currentMode
+  vm.autoSort = autoSort
+  vm.panelVisible = panelVisible
+}
 
 const setSortMode = (mode: CommentSortMode) => {
   currentMode = mode
@@ -251,25 +148,46 @@ const setSortMode = (mode: CommentSortMode) => {
   if (settings) {
     settings.options.sortMode = mode
   }
-  // 立即排序所有已观察区域
-  observedAreas.forEach(area => applySortByCssOrder(area, mode))
-  panelApi?.updatePanel()
+  sortAllAreas(mode)
+  updatePanelProps()
 }
 
-// ============ 主逻辑 ============
-
-const observedAreas: Set<CommentArea> = new Set()
-let sortScheduled = false
-
-const scheduleSort = () => {
-  if (sortScheduled || !autoSort) return
-  sortScheduled = true
-  requestAnimationFrame(() => {
-    sortScheduled = false
-    if (!autoSort) return
-    observedAreas.forEach(area => applySortByCssOrder(area, currentMode))
+const createPanel = async () => {
+  if (panelInstance) {
+    return
+  }
+  panelContainer = document.createElement('div')
+  panelContainer.id = 'sort-comments-panel-container'
+  document.body.appendChild(panelContainer)
+  const SortPanel = await import('./SortPanel.vue')
+  panelInstance = mountVueComponent(SortPanel, panelContainer)
+  const vm = panelInstance as any
+  vm.$on('mode-change', (mode: CommentSortMode) => {
+    setSortMode(mode)
   })
+  vm.$on('auto-toggle', (value: boolean) => {
+    autoSort = value
+    const settings = getComponentSettings<SortCommentsOptions>('sortComments')
+    if (settings) {
+      settings.options.autoSort = value
+    }
+    updatePanelProps()
+  })
+  updatePanelProps()
 }
+
+const destroyPanel = () => {
+  if (panelInstance) {
+    panelInstance.$destroy()
+    panelInstance = null
+  }
+  if (panelContainer) {
+    panelContainer.remove()
+    panelContainer = null
+  }
+}
+
+// ============ 入口 ============
 
 const entry = async () => {
   const settings = getComponentSettings<SortCommentsOptions>('sortComments')
@@ -277,45 +195,39 @@ const entry = async () => {
   autoSort = settings.options.autoSort
   panelVisible = settings.options.showPanel
 
-  // 监听设置面板中的排序方式变更
   addComponentListener(
     'sortComments.sortMode',
     (mode: CommentSortMode) => {
       currentMode = mode
-      observedAreas.forEach(area => applySortByCssOrder(area, mode))
-      panelApi?.updatePanel()
+      sortAllAreas(mode)
+      updatePanelProps()
     },
     true,
   )
 
-  // 监听自动排序开关
   addComponentListener(
     'sortComments.autoSort',
     (value: boolean) => {
       autoSort = value
-      panelApi?.updatePanel()
+      updatePanelProps()
     },
     true,
   )
 
-  // 监听面板显示开关
   addComponentListener(
     'sortComments.showPanel',
     (value: boolean) => {
       panelVisible = value
-      panelApi?.updatePanel()
+      updatePanelProps()
     },
     true,
   )
 
-  // 创建悬浮面板
-  if (panelVisible) {
-    panelApi = createPanel()
-  }
+  // 始终创建面板，通过 hidden class 控制显示
+  await createPanel()
 
-  // 监听评论区
+  // 排序已有评论区
   forEachCommentArea(area => {
-    observedAreas.add(area)
     if (autoSort) {
       applySortByCssOrder(area, currentMode)
     }
@@ -335,8 +247,26 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.utils],
   options: sortCommentsOptions,
   entry,
+  reload: async () => {
+    autoSort = true
+    panelVisible = true
+    await createPanel()
+    sortAllAreas(currentMode)
+  },
+  unload: () => {
+    destroyPanel()
+    cleanupAllStyles()
+  },
   author: {
     name: 'ChairKeter',
     link: 'https://github.com/ChairKeter',
   },
+  urlInclude: [
+    '//www.bilibili.com/video/',
+    '//www.bilibili.com/bangumi/',
+    '//t.bilibili.com/',
+    '//www.bilibili.com/read/',
+    '//www.bilibili.com/audio/',
+    '//www.bilibili.com/opus/',
+  ],
 })
