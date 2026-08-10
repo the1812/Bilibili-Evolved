@@ -1,22 +1,30 @@
 import { defineComponentMetadata } from '@/components/component'
 import { getCookieValue, matchUrlPattern } from '@/core/utils'
+import { festivalUrls } from '@/core/utils/urls'
 
 const name = 'integratedDarkMode'
 const darkModeClass = 'dark'
 const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
 
+// 判断活动页面是否启用深色模式
+const isFestivalDarkModeEnabled = () => {
+  if (!festivalUrls.some(matchUrlPattern)) {
+    return true
+  }
+  return document.documentElement.classList.contains('bili_dark')
+}
+
 // 判断直播间是否启用深色模式
 const isLiveroomDarkModeEnabled = () => {
   if (!matchUrlPattern(/^https:\/\/live\.bilibili\.com\/([\d]+)/)) {
     return true
   }
-  const htmlElement = document.documentElement
-  return htmlElement.getAttribute('lab-style') === 'dark'
+  return document.documentElement.getAttribute('lab-style') === 'dark'
 }
 
 const isOfficialDarkModeEnabled = () => {
-  if (!isLiveroomDarkModeEnabled()) {
+  if (!isLiveroomDarkModeEnabled() || !isFestivalDarkModeEnabled()) {
     return false
   }
   return getCookieValue('theme_style') === 'dark'
