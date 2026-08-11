@@ -186,12 +186,21 @@ const setupPlayerActions = () => {
 
   let currentActionBar: HTMLElement | null = null
   let frozenDanmaku: HTMLElement | null = null
-  let currentDanmakuText = ''
 
   const positionActionBar = (bar: HTMLElement, anchor: HTMLElement) => {
     const rect = anchor.getBoundingClientRect()
-    bar.style.setProperty('top', `${rect.top + rect.height / 2}px`, 'important')
-    bar.style.setProperty('left', `${rect.right + 6}px`, 'important')
+    const barWidth = bar.offsetWidth || 60
+    const barHeight = bar.offsetHeight || 28
+    let left = rect.right - 4
+    if (left + barWidth > window.innerWidth - 4) {
+      left = Math.max(4, rect.left - barWidth + 4)
+    }
+    const top = Math.min(
+      Math.max(rect.top + rect.height / 2, barHeight / 2 + 4),
+      window.innerHeight - barHeight / 2 - 4,
+    )
+    bar.style.setProperty('top', `${top}px`, 'important')
+    bar.style.setProperty('left', `${left}px`, 'important')
   }
 
   const restore = () => {
@@ -201,7 +210,6 @@ const setupPlayerActions = () => {
     }
     currentActionBar?.remove()
     currentActionBar = null
-    currentDanmakuText = ''
   }
 
   const getDanmakuItemFromTarget = (target: HTMLElement): HTMLElement | null => {
@@ -218,33 +226,37 @@ const setupPlayerActions = () => {
     return cur
   }
 
-  const isInsideRect = (x: number, y: number, el: HTMLElement, margin = 8) => {
-    const r = el.getBoundingClientRect()
+  const keepZoneMargin = 16
+  const isInsideKeepZone = (x: number, y: number) => {
+    if (!frozenDanmaku) {
+      return false
+    }
+    const rect = frozenDanmaku.getBoundingClientRect()
+    let { left, top, right, bottom } = rect
+    if (currentActionBar) {
+      const barRect = currentActionBar.getBoundingClientRect()
+      left = Math.min(left, barRect.left)
+      top = Math.min(top, barRect.top)
+      right = Math.max(right, barRect.right)
+      bottom = Math.max(bottom, barRect.bottom)
+    }
     return (
-      x >= r.left - margin && x <= r.right + margin && y >= r.top - margin && y <= r.bottom + margin
+      x >= left - keepZoneMargin &&
+      x <= right + keepZoneMargin &&
+      y >= top - keepZoneMargin &&
+      y <= bottom + keepZoneMargin
     )
   }
 
-  const handleMouseEnter = (e: MouseEvent) => {
-    const target = e.target as HTMLElement
-    if (!target || target.closest('.danmaku-action-bar')) {
-      return
-    }
-
-    const danmakuItem = getDanmakuItemFromTarget(target)
-    if (!danmakuItem || danmakuItem === frozenDanmaku) {
-      return
-    }
-
+  const freezeAndShow = (danmakuItem: HTMLElement) => {
     const text = danmakuItem.textContent?.trim()
-    if (!text || text === currentDanmakuText) {
+    if (!text) {
       return
     }
 
     restore()
     freezeDanmaku(danmakuItem)
     frozenDanmaku = danmakuItem
-    currentDanmakuText = text
 
     currentActionBar = createActionBar(
       () => plusOne(text),
@@ -266,15 +278,37 @@ const setupPlayerActions = () => {
     positionActionBar(currentActionBar, danmakuItem)
   }
 
+  const handleMouseEnter = (e: MouseEvent) => {
+    const target = e.target as HTMLElement
+    if (!target || target.closest('.danmaku-action-bar')) {
+      return
+    }
+
+    const danmakuItem = getDanmakuItemFromTarget(target)
+    if (!danmakuItem || danmakuItem === frozenDanmaku) {
+      return
+    }
+
+    if (frozenDanmaku && isInsideKeepZone(e.clientX, e.clientY)) {
+      return
+    }
+
+    freezeAndShow(danmakuItem)
+  }
+
   const handleDocPointerMove = (e: PointerEvent) => {
     if (!frozenDanmaku) {
       return
     }
-    const { clientX: x, clientY: y } = e
-    const onDanmaku = isInsideRect(x, y, frozenDanmaku)
-    const onBar = currentActionBar ? isInsideRect(x, y, currentActionBar, 0) : false
-    if (!onDanmaku && !onBar) {
-      restore()
+    if (isInsideKeepZone(e.clientX, e.clientY)) {
+      return
+    }
+    restore()
+    const hovered = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null
+    const next =
+      hovered && !hovered.closest('.danmaku-action-bar') ? getDanmakuItemFromTarget(hovered) : null
+    if (next) {
+      freezeAndShow(next)
     }
   }
 
