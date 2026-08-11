@@ -111,10 +111,10 @@ export abstract class PlayerAgent
       }
     }
 
-    const subtitleLanguage =
+    const preferredSubtitleLanguage =
       this.getPlayerConfig<null, string>('subtitle.preferred_language', null) ??
       this.getPlayerConfig<null, string>('subtitle.lan', null)
-    if (subtitleLanguage === null) {
+    if (preferredSubtitleLanguage === null) {
       const firstOption = subtitleOptions.at(0)
       firstOption?.click()
       return {
@@ -123,16 +123,17 @@ export abstract class PlayerAgent
       }
     }
 
-    // 优先选择用过的选项，其次选择与用过的选项相近的选项，最后考虑 AI 生成选项，都不满足则尝试选择可选项第一个
+    const subtitleLanguage = preferredSubtitleLanguage.replace(/^ai-/, '')
+    const baseLanguage = subtitleLanguage.split('-')[0]
+
+    // 优先选择同语言的人工字幕，再考虑 AI 生成字幕，都不满足则尝试选择可选项第一个
     const matchers = [
       () => subtitleOptions.find(it => it.dataset.lan === subtitleLanguage),
       () =>
         subtitleOptions.find(
-          it =>
-            !it.dataset.lan?.startsWith('ai-') &&
-            it.dataset.lan?.includes(subtitleLanguage.split('-')[0]),
+          it => !it.dataset.lan?.startsWith('ai-') && it.dataset.lan?.includes(baseLanguage),
         ),
-      () => subtitleOptions.find(it => it.dataset.lan === `ai-${subtitleLanguage.split('-')[0]}`),
+      () => subtitleOptions.find(it => it.dataset.lan === `ai-${baseLanguage}`),
       () => subtitleOptions.at(0),
     ]
 
