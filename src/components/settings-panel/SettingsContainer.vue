@@ -83,8 +83,7 @@ export default {
     },
     handleWindowBlur() {
       setTimeout(() => {
-        const active = document.activeElement
-        if (active instanceof HTMLIFrameElement) {
+        if (document.activeElement instanceof HTMLIFrameElement) {
           this.settingsOpened = false
           this.widgetsOpened = false
         }
