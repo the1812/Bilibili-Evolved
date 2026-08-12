@@ -1,4 +1,3 @@
-/* spellchecker:words pvdata */
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDuration } from '@/core/utils/formatters'
 
@@ -15,6 +14,28 @@ const parsePVData = async (data: ArrayBuffer) => {
     result.push(view.getUint16(i, false))
   }
   return result
+}
+
+/**
+ * 获取快照时间点数组
+ * index=1 时接口会返回 index 字段, 但偶发为空, 此时回退到解析二进制的 pvdata
+ */
+async function fetchShotTimes(data: any) {
+  const index = data.index as number[] | undefined
+  if (index?.length > 1) {
+    // 与 parsePVData 一致, 跳过第一个恒为 0 的值
+    console.debug('[VideoSnapshot] 使用接口 index 字段获取快照时间点')
+    return index.slice(1)
+  }
+  if (!data.pvdata) {
+    throw new Error('[VideoSnapshot] 视频快照时间数据缺失')
+  }
+  console.debug('[VideoSnapshot] index 字段为空, 回退到解析二进制 pvdata 获取快照时间点')
+  const response = await fetch(data.pvdata)
+  if (!response.ok) {
+    throw new Error(`[VideoSnapshot] 获取视频快照时间数据失败: ${response.status}`)
+  }
+  return parsePVData(await response.arrayBuffer())
 }
 
 // =========================================================================== /
@@ -410,20 +431,18 @@ export class VideoSnapshot {
   }
 
   async fetchInfo() {
-    let url = 'https://api.bilibili.com/x/player/videoshot?'
+    let url = 'https://api.bilibili.com/x/player/videoshot?index=1'
     if (this.aid) {
-      url += `aid=${this.aid}`
+      url += `&aid=${this.aid}`
     } else if (this.bvid) {
-      url += `bvid=${this.bvid}`
+      url += `&bvid=${this.bvid}`
     }
     if (this.cid) {
       url += `&cid=${this.cid}`
     }
     const data = await bilibiliApi(getJsonWithCredentials(url), '[VideoSnapshot]', false)
 
-    const allTimes = await fetch(data.pvdata, {})
-      .then(res => res.arrayBuffer())
-      .then(b => parsePVData(b))
+    const allTimes = await fetchShotTimes(data)
 
     this.atlasColumns = data.img_x_len
     this.atlasRows = data.img_y_len
