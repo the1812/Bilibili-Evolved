@@ -1,33 +1,26 @@
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
 
-const isCommentLiked = (item: CommentReplyItem) =>
-  item.frameworkSpecificProps?.up_action?.like === true
-
 const createUpLiked = (footer: HTMLDivElement) => {
   const tagsContainerElement =
     (footer.querySelector('#tags') as HTMLDivElement | null) ?? document.createElement('div')
   tagsContainerElement.id = 'tags'
 
-  if (tagsContainerElement.querySelector('.tag') !== null) {
-    if (footer.contains(tagsContainerElement)) {
-      return
-    }
-  }
-
-  const mainTag = document.createElement('div')
-  mainTag.className = 'tag'
-  mainTag.textContent = 'UP主觉得很赞'
-
-  tagsContainerElement.appendChild(mainTag)
   if (!footer.contains(tagsContainerElement)) {
     footer.appendChild(tagsContainerElement)
+  }
+
+  if (!tagsContainerElement.querySelector('.tag')) {
+    const mainTag = document.createElement('div')
+    mainTag.className = 'tag'
+    mainTag.textContent = 'UP主觉得很赞'
+    tagsContainerElement.appendChild(mainTag)
   }
 }
 
 const processItems = (items: CommentReplyItem[]) => {
   items.forEach(item => {
-    if (!isCommentLiked(item)) {
+    if (item.frameworkSpecificProps?.up_action?.like !== true) {
       return
     }
 
