@@ -1,9 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
-import { delay, getUID } from '@/core/utils'
+import { getUID } from '@/core/utils'
+import { select } from '@/core/spin-query'
 
-const getPlayer = () => unsafeWindow.livePlayer as any
-const isPlayerReady = (player: any) => player?.getPlayerInfo?.().playurl && player.switchQuality
+const isPlayerReady = (player: any) => player?.getPlayerInfo?.()?.playurl && player.switchQuality
 
 export const component = defineComponentMetadata({
   name: 'autoHighestQuality',
@@ -17,11 +17,10 @@ export const component = defineComponentMetadata({
       return
     }
 
-    let player = getPlayer()
-    while (!isPlayerReady(player)) {
-      await delay(500)
-      player = getPlayer()
-    }
+    const player = await select(() => {
+      const p = unsafeWindow.livePlayer as any
+      return isPlayerReady(p) ? p : null
+    })
     console.debug('[直播自动切换最高画质] 播放器已就绪')
 
     const playerInfo = player.getPlayerInfo()
