@@ -32,7 +32,7 @@ function createButton(vid: number | string, cid: number, title: string, position
 }
 
 function parseBvidFromUrl(url: string) {
-  return url.match(/bilibili\.com\/video\/(\w+)/i)?.[1] ?? ''
+  return url.match(/bilibili\.com\/video\/(\w+)/i)[1]
 }
 
 // ========================================================================== //
@@ -41,20 +41,29 @@ const recommendListContainerSelector = '.recommend-list-v1, .recommend-list-cont
 const recommendCardSelector = '.video-page-card-small, .recommend-video-card.video-card'
 const recommendCardPicBoxSelector = '.card-box>.pic-box'
 
+let recommendListObserver: MutationObserver | null = null
+
+function clearRecommendListObserver() {
+  recommendListObserver?.disconnect()
+  recommendListObserver = null
+}
+
 function addButtonOnRecommendCards(container: Element, position: string) {
   container.querySelectorAll(recommendCardSelector).forEach(card => {
     if (hasSnapshotButton(card)) {
       return
     }
     const data = (
-      getVue2Data(card) as {
-        $props: {
-          item?: { aid: number; cid: number; title: string }
-          info?: { aid: number; cid: number; title: string }
-        }
-      }
-    ).$props
-    const item = data.item ?? data.info
+      getVue2Data(card) as
+        | {
+            $props?: {
+              item?: { aid: number; cid: number; title: string }
+              info?: { aid: number; cid: number; title: string }
+            }
+          }
+        | undefined
+    )?.$props
+    const item = data?.item ?? data?.info
     if (!item) {
       return
     }
@@ -72,9 +81,11 @@ async function addButtonOnRecommendList() {
   }
   const addCards = () => addButtonOnRecommendCards(container, position)
   addCards()
-  childListSubtree(container, () => {
+  clearRecommendListObserver()
+  const [observer] = childListSubtree(container, () => {
     requestAnimationFrame(addCards)
   })
+  recommendListObserver = observer
 }
 
 // ========================================================================== //
@@ -89,6 +100,7 @@ const spaceVideoCardCoverSelector = '.bili-video-card__cover'
 
 let spaceListObserver: MutationObserver | null = null
 let currentSpaceListElement: Element | null = null
+let spaceVideoListGeneration = 0
 
 function clearSpaceListObserver() {
   spaceListObserver?.disconnect()
@@ -119,6 +131,7 @@ function addButtonOnSpaceCard(card: Element, position: string) {
 
 function addButtonOnSpaceVideoList(position: ButtonPosition) {
   const positionStr = parseButtonPosition(position)
+  const generation = ++spaceVideoListGeneration
   let processing = false
   const processCards = () => {
     if (processing) {
@@ -144,7 +157,7 @@ function addButtonOnSpaceVideoList(position: ButtonPosition) {
   }
   clearSpaceListObserver()
   select(spaceVideoListMainSelector).then(list => {
-    if (!list) {
+    if (generation !== spaceVideoListGeneration || !list) {
       return
     }
     bindSpaceListObserver(list, processCards)
@@ -169,7 +182,7 @@ function addButtonOnFeedCards() {
       const button = createButton(
         parseBvidFromUrl(videoCard.href),
         0,
-        videoCard.querySelector(feedVideoCardTitleSelector).innerHTML,
+        videoCard.querySelector(feedVideoCardTitleSelector).textContent,
         position,
       )
       videoCard.querySelector(feedVideoCardCoverSelector)?.appendChild(button)
@@ -182,6 +195,7 @@ function addButtonOnFeedCards() {
 export const entry: ComponentEntry = async () => {
   const options = getOptions()
   urlChange(() => {
+    clearRecommendListObserver()
     clearSpaceListObserver()
     if (matchCurrentPage(videoUrls) && isButtonEnabled(options.recommendListButton)) {
       playerReady().then(addButtonOnRecommendList)
