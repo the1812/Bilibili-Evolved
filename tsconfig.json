@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./dist/",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
@@ -19,7 +19,7 @@
     }
   },
   "vueCompilerOptions": {
-    "target": 2.7
+    "target": "auto"
   },
   "include": [
     "src/**/*",
