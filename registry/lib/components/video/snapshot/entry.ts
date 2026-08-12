@@ -2,7 +2,7 @@ import { forEachFeedsCard } from '@/components/feeds/api'
 import { ComponentEntry } from '@/components/types'
 import { childListSubtree, urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
-import { playerReady } from '@/core/utils'
+import { getVue2Data, playerReady } from '@/core/utils'
 import {
   feedsUrls,
   matchCurrentPage,
@@ -14,7 +14,9 @@ import ViewButton from './ViewButton.vue'
 import { getConsole, getOptions } from './handler'
 import { ButtonPosition, isButtonEnabled, parseButtonPosition } from './options'
 
-const snapshotButtonSelector = '.view-snapshot-button'
+function hasSnapshotButton(card: Element) {
+  return card.querySelector('.view-snapshot-button') !== null
+}
 
 function createButton(vid: number | string, cid: number, title: string, position: string) {
   const vm = new (Vue.extend(ViewButton))({
@@ -39,44 +41,25 @@ const recommendListContainerSelector = '.recommend-list-v1, .recommend-list-cont
 const recommendCardSelector = '.video-page-card-small, .recommend-video-card.video-card'
 const recommendCardPicBoxSelector = '.card-box>.pic-box'
 
-function getRecommendCardInfo(card: Element) {
-  const item = (
-    card as Element & {
-      $props?: { item?: { aid?: number; cid?: number; title?: string } }
-    }
-  ).$props?.item
-  if (item?.aid !== undefined && item?.cid !== undefined && item?.title) {
-    return {
-      vid: item.aid,
-      cid: item.cid,
-      title: item.title,
-    }
-  }
-  const titleElement = card.querySelector('.title, [title]') as HTMLElement | null
-  const title =
-    titleElement?.textContent?.trim() || titleElement?.getAttribute('title')?.trim() || ''
-  const link = card.querySelector('a[href*="/video/"]') as HTMLAnchorElement | null
-  if (!title || !link?.href) {
-    return null
-  }
-  return {
-    vid: parseBvidFromUrl(link.href),
-    cid: 0,
-    title,
-  }
-}
-
 function addButtonOnRecommendCards(container: Element, position: string) {
   container.querySelectorAll(recommendCardSelector).forEach(card => {
-    if (card.querySelector(snapshotButtonSelector)) {
+    if (hasSnapshotButton(card)) {
       return
     }
-    const info = getRecommendCardInfo(card)
-    if (!info) {
+    const data = (
+      getVue2Data(card) as {
+        $props: {
+          item?: { aid: number; cid: number; title: string }
+          info?: { aid: number; cid: number; title: string }
+        }
+      }
+    ).$props
+    const item = data.item ?? data.info
+    if (!item) {
       return
     }
-    const cover = card.querySelector(recommendCardPicBoxSelector)
-    cover.appendChild(createButton(info.vid, info.cid, info.title, position))
+    const button = createButton(item.aid, item.cid, item.title, position)
+    card.querySelector(recommendCardPicBoxSelector)?.appendChild(button)
   })
 }
 
@@ -121,23 +104,22 @@ function bindSpaceListObserver(list: Element, callback: () => void) {
 }
 
 function addButtonOnSpaceCard(card: Element, position: string) {
-  if (card.querySelector(snapshotButtonSelector)) {
+  if (hasSnapshotButton(card)) {
     return
   }
-  const titleAnchor = card.querySelector(spaceVideoCardAnchorSelector) as HTMLAnchorElement | null
-  if (!titleAnchor) {
-    return
-  }
-  const vid = parseBvidFromUrl(titleAnchor.href)
-  const title = titleAnchor.innerText?.trim()
-  const cover = card.querySelector(spaceVideoCardCoverSelector)
-  cover.appendChild(createButton(vid, 0, title, position))
+  const titleAnchor = card.querySelector(spaceVideoCardAnchorSelector) as HTMLAnchorElement
+  const button = createButton(
+    parseBvidFromUrl(titleAnchor.href),
+    0,
+    titleAnchor.innerText,
+    position,
+  )
+  card.querySelector(spaceVideoCardCoverSelector)?.appendChild(button)
 }
 
 function addButtonOnSpaceVideoList(position: ButtonPosition) {
   const positionStr = parseButtonPosition(position)
   let processing = false
-
   const processCards = () => {
     if (processing) {
       return
@@ -145,18 +127,13 @@ function addButtonOnSpaceVideoList(position: ButtonPosition) {
     processing = true
     requestAnimationFrame(() => {
       try {
-        let list = currentSpaceListElement
-        if (!list || !document.contains(list)) {
-          const newList = document.querySelector(spaceVideoListMainSelector)
-          if (!newList) {
-            return
-          }
-          list = newList
-          bindSpaceListObserver(list, () => {
-            processCards()
-          })
+        const list = currentSpaceListElement ?? document.querySelector(spaceVideoListMainSelector)
+        if (!list) {
+          return
         }
-
+        if (list !== currentSpaceListElement) {
+          bindSpaceListObserver(list, processCards)
+        }
         list
           .querySelectorAll(spaceVideoCardSelector)
           .forEach(card => addButtonOnSpaceCard(card, positionStr))
@@ -165,19 +142,14 @@ function addButtonOnSpaceVideoList(position: ButtonPosition) {
       }
     })
   }
-
-  const init = async () => {
-    clearSpaceListObserver()
-    const list = await select(spaceVideoListMainSelector)
+  clearSpaceListObserver()
+  select(spaceVideoListMainSelector).then(list => {
     if (!list) {
       return
     }
-    bindSpaceListObserver(list, () => {
-      processCards()
-    })
+    bindSpaceListObserver(list, processCards)
     processCards()
-  }
-  init()
+  })
 }
 
 // ========================================================================== //
@@ -191,18 +163,16 @@ function addButtonOnFeedCards() {
   forEachFeedsCard({
     added: card => {
       const videoCard: HTMLAnchorElement = card.element.querySelector(feedVideoCardSelector)
-      if (videoCard) {
-        if (videoCard.querySelector(snapshotButtonSelector)) {
-          return
-        }
-        const button = createButton(
-          parseBvidFromUrl(videoCard.href),
-          0,
-          videoCard.querySelector(feedVideoCardTitleSelector).innerHTML,
-          position,
-        )
-        videoCard.querySelector(feedVideoCardCoverSelector)?.appendChild(button)
+      if (!videoCard || hasSnapshotButton(videoCard)) {
+        return
       }
+      const button = createButton(
+        parseBvidFromUrl(videoCard.href),
+        0,
+        videoCard.querySelector(feedVideoCardTitleSelector).innerHTML,
+        position,
+      )
+      videoCard.querySelector(feedVideoCardCoverSelector)?.appendChild(button)
     },
   })
 }
