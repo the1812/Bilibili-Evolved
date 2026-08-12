@@ -37,7 +37,7 @@
             }
             .top3-name {
               max-width: calc(
-                (var(--be-live-chat-panel-width) - 127px) / var(--be-count-top3-gift)
+                (var(--be-live-chat-panel-width) - 130px) / var(--be-count-top3-gift)
               );
             }
           }
@@ -130,7 +130,7 @@
                   .uname > a {
                     width: auto;
                     max-width: calc(
-                      (var(--be-live-chat-panel-width) - 141px) / var(--be-count-top3-guard)
+                      (var(--be-live-chat-panel-width) - 145px) / var(--be-count-top3-guard)
                     );
                   }
                 }
