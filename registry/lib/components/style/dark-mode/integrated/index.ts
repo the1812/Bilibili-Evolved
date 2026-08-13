@@ -1,30 +1,28 @@
 import { defineComponentMetadata } from '@/components/component'
+import { mutationObserve } from '@/core/observer'
 import { getCookieValue, matchUrlPattern } from '@/core/utils'
-import { festivalUrls } from '@/core/utils/urls'
 
 const name = 'integratedDarkMode'
 const darkModeClass = 'dark'
 const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
 
-// 判断活动页面是否启用深色模式
-const isFestivalDarkModeEnabled = () => {
-  if (!festivalUrls.some(matchUrlPattern)) {
-    return true
-  }
-  return document.documentElement.classList.contains('bili_dark')
-}
+// 直播页
+const isLivePage = () => matchUrlPattern(/^https:\/\/live\.bilibili\.com\//)
 
-// 判断直播间是否启用深色模式
-const isLiveroomDarkModeEnabled = () => {
-  if (!matchUrlPattern(/^https:\/\/live\.bilibili\.com\/([\d]+)/)) {
-    return true
-  }
-  return document.documentElement.getAttribute('lab-style') === 'dark'
-}
+// 深色模式不适用的页面: 活动页 / blackboard / 音乐 / 创作中心
+const unsupportedUrls = [
+  /^https:\/\/www\.bilibili\.com\/festival\//,
+  /^https:\/\/www\.bilibili\.com\/blackboard\//,
+  /^https:\/\/www\.bilibili\.com\/audio\//,
+  /^https:\/\/member\.bilibili\.com\//,
+]
 
 const isOfficialDarkModeEnabled = () => {
-  if (!isLiveroomDarkModeEnabled() || !isFestivalDarkModeEnabled()) {
+  if (isLivePage()) {
+    return document.documentElement.getAttribute('lab-style') === 'dark'
+  }
+  if (unsupportedUrls.some(matchUrlPattern)) {
     return false
   }
   return getCookieValue('theme_style') === 'dark'
@@ -68,7 +66,7 @@ const disableDarkMode = () => {
   }
 }
 
-const toggleDarkModeByCookie = () => {
+const toggleDarkMode = () => {
   if (isOfficialDarkModeEnabled()) {
     enableDarkMode()
   } else {
@@ -78,8 +76,22 @@ const toggleDarkModeByCookie = () => {
 
 const cookieChangeHandler = (e: CookieChangedEvent) => {
   if (e.changed.some(cookie => cookie.name === 'theme_style')) {
-    toggleDarkModeByCookie()
+    toggleDarkMode()
   }
+}
+
+let liveLabStyleObserver: MutationObserver | undefined
+const watchLiveLabStyle = () => {
+  liveLabStyleObserver?.disconnect()
+  if (!isLivePage()) {
+    liveLabStyleObserver = undefined
+    return
+  }
+  ;[liveLabStyleObserver] = mutationObserve(
+    [document.documentElement],
+    { attributes: true, attributeFilter: ['lab-style'] },
+    toggleDarkMode,
+  )
 }
 
 export const component = defineComponentMetadata({
@@ -87,13 +99,17 @@ export const component = defineComponentMetadata({
   displayName: '深色模式',
   entry: () => {
     cookieStore.addEventListener('change', cookieChangeHandler)
+    watchLiveLabStyle()
   },
   reload: () => {
     cookieStore.addEventListener('change', cookieChangeHandler)
-    toggleDarkModeByCookie()
+    toggleDarkMode()
+    watchLiveLabStyle()
   },
   unload: () => {
     cookieStore.removeEventListener('change', cookieChangeHandler)
+    liveLabStyleObserver?.disconnect()
+    liveLabStyleObserver = undefined
     document.body.classList.remove(darkModeClass, integratedDarkModeClass)
   },
   tags: [componentsTags.style, componentsTags.general],
@@ -120,7 +136,7 @@ export const component = defineComponentMetadata({
       const { isComponentEnabled } = await import('@/core/settings')
       contentLoaded(() => {
         if (isComponentEnabled(name)) {
-          toggleDarkModeByCookie()
+          toggleDarkMode()
         }
       })
     },
