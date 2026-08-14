@@ -190,7 +190,7 @@
         }
 
         // 底部卡片栏
-        .relocated-cards-area .relocated-card-slot {
+        .relocated-cards-area {
           scale: var(--live-chat-panel-scale);
           min-width: 300px;
           transform-origin: left bottom;
