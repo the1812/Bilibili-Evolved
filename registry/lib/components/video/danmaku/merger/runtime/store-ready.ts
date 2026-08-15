@@ -2,6 +2,7 @@
 import { dmLog } from '../danmaku/log'
 import type { DanmakuEngine } from '../danmaku/engine'
 import type { NativeDanmakuApi } from '../danmaku/inject'
+import { isPakkuActive } from '../api/bilibili'
 
 type NativeDanmakuRuntime = NativeDanmakuApi & {
   _storeReadyRetryTimer?: number
@@ -48,7 +49,9 @@ export function bindStoreReadyListener(
         return
       }
       dmLog('Store 就绪，自动补同步', { screen, listLen, sources: activeSources.size })
-      const result = await nativeDanmaku.fullSyncAsync(activeSources, undefined)
+      const result = await nativeDanmaku.fullSyncAsync(activeSources, undefined, {
+        allowBurstCapture: !isPakkuActive(),
+      })
       engine.lastListSync = !!result.list
       engine.lastSyncResult = result
       document.dispatchEvent(new CustomEvent('dm-sources-updated'))

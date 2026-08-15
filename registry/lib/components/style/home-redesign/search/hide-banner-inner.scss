@@ -1,0 +1,18 @@
+// 仅隐藏动画横幅层与 Logo 区, 不改动顶栏容器与功能入口
+@mixin layout-shift {
+  position: fixed;
+  visibility: hidden;
+  top: 200vh;
+  left: 0;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+.animated-banner,
+.header-banner__inner,
+#bili-header-banner-img,
+picture.banner-img {
+  @include layout-shift();
+}

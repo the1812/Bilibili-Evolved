@@ -35,6 +35,7 @@ export interface ViewPageItem {
 /** view 接口视频详情 */
 export interface ViewResult {
   bvid: string
+  aid?: number
   title: string
   pic: string
   owner?: { name: string }
