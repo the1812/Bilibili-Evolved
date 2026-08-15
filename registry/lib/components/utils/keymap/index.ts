@@ -34,6 +34,10 @@ const options = defineOptionsMetadata({
     defaultValue: false,
     displayName: '屏蔽 B 站播放器原生快捷键',
   },
+  subtitleLanguagePreference: {
+    defaultValue: '',
+    displayName: '字幕语言偏好',
+  },
   customKeyBindings: {
     defaultValue: {} as Record<string, string>,
     displayName: '自定义键位',

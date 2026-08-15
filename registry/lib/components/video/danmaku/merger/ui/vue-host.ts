@@ -39,6 +39,9 @@ export interface MergerEngineSource {
   offset?: number
   cid?: number | string
   viewCid?: number | string
+  aid?: number | string
+  fetchMode?: string
+  fetchNotice?: string
 }
 
 export interface MergerVueHostDeps {
@@ -47,6 +50,10 @@ export interface MergerVueHostDeps {
     getCurrentVideoId: () => string
     removeSource: (id: string) => void
     updateSource: (id: string, updates: Record<string, unknown>) => void
+    /** 偏移写回后立刻重刷当前进度弹幕 */
+    applyOffsetAndReshow?: (id: string, offset: number) => void
+    /** 当前观看分 P 的 cid，切 P 时可能比页面 cid 更及时 */
+    activeViewCid?: string | null
     sources?: Map<string, { list: Array<{ time: number; text: string }>; meta: MergerEngineSource }>
   }
   api: {
@@ -61,7 +68,19 @@ export interface MergerVueHostDeps {
       owner?: { name: string }
       pages?: Array<{ cid: number; part: string; page: number; duration?: number }>
     }>
-    getDanmaku: (cid: number | string) => Promise<string>
+    getDanmaku: (
+      cid: number | string,
+      options?: {
+        videoId?: string
+        aid?: number | string
+        forceFallback?: boolean
+        unavailableReason?: string
+      },
+    ) => Promise<{
+      list: Array<{ time: number; text: string }>
+      mode: string
+      notice?: string
+    }>
     getPageList: (bvid: string) => Promise<Array<{ cid: number; duration?: number }>>
   }
   parseDanmaku: (xml: string) => Array<{ time: number; text: string }>
@@ -108,6 +127,8 @@ interface SearchUiState {
   loadingMore: boolean
   results: MergerSearchVideo[]
   selectedBvids: string[]
+  /** 跨搜索保留已选视频卡片信息（bvid → 摘要） */
+  selectedVideos: Record<string, MergerSearchVideo>
   expandedBvids: Record<string, boolean>
   expandedPages: Record<string, PagePartListRow[]>
   sortMode: 'default' | 'play' | 'danmaku'
@@ -178,6 +199,8 @@ function buildManagerGroups(
       title: source.title || '',
       count: source.count || 0,
       offset: source.offset,
+      fetchMode: source.fetchMode,
+      fetchNotice: source.fetchNotice,
     })
   })
 
@@ -188,6 +211,7 @@ export interface MergerVueHostCtrl {
   host: MergerUiHost
   mount: () => Promise<void>
   handleVideoChange: () => void
+  handlePartChange: () => void
   destroy: () => void
   refreshBadge: () => void
 }
@@ -200,6 +224,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     loadingMore: false,
     results: [],
     selectedBvids: [],
+    selectedVideos: {},
     expandedBvids: {},
     expandedPages: {},
     sortMode: 'default',
@@ -245,6 +270,88 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     ...video,
     pic: normalizeHttpsUrl(video.pic),
   })
+
+  /** 当前已合并源的 BV 集合（搜索列表打标用） */
+  const getMergedBvidSet = (): Set<string> => {
+    const set = new Set<string>()
+    deps.engine.getSources().forEach(source => {
+      const bvid = deps.resolveSourceBvid(source) || source.bvid || ''
+      if (bvid) {
+        set.add(String(bvid))
+      }
+    })
+    return set
+  }
+
+  /** 当前已合并源的 cid 集合（分 P 行打标用） */
+  const getMergedCidSet = (): Set<string> => {
+    const set = new Set<string>()
+    deps.engine.getSources().forEach(source => {
+      if (source.cid != null && source.cid !== '') {
+        set.add(String(source.cid))
+      }
+      // id 形如 BVxxx_cid
+      const fromId = String(source.id || '').match(/_(\d+)$/)
+      if (fromId?.[1]) {
+        set.add(fromId[1])
+      }
+    })
+    return set
+  }
+
+  /** 已合并源条数按 BV 汇总，供搜索卡展示 */
+  const getMergedCountByBvid = (): Record<string, number> => {
+    const map: Record<string, number> = {}
+    deps.engine.getSources().forEach(source => {
+      const bvid = deps.resolveSourceBvid(source) || source.bvid || ''
+      if (!bvid) {
+        return
+      }
+      map[bvid] = (map[bvid] || 0) + 1
+    })
+    return map
+  }
+
+  /** 给分 P 行打上 merged 标记 */
+  const markMergedPages = (pages: PagePartListRow[]): PagePartListRow[] => {
+    const mergedCids = getMergedCidSet()
+    return pages.map(page => ({
+      ...page,
+      merged: mergedCids.has(String(page.cid)),
+    }))
+  }
+
+  /** 记住已选视频摘要，换关键词后底部仍可查看/合并 */
+  const rememberSelectedVideos = (videos: MergerSearchVideo[]): void => {
+    videos.forEach(video => {
+      if (!video?.bvid) {
+        return
+      }
+      searchState.selectedVideos[video.bvid] = normalizeSearchVideo(video)
+    })
+  }
+
+  /** 选中列表变化时同步摘要字典，去掉已取消项 */
+  const syncSelectedVideoCache = (selectedBvids: string[]): void => {
+    const next: Record<string, MergerSearchVideo> = {}
+    selectedBvids.forEach(bvid => {
+      const cached = searchState.selectedVideos[bvid]
+      const fromResults = searchState.results.find(item => item.bvid === bvid)
+      if (fromResults) {
+        next[bvid] = normalizeSearchVideo(fromResults)
+        return
+      }
+      if (cached) {
+        next[bvid] = cached
+      }
+    })
+    searchState.selectedVideos = next
+  }
+
+  const selectedVideosList = (): MergerSearchVideo[] =>
+    searchState.selectedBvids
+      .map(bvid => searchState.selectedVideos[bvid])
+      .filter((item): item is MergerSearchVideo => !!item)
 
   const applySearchSort = (
     results: MergerSearchVideo[],
@@ -294,6 +401,13 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     if (!searchVm) {
       return
     }
+    // 源列表变化时，刷新已展开分P的 merged 标记
+    Object.keys(searchState.expandedPages).forEach(bvid => {
+      const pages = searchState.expandedPages[bvid]
+      if (pages?.length) {
+        searchState.expandedPages[bvid] = markMergedPages(pages)
+      }
+    })
     const data = searchVm.$data as Record<string, unknown>
     const currentResults = (data.results as MergerSearchVideo[]) || []
     const nextResults = searchState.results
@@ -306,12 +420,16 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       Vue.set(data, 'results', [...nextResults])
     }
     Vue.set(data, 'selectedBvids', [...searchState.selectedBvids])
+    Vue.set(data, 'selectedVideos', selectedVideosList())
     Vue.set(data, 'expandedBvids', { ...searchState.expandedBvids })
     Vue.set(data, 'expandedPages', cloneExpandedPages())
     Vue.set(data, 'sortMode', searchState.sortMode)
     Vue.set(data, 'errorMessage', searchState.errorMessage)
     Vue.set(data, 'hasMore', searchState.hasMore)
-    Vue.set(data, 'searchInput', searchState.keyword)
+    // 已合并 BV 标记，供搜索列表与底部已选区展示
+    Vue.set(data, 'mergedBvids', Array.from(getMergedBvidSet()))
+    Vue.set(data, 'mergedCountByBvid', getMergedCountByBvid())
+    // 不在这里写 searchInput：输入框由用户编辑，避免同步时被预填标题冲掉
   }
 
   const syncManagerVm = () => {
@@ -354,13 +472,19 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   }
 
   const getBadgeSources = () => {
-    const viewCid = getCurrentPageCid()
+    // 优先引擎当前活跃分P（切P过程中可能比 unsafeWindow.cid 更及时）
+    const viewCid =
+      (deps.engine.activeViewCid != null && String(deps.engine.activeViewCid)) ||
+      getCurrentPageCid()
     const sources = deps.engine.getSources()
     if (!viewCid) {
       return sources
     }
     return sources.filter(source => sourceMatchesViewCid(source, viewCid))
   }
+
+  /** 管理页 / 角标 / 汇总：只展示当前分 P 观看上下文的合并源 */
+  const getViewScopedSources = (): MergerEngineSource[] => getBadgeSources()
 
   const refreshBadge = () => {
     const sources = getBadgeSources()
@@ -411,7 +535,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
 
   const refreshManagerGroups = () => {
     managerState.groups = buildManagerGroups(
-      deps.engine.getSources(),
+      getViewScopedSources(),
       deps.extractBvid,
       deps.resolveSourceBvid,
     )
@@ -422,11 +546,28 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   }
 
   const getInitialKeyword = (): string => {
-    const title =
-      document.querySelector('.video-title')?.getAttribute('title') ||
-      document.querySelector('title')?.innerText.replace('_哔哩哔哩_bilibili', '') ||
-      ''
-    return title
+    const candidates = [
+      document.querySelector('.video-title')?.getAttribute('title'),
+      document.querySelector('.video-title')?.textContent,
+      document.querySelector('h1.video-title, h1[title], .video-info-title')?.getAttribute('title'),
+      document.querySelector('h1.video-title, h1[title], .video-info-title')?.textContent,
+      document.querySelector(
+        '.video-pod__item.active .title-txt, .video-pod__item.active .title, .multipage-list .on .part, .page-list .on',
+      )?.textContent,
+      document.title
+        .replace(/_哔哩哔哩_bilibili.*$/, '')
+        .replace(/-哔哩哔哩.*$/, '')
+        .replace(/_哔哩哔哩.*$/, ''),
+    ]
+    for (const raw of candidates) {
+      const title = String(raw || '')
+        .replace(/\s+/g, ' ')
+        .trim()
+      if (title) {
+        return title
+      }
+    }
+    return ''
   }
 
   const resolvePartDurations = (
@@ -530,17 +671,18 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     await Promise.all(
       pages.map(async page => {
         try {
-          const xml = await deps.api.getDanmaku(page.cid)
-          const list = deps.parseDanmaku(xml)
+          const fetched = await deps.api.getDanmaku(page.cid, { videoId: bvid })
+          const { list } = fetched
           page.danmakuCount = list.length
           page.danmakuError = false
         } catch {
+          // 仅网络/接口异常算获取失败；空列表在上游已作为成功返回
           page.danmakuCount = undefined
           page.danmakuError = true
         }
       }),
     )
-    searchState.expandedPages[bvid] = [...pages]
+    searchState.expandedPages[bvid] = markMergedPages(pages)
     syncExpandedPagesToVm(bvid)
   }
 
@@ -557,7 +699,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           page.duration = sec
         }
       })
-      searchState.expandedPages[bvid] = [...pages]
+      searchState.expandedPages[bvid] = markMergedPages(pages)
       syncExpandedPagesToVm(bvid)
     } catch {
       // 忽略片长拉取失败
@@ -584,7 +726,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         searchState.partModeFields[bvid] = defaultPartModeFields(bvid, deps.loadPartModeState)
       }
 
-      searchState.expandedPages[bvid] = pages
+      searchState.expandedPages[bvid] = markMergedPages(pages)
       syncSearchVm()
 
       if (pages.length > 1) {
@@ -604,6 +746,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     searchState.errorMessage = ''
     searchState.results = []
     searchState.hasMore = false
+    // 直接 BV/av 打开时不清空跨搜索已选，便于继续追加
     syncSearchVm()
 
     try {
@@ -615,7 +758,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         author: data.owner?.name || '',
       }
       searchState.results = [video]
-      searchState.selectedBvids = []
+      rememberSelectedVideos([video])
       await loadVideoPages(data.bvid)
     } catch (err) {
       searchState.errorMessage = String(err)
@@ -635,9 +778,7 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       searchState.loading = true
       searchState.errorMessage = ''
       searchState.results = []
-      searchState.selectedBvids = []
-      searchState.expandedBvids = {}
-      searchState.expandedPages = {}
+      // 换关键词只刷新结果列表；已选与分P勾选跨搜索保留
       searchState.currentKeyword = keyword
       searchState.currentPage = 1
       searchState.hasMore = true
@@ -653,6 +794,10 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
         const incoming = videos.data.map(normalizeSearchVideo)
         const merged = append ? [...searchState.results, ...incoming] : incoming
         searchState.results = applySearchSort(merged, searchState.sortMode)
+        // 新结果若命中已选 bvid，刷新封面/标题摘要
+        rememberSelectedVideos(
+          incoming.filter(item => searchState.selectedBvids.includes(item.bvid)),
+        )
         searchState.hasMore = videos.data.length >= 30
         searchState.currentPage = page
       } else if (!append) {
@@ -684,13 +829,13 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       return
     }
 
-    searchState.visible = false
+    // 合并过程中保持搜索页打开，动作完成后仍留在搜索页
+    searchState.visible = true
     syncSearchVm()
 
     let success = 0
     let fail = 0
     let totalDm = 0
-    let screenDm = 0
     let lastFailReason = ''
     const reasonText: Record<string, string> = {
       player_not_ready: '播放器未就绪',
@@ -715,19 +860,33 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           const workingTask = { ...task }
 
           if (task.fetchRequired) {
-            const data = await deps.api.getView(task.bvid)
-            if (data?.pages?.length) {
-              cid = data.pages[0].cid
-              title = `P1 ${data.pages[0].part}`
-              Object.assign(workingTask, {
-                cid,
-                title,
-                pic: normalizeHttpsUrl(data.pic),
-                author: data.owner?.name || '',
-                groupTitle: data.title,
-              })
-            } else {
-              throw new Error('没有分P数据')
+            try {
+              const data = await deps.api.getView(task.bvid)
+              if (data?.pages?.length) {
+                cid = data.pages[0].cid
+                title = `P1 ${data.pages[0].part}`
+                Object.assign(workingTask, {
+                  cid,
+                  title,
+                  pic: normalizeHttpsUrl(data.pic),
+                  author: data.owner?.name || '',
+                  groupTitle: data.title,
+                  aid: (data as { aid?: number | string }).aid,
+                })
+              } else {
+                throw new Error('没有分P数据')
+              }
+            } catch (viewErr) {
+              // 视频已删时 view 失败：若任务已有 cid 仍可走历史弹幕兜底
+              if (cid == null) {
+                const msg = viewErr instanceof Error ? viewErr.message : String(viewErr)
+                throw new Error(
+                  /不存在|已删除|404|62002|不可见/i.test(msg)
+                    ? '视频不存在或已删除，且缺少 cid 无法兜底'
+                    : msg || '获取视频信息失败',
+                )
+              }
+              workingTask.fetchNotice = '视频不存在或已删除，将尝试历史弹幕兜底'
             }
           }
 
@@ -736,12 +895,29 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           }
           resolvedTitle = title
           resolvedSourceId = workingTask.bvid ? `${workingTask.bvid}_${cid}` : String(cid)
-          const xml = await deps.api.getDanmaku(cid)
-          const list = deps.parseDanmaku(xml)
+          const fetched = await deps.api.getDanmaku(cid, {
+            videoId: workingTask.bvid || String(cid),
+            aid: workingTask.aid,
+            forceFallback: !!workingTask.fetchNotice,
+            unavailableReason:
+              typeof workingTask.fetchNotice === 'string' ? workingTask.fetchNotice : undefined,
+          })
+          const { list } = fetched
+          if (!list.length) {
+            throw new Error('弹幕为空')
+          }
+          if (fetched.notice) {
+            mergerToast(fetched.notice, 'warn')
+          }
           const injectIndex = success + fail + 1
           const result = await deps.injectDanmaku(
             list,
-            { ...workingTask, id: resolvedSourceId },
+            {
+              ...workingTask,
+              id: resolvedSourceId,
+              fetchMode: fetched.mode,
+              fetchNotice: fetched.notice,
+            },
             true,
             phase => {
               mergerProgressToast(
@@ -756,7 +932,6 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           if (mergedOk) {
             success++
             totalDm += result.count
-            screenDm += result.screen || 0
           } else {
             fail++
             lastFailReason = result.reason || 'inject_failed'
@@ -793,11 +968,6 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     if (totalDm > 0) {
       finalMsg += `，共 ${totalDm} 条`
     }
-    if (screenDm > 0) {
-      finalMsg += `，画面已写入 ${screenDm} 条`
-    } else if (success > 0) {
-      finalMsg += '，原生画面未写入（请确认 DanmakuX 已加载）'
-    }
     if (fail > 0) {
       finalMsg += `，${fail} 个失败`
       if (lastFailReason) {
@@ -812,7 +982,26 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     }
 
     mergerToast(finalMsg, success > 0 ? 'success' : 'error')
+    if (success > 0) {
+      // 合并成功后清空已选，但保留搜索页与展开状态，便于继续操作
+      searchState.selectedBvids = []
+      searchState.selectedVideos = {}
+      // 已展开分P的勾选状态清掉，避免残留已选计数
+      Object.keys(searchState.expandedPages).forEach(bvid => {
+        const pages = searchState.expandedPages[bvid]
+        if (!pages) {
+          return
+        }
+        pages.forEach(page => {
+          page.selected = false
+        })
+      })
+      searchState.visible = true
+      syncSearchVm()
+    }
     refreshManagerGroups()
+    // 刷新已合并标记（角标/管理组已更新）
+    syncSearchVm()
   }
 
   const openPreviewForSource = (sourceId: string) => {
@@ -836,10 +1025,13 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
   const host: MergerUiHost = {
     openSearchModal() {
       searchState.visible = true
-      if (!searchState.keyword) {
-        searchState.keyword = getInitialKeyword()
-      }
+      // 每次打开都按当前分 P / 当前视频标题刷新预填
+      searchState.keyword = getInitialKeyword()
       syncSearchVm()
+      // 仅打开瞬间写入输入框；之后用户改词不再被 host 覆盖
+      if (searchVm) {
+        Vue.set(searchVm.$data as Record<string, unknown>, 'searchInput', searchState.keyword)
+      }
     },
     openManagerModal() {
       if (!managerVm) {
@@ -864,14 +1056,16 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       }
     },
     getSourceSummaries(): MergerSourceSummary[] {
-      return deps.engine.getSources().map(s => ({
+      return getViewScopedSources().map(s => ({
         bvid: deps.resolveSourceBvid(s),
         title: s.title || '',
         count: s.count || 0,
+        fetchMode: s.fetchMode,
+        fetchNotice: s.fetchNotice,
       }))
     },
     getTotalMergedCount(): number {
-      return deps.engine.getSources().reduce((acc, s) => acc + (s.count || 0), 0)
+      return getViewScopedSources().reduce((acc, s) => acc + (s.count || 0), 0)
     },
   }
 
@@ -883,6 +1077,8 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       syncSearchVm()
     })
     vm.$on(MERGER_MODAL_EVENTS.SEARCH, ({ keyword, page }: { keyword: string; page?: number }) => {
+      // 记录用户实际搜索词，避免后续同步仍拿页面原标题
+      searchState.keyword = keyword
       doSearch(keyword, page || 1, false)
     })
     vm.$on(
@@ -912,13 +1108,67 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     })
     vm.$on(
       MERGER_MODAL_EVENTS.SELECTION_CHANGE,
-      ({ selectedBvids }: { selectedBvids: string[] }) => {
+      ({
+        selectedBvids,
+        selectedVideos,
+      }: {
+        selectedBvids: string[]
+        selectedVideos?: MergerSearchVideo[]
+      }) => {
         searchState.selectedBvids = selectedBvids
+        if (selectedVideos?.length) {
+          rememberSelectedVideos(selectedVideos)
+        }
+        syncSelectedVideoCache(selectedBvids)
         syncSearchVm()
       },
     )
     vm.$on(MERGER_MODAL_EVENTS.BATCH_MERGE, ({ items }: { items: MergerBatchMergeItem[] }) => {
       runBatchMerge(items)
+    })
+    vm.$on(MERGER_MODAL_EVENTS.DELETE_MERGED, async ({ bvids }: { bvids: string[] }) => {
+      const targets = Array.from(
+        new Set((bvids || []).map(b => String(b || '').trim()).filter(Boolean)),
+      )
+      if (!targets.length) {
+        return
+      }
+      // 收集这些 BV 下的全部已合并源 id
+      const sourceIds = deps.engine
+        .getSources()
+        .filter(source => {
+          const bvid = deps.resolveSourceBvid(source) || source.bvid || ''
+          return targets.includes(String(bvid))
+        })
+        .map(source => String(source.id))
+      if (!sourceIds.length) {
+        mergerToast('所选视频没有可删除的已合并源', 'warn')
+        return
+      }
+      const confirmed = await mergerConfirm(
+        '删除已合并',
+        `确定删除 ${targets.length} 个视频下的 ${sourceIds.length} 个已合并源吗？此操作不可撤销。`,
+      )
+      if (!confirmed) {
+        return
+      }
+      sourceIds.forEach(id => deps.engine.removeSource(id))
+      // 从已选中去掉这些 BV，但保留搜索页
+      searchState.selectedBvids = searchState.selectedBvids.filter(id => !targets.includes(id))
+      targets.forEach(bvid => {
+        delete searchState.selectedVideos[bvid]
+        const pages = searchState.expandedPages[bvid]
+        if (pages) {
+          pages.forEach(page => {
+            page.selected = false
+          })
+        }
+      })
+      syncSelectedVideoCache(searchState.selectedBvids)
+      searchState.visible = true
+      mergerToast(`已删除 ${sourceIds.length} 个弹幕源`, 'success')
+      refreshManagerGroups()
+      syncSearchVm()
     })
     vm.$on(
       'update:pageSelection',
@@ -932,11 +1182,35 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
           return
         }
         page.selected = selected
+
+        // 全部分P勾选 → 父勾选；否则父不勾（仅部分分P时父保持不勾）
+        const allSelected = pages.every(item => item.selected)
+        if (allSelected) {
+          if (!searchState.selectedBvids.includes(bvid)) {
+            searchState.selectedBvids = [...searchState.selectedBvids, bvid]
+          }
+          const video = searchState.results.find(item => item.bvid === bvid)
+          if (video) {
+            rememberSelectedVideos([video])
+          }
+        } else if (searchState.selectedBvids.includes(bvid)) {
+          searchState.selectedBvids = searchState.selectedBvids.filter(id => id !== bvid)
+        }
+        if (pages.some(item => item.selected)) {
+          const video = searchState.results.find(item => item.bvid === bvid)
+          if (video) {
+            rememberSelectedVideos([video])
+          }
+        }
+        syncSelectedVideoCache(searchState.selectedBvids)
+
         if (searchState.partModeEnabled[bvid]) {
           applyPartModeOffsets(bvid, true)
         } else {
           syncExpandedPagesToVm(bvid)
         }
+        // 回写 expandedPages / selectedBvids / selectedVideos
+        syncSearchVm()
       },
     )
     vm.$on(
@@ -988,20 +1262,25 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
       pages.forEach(page => {
         page.selected = select
       })
-      if (select && !searchState.selectedBvids.includes(bvid)) {
-        searchState.selectedBvids = [...searchState.selectedBvids, bvid]
-      }
-      if (!select) {
+      // 全选分P → 父勾选；取消全选 → 父取消
+      if (select) {
+        if (!searchState.selectedBvids.includes(bvid)) {
+          searchState.selectedBvids = [...searchState.selectedBvids, bvid]
+        }
+        const video = searchState.results.find(item => item.bvid === bvid)
+        if (video) {
+          rememberSelectedVideos([video])
+        }
+      } else {
         searchState.selectedBvids = searchState.selectedBvids.filter(id => id !== bvid)
       }
+      syncSelectedVideoCache(searchState.selectedBvids)
       if (searchState.partModeEnabled[bvid]) {
         applyPartModeOffsets(bvid, true)
       } else {
         syncExpandedPagesToVm(bvid)
-        Vue.set(searchVm?.$data as Record<string, unknown>, 'selectedBvids', [
-          ...searchState.selectedBvids,
-        ])
       }
+      syncSearchVm()
     })
     vm.$on(
       'part-duration-change',
@@ -1077,13 +1356,14 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     vm.$on(MANAGER_MODAL_EVENTS.CLEAR_ALL, async () => {
       const confirmed = await mergerConfirm(
         '清除全部',
-        '确定要移除当前视频所有已合并的弹幕吗？此操作不可撤销。',
+        '确定要移除当前分P所有已合并的弹幕吗？此操作不可撤销。',
       )
       if (!confirmed) {
         return
       }
-      deps.engine.getSources().forEach(s => deps.engine.removeSource(s.id))
-      mergerToast('已清除所有合并的弹幕', 'success')
+      const scoped = getViewScopedSources()
+      scoped.forEach(s => deps.engine.removeSource(s.id))
+      mergerToast(`已清除当前分P的 ${scoped.length} 个合并源`, 'success')
       refreshManagerGroups()
     })
     vm.$on(MANAGER_MODAL_EVENTS.ADD_MORE, () => {
@@ -1107,7 +1387,11 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     vm.$on(
       MANAGER_MODAL_EVENTS.UPDATE_OFFSET,
       ({ sourceId, offset }: { sourceId: string; offset: number }) => {
-        deps.engine.updateSource(sourceId, { offset })
+        if (deps.engine.applyOffsetAndReshow) {
+          deps.engine.applyOffsetAndReshow(sourceId, offset)
+        } else {
+          deps.engine.updateSource(sourceId, { offset })
+        }
         refreshManagerGroups()
       },
     )
@@ -1219,16 +1503,53 @@ export const createMergerVueHost = (deps: MergerVueHostDeps): MergerVueHostCtrl 
     searchState.visible = false
     managerState.visible = false
     previewState.visible = false
+    // 换视频或分 P 后，清空旧预填，下次打开再读新标题
+    searchState.keyword = ''
+    // 清空搜索已选与管理页缓存，避免稍后再看切集后仍显示上一集合并源
+    searchState.selectedBvids = []
+    searchState.selectedVideos = {}
+    searchState.expandedBvids = {}
+    searchState.expandedPages = {}
+    searchState.results = []
+    searchState.errorMessage = ''
+    managerState.groups = []
+    managerState.selectedIds = []
+    managerState.expandedGroups = []
+    previewState.items = []
+    previewState.fullList = []
+    previewState.displayedCount = 0
+    previewState.title = ''
     syncSearchVm()
     syncManagerVm()
     syncPreviewVm()
     refreshBadge()
   }
 
+  const handlePartChange = () => {
+    // 切分 P：管理页/角标只保留当前分 P 源
+    managerState.selectedIds = []
+    managerState.expandedGroups = []
+    refreshManagerGroups()
+
+    // 搜索框：弹窗打开时不覆盖用户输入；关闭时刷新预填
+    if (!searchState.visible) {
+      const applyKeyword = () => {
+        if (searchState.visible) {
+          return
+        }
+        searchState.keyword = getInitialKeyword()
+      }
+      applyKeyword()
+      window.setTimeout(applyKeyword, 300)
+      window.setTimeout(applyKeyword, 1000)
+    }
+  }
+
   return {
     host,
     mount,
     handleVideoChange,
+    handlePartChange,
     destroy,
     refreshBadge,
   }

@@ -9,7 +9,10 @@ function dmMergerPageBridgeMain() {
     return
   }
   w.__dmMergerBridge = true
-  w.__dmMergerLoadedVersion = '1.6'
+  // 桥接层版本标记；组件入口会再写成 DM_MERGER_VERSION
+  if (!w.__dmMergerLoadedVersion) {
+    w.__dmMergerLoadedVersion = 'bridge'
+  }
   w.__dmMergerBridgeInstalled = true
   w.__dmMergerStores = w.__dmMergerStores || null
 
@@ -93,7 +96,7 @@ function dmMergerPageBridgeMain() {
 
   const scanFiberForStore = () => {
     try {
-      w.player?.auxiliary?.openTabList?.()
+      // 不要在捕获阶段调用 openTabList：会反复展开弹幕列表，导致刚加载时无法折叠
     } catch (x) {}
     const seeds = [
       document.querySelector('.dm-info-row'),

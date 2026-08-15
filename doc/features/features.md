@@ -156,7 +156,7 @@ by [@Rinne](https://github.com/OharaRinneY)
 
 by [@magicFeirl](https://github.com/magicFeirl)
 
-在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。
+在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。本功能点亮粉丝勋章只需要点赞 30 次即可达到效果，默认点赞 300 次，可在选项中修改。
 
 ### [禁止直播可见性检测](../../registry/dist/components/live/block-live-visibility-detection.js)
 `blockLiveVisibilityDetection`
@@ -878,6 +878,17 @@ by [@snowraincloud](https://github.com/snowraincloud)
 
 避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.
 
+### [楼中楼回复“UP主觉得很赞”显示](../../registry/dist/components/utils/comment-reply-up-like-show.js)
+`commentReplyUpLikeShow`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comment-reply-up-like-show.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comment-reply-up-like-show.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comment-reply-up-like-show.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comment-reply-up-like-show.js)
+
+by [@Light_Quanta](https://github.com/LightQuanta)
+
+在楼中楼回复显示“UP主觉得很赞”标识
+
 ### [评论内容替换](../../registry/dist/components/utils/comments/content-replace.js)
 `commentContentReplace`
 
@@ -906,6 +917,19 @@ by [@snowraincloud](https://github.com/snowraincloud)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/disable-search-link.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/disable-search-link.js)
 
 禁用评论区的搜索词链接.
+
+### [评论图片导出](../../registry/dist/components/utils/comments/image-export.js)
+`commentImageExport`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/image-export.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/image-export.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/image-export.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/image-export.js)
+
+by [@kaixinol](https://github.com/kaixinol)
+
+开启后, 可批量导出评论区中带图片的评论.
+
+在评论区标签栏点击「解析评论区图片」打开下载面板, 或在每条评论的菜单中选择「导出图片」单独下载.
 
 ### [DevClient](../../registry/dist/components/utils/dev-client.js)
 `devClient`
@@ -1777,7 +1801,14 @@ by [@weedy233](https://github.com/weedy233)
 
 by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)
 
-查看视频多个时间点的快照预览图
+查看视频多个时间点的快照预览图。
+
+### 选项
+
+**注意：所有选项修改均需要刷新后生效。**
+
+- `推荐列表视频按钮`：
+  - 「左上」位置可能与组件「视频预览放大`biggerVideoPreview`」冲突
 
 ### [下载字幕](../../registry/dist/components/video/subtitle/download.js)
 `downloadSubtitle`

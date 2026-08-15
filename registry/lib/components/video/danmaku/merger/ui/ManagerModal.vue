@@ -54,6 +54,13 @@
                 {{ group.bvid }}
               </a>
               <span>UP: {{ group.author || '未知' }} · {{ group.items.length }}个分P</span>
+              <span
+                v-if="groupOffsetCount(group) > 0"
+                class="dm-offset-badge dm-group-offset-badge"
+                :title="groupOffsetTitle(group)"
+              >
+                {{ groupOffsetLabel(group) }}
+              </span>
             </div>
           </div>
         </div>
@@ -63,6 +70,7 @@
             v-for="item in group.items"
             :key="item.id"
             class="dm-source-item"
+            :class="{ 'dm-source-item-offset': offsetValue(item) > 0 }"
             :data-source-id="item.id"
             :data-group="group.groupKey"
           >
@@ -88,6 +96,27 @@
                 >
                   {{ item.count }} 条弹幕
                 </span>
+                <span
+                  v-if="offsetValue(item) > 0"
+                  class="dm-offset-badge"
+                  :title="offsetBadgeTitle(item)"
+                >
+                  {{ offsetBadgeLabel(item) }}
+                </span>
+                <span
+                  v-if="item.fetchMode === 'protobuf-fallback' || item.fetchNotice"
+                  class="dm-source-fallback-tag"
+                  :title="item.fetchNotice || '视频不可用，已使用历史弹幕兜底'"
+                >
+                  历史兜底
+                </span>
+              </div>
+              <div
+                v-if="item.fetchNotice"
+                class="dm-source-fallback-note"
+                :title="item.fetchNotice"
+              >
+                {{ item.fetchNotice }}
               </div>
             </div>
 
@@ -103,14 +132,24 @@
                 </select>
                 <input
                   type="number"
-                  step="0.5"
+                  step="0.1"
                   min="0"
                   class="dm-offset-input"
                   :class="{ 'dm-offset-flash': flashOffsetId === item.id }"
                   :value="offsetValue(item)"
+                  title="偏移秒数，步进 0.1"
                   @change="onOffsetValueChange(item, $event)"
                 />
                 <span class="dm-offset-unit">秒</span>
+                <button
+                  v-if="offsetValue(item) > 0"
+                  type="button"
+                  class="dm-offset-clear-btn"
+                  title="清除偏移"
+                  @click.stop="onClearOffset(item)"
+                >
+                  清除
+                </button>
               </div>
               <button type="button" class="dm-delete-btn" @click.stop="onRemoveSource(item.id)">
                 移除
@@ -147,7 +186,12 @@
 <script lang="ts">
 import ModalShell from './shared/ModalShell.vue'
 import { normalizeHttpsUrl } from './shared/media-url'
-import { MANAGER_MODAL_EVENTS, type MergerManagerGroup, type MergerOffsetType } from './contracts'
+import {
+  MANAGER_MODAL_EVENTS,
+  type MergerManagerGroup,
+  type MergerManagerSourceItem,
+  type MergerOffsetType,
+} from './contracts'
 
 export default Vue.extend({
   name: 'ManagerModal',
@@ -210,7 +254,45 @@ export default Vue.extend({
       return (item.offset ?? 0) < 0 ? -1 : 1
     },
     offsetValue(item: MergerManagerSourceItem): number {
-      return Math.abs(item.offset ?? 0)
+      // 与时停写回一致：展示也只保留 1 位小数
+      return Math.round(Math.abs(item.offset ?? 0) * 10) / 10
+    },
+    offsetBadgeLabel(item: MergerManagerSourceItem): string {
+      const seconds = this.offsetValue(item)
+      if (seconds <= 0) {
+        return ''
+      }
+      const dir = this.offsetType(item) === -1 ? '提前' : '推迟'
+      return `${dir} ${seconds.toFixed(1)}s`
+    },
+    offsetBadgeTitle(item: MergerManagerSourceItem): string {
+      const label = this.offsetBadgeLabel(item)
+      return label ? `该分P已设置时间偏移：${label}` : ''
+    },
+    groupOffsetItems(group: MergerManagerGroup): MergerManagerSourceItem[] {
+      return group.items.filter(item => this.offsetValue(item) > 0)
+    },
+    groupOffsetCount(group: MergerManagerGroup): number {
+      return this.groupOffsetItems(group).length
+    },
+    groupOffsetLabel(group: MergerManagerGroup): string {
+      const items = this.groupOffsetItems(group)
+      if (!items.length) {
+        return ''
+      }
+      if (items.length === 1) {
+        return this.offsetBadgeLabel(items[0])
+      }
+      return `已偏移 ${items.length} 项`
+    },
+    groupOffsetTitle(group: MergerManagerGroup): string {
+      const items = this.groupOffsetItems(group)
+      if (!items.length) {
+        return ''
+      }
+      return items
+        .map(item => `${item.title || item.id}: ${this.offsetBadgeLabel(item)}`)
+        .join('\n')
     },
     emitSelectionChange(nextIds: string[]) {
       this.$emit(MANAGER_MODAL_EVENTS.SELECTION_CHANGE, { selectedIds: nextIds })
@@ -265,7 +347,9 @@ export default Vue.extend({
       this.$emit(MANAGER_MODAL_EVENTS.REMOVE_SOURCE, { sourceId })
     },
     emitOffset(sourceId: string, offsetType: MergerOffsetType, seconds: number) {
-      const offset = offsetType * Math.max(0, seconds)
+      // 秒数只保留 1 位小数，与 number input step=0.1 对齐
+      const rounded = Math.round(Math.max(0, seconds) * 10) / 10
+      const offset = offsetType * rounded
       this.$emit(MANAGER_MODAL_EVENTS.UPDATE_OFFSET, { sourceId, offset })
       this.flashOffsetId = sourceId
       if (this.flashTimer) {
@@ -285,6 +369,9 @@ export default Vue.extend({
       const raw = (event.target as HTMLInputElement).value
       const seconds = parseFloat(raw) || 0
       this.emitOffset(item.id, this.offsetType(item), seconds)
+    },
+    onClearOffset(item: MergerManagerSourceItem) {
+      this.emitOffset(item.id, 1, 0)
     },
   },
 })
@@ -385,6 +472,28 @@ export default Vue.extend({
   padding-left: 42px;
 }
 
+.dm-source-item-offset {
+  background: rgba(0, 174, 236, 0.06);
+}
+
+.dm-offset-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 6px;
+  height: 18px;
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #00aeec;
+  background: rgba(0, 174, 236, 0.14);
+  white-space: nowrap;
+}
+
+.dm-group-offset-badge {
+  margin-left: 2px;
+}
+
 .dm-item-checkbox {
   flex-shrink: 0;
   cursor: pointer;
@@ -450,7 +559,7 @@ export default Vue.extend({
 }
 
 .dm-offset-input {
-  width: 40px;
+  width: 48px;
   background: transparent;
   border: none;
   border-bottom: 1px solid #ddd;
@@ -468,6 +577,24 @@ export default Vue.extend({
   font-size: 12px;
   color: var(--text3, #999);
   margin-left: 2px;
+}
+
+.dm-offset-clear-btn {
+  margin-left: 4px;
+  padding: 0 6px;
+  height: 22px;
+  border: none;
+  border-radius: 4px;
+  background: transparent;
+  color: var(--text3, #999);
+  font-size: 12px;
+  line-height: 22px;
+  cursor: pointer;
+}
+
+.dm-offset-clear-btn:hover {
+  color: #ff4d4f;
+  background: rgba(255, 77, 79, 0.08);
 }
 
 .dm-delete-btn {

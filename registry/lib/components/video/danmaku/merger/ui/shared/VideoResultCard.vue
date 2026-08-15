@@ -1,5 +1,5 @@
 <template>
-  <div class="dm-result-wrapper" :data-bvid="video.bvid">
+  <div class="dm-result-wrapper" :class="{ 'dm-result-merged': merged }" :data-bvid="video.bvid">
     <div class="dm-result-item" @click="onItemClick">
       <div class="dm-checkbox" :class="{ checked }" @click.stop="onToggleSelect"></div>
 
@@ -11,11 +11,18 @@
           @click.stop="onOpenVideo"
         />
         <div v-if="durationText" class="dm-result-duration">{{ durationText }}</div>
+        <div v-if="merged" class="dm-result-merged-badge">已合并</div>
       </div>
 
       <div class="dm-result-info">
         <div class="dm-result-title" :title="plainTitle">{{ plainTitle }}</div>
-        <div class="dm-result-meta">UP: {{ video.author }} · {{ video.play }}播放</div>
+        <div class="dm-result-meta">
+          UP: {{ video.author }}
+          <span v-if="video.play != null"> · {{ video.play }}播放</span>
+          <span v-if="merged" class="dm-result-merged-text">
+            · 已合并{{ mergedCount > 0 ? ` ${mergedCount} 源` : '' }}
+          </span>
+        </div>
       </div>
 
       <div class="dm-expand-btn" @click.stop="onToggleExpand">
@@ -85,6 +92,16 @@ export default Vue.extend({
       type: Boolean,
       default: false,
     },
+    /** 该 BV 是否已有合并源 */
+    merged: {
+      type: Boolean,
+      default: false,
+    },
+    /** 已合并源条数（同 BV 多分P） */
+    mergedCount: {
+      type: Number,
+      default: 0,
+    },
   },
   computed: {
     plainTitle(): string {
@@ -138,6 +155,10 @@ export default Vue.extend({
   border-bottom: 1px solid var(--line_light, #f0f0f0);
 }
 
+.dm-result-wrapper.dm-result-merged .dm-result-item {
+  background: rgba(0, 174, 236, 0.06);
+}
+
 .dm-result-item {
   display: flex;
   gap: 12px;
@@ -175,6 +196,19 @@ export default Vue.extend({
   font-weight: 500;
 }
 
+.dm-result-merged-badge {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  background: rgba(0, 174, 236, 0.92);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 16px;
+}
+
 .dm-result-info {
   flex: 1;
   min-width: 0;
@@ -196,6 +230,11 @@ export default Vue.extend({
 .dm-result-meta {
   font-size: 12px;
   color: var(--text3, #999);
+}
+
+.dm-result-merged-text {
+  color: #00aeec;
+  font-weight: 600;
 }
 
 .dm-expand-btn {
