@@ -157,30 +157,28 @@ const addNewPattern = (pattern: string) => {
   }
 }
 
-const toastTitle = displayName
-
 const exportShareCode = async () => {
   const code = encodeShareCode(getShareData())
   shareCode.value = code
   try {
     await navigator.clipboard.writeText(code)
-    Toast.success('分享码已复制到剪贴板', toastTitle, 3000)
+    Toast.success('分享码已复制到剪贴板', displayName, 3000)
   } catch {
-    Toast.info('分享码已生成, 请手动复制', toastTitle, 3000)
+    Toast.info('分享码已生成, 请手动复制', displayName, 3000)
   }
 }
 
 const importShareCode = () => {
   if (shareCode.value.trim() === '') {
-    Toast.info('请先粘贴要导入的分享码', toastTitle, 3000)
+    Toast.info('请先粘贴要导入的分享码', displayName, 3000)
     return
   }
   try {
     applyShareData(decodeShareCode(shareCode.value))
     shareCode.value = ''
-    Toast.success('设置已导入', toastTitle, 3000)
+    Toast.success('设置已导入', displayName, 3000)
   } catch (error) {
-    Toast.error(error instanceof Error ? error.message : '分享码无效', toastTitle)
+    Toast.error(error instanceof Error ? error.message : '分享码无效', displayName)
   }
 }
 
