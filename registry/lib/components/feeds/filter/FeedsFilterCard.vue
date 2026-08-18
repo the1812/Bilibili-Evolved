@@ -61,6 +61,23 @@
         @click="toggleBlockSide(parseInt(id))"
       />
     </div>
+    <h2>分享</h2>
+    <div class="share-code">
+      <TextArea
+        v-model="shareCode"
+        placeholder="点击「导出」生成分享码，或粘贴分享码后点击「导入」"
+        rows="3"
+        @keydown.enter.exact.prevent="importShareCode()"
+      />
+      <div class="share-code-actions">
+        <VButton type="transparent" @click.native="exportShareCode()">
+          <VIcon title="导出分享码" icon="mdi-export" :size="16" />
+        </VButton>
+        <VButton type="transparent" @click.native="importShareCode()">
+          <VIcon title="导入分享码" icon="mdi-import" :size="16" />
+        </VButton>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -76,9 +93,11 @@ import {
 } from '@/components/feeds/api'
 import { select } from '@/core/spin-query'
 import { attributes, attributesSubtree } from '@/core/observer'
-import { VIcon, TextBox, VButton } from '@/ui'
-import { BlockableCard, hasBlockedPattern } from './pattern'
+import { Toast } from '@/core/toast'
+import { VIcon, TextBox, TextArea, VButton } from '@/ui'
+import { type BlockableCard, hasBlockedPattern } from './pattern'
 import { useFeedsFilterState } from './state'
+import { decodeShareCode, encodeShareCode } from './share-code'
 
 const FilterTypeSwitch = defineAsyncComponent(() => import('./FilterTypeSwitch.vue'))
 const FilterSideCard = defineAsyncComponent(() => import('./FilterSideCard.vue'))
@@ -96,14 +115,17 @@ const {
   togglePattern,
   toggleBlockSide,
   updateBlockSide,
+  getShareData,
+  applyShareData,
 } = useFeedsFilterState()
 
 const cardsManager = ref<FeedsCardsManager | null>(null)
 const allTypes = ref<[string, FeedsCardType][]>([])
 const newPattern = ref('')
+const shareCode = ref('')
 const collapse = ref(!contentsOnly)
 
-const updateCard = async (card: Readonly<FeedsCard>) => {
+const updateCard = (card: Readonly<FeedsCard>) => {
   const blockableCard: BlockableCard = {
     text: card.text,
     username: card.username,
@@ -134,13 +156,35 @@ const addNewPattern = (pattern: string) => {
   }
 }
 
-watch(validPatterns, () => {
-  updateCards()
-})
+const toastTitle = '动态过滤器'
 
-watch(blockSideCards, () => {
-  updateBlockSide()
-})
+const exportShareCode = async () => {
+  const code = encodeShareCode(getShareData())
+  shareCode.value = code
+  try {
+    await navigator.clipboard.writeText(code)
+    Toast.success('分享码已复制到剪贴板', toastTitle, 3000)
+  } catch {
+    Toast.info('分享码已生成, 请手动复制', toastTitle, 3000)
+  }
+}
+
+const importShareCode = () => {
+  if (shareCode.value.trim() === '') {
+    Toast.info('请先粘贴要导入的分享码', toastTitle, 3000)
+    return
+  }
+  try {
+    applyShareData(decodeShareCode(shareCode.value))
+    shareCode.value = ''
+    Toast.success('设置已导入', toastTitle, 3000)
+  } catch (error) {
+    Toast.error(error instanceof Error ? error.message : '分享码无效', toastTitle)
+  }
+}
+
+watch(validPatterns, updateCards)
+watch(blockSideCards, updateBlockSide)
 
 onMounted(async () => {
   updateBlockSide()
@@ -264,6 +308,7 @@ body.disable-feeds-filter-card {
 
   &.contents-only {
     overflow: visible;
+    max-height: none;
     > * {
       padding-left: 0;
       padding-right: 0;
@@ -286,6 +331,9 @@ body.disable-feeds-filter-card {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    margin-bottom: 18px;
+  }
+  .filter-side-card {
     margin-bottom: 18px;
   }
   body.by-type & {
@@ -333,6 +381,25 @@ body.disable-feeds-filter-card {
     .be-button {
       margin-left: 6px;
       padding: 4px 6px;
+    }
+  }
+  .share-code {
+    display: flex;
+    align-items: center;
+    textarea {
+      font-size: 12px;
+      line-height: 16px;
+      min-height: 56px;
+      max-height: 112px;
+      word-break: break-all;
+    }
+    .share-code-actions {
+      display: flex;
+      margin-left: 6px;
+      .be-button {
+        margin-left: 4px;
+        padding: 4px 6px;
+      }
     }
   }
 }

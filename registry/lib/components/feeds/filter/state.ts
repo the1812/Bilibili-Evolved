@@ -2,6 +2,7 @@ import { computed, ref } from 'vue'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { getRandomId } from '@/core/utils'
 import { type FeedsFilterOptions, type FeedsFilterPatternConfig } from './options'
+import { type FeedsFilterShareData, shareCodeVersion } from './share-code'
 
 export interface SideCardType {
   className: string
@@ -10,6 +11,7 @@ export interface SideCardType {
 
 type PatternConfigInput = FeedsFilterPatternConfig | string
 type OptionKey = 'types' | 'specialTypes'
+type ArrayOptionKey = OptionKey | 'sideCards'
 
 const normalizePatternConfigs = (patterns: PatternConfigInput[]): FeedsFilterPatternConfig[] =>
   patterns.map(pattern =>
@@ -24,6 +26,9 @@ const normalizePatternConfigs = (patterns: PatternConfigInput[]): FeedsFilterPat
 
 const clonePatternConfigs = (patterns: PatternConfigInput[]) =>
   lodash.cloneDeep(normalizePatternConfigs(patterns))
+
+const toNumberArray = (values: unknown[]) =>
+  values.map(value => Number(value)).filter((value): value is number => Number.isFinite(value))
 
 const createSideCards = (): Record<number, SideCardType> => {
   const sideCards: Record<number, SideCardType> = {
@@ -74,40 +79,32 @@ const createFeedsFilterState = () => {
   const specialTypes = ref([...options.specialTypes])
   const sideCards = createSideCards()
 
-  let patternSaveTimer: number | undefined
-
   const validPatterns = computed(() =>
     lodash
       .uniqBy(savedPatterns.value, pattern => pattern.pattern)
       .filter(pattern => pattern.pattern.trim() !== '' && pattern.enabled),
   )
 
-  const syncPatterns = (nextPatterns: PatternConfigInput[] = options.patterns) => {
-    const next = clonePatternConfigs(nextPatterns)
-    patterns.value = [...next]
-    savedPatterns.value = [...next]
+  const syncPatterns = (nextPatterns: PatternConfigInput[]) => {
+    patterns.value = clonePatternConfigs(nextPatterns)
+    savedPatterns.value = clonePatternConfigs(nextPatterns)
   }
 
-  const syncNumberArray = (target: typeof blockSideCards, nextValues: number[] = []) => {
+  const syncNumberArray = (target: typeof blockSideCards, nextValues: number[]) => {
     target.value = [...nextValues]
   }
 
+  const debounceSavePatterns = lodash.debounce(() => {
+    options.patterns = clonePatternConfigs(patterns.value)
+  }, 100)
+
   const savePatternConfig = () => {
     savedPatterns.value = clonePatternConfigs(patterns.value)
-    if (patternSaveTimer !== undefined) {
-      window.clearTimeout(patternSaveTimer)
-    }
-    patternSaveTimer = window.setTimeout(() => {
-      options.patterns = clonePatternConfigs(patterns.value)
-    }, 100)
+    debounceSavePatterns()
   }
 
   const deletePattern = (patternConfig: FeedsFilterPatternConfig) => {
-    const index = patterns.value.findIndex(pattern => pattern.key === patternConfig.key)
-    if (index === -1) {
-      return
-    }
-    patterns.value = [...patterns.value.slice(0, index), ...patterns.value.slice(index + 1)]
+    patterns.value = patterns.value.filter(pattern => pattern.key !== patternConfig.key)
     savePatternConfig()
   }
 
@@ -142,14 +139,12 @@ const createFeedsFilterState = () => {
 
   const setTypeDisabled = (typeId: number, disabled: boolean) => {
     const { key, valueRef } = getTypeState(typeId)
-    const index = valueRef.value.indexOf(typeId)
-    if (disabled && index === -1) {
-      valueRef.value = [...valueRef.value, typeId]
-    } else if (!disabled && index !== -1) {
-      valueRef.value = [...valueRef.value.slice(0, index), ...valueRef.value.slice(index + 1)]
-    } else {
+    if (disabled === valueRef.value.includes(typeId)) {
       return
     }
+    valueRef.value = disabled
+      ? [...valueRef.value, typeId]
+      : valueRef.value.filter(id => id !== typeId)
     options[key] = [...valueRef.value]
   }
 
@@ -165,15 +160,9 @@ const createFeedsFilterState = () => {
   }
 
   const toggleBlockSide = (id: number) => {
-    const index = blockSideCards.value.indexOf(id)
-    if (index === -1) {
-      blockSideCards.value = [...blockSideCards.value, id]
-    } else {
-      blockSideCards.value = [
-        ...blockSideCards.value.slice(0, index),
-        ...blockSideCards.value.slice(index + 1),
-      ]
-    }
+    blockSideCards.value = blockSideCards.value.includes(id)
+      ? blockSideCards.value.filter(cardId => cardId !== id)
+      : [...blockSideCards.value, id]
     options.sideCards = [...blockSideCards.value]
     updateBlockSide()
   }
@@ -191,6 +180,46 @@ const createFeedsFilterState = () => {
     syncNumberArray(specialTypes, value ?? [])
   })
 
+  const getShareData = (): FeedsFilterShareData => ({
+    version: shareCodeVersion,
+    types: toNumberArray(types.value),
+    specialTypes: toNumberArray(specialTypes.value),
+    sideCards: toNumberArray(blockSideCards.value),
+    patterns: patterns.value
+      .filter(({ pattern }) => pattern.trim() !== '')
+      .map(({ pattern, enabled }) => ({ pattern, enabled })),
+  })
+
+  const applyNumberArray = (key: ArrayOptionKey, values: number[]) => {
+    options[key] = [...values]
+  }
+
+  const applyShareData = (data: FeedsFilterShareData) => {
+    debounceSavePatterns.cancel()
+    const nextPatterns = data.patterns
+      .map(({ pattern, enabled }) => ({
+        pattern: pattern.trim(),
+        enabled,
+        key: getRandomId(),
+      }))
+      .filter(({ pattern }) => pattern !== '')
+    const validSideCardIds = Object.keys(sideCards).map(Number)
+    options.patterns = nextPatterns
+    applyNumberArray(
+      'types',
+      data.types.filter(id => id > 0 && id <= 2048),
+    )
+    applyNumberArray(
+      'specialTypes',
+      data.specialTypes.filter(id => id < 0),
+    )
+    applyNumberArray(
+      'sideCards',
+      data.sideCards.filter(id => validSideCardIds.includes(id)),
+    )
+    updateBlockSide()
+  }
+
   return {
     patterns,
     validPatterns,
@@ -204,6 +233,8 @@ const createFeedsFilterState = () => {
     setTypeDisabled,
     toggleBlockSide,
     updateBlockSide,
+    getShareData,
+    applyShareData,
   }
 }
 
