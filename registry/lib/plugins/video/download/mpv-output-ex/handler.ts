@@ -45,9 +45,9 @@ export const MPV_Ex: DownloadVideoOutput<ConfigDataType> = {
       // 单文件直接生成 url
       const frag = action.infos[0].fragments
       if (frag.length === 1) {
-        finalURL = buildMpvUrl(mpvHttpHeaders, `"${frag[0].url}"`)
+        finalURL = buildMpvUrl(mpvHttpHeaders, frag[0].url)
       } else if (frag.length === 2) {
-        finalURL = buildMpvUrl(mpvHttpHeaders, `"${frag[0].url}"`, `--audio-file="${frag[1].url}"`)
+        finalURL = buildMpvUrl(mpvHttpHeaders, frag[0].url, `--audio-file=${frag[1].url}`)
       }
     } else {
       // 多文件生成 .m3u 播放列表
@@ -59,7 +59,7 @@ export const MPV_Ex: DownloadVideoOutput<ConfigDataType> = {
           /^(https:\/\/pastebin.com)\/(.*)/,
           '$1/raw/$2?.m3u',
         )
-        finalURL = buildMpvUrl(mpvHttpHeaders, `"${playlist}"`)
+        finalURL = buildMpvUrl(mpvHttpHeaders, playlist)
       } catch (error) {
         logError(error)
         return
