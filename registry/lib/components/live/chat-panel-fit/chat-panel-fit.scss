@@ -237,7 +237,7 @@
         // 聊天栏
         .chat-input-ctnr {
           // 隐藏粉丝勋章
-          .medal-section {
+          .medal-section.focus-textarea {
             display: none !important;
           }
         }
