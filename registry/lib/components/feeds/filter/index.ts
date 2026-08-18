@@ -5,6 +5,9 @@ import { type FeedsFilterOptions, options } from './options'
 import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 
+export const name = 'feedsFilter'
+export const displayName = '动态过滤器'
+
 const entry: ComponentEntry<FeedsFilterOptions> = async ({ metadata }) => {
   const { select } = await import('@/core/spin-query')
   let leftPanel: HTMLElement
@@ -33,8 +36,8 @@ const entry: ComponentEntry<FeedsFilterOptions> = async ({ metadata }) => {
 }
 
 export const component = defineComponentMetadata({
-  name: 'feedsFilter',
-  displayName: '动态过滤器',
+  name,
+  displayName,
   entry,
   tags: [componentsTags.feeds],
   options,

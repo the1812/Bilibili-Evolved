@@ -98,6 +98,7 @@ import { VIcon, TextBox, TextArea, VButton } from '@/ui'
 import { type BlockableCard, hasBlockedPattern } from './pattern'
 import { useFeedsFilterState } from './state'
 import { decodeShareCode, encodeShareCode } from './share-code'
+import { displayName } from './index'
 
 const FilterTypeSwitch = defineAsyncComponent(() => import('./FilterTypeSwitch.vue'))
 const FilterSideCard = defineAsyncComponent(() => import('./FilterSideCard.vue'))
@@ -156,7 +157,7 @@ const addNewPattern = (pattern: string) => {
   }
 }
 
-const toastTitle = '动态过滤器'
+const toastTitle = displayName
 
 const exportShareCode = async () => {
   const code = encodeShareCode(getShareData())
