@@ -552,8 +552,11 @@ interface RetrievedImageUrl {
  * @param source 元素或图片URL字符串
  * @returns 图片的链接和扩展名
  */
-export const retrieveImageUrl = (source: string | HTMLElement): RetrievedImageUrl | null => {
-  const retrieveUrlFromElement = (element: HTMLElement) => {
+export const retrieveImageUrl = (source: string | HTMLElement | null): RetrievedImageUrl | null => {
+  const retrieveUrlFromElement = (element: HTMLElement | null) => {
+    if (!element) {
+      return null
+    }
     if (element.hasAttribute('data-src')) {
       return element.getAttribute('data-src')
     }
