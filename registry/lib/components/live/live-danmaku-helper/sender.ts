@@ -1,6 +1,8 @@
 import { getCsrf, getUID, delay, dq, dqa } from '@/core/utils'
 import { childListSubtree } from '@/core/observer'
+import { select } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
+import { withControlBar } from '@/components/live/live-control-bar'
 
 //  live/danmaku-sendbar
 const liveInputSelector = [
@@ -24,6 +26,17 @@ const isVisible = (element: Element): element is HTMLElement =>
   (element.offsetParent !== null || element.getClientRects().length > 0)
 
 const queryVisible = (selector: string): HTMLElement | null => dqa(selector).find(isVisible) ?? null
+
+const fullscreenInputSelector = '#fullscreen-danmaku-vm .fullscreen-danmaku input.chat-input'
+const fullscreenSendButtonSelector = '#fullscreen-danmaku-vm .fullscreen-danmaku .send-danmaku'
+
+const isBrowserFullscreen = () =>
+  Boolean(
+    document.fullscreenElement ||
+      (document as any).webkitFullscreenElement ||
+      (document as any).mozFullScreenElement ||
+      (document as any).msFullscreenElement,
+  )
 
 const getRoomId = () => window.location.pathname.match(/\/(\d+)/)?.[1] ?? ''
 
@@ -88,7 +101,35 @@ const sendByApi = async (text: string) => {
   }
 }
 
+const sendByFullscreenDom = async (text: string) => {
+  let sent = false
+  await withControlBar(async () => {
+    const input = await select<HTMLElement>(() => queryVisible(fullscreenInputSelector), {
+      maxRetry: 5,
+      queryInterval: 200,
+    })
+    if (!input) {
+      return
+    }
+    setNativeValue(input, text)
+    await delay(100)
+    const sendButton = dqa(fullscreenSendButtonSelector).find(
+      (button): button is HTMLButtonElement =>
+        isVisible(button) && !button.classList.contains('send-danmaku-disabled'),
+    )
+    if (!sendButton) {
+      return
+    }
+    sendButton.click()
+    sent = true
+  })
+  return sent
+}
+
 const sendByDom = async (text: string) => {
+  if (isBrowserFullscreen()) {
+    return sendByFullscreenDom(text)
+  }
   const input = queryVisible(liveInputSelector)
   if (!input) {
     return false
