@@ -5,6 +5,7 @@ interface NavigatorUABrand {
 
 interface NavigatorUAData {
   brands: ReadonlyArray<NavigatorUABrand>
+  readonly platform?: string
 }
 
 interface Navigator {
