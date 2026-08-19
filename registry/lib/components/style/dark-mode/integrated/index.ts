@@ -22,9 +22,6 @@ const isOfficialDarkModeEnabled = () => {
   if (isLivePage()) {
     return document.documentElement.getAttribute('lab-style') === 'dark'
   }
-  if (unsupportedUrls.some(matchUrlPattern)) {
-    return false
-  }
   return getCookieValue('theme_style') === 'dark'
 }
 
@@ -97,6 +94,7 @@ const watchLiveLabStyle = () => {
 export const component = defineComponentMetadata({
   name,
   displayName: '深色模式',
+  urlExclude: unsupportedUrls,
   entry: () => {
     cookieStore.addEventListener('change', cookieChangeHandler)
     watchLiveLabStyle()
