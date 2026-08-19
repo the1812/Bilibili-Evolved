@@ -32,7 +32,7 @@ const tokenSplit = (format: string) => {
   return tokens.filter(it => it !== '')
 }
 
-export const getTitleVariablesFromDate = (date: Date, padStartLength = 2) => {
+export const getTitleVariablesFromDate = (date = new Date(), padStartLength = 2) => {
   return {
     year: date.getFullYear().toString(),
     month: (date.getMonth() + 1).toString().padStart(padStartLength, '0'),
@@ -44,11 +44,30 @@ export const getTitleVariablesFromDate = (date: Date, padStartLength = 2) => {
   }
 }
 
+export const formatVariables = (format: string, variables: StringMap) => {
+  const tokens = tokenSplit(format)
+  const sortedVariables = Object.entries(variables).sort(descendingSort(([name]) => name.length))
+  const processedTokens = tokens.map(token => {
+    if (!token.startsWith('[') || !token.endsWith(']')) {
+      return token
+    }
+    for (const [name, value] of sortedVariables) {
+      const regex = new RegExp(`^\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]$`)
+      const match = token.match(regex)
+      if (match && Boolean(value)) {
+        return `${match[1] ?? ''}${value}${match[2] ?? ''}`
+      }
+    }
+    return ''
+  })
+  const finalValue = processedTokens.join('')
+  return formatFilename(finalValue, ' ')
+}
+
 export const formatTitle = (
   format: string,
   includesPageTitle = true,
   extraVariables: StringMap = {},
-  allowedVariables?: string[],
 ) => {
   const getLegacyTitle = () => {
     return (
@@ -68,7 +87,7 @@ export const formatTitle = (
         .trim()
     )
   }
-  const dateVariables = getTitleVariablesFromDate(new Date())
+  const dateVariables = getTitleVariablesFromDate()
   const builtInVariables: StringMap = {
     title: (() => {
       const videoPageTitle = dq('.video-info-container .video-title')
@@ -142,31 +161,7 @@ export const formatTitle = (
     ...builtInVariables,
     ...extraVariables,
   }
-  const filteredVariables =
-    allowedVariables === undefined
-      ? variables
-      : Object.fromEntries(
-          Object.entries(variables).filter(([name]) => allowedVariables.includes(name)),
-        )
-  const tokens = tokenSplit(format)
-  const sortedVariables = Object.entries(filteredVariables).sort(
-    descendingSort(([name]) => name.length),
-  )
-  const processedTokens = tokens.map(token => {
-    if (!token.startsWith('[') || !token.endsWith(']')) {
-      return token
-    }
-    for (const [name, value] of sortedVariables) {
-      const regex = new RegExp(`^\\[([^\\[\\]]*?)${name}([^\\[\\]]*?)\\]$`)
-      const match = token.match(regex)
-      if (match && Boolean(value)) {
-        return `${match[1] ?? ''}${value}${match[2] ?? ''}`
-      }
-    }
-    return ''
-  })
-  const finalTitle = processedTokens.join('')
-  return formatFilename(finalTitle, ' ')
+  return formatVariables(format, variables)
 }
 export const getFriendlyTitle = (includesPageTitle = true, extraVariables: StringMap = {}) =>
   formatTitle(getGeneralSettings().filenameFormat, includesPageTitle, extraVariables)
