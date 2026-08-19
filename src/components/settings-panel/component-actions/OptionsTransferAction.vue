@@ -90,10 +90,6 @@ export default Vue.extend({
       Object.assign(options, importedOptions)
       Toast.success('选项已导入', this.componentDisplayName, 3000)
     },
-    async pickOptionsFile(): Promise<string | undefined> {
-      const [file] = await pickFile({ accept: '.json' })
-      return file?.text()
-    },
     async handleClick(e: MouseEvent) {
       this.ctrlPressed = hasTransferModifier(e)
       const isImport = this.item.mode === 'import'
@@ -101,7 +97,7 @@ export default Vue.extend({
         if (isImport) {
           const json = this.ctrlPressed
             ? await navigator.clipboard.readText()
-            : await this.pickOptionsFile()
+            : await pickFile({ accept: '.json' }).then(([file]) => file?.text())
           if (json) {
             await this.applyImportedOptions(json)
           }
