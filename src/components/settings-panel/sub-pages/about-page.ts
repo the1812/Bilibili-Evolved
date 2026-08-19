@@ -1,4 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
+import { getGeneralSettings } from '@/core/settings'
+import { formatTitle } from '@/core/utils/title'
 
 export interface AboutPageAction {
   icon: string
@@ -9,6 +11,23 @@ export interface AboutPageAction {
   actionName?: string
   run: (event?: MouseEvent) => void | Promise<void>
 }
+
+const exportSettingsFormatVariables = ['n', 'v', 'V', 'y', 'M', 'd', 'h', 'm', 's', 'ms'] as const
+
+export const getFormatStr = async (format: string) => {
+  const { meta } = await import('@/core/meta')
+  return formatTitle(
+    format,
+    false,
+    {
+      n: meta.name,
+      v: `v${meta.compilationInfo.version}`,
+      V: meta.compilationInfo.versionWithTag,
+    },
+    [...exportSettingsFormatVariables],
+  )
+}
+
 export const builtInActions: AboutPageAction[] = [
   {
     icon: 'mdi-inbox-arrow-up-outline',
@@ -18,7 +37,8 @@ export const builtInActions: AboutPageAction[] = [
     run: async () => {
       const { settings } = await import('@/core/settings')
       const { DownloadPackage } = await import('@/core/download')
-      DownloadPackage.single('settings.json', JSON.stringify(settings, undefined, 2))
+      const fileName = await getFormatStr(getGeneralSettings().exportSettingsFormat)
+      DownloadPackage.single(`${fileName}.json`, JSON.stringify(settings, undefined, 2))
     },
   },
   {

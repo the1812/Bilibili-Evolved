@@ -52,6 +52,11 @@ const options = defineOptionsMetadata({
     displayName: '批量命名格式',
     multiline: true,
   },
+  exportSettingsFormat: {
+    defaultValue: '[n]_[v] [y]-[M]-[d] [h]-[m]-[s]',
+    displayName: '导出设置文件命名格式',
+    multiline: true,
+  },
   downloadPackageEmitMode: {
     defaultValue: DownloadPackageEmitMode.Packed,
     displayName: '文件下载模式',
