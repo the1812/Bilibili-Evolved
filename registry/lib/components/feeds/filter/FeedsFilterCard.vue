@@ -137,11 +137,7 @@ const updateCard = (card: Readonly<FeedsCard>) => {
   const block = validPatterns.value.some(pattern =>
     hasBlockedPattern(pattern.pattern, blockableCard),
   )
-  if (block) {
-    card.element.classList.add('pattern-block')
-  } else {
-    card.element.classList.remove('pattern-block')
-  }
+  card.element.classList.toggle('pattern-block', block)
 }
 
 const updateCards = () => {
