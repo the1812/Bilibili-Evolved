@@ -27,9 +27,6 @@ const normalizePatternConfigs = (patterns: PatternConfigInput[]): FeedsFilterPat
 const clonePatternConfigs = (patterns: PatternConfigInput[]) =>
   lodash.cloneDeep(normalizePatternConfigs(patterns))
 
-const toNumberArray = (values: unknown[]) =>
-  values.map(value => Number(value)).filter((value): value is number => Number.isFinite(value))
-
 const createSideCards = (): Record<number, SideCardType> => {
   const sideCards: Record<number, SideCardType> = {
     0: {
@@ -85,12 +82,12 @@ const createFeedsFilterState = () => {
       .filter(pattern => pattern.pattern.trim() !== '' && pattern.enabled),
   )
 
-  const syncPatterns = (nextPatterns: PatternConfigInput[]) => {
+  const syncPatterns = (nextPatterns: PatternConfigInput[] = options.patterns) => {
     patterns.value = clonePatternConfigs(nextPatterns)
     savedPatterns.value = clonePatternConfigs(nextPatterns)
   }
 
-  const syncNumberArray = (target: typeof blockSideCards, nextValues: number[]) => {
+  const syncNumberArray = (target: typeof blockSideCards, nextValues: number[] = []) => {
     target.value = [...nextValues]
   }
 
@@ -179,6 +176,9 @@ const createFeedsFilterState = () => {
   addComponentListener<number[]>('feedsFilter.specialTypes', value => {
     syncNumberArray(specialTypes, value ?? [])
   })
+
+  const toNumberArray = (values: unknown[]) =>
+    values.map(value => Number(value)).filter((value): value is number => Number.isFinite(value))
 
   const getShareData = (): FeedsFilterShareData => ({
     version: shareCodeVersion,
