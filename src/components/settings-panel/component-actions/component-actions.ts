@@ -68,7 +68,7 @@ const builtInActions: ComponentAction[] = [
     shiftDisplayName: '复制选项',
     icon: 'mdi-export',
     shiftIcon: 'mdi-content-copy',
-    title: '导出当前组件的选项, 按住 Shift 点击可复制到剪贴板',
+    title: '导出当前组件的选项, 按住 Shift 点击可复制到剪贴板. 文件命名格式可在设置面板中修改',
   }),
   createOptionsTransferAction({
     name: 'optionsImport',

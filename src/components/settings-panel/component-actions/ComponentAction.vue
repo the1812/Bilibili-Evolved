@@ -53,6 +53,7 @@ export default Vue.extend({
 .component-action {
   @include h-center(6px);
   cursor: pointer;
+  user-select: none;
   border-radius: 4px;
   padding: 4px 8px 4px 6px;
   font-size: 13px;
