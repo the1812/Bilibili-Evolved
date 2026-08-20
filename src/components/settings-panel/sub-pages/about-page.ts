@@ -1,6 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
 import { getGeneralSettings } from '@/core/settings'
-import { formatVariables, getTitleVariablesFromDate } from '@/core/utils/title'
+import { getFormatStr } from '@/core/utils/title'
 
 export interface AboutPageAction {
   icon: string
@@ -10,32 +10,6 @@ export interface AboutPageAction {
   displayName: string
   actionName?: string
   run: (event?: MouseEvent) => void | Promise<void>
-}
-
-export const getFormatStr = async (format: string, extraVariables: Record<string, string> = {}) => {
-  const { meta } = await import('@/core/meta')
-  const {
-    year: y,
-    month: M,
-    day: d,
-    hour: h,
-    minute: m,
-    second: s,
-    millisecond: ms,
-  } = getTitleVariablesFromDate()
-  return formatVariables(format, {
-    n: meta.name,
-    v: `v${meta.compilationInfo.version}`,
-    V: meta.compilationInfo.versionWithTag,
-    y,
-    M,
-    d,
-    h,
-    m,
-    s,
-    ms,
-    ...extraVariables,
-  })
 }
 
 export const builtInActions: AboutPageAction[] = [

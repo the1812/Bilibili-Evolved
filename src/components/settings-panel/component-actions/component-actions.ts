@@ -24,29 +24,22 @@ export interface OptionsTransferActionItem extends ComponentVueAction {
   shiftDisplayName: string
   icon: string
   shiftIcon: string
-  title?: string
+  title: string
 }
 
 export type ComponentAction = (
   metadata: ComponentMetadata,
 ) => ComponentConfigAction | ComponentVueAction | undefined
 
-type OptionsTransferActionConfig = Pick<
-  OptionsTransferActionItem,
-  'mode' | 'name' | 'displayName' | 'shiftDisplayName' | 'icon' | 'shiftIcon'
-> & { title: string }
-
 const createOptionsTransferAction =
-  (config: OptionsTransferActionConfig): ComponentAction =>
-  metadata => {
-    if (metadata.options === undefined) {
-      return undefined
-    }
-    return {
-      ...config,
-      component: () => import('./OptionsTransferAction.vue'),
-    }
-  }
+  (config: Omit<OptionsTransferActionItem, 'component'>): ComponentAction =>
+  metadata =>
+    metadata.options === undefined
+      ? undefined
+      : {
+          ...config,
+          component: () => import('./OptionsTransferAction.vue'),
+        }
 
 const builtInActions: ComponentAction[] = [
   metadata => ({

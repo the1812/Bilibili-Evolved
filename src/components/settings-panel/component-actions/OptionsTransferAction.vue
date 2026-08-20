@@ -10,10 +10,10 @@ import { DownloadPackage } from '@/core/download'
 import { pickFile } from '@/core/file-picker'
 import { Toast } from '@/core/toast'
 import { logError } from '@/core/utils/log'
+import { getFormatStr } from '@/core/utils/title'
 import { VIcon } from '@/ui'
 import { ComponentMetadata } from '../../component'
 import { OptionsTransferActionItem } from './component-actions'
-import { getFormatStr } from '../sub-pages/about-page'
 
 const hasTransferModifier = (e: MouseEvent | KeyboardEvent) => e.shiftKey
 
@@ -82,11 +82,7 @@ export default Vue.extend({
         Toast.error('导入内容中的组件名称不匹配, 未能导入选项', this.componentDisplayName)
         return
       }
-      if (
-        typeof importedOptions !== 'object' ||
-        importedOptions === null ||
-        Array.isArray(importedOptions)
-      ) {
+      if (!lodash.isPlainObject(importedOptions)) {
         Toast.error('导入内容中缺少有效的 options 字段', this.componentDisplayName)
         return
       }
