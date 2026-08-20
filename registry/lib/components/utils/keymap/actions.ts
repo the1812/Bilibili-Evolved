@@ -1,11 +1,11 @@
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
-import { Options } from '.'
-import { KeyBindingAction, KeyBindingActionContext } from './bindings'
+import type { Options } from '.'
+import type { KeyBindingAction, KeyBindingActionContext, KeyEvent } from './bindings'
 import { getActiveElement, simulateClick } from '@/core/utils'
 
-export const keyboardEventToPointer = (event: KeyboardEvent): PointerEventInit => {
+export const keyEventToPointer = (event: KeyEvent): PointerEventInit => {
   return {
     ...lodash.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
     bubbles: true,
@@ -15,7 +15,7 @@ export const keyboardEventToPointer = (event: KeyboardEvent): PointerEventInit =
 }
 export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
   const { event } = context
-  const eventParams = keyboardEventToPointer(event)
+  const eventParams = keyEventToPointer(event)
   if (typeof target === 'string') {
     const targetElement = dq(target) as HTMLElement
     if (!targetElement) {
@@ -169,25 +169,21 @@ export const builtInActions: Record<string, KeyBindingAction> = {
           return false
         }
         event.preventDefault()
-        const fireMouseEvent = (name: string, source: KeyboardEvent) => {
-          const eventParams: MouseEventInit = keyboardEventToPointer(source)
+        const fireMouseEvent = (name: string) => {
+          const eventParams: MouseEventInit = keyEventToPointer(event)
           const mouseEvent = new MouseEvent(name, eventParams)
           likeButton.dispatchEvent(mouseEvent)
         }
         likeClick = true
         setTimeout(() => (likeClick = false), 200)
-        fireMouseEvent('mousedown', event)
-        document.body.addEventListener(
-          'keyup',
-          e => {
-            e.preventDefault()
-            fireMouseEvent('mouseup', e)
-            if (likeClick) {
-              fireMouseEvent('click', e)
-            }
-          },
-          { once: true },
-        )
+        fireMouseEvent('mousedown')
+        event.onRelease(({ sourceEvent, cancelled }) => {
+          sourceEvent?.preventDefault()
+          fireMouseEvent('mouseup')
+          if (!cancelled && likeClick) {
+            fireMouseEvent('click')
+          }
+        })
         return true
       }
     })(),
@@ -216,7 +212,6 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       let activeCode: string = null
       let timer: number = null
       let originalPlaybackRate: number = null
-      let onKeyUp: (event: KeyboardEvent) => void
 
       const reset = () => {
         if (timer !== null) {
@@ -228,18 +223,6 @@ export const builtInActions: Record<string, KeyBindingAction> = {
         activeCode = null
         timer = null
         originalPlaybackRate = null
-        window.removeEventListener('keyup', onKeyUp, true)
-        window.removeEventListener('blur', reset)
-      }
-      onKeyUp = (event: KeyboardEvent) => {
-        if (event.code !== activeCode) {
-          return
-        }
-        const isShortPress = timer !== null
-        reset()
-        if (isShortPress) {
-          playerAgent.changeTime(5)
-        }
       }
 
       return ({ event }: KeyBindingActionContext) => {
@@ -250,8 +233,13 @@ export const builtInActions: Record<string, KeyBindingAction> = {
           return playerAgent.changeTime(5)
         }
         activeCode = event.code
-        window.addEventListener('keyup', onKeyUp, true)
-        window.addEventListener('blur', reset)
+        event.onRelease(({ cancelled }) => {
+          const isShortPress = timer !== null
+          reset()
+          if (!cancelled && isShortPress) {
+            playerAgent.changeTime(5)
+          }
+        })
         timer = window.setTimeout(() => {
           timer = null
           const api = playerAgent.nativeApi

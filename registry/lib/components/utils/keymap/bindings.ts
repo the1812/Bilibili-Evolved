@@ -6,7 +6,7 @@ import { shouldBlockBilibiliPlayerShortcut } from './bilibili-player-shortcuts'
 
 export interface KeyBindingActionContext {
   binding: KeyBinding
-  event: KeyboardEvent
+  event: KeyEvent
   isWatchlater: boolean
   isMediaList: boolean
   clickElement: typeof clickElement
@@ -26,16 +26,77 @@ export interface KeyBinding {
   keys: string[]
   action: KeyBindingAction
 }
-const modifyKeys = ['shift', 'alt', 'ctrl', 'meta']
+export interface KeyReleaseEvent {
+  sourceEvent: KeyboardEvent | MouseEvent | null
+  cancelled: boolean
+}
+export interface KeyEvent {
+  key: string
+  code: string
+  shiftKey: boolean
+  altKey: boolean
+  ctrlKey: boolean
+  metaKey: boolean
+  repeat: boolean
+  sourceEvent: KeyboardEvent | MouseEvent
+  onRelease: (listener: (event: KeyReleaseEvent) => void) => void
+  preventDefault: () => void
+  stopImmediatePropagation: () => void
+}
+
+const modifyKeys = ['shift', 'alt', 'ctrl', 'meta'] as const
+const mouseButtonKeys: Record<number, string> = {
+  1: 'mouseMiddle',
+  3: 'mouseBack',
+  4: 'mouseForward',
+}
 export const loadKeymap = lodash.once(() => {
   const isWatchlater = watchlaterUrls.some(url => matchUrlPattern(url))
   const isMediaList = mediaListUrls.some(url => matchUrlPattern(url))
+  const keyReleaseListeners = new Map<string, ((event: KeyReleaseEvent) => void)[]>()
+  const consumedMouseButtons = new Set<number>()
   const config = {
     enable: true,
     bindings: [] as KeyBinding[],
     disableBilibiliPlayerShortcuts: false,
   }
-  const keyboardHandler = (e: KeyboardEvent & { [key: string]: boolean }) => {
+
+  const addKeyReleaseListener = (code: string, listener: (event: KeyReleaseEvent) => void) => {
+    let listeners = keyReleaseListeners.get(code)
+    if (!listeners) {
+      listeners = []
+      keyReleaseListeners.set(code, listeners)
+    }
+    listeners.push(listener)
+  }
+  const createKeyEvent = (
+    sourceEvent: KeyboardEvent | MouseEvent,
+    key: string,
+    code: string,
+    repeat: boolean,
+  ): KeyEvent => ({
+    key,
+    code,
+    ...lodash.pick(sourceEvent, 'shiftKey', 'altKey', 'ctrlKey', 'metaKey'),
+    repeat,
+    sourceEvent,
+    onRelease: listener => addKeyReleaseListener(code, listener),
+    preventDefault: () => sourceEvent.preventDefault(),
+    stopImmediatePropagation: () => sourceEvent.stopImmediatePropagation(),
+  })
+  const handleKeyUp = (
+    code: string,
+    sourceEvent: KeyboardEvent | MouseEvent | null,
+    cancelled = false,
+  ) => {
+    const listeners = keyReleaseListeners.get(code)
+    if (!listeners) {
+      return
+    }
+    keyReleaseListeners.delete(code)
+    listeners.forEach(listener => listener({ sourceEvent, cancelled }))
+  }
+  const handleKeyDown = (e: KeyEvent) => {
     if (!config.enable) {
       return
     }
@@ -109,7 +170,7 @@ export const loadKeymap = lodash.once(() => {
         return
       }
       const restKeys = binding.keys
-        .filter(k => !modifyKeys.includes(k.toLowerCase()))
+        .filter(k => !modifyKeys.some(m => m === k.toLowerCase()))
         .map(k => k.toLowerCase())
       const keyMatch =
         restKeys.includes(e.key.toLowerCase()) || restKeys.includes(e.code.toLowerCase())
@@ -133,15 +194,72 @@ export const loadKeymap = lodash.once(() => {
         e.preventDefault()
       }
     })
-    if (config.disableBilibiliPlayerShortcuts && shouldBlockBilibiliPlayerShortcut(e)) {
-      e.stopImmediatePropagation()
-      e.preventDefault()
+  }
+
+  const keyboardHandler = (event: KeyboardEvent) => {
+    handleKeyDown(createKeyEvent(event, event.key, event.code, event.repeat))
+    if (
+      config.enable &&
+      config.disableBilibiliPlayerShortcuts &&
+      shouldBlockBilibiliPlayerShortcut(event)
+    ) {
+      event.stopImmediatePropagation()
+      event.preventDefault()
     }
   }
+  const keyboardUpHandler = (event: KeyboardEvent) => {
+    handleKeyUp(event.code, event)
+  }
+  const mouseHandler = (event: MouseEvent) => {
+    const key = mouseButtonKeys[event.button]
+    if (!key) {
+      return
+    }
+    handleKeyDown(createKeyEvent(event, key, key, false))
+    if (!event.defaultPrevented) {
+      return
+    }
+    consumedMouseButtons.add(event.button)
+  }
+  const mouseUpHandler = (event: MouseEvent) => {
+    const key = mouseButtonKeys[event.button]
+    if (!key) {
+      return
+    }
+    handleKeyUp(key, event)
+    if (!consumedMouseButtons.has(event.button)) {
+      return
+    }
+    event.stopImmediatePropagation()
+    event.preventDefault()
+    window.setTimeout(() => consumedMouseButtons.delete(event.button))
+  }
+  const auxClickHandler = (event: MouseEvent) => {
+    if (!consumedMouseButtons.delete(event.button)) {
+      return
+    }
+    event.stopImmediatePropagation()
+    event.preventDefault()
+  }
+  const blurHandler = () => {
+    keyReleaseListeners.forEach((_, code) => handleKeyUp(code, null, true))
+    consumedMouseButtons.clear()
+  }
+
   document.body.addEventListener('keydown', keyboardHandler, { capture: true })
+  document.body.addEventListener('keyup', keyboardUpHandler, { capture: true })
+  document.body.addEventListener('mousedown', mouseHandler, { capture: true })
+  document.body.addEventListener('mouseup', mouseUpHandler, { capture: true })
+  document.body.addEventListener('auxclick', auxClickHandler, { capture: true })
+  window.addEventListener('blur', blurHandler)
   shadowDomObserver.watchShadowDom({
-    added: shadowDom =>
-      shadowDom.shadowRoot.addEventListener('keydown', keyboardHandler, { capture: true }),
+    added: shadowDom => {
+      shadowDom.shadowRoot.addEventListener('keydown', keyboardHandler, { capture: true })
+      shadowDom.shadowRoot.addEventListener('keyup', keyboardUpHandler, { capture: true })
+      shadowDom.shadowRoot.addEventListener('mousedown', mouseHandler, { capture: true })
+      shadowDom.shadowRoot.addEventListener('mouseup', mouseUpHandler, { capture: true })
+      shadowDom.shadowRoot.addEventListener('auxclick', auxClickHandler, { capture: true })
+    },
   })
   return config
 })
