@@ -21,9 +21,9 @@ export const presetBase: Record<string, string> = {
   nextPart: ']',
   focusDanmakuInput: 'enter',
   danmaku: 'd',
-  seekBegin: '0',
+  seekBegin: 'digit0',
   // 1-9 跳转到对应百分比
-  ...lodash.fromPairs(lodash.range(1, 10).map(i => [`seekProgress${i}0`, String(i)])),
+  ...lodash.fromPairs(lodash.range(1, 10).map(i => [`seekProgress${i}0`, `digit${i}`])),
   sendComment: 'ctrl enter',
 }
 export const builtInPresets: Record<string, Record<string, string>> = {
@@ -44,9 +44,9 @@ export const builtInPresets: Record<string, Record<string, string>> = {
     pause: 'space k',
     longJumpForward: 'l',
     longJumpBackward: 'j',
-    seekBegin: '0 Home',
+    seekBegin: 'digit0 Home',
     // 1-9 跳转到对应百分比
-    ...lodash.fromPairs(lodash.range(1, 10).map(i => [`seekProgress${i}0`, String(i)])),
+    ...lodash.fromPairs(lodash.range(1, 10).map(i => [`seekProgress${i}0`, `digit${i}`])),
   },
   HTML5Player: {
     coin: 'shift c',
@@ -61,7 +61,7 @@ export const builtInPresets: Record<string, Record<string, string>> = {
     coin: 'shift c',
     danmaku: 'shift d',
     fullscreen: 'enter',
-    webFullscreen: '6',
+    webFullscreen: 'digit6',
     longJumpBackward: 'ctrl arrowLeft',
     longJumpForward: 'ctrl arrowRight',
     seekBegin: 'backspace',
