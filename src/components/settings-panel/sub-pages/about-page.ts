@@ -12,7 +12,7 @@ export interface AboutPageAction {
   run: (event?: MouseEvent) => void | Promise<void>
 }
 
-export const getFormatStr = async (format: string) => {
+export const getFormatStr = async (format: string, extraVariables: Record<string, string> = {}) => {
   const { meta } = await import('@/core/meta')
   const {
     year: y,
@@ -34,6 +34,7 @@ export const getFormatStr = async (format: string) => {
     m,
     s,
     ms,
+    ...extraVariables,
   })
 }
 

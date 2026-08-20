@@ -5,16 +5,17 @@
   </div>
 </template>
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
+import { getComponentSettings, getGeneralSettings } from '@/core/settings'
 import { DownloadPackage } from '@/core/download'
 import { pickFile } from '@/core/file-picker'
 import { Toast } from '@/core/toast'
 import { logError } from '@/core/utils/log'
 import { VIcon } from '@/ui'
 import { ComponentMetadata } from '../../component'
-import { isMac, OptionsTransferActionItem } from './component-actions'
+import { OptionsTransferActionItem } from './component-actions'
+import { getFormatStr } from '../sub-pages/about-page'
 
-const hasTransferModifier = (e: MouseEvent | KeyboardEvent) => (isMac ? e.metaKey : e.ctrlKey)
+const hasTransferModifier = (e: MouseEvent | KeyboardEvent) => e.shiftKey
 
 export default Vue.extend({
   components: {
@@ -32,15 +33,15 @@ export default Vue.extend({
   },
   data() {
     return {
-      ctrlPressed: false,
+      shiftPressed: false,
     }
   },
   computed: {
     displayName(): string {
-      return this.ctrlPressed ? this.item.ctrlDisplayName : this.item.displayName
+      return this.shiftPressed ? this.item.shiftDisplayName : this.item.displayName
     },
     currentIcon(): string {
-      return this.ctrlPressed ? this.item.ctrlIcon : this.item.icon
+      return this.shiftPressed ? this.item.shiftIcon : this.item.icon
     },
     componentDisplayName(): string {
       return this.component.displayName
@@ -58,60 +59,72 @@ export default Vue.extend({
   },
   methods: {
     handleKeyEvent(e: KeyboardEvent) {
-      this.ctrlPressed = hasTransferModifier(e)
+      this.shiftPressed = hasTransferModifier(e)
     },
     handleBlur() {
-      this.ctrlPressed = false
+      this.shiftPressed = false
     },
     serialize(): string {
       const { name } = this.component
       const { options } = getComponentSettings(this.component)
       return JSON.stringify({ name, options }, undefined, 2)
     },
-    async applyImportedOptions(json: string) {
-      let parsed: { options?: Record<string, unknown> }
+    async importOptions(json: string) {
+      let parsed: { name?: unknown; options?: Record<string, unknown> }
       try {
         parsed = JSON.parse(json)
       } catch {
         Toast.error('选项 JSON 格式错误, 未能导入选项', this.componentDisplayName)
         return
       }
-      const { options: importedOptions } = parsed
+      const { name: importedName, options: importedOptions } = parsed ?? {}
+      if (importedName !== this.component.name) {
+        Toast.error('导入内容中的组件名称不匹配, 未能导入选项', this.componentDisplayName)
+        return
+      }
       if (
         typeof importedOptions !== 'object' ||
         importedOptions === null ||
-        Array.isArray(importedOptions) ||
-        Object.keys(importedOptions).length === 0
+        Array.isArray(importedOptions)
       ) {
         Toast.error('导入内容中缺少有效的 options 字段', this.componentDisplayName)
         return
       }
       const { options } = getComponentSettings(this.component)
-      Object.assign(options, importedOptions)
+      for (const key of Object.keys(options)) {
+        if (!(key in importedOptions)) {
+          delete options[key]
+        }
+      }
+      for (const [key, value] of Object.entries(importedOptions)) {
+        if (!lodash.isEqual(options[key], value)) {
+          options[key] = value
+        }
+      }
       Toast.success('选项已导入', this.componentDisplayName, 3000)
     },
     async handleClick(e: MouseEvent) {
-      this.ctrlPressed = hasTransferModifier(e)
+      this.shiftPressed = hasTransferModifier(e)
       const isImport = this.item.mode === 'import'
       try {
         if (isImport) {
-          const json = this.ctrlPressed
+          const json = this.shiftPressed
             ? await navigator.clipboard.readText()
             : await pickFile({ accept: '.json' }).then(([file]) => file?.text())
           if (json) {
-            await this.applyImportedOptions(json)
+            await this.importOptions(json)
           }
-        } else if (this.ctrlPressed) {
+        } else if (this.shiftPressed) {
           await navigator.clipboard.writeText(this.serialize())
           Toast.success('选项已复制到剪贴板', this.componentDisplayName, 3000)
         } else {
-          await DownloadPackage.single(
-            `${this.componentDisplayName}-Bilibili Evolved.json`,
-            this.serialize(),
-          )
+          const fileName = await getFormatStr(getGeneralSettings().exportOptionsFormat, {
+            c: this.component.name,
+          })
+          await DownloadPackage.single(`${fileName}.json`, this.serialize())
         }
       } catch (error) {
-        logError(error instanceof Error ? error : String(error))
+        logError(error)
       }
     },
   },
