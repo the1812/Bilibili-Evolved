@@ -257,7 +257,7 @@ const clearHome: ComponentEntry<Options> = async ({ metadata, settings }) => {
 }
 
 export const component = defineComponentMetadata({
-  name: 'clearHome',
+  name: 'clear-home',
   author: {
     name: 'RieN7',
     link: 'https://github.com/rien7',
