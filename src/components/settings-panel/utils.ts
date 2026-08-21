@@ -1,9 +1,10 @@
+import { getGeneralSettings } from '@/core/settings'
 import { formatVariables, getTitleVariablesFromDate } from '@/core/utils/title'
 
 type StringMap = Record<string, string>
 
-/** 将命名格式字符串转换为文件名, 支持脚本名/版本/日期时间等变量, 可用`extraVariables`传入自定义变量 */
-export const getExportSettingsFilename = async (format: string, extraVariables: StringMap = {}) => {
+/** 根据`导出设置文件命名格式`生成文件名, 支持脚本名/版本/日期时间等变量, 可用`extraVariables`覆盖内置变量 */
+export const getExportSettingsFilename = async (extraVariables: StringMap = {}) => {
   const { meta } = await import('@/core/meta')
   const {
     year: y,
@@ -14,7 +15,7 @@ export const getExportSettingsFilename = async (format: string, extraVariables: 
     second: s,
     millisecond: ms,
   } = getTitleVariablesFromDate()
-  return formatVariables(format, {
+  return formatVariables(getGeneralSettings().exportSettingsFormat, {
     n: meta.name,
     v: `v${meta.compilationInfo.version}`,
     V: meta.compilationInfo.versionWithTag,

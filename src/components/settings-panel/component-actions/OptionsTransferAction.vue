@@ -5,7 +5,7 @@
   </div>
 </template>
 <script lang="ts">
-import { getComponentSettings, getGeneralSettings } from '@/core/settings'
+import { getComponentSettings } from '@/core/settings'
 import { DownloadPackage } from '@/core/download'
 import { pickFile } from '@/core/file-picker'
 import { Toast } from '@/core/toast'
@@ -114,14 +114,11 @@ export default Vue.extend({
           await navigator.clipboard.writeText(this.serialize())
           Toast.success('选项已复制到剪贴板', this.componentDisplayName, 3000)
         } else {
-          const fileName = await getExportSettingsFilename(
-            getGeneralSettings().exportSettingsFormat,
-            {
-              n: this.component.name,
-              v: '',
-              V: '',
-            },
-          )
+          const fileName = await getExportSettingsFilename({
+            n: this.component.name,
+            v: '',
+            V: '',
+          })
           await DownloadPackage.single(`${fileName}.json`, this.serialize())
         }
       } catch (error) {
