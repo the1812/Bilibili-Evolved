@@ -131,7 +131,7 @@ export default Vue.extend({
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 100000;
+  z-index: 100002;
   display: flex;
   justify-content: center;
   align-items: center;
