@@ -1,6 +1,6 @@
 import { registerAndGetData } from '@/plugins/data'
 import { getGeneralSettings } from '@/core/settings'
-import { getFormatStr } from '@/core/utils/title'
+import { getExportSettingsFilename } from '../utils'
 
 export interface AboutPageAction {
   icon: string
@@ -21,7 +21,7 @@ export const builtInActions: AboutPageAction[] = [
     run: async () => {
       const { settings } = await import('@/core/settings')
       const { DownloadPackage } = await import('@/core/download')
-      const fileName = await getFormatStr(getGeneralSettings().exportSettingsFormat)
+      const fileName = await getExportSettingsFilename(getGeneralSettings().exportSettingsFormat)
       DownloadPackage.single(`${fileName}.json`, JSON.stringify(settings, undefined, 2))
     },
   },

@@ -10,7 +10,7 @@ import { DownloadPackage } from '@/core/download'
 import { pickFile } from '@/core/file-picker'
 import { Toast } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import { getFormatStr } from '@/core/utils/title'
+import { getExportSettingsFilename } from '../utils'
 import { VIcon } from '@/ui'
 import { ComponentMetadata } from '../../component'
 import { OptionsTransferActionItem } from './component-actions'
@@ -114,9 +114,14 @@ export default Vue.extend({
           await navigator.clipboard.writeText(this.serialize())
           Toast.success('选项已复制到剪贴板', this.componentDisplayName, 3000)
         } else {
-          const fileName = await getFormatStr(getGeneralSettings().exportOptionsFormat, {
-            c: this.component.name,
-          })
+          const fileName = await getExportSettingsFilename(
+            getGeneralSettings().exportSettingsFormat,
+            {
+              n: this.component.name,
+              v: '',
+              V: '',
+            },
+          )
           await DownloadPackage.single(`${fileName}.json`, this.serialize())
         }
       } catch (error) {

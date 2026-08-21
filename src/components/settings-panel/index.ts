@@ -53,13 +53,8 @@ const options = defineOptionsMetadata({
     multiline: true,
   },
   exportSettingsFormat: {
-    defaultValue: '[n]_[v] [y]-[M]-[d] [h]-[m]-[s]',
+    defaultValue: '[n][_v] [y]-[M]-[d] [h]-[m]-[s]',
     displayName: '导出设置文件命名格式',
-    multiline: true,
-  },
-  exportOptionsFormat: {
-    defaultValue: '[c]_[n] [y]-[M]-[d] [h]-[m]-[s]',
-    displayName: '导出选项文件命名格式',
     multiline: true,
   },
   downloadPackageEmitMode: {
