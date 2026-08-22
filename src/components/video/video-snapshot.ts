@@ -1,4 +1,5 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
+import { Toast } from '@/core/toast'
 import { formatDuration } from '@/core/utils/formatters'
 
 /**
@@ -135,24 +136,51 @@ async function parseAtlases(
 /**
  * @author WakelessSloth56
  */
-
-async function loadImage(url: string) {
+function loadImageWithCrossOrigin(url: string, crossOrigin: boolean) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image()
-    img.crossOrigin = 'anonymous'
+    if (crossOrigin) {
+      img.crossOrigin = 'anonymous'
+    }
     img.onload = () => resolve(img)
-    img.onerror = reject
+    img.onerror = () =>
+      reject(
+        new Error(
+          crossOrigin
+            ? `[VideoSnapshot] 快照图跨域加载失败 (CORS 被阻止): ${url}`
+            : `[VideoSnapshot] 快照图加载失败: ${url}`,
+        ),
+      )
     img.src = url
   })
+}
+
+/**
+ * 加载快照图
+ * 优先以 CORS 模式加载 (画布才可导出), CDN 未返回
+ * Access-Control-Allow-Origin 时回退为普通加载: 图片仍可显示,
+ * 但画布会被标记为污染, 无法导出下载
+ * @param url 图片地址
+ */
+let corsToastShown = false
+async function loadImage(url: string) {
+  try {
+    return await loadImageWithCrossOrigin(url, true)
+  } catch (error) {
+    console.error(error)
+    if (!corsToastShown) {
+      corsToastShown = true
+      Toast.error('快照图 CDN 跨域加载失败, 预览可用但无法导出下载, 可重启浏览器后重试', '视频快照')
+    }
+    return loadImageWithCrossOrigin(url, false)
+  }
 }
 
 async function loadAtlasImage(atlas: SnapshotAtlas) {
   if (atlas.image) {
     return atlas
   }
-
-  const img = await loadImage(atlas.url)
-  atlas.image = img
+  atlas.image = await loadImage(atlas.url)
   return atlas
 }
 
