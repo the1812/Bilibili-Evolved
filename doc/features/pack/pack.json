@@ -287,7 +287,7 @@
         "type": "component",
         "name": "disableFeedsDetails",
         "displayName": "禁止跳转动态详情",
-        "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
+        "description": "禁止点击动态正文后跳转详情页, 方便选择其中的文字.\n仅正文区域生效, 点击标题/时间缀等其他区域或按住 <kbd>Ctrl + 点击</kbd> 仍会正常跳转.\n转发动态会在正文末尾追加一个\"详情\"入口用于跳转.",
         "fullRelativePath": "../../registry/dist/components/feeds/disable-details.js",
         "fullAbsolutePath": "registry/dist/components/feeds/disable-details.js"
       },
