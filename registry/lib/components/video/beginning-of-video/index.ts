@@ -23,7 +23,7 @@ const removeStartTime = (rawUrl: string): string => {
 }
 
 export const component = defineComponentMetadata({
-  name: 'beginningOfVideo',
+  name: 'cleanStartVideo',
   displayName: '新视频永远从头开始',
   author: {
     name: 'Earchaut',
@@ -35,6 +35,9 @@ export const component = defineComponentMetadata({
       (e: MouseEvent) => {
         const link = (e.target as HTMLElement).closest<HTMLAnchorElement>('a')
         if (!link) {
+          return
+        }
+        if (!link.closest('.bili-video-card')) {
           return
         }
         const { href } = link
