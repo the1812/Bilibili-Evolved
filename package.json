@@ -78,8 +78,8 @@
   "dependencies": {
     "@popperjs/core": "^2.6.0",
     "color": "^3.1.2",
+    "fflate": "^0.8.3",
     "fuse.js": "^6.4.6",
-    "jszip": "^3.7.1",
     "lodash": "^4.17.21",
     "marked": "^1.2.5",
     "protobufjs": "^6.11.2",

@@ -8,7 +8,7 @@ export interface CdnConfig {
   library: {
     lodash: ExternalLibrary
     protobuf: ExternalLibrary
-    jszip: ExternalLibrary
+    fflate: ExternalLibrary
     sortable: ExternalLibrary
     streamsaver: ExternalLibrary
     ffmpeg: {

@@ -26,6 +26,11 @@ export const component = RememberSpeedComponent.create<Options>({
       displayName: '各视频分别记忆',
       defaultValue: false,
     },
+    useRbvp: {
+      displayName: '交由 RBVP 决定还原策略',
+      defaultValue: false,
+      hidden: true,
+    },
     individualRememberRecord: {
       displayName: '独立记忆倍速记录',
       defaultValue: {},
@@ -34,6 +39,17 @@ export const component = RememberSpeedComponent.create<Options>({
     showRestoreTip: {
       displayName: '弹出还原倍速提示',
       defaultValue: true,
+    },
+  },
+  extraOptions: () => import('./settings/ExtraOptions.vue').then(m => m.default),
+  plugin: {
+    displayName: '记忆倍速 - RBVP 兼容',
+    setup: async ({ addData }) => {
+      const { rememberVideoSpeedNamespaceProvider } = await import('./rbvp-provider')
+      addData('rbvp.namespaces', namespaces => {
+        delete namespaces.speed
+        namespaces.rememberVideoSpeed = rememberVideoSpeedNamespaceProvider
+      })
     },
   },
 })

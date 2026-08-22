@@ -71,7 +71,8 @@
     @include border-color('3');
   }
 }
-:host(bili-comment-renderer) {
+:host(bili-comment-renderer),
+:host(bili-comment-reply-renderer) {
   i#note {
     @include color('a');
     @include background-color('3');

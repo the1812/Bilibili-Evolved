@@ -7,11 +7,23 @@
       <div class="close image-viewer-icon" title="关闭" @click="open = false">
         <VIcon :size="48" icon="mdi-close"></VIcon>
       </div>
-      <a target="_blank" class="copy-link image-viewer-icon" title="复制原链接" @click="copyLink()">
+      <a
+        v-if="!blobFilename"
+        target="_blank"
+        class="copy-link image-viewer-icon"
+        title="复制原链接"
+        @click="copyLink()"
+      >
         <VIcon v-if="copiedTimer" :size="48" icon="mdi-check"></VIcon>
         <VIcon v-else :size="48" icon="mdi-link"></VIcon>
       </a>
-      <a target="_blank" class="new-tab image-viewer-icon" title="在新标签页打开" @click="newTab()">
+      <a
+        v-if="!blobFilename"
+        target="_blank"
+        class="new-tab image-viewer-icon"
+        title="在新标签页打开"
+        @click="newTab()"
+      >
         <VIcon :size="48" icon="mdi-open-in-new"></VIcon>
       </a>
       <a
@@ -38,33 +50,16 @@ export default Vue.extend({
   components: {
     VIcon,
   },
-  props: {
-    image: {
-      type: String,
-      required: true,
-    },
-  },
   data() {
     return {
+      image: '',
       filename: '',
+      blobFilename: '',
       open: false,
       blobUrl: '',
       keyHandler: null,
       copiedTimer: 0,
     }
-  },
-  watch: {
-    async image(url: string) {
-      if (this.blobUrl) {
-        URL.revokeObjectURL(this.blobUrl)
-      }
-      if (!url) {
-        this.blobUrl = ''
-      }
-      const blob = await getBlob(url)
-      this.blobUrl = URL.createObjectURL(blob)
-      this.updateFilename()
-    },
   },
   mounted() {
     this.keyHandler = (e: KeyboardEvent) => {
@@ -111,9 +106,32 @@ export default Vue.extend({
         this.filename = ''
         return
       }
-      this.filename =
-        getFriendlyTitle(document.URL.includes('/www.bilibili.com/bangumi/')) +
-        url.substring(url.lastIndexOf('.'))
+      this.filename = this.blobFilename
+        ? this.blobFilename
+        : getFriendlyTitle(document.URL.includes('/www.bilibili.com/bangumi/')) +
+          url.substring(url.lastIndexOf('.'))
+    },
+    async setImage(url: string, blobFilename?: string) {
+      if (this.blobUrl) {
+        URL.revokeObjectURL(this.blobUrl)
+      }
+      if (!url) {
+        this.blobUrl = ''
+        this.image = ''
+      }
+      this.image = url
+      this.blobFilename = ''
+      if (url.startsWith('blob:')) {
+        this.blobUrl = url
+        if (!blobFilename) {
+          throw new Error('[ImageViewer] Blob格式图片未指定文件名')
+        }
+        this.blobFilename = blobFilename
+      } else {
+        const blob = await getBlob(url)
+        this.blobUrl = URL.createObjectURL(blob)
+      }
+      this.updateFilename()
     },
   },
 })

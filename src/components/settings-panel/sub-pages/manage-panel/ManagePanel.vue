@@ -97,7 +97,7 @@ import { installFeature, tryParseZip } from '@/core/install-feature'
 import { pickFile } from '@/core/file-picker'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import { JSZipLibrary } from '@/core/runtime-library'
+import { FflateLibrary } from '@/core/runtime-library'
 import { VIcon, VButton, TextBox, VEmpty, VLoading, VPopup, TextArea, SwitchBox } from '@/ui'
 import ManageItem from './ManageItem.vue'
 import OnlineRegistryButton from '../online-registry/OnlineRegistryButton.vue'
@@ -163,14 +163,23 @@ export default Vue.extend({
       const [codeFile] = codes
       let code: string
       if (codeFile.name.endsWith('.zip')) {
-        const JSZip = await JSZipLibrary
-        const zip = await JSZip.loadAsync(codeFile)
-        const files = Object.values(zip.files)
-        if (files.length === 0) {
+        const fflate = await FflateLibrary
+        const buffer = new Uint8Array(await codeFile.arrayBuffer())
+        const files = await new Promise<Record<string, Uint8Array>>((resolve, reject) => {
+          fflate.unzip(buffer, (err, data) => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve(data)
+            }
+          })
+        })
+        const fileNames = Object.keys(files)
+        if (fileNames.length === 0) {
           Toast.info('不能打开空文件', `添加${this.config.title}`)
           return
         }
-        code = await files[0].async('text')
+        code = new TextDecoder().decode(files[fileNames[0]])
       } else {
         code = await codeFile.text()
       }
