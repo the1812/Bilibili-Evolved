@@ -58,7 +58,7 @@ export const loadKeymap = lodash.once(() => {
   const config = {
     enable: true,
     bindings: [] as KeyBinding[],
-    disableBilibiliPlayerShortcuts: false,
+    blockedBilibiliPlayerShortcuts: new Set<string>(),
   }
 
   const addKeyReleaseListener = (code: string, listener: (event: KeyReleaseEvent) => void) => {
@@ -200,8 +200,7 @@ export const loadKeymap = lodash.once(() => {
     handleKeyDown(createKeyEvent(event, event.key, event.code, event.repeat))
     if (
       config.enable &&
-      config.disableBilibiliPlayerShortcuts &&
-      shouldBlockBilibiliPlayerShortcut(event)
+      shouldBlockBilibiliPlayerShortcut(event, config.blockedBilibiliPlayerShortcuts)
     ) {
       event.stopImmediatePropagation()
       event.preventDefault()

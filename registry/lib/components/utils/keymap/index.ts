@@ -30,9 +30,10 @@ const options = defineOptionsMetadata({
     defaultValue: true,
     displayName: '显示百分比跳转快捷键',
   },
-  disableBilibiliPlayerShortcuts: {
-    defaultValue: false,
-    displayName: '屏蔽 B 站播放器原生快捷键',
+  blockedBilibiliPlayerShortcuts: {
+    defaultValue: [] as string[],
+    displayName: '屏蔽的 B 站播放器原生快捷键',
+    hidden: true,
   },
   subtitleLanguagePreference: {
     defaultValue: '',
@@ -71,12 +72,14 @@ const entry = styledComponentEntry<Options>(
         ...settings.options.customKeyBindings,
       })
       config.bindings = bindings
-      config.disableBilibiliPlayerShortcuts = settings.options.disableBilibiliPlayerShortcuts
+      config.blockedBilibiliPlayerShortcuts = new Set(
+        settings.options.blockedBilibiliPlayerShortcuts,
+      )
     }
 
     addComponentListener('keymap.preset', update, true)
     addComponentListener('keymap.customKeyBindings', update)
-    addComponentListener('keymap.disableBilibiliPlayerShortcuts', update)
+    addComponentListener('keymap.blockedBilibiliPlayerShortcuts', update)
   },
 )
 export const component = defineComponentMetadata({
