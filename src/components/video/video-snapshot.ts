@@ -170,7 +170,10 @@ async function loadImage(url: string) {
     console.error(error)
     if (!corsToastShown) {
       corsToastShown = true
-      Toast.error('快照图 CDN 跨域加载失败, 预览可用但无法导出下载, 可重启浏览器后重试', '视频快照')
+      Toast.error(
+        '快照图 CDN 跨域加载失败, 预览可用但无法导出下载, 可刷新网页或重启浏览器后重试',
+        '视频快照',
+      )
     }
     return loadImageWithCrossOrigin(url, false)
   }
