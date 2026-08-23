@@ -1,5 +1,64 @@
 <!-- spell-checker: disable -->
 # 更新日志
+## v2.11.3-preview
+`2026-08-23`
+
+> 包含 [v2.11.3](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.11.3) 的所有更新内容.
+
+✨新增
+- 新增组件 `番剧动态稍后再看按钮`, 在动态页的番剧卡片上增加与原生功能一致的稍后再看按钮. (#5688, PR #5704 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `直播显示分区信息`, 在播放器标题栏显示当前直播间的分区. (PR #5705 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `直播自动切换最高画质`, 进入直播间会自动选择最高画质, 之后仍可手动切换. (#5638, PR #5706 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `仅搜索首页`, 首页只保留顶栏和中央搜索框, 并支持自定义背景. (PR #5659 by [Yimino](https://github.com/mintonight))
+- 新增组件 `合集链接重定向`, 修正指向个人空间列表的合集链接路径和参数. (#5684, PR #5709 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `强制保留播放器控制栏`, 鼠标静止或移出播放器后仍保留细进度条等控制栏区域. (#5720, PR #5724 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `弹幕合并器` 新增弹幕时停功能, 拖动进度后恢复时会写入偏移; 同时改进搜索、分 P 选择和管理操作. (#5647, #5650, PR #5701 by [XianYuDaXian](https://github.com/XianYuDaXian))
+- 设置面板支持导入和导出单个组件的选项, 通用设置支持自定义导出文件名. (#5702, #5734, PR #5708, PR #5736 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `快捷键扩展` 能够区分数字键盘、鼠标中键和侧键, 并新增屏蔽 B 站播放器原生快捷键的设置. (#5464)
+- `快捷键扩展 - 开关 CC 字幕` 支持配置字幕语言偏好, 并优先选择匹配的人工字幕. (#5685)
+- `视频快照` 适配更多页面, 调整按钮和预览样式, 并修复与 `视频预览放大` 的兼容问题. (PR #5707 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+🐛修复
+- 修复 `直播弹幕助手 (+1 & 收藏)` 在弹幕悬停和全屏兼容模式下的 +1 发送问题. (PR #5728 by [oooolcepsed](https://github.com/cccccccccooool))
+- 修复 `楼中楼回复“UP主觉得很赞”显示` 在深色 / 夜间模式下的样式问题. (PR #5718 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+## v2.11.3
+`2026-08-23`
+
+<details>
+<summary>正式版用户将获得 v2.10.10-preview ~ v2.11.1-preview 的所有改动, 点击展开查看</summary>
+
+✨新增
+- 新增组件 `禁止直播可见性检测`, 阻止直播间在页面切到后台时自动降低画质, 避免切回前台恢复画质时卡顿. (#5556)
+- 新增组件 `RBVP 视频策略`, 根据 UP 主、分区、标签、标题、时长等规则匹配视频, 自动执行倍速、合集记忆等动作; 规则支持异步校验、导入导出和别名编辑. (#5554, PR #5577, PR #5619, PR #5620 by [JLoeve](https://github.com/LonelySteve), [LainIO24](https://github.com/lainio24))
+- 新增组件 `弹幕合并器`, 将其他 B 站视频的弹幕合并到当前播放页的画面和右侧列表, 支持关键词 / BV 号搜索、多 P 勾选、分 P 弹幕延迟顺延和播放进度对齐. (PR #5617 by [XianYuDaXian](https://github.com/XianYuDaXian))
+- 新增组件 `视频快照`, 集中展示视频多个时间点的预览图, 也能从推荐、动态、空间投稿和收藏夹的视频卡片中打开快照; `下载视频` 还可将快照生成网格. (PR #5623 by [WakelessSloth56](https://github.com/WakelessSloth56), [LainIO24](https://github.com/lainio24), PR #5645 by [LainIO24](https://github.com/lainio24))
+- 新增组件 `播放页自定义背景`, 为视频、番剧等播放页设置远程或本地背景图; 背景的不透明度、遮罩、模糊、缩放、位置和深色模式配色均可调整. (PR #5606 by [Andy_Allan](https://github.com/andya1lan))
+- 新增组件 `直播弹幕助手 (+1 & 收藏)`, 在直播间增加弹幕 +1、弹幕收藏和收藏管理面板. (PR #5597 by [oooolcepsed](https://github.com/cccccccccooool))
+- 新增组件 `直播首页暂停`, 阻止直播首页的推荐直播间自动播放. (PR #5610 by [YiJay99](https://github.com/YiJay99))
+- 新增组件 `Hi-Res 音质按钮布局调整`, 将播放器的 Hi-Res 按钮简化为图标. (#5609, PR #5653 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `评论图片导出`, 汇总并批量下载评论区中的图片, 也支持单独导出某条评论里的图片. (PR #5661 by [塵埃殘憶](https://github.com/kaixinol))
+- 新增组件 `楼中楼回复“UP主觉得很赞”显示`, 为楼中楼回复补充 UP 主点赞标识. (PR #5648 by [Light_Quanta](https://github.com/LightQuanta))
+- `下载视频` 支持选择和下载 AI 原声翻译等多音轨, 并显示 DASH 视频的预计带宽和实际编码. (PR #5576 by [LainIO24](https://github.com/lainio24), PR #5660 by [EricZhou](https://github.com/EricZhou05))
+- `视频预览放大` 支持解除 5 分钟预览限制, 并完善预览框尺寸限制. (PR #5664 by [wsgh0202](https://github.com/wsgh0202))
+- `一键点亮直播间粉丝勋章` 改进勋章直播间识别, 支持导出和修改默认点赞次数. (PR #5612 by [k](https://github.com/kkkkkkkk566), PR #5634 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+</details>
+
+🐛修复
+- 修复 `自定义顶栏` 未隐藏原版频道下拉菜单的问题, 并排除 toy 与轻剪辑等不适用页面. (#5495, PR #5673 by [Lancy](https://github.com/lancy69), PR #5695 by [树根(佬?)](https://github.com/shugen002))
+- 修复 `下载视频 - MPV 输出支持` 在 Chrome 中无法正确传递包含特殊字符的参数, 并移除 URL 参数外层多余的引号. (PR #5574 by [Carter Gissing](https://github.com/cgissing))
+- 修复 `图片批量导出` 在专栏等页面无法正确回退提取的问题. (#5712, PR #5715 by [塵埃殘憶](https://github.com/kaixinol))
+- 修复 `直播间网页全屏自适应` 因 debounce 导致的性能问题和部分布局问题. (PR #5713 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复点击直播播放器 iframe 时无法关闭设置面板或小组件面板的问题. (PR #5700 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `深色模式` 在不支持的页面仍会生效, 以及直播页切换深色模式时未及时更新的问题. (PR #5725 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `直播首页静音` 不适配新版直播首页的问题. (PR #5730 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `清爽首页` 在部分卡片缺少徽标元素时发生异常的问题. (#5732, PR #5733 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+☕开发者相关
+- 将压缩和解压运行库从 JSZip 替换为 fflate, 减小体积并改进压缩包处理性能. (PR #5662 by [塵埃殘憶](https://github.com/kaixinol))
+- 修正 Node.js、webpack 和 registry 工具链的 TypeScript 模块解析配置. (PR #5679 by [塵埃殘憶](https://github.com/kaixinol))
+
 ## v2.11.2-preview
 `2026-07-30`
 
