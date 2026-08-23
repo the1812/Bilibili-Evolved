@@ -19,7 +19,7 @@
     "type": "component",
     "name": "disableFeedsDetails",
     "displayName": "禁止跳转动态详情",
-    "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
+    "description": "禁止点击动态正文后跳转详情页, 方便选择其中的文字.\n仅正文区域生效, 点击标题/时间缀等其他区域或按住 <kbd>Ctrl + 点击</kbd> 仍会正常跳转.\n转发动态会在正文末尾追加一个\"详情\"入口用于跳转.",
     "fullRelativePath": "../../registry/dist/components/feeds/disable-details.js",
     "fullAbsolutePath": "registry/dist/components/feeds/disable-details.js"
   },
@@ -105,11 +105,27 @@
   },
   {
     "type": "component",
+    "name": "pgcWatchlater",
+    "displayName": "番剧动态稍后再看按钮",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n为动态页的番剧卡片添加 `稍后再看` 按钮\n\n### 致谢\n\n基于 `[组件-视频快照]` 修改。\n\n原作者\n\n- [WakelessSloth56](https://github.com/WakelessSloth56)\n- [LainIO24](https://github.com/LainIO24)",
+    "fullRelativePath": "../../registry/dist/components/feeds/pgc-watchlater.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/pgc-watchlater.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠",
     "fullRelativePath": "../../registry/dist/components/feeds/unfold.js",
     "fullAbsolutePath": "registry/dist/components/feeds/unfold.js"
+  },
+  {
+    "type": "component",
+    "name": "autoHighestQuality",
+    "displayName": "直播自动切换最高画质",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n将直播自动切换至最高画质",
+    "fullRelativePath": "../../registry/dist/components/live/auto-highest-quality.js",
+    "fullAbsolutePath": "registry/dist/components/live/auto-highest-quality.js"
   },
   {
     "type": "component",
@@ -203,7 +219,7 @@
     "type": "component",
     "name": "liveDanmakuHelper",
     "displayName": "直播弹幕助手 (+1 & 收藏)",
-    "description": "by [@oooolcepsed](https://github.com/cccccccccooool)\n\n为 Bilibili 直播间添加弹幕 +1 发送、收藏功能。\n\n推荐搭配 返回原版直播间 使用以来避免在活动房间内失效",
+    "description": "by [@oooolcepsed](https://github.com/cccccccccooool)\n\n为 Bilibili 直播间添加弹幕 +1 发送、收藏功能。\n\n推荐搭配 返回原版直播间 使用，以免在活动房间内失效",
     "fullRelativePath": "../../registry/dist/components/live/live-danmaku-helper.js",
     "fullAbsolutePath": "registry/dist/components/live/live-danmaku-helper.js"
   },
@@ -238,6 +254,14 @@
     "description": "删除观看直播时角落的水印.",
     "fullRelativePath": "../../registry/dist/components/live/remove-watermark.js",
     "fullAbsolutePath": "registry/dist/components/live/remove-watermark.js"
+  },
+  {
+    "type": "component",
+    "name": "showArea",
+    "displayName": "直播显示分区信息",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n在直播间的播放器标题栏显示当前房间的分区信息",
+    "fullRelativePath": "../../registry/dist/components/live/show-area.js",
+    "fullAbsolutePath": "registry/dist/components/live/show-area.js"
   },
   {
     "type": "component",
@@ -457,6 +481,14 @@
   },
   {
     "type": "component",
+    "name": "searchHome",
+    "displayName": "仅搜索首页",
+    "description": "by [@mintonight](https://github.com/mintonight)\n\n使用重新设计的「仅搜索首页」替换原本的首页, 仅保留顶栏与页面中央的搜索框, 隐藏推荐流、频道栏和横幅等内容.\n\n请注意:\n\n- 此功能与 `极简首页` / `清爽首页` 互斥, 请勿同时使用.\n- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.\n- 中间搜索框使用脚本自带的搜索栏 (LaunchBar), 可与搜索相关插件配合使用; 顶栏中的原版搜索仍会保留.\n- 仅隐藏首页动画横幅层与 Logo 区, 不改动顶栏容器与功能入口 (消息 / 头像等).\n\n选项说明:\n\n- 背景颜色: 页面底色, 默认为纯黑 `#000000`.\n- 背景图片: 默认使用 B 站动态页背景. 可在额外选项中填写图片链接 (失焦生效), 或选择不超过 1024 KiB 的本地图片; 点击「清除」可仅保留背景颜色.",
+    "fullRelativePath": "../../registry/dist/components/style/home-redesign/search.js",
+    "fullAbsolutePath": "registry/dist/components/style/home-redesign/search.js"
+  },
+  {
+    "type": "component",
     "name": "playerOnTopNew",
     "displayName": "播放器置顶（新）",
     "description": "by [@RieN7](https://github.com/rien7), [@ZiuChen](https://github.com/ZiuChen), [@LockRim](https://github.com/LockRim)\n\n原来的播放器置顶插件，现在已经不可用了，这是一个新的版本，可以在视频页面中将播放器放在页面最上方.",
@@ -641,6 +673,14 @@
   },
   {
     "type": "component",
+    "name": "collectionLinkRedirect",
+    "displayName": "合集链接重定向",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n将合集的跳转链接正确转换为对应的合集页链接",
+    "fullRelativePath": "../../registry/dist/components/utils/collection-link-redirect.js",
+    "fullAbsolutePath": "registry/dist/components/utils/collection-link-redirect.js"
+  },
+  {
+    "type": "component",
     "name": "columnUnlock",
     "displayName": "专栏复制优化",
     "description": "(原名: 专栏文字选择, 现在专栏已经不限制选中文字了)\n\n避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.",
@@ -747,7 +787,7 @@
     "type": "component",
     "name": "keymap",
     "displayName": "快捷键扩展",
-    "description": "为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.",
+    "description": "为脚本的功能和 b 站的功能启用快捷键支持，可使用键盘按键、鼠标中键和侧键，快捷键列表可在`快捷键设置`中查看和配置。\n\n`字幕语言偏好`: 可以填写一个标准语言代码 (如 `zh`、`en`、`ja`)，使用快捷键开启字幕时会优先匹配该语言，并优先选择人工字幕；留空则跟随播放器最近使用的语言。如果当前视频没有匹配的语言时会回退到第一个字幕。",
     "fullRelativePath": "../../registry/dist/components/utils/keymap.js",
     "fullAbsolutePath": "registry/dist/components/utils/keymap.js"
   },
@@ -883,7 +923,7 @@
     "type": "component",
     "name": "danmakuMerger",
     "displayName": "弹幕合并器",
-    "description": "by [@XianYuDaXian](https://github.com/XianYuDaXian)\n\n将其他 B 站视频的弹幕合并到当前播放页的原生播放器画面与右侧弹幕列表，不自绘弹幕层。\n\n- 支持关键词搜索或 BV 号获取弹幕，按分 P 勾选合并\n- 列表项带 `【BV号】` 前缀，画面层保持原文\n- 分 P 有效顺延：按正片有效时长自动计算多 P 弹幕延迟\n- 注入时保持当前播放进度\n\n使用前请先播放 5～10 秒，确保弹幕引擎就绪后再合并。",
+    "description": "by [@XianYuDaXian](https://github.com/XianYuDaXian)\n\n将其他 B 站视频的弹幕合并到当前播放页的原生播放器画面与右侧弹幕列表，不自绘弹幕层。\n\n- 支持关键词搜索或 BV 号获取弹幕，按分 P 勾选合并\n- 列表项带 `【BV号】` 前缀，画面层保持原文\n- 分 P 有效顺延：按正片有效时长自动计算多 P 弹幕延迟\n- 注入时保持当前播放进度\n- 悬停已合并弹幕可「时停」：同源弹幕定格，拖动进度后点「恢复」完成时间偏移\n\n使用前请先播放 5～10 秒，确保弹幕引擎就绪后再合并。",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/merger.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/merger.js"
   },
@@ -1025,6 +1065,14 @@
   },
   {
     "type": "component",
+    "name": "keepControlWrap",
+    "displayName": "强制保留播放器控制栏",
+    "description": "by [@Andy_Allan](https://github.com/andya1lan), [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n强制保留鼠标静止不动或移出视频播放器区域时，播放器的控制栏区域，如细进度条等.",
+    "fullRelativePath": "../../registry/dist/components/video/player/keep-control-wrap.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/keep-control-wrap.js"
+  },
+  {
+    "type": "component",
     "name": "legacyAutoPlay",
     "displayName": "传统连播模式",
     "description": "模拟传统的多 P 连播策略: 仅连播视频的分 P, 最后 1P 放完禁止连播其他推荐视频.",
@@ -1147,7 +1195,7 @@
     "type": "component",
     "name": "videoSnapshot",
     "displayName": "视频快照",
-    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)\n\n查看视频多个时间点的快照预览图。\n\n### 选项\n\n**注意：所有选项修改均需要刷新后生效。**\n\n- `推荐列表视频按钮`：\n  - 「左上」位置可能与组件「视频预览放大`biggerVideoPreview`」冲突",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)\n\n查看视频多个时间点的快照预览图。\n\n### 选项\n\n**注意：所有选项修改均需要刷新后生效。**",
     "fullRelativePath": "../../registry/dist/components/video/snapshot.js",
     "fullAbsolutePath": "registry/dist/components/video/snapshot.js"
   },
