@@ -63,6 +63,12 @@
 
 <script lang="ts">
 import {
+  getComponentSettings,
+  ComponentSettings,
+  addComponentListener,
+  removeComponentListener,
+} from '@/core/settings'
+import {
   TextBox,
   TextArea,
   SwitchBox,
@@ -72,10 +78,9 @@ import {
   ImagePicker,
   VSlider,
 } from '@/ui'
-import { getComponentSettings, ComponentSettings } from '@/core/settings'
 import { OptionMetadata } from '../component'
-import { getDropdownItems } from './dropdown'
 import SwitchOptions from '../SwitchOptions.vue'
+import { getDropdownItems } from './dropdown'
 
 function valueChange(newValue: unknown) {
   const settings = this.settings as ComponentSettings
@@ -162,6 +167,16 @@ export default {
           return 'unknown'
       }
     },
+  },
+  created() {
+    this.optionListenerPath = `${this.component.name}.${this.name}`
+    this.optionListener = (newValue: unknown) => {
+      this.value = newValue
+    }
+    addComponentListener(this.optionListenerPath, this.optionListener)
+  },
+  beforeDestroy() {
+    removeComponentListener(this.optionListenerPath, this.optionListener)
   },
   methods: {
     getDropdownItems,

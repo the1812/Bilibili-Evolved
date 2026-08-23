@@ -169,7 +169,7 @@ function cardClear(mutationsList: HTMLElement[]) {
       continue
     }
     if (mutation.classList.contains('floor-single-card')) {
-      const badge = mutation.querySelector('.badge').textContent
+      const badge = mutation.querySelector('.badge')?.textContent
       if (badge && removeBadgeList.includes(badge)) {
         mutation.remove()
       }

@@ -1,5 +1,6 @@
 <template>
   <span
+    v-show="show"
     class="quick-favorite be-quick-favorite video-toolbar-left-item"
     title="快速收藏"
     :class="{ on: isFavorite, ...displayModeClass }"
@@ -15,7 +16,7 @@
       快速收藏
     </div>
     <div ref="selectList" class="select-list" :class="{ show: listShowing }">
-      <div class="lists">
+      <div v-if="!useRbvp" class="lists">
         选择快速收藏夹:
         <VDropdown
           v-model="selectedFavoriteList"
@@ -24,7 +25,10 @@
           @change="saveFavoriteList"
         />
       </div>
-      <div class="lists-tip" :class="{ show: listShowing }">右键点击快速收藏可再次打开</div>
+      <div v-if="!useRbvp" class="lists-tip">右键点击快速收藏可再次打开</div>
+      <div v-else class="lists-tip">
+        <i>由 RBVP 接管：{{ selectedFavoriteList.displayName }}</i>
+      </div>
     </div>
     <div class="tip" :class="{ show: tipShowing }">{{ tipText }}</div>
   </span>
@@ -37,6 +41,7 @@ import { logError } from '@/core/utils/log'
 import { Toast } from '@/core/toast'
 import { VDropdown } from '@/ui'
 import { DisplayMode, Options } from './options'
+import { componentsMap } from '@/components/component'
 
 const { options } = getComponentSettings('quickFavorite')
 interface RawFavoriteListItem {
@@ -58,8 +63,9 @@ export default Vue.extend({
     VDropdown,
   },
   data() {
-    const { displayMode } = getComponentSettings<Options>('outerWatchlater').options
+    const { displayMode } = getComponentSettings<Options>('quickFavorite').options
     return {
+      show: false,
       aid: unsafeWindow.aid,
       isFavorite: false,
       tipText: '',
@@ -69,6 +75,7 @@ export default Vue.extend({
       selectedFavoriteList: EmptyFavoriteList,
       listShowing: false,
       displayMode,
+      useRbvp: false,
     }
   },
   computed: {
@@ -96,9 +103,28 @@ export default Vue.extend({
     },
   },
   created() {
-    this.loadSavedList()
     addComponentListener('quickFavorite.displayMode', (value: DisplayMode) => {
       this.displayMode = value
+    })
+    addComponentListener(
+      'quickFavorite.useRbvp',
+      (useRbvp: boolean) => {
+        this.useRbvp =
+          Boolean(componentsMap.rbvp) && getComponentSettings('rbvp').enabled && useRbvp
+        if (!this.useRbvp) {
+          this.loadSavedList()
+          this.show = true
+        }
+        // RBVP接管时暂时不显示
+      },
+      true,
+    )
+    addComponentListener('quickFavorite.favoriteFolderID', () => {
+      if (this.useRbvp) {
+        this.syncFavoriteState()
+        // 由RBVP设置完后再显示
+        this.show = true
+      }
     })
   },
   methods: {

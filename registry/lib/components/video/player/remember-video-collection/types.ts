@@ -38,4 +38,5 @@ export interface ComponentOptions extends UnknownOptions {
   markingStyle: MarkingStyle
   sectionMode: SectionMode
   showPrompt: boolean
+  useRbvp: boolean
 }

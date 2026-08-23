@@ -270,17 +270,21 @@ export interface BilibiliApiResponse {
  * 进行 bilibili API 标准响应处理
  * @param apiPromise 运行中的 API Promise
  * @param errorMessage 出错时的提示信息
+ * @param log 是否输出错误信息
  */
 export const bilibiliApi = async <T = any>(
   apiPromise: Promise<BilibiliApiResponse>,
   errorMessage?: string,
+  log = true,
 ) => {
   const json = await apiPromise
   if (json.code !== 0) {
     const error = new Error(
       `${errorMessage}: code = ${json.code}, message = ${json.message || json.msg}`,
     )
-    logError(error)
+    if (log) {
+      logError(error)
+    }
     throw error
   }
   return (json.data || json.result || {}) as T

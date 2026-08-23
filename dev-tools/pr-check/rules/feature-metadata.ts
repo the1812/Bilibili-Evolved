@@ -22,7 +22,6 @@ export const featureMetadataRule: CheckRule = {
         }
 
         const errors: string[] = []
-        const warnings: string[] = []
         const isAdded = file.status.startsWith('A')
 
         if (metadata.name && !isCamelCase(metadata.name)) {
@@ -45,15 +44,14 @@ export const featureMetadataRule: CheckRule = {
           )
         }
         if (isAdded && !metadata.properties.has('author')) {
-          warnings.push(`${file.path}: new components and plugins should include author metadata.`)
+          errors.push(`${file.path}: new components and plugins must include author metadata.`)
         }
 
-        return { errors, warnings }
+        return { errors }
       })
       .reduce<CheckResult>(
         (result, current) => ({
           errors: [...(result.errors || []), ...(current.errors || [])],
-          warnings: [...(result.warnings || []), ...(current.warnings || [])],
         }),
         {},
       ),

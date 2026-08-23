@@ -1,0 +1,92 @@
+/* 快合按钮样式：随 quick-merge-host 模块加载，不依赖 merger.scss 注入 */
+
+.dm-quick-merge-btn {
+  position: absolute !important;
+  right: 6px !important;
+  bottom: 6px !important;
+  width: 28px !important;
+  height: 28px !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 100 !important;
+  color: #fff !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  box-sizing: border-box;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pic-box,
+.video-card .pic,
+.video-card-common .pic,
+.bili-video-card__cover,
+.bili-video-card .cover,
+.video-page-card-small .pic-box,
+.recommend-video-card .pic-box,
+.card-box .pic-box {
+  position: relative !important;
+}
+
+.pic-box:hover .dm-quick-merge-btn,
+.video-card .pic:hover .dm-quick-merge-btn,
+.video-card-common .pic:hover .dm-quick-merge-btn,
+.bili-video-card__cover:hover .dm-quick-merge-btn,
+.bili-video-card .cover:hover .dm-quick-merge-btn,
+.video-page-card-small .pic-box:hover .dm-quick-merge-btn,
+.recommend-video-card:hover .dm-quick-merge-btn,
+.recommend-video-card .pic-box:hover .dm-quick-merge-btn,
+.card-box .pic-box:hover .dm-quick-merge-btn {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.dm-quick-merge-btn:hover {
+  background-color: rgba(0, 0, 0, 0.8) !important;
+  transform: scale(1.05) !important;
+}
+
+.dm-quick-merge-btn.active {
+  color: #fff !important;
+  background-color: rgba(0, 0, 0, 0.8) !important;
+}
+
+.dm-quick-tip {
+  position: absolute !important;
+  right: 34px !important;
+  top: 50% !important;
+  transform: translateY(-50%) translateX(10px) scale(0.8) !important;
+  white-space: nowrap !important;
+  background: rgba(21, 21, 21, 0.9) !important;
+  color: #fff !important;
+  padding: 5px 10px !important;
+  border-radius: 4px !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  transition: all 0.2s cubic-bezier(0.18, 0.89, 0.32, 1.28) !important;
+  z-index: 200 !important;
+}
+
+.dm-quick-merge-btn:hover .dm-quick-tip {
+  opacity: 1 !important;
+  transform: translateY(-50%) translateX(0) scale(1) !important;
+}
+
+.wl-tips {
+  left: auto !important;
+  right: 34px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin-left: 0 !important;
+  padding: 5px 10px !important;
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+  background: rgba(21, 21, 21, 0.9) !important;
+  height: auto !important;
+  border-radius: 4px !important;
+}

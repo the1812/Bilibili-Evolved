@@ -47,7 +47,7 @@ export default Vue.extend({
       const pack = new DownloadPackage()
       this.screenshots.forEach((it: Screenshot) => {
         pack.add(it.filename, it.blob, {
-          date: new Date(it.timeStamp),
+          mtime: new Date(it.timeStamp),
         })
       })
       await pack.emit(`${getFriendlyTitle()}.zip`)
