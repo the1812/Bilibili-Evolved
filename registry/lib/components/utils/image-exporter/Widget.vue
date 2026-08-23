@@ -15,6 +15,7 @@ import { retrieveImageUrl } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { DefaultWidget } from '@/ui'
+import { extractImagesFromArticle } from './article'
 import type { Options } from '.'
 
 export default Vue.extend({
@@ -74,6 +75,22 @@ export default Vue.extend({
             })
           }
         })
+        if (images.length === 0 && variables.cv) {
+          const articleUrls = await extractImagesFromArticle(Number(variables.cv))
+          articleUrls.forEach(url => {
+            const imageInfo = retrieveImageUrl(url)
+            if (!imageInfo) {
+              return
+            }
+            images.push({
+              ...imageInfo,
+              name: `${formatTitle(columnFormat, false, {
+                n: (images.length + 1).toString(),
+                ...variables,
+              })}${imageInfo.extension}`,
+            })
+          })
+        }
         if (images.length === 0) {
           Toast.info('此页面没有检测到任何可导出图片.', '图片导出')
           return

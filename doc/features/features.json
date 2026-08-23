@@ -19,7 +19,7 @@
     "type": "component",
     "name": "disableFeedsDetails",
     "displayName": "禁止跳转动态详情",
-    "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
+    "description": "禁止点击动态正文后跳转详情页, 方便选择其中的文字.\n仅正文区域生效, 点击标题/时间缀等其他区域或按住 <kbd>Ctrl + 点击</kbd> 仍会正常跳转.\n转发动态会在正文末尾追加一个\"详情\"入口用于跳转.",
     "fullRelativePath": "../../registry/dist/components/feeds/disable-details.js",
     "fullAbsolutePath": "registry/dist/components/feeds/disable-details.js"
   },
@@ -123,9 +123,17 @@
     "type": "component",
     "name": "badgeKeepalive",
     "displayName": "一键点亮直播间粉丝勋章",
-    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。原理：发送一个 300 次点赞的请求点亮粉丝勋章。",
+    "description": "by [@magicFeirl](https://github.com/magicFeirl)\n\n在直播间页面的功能面板添加一键点亮粉丝勋章功能，仅适用于有粉丝勋章且正在直播的直播间。本功能点亮粉丝勋章只需要点赞 30 次即可达到效果，默认点赞 300 次，可在选项中修改。",
     "fullRelativePath": "../../registry/dist/components/live/badge-keepalive.js",
     "fullAbsolutePath": "registry/dist/components/live/badge-keepalive.js"
+  },
+  {
+    "type": "component",
+    "name": "blockLiveVisibilityDetection",
+    "displayName": "禁止直播可见性检测",
+    "description": "直播页面不在前台时会被自动切换到低画质，切回前台后再恢复原画质，这会导致不必要的卡顿，本功能可以阻止直播画质根据前后台自动切换。",
+    "fullRelativePath": "../../registry/dist/components/live/block-live-visibility-detection.js",
+    "fullAbsolutePath": "registry/dist/components/live/block-live-visibility-detection.js"
   },
   {
     "type": "component",
@@ -182,6 +190,22 @@
     "description": "禁止直播首页的推荐直播间自动开始播放.",
     "fullRelativePath": "../../registry/dist/components/live/home-mute.js",
     "fullAbsolutePath": "registry/dist/components/live/home-mute.js"
+  },
+  {
+    "type": "component",
+    "name": "liveHomePause",
+    "displayName": "直播首页暂停",
+    "description": "by [@YeJay99](https://github.com/YeJay99)\n\n暂停直播首页的推荐直播间.",
+    "fullRelativePath": "../../registry/dist/components/live/home-pause.js",
+    "fullAbsolutePath": "registry/dist/components/live/home-pause.js"
+  },
+  {
+    "type": "component",
+    "name": "liveDanmakuHelper",
+    "displayName": "直播弹幕助手 (+1 & 收藏)",
+    "description": "by [@oooolcepsed](https://github.com/cccccccccooool)\n\n为 Bilibili 直播间添加弹幕 +1 发送、收藏功能。\n\n推荐搭配 返回原版直播间 使用，以免在活动房间内失效",
+    "fullRelativePath": "../../registry/dist/components/live/live-danmaku-helper.js",
+    "fullAbsolutePath": "registry/dist/components/live/live-danmaku-helper.js"
   },
   {
     "type": "component",
@@ -302,6 +326,14 @@
     "description": "设置一个使用夜间模式的时间段, 进入 / 离开此时间段时, 会自动开启 / 关闭夜间模式. 结束时间小于起始时间时将视为次日, 如 `18:00` 至 `6:00` 表示晚上 18:00 到次日 6:00. 请勿和 `夜间模式跟随系统` 一同使用.",
     "fullRelativePath": "../../registry/dist/components/style/dark-mode/schedule.js",
     "fullAbsolutePath": "registry/dist/components/style/dark-mode/schedule.js"
+  },
+  {
+    "type": "component",
+    "name": "hiResButtonStyles",
+    "displayName": "Hi-Res 音质按钮布局调整",
+    "description": "将播放器的 Hi-Res 音质按钮调整为只保留图标。",
+    "fullRelativePath": "../../registry/dist/components/style/hi-res-button-styles.js",
+    "fullAbsolutePath": "registry/dist/components/style/hi-res-button-styles.js"
   },
   {
     "type": "component",
@@ -505,6 +537,14 @@
   },
   {
     "type": "component",
+    "name": "videoPageBackground",
+    "displayName": "播放页自定义背景",
+    "description": "by [@andya1lan](https://github.com/andya1lan)\n\n在视频、番剧等播放页中设置自定义页面背景，并将页面根容器设为透明。\n\n- **URL 图片**：在「背景图片 URL」中填入远端图片链接。组件不会下载或持久化远端图片，页面加载时由浏览器直接读取该 URL。\n- **本地图片**：点击「选择本地图片」从本地选择，图片以 Base64 形式保存在组件设置中，限制为 1024 KiB。\n- 支持调整图片不透明度、遮罩、模糊、缩放方式、位置和页面底色。\n- 页面底色和遮罩颜色分浅色 / 深色两组，开启「随深色模式切换配色」时会跟随 B 站官方主题以及本扩展「夜间模式」「深色模式」组件自动切换；关闭此开关则始终使用浅色组配色。",
+    "fullRelativePath": "../../registry/dist/components/style/video-page-background.js",
+    "fullAbsolutePath": "registry/dist/components/style/video-page-background.js"
+  },
+  {
+    "type": "component",
     "name": "touchComboLike",
     "displayName": "三连触摸支持",
     "description": "为视频页面中的三连操作 (长按点赞) 启用触摸支持.",
@@ -609,6 +649,14 @@
   },
   {
     "type": "component",
+    "name": "commentReplyUpLikeShow",
+    "displayName": "楼中楼回复“UP主觉得很赞”显示",
+    "description": "by [@Light_Quanta](https://github.com/LightQuanta)\n\n在楼中楼回复显示“UP主觉得很赞”标识",
+    "fullRelativePath": "../../registry/dist/components/utils/comment-reply-up-like-show.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comment-reply-up-like-show.js"
+  },
+  {
+    "type": "component",
     "name": "commentContentReplace",
     "displayName": "评论内容替换",
     "description": "替换评论中的内容.\n\n可以添加多个替换配置, 每项配置可将一个关键词替换为其他文本. 若替换的目标是一个链接, 则视作替换为表情, 留空则会移除命中的关键词.",
@@ -630,6 +678,14 @@
     "description": "禁用评论区的搜索词链接.",
     "fullRelativePath": "../../registry/dist/components/utils/comments/disable-search-link.js",
     "fullAbsolutePath": "registry/dist/components/utils/comments/disable-search-link.js"
+  },
+  {
+    "type": "component",
+    "name": "commentImageExport",
+    "displayName": "评论图片导出",
+    "description": "by [@kaixinol](https://github.com/kaixinol)\n\n开启后, 可批量导出评论区中带图片的评论.\n\n在评论区标签栏点击「解析评论区图片」打开下载面板, 或在每条评论的菜单中选择「导出图片」单独下载.",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/image-export.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/image-export.js"
   },
   {
     "type": "component",
@@ -825,6 +881,14 @@
   },
   {
     "type": "component",
+    "name": "danmakuMerger",
+    "displayName": "弹幕合并器",
+    "description": "by [@XianYuDaXian](https://github.com/XianYuDaXian)\n\n将其他 B 站视频的弹幕合并到当前播放页的原生播放器画面与右侧弹幕列表，不自绘弹幕层。\n\n- 支持关键词搜索或 BV 号获取弹幕，按分 P 勾选合并\n- 列表项带 `【BV号】` 前缀，画面层保持原文\n- 分 P 有效顺延：按正片有效时长自动计算多 P 弹幕延迟\n- 注入时保持当前播放进度\n\n使用前请先播放 5～10 秒，确保弹幕引擎就绪后再合并。",
+    "fullRelativePath": "../../registry/dist/components/video/danmaku/merger.js",
+    "fullAbsolutePath": "registry/dist/components/video/danmaku/merger.js"
+  },
+  {
+    "type": "component",
     "name": "unescapeDanmaku",
     "displayName": "弹幕转义",
     "description": "将弹幕中的 `\\n` 或 `/n` 替换为真实的换行, 注意这可能导致原先不重叠的弹幕发生重叠.",
@@ -985,6 +1049,14 @@
   },
   {
     "type": "component",
+    "name": "rbvp",
+    "displayName": "RBVP 视频策略",
+    "description": "by [@JLoeve (with Claude Code & Codex)](https://github.com/LonelySteve)\n\n> 基于规则的视频策略引擎，根据当前视频的 UP 主、分区、标签、标题、时长等信息自动匹配预设规则并执行对应动作，可实现倍速自动切换、合集记忆行为控制等场景.\n\n#### 🔧 **选项**\n\n- `显示命中提示`：打开此选项后，每次规则匹配成功时会在播放器弹出提示，显示命中的规则行号和动作信息.\n\n#### ⚙️ **RBVP 设置面板**\n\n点击组件选项下方的「RBVP 设置」按钮可打开设置面板，包含三个页签：\n\n- **规则**：管理主规则，支持可视化视图（逐条编辑、排序、上下移动）、文本视图（批量编辑、导入导出）、上下文视图（查看当前视频的匹配上下文）和调试视图（查看最近一次规则匹配的追踪路径）.\n- **规则集**：管理可复用的本地规则集，支持按名称、匹配类型和条目进行编辑，也支持导入导出.\n- **命名空间**：查看已注册的命名空间（如「记忆倍速」「记忆合集」），可在此直接切换各命名空间是否交由 RBVP 接管，并查看其主名称、别名与描述.\n\n#### 📝 **规则语法**\n\n每条规则占一行，格式为 `匹配条件, 参数, 动作`，以 `#` 开头的行为注释行.\n\n**匹配器类型**：\n\n- `UP, UID`：匹配 UP 主的 UID\n- `TAG, 关键词`：匹配视频标签，支持模糊匹配、精确匹配（`\"关键词\"`）和正则（`/pattern/`）\n- `TAG-MUSIC, music_id`：匹配音乐标签的 music_id\n- `PARTITION, 分区ID`：匹配视频分区 ID\n- `TITLE, 关键词`：匹配视频标题，支持与 TAG 相同的匹配模式\n- `PART, 关键词`：匹配分 P 标题\n- `BVID, bvid` / `AID, aid`：匹配特定视频，支持 `#页码` 指定分 P\n- `SECTION, ID` / `SECTION-ROOT, ID`：匹配合集的 TAB 或根 ID\n- `SECTION-NAME, 关键词` / `SECTION-ROOT-NAME, 关键词`：匹配合集 TAB 或根名称\n- `TIME, 表达式`：匹配视频时长，支持比较（`>=3600`、`<600`）和范围（`300-1800`），单位为秒\n- `RULE-SET, 规则集名称`：引用本地规则集\n- `FINAL`：兜底规则，始终匹配\n\n**逻辑组合**：`AND(条件1, 条件2)`、`OR(条件1, 条件2)`、`NOT(条件)` 可嵌套使用.\n\n**动作格式**：`命名空间:动作值`，如 `rememberVideoSpeed:2`、`rememberVideoCollection:OFF`。动作值含义由各命名空间定义，可前往「命名空间」页签查看.\n\n#### 🔗 **联动组件**\n\nRBVP 通过命名空间机制与兼容组件联动，首批支持「记忆倍速」和「记忆合集」。具体动作值说明请参见对应组件的描述.\n\n#### 🌈 **温馨提示**\n\n规则按从上到下的顺序匹配，命中第一条即停止，因此请将更具体的规则放在上方，通用规则（如 `FINAL`）放在最末尾.\n\n上下文视图和调试视图仅在最近一次匹配后才有数据显示，刚安装时为空.",
+    "fullRelativePath": "../../registry/dist/components/video/player/rbvp.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/rbvp.js"
+  },
+  {
+    "type": "component",
     "name": "rememberVideoSpeed",
     "displayName": "记忆倍速",
     "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n#### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n#### 🌈 **温馨提示**\n\n「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.\n\n请根据自身需要：\n\n- 前往「组件」页面安装[「扩展倍速」](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/extend-speed.js)组件\n- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/player/speed.js)插件.\n\n_如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件._",
@@ -1070,6 +1142,14 @@
     "description": "进入 SEO 视频页面时 (`https://www.bilibili.com/s/video/`) 自动跳转到原视频页面.",
     "fullRelativePath": "../../registry/dist/components/video/seo-redirect.js",
     "fullAbsolutePath": "registry/dist/components/video/seo-redirect.js"
+  },
+  {
+    "type": "component",
+    "name": "videoSnapshot",
+    "displayName": "视频快照",
+    "description": "by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://github.com/LainIO24)\n\n查看视频多个时间点的快照预览图。\n\n### 选项\n\n**注意：所有选项修改均需要刷新后生效。**",
+    "fullRelativePath": "../../registry/dist/components/video/snapshot.js",
+    "fullAbsolutePath": "registry/dist/components/video/snapshot.js"
   },
   {
     "type": "component",

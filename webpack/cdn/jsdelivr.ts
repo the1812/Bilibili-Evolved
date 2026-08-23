@@ -17,9 +17,9 @@ export const jsDelivr: CdnConfig = {
       url: `https://${host}/npm/protobufjs@6.10.1/dist/light/protobuf.min.js`,
       sha256: '8978daf871b02d683ecaee371861702a6f31d0a4c52925b7db2bb1655a8bc7d1',
     },
-    jszip: {
-      url: `https://${host}/npm/jszip@3.7.1/dist/jszip.min.js`,
-      sha256: 'c9e4a52bac18aee4f3f90d05fbca603f5b0f5bf1ce8c45e60bb4ed3a2cb2ed86',
+    fflate: {
+      url: `https://${host}/npm/fflate@0.8.3/umd/index.js`,
+      sha256: '462ef8041fc970e3615a20a9dd2b2e3047a073b2da729ef4f02b634bba8b7b83',
     },
     sortable: {
       url: `https://${host}/npm/sortablejs@1.14.0/Sortable.min.js`,

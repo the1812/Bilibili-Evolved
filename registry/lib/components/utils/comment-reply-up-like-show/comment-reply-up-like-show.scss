@@ -1,0 +1,27 @@
+:host-context(body.dark) #footer #tags .tag {
+  --bili-comment-tag-color: var(--bili-comment-tag-color-dark);
+  --bili-comment-tag-bg: var(--bili-comment-tag-bg-dark);
+}
+
+#footer #tags {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+
+  .tag {
+    --bili-comment-tag-color-light: #757575;
+    --bili-comment-tag-color-dark: #939393;
+    --bili-comment-tag-bg-light: #f4f4f4;
+    --bili-comment-tag-bg-dark: #1e1e1e;
+
+    --bili-comment-tag-color: var(--bili-comment-tag-color-light);
+    --bili-comment-tag-bg: var(--bili-comment-tag-bg-light);
+    color: var(--bili-comment-tag-color, --brand_pink);
+    background-color: var(--bili-comment-tag-bg, ----brand_pink_thin);
+    padding: 6px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-size: 12px;
+    line-height: 1;
+  }
+}

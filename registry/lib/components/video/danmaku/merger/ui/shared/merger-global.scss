@@ -1,0 +1,184 @@
+/* 弹窗内共用控件样式（限定在 .dm-merger-modal 内，避免污染 B 站页面） */
+
+.dm-merger-modal {
+  .dm-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    margin-right: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+    box-sizing: border-box;
+  }
+
+  .dm-checkbox.checked {
+    background: #00aeec;
+    border-color: #00aeec;
+  }
+
+  .dm-checkbox.checked::after {
+    content: '';
+    display: block;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(0, -1px);
+  }
+
+  .dm-page-item {
+    display: flex;
+    align-items: center;
+    padding: 6px 10px;
+    font-size: 13px;
+    color: var(--dm-text2);
+    cursor: pointer;
+    border-radius: 4px;
+  }
+
+  .dm-page-item:hover {
+    background: var(--dm-bg2);
+    color: #00aeec;
+  }
+
+  .dm-part-mode-panel {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--dm-line-regular);
+    border-radius: 6px;
+    background: var(--dm-bg2);
+  }
+
+  .dm-part-mode-toggle-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .dm-part-mode-fields {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--dm-line-regular);
+  }
+
+  .dm-part-duration-input,
+  .dm-offset-input {
+    width: 64px;
+    padding: 2px 6px;
+    border: 1px solid var(--dm-line-regular);
+    border-radius: 4px;
+    font-size: 12px;
+    text-align: center;
+    background: var(--dm-bg1);
+    color: var(--dm-text1);
+  }
+
+  .dm-part-calc-btn {
+    padding: 4px 12px;
+    background: #00aeec;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .dm-part-calc-btn:hover {
+    opacity: 0.85;
+  }
+
+  .dm-merger-input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  #dm-search-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid var(--dm-line-regular);
+    background: var(--dm-bg2);
+    color: var(--dm-text1);
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s;
+    box-sizing: border-box;
+  }
+
+  #dm-search-input:focus {
+    border-color: #00aeec;
+    background: var(--dm-bg1);
+  }
+
+  #dm-search-btn {
+    padding: 8px 20px;
+    background: #00aeec;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+  }
+
+  #dm-search-btn:hover {
+    background: #00a1d6;
+  }
+
+  #dm-search-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  select,
+  input[type='text'],
+  input[type='number'] {
+    color: var(--dm-text1);
+    background: var(--dm-bg2);
+    border-color: var(--dm-line-regular);
+  }
+
+  .dm-confirm-content {
+    font-size: 14px;
+    color: var(--dm-text2);
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+
+  .dm-confirm-btns {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 12px 20px 20px;
+    border-top: 1px solid var(--dm-line-regular);
+  }
+
+  .dm-confirm-btn {
+    padding: 8px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+    transition: opacity 0.2s;
+  }
+
+  .dm-confirm-btn.primary {
+    background: #00aeec;
+    color: #fff;
+  }
+
+  .dm-confirm-btn.cancel {
+    background: var(--dm-bg2);
+    color: var(--dm-text2);
+  }
+
+  .dm-confirm-btn:hover {
+    opacity: 0.85;
+  }
+}
