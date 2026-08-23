@@ -1,4 +1,5 @@
 import { registerAndGetData } from '@/plugins/data'
+import { getExportSettingsFilename } from '../utils'
 
 export interface AboutPageAction {
   icon: string
@@ -9,6 +10,7 @@ export interface AboutPageAction {
   actionName?: string
   run: (event?: MouseEvent) => void | Promise<void>
 }
+
 export const builtInActions: AboutPageAction[] = [
   {
     icon: 'mdi-inbox-arrow-up-outline',
@@ -18,7 +20,8 @@ export const builtInActions: AboutPageAction[] = [
     run: async () => {
       const { settings } = await import('@/core/settings')
       const { DownloadPackage } = await import('@/core/download')
-      DownloadPackage.single('settings.json', JSON.stringify(settings, undefined, 2))
+      const fileName = await getExportSettingsFilename()
+      DownloadPackage.single(`${fileName}.json`, JSON.stringify(settings, undefined, 2))
     },
   },
   {

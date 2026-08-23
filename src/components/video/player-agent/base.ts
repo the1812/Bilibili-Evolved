@@ -81,7 +81,7 @@ export abstract class PlayerAgent
     raiseEvent(checkbox, 'change')
     return checkbox.checked
   }
-  toggleSubtitle(): PlayerAgentToggleSubtitleResult {
+  toggleSubtitle(preferredLanguage?: string): PlayerAgentToggleSubtitleResult {
     const closeSwitch = dq('.bpx-player-ctrl-subtitle-close-switch') as HTMLDivElement | null
 
     const isNoSubtitleConfigured = !closeSwitch
@@ -111,9 +111,10 @@ export abstract class PlayerAgent
       }
     }
 
-    const subtitleLanguage =
+    const storedSubtitleLanguage =
       this.getPlayerConfig<null, string>('subtitle.preferred_language', null) ??
       this.getPlayerConfig<null, string>('subtitle.lan', null)
+    const subtitleLanguage = preferredLanguage?.trim() || storedSubtitleLanguage
     if (subtitleLanguage === null) {
       const firstOption = subtitleOptions.at(0)
       firstOption?.click()
@@ -123,16 +124,15 @@ export abstract class PlayerAgent
       }
     }
 
-    // 优先选择用过的选项，其次选择与用过的选项相近的选项，最后考虑 AI 生成选项，都不满足则尝试选择可选项第一个
+    const normalizedLanguage = subtitleLanguage.replace(/^ai-/, '')
+    const baseLanguage = normalizedLanguage.split('-')[0]
     const matchers = [
-      () => subtitleOptions.find(it => it.dataset.lan === subtitleLanguage),
+      () => subtitleOptions.find(it => it.dataset.lan === normalizedLanguage),
       () =>
         subtitleOptions.find(
-          it =>
-            !it.dataset.lan?.startsWith('ai-') &&
-            it.dataset.lan?.includes(subtitleLanguage.split('-')[0]),
+          it => !it.dataset.lan?.startsWith('ai-') && it.dataset.lan?.includes(baseLanguage),
         ),
-      () => subtitleOptions.find(it => it.dataset.lan === `ai-${subtitleLanguage.split('-')[0]}`),
+      () => subtitleOptions.find(it => it.dataset.lan === `ai-${baseLanguage}`),
       () => subtitleOptions.at(0),
     ]
 

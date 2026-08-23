@@ -3,11 +3,12 @@ import { ComponentEntry } from '@/components/types'
 import { getBlob, getJsonWithCredentials } from '@/core/ajax'
 import { DownloadPackage } from '@/core/download'
 import { Toast } from '@/core/toast'
-import { matchUrlPattern, retrieveImageUrl } from '@/core/utils'
+import { dq, dqa, matchUrlPattern, retrieveImageUrl } from '@/core/utils'
 import { formatTitle, getTitleVariablesFromDate } from '@/core/utils/title'
 import { feedsUrls } from '@/core/utils/urls'
 import { Options } from '.'
 import { useScopedConsole } from '@/core/utils/log'
+import { extractImagesFromArticle } from './article'
 
 interface DynamicDetailResponse {
   code: number
@@ -89,24 +90,30 @@ const extractImagesFromMajor = (
     return []
   }
   if (major.draw?.items) {
-    return major.draw.items.map(p => p.src.replace(/^http:/, 'https:'))
+    return major.draw.items.flatMap(p => {
+      const r = retrieveImageUrl(p.src)
+      return r ? [r.url] : []
+    })
   }
   if (major.opus?.pics) {
-    return major.opus.pics.map(p => p.url.replace(/^http:/, 'https:'))
+    return major.opus.pics.flatMap(p => {
+      const r = retrieveImageUrl(p.url)
+      return r ? [r.url] : []
+    })
   }
   return []
 }
 
 const extractImagesFromDom = (): string[] => {
-  const contentArea = document.querySelector('.opus-module-content')
+  const contentArea = dq('.opus-module-content')
   if (!contentArea) {
     return []
   }
-  const images = contentArea.querySelectorAll('img')
+  const images = dqa(contentArea, 'img')
   const urls = new Set<string>()
   images.forEach((img: HTMLImageElement) => {
     const src = img.src || (img.dataset as any)?.src || ''
-    if (src.includes('/new_dyn/') && !src.includes('/face/')) {
+    if (src.includes('/article/') && !src.includes('/face/')) {
       const imageInfo = retrieveImageUrl(src)
       if (imageInfo) {
         urls.add(imageInfo.url)
@@ -116,9 +123,9 @@ const extractImagesFromDom = (): string[] => {
   return [...urls]
 }
 
-const extractImagesFromItem = (
+const extractImagesFromItem = async (
   item: DynamicDetailResponse['data']['item'],
-): { urls: string[]; authorModule: any; titleModule: any; origItem?: any } => {
+): Promise<{ urls: string[]; authorModule: any; titleModule: any; origItem?: any }> => {
   const { modules } = item
   const authorModule = modules.module_author ?? {}
   const titleModule = modules.module_title ?? {}
@@ -144,6 +151,14 @@ const extractImagesFromItem = (
     const domUrls = extractImagesFromDom()
     if (domUrls.length > 0) {
       return { urls: domUrls, authorModule, titleModule }
+    }
+
+    const articleId = modules.module_dynamic?.major?.article?.id
+    if (articleId) {
+      const articleUrls = await extractImagesFromArticle(articleId)
+      if (articleUrls.length > 0) {
+        return { urls: articleUrls, authorModule, titleModule }
+      }
     }
   }
 
@@ -177,7 +192,7 @@ export const setupFeedImageExporter: ComponentEntry<Options> = async ({
           authorModule,
           titleModule,
           origItem,
-        } = extractImagesFromItem(detail.data.item)
+        } = await extractImagesFromItem(detail.data.item)
 
         if (imageUrls.length === 0) {
           toast.close()

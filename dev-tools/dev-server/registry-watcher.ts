@@ -17,11 +17,14 @@ export interface RegistryFeature {
   path: string
 }
 
+type RegistryOutputFileSystem = ReturnType<typeof createFsFromVolume>
+
 export const featureSessions: {
   feature: RegistryFeature
   path: string
   watcher: Watching
   ready: Promise<void>
+  outputFileSystem: RegistryOutputFileSystem
 }[] = []
 
 export const getFeatureSessionPaths = () => featureSessions.map(it => it.path)
@@ -47,22 +50,24 @@ const getBuildConfig = (feature: RegistryFeature, mode: Configuration['mode'] = 
     mode,
   }) as Configuration
 
-const registryVolume = new Volume()
-const registryOutputFileSystem = createFsFromVolume(registryVolume)
-
 const createFeatureCompiler = (
   feature: RegistryFeature,
   mode: Configuration['mode'] = 'development',
 ) => {
   const config = getBuildConfig(feature, mode)
   const compiler = webpack(config)
-  compiler.outputFileSystem = registryOutputFileSystem as any
-  return compiler
+  const outputFileSystem = createFsFromVolume(new Volume())
+  compiler.outputFileSystem = outputFileSystem as any
+  return { compiler, outputFileSystem }
 }
 
 export const readRegistryOutput = (requestPath: string) => {
+  const session = featureSessions.find(it => it.path === requestPath)
+  if (!session) {
+    return null
+  }
   try {
-    return registryOutputFileSystem.readFileSync(nodePath.resolve(`.${requestPath}`)) as Buffer
+    return session.outputFileSystem.readFileSync(nodePath.resolve(`.${requestPath}`)) as Buffer
   } catch {
     return null
   }
@@ -110,7 +115,7 @@ export const startFeatureSessionWatcher = (
     }
     console.log(`功能编译中... ${outputPath}`)
     const { maxWatchers } = devServerConfig
-    const watcher = createFeatureCompiler(feature, mode)
+    const { compiler: watcher, outputFileSystem } = createFeatureCompiler(feature, mode)
     let readyResolve: () => void
     const ready = new Promise<void>(resolveReady => {
       readyResolve = resolveReady
@@ -157,7 +162,13 @@ export const startFeatureSessionWatcher = (
         notifyFeatureSessionsChanged()
       })
     }
-    featureSessions.push({ feature, path: outputPath, watcher: watcherInstance, ready })
+    featureSessions.push({
+      feature,
+      path: outputPath,
+      watcher: watcherInstance,
+      ready,
+      outputFileSystem,
+    })
     notifyFeatureSessionsChanged()
   })
 
@@ -189,7 +200,7 @@ export const buildFeature = (
 ) =>
   new Promise<Stats>((resolve, reject) => {
     const feature = getRegistryFeature(kind, id)
-    const compiler = createFeatureCompiler(feature, mode)
+    const { compiler } = createFeatureCompiler(feature, mode)
     console.log(`功能单次编译中... ${feature.path}`)
     compiler.run((error, result) => {
       compiler.close(closeError => {

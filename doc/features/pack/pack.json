@@ -215,7 +215,7 @@
         "type": "component",
         "name": "keymap",
         "displayName": "快捷键扩展",
-        "description": "为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.",
+        "description": "为脚本的功能和 b 站的功能启用快捷键支持，可使用键盘按键、鼠标中键和侧键，快捷键列表可在`快捷键设置`中查看和配置。\n\n`字幕语言偏好`: 可以填写一个标准语言代码 (如 `zh`、`en`、`ja`)，使用快捷键开启字幕时会优先匹配该语言，并优先选择人工字幕；留空则跟随播放器最近使用的语言。如果当前视频没有匹配的语言时会回退到第一个字幕。",
         "fullRelativePath": "../../registry/dist/components/utils/keymap.js",
         "fullAbsolutePath": "registry/dist/components/utils/keymap.js"
       },
@@ -287,7 +287,7 @@
         "type": "component",
         "name": "disableFeedsDetails",
         "displayName": "禁止跳转动态详情",
-        "description": "禁止动态点击后跳转详情页, 方便选择其中的文字.",
+        "description": "禁止点击动态正文后跳转详情页, 方便选择其中的文字.\n仅正文区域生效, 点击标题/时间缀等其他区域或按住 <kbd>Ctrl + 点击</kbd> 仍会正常跳转.\n转发动态会在正文末尾追加一个\"详情\"入口用于跳转.",
         "fullRelativePath": "../../registry/dist/components/feeds/disable-details.js",
         "fullAbsolutePath": "registry/dist/components/feeds/disable-details.js"
       },

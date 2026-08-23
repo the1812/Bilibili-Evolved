@@ -1,6 +1,6 @@
 import { forEachFeedsCard } from '@/components/feeds/api'
 import { ComponentEntry } from '@/components/types'
-import { childList, urlChange } from '@/core/observer'
+import { childListSubtree, urlChange } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { getVue2Data, playerReady } from '@/core/utils'
 import {
@@ -13,7 +13,10 @@ import {
 import ViewButton from './ViewButton.vue'
 import { getConsole, getOptions } from './handler'
 import { ButtonPosition, isButtonEnabled, parseButtonPosition } from './options'
-import { RecommendList } from './types'
+
+function hasSnapshotButton(card: Element) {
+  return card.querySelector('.view-snapshot-button') !== null
+}
 
 function createButton(vid: number | string, cid: number, title: string, position: string) {
   const vm = new (Vue.extend(ViewButton))({
@@ -34,88 +37,131 @@ function parseBvidFromUrl(url: string) {
 
 // ========================================================================== //
 
-const videoPageCardSelector = '.video-page-card-small'
-const videoPageCardPicBoxSelector = '.card-box>.pic-box'
+const recommendListContainerSelector = '.recommend-list-v1, .recommend-list-container'
+const recommendCardSelector = '.video-page-card-small, .recommend-video-card.video-card'
+const recommendCardPicBoxSelector = '.card-box>.pic-box'
 
-function getRecommendListVue() {
-  let vm: RecommendList = getVue2Data(dq('.recommend-list-v1'))
-  if (!vm.recListItems) {
-    vm = vm.$children[0] as any as RecommendList
-    if (!vm.recListItems) {
-      getConsole().warn('获取视频推荐列表失败')
-      vm = undefined
+let recommendListObserver: MutationObserver | null = null
+
+function clearRecommendListObserver() {
+  recommendListObserver?.disconnect()
+  recommendListObserver = null
+}
+
+function addButtonOnRecommendCards(container: Element, position: string) {
+  container.querySelectorAll(recommendCardSelector).forEach(card => {
+    if (hasSnapshotButton(card)) {
+      return
     }
-  }
-  return vm
+    const data = (
+      getVue2Data(card) as
+        | {
+            $props?: {
+              item?: { aid: number; cid: number; title: string }
+              info?: { aid: number; cid: number; title: string }
+            }
+          }
+        | undefined
+    )?.$props
+    const item = data?.item ?? data?.info
+    if (!item) {
+      return
+    }
+    const button = createButton(item.aid, item.cid, item.title, position)
+    card.querySelector(recommendCardPicBoxSelector)?.appendChild(button)
+  })
 }
 
 async function addButtonOnRecommendList() {
-  const recommendList = getRecommendListVue()
-  if (!recommendList || recommendList.bilibiliEvolved_viewSnapshot_watched) {
+  const position = parseButtonPosition(getOptions().recommendListButton)
+  const container = await select(recommendListContainerSelector)
+  if (!container) {
+    getConsole().warn('未找到推荐列表容器')
     return
   }
-  recommendList.bilibiliEvolved_viewSnapshot_watched = true
-  const position = parseButtonPosition(getOptions().recommendListButton)
-  recommendList.$watch(
-    'recListItems',
-    () => {
-      requestAnimationFrame(() => {
-        recommendList.$children.forEach(async videoCard => {
-          if (videoCard.bilibiliEvolved_viewSnapshot_btn) {
-            return
-          }
-          if (!videoCard.$el.matches(videoPageCardSelector)) {
-            return
-          }
-          const { aid, cid, title } = videoCard.$props.item
-          const button = createButton(aid, cid, title, position)
-          videoCard.$el.querySelector(videoPageCardPicBoxSelector)?.appendChild(button)
-          videoCard.bilibiliEvolved_viewSnapshot_btn = true
-        })
-      })
-    },
-    { immediate: true },
-  )
+  const addCards = () => addButtonOnRecommendCards(container, position)
+  addCards()
+  clearRecommendListObserver()
+  const [observer] = childListSubtree(container, () => {
+    requestAnimationFrame(addCards)
+  })
+  recommendListObserver = observer
 }
 
 // ========================================================================== //
 
-const spaceVideoListMainSelector = '.fav-list-main>.items,.space-upload .video-list'
+const spaceVideoListMainSelector =
+  '.fav-list-main>.items, .space-upload .video-list, .space-home .content, .space-lists .lists-content, .space-list-details .list-content'
 const spaceVideoCardSelector =
-  '.bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"]))'
-const spaceVideoCardAnchorSelector = '.bili-video-card__title>a'
+  '.top-video, .upload-video-card.list-mode, .bili-video-card:not(:has(.bili-cover-card__thumbnail>img[alt="已失效视频"])):not(:has(.bili-cover-card__tags .pugv-tag))'
+const spaceVideoCardAnchorSelector =
+  '.top-video__title, .info__top>.title, .bili-video-card__title>a'
 const spaceVideoCardCoverSelector = '.bili-video-card__cover'
 
-function getVideoCards(mutation: MutationRecord[]) {
-  if (mutation.length > 0) {
-    return mutation
-      .flatMap(r => [...r.addedNodes])
-      .filter(
-        x => x instanceof HTMLElement && x.querySelector(spaceVideoCardSelector),
-      ) as HTMLElement[]
-  }
-  return dqa(spaceVideoCardSelector)
+let spaceListObserver: MutationObserver | null = null
+let currentSpaceListElement: Element | null = null
+let spaceVideoListGeneration = 0
+
+function clearSpaceListObserver() {
+  spaceListObserver?.disconnect()
+  spaceListObserver = null
+  currentSpaceListElement = null
 }
 
-async function addButtonOnSpaceVideoList(position: ButtonPosition) {
-  const list = await select(spaceVideoListMainSelector)
+function bindSpaceListObserver(list: Element, callback: () => void) {
+  clearSpaceListObserver()
+  currentSpaceListElement = list
+  spaceListObserver = new MutationObserver(callback)
+  spaceListObserver.observe(list, { childList: true, subtree: true })
+}
+
+function addButtonOnSpaceCard(card: Element, position: string) {
+  if (hasSnapshotButton(card)) {
+    return
+  }
+  const titleAnchor = card.querySelector(spaceVideoCardAnchorSelector) as HTMLAnchorElement
+  const button = createButton(
+    parseBvidFromUrl(titleAnchor.href),
+    0,
+    titleAnchor.innerText,
+    position,
+  )
+  card.querySelector(spaceVideoCardCoverSelector)?.appendChild(button)
+}
+
+function addButtonOnSpaceVideoList(position: ButtonPosition) {
   const positionStr = parseButtonPosition(position)
-  childList(list, mutation => {
-    const videoCards = getVideoCards(mutation)
+  const generation = ++spaceVideoListGeneration
+  let processing = false
+  const processCards = () => {
+    if (processing) {
+      return
+    }
+    processing = true
     requestAnimationFrame(() => {
-      videoCards.forEach(async videoCard => {
-        const titleAnchor = videoCard.querySelector(
-          spaceVideoCardAnchorSelector,
-        ) as HTMLAnchorElement
-        const button = createButton(
-          parseBvidFromUrl(titleAnchor.href),
-          0,
-          titleAnchor.innerText,
-          positionStr,
-        )
-        videoCard.querySelector(spaceVideoCardCoverSelector)?.appendChild(button)
-      })
+      try {
+        const list = currentSpaceListElement ?? document.querySelector(spaceVideoListMainSelector)
+        if (!list) {
+          return
+        }
+        if (list !== currentSpaceListElement) {
+          bindSpaceListObserver(list, processCards)
+        }
+        list
+          .querySelectorAll(spaceVideoCardSelector)
+          .forEach(card => addButtonOnSpaceCard(card, positionStr))
+      } finally {
+        processing = false
+      }
     })
+  }
+  clearSpaceListObserver()
+  select(spaceVideoListMainSelector).then(list => {
+    if (generation !== spaceVideoListGeneration || !list) {
+      return
+    }
+    bindSpaceListObserver(list, processCards)
+    processCards()
   })
 }
 
@@ -130,15 +176,16 @@ function addButtonOnFeedCards() {
   forEachFeedsCard({
     added: card => {
       const videoCard: HTMLAnchorElement = card.element.querySelector(feedVideoCardSelector)
-      if (videoCard) {
-        const button = createButton(
-          parseBvidFromUrl(videoCard.href),
-          0,
-          videoCard.querySelector(feedVideoCardTitleSelector).innerHTML,
-          position,
-        )
-        videoCard.querySelector(feedVideoCardCoverSelector)?.appendChild(button)
+      if (!videoCard || hasSnapshotButton(videoCard)) {
+        return
       }
+      const button = createButton(
+        parseBvidFromUrl(videoCard.href),
+        0,
+        videoCard.querySelector(feedVideoCardTitleSelector).textContent,
+        position,
+      )
+      videoCard.querySelector(feedVideoCardCoverSelector)?.appendChild(button)
     },
   })
 }
@@ -148,6 +195,8 @@ function addButtonOnFeedCards() {
 export const entry: ComponentEntry = async () => {
   const options = getOptions()
   urlChange(() => {
+    clearRecommendListObserver()
+    clearSpaceListObserver()
     if (matchCurrentPage(videoUrls) && isButtonEnabled(options.recommendListButton)) {
       playerReady().then(addButtonOnRecommendList)
     } else if (
@@ -156,7 +205,11 @@ export const entry: ComponentEntry = async () => {
     ) {
       addButtonOnSpaceVideoList(options.favoriteListButton)
     } else if (
-      matchCurrentPage(spaceUploadVideosUrls) &&
+      matchCurrentPage([
+        ...spaceUploadVideosUrls,
+        /^https:\/\/space\.bilibili\.com\/\d+\/?$/,
+        /^https:\/\/space\.bilibili\.com\/[\d]+\/list/,
+      ]) &&
       isButtonEnabled(options.uploadListButton)
     ) {
       addButtonOnSpaceVideoList(options.uploadListButton)

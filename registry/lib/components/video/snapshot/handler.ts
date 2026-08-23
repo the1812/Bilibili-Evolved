@@ -37,9 +37,9 @@ async function getVideoInfoText(vid: number | string, cid?: number) {
   lines.push(`${info.bvid}　AV${info.aid}　CID ${page.cid}`, `稿件标题：${info.title}`)
   if (info.pages.length > 1) {
     lines.push(
-      `分页：${page.pageNumber} / ${info.pages.length}　投稿时间：${formatDateTime(
-        new Date(page.ctime * 1000),
-      )}　标题：${page.title}`,
+      `分页：${page.pageNumber} / ${info.pages.length}　${
+        page.ctime > 0 ? `投稿时间：${formatDateTime(new Date(page.ctime * 1000))}　` : ''
+      }标题：${page.title}`,
     )
   }
   lines.push(

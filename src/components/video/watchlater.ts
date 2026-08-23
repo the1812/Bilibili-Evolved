@@ -146,7 +146,9 @@ export const toggleWatchlater = async (aid: string | number, add?: boolean | und
     return
   }
   if (add) {
-    watchlaterList.push(id)
+    if (!watchlaterList.includes(id)) {
+      watchlaterList.push(id)
+    }
   } else {
     deleteValue(watchlaterList, it => it === id)
   }
