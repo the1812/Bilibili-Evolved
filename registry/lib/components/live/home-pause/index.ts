@@ -15,10 +15,6 @@ export const component = defineComponentMetadata({
     link: 'https://github.com/YiJay99',
   },
   entry: async ({ metadata }) => {
-    name: 'YeJay99',
-    link: 'https://github.com/YeJay99',
-  },
-  entry: async () => {
     const { select } = await import('@/core/spin-query')
     select('video').then((video: HTMLVideoElement) => {
       video.pause()
