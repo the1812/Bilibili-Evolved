@@ -7,9 +7,6 @@ export const component = defineComponentMetadata({
   name: 'liveHomePause',
   displayName: '直播首页暂停',
   tags: [componentsTags.live],
-  description: {
-    'zh-CN': '暂停直播首页的推荐直播间.',
-  },
   author: {
     name: 'YiJay99',
     link: 'https://github.com/YiJay99',
