@@ -24,7 +24,7 @@ export const component = defineComponentMetadata({
       `${metadata.name}.hide`,
       (value: boolean) => {
         if (value) {
-          addStyle('.player-area-ctnr,#player-header { display: none !important }', styleID)
+          addStyle('.player-area-ctnr,#player-header,#blive-home .flex.items-stretch.pr-20px  { display: none !important }', styleID)
         } else {
           removeStyle(styleID)
         }
