@@ -53,7 +53,16 @@
   }
 }
 
-.be-related-video-card:hover .be-related-video-open-button,
+:is(
+  .video-page-card,
+  .video-page-card-small,
+  .recommend-video-card,
+  .remd-video-card,
+  .video-card,
+  [class*='RecommendItem_wrap'],
+  [class*='recommend_item'],
+  [class*='recommend-item']
+):hover .be-related-video-open-button,
 .be-related-video-title-container:hover .be-related-video-open-button,
 .be-related-video-open-button:focus-visible,
 .be-related-video-open-always .be-related-video-open-button {

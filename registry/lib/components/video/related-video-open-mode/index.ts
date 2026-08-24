@@ -86,6 +86,8 @@ let componentSettings: ComponentSettings<Options> | null = null
 let observer: MutationObserver | null = null
 let titleResizeObserver: ResizeObserver | null = null
 let scanRequest: number | null = null
+let initialScanTimer: number | null = null
+let initialScanPending = false
 let active = false
 
 const isPlayableAnchor = (anchor: HTMLAnchorElement) => {
@@ -260,7 +262,33 @@ const scanRecommendLists = () => {
 }
 
 const scheduleScan = () => {
-  if (!active || scanRequest !== null) {
+  if (!active) {
+    return
+  }
+
+  // B 站初次渲染期间会连续修改推荐列表的 DOM。
+  // 此时直接向 Vue 管理的节点插入按钮可能造成真实 DOM 与虚拟节点失配。
+  // 初次扫描改为“等待 DOM 安静下来一段时间”后再执行；后续动态更新仍保持一帧合并。
+  if (initialScanPending) {
+    if (initialScanTimer !== null) {
+      window.clearTimeout(initialScanTimer)
+    }
+    initialScanTimer = window.setTimeout(() => {
+      initialScanTimer = null
+      if (!active) {
+        return
+      }
+      initialScanPending = false
+      if (scanRequest !== null) {
+        cancelAnimationFrame(scanRequest)
+        scanRequest = null
+      }
+      scanRequest = requestAnimationFrame(scanRecommendLists)
+    }, 500)
+    return
+  }
+
+  if (scanRequest !== null) {
     return
   }
   scanRequest = requestAnimationFrame(scanRecommendLists)
@@ -289,6 +317,7 @@ const activate = () => {
     return
   }
   active = true
+  initialScanPending = true
   document.addEventListener('click', clickHandler, true)
   window.addEventListener('resize', scheduleScan)
   titleResizeObserver = new ResizeObserver(entries => {
@@ -317,6 +346,11 @@ const deactivate = () => {
     cancelAnimationFrame(scanRequest)
     scanRequest = null
   }
+  if (initialScanTimer !== null) {
+    window.clearTimeout(initialScanTimer)
+    initialScanTimer = null
+  }
+  initialScanPending = false
   document.removeEventListener('click', clickHandler, true)
   window.removeEventListener('resize', scheduleScan)
   document.documentElement.classList.remove(alwaysShowClass)
