@@ -87,7 +87,8 @@ export default Vue.extend({
     },
     keyMapper: {
       type: Function,
-      default: (item: any) => item.name,
+      default: (item: any) =>
+        item !== null && typeof item === 'object' && 'name' in item ? item.name : item,
     },
     round: {
       type: Boolean,
@@ -118,7 +119,14 @@ export default Vue.extend({
   },
   methods: {
     selectItem(item: any) {
-      if (item !== this.value) {
+      let isChanged = false
+      if (item && this.value && this.keyMapper) {
+        isChanged = this.keyMapper(item) !== this.keyMapper(this.value)
+      } else {
+        isChanged = item !== this.value
+      }
+
+      if (isChanged) {
         this.$emit('change', item)
       }
       this.popupOpen = false

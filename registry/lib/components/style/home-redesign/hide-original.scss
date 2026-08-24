@@ -23,6 +23,8 @@
     @include layout-shift();
   }
   margin: 0 !important;
+  max-width: unset !important;
+  align-self: stretch;
 }
 #i_cecream,
 .bili-feed4 {

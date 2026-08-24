@@ -25,7 +25,6 @@ const author = [
 export const component = defineComponentMetadata({
   name,
   displayName: title,
-  description: '保存视频元数据（标题、描述、UP、章节等）',
   author,
   tags: [componentsTags.video],
   entry: none,

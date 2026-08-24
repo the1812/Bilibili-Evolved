@@ -12,8 +12,5 @@ export const component = defineComponentMetadata({
     },
   ],
   tags: [componentsTags.style],
-  description: {
-    'zh-CN': '隐藏首页顶部横幅.',
-  },
   urlInclude: mainSiteUrls,
 })

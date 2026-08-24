@@ -5,7 +5,6 @@ import { playerUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
 import { KeyBindingAction } from '../../../utils/keymap/bindings'
 import { defineComponentMetadata } from '@/components/define'
-import desc from './desc.md'
 import seekLeft from './seek-left.svg'
 import seekRight from './seek-right.svg'
 
@@ -63,9 +62,6 @@ export const component = defineComponentMetadata({
   name: 'seekByFrames',
   displayName: '启用逐帧调整',
   tags: [componentsTags.video],
-  description: {
-    'zh-CN': desc,
-  },
   entry,
   reload: () => document.body.classList.remove(SeekByFramesDisabledClass),
   unload: () => document.body.classList.add(SeekByFramesDisabledClass),

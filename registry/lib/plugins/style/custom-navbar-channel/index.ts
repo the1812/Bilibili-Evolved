@@ -6,7 +6,6 @@ import type { CustomNavbarOptions } from '../../../components/style/custom-navba
 export const plugin: PluginMetadata = {
   name: 'customNavbar.items.channel',
   displayName: '自定义顶栏 - 频道',
-  description: '为自定义顶栏添加一个频道入口.',
   async setup({ addData }) {
     addData('customNavbar.items', (items: CustomNavbarItemInit[]) => {
       const defaultLink = 'https://www.bilibili.com/v/channel/'

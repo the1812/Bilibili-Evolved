@@ -8,11 +8,12 @@ on:
       - preview
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
-          fetch-depth: "0"
+          fetch-depth: '0'
       - name: Setup git
         run: |-
           git config --local user.email github-actions[bot]@users.noreply.github.com

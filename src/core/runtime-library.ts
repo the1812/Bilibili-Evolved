@@ -1,5 +1,5 @@
 import type protobufType from 'protobufjs'
-import type JSZipType from 'jszip'
+import type * as fflateType from 'fflate'
 import type SortableJSType from 'sortablejs'
 import type StreamSaverType from 'streamsaver'
 import { monkey } from './ajax'
@@ -72,9 +72,9 @@ export const protobufLibrary = new RuntimeLibrary<typeof protobufType>({
   library: meta.compilationInfo.altCdn.library.protobuf,
   getModule: window => window.protobuf,
 })
-export const JSZipLibrary = new RuntimeLibrary<typeof JSZipType>({
-  library: meta.compilationInfo.altCdn.library.jszip,
-  getModule: window => window.JSZip,
+export const FflateLibrary = new RuntimeLibrary<typeof fflateType>({
+  library: meta.compilationInfo.altCdn.library.fflate,
+  getModule: window => window.fflate,
 })
 export const SortableJSLibrary = new RuntimeLibrary<typeof SortableJSType>({
   library: meta.compilationInfo.altCdn.library.sortable,

@@ -13,7 +13,6 @@ import {
 export const plugin: PluginMetadata = {
   name: 'downloadVideo.inputs.manual',
   displayName: '下载视频 - 手动输入',
-  description: '为下载视频增加手动输入支持.',
   setup: ({ addData }) => {
     addData('downloadVideo.inputs', (inputs: DownloadVideoInput[]) => {
       inputs.push({

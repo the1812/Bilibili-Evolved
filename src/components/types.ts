@@ -1,9 +1,9 @@
-import { TestPattern, Executable, VueModule, I18nDescription } from '@/core/common-types'
-import { ComponentSettings } from '@/core/settings'
+import { Widget } from '@/components/widget'
+import { Executable, I18nDescription, TestPattern, VueModule } from '@/core/common-types'
 import { CoreApis } from '@/core/core-apis'
+import { ComponentSettings } from '@/core/settings'
 import { PluginMinimalData } from '@/plugins/plugin'
 import { Range } from '@/ui/range'
-import { Widget } from '@/components/widget'
 import { LanguagePack } from './i18n/types'
 
 export type Author = {
@@ -12,8 +12,7 @@ export type Author = {
 }
 
 export interface FeatureBase {
-  // TODO: 可在编译时转换 Markdown 以提高运行时性能
-  /** 描述 (支持 markdown), 可以设置为对象提供多语言的描述 (`key: 语言代码`) */
+  /** 功能描述, 由 index.md 注入, 不需要手动填写 */
   description?: I18nDescription
   /** 作者信息 */
   author?: Author | Author[]
@@ -191,7 +190,7 @@ export interface FunctionalMetadata<O extends UnknownOptions = UnknownOptions> {
   /** 关闭时执行 */
   unload?: Executable
   /** 插件化数据定义 */
-  plugin?: Optional<PluginMinimalData, 'name'>
+  plugin?: Optional<PluginMinimalData, 'name'> | Optional<PluginMinimalData, 'name'>[]
   /** 额外想要展示在设置里的选项 UI */
   extraOptions?: () => Promise<VueModule>
   /** 设置匹配的URL, 不匹配则不运行此组件 */

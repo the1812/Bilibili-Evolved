@@ -1,11 +1,14 @@
 import { createServer, Server } from 'http'
-import { Configuration } from 'webpack'
 import exitHook from 'async-exit-hook'
 import handler from 'serve-handler'
 import { devServerConfig } from './config'
-import { buildByEntry } from '../../registry/webpack/config'
 import { exitWebSocketServer } from './web-socket-server'
-import { watchers, parseRegistryUrl, startRegistryWatcher } from './registry-watcher'
+import {
+  featureSessions,
+  parseRegistryUrl,
+  readRegistryOutput,
+  startFeatureSessionWatcher,
+} from './registry-watcher'
 
 export const startDevServer = () =>
   new Promise<Server>(resolve => {
@@ -14,31 +17,41 @@ export const startDevServer = () =>
     const server = createServer((request, response) => {
       const { url } = request
       console.log('请求:', url)
-      const callHandler = () => {
+      const serveStatic = () => {
         handler(request, response, {
           public: '.',
-          directoryListing: ['/dist', '/dist/**', '/registry/dist', '/registry/dist/**'],
+          directoryListing: ['/dist', '/dist/**'],
         })
       }
+      const serveNotFound = () => {
+        response.statusCode = 404
+        response.end('Not found')
+      }
+      const serveRegistryOutput = (path: string, notFound = false) => {
+        const output = readRegistryOutput(path)
+        if (!output) {
+          if (notFound) {
+            serveNotFound()
+          }
+          return false
+        }
+        response.setHeader('Content-Type', 'application/javascript; charset=utf-8')
+        response.end(output)
+        return true
+      }
       if (url.startsWith('/registry')) {
-        const existingWatcher = watchers.find(w => w.url === url)
-        const registryInfo = parseRegistryUrl(url)
-        if (existingWatcher && registryInfo) {
+        const feature = parseRegistryUrl(url)
+        const existingSession = feature && featureSessions.find(s => s.path === feature.path)
+        if (existingSession && feature) {
           console.log(`已复用功能编译器: ${url}`)
         }
-        if (existingWatcher || !registryInfo) {
-          callHandler()
-        } else {
-          startRegistryWatcher(
-            url,
-            buildByEntry({
-              ...registryInfo,
-              mode: 'development',
-            }) as Configuration,
-          ).then(() => callHandler())
+        if (!feature) {
+          serveNotFound()
+        } else if (!serveRegistryOutput(feature.path)) {
+          startFeatureSessionWatcher(feature).then(() => serveRegistryOutput(feature.path, true))
         }
       } else {
-        callHandler()
+        serveStatic()
       }
     })
     exitHook(exit => {

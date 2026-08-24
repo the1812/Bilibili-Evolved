@@ -83,9 +83,6 @@ export const component = defineComponentMetadata({
   widget: {
     component: () => import('./ViewCover.vue').then(m => m.default),
   },
-  description: {
-    'zh-CN': '在视频页面中, 可从功能面板中查看封面.',
-  },
   urlInclude: [
     ...videoAndBangumiUrls,
     // ...liveUrls,

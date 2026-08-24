@@ -24,9 +24,6 @@ export const component = defineComponentMetadata({
     link: 'https://github.com/Liki4',
   },
   tags: [componentsTags.live, componentsTags.style],
-  description: {
-    'zh-CN': '删除观看直播时某些分区的马赛克遮罩.',
-  },
   entry,
   reload: entry,
   urlInclude: liveUrls,

@@ -1,8 +1,9 @@
+import { VideoQuality } from '@/components/video/video-quality'
 import { Executable, TestPattern, VueModule, WithName } from '@/core/common-types'
 import { DownloadPackage, PackageEntry } from '@/core/download'
 import { formatNumber } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
-import { VideoQuality } from '@/components/video/video-quality'
+import { DefaultDashExtensions } from './apis/dash'
 
 interface VueInstanceInput {
   component?: Executable<VueModule>
@@ -18,6 +19,12 @@ export interface DownloadVideoInputItem {
   quality?: VideoQuality
   /** 是否允许画质回退, 当实际画质和期望画质不符时此项将决定是否抛出异常 */
   allowQualityDrop?: boolean
+  /** 请求的音轨语言 */
+  audioLanguage?: string
+}
+export interface DownloadVideoAudioLanguage {
+  language: string
+  title: string
 }
 /** 页面数据提供者 */
 export interface DownloadVideoInput<InputParameter = any> extends VueInstanceInput, WithName {
@@ -32,11 +39,14 @@ export interface DownloadVideoInput<InputParameter = any> extends VueInstanceInp
 }
 /** 表示一个视频分段 */
 export interface DownloadVideoFragment {
+  type: keyof typeof DefaultDashExtensions | 'flv'
   length: number
   size: number
   url: string
   allUrls: string[]
   extension: string
+  codec?: string
+  bandWidth?: number
 }
 /** 调用 API 后得到的视频详细信息, 包括下载链接, 清晰度, 分段等 */
 export class DownloadVideoInfo {
@@ -44,6 +54,9 @@ export class DownloadVideoInfo {
   public fragments: DownloadVideoFragment[]
   public qualities: VideoQuality[]
   public currentQuality: VideoQuality
+  public currentCodec?: string
+  public currentBandWidth?: number
+  public audioLanguages?: DownloadVideoAudioLanguage[]
   public jsonData: any
   constructor(
     parameters: Omit<DownloadVideoInfo, 'totalSize' | 'totalLength' | 'titledFragments'>,

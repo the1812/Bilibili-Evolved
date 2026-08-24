@@ -164,7 +164,12 @@ const entry = async () => {
   )
 
   const mtime = info?.relation?.mtime
+  const attribute = info?.relation?.attribute
   if (!mtime) {
+    return
+  }
+  if (attribute !== 2) {
+    console.log('当前获取的是非关注时间，跳过关注时间显示')
     return
   }
 
@@ -185,7 +190,4 @@ export const component = defineComponentMetadata({
     /https:\/\/space\.bilibili\.com\/\d+/,
   ],
   entry,
-  description: {
-    'zh-CN': '在粉丝/关注列表及用户主页显示关注的具体时间。',
-  },
 })

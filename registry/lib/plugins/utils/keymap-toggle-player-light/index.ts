@@ -5,7 +5,6 @@ import type { KeyBindingAction } from '../../../components/utils/keymap/bindings
 export const plugin: PluginMetadata = {
   name: 'keymap.actions.togglePlayerLight',
   displayName: '快捷键扩展 - 开关灯',
-  description: '在快捷键的动作列表里添加一个 "开关灯".',
   setup: ({ addData }) => {
     addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
       actions.togglePlayerLight = {

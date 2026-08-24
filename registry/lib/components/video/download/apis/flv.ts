@@ -1,6 +1,6 @@
+import { allQualities } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { matchUrlPattern } from '@/core/utils'
-import { allQualities } from '@/components/video/video-quality'
 import { bangumiUrls } from '@/core/utils/urls'
 import { compareQuality } from '../error'
 import {
@@ -21,6 +21,7 @@ const parseInfoFromJson = (data: any, extensions: string[]) => {
   const fragments = data.durl.map(
     (it: any, index: number) =>
       ({
+        type: 'flv',
         length: it.length,
         size: it.size,
         url: it.url,

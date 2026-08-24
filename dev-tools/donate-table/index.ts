@@ -1,7 +1,9 @@
 import { parse } from 'csv-parse/sync'
 import * as fs from 'fs'
+import * as path from 'path'
 
 const files = process.argv.slice(2)
+const outputDirectory = path.resolve(__dirname, 'dist')
 const parseAliPay = (csv: Record<string, string>[]) => {
   csv.forEach(item => {
     item.sortKey = Number(new Date(item.创建时间)).toString()
@@ -60,5 +62,5 @@ const items = files
   })
   .flat()
   .sort((a, b) => parseInt(b.sortKey) - parseInt(a.sortKey))
-fs.mkdirSync('dist/', { recursive: true })
-fs.writeFileSync('dist/output.md', items.join('\n'))
+fs.mkdirSync(outputDirectory, { recursive: true })
+fs.writeFileSync(path.join(outputDirectory, 'output.md'), items.join('\n'))

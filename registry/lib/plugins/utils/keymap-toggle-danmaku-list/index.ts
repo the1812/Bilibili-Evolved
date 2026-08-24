@@ -4,7 +4,6 @@ import type { KeyBindingAction } from '../../../components/utils/keymap/bindings
 export const plugin: PluginMetadata = {
   name: 'keymap.actions.toggleDanmakuList',
   displayName: '快捷键扩展 - 开关弹幕列表',
-  description: '在快捷键的动作列表里添加一个 "开关弹幕列表".',
   setup: ({ addData }) => {
     addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
       actions.toggleDanmakuList = {

@@ -20,9 +20,6 @@ const entry = async () => {
 export const component = defineComponentMetadata({
   name: 'copyFeedsLink',
   displayName: '复制动态链接',
-  description: {
-    'zh-CN': '开启后, 可在每条动态的菜单中选择复制链接.',
-  },
   entry,
   urlInclude: feedsUrls,
   tags: [componentsTags.feeds, componentsTags.utils],

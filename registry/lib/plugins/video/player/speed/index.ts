@@ -25,18 +25,6 @@ export const plugin: PluginMetadata = {
     name: 'JLoeve',
     link: 'https://github.com/LonelySteve',
   },
-  description: `
-
-为操作视频倍速提供快捷键支持：
-
-- 提高倍速
-- 降低倍速
-- 切换倍速
-
-若添加并启用了记忆倍速组件，则还会增加一个快捷键：
-
-- 清除倍速记忆
-  `,
   setup: ({ addData, addHook }) => {
     const videoSpeedAction =
       (cb: (context: SpeedContext) => Promise<unknown> | unknown) =>
@@ -97,9 +85,9 @@ export const plugin: PluginMetadata = {
                   )
                   return
                 }
-                if (!component.options.individualRemember) {
+                if (!component.usesRbvp() && !component.options.individualRemember) {
                   Toast.error(
-                    '选项「各视频分别记忆」已禁用，不能清除当前视频倍速记忆值',
+                    '选项「各视频分别记忆」已禁用，且当前未启用 RBVP 接管，不能清除当前视频倍速记忆值',
                     component.metadata.displayName,
                     5000,
                   )

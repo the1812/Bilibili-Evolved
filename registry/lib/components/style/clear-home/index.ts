@@ -169,7 +169,7 @@ function cardClear(mutationsList: HTMLElement[]) {
       continue
     }
     if (mutation.classList.contains('floor-single-card')) {
-      const badge = mutation.querySelector('.badge').textContent
+      const badge = mutation.querySelector('.badge')?.textContent
       if (badge && removeBadgeList.includes(badge)) {
         mutation.remove()
       }
@@ -264,7 +264,6 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.style],
   displayName: '首页净化',
-  description: '删除首页特定类型的卡片',
   entry: clearHome,
   options,
 })

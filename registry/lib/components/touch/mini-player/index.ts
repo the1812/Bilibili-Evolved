@@ -13,9 +13,6 @@ const setTouch = async (enable: boolean) => {
 export const component = defineComponentMetadata({
   name: 'touchMiniPlayer',
   displayName: '迷你播放器触摸拖动',
-  description: {
-    'zh-CN': '使迷你播放器的拖动条可以触摸拖动.',
-  },
   enabledByDefault: navigator.maxTouchPoints > 0,
   tags: [componentsTags.touch],
   urlInclude: [...videoAndBangumiUrls, ...liveUrls],

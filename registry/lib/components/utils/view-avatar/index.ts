@@ -14,8 +14,5 @@ export const component = defineComponentMetadata({
   widget: {
     component: () => import('./ViewAvatar.vue').then(m => m.default),
   },
-  description: {
-    'zh-CN': '在个人空间页面中, 可从功能面板中查看当前用户的高分辨率头像.',
-  },
   urlInclude: [/^https:\/\/space\.bilibili\.com\/\d+(?:[/?#]|$)/],
 })

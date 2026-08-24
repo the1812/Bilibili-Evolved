@@ -328,7 +328,6 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.style],
   displayName: '替换标题党封面',
-  description: '将视频卡片的封面替换为视频预览帧，杜绝图文不符。致敬DeArrow。',
   urlInclude: ['www.bilibili.com'],
   // 将样式和逻辑入口合并到 entry 属性中
   entry: styledComponentEntry(

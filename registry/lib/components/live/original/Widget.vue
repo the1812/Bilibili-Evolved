@@ -1,5 +1,5 @@
 <template>
-  <a :href="href" tabindex="-1">
+  <a :href="href" class="no-underline" tabindex="-1">
     <DefaultWidget name="返回原版直播间" icon="mdi-arrow-left-circle-outline" />
   </a>
 </template>
@@ -18,3 +18,9 @@ export default Vue.extend({
   },
 })
 </script>
+
+<style lang="css">
+.no-underline {
+  text-decoration: none;
+}
+</style>

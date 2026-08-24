@@ -1,7 +1,10 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "module": "CommonJS",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "noEmit": true,
-  }
+    "rootDir": "../.."
+  },
+  "include": ["./**/*.ts", "../../registry/lib/id.ts", "../../registry/webpack/config.ts"]
 }

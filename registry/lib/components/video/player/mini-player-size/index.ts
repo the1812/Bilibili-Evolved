@@ -124,9 +124,6 @@ export const component = defineComponentMetadata({
     name: 'GH4NG',
     link: 'https://github.com/GH4NG',
   },
-  description: {
-    'zh-CN': '自定义视频小窗播放器的大小, 可通过拖拽四角调整, 支持保持 16:9 宽高比.',
-  },
   tags: [componentsTags.video],
   urlInclude: videoAndBangumiUrls,
   instantStyles: [

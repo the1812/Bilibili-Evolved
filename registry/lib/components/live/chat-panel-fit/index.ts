@@ -29,44 +29,46 @@ const calcPanelWidth = () => {
   }
   const { innerWidth, innerHeight } = window
   const liveChatPanelWidth = innerWidth - (widthRatio * innerHeight) / heightRatio
-  console.log({ liveChatPanelWidth })
+  console.debug({ liveChatPanelWidth })
   document.documentElement.style.setProperty(
     '--live-chat-panel-width',
     `${lodash.clamp(liveChatPanelWidth, ChatPanelFitOptionsMinWidth, maxWidth)}px`,
   )
 }
-const debounceCalcPanelWidth = lodash.debounce(calcPanelWidth, 200)
+const scheduleCalcPanelWidth = () => {
+  requestAnimationFrame(calcPanelWidth)
+}
 
 let draggerInstance: Vue
 const load = async () => {
   addComponentListener(`${name}.targetRatio`, calcPanelWidth)
   addComponentListener(`${name}.maxWidth`, calcPanelWidth)
   window.addEventListener('customWidthReset', calcPanelWidth)
-  window.addEventListener('resize', debounceCalcPanelWidth)
+  window.addEventListener('resize', scheduleCalcPanelWidth)
   const video = await sq(
-    () => dq('.live-player-ctnr video') as HTMLVideoElement,
+    () => dq('.player-ctnr video') as HTMLVideoElement,
     v => v !== null && v.readyState !== HTMLMediaElement.HAVE_NOTHING,
   )
   if (!video) {
-    console.log('未找到 video 元素')
+    console.warn('未找到 video 元素')
     return
   }
   calcPanelWidth()
 
-  const asideToggleButton = (await select('.aside-area-toggle-btn')) as HTMLElement
-  if (!asideToggleButton) {
-    console.log('未找到侧边栏按钮')
+  const aside = (await select('.aside-area')) as HTMLElement
+  if (!aside) {
+    console.warn('未找到侧边栏')
     return
   }
   const { default: ChatPanelFitDragger } = await import('./ChatPanelFitDragger.vue')
   draggerInstance = mountVueComponent(ChatPanelFitDragger)
-  asideToggleButton.insertAdjacentElement('afterend', draggerInstance.$el)
+  aside.insertAdjacentElement('afterend', draggerInstance.$el)
 }
 const unload = () => {
   removeComponentListener(`${name}.targetRatio`, calcPanelWidth)
   removeComponentListener(`${name}.maxWidth`, calcPanelWidth)
   window.removeEventListener('customWidthReset', calcPanelWidth)
-  window.removeEventListener('resize', debounceCalcPanelWidth)
+  window.removeEventListener('resize', scheduleCalcPanelWidth)
   document.documentElement.style.removeProperty('--live-chat-panel-width')
   if (draggerInstance) {
     draggerInstance.$el.remove()

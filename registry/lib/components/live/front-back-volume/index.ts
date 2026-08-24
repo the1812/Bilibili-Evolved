@@ -141,7 +141,6 @@ const setupVolumeControl = async (enableLogging: boolean): Promise<void> => {
 export const component = defineComponentMetadata({
   name: 'frontBackVolume',
   displayName: '直播前后台音量自动调节',
-  description: '自动调节B站直播音量，前台和后台使用不同音量',
   author: {
     name: 'KDH-KDHKDH',
     link: 'https://github.com/KDH-KDHKDH',

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Bilibili Evolved Dev Server"
+  short_description: "Use the local dev server and feature commands."
+  default_prompt: "Use $bilibili-evolved-dev-server to compile or watch one Bilibili Evolved feature with the local dev server."

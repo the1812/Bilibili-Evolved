@@ -48,7 +48,18 @@
       <div class="component-detail-internal-data">
         <div class="component-detail-separator"></div>
         <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
-          <div class="internal-name">Commit: {{ componentData.commitHash.substring(0, 9) }}</div>
+          <div class="component-detail-commit">
+            <span class="internal-name"
+              >Commit: {{ componentData.commitHash.substring(0, 9) }}</span
+            >
+            <VIcon
+              v-if="isLocalDebugUrl"
+              class="local-debug-warning"
+              icon="mdi-alert-circle-outline"
+              :size="14"
+              title="当前组件的更新地址是本地开发链接, 不会随着检查更新而更新"
+            />
+          </div>
         </div>
         <div class="component-detail-internal-data-row">
           <div class="internal-name">内部名称: {{ componentData.name }}</div>
@@ -90,6 +101,8 @@
 <script lang="ts">
 import { VButton, VIcon, SwitchBox, MiniToast } from '@/ui'
 import { visible } from '@/core/observer'
+import { getComponentSettings } from '@/core/settings'
+import type { AutoUpdateOptions } from '../auto-update'
 import { OptionsMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
@@ -129,6 +142,11 @@ export default Vue.extend({
       return Object.entries((this.componentData.options ?? {}) as OptionsMetadata).filter(
         ([, option]) => !option.hidden,
       )
+    },
+    isLocalDebugUrl() {
+      const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
+      const url = options.urls.components[this.componentData.name]?.url ?? ''
+      return /^http:\/\/localhost:\d+\/registry\/dist\/components\/.+\.js$/.test(url)
     },
   },
   async mounted() {
@@ -237,6 +255,13 @@ export default Vue.extend({
 
     .internal-name {
       opacity: 0.5;
+    }
+    .component-detail-commit {
+      @include h-center();
+    }
+    .local-debug-warning {
+      color: #ff9800;
+      margin-left: 4px;
     }
     .tippy-content {
       padding: 4px;

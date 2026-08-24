@@ -12,8 +12,5 @@ export const component = defineComponentMetadata({
     },
   ],
   tags: [componentsTags.style, componentsTags.video],
-  description: {
-    'zh-CN': '为播放器添加主题色投影.',
-  },
   urlInclude: allVideoUrls,
 })

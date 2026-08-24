@@ -6,7 +6,7 @@
         :key="video.id"
         :title="video.title"
         class="fresh-home-video-slides-cover"
-        :href="index !== 1 ? 'javascript:void(0)' : url(video.bvid)"
+        :href="index !== 1 ? 'javascript:void(0)' : video.videoHref"
         target="_blank"
         @click.capture="index !== 1 ? jumpToCard($event, index) : () => {}"
       >
@@ -42,7 +42,7 @@
               </VButton>
             </a>
             <VButton
-              v-if="watchlaterAdded"
+              v-if="currentItem.aid && watchlaterAdded"
               class="fresh-home-video-slides-watchlater-button"
               icon
               title="取消稍后再看"
@@ -51,7 +51,7 @@
               <VIcon icon="mdi-clock-check-outline" :size="20" />
             </VButton>
             <VButton
-              v-else
+              v-else-if="currentItem.aid"
               class="fresh-home-video-slides-watchlater-button"
               icon
               title="稍后再看"
@@ -60,12 +60,14 @@
               <VIcon icon="mdi-clock-outline" :size="20" />
             </VButton>
             <a
+              v-if="currentItem.upID"
               class="fresh-home-video-slides-up-container"
               :href="`https://space.bilibili.com/${currentItem.upID}`"
               :title="currentItem.upName"
               target="_blank"
             >
-              <DpiImage :size="24" :src="currentItem.upFaceUrl" />
+              <DpiImage v-if="currentItem.upFaceUrl" :size="24" :src="currentItem.upFaceUrl" />
+              <VIcon v-else icon="mdi-account-circle" :size="24" />
               <div class="fresh-home-video-slides-up-name">
                 {{ currentItem.upName }}
               </div>
@@ -104,10 +106,8 @@
   </div>
 </template>
 <script lang="ts">
-import { applyContentFilter } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
-import { formatDuration } from '@/core/utils/formatters'
+import { bilibiliApi, getJson } from '@/core/ajax'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
 
@@ -120,7 +120,9 @@ export default Vue.extend({
     VEmpty,
   },
   mixins: [
-    requestMixin(),
+    requestMixin({
+      requestMethod: url => bilibiliApi(getJson(url), '获取清爽首页分区视频失败'),
+    }),
     cssVariableMixin({
       mainCoverHeight: 185,
       mainCoverWidth: 287,
@@ -131,6 +133,12 @@ export default Vue.extend({
       coverPadding: 16,
     }),
   ],
+  props: {
+    parseJson: {
+      type: Function,
+      required: true,
+    },
+  },
   data() {
     return {
       watchlaterList,
@@ -142,7 +150,7 @@ export default Vue.extend({
       return this.items[1]
     },
     currentUrl() {
-      return this.url(this.currentItem.bvid)
+      return this.currentItem.videoHref
     },
     watchlaterAdded() {
       return this.watchlaterList.includes(this.currentItem.aid)
@@ -152,34 +160,6 @@ export default Vue.extend({
     getWatchlaterList()
   },
   methods: {
-    parseJson(json: any) {
-      const items = lodash.get(json, 'data.archives', [])
-      const cards = items.map(
-        (item: any): VideoCard => ({
-          id: item.aid,
-          aid: item.aid,
-          bvid: item.bvid,
-          coverUrl: item.pic,
-          title: item.title,
-          upName: item.owner.name,
-          upFaceUrl: item.owner.face,
-          upID: item.owner.mid,
-          playCount: item.stat.view,
-          danmakuCount: item.stat.danmaku,
-          like: item.stat.like,
-          coins: item.stat.coin,
-          description: item.desc,
-          dynamic: item.dynamic || item.desc,
-          type: item.tname,
-          duration: item.duration,
-          durationText: formatDuration(item.duration),
-        }),
-      )
-      return applyContentFilter(cards)
-    },
-    url(id: string) {
-      return `https://www.bilibili.com/video/${id}/`
-    },
     toggleWatchlater,
     nextCard() {
       this.items.push(this.items.shift())

@@ -72,10 +72,22 @@ export default {
       this.widgetsOpened = false
       this.settingsOpened = true
     })
+    window.addEventListener('blur', this.handleWindowBlur)
+  },
+  beforeDestroy() {
+    window.removeEventListener('blur', this.handleWindowBlur)
   },
   methods: {
     theWorld() {
       externalApis.theWorld(0)
+    },
+    handleWindowBlur() {
+      setTimeout(() => {
+        if (document.activeElement instanceof HTMLIFrameElement) {
+          this.settingsOpened = false
+          this.widgetsOpened = false
+        }
+      }, 0)
     },
     settingsPanelClosePredicate(data: {
       target: HTMLElement

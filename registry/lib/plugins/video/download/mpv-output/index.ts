@@ -10,8 +10,6 @@ export const plugin: PluginMetadata = {
     name: 'diannaojiang',
     link: 'https://github.com/diannaojiang',
   },
-  description:
-    '为下载视频增加 MPV 输出支持, 配置方式请参考 [Bilibili-Playin-Mpv](https://github.com/diannaojiang/Bilibili-Playin-Mpv)',
   setup: ({ addData }) => {
     addData('downloadVideo.outputs', (outputs: DownloadVideoOutput[]) => {
       outputs.push({

@@ -7,16 +7,16 @@ export const component = defineComponentMetadata({
   name: 'liveHomeMute',
   displayName: '直播首页静音',
   tags: [componentsTags.live],
-  description: {
-    'zh-CN': '禁止直播首页的推荐直播间自动开始播放.',
-  },
   entry: async ({ metadata }) => {
     const styleID = 'hide-home-live'
     addComponentListener(
       `${metadata.name}.hide`,
       (value: boolean) => {
         if (value) {
-          addStyle('.player-area-ctnr,#player-header { display: none !important }', styleID)
+          addStyle(
+            '.player-area-ctnr,#player-header,#blive-home .flex.items-stretch.pr-20px  { display: none !important }',
+            styleID,
+          )
         } else {
           removeStyle(styleID)
         }

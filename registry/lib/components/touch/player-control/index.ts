@@ -8,9 +8,6 @@ const entry = async () => {
 export const component = defineComponentMetadata({
   name: 'touchPlayerControl',
   displayName: '控制栏触摸优化',
-  description: {
-    'zh-CN': '增大播放器控制栏里按钮的间距, 方便触屏使用.',
-  },
   tags: [componentsTags.touch, componentsTags.style],
   enabledByDefault: navigator.maxTouchPoints > 0,
   urlInclude: playerUrls,

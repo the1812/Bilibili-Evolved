@@ -119,10 +119,12 @@ const mergeRecommendLiveInfos = (liveInfos: LiveInfo[], recommendLiveInfos: Live
   return lodash.concat(recommendLiveInfos, feedConcatItems)
 }
 
+const sameUID = (a: unknown, b: unknown) => String(a) === String(b)
+
 const sortByUsers = (users: FollowingUserInfo[], descending = false) => {
   return (a: LiveInfo, b: LiveInfo) => {
-    const aPinnedIndex = users.findIndex(it => it.mid === a.uid)
-    const bPinnedIndex = users.findIndex(it => it.mid === b.uid)
+    const aPinnedIndex = users.findIndex(it => sameUID(it.mid, a.uid))
+    const bPinnedIndex = users.findIndex(it => sameUID(it.mid, b.uid))
     if (bPinnedIndex === -1 && aPinnedIndex === -1) {
       return 0
     }
@@ -206,7 +208,7 @@ const fetchLiveList = async () => {
     const [allItems, recommendItems] = await Promise.all([promise, fetchRecommendLiveInfos()])
     const sortedItems = mergeRecommendLiveInfos(allItems, recommendItems)
       .sort(sortByUsers(pinnedUsers.value, false))
-      .filter(item => !hiddenUsers.value.some(user => user.mid === item.uid))
+      .filter(item => !hiddenUsers.value.some(user => sameUID(user.mid, item.uid)))
     items.value = sortedItems
   } finally {
     loaded.value = true

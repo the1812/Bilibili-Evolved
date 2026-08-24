@@ -41,8 +41,5 @@ export const component = defineComponentMetadata({
       style: () => import('./cover.scss'),
     },
   ],
-  description: {
-    'zh-CN': '在视频开始播放前, 在播放器中显示封面.',
-  },
   tags: [componentsTags.video],
 })

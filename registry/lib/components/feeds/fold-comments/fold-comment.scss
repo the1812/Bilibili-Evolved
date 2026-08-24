@@ -13,7 +13,7 @@
     color: #99a2aa;
     cursor: pointer;
     transition: all 0.2s ease-out;
-    z-index: 110;
+    z-index: 98;
     border-radius: 4px;
     &:hover {
       color: black;
@@ -26,6 +26,9 @@
       }
     }
   }
+}
+.space-dynamic__content {
+  overflow: visible !important;
 }
 .bili-comment-container {
   display: flex !important;

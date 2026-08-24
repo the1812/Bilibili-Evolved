@@ -1,25 +1,19 @@
 <template>
   <div
-    tabindex="0"
     class="be-launch-bar-action-item be-launch-bar-suggest-item"
     :class="{ focused }"
     :title="action.displayName || action.name"
     :data-indexer="action.indexer"
-    @click.self="performAction($event)"
-    @keydown.enter.prevent.stop="performAction($event)"
-    @keydown.shift.delete.prevent.stop="performDelete($event)"
-    @keydown.up.prevent.stop="$emit('previous-item', $event.currentTarget)"
-    @keydown.down.prevent.stop="$emit('next-item', $event.currentTarget)"
+    role="option"
+    :aria-selected="focused"
+    @pointerdown.prevent
+    @click.self="performAction"
   >
     <div class="be-launch-bar-suggest-item-content">
-      <div
-        v-if="action.icon"
-        class="be-launch-bar-suggest-item-icon"
-        @click="performAction($event)"
-      >
+      <div v-if="action.icon" class="be-launch-bar-suggest-item-icon" @click="performAction">
         <VIcon :icon="action.icon" :size="18" />
       </div>
-      <div class="be-launch-bar-suggest-item-title" @click="performAction($event)">
+      <div class="be-launch-bar-suggest-item-title" @click="performAction">
         <component
           :is="action.content"
           v-if="action.content"
@@ -41,7 +35,7 @@
         v-if="action.deleteAction"
         class="be-launch-bar-suggest-item-delete"
         title="删除此项"
-        @click="performDelete($event)"
+        @click="performDelete"
       >
         <VIcon icon="cancel" :size="18" />
       </div>
@@ -50,43 +44,31 @@
 </template>
 <script setup lang="ts">
 import { VIcon } from '@/ui'
+import type { LaunchBarAction } from './launch-bar-action'
 
 interface Props {
   focused?: boolean
-  action: {
-    name: string
-    displayName?: string
-    icon?: string
-    description?: string
-    indexer?: string
-    content?: any
-    action: () => Promise<void> | void
-    deleteAction?: () => Promise<void> | void
-  }
+  action: LaunchBarAction
 }
 
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  (event: 'previous-item', currentTarget: EventTarget | null): void
-  (event: 'next-item', currentTarget: EventTarget | null): void
-  (event: 'action', currentTarget: EventTarget | null): void
-  (event: 'delete-item', currentTarget: EventTarget | null): void
+  (event: 'action'): void
+  (event: 'delete-item'): void
 }>()
 
-const performAction = async (event: KeyboardEvent | MouseEvent) => {
-  const { currentTarget } = event
+const performAction = async () => {
   await props.action.action()
-  emit('action', currentTarget)
+  emit('action')
 }
 
-const performDelete = async (event: KeyboardEvent | MouseEvent) => {
-  const { currentTarget } = event
+const performDelete = async () => {
   if (!props.action.deleteAction) {
     return
   }
   await props.action.deleteAction()
-  emit('delete-item', currentTarget)
+  emit('delete-item')
 }
 </script>
 <style lang="scss">

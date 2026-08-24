@@ -107,9 +107,6 @@ export const component = wrapSwitchOptions({
       important: true,
     },
   ],
-  description: {
-    'zh-CN': '隐藏直播间中各种不需要的内容.',
-  },
   tags: [componentsTags.live, componentsTags.style],
   urlInclude: liveUrls,
 })

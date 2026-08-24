@@ -1,6 +1,5 @@
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { defineComponentMetadata } from '@/components/define'
-import desc from './desc.md'
 
 export const component = defineComponentMetadata({
   name: 'playerFocus',
@@ -21,9 +20,6 @@ export const component = defineComponentMetadata({
     if (options.offset !== 0) {
       window.scrollBy(0, options.offset)
     }
-  },
-  description: {
-    'zh-CN': desc,
   },
   options: {
     offset: {

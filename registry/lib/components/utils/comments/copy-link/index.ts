@@ -59,9 +59,6 @@ const entry = async () => {
 export const component = defineComponentMetadata({
   name: 'copyCommentsLink',
   displayName: '复制评论链接',
-  description: {
-    'zh-CN': '开启后, 可在每条评论的菜单中选择复制链接.',
-  },
   entry,
   tags: [componentsTags.utils],
 })

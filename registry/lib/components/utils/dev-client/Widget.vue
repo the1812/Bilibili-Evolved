@@ -1,6 +1,7 @@
 <template>
   <div class="be-dev-client">
     <div class="title">DevClient</div>
+    <div v-if="clientId" class="client-id">{{ clientId }}</div>
     <div class="connection-status">
       <template v-if="isConnected">
         <div class="status-dot connected" />
@@ -34,6 +35,7 @@ export default Vue.extend({
   data() {
     return {
       client: null,
+      clientId: '',
       isConnected: false,
     }
   },
@@ -41,11 +43,14 @@ export default Vue.extend({
     const { devClient } = await import('./client')
     this.client = devClient
     this.updateConnectionStatus()
+    this.updateClientId()
     devClient.addEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
+    devClient.addEventListener(DevClientEvents.ClientIdUpdate, this.updateClientId)
   },
   beforeDestroy() {
     const devClient = this.client as DevClient
     devClient.removeEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
+    devClient.removeEventListener(DevClientEvents.ClientIdUpdate, this.updateClientId)
   },
   methods: {
     async connect() {
@@ -56,6 +61,9 @@ export default Vue.extend({
     },
     updateConnectionStatus() {
       this.isConnected = this.client.isConnected
+    },
+    updateClientId() {
+      this.clientId = this.client.clientId
     },
   },
 })
@@ -74,6 +82,12 @@ export default Vue.extend({
   }
   .title {
     @include semi-bold();
+  }
+  .client-id {
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--be-color-muted, #888);
+    user-select: all;
   }
   .connection-status {
     @include h-center(6px);

@@ -1,12 +1,27 @@
 import { defineComponentMetadata } from '@/components/component'
-import { getCookieValue } from '@/core/utils'
+import { mutationObserve } from '@/core/observer'
+import { getCookieValue, matchUrlPattern } from '@/core/utils'
 
 const name = 'integratedDarkMode'
 const darkModeClass = 'dark'
 const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
 
+// 直播页
+const isLivePage = () => matchUrlPattern(/^https:\/\/live\.bilibili\.com\//)
+
+// 深色模式不适用的页面: 活动页 / blackboard / 音乐 / 创作中心
+const unsupportedUrls = [
+  /^https:\/\/www\.bilibili\.com\/festival\//,
+  /^https:\/\/www\.bilibili\.com\/blackboard\//,
+  /^https:\/\/www\.bilibili\.com\/audio\//,
+  /^https:\/\/member\.bilibili\.com\//,
+]
+
 const isOfficialDarkModeEnabled = () => {
+  if (isLivePage()) {
+    return document.documentElement.getAttribute('lab-style') === 'dark'
+  }
   return getCookieValue('theme_style') === 'dark'
 }
 
@@ -48,7 +63,7 @@ const disableDarkMode = () => {
   }
 }
 
-const toggleDarkModeByCookie = () => {
+const toggleDarkMode = () => {
   if (isOfficialDarkModeEnabled()) {
     enableDarkMode()
   } else {
@@ -58,22 +73,41 @@ const toggleDarkModeByCookie = () => {
 
 const cookieChangeHandler = (e: CookieChangedEvent) => {
   if (e.changed.some(cookie => cookie.name === 'theme_style')) {
-    toggleDarkModeByCookie()
+    toggleDarkMode()
   }
+}
+
+let liveLabStyleObserver: MutationObserver | undefined
+const watchLiveLabStyle = () => {
+  liveLabStyleObserver?.disconnect()
+  if (!isLivePage()) {
+    liveLabStyleObserver = undefined
+    return
+  }
+  ;[liveLabStyleObserver] = mutationObserve(
+    [document.documentElement],
+    { attributes: true, attributeFilter: ['lab-style'] },
+    toggleDarkMode,
+  )
 }
 
 export const component = defineComponentMetadata({
   name,
   displayName: '深色模式',
+  urlExclude: unsupportedUrls,
   entry: () => {
     cookieStore.addEventListener('change', cookieChangeHandler)
+    watchLiveLabStyle()
   },
   reload: () => {
     cookieStore.addEventListener('change', cookieChangeHandler)
-    toggleDarkModeByCookie()
+    toggleDarkMode()
+    watchLiveLabStyle()
   },
   unload: () => {
     cookieStore.removeEventListener('change', cookieChangeHandler)
+    liveLabStyleObserver?.disconnect()
+    liveLabStyleObserver = undefined
     document.body.classList.remove(darkModeClass, integratedDarkModeClass)
   },
   tags: [componentsTags.style, componentsTags.general],
@@ -100,7 +134,7 @@ export const component = defineComponentMetadata({
       const { isComponentEnabled } = await import('@/core/settings')
       contentLoaded(() => {
         if (isComponentEnabled(name)) {
-          toggleDarkModeByCookie()
+          toggleDarkMode()
         }
       })
     },

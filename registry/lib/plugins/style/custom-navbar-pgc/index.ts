@@ -4,7 +4,6 @@ import type { CustomNavbarItemInit } from '../../../components/style/custom-navb
 export const plugin: PluginMetadata = {
   name: 'customNavbar.items.pgc',
   displayName: '自定义顶栏 - 版权内容',
-  description: '为自定义顶栏扩充版权内容相关的快速入口, 包括国创 / 电影 / 电视剧 /综艺 / 纪录片',
   async setup({ addData }) {
     addData('customNavbar.items', (items: CustomNavbarItemInit[]) => {
       const pgcItems = [
