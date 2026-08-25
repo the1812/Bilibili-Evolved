@@ -8,8 +8,11 @@
     <div class="filter-types">
       <FilterTypeSwitch v-for="[name, type] of allTypes" :key="type.id" :name="name" :type="type" />
     </div>
-    <h2>关键词</h2>
-    <div class="filter-patterns">
+    <h2 class="patterns-header" @click="patternsCollapsed = !patternsCollapsed">
+      关键词
+      <VIcon icon="mdi-chevron-up" :class="{ collapsed: patternsCollapsed }" />
+    </h2>
+    <div v-show="!patternsCollapsed" class="filter-patterns">
       <div
         v-for="p of patterns"
         :key="p.key"
@@ -102,6 +105,7 @@ const cardsManager = ref<FeedsCardsManager | null>(null)
 const allTypes = ref<[string, FeedsCardType][]>([])
 const newPattern = ref('')
 const collapse = ref(!contentsOnly)
+const patternsCollapsed = ref(true)
 
 const updateCard = async (card: Readonly<FeedsCard>) => {
   const blockableCard: BlockableCard = {
@@ -275,6 +279,18 @@ body.disable-feeds-filter-card {
     font-size: 13px;
     margin: 0;
     margin-bottom: 8px;
+  }
+  .patterns-header {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .be-icon {
+      transition: transform 0.2s ease-out;
+      &.collapsed {
+        transform: rotate(180deg);
+      }
+    }
   }
   .filter-type-switch {
     flex: 0 0 49%;
