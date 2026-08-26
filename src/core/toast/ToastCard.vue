@@ -130,6 +130,7 @@ onMounted(() => {
     cursor: pointer;
     -webkit-tap-highlight-color: transparent;
     box-sizing: content-box;
+    color: var(--text1);
     opacity: 0.75;
     &:hover {
       opacity: 0.85;
