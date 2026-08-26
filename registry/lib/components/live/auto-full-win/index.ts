@@ -2,7 +2,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { liveUrls } from '@/core/utils/urls'
 import { select } from '@/core/spin-query'
 
-const isPlayerReady = (player: any) => player?.getPlayerInfo?.()?.playurl && player.switchQuality
+const isPlayerReady = (player: any) => player?.getPlayerInfo?.()?.playurl
 
 export const component = defineComponentMetadata({
   name: 'autoFullWin',
