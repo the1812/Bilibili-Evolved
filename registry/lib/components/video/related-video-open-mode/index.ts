@@ -124,6 +124,10 @@ const restoreAnchorTargets = () => {
   originalTargets.clear()
 }
 
+const openInNewTab = (anchor: HTMLAnchorElement) => {
+  window.open(anchor.href, '_blank', 'noopener')
+}
+
 const openInOppositeMode = (button: Element) => {
   const title = button instanceof HTMLButtonElement ? buttonTitles.get(button) : null
   const anchor = title && findTitleAnchor(title)
@@ -131,7 +135,7 @@ const openInOppositeMode = (button: Element) => {
     return
   }
   if (componentSettings.options.defaultOpenMode === OpenMode.CurrentTab) {
-    window.open(anchor.href, '_blank', 'noopener')
+    openInNewTab(anchor)
   } else {
     window.location.assign(anchor.href)
   }
@@ -142,12 +146,31 @@ const clickHandler = (event: MouseEvent) => {
     return
   }
   const button = event.target.closest(`.${buttonClass}`)
-  if (!button) {
+  if (button) {
+    event.preventDefault()
+    event.stopImmediatePropagation()
+    openInOppositeMode(button)
+    return
+  }
+  if (
+    !componentSettings ||
+    componentSettings.options.defaultOpenMode !== OpenMode.NewTab ||
+    event.ctrlKey ||
+    event.metaKey ||
+    event.shiftKey ||
+    event.altKey
+  ) {
+    return
+  }
+  // B 站推荐卡片自身的 click 处理会忽略 anchor 的 target 属性,
+  // 因此需要在捕获阶段接管可播放链接的点击并自行打开新标签页.
+  const anchor = event.target.closest<HTMLAnchorElement>('a[href]')
+  if (!anchor || !anchor.closest(recommendListSelector) || !isPlayableAnchor(anchor)) {
     return
   }
   event.preventDefault()
   event.stopImmediatePropagation()
-  openInOppositeMode(button)
+  openInNewTab(anchor)
 }
 
 const removeButtons = () => {
