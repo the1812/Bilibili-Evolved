@@ -9,8 +9,10 @@ const CreateAnim = (): void => {
   mstars1.id = 'mstars1'
   const mstars2 = document.createElement('div')
   mstars2.id = 'mstars2'
-  biliMainHeader.appendChild(mstars1)
-  biliMainHeader.appendChild(mstars2)
+  // bangumi 等页面的播放器位于低 z-index 的祖先堆叠上下文中, 挂在 header 上会让星星浮在播放器上方, 优先挂到播放器根容器里
+  const starsHost = document.querySelector('.bpx-docker-major') ?? biliMainHeader
+  starsHost.appendChild(mstars1)
+  starsHost.appendChild(mstars2)
 
   // 添加一段css 样式到document最后
   const style = document.createElement('style')
@@ -34,9 +36,9 @@ const CreateAnim = (): void => {
   const stars3Shadow = generate(starNumCtl * 4)
   const stars4Shadow = generate(starNumCtl * 8)
   style.innerHTML = `
-  #mstars1{z-index: 1009;position: fixed;left:0px; width:1px;height:1px;background:transparent;box-shadow:${stars1Shadow};animation:animStar 50s linear infinite}
+  #mstars1{z-index: 1009;position: fixed;left:0px;top:0px; width:1px;height:1px;background:transparent;box-shadow:${stars1Shadow};animation:animStar 50s linear infinite}
   #mstars1:after{content:' ';position:fixed;left:0px;top:0px;width:1px;height:1px;background:transparent;box-shadow:${stars2Shadow}}
-  #mstars2{z-index: 1009;position: fixed;left:0px;width:2px;height:2px;background:transparent;box-shadow:${stars3Shadow};animation:animStar 100s linear infinite}
+  #mstars2{z-index: 1009;position: fixed;left:0px;top:0px;width:2px;height:2px;background:transparent;box-shadow:${stars3Shadow};animation:animStar 100s linear infinite}
   #mstars2:after{content:' ';position:fixed;left:0px;top:0px;width:2px;height:2px;background:transparent;box-shadow:${stars4Shadow}}
   @keyframes animStar{from{transform:translateY(-200px)}to{transform:translateY(-2200px)}}
   `
