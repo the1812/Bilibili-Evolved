@@ -139,3 +139,12 @@ $switchPrefix: 'remove-promotions';
     border: red 1px solid;
   }
 }
+
+// 进入页面时提前加载: 把锚点临时移到视口上方,
+// 页面自身的滚动检查会认为已经到达锚点, 提前加载下一批卡片, 避免首页下半部分空白
+body.#{$switchPrefix}-hide-container {
+  .container > .load-more-anchor.#{$switchPrefix}-preload-anchor {
+    position: fixed;
+    top: -9999px;
+  }
+}
