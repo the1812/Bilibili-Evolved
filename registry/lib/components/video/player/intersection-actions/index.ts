@@ -110,13 +110,15 @@ export const component = defineComponentMetadata({
         videoEl.addEventListener('play', addPlayerOutEvent)
         // videoEl.addEventListener('pause', removePlayerOutEvent);
         videoEl.addEventListener('ended', removePlayerOutEvent)
-        videoChange(async () => {
-          await playerReady()
+        videoChange(() => {
           if (!videoEl.paused && !videoEl.ended) {
             addPlayerOutEvent()
           }
         })
       }
+
+      // 就绪前不注册任何监听, 统一丢弃过期位置, 由 videoChange 兜底在就绪后按当前状态开始观察
+      await playerReady()
 
       addComponentListener(`${metadata.name}.triggerLocation`, (value: IntersectionMode) => {
         removePlayerOutEvent()
