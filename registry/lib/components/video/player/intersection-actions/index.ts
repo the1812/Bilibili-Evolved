@@ -26,6 +26,7 @@ export const component = defineComponentMetadata({
       light: boolean
     }
     Promise.resolve().then(async () => {
+      const { playerReady } = await import('@/core/utils')
       const {
         query: { video },
       } = playerAgent
@@ -106,13 +107,14 @@ export const component = defineComponentMetadata({
         )
 
       function mountPlayListener() {
+        videoEl.addEventListener('play', addPlayerOutEvent)
+        // videoEl.addEventListener('pause', removePlayerOutEvent);
+        videoEl.addEventListener('ended', removePlayerOutEvent)
         videoChange(async () => {
-          if (playerAgent.isAutoPlay()) {
+          await playerReady()
+          if (!videoEl.paused && !videoEl.ended) {
             addPlayerOutEvent()
           }
-          videoEl.addEventListener('play', addPlayerOutEvent)
-          // videoEl.addEventListener('pause', removePlayerOutEvent);
-          videoEl.addEventListener('ended', removePlayerOutEvent)
         })
       }
 
