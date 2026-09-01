@@ -33,32 +33,48 @@ export const component = defineComponentMetadata({
 
     const setLight = async (on: boolean) => {
       await waitPlayerReady()
-      if (on) {
-        lightOn()
-        StarAnim(false)
-      } else {
-        lightOff()
-        if (settings.options.starAnimation) {
-          StarAnim(true)
-        }
-      }
+      on ? lightOn() : lightOff()
     }
 
+    // 星光动画跟随灯光状态, starAnimation 选项在此统一控制
+    const setStars = (isLightOff: boolean) => StarAnim(isLightOff && settings.options.starAnimation)
+
+    // 任何组件开关灯都经过 PlayerAgent.toggleLight, 监听其广播的灯光状态同步星光动画
+    window.addEventListener('playerLightChange', event => {
+      const { lightOn: isLightOn } = (event as CustomEvent<{ lightOn: boolean }>).detail
+      setStars(!isLightOn)
+    })
+
+    // 用户手动点击播放器设置中的 "关灯模式" 勾选框时同步星光动画 (该路径不经过 PlayerAgent.toggleLight)
+    document.addEventListener(
+      'change',
+      event => {
+        const checkbox = event.target
+        if (
+          checkbox instanceof HTMLInputElement &&
+          checkbox.closest('.bpx-player-ctrl-setting-lightoff')
+        ) {
+          setStars(checkbox.checked)
+        }
+      },
+      true,
+    )
+
     // 在 document 上捕获事件, 避免视频元素被替换后监听器失效，导致卡在关灯状态
-    const onVideoEvent = (type: string, action: () => void) => {
+    const onVideoEvent = (type: string, on: boolean) => {
       document.addEventListener(
         type,
         event => {
           if (event.target instanceof Element && event.target.closest('.bpx-player-video-area')) {
-            action()
+            setLight(on)
           }
         },
         true,
       )
     }
-    onVideoEvent('play', () => setLight(false))
-    onVideoEvent('pause', () => setLight(true))
-    onVideoEvent('ended', () => setLight(true))
+    onVideoEvent('play', false)
+    onVideoEvent('pause', true)
+    onVideoEvent('ended', true)
 
     videoChange(async () => {
       const video = (await playerAgent.query.video.element()) as HTMLVideoElement
