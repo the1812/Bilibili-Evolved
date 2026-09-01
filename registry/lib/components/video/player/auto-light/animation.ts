@@ -1,5 +1,34 @@
 // author: https://github.com/z503722728
 
+/** 动画单周期位移距离, 阴影按该周期平铺以保证循环无缝 */
+const periodHeight = 2000
+
+/** 生成单个周期的随机星点图案, 并按 periodHeight 原样重复平铺, 使动画循环首尾衔接 */
+const generateTiledShadow = (numCtrl: number) => {
+  const viewportHeight = Math.max(window.innerHeight, 1)
+  const copies = Math.ceil((viewportHeight + periodHeight) / periodHeight)
+  // 每周期星数按原实现的密度计算
+  const count = Math.floor(
+    (window.innerWidth * viewportHeight * periodHeight) /
+      (numCtrl * (viewportHeight + periodHeight)),
+  )
+  const period = []
+  for (let i = 0; i < count; i++) {
+    period.push([
+      Math.floor(Math.random() * window.innerWidth * 1.5),
+      Math.floor(Math.random() * periodHeight),
+    ])
+  }
+  const stars = []
+  for (let k = 0; k < copies; k++) {
+    const offset = k * periodHeight
+    for (const [x, y] of period) {
+      stars.push(`${x}px ${y + offset}px #FFF`)
+    }
+  }
+  return stars.join(',')
+}
+
 const CreateAnim = (): void => {
   const biliMainHeader = document.getElementById('biliMainHeader')
   if (biliMainHeader == null) {
@@ -16,31 +45,17 @@ const CreateAnim = (): void => {
 
   // 添加一段css 样式到document最后
   const style = document.createElement('style')
-  // generate random stars
-  function generate(numCtrl) {
-    let star = ''
-    const max = window.innerWidth * window.innerHeight
-    for (let i = 0; i < max / numCtrl; i++) {
-      const x = Math.floor(Math.random() * window.innerWidth * 1.5)
-      const y = Math.floor(Math.random() * (window.innerHeight + 2000))
-      star += `${x}px ${y}px #FFF,`
-    }
-    const x = Math.floor(Math.random() * window.innerWidth * 1.5)
-    const y = Math.floor(Math.random() * (window.innerHeight + 2000))
-    star += `${x}px ${y}px #FFF;`
-    return star
-  }
   const starNumCtl = 400
-  const stars1Shadow = generate(starNumCtl)
-  const stars2Shadow = generate(starNumCtl * 2)
-  const stars3Shadow = generate(starNumCtl * 4)
-  const stars4Shadow = generate(starNumCtl * 8)
+  const stars1Shadow = generateTiledShadow(starNumCtl)
+  const stars2Shadow = generateTiledShadow(starNumCtl * 2)
+  const stars3Shadow = generateTiledShadow(starNumCtl * 4)
+  const stars4Shadow = generateTiledShadow(starNumCtl * 8)
   style.innerHTML = `
   #mstars1{z-index: 1009;position: fixed;left:0px;top:0px; width:1px;height:1px;background:transparent;box-shadow:${stars1Shadow};animation:animStar 50s linear infinite}
   #mstars1:after{content:' ';position:fixed;left:0px;top:0px;width:1px;height:1px;background:transparent;box-shadow:${stars2Shadow}}
   #mstars2{z-index: 1009;position: fixed;left:0px;top:0px;width:2px;height:2px;background:transparent;box-shadow:${stars3Shadow};animation:animStar 100s linear infinite}
   #mstars2:after{content:' ';position:fixed;left:0px;top:0px;width:2px;height:2px;background:transparent;box-shadow:${stars4Shadow}}
-  @keyframes animStar{from{transform:translateY(-200px)}to{transform:translateY(-2200px)}}
+  @keyframes animStar{from{transform:translateY(0)}to{transform:translateY(-${periodHeight}px)}}
   `
   document.body.appendChild(style)
 }
