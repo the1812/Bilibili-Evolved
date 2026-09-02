@@ -11,8 +11,12 @@ enum IntersectionMode {
   Bottom = '视频底部',
 }
 
+const name = 'playerIntersectionActions'
+const displayName = '播放器位置动作'
+
 export const component = defineComponentMetadata({
-  name: 'playerIntersectionActions',
+  name,
+  displayName,
   author: {
     name: 'Waua',
     link: 'https://github.com/FoundTheWOUT',
@@ -109,7 +113,7 @@ export const component = defineComponentMetadata({
       const { addImportantStyle } = await import('@/core/style')
       addImportantStyle(
         '.left-container { position: relative !important; top: 0 !important; }',
-        'playerIntersectionActions',
+        name,
       )
 
       addComponentListener(`${metadata.name}.triggerLocation`, (value: IntersectionMode) => {
@@ -124,7 +128,6 @@ export const component = defineComponentMetadata({
       videoChange(() => addPlayerOutEvent())
     })
   },
-  displayName: '播放器位置动作',
   options: {
     triggerLocation: {
       defaultValue: IntersectionMode.Medium,
