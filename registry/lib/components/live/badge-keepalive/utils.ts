@@ -39,24 +39,21 @@ export async function getLiveRoomUserInfo(room_id: string) {
 export async function getWornMedalRoomId(): Promise<string> {
   const { medal } = await getLiveRoomUserInfo(getLiveRoomId())
 
-  const targetRoomId = medal?.curr_weared?.target_roomid
-  if (targetRoomId) {
-    return String(targetRoomId)
-  }
-
-  // curr_weared 缺失时, 尝试用佩戴勋章的 ruid 查询其直播间号
+  // 用佩戴勋章的 ruid 查询其直播间号
   const ruid = medal?.curr_weared_v2?.ruid
-  if (ruid) {
-    const json = await getJsonWithCredentials(
-      `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${ruid}`,
-    )
-    const { roomid } = validateJSON(json)
-    if (roomid) {
-      return String(roomid)
-    }
+  if (!ruid) {
+    throw new Error('未获取到当前佩戴勋章的直播间')
   }
 
-  throw new Error('未获取到当前佩戴勋章的直播间')
+  const json = await getJsonWithCredentials(
+    `https://api.live.bilibili.com/room/v1/Room/getRoomInfoOld?mid=${ruid}`,
+  )
+  const { roomid } = validateJSON(json)
+  if (!roomid) {
+    throw new Error('未获取到当前佩戴勋章的直播间')
+  }
+
+  return String(roomid)
 }
 
 export async function keepAliveRequest(
