@@ -36,16 +36,13 @@ export const component = defineComponentMetadata({
       } = playerAgent
 
       const videoEl = (await video.element()) as HTMLVideoElement
-      // const playerWrap = await video.wrap()
-      // 如果有 video-player 优先的使用该盒子
-      // 因为在稍后再看页面（medialist）视频也有 player-wrap
-      // 选择 player-wrap 会导致闪烁。
+      // 优先使用 #video-player: 稍后再看 (medialist) 页面也有 .player-wrap, 混用会导致闪烁
       const playerWrap = (document.getElementById('video-player') ??
         (dq('.player-wrap') || dq('.player-module'))) as HTMLElement
 
       let observer: IntersectionObserver
       let intersectionLock = true // Lock intersection action
-      let playerIntersecting = true // 播放器当前是否在视口内 (由 IO 回调维护)
+      let playerIntersecting = true // 播放器当前是否在视口内, 由 IO 回调维护
 
       const getToTop = (mode: string): number =>
         ({
@@ -95,8 +92,8 @@ export const component = defineComponentMetadata({
           { threshold: getToTop(mode) },
         )
 
-      // 视口外播放时, playerAutoLight 的关灯会覆盖自动开灯
-      // 同一任务内纠正可避免闪烁.
+      // 视口外播放时, playerAutoLight 的关灯会覆盖自动开灯;
+      // 关灯广播同步派发, 在同一任务内纠正开灯, 避免灯光闪烁
       window.addEventListener('playerLightChange', event => {
         const { lightOn: isLightOn } = (event as CustomEvent<{ lightOn: boolean }>).detail
         if (!isLightOn && isLightEnabled() && !videoEl.paused && !playerIntersecting) {
@@ -105,16 +102,16 @@ export const component = defineComponentMetadata({
         }
       })
 
-      await playerReady()
-
-      // 开灯模式 b 站给 left-container 加 scroll-sticky (负 top) 钉住播放器,
-      // 小窗模式还会动态写入负 top 使容器整体上移 (评论区跳动);
+      // 开灯时 left-container 有 scroll-sticky,
+      // 小窗模式还会动态写入负 top 导致评论区跳动;
       // 用重要样式一次性强制 relative + top 0
       const { addImportantStyle } = await import('@/core/style')
       addImportantStyle(
         '.left-container { position: relative !important; top: 0 !important; }',
         name,
       )
+
+      await playerReady()
 
       addComponentListener(`${metadata.name}.triggerLocation`, (value: IntersectionMode) => {
         removePlayerOutEvent()

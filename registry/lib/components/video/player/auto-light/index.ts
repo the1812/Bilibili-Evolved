@@ -47,13 +47,12 @@ export const component = defineComponentMetadata({
       true,
     )
 
-    // 等待播放器完成初始化, 过早调用关灯 API 可能与 b 站自身的初始化竞争并触发页面自动刷新
-    // https://github.com/the1812/Bilibili-Evolved/issues/5125
-    // 就绪前的 play/pause 事件无法安全响应且状态不可信, 统一丢弃, 由 videoChange 兜底按当前状态同步
+    // 等待播放器完成初始化: 过早调用关灯 API 会与 b 站初始化竞争, 触发页面自动刷新 (#5125)
+    // 就绪前的 play/pause 事件状态不可信, 统一丢弃, 由 videoChange 兜底按当前状态同步
     await playerReady()
 
-    // 在 document 上捕获事件, 避免视频元素被替换后监听器失效，导致卡在关灯状态
-    // 限定主播放器挂载点 (#bilibili-player 为视频/番剧页, #edu-player 为课堂页), 推荐卡片预览是独立 bpx 实例, 不能误触发
+    // 在 document 上捕获事件, 避免视频元素被替换后监听器失效, 导致卡在关灯状态
+    // 限定主播放器挂载点 (#bilibili-player 为视频/番剧页, #edu-player 为课堂页)
     const onVideoEvent = (type: string, action: () => void) => {
       document.addEventListener(
         type,
