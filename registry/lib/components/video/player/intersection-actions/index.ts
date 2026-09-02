@@ -41,29 +41,21 @@ export const component = defineComponentMetadata({
 
       let observer: IntersectionObserver
       let intersectionLock = true // Lock intersection action
+      let playerIntersecting = true // 播放器当前是否在视口内 (由 IO 回调维护)
 
-      function getToTop(_mode: string): number {
-        switch (_mode) {
-          case IntersectionMode.Top:
-            return 1
-          case IntersectionMode.Medium:
-            return 0.5
-          case IntersectionMode.Bottom:
-            return 0
-          default:
-            return 0.5
-        }
-      }
+      const getToTop = (mode: string): number =>
+        ({
+          [IntersectionMode.Top]: 1,
+          [IntersectionMode.Medium]: 0.5,
+          [IntersectionMode.Bottom]: 0,
+        }[mode] ?? 0.5)
 
-      function addPlayerOutEvent() {
-        // window.addEventListener('scroll', onPlayerOutEvent, { passive: true });
-        observer.observe(playerWrap)
-      }
+      const addPlayerOutEvent = () => observer.observe(playerWrap)
+      const removePlayerOutEvent = () => observer.unobserve(playerWrap)
 
-      function removePlayerOutEvent() {
-        // window.removeEventListener('scroll', onPlayerOutEvent);
-        observer.unobserve(playerWrap)
-      }
+      // 自动开灯是否可用: light 选项开启且 playerAutoLight 已启用且未开自动暂停
+      const isLightEnabled = () =>
+        settings.light && getComponentSettings('playerAutoLight').enabled && !settings.pause
 
       const intersectingCall = () => {
         if (intersectionLock) {
@@ -73,51 +65,42 @@ export const component = defineComponentMetadata({
         if (settings.pause && videoEl.paused) {
           videoEl.play()
         }
-        if (
-          settings.light &&
-          getComponentSettings('playerAutoLight').enabled &&
-          !settings.pause &&
-          !videoEl.paused
-        ) {
+        if (isLightEnabled() && !videoEl.paused) {
           lightOff()
         }
       }
 
       const disIntersectingCall = () => {
-        // if video is playing, unlock intersecting action
         if (!videoEl.paused) {
           intersectionLock = false
+          if (settings.pause) {
+            videoEl.pause()
+          }
         }
-        if (settings.pause && !videoEl.paused) {
-          videoEl.pause()
-        }
-        if (settings.light && getComponentSettings('playerAutoLight').enabled && !settings.pause) {
+        if (isLightEnabled()) {
           lightOn()
         }
       }
 
-      const createObserver = (mode?: string) =>
+      const createObserver = (mode = settings.triggerLocation) =>
         new IntersectionObserver(
           ([e]) => {
+            playerIntersecting = e.isIntersecting
             e.isIntersecting ? intersectingCall() : disIntersectingCall()
           },
-          {
-            threshold: getToTop(mode || settings.triggerLocation),
-          },
+          { threshold: getToTop(mode) },
         )
 
-      function mountPlayListener() {
-        videoEl.addEventListener('play', addPlayerOutEvent)
-        // videoEl.addEventListener('pause', removePlayerOutEvent);
-        videoEl.addEventListener('ended', removePlayerOutEvent)
-        videoChange(() => {
-          if (!videoEl.paused && !videoEl.ended) {
-            addPlayerOutEvent()
-          }
-        })
-      }
+      // 视口外播放时, playerAutoLight 的关灯会覆盖自动开灯
+      // 同一任务内纠正可避免闪烁.
+      window.addEventListener('playerLightChange', event => {
+        const { lightOn: isLightOn } = (event as CustomEvent<{ lightOn: boolean }>).detail
+        if (!isLightOn && isLightEnabled() && !videoEl.paused && !playerIntersecting) {
+          intersectionLock = false
+          lightOn()
+        }
+      })
 
-      // 就绪前不注册任何监听, 统一丢弃过期位置, 由 videoChange 兜底在就绪后按当前状态开始观察
       await playerReady()
 
       addComponentListener(`${metadata.name}.triggerLocation`, (value: IntersectionMode) => {
@@ -127,7 +110,9 @@ export const component = defineComponentMetadata({
       })
 
       observer = createObserver()
-      mountPlayListener()
+      videoEl.addEventListener('play', addPlayerOutEvent)
+      videoEl.addEventListener('ended', removePlayerOutEvent)
+      videoChange(() => addPlayerOutEvent())
     })
   },
   displayName: '播放器位置动作',
