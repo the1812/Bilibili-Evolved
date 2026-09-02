@@ -103,18 +103,14 @@ export const component = defineComponentMetadata({
 
       await playerReady()
 
-      // 强制 relative 让播放器随页面正常滚出, 与关灯模式几何一致
-      const leftContainer = dq('.left-container') as HTMLElement | null
-      if (leftContainer) {
-        leftContainer.style.position = 'relative'
-        // 短页面切换到小窗模式时, b 站会给 left-container 加负 top 把容器整体上移,
-        // 导致评论区瞬间跳动; 重置为 0 保持布局位置不变
-        new MutationObserver(() => {
-          if (parseFloat(leftContainer.style.top) < 0) {
-            leftContainer.style.top = '0px'
-          }
-        }).observe(leftContainer, { attributes: true, attributeFilter: ['style'] })
-      }
+      // 开灯模式 b 站给 left-container 加 scroll-sticky (负 top) 钉住播放器,
+      // 小窗模式还会动态写入负 top 使容器整体上移 (评论区跳动);
+      // 用重要样式一次性强制 relative + top 0
+      const { addImportantStyle } = await import('@/core/style')
+      addImportantStyle(
+        '.left-container { position: relative !important; top: 0 !important; }',
+        'playerIntersectionActions',
+      )
 
       addComponentListener(`${metadata.name}.triggerLocation`, (value: IntersectionMode) => {
         removePlayerOutEvent()
