@@ -169,7 +169,6 @@ export abstract class PlayerAgent
         }
       })
     }
-    // 广播灯光状态, 供其他组件 (如自动关灯的星光动画) 同步
     window.dispatchEvent(
       new CustomEvent('playerLightChange', { detail: { lightOn: targetLightOn } }),
     )
