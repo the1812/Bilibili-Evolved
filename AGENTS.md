@@ -41,11 +41,12 @@ The dev server starts and watches the development core build, serves the local u
 - Keep `entry` focused on the work that must happen when the component starts.
 - Do not rely on the return value of `entry` for cleanup. Put teardown logic in `unload`; use `reload` together with `unload` when a component must support disable and re-enable behavior.
 - Use existing helpers such as `styledComponentEntry`, `toggleStyle`, shared core APIs, component APIs, and plugin APIs before adding new infrastructure.
+- Use the observer APIs from `core/observer`, such as `mutationObserve`, `childList`, `visible`, `sizeChange`, `urlChange`, and `videoChange`, instead of directly constructing native `MutationObserver`, `IntersectionObserver`, or `ResizeObserver` instances when the project API covers the required behavior.
 - Put fixed component styles in SCSS files instead of constructing style text in business logic. Use `instantStyles`, `styledComponentEntry`, or `toggleStyle` so styles are only applied when intended.
 - When writing SCSS, check shared Sass files before adding local helpers. For example, `ui/_common.scss` is available through `@import "common"` and provides common mixins such as fullscreen and centering helpers.
 - For options, follow existing `defineOptionsMetadata` and `options` patterns so defaults, labels, and validators stay close to metadata.
 - Model exclusive choices as one option, usually with an enum or dropdown, instead of multiple mutually exclusive boolean options.
-- If settings need to control CSS, prefer toggling a class on `html` or `body` and writing SCSS against that class.
+- For dynamic style switching, keep the style rules in SCSS and toggle a state class on `html` so CSS responds to that state. Prefer this over manually adding and removing stylesheets in TypeScript.
 
 ## Code Style
 
