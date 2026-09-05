@@ -1,3 +1,7 @@
+html:not(.live-side-bar-user-opened) .side-bar-popup-cntr {
+  display: none !important;
+}
+
 .side-bar-cntr {
   transition: 0.24s ease-out !important;
   overflow: visible !important;
@@ -36,7 +40,7 @@
   }
   &::before,
   &::after {
-    content: "";
+    content: '';
     transition: 0.24s ease-out;
     cursor: pointer;
     position: fixed;
