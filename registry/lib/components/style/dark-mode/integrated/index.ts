@@ -8,7 +8,7 @@ const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
 
 // 直播页
-const isLivePage = () => matchUrlPattern(/^https:\/\/live\.bilibili\.com\//)
+const isLivePage = () => matchUrlPattern(/^https:\/\/(?:live|link)\.bilibili\.com\//)
 
 // 深色模式不适用的页面: 活动页 / blackboard / 音乐 / 创作中心
 const unsupportedUrls = [
