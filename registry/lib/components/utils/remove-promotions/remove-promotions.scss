@@ -28,9 +28,9 @@ body.remove-game-match-module #reportFirst3,
 .eva-banner,
 .video-ad-creative-card,
 .bili-dyn-home--member .bili-dyn-ads,
-.video-page-special-card-small,
-.video-page-game-card-small,
-.video-page-operator-card-small,
+.video-page-special-card-small .card-box,
+.video-page-game-card-small .card-box,
+.video-page-operator-card-small .card-box,
 [data-be-promotion-mark],
 body:not(.preserve-feed-goods) .dyn-goods,
 .desktop-download-tip,
@@ -137,5 +137,14 @@ $switchPrefix: 'remove-promotions';
     display: unset;
     visibility: visible;
     border: red 1px solid;
+  }
+}
+
+// 进入页面时提前加载: 把锚点临时移到视口上方,
+// 页面自身的滚动检查会认为已经到达锚点, 提前加载下一批卡片, 避免首页下半部分空白
+body.#{$switchPrefix}-hide-container {
+  .container > .load-more-anchor.#{$switchPrefix}-preload-anchor {
+    position: fixed;
+    top: -9999px;
   }
 }
