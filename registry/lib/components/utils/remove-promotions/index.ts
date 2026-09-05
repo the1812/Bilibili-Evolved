@@ -5,6 +5,37 @@ import { createComponentWithProps } from '@/core/utils'
 
 const componentName = 'removePromotions'
 
+// 完全隐藏模式下, 进入页面时提前加载一批卡片, 避免首页下半部分空白
+const startHomeFeedPreload = async () => {
+  const preloadAnchorSelector = '.container > .load-more-anchor'
+  const preloadClass = 'remove-promotions-preload-anchor'
+  const preloadReleaseTimeout = 5000
+
+  const { select } = await import('@/core/spin-query')
+  const anchor = (await select(preloadAnchorSelector)) as HTMLElement | null
+  if (!anchor) {
+    return
+  }
+  const parent = anchor.parentElement
+  const preloadedChildCount = parent?.childElementCount ?? -1
+  anchor.classList.add(preloadClass)
+  window.dispatchEvent(new Event('scroll'))
+  const release = () => anchor.classList.remove(preloadClass)
+  const observer = new MutationObserver(() => {
+    if (anchor.parentElement?.childElementCount !== preloadedChildCount) {
+      observer.disconnect()
+      release()
+    }
+  })
+  if (parent) {
+    observer.observe(parent, { childList: true })
+  }
+  window.setTimeout(() => {
+    observer.disconnect()
+    release()
+  }, preloadReleaseTimeout)
+}
+
 // const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {
   const { addComponentListener } = await import('@/core/settings')
@@ -63,6 +94,9 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
           )
         })
     })
+    if (settings.options.hideContainer) {
+      startHomeFeedPreload()
+    }
   }
   addComponentListener(
     `${metadata.name}.preserveEventBanner`,
