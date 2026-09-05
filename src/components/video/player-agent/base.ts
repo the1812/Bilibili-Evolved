@@ -156,22 +156,22 @@ export abstract class PlayerAgent
     if (!this.nativeApi) {
       return null
     }
-    const isCurrentLightOff = this.nativeApi.getLightOff()
-    // 无指定参数, 直接 toggle
-    if (on === undefined) {
-      this.nativeApi.setLightOff(!isCurrentLightOff)
-      return !isCurrentLightOff
+    const isLightOn = !this.nativeApi.getLightOff()
+    const targetLightOn = on ?? !isLightOn
+    const changed = targetLightOn !== isLightOn
+    if (changed) {
+      this.nativeApi.setLightOff(!targetLightOn)
+      // 同步设置面板中的 "关灯模式" 勾选框 (原生 API 不会自动更新该 UI), 面板懒加载可能尚未完成
+      this.query.control.settings.lightOff().then(checkbox => {
+        if (checkbox instanceof HTMLInputElement) {
+          checkbox.checked = !targetLightOn
+        }
+      })
     }
-    // 关灯状态 && 要开灯 -> 开灯
-    if (on && isCurrentLightOff) {
-      this.nativeApi.setLightOff(false)
-      return true
-    }
-    if (!on && !isCurrentLightOff) {
-      this.nativeApi.setLightOff(true)
-      return false
-    }
-    return null
+    window.dispatchEvent(
+      new CustomEvent('playerLightChange', { detail: { lightOn: targetLightOn } }),
+    )
+    return changed ? targetLightOn : null
   }
 
   getPlayerConfig<DefaultValueType = unknown, ValueType = DefaultValueType>(

@@ -1,6 +1,6 @@
 import { matchUrlPattern } from '@/core/utils'
 import { AutoplayActionType } from '../AutoplayActionType'
-import { BaseAutoplayHandler } from './BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './base-autoplay-handler'
 
 /** 自动连播处理器-推荐视频（接下来播放） */
 export class RecommendAutoplayHandler extends BaseAutoplayHandler {
@@ -19,7 +19,7 @@ export class RecommendAutoplayHandler extends BaseAutoplayHandler {
     )
   }
 
-  async setupAutoPlay(enable: boolean) {
-    await this.setupAutoPlay_SwitchBtn(enable)
+  async setupAutoplay(enable: boolean) {
+    await this.setupAutoplaySwitchButton(enable)
   }
 }

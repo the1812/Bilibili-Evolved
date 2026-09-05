@@ -48,7 +48,7 @@ export abstract class BaseAutoplayHandler {
    * 设置自动连播状态
    * @param enable true：启用，false：禁用
    */
-  abstract setupAutoPlay(enable: boolean): Promise<void>
+  abstract setupAutoplay(enable: boolean): Promise<void>
 
   // #endregion
 
@@ -104,7 +104,7 @@ export abstract class BaseAutoplayHandler {
   }
 
   /** 设置自动连播按钮状态（位于右上角） */
-  protected async setupAutoPlay_SwitchBtn(enableAutoplay: boolean) {
+  protected async setupAutoplaySwitchButton(enableAutoplay: boolean) {
     sq(() => {
       try {
         const app = document.getElementById('app')
@@ -119,7 +119,7 @@ export abstract class BaseAutoplayHandler {
   }
 
   /** 设置播放器自动连播状态（位于播放器设置浮窗内） */
-  protected async setupAutoPlay_Player(enableAutoplay: boolean) {
+  protected async setupAutoplayPlayer(enableAutoplay: boolean) {
     const selector = enableAutoplay
       ? '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]'
       : '.bpx-player-ctrl-setting-handoff input[type="radio"][value="2"]'
