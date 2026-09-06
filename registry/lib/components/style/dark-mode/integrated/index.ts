@@ -7,20 +7,40 @@ const darkModeClass = 'dark'
 const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
 
+// 不支持深色模式的页面
+const unsupportedUrls = [
+  /^https:\/\/app\.bilibili\.com\//,
+  /^https:\/\/b\.bilibili\.com\//,
+  /^https:\/\/d\.bilibili\.com\//,
+  /^https:\/\/e\.bilibili\.com\//,
+  /^https:\/\/ir\.bilibili\.com\//,
+  /^https:\/\/love\.bilibili\.com\//,
+  /^https:\/\/manga\.bilibili\.com\//,
+  /^https:\/\/mcn\.bilibili\.com\//,
+  /^https:\/\/member\.bilibili\.com\//,
+  /^https:\/\/www\.bilibili\.com\/audio\//,
+  /^https:\/\/www\.bilibili\.com\/festival\//,
+  /^https:\/\/www\.bilibili\.com\/protocal\//,
+  /^https:\/\/www\.bilibili\.com\/v\/copyright\//,
+]
+
 // 直播页
 const isLivePage = () => matchUrlPattern(/^https:\/\/(?:live|link)\.bilibili\.com\//)
 
-// 深色模式不适用的页面: 活动页 / blackboard / 音乐 / 创作中心
-const unsupportedUrls = [
-  /^https:\/\/www\.bilibili\.com\/festival\//,
-  /^https:\/\/www\.bilibili\.com\/blackboard\//,
-  /^https:\/\/www\.bilibili\.com\/audio\//,
-  /^https:\/\/member\.bilibili\.com\//,
-]
+// blackboard 路径下是帮助中心、活动页、活动列表等杂类页面,
+// 其官方深色模式由 laputa 头部/页脚脚本提供, 脚本上显式声明 theme="light" 的页面会强制浅色,
+// 未声明的页面跟随 theme_style cookie.
+const isBlackboardPage = () => matchUrlPattern(/^https:\/\/www\.bilibili\.com\/blackboard\//)
+const isBlackboardDarkModeSupported = () =>
+  dq('script[src*="laputa-header"], script[src*="laputa-footer"]') !== null &&
+  dq('script[src*="laputa"][theme="light"]') === null
 
 const isOfficialDarkModeEnabled = () => {
   if (isLivePage()) {
     return document.documentElement.getAttribute('lab-style') === 'dark'
+  }
+  if (isBlackboardPage() && !isBlackboardDarkModeSupported()) {
+    return false
   }
   return getCookieValue('theme_style') === 'dark'
 }
