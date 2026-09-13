@@ -21,7 +21,7 @@ const exitConfirmHandler = (e: BeforeUnloadEvent) => {
   }
 }
 
-/** 控制栏上显示的直播已持续时间 */
+/** 控制栏上显示的直播已持续时间 (轮播等场景下为空) */
 const getLiveDuration = () => dq('.control-area .text.time')?.textContent?.trim() || undefined
 
 const addScreenshot = (video: HTMLVideoElement, duration?: string) => {
@@ -39,13 +39,13 @@ const takeLiveScreenshot = async () => {
     logError('直播截图失败: 无法定位直播视频元素.')
     return
   }
-  const duration = getLiveDuration()
-  if (duration) {
-    addScreenshot(video, duration)
+  if (!dq('.control-area')) {
+    // 控制栏未显示时取不到持续时间, 先临时调出控制栏再截图
+    await withControlBar(() => addScreenshot(video, getLiveDuration()))
     return
   }
-  // 控制栏未显示时取不到持续时间, 先临时调出控制栏再截图
-  await withControlBar(() => addScreenshot(video, getLiveDuration()))
+  // 轮播等场景下控制栏存在但没有持续时间, 交给 Screenshot 用视频时间兜底
+  addScreenshot(video, getLiveDuration())
 }
 
 const insertScreenshotButton = (controlBar: Element | null) => {

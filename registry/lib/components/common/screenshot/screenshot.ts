@@ -1,20 +1,10 @@
 import { playerAgent } from '@/components/video/player-agent'
+import { formatDuration } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
 
 export const ScreenshotDisabledClass = 'screenshot-disable'
 
 const canvas = document.createElement('canvas')
-
-/** 将视频时间点格式化为 `HH:MM:SS.mmm` / `MM:SS.mmm` */
-const formatVideoTime = (videoTime: number) => {
-  const hour = Math.trunc(videoTime / 3600).toString()
-  const minute = Math.trunc(videoTime / 60).toString()
-  const second = (videoTime % 60).toFixed(2)
-  if (hour === '0') {
-    return `${minute.padStart(2, '0')}:${second.padStart(5, '0')}`
-  }
-  return `${hour}:${minute.padStart(2, '0')}:${second.padStart(5, '0')}`
-}
 
 export class Screenshot {
   readonly mimeType = 'image/png'
@@ -31,7 +21,7 @@ export class Screenshot {
     public video: HTMLVideoElement,
     public videoTime: number,
     public withDanmaku = false,
-    public time = formatVideoTime(videoTime),
+    public time = formatDuration(videoTime, 2),
   ) {
     this.createUrl()
   }
