@@ -79,7 +79,7 @@ Choose validation based on the risk and scope of the change.
 - For browser-facing behavior, verify the changed feature in a real browser with the local userscript installed.
 - For API-shape or Bilibili-rollout-dependent changes, record what page or account state was actually self-tested.
 
-The pull request CI workflow runs the following production builds. Do not repeat them as routine local validation; run them locally only when explicitly requested, reproducing a CI failure, changing shared build infrastructure, or preparing a release.
+The pull request CI workflow runs the following checks and builds. Do not repeat `build-core` or the full `build-features` build as routine local validation; run them locally only when explicitly requested, reproducing a CI failure, changing shared build infrastructure, or preparing a release.
 
 1. `pnpm run type`
 2. `pnpm run lint-check`
