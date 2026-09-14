@@ -1,0 +1,7 @@
+.bili-header > .bili-header__channel {
+  height: var(--hide-category-bar-spacing, 16px) !important;
+
+  > * {
+    display: none !important;
+  }
+}
