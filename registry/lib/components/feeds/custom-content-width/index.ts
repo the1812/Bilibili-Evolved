@@ -30,6 +30,10 @@ export type CustomContentWidthOptions = OptionsOfMetadata<typeof options>
 export const component = defineComponentMetadata({
   name: 'customContentWidth',
   displayName: '自定义动态页内容宽度',
+  author: {
+    name: 'WhiteTeal55',
+    link: 'https://github.com/WhiteTeal55',
+  },
   options,
   tags: [componentsTags.style, componentsTags.feeds],
   urlInclude: feedsUrls,
