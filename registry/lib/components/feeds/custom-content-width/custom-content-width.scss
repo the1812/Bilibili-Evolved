@@ -1,0 +1,20 @@
+body #app {
+  // 动态页
+  .bili-dyn-home--member {
+    --center-width: var(--be-feeds-content-width, 632px) !important;
+  }
+  // 动态详情页
+  .content {
+    width: var(--be-feeds-content-width, 632px) !important;
+  }
+  //图文动态 / 专栏详情页
+  .opus-detail {
+    width: var(--be-feeds-content-width, 708px) !important;
+    .opus-module-top__album__cover {
+      width: inherit !important;
+    }
+    .right-sidebar-wrap {
+      margin-left: calc(var(--be-feeds-content-width) + 12px) !important;
+    }
+  }
+}
