@@ -10,9 +10,9 @@ import {
   Screenshot,
   ScreenshotDisabledClass,
   takeScreenshot,
-} from '../../../common/screenshot/screenshot'
+} from '../common/screenshot/screenshot'
 import { defineComponentMetadata } from '@/components/define'
-import ScreenshotContainer from '../../../common/screenshot/ScreenshotContainer.vue'
+import ScreenshotContainer from '../common/screenshot/ScreenshotContainer.vue'
 
 let screenShotsList: Vue & {
   screenshots: Screenshot[]

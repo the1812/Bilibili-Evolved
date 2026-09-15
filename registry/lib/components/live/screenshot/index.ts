@@ -3,8 +3,11 @@ import { waitForControlBar, withControlBar } from '@/components/live/live-contro
 import { mountVueComponent } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 import { KeyBindingAction } from '../../utils/keymap/bindings'
-import { Screenshot, ScreenshotDisabledClass } from '../../common/screenshot/screenshot'
-import ScreenshotContainer from '../../common/screenshot/ScreenshotContainer.vue'
+import {
+  Screenshot,
+  ScreenshotDisabledClass,
+} from '../../video/player/common/screenshot/screenshot'
+import ScreenshotContainer from '../../video/player/common/screenshot/ScreenshotContainer.vue'
 import LiveScreenshotButton from './LiveScreenshotButton.vue'
 
 const buttonClass = 'be-live-screenshot-button'
