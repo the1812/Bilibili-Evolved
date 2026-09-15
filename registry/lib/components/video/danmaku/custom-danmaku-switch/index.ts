@@ -10,7 +10,7 @@ import { isTyping } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
 import type { KeyBindingAction } from '../../../utils/keymap/bindings'
-import { showDanmakuStateTip } from '../../../common/player-tip/player-tip'
+import { showDanmakuStateTip } from '../../player/common/player-tip/player-tip'
 
 const name = 'customDanmakuSwitch'
 const displayName = '自定义弹幕切换行为'

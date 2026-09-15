@@ -4,7 +4,7 @@ import { registerAndGetData } from '@/plugins/data'
 import type { Options } from '.'
 import type { KeyBindingAction, KeyBindingActionContext, KeyEvent } from './bindings'
 import { getActiveElement, simulateClick } from '@/core/utils'
-import { showDanmakuStateTip, showPlayerTip } from '../../common/player-tip/player-tip'
+import { showDanmakuStateTip, showPlayerTip } from '../../video/player/common/player-tip/player-tip'
 
 export const keyEventToPointer = (event: KeyEvent): PointerEventInit => {
   return {
