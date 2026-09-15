@@ -6,7 +6,7 @@ import {
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings, isComponentEnabled } from '@/core/settings'
 import { allVideoUrls } from '@/core/utils/urls'
-import { showPlayerTip } from '../../../common/player-tip/player-tip'
+import { showPlayerTip } from '../common/player-tip/player-tip'
 
 const name = 'scrollVolume'
 const displayName = '滚轮调节音量'
