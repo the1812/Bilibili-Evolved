@@ -7,7 +7,7 @@ body #app {
   .content {
     width: var(--be-feeds-content-width, 632px) !important;
   }
-  //图文动态 / 专栏详情页
+  // 图文动态 / 专栏详情页
   .opus-detail {
     width: var(--be-feeds-content-width, 708px) !important;
     .opus-module-top__album__cover {
@@ -15,6 +15,7 @@ body #app {
     }
     .right-sidebar-wrap {
       margin-left: calc(var(--be-feeds-content-width) + 12px) !important;
+      transition: none !important;
     }
   }
 }
