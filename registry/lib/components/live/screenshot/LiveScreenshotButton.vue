@@ -15,13 +15,14 @@ export default Vue.extend({
   },
 })
 </script>
+
 <style lang="scss">
 .be-live-screenshot-tip.tip-wrap {
   position: relative;
 
-  // 复用原生提示框样式 (.tip.panel), 只补充原生 scoped 样式未提供的显隐动画和文本布局。
-  // 动画与原生一致: 200ms cubicOut, 从下方 10px 滑入并淡入到 0.9 不透明度;
-  // 位移动画用 translate 属性而非 transform, 以免覆盖 .panel 用于定位的 transform。
+  // 气泡外观来自原生 .tip.panel, 这里只补充原生 scoped 样式覆盖不到的显隐与文本布局。
+  // 显隐动画与播放器一致: 200ms cubicOut, 从下方 10px 滑入并淡入;
+  // 位移用 translate 属性而非 transform, 以免覆盖 .panel 用于定位的 transform。
   .tip.panel {
     visibility: hidden;
     opacity: 0;
@@ -29,10 +30,7 @@ export default Vue.extend({
     padding: 6px 10px;
     line-height: 21px;
     white-space: nowrap;
-    word-break: keep-all;
-    transition: visibility 0.2s cubic-bezier(0.215, 0.61, 0.355, 1),
-      opacity 0.2s cubic-bezier(0.215, 0.61, 0.355, 1),
-      translate 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
+    transition: 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
   &:hover .tip.panel {
@@ -50,9 +48,23 @@ export default Vue.extend({
   height: 30px;
   padding: 0;
   border: none;
-  background-color: transparent;
+  background: none;
   color: #fff;
   cursor: pointer;
   outline: none !important;
+
+  // 原生控制栏按钮悬停时图标会放大到 28px 再回到 24px (.icon:hover svg 动画宽高)。
+  // VIcon 是字体图标, 盒子尺寸跟 --size (宽高), 字形大小跟 font-size, 两者都要动画
+  &:hover .be-icon {
+    animation: 0.2s be-live-screenshot-icon-zoom;
+  }
+
+  @keyframes be-live-screenshot-icon-zoom {
+    50% {
+      width: 28px;
+      height: 28px;
+      font-size: 28px;
+    }
+  }
 }
 </style>
