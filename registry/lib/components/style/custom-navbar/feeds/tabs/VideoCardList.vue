@@ -125,7 +125,7 @@ export default Vue.extend({
       }
     }
   }
-  // 竖向卡片的描述行默认隐藏(见 VideoCard.vue), 这里借它显示合集/收藏夹名
+
   &.show-description .video-card.vertical :deep(.description) {
     grid-area: stats;
     display: block;

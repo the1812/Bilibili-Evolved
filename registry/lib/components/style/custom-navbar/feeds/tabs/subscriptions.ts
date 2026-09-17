@@ -86,15 +86,21 @@ export const getSubscriptionKindName = (subscription: Subscription) =>
 const getUgcSeasonLatestArchive = async (
   subscription: Subscription,
 ): Promise<SubscriptionContent | null> => {
-  const data = await bilibiliApi<{ archives?: any[] }>(
-    getJsonWithCredentials(
-      `https://api.bilibili.com/x/polymer/web-space/seasons_archives_list?mid=${subscription.mid}` +
-        `&season_id=${subscription.id}&sort_reverse=false&page_num=1&page_size=3`,
-    ),
-    `获取合集「${subscription.title}」的投稿失败`,
-    false,
-  )
-  const archives = data.archives ?? []
+  // 合集内的顺序由 UP 排定(实测有升序/降序/乱序三种), 与投稿时间无关:
+  // 两端各取若干条再按投稿时间挑最新, 才能覆盖"最新一集在开头"和"在末尾"两种情况
+  const getArchives = async (sortReverse: boolean) => {
+    const data = await bilibiliApi<{ archives?: any[] }>(
+      getJsonWithCredentials(
+        `https://api.bilibili.com/x/polymer/web-space/seasons_archives_list?mid=${subscription.mid}` +
+          `&season_id=${subscription.id}&sort_reverse=${sortReverse}&page_num=1&page_size=10`,
+      ),
+      `获取合集「${subscription.title}」的投稿失败`,
+      false,
+    )
+    return data.archives ?? []
+  }
+  const [fromStart, fromEnd] = await Promise.all([getArchives(false), getArchives(true)])
+  const archives = [...fromStart, ...fromEnd]
   if (archives.length === 0) {
     return null
   }
