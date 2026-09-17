@@ -3,24 +3,17 @@
     <div class="episodes-picker-header">
       <div class="episodes-picker-title">选集:</div>
       <div class="episodes-picker-checked-ratio">{{ formatRatio(episodeItems) }}</div>
-      <div class="episodes-picker-actions">
-        <VButton
-          v-for="action of selectActions"
-          :key="action.name"
-          :class="action.name"
-          :title="action.title"
-          type="transparent"
-          @click="applySelectAction(action, episodeItems)"
-        >
-          <VIcon :size="16" :icon="action.icon" />
-        </VButton>
-      </div>
+      <EpisodeSelectActions :items="episodeItems" />
     </div>
     <div class="episodes-picker-items">
       <div v-if="episodeItems.length === 0" class="episodes-picker-empty">
         <VEmpty />
       </div>
-      <div v-for="(section, sectionIndex) of episodeSections" :key="sectionIndex">
+      <div
+        v-for="(section, sectionIndex) of episodeSections"
+        :key="sectionIndex"
+        class="episodes-picker-section-block"
+      >
         <div
           v-if="section.title"
           class="episodes-picker-section"
@@ -31,15 +24,11 @@
           <VIcon class="episodes-picker-section-toggle" :size="14" icon="mdi-chevron-down" />
           <span class="episodes-picker-section-title">{{ section.title }}</span>
           <span class="episodes-picker-section-ratio">{{ formatRatio(section.entries) }}</span>
-          <VButton
-            v-for="action of selectActions"
-            :key="action.name"
-            :title="action.title"
-            type="transparent"
-            @click.stop="applySelectAction(action, section.entries)"
-          >
-            <VIcon :size="14" :icon="action.icon" />
-          </VButton>
+          <EpisodeSelectActions
+            class="episodes-picker-section-actions"
+            :items="section.entries"
+            compact
+          />
         </div>
         <transition
           name="episodes-picker-collapse"
@@ -72,39 +61,17 @@
     </div>
   </div>
 </template>
-<script lang="ts">
-import { VButton, VIcon, CheckBox, VEmpty } from '@/ui'
-import { EpisodeItem } from './episode-item'
+<script setup lang="ts">
+import { computed, onBeforeMount, ref } from 'vue'
+import { VIcon, CheckBox, VEmpty } from '@/ui'
+import type { EpisodeItem } from './episode-item'
+import EpisodeSelectActions from './EpisodeSelectActions.vue'
 
 interface EpisodeSection {
   title?: string
   isCollapsed: boolean
   entries: EpisodeItem[]
 }
-
-interface SelectAction {
-  name: string
-  title: string
-  icon: string
-  /** 目标选中状态, 省略时表示反选 */
-  isChecked?: boolean
-}
-
-const selectActions: SelectAction[] = [
-  {
-    name: 'select-all',
-    title: '全选',
-    icon: 'mdi-checkbox-multiple-marked-circle',
-    isChecked: true,
-  },
-  {
-    name: 'deselect-all',
-    title: '全不选',
-    icon: 'mdi-checkbox-multiple-blank-circle-outline',
-    isChecked: false,
-  },
-  { name: 'invert-selection', title: '反选', icon: 'mdi-circle-slice-4' },
-]
 
 const buildEpisodeSections = (items: EpisodeItem[]): EpisodeSection[] => {
   const sections: EpisodeSection[] = []
@@ -119,87 +86,51 @@ const buildEpisodeSections = (items: EpisodeItem[]): EpisodeSection[] => {
   return sections
 }
 
-export default Vue.extend({
-  components: {
-    VButton,
-    VIcon,
-    CheckBox,
-    VEmpty,
-  },
-  props: {
-    api: {
-      type: Function,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      selectActions,
-      episodeItems: [] as EpisodeItem[],
-      episodeSections: [] as EpisodeSection[],
-      maxCheckedItems: 32,
-      lastCheckedEpisodeIndex: -1,
-    }
-  },
-  computed: {
-    checkedInputItems() {
-      return this.episodeItems.filter(it => it.isChecked).map(it => it.inputItem)
-    },
-  },
-  created() {
-    this.getEpisodeItems()
-  },
-  methods: {
-    // 展开/折叠前固定为内容高度, 结束值由 CSS 类提供
-    onSectionTransitionStart(el: HTMLElement) {
-      el.style.height = `${el.scrollHeight}px`
-    },
-    onSectionTransitionEnd(el: HTMLElement) {
-      el.style.height = ''
-    },
-    toggleSection(section: EpisodeSection) {
-      section.isCollapsed = !section.isCollapsed
-    },
-    formatRatio(items: EpisodeItem[]) {
-      return `(${items.filter(it => it.isChecked).length}/${items.length})`
-    },
-    applySelectAction(action: SelectAction, items: EpisodeItem[]) {
-      items.forEach(it => {
-        it.isChecked = action.isChecked ?? !it.isChecked
-      })
-    },
-    shiftSelect(e: MouseEvent, item: EpisodeItem) {
-      const index = this.episodeItems.indexOf(item)
-      if (!e.shiftKey || this.lastCheckedEpisodeIndex === -1) {
-        // console.log('set lastCheckedEpisodeIndex', index)
-        this.lastCheckedEpisodeIndex = index
-        return
-      }
-      this.episodeItems
-        .slice(
-          Math.min(this.lastCheckedEpisodeIndex, index) + 1,
-          Math.max(this.lastCheckedEpisodeIndex, index),
-        )
-        .forEach(it => {
-          it.isChecked = !it.isChecked
-        })
-      // console.log(
-      //   'shift toggle',
-      //   Math.min(this.lastCheckedEpisodeIndex, index) + 1,
-      //   Math.max(this.lastCheckedEpisodeIndex, index),
-      // )
-      this.lastCheckedEpisodeIndex = index
-      e.preventDefault()
-    },
-    async getEpisodeItems() {
-      if (this.episodeItems.length > 0) {
-        return
-      }
-      const items: EpisodeItem[] = await this.api(this)
-      this.episodeItems = items
-      this.episodeSections = buildEpisodeSections(items)
-    },
-  },
+const props = defineProps<{
+  api: (options: { maxCheckedItems: number }) => Promise<EpisodeItem[]>
+}>()
+
+const episodeItems = ref<EpisodeItem[]>([])
+const episodeSections = ref<EpisodeSection[]>([])
+let lastCheckedEpisodeIndex = -1
+const checkedInputItems = computed(() =>
+  episodeItems.value.filter(it => it.isChecked).map(it => it.inputItem),
+)
+
+defineExpose({ checkedInputItems })
+
+// 展开/折叠前固定为内容高度, 结束值由 CSS 类提供
+const onSectionTransitionStart = (el: HTMLElement) => {
+  el.style.height = `${el.scrollHeight}px`
+}
+const onSectionTransitionEnd = (el: HTMLElement) => {
+  el.style.height = ''
+}
+const toggleSection = (section: EpisodeSection) => {
+  section.isCollapsed = !section.isCollapsed
+}
+const formatRatio = (items: EpisodeItem[]) =>
+  `(${items.filter(it => it.isChecked).length}/${items.length})`
+
+const shiftSelect = (e: MouseEvent, item: EpisodeItem) => {
+  const index = episodeItems.value.indexOf(item)
+  if (!e.shiftKey || lastCheckedEpisodeIndex === -1) {
+    lastCheckedEpisodeIndex = index
+    return
+  }
+  episodeItems.value
+    .slice(Math.min(lastCheckedEpisodeIndex, index) + 1, Math.max(lastCheckedEpisodeIndex, index))
+    .forEach(it => {
+      it.isChecked = !it.isChecked
+    })
+  lastCheckedEpisodeIndex = index
+  e.preventDefault()
+}
+
+onBeforeMount(async () => {
+  const items = await props.api({ maxCheckedItems: 32 })
+  episodeItems.value = items
+  episodeSections.value = buildEpisodeSections(items)
 })
 </script>
 <style lang="scss">
@@ -213,19 +144,6 @@ $collapse-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   &-checked-ratio {
     flex-grow: 1;
     margin-left: 4px;
-  }
-  &-actions {
-    @include h-center();
-    .be-button {
-      padding: 4px;
-      &.invert-selection .be-icon {
-        font-size: 14px;
-      }
-      &.select-all .be-icon,
-      &.deselect-all .be-icon {
-        transform: translateY(1px);
-      }
-    }
   }
   &-items {
     max-height: 400px;
@@ -254,11 +172,17 @@ $collapse-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0.5;
     }
   }
+  &-section-block {
+    border-bottom: 1px solid var(--be-color-card-border, #dfdfdf);
+  }
   &-section {
     @include h-center();
     padding: 4px 6px;
-    background-color: #8882;
-    border-bottom: 1px solid #8882;
+    background-color: var(--be-color-card-bg, #eee);
+    border-bottom: 1px solid var(--be-color-card-border, #dfdfdf);
+    position: sticky;
+    top: 0;
+    z-index: 1;
     cursor: pointer;
     user-select: none;
     &-toggle {
@@ -271,7 +195,6 @@ $collapse-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       transform: rotate(-90deg);
     }
     &-title {
-      flex: 1 1 0;
       min-width: 0;
       @include single-line();
       @include semi-bold();
@@ -280,12 +203,8 @@ $collapse-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       margin-left: 4px;
       opacity: 0.5;
     }
-    .be-button {
-      padding: 2px;
-      margin-left: 2px;
-      .be-icon {
-        transform: translateY(1px);
-      }
+    &-actions {
+      margin-left: auto;
     }
   }
   &-empty {
