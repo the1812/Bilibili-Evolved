@@ -1,0 +1,39 @@
+name: Auto Publish Label
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, edited]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: auto-publish-label-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  label:
+    name: Update Auto Publish Label
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          fetch-depth: 0
+      - name: Install dependencies
+        uses: pnpm/action-setup@v4
+        with:
+          run_install: |
+            - args: [--frozen-lockfile, --ignore-scripts]
+      - name: Classify auto publish
+        id: classify
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          AUTO_PUBLISH_PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node .github/scripts/auto-publish-classify.mjs
+      - name: Sync PR label
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PUBLISHABLE: ${{ steps.classify.outputs.publishable }}
+        run: node .github/scripts/auto-publish-label.mjs
