@@ -4,6 +4,8 @@ export interface VideoCard {
   aid?: number
   bvid?: string
   epID?: number
+  /** 卡片点击打开的页面, 省略时按 bvid 或 epID 推导 */
+  url?: string
   title: string
   upID?: number
   upName: string
