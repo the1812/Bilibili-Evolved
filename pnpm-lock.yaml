@@ -218,6 +218,9 @@ importers:
       ws:
         specifier: ^8.5.0
         version: 8.18.0
+      zx:
+        specifier: 8.8.5
+        version: 8.8.5
 
 packages:
 
@@ -3993,6 +3996,11 @@ packages:
   yocto-queue@1.1.1:
     resolution: {integrity: sha512-b4JR1PFR10y1mKjhHY9LaGo6tmrgjit7hxVIeAmyMw3jegXR4dhYqLaQF5zMXZxY7tLpMyJeLjr1C4rLmkVe8g==}
     engines: {node: '>=12.20'}
+
+  zx@8.8.5:
+    resolution: {integrity: sha512-SNgDF5L0gfN7FwVOdEFguY3orU5AkfFZm9B5YSHog/UDHv+lvmd82ZAsOenOkQixigwH2+yyH198AwNdKhj+RA==}
+    engines: {node: '>= 12.17.0'}
+    hasBin: true
 
 snapshots:
 
@@ -8092,3 +8100,5 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@1.1.1: {}
+
+  zx@8.8.5: {}
