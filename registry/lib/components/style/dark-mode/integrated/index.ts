@@ -10,18 +10,9 @@ const darkMetaColor = '#111'
 // 不支持深色模式的页面
 const urlExclude = [
   /^https:\/\/app\.bilibili\.com\//,
-  /^https:\/\/b\.bilibili\.com\//,
   /^https:\/\/d\.bilibili\.com\//,
-  /^https:\/\/e\.bilibili\.com\//,
-  /^https:\/\/ir\.bilibili\.com\//,
-  /^https:\/\/jobs\.bilibili\.com\//,
   /^https:\/\/love\.bilibili\.com\//,
-  /^https:\/\/mcn\.bilibili\.com\//,
   /^https:\/\/member\.bilibili\.com\//,
-  /^https:\/\/open\.bilibili\.com\//,
-  /^https:\/\/open-live\.bilibili\.com\//,
-  /^https:\/\/play-live\.bilibili\.com\//,
-  /^https:\/\/security\.bilibili\.com\//,
   /^https:\/\/www\.bilibili\.com\/audio\//,
   /^https:\/\/www\.bilibili\.com\/blackroom\//,
   /^https:\/\/www\.bilibili\.com\/festival\//,
