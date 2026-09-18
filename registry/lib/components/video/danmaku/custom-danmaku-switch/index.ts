@@ -5,7 +5,7 @@ import {
 } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
 import type { PlayerAgentDanmakuSwitchState } from '@/components/video/player-agent'
-import { getComponentSettings } from '@/core/settings'
+import { getComponentSettings, isComponentEnabled } from '@/core/settings'
 import { isTyping } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { addData } from '@/plugins/data'
@@ -95,8 +95,14 @@ const handleDanmakuSwitchClick = (e: MouseEvent) => {
   window.setTimeout(() => switchDanmakuByCycle(from), 0)
 }
 
-/** 接管原生 `d` 快捷键 */
+/**
+ * 接管播放器原生的 `d` 快捷键.
+ * 快捷键扩展启用时不生效.
+ */
 const handleDanmakuSwitchKeydown = (e: KeyboardEvent) => {
+  if (isComponentEnabled('keymap')) {
+    return
+  }
   const isDKey = e.key.toLowerCase() === 'd' || e.code.toLowerCase() === 'keyd'
   const hasModifier = e.ctrlKey || e.altKey || e.metaKey || e.shiftKey
   if (!isDKey || hasModifier || e.repeat || isTyping()) {
