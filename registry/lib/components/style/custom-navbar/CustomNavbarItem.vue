@@ -4,8 +4,15 @@
     class="custom-navbar-item"
     role="listitem"
     :data-name="item.name"
-    :class="{ disabled: item.disabled, active: item.active, 'input-within': inputWithin }"
+    :class="{
+      disabled: item.disabled,
+      active: item.active,
+      'input-within': inputWithin,
+      [`popup-${popupState}`]: popupState !== 'hidden',
+    }"
     :style="{ flex: item.flexStyle, order: item.order }"
+    @mouseenter="keepPopupOpen"
+    @mouseleave="closePopupLater"
   >
     <CustomNavbarLink
       v-if="item.href"
@@ -60,6 +67,11 @@ import { addComponentListener, removeComponentListener } from '@/core/settings'
 import CustomNavbarLink from './CustomNavbarLink.vue'
 import { CustomNavbarItem } from './custom-navbar-item'
 
+/** waiting 表示别的按钮正显示着弹窗, 本按钮在等接管 */
+type PopupState = 'hidden' | 'shown' | 'waiting'
+/** 保证同一时间只有一个弹窗 */
+let hideShownPopup: (() => void) | null = null
+
 const isOpenInNewTab = (item: CustomNavbarItem) => {
   const { name } = item
   const options = CustomNavbarItem.navbarOptions
@@ -83,6 +95,8 @@ export default Vue.extend({
       newTab: isOpenInNewTab(this.item),
       cancelListeners: none,
       inputWithin: false,
+      popupState: 'hidden' as PopupState,
+      popupTimer: null as any,
     }
   },
   mounted() {
@@ -100,8 +114,42 @@ export default Vue.extend({
   },
   beforeDestroy() {
     this.cancelListeners?.()
+    this.setPopupState('hidden')
   },
   methods: {
+    /** 斜向划入弹窗时可能先碰到相邻按钮, 所以要停留片刻才接管 */
+    keepPopupOpen() {
+      clearTimeout(this.popupTimer)
+      if (hideShownPopup === null || this.popupState === 'shown') {
+        this.setPopupState('shown')
+        return
+      }
+      this.setPopupState('waiting')
+      this.popupTimer = setTimeout(() => {
+        this.setPopupState('shown')
+      }, 120) // 略小于入场延迟(0.15s)
+    },
+    /** 留出鼠标从按钮划到弹窗的时间 */
+    closePopupLater() {
+      clearTimeout(this.popupTimer)
+      this.popupTimer = setTimeout(() => {
+        this.setPopupState('hidden')
+      }, 300)
+    },
+    /** 显示时接管别的按钮的弹窗 */
+    setPopupState(state: 'hidden' | 'shown' | 'waiting') {
+      clearTimeout(this.popupTimer)
+      if (this.popupState === 'shown') {
+        hideShownPopup = null
+      }
+      if (state === 'shown') {
+        hideShownPopup?.()
+        hideShownPopup = () => {
+          this.setPopupState('hidden')
+        }
+      }
+      this.popupState = state
+    },
     toggleInputWithin(e: FocusEvent, value: boolean) {
       if (!(e.target instanceof HTMLInputElement)) {
         this.inputWithin = false
@@ -150,19 +198,6 @@ export default Vue.extend({
       }
       this.triggerPopupShow(false)
     },
-    // async initPopper() {
-    //   const { popupContainer } = this.$refs
-    //   const navbarItem = this.item as CustomNavbarItem
-    //   console.log(navbarItem.name, this.$refs, popupContainer, navbarItem.popper)
-    //   if (!popupContainer || navbarItem.popper) {
-    //     console.log('return')
-    //     return
-    //   }
-    //   console.log('createPopper', createPopper)
-    //   navbarItem.popper = createPopper(navbarItem.element, popupContainer, {
-    //     placement: 'bottom',
-    //   })
-    // },
   },
 })
 </script>
@@ -178,15 +213,6 @@ export default Vue.extend({
     pointer-events: initial;
   }
 }
-// @keyframes navbar-popup-out {
-//   from {
-//     pointer-events: none;
-//   }
-//   to {
-//     pointer-events: none;
-//     opacity: 0;
-//   }
-// }
 
 .custom-navbar-item {
   color: inherit;
@@ -261,7 +287,7 @@ export default Vue.extend({
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
     border: 1px solid var(--be-color-popup-border, #8882);
     border-radius: 8px;
-    transition: opacity 0.2s ease-out 0.2s;
+    transition: opacity 0.2s ease-out;
     position: absolute;
     top: 100%;
     left: 50%;
@@ -300,15 +326,20 @@ export default Vue.extend({
     top: calc(100% - 8px);
     left: 50%;
     pointer-events: none;
-    transition: all 0.2s ease-out 0.2s;
+    transition: all 0.2s ease-out;
   }
 
-  &:not(.disabled):hover,
-  &:not(.disabled).input-within {
+  // 等待接管期间不跟着 hover 展开, 免得和正在显示的弹窗同时出现
+  &:not(.disabled):hover:not(.popup-waiting),
+  &:not(.disabled).input-within,
+  &:not(.disabled).popup-shown {
     .popup-container {
       top: 100%;
+      // 只有展开带 0.2s 延迟, 收起走基础过渡
+      transition: all 0.2s ease-out 0.2s;
       > .popup {
         animation: navbar-popup-in 0.2s ease-out 0.15s both;
+        transition: opacity 0.2s ease-out 0.2s;
         opacity: 1;
       }
     }
