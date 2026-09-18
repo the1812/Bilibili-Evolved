@@ -18,28 +18,24 @@ const getExtensionFromUrl = (url: string): string => {
   return match ? `.${match[1]}` : '.jpg'
 }
 
-const getVideoId = (url: string): string | null => {
-  const videoMatch = url.match(/bilibili\.com\/video\/(BV[a-zA-Z0-9]+|av\d+)/)
+const getVideoId = ({ pathname, searchParams }: URL): string | null => {
+  const videoMatch = pathname.match(/^\/video\/(BV[a-zA-Z0-9]+|av\d+)/)
   if (videoMatch) {
     return videoMatch[1]
   }
-  if (!url.includes('bilibili.com/list/')) {
+  if (!pathname.startsWith('/list/')) {
     return null
   }
-  const bvidMatches = url.match(/[?&]bvid=(BV[a-zA-Z0-9]+)/g)
-  if (!bvidMatches) {
-    return null
-  }
-  const [, bvid] = bvidMatches[bvidMatches.length - 1].match(/[?&]bvid=(BV[a-zA-Z0-9]+)/)
-  return bvid
+  return searchParams.getAll('bvid').pop() ?? null
 }
 
-const getDynamicIdFromUrl = (url: string): string | null => {
-  if (!url.includes('t.bilibili.com/') && !url.includes('bilibili.com/opus/')) {
+const getDynamicIdFromUrl = ({ hostname, pathname }: URL): string | null => {
+  const segments = pathname.split('/').filter(Boolean)
+  if (hostname !== 't.bilibili.com' && segments[0] !== 'opus') {
     return null
   }
-  const ids = url.match(/\d{6,}/g)
-  return ids ? ids[ids.length - 1] : null
+  const lastSegment = segments[segments.length - 1]
+  return /^\d+$/.test(lastSegment) ? lastSegment : null
 }
 
 const getDynamicIdFromDom = (areaElement?: HTMLElement): string | null =>
@@ -51,7 +47,7 @@ const getCommentAreaOid = (areaElement?: HTMLElement): string | null => {
 }
 
 const getSourceId = (areaElement?: HTMLElement): string => {
-  const url = window.location.href
+  const url = new URL(window.location.href)
   const videoId = getVideoId(url)
   if (videoId) {
     return videoId
@@ -60,7 +56,7 @@ const getSourceId = (areaElement?: HTMLElement): string => {
   if (dynamicId) {
     return dynamicId
   }
-  const readMatch = url.match(/bilibili\.com\/read\/cv(\d+)/)
+  const readMatch = url.pathname.match(/^\/read\/cv(\d+)/)
   if (readMatch) {
     return `cv${readMatch[1]}`
   }
