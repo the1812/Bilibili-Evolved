@@ -18,21 +18,53 @@ const getExtensionFromUrl = (url: string): string => {
   return match ? `.${match[1]}` : '.jpg'
 }
 
-const getPageId = (): string => {
-  const url = window.location.href
+const getVideoId = (url: string): string | null => {
   const videoMatch = url.match(/bilibili\.com\/video\/(BV[a-zA-Z0-9]+|av\d+)/)
   if (videoMatch) {
     return videoMatch[1]
   }
-  const opusMatch = url.match(/bilibili\.com\/opus\/(\d+)/)
-  if (opusMatch) {
-    return `opus_${opusMatch[1]}`
+  if (!url.includes('bilibili.com/list/')) {
+    return null
+  }
+  const bvidMatches = url.match(/[?&]bvid=(BV[a-zA-Z0-9]+)/g)
+  if (!bvidMatches) {
+    return null
+  }
+  const [, bvid] = bvidMatches[bvidMatches.length - 1].match(/[?&]bvid=(BV[a-zA-Z0-9]+)/)
+  return bvid
+}
+
+const getDynamicIdFromUrl = (url: string): string | null => {
+  if (!url.includes('t.bilibili.com/') && !url.includes('bilibili.com/opus/')) {
+    return null
+  }
+  const ids = url.match(/\d{6,}/g)
+  return ids ? ids[ids.length - 1] : null
+}
+
+const getDynamicIdFromDom = (areaElement?: HTMLElement): string | null =>
+  areaElement?.closest('[data-did]')?.getAttribute('data-did') ?? null
+
+const getCommentAreaOid = (areaElement?: HTMLElement): string | null => {
+  const [, oid] = areaElement?.getAttribute('data-params')?.split(',') ?? []
+  return oid && /^\d+$/.test(oid) ? oid : null
+}
+
+const getSourceId = (areaElement?: HTMLElement): string => {
+  const url = window.location.href
+  const videoId = getVideoId(url)
+  if (videoId) {
+    return videoId
+  }
+  const dynamicId = getDynamicIdFromUrl(url) ?? getDynamicIdFromDom(areaElement)
+  if (dynamicId) {
+    return dynamicId
   }
   const readMatch = url.match(/bilibili\.com\/read\/cv(\d+)/)
   if (readMatch) {
     return `cv${readMatch[1]}`
   }
-  return 'unknown'
+  return getCommentAreaOid(areaElement) ?? 'unknown'
 }
 
 const buildFileName = (entry: PictureEntry) =>
@@ -40,7 +72,10 @@ const buildFileName = (entry: PictureEntry) =>
     entry.imageIndex
   }${getExtensionFromUrl(entry.url)}`
 
-const downloadEntries = async (entries: PictureEntry[]) => {
+const buildZipName = (sourceId: string, commentId?: string) =>
+  commentId ? `${sourceId} - ${commentId}.zip` : `${sourceId}.zip`
+
+const downloadEntries = async (entries: PictureEntry[], zipName: string) => {
   const toast = Toast.info('获取图片中...', '评论图片下载')
   let completed = 0
   const failedUrls: string[] = []
@@ -73,7 +108,7 @@ const downloadEntries = async (entries: PictureEntry[]) => {
     )
   }
   if (results.some(Boolean)) {
-    await pack.emit(`评论图片 - ${getPageId()}.zip`)
+    await pack.emit(zipName)
   }
 }
 
@@ -86,11 +121,11 @@ const toEntries = (data: CommentImageData): PictureEntry[] =>
     imageIndex: i + 1,
   }))
 
-export const downloadSingleComment = (data: CommentImageData) => {
-  downloadEntries(toEntries(data))
+export const downloadSingleComment = (data: CommentImageData, areaElement?: HTMLElement) => {
+  downloadEntries(toEntries(data), buildZipName(getSourceId(areaElement), data.commentId))
 }
 
-export const downloadAllComments = () => {
+export const downloadAllComments = (areaElement?: HTMLElement) => {
   const entries: PictureEntry[] = []
   commentImageList.value.forEach(data => {
     entries.push(...toEntries(data))
@@ -98,5 +133,5 @@ export const downloadAllComments = () => {
   if (entries.length === 0) {
     return
   }
-  downloadEntries(entries)
+  downloadEntries(entries, buildZipName(getSourceId(areaElement)))
 }
