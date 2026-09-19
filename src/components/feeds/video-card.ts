@@ -4,6 +4,7 @@ export interface VideoCard {
   aid?: number
   bvid?: string
   epID?: number
+  url?: string
   title: string
   upID?: number
   upName: string
