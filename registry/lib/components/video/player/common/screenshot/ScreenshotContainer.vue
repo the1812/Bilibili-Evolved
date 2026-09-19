@@ -1,14 +1,14 @@
 <template>
-  <div class="video-screenshot-container">
-    <transition-group class="video-screenshot-list" name="video-screenshot-list" tag="div">
-      <VideoScreenshot
+  <div class="screenshot-container">
+    <transition-group class="screenshot-list" name="screenshot-list" tag="div">
+      <ScreenshotThumbnail
         v-for="screenshot of screenshots"
         :key="screenshot.id"
         :screenshot="screenshot"
         @discard="discard(screenshot)"
-      ></VideoScreenshot>
+      ></ScreenshotThumbnail>
     </transition-group>
-    <div v-show="showBatch" class="video-screenshot-batch">
+    <div v-show="showBatch" class="screenshot-batch">
       <button @click="saveAll"><VIcon :size="18" icon="mdi-content-save"></VIcon>全部保存</button>
       <button @click="discardAll">
         <VIcon :size="18" icon="mdi-delete-forever"></VIcon>全部丢弃
@@ -20,13 +20,13 @@
 import { getFriendlyTitle } from '@/core/utils/title'
 import { DownloadPackage } from '@/core/download'
 import { VIcon } from '@/ui'
-import VideoScreenshot from './VideoScreenshot.vue'
+import ScreenshotThumbnail from './ScreenshotThumbnail.vue'
 import { Screenshot } from './screenshot'
 
 export default Vue.extend({
   components: {
     VIcon,
-    VideoScreenshot,
+    ScreenshotThumbnail,
   },
   data() {
     return {
@@ -63,7 +63,7 @@ export default Vue.extend({
 <style lang="scss">
 @import 'common';
 
-.video-screenshot-container {
+.screenshot-container {
   position: relative;
   --screenshot-width: 240px;
   --screenshot-width-negative: calc(0px - var(--screenshot-width));
@@ -71,10 +71,10 @@ export default Vue.extend({
   --thumbnail-margin-vertical: 12px;
   --thumbnail-margin-horizontal: 12px;
   --screenshot-list-width: calc(2 * var(--thumbnail-margin-horizontal) + var(--screenshot-width));
-  .video-screenshot-disable & {
+  .screenshot-disable & {
     display: none;
   }
-  .video-screenshot-batch {
+  .screenshot-batch {
     position: fixed;
     bottom: var(--thumbnail-margin-vertical);
     right: var(--thumbnail-margin-horizontal);
@@ -100,7 +100,7 @@ export default Vue.extend({
       }
     }
   }
-  .video-screenshot-list {
+  .screenshot-list {
     position: fixed;
     top: 0;
     right: 0;
