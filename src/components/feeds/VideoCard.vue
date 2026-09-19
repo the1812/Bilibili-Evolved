@@ -131,12 +131,6 @@ import { getUID } from '@/core/utils'
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
 import { VideoCard as VideoCardInfo } from '@/components/feeds/video-card'
 
-/**
- * 卡片字段
- * @remarks
- * 运行时由 `data` 属性展开而来(展开的字段无法被推断, 所以这里显式声明),
- * `watchlater` 被展开排除在外, 由 `watchlaterInit` 与同名 computed 接管
- */
 type VideoCardData = Omit<VideoCardInfo, 'watchlater'> & {
   watchlaterList: number[]
   watchlaterInit: any
