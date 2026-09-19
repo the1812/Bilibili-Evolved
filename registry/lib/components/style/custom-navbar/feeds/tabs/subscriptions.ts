@@ -1,10 +1,6 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { getUID } from '@/core/utils'
 
-/** 订阅列表的每页数量 */
-const pageSize = 20
-/** 取各订阅更新时的并发上限避免订阅很多时一次性发出大量请求 */
-const concurrency = 4
 /** 订阅列表里 `type` 为 11 的是收藏夹, 21 的是合集 */
 const favFolderType = 11
 const ugcSeasonType = 21
@@ -48,7 +44,7 @@ export interface SubscriptionUpdate {
  */
 const getSpaceCard = async (mid: number) => {
   const data = await bilibiliApi<{ card?: any }>(
-    getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/card?mid=${mid}&photo=false`),
+    getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/card?mid=${mid}`),
     `获取用户 ${mid} 的信息失败`,
     false,
   )
@@ -59,7 +55,7 @@ const getSpaceCard = async (mid: number) => {
 const getSubscriptions = async (page: number) => {
   const data = await bilibiliApi<{ list?: any[]; has_more?: boolean }>(
     getJsonWithCredentials(
-      `https://api.bilibili.com/x/v3/fav/folder/collected/list?up_mid=${getUID()}&pn=${page}&ps=${pageSize}&platform=web`,
+      `https://api.bilibili.com/x/v3/fav/folder/collected/list?up_mid=${getUID()}&pn=${page}&ps=20&platform=web`,
     ),
     '获取订阅列表失败',
     false,
@@ -72,7 +68,7 @@ const getSubscriptions = async (page: number) => {
         type: item.type,
         mid: item.mid,
         title: item.title,
-        upName: lodash.get(item, 'upper.name') ?? '',
+        upName: item.upper?.name ?? '',
       }),
     )
   return { subscriptions, hasMore: Boolean(data.has_more) }
@@ -82,29 +78,58 @@ const getSubscriptions = async (page: number) => {
 export const getSubscriptionKindName = (subscription: Subscription) =>
   subscription.type === favFolderType ? '收藏夹' : '合集'
 
-/** 获取合集最新一集 */
+/** 试探合集末尾时的取样条数 */
+const seasonProbeSize = 10
+/** 逐页找合集最新一集时每页取的稿件数 */
+const seasonPageSize = 100
+/** 读取合集的一页稿件 */
+const getSeasonArchives = async (
+  subscription: Subscription,
+  { pageNum = 1, pageSize = seasonPageSize, sortReverse = false } = {},
+) => {
+  const data = await bilibiliApi<{
+    archives?: any[]
+    /** `ptime` 是接口给出的最新一集投稿时间 */
+    meta?: { ptime?: number }
+    page?: { total?: number }
+  }>(
+    getJsonWithCredentials(
+      `https://api.bilibili.com/x/polymer/web-space/seasons_archives_list?mid=${subscription.mid}` +
+        `&season_id=${subscription.id}&sort_reverse=${sortReverse}&page_num=${pageNum}&page_size=${pageSize}`,
+    ),
+    `获取合集「${subscription.title}」的投稿失败`,
+    false,
+  )
+  return {
+    archives: data.archives ?? [],
+    latestTime: data.meta?.ptime ?? 0,
+    total: data.page?.total ?? 0,
+  }
+}
+
+/**
+ * 获取合集最新一集
+ * @remarks
+ * 合集内稿件的顺序由 UP 排定(实测有升序/降序/乱序), 与投稿时间无关:
+ * 先看末尾若干条(多数合集是升序, 最新一集就在末尾), 若其中最新的一条仍早于 `latestTime`
+ * (接口给出的最新一集投稿时间), 说明最新一集在别处, 再从第 1 页逐页找出来
+ */
 const getUgcSeasonLatestArchive = async (
   subscription: Subscription,
 ): Promise<SubscriptionContent | null> => {
-  // 合集内的顺序由 UP 排定(实测有升序/降序/乱序三种), 与投稿时间无关:
-  // 两端各取若干条再按投稿时间挑最新, 才能覆盖"最新一集在开头"和"在末尾"两种情况
-  const getArchives = async (sortReverse: boolean) => {
-    const data = await bilibiliApi<{ archives?: any[] }>(
-      getJsonWithCredentials(
-        `https://api.bilibili.com/x/polymer/web-space/seasons_archives_list?mid=${subscription.mid}` +
-          `&season_id=${subscription.id}&sort_reverse=${sortReverse}&page_num=1&page_size=10`,
-      ),
-      `获取合集「${subscription.title}」的投稿失败`,
-      false,
-    )
-    return data.archives ?? []
-  }
-  const [fromStart, fromEnd] = await Promise.all([getArchives(false), getArchives(true)])
-  const archives = [...fromStart, ...fromEnd]
-  if (archives.length === 0) {
+  const tail = await getSeasonArchives(subscription, {
+    pageSize: seasonProbeSize,
+    sortReverse: true,
+  })
+  let archive = lodash.maxBy(tail.archives, 'pubdate')
+  if (archive === undefined) {
     return null
   }
-  const archive = lodash.maxBy(archives, 'pubdate')
+  const pageCount = Math.ceil(tail.total / seasonPageSize)
+  for (let pageNum = 1; pageNum <= pageCount && archive.pubdate < tail.latestTime; pageNum++) {
+    const { archives } = await getSeasonArchives(subscription, { pageNum })
+    archive = lodash.maxBy([archive, ...archives], 'pubdate')
+  }
   const owner = await getSpaceCard(subscription.mid).catch(() => null)
   return {
     aid: archive.aid,
@@ -113,7 +138,7 @@ const getUgcSeasonLatestArchive = async (
     cover: archive.pic,
     duration: archive.duration,
     updateTime: archive.pubdate,
-    playCount: lodash.get(archive, 'stat.view', 0),
+    playCount: archive.stat?.view ?? 0,
     upName: subscription.upName,
     upFaceUrl: owner?.face ?? '',
     upID: subscription.mid,
@@ -126,7 +151,7 @@ const getFavFolderLatestMedia = async (
 ): Promise<SubscriptionContent | null> => {
   const data = await bilibiliApi<{ medias?: any[]; info?: any }>(
     getJsonWithCredentials(
-      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${subscription.id}&pn=1&ps=3&order=mtime&platform=web`,
+      `https://api.bilibili.com/x/v3/fav/resource/list?media_id=${subscription.id}&pn=1&ps=3&platform=web`,
     ),
     `获取收藏夹「${subscription.title}」的内容失败`,
     false,
@@ -135,7 +160,10 @@ const getFavFolderLatestMedia = async (
   if (medias.length === 0) {
     return null
   }
-  const media = lodash.maxBy(medias, 'fav_time')
+  // attr 为 1/9 的是已失效稿件(与收藏夹面板的过滤规则一致), 优先用它后面的可用稿件;
+  // 取样里全是失效稿件时仍然拿失效的那条, 否则这个订阅项会整项从列表里消失
+  const availableMedias = medias.filter(media => media.attr !== 1 && media.attr !== 9)
+  const media = lodash.maxBy(availableMedias.length > 0 ? availableMedias : medias, 'fav_time')
   const creator = data.info?.upper
   return {
     aid: media.id,
@@ -145,7 +173,7 @@ const getFavFolderLatestMedia = async (
     duration: media.duration,
     updateTime: media.fav_time ?? media.pubtime,
     pageUrl: `https://www.bilibili.com/list/ml${subscription.id}`,
-    playCount: lodash.get(media, 'cnt_info.play', 0),
+    playCount: media.cnt_info?.play ?? 0,
     upName: creator?.name ?? '',
     upFaceUrl: creator?.face ?? '',
     upID: creator?.mid ?? 0,
@@ -167,7 +195,8 @@ const getSubscriptionUpdate = async (subscription: Subscription) => {
 /** 分批获取各订阅项的更新 */
 const getSubscriptionUpdates = async (subscriptions: Subscription[]) => {
   const updates: SubscriptionUpdate[] = []
-  for (const chunk of lodash.chunk(subscriptions, concurrency)) {
+  // 控制并发, 避免订阅很多时一次性发出大量请求
+  for (const chunk of lodash.chunk(subscriptions, 4)) {
     updates.push(...lodash.compact(await Promise.all(chunk.map(getSubscriptionUpdate))))
   }
   return updates
