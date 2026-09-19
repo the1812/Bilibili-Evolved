@@ -17,6 +17,7 @@
       class="thumb-container"
       placement="top"
       :arrow="false"
+      v-bind="{ hideOnClick: false }"
       :style="{ left: thumbLeft }"
     >
       <slot name="thumb">
