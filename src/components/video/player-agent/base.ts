@@ -9,6 +9,7 @@ import {
   CustomQueryProvider,
   PlayerAgentEventTypes,
   PlayerAgentToggleSubtitleResult,
+  PlayerAgentDanmakuSwitchState,
 } from './types'
 
 export const elementQuery = (selector: string): ElementQuery => {
@@ -72,14 +73,31 @@ export abstract class PlayerAgent
   toggleMute() {
     return click(this.query.control.buttons.volume)
   }
-  toggleDanmaku() {
+  getDanmakuState(): PlayerAgentDanmakuSwitchState | null {
+    const checkbox = this.query.danmakuSwitch.sync() as HTMLInputElement
+    if (!checkbox) {
+      return null
+    }
+    if (checkbox.indeterminate) {
+      return 'concise'
+    }
+    return checkbox.checked ? 'on' : 'off'
+  }
+  toggleDanmaku(): PlayerAgentDanmakuSwitchState | null {
     const checkbox = this.query.danmakuSwitch.sync() as HTMLInputElement
     if (!checkbox) {
       return null
     }
     checkbox.checked = !checkbox.checked
     raiseEvent(checkbox, 'change')
-    return checkbox.checked
+    return this.getDanmakuState()
+  }
+  getSupportedDanmakuStates(): PlayerAgentDanmakuSwitchState[] {
+    const isThreeState = this.query.danmakuSwitch
+      .sync()
+      ?.closest('.bpx-player-dm-switch')
+      ?.classList.contains('bui-danmaku-switch-new')
+    return isThreeState ? ['on', 'concise', 'off'] : ['on', 'off']
   }
   toggleSubtitle(preferredLanguage?: string): PlayerAgentToggleSubtitleResult {
     const closeSwitch = dq('.bpx-player-ctrl-subtitle-close-switch') as HTMLDivElement | null
