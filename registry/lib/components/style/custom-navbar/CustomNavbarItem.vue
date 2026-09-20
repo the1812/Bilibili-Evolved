@@ -8,18 +8,17 @@
       disabled: item.disabled,
       active: item.active,
       'input-within': inputWithin,
-      [`popup-${popupState}`]: popupState !== 'hidden',
+      'popup-shown': popupShown,
     }"
     :style="{ flex: item.flexStyle, order: item.order }"
-    @mouseenter="keepPopupOpen"
-    @mouseleave="closePopupLater"
+    @mouseenter="togglePopup(true)"
+    @mouseleave="togglePopup(false)"
   >
     <CustomNavbarLink
       v-if="item.href"
       :new-tab="newTab"
       class="main-content"
       :href="!item.active && !item.touch && item.href"
-      @mouseover.self="requestPopup()"
     >
       <template v-if="typeof item.content === 'string'">
         {{ item.content }}
@@ -55,6 +54,7 @@
           ref="popup"
           :container="$refs.popupContainer"
           :item="item"
+          @hook:mounted="popupShown && refreshPopup()"
         ></component>
       </div>
     </div>
@@ -67,8 +67,6 @@ import { addComponentListener, removeComponentListener } from '@/core/settings'
 import CustomNavbarLink from './CustomNavbarLink.vue'
 import { CustomNavbarItem } from './custom-navbar-item'
 
-/** waiting 表示别的按钮正显示着弹窗, 本按钮在等接管 */
-type PopupState = 'hidden' | 'shown' | 'waiting'
 /** 保证同一时间只有一个弹窗 */
 let hideShownPopup: (() => void) | null = null
 
@@ -95,7 +93,7 @@ export default Vue.extend({
       newTab: isOpenInNewTab(this.item),
       cancelListeners: none,
       inputWithin: false,
-      popupState: 'hidden' as PopupState,
+      popupShown: false,
       popupTimer: null as any,
     }
   },
@@ -114,41 +112,46 @@ export default Vue.extend({
   },
   beforeDestroy() {
     this.cancelListeners?.()
-    this.setPopupState('hidden')
+    this.setPopupShown(false)
   },
   methods: {
-    /** 斜向划入弹窗时可能先碰到相邻按钮, 所以要停留片刻才接管 */
-    keepPopupOpen() {
+    /** 划入停留片刻才展开(避免从浏览器标签栏往页面里划时被带出来), 划出留出鼠标划到弹窗的时间 */
+    togglePopup(shown: boolean) {
       clearTimeout(this.popupTimer)
-      if (hideShownPopup === null || this.popupState === 'shown') {
-        this.setPopupState('shown')
+      if (shown && (this.item.disabled || this.popupShown)) {
         return
       }
-      this.setPopupState('waiting')
-      this.popupTimer = setTimeout(() => {
-        this.setPopupState('shown')
-      }, 120) // 略小于入场延迟(0.15s)
+      this.popupTimer = setTimeout(() => this.setPopupShown(shown), 200)
     },
-    /** 留出鼠标从按钮划到弹窗的时间 */
-    closePopupLater() {
+    /** 展开时接管别的按钮的弹窗 */
+    setPopupShown(shown: boolean) {
       clearTimeout(this.popupTimer)
-      this.popupTimer = setTimeout(() => {
-        this.setPopupState('hidden')
-      }, 300)
-    },
-    /** 显示时接管别的按钮的弹窗 */
-    setPopupState(state: 'hidden' | 'shown' | 'waiting') {
-      clearTimeout(this.popupTimer)
-      if (this.popupState === 'shown') {
+      if (shown) {
+        // 内容是懒加载的, 到要展开时才挂载, 免得只是路过就发请求
+        const { item } = this as { item: CustomNavbarItem }
+        item.requestedPopup = true
+        hideShownPopup?.()
+        hideShownPopup = () => this.setPopupShown(false)
+        this.refreshPopup()
+      } else if (this.popupShown) {
+        // 只在收起自己时清理, 免得清掉接管后的新弹窗
         hideShownPopup = null
       }
-      if (state === 'shown') {
-        hideShownPopup?.()
-        hideShownPopup = () => {
-          this.setPopupState('hidden')
-        }
+      this.popupShown = shown
+    },
+    /** 通知面板内容已经展开, 内容没挂载时由挂载钩子补一次 */
+    refreshPopup() {
+      const { popup } = this.$refs
+      if (!popup) {
+        return
       }
-      this.popupState = state
+      const { refreshOnPopup } = CustomNavbarItem.navbarOptions
+      if (refreshOnPopup && typeof popup.popupRefresh === 'function') {
+        popup.popupRefresh()
+      }
+      if (typeof popup.popupShow === 'function') {
+        popup.popupShow()
+      }
     },
     toggleInputWithin(e: FocusEvent, value: boolean) {
       if (!(e.target instanceof HTMLInputElement)) {
@@ -167,52 +170,12 @@ export default Vue.extend({
         'iframe-container': item.iframeName,
       }
     },
-    triggerPopupShow: lodash.debounce(function trigger(initialPopup: boolean) {
-      const { popup } = this.$refs
-      if (!popup) {
-        return
-      }
-      const allowRefresh =
-        CustomNavbarItem.navbarOptions.refreshOnPopup &&
-        popup.popupRefresh &&
-        typeof popup.popupRefresh === 'function'
-      if (!initialPopup && allowRefresh) {
-        popup.popupRefresh()
-      }
-      if (popup.popupShow && typeof popup.popupShow === 'function') {
-        popup.popupShow()
-      }
-    }, 300),
-    async requestPopup() {
-      const { item } = this as {
-        item: CustomNavbarItem
-      }
-      /** 惰性加载的, 要在鼠标经过时加载 popup */
-      if (item.disabled) {
-        return
-      }
-      if (!item.requestedPopup) {
-        item.requestedPopup = true
-        this.triggerPopupShow(true)
-        return
-      }
-      this.triggerPopupShow(false)
-    },
   },
 })
 </script>
 
 <style lang="scss">
 @import 'common';
-
-@keyframes navbar-popup-in {
-  1% {
-    pointer-events: initial;
-  }
-  to {
-    pointer-events: initial;
-  }
-}
 
 .custom-navbar-item {
   color: inherit;
@@ -329,19 +292,13 @@ export default Vue.extend({
     transition: all 0.2s ease-out;
   }
 
-  // 等待接管期间不跟着 hover 展开, 免得和正在显示的弹窗同时出现
-  &:not(.disabled):hover:not(.popup-waiting),
-  &:not(.disabled).input-within,
-  &:not(.disabled).popup-shown {
-    .popup-container {
-      top: 100%;
-      // 只有展开带 0.2s 延迟, 收起走基础过渡
-      transition: all 0.2s ease-out 0.2s;
-      > .popup {
-        animation: navbar-popup-in 0.2s ease-out 0.15s both;
-        transition: opacity 0.2s ease-out 0.2s;
-        opacity: 1;
-      }
+  // 展开只认 .popup-shown: 用 :hover 时鼠标从浏览器标签栏划进页面会顺带带出面板; :has 保证内容挂载前不展开
+  &:not(.disabled).popup-shown .popup-container:has(> .popup > *),
+  &:not(.disabled).input-within .popup-container {
+    top: 100%;
+    > .popup {
+      pointer-events: initial;
+      opacity: 1;
     }
   }
 
