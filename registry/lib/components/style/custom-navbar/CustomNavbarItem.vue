@@ -101,7 +101,7 @@ export default Vue.extend({
     const navbarItem = this.item as CustomNavbarItem
     navbarItem.contentMounted?.(navbarItem)
     const listener = () => {
-      this.updateLinkOption()
+      this.newTab = isOpenInNewTab(this.item)
     }
     addComponentListener('customNavbar.openInNewTabOverrides', listener)
     addComponentListener('customNavbar.openInNewTab', listener)
@@ -123,7 +123,6 @@ export default Vue.extend({
       }
       this.popupTimer = setTimeout(() => this.setPopupShown(shown), 200)
     },
-    /** 展开时接管别的按钮的弹窗 */
     setPopupShown(shown: boolean) {
       clearTimeout(this.popupTimer)
       if (shown) {
@@ -134,12 +133,10 @@ export default Vue.extend({
         hideShownPopup = () => this.setPopupShown(false)
         this.refreshPopup()
       } else if (this.popupShown) {
-        // 只在收起自己时清理, 免得清掉接管后的新弹窗
         hideShownPopup = null
       }
       this.popupShown = shown
     },
-    /** 通知面板内容已经展开, 内容没挂载时由挂载钩子补一次 */
     refreshPopup() {
       const { popup } = this.$refs
       if (!popup) {
@@ -159,9 +156,6 @@ export default Vue.extend({
         return
       }
       this.inputWithin = value
-    },
-    updateLinkOption() {
-      this.newTab = isOpenInNewTab(this.item)
     },
     popupClasses(item: CustomNavbarItem & { iframeName?: string }) {
       return {
