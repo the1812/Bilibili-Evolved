@@ -3,9 +3,11 @@ import {
   defineOptionsMetadata,
   OptionsOfMetadata,
 } from '@/components/define'
-import { addComponentListener } from '@/core/settings'
+import { addComponentListener, removeComponentListener } from '@/core/settings'
 import { getNumberValidator } from '@/core/utils'
-import { feedsUrls } from '@/core/utils/urls'
+
+const name = 'customContentWidth'
+const displayName = '自定义动态页内容宽度'
 
 const DEFAULT_WIDTH = 1000
 /** 动态卡片自身有 `min-width: 556px` */
@@ -27,30 +29,37 @@ const options = defineOptionsMetadata({
 })
 export type CustomContentWidthOptions = OptionsOfMetadata<typeof options>
 
+const applyWidth = (width: number) => {
+  document.documentElement.style.setProperty('--be-feeds-content-width', `${width}px`)
+}
+const entry = () => addComponentListener(`${name}.customWidth`, applyWidth, true)
+
 export const component = defineComponentMetadata({
-  name: 'customContentWidth',
-  displayName: '自定义动态页内容宽度',
+  name,
+  displayName,
   author: {
     name: 'WhiteTeal55',
     link: 'https://github.com/WhiteTeal55',
   },
   options,
   tags: [componentsTags.style, componentsTags.feeds],
-  urlInclude: feedsUrls,
+  urlInclude: [
+    // 动态首页与动态详情页
+    /^https:\/\/t\.bilibili\.com\//,
+    // 图文动态 / 专栏页
+    /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
+  ],
   instantStyles: [
     {
-      name: 'customContentWidth',
+      name,
       style: () => import('./custom-content-width.scss'),
       important: true,
     },
   ],
-  entry: ({ metadata }) => {
-    addComponentListener(
-      `${metadata.name}.customWidth`,
-      (value: number) => {
-        document.documentElement.style.setProperty('--be-feeds-content-width', `${value}px`)
-      },
-      true,
-    )
+  entry,
+  reload: entry,
+  unload: () => {
+    removeComponentListener(`${name}.customWidth`, applyWidth)
+    document.documentElement.style.removeProperty('--be-feeds-content-width')
   },
 })
