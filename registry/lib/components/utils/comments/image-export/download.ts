@@ -18,15 +18,15 @@ const getExtensionFromUrl = (url: string): string => {
   return match ? `.${match[1]}` : '.jpg'
 }
 
-const getVideoId = ({ pathname, searchParams }: URL): string | null => {
-  const videoMatch = pathname.match(/^\/video\/(BV[a-zA-Z0-9]+|av\d+)/)
-  if (videoMatch) {
-    return videoMatch[1]
+// bvid / aid 由 core 的 player polyfill 填充, 番剧、合集等页面也能拿到当前播放的视频
+const getVideoId = (): string | null => {
+  if (unsafeWindow.bvid) {
+    return unsafeWindow.bvid
   }
-  if (!pathname.startsWith('/list/')) {
-    return null
+  if (unsafeWindow.aid) {
+    return `av${unsafeWindow.aid}`
   }
-  return searchParams.getAll('bvid').pop() ?? null
+  return null
 }
 
 const getDynamicIdFromUrl = ({ hostname, pathname }: URL): string | null => {
@@ -48,7 +48,7 @@ const getCommentAreaOid = (areaElement?: HTMLElement): string | null => {
 
 const getSourceId = (areaElement?: HTMLElement): string => {
   const url = new URL(window.location.href)
-  const videoId = getVideoId(url)
+  const videoId = getVideoId()
   if (videoId) {
     return videoId
   }
