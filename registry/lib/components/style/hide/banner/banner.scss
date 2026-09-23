@@ -43,7 +43,7 @@ div.blur-bg,
     // 这里等效地把容器改为深色; 自带 color 的元素 (投稿按钮, 未读红点, 各类弹层) 不受继承影响.
     color: black !important;
     body.dark & {
-      color: #eee !important;
+      color: var(--be-color-text-title, #eee) !important;
     }
 
     .entry-title,
@@ -55,7 +55,7 @@ div.blur-bg,
       color: black !important;
       text-shadow: none !important;
       body.dark & {
-        color: #eee !important;
+        color: var(--be-color-text-title, #eee) !important;
       }
     }
   }
@@ -67,7 +67,7 @@ div.blur-bg,
   .right-entry .right-entry__item-trigger .trigger-icon {
     color: black !important;
     body.dark & {
-      color: #eee !important;
+      color: var(--be-color-text-title, #eee) !important;
     }
   }
 }
