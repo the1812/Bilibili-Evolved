@@ -1,6 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { addStyle, removeStyle } from '@/core/style'
+import style from './index.scss'
 
 const liveHome = /^https:\/\/live\.bilibili\.com\/(index\.html)?$/
 export const component = defineComponentMetadata({
@@ -13,10 +14,7 @@ export const component = defineComponentMetadata({
       `${metadata.name}.hide`,
       (value: boolean) => {
         if (value) {
-          addStyle(
-            '.player-area-ctnr,#player-header,#blive-home .flex.items-stretch.pr-20px  { display: none !important }',
-            styleID,
-          )
+          addStyle(style, styleID)
         } else {
           removeStyle(styleID)
         }

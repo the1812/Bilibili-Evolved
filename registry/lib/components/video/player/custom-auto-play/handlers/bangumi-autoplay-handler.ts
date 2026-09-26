@@ -1,7 +1,7 @@
 import { matchUrlPattern } from '@/core/utils'
 import { bangumiUrls } from '@/core/utils/urls'
 import { AutoplayActionType } from '../AutoplayActionType'
-import { BaseAutoplayHandler } from './BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './base-autoplay-handler'
 
 /** 自动连播处理器-番剧 */
 export class BangumiAutoplayHandler extends BaseAutoplayHandler {
@@ -35,7 +35,7 @@ export class BangumiAutoplayHandler extends BaseAutoplayHandler {
     )
   }
 
-  async setupAutoPlay(enable: boolean) {
-    await this.setupAutoPlay_Player(enable)
+  async setupAutoplay(enable: boolean) {
+    await this.setupAutoplayPlayer(enable)
   }
 }

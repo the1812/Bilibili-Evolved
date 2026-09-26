@@ -74,6 +74,8 @@ export default Vue.extend({
   grid-template: 'displayName line remove' auto 'name line remove' auto / auto 1fr auto;
   align-items: center;
   padding: 6px 0;
+  height: unset;
+  width: unset;
 
   .user-item-display-name {
     grid-area: displayName;

@@ -1,6 +1,6 @@
 import { matchUrlPattern } from '@/core/utils'
 import { AutoplayActionType } from '../AutoplayActionType'
-import { BaseAutoplayHandler } from './BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './base-autoplay-handler'
 import { bangumiUrls, favoriteListUrls, watchlaterUrls } from '@/core/utils/urls'
 
 /** 自动连播处理器-推荐视频（列表第一个） */
@@ -30,7 +30,7 @@ export class RecommendListAutoplayHandler extends BaseAutoplayHandler {
     window.location.assign(a.getAttribute('href'))
   }
 
-  async setupAutoPlay(enable: boolean) {
+  async setupAutoplay(enable: boolean) {
     const video = document.querySelector('video')
     if (!video) {
       return

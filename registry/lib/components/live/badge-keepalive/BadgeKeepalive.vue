@@ -7,6 +7,12 @@
       :change-on-blur="true"
       @change="handleRoomIdChange"
     ></TextBox>
+    <div class="room-row">
+      <AsyncButton title="填入当前直播间ID" @click="fillRoomId(getLiveRoomId)">当前</AsyncButton>
+      <AsyncButton title="填入当前佩戴勋章所属的直播间ID" @click="fillRoomId(getWornMedalRoomId)">
+        佩戴勋章
+      </AsyncButton>
+    </div>
     <TextBox
       placeholder="点赞次数"
       :text="clickTimes"
@@ -20,7 +26,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { TextBox, AsyncButton } from '@/ui'
-import { validateRoomId, getLiveRoomId, keepAliveRequest } from './utils'
+import { validateRoomId, getLiveRoomId, getWornMedalRoomId, keepAliveRequest } from './utils'
 import { Toast } from '@/core/toast'
 import {
   getComponentSettings,
@@ -46,6 +52,14 @@ const handleClickTimesChange = (value: string) => {
   }
 }
 
+const fillRoomId = async (getRoomId: () => string | Promise<string>) => {
+  try {
+    roomid.value = await getRoomId()
+  } catch ({ message }) {
+    Toast.error(`获取直播间ID失败，原因: ${message}`, '一键点亮直播间粉丝勋章')
+  }
+}
+
 const syncClickTimes = (newValue: unknown) => (clickTimes.value = String(newValue))
 
 onMounted(() => {
@@ -63,9 +77,9 @@ const handleKeepAliveRequest = async () => {
 
   try {
     await keepAliveRequest(roomid.value, clickTimes.value)
-    Toast.success('发送点亮勋章请求成功', '提示', 3000)
+    Toast.success('发送点亮勋章请求成功', '一键点亮直播间粉丝勋章', 3000)
   } catch ({ message }) {
-    Toast.error(`勋章点亮失败，原因: ${message}`, '提示')
+    Toast.error(`勋章点亮失败，原因: ${message}`, '一键点亮直播间粉丝勋章')
   }
 }
 </script>
@@ -85,6 +99,10 @@ const handleKeepAliveRequest = async () => {
 
   .title {
     @include semi-bold();
+  }
+
+  .room-row {
+    @include h-stretch(6px);
   }
 }
 </style>

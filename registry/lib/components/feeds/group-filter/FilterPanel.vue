@@ -126,9 +126,12 @@ export default Vue.extend({
     },
     updateCard(card: FeedsCard) {
       // 从username获得tag
-      const userTagIds: number[] = this.followingMap.get(card.username)
-      if (!userTagIds || !this.selectedGroupIds) {
+      let userTagIds: number[] = this.followingMap.get(card.username)
+      if (!this.selectedGroupIds) {
         return
+      }
+      if (!userTagIds || userTagIds.length === 0) {
+        userTagIds = [0]
       }
       if (!userTagIds.some(item => this.selectedGroupIds.includes(item))) {
         card.element.classList.add('group-filter-hide-feed')
@@ -197,8 +200,8 @@ export default Vue.extend({
   }
 
   body.dark & {
-    color: #eee;
-    background-color: #444;
+    color: var(--be-color-text-title, #eee);
+    background-color: var(--be-color-panel-bg, #444);
   }
 }
 </style>

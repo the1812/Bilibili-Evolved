@@ -2,11 +2,8 @@ import { playerAgent } from '@/components/video/player-agent'
 import { lightOn, lightOff } from '@/components/video/player-light'
 import { videoChange } from '@/core/observer'
 import { allVideoUrls } from '@/core/utils/urls'
-import type { PlayerAgent } from '@/components/video/player-agent/base'
 import { StarAnim } from './animation'
 import { defineComponentMetadata } from '@/components/define'
-
-let playerAgentInstance: PlayerAgent
 
 export const component = defineComponentMetadata({
   name: 'playerAutoLight',
@@ -20,42 +17,66 @@ export const component = defineComponentMetadata({
     },
   },
   entry: async ({ settings }) => {
-    const { isEmbeddedPlayer } = await import('@/core/utils')
+    const { isEmbeddedPlayer, playerReady } = await import('@/core/utils')
 
     if (isEmbeddedPlayer()) {
       return
     }
 
-    const makeLightOn = () => {
-      lightOn()
-      StarAnim(false)
-    }
+    // 星光动画跟随灯光状态, starAnimation 选项在此统一控制
+    const setStars = (isLightOff: boolean) => StarAnim(isLightOff && settings.options.starAnimation)
 
-    const makeLightOff = () => {
-      lightOff()
-      if (settings.options.starAnimation) {
-        StarAnim(true)
-      }
+    // 任何组件开关灯都经过 PlayerAgent.toggleLight, 监听其广播的灯光状态同步星光动画
+    window.addEventListener('playerLightChange', event => {
+      const { lightOn: isLightOn } = (event as CustomEvent<{ lightOn: boolean }>).detail
+      setStars(!isLightOn)
+    })
+
+    // 用户手动点击播放器设置中的 "关灯模式" 勾选框时同步星光动画 (该路径不经过 PlayerAgent.toggleLight)
+    document.addEventListener(
+      'change',
+      event => {
+        const checkbox = event.target
+        if (
+          checkbox instanceof HTMLInputElement &&
+          checkbox.closest('.bpx-player-ctrl-setting-lightoff')
+        ) {
+          setStars(checkbox.checked)
+        }
+      },
+      true,
+    )
+
+    // 等待播放器完成初始化: 过早调用关灯 API 会与 b 站初始化竞争, 触发页面自动刷新 (#5125)
+    // 就绪前的 play/pause 事件状态不可信, 统一丢弃, 由 videoChange 兜底按当前状态同步
+    await playerReady()
+
+    // 在 document 上捕获事件, 避免视频元素被替换后监听器失效, 导致卡在关灯状态
+    // 限定主播放器挂载点 (#bilibili-player 为视频/番剧页, #edu-player 为课堂页)
+    const onVideoEvent = (type: string, action: () => void) => {
+      document.addEventListener(
+        type,
+        event => {
+          if (
+            event.target instanceof Element &&
+            event.target.closest('#bilibili-player, #edu-player')
+          ) {
+            action()
+          }
+        },
+        true,
+      )
     }
+    onVideoEvent('play', lightOff)
+    onVideoEvent('pause', lightOn)
+    onVideoEvent('ended', lightOn)
 
     videoChange(async () => {
-      if (playerAgentInstance != null) {
-        const oldVideo = await playerAgentInstance.query.video.element()
-        oldVideo.removeEventListener('ended', makeLightOn)
-        oldVideo.removeEventListener('pause', makeLightOn)
-        oldVideo.removeEventListener('play', makeLightOff)
+      const video = (await playerAgent.query.video.element()) as HTMLVideoElement
+      // 组件加载前视频可能已经开始播放
+      if (!video.paused && !video.ended) {
+        lightOff()
       }
-
-      playerAgentInstance = playerAgent
-      const video = await playerAgentInstance.query.video.element()
-
-      if (playerAgentInstance.isAutoPlay()) {
-        makeLightOff()
-      }
-
-      video.addEventListener('ended', makeLightOn)
-      video.addEventListener('pause', makeLightOn)
-      video.addEventListener('play', makeLightOff)
     })
   },
 })

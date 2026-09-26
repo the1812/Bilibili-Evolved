@@ -5,8 +5,11 @@
       placeholder="发个弹幕呗~"
       :value="value"
       maxlength="30"
+      autocomplete="off"
       @keydown.enter="send()"
       @input="updateValue($event.target.value)"
+      @focus="setControlBarLocked(true)"
+      @blur="setControlBarLocked(false)"
     />
   </div>
 </template>
@@ -57,6 +60,14 @@ export default Vue.extend({
     this.originalTextArea.removeEventListener('change', this.listenChange)
   },
   methods: {
+    /**
+     * 锁定或解除控制栏的显示与鼠标指针, 避免输入弹幕时控制栏自动隐藏并销毁 DOM 导致输入中断.
+     * 播放器 `changeCtrlVisible(visible, lock)` 中 `lock` 为 `false` 时锁定显示, 因此这里取反.
+     */
+    setControlBarLocked(locked: boolean) {
+      unsafeWindow.EmbedPlayer?.instance?.changeCtrlVisible?.(true, !locked)
+      document.body.classList.toggle('danmaku-send-bar-focus', locked)
+    },
     updateValue(newValue: string) {
       this.originalTextArea.value = newValue
       raiseEvent(this.originalTextArea, 'input')
@@ -82,6 +93,10 @@ export default Vue.extend({
 .live-web-player-controller {
   background-image: linear-gradient(to bottom, transparent 20%, rgba(0, 0, 0, 0.9));
 }
+// 输入弹幕时保持鼠标指针显示, 播放器会在鼠标静止后隐藏指针
+body.danmaku-send-bar-focus #live-player {
+  cursor: default !important;
+}
 @media screen and (min-width: 1038px) {
   .player-full-win {
     &:not(.danmaku-send-bar-unloaded) {
@@ -99,6 +114,7 @@ export default Vue.extend({
             border-bottom: 2px solid #fff8;
             background-color: transparent;
             color: #fff;
+            cursor: text;
             padding: 4px;
             line-height: normal;
             flex: 1;

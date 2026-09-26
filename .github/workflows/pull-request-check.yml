@@ -2,18 +2,6 @@ name: Pull Request Check
 on:
   - pull_request
 jobs:
-  auto-publish-classify:
-    name: Auto Publish Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: '0'
-      - name: Classify auto publish
-        env:
-          BASE_REF: ${{ github.event.pull_request.base.ref }}
-          AUTO_PUBLISH_PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: node .github/scripts/auto-publish-classify.mjs
   check:
     name: Pull Request Check
     runs-on: ubuntu-latest
