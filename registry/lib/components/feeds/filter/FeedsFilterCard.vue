@@ -10,11 +10,26 @@
     </div>
     <h2 class="patterns-header" @click="patternsCollapsed = !patternsCollapsed">
       关键词
-      <VIcon icon="mdi-chevron-up" :class="{ collapsed: patternsCollapsed }" />
+      <VIcon icon="mdi-chevron-up" :size="18" :class="{ collapsed: patternsCollapsed }" />
     </h2>
+    <div
+      ref="addPatternInput"
+      class="add-pattern"
+      :class="{ 'no-visible-patterns': patternsCollapsed || patterns.length === 0 }"
+    >
+      <TextBox
+        v-model="newPattern"
+        placeholder="支持正则表达式 /^xxx$/"
+        type="text"
+        @keydown.enter="addNewPattern(newPattern)"
+      />
+      <VButton type="transparent" @click.native="addNewPattern(newPattern)">
+        <VIcon title="添加" icon="mdi-plus" :size="18" />
+      </VButton>
+    </div>
     <div v-show="!patternsCollapsed" class="filter-patterns">
       <div
-        v-for="p of patterns"
+        v-for="p of displayedPatterns"
         :key="p.key"
         class="pattern"
         :class="{ 'pattern-disabled': !p.enabled }"
@@ -42,17 +57,6 @@
         </div>
       </div>
     </div>
-    <div class="add-pattern">
-      <TextBox
-        v-model="newPattern"
-        placeholder="支持正则表达式 /^xxx$/"
-        type="text"
-        @keydown.enter="addNewPattern(newPattern)"
-      />
-      <VButton type="transparent" @click.native="addNewPattern(newPattern)">
-        <VIcon title="添加" icon="mdi-plus" :size="18" />
-      </VButton>
-    </div>
     <h2>板块</h2>
     <div class="filter-side-card">
       <FilterSideCard
@@ -68,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, defineAsyncComponent, watch } from 'vue'
+import { ref, computed, onMounted, defineAsyncComponent, watch, nextTick } from 'vue'
 import {
   FeedsCard,
   type FeedsCardsManager,
@@ -104,6 +108,8 @@ const {
 const cardsManager = ref<FeedsCardsManager | null>(null)
 const allTypes = ref<[string, FeedsCardType][]>([])
 const newPattern = ref('')
+const addPatternInput = ref<HTMLDivElement | null>(null)
+const displayedPatterns = computed(() => [...patterns.value].reverse())
 const collapse = ref(!contentsOnly)
 const patternsCollapsed = ref(true)
 
@@ -132,9 +138,11 @@ const updateCards = () => {
   cardsManager.value.cards.forEach(card => updateCard(card))
 }
 
-const addNewPattern = (pattern: string) => {
+const addNewPattern = async (pattern: string) => {
   if (addPattern(pattern)) {
     newPattern.value = ''
+    await nextTick()
+    addPatternInput.value?.querySelector('input')?.focus()
   }
 }
 
@@ -312,7 +320,7 @@ body.disable-feeds-filter-card {
   }
   .filter-patterns {
     &:not(:empty) {
-      margin-bottom: 4px;
+      margin-bottom: 18px;
     }
     .pattern {
       display: flex;
@@ -342,7 +350,10 @@ body.disable-feeds-filter-card {
   .add-pattern {
     display: flex;
     align-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 4px;
+    &.no-visible-patterns {
+      margin-bottom: 18px;
+    }
     input {
       font-size: 12px;
     }
