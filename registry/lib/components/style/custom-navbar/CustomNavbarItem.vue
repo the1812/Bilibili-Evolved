@@ -244,6 +244,7 @@ export default Vue.extend({
     padding: 0 10px;
     color: var(--navbar-foreground);
     user-select: none;
+    overflow: unset;
     &:hover {
       color: var(--navbar-foreground) !important;
     }

@@ -1,16 +1,20 @@
 import { matchUrlPattern } from '@/core/utils'
 import { AutoplayActionType } from '../AutoplayActionType'
-import { BaseAutoplayHandler } from './BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './base-autoplay-handler'
 
 /** 自动连播处理器-分P视频 */
 export class MultipartAutoplayHandler extends BaseAutoplayHandler {
   type = '分P视频'
 
+  /** 是否为带自动播放切换按钮的旧版界面 */
+  private isLegacyLayout() {
+    return document.querySelector('.video-pod .auto-play .switch-btn') !== null
+  }
+
   async match() {
     const videoUrl = '//www.bilibili.com/video/'
     const list = document.querySelector('.video-pod .multip')
-    const btn = document.querySelector('.video-pod .auto-play .switch-btn')
-    return matchUrlPattern(videoUrl) && list != null && btn != null
+    return matchUrlPattern(videoUrl) && list !== null
   }
 
   protected override getSequentialNumberString(): string {
@@ -24,7 +28,11 @@ export class MultipartAutoplayHandler extends BaseAutoplayHandler {
     )
   }
 
-  async setupAutoPlay(enable: boolean) {
-    await this.setupAutoPlay_SwitchBtn(enable)
+  async setupAutoplay(enable: boolean) {
+    if (this.isLegacyLayout()) {
+      await this.setupAutoplaySwitchButton(enable)
+      return
+    }
+    await this.setupAutoplayPlayer(enable)
   }
 }

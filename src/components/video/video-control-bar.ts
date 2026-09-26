@@ -37,8 +37,22 @@ export const addControlBarButton = async (button: VideoControlBarItem) => {
     controlBarInstance = initControlBar()
   }
   const created = (await controlBarInstance) as ControlBarComponent
-  if (!created) {
+  if (!created || created.items.some(item => item.name === button.name)) {
     return
   }
   created.items.push(button)
+}
+/** 从视频控制栏移除按钮 */
+export const removeControlBarButton = async (name: string) => {
+  if (!controlBarInstance) {
+    return
+  }
+  const created = (await controlBarInstance) as ControlBarComponent
+  if (!created) {
+    return
+  }
+  const index = created.items.findIndex(item => item.name === name)
+  if (index !== -1) {
+    created.items.splice(index, 1)
+  }
 }

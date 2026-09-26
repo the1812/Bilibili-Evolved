@@ -1,7 +1,7 @@
 import { matchUrlPattern } from '@/core/utils'
 import { favoriteListUrls } from '@/core/utils/urls'
 import { AutoplayActionType } from '../AutoplayActionType'
-import { BaseAutoplayHandler } from './BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './base-autoplay-handler'
 
 /** 自动连播处理器-收藏夹 */
 export class FavoriteAutoplayHandler extends BaseAutoplayHandler {
@@ -22,7 +22,7 @@ export class FavoriteAutoplayHandler extends BaseAutoplayHandler {
     )
   }
 
-  async setupAutoPlay(enable: boolean) {
-    await this.setupAutoPlay_SwitchBtn(enable)
+  async setupAutoplay(enable: boolean) {
+    await this.setupAutoplaySwitchButton(enable)
   }
 }

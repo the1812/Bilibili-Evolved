@@ -36,7 +36,10 @@
         height: calc(100% - 11px);
       }
       .playlist-container &,
-      .video-container-v1 & {
+      .video-container-v1 &,
+      .edu-play-main-container &,
+      .festival-video-player &,
+      .plp-player & {
         height: calc(100% - 5px);
         @include on-fullscreen {
           height: calc(100% + 1px);
@@ -47,7 +50,9 @@
 }
 body {
   &.video-control-progress-background {
-    .squirtle-progress-bar:not(.squirtle-progress-buffer):not(.squirtle-progress-timeline):not(.squirtle-progress-dot-container),
+    .squirtle-progress-bar:not(.squirtle-progress-buffer):not(.squirtle-progress-timeline):not(
+        .squirtle-progress-dot-container
+      ),
     .bpx-player-progress-schedule {
       background-color: transparent !important;
     }

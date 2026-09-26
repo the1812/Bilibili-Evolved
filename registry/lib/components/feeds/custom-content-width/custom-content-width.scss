@@ -1,0 +1,27 @@
+body #app {
+  // 动态首页
+  .bili-dyn-home--member {
+    --center-width: var(--be-feeds-content-width, 556px) !important;
+    @media screen and (min-width: 1320px) {
+      --center-width: var(--be-feeds-content-width, 724px) !important;
+    }
+    > main {
+      width: var(--center-width) !important;
+    }
+  }
+  // 动态详情页
+  > .content {
+    width: var(--be-feeds-content-width, 632px) !important;
+  }
+  // 图文动态 / 专栏页
+  .opus-detail {
+    width: var(--be-feeds-content-width, 708px) !important;
+    .opus-module-top__album__cover {
+      width: inherit !important;
+    }
+    .right-sidebar-wrap {
+      margin-left: calc(var(--be-feeds-content-width, 708px) + 12px) !important;
+      transition: none !important;
+    }
+  }
+}

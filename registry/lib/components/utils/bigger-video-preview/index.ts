@@ -223,6 +223,10 @@ const entry: ComponentEntry = async ({ metadata: { name }, settings }) => {
     const wrap = node.querySelectorAll('.v-inline-player,.v-recommend-inline-player')
     wrap.forEach(it => {
       const movingDom = it.parentElement
+      // 课堂卡片的播放器无法预览, 跳过
+      if (movingDom.closest('.bili-video-card')?.querySelector('a[href*="/cheese/"]')) {
+        return
+      }
       updatePreviewTimeLimit(movingDom)
 
       // 检查父元素下是否已经有该按钮，避免重复插入
@@ -317,6 +321,14 @@ const entry: ComponentEntry = async ({ metadata: { name }, settings }) => {
       'bigger-video-preview-button-list',
       'v-recommend-inline-player',
       '.recommend-list-container',
+      element => element.parentElement,
+    )
+  } else if (document.URL.startsWith('https://search.bilibili.com/')) {
+    logger.debug('初始化搜索页预览放大按钮')
+    initPreviewButton(
+      'bigger-video-preview-button-search',
+      'v-inline-player',
+      '.search-content',
       element => element.parentElement,
     )
   }

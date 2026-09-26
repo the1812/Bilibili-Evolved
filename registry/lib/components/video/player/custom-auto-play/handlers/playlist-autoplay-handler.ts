@@ -1,6 +1,6 @@
 import { matchUrlPattern } from '@/core/utils'
 import { AutoplayActionType } from '../AutoplayActionType'
-import { BaseAutoplayHandler } from './BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './base-autoplay-handler'
 
 /** 自动连播处理器-视频合集 */
 export class PlaylistAutoplayHandler extends BaseAutoplayHandler {
@@ -74,11 +74,11 @@ export class PlaylistAutoplayHandler extends BaseAutoplayHandler {
     )
   }
 
-  async setupAutoPlay(enable: boolean) {
+  async setupAutoplay(enable: boolean) {
     if (this.isNewLayout()) {
-      await this.setupAutoPlay_Player(enable)
+      await this.setupAutoplayPlayer(enable)
       return
     }
-    await this.setupAutoPlay_SwitchBtn(enable)
+    await this.setupAutoplaySwitchButton(enable)
   }
 }

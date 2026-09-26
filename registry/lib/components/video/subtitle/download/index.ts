@@ -39,6 +39,9 @@ export const component = defineComponentMetadata({
             const results = await Promise.allSettled(
               infos.map(async info => {
                 const blob = await getSubtitleBlob(type, info.input)
+                if (blob === null) {
+                  throw new Error('当前视频没有字幕')
+                }
                 downloadedItemCount++
                 toast.message = `获取字幕中... (${downloadedItemCount}/${infos.length})`
                 return {

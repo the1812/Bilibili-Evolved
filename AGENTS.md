@@ -40,12 +40,14 @@ The dev server starts and watches the development core build, serves the local u
 - Use `urlInclude` and `urlExclude` for page matching instead of manually repeating page checks in `entry`.
 - Keep `entry` focused on the work that must happen when the component starts.
 - Do not rely on the return value of `entry` for cleanup. Put teardown logic in `unload`; use `reload` together with `unload` when a component must support disable and re-enable behavior.
-- Use existing helpers such as `styledComponentEntry`, `toggleStyle`, shared core APIs, component APIs, and plugin APIs before adding new infrastructure.
-- Put fixed component styles in SCSS files instead of constructing style text in business logic. Use `instantStyles`, `styledComponentEntry`, or `toggleStyle` so styles are only applied when intended.
+- Use existing shared core APIs, component APIs, and plugin APIs before adding new infrastructure. Do not add new uses of `styledComponentEntry` or `toggleStyle` from `@/components/styled-component`; declare fixed component styles through metadata `instantStyles` instead.
+- Use the observer APIs from `core/observer`, such as `mutationObserve`, `childList`, `visible`, `sizeChange`, `urlChange`, and `videoChange`, instead of directly constructing native `MutationObserver`, `IntersectionObserver`, or `ResizeObserver` instances when the project API covers the required behavior.
+- Put fixed component styles in SCSS files and load them through metadata `instantStyles`. Do not embed fixed CSS in TypeScript strings, HTML `style` attributes constructed in TypeScript, `style.cssText`, or individual DOM style assignments. For styles that require a different loading lifecycle, use the existing style APIs to load SCSS and handle cleanup explicitly.
 - When writing SCSS, check shared Sass files before adding local helpers. For example, `ui/_common.scss` is available through `@import "common"` and provides common mixins such as fullscreen and centering helpers.
 - For options, follow existing `defineOptionsMetadata` and `options` patterns so defaults, labels, and validators stay close to metadata.
 - Model exclusive choices as one option, usually with an enum or dropdown, instead of multiple mutually exclusive boolean options.
-- If settings need to control CSS, prefer toggling a class on `html` or `body` and writing SCSS against that class.
+- For dynamic style switching, keep the style rules in SCSS and toggle a state class on `html` so CSS responds to that state. Prefer this over manually adding and removing stylesheets in TypeScript.
+- Runtime style writes are allowed for computed positions and dimensions, CSS custom properties, and restoring existing inline styles. Keep fixed declarations in SCSS even when the same element also needs dynamic values.
 
 ## Code Style
 
@@ -78,7 +80,7 @@ Choose validation based on the risk and scope of the change.
 - For browser-facing behavior, verify the changed feature in a real browser with the local userscript installed.
 - For API-shape or Bilibili-rollout-dependent changes, record what page or account state was actually self-tested.
 
-The pull request CI workflow runs the following production builds. Do not repeat them as routine local validation; run them locally only when explicitly requested, reproducing a CI failure, changing shared build infrastructure, or preparing a release.
+The pull request CI workflow runs the following checks and builds. Do not repeat `build-core` or the full `build-features` build as routine local validation; run them locally only when explicitly requested, reproducing a CI failure, changing shared build infrastructure, or preparing a release.
 
 1. `pnpm run type`
 2. `pnpm run lint-check`
