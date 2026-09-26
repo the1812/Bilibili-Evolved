@@ -38,6 +38,14 @@ div.blur-bg,
 .bili-header {
   .left-entry,
   .right-entry {
+    // 顶栏再次改版后, 各入口的文字不再有独立类名, 而是统一继承入口容器的颜色.
+    // B 站靠给容器加 .white-bg-bar 来切换白底配色, 但横幅被隐藏时这个类不会加上,
+    // 这里等效地把容器改为深色; 自带 color 的元素 (投稿按钮, 未读红点, 各类弹层) 不受继承影响.
+    color: black !important;
+    body.dark & {
+      color: var(--be-color-text-title, #eee) !important;
+    }
+
     .entry-title,
     .default-entry,
     .download-entry,
@@ -47,16 +55,19 @@ div.blur-bg,
       color: black !important;
       text-shadow: none !important;
       body.dark & {
-        color: #eee !important;
+        color: var(--be-color-text-title, #eee) !important;
       }
     }
   }
-  // 图标为 SVG 且使用 currentColor, 设 color 即可连带修正 fill: 左侧小电视 logo 与右侧入口图标
+  // 图标为 SVG 且使用 currentColor, 设 color 即可连带修正 fill: 左侧小电视 logo 与右侧入口图标.
+  // 改版后的图标统一为 .trigger-icon, 限定在入口按钮内, 以避开投稿按钮的 .upload-entry__trigger.
   .left-entry .zhuzhan-icon,
-  .right-entry .right-entry-icon {
+  .right-entry .right-entry-icon,
+  .left-entry .left-entry__item-trigger .trigger-icon,
+  .right-entry .right-entry__item-trigger .trigger-icon {
     color: black !important;
     body.dark & {
-      color: #eee !important;
+      color: var(--be-color-text-title, #eee) !important;
     }
   }
 }

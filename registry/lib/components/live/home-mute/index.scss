@@ -1,0 +1,14 @@
+.player-area-ctnr,
+#player-header {
+  display: none !important;
+}
+
+#blive-home .flex.items-stretch {
+  > :first-child {
+    display: none !important;
+  }
+
+  > :nth-child(2) {
+    margin-left: 0 !important;
+  }
+}
