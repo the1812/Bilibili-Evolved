@@ -1,44 +1,57 @@
 import { RadioItem } from '@/ui'
 import { ComponentEntry } from '@/components/types'
 import { defineComponentMetadata } from '@/components/define'
-import { createComponentWithProps } from '@/core/utils'
+import { createComponentWithProps, delay } from '@/core/utils'
 
 const componentName = 'removePromotions'
 
-// 完全隐藏模式下, 进入页面时提前加载一批卡片, 避免首页下半部分空白
-const startHomeFeedPreload = async () => {
-  const preloadAnchorSelector = '.container > .load-more-anchor'
-  const preloadClass = 'remove-promotions-preload-anchor'
-  const preloadReleaseTimeout = 5000
+const preloadAnchorSelector = '.container > .load-more-anchor'
+const preloadClass = 'remove-promotions-preload-anchor'
+/** 提前加载的触发间隔与次数 (最长 5s) */
+const preloadNudgeInterval = 500
+const preloadNudgeTimes = 10
 
+/** 完全隐藏模式下把锚点移到视口上方, 让页面认为已到达锚点, 从而提前加载下一批卡片, 避免首页出现空白 */
+const watchHomeFeedPreload = async (enabled: () => boolean) => {
   const { select } = await import('@/core/spin-query')
   const anchor = (await select(preloadAnchorSelector)) as HTMLElement | null
-  if (!anchor) {
+  const container = anchor?.parentElement
+  if (!anchor || !container) {
     return
   }
-  const parent = anchor.parentElement
-  const preloadedChildCount = parent?.childElementCount ?? -1
-  anchor.classList.add(preloadClass)
-  window.dispatchEvent(new Event('scroll'))
-  const release = () => anchor.classList.remove(preloadClass)
-  const observer = new MutationObserver(() => {
-    if (anchor.parentElement?.childElementCount !== preloadedChildCount) {
-      observer.disconnect()
-      release()
+  const preload = async () => {
+    if (anchor.classList.contains(preloadClass)) {
+      return
     }
-  })
-  if (parent) {
-    observer.observe(parent, { childList: true })
+    let childCount = container.childElementCount
+    anchor.classList.add(preloadClass)
+    // 页面只在滚动事件里检查锚点, 刷新或加载期间还会忽略滚动, 因此反复触发直到卡片数变多
+    for (let i = 0; i < preloadNudgeTimes && enabled(); i++) {
+      window.dispatchEvent(new Event('scroll'))
+      await delay(preloadNudgeInterval)
+      if (container.childElementCount > childCount) {
+        break
+      }
+      childCount = container.childElementCount
+    }
+    anchor.classList.remove(preloadClass)
   }
-  window.setTimeout(() => {
-    observer.disconnect()
-    release()
-  }, preloadReleaseTimeout)
+  preload()
+  let childCount = container.childElementCount
+  const { childList } = await import('@/core/observer')
+  childList(container, () => {
+    const currentChildCount = container.childElementCount
+    // 卡片变少说明推荐流被清空重填
+    if (currentChildCount < childCount) {
+      preload()
+    }
+    childCount = currentChildCount
+  })
 }
 
 // const PromotionMark = 'data-be-promotion-mark'
 const entry: ComponentEntry = async ({ settings, metadata }) => {
-  const { addComponentListener } = await import('@/core/settings')
+  const { addComponentListener, isComponentEnabled } = await import('@/core/settings')
   if (document.URL.replace(window.location.search, '') === 'https://www.bilibili.com/') {
     const { selectAll, select } = await import('@/core/spin-query')
     select('.eva-extension-area').then(it => {
@@ -94,9 +107,9 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
           )
         })
     })
-    if (settings.options.hideContainer) {
-      startHomeFeedPreload()
-    }
+    watchHomeFeedPreload(
+      () => isComponentEnabled(metadata.name) && Boolean(settings.options.hideContainer),
+    )
   }
   addComponentListener(
     `${metadata.name}.preserveEventBanner`,
