@@ -5,10 +5,15 @@ interface RecommendParams {
   fresh_type?: number
   fetch_row?: number
   ps?: number
+  domestic_zh_ps?: number
+  domestic_other_ps?: number
+  overseas_zh_ps?: number
+  overseas_other_ps?: number
 }
 interface FeedStore {
   homeVersion: string
-  getRecommend: (...args: unknown[]) => unknown
+  getRecommend?: (...args: unknown[]) => unknown
+  getHead?: (...args: unknown[]) => unknown
   $onAction: (
     listener: (action: { name: string; args: RecommendParams[] }) => void,
     detached: boolean,
@@ -37,7 +42,7 @@ const findStore = (): FeedStore | undefined => {
     if (
       store?.homeVersion === 'V8' &&
       typeof store.$onAction === 'function' &&
-      typeof store.getRecommend === 'function'
+      (typeof store.getHead === 'function' || typeof store.getRecommend === 'function')
     ) {
       return store
     }
@@ -62,7 +67,13 @@ const reload = async () => {
   unsubscribe = store.$onAction(({ name, args }) => {
     const params = args[0]
     // Only the native top refresh action: leave initial and infinite feeds alone.
-    if (name !== 'getRecommend' || params?.fresh_type !== 3 || params.fetch_row !== 1) {
+    // Newer homepages call getRecommend through a closure inside getHead,
+    // bypassing Pinia's getRecommend action subscription.
+    if (
+      (name !== 'getHead' && name !== 'getRecommend') ||
+      params?.fresh_type !== 3 ||
+      params.fetch_row !== 1
+    ) {
       return
     }
     const count = Number(getCount())
@@ -70,7 +81,14 @@ const reload = async () => {
       return
     }
     // Pinia dispatches this callback before the action and its WBI middleware.
-    args[0] = { ...params, ps: count }
+    args[0] = {
+      ...params,
+      ps: count,
+      domestic_zh_ps: count,
+      domestic_other_ps: count,
+      overseas_zh_ps: count,
+      overseas_other_ps: count,
+    }
     document.documentElement.classList.add(className)
   }, true)
 }
