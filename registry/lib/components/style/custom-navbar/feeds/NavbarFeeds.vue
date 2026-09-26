@@ -46,7 +46,8 @@ export default Vue.extend({
           return
         }
         const feedsCardType = feedsCardTypes[tab.name] as FeedsCardType
-        if (!feedsCardType.apiType) {
+        // 没有对应动态类型的页签(如 live/订阅)不显示未读数字
+        if (!feedsCardType?.apiType) {
           return
         }
         const count = await getNotifyCountByType(feedsCardType.apiType)

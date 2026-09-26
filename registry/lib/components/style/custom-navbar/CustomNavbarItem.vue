@@ -4,15 +4,21 @@
     class="custom-navbar-item"
     role="listitem"
     :data-name="item.name"
-    :class="{ disabled: item.disabled, active: item.active, 'input-within': inputWithin }"
+    :class="{
+      disabled: item.disabled,
+      active: item.active,
+      'input-within': inputWithin,
+      'popup-shown': popupShown,
+    }"
     :style="{ flex: item.flexStyle, order: item.order }"
+    @mouseenter="togglePopup(true)"
+    @mouseleave="togglePopup(false)"
   >
     <CustomNavbarLink
       v-if="item.href"
       :new-tab="newTab"
       class="main-content"
       :href="!item.active && !item.touch && item.href"
-      @mouseover.self="requestPopup()"
     >
       <template v-if="typeof item.content === 'string'">
         {{ item.content }}
@@ -48,6 +54,7 @@
           ref="popup"
           :container="$refs.popupContainer"
           :item="item"
+          @hook:mounted="popupShown && refreshPopup()"
         ></component>
       </div>
     </div>
@@ -59,6 +66,9 @@
 import { addComponentListener, removeComponentListener } from '@/core/settings'
 import CustomNavbarLink from './CustomNavbarLink.vue'
 import { CustomNavbarItem } from './custom-navbar-item'
+
+/** 保证同一时间只有一个弹窗 */
+let hideShownPopup: (() => void) | null = null
 
 const isOpenInNewTab = (item: CustomNavbarItem) => {
   const { name } = item
@@ -83,13 +93,15 @@ export default Vue.extend({
       newTab: isOpenInNewTab(this.item),
       cancelListeners: none,
       inputWithin: false,
+      popupShown: false,
+      popupTimer: null as any,
     }
   },
   mounted() {
     const navbarItem = this.item as CustomNavbarItem
     navbarItem.contentMounted?.(navbarItem)
     const listener = () => {
-      this.updateLinkOption()
+      this.newTab = isOpenInNewTab(this.item)
     }
     addComponentListener('customNavbar.openInNewTabOverrides', listener)
     addComponentListener('customNavbar.openInNewTab', listener)
@@ -100,17 +112,50 @@ export default Vue.extend({
   },
   beforeDestroy() {
     this.cancelListeners?.()
+    this.setPopupShown(false)
   },
   methods: {
+    /** 划入停留片刻才展开(避免从浏览器标签栏往页面里划时被带出来), 划出留出鼠标划到弹窗的时间 */
+    togglePopup(shown: boolean) {
+      clearTimeout(this.popupTimer)
+      if (shown && (this.item.disabled || this.popupShown)) {
+        return
+      }
+      this.popupTimer = setTimeout(() => this.setPopupShown(shown), 200)
+    },
+    setPopupShown(shown: boolean) {
+      clearTimeout(this.popupTimer)
+      if (shown) {
+        // 内容是懒加载的, 到要展开时才挂载, 免得只是路过就发请求
+        const { item } = this as { item: CustomNavbarItem }
+        item.requestedPopup = true
+        hideShownPopup?.()
+        hideShownPopup = () => this.setPopupShown(false)
+        this.refreshPopup()
+      } else if (this.popupShown) {
+        hideShownPopup = null
+      }
+      this.popupShown = shown
+    },
+    refreshPopup() {
+      const { popup } = this.$refs
+      if (!popup) {
+        return
+      }
+      const { refreshOnPopup } = CustomNavbarItem.navbarOptions
+      if (refreshOnPopup && typeof popup.popupRefresh === 'function') {
+        popup.popupRefresh()
+      }
+      if (typeof popup.popupShow === 'function') {
+        popup.popupShow()
+      }
+    },
     toggleInputWithin(e: FocusEvent, value: boolean) {
       if (!(e.target instanceof HTMLInputElement)) {
         this.inputWithin = false
         return
       }
       this.inputWithin = value
-    },
-    updateLinkOption() {
-      this.newTab = isOpenInNewTab(this.item)
     },
     popupClasses(item: CustomNavbarItem & { iframeName?: string }) {
       return {
@@ -119,74 +164,12 @@ export default Vue.extend({
         'iframe-container': item.iframeName,
       }
     },
-    triggerPopupShow: lodash.debounce(function trigger(initialPopup: boolean) {
-      const { popup } = this.$refs
-      if (!popup) {
-        return
-      }
-      const allowRefresh =
-        CustomNavbarItem.navbarOptions.refreshOnPopup &&
-        popup.popupRefresh &&
-        typeof popup.popupRefresh === 'function'
-      if (!initialPopup && allowRefresh) {
-        popup.popupRefresh()
-      }
-      if (popup.popupShow && typeof popup.popupShow === 'function') {
-        popup.popupShow()
-      }
-    }, 300),
-    async requestPopup() {
-      const { item } = this as {
-        item: CustomNavbarItem
-      }
-      /** 惰性加载的, 要在鼠标经过时加载 popup */
-      if (item.disabled) {
-        return
-      }
-      if (!item.requestedPopup) {
-        item.requestedPopup = true
-        this.triggerPopupShow(true)
-        return
-      }
-      this.triggerPopupShow(false)
-    },
-    // async initPopper() {
-    //   const { popupContainer } = this.$refs
-    //   const navbarItem = this.item as CustomNavbarItem
-    //   console.log(navbarItem.name, this.$refs, popupContainer, navbarItem.popper)
-    //   if (!popupContainer || navbarItem.popper) {
-    //     console.log('return')
-    //     return
-    //   }
-    //   console.log('createPopper', createPopper)
-    //   navbarItem.popper = createPopper(navbarItem.element, popupContainer, {
-    //     placement: 'bottom',
-    //   })
-    // },
   },
 })
 </script>
 
 <style lang="scss">
 @import 'common';
-
-@keyframes navbar-popup-in {
-  1% {
-    pointer-events: initial;
-  }
-  to {
-    pointer-events: initial;
-  }
-}
-// @keyframes navbar-popup-out {
-//   from {
-//     pointer-events: none;
-//   }
-//   to {
-//     pointer-events: none;
-//     opacity: 0;
-//   }
-// }
 
 .custom-navbar-item {
   color: inherit;
@@ -261,7 +244,7 @@ export default Vue.extend({
     box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
     border: 1px solid var(--be-color-popup-border, #8882);
     border-radius: 8px;
-    transition: opacity 0.2s ease-out 0.2s;
+    transition: opacity 0.2s ease-out;
     position: absolute;
     top: 100%;
     left: 50%;
@@ -300,17 +283,16 @@ export default Vue.extend({
     top: calc(100% - 8px);
     left: 50%;
     pointer-events: none;
-    transition: all 0.2s ease-out 0.2s;
+    transition: all 0.2s ease-out;
   }
 
-  &:not(.disabled):hover,
-  &:not(.disabled).input-within {
-    .popup-container {
-      top: 100%;
-      > .popup {
-        animation: navbar-popup-in 0.2s ease-out 0.15s both;
-        opacity: 1;
-      }
+  // 展开只认 .popup-shown: 用 :hover 时鼠标从浏览器标签栏划进页面会顺带带出面板; :has 保证内容挂载前不展开
+  &:not(.disabled).popup-shown .popup-container:has(> .popup > *),
+  &:not(.disabled).input-within .popup-container {
+    top: 100%;
+    > .popup {
+      pointer-events: initial;
+      opacity: 1;
     }
   }
 
