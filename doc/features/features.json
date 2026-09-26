@@ -195,7 +195,7 @@
     "type": "component",
     "name": "liveHomePause",
     "displayName": "直播首页暂停",
-    "description": "by [@YeJay99](https://github.com/YeJay99)\n\n暂停直播首页的推荐直播间.",
+    "description": "by [@YiJay99](https://github.com/YiJay99)\n\n暂停直播首页的推荐直播间.",
     "fullRelativePath": "../../registry/dist/components/live/home-pause.js",
     "fullAbsolutePath": "registry/dist/components/live/home-pause.js"
   },
@@ -251,7 +251,7 @@
     "type": "component",
     "name": "collapseLiveSideBar",
     "displayName": "自动收起直播侧栏",
-    "description": "自动收起直播间右边偏下的侧栏. (上面有个 \"关注\" 的面板)",
+    "description": "自动收起直播间右边偏下的侧栏 (上面有个 \"关注\" 的面板) , 并阻止侧栏面板 (如 \"主播推荐\") 在打开网页时自动弹出.",
     "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
     "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
   },
@@ -371,7 +371,7 @@
     "type": "component",
     "name": "hideTrendingSearch",
     "displayName": "隐藏热搜",
-    "description": "隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 请注意这只是视觉上的隐藏, 如果不输入任何关键词就点 Enter 或搜索按钮, 仍然会跳转至推荐的热搜词.",
+    "description": "隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 不输入任何关键词就按 Enter 或点搜索按钮时, 会打开搜索页.",
     "fullRelativePath": "../../registry/dist/components/style/hide/trending-search.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/trending-search.js"
   },
@@ -1155,7 +1155,7 @@
     "type": "component",
     "name": "downloadSubtitle",
     "displayName": "下载字幕",
-    "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)",
+    "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
     "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
     "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
   },
