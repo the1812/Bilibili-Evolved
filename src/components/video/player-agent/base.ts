@@ -99,6 +99,18 @@ export abstract class PlayerAgent
       ?.classList.contains('bui-danmaku-switch-new')
     return isThreeState ? ['on', 'concise', 'off'] : ['on', 'off']
   }
+  /** 设置弹幕状态, 返回实际状态; 不支持目标状态时不进行切换. */
+  setDanmakuState(target: PlayerAgentDanmakuSwitchState): PlayerAgentDanmakuSwitchState | null {
+    const supported = this.getSupportedDanmakuStates()
+    let state = this.getDanmakuState()
+    if (!supported.includes(target)) {
+      return state
+    }
+    for (let i = 0; i < supported.length && state !== null && state !== target; i++) {
+      state = this.toggleDanmaku()
+    }
+    return state
+  }
   toggleSubtitle(preferredLanguage?: string): PlayerAgentToggleSubtitleResult {
     const closeSwitch = dq('.bpx-player-ctrl-subtitle-close-switch') as HTMLDivElement | null
 
