@@ -295,6 +295,16 @@ const buildSubjectPart = (elementContext: ReturnType<typeof buildElementPart>) =
     }
   })
   const menuListElementClickSpeedChange$ = menuListElementClickSpeed$.pipe(distinctUntilChanged())
+  let oldSelectedVideoSpeed: number
+  let selectedVideoSpeed: number
+
+  // 播放器的临时加速可能只修改播放按钮文字，不会触发倍速菜单点击。
+  // 只用按钮文字的变化记录历史，会把临时倍速误认为用户上次选择的倍速。
+  menuListElementClickSpeedChange$.subscribe(speed => {
+    oldSelectedVideoSpeed = selectedVideoSpeed
+    selectedVideoSpeed = speed
+  })
+
   const playbackRateChange$ = playbackRate$.pipe(distinctUntilChanged())
 
   const videoSpeedChange$ = subject(({ next }) => {
@@ -334,6 +344,7 @@ const buildSubjectPart = (elementContext: ReturnType<typeof buildElementPart>) =
     ...elementContext,
     ...subjects,
     dispose,
+    getOldActiveVideoSpeed: () => oldSelectedVideoSpeed ?? elementContext.getOldActiveVideoSpeed(),
     getOldPlaybackRate: () => oldPlaybackRate,
   }
 }

@@ -1,9 +1,14 @@
-import { ref } from 'vue'
+import { ref, shallowRef } from 'vue'
 import { CommentImageData } from './types'
 
 export const commentImageList = ref<CommentImageData[]>([])
 export const panelVisible = ref(false)
+export const commentAreaElement = shallowRef<HTMLElement | null>(null)
 const existingIds = new Set<string>()
+
+export const setCommentAreaElement = (element: HTMLElement) => {
+  commentAreaElement.value = element
+}
 
 export const setCommentImages = (images: CommentImageData[]) => {
   commentImageList.value = images

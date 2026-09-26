@@ -1,7 +1,7 @@
 import { matchUrlPattern } from '@/core/utils'
 import { watchlaterUrls } from '@/core/utils/urls'
 import { AutoplayActionType } from '../AutoplayActionType'
-import { BaseAutoplayHandler } from './BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './base-autoplay-handler'
 
 /** 自动连播处理器-稍后再看 */
 export class WatchLaterAutoplayHandler extends BaseAutoplayHandler {
@@ -22,7 +22,7 @@ export class WatchLaterAutoplayHandler extends BaseAutoplayHandler {
     )
   }
 
-  async setupAutoPlay(enable: boolean) {
-    await this.setupAutoPlay_SwitchBtn(enable)
+  async setupAutoplay(enable: boolean) {
+    await this.setupAutoplaySwitchButton(enable)
   }
 }

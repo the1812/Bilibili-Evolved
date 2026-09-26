@@ -6,15 +6,15 @@ import { select } from '@/core/spin-query'
 import { playerReady } from '@/core/utils'
 import { addComponentListener } from '@/core/settings'
 import { childListSubtree } from '@/core/observer'
-import { BaseAutoplayHandler } from './handlers/BaseAutoplayHandler'
+import { BaseAutoplayHandler } from './handlers/base-autoplay-handler'
 import { AutoplayActionType } from './AutoplayActionType'
-import { BangumiAutoplayHandler } from './handlers/BangumiAutoplayHandler'
-import { FavoriteAutoplayHandler } from './handlers/FavoriteAutoplayHandler'
-import { PlaylistAutoplayHandler } from './handlers/PlaylistAutoplayHandler'
-import { RecommendAutoplayHandler } from './handlers/RecommendAutoplayHandler'
-import { WatchLaterAutoplayHandler } from './handlers/WatchLaterAutoplayHandler'
-import { MultipartAutoplayHandler } from './handlers/MultipartAutoplayHandler'
-import { RecommendListAutoplayHandler } from './handlers/RecommendListAutoplayHandler'
+import { BangumiAutoplayHandler } from './handlers/bangumi-autoplay-handler'
+import { FavoriteAutoplayHandler } from './handlers/favorite-autoplay-handler'
+import { PlaylistAutoplayHandler } from './handlers/playlist-autoplay-handler'
+import { RecommendAutoplayHandler } from './handlers/recommend-autoplay-handler'
+import { WatchLaterAutoplayHandler } from './handlers/watch-later-autoplay-handler'
+import { MultipartAutoplayHandler } from './handlers/multipart-autoplay-handler'
+import { RecommendListAutoplayHandler } from './handlers/recommend-list-autoplay-handler'
 
 export const logger = useScopedConsole('定制自动连播行为')
 
@@ -56,11 +56,11 @@ const entry: ComponentEntry = async ({ metadata, settings }) => {
 
     // 先设置禁用连播，以防覆盖掉启用的处理器
     for (const handler of disableHandlers) {
-      await handler.setupAutoPlay(false)
+      await handler.setupAutoplay(false)
     }
 
     // 设置应连播的类型
-    await enableHandler?.setupAutoPlay(true)
+    await enableHandler?.setupAutoplay(true)
   }
 
   /** 注册自动播放处理器 */

@@ -1,4 +1,4 @@
-import { execFileSync } from 'node:child_process'
+import { $ } from 'zx'
 import { appendFileSync } from 'node:fs'
 import { randomUUID } from 'node:crypto'
 
@@ -7,13 +7,6 @@ const prNumber = process.env.AUTO_PUBLISH_PR_NUMBER
 
 if (!baseRef) {
   throw new Error('BASE_REF is required')
-}
-
-const runGit = (args, options = {}) => {
-  return execFileSync('git', args, {
-    encoding: 'utf8',
-    stdio: options.stdio ?? ['ignore', 'pipe', 'pipe'],
-  })
 }
 
 const appendOutput = (name, value) => {
@@ -61,6 +54,10 @@ const report = ({
   appendOutput('publishable', String(publishable))
   appendOutput('reason', reason)
 
+  if (prNumber) {
+    return
+  }
+
   appendSummary(`## Auto Publishable: ${publishable}
 
 - Base: \`${baseRef}\`
@@ -76,19 +73,13 @@ ${reason}
   console.log(`auto-publish publishable=${publishable}`)
 }
 
-runGit(
-  ['fetch', 'origin', 'preview-fixes', 'preview-features', 'preview', 'master', 'master-cdn'],
-  {
-    stdio: 'inherit',
-  },
-)
+await $`git fetch origin preview-fixes preview-features preview master master-cdn`
 
 let candidateRef = process.env.AUTO_PUBLISH_CANDIDATE_REF
 if (prNumber) {
   candidateRef = 'pr-merge'
-  try {
-    runGit(['fetch', 'origin', `pull/${prNumber}/merge:${candidateRef}`], { stdio: 'inherit' })
-  } catch {
+  const mergeRef = await $`git fetch origin ${`pull/${prNumber}/merge:${candidateRef}`}`.nothrow()
+  if (mergeRef.exitCode !== 0) {
     report({
       publishable: false,
       candidateRef,
@@ -116,9 +107,8 @@ const rangesByBaseRef = {
 
 const diffEntries = new Set()
 for (const range of rangesByBaseRef[baseRef] ?? []) {
-  const output = runGit(['diff', '--name-status', range])
-  output
-    .split('\n')
+  const lines = await $`git diff --name-status ${range}`.lines()
+  lines
     .map(line => line.trim())
     .filter(Boolean)
     .forEach(line => diffEntries.add(line))
