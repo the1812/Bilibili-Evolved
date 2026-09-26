@@ -11,6 +11,17 @@
 
 开启后, 可在每条动态的菜单中选择复制链接.
 
+### [自定义动态页内容宽度](../../registry/dist/components/feeds/custom-content-width.js)
+`customContentWidth`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/custom-content-width.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/custom-content-width.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/custom-content-width.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/custom-content-width.js)
+
+by [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+自定义动态首页、动态详情、图文动态与专栏的正文宽度.
+
 ### [删除动态](../../registry/dist/components/feeds/del-feeds.js)
 `deleteFeeds`
 
@@ -159,6 +170,17 @@ by [@WhiteTeal55](https://github.com/WhiteTeal55)
 - 短时间内大量更新作品
 - 多人转发同一个作品
 - 被审核折叠
+
+### [直播自动网页全屏](../../registry/dist/components/live/auto-full-win.js)
+`autoFullWin`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/auto-full-win.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/auto-full-win.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/auto-full-win.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/auto-full-win.js)
+
+by [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+进入直播间时, 自动将播放器切换至网页全屏模式.
 
 ### [直播自动切换最高画质](../../registry/dist/components/live/auto-highest-quality.js)
 `autoHighestQuality`
@@ -343,6 +365,17 @@ by [@Liki4](https://github.com/Liki4)
 
 删除观看直播时角落的水印.
 
+### [启用直播截图](../../registry/dist/components/live/screenshot.js)
+`liveScreenshot`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/live/screenshot.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/live/screenshot.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/screenshot.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/screenshot.js)
+
+by [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+启用直播快速截图, 将在播放器的音量按钮右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.
+
 ### [直播显示分区信息](../../registry/dist/components/live/show-area.js)
 `showArea`
 
@@ -521,6 +554,17 @@ by [@Tinhone](https://github.com/Tinhone)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/banner.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/banner.js)
 
 隐藏首页顶部横幅.
+
+### [隐藏分区栏](../../registry/dist/components/style/hide/category-bar.js)
+`hideCategoryBar`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/category-bar.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/category-bar.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/category-bar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/category-bar.js)
+
+by [@ChiyukiKazama](https://github.com/ChiyukiKazama)
+
+隐藏主站首页及支持分区首页中 Banner 下方包含动态、热门、各分区及专栏、直播等入口的导航栏。可自定义隐藏后保留的垂直间距，默认为 16px。
 
 ### [隐藏首页轮播图](../../registry/dist/components/style/hide/home-carousel.js)
 `hideHomeCarousel`
@@ -1009,6 +1053,38 @@ by [@kaixinol](https://github.com/kaixinol)
 
 在评论区标签栏点击「解析评论区图片」打开下载面板, 或在每条评论的菜单中选择「导出图片」单独下载.
 
+### [评论区评论排序](../../registry/dist/components/utils/comments/sort-comments.js)
+`sortComments`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/sort-comments.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/sort-comments.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/sort-comments.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/sort-comments.js)
+
+by [@ChairKeter](https://github.com/ChairKeter)
+
+支持对视频、番剧、动态、专栏、音频、图文等页面的评论区进行多种排序方式：
+注：仅支持已加载的评论
+- **点赞数排序**：按评论点赞数从高到低 / 从低到高排序
+- **发布时间排序**：按评论发布时间从新到旧 / 从旧到新排序
+- **用户等级排序**：按评论用户等级从高到低 / 从低到高排序
+- **默认顺序**：恢复为 Bilibili 默认排序
+
+在设置面板中可以随时切换排序方式，切换后立即生效。右下角悬浮面板支持拖拽移动和缩放，位置和大小自动保存。
+
+### [自定义首页换一换数量](../../registry/dist/components/utils/custom-home-refresh-count.js)
+`customHomeRefreshCount`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/custom-home-refresh-count.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/custom-home-refresh-count.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/custom-home-refresh-count.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/custom-home-refresh-count.js)
+
+by [@ChiyukiKazama](https://github.com/ChiyukiKazama)
+
+自定义首页「换一换」按钮每次请求的推荐条目数量，默认 15 条。
+
+- **每批推荐条目数量**：输入正整数，修改后从下一次点击「换一换」开始生效。广告等推荐条目也计入数量，不等于普通视频数；轮播和独立楼层卡片不计入。
+- 请求参数在 B 站原生 WBI 签名前调整，同时解除顶部推荐卡片的响应式隐藏限制。不会补发请求凑数，实际返回数量以接口为准。
+
 ### [DevClient](../../registry/dist/components/utils/dev-client.js)
 `devClient`
 
@@ -1270,6 +1346,17 @@ by [@magicFeirl](https://github.com/magicFeirl)
 
 当视频的链接是 BV 号时, 自动转换为 AV 号. 请注意这会导致浏览器历史记录出现重复的标题 (分别是转换前后的网址), 并可能导致后退要多退几次.
 
+### [新视频永远从头开始](../../registry/dist/components/video/beginning-of-video.js)
+`cleanStartVideo`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/beginning-of-video.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/beginning-of-video.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/beginning-of-video.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/beginning-of-video.js)
+
+by [@Earchaut](https://github.com/Earchaut)
+
+点击首页视频卡片时移除 `t` 参数, 使新视频始终从头开始播放, 不受预览时长影响（不影响已经看过的视频从上次离开位置继续）。
+
 ### [BiliPlus 跳转支持](../../registry/dist/components/video/biliplus-redirect.js)
 `biliplusRedirect`
 
@@ -1298,6 +1385,19 @@ by [@magicFeirl](https://github.com/magicFeirl)
 by [@kdxcxs](https://github.com/kdxcxs)
 
 为可能含有时间点的弹幕添加下划线, 点击可以跳到视频对应时间.
+
+### [自定义弹幕切换行为](../../registry/dist/components/video/danmaku/custom-danmaku-switch.js)
+`customDanmakuSwitch`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/danmaku/custom-danmaku-switch.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/danmaku/custom-danmaku-switch.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/danmaku/custom-danmaku-switch.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/danmaku/custom-danmaku-switch.js)
+
+by [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+自定义使用快捷键或点击播放器弹幕按钮切换弹幕时, 在哪些状态之间循环.
+
+启用快捷键扩展时, 使用快捷键扩展中「弹幕开关」动作绑定的按键触发循环; 未启用时才接管播放器原生的 `d` 快捷键.
 
 ### [下载弹幕](../../registry/dist/components/video/danmaku/download.js)
 `downloadDanmaku`
@@ -1373,17 +1473,18 @@ by [@XianYuDaXian](https://github.com/XianYuDaXian)
 - 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.
 - 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.
 
-在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:
+在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:
 - `user`: UP 主用户名
 - `userID`: UP 主用户 ID
-- 视频发布时间:
-  - `publishYear`
-  - `publishMonth`
-  - `publishDay`
-  - `publishHour`
-  - `publishMinute`
-  - `publishSecond`
-  - `publishMillisecond`
+
+批量下载时, 批量命名格式中还额外提供视频发布时间变量:
+- `publishYear`
+- `publishMonth`
+- `publishDay`
+- `publishHour`
+- `publishMinute`
+- `publishSecond`
+- `publishMillisecond`
 
 ### [展开视频简介](../../registry/dist/components/video/full-description.js)
 `fullVideoDescription`
@@ -1778,6 +1879,21 @@ by [@JLoeve (with Kilo Code & Codex)](https://github.com/LonelySteve)
 
 启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.
 
+### [滚轮调节音量](../../registry/dist/components/video/player/scroll-volume.js)
+`scrollVolume`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/scroll-volume.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/scroll-volume.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/scroll-volume.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/scroll-volume.js)
+
+by [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+在播放器画面上滚动滚轮调节音量, 并可自定义每一格滚轮改变的音量.
+
+- 常规 / 宽屏 / 小窗模式下, 鼠标悬停在画面上即可调节音量 (不会再滚动页面), 可通过 `常规模式下也可调节` 关闭
+- 网页全屏 / 全屏模式下会接管播放器的滚轮调节, 使每一格滚轮的幅度保持一致
+- 不能和 `禁止滚轮调音量` / `反转滚轮调音量` 一同使用
+
 ### [启用逐帧调整](../../registry/dist/components/video/player/seek-by-frames.js)
 `seekByFrames`
 
@@ -1874,6 +1990,19 @@ by [@weedy233](https://github.com/weedy233)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/quick-favorite.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/quick-favorite.js)
 
 启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹. 请注意如果在在收藏夹播放页面仍然显示, 是不会实时同步右侧的播放列表的.
+
+### [推荐视频打开方式](../../registry/dist/components/video/related-video-open-mode.js)
+`relatedVideoOpenMode`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/related-video-open-mode.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/related-video-open-mode.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/related-video-open-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/related-video-open-mode.js)
+
+by [@RhoPaper](https://github.com/RhoPaper)
+
+控制视频播放页右侧推荐栏的链接打开方式，可选择保持 B 站默认的当前标签页打开，或默认在新标签页打开。
+
+可在每个推荐视频标题右侧显示一个反向操作图标：默认使用当前标签页时，点击图标可在新标签页打开；默认使用新标签页时，点击图标可在当前标签页打开。图标可设为悬停视频卡片时显示或始终显示，后者适合触屏设备。
 
 ### [SEO 页面重定向](../../registry/dist/components/video/seo-redirect.js)
 `seoRedirect`
