@@ -58,10 +58,17 @@ export const forEachVideoDanmaku = async (callback: DanmakuRecordCallback) => {
     return
   }
   videoChange(async () => {
-    const container = await playerAgent.query.video.danmaku()
-    if (!container) {
-      return
-    }
-    startRecording(container, callback)
+    const danmakuQueries = [
+      playerAgent.query.video.danmaku,
+      playerAgent.query.video.advDanmaku,
+      playerAgent.query.video.basDanmaku,
+    ]
+    const containers = await Promise.all(danmakuQueries.map(query => query()))
+    containers.forEach(container => {
+      if (!container) {
+        return
+      }
+      startRecording(container, callback)
+    })
   })
 }
