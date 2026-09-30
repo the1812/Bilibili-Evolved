@@ -3,8 +3,13 @@ import {
   defineOptionsMetadata,
   OptionsOfMetadata,
 } from '@/components/define'
-import { addComponentListener, removeComponentListener } from '@/core/settings'
-import { getNumberValidator } from '@/core/utils'
+import {
+  addComponentListener,
+  getComponentSettings,
+  removeComponentListener,
+} from '@/core/settings'
+import { getNumberValidator, createComponentWithProps } from '@/core/utils'
+import { RadioItem } from '@/ui'
 
 const name = 'customContentWidth'
 const displayName = '自定义动态页内容宽度'
@@ -14,10 +19,26 @@ const DEFAULT_WIDTH = 1000
 const MIN_WIDTH = 560
 /** `#app` 的 `max-width` 为 2560px, 减去两侧栏与间距 */
 const MAX_WIDTH = 1950
+/** 影响宽度的选项, 任一变化都需要重新计算 */
+const WIDTH_OPTIONS = ['pixel', 'customWidth', 'percentage', 'customPercentage']
+
+const items: Record<string, RadioItem> = {
+  pixel: { name: 'pixel', isOption: true, optionsIncluded: ['customWidth'] },
+  percentage: { name: 'percentage', isOption: true, optionsIncluded: ['customPercentage'] },
+}
 
 const options = defineOptionsMetadata({
+  showWidget: {
+    displayName: '显示小组件（刷新后生效）',
+    defaultValue: false,
+  },
+  pixel: {
+    displayName: '像素',
+    defaultValue: true,
+    hidden: true,
+  },
   customWidth: {
-    displayName: '自定义内容宽度 (px)',
+    displayName: '(px)',
     defaultValue: DEFAULT_WIDTH,
     slider: {
       min: MIN_WIDTH,
@@ -25,14 +46,55 @@ const options = defineOptionsMetadata({
       step: 10,
     },
     validator: getNumberValidator(MIN_WIDTH, MAX_WIDTH),
+    hidden: true,
+  },
+  percentage: {
+    displayName: '百分比',
+    defaultValue: false,
+    hidden: true,
+  },
+  customPercentage: {
+    displayName: '(%)',
+    defaultValue: 50,
+    slider: {
+      min: 1,
+      max: 100,
+      step: 1,
+    },
+    validator: getNumberValidator(1, 100),
+    hidden: true,
   },
 })
 export type CustomContentWidthOptions = OptionsOfMetadata<typeof options>
+const componentOptions = () => getComponentSettings<CustomContentWidthOptions>(name).options
 
-const applyWidth = (width: number) => {
-  document.documentElement.style.setProperty('--be-feeds-content-width', `${width}px`)
+const optionsWidget = (isPopup: boolean) =>
+  import('@/ui').then(m =>
+    createComponentWithProps(m.OptionRadioGroup, {
+      title: '动态页内容宽度',
+      groupName: `${name}-options`,
+      items,
+      componentName: name,
+      icon: 'mdi-arrow-expand-horizontal',
+      isPopup,
+      hasContainer: isPopup,
+    }),
+  )
+
+const applyWidth = () => {
+  const { pixel, customWidth, customPercentage } = componentOptions()
+  const width = pixel
+    ? customWidth
+    : (customPercentage / 100) * document.documentElement.clientWidth
+  const clampedWidth = lodash.clamp(width, MIN_WIDTH, MAX_WIDTH)
+  document.documentElement.style.setProperty('--be-feeds-content-width', `${clampedWidth}px`)
 }
-const entry = () => addComponentListener(`${name}.customWidth`, applyWidth, true)
+const entry = () => {
+  WIDTH_OPTIONS.forEach(optionName =>
+    addComponentListener(`${name}.${optionName}`, applyWidth, true),
+  )
+  window.addEventListener('resize', applyWidth)
+}
 
 export const component = defineComponentMetadata({
   name,
@@ -42,13 +104,20 @@ export const component = defineComponentMetadata({
     link: 'https://github.com/WhiteTeal55',
   },
   options,
-  tags: [componentsTags.style, componentsTags.feeds],
-  urlInclude: [
-    // 动态首页与动态详情页
-    /^https:\/\/t\.bilibili\.com\//,
-    // 图文动态 / 专栏页
-    /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
-  ],
+  extraOptions: () => optionsWidget(false),
+  widget: {
+    component: () => optionsWidget(true),
+    condition: () => Boolean(componentOptions().showWidget),
+  },
+  entry,
+  reload: entry,
+  unload: () => {
+    WIDTH_OPTIONS.forEach(optionName =>
+      removeComponentListener(`${name}.${optionName}`, applyWidth),
+    )
+    window.removeEventListener('resize', applyWidth)
+    document.documentElement.style.removeProperty('--be-feeds-content-width')
+  },
   instantStyles: [
     {
       name,
@@ -56,10 +125,11 @@ export const component = defineComponentMetadata({
       important: true,
     },
   ],
-  entry,
-  reload: entry,
-  unload: () => {
-    removeComponentListener(`${name}.customWidth`, applyWidth)
-    document.documentElement.style.removeProperty('--be-feeds-content-width')
-  },
+  tags: [componentsTags.style, componentsTags.feeds],
+  urlInclude: [
+    // 动态首页与动态详情页
+    /^https:\/\/t\.bilibili\.com\//,
+    // 图文动态 / 专栏页
+    /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/,
+  ],
 })
