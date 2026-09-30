@@ -34,7 +34,7 @@ const options = defineOptionsMetadata({
   },
   pixel: {
     displayName: '像素',
-    defaultValue: true,
+    defaultValue: false,
     hidden: true,
   },
   customWidth: {
@@ -50,7 +50,7 @@ const options = defineOptionsMetadata({
   },
   percentage: {
     displayName: '百分比',
-    defaultValue: false,
+    defaultValue: true,
     hidden: true,
   },
   customPercentage: {
