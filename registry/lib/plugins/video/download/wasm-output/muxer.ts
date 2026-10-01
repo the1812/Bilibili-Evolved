@@ -52,6 +52,46 @@ const outputFormats: OutputFormats = {
   matroska: mkvFormat,
 }
 
+/** 'ec-3' (E-AC-3) 采样条目中 channelcount 字段相对标签的偏移 */
+const eac3ChannelCountOffset = 20
+/** 定位 mp4 中的 E-AC-3 音频采样条目 (其后紧跟 dec3 box), 返回 'ec-3' 标签偏移 */
+const findEac3SampleEntry = (data: Uint8Array) => {
+  for (let i = 0; i < data.length - 39; i++) {
+    if (
+      data[i] === 0x65 &&
+      data[i + 1] === 0x63 &&
+      data[i + 2] === 0x2d &&
+      data[i + 3] === 0x33 &&
+      data[i + 36] === 0x64 &&
+      data[i + 37] === 0x65 &&
+      data[i + 38] === 0x63 &&
+      data[i + 39] === 0x33
+    ) {
+      return i
+    }
+  }
+  return -1
+}
+const getEac3ChannelCount = (data: Uint8Array) => {
+  const index = findEac3SampleEntry(data)
+  if (index < 0) {
+    return 0
+  }
+  return data[index + eac3ChannelCountOffset] * 256 + data[index + eac3ChannelCountOffset + 1]
+}
+/**
+ * ffmpeg 5.1 (WASM core) 会把 mp4 中 E-AC-3 的 channelcount 固定写成 2, 只靠 dec3 box 记录真实声道,
+ * 导致按 sample entry 读取声道的播放器把环绕声识别成 2Ch, 这里用源音频的声道数修正输出.
+ */
+const fixEac3ChannelCount = (output: Uint8Array, channelCount: number) => {
+  const index = findEac3SampleEntry(output)
+  if (index < 0) {
+    return
+  }
+  output[index + eac3ChannelCountOffset] = Math.floor(channelCount / 256)
+  output[index + eac3ChannelCountOffset + 1] = channelCount % 256
+}
+
 export async function mux(
   ffmpeg: FFmpeg,
   outputType: OutputType,
@@ -76,6 +116,9 @@ export async function mux(
   args.push('output')
   console.debug('FFmpeg commandline args:', args.join(' '))
 
+  // writeFile 会把 buffer 转移给 worker, 因此要在写入前读取源音频的声道数
+  const eac3ChannelCount = outputType === 'mp4' ? getEac3ChannelCount(audio) : 0
+
   await ffmpeg.writeFile('video', video)
   await ffmpeg.writeFile('audio', audio)
   if (cover) {
@@ -89,6 +132,9 @@ export async function mux(
   await ffmpeg.exec(args)
 
   const output = await ffmpeg.readFile('output')
+  if (eac3ChannelCount > 0) {
+    fixEac3ChannelCount(output, eac3ChannelCount)
+  }
   const outputBlob = new Blob([output], { type: format.mime })
 
   await Promise.all([

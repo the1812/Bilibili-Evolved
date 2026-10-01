@@ -1,7 +1,10 @@
 import { StreamSaverLibrary } from '@/core/runtime-library'
 import { Toast } from '@/core/toast'
+import { extractFlac } from '../flac'
 import { DownloadVideoOutput } from '../types'
 
+/** 无损音频片段会被解封装成裸 FLAC, 因此只对这个扩展名做处理 */
+const flacExtension = '.flac'
 const serviceWorkerMessage =
   '需要浏览器允许来自 jimmywarting.github.io (StreamSaver 的网站) 的第三方 cookie, 详细原因见 <a href="https://github.com/jimmywarting/StreamSaver.js?#how-does-it-work" target="blank">How does it work</a>'
 export const streamSaverOutput: DownloadVideoOutput = {
@@ -21,11 +24,22 @@ export const streamSaverOutput: DownloadVideoOutput = {
     dqa(element, 'a[data-index]').forEach((span: HTMLElement) => {
       span.addEventListener('click', async () => {
         const { index } = span.dataset
-        const { title, url, size } = fragments[index]
-        const fileStream = streamSaver.createWriteStream(title, {
-          size,
-        })
+        const fragment = fragments[index]
+        const { title, url, size } = fragment
+        const isFlac =
+          fragment.type === 'flacAudio' && fragment.extension.toLowerCase() === flacExtension
+        // 裸 FLAC 的大小要在解封装后才能知道, 因此不传 size
+        const fileStream = isFlac
+          ? streamSaver.createWriteStream(title)
+          : streamSaver.createWriteStream(title, { size })
         const response = await fetch(url)
+        if (isFlac) {
+          const data = new Uint8Array(await response.arrayBuffer())
+          const writer = fileStream.getWriter()
+          await writer.write(extractFlac(data) ?? data)
+          await writer.close()
+          return
+        }
         await response.body.pipeTo(fileStream)
       })
     })
