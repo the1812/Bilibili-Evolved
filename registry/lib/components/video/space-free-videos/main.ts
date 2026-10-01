@@ -25,22 +25,28 @@ type Context = {
 
 let observer: MutationObserver | null = null
 let freeMode = false
+let leavingFreeMode = false
 let internalClick = false
 let transitioning = false
 let syntheticChargingRequests = 0
 let internalPaginationJump = false
 let paginationProjectionFrame = 0
+let freeCurrentPage = 1
+let freeTotalCount: number | null = null
+let freeResponseVersion = 0
+let chargingRequestVersion = 0
+let allRequestVersion = 0
+let currentSpaceKey: string | null = null
 let originalFetch: typeof fetch | null = null
 let nativeFetch: NativeFetch | null = null
 let patchedFetch: typeof fetch | null = null
 let knownAllCount: number | null = null
 let knownChargeCount: number | null = null
 let lastRawJson: JsonRecord | null = null
-let freeCurrentPage = 1
-let freeTotalCount: number | null = null
 
 const contexts = new Map<string, Context>()
 const cloneJson = <T>(value: T): T => JSON.parse(JSON.stringify(value))
+const isFreeVisualMode = () => freeMode || leavingFreeMode
 
 const parseRequestUrl = (input: RequestInfo | URL) => {
   const raw = typeof input === 'string' || input instanceof URL ? String(input) : input?.url ?? ''
@@ -548,53 +554,67 @@ const handlePaginationKeyEvent = (event: KeyboardEvent) => {
 }
 
 const buildFreeJson = async (url: URL, originalJson: JsonRecord) => {
-  const logicalPage = Math.max(
+  const requestedPage = Math.max(
     1,
     Number(url.searchParams.get('pn') || originalJson?.data?.page?.pn || 1),
   )
   const pageSize = Math.max(
     1,
-    Number(url.searchParams.get('ps') || originalJson?.data?.page?.ps || 42),
+    Number(
+      url.searchParams.get('ps') ||
+        originalJson?.data?.page?.ps ||
+        paginationPageSize,
+    ),
   )
   const context = getContext(url, pageSize)
-  cacheRawJson(context, logicalPage, originalJson)
+
+  if (originalJson) {
+    cacheRawJson(context, requestedPage, originalJson)
+  }
   if (context.allCount === null) {
     await fetchRawPage(context, 1)
   }
 
-  const start = (logicalPage - 1) * pageSize
-  const targetEnd = start + pageSize
   context.chain = context.chain.then(async () => {
-    const [chargeCount] = await Promise.all([
-      resolveChargeCount(context),
-      ensureFreeItems(context, targetEnd),
-    ])
+    const chargeCount = await resolveChargeCount(context)
     context.freeCount = Math.max(0, (context.allCount ?? 0) - chargeCount)
+    const totalPages = Math.max(1, Math.ceil(context.freeCount / pageSize))
+    const logicalPage = Math.min(requestedPage, totalPages)
+    const targetEnd = Math.min(logicalPage * pageSize, context.freeCount)
+    await ensureFreeItems(context, targetEnd)
   })
   await context.chain
+
+  const totalPages = Math.max(1, Math.ceil((context.freeCount ?? 0) / pageSize))
+  const logicalPage = Math.min(requestedPage, totalPages)
+  const start = (logicalPage - 1) * pageSize
+  const targetEnd = Math.min(
+    start + pageSize,
+    context.freeCount ?? start + pageSize,
+  )
 
   const template = context.templateJson || originalJson || lastRawJson
   if (!template) {
     throw new Error('缺少投稿列表响应模板')
   }
+
   const result = cloneJson(template)
   result.data.page.pn = logicalPage
   result.data.page.ps = pageSize
   result.data.page.count = context.freeCount
   freeTotalCount = context.freeCount
   freeCurrentPage = logicalPage
+
   if (!result.data.list) {
     result.data.list = {}
   }
-  result.data.list.vlist = context.freeItems.slice(
-    start,
-    Math.min(targetEnd, context.freeCount ?? targetEnd),
-  )
+  result.data.list.vlist = context.freeItems.slice(start, targetEnd)
 
   setTimeout(() => {
     schedulePaginationProjection()
     prefetchNextRawPage(context)
   }, 0)
+
   return result
 }
 
@@ -662,10 +682,49 @@ const cachePassiveResponse = (url: URL, response: Response) => {
     .catch(() => {})
 }
 
+const getCurrentSpaceKey = () => {
+  const match = location.pathname.match(/^\/(\d+)(?:\/|$)/)
+  return match ? match[1] : location.pathname
+}
+
+const resetSpaceState = () => {
+  freeMode = false
+  leavingFreeMode = false
+  transitioning = false
+  syntheticChargingRequests = 0
+  internalPaginationJump = false
+  freeCurrentPage = 1
+  freeTotalCount = null
+  freeResponseVersion = 0
+  chargingRequestVersion = 0
+  allRequestVersion = 0
+  knownAllCount = null
+  knownChargeCount = null
+  lastRawJson = null
+  clearPaginationProjection()
+  contexts.clear()
+  document.querySelector(`[${filterAttr}]`)?.remove()
+}
+
+const syncSpaceContext = () => {
+  const nextSpaceKey = getCurrentSpaceKey()
+  if (currentSpaceKey === null) {
+    currentSpaceKey = nextSpaceKey
+    return false
+  }
+  if (nextSpaceKey === currentSpaceKey) {
+    return false
+  }
+  currentSpaceKey = nextSpaceKey
+  resetSpaceState()
+  return true
+}
+
 const installFetchHook = () => {
   if (patchedFetch) {
     return
   }
+
   originalFetch = unsafeWindow.fetch
   nativeFetch = (input, init) => originalFetch!.call(unsafeWindow, input, init)
 
@@ -674,6 +733,9 @@ const installFetchHook = () => {
     if (!url) {
       return nativeFetch!(input, init)
     }
+
+    syncSpaceContext()
+
     const method = String(
       init?.method || (input instanceof Request ? input.method : '') || 'GET',
     ).toUpperCase()
@@ -684,14 +746,31 @@ const installFetchHook = () => {
     }
 
     const specialType = url.searchParams.get('special_type') || ''
+
+    if (specialType === 'charging') {
+      chargingRequestVersion += 1
+    } else if (specialType === '') {
+      allRequestVersion += 1
+    }
+
     if (syntheticChargingRequests > 0 && specialType === 'charging') {
       syntheticChargingRequests -= 1
-      return syntheticResponse(getHopJson(url))
+
+      if (lastRawJson) {
+        return syntheticResponse(getHopJson(url))
+      }
+
+      const response = await nativeFetch!(input, init)
+      cachePassiveResponse(url, response)
+      return response
     }
 
     if (freeMode && specialType === '') {
       const logicalPage = Math.max(1, Number(url.searchParams.get('pn') || 1))
-      const pageSize = Math.max(1, Number(url.searchParams.get('ps') || 42))
+      const pageSize = Math.max(
+        1,
+        Number(url.searchParams.get('ps') || paginationPageSize),
+      )
       const context = getContext(url, pageSize)
       const cached = context.rawPages.get(logicalPage)
       let response: Response | null = null
@@ -711,11 +790,13 @@ const installFetchHook = () => {
 
       try {
         const freeJson = await buildFreeJson(url, originalJson)
+        freeResponseVersion += 1
         updateFilterLabel()
         return response ? responseFromJson(response, freeJson) : syntheticResponse(freeJson)
       } catch (error) {
         console.error('[免费视频筛选] 生成免费视频列表失败，已恢复 B站原生筛选。', error)
         freeMode = false
+        leavingFreeMode = false
         transitioning = false
         freeTotalCount = null
         freeCurrentPage = 1
@@ -749,13 +830,21 @@ const updateFilterLabel = (explicitItem?: HTMLElement) => {
   if (!row) {
     return
   }
+
+  const chargeItem = getChargeItem(row)
+  if (!chargeItem) {
+    return
+  }
+
   const item = explicitItem ?? row.querySelector<HTMLElement>(`[${filterAttr}]`)
   if (!item) {
     return
   }
+
   const domAll = getCount(getAllItem(row))
-  const domCharge = getCount(getChargeItem(row))
-  if (!freeMode) {
+  const domCharge = getCount(chargeItem)
+
+  if (!freeMode && !leavingFreeMode) {
     if (domAll !== null) {
       knownAllCount = domAll
     }
@@ -763,10 +852,12 @@ const updateFilterLabel = (explicitItem?: HTMLElement) => {
       knownChargeCount = domCharge
     }
   }
+
   const all = knownAllCount ?? domAll
   const charge = knownChargeCount ?? domCharge
   const free = all !== null && charge !== null && all >= charge ? all - charge : null
   const label = free === null ? '免费视频' : `免费视频 ${free}`
+
   if (item.textContent !== label) {
     item.textContent = label
   }
@@ -777,21 +868,76 @@ const ensureFilterItem = () => {
   if (!row) {
     return null
   }
+
+  const chargeItem = getChargeItem(row)
   let item = row.querySelector<HTMLElement>(`[${filterAttr}]`)
+
+  if (!chargeItem && transitioning) {
+    return item
+  }
+
+  if (!chargeItem) {
+    item?.remove()
+    knownChargeCount = null
+    return null
+  }
+
   if (!item) {
     item = document.createElement('div')
     item.className = 'radio-filter__item'
     item.setAttribute(filterAttr, '')
     item.title = '仅显示可免费观看的视频'
-    const chargeItem = getChargeItem(row)
-    if (chargeItem?.nextSibling) {
+
+    if (chargeItem.nextSibling) {
       row.insertBefore(item, chargeItem.nextSibling)
     } else {
       row.appendChild(item)
     }
   }
+
   updateFilterLabel(item)
   return item
+}
+
+const enforceFreeFilterVisualState = () => {
+  if (!isFreeVisualMode()) {
+    return
+  }
+
+  const row = getFilterRow()
+  if (!row) {
+    return
+  }
+
+  const freeItem = row.querySelector<HTMLElement>(`[${filterAttr}]`)
+  if (!freeItem) {
+    return
+  }
+
+  if (!freeItem.classList.contains(activeClass)) {
+    freeItem.classList.add(activeClass)
+  }
+
+  getNativeItems(row).forEach(item => {
+    if (item.classList.contains(activeClass)) {
+      item.classList.remove(activeClass)
+    }
+  })
+}
+
+const enforceAllFilterVisualState = () => {
+  const row = getFilterRow()
+  if (!row) {
+    return
+  }
+
+  const freeItem = row.querySelector<HTMLElement>(`[${filterAttr}]`)
+  freeItem?.classList.remove(activeClass)
+
+  const allItem = getAllItem(row)
+  getNativeItems(row).forEach(item => {
+    item.classList.toggle(activeClass, item === allItem)
+  })
 }
 
 const syncVisualState = () => {
@@ -799,14 +945,22 @@ const syncVisualState = () => {
   if (!row) {
     return
   }
+
   const freeItem = ensureFilterItem()
   if (!freeItem) {
     return
   }
-  freeItem.classList.toggle(activeClass, freeMode)
-  if (freeMode && !transitioning) {
-    getNativeItems(row).forEach(item => item.classList.remove(activeClass))
-    schedulePaginationProjection()
+
+  if (isFreeVisualMode()) {
+    enforceFreeFilterVisualState()
+    if (freeMode && freeTotalCount !== null) {
+      schedulePaginationProjection()
+    }
+    return
+  }
+
+  if (freeItem.classList.contains(activeClass)) {
+    freeItem.classList.remove(activeClass)
   }
 }
 
@@ -822,7 +976,7 @@ const clickNative = (item: HTMLElement | null) => {
   }
 }
 
-const waitFor = (predicate: () => boolean, timeout = 250) =>
+const waitFor = (predicate: () => boolean, timeout = 1500) =>
   new Promise<boolean>(resolve => {
     const started = performance.now()
     const check = () => {
@@ -839,80 +993,201 @@ const waitFor = (predicate: () => boolean, timeout = 250) =>
     check()
   })
 
+const waitFrames = (count = 2) =>
+  new Promise<void>(resolve => {
+    const step = () => {
+      if (count <= 0) {
+        resolve()
+        return
+      }
+      count -= 1
+      requestAnimationFrame(step)
+    }
+    step()
+  })
+
+const waitForFreeResponse = async (version: number) => {
+  const ok = await waitFor(() => freeResponseVersion > version, 2500)
+  if (ok) {
+    await waitFrames(2)
+    enforceFreeFilterVisualState()
+    schedulePaginationProjection()
+  }
+  return ok
+}
+
 const forceAllReload = async () => {
   if (transitioning) {
     return
   }
+
   const row = getFilterRow()
   if (!row) {
     return
   }
+
   const chargeItem = getChargeItem(row)
   const allItem = getAllItem(row)
+
   if (!chargeItem || !allItem) {
-    console.warn('[免费视频筛选] 无法找到原生“全部类型 / 充电专属”筛选项。')
+    if (leavingFreeMode) {
+      leavingFreeMode = false
+      enforceAllFilterVisualState()
+    }
     return
   }
+
+  const enteringFree = freeMode
+  const exitingFree = leavingFreeMode
 
   transitioning = true
-  syntheticChargingRequests += 1
-  clickNative(chargeItem)
-  await waitFor(() => {
-    const currentRow = getFilterRow()
-    return Boolean(currentRow && getChargeItem(currentRow)?.classList.contains(activeClass))
-  })
-  const currentRow = getFilterRow()
-  clickNative(currentRow ? getAllItem(currentRow) : null)
-  await waitFor(() => {
+
+  try {
+    const chargeVersion = chargingRequestVersion
+    syntheticChargingRequests += 1
+
+    clickNative(chargeItem)
+
+    await waitFor(() => chargingRequestVersion > chargeVersion, 1200)
+
+    if (enteringFree || exitingFree) {
+      enforceFreeFilterVisualState()
+    }
+
+    const responseVersion = freeResponseVersion
+    const nativeAllVersion = allRequestVersion
+
     const latestRow = getFilterRow()
-    return Boolean(latestRow && getAllItem(latestRow)?.classList.contains(activeClass))
-  })
-  transitioning = false
-  syncVisualState()
-  setTimeout(() => {
+    const latestAll = latestRow ? getAllItem(latestRow) : null
+
+    if (!latestAll) {
+      if (exitingFree) {
+        leavingFreeMode = false
+        enforceAllFilterVisualState()
+      }
+      return
+    }
+
+    clickNative(latestAll)
+
+    if (enteringFree) {
+      enforceFreeFilterVisualState()
+
+      const ok = await waitForFreeResponse(responseVersion)
+      if (!ok) {
+        console.warn('[免费视频筛选] 未收到免费视频列表响应，已恢复原生“全部类型”。')
+        freeMode = false
+        leavingFreeMode = false
+        freeTotalCount = null
+        freeCurrentPage = 1
+        clearPaginationProjection()
+        enforceAllFilterVisualState()
+      }
+      return
+    }
+
+    if (exitingFree) {
+      enforceFreeFilterVisualState()
+
+      await waitFor(() => allRequestVersion > nativeAllVersion, 2000)
+      await waitFrames(2)
+
+      leavingFreeMode = false
+      enforceAllFilterVisualState()
+      return
+    }
+
+    await waitFor(() => allRequestVersion > nativeAllVersion, 2000)
+    await waitFrames(2)
+  } finally {
+    transitioning = false
     syntheticChargingRequests = 0
-  }, 500)
+  }
+
+  syncVisualState()
 }
 
-const activateFreeMode = () => {
-  if (freeMode || transitioning) {
+const activateFreeMode = async () => {
+  if (freeMode || leavingFreeMode || transitioning) {
     return
   }
+
+  syncSpaceContext()
+
   const row = getFilterRow()
   if (!row) {
     return
   }
+
   const allItem = getAllItem(row)
-  const activeNative = getNativeItems(row).find(item => item.classList.contains(activeClass))
+  const chargeItem = getChargeItem(row)
+
+  if (!chargeItem) {
+    row.querySelector(`[${filterAttr}]`)?.remove()
+    return
+  }
+
+  const activeNative = getNativeItems(row).find(item =>
+    item.classList.contains(activeClass),
+  )
+
   readCountsFromDom()
+
   if (knownAllCount !== null && knownChargeCount !== null) {
     freeTotalCount = Math.max(0, knownAllCount - knownChargeCount)
   }
+
   freeCurrentPage = 1
+  leavingFreeMode = false
   freeMode = true
 
+  enforceFreeFilterVisualState()
+
   if (activeNative && activeNative !== allItem) {
+    const responseVersion = freeResponseVersion
     transitioning = true
-    clickNative(allItem)
-    setTimeout(() => {
+
+    try {
+      clickNative(allItem)
+      enforceFreeFilterVisualState()
+
+      const ok = await waitForFreeResponse(responseVersion)
+      if (!ok) {
+        console.warn('[免费视频筛选] 从原生筛选切换到免费视频时未收到列表响应，已恢复全部类型。')
+        freeMode = false
+        leavingFreeMode = false
+        freeTotalCount = null
+        freeCurrentPage = 1
+        clearPaginationProjection()
+        enforceAllFilterVisualState()
+      }
+    } finally {
       transitioning = false
-      syncVisualState()
-    }, 0)
+    }
+
+    syncVisualState()
     return
   }
-  forceAllReload()
+
+  await forceAllReload()
 }
 
 const deactivateToAll = (event: Event) => {
   event.preventDefault()
   event.stopPropagation()
-  if (!freeMode || transitioning) {
+
+  if (!freeMode || leavingFreeMode || transitioning) {
     return
   }
+
   freeMode = false
+  leavingFreeMode = true
+
   freeTotalCount = null
   freeCurrentPage = 1
   clearPaginationProjection()
+
+  enforceFreeFilterVisualState()
   forceAllReload()
 }
 
@@ -920,10 +1195,12 @@ const handleClick = (event: Event) => {
   if (internalClick) {
     return
   }
+
   const target = event.target
   if (!(target instanceof Element)) {
     return
   }
+
   const freeItem = target.closest(`[${filterAttr}]`)
   if (freeItem) {
     event.preventDefault()
@@ -931,20 +1208,36 @@ const handleClick = (event: Event) => {
     activateFreeMode()
     return
   }
+
+  if (leavingFreeMode) {
+    const nativeItem = target.closest('.video-type-filter .radio-filter__item')
+    if (nativeItem) {
+      event.preventDefault()
+      event.stopPropagation()
+      event.stopImmediatePropagation()
+    }
+    return
+  }
+
   if (!freeMode) {
     return
   }
+
   const nativeItem = target.closest<HTMLElement>('.video-type-filter .radio-filter__item')
   if (!nativeItem) {
     return
   }
+
   const row = getFilterRow()
   const allItem = row && getAllItem(row)
+
   if (nativeItem === allItem) {
     deactivateToAll(event)
     return
   }
+
   freeMode = false
+  leavingFreeMode = false
   freeTotalCount = null
   freeCurrentPage = 1
   clearPaginationProjection()
@@ -954,24 +1247,36 @@ const handleClick = (event: Event) => {
 const stop = () => {
   observer?.disconnect()
   observer = null
+
   if (paginationProjectionFrame) {
     cancelAnimationFrame(paginationProjectionFrame)
     paginationProjectionFrame = 0
   }
+
   document.removeEventListener('click', handleClick, true)
   document.removeEventListener('click', handlePaginationClick, true)
+
   for (const type of ['keydown', 'keypress', 'keyup'] as const) {
     document.removeEventListener(type, handlePaginationKeyEvent, true)
   }
+
   document.querySelector(`[${filterAttr}]`)?.remove()
 
   freeMode = false
+  leavingFreeMode = false
   internalClick = false
   transitioning = false
   syntheticChargingRequests = 0
   internalPaginationJump = false
   freeTotalCount = null
   freeCurrentPage = 1
+  freeResponseVersion = 0
+  chargingRequestVersion = 0
+  allRequestVersion = 0
+  currentSpaceKey = null
+  knownAllCount = null
+  knownChargeCount = null
+
   clearPaginationProjection()
   contexts.clear()
   lastRawJson = null
@@ -980,35 +1285,38 @@ const stop = () => {
 
 const start = () => {
   stop()
-  freeMode = false
+
+  currentSpaceKey = getCurrentSpaceKey()
   installFetchHook()
+
   document.addEventListener('click', handlePaginationClick, true)
+
   for (const type of ['keydown', 'keypress', 'keyup'] as const) {
     document.addEventListener(type, handlePaginationKeyEvent, true)
   }
+
   document.addEventListener('click', handleClick, true)
 
-  observer = new MutationObserver(mutations => {
+  observer = new MutationObserver(() => {
+    syncSpaceContext()
     ensureFilterItem()
-    if (transitioning) {
-      return
-    }
-    syncVisualState()
-    if (freeMode) {
-      const paginationChanged = mutations.some(mutation => {
-        const target = mutation.target
-        const element =
-          target.nodeType === Node.ELEMENT_NODE ? (target as Element) : target.parentElement
-        return Boolean(element?.closest?.('.video-pagination, .vui_pagenation'))
-      })
-      if (paginationChanged) {
+
+    if (isFreeVisualMode()) {
+      enforceFreeFilterVisualState()
+
+      if (freeMode && freeTotalCount !== null) {
         schedulePaginationProjection()
       }
+    } else {
+      syncVisualState()
     }
   })
+
   observer.observe(document.body, {
     childList: true,
     subtree: true,
+    attributes: true,
+    attributeFilter: ['class'],
     characterData: true,
   })
 
@@ -1016,6 +1324,8 @@ const start = () => {
   ensureFilterItem()
   syncVisualState()
 }
+
+export const entry = start
 
 export const entry = start
 export const reload = start
