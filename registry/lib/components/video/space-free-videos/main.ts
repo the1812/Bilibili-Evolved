@@ -1326,7 +1326,5 @@ const start = () => {
 }
 
 export const entry = start
-
-export const entry = start
 export const reload = start
 export const unload = stop
