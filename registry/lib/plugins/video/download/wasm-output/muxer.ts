@@ -52,21 +52,24 @@ const outputFormats: OutputFormats = {
   matroska: mkvFormat,
 }
 
-/** 'ec-3' (E-AC-3) 采样条目中 channelcount 字段相对标签的偏移 */
+/** E-AC-3 采样条目里 channelcount 相对 'ec-3' 标签的偏移 */
 const eac3ChannelCountOffset = 20
-/** 定位 mp4 中的 E-AC-3 音频采样条目 (其后紧跟 dec3 box), 返回 'ec-3' 标签偏移 */
+/** 'ec-3' 与其后紧跟的 'dec3' */
+const eac3Tag = [0x65, 0x63, 0x2d, 0x33]
+const dec3Tag = [0x64, 0x65, 0x63, 0x33]
+const matchBytes = (data: Uint8Array, offset: number, bytes: number[]) => {
+  for (let i = 0; i < bytes.length; i++) {
+    if (data[offset + i] !== bytes[i]) {
+      return false
+    }
+  }
+  return true
+}
+/** 定位 mp4 的 E-AC-3 音频采样条目, 返回 'ec-3' 标签偏移 */
 const findEac3SampleEntry = (data: Uint8Array) => {
   for (let i = 0; i < data.length - 39; i++) {
-    if (
-      data[i] === 0x65 &&
-      data[i + 1] === 0x63 &&
-      data[i + 2] === 0x2d &&
-      data[i + 3] === 0x33 &&
-      data[i + 36] === 0x64 &&
-      data[i + 37] === 0x65 &&
-      data[i + 38] === 0x63 &&
-      data[i + 39] === 0x33
-    ) {
+    // 采样条目后必然紧跟 dec3 box, 用它避免误匹配
+    if (matchBytes(data, i, eac3Tag) && matchBytes(data, i + 36, dec3Tag)) {
       return i
     }
   }
@@ -74,22 +77,17 @@ const findEac3SampleEntry = (data: Uint8Array) => {
 }
 const getEac3ChannelCount = (data: Uint8Array) => {
   const index = findEac3SampleEntry(data)
-  if (index < 0) {
-    return 0
-  }
-  return data[index + eac3ChannelCountOffset] * 256 + data[index + eac3ChannelCountOffset + 1]
+  return index < 0
+    ? 0
+    : data[index + eac3ChannelCountOffset] * 256 + data[index + eac3ChannelCountOffset + 1]
 }
-/**
- * ffmpeg 5.1 (WASM core) 会把 mp4 中 E-AC-3 的 channelcount 固定写成 2, 只靠 dec3 box 记录真实声道,
- * 导致按 sample entry 读取声道的播放器把环绕声识别成 2Ch, 这里用源音频的声道数修正输出.
- */
-const fixEac3ChannelCount = (output: Uint8Array, channelCount: number) => {
-  const index = findEac3SampleEntry(output)
-  if (index < 0) {
-    return
+/** ffmpeg 5.1 会把 mp4 中 E-AC-3 的 channelcount 固定写成 2, 这里改回真实声道数 */
+const setEac3ChannelCount = (data: Uint8Array, channelCount: number) => {
+  const index = findEac3SampleEntry(data)
+  if (index >= 0) {
+    data[index + eac3ChannelCountOffset] = Math.floor(channelCount / 256)
+    data[index + eac3ChannelCountOffset + 1] = channelCount % 256
   }
-  output[index + eac3ChannelCountOffset] = Math.floor(channelCount / 256)
-  output[index + eac3ChannelCountOffset + 1] = channelCount % 256
 }
 
 export async function mux(
@@ -133,7 +131,7 @@ export async function mux(
 
   const output = await ffmpeg.readFile('output')
   if (eac3ChannelCount > 0) {
-    fixEac3ChannelCount(output, eac3ChannelCount)
+    setEac3ChannelCount(output, eac3ChannelCount)
   }
   const outputBlob = new Blob([output], { type: format.mime })
 

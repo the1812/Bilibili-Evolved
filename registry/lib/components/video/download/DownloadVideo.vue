@@ -406,7 +406,7 @@ export default Vue.extend({
         this.testData.videoInfo = undefined
       }
     },
-    async startDownload(instance: Vue, output: DownloadVideoOutput) {
+    async startDownload(instance: any, output: DownloadVideoOutput) {
       try {
         this.busy = true
         const input = this.selectedInput as DownloadVideoInput

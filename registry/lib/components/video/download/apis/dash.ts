@@ -61,15 +61,9 @@ const audioFormatOfDashType: Record<AudioDash['type'], DownloadVideoAudioFormat>
   dolbyAudio: 'dolby',
   flacAudio: 'flac',
 }
-/** 收集音频轨道可选的格式, 并按期望格式筛选 (auto 表示不筛选) */
-export const pickAudioDashes = (
-  dashes: AudioDash[],
-  format: DownloadVideoAudioFormat,
-): { dashes: AudioDash[]; formats: DownloadVideoAudioFormat[] } => {
+/** 收集可选的音频格式, 并按期望格式筛选 (无匹配格式时返回全部) */
+const pickAudioDashes = (dashes: AudioDash[], format: DownloadVideoAudioFormat) => {
   const formats = lodash.uniq(dashes.map(d => audioFormatOfDashType[d.type]))
-  if (format === 'auto') {
-    return { dashes, formats }
-  }
   const matched = dashes.filter(d => audioFormatOfDashType[d.type] === format)
   return { dashes: matched.length > 0 ? matched : dashes, formats }
 }

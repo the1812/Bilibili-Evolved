@@ -2,23 +2,17 @@
 const flacMagic = [0x66, 0x4c, 0x61, 0x43]
 const readUint32 = (data: Uint8Array, offset: number) =>
   data[offset] * 16777216 + data[offset + 1] * 65536 + data[offset + 2] * 256 + data[offset + 3]
-const findTag = (data: Uint8Array, tag: number[]) => {
-  for (let i = 0; i <= data.length - tag.length; i++) {
-    let matched = true
-    for (let j = 0; j < tag.length; j++) {
-      if (data[i + j] !== tag[j]) {
-        matched = false
-        break
-      }
-    }
-    if (matched) {
+/** 读取 4 字节 box 类型, 如 'mdat' / 'dfLa' */
+const readTag = (data: Uint8Array, offset: number) =>
+  String.fromCharCode(data[offset], data[offset + 1], data[offset + 2], data[offset + 3])
+const findTag = (data: Uint8Array, tag: string) => {
+  for (let i = 0; i <= data.length - 4; i++) {
+    if (readTag(data, i) === tag) {
       return i
     }
   }
   return -1
 }
-/** 'dfLa' (FLAC 元数据 box) */
-const dflaTag = [0x64, 0x66, 0x4c, 0x61]
 
 /**
  * B 站无损音频的 DASH 片段是 MP4 封装的 FLAC, 直接保存为 .flac 会被播放器判为无效.
@@ -30,12 +24,7 @@ export const extractFlac = (data: Uint8Array) => {
   let offset = 0
   while (offset + 8 <= data.length) {
     let size = readUint32(data, offset)
-    const type = String.fromCharCode(
-      data[offset + 4],
-      data[offset + 5],
-      data[offset + 6],
-      data[offset + 7],
-    )
+    const type = readTag(data, offset + 4)
     let headerSize = 8
     if (size === 1) {
       size = readUint32(data, offset + 8) * 0x100000000 + readUint32(data, offset + 12)
@@ -50,7 +39,7 @@ export const extractFlac = (data: Uint8Array) => {
       frames.push(data.subarray(offset + headerSize, offset + size))
     } else if (type === 'moov') {
       const moov = data.subarray(offset + headerSize, offset + size)
-      const index = findTag(moov, dflaTag)
+      const index = findTag(moov, 'dfLa')
       if (index >= 4) {
         // 跳过 dfLa 的 8 字节 box 头与 4 字节 fullbox version/flags
         metadata = moov.subarray(index + 8, index - 4 + readUint32(moov, index - 4))
