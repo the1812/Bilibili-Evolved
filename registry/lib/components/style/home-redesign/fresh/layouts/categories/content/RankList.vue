@@ -106,6 +106,7 @@
 <script lang="ts">
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
+import { getJsonWithCredentials } from '@/core/ajax'
 import { DpiImage, VIcon, VLoading, VEmpty, VButton } from '@/ui'
 import { requestMixin, cssVariableMixin } from '../../../../mixin'
 import { rankListCssVars } from './rank-list'
@@ -122,7 +123,10 @@ export default Vue.extend({
   filters: {
     formatCount,
   },
-  mixins: [requestMixin(), cssVariableMixin(rankListCssVars)],
+  mixins: [
+    requestMixin({ requestMethod: getJsonWithCredentials }),
+    cssVariableMixin(rankListCssVars),
+  ],
   props: {
     parseJson: {
       type: Function,
