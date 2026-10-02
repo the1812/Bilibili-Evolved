@@ -1,7 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { createHook } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { allVideoUrls } from '@/core/utils/urls'
+import { videoUrls } from '@/core/utils/urls'
 
 let restore: (() => void) | undefined
 
@@ -12,7 +12,6 @@ const isAudioOnlyTimer = (handler: TimerHandler) => {
   const source = String(handler)
   const isMatch =
     source.includes('isVideoDisabledByBackNormal') &&
-    source.includes('backgroundFakeSwitchCount') &&
     source.includes('switch_to_audio_mode') &&
     source.includes('skip_audio_only_mode')
   if (isMatch) {
@@ -42,9 +41,13 @@ const unload = () => {
 export const component = defineComponentMetadata({
   name: 'blockVideoVisibilityDetection',
   displayName: '禁止视频可见性检测',
+  author: {
+    name: 'WhiteTeal55',
+    link: 'https://github.com/WhiteTeal55',
+  },
   tags: [componentsTags.video],
   entry,
   reload: entry,
   unload,
-  urlInclude: allVideoUrls,
+  urlInclude: videoUrls,
 })
