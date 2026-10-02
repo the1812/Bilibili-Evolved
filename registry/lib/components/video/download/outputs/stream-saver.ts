@@ -1,6 +1,6 @@
 import { StreamSaverLibrary } from '@/core/runtime-library'
 import { Toast } from '@/core/toast'
-import { extractFlac } from '../flac'
+import { extractFlac } from './flac'
 import { DownloadVideoOutput } from '../types'
 
 /** 无损音频片段会被解封装成裸 FLAC, 因此只对这个扩展名做处理 */
