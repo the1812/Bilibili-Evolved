@@ -23,7 +23,7 @@ export default Vue.extend({
   data() {
     return {
       downloading: false,
-      roomIdRegex: /^https:\/\/live\.bilibili\.com\/(?:blanc\/)?(\d+)(?:\?\.*?)?$/,
+      roomIdRegex: /^https:\/\/live\.bilibili\.com\/(?:blanc\/)?(\d+)(?:\?.*?)?$/,
     }
   },
   methods: {
