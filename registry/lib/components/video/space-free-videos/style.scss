@@ -1,0 +1,15 @@
+[data-be-free-video-filter] {
+  cursor: pointer;
+}
+
+.vui_pagenation--btn-num[data-be-free-page-label],
+.vui_pagenation--btn-more[data-be-free-page-label] {
+  font-size: 0 !important;
+}
+
+.vui_pagenation--btn-num[data-be-free-page-label]::after,
+.vui_pagenation--btn-more[data-be-free-page-label]::after {
+  content: attr(data-be-free-page-label);
+  font-size: 16px !important;
+  line-height: inherit;
+}
