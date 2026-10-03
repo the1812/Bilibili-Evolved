@@ -20,7 +20,8 @@ import { bangumiApi, videoApi } from './url'
 export const DefaultDashExtensions = {
   video: '.mp4',
   audio: '.m4a',
-  flacAudio: '.flac',
+  // B 站的 FLAC 音轨同样是 MP4 封装, 因此也用 m4a
+  flacAudio: '.m4a',
   dolbyAudio: '.m4a',
 }
 /** dash 格式原本的扩展名 */

@@ -166,7 +166,7 @@ export async function run(
       cover?.[i]?.url,
       <string>ffmetadata?.[i]?.data,
       outputType,
-      audio.extension === dashFlacAudioExtension,
+      audio.type === 'flacAudio',
       i + 1,
       pages.length,
     )
