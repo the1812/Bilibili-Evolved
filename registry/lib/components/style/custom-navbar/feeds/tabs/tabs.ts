@@ -9,6 +9,12 @@ export const tabs: TabMappings = [
     count: 0,
   },
   {
+    name: 'subscriptions',
+    displayName: '订阅',
+    component: () => import('./SubscriptionFeeds.vue').then(m => m.default),
+    count: 0,
+  },
+  {
     name: 'bangumi',
     displayName: '番剧',
     component: () => import('./BangumiFeeds.vue').then(m => m.default),
