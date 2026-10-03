@@ -5,6 +5,9 @@ import { formatNumber } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { DefaultDashExtensions } from './apis/dash'
 
+/** 下载使用的音频格式, auto 表示不限制 (按最高码率选择) */
+export type DownloadVideoAudioFormat = 'auto' | 'stereo' | 'dolby' | 'flac'
+
 interface VueInstanceInput {
   component?: Executable<VueModule>
 }
@@ -21,6 +24,8 @@ export interface DownloadVideoInputItem {
   allowQualityDrop?: boolean
   /** 请求的音轨语言 */
   audioLanguage?: string
+  /** 期望的音频格式, 忽略或 auto 时按最高码率选择 */
+  audioFormat?: DownloadVideoAudioFormat
 }
 export interface DownloadVideoAudioLanguage {
   language: string
@@ -57,6 +62,7 @@ export class DownloadVideoInfo {
   public currentCodec?: string
   public currentBandWidth?: number
   public audioLanguages?: DownloadVideoAudioLanguage[]
+  public audioFormats?: DownloadVideoAudioFormat[]
   public jsonData: any
   constructor(
     parameters: Omit<DownloadVideoInfo, 'totalSize' | 'totalLength' | 'titledFragments'>,

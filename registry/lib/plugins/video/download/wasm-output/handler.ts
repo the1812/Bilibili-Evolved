@@ -127,8 +127,12 @@ export async function run(
     action.extraOnlineAssets = extraOnlineAssetsForBrowser
   }
 
-  const { dashAudioExtension, dashFlacAudioExtension, dashVideoExtension } =
-    getComponentSettings<Options>('downloadVideo').options
+  const {
+    dashAudioExtension,
+    dashFlacAudioExtension,
+    dashDolbyAudioExtension,
+    dashVideoExtension,
+  } = getComponentSettings<Options>('downloadVideo').options
 
   for (let i = 0; i < pages.length; i++) {
     const page = pages[i]
@@ -137,7 +141,9 @@ export async function run(
       !(
         page.fragments.length === 2 &&
         video.extension === dashVideoExtension &&
-        (audio.extension === dashAudioExtension || audio.extension === dashFlacAudioExtension)
+        (audio.extension === dashAudioExtension ||
+          audio.extension === dashFlacAudioExtension ||
+          audio.extension === dashDolbyAudioExtension)
       )
     ) {
       throw new Error('仅支持 DASH 格式视频和音频')
@@ -160,7 +166,7 @@ export async function run(
       cover?.[i]?.url,
       <string>ffmetadata?.[i]?.data,
       outputType,
-      audio.extension === dashFlacAudioExtension,
+      audio.type === 'flacAudio',
       i + 1,
       pages.length,
     )

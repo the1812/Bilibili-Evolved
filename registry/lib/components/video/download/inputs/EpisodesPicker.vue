@@ -148,6 +148,8 @@ $collapse-transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   &-items {
     max-height: 400px;
     overflow: auto;
+    // 隔离内部吸顶标题的层叠上下文, 避免 z-index 溢出到弹窗其他部分
+    isolation: isolate;
     &:not(:empty) {
       margin-top: 4px;
       border: 1px solid #8884;
