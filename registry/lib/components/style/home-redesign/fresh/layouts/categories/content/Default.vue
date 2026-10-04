@@ -47,9 +47,9 @@ import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
 import SubHeader from '../../../SubHeader.vue'
 import { compactRankListMixin } from '../../../../mixin'
-import { categoryCodesV2 } from '@/components/utils/categories/data'
 
-const regionFeedCodes: Record<string, number> = {
+// route 对应的 v2 分区 ID, 用于「有新动态」和排行榜
+const regionCodes: Record<string, number> = {
   cinephile: 1001,
   ent: 1002,
   music: 1003,
@@ -146,7 +146,7 @@ const getActiveVideoSource = (route: string) => {
     }
   }
   return {
-    api: `https://api.bilibili.com/x/web-interface/region/feed/rcmd?display_id=1&request_cnt=15&from_region=${regionFeedCodes[route]}`,
+    api: `https://api.bilibili.com/x/web-interface/region/feed/rcmd?display_id=1&request_cnt=15&from_region=${regionCodes[route]}`,
     parseJson: parseRegionVideos,
   }
 }
@@ -156,7 +156,7 @@ const getRankingSource = (route: string) => {
   return {
     api: bangumiMode
       ? `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`
-      : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${categoryCodesV2[route]}&type=all`,
+      : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${regionCodes[route]}&type=all`,
     link: `https://www.bilibili.com/v/popular/rank/${route}`,
     bangumiMode,
     parseJson: bangumiMode ? parsePgcRankings : parseDefaultRankings,

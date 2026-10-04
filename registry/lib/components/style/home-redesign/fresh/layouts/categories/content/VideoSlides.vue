@@ -156,11 +156,31 @@ export default Vue.extend({
       return this.watchlaterList.includes(this.currentItem.aid)
     },
   },
+  watch: {
+    currentItem() {
+      this.loadVideoInfo()
+    },
+  },
   created() {
     getWatchlaterList()
   },
   methods: {
     toggleWatchlater,
+    // rcmd 分区接口不含 UP 头像和视频简介, 用视频详情接口补齐
+    async loadVideoInfo() {
+      const item = this.currentItem
+      if (!item?.bvid || item.upFaceUrl !== undefined) {
+        return
+      }
+      const info = await bilibiliApi(
+        getJson(`https://api.bilibili.com/x/web-interface/view?bvid=${item.bvid}`),
+        '获取清爽首页分区视频信息失败',
+      ).catch(() => null)
+      this.$set(item, 'upFaceUrl', info?.owner?.face ?? '')
+      if (info?.desc) {
+        this.$set(item, 'description', info.desc)
+      }
+    },
     nextCard() {
       this.items.push(this.items.shift())
     },
