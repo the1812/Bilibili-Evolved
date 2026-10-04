@@ -8,6 +8,7 @@ import { Options } from '..'
 import { compareQuality } from '../error'
 import {
   DownloadVideoApi,
+  DownloadVideoAudioFormat,
   DownloadVideoAudioLanguage,
   DownloadVideoFragment,
   DownloadVideoInfo,
@@ -19,7 +20,9 @@ import { bangumiApi, videoApi } from './url'
 export const DefaultDashExtensions = {
   video: '.mp4',
   audio: '.m4a',
-  flacAudio: '.flac',
+  // B 站的 FLAC 音轨同样是 MP4 封装, 因此也用 m4a
+  flacAudio: '.m4a',
+  dolbyAudio: '.m4a',
 }
 /** dash 格式原本的扩展名 */
 export const DashFragmentExtension = '.m4s'
@@ -39,7 +42,7 @@ export interface Dash {
   duration: number
 }
 export interface AudioDash extends Dash {
-  type: 'audio' | 'flacAudio'
+  type: 'audio' | 'flacAudio' | 'dolbyAudio'
 }
 export interface VideoDash extends Dash {
   type: 'video'
@@ -53,6 +56,18 @@ export interface DashFilters {
   video?: (dash: VideoDash) => boolean
   audio?: (dash: AudioDash) => boolean
 }
+/** 音频格式与 AudioDash 类型的对应关系 */
+const audioFormatOfDashType: Record<AudioDash['type'], DownloadVideoAudioFormat> = {
+  audio: 'stereo',
+  dolbyAudio: 'dolby',
+  flacAudio: 'flac',
+}
+/** 收集可选的音频格式, 并按期望格式筛选 (无匹配格式时返回全部) */
+const pickAudioDashes = (dashes: AudioDash[], format: DownloadVideoAudioFormat) => {
+  const formats = lodash.uniq(dashes.map(d => audioFormatOfDashType[d.type]))
+  const matched = dashes.filter(d => audioFormatOfDashType[d.type] === format)
+  return { dashes: matched.length > 0 ? matched : dashes, formats }
+}
 const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => {
   const { options } = getComponentSettings<Options>('downloadVideo')
   if (type === 'video') {
@@ -63,6 +78,9 @@ const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => 
   }
   if (type === 'flacAudio') {
     return options.dashFlacAudioExtension
+  }
+  if (type === 'dolbyAudio') {
+    return options.dashDolbyAudioExtension
   }
   return DefaultDashExtensions[type] ?? DashFragmentExtension
 }
@@ -186,13 +204,17 @@ const downloadDash = async (
     .map(d => mapAudioDash(d))
     .filter(d => dashFilters.audio(d))
   if (dolby) {
-    audioDashes.push(...(dolby.audio?.map((d: any) => mapAudioDash(d)) ?? []))
+    audioDashes.push(...(dolby.audio?.map((d: any) => mapAudioDash(d, 'dolbyAudio')) ?? []))
   }
   if (flac) {
     audioDashes.push(...(flac.audio ? [mapAudioDash(flac.audio, 'flacAudio')] : []))
   }
-  const fragments = dashToFragments({
+  const { dashes: pickedAudioDashes, formats: audioFormats } = pickAudioDashes(
     audioDashes,
+    input.audioFormat ?? 'auto',
+  )
+  const fragments = dashToFragments({
+    audioDashes: pickedAudioDashes,
     videoDashes,
     videoCodec: codec,
   })
@@ -239,6 +261,7 @@ const downloadDash = async (
     currentCodec,
     currentBandWidth,
     audioLanguages,
+    audioFormats,
   })
   compareQuality(input, info)
   return info

@@ -24,6 +24,10 @@ const options = defineOptionsMetadata({
     defaultValue: DefaultDashExtensions.flacAudio,
     displayName: 'DASH FLAC 音频扩展名',
   },
+  dashDolbyAudioExtension: {
+    defaultValue: DefaultDashExtensions.dolbyAudio,
+    displayName: 'DASH 杜比音频扩展名',
+  },
   dashCodecFallback: {
     defaultValue: DashCodec.Avc,
     dropdownEnum: DashCodec,

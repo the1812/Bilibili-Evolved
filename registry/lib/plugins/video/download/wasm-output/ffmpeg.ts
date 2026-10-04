@@ -149,7 +149,7 @@ export class FFmpeg {
       },
       undefined,
       signal,
-    ) as Promise<Uint8Array>
+    ) as Promise<Uint8Array<ArrayBuffer>>
 
   public deleteFile = (path: string, signal?: AbortSignal) =>
     this.#send(
