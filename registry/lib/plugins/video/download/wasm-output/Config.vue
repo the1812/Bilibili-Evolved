@@ -1,7 +1,7 @@
 <template>
   <div class="wasm-output-config">
     <div class="download-video-config-item" style="flex-wrap: wrap">
-      <div class="download-video-config-title">输出格式：</div>
+      <div class="download-video-config-title">输出格式:</div>
       <VDropdown v-model="outputType" :items="outputTypes" @change="saveOptions">
         <template #item="{ item }">
           {{ item }}
@@ -13,14 +13,14 @@
       </div>
     </div>
     <div v-if="hasMetadata" class="download-video-config-item" style="flex-wrap: wrap">
-      <div class="download-video-config-title">写入元数据：</div>
+      <div class="download-video-config-title">写入元数据:</div>
       <SwitchBox v-model="muxWithMetadata" @change="saveOptions" />
       <div class="download-video-config-description" style="width: 100%">
         支持元数据类型「ffmetadata」
       </div>
     </div>
     <div v-if="hasCover" class="download-video-config-item" style="flex-wrap: wrap">
-      <div class="download-video-config-title">附加封面：</div>
+      <div class="download-video-config-title">附加封面:</div>
       <SwitchBox v-model="attachCover" @change="saveOptions" />
       <div v-if="hasMetadata" class="download-video-config-description" style="width: 100%">
         附加封面至 MP4 格式会导致元数据自定义字段失效
@@ -68,3 +68,10 @@ export default Vue.extend({
   },
 })
 </script>
+<style lang="scss">
+@import 'common';
+
+.wasm-output-config {
+  @include v-stretch(12px);
+}
+</style>
