@@ -1,0 +1,35 @@
+// 按钮和译文自带 hidden 属性, 只有这份样式生效时才会显示
+:host(bili-comment-action-buttons-renderer) .be-comment-translate {
+  display: block;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+  }
+  &.active button {
+    color: var(--brand_blue);
+  }
+}
+
+:host(bili-comment-renderer),
+:host(bili-comment-reply-renderer) {
+  .be-comment-translation.open {
+    display: block;
+    margin: 6px 0 2px;
+    padding: 6px 10px;
+    border-left: 3px solid var(--brand_blue);
+    border-radius: 4px;
+    background-color: var(--bg2);
+    color: var(--text1);
+    font-size: 14px;
+    line-height: 22px;
+    white-space: pre-wrap;
+    word-break: break-word;
+
+    img {
+      height: 1.4em;
+      vertical-align: text-bottom;
+    }
+  }
+}
