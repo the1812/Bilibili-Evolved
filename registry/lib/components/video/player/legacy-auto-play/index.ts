@@ -7,12 +7,6 @@ import { useScopedConsole } from '@/core/utils/log'
 import { bangumiUrls, videoUrls } from '@/core/utils/urls'
 
 abstract class LegacyAutoPlay {
-  isChecked(container: HTMLElement) {
-    return (
-      Boolean(container.querySelector('.switch-button.on') || container.matches(':checked')) ||
-      container.classList.contains('on')
-    )
-  }
   async onRightPanelLoaded(callback: (rightPanel: Element) => Promise<void> | void) {
     await playerReady()
     const rightPanel = await Promise.any([
@@ -37,20 +31,6 @@ abstract class LegacyAutoPlay {
 }
 
 class VideoLegacyAutoPlay extends LegacyAutoPlay {
-  readonly autoPlayControls = {
-    /** 命中时应该打开连播: 传统分 P, 合集 */
-    enable: [
-      ':is(.base-video-sections, .base-video-sections-v1) .next-button',
-      ':is(.multi-page, .multi-page-v1) .next-button',
-      '.player-auxiliary-autoplay-switch input',
-      '.video-pod .auto-play .switch-btn',
-    ],
-    /** 命中时应该关闭连播: 关联视频推荐 */
-    disable: [
-      ':is(.recommend-list, .recommend-list-v1) .next-button',
-      '.recommend-list-v1 .switch-btn',
-    ],
-  }
   /** 最后 1P 时不能开启连播 */
   readonly disableConditions = [
     /** 传统分 P */
@@ -76,21 +56,13 @@ class VideoLegacyAutoPlay extends LegacyAutoPlay {
       ),
   ]
 
-  async checkPlayMode() {
-    const element = (await select(
-      [...this.autoPlayControls.disable, ...this.autoPlayControls.enable].join(','),
-    )) as HTMLElement
-    if (!element) {
-      return
-    }
-    const shouldChecked =
-      this.autoPlayControls.enable.some(selector => element.matches(selector)) &&
-      this.disableConditions.every(condition => !condition())
-    const checked = this.isChecked(element)
-    console.log('checkPlayMode', { shouldChecked, checked })
-    if (shouldChecked !== checked) {
-      element.click()
-    }
+  checkPlayMode(rightPanel: Element) {
+    const hasSequentialList = rightPanel.querySelector(
+      '.base-video-sections, .base-video-sections-v1, .multi-page, .multi-page-v1, .multip',
+    )
+    const shouldContinue =
+      hasSequentialList !== null && this.disableConditions.every(condition => !condition())
+    playerAgent.setAutoPlayNextVideo(shouldContinue)
   }
   async checkPlayListPlayMode(rightPanel: Element) {
     // spell-checker: disable
@@ -123,7 +95,6 @@ class VideoLegacyAutoPlay extends LegacyAutoPlay {
     console.log('checkPlayListPlayMode', { isLastVideo, sequentialNumbers, shouldContinue })
     const app = document.getElementById('app')
     const vueInstance = getVue2Data(app)
-    // 不用判断当前状态是什么，直接将将是否需要继续播放赋值 vue 实例中的 continuousPlay
     vueInstance.setContinuousPlay(shouldContinue)
     // spell-checker: enable
   }
@@ -132,7 +103,7 @@ class VideoLegacyAutoPlay extends LegacyAutoPlay {
     this.onRightPanelLoaded(rightPanel => {
       const check = () => {
         const isPlayList = rightPanel.querySelector('.video-pod__list.section')
-        return isPlayList ? this.checkPlayListPlayMode(rightPanel) : this.checkPlayMode()
+        return isPlayList ? this.checkPlayListPlayMode(rightPanel) : this.checkPlayMode(rightPanel)
       }
       childListSubtree(rightPanel, () => check())
       this.onVideoChange(() => check())

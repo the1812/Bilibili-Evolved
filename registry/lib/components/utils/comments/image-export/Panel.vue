@@ -13,7 +13,7 @@
       type="button"
       class="cie-download-all"
       :disabled="items.length === 0"
-      @click="downloadAllComments"
+      @click="downloadAllComments(currentAreaElement)"
     >
       全部下载
     </button>
@@ -24,7 +24,7 @@
         :key="item.commentId"
         type="button"
         class="cie-item"
-        @click="downloadSingleComment(item)"
+        @click="downloadSingleComment(item, currentAreaElement)"
       >
         <div class="cie-item-content">
           <div class="cie-item-info">
@@ -42,10 +42,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { VPopup } from '@/ui'
-import { commentImageList, panelVisible } from './store'
+import { commentImageList, panelVisible, commentAreaElement } from './store'
 import { downloadSingleComment, downloadAllComments } from './download'
 
 const items = computed(() => commentImageList.value)
+const currentAreaElement = computed(() => commentAreaElement.value ?? undefined)
 const statsText = computed(() => `共找到 ${items.value.length} 条包含图片的评论`)
 
 const truncate = (text: string) => (text.length > 10 ? `${text.substring(0, 10)}...` : text)

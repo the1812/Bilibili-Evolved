@@ -68,7 +68,7 @@
         "type": "component",
         "name": "collapseLiveSideBar",
         "displayName": "自动收起直播侧栏",
-        "description": "自动收起直播间右边偏下的侧栏. (上面有个 \"关注\" 的面板)",
+        "description": "自动收起直播间右边偏下的侧栏 (上面有个 \"关注\" 的面板) , 并阻止侧栏面板 (如 \"主播推荐\") 在打开网页时自动弹出.",
         "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
         "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
       },
@@ -114,7 +114,7 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n- 视频发布时间:\n  - `publishYear`\n  - `publishMonth`\n  - `publishDay`\n  - `publishHour`\n  - `publishMinute`\n  - `publishSecond`\n  - `publishMillisecond`",
+        "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n\n批量下载时, 批量命名格式中还额外提供视频发布时间变量:\n- `publishYear`\n- `publishMonth`\n- `publishDay`\n- `publishHour`\n- `publishMinute`\n- `publishSecond`\n- `publishMillisecond`",
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },
@@ -122,7 +122,7 @@
         "type": "component",
         "name": "downloadSubtitle",
         "displayName": "下载字幕",
-        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)",
+        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
         "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
         "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
       },

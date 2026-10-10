@@ -38,7 +38,7 @@ body:not(.preserve-feed-goods) .dyn-goods,
 .palette-button-adcard,
 .palette-button-wrap .adcard-content,
 .video-card-ad-small,
-.search-all-list .video-list > *:has(.bili-video-card__info--ad) {
+.search-all-list .video-list > *:has(.bili-video-card__info--ad, .ad-feedback-entry) {
   display: none !important;
 }
 .recommend-list .rec-list > :not(.video-page-card) + .video-page-card {

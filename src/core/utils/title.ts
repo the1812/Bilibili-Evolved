@@ -64,6 +64,21 @@ export const formatVariables = (format: string, variables: StringMap) => {
   return formatFilename(finalValue, ' ')
 }
 
+/** 获取当前页面 up 主的链接, 单人投稿优先, 联合投稿则查找标注为 UP主 的成员 */
+const getUpNameLink = (): HTMLAnchorElement | null => {
+  const normalLink = dq('a.up-name') as HTMLAnchorElement | null
+  if (normalLink?.href) {
+    return normalLink
+  }
+  const upStaffInfo = Array.from(document.querySelectorAll<HTMLDivElement>('.staff-info')).find(
+    div => {
+      const tag = div.querySelector<HTMLSpanElement>('.info-tag')
+      return tag?.textContent?.trim() === 'UP主'
+    },
+  )
+  return upStaffInfo?.querySelector<HTMLAnchorElement>('a.staff-name') ?? null
+}
+
 export const formatTitle = (
   format: string,
   includesPageTitle = true,
@@ -88,6 +103,9 @@ export const formatTitle = (
     )
   }
   const dateVariables = getTitleVariablesFromDate()
+  const upNameLink = getUpNameLink()
+  const upOwnerId = upNameLink?.href.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1')
+  const upOwnerName = upNameLink?.innerText?.trim() || undefined
   const builtInVariables: StringMap = {
     title: (() => {
       const videoPageTitle = dq('.video-info-container .video-title')
@@ -124,27 +142,8 @@ export const formatTitle = (
       }
       return undefined
     })(),
-    userID: (() => {
-      // 先按照单人投稿获取userID
-      const normalLink = dq('a.up-name') as HTMLAnchorElement
-      if (normalLink?.href) {
-        return normalLink.href.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1')
-      }
-      // 联合投稿userID通过staff-info中text对比单独获取
-      const upStaffInfo = Array.from(document.querySelectorAll<HTMLDivElement>('.staff-info')).find(
-        div => {
-          const tag = div.querySelector<HTMLSpanElement>('.info-tag')
-          return tag?.textContent?.trim() === 'UP主'
-        },
-      )
-      if (upStaffInfo) {
-        const link = upStaffInfo.querySelector<HTMLAnchorElement>('a.staff-name')
-        if (link?.href) {
-          return link.href.replace(/.*space\.bilibili\.com\/(\d+).*/, '$1')
-        }
-      }
-      return undefined
-    })(),
+    userID: upOwnerId,
+    user: upOwnerName,
     aid: unsafeWindow.aid,
     bvid: unsafeWindow.bvid,
     cid: unsafeWindow.cid,

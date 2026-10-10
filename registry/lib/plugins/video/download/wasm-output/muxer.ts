@@ -1,3 +1,4 @@
+import { getEac3ChannelCount, setEac3ChannelCount } from './eac3-channel-count'
 import { FFmpeg, ProgressEvent } from './ffmpeg'
 import { Format, OutputFormats, OutputType } from './types'
 
@@ -76,6 +77,9 @@ export async function mux(
   args.push('output')
   console.debug('FFmpeg commandline args:', args.join(' '))
 
+  // writeFile 会把 buffer 转移给 worker, 因此要在写入前读取源音频的声道数
+  const eac3ChannelCount = outputType === 'mp4' ? getEac3ChannelCount(audio) : 0
+
   await ffmpeg.writeFile('video', video)
   await ffmpeg.writeFile('audio', audio)
   if (cover) {
@@ -89,6 +93,9 @@ export async function mux(
   await ffmpeg.exec(args)
 
   const output = await ffmpeg.readFile('output')
+  if (eac3ChannelCount > 0) {
+    setEac3ChannelCount(output, eac3ChannelCount)
+  }
   const outputBlob = new Blob([output], { type: format.mime })
 
   await Promise.all([

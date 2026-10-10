@@ -55,7 +55,21 @@ watch(
   &:not(:last-child) {
     margin-bottom: 4px;
   }
-  label {
+  > .filter-side-card-button {
+    width: 100%;
+    box-sizing: border-box;
+    font: inherit;
+    color: inherit;
+    text-align: inherit;
+    background-color: transparent;
+
+    &:focus-visible {
+      outline: 2px solid var(--theme-color);
+      outline-offset: 2px;
+    }
+  }
+  label,
+  > .filter-side-card-button {
     cursor: pointer;
     margin: 0;
     padding: 4px 6px;

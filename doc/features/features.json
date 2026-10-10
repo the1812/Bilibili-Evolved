@@ -9,6 +9,14 @@
   },
   {
     "type": "component",
+    "name": "customContentWidth",
+    "displayName": "自定义动态页内容宽度",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n自定义动态首页、动态详情、图文动态与专栏的正文宽度.",
+    "fullRelativePath": "../../registry/dist/components/feeds/custom-content-width.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/custom-content-width.js"
+  },
+  {
+    "type": "component",
     "name": "deleteFeeds",
     "displayName": "删除动态",
     "description": "删除动态, 可选转发抽奖(不会删除自己中奖的动态), 和全部删除.",
@@ -121,6 +129,14 @@
   },
   {
     "type": "component",
+    "name": "autoFullWin",
+    "displayName": "直播自动网页全屏",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n进入直播间时, 自动将播放器切换至网页全屏模式.",
+    "fullRelativePath": "../../registry/dist/components/live/auto-full-win.js",
+    "fullAbsolutePath": "registry/dist/components/live/auto-full-win.js"
+  },
+  {
+    "type": "component",
     "name": "autoHighestQuality",
     "displayName": "直播自动切换最高画质",
     "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n将直播自动切换至最高画质",
@@ -211,7 +227,7 @@
     "type": "component",
     "name": "liveHomePause",
     "displayName": "直播首页暂停",
-    "description": "by [@YeJay99](https://github.com/YeJay99)\n\n暂停直播首页的推荐直播间.",
+    "description": "by [@YiJay99](https://github.com/YiJay99)\n\n暂停直播首页的推荐直播间.",
     "fullRelativePath": "../../registry/dist/components/live/home-pause.js",
     "fullAbsolutePath": "registry/dist/components/live/home-pause.js"
   },
@@ -257,6 +273,14 @@
   },
   {
     "type": "component",
+    "name": "liveScreenshot",
+    "displayName": "启用直播截图",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n启用直播快速截图, 将在播放器的音量按钮右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.",
+    "fullRelativePath": "../../registry/dist/components/live/screenshot.js",
+    "fullAbsolutePath": "registry/dist/components/live/screenshot.js"
+  },
+  {
+    "type": "component",
     "name": "showArea",
     "displayName": "直播显示分区信息",
     "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n在直播间的播放器标题栏显示当前房间的分区信息",
@@ -275,7 +299,7 @@
     "type": "component",
     "name": "collapseLiveSideBar",
     "displayName": "自动收起直播侧栏",
-    "description": "自动收起直播间右边偏下的侧栏. (上面有个 \"关注\" 的面板)",
+    "description": "自动收起直播间右边偏下的侧栏 (上面有个 \"关注\" 的面板) , 并阻止侧栏面板 (如 \"主播推荐\") 在打开网页时自动弹出.",
     "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
     "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
   },
@@ -385,6 +409,14 @@
   },
   {
     "type": "component",
+    "name": "hideCategoryBar",
+    "displayName": "隐藏分区栏",
+    "description": "by [@ChiyukiKazama](https://github.com/ChiyukiKazama)\n\n隐藏主站首页及支持分区首页中 Banner 下方包含动态、热门、各分区及专栏、直播等入口的导航栏。可自定义隐藏后保留的垂直间距，默认为 16px。",
+    "fullRelativePath": "../../registry/dist/components/style/hide/category-bar.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/category-bar.js"
+  },
+  {
+    "type": "component",
     "name": "hideHomeCarousel",
     "displayName": "隐藏首页轮播图",
     "description": "隐藏首页的轮播图区域\n\n选项说明：\n\n- `完全隐藏`：完全隐藏整个轮播区域\n- `透明化`：完全透明化整个轮播区域，同时禁止点击打开链接\n- `自定义`：\n  - `禁用轮播`：禁用图片轮播，可以手动切换\n  - `图片模糊`：模糊轮播图片，为0时不模糊\n  - `隐藏轮播图片`：隐藏轮播图片，同时禁止点击图片打开链接\n  - `隐藏图片标题`：隐藏图片标题，同时禁止点击标题打开链接",
@@ -395,7 +427,7 @@
     "type": "component",
     "name": "hideTrendingSearch",
     "displayName": "隐藏热搜",
-    "description": "隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 请注意这只是视觉上的隐藏, 如果不输入任何关键词就点 Enter 或搜索按钮, 仍然会跳转至推荐的热搜词.",
+    "description": "隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 不输入任何关键词就按 Enter 或点搜索按钮时, 会打开搜索页.",
     "fullRelativePath": "../../registry/dist/components/style/hide/trending-search.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/trending-search.js"
   },
@@ -729,6 +761,22 @@
   },
   {
     "type": "component",
+    "name": "sortComments",
+    "displayName": "评论区评论排序",
+    "description": "by [@ChairKeter](https://github.com/ChairKeter)\n\n支持对视频、番剧、动态、专栏、音频、图文等页面的评论区进行多种排序方式：\n注：仅支持已加载的评论\n- **点赞数排序**：按评论点赞数从高到低 / 从低到高排序\n- **发布时间排序**：按评论发布时间从新到旧 / 从旧到新排序\n- **用户等级排序**：按评论用户等级从高到低 / 从低到高排序\n- **默认顺序**：恢复为 Bilibili 默认排序\n\n在设置面板中可以随时切换排序方式，切换后立即生效。右下角悬浮面板支持拖拽移动和缩放，位置和大小自动保存。",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/sort-comments.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/sort-comments.js"
+  },
+  {
+    "type": "component",
+    "name": "customHomeRefreshCount",
+    "displayName": "自定义首页换一换数量",
+    "description": "by [@ChiyukiKazama](https://github.com/ChiyukiKazama)\n\n自定义首页「换一换」按钮每次请求的推荐条目数量，默认 15 条。\n\n- **每批推荐条目数量**：输入正整数，修改后从下一次点击「换一换」开始生效。广告等推荐条目也计入数量，不等于普通视频数；轮播和独立楼层卡片不计入。\n- 请求参数在 B 站原生 WBI 签名前调整，同时解除顶部推荐卡片的响应式隐藏限制。不会补发请求凑数，实际返回数量以接口为准。",
+    "fullRelativePath": "../../registry/dist/components/utils/custom-home-refresh-count.js",
+    "fullAbsolutePath": "registry/dist/components/utils/custom-home-refresh-count.js"
+  },
+  {
+    "type": "component",
     "name": "devClient",
     "displayName": "DevClient",
     "description": "本地开发工具, 提供自动更新功能和样式热重载的能力, 需要与 DevServer 配合使用. (DevServer 的使用方式见 [CONTRIBUTING.md](https://github.com/the1812/Bilibili-Evolved/blob/preview/CONTRIBUTING.md))\n\n`自动连接` 开启时, 每次进入网页都会自动尝试连接到 DevServer, 如果关闭则需要手动操作连接.\n\n`刷新策略` 决定了收到本体或者功能更新的消息时是否刷新:\n  - **总是刷新**: 收到更新时立即刷新页面\n  - 不刷新: 收到更新时不刷新页面\n\n`热重载策略` 决定了是否开启热重载功能, 只要成功触发热重载, 就不刷新页面:\n  - **开启热重载**: 功能带有 `instantStyles` 时, 热重载 `instantStyles` 中的样式\n  - 关闭热重载: 收到更新时按 `刷新策略` 执行\n\n> 目前就这两个选项, 将来可能会支持对 `entry` 的热重载",
@@ -881,6 +929,14 @@
   },
   {
     "type": "component",
+    "name": "cleanStartVideo",
+    "displayName": "新视频永远从头开始",
+    "description": "by [@Earchaut](https://github.com/Earchaut)\n\n点击首页视频卡片时移除 `t` 参数, 使新视频始终从头开始播放, 不受预览时长影响（不影响已经看过的视频从上次离开位置继续）。",
+    "fullRelativePath": "../../registry/dist/components/video/beginning-of-video.js",
+    "fullAbsolutePath": "registry/dist/components/video/beginning-of-video.js"
+  },
+  {
+    "type": "component",
     "name": "biliplusRedirect",
     "displayName": "BiliPlus 跳转支持",
     "description": "在视频 / 番剧 / 空间中, 可以从功能中的按钮点击转到 BiliPlus 上对应的页面.",
@@ -902,6 +958,14 @@
     "description": "by [@kdxcxs](https://github.com/kdxcxs)\n\n为可能含有时间点的弹幕添加下划线, 点击可以跳到视频对应时间.",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/airborne.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/airborne.js"
+  },
+  {
+    "type": "component",
+    "name": "customDanmakuSwitch",
+    "displayName": "自定义弹幕切换行为",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n自定义使用快捷键或点击播放器弹幕按钮切换弹幕时, 在哪些状态之间循环.\n\n启用快捷键扩展时, 使用快捷键扩展中「弹幕开关」动作绑定的按键触发循环; 未启用时才接管播放器原生的 `d` 快捷键.",
+    "fullRelativePath": "../../registry/dist/components/video/danmaku/custom-danmaku-switch.js",
+    "fullAbsolutePath": "registry/dist/components/video/danmaku/custom-danmaku-switch.js"
   },
   {
     "type": "component",
@@ -947,7 +1011,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n- 视频发布时间:\n  - `publishYear`\n  - `publishMonth`\n  - `publishDay`\n  - `publishHour`\n  - `publishMinute`\n  - `publishSecond`\n  - `publishMillisecond`",
+    "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n\n批量下载时, 批量命名格式中还额外提供视频发布时间变量:\n- `publishYear`\n- `publishMonth`\n- `publishDay`\n- `publishHour`\n- `publishMinute`\n- `publishSecond`\n- `publishMillisecond`",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
@@ -1137,6 +1201,14 @@
   },
   {
     "type": "component",
+    "name": "scrollVolume",
+    "displayName": "滚轮调节音量",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n在播放器画面上滚动滚轮调节音量, 并可自定义每一格滚轮改变的音量.\n\n- 常规 / 宽屏 / 小窗模式下, 鼠标悬停在画面上即可调节音量 (不会再滚动页面), 可通过 `常规模式下也可调节` 关闭\n- 网页全屏 / 全屏模式下会接管播放器的滚轮调节, 使每一格滚轮的幅度保持一致\n- 不能和 `禁止滚轮调音量` / `反转滚轮调音量` 一同使用",
+    "fullRelativePath": "../../registry/dist/components/video/player/scroll-volume.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/scroll-volume.js"
+  },
+  {
+    "type": "component",
     "name": "seekByFrames",
     "displayName": "启用逐帧调整",
     "description": "在播放器的时间右边增加两个按钮, 用于**较精细**调整视频时间. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Shift</kbd>+<kbd>←</kbd>/<kbd>→</kbd>.\n\n> 注: `视频的实际播放帧率`跟`视频本身的帧率`和`显示器的刷新率`有关, 很难计算一个精准的数值, 部分视频仍然会有暂停不到那种一闪而过的图的情况.",
@@ -1185,6 +1257,14 @@
   },
   {
     "type": "component",
+    "name": "relatedVideoOpenMode",
+    "displayName": "推荐视频打开方式",
+    "description": "by [@RhoPaper](https://github.com/RhoPaper)\n\n控制视频播放页右侧推荐栏的链接打开方式，可选择保持 B 站默认的当前标签页打开，或默认在新标签页打开。\n\n可在每个推荐视频标题右侧显示一个反向操作图标：默认使用当前标签页时，点击图标可在新标签页打开；默认使用新标签页时，点击图标可在当前标签页打开。图标可设为悬停视频卡片时显示或始终显示，后者适合触屏设备。",
+    "fullRelativePath": "../../registry/dist/components/video/related-video-open-mode.js",
+    "fullAbsolutePath": "registry/dist/components/video/related-video-open-mode.js"
+  },
+  {
+    "type": "component",
     "name": "seoRedirect",
     "displayName": "SEO 页面重定向",
     "description": "进入 SEO 视频页面时 (`https://www.bilibili.com/s/video/`) 自动跳转到原视频页面.",
@@ -1203,7 +1283,7 @@
     "type": "component",
     "name": "downloadSubtitle",
     "displayName": "下载字幕",
-    "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)",
+    "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
     "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
     "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
   },

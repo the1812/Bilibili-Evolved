@@ -9,6 +9,7 @@ import {
   CustomQueryProvider,
   PlayerAgentEventTypes,
   PlayerAgentToggleSubtitleResult,
+  PlayerAgentDanmakuSwitchState,
 } from './types'
 
 export const elementQuery = (selector: string): ElementQuery => {
@@ -72,14 +73,43 @@ export abstract class PlayerAgent
   toggleMute() {
     return click(this.query.control.buttons.volume)
   }
-  toggleDanmaku() {
+  getDanmakuState(): PlayerAgentDanmakuSwitchState | null {
+    const checkbox = this.query.danmakuSwitch.sync() as HTMLInputElement
+    if (!checkbox) {
+      return null
+    }
+    if (checkbox.indeterminate) {
+      return 'concise'
+    }
+    return checkbox.checked ? 'on' : 'off'
+  }
+  toggleDanmaku(): PlayerAgentDanmakuSwitchState | null {
     const checkbox = this.query.danmakuSwitch.sync() as HTMLInputElement
     if (!checkbox) {
       return null
     }
     checkbox.checked = !checkbox.checked
     raiseEvent(checkbox, 'change')
-    return checkbox.checked
+    return this.getDanmakuState()
+  }
+  getSupportedDanmakuStates(): PlayerAgentDanmakuSwitchState[] {
+    const isThreeState = this.query.danmakuSwitch
+      .sync()
+      ?.closest('.bpx-player-dm-switch')
+      ?.classList.contains('bui-danmaku-switch-new')
+    return isThreeState ? ['on', 'concise', 'off'] : ['on', 'off']
+  }
+  /** 设置弹幕状态, 返回实际状态; 不支持目标状态时不进行切换. */
+  setDanmakuState(target: PlayerAgentDanmakuSwitchState): PlayerAgentDanmakuSwitchState | null {
+    const supported = this.getSupportedDanmakuStates()
+    let state = this.getDanmakuState()
+    if (!supported.includes(target)) {
+      return state
+    }
+    for (let i = 0; i < supported.length && state !== null && state !== target; i++) {
+      state = this.toggleDanmaku()
+    }
+    return state
   }
   toggleSubtitle(preferredLanguage?: string): PlayerAgentToggleSubtitleResult {
     const closeSwitch = dq('.bpx-player-ctrl-subtitle-close-switch') as HTMLDivElement | null
@@ -184,6 +214,17 @@ export abstract class PlayerAgent
 
   isAutoPlay() {
     return this.getPlayerConfig('video_status.autoplay')
+  }
+
+  isAutoPlayNextVideo(): boolean {
+    return this.nativeApi.getHandoff() !== this.nanoApi.HandoffKind.Abort
+  }
+
+  setAutoPlayNextVideo(enabled: boolean) {
+    const target = enabled ? this.nanoApi.HandoffKind.Auto : this.nanoApi.HandoffKind.Abort
+    if (this.nativeApi.getHandoff() !== target) {
+      this.nativeApi.setHandoff(target)
+    }
   }
 
   // https://github.com/the1812/Bilibili-Evolved/discussions/4341

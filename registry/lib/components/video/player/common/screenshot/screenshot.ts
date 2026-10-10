@@ -1,16 +1,27 @@
 import { playerAgent } from '@/components/video/player-agent'
+import { formatDuration } from '@/core/utils/formatters'
 import { getFriendlyTitle } from '@/core/utils/title'
 
+export const ScreenshotDisabledClass = 'screenshot-disable'
+
 const canvas = document.createElement('canvas')
+
 export class Screenshot {
   readonly mimeType = 'image/png'
   url = ''
   blob: Blob
   timeStamp = new Date().getTime()
+  /**
+   * @param video 截图来源的视频元素
+   * @param videoTime 视频时间点, 仅用于生成截图 ID
+   * @param withDanmaku 是否将弹幕一并截入图片 (仅视频页面支持)
+   * @param time 截图上显示的时间文本, 默认为视频时间点
+   */
   constructor(
     public video: HTMLVideoElement,
     public videoTime: number,
     public withDanmaku = false,
+    public time = formatDuration(videoTime, 2),
   ) {
     this.createUrl()
   }
@@ -70,15 +81,6 @@ export class Screenshot {
   }
   get id() {
     return this.videoTime.toString() + this.timeStamp.toString()
-  }
-  get time() {
-    const hour = Math.trunc(this.videoTime / 3600).toString()
-    const minute = Math.trunc(this.videoTime / 60).toString()
-    const second = (this.videoTime % 60).toFixed(2)
-    if (hour === '0') {
-      return `${minute.padStart(2, '0')}:${second.padStart(5, '0')}`
-    }
-    return `${hour}:${minute.padStart(2, '0')}:${second.padStart(5, '0')}`
   }
   revoke() {
     URL.revokeObjectURL(this.url)
