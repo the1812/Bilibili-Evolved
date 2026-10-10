@@ -78,6 +78,10 @@ export interface RawWatchlaterItem {
   progress: number
   add_at: number
   bvid: string
+  bangumi?: {
+    cover?: string
+    season?: { title?: string }
+  }
 }
 /** 稍后再看列表 */
 export const watchlaterList: number[] = []

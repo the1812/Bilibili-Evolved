@@ -41,7 +41,9 @@
         </a>
         <a class="title" target="_blank" :href="card.href" :title="card.title">{{ card.title }}</a>
         <div class="info-row">
+          <div v-if="card.epTitle" class="description">{{ card.epTitle }}</div>
           <a
+            v-else-if="card.upID"
             class="up"
             target="_blank"
             :href="'https://space.bilibili.com/' + card.upID"
@@ -82,6 +84,7 @@ interface WatchlaterCard {
   currentPage?: number
   totalPages: number
   percent: number
+  epTitle?: string
 }
 export default Vue.extend({
   components: {
@@ -144,15 +147,18 @@ export default Vue.extend({
           return page <= 1 ? getLink(item) : `${getLink(item)}?p=${page}`
         })()
         const percent = Math.round((1000 * item.progress) / duration) / 1000
+        const title = item.bangumi?.season?.title ?? item.title
+        const epTitle = item.title === title ? undefined : item.title.slice(title.length).trim()
 
         return {
           aid: item.aid,
           href,
-          coverUrl: item.pic.replace('http:', 'https:'),
+          coverUrl: (item.bangumi?.cover ?? item.pic).replace('http:', 'https:'),
           durationText: formatDuration(duration),
           duration,
           complete: item.progress < 0 || percent > 0.95, // 进度过95%算看完, -1值表示100%
-          title: item.title,
+          title,
+          epTitle,
           upName: item.owner.name,
           upFaceUrl: item.owner.face.replace('http:', 'https:'),
           upID: item.owner.mid,
@@ -357,16 +363,28 @@ export default Vue.extend({
         justify-content: space-between;
         align-items: flex-end;
         grid-area: info;
-        margin: 6px 8px;
+        margin: 0;
+        min-width: 0;
+        .description {
+          @include single-line();
+          align-self: flex-start;
+          margin: 4px 10px;
+          min-width: 0;
+          padding-right: 2px;
+        }
         .viewed {
           opacity: 0.75;
           font-size: 11px;
-          margin: 2px 0;
+          align-self: center;
+          flex-shrink: 0;
+          margin: 2px 8px 2px 0;
         }
       }
       .up {
         flex: 0 1 auto;
+        min-width: 0;
         padding: 2px 10px 2px 2px;
+        margin: 0 8px 6px;
         justify-self: start;
         align-self: center;
         max-width: calc(100% - 16px);

@@ -1,5 +1,5 @@
 import { createPopper, Instance as Popper } from '@popperjs/core'
-import { VueModule, Executable } from '@/core/common-types'
+import { VueModule, Executable, ExecutableWithParameter } from '@/core/common-types'
 import { getComponentSettings, addComponentListener } from '@/core/settings'
 import type { CustomNavbarOptions } from '.'
 import { getUID } from '@/core/utils'
@@ -27,8 +27,8 @@ export interface CustomNavbarItemInit {
   active?: boolean
   /** `content`指定的内容mount之后要执行的代码 */
   contentMounted?: (item: CustomNavbarItem) => Promise<void> | void
-  /** 点击运行的代码段 */
-  clickAction?: Executable
+  /** 点击运行的代码段, 参数为点击事件 */
+  clickAction?: ExecutableWithParameter<[MouseEvent]>
   /** 获取或设置提示数字, 将显示在顶部 */
   notifyCount?: number
   /** 是否在触屏状态下不响应点击 */
@@ -57,7 +57,7 @@ export class CustomNavbarItem implements Required<CustomNavbarItemInit> {
   disabled = false
   href: string = null
   active = false
-  clickAction: Executable = none
+  clickAction: ExecutableWithParameter<[MouseEvent]> = none
   contentMounted: (item: CustomNavbarItem) => Promise<void> | void = none
   notifyCount = 0
   touch = false
