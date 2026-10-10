@@ -370,6 +370,7 @@ export default Vue.extend({
           align-self: flex-start;
           margin: 4px 10px;
           min-width: 0;
+          padding-right: 2px;
         }
         .viewed {
           opacity: 0.75;
