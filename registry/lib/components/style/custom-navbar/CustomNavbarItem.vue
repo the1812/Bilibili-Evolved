@@ -54,7 +54,7 @@
           ref="popup"
           :container="$refs.popupContainer"
           :item="item"
-          @hook:mounted="popupShown && refreshPopup()"
+          @hook:mounted="popupShown && refreshPopup(true)"
         ></component>
       </div>
     </div>
@@ -137,13 +137,14 @@ export default Vue.extend({
       }
       this.popupShown = shown
     },
-    refreshPopup() {
+    /** `initialPopup` 为首次挂载: 此时内容会自己加载数据, 不刷新 */
+    refreshPopup(initialPopup = false) {
       const { popup } = this.$refs
       if (!popup) {
         return
       }
       const { refreshOnPopup } = CustomNavbarItem.navbarOptions
-      if (refreshOnPopup && typeof popup.popupRefresh === 'function') {
+      if (!initialPopup && refreshOnPopup && typeof popup.popupRefresh === 'function') {
         popup.popupRefresh()
       }
       if (typeof popup.popupShow === 'function') {
