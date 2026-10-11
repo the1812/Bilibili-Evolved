@@ -29,7 +29,7 @@
           <div class="compact-rank-list-card-rank" :class="{ 'top-three': index < 3 }">
             {{ index + 1 }}
           </div>
-          <DpiImage :src="video.coverUrl" :size="{ width: 128, height: 80 }" />
+          <DpiImage placeholder-image :src="video.coverUrl" :size="{ width: 128, height: 80 }" />
         </div>
         <div class="compact-rank-list-card-info">
           <div class="compact-rank-list-card-title" :title="video.title">{{ video.title }}</div>

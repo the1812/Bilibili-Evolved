@@ -23,6 +23,7 @@
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="firstItem.videoHref">
           <DpiImage
+            placeholder-image
             :src="firstItem.coverUrl"
             :size="{ width: ui.firstCoverWidth, height: ui.firstCoverHeight }"
           />
@@ -65,6 +66,7 @@
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="secondItem.videoHref">
           <DpiImage
+            placeholder-image
             :src="secondItem.coverUrl"
             :size="{ width: ui.secondCoverWidth, height: ui.secondCoverHeight }"
           />
@@ -94,6 +96,7 @@
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="thirdItem.videoHref">
           <DpiImage
+            placeholder-image
             :src="thirdItem.coverUrl"
             :size="{ width: ui.thirdCoverWidth, height: ui.thirdCoverHeight }"
           />
