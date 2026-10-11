@@ -78,7 +78,29 @@
         </a>
       </div>
       <div class="fresh-home-video-slides-main-description">
-        <div class="description-text" v-text="currentItem.description"></div>
+        <div class="fresh-home-video-slides-stats">
+          <div v-if="currentItem.playCount" class="stat">
+            <VIcon icon="play" :size="16" />
+            {{ currentItem.playCount | formatCount }}
+          </div>
+          <div v-if="currentItem.danmakuCount" class="stat">
+            <VIcon icon="danmaku" :size="16" />
+            {{ currentItem.danmakuCount | formatCount }}
+          </div>
+          <div v-if="currentItem.like" class="stat">
+            <VIcon icon="like-outline" :size="16" />
+            {{ currentItem.like | formatCount }}
+          </div>
+          <div v-if="currentItem.durationText" class="stat">
+            <VIcon icon="mdi-clock-outline" :size="16" />
+            {{ currentItem.durationText }}
+          </div>
+        </div>
+        <div
+          v-if="currentItem.description"
+          class="description-text"
+          v-text="currentItem.description"
+        ></div>
       </div>
       <div class="fresh-home-video-slides-actions">
         <VButton class="fresh-home-video-slides-refresh-button" title="刷新" icon @click="reload">
@@ -103,6 +125,7 @@
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { bilibiliApi, getJson } from '@/core/ajax'
+import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
 
@@ -114,6 +137,9 @@ export default Vue.extend({
     UpInfo,
     VLoading,
     VEmpty,
+  },
+  filters: {
+    formatCount,
   },
   mixins: [
     requestMixin({
@@ -141,11 +167,13 @@ export default Vue.extend({
       itemLimit: 10,
       // 最近一次滑动方向, 用于回绕封面的瞬移
       coverDirection: 'next' as 'next' | 'prev',
+      // 跳转动画期间锁定信息栏的目标项, 避免跟随中间项连续刷新
+      jumpTarget: null as any,
     }
   },
   computed: {
     currentItem() {
-      return this.items[1]
+      return this.jumpTarget || this.items[1]
     },
     currentUrl() {
       return this.currentItem.videoHref
@@ -172,12 +200,16 @@ export default Vue.extend({
         return
       }
       event.preventDefault()
+      // 信息栏直达目标项, 动画期间不再更新
+      this.jumpTarget = this.items[index]
       // 逐帧连发多格, 由过渡重定向连成一次滑动; 同帧多发会让回绕封面横穿卡片
       let steps = index - 1
       const step = () => {
         this.nextCard()
         if (--steps > 0) {
           requestAnimationFrame(step)
+        } else {
+          this.jumpTarget = null
         }
       }
       step()
@@ -329,6 +361,20 @@ $cover-scale-y: 0.540541;
       height: 0;
       white-space: pre-wrap;
       word-break: break-word;
+    }
+  }
+  & &-stats {
+    // 封面右侧留白处补充视频数据; 有简介时置于简介上方
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 12px;
+    margin-bottom: 6px;
+    opacity: 0.8;
+    .stat {
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
   }
   & &-actions {
