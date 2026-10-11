@@ -36,6 +36,7 @@ export const PGCSeasonTypeMap = {
   documentary: 3,
   guochuang: 4,
   tv: 5,
+  variety: 7,
 }
 export const getDefaultRankListCards = (json: any): RankListCard[] => {
   const items = (lodash.get(json, 'data.list', []) || []) as any[]

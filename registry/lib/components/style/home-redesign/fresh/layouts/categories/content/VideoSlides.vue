@@ -22,7 +22,7 @@
       <div class="empty-indicator">
         <VLoading v-if="loading" />
         <div v-if="error" class="empty-indicator-error">
-          <VEmpty />
+          <VEmpty>{{ error }}</VEmpty>
           <VButton class="fresh-home-video-slides-refresh-button" round @click="reload">
             <VIcon icon="mdi-refresh" />
             刷新
@@ -82,6 +82,10 @@
           <div v-if="currentItem.playCount" class="stat">
             <VIcon icon="play" :size="16" />
             {{ currentItem.playCount | formatCount }}
+          </div>
+          <div v-if="currentItem.rating" class="stat">
+            <VIcon icon="mdi-star-outline" :size="16" />
+            {{ currentItem.rating }}
           </div>
           <div v-if="currentItem.danmakuCount" class="stat">
             <VIcon icon="danmaku" :size="16" />
@@ -143,7 +147,8 @@ export default Vue.extend({
   },
   mixins: [
     requestMixin({
-      requestMethod: url => bilibiliApi(getJson(url), '获取清爽首页分区视频失败'),
+      // log = false: 关闭 Toast, 错误信息改在空态中展示
+      requestMethod: url => bilibiliApi(getJson(url), '获取清爽首页分区视频失败', false),
     }),
     cssVariableMixin({
       mainCoverHeight: 185,
@@ -270,6 +275,10 @@ $cover-scale-y: 0.540541;
       @include absolute-center();
       &-error {
         @include v-center(12px);
+        .be-empty {
+          text-align: center;
+          color: #f44336;
+        }
         .be-button {
           padding-left: 6px;
           .be-icon {

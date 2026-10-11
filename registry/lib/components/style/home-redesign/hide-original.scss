@@ -35,4 +35,8 @@
   .bili-footer {
     @include layout-shift();
   }
+  // 频道栏: B 站靠内联 display: none 隐藏, 刷新后会被脚本清掉, 这里兜底
+  .header-channel {
+    display: none !important;
+  }
 }

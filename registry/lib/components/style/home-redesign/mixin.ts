@@ -22,7 +22,8 @@ export const requestMixin = (
       return {
         items: [] as any[],
         loading: true,
-        error: false,
+        // 请求失败时存放错误信息, 供使用者展示
+        error: null as string | null,
       }
     },
     computed: {
@@ -36,7 +37,7 @@ export const requestMixin = (
     methods: {
       async reload() {
         try {
-          this.error = false
+          this.error = null
           this.loading = true
           this.items = this.parseJson(await requestMethod(this.api)).slice(
             0,
@@ -44,7 +45,7 @@ export const requestMixin = (
           )
         } catch (error) {
           console.error(error)
-          this.error = true
+          this.error = String(error)
         } finally {
           this.loading = false
         }

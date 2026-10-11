@@ -6,7 +6,7 @@
         <VideoSlides :api="activeVideoSource.api" :parse-json="activeVideoSource.parseJson" />
       </div>
       <div class="fresh-home-categories-default-video-column-item">
-        <SubHeader> 最新发布 </SubHeader>
+        <SubHeader> {{ newVideoSource.label }} </SubHeader>
         <VideoSlides :api="newVideoSource.api" :parse-json="newVideoSource.parseJson" />
       </div>
     </div>
@@ -48,28 +48,21 @@ import VideoSlides from './VideoSlides.vue'
 import SubHeader from '../../../SubHeader.vue'
 import { compactRankListMixin } from '../../../../mixin'
 
-// route 对应的 v2 分区 ID, 用于「有新动态」和排行榜
-const regionCodes: Record<string, number> = {
-  cinephile: 1001,
-  ent: 1002,
-  music: 1003,
-  dance: 1004,
-  douga: 1005,
-  kichiku: 1007,
-  game: 1008,
-  knowledge: 1010,
-  tech: 1012,
-  car: 1013,
-  fashion: 1014,
-  sports: 1018,
-  food: 1020,
-  animal: 1024,
-  life: 1029,
-}
-const pgcFeedNames: Record<string, string> = {
-  movie: 'movie',
-  tv: 'tv',
-  documentary: 'documentary',
+const pgcFeedRoutes = ['movie', 'tv', 'documentary', 'variety']
+// 频道对应的旧版分区 tid, 用于「最新发布」
+const newlistTids: Record<string, number> = {
+  cinephile: 181,
+  ent: 5,
+  music: 3,
+  dance: 129,
+  douga: 1,
+  kichiku: 119,
+  game: 4,
+  knowledge: 36,
+  tech: 188,
+  fashion: 155,
+  food: 211,
+  vlog: 160,
 }
 
 const parsePgcVideos = (json: any) => {
@@ -80,10 +73,9 @@ const parsePgcVideos = (json: any) => {
     title: item.title,
     epTitle: item.sub_title,
     description: item.sub_title,
-    duration: item.stat.duration,
-    durationText: formatDuration(item.stat.duration),
+    // PGC 季卡片不提供时长/弹幕/点赞, 只有评分和播放
+    rating: item.rating || undefined,
     playCount: item.stat.view,
-    danmakuCount: item.stat.danmaku,
   }))
   return applyContentFilter(cards)
 }
@@ -133,30 +125,45 @@ const parseDefaultRankings = (json: any) =>
   applyContentFilter(getDefaultRankListCards(json).slice(0, 10))
 const parsePgcRankings = (json: any) =>
   applyContentFilter(getBangumiRankListCards(json).slice(0, 10))
+// 游标过大时综艺列表会枯竭 (实测 220 起不足、230 起全空), 上限收到 200
+const pgcFeedSource = (route: string, label?: string) => ({
+  api: `https://api.bilibili.com/pgc/page/web/feed?name=${route}&coursor=${lodash.random(
+    24,
+    200,
+  )}&new_cursor_status=true`,
+  parseJson: parsePgcVideos,
+  label,
+})
+const newlistSource = (tid: number) => ({
+  api: `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${tid}`,
+  parseJson: parseNewVideos,
+  label: '最新发布',
+})
+const rcmdSource = (regionId: number, displayId: number, label?: string) => ({
+  api: `https://api.bilibili.com/x/web-interface/region/feed/rcmd?display_id=${displayId}&request_cnt=15&from_region=${regionId}`,
+  parseJson: parseRegionVideos,
+  label,
+})
 
-const getActiveVideoSource = (route: string) => {
-  const pgcFeedName = pgcFeedNames[route]
-  if (pgcFeedName) {
-    return {
-      api: `https://api.bilibili.com/pgc/page/web/feed?name=${pgcFeedName}&coursor=${lodash.random(
-        24,
-        300,
-      )}&new_cursor_status=true`,
-      parseJson: parsePgcVideos,
-    }
+const getActiveVideoSource = (route: string, regionId: number) =>
+  pgcFeedRoutes.includes(route) ? pgcFeedSource(route) : rcmdSource(regionId, 1)
+const getNewVideoSource = (route: string, regionId: number) => {
+  const newlistTid = pgcFeedRoutes.includes(route) ? regionId : newlistTids[route]
+  if (newlistTid) {
+    return newlistSource(newlistTid)
   }
-  return {
-    api: `https://api.bilibili.com/x/web-interface/region/feed/rcmd?display_id=1&request_cnt=15&from_region=${regionCodes[route]}`,
-    parseJson: parseRegionVideos,
-  }
+  // 综艺没有 newlist 数据, 换个游标再取一次 pgc feed
+  return pgcFeedRoutes.includes(route)
+    ? pgcFeedSource(route, '更多推荐')
+    : rcmdSource(regionId, 2, '更多推荐')
 }
-const getRankingSource = (route: string) => {
+const getRankingSource = (route: string, regionId: number) => {
   const seasonType = PGCSeasonTypeMap[route]
   const bangumiMode = seasonType !== undefined
   return {
     api: bangumiMode
       ? `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`
-      : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${regionCodes[route]}&type=all`,
+      : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${regionId}&type=all`,
     link: `https://www.bilibili.com/v/popular/rank/${route}`,
     bangumiMode,
     parseJson: bangumiMode ? parsePgcRankings : parseDefaultRankings,
@@ -180,15 +187,12 @@ export default Vue.extend({
     },
   },
   data() {
-    const regionCode = this.region.id
+    const regionId = this.region.id
     const { route } = this.region.category
     return {
-      activeVideoSource: getActiveVideoSource(route),
-      newVideoSource: {
-        api: `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${regionCode}`,
-        parseJson: parseNewVideos,
-      },
-      rankingSource: getRankingSource(route),
+      activeVideoSource: getActiveVideoSource(route, regionId),
+      newVideoSource: getNewVideoSource(route, regionId),
+      rankingSource: getRankingSource(route, regionId),
     }
   },
 })
