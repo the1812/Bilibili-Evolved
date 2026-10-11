@@ -1,6 +1,6 @@
 <template>
   <div class="fresh-home-video-slides">
-    <div v-if="loaded" class="fresh-home-video-slides-covers">
+    <div v-if="loaded" class="fresh-home-video-slides-covers" :class="coverDirection">
       <a
         v-for="(video, index) of items"
         :key="video.id"
@@ -38,7 +38,7 @@
             <a class="fresh-home-video-slides-play-button" :href="currentUrl" target="_blank">
               <VButton type="primary" round>
                 <VIcon icon="mdi-play" />
-                播放
+                <span class="fresh-home-video-slides-play-text">播放</span>
               </VButton>
             </a>
             <VButton
@@ -59,19 +59,13 @@
             >
               <VIcon icon="mdi-clock-outline" :size="20" />
             </VButton>
-            <a
+            <UpInfo
               v-if="currentItem.upID"
               class="fresh-home-video-slides-up-container"
-              :href="`https://space.bilibili.com/${currentItem.upID}`"
-              :title="currentItem.upName"
-              target="_blank"
-            >
-              <DpiImage v-if="currentItem.upFaceUrl" :size="24" :src="currentItem.upFaceUrl" />
-              <VIcon v-else icon="mdi-account-circle" :size="24" />
-              <div class="fresh-home-video-slides-up-name">
-                {{ currentItem.upName }}
-              </div>
-            </a>
+              :up-face-url="currentItem.upFaceUrl"
+              :up-id="currentItem.upID"
+              :up-name="currentItem.upName"
+            />
           </div>
         </div>
         <a
@@ -106,6 +100,7 @@
   </div>
 </template>
 <script lang="ts">
+import UpInfo from '@/components/feeds/UpInfo.vue'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { bilibiliApi, getJson } from '@/core/ajax'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
@@ -116,6 +111,7 @@ export default Vue.extend({
     VButton,
     VIcon,
     DpiImage,
+    UpInfo,
     VLoading,
     VEmpty,
   },
@@ -143,6 +139,8 @@ export default Vue.extend({
     return {
       watchlaterList,
       itemLimit: 10,
+      // 最近一次滑动方向, 用于回绕封面的瞬移
+      coverDirection: 'next' as 'next' | 'prev',
     }
   },
   computed: {
@@ -156,51 +154,33 @@ export default Vue.extend({
       return this.watchlaterList.includes(this.currentItem.aid)
     },
   },
-  watch: {
-    currentItem() {
-      this.loadVideoInfo()
-    },
-  },
   created() {
     getWatchlaterList()
   },
   methods: {
     toggleWatchlater,
-    // rcmd 分区接口不含 UP 头像和视频简介, 用视频详情接口补齐
-    async loadVideoInfo() {
-      const item = this.currentItem
-      if (!item?.bvid || item.upFaceUrl !== undefined) {
-        return
-      }
-      const info = await bilibiliApi(
-        getJson(`https://api.bilibili.com/x/web-interface/view?bvid=${item.bvid}`),
-        '获取清爽首页分区视频信息失败',
-      ).catch(() => null)
-      this.$set(item, 'upFaceUrl', info?.owner?.face ?? '')
-      if (info?.desc) {
-        this.$set(item, 'description', info.desc)
-      }
-    },
     nextCard() {
+      this.coverDirection = 'next'
       this.items.push(this.items.shift())
     },
     previousCard() {
+      this.coverDirection = 'prev'
       this.items.unshift(this.items.pop())
     },
     jumpToCard(event: MouseEvent, index: number) {
       if (index <= 1 || index >= this.items.length) {
         return
       }
+      event.preventDefault()
+      // 逐帧连发多格, 由过渡重定向连成一次滑动; 同帧多发会让回绕封面横穿卡片
       let steps = index - 1
-      const jump = () => {
+      const step = () => {
         this.nextCard()
-        steps--
-        if (steps > 0) {
-          setTimeout(jump)
+        if (--steps > 0) {
+          requestAnimationFrame(step)
         }
       }
-      jump()
-      event.preventDefault()
+      step()
     },
   },
 })
@@ -208,6 +188,10 @@ export default Vue.extend({
 <style lang="scss">
 @import 'common';
 @import 'effects';
+
+// 小封面相对主封面的缩放 (154/287, 100/185), 与 cssVariableMixin 尺寸配套
+$cover-scale-x: 0.536585;
+$cover-scale-y: 0.540541;
 
 .fresh-home-video-slides {
   @include card(12px);
@@ -224,6 +208,8 @@ export default Vue.extend({
   .cover-placeholder-vertical {
     height: var(--other-cover-height);
     width: 0;
+    // 不参与压缩, 信息行起点不随内容高度变化
+    flex-shrink: 0;
   }
   .cover-placeholder-horizontal {
     width: var(--main-cover-width);
@@ -253,7 +239,7 @@ export default Vue.extend({
       &-error {
         @include v-center(12px);
         .be-button {
-          padding: 4px 10px 4px 6px !important;
+          padding-left: 6px;
           .be-icon {
             margin-right: 6px;
           }
@@ -264,10 +250,20 @@ export default Vue.extend({
   & &-row {
     @include h-stretch(var(--cover-padding));
   }
+  & &-play-text {
+    // 字形墨迹在行盒中偏下, 上移补偿与图标视觉居中
+    transform: translateY(-0.75px);
+  }
   & &-play-button {
-    flex: 1;
+    // 宽度参与换行计算, 否则短昵称时播放按钮会和 UP 信息挤同一行
+    flex: 1 1 auto;
     font-size: 16px;
     filter: drop-shadow(0 4px 12px var(--theme-color-10));
+    .be-button {
+      // 描边垫在半透明填充下会在圆角处露出脏缝; 三角墨迹偏右, 左侧内边距收小
+      box-shadow: none;
+      padding-left: 4px;
+    }
     .be-icon {
       margin-right: 6px;
     }
@@ -280,41 +276,24 @@ export default Vue.extend({
       transform: rotate(1turn);
     }
   }
-  & &-previous-button {
-    &:hover .be-icon {
-      @include bounce-x(-2);
-    }
-    &:active .be-icon {
-      transform: scale(0.9);
-    }
+  & &-previous-button:active .be-icon,
+  & &-next-button:active .be-icon {
+    transform: scale(0.9);
   }
-  & &-next-button {
-    padding: 6px !important;
-    &:hover .be-icon {
-      @include bounce-x(2);
-    }
-    &:active .be-icon {
-      transform: scale(0.9);
-    }
+  & &-previous-button:hover .be-icon {
+    @include bounce-x(-2);
   }
+  & &-next-button:hover .be-icon {
+    @include bounce-x(2);
+  }
+  & &-next-button,
   & &-watchlater-button {
     padding: 6px !important;
   }
   & &-up-container {
-    @include h-center(8px);
-    @include card(14px);
-    @include round-bar(28);
+    // UpInfo 内部是 flex 布局, 需覆盖上方 a { display: block }
+    display: flex;
     max-width: var(--other-cover-width);
-    box-shadow: none;
-    padding: 2px;
-    padding-right: 8px;
-    img {
-      border-radius: 50%;
-    }
-  }
-  & &-up-name {
-    @include single-line();
-    font-size: 12px;
   }
   & &-main-info {
     @include v-stretch();
@@ -325,6 +304,8 @@ export default Vue.extend({
   }
   & &-main-title {
     font-size: 16px;
+    // 固定行高, 否则行盒高度随字体浮动, --main-info-padding 的布局失效
+    line-height: 19px;
     @include single-line();
     @include semi-bold();
   }
@@ -362,6 +343,14 @@ export default Vue.extend({
     top: 0;
     left: 0;
     z-index: 1;
+    // 首个小封面槽位的偏移与槽位间距 (封面宽 + 间距)
+    --slot-offset: calc(var(--main-cover-width) + var(--cover-padding));
+    --slot-step: calc(var(--other-cover-width) + var(--cover-padding));
+  }
+  // 回绕的封面两端都在卡片外, 直接瞬移, 否则会横穿卡片
+  & &-covers.next &-cover:last-child:nth-child(n + 3),
+  & &-covers.prev &-cover:first-child:nth-last-child(n + 3) {
+    transition: none;
   }
   & &-cover {
     @include card(12px);
@@ -370,9 +359,15 @@ export default Vue.extend({
     overflow: hidden;
     top: var(--main-padding-y);
     left: var(--main-padding-x);
-    width: var(--other-cover-width);
-    height: var(--other-cover-height);
-    transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    width: var(--main-cover-width);
+    height: var(--main-cover-height);
+    transform-origin: top left;
+    // 小封面用缩放实现 (只走合成器), 边框与圆角除以缩放系数抵消
+    &:not(:nth-child(2)) {
+      border-width: calc(1px / #{$cover-scale-x});
+      border-radius: calc(12px / #{$cover-scale-x});
+    }
+    transition: 0.45s cubic-bezier(0.33, 1, 0.68, 1);
     img {
       transition: 0.2s ease-out;
       object-fit: cover;
@@ -384,23 +379,12 @@ export default Vue.extend({
     }
     &:nth-child(1) {
       opacity: 0;
-      transform: translateX(calc(0px - var(--other-cover-width) - var(--cover-padding)));
-    }
-    &:nth-child(2) {
-      width: var(--main-cover-width);
-      height: var(--main-cover-height);
+      transform: translateX(calc(0px - var(--slot-step))) scale($cover-scale-x, $cover-scale-y);
     }
     @for $i from 3 through 10 {
       &:nth-child(#{$i}) {
-        transform: translateX(
-          calc(
-            var(--main-cover-width) +
-              var(--cover-padding) +
-              #{$i -
-              3} *
-              (var(--other-cover-width) + var(--cover-padding))
-          )
-        );
+        transform: translateX(calc(var(--slot-offset) + #{$i - 3} * var(--slot-step)))
+          scale($cover-scale-x, $cover-scale-y);
       }
     }
   }
