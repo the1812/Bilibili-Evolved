@@ -301,9 +301,12 @@ $cover-scale-y: 0.540541;
     font-size: 16px;
     filter: drop-shadow(0 4px 12px var(--theme-color-10));
     .be-button {
-      // 描边垫在半透明填充下会在圆角处露出脏缝; 三角墨迹偏右, 左侧内边距收小
+      // 描边过渡时会露出脏缝 (hover 时基础样式会加回); 三角墨迹偏右, 左侧内边距收小
       box-shadow: none;
       padding-left: 4px;
+      &:hover {
+        box-shadow: none !important;
+      }
     }
     .be-icon {
       margin-right: 6px;
