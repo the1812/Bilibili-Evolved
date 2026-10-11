@@ -255,7 +255,7 @@ by [@TimmyOVO](https://github.com/TimmyOVO)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/home-pause.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/home-pause.js)
 
-by [@YeJay99](https://github.com/YeJay99)
+by [@YiJay99](https://github.com/YiJay99)
 
 暂停直播首页的推荐直播间.
 
@@ -328,7 +328,7 @@ by [@Liki4](https://github.com/Liki4)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/live/side-bar.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/live/side-bar.js)
 
-自动收起直播间右边偏下的侧栏. (上面有个 "关注" 的面板)
+自动收起直播间右边偏下的侧栏 (上面有个 "关注" 的面板) , 并阻止侧栏面板 (如 "主播推荐") 在打开网页时自动弹出.
 
 ### [总是显示视频时长](../../registry/dist/components/style/always-show-duration.js)
 `alwaysShowDuration`
@@ -506,7 +506,7 @@ by [@Tinhone](https://github.com/Tinhone)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/trending-search.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/trending-search.js)
 
-隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 请注意这只是视觉上的隐藏, 如果不输入任何关键词就点 Enter 或搜索按钮, 仍然会跳转至推荐的热搜词.
+隐藏搜索栏和搜索页面中的 `bilibili 热搜`. 不输入任何关键词就按 Enter 或点搜索按钮时, 会打开搜索页.
 
 ### [隐藏用户信息卡片](../../registry/dist/components/style/hide/user-card.js)
 `hideUserCard`
@@ -1767,7 +1767,7 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://g
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/subtitle/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/subtitle/download.js)
 
-启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)
+启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.
 
 ### [视频内显示时间](../../registry/dist/components/video/player/localtime.js)
 `videoCurTime`

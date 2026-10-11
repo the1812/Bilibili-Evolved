@@ -187,6 +187,17 @@ export abstract class PlayerAgent
     return this.getPlayerConfig('video_status.autoplay')
   }
 
+  isAutoPlayNextVideo(): boolean {
+    return this.nativeApi.getHandoff() !== this.nanoApi.HandoffKind.Abort
+  }
+
+  setAutoPlayNextVideo(enabled: boolean) {
+    const target = enabled ? this.nanoApi.HandoffKind.Auto : this.nanoApi.HandoffKind.Abort
+    if (this.nativeApi.getHandoff() !== target) {
+      this.nativeApi.setHandoff(target)
+    }
+  }
+
   // https://github.com/the1812/Bilibili-Evolved/discussions/4341
   get nativeApi() {
     return unsafeWindow.player || unsafeWindow.playerRaw

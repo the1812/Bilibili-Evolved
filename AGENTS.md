@@ -2,6 +2,8 @@
 
 This file gives coding agents repository-specific guidance for working on Bilibili Evolved. Read `CONTRIBUTING.md` first, then use this file as the practical checklist for implementation and verification.
 
+Follow the [feature scope and restrictions](CONTRIBUTING.md#功能范围与限制) in `CONTRIBUTING.md` when proposing, implementing, or reviewing changes, including the prohibition on computing API signatures directly in the project.
+
 ## Project Structure
 
 - `src/` contains the userscript core, built-in components, shared runtime APIs, settings UI, and other code shipped with the main script.

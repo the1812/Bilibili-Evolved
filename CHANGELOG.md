@@ -1,5 +1,57 @@
 <!-- spell-checker: disable -->
 # 更新日志
+## v2.11.4-preview
+`2026-09-26`
+
+> 包含 [v2.11.4](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.11.4) 的所有更新内容.
+
+✨新增
+- 新增组件 `自定义动态页内容宽度`, 自定义动态首页、动态详情、图文动态与专栏的正文宽度. (#5440, PR #5796 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `直播自动网页全屏`, 进入直播间时, 自动将播放器切换至网页全屏模式. (#965, PR #5748 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `启用直播截图`, 在播放器的音量按钮右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (#5788, PR #5790 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `隐藏分区栏`, 隐藏主站首页及支持分区首页中 Banner 下方包含动态、热门、各分区及专栏、直播等入口的导航栏, 可自定义隐藏后保留的垂直间距. (#4075, PR #5783 by [ChiyukiKazama](https://github.com/ChiyukiKazama))
+- 新增组件 `评论区评论排序`, 支持按点赞数、发布时间、用户等级对视频、番剧、动态、专栏等页面已加载的评论进行排序, 也可恢复默认顺序. (#3446, #5052, PR #5723 by [ChairKeter](https://github.com/ChairKeter))
+- 新增组件 `自定义首页换一换数量`, 自定义首页“换一换”按钮每次请求的推荐条目数量, 默认 15 条, 广告等推荐条目也计入数量. (PR #5785 by [ChiyukiKazama](https://github.com/ChiyukiKazama))
+- 新增组件 `新视频永远从头开始`, 点击首页视频卡片时移除 `t` 参数, 使新视频始终从头开始播放, 不受预览时长影响, 不影响已经看过的视频从上次离开位置继续. (#4766, PR #5716 by [Earchaut](https://github.com/Earchaut))
+- 新增组件 `自定义弹幕切换行为`, 自定义使用快捷键或点击播放器弹幕按钮切换弹幕时, 在哪些状态之间循环; `快捷键扩展` 切换弹幕时显示对应状态提示. (#4743, #5777, #5782, PR #5787 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `滚轮调节音量`, 在播放器画面上滚动滚轮调节音量, 并可自定义每一格滚轮改变的音量. (#718, #4283, PR #5797 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `推荐视频打开方式`, 控制视频播放页右侧推荐栏的链接在当前标签页或新标签页打开, 并可显示反向操作图标. (#5036, PR #5738 by [RhoPaper](https://github.com/RhoPaper))
+- `下载视频` 支持在合集输入源中区分多个子合集. (#5227, PR #5781 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 文件名格式新增 `user` 变量, 可使用 UP 主昵称. (#2134, #4658, PR #5771 by [WzLYVg387U](https://github.com/WzLYVg387U))
+- `视频预览放大` 支持搜索页视频卡片. (#5759, PR #5764 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `动态过滤` 的关键词列表支持折叠, 输入框移至列表上方, 新添加的关键词显示在最前面. (#5794, PR #5746 by [Acetab](https://github.com/Acetab))
+
+🐛修复
+- 修复 `视频快照` 图片跨域加载失败时预览不可用且错误提示不明确的问题. (PR #5737 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+## v2.11.4
+`2026-09-26`
+
+✨新增
+- `直播首页暂停` 新增隐藏首页直播板块的选项. (PR #5744 by [YiJay99](https://github.com/YiJay99))
+- `动态过滤` 的板块开关支持键盘操作. (PR #5793 by [grcOvO](https://github.com/koagaroon))
+
+🐛修复
+- 修复 `定制自动连播行为` 在普通分 P 新版界面失效, 以及 `传统连播模式` 在多 P 视频中无法按设置连播的问题. (#5642, PR #5758 by [dot-super](https://github.com/dot-super))
+- 修复 `隐藏顶部横幅` 在新版顶栏出现首页顶部全白及深色模式文字颜色不正确的问题. (#5496, PR #5800 by [T0M](https://github.com/T0MYYY))
+- 修复 `删除广告` 导致首页推荐流空位、新版合集列表底部空白, 以及搜索页广告未隐藏的问题. (#5699, #5756, PR #5753, PR #5803 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `隐藏热搜` 失效, 并在空关键词搜索时打开搜索页. (#5364, PR #5802 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `评论图片导出` 的来源视频或动态 ID 解析和压缩包命名问题. (PR #5801 by [塵埃殘憶](https://github.com/kaixinol))
+- 修复 `深色模式` 在直播中心、漫画、blackboard 等页面的适配问题, 并排除不应运行脚本的页面. (PR #5763, PR #5772 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `播放时自动关灯` 触发页面自动刷新、星光动画不同步, 以及 `播放器位置动作` 导致页面闪烁和评论区跳动的问题. (#5125, #5269, #5463, PR #5757 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `自动收起直播侧栏` 在网页打开时弹出侧栏的问题. (PR #5754 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `直播首页静音` 不适配新版首页布局的问题. (PR #5791 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `下载字幕` 将无字幕分 P 计为成功并生成空条目的问题. (PR #5770 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `一键点亮直播间粉丝勋章` 将点赞发送到佩戴勋章对应直播间的问题, 并支持一键填入当前或佩戴勋章的直播间 ID. (#5761, PR #5762 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `直播弹幕发送栏` 输入中断及输入框自动填充问题. (#5301, #2994, PR #5779 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `动态分组过滤` 的默认分组判断和深色模式样式问题. (#5345, PR #5751 by [Skalo](https://github.com/KingLou4329))
+- 修复 `自定义顶栏` 遇到不可见专栏卡片时报错、导航栏项目出现滚动条, 以及漫画封面使用非 HTTPS 地址的问题. (#5646, #5760, #2888, PR #5767 by [Uchida Kotori](https://github.com/PriceHu), PR #5778 by [司城 ユヅキ](https://github.com/WhiteTeal55), PR #5792 by [grcOvO](https://github.com/koagaroon))
+- 修复官方深色模式下 Toast 卡片关闭按钮与进度环颜色异常, 以及活动直播间覆盖管理面板样式的问题. (PR #5750, PR #5775 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `弹幕转义` 对高级弹幕不生效的问题. (#5745, PR #5749 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复临时加速污染倍速切换记忆的问题. (#5710, PR #5743 by [yousizaitianqiong](https://github.com/yousizaitianqiong))
+- 修复 `播放器控制栏背景色` 在课堂、活动和番剧页面的高度与位置适配问题. (#4260, PR #5774 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `禁止跳转动态详情` 等动态相关功能在个人空间搜索动态页失效的问题. (#4458, PR #5768 by [塵埃殘憶](https://github.com/kaixinol))
+
 ## v2.11.3-preview
 `2026-08-23`
 

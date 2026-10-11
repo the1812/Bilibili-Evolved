@@ -2,7 +2,13 @@ import { watch } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem, CommentAreaV3, commentAreaManager } from '@/components/utils/comment-apis'
 import { ShadowRootEvents } from '@/core/shadow-root'
-import { setCommentImages, addCommentImages, panelVisible, clearCommentImages } from './store'
+import {
+  setCommentImages,
+  addCommentImages,
+  panelVisible,
+  clearCommentImages,
+  setCommentAreaElement,
+} from './store'
 import { downloadSingleComment } from './download'
 import { select } from '@/core/spin-query'
 import { mountVueComponent } from '@/core/utils'
@@ -57,6 +63,7 @@ const showPanel = async (commentAreaElement: HTMLElement) => {
   const images = await collectImagesFromArea(commentAreaElement)
   const imageData = images.map(toImageData)
   setCommentImages(imageData)
+  setCommentAreaElement(commentAreaElement)
   mountPanel()
   await registerNewCommentListener()
   panelVisible.value = true
@@ -156,7 +163,7 @@ const entry = async () => {
           time: comment.time,
           pictures: comment.pictures.map(url => url.replace(/^http:/, 'https:')),
         }
-        downloadSingleComment(data)
+        downloadSingleComment(data, comment.parent.element)
       },
     })
   }

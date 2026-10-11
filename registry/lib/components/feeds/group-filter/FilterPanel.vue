@@ -29,6 +29,8 @@ interface Group {
   id: number
 }
 
+const defaultGroupId = 0
+
 let cardsManager: typeof import('@/components/feeds/api').feedsCardsManager | undefined
 const { options } = getComponentSettings<FeedsGroupFilterOptions>('feedsGroupFilter')
 
@@ -62,6 +64,9 @@ export default Vue.extend({
           group.checked = newChecked
         }
       },
+    },
+    validGroupIds(): Set<number> {
+      return new Set(this.groups.map(group => group.id))
     },
   },
   watch: {
@@ -125,14 +130,14 @@ export default Vue.extend({
       })
     },
     updateCard(card: FeedsCard) {
-      // 从username获得tag
-      let userTagIds: number[] = this.followingMap.get(card.username)
       if (!this.selectedGroupIds) {
         return
       }
-      if (!userTagIds || userTagIds.length === 0) {
-        userTagIds = [0]
-      }
+      // 关注接口中已删除分组的 tag 不会重置, 过滤后全部无效时归入默认分组
+      const validTagIds = (this.followingMap.get(card.username) ?? []).filter(id =>
+        this.validGroupIds.has(id),
+      )
+      const userTagIds = validTagIds.length > 0 ? validTagIds : [defaultGroupId]
       if (!userTagIds.some(item => this.selectedGroupIds.includes(item))) {
         card.element.classList.add('group-filter-hide-feed')
       } else {
@@ -160,7 +165,7 @@ export default Vue.extend({
 
   .group-filter-header {
     cursor: pointer;
-    padding-bottom: 14px;
+    padding-bottom: 8px;
     position: sticky;
     top: 0;
     background-color: inherit;
@@ -196,7 +201,7 @@ export default Vue.extend({
   }
 
   .group-select-all {
-    padding-bottom: 6px;
+    padding: 6px 0;
   }
 
   body.dark & {

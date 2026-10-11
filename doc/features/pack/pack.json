@@ -68,7 +68,7 @@
         "type": "component",
         "name": "collapseLiveSideBar",
         "displayName": "自动收起直播侧栏",
-        "description": "自动收起直播间右边偏下的侧栏. (上面有个 \"关注\" 的面板)",
+        "description": "自动收起直播间右边偏下的侧栏 (上面有个 \"关注\" 的面板) , 并阻止侧栏面板 (如 \"主播推荐\") 在打开网页时自动弹出.",
         "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
         "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
       },
@@ -122,7 +122,7 @@
         "type": "component",
         "name": "downloadSubtitle",
         "displayName": "下载字幕",
-        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕. (AI 生成的不可下载)",
+        "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
         "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
         "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
       },

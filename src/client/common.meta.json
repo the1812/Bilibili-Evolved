@@ -1,5 +1,5 @@
 {
-  "version": "2.11.3",
+  "version": "2.11.4",
   "author": "Grant Howard, Coulomb-G",
   "copyright": "[year], Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)",
   "license": "MIT",
@@ -13,7 +13,15 @@
     "*://bbq.bilibili.com/*",
     "*://message.bilibili.com/pages/nav/header_sync",
     "*://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html",
-    "*://open-live.bilibili.com/*"
+    "*://b.bilibili.com/*",
+    "*://e.bilibili.com/*",
+    "*://ir.bilibili.com/*",
+    "*://jobs.bilibili.com/*",
+    "*://mcn.bilibili.com/*",
+    "*://open.bilibili.com/*",
+    "*://open-live.bilibili.com/*",
+    "*://play-live.bilibili.com/*",
+    "*://security.bilibili.com/*"
   ],
   "run-at": "document-start",
   "grant": [
