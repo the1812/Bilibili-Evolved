@@ -7,7 +7,8 @@ export const thirdPartyComponents: DocSourceItem[] = [
     displayName: '直播弹幕发送检测',
     fullRelativePath: '../../registry/dist/components/live/danmaku-send-status.js',
     fullAbsolutePath: 'registry/dist/components/live/danmaku-send-status.js',
-    description: '检测系统过滤和直播间屏蔽，仅在发送失败时提示原因和弹幕内容，并将屏蔽响应改写为发送失败。',
+    description:
+      '检测系统过滤和直播间屏蔽，仅在发送失败时提示原因和弹幕内容，并将屏蔽响应改写为发送失败。',
     owner: 'mengguojia',
   },
   {
