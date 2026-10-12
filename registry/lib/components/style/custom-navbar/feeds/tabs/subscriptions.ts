@@ -203,8 +203,8 @@ const getSubscriptionUpdate = async (subscription: Subscription) => {
 /** 分批获取各订阅项的更新 */
 const getSubscriptionUpdates = async (subscriptions: Subscription[]) => {
   const updates: SubscriptionUpdate[] = []
-  // 控制并发, 避免订阅很多时一次性发出大量请求
-  for (const chunk of lodash.chunk(subscriptions, 8)) {
+  // 控制并发, 避免订阅很多时一次性发出大量请求(并发 8 实测会触发 412 风控)
+  for (const chunk of lodash.chunk(subscriptions, 4)) {
     updates.push(...lodash.compact(await Promise.all(chunk.map(getSubscriptionUpdate))))
   }
   return updates
