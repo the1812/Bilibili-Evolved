@@ -199,19 +199,31 @@ export default defineComponent({
 .sort-comments-panel {
   position: fixed;
   z-index: 99999;
-  background: rgba(0, 0, 0, 0.75);
+  --panel-btn-bg: rgba(0, 0, 0, 0.06);
+  --panel-btn-bg-hover: rgba(0, 0, 0, 0.12);
+  --panel-resize-color: rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.75);
+  color: #18191c;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(8px);
   border-radius: 12px;
   padding: 8px 10px;
-  color: #fff;
   font-size: 13px;
   display: flex;
   flex-direction: column;
   gap: 6px;
   min-width: 140px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: opacity 0.2s;
   user-select: none;
+
+  body.dark & {
+    --panel-btn-bg: rgba(255, 255, 255, 0.1);
+    --panel-btn-bg-hover: rgba(255, 255, 255, 0.25);
+    --panel-resize-color: rgba(255, 255, 255, 0.3);
+    background: rgba(0, 0, 0, 0.75);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  }
 }
 .sort-comments-panel.dragging {
   transition: none;
@@ -230,10 +242,10 @@ export default defineComponent({
   padding: 2px 0;
 }
 .panel-btn {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--panel-btn-bg);
   border: none;
   border-radius: 6px;
-  color: #fff;
+  color: inherit;
   padding: 6px 8px;
   cursor: pointer;
   font-size: 12px;
@@ -242,7 +254,7 @@ export default defineComponent({
   width: 100%;
 }
 .panel-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
+  background: var(--panel-btn-bg-hover);
 }
 .panel-btn.active {
   background: rgba(0, 161, 214, 0.5);
@@ -277,7 +289,7 @@ export default defineComponent({
   width: 16px;
   height: 16px;
   cursor: nwse-resize;
-  background: linear-gradient(135deg, transparent 50%, rgba(255, 255, 255, 0.3) 50%);
+  background: linear-gradient(135deg, transparent 50%, var(--panel-resize-color) 50%);
   border-radius: 0 0 12px 0;
 }
 </style>
