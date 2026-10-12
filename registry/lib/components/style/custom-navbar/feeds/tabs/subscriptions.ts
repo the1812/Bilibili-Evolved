@@ -37,18 +37,25 @@ export interface SubscriptionUpdate {
   content: SubscriptionContent
 }
 
+/** 一次加载内按 mid 复用的名片请求 */
+let spaceCardRequests = new Map<number, Promise<any>>()
+
 /**
  * 按 mid 取空间名片
  * @remarks
  * 头像从空间名片取; 名称直接订阅列表里的 `upName`
  */
-const getSpaceCard = async (mid: number) => {
-  const data = await bilibiliApi<{ card?: any }>(
-    getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/card?mid=${mid}`),
-    `获取用户 ${mid} 的信息失败`,
-    false,
-  )
-  return data.card
+const getSpaceCard = (mid: number) => {
+  let request = spaceCardRequests.get(mid)
+  if (request === undefined) {
+    request = bilibiliApi<{ card?: any }>(
+      getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/card?mid=${mid}`),
+      `获取用户 ${mid} 的信息失败`,
+      false,
+    ).then(data => data.card)
+    spaceCardRequests.set(mid, request)
+  }
+  return request
 }
 
 /** 获取订阅的合集与收藏夹 */
@@ -117,6 +124,7 @@ const getSeasonArchives = async (
 const getUgcSeasonLatestArchive = async (
   subscription: Subscription,
 ): Promise<SubscriptionContent | null> => {
+  const ownerRequest = getSpaceCard(subscription.mid).catch(() => null)
   const tail = await getSeasonArchives(subscription, {
     pageSize: seasonProbeSize,
     sortReverse: true,
@@ -130,7 +138,7 @@ const getUgcSeasonLatestArchive = async (
     const { archives } = await getSeasonArchives(subscription, { pageNum })
     archive = lodash.maxBy([archive, ...archives], 'pubdate')
   }
-  const owner = await getSpaceCard(subscription.mid).catch(() => null)
+  const owner = await ownerRequest
   return {
     aid: archive.aid,
     bvid: archive.bvid,
@@ -196,7 +204,7 @@ const getSubscriptionUpdate = async (subscription: Subscription) => {
 const getSubscriptionUpdates = async (subscriptions: Subscription[]) => {
   const updates: SubscriptionUpdate[] = []
   // 控制并发, 避免订阅很多时一次性发出大量请求
-  for (const chunk of lodash.chunk(subscriptions, 4)) {
+  for (const chunk of lodash.chunk(subscriptions, 8)) {
     updates.push(...lodash.compact(await Promise.all(chunk.map(getSubscriptionUpdate))))
   }
   return updates
@@ -207,6 +215,7 @@ const getSubscriptionUpdates = async (subscriptions: Subscription[]) => {
  * @remarks 每次调用取订阅列表的下一页, 每个订阅项取最新一条更新, 返回的 `items` 由页签的映射函数转成卡片
  */
 export const createSubscriptionsLoader = async (cursor: any) => {
+  spaceCardRequests = new Map()
   let page = Number(cursor ?? 0)
   let subscriptions: Subscription[]
   let hasMore: boolean
