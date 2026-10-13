@@ -33,7 +33,7 @@
         </div>
         <div class="compact-rank-list-card-info">
           <div class="compact-rank-list-card-title" :title="video.title">{{ video.title }}</div>
-          <UpInfo :up-face-url="video.upFaceUrl" :href="video.upHref" :up-name="video.upName">
+          <UpInfo :href="video.upHref" :up-name="video.upName">
             <template #fallback-icon>
               <VIcon v-bind="upInfoProps" />
             </template>

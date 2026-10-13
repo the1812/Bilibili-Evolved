@@ -27,11 +27,7 @@
             :src="firstItem.coverUrl"
             :size="{ width: ui.firstCoverWidth, height: ui.firstCoverHeight }"
           />
-          <UpInfo
-            :up-face-url="firstItem.upFaceUrl"
-            :href="firstItem.upHref"
-            :up-name="firstItem.upName"
-          >
+          <UpInfo :href="firstItem.upHref" :up-name="firstItem.upName">
             <template #fallback-icon>
               <VIcon v-bind="upInfoProps" />
             </template>
@@ -48,11 +44,7 @@
           <div class="fresh-home-rank-list-rank-item-title" :title="secondItem.title">
             {{ secondItem.title }}
           </div>
-          <UpInfo
-            :up-face-url="secondItem.upFaceUrl"
-            :href="secondItem.upHref"
-            :up-name="secondItem.upName"
-          >
+          <UpInfo :href="secondItem.upHref" :up-name="secondItem.upName">
             <template #fallback-icon>
               <VIcon v-bind="upInfoProps" />
             </template>
@@ -78,11 +70,7 @@
           <div class="fresh-home-rank-list-rank-item-title" :title="thirdItem.title">
             {{ thirdItem.title }}
           </div>
-          <UpInfo
-            :up-face-url="thirdItem.upFaceUrl"
-            :href="thirdItem.upHref"
-            :up-name="thirdItem.upName"
-          >
+          <UpInfo :href="thirdItem.upHref" :up-name="thirdItem.upName">
             <template #fallback-icon>
               <VIcon v-bind="upInfoProps" />
             </template>

@@ -62,7 +62,6 @@
             <UpInfo
               v-if="currentItem.upID"
               class="fresh-home-video-slides-up-container"
-              :up-face-url="currentItem.upFaceUrl"
               :up-id="currentItem.upID"
               :up-name="currentItem.upName"
             />
