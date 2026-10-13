@@ -240,6 +240,11 @@ export default defineComponent({
   cursor: move;
   padding: 2px 0;
 }
+.panel-modes {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
 .panel-btn {
   background: var(--panel-btn-bg);
   border: none;
