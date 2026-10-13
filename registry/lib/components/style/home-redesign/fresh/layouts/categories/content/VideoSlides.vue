@@ -16,9 +16,7 @@
         />
       </a>
     </div>
-    <div class="cover-placeholder-vertical"></div>
     <div v-if="!loaded" class="fresh-home-video-slides-empty">
-      <div class="empty-placeholder fresh-home-video-slides-main-title" v-text="' '"></div>
       <div class="empty-indicator">
         <VLoading v-if="loading" />
         <div v-if="error" class="empty-indicator-error">
@@ -32,52 +30,50 @@
     </div>
     <div v-if="currentItem && loaded" class="fresh-home-video-slides-row">
       <div class="fresh-home-video-slides-main-info">
-        <div class="fresh-home-video-slides-row">
-          <div class="cover-placeholder-horizontal"></div>
-          <div class="fresh-home-video-slides-main-actions">
-            <a class="fresh-home-video-slides-play-button" :href="currentUrl" target="_blank">
-              <VButton type="primary" round>
-                <VIcon icon="mdi-play" />
-                <span class="fresh-home-video-slides-play-text">播放</span>
-              </VButton>
-            </a>
-            <VButton
-              v-if="currentItem.aid && watchlaterAdded"
-              class="fresh-home-video-slides-watchlater-button"
-              icon
-              title="取消稍后再看"
-              @click="toggleWatchlater(currentItem.aid)"
-            >
-              <VIcon icon="mdi-clock-check-outline" :size="20" />
+        <div class="fresh-home-video-slides-main-actions">
+          <a class="fresh-home-video-slides-play-button" :href="currentUrl" target="_blank">
+            <VButton type="primary" round>
+              <VIcon icon="mdi-play" />
+              <span class="fresh-home-video-slides-play-text">播放</span>
             </VButton>
-            <VButton
-              v-else-if="currentItem.aid"
-              class="fresh-home-video-slides-watchlater-button"
-              icon
-              title="稍后再看"
-              @click="toggleWatchlater(currentItem.aid)"
-            >
-              <VIcon icon="mdi-clock-outline" :size="20" />
-            </VButton>
-            <UpInfo
-              v-if="currentItem.upID"
-              class="fresh-home-video-slides-up-container"
-              :up-id="currentItem.upID"
-              :up-name="currentItem.upName"
-            />
-          </div>
+          </a>
+          <VButton
+            v-if="currentItem.aid && watchlaterAdded"
+            class="fresh-home-video-slides-watchlater-button"
+            icon
+            title="取消稍后再看"
+            @click="toggleWatchlater(currentItem.aid)"
+          >
+            <VIcon icon="mdi-clock-check-outline" :size="20" />
+          </VButton>
+          <VButton
+            v-else-if="currentItem.aid"
+            class="fresh-home-video-slides-watchlater-button"
+            icon
+            title="稍后再看"
+            @click="toggleWatchlater(currentItem.aid)"
+          >
+            <VIcon icon="mdi-clock-outline" :size="20" />
+          </VButton>
+          <UpInfo
+            v-if="currentItem.upID"
+            class="fresh-home-video-slides-up-container"
+            :up-id="currentItem.upID"
+            :up-name="currentItem.upName"
+          />
         </div>
-        <a
-          class="fresh-home-video-slides-main-title"
-          :title="currentItem.title"
-          :href="currentUrl"
-          target="_blank"
-        >
-          {{ currentItem.title }}
-        </a>
       </div>
-      <div class="fresh-home-video-slides-main-description">
-        <div class="fresh-home-video-slides-stats">
+      <a
+        class="fresh-home-video-slides-title"
+        :class="{ 'no-description': !currentItem.description }"
+        :title="currentItem.title"
+        :href="currentUrl"
+        target="_blank"
+      >
+        {{ currentItem.title }}
+      </a>
+      <div class="fresh-home-video-slides-description">
+        <div class="fresh-home-video-slides-description-stats">
           <div v-if="currentItem.playCount" class="stat">
             <VIcon icon="play" :size="16" />
             {{ currentItem.playCount | formatCount }}
@@ -146,7 +142,7 @@ export default Vue.extend({
   },
   mixins: [
     requestMixin({
-      // log = false: 关闭 Toast, 错误信息改在空态中展示
+      // log = false: 错误信息改在空态中展示
       requestMethod: url => bilibiliApi(getJson(url), '获取清爽首页分区视频失败', false),
     }),
     cssVariableMixin({
@@ -169,9 +165,9 @@ export default Vue.extend({
     return {
       watchlaterList,
       itemLimit: 10,
-      // 最近一次滑动方向, 用于回绕封面的瞬移
+      // 最近滑动方向, 供回绕封面瞬移
       coverDirection: 'next' as 'next' | 'prev',
-      // 跳转动画期间锁定信息栏的目标项, 避免跟随中间项连续刷新
+      // 跳转期间锁定信息栏目标项, 避免跟随中间项刷新
       jumpTarget: null as any,
     }
   },
@@ -204,9 +200,9 @@ export default Vue.extend({
         return
       }
       event.preventDefault()
-      // 信息栏直达目标项, 动画期间不再更新
+      // 直达目标项, 动画期间不再更新
       this.jumpTarget = this.items[index]
-      // 逐帧连发多格, 由过渡重定向连成一次滑动; 同帧多发会让回绕封面横穿卡片
+      // 逐帧连发多格, 由过渡连成一次滑动; 同帧多发会让回绕封面横穿卡片
       let steps = index - 1
       const step = () => {
         this.nextCard()
@@ -225,32 +221,20 @@ export default Vue.extend({
 @import 'common';
 @import 'effects';
 
-// 小封面相对主封面的缩放 (154/287, 100/185), 与 cssVariableMixin 尺寸配套
+// 小封面相对主封面的缩放 (154/287, 100/185)
 $cover-scale-x: 0.536585;
 $cover-scale-y: 0.540541;
 
 .fresh-home-video-slides {
   @include card(12px);
-  @include v-stretch(var(--cover-padding));
-  --main-info-padding: calc(
-    var(--main-padding-y) + var(--main-cover-height) - var(--other-cover-height) -
-      var(--cover-padding)
-  );
+  @include v-stretch();
   position: relative;
   overflow: hidden;
-  padding: var(--main-padding-y) var(--main-padding-x);
+  // 顶部让出封面区
+  padding: calc(var(--main-padding-y) + var(--other-cover-height) + var(--cover-padding))
+    var(--main-padding-x) var(--main-padding-y);
   height: 266px;
 
-  .cover-placeholder-vertical {
-    height: var(--other-cover-height);
-    width: 0;
-    // 不参与压缩, 信息行起点不随内容高度变化
-    flex-shrink: 0;
-  }
-  .cover-placeholder-horizontal {
-    width: var(--main-cover-width);
-    height: 0;
-  }
   .be-button .be-icon {
     transition: 0.2s ease-out;
   }
@@ -263,13 +247,6 @@ $cover-scale-y: 0.540541;
   }
 
   & &-empty {
-    padding-top: var(--main-info-padding);
-    @include h-center();
-    justify-content: center;
-    .empty-placeholder {
-      visibility: hidden;
-      white-space: pre;
-    }
     .empty-indicator {
       @include absolute-center();
       &-error {
@@ -289,18 +266,20 @@ $cover-scale-y: 0.540541;
   }
   & &-row {
     @include h-stretch(var(--cover-padding));
+    // 占满剩余高度
+    flex: 1;
   }
   & &-play-text {
-    // 字形墨迹在行盒中偏下, 上移补偿与图标视觉居中
+    // 字形墨迹偏下, 上移补偿
     transform: translateY(-0.75px);
   }
   & &-play-button {
-    // 宽度参与换行计算, 否则短昵称时播放按钮会和 UP 信息挤同一行
+    // 宽度参与换行计算, 避免与 UP 信息挤同一行
     flex: 1 1 auto;
     font-size: 16px;
     filter: drop-shadow(0 4px 12px var(--theme-color-10));
     .be-button {
-      // 描边过渡时会露出脏缝 (hover 时基础样式会加回); 三角墨迹偏右, 左侧内边距收小
+      // 描边过渡会露脏缝; 三角墨迹偏右, 左内边距收小
       box-shadow: none;
       padding-left: 4px;
       &:hover {
@@ -334,23 +313,14 @@ $cover-scale-y: 0.540541;
     padding: 6px !important;
   }
   & &-up-container {
-    // UpInfo 内部是 flex 布局, 需覆盖上方 a { display: block }
+    // 覆盖上方 a { display: block }
     display: flex;
     max-width: var(--other-cover-width);
   }
   & &-main-info {
-    @include v-stretch();
-    justify-content: space-between;
+    // 操作区定位锚点
     position: relative;
-    padding-top: var(--main-info-padding);
     width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
-  }
-  & &-main-title {
-    font-size: 16px;
-    // 固定行高, 否则行盒高度随字体浮动, --main-info-padding 的布局失效
-    line-height: 19px;
-    @include single-line();
-    @include semi-bold();
   }
   & &-main-actions {
     @include h-center(8px);
@@ -360,7 +330,26 @@ $cover-scale-y: 0.540541;
     right: 0;
     top: 0;
   }
-  & &-main-description {
+  & &-title {
+    // 锚定卡片左下, 宽度收敛到文字长度
+    position: absolute;
+    left: var(--main-padding-x);
+    bottom: var(--main-padding-y);
+    font-size: 16px;
+    // 固定行高
+    line-height: 19px;
+    @include single-line();
+    @include semi-bold();
+    width: fit-content;
+    max-width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
+    // 无简介时标题延伸至操作按钮前
+    &.no-description {
+      max-width: calc(100% - 128px - 16px - var(--main-padding-x) * 2);
+      // 简介列会盖住溢出区, 抬到上层
+      z-index: 1;
+    }
+  }
+  & &-description {
     @include v-stretch();
     @include no-scrollbar();
     font-size: 13px;
@@ -368,24 +357,24 @@ $cover-scale-y: 0.540541;
     opacity: 0.75;
     flex: 1;
     padding: 2px;
+    // 封面右侧留白处补充视频数据
+    &-stats {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 12px;
+      margin-bottom: 6px;
+      opacity: 0.8;
+      .stat {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
     .description-text {
       height: 0;
       white-space: pre-wrap;
       word-break: break-word;
-    }
-  }
-  & &-stats {
-    // 封面右侧留白处补充视频数据; 有简介时置于简介上方
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 6px 12px;
-    margin-bottom: 6px;
-    opacity: 0.8;
-    .stat {
-      display: flex;
-      align-items: center;
-      gap: 4px;
     }
   }
   & &-actions {
@@ -400,11 +389,11 @@ $cover-scale-y: 0.540541;
     top: 0;
     left: 0;
     z-index: 1;
-    // 首个小封面槽位的偏移与槽位间距 (封面宽 + 间距)
+    // 小封面槽位偏移与间距
     --slot-offset: calc(var(--main-cover-width) + var(--cover-padding));
     --slot-step: calc(var(--other-cover-width) + var(--cover-padding));
   }
-  // 回绕的封面两端都在卡片外, 直接瞬移, 否则会横穿卡片
+  // 回绕封面两端都在卡片外, 直接瞬移
   & &-covers.next &-cover:last-child:nth-child(n + 3),
   & &-covers.prev &-cover:first-child:nth-last-child(n + 3) {
     transition: none;
@@ -419,7 +408,7 @@ $cover-scale-y: 0.540541;
     width: var(--main-cover-width);
     height: var(--main-cover-height);
     transform-origin: top left;
-    // 小封面用缩放实现 (只走合成器), 边框与圆角除以缩放系数抵消
+    // 小封面用缩放实现, 边框与圆角除以缩放系数抵消
     &:not(:nth-child(2)) {
       border-width: calc(1px / #{$cover-scale-x});
       border-radius: calc(12px / #{$cover-scale-x});
