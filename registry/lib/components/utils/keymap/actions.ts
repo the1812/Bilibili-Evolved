@@ -90,6 +90,12 @@ export const builtInActions: Record<string, KeyBindingAction> = {
     displayName: '增加音量',
     ignoreFocus: false,
     run: () => {
+      const speedHint = playerAgent.query.playerArea
+        .sync()
+        ?.querySelector('.bpx-player-three-playrate-hint')
+      if (speedHint?.checkVisibility()) {
+        return null
+      }
       const step = getComponentSettings<Options>('keymap').options.volumeStep
       const volume = playerAgent.changeVolume(step)
       if (lodash.isNil(volume)) {
@@ -103,6 +109,12 @@ export const builtInActions: Record<string, KeyBindingAction> = {
     displayName: '降低音量',
     ignoreFocus: false,
     run: () => {
+      const speedHint = playerAgent.query.playerArea
+        .sync()
+        ?.querySelector('.bpx-player-three-playrate-hint')
+      if (speedHint?.checkVisibility()) {
+        return null
+      }
       const step = getComponentSettings<Options>('keymap').options.volumeStep
       const volume = playerAgent.changeVolume(-step)
       if (lodash.isNil(volume)) {
