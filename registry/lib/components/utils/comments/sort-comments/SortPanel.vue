@@ -202,10 +202,9 @@ export default defineComponent({
   --panel-btn-bg: rgba(0, 0, 0, 0.06);
   --panel-btn-bg-hover: rgba(0, 0, 0, 0.12);
   --panel-resize-color: rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.9);
   color: #18191c;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(8px);
   border-radius: 12px;
   padding: 8px 10px;
   font-size: 13px;
@@ -217,11 +216,11 @@ export default defineComponent({
   user-select: none;
 
   body.dark & {
-    --panel-btn-bg: rgba(255, 255, 255, 0.1);
-    --panel-btn-bg-hover: rgba(255, 255, 255, 0.25);
+    --panel-btn-bg: var(--be-color-button-bg, rgba(255, 255, 255, 0.1));
+    --panel-btn-bg-hover: var(--be-color-button-bg-hover, rgba(255, 255, 255, 0.25));
     --panel-resize-color: rgba(255, 255, 255, 0.3);
-    background: rgba(0, 0, 0, 0.75);
-    color: #fff;
+    background: var(--be-color-popup-bg, rgba(0, 0, 0, 0.9));
+    color: var(--be-color-text-title, #fff);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 }
