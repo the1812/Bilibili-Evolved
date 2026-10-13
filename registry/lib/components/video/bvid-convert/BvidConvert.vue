@@ -94,7 +94,11 @@ export default Vue.extend({
       }
       const link = linkProviders.map(p => p(context)).filter(it => it !== null)[0]
       if (options.copyWithTitle) {
-        await navigator.clipboard.writeText(`${getFriendlyTitle()} ${link}`)
+        if (options.useMarkdownFormat) {
+          await navigator.clipboard.writeText(`[${getFriendlyTitle()}](${link})`)
+        } else {
+          await navigator.clipboard.writeText(`${getFriendlyTitle()} ${link}`)
+        }
       } else {
         await navigator.clipboard.writeText(link)
       }
