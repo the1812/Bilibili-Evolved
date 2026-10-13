@@ -6,7 +6,7 @@
         <VideoSlides :api="activeVideoSource.api" :parse-json="activeVideoSource.parseJson" />
       </div>
       <div class="fresh-home-categories-default-video-column-item">
-        <SubHeader> {{ newVideoSource.label }} </SubHeader>
+        <SubHeader> 更多推荐 </SubHeader>
         <VideoSlides :api="newVideoSource.api" :parse-json="newVideoSource.parseJson" />
       </div>
     </div>
@@ -49,21 +49,6 @@ import SubHeader from '../../../SubHeader.vue'
 import { compactRankListMixin } from '../../../../mixin'
 
 const pgcFeedRoutes = ['movie', 'tv', 'documentary', 'variety']
-// 频道对应的旧版分区 tid, 用于「最新发布」
-const newlistTids: Record<string, number> = {
-  cinephile: 181,
-  ent: 5,
-  music: 3,
-  dance: 129,
-  douga: 1,
-  kichiku: 119,
-  game: 4,
-  knowledge: 36,
-  tech: 188,
-  fashion: 155,
-  food: 211,
-  vlog: 160,
-}
 
 const parsePgcVideos = (json: any) => {
   const cards = json.items.map((item: any) => ({
@@ -98,75 +83,32 @@ const parseRegionVideos = (json: any) => {
   }))
   return applyContentFilter(cards)
 }
-const parseNewVideos = (json: any) => {
-  const cards = json.archives.map((item: any) => ({
-    id: item.aid,
-    aid: item.aid,
-    bvid: item.bvid,
-    videoHref: `https://www.bilibili.com/video/${item.bvid}/`,
-    coverUrl: item.pic,
-    title: item.title,
-    upName: item.owner.name,
-    upFaceUrl: item.owner.face,
-    upID: item.owner.mid,
-    playCount: item.stat.view,
-    danmakuCount: item.stat.danmaku,
-    like: item.stat.like,
-    coins: item.stat.coin,
-    description: item.desc,
-    dynamic: item.dynamic || item.desc,
-    type: item.tname,
-    duration: item.duration,
-    durationText: formatDuration(item.duration),
-  }))
-  return applyContentFilter(cards)
-}
-const parseDefaultRankings = (json: any) =>
-  applyContentFilter(getDefaultRankListCards(json).slice(0, 10))
-const parsePgcRankings = (json: any) =>
-  applyContentFilter(getBangumiRankListCards(json).slice(0, 10))
 // 游标过大时综艺列表会枯竭 (实测 220 起不足、230 起全空), 上限收到 200
-const pgcFeedSource = (route: string, label?: string) => ({
+const pgcFeedSource = (route: string) => ({
   api: `https://api.bilibili.com/pgc/page/web/feed?name=${route}&coursor=${lodash.random(
     24,
     200,
   )}&new_cursor_status=true`,
   parseJson: parsePgcVideos,
-  label,
 })
-const newlistSource = (tid: number) => ({
-  api: `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${tid}`,
-  parseJson: parseNewVideos,
-  label: '最新发布',
-})
-const rcmdSource = (regionId: number, displayId: number, label?: string) => ({
+const rcmdSource = (regionId: number, displayId: number) => ({
   api: `https://api.bilibili.com/x/web-interface/region/feed/rcmd?display_id=${displayId}&request_cnt=15&from_region=${regionId}`,
   parseJson: parseRegionVideos,
-  label,
 })
 
-const getActiveVideoSource = (route: string, regionId: number) =>
-  pgcFeedRoutes.includes(route) ? pgcFeedSource(route) : rcmdSource(regionId, 1)
-const getNewVideoSource = (route: string, regionId: number) => {
-  const newlistTid = pgcFeedRoutes.includes(route) ? regionId : newlistTids[route]
-  if (newlistTid) {
-    return newlistSource(newlistTid)
-  }
-  // 综艺没有 newlist 数据, 换个游标再取一次 pgc feed
-  return pgcFeedRoutes.includes(route)
-    ? pgcFeedSource(route, '更多推荐')
-    : rcmdSource(regionId, 2, '更多推荐')
-}
+const getVideoSource = (route: string, regionId: number, displayId: number) =>
+  pgcFeedRoutes.includes(route) ? pgcFeedSource(route) : rcmdSource(regionId, displayId)
 const getRankingSource = (route: string, regionId: number) => {
   const seasonType = PGCSeasonTypeMap[route]
   const bangumiMode = seasonType !== undefined
+  const getRankListCards = bangumiMode ? getBangumiRankListCards : getDefaultRankListCards
   return {
     api: bangumiMode
       ? `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`
       : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${regionId}&type=all`,
     link: `https://www.bilibili.com/v/popular/rank/${route}`,
     bangumiMode,
-    parseJson: bangumiMode ? parsePgcRankings : parseDefaultRankings,
+    parseJson: (json: any) => applyContentFilter(getRankListCards(json).slice(0, 10)),
   }
 }
 
@@ -190,8 +132,8 @@ export default Vue.extend({
     const regionId = this.region.id
     const { route } = this.region.category
     return {
-      activeVideoSource: getActiveVideoSource(route, regionId),
-      newVideoSource: getNewVideoSource(route, regionId),
+      activeVideoSource: getVideoSource(route, regionId, 1),
+      newVideoSource: getVideoSource(route, regionId, 2),
       rankingSource: getRankingSource(route, regionId),
     }
   },
