@@ -1,154 +1,28 @@
-// 屏蔽右上角「消息」「动态」入口的红点角标 + 「永远 99+」
-// 选择器经实际取证: 官方样式表 (laputa-home) 与头部 bundle 模板一致
-//   .red-num   → 数字角标 (如 "99+")
-//   .red-point → 圆点角标
-// 入口身份: VPopover 包裹层 .message-entry / .dynamic-entry,
-//           后备判据 a[href*="message.bilibili.com"] / a[href*="//t.bilibili.com"]
-// 红点由 Vue 条件渲染 (count > 0), 「永远 99+」的插入逻辑在组件 entry (index.ts) 中.
-// 编写 SCSS 时可用 @import "common" 引入 ui/_common.scss 的公共 Mixin (本组件未用到).
+$prefix: 'be-hide-header-badge';
 
-/* ---------- 屏蔽 ---------- */
+// .red-num: 数字角标, .red-point: 圆点角标
+.#{$prefix} {
+  &--messages {
+    .message-entry,
+    .right-entry__item:has(a[href*='message.bilibili.com']) {
+      .trigger-icon-wrap {
+        .red-num,
+        .red-point {
+          display: none !important;
+        }
+      }
+    }
+  }
 
-.be-hide-header-badge--messages
-  .bili-header
-  .right-entry
-  .message-entry
-  .trigger-icon-wrap
-  .red-num,
-.be-hide-header-badge--messages
-  .bili-header
-  .right-entry
-  .message-entry
-  .trigger-icon-wrap
-  .red-point,
-.be-hide-header-badge--messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(a[href*='message.bilibili.com'])
-  .trigger-icon-wrap
-  .red-num,
-.be-hide-header-badge--messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(a[href*='message.bilibili.com'])
-  .trigger-icon-wrap
-  .red-point {
-  display: none !important;
-}
-
-.be-hide-header-badge--feeds .bili-header .right-entry .dynamic-entry .trigger-icon-wrap .red-num,
-.be-hide-header-badge--feeds .bili-header .right-entry .dynamic-entry .trigger-icon-wrap .red-point,
-.be-hide-header-badge--feeds .bili-header .right-entry .right-entry__item:has(a[href*="//t.bilibili.com"]) .trigger-icon-wrap .red-num,
-.be-hide-header-badge--feeds .bili-header .right-entry .right-entry__item:has(a[href*="//t.bilibili.com"]) .trigger-icon-wrap .red-point
-{
-  display: none !important;
-}
-
-/* ---------- 永远 99+ ---------- */
-// 原文本 font-size:0 隐藏, ::after 强制显示 "99+"; 圆点形态转为数字角标.
-// 显示层完全由 CSS 接管, Vue 更新真实未读数不影响显示.
-
-/* 消息 */
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .message-entry
-  .trigger-icon-wrap
-  .red-num,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(.message-entry)
-  .trigger-icon-wrap
-  .red-num,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  a[href*='message.bilibili.com']
-  .trigger-icon-wrap
-  .red-num,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(a[href*='message.bilibili.com'])
-  .trigger-icon-wrap
-  .red-num {
-  font-size: 0 !important;
-}
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .message-entry
-  .trigger-icon-wrap
-  .red-num::after,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(.message-entry)
-  .trigger-icon-wrap
-  .red-num::after,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  a[href*='message.bilibili.com']
-  .trigger-icon-wrap
-  .red-num::after,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(a[href*='message.bilibili.com'])
-  .trigger-icon-wrap
-  .red-num::after {
-  content: '99+' !important;
-  font-size: 12px !important;
-}
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .message-entry
-  .trigger-icon-wrap
-  .red-point,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(.message-entry)
-  .trigger-icon-wrap
-  .red-point,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  a[href*='message.bilibili.com']
-  .trigger-icon-wrap
-  .red-point,
-.be-hide-header-badge--force99-messages
-  .bili-header
-  .right-entry
-  .right-entry__item:has(a[href*='message.bilibili.com'])
-  .trigger-icon-wrap
-  .red-point {
-  display: none !important;
-}
-
-/* 动态 */
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .dynamic-entry .trigger-icon-wrap .red-num,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .right-entry__item:has(.dynamic-entry) .trigger-icon-wrap .red-num,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry a[href*="//t.bilibili.com"] .trigger-icon-wrap .red-num,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .right-entry__item:has(a[href*="//t.bilibili.com"]) .trigger-icon-wrap .red-num
-{
-  font-size: 0 !important;
-}
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .dynamic-entry .trigger-icon-wrap .red-num::after,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .right-entry__item:has(.dynamic-entry) .trigger-icon-wrap .red-num::after,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry a[href*="//t.bilibili.com"] .trigger-icon-wrap .red-num::after,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .right-entry__item:has(a[href*="//t.bilibili.com"]) .trigger-icon-wrap .red-num::after
-{
-  content: '99+' !important;
-  font-size: 12px !important;
-}
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .dynamic-entry .trigger-icon-wrap .red-point,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .right-entry__item:has(.dynamic-entry) .trigger-icon-wrap .red-point,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry a[href*="//t.bilibili.com"] .trigger-icon-wrap .red-point,
-.be-hide-header-badge--force99-feeds .bili-header .right-entry .right-entry__item:has(a[href*="//t.bilibili.com"]) .trigger-icon-wrap .red-point
-{
-  display: none !important;
+  &--feeds {
+    .dynamic-entry,
+    .right-entry__item:has(a[href*='//t.bilibili.com']) {
+      .trigger-icon-wrap {
+        .red-num,
+        .red-point {
+          display: none !important;
+        }
+      }
+    }
+  }
 }
