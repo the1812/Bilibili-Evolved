@@ -2,26 +2,22 @@ $prefix: 'be-hide-header-badge';
 
 // .red-num: 数字角标, .red-point: 圆点角标
 .#{$prefix} {
-  &--messages {
+  &--messages .bili-header {
     .message-entry,
     .right-entry__item:has(a[href*='message.bilibili.com']) {
-      .trigger-icon-wrap {
-        .red-num,
-        .red-point {
-          display: none !important;
-        }
+      .red-num,
+      .red-point {
+        display: none !important;
       }
     }
   }
 
-  &--feeds {
+  &--feeds .bili-header {
     .dynamic-entry,
     .right-entry__item:has(a[href*='//t.bilibili.com']) {
-      .trigger-icon-wrap {
-        .red-num,
-        .red-point {
-          display: none !important;
-        }
+      .red-num,
+      .red-point {
+        display: none !important;
       }
     }
   }
