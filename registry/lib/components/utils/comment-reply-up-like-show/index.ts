@@ -1,5 +1,21 @@
 import { defineComponentMetadata } from '@/components/define'
 import { CommentItem, CommentReplyItem } from '@/components/utils/comment-apis'
+import { getCookieValue } from '@/core/utils'
+
+const officialDarkModeClass = 'comment-up-like-official-dark'
+
+const updateOfficialDarkMode = () => {
+  document.documentElement.classList.toggle(
+    officialDarkModeClass,
+    getCookieValue('theme_style') === 'dark',
+  )
+}
+
+const cookieChangeHandler = (e: CookieChangedEvent) => {
+  if (e.changed.some(cookie => cookie.name === 'theme_style')) {
+    updateOfficialDarkMode()
+  }
+}
 
 const createUpLiked = (footer: HTMLDivElement) => {
   const tagsContainerElement =
@@ -34,6 +50,8 @@ const processItems = (items: CommentReplyItem[]) => {
 }
 
 const entry = async () => {
+  cookieStore.addEventListener('change', cookieChangeHandler)
+  updateOfficialDarkMode()
   const { forEachCommentItem } = await import('@/components/utils/comment-apis')
   const addUpLikedMark = (comment: CommentItem) => {
     processItems(comment.replies)
@@ -58,4 +76,12 @@ export const component = defineComponentMetadata({
     },
   ],
   entry,
+  reload: () => {
+    cookieStore.addEventListener('change', cookieChangeHandler)
+    updateOfficialDarkMode()
+  },
+  unload: () => {
+    cookieStore.removeEventListener('change', cookieChangeHandler)
+    document.documentElement.classList.remove(officialDarkModeClass)
+  },
 })

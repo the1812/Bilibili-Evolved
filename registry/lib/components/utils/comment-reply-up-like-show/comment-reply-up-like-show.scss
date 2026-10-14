@@ -1,6 +1,9 @@
-:host-context(body.dark) #footer #tags .tag {
-  --bili-comment-tag-color: var(--bili-comment-tag-color-dark);
-  --bili-comment-tag-bg: var(--bili-comment-tag-bg-dark);
+:host-context(html.comment-up-like-official-dark),
+:host-context(body.dark) {
+  #footer #tags .tag {
+    --bili-comment-tag-color: var(--bili-comment-tag-color-dark);
+    --bili-comment-tag-bg: var(--bili-comment-tag-bg-dark);
+  }
 }
 
 #footer #tags {
