@@ -6,6 +6,12 @@ import {
 import { contentLoaded } from './life-cycle'
 import { shadowRootStyles } from './shadow-root'
 
+/** 脚本注入样式的标记属性, 用于在 Next.js 页面上保护样式 (见 `protectStyles`) */
+const injectedStyleAttribute = 'data-be-style'
+const injectedStyleSelector = `style[${injectedStyleAttribute}]`
+const markInjectedStyle = (style: HTMLStyleElement) =>
+  style.setAttribute(injectedStyleAttribute, '')
+
 /** 为`<style>`获取默认的ID (camelCase转为kebab-case) */
 export const getDefaultStyleID = (name: string) =>
   name.replace(/([a-z][A-Z])/g, g => `${g[0]}-${g[1].toLowerCase()}`)
@@ -23,6 +29,7 @@ export const addStyle = (text: string, name?: string, container?: HTMLElement) =
     const style = document.createElement('style')
     style.id = id
     style.textContent = text
+    markInjectedStyle(style)
     ;(container || document.head).insertAdjacentElement('beforeend', style)
     return style
   }
@@ -78,6 +85,7 @@ export const loadInstantStyle = async (
       const style = document.createElement('style')
       style.id = getDefaultStyleID(it.name)
       style.textContent = styleContent
+      markInjectedStyle(style)
       if ((it as DomInstantStyleDefinition).important) {
         fragments.body.appendChild(style)
       } else {
@@ -107,6 +115,31 @@ export const removeInstantStyle = (
     }
   })
 }
+
+/**
+ * 番剧等 Next.js 页面在客户端水合时会删除 `<meta name="next-head-count">` 之前的样式,
+ * 把脚本注入且位于标记之前的样式移到标记之后, 避免它们被删除 (#4250)
+ */
+export const protectStyles = lodash.once(() => {
+  const relocate = () => {
+    const marker = dq('meta[name=next-head-count]')
+    if (!marker) {
+      return
+    }
+    const styles: Element[] = []
+    for (let style = marker.previousElementSibling; style; style = style.previousElementSibling) {
+      if (style.matches(injectedStyleSelector)) {
+        styles.push(style)
+      }
+    }
+    marker.after(...styles.reverse())
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('readystatechange', relocate)
+  } else {
+    relocate()
+  }
+})
 
 /**
  * 注入组件中定义的首屏样式, MDI图标样式, 以及主题颜色样式
@@ -178,6 +211,7 @@ export const preloadStyles = lodash.once(async () => {
         const style = document.createElement('style')
         style.id = getDefaultStyleID(c.name)
         style.textContent = c.style
+        markInjectedStyle(style)
         fragment.appendChild(style)
       })
     document.head.appendChild(fragment)
