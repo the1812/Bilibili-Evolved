@@ -11,6 +11,15 @@ const options = defineOptionsMetadata({
     defaultValue: false,
     displayName: '复制链接时带上标题',
   },
+  copyWithCover: {
+    defaultValue: false,
+    displayName: '复制链接时带上封面',
+  },
+  copyFormat: {
+    defaultValue: 'HTML',
+    displayName: '富文本格式',
+    dropdownEnum: ['HTML', 'Markdown'],
+  },
 })
 export const component = defineComponentMetadata({
   name: 'bvidConvert',

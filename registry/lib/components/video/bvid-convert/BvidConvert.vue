@@ -1,36 +1,23 @@
 <template>
   <div class="bvid-convert">
-    <div v-if="aid" class="bvid-convert-item">
-      {{ aid }}
-      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('aid')">
-        <VIcon :size="16" :icon="aidCopied ? 'mdi-check' : 'mdi-link'" />
-      </div>
-    </div>
-    <div v-if="bvid" class="bvid-convert-item">
-      {{ bvid }}
-      <div class="bvid-convert-item-copy" title="复制链接" @click="copyLink('bvid')">
-        <VIcon :size="16" :icon="bvidCopied ? 'mdi-check' : 'mdi-link'" />
-      </div>
-    </div>
+    <BvidConvertRow v-for="id in ids" :id="id" :key="id" :copy-link="copyLink" />
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+import { VideoInfo } from '@/components/video/video-info'
 import { videoChange } from '@/core/observer'
 import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { matchUrlPattern } from '@/core/utils'
 import { getFriendlyTitle } from '@/core/utils/title'
 import { bangumiUrls } from '@/core/utils/urls'
-import { VIcon } from '@/ui'
 import { BvidConvertOptions } from '.'
+import BvidConvertRow from './BvidConvertRow.vue'
 
 const { options } = getComponentSettings<BvidConvertOptions>('bvidConvert')
-enum CopyIdType {
-  Aid = 'aid',
-  Bvid = 'bvid',
-}
-const copyIds = [CopyIdType.Aid, CopyIdType.Bvid]
+const copyIds = ['aid', 'bvid']
 type LinkProvider = (context: { id: string; query: string }) => string
 const linkProviders: LinkProvider[] = [
   // 参数类页面, 如 festival
@@ -62,51 +49,85 @@ const linkProviders: LinkProvider[] = [
     }`
   },
 ]
-export default Vue.extend({
-  components: { VIcon },
-  data() {
-    return {
-      aid: '',
-      aidCopied: false,
-      bvid: '',
-      bvidCopied: false,
+const aid = ref('')
+const bvid = ref('')
+const ids = computed(() => [aid.value ? `av${aid.value}` : '', bvid.value].filter(Boolean))
+
+onMounted(() => {
+  videoChange(async () => {
+    aid.value = unsafeWindow.aid?.toString() ?? ''
+    bvid.value = unsafeWindow.bvid
+    const link = (await select('.av-link,.bv-link,.bvid-link')) as HTMLElement
+    if (link) {
+      bvid.value = link.innerHTML.trim()
     }
-  },
-  async mounted() {
-    videoChange(async () => {
-      this.aid = `av${unsafeWindow.aid}`
-      this.bvid = unsafeWindow.bvid
-      const link = (await select('.av-link,.bv-link,.bvid-link')) as HTMLElement
-      if (link) {
-        this.bvid = link.innerHTML.trim()
-      }
-    })
-  },
-  methods: {
-    async copyLink(data: CopyIdType) {
-      if (this[`${data}Copied`]) {
-        return
-      }
-      const context = {
-        query: location.search,
-        url: location.origin + location.pathname,
-        id: this[data],
-      }
-      const link = linkProviders.map(p => p(context)).filter(it => it !== null)[0]
-      if (options.copyWithTitle) {
-        await navigator.clipboard.writeText(`${getFriendlyTitle()} ${link}`)
-      } else {
-        await navigator.clipboard.writeText(link)
-      }
-      this[`${data}Copied`] = true
-      setTimeout(() => (this[`${data}Copied`] = false), 1000)
-    },
-  },
+  })
 })
+
+const createMarkdown = (link: string, title: string, coverUrl: string) => {
+  const label = title.replace(/[\\`*_[\]<>!]/g, '\\$&')
+  const markdown = title ? `[${label}](${link})` : link
+  return coverUrl ? `${markdown}\n\n![视频封面](${coverUrl})` : markdown
+}
+
+const getImageDataUrl = async (url: string) => {
+  const response = await fetch(url)
+  if (!response.ok) {
+    throw new Error(`下载视频封面失败: ${response.status}`)
+  }
+  const blob = await response.blob()
+  return new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result as string)
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(blob)
+  })
+}
+
+const createHtml = async (link: string, title: string, coverUrl: string) => {
+  const anchor = document.createElement('a')
+  anchor.href = link
+  anchor.textContent = title || link
+  if (!coverUrl) {
+    return anchor.outerHTML
+  }
+  const image = document.createElement('img')
+  image.src = await getImageDataUrl(coverUrl)
+  image.alt = '视频封面'
+  return `<div><p>${anchor.outerHTML}</p><p>${image.outerHTML}</p></div>`
+}
+
+const createContent = async (link: string, title: string, copyOptions: BvidConvertOptions) => {
+  const { copyWithCover, copyFormat } = copyOptions
+  const coverUrl = copyWithCover ? (await new VideoInfo(aid.value).fetchInfo()).coverUrl : ''
+  return copyFormat === 'Markdown'
+    ? createMarkdown(link, title, coverUrl)
+    : createHtml(link, title, coverUrl)
+}
+
+const copyLink = async (id: string) => {
+  const context = {
+    query: location.search,
+    id,
+  }
+  const link = linkProviders.map(p => p(context)).filter(it => it !== null)[0]
+  const copyOptions = { ...options }
+  const { copyWithTitle, copyFormat } = copyOptions
+  const title = copyWithTitle ? getFriendlyTitle() : ''
+  const text = title ? `${title} ${link}` : link
+  const content = createContent(link, title, copyOptions)
+  const mimeType = copyFormat === 'Markdown' ? 'text/plain' : 'text/html'
+  const clipboardData = {
+    [mimeType]: content.then(value => new Blob([value], { type: mimeType })),
+  }
+  if (copyFormat === 'HTML') {
+    clipboardData['text/plain'] = Promise.resolve(new Blob([text], { type: 'text/plain' }))
+  }
+  await navigator.clipboard.write([new ClipboardItem(clipboardData)])
+}
 </script>
 
 <style lang="scss">
-@import 'common';
 .bvid-convert {
   order: -1;
   flex-direction: column;
@@ -118,17 +139,6 @@ export default Vue.extend({
   background-color: #fff;
   body.dark & {
     background-color: var(--be-color-card-bg, #333);
-  }
-  &-item {
-    font-size: 14px;
-    @include h-center(6px);
-    &-copy {
-      transition: transform 0.3s ease-out;
-      cursor: pointer;
-      &:active {
-        transform: scale(0.9);
-      }
-    }
   }
 }
 </style>
