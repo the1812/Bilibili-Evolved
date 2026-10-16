@@ -35,6 +35,9 @@ export const installStyle = async (input: UserStyle | string) => {
     } else {
       userStyle = input
     }
+    if (typeof userStyle?.style !== 'string') {
+      throw new Error('无效的样式代码')
+    }
     const { name, style, displayName, mode } = userStyle
     const { removeStyle, addImportantStyle, addStyle } = await import('@/core/style')
     const existingStyle = settings.userStyles[name]

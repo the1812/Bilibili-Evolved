@@ -64,6 +64,9 @@ export const installPlugin = async (code: string, parsedPlugin?: PluginMetadata)
     } catch (e) {
       throw new Error('无效的插件代码', e)
     }
+    if (typeof plugin?.setup !== 'function') {
+      throw new Error('无效的插件代码')
+    }
   }
   const { settings } = await import('@/core/settings')
   const existingPlugin = settings.userPlugins[plugin.name]

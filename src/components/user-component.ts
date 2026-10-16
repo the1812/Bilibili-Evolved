@@ -20,6 +20,9 @@ export const installComponent = async (code: string, parsedComponent?: Component
     } catch (e) {
       throw new Error('无效的组件代码', { cause: e })
     }
+    if (typeof component?.entry !== 'function') {
+      throw new Error('无效的组件代码')
+    }
   }
   const { settings } = await import('@/core/settings')
   if (isBuiltInComponent(component.name)) {
