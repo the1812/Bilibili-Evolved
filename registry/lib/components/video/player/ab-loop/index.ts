@@ -11,7 +11,7 @@ import { showPlayerTip } from '../common/player-tip/player-tip'
 import abLoopIcon from './ab-loop.svg'
 
 const name = 'abLoop'
-const displayName = 'A-B 循环播放'
+const displayName = 'AB 区段循环播放'
 /** A / B 点最小间隔 (秒) */
 const minLoopDuration = 0.5
 const progressSelector = '.bpx-player-progress'
