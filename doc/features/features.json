@@ -417,6 +417,14 @@
   },
   {
     "type": "component",
+    "name": "hideHeaderBadge",
+    "displayName": "屏蔽消息/动态红点",
+    "description": "by [@TangKuku9](https://github.com/TangKuku9)\n\n屏蔽顶部导航栏右上角「消息」「动态」入口的红点角标, 数字与圆点两种形态均覆盖, 两个入口可分别控制.",
+    "fullRelativePath": "../../registry/dist/components/style/hide/header-badge.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/header-badge.js"
+  },
+  {
+    "type": "component",
     "name": "hideHomeCarousel",
     "displayName": "隐藏首页轮播图",
     "description": "隐藏首页的轮播图区域\n\n选项说明：\n\n- `完全隐藏`：完全隐藏整个轮播区域\n- `透明化`：完全透明化整个轮播区域，同时禁止点击打开链接\n- `自定义`：\n  - `禁用轮播`：禁用图片轮播，可以手动切换\n  - `图片模糊`：模糊轮播图片，为0时不模糊\n  - `隐藏轮播图片`：隐藏轮播图片，同时禁止点击图片打开链接\n  - `隐藏图片标题`：隐藏图片标题，同时禁止点击标题打开链接",
@@ -857,6 +865,14 @@
   },
   {
     "type": "component",
+    "name": "searchResultFilter",
+    "displayName": "搜索结果过滤",
+    "description": "by [@Zichao-xu (with Claude Code)](https://github.com/Zichao-xu)\n\n隐藏搜索结果中与关键词无关的视频, 并在结果上方显示过滤数量, 点击可临时显示被隐藏的视频.\n\nB 站的搜索结果由两部分混排: 按关键词搜到的视频, 以及不依赖关键词推送进来的视频 (语义相关 / 热门 / 根据账号兴趣的个性化推荐). 后者在登录状态下尤其容易混入与搜索内容无关的视频.\n\n- `过滤模式`\n  - `仅推送`: 只检查非关键词推送的视频, 标题 (或标签) 中不含任何关键词则隐藏. 按关键词搜到的结果不受影响.\n  - `严格`: 检查所有视频, 用空格分隔的每个关键词都要出现在标题或标签中.\n  - `宽松`: 检查所有视频, 至少出现一个关键词即可保留.\n- `同时匹配视频标签`: 关闭后只匹配标题.\n\n不带空格的长关键词会参考 B 站在标题中高亮的分词结果进行匹配. 广告等拿不到数据的卡片不会被处理.",
+    "fullRelativePath": "../../registry/dist/components/utils/search-result-filter.js",
+    "fullAbsolutePath": "registry/dist/components/utils/search-result-filter.js"
+  },
+  {
+    "type": "component",
     "name": "subscribeTimeShow",
     "displayName": "关注时间显示",
     "description": "by [@GH4NG](https://github.com/GH4NG)\n\n在粉丝/关注列表及用户主页显示关注的具体时间。",
@@ -942,6 +958,14 @@
     "description": "在视频 / 番剧 / 空间中, 可以从功能中的按钮点击转到 BiliPlus 上对应的页面.",
     "fullRelativePath": "../../registry/dist/components/video/biliplus-redirect.js",
     "fullAbsolutePath": "registry/dist/components/video/biliplus-redirect.js"
+  },
+  {
+    "type": "component",
+    "name": "blockVideoVisibilityDetection",
+    "displayName": "禁止视频可见性检测",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n视频页面切到后台一段时间后会自动切换到仅音频模式, 切回前台恢复画面时会造成卡顿, 本功能可以阻止视频自动切换到仅音频模式。",
+    "fullRelativePath": "../../registry/dist/components/video/block-video-visibility-detection.js",
+    "fullAbsolutePath": "registry/dist/components/video/block-video-visibility-detection.js"
   },
   {
     "type": "component",
@@ -1289,6 +1313,15 @@
   },
   {
     "type": "component",
+    "name": "liveDanmakuSendStatus",
+    "displayName": "直播弹幕发送检测",
+    "description": "by mengguojia\n\n检测系统过滤和直播间屏蔽，仅在发送失败时提示原因和弹幕内容，并将屏蔽响应改写为发送失败。",
+    "fullRelativePath": "../../registry/dist/components/live/danmaku-send-status.js",
+    "fullAbsolutePath": "registry/dist/components/live/danmaku-send-status.js",
+    "owner": "mengguojia"
+  },
+  {
+    "type": "component",
     "name": "videoCurTime",
     "displayName": "视频内显示时间",
     "description": "by FoundTheWOUT\n\n在视频播放器右上角显示系统时间.",
@@ -1535,5 +1568,14 @@
     "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n为操作视频倍速提供快捷键支持：\n\n- 提高倍速\n- 降低倍速\n- 切换倍速\n\n若添加并启用了记忆倍速组件，则还会增加一个快捷键：\n\n- 清除倍速记忆",
     "fullRelativePath": "../../registry/dist/plugins/video/player/speed.js",
     "fullAbsolutePath": "registry/dist/plugins/video/player/speed.js"
+  },
+  {
+    "type": "plugin",
+    "name": "customNavbar.items.localHistory",
+    "displayName": "自定义顶栏 - 本地历史搜索",
+    "description": "by xinyulan810\n\n把自定义顶栏\"历史\"弹窗的搜索替换为本地历史库检索: 全量抓取观看历史保存到 IndexedDB, 在本地全量数据上按标题/UP 主搜索(支持拼音全拼与首字母), 能搜到早期观看的视频.",
+    "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-local-history.js",
+    "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-local-history.js",
+    "owner": "xinyulan810"
   }
 ]
