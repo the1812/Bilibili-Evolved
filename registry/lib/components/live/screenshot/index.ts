@@ -1,5 +1,9 @@
 import { defineComponentMetadata } from '@/components/define'
-import { waitForControlBar, withControlBar } from '@/components/live/live-control-bar'
+import {
+  addControlBarButton,
+  removeControlBarButton,
+  withControlBar,
+} from '@/components/live/live-control-bar'
 import { mountVueComponent } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
 import { KeyBindingAction } from '../../utils/keymap/bindings'
@@ -8,14 +12,10 @@ import {
   ScreenshotDisabledClass,
 } from '../../video/player/common/screenshot/screenshot'
 import ScreenshotContainer from '../../video/player/common/screenshot/ScreenshotContainer.vue'
-import LiveScreenshotButton from './LiveScreenshotButton.vue'
-
-const buttonClass = 'be-live-screenshot-button'
 
 let screenShotsList: Vue & {
   screenshots: Screenshot[]
 }
-let screenshotButton: Element
 let enabled = false
 
 const exitConfirmHandler = (e: BeforeUnloadEvent) => {
@@ -51,27 +51,17 @@ const takeLiveScreenshot = async () => {
   addScreenshot(video, getLiveDuration())
 }
 
-const insertScreenshotButton = (controlBar: Element | null) => {
-  if (!enabled || !controlBar || dq(controlBar, `.${buttonClass}`)) {
-    return
-  }
-  if (!screenshotButton) {
-    screenshotButton = mountVueComponent(LiveScreenshotButton).$el
-    const button = screenshotButton.querySelector('button') as HTMLButtonElement
-    button.addEventListener('click', takeLiveScreenshot)
-  }
-  const volume = dq(controlBar, '.volume')
-  if (volume) {
-    volume.insertAdjacentElement('afterend', screenshotButton)
-    return
-  }
-  ;(dq(controlBar, '.left-area') ?? controlBar).appendChild(screenshotButton)
-}
-
 const enable = () => {
   enabled = true
   document.body.classList.remove(ScreenshotDisabledClass)
   window.addEventListener('beforeunload', exitConfirmHandler)
+  addControlBarButton({
+    name: 'takeLiveScreenshot',
+    displayName: '截图',
+    icon: 'mdi-camera',
+    order: 0,
+    action: takeLiveScreenshot,
+  })
 }
 
 export const component = defineComponentMetadata({
@@ -83,19 +73,13 @@ export const component = defineComponentMetadata({
   },
   tags: [componentsTags.live],
   urlInclude: liveUrls,
-  entry: () => {
-    enable()
-    waitForControlBar({ callback: insertScreenshotButton })
-  },
-  reload: () => {
-    enable()
-    insertScreenshotButton(dq('.control-area'))
-  },
+  entry: enable,
+  reload: enable,
   unload: () => {
     enabled = false
     document.body.classList.add(ScreenshotDisabledClass)
     window.removeEventListener('beforeunload', exitConfirmHandler)
-    screenshotButton?.remove()
+    return removeControlBarButton('takeLiveScreenshot')
   },
   plugin: {
     displayName: '直播截图 - 快捷键支持',

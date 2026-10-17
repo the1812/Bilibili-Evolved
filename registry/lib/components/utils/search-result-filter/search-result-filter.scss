@@ -1,0 +1,16 @@
+html:not(.be-search-filter-show-all) .be-search-filter-hidden {
+  display: none !important;
+}
+html.be-search-filter-show-all .be-search-filter-hidden {
+  opacity: 0.35;
+}
+.be-search-filter-counter {
+  margin-bottom: 12px;
+  font-size: 13px;
+  color: var(--text3, #9499a0);
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    color: var(--theme-color, #00a1d6);
+  }
+}

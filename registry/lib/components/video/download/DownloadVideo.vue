@@ -45,6 +45,14 @@
           @change="saveSelectedAudioTrack()"
         />
       </div>
+      <div v-if="audioFormats.length > 1" class="download-video-config-item">
+        <div class="download-video-config-title">音频格式:</div>
+        <VDropdown
+          v-model="selectedAudioFormat"
+          :items="audioFormatOptions"
+          @change="updateTestVideoInfo()"
+        />
+      </div>
       <template v-if="!testData.multiple && selectedQuality">
         <div v-if="testData.videoInfo" class="download-video-config-description">
           预计大小: {{ formatFileSize(testData.videoInfo.totalSize) }}
@@ -125,6 +133,7 @@ import {
   DownloadVideoAction,
   DownloadVideoApi,
   DownloadVideoAssets,
+  DownloadVideoAudioFormat,
   DownloadVideoInput,
   DownloadVideoInputItem,
   DownloadVideoOutput,
@@ -165,6 +174,12 @@ const urlTypeOptions: { displayName: string; name: DownloadVideoUrlType }[] = [
   { displayName: 'UPOS', name: DownloadVideoUrlType.UPOS },
   { displayName: 'BCache', name: DownloadVideoUrlType.BCache },
   { displayName: 'MCDN / PCDN', name: DownloadVideoUrlType.MCDN },
+]
+const allAudioFormatOptions: { name: DownloadVideoAudioFormat; displayName: string }[] = [
+  { name: 'auto', displayName: '自动 (最高音质)' },
+  { name: 'stereo', displayName: '普通音频 (AAC 双声道)' },
+  { name: 'dolby', displayName: '杜比音频 (全景声)' },
+  { name: 'flac', displayName: 'FLAC 音频 (无损)' },
 ]
 
 const getFallbackTestVideoInfo = () =>
@@ -211,6 +226,8 @@ export default Vue.extend({
       selectedQuality: undefined,
       audioLanguages: [],
       selectedAudioTrack: undefined,
+      audioFormats: [],
+      selectedAudioFormat: undefined,
       inputs: [],
       selectedInput: undefined,
       apis: [],
@@ -242,12 +259,21 @@ export default Vue.extend({
       }
       return options
     },
+    audioFormatOptions() {
+      const available = this.audioFormats as DownloadVideoAudioFormat[]
+      return allAudioFormatOptions.filter(it => it.name === 'auto' || available.includes(it.name))
+    },
     canStartDownload() {
       if (this.busy || !this.open) {
         return false
       }
       const isAnySelectionEmpty = Object.entries(this)
-        .filter(([key]) => key.startsWith('selected') && key !== 'selectedAudioTrack')
+        .filter(
+          ([key]) =>
+            key.startsWith('selected') &&
+            key !== 'selectedAudioTrack' &&
+            key !== 'selectedAudioFormat',
+        )
         .some(([, value]) => !value)
       if (isAnySelectionEmpty) {
         return false
@@ -333,6 +359,7 @@ export default Vue.extend({
         const videoInfo = await api.downloadVideoInfo(testItem)
         this.qualities = videoInfo.qualities
         this.audioLanguages = videoInfo.audioLanguages || []
+        this.audioFormats = videoInfo.audioFormats || []
 
         const isSelectedQualityOutdated =
           !this.selectedQuality ||
@@ -359,9 +386,18 @@ export default Vue.extend({
             this.selectedAudioTrack = undefined
           }
         }
+
+        const isSelectedAudioFormatOutdated =
+          !this.selectedAudioFormat ||
+          (this.selectedAudioFormat.name !== 'auto' &&
+            !this.audioFormats.includes(this.selectedAudioFormat.name))
+        if (isSelectedAudioFormatOutdated) {
+          this.selectedAudioFormat = allAudioFormatOptions.find(it => it.name === 'auto')
+        }
         // 填充 quality 后要再请求一次得到对应 quality 的统计数据
         testItem.quality = this.selectedQuality
         testItem.audioLanguage = this.selectedAudioTrack?.name
+        testItem.audioFormat = this.selectedAudioFormat?.name
         const qualityVideoInfo = await api.downloadVideoInfo(testItem)
         this.testData.videoInfo = qualityVideoInfo
         console.log('[qualityVideoInfo]', qualityVideoInfo)
@@ -370,7 +406,7 @@ export default Vue.extend({
         this.testData.videoInfo = undefined
       }
     },
-    async startDownload(instance: Vue, output: DownloadVideoOutput) {
+    async startDownload(instance: any, output: DownloadVideoOutput) {
       try {
         this.busy = true
         const input = this.selectedInput as DownloadVideoInput
@@ -383,6 +419,7 @@ export default Vue.extend({
         videoInputs.forEach(item => {
           item.quality = this.selectedQuality
           item.audioLanguage = this.selectedAudioTrack?.name
+          item.audioFormat = this.selectedAudioFormat?.name
         })
         const videoInfos = await Promise.all(videoInputs.map(i => api.downloadVideoInfo(i)))
         if (videoInfos.length === 0 || lodash.sumBy(videoInfos, it => it.fragments.length) === 0) {

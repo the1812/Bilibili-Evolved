@@ -1,0 +1,24 @@
+$prefix: 'be-hide-header-badge';
+
+// .red-num: 数字角标, .red-point: 圆点角标
+.#{$prefix} {
+  &--messages .bili-header {
+    .message-entry,
+    .right-entry__item:has(a[href*='message.bilibili.com']) {
+      .red-num,
+      .red-point {
+        display: none !important;
+      }
+    }
+  }
+
+  &--feeds .bili-header {
+    .dynamic-entry,
+    .right-entry__item:has(a[href*='//t.bilibili.com']) {
+      .red-num,
+      .red-point {
+        display: none !important;
+      }
+    }
+  }
+}

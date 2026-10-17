@@ -42,10 +42,7 @@ const switchDanmakuByCycle = (current: PlayerAgentDanmakuSwitchState | null) => 
   const selected = cycleStatesMap[cycleStates].filter(state => supported.includes(state))
   const cycle = selected.length >= 2 ? selected : supported
   const target = cycle[(cycle.indexOf(current) + 1) % cycle.length]
-  for (let i = 0; i < supported.length && playerAgent.getDanmakuState() !== target; i++) {
-    playerAgent.toggleDanmaku()
-  }
-  return target
+  return playerAgent.setDanmakuState(target)
 }
 
 const runCustomDanmakuSwitch = () => {

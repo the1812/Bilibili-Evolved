@@ -3,9 +3,10 @@
     class="video-card"
     target="_blank"
     :href="
-      epID
+      url ??
+      (epID
         ? `https://www.bilibili.com/bangumi/play/ep${epID}`
-        : `https://www.bilibili.com/video/${bvid}/`
+        : `https://www.bilibili.com/video/${bvid}/`)
     "
     :class="{ vertical: orientation === 'vertical', 'no-stats': !showStats }"
   >
@@ -128,10 +129,19 @@
 import { DpiImage, VIcon } from '@/ui'
 import { getUID } from '@/core/utils'
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import { VideoCard as VideoCardInfo } from '@/components/feeds/video-card'
+
+type VideoCardData = Omit<VideoCardInfo, 'watchlater'> & {
+  watchlaterList: number[]
+  watchlaterInit: any
+  statsIconSize: number
+  pubTime?: number
+  pubTimeText?: string
+}
 
 /*
   ============
-  祖 传 代 码
+   祖 传 代 码
   ============
 */
 export default {
@@ -177,7 +187,7 @@ export default {
       ...lodash.omit(this.data, 'watchlater'),
       watchlaterInit: this.data.watchlater,
       statsIconSize: 14,
-    }
+    } as VideoCardData
   },
   computed: {
     vertical() {
@@ -252,6 +262,7 @@ export default {
     }
     .title {
       display: -webkit-box;
+      line-clamp: 2;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       max-height: 3em;
@@ -329,6 +340,7 @@ export default {
     overflow: hidden;
     .cover {
       transition: 0.1s cubic-bezier(0.39, 0.58, 0.57, 1);
+      transform: rotate(0deg);
       -webkit-transform: rotate(0deg);
       object-fit: cover;
       width: 100%;
@@ -432,6 +444,7 @@ export default {
     line-height: 1.5;
     height: 3em;
     display: -webkit-box;
+    line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     scrollbar-width: none !important;

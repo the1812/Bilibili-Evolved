@@ -1,38 +1,20 @@
-import { waitForControlBar } from '@/components/live/live-control-bar'
 import { defineComponentMetadata } from '@/components/define'
-import { getUID } from '@/core/utils'
+import { getUID, mountVueComponent } from '@/core/utils'
 import { liveUrls } from '@/core/utils/urls'
-import { leftControllerSelector } from './original-elements'
+import DanmakuSendbar from './DanmakuSendbar.vue'
 
-const entry = async () => {
-  if (!getUID()) {
-    return
+const getSendbar = lodash.once(() => mountVueComponent<{ enabled: boolean }>(DanmakuSendbar))
+const setEnabled = (enabled: boolean) => {
+  if (getUID()) {
+    getSendbar().enabled = enabled
   }
-  let danmakuSendBarElement: Element
-  waitForControlBar({
-    callback: async controlBar => {
-      const leftController = dq(controlBar, leftControllerSelector) as HTMLDivElement
-      if (!leftController) {
-        throw new Error('[danmakuSendBar] leftController not found')
-      }
-      if (dq(controlBar, '.danmaku-send-bar')) {
-        return
-      }
-      if (!danmakuSendBarElement) {
-        const { mountVueComponent } = await import('@/core/utils')
-        const DanmakuSendBar = await import('./DanmakuSendbar.vue')
-        danmakuSendBarElement = mountVueComponent(DanmakuSendBar).$el
-      }
-      leftController.insertAdjacentElement('afterend', danmakuSendBarElement)
-    },
-  })
 }
 export const component = defineComponentMetadata({
   name: 'liveDanmakuSendbar',
   displayName: '直播弹幕发送栏',
   tags: [componentsTags.live],
-  entry,
-  reload: () => document.body.classList.remove('danmaku-send-bar-unloaded'),
-  unload: () => document.body.classList.add('danmaku-send-bar-unloaded'),
+  entry: () => setEnabled(true),
+  reload: () => setEnabled(true),
+  unload: () => setEnabled(false),
   urlInclude: liveUrls,
 })

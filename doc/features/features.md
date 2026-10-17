@@ -566,6 +566,17 @@ by [@ChiyukiKazama](https://github.com/ChiyukiKazama)
 
 隐藏主站首页及支持分区首页中 Banner 下方包含动态、热门、各分区及专栏、直播等入口的导航栏。可自定义隐藏后保留的垂直间距，默认为 16px。
 
+### [屏蔽消息/动态红点](../../registry/dist/components/style/hide/header-badge.js)
+`hideHeaderBadge`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/style/hide/header-badge.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/style/hide/header-badge.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/header-badge.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/header-badge.js)
+
+by [@TangKuku9](https://github.com/TangKuku9)
+
+屏蔽顶部导航栏右上角「消息」「动态」入口的红点角标, 数字与圆点两种形态均覆盖, 两个入口可分别控制.
+
 ### [隐藏首页轮播图](../../registry/dist/components/style/hide/home-carousel.js)
 `hideHomeCarousel`
 
@@ -1252,6 +1263,27 @@ by [@Light_Quanta](https://github.com/LightQuanta)
     - `占位文本`: 屏蔽首页推广模块的广告后显示"🚫已屏蔽广告"来替代空白区域.
   - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效
 
+### [搜索结果过滤](../../registry/dist/components/utils/search-result-filter.js)
+`searchResultFilter`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/search-result-filter.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/search-result-filter.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/search-result-filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/search-result-filter.js)
+
+by [@Zichao-xu (with Claude Code)](https://github.com/Zichao-xu)
+
+隐藏搜索结果中与关键词无关的视频, 并在结果上方显示过滤数量, 点击可临时显示被隐藏的视频.
+
+B 站的搜索结果由两部分混排: 按关键词搜到的视频, 以及不依赖关键词推送进来的视频 (语义相关 / 热门 / 根据账号兴趣的个性化推荐). 后者在登录状态下尤其容易混入与搜索内容无关的视频.
+
+- `过滤模式`
+  - `仅推送`: 只检查非关键词推送的视频, 标题 (或标签) 中不含任何关键词则隐藏. 按关键词搜到的结果不受影响.
+  - `严格`: 检查所有视频, 用空格分隔的每个关键词都要出现在标题或标签中.
+  - `宽松`: 检查所有视频, 至少出现一个关键词即可保留.
+- `同时匹配视频标签`: 关闭后只匹配标题.
+
+不带空格的长关键词会参考 B 站在标题中高亮的分词结果进行匹配. 广告等拿不到数据的卡片不会被处理.
+
 ### [关注时间显示](../../registry/dist/components/utils/subscribe-time-show.js)
 `subscribeTimeShow`
 
@@ -1365,6 +1397,17 @@ by [@Earchaut](https://github.com/Earchaut)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/biliplus-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/biliplus-redirect.js)
 
 在视频 / 番剧 / 空间中, 可以从功能中的按钮点击转到 BiliPlus 上对应的页面.
+
+### [禁止视频可见性检测](../../registry/dist/components/video/block-video-visibility-detection.js)
+`blockVideoVisibilityDetection`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/block-video-visibility-detection.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/block-video-visibility-detection.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/block-video-visibility-detection.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/block-video-visibility-detection.js)
+
+by [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+视频页面切到后台一段时间后会自动切换到仅音频模式, 切回前台恢复画面时会造成卡顿, 本功能可以阻止视频自动切换到仅音频模式。
 
 ### [BV 号转换](../../registry/dist/components/video/bvid-convert.js)
 `bvidConvert`
@@ -2037,6 +2080,17 @@ by [@WakelessSloth56](https://github.com/WakelessSloth56), [@LainIO24](https://g
 
 启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.
 
+### [直播弹幕发送检测](../../registry/dist/components/live/danmaku-send-status.js)
+`liveDanmakuSendStatus`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/mengguojia/Bilibili-Evolved@master/registry/dist/components/live/danmaku-send-status.js) / [`Preview`](https://cdn.jsdelivr.net/gh/mengguojia/Bilibili-Evolved@preview/registry/dist/components/live/danmaku-send-status.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/mengguojia/Bilibili-Evolved/master/registry/dist/components/live/danmaku-send-status.js) / [`Preview`](https://raw.githubusercontent.com/mengguojia/Bilibili-Evolved/preview/registry/dist/components/live/danmaku-send-status.js)
+
+by mengguojia
+
+检测系统过滤和直播间屏蔽，仅在发送失败时提示原因和弹幕内容，并将屏蔽响应改写为发送失败。
+
 ### [视频内显示时间](../../registry/dist/components/video/player/localtime.js)
 `videoCurTime`
 
@@ -2340,3 +2394,14 @@ by [@JLoeve](https://github.com/LonelySteve)
 若添加并启用了记忆倍速组件，则还会增加一个快捷键：
 
 - 清除倍速记忆
+
+### [自定义顶栏 - 本地历史搜索](../../registry/dist/plugins/style/custom-navbar-local-history.js)
+`customNavbar.items.localHistory`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/xinyulan810/Bilibili-Evolved@master/registry/dist/plugins/style/custom-navbar-local-history.js) / [`Preview`](https://cdn.jsdelivr.net/gh/xinyulan810/Bilibili-Evolved@preview/registry/dist/plugins/style/custom-navbar-local-history.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/xinyulan810/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-local-history.js) / [`Preview`](https://raw.githubusercontent.com/xinyulan810/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-local-history.js)
+
+by xinyulan810
+
+把自定义顶栏"历史"弹窗的搜索替换为本地历史库检索: 全量抓取观看历史保存到 IndexedDB, 在本地全量数据上按标题/UP 主搜索(支持拼音全拼与首字母), 能搜到早期观看的视频.
