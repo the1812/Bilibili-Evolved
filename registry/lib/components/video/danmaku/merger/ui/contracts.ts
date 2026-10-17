@@ -16,6 +16,9 @@ export interface MergerSourceSummary {
   title: string
   count: number
   pages?: number
+  /** 拉取方式提示，如视频已删走兜底 */
+  fetchNotice?: string
+  fetchMode?: string
 }
 
 /**
@@ -104,6 +107,8 @@ export interface PagePartListRow extends MergerPagePart {
   partDurationText?: string
   danmakuCount?: number
   danmakuError?: boolean
+  /** 该分 P 是否已在当前页合并源中 */
+  merged?: boolean
 }
 
 /** 批量合并单条任务（`MergerModal` emit `batch-merge` 载荷元素） */
@@ -117,6 +122,10 @@ export interface MergerBatchMergeItem {
   offset?: number
   /** 为 true 时表示仅勾选整 BV、需 runtime 拉取 view / pagelist */
   fetchRequired?: boolean
+  /** 源 avid，protobuf 兜底时可选 */
+  aid?: number | string
+  /** 拉取/可用性提示，写入管理面板 */
+  fetchNotice?: string
 }
 
 // ── Vue emit 事件名常量（Wave 2 统一引用，避免字符串漂移）──────
@@ -139,6 +148,8 @@ export const MERGER_MODAL_EVENTS = {
   COLLAPSE_VIDEO: 'collapse-video',
   /** 本地排序切换（默认 / 播放量 / 弹幕量） */
   SORT_CHANGE: 'sort-change',
+  /** 删除已选中的已合并源（按 BV） */
+  DELETE_MERGED: 'delete-merged',
 } as const
 
 /** `ManagerModal.vue`（已合并源管理） */
@@ -200,10 +211,15 @@ export interface MergerModalEventPayloads {
   [MERGER_MODAL_EVENTS.LOAD_MORE]: { keyword: string; page: number }
   [MERGER_MODAL_EVENTS.BATCH_MERGE]: { items: MergerBatchMergeItem[] }
   [MERGER_MODAL_EVENTS.CLOSE]: void
-  [MERGER_MODAL_EVENTS.SELECTION_CHANGE]: { selectedBvids: string[] }
+  [MERGER_MODAL_EVENTS.SELECTION_CHANGE]: {
+    selectedBvids: string[]
+    /** 本次变更涉及的视频摘要，供跨搜索底部已选区缓存 */
+    selectedVideos?: MergerSearchVideo[]
+  }
   [MERGER_MODAL_EVENTS.EXPAND_VIDEO]: { bvid: string }
   [MERGER_MODAL_EVENTS.COLLAPSE_VIDEO]: { bvid: string }
   [MERGER_MODAL_EVENTS.SORT_CHANGE]: { mode: 'default' | 'play' | 'danmaku' }
+  [MERGER_MODAL_EVENTS.DELETE_MERGED]: { bvids: string[] }
 }
 
 export interface ManagerModalEventPayloads {

@@ -95,4 +95,17 @@ export default defineComponent({
   opacity: 1;
   transition: opacity 0.3s 0.3s, box-shadow 0.2s ease-out !important;
 }
+
+// 搜索页视频卡片预览放大按钮
+.bigger-video-preview-button-search {
+  @extend .bigger-video-preview-button;
+  transition: opacity 0.2s linear !important;
+  top: 8px;
+  left: 8px;
+}
+.bili-video-card__image:hover .bigger-video-preview-button-search,
+.bigger-video-preview-button-search.bigger-video-preview-button-show {
+  opacity: 1;
+  transition: opacity 0.2s linear 0.2s, box-shadow 0.2s ease-out !important;
+}
 </style>
