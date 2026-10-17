@@ -1,0 +1,14 @@
+.be-ab-loop-marker {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 10px;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  background-color: #fff;
+}
+
+.be-ab-loop-active .be-icon svg {
+  fill: var(--theme-color) !important;
+}
