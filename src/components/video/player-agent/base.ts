@@ -9,6 +9,7 @@ import {
   CustomQueryProvider,
   PlayerAgentEventTypes,
   PlayerAgentToggleSubtitleResult,
+  PlayerAgentDanmakuSwitchState,
 } from './types'
 
 export const elementQuery = (selector: string): ElementQuery => {
@@ -72,16 +73,33 @@ export abstract class PlayerAgent
   toggleMute() {
     return click(this.query.control.buttons.volume)
   }
-  toggleDanmaku() {
+  getDanmakuState(): PlayerAgentDanmakuSwitchState | null {
+    const checkbox = this.query.danmakuSwitch.sync() as HTMLInputElement
+    if (!checkbox) {
+      return null
+    }
+    if (checkbox.indeterminate) {
+      return 'concise'
+    }
+    return checkbox.checked ? 'on' : 'off'
+  }
+  toggleDanmaku(): PlayerAgentDanmakuSwitchState | null {
     const checkbox = this.query.danmakuSwitch.sync() as HTMLInputElement
     if (!checkbox) {
       return null
     }
     checkbox.checked = !checkbox.checked
     raiseEvent(checkbox, 'change')
-    return checkbox.checked
+    return this.getDanmakuState()
   }
-  toggleSubtitle(): PlayerAgentToggleSubtitleResult {
+  getSupportedDanmakuStates(): PlayerAgentDanmakuSwitchState[] {
+    const isThreeState = this.query.danmakuSwitch
+      .sync()
+      ?.closest('.bpx-player-dm-switch')
+      ?.classList.contains('bui-danmaku-switch-new')
+    return isThreeState ? ['on', 'concise', 'off'] : ['on', 'off']
+  }
+  toggleSubtitle(preferredLanguage?: string): PlayerAgentToggleSubtitleResult {
     const closeSwitch = dq('.bpx-player-ctrl-subtitle-close-switch') as HTMLDivElement | null
 
     const isNoSubtitleConfigured = !closeSwitch
@@ -111,10 +129,11 @@ export abstract class PlayerAgent
       }
     }
 
-    const preferredSubtitleLanguage =
+    const storedSubtitleLanguage =
       this.getPlayerConfig<null, string>('subtitle.preferred_language', null) ??
       this.getPlayerConfig<null, string>('subtitle.lan', null)
-    if (preferredSubtitleLanguage === null) {
+    const subtitleLanguage = preferredLanguage?.trim() || storedSubtitleLanguage
+    if (subtitleLanguage === null) {
       const firstOption = subtitleOptions.at(0)
       firstOption?.click()
       return {
@@ -123,12 +142,10 @@ export abstract class PlayerAgent
       }
     }
 
-    const subtitleLanguage = preferredSubtitleLanguage.replace(/^ai-/, '')
-    const baseLanguage = subtitleLanguage.split('-')[0]
-
-    // 优先选择同语言的人工字幕，再考虑 AI 生成字幕，都不满足则尝试选择可选项第一个
+    const normalizedLanguage = subtitleLanguage.replace(/^ai-/, '')
+    const baseLanguage = normalizedLanguage.split('-')[0]
     const matchers = [
-      () => subtitleOptions.find(it => it.dataset.lan === subtitleLanguage),
+      () => subtitleOptions.find(it => it.dataset.lan === normalizedLanguage),
       () =>
         subtitleOptions.find(
           it => !it.dataset.lan?.startsWith('ai-') && it.dataset.lan?.includes(baseLanguage),
@@ -310,5 +327,19 @@ export abstract class PlayerAgent
     }
     this.nativeApi.seek(video.currentTime + change, video.paused)
     return this.nativeApi.getCurrentTime()
+  }
+  /** 切换到上一分 P */
+  previousPart() {
+    if (!this.nativeApi?.getManifest?.().hasPrev) {
+      return null
+    }
+    return this.nativeApi.prev()
+  }
+  /** 切换到下一分 P */
+  nextPart() {
+    if (!this.nativeApi?.getManifest?.().hasNext) {
+      return null
+    }
+    return this.nativeApi.next()
   }
 }

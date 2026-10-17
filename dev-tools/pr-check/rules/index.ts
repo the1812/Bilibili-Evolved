@@ -5,6 +5,7 @@ import { descMarkdownRule } from './desc-md'
 import { featureMetadataRule } from './feature-metadata'
 import { generatedDocsRule } from './generated-docs'
 import { thirdPartyMixedSourceRule } from './third-party-mixed-source'
+import { vueScriptSetupRule } from './vue-script-setup'
 
 export const rules: CheckRule[] = [
   baseBranchRule,
@@ -13,4 +14,5 @@ export const rules: CheckRule[] = [
   thirdPartyMixedSourceRule,
   descMarkdownRule,
   featureMetadataRule,
+  vueScriptSetupRule,
 ]

@@ -27,6 +27,18 @@ import { nextTick } from 'vue'
 import VIcon from './icon/VIcon.vue'
 import VLoading from './VLoading.vue'
 
+const isTaintedCanvas = (canvas: HTMLCanvasElement) => {
+  if (!canvas.width || !canvas.height) {
+    return false
+  }
+  try {
+    canvas.getContext('2d').getImageData(0, 0, 1, 1)
+  } catch {
+    return true
+  }
+  return false
+}
+
 export default Vue.extend({
   name: 'CanvasViewer',
   components: {
@@ -82,6 +94,10 @@ export default Vue.extend({
         })
       })
     },
+    setDownloadError(message: string) {
+      this.blobStatus = 'error'
+      this.downloadMessage = message
+    },
     async setDownloadable(filename: string) {
       if (!this.canvas) {
         throw new Error('[CanvasViewer] Canvas not ready')
@@ -93,12 +109,15 @@ export default Vue.extend({
       this.blobStatus = 'wait'
       this.downloadMessage = '正在创建图片……'
       await nextTick()
+      if (isTaintedCanvas(this.canvas)) {
+        this.setDownloadError('无法下载图片：快照图 CDN 未允许跨域, 画布被污染, 无法导出下载')
+        throw new Error('[CanvasViewer] Failed to create image from tainted canvas')
+      }
       return new Promise<void>((resolve, reject) => {
         requestAnimationFrame(() => {
           this.canvas.toBlob(blob => {
             if (!blob) {
-              this.blobStatus = 'error'
-              this.downloadMessage = `无法下载图片：为Canvas创建图片失败`
+              this.setDownloadError('无法下载图片：为 Canvas 创建图片失败')
               reject(new Error('[CanvasViewer] Failed to create image from canvas'))
             } else {
               this.blobStatus = 'ready'

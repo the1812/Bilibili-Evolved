@@ -1,0 +1,7 @@
+// Native V8 CSS hides overflow recommendations at each viewport breakpoint.
+html.be-custom-home-refresh-count {
+  .recommended-container_floor-aside > .container > .feed-card {
+    // Let removePromotions' more specific rules collapse ad cards.
+    display: block;
+  }
+}

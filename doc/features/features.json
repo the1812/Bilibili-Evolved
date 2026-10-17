@@ -9,6 +9,14 @@
   },
   {
     "type": "component",
+    "name": "customContentWidth",
+    "displayName": "自定义动态页内容宽度",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n自定义动态首页、动态详情、图文动态与专栏的正文宽度.",
+    "fullRelativePath": "../../registry/dist/components/feeds/custom-content-width.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/custom-content-width.js"
+  },
+  {
+    "type": "component",
     "name": "deleteFeeds",
     "displayName": "删除动态",
     "description": "删除动态, 可选转发抽奖(不会删除自己中奖的动态), 和全部删除.",
@@ -105,11 +113,35 @@
   },
   {
     "type": "component",
+    "name": "pgcWatchlater",
+    "displayName": "番剧动态稍后再看按钮",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n为动态页的番剧卡片添加 `稍后再看` 按钮\n\n### 致谢\n\n基于 `[组件-视频快照]` 修改。\n\n原作者\n\n- [WakelessSloth56](https://github.com/WakelessSloth56)\n- [LainIO24](https://github.com/LainIO24)",
+    "fullRelativePath": "../../registry/dist/components/feeds/pgc-watchlater.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/pgc-watchlater.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠",
     "fullRelativePath": "../../registry/dist/components/feeds/unfold.js",
     "fullAbsolutePath": "registry/dist/components/feeds/unfold.js"
+  },
+  {
+    "type": "component",
+    "name": "autoFullWin",
+    "displayName": "直播自动网页全屏",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n进入直播间时, 自动将播放器切换至网页全屏模式.",
+    "fullRelativePath": "../../registry/dist/components/live/auto-full-win.js",
+    "fullAbsolutePath": "registry/dist/components/live/auto-full-win.js"
+  },
+  {
+    "type": "component",
+    "name": "autoHighestQuality",
+    "displayName": "直播自动切换最高画质",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n将直播自动切换至最高画质",
+    "fullRelativePath": "../../registry/dist/components/live/auto-highest-quality.js",
+    "fullAbsolutePath": "registry/dist/components/live/auto-highest-quality.js"
   },
   {
     "type": "component",
@@ -241,6 +273,22 @@
   },
   {
     "type": "component",
+    "name": "liveScreenshot",
+    "displayName": "启用直播截图",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n启用直播快速截图, 将在播放器的音量按钮右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.",
+    "fullRelativePath": "../../registry/dist/components/live/screenshot.js",
+    "fullAbsolutePath": "registry/dist/components/live/screenshot.js"
+  },
+  {
+    "type": "component",
+    "name": "showArea",
+    "displayName": "直播显示分区信息",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n在直播间的播放器标题栏显示当前房间的分区信息",
+    "fullRelativePath": "../../registry/dist/components/live/show-area.js",
+    "fullAbsolutePath": "registry/dist/components/live/show-area.js"
+  },
+  {
+    "type": "component",
     "name": "dpiLiveShowgirl",
     "displayName": "直播看板娘高 DPI 适配",
     "description": "根据屏幕 DPI 缩放直播看板娘的大小, 避免像素锯齿.",
@@ -361,6 +409,14 @@
   },
   {
     "type": "component",
+    "name": "hideCategoryBar",
+    "displayName": "隐藏分区栏",
+    "description": "by [@ChiyukiKazama](https://github.com/ChiyukiKazama)\n\n隐藏主站首页及支持分区首页中 Banner 下方包含动态、热门、各分区及专栏、直播等入口的导航栏。可自定义隐藏后保留的垂直间距，默认为 16px。",
+    "fullRelativePath": "../../registry/dist/components/style/hide/category-bar.js",
+    "fullAbsolutePath": "registry/dist/components/style/hide/category-bar.js"
+  },
+  {
+    "type": "component",
     "name": "hideHomeCarousel",
     "displayName": "隐藏首页轮播图",
     "description": "隐藏首页的轮播图区域\n\n选项说明：\n\n- `完全隐藏`：完全隐藏整个轮播区域\n- `透明化`：完全透明化整个轮播区域，同时禁止点击打开链接\n- `自定义`：\n  - `禁用轮播`：禁用图片轮播，可以手动切换\n  - `图片模糊`：模糊轮播图片，为0时不模糊\n  - `隐藏轮播图片`：隐藏轮播图片，同时禁止点击图片打开链接\n  - `隐藏图片标题`：隐藏图片标题，同时禁止点击标题打开链接",
@@ -454,6 +510,14 @@
     "description": "使用重新设计的极简首页替换原本的首页.\n\n请注意:\n- 此功能与 `清爽首页` 互斥, 请勿同时使用.\n- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.\n\n选项说明:\n- 个性化推荐: 启用时展示推荐视频, 禁用时展示热门视频\n- 自定义列数: 为 `0` 时根据视图宽度推断, 大于 `0` 的值将作为固定的列数",
     "fullRelativePath": "../../registry/dist/components/style/home-redesign/minimal.js",
     "fullAbsolutePath": "registry/dist/components/style/home-redesign/minimal.js"
+  },
+  {
+    "type": "component",
+    "name": "searchHome",
+    "displayName": "仅搜索首页",
+    "description": "by [@mintonight](https://github.com/mintonight)\n\n使用重新设计的「仅搜索首页」替换原本的首页, 仅保留顶栏与页面中央的搜索框, 隐藏推荐流、频道栏和横幅等内容.\n\n请注意:\n\n- 此功能与 `极简首页` / `清爽首页` 互斥, 请勿同时使用.\n- 此功能会禁用首页的[悬浮视频](https://github.com/the1812/Bilibili-Evolved/discussions/4404), 变为直接跳转到视频页面.\n- 中间搜索框使用脚本自带的搜索栏 (LaunchBar), 可与搜索相关插件配合使用; 顶栏中的原版搜索仍会保留.\n- 仅隐藏首页动画横幅层与 Logo 区, 不改动顶栏容器与功能入口 (消息 / 头像等).\n\n选项说明:\n\n- 背景颜色: 页面底色, 默认为纯黑 `#000000`.\n- 背景图片: 默认使用 B 站动态页背景. 可在额外选项中填写图片链接 (失焦生效), 或选择不超过 1024 KiB 的本地图片; 点击「清除」可仅保留背景颜色.",
+    "fullRelativePath": "../../registry/dist/components/style/home-redesign/search.js",
+    "fullAbsolutePath": "registry/dist/components/style/home-redesign/search.js"
   },
   {
     "type": "component",
@@ -641,6 +705,14 @@
   },
   {
     "type": "component",
+    "name": "collectionLinkRedirect",
+    "displayName": "合集链接重定向",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n将合集的跳转链接正确转换为对应的合集页链接",
+    "fullRelativePath": "../../registry/dist/components/utils/collection-link-redirect.js",
+    "fullAbsolutePath": "registry/dist/components/utils/collection-link-redirect.js"
+  },
+  {
+    "type": "component",
     "name": "columnUnlock",
     "displayName": "专栏复制优化",
     "description": "(原名: 专栏文字选择, 现在专栏已经不限制选中文字了)\n\n避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.",
@@ -686,6 +758,22 @@
     "description": "by [@kaixinol](https://github.com/kaixinol)\n\n开启后, 可批量导出评论区中带图片的评论.\n\n在评论区标签栏点击「解析评论区图片」打开下载面板, 或在每条评论的菜单中选择「导出图片」单独下载.",
     "fullRelativePath": "../../registry/dist/components/utils/comments/image-export.js",
     "fullAbsolutePath": "registry/dist/components/utils/comments/image-export.js"
+  },
+  {
+    "type": "component",
+    "name": "sortComments",
+    "displayName": "评论区评论排序",
+    "description": "by [@ChairKeter](https://github.com/ChairKeter)\n\n支持对视频、番剧、动态、专栏、音频、图文等页面的评论区进行多种排序方式：\n注：仅支持已加载的评论\n- **点赞数排序**：按评论点赞数从高到低 / 从低到高排序\n- **发布时间排序**：按评论发布时间从新到旧 / 从旧到新排序\n- **用户等级排序**：按评论用户等级从高到低 / 从低到高排序\n- **默认顺序**：恢复为 Bilibili 默认排序\n\n在设置面板中可以随时切换排序方式，切换后立即生效。右下角悬浮面板支持拖拽移动和缩放，位置和大小自动保存。",
+    "fullRelativePath": "../../registry/dist/components/utils/comments/sort-comments.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/sort-comments.js"
+  },
+  {
+    "type": "component",
+    "name": "customHomeRefreshCount",
+    "displayName": "自定义首页换一换数量",
+    "description": "by [@ChiyukiKazama](https://github.com/ChiyukiKazama)\n\n自定义首页「换一换」按钮每次请求的推荐条目数量，默认 15 条。\n\n- **每批推荐条目数量**：输入正整数，修改后从下一次点击「换一换」开始生效。广告等推荐条目也计入数量，不等于普通视频数；轮播和独立楼层卡片不计入。\n- 请求参数在 B 站原生 WBI 签名前调整，同时解除顶部推荐卡片的响应式隐藏限制。不会补发请求凑数，实际返回数量以接口为准。",
+    "fullRelativePath": "../../registry/dist/components/utils/custom-home-refresh-count.js",
+    "fullAbsolutePath": "registry/dist/components/utils/custom-home-refresh-count.js"
   },
   {
     "type": "component",
@@ -747,7 +835,7 @@
     "type": "component",
     "name": "keymap",
     "displayName": "快捷键扩展",
-    "description": "为脚本的功能和 b 站的功能启用键盘快捷键支持, 快捷键列表可在`快捷键设置`中查看和配置.",
+    "description": "为脚本的功能和 b 站的功能启用快捷键支持，可使用键盘按键、鼠标中键和侧键，快捷键列表可在`快捷键设置`中查看和配置。\n\n`字幕语言偏好`: 可以填写一个标准语言代码 (如 `zh`、`en`、`ja`)，使用快捷键开启字幕时会优先匹配该语言，并优先选择人工字幕；留空则跟随播放器最近使用的语言。如果当前视频没有匹配的语言时会回退到第一个字幕。",
     "fullRelativePath": "../../registry/dist/components/utils/keymap.js",
     "fullAbsolutePath": "registry/dist/components/utils/keymap.js"
   },
@@ -841,6 +929,14 @@
   },
   {
     "type": "component",
+    "name": "cleanStartVideo",
+    "displayName": "新视频永远从头开始",
+    "description": "by [@Earchaut](https://github.com/Earchaut)\n\n点击首页视频卡片时移除 `t` 参数, 使新视频始终从头开始播放, 不受预览时长影响（不影响已经看过的视频从上次离开位置继续）。",
+    "fullRelativePath": "../../registry/dist/components/video/beginning-of-video.js",
+    "fullAbsolutePath": "registry/dist/components/video/beginning-of-video.js"
+  },
+  {
+    "type": "component",
     "name": "biliplusRedirect",
     "displayName": "BiliPlus 跳转支持",
     "description": "在视频 / 番剧 / 空间中, 可以从功能中的按钮点击转到 BiliPlus 上对应的页面.",
@@ -865,6 +961,14 @@
   },
   {
     "type": "component",
+    "name": "customDanmakuSwitch",
+    "displayName": "自定义弹幕切换行为",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n自定义使用快捷键或点击播放器弹幕按钮切换弹幕时, 在哪些状态之间循环.\n\n启用快捷键扩展时, 使用快捷键扩展中「弹幕开关」动作绑定的按键触发循环; 未启用时才接管播放器原生的 `d` 快捷键.",
+    "fullRelativePath": "../../registry/dist/components/video/danmaku/custom-danmaku-switch.js",
+    "fullAbsolutePath": "registry/dist/components/video/danmaku/custom-danmaku-switch.js"
+  },
+  {
+    "type": "component",
     "name": "downloadDanmaku",
     "displayName": "下载弹幕",
     "description": "启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕. 请注意 ASS 弹幕下载不会包含高级弹幕, 字幕弹幕等.",
@@ -883,7 +987,7 @@
     "type": "component",
     "name": "danmakuMerger",
     "displayName": "弹幕合并器",
-    "description": "by [@XianYuDaXian](https://github.com/XianYuDaXian)\n\n将其他 B 站视频的弹幕合并到当前播放页的原生播放器画面与右侧弹幕列表，不自绘弹幕层。\n\n- 支持关键词搜索或 BV 号获取弹幕，按分 P 勾选合并\n- 列表项带 `【BV号】` 前缀，画面层保持原文\n- 分 P 有效顺延：按正片有效时长自动计算多 P 弹幕延迟\n- 注入时保持当前播放进度\n\n使用前请先播放 5～10 秒，确保弹幕引擎就绪后再合并。",
+    "description": "by [@XianYuDaXian](https://github.com/XianYuDaXian)\n\n将其他 B 站视频的弹幕合并到当前播放页的原生播放器画面与右侧弹幕列表，不自绘弹幕层。\n\n- 支持关键词搜索或 BV 号获取弹幕，按分 P 勾选合并\n- 列表项带 `【BV号】` 前缀，画面层保持原文\n- 分 P 有效顺延：按正片有效时长自动计算多 P 弹幕延迟\n- 注入时保持当前播放进度\n- 悬停已合并弹幕可「时停」：同源弹幕定格，拖动进度后点「恢复」完成时间偏移\n\n使用前请先播放 5～10 秒，确保弹幕引擎就绪后再合并。",
     "fullRelativePath": "../../registry/dist/components/video/danmaku/merger.js",
     "fullAbsolutePath": "registry/dist/components/video/danmaku/merger.js"
   },
@@ -907,7 +1011,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在使用视频 (非番剧) 批量下载时, 文件的批量命名格式中可以使用以下额外变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n- 视频发布时间:\n  - `publishYear`\n  - `publishMonth`\n  - `publishDay`\n  - `publishHour`\n  - `publishMinute`\n  - `publishSecond`\n  - `publishMillisecond`",
+    "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n\n批量下载时, 批量命名格式中还额外提供视频发布时间变量:\n- `publishYear`\n- `publishMonth`\n- `publishDay`\n- `publishHour`\n- `publishMinute`\n- `publishSecond`\n- `publishMillisecond`",
     "fullRelativePath": "../../registry/dist/components/video/download.js",
     "fullAbsolutePath": "registry/dist/components/video/download.js"
   },
@@ -1025,6 +1129,14 @@
   },
   {
     "type": "component",
+    "name": "keepControlWrap",
+    "displayName": "强制保留播放器控制栏",
+    "description": "by [@Andy_Allan](https://github.com/andya1lan), [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n强制保留鼠标静止不动或移出视频播放器区域时，播放器的控制栏区域，如细进度条等.",
+    "fullRelativePath": "../../registry/dist/components/video/player/keep-control-wrap.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/keep-control-wrap.js"
+  },
+  {
+    "type": "component",
     "name": "legacyAutoPlay",
     "displayName": "传统连播模式",
     "description": "模拟传统的多 P 连播策略: 仅连播视频的分 P, 最后 1P 放完禁止连播其他推荐视频.",
@@ -1059,7 +1171,7 @@
     "type": "component",
     "name": "rememberVideoSpeed",
     "displayName": "记忆倍速",
-    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n#### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n#### 🌈 **温馨提示**\n\n「扩展倍速」和倍速相关的快捷键插件已分离为单独的组件或插件.\n\n请根据自身需要：\n\n- 前往「组件」页面安装[「扩展倍速」](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/extend-speed.js)组件\n- 前往「插件」页面安装[「快捷键扩展 - 视频倍速」](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/video/player/speed.js)插件.\n\n_如果想要清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件._",
+    "description": "by [@JLoeve](https://github.com/LonelySteve)\n\n> 提高视频播放器的倍速记忆体验，可实现跨页共享倍速，也可以按视频分别记忆倍速.\n\n#### 🔧 **选项**\n\n- `全局记忆倍速值`：默认情况下，这是跨页共享的倍速值，如果启用「各视频分别记忆」，则作为从未独立记忆倍速视频的初始倍速值.\n- `固定全局倍速值`：默认情况下，全局倍速值将随着用户改变视频倍速而改变，打开此选项后，全局记忆倍速值不再受倍速调整的影响.\n- `各视频分别记忆`：打开此选项后，将按不同视频分别记忆倍速，对于从未被记忆过倍速的视频，将采用全局记忆倍速值，选项「固定全局倍速值」在此情况下强制生效.\n- `交由 RBVP 决定还原策略`：打开此选项后，「记忆倍速」不再自行决定何时还原倍速，而是作为 RBVP 的兼容存储层使用；此时 `固定全局倍速值` 和 `各视频分别记忆` 不再参与自动策略.\n  - 此选项仅在安装并启用 RBVP 组件后可见.\n- `弹出还原倍速提示`：打开此选项后，每次成功还原倍速后都会弹出提示.\n\n#### 🔗 **RBVP 联动**\n\n在 RBVP 规则中可通过命名空间 `rememberVideoSpeed` 调用本组件（别名可在 RBVP 设置 - 命名空间页自定义，写入主规则文本），支持以下动作值：\n\n- 具体倍速数值，如 `1.5`、`2`\n- `MAX`：最高可用倍速\n- `MIN`：最低可用倍速\n- `MEMORY_LOCAL`：当前视频记忆的倍速\n- `MEMORY_GLOBAL`：全局记忆的倍速\n\n使用前需先开启选项「交由 RBVP 决定还原策略」.\n\n#### 🌈 **温馨提示**\n\n「扩展倍速」和「快捷键扩展 - 视频倍速」已分离为独立的组件和插件，可根据需要前往对应页面安装.\n\n「记忆倍速」的记忆数据均存储在本地，不会上传到服务器.\n\n如需清除当前视频的记忆状态，需要安装「快捷键扩展 - 视频倍速」插件.",
     "fullRelativePath": "../../registry/dist/components/video/player/remember-speed.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remember-speed.js"
   },
@@ -1067,7 +1179,7 @@
     "type": "component",
     "name": "rememberVideoCollection",
     "displayName": "记忆合集",
-    "description": "by [@JLoeve (with Kilo Code & Codex)](https://github.com/LonelySteve)\n\n记忆合集与多 P 视频的播放进度, 在列表中标记已观看/上次播放位置, 并提供跳转提示与记忆管理功能面板.",
+    "description": "by [@JLoeve (with Kilo Code & Codex)](https://github.com/LonelySteve)\n\n> 记忆合集与多 P 视频的播放进度，在列表中标记已观看/上次播放位置，并提供跳转提示与记忆管理功能面板.\n\n#### 🔧 **选项**\n\n- `标记样式`：控制视频列表中已观看和上次播放视频的视觉标记方式。「不区分」使用相同的标记样式，「区分」则对「上次播放」和「已观看」使用不同的标记样式.\n- `多TAB合集模式`：对于包含多个 TAB 分区的合集，「分别记忆」为每个 TAB 单独记录播放进度，「统一记忆」则将整个合集视为一个整体进行记忆.\n- `提示是否跳转到上次播放`：打开此选项后，每次进入合集页面时若检测到上次播放位置与当前不一致，将弹出提示框询问是否跳转到上次播放位置，同时可一键跳转到下一个视频.\n- `交由 RBVP 决定恢复策略`：打开此选项后，「记忆合集」不再自行决定是否恢复和记录合集进度，而是作为 RBVP 的兼容存储层使用.\n  - 此选项仅在安装并启用 RBVP 组件后可见.\n\n#### ⌨️ **快捷键**\n\n组件安装后会自动注册以下快捷键（可在「插件 - 快捷键扩展」中自定义）：\n\n- `Shift + H`：跳转到上次播放\n- `Shift + N`：跳转到下一个视频\n- `Shift + Delete`：清除当前视频的合集记忆\n\n#### 📋 **侧栏面板**\n\n点击播放器侧栏的「合集记忆」按钮可打开面板，包含两个页签：\n\n- **上次播放**：查看上次播放和下一个视频信息，并提供一键跳转按钮.\n- **记忆管理**：查看当前作用域及全部记忆的视频数量，支持清除当前作用域或全部合集记忆.\n\n#### 🔗 **RBVP 联动**\n\n在 RBVP 规则中可通过命名空间 `rememberVideoCollection` 调用本组件（别名可在 RBVP 设置 - 命名空间页自定义，写入主规则文本），支持以下动作值：\n\n- `ON`：按原逻辑恢复并记录合集进度\n- `OFF`：跳过恢复且不记录当前合集记忆进度\n\n使用前需先开启选项「交由 RBVP 决定恢复策略」.\n\n#### 🌈 **温馨提示**\n\n「记忆合集」的记忆数据均存储在本地，不会上传到服务器.\n\n如需管理或清除特定视频的记忆，可在播放页面使用快捷键或侧栏面板操作.",
     "fullRelativePath": "../../registry/dist/components/video/player/remember-video-collection.js",
     "fullAbsolutePath": "registry/dist/components/video/player/remember-video-collection.js"
   },
@@ -1086,6 +1198,14 @@
     "description": "启用视频快速截图, 将在播放器的时间右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键<kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>.",
     "fullRelativePath": "../../registry/dist/components/video/player/screenshot.js",
     "fullAbsolutePath": "registry/dist/components/video/player/screenshot.js"
+  },
+  {
+    "type": "component",
+    "name": "scrollVolume",
+    "displayName": "滚轮调节音量",
+    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n在播放器画面上滚动滚轮调节音量, 并可自定义每一格滚轮改变的音量.\n\n- 常规 / 宽屏 / 小窗模式下, 鼠标悬停在画面上即可调节音量 (不会再滚动页面), 可通过 `常规模式下也可调节` 关闭\n- 网页全屏 / 全屏模式下会接管播放器的滚轮调节, 使每一格滚轮的幅度保持一致\n- 不能和 `禁止滚轮调音量` / `反转滚轮调音量` 一同使用",
+    "fullRelativePath": "../../registry/dist/components/video/player/scroll-volume.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/scroll-volume.js"
   },
   {
     "type": "component",
@@ -1134,6 +1254,14 @@
     "description": "启用快速收藏, 在视频页面可以一键收藏到设定的某个收藏夹. 首次启动时或者右键点击快速收藏图标可以配置快速收藏夹. 请注意如果在在收藏夹播放页面仍然显示, 是不会实时同步右侧的播放列表的.",
     "fullRelativePath": "../../registry/dist/components/video/quick-favorite.js",
     "fullAbsolutePath": "registry/dist/components/video/quick-favorite.js"
+  },
+  {
+    "type": "component",
+    "name": "relatedVideoOpenMode",
+    "displayName": "推荐视频打开方式",
+    "description": "by [@RhoPaper](https://github.com/RhoPaper)\n\n控制视频播放页右侧推荐栏的链接打开方式，可选择保持 B 站默认的当前标签页打开，或默认在新标签页打开。\n\n可在每个推荐视频标题右侧显示一个反向操作图标：默认使用当前标签页时，点击图标可在新标签页打开；默认使用新标签页时，点击图标可在当前标签页打开。图标可设为悬停视频卡片时显示或始终显示，后者适合触屏设备。",
+    "fullRelativePath": "../../registry/dist/components/video/related-video-open-mode.js",
+    "fullAbsolutePath": "registry/dist/components/video/related-video-open-mode.js"
   },
   {
     "type": "component",

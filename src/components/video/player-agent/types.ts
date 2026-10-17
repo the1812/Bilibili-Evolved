@@ -75,3 +75,6 @@ export type PlayerAgentToggleSubtitleResult = { element: HTMLElement | null } & 
   | { result: 'success' }
   | { result: 'no-subtitle-configured' }
 )
+
+/** 弹幕开关状态, 其中 `concise` 对应 B 站灰度中的「精简弹幕」 */
+export type PlayerAgentDanmakuSwitchState = 'on' | 'concise' | 'off'

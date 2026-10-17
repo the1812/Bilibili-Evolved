@@ -1,5 +1,76 @@
 <!-- spell-checker: disable -->
 # 更新日志
+## v2.11.5-preview
+`2026-10-17`
+
+> 包含 [v2.11.5](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.11.5) 的所有更新内容.
+
+✨新增
+- 新增组件 `禁止视频可见性检测`, 阻止视频自动切换到仅音频模式, 避免从后台切回来时卡顿. (#5556, PR #5818 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `搜索结果过滤`, 隐藏搜索结果中与关键词无关的视频, 并在结果上方显示过滤数量, 点击可临时显示被隐藏的视频. (PR #5820 by [Adams](https://github.com/Zichao-xu))
+- 新增组件 `屏蔽消息/动态红点`, 屏蔽顶部导航栏右上角「消息」「动态」入口的红点角标. (PR #5826 by [Tang Kuku](https://github.com/TangKuku9))
+- `自定义顶栏` 的动态弹窗新增 `订阅` 标签页, 汇总订阅的合集与收藏夹的最新更新; 稍后再看弹窗支持显示番剧名、剧集文字和当前集封面, 并改进弹窗悬停交互与按需加载. (#5072, PR #5798 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `自定义动态页内容宽度` 支持像素与视口百分比两种单位, 新增选项面板与小组件, 可直接输入或切换宽度单位. (#5440, PR #5815 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `下载视频` 支持选择普通 AAC、杜比或 FLAC 音频; FLAC 音频默认使用与实际封装一致的 `.m4a` 扩展名, 并修正 `WASM 混流输出` 生成 MP4 时 E-AC-3 环绕声音轨的声道数. (#5396, PR #5817 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `BV 号转换` 支持复制带封面的 HTML 或 Markdown 链接, 并可同时附带视频标题. (#4327)
+- `评论区评论排序` 的悬浮面板随深色模式自动切换配色, 并调整按钮间距. (#5809, PR #5828 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增插件 `自定义顶栏 - 本地历史搜索`, 把顶栏"历史"弹窗的搜索替换为本地历史库检索. (PR #5811 by [心雨兰](https://github.com/xinyulan810))
+- 新增组件 `直播弹幕发送检测`, 支持检测直播弹幕发送结果，在系统过滤或直播间屏蔽时提示失败原因和弹幕内容. (PR #5823 by [郭嘉](https://github.com/mengguojia))
+
+🐛修复
+- 修复 `自定义首页换一换数量` 在新版首页失效的问题. (PR #5810 by [风间千雪](https://github.com/ChiyukiKazama))
+
+☕开发者相关
+- 直播播放器新增控制栏 API.
+- Player Agent 新增设置弹幕状态的 API.
+
+## v2.11.5
+`2026-10-17`
+
+<details>
+<summary>正式版用户将获得 v2.11.3-preview ~ v2.11.4-preview 的所有改动, 点击展开查看</summary>
+
+✨新增
+- 新增组件 `番剧动态稍后再看按钮`, 在动态页的番剧卡片上增加与原生功能一致的稍后再看按钮. (#5688, PR #5704 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `直播显示分区信息`, 在播放器标题栏显示当前直播间的分区. (PR #5705 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `直播自动切换最高画质`, 进入直播间会自动选择最高画质, 之后仍可手动切换. (#5638, PR #5706 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `仅搜索首页`, 首页只保留顶栏和中央搜索框, 并支持自定义背景. (PR #5659 by [Yimino](https://github.com/mintonight))
+- 新增组件 `合集链接重定向`, 修正指向个人空间列表的合集链接路径和参数. (#5684, PR #5709 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `强制保留播放器控制栏`, 鼠标静止或移出播放器后仍保留细进度条等控制栏区域. (#5720, PR #5724 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `弹幕合并器` 新增弹幕时停功能, 拖动进度后恢复时会写入偏移; 同时改进搜索、分 P 选择和管理操作. (#5647, #5650, PR #5701 by [XianYuDaXian](https://github.com/XianYuDaXian))
+- 设置面板支持导入和导出单个组件的选项, 通用设置支持自定义导出文件名. (#5702, #5734, PR #5708, PR #5736 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `快捷键扩展` 能够区分数字键盘、鼠标中键和侧键, 并新增屏蔽 B 站播放器原生快捷键的设置. (#5464)
+- `快捷键扩展 - 开关 CC 字幕` 支持配置字幕语言偏好, 并优先选择匹配的人工字幕. (#5685)
+- `视频快照` 适配更多页面, 调整按钮和预览样式, 并修复与 `视频预览放大` 的兼容问题. (PR #5707 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `自定义动态页内容宽度`, 自定义动态首页、动态详情、图文动态与专栏的正文宽度. (#5440, PR #5796 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `直播自动网页全屏`, 进入直播间时, 自动将播放器切换至网页全屏模式. (#965, PR #5748 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `启用直播截图`, 在播放器的音量按钮右边增加一个截图按钮. 装有 `快捷键扩展` 时支持键盘快捷键 <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>C</kbd>. (#5788, PR #5790 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `隐藏分区栏`, 隐藏主站首页及支持分区首页中 Banner 下方包含动态、热门、各分区及专栏、直播等入口的导航栏, 可自定义隐藏后保留的垂直间距. (#4075, PR #5783 by [ChiyukiKazama](https://github.com/ChiyukiKazama))
+- 新增组件 `评论区评论排序`, 支持按点赞数、发布时间、用户等级对视频、番剧、动态、专栏等页面已加载的评论进行排序, 也可恢复默认顺序. (#3446, #5052, PR #5723 by [ChairKeter](https://github.com/ChairKeter))
+- 新增组件 `自定义首页换一换数量`, 自定义首页“换一换”按钮每次请求的推荐条目数量, 默认 15 条, 广告等推荐条目也计入数量. (PR #5785 by [ChiyukiKazama](https://github.com/ChiyukiKazama))
+- 新增组件 `新视频永远从头开始`, 点击首页视频卡片时移除 `t` 参数, 使新视频始终从头开始播放, 不受预览时长影响, 不影响已经看过的视频从上次离开位置继续. (#4766, PR #5716 by [Earchaut](https://github.com/Earchaut))
+- 新增组件 `自定义弹幕切换行为`, 自定义使用快捷键或点击播放器弹幕按钮切换弹幕时, 在哪些状态之间循环; `快捷键扩展` 切换弹幕时显示对应状态提示. (#4743, #5777, #5782, PR #5787 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `滚轮调节音量`, 在播放器画面上滚动滚轮调节音量, 并可自定义每一格滚轮改变的音量. (#718, #4283, PR #5797 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `推荐视频打开方式`, 控制视频播放页右侧推荐栏的链接在当前标签页或新标签页打开, 并可显示反向操作图标. (#5036, PR #5738 by [RhoPaper](https://github.com/RhoPaper))
+- `下载视频` 支持在合集输入源中区分多个子合集. (#5227, PR #5781 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 文件名格式新增 `user` 变量, 可使用 UP 主昵称. (#2134, #4658, PR #5771 by [WzLYVg387U](https://github.com/WzLYVg387U))
+- `视频预览放大` 支持搜索页视频卡片. (#5759, PR #5764 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `动态过滤` 的关键词列表支持折叠, 输入框移至列表上方, 新添加的关键词显示在最前面. (#5794, PR #5746 by [Acetab](https://github.com/Acetab))
+
+🐛修复
+- 修复 `直播弹幕助手 (+1 & 收藏)` 在弹幕悬停和全屏兼容模式下的 +1 发送问题. (PR #5728 by [oooolcepsed](https://github.com/cccccccccooool))
+- 修复 `楼中楼回复“UP主觉得很赞”显示` 在深色 / 夜间模式下的样式问题. (PR #5718 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `视频快照` 图片跨域加载失败时预览不可用且错误提示不明确的问题. (PR #5737 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+</details>
+
+🐛修复
+- 修复 `删除广告` 在首页推荐流可能空白的问题. (PR #5804 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `动态分组过滤` 将已删除分组中的 UP 主持续过滤掉的问题. (#5812, PR #5813 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `隐藏首页轮播图` 导致推荐卡片错位的问题. (PR #5814 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `深色模式` 对 blackboard / 登录页面的适配. (PR #5829 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `快捷键扩展` 在原生长按加速调整速度时同时触发音量调整的问题. (#5654)
+
 ## v2.11.4-preview
 `2026-09-26`
 

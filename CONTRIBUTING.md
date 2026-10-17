@@ -5,6 +5,20 @@ Bilibili Evolved 是一个基于 Web 前端技术构建的油猴脚本, 贡献�
 - 熟悉 Web 前端技术, 编写逻辑时使用 [TypeScript](https://www.typescriptlang.org/), 编写样式时使用 [Scss](https://sass-lang.com/), 创建 UI 时使用 [Vue 2](https://v2.cn.vuejs.org/).
 - 新增的代码能够通过 [ESLint](https://eslint.org/) 和 [TypeScript](https://www.typescriptlang.org/) 检查.
 
+## 功能范围与限制
+
+项目不接受以下功能:
+
+- 破解或绕过大会员、付费内容的权益限制, 例如非大会员下载大会员视频.
+- 绕过地区限制, 例如在非港澳台网络下观看港澳台限定番剧.
+- 绕过安全与风控机制, 例如验证码、访问频率限制或账号封禁.
+- 越权访问, 包括读取当前用户无权访问的数据或执行当前用户无权执行的操作.
+- 存储 Cookie / Token 等敏感信息.
+- 恢复任何旧版本页面或功能.
+- 适配移动端或实现移动端特有功能.
+
+禁止在项目中包含涉及 b 站私有算法或者移动端算法的实现, 包括 WBI 签名、App MD5 签名等.
+
 ## 搭建开发环境
 
 - 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [pnpm](https://pnpm.io/installation) (>= 8.9.0).
