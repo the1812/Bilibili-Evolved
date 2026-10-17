@@ -13,6 +13,7 @@ const urlExclude = [
   /^https:\/\/d\.bilibili\.com\//,
   /^https:\/\/love\.bilibili\.com\//,
   /^https:\/\/member\.bilibili\.com\//,
+  /^https:\/\/passport\.bilibili\.com\//,
   /^https:\/\/www\.bilibili\.com\/audio\//,
   /^https:\/\/www\.bilibili\.com\/blackroom\//,
   /^https:\/\/www\.bilibili\.com\/festival\//,
@@ -22,14 +23,10 @@ const urlExclude = [
 
 const isLivePage = () => matchUrlPattern(/^https:\/\/(?:live|link)\.bilibili\.com\//)
 const isMangaPage = () => matchUrlPattern(/^https:\/\/manga\.bilibili\.com\//)
-
-// blackboard 路径下是帮助中心、活动页、活动列表等杂类页面,
-// 其官方深色模式由 laputa 头部/页脚脚本提供, 脚本上显式声明 theme="light" 的页面会强制浅色,
-// 未声明的页面跟随 theme_style cookie.
+// blackboard 路径下是帮助中心、活动页、活动列表等杂类页面, 其官方主题由 laputa 头部/页脚脚本解析后
+// 写入 #__css-map__ 链接: 强制浅色的活动页、关于页始终指向 light.css, 以链接的实际指向判断官方主题
+const themeStyleLinkSelector = '#__css-map__'
 const isBlackboardPage = () => matchUrlPattern(/^https:\/\/www\.bilibili\.com\/blackboard\//)
-const isBlackboardDarkModeSupported = () =>
-  dq('script[src*="laputa-header"], script[src*="laputa-footer"]') !== null &&
-  dq('script[src*="laputa"][theme="light"]') === null
 
 const isOfficialDarkModeEnabled = () => {
   const hasDarkCookie = getCookieValue('theme_style') === 'dark'
@@ -37,7 +34,7 @@ const isOfficialDarkModeEnabled = () => {
     return document.documentElement.getAttribute('lab-style') === 'dark'
   }
   if (isBlackboardPage()) {
-    return isBlackboardDarkModeSupported() && hasDarkCookie
+    return (dq(themeStyleLinkSelector) as HTMLLinkElement | null)?.href.includes('dark') ?? false
   }
   if (isMangaPage()) {
     return document.documentElement.classList.contains('theme-dark')
