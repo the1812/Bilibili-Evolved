@@ -7,7 +7,7 @@ import {
 } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { actions } from './actions'
-import { KeyBinding, KeyBindingConfig, loadKeyBindings } from './bindings'
+import { KeyBinding, KeymapConfig, loadKeymap } from './bindings'
 import { presetBase, presets } from './presets'
 import { getNumberValidator } from '@/core/utils'
 
@@ -22,10 +22,22 @@ const options = defineOptionsMetadata({
     displayName: '音量调整幅度',
     validator: getNumberValidator(1, 100),
   },
-  /** 是否显示跳转快捷键 */
+  enableLongPressSpeed: {
+    defaultValue: true,
+    displayName: '长按前进倍速播放',
+  },
   showSeekShortcuts: {
     defaultValue: true,
-    displayName: '显示跳转快捷键',
+    displayName: '显示百分比跳转快捷键',
+  },
+  blockedBilibiliPlayerShortcuts: {
+    defaultValue: [] as string[],
+    displayName: '屏蔽的 B 站播放器原生快捷键',
+    hidden: true,
+  },
+  subtitleLanguagePreference: {
+    defaultValue: '',
+    displayName: '字幕语言偏好',
   },
   customKeyBindings: {
     defaultValue: {} as Record<string, string>,
@@ -39,7 +51,7 @@ const options = defineOptionsMetadata({
   },
 })
 export type Options = OptionsOfMetadata<typeof options>
-let config: KeyBindingConfig = null
+let config: KeymapConfig = null
 const parseBindings = (bindings: Record<string, string>): KeyBinding[] => {
   const parseBinding = (actionName: string, keyString: string) => {
     const keys = keyString.split(' ').filter(it => it !== '')
@@ -50,6 +62,7 @@ const parseBindings = (bindings: Record<string, string>): KeyBinding[] => {
 const entry = styledComponentEntry<Options>(
   () => import('./playback-tip.scss'),
   async ({ settings }) => {
+    config = loadKeymap()
     const update = () => {
       const presetName = settings.options.preset
       const preset = presets[presetName] || {}
@@ -58,15 +71,15 @@ const entry = styledComponentEntry<Options>(
         ...preset,
         ...settings.options.customKeyBindings,
       })
-      if (config) {
-        config.bindings = bindings
-      } else {
-        config = loadKeyBindings(bindings)
-      }
+      config.bindings = bindings
+      config.blockedBilibiliPlayerShortcuts = new Set(
+        settings.options.blockedBilibiliPlayerShortcuts,
+      )
     }
 
     addComponentListener('keymap.preset', update, true)
     addComponentListener('keymap.customKeyBindings', update)
+    addComponentListener('keymap.blockedBilibiliPlayerShortcuts', update)
   },
 )
 export const component = defineComponentMetadata({

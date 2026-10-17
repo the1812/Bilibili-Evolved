@@ -1,5 +1,5 @@
 <template>
-  <div class="video-screenshot-thumbnail">
+  <div class="screenshot-thumbnail">
     <img v-if="objectUrl" :src="objectUrl" />
     <div v-if="objectUrl" class="mask">
       <a
@@ -84,7 +84,7 @@ export default Vue.extend({
 })
 </script>
 <style lang="scss">
-.video-screenshot-thumbnail {
+.screenshot-thumbnail {
   margin: var(--thumbnail-margin-vertical) var(--thumbnail-margin-horizontal);
   position: relative;
   transition: 0.35s cubic-bezier(0.18, 0.89, 0.32, 1.28);
@@ -121,7 +121,7 @@ export default Vue.extend({
     border-top-color: var(--theme-color);
     animation: spinner 0.6s linear infinite;
   }
-  &.video-screenshot-list-leave-active {
+  &.screenshot-list-leave-active {
     position: absolute;
     transition: 0.35s cubic-bezier(0.6, -0.28, 0.74, 0.05);
   }

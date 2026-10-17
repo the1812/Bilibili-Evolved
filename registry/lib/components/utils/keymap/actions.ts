@@ -1,11 +1,12 @@
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
 import { registerAndGetData } from '@/plugins/data'
-import { Options } from '.'
-import { KeyBindingAction, KeyBindingActionContext } from './bindings'
+import type { Options } from '.'
+import type { KeyBindingAction, KeyBindingActionContext, KeyEvent } from './bindings'
 import { getActiveElement, simulateClick } from '@/core/utils'
+import { showDanmakuStateTip, showPlayerTip } from '../../video/player/common/player-tip/player-tip'
 
-export const keyboardEventToPointer = (event: KeyboardEvent): PointerEventInit => {
+export const keyEventToPointer = (event: KeyEvent): PointerEventInit => {
   return {
     ...lodash.pick(event, 'ctrlKey', 'shiftKey', 'altKey', 'metaKey'),
     bubbles: true,
@@ -15,7 +16,7 @@ export const keyboardEventToPointer = (event: KeyboardEvent): PointerEventInit =
 }
 export const clickElement = (target: string | HTMLElement, context: KeyBindingActionContext) => {
   const { event } = context
-  const eventParams = keyboardEventToPointer(event)
+  const eventParams = keyEventToPointer(event)
   if (typeof target === 'string') {
     const targetElement = dq(target) as HTMLElement
     if (!targetElement) {
@@ -35,44 +36,12 @@ export const useClickElement =
     clickElement(target, context)
 export const changeVideoTime = (delta: number | (() => number)) => () =>
   playerAgent.changeTime(typeof delta === 'number' ? delta : delta())
-/** 提示框用的`setTimeout`句柄 */
-let tipTimeoutHandle: number
-/**
- * 显示提示框
- * @param text 文字 (可以 HTML)
- * @param icon MDI 图标 class
- */
-export const showTip = async (text: string, icon: string) => {
-  let tip = dq('.keymap-tip') as HTMLDivElement
-  if (!tip) {
-    const player = (await playerAgent.query.playerArea()) as HTMLElement
-    if (!player) {
-      return
-    }
-    player.insertAdjacentHTML(
-      'afterbegin',
-      /* html */ `
-      <div class="keymap-tip-container">
-        <i class="keymap-tip-icon mdi ${icon}"></i>
-        <div class="keymap-tip">${text}</div>
-      </div>
-    `,
-    )
-    tip = dq('.keymap-tip') as HTMLDivElement
-  }
-  tip.innerHTML = text
-  const container = dq('.keymap-tip-container') as HTMLDivElement
-  const iconElement = dq(container, '.mdi') as HTMLElement
-  iconElement.classList.remove(...iconElement.classList.values())
-  iconElement.classList.add('mdi', icon)
-  if (tipTimeoutHandle) {
-    clearTimeout(tipTimeoutHandle)
-  }
-  container.classList.add('show')
-  tipTimeoutHandle = window.setTimeout(() => {
-    container.classList.remove('show')
-  }, 2000)
-}
+
+const JumpForwardLongPressDelay = 300
+const JumpForwardLongPressRate = 3
+
+/** 显示播放器中央提示框 */
+export const showTip = showPlayerTip
 export const builtInActions: Record<string, KeyBindingAction> = {
   fullscreen: {
     displayName: '全屏',
@@ -90,6 +59,12 @@ export const builtInActions: Record<string, KeyBindingAction> = {
     displayName: '增加音量',
     ignoreFocus: false,
     run: () => {
+      const speedHint = playerAgent.query.playerArea
+        .sync()
+        ?.querySelector('.bpx-player-three-playrate-hint')
+      if (speedHint?.checkVisibility()) {
+        return null
+      }
       const step = getComponentSettings<Options>('keymap').options.volumeStep
       const volume = playerAgent.changeVolume(step)
       if (lodash.isNil(volume)) {
@@ -103,6 +78,12 @@ export const builtInActions: Record<string, KeyBindingAction> = {
     displayName: '降低音量',
     ignoreFocus: false,
     run: () => {
+      const speedHint = playerAgent.query.playerArea
+        .sync()
+        ?.querySelector('.bpx-player-three-playrate-hint')
+      if (speedHint?.checkVisibility()) {
+        return null
+      }
       const step = getComponentSettings<Options>('keymap').options.volumeStep
       const volume = playerAgent.changeVolume(-step)
       if (lodash.isNil(volume)) {
@@ -165,32 +146,35 @@ export const builtInActions: Record<string, KeyBindingAction> = {
           return false
         }
         event.preventDefault()
-        const fireMouseEvent = (name: string, source: KeyboardEvent) => {
-          const eventParams: MouseEventInit = keyboardEventToPointer(source)
+        const fireMouseEvent = (name: string) => {
+          const eventParams: MouseEventInit = keyEventToPointer(event)
           const mouseEvent = new MouseEvent(name, eventParams)
           likeButton.dispatchEvent(mouseEvent)
         }
         likeClick = true
         setTimeout(() => (likeClick = false), 200)
-        fireMouseEvent('mousedown', event)
-        document.body.addEventListener(
-          'keyup',
-          e => {
-            e.preventDefault()
-            fireMouseEvent('mouseup', e)
-            if (likeClick) {
-              fireMouseEvent('click', e)
-            }
-          },
-          { once: true },
-        )
+        fireMouseEvent('mousedown')
+        event.onRelease(({ sourceEvent, cancelled }) => {
+          sourceEvent?.preventDefault()
+          fireMouseEvent('mouseup')
+          if (!cancelled && likeClick) {
+            fireMouseEvent('click')
+          }
+        })
         return true
       }
     })(),
   },
   danmaku: {
     displayName: '弹幕开关',
-    run: () => playerAgent.toggleDanmaku(),
+    run: () => {
+      const state = playerAgent.toggleDanmaku()
+      if (lodash.isNil(state)) {
+        return state
+      }
+      showDanmakuStateTip(state)
+      return true
+    },
   },
   longJumpBackward: {
     displayName: '长倒退',
@@ -208,7 +192,71 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   jumpForward: {
     displayName: '前进',
-    run: () => playerAgent.changeTime(5),
+    run: (() => {
+      let activeCode: string = null
+      let timer: number = null
+      let originalPlaybackRate: number = null
+
+      const reset = () => {
+        if (timer !== null) {
+          clearTimeout(timer)
+        }
+        if (originalPlaybackRate !== null) {
+          playerAgent.nativeApi?.setPlaybackRate(originalPlaybackRate)
+        }
+        activeCode = null
+        timer = null
+        originalPlaybackRate = null
+      }
+
+      return ({ event }: KeyBindingActionContext) => {
+        if (activeCode !== null) {
+          return true
+        }
+        if (!getComponentSettings<Options>('keymap').options.enableLongPressSpeed) {
+          return playerAgent.changeTime(5)
+        }
+        activeCode = event.code
+        event.onRelease(({ cancelled }) => {
+          const isShortPress = timer !== null
+          reset()
+          if (!cancelled && isShortPress) {
+            playerAgent.changeTime(5)
+          }
+        })
+        timer = window.setTimeout(() => {
+          timer = null
+          const api = playerAgent.nativeApi
+          if (!api?.getPlaybackRate || !api?.setPlaybackRate) {
+            return
+          }
+          originalPlaybackRate = api.getPlaybackRate()
+          if (api.isPaused?.()) {
+            api.play()
+          }
+          api.setPlaybackRate(JumpForwardLongPressRate)
+        }, JumpForwardLongPressDelay)
+        return true
+      }
+    })(),
+  },
+  previousPart: {
+    displayName: '上一 P',
+    run: () => playerAgent.previousPart(),
+  },
+  nextPart: {
+    displayName: '下一 P',
+    run: () => playerAgent.nextPart(),
+  },
+  focusDanmakuInput: {
+    displayName: '聚焦弹幕输入框',
+    run: () => {
+      const input = playerAgent.query.bilibiliPlayer
+        .sync()
+        ?.querySelector<HTMLInputElement>('.bpx-player-dm-input')
+      input?.focus()
+      return input
+    },
   },
   playerMenu: {
     displayName: '播放器菜单',

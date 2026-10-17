@@ -48,11 +48,20 @@ export function sourceMatchesViewCid(
   if (meta.viewCid != null && String(meta.viewCid) !== '') {
     return String(meta.viewCid) === String(viewCid)
   }
-  // 旧数据无 viewCid：仅当源 cid 与当前分 P 一致时展示
+  // 旧数据无 viewCid：仅当源 cid 与当前分 P 一致时视为匹配
   if (meta.cid != null && String(meta.cid) !== '') {
     return String(meta.cid) === String(viewCid)
   }
+  // 无任何分P信息的极旧数据：不跨分P展示
   return false
+}
+
+/** 是否为未标注观看分P的旧源（可按会话级回落注入） */
+export function isLegacyUnscopedSource(meta: {
+  viewCid?: number | string
+  cid?: number | string
+}): boolean {
+  return meta.viewCid == null || String(meta.viewCid) === ''
 }
 
 /** 按观看分 P 过滤内存中的合并源 */

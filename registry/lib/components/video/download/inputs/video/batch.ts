@@ -75,25 +75,32 @@ export const videoSeasonBatchInput: DownloadVideoInput = {
         return []
       }
       const owner = lodash.get(json, 'data.View.owner', {})
-      const sections: { episodes: any[] }[] = lodash.get(json, 'data.View.ugc_season.sections', [])
-      if (sections.length === 0) {
+      const sections: { title?: string; episodes?: any[] }[] = lodash.get(
+        json,
+        'data.View.ugc_season.sections',
+        [],
+      )
+      const validSections = sections.filter(
+        (section): section is { title?: string; episodes: any[] } => !!section.episodes?.length,
+      )
+      if (validSections.length === 0) {
         return []
       }
-      const totalEpisodesLength = lodash.sumBy(sections, it => it.episodes.length)
-      return sections.flatMap((section, sectionIndex) => {
-        const { episodes = [] } = section
-        return episodes.map((episode, episodeIndex) => {
-          const currentIndex =
-            episodeIndex + lodash.sumBy(sections.slice(0, sectionIndex), it => it.episodes.length)
-          const key = episode.cid
-          const page = currentIndex + 1
-          const title = `P${page} ${episode.title}`
+      // 存在多个子合集时才需要显示分组标题以区分
+      const showSectionTitle = validSections.length > 1
+      const totalEpisodesLength = lodash.sumBy(validSections, it => it.episodes.length)
+      let page = 0
+      return validSections.flatMap(section => {
+        const sectionTitle = showSectionTitle ? section.title : undefined
+        return section.episodes.map(episode => {
+          page += 1
           const date = getTitleVariablesFromDate(new Date(episode.arc.pubdate * 1000))
           return {
-            key,
-            title,
-            isChecked: currentIndex < instance.maxCheckedItems,
+            key: episode.cid,
+            title: `P${page} ${episode.title}`,
+            isChecked: page <= instance.maxCheckedItems,
             durationText: formatDuration(episode.arc.duration),
+            sectionTitle,
             inputItem: {
               allowQualityDrop: true,
               title: formatTitle(getGeneralSettings().batchFilenameFormat, false, {

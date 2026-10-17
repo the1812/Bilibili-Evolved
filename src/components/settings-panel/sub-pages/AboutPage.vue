@@ -67,6 +67,7 @@
           {{ action.displayName }}
         </VButton>
       </div>
+      <div class="tip">导出设置的文件命名格式可在通用设置中修改</div>
     </div>
   </div>
 </template>
@@ -153,6 +154,7 @@ export default Vue.extend({
     .script-links {
       .script-link {
         @include h-stretch();
+        text-decoration: none;
         .be-button {
           flex: 1;
         }
@@ -170,6 +172,11 @@ export default Vue.extend({
         }
       }
     }
+  }
+  .tip {
+    text-align: center;
+    margin-top: -12px;
+    opacity: 0.5;
   }
 }
 </style>
