@@ -31,6 +31,8 @@
   > main,
   .palette-button-outer,
   .bili-header__channel,
+  .header-channel,
+  .header-channel-fixed,
   > .bili-feed4 > :not(.bili-header),
   .bili-footer {
     @include layout-shift();

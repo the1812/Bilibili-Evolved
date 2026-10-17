@@ -53,7 +53,6 @@ const pluginSetup: PluginMinimalData['setup'] = ({ addData }) => {
 export const component = defineComponentMetadata({
   name: componentName,
   displayName,
-  description: '查看视频多个时间点的快照预览图',
   author,
   tags: [componentsTags.utils, componentsTags.video],
   entry,
