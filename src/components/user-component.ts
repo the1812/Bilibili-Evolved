@@ -17,6 +17,9 @@ export const installComponent = async (code: string, parsedComponent?: Component
     try {
       const { loadFeatureCode } = await import('@/core/external-input')
       component = loadFeatureCode(code) as ComponentMetadata
+      if (typeof component?.entry !== 'function') {
+        throw new Error('缺少 entry 方法')
+      }
     } catch (e) {
       throw new Error('无效的组件代码', { cause: e })
     }
