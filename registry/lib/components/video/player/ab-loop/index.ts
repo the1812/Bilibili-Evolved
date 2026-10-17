@@ -21,14 +21,18 @@ const buttonSelector = `.be-video-control-bar-extend [data-name="${name}"]`
 
 type TriggerSource = 'button' | 'keyboard'
 
-/** A / B 点 (秒); seekedPastB: 手动 seek 越过 B 点后暂不循环 */
+/** A / B 点 (秒) */
 const loop = { a: null as number | null, b: null as number | null, seekedPastB: false }
 let watchingVideo: HTMLVideoElement | null = null
 let frameCallbackId: number | null = null
 
 const getVideo = () => playerAgent.query.video.element.sync() as HTMLVideoElement | null
 
-/** 跳转到指定时间, 保持播放 / 暂停状态 */
+/** 视频时长就绪 */
+const durationReady = (video: HTMLVideoElement | null): video is HTMLVideoElement =>
+  video !== null && video.duration > 0 && Number.isFinite(video.duration)
+
+/** 跳转到指定时间 */
 const seekTo = (time: number) => {
   const video = getVideo()
   if (!video) {
@@ -42,7 +46,7 @@ const seekTo = (time: number) => {
   }
 }
 
-/** 播放经过 B 点跳回 A 点; 手动 seek 越过不触发 (与 mpv 一致) */
+/** 播放经过 B 点跳回 A 点; 手动 seek 越过不触发 */
 const checkLoop = () => {
   const video = watchingVideo
   if (!video || loop.a === null || loop.b === null) {
@@ -84,7 +88,7 @@ const startWatching = () => {
     return
   }
   watchingVideo = video
-  // 逐帧检查保证循环点准确, `timeupdate` 兜底后台标签页
+  // 逐帧检查, timeupdate 兜底后台标签页
   video.addEventListener('timeupdate', checkLoop)
   video.addEventListener('seeking', handleSeeking)
   if (video.requestVideoFrameCallback) {
@@ -99,8 +103,8 @@ const startWatching = () => {
 const updateMarkers = () => {
   const area = dq(progressSelector)
   area?.querySelectorAll(`.${markerClass}`).forEach(marker => marker.remove())
-  const duration = getVideo()?.duration
-  if (!area || !duration || !Number.isFinite(duration)) {
+  const video = getVideo()
+  if (!area || !durationReady(video)) {
     return
   }
   const addMarker = (point: number | null) => {
@@ -109,7 +113,7 @@ const updateMarkers = () => {
     }
     const marker = document.createElement('div')
     marker.className = markerClass
-    marker.style.left = `${(point / duration) * 100}%`
+    marker.style.left = `${(point / video.duration) * 100}%`
     area.appendChild(marker)
   }
   addMarker(loop.a)
@@ -130,12 +134,12 @@ const resetPoints = () => {
 
 const setPointA = (source: TriggerSource) => {
   const video = getVideo()
-  if (!video) {
+  if (!durationReady(video)) {
     return undefined
   }
   const time = video.currentTime
   loop.a = time
-  // 循环中移动 A 点, 只要仍有效就不中断循环
+  // 循环中移动 A 点, 仍有效则继续
   if (loop.b !== null && loop.b - time >= minLoopDuration) {
     showPlayerTip(`A-B 循环 ${formatDuration(time)} - ${formatDuration(loop.b)}`, 'mdi-repeat')
   } else {
@@ -151,7 +155,7 @@ const setPointA = (source: TriggerSource) => {
 
 const setPointB = () => {
   const video = getVideo()
-  if (!video) {
+  if (!durationReady(video)) {
     return undefined
   }
   if (loop.a === null) {
@@ -182,7 +186,7 @@ const clearLoop = () => {
 
 const handleButtonClick = () => {
   const video = getVideo()
-  if (!video) {
+  if (!durationReady(video)) {
     return
   }
   if (loop.a === null) {
