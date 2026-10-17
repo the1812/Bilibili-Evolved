@@ -65,6 +65,11 @@ export const init = async () => {
   // eslint-disable-next-line no-global-assign
   console = window.console
 
+  await promiseLoadTrace('protect styles', async () => {
+    const { protectStyles } = await import('@/core/style')
+    protectStyles()
+  })
+
   const { loadAllUserComponents } = await import('@/components/component')
   await promiseLoadTrace('parse user components', loadAllUserComponents)
 
