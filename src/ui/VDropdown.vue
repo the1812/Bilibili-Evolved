@@ -47,6 +47,7 @@
       v-model="popupOpen"
       class="dropdown-popup"
       :lazy="false"
+      fixed
       :trigger-element="$refs.selected"
       @keydown.esc="selectItem(value)"
     >
@@ -66,7 +67,19 @@
 </template>
 
 <script lang="ts">
+import { PropOptions, PropType } from 'vue'
 import VPopup from './VPopup.vue'
+
+// fixed 定位的实际包含块, 无则相对视口
+const getFixedContainingBlock = (element: HTMLElement) => {
+  for (let parent = element.parentElement; parent; parent = parent.parentElement) {
+    const { transform, filter, backdropFilter } = getComputedStyle(parent)
+    if (transform !== 'none' || filter !== 'none' || backdropFilter !== 'none') {
+      return parent
+    }
+  }
+  return null
+}
 
 export default Vue.extend({
   name: 'VDropdown',
@@ -80,9 +93,9 @@ export default Vue.extend({
   props: {
     value: {
       required: true,
-    },
+    } as PropOptions<any>,
     items: {
-      type: Array,
+      type: Array as PropType<any[]>,
       required: true,
     },
     keyMapper: {
@@ -98,6 +111,8 @@ export default Vue.extend({
   data() {
     return {
       popupOpen: false,
+      anchor: null as DOMRect,
+      followHandle: 0,
     }
   },
   computed: {
@@ -111,11 +126,25 @@ export default Vue.extend({
         this.popupOpen = false
       }
     },
+    popupOpen(value: boolean) {
+      if (value) {
+        document.addEventListener('scroll', this.closeOrFollow, true)
+        window.addEventListener('resize', this.closeOrFollow)
+        this.followPosition()
+        return
+      }
+      // 关闭过渡期间仅跟随滚动/缩放事件
+      cancelAnimationFrame(this.followHandle)
+      lodash.delay(() => !this.popupOpen && this.stopPositionUpdates(), 200)
+    },
   },
   created() {
     if (this.value === null || this.value === undefined) {
       this.$emit('change', this.items[0] || '<No items>')
     }
+  },
+  beforeDestroy() {
+    this.stopPositionUpdates()
   },
   methods: {
     selectItem(item: any) {
@@ -132,13 +161,38 @@ export default Vue.extend({
       this.popupOpen = false
       this.$el.focus()
     },
+    updatePopupPosition() {
+      const popup = this.$refs.popup.$el
+      const block = getFixedContainingBlock(popup)?.getBoundingClientRect()
+      this.anchor = this.$el.getBoundingClientRect()
+      popup.style.left = `${this.anchor.left + this.anchor.width / 2 - (block?.left ?? 0)}px`
+      popup.style.top = `${this.anchor.bottom + 4 - (block?.top ?? 0)}px`
+      popup.style.minWidth = `${this.anchor.width}px`
+    },
+    stopPositionUpdates() {
+      cancelAnimationFrame(this.followHandle)
+      document.removeEventListener('scroll', this.closeOrFollow, true)
+      window.removeEventListener('resize', this.closeOrFollow)
+      this.anchor = null
+    },
+    triggerMoved() {
+      const { left, top } = this.$el.getBoundingClientRect()
+      return left !== this.anchor.left || top !== this.anchor.top
+    },
+    followPosition() {
+      ;(!this.anchor || this.triggerMoved()) && this.updatePopupPosition()
+      this.followHandle = requestAnimationFrame(this.followPosition)
+    },
+    closeOrFollow() {
+      this.triggerMoved() && (this.popupOpen = false)
+      this.updatePopupPosition()
+    },
     hit(event: Event) {
       if (this.disabled) {
         return
       }
-      const popup = this.$refs.popup.$el as HTMLElement
       const target = event.target as HTMLElement
-      if (popup !== target && !popup.contains(target)) {
+      if (!this.$refs.popup.$el.contains(target)) {
         this.popupOpen = !this.popupOpen
       }
       // if (this.popupOpen) {
@@ -181,12 +235,11 @@ export default Vue.extend({
   }
   .dropdown-popup {
     background-color: inherit;
-    top: calc(100% + 4px);
-    left: 50%;
     transform: translateX(-50%) translateY(-4px) scale(0.8);
     transform-origin: top;
     transition: 0.2s ease-out;
-    min-width: 100%;
+    // left/top/min-width 由脚本更新
+    transition-property: transform, opacity, background-color;
     @include shadow();
     border: 1px solid #8882;
     box-sizing: border-box;
