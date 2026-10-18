@@ -58,6 +58,25 @@ const showVolumeTip = (volume: number) => {
   }
 }
 
+/** 控制栏和可滚动的浮层 (菜单/设置/选集等) 内的滚轮交互不调节音量 */
+const isUiScrollTarget = (target: EventTarget, videoArea: HTMLElement) => {
+  for (
+    let element = target instanceof Element ? target : null;
+    element && element !== videoArea;
+    element = element.parentElement
+  ) {
+    const { overflowY } = getComputedStyle(element)
+    if (
+      element.closest(playerAgent.query.control.wrap.selector) ||
+      ((overflowY === 'auto' || overflowY === 'scroll') &&
+        element.scrollHeight > element.clientHeight)
+    ) {
+      return true
+    }
+  }
+  return false
+}
+
 let cancel: () => void
 const setup = () => {
   cancel?.()
@@ -72,7 +91,11 @@ const setup = () => {
       return
     }
     const videoArea = playerAgent.query.video.wrap.sync()
-    if (!videoArea || !videoArea.contains(e.target as Node)) {
+    if (
+      !videoArea ||
+      !videoArea.contains(e.target as Node) ||
+      isUiScrollTarget(e.target, videoArea)
+    ) {
       return
     }
     const notches = parseNotches(e)
