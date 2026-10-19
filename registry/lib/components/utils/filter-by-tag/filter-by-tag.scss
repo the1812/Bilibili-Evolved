@@ -1,0 +1,11 @@
+// 命中屏蔽规则的「格子」. 只由 card-filter.ts 增删这个 class, 不修改卡片本身的内容和结构.
+//
+// 这个 class 必须落在网格 / 列表容器的**直接子元素**上 (首页是 .container > .feed-card),
+// 而不是内层的 .bili-video-card / .bili-live-card: 只隐藏内层卡片会把外层格子空出来,
+// 页面上就会出现一张空白卡片. 具体取哪一层见 card-filter.ts 的 resolveTarget.
+//
+// display: none 只是让元素不参与布局, 节点本身仍在 DOM 里, 站方的翻页计数和推荐流
+// 加载逻辑不受影响 —— 这是本组件「只做展示层过滤, 不改变推荐算法」的实现方式.
+.be-filter-by-tag-hidden {
+  display: none !important;
+}
