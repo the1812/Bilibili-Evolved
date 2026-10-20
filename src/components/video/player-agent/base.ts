@@ -209,9 +209,14 @@ export abstract class PlayerAgent
   }
 
   setAutoPlayNextVideo(enabled: boolean) {
-    const target = enabled ? this.nanoApi.HandoffKind.Auto : this.nanoApi.HandoffKind.Abort
-    if (this.nativeApi.getHandoff() !== target) {
-      this.nativeApi.setHandoff(target)
+    const { nativeApi, nanoApi } = this
+    if (!nativeApi?.getHandoff || !nativeApi?.setHandoff || !nanoApi?.HandoffKind) {
+      console.warn('[PlayerAgent] handoff API unavailable, skip autoplay setting')
+      return
+    }
+    const target = enabled ? nanoApi.HandoffKind.Auto : nanoApi.HandoffKind.Abort
+    if (nativeApi.getHandoff() !== target) {
+      nativeApi.setHandoff(target)
     }
   }
 
