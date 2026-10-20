@@ -6,7 +6,7 @@
         <VideoSlides :api="activeVideoSource.api" :parse-json="activeVideoSource.parseJson" />
       </div>
       <div class="fresh-home-categories-default-video-column-item">
-        <SubHeader> 最新发布 </SubHeader>
+        <SubHeader> 更多推荐 </SubHeader>
         <VideoSlides :api="newVideoSource.api" :parse-json="newVideoSource.parseJson" />
       </div>
     </div>
@@ -47,30 +47,8 @@ import RankList from './RankList.vue'
 import VideoSlides from './VideoSlides.vue'
 import SubHeader from '../../../SubHeader.vue'
 import { compactRankListMixin } from '../../../../mixin'
-import { categoryCodesV2 } from '@/components/utils/categories/data'
 
-const regionFeedCodes: Record<string, number> = {
-  cinephile: 1001,
-  ent: 1002,
-  music: 1003,
-  dance: 1004,
-  douga: 1005,
-  kichiku: 1007,
-  game: 1008,
-  knowledge: 1010,
-  tech: 1012,
-  car: 1013,
-  fashion: 1014,
-  sports: 1018,
-  food: 1020,
-  animal: 1024,
-  life: 1029,
-}
-const pgcFeedNames: Record<string, string> = {
-  movie: 'movie',
-  tv: 'tv',
-  documentary: 'documentary',
-}
+const pgcFeedRoutes = ['movie', 'tv', 'documentary', 'variety']
 
 const parsePgcVideos = (json: any) => {
   const cards = json.items.map((item: any) => ({
@@ -80,10 +58,9 @@ const parsePgcVideos = (json: any) => {
     title: item.title,
     epTitle: item.sub_title,
     description: item.sub_title,
-    duration: item.stat.duration,
-    durationText: formatDuration(item.stat.duration),
+    // PGC 季卡片不提供时长/弹幕/点赞, 只有评分和播放
+    rating: item.rating || undefined,
     playCount: item.stat.view,
-    danmakuCount: item.stat.danmaku,
   }))
   return applyContentFilter(cards)
 }
@@ -106,60 +83,32 @@ const parseRegionVideos = (json: any) => {
   }))
   return applyContentFilter(cards)
 }
-const parseNewVideos = (json: any) => {
-  const cards = json.archives.map((item: any) => ({
-    id: item.aid,
-    aid: item.aid,
-    bvid: item.bvid,
-    videoHref: `https://www.bilibili.com/video/${item.bvid}/`,
-    coverUrl: item.pic,
-    title: item.title,
-    upName: item.owner.name,
-    upFaceUrl: item.owner.face,
-    upID: item.owner.mid,
-    playCount: item.stat.view,
-    danmakuCount: item.stat.danmaku,
-    like: item.stat.like,
-    coins: item.stat.coin,
-    description: item.desc,
-    dynamic: item.dynamic || item.desc,
-    type: item.tname,
-    duration: item.duration,
-    durationText: formatDuration(item.duration),
-  }))
-  return applyContentFilter(cards)
-}
-const parseDefaultRankings = (json: any) =>
-  applyContentFilter(getDefaultRankListCards(json).slice(0, 10))
-const parsePgcRankings = (json: any) =>
-  applyContentFilter(getBangumiRankListCards(json).slice(0, 10))
+// 游标过大时综艺列表会枯竭 (实测 220 起不足、230 起全空), 上限收到 200
+const pgcFeedSource = (route: string) => ({
+  api: `https://api.bilibili.com/pgc/page/web/feed?name=${route}&coursor=${lodash.random(
+    24,
+    200,
+  )}&new_cursor_status=true`,
+  parseJson: parsePgcVideos,
+})
+const rcmdSource = (regionId: number, displayId: number) => ({
+  api: `https://api.bilibili.com/x/web-interface/region/feed/rcmd?display_id=${displayId}&request_cnt=15&from_region=${regionId}`,
+  parseJson: parseRegionVideos,
+})
 
-const getActiveVideoSource = (route: string) => {
-  const pgcFeedName = pgcFeedNames[route]
-  if (pgcFeedName) {
-    return {
-      api: `https://api.bilibili.com/pgc/page/web/feed?name=${pgcFeedName}&coursor=${lodash.random(
-        24,
-        300,
-      )}&new_cursor_status=true`,
-      parseJson: parsePgcVideos,
-    }
-  }
-  return {
-    api: `https://api.bilibili.com/x/web-interface/region/feed/rcmd?display_id=1&request_cnt=15&from_region=${regionFeedCodes[route]}`,
-    parseJson: parseRegionVideos,
-  }
-}
-const getRankingSource = (route: string) => {
+const getVideoSource = (route: string, regionId: number, displayId: number) =>
+  pgcFeedRoutes.includes(route) ? pgcFeedSource(route) : rcmdSource(regionId, displayId)
+const getRankingSource = (route: string, regionId: number) => {
   const seasonType = PGCSeasonTypeMap[route]
   const bangumiMode = seasonType !== undefined
+  const getRankListCards = bangumiMode ? getBangumiRankListCards : getDefaultRankListCards
   return {
     api: bangumiMode
       ? `https://api.bilibili.com/pgc/season/rank/web/list?day=3&season_type=${seasonType}`
-      : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${categoryCodesV2[route]}&type=all`,
+      : `https://api.bilibili.com/x/web-interface/ranking/v2?rid=${regionId}&type=all`,
     link: `https://www.bilibili.com/v/popular/rank/${route}`,
     bangumiMode,
-    parseJson: bangumiMode ? parsePgcRankings : parseDefaultRankings,
+    parseJson: (json: any) => applyContentFilter(getRankListCards(json).slice(0, 10)),
   }
 }
 
@@ -180,15 +129,12 @@ export default Vue.extend({
     },
   },
   data() {
-    const regionCode = this.region.id
+    const regionId = this.region.id
     const { route } = this.region.category
     return {
-      activeVideoSource: getActiveVideoSource(route),
-      newVideoSource: {
-        api: `https://api.bilibili.com/x/web-interface/newlist?ps=10&rid=${regionCode}`,
-        parseJson: parseNewVideos,
-      },
-      rankingSource: getRankingSource(route),
+      activeVideoSource: getVideoSource(route, regionId, 1),
+      newVideoSource: getVideoSource(route, regionId, 2),
+      rankingSource: getRankingSource(route, regionId),
     }
   },
 })
