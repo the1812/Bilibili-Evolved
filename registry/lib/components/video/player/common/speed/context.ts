@@ -1,7 +1,7 @@
 import { playerAgent } from '@/components/video/player-agent'
 import { LifeCycleEventTypes } from '@/core/life-cycle'
 import { videoChange } from '@/core/observer'
-import { des } from '@/core/utils'
+import { delay, des } from '@/core/utils'
 import { ascendingSort } from '@/core/utils/sort'
 import { bindCallback, concat, firstValueFrom, fromEvent, of, subject, Subject } from '../mini-rxjs'
 import { bufferSet } from '../mini-rxjs/operators/bufferSet'
@@ -369,7 +369,6 @@ const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
   const {
     query,
     videoElement,
-    videoSpeedChange$,
     getOldActiveVideoSpeed,
     getAvailableSpeedValues,
     getActiveVideoSpeed,
@@ -384,23 +383,16 @@ const buildMethodPart = (speedContext: ReturnType<typeof buildSubjectPart>) => {
 
     speedMenuItemElement.click()
 
-    const check = result => {
-      if ((result ?? videoElement.playbackRate) !== value) {
-        throw new Error(`failed to set ${formatSpeedText(value)} video speed.`)
-      }
-    }
-
-    const promises = [
-      firstValueFrom(videoSpeedChange$.pipe(debounceTime(Math.max(0, timeoutArg || 0)))),
-    ]
-
-    if (timeoutArg > 0) {
-      promises.push(
-        new Promise((resolve, reject) => setTimeout(() => setTimeout(reject, timeoutArg))),
+    // 等待播放器处理菜单点击后检查实际倍速, 不把事件结果或异常当作倍速值.
+    await delay(Math.max(0, timeoutArg || 0))
+    const actualSpeed = videoElement.playbackRate
+    if (actualSpeed !== value) {
+      throw new Error(
+        `failed to set ${formatSpeedText(value)} video speed. ` +
+          `(actual: ${String(actualSpeed)}, type: ${typeof actualSpeed}, ` +
+          `element: ${videoElement.tagName}, connected: ${videoElement.isConnected})`,
       )
     }
-
-    await Promise.all(promises).then(check).catch(check)
   }
 
   const force = async (value: number) => {

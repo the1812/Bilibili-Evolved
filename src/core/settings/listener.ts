@@ -1,5 +1,6 @@
 import { settingsInternalState } from './internal-state'
 import { Property, ValueChangeListener } from './types'
+import { writeSetting } from './storage'
 
 export const registeredListeners = new Map<string, ValueChangeListener[]>()
 export const settingsChangedHandler = (
@@ -9,7 +10,7 @@ export const settingsChangedHandler = (
   propPath: Property[] = [],
 ) => {
   if (settingsInternalState.settingsLoaded) {
-    GM_setValue(prop.toString(), settingsInternalState.internalSettings[prop.toString()])
+    writeSetting(prop.toString(), settingsInternalState.internalSettings[prop.toString()])
     const path = propPath.join('.')
     // 如果父级是普通对象或数组也会通知, 但没有旧值
     if (propPath.length > 1) {

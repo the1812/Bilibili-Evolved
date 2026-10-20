@@ -29,6 +29,26 @@ const createCodeSandbox = (): CodeSandbox => {
     [Symbol.unscopables, undefined],
     ['unsafeWindow', unsafeWindow],
   ] as [keyof any, unknown][])
+  if (GM_info.scriptHandler === 'AdGuard') {
+    // AdGuard 的这些原生 API 只接受自身的 window, 不能以 with 作用域的 Proxy 作为 this.
+    for (const name of [
+      'fetch',
+      'btoa',
+      'atob',
+      'setTimeout',
+      'clearTimeout',
+      'setInterval',
+      'clearInterval',
+      'requestIdleCallback',
+      'cancelIdleCallback',
+      'requestAnimationFrame',
+      'cancelAnimationFrame',
+    ] as const) {
+      if (typeof window[name] === 'function') {
+        injection.set(name, window[name].bind(window))
+      }
+    }
+  }
   // 目标代码执行时的全局对象代理
   const sandbox = new Proxy(Object.create(null), {
     has: () => true,

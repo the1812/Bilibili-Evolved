@@ -62,16 +62,18 @@ export default {
     }
   },
   mounted() {
-    GM_registerMenuCommand('功能', () => {
-      this.loadPanel('widgetsPanelPopup')
-      this.widgetsOpened = true
-      this.settingsOpened = false
-    })
-    GM_registerMenuCommand('设置', () => {
-      this.loadPanel('settingsPanelPopup')
-      this.widgetsOpened = false
-      this.settingsOpened = true
-    })
+    if (typeof GM_registerMenuCommand === 'function') {
+      GM_registerMenuCommand('功能', () => {
+        this.loadPanel('widgetsPanelPopup')
+        this.widgetsOpened = true
+        this.settingsOpened = false
+      })
+      GM_registerMenuCommand('设置', () => {
+        this.loadPanel('settingsPanelPopup')
+        this.widgetsOpened = false
+        this.settingsOpened = true
+      })
+    }
     window.addEventListener('blur', this.handleWindowBlur)
   },
   beforeDestroy() {

@@ -160,7 +160,11 @@ export const monkey = <T = any>(details: MonkeyXhrBasicDetails) =>
     const fullDetails: MonkeyXhrDetails = {
       nocache: true,
       ...details,
-      onload: (r: MonkeyXhrResponse) => resolve(r.response),
+      onload: (r: MonkeyXhrResponse) => {
+        // AdGuard 的文本响应可能只有 responseText; 非文本响应不能访问此字段.
+        const isText = !details.responseType || details.responseType === 'text'
+        resolve(r.response === undefined && isText ? r.responseText : r.response)
+      },
       onerror: (r: MonkeyXhrResponse) => {
         // 重新序列化一下取出对象字段, 油猴给的是一个函数对象混合体
         const realObject = {

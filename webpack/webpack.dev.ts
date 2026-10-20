@@ -11,7 +11,10 @@ const previewConfig = Object.assign(getDefaultConfig(), {
 }) as Configuration
 previewConfig.plugins.push(
   new webpack.BannerPlugin({
-    banner: getBanner(previewMeta),
+    banner: getBanner({
+      ...previewMeta,
+      description: 'Bilibili Evolved 本地 AdGuard 兼容修复版 (分块存储与组件调度修复).',
+    }),
     raw: true,
     entryOnly: true,
   }),

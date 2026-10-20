@@ -1,6 +1,6 @@
 {
   "name": "Bilibili Evolved (Preview)",
   "description": "Bilibili Evolved 的预览版, 可以抢先体验新功能.",
-  "updateURL": "[altCdn.previewClient]",
-  "downloadURL": "[altCdn.previewClient]"
+  "updateURL": "https://raw.githubusercontent.com/baiyoung/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js",
+  "downloadURL": "https://raw.githubusercontent.com/baiyoung/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js"
 }

@@ -5,12 +5,13 @@ import { createProxy } from './proxy'
 import { registeredListeners, settingsChangedHandler } from './listener'
 import { initInternalSettings, settingsInternalState as state } from './internal-state'
 import { readSettings } from './read'
+import { writeSetting } from './storage'
 
 initInternalSettings()
 export { defaultSettings } from './internal-state'
 state.internalSettings = createProxy(readSettings(state.internalSettings), settingsChangedHandler)
 for (const [key, value] of Object.entries(state.internalSettings)) {
-  GM_setValue(key, value)
+  writeSetting(key, value)
 }
 // state.internalSettings.instance = getRandomId(32)
 

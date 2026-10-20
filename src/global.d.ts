@@ -164,6 +164,7 @@ declare global {
   function GM_xmlhttpRequest(details: MonkeyXhrDetails): { abort: () => void }
   function GM_setValue<T>(name: string, value: T): void
   function GM_getValue<T>(name: string, defaultValue?: T): T
+  function GM_listValues(): string[]
   function GM_deleteValue(name: string): void
   function GM_getResourceText(name: string): string
   function GM_getResourceURL(name: string): string

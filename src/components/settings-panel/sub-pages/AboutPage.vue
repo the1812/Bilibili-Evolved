@@ -80,7 +80,7 @@ import { AboutPageAction, aboutPageActions } from './about-page'
 import { openFeedback } from './feedback'
 
 const feedbackSupported = (() => {
-  const namespace = GM_info.scriptMetaStr.match(/@namespace\s*(.+)/)
+  const namespace = GM_info.scriptMetaStr?.match(/@namespace\s*(.+)/)
   if (!namespace || !namespace[1]) {
     return true
   }

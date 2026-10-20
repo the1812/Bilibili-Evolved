@@ -1,4 +1,5 @@
 import { registerAndGetData } from '@/plugins/data'
+import { writeSetting } from '@/core/settings/storage'
 import { getExportSettingsFilename } from '../utils'
 
 export interface AboutPageAction {
@@ -43,8 +44,12 @@ export const builtInActions: AboutPageAction[] = [
       try {
         const settings = JSON.parse(await file.text())
         Object.entries(settings).forEach(([key, value]) => {
-          GM_setValue(key, value)
+          writeSetting(key, value)
         })
+        if (GM_info.scriptHandler === 'AdGuard') {
+          Toast.success('导入成功, 请刷新页面以应用设置', '导入设置')
+          return
+        }
         Toast.success('导入成功, 正在刷新页面...', '导入设置')
         window.location.reload()
       } catch (error) {
