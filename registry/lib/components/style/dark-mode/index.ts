@@ -1,59 +1,134 @@
-import { defineComponentMetadata } from '@/components/define'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import { contentLoaded } from '@/core/life-cycle'
+import {
+  addComponentListener,
+  ComponentSettings,
+  getComponentSettings,
+  isComponentEnabled,
+  settings,
+} from '@/core/settings'
+import { Range } from '@/ui/range'
 import { darkExcludes } from './dark-urls'
+import { DarkModeMode } from './mode'
+import { isInTimeRange, millisecondsUntilChange, rangeValidator } from './schedule-time'
 
 const name = 'darkMode'
-const changeDelay = 200
 const darkMetaColor = '#111'
-const add = async () => {
-  document.body.classList.add('dark')
-  localStorage.setItem('pbp_theme_v4', 'b')
+const themeColorSelector = 'meta[name="theme-color"]'
+const colorSchemeSelector = 'meta[name="color-scheme"]'
+const pbpThemeKey = 'pbp_theme_v4'
+const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+const defaultRange: Range<string> = { start: '18:00', end: '6:00' }
 
-  const themeColorMeta = dq('meta[name="theme-color"]') as HTMLMetaElement
-  if (!themeColorMeta) {
-    document.head.insertAdjacentHTML(
-      'beforeend',
-      `<meta name="theme-color" content="${darkMetaColor}">`,
-    )
+type Options = {
+  mode: DarkModeMode
+  range: Range<string>
+}
+type DarkModeSettings = ComponentSettings<Options>
+
+const options = defineOptionsMetadata<Options>({
+  mode: {
+    defaultValue: DarkModeMode.Manual,
+    displayName: '模式',
+    dropdownEnum: DarkModeMode,
+  },
+  range: {
+    defaultValue: { ...defaultRange },
+    displayName: '时间段',
+    validator: rangeValidator,
+  },
+})
+
+const syncEnabled = (componentSettings: DarkModeSettings) => {
+  // 覆盖安装时旧设置里可能还没有 options
+  const { mode = DarkModeMode.Manual, range = defaultRange } = componentSettings.options
+  let dark: boolean
+  if (mode === DarkModeMode.FollowSystem) {
+    dark = darkMediaQuery.matches
+  } else if (mode === DarkModeMode.Schedule) {
+    dark = isInTimeRange(range)
   } else {
-    themeColorMeta.dataset.light = themeColorMeta.content
-    themeColorMeta.content = darkMetaColor
+    return
   }
-
-  const colorSchemeMeta = dq('meta[name="color-scheme"]') as HTMLMetaElement
-  if (!colorSchemeMeta) {
-    document.head.insertAdjacentHTML('beforeend', `<meta name="color-scheme" content="dark">`)
-  } else {
-    colorSchemeMeta.content = 'dark'
+  if (componentSettings.enabled !== dark) {
+    componentSettings.enabled = dark
   }
 }
-const remove = async () => {
-  document.body.classList.remove('dark')
 
-  const themeColorMeta = dq('meta[name="theme-color"]') as HTMLMetaElement
-  if (themeColorMeta?.dataset.light) {
-    themeColorMeta.content = themeColorMeta.dataset.light
-  } else {
-    themeColorMeta?.remove()
+const migrateDeprecatedComponents = (componentSettings: DarkModeSettings) => {
+  const followSystem = settings.userComponents.darkModeFollowSystem?.settings
+  if (followSystem?.enabled) {
+    componentSettings.options.mode = DarkModeMode.FollowSystem
+    followSystem.enabled = false
   }
+  const schedule = settings.userComponents.darkModeSchedule?.settings
+  if (schedule?.enabled) {
+    const { range } = schedule.options as { range?: Range<string> }
+    componentSettings.options.mode = DarkModeMode.Schedule
+    componentSettings.options.range = range ?? componentSettings.options.range
+    schedule.enabled = false
+  }
+}
 
-  const colorSchemeMeta = dq('meta[name="color-scheme"]') as HTMLMetaElement
+let applied = false
+let originalPbpTheme: string | null = null
+
+const applyDark = (dark: boolean) => {
+  if (dark === applied) {
+    return
+  }
+  applied = dark
+  document.body.classList.toggle('dark', dark)
+  const themeColorMeta = dq(themeColorSelector) as HTMLMetaElement
+  const colorSchemeMeta = dq(colorSchemeSelector) as HTMLMetaElement
+  if (dark) {
+    originalPbpTheme = localStorage.getItem(pbpThemeKey)
+    localStorage.setItem(pbpThemeKey, 'b')
+    if (themeColorMeta) {
+      themeColorMeta.dataset.light = themeColorMeta.content
+      themeColorMeta.content = darkMetaColor
+    } else {
+      document.head.insertAdjacentHTML(
+        'beforeend',
+        `<meta name="theme-color" content="${darkMetaColor}" data-be-created="true">`,
+      )
+    }
+  } else {
+    if (themeColorMeta?.dataset.light) {
+      themeColorMeta.content = themeColorMeta.dataset.light
+    } else if (themeColorMeta?.dataset.beCreated === 'true') {
+      themeColorMeta.remove()
+    }
+    if (originalPbpTheme === null) {
+      localStorage.removeItem(pbpThemeKey)
+    } else {
+      localStorage.setItem(pbpThemeKey, originalPbpTheme)
+    }
+  }
   if (colorSchemeMeta) {
-    colorSchemeMeta.content = 'light'
+    colorSchemeMeta.content = dark ? 'dark' : 'light'
+  } else if (dark) {
+    document.head.insertAdjacentHTML('beforeend', '<meta name="color-scheme" content="dark">')
   }
 }
-const entry = async () => {
-  setTimeout(add, changeDelay)
+
+// 先于首屏样式确定开关状态, 避免加载中途反复应用 / 撤销
+const initialSettings = settings.userComponents[name]?.settings as DarkModeSettings | undefined
+if (initialSettings) {
+  migrateDeprecatedComponents(initialSettings)
+  syncEnabled(initialSettings)
 }
+
+const entry = () => applyDark(true)
 
 export const component = defineComponentMetadata({
   name,
   displayName: '夜间模式',
   entry,
   reload: entry,
-  unload: () => {
-    setTimeout(remove, changeDelay)
-  },
+  unload: () => applyDark(false),
   tags: [componentsTags.style, componentsTags.general],
+  options,
   instantStyles: [
     {
       name: 'dark-mode',
@@ -76,15 +151,31 @@ export const component = defineComponentMetadata({
     description: {
       'zh-CN': '提前注入夜间模式的 .dark class 以减少一些组件首屏仍然是白色的问题.',
     },
-    async setup() {
-      const { contentLoaded } = await import('@/core/life-cycle')
-      const { isComponentEnabled } = await import('@/core/settings')
-      contentLoaded(() => {
-        // 提前添加 dark 的 class, 防止颜色抖动
-        if (isComponentEnabled(name)) {
-          document.body.classList.add('dark')
+    setup() {
+      const componentSettings = getComponentSettings<Options>(name)
+      let scheduleTimer: number | undefined
+      const schedule = () => {
+        window.clearTimeout(scheduleTimer)
+        if (componentSettings.options.mode !== DarkModeMode.Schedule) {
+          return
         }
-      })
+        const { range = defaultRange } = componentSettings.options
+        const wait = millisecondsUntilChange(range)
+        scheduleTimer = window.setTimeout(() => {
+          syncEnabled(componentSettings)
+          schedule()
+        }, wait)
+      }
+      const update = () => {
+        syncEnabled(componentSettings)
+        schedule()
+      }
+      darkMediaQuery.addEventListener('change', update)
+      addComponentListener(`${name}.mode`, update)
+      addComponentListener(`${name}.range`, update)
+      update()
+      // 提前添加 dark 的 class, 防止颜色抖动
+      contentLoaded(() => isComponentEnabled(name) && applyDark(true))
     },
   },
   urlExclude: darkExcludes,
