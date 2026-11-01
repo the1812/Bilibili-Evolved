@@ -14,8 +14,6 @@ import { isInTimeRange, millisecondsUntilChange, rangeValidator } from './schedu
 
 const name = 'darkMode'
 const darkMetaColor = '#111'
-const themeColorSelector = 'meta[name="theme-color"]'
-const colorSchemeSelector = 'meta[name="color-scheme"]'
 const pbpThemeKey = 'pbp_theme_v4'
 const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
 const defaultRange: Range<string> = { start: '18:00', end: '6:00' }
@@ -41,12 +39,12 @@ const options = defineOptionsMetadata<Options>({
 
 const syncEnabled = (componentSettings: DarkModeSettings) => {
   // 覆盖安装时旧设置里可能还没有 options
-  const { mode = DarkModeMode.Manual, range = defaultRange } = componentSettings.options
+  const { mode, range } = componentSettings.options
   let dark: boolean
   if (mode === DarkModeMode.FollowSystem) {
     dark = darkMediaQuery.matches
   } else if (mode === DarkModeMode.Schedule) {
-    dark = isInTimeRange(range)
+    dark = isInTimeRange(range ?? defaultRange)
   } else {
     return
   }
@@ -73,42 +71,41 @@ const migrateDeprecatedComponents = (componentSettings: DarkModeSettings) => {
 let applied = false
 let originalPbpTheme: string | null = null
 
+// 深色时记住原值并改写, 浅色时还原原值或删除自建的 meta
+const toggleMeta = (metaName: string, darkContent: string) => {
+  const meta = dq(`meta[name="${metaName}"]`) as HTMLMetaElement
+  if (applied) {
+    if (meta) {
+      meta.dataset.light = meta.content
+      meta.content = darkContent
+    } else {
+      document.head.insertAdjacentHTML(
+        'beforeend',
+        `<meta name="${metaName}" content="${darkContent}" data-be-created="true">`,
+      )
+    }
+  } else if (meta?.dataset.light !== undefined) {
+    meta.content = meta.dataset.light
+  } else if (meta?.dataset.beCreated === 'true') {
+    meta.remove()
+  }
+}
+
 const applyDark = (dark: boolean) => {
   if (dark === applied) {
     return
   }
   applied = dark
   document.body.classList.toggle('dark', dark)
-  const themeColorMeta = dq(themeColorSelector) as HTMLMetaElement
-  const colorSchemeMeta = dq(colorSchemeSelector) as HTMLMetaElement
+  toggleMeta('theme-color', darkMetaColor)
+  toggleMeta('color-scheme', 'dark')
   if (dark) {
     originalPbpTheme = localStorage.getItem(pbpThemeKey)
     localStorage.setItem(pbpThemeKey, 'b')
-    if (themeColorMeta) {
-      themeColorMeta.dataset.light = themeColorMeta.content
-      themeColorMeta.content = darkMetaColor
-    } else {
-      document.head.insertAdjacentHTML(
-        'beforeend',
-        `<meta name="theme-color" content="${darkMetaColor}" data-be-created="true">`,
-      )
-    }
+  } else if (originalPbpTheme === null) {
+    localStorage.removeItem(pbpThemeKey)
   } else {
-    if (themeColorMeta?.dataset.light) {
-      themeColorMeta.content = themeColorMeta.dataset.light
-    } else if (themeColorMeta?.dataset.beCreated === 'true') {
-      themeColorMeta.remove()
-    }
-    if (originalPbpTheme === null) {
-      localStorage.removeItem(pbpThemeKey)
-    } else {
-      localStorage.setItem(pbpThemeKey, originalPbpTheme)
-    }
-  }
-  if (colorSchemeMeta) {
-    colorSchemeMeta.content = dark ? 'dark' : 'light'
-  } else if (dark) {
-    document.head.insertAdjacentHTML('beforeend', '<meta name="color-scheme" content="dark">')
+    localStorage.setItem(pbpThemeKey, originalPbpTheme)
   }
 }
 
@@ -153,29 +150,27 @@ export const component = defineComponentMetadata({
     },
     setup() {
       const componentSettings = getComponentSettings<Options>(name)
-      let scheduleTimer: number | undefined
-      const schedule = () => {
-        window.clearTimeout(scheduleTimer)
+      let timer: number | undefined
+      const resetTimer = () => {
+        window.clearTimeout(timer)
         if (componentSettings.options.mode !== DarkModeMode.Schedule) {
           return
         }
-        const { range = defaultRange } = componentSettings.options
-        const wait = millisecondsUntilChange(range)
-        scheduleTimer = window.setTimeout(() => {
+        timer = window.setTimeout(() => {
           syncEnabled(componentSettings)
-          schedule()
-        }, wait)
+          resetTimer()
+        }, millisecondsUntilChange(componentSettings.options.range ?? defaultRange))
       }
       const update = () => {
         syncEnabled(componentSettings)
-        schedule()
+        resetTimer()
       }
       darkMediaQuery.addEventListener('change', update)
       addComponentListener(`${name}.mode`, update)
       addComponentListener(`${name}.range`, update)
       update()
-      // 提前添加 dark 的 class, 防止颜色抖动
-      contentLoaded(() => isComponentEnabled(name) && applyDark(true))
+      // body 就绪后再同步一次 class, 防止颜色抖动
+      contentLoaded(() => applyDark(isComponentEnabled(name)))
     },
   },
   urlExclude: darkExcludes,

@@ -2,7 +2,7 @@ import { Range } from '@/ui/range'
 
 const minutesPerDay = 24 * 60
 const millisecondsPerDay = minutesPerDay * 60 * 1000
-const timeRegex = /^(\d{1,2}):(\d{1,2})$/
+const timeRegex = /^([01]?\d|2[0-3]):([0-5]?\d)$/
 const pad = (value: number) => value.toString().padStart(2, '0')
 
 const toMinutes = (time: string) => {
@@ -10,7 +10,7 @@ const toMinutes = (time: string) => {
   return (hour * 60 + minute) % minutesPerDay
 }
 
-/** `6:00` → `06:00`, 超出一天的部分会归一化 */
+/** `6:00` → `06:00` */
 const normalizeTime = (time: string) => {
   const minutes = toMinutes(time)
   return `${pad(Math.floor(minutes / 60))}:${pad(minutes % 60)}`

@@ -113,9 +113,6 @@ export const runMigrate = async (v1Settings: any) => {
     const migrateActions: Executable[] = [
       featureMap('useDarkStyle', 'darkMode', 'component'),
       featureMap('darkColorScheme', 'darkMode', 'component'),
-      optionMap('darkColorScheme', 'darkMode.mode', (value: boolean) =>
-        value ? DarkModeMode.FollowSystem : undefined,
-      ),
       featureMap('hideBanner', 'hideBanner', 'component'),
       featureMap('expandDanmakuList', 'expandDanmakuList', 'component'),
       optionMap('expandDanmakuListIgnoreMediaList', 'expandDanmakuList.ignoreMediaList'),
@@ -135,9 +132,15 @@ export const runMigrate = async (v1Settings: any) => {
         },
       ),
       featureMap('darkSchedule', 'darkMode', 'component'),
-      optionMap('darkSchedule', 'darkMode.mode', (value: boolean) =>
-        value ? DarkModeMode.Schedule : undefined,
-      ),
+      () => {
+        // v1 的跟随系统与计划时段互斥, 计划时段优先
+        const { darkSchedule, darkColorScheme } = v1Settings
+        if (!darkSchedule && !darkColorScheme) {
+          return
+        }
+        const mode = darkSchedule ? DarkModeMode.Schedule : DarkModeMode.FollowSystem
+        lodash.set(getComponentSettings('darkMode').options, 'mode', mode)
+      },
       optionMap('darkScheduleStart', 'darkMode.range.start'),
       optionMap('darkScheduleEnd', 'darkMode.range.end'),
       featureMap('fullTweetsTitle', 'fullFeedsTitle', 'component'),
