@@ -1,7 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { addComponentListener } from '@/core/settings'
 import { addStyle, removeStyle } from '@/core/style'
-import style from './index.scss'
+import style from '../_hide-home-live.scss'
 
 const liveHome = /^https:\/\/live\.bilibili\.com\/(index\.html)?$/
 export const component = defineComponentMetadata({
