@@ -206,10 +206,6 @@ const handleButtonClick = () => {
 }
 
 const enable = async () => {
-  videoChange(resetPoints)
-  addData('ui.icons', (icons: Record<string, string>) => {
-    icons['ab-loop'] = abLoopIcon
-  })
   await addControlBarButton({
     name,
     displayName,
@@ -225,7 +221,13 @@ export const component = defineComponentMetadata({
   displayName,
   tags: [componentsTags.video],
   instantStyles: [{ name, style: () => import('./ab-loop.scss') }],
-  entry: enable,
+  entry: async () => {
+    videoChange(resetPoints)
+    addData('ui.icons', (icons: Record<string, string>) => {
+      icons['ab-loop'] = abLoopIcon
+    })
+    await enable()
+  },
   reload: enable,
   unload: async () => {
     resetPoints()
