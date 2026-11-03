@@ -1,0 +1,34 @@
+.be-inline-translator {
+  margin-top: 4px;
+  color: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+
+  &.be-feeds-translator {
+    padding-top: 8px;
+  }
+
+  img {
+    height: var(--be-translation-emote-height);
+    vertical-align: var(--be-translation-emote-align);
+  }
+
+  > button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--be-color-text-placeholder, #888);
+    font: inherit;
+    cursor: pointer;
+
+    &:hover {
+      color: var(--theme-color);
+    }
+
+    &:disabled {
+      cursor: wait;
+    }
+  }
+}

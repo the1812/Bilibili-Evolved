@@ -18,7 +18,7 @@ const targetLanguages = {
   马来语: 'ms',
 }
 
-export const getTargetLanguage = (selection: FeedsTranslateOptions['targetLanguage']) => {
+export const getTargetLanguage = (selection: TranslateOptions['targetLanguage']) => {
   if (selection !== '自动') {
     return targetLanguages[selection]
   }
@@ -43,4 +43,4 @@ export const options = defineOptionsMetadata({
   },
 })
 
-export type FeedsTranslateOptions = OptionsOfMetadata<typeof options>
+export type TranslateOptions = OptionsOfMetadata<typeof options>

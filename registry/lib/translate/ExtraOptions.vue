@@ -1,5 +1,5 @@
 <template>
-  <div class="feeds-translate-provider-option">
+  <div class="translate-provider-option">
     <div>翻译模型</div>
     <VDropdown
       :items="providers"
@@ -21,9 +21,11 @@ import {
   removeComponentListener,
 } from '@/core/settings'
 import { VDropdown } from '@/ui'
-import { FeedsTranslateOptions } from './options'
+import { TranslateOptions } from './options'
 
-const { options } = getComponentSettings<FeedsTranslateOptions>('feedsTranslate')
+const props = defineProps<{ componentName: string }>()
+const { options } = getComponentSettings<TranslateOptions>(props.componentName)
+const providerPath = `${props.componentName}.providerId`
 const providerId = ref(options.providerId)
 const providers = computed(getAIProviders)
 const selectedProvider = computed(
@@ -36,8 +38,8 @@ const selectedProvider = computed(
 const updateProviderId = (id: string) => {
   providerId.value = id
 }
-addComponentListener('feedsTranslate.providerId', updateProviderId)
-onBeforeUnmount(() => removeComponentListener('feedsTranslate.providerId', updateProviderId))
+addComponentListener(providerPath, updateProviderId)
+onBeforeUnmount(() => removeComponentListener(providerPath, updateProviderId))
 
 const changeProvider = (provider: AIProvider) => {
   options.providerId = provider.id
@@ -47,7 +49,7 @@ const changeProvider = (provider: AIProvider) => {
 <style lang="scss">
 @import 'common';
 
-.feeds-translate-provider-option {
+.translate-provider-option {
   @include h-center(8px);
   justify-content: space-between;
 }

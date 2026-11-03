@@ -1,15 +1,17 @@
 import { defineComponentMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
 import { FeedsCard, feedsCardsManager, FeedsCardsManagerEventType } from '@/components/feeds/api'
-import { createComponentWithProps, getVue2Data, mountVueComponent } from '@/core/utils'
+import { createComponentWithProps } from '@/core/utils'
 import { feedsUrls } from '@/core/utils/urls'
-import FeedsTranslator from './FeedsTranslator.vue'
-import { FeedsTranslateOptions, options } from './options'
+import { createTranslator } from '../../../translate/translator'
+import { TranslateOptions, options } from '../../../translate/options'
 
+const name = 'feedsTranslate'
+const translations = new Map<HTMLElement, HTMLElement>()
 let enabled = false
 
 const addCard = (card: FeedsCard) => {
-  if (!enabled || !card.text.trim() || card.element.querySelector('.be-feeds-translator')) {
+  if (!enabled || !card.text.trim() || translations.has(card.element)) {
     return
   }
   const content = card.element.querySelector(
@@ -18,25 +20,31 @@ const addCard = (card: FeedsCard) => {
   if (!content) {
     return
   }
-  const vm = mountVueComponent(createComponentWithProps(FeedsTranslator, { text: card.text }))
-  content.appendChild(vm.$el)
+  const translator = createTranslator(name, card.text, () => content)
+  translator.classList.add('be-feeds-translator')
+  translations.set(card.element, translator)
+  content.append(translator)
 }
 
 const onAdded = (event: CustomEvent<FeedsCard>) => addCard(event.detail)
+
+const onRemoved = ({ detail }: CustomEvent<FeedsCard>) => {
+  translations.get(detail.element)?.remove()
+  translations.delete(detail.element)
+}
 
 const entry = async () => {
   if (enabled) {
     return
   }
   enabled = true
-  const settings = getComponentSettings<FeedsTranslateOptions & { model?: string }>(
-    'feedsTranslate',
-  )
+  const settings = getComponentSettings<TranslateOptions & { model?: string }>('feedsTranslate')
   if (settings.options.model) {
     settings.options.providerId = settings.options.model
     delete settings.options.model
   }
   feedsCardsManager.addEventListener(FeedsCardsManagerEventType.AddCard, onAdded)
+  feedsCardsManager.addEventListener(FeedsCardsManagerEventType.RemoveCard, onRemoved)
   await feedsCardsManager.startWatching()
   if (enabled) {
     feedsCardsManager.cards.forEach(addCard)
@@ -44,20 +52,23 @@ const entry = async () => {
 }
 
 export const component = defineComponentMetadata({
-  name: 'feedsTranslate',
+  name,
   displayName: '动态翻译',
   tags: [componentsTags.feeds, componentsTags.utils],
   options,
-  extraOptions: () => import('./ExtraOptions.vue').then(m => m.default),
+  instantStyles: [{ name, style: () => import('../../../translate/translator.scss') }],
+  extraOptions: () =>
+    import('../../../translate/ExtraOptions.vue').then(m =>
+      createComponentWithProps(m.default, { componentName: name }),
+    ),
   urlInclude: feedsUrls,
   entry,
   reload: entry,
   unload: () => {
     enabled = false
     feedsCardsManager.removeEventListener(FeedsCardsManagerEventType.AddCard, onAdded)
-    dqa('.be-feeds-translator').forEach(element => {
-      getVue2Data(element).$destroy()
-      element.remove()
-    })
+    feedsCardsManager.removeEventListener(FeedsCardsManagerEventType.RemoveCard, onRemoved)
+    translations.forEach(translator => translator.remove())
+    translations.clear()
   },
 })

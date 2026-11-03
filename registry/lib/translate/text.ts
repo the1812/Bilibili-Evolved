@@ -1,4 +1,7 @@
-export const protectFeedsText = (text: string) => {
+import { AIProvider } from '@/core/ai'
+import { AITranslateProvider } from '@/core/translate'
+
+const protectTranslationText = (text: string) => {
   const tokens: string[] = []
   const protectedText = text.replace(
     /https?:\/\/[^\s\u200b]+|@[^\s@#，。！？、：；,.!?:;]+|#[^#\r\n]+#|\[[^\]\r\n]+\]/g,
@@ -21,4 +24,14 @@ export const protectFeedsText = (text: string) => {
       return result
     },
   }
+}
+
+export const translateText = async (text: string, provider: AIProvider, targetLanguage: string) => {
+  const translator = new AITranslateProvider(provider)
+  const protectedText = protectTranslationText(text)
+  const translatedText = await translator.translate(protectedText.text, {
+    targetLanguage,
+    instruction: '【硬性要求】原样保留所有 {{TRANSLATE_PLACEHOLDER_*}} 占位符，保留原有换行。',
+  })
+  return protectedText.restore(translatedText)
 }
