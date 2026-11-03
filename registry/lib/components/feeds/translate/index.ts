@@ -1,54 +1,52 @@
 import { defineComponentMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
-import { FeedsCard, feedsCardsManager, FeedsCardsManagerEventType } from '@/components/feeds/api'
+import {
+  addMenuItem,
+  FeedsCard,
+  feedsCardsManager,
+  FeedsCardsManagerEventType,
+} from '@/components/feeds/api'
 import { createComponentWithProps } from '@/core/utils'
 import { feedsUrls } from '@/core/utils/urls'
-import { createTranslator } from '../../../translate/translator'
+import { addTranslateButton, createTranslator } from '../../../translate/translator'
 import { TranslateOptions, options } from '../../../translate/options'
 
 const name = 'feedsTranslate'
-const translations = new Map<HTMLElement, HTMLElement>()
-let enabled = false
-
-const addCard = (card: FeedsCard) => {
-  if (!enabled || !card.text.trim() || translations.has(card.element)) {
-    return
-  }
-  const content = card.element.querySelector(
-    '.bili-dyn-content, .card-content, .opus-module-content',
-  )
-  if (!content) {
-    return
-  }
-  const translator = createTranslator(name, card.text, () => content)
-  translator.classList.add('be-feeds-translator')
-  translations.set(card.element, translator)
-  content.append(translator)
-}
-
-const onAdded = (event: CustomEvent<FeedsCard>) => addCard(event.detail)
-
-const onRemoved = ({ detail }: CustomEvent<FeedsCard>) => {
-  translations.get(detail.element)?.remove()
-  translations.delete(detail.element)
-}
-
 const entry = async () => {
-  if (enabled) {
-    return
+  const menuMode = getComponentSettings<TranslateOptions>(name).options.entryPoint === '菜单项'
+  const cards = new WeakSet<HTMLElement>()
+  const addCard = (card: FeedsCard) => {
+    if (!card.text.trim() || cards.has(card.element)) {
+      return
+    }
+    const content = card.element.querySelector(
+      '.bili-dyn-content, .card-content, .opus-module-content',
+    )
+    if (!content) {
+      return
+    }
+    const translator = createTranslator(name, card.text, () => content)
+    const { container, start } = translator
+    container.classList.add('be-feeds-translator')
+    cards.add(card.element)
+    content.append(container)
+    if (menuMode) {
+      container.hidden = true
+      addMenuItem(card, {
+        className: 'be-feeds-translate-menu',
+        text: '翻译',
+        action: start,
+      })
+    } else {
+      addTranslateButton(translator)
+    }
   }
-  enabled = true
-  const settings = getComponentSettings<TranslateOptions & { model?: string }>('feedsTranslate')
-  if (settings.options.model) {
-    settings.options.providerId = settings.options.model
-    delete settings.options.model
-  }
-  feedsCardsManager.addEventListener(FeedsCardsManagerEventType.AddCard, onAdded)
-  feedsCardsManager.addEventListener(FeedsCardsManagerEventType.RemoveCard, onRemoved)
+
+  feedsCardsManager.addEventListener(FeedsCardsManagerEventType.AddCard, event => {
+    addCard((event as CustomEvent<FeedsCard>).detail)
+  })
   await feedsCardsManager.startWatching()
-  if (enabled) {
-    feedsCardsManager.cards.forEach(addCard)
-  }
+  feedsCardsManager.cards.forEach(addCard)
 }
 
 export const component = defineComponentMetadata({
@@ -63,12 +61,4 @@ export const component = defineComponentMetadata({
     ),
   urlInclude: feedsUrls,
   entry,
-  reload: entry,
-  unload: () => {
-    enabled = false
-    feedsCardsManager.removeEventListener(FeedsCardsManagerEventType.AddCard, onAdded)
-    feedsCardsManager.removeEventListener(FeedsCardsManagerEventType.RemoveCard, onRemoved)
-    translations.forEach(translator => translator.remove())
-    translations.clear()
-  },
 })

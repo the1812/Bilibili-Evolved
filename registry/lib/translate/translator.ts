@@ -7,12 +7,9 @@ const translate = async (
   name: string,
   text: string,
   getSource: () => ParentNode,
-  button: HTMLButtonElement,
   result: HTMLElement,
 ) => {
-  button.disabled = true
-  button.textContent = '翻译中…'
-  result.textContent = ''
+  result.textContent = '翻译中…'
   try {
     const { providerId, targetLanguage } = getComponentSettings<TranslateOptions>(name).options
     const translated = await translateText(
@@ -26,6 +23,7 @@ const translate = async (
         emote => [emote.alt, emote] as const,
       ),
     )
+    result.textContent = ''
     translated.split(/(\[[^\]\r\n]+\])/g).forEach(part => {
       const emote = emotes.get(part)
       if (!emote) {
@@ -40,26 +38,38 @@ const translate = async (
       image.style.setProperty('--be-translation-emote-align', style.verticalAlign)
       result.append(image)
     })
-    button.remove()
+    return true
   } catch (error) {
     result.textContent = (error as Error).message
-    button.textContent = '重试翻译'
-  } finally {
-    button.disabled = false
+    return false
   }
 }
 
 export const createTranslator = (name: string, text: string, getSource: () => ParentNode) => {
   const container = document.createElement('div')
   container.className = 'be-inline-translator'
+  const result = document.createElement('div')
+  container.append(result)
+  const start = () => {
+    container.hidden = false
+    return translate(name, text, getSource, result)
+  }
+  return { container, start }
+}
+
+export const addTranslateButton = ({ container, start }: ReturnType<typeof createTranslator>) => {
   const button = document.createElement('button')
   button.type = 'button'
   button.textContent = '翻译'
-  const result = document.createElement('div')
-  button.addEventListener('click', event => {
+  button.addEventListener('click', async event => {
     event.stopPropagation()
-    translate(name, text, getSource, button, result)
+    button.hidden = true
+    if (await start()) {
+      button.remove()
+    } else {
+      button.textContent = '重试翻译'
+      button.hidden = false
+    }
   })
-  container.append(button, result)
-  return container
+  container.prepend(button)
 }

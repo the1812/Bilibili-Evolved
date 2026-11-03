@@ -32,6 +32,11 @@ export const getTargetLanguage = (selection: TranslateOptions['targetLanguage'])
 }
 
 export const options = defineOptionsMetadata({
+  entryPoint: {
+    displayName: '翻译入口',
+    defaultValue: '菜单项' as '常驻按钮' | '菜单项',
+    dropdownEnum: ['常驻按钮', '菜单项'],
+  },
   providerId: {
     defaultValue: defaultAIProviderId,
     hidden: true,

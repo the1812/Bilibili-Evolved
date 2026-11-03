@@ -1,69 +1,54 @@
 import { defineComponentMetadata } from '@/components/define'
-import { CommentItem, CommentReplyItem, commentAreaManager } from '@/components/utils/comment-apis'
+import { CommentReplyItem, forEachCommentItem } from '@/components/utils/comment-apis'
+import { getComponentSettings } from '@/core/settings'
 import { select } from '@/core/spin-query'
 import { createComponentWithProps } from '@/core/utils'
-import { options } from '../../../../translate/options'
-import { createTranslator } from '../../../../translate/translator'
+import { options, TranslateOptions } from '../../../../translate/options'
+import { addTranslateButton, createTranslator } from '../../../../translate/translator'
 
 const name = 'commentsTranslate'
-const threads = new Map<CommentItem, () => void>()
-let enabled = false
-
-const addThread = (item: CommentItem) => {
-  if (!enabled || threads.has(item)) {
-    return
-  }
-  const translations = new Map<HTMLElement, HTMLElement>()
+const entry = () => {
+  const menuMode = getComponentSettings<TranslateOptions>(name).options.entryPoint === '菜单项'
+  const translatedElements = new WeakSet<HTMLElement>()
   const addTranslation = async (reply: CommentReplyItem) => {
-    if (!reply.element || !reply.content.trim() || translations.has(reply.element)) {
+    if (!reply.element || !reply.content.trim() || translatedElements.has(reply.element)) {
       return
     }
-    let content: Element
-    const container = createTranslator(
-      name,
-      reply.content,
-      () => reply.shadowDomEntry?.querySelectorAsEntry('bili-rich-text')?.shadowRoot ?? content,
-    )
-    translations.set(reply.element, container)
-    content = await select(() =>
+    translatedElements.add(reply.element)
+    const content = await select(() =>
       reply.shadowDomEntry
         ? reply.shadowDomEntry.querySelectorAsEntry('bili-rich-text')?.element
         : reply.element.querySelector('.reply-content, .sub-reply-content, .con .text, .text-con'),
     )
-    if (!content || translations.get(reply.element) !== container) {
+    if (!content) {
       return
     }
 
+    const translator = createTranslator(
+      name,
+      reply.content,
+      () => reply.shadowDomEntry?.querySelectorAsEntry('bili-rich-text')?.shadowRoot ?? content,
+    )
+    const { container, start } = translator
     content.after(container)
+    if (menuMode) {
+      container.hidden = true
+      reply.parent.addMenuItem(reply, {
+        className: 'be-comments-translate-menu',
+        text: '翻译',
+        action: start,
+      })
+    } else {
+      addTranslateButton(translator)
+    }
   }
-  const updateReplies = ({ detail }: CustomEvent<CommentReplyItem[]>) => {
-    const elements = new Set(detail.map(reply => reply.element))
-    translations.forEach((container, element) => {
-      if (element !== item.element && !elements.has(element)) {
-        container.remove()
-        translations.delete(element)
-      }
-    })
-    detail.forEach(addTranslation)
-  }
-  item.addEventListener('repliesUpdate', updateReplies)
-  threads.set(item, () => {
-    item.removeEventListener('repliesUpdate', updateReplies)
-    translations.forEach(container => container.remove())
-    translations.clear()
+  forEachCommentItem({
+    added: item => {
+      addTranslation(item)
+      item.replies.forEach(addTranslation)
+      item.addEventListener('repliesUpdate', ({ detail }) => detail.forEach(addTranslation))
+    },
   })
-  addTranslation(item)
-  item.replies.forEach(addTranslation)
-}
-
-const removeThread = (item: CommentItem) => {
-  threads.get(item)?.()
-  threads.delete(item)
-}
-
-const reload = () => {
-  enabled = true
-  commentAreaManager.commentAreas.forEach(area => area.items.forEach(addThread))
 }
 
 export const component = defineComponentMetadata({
@@ -83,16 +68,5 @@ export const component = defineComponentMetadata({
       shadowDom: true,
     },
   ],
-  entry: () => {
-    enabled = true
-    commentAreaManager.forEachCommentArea({
-      added: area => area.forEachCommentItem({ added: addThread, removed: removeThread }),
-      removed: area => area.items.forEach(removeThread),
-    })
-  },
-  reload,
-  unload: () => {
-    enabled = false
-    threads.forEach((_, item) => removeThread(item))
-  },
+  entry,
 })
