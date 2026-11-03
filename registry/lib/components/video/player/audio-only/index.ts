@@ -1,5 +1,5 @@
 import { defineComponentMetadata } from '@/components/define'
-import { playerAgent, PlayerAgentEventTypes } from '@/components/video/player-agent'
+import { playerAgent } from '@/components/video/player-agent'
 import {
   addControlBarButton,
   removeControlBarButton,
@@ -66,13 +66,32 @@ const visibilityHandler = () => {
   }
 }
 
+/** 换集/分P切换时播放器实例可能重建, 需要重新停用 */
+const playHandler = () => applyAudioOnly()
+
+/** 本次激活注册的监听, 重载/卸载时统一清理 */
+let listenerAborter: AbortController | null = null
+
+const removeListeners = () => {
+  listenerAborter?.abort()
+  listenerAborter = null
+}
+
+const addListeners = () => {
+  // reload 时会再次进入, 先清掉上一次的监听, 避免同样的处理函数被重复挂载
+  removeListeners()
+  const aborter = new AbortController()
+  listenerAborter = aborter
+  const { signal } = aborter
+  // 换集后换上的播放器可能还没就绪, 这里与下面的 play 事件互为兜底
+  videoChange(() => applyAudioOnly(), { signal })
+  // play 事件不冒泡, 在 document 上以捕获阶段监听, 视频元素被替换后依然有效
+  document.addEventListener('play', playHandler, { capture: true, signal })
+  document.addEventListener('visibilitychange', visibilityHandler, { signal })
+}
+
 const entry = async () => {
-  videoChange(() => {
-    // 换集/分P切换时播放器实例可能重建, 需要重新挂载; 先移除避免监听器累积
-    playerAgent.removeEventListener(PlayerAgentEventTypes.Play, applyAudioOnly)
-    playerAgent.addEventListener(PlayerAgentEventTypes.Play, applyAudioOnly)
-  })
-  document.addEventListener('visibilitychange', visibilityHandler)
+  addListeners()
   await addControlBarButton(button)
 }
 
@@ -90,7 +109,7 @@ export const component = defineComponentMetadata({
   unload: async () => {
     enabled = false
     revertAudioOnly()
-    document.removeEventListener('visibilitychange', visibilityHandler)
+    removeListeners()
     await removeControlBarButton(button.name)
   },
   instantStyles: [
