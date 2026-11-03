@@ -6,6 +6,7 @@ import { component as AutoUpdate } from './auto-update'
 import { component as NotifyNewVersion } from './notify-new-version'
 import { component as Bisector } from './bisector'
 import { component as Compatibilities } from './compatibilities'
+import { component as AIProvider } from './ai-provider'
 
 export const getBuiltInComponents = (): ComponentMetadata[] => [
   SettingsPanel,
@@ -15,6 +16,7 @@ export const getBuiltInComponents = (): ComponentMetadata[] => [
   NotifyNewVersion,
   Bisector,
   Compatibilities,
+  AIProvider,
 ]
 
 export const isBuiltInComponent = (name: string) =>
