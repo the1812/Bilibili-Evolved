@@ -346,8 +346,8 @@ const makeItem = (up: FollowUp, proto: HTMLElement, nativeEl: HTMLElement | null
     if (result && result.ok) {
       clearSearch()
     } else {
-      console.warn('[动态页快速搜索up动态] 切换失败', result)
-      Toast.error(`切换失败: ${(result && result.err) || '未知错误'}`, '动态页快速搜索up动态', 5000)
+      console.warn('[up切换栏搜索框] 切换失败', result)
+      Toast.error(`切换失败: ${(result && result.err) || '未知错误'}`, 'up切换栏搜索框', 5000)
     }
   })
   return li
@@ -422,7 +422,7 @@ ensureData = async () => {
       applyFilter(input.value)
     }
   } catch (error: any) {
-    Toast.error(`加载关注列表失败: ${error.message}`, '动态页快速搜索up动态', 5000)
+    Toast.error(`加载关注列表失败: ${error.message}`, 'up切换栏搜索框', 5000)
   } finally {
     state.loading = false
   }
@@ -504,7 +504,7 @@ const unload = () => {
 
 export const component = defineComponentMetadata({
   name,
-  displayName: '动态页快速搜索up动态',
+  displayName: 'up切换栏搜索框',
   author: {
     name: 'QiuLiang-99 (with DeepSeek Harness)',
     link: 'https://github.com/QiuLiang-99',
