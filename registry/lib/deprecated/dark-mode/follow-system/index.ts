@@ -1,6 +1,6 @@
 import { defineComponentMetadata } from '@/components/define'
 import { getComponentSettings } from '@/core/settings'
-import { darkExcludes } from '../dark-urls'
+import { darkExcludes } from '../../../components/style/dark-mode/dark-urls'
 
 export const component = defineComponentMetadata({
   name: 'darkModeFollowSystem',
