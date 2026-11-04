@@ -52,13 +52,13 @@ const options = defineOptionsMetadata({
 })
 export type Options = OptionsOfMetadata<typeof options>
 let config: KeymapConfig = null
-const parseBindings = (bindings: Record<string, string>): KeyBinding[] => {
-  const parseBinding = (actionName: string, keyString: string) => {
-    const keys = keyString.split(' ').filter(it => it !== '')
-    return { keys, action: actions[actionName] }
-  }
-  return Object.entries(bindings).map(([n, k]) => parseBinding(n, k))
-}
+const parseBindings = (bindings: Record<string, string>): KeyBinding[] =>
+  Object.entries(bindings)
+    .filter(([name]) => actions[name])
+    .map(([name, keys]) => ({
+      keys: keys.split(' ').filter(it => it !== ''),
+      action: actions[name],
+    }))
 const entry = styledComponentEntry<Options>(
   () => import('./playback-tip.scss'),
   async ({ settings }) => {
