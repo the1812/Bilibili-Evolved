@@ -11,6 +11,16 @@ import { InlineAssetBufferPlugin } from './inline-asset-buffer'
 import commonMeta from '../src/client/common.meta.json'
 import * as gitInfo from './compilation-info/git'
 
+/** 给 style-loader 注入的样式打上标记, 便于在 Next.js 页面上保护它们 (见 src/core/style.ts 的 protectStyles) */
+const styleLoader = {
+  loader: 'style-loader',
+  options: {
+    attributes: {
+      'data-be-style': '',
+    },
+  },
+}
+
 const relativePath = (p: string) => path.join(process.cwd(), p)
 export const getDefaultConfig = (src = relativePath('src')): Configuration => {
   return {
@@ -69,7 +79,7 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
         },
         {
           test: /\.css$/,
-          use: ['style-loader', ...cssStyleLoaders],
+          use: [styleLoader, ...cssStyleLoaders],
           include: /node_modules/,
         },
         {
@@ -77,7 +87,7 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
           oneOf: [
             {
               resourceQuery: /vue/,
-              use: ['style-loader', ...cssStyleLoaders],
+              use: [styleLoader, ...cssStyleLoaders],
             },
             {
               use: ['to-string-loader', ...cssStyleLoaders],
@@ -90,7 +100,7 @@ export const getDefaultConfig = (src = relativePath('src')): Configuration => {
           oneOf: [
             {
               resourceQuery: /vue/,
-              use: ['style-loader', ...sassStyleLoaders],
+              use: [styleLoader, ...sassStyleLoaders],
             },
             {
               use: ['to-string-loader', ...sassStyleLoaders],

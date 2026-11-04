@@ -1,6 +1,6 @@
 <template>
   <div class="fresh-home-video-slides">
-    <div v-if="loaded" class="fresh-home-video-slides-covers">
+    <div v-if="loaded" class="fresh-home-video-slides-covers" :class="coverDirection">
       <a
         v-for="(video, index) of items"
         :key="video.id"
@@ -16,13 +16,11 @@
         />
       </a>
     </div>
-    <div class="cover-placeholder-vertical"></div>
     <div v-if="!loaded" class="fresh-home-video-slides-empty">
-      <div class="empty-placeholder fresh-home-video-slides-main-title" v-text="' '"></div>
       <div class="empty-indicator">
         <VLoading v-if="loading" />
         <div v-if="error" class="empty-indicator-error">
-          <VEmpty />
+          <VEmpty>{{ error }}</VEmpty>
           <VButton class="fresh-home-video-slides-refresh-button" round @click="reload">
             <VIcon icon="mdi-refresh" />
             刷新
@@ -32,59 +30,76 @@
     </div>
     <div v-if="currentItem && loaded" class="fresh-home-video-slides-row">
       <div class="fresh-home-video-slides-main-info">
-        <div class="fresh-home-video-slides-row">
-          <div class="cover-placeholder-horizontal"></div>
-          <div class="fresh-home-video-slides-main-actions">
-            <a class="fresh-home-video-slides-play-button" :href="currentUrl" target="_blank">
-              <VButton type="primary" round>
-                <VIcon icon="mdi-play" />
-                播放
-              </VButton>
-            </a>
-            <VButton
-              v-if="currentItem.aid && watchlaterAdded"
-              class="fresh-home-video-slides-watchlater-button"
-              icon
-              title="取消稍后再看"
-              @click="toggleWatchlater(currentItem.aid)"
-            >
-              <VIcon icon="mdi-clock-check-outline" :size="20" />
+        <div class="fresh-home-video-slides-main-actions">
+          <a class="fresh-home-video-slides-play-button" :href="currentUrl" target="_blank">
+            <VButton type="primary" round>
+              <VIcon icon="mdi-play" />
+              <span class="fresh-home-video-slides-play-text">播放</span>
             </VButton>
-            <VButton
-              v-else-if="currentItem.aid"
-              class="fresh-home-video-slides-watchlater-button"
-              icon
-              title="稍后再看"
-              @click="toggleWatchlater(currentItem.aid)"
-            >
-              <VIcon icon="mdi-clock-outline" :size="20" />
-            </VButton>
-            <a
-              v-if="currentItem.upID"
-              class="fresh-home-video-slides-up-container"
-              :href="`https://space.bilibili.com/${currentItem.upID}`"
-              :title="currentItem.upName"
-              target="_blank"
-            >
-              <DpiImage v-if="currentItem.upFaceUrl" :size="24" :src="currentItem.upFaceUrl" />
-              <VIcon v-else icon="mdi-account-circle" :size="24" />
-              <div class="fresh-home-video-slides-up-name">
-                {{ currentItem.upName }}
-              </div>
-            </a>
+          </a>
+          <VButton
+            v-if="currentItem.aid && watchlaterAdded"
+            class="fresh-home-video-slides-watchlater-button"
+            icon
+            title="取消稍后再看"
+            @click="toggleWatchlater(currentItem.aid)"
+          >
+            <VIcon icon="mdi-clock-check-outline" :size="20" />
+          </VButton>
+          <VButton
+            v-else-if="currentItem.aid"
+            class="fresh-home-video-slides-watchlater-button"
+            icon
+            title="稍后再看"
+            @click="toggleWatchlater(currentItem.aid)"
+          >
+            <VIcon icon="mdi-clock-outline" :size="20" />
+          </VButton>
+          <UpInfo
+            v-if="currentItem.upID"
+            class="fresh-home-video-slides-up-container"
+            :up-id="currentItem.upID"
+            :up-name="currentItem.upName"
+          />
+        </div>
+      </div>
+      <a
+        class="fresh-home-video-slides-title"
+        :class="{ 'no-description': !currentItem.description }"
+        :title="currentItem.title"
+        :href="currentUrl"
+        target="_blank"
+      >
+        {{ currentItem.title }}
+      </a>
+      <div class="fresh-home-video-slides-description">
+        <div class="fresh-home-video-slides-description-stats">
+          <div v-if="currentItem.playCount" class="stat">
+            <VIcon icon="play" :size="16" />
+            {{ currentItem.playCount | formatCount }}
+          </div>
+          <div v-if="currentItem.rating" class="stat">
+            <VIcon icon="mdi-star-outline" :size="16" />
+            {{ currentItem.rating }}
+          </div>
+          <div v-if="currentItem.danmakuCount" class="stat">
+            <VIcon icon="danmaku" :size="16" />
+            {{ currentItem.danmakuCount | formatCount }}
+          </div>
+          <div v-if="currentItem.like" class="stat">
+            <VIcon icon="like-outline" :size="16" />
+            {{ currentItem.like | formatCount }}
+          </div>
+          <div v-if="currentItem.durationText" class="stat">
+            <VIcon icon="mdi-clock-outline" :size="16" />
+            {{ currentItem.durationText }}
           </div>
         </div>
-        <a
-          class="fresh-home-video-slides-main-title"
-          :title="currentItem.title"
-          :href="currentUrl"
-          target="_blank"
-        >
-          {{ currentItem.title }}
-        </a>
-      </div>
-      <div class="fresh-home-video-slides-main-description">
-        <div class="description-text" v-text="currentItem.description"></div>
+        <div
+          v-if="currentItem.description"
+          class="description-text"
+          v-text="currentItem.description"
+        ></div>
       </div>
       <div class="fresh-home-video-slides-actions">
         <VButton class="fresh-home-video-slides-refresh-button" title="刷新" icon @click="reload">
@@ -106,8 +121,10 @@
   </div>
 </template>
 <script lang="ts">
+import UpInfo from '@/components/feeds/UpInfo.vue'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { bilibiliApi, getJson } from '@/core/ajax'
+import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
 
@@ -116,12 +133,17 @@ export default Vue.extend({
     VButton,
     VIcon,
     DpiImage,
+    UpInfo,
     VLoading,
     VEmpty,
   },
+  filters: {
+    formatCount,
+  },
   mixins: [
     requestMixin({
-      requestMethod: url => bilibiliApi(getJson(url), '获取清爽首页分区视频失败'),
+      // log = false: 错误信息改在空态中展示
+      requestMethod: url => bilibiliApi(getJson(url), '获取清爽首页分区视频失败', false),
     }),
     cssVariableMixin({
       mainCoverHeight: 185,
@@ -143,11 +165,15 @@ export default Vue.extend({
     return {
       watchlaterList,
       itemLimit: 10,
+      // 最近滑动方向, 供回绕封面瞬移
+      coverDirection: 'next' as 'next' | 'prev',
+      // 跳转期间锁定信息栏目标项, 避免跟随中间项刷新
+      jumpTarget: null as any,
     }
   },
   computed: {
     currentItem() {
-      return this.items[1]
+      return this.jumpTarget || this.items[1]
     },
     currentUrl() {
       return this.currentItem.videoHref
@@ -162,25 +188,31 @@ export default Vue.extend({
   methods: {
     toggleWatchlater,
     nextCard() {
+      this.coverDirection = 'next'
       this.items.push(this.items.shift())
     },
     previousCard() {
+      this.coverDirection = 'prev'
       this.items.unshift(this.items.pop())
     },
     jumpToCard(event: MouseEvent, index: number) {
       if (index <= 1 || index >= this.items.length) {
         return
       }
+      event.preventDefault()
+      // 直达目标项, 动画期间不再更新
+      this.jumpTarget = this.items[index]
+      // 逐帧连发多格, 由过渡连成一次滑动; 同帧多发会让回绕封面横穿卡片
       let steps = index - 1
-      const jump = () => {
+      const step = () => {
         this.nextCard()
-        steps--
-        if (steps > 0) {
-          setTimeout(jump)
+        if (--steps > 0) {
+          requestAnimationFrame(step)
+        } else {
+          this.jumpTarget = null
         }
       }
-      jump()
-      event.preventDefault()
+      step()
     },
   },
 })
@@ -189,26 +221,20 @@ export default Vue.extend({
 @import 'common';
 @import 'effects';
 
+// 小封面相对主封面的缩放 (154/287, 100/185)
+$cover-scale-x: 0.536585;
+$cover-scale-y: 0.540541;
+
 .fresh-home-video-slides {
   @include card(12px);
-  @include v-stretch(var(--cover-padding));
-  --main-info-padding: calc(
-    var(--main-padding-y) + var(--main-cover-height) - var(--other-cover-height) -
-      var(--cover-padding)
-  );
+  @include v-stretch();
   position: relative;
   overflow: hidden;
-  padding: var(--main-padding-y) var(--main-padding-x);
+  // 顶部让出封面区
+  padding: calc(var(--main-padding-y) + var(--other-cover-height) + var(--cover-padding))
+    var(--main-padding-x) var(--main-padding-y);
   height: 266px;
 
-  .cover-placeholder-vertical {
-    height: var(--other-cover-height);
-    width: 0;
-  }
-  .cover-placeholder-horizontal {
-    width: var(--main-cover-width);
-    height: 0;
-  }
   .be-button .be-icon {
     transition: 0.2s ease-out;
   }
@@ -221,19 +247,16 @@ export default Vue.extend({
   }
 
   & &-empty {
-    padding-top: var(--main-info-padding);
-    @include h-center();
-    justify-content: center;
-    .empty-placeholder {
-      visibility: hidden;
-      white-space: pre;
-    }
     .empty-indicator {
       @include absolute-center();
       &-error {
         @include v-center(12px);
+        .be-empty {
+          text-align: center;
+          color: #f44336;
+        }
         .be-button {
-          padding: 4px 10px 4px 6px !important;
+          padding-left: 6px;
           .be-icon {
             margin-right: 6px;
           }
@@ -243,11 +266,26 @@ export default Vue.extend({
   }
   & &-row {
     @include h-stretch(var(--cover-padding));
+    // 占满剩余高度
+    flex: 1;
+  }
+  & &-play-text {
+    // 字形墨迹偏下, 上移补偿
+    transform: translateY(-0.75px);
   }
   & &-play-button {
-    flex: 1;
+    // 宽度参与换行计算, 避免与 UP 信息挤同一行
+    flex: 1 1 auto;
     font-size: 16px;
     filter: drop-shadow(0 4px 12px var(--theme-color-10));
+    .be-button {
+      // 描边过渡会露脏缝; 三角墨迹偏右, 左内边距收小
+      box-shadow: none;
+      padding-left: 4px;
+      &:hover {
+        box-shadow: none !important;
+      }
+    }
     .be-icon {
       margin-right: 6px;
     }
@@ -260,53 +298,29 @@ export default Vue.extend({
       transform: rotate(1turn);
     }
   }
-  & &-previous-button {
-    &:hover .be-icon {
-      @include bounce-x(-2);
-    }
-    &:active .be-icon {
-      transform: scale(0.9);
-    }
+  & &-previous-button:active .be-icon,
+  & &-next-button:active .be-icon {
+    transform: scale(0.9);
   }
-  & &-next-button {
-    padding: 6px !important;
-    &:hover .be-icon {
-      @include bounce-x(2);
-    }
-    &:active .be-icon {
-      transform: scale(0.9);
-    }
+  & &-previous-button:hover .be-icon {
+    @include bounce-x(-2);
   }
+  & &-next-button:hover .be-icon {
+    @include bounce-x(2);
+  }
+  & &-next-button,
   & &-watchlater-button {
     padding: 6px !important;
   }
   & &-up-container {
-    @include h-center(8px);
-    @include card(14px);
-    @include round-bar(28);
+    // 覆盖上方 a { display: block }
+    display: flex;
     max-width: var(--other-cover-width);
-    box-shadow: none;
-    padding: 2px;
-    padding-right: 8px;
-    img {
-      border-radius: 50%;
-    }
-  }
-  & &-up-name {
-    @include single-line();
-    font-size: 12px;
   }
   & &-main-info {
-    @include v-stretch();
-    justify-content: space-between;
+    // 操作区定位锚点
     position: relative;
-    padding-top: var(--main-info-padding);
     width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
-  }
-  & &-main-title {
-    font-size: 16px;
-    @include single-line();
-    @include semi-bold();
   }
   & &-main-actions {
     @include h-center(8px);
@@ -316,7 +330,26 @@ export default Vue.extend({
     right: 0;
     top: 0;
   }
-  & &-main-description {
+  & &-title {
+    // 锚定卡片左下, 宽度收敛到文字长度
+    position: absolute;
+    left: var(--main-padding-x);
+    bottom: var(--main-padding-y);
+    font-size: 16px;
+    // 固定行高
+    line-height: 19px;
+    @include single-line();
+    @include semi-bold();
+    width: fit-content;
+    max-width: calc(var(--main-cover-width) + var(--cover-padding) + var(--other-cover-width));
+    // 无简介时标题延伸至操作按钮前
+    &.no-description {
+      max-width: calc(100% - 128px - 16px - var(--main-padding-x) * 2);
+      // 简介列会盖住溢出区, 抬到上层
+      z-index: 1;
+    }
+  }
+  & &-description {
     @include v-stretch();
     @include no-scrollbar();
     font-size: 13px;
@@ -324,6 +357,20 @@ export default Vue.extend({
     opacity: 0.75;
     flex: 1;
     padding: 2px;
+    // 封面右侧留白处补充视频数据
+    &-stats {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 12px;
+      margin-bottom: 6px;
+      opacity: 0.8;
+      .stat {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+    }
     .description-text {
       height: 0;
       white-space: pre-wrap;
@@ -342,6 +389,14 @@ export default Vue.extend({
     top: 0;
     left: 0;
     z-index: 1;
+    // 小封面槽位偏移与间距
+    --slot-offset: calc(var(--main-cover-width) + var(--cover-padding));
+    --slot-step: calc(var(--other-cover-width) + var(--cover-padding));
+  }
+  // 回绕封面两端都在卡片外, 直接瞬移
+  & &-covers.next &-cover:last-child:nth-child(n + 3),
+  & &-covers.prev &-cover:first-child:nth-last-child(n + 3) {
+    transition: none;
   }
   & &-cover {
     @include card(12px);
@@ -350,9 +405,15 @@ export default Vue.extend({
     overflow: hidden;
     top: var(--main-padding-y);
     left: var(--main-padding-x);
-    width: var(--other-cover-width);
-    height: var(--other-cover-height);
-    transition: 0.4s cubic-bezier(0.22, 0.61, 0.36, 1);
+    width: var(--main-cover-width);
+    height: var(--main-cover-height);
+    transform-origin: top left;
+    // 小封面用缩放实现, 边框与圆角除以缩放系数抵消
+    &:not(:nth-child(2)) {
+      border-width: calc(1px / #{$cover-scale-x});
+      border-radius: calc(12px / #{$cover-scale-x});
+    }
+    transition: 0.45s cubic-bezier(0.33, 1, 0.68, 1);
     img {
       transition: 0.2s ease-out;
       object-fit: cover;
@@ -364,23 +425,12 @@ export default Vue.extend({
     }
     &:nth-child(1) {
       opacity: 0;
-      transform: translateX(calc(0px - var(--other-cover-width) - var(--cover-padding)));
-    }
-    &:nth-child(2) {
-      width: var(--main-cover-width);
-      height: var(--main-cover-height);
+      transform: translateX(calc(0px - var(--slot-step))) scale($cover-scale-x, $cover-scale-y);
     }
     @for $i from 3 through 10 {
       &:nth-child(#{$i}) {
-        transform: translateX(
-          calc(
-            var(--main-cover-width) +
-              var(--cover-padding) +
-              #{$i -
-              3} *
-              (var(--other-cover-width) + var(--cover-padding))
-          )
-        );
+        transform: translateX(calc(var(--slot-offset) + #{$i - 3} * var(--slot-step)))
+          scale($cover-scale-x, $cover-scale-y);
       }
     }
   }

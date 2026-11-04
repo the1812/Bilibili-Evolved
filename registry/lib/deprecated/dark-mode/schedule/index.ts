@@ -6,7 +6,7 @@ import {
 import { fullyLoaded } from '@/core/life-cycle'
 import { ComponentSettings, getComponentSettings } from '@/core/settings'
 import { Range } from '@/ui/range'
-import { darkExcludes } from '../dark-urls'
+import { darkExcludes } from '../../../components/style/dark-mode/dark-urls'
 
 class ScheduleTime {
   hour: number

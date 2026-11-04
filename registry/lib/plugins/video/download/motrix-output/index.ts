@@ -12,15 +12,22 @@ export const plugin: PluginMetadata = {
         displayName: 'Motrix',
         description: '调用 Motrix 下载.',
         runAction: async action => {
-          const fragments = action.infos.flatMap(it => it.titledFragments)
+          const urls = action.infos.flatMap(it => it.titledFragments.map(f => f.url))
           try {
-            const params = new URLSearchParams({
-              uris: fragments.map(f => f.url).join('\n'),
-              referer: document.URL.replace(window.location.search, ''),
-            })
-            window.open(`motrix://new-task?${params.toString()}`, '_self')
+            // Motrix 2 的链接只接受单个 uri, 多分段时靠它读取剪贴板自动填入
+            if (urls.length === 1) {
+              window.open(`motrix://new-task?${new URLSearchParams({ uri: urls[0] })}`, '_self')
+              return
+            }
+            await navigator.clipboard.writeText(urls.join('\n'))
+            window.open('motrix://new-task', '_self')
+            Toast.info(
+              `已复制 ${urls.length} 个链接, 新建任务时会自动填入, 未填入请手动粘贴.`,
+              'Motrix',
+              10000,
+            )
           } catch (error) {
-            Toast.error(String(error), '发生错误')
+            Toast.error(`调用 Motrix 失败: ${error}`, 'Motrix')
           }
         },
       })

@@ -61,8 +61,11 @@ export const installPlugin = async (code: string, parsedPlugin?: PluginMetadata)
     try {
       const { loadFeatureCode } = await import('@/core/external-input')
       plugin = loadFeatureCode(code) as PluginMetadata
+      if (typeof plugin?.setup !== 'function') {
+        throw new Error('缺少 setup 方法')
+      }
     } catch (e) {
-      throw new Error('无效的插件代码', e)
+      throw new Error('无效的插件代码', { cause: e })
     }
   }
   const { settings } = await import('@/core/settings')

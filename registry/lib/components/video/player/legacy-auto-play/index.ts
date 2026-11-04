@@ -1,10 +1,10 @@
 import { defineComponentMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
 import { childListSubtree, videoChange } from '@/core/observer'
-import { select } from '@/core/spin-query'
-import { getVue2Data, matchUrlPattern, playerReady } from '@/core/utils'
+import { select, sq } from '@/core/spin-query'
+import { matchUrlPattern, playerReady } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { bangumiUrls, videoUrls } from '@/core/utils/urls'
+import { bangumiUrls, mediaListUrls, videoUrls } from '@/core/utils/urls'
 
 abstract class LegacyAutoPlay {
   async onRightPanelLoaded(callback: (rightPanel: Element) => Promise<void> | void) {
@@ -21,107 +21,119 @@ abstract class LegacyAutoPlay {
     }
     callback(rightPanel)
   }
-  async onVideoChange(callback: (video: HTMLVideoElement) => Promise<void> | void) {
+  async onVideoChange(callback: () => Promise<void> | void) {
     videoChange(async () => {
       const video = (await playerAgent.query.video.element()) as HTMLVideoElement
-      video?.addEventListener('play', () => callback(video), { once: true })
+      video?.addEventListener('play', () => callback(), { once: true })
     })
   }
   abstract setupAutoPlay(): Promise<void>
 }
 
 class VideoLegacyAutoPlay extends LegacyAutoPlay {
-  /** 最后 1P 时不能开启连播 */
+  /** 到达最后一项时关闭连播 */
   readonly disableConditions = [
-    /** 传统分 P */
+    // 新版分 P / 合集
+    () => this.isLastPodItem(),
+    // 旧版分 P
+    () => Boolean(dq(':is(.multi-page, .multi-page-v1) .list-box li.on:last-child')),
+    // 旧版合集
     () =>
       Boolean(
         dq(
-          ':is(.multi-page, .multi-page-v1) .list-box li.on:last-child, .video-pod__list .simple-base-item.active:last-child',
-        ),
-      ),
-    /** 替代分 P 的合集 & 可分子合集的分 P 合集, 布局长得比下面那个丑一点 */
-    () =>
-      Boolean(
-        dq(
-          '.video-sections-item:last-child .video-episode-card:last-child .video-episode-card__info-playing',
-        ),
-      ),
-    /** 可分子合集的合集 */
-    () =>
-      Boolean(
-        dq(
-          '.video-sections-item:last-child .video-episode-card:last-child .video-episode-card__info-title-playing',
+          '.video-sections-item:last-child .video-episode-card:last-child :is(.video-episode-card__info-playing, .video-episode-card__info-title-playing)',
         ),
       ),
   ]
 
+  isLastPodItem() {
+    const [current, total] = (dq('.video-pod__header .amt')?.textContent.match(/\d+/g) ?? []).map(
+      it => parseInt(it),
+    )
+    if (!(current >= total)) {
+      return false
+    }
+    // 合集内嵌分 P 还需判断分集内进度
+    const activePage = dq(
+      '.video-pod__list .page-list > .active, .video-pod__list .page-list > .multip-list-item-active',
+    )
+    return activePage === null || activePage === activePage.parentElement?.lastElementChild
+  }
+
+  /** 媒体列表最后一项是否为当前项 */
+  isLastListItem(item: Element) {
+    const isSingle =
+      item.classList.contains('singlep-list-item-inner') || item.querySelector('.single-p') !== null
+    if (isSingle) {
+      return (
+        item.classList.contains('siglep-active') ||
+        item.querySelector('.simple-base-item.active') !== null
+      )
+    }
+    // 新版分 P 列表在 .page-list, 旧版在 children[1]
+    const pageList = item.querySelector('.page-list') ?? item.children[1]
+    const lastPage = pageList?.lastElementChild
+    return Boolean(
+      lastPage?.classList.contains('active') ||
+        lastPage?.classList.contains('multip-list-item-active'),
+    )
+  }
+
   checkPlayMode(rightPanel: Element) {
     const hasSequentialList = rightPanel.querySelector(
-      '.base-video-sections, .base-video-sections-v1, .multi-page, .multi-page-v1, .multip',
+      '.base-video-sections, .base-video-sections-v1, .multi-page, .multi-page-v1, .multip, .video-pod__list.section',
     )
     const shouldContinue =
       hasSequentialList !== null && this.disableConditions.every(condition => !condition())
     playerAgent.setAutoPlayNextVideo(shouldContinue)
   }
-  async checkPlayListPlayMode(rightPanel: Element) {
+
+  checkPlayListPlayMode(rightPanel: Element) {
     // spell-checker: disable
     const videoSequentialNumber = dq(rightPanel, '.list-count, .video-pod__header .amt')
+    const lastVideoElement = dq(
+      '.action-list .action-list-item-wrap:last-child .singlep-list-item-inner, .action-list .action-list-item-wrap:last-child .multip-list-item-inner, .video-pod__list .pod-item:last-child',
+    )
+    if (videoSequentialNumber === null || lastVideoElement === null) {
+      this.checkPlayMode(rightPanel)
+      return
+    }
     const sequentialNumbers = videoSequentialNumber.innerHTML
       .replace(/[（）]/g, '')
       .split('/')
       .map(it => parseInt(it))
-    const lastVideoElement = dq(
-      '.action-list .action-list-item-wrap:last-child .action-list-item .actionlist-item-inner, .video-pod__list .pod-item:last-child',
-    )
-
-    const isSingleList =
-      lastVideoElement.classList.contains('singlep-list-item-inner') ||
-      lastVideoElement.querySelector('.single-p') !== null
-    const isLastVideo = (() => {
-      if (isSingleList) {
-        return (
-          lastVideoElement.classList.contains('siglep-active') ||
-          lastVideoElement.querySelector('.simple-base-item.active') !== null
-        )
-      }
-      return lastVideoElement.children[1].lastElementChild.classList.contains(
-        'multip-list-item-active',
-      )
-    })()
-
+    const isLastVideo = this.isLastListItem(lastVideoElement)
     const shouldContinue = !(sequentialNumbers[0] >= sequentialNumbers[1] && isLastVideo)
 
     console.log('checkPlayListPlayMode', { isLastVideo, sequentialNumbers, shouldContinue })
-    const app = document.getElementById('app')
-    const vueInstance = getVue2Data(app)
-    vueInstance.setContinuousPlay(shouldContinue)
+    playerAgent.setAutoPlayNextVideo(shouldContinue)
     // spell-checker: enable
   }
 
   async setupAutoPlay() {
     this.onRightPanelLoaded(rightPanel => {
-      const check = () => {
-        const isPlayList = rightPanel.querySelector('.video-pod__list.section')
-        return isPlayList ? this.checkPlayListPlayMode(rightPanel) : this.checkPlayMode(rightPanel)
-      }
+      const check = () =>
+        mediaListUrls.some(url => matchUrlPattern(url))
+          ? this.checkPlayListPlayMode(rightPanel)
+          : this.checkPlayMode(rightPanel)
       childListSubtree(rightPanel, () => check())
-      this.onVideoChange(() => check())
+      this.onVideoChange(check)
     })
   }
 }
 
 class BangumiLegacyAutoPlay extends LegacyAutoPlay {
   async setupAutoPlay() {
-    const autoPlayRadio = (await select(
-      '.bpx-player-ctrl-setting-handoff input[type="radio"][value="0"]',
-    )) as HTMLInputElement
-    if (autoPlayRadio === null) {
+    // 等待 handoff API 就绪
+    const ready = await sq(() =>
+      Boolean(playerAgent.nativeApi?.getHandoff && playerAgent.nanoApi?.HandoffKind),
+    )
+    if (!ready) {
       const console = useScopedConsole('传统连播模式')
-      console.warn('未找到 autoPlayRadio')
+      console.warn('handoff API 未就绪')
       return
     }
-    autoPlayRadio.click()
+    playerAgent.setAutoPlayNextVideo(true)
   }
 }
 
@@ -131,13 +143,8 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.video],
   urlInclude: [...videoUrls, ...bangumiUrls],
   entry: async () => {
-    const legacyAutoPlay = (() => {
-      const isBangumi = bangumiUrls.some(url => matchUrlPattern(url))
-      if (isBangumi) {
-        return new BangumiLegacyAutoPlay()
-      }
-      return new VideoLegacyAutoPlay()
-    })()
+    const isBangumi = bangumiUrls.some(url => matchUrlPattern(url))
+    const legacyAutoPlay = isBangumi ? new BangumiLegacyAutoPlay() : new VideoLegacyAutoPlay()
     await legacyAutoPlay.setupAutoPlay()
   },
 })

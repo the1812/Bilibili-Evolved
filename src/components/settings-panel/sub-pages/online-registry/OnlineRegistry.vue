@@ -71,7 +71,7 @@
   </VPopup>
 </template>
 <script lang="ts">
-import { DocSourceItem } from 'registry/lib/docs'
+import type { DocSourceItem } from '../../../../../registry/lib/docs'
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
@@ -92,7 +92,7 @@ function updateList(keyword: string) {
   }
   this.filteredList = this.list.filter((it: DocSourceItem) => {
     const text = [it.name, it.displayName, it.descriptionText].join('\n').toLowerCase()
-    return text.includes(keyword)
+    return text.includes(keyword.toLowerCase())
   })
   this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
 }

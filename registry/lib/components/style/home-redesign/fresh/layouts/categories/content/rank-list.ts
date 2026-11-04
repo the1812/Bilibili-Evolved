@@ -3,7 +3,6 @@ export interface RankListCard {
   title: string
   videoHref: string
   coverUrl: string
-  upFaceUrl?: string
   upHref: string
   upName: string
   points: number
@@ -36,6 +35,7 @@ export const PGCSeasonTypeMap = {
   documentary: 3,
   guochuang: 4,
   tv: 5,
+  variety: 7,
 }
 export const getDefaultRankListCards = (json: any): RankListCard[] => {
   const items = (lodash.get(json, 'data.list', []) || []) as any[]
@@ -58,7 +58,8 @@ export const getDefaultRankListCards = (json: any): RankListCard[] => {
 export const getBangumiRankListCards = (json: any): RankListCard[] => {
   const items = (lodash.get(json, 'data.list', []) || []) as any[]
   const cards = items.map((item): RankListCard => {
-    const upName = item.new_ep?.index_show ?? item.title
+    // 未开播的季没有正片, new_ep 是空串, 需用 || 兜底
+    const upName = item.new_ep?.index_show || '敬请期待'
     return {
       id: item.season_id,
       title: item.title,
@@ -68,7 +69,7 @@ export const getBangumiRankListCards = (json: any): RankListCard[] => {
       upHref: item.url,
       upName,
       dynamic: upName,
-      coverUrl: item.new_ep?.cover ?? item.ss_horizontal_cover,
+      coverUrl: item.new_ep?.cover || item.ss_horizontal_cover,
       videoHref: item.url,
     }
   })
