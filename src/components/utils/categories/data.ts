@@ -90,18 +90,13 @@ secondaryCategories.forEach(it => {
   }
 })
 export const categories = generalCategories
-export const categoryCodes = Object.fromEntries(mainCategories.map(it => [it.route, it.tid]))
-export const categoryCodesV2 = Object.fromEntries(
-  mainCategories
-    .map(it => {
-      const tid = tidV2.find(t => t.route === it.route)?.tid
-      return [it.route, tid]
-    })
-    .filter(it => it[1] !== undefined),
-)
-export const categoryLinks = Object.fromEntries(
-  Object.values(generalCategories).map(data => [data.icon, data.link]),
-)
+/** 新版分区频道 (tid 1000 段) */
+export const channelsV2 = tidV2.map(it => ({
+  name: it.name,
+  route: it.route,
+  tid: it.tid,
+  link: urlNormalize(it.url),
+}))
 /** 插入主站导航图标 SVG 符号定义 */
 export const addCategoryIcons = async () => {
   if (document.getElementById('be-category-icons')) {
