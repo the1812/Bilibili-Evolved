@@ -11,8 +11,8 @@
     "build-docs": "tsx dev-tools/feature-docs/index.ts",
     "check-pr-files": "tsx dev-tools/pr-check/index.ts",
     "donate-table": "tsx dev-tools/donate-table/index.ts",
-    "lint": "eslint --quiet --fix . --ext .ts,.vue",
-    "lint-check": "eslint . --ext .ts,.vue",
+    "lint": "eslint --quiet --fix . --ext .ts,.mts,.vue",
+    "lint-check": "eslint . --ext .ts,.mts,.vue",
     "type": "tsc -p tsconfig.type-check.json --noEmit"
   },
   "devDependencies": {

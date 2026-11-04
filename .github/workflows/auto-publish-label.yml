@@ -31,9 +31,9 @@ jobs:
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
           AUTO_PUBLISH_PR_NUMBER: ${{ github.event.pull_request.number }}
-        run: node .github/scripts/auto-publish-classify.mjs
+        run: node .github/scripts/auto-publish-classify.mts
       - name: Sync PR label
         env:
           GH_TOKEN: ${{ github.token }}
           PUBLISHABLE: ${{ steps.classify.outputs.publishable }}
-        run: node .github/scripts/auto-publish-label.mjs
+        run: node .github/scripts/auto-publish-label.mts
