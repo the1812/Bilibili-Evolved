@@ -33,6 +33,14 @@ const options = defineOptionsMetadata({
     dropdownEnum: DashCodec,
     displayName: 'DASH 回退编码',
   },
+  classifyAkamaizedCdn: {
+    defaultValue: false,
+    displayName: '区分 Akamaized 源',
+  },
+  warnIfNotPreferred: {
+    defaultValue: true,
+    displayName: '没有偏好源时警告',
+  },
 })
 export type Options = OptionsOfMetadata<typeof options>
 export const component = defineComponentMetadata({

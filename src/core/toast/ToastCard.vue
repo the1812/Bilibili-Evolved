@@ -178,7 +178,9 @@ onMounted(() => {
     top: 5px;
     left: 0;
   }
-  @each $name, $color in (default: #444, error: #f44336, info: #2196f3, success: #8bc34a) {
+  @each $name,
+    $color in (default: #444, error: #f44336, warning: #ff9900, info: #2196f3, success: #8bc34a)
+  {
     &.toast-#{$name} .toast-card-border {
       background-color: $color;
     }

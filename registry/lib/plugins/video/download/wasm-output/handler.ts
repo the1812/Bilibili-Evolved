@@ -45,6 +45,8 @@ async function loadFFmpeg() {
   toast.close()
 }
 
+const httpInit = { headers: { range: 'bytes=0-' } }
+
 async function single(
   name: string,
   videoUrl: string,
@@ -60,8 +62,8 @@ async function single(
 
   const progress = toastProgress(toast)
   const [video, audio] = await Promise.all([
-    httpGet(videoUrl, progress(0, '正在下载视频流')),
-    httpGet(audioUrl, progress(1, '正在下载音频流')),
+    httpGet(videoUrl, progress(0, `正在下载视频流`), httpInit),
+    httpGet(audioUrl, progress(1, `正在下载音频流`), httpInit),
   ])
 
   let cover: Uint8Array

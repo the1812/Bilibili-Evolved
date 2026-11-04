@@ -35,8 +35,8 @@ function parseContentLength(response: Response) {
     : parseInt(response.headers.get('Content-Length'))
 }
 
-export async function httpGet(url: string, onprogress: OnProgress) {
-  const response = await fetch(url)
+export async function httpGet(url: string, onprogress: OnProgress, init: RequestInit = {}) {
+  const response = await fetch(url, init)
   if (!response.ok) {
     throw new Error(`${response.status} ${response.statusText}`)
   }
@@ -84,7 +84,7 @@ export async function httpGet(url: string, onprogress: OnProgress) {
 
 export async function getContentLength(url: string) {
   try {
-    const response = await fetch(url, { method: 'HEAD' })
+    const response = await fetch(url, { method: 'HEAD', headers: { range: 'bytes=0-' } })
     return response.ok ? parseContentLength(response) : -1
   } catch (_) {
     return -1

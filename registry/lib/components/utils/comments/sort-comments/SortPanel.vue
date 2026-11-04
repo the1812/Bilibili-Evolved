@@ -1,36 +1,67 @@
 <template>
   <div
+    v-show="panelVisible"
     class="sort-comments-panel"
-    :class="{ hidden: !panelVisible, dragging: isDragging }"
+    :class="{ minimized, dragging: isDragging }"
     :style="{
       right: posRight + 'px',
       bottom: posBottom + 'px',
-      transform: 'scale(' + panelScale + ')',
+      transform: 'scale(' + (minimized ? 1 : panelScale) + ')',
       transformOrigin: 'right bottom',
     }"
+    @keydown.enter.stop
   >
-    <div class="panel-header" @mousedown="startDrag">评论排序</div>
-    <div class="panel-modes">
-      <button
-        v-for="mode in modeGroups"
-        :key="mode.key"
-        class="panel-btn"
-        :class="{ active: isGroupActive(mode.key) }"
-        @click="handleModeClick(mode.key)"
-      >
-        {{ getModeLabel(mode.key) }}
-      </button>
-    </div>
-    <div class="panel-toggle" @click="toggleAuto">
-      <span class="dot" :class="{ manual: !autoSort }" />
-      <span>{{ autoSort ? '自动排序' : '点击排序' }}</span>
-    </div>
-    <div class="resize-handle" @mousedown="startResize" />
+    <button
+      v-if="minimized"
+      ref="restoreButton"
+      type="button"
+      class="panel-restore"
+      title="展开评论排序"
+      aria-label="展开评论排序"
+      aria-expanded="false"
+      @click="toggleMinimized"
+    >
+      <VIcon icon="mdi-sort" :size="24" aria-hidden="true" />
+    </button>
+    <template v-else>
+      <div class="panel-header" @mousedown="startDrag">
+        <span class="panel-title">评论排序</span>
+        <button
+          ref="minimizeButton"
+          type="button"
+          class="panel-minimize"
+          title="最小化评论排序"
+          aria-label="最小化评论排序"
+          aria-expanded="true"
+          @mousedown.stop
+          @click="toggleMinimized"
+        >
+          <VIcon icon="mdi-minus" :size="18" aria-hidden="true" />
+        </button>
+      </div>
+      <div class="panel-modes">
+        <button
+          v-for="mode in modeGroups"
+          :key="mode.key"
+          class="panel-btn"
+          :class="{ active: isGroupActive(mode.key) }"
+          @click="handleModeClick(mode.key)"
+        >
+          {{ getModeLabel(mode.key) }}
+        </button>
+      </div>
+      <div class="panel-toggle" @click="toggleAuto">
+        <span class="dot" :class="{ manual: !autoSort }" />
+        <span>{{ autoSort ? '自动排序' : '点击排序' }}</span>
+      </div>
+      <div class="resize-handle" @mousedown="startResize" />
+    </template>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { VIcon } from '@/ui'
 import { CommentSortMode } from './options'
 
 const MODE_GROUPS = [
@@ -50,11 +81,13 @@ const GROUP_LABELS: Record<string, string> = {
 const STORAGE_KEY = 'sort-comments-panel'
 
 export default defineComponent({
+  components: { VIcon },
   data() {
     return {
       currentMode: CommentSortMode.Default as string,
       autoSort: true,
       panelVisible: true,
+      minimized: false,
       modeGroups: MODE_GROUPS as typeof MODE_GROUPS,
       posRight: 20,
       posBottom: 120,
@@ -63,8 +96,16 @@ export default defineComponent({
       isResizing: false,
     }
   },
+  watch: {
+    panelVisible(visible: boolean) {
+      if (visible) {
+        this.$nextTick(this.clampPosition)
+      }
+    },
+  },
   mounted() {
-    this.loadPosition()
+    this.loadPanelState()
+    this.$nextTick(this.clampPosition)
     this.onWindowResize = () => {
       this.clampPosition()
     }
@@ -74,24 +115,29 @@ export default defineComponent({
     window.removeEventListener('resize', this.onWindowResize)
   },
   methods: {
-    loadPosition() {
+    loadPanelState() {
       try {
         const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')
-        if (typeof saved.right === 'number') {
+        if (!saved || typeof saved !== 'object') {
+          return
+        }
+        if (Number.isFinite(saved.right)) {
           this.posRight = saved.right
         }
-        if (typeof saved.bottom === 'number') {
+        if (Number.isFinite(saved.bottom)) {
           this.posBottom = saved.bottom
         }
-        if (typeof saved.scale === 'number') {
+        if (Number.isFinite(saved.scale)) {
           this.panelScale = Math.max(0.5, Math.min(2, saved.scale))
+        }
+        if (typeof saved.minimized === 'boolean') {
+          this.minimized = saved.minimized
         }
       } catch {
         // ignore
       }
-      this.clampPosition()
     },
-    savePosition() {
+    savePanelState() {
       try {
         localStorage.setItem(
           STORAGE_KEY,
@@ -99,6 +145,7 @@ export default defineComponent({
             right: this.posRight,
             bottom: this.posBottom,
             scale: this.panelScale,
+            minimized: this.minimized,
           }),
         )
       } catch {
@@ -106,8 +153,26 @@ export default defineComponent({
       }
     },
     clampPosition() {
-      this.posRight = Math.max(0, Math.min(window.innerWidth - 50, this.posRight))
-      this.posBottom = Math.max(0, Math.min(window.innerHeight - 50, this.posBottom))
+      if (!this.panelVisible) {
+        return
+      }
+      const { width, height } = (this.$el as HTMLElement).getBoundingClientRect()
+      // Keep the header controls reachable even when the scaled panel exceeds the viewport.
+      this.posRight = Math.max(0, Math.min(window.innerWidth - width, this.posRight))
+      this.posBottom = Math.min(Math.max(0, this.posBottom), window.innerHeight - height)
+    },
+    toggleMinimized() {
+      this.minimized = !this.minimized
+      this.$nextTick(() => {
+        this.clampPosition()
+        this.savePanelState()
+        if (this.panelVisible) {
+          const button = this.$refs[
+            this.minimized ? 'restoreButton' : 'minimizeButton'
+          ] as HTMLButtonElement
+          button?.focus({ preventScroll: true })
+        }
+      })
     },
     startDrag(e: MouseEvent) {
       if ((e.target as HTMLElement).closest('.panel-btn, .panel-toggle, .resize-handle')) {
@@ -134,7 +199,7 @@ export default defineComponent({
         this.isDragging = false
         document.removeEventListener('mousemove', onMove)
         document.removeEventListener('mouseup', onEnd)
-        this.savePosition()
+        this.savePanelState()
       }
       document.addEventListener('mousemove', onMove)
       document.addEventListener('mouseup', onEnd)
@@ -154,7 +219,10 @@ export default defineComponent({
         this.isResizing = false
         document.removeEventListener('mousemove', onMove)
         document.removeEventListener('mouseup', onEnd)
-        this.savePosition()
+        this.$nextTick(() => {
+          this.clampPosition()
+          this.savePanelState()
+        })
       }
       document.addEventListener('mousemove', onMove)
       document.addEventListener('mouseup', onEnd)
@@ -227,18 +295,53 @@ export default defineComponent({
 .sort-comments-panel.dragging {
   transition: none;
 }
-.sort-comments-panel.hidden {
-  opacity: 0;
-  pointer-events: none;
+.sort-comments-panel.minimized {
+  min-width: 0;
+  padding: 0;
+  gap: 0;
+  border-radius: 50%;
 }
 .panel-header {
+  display: flex;
+  align-items: center;
   font-weight: 600;
   font-size: 12px;
-  opacity: 0.7;
   text-align: center;
   letter-spacing: 1px;
   cursor: move;
   padding: 2px 0;
+}
+.panel-title {
+  flex: 1;
+}
+.panel-minimize,
+.panel-restore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: none;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+  &:hover {
+    background: var(--panel-btn-bg-hover);
+  }
+  &:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}
+.panel-minimize {
+  padding: 4px;
+  border-radius: 4px;
+}
+.panel-restore {
+  box-sizing: border-box;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  border-radius: 50%;
 }
 .panel-modes {
   display: flex;

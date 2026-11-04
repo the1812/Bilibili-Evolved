@@ -1,0 +1,503 @@
+@import 'common';
+
+$header-height: 64px;
+$sticky-top: $header-height + 8px;
+$up-list-width: 220px;
+$gap: 16px;
+$card-min-width: 240px;
+$sidebar-offset: 24px;
+$radius: 8px;
+$hover-background: #8882;
+// 半透明灰色在浅色和深色背景上都不突兀
+$scrollbar-thumb: #8886;
+// `round-bar()` 接收无单位数值
+$up-pill-height: 24;
+// 原生头像为 48px, 缩放为 18px
+$avatar-native-size: 48px;
+$up-face-scale: 0.375;
+$up-face-size: $avatar-native-size * $up-face-scale;
+$up-face-offset: ($up-pill-height * 1px - $up-face-size) * 0.5;
+$card-padding: 12px;
+$card-bottom-padding: 10px;
+$layout: 'html.be-feeds-video-waterfall body';
+
+// 选择器以 `html.<状态类> body` 开头, `_common.scss` 的 `card()` / `shadow()` 生成的 `body.dark &` 无法匹配,
+// 所以把 `body` 替换为 `body.dark` 来实现深色模式
+@mixin dark {
+  @at-root #{selector-replace(&, 'body', 'body.dark')} {
+    @content;
+  }
+}
+// 与 `_common.scss` 的 `card()` 外观一致, 浅色下沿用 B 站自身的颜色变量以兼容其深色主题
+@mixin waterfall-card {
+  background-color: var(--bg1, #fff) !important;
+  color: var(--text1, #000);
+  border-radius: $radius !important;
+  border: 1px solid #8882 !important;
+  box-sizing: border-box;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
+  @include dark {
+    background-color: var(--be-color-card-bg, #282828) !important;
+    color: var(--be-color-text-title, #eee);
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.2);
+  }
+}
+
+// 选择器带上 `body #app` 以覆盖 `自定义动态页内容宽度` / `强制固定动态侧栏` 对主栏宽度的设置
+#{$layout} #app .bili-dyn-home--member {
+  justify-content: flex-start;
+  padding: 0 $sidebar-offset;
+  box-sizing: border-box;
+
+  > aside {
+    display: none !important;
+  }
+  > main {
+    display: flex;
+    align-items: flex-start;
+    gap: $gap;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto !important;
+    margin: 0 !important;
+
+    > section {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+    > section:has(> .bili-dyn-publishing) {
+      display: none;
+    }
+    > section:has(> .bili-dyn-up-list) {
+      order: -1;
+      flex: 0 0 $up-list-width;
+      position: sticky;
+      top: $sticky-top;
+    }
+  }
+
+  // 选中单个 UP 主时没有标签栏, 列表混有非视频动态, 保持单列
+  .bili-dyn-list:first-child {
+    max-width: var(--be-feeds-content-width, 724px);
+    margin: 0 auto;
+  }
+}
+
+html.be-feeds-video-waterfall.be-feeds-video-waterfall-publishing
+  body
+  #app
+  .bili-dyn-home--member
+  > main
+  > section:has(> .bili-dyn-publishing) {
+  display: block;
+  // 表情 / 话题等面板会在发动态框下方展开, 所以放在顶部而不是贴着右下角的按钮
+  position: fixed;
+  top: $sticky-top + $gap;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001;
+  flex: none;
+  width: 556px;
+  border: 1px solid #8882;
+  border-radius: $radius;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+}
+
+// 左侧 UP 主列表
+#{$layout} .bili-dyn-up-list {
+  @include waterfall-card();
+  height: calc(100vh - #{$sticky-top} - #{$gap});
+  padding: 6px 0;
+
+  &__nav,
+  &__content > .shim {
+    display: none !important;
+  }
+  // 滚动条平时透明, 鼠标移入列表时才显示; 滑块一直占位, 所以显示时列表不会抖动
+  &__window {
+    width: 100%;
+    height: 100%;
+    padding: 0 !important;
+    overflow: hidden auto !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: transparent transparent !important;
+    transition: scrollbar-color 0.2s ease-out;
+
+    &:hover {
+      scrollbar-color: $scrollbar-thumb transparent !important;
+    }
+    // 不支持 `scrollbar-color` 的旧版 Chromium
+    &::-webkit-scrollbar {
+      width: 4px !important;
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent !important;
+    }
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background: transparent !important;
+    }
+    &:hover::-webkit-scrollbar-thumb {
+      background: $scrollbar-thumb !important;
+    }
+  }
+  &__content {
+    flex-direction: column;
+    gap: 2px;
+    width: auto !important;
+    transform: none !important;
+  }
+  &__item {
+    @include h-center(10px);
+    flex-direction: row !important;
+    flex-shrink: 0;
+    width: auto !important;
+    height: 40px !important;
+    padding: 0 10px !important;
+    margin: 0 6px !important;
+    border-radius: 6px;
+    box-sizing: border-box;
+    color: inherit;
+    cursor: pointer;
+    @include default-transition(background-color);
+
+    &:hover {
+      background-color: $hover-background;
+    }
+    &:hover,
+    &.active {
+      .bili-dyn-up-list__item__name {
+        color: var(--theme-color) !important;
+      }
+    }
+    &.active {
+      background-color: var(--theme-color-10);
+
+      .bili-dyn-up-list__item__name {
+        @include semi-bold();
+      }
+      .bili-dyn-up-list__item__face {
+        box-shadow: 0 0 0 2px var(--theme-color) !important;
+      }
+    }
+  }
+  &__item__face {
+    flex-shrink: 0;
+    width: 28px !important;
+    height: 28px !important;
+    margin: 0 !important;
+    border: none !important;
+    box-shadow: 0 0 0 1px #8882 !important;
+
+    .b-img,
+    img {
+      width: 100% !important;
+      height: 100% !important;
+    }
+    // 更新提示圆点
+    > span {
+      top: auto !important;
+      bottom: -2px;
+      left: auto !important;
+      right: -2px;
+      background-color: var(--theme-color) !important;
+      border-color: var(--bg1, #fff) !important;
+      @include dark {
+        border-color: var(--be-color-card-bg, #282828) !important;
+      }
+    }
+  }
+  &__item__name {
+    display: block !important;
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    color: inherit !important;
+    font-size: 13px !important;
+    line-height: 18px !important;
+    text-align: left !important;
+    -webkit-line-clamp: 1 !important;
+    @include single-line();
+  }
+}
+
+// 只有标签栏存在时 (即确实处于「视频投稿」标签页) 才使用网格布局
+#{$layout} .bili-dyn-list-tabs {
+  @include waterfall-card();
+}
+#{$layout} .bili-dyn-list-tabs + .bili-dyn-list {
+  margin-top: 12px;
+
+  .bili-dyn-list__items {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax($card-min-width, 1fr));
+    gap: $gap;
+  }
+  .bili-dyn-list__item {
+    width: auto !important;
+    min-width: 0;
+    margin: 0 !important;
+
+    &:not(:has(.bili-dyn-item__main)) {
+      display: none;
+    }
+  }
+  // 不能设置 overflow: hidden, 否则「更多」菜单会被裁掉
+  .bili-dyn-item {
+    @include waterfall-card();
+    height: 100%;
+    min-width: 0 !important;
+  }
+  .bili-dyn-item__main {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0 !important;
+  }
+  .bili-dyn-item__ornament,
+  .bili-dyn-item__footer,
+  .bili-dyn-item__interaction,
+  .bili-dyn-item-fold,
+  .bili-dyn-content__orig > :not(.bili-dyn-content__orig__major),
+  .bili-dyn-card-video__desc {
+    display: none !important;
+  }
+  .bili-dyn-item__body {
+    order: 1;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bili-dyn-content__orig__major {
+    margin: 0 !important;
+  }
+
+  // 视频卡片: 封面在上, 标题和播放数据在下
+  .bili-dyn-card-video {
+    flex-direction: column;
+    width: auto !important;
+    height: auto !important;
+    color: inherit;
+    border: none !important;
+    border-radius: 0 !important;
+    background: none !important;
+
+    &:hover {
+      .bili-dyn-card-video__title {
+        color: var(--theme-color) !important;
+      }
+      .bili-dyn-card-video__cover .b-img {
+        transform: scale(1.05);
+      }
+    }
+  }
+  .bili-dyn-card-video__header {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    border-radius: ($radius - 1px) ($radius - 1px) 0 0;
+    overflow: hidden;
+  }
+  .bili-dyn-card-video__cover {
+    width: 100% !important;
+    height: 100% !important;
+    border-radius: 0 !important;
+
+    .b-img {
+      transition: transform 0.2s ease-out;
+    }
+  }
+  .bili-dyn-card-video__cover-shadow {
+    background: none !important;
+  }
+  .duration-time {
+    top: auto !important;
+    right: 6px !important;
+    bottom: 6px !important;
+    left: auto !important;
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    background-color: #000a;
+    color: #fff !important;
+    font-size: 12px !important;
+    line-height: 20px !important;
+  }
+  .bili-dyn-card-video__body {
+    position: static !important;
+    width: auto !important;
+    height: auto !important;
+    padding: 8px $card-padding 0 !important;
+    border: none !important;
+    background: none !important;
+  }
+  .bili-dyn-card-video__title {
+    width: auto !important;
+    height: auto !important;
+    margin: 0 !important;
+    color: inherit !important;
+    font-size: 14px !important;
+    @include semi-bold();
+    @include max-line(2);
+    min-height: 3em;
+    transition: color 0.2s ease-out;
+  }
+  .bili-dyn-card-video__stat {
+    @include h-center(12px);
+    position: static !important;
+    width: auto !important;
+    margin: 4px 0 0 !important;
+    color: inherit !important;
+    font-size: 12px !important;
+    opacity: 0.5;
+  }
+  .bili-dyn-card-video__stat__item {
+    @include h-center(2px);
+    width: auto !important;
+    margin: 0 !important;
+    color: inherit !important;
+
+    svg {
+      color: inherit !important;
+      fill: currentColor !important;
+    }
+  }
+
+  // 底部: UP 主胶囊 (头像 + 名称), 发布时间, 更多菜单
+  .bili-dyn-item__header {
+    @include h-center(8px);
+    order: 2;
+    height: auto !important;
+    margin-top: auto;
+    padding: 8px 8px $card-bottom-padding $card-padding !important;
+  }
+  .bili-dyn-title {
+    @include h-center();
+    @include round-bar($up-pill-height);
+    flex: 0 1 auto;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 10px 0 ($up-face-offset + $up-face-size + 6px);
+    border: 1px solid #8882;
+    @include default-transition(background-color);
+
+    &:hover {
+      background-color: $hover-background;
+    }
+  }
+  .bili-dyn-item__main:has(.bili-dyn-item__avatar:hover) .bili-dyn-title {
+    background-color: $hover-background;
+  }
+  .bili-dyn-title:hover,
+  .bili-dyn-item__main:has(.bili-dyn-item__avatar:hover) .bili-dyn-title {
+    .bili-dyn-title__text {
+      color: var(--theme-color) !important;
+    }
+  }
+  .bili-dyn-title__text {
+    display: block;
+    height: auto !important;
+    color: inherit !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    line-height: 18px !important;
+    @include single-line();
+  }
+  // 头像缩小后叠放在 UP 主胶囊的左侧
+  .bili-dyn-item__avatar {
+    // 原生为居中的 flex 容器, 会让缩放前的 48px 头像向左上偏移
+    display: block !important;
+    position: absolute !important;
+    top: auto !important;
+    left: $card-padding + $up-face-offset !important;
+    bottom: $card-bottom-padding + $up-face-offset !important;
+    z-index: 1;
+    width: $up-face-size !important;
+    height: $up-face-size !important;
+    border-radius: 50%;
+    overflow: hidden;
+
+    .bili-dyn-avatar {
+      transform: scale($up-face-scale);
+      transform-origin: 0 0;
+    }
+    // 挂件 / 认证标记
+    .b-avatar__layer:not(.center),
+    .b-avatar__pendent {
+      display: none !important;
+    }
+  }
+  .bili-dyn-item__desc {
+    display: block !important;
+    flex: 1 1 0;
+    min-width: 0;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .bili-dyn-time {
+    display: block !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    color: inherit !important;
+    font-size: 12px !important;
+    line-height: 18px !important;
+    opacity: 0.5;
+    @include single-line();
+  }
+  .bili-dyn-item__more {
+    position: relative !important;
+    top: 0 !important;
+    right: 0 !important;
+    flex: 0 0 auto;
+    width: 24px;
+    height: 24px;
+  }
+  // 只淡化按钮图标, 不影响展开的菜单
+  .bili-dyn-more__btn {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    color: inherit !important;
+
+    > svg {
+      opacity: 0.5;
+      transition: opacity 0.2s ease-out, color 0.2s ease-out;
+    }
+    &:hover > svg {
+      color: var(--theme-color);
+    }
+  }
+  .bili-dyn-item:hover .bili-dyn-more__btn > svg {
+    opacity: 1;
+  }
+}
+
+.bili-dyn-sidebar .be-feeds-video-waterfall-publish {
+  display: none;
+}
+html.be-feeds-video-waterfall {
+  .bili-dyn-sidebar {
+    top: auto !important;
+    right: $sidebar-offset !important;
+    bottom: $sidebar-offset !important;
+    left: auto !important;
+    transform: none !important;
+
+    .be-feeds-video-waterfall-publish {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover,
+      &.active {
+        color: var(--brand_blue, #00aeec);
+      }
+    }
+  }
+}
