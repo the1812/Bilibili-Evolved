@@ -30,7 +30,7 @@
             主页
           </VButton>
         </a>
-        <VButton class="feedback script-link" @click="openFeedback">
+        <VButton class="feedback script-link" @click="openFeedback()">
           <VIcon icon="mdi-message-text-outline" :size="18" />
           反馈
         </VButton>
@@ -76,19 +76,8 @@
 import { meta } from '@/core/meta'
 import { formatDateTime } from '@/core/utils/formatters'
 import { VButton, VIcon } from '@/ui'
+import { feedbackSupported, openFeedback } from '../feedback'
 import { AboutPageAction, aboutPageActions } from './about-page'
-import { openFeedback } from './feedback'
-
-const feedbackSupported = (() => {
-  const namespace = GM_info.scriptMetaStr.match(/@namespace\s*(.+)/)
-  if (!namespace || !namespace[1]) {
-    return true
-  }
-  if (namespace[1].includes('greasyfork')) {
-    return false
-  }
-  return true
-})()
 
 export default Vue.extend({
   components: {

@@ -4,6 +4,7 @@ import { getHook } from '@/plugins/hook'
 import { isUserComponent } from '@/core/settings'
 import { ComponentMetadata } from '../../types'
 import { uninstallComponent } from '../../user-component'
+import { feedbackSupported, openFeedback } from '../feedback'
 
 export interface ComponentConfigAction {
   name: string
@@ -71,6 +72,13 @@ const builtInActions: ComponentAction[] = [
     icon: 'mdi-import',
     shiftIcon: 'mdi-content-paste',
     title: '从文件导入当前组件的选项, 按住 Shift 点击可从剪贴板粘贴',
+  }),
+  metadata => ({
+    name: 'feedback',
+    displayName: '反馈',
+    icon: 'mdi-message-text-outline',
+    visible: feedbackSupported,
+    action: () => openFeedback(metadata),
   }),
 ]
 export const [componentActions] = registerAndGetData(
