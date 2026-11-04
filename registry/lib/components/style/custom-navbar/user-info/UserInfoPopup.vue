@@ -9,7 +9,7 @@
         <div
           class="b-coin"
           :class="{ received: privileges.bCoin.received }"
-          :title="'有效期限: ' + privileges.bCoin.expire"
+          :title="privileges.bCoin.title"
           @click="privilegeReceive(1)"
         >
           {{ privileges.bCoin.received ? '已领取B币' : '领取B币' }}
@@ -17,7 +17,7 @@
         <div
           class="coupons"
           :class="{ received: privileges.coupons.received }"
-          :title="'有效期限: ' + privileges.coupons.expire"
+          :title="privileges.coupons.title"
           @click="privilegeReceive(2)"
         >
           {{ privileges.coupons.received ? '已领取优惠券' : '领取优惠券' }}
@@ -155,7 +155,7 @@
 </template>
 
 <script lang="ts">
-import { getUID, getCsrf, formData } from '@/core/utils'
+import { getUID, getCsrf } from '@/core/utils'
 import { formatCount } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
 import { getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
@@ -163,6 +163,28 @@ import { getUserInfo } from '@/core/user-info'
 import { popperMixin } from '../mixins'
 
 type PrivilegeType = 1 | 2
+interface PrivilegeItem {
+  type: PrivilegeType
+  state: number
+  expire_time: number
+  next_receive_days: number
+  period_end_unix: number
+}
+
+const formatDate = (timestamp: number) => new Date(timestamp * 1000).toLocaleDateString()
+// 未领取时接口的 expire_time 只是本期截止, 不代表券已到期
+const privilegeTitle = (item?: PrivilegeItem) => {
+  if (item?.state !== 1) {
+    return ''
+  }
+  if (item.expire_time) {
+    return `有效期限: ${formatDate(item.expire_time)}`
+  }
+  return item.next_receive_days > 0 && item.period_end_unix
+    ? `${formatDate(item.period_end_unix)} 可再次领取`
+    : ''
+}
+
 export default Vue.extend({
   components: {
     VIcon: coreApis.ui.VIcon,
@@ -173,17 +195,17 @@ export default Vue.extend({
   mixins: [popperMixin],
   data() {
     return {
-      userInfo: {},
-      stat: {},
+      userInfo: {} as Record<string, any>,
+      stat: {} as Record<string, any>,
       isLogin: Boolean(getUID()),
       privileges: {
         bCoin: {
           received: false,
-          expire: '',
+          title: '',
         },
         coupons: {
           received: false,
-          expire: '',
+          title: '',
         },
       },
     }
@@ -234,49 +256,53 @@ export default Vue.extend({
     this.userInfo = userInfo
     const json = await getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav/stat')
     this.stat = json.data || {}
-    if (this.isLogin && this.userInfo.vipType === 2) {
+    if (this.isLogin && this.userInfo.vipStatus === 1 && this.userInfo.vipType === 2) {
       // 年度大会员权益
-      const privileges = await getJsonWithCredentials('https://api.bilibili.com/x/vip/privilege/my')
-      if (privileges.code === 0) {
-        const bCoin = privileges.data.list.find((it: { type: PrivilegeType }) => it.type === 1)
-        this.privileges.bCoin.received = bCoin.state === 1
-        this.privileges.bCoin.expire = new Date(bCoin.expire_time * 1000).toLocaleDateString()
-        const coupons = privileges.data.list.find((it: { type: PrivilegeType }) => it.type === 2)
-        this.privileges.coupons.received = coupons.state === 1
-        this.privileges.coupons.expire = new Date(coupons.expire_time * 1000).toLocaleDateString()
-      }
+      await this.refreshPrivileges()
     }
   },
   methods: {
+    async refreshPrivileges() {
+      const { code, data } = await getJsonWithCredentials(
+        'https://api.bilibili.com/x/vip/privilege/my',
+      )
+      if (code !== 0) {
+        return
+      }
+      const findPrivilege = (type: PrivilegeType) =>
+        data.list?.find((it: PrivilegeItem) => it.type === type)
+      const bCoin = findPrivilege(1)
+      const coupons = findPrivilege(2)
+      this.privileges.bCoin.received = bCoin?.state === 1
+      this.privileges.bCoin.title = privilegeTitle(bCoin)
+      this.privileges.coupons.received = coupons?.state === 1
+      this.privileges.coupons.title = privilegeTitle(coupons)
+    },
     async privilegeReceive(type: PrivilegeType) {
       const typeMapping = {
         1: 'bCoin',
         2: 'coupons',
       }
-      if (this.privileges[typeMapping[type]].received) {
+      const key = typeMapping[type]
+      if (this.privileges[key].received) {
         return
       }
-      this.privileges[typeMapping[type]].received = true
       const csrf = getCsrf()
-      const result = await (
-        await fetch('https://api.bilibili.com/x/vip/privilege/receive', {
-          credentials: 'include',
-          headers: { 'content-type': 'application/x-www-form-urlencoded' },
-          body: `type=${type}&csrf=${csrf}`,
-          method: 'POST',
-        })
-      ).json()
+      const response = await postTextWithCredentials(
+        'https://api.bilibili.com/x/vip/privilege/receive',
+        new URLSearchParams({ type: `${type}`, csrf }),
+      )
+      const result = JSON.parse(response)
       console.log(result)
       if (result.code === 0) {
-        if (typeMapping[type] === 'bCoin') {
+        if (key === 'bCoin') {
           this.userInfo.wallet.bcoin_balance += 5
         }
-      } else if (result.code === 69801) {
-        // 已领过
-      } else {
-        this.privileges[typeMapping[type]].received = false
+      } else if (result.code !== 69801) {
+        // 69801 为已领过
         logError(result.message)
       }
+      await this.refreshPrivileges()
     },
     async logout() {
       /** b 站 源 码
@@ -311,9 +337,7 @@ export default Vue.extend({
        */
       const response = await postTextWithCredentials(
         'https://passport.bilibili.com/login/exit/v2',
-        formData({
-          biliCSRF: getCsrf(),
-        }),
+        new URLSearchParams({ biliCSRF: getCsrf() }),
       )
       const url = lodash.get(JSON.parse(response), 'data.redirectUrl', '')
       if (url) {
