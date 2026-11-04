@@ -1,6 +1,8 @@
 <template>
   <MiniToast
     class="online-registry-item-wrapper"
+    theme="online-registry"
+    v-bind="{ popperOptions }"
     :placement="placement"
     container="body"
     :delay="[200, 0]"
@@ -45,7 +47,7 @@
   </MiniToast>
 </template>
 <script lang="ts">
-import { DocSourceItem } from 'registry/lib/docs'
+import type { DocSourceItem } from '../../../../../registry/lib/docs'
 import { cdnRoots } from '@/core/cdn-types'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
@@ -93,6 +95,10 @@ const typeMappings = {
     isInstalled: (pack: PackItem) => pack.items.every(isFeatureInstalled),
   },
 }
+// 开启侧轴钳制并关闭 tether, 避免提示框跟随条目滚出视口时将页面撑高
+const popperOptions = {
+  modifiers: [{ name: 'preventOverflow', options: { altAxis: true, tether: false } }],
+}
 export default Vue.extend({
   components: { VIcon, VButton, MiniToast, ComponentDescription },
   props: {
@@ -120,6 +126,7 @@ export default Vue.extend({
       installed: false,
       virtual: false,
       placement: 'right',
+      popperOptions,
     }
   },
   computed: {
@@ -248,5 +255,12 @@ export default Vue.extend({
   font-size: 13px;
   @include markdown();
   word-break: break-all;
+}
+.tippy-box[data-theme~='online-registry'] {
+  .tippy-content {
+    max-height: calc(100vh - 14px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 </style>
