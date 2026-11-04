@@ -1,7 +1,6 @@
 import { parse } from '@babel/parser'
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
-import { readFileSync } from 'fs'
 import { FeatureMetadata } from './types'
 
 export const isRegistryFeatureIndex = (filePath: string) =>
@@ -42,8 +41,7 @@ const getStringProperty = (objectExpression: t.ObjectExpression, propertyName: s
   return property.value.value
 }
 
-export const getFeatureMetadata = (filePath: string): FeatureMetadata | undefined => {
-  const content = readFileSync(filePath, 'utf8')
+export const parseFeatureMetadata = (content: string): FeatureMetadata | undefined => {
   const ast = parse(content, {
     plugins: ['typescript'],
     sourceType: 'module',

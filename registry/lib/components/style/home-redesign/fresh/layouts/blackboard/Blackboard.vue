@@ -53,7 +53,12 @@
 </template>
 <script lang="ts">
 import { VButton, VIcon, DpiImage } from '@/ui'
+import { addComponentListener } from '@/core/settings'
 import { getBlackboards } from './api'
+
+const autoPlayInterval = 5000
+const wheelInterval = 400
+const radioSelector = '.fresh-home-blackboard-radio'
 
 export default Vue.extend({
   components: {
@@ -78,29 +83,53 @@ export default Vue.extend({
   },
   mounted() {
     this.createTimer()
+    const cards = this.cardsContainer as HTMLElement
+    let lastWheelTime = 0
+    const handleWheel = (e: WheelEvent) => {
+      if (!e.deltaY || e.deltaX) {
+        return
+      }
+      e.preventDefault()
+      if (e.timeStamp - lastWheelTime >= wheelInterval) {
+        lastWheelTime = e.timeStamp
+        this.stepCard(e.deltaY > 0 ? 1 : -1)
+      }
+    }
+    addComponentListener(
+      'freshHome.horizontalWheelScroll',
+      (scroll: boolean) => {
+        if (scroll) {
+          cards.addEventListener('wheel', handleWheel, { passive: false })
+        } else {
+          cards.removeEventListener('wheel', handleWheel)
+        }
+      },
+      true,
+    )
   },
   beforeDestroy() {
     this.destroyTimer()
   },
   methods: {
+    stepCard(offset: number) {
+      const count = this.blackboards.length
+      if (count === 0) {
+        return
+      }
+      const current = parseInt(dq(`${radioSelector}:checked`).getAttribute('data-index'))
+      const target = (current + offset + count) % count
+      ;(dq(`${radioSelector}[data-index='${target}']`) as HTMLInputElement).checked = true
+    },
     createTimer() {
       if (this.timer) {
         return
       }
-      const radioClass = 'fresh-home-blackboard-radio'
       this.timer = window.setInterval(() => {
         if (!document.hasFocus() || this.$el.matches(':hover')) {
           return
         }
-        const currentIndex = parseInt(dq(`.${radioClass}:checked`).getAttribute('data-index'))
-        let targetIndex: number
-        if (currentIndex === this.blackboards.length - 1) {
-          targetIndex = 0
-        } else {
-          targetIndex = currentIndex + 1
-        }
-        ;(dq(`.${radioClass}[data-index='${targetIndex}']`) as HTMLInputElement).checked = true
-      }, 5000)
+        this.stepCard(1)
+      }, autoPlayInterval)
     },
     destroyTimer() {
       if (!this.timer) {
@@ -115,6 +144,7 @@ export default Vue.extend({
 <style lang="scss">
 @import 'common';
 
+$card-transition-duration: 0.8s;
 $max-card-count: 16;
 .fresh-home {
   &-blackboard {
@@ -143,7 +173,7 @@ $max-card-count: 16;
       height: 100%;
       position: relative;
       display: block;
-      transition: 0.8s cubic-bezier(0.44, 0.29, 0.13, 1);
+      transition: $card-transition-duration cubic-bezier(0.44, 0.29, 0.13, 1);
       &,
       body.dark &,
       &:hover {

@@ -1,9 +1,22 @@
 import { $ } from 'zx'
 import { readFileSync } from 'node:fs'
 
-const { pull_request: expected } = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8'))
+interface PullRequestSnapshot {
+  number: number
+  head: { sha: string }
+  base: { ref: string; sha: string }
+}
+
+interface PullRequest extends PullRequestSnapshot {
+  state: string
+  labels: { name: string }[]
+}
+
+const { pull_request: expected } = JSON.parse(
+  readFileSync(process.env.GITHUB_EVENT_PATH as string, 'utf8'),
+) as { pull_request: PullRequestSnapshot }
 const repository = process.env.GITHUB_REPOSITORY
-const pr = await $`gh api ${`repos/${repository}/pulls/${expected.number}`}`.json()
+const pr = await $`gh api ${`repos/${repository}/pulls/${expected.number}`}`.json<PullRequest>()
 
 const syncAutoPublishLabel = async () => {
   if (
