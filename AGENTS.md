@@ -41,11 +41,13 @@ The dev server starts and watches the development core build, serves the local u
 - If a component has an `index.md`, do not duplicate the same description in metadata unless the existing pattern for that component requires it.
 - Use `urlInclude` and `urlExclude` for page matching instead of manually repeating page checks in `entry`.
 - Keep `entry` focused on the work that must happen when the component starts.
-- Do not rely on the return value of `entry` for cleanup. Put teardown logic in `unload`; use `reload` together with `unload` when a component must support disable and re-enable behavior.
+- Supporting disable and re-enable without a page refresh is optional. If teardown and reinitialization would account for roughly half the feature's implementation, prefer omitting `reload` and `unload` and requiring a page refresh. When supporting live toggling, implement both hooks and put cleanup in `unload`. Do not rely on the return value of `entry` for cleanup.
 - Use existing shared core APIs, component APIs, and plugin APIs before adding new infrastructure. Do not add new uses of `styledComponentEntry` or `toggleStyle` from `@/components/styled-component`; declare fixed component styles through metadata `instantStyles` instead.
 - Use the observer APIs from `core/observer`, such as `mutationObserve`, `childList`, `visible`, `sizeChange`, `urlChange`, and `videoChange`, instead of directly constructing native `MutationObserver`, `IntersectionObserver`, or `ResizeObserver` instances when the project API covers the required behavior.
+- `videoChange` runs the callback on setup and wraps it in a new listener each time, even when passed the same callback. Register it once per page if the callback checks whether the feature is enabled. If the listener should exist only while the feature is enabled, pass an `AbortSignal` and abort it in `unload` before registering again. After repeated live toggles, verify that a single video change triggers only one callback.
 - Put fixed component styles in SCSS files and load them through metadata `instantStyles`. Do not embed fixed CSS in TypeScript strings, HTML `style` attributes constructed in TypeScript, `style.cssText`, or individual DOM style assignments. For styles that require a different loading lifecycle, use the existing style APIs to load SCSS and handle cleanup explicitly.
 - When writing SCSS, check shared Sass files before adding local helpers. For example, `ui/_common.scss` is available through `@import "common"` and provides common mixins such as fullscreen and centering helpers.
+- For dark mode, reuse existing `--be-color-*` variables for text, backgrounds, and borders so components follow the shared theme palette.
 - For options, follow existing `defineOptionsMetadata` and `options` patterns so defaults, labels, and validators stay close to metadata.
 - Model exclusive choices as one option, usually with an enum or dropdown, instead of multiple mutually exclusive boolean options.
 - For dynamic style switching, keep the style rules in SCSS and toggle a state class on `html` so CSS responds to that state. Prefer this over manually adding and removing stylesheets in TypeScript.
@@ -58,8 +60,10 @@ The dev server starts and watches the development core build, serves the local u
 - Keep control-flow bodies braced.
 - Preserve the existing TypeScript, Vue 2, and SCSS conventions around the code being changed.
 - Avoid unnecessary defensive branches, empty error handling, duplicated state, and one-off abstractions.
+- Use comments for intent or constraints that are difficult to infer from the code. Keep routine behavior clear through names and structure.
 - Prefer existing Bilibili API wrappers, request helpers, settings helpers, observer utilities, style utilities, and UI components over reimplementing equivalent behavior.
 - Prefer stable Bilibili APIs and existing wrappers over reading page-internal globals or framework internals when the data is available from an API.
+- Avoid per-video requests to `x/web-interface/view`, including through `VideoInfo.fetchInfo()`, just to fill optional fields such as uploader avatars or descriptions in video lists and carousels. Browsing through items can quickly trigger the endpoint's rate limits.
 - Scope DOM selectors to the nearest stable parent class or page region. Avoid broad selectors that can match unrelated Bilibili UI.
 - Keep names and types aligned with behavior. If a function starts returning a broader shape, update the type and name instead of overloading a misleading contract.
 - Be careful with data units and API failure states. Do not cache a failed request as if it were a successful value, and keep byte, bit, count, id, and URL semantics explicit.
@@ -97,4 +101,5 @@ When a change affects page behavior, also check the browser console for new runt
 - Use `preview-features` as the base for new features.
 - Use `preview-fixes` as the base for bug fixes.
 - Commit messages only need to clearly describe the change; the repository does not require a strict conventional commit format.
+- If you credit AI assistance, use the component's `author` metadata as described in `CONTRIBUTING.md`. Keep Git authorship and commit messages focused on the human contributors and the changes they made.
 - Do not create release tags, push release branches, or perform release steps unless the task is explicitly about releasing.

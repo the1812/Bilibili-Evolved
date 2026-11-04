@@ -5,6 +5,10 @@ Bilibili Evolved 是一个基于 Web 前端技术构建的油猴脚本, 贡献�
 - 熟悉 Web 前端技术, 编写逻辑时使用 [TypeScript](https://www.typescriptlang.org/), 编写样式时使用 [Scss](https://sass-lang.com/), 创建 UI 时使用 [Vue 2](https://v2.cn.vuejs.org/).
 - 新增的代码能够通过 [ESLint](https://eslint.org/) 和 [TypeScript](https://www.typescriptlang.org/) 检查.
 
+## 关于 AI
+
+你可以使用 AI 辅助开发, 项目中已包含 AGENTS.md. 但请注意你仍然需要保障代码的质量, 保持 UI 设计的美观. 太乱的代码会需要更长的时间去 review, 甚至可能被拒绝合入, 因此也建议尽可能使用先进的 AI 模型 (可参考 [FrontierCode](https://cognition.com/frontiercode) 中 Score 超过 20% 的模型).
+
 ## 功能范围与限制
 
 项目不接受以下功能:
