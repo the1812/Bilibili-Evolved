@@ -9,8 +9,13 @@ import {
 } from '@/core/settings'
 import { Range } from '@/ui/range'
 import { darkExcludes } from './dark-urls'
-import { DarkModeMode } from './mode'
 import { isInTimeRange, millisecondsUntilChange, rangeValidator } from './schedule-time'
+
+enum DarkModeMode {
+  Manual = '手动',
+  FollowSystem = '跟随系统',
+  Schedule = '计划时段',
+}
 
 const name = 'darkMode'
 const darkMetaColor = '#111'

@@ -11,7 +11,6 @@ import { getHook } from '@/plugins/hook'
 import { installPlugin, pluginsMap } from '@/plugins/plugin'
 import { UserStyle } from '@/plugins/style'
 import type { DocSourceItem } from '../../../docs'
-import { DarkModeMode } from '../../style/dark-mode/mode'
 
 export const runMigrate = async (v1Settings: any) => {
   const toast = Toast.info('下载功能列表中', '导入 v1 设置')
@@ -112,7 +111,7 @@ export const runMigrate = async (v1Settings: any) => {
 
     const migrateActions: Executable[] = [
       featureMap('useDarkStyle', 'darkMode', 'component'),
-      featureMap('darkColorScheme', 'darkMode', 'component'),
+      featureMap('darkColorScheme', 'darkModeFollowSystem', 'component'),
       featureMap('hideBanner', 'hideBanner', 'component'),
       featureMap('expandDanmakuList', 'expandDanmakuList', 'component'),
       optionMap('expandDanmakuListIgnoreMediaList', 'expandDanmakuList.ignoreMediaList'),
@@ -131,18 +130,9 @@ export const runMigrate = async (v1Settings: any) => {
           return Math.round(opacity * 100)
         },
       ),
-      featureMap('darkSchedule', 'darkMode', 'component'),
-      () => {
-        // v1 的跟随系统与计划时段互斥, 计划时段优先
-        const { darkSchedule, darkColorScheme } = v1Settings
-        if (!darkSchedule && !darkColorScheme) {
-          return
-        }
-        const mode = darkSchedule ? DarkModeMode.Schedule : DarkModeMode.FollowSystem
-        lodash.set(getComponentSettings('darkMode').options, 'mode', mode)
-      },
-      optionMap('darkScheduleStart', 'darkMode.range.start'),
-      optionMap('darkScheduleEnd', 'darkMode.range.end'),
+      featureMap('darkSchedule', 'darkModeSchedule', 'component'),
+      optionMap('darkScheduleStart', 'darkModeSchedule.range.start'),
+      optionMap('darkScheduleEnd', 'darkModeSchedule.range.end'),
       featureMap('fullTweetsTitle', 'fullFeedsTitle', 'component'),
       featureMap('fullPageTitle', 'fullEpisodeTitle', 'component'),
       featureMap('removeVideoTopMask', 'hideVideoTopMask', 'component'),
