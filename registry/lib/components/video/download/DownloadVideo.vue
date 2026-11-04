@@ -114,7 +114,7 @@
 </template>
 <script lang="ts">
 import { TestPattern } from '@/core/common-types'
-import { getComponentSettings } from '@/core/settings'
+import { addComponentListener, getComponentSettings } from '@/core/settings'
 import { matchUrlPattern } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { formatFileSize } from '@/core/utils/formatters'
@@ -138,7 +138,7 @@ import {
   DownloadVideoInputItem,
   DownloadVideoOutput,
 } from './types'
-import { DownloadVideoUrlType, parseVideoUrlType, sortVideoUrlByType } from './url-type'
+import { DownloadVideoUrlType, sortVideoUrlByType } from './url-type'
 
 const [inputs] = registerAndGetData('downloadVideo.inputs', [
   videoSingleInput,
@@ -169,12 +169,20 @@ const filterData = <T extends { match?: TestPattern }>(items: T[]) => {
   const matchedItems = items.filter(it => it.match?.some(p => matchUrlPattern(p)) ?? true)
   return matchedItems
 }
-const urlTypeOptions: { displayName: string; name: DownloadVideoUrlType }[] = [
+type UrlTypeOption = { displayName: string; name: DownloadVideoUrlType }
+const urlTypeOptionsCommon: UrlTypeOption[] = [
   { displayName: 'Mirror', name: DownloadVideoUrlType.Mirror },
   { displayName: 'UPOS', name: DownloadVideoUrlType.UPOS },
   { displayName: 'BCache', name: DownloadVideoUrlType.BCache },
   { displayName: 'MCDN / PCDN', name: DownloadVideoUrlType.MCDN },
 ]
+const urlTypeOptionAkamaized: UrlTypeOption = {
+  displayName: 'Mirror (Akamaized)',
+  name: DownloadVideoUrlType.MirrorAkamaized,
+}
+const defaultPreferredUrlType: UrlTypeOption = urlTypeOptionsCommon.find(
+  it => it.name === DownloadVideoUrlType.Mirror,
+)
 const allAudioFormatOptions: { name: DownloadVideoAudioFormat; displayName: string }[] = [
   { name: 'auto', displayName: '自动 (最高音质)' },
   { name: 'stereo', displayName: '普通音频 (AAC 双声道)' },
@@ -206,11 +214,6 @@ export default Vue.extend({
   },
   data() {
     const lastOutput = basicConfig.output
-    const lastPreferredUrlType = basicConfig.preferredUrlType
-    console.log({
-      lastPreferredUrlType,
-      optionValue: lastPreferredUrlType ?? DownloadVideoUrlType.Mirror,
-    })
     return {
       open: false,
       busy: false,
@@ -234,9 +237,9 @@ export default Vue.extend({
       selectedApi: undefined,
       outputs,
       selectedOutput: outputs.find(it => it.name === lastOutput) || outputs[0],
-      urlTypeOptions,
-      preferredUrlType:
-        lastPreferredUrlType ?? urlTypeOptions.find(it => it.name === DownloadVideoUrlType.Mirror),
+      classifyAkamaizedCdn: false,
+      urlTypeOptions: [],
+      preferredUrlType: undefined,
     }
   },
   computed: {
@@ -301,12 +304,30 @@ export default Vue.extend({
       }
       basicConfig.output = output.name
     },
-    preferredUrlType(urlType: DownloadVideoUrlType) {
+    preferredUrlType(urlType: UrlTypeOption) {
       if (urlType === undefined) {
         return
       }
-      basicConfig.preferredUrlType = urlType
+      basicConfig.preferredUrlType = urlType.name
     },
+  },
+  created() {
+    addComponentListener(
+      'downloadVideo.classifyAkamaizedCdn',
+      (classifyAkamaizedCdn: boolean) => {
+        this.classifyAkamaizedCdn = classifyAkamaizedCdn
+        const urlTypeOptions = classifyAkamaizedCdn
+          ? [...urlTypeOptionsCommon, urlTypeOptionAkamaized]
+          : urlTypeOptionsCommon
+        this.urlTypeOptions = urlTypeOptions
+        const lastPreferredUrlType = basicConfig.preferredUrlType
+        console.log(`[downloadVideo]`, { lastPreferredUrlType, urlTypeOptions })
+        this.preferredUrlType = lastPreferredUrlType
+          ? urlTypeOptions.find(it => it.name === lastPreferredUrlType) ?? defaultPreferredUrlType
+          : defaultPreferredUrlType
+      },
+      true,
+    )
   },
   mounted() {
     coreApis.observer.videoChange(() => {
@@ -426,20 +447,35 @@ export default Vue.extend({
           Toast.info('未接收到可下载数据, 请检查输入源和格式是否适用于当前视频.', '下载视频', 3000)
           return
         }
+        const warnings: string[] = []
         videoInfos.forEach(videoInfo => {
           videoInfo.fragments.forEach(fragment => {
             if (this.preferredUrlType !== undefined) {
-              const preferredUrl = fragment.allUrls.find(
-                url => parseVideoUrlType(url) === this.preferredUrlType,
-              )
-              if (preferredUrl !== undefined) {
-                fragment.url = preferredUrl
+              const urlsByType = sortVideoUrlByType(fragment.allUrls, this.classifyAkamaizedCdn)
+              console.info(`[downloadVideo] ${fragment.type} urls`, urlsByType)
+              const preferred = urlsByType.find(({ type }) => type === this.preferredUrlType.name)
+              if (preferred !== undefined) {
+                fragment.url = preferred.url
               } else {
-                fragment.url = sortVideoUrlByType(fragment.allUrls)[0]
+                const fallback = urlsByType[0]
+                const message = `${fragment.type} 没有指定偏好 ${
+                  this.preferredUrlType.displayName
+                } 的下载地址, 使用 ${
+                  this.urlTypeOptions.find(({ name }) => name === fallback.type).displayName
+                }`
+                console.warn(`[downloadVideo] ${message}`)
+                warnings.push(message)
+                fragment.url = fallback.url
               }
             }
           })
         })
+        if (
+          warnings.length > 0 &&
+          getComponentSettings('downloadVideo').options.warnIfNotPreferred
+        ) {
+          Toast.warn(warnings.join('\n'), '下载视频', 3000)
+        }
         const action = new DownloadVideoAction(videoInfos)
         assets.forEach(a => {
           const assetsType = a?.getUrls ? action.extraOnlineAssets : action.extraAssets

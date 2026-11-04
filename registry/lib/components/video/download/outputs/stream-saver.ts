@@ -2,11 +2,13 @@ import { StreamSaverLibrary } from '@/core/runtime-library'
 import { Toast } from '@/core/toast'
 import { DownloadVideoOutput } from '../types'
 
+const displayName = 'StreamSaver'
+
 const serviceWorkerMessage =
   '需要浏览器允许来自 jimmywarting.github.io (StreamSaver 的网站) 的第三方 cookie, 详细原因见 <a href="https://github.com/jimmywarting/StreamSaver.js?#how-does-it-work" target="blank">How does it work</a>'
 export const streamSaverOutput: DownloadVideoOutput = {
   name: 'steamSaver',
-  displayName: 'StreamSaver',
+  displayName,
   description: `使用 StreamSaver 输出到本地文件, 下载过程中请勿关闭页面. 注意: ${serviceWorkerMessage}, 否则弹出的链接点击后会没有反应.`,
   runAction: async action => {
     const streamSaver = await StreamSaverLibrary
@@ -26,6 +28,10 @@ export const streamSaverOutput: DownloadVideoOutput = {
           size,
         })
         const response = await fetch(url)
+        if (!response.ok) {
+          Toast.error(`HTTP ${response.status} ${response.statusText}: ${title}`, displayName)
+          return
+        }
         await response.body.pipeTo(fileStream)
       })
     })
