@@ -250,6 +250,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   focusDanmakuInput: {
     displayName: '聚焦弹幕输入框',
+    ignoreFocus: false,
     run: () => {
       const input = playerAgent.query.bilibiliPlayer
         .sync()
