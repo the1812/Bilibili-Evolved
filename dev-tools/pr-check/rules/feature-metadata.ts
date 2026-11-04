@@ -1,6 +1,6 @@
-import { existsSync } from 'fs'
+import { existsSync, readFileSync } from 'fs'
 import * as path from 'path'
-import { getFeatureMetadata, isRegistryFeatureIndex } from '../metadata'
+import { isRegistryFeatureIndex, parseFeatureMetadata } from '../metadata'
 import { CheckResult, CheckRule } from '../types'
 
 const hasIndexMarkdown = (indexPath: string) => {
@@ -12,11 +12,11 @@ const isCamelCase = (name: string) => /^[a-z][a-zA-Z0-9]*$/.test(name)
 
 export const featureMetadataRule: CheckRule = {
   name: 'feature-metadata',
-  check: ({ changedFiles }) =>
+  check: ({ changedFiles, readBaseFile }) =>
     changedFiles
-      .filter(file => isRegistryFeatureIndex(file.path))
+      .filter(file => file.status !== 'D' && isRegistryFeatureIndex(file.path))
       .map((file): CheckResult => {
-        const metadata = getFeatureMetadata(file.path)
+        const metadata = parseFeatureMetadata(readFileSync(file.path, 'utf8'))
         if (!metadata) {
           return {}
         }
@@ -24,8 +24,19 @@ export const featureMetadataRule: CheckRule = {
         const errors: string[] = []
         const isAdded = file.status.startsWith('A')
 
-        if (metadata.name && !isCamelCase(metadata.name)) {
-          errors.push(`${file.path}: ${metadata.kind} metadata name must be camelCase.`)
+        const { kind, name } = metadata
+        if (kind === 'component' && name && !isCamelCase(name)) {
+          errors.push(`${file.path}: component metadata name must be camelCase.`)
+        }
+        if (kind === 'plugin' && name !== undefined && !name.split('.').every(isCamelCase)) {
+          const previousPath = file.previousPath ?? file.path
+          const previousMetadata =
+            !isAdded && isRegistryFeatureIndex(previousPath)
+              ? parseFeatureMetadata(readBaseFile(previousPath))
+              : undefined
+          if (previousMetadata?.kind !== 'plugin' || previousMetadata.name !== name) {
+            errors.push(`${file.path}: new plugin metadata names must use dot-separated camelCase.`)
+          }
         }
 
         if (metadata.properties.has('description')) {

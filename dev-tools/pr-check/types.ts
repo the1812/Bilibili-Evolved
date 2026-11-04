@@ -1,6 +1,7 @@
 export interface ChangedFile {
   status: string
   path: string
+  previousPath?: string
 }
 
 export interface PullRequestEvent {
@@ -25,6 +26,7 @@ export interface CheckContext {
   baseRef?: string
   changedFiles: ChangedFile[]
   changedPaths: string[]
+  readBaseFile: (path: string) => string
 }
 
 export interface CheckResult {
