@@ -1,7 +1,7 @@
 import { allQualities, VideoQuality } from '@/components/video/video-quality'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { getComponentSettings } from '@/core/settings'
-import { formData, matchUrlPattern } from '@/core/utils'
+import { matchUrlPattern } from '@/core/utils'
 import { ascendingSort, descendingSort } from '@/core/utils/sort'
 import { bangumiUrls } from '@/core/utils/urls'
 import { Options } from '..'
@@ -53,8 +53,9 @@ export interface DashFilters {
   video?: (dash: VideoDash) => boolean
   audio?: (dash: AudioDash) => boolean
 }
+const getOptions = () => getComponentSettings<Options>('downloadVideo').options
 const getDashExtensions = (type: keyof typeof DefaultDashExtensions): string => {
-  const { options } = getComponentSettings<Options>('downloadVideo')
+  const options = getOptions()
   if (type === 'video') {
     return options.dashVideoExtension
   }
@@ -83,15 +84,14 @@ export const dashToFragments = (info: {
 }): DownloadVideoFragment[] => {
   const { videoDashes, audioDashes, videoCodec } = info
   const results: DownloadVideoFragment[] = []
-  // 画面按照首选编码选择, 若没有相应编码则选择第一个编码
+  // 优先首选编码, 其次回退编码, 最后码率最低
   if (videoDashes.length !== 0) {
-    const matchPreferredCodec = (d: VideoDash) => d.videoCodec === videoCodec
-    let dash: VideoDash
-    if (videoDashes.some(matchPreferredCodec)) {
-      dash = videoDashes.filter(matchPreferredCodec).sort(ascendingSort(d => d.bandWidth))[0]
-    } else {
-      dash = videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
-    }
+    const pickCodec = (target: DashCodec) =>
+      videoDashes.filter(d => d.videoCodec === target).sort(ascendingSort(d => d.bandWidth))[0]
+    const dash =
+      pickCodec(videoCodec) ??
+      pickCodec(getOptions().dashCodecFallback) ??
+      videoDashes.sort(ascendingSort(d => d.bandWidth))[0]
     results.push(dashToFragment(dash))
   }
   if (audioDashes.length !== 0) {
@@ -117,26 +117,23 @@ const downloadDash = async (
     ...filters,
   }
   const { aid, cid, quality, audioLanguage } = input
-  const params: Record<string, string | number> = {
+  const params: Record<string, string> = {
     avid: aid,
     cid,
-    qn: quality?.value ?? '',
+    qn: quality?.value?.toString() ?? '',
     otype: 'json',
-    fourk: 1,
-    fnver: 0,
-    fnval: 4048,
+    fourk: '1',
+    fnver: '0',
+    fnval: '4048',
   }
   if (audioLanguage) {
     params.cur_language = audioLanguage
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
-  const api = isBanugmi ? bangumiApi(formData(params)) : videoApi(formData(params))
+  const query = new URLSearchParams(params).toString()
+  const api = isBanugmi ? bangumiApi(query) : videoApi(query)
   const data = await bilibiliApi(getJsonWithCredentials(api), '获取视频链接失败')
-  if (!data.dash) {
-    throw new Error('此视频没有 dash 格式, 请改用其他格式.')
-  }
-  const currentQuality = allQualities.find(q => q.value === data.quality)
-  const { duration, video, audio, dolby, flac } = data.dash
+  const { duration, video, audio, dolby, flac } = data.dash ?? {}
   const parseVideoCodec = (codecId: number) => {
     switch (codecId) {
       case 12:
@@ -148,7 +145,15 @@ const downloadDash = async (
         return DashCodec.Avc
     }
   }
-  const videoDashes: VideoDash[] = (video as any[])
+  const dashVideos: any[] = video ?? []
+  const dashQualities = allQualities.filter(q => dashVideos.some(d => d.id === q.value))
+  if (dashQualities.length === 0) {
+    throw new Error('此视频没有 dash 格式, 请改用其他格式.')
+  }
+  const requestedQuality = quality?.value ?? data.quality
+  // 请求的画质不在 dash 中时 (超出权限), 取最高画质
+  const currentQuality = dashQualities.find(q => q.value === requestedQuality) ?? dashQualities[0]
+  const videoDashes: VideoDash[] = dashVideos
     .filter(d => d.id === currentQuality.value)
     .map((d): VideoDash => {
       const dash: VideoDash = {
@@ -197,29 +202,23 @@ const downloadDash = async (
     videoCodec: codec,
   })
   const qualities = (() => {
-    const filterByCodec = (preferredCodec: DashCodec | null) => {
-      return (data.accept_quality as number[])
-        .filter(qn => {
-          if (preferredCodec !== null) {
-            return (video as any[]).some(
-              d => d.id === qn && parseVideoCodec(d.codecid) === preferredCodec,
-            )
-          }
-          return true
-        })
-        .map(qn => allQualities.find(q => q.value === qn))
-        .filter(q => q !== undefined)
-    }
-    const allAvailableQualities = filterByCodec(codec)
-    if (allAvailableQualities.length > 0) {
-      return allAvailableQualities
-    }
-    const { options } = getComponentSettings<Options>('downloadVideo')
-    const fallbackQualities = filterByCodec(options.dashCodecFallback)
-    if (fallbackQualities.length > 0) {
-      return fallbackQualities
-    }
-    return filterByCodec(null)
+    const formats: any[] = data.support_formats ?? []
+    // 两个字段都可能被裁剪, 取并集
+    const qualityValues = [...(data.accept_quality as number[]), ...formats.map(f => f.quality)]
+    const supportedQualities = allQualities.filter(q => qualityValues.includes(q.value))
+    const filterByCodec = (preferredCodec: DashCodec | null) =>
+      supportedQualities.filter(
+        q =>
+          preferredCodec === null ||
+          // dash 未返回的画质无法判断编码
+          dashVideos.every(d => d.id !== q.value) ||
+          dashVideos.some(d => d.id === q.value && parseVideoCodec(d.codecid) === preferredCodec),
+      )
+    // 视频没有当前编码时用回退编码
+    const availableCodec = [codec, getOptions().dashCodecFallback].find(c =>
+      dashVideos.some(d => parseVideoCodec(d.codecid) === c),
+    )
+    return filterByCodec(availableCodec ?? null)
   })()
   const currentCodec = fragments.find(x => x.type === 'video')?.codec
   const currentBandWidth = fragments.reduce((p, c) => p + c.bandWidth, 0)
