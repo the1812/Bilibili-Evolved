@@ -29,7 +29,7 @@ const buttonClass = 'be-volume-boost'
 const options = defineOptionsMetadata({
   maxPercent: {
     defaultValue: maxGainPercent,
-    displayName: `增益上限 (%), 默认 ${maxGainPercent}, 可填 ${minGainPercent}–${absoluteMaxGainPercent}`,
+    displayName: `增益上限 (${minGainPercent}–${absoluteMaxGainPercent}%)`,
     validator: (value: number) => {
       const percent = Math.round(Number(value))
       if (!Number.isFinite(percent) || percent < minGainPercent) {
