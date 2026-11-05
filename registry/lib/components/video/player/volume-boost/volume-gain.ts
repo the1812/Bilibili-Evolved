@@ -2,45 +2,93 @@ import { useScopedConsole } from '@/core/utils/log'
 
 /** 增益范围下限, 与原生音量完全一致 */
 export const minGainPercent = 100
-/** 增益范围上限 */
+/** 增益范围上限的默认值 */
 export const maxGainPercent = 300
-/** 滑块上每一档对应的听感变化幅度 (dB) */
+/** 每档变化的默认值 (dB), 按分贝调节时使用 */
 export const gainStepDecibel = 0.5
-/** 上限增益对应的分贝数, 约为 9.54 dB */
-export const maxGainDecibel = 20 * Math.log10(maxGainPercent / minGainPercent)
+/** 每档变化的默认值 (%), 按百分比调节时使用 */
+export const gainStepPercent = 6
+
+/**
+ * 滚轮每一档的调节方式.
+ * `decibel` 时每档是固定的分贝数, 听感等距, 越往上不会觉得越调越不明显;
+ * `percent` 时每档是固定的百分比, 数值等距, 但听感会随着增益升高而变弱.
+ */
+export interface GainStep {
+  mode: 'decibel' | 'percent'
+  decibel: number
+  percent: number
+}
+
+export const defaultGainStep: GainStep = {
+  mode: 'decibel',
+  decibel: gainStepDecibel,
+  percent: gainStepPercent,
+}
 
 const console = useScopedConsole('volumeGain')
 
+/** 上限增益对应的分贝数, 300% 时约为 9.54 dB */
+export const maxDecibelOf = (maxPercent: number) =>
+  20 * Math.log10(Math.max(maxPercent, minGainPercent) / minGainPercent)
+
 /** 把任意输入规整为范围内的整数百分比 */
-export const clampGainPercent = (percent: number) => {
+export const clampGainPercent = (percent: number, maxPercent = maxGainPercent) => {
   if (!Number.isFinite(percent)) {
     return minGainPercent
   }
-  return Math.round(lodash.clamp(percent, minGainPercent, maxGainPercent))
+  return Math.round(lodash.clamp(percent, minGainPercent, Math.max(maxPercent, minGainPercent)))
 }
 
 /** 增益百分比换算成分贝数 */
-const decibelOfPercent = (percent: number) => 20 * Math.log10(percent / minGainPercent)
-
-const percentOfRatioRaw = (ratio: number) =>
-  clampGainPercent(minGainPercent * 10 ** ((lodash.clamp(ratio, 0, 1) * maxGainDecibel) / 20))
+const decibelOfPercent = (percent: number) =>
+  20 * Math.log10(Math.max(percent, minGainPercent) / minGainPercent)
 
 /** 分贝数换算成增益百分比 */
-const percentOfDecibel = (decibel: number) => percentOfRatioRaw(decibel / maxGainDecibel)
+const percentOfDecibel = (decibel: number, maxPercent: number) =>
+  clampGainPercent(minGainPercent * 10 ** (decibel / 20), maxPercent)
 
 /**
  * 滑块高度比例 (0 为最底部, 1 为最顶部) 与增益百分比互相换算.
  * 比例到分贝是线性的, 因此每一档的听感变化都相同, 越往上不会变得越不敏感.
  */
-export const ratioOfPercent = (percent: number) =>
-  lodash.clamp(decibelOfPercent(clampGainPercent(percent)) / maxGainDecibel, 0, 1)
-export const percentOfRatio = (ratio: number) => percentOfRatioRaw(ratio)
+export const ratioOfPercent = (percent: number, maxPercent = maxGainPercent) => {
+  const maxDecibel = maxDecibelOf(maxPercent)
+  if (maxDecibel <= 0) {
+    return 0
+  }
+  return lodash.clamp(decibelOfPercent(clampGainPercent(percent, maxPercent)) / maxDecibel, 0, 1)
+}
+export const percentOfRatio = (ratio: number, maxPercent = maxGainPercent) => {
+  const maxDecibel = maxDecibelOf(maxPercent)
+  if (maxDecibel <= 0) {
+    return minGainPercent
+  }
+  return percentOfDecibel(lodash.clamp(ratio, 0, 1) * maxDecibel, maxPercent)
+}
 
 /** 按一档的幅度调整增益, direction 为正表示增大 */
-export const stepGainPercent = (percent: number, direction: number) => {
-  const nextDecibel =
-    decibelOfPercent(clampGainPercent(percent)) + Math.sign(direction) * gainStepDecibel
-  return percentOfDecibel(lodash.clamp(nextDecibel, 0, maxGainDecibel))
+export const stepGainPercent = (
+  percent: number,
+  direction: number,
+  step: GainStep = defaultGainStep,
+  maxPercent = maxGainPercent,
+) => {
+  const current = clampGainPercent(percent, maxPercent)
+  const sign = Math.sign(direction)
+  if (sign === 0) {
+    return current
+  }
+  if (step.mode === 'percent') {
+    return clampGainPercent(current + sign * Math.max(step.percent, 1), maxPercent)
+  }
+  const maxDecibel = maxDecibelOf(maxPercent)
+  const nextDecibel = lodash.clamp(
+    decibelOfPercent(current) + sign * Math.max(step.decibel, 0.1),
+    0,
+    maxDecibel,
+  )
+  return percentOfDecibel(nextDecibel, maxPercent)
 }
 
 interface AudioGraph {

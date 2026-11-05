@@ -1,4 +1,6 @@
 import {
+  defaultGainStep,
+  GainStep,
   maxGainPercent,
   minGainPercent,
   percentOfRatio,
@@ -12,6 +14,10 @@ export interface GainPanelConfig {
   onChange: (percent: number, source: 'drag' | 'wheel') => void
   /** 直播控制栏的按钮尺寸与视频页不同, 需要单独的样式 */
   live?: boolean
+  /** 增益上限, 滑块顶部对应的百分比 */
+  maxPercent?: number
+  /** 滚轮每一档的调节方式 */
+  step?: GainStep
 }
 
 export interface GainPanel {
@@ -40,7 +46,13 @@ const isPlayerMode = () => {
  * 结构与样式尽量与原生音量浮层一致 (32×100 的深色竖条, 顶部数字, 下面竖直滑块),
  * 但只控制增益, 不碰原生音量, 两者的作用相互独立.
  */
-export const createGainPanel = ({ percent, onChange, live }: GainPanelConfig): GainPanel => {
+export const createGainPanel = ({
+  percent,
+  onChange,
+  live,
+  maxPercent = maxGainPercent,
+  step = defaultGainStep,
+}: GainPanelConfig): GainPanel => {
   const element = document.createElement('div')
   // 复用原生控制栏按钮的类名, 宽度、高度、行高、全屏放大与悬停高亮都由 B 站的样式管理
   element.className = live
@@ -68,13 +80,14 @@ export const createGainPanel = ({ percent, onChange, live }: GainPanelConfig): G
 
   const update = (value: number) => {
     current = value
-    const ratio = ratioOfPercent(value)
+    const ratio = ratioOfPercent(value, maxPercent)
     number.textContent = `${value}`
     progress.style.setProperty('--be-volume-boost-ratio', `${ratio * 100}%`)
     progress.setAttribute('aria-valuenow', `${value}`)
+    progress.setAttribute('aria-valuetext', `${value}%`)
   }
   progress.setAttribute('aria-valuemin', `${minGainPercent}`)
-  progress.setAttribute('aria-valuemax', `${maxGainPercent}`)
+  progress.setAttribute('aria-valuemax', `${maxPercent}`)
   update(percent)
 
   const open = () => {
@@ -109,7 +122,7 @@ export const createGainPanel = ({ percent, onChange, live }: GainPanelConfig): G
       0,
       1,
     )
-    return percentOfRatio(ratio)
+    return percentOfRatio(ratio, maxPercent)
   }
 
   const apply = (value: number, source: 'drag' | 'wheel') => {
@@ -168,7 +181,7 @@ export const createGainPanel = ({ percent, onChange, live }: GainPanelConfig): G
     if (direction === 0) {
       return
     }
-    const next = stepGainPercent(current, direction)
+    const next = stepGainPercent(current, direction, step, maxPercent)
     if (next === current) {
       return
     }
@@ -191,7 +204,7 @@ export const createGainPanel = ({ percent, onChange, live }: GainPanelConfig): G
     event.preventDefault()
     event.stopPropagation()
     open()
-    apply(stepGainPercent(current, direction), 'wheel')
+    apply(stepGainPercent(current, direction, step, maxPercent), 'wheel')
   }
 
   element.addEventListener('mouseenter', open)

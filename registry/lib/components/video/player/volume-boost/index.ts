@@ -11,12 +11,44 @@ import { useScopedConsole } from '@/core/utils/log'
 import { allVideoUrls, liveUrls, matchCurrentPage } from '@/core/utils/urls'
 import { showPlayerTip } from '../common/player-tip/player-tip'
 import { createGainPanel, GainPanel } from './panel'
-import { clampGainPercent, minGainPercent, VolumeGain } from './volume-gain'
+import {
+  clampGainPercent,
+  defaultGainStep,
+  gainStepDecibel,
+  gainStepPercent,
+  GainStep,
+  maxGainPercent,
+  minGainPercent,
+  VolumeGain,
+} from './volume-gain'
 
 const name = 'volumeBoost'
 const buttonClass = 'be-volume-boost'
 
 const options = defineOptionsMetadata({
+  maxPercent: {
+    defaultValue: maxGainPercent,
+    displayName: '增益上限 (%)',
+    slider: { min: minGainPercent, max: maxGainPercent, step: 5 },
+  },
+  stepMode: {
+    defaultValue: defaultGainStep.mode,
+    displayName: '滚轮每档的调节方式',
+    dropdownEnum: {
+      decibel: '按分贝 (听感等距)',
+      percent: '按百分比 (数值等距)',
+    },
+  },
+  stepDecibel: {
+    defaultValue: gainStepDecibel,
+    displayName: '每档增益 (dB, 仅按分贝调节时生效)',
+    slider: { min: 0.1, max: 3, step: 0.1 },
+  },
+  stepPercent: {
+    defaultValue: gainStepPercent,
+    displayName: '每档百分比 (%, 仅按百分比调节时生效)',
+    slider: { min: 1, max: 20, step: 1 },
+  },
   records: {
     defaultValue: {} as Record<string, number>,
     hidden: true,
@@ -67,6 +99,22 @@ const setup = () => {
   const settings = getComponentSettings<Options>(name)
   const console = useScopedConsole(name)
   const isLivePage = matchCurrentPage(liveUrls)
+  /** 增益上限, 滑块顶部对应的百分比 */
+  const maxPercent = Math.round(
+    lodash.clamp(
+      Number(settings.options.maxPercent) || maxGainPercent,
+      minGainPercent,
+      maxGainPercent,
+    ),
+  )
+  /** 滚轮每一档的调节方式, 按分贝时听感等距 */
+  const step: GainStep = {
+    mode: settings.options.stepMode === 'percent' ? 'percent' : defaultGainStep.mode,
+    decibel: lodash.clamp(Number(settings.options.stepDecibel) || gainStepDecibel, 0.1, 3),
+    percent: Math.round(
+      lodash.clamp(Number(settings.options.stepPercent) || gainStepPercent, 1, 20),
+    ),
+  }
   const gain = new VolumeGain()
   /** videoChange 和 urlChange 每注册一次就会多一个监听, 关闭组件时需要一并撤销 */
   const abort = new AbortController()
@@ -103,12 +151,14 @@ const setup = () => {
   }
 
   const changePercent = (percent: number, source: 'drag' | 'wheel') => {
+    // 用户调低增益上限后, 当前值可能已经超出范围
+    const value = clampGainPercent(percent, maxPercent)
     dirty = true
-    gain.setPercent(percent)
-    remember(percent)
+    gain.setPercent(value)
+    remember(value)
     // 直播页没有播放器中央的提示层, 只在视频页显示
     if (source === 'wheel' && !isLivePage && settings.options.showTip) {
-      showPlayerTip(`${percent}%`, 'mdi-volume-plus').catch(() => undefined)
+      showPlayerTip(`${value}%`, 'mdi-volume-plus').catch(() => undefined)
     }
   }
 
@@ -129,7 +179,11 @@ const setup = () => {
         }
         recordKey = key
         const remembered = key ? settings.options.records[key] : undefined
-        const percent = clampGainPercent(remembered ?? minGainPercent)
+        const percent = clampGainPercent(remembered ?? minGainPercent, maxPercent)
+        if (remembered !== undefined && remembered !== percent) {
+          // 用户调低增益上限后, 记忆里超出上限的旧值顺手修剪掉
+          remember(percent)
+        }
         gain.setPercent(percent)
         panel?.setPercent(percent)
       })
@@ -138,7 +192,13 @@ const setup = () => {
 
   const createPanel = (live = false) => {
     panel?.dispose()
-    panel = createGainPanel({ percent: gain.getPercent(), onChange: changePercent, live })
+    panel = createGainPanel({
+      percent: gain.getPercent(),
+      onChange: changePercent,
+      live,
+      maxPercent,
+      step,
+    })
     return panel.element
   }
 
