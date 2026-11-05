@@ -1,0 +1,125 @@
+// 与原生音量按钮 (`.bpx-player-ctrl-volume`) 保持同样的尺寸, 从而与控制栏的其他按钮对齐
+.be-volume-boost {
+  position: relative;
+  flex: none;
+  box-sizing: border-box;
+  width: 36px;
+  height: 22px;
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  font-size: 20px;
+  line-height: 22px;
+  text-align: center;
+}
+
+.be-volume-boost:hover .be-volume-boost-icon {
+  color: #fff;
+}
+
+.be-volume-boost-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+// 收起状态不占位, 展开后与原生音量浮层一样浮在按钮上方
+.be-volume-boost-panel {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: 41px;
+  box-sizing: border-box;
+  width: 32px;
+  height: 100px;
+  margin-left: -16px;
+  background: rgba(20, 20, 20, 0.9);
+  border-radius: 2px;
+}
+
+.be-volume-boost-open .be-volume-boost-panel {
+  display: block;
+}
+
+// 展开时把浮层下方的一段区域也纳入悬停范围, 鼠标从按钮移到浮层上时不会中途离开
+.be-volume-boost-panel::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -32px;
+  left: 0;
+  height: 32px;
+}
+
+.be-volume-boost-number {
+  height: 28px;
+  margin-bottom: 2px;
+  color: rgb(229, 233, 239);
+  font-size: 12px;
+  line-height: 28px;
+  text-align: center;
+}
+
+.be-volume-boost-progress {
+  position: relative;
+  width: 32px;
+  height: 60px;
+  margin: 0 auto;
+  cursor: pointer;
+  outline: none;
+}
+
+// 键盘调节时给出可见的焦点提示
+.be-volume-boost-progress:focus-visible {
+  border-radius: 2px;
+  box-shadow: 0 0 0 2px rgba(0, 174, 236, 0.5);
+}
+
+// 未填充的轨道
+.be-volume-boost-progress::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: 100%;
+  margin-left: -1px;
+  border-radius: 1px;
+  background: #505050;
+}
+
+.be-volume-boost-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  height: var(--be-volume-boost-ratio, 0%);
+  margin-left: -1px;
+  border-radius: 1px;
+  background: var(--bpx-fn-color, #00aeec);
+}
+
+.be-volume-boost-thumb {
+  position: absolute;
+  bottom: var(--be-volume-boost-ratio, 0%);
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-bottom: -6px;
+  margin-left: -6px;
+  border-radius: 50%;
+  background: var(--bpx-fn-color, #00aeec);
+}
+
+.be-volume-boost-dragging .be-volume-boost-thumb {
+  box-shadow: 0 0 0 4px rgba(0, 174, 236, 0.2);
+}
+
+// 全屏与网页全屏时控制栏更高, 与原生音量浮层一样抬高
+.be-volume-boost-player-mode .be-volume-boost-panel {
+  bottom: 74px;
+}
+
+.be-volume-boost-player-mode .be-volume-boost-panel::after {
+  bottom: -65px;
+  height: 65px;
+}
