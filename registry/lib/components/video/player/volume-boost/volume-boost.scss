@@ -1,7 +1,8 @@
 // 与原生音量按钮 (`.bpx-player-ctrl-volume`) 保持同样的尺寸, 从而与控制栏的其他按钮对齐
 .be-volume-boost {
   position: relative;
-  flex: none;
+  // 控制栏拥挤时和原生按钮一起被压缩 (网页全屏下原生按钮会从 54 压到 40)
+  flex: 0 1 auto;
   box-sizing: border-box;
   width: 36px;
   height: 22px;
@@ -10,6 +11,17 @@
   font-size: 20px;
   line-height: 22px;
   text-align: center;
+}
+
+// 网页全屏与全屏时 B 站会把控制栏按钮放大, 与原生音量按钮保持一致
+@media screen and (min-width: 750px) {
+  .bpx-player-container[data-screen='web'] .be-volume-boost,
+  .bpx-player-container[data-screen='full'] .be-volume-boost {
+    width: 54px;
+    height: 43px;
+    font-size: 25px;
+    line-height: 43px;
+  }
 }
 
 .be-volume-boost:hover .be-volume-boost-icon {
