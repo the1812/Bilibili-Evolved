@@ -3,8 +3,12 @@ import { getCookieValue, getVue2Data } from '@/core/utils'
 import { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
 
 type OfficialTheme = 'light' | 'dark'
+interface BiliHeaderThemeProps {
+  theme?: string
+  themeSwitchHandler?: (theme: OfficialTheme) => void
+}
 type BiliHeaderContainer = HTMLElement & {
-  __vue_app__?: { _instance?: { props?: { theme?: string } } }
+  __vue_app__?: { _instance?: { props?: BiliHeaderThemeProps } }
 }
 
 const themeStyleLinkSelector = '#__css-map__'
@@ -25,16 +29,21 @@ const updateMapFilter = (theme: OfficialTheme) => {
   mapFilter.innerHTML = theme === 'light' ? `/*${css}*/` : css
 }
 
-// 动态页、消息页等页面的背景图由根组件的 themeSwitchHandler 驱动
-const callThemeSwitchHandler = (theme: OfficialTheme) => {
+const callThemeSwitchHandler = (theme: OfficialTheme, headerProps?: BiliHeaderThemeProps) => {
+  if (headerProps?.themeSwitchHandler) {
+    headerProps.themeSwitchHandler(theme)
+    return
+  }
   try {
-    getVue2Data(dq(appContainerSelector))?.themeSwitchHandler?.(theme)
+    getVue2Data(unsafeWindow.document.querySelector(appContainerSelector))?.themeSwitchHandler?.(
+      theme,
+    )
   } catch {
     // #app 为空时 getVue2Data 会抛错, 此时页面也没有该回调
   }
 }
 
-const updateHostCookie = (targetMode: OfficialTheme) => {
+const updateHostCookie = (targetMode: OfficialTheme) =>
   cookieStore.set({
     name: 'theme_style',
     value: targetMode,
@@ -42,14 +51,14 @@ const updateHostCookie = (targetMode: OfficialTheme) => {
     expires: Date.now() + 365 * 24 * 60 * 60 * 1000,
     domain: 'bilibili.com',
   })
-}
 
-// 等效于官方顶栏的主题切换流程
-export const applyOfficialTheme = (theme: OfficialTheme) => {
-  const headerContainer = dq(headerContainerSelector) as BiliHeaderContainer | null
-  // 头部强制浅色的页面不应用
+export const applyOfficialTheme = async (theme: OfficialTheme) => {
+  const headerContainer = unsafeWindow.document.querySelector(
+    headerContainerSelector,
+  ) as BiliHeaderContainer | null
   // eslint-disable-next-line no-underscore-dangle
-  if (headerContainer?.__vue_app__?._instance?.props?.theme === 'light') {
+  const headerProps = headerContainer?.__vue_app__?._instance?.props
+  if (headerProps?.theme === 'light') {
     return
   }
   document.documentElement.classList.toggle(officialDarkClass, theme === 'dark')
@@ -58,8 +67,12 @@ export const applyOfficialTheme = (theme: OfficialTheme) => {
     themeStyleLink.href = `${themeStyleBaseUrl}/${theme}.css`
     updateMapFilter(theme)
   }
-  callThemeSwitchHandler(theme)
-  updateHostCookie(theme)
+  await updateHostCookie(theme)
+  document.dispatchEvent(
+    new CustomEvent('biliThemeChange', { detail: { theme }, bubbles: true, cancelable: true }),
+  )
+  callThemeSwitchHandler(theme, headerProps)
+  document.dispatchEvent(new CustomEvent('global.themeChange', { detail: theme }))
 }
 
 export const plugin: PluginMetadata = {
@@ -71,9 +84,8 @@ export const plugin: PluginMetadata = {
         name: 'integratedDarkMode',
         displayName: '深色模式开关',
         content: () => import('./NavbarIntegratedDarkMode.vue'),
-        clickAction: () => {
-          applyOfficialTheme(getCookieValue('theme_style') === 'dark' ? 'light' : 'dark')
-        },
+        clickAction: () =>
+          applyOfficialTheme(getCookieValue('theme_style') === 'dark' ? 'light' : 'dark'),
       })
     })
   },
