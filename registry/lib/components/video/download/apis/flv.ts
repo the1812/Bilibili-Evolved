@@ -50,10 +50,19 @@ const downloadFlv = async (input: DownloadVideoInputItem) => {
     otype: 'json',
   }
   const isBanugmi = bangumiUrls.some(url => matchUrlPattern(url))
-  const api = isBanugmi
-    ? bangumiApi(new URLSearchParams(params).toString())
-    : videoApi(new URLSearchParams(params).toString())
-  const data = await bilibiliApi(getJsonWithCredentials(api), '获取视频链接失败')
+  const request = async (extra?: Record<string, string>) => {
+    const query = new URLSearchParams({ ...params, ...extra }).toString()
+    const api = isBanugmi ? bangumiApi(query) : videoApi(query)
+    return bilibiliApi(getJsonWithCredentials(api), '获取视频链接失败')
+  }
+  let data = await request()
+  if (!allQualities.some(q => q.value === data.quality)) {
+    // 未知画质 (如只剩已废弃的 240P), 带 dash 参数再请求一次
+    data = await request({ fourk: '1', fnver: '0', fnval: '4048' })
+  }
+  if (!data.durl) {
+    throw new Error('此视频没有 flv 格式, 请改用其他格式.')
+  }
   const info = new DownloadVideoInfo({
     input,
     jsonData: data,
