@@ -1,37 +1,45 @@
-// 与原生音量按钮 (`.bpx-player-ctrl-volume`) 保持同样的尺寸, 从而与控制栏的其他按钮对齐
+// 按钮本身直接复用 B 站原生的 `.bpx-player-ctrl-btn`:
+// 36×22 (网页全屏与全屏下放大到 54×43)、行高、悬停变白、以及控制栏拥挤时的压缩都由原生样式管理,
+// 这里只需要把 mdi 图标的尺寸对齐原生的 svg (22px, 全屏时 28px)
 .be-volume-boost {
-  position: relative;
-  // 控制栏拥挤时和原生按钮一起被压缩 (网页全屏下原生按钮会从 54 压到 40)
-  flex: 0 1 auto;
-  box-sizing: border-box;
-  width: 36px;
-  height: 22px;
-  color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
-  font-size: 20px;
-  line-height: 22px;
-  text-align: center;
-}
-
-// 网页全屏与全屏时 B 站会把控制栏按钮放大, 与原生音量按钮保持一致
-@media screen and (min-width: 750px) {
-  .bpx-player-container[data-screen='web'] .be-volume-boost,
-  .bpx-player-container[data-screen='full'] .be-volume-boost {
-    width: 54px;
-    height: 43px;
-    font-size: 25px;
-    line-height: 43px;
-  }
-}
-
-.be-volume-boost:hover .be-volume-boost-icon {
-  color: #fff;
 }
 
 .be-volume-boost-icon {
-  display: block;
-  width: 100%;
-  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 22px;
+  font-size: 20px;
+  line-height: 22px;
+}
+
+@media screen and (min-width: 750px) {
+  .bpx-player-container[data-screen='web'] .be-volume-boost-icon,
+  .bpx-player-container[data-screen='full'] .be-volume-boost-icon {
+    height: 32px;
+    font-size: 25px;
+    line-height: 32px;
+  }
+}
+
+// 直播控制栏的按钮与视频页不同, 尺寸对齐 Bilibili-Evolved 其他直播按钮 (30×30, 图标 24px)
+.be-volume-boost-live {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.be-volume-boost-live .be-volume-boost-icon {
+  height: 24px;
+  font-size: 24px;
+  line-height: 24px;
 }
 
 // 收起状态不占位, 展开后与原生音量浮层一样浮在按钮上方

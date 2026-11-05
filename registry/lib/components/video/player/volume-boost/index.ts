@@ -136,9 +136,9 @@ const setup = () => {
       .catch(() => undefined)
   }
 
-  const createPanel = () => {
+  const createPanel = (live = false) => {
     panel?.dispose()
-    panel = createGainPanel({ percent: gain.getPercent(), onChange: changePercent })
+    panel = createGainPanel({ percent: gain.getPercent(), onChange: changePercent, live })
     return panel.element
   }
 
@@ -171,7 +171,7 @@ const setup = () => {
     if (!volumeButton) {
       return
     }
-    volumeButton.insertAdjacentElement('afterend', createPanel())
+    volumeButton.insertAdjacentElement('afterend', createPanel(true))
     restore()
   }
 

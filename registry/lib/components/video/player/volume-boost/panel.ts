@@ -10,6 +10,8 @@ export interface GainPanelConfig {
   percent: number
   /** 用户拖动滑块或滚动滚轮改变了增益 */
   onChange: (percent: number, source: 'drag' | 'wheel') => void
+  /** 直播控制栏的按钮尺寸与视频页不同, 需要单独的样式 */
+  live?: boolean
 }
 
 export interface GainPanel {
@@ -38,9 +40,12 @@ const isPlayerMode = () => {
  * 结构与样式尽量与原生音量浮层一致 (32×100 的深色竖条, 顶部数字, 下面竖直滑块),
  * 但只控制增益, 不碰原生音量, 两者的作用相互独立.
  */
-export const createGainPanel = ({ percent, onChange }: GainPanelConfig): GainPanel => {
+export const createGainPanel = ({ percent, onChange, live }: GainPanelConfig): GainPanel => {
   const element = document.createElement('div')
-  element.className = 'be-volume-boost'
+  // 复用原生控制栏按钮的类名, 宽度、高度、行高、全屏放大与悬停高亮都由 B 站的样式管理
+  element.className = live
+    ? 'be-volume-boost be-volume-boost-live'
+    : 'bpx-player-ctrl-btn be-volume-boost'
   element.innerHTML = `
     <div class="be-volume-boost-icon mdi mdi-volume-plus"></div>
     <div class="be-volume-boost-panel">
