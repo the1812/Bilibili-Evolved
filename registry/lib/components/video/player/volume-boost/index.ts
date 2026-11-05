@@ -12,6 +12,7 @@ import { allVideoUrls, liveUrls, matchCurrentPage } from '@/core/utils/urls'
 import { showPlayerTip } from '../common/player-tip/player-tip'
 import { createGainPanel, GainPanel } from './panel'
 import {
+  absoluteMaxGainPercent,
   clampGainPercent,
   defaultGainStep,
   gainStepDecibel,
@@ -28,8 +29,15 @@ const buttonClass = 'be-volume-boost'
 const options = defineOptionsMetadata({
   maxPercent: {
     defaultValue: maxGainPercent,
-    displayName: '增益上限 (%)',
-    slider: { min: minGainPercent, max: maxGainPercent, step: 5 },
+    displayName: `增益上限 (%), 默认 ${maxGainPercent}, 可填 ${minGainPercent}–${absoluteMaxGainPercent}`,
+    validator: (value: number) => {
+      const percent = Math.round(Number(value))
+      if (!Number.isFinite(percent) || percent < minGainPercent) {
+        // 返回 undefined 表示拒绝这次输入, 保留原来的值
+        return undefined
+      }
+      return Math.min(percent, absoluteMaxGainPercent)
+    },
   },
   stepMode: {
     defaultValue: defaultGainStep.mode,
@@ -104,7 +112,7 @@ const setup = () => {
     lodash.clamp(
       Number(settings.options.maxPercent) || maxGainPercent,
       minGainPercent,
-      maxGainPercent,
+      absoluteMaxGainPercent,
     ),
   )
   /** 滚轮每一档的调节方式, 按分贝时听感等距 */

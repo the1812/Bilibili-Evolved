@@ -4,6 +4,8 @@ import { useScopedConsole } from '@/core/utils/log'
 export const minGainPercent = 100
 /** 增益范围上限的默认值 */
 export const maxGainPercent = 300
+/** 增益上限允许填写的最大值, 再往上意义不大, 也更容易被压缩器压回去 */
+export const absoluteMaxGainPercent = 1000
 /** 每档变化的默认值 (dB), 按分贝调节时使用 */
 export const gainStepDecibel = 0.5
 /** 每档变化的默认值 (%), 按百分比调节时使用 */
@@ -220,7 +222,10 @@ export class VolumeGain {
   }
 
   setPercent(percent: number) {
-    this.percent = clampGainPercent(percent)
+    // 上限由调用方 (设置里的增益上限) 决定, 这里只保证不会低于原生音量
+    this.percent = Number.isFinite(percent)
+      ? Math.max(Math.round(percent), minGainPercent)
+      : minGainPercent
     this.apply()
   }
 
