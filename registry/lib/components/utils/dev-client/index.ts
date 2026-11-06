@@ -1,9 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
-import { installFeature } from '@/core/install-feature'
 import { isIframe } from '@/core/utils'
 import { devClientOptionsMetadata, autoUpdateOptions } from './options'
 import { setupPlugin } from './plugin'
-import { RefreshMethod } from './update-method'
 
 export const component = defineComponentMetadata({
   name: 'devClient',
@@ -14,26 +12,17 @@ export const component = defineComponentMetadata({
       return
     }
     const { devClient, DevClientEvents } = await import('./client')
-    const restoreInactiveDevRecords = async () => {
-      let restored = false
-      for (const { name, originalUrl } of Object.values(options.devRecords)) {
+    const restoreInactiveDevRecords = () => {
+      Object.values(options.devRecords).forEach(({ name, originalUrl }) => {
         const record =
           autoUpdateOptions.urls.components[name] ?? autoUpdateOptions.urls.plugins[name]
         if (!record || devClient.featureSessions.some(s => record.url.endsWith(s))) {
-          continue
+          return
         }
         record.url = originalUrl
         console.log('restoreInactiveDevRecords', name, originalUrl, record)
         delete options.devRecords[name]
-        restored = true
-        // 持久化的开发版代码也要重新安装
-        await installFeature(originalUrl).catch(error => {
-          console.error('还原原版本失败', name, error)
-        })
-      }
-      if (restored && options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
-        location.reload()
-      }
+      })
     }
     devClient.addEventListener(DevClientEvents.FeatureSessionsUpdate, restoreInactiveDevRecords)
     devClient.addEventListener(DevClientEvents.ServerDisconnected, restoreInactiveDevRecords)
