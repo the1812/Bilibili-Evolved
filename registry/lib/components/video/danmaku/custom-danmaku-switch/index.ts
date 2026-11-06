@@ -105,7 +105,7 @@ const handleDanmakuSwitchKeydown = (e: KeyboardEvent) => {
   }
   const isDKey = e.key.toLowerCase() === 'd' || e.code.toLowerCase() === 'keyd'
   const hasModifier = e.ctrlKey || e.altKey || e.metaKey || e.shiftKey
-  if (!isDKey || hasModifier || e.repeat || isTyping()) {
+  if (!isDKey || hasModifier || isTyping()) {
     return
   }
   if (lodash.isNil(playerAgent.getDanmakuState())) {
@@ -113,7 +113,9 @@ const handleDanmakuSwitchKeydown = (e: KeyboardEvent) => {
   }
   e.preventDefault()
   e.stopImmediatePropagation()
-  runCustomDanmakuSwitch()
+  if (!e.repeat) {
+    runCustomDanmakuSwitch()
+  }
 }
 
 const enable = () => {
