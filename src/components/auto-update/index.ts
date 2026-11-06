@@ -81,6 +81,7 @@ const entry: ComponentEntry<Options> = async ({ settings: { options } }) => {
 }
 
 export type AutoUpdateOptions = OptionsOfMetadata<typeof optionsMetadata>
+export type FeatureType = keyof AutoUpdateOptions['urls']
 
 export const component = defineComponentMetadata({
   name,

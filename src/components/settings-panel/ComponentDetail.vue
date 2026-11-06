@@ -47,9 +47,12 @@
       <div class="component-detail-grow"></div>
       <div class="component-detail-internal-data">
         <div class="component-detail-separator"></div>
-        <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
+        <div
+          v-if="componentData.commitHash || sourceBranch"
+          class="component-detail-internal-data-row"
+        >
           <div class="component-detail-commit">
-            <span class="internal-name"
+            <span v-if="componentData.commitHash" class="internal-name"
               >Commit: {{ componentData.commitHash.substring(0, 9) }}</span
             >
             <VIcon
@@ -59,12 +62,25 @@
               :size="14"
               title="当前组件的更新地址是本地开发链接, 不会随着检查更新而更新"
             />
+            <span v-if="sourceBranch" class="internal-name source-branch">
+              分支: {{ sourceBranch }}
+            </span>
+            <VIcon
+              v-if="branchMismatch"
+              class="branch-mismatch"
+              icon="mdi-alert-circle-outline"
+              :size="14"
+              title="组件安装分支与本体不一致"
+            />
           </div>
         </div>
         <div class="component-detail-internal-data-row">
           <div class="internal-name">内部名称: {{ componentData.name }}</div>
           <MiniToast
-            v-if="componentData.configurable !== false && componentActions.length > 0"
+            v-if="
+              componentData.configurable !== false &&
+              (configActions.length > 0 || vueActions.length > 0)
+            "
             placement="bottom"
             trigger="click"
             class="extra-actions-wrapper"
@@ -74,20 +90,16 @@
             </div>
             <template #toast>
               <div class="extra-actions-list">
-                <div v-for="a of componentActions" :key="a.name">
-                  <component
-                    :is="a.component"
-                    v-if="a.component"
-                    :item="a"
-                    :component="componentData"
-                  />
+                <div v-for="a of configActions" :key="a.name">
                   <ComponentAction
-                    v-else
                     v-show="a.visible !== false"
                     class="extra-action-item"
                     :item="a"
                     :component="componentData"
                   />
+                </div>
+                <div v-for="a of vueActions" :key="a.name">
+                  <component :is="a.component" :item="a" :component="componentData" />
                 </div>
               </div>
             </template>
@@ -101,14 +113,20 @@
 <script lang="ts">
 import { VButton, VIcon, SwitchBox, MiniToast } from '@/ui'
 import { visible } from '@/core/observer'
+import { meta } from '@/core/meta'
 import { getComponentSettings } from '@/core/settings'
 import type { AutoUpdateOptions } from '../auto-update'
-import { OptionsMetadata } from '../component'
+import { OptionsMetadata, ComponentMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
 import { componentSettingsMixin } from './mixins'
-import { componentActions, ComponentConfigAction } from './component-actions/component-actions'
+import {
+  componentActions,
+  ComponentConfigAction,
+  ComponentVueAction,
+} from './component-actions/component-actions'
 import ComponentAction from './component-actions/ComponentAction.vue'
+import { getFeatureBranch } from './utils'
 
 export default Vue.extend({
   components: {
@@ -121,20 +139,28 @@ export default Vue.extend({
     MiniToast,
   },
   mixins: [componentSettingsMixin],
+  props: {
+    componentData: {
+      type: Object as () => ComponentMetadata,
+      required: true,
+    },
+  },
   data() {
+    const actions = componentActions
+      .map(factory => factory((this as any).componentData))
+      .filter((it): it is ComponentConfigAction | ComponentVueAction => {
+        if (it === undefined) {
+          return false
+        }
+        if ((it as ComponentConfigAction).visible === false) {
+          return false
+        }
+        return true
+      })
     return {
       virtual: false,
-      componentActions: componentActions
-        .map(factory => factory((this as any).componentData))
-        .filter(it => {
-          if (it === undefined) {
-            return false
-          }
-          if ((it as ComponentConfigAction).visible === false) {
-            return false
-          }
-          return true
-        }),
+      configActions: actions.filter((it): it is ComponentConfigAction => !('component' in it)),
+      vueActions: actions.filter((it): it is ComponentVueAction => 'component' in it),
     }
   },
   computed: {
@@ -148,6 +174,12 @@ export default Vue.extend({
       const url = options.urls.components[this.componentData.name]?.url ?? ''
       return /^http:\/\/localhost:\d+\/registry\/dist\/components\/.+\.js$/.test(url)
     },
+    sourceBranch() {
+      return getFeatureBranch('components', this.componentData.name)
+    },
+    branchMismatch() {
+      return this.sourceBranch && !meta.compilationInfo.branch.includes(this.sourceBranch)
+    },
   },
   async mounted() {
     const element = this.$el as HTMLElement
@@ -158,7 +190,7 @@ export default Vue.extend({
     })
     await this.$nextTick()
     this.$emit('mounted')
-    console.log(this.componentActions)
+    console.log(this.configActions, this.vueActions)
   },
 })
 </script>
@@ -256,10 +288,19 @@ export default Vue.extend({
     .internal-name {
       opacity: 0.5;
     }
+    .source-branch {
+      @include single-line();
+      min-width: 0;
+      &:not(:first-child) {
+        margin-left: 8px;
+      }
+    }
     .component-detail-commit {
       @include h-center();
+      min-width: 0;
     }
-    .local-debug-warning {
+    .local-debug-warning,
+    .branch-mismatch {
       color: #ff9800;
       margin-left: 4px;
     }
