@@ -108,11 +108,13 @@ export default Vue.extend({
         const { devClient } = await import('./client')
         const metadata = this.component as ComponentMetadata
         const devUrl = urlConverter.toDevUrl(this.componentUpdateUrl)
-        // console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
         if (this.autoUpdateRecord.url !== devUrl) {
-          options.devRecords[metadata.name] = {
-            name: metadata.name,
-            originalUrl: this.componentUpdateUrl,
+          // 先记录原始链接, 否则停止调试后无法还原
+          if (!options.devRecords[metadata.name]) {
+            options.devRecords[metadata.name] = {
+              name: metadata.name,
+              originalUrl: this.componentUpdateUrl,
+            }
           }
           this.autoUpdateRecord.url = devUrl
         }

@@ -60,10 +60,14 @@ export class DevClient extends EventTarget {
 
   createSocket(toastError = false) {
     return new Promise<boolean>(resolve => {
-      this.closeSocket()
+      // 重连时静默关闭旧连接, 避免误判会话消失而还原调试记录
+      if (this.socket) {
+        this.socket.close()
+        this.socket = null
+      }
 
       const unloadHandler = () => {
-        this.closeSocket()
+        this.socket?.close()
       }
       this.socket = new WebSocket(`ws://localhost:${options.port}`)
       this.socket.addEventListener('error', () => {
@@ -140,7 +144,9 @@ export class DevClient extends EventTarget {
     this.socket.close()
     this.socket = null
     this.updateClientId(null)
-    this.updateFeatureSessions([])
+    // 断开后会话列表不可信, 但不再派发 FeatureSessionsUpdate, 否则重连时会误还原
+    this.featureSessions = []
+    this.pendingFeatureSessionQueries.splice(0).forEach(resolve => resolve([]))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerDisconnected))
   }
@@ -164,10 +170,14 @@ export class DevClient extends EventTarget {
       ([, { url: itemUrl }]) => itemUrl.endsWith(path),
     )
     if (componentRecord) {
-      const [name] = componentRecord
+      const [name, autoUpdateRecord] = componentRecord
       const oldComponent = componentsMap[name]
       if (!oldComponent) {
         return
+      }
+      // 先记录原始链接, 否则停止调试后无法还原
+      if (!options.devRecords[name]) {
+        options.devRecords[name] = { name, originalUrl: autoUpdateRecord.url }
       }
       const code: string = await monkey({ url })
       const { installFeatureFromCode } = await import('@/core/install-feature')
@@ -223,10 +233,14 @@ export class DevClient extends EventTarget {
       ([, { url: itemUrl }]) => itemUrl.endsWith(path),
     )
     if (pluginRecord) {
-      const [name] = pluginRecord
+      const [name, autoUpdateRecord] = pluginRecord
       const plugin = plugins.find(p => p.name === name)
       if (!plugin) {
         return
+      }
+      // 先记录原始链接, 否则停止调试后无法还原
+      if (!options.devRecords[name]) {
+        options.devRecords[name] = { name, originalUrl: autoUpdateRecord.url }
       }
       const { displayName } = plugin
       if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
@@ -327,7 +341,7 @@ export class DevClient extends EventTarget {
       debugStage = 'update auto update record'
       const existingDevRecord = options.devRecords[metadata.name]
       const existingAutoUpdateRecord = autoUpdateRecords[metadata.name]
-      if (!existingDevRecord && originalAutoUpdateUrl && originalAutoUpdateUrl !== url) {
+      if (!existingDevRecord && originalAutoUpdateUrl) {
         options.devRecords[metadata.name] = {
           name: metadata.name,
           originalUrl: originalAutoUpdateUrl,
@@ -356,6 +370,10 @@ export class DevClient extends EventTarget {
           message: `功能已安装并启用调试: ${kind}/${payload.id}`,
         } satisfies Payload),
       )
+      // 新的 entry 需要刷新页面后才会执行
+      if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
+        location.reload()
+      }
     } catch (error) {
       console.error('调试功能安装失败', error)
       const message =
