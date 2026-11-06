@@ -1,10 +1,11 @@
-import type { Payload, StopFeatureSessionPayload } from './protocol'
+import type { FeatureKind, Payload, StopFeatureSessionPayload } from './protocol'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeInstantStyle } from '@/core/style'
 import { getComponentSettings, isComponentEnabled } from '@/core/settings'
 import { autoUpdateOptions, getDevClientOptions } from './options'
 import { RefreshMethod, HotReloadMethod } from './update-method'
+import { urlConverter } from './converter'
 import { monkey } from '@/core/ajax'
 import { plugins } from '@/plugins/plugin'
 import { Toast } from '@/core/toast'
@@ -12,6 +13,14 @@ import { Toast } from '@/core/toast'
 const options = getDevClientOptions()
 const console = useScopedConsole('DevClient')
 const createRequestId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`
+// GM_setValue 异步落盘, 立即刷新会丢失刚安装的代码
+const reloadPage = () => setTimeout(() => location.reload(), 500)
+export const recordOriginalUrl = (name: string, url?: string, kind: FeatureKind = 'component') => {
+  if (!url || options.devRecords[name] || urlConverter.toDevUrl(url, kind) === url) {
+    return
+  }
+  options.devRecords[name] = { name, originalUrl: url }
+}
 const handleSocketMessage = (event: MessageEvent, callback: (payload: Payload) => void) => {
   const { data } = event
   try {
@@ -60,10 +69,13 @@ export class DevClient extends EventTarget {
 
   createSocket(toastError = false) {
     return new Promise<boolean>(resolve => {
-      this.closeSocket()
+      if (this.socket) {
+        this.socket.close()
+        this.socket = null
+      }
 
       const unloadHandler = () => {
-        this.closeSocket()
+        this.socket?.close()
       }
       this.socket = new WebSocket(`ws://localhost:${options.port}`)
       this.socket.addEventListener('error', () => {
@@ -140,7 +152,8 @@ export class DevClient extends EventTarget {
     this.socket.close()
     this.socket = null
     this.updateClientId(null)
-    this.updateFeatureSessions([])
+    this.featureSessions = []
+    this.pendingFeatureSessionQueries.splice(0).forEach(resolve => resolve([]))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerDisconnected))
   }
@@ -164,11 +177,12 @@ export class DevClient extends EventTarget {
       ([, { url: itemUrl }]) => itemUrl.endsWith(path),
     )
     if (componentRecord) {
-      const [name] = componentRecord
+      const [name, autoUpdateRecord] = componentRecord
       const oldComponent = componentsMap[name]
       if (!oldComponent) {
         return
       }
+      recordOriginalUrl(name, autoUpdateRecord.url)
       const code: string = await monkey({ url })
       const { installFeatureFromCode } = await import('@/core/install-feature')
       const { metadata } = await installFeatureFromCode(code, url)
@@ -183,7 +197,7 @@ export class DevClient extends EventTarget {
       }
       const reload = () => {
         console.log(`组件 [${newComponent.displayName}] 已更新, 刷新页面...`)
-        location.reload()
+        reloadPage()
       }
       const reloadInstantStyles = () => {
         if (oldInstantStyles.length > 0 || newInstantStyles.length > 0) {
@@ -223,15 +237,16 @@ export class DevClient extends EventTarget {
       ([, { url: itemUrl }]) => itemUrl.endsWith(path),
     )
     if (pluginRecord) {
-      const [name] = pluginRecord
+      const [name, autoUpdateRecord] = pluginRecord
       const plugin = plugins.find(p => p.name === name)
       if (!plugin) {
         return
       }
+      recordOriginalUrl(name, autoUpdateRecord.url, 'plugin')
       const { displayName } = plugin
       if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
         console.log(`插件 [${displayName}] 已更新, 刷新页面...`)
-        location.reload()
+        reloadPage()
       } else {
         console.log(`插件 [${displayName}] 已更新`)
       }
@@ -325,14 +340,8 @@ export class DevClient extends EventTarget {
       const oldComponent = kind === 'component' ? componentsMap[parsedFeature.name] : undefined
       const { metadata } = await installFeatureFromCode(code, url)
       debugStage = 'update auto update record'
-      const existingDevRecord = options.devRecords[metadata.name]
       const existingAutoUpdateRecord = autoUpdateRecords[metadata.name]
-      if (!existingDevRecord && originalAutoUpdateUrl && originalAutoUpdateUrl !== url) {
-        options.devRecords[metadata.name] = {
-          name: metadata.name,
-          originalUrl: originalAutoUpdateUrl,
-        }
-      }
+      recordOriginalUrl(metadata.name, originalAutoUpdateUrl, kind)
       if (existingAutoUpdateRecord) {
         existingAutoUpdateRecord.url = url
       }
@@ -356,6 +365,9 @@ export class DevClient extends EventTarget {
           message: `功能已安装并启用调试: ${kind}/${payload.id}`,
         } satisfies Payload),
       )
+      if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
+        reloadPage()
+      }
     } catch (error) {
       console.error('调试功能安装失败', error)
       const message =

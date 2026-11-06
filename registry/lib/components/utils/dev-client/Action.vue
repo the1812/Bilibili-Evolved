@@ -105,17 +105,10 @@ export default Vue.extend({
     },
     async startDebug() {
       await this.handleClick(async () => {
-        const { devClient } = await import('./client')
+        const { devClient, recordOriginalUrl } = await import('./client')
         const metadata = this.component as ComponentMetadata
-        const devUrl = urlConverter.toDevUrl(this.componentUpdateUrl)
-        // console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
-        if (this.autoUpdateRecord.url !== devUrl) {
-          options.devRecords[metadata.name] = {
-            name: metadata.name,
-            originalUrl: this.componentUpdateUrl,
-          }
-          this.autoUpdateRecord.url = devUrl
-        }
+        recordOriginalUrl(metadata.name, this.componentUpdateUrl)
+        this.autoUpdateRecord.url = urlConverter.toDevUrl(this.componentUpdateUrl)
         const toast = Toast.info('启动调试中...', 'DevClient')
         try {
           await devClient.startDebug(this.autoUpdateRecord.url)

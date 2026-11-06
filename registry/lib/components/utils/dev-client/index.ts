@@ -13,17 +13,14 @@ export const component = defineComponentMetadata({
     }
     const { devClient, DevClientEvents } = await import('./client')
     const restoreInactiveDevRecords = () => {
-      Object.entries(options.devRecords).forEach(([, { name, originalUrl }]) => {
-        const autoUpdateRecord = autoUpdateOptions.urls.components[name]
-        if (!autoUpdateRecord) {
+      Object.values(options.devRecords).forEach(({ name, originalUrl }) => {
+        const record =
+          autoUpdateOptions.urls.components[name] ?? autoUpdateOptions.urls.plugins[name]
+        if (!record || devClient.featureSessions.some(s => record.url.endsWith(s))) {
           return
         }
-        const devUrl = autoUpdateRecord.url
-        if (devClient.featureSessions.find(s => devUrl.endsWith(s))) {
-          return
-        }
-        autoUpdateRecord.url = originalUrl
-        console.log('restoreInactiveDevRecords', name, devUrl, originalUrl, autoUpdateRecord)
+        record.url = originalUrl
+        console.log('restoreInactiveDevRecords', name, originalUrl, record)
         delete options.devRecords[name]
       })
     }
