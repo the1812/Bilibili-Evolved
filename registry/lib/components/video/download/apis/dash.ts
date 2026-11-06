@@ -202,10 +202,9 @@ const downloadDash = async (
     videoCodec: codec,
   })
   const qualities = (() => {
-    const formats: any[] = data.support_formats ?? []
-    // 两个字段都可能被裁剪, 取并集
-    const qualityValues = [...(data.accept_quality as number[]), ...formats.map(f => f.quality)]
-    const supportedQualities = allQualities.filter(q => qualityValues.includes(q.value))
+    const supportedQualities = allQualities.filter(q =>
+      (data.accept_quality as number[]).includes(q.value),
+    )
     const filterByCodec = (preferredCodec: DashCodec | null) =>
       supportedQualities.filter(
         q =>
