@@ -13,7 +13,8 @@ import { Toast } from '@/core/toast'
 const options = getDevClientOptions()
 const console = useScopedConsole('DevClient')
 const createRequestId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`
-// 记录原始链接, 已是本地链接时不覆盖已有记录
+// GM_setValue 异步落盘, 立即刷新会丢失刚安装的代码
+const reloadPage = () => setTimeout(() => location.reload(), 500)
 export const recordOriginalUrl = (name: string, url?: string, kind: FeatureKind = 'component') => {
   if (!url || options.devRecords[name] || urlConverter.toDevUrl(url, kind) === url) {
     return
@@ -68,7 +69,6 @@ export class DevClient extends EventTarget {
 
   createSocket(toastError = false) {
     return new Promise<boolean>(resolve => {
-      // 重连时静默关闭旧连接, 避免误还原调试记录
       if (this.socket) {
         this.socket.close()
         this.socket = null
@@ -152,7 +152,6 @@ export class DevClient extends EventTarget {
     this.socket.close()
     this.socket = null
     this.updateClientId(null)
-    // 断开后不派发 FeatureSessionsUpdate, 否则重连会误还原
     this.featureSessions = []
     this.pendingFeatureSessionQueries.splice(0).forEach(resolve => resolve([]))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
@@ -198,7 +197,7 @@ export class DevClient extends EventTarget {
       }
       const reload = () => {
         console.log(`组件 [${newComponent.displayName}] 已更新, 刷新页面...`)
-        location.reload()
+        reloadPage()
       }
       const reloadInstantStyles = () => {
         if (oldInstantStyles.length > 0 || newInstantStyles.length > 0) {
@@ -247,7 +246,7 @@ export class DevClient extends EventTarget {
       const { displayName } = plugin
       if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
         console.log(`插件 [${displayName}] 已更新, 刷新页面...`)
-        location.reload()
+        reloadPage()
       } else {
         console.log(`插件 [${displayName}] 已更新`)
       }
@@ -366,9 +365,8 @@ export class DevClient extends EventTarget {
           message: `功能已安装并启用调试: ${kind}/${payload.id}`,
         } satisfies Payload),
       )
-      // 新的 entry 需要刷新后才执行
       if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
-        location.reload()
+        reloadPage()
       }
     } catch (error) {
       console.error('调试功能安装失败', error)
