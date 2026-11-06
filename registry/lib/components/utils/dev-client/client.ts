@@ -1,10 +1,11 @@
-import type { Payload, StopFeatureSessionPayload } from './protocol'
+import type { FeatureKind, Payload, StopFeatureSessionPayload } from './protocol'
 import { useScopedConsole } from '@/core/utils/log'
 import { ComponentMetadata, componentsMap } from '@/components/component'
 import { loadInstantStyle, removeInstantStyle } from '@/core/style'
 import { getComponentSettings, isComponentEnabled } from '@/core/settings'
 import { autoUpdateOptions, getDevClientOptions } from './options'
 import { RefreshMethod, HotReloadMethod } from './update-method'
+import { urlConverter } from './converter'
 import { monkey } from '@/core/ajax'
 import { plugins } from '@/plugins/plugin'
 import { Toast } from '@/core/toast'
@@ -12,6 +13,13 @@ import { Toast } from '@/core/toast'
 const options = getDevClientOptions()
 const console = useScopedConsole('DevClient')
 const createRequestId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`
+// 记录原始链接, 已是本地链接时不覆盖已有记录
+export const recordOriginalUrl = (name: string, url?: string, kind: FeatureKind = 'component') => {
+  if (!url || options.devRecords[name] || urlConverter.toDevUrl(url, kind) === url) {
+    return
+  }
+  options.devRecords[name] = { name, originalUrl: url }
+}
 const handleSocketMessage = (event: MessageEvent, callback: (payload: Payload) => void) => {
   const { data } = event
   try {
@@ -60,7 +68,7 @@ export class DevClient extends EventTarget {
 
   createSocket(toastError = false) {
     return new Promise<boolean>(resolve => {
-      // 重连时静默关闭旧连接, 避免误判会话消失而还原调试记录
+      // 重连时静默关闭旧连接, 避免误还原调试记录
       if (this.socket) {
         this.socket.close()
         this.socket = null
@@ -144,7 +152,7 @@ export class DevClient extends EventTarget {
     this.socket.close()
     this.socket = null
     this.updateClientId(null)
-    // 断开后会话列表不可信, 但不再派发 FeatureSessionsUpdate, 否则重连时会误还原
+    // 断开后不派发 FeatureSessionsUpdate, 否则重连会误还原
     this.featureSessions = []
     this.pendingFeatureSessionQueries.splice(0).forEach(resolve => resolve([]))
     this.dispatchEvent(new CustomEvent(DevClientEvents.ServerChange, { detail: false }))
@@ -175,10 +183,7 @@ export class DevClient extends EventTarget {
       if (!oldComponent) {
         return
       }
-      // 先记录原始链接, 否则停止调试后无法还原
-      if (!options.devRecords[name]) {
-        options.devRecords[name] = { name, originalUrl: autoUpdateRecord.url }
-      }
+      recordOriginalUrl(name, autoUpdateRecord.url)
       const code: string = await monkey({ url })
       const { installFeatureFromCode } = await import('@/core/install-feature')
       const { metadata } = await installFeatureFromCode(code, url)
@@ -238,10 +243,7 @@ export class DevClient extends EventTarget {
       if (!plugin) {
         return
       }
-      // 先记录原始链接, 否则停止调试后无法还原
-      if (!options.devRecords[name]) {
-        options.devRecords[name] = { name, originalUrl: autoUpdateRecord.url }
-      }
+      recordOriginalUrl(name, autoUpdateRecord.url, 'plugin')
       const { displayName } = plugin
       if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
         console.log(`插件 [${displayName}] 已更新, 刷新页面...`)
@@ -339,14 +341,8 @@ export class DevClient extends EventTarget {
       const oldComponent = kind === 'component' ? componentsMap[parsedFeature.name] : undefined
       const { metadata } = await installFeatureFromCode(code, url)
       debugStage = 'update auto update record'
-      const existingDevRecord = options.devRecords[metadata.name]
       const existingAutoUpdateRecord = autoUpdateRecords[metadata.name]
-      if (!existingDevRecord && originalAutoUpdateUrl) {
-        options.devRecords[metadata.name] = {
-          name: metadata.name,
-          originalUrl: originalAutoUpdateUrl,
-        }
-      }
+      recordOriginalUrl(metadata.name, originalAutoUpdateUrl, kind)
       if (existingAutoUpdateRecord) {
         existingAutoUpdateRecord.url = url
       }
@@ -370,7 +366,7 @@ export class DevClient extends EventTarget {
           message: `功能已安装并启用调试: ${kind}/${payload.id}`,
         } satisfies Payload),
       )
-      // 新的 entry 需要刷新页面后才会执行
+      // 新的 entry 需要刷新后才执行
       if (options.registryRefreshMethod !== RefreshMethod.DoNotRefresh) {
         location.reload()
       }

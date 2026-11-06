@@ -16,21 +16,17 @@ export const component = defineComponentMetadata({
     const { devClient, DevClientEvents } = await import('./client')
     const restoreInactiveDevRecords = async () => {
       let restored = false
-      for (const [, { name, originalUrl }] of Object.entries(options.devRecords)) {
-        const autoUpdateRecord =
+      for (const { name, originalUrl } of Object.values(options.devRecords)) {
+        const record =
           autoUpdateOptions.urls.components[name] ?? autoUpdateOptions.urls.plugins[name]
-        if (!autoUpdateRecord) {
+        if (!record || devClient.featureSessions.some(s => record.url.endsWith(s))) {
           continue
         }
-        const devUrl = autoUpdateRecord.url
-        if (devClient.featureSessions.find(s => devUrl.endsWith(s))) {
-          continue
-        }
-        autoUpdateRecord.url = originalUrl
-        console.log('restoreInactiveDevRecords', name, devUrl, originalUrl, autoUpdateRecord)
+        record.url = originalUrl
+        console.log('restoreInactiveDevRecords', name, originalUrl, record)
         delete options.devRecords[name]
         restored = true
-        // 只还原链接不够, 持久化的开发版代码也要重新安装
+        // 持久化的开发版代码也要重新安装
         await installFeature(originalUrl).catch(error => {
           console.error('还原原版本失败', name, error)
         })
