@@ -5,46 +5,26 @@ import { playerReady, getNumberValidator } from '@/core/utils'
 import { videoUrls } from '@/core/utils/urls'
 
 /**
- * 将 element 移动到 after 后面
- * @param element 要移动的元素
- * @param after 目标元素
- */
-function moveElementAfter(element: Element, after: Element) {
-  const parent = element.parentElement
-  if (!parent) {
-    return
-  }
-  parent.removeChild(element)
-  parent.insertBefore(element, after.nextSibling)
-}
-
-/**
- * 处理屏幕尺寸变化
- * 实时获取到`#danmukuBox`的`marginTop`值
- * 修改自B站内联的JS代码，请确保此函数在播放器宽屏模式下被调用
- */
-function calcMarginTop() {
-  const e = window.innerHeight
-  const t = Math.max((document.body && document.body.clientWidth) || window.innerWidth, 1100)
-  const n = innerWidth > 1680 ? 411 : 350
-  const o = parseInt(String((16 * (e - (window.innerWidth > 1690 ? 318 : 308))) / 9))
-  const r = t - 112 - n
-  const d = r < o ? r : o
-  const a = Math.round((d + n) * (9 / 16)) + (innerWidth > 1680 ? 56 : 46)
-
-  return `${a}px`
-}
-
-/**
  * 统一添加副作用处理
  * 处理播放器宽屏切换后的UP信息与弹幕列表样式
  */
-function sideEffect() {
+function watchPlayerMode(player: HTMLDivElement) {
   const author = document.querySelector('.up-panel-container') as HTMLDivElement
   const danmuku = document.querySelector('#danmukuBox') as HTMLDivElement
 
   // 缓存当前播放器模式 用于判断是否为宽屏模式
   let currentMode = 'normal'
+
+  const updateUpPanelMargin = () => {
+    // 先还原再测量, 避免叠加偏移
+    author.style.marginTop = '0px'
+    if (currentMode !== 'wide') {
+      return
+    }
+    // 宽屏时播放器会盖住右侧栏
+    const offset = player.getBoundingClientRect().bottom - author.getBoundingClientRect().top
+    author.style.marginTop = `${Math.max(0, offset)}px`
+  }
 
   // 监听播放器宽屏模式 调整UP信息与弹幕列表样式
   window.addEventListener(
@@ -52,27 +32,22 @@ function sideEffect() {
     (ev: ReturnType<typeof createPlayerModeChangeEvent>) => {
       const { mode } = ev.detail
 
-      if (mode !== 'mini') {
-        currentMode = mode
+      // 迷你播放器不影响布局, 保持原状态
+      if (mode === 'mini') {
+        return
       }
 
-      if (currentMode === 'wide') {
+      currentMode = mode
+      if (mode === 'wide') {
         danmuku.style.marginTop = '0px'
-        author.style.marginTop = calcMarginTop()
-      } else {
-        // 恢复原始样式
-        author.style.marginTop = '0px'
       }
+      // 等播放器尺寸生效后再测量
+      window.requestAnimationFrame(updateUpPanelMargin)
     },
   )
 
   // 监听屏幕尺寸变化
-  window.addEventListener('resize', () => {
-    // 播放器宽屏模式
-    if (currentMode === 'wide') {
-      author.style.marginTop = calcMarginTop()
-    }
-  })
+  window.addEventListener('resize', updateUpPanelMargin)
 }
 
 /**
@@ -81,10 +56,10 @@ function sideEffect() {
  */
 async function playerOnTop({ settings: { options: opt }, metadata }) {
   await playerReady()
-  const title = document.querySelector('#viewbox_report')
   const player = document.querySelector('#playerWrap') as HTMLDivElement
   // 将标题放到播放器和点赞中间位置
-  moveElementAfter(title, player)
+  const title = document.querySelector('.video-info-container')
+  title?.parentElement.insertBefore(title, player.nextSibling)
   player.style.marginTop = `${opt.marginTop}px`
 
   // 监听设置变化 实时更新到页面
@@ -92,7 +67,7 @@ async function playerOnTop({ settings: { options: opt }, metadata }) {
     player.style.marginTop = `${value}px`
   })
 
-  sideEffect()
+  watchPlayerMode(player)
 }
 
 export const component = defineComponentMetadata({
@@ -121,6 +96,12 @@ export const component = defineComponentMetadata({
   },
   urlInclude: videoUrls,
   displayName: '播放器置顶（新）',
+  instantStyles: [
+    {
+      name: 'playerOnTopNew',
+      style: () => import('./player-on-top-new.scss'),
+    },
+  ],
   entry: playerOnTop,
   reload: () =>
     playerOnTop({ settings: getComponentSettings('playerOnTopNew'), metadata: component }),
