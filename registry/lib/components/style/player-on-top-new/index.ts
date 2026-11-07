@@ -9,8 +9,8 @@ import { videoUrls } from '@/core/utils/urls'
  * 处理播放器宽屏切换后的UP信息与弹幕列表样式
  */
 function watchPlayerMode(player: HTMLDivElement) {
-  const author = document.querySelector('.up-panel-container') as HTMLDivElement
-  const danmuku = document.querySelector('#danmukuBox') as HTMLDivElement
+  const author = dq('.up-panel-container') as HTMLDivElement
+  const danmuku = dq('#danmukuBox') as HTMLDivElement
 
   // 缓存当前播放器模式 用于判断是否为宽屏模式
   let currentMode = 'normal'
@@ -56,9 +56,9 @@ function watchPlayerMode(player: HTMLDivElement) {
  */
 async function playerOnTop({ settings: { options: opt }, metadata }) {
   await playerReady()
-  const player = document.querySelector('#playerWrap') as HTMLDivElement
+  const player = dq('#playerWrap') as HTMLDivElement
   // 将标题放到播放器和点赞中间位置
-  const title = document.querySelector('.video-info-container')
+  const title = dq('.video-info-container')
   title?.parentElement.insertBefore(title, player.nextSibling)
   player.style.marginTop = `${opt.marginTop}px`
 

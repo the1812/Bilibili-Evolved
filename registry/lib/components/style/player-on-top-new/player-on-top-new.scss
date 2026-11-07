@@ -1,5 +1,4 @@
-// 标题容器用固定高度撑开, 移到播放器下方后会在与工具栏之间多出一截空隙
-// 宽屏 + 联合投稿时 B站 还会给它设行内 height: 150px / padding-top: 49px, 一并压回
+// 覆盖 B站 的固定高度, 以及「宽屏 + 联合投稿」时写入的行内 height/padding-top
 #playerWrap + .video-info-container {
   height: auto !important;
   padding-top: 22px !important;
