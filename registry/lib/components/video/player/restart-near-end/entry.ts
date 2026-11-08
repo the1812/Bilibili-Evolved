@@ -143,6 +143,11 @@ export const seekAndPlay = async (time: number) => {
 }
 
 const goNextEpisode = async () => {
+  // 原生 API: 播放器清单确认有下一分 P 时直接切换 (番剧的下一集不在此清单内, 走按钮兜底)
+  if (playerAgent.nativeApi?.getManifest?.()?.hasNext) {
+    playerAgent.nextPart()
+    return
+  }
   const nextButton = playerAgent.query.control.buttons.next.sync()
   if (nextButton) {
     nextButton.click()
@@ -155,7 +160,7 @@ const goNextEpisode = async () => {
     fallback.click()
     return
   }
-  // 没有「下一集」按钮时把进度拉到最后, 由播放器自身的播完逻辑衔接下一集/选集面板
+  // 没有「下一集」入口时把进度拉到最后, 由播放器自身的播完逻辑衔接下一集/选集面板
   const video = (await playerAgent.query.video.element()) as HTMLVideoElement | null
   if (!video) {
     return
