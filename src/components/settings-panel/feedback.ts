@@ -1,7 +1,11 @@
 import { meta } from '@/core/meta'
+import type { ComponentMetadata } from '@/components/types'
 
 const feedbackFormUrl = 'https://github.com/the1812/Bilibili-Evolved/issues/new'
 const videoPageFallbackText = '当前不是视频页面'
+
+const namespace = GM_info.scriptMetaStr.match(/@namespace\s*(.+)/)?.[1]
+export const feedbackSupported = !namespace?.includes('greasyfork')
 
 const getBrowserVersion = () => {
   const { userAgentData } = navigator
@@ -27,13 +31,15 @@ const getPlayerLogs = async () => {
         /--------------- Header\(S\) ---------------([\s\S]*?)--------------- Header\(E\) ---------------/,
       )?.[1]
       .trim()
-    return header || '未找到播放器日志 Header'
+    const playerLogs = header || '未找到播放器日志 Header'
+    const preferCodec = nativeApi.getPreferCodec?.()
+    return preferCodec === undefined ? playerLogs : `${playerLogs}\npreferCodec: ${preferCodec}`
   } catch (error) {
     return `播放器日志读取失败: ${String(error)}`
   }
 }
 
-const createFeedbackUrl = async () => {
+export const openFeedback = async (component?: ComponentMetadata) => {
   const params = new URLSearchParams({
     template: 'bug_report.yml',
     'script-version': meta.compilationInfo.versionWithTag,
@@ -41,10 +47,10 @@ const createFeedbackUrl = async () => {
     'browser-version': getBrowserVersion(),
     'player-logs': await getPlayerLogs(),
   })
-  return `${feedbackFormUrl}?${params}`
-}
-
-export const openFeedback = async () => {
-  const url = await createFeedbackUrl()
-  window.open(url, '_blank')
+  if (component) {
+    const { displayName, name, commitHash } = component
+    const feature = `${displayName} (${name})`
+    params.set('feature', commitHash ? `${feature}\nCommit: ${commitHash}` : feature)
+  }
+  window.open(`${feedbackFormUrl}?${params}`, '_blank', 'noopener')
 }

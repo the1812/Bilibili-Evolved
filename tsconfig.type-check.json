@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": [
-    "src/client/bilibili-evolved.ts",
-    "src/**/*.d.ts",
-    "registry/lib/**/*.ts"
-  ],
-}

@@ -1,26 +1,20 @@
-import { getDevClientOptions } from './options'
+import { getLoadedDevPath } from '@/core/dev-features'
+import { autoUpdateOptions } from './options'
 
-const options = getDevClientOptions()
-
-export const urlConverter = {
-  toDevUrl: (originalUrl: string, kind = 'component') => {
-    if (!originalUrl) {
-      return null
-    }
-    const devUrlMatch = originalUrl.match(
-      new RegExp(`localhost:${options.port}\\/registry\\/dist\\/${kind}s\\/(.+)$`),
-    )
-    if (devUrlMatch) {
-      return originalUrl
-    }
-    const localhostMatch = originalUrl.match(new RegExp(`localhost:(\\d+?)\\/${kind}s\\/(.+)$`))
-    if (localhostMatch) {
-      return `http://localhost:${options.port}/registry/dist/${kind}s/${localhostMatch[2]}`
-    }
-    const onlineMatch = originalUrl.match(new RegExp(`\\/registry\\/dist\\/${kind}s\\/(.+)$`))
-    if (onlineMatch) {
-      return `http://localhost:${options.port}/registry/dist/${kind}s/${onlineMatch[1]}`
-    }
-    return null
-  },
+export const getComponentDevPath = (name: string) => {
+  const activePath = getLoadedDevPath('component', name)
+  if (activePath) {
+    return activePath
+  }
+  const source = autoUpdateOptions.urls.components[name]?.source
+  if (!source) {
+    return undefined
+  }
+  const path = source.kind === 'github' ? `/${source.path}` : source.url
+  const registryPath = path.match(/\/registry\/dist\/components\/[^?#]+\.js(?=$|[?#])/)
+  if (registryPath) {
+    return registryPath[0]
+  }
+  const legacyPath = /^http:\/\/localhost:\d+(\/components\/[^?#]+\.js)(?=$|[?#])/.exec(path)
+  return legacyPath && `/registry/dist${legacyPath[1]}`
 }

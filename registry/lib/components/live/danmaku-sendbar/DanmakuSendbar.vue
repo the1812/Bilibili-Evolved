@@ -8,7 +8,7 @@
       maxlength="30"
       autocomplete="off"
       @keydown.enter="send()"
-      @input="updateValue($event.target.value)"
+      @input="updateValue"
       @focus="setControlBarLocked(true)"
       @blur="setControlBarLocked(false)"
     />
@@ -40,8 +40,8 @@ watch(
   },
   { flush: 'sync' },
 )
-const updateValue = (text: string) => {
-  controls.value.textArea.value = text
+const updateValue = (event: Event) => {
+  controls.value.textArea.value = (event.currentTarget as HTMLInputElement).value
 }
 const send = () => {
   if (!controls.value.button.disabled) {

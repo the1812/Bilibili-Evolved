@@ -1,19 +1,3 @@
-import { getComponentSettings } from '@/core/settings'
-import { ComponentMetadata } from '../component'
-
-export const componentSettingsMixin = Vue.extend({
-  props: {
-    componentData: {
-      type: Object as () => ComponentMetadata,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      settings: getComponentSettings(this.componentData),
-    }
-  },
-})
 export const virtualScrollMixin = (containerSelector: string) =>
   Vue.extend({
     data() {

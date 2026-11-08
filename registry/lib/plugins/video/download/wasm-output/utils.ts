@@ -108,7 +108,7 @@ export async function getCacheOrFetch(
   })
 }
 
-export function toBlobUrl(buffer: Uint8Array, mimeType: string) {
+export function toBlobUrl(buffer: Uint8Array<ArrayBuffer>, mimeType: string) {
   const blob = new Blob([buffer], { type: mimeType })
   return URL.createObjectURL(blob)
 }

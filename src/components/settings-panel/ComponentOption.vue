@@ -7,16 +7,16 @@
       v-if="type === 'text' || type === 'number'"
       change-on-blur
       :validator="option.validator"
-      :text="value.toString()"
-      :placeholder="value.toString()"
+      :text="text"
+      :placeholder="text"
       @change="type === 'text' ? valueChange($event) : numberChange($event)"
     ></TextBox>
     <TextArea
       v-if="type === 'textArea'"
       change-on-blur
       :validator="option.validator"
-      :text="value.toString()"
-      :placeholder="value.toString()"
+      :text="text"
+      :placeholder="text"
       @change="valueChange($event)"
     ></TextArea>
     <SwitchBox v-if="type === 'boolean'" :checked="value" @change="valueChange($event)"></SwitchBox>
@@ -61,10 +61,10 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { computed, onBeforeUnmount, ref } from 'vue'
 import {
   getComponentSettings,
-  ComponentSettings,
   addComponentListener,
   removeComponentListener,
 } from '@/core/settings'
@@ -78,121 +78,71 @@ import {
   ImagePicker,
   VSlider,
 } from '@/ui'
-import { OptionMetadata } from '../component'
+import type { ComponentMetadata, OptionMetadata } from '../component'
 import SwitchOptions from '../SwitchOptions.vue'
 import { getDropdownItems } from './dropdown'
 
-function valueChange(newValue: unknown) {
-  const settings = this.settings as ComponentSettings
-  settings.options[this.name] = newValue
-  this.value = newValue
-}
-export default {
-  name: 'ComponentOption',
-  components: {
-    SwitchOptions,
-    TextBox,
-    TextArea,
-    SwitchBox,
-    ColorPicker,
-    RangeInput,
-    VDropdown,
-    ImagePicker,
-    VSlider,
-  },
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    displayName: {
-      type: String,
-      default: '',
-    },
-    option: {
-      type: Object,
-      required: true,
-    },
-    component: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    const settings = getComponentSettings(this.component)
-    return {
-      settings,
-      value: settings.options[this.name],
-    }
-  },
-  computed: {
-    type() {
-      const option = this.option as OptionMetadata
-      const { defaultValue } = option
-      // console.log(option)
-      switch (typeof defaultValue) {
-        case 'boolean':
-          return 'boolean'
-        case 'number': {
-          if (option.slider) {
-            return 'slider'
-          }
-          return 'number'
-        }
-        case 'string': {
-          if (option.color) {
-            return 'color'
-          }
-          if (option.dropdownEnum) {
-            return 'dropdown'
-          }
-          if (option.multiline) {
-            return 'textArea'
-          }
-          return 'text'
-        }
-        case 'object': {
-          if ('start' in defaultValue && 'end' in defaultValue) {
-            return 'range'
-          }
-          if ('name' in defaultValue && 'url' in defaultValue) {
-            return 'image'
-          }
-          if ('name' in defaultValue && 'switches' in defaultValue) {
-            return 'switch'
-          }
-          return 'unknown'
-        }
-        default:
-          return 'unknown'
+const props = withDefaults(
+  defineProps<{
+    name: string
+    displayName?: string
+    option: OptionMetadata
+    component: ComponentMetadata
+  }>(),
+  { displayName: '' },
+)
+const settings = getComponentSettings(props.component)
+const value = ref(settings.options[props.name])
+const text = computed(() => String(value.value))
+const type = computed(() => {
+  const { defaultValue, slider, color, dropdownEnum, multiline } = props.option
+  switch (typeof defaultValue) {
+    case 'boolean':
+      return 'boolean'
+    case 'number':
+      return slider ? 'slider' : 'number'
+    case 'string':
+      if (color) {
+        return 'color'
       }
-    },
-  },
-  created() {
-    this.optionListenerPath = `${this.component.name}.${this.name}`
-    this.optionListener = (newValue: unknown) => {
-      this.value = newValue
-    }
-    addComponentListener(this.optionListenerPath, this.optionListener)
-  },
-  beforeDestroy() {
-    removeComponentListener(this.optionListenerPath, this.optionListener)
-  },
-  methods: {
-    getDropdownItems,
-    numberChange(newValue: string) {
-      const settings = this.settings as ComponentSettings
-      const numberValue = parseFloat(newValue)
-      if (Number.isNaN(numberValue)) {
-        return
+      if (dropdownEnum) {
+        return 'dropdown'
       }
-      settings.options[this.name] = numberValue
-      this.value = numberValue
-    },
-    debounceValueChange: lodash.debounce(valueChange, 200),
-    valueChange,
-  },
+      return multiline ? 'textArea' : 'text'
+    case 'object':
+      if ('start' in defaultValue && 'end' in defaultValue) {
+        return 'range'
+      }
+      if ('name' in defaultValue && 'url' in defaultValue) {
+        return 'image'
+      }
+      if ('name' in defaultValue && 'switches' in defaultValue) {
+        return 'switch'
+      }
+      return 'unknown'
+    default:
+      return 'unknown'
+  }
+})
+
+const valueChange = (newValue: unknown) => {
+  settings.options[props.name] = newValue
+  value.value = newValue
 }
+const numberChange = (newValue: string) => {
+  const numberValue = parseFloat(newValue)
+  if (!Number.isNaN(numberValue)) {
+    valueChange(numberValue)
+  }
+}
+const debounceValueChange = lodash.debounce(valueChange, 200)
+
+const optionListenerPath = [props.component.name, props.name].join('.')
+const optionListener = (newValue: unknown) => {
+  value.value = newValue
+}
+addComponentListener(optionListenerPath, optionListener)
+onBeforeUnmount(() => removeComponentListener(optionListenerPath, optionListener))
 </script>
 
 <style lang="scss">

@@ -68,7 +68,7 @@ export class DownloadPackage {
       const finalOptions = { ...options, level: 0 as const }
       zippable[finalName] = [bytes, finalOptions]
     }
-    const result = await new Promise<Uint8Array>((resolve, reject) => {
+    const result = await new Promise<Uint8Array<ArrayBuffer>>((resolve, reject) => {
       fflate.zip(zippable, (err, data) => {
         if (err) {
           reject(err)

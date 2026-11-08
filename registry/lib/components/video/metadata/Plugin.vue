@@ -15,10 +15,10 @@ import { VDropdown } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
 import { MetadataType } from './types'
 
-interface Options {
+type Options = {
   metadataType: MetadataType | '无'
 }
-const options = getComponentSettings('downloadVideo').options as Options
+const { options } = getComponentSettings<Options>('downloadVideo')
 
 export default Vue.extend({
   components: {

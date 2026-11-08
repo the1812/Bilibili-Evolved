@@ -1,7 +1,7 @@
 export type ExternalLibrary = { url: string; sha256: string }
 export interface CdnConfig {
   name: string
-  owner: string
+  repo: string
   host: string
   stableClient: string
   previewClient: string
@@ -19,5 +19,5 @@ export interface CdnConfig {
   }
   smallLogo: string
   logo: string
-  root: (branch: string, ownerOverride: string) => string
+  root: (branch: string, repo: string) => string
 }

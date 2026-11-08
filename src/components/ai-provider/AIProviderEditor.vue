@@ -25,7 +25,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 import { AIProviderConfig, getAIProviderParameters, setAIProviderConfig } from '@/core/ai'
 import { getRandomId } from '@/core/utils'
 import { TextArea, TextBox, VButton } from '@/ui'
@@ -33,7 +33,7 @@ import { TextArea, TextBox, VButton } from '@/ui'
 const props = defineProps<{ config?: AIProviderConfig }>()
 const emit = defineEmits<{ (event: 'close'): void }>()
 const { config } = props
-const draft = reactive<AIProviderConfig>(
+const draft = ref<AIProviderConfig>(
   config
     ? { ...config, parameters: getAIProviderParameters(config) }
     : { id: getRandomId(16), displayName: '', baseUrl: '', model: '', parameters: '' },
@@ -42,7 +42,7 @@ const error = ref('')
 
 const save = () => {
   try {
-    setAIProviderConfig(draft)
+    setAIProviderConfig(draft.value)
     emit('close')
   } catch (e) {
     error.value = (e as Error).message

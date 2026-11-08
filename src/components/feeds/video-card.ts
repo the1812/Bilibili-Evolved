@@ -14,6 +14,8 @@ export interface VideoCard {
   duration?: number
   durationText: string
   playCount: string
+  pubTime?: string
+  pubTimeText?: string
   danmakuCount?: string
   dynamic?: string
   like?: string

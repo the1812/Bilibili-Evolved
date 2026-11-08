@@ -15,5 +15,6 @@ export interface DocSourceItem {
   descriptionText?: string
   fullAbsolutePath: string
   fullRelativePath: string
+  repo?: string
   owner?: string
 }

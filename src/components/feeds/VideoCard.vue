@@ -126,17 +126,16 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import { DpiImage, VIcon } from '@/ui'
 import { getUID } from '@/core/utils'
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
-import { VideoCard as VideoCardInfo } from '@/components/feeds/video-card'
+import type { VideoCard } from './video-card'
 
-type VideoCardData = Omit<VideoCardInfo, 'watchlater'> & {
+type VideoCardData = Omit<VideoCard, 'watchlater'> & {
   watchlaterList: number[]
   watchlaterInit: any
   statsIconSize: number
-  pubTime?: number
-  pubTimeText?: string
 }
 
 /*
@@ -144,7 +143,7 @@ type VideoCardData = Omit<VideoCardInfo, 'watchlater'> & {
    祖 传 代 码
   ============
 */
-export default {
+export default defineComponent({
   // props: ['data', 'orientation'],
   components: {
     DpiImage,
@@ -152,7 +151,7 @@ export default {
   },
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<VideoCard>,
       required: true,
     },
     orientation: {
@@ -182,7 +181,7 @@ export default {
       upID: 0,
       epID: 0,
       cooperation: [],
-      pubTime: 0,
+      pubTime: '',
       pubTimeText: '',
       ...lodash.omit(this.data, 'watchlater'),
       watchlaterInit: this.data.watchlater,
@@ -206,7 +205,7 @@ export default {
   methods: {
     toggleWatchlater,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

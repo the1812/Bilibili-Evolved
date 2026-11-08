@@ -7,15 +7,16 @@
   />
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VideoCard } from '@/components/feeds/video-card'
 import { formatDuration, formatCount, parseDuration, parseCount } from '@/core/utils/formatters'
-import { isNewID } from '@/components/feeds/notify'
+import { isNewID, type FeedCardWithNewStatus } from '@/components/feeds/notify'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import { nextPageMixin } from './next-page'
 import { formatPubTime, formatPubTimeText } from './video-card-pub-time'
 import VideoCardList from './VideoCardList.vue'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VideoCardList,
   },
@@ -27,7 +28,6 @@ export default Vue.extend({
         id: card.id_str,
         aid: parseInt(archive.aid),
         bvid: archive.bvid,
-        videoUrl: `https://www.bilibili.com/${archive.bvid}`,
         coverUrl: archive.cover,
         title: archive.title,
         duration: parseDuration(archive.duration_text),
@@ -43,7 +43,7 @@ export default Vue.extend({
         get new() {
           return isNewID(this.id)
         },
-      } as VideoCard
+      } satisfies FeedCardWithNewStatus<VideoCard>
     }),
   ],
   methods: {

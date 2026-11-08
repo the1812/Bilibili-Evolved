@@ -10,6 +10,7 @@ const internalSettings = {
   userComponents: {},
   components: {},
   plugins: {},
+  featureSourcesMigrated: false,
 } as Settings
 export const settingsInternalState = {
   internalSettings,

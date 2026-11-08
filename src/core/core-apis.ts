@@ -4,7 +4,14 @@ import * as cdnTypes from '@/core/cdn-types'
 import * as containerQuery from '@/core/container-query'
 import * as download from '@/core/download'
 import * as dialog from '@/core/dialog'
+import {
+  getDevFeaturePaths,
+  getLoadedDevPath,
+  loadDevFeature,
+  setDevFeaturePaths,
+} from '@/core/dev-features'
 import * as externalInput from '@/core/external-input'
+import * as featureSource from '@/core/feature-source'
 import * as filePicker from '@/core/file-picker'
 import * as installFeature from '@/core/install-feature'
 import * as horizontalScroll from '@/core/horizontal-scroll'
@@ -48,7 +55,9 @@ export const coreApis = {
   containerQuery,
   download,
   dialog,
+  devFeatures: { getDevFeaturePaths, getLoadedDevPath, loadDevFeature, setDevFeaturePaths },
   externalInput,
+  featureSource,
   filePicker,
   installFeature,
   horizontalScroll,

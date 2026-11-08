@@ -105,7 +105,7 @@
         class="run-download"
         type="primary"
         :disabled="!canStartDownload"
-        @click="startDownload($refs.outputOptions, selectedOutput)"
+        @click="startDownload(selectedOutput)"
       >
         开始
       </VButton>
@@ -427,7 +427,8 @@ export default Vue.extend({
         this.testData.videoInfo = undefined
       }
     },
-    async startDownload(instance: any, output: DownloadVideoOutput) {
+    async startDownload(output: DownloadVideoOutput) {
+      const instance = this.$refs.outputOptions as Vue
       try {
         this.busy = true
         const input = this.selectedInput as DownloadVideoInput

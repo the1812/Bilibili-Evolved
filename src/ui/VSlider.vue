@@ -24,13 +24,14 @@
         <div class="default-thumb"></div>
       </slot>
       <template #toast>
-        {{ displayFun(realValue) }}
+        {{ formattedValue }}
       </template>
     </MiniToast>
   </div>
 </template>
 
 <script lang="ts">
+import type { PropType } from 'vue'
 /**
  * 提供一种数值输入方式
  *
@@ -121,7 +122,7 @@ export default Vue.extend({
       default: 1,
     },
     displayFun: {
-      type: Function,
+      type: Function as PropType<(value: number) => string>,
       default: (v: number) => String(v),
     },
   },
@@ -133,6 +134,9 @@ export default Vue.extend({
     }
   },
   computed: {
+    formattedValue(): string {
+      return this.displayFun(this.realValue)
+    },
     // 不大于 max 的对齐 step 与 center 的值
     realMax() {
       return this.valueToRounded(this.max, Math.floor)

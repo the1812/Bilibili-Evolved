@@ -8,6 +8,7 @@
   />
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VideoCard } from '@/components/feeds/video-card'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
 import { nextPageMixin } from './next-page'
@@ -49,10 +50,10 @@ const mapSubscriptionUpdate = ({ subscription, content }: SubscriptionUpdate) =>
     upID: content.upID,
     watchlater: true,
     playCount: formatCount(content.playCount),
-  } as VideoCard
+  } satisfies VideoCard
 }
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VideoCardList,
   },

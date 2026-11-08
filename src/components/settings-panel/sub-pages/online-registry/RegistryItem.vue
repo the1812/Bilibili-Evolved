@@ -1,5 +1,6 @@
 <template>
   <MiniToast
+    ref="root"
     class="online-registry-item-wrapper"
     theme="online-registry"
     v-bind="{ popperOptions }"
@@ -25,7 +26,7 @@
           title="安装"
           type="primary"
           :disabled="installing"
-          @click="install(getUrl(item))"
+          @click="install()"
         >
           <VIcon icon="mdi-plus" :size="15" />
           {{ installing ? '正在安装' : '安装' }}
@@ -35,7 +36,7 @@
           class="reinstall-button"
           title="重新安装"
           :disabled="installing"
-          @click="install(getUrl(item))"
+          @click="install()"
         >
           {{ installing ? '正在安装' : '已安装' }}
         </VButton>
@@ -46,147 +47,114 @@
     </template>
   </MiniToast>
 </template>
-<script lang="ts">
-import type { DocSourceItem } from '../../../../../registry/lib/docs'
-import { cdnRoots } from '@/core/cdn-types'
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import type { Placement } from '@popperjs/core'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
-import { addComponentListener, getGeneralSettings, settings } from '@/core/settings'
+import {
+  addComponentListener,
+  getGeneralSettings,
+  removeComponentListener,
+  settings,
+} from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VButton, MiniToast } from '@/ui'
 import ComponentDescription from '../../ComponentDescription.vue'
 import { SettingsPanelDockSide } from '../../dock'
 import { ItemFilter } from './item-filter'
+import type { RegistryItemData } from './types'
 
-const getFeatureUrl = (item: DocSourceItem, branch: string) => {
-  const cdnRootFn = cdnRoots[getGeneralSettings().cdnRoot]
-  const cdnRoot = cdnRootFn(branch, item.owner)
-  return `${cdnRoot}${item.fullAbsolutePath}`
-}
-const isFeatureInstalled = (item: DocSourceItem) => {
-  const storageKey = `user${lodash.startCase(item.type)}s`
-  return item.name in settings[storageKey]
-}
-type PackItem = { items: DocSourceItem[] }
+const props = withDefaults(
+  defineProps<{ item: RegistryItemData; branch: string; itemFilter?: ItemFilter }>(),
+  { itemFilter: ItemFilter.All },
+)
+const emit = defineEmits<{ (event: 'refresh'): void }>()
 const typeMappings = {
   component: {
     icon: 'mdi-cube-scan',
     badge: '组件',
-    getUrl: getFeatureUrl,
-    isInstalled: isFeatureInstalled,
   },
   plugin: {
     icon: 'mdi-puzzle-outline',
     badge: '插件',
-    getUrl: getFeatureUrl,
-    isInstalled: isFeatureInstalled,
-  },
-  style: {
-    icon: 'mdi-tune',
-    badge: '样式',
-    getUrl: getFeatureUrl,
-    isInstalled: isFeatureInstalled,
   },
   pack: {
     icon: 'mdi-package-variant-closed',
     badge: '合集包',
-    getUrl: (pack: PackItem, branch: string) =>
-      pack.items.map(it => getFeatureUrl(it, branch)).join('\n'),
-    isInstalled: (pack: PackItem) => pack.items.every(isFeatureInstalled),
   },
 }
 // 开启侧轴钳制并关闭 tether, 避免提示框跟随条目滚出视口时将页面撑高
 const popperOptions = {
   modifiers: [{ name: 'preventOverflow', options: { altAxis: true, tether: false } }],
 }
-export default Vue.extend({
-  components: { VIcon, VButton, MiniToast, ComponentDescription },
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    branch: {
-      type: String,
-      required: true,
-    },
-    itemFilter: {
-      type: String,
-      default: ItemFilter.All,
-    },
-  },
-  data() {
-    const { icon, badge, getUrl, isInstalled } = typeMappings[this.item.type]
-    return {
-      icon,
-      badge,
-      getUrl: (item: PackItem) => getUrl(item, this.branch),
-      isInstalled,
-      installing: false,
-      installed: false,
-      virtual: false,
-      placement: 'right',
-      popperOptions,
-    }
-  },
-  computed: {
-    hidden() {
-      switch (this.itemFilter) {
-        case ItemFilter.All:
-        default: {
-          return false
-        }
-        case ItemFilter.Installed: {
-          return !this.installed
-        }
-        case ItemFilter.NotInstalled: {
-          return this.installed
-        }
-      }
-    },
-  },
-  created() {
-    this.checkInstalled()
-    addComponentListener(
-      'settingsPanel.dockSide',
-      (value: SettingsPanelDockSide) => {
-        this.placement = value === SettingsPanelDockSide.Left ? 'right' : 'left'
-      },
-      true,
-    )
-  },
-  mounted() {
-    const element = this.$el as HTMLElement
-    visibleInside(element, element.parentElement, '150% 0px', records => {
-      records.forEach(record => {
-        this.virtual = !record.isIntersecting
-      })
-    })
-  },
-  methods: {
-    checkInstalled() {
-      this.installed = this.isInstalled(this.item)
-    },
-    async install(sourceUrls: string) {
-      const urls = sourceUrls
-        .split('\n')
-        .map(it => it.trim())
-        .filter(it => it !== '')
-      try {
-        this.installing = true
-        await Promise.all(urls.map(async url => installFeature(url)))
-        this.checkInstalled()
-        if (this.item.type === 'pack') {
-          this.$emit('refresh')
-        }
-      } catch (error) {
-        logError(error)
-      } finally {
-        this.installing = false
-      }
-    },
-  },
+const { icon, badge } = typeMappings[props.item.type]
+const features = computed(() => (props.item.type === 'pack' ? props.item.items : [props.item]))
+const root = ref<InstanceType<typeof MiniToast>>()
+const installing = ref(false)
+const installed = ref(false)
+const virtual = ref(false)
+const placement = ref<Placement>('right')
+const hidden = computed(() => {
+  if (props.itemFilter === ItemFilter.Installed) {
+    return !installed.value
+  }
+  return props.itemFilter === ItemFilter.NotInstalled && installed.value
 })
+
+const checkInstalled = () => {
+  installed.value = features.value.every(item => {
+    const storageKey = `user${lodash.startCase(item.type)}s`
+    return item.name in settings[storageKey]
+  })
+}
+checkInstalled()
+defineExpose({ checkInstalled })
+
+const updatePlacement = (value: SettingsPanelDockSide) => {
+  placement.value = value === SettingsPanelDockSide.Left ? 'right' : 'left'
+}
+addComponentListener('settingsPanel.dockSide', updatePlacement, true)
+let visibilityObserver: IntersectionObserver
+onMounted(() => {
+  const element = root.value.$el as HTMLElement
+  const [observer] = visibleInside(element, element.parentElement, '150% 0px', records => {
+    records.forEach(record => {
+      virtual.value = !record.isIntersecting
+    })
+  })
+  visibilityObserver = observer
+})
+onUnmounted(() => {
+  visibilityObserver?.disconnect()
+  removeComponentListener('settingsPanel.dockSide', updatePlacement)
+})
+
+const install = async () => {
+  try {
+    installing.value = true
+    const cdn = getGeneralSettings().cdnRoot
+    await Promise.all(
+      features.value.map(feature =>
+        installFeature({
+          kind: 'github',
+          repo: feature.repo,
+          ref: props.branch,
+          path: feature.fullAbsolutePath,
+          cdn,
+        }),
+      ),
+    )
+    checkInstalled()
+    if (props.item.type === 'pack') {
+      emit('refresh')
+    }
+  } catch (error) {
+    logError(error)
+  } finally {
+    installing.value = false
+  }
+}
 </script>
 <style lang="scss">
 @import 'common';

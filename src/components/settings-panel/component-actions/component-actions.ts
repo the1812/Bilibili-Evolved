@@ -1,14 +1,15 @@
 import { registerAndGetData } from '@/plugins/data'
-import { Executable, VueModule } from '@/core/common-types'
+import { Executable, ExecutableWithParameter, VueModule } from '@/core/common-types'
 import { getHook } from '@/plugins/hook'
 import { isUserComponent } from '@/core/settings'
 import { ComponentMetadata } from '../../types'
 import { uninstallComponent } from '../../user-component'
+import { feedbackSupported, openFeedback } from '../feedback'
 
 export interface ComponentConfigAction {
   name: string
   displayName: string
-  action: Executable
+  action: ExecutableWithParameter<[component?: ComponentMetadata]>
   icon: string
   visible?: boolean
   title?: string
@@ -31,6 +32,13 @@ export type ComponentAction = (
   metadata: ComponentMetadata,
 ) => ComponentConfigAction | ComponentVueAction | undefined
 
+export const removeUserComponent = async (metadata: ComponentMetadata) => {
+  const { before, after } = getHook('userComponents.remove', metadata)
+  await before()
+  await uninstallComponent(metadata.name)
+  await after()
+}
+
 const createOptionsTransferAction =
   (config: Omit<OptionsTransferActionItem, 'component'>): ComponentAction =>
   metadata =>
@@ -41,19 +49,7 @@ const createOptionsTransferAction =
           component: () => import('./OptionsTransferAction.vue'),
         }
 
-const builtInActions: ComponentAction[] = [
-  metadata => ({
-    name: 'uninstall',
-    displayName: '卸载',
-    icon: 'mdi-trash-can-outline',
-    visible: isUserComponent(metadata),
-    action: async () => {
-      const { before, after } = getHook('userComponents.remove', metadata)
-      await before()
-      await uninstallComponent(metadata.name)
-      await after()
-    },
-  }),
+const builtInMenuActions: ComponentAction[] = [
   createOptionsTransferAction({
     name: 'optionsExport',
     mode: 'export',
@@ -73,7 +69,27 @@ const builtInActions: ComponentAction[] = [
     title: '从文件导入当前组件的选项, 按住 Shift 点击可从剪贴板粘贴',
   }),
 ]
+const builtInActionButtons: ComponentAction[] = [
+  metadata => ({
+    name: 'feedback',
+    displayName: '反馈',
+    icon: 'mdi-message-text-outline',
+    visible: feedbackSupported,
+    action: () => openFeedback(metadata),
+  }),
+  metadata => ({
+    name: 'uninstall',
+    displayName: '卸载',
+    icon: 'mdi-trash-can-outline',
+    visible: isUserComponent(metadata),
+    action: () => removeUserComponent(metadata),
+  }),
+]
 export const [componentActions] = registerAndGetData(
   'settingsPanel.componentActions',
-  builtInActions,
+  builtInMenuActions,
+)
+export const [componentActionButtons] = registerAndGetData(
+  'settingsPanel.componentActionButtons',
+  builtInActionButtons,
 )

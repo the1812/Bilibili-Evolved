@@ -19,7 +19,9 @@ interface AbdmConfig {
   port: string
 }
 
-const { options: storedOptions } = getComponentSettings('downloadVideo')
+const { options: storedOptions } = getComponentSettings<{ abdmConfig?: Partial<AbdmConfig> }>(
+  'downloadVideo',
+)
 const defaultConfig: AbdmConfig = {
   host: 'localhost',
   port: '15151',

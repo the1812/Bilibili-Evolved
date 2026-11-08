@@ -1,145 +1,64 @@
 <template>
-  <div v-show="isConnected">
-    <div v-if="canStartDebug" class="component-action dev-client-action" @click="startDebug">
-      <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
-      <VIcon v-else icon="mdi-play-network-outline" :size="16" />
-      {{ busy ? '启动中' : '开始调试' }}
-    </div>
-    <div v-if="canStopDebug" class="component-action dev-client-action" @click="stopDebug">
-      <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
-      <VIcon v-else icon="mdi-minus-network-outline" :size="16" />
-      {{ busy ? '停止中' : '停止调试' }}
-    </div>
-  </div>
+  <VButton
+    v-if="isConnected && debugPath"
+    class="dev-client-action"
+    :disabled="busy"
+    @click="isDebugging ? stopDebug() : startDebug()"
+  >
+    <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
+    <VIcon v-else-if="isDebugging" icon="mdi-minus-network-outline" :size="16" />
+    <VIcon v-else icon="mdi-play-network-outline" :size="16" />
+    {{ busy ? '启动中' : debugLabel }}
+  </VButton>
 </template>
-<script lang="ts">
-import { ComponentMetadata } from '@/components/types'
+<script setup lang="ts">
+import { computed, onUnmounted, ref } from 'vue'
+import type { ComponentVueAction } from '@/components/settings-panel/component-actions/component-actions'
+import type { ComponentMetadata } from '@/components/types'
 import { Toast } from '@/core/toast'
-import { VIcon } from '@/ui'
-import { DevClientEvents } from './client'
-import { autoUpdateOptions, getDevClientOptions } from './options'
-import { urlConverter } from './converter'
+import { VButton, VIcon } from '@/ui'
+import { devClient, DevClientEvents } from './client'
+import { getComponentDevPath } from './converter'
 
-const options = getDevClientOptions()
+const props = defineProps<{ item: ComponentVueAction; component: ComponentMetadata }>()
+const busy = ref(false)
+const debugPaths = ref(devClient.debugPaths)
+const isConnected = ref(devClient.isConnected)
+const debugPath = computed(() => getComponentDevPath(props.component.name))
+const isDebugging = computed(() => debugPaths.value.includes(debugPath.value))
+const debugLabel = computed(() => (isDebugging.value ? '停止调试' : '开始调试'))
 
-export default Vue.extend({
-  components: {
-    VIcon,
-  },
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    component: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      busy: false,
-      autoUpdateComponents: autoUpdateOptions.urls.components,
-      featureSessions: [],
-      isConnected: false,
-    }
-  },
-  computed: {
-    autoUpdateRecord() {
-      const metadata = this.component as ComponentMetadata
-      return this.autoUpdateComponents[metadata.name]
-    },
-    componentUpdateUrl() {
-      return this.autoUpdateRecord?.url
-    },
-    isDebugging() {
-      return (
-        this.componentUpdateUrl &&
-        this.featureSessions.some((path: string) => {
-          const { pathname } = new URL(this.componentUpdateUrl)
-          return path === pathname
-        })
-      )
-    },
-    canStartDebug() {
-      return !this.isDebugging && urlConverter.toDevUrl(this.componentUpdateUrl) !== null
-    },
-    canStopDebug() {
-      return Boolean(this.isDebugging && this.componentUpdateUrl)
-    },
-  },
-  async created() {
-    const { devClient } = await import('./client')
-    this.featureSessions = devClient.featureSessions
-    this.isConnected = devClient.isConnected
-    devClient.addEventListener(DevClientEvents.ServerChange, this.handleServerChange)
-    devClient.addEventListener(
-      DevClientEvents.FeatureSessionsUpdate,
-      this.handleFeatureSessionsUpdate,
-    )
-  },
-  async beforeDestroy() {
-    const { devClient } = await import('./client')
-    devClient.removeEventListener(
-      DevClientEvents.FeatureSessionsUpdate,
-      this.handleFeatureSessionsUpdate,
-    )
-  },
-  methods: {
-    handleFeatureSessionsUpdate(e: CustomEvent<string[]>) {
-      this.featureSessions = e.detail
-    },
-    handleServerChange(e: CustomEvent<boolean>) {
-      this.isConnected = e.detail
-    },
-    async handleClick(action: () => Promise<void>) {
-      if (this.busy) {
-        return
-      }
-      try {
-        this.busy = true
-        await action()
-      } finally {
-        this.busy = false
-      }
-    },
-    async startDebug() {
-      await this.handleClick(async () => {
-        const { devClient } = await import('./client')
-        const metadata = this.component as ComponentMetadata
-        const devUrl = urlConverter.toDevUrl(this.componentUpdateUrl)
-        // console.log('devUrl:', devUrl, 'autoUpdateRecord.url:', this.autoUpdateRecord.url)
-        if (this.autoUpdateRecord.url !== devUrl) {
-          options.devRecords[metadata.name] = {
-            name: metadata.name,
-            originalUrl: this.componentUpdateUrl,
-          }
-          this.autoUpdateRecord.url = devUrl
-        }
-        const toast = Toast.info('启动调试中...', 'DevClient')
-        try {
-          await devClient.startDebug(this.autoUpdateRecord.url)
-        } catch (error) {
-          console.error(error)
-        } finally {
-          toast.close()
-        }
-      })
-    },
-    async stopDebug() {
-      await this.handleClick(async () => {
-        const { devClient } = await import('./client')
-        const metadata = this.component as ComponentMetadata
-        const { pathname } = new URL(this.componentUpdateUrl)
-        if (devClient.isConnected) {
-          await devClient.stopDebug(pathname)
-        }
-        if (options.devRecords[metadata.name]) {
-          this.autoUpdateRecord.url = options.devRecords[metadata.name].originalUrl
-          delete options.devRecords[metadata.name]
-        }
-      })
-    },
-  },
+const handleServerChange = (event: CustomEvent<boolean>) => {
+  isConnected.value = event.detail
+}
+const handleDebugPathsChange = (event: CustomEvent<string[]>) => {
+  debugPaths.value = event.detail
+}
+devClient.addEventListener(DevClientEvents.ServerChange, handleServerChange)
+devClient.addEventListener(DevClientEvents.DebugPathsChange, handleDebugPathsChange)
+onUnmounted(() => {
+  devClient.removeEventListener(DevClientEvents.ServerChange, handleServerChange)
+  devClient.removeEventListener(DevClientEvents.DebugPathsChange, handleDebugPathsChange)
 })
+
+const startDebug = async () => {
+  if (busy.value || !debugPath.value) {
+    return
+  }
+  busy.value = true
+  const toast = Toast.info('启动调试中...', 'DevClient')
+  try {
+    await devClient.startDebug(debugPath.value, { kind: 'component', name: props.component.name })
+  } catch (error) {
+    console.error(error)
+  } finally {
+    toast.close()
+    busy.value = false
+  }
+}
+const stopDebug = () => {
+  if (!busy.value && debugPath.value) {
+    devClient.stopDebug(debugPath.value)
+  }
+}
 </script>
