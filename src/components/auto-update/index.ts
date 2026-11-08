@@ -18,7 +18,6 @@ import {
   getFeatureUrl,
 } from '@/core/feature-source'
 import * as checkerMethods from './checker'
-import { SearchBarAction } from '../settings-panel/search-bar-actions'
 
 const {
   checkComponentsUpdate,
@@ -181,44 +180,6 @@ export const component = defineComponentMetadata({
               icon,
             },
           ],
-        })
-      })
-      addData('settingsPanel.searchBarActions', (actions: SearchBarAction[]) => {
-        actions.unshift({
-          key: 'updateFeatures',
-          title: ({ selectedComponents }) =>
-            selectedComponents.length > 0 ? '更新所选组件' : '检查所有更新',
-          icon: 'mdi-cloud-download-outline',
-          run: async context => {
-            const confirmMessage =
-              context.selectedComponents.length > 0
-                ? `确定要更新所选的 ${context.selectedComponents.length} 个组件吗?`
-                : '确定要检查所有更新吗?'
-            if (!window.confirm(confirmMessage)) {
-              return
-            }
-            const { Toast } = await import('@/core/toast')
-            const { isBuiltInComponent } = await import('@/components/built-in-components')
-            if (context.selectedComponents.length === 0) {
-              const toast = Toast.info('正在检查更新...', '检查所有更新')
-              await forceCheckUpdateAndReload()
-              toast.close()
-            } else {
-              context.selectedComponents.forEach(async ({ name: componentName }) => {
-                if (isBuiltInComponent(componentName)) {
-                  Toast.info('内置组件不能更新', '检查更新', 3000)
-                } else {
-                  const toast = Toast.info('检查更新中...', '检查更新')
-                  const result = await checkComponentsUpdate({
-                    filterNames: [componentName],
-                    force: true,
-                  })
-                  toast.message = result
-                  toast.duration = 3000
-                }
-              })
-            }
-          },
         })
       })
       if (getGeneralSettings().devMode) {

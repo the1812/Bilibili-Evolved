@@ -49,6 +49,7 @@
 </template>
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import type { Placement } from '@popperjs/core'
 import { installFeature } from '@/core/install-feature'
 import { visibleInside } from '@/core/observer'
 import {
@@ -93,7 +94,7 @@ const root = ref<InstanceType<typeof MiniToast>>()
 const installing = ref(false)
 const installed = ref(false)
 const virtual = ref(false)
-const placement = ref('right')
+const placement = ref<Placement>('right')
 const hidden = computed(() => {
   if (props.itemFilter === ItemFilter.Installed) {
     return !installed.value

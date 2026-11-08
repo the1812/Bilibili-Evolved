@@ -7,7 +7,7 @@
         :class="{ open: widgetsOpened }"
         @click.shift="theWorld"
         @click.exact="widgetsOpened = !widgetsOpened"
-        @mouseover="loadPanel('widgetsPanelPopup')"
+        @mouseover="loadPanel(widgetsPanelPopup)"
       >
         <VIcon icon="widgets" :size="26"></VIcon>
       </div>
@@ -16,7 +16,7 @@
         title="设置"
         :class="{ open: settingsOpened }"
         @click="settingsOpened = !settingsOpened"
-        @mouseover="loadPanel('settingsPanelPopup')"
+        @mouseover="loadPanel(settingsPanelPopup)"
       >
         <VIcon icon="settings-outline" :size="26"></VIcon>
       </div>
@@ -25,7 +25,7 @@
       ref="widgetsPanelPopup"
       v-model="widgetsOpened"
       class="widgets-panel-popup"
-      :trigger-element="$refs.widgetsIcon"
+      :trigger-element="widgetsIcon"
       :fixed="true"
     >
       <WidgetsPanel />
@@ -34,84 +34,61 @@
       ref="settingsPanelPopup"
       v-model="settingsOpened"
       class="settings-panel-popup"
-      :trigger-element="$refs.settingsIcon"
+      :trigger-element="settingsIcon"
       :auto-close-predicate="settingsPanelClosePredicate"
       :fixed="true"
     >
-      <SettingsPanel @close="settingsOpened = false" />
+      <SettingsPanel :open="settingsOpened" @close="settingsOpened = false" />
     </VPopup>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { defineAsyncComponent, onBeforeUnmount, onMounted, ref } from 'vue'
 import { VPopup, VIcon } from '@/ui'
 import { externalApis } from '@/core/core-apis'
 
-export default {
-  name: 'SettingsContainer',
-  components: {
-    VPopup,
-    VIcon,
-    SettingsPanel: () => import('./SettingsPanel.vue').then(m => m.default),
-    WidgetsPanel: () => import('./WidgetsPanel.vue').then(m => m.default),
-  },
-  data() {
-    return {
-      settingsOpened: false,
-      widgetsOpened: false,
+const SettingsPanel = defineAsyncComponent(() => import('./SettingsPanel.vue'))
+const WidgetsPanel = defineAsyncComponent(() => import('./WidgetsPanel.vue'))
+
+const settingsOpened = ref(false)
+const widgetsOpened = ref(false)
+const settingsIcon = ref<HTMLElement>()
+const widgetsIcon = ref<HTMLElement>()
+const settingsPanelPopup = ref<InstanceType<typeof VPopup>>()
+const widgetsPanelPopup = ref<InstanceType<typeof VPopup>>()
+
+const theWorld = () => externalApis.theWorld(0)
+const handleWindowBlur = () => {
+  setTimeout(() => {
+    if (document.activeElement instanceof HTMLIFrameElement) {
+      settingsOpened.value = false
+      widgetsOpened.value = false
     }
-  },
-  mounted() {
-    GM_registerMenuCommand('功能', () => {
-      this.loadPanel('widgetsPanelPopup')
-      this.widgetsOpened = true
-      this.settingsOpened = false
-    })
-    GM_registerMenuCommand('设置', () => {
-      this.loadPanel('settingsPanelPopup')
-      this.widgetsOpened = false
-      this.settingsOpened = true
-    })
-    window.addEventListener('blur', this.handleWindowBlur)
-  },
-  beforeDestroy() {
-    window.removeEventListener('blur', this.handleWindowBlur)
-  },
-  methods: {
-    theWorld() {
-      externalApis.theWorld(0)
-    },
-    handleWindowBlur() {
-      setTimeout(() => {
-        if (document.activeElement instanceof HTMLIFrameElement) {
-          this.settingsOpened = false
-          this.widgetsOpened = false
-        }
-      }, 0)
-    },
-    settingsPanelClosePredicate(data: {
-      target: HTMLElement
-      element: HTMLElement
-      trigger: HTMLElement
-    }) {
-      if (
-        dqa('.be-settings-extra-options').some(c => c === data.target || c.contains(data.target))
-      ) {
-        return false
-      }
-      return true
-    },
-    loadPanel(refName: string) {
-      const popup = this.$refs[refName]
-      if (!popup) {
-        return
-      }
-      if (!(popup?.loaded ?? true)) {
-        popup.loaded = true
-      }
-    },
-  },
+  }, 0)
 }
+const settingsPanelClosePredicate = ({ target }: { target: HTMLElement }) =>
+  !dqa('.be-settings-extra-options').some(element => element.contains(target))
+const loadPanel = (popup?: InstanceType<typeof VPopup>) => {
+  if (popup) {
+    popup.loaded = true
+  }
+}
+
+onMounted(() => {
+  GM_registerMenuCommand('功能', () => {
+    loadPanel(widgetsPanelPopup.value)
+    widgetsOpened.value = true
+    settingsOpened.value = false
+  })
+  GM_registerMenuCommand('设置', () => {
+    loadPanel(settingsPanelPopup.value)
+    widgetsOpened.value = false
+    settingsOpened.value = true
+  })
+  window.addEventListener('blur', handleWindowBlur)
+})
+onBeforeUnmount(() => window.removeEventListener('blur', handleWindowBlur))
 </script>
 
 <style lang="scss">

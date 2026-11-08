@@ -23,7 +23,7 @@
                 <div v-for="action of menuActions" :key="action.name">
                   <component
                     :is="action.component"
-                    v-if="action.component"
+                    v-if="'component' in action"
                     :item="action"
                     :component="componentData"
                   />
@@ -45,7 +45,7 @@
         <template v-for="action of actionButtons">
           <component
             :is="action.component"
-            v-if="action.component"
+            v-if="'component' in action"
             :key="action.name"
             :item="action"
             :component="componentData"
@@ -237,7 +237,6 @@ onMounted(async () => {
       }
     }
     .extra-actions {
-      padding: 4px;
       cursor: pointer;
     }
     .extra-actions-list {

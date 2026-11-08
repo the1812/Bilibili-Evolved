@@ -1,5 +1,5 @@
 import { registerAndGetData } from '@/plugins/data'
-import { Executable, VueModule } from '@/core/common-types'
+import { Executable, ExecutableWithParameter, VueModule } from '@/core/common-types'
 import { getHook } from '@/plugins/hook'
 import { isUserComponent } from '@/core/settings'
 import { ComponentMetadata } from '../../types'
@@ -9,7 +9,7 @@ import { feedbackSupported, openFeedback } from '../feedback'
 export interface ComponentConfigAction {
   name: string
   displayName: string
-  action: Executable
+  action: ExecutableWithParameter<[component?: ComponentMetadata]>
   icon: string
   visible?: boolean
   title?: string
@@ -31,6 +31,13 @@ export interface OptionsTransferActionItem extends ComponentVueAction {
 export type ComponentAction = (
   metadata: ComponentMetadata,
 ) => ComponentConfigAction | ComponentVueAction | undefined
+
+export const removeUserComponent = async (metadata: ComponentMetadata) => {
+  const { before, after } = getHook('userComponents.remove', metadata)
+  await before()
+  await uninstallComponent(metadata.name)
+  await after()
+}
 
 const createOptionsTransferAction =
   (config: Omit<OptionsTransferActionItem, 'component'>): ComponentAction =>
@@ -75,12 +82,7 @@ const builtInActionButtons: ComponentAction[] = [
     displayName: '卸载',
     icon: 'mdi-trash-can-outline',
     visible: isUserComponent(metadata),
-    action: async () => {
-      const { before, after } = getHook('userComponents.remove', metadata)
-      await before()
-      await uninstallComponent(metadata.name)
-      await after()
-    },
+    action: () => removeUserComponent(metadata),
   }),
 ]
 export const [componentActions] = registerAndGetData(
