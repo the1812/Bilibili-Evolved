@@ -1,0 +1,5 @@
+// 覆盖 B站 的固定高度, 以及「宽屏 + 联合投稿」时写入的行内 height/padding-top
+#playerWrap + .video-info-container {
+  height: auto !important;
+  padding-top: 22px !important;
+}
