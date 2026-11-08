@@ -2,8 +2,6 @@ import { meta } from '@/core/meta'
 import { getGeneralSettings, getComponentSettings } from '@/core/settings'
 import { useScopedConsole } from '@/core/utils/log'
 import { descendingSort } from '@/core/utils/sort'
-import { isFeatureAcceptable } from '@/core/version'
-import { getFeatureUrl, isLocalFeatureUrl } from '@/core/feature-source'
 import {
   name,
   CheckUpdateConfig,
@@ -11,6 +9,7 @@ import {
   CheckSingleTypeUpdate,
   UpdateRecord,
   CheckSingleTypeUpdateConfig,
+  updateFeature,
   updateKinds,
 } from './utils'
 import type { Options } from '.'
@@ -58,24 +57,7 @@ export const checkUpdate = async (config: CheckUpdateConfig) => {
         return `[${itemName}] 已到达单次更新量上限 (${maxCount} 个), 已跳过`
       }
       startedCount++
-      let url = getFeatureUrl(source)
-      if (isLocalFeatureUrl(url) && options.localPortOverride) {
-        const localUrl = new URL(url)
-        localUrl.port = options.localPortOverride
-        url = localUrl.href
-      }
-      const { tryParseZip, installFeatureFromCode } = await import('@/core/install-feature')
-      const code = await tryParseZip(url)
-      if (!code) {
-        return `[${itemName}] 更新下载失败, 取消更新`
-      }
-      if (!(await isFeatureAcceptable(code))) {
-        return `[${itemName}] 版本不匹配, 取消更新`
-      }
-      if (items[itemName] !== item || item.source !== source || !existPredicate(itemName)) {
-        return `[${itemName}] 功能安装记录已变化, 取消更新`
-      }
-      const { message } = await installFeatureFromCode(code, source)
+      const { message } = await updateFeature(source)
       if (items[itemName] === item) {
         item.lastUpdateCheck = Date.now()
       }

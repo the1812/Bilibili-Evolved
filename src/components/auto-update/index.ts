@@ -1,5 +1,5 @@
 import { ComponentEntry, componentsTags } from '@/components/types'
-import { meta } from '@/core/meta'
+import { branches, matchingUpdateBranches, meta, stableUpdateBranches } from '@/core/meta'
 import { getComponentSettings, getGeneralSettings, isUserComponent } from '@/core/settings'
 import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
@@ -10,12 +10,13 @@ import {
 } from '@/components/define'
 import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
 import { ComponentAction } from '../settings-panel/component-actions/component-actions'
-import { name, UpdateCheckItem, updateKinds } from './utils'
+import { name, UpdateCheckItem, updateFeature, updateKinds } from './utils'
 import {
   FeatureSource,
   getFeatureSource,
   isLocalFeatureUrl,
   getFeatureUrl,
+  switchGithubBranch,
 } from '@/core/feature-source'
 import * as checkerMethods from './checker'
 
@@ -158,6 +159,50 @@ export const component = defineComponentMetadata({
                 force: true,
               })
               toast.duration = 3000
+            },
+          }
+        })
+      })
+      addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
+        const { options } = getComponentSettings<AutoUpdateOptions>(name)
+        actions.push(metadata => {
+          const source = options.urls.components[metadata.name]?.source
+          if (source?.kind !== 'github' || !isUserComponent(metadata)) {
+            return undefined
+          }
+          const isPreview = source.ref === branches.preview
+          if (!isPreview && !stableUpdateBranches.includes(source.ref)) {
+            return undefined
+          }
+          const { branch } = meta.compilationInfo
+          const stableBranch = branch === branches.stableCdn ? branches.stableCdn : branches.stable
+          const target = switchGithubBranch(source, isPreview ? stableBranch : branches.preview)
+          const displayName = isPreview ? '切换到稳定版' : '切换到预览版'
+          const confirmPreview =
+            !isPreview && matchingUpdateBranches.get(branch)?.includes(branches.stable)
+          return {
+            name: 'switchUpdateChannel',
+            displayName,
+            icon: 'mdi-source-branch',
+            action: async () => {
+              if (
+                confirmPreview &&
+                !window.confirm(
+                  '当前本体是稳定版，确定要将此组件切换到预览版吗？这可能导致组件出现不兼容的情况而失效。',
+                )
+              ) {
+                return
+              }
+              const { Toast } = await import('@/core/toast')
+              const toast = Toast.info('正在切换版本...', displayName)
+              try {
+                const { message } = await updateFeature(target)
+                Toast.success(message, displayName, 3000)
+              } catch (error) {
+                Toast.error((error as Error).message ?? String(error), displayName, 5000)
+              } finally {
+                toast.close()
+              }
             },
           }
         })

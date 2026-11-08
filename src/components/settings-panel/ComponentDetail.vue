@@ -114,7 +114,7 @@ import {
   removeComponentListener,
 } from '@/core/settings'
 import { getFeatureUrl } from '@/core/feature-source'
-import { branches, meta } from '@/core/meta'
+import { matchingUpdateBranches, meta } from '@/core/meta'
 import type { AutoUpdateOptions } from '../auto-update'
 import type { ComponentMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
@@ -159,13 +159,6 @@ const commitLabel = computed(() => {
   const hash = props.componentData.commitHash?.substring(0, 9)
   return githubRef.value ? `${hash} (${githubRef.value})` : hash
 })
-const stableUpdateBranches = [branches.stable, branches.stableCdn]
-const matchingUpdateBranches = new Map([
-  ['preview-features', [branches.preview]],
-  ['preview-fixes', stableUpdateBranches],
-  [branches.stable, stableUpdateBranches],
-  [branches.stableCdn, stableUpdateBranches],
-])
 const commitWarning = computed(() => {
   const url = getFeatureUrl(updateSource.value)
   if (/^http:\/\/localhost:\d+\/registry\/dist\/components\/.+\.js$/.test(url)) {

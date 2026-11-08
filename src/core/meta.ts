@@ -11,6 +11,14 @@ export const branches = {
   stableCdn: 'master-cdn',
   preview: 'preview',
 }
+export const previewUpdateBranches = [branches.preview]
+export const stableUpdateBranches = [branches.stable, branches.stableCdn]
+export const matchingUpdateBranches = new Map([
+  ['preview-features', previewUpdateBranches],
+  ['preview-fixes', stableUpdateBranches],
+  [branches.stable, stableUpdateBranches],
+  [branches.stableCdn, stableUpdateBranches],
+])
 const compilationInfo = webpackCompilationInfo
 /**
  * 脚本元数据
