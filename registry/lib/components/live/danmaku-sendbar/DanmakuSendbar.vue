@@ -134,7 +134,7 @@ defineExpose({ enabled })
           }
         }
       }
-      .right-area {
+      .danmaku-send-bar.enabled + .right-area {
         flex: 0 0 auto !important;
       }
     }
