@@ -19,8 +19,8 @@ export const component = defineComponentMetadata({
             return
           }
           const content = await sq(
-            () => item.shadowDomEntry.querySelector(':host(bili-rich-text) #contents'),
-            contents => contents.childNodes.length > 0,
+            () => item.shadowDomEntry?.querySelector(':host(bili-rich-text) #contents'),
+            contents => contents !== null && contents.childNodes.length > 0,
             { queryInterval: 100 },
           )
           if (content === null) {
