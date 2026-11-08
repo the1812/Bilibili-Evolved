@@ -31,7 +31,9 @@ const getPlayerLogs = async () => {
         /--------------- Header\(S\) ---------------([\s\S]*?)--------------- Header\(E\) ---------------/,
       )?.[1]
       .trim()
-    return header || '未找到播放器日志 Header'
+    const playerLogs = header || '未找到播放器日志 Header'
+    const preferCodec = nativeApi.getPreferCodec?.()
+    return preferCodec === undefined ? playerLogs : `${playerLogs}\npreferCodec: ${preferCodec}`
   } catch (error) {
     return `播放器日志读取失败: ${String(error)}`
   }
