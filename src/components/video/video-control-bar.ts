@@ -42,3 +42,17 @@ export const addControlBarButton = async (button: VideoControlBarItem) => {
   }
   created.items.push(button)
 }
+/** 按按钮的 `name` 从视频控制栏移除按钮, 不存在时无操作 */
+export const removeControlBarButton = async (name: string) => {
+  if (!controlBarInstance) {
+    return
+  }
+  const created = (await controlBarInstance) as ControlBarComponent
+  if (!created) {
+    return
+  }
+  const index = created.items.findIndex(item => item.name === name)
+  if (index !== -1) {
+    created.items.splice(index, 1)
+  }
+}
