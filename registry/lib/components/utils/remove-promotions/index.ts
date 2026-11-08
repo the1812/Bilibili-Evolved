@@ -8,6 +8,12 @@ const componentName = 'removePromotions'
 const preloadAnchorSelector = '.container > .load-more-anchor'
 const preloadClass = 'remove-promotions-preload-anchor'
 
+/** 原版首页被首页设计组件隐藏时不需要预加载 */
+const isNativeFeedHidden = () => {
+  const anchor = document.querySelector(preloadAnchorSelector)
+  return anchor !== null && window.getComputedStyle(anchor).visibility === 'hidden'
+}
+
 /** 完全隐藏模式下把锚点移到视口上方, 让页面认为已到达锚点, 从而提前加载下一批卡片, 避免首页出现空白 */
 const watchHomeFeedPreload = async (enabled: () => boolean) => {
   const { select, sq } = await import('@/core/spin-query')
@@ -17,7 +23,7 @@ const watchHomeFeedPreload = async (enabled: () => boolean) => {
     return
   }
   const preload = async () => {
-    if (anchor.classList.contains(preloadClass)) {
+    if (!enabled() || anchor.classList.contains(preloadClass)) {
       return
     }
     anchor.classList.add(preloadClass)
@@ -103,7 +109,9 @@ const entry: ComponentEntry = async ({ settings, metadata }) => {
           )
         })
     })
-    watchHomeFeedPreload(() => settings.enabled && Boolean(settings.options.hideContainer))
+    watchHomeFeedPreload(
+      () => settings.enabled && Boolean(settings.options.hideContainer) && !isNativeFeedHidden(),
+    )
   }
   addComponentListener(
     `${metadata.name}.preserveEventBanner`,

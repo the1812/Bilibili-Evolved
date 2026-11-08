@@ -1,6 +1,7 @@
 import { defineComponentMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
 import { mountVueComponent } from '@/core/utils'
+import { resumeNativeFeedLoading, suspendNativeFeedLoading } from '../suspend-native-feed'
 import { homeUrls } from '../urls'
 import { searchHomeOptionsMetadata } from './options'
 
@@ -16,6 +17,7 @@ export const component = defineComponentMetadata({
   options: searchHomeOptionsMetadata,
   extraOptions: () => import('./ExtraOptions.vue').then(m => m.default),
   entry: () => {
+    suspendNativeFeedLoading()
     contentLoaded(async () => {
       const SearchHome = await import('./SearchHome.vue')
       const searchHome = mountVueComponent(SearchHome)
@@ -23,8 +25,14 @@ export const component = defineComponentMetadata({
     })
   },
 
-  unload: () => document.body.classList.add('home-redesign-off'),
-  reload: () => document.body.classList.remove('home-redesign-off'),
+  unload: () => {
+    document.body.classList.add('home-redesign-off')
+    resumeNativeFeedLoading()
+  },
+  reload: () => {
+    document.body.classList.remove('home-redesign-off')
+    suspendNativeFeedLoading()
+  },
   instantStyles: [
     {
       name: 'search-home-hide-original',
