@@ -319,8 +319,7 @@ pnpm run check-pr-files
 ```
 
 类型检查:
-> 项目有[计划](https://github.com/the1812/Bilibili-Evolved/discussions/3939)从 Vue 2 迁移到 Vue 3, 因此虽然我们[启用](https://github.com/the1812/Bilibili-Evolved/pull/4337)了 Volar 对 *.vue 文件进行类型检查, 却未完全修复 Volar 报告的类型错误. 因此，开发时你可能看到 VSCode 出现类型报错, 但是 `pnpm run type` 通过, 这是正常现象.
-
+> 使用 `vue-tsc` 检查 TypeScript 源码和 Vue 单文件组件, 包括模板表达式.
 ```powershell
 pnpm run type
 ```

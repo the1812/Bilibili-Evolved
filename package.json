@@ -13,8 +13,7 @@
     "donate-table": "tsx dev-tools/donate-table/index.ts",
     "lint": "eslint --quiet --fix . --ext .ts,.mts,.vue",
     "lint-check": "eslint . --ext .ts,.mts,.vue",
-    "type": "tsc -p tsconfig.type-check.json --noEmit",
-    "type:vue": "vue-tsc -p tsconfig.json --noEmit"
+    "type": "vue-tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@babel/core": "7.22.10",

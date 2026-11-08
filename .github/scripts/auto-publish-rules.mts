@@ -4,7 +4,6 @@ const scriptBuildOutputFiles = new Set([
   'package.json',
   'pnpm-lock.yaml',
   'tsconfig.json',
-  'tsconfig.type-check.json',
 ])
 
 const affectsScriptBuildOutput = (path: string) =>
