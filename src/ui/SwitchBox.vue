@@ -15,7 +15,7 @@
         type="checkbox"
         :disabled="disabled"
         :checked="checked"
-        @change.stop="$emit('change', $event.target.checked)"
+        @change.stop="handleChange"
       />
       <div class="bar">
         <div class="thumb"></div>
@@ -42,6 +42,9 @@ export default Vue.extend({
     },
   },
   methods: {
+    handleChange(event: Event) {
+      this.$emit('change', (event.currentTarget as HTMLInputElement).checked)
+    },
     toggle() {
       if (this.disabled) {
         return

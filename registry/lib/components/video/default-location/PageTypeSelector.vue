@@ -50,7 +50,7 @@ export default Vue.extend({
     },
   },
   methods: {
-    onChange(item: string | Item) {
+    onChange(item: Item) {
       this.$emit('change', item.name)
     },
   },

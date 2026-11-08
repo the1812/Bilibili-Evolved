@@ -17,10 +17,13 @@
   </div>
 </template>
 <script lang="ts">
+import { PropType } from 'vue'
+import type { ComponentTag } from '../types'
+
 export default Vue.extend({
   props: {
     tags: {
-      type: Array,
+      type: Array as PropType<ComponentTag[]>,
       required: true,
     },
     size: {

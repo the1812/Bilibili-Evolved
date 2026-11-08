@@ -1,3 +1,4 @@
+import { defineComponent } from 'vue'
 import {
   getFeeds,
   FeedsCardType,
@@ -23,7 +24,7 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
   type: FeedsCardType,
   jsonMapper: (obj: RawItem) => MappedItem,
 ) =>
-  Vue.extend({
+  defineComponent({
     components: {
       VLoading,
       VEmpty,
@@ -32,7 +33,7 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
     data() {
       return {
         loading: true,
-        cards: [],
+        cards: [] as MappedItem[],
         hasMorePage: true,
       }
     },

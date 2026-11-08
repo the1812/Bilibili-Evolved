@@ -7,7 +7,7 @@
       maxlength="30"
       autocomplete="off"
       @keydown.enter="send()"
-      @input="updateValue($event.target.value)"
+      @input="updateValue"
       @focus="setControlBarLocked(true)"
       @blur="setControlBarLocked(false)"
     />
@@ -68,8 +68,8 @@ export default Vue.extend({
       unsafeWindow.EmbedPlayer?.instance?.changeCtrlVisible?.(true, !locked)
       document.body.classList.toggle('danmaku-send-bar-focus', locked)
     },
-    updateValue(newValue: string) {
-      this.originalTextArea.value = newValue
+    updateValue(event: Event) {
+      this.originalTextArea.value = (event.currentTarget as HTMLInputElement).value
       raiseEvent(this.originalTextArea, 'input')
     },
     send() {
