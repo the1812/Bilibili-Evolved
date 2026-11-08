@@ -30,12 +30,15 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VideoCard } from '@/components/feeds/video-card'
 import { formatDuration, formatCount, parseDuration, parseCount } from '@/core/utils/formatters'
 import { isNewID } from '@/components/feeds/notify'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { nextPageMixin } from './next-page'
+
+type FeedVideoCard = VideoCard & { new: boolean }
 
 const formatPubTime = (pubTime: number) => {
   const now = Number(new Date())
@@ -74,7 +77,7 @@ const formatPubTimeText = (pubTime: number) => {
   }
   return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     VideoCard: VideoCardComponent,
   },
@@ -102,12 +105,12 @@ export default Vue.extend({
         get new() {
           return isNewID(this.id)
         },
-      } as VideoCard
+      } as FeedVideoCard
     }),
   ],
   computed: {
     columnedCards() {
-      const { cards } = this as { cards: VideoCard[] }
+      const { cards } = this as { cards: FeedVideoCard[] }
       return {
         left: cards.filter((_, index) => index % 2 === 0),
         right: cards.filter((_, index) => index % 2 !== 0),

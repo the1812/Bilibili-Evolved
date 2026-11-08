@@ -13,7 +13,8 @@
     "donate-table": "tsx dev-tools/donate-table/index.ts",
     "lint": "eslint --quiet --fix . --ext .ts,.mts,.vue",
     "lint-check": "eslint . --ext .ts,.mts,.vue",
-    "type": "tsc -p tsconfig.type-check.json --noEmit"
+    "type": "tsc -p tsconfig.type-check.json --noEmit",
+    "type:vue": "vue-tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@babel/core": "7.22.10",
@@ -67,9 +68,10 @@
     "to-string-loader": "^1.2.0",
     "ts-node": "^10.7.0",
     "tsx": "4.22.4",
-    "typescript": "5.8.3",
+    "typescript": "6.0.3",
     "vue-eslint-parser": "^9.4.3",
     "vue-loader": "^15.10.1",
+    "vue-tsc": "3.3.14",
     "webpack": "^5.31.2",
     "webpack-bundle-analyzer": "^4.5.0",
     "webpack-cli": "^4.6.0",

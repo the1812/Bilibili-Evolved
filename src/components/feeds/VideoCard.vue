@@ -125,16 +125,18 @@
 </template>
 
 <script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import { DpiImage, VIcon } from '@/ui'
 import { getUID } from '@/core/utils'
 import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import type { VideoCard } from './video-card'
 
 /*
   ============
   祖 传 代 码
   ============
 */
-export default {
+export default defineComponent({
   // props: ['data', 'orientation'],
   components: {
     DpiImage,
@@ -142,7 +144,7 @@ export default {
   },
   props: {
     data: {
-      type: Object,
+      type: Object as PropType<VideoCard>,
       required: true,
     },
     orientation: {
@@ -196,7 +198,7 @@ export default {
   methods: {
     toggleWatchlater,
   },
-}
+})
 </script>
 
 <style lang="scss" scoped>

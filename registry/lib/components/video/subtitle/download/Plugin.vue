@@ -15,10 +15,10 @@ import { getComponentSettings } from '@/core/settings'
 import { VDropdown } from '@/ui'
 import { SubtitleDownloadType } from './utils'
 
-interface Options {
+type Options = {
   subtitleType: SubtitleDownloadType | '无'
 }
-const options = getComponentSettings('downloadVideo').options as Options
+const { options } = getComponentSettings<Options>('downloadVideo')
 
 export default Vue.extend({
   components: {

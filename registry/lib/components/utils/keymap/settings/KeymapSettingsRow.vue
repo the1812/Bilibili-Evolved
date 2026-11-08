@@ -45,9 +45,10 @@
 <script lang="ts">
 import { TextBox, VButton, VIcon } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
+import type { Options } from '..'
 import { presetBase, presets } from '../presets'
 
-const keymapOptions = getComponentSettings('keymap').options
+const keymapOptions = getComponentSettings<Options>('keymap').options
 export default Vue.extend({
   components: {
     TextBox,

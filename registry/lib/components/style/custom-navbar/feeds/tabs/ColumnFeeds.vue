@@ -11,13 +11,14 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
 import { isNewID } from '@/components/feeds/notify'
 import { ColumnCard } from '@/components/feeds/column-card'
 import ColumnCardComponent from '@/components/feeds/ColumnCard.vue'
 import { nextPageMixin } from './next-page'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     ColumnCard: ColumnCardComponent,
   },
@@ -38,7 +39,7 @@ export default Vue.extend({
         get new() {
           return isNewID(this.id)
         },
-      } as ColumnCard
+      } satisfies ColumnCard & { new: boolean }
     }),
   ],
 })

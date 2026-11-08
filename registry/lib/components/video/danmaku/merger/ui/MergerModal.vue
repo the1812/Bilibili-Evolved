@@ -297,12 +297,12 @@ export default Vue.extend({
       )
     },
     hasExpandedPageLists(): boolean {
-      return Object.values(this.expandedPages).some(pages => pages.length > 0)
+      return Object.values<MergerPagePart[]>(this.expandedPages).some(pages => pages.length > 0)
     },
     /** 父勾选 + 仅勾分P 的视频，都进底部已选区 */
     selectedCardBvids(): string[] {
       const set = new Set<string>(this.selectedBvids)
-      Object.entries(this.expandedPages).forEach(([bvid, pages]) => {
+      Object.entries<MergerPagePart[]>(this.expandedPages).forEach(([bvid, pages]) => {
         if (pages.some(page => page.selected)) {
           set.add(bvid)
         }
@@ -353,7 +353,7 @@ export default Vue.extend({
       })
 
       // 仅勾了分P、未进 selectedBvids 的兜底（一般不会发生）
-      Object.entries(this.expandedPages).forEach(([bvid, pages]) => {
+      Object.entries<MergerPagePart[]>(this.expandedPages).forEach(([bvid, pages]) => {
         if (this.selectedBvids.includes(bvid) || !this.isBvidExpanded(bvid)) {
           return
         }
@@ -765,7 +765,7 @@ export default Vue.extend({
     buildBatchMergeItems(): MergerBatchMergeItem[] {
       const items: MergerBatchMergeItem[] = []
 
-      Object.entries(this.expandedPages).forEach(([bvid, pages]) => {
+      Object.entries<MergerPagePart[]>(this.expandedPages).forEach(([bvid, pages]) => {
         if (!this.isBvidExpanded(bvid)) {
           return
         }

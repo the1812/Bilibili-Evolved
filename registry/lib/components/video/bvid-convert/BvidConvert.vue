@@ -26,11 +26,8 @@ import { VIcon } from '@/ui'
 import { BvidConvertOptions } from '.'
 
 const { options } = getComponentSettings<BvidConvertOptions>('bvidConvert')
-enum CopyIdType {
-  Aid = 'aid',
-  Bvid = 'bvid',
-}
-const copyIds = [CopyIdType.Aid, CopyIdType.Bvid]
+const copyIds = ['aid', 'bvid'] as const
+type CopyIdType = (typeof copyIds)[number]
 type LinkProvider = (context: { id: string; query: string }) => string
 const linkProviders: LinkProvider[] = [
   // 参数类页面, 如 festival
