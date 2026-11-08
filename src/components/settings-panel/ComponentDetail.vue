@@ -8,13 +8,71 @@
         <div class="display-name">
           {{ componentData.displayName }}
         </div>
-        <VIcon class="close" icon="close" :size="18" @click="emit('close')" />
+        <div class="component-detail-header-actions">
+          <MiniToast
+            v-if="menuActions.length > 0"
+            placement="bottom-end"
+            trigger="click"
+            class="extra-actions-wrapper"
+          >
+            <div class="extra-actions">
+              <VIcon icon="mdi-dots-vertical" :size="18" />
+            </div>
+            <template #toast>
+              <div class="extra-actions-list">
+                <div v-for="action of menuActions" :key="action.name">
+                  <component
+                    :is="action.component"
+                    v-if="action.component"
+                    :item="action"
+                    :component="componentData"
+                  />
+                  <ComponentAction v-else :item="action" :component="componentData" />
+                </div>
+              </div>
+            </template>
+          </MiniToast>
+          <VIcon class="close" icon="close" :size="18" @click="emit('close')" />
+        </div>
       </div>
       <div class="component-detail-tags">
         <div v-for="t of componentData.tags" :key="t.name" class="tag">
           <div class="tag-color" :style="{ backgroundColor: t.color }"></div>
           {{ t.displayName }}
         </div>
+      </div>
+      <div v-if="actionButtons.length > 0" class="component-detail-operations">
+        <template v-for="action of actionButtons">
+          <component
+            :is="action.component"
+            v-if="action.component"
+            :key="action.name"
+            :item="action"
+            :component="componentData"
+          />
+          <AsyncButton
+            v-else
+            :key="action.name"
+            :title="action.title"
+            @click="action.action(componentData)"
+          >
+            <VIcon :icon="action.icon" :size="16" />
+            {{ action.displayName }}
+          </AsyncButton>
+        </template>
+      </div>
+      <div v-if="componentData.commitHash || devMode" class="component-detail-internal-data">
+        <div v-if="componentData.commitHash" class="component-detail-commit">
+          <span>Commit: {{ commitLabel }}</span>
+          <VIcon
+            v-if="commitWarning"
+            class="commit-warning"
+            icon="mdi-alert-circle-outline"
+            :size="14"
+            :title="commitWarning"
+          />
+        </div>
+        <div v-if="devMode">内部名称: {{ componentData.name }}</div>
       </div>
       <div class="component-detail-separator"></div>
       <template
@@ -42,89 +100,87 @@
           class="component-detail-description"
           :component-data="componentData"
         />
-        <!-- <div class="component-detail-separator"></div> -->
       </template>
-      <div class="component-detail-grow"></div>
-      <div class="component-detail-internal-data">
-        <div class="component-detail-separator"></div>
-        <div v-if="componentData.commitHash" class="component-detail-internal-data-row">
-          <div class="component-detail-commit">
-            <span class="internal-name"
-              >Commit: {{ componentData.commitHash.substring(0, 9) }}</span
-            >
-            <VIcon
-              v-if="isLocalDebugUrl"
-              class="local-debug-warning"
-              icon="mdi-alert-circle-outline"
-              :size="14"
-              title="当前组件的更新地址是本地开发链接, 不会随着检查更新而更新"
-            />
-          </div>
-        </div>
-        <div class="component-detail-internal-data-row">
-          <div class="internal-name">内部名称: {{ componentData.name }}</div>
-          <MiniToast
-            v-if="componentData.configurable !== false && componentActions.length > 0"
-            placement="bottom"
-            trigger="click"
-            class="extra-actions-wrapper"
-          >
-            <div class="extra-actions">
-              <VIcon icon="mdi-dots-vertical" :size="16" />
-            </div>
-            <template #toast>
-              <div class="extra-actions-list">
-                <div v-for="a of componentActions" :key="a.name">
-                  <component
-                    :is="a.component"
-                    v-if="a.component"
-                    :item="a"
-                    :component="componentData"
-                  />
-                  <ComponentAction
-                    v-else
-                    v-show="a.visible !== false"
-                    class="extra-action-item"
-                    :item="a"
-                    :component="componentData"
-                  />
-                </div>
-              </div>
-            </template>
-          </MiniToast>
-        </div>
-      </div>
     </template>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted } from 'vue'
-import { VIcon, MiniToast } from '@/ui'
-import { getComponentSettings } from '@/core/settings'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { AsyncButton, VIcon, MiniToast } from '@/ui'
+import {
+  addComponentListener,
+  getComponentSettings,
+  removeComponentListener,
+} from '@/core/settings'
 import { getFeatureUrl } from '@/core/feature-source'
+import { branches, meta } from '@/core/meta'
 import type { AutoUpdateOptions } from '../auto-update'
 import type { ComponentMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
-import { componentActions as actionFactories } from './component-actions/component-actions'
+import {
+  componentActions,
+  componentActionButtons,
+  ComponentAction as ActionFactory,
+} from './component-actions/component-actions'
 import ComponentAction from './component-actions/ComponentAction.vue'
 
 const props = defineProps<{ componentData: ComponentMetadata }>()
 const emit = defineEmits<{ (event: 'close' | 'mounted'): void }>()
 const settings = computed(() => getComponentSettings(props.componentData))
-const componentActions = computed(() =>
-  actionFactories
+const getVisibleActions = (factories: ActionFactory[]) => {
+  if (props.componentData.configurable === false) {
+    return []
+  }
+  return factories
     .map(factory => factory(props.componentData))
-    .filter(action => action && (!('visible' in action) || action.visible !== false)),
-)
+    .filter(action => action && (!('visible' in action) || action.visible !== false))
+}
+const menuActions = computed(() => getVisibleActions(componentActions))
+const actionButtons = computed(() => getVisibleActions(componentActionButtons))
+const devMode = ref(false)
+const updateDevMode = (enabled: boolean) => {
+  devMode.value = enabled
+}
+addComponentListener('settingsPanel.devMode', updateDevMode, true)
+onUnmounted(() => removeComponentListener('settingsPanel.devMode', updateDevMode))
 const generatedOptions = computed(() =>
   Object.entries(props.componentData.options ?? {}).filter(([, option]) => !option.hidden),
 )
-const isLocalDebugUrl = computed(() => {
+const updateSource = computed(() => {
   const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-  const url = getFeatureUrl(options.urls.components[props.componentData.name]?.source)
-  return /^http:\/\/localhost:\d+\/registry\/dist\/components\/.+\.js$/.test(url)
+  return options.urls.components[props.componentData.name]?.source
+})
+const githubRef = computed(() =>
+  updateSource.value?.kind === 'github' ? updateSource.value.ref : undefined,
+)
+const commitLabel = computed(() => {
+  const hash = props.componentData.commitHash?.substring(0, 9)
+  return githubRef.value ? `${hash} (${githubRef.value})` : hash
+})
+const stableUpdateBranches = [branches.stable, branches.stableCdn]
+const matchingUpdateBranches = new Map([
+  ['preview-features', [branches.preview]],
+  ['preview-fixes', stableUpdateBranches],
+  [branches.stable, stableUpdateBranches],
+  [branches.stableCdn, stableUpdateBranches],
+])
+const commitWarning = computed(() => {
+  const url = getFeatureUrl(updateSource.value)
+  if (/^http:\/\/localhost:\d+\/registry\/dist\/components\/.+\.js$/.test(url)) {
+    return '当前组件的更新地址是本地开发链接, 不会随着检查更新而更新'
+  }
+  const { branch } = meta.compilationInfo
+  const sourceBranch = githubRef.value
+  if (
+    sourceBranch &&
+    sourceBranch !== branch &&
+    !matchingUpdateBranches.get(branch)?.includes(sourceBranch)
+  ) {
+    return `当前本体分支为 ${branch}, 组件更新源分支为 ${sourceBranch}`
+  }
+  return undefined
 })
 
 onMounted(async () => {
@@ -158,7 +214,7 @@ onMounted(async () => {
     box-sizing: border-box;
   }
   &-header {
-    @include h-center();
+    @include h-center(8px);
     justify-content: space-between;
     padding: 12px;
     background-color: inherit;
@@ -170,14 +226,28 @@ onMounted(async () => {
       @include semi-bold();
       font-size: 16px;
     }
+    &-actions {
+      @include h-center(4px);
+      flex-shrink: 0;
+    }
     .close {
       cursor: pointer;
       &:hover {
         color: var(--theme-color);
       }
     }
+    .extra-actions {
+      padding: 4px;
+      cursor: pointer;
+    }
+    .extra-actions-list {
+      width: max-content;
+    }
+    .tippy-content {
+      padding: 4px;
+    }
   }
-  &-description:not(:last-child) {
+  &-description {
     padding: 6px 12px;
   }
   &-tags {
@@ -202,82 +272,28 @@ onMounted(async () => {
     }
   }
   &-internal-data {
-    @include v-stretch();
-    justify-content: center;
-    flex-shrink: 0;
-    position: sticky;
-    bottom: 0;
-    min-height: 24px;
-    box-sizing: content-box;
-    background-color: inherit;
-    padding-bottom: 8px;
-
-    .component-detail-separator {
-      margin-top: 0;
-    }
-
-    &-row {
-      @include h-center();
-      justify-content: space-between;
-      line-height: 24px;
-      padding: 0 12px;
-    }
-
-    .internal-name {
-      opacity: 0.5;
-    }
+    padding: 0 12px 0;
+    color: var(--be-color-muted, #888);
+    line-height: 20px;
     .component-detail-commit {
-      @include h-center();
+      @include h-center(4px);
     }
-    .local-debug-warning {
+    .commit-warning {
       color: #ff9800;
-      margin-left: 4px;
     }
-    .tippy-content {
-      padding: 4px;
-    }
-    .extra-actions-wrapper {
-      position: relative;
-      transform: translateX(2px);
-
-      .extra-actions {
-        padding: 4px;
-        cursor: pointer;
-      }
-      .extra-actions-list {
-        width: max-content;
-      }
-      //   @include popup();
-      //   padding: 4px;
-      //   position: absolute;
-      //   width: max-content;
-      //   top: 100%;
-      //   left: 50%;
-      //   opacity: 0;
-      //   pointer-events: none;
-      //   transform: translateX(-50%) scaleY(0.8);
-      //   transition: 0.2s ease-out;
-      //   transform-origin: top;
-      // }
-      // .extra-actions:hover ~ .extra-actions-list,
-      // .extra-actions-list:hover {
-      //   pointer-events: initial;
-      //   opacity: 1;
-      //   transform: translateX(-50%) scaleY(1);
-      // }
-    }
-    // margin-bottom: 12px;
-    // &-item {
-    //   margin-bottom: 6px;
-    // }
   }
   &-operations {
-    @include h-center();
+    @include h-stretch(8px);
+    flex-wrap: wrap;
+    padding: 0 12px 8px;
     > * {
-      flex: 1 0 0;
-      &:not(:last-child) {
-        margin-right: 8px;
+      flex: 1 0 auto;
+      .be-icon {
+        margin-right: 6px;
       }
+    }
+    &:empty {
+      display: none;
     }
   }
   &-options {
@@ -294,9 +310,6 @@ onMounted(async () => {
     .generated-option:not(:last-child) {
       margin-bottom: 4px;
     }
-  }
-  &-grow {
-    flex: 1;
   }
 }
 </style>

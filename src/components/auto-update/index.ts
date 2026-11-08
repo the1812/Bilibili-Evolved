@@ -135,9 +135,9 @@ export const component = defineComponentMetadata({
           },
         })
       })
-      addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
+      addData('settingsPanel.componentActionButtons', (actions: ComponentAction[]) => {
         const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-        actions.push(metadata => {
+        actions.unshift(metadata => {
           const item = options.urls.components[metadata.name]
           if (!item?.source) {
             return undefined

@@ -1,23 +1,22 @@
 <template>
-  <div v-show="isConnected">
-    <div v-if="canStartDebug" class="component-action dev-client-action" @click="startDebug">
-      <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
-      <VIcon v-else icon="mdi-play-network-outline" :size="16" />
-      {{ busy ? '启动中' : '开始调试' }}
-    </div>
-    <div v-if="canStopDebug" class="component-action dev-client-action" @click="stopDebug">
-      <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
-      <VIcon v-else icon="mdi-minus-network-outline" :size="16" />
-      {{ busy ? '停止中' : '停止调试' }}
-    </div>
-  </div>
+  <VButton
+    v-if="isConnected && debugPath"
+    class="dev-client-action"
+    :disabled="busy"
+    @click="isDebugging ? stopDebug() : startDebug()"
+  >
+    <VIcon v-if="busy" icon="mdi-network-outline" :size="16" />
+    <VIcon v-else-if="isDebugging" icon="mdi-minus-network-outline" :size="16" />
+    <VIcon v-else icon="mdi-play-network-outline" :size="16" />
+    {{ busy ? '启动中' : debugLabel }}
+  </VButton>
 </template>
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue'
 import type { ComponentVueAction } from '@/components/settings-panel/component-actions/component-actions'
 import type { ComponentMetadata } from '@/components/types'
 import { Toast } from '@/core/toast'
-import { VIcon } from '@/ui'
+import { VButton, VIcon } from '@/ui'
 import { devClient, DevClientEvents } from './client'
 import { getComponentDevPath } from './converter'
 
@@ -26,8 +25,8 @@ const busy = ref(false)
 const debugPaths = ref(devClient.debugPaths)
 const isConnected = ref(devClient.isConnected)
 const debugPath = computed(() => getComponentDevPath(props.component.name))
-const canStopDebug = computed(() => debugPaths.value.includes(debugPath.value))
-const canStartDebug = computed(() => Boolean(debugPath.value) && !canStopDebug.value)
+const isDebugging = computed(() => debugPaths.value.includes(debugPath.value))
+const debugLabel = computed(() => (isDebugging.value ? '停止调试' : '开始调试'))
 
 const handleServerChange = (event: CustomEvent<boolean>) => {
   isConnected.value = event.detail

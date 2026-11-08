@@ -8,7 +8,7 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
   if (isIframe()) {
     return
   }
-  addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
+  addData('settingsPanel.componentActionButtons', (actions: ComponentAction[]) => {
     actions.push(component => {
       if (!getComponentDevPath(component.name)) {
         return undefined

@@ -42,19 +42,7 @@ const createOptionsTransferAction =
           component: () => import('./OptionsTransferAction.vue'),
         }
 
-const builtInActions: ComponentAction[] = [
-  metadata => ({
-    name: 'uninstall',
-    displayName: '卸载',
-    icon: 'mdi-trash-can-outline',
-    visible: isUserComponent(metadata),
-    action: async () => {
-      const { before, after } = getHook('userComponents.remove', metadata)
-      await before()
-      await uninstallComponent(metadata.name)
-      await after()
-    },
-  }),
+const builtInMenuActions: ComponentAction[] = [
   createOptionsTransferAction({
     name: 'optionsExport',
     mode: 'export',
@@ -73,6 +61,8 @@ const builtInActions: ComponentAction[] = [
     shiftIcon: 'mdi-content-paste',
     title: '从文件导入当前组件的选项, 按住 Shift 点击可从剪贴板粘贴',
   }),
+]
+const builtInActionButtons: ComponentAction[] = [
   metadata => ({
     name: 'feedback',
     displayName: '反馈',
@@ -80,8 +70,24 @@ const builtInActions: ComponentAction[] = [
     visible: feedbackSupported,
     action: () => openFeedback(metadata),
   }),
+  metadata => ({
+    name: 'uninstall',
+    displayName: '卸载',
+    icon: 'mdi-trash-can-outline',
+    visible: isUserComponent(metadata),
+    action: async () => {
+      const { before, after } = getHook('userComponents.remove', metadata)
+      await before()
+      await uninstallComponent(metadata.name)
+      await after()
+    },
+  }),
 ]
 export const [componentActions] = registerAndGetData(
   'settingsPanel.componentActions',
-  builtInActions,
+  builtInMenuActions,
+)
+export const [componentActionButtons] = registerAndGetData(
+  'settingsPanel.componentActionButtons',
+  builtInActionButtons,
 )
