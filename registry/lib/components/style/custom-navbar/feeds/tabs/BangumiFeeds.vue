@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
-import { isNewID } from '@/components/feeds/notify'
+import { isNewID, type FeedCardWithNewStatus } from '@/components/feeds/notify'
 import { BangumiCard } from '@/components/feeds/bangumi-card'
 import BangumiCardComponent from '@/components/feeds/BangumiCard.vue'
 import { nextPageMixin } from './next-page'
@@ -36,7 +36,7 @@ export default defineComponent({
         get new() {
           return isNewID(this.id)
         },
-      } satisfies BangumiCard & { new: boolean }
+      } satisfies FeedCardWithNewStatus<BangumiCard>
     }),
   ],
 })

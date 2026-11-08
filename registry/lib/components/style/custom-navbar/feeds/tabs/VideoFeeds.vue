@@ -33,12 +33,10 @@
 import { defineComponent } from 'vue'
 import { VideoCard } from '@/components/feeds/video-card'
 import { formatDuration, formatCount, parseDuration, parseCount } from '@/core/utils/formatters'
-import { isNewID } from '@/components/feeds/notify'
+import { isNewID, type FeedCardWithNewStatus } from '@/components/feeds/notify'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { nextPageMixin } from './next-page'
-
-type FeedVideoCard = VideoCard & { new: boolean }
 
 const formatPubTime = (pubTime: number) => {
   const now = Number(new Date())
@@ -105,12 +103,12 @@ export default defineComponent({
         get new() {
           return isNewID(this.id)
         },
-      } as FeedVideoCard
+      } as FeedCardWithNewStatus<VideoCard>
     }),
   ],
   computed: {
     columnedCards() {
-      const { cards } = this as { cards: FeedVideoCard[] }
+      const { cards } = this as { cards: FeedCardWithNewStatus<VideoCard>[] }
       return {
         left: cards.filter((_, index) => index % 2 === 0),
         right: cards.filter((_, index) => index % 2 !== 0),

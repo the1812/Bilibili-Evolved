@@ -13,7 +13,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { feedsCardTypes } from '@/components/feeds/api'
-import { isNewID } from '@/components/feeds/notify'
+import { isNewID, type FeedCardWithNewStatus } from '@/components/feeds/notify'
 import { ColumnCard } from '@/components/feeds/column-card'
 import ColumnCardComponent from '@/components/feeds/ColumnCard.vue'
 import { nextPageMixin } from './next-page'
@@ -39,7 +39,7 @@ export default defineComponent({
         get new() {
           return isNewID(this.id)
         },
-      } satisfies ColumnCard & { new: boolean }
+      } satisfies FeedCardWithNewStatus<ColumnCard>
     }),
   ],
 })
