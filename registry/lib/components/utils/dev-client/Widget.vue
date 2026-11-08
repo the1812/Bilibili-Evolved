@@ -22,50 +22,26 @@
     </div>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { onUnmounted, ref } from 'vue'
 import { AsyncButton, VIcon } from '@/ui'
-import type { DevClient } from './client'
-import { DevClientEvents } from './client'
+import { devClient, DevClientEvents } from './client'
 
-export default Vue.extend({
-  components: {
-    AsyncButton,
-    VIcon,
-  },
-  data() {
-    return {
-      client: null,
-      clientId: '',
-      isConnected: false,
-    }
-  },
-  async created() {
-    const { devClient } = await import('./client')
-    this.client = devClient
-    this.updateConnectionStatus()
-    this.updateClientId()
-    devClient.addEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
-    devClient.addEventListener(DevClientEvents.ClientIdUpdate, this.updateClientId)
-  },
-  beforeDestroy() {
-    const devClient = this.client as DevClient
-    devClient.removeEventListener(DevClientEvents.ServerChange, this.updateConnectionStatus)
-    devClient.removeEventListener(DevClientEvents.ClientIdUpdate, this.updateClientId)
-  },
-  methods: {
-    async connect() {
-      return this.client.createSocket(true)
-    },
-    disconnect() {
-      this.client.closeSocket()
-    },
-    updateConnectionStatus() {
-      this.isConnected = this.client.isConnected
-    },
-    updateClientId() {
-      this.clientId = this.client.clientId
-    },
-  },
+const clientId = ref(devClient.clientId)
+const isConnected = ref(devClient.isConnected)
+const connect = () => devClient.createSocket(true)
+const disconnect = () => devClient.disconnect()
+const updateConnectionStatus = () => {
+  isConnected.value = devClient.isConnected
+}
+const updateClientId = () => {
+  clientId.value = devClient.clientId
+}
+devClient.addEventListener(DevClientEvents.ServerChange, updateConnectionStatus)
+devClient.addEventListener(DevClientEvents.ClientIdUpdate, updateClientId)
+onUnmounted(() => {
+  devClient.removeEventListener(DevClientEvents.ServerChange, updateConnectionStatus)
+  devClient.removeEventListener(DevClientEvents.ClientIdUpdate, updateClientId)
 })
 </script>
 <style lang="scss" scoped>

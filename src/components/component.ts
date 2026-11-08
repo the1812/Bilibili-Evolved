@@ -156,27 +156,10 @@ const loadComponentStage = async (
 
 /** 加载所有用户组件的定义 (不运行) */
 export const loadAllUserComponents = async () => {
-  const { settings } = await import('@/core/settings')
-  const { loadFeatureCode } = await import('@/core/external-input/load-feature-code')
-
-  const loadUserComponent = (component: ComponentMetadata) => {
+  const { getFeatureDefinitions } = await import('@/core/feature-definitions')
+  for (const component of await getFeatureDefinitions('component')) {
     components.push(component)
     componentsMap[component.name] = component
-  }
-
-  for (const [name, setting] of Object.entries(settings.userComponents)) {
-    const { code } = setting
-    let metadata: ComponentMetadata
-    try {
-      metadata = loadFeatureCode(code) as ComponentMetadata
-    } catch (e) {
-      console.error('从代码加载用户组件失败。代码可能有语法错误或代码执行时有抛出值。', {
-        componentName: name,
-        error: e,
-      })
-      continue
-    }
-    loadUserComponent(metadata)
   }
 }
 /** 载入所有组件 */

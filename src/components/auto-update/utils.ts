@@ -1,14 +1,16 @@
 import { settings } from '@/core/settings'
+import type { FeatureSource } from '@/core/feature-source'
 
 export const name = 'autoUpdate'
 export interface UpdateCheckItem {
-  url: string
+  source?: FeatureSource
   lastUpdateCheck: number
   installTime: number
   alwaysUpdate?: boolean
 }
-export const localhost = /^http:\/\/localhost/
-export type UpdateRecord = Record<string, Record<string, UpdateCheckItem>>
+export const updateKinds = ['components', 'plugins', 'styles'] as const
+export type UpdateKind = (typeof updateKinds)[number]
+export type UpdateRecord = Record<UpdateKind, Record<string, UpdateCheckItem>>
 export interface CheckSingleTypeUpdateConfig {
   filterNames?: string[]
   force?: boolean
@@ -16,12 +18,10 @@ export interface CheckSingleTypeUpdateConfig {
 }
 export type CheckSingleTypeUpdate = (config?: CheckSingleTypeUpdateConfig) => Promise<string>
 export interface CheckUpdateConfig extends CheckSingleTypeUpdateConfig {
+  kind: UpdateKind
   items: Record<string, UpdateCheckItem>
   existPredicate?: (name: string) => boolean
   // installer: (code: string) => Promise<{ message: string }>
 }
-export const isLocalItem = (url: string) => localhost.test(url)
-export const defaultExistPredicate = (itemName: string) =>
-  settings.userComponents[itemName] !== undefined ||
-  settings.userPlugins[itemName] !== undefined ||
-  settings.userStyles[itemName] !== undefined
+export const defaultExistPredicate = (itemName: string, kind: UpdateKind) =>
+  settings[`user${lodash.startCase(kind)}`][itemName] !== undefined

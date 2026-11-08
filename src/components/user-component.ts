@@ -1,4 +1,4 @@
-import { componentToSettings } from '@/core/settings'
+import { componentToSettings, fillComponentOptionDefaults } from '@/core/settings'
 import { isBuiltInComponent } from './built-in-components'
 import { ComponentMetadata, componentsMap } from './component'
 import * as bisector from './bisector/api'
@@ -45,16 +45,9 @@ export const installComponent = async (code: string, parsedComponent?: Component
   if (existingComponent) {
     existingComponent.code = code
     existingComponent.metadata = userMetadata
-    const defaultSettings = componentToSettings(component)
-    lodash.defaultsDeep(
+    fillComponentOptionDefaults(
       existingComponent.settings.options,
-      lodash.pickBy(defaultSettings.options, (value, key) => {
-        const isArray = Array.isArray(value)
-        if (isArray) {
-          return lodash.get(existingComponent.settings.options, key) === undefined
-        }
-        return true
-      }),
+      componentToSettings(component).options,
     )
     return {
       metadata: component,

@@ -70,138 +70,111 @@
     </div>
   </VPopup>
 </template>
-<script lang="ts">
-import type { DocSourceItem } from '../../../../../registry/lib/docs'
+<script setup lang="ts">
+import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import type { DocSourceItem, Package } from '../../../../../registry/lib/docs'
 import { monkey } from '@/core/ajax'
-import { cdnRoots } from '@/core/cdn-types'
+import { getCdnConfig } from '@/core/cdn-types'
 import { meta } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
 import { logError } from '@/core/utils/log'
 import { VIcon, VDropdown, TextBox, VPopup, VLoading, VEmpty, RadioButton } from '@/ui'
+import { getDescriptionText } from '@/components/description'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
 import { ItemFilter } from './item-filter'
-import { getDescriptionText } from '@/components/description'
+import type { RegistryItemData } from './types'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
 const general = getGeneralSettings() as ExtendedSettings
-function updateList(keyword: string) {
-  if (!keyword) {
-    this.filteredList = this.list
-    return
-  }
-  this.filteredList = this.list.filter((it: DocSourceItem) => {
-    const text = [it.name, it.displayName, it.descriptionText].join('\n').toLowerCase()
-    return text.includes(keyword.toLowerCase())
-  })
-  this.$nextTick().then(() => this.$refs.content.scrollTo(0, 0))
-}
+const popupOpen = ref(false)
+defineExpose({ popupOpen })
+
+const searchKeyword = ref('')
+const loading = ref(false)
+const list = ref<RegistryItemData[]>([])
+const filteredList = ref<RegistryItemData[]>([])
+const itemFilter = ref(ItemFilter.All)
+const content = ref<HTMLElement>()
+const items = ref<{ checkInstalled: () => void }[]>([])
+const selectedBranch = ref(
+  [general.registryBranch, meta.compilationInfo.branch].find(branch =>
+    registryBranches.includes(branch),
+  ) ?? registryBranches[0],
+)
 const itemFilterOptions = [
-  {
-    label: '全部',
-    value: ItemFilter.All,
-  },
-  {
-    label: '已安装',
-    value: ItemFilter.Installed,
-  },
-  {
-    label: '未安装',
-    value: ItemFilter.NotInstalled,
-  },
+  { label: '全部', value: ItemFilter.All },
+  { label: '已安装', value: ItemFilter.Installed },
+  { label: '未安装', value: ItemFilter.NotInstalled },
 ]
 
-export default Vue.extend({
-  components: {
-    VIcon,
-    VDropdown,
-    TextBox,
-    VPopup,
-    RegistryItem,
-    VLoading,
-    VEmpty,
-    RadioButton,
-  },
-  props: {
-    open: {
-      default: false,
-      type: Boolean,
-    },
-  },
-  data() {
-    const branches = [
-      general.registryBranch,
-      meta.compilationInfo.branch,
-      registryBranches[0],
-    ].filter(it => registryBranches.includes(it) && Boolean(it))
-    return {
-      searchKeyword: '',
-      popupOpen: false,
-      loading: false,
-      list: [],
-      itemFilter: ItemFilter.All,
-      itemFilterOptions,
-      filteredList: [],
-      // packList: [],
-      registryBranches,
-      selectedBranch: branches[0],
+const updateList = (keyword: string) => {
+  if (!keyword) {
+    filteredList.value = list.value
+    return
+  }
+  const query = keyword.toLowerCase()
+  filteredList.value = list.value.filter(item => {
+    const text = [item.name, item.displayName, item.descriptionText].join('\n').toLowerCase()
+    return text.includes(query)
+  })
+  nextTick(() => content.value?.scrollTo(0, 0))
+}
+
+const fetchFeatures = async () => {
+  if (loading.value) {
+    return
+  }
+  const cdn = getCdnConfig(general.cdnRoot)
+  const fetchPath = cdn.root(selectedBranch.value, cdn.repo)
+  try {
+    loading.value = true
+    list.value = []
+    filteredList.value = []
+    const featureListUrl = `${fetchPath}doc/features/features.json`
+    const packListUrl = `${fetchPath}doc/features/pack/pack.json`
+    const featureList = await monkey<DocSourceItem[]>({
+      url: featureListUrl,
+      responseType: 'json',
+    })
+    const packList = await monkey<(Package & { type: 'pack'; items: DocSourceItem[] })[]>({
+      url: packListUrl,
+      responseType: 'json',
+    })
+    if (!Array.isArray(featureList) || !Array.isArray(packList)) {
+      console.error('Fetch failed:', featureList, packList, featureListUrl, packListUrl)
+      throw new Error('获取在线仓库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
     }
-  },
-  watch: {
-    searchKeyword: lodash.debounce(updateList, 200),
-    selectedBranch(newBranch: string) {
-      general.registryBranch = newBranch
-      this.fetchFeatures()
-    },
-  },
-  mounted() {
-    this.fetchFeatures()
-  },
-  methods: {
-    async fetchFeatures() {
-      if (this.loading) {
-        return
-      }
-      const fetchPath = cdnRoots[general.cdnRoot](this.selectedBranch)
-      try {
-        this.loading = true
-        this.list = []
-        this.filteredList = []
-        const featureListUrl = `${fetchPath}doc/features/features.json`
-        const packListUrl = `${fetchPath}doc/features/pack/pack.json`
-        const featureList = await monkey({
-          url: featureListUrl,
-          responseType: 'json',
-        })
-        const packList = await monkey({
-          url: packListUrl,
-          responseType: 'json',
-        })
-        if (!Array.isArray(featureList) || !Array.isArray(packList)) {
-          console.error('Fetch failed:', featureList, packList, featureListUrl, packListUrl)
-          throw new Error('获取在线仓库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
-        }
-        this.list = await Promise.all(
-          [...packList, ...featureList].map(async it => {
-            return {
-              ...it,
-              descriptionText: await getDescriptionText(it),
-            }
-          }),
-        )
-        console.log(this.list)
-        updateList.call(this, this.searchKeyword)
-      } catch (error) {
-        logError(error)
-      } finally {
-        this.loading = false
-      }
-    },
-    checkInstalled() {
-      this.$refs.items?.forEach((item: any) => item.checkInstalled())
-    },
-  },
+    const withRepo = (item: DocSourceItem) => ({
+      ...item,
+      repo: item.repo ?? (item.owner ? `${item.owner}/Bilibili-Evolved` : cdn.repo),
+    })
+    list.value = await Promise.all(
+      [...packList, ...featureList].map(async entry => {
+        const item =
+          entry.type === 'pack' ? { ...entry, items: entry.items.map(withRepo) } : withRepo(entry)
+        return { ...item, descriptionText: await getDescriptionText(entry) }
+      }),
+    )
+    updateList(searchKeyword.value)
+  } catch (error) {
+    logError(error)
+  } finally {
+    loading.value = false
+  }
+}
+
+const checkInstalled = () => {
+  items.value.forEach(item => item.checkInstalled())
+}
+const debouncedUpdateList = lodash.debounce(updateList, 200)
+watch(searchKeyword, debouncedUpdateList)
+watch(selectedBranch, branch => {
+  general.registryBranch = branch
+  fetchFeatures()
 })
+onMounted(fetchFeatures)
+onUnmounted(debouncedUpdateList.cancel)
 </script>
 <style lang="scss">
 @import 'common';

@@ -157,7 +157,7 @@ export const enableProductionSourceMap = (config: Configuration, cdnPath: string
   config.plugins.push(
     new webpack.SourceMapDevToolPlugin({
       filename: '[file].map',
-      publicPath: altCdn.root(gitInfo.branch, altCdn.owner) + cdnPath,
+      publicPath: altCdn.root(gitInfo.branch, altCdn.repo) + cdnPath,
       append: '\n//# sourceMappingURL=[url]',
     }),
   )

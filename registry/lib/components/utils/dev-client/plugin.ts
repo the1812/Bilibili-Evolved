@@ -2,7 +2,7 @@ import { PluginSetupParameters } from '@/plugins/plugin'
 import { ComponentAction } from '@/components/settings-panel/component-actions/component-actions'
 import { isIframe } from '@/core/utils'
 import { LaunchBarAction, LaunchBarActionProvider } from '@/components/launch-bar/launch-bar-action'
-import { autoUpdateOptions } from './options'
+import { getComponentDevPath } from './converter'
 
 export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
   if (isIframe()) {
@@ -10,7 +10,7 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
   }
   addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
     actions.push(component => {
-      if (!autoUpdateOptions.urls.components[component.name]) {
+      if (!getComponentDevPath(component.name)) {
         return undefined
       }
       const ActionModule = () => import('./Action.vue')
@@ -31,7 +31,7 @@ export const setupPlugin = async ({ addData }: PluginSetupParameters) => {
             name: '断开 DevServer 连接',
             description: 'Disconnect from DevServer',
             icon: 'mdi-stop-circle-outline',
-            action: () => devClient.closeSocket(),
+            action: () => devClient.disconnect(),
           })
         } else {
           actions.push({

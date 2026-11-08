@@ -49,4 +49,5 @@ export interface Settings {
   components: Record<string, ComponentSettings>
   /** 插件设置 */
   plugins: Record<string, boolean>
+  featureSourcesMigrated: boolean
 }

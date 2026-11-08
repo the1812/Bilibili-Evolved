@@ -3,23 +3,24 @@ import { getGeneralSettings, getComponentSettings } from '@/core/settings'
 import { useScopedConsole } from '@/core/utils/log'
 import { descendingSort } from '@/core/utils/sort'
 import { isFeatureAcceptable } from '@/core/version'
+import { getFeatureUrl, isLocalFeatureUrl } from '@/core/feature-source'
 import {
   name,
   CheckUpdateConfig,
   defaultExistPredicate,
-  localhost,
   CheckSingleTypeUpdate,
   UpdateRecord,
-  UpdateCheckItem,
   CheckSingleTypeUpdateConfig,
+  updateKinds,
 } from './utils'
 import type { Options } from '.'
 import { isDataSaveMode } from '@/core/utils'
 
 export const checkUpdate = async (config: CheckUpdateConfig) => {
   const {
+    kind,
     items,
-    existPredicate = defaultExistPredicate,
+    existPredicate = itemName => defaultExistPredicate(itemName, kind),
     filterNames = [],
     force = false,
     maxCount = Infinity,
@@ -44,11 +45,11 @@ export const checkUpdate = async (config: CheckUpdateConfig) => {
   }
   let startedCount = 0
   const updateItems = Object.entries(items).filter(
-    ([itemName, item]) => shouldUpdate(itemName) && Boolean(item.url),
+    ([itemName, item]) => shouldUpdate(itemName) && Boolean(item.source),
   )
   const results = await Promise.allSettled(
     updateItems.map(async ([itemName, item]) => {
-      const { url, lastUpdateCheck, alwaysUpdate } = item
+      const { source, lastUpdateCheck, alwaysUpdate } = item
       const isDebugItem = alwaysUpdate && devMode
       if (!isDebugItem && now - lastUpdateCheck <= options.minimumDuration && !force) {
         return `[${itemName}] 未超过更新间隔期, 已跳过`
@@ -57,24 +58,27 @@ export const checkUpdate = async (config: CheckUpdateConfig) => {
         return `[${itemName}] 已到达单次更新量上限 (${maxCount} 个), 已跳过`
       }
       startedCount++
-      let finalUrl = url
-      if (localhost.test(url) && options.localPortOverride) {
-        finalUrl = url.replace(/:(\d)+/, `:${options.localPortOverride}`)
+      let url = getFeatureUrl(source)
+      if (isLocalFeatureUrl(url) && options.localPortOverride) {
+        const localUrl = new URL(url)
+        localUrl.port = options.localPortOverride
+        url = localUrl.href
       }
-      const code: string = await coreApis.ajax.monkey({ url: finalUrl })
-      // 需要再检查下是否还安装着, 有可能正好在下载途中被卸载
-      if (!(itemName in items)) {
-        return `[${itemName}] 已被卸载, 取消更新`
-      }
+      const { tryParseZip, installFeatureFromCode } = await import('@/core/install-feature')
+      const code = await tryParseZip(url)
       if (!code) {
         return `[${itemName}] 更新下载失败, 取消更新`
       }
       if (!(await isFeatureAcceptable(code))) {
         return `[${itemName}] 版本不匹配, 取消更新`
       }
-      const { installFeatureFromCode } = await import('@/core/install-feature')
-      const { message } = await installFeatureFromCode(code, url)
-      item.lastUpdateCheck = Number(new Date())
+      if (items[itemName] !== item || item.source !== source || !existPredicate(itemName)) {
+        return `[${itemName}] 功能安装记录已变化, 取消更新`
+      }
+      const { message } = await installFeatureFromCode(code, source)
+      if (items[itemName] === item) {
+        item.lastUpdateCheck = Date.now()
+      }
       return `[${itemName}] ${message}`
     }),
   )
@@ -93,6 +97,7 @@ export const checkComponentsUpdate: CheckSingleTypeUpdate = async config => {
   const { options } = getComponentSettings(name)
   const { components } = options.urls as UpdateRecord
   return checkUpdate({
+    kind: 'components',
     items: components,
     ...config,
   })
@@ -101,6 +106,7 @@ export const checkPluginsUpdate: CheckSingleTypeUpdate = async config => {
   const { options } = getComponentSettings(name)
   const { plugins } = options.urls as UpdateRecord
   return checkUpdate({
+    kind: 'plugins',
     items: plugins,
     ...config,
   })
@@ -109,6 +115,7 @@ export const checkStylesUpdate: CheckSingleTypeUpdate = async config => {
   const { options } = getComponentSettings(name)
   const { styles } = options.urls as UpdateRecord
   return checkUpdate({
+    kind: 'styles',
     items: styles,
     ...config,
   })
@@ -156,14 +163,15 @@ export const checkComponentsByName = checkByName(checkComponentsUpdate)
 export const checkPluginsByName = checkByName(checkPluginsUpdate)
 export const checkStylesByName = checkByName(checkStylesUpdate)
 export const checkLastFeature = async () => {
-  const { options } = getComponentSettings(name)
-  const items = Object.values(options.urls)
-    .flatMap(it => Object.entries(it))
-    .map(([key, record]: [string, UpdateCheckItem]) => ({
-      key,
-      time: record.lastUpdateCheck,
-      item: record,
-    }))
+  const { options } = getComponentSettings<Options>(name)
+  const items = updateKinds
+    .flatMap(kind =>
+      Object.entries(options.urls[kind]).map(([key, { lastUpdateCheck }]) => ({
+        kind,
+        key,
+        time: lastUpdateCheck,
+      })),
+    )
     .sort(descendingSort(it => it.time))
   const [firstItem] = items
   if (!firstItem) {
@@ -171,7 +179,9 @@ export const checkLastFeature = async () => {
     return
   }
   await checkUpdate({
-    items: { [firstItem.key]: firstItem.item },
+    kind: firstItem.kind,
+    items: options.urls[firstItem.kind],
+    filterNames: [firstItem.key],
     force: true,
   })
   window.location.reload()

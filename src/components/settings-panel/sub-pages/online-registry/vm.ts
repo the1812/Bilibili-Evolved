@@ -1,10 +1,7 @@
 import { mountVueComponent } from '@/core/utils'
 import OnlineRegistry from './OnlineRegistry.vue'
 
-let vm: Vue & {
-  popupOpen: boolean
-  searchKeyword: string
-}
+let vm: Vue & { popupOpen: boolean }
 export const initPopup = () => {
   if (!vm) {
     vm = mountVueComponent(OnlineRegistry)

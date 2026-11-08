@@ -8,7 +8,7 @@
         <div class="display-name">
           {{ componentData.displayName }}
         </div>
-        <VIcon class="close" icon="close" :size="18" @click="$emit('close')" />
+        <VIcon class="close" icon="close" :size="18" @click="emit('close')" />
       </div>
       <div class="component-detail-tags">
         <div v-for="t of componentData.tags" :key="t.name" class="tag">
@@ -98,68 +98,38 @@
   </div>
 </template>
 
-<script lang="ts">
-import { VButton, VIcon, SwitchBox, MiniToast } from '@/ui'
-import { visible } from '@/core/observer'
+<script setup lang="ts">
+import { computed, nextTick, onMounted } from 'vue'
+import { VIcon, MiniToast } from '@/ui'
 import { getComponentSettings } from '@/core/settings'
+import { getFeatureUrl } from '@/core/feature-source'
 import type { AutoUpdateOptions } from '../auto-update'
-import { OptionsMetadata } from '../component'
+import type { ComponentMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
-import { componentSettingsMixin } from './mixins'
-import { componentActions, ComponentConfigAction } from './component-actions/component-actions'
+import { componentActions as actionFactories } from './component-actions/component-actions'
 import ComponentAction from './component-actions/ComponentAction.vue'
 
-export default Vue.extend({
-  components: {
-    ComponentDescription,
-    ComponentOption,
-    ComponentAction,
-    VButton,
-    VIcon,
-    SwitchBox,
-    MiniToast,
-  },
-  mixins: [componentSettingsMixin],
-  data() {
-    return {
-      virtual: false,
-      componentActions: componentActions
-        .map(factory => factory((this as any).componentData))
-        .filter(it => {
-          if (it === undefined) {
-            return false
-          }
-          if ((it as ComponentConfigAction).visible === false) {
-            return false
-          }
-          return true
-        }),
-    }
-  },
-  computed: {
-    generatedOptions() {
-      return Object.entries((this.componentData.options ?? {}) as OptionsMetadata).filter(
-        ([, option]) => !option.hidden,
-      )
-    },
-    isLocalDebugUrl() {
-      const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-      const url = options.urls.components[this.componentData.name]?.url ?? ''
-      return /^http:\/\/localhost:\d+\/registry\/dist\/components\/.+\.js$/.test(url)
-    },
-  },
-  async mounted() {
-    const element = this.$el as HTMLElement
-    visible(element, records => {
-      records.forEach(record => {
-        this.virtual = !record.isIntersecting
-      })
-    })
-    await this.$nextTick()
-    this.$emit('mounted')
-    console.log(this.componentActions)
-  },
+const props = defineProps<{ componentData: ComponentMetadata }>()
+const emit = defineEmits<{ (event: 'close' | 'mounted'): void }>()
+const settings = computed(() => getComponentSettings(props.componentData))
+const componentActions = computed(() =>
+  actionFactories
+    .map(factory => factory(props.componentData))
+    .filter(action => action && (!('visible' in action) || action.visible !== false)),
+)
+const generatedOptions = computed(() =>
+  Object.entries(props.componentData.options ?? {}).filter(([, option]) => !option.hidden),
+)
+const isLocalDebugUrl = computed(() => {
+  const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
+  const url = getFeatureUrl(options.urls.components[props.componentData.name]?.source)
+  return /^http:\/\/localhost:\d+\/registry\/dist\/components\/.+\.js$/.test(url)
+})
+
+onMounted(async () => {
+  await nextTick()
+  emit('mounted')
 })
 </script>
 

@@ -1,14 +1,14 @@
 import { jsDelivr } from './jsdelivr'
 import { CdnConfig } from './types'
 
-const owner = 'the1812'
+const repo = 'the1812/Bilibili-Evolved'
 const host = 'raw.githubusercontent.com'
 export const github: CdnConfig = {
   name: 'GitHub',
-  owner,
+  repo,
   host,
-  stableClient: `https://${host}/${owner}/Bilibili-Evolved/master/dist/bilibili-evolved.user.js`,
-  previewClient: `https://${host}/${owner}/Bilibili-Evolved/preview/dist/bilibili-evolved.preview.user.js`,
+  stableClient: `https://${host}/${repo}/master/dist/bilibili-evolved.user.js`,
+  previewClient: `https://${host}/${repo}/preview/dist/bilibili-evolved.preview.user.js`,
   library: {
     lodash: {
       url: `https://${host}/lodash/lodash/4.17.21/dist/lodash.min.js`,
@@ -30,8 +30,7 @@ export const github: CdnConfig = {
     // https://github.com/the1812/Bilibili-Evolved/pull/4521#discussion_r1402084486
     ffmpeg: jsDelivr.library.ffmpeg,
   },
-  smallLogo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo-small.png`,
-  logo: `https://${host}/${owner}/Bilibili-Evolved/preview/images/logo.png`,
-  root: (branch, ownerOverride) =>
-    `https://${host}/${ownerOverride || owner}/Bilibili-Evolved/${branch}/`,
+  smallLogo: `https://${host}/${repo}/preview/images/logo-small.png`,
+  logo: `https://${host}/${repo}/preview/images/logo.png`,
+  root: (branch, sourceRepo) => `https://${host}/${sourceRepo}/${branch}/`,
 }

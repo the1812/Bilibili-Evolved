@@ -10,7 +10,13 @@ import {
 } from '@/components/define'
 import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
 import { ComponentAction } from '../settings-panel/component-actions/component-actions'
-import { isLocalItem, name, UpdateCheckItem } from './utils'
+import { name, UpdateCheckItem, updateKinds } from './utils'
+import {
+  FeatureSource,
+  getFeatureSource,
+  isLocalFeatureUrl,
+  getFeatureUrl,
+} from '@/core/feature-source'
 import * as checkerMethods from './checker'
 import { SearchBarAction } from '../settings-panel/search-bar-actions'
 
@@ -100,25 +106,22 @@ export const component = defineComponentMetadata({
     },
     // 非设置面板的组件如果也对能功能进行修改, 建议调用此处的 Hooks 同步状态.
     setup: ({ addData, addHook }) => {
-      const types = ['components', 'plugins', 'styles']
-      types.forEach(type => {
+      updateKinds.forEach(type => {
         addHook(`user${lodash.startCase(type)}.add`, {
-          after: (_, url: string, metadata: { name: string }) => {
-            // console.log('hook', `user${lodash.startCase(type)}.add`, metadata.name, url)
-            const { options } = getComponentSettings('autoUpdate')
-            const existingItem = options.urls[type][metadata.name] as UpdateCheckItem
-            if (!existingItem) {
-              options.urls[type][metadata.name] = {
-                url,
-                lastUpdateCheck: Number(new Date()),
-                installTime: Number(new Date()),
-                alwaysUpdate: isLocalItem(url),
-              } as UpdateCheckItem
-            } else {
-              existingItem.url = url
-              existingItem.lastUpdateCheck = Number(new Date())
-              existingItem.alwaysUpdate = isLocalItem(url)
-              // keep install time
+          after: (
+            _,
+            url: string,
+            metadata: { name: string },
+            source: FeatureSource | undefined = getFeatureSource(url),
+          ) => {
+            const { options } = getComponentSettings<AutoUpdateOptions>(name)
+            const items = options.urls[type]
+            const now = Date.now()
+            items[metadata.name] = {
+              source,
+              lastUpdateCheck: now,
+              installTime: items[metadata.name]?.installTime ?? now,
+              alwaysUpdate: isLocalFeatureUrl(url),
             }
           },
         })
@@ -136,17 +139,18 @@ export const component = defineComponentMetadata({
         const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
         actions.push(metadata => {
           const item = options.urls.components[metadata.name]
-          if (!item) {
+          if (!item?.source) {
             return undefined
           }
+          const url = getFeatureUrl(item.source)
           return {
             name: 'checkUpdate',
             displayName: '检查更新',
-            icon: isLocalItem(item.url)
+            icon: isLocalFeatureUrl(url)
               ? 'mdi-file-download-outline'
               : 'mdi-cloud-download-outline',
             visible: isUserComponent(metadata),
-            title: item.url,
+            title: url,
             action: async () => {
               const { Toast } = await import('@/core/toast')
               const toast = Toast.info('检查更新中...', '检查更新')

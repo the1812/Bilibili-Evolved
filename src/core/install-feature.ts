@@ -3,6 +3,7 @@ import { installComponent } from '@/components/user-component'
 import { getHook } from '@/plugins/hook'
 import { installPlugin, PluginMetadata } from '@/plugins/plugin'
 import { installStyle, UserStyle } from '@/plugins/style'
+import { FeatureSource, getFeatureSource, getFeatureUrl } from './feature-source'
 
 type FeatureType = ComponentMetadata | PluginMetadata | UserStyle
 const isComponent = (item: FeatureType): item is ComponentMetadata =>
@@ -40,7 +41,7 @@ export const tryParseZip = async (url: string) => {
 }
 export const installFeatureFromCode = async (
   code: string,
-  url?: string,
+  input?: string | FeatureSource,
 ): Promise<{
   metadata: FeatureType
   message: string
@@ -69,18 +70,20 @@ export const installFeatureFromCode = async (
     throw new Error('无效的功能代码')
   })()
 
+  const source = typeof input === 'string' ? getFeatureSource(input) : input
+  const url = typeof input === 'object' ? getFeatureUrl(input) : input
   const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
   await before()
   const installerResult = await installer()
-  await after(installerResult.metadata)
+  await after(installerResult.metadata, source)
   return installerResult
 }
 export const installFeature = async (
-  url: string,
+  input: string | FeatureSource,
 ): Promise<{
   metadata: FeatureType
   message: string
 }> => {
-  const code = await tryParseZip(url)
-  return installFeatureFromCode(code, url)
+  const code = await tryParseZip(typeof input === 'string' ? input : getFeatureUrl(input))
+  return installFeatureFromCode(code, input)
 }
