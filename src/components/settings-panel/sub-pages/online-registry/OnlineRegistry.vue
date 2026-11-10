@@ -23,39 +23,7 @@
       />
     </div>
     <div class="online-registry-toolbar">
-      <div class="online-registry-filters">
-        <div class="online-registry-filter">
-          排序
-          <VDropdown v-model="selectedSort" :items="sortOptions" class="online-registry-sort" />
-        </div>
-        <div class="online-registry-filter">
-          安装状态
-          <VDropdown v-model="selectedStatus" :items="statusOptions" />
-        </div>
-        <div class="online-registry-filter">
-          功能类型
-          <VDropdown v-model="selectedType" :items="typeOptions" />
-        </div>
-        <div class="online-registry-filter">
-          标签
-          <VDropdown
-            v-model="selectedTag"
-            :items="tagOptions"
-            :disabled="selectedType.name === 'plugin'"
-          >
-            <template #item="{ item }">
-              <span class="online-registry-tag-option">
-                <span
-                  v-if="item.color"
-                  class="online-registry-tag-dot"
-                  :style="{ '--tag-color': item.color }"
-                ></span>
-                {{ item.displayName }}
-              </span>
-            </template>
-          </VDropdown>
-        </div>
-      </div>
+      <RegistryFilters :selection="filters" :items="list" @change="filters = $event" />
     </div>
     <div ref="content" class="online-registry-content">
       <VLoading v-if="loading" />
@@ -78,153 +46,33 @@
 </template>
 
 <script setup lang="ts">
-import { convertToPinyin } from 'tiny-pinyin'
 import { computed, onUnmounted, ref, watch } from 'vue'
-import type { DocSourceItem } from '../../../../../registry/lib/docs'
-import { componentsTags } from '@/components/types'
-import { getDescriptionText } from '@/components/description'
-import { monkey } from '@/core/ajax'
-import { getCdnConfig } from '@/core/cdn-types'
-import { installFeature } from '@/core/install-feature'
-import { branches, meta } from '@/core/meta'
 import { sizeChange } from '@/core/observer'
-import {
-  addSettingsChangeListener,
-  getGeneralSettings,
-  removeSettingsChangeListener,
-  settings,
-} from '@/core/settings'
-import { logError } from '@/core/utils/log'
-import { TextBox, VButton, VDropdown, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
+import { TextBox, VButton, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
+import RegistryFilters from './RegistryFilters.vue'
 import RegistryItem from './RegistryItem.vue'
-import type { RegistryItemData } from './types'
+import { queryRegistryItems } from './registry-query'
+import type { RegistryFilterSelection } from './types'
+import { useRegistryData } from './use-registry-data'
 
 const popupOpen = ref(false)
 defineExpose({ popupOpen })
 
-const general = getGeneralSettings()
-const branch = [branches.preview, 'preview-features'].includes(meta.compilationInfo.branch)
-  ? branches.preview
-  : branches.stable
-
-const loading = ref(false)
-const loadFailed = ref(false)
-const list = ref<RegistryItemData[] | null>(null)
-const installing = ref<RegistryItemData[]>([])
+const { list, loading, loadFailed, installing, isInstalled, loadFeatures, install } =
+  useRegistryData()
 const content = ref<HTMLElement>()
 const cardColumns = ref(1)
 const searchKeyword = ref('')
 const appliedKeyword = ref('')
+const filters = ref<RegistryFilterSelection>({ sort: 'default', status: '', type: '', tag: '' })
 
-const all = { name: '', displayName: '全部' }
-const sortOptions = [
-  { name: 'default', displayName: '默认顺序' },
-  { name: 'nameAsc', displayName: '名称正序' },
-  { name: 'nameDesc', displayName: '名称倒序' },
-  { name: 'installed', displayName: '已安装优先' },
-  { name: 'notInstalled', displayName: '未安装优先' },
-]
-const statusOptions = [
-  all,
-  { name: 'installed', displayName: '已安装' },
-  { name: 'notInstalled', displayName: '未安装' },
-]
-const typeOptions = [
-  all,
-  { name: 'component', displayName: '组件' },
-  { name: 'plugin', displayName: '插件' },
-]
-const tagOptions = computed(() => {
-  const tags = lodash.uniqBy(list.value?.flatMap(item => item.componentTags) ?? [], tag => tag.name)
-  return [all, ...lodash.sortBy(tags, tag => tag.order)]
-})
-const selectedSort = ref(sortOptions[0])
-const selectedStatus = ref(all)
-const selectedType = ref(all)
-const selectedTag = ref(all)
-
-const readInstalled = () => ({
-  component: new Set(Object.keys(settings.userComponents)),
-  plugin: new Set(Object.keys(settings.userPlugins)),
-})
-const installed = ref(readInstalled())
-const isInstalled = (item: RegistryItemData) => installed.value[item.type].has(item.name)
-const refreshInstalled = () => {
-  installed.value = readInstalled()
-}
-addSettingsChangeListener('userComponents', refreshInstalled)
-addSettingsChangeListener('userPlugins', refreshInstalled)
-
-const nameCollator = new Intl.Collator('en', { sensitivity: 'base', numeric: true })
-const filteredList = computed(() => {
-  const status = selectedStatus.value.name
-  const type = selectedType.value.name
-  const tag = selectedTag.value.name
-  const keyword = appliedKeyword.value
-  const matches = (list.value ?? []).filter(
-    item =>
-      (!status || isInstalled(item) === (status === 'installed')) &&
-      (!type || item.type === type) &&
-      (!tag || item.componentTags.some(itemTag => itemTag.name === tag)) &&
-      (!keyword || item.searchText.includes(keyword)),
-  )
-  switch (selectedSort.value.name) {
-    case 'nameAsc':
-      return matches.sort((a, b) => nameCollator.compare(a.nameSortKey, b.nameSortKey))
-    case 'nameDesc':
-      return matches.sort((a, b) => nameCollator.compare(b.nameSortKey, a.nameSortKey))
-    case 'installed':
-      return matches.sort((a, b) => Number(isInstalled(b)) - Number(isInstalled(a)))
-    case 'notInstalled':
-      return matches.sort((a, b) => Number(isInstalled(a)) - Number(isInstalled(b)))
-    default:
-      return matches
-  }
-})
-
-const loadFeatures = async () => {
-  if (loading.value || list.value) {
-    return
-  }
-  loading.value = true
-  loadFailed.value = false
-  try {
-    const cdn = getCdnConfig(general.cdnRoot)
-    const url =
-      process.env.NODE_ENV === 'development'
-        ? 'http://localhost:23333/dev/online-registry/features.json'
-        : `${cdn.root(branch, cdn.repo)}doc/features/features.json`
-    const entries = await monkey<DocSourceItem[]>({ url, responseType: 'json' })
-    if (!Array.isArray(entries)) {
-      throw new Error(`无效的在线仓库索引: ${url}`)
-    }
-    list.value = await Promise.all(
-      entries.map(async item => {
-        const descriptionText = await getDescriptionText(item)
-        return {
-          ...item,
-          nameSortKey: convertToPinyin(item.displayName),
-          repo: item.repo ?? (item.owner ? `${item.owner}/Bilibili-Evolved` : cdn.repo),
-          componentTags:
-            item.type === 'component'
-              ? (item.tags ?? []).map(tag => componentsTags[tag]).filter(Boolean)
-              : [],
-          descriptionText,
-          searchText: [item.name, item.displayName, descriptionText].join('\n').toLowerCase(),
-        }
-      }),
-    )
-  } catch (error) {
-    loadFailed.value = true
-    console.error('获取在线仓库索引失败', error)
-  } finally {
-    loading.value = false
-  }
-}
-
+const filteredList = computed(() =>
+  queryRegistryItems(list.value ?? [], filters.value, appliedKeyword.value, isInstalled),
+)
+const scrollToTop = () => content.value?.scrollTo(0, 0)
 const applySearch = () => {
   appliedKeyword.value = searchKeyword.value.toLowerCase()
-  content.value?.scrollTo(0, 0)
+  scrollToTop()
 }
 const debouncedSearch = lodash.debounce(applySearch, 200)
 const search = () => {
@@ -238,27 +86,8 @@ const onSearchEnter = (event: KeyboardEvent) => {
   }
 }
 
-const install = async (item: RegistryItemData) => {
-  if (installing.value.includes(item)) {
-    return
-  }
-  installing.value.push(item)
-  try {
-    await installFeature({
-      kind: 'github',
-      repo: item.repo,
-      ref: branch,
-      path: item.fullAbsolutePath,
-      cdn: general.cdnRoot,
-    })
-  } catch (error) {
-    logError(error)
-  } finally {
-    installing.value = installing.value.filter(entry => entry !== item)
-  }
-}
-
 watch(searchKeyword, debouncedSearch)
+watch(filters, scrollToTop)
 watch(content, (element, _, onCleanup) => {
   if (!element) {
     return
@@ -270,24 +99,12 @@ watch(content, (element, _, onCleanup) => {
   })
   onCleanup(() => observer.disconnect())
 })
-watch(selectedType, type => {
-  if (type.name === 'plugin') {
-    selectedTag.value = all
-  }
-})
-watch([selectedSort, selectedStatus, selectedType, selectedTag], () =>
-  content.value?.scrollTo(0, 0),
-)
 watch(popupOpen, open => {
   if (open && !loadFailed.value) {
     loadFeatures()
   }
 })
-onUnmounted(() => {
-  debouncedSearch.cancel()
-  removeSettingsChangeListener('userComponents', refreshInstalled)
-  removeSettingsChangeListener('userPlugins', refreshInstalled)
-})
+onUnmounted(() => debouncedSearch.cancel())
 </script>
 
 <style lang="scss">
@@ -337,35 +154,12 @@ onUnmounted(() => {
   }
   &-search {
     min-width: 0;
+    font-size: 12px;
     @include h-stretch(8px);
     .be-button {
       padding: 4px 12px;
       white-space: nowrap;
     }
-  }
-  &-filters {
-    @include h-center(12px);
-    flex-wrap: wrap;
-    justify-content: center;
-    white-space: nowrap;
-  }
-  &-filter {
-    @include h-center(6px);
-    .be-dropdown {
-      width: 90px;
-      &.online-registry-sort {
-        width: 132px;
-      }
-    }
-  }
-  &-tag-option {
-    @include h-center(6px);
-  }
-  &-tag-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: var(--tag-color);
   }
   &-content {
     --card-gap: 12px;
