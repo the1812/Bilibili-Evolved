@@ -1,6 +1,6 @@
 import { playerAgent } from '@/components/video/player-agent'
 import { getComponentSettings } from '@/core/settings'
-import { registerAndGetData } from '@/plugins/data'
+import { getData, registerAndGetData } from '@/plugins/data'
 import type { Options } from '.'
 import type { KeyBindingAction, KeyBindingActionContext, KeyEvent } from './bindings'
 import { getActiveElement, simulateClick } from '@/core/utils'
@@ -317,6 +317,13 @@ export const builtInActions: Record<string, KeyBindingAction> = {
       }
       sendButton.click()
       return true
+    },
+  },
+  showLaunchBar: {
+    displayName: '显示搜索栏',
+    run: () => {
+      const [toggle] = getData('launchBar.toggle') as [toggle?: () => Promise<void>]
+      return toggle?.()
     },
   },
   seekBegin: {

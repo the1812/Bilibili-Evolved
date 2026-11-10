@@ -25,6 +25,7 @@ export const presetBase: Record<string, string> = {
   // 1-9 跳转到对应百分比
   ...lodash.fromPairs(lodash.range(1, 10).map(i => [`seekProgress${i}0`, `digit${i}`])),
   sendComment: 'ctrl enter',
+  showLaunchBar: '/',
 }
 export const builtInPresets: Record<string, Record<string, string>> = {
   Default: {},
