@@ -61,9 +61,20 @@
           </AsyncButton>
         </template>
       </div>
-      <div v-if="componentData.commitHash || devMode" class="component-detail-internal-data">
-        <div v-if="componentData.commitHash" class="component-detail-commit">
-          <span>Commit: {{ commitLabel }}</span>
+      <div
+        v-if="componentData.author || componentData.commitHash || devMode"
+        class="component-detail-internal-data"
+      >
+        <FeatureAuthors
+          :author="componentData.author"
+          class="component-detail-feature-authors component-detail-metadata-row"
+        />
+        <div
+          v-if="componentData.commitHash"
+          class="component-detail-commit component-detail-metadata-row"
+        >
+          <VIcon icon="mdi-source-commit" :size="16" title="Commit" />
+          <span>{{ commitLabel }}</span>
           <VIcon
             v-if="commitWarning"
             class="commit-warning"
@@ -72,7 +83,10 @@
             :title="commitWarning"
           />
         </div>
-        <div v-if="devMode">内部名称: {{ componentData.name }}</div>
+        <div v-if="devMode" class="component-detail-internal-name component-detail-metadata-row">
+          <VIcon icon="mdi-code-braces" :size="14" title="内部名称" />
+          <span>{{ componentData.name }}</span>
+        </div>
       </div>
       <div class="component-detail-separator"></div>
       <template
@@ -119,6 +133,7 @@ import type { AutoUpdateOptions } from '../auto-update'
 import type { ComponentMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
+import FeatureAuthors from './FeatureAuthors.vue'
 import {
   componentActions,
   componentActionButtons,
@@ -240,7 +255,7 @@ onMounted(async () => {
     }
   }
   &-description {
-    padding: 6px 12px;
+    padding: 0 12px 6px;
   }
   &-tags {
     @include h-center();
@@ -267,8 +282,13 @@ onMounted(async () => {
     padding: 0 12px 0;
     color: var(--be-color-muted, #888);
     line-height: 20px;
-    .component-detail-commit {
-      @include h-center(4px);
+    .component-detail-metadata-row {
+      @include h-center(2px);
+      transform: translateX(-2px);
+    }
+    .component-detail-internal-name > .be-icon {
+      box-sizing: content-box;
+      padding: 1px;
     }
     .commit-warning {
       color: #ff9800;

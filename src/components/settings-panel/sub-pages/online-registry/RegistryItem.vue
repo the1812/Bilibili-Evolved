@@ -35,11 +35,10 @@
     >
       <div class="online-registry-item-description">{{ item.descriptionText }}</div>
       <template #toast>
-        <ComponentDescription
-          v-if="descriptionOpened"
-          :component-data="item"
-          @hook:updated="updateDescriptionPosition"
-        />
+        <div v-if="descriptionOpened" class="online-registry-item-details">
+          <FeatureAuthors :author="item.author" />
+          <ComponentDescription :component-data="item" @hook:updated="updateDescriptionPosition" />
+        </div>
       </template>
     </MiniToast>
   </div>
@@ -49,6 +48,7 @@
 import { computed, ref } from 'vue'
 import { MiniToast, VButton, VIcon } from '@/ui'
 import ComponentDescription from '../../ComponentDescription.vue'
+import FeatureAuthors from '../../FeatureAuthors.vue'
 import TagRing from '../../TagRing.vue'
 import type { RegistryItemData } from './types'
 
@@ -105,6 +105,9 @@ const actionLabel = computed(() => {
     color: var(--be-color-text-content, #555);
     @include max-line(2);
     height: 2lh;
+  }
+  &-details {
+    @include v-stretch(6px);
   }
 }
 .tippy-box[data-theme~='online-registry'] {

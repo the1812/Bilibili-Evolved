@@ -24,20 +24,17 @@ const authors = computed(() => getFeatureAuthors(props.author))
 </script>
 
 <style lang="scss">
+@import 'common';
+
 .feature-authors {
-  display: flex;
+  @include h-center(2px);
   flex-wrap: wrap;
-  align-items: center;
-  gap: 4px 6px;
-  font-size: 13px;
   color: var(--be-color-muted, #888);
 
   a {
     color: var(--theme-color);
     overflow-wrap: anywhere;
-    &:hover {
-      text-decoration: underline;
-    }
+    text-decoration: none;
   }
 }
 </style>
