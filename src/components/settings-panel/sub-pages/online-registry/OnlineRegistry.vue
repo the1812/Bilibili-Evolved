@@ -25,6 +25,10 @@
     <div class="online-registry-toolbar">
       <div class="online-registry-filters">
         <div class="online-registry-filter">
+          排序
+          <VDropdown v-model="selectedSort" :items="sortOptions" class="online-registry-sort" />
+        </div>
+        <div class="online-registry-filter">
           安装状态
           <VDropdown v-model="selectedStatus" :items="statusOptions" />
         </div>
@@ -74,6 +78,7 @@
 </template>
 
 <script setup lang="ts">
+import { convertToPinyin } from 'tiny-pinyin'
 import { computed, onUnmounted, ref, watch } from 'vue'
 import type { DocSourceItem } from '../../../../../registry/lib/docs'
 import { componentsTags } from '@/components/types'
@@ -112,6 +117,13 @@ const searchKeyword = ref('')
 const appliedKeyword = ref('')
 
 const all = { name: '', displayName: '全部' }
+const sortOptions = [
+  { name: 'default', displayName: '默认顺序' },
+  { name: 'nameAsc', displayName: '名称正序' },
+  { name: 'nameDesc', displayName: '名称倒序' },
+  { name: 'installed', displayName: '已安装优先' },
+  { name: 'notInstalled', displayName: '未安装优先' },
+]
 const statusOptions = [
   all,
   { name: 'installed', displayName: '已安装' },
@@ -126,6 +138,7 @@ const tagOptions = computed(() => {
   const tags = lodash.uniqBy(list.value?.flatMap(item => item.componentTags) ?? [], tag => tag.name)
   return [all, ...lodash.sortBy(tags, tag => tag.order)]
 })
+const selectedSort = ref(sortOptions[0])
 const selectedStatus = ref(all)
 const selectedType = ref(all)
 const selectedTag = ref(all)
@@ -142,18 +155,31 @@ const refreshInstalled = () => {
 addSettingsChangeListener('userComponents', refreshInstalled)
 addSettingsChangeListener('userPlugins', refreshInstalled)
 
+const nameCollator = new Intl.Collator('en', { sensitivity: 'base', numeric: true })
 const filteredList = computed(() => {
   const status = selectedStatus.value.name
   const type = selectedType.value.name
   const tag = selectedTag.value.name
   const keyword = appliedKeyword.value
-  return (list.value ?? []).filter(
+  const matches = (list.value ?? []).filter(
     item =>
       (!status || isInstalled(item) === (status === 'installed')) &&
       (!type || item.type === type) &&
       (!tag || item.componentTags.some(itemTag => itemTag.name === tag)) &&
       (!keyword || item.searchText.includes(keyword)),
   )
+  switch (selectedSort.value.name) {
+    case 'nameAsc':
+      return matches.sort((a, b) => nameCollator.compare(a.nameSortKey, b.nameSortKey))
+    case 'nameDesc':
+      return matches.sort((a, b) => nameCollator.compare(b.nameSortKey, a.nameSortKey))
+    case 'installed':
+      return matches.sort((a, b) => Number(isInstalled(b)) - Number(isInstalled(a)))
+    case 'notInstalled':
+      return matches.sort((a, b) => Number(isInstalled(a)) - Number(isInstalled(b)))
+    default:
+      return matches
+  }
 })
 
 const loadFeatures = async () => {
@@ -177,6 +203,7 @@ const loadFeatures = async () => {
         const descriptionText = await getDescriptionText(item)
         return {
           ...item,
+          nameSortKey: convertToPinyin(item.displayName),
           repo: item.repo ?? (item.owner ? `${item.owner}/Bilibili-Evolved` : cdn.repo),
           componentTags:
             item.type === 'component'
@@ -248,7 +275,9 @@ watch(selectedType, type => {
     selectedTag.value = all
   }
 })
-watch([selectedStatus, selectedType, selectedTag], () => content.value?.scrollTo(0, 0))
+watch([selectedSort, selectedStatus, selectedType, selectedTag], () =>
+  content.value?.scrollTo(0, 0),
+)
 watch(popupOpen, open => {
   if (open && !loadFailed.value) {
     loadFeatures()
@@ -269,8 +298,8 @@ onUnmounted(() => {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  width: 64vw;
-  height: 64vh;
+  width: 50vw;
+  height: 85vh;
   z-index: 100000;
   transition: 0.2s ease-out;
   font-size: 14px;
@@ -324,6 +353,9 @@ onUnmounted(() => {
     @include h-center(6px);
     .be-dropdown {
       width: 90px;
+      &.online-registry-sort {
+        width: 132px;
+      }
     }
   }
   &-tag-option {
