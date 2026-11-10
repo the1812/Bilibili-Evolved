@@ -1,7 +1,9 @@
-import type { DocSourceItem, Package } from '../../../../../registry/lib/docs'
+import type { DocSourceItem } from '../../../../../registry/lib/docs'
+import type { ComponentTag } from '@/components/types'
 
-type RegistryFeature = DocSourceItem & { repo: string }
-
-export type RegistryItemData =
-  | RegistryFeature
-  | (Package & { type: 'pack'; items: RegistryFeature[]; descriptionText?: string })
+export type RegistryItemData = DocSourceItem & {
+  repo: string
+  componentTags: ComponentTag[]
+  descriptionText: string
+  searchText: string
+}

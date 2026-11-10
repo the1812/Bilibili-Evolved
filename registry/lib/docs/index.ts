@@ -13,6 +13,7 @@ export interface DocSourceItem {
   displayName: string
   description?: string
   descriptionText?: string
+  tags?: string[]
   fullAbsolutePath: string
   fullRelativePath: string
   repo?: string

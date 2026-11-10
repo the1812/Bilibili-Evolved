@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { sync } from 'glob'
+import * as t from '@babel/types'
 import {
   collectStaticObjectConstants,
   collectStringConstants,
@@ -17,7 +18,7 @@ const getFeatureId = (root: string, entry: string) => {
   return relative.replace(/\/[^/]+$/, '')
 }
 
-const readFeatureMetadata = (file: string) => {
+const readFeatureMetadata = (file: string, kind: FeatureKind) => {
   const ast = parseFile(file)
   const constants = collectStringConstants(ast)
   const objectConstants = collectStaticObjectConstants(ast, constants)
@@ -45,7 +46,26 @@ const readFeatureMetadata = (file: string) => {
     throw new Error(`${file}: failed to resolve static author`)
   }
 
-  return { name, displayName, author }
+  const tagsProperty = kind === 'component' ? findObjectProperty(metadata, 'tags') : undefined
+  let tags: string[] | undefined
+  if (tagsProperty) {
+    const { value } = tagsProperty
+    if (!t.isArrayExpression(value)) {
+      throw new Error(`${file}: failed to resolve static tags`)
+    }
+    tags = value.elements.map(tag => {
+      if (
+        !t.isMemberExpression(tag, { computed: false }) ||
+        !t.isIdentifier(tag.object, { name: 'componentsTags' }) ||
+        !t.isIdentifier(tag.property)
+      ) {
+        throw new Error(`${file}: expected a componentsTags reference`)
+      }
+      return tag.property.name
+    })
+  }
+
+  return { name, displayName, author, tags }
 }
 
 export const getAuthorMarkdown = (author: Author | Author[] | undefined) => {
@@ -67,7 +87,7 @@ export const readFeatureDocs = (kind: FeatureKind): DocSourceItem[] => {
   return sync(`${src}**/index.ts`, { dotRelative: true, posix: true })
     .sort()
     .map(file => {
-      const metadata = readFeatureMetadata(file)
+      const metadata = readFeatureMetadata(file, kind)
       if (!metadata) {
         return undefined
       }
@@ -82,6 +102,7 @@ export const readFeatureDocs = (kind: FeatureKind): DocSourceItem[] => {
         name: metadata.name,
         displayName: metadata.displayName,
         description: getAuthorMarkdown(metadata.author) + readMarkdownDescription(descriptionFile),
+        tags: metadata.tags,
         fullRelativePath,
         fullAbsolutePath,
       } as DocSourceItem

@@ -12,8 +12,6 @@ const name = camelName
 
 const displayName = '自定义字体'
 
-const tags = [componentsTags.style, componentsTags.general]
-
 const entry = () => {
   addComponentListener(
     `${name}.fontFamily`,
@@ -97,7 +95,7 @@ const author = {
 export const component = defineComponentMetadata({
   name,
   displayName,
-  tags,
+  tags: [componentsTags.style, componentsTags.general],
   entry,
   options,
   extraOptions,
