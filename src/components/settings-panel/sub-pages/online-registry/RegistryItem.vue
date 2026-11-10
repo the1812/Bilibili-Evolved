@@ -88,15 +88,25 @@ const actionLabel = computed(() => {
     @include single-line();
   }
   &-action {
+    position: relative;
+    .installed-icon,
     .reinstall-icon {
-      display: none;
+      transition: opacity 0.2s ease-out;
+    }
+    .reinstall-icon {
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      transform: translateX(0.5px);
+      opacity: 0;
+      pointer-events: none;
     }
     &:hover {
       .installed-icon {
-        display: none;
+        opacity: 0;
       }
       .reinstall-icon {
-        display: flex;
+        opacity: 1;
       }
     }
   }
