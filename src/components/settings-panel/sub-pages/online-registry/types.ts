@@ -1,5 +1,17 @@
-import type { DocSourceItem } from '../../../../../registry/lib/docs'
-import type { ComponentTag } from '@/components/types'
+import type { ComponentTag, FeatureBase } from '@/components/types'
+
+export interface DocSourceItem {
+  type: 'component' | 'plugin'
+  name: string
+  displayName: string
+  description?: string
+  author?: FeatureBase['author']
+  tags?: string[]
+  fullAbsolutePath: string
+  fullRelativePath: string
+  repo?: string
+  owner?: string
+}
 
 export interface RegistryFilterSelection {
   sort: 'default' | 'nameAsc' | 'nameDesc' | 'installed' | 'notInstalled'

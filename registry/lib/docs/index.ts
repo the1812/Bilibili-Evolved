@@ -1,3 +1,5 @@
+export type { DocSourceItem } from '@/components/settings-panel/sub-pages/online-registry/types'
+
 /** 表示一个合集包 */
 export interface Package {
   name: string
@@ -5,17 +7,4 @@ export interface Package {
   description?: string
   components?: string[]
   plugins?: string[]
-}
-/** 表示一个支持在线安装的功能 */
-export interface DocSourceItem {
-  type: 'component' | 'plugin'
-  name: string
-  displayName: string
-  description?: string
-  descriptionText?: string
-  tags?: string[]
-  fullAbsolutePath: string
-  fullRelativePath: string
-  repo?: string
-  owner?: string
 }

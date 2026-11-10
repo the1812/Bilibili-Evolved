@@ -1,27 +1,20 @@
 <template>
-  <div class="component-description" v-html="html"></div>
+  <div class="component-description">
+    <FeatureAuthors :author="componentData.author" />
+    <div class="component-description-markdown" v-html="html"></div>
+  </div>
 </template>
 
-<script lang="ts">
-import { getComponentSettings } from '@/core/settings'
+<script setup lang="ts">
+import { onBeforeMount, ref } from 'vue'
 import { getDescriptionHTML } from '../description'
+import type { FeatureBase } from '../types'
+import FeatureAuthors from './FeatureAuthors.vue'
 
-export default Vue.extend({
-  props: {
-    componentData: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      settings: getComponentSettings(this.componentData),
-      html: '',
-    }
-  },
-  async created() {
-    this.html = await getDescriptionHTML(this.componentData)
-  },
+const props = defineProps<{ componentData: Pick<FeatureBase, 'author' | 'description'> }>()
+const html = ref('')
+onBeforeMount(async () => {
+  html.value = await getDescriptionHTML(props.componentData)
 })
 </script>
 
@@ -30,6 +23,10 @@ export default Vue.extend({
 @import 'markdown';
 
 .component-description {
+  @include v-stretch(6px);
+}
+
+.component-description-markdown {
   word-break: break-all;
   @include markdown();
 }

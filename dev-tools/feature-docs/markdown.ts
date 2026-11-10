@@ -1,3 +1,4 @@
+import { getFeatureAuthors } from '../../src/components/author'
 import { DocSourceItem, PackItem } from './types'
 
 const branches = {
@@ -15,6 +16,10 @@ const getGitHubRoot = (branch: string, owner = defaultOwner) =>
 export const getFeatureMarkdown = (title: string, items: DocSourceItem[]) => {
   const docText = items.map(item => {
     const { name, displayName, description, fullAbsolutePath, fullRelativePath, owner } = item
+    const authorLinks = getFeatureAuthors(item.author)
+      .map(author => `[@${author.name}](${author.link})`)
+      .join(', ')
+    const authors = authorLinks ? `作者: ${authorLinks}\n\n` : ''
     return `
 ### [${displayName}](${fullRelativePath})
 \`${name}\`
@@ -35,7 +40,7 @@ export const getFeatureMarkdown = (title: string, items: DocSourceItem[]) => {
       owner,
     )}${fullAbsolutePath})
 
-${description || ''}
+${authors}${description || ''}
     `.trim()
   })
   return `

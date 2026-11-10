@@ -11,7 +11,7 @@ import {
   readAuthor,
   readStaticString,
 } from './ast'
-import { Author, DocSourceItem, FeatureKind } from './types'
+import { DocSourceItem, FeatureKind } from './types'
 
 const getFeatureId = (root: string, entry: string) => {
   const relative = entry.replace(root, '').replace(/\\/g, '/')
@@ -68,16 +68,6 @@ const readFeatureMetadata = (file: string, kind: FeatureKind) => {
   return { name, displayName, author, tags }
 }
 
-export const getAuthorMarkdown = (author: Author | Author[] | undefined) => {
-  if (!author) {
-    return ''
-  }
-  if (Array.isArray(author)) {
-    return `by ${author.map(item => `[@${item.name}](${item.link})`).join(', ')}\n\n`
-  }
-  return `by [@${author.name}](${author.link})\n\n`
-}
-
 const readMarkdownDescription = (file: string) =>
   readFileSync(file, 'utf8').replace(/\r\n?/g, '\n').trim()
 
@@ -101,7 +91,8 @@ export const readFeatureDocs = (kind: FeatureKind): DocSourceItem[] => {
         type: kind,
         name: metadata.name,
         displayName: metadata.displayName,
-        description: getAuthorMarkdown(metadata.author) + readMarkdownDescription(descriptionFile),
+        description: readMarkdownDescription(descriptionFile),
+        author: metadata.author,
         tags: metadata.tags,
         fullRelativePath,
         fullAbsolutePath,

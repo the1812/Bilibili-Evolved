@@ -253,7 +253,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 - `components/types`: 组件相关接口定义
 - `components/styled-components`: 包含样式的组件 entry 简化包装函数
 - `components/user-component`: 用户组件的安装/卸载 API
-- `components/description`: 获取组件或插件的描述, 会自动匹配语言并插入作者标记, 支持 HTML, Markdown 和纯文本形式
+- `components/description`: 获取当前语言的组件或插件描述, 支持 HTML, Markdown 和纯文本形式
 - `components/feeds/`:
   - `api`: 动态相关 API 封装, 获取动态流, 对每一个动态卡片执行操作等
   - `BangumiCard.vue`: 番剧卡片

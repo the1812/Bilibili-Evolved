@@ -1,6 +1,6 @@
 import { convertToPinyin } from 'tiny-pinyin'
 import { onUnmounted, ref } from 'vue'
-import type { DocSourceItem } from '../../../../../registry/lib/docs'
+import { getFeatureAuthors } from '@/components/author'
 import { getDescriptionText } from '@/components/description'
 import { componentsTags } from '@/components/types'
 import { monkey } from '@/core/ajax'
@@ -14,7 +14,7 @@ import {
   settings,
 } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import type { RegistryItemData } from './types'
+import type { DocSourceItem, RegistryItemData } from './types'
 
 const readInstalled = () => ({
   component: new Set(Object.keys(settings.userComponents)),
@@ -60,6 +60,7 @@ export const useRegistryData = () => {
       list.value = await Promise.all(
         entries.map(async item => {
           const descriptionText = await getDescriptionText(item)
+          const authors = getFeatureAuthors(item.author).map(author => `@${author.name}`)
           return {
             ...item,
             nameSortKey: convertToPinyin(item.displayName),
@@ -69,7 +70,9 @@ export const useRegistryData = () => {
                 ? (item.tags ?? []).map(tag => componentsTags[tag]).filter(Boolean)
                 : [],
             descriptionText,
-            searchText: [item.name, item.displayName, descriptionText].join('\n').toLowerCase(),
+            searchText: [item.name, item.displayName, ...authors, descriptionText]
+              .join('\n')
+              .toLowerCase(),
           }
         }),
       )

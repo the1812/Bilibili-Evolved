@@ -1,9 +1,6 @@
-import type { DocSourceItem } from '../../registry/lib/docs'
+import type { DocSourceItem } from '../../src/components/settings-panel/sub-pages/online-registry/types'
 
-export type Author = {
-  name: string
-  link: string
-}
+export type { Author } from '../../src/components/types'
 
 export type FeatureKind = 'component' | 'plugin'
 

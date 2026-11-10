@@ -70,6 +70,7 @@ import { onUnmounted, ref, watch } from 'vue'
 import { VIcon, TextBox, VPopup, VEmpty } from '@/ui'
 import { getHook } from '@/plugins/hook'
 import { ComponentMetadata, components } from '../component'
+import { getFeatureAuthors } from '../author'
 import { getDescriptionText } from '../description'
 import ComponentBatchActions from './ComponentBatchActions.vue'
 import ComponentSettings from './ComponentSettings.vue'
@@ -161,6 +162,7 @@ const updateRenderedComponents = async () => {
         c.name,
         c.displayName,
         ...c.tags.flatMap(t => [t.name, t.displayName]),
+        ...getFeatureAuthors(c.author).map(author => `@${author.name}`),
         await getDescriptionText(c),
       ]
         .join('\n')

@@ -1,5 +1,6 @@
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
+import { getGitHubAuthor } from '../../src/components/author'
 import { findObjectProperty, parseFile, readStaticString } from './ast'
 import { DocSourceItem, FeatureKind } from './types'
 
@@ -25,7 +26,8 @@ const readStaticDocSourceItem = (object: t.ObjectExpression): DocSourceItem => {
     type,
     name,
     displayName,
-    description,
+    description: description ?? '暂无描述.',
+    author: owner ? getGitHubAuthor(owner) : undefined,
     fullRelativePath,
     fullAbsolutePath,
     owner,
@@ -54,13 +56,7 @@ export const readThirdPartyDocs = () => {
         if (!t.isObjectExpression(element)) {
           throw new Error(`registry/lib/docs/third-party.ts: unsupported ${variableName} entry`)
         }
-        const item = readStaticDocSourceItem(element)
-        return {
-          ...item,
-          description: `${item.owner ? `by ${item.owner}\n\n` : ''}${
-            item.description ?? '暂无描述.'
-          }`,
-        }
+        return readStaticDocSourceItem(element)
       })
     },
   })
