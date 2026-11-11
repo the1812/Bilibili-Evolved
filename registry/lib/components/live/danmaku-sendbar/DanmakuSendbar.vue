@@ -9,8 +9,8 @@
       autocomplete="off"
       @keydown.enter="send()"
       @input="updateValue"
-      @focus="setControlBarLocked(true)"
-      @blur="setControlBarLocked(false)"
+      @focus="setLocked(true)"
+      @blur="setLocked(false)"
     />
   </div>
 </template>
@@ -30,12 +30,20 @@ const value = ref('')
 const enabled = ref(false)
 const controls = shallowRef<{ textArea: HTMLTextAreaElement; button: HTMLButtonElement }>()
 
+// 重复调用会清掉播放器的自动隐藏定时器
+let locked = false
+const setLocked = (active: boolean) => {
+  if (locked !== active) {
+    setControlBarLocked((locked = active))
+  }
+}
+
 watch(
   enabled,
   active => {
     if (!active) {
       element.value.querySelector('input').blur()
-      setControlBarLocked(false)
+      setLocked(false)
     }
   },
   { flush: 'sync' },
@@ -56,7 +64,7 @@ onMounted(async () => {
       if (!leftController) {
         throw new Error('[danmakuSendBar] leftController not found')
       }
-      setControlBarLocked(false)
+      setLocked(false)
       leftController.insertAdjacentElement('afterend', element.value)
     },
   })
@@ -134,7 +142,7 @@ defineExpose({ enabled })
           }
         }
       }
-      .right-area {
+      .danmaku-send-bar.enabled + .right-area {
         flex: 0 0 auto !important;
       }
     }
