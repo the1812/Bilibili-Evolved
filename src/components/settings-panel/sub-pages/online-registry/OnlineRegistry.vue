@@ -83,6 +83,7 @@ import { getDescriptionText } from '@/components/description'
 import RegistryItem from './RegistryItem.vue'
 import { registryBranches } from './third-party'
 import { ItemFilter } from './item-filter'
+import { loadRegistryEntries } from '@/core/feature-registry'
 import type { RegistryItemData } from './types'
 
 type ExtendedSettings = ReturnType<typeof getGeneralSettings> & { registryBranch: string }
@@ -131,18 +132,14 @@ const fetchFeatures = async () => {
     loading.value = true
     list.value = []
     filteredList.value = []
-    const featureListUrl = `${fetchPath}doc/features/features.json`
     const packListUrl = `${fetchPath}doc/features/pack/pack.json`
-    const featureList = await monkey<DocSourceItem[]>({
-      url: featureListUrl,
-      responseType: 'json',
-    })
+    const featureList = await loadRegistryEntries(selectedBranch.value, cdn)
     const packList = await monkey<(Package & { type: 'pack'; items: DocSourceItem[] })[]>({
       url: packListUrl,
       responseType: 'json',
     })
-    if (!Array.isArray(featureList) || !Array.isArray(packList)) {
-      console.error('Fetch failed:', featureList, packList, featureListUrl, packListUrl)
+    if (!Array.isArray(packList)) {
+      console.error('Fetch failed:', packList, packListUrl)
       throw new Error('获取在线仓库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
     }
     const withRepo = (item: DocSourceItem) => ({

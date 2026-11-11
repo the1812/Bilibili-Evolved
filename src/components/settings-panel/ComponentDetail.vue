@@ -115,7 +115,6 @@ import {
 } from '@/core/settings'
 import { getFeatureUrl } from '@/core/feature-source'
 import { matchingUpdateBranches, meta } from '@/core/meta'
-import type { AutoUpdateOptions } from '../auto-update'
 import type { ComponentMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
@@ -125,6 +124,8 @@ import {
   ComponentAction as ActionFactory,
 } from './component-actions/component-actions'
 import ComponentAction from './component-actions/ComponentAction.vue'
+import { getComponentUpdateSource } from './component-update-source'
+import { useComponentData } from './component-data'
 
 const props = defineProps<{ componentData: ComponentMetadata }>()
 const emit = defineEmits<{ (event: 'close' | 'mounted'): void }>()
@@ -137,8 +138,8 @@ const getVisibleActions = (factories: ActionFactory[]) => {
     .map(factory => factory(props.componentData))
     .filter(action => action && (!('visible' in action) || action.visible !== false))
 }
-const menuActions = computed(() => getVisibleActions(componentActions))
-const actionButtons = computed(() => getVisibleActions(componentActionButtons))
+const menuActions = useComponentData(() => getVisibleActions(componentActions))
+const actionButtons = useComponentData(() => getVisibleActions(componentActionButtons))
 const devMode = ref(false)
 const updateDevMode = (enabled: boolean) => {
   devMode.value = enabled
@@ -148,10 +149,7 @@ onUnmounted(() => removeComponentListener('settingsPanel.devMode', updateDevMode
 const generatedOptions = computed(() =>
   Object.entries(props.componentData.options ?? {}).filter(([, option]) => !option.hidden),
 )
-const updateSource = computed(() => {
-  const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-  return options.urls.components[props.componentData.name]?.source
-})
+const updateSource = useComponentData(() => getComponentUpdateSource(props.componentData.name))
 const githubRef = computed(() =>
   updateSource.value?.kind === 'github' ? updateSource.value.ref : undefined,
 )
@@ -171,7 +169,7 @@ const commitWarning = computed(() => {
     sourceBranch !== branch &&
     !matchingUpdateBranches.get(branch)?.includes(sourceBranch)
   ) {
-    return `当前本体分支为 ${branch}, 组件更新源分支为 ${sourceBranch}`
+    return `当前本体分支为 ${branch}, 组件更新源分支为 ${sourceBranch}, 可能会存在兼容性问题`
   }
   return undefined
 })

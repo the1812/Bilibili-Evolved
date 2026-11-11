@@ -32,6 +32,12 @@ export type ComponentAction = (
   metadata: ComponentMetadata,
 ) => ComponentConfigAction | ComponentVueAction | undefined
 
+export interface ComponentBatchAction extends Omit<ComponentConfigAction, 'action' | 'visible'> {
+  verb: string
+  filter: (component: ComponentMetadata) => boolean
+  run: (components: ComponentMetadata[]) => Promise<string>
+}
+
 export const removeUserComponent = async (metadata: ComponentMetadata) => {
   const { before, after } = getHook('userComponents.remove', metadata)
   await before()
@@ -85,6 +91,28 @@ const builtInActionButtons: ComponentAction[] = [
     action: () => removeUserComponent(metadata),
   }),
 ]
+const builtInBatchActions: ComponentBatchAction[] = [
+  {
+    name: 'uninstall',
+    displayName: '批量卸载',
+    icon: 'mdi-trash-can-outline',
+    title: '卸载所选的自定义组件',
+    verb: '卸载',
+    filter: isUserComponent,
+    run: async items => {
+      const failures: string[] = []
+      for (const item of items) {
+        try {
+          await removeUserComponent(item)
+        } catch (error) {
+          failures.push(`[${item.displayName}] ${String(error)}`)
+        }
+      }
+      const count = items.length - failures.length
+      return [`已卸载 ${count} 个组件, 刷新后生效`, ...failures].join('\n')
+    },
+  },
+]
 export const [componentActions] = registerAndGetData(
   'settingsPanel.componentActions',
   builtInMenuActions,
@@ -92,4 +120,8 @@ export const [componentActions] = registerAndGetData(
 export const [componentActionButtons] = registerAndGetData(
   'settingsPanel.componentActionButtons',
   builtInActionButtons,
+)
+export const [componentBatchActions] = registerAndGetData(
+  'settingsPanel.componentBatchActions',
+  builtInBatchActions,
 )

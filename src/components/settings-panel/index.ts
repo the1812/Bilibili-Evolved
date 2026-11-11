@@ -8,6 +8,7 @@ import { ComponentEntry, componentsTags } from '../types'
 import { defineComponentMetadata, defineOptionsMetadata, OptionsOfMetadata } from '../define'
 import { provideActions } from './external-actions'
 import { SettingsPanelDockSide } from './dock'
+import { invalidateComponentData } from './component-data'
 
 export const WidgetsPlugin = 'widgets'
 
@@ -101,8 +102,10 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.general],
   plugin: {
     displayName: '设置面板 - 功能扩展',
-    setup: () => {
+    setup: ({ addHook }) => {
       provideActions()
+      addHook('userComponents.add', { after: invalidateComponentData })
+      addHook('userComponents.remove', { after: invalidateComponentData })
     },
   },
 })

@@ -1,5 +1,5 @@
 import { ComponentEntry, componentsTags } from '@/components/types'
-import { branches, matchingUpdateBranches, meta, stableUpdateBranches } from '@/core/meta'
+import { meta } from '@/core/meta'
 import { getComponentSettings, getGeneralSettings, isUserComponent } from '@/core/settings'
 import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
@@ -9,15 +9,19 @@ import {
   OptionsOfMetadata,
 } from '@/components/define'
 import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
-import { ComponentAction } from '../settings-panel/component-actions/component-actions'
-import { name, UpdateCheckItem, updateFeature, updateKinds } from './utils'
+import type {
+  ComponentAction,
+  ComponentBatchAction,
+} from '../settings-panel/component-actions/component-actions'
+import type { ComponentUpdateSourceProvider } from '../settings-panel/component-update-source'
+import { name, UpdateCheckItem, updateKinds } from './utils'
 import {
   FeatureSource,
   getFeatureSource,
   isLocalFeatureUrl,
   getFeatureUrl,
-  switchGithubBranch,
 } from '@/core/feature-source'
+import { createSwitchUpdateChannelAction } from './channel-switch'
 import * as checkerMethods from './checker'
 
 const {
@@ -106,6 +110,16 @@ export const component = defineComponentMetadata({
     },
     // 非设置面板的组件如果也对能功能进行修改, 建议调用此处的 Hooks 同步状态.
     setup: ({ addData, addHook }) => {
+      const getComponentUpdateSource: ComponentUpdateSourceProvider = componentName => {
+        const { options } = getComponentSettings<AutoUpdateOptions>(name)
+        return options.urls.components[componentName]?.source
+      }
+      addData(
+        'settingsPanel.componentUpdateSources',
+        (providers: ComponentUpdateSourceProvider[]) => {
+          providers.push(getComponentUpdateSource)
+        },
+      )
       updateKinds.forEach(type => {
         addHook(`user${lodash.startCase(type)}.add`, {
           after: (
@@ -136,13 +150,12 @@ export const component = defineComponentMetadata({
         })
       })
       addData('settingsPanel.componentActionButtons', (actions: ComponentAction[]) => {
-        const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
         actions.unshift(metadata => {
-          const item = options.urls.components[metadata.name]
-          if (!item?.source) {
+          const source = getComponentUpdateSource(metadata.name)
+          if (!source) {
             return undefined
           }
-          const url = getFeatureUrl(item.source)
+          const url = getFeatureUrl(source)
           return {
             name: 'checkUpdate',
             displayName: '检查更新',
@@ -164,47 +177,29 @@ export const component = defineComponentMetadata({
         })
       })
       addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
-        const { options } = getComponentSettings<AutoUpdateOptions>(name)
         actions.push(metadata => {
-          const source = options.urls.components[metadata.name]?.source
-          if (source?.kind !== 'github' || !isUserComponent(metadata)) {
-            return undefined
-          }
-          const isPreview = source.ref === branches.preview
-          if (!isPreview && !stableUpdateBranches.includes(source.ref)) {
-            return undefined
-          }
-          const { branch } = meta.compilationInfo
-          const stableBranch = branch === branches.stableCdn ? branches.stableCdn : branches.stable
-          const target = switchGithubBranch(source, isPreview ? stableBranch : branches.preview)
-          const displayName = isPreview ? '切换到稳定版' : '切换到预览版'
-          const confirmPreview =
-            !isPreview && matchingUpdateBranches.get(branch)?.includes(branches.stable)
-          return {
-            name: 'switchUpdateChannel',
-            displayName,
-            icon: 'mdi-source-branch',
-            action: async () => {
-              if (
-                confirmPreview &&
-                !window.confirm(
-                  '当前本体是稳定版，确定要将此组件切换到预览版吗？这可能导致组件出现不兼容的情况而失效。',
-                )
-              ) {
-                return
-              }
-              const { Toast } = await import('@/core/toast')
-              const toast = Toast.info('正在切换版本...', displayName)
-              try {
-                const { message } = await updateFeature(target)
-                Toast.success(message, displayName, 3000)
-              } catch (error) {
-                Toast.error((error as Error).message ?? String(error), displayName, 5000)
-              } finally {
-                toast.close()
-              }
-            },
-          }
+          const source = getComponentUpdateSource(metadata.name)
+          return source && isUserComponent(metadata)
+            ? createSwitchUpdateChannelAction(metadata.name, source)
+            : undefined
+        })
+      })
+      addData('settingsPanel.componentBatchActions', (actions: ComponentBatchAction[]) => {
+        actions.unshift({
+          name: 'update',
+          displayName: '批量更新',
+          icon: 'mdi-cloud-download-outline',
+          title: '更新所选组件中有更新链接的组件',
+          verb: '更新',
+          filter: metadata =>
+            isUserComponent(metadata) && Boolean(getComponentUpdateSource(metadata.name)),
+          run: async items => {
+            const result = await checkComponentsUpdate({
+              filterNames: items.map(item => item.name),
+              force: true,
+            })
+            return result || '所选组件暂无更新'
+          },
         })
       })
 
