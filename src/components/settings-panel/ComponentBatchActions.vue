@@ -6,7 +6,8 @@
     placement="right"
     trigger="manual"
     show
-    v-bind="{ hideOnClick: false, getReferenceClientRect: referenceRect }"
+    :hide-on-click="false"
+    :get-reference-client-rect="referenceRect"
   >
     <template #toast>
       <div class="batch-actions-header">

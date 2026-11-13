@@ -3,7 +3,7 @@
     ref="root"
     class="online-registry-item-wrapper"
     theme="online-registry"
-    v-bind="{ popperOptions }"
+    :popper-options="popperOptions"
     :placement="placement"
     container="body"
     :delay="[200, 0]"

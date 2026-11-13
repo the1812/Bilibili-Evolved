@@ -2,21 +2,23 @@
   <div class="user-components-page">
     <ManagePanel :config="config">
       <template #item="{ item }">
-        <UserItem :config="getItemConfig(item)" />
+        <UserItem :config="getComponentItemConfig(item)" />
       </template>
     </ManagePanel>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { reactive } from 'vue'
 import { ComponentMetadata, components } from '@/components/component'
-import { installComponent, uninstallComponent } from '@/components/user-component'
-import { getComponentSettings, isUserComponent } from '@/core/settings'
+import { installComponent } from '@/components/user-component'
+import { isUserComponent } from '@/core/settings'
 import { getHook } from '@/plugins/hook'
-import { ManageItem, ManagePanelConfig } from './manage-panel/manage-panel'
+import { getComponentItemConfig } from '../user-item'
+import UserItem from '../UserItem.vue'
+import type { ManagePanelConfig } from './manage-panel/manage-panel'
 import ManagePanel from './manage-panel/ManagePanel.vue'
-import UserItem from './manage-panel/UserItem.vue'
 
-const config: ManagePanelConfig<ComponentMetadata> = {
+const config = reactive<ManagePanelConfig<ComponentMetadata>>({
   key: 'userComponents',
   icon: 'mdi-cube-scan',
   title: '组件',
@@ -43,32 +45,6 @@ const config: ManagePanelConfig<ComponentMetadata> = {
     const { metadata, message } = await installComponent(code)
     await after(metadata)
     return message
-  },
-}
-const getItemConfig = (item: ComponentMetadata): ManageItem<ComponentMetadata> => ({
-  key: 'userComponents',
-  item,
-  isUserItem: isUserComponent(item),
-  getSettings: it => getComponentSettings(it),
-  onItemRemove: async it => {
-    const { before, after } = getHook('userComponents.remove', it)
-    await before()
-    uninstallComponent(it.name)
-    await after()
-  },
-})
-export default Vue.extend({
-  components: {
-    ManagePanel,
-    UserItem,
-  },
-  data() {
-    return {
-      config,
-    }
-  },
-  methods: {
-    getItemConfig,
   },
 })
 </script>

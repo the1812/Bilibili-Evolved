@@ -10,12 +10,35 @@
 </template>
 <script setup lang="ts">
 import { nextTick, onBeforeUnmount, onMounted, ref, shallowRef, useAttrs, watch } from 'vue'
-import type { Placement } from '@popperjs/core'
+import type { Props as TippyProps } from 'tippy.js'
 import { createMiniToast } from './mini'
 
 const props = withDefaults(
-  defineProps<{ show?: boolean; container?: 'body' | 'local'; placement?: Placement }>(),
-  { container: 'local', placement: undefined },
+  defineProps<{
+    show?: boolean
+    container?: 'body' | 'local'
+    placement?: TippyProps['placement']
+    trigger?: TippyProps['trigger']
+    arrow?: TippyProps['arrow']
+    delay?: TippyProps['delay']
+    getReferenceClientRect?: TippyProps['getReferenceClientRect']
+    hideOnClick?: TippyProps['hideOnClick']
+    offset?: TippyProps['offset']
+    popperOptions?: TippyProps['popperOptions']
+    theme?: TippyProps['theme']
+  }>(),
+  {
+    container: 'local',
+    placement: undefined,
+    trigger: 'mouseenter focusin',
+    arrow: undefined,
+    delay: undefined,
+    getReferenceClientRect: undefined,
+    hideOnClick: undefined,
+    offset: undefined,
+    popperOptions: undefined,
+    theme: undefined,
+  },
 )
 const emit = defineEmits<{ (event: 'change', show: boolean): void }>()
 const attrs = useAttrs()
@@ -36,17 +59,17 @@ onMounted(async () => {
   if (!toastElement.value || !content.value) {
     return
   }
+  const { show, container, ...tippyProps } = props
   toast.value = createMiniToast(toastElement.value, content.value, {
-    placement: props.placement,
-    showOnCreate: props.show,
-    trigger: 'mouseenter focusin',
+    showOnCreate: show,
     onHide: () => {
       emit('change', false)
     },
     onShow: () => {
       emit('change', true)
     },
-    appendTo: props.container === 'body' ? document.body : undefined,
+    appendTo: container === 'body' ? document.body : undefined,
+    ...lodash.omitBy(tippyProps, lodash.isUndefined),
     ...attrs,
   })
 })
@@ -55,6 +78,7 @@ defineExpose({ toast })
 </script>
 <script lang="ts">
 export default {
+  inheritAttrs: false,
   model: {
     prop: 'show',
     event: 'change',

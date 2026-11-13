@@ -78,8 +78,8 @@
       <template
         v-if="(componentData.options && generatedOptions.length > 0) || componentData.extraOptions"
       >
-        <div class="component-detail-options">
-          <div class="component-detail-options-title">选项</div>
+        <div class="component-detail-section">
+          <div class="component-detail-section-title">选项</div>
           <div v-for="[name, option] of generatedOptions" :key="name" class="generated-option">
             <ComponentOption
               :name="name"
@@ -92,6 +92,36 @@
             <component :is="componentData.extraOptions" :component-data="componentData"></component>
           </div>
           <slot></slot>
+        </div>
+        <div class="component-detail-separator"></div>
+      </template>
+      <template v-if="relatedPlugins.length > 0">
+        <div class="component-detail-section component-detail-plugins">
+          <div class="component-detail-section-title">关联插件</div>
+          <div class="component-detail-plugin-list" :class="{ 'dev-mode': devMode }">
+            <MiniToast
+              v-for="plugin of relatedPlugins"
+              :key="plugin.name"
+              container="body"
+              placement="bottom"
+              :delay="[200, 0]"
+              :popper-options="{ strategy: 'fixed' }"
+            >
+              <UserItem
+                :config="getPluginItemConfig(plugin)"
+                :display-name="getRelatedPluginDisplayName(plugin)"
+                :show-name="devMode"
+                compact
+              />
+              <template #toast>
+                <ComponentDescription
+                  :component-data="plugin"
+                  @mousedown.native.stop
+                  @touchstart.native.stop
+                />
+              </template>
+            </MiniToast>
+          </div>
         </div>
         <div class="component-detail-separator"></div>
       </template>
@@ -111,10 +141,12 @@ import { AsyncButton, VIcon, MiniToast } from '@/ui'
 import {
   addComponentListener,
   getComponentSettings,
+  isUserPlugin,
   removeComponentListener,
 } from '@/core/settings'
 import { getFeatureUrl } from '@/core/feature-source'
 import { matchingUpdateBranches, meta } from '@/core/meta'
+import { PluginMetadata, plugins } from '@/plugins/plugin'
 import type { ComponentMetadata } from '../component'
 import ComponentDescription from './ComponentDescription.vue'
 import ComponentOption from './ComponentOption.vue'
@@ -126,6 +158,8 @@ import {
 import ComponentAction from './component-actions/ComponentAction.vue'
 import { getComponentUpdateSource } from './component-update-source'
 import { useComponentData } from './component-data'
+import { getPluginItemConfig } from './user-item'
+import UserItem from './UserItem.vue'
 
 const props = defineProps<{ componentData: ComponentMetadata }>()
 const emit = defineEmits<{ (event: 'close' | 'mounted'): void }>()
@@ -149,6 +183,19 @@ onUnmounted(() => removeComponentListener('settingsPanel.devMode', updateDevMode
 const generatedOptions = computed(() =>
   Object.entries(props.componentData.options ?? {}).filter(([, option]) => !option.hidden),
 )
+const installedPlugins = ref(plugins)
+const relatedPlugins = computed(() =>
+  installedPlugins.value.filter(
+    plugin => plugin.name.startsWith(`${props.componentData.name}.`) && isUserPlugin(plugin),
+  ),
+)
+const getRelatedPluginDisplayName = (plugin: PluginMetadata) => {
+  const displayName = plugin.displayName || plugin.name
+  const prefix = `${props.componentData.displayName} - `
+  return displayName.startsWith(prefix)
+    ? displayName.slice(prefix.length).trim() || displayName
+    : displayName
+}
 const updateSource = useComponentData(() => getComponentUpdateSource(props.componentData.name))
 const githubRef = computed(() =>
   updateSource.value?.kind === 'github' ? updateSource.value.ref : undefined,
@@ -286,19 +333,26 @@ onMounted(async () => {
       display: none;
     }
   }
-  &-options {
+  &-section {
     padding: 8px 12px;
-    // flex: 1 0 0;
-    // height: 0;
-    // @include no-scrollbar();
 
-    .component-detail-options-title {
+    &-title {
       @include semi-bold();
       font-size: 14px;
       margin-bottom: 8px;
     }
     .generated-option:not(:last-child) {
       margin-bottom: 4px;
+    }
+  }
+  &-plugin-list {
+    @include v-stretch(4px);
+    padding-block-start: 2px;
+    overflow-wrap: anywhere;
+
+    &.dev-mode {
+      padding-block-start: 6px;
+      gap: 12px;
     }
   }
 }

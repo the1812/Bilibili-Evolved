@@ -1,10 +1,9 @@
 import { registerAndGetData } from '@/plugins/data'
 import { Executable, ExecutableWithParameter, VueModule } from '@/core/common-types'
-import { getHook } from '@/plugins/hook'
 import { isUserComponent } from '@/core/settings'
 import { ComponentMetadata } from '../../types'
-import { uninstallComponent } from '../../user-component'
 import { feedbackSupported, openFeedback } from '../feedback'
+import { removeUserComponent } from '../user-item'
 
 export interface ComponentConfigAction {
   name: string
@@ -36,13 +35,6 @@ export interface ComponentBatchAction extends Omit<ComponentConfigAction, 'actio
   verb: string
   filter: (component: ComponentMetadata) => boolean
   run: (components: ComponentMetadata[]) => Promise<string>
-}
-
-export const removeUserComponent = async (metadata: ComponentMetadata) => {
-  const { before, after } = getHook('userComponents.remove', metadata)
-  await before()
-  await uninstallComponent(metadata.name)
-  await after()
 }
 
 const createOptionsTransferAction =
