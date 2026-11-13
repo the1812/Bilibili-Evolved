@@ -1,11 +1,10 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../tsconfig.json",
   "compilerOptions": {
-    "lib": ["ESNext"],
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "noEmit": true,
-    "types": ["node"],
+    "rootDir": ".."
   },
-  "include": ["./**/*.ts"],
+  "include": ["./**/*.ts"]
 }

@@ -20,6 +20,7 @@ export interface FeatureMetadata {
   kind: 'component' | 'plugin'
   properties: Set<string>
   name?: string
+  displayName?: string
 }
 
 export interface CheckContext {

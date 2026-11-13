@@ -1,7 +1,12 @@
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
 import { sync } from 'glob'
-import { findObjectProperty, parseFile, readStaticString, readStaticStringArray } from './ast'
+import {
+  findObjectProperty,
+  parseFile,
+  readStaticString,
+  readStaticStringArray,
+} from '../feature-ast'
 import { getPackageMarkdown } from './markdown'
 import { DocSourceItem, FeatureKind, PackageDoc, PackItem } from './types'
 

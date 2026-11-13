@@ -1,7 +1,11 @@
 import { existsSync, readFileSync } from 'fs'
 import * as path from 'path'
-import { isRegistryFeatureIndex, parseFeatureMetadata } from '../metadata'
-import { CheckResult, CheckRule } from '../types'
+import {
+  isRegistryFeatureIndex,
+  parseFeatureMetadata,
+  readComponentDisplayNames,
+} from '../metadata'
+import { CheckResult, CheckRule, FeatureMetadata } from '../types'
 
 const hasIndexMarkdown = (indexPath: string) => {
   const directory = path.dirname(indexPath)
@@ -10,13 +14,56 @@ const hasIndexMarkdown = (indexPath: string) => {
 
 const isCamelCase = (name: string) => /^[a-z][a-zA-Z0-9]*$/.test(name)
 
+const uiPluginDisplayNames = new Map([['vLoading', '加载提示']])
+
+const checkPluginPrefixes = (
+  file: string,
+  { name, displayName }: FeatureMetadata,
+  getComponentDisplayNames: () => Map<string, string>,
+) => {
+  const errors: string[] = []
+  if (!name?.trim()) {
+    errors.push(`${file}: plugin metadata name must be a non-empty static string.`)
+  }
+  if (!displayName?.trim()) {
+    errors.push(`${file}: plugin metadata displayName must be a non-empty static string.`)
+  }
+  if (errors.length > 0) {
+    return errors
+  }
+
+  const separator = name.indexOf('.')
+  const componentName = separator > 0 ? name.slice(0, separator) : ''
+  const componentDisplayName =
+    uiPluginDisplayNames.get(componentName) ?? getComponentDisplayNames().get(componentName)
+  if (!componentDisplayName) {
+    return [
+      `${file}: plugin metadata name "${name}" must start with an existing component's name or a registered UI plugin prefix, followed by ".".`,
+    ]
+  }
+  const prefix = `${componentDisplayName} - `
+  if (!displayName.startsWith(prefix) || !displayName.slice(prefix.length).trim()) {
+    return [`${file}: plugin metadata displayName must start with "${prefix}" followed by a title.`]
+  }
+  return []
+}
+
 export const featureMetadataRule: CheckRule = {
   name: 'feature-metadata',
-  check: ({ changedFiles, readBaseFile }) =>
-    changedFiles
+  check: ({ changedFiles, readBaseFile }) => {
+    let componentDisplayNames: Map<string, string> | undefined
+    const getComponentDisplayNames = () => (componentDisplayNames ??= readComponentDisplayNames())
+    return changedFiles
       .filter(file => file.status !== 'D' && isRegistryFeatureIndex(file.path))
       .map((file): CheckResult => {
-        const metadata = parseFeatureMetadata(readFileSync(file.path, 'utf8'))
+        const isPluginIndex = file.path.startsWith('registry/lib/plugins/')
+        const metadata = parseFeatureMetadata(
+          readFileSync(file.path, 'utf8'),
+          isPluginIndex ? 'plugin' : 'component',
+        )
+        if (isPluginIndex && !metadata) {
+          return { errors: [`${file.path}: could not read the plugin metadata object.`] }
+        }
         if (!metadata) {
           return {}
         }
@@ -24,18 +71,27 @@ export const featureMetadataRule: CheckRule = {
         const errors: string[] = []
         const isAdded = file.status.startsWith('A')
 
-        const { kind, name } = metadata
+        const { kind, name, displayName } = metadata
         if (kind === 'component' && name && !isCamelCase(name)) {
           errors.push(`${file.path}: component metadata name must be camelCase.`)
         }
-        if (kind === 'plugin' && name !== undefined && !name.split('.').every(isCamelCase)) {
+        if (isPluginIndex) {
           const previousPath = file.previousPath ?? file.path
           const previousMetadata =
-            !isAdded && isRegistryFeatureIndex(previousPath)
-              ? parseFeatureMetadata(readBaseFile(previousPath))
+            !isAdded && previousPath.startsWith('registry/lib/plugins/')
+              ? parseFeatureMetadata(readBaseFile(previousPath), 'plugin')
               : undefined
-          if (previousMetadata?.kind !== 'plugin' || previousMetadata.name !== name) {
+          const nameChanged = previousMetadata?.kind !== 'plugin' || previousMetadata.name !== name
+          if (nameChanged && name?.trim() && !name.split('.').every(isCamelCase)) {
             errors.push(`${file.path}: new plugin metadata names must use dot-separated camelCase.`)
+          }
+          if (
+            nameChanged ||
+            previousMetadata?.displayName !== displayName ||
+            name === undefined ||
+            displayName === undefined
+          ) {
+            errors.push(...checkPluginPrefixes(file.path, metadata, getComponentDisplayNames))
           }
         }
 
@@ -65,5 +121,6 @@ export const featureMetadataRule: CheckRule = {
           errors: [...(result.errors || []), ...(current.errors || [])],
         }),
         {},
-      ),
+      )
+  },
 }

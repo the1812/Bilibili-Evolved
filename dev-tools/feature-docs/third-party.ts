@@ -1,6 +1,6 @@
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
-import { findObjectProperty, parseFile, readStaticString } from './ast'
+import { findObjectProperty, parseFile, readStaticString } from '../feature-ast'
 import { DocSourceItem, FeatureKind } from './types'
 
 const readStaticDocSourceItem = (object: t.ObjectExpression): DocSourceItem => {

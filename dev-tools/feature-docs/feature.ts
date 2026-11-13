@@ -2,14 +2,13 @@ import { existsSync, readFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { sync } from 'glob'
 import {
-  collectStaticObjectConstants,
   collectStringConstants,
   findFeatureObject,
   findObjectProperty,
   parseFile,
-  readAuthor,
   readStaticString,
-} from './ast'
+} from '../feature-ast'
+import { collectAuthorConstants, readAuthor } from './author'
 import { Author, DocSourceItem, FeatureKind } from './types'
 
 const getFeatureId = (root: string, entry: string) => {
@@ -20,7 +19,7 @@ const getFeatureId = (root: string, entry: string) => {
 const readFeatureMetadata = (file: string) => {
   const ast = parseFile(file)
   const constants = collectStringConstants(ast)
-  const objectConstants = collectStaticObjectConstants(ast, constants)
+  const objectConstants = collectAuthorConstants(ast, constants)
   const metadata = findFeatureObject(ast)
   if (!metadata) {
     return undefined
