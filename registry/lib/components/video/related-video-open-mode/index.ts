@@ -6,6 +6,7 @@ import {
 import { ComponentEntry } from '@/components/types'
 import { addComponentListener } from '@/core/settings'
 import { ComponentSettings } from '@/core/settings/types'
+import { withoutLocaleSegment } from '@/core/utils'
 import { videoAndBangumiUrls } from '@/core/utils/urls'
 import browserIcon from './browser.svg'
 import newTabIcon from './new-tab.svg'
@@ -92,7 +93,7 @@ let active = false
 
 const isPlayableAnchor = (anchor: HTMLAnchorElement) => {
   try {
-    const url = new URL(anchor.href, document.URL)
+    const url = new URL(withoutLocaleSegment(anchor.href), document.URL)
     const isBilibili = url.hostname === 'bilibili.com' || url.hostname.endsWith('.bilibili.com')
     return isBilibili && playablePathPattern.test(url.pathname)
   } catch {
