@@ -2,6 +2,7 @@ export interface Aria2RpcProfile {
   name: string
   secretKey: string
   dir: string
+  createUpDirectory: boolean
   host: string
   port: string
   method: string
@@ -11,6 +12,7 @@ export const defaultProfile: Aria2RpcProfile = {
   name: '未命名',
   secretKey: '',
   dir: '',
+  createUpDirectory: false,
   host: '127.0.0.1',
   port: '6800',
   method: 'get',
