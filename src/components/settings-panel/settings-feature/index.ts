@@ -17,13 +17,19 @@ export const useSettingsFeatures = () => {
   const allComponents = ref(components)
   const allPlugins = ref(plugins)
   const allStyles = ref(styles)
+  const visibleComponents = computed(() =>
+    allComponents.value.filter(component => !component.hidden),
+  )
   const features = computed<SettingsFeature[]>(() => [
-    ...allComponents.value
-      .filter(component => !component.hidden)
-      .map(component => new ComponentSettingsFeature(component)),
+    ...visibleComponents.value.map(component => new ComponentSettingsFeature(component)),
     ...allPlugins.value.filter(isUserPlugin).map(plugin => new PluginSettingsFeature(plugin)),
     ...allStyles.value.map(style => new StyleSettingsFeature(style)),
   ])
-  const tags = computed(() => getSettingsTags(features.value))
+  const tags = computed(() =>
+    getSettingsTags(features.value, {
+      components: allComponents.value,
+      renderedComponents: visibleComponents.value,
+    }),
+  )
   return { features, tags }
 }

@@ -10,7 +10,7 @@
         :title="commitWarning"
       />
     </div>
-    <div v-if="showName">内部名称: {{ feature.name }}</div>
+    <div v-if="showName" class="component-detail-internal-name">内部名称: {{ feature.name }}</div>
   </div>
 </template>
 
