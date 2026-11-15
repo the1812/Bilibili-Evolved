@@ -11,95 +11,88 @@
         <div class="meta-info-description">
           {{ meta.description }}
         </div>
-        <!-- <div class="meta-info-commit">
-          Commit Hash: {{ meta.compilationInfo.commitHash.substring(0, 8) }}
-        </div> -->
       </div>
-      <div v-if="feedbackSupported" class="script-links">
+      <div class="script-links">
         <a
           target="_blank"
           href="https://github.com/the1812/Bilibili-Evolved"
           class="homepage script-link"
+          title="主页"
         >
-          <VButton>
+          <VButton type="transparent" icon>
             <VIcon icon="mdi-home-outline" :size="20" />
-            主页
           </VButton>
         </a>
-        <VButton class="feedback script-link" @click="openFeedback()">
+        <VButton
+          v-if="feedbackSupported"
+          type="transparent"
+          icon
+          class="feedback"
+          title="反馈"
+          @click="openFeedback()"
+        >
           <VIcon icon="mdi-message-text-outline" :size="18" />
-          反馈
         </VButton>
         <a
           target="_blank"
           href="https://github.com/the1812/Bilibili-Evolved/releases"
           class="releases script-link"
+          title="更新日志"
         >
-          <VButton>
+          <VButton type="transparent" icon>
             <VIcon icon="mdi-update" :size="20" />
-            更新日志
           </VButton>
         </a>
         <a
           target="_blank"
           href="https://github.com/the1812/Bilibili-Evolved/blob/preview/doc/donate.md"
           class="donate script-link"
+          title="捐赠"
         >
-          <VButton>
-            <VIcon icon="mdi-heart-outline" :size="18" />
-            捐赠
+          <VButton type="transparent" icon>
+            <VIcon icon="mdi-heart-outline" :size="20" />
           </VButton>
         </a>
       </div>
       <div class="about-page-actions">
-        <VButton
-          v-for="action of aboutPageActions"
-          :key="action.name"
-          :disabled="action.disabled"
-          class="about-page-action"
-          @click="runAction(action, $event)"
-        >
-          <VIcon :icon="action.icon" :size="action.iconSize || 20" />
-          {{ action.displayName }}
-        </VButton>
+        <div class="about-page-action-buttons">
+          <VButton
+            v-for="action of actions"
+            :key="action.name"
+            :disabled="action.disabled || runningActions.includes(action.name)"
+            class="about-page-action"
+            @click="runAction(action, $event)"
+          >
+            <VIcon :icon="action.icon" :size="action.iconSize || 20" />
+            {{ action.displayName }}
+          </VButton>
+        </div>
+        <div class="tip">导出设置的文件命名格式可在通用设置中修改</div>
       </div>
-      <div class="tip">导出设置的文件命名格式可在通用设置中修改</div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { ref } from 'vue'
 import { meta } from '@/core/meta'
-import { formatDateTime } from '@/core/utils/formatters'
 import { VButton, VIcon } from '@/ui'
 import { feedbackSupported, openFeedback } from '../feedback'
-import { AboutPageAction, aboutPageActions } from './about-page'
+import { aboutPageActions, type AboutPageAction } from './about-page'
 
-export default Vue.extend({
-  components: {
-    VButton,
-    VIcon,
-  },
-  data() {
-    return {
-      meta,
-      aboutPageActions,
-      feedbackSupported,
-    }
-  },
-  methods: {
-    formatDateTime,
-    openFeedback,
-    async runAction(action: AboutPageAction, event: MouseEvent) {
-      action.disabled = true
-      try {
-        await action.run(event)
-      } finally {
-        action.disabled = false
-      }
-    },
-  },
-})
+const actions = ref(aboutPageActions)
+const runningActions = ref<string[]>([])
+const runAction = async (action: AboutPageAction, event: MouseEvent) => {
+  if (action.disabled || runningActions.value.includes(action.name)) {
+    return
+  }
+  runningActions.value.push(action.name)
+  try {
+    await action.run(event)
+  } finally {
+    runningActions.value = runningActions.value.filter(name => name !== action.name)
+  }
+}
 </script>
 
 <style lang="scss">
@@ -107,9 +100,25 @@ export default Vue.extend({
 
 .be-about-page {
   flex: 1;
-  padding: 12px;
+  position: relative;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 28px 12px;
+  border-radius: inherit;
+  @include v-stretch();
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: url('./about-hexagons.svg?inline') repeat center;
+    mask-image: linear-gradient(#000, transparent 50%, #000);
+    pointer-events: none;
+  }
   &-content {
-    @include v-stretch(24px);
+    position: relative;
+    margin-block: auto;
+    @include v-stretch(12px);
     .script-meta-info {
       @include v-center(8px);
       text-align: center;
@@ -117,7 +126,7 @@ export default Vue.extend({
       .meta-info {
         &-name {
           font-weight: 500;
-          font-size: 22px;
+          font-size: 18px;
         }
         &-version {
           font-size: 14px;
@@ -129,19 +138,21 @@ export default Vue.extend({
       }
     }
     .script-links {
+      @include h-center(4px);
+      justify-content: center;
       .script-link {
-        @include h-stretch();
         text-decoration: none;
-        .be-button {
-          flex: 1;
-        }
+      }
+      .feedback .be-icon {
+        transform: translateY(1px);
       }
     }
-    .script-links,
     .about-page-actions {
+      @include v-stretch(8px);
+    }
+    .about-page-action-buttons {
       @include h-stretch(8px);
       flex-wrap: wrap;
-      .script-link,
       .about-page-action {
         flex: 1 0 auto;
         .be-icon {
@@ -152,7 +163,6 @@ export default Vue.extend({
   }
   .tip {
     text-align: center;
-    margin-top: -12px;
     opacity: 0.5;
   }
 }
