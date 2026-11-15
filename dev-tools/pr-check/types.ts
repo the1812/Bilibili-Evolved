@@ -1,3 +1,5 @@
+import type { RegistryFeatureType } from '../src-types'
+
 export interface ChangedFile {
   status: string
   path: string
@@ -17,7 +19,7 @@ export interface PullRequestEvent {
 }
 
 export interface FeatureMetadata {
-  kind: 'component' | 'plugin'
+  kind: RegistryFeatureType
   properties: Set<string>
   name?: string
   displayName?: string

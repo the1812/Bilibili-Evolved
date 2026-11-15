@@ -13,12 +13,10 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { VIcon } from '@/ui'
-import type { ComponentMetadata } from '../../types'
-import type { ComponentConfigAction } from './component-actions'
+import type { SettingsButtonAction } from './settings-action-types'
 
 const props = defineProps<{
-  item: ComponentConfigAction
-  component?: ComponentMetadata
+  item: SettingsButtonAction
   disabled?: boolean
 }>()
 const running = ref(false)
@@ -30,7 +28,7 @@ const handleClick = async () => {
   }
   try {
     running.value = true
-    await props.item.action(props.component)
+    await props.item.action()
   } finally {
     running.value = false
   }

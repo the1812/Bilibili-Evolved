@@ -1,3 +1,5 @@
+import type { RegistryFeatureType } from '@/core/feature-types'
+
 /** 表示一个合集包 */
 export interface Package {
   name: string
@@ -8,7 +10,7 @@ export interface Package {
 }
 /** 表示一个支持在线安装的功能 */
 export interface DocSourceItem {
-  type: 'component' | 'plugin'
+  type: RegistryFeatureType
   name: string
   displayName: string
   description?: string

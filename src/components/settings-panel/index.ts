@@ -106,6 +106,8 @@ export const component = defineComponentMetadata({
       provideActions()
       addHook('userComponents.add', { after: invalidateComponentData })
       addHook('userComponents.remove', { after: invalidateComponentData })
+      addHook('userPlugins.add', { after: invalidateComponentData })
+      addHook('userPlugins.remove', { after: invalidateComponentData })
     },
   },
 })

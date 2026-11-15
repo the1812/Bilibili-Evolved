@@ -1,11 +1,15 @@
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
 import { findObjectProperty, parseFile, readStaticString } from '../feature-ast'
-import { DocSourceItem, FeatureKind } from './types'
+import type { RegistryFeatureType } from '../src-types'
+import { DocSourceItem } from './types'
 
 const readStaticDocSourceItem = (object: t.ObjectExpression): DocSourceItem => {
   const constants = new Map<string, string>()
-  const type = readStaticString(findObjectProperty(object, 'type')?.value, constants) as FeatureKind
+  const type = readStaticString(
+    findObjectProperty(object, 'type')?.value,
+    constants,
+  ) as RegistryFeatureType
   const name = readStaticString(findObjectProperty(object, 'name')?.value, constants)
   const displayName = readStaticString(findObjectProperty(object, 'displayName')?.value, constants)
   const fullRelativePath = readStaticString(
@@ -34,7 +38,7 @@ const readStaticDocSourceItem = (object: t.ObjectExpression): DocSourceItem => {
 
 export const readThirdPartyDocs = () => {
   const ast = parseFile('registry/lib/docs/third-party.ts')
-  const docs: Record<'component' | 'plugin', DocSourceItem[]> = {
+  const docs: Record<RegistryFeatureType, DocSourceItem[]> = {
     component: [],
     plugin: [],
   }

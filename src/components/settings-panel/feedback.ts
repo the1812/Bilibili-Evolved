@@ -39,7 +39,9 @@ const getPlayerLogs = async () => {
   }
 }
 
-export const openFeedback = async (component?: ComponentMetadata) => {
+export const openFeedback = async (
+  metadata?: Pick<ComponentMetadata, 'name' | 'displayName' | 'commitHash'>,
+) => {
   const params = new URLSearchParams({
     template: 'bug_report.yml',
     'script-version': meta.compilationInfo.versionWithTag,
@@ -47,8 +49,8 @@ export const openFeedback = async (component?: ComponentMetadata) => {
     'browser-version': getBrowserVersion(),
     'player-logs': await getPlayerLogs(),
   })
-  if (component) {
-    const { displayName, name, commitHash } = component
+  if (metadata) {
+    const { displayName, name, commitHash } = metadata
     const feature = `${displayName} (${name})`
     params.set('feature', commitHash ? `${feature}\nCommit: ${commitHash}` : feature)
   }

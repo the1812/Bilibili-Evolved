@@ -1,10 +1,10 @@
+import type { RegistryFeatureType } from '../src-types'
+
 export interface PayloadBase<Type extends string = string> {
   type: Type
 }
-export type FeatureKind = 'component' | 'plugin'
-
 export interface FeaturePayload {
-  kind: FeatureKind
+  kind: RegistryFeatureType
   id: string
 }
 export type ServerReadyPayload = PayloadBase<'serverReady'> & {

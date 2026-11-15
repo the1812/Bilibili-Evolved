@@ -11,7 +11,7 @@
   >
     <template #toast>
       <div class="batch-actions-header">
-        <span>已选 {{ selection.length }} 个组件</span>
+        <span>已选 {{ selection.length }} 个功能</span>
         <VIcon icon="close" :size="14" title="清除选择" @click="emit('close')" />
       </div>
       <ComponentAction
@@ -28,12 +28,12 @@
 import { computed, ref, watch } from 'vue'
 import { Toast, ToastType } from '@/core/toast'
 import { MiniToast, VIcon } from '@/ui'
-import { componentsMap } from '../component'
+import type { SettingsFeature } from './settings-feature'
 import ComponentAction from './component-actions/ComponentAction.vue'
-import { componentBatchActions } from './component-actions/component-actions'
+import { settingsBatchActions } from './component-actions/component-actions'
 import { useComponentData } from './component-data'
 
-const props = defineProps<{ selection: string[]; scrollContainer?: HTMLElement }>()
+const props = defineProps<{ selection: SettingsFeature[]; scrollContainer?: HTMLElement }>()
 const emit = defineEmits<{ (event: 'close'): void }>()
 const menu = ref<InstanceType<typeof MiniToast>>()
 const referenceRect = computed(() => {
@@ -67,7 +67,7 @@ const runBatchAction = async (verb: string, count: number, run: () => Promise<st
     return
   }
   const title = `批量${verb}`
-  if (!window.confirm(`确定要${verb}所选的 ${count} 个组件吗?`)) {
+  if (!window.confirm(`确定要${verb}所选的 ${count} 个功能吗?`)) {
     return
   }
   pending.value = true
@@ -83,17 +83,16 @@ const runBatchAction = async (verb: string, count: number, run: () => Promise<st
   }
 }
 
-const actions = useComponentData(() => {
-  const selectedComponents = props.selection.map(name => componentsMap[name]).filter(Boolean)
-  return componentBatchActions.map(({ filter, run, verb, ...action }) => {
-    const items = selectedComponents.filter(filter)
+const actions = useComponentData(() =>
+  settingsBatchActions.value.map(({ prepare, verb, ...action }) => {
+    const { count, run } = prepare(props.selection)
     return {
       ...action,
-      count: items.length,
-      action: () => runBatchAction(verb, items.length, () => run(items)),
+      count,
+      action: () => runBatchAction(verb, count, run),
     }
-  })
-})
+  }),
+)
 </script>
 
 <style lang="scss">

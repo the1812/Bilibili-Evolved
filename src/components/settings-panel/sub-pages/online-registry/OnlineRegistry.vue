@@ -7,7 +7,7 @@
   >
     <div class="online-registry-header">
       <VIcon icon="mdi-web" class="online-registry-header-title-icon" />
-      <div class="online-registry-header-title">在线仓库</div>
+      <div class="online-registry-header-title">功能库</div>
       <VIcon
         icon="mdi-refresh"
         :size="22"
@@ -140,7 +140,7 @@ const fetchFeatures = async () => {
     })
     if (!Array.isArray(packList)) {
       console.error('Fetch failed:', packList, packListUrl)
-      throw new Error('获取在线仓库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
+      throw new Error('获取功能库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
     }
     const withRepo = (item: DocSourceItem) => ({
       ...item,

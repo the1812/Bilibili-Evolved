@@ -1,9 +1,5 @@
 <template>
   <div class="be-about-page">
-    <div class="be-about-page-header">
-      <VIcon icon="mdi-information-outline" />
-      <div class="title-text">关于</div>
-    </div>
     <div class="be-about-page-content">
       <div class="script-meta-info">
         <div class="meta-info-name">
@@ -111,15 +107,7 @@ export default Vue.extend({
 
 .be-about-page {
   flex: 1;
-  &-header {
-    @include h-center(6px);
-    margin-bottom: 12px;
-    .title-text {
-      font-size: 16px;
-      @include semi-bold();
-      flex: 1 0 auto;
-    }
-  }
+  padding: 12px;
   &-content {
     @include v-stretch(24px);
     .script-meta-info {

@@ -9,7 +9,8 @@ import {
   readStaticString,
 } from '../feature-ast'
 import { collectAuthorConstants, readAuthor } from './author'
-import { Author, DocSourceItem, FeatureKind } from './types'
+import type { RegistryFeatureType } from '../src-types'
+import { Author, DocSourceItem } from './types'
 
 const getFeatureId = (root: string, entry: string) => {
   const relative = entry.replace(root, '').replace(/\\/g, '/')
@@ -60,7 +61,7 @@ export const getAuthorMarkdown = (author: Author | Author[] | undefined) => {
 const readMarkdownDescription = (file: string) =>
   readFileSync(file, 'utf8').replace(/\r\n?/g, '\n').trim()
 
-export const readFeatureDocs = (kind: FeatureKind): DocSourceItem[] => {
+export const readFeatureDocs = (kind: RegistryFeatureType): DocSourceItem[] => {
   const src = `./registry/lib/${kind}s/`
   const rootPath = `../../registry/dist/${kind}s/`
   return sync(`${src}**/index.ts`, { dotRelative: true, posix: true })

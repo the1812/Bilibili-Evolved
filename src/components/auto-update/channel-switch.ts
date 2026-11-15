@@ -1,11 +1,12 @@
 import { findFeatureSource } from '@/core/feature-registry'
 import { FeatureSource, switchGithubBranch } from '@/core/feature-source'
+import type { RegistryFeatureType } from '@/core/feature-types'
 import { branches, matchingUpdateBranches, meta, stableUpdateBranches } from '@/core/meta'
 import { getGeneralSettings } from '@/core/settings'
-import type { ComponentConfigAction } from '../settings-panel/component-actions/component-actions'
+import type { SettingsButtonAction } from '../settings-panel/component-actions/settings-action-types'
 import { updateFeature } from './utils'
 
-const getChannelSwitchTarget = (name: string, source: FeatureSource) => {
+const getChannelSwitchTarget = (type: RegistryFeatureType, name: string, source: FeatureSource) => {
   const coreBranch = meta.compilationInfo.branch
   const stableBranch = coreBranch === branches.stableCdn ? branches.stableCdn : branches.stable
   if (source.kind === 'github') {
@@ -22,20 +23,22 @@ const getChannelSwitchTarget = (name: string, source: FeatureSource) => {
   const branch = matchingBranches.includes(branches.preview) ? branches.preview : stableBranch
   return {
     branch,
-    title: '从在线仓库安装同名组件并替换当前更新源',
-    getSource: () => findFeatureSource(name, branch, getGeneralSettings().cdnRoot),
+    title: `从功能库安装同名${type === 'plugin' ? '插件' : '组件'}并替换当前更新源`,
+    getSource: () => findFeatureSource(type, name, branch, getGeneralSettings().cdnRoot),
   }
 }
 
 export const createSwitchUpdateChannelAction = (
+  type: RegistryFeatureType,
   name: string,
   source: FeatureSource,
-): ComponentConfigAction | undefined => {
-  const target = getChannelSwitchTarget(name, source)
+): SettingsButtonAction | undefined => {
+  const target = getChannelSwitchTarget(type, name, source)
   if (!target) {
     return undefined
   }
   const toPreview = target.branch === branches.preview
+  const label = type === 'plugin' ? '插件' : '组件'
   const displayName = toPreview ? '切换到预览版' : '切换到稳定版'
   const confirmPreview =
     toPreview && matchingUpdateBranches.get(meta.compilationInfo.branch)?.includes(branches.stable)
@@ -48,7 +51,7 @@ export const createSwitchUpdateChannelAction = (
       if (
         confirmPreview &&
         !window.confirm(
-          '当前本体是稳定版，确定要将此组件切换到预览版吗？这可能导致组件出现不兼容的情况而失效。',
+          `当前本体是稳定版，确定要将此${label}切换到预览版吗？这可能导致${label}出现不兼容的情况而失效。`,
         )
       ) {
         return

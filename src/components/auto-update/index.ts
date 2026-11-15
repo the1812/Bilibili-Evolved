@@ -1,6 +1,6 @@
 import { ComponentEntry, componentsTags } from '@/components/types'
 import { meta } from '@/core/meta'
-import { getComponentSettings, getGeneralSettings, isUserComponent } from '@/core/settings'
+import { getComponentSettings, getGeneralSettings } from '@/core/settings'
 import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
 import {
@@ -10,10 +10,11 @@ import {
 } from '@/components/define'
 import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
 import type {
-  ComponentAction,
-  ComponentBatchAction,
-} from '../settings-panel/component-actions/component-actions'
-import type { ComponentUpdateSourceProvider } from '../settings-panel/component-update-source'
+  SettingsBatchAction,
+  SettingsDetailActionProvider,
+} from '../settings-panel/component-actions/settings-action-types'
+import type { SettingsFeature } from '../settings-panel/settings-feature'
+import type { UpdateSourceProvider } from '../settings-panel/feature-update-source'
 import { name, UpdateCheckItem, updateKinds } from './utils'
 import {
   FeatureSource,
@@ -26,6 +27,7 @@ import * as checkerMethods from './checker'
 
 const {
   checkComponentsUpdate,
+  checkPluginsUpdate,
   checkLastFeature,
   forceCheckUpdate,
   forceCheckUpdateAndReload,
@@ -106,20 +108,20 @@ export const component = defineComponentMetadata({
     displayName: '自动更新器 - 功能扩展',
     description: {
       'zh-CN':
-        '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件详情中支持手动检查该组件的更新.',
+        '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件和插件详情中支持手动检查更新.',
     },
     // 非设置面板的组件如果也对能功能进行修改, 建议调用此处的 Hooks 同步状态.
     setup: ({ addData, addHook }) => {
-      const getComponentUpdateSource: ComponentUpdateSourceProvider = componentName => {
+      const getUpdateSource = (type: 'components' | 'plugins', featureName: string) => {
         const { options } = getComponentSettings<AutoUpdateOptions>(name)
-        return options.urls.components[componentName]?.source
+        return options.urls[type][featureName]?.source
       }
-      addData(
-        'settingsPanel.componentUpdateSources',
-        (providers: ComponentUpdateSourceProvider[]) => {
-          providers.push(getComponentUpdateSource)
-        },
-      )
+      addData('settingsPanel.componentUpdateSources', (providers: UpdateSourceProvider[]) => {
+        providers.push(featureName => getUpdateSource('components', featureName))
+      })
+      addData('settingsPanel.pluginUpdateSources', (providers: UpdateSourceProvider[]) => {
+        providers.push(featureName => getUpdateSource('plugins', featureName))
+      })
       updateKinds.forEach(type => {
         addHook(`user${lodash.startCase(type)}.add`, {
           after: (
@@ -149,56 +151,73 @@ export const component = defineComponentMetadata({
           },
         })
       })
-      addData('settingsPanel.componentActionButtons', (actions: ComponentAction[]) => {
-        actions.unshift(metadata => {
-          const source = getComponentUpdateSource(metadata.name)
-          if (!source) {
-            return undefined
+      const checkByCollection = { components: checkComponentsUpdate, plugins: checkPluginsUpdate }
+      const getUpdate = (feature: SettingsFeature) => {
+        const { removal, registry } = feature.operations
+        const target = removal && registry?.target
+        const source = target && getUpdateSource(target.collection, target.name)
+        return source && { target, source }
+      }
+      addData('settingsPanel.featureActions', (providers: SettingsDetailActionProvider[]) => {
+        providers.unshift(feature => {
+          const update = getUpdate(feature)
+          if (!update) {
+            return {}
           }
+          const { target, source } = update
           const url = getFeatureUrl(source)
+          const channelAction = createSwitchUpdateChannelAction(target.kind, target.name, source)
           return {
-            name: 'checkUpdate',
-            displayName: '检查更新',
-            icon: isLocalFeatureUrl(url)
-              ? 'mdi-file-download-outline'
-              : 'mdi-cloud-download-outline',
-            visible: isUserComponent(metadata),
-            title: url,
-            action: async () => {
-              const { Toast } = await import('@/core/toast')
-              const toast = Toast.info('检查更新中...', '检查更新')
-              toast.message = await checkComponentsUpdate({
-                filterNames: [metadata.name],
-                force: true,
-              })
-              toast.duration = 3000
-            },
+            buttons: [
+              {
+                name: 'checkUpdate',
+                displayName: '检查更新',
+                icon: isLocalFeatureUrl(url)
+                  ? 'mdi-file-download-outline'
+                  : 'mdi-cloud-download-outline',
+                title: url,
+                action: async () => {
+                  const { Toast } = await import('@/core/toast')
+                  const toast = Toast.info('检查更新中...', '检查更新')
+                  toast.message = await checkByCollection[target.collection]({
+                    filterNames: [target.name],
+                    force: true,
+                  })
+                  toast.duration = 3000
+                },
+              },
+            ],
+            menu: channelAction ? [channelAction] : [],
           }
         })
       })
-      addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
-        actions.push(metadata => {
-          const source = getComponentUpdateSource(metadata.name)
-          return source && isUserComponent(metadata)
-            ? createSwitchUpdateChannelAction(metadata.name, source)
-            : undefined
-        })
-      })
-      addData('settingsPanel.componentBatchActions', (actions: ComponentBatchAction[]) => {
+      addData('settingsPanel.featureBatchActions', (actions: SettingsBatchAction[]) => {
         actions.unshift({
           name: 'update',
           displayName: '批量更新',
           icon: 'mdi-cloud-download-outline',
-          title: '更新所选组件中有更新链接的组件',
+          title: '更新所选功能中有更新链接的组件和插件',
           verb: '更新',
-          filter: metadata =>
-            isUserComponent(metadata) && Boolean(getComponentUpdateSource(metadata.name)),
-          run: async items => {
-            const result = await checkComponentsUpdate({
-              filterNames: items.map(item => item.name),
-              force: true,
+          prepare: selection => {
+            const targets = selection.flatMap(feature => {
+              const update = getUpdate(feature)
+              return update ? [update.target] : []
             })
-            return result || '所选组件暂无更新'
+            const groups = Object.values(lodash.groupBy(targets, target => target.collection))
+            return {
+              count: targets.length,
+              run: async () => {
+                const results = await Promise.all(
+                  groups.map(items =>
+                    checkByCollection[items[0].collection]({
+                      filterNames: items.map(item => item.name),
+                      force: true,
+                    }),
+                  ),
+                )
+                return results.filter(Boolean).join('\n') || '所选功能暂无更新'
+              },
+            }
           },
         })
       })

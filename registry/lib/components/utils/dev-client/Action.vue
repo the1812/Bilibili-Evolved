@@ -1,6 +1,6 @@
 <template>
   <VButton
-    v-if="isConnected && debugPath"
+    v-if="isConnected"
     class="dev-client-action"
     :disabled="busy"
     @click="isDebugging ? stopDebug() : startDebug()"
@@ -13,19 +13,15 @@
 </template>
 <script setup lang="ts">
 import { computed, onUnmounted, ref } from 'vue'
-import type { ComponentVueAction } from '@/components/settings-panel/component-actions/component-actions'
-import type { ComponentMetadata } from '@/components/types'
-import { Toast } from '@/core/toast'
+import type { SettingsFeatureTarget } from '@/components/settings-panel/settings-feature'
 import { VButton, VIcon } from '@/ui'
 import { devClient, DevClientEvents } from './client'
-import { getComponentDevPath } from './converter'
 
-const props = defineProps<{ item: ComponentVueAction; component: ComponentMetadata }>()
+const props = defineProps<{ target: SettingsFeatureTarget; path: string }>()
 const busy = ref(false)
 const debugPaths = ref(devClient.debugPaths)
 const isConnected = ref(devClient.isConnected)
-const debugPath = computed(() => getComponentDevPath(props.component.name))
-const isDebugging = computed(() => debugPaths.value.includes(debugPath.value))
+const isDebugging = computed(() => debugPaths.value.includes(props.path))
 const debugLabel = computed(() => (isDebugging.value ? '停止调试' : '开始调试'))
 
 const handleServerChange = (event: CustomEvent<boolean>) => {
@@ -42,23 +38,21 @@ onUnmounted(() => {
 })
 
 const startDebug = async () => {
-  if (busy.value || !debugPath.value) {
+  if (busy.value) {
     return
   }
   busy.value = true
-  const toast = Toast.info('启动调试中...', 'DevClient')
   try {
-    await devClient.startDebug(debugPath.value, { kind: 'component', name: props.component.name })
+    await devClient.startDebug(props.path, props.target)
   } catch (error) {
     console.error(error)
   } finally {
-    toast.close()
     busy.value = false
   }
 }
 const stopDebug = () => {
-  if (!busy.value && debugPath.value) {
-    devClient.stopDebug(debugPath.value)
+  if (!busy.value) {
+    devClient.stopDebug(props.path)
   }
 }
 </script>

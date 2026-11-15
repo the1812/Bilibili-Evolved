@@ -1,6 +1,7 @@
 import type { ComponentMetadata } from '@/components/types'
 import type { PluginMetadata } from '@/plugins/plugin'
 import { monkey } from './ajax'
+import type { RegistryFeatureType } from './feature-types'
 
 type DevFeature =
   | { kind: 'component'; path: string; metadata: ComponentMetadata }
@@ -65,7 +66,7 @@ const getListeningPaths = (port: number) =>
   })
 
 const loadedFeatures: DevFeature[] = []
-export const getLoadedDevPath = (kind: DevFeature['kind'], name: string) =>
+export const getLoadedDevPath = (kind: RegistryFeatureType, name: string) =>
   loadedFeatures.find(feature => feature.kind === kind && feature.metadata.name === name)?.path
 
 export const loadDevFeatures = lodash.once(async () => {

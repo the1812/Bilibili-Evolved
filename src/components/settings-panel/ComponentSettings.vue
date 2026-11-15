@@ -1,80 +1,41 @@
 <template>
-  <div class="component-settings" :class="{ virtual }">
+  <div ref="row" class="component-settings" :class="{ virtual }">
     <template v-if="!virtual">
       <div class="component-settings-row">
-        <TagRing :tags="componentData.tags" />
+        <TagRing v-if="appearance.tags" :tags="appearance.tags" />
+        <VIcon v-else :icon="appearance.icon" :size="18" />
         <div class="display-name">
-          {{ componentData.displayName }}
+          {{ feature.displayName }}
         </div>
-        <SwitchBox v-if="componentData.configurable !== false" v-model="settings.enabled" />
+        <SwitchBox v-if="settings" v-model="settings.enabled" />
         <VIcon v-else icon="right-arrow" class="details-arrow" :size="18" />
       </div>
     </template>
   </div>
 </template>
 
-<script lang="ts">
-import marked from 'marked'
-import { getComponentSettings } from '@/core/settings'
-import SwitchBox from '@/ui/SwitchBox.vue'
-import VIcon from '@/ui/icon/VIcon.vue'
+<script setup lang="ts">
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { visibleInside } from '@/core/observer'
-import { dq } from '@/core/utils'
+import { SwitchBox, VIcon } from '@/ui'
 import TagRing from './TagRing.vue'
-import { getSelectedLanguage } from '../i18n/helpers'
-import { ComponentMetadata } from '../component'
+import type { SettingsFeature } from './settings-feature'
 
-export default Vue.extend({
-  components: {
-    SwitchBox,
-    TagRing,
-    VIcon,
-  },
-  props: {
-    componentData: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      settings: getComponentSettings(this.componentData),
-      virtual: false,
-    }
-  },
-  async mounted() {
-    const element = this.$el as HTMLElement
-    const container = dq('.settings-panel-content .main') as HTMLElement
-    if (!container) {
-      console.log('settings container not found, virtual scroll will be disabled!')
-      return
-    }
-    visibleInside(element, container, '150% 0px', records => {
-      records.forEach(record => {
-        this.virtual = !record.isIntersecting
-      })
-    })
-  },
-  methods: {
-    markdown(input: string) {
-      return marked(input)
-    },
-    descriptionI18n(component: ComponentMetadata) {
-      const { description, options } = component
-      if (!description) {
-        if (options && Object.keys(options).length > 0) {
-          const count = Object.keys(options).length
-          return `${count}个选项`
-        }
-        return '暂无说明'
-      }
-      if (typeof description === 'string') {
-        return description
-      }
-      return description[getSelectedLanguage()] || description['zh-CN']
-    },
-  },
+const props = defineProps<{ feature: SettingsFeature }>()
+const row = ref<HTMLElement>()
+const virtual = ref(false)
+const appearance = computed(() => props.feature.row)
+const settings = computed(() => appearance.value.toggle)
+
+let observer: IntersectionObserver
+onMounted(() => {
+  const element = row.value
+  const [rowObserver] = visibleInside(element, element.closest('.main'), '150% 0px', ([record]) => {
+    virtual.value = !record.isIntersecting
+  })
+  observer = rowObserver
 })
+onUnmounted(() => observer?.disconnect())
 </script>
 
 <style lang="scss">

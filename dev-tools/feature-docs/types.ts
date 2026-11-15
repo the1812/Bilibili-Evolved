@@ -1,12 +1,12 @@
+import type { RegistryFeatureType } from '../src-types'
+
 export type Author = {
   name: string
   link: string
 }
 
-export type FeatureKind = 'component' | 'plugin'
-
 export type DocSourceItem = {
-  type: FeatureKind
+  type: RegistryFeatureType
   name: string
   displayName: string
   description?: string

@@ -1,13 +1,14 @@
 import type { ComponentMetadata } from '@/components/types'
 import type { PluginMetadata } from '@/plugins/plugin'
 import { loadDevFeatures } from './dev-features'
+import type { RegistryFeatureType } from './feature-types'
 
 type FeatureDefinitions = {
   component: ComponentMetadata
   plugin: PluginMetadata
 }
 
-export const getFeatureDefinitions = async <K extends keyof FeatureDefinitions>(kind: K) => {
+export const getFeatureDefinitions = async <K extends RegistryFeatureType>(kind: K) => {
   const { settings } = await import('./settings')
   const { loadFeatureCode } = await import('./external-input')
   const stored = kind === 'component' ? settings.userComponents : settings.userPlugins

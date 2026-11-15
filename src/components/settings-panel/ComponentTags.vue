@@ -1,119 +1,64 @@
 <template>
   <div class="component-tags-preview">
-    <VPopup
-      v-model="selectedSubPageOpen"
-      :lazy="false"
-      :trigger-element="selectedSubPageTrigger"
-      class="settings-panel-sub-page"
+    <div
+      v-for="expanded of [false, true]"
+      :key="String(expanded)"
+      :class="expanded ? 'component-tags' : 'icon-list'"
     >
-      <keep-alive>
-        <component :is="selectedSubPage" v-if="selectedSubPage" />
-      </keep-alive>
-    </VPopup>
-    <div class="icon-list">
       <div
-        v-for="t of tags"
-        :key="t.name"
+        v-for="tag of tags"
+        :key="tag.name"
         class="component-tags-item"
-        :class="{ selected: t.name === selectedTagName }"
-        @click="selectTag(t)"
+        :class="{ selected: page === 'list' && tag.name === tagName }"
+        @click="emit('tag', tag.name)"
       >
-        <VIcon :size="20" :icon="t.icon" :style="{ color: t.color }" />
-      </div>
-      <div class="grow"></div>
-      <div v-for="t of subPages" :key="t.name" class="component-tags-item">
-        <VIcon :size="20" :icon="t.icon" :style="{ color: 'inherit' }" />
-      </div>
-    </div>
-    <div class="component-tags">
-      <div
-        v-for="t of tags"
-        :key="t.name"
-        class="component-tags-item"
-        :class="{ selected: t.name === selectedTagName }"
-        @click="selectTag(t)"
-      >
-        <VIcon :size="20" :icon="t.icon" :style="{ color: t.color }" />
-        <div class="tag-name">
-          {{ t.displayName }}
-        </div>
-        <div class="tag-count">({{ t.count }})</div>
+        <VIcon :size="20" :icon="tag.icon" :style="{ color: tag.color }" />
+        <template v-if="expanded">
+          <div class="tag-name">{{ tag.displayName }}</div>
+          <div class="tag-count">({{ tag.count }})</div>
+        </template>
       </div>
       <div class="grow"></div>
       <div
-        v-for="t of subPages"
-        :key="t.name"
+        v-for="link of links"
+        :key="link.name"
         class="component-tags-item"
-        @click="openSubPage($event, t.component)"
+        :class="{ selected: page === link.name }"
+        @click="openLink(link.name)"
       >
-        <VIcon :size="20" :icon="t.icon" :style="{ color: 'inherit' }" />
-        <div class="tag-name">
-          {{ t.displayName }}
-        </div>
+        <VIcon :size="20" :icon="link.icon" />
+        <div v-if="expanded" class="tag-name">{{ link.displayName }}</div>
       </div>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { Executable, VueModule } from '@/core/common-types'
-import { ascendingSort } from '@/core/utils/sort'
-import VIcon from '@/ui/icon/VIcon.vue'
-import VPopup from '@/ui/VPopup.vue'
-import { components, ComponentTag } from '../component'
-import { subPages } from './sub-pages'
-import { SettingsTag, tagFilters } from './tag-filter'
+<script setup lang="ts">
+import { VIcon } from '@/ui'
+import type { SettingsTag } from './tag-filter'
 
-export default Vue.extend({
-  components: { VIcon, VPopup },
-  data() {
-    return {
-      tags: [],
-      selectedTagName: '',
-      subPages,
-      selectedSubPage: null,
-      selectedSubPageOpen: false,
-      selectedSubPageTrigger: null,
-    }
-  },
-  created() {
-    this.refreshTags()
-    this.reset()
-  },
-  mounted() {
-    this.selectTag(this.tags[0])
-  },
-  methods: {
-    refreshTags() {
-      const renderedComponents = components.filter(c => !c.hidden)
-      const tags = tagFilters.flatMap(f => {
-        if (typeof f === 'function') {
-          return f({ components, renderedComponents })
-        }
-        return f
-      })
-      this.tags = tags.sort(ascendingSort(it => it.order))
-    },
-    reset() {
-      this.selectedTagName = this.tags[0].name
-    },
-    selectTag(tag: ComponentTag) {
-      this.selectedTagName = tag.name
-      const { filter } = (this.tags as SettingsTag[]).find(t => t.name === tag.name)
-      this.$emit('change', filter)
-    },
-    async openSubPage(e: MouseEvent, component: Executable<VueModule>) {
-      if (this.selectedSubPage === component) {
-        this.selectedSubPageOpen = !this.selectedSubPageOpen
-        return
-      }
-      this.selectedSubPage = component
-      this.selectedSubPageTrigger = e.currentTarget
-      await this.$nextTick()
-      this.selectedSubPageOpen = true
-    },
-  },
-})
+const links = [
+  { name: 'add', displayName: '添加功能', icon: 'mdi-plus' },
+  { name: 'library', displayName: '功能库', icon: 'mdi-web' },
+  { name: 'about', displayName: '关于', icon: 'mdi-information-outline' },
+] as const
+type Link = (typeof links)[number]['name']
+type SubPage = Exclude<Link, 'library'>
+
+defineProps<{ page: 'list' | SubPage; tagName: string; tags: SettingsTag[] }>()
+const emit = defineEmits<{
+  (event: 'tag', name: string): void
+  (event: 'page', name: SubPage): void
+}>()
+
+const openLink = async (name: Link) => {
+  if (name === 'library') {
+    const { togglePopup } = await import('./sub-pages/online-registry/vm')
+    togglePopup()
+  } else {
+    emit('page', name)
+  }
+}
 </script>
 
 <style lang="scss">
@@ -125,32 +70,6 @@ export default Vue.extend({
   flex-direction: column;
   justify-content: space-between;
 
-  .settings-panel-sub-page {
-    font-size: 13px;
-    top: 12px;
-    transition: 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-    transform: translateX(calc(-12.5% * var(--direction)));
-    min-width: 372px;
-    padding: 12px;
-    box-sizing: border-box;
-    @include popup();
-    &.open {
-      transform: translateX(0);
-    }
-    .sub-page-row {
-      @include h-center();
-      justify-content: space-between;
-      flex-shrink: 0;
-      &:not(:last-child) {
-        margin-bottom: 12px;
-      }
-    }
-    .separator {
-      height: 1px;
-      background-color: #8882;
-      width: 100%;
-    }
-  }
   .component-tags-item {
     background-color: transparent;
     cursor: pointer;

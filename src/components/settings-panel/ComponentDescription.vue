@@ -3,7 +3,6 @@
 </template>
 
 <script lang="ts">
-import { getComponentSettings } from '@/core/settings'
 import { getDescriptionHTML } from '../description'
 
 export default Vue.extend({
@@ -15,7 +14,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      settings: getComponentSettings(this.componentData),
       html: '',
     }
   },
