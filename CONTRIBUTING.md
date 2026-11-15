@@ -207,7 +207,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发. 编写 SCSS 时可以使用公共 Sass 文件, 例如通过 `@import "common"` 使用 `ui/_common.scss` 中的 mixin.
 9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可. 如果开发服务已经运行, 也可以用 `pnpm tsx dev-tools/dev-server/command.ts build component <id>` 或 `pnpm tsx dev-tools/dev-server/command.ts build plugin <id>` 单独编译.
 10. 然后运行 `启动开发服务 dev-server`, 组件的 localhost 连接格式为 `http://localhost:23333/registry/dist/components/<id>.js`, 插件则为 `http://localhost:23333/registry/dist/plugins/<id>.js`.
-11. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
+11. 进入 b 站, 从脚本的设置面板打开 `功能库`, 点击搜索按钮右侧的 `链接添加`. 在弹窗中粘贴上一步的本地链接, 点击 `添加`.
 12. 后续同 [修改](##修改) 中的 2 ~ 3 步.
 
 ### 插件
@@ -294,7 +294,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 
 对于某种特定时机发生的事件, 可以调用 `getHook` 允许其他地方注入钩子提高扩展性, 其他地方可以调用 `addHook` 进行注入.
 
-例如, 自动更新器在组件管理面板注入了钩子, 在新组件安装时记录安装来源, 实现自动更新. 组件管理面板没有任何更新相关代码.
+例如, 自动更新器通过功能安装钩子记录组件的安装来源, 实现自动更新.
 
 - `plugins/style`: 提供简单的自定义样式增删 API (复杂样式请考虑组件或者 Stylus)
 

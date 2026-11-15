@@ -1,7 +1,17 @@
-import type { DocSourceItem, Package } from '../../../../../registry/lib/docs'
+import type { ComponentTag } from '@/components/types'
+import type { DocSourceItem } from '../../../../../registry/lib/docs'
 
-type RegistryFeature = DocSourceItem & { repo: string }
+export interface RegistryFilterSelection {
+  sort: 'default' | 'nameAsc' | 'nameDesc' | 'installed' | 'notInstalled'
+  status: '' | 'installed' | 'notInstalled'
+  type: '' | DocSourceItem['type']
+  tag: string
+}
 
-export type RegistryItemData =
-  | RegistryFeature
-  | (Package & { type: 'pack'; items: RegistryFeature[]; descriptionText?: string })
+export type RegistryItemData = DocSourceItem & {
+  nameSortKey: string
+  repo: string
+  componentTags: ComponentTag[]
+  descriptionText: string
+  searchText: string
+}

@@ -88,7 +88,6 @@ const props = defineProps<{ open: boolean }>()
 const emit = defineEmits<{ (event: 'close'): void }>()
 
 const subPages = {
-  add: defineAsyncComponent(() => import('./sub-pages/AddFeaturePage.vue')),
   about: defineAsyncComponent(() => import('./sub-pages/AboutPage.vue')),
 }
 type Page = 'list' | keyof typeof subPages

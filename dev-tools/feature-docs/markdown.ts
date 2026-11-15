@@ -14,7 +14,11 @@ const getGitHubRoot = (branch: string, owner = defaultOwner) =>
 
 export const getFeatureMarkdown = (title: string, items: DocSourceItem[]) => {
   const docText = items.map(item => {
-    const { name, displayName, description, fullAbsolutePath, fullRelativePath, owner } = item
+    const { name, displayName, description, author, fullAbsolutePath, fullRelativePath, owner } =
+      item
+    const authors = [author ?? []].flat()
+    const authorLinks = authors.map(credit => `[@${credit.name}](${credit.link})`).join(', ')
+    const authorPrefix = authorLinks ? `作者: ${authorLinks}\n\n` : ''
     return `
 ### [${displayName}](${fullRelativePath})
 \`${name}\`
@@ -35,7 +39,7 @@ export const getFeatureMarkdown = (title: string, items: DocSourceItem[]) => {
       owner,
     )}${fullAbsolutePath})
 
-${description || ''}
+${authorPrefix}${description || ''}
     `.trim()
   })
   return `

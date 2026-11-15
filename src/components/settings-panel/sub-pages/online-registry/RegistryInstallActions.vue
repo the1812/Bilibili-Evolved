@@ -1,37 +1,48 @@
 <template>
-  <div class="add-feature-page">
-    <TextArea
-      v-model="input"
-      :disabled="installing"
-      rows="6"
-      placeholder="粘贴功能链接，每行一个"
-    />
-    <div class="add-feature-actions">
-      <VButton type="primary" :disabled="installing || !urls.length" @click="installLinks">
-        <VIcon icon="mdi-download-multiple" :size="18" />
-        批量添加
-      </VButton>
-      <VButton :disabled="installing" @click="browse">
-        <VIcon icon="mdi-folder-open-outline" :size="18" />
-        浏览本地文件
-      </VButton>
-      <OnlineRegistryButton>
-        <VIcon icon="mdi-web" :size="18" />
-        功能库
-      </OnlineRegistryButton>
-    </div>
+  <div class="online-registry-install-actions">
+    <VButton ref="linksButton" :disabled="installing" @click="toggleLinks">
+      <VIcon icon="mdi-link-plus" :size="16" />
+      链接添加
+    </VButton>
+    <VButton :disabled="installing" @click="browse">
+      <VIcon icon="mdi-folder-open-outline" :size="16" />
+      本地浏览
+    </VButton>
+    <VPopup
+      v-model="linksOpen"
+      :trigger-element="linksButton"
+      class="online-registry-add-popup"
+      esc-close
+    >
+      <TextArea
+        ref="linksInput"
+        v-model="input"
+        :disabled="installing"
+        placeholder="粘贴功能链接，每行一个"
+      />
+      <div class="online-registry-add-actions">
+        <VButton @click="linksOpen = false">取消</VButton>
+        <VButton type="primary" :disabled="installing || !urls.length" @click="installLinks">
+          <VIcon icon="mdi-plus" :size="16" />
+          添加
+        </VButton>
+      </div>
+    </VPopup>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, nextTick, ref, watch } from 'vue'
 import { pickFile } from '@/core/file-picker'
 import { installFeature, installFeatureFromCode, readFeatureZip } from '@/core/install-feature'
 import { Toast, ToastType } from '@/core/toast'
 import { logError } from '@/core/utils/log'
-import { TextArea, VButton, VIcon } from '@/ui'
-import OnlineRegistryButton from './online-registry/OnlineRegistryButton.vue'
+import { TextArea, VButton, VIcon, VPopup } from '@/ui'
 
+const props = defineProps<{ open: boolean }>()
+const linksOpen = ref(false)
+const linksButton = ref<InstanceType<typeof VButton>>()
+const linksInput = ref<{ focus(): void }>()
 const input = ref('')
 const urls = computed(() =>
   input.value
@@ -40,6 +51,23 @@ const urls = computed(() =>
     .filter(Boolean),
 )
 const installing = ref(false)
+
+const toggleLinks = async () => {
+  linksOpen.value = !linksOpen.value
+  if (linksOpen.value) {
+    await nextTick()
+    linksInput.value?.focus()
+  }
+}
+
+watch(
+  () => props.open,
+  open => {
+    if (!open) {
+      linksOpen.value = false
+    }
+  },
+)
 
 const installLinks = async () => {
   const sources = urls.value
@@ -104,19 +132,37 @@ const browse = async () => {
 <style lang="scss">
 @import 'common';
 
-.add-feature-page {
-  @include v-stretch(12px);
-  padding: 12px;
+.online-registry-install-actions {
+  position: relative;
+  @include h-center(8px);
 
-  .add-feature-actions {
+  .be-button .be-icon {
+    margin-right: 4px;
+  }
+}
+
+.online-registry-add-popup {
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  width: min(320px, calc(100vw - 48px));
+  padding: 8px;
+  transform: translateY(-8px);
+  transition: 0.2s ease-out;
+  @include popup();
+  @include v-stretch(8px);
+  &.open {
+    transform: translateY(0);
+  }
+  textarea {
+    min-height: 7lh;
+    max-height: 35vh;
+  }
+  .online-registry-add-actions {
     @include h-stretch(8px);
-    flex-wrap: wrap;
-
     .be-button {
-      flex: 1 0 auto;
-      .be-icon {
-        margin-right: 4px;
-      }
+      flex: 1;
     }
   }
 }

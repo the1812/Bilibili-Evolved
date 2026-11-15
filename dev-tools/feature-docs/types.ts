@@ -10,6 +10,8 @@ export type DocSourceItem = {
   name: string
   displayName: string
   description?: string
+  author?: Author | Author[]
+  tags?: string[]
   fullAbsolutePath: string
   fullRelativePath: string
   owner?: string

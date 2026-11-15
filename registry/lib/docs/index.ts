@@ -1,3 +1,4 @@
+import type { Author } from '@/components/types'
 import type { RegistryFeatureType } from '@/core/feature-types'
 
 /** 表示一个合集包 */
@@ -14,7 +15,8 @@ export interface DocSourceItem {
   name: string
   displayName: string
   description?: string
-  descriptionText?: string
+  author?: Author | Author[]
+  tags?: string[]
   fullAbsolutePath: string
   fullRelativePath: string
   repo?: string

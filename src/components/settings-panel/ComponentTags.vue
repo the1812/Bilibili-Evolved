@@ -38,8 +38,7 @@ import { VIcon } from '@/ui'
 import type { SettingsTag } from './tag-filter'
 
 const links = [
-  { name: 'add', displayName: '添加功能', icon: 'mdi-plus' },
-  { name: 'library', displayName: '功能库', icon: 'mdi-web' },
+  { name: 'library', displayName: '功能库', icon: 'mdi-package-variant-closed' },
   { name: 'about', displayName: '关于', icon: 'mdi-information-outline' },
 ] as const
 type Link = (typeof links)[number]['name']
