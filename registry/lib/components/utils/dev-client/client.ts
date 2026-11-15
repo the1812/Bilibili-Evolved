@@ -4,6 +4,7 @@ import { ComponentMetadata, componentsMap } from '@/components/component'
 import { isComponentEnabled, registerTemporaryComponentSettings } from '@/core/settings'
 import { loadInstantStyle, removeInstantStyle } from '@/core/style'
 import { getDevFeaturePaths, loadDevFeature, setDevFeaturePaths } from '@/core/dev-features'
+import type { RegistryFeatureType } from '@/core/feature-types'
 import { getDevClientOptions } from './options'
 import { HotReloadMethod, RefreshMethod } from './update-method'
 import { Toast } from '@/core/toast'
@@ -169,7 +170,7 @@ export class DevClient extends EventTarget {
     }
   }
 
-  async startDebug(path: string, expected?: { kind: 'component' | 'plugin'; name?: string }) {
+  async startDebug(path: string, expected?: { kind: RegistryFeatureType; name?: string }) {
     const feature = await loadDevFeature(options.port, path)
     if (
       expected &&

@@ -1,10 +1,21 @@
-import type { DocSourceItem } from '../../src/components/settings-panel/sub-pages/online-registry/types'
+import type { RegistryFeatureType } from '../src-types'
 
-export type { Author } from '../../src/components/types'
+export type Author = {
+  name: string
+  link: string
+}
 
-export type FeatureKind = 'component' | 'plugin'
-
-export type { DocSourceItem }
+export type DocSourceItem = {
+  type: RegistryFeatureType
+  name: string
+  displayName: string
+  description?: string
+  author?: Author | Author[]
+  tags?: string[]
+  fullAbsolutePath: string
+  fullRelativePath: string
+  owner?: string
+}
 
 export type PackageDoc = {
   name: string

@@ -1,6 +1,7 @@
 import { WebSocket } from 'ws'
+import type { RegistryFeatureType } from '../src-types'
 import { devServerConfig } from './config'
-import { Payload, FeatureKind } from './payload'
+import { Payload } from './payload'
 
 const [, , command, kindText, ...args] = process.argv
 
@@ -16,7 +17,7 @@ pnpm tsx dev-tools/dev-server/command.ts shutdown
 pnpm tsx dev-tools/dev-server/command.ts create <component|plugin> <id> <name> <displayName> <authorName> [authorLink] [description]`)
 }
 
-const isFeatureKind = (value: string): value is FeatureKind =>
+const isFeatureKind = (value: string): value is RegistryFeatureType =>
   value === 'component' || value === 'plugin'
 
 const createRequestId = () => `${Date.now()}-${Math.random().toString(36).slice(2)}`

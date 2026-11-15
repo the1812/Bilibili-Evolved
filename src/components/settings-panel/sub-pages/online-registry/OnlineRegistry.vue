@@ -7,12 +7,13 @@
   >
     <div class="online-registry-header">
       <div class="online-registry-title">
-        <VIcon icon="mdi-web" />
-        在线仓库
+        <VIcon icon="mdi-package-variant-closed" />
+        功能库
       </div>
       <div class="online-registry-search">
         <TextBox v-model="searchKeyword" placeholder="搜索功能" @keydown.enter="onSearchEnter" />
         <VButton type="primary" :disabled="loading" @click="search">搜索</VButton>
+        <RegistryInstallActions :open="popupOpen" />
       </div>
       <VIcon
         icon="mdi-close"
@@ -27,9 +28,7 @@
     </div>
     <div ref="content" class="online-registry-content">
       <VLoading v-if="loading" />
-      <div v-else-if="loadFailed" class="online-registry-error">
-        加载在线仓库失败，请点击搜索重试
-      </div>
+      <div v-else-if="loadFailed" class="online-registry-error">加载功能库失败，请点击搜索重试</div>
       <VEmpty v-else-if="!filteredList.length" />
       <div v-else class="online-registry-grid" :style="{ '--card-columns': cardColumns }">
         <RegistryItem
@@ -50,6 +49,7 @@ import { computed, onUnmounted, ref, watch } from 'vue'
 import { sizeChange } from '@/core/observer'
 import { TextBox, VButton, VEmpty, VIcon, VLoading, VPopup } from '@/ui'
 import RegistryFilters from './RegistryFilters.vue'
+import RegistryInstallActions from './RegistryInstallActions.vue'
 import RegistryItem from './RegistryItem.vue'
 import { queryRegistryItems } from './registry-query'
 import type { RegistryFilterSelection } from './types'
@@ -115,7 +115,7 @@ onUnmounted(() => debouncedSearch.cancel())
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  width: 50vw;
+  width: min(calc(100vw - 24px), max(50vw, 640px));
   height: 85vh;
   z-index: 100000;
   transition: 0.2s ease-out;
@@ -129,17 +129,26 @@ onUnmounted(() => debouncedSearch.cancel())
     padding: 12px $inline-padding;
     flex-shrink: 0;
     display: grid;
-    grid-template-columns: minmax(110px, 1fr) minmax(0, 400px) minmax(110px, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-areas: 'title search close';
     align-items: center;
     gap: 8px;
+    @media (max-width: 640px) {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        'title close'
+        'search search';
+    }
   }
   &-title {
+    grid-area: title;
     font-size: 18px;
     white-space: nowrap;
     @include h-center(8px);
     @include semi-bold();
   }
   &-close {
+    grid-area: close;
     justify-self: end;
     padding: 2px;
     cursor: pointer;
@@ -153,6 +162,10 @@ onUnmounted(() => debouncedSearch.cancel())
     border-bottom: 1px solid #8882;
   }
   &-search {
+    grid-area: search;
+    justify-self: center;
+    width: 100%;
+    max-width: 560px;
     min-width: 0;
     font-size: 12px;
     @include h-stretch(8px);

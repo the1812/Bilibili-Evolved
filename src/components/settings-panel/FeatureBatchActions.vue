@@ -6,11 +6,12 @@
     placement="right"
     trigger="manual"
     show
-    v-bind="{ hideOnClick: false, getReferenceClientRect: referenceRect }"
+    :hide-on-click="false"
+    :get-reference-client-rect="referenceRect"
   >
     <template #toast>
       <div class="batch-actions-header">
-        <span>已选 {{ selection.length }} 个组件</span>
+        <span>已选 {{ selection.length }} 个功能</span>
         <VIcon icon="close" :size="14" title="清除选择" @click="emit('close')" />
       </div>
       <ComponentAction
@@ -25,15 +26,14 @@
 
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import { getComponentSettings, isUserComponent } from '@/core/settings'
 import { Toast, ToastType } from '@/core/toast'
 import { MiniToast, VIcon } from '@/ui'
-import type { AutoUpdateOptions } from '../auto-update'
-import { componentsMap, ComponentMetadata } from '../component'
+import type { SettingsFeature } from './settings-feature'
 import ComponentAction from './component-actions/ComponentAction.vue'
-import { removeUserComponent } from './component-actions/component-actions'
+import { settingsBatchActions } from './component-actions/component-actions'
+import { useComponentData } from './component-data'
 
-const props = defineProps<{ selection: string[]; scrollContainer?: HTMLElement }>()
+const props = defineProps<{ selection: SettingsFeature[]; scrollContainer?: HTMLElement }>()
 const emit = defineEmits<{ (event: 'close'): void }>()
 const menu = ref<InstanceType<typeof MiniToast>>()
 const referenceRect = computed(() => {
@@ -62,30 +62,18 @@ watch(
 )
 
 const pending = ref(false)
-const userComponents = computed(() =>
-  props.selection.filter(isUserComponent).map(name => componentsMap[name]),
-)
-const updatableComponents = computed(() => {
-  const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-  return userComponents.value.filter(({ name }) => options.urls.components[name]?.source)
-})
-
-const runBatchAction = async (
-  verb: string,
-  items: ComponentMetadata[],
-  run: (items: ComponentMetadata[]) => Promise<string>,
-) => {
-  if (pending.value || items.length === 0) {
+const runBatchAction = async (verb: string, count: number, run: () => Promise<string>) => {
+  if (pending.value || count === 0) {
     return
   }
   const title = `批量${verb}`
-  if (!window.confirm(`确定要${verb}所选的 ${items.length} 个组件吗?`)) {
+  if (!window.confirm(`确定要${verb}所选的 ${count} 个功能吗?`)) {
     return
   }
   pending.value = true
   const toast = Toast.info('处理中...', title)
   try {
-    toast.message = lodash.escape(await run(items))
+    toast.message = lodash.escape(await run())
   } catch (error) {
     toast.type = ToastType.Error
     toast.message = lodash.escape(String(error))
@@ -95,44 +83,16 @@ const runBatchAction = async (
   }
 }
 
-const actions = computed(() => [
-  {
-    name: 'update',
-    displayName: '批量更新',
-    icon: 'mdi-cloud-download-outline',
-    title: '更新所选组件中有更新链接的组件',
-    count: updatableComponents.value.length,
-    action: () =>
-      runBatchAction('更新', updatableComponents.value, async items => {
-        const { checkComponentsUpdate } = await import('../auto-update/checker')
-        const result = await checkComponentsUpdate({
-          filterNames: items.map(({ name }) => name),
-          force: true,
-        })
-        return result || '所选组件暂无更新'
-      }),
-  },
-  {
-    name: 'uninstall',
-    displayName: '批量卸载',
-    icon: 'mdi-trash-can-outline',
-    title: '卸载所选的自定义组件',
-    count: userComponents.value.length,
-    action: () =>
-      runBatchAction('卸载', userComponents.value, async items => {
-        const failures: string[] = []
-        for (const item of items) {
-          try {
-            await removeUserComponent(item)
-          } catch (error) {
-            failures.push(`[${item.displayName}] ${String(error)}`)
-          }
-        }
-        const count = items.length - failures.length
-        return [`已卸载 ${count} 个组件, 刷新后生效`, ...failures].join('\n')
-      }),
-  },
-])
+const actions = useComponentData(() =>
+  settingsBatchActions.value.map(({ prepare, verb, ...action }) => {
+    const { count, run } = prepare(props.selection)
+    return {
+      ...action,
+      count,
+      action: () => runBatchAction(verb, count, run),
+    }
+  }),
+)
 </script>
 
 <style lang="scss">

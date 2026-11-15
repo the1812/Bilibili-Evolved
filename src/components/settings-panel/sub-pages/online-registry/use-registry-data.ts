@@ -3,8 +3,8 @@ import { onUnmounted, ref } from 'vue'
 import { getFeatureAuthors } from '@/components/author'
 import { getDescriptionText } from '@/components/description'
 import { componentsTags } from '@/components/types'
-import { monkey } from '@/core/ajax'
 import { getCdnConfig } from '@/core/cdn-types'
+import { loadRegistryEntries } from '@/core/feature-registry'
 import { installFeature } from '@/core/install-feature'
 import { branches, meta } from '@/core/meta'
 import {
@@ -14,7 +14,7 @@ import {
   settings,
 } from '@/core/settings'
 import { logError } from '@/core/utils/log'
-import type { DocSourceItem, RegistryItemData } from './types'
+import type { RegistryItemData } from './types'
 
 const readInstalled = () => ({
   component: new Set(Object.keys(settings.userComponents)),
@@ -52,11 +52,7 @@ export const useRegistryData = () => {
     loadFailed.value = false
     try {
       const cdn = getCdnConfig(general.cdnRoot)
-      const url = `${cdn.root(branch, cdn.repo)}doc/features/features.json`
-      const entries = await monkey<DocSourceItem[]>({ url, responseType: 'json' })
-      if (!Array.isArray(entries)) {
-        throw new Error(`无效的在线仓库索引: ${url}`)
-      }
+      const entries = await loadRegistryEntries(branch, cdn)
       list.value = await Promise.all(
         entries.map(async item => {
           const descriptionText = await getDescriptionText(item)

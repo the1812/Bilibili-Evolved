@@ -3,25 +3,25 @@ import { dirname, join } from 'path'
 import { sync } from 'glob'
 import * as t from '@babel/types'
 import {
-  collectStaticObjectConstants,
   collectStringConstants,
   findFeatureObject,
   findObjectProperty,
   parseFile,
-  readAuthor,
   readStaticString,
-} from './ast'
-import { DocSourceItem, FeatureKind } from './types'
+} from '../feature-ast'
+import { collectAuthorConstants, readAuthor } from './author'
+import type { RegistryFeatureType } from '../src-types'
+import { DocSourceItem } from './types'
 
 const getFeatureId = (root: string, entry: string) => {
   const relative = entry.replace(root, '').replace(/\\/g, '/')
   return relative.replace(/\/[^/]+$/, '')
 }
 
-const readFeatureMetadata = (file: string, kind: FeatureKind) => {
+const readFeatureMetadata = (file: string, kind: RegistryFeatureType) => {
   const ast = parseFile(file)
   const constants = collectStringConstants(ast)
-  const objectConstants = collectStaticObjectConstants(ast, constants)
+  const objectConstants = collectAuthorConstants(ast, constants)
   const metadata = findFeatureObject(ast)
   if (!metadata) {
     return undefined
@@ -64,14 +64,13 @@ const readFeatureMetadata = (file: string, kind: FeatureKind) => {
       return tag.property.name
     })
   }
-
   return { name, displayName, author, tags }
 }
 
 const readMarkdownDescription = (file: string) =>
   readFileSync(file, 'utf8').replace(/\r\n?/g, '\n').trim()
 
-export const readFeatureDocs = (kind: FeatureKind): DocSourceItem[] => {
+export const readFeatureDocs = (kind: RegistryFeatureType): DocSourceItem[] => {
   const src = `./registry/lib/${kind}s/`
   const rootPath = `../../registry/dist/${kind}s/`
   return sync(`${src}**/index.ts`, { dotRelative: true, posix: true })

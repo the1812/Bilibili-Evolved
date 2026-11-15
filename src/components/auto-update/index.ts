@@ -1,6 +1,6 @@
 import { ComponentEntry, componentsTags } from '@/components/types'
-import { branches, matchingUpdateBranches, meta, stableUpdateBranches } from '@/core/meta'
-import { getComponentSettings, getGeneralSettings, isUserComponent } from '@/core/settings'
+import { meta } from '@/core/meta'
+import { getComponentSettings, getGeneralSettings } from '@/core/settings'
 import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
 import {
@@ -9,19 +9,25 @@ import {
   OptionsOfMetadata,
 } from '@/components/define'
 import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
-import { ComponentAction } from '../settings-panel/component-actions/component-actions'
-import { name, UpdateCheckItem, updateFeature, updateKinds } from './utils'
+import type {
+  SettingsBatchAction,
+  SettingsDetailActionProvider,
+} from '../settings-panel/component-actions/settings-action-types'
+import type { SettingsFeature } from '../settings-panel/settings-feature'
+import type { UpdateSourceProvider } from '../settings-panel/feature-update-source'
+import { name, UpdateCheckItem, updateKinds } from './utils'
 import {
   FeatureSource,
   getFeatureSource,
   isLocalFeatureUrl,
   getFeatureUrl,
-  switchGithubBranch,
 } from '@/core/feature-source'
+import { createSwitchUpdateChannelAction } from './channel-switch'
 import * as checkerMethods from './checker'
 
 const {
   checkComponentsUpdate,
+  checkPluginsUpdate,
   checkLastFeature,
   forceCheckUpdate,
   forceCheckUpdateAndReload,
@@ -102,10 +108,20 @@ export const component = defineComponentMetadata({
     displayName: '自动更新器 - 功能扩展',
     description: {
       'zh-CN':
-        '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件详情中支持手动检查该组件的更新.',
+        '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件和插件详情中支持手动检查更新.',
     },
     // 非设置面板的组件如果也对能功能进行修改, 建议调用此处的 Hooks 同步状态.
     setup: ({ addData, addHook }) => {
+      const getUpdateSource = (type: 'components' | 'plugins', featureName: string) => {
+        const { options } = getComponentSettings<AutoUpdateOptions>(name)
+        return options.urls[type][featureName]?.source
+      }
+      addData('settingsPanel.componentUpdateSources', (providers: UpdateSourceProvider[]) => {
+        providers.push(featureName => getUpdateSource('components', featureName))
+      })
+      addData('settingsPanel.pluginUpdateSources', (providers: UpdateSourceProvider[]) => {
+        providers.push(featureName => getUpdateSource('plugins', featureName))
+      })
       updateKinds.forEach(type => {
         addHook(`user${lodash.startCase(type)}.add`, {
           after: (
@@ -135,76 +151,74 @@ export const component = defineComponentMetadata({
           },
         })
       })
-      addData('settingsPanel.componentActionButtons', (actions: ComponentAction[]) => {
-        const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-        actions.unshift(metadata => {
-          const item = options.urls.components[metadata.name]
-          if (!item?.source) {
-            return undefined
+      const checkByCollection = { components: checkComponentsUpdate, plugins: checkPluginsUpdate }
+      const getUpdate = (feature: SettingsFeature) => {
+        const { removal, registry } = feature.operations
+        const target = removal && registry?.target
+        const source = target && getUpdateSource(target.collection, target.name)
+        return source && { target, source }
+      }
+      addData('settingsPanel.featureActions', (providers: SettingsDetailActionProvider[]) => {
+        providers.unshift(feature => {
+          const update = getUpdate(feature)
+          if (!update) {
+            return {}
           }
-          const url = getFeatureUrl(item.source)
+          const { target, source } = update
+          const url = getFeatureUrl(source)
+          const channelAction = createSwitchUpdateChannelAction(target.kind, target.name, source)
           return {
-            name: 'checkUpdate',
-            displayName: '检查更新',
-            icon: isLocalFeatureUrl(url)
-              ? 'mdi-file-download-outline'
-              : 'mdi-cloud-download-outline',
-            visible: isUserComponent(metadata),
-            title: url,
-            action: async () => {
-              const { Toast } = await import('@/core/toast')
-              const toast = Toast.info('检查更新中...', '检查更新')
-              toast.message = await checkComponentsUpdate({
-                filterNames: [metadata.name],
-                force: true,
-              })
-              toast.duration = 3000
-            },
+            buttons: [
+              {
+                name: 'checkUpdate',
+                displayName: '检查更新',
+                icon: isLocalFeatureUrl(url)
+                  ? 'mdi-file-download-outline'
+                  : 'mdi-cloud-download-outline',
+                title: url,
+                action: async () => {
+                  const { Toast } = await import('@/core/toast')
+                  const toast = Toast.info('检查更新中...', '检查更新')
+                  toast.message = await checkByCollection[target.collection]({
+                    filterNames: [target.name],
+                    force: true,
+                  })
+                  toast.duration = 3000
+                },
+              },
+            ],
+            menu: channelAction ? [channelAction] : [],
           }
         })
       })
-      addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
-        const { options } = getComponentSettings<AutoUpdateOptions>(name)
-        actions.push(metadata => {
-          const source = options.urls.components[metadata.name]?.source
-          if (source?.kind !== 'github' || !isUserComponent(metadata)) {
-            return undefined
-          }
-          const isPreview = source.ref === branches.preview
-          if (!isPreview && !stableUpdateBranches.includes(source.ref)) {
-            return undefined
-          }
-          const { branch } = meta.compilationInfo
-          const stableBranch = branch === branches.stableCdn ? branches.stableCdn : branches.stable
-          const target = switchGithubBranch(source, isPreview ? stableBranch : branches.preview)
-          const displayName = isPreview ? '切换到稳定版' : '切换到预览版'
-          const confirmPreview =
-            !isPreview && matchingUpdateBranches.get(branch)?.includes(branches.stable)
-          return {
-            name: 'switchUpdateChannel',
-            displayName,
-            icon: 'mdi-source-branch',
-            action: async () => {
-              if (
-                confirmPreview &&
-                !window.confirm(
-                  '当前本体是稳定版，确定要将此组件切换到预览版吗？这可能导致组件出现不兼容的情况而失效。',
+      addData('settingsPanel.featureBatchActions', (actions: SettingsBatchAction[]) => {
+        actions.unshift({
+          name: 'update',
+          displayName: '批量更新',
+          icon: 'mdi-cloud-download-outline',
+          title: '更新所选功能中有更新链接的组件和插件',
+          verb: '更新',
+          prepare: selection => {
+            const targets = selection.flatMap(feature => {
+              const update = getUpdate(feature)
+              return update ? [update.target] : []
+            })
+            const groups = Object.values(lodash.groupBy(targets, target => target.collection))
+            return {
+              count: targets.length,
+              run: async () => {
+                const results = await Promise.all(
+                  groups.map(items =>
+                    checkByCollection[items[0].collection]({
+                      filterNames: items.map(item => item.name),
+                      force: true,
+                    }),
+                  ),
                 )
-              ) {
-                return
-              }
-              const { Toast } = await import('@/core/toast')
-              const toast = Toast.info('正在切换版本...', displayName)
-              try {
-                const { message } = await updateFeature(target)
-                Toast.success(message, displayName, 3000)
-              } catch (error) {
-                Toast.error((error as Error).message ?? String(error), displayName, 5000)
-              } finally {
-                toast.close()
-              }
-            },
-          }
+                return results.filter(Boolean).join('\n') || '所选功能暂无更新'
+              },
+            }
+          },
         })
       })
 

@@ -14,6 +14,7 @@ export const branches = {
 export const previewUpdateBranches = [branches.preview]
 export const stableUpdateBranches = [branches.stable, branches.stableCdn]
 export const matchingUpdateBranches = new Map([
+  [branches.preview, previewUpdateBranches],
   ['preview-features', previewUpdateBranches],
   ['preview-fixes', stableUpdateBranches],
   [branches.stable, stableUpdateBranches],
