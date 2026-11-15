@@ -23,7 +23,7 @@ const addUid = async (item: CommentReplyItem) => {
   }
   const uid = document.createElement('span')
   uid.className = uidClass
-  uid.textContent = `UID: ${item.userId}`
+  uid.textContent = `UID ${item.userId}`
   userName.after(uid)
 }
 

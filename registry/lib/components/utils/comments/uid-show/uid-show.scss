@@ -1,10 +1,13 @@
 .be-comment-uid {
   display: inline-block;
   margin-left: 5px;
-  color: var(--be-color-text-placeholder, #888);
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: var(--be-color-tag-bg, #f4f4f4);
+  color: var(--text3, #9499a0);
   font-size: 12px;
   font-weight: normal;
-  line-height: inherit;
+  line-height: 1.5;
   vertical-align: middle;
   white-space: nowrap;
 }
