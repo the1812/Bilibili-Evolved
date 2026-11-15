@@ -122,6 +122,22 @@ const updateList = (keyword: string) => {
   nextTick(() => content.value?.scrollTo(0, 0))
 }
 
+const loadRegistryPacks = async (url: string) => {
+  try {
+    const packs = await monkey<(Package & { type: 'pack'; items: DocSourceItem[] })[]>({
+      url,
+      responseType: 'json',
+    })
+    if (!Array.isArray(packs)) {
+      throw new Error('无效的功能库合集索引')
+    }
+    return packs
+  } catch (error) {
+    console.warn('获取功能库合集失败', url, error)
+    return []
+  }
+}
+
 const fetchFeatures = async () => {
   if (loading.value) {
     return
@@ -132,16 +148,10 @@ const fetchFeatures = async () => {
     loading.value = true
     list.value = []
     filteredList.value = []
-    const packListUrl = `${fetchPath}doc/features/pack/pack.json`
-    const featureList = await loadRegistryEntries(selectedBranch.value, cdn)
-    const packList = await monkey<(Package & { type: 'pack'; items: DocSourceItem[] })[]>({
-      url: packListUrl,
-      responseType: 'json',
-    })
-    if (!Array.isArray(packList)) {
-      console.error('Fetch failed:', packList, packListUrl)
-      throw new Error('获取功能库数据失败, 请尝试在通用设置中设置其他更新源, 然后再试一次.')
-    }
+    const [featureList, packList] = await Promise.all([
+      loadRegistryEntries(selectedBranch.value, cdn),
+      loadRegistryPacks(`${fetchPath}doc/features/pack/pack.json`),
+    ])
     const withRepo = (item: DocSourceItem) => ({
       ...item,
       repo: item.repo ?? (item.owner ? `${item.owner}/Bilibili-Evolved` : cdn.repo),
