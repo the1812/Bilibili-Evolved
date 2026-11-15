@@ -1,7 +1,7 @@
 <template>
   <div class="component-detail">
     <div class="component-detail-header">
-      <div class="display-name">{{ feature.displayName }}</div>
+      <div class="display-name" :title="feature.displayName">{{ feature.displayName }}</div>
       <div class="component-detail-header-actions">
         <DetailActionMenu :actions="actions.menu" />
         <VIcon class="close" icon="close" :size="18" @click="emit('close')" />
@@ -101,6 +101,8 @@ onUnmounted(() => removeComponentListener('settingsPanel.devMode', updateDevMode
     z-index: 2;
 
     .display-name {
+      min-width: 0;
+      @include single-line();
       @include semi-bold();
       font-size: 16px;
     }
@@ -163,6 +165,9 @@ onUnmounted(() => removeComponentListener('settingsPanel.devMode', updateDevMode
     .commit-warning {
       color: #ff9800;
     }
+  }
+  &-internal-name {
+    overflow-wrap: anywhere;
   }
   &-header + &-operations {
     padding-top: 3px;
