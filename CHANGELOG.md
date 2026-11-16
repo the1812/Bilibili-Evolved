@@ -1,5 +1,48 @@
 <!-- spell-checker: disable -->
 # 更新日志
+## v2.12.0-preview
+`2026-11-16`
+
+> 包含 [v2.12.0](https://github.com/the1812/Bilibili-Evolved/releases/tag/v2.12.0) 的所有更新内容.
+
+✨新增
+- 新增组件 `AB 区段循环播放`, 可在播放器上标记 A / B 两点并循环播放, 在进度条上显示标记, 也可通过 `快捷键扩展` 设置标记和退出循环. (#5837, PR #5838 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 新增组件 `动态视频瀑布流`, 在动态页以瀑布流布局展示视频动态. (PR #5848 by [TianMiao](https://github.com/tianmiao8152))
+- 新增组件 `仅听视频`, 可通过播放器控制栏切换, 停止下载视频分片并保留音频、弹幕和字幕. (PR #5850 by [Weidows](https://github.com/Weidows))
+- 新增组件 `播放器弹出菜单改为点击展开`, 支持点击展开画质、倍速、字幕等菜单, 可分别恢复各控件的悬停行为. (PR #5853 by [tangentyh](https://github.com/tangentyh))
+- 新增组件 `多语言链接重定向`, 支持将带语言前缀的 b 站链接重定向到对应的主站页面. (#5824, PR #5858 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 恢复曾经废弃的 `动态翻译` 和 `评论翻译`, 基于 b 站提供的 Index-Translate 服务打造, 也可以通过内置的 `AI 模型配置` 设置其他模型.
+- `自定义顶栏 - 深色模式开关` 支持无需刷新切换, 并同步 b 站原生主题状态. (PR #5832 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `评论区评论排序` 的悬浮面板支持最小化和恢复, 并处理了 Enter 键与评论输入框的冲突. (PR #5851 by [grcOvO](https://github.com/koagaroon))
+- `下载视频` 支持区分 Akamaized 视频源, 并在使用非偏好源时提醒. 同时改进 StreamSaver 的请求失败提示, 修复 `WASM 混流输出` 获取 DASH 视频时的范围请求. (#5857)
+
+☕开发者相关
+- 新增 AI 模型服务与翻译接口.
+- Toast 支持警告类型. (PR #5859 by [LainIO24](https://github.com/lainio24))
+
+## v2.12.0
+`2026-11-16`
+
+✨新增
+- 调整了设置面板一些不太合理的交互设计, 并重新设计了功能详情面板里的布局, 支持直接切换功能的更新源、查看关联的插件信息等.
+- `在线仓库` 现已更名为 `功能库`, 调整了设计方便浏览可用的功能, 原有的添加组件/插件/样式入口也移动到了功能库面板中.
+- `夜间模式` 新增手动、跟随系统、计划时段三种模式. 原先的 `夜间模式跟随系统` 和 `夜间模式计划时段` 已合入主组件, 并修复首次加载时的主题闪动. (#5861, PR #5866 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `清爽首页` 重做分区栏和视频轮播, 支持分区拖动排序、活动卡片滚轮切换, 并改进列表分页与封面加载. (#5632, PR #5819 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+🐛修复
+- 修复番剧播放页样式有时会失效的问题. (#4250, PR #5830 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复设置面板内下拉菜单被滚动容器裁切的问题. (PR #5827 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复在线功能导入、搜索和提示框的问题, 并在安装时拒绝缺少必要字段的组件、插件和样式. (PR #5834 by [司城 ユヅキ](https://github.com/WhiteTeal55), PR #5835 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `传统连播模式` 在新版多 P 和合集页面失效的问题. (#5843, PR #5847 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `滚轮调节音量` 拦截播放器控制栏和浮层上的滚动操作. (PR #5842 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `直播首页静音` 和 `直播首页暂停` 共用隐藏直播首页板块的样式. (PR #5836 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `快捷键扩展` 加载已失效的动作绑定时出错的问题. (#5863, PR #5871 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- 修复 `自定义顶栏` 个人信息面板的大会员权益到期时间显示. (PR #5868 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+- `下载视频 - Motrix 输出支持` 适配 Motrix 2 的链接协议, 多分段地址通过剪贴板传入新建任务. (#5860, PR #5865 by [司城 ユヅキ](https://github.com/WhiteTeal55))
+
+☕开发者相关
+- DevClient 不再将临时开发地址写入到脚本存储, 改为 sessionStorage 实现, 避免开发地址残留的问题.
+
 ## v2.11.5-preview
 `2026-10-17`
 
