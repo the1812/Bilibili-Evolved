@@ -105,12 +105,14 @@ interface AudioGraph {
 const audioGraphs = new WeakMap<HTMLVideoElement, AudioGraph>()
 
 /**
- * 软削波曲线: 0.8 以下线性透传, 超出部分用 tanh 平滑地压进 ±1
- * 压缩和限幅仍可能输出超过 1 的样本, 这里做最后一道保险, 保证任何增益下都不会削波
+ * 软削波曲线: `knee` 以下线性透传, 超出部分用 tanh 平滑地压进上限.
+ * 上限取 0.95 而不是 1, 是因为 `oversample: '4x'` 的插值滤波会在峰值处产生少量过冲,
+ * 留出余量才能保证最终输出的样本始终小于满刻度, 不会削波爆音.
  */
 const createSoftClipCurve = () => {
   const size = 4096
-  const knee = 0.8
+  const knee = 0.65
+  const ceiling = 0.95
   const curve = new Float32Array(size)
   for (let index = 0; index < size; index += 1) {
     const input = (index / (size - 1)) * 2 - 1
@@ -118,7 +120,8 @@ const createSoftClipCurve = () => {
     curve[index] =
       magnitude <= knee
         ? input
-        : Math.sign(input) * (knee + (1 - knee) * Math.tanh((magnitude - knee) / (1 - knee)))
+        : Math.sign(input) *
+          (knee + (ceiling - knee) * Math.tanh((magnitude - knee) / (ceiling - knee)))
   }
   return curve
 }
@@ -147,22 +150,16 @@ const createAudioGraph = (video: HTMLVideoElement) => {
     const source = context.createMediaElementSource(video)
     const gain = context.createGain()
 
-    // 压缩器只在接近满刻度时才介入 (实测这个参数组合几乎不改变整体的响度),
-    // 这样滑块每一档的听感变化依然等量, 而峰值又不会被推到削波
-    const compressor = context.createDynamicsCompressor()
-    compressor.threshold.value = -2
-    compressor.knee.value = 6
-    compressor.ratio.value = 6
-    compressor.attack.value = 0.003
-    compressor.release.value = 0.25
-
+    // 这里只用一个逐样本的软削波限幅器, 不再串联动态压缩器:
+    // 动态压缩器的增益恢复 (release) 会在每个音符之间弹回, 导致峰值反复冲过阈值,
+    // 实测平均响度反而被压低; 而逐样本的软削波会把超出满刻度的部分直接平滑地压进 ±1,
+    // 压缩比对平均响度的提升是确定且没有回弹的.
     const softClip = context.createWaveShaper()
     softClip.curve = createSoftClipCurve()
     softClip.oversample = '4x'
 
     // 增益链路一直在那里, 只是没有输入, 由 `setChained` 决定源节点接不接进来
-    gain.connect(compressor)
-    compressor.connect(softClip)
+    gain.connect(softClip)
     softClip.connect(context.destination)
 
     const graph: AudioGraph = { context, source, gain, chained: false }
