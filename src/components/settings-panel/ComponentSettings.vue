@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import { visibleInside } from '@/core/observer'
 import { SwitchBox, VIcon } from '@/ui'
 import TagRing from './TagRing.vue'
@@ -25,7 +25,10 @@ const props = defineProps<{ feature: SettingsFeature }>()
 const row = ref<HTMLElement>()
 const virtual = ref(false)
 const appearance = computed(() => props.feature.row)
-const settings = computed(() => appearance.value.toggle)
+const settings = computed(() => {
+  const { toggle } = appearance.value
+  return toggle && reactive(toggle)
+})
 
 let observer: IntersectionObserver
 onMounted(() => {
