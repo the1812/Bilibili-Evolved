@@ -317,7 +317,7 @@ export default Vue.extend({
         Math.trunc(containerWidth / timelineCssVars.seasonItemWidth) *
         timelineCssVars.seasonItemWidth
       const scrollArea = container.children[0]
-      scrollArea?.scrollBy(offset * pageWidth, 0)
+      scrollArea?.scrollBy({ left: offset * pageWidth, behavior: 'smooth' })
     },
   },
 })

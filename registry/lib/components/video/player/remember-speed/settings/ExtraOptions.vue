@@ -12,7 +12,7 @@
 import { componentsMap } from '@/components/component'
 import { getComponentSettings } from '@/core/settings'
 import { CheckBox } from '@/ui'
-import type { Options } from '..'
+import type { Options } from '../component'
 
 const rememberSpeedOptions = getComponentSettings<Options>('rememberVideoSpeed').options
 

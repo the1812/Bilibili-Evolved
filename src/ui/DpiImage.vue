@@ -12,6 +12,16 @@
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
 
+const findScrollParent = (element: HTMLElement) => {
+  for (let parent = element.parentElement; parent; parent = parent.parentElement) {
+    const { overflowX, overflowY } = getComputedStyle(parent)
+    if (/(auto|scroll)/.test(overflowX + overflowY)) {
+      return parent
+    }
+  }
+  return null
+}
+
 export default Vue.extend({
   name: 'DpiImage',
   props: {
@@ -68,10 +78,10 @@ export default Vue.extend({
     },
   },
   mounted() {
-    const options = {
-      ...{
-        rootMargin: '200px',
-      },
+    const scrollParent = this.intersection.root ? null : findScrollParent(this.$el as HTMLElement)
+    const options: IntersectionObserverInit = {
+      root: scrollParent,
+      rootMargin: scrollParent ? '100%' : '200px',
       ...this.intersection,
     }
     const observer = new IntersectionObserver(entries => {

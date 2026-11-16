@@ -31,6 +31,15 @@ export const componentToSettings = <O extends UnknownOptions>(
   }
 }
 
+export const fillComponentOptionDefaults = (options: UnknownOptions, defaults: UnknownOptions) =>
+  lodash.defaultsDeep(
+    options,
+    lodash.pickBy(
+      defaults,
+      (value, key) => !Array.isArray(value) || lodash.get(options, key) === undefined,
+    ),
+  )
+
 /**
  * 判断是否为自定义组件
  * @param component 组件定义
@@ -58,6 +67,15 @@ const emptySettings: ComponentSettings = {
       },
     },
   ),
+}
+const temporaryComponentSettings = new WeakMap<ComponentMetadata, ComponentSettings>()
+export const registerTemporaryComponentSettings = (component: ComponentMetadata) => {
+  const storedOptions = settings.userComponents[component.name]?.settings.options
+  const { options: defaults } = componentToSettings(component)
+  temporaryComponentSettings.set(component, {
+    enabled: true,
+    options: fillComponentOptionDefaults(lodash.cloneDeep(storedOptions ?? {}), defaults),
+  })
 }
 
 /**
@@ -88,6 +106,10 @@ export const getComponentSettings = <O extends UnknownOptions>(
     componentMetadata = componentsMap[component]
   } else {
     componentMetadata = component
+  }
+  const temporary = temporaryComponentSettings.get(componentMetadata)
+  if (temporary) {
+    return temporary as ComponentSettings<O>
   }
   if (isUserComponent(componentMetadata)) {
     const { name } = componentMetadata

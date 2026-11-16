@@ -45,9 +45,10 @@
   </VPopup>
 </template>
 <script lang="ts">
+import { defineComponent, PropType } from 'vue'
 import { VPopup, TextBox, VIcon, VButton } from '@/ui'
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     VPopup,
     TextBox,
@@ -60,7 +61,7 @@ export default Vue.extend({
       default: null,
     },
     list: {
-      type: Array,
+      type: Array as PropType<string[]>,
       default: null,
     },
     titleName: {
@@ -82,17 +83,17 @@ export default Vue.extend({
     toggle() {
       this.$refs.popup.toggle()
     },
-    changeName(val: string) {
+    changeName(val: string): void {
       this.name = val
     },
-    add() {
+    add(): void {
       if (this.name.length && !this.list.includes(this.name)) {
         // eslint-disable-next-line vue/no-mutating-props
         this.list.push(this.name)
       }
       this.name = ''
     },
-    toggleVisible(item: string) {
+    toggleVisible(item: string): void {
       // eslint-disable-next-line vue/no-mutating-props
       this.list.splice(this.list.indexOf(item), 1)
     },

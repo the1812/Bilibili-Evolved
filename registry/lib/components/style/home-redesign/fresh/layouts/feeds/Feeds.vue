@@ -28,10 +28,10 @@
         <VButton icon title="刷新" @click="reload">
           <VIcon icon="mdi-refresh" :size="18" />
         </VButton>
-        <VButton icon title="上一页" @click="$refs.videoList.offsetPage(-1)">
+        <VButton icon title="上一页" @click="offsetPage(-1)">
           <VIcon icon="left-arrow" :size="20" />
         </VButton>
-        <VButton icon title="下一页" @click="$refs.videoList.offsetPage(1)">
+        <VButton icon title="下一页" @click="offsetPage(1)">
           <VIcon icon="right-arrow" :size="20" />
         </VButton>
         <a
@@ -92,6 +92,10 @@ export default Vue.extend({
     this.reload()
   },
   methods: {
+    offsetPage(offset: number) {
+      const videoList = this.$refs.videoList as InstanceType<typeof VideoList>
+      videoList.offsetPage(offset)
+    },
     selectTab(tab: TabType) {
       if (this.selectedTab === tab) {
         window.open(tab.href, '_blank')

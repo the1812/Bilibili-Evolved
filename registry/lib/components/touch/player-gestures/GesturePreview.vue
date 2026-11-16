@@ -6,7 +6,7 @@
         <div class="label">
           <div class="name">亮度</div>
           <div class="value">
-            {{ preview.brightness | percent }}
+            {{ formatPercent(preview.brightness) }}
           </div>
         </div>
       </div>
@@ -14,7 +14,7 @@
         <div class="videoshot" :style="videoshotStyle"></div>
         <div v-show="preview.progress !== null" class="preview">
           <div v-if="!progressNaN" class="diff">
-            {{ (preview.progress - store.progress) | progressDiff }}
+            {{ formatProgressDiff(preview.progress - store.progress) }}
           </div>
           <div class="seek-mode">
             {{ !progressNaN ? preview.seekMode : '取消调整' }}
@@ -22,7 +22,7 @@
         </div>
         <div v-show="preview.progress === null" class="name">进度</div>
         <div class="progress-label">
-          {{ (progressValid ? preview.progress : store.progress) | progress }}
+          {{ formatProgress(progressValid ? preview.progress : store.progress) }}
         </div>
       </div>
       <div class="volume">
@@ -30,7 +30,7 @@
         <div class="label">
           <div class="name">音量</div>
           <div class="value">
-            {{ preview.volume | percent }}
+            {{ formatPercent(preview.volume) }}
           </div>
         </div>
       </div>
@@ -86,14 +86,6 @@ export default Vue.extend({
     ProgressRing,
     ProgressBar,
   },
-  filters: {
-    percent: formatPercent,
-    progress: (p: number) => formatDuration(p, 1),
-    progressDiff(diff: number) {
-      const symbol = diff > 0 ? '+' : '-'
-      return `${symbol}${secondsToTime(diff)}`
-    },
-  },
   data() {
     const defaultStore = {
       progress: 0,
@@ -102,7 +94,7 @@ export default Vue.extend({
     }
     return {
       opened: false,
-      video: dq('video'),
+      video: dq('video') as HTMLVideoElement,
       videoshot: new Videoshot(),
       videoshotStyle: {},
       store: defaultStore,
@@ -130,6 +122,14 @@ export default Vue.extend({
     },
   },
   methods: {
+    formatPercent,
+    formatProgress(progress: number) {
+      return formatDuration(progress, 1)
+    },
+    formatProgressDiff(diff: number) {
+      const symbol = diff > 0 ? '+' : '-'
+      return `${symbol}${secondsToTime(diff)}`
+    },
     sync() {
       const video = dq('video') as HTMLVideoElement
       this.video = video

@@ -30,9 +30,10 @@
   </div>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { VideoCard } from '@/components/feeds/video-card'
 import { formatDuration, formatCount, parseDuration, parseCount } from '@/core/utils/formatters'
-import { isNewID } from '@/components/feeds/notify'
+import { isNewID, type FeedCardWithNewStatus } from '@/components/feeds/notify'
 import { feedsCardTypes, groupVideoFeeds } from '@/components/feeds/api'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { nextPageMixin } from './next-page'
@@ -74,7 +75,7 @@ const formatPubTimeText = (pubTime: number) => {
   }
   return `${date.map(it => it.toString().padStart(2, '0')).join('-')}`
 }
-export default Vue.extend({
+export default defineComponent({
   components: {
     VideoCard: VideoCardComponent,
   },
@@ -102,12 +103,12 @@ export default Vue.extend({
         get new() {
           return isNewID(this.id)
         },
-      } as VideoCard
+      } as FeedCardWithNewStatus<VideoCard>
     }),
   ],
   computed: {
     columnedCards() {
-      const { cards } = this as { cards: VideoCard[] }
+      const { cards } = this as { cards: FeedCardWithNewStatus<VideoCard>[] }
       return {
         left: cards.filter((_, index) => index % 2 === 0),
         right: cards.filter((_, index) => index % 2 !== 0),

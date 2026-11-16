@@ -11,7 +11,7 @@ export const requestMixin = (
   } = {},
 ) => {
   const { requestMethod = getJson } = config
-  return Vue.extend({
+  return {
     props: {
       api: {
         type: String,
@@ -20,9 +20,10 @@ export const requestMixin = (
     },
     data() {
       return {
-        items: [],
+        items: [] as any[],
         loading: true,
-        error: false,
+        // 请求失败时存放错误信息, 供使用者展示
+        error: null as string | null,
       }
     },
     computed: {
@@ -36,7 +37,7 @@ export const requestMixin = (
     methods: {
       async reload() {
         try {
-          this.error = false
+          this.error = null
           this.loading = true
           this.items = this.parseJson(await requestMethod(this.api)).slice(
             0,
@@ -44,38 +45,37 @@ export const requestMixin = (
           )
         } catch (error) {
           console.error(error)
-          this.error = true
+          this.error = String(error)
         } finally {
           this.loading = false
         }
       },
     },
-  })
+  }
 }
 
 /**
  * 将 UI 常量放到 this.ui 上, 并在根元素上同步对应的 CSS var
  * @param variables UI 常量
  */
-export const cssVariableMixin = (variables: Record<string, string | number>) =>
-  Vue.extend({
-    data() {
-      return {
-        ui: variables,
-      }
-    },
-    mounted() {
-      const element = this.$el as HTMLElement
-      Object.entries(variables).forEach(([name, value]) => {
-        const stringValue = typeof value === 'number' ? `${value}px` : value
-        element.style.setProperty(`--${lodash.kebabCase(name)}`, stringValue)
-      })
-    },
-  })
+export const cssVariableMixin = (variables: Record<string, string | number>) => ({
+  data() {
+    return {
+      ui: variables,
+    }
+  },
+  mounted(this: Vue) {
+    const element = this.$el as HTMLElement
+    Object.entries(variables).forEach(([name, value]) => {
+      const stringValue = typeof value === 'number' ? `${value}px` : value
+      element.style.setProperty(`--${lodash.kebabCase(name)}`, stringValue)
+    })
+  },
+})
 
 /** 使用 CompactRankList, 提供一些与设置关联的 data */
 export const compactRankListMixin = () => {
-  return Vue.extend({
+  return {
     data() {
       return {
         rankListMode: freshHomeOptions.rankListMode,
@@ -96,5 +96,5 @@ export const compactRankListMixin = () => {
         freshHomeOptions.rankListMode = this.rankListMode
       },
     },
-  })
+  }
 }

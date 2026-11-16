@@ -39,7 +39,7 @@ jobs:
         id: classify
         env:
           BASE_REF: ${{ github.event.pull_request.base.ref }}
-        run: node .github/scripts/auto-publish-classify.mjs
+        run: node .github/scripts/auto-publish-classify.mts
 
   auto-publish-preview-fixes:
     name: Publish Preview Fixes

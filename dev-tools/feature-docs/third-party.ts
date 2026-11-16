@@ -1,11 +1,15 @@
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
-import { findObjectProperty, parseFile, readStaticString } from './ast'
-import { DocSourceItem, FeatureKind } from './types'
+import { findObjectProperty, parseFile, readStaticString } from '../feature-ast'
+import type { RegistryFeatureType } from '../src-types'
+import { DocSourceItem } from './types'
 
 const readStaticDocSourceItem = (object: t.ObjectExpression): DocSourceItem => {
   const constants = new Map<string, string>()
-  const type = readStaticString(findObjectProperty(object, 'type')?.value, constants) as FeatureKind
+  const type = readStaticString(
+    findObjectProperty(object, 'type')?.value,
+    constants,
+  ) as RegistryFeatureType
   const name = readStaticString(findObjectProperty(object, 'name')?.value, constants)
   const displayName = readStaticString(findObjectProperty(object, 'displayName')?.value, constants)
   const fullRelativePath = readStaticString(
@@ -25,7 +29,8 @@ const readStaticDocSourceItem = (object: t.ObjectExpression): DocSourceItem => {
     type,
     name,
     displayName,
-    description,
+    description: description ?? '暂无描述.',
+    author: owner ? { name: owner, link: `https://github.com/${owner}` } : undefined,
     fullRelativePath,
     fullAbsolutePath,
     owner,
@@ -34,7 +39,7 @@ const readStaticDocSourceItem = (object: t.ObjectExpression): DocSourceItem => {
 
 export const readThirdPartyDocs = () => {
   const ast = parseFile('registry/lib/docs/third-party.ts')
-  const docs: Record<'component' | 'plugin', DocSourceItem[]> = {
+  const docs: Record<RegistryFeatureType, DocSourceItem[]> = {
     component: [],
     plugin: [],
   }
@@ -54,13 +59,7 @@ export const readThirdPartyDocs = () => {
         if (!t.isObjectExpression(element)) {
           throw new Error(`registry/lib/docs/third-party.ts: unsupported ${variableName} entry`)
         }
-        const item = readStaticDocSourceItem(element)
-        return {
-          ...item,
-          description: `${item.owner ? `by ${item.owner}\n\n` : ''}${
-            item.description ?? '暂无描述.'
-          }`,
-        }
+        return readStaticDocSourceItem(element)
       })
     },
   })

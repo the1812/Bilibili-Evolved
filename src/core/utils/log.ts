@@ -178,12 +178,14 @@ export const useScopedConsole = (config: ScopedConsoleConfig | string) => {
   )
   scopedConsole.debug = (() => {
     const patch = prependBadge(console.debug, actualConfig)
-    return function patchedDebug(...args: any[]) {
+    const patchedDebug = function patchedDebug(...args: any[]) {
       if (!getGeneralSettings().devMode) {
         return undefined
       }
       return patch.apply(this, args)
     }
+    patchedDebug[ScopedConsoleSymbol] = patch[ScopedConsoleSymbol]
+    return patchedDebug
   })()
   afterCreate(actualConfig, scopedConsole)
   return scopedConsole

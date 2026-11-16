@@ -7,10 +7,6 @@ import { RefreshMethod, HotReloadMethod } from './update-method'
 export const { options: autoUpdateOptions } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
 export const getDevClientOptions = () =>
   getComponentSettings<OptionsOfMetadata<typeof devClientOptionsMetadata>>('devClient').options
-export interface DevRecord {
-  name: string
-  originalUrl: string
-}
 export const devClientOptionsMetadata = defineOptionsMetadata({
   port: {
     defaultValue: 23333,
@@ -35,10 +31,5 @@ export const devClientOptionsMetadata = defineOptionsMetadata({
     defaultValue: HotReloadMethod.Enabled,
     displayName: '功能热重载策略',
     dropdownEnum: HotReloadMethod,
-  },
-  devRecords: {
-    defaultValue: {} as Record<string, DevRecord>,
-    displayName: '调试模式临时存储',
-    hidden: true,
   },
 })

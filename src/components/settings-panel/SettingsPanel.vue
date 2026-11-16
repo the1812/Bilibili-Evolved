@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-panel" :class="{ collapsed, peek }">
+  <div class="settings-panel" :class="{ peek }">
     <div class="settings-panel-header">
       <VIcon icon="settings-outline" />
       <div class="title">设置</div>
@@ -12,248 +12,211 @@
       >
         <VIcon icon="eye" :size="18" />
       </div>
-      <div class="close" @click="$emit('close')">
+      <div class="close" @click="emit('close')">
         <VIcon icon="close" :size="18" />
       </div>
     </div>
     <div class="settings-panel-content">
-      <div ref="sidebarContainer" class="sidebar">
-        <ComponentTags ref="componentTags" @change="searchFilter = $event" />
+      <div class="sidebar">
+        <ComponentTags
+          :page="page"
+          :tag-name="activeTag.name"
+          :tags="tags"
+          @tag="selectTag"
+          @page="selectPage"
+        />
       </div>
       <div ref="mainContainer" class="main">
-        <div ref="componentList" class="component-list">
+        <div v-show="page === 'list'" ref="componentList" class="component-list">
           <div class="settings-panel-search-bar">
             <TextBox v-model="searchKeyword" class="settings-panel-search" placeholder="搜索" />
-            <VButton
-              v-for="action of searchBarActions"
-              :key="action.key"
-              type="transparent"
-              icon
-              :title="
-                typeof action.title === 'function' ? action.title(searchBarContext) : action.title
-              "
-              :disabled="action.disabled ? action.disabled(searchBarContext) : false"
-            >
-              <VIcon :icon="action.icon" :size="18" @click="action.run(searchBarContext)" />
-            </VButton>
           </div>
           <div
-            v-for="c of renderedComponents"
-            :key="c.name"
-            @click.ctrl.stop.capture="selectMultipleComponent(c)"
-            @click.shift.stop.capture="selectMultipleComponent(c, true)"
+            v-for="feature of renderedFeatures"
+            :key="feature.name"
+            @click.capture="selectMultipleFeatures($event, feature.name)"
           >
             <ComponentSettings
-              :class="{ selected: isComponentSelected(c.name) }"
-              :component-data="c"
-              :data-name="c.name"
-              @click.native="selectComponent(c)"
-            >
-            </ComponentSettings>
+              :class="{
+                selected: selectedName === feature.name || batchSelection.includes(feature.name),
+              }"
+              :feature="feature"
+              :data-name="feature.name"
+              @click.native="selectFeature(feature)"
+            />
           </div>
-          <VEmpty v-if="renderedComponents.length === 0" />
+          <VEmpty v-if="renderedFeatures.length === 0" />
         </div>
+        <keep-alive>
+          <component :is="subPages[page]" v-if="page !== 'list'" />
+        </keep-alive>
       </div>
       <VPopup
-        ref="detailsPopup"
         class="component-detail-panel"
-        :trigger-element="$refs.componentList"
-        :open="componentDetailOpen"
-        @popup-change="!$event && closePopper()"
+        :trigger-element="componentList"
+        :open="Boolean(selectedFeature)"
+        @popup-change="!$event && closeDetail()"
       >
-        <ComponentDetail
-          v-if="selectedComponent"
-          :key="selectedComponent.name"
-          :component-data="selectedComponent"
-          @close="closePopper()"
+        <FeatureDetail
+          v-if="selectedFeature"
+          :key="selectedName"
+          :feature="selectedFeature"
+          :features="features"
+          @close="closeDetail"
+          @open-feature="selectFeature"
         />
       </VPopup>
     </div>
+    <FeatureBatchActions
+      :selection="selectedBatchFeatures"
+      :scroll-container="mainContainer"
+      @close="clearBatchSelection"
+    />
   </div>
 </template>
 
-<script lang="ts">
-import { VIcon, TextBox, VPopup, VEmpty, VButton } from '@/ui'
-import { getHook } from '@/plugins/hook'
-import { deleteValue } from '@/core/utils'
+<script setup lang="ts">
+import { computed, defineAsyncComponent, nextTick, onUnmounted, ref, shallowRef, watch } from 'vue'
+import { VIcon, TextBox, VPopup, VEmpty } from '@/ui'
+import FeatureBatchActions from './FeatureBatchActions.vue'
 import ComponentSettings from './ComponentSettings.vue'
-import { ComponentMetadata, ComponentTag, components } from '../component'
-import ComponentDetail from './ComponentDetail.vue'
+import FeatureDetail from './FeatureDetail.vue'
 import ComponentTags from './ComponentTags.vue'
-import { getDescriptionText } from '../description'
-import { SearchBarActionContext, searchBarActions } from './search-bar-actions'
+import { useSettingsFeatures, type SettingsFeature } from './settings-feature'
 
-const defaultSearchFilter = (items: ComponentMetadata[]) => items
-export default {
-  name: 'SettingsPanel',
-  components: {
-    VIcon,
-    TextBox,
-    VPopup,
-    VButton,
-    VEmpty,
-    ComponentSettings,
-    ComponentDetail,
-    ComponentTags,
-  },
-  data() {
-    return {
-      components,
-      renderedComponents: components.filter(c => !c.hidden),
-      selectedComponent: null,
-      selectedComponents: [],
-      componentDetailOpen: false,
-      collapsed: false,
-      peek: false,
-      searchKeyword: '',
-      searchFilter: defaultSearchFilter,
-      searchBarActions,
+const props = defineProps<{ open: boolean }>()
+const emit = defineEmits<{ (event: 'close'): void }>()
+
+const subPages = {
+  about: defineAsyncComponent(() => import('./sub-pages/AboutPage.vue')),
+}
+type Page = 'list' | keyof typeof subPages
+
+const mainContainer = ref<HTMLElement>()
+const componentList = ref<HTMLElement>()
+const { features, tags } = useSettingsFeatures()
+const page = ref<Page>('list')
+const tagName = ref<string>()
+const activeTag = computed(
+  () => tags.value.find(tag => tag.name === tagName.value) ?? tags.value[0],
+)
+const selectedName = ref<string>()
+const selectedFeature = computed(() =>
+  features.value.find(feature => feature.name === selectedName.value),
+)
+const batchSelection = ref<string[]>([])
+const selectionAnchor = ref('')
+const peek = ref(false)
+const searchKeyword = ref('')
+const matchedFeatures = shallowRef<SettingsFeature[]>(features.value)
+const renderedFeatures = computed(() => activeTag.value.filter(matchedFeatures.value))
+const selectedBatchFeatures = computed(() =>
+  renderedFeatures.value.filter(feature => batchSelection.value.includes(feature.name)),
+)
+
+const clearSelectedFeature = () => {
+  selectedName.value = undefined
+}
+const closeDetail = () => selectedFeature.value?.closeDetail(clearSelectedFeature)
+const clearBatchSelection = () => {
+  batchSelection.value = []
+  selectionAnchor.value = ''
+}
+const selectMultipleFeatures = (event: MouseEvent, name: string) => {
+  if (!event.ctrlKey && !event.shiftKey) {
+    return
+  }
+  event.stopPropagation()
+  const selected = selectedName.value
+  closeDetail()
+  const anchor = selected ?? selectionAnchor.value
+  if (event.shiftKey) {
+    const names = renderedFeatures.value.map(feature => feature.name)
+    const start = names.indexOf(anchor)
+    const end = names.indexOf(name)
+    if (start !== -1) {
+      batchSelection.value = names.slice(Math.min(start, end), Math.max(start, end) + 1)
+      selectionAnchor.value = anchor
+      return
+    }
+    batchSelection.value = [name]
+  } else {
+    const selection = selected ? [selected] : batchSelection.value
+    batchSelection.value = selection.includes(name)
+      ? selection.filter(item => item !== name)
+      : [...selection, name]
+  }
+  selectionAnchor.value = batchSelection.value.length > 0 ? name : ''
+}
+const selectFeature = (feature: SettingsFeature) => {
+  clearBatchSelection()
+  const previous = selectedName.value
+  closeDetail()
+  if (previous === feature.name) {
+    return
+  }
+  feature.openDetail(() => {
+    selectedName.value = feature.name
+  })
+}
+const selectPage = (next: Page) => {
+  if (next === page.value) {
+    return
+  }
+  closeDetail()
+  clearBatchSelection()
+  page.value = next
+  nextTick(() => mainContainer.value?.scrollTo(0, 0))
+}
+
+let searchRevision = 0
+const updateMatchedFeatures = async () => {
+  const revision = ++searchRevision
+  const candidates = features.value
+  const keyword = searchKeyword.value.toLowerCase()
+  if (!keyword) {
+    matchedFeatures.value = candidates
+    return
+  }
+  const matches = await Promise.all(
+    candidates.map(async feature => (await feature.searchText()).toLowerCase().includes(keyword)),
+  )
+  if (revision === searchRevision && keyword === searchKeyword.value.toLowerCase()) {
+    matchedFeatures.value = candidates.filter((_, index) => matches[index])
+  }
+}
+
+const selectTag = (name: string) => {
+  if (name !== activeTag.value.name) {
+    closeDetail()
+    searchKeyword.value = ''
+    updateMatchedFeatures()
+  }
+  tagName.value = name
+  selectPage('list')
+}
+
+watch(
+  () => props.open,
+  open => {
+    if (!open) {
+      clearBatchSelection()
     }
   },
-  computed: {
-    isComponentSelected() {
-      return (name: string) =>
-        this.selectedComponents.some((c: ComponentMetadata) => c.name === name)
-    },
-    tags() {
-      const renderedComponents = this.renderedComponents as ComponentMetadata[]
-      let tags = [] as (ComponentTag & { count: number })[]
-      renderedComponents.forEach(it =>
-        it.tags.forEach(t => {
-          tags.push({ count: 0, ...t })
-        }),
-      )
-      const counts = lodash.countBy(tags, (t: ComponentTag) => t.name)
-      tags = lodash.uniqBy(tags, t => t.name)
-      tags.forEach(t => (t.count = counts[t.name]))
-      return tags
-    },
-    searchBarContext(): SearchBarActionContext {
-      return lodash.pick(
-        this,
-        'components',
-        'selectedComponent',
-        'selectedComponents',
-        'searchKeyword',
-        'searchFilter',
-      )
-    },
-  },
-  watch: {
-    searchKeyword: lodash.debounce(function searchKeywordWatch() {
-      // if (this.searchKeyword !== '') {
-      //   this.$refs.componentTags?.reset()
-      // }
-      this.updateRenderedComponents()
-    }, 200),
-    searchFilter() {
-      // if (this.searchFilter !== defaultSearchFilter) {
-      this.searchKeyword = ''
-      this.selectedComponents = []
-      // }
-      this.updateRenderedComponents()
-    },
-    components() {
-      this.updateRenderedComponents()
-      this.$refs.componentTags.refreshTags()
-      if (
-        !this.components.some((c: ComponentMetadata) => c.name === this.selectedComponent?.name)
-      ) {
-        this.selectedComponent = null
-      }
-    },
-  },
-  methods: {
-    closePopper() {
-      this.selectedComponent = null
-      this.selectedComponents = []
-      this.componentDetailOpen = false
-    },
-    selectMultipleComponent(component: ComponentMetadata, listSelect = false) {
-      if (this.selectedComponent && listSelect) {
-        // handle shift + click
-        const { name } = component
-        const { name: selectedComponentName } = this.selectedComponent as ComponentMetadata
-        const list = this.renderedComponents as ComponentMetadata[]
-        let startIdx = list.findIndex(c => c.name === selectedComponentName)
-        let endIdx = list.findIndex(c => c.name === name)
-        if (startIdx > endIdx) {
-          // if start index is greater than end index, swap them
-          ;[startIdx, endIdx] = [endIdx, startIdx]
-        }
-        this.selectedComponents = list.slice(startIdx, endIdx + 1)
-        return
-      }
-      const selectedList = this.selectedComponents as ComponentMetadata[]
-      const selectedComponent = selectedList.find(c => c.name === component.name)
-      if (selectedComponent) {
-        deleteValue(selectedList, c => c.name === selectedComponent.name)
-      } else {
-        selectedList.push(component)
-      }
-    },
-    selectComponent(component: ComponentMetadata) {
-      this.selectedComponents = []
-      const closeHooks = getHook('settingsPanel.componentDetail.close')
-      const openHooks = getHook('settingsPanel.componentDetail.open')
-      const selectedName = this.selectedComponent?.name
-      const isAlreadySelected = this.componentDetailOpen && selectedName === component.name
-      closeHooks.before(selectedName)
-      this.closePopper()
-      closeHooks.after(selectedName)
-      if (isAlreadySelected) {
-        return
-      }
-      openHooks.before(component.name)
-      this.selectedComponents.push(component)
-      this.selectedComponent = component
-      this.componentDetailOpen = true
-      openHooks.after(component.name)
-    },
-    async updateRenderedComponents() {
-      const textMap: Record<string, string> = await (async () => {
-        if (!this.searchKeyword) {
-          return {}
-        }
-        return Object.fromEntries(
-          await Promise.all(
-            components.map(async c => [
-              c.name,
-              [
-                c.name,
-                c.displayName,
-                c.tags.map(t => `${t.name}\n${t.displayName}`).join('\n'),
-                await getDescriptionText(c),
-              ]
-                .join('\n')
-                .toLowerCase(),
-            ]),
-          ),
-        )
-      })()
-      const internalFiltered = components.filter(c => {
-        if (c.hidden) {
-          return false
-        }
-        if (this.searchKeyword) {
-          const text = textMap[c.name]
-          if (!text) {
-            return false
-          }
-          return text.includes(this.searchKeyword.toLowerCase())
-        }
-        return true
-      })
-      // if (this.searchKeyword) {
-      //   console.log('updateRenderedComponents', this.searchKeyword)
-      //   this.renderedComponents = internalFiltered
-      //   return
-      // }
-      // console.log('updateRenderedComponents', this.searchKeyword)
-      this.renderedComponents = this.searchFilter(internalFiltered)
-    },
-  },
-}
+)
+watch(renderedFeatures, items => {
+  const names = new Set(items.map(feature => feature.name))
+  batchSelection.value = batchSelection.value.filter(name => names.has(name))
+})
+const updateSearch = lodash.debounce(updateMatchedFeatures, 200)
+watch(searchKeyword, updateSearch)
+onUnmounted(updateSearch.cancel)
+watch(features, updateMatchedFeatures)
+watch(selectedFeature, (feature, previous) => {
+  if (!feature && selectedName.value) {
+    previous?.closeDetail(clearSelectedFeature)
+  }
+})
 </script>
 
 <style lang="scss">
@@ -273,8 +236,7 @@ export default {
     color: black;
     border: 1px solid #8882;
     box-sizing: content-box;
-    width: auto;
-    min-width: 320px;
+    width: 320px;
     height: var(--panel-height);
     transition: opacity 0.2s 0.2s ease-out;
     body.dark & {
@@ -363,7 +325,6 @@ export default {
           .settings-panel-search-bar {
             @include h-center();
             background-color: var(--settings-panel-background);
-            padding-right: 8px;
             height: 36px;
             box-sizing: border-box;
             border-bottom: 1px solid #8882;
@@ -403,27 +364,6 @@ export default {
       }
       &.open {
         transform: translateZ(0) translateY(-50%) translateX(0);
-      }
-    }
-    &.collapsed {
-      height: auto;
-      transform: translateY(calc(50% - 45vh));
-      .header,
-      body.dark & .header {
-        border-color: transparent;
-      }
-      .sidebar,
-      .main {
-        opacity: 0;
-        padding: 0;
-        pointer-events: none;
-      }
-      .sidebar {
-        display: none;
-      }
-      opacity: 0.3;
-      &:hover {
-        opacity: 1;
       }
     }
     &.peek {

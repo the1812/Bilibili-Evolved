@@ -48,7 +48,7 @@ export default Vue.extend({
       result: '',
       working: false,
       translateProviders,
-      activeTranslator: {},
+      activeTranslator: null as MachineTranslateProvider | null,
     }
   },
   computed: {
@@ -70,7 +70,7 @@ export default Vue.extend({
         // 移除 #话题# , '#'似乎会干扰翻译器
         const text = this.text.replace(/#(.+?)#/g, '') as string
         this.activeTranslator = getTranslator()
-        const translator = this.activeTranslator as MachineTranslateProvider
+        const translator = this.activeTranslator
         this.result = await translator.translate(text)
       } catch (error) {
         logError(error)

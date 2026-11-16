@@ -79,7 +79,7 @@ export default Vue.extend({
         parseFloat(style.getPropertyValue('--card-width')) +
         parseFloat(style.getPropertyValue('--card-padding'))
       const pageWidth = Math.trunc(containerWidth / wrapperWidth) * wrapperWidth
-      container.scrollBy(offset * pageWidth, 0)
+      container.scrollBy({ left: offset * pageWidth, behavior: 'smooth' })
     },
   },
 })

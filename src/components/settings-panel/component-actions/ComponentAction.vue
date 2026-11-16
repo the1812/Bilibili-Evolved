@@ -1,8 +1,8 @@
 <template>
   <div
     class="component-action"
-    :class="{ disabled }"
-    :aria-disabled="disabled"
+    :class="{ disabled: unavailable }"
+    :aria-disabled="unavailable"
     :title="item.title"
     @click="handleClick"
   >
@@ -10,42 +10,29 @@
     {{ item.displayName }}
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { computed, ref } from 'vue'
 import { VIcon } from '@/ui'
+import type { SettingsButtonAction } from './settings-action-types'
 
-export default Vue.extend({
-  components: {
-    VIcon,
-  },
-  props: {
-    item: {
-      type: Object,
-      required: true,
-    },
-    component: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      disabled: false,
-    }
-  },
-  methods: {
-    async handleClick() {
-      if (this.disabled) {
-        return
-      }
-      try {
-        this.disabled = true
-        await this.item.action(this.component)
-      } finally {
-        this.disabled = false
-      }
-    },
-  },
-})
+const props = defineProps<{
+  item: SettingsButtonAction
+  disabled?: boolean
+}>()
+const running = ref(false)
+const unavailable = computed(() => props.disabled || running.value)
+
+const handleClick = async () => {
+  if (unavailable.value) {
+    return
+  }
+  try {
+    running.value = true
+    await props.item.action()
+  } finally {
+    running.value = false
+  }
+}
 </script>
 <style lang="scss">
 @import 'common';
