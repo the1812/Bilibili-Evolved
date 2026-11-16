@@ -185,6 +185,18 @@
   },
   {
     "type": "component",
+    "name": "feedsTranslate",
+    "displayName": "动态翻译",
+    "description": "为动态正文提供翻译功能，支持菜单或者常驻按钮形式。",
+    "tags": [
+      "feeds",
+      "utils"
+    ],
+    "fullRelativePath": "../../registry/dist/components/feeds/translate.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/translate.js"
+  },
+  {
+    "type": "component",
     "name": "unfoldFeeds",
     "displayName": "动态反折叠",
     "description": "自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠",
@@ -193,6 +205,22 @@
     ],
     "fullRelativePath": "../../registry/dist/components/feeds/unfold.js",
     "fullAbsolutePath": "registry/dist/components/feeds/unfold.js"
+  },
+  {
+    "type": "component",
+    "name": "feedsVideoWaterfall",
+    "displayName": "动态视频瀑布流",
+    "description": "参考客户端的动态视频页, 将动态首页的「视频投稿」标签页 (`https://t.bilibili.com/?tab=video`) 改为瀑布流布局:\n\n- 隐藏原页面的左右侧栏和发动态框, 视频以多列卡片显示, 列数随窗口宽度自适应.\n- 关注的 UP 主列表移到左侧并改为垂直排列.\n- 右下角提供写动态按钮, 点击后弹出原生的发动态框.\n\n选中单个 UP 主时, 列表中会混有非视频动态, 此时保持原有的单列显示.",
+    "author": {
+      "name": "tianmiao8152",
+      "link": "https://github.com/tianmiao8152"
+    },
+    "tags": [
+      "feeds",
+      "style"
+    ],
+    "fullRelativePath": "../../registry/dist/components/feeds/video-waterfall.js",
+    "fullAbsolutePath": "registry/dist/components/feeds/video-waterfall.js"
   },
   {
     "type": "component",
@@ -642,7 +670,16 @@
     "type": "component",
     "name": "hideHeaderBadge",
     "displayName": "屏蔽消息/动态红点",
-    "description": "by [@TangKuku9](https://github.com/TangKuku9)\n\n屏蔽顶部导航栏右上角「消息」「动态」入口的红点角标, 数字与圆点两种形态均覆盖, 两个入口可分别控制.",
+    "description": "屏蔽顶部导航栏右上角「消息」「动态」入口的红点角标, 数字与圆点两种形态均覆盖, 两个入口可分别控制.",
+    "author": [
+      {
+        "name": "TangKuku9",
+        "link": "https://github.com/TangKuku9"
+      }
+    ],
+    "tags": [
+      "style"
+    ],
     "fullRelativePath": "../../registry/dist/components/style/hide/header-badge.js",
     "fullAbsolutePath": "registry/dist/components/style/hide/header-badge.js"
   },
@@ -1200,7 +1237,7 @@
     "type": "component",
     "name": "sortComments",
     "displayName": "评论区评论排序",
-    "description": "支持对视频、番剧、动态、专栏、音频、图文等页面的评论区进行多种排序方式：\n注：仅支持已加载的评论\n- **点赞数排序**：按评论点赞数从高到低 / 从低到高排序\n- **发布时间排序**：按评论发布时间从新到旧 / 从旧到新排序\n- **用户等级排序**：按评论用户等级从高到低 / 从低到高排序\n- **默认顺序**：恢复为 Bilibili 默认排序\n\n在设置面板中可以随时切换排序方式，切换后立即生效。右下角悬浮面板支持拖拽移动和缩放，位置和大小自动保存。",
+    "description": "支持对视频、番剧、动态、专栏、音频、图文等页面的评论区进行多种排序方式：\n注：仅支持已加载的评论\n- **点赞数排序**：按评论点赞数从高到低 / 从低到高排序\n- **发布时间排序**：按评论发布时间从新到旧 / 从旧到新排序\n- **用户等级排序**：按评论用户等级从高到低 / 从低到高排序\n- **默认顺序**：恢复为 Bilibili 默认排序\n\n在设置面板中可以随时切换排序方式，切换后立即生效。右下角悬浮面板支持拖拽移动和缩放，位置和大小自动保存。\n\n点击面板标题旁的最小化按钮，可将面板收起为排序图标；点击图标即可展开。最小化不会改变排序方式或自动排序状态，最小化状态与位置、大小一起按当前站点保存，刷新后仍然有效。关闭「显示排序悬浮面板」会同时隐藏面板和图标。",
     "author": {
       "name": "ChairKeter",
       "link": "https://github.com/ChairKeter"
@@ -1210,6 +1247,18 @@
     ],
     "fullRelativePath": "../../registry/dist/components/utils/comments/sort-comments.js",
     "fullAbsolutePath": "registry/dist/components/utils/comments/sort-comments.js"
+  },
+  {
+    "type": "component",
+    "name": "commentsTranslate",
+    "displayName": "评论翻译",
+    "description": "为评论提供翻译功能，支持菜单或者常驻按钮形式。",
+    "tags": [
+      "utils",
+      "feeds"
+    ],
+    "fullRelativePath": "../../registry/dist/components/utils/comments/translate.js",
+    "fullAbsolutePath": "registry/dist/components/utils/comments/translate.js"
   },
   {
     "type": "component",
@@ -1342,6 +1391,21 @@
   },
   {
     "type": "component",
+    "name": "multiLanguageLinkRedirect",
+    "displayName": "多语言链接重定向",
+    "description": "移除 B 站链接中的多语言路径, 例如 `https://www.bilibili.com/en` → `https://www.bilibili.com`",
+    "author": {
+      "name": "WhiteTeal55",
+      "link": "https://github.com/WhiteTeal55"
+    },
+    "tags": [
+      "utils"
+    ],
+    "fullRelativePath": "../../registry/dist/components/utils/multi-language-link-redirect.js",
+    "fullAbsolutePath": "registry/dist/components/utils/multi-language-link-redirect.js"
+  },
+  {
+    "type": "component",
     "name": "removePromotions",
     "displayName": "删除广告",
     "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等.\n\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `广告卡片选项`\n  - `完全隐藏`: 广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置\n  - `自定义`\n    - `占位文本`: 屏蔽首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n  - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效",
@@ -1355,7 +1419,14 @@
     "type": "component",
     "name": "searchResultFilter",
     "displayName": "搜索结果过滤",
-    "description": "by [@Zichao-xu (with Claude Code)](https://github.com/Zichao-xu)\n\n隐藏搜索结果中与关键词无关的视频, 并在结果上方显示过滤数量, 点击可临时显示被隐藏的视频.\n\nB 站的搜索结果由两部分混排: 按关键词搜到的视频, 以及不依赖关键词推送进来的视频 (语义相关 / 热门 / 根据账号兴趣的个性化推荐). 后者在登录状态下尤其容易混入与搜索内容无关的视频.\n\n- `过滤模式`\n  - `仅推送`: 只检查非关键词推送的视频, 标题 (或标签) 中不含任何关键词则隐藏. 按关键词搜到的结果不受影响.\n  - `严格`: 检查所有视频, 用空格分隔的每个关键词都要出现在标题或标签中.\n  - `宽松`: 检查所有视频, 至少出现一个关键词即可保留.\n- `同时匹配视频标签`: 关闭后只匹配标题.\n\n不带空格的长关键词会参考 B 站在标题中高亮的分词结果进行匹配. 广告等拿不到数据的卡片不会被处理.",
+    "description": "隐藏搜索结果中与关键词无关的视频, 并在结果上方显示过滤数量, 点击可临时显示被隐藏的视频.\n\nB 站的搜索结果由两部分混排: 按关键词搜到的视频, 以及不依赖关键词推送进来的视频 (语义相关 / 热门 / 根据账号兴趣的个性化推荐). 后者在登录状态下尤其容易混入与搜索内容无关的视频.\n\n- `过滤模式`\n  - `仅推送`: 只检查非关键词推送的视频, 标题 (或标签) 中不含任何关键词则隐藏. 按关键词搜到的结果不受影响.\n  - `严格`: 检查所有视频, 用空格分隔的每个关键词都要出现在标题或标签中.\n  - `宽松`: 检查所有视频, 至少出现一个关键词即可保留.\n- `同时匹配视频标签`: 关闭后只匹配标题.\n\n不带空格的长关键词会参考 B 站在标题中高亮的分词结果进行匹配. 广告等拿不到数据的卡片不会被处理.",
+    "author": {
+      "name": "Zichao-xu (with Claude Code)",
+      "link": "https://github.com/Zichao-xu"
+    },
+    "tags": [
+      "utils"
+    ],
     "fullRelativePath": "../../registry/dist/components/utils/search-result-filter.js",
     "fullAbsolutePath": "registry/dist/components/utils/search-result-filter.js"
   },
@@ -1506,7 +1577,14 @@
     "type": "component",
     "name": "blockVideoVisibilityDetection",
     "displayName": "禁止视频可见性检测",
-    "description": "by [@WhiteTeal55](https://github.com/WhiteTeal55)\n\n视频页面切到后台一段时间后会自动切换到仅音频模式, 切回前台恢复画面时会造成卡顿, 本功能可以阻止视频自动切换到仅音频模式。",
+    "description": "视频页面切到后台一段时间后会自动切换到仅音频模式, 切回前台恢复画面时会造成卡顿, 本功能可以阻止视频自动切换到仅音频模式。",
+    "author": {
+      "name": "WhiteTeal55",
+      "link": "https://github.com/WhiteTeal55"
+    },
+    "tags": [
+      "video"
+    ],
     "fullRelativePath": "../../registry/dist/components/video/block-video-visibility-detection.js",
     "fullAbsolutePath": "registry/dist/components/video/block-video-visibility-detection.js"
   },
@@ -1616,7 +1694,7 @@
     "type": "component",
     "name": "downloadVideo",
     "displayName": "下载视频",
-    "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n\n批量下载时, 批量命名格式中还额外提供视频发布时间变量:\n- `publishYear`\n- `publishMonth`\n- `publishDay`\n- `publishHour`\n- `publishMinute`\n- `publishSecond`\n- `publishMillisecond`",
+    "description": "在功能面板中添加下载视频支持.\n\n### 注意:\n\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n- 海外用户建议开启「区分 Akamaized 源」并首选 Akamaized 源.\n\n### 文件命名格式变量:\n\n在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:\n\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n\n批量下载时, 批量命名格式中还额外提供视频发布时间变量:\n\n- `publishYear`\n- `publishMonth`\n- `publishDay`\n- `publishHour`\n- `publishMinute`\n- `publishSecond`\n- `publishMillisecond`",
     "tags": [
       "video"
     ],
@@ -1680,6 +1758,36 @@
   },
   {
     "type": "component",
+    "name": "abLoop",
+    "displayName": "AB 区段循环播放",
+    "description": "在播放器控制栏添加一个按钮, 标记 A / B 两点后即可在两点之间循环播放.\n\n- 第一次点击标记 A 点, 第二次点击标记 B 点, 视频跳回 A 点开始循环, 第三次点击退出循环\n- A / B 点可重新标记: 重新标记 B 点会从 A 点重新循环, A 点离 B 点太近时会退出循环\n- 手动跳到 B 点之后不会被拉回, 再次经过 B 点时恢复循环\n- A / B 点在进度条上显示为白色标记\n- 切换视频 (分P / 换集) 时自动退出循环\n- 配合 `快捷键扩展` 可绑定 `设置 A 点` / `设置 B 点` / `退出 A-B 循环` (默认无绑定)",
+    "author": {
+      "name": "WhiteTeal55",
+      "link": "https://github.com/WhiteTeal55"
+    },
+    "tags": [
+      "video"
+    ],
+    "fullRelativePath": "../../registry/dist/components/video/player/ab-loop.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/ab-loop.js"
+  },
+  {
+    "type": "component",
+    "name": "audioOnly",
+    "displayName": "仅听视频",
+    "description": "停用视频流, 只保留音频播放, 省流量且画面不再占用解码资源.\n\n开启后播放器会停止下载视频分片, 画面替换为 \"仅听视频\" 占位提示, 音频与弹幕/字幕不受影响.\n再次点击控制栏的耳机按钮即可恢复画面.",
+    "author": {
+      "name": "weidows",
+      "link": "https://github.com/weidows"
+    },
+    "tags": [
+      "video"
+    ],
+    "fullRelativePath": "../../registry/dist/components/video/player/audio-only.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/audio-only.js"
+  },
+  {
+    "type": "component",
     "name": "playerAutoLight",
     "displayName": "播放时自动关灯",
     "description": "在视频播放时自动关灯, 暂停或结束时再自动打开.",
@@ -1688,6 +1796,21 @@
     ],
     "fullRelativePath": "../../registry/dist/components/video/player/auto-light.js",
     "fullAbsolutePath": "registry/dist/components/video/player/auto-light.js"
+  },
+  {
+    "type": "component",
+    "name": "clickPlayerMenus",
+    "displayName": "播放器弹出菜单改为点击展开",
+    "description": "播放器中画质, 倍速, 字幕, 弹幕设置和设置的弹出菜单原本悬停即展开, 很容易在移动鼠标时误选, 开启后改为点击展开.\n\n点击展开后菜单不会随光标离开按钮而收起, 再次点击按钮, 点击菜单外部或按 Esc 才会收起.\n播放器在鼠标静止一段时间后淡出控制栏, 这时已经展开的菜单也一起收起, 不会等控制栏回来时又自己弹出来.\n\n音量按钮保持原本的行为: 悬停展开音量条, 点击图标静音.\n勾选下方选项可以单独恢复某个控件原本的悬停行为.",
+    "author": {
+      "name": "tangentyh",
+      "link": "https://github.com/tangentyh"
+    },
+    "tags": [
+      "video"
+    ],
+    "fullRelativePath": "../../registry/dist/components/video/player/click-player-menus.js",
+    "fullAbsolutePath": "registry/dist/components/video/player/click-player-menus.js"
   },
   {
     "type": "component",
@@ -2078,7 +2201,11 @@
     "type": "component",
     "name": "liveDanmakuSendStatus",
     "displayName": "直播弹幕发送检测",
-    "description": "by mengguojia\n\n检测系统过滤和直播间屏蔽，仅在发送失败时提示原因和弹幕内容，并将屏蔽响应改写为发送失败。",
+    "description": "检测系统过滤和直播间屏蔽，仅在发送失败时提示原因和弹幕内容，并将屏蔽响应改写为发送失败。",
+    "author": {
+      "name": "mengguojia",
+      "link": "https://github.com/mengguojia"
+    },
     "fullRelativePath": "../../registry/dist/components/live/danmaku-send-status.js",
     "fullAbsolutePath": "registry/dist/components/live/danmaku-send-status.js",
     "owner": "mengguojia"
@@ -2188,7 +2315,7 @@
     "type": "plugin",
     "name": "customNavbar.items.integratedDarkMode",
     "displayName": "自定义顶栏 - 深色模式开关",
-    "description": "为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分; 受限于 b 站深色模式实现, 这个开关无法实时切换, 会刷新页面)",
+    "description": "为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分)",
     "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js",
     "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js"
   },
@@ -2370,7 +2497,11 @@
     "type": "plugin",
     "name": "customNavbar.items.localHistory",
     "displayName": "自定义顶栏 - 本地历史搜索",
-    "description": "by xinyulan810\n\n把自定义顶栏\"历史\"弹窗的搜索替换为本地历史库检索: 全量抓取观看历史保存到 IndexedDB, 在本地全量数据上按标题/UP 主搜索(支持拼音全拼与首字母), 能搜到早期观看的视频.",
+    "description": "把自定义顶栏\"历史\"弹窗的搜索替换为本地历史库检索: 全量抓取观看历史保存到 IndexedDB, 在本地全量数据上按标题/UP 主搜索(支持拼音全拼与首字母), 能搜到早期观看的视频.",
+    "author": {
+      "name": "xinyulan810",
+      "link": "https://github.com/xinyulan810"
+    },
     "fullRelativePath": "../../registry/dist/plugins/style/custom-navbar-local-history.js",
     "fullAbsolutePath": "registry/dist/plugins/style/custom-navbar-local-history.js",
     "owner": "xinyulan810"

@@ -156,6 +156,15 @@
 - [WakelessSloth56](https://github.com/WakelessSloth56)
 - [LainIO24](https://github.com/LainIO24)
 
+### [动态翻译](../../registry/dist/components/feeds/translate.js)
+`feedsTranslate`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/translate.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/translate.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/translate.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/translate.js)
+
+为动态正文提供翻译功能，支持菜单或者常驻按钮形式。
+
 ### [动态反折叠](../../registry/dist/components/feeds/unfold.js)
 `unfoldFeeds`
 
@@ -170,6 +179,23 @@
 - 短时间内大量更新作品
 - 多人转发同一个作品
 - 被审核折叠
+
+### [动态视频瀑布流](../../registry/dist/components/feeds/video-waterfall.js)
+`feedsVideoWaterfall`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/feeds/video-waterfall.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/feeds/video-waterfall.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/feeds/video-waterfall.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/feeds/video-waterfall.js)
+
+作者: [@tianmiao8152](https://github.com/tianmiao8152)
+
+参考客户端的动态视频页, 将动态首页的「视频投稿」标签页 (`https://t.bilibili.com/?tab=video`) 改为瀑布流布局:
+
+- 隐藏原页面的左右侧栏和发动态框, 视频以多列卡片显示, 列数随窗口宽度自适应.
+- 关注的 UP 主列表移到左侧并改为垂直排列.
+- 右下角提供写动态按钮, 点击后弹出原生的发动态框.
+
+选中单个 UP 主时, 列表中会混有非视频动态, 此时保持原有的单列显示.
 
 ### [直播自动网页全屏](../../registry/dist/components/live/auto-full-win.js)
 `autoFullWin`
@@ -557,7 +583,7 @@
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/style/hide/header-badge.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/style/hide/header-badge.js)
 
-by [@TangKuku9](https://github.com/TangKuku9)
+作者: [@TangKuku9](https://github.com/TangKuku9)
 
 屏蔽顶部导航栏右上角「消息」「动态」入口的红点角标, 数字与圆点两种形态均覆盖, 两个入口可分别控制.
 
@@ -1066,6 +1092,17 @@ by [@TangKuku9](https://github.com/TangKuku9)
 
 在设置面板中可以随时切换排序方式，切换后立即生效。右下角悬浮面板支持拖拽移动和缩放，位置和大小自动保存。
 
+点击面板标题旁的最小化按钮，可将面板收起为排序图标；点击图标即可展开。最小化不会改变排序方式或自动排序状态，最小化状态与位置、大小一起按当前站点保存，刷新后仍然有效。关闭「显示排序悬浮面板」会同时隐藏面板和图标。
+
+### [评论翻译](../../registry/dist/components/utils/comments/translate.js)
+`commentsTranslate`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/comments/translate.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/comments/translate.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/comments/translate.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/comments/translate.js)
+
+为评论提供翻译功能，支持菜单或者常驻按钮形式。
+
 ### [自定义首页换一换数量](../../registry/dist/components/utils/custom-home-refresh-count.js)
 `customHomeRefreshCount`
 
@@ -1231,6 +1268,17 @@ by [@TangKuku9](https://github.com/TangKuku9)
 
 将移动端的会员购链接转换为 PC 端的链接
 
+### [多语言链接重定向](../../registry/dist/components/utils/multi-language-link-redirect.js)
+`multiLanguageLinkRedirect`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/utils/multi-language-link-redirect.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/utils/multi-language-link-redirect.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/multi-language-link-redirect.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/multi-language-link-redirect.js)
+
+作者: [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+移除 B 站链接中的多语言路径, 例如 `https://www.bilibili.com/en` → `https://www.bilibili.com`
+
 ### [删除广告](../../registry/dist/components/utils/remove-promotions.js)
 `removePromotions`
 
@@ -1254,7 +1302,7 @@ by [@TangKuku9](https://github.com/TangKuku9)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/utils/search-result-filter.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/utils/search-result-filter.js)
 
-by [@Zichao-xu (with Claude Code)](https://github.com/Zichao-xu)
+作者: [@Zichao-xu (with Claude Code)](https://github.com/Zichao-xu)
 
 隐藏搜索结果中与关键词无关的视频, 并在结果上方显示过滤数量, 点击可临时显示被隐藏的视频.
 
@@ -1389,7 +1437,7 @@ B 站的搜索结果由两部分混排: 按关键词搜到的视频, 以及不�
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/block-video-visibility-detection.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/block-video-visibility-detection.js)
 
-by [@WhiteTeal55](https://github.com/WhiteTeal55)
+作者: [@WhiteTeal55](https://github.com/WhiteTeal55)
 
 视频页面切到后台一段时间后会自动切换到仅音频模式, 切回前台恢复画面时会造成卡顿, 本功能可以阻止视频自动切换到仅音频模式。
 
@@ -1496,15 +1544,23 @@ by [@WhiteTeal55](https://github.com/WhiteTeal55)
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/download.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/download.js)
 
-在功能面板中添加下载视频支持. 请注意:
+在功能面板中添加下载视频支持.
+
+### 注意:
+
 - 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.
 - 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.
+- 海外用户建议开启「区分 Akamaized 源」并首选 Akamaized 源.
+
+### 文件命名格式变量:
 
 在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:
+
 - `user`: UP 主用户名
 - `userID`: UP 主用户 ID
 
 批量下载时, 批量命名格式中还额外提供视频发布时间变量:
+
 - `publishYear`
 - `publishMonth`
 - `publishDay`
@@ -1555,6 +1611,38 @@ by [@WhiteTeal55](https://github.com/WhiteTeal55)
 
 将视频页面菜单里的 `稍后再看` 移到外面. 请注意如果在稍后再看页面中仍然显示, 是不会实时同步右侧的播放列表的.
 
+### [AB 区段循环播放](../../registry/dist/components/video/player/ab-loop.js)
+`abLoop`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/ab-loop.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/ab-loop.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/ab-loop.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/ab-loop.js)
+
+作者: [@WhiteTeal55](https://github.com/WhiteTeal55)
+
+在播放器控制栏添加一个按钮, 标记 A / B 两点后即可在两点之间循环播放.
+
+- 第一次点击标记 A 点, 第二次点击标记 B 点, 视频跳回 A 点开始循环, 第三次点击退出循环
+- A / B 点可重新标记: 重新标记 B 点会从 A 点重新循环, A 点离 B 点太近时会退出循环
+- 手动跳到 B 点之后不会被拉回, 再次经过 B 点时恢复循环
+- A / B 点在进度条上显示为白色标记
+- 切换视频 (分P / 换集) 时自动退出循环
+- 配合 `快捷键扩展` 可绑定 `设置 A 点` / `设置 B 点` / `退出 A-B 循环` (默认无绑定)
+
+### [仅听视频](../../registry/dist/components/video/player/audio-only.js)
+`audioOnly`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/audio-only.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/audio-only.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/audio-only.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/audio-only.js)
+
+作者: [@weidows](https://github.com/weidows)
+
+停用视频流, 只保留音频播放, 省流量且画面不再占用解码资源.
+
+开启后播放器会停止下载视频分片, 画面替换为 "仅听视频" 占位提示, 音频与弹幕/字幕不受影响.
+再次点击控制栏的耳机按钮即可恢复画面.
+
 ### [播放时自动关灯](../../registry/dist/components/video/player/auto-light.js)
 `playerAutoLight`
 
@@ -1563,6 +1651,23 @@ by [@WhiteTeal55](https://github.com/WhiteTeal55)
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/auto-light.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/auto-light.js)
 
 在视频播放时自动关灯, 暂停或结束时再自动打开.
+
+### [播放器弹出菜单改为点击展开](../../registry/dist/components/video/player/click-player-menus.js)
+`clickPlayerMenus`
+
+**jsDelivr:** [`Stable`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@master/registry/dist/components/video/player/click-player-menus.js) / [`Preview`](https://cdn.jsdelivr.net/gh/the1812/Bilibili-Evolved@preview/registry/dist/components/video/player/click-player-menus.js)
+
+**GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/components/video/player/click-player-menus.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/components/video/player/click-player-menus.js)
+
+作者: [@tangentyh](https://github.com/tangentyh)
+
+播放器中画质, 倍速, 字幕, 弹幕设置和设置的弹出菜单原本悬停即展开, 很容易在移动鼠标时误选, 开启后改为点击展开.
+
+点击展开后菜单不会随光标离开按钮而收起, 再次点击按钮, 点击菜单外部或按 Esc 才会收起.
+播放器在鼠标静止一段时间后淡出控制栏, 这时已经展开的菜单也一起收起, 不会等控制栏回来时又自己弹出来.
+
+音量按钮保持原本的行为: 悬停展开音量条, 点击图标静音.
+勾选下方选项可以单独恢复某个控件原本的悬停行为.
 
 ### [播放器控制栏背景色](../../registry/dist/components/video/player/control-background.js)
 `playerControlBackground`
@@ -2071,7 +2176,7 @@ RBVP 通过命名空间机制与兼容组件联动，首批支持「记忆倍速
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/mengguojia/Bilibili-Evolved/master/registry/dist/components/live/danmaku-send-status.js) / [`Preview`](https://raw.githubusercontent.com/mengguojia/Bilibili-Evolved/preview/registry/dist/components/live/danmaku-send-status.js)
 
-by mengguojia
+作者: [@mengguojia](https://github.com/mengguojia)
 
 检测系统过滤和直播间屏蔽，仅在发送失败时提示原因和弹幕内容，并将屏蔽响应改写为发送失败。
 
@@ -2195,7 +2300,7 @@ by mengguojia
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js) / [`Preview`](https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-integrated-dark-mode.js)
 
-为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分; 受限于 b 站深色模式实现, 这个开关无法实时切换, 会刷新页面)
+为自定义顶栏添加一个深色模式开关, 方便快速切换深色模式. (请注意和夜间模式区分)
 
 ### [自定义顶栏 - 版权内容](../../registry/dist/plugins/style/custom-navbar-pgc.js)
 `customNavbar.items.pgc`
@@ -2388,6 +2493,6 @@ Motrix 2 的链接一次只能携带一个地址, 多个分段 (如 DASH 的视�
 
 **GitHub:** [`Stable`](https://raw.githubusercontent.com/xinyulan810/Bilibili-Evolved/master/registry/dist/plugins/style/custom-navbar-local-history.js) / [`Preview`](https://raw.githubusercontent.com/xinyulan810/Bilibili-Evolved/preview/registry/dist/plugins/style/custom-navbar-local-history.js)
 
-by xinyulan810
+作者: [@xinyulan810](https://github.com/xinyulan810)
 
 把自定义顶栏"历史"弹窗的搜索替换为本地历史库检索: 全量抓取观看历史保存到 IndexedDB, 在本地全量数据上按标题/UP 主搜索(支持拼音全拼与首字母), 能搜到早期观看的视频.
