@@ -23,14 +23,11 @@
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="firstItem.videoHref">
           <DpiImage
+            placeholder-image
             :src="firstItem.coverUrl"
             :size="{ width: ui.firstCoverWidth, height: ui.firstCoverHeight }"
           />
-          <UpInfo
-            :up-face-url="firstItem.upFaceUrl"
-            :href="firstItem.upHref"
-            :up-name="firstItem.upName"
-          >
+          <UpInfo :href="firstItem.upHref" :up-name="firstItem.upName">
             <template #fallback-icon>
               <VIcon v-bind="upInfoProps" />
             </template>
@@ -47,11 +44,7 @@
           <div class="fresh-home-rank-list-rank-item-title" :title="secondItem.title">
             {{ secondItem.title }}
           </div>
-          <UpInfo
-            :up-face-url="secondItem.upFaceUrl"
-            :href="secondItem.upHref"
-            :up-name="secondItem.upName"
-          >
+          <UpInfo :href="secondItem.upHref" :up-name="secondItem.upName">
             <template #fallback-icon>
               <VIcon v-bind="upInfoProps" />
             </template>
@@ -65,6 +58,7 @@
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="secondItem.videoHref">
           <DpiImage
+            placeholder-image
             :src="secondItem.coverUrl"
             :size="{ width: ui.secondCoverWidth, height: ui.secondCoverHeight }"
           />
@@ -76,11 +70,7 @@
           <div class="fresh-home-rank-list-rank-item-title" :title="thirdItem.title">
             {{ thirdItem.title }}
           </div>
-          <UpInfo
-            :up-face-url="thirdItem.upFaceUrl"
-            :href="thirdItem.upHref"
-            :up-name="thirdItem.upName"
-          >
+          <UpInfo :href="thirdItem.upHref" :up-name="thirdItem.upName">
             <template #fallback-icon>
               <VIcon v-bind="upInfoProps" />
             </template>
@@ -94,6 +84,7 @@
         </a>
         <a class="fresh-home-rank-list-cover" target="_blank" :href="thirdItem.videoHref">
           <DpiImage
+            placeholder-image
             :src="thirdItem.coverUrl"
             :size="{ width: ui.thirdCoverWidth, height: ui.thirdCoverHeight }"
           />
@@ -106,6 +97,7 @@
 <script lang="ts">
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatCount } from '@/core/utils/formatters'
+import { getJsonWithCredentials } from '@/core/ajax'
 import { DpiImage, VIcon, VLoading, VEmpty, VButton } from '@/ui'
 import { requestMixin, cssVariableMixin } from '../../../../mixin'
 import { rankListCssVars } from './rank-list'
@@ -122,7 +114,10 @@ export default Vue.extend({
   filters: {
     formatCount,
   },
-  mixins: [requestMixin(), cssVariableMixin(rankListCssVars)],
+  mixins: [
+    requestMixin({ requestMethod: getJsonWithCredentials }),
+    cssVariableMixin(rankListCssVars),
+  ],
   props: {
     parseJson: {
       type: Function,

@@ -1,6 +1,6 @@
 import { ComponentEntry, componentsTags } from '@/components/types'
 import { meta } from '@/core/meta'
-import { getComponentSettings, getGeneralSettings, isUserComponent } from '@/core/settings'
+import { getComponentSettings, getGeneralSettings } from '@/core/settings'
 import { isIframe } from '@/core/utils'
 import { Version } from '@/core/version'
 import {
@@ -9,13 +9,25 @@ import {
   OptionsOfMetadata,
 } from '@/components/define'
 import { LaunchBarActionProvider } from '../launch-bar/launch-bar-action'
-import { ComponentAction } from '../settings-panel/component-actions/component-actions'
-import { isLocalItem, name, UpdateCheckItem } from './utils'
+import type {
+  SettingsBatchAction,
+  SettingsDetailActionProvider,
+} from '../settings-panel/component-actions/settings-action-types'
+import type { SettingsFeature } from '../settings-panel/settings-feature'
+import type { UpdateSourceProvider } from '../settings-panel/feature-update-source'
+import { name, UpdateCheckItem, updateKinds } from './utils'
+import {
+  FeatureSource,
+  getFeatureSource,
+  isLocalFeatureUrl,
+  getFeatureUrl,
+} from '@/core/feature-source'
+import { createSwitchUpdateChannelAction } from './channel-switch'
 import * as checkerMethods from './checker'
-import { SearchBarAction } from '../settings-panel/search-bar-actions'
 
 const {
   checkComponentsUpdate,
+  checkPluginsUpdate,
   checkLastFeature,
   forceCheckUpdate,
   forceCheckUpdateAndReload,
@@ -96,29 +108,36 @@ export const component = defineComponentMetadata({
     displayName: '自动更新器 - 功能扩展',
     description: {
       'zh-CN':
-        '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件详情中支持手动检查该组件的更新.',
+        '记录在设置面板中的功能安装/卸载数据供自动更新使用; 并在组件和插件详情中支持手动检查更新.',
     },
     // 非设置面板的组件如果也对能功能进行修改, 建议调用此处的 Hooks 同步状态.
     setup: ({ addData, addHook }) => {
-      const types = ['components', 'plugins', 'styles']
-      types.forEach(type => {
+      const getUpdateSource = (type: 'components' | 'plugins', featureName: string) => {
+        const { options } = getComponentSettings<AutoUpdateOptions>(name)
+        return options.urls[type][featureName]?.source
+      }
+      addData('settingsPanel.componentUpdateSources', (providers: UpdateSourceProvider[]) => {
+        providers.push(featureName => getUpdateSource('components', featureName))
+      })
+      addData('settingsPanel.pluginUpdateSources', (providers: UpdateSourceProvider[]) => {
+        providers.push(featureName => getUpdateSource('plugins', featureName))
+      })
+      updateKinds.forEach(type => {
         addHook(`user${lodash.startCase(type)}.add`, {
-          after: (_, url: string, metadata: { name: string }) => {
-            // console.log('hook', `user${lodash.startCase(type)}.add`, metadata.name, url)
-            const { options } = getComponentSettings('autoUpdate')
-            const existingItem = options.urls[type][metadata.name] as UpdateCheckItem
-            if (!existingItem) {
-              options.urls[type][metadata.name] = {
-                url,
-                lastUpdateCheck: Number(new Date()),
-                installTime: Number(new Date()),
-                alwaysUpdate: isLocalItem(url),
-              } as UpdateCheckItem
-            } else {
-              existingItem.url = url
-              existingItem.lastUpdateCheck = Number(new Date())
-              existingItem.alwaysUpdate = isLocalItem(url)
-              // keep install time
+          after: (
+            _,
+            url: string,
+            metadata: { name: string },
+            source: FeatureSource | undefined = getFeatureSource(url),
+          ) => {
+            const { options } = getComponentSettings<AutoUpdateOptions>(name)
+            const items = options.urls[type]
+            const now = Date.now()
+            items[metadata.name] = {
+              source,
+              lastUpdateCheck: now,
+              installTime: items[metadata.name]?.installTime ?? now,
+              alwaysUpdate: isLocalFeatureUrl(url),
             }
           },
         })
@@ -132,31 +151,74 @@ export const component = defineComponentMetadata({
           },
         })
       })
-      addData('settingsPanel.componentActions', (actions: ComponentAction[]) => {
-        const { options } = getComponentSettings<AutoUpdateOptions>('autoUpdate')
-        actions.push(metadata => {
-          const item = options.urls.components[metadata.name]
-          if (!item) {
-            return undefined
+      const checkByCollection = { components: checkComponentsUpdate, plugins: checkPluginsUpdate }
+      const getUpdate = (feature: SettingsFeature) => {
+        const { removal, registry } = feature.operations
+        const target = removal && registry?.target
+        const source = target && getUpdateSource(target.collection, target.name)
+        return source && { target, source }
+      }
+      addData('settingsPanel.featureActions', (providers: SettingsDetailActionProvider[]) => {
+        providers.unshift(feature => {
+          const update = getUpdate(feature)
+          if (!update) {
+            return {}
           }
+          const { target, source } = update
+          const url = getFeatureUrl(source)
+          const channelAction = createSwitchUpdateChannelAction(target.kind, target.name, source)
           return {
-            name: 'checkUpdate',
-            displayName: '检查更新',
-            icon: isLocalItem(item.url)
-              ? 'mdi-file-download-outline'
-              : 'mdi-cloud-download-outline',
-            visible: isUserComponent(metadata),
-            title: item.url,
-            action: async () => {
-              const { Toast } = await import('@/core/toast')
-              const toast = Toast.info('检查更新中...', '检查更新')
-              toast.message = await checkComponentsUpdate({
-                filterNames: [metadata.name],
-                force: true,
-              })
-              toast.duration = 3000
-            },
+            buttons: [
+              {
+                name: 'checkUpdate',
+                displayName: '检查更新',
+                icon: isLocalFeatureUrl(url)
+                  ? 'mdi-file-download-outline'
+                  : 'mdi-cloud-download-outline',
+                title: url,
+                action: async () => {
+                  const { Toast } = await import('@/core/toast')
+                  const toast = Toast.info('检查更新中...', '检查更新')
+                  toast.message = await checkByCollection[target.collection]({
+                    filterNames: [target.name],
+                    force: true,
+                  })
+                  toast.duration = 3000
+                },
+              },
+            ],
+            menu: channelAction ? [channelAction] : [],
           }
+        })
+      })
+      addData('settingsPanel.featureBatchActions', (actions: SettingsBatchAction[]) => {
+        actions.unshift({
+          name: 'update',
+          displayName: '批量更新',
+          icon: 'mdi-cloud-download-outline',
+          title: '更新所选功能中有更新链接的组件和插件',
+          verb: '更新',
+          prepare: selection => {
+            const targets = selection.flatMap(feature => {
+              const update = getUpdate(feature)
+              return update ? [update.target] : []
+            })
+            const groups = Object.values(lodash.groupBy(targets, target => target.collection))
+            return {
+              count: targets.length,
+              run: async () => {
+                const results = await Promise.all(
+                  groups.map(items =>
+                    checkByCollection[items[0].collection]({
+                      filterNames: items.map(item => item.name),
+                      force: true,
+                    }),
+                  ),
+                )
+                return results.filter(Boolean).join('\n') || '所选功能暂无更新'
+              },
+            }
+          },
         })
       })
 
@@ -177,44 +239,6 @@ export const component = defineComponentMetadata({
               icon,
             },
           ],
-        })
-      })
-      addData('settingsPanel.searchBarActions', (actions: SearchBarAction[]) => {
-        actions.unshift({
-          key: 'updateFeatures',
-          title: ({ selectedComponents }) =>
-            selectedComponents.length > 0 ? '更新所选组件' : '检查所有更新',
-          icon: 'mdi-cloud-download-outline',
-          run: async context => {
-            const confirmMessage =
-              context.selectedComponents.length > 0
-                ? `确定要更新所选的 ${context.selectedComponents.length} 个组件吗?`
-                : '确定要检查所有更新吗?'
-            if (!window.confirm(confirmMessage)) {
-              return
-            }
-            const { Toast } = await import('@/core/toast')
-            const { isBuiltInComponent } = await import('@/components/built-in-components')
-            if (context.selectedComponents.length === 0) {
-              const toast = Toast.info('正在检查更新...', '检查所有更新')
-              await forceCheckUpdateAndReload()
-              toast.close()
-            } else {
-              context.selectedComponents.forEach(async ({ name: componentName }) => {
-                if (isBuiltInComponent(componentName)) {
-                  Toast.info('内置组件不能更新', '检查更新', 3000)
-                } else {
-                  const toast = Toast.info('检查更新中...', '检查更新')
-                  const result = await checkComponentsUpdate({
-                    filterNames: [componentName],
-                    force: true,
-                  })
-                  toast.message = result
-                  toast.duration = 3000
-                }
-              })
-            }
-          },
         })
       })
       if (getGeneralSettings().devMode) {

@@ -168,6 +168,79 @@ export const ReorderOrientations: { [key: string]: ReorderOrientation } = {
     //   return ''
     // },
   },
+  /** 网格 (按阅读顺序排列, 支持多行) */
+  grid: {
+    name: 'grid',
+    getMoveTransform: (xOffset, yOffset) => `translate(${xOffset}px, ${yOffset}px)`,
+    setOtherTransform: lodash.throttle(
+      (snapshots: ReorderItemSnapshot[], currentElement, xOffset, yOffset) => {
+        if (!currentElement.classList.contains(ReorderingClassName)) {
+          return
+        }
+        const currentSnapshot = snapshots.find(s => s.element === currentElement)
+        if (!currentSnapshot) {
+          return
+        }
+        const currentRect = currentSnapshot.rect
+        // 按阅读顺序排序
+        const visual = [...snapshots].sort(
+          (a, b) => a.rect.top - b.rect.top || a.rect.left - b.rect.left,
+        )
+        const oldIndex = visual.findIndex(s => s.element === currentElement)
+        // 拖动中心之前的项数即为插入位置
+        const centerX = currentRect.left + currentRect.width / 2 + xOffset
+        const centerY = currentRect.top + currentRect.height / 2 + yOffset
+        const targetIndex = visual.filter(s => {
+          if (s.element === currentElement) {
+            return false
+          }
+          const sameRow =
+            Math.abs(s.rect.top + s.rect.height / 2 - centerY) <
+            (currentRect.height + s.rect.height) / 2
+          return sameRow
+            ? s.rect.left + s.rect.width / 2 < centerX
+            : s.rect.top + s.rect.height / 2 < centerY
+        }).length
+        const shiftLeft = targetIndex > oldIndex
+        // 插入位置与原位置之间被跨越的项
+        const crossed = shiftLeft
+          ? visual.slice(oldIndex + 1, targetIndex + 1)
+          : visual.slice(targetIndex, oldIndex)
+        // 布局参数 (由快照观测): 各行顶部、行首、换行边界、相邻间距
+        const rowTops = [...new Set(visual.map(s => s.rect.top))].sort((a, b) => a - b)
+        const rowLeft = Math.min(...visual.map(s => s.rect.left))
+        const rowRight = Math.max(...visual.map(s => s.rect.left + s.rect.width))
+        const pairIndex = visual.findIndex((s, i) => visual[i + 1]?.rect.top === s.rect.top)
+        const gapFrom = visual[pairIndex]
+        const gap = gapFrom
+          ? visual[pairIndex + 1].rect.left - gapFrom.rect.left - gapFrom.rect.width
+          : 0
+        // 先复位所有项, 再把被跨越的项从插入点所在行起按流式布局摆放 (与松手结果一致), 行尾换行
+        let flowRow = rowTops.indexOf(visual[shiftLeft ? oldIndex : targetIndex].rect.top)
+        let flowLeft = shiftLeft
+          ? visual[oldIndex].rect.left
+          : visual[targetIndex].rect.left + currentRect.width + gap
+        visual.forEach(s => {
+          if (s.element !== currentElement) {
+            s.element.classList.remove(ReorderIncreaseClassName, ReorderDecreaseClassName)
+            s.element.style.transform = ''
+          }
+        })
+        crossed.forEach(s => {
+          if (flowRow < rowTops.length - 1 && flowLeft + s.rect.width > rowRight) {
+            flowRow += 1
+            flowLeft = rowLeft
+          }
+          s.element.classList.add(shiftLeft ? ReorderDecreaseClassName : ReorderIncreaseClassName)
+          s.element.style.transform = `translate(${flowLeft - s.rect.left}px, ${
+            rowTops[flowRow] - s.rect.top
+          }px)`
+          flowLeft += s.rect.width + gap
+        })
+      },
+      50,
+    ),
+  },
 }
 /** 为一排元素启用重排列支持 */
 export class Reorder extends EventTarget {
@@ -302,7 +375,8 @@ export class Reorder extends EventTarget {
         this.attachedEvents.push(() => element.removeEventListener('touchmove', touchmove))
       }
       const handleUp = () => {
-        const up = () => {
+        // 结束拖动: commit 时结算顺序; 窗口失焦 (如拖到窗口外) 时只还原位移, 不改变顺序
+        const finish = (commit: boolean) => {
           if (!reordering) {
             return
           }
@@ -310,34 +384,37 @@ export class Reorder extends EventTarget {
           reordering = false
           let orderOffset = 0
           const other = this.children.filter(e => e !== element)
-          const changedSnapshots: ReorderItemSnapshot[] = []
           other.forEach(e => {
             e.style.transform = ''
             e.style.transition = ''
-            if (e.classList.contains(ReorderIncreaseClassName)) {
+            if (!commit) {
+              e.classList.remove(ReorderIncreaseClassName, ReorderDecreaseClassName)
+            } else if (e.classList.contains(ReorderIncreaseClassName)) {
               orderOffset--
               e.style.order = (parseInt(e.style.order) + 1).toString()
               e.classList.remove(ReorderIncreaseClassName)
-              changedSnapshots.push(this.snapshots.get(e))
             } else if (e.classList.contains(ReorderDecreaseClassName)) {
               orderOffset++
               e.style.order = (parseInt(e.style.order) - 1).toString()
               e.classList.remove(ReorderDecreaseClassName)
-              changedSnapshots.push(this.snapshots.get(e))
             }
           })
           element.style.userSelect = ''
-          element.style.order = (parseInt(element.style.order) + orderOffset).toString()
+          if (commit) {
+            element.style.order = (parseInt(element.style.order) + orderOffset).toString()
+          }
           element.style.transform = ''
           element.style.transition = ''
-          this.dispatchEvent(
-            new CustomEvent('reorder', {
-              detail: this.children.map(c => ({
-                element: c,
-                order: parseInt(c.style.order),
-              })),
-            }),
-          )
+          if (commit) {
+            this.dispatchEvent(
+              new CustomEvent('reorder', {
+                detail: this.children.map(c => ({
+                  element: c,
+                  order: parseInt(c.style.order),
+                })),
+              }),
+            )
+          }
           // setTimeout(() => element.style.transition = '', 200);
           // setTimeout(() => {
           //   other.forEach(e => {
@@ -345,10 +422,14 @@ export class Reorder extends EventTarget {
           //   })
           // }, 1000);
         }
+        const up = () => finish(true)
+        const cancel = () => finish(false)
         document.addEventListener('mouseup', up)
         this.attachedEvents.push(() => document.removeEventListener('mouseup', up))
         element.addEventListener('touchend', up)
         this.attachedEvents.push(() => element.removeEventListener('touchend', up))
+        window.addEventListener('blur', cancel)
+        this.attachedEvents.push(() => window.removeEventListener('blur', cancel))
       }
       handleDown()
       handleMove()

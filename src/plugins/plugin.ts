@@ -61,8 +61,11 @@ export const installPlugin = async (code: string, parsedPlugin?: PluginMetadata)
     try {
       const { loadFeatureCode } = await import('@/core/external-input')
       plugin = loadFeatureCode(code) as PluginMetadata
+      if (typeof plugin?.setup !== 'function') {
+        throw new Error('缺少 setup 方法')
+      }
     } catch (e) {
-      throw new Error('无效的插件代码', e)
+      throw new Error('无效的插件代码', { cause: e })
     }
   }
   const { settings } = await import('@/core/settings')
@@ -163,28 +166,15 @@ export const loadPlugin = async (plugin: PluginMetadata) => {
  * @param components 组件列表
  */
 export const loadAllPlugins = async (components: ComponentMetadata[]) => {
-  const { settings, getGeneralSettings } = await import('@/core/settings')
-  const { loadFeatureCode } = await import('@/core/external-input/load-feature-code')
+  const { getGeneralSettings } = await import('@/core/settings')
+  const { getFeatureDefinitions } = await import('@/core/feature-definitions')
   for (const component of components) {
     const plugin = extractPluginFromComponent(component)
     if (plugin) {
       plugins.push(...plugin)
     }
   }
-  for (const [name, setting] of Object.entries(settings.userPlugins)) {
-    const { code } = setting
-    let metadata: PluginMetadata
-    try {
-      metadata = loadFeatureCode(code) as PluginMetadata
-    } catch (e) {
-      console.error('从代码加载用户插件失败。代码可能包含语法错误或执行时产生了异常', {
-        pluginName: name,
-        error: e,
-      })
-      continue
-    }
-    plugins.push(metadata)
-  }
+  plugins.push(...(await getFeatureDefinitions('plugin')))
   return Promise.allSettled(plugins.map(loadPlugin)).then(async () => {
     if (getGeneralSettings().devMode) {
       const { pluginLoadTime, pluginResolveTime } = await import('@/core/performance/plugin-trace')

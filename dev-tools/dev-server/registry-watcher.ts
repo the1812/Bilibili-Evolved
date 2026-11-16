@@ -7,10 +7,10 @@ import { buildByEntry } from '../../registry/webpack/config'
 import { defaultWatcherHandler } from './watcher-common'
 import { broadcastMessage } from './web-socket-server'
 import { devServerConfig } from './config'
-import { FeatureKind } from './payload'
+import type { RegistryFeatureType } from '../src-types'
 
 export interface RegistryFeature {
-  kind: FeatureKind
+  kind: RegistryFeatureType
   id: string
   src: string
   entry: string
@@ -30,7 +30,7 @@ export const featureSessions: {
 export const getFeatureSessionPaths = () => featureSessions.map(it => it.path)
 
 const normalizeId = (id: string) => id.replace(/\\/g, '/').replace(/^\/+/, '')
-export const getRegistryFeature = (kind: FeatureKind, id: string): RegistryFeature => {
+export const getRegistryFeature = (kind: RegistryFeatureType, id: string): RegistryFeature => {
   const normalizedId = normalizeId(id)
   const src = `./registry/lib/${kind}s/`
   return {
@@ -87,7 +87,7 @@ export const parseRegistryUrl = (url: string) => {
   if (!match) {
     return null
   }
-  const [, kind, id] = match as [string, FeatureKind, string]
+  const [, kind, id] = match as [string, RegistryFeatureType, string]
   return getRegistryFeature(kind, id)
 }
 
@@ -172,7 +172,7 @@ export const startFeatureSessionWatcher = (
     notifyFeatureSessionsChanged()
   })
 
-export const startFeatureSession = (kind: FeatureKind, id: string) =>
+export const startFeatureSession = (kind: RegistryFeatureType, id: string) =>
   startFeatureSessionWatcher(getRegistryFeature(kind, id))
 
 export const stopFeatureSessionByPath = (path: string) =>
@@ -190,11 +190,11 @@ export const stopFeatureSessionByPath = (path: string) =>
     })
   })
 
-export const stopFeatureSession = (kind: FeatureKind, id: string) =>
+export const stopFeatureSession = (kind: RegistryFeatureType, id: string) =>
   stopFeatureSessionByPath(getRegistryFeature(kind, id).path)
 
 export const buildFeature = (
-  kind: FeatureKind,
+  kind: RegistryFeatureType,
   id: string,
   mode: Configuration['mode'] = 'development',
 ) =>

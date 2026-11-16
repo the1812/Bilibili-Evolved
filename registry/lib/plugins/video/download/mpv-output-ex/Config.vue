@@ -16,7 +16,7 @@ import { TextBox } from '@/ui'
 
 const { options } = getComponentSettings<ConfigDataType>('downloadVideo')
 
-export default Vue.extend<ConfigDataType>({
+export default Vue.extend({
   components: {
     TextBox,
   },

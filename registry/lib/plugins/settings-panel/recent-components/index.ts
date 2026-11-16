@@ -1,53 +1,49 @@
-import { PluginMetadata } from '@/plugins/plugin'
-import { TagFilter } from '@/components/settings-panel/tag-filter'
-import { ComponentMetadata } from '@/components/types'
+import type { PluginMetadata } from '@/plugins/plugin'
+import type { TagFilter } from '@/components/settings-panel/tag-filter'
 import type { Options as SettingPanelOptions } from '@/components/settings-panel'
+import type { FeatureType } from '@/core/feature-types'
 
-type ExtendedOptions = SettingPanelOptions & {
-  recentComponents?: Record<string, number>
-}
+const recordKeys = {
+  component: 'recentComponents',
+  plugin: 'recentPlugins',
+  style: 'recentStyles',
+} as const satisfies Record<FeatureType, string>
+type ExtendedOptions = SettingPanelOptions &
+  Partial<Record<(typeof recordKeys)[FeatureType], Record<string, number>>>
 
 export const plugin: PluginMetadata = {
   name: 'settingsPanel.tagFilters.recentComponents',
   displayName: '设置面板 - "最近使用" 类别',
-  setup: ({ addData, addHook }) => {
-    const getRecentComponents = async () => {
-      const { getGeneralSettings } = await import('@/core/settings')
-      const generalSettings: ExtendedOptions = getGeneralSettings()
-      if (!generalSettings.recentComponents) {
-        generalSettings.recentComponents = {}
+  setup: async ({ addData, addHook }) => {
+    const { getGeneralSettings } = await import('@/core/settings')
+    const options: ExtendedOptions = getGeneralSettings()
+    const getLastUsed = (name: string) =>
+      Math.max(...Object.values(recordKeys).map(key => options[key]?.[name] ?? 0))
+    for (const [type, key] of Object.entries(recordKeys)) {
+      const records = () => (options[key] ??= {})
+      const recordUse = (name: string) => {
+        records()[name] = Date.now()
       }
-      return generalSettings.recentComponents as Record<string, number>
+      addHook(`settingsPanel.${type}Detail.open`, { after: recordUse })
+      const hookPrefix = `user${lodash.startCase(type)}s`
+      addHook(`${hookPrefix}.add`, {
+        after: (_code: string, _url: string, feature: { name: string }) => recordUse(feature.name),
+      })
+      addHook(`${hookPrefix}.remove`, {
+        after: (feature: { name: string }) => {
+          delete records()[feature.name]
+        },
+      })
     }
-    addHook('settingsPanel.componentDetail.open', {
-      after: async (name: string) => {
-        const recentComponents = await getRecentComponents()
-        recentComponents[name] = Number(new Date())
-      },
-    })
-    addHook('userComponents.add', {
-      after: async (code: string, url: string, component: ComponentMetadata) => {
-        const recentComponents = await getRecentComponents()
-        recentComponents[component.name] = Number(new Date())
-      },
-    })
-    addHook('userComponents.remove', {
-      after: async (component: ComponentMetadata) => {
-        const recentComponents = await getRecentComponents()
-        delete recentComponents[component.name]
-      },
-    })
-    addData('settingsPanel.tagFilters', async (tagFilters: TagFilter[]) => {
-      const recentComponents = await getRecentComponents()
-      tagFilters.unshift(({ renderedComponents }) => ({
+    addData('settingsPanel.featureTagFilters', (tagFilters: TagFilter[]) => {
+      tagFilters.unshift(features => ({
         name: 'recent',
         displayName: '最近',
         color: 'inherit',
         icon: 'mdi-clock-outline',
         order: 0,
-        count: renderedComponents.length,
-        filter: components =>
-          lodash.sortBy(components, it => recentComponents[it.name] ?? 0).reverse(),
+        count: features.length,
+        filter: items => lodash.sortBy(items, feature => getLastUsed(feature.name)).reverse(),
       }))
     })
   },
