@@ -56,11 +56,12 @@
         :trigger-element="componentList"
         :open="Boolean(selectedFeature)"
         @popup-change="!$event && closeDetail()"
+        @transitionend.self="clearClosedDetail"
       >
         <FeatureDetail
-          v-if="selectedFeature"
-          :key="selectedName"
-          :feature="selectedFeature"
+          v-if="displayedFeature"
+          :key="displayedFeature.name"
+          :feature="displayedFeature"
           :features="features"
           @close="closeDetail"
           @open-feature="selectFeature"
@@ -104,6 +105,7 @@ const selectedName = ref<string>()
 const selectedFeature = computed(() =>
   features.value.find(feature => feature.name === selectedName.value),
 )
+const displayedFeature = shallowRef<SettingsFeature>()
 const batchSelection = ref<string[]>([])
 const selectionAnchor = ref('')
 const peek = ref(false)
@@ -118,6 +120,11 @@ const clearSelectedFeature = () => {
   selectedName.value = undefined
 }
 const closeDetail = () => selectedFeature.value?.closeDetail(clearSelectedFeature)
+const clearClosedDetail = (event: TransitionEvent) => {
+  if (event.propertyName === 'transform' && !selectedFeature.value) {
+    displayedFeature.value = undefined
+  }
+}
 const clearBatchSelection = () => {
   batchSelection.value = []
   selectionAnchor.value = ''
@@ -213,7 +220,9 @@ watch(searchKeyword, updateSearch)
 onUnmounted(updateSearch.cancel)
 watch(features, updateMatchedFeatures)
 watch(selectedFeature, (feature, previous) => {
-  if (!feature && selectedName.value) {
+  if (feature) {
+    displayedFeature.value = feature
+  } else if (selectedName.value) {
     previous?.closeDetail(clearSelectedFeature)
   }
 })
