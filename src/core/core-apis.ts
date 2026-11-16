@@ -1,9 +1,17 @@
 import * as ajax from '@/core/ajax'
+import * as ai from '@/core/ai'
 import * as cdnTypes from '@/core/cdn-types'
 import * as containerQuery from '@/core/container-query'
 import * as download from '@/core/download'
 import * as dialog from '@/core/dialog'
+import {
+  getDevFeaturePaths,
+  getLoadedDevPath,
+  loadDevFeature,
+  setDevFeaturePaths,
+} from '@/core/dev-features'
 import * as externalInput from '@/core/external-input'
+import * as featureSource from '@/core/feature-source'
 import * as filePicker from '@/core/file-picker'
 import * as installFeature from '@/core/install-feature'
 import * as horizontalScroll from '@/core/horizontal-scroll'
@@ -32,6 +40,7 @@ import * as sort from '@/core/utils/sort'
 import * as urls from '@/core/utils/urls'
 import * as toast from '@/core/toast'
 import * as themeColor from '@/core/theme-color'
+import * as translate from '@/core/translate'
 import * as ui from '@/ui'
 import { componentApis } from '@/components/api'
 import { pluginApis } from '@/plugins/api'
@@ -41,11 +50,14 @@ import { pluginApis } from '@/plugins/api'
  */
 export const coreApis = {
   ajax,
+  ai,
   cdnTypes,
   containerQuery,
   download,
   dialog,
+  devFeatures: { getDevFeaturePaths, getLoadedDevPath, loadDevFeature, setDevFeaturePaths },
   externalInput,
+  featureSource,
   filePicker,
   installFeature,
   horizontalScroll,
@@ -65,6 +77,7 @@ export const coreApis = {
   shadowRoot,
   toast,
   themeColor,
+  translate,
   utils: {
     ...commonUtils,
     constants,
@@ -84,6 +97,8 @@ export type CoreApis = typeof coreApis
 /** 可供外部使用的核心API */
 export const externalApis = {
   ajax,
+  ai,
+  translate,
   ...cdnTypes,
   ...containerQuery,
   ...download,

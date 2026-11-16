@@ -1,50 +1,82 @@
+import { ref } from 'vue'
 import { registerAndGetData } from '@/plugins/data'
-import { ComponentTag, ComponentMetadata } from '../types'
+import { ascendingSort } from '@/core/utils/sort'
+import type { ComponentMetadata, ComponentTag } from '../types'
+import type { SettingsFeature } from './settings-feature'
+import { ComponentSettingsFeature } from './settings-feature/component'
 
-export interface SettingsTagFilterContext {
+export interface SettingsTag extends ComponentTag {
+  count: number
+  filter: (features: SettingsFeature[]) => SettingsFeature[]
+}
+
+export type TagFilter =
+  | SettingsTag
+  | ((features: readonly SettingsFeature[]) => SettingsTag | SettingsTag[])
+
+interface LegacyTagFilterContext {
   components: ComponentMetadata[]
   renderedComponents: ComponentMetadata[]
 }
-export interface SettingsTag extends ComponentTag {
-  count: number
+
+interface LegacySettingsTag extends Omit<SettingsTag, 'filter'> {
   filter: (components: ComponentMetadata[]) => ComponentMetadata[]
 }
-export type SettingsTagFunction = (context: SettingsTagFilterContext) => SettingsTag | SettingsTag[]
-export type TagFilter = SettingsTag | SettingsTagFunction
+
+type LegacyTagFilter =
+  | LegacySettingsTag
+  | ((context: LegacyTagFilterContext) => LegacySettingsTag | LegacySettingsTag[])
+
 const builtInTagFilters: TagFilter[] = [
-  (
-    { renderedComponents }, // 全部组件
-  ) => ({
+  features => ({
     name: 'all',
     displayName: '全部',
     color: 'inherit',
     icon: 'mdi-shape-outline',
     order: 0,
-    count: renderedComponents.length,
-    filter: c => c,
+    count: features.length,
+    filter: items => items,
   }),
-  ({ renderedComponents }) => {
-    // 按组件标签分类
-    const tags: SettingsTag[] = []
-    renderedComponents.forEach(it =>
-      it.tags.forEach(t => {
-        tags.push({
-          count: 0,
-          ...t,
-          filter: components =>
-            components.filter(c => {
-              if (t.name === 'all') {
-                return true
-              }
-              return c.tags.some(tag => tag.name === t.name)
-            }),
-        })
-      }),
-    )
-    const counts = lodash.countBy(tags, (t: ComponentTag) => t.name)
+  features => {
+    const tags = features.flatMap(feature => feature.row.tags ?? [])
+    const counts = lodash.countBy(tags, tag => tag.name)
     return lodash
-      .uniqBy(tags, t => t.name)
-      .map(t => ({ ...t, count: counts[t.name] } as SettingsTag))
+      .uniqBy(tags, tag => tag.name)
+      .map(tag => ({
+        ...tag,
+        count: counts[tag.name],
+        filter: items => items.filter(feature => feature.row.tags?.some(t => t.name === tag.name)),
+      }))
   },
 ]
-export const [tagFilters] = registerAndGetData('settingsPanel.tagFilters', builtInTagFilters)
+
+const [tagFilters] = registerAndGetData('settingsPanel.featureTagFilters', builtInTagFilters)
+const registeredFilters = ref(tagFilters)
+const [legacyTagFilters] = registerAndGetData('settingsPanel.tagFilters', [] as LegacyTagFilter[])
+const registeredLegacyFilters = ref(legacyTagFilters)
+
+const getLegacySettingsTags = (context: LegacyTagFilterContext): SettingsTag[] =>
+  registeredLegacyFilters.value
+    .flatMap(filter => (typeof filter === 'function' ? filter(context) : filter))
+    .map<SettingsTag>(({ filter, ...tag }) => ({
+      ...tag,
+      filter: items => {
+        const components = items.filter(item => item instanceof ComponentSettingsFeature)
+        const byName = new Map(components.map(item => [item.name, item]))
+        return filter(components.map(item => item.metadata)).flatMap(
+          component => byName.get(component.name) ?? [],
+        )
+      },
+    }))
+
+export const getSettingsTags = (
+  features: readonly SettingsFeature[],
+  componentContext: LegacyTagFilterContext,
+): SettingsTag[] => {
+  const legacyTags = getLegacySettingsTags(componentContext)
+  const tags = registeredFilters.value.flatMap(filter =>
+    typeof filter === 'function' ? filter(features) : filter,
+  )
+  const tagsByName = new Map([...legacyTags, ...tags].map(tag => [tag.name, tag]))
+  return [...tagsByName.values()].sort(ascendingSort(tag => tag.order))
+}

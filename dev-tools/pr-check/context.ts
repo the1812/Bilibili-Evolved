@@ -36,7 +36,7 @@ const getDiffRange = (event: PullRequestEvent) => {
 }
 
 const getChangedFiles = (range: string): ChangedFile[] => {
-  const output = runGit(['diff', '--name-status', range])
+  const output = runGit(['diff', '--name-status', '--find-renames', range])
   if (!output) {
     return []
   }
@@ -45,16 +45,22 @@ const getChangedFiles = (range: string): ChangedFile[] => {
     return {
       status,
       path: normalizePath(secondPath || firstPath),
+      previousPath: status.startsWith('R') ? normalizePath(firstPath) : undefined,
     }
   })
 }
 
 export const createContext = (): CheckContext => {
   const event = getEvent()
-  const changedFiles = getChangedFiles(getDiffRange(event))
+  const range = getDiffRange(event)
+  const changedFiles = getChangedFiles(range)
+  const [base, separator, head] = range.split(/(\.\.\.?)/)
+  const baseTree =
+    separator === '...' ? runGit(['merge-base', base || 'HEAD', head || 'HEAD']) : base || 'HEAD'
   return {
     baseRef: process.env.GITHUB_BASE_REF || event.pull_request?.base?.ref,
     changedFiles,
     changedPaths: changedFiles.map(file => file.path),
+    readBaseFile: filePath => runGit(['show', `${baseTree}:${filePath}`]),
   }
 }

@@ -1,26 +1,27 @@
 import { existsSync, readFileSync } from 'fs'
 import { dirname, join } from 'path'
 import { sync } from 'glob'
+import * as t from '@babel/types'
 import {
-  collectStaticObjectConstants,
   collectStringConstants,
   findFeatureObject,
   findObjectProperty,
   parseFile,
-  readAuthor,
   readStaticString,
-} from './ast'
-import { Author, DocSourceItem, FeatureKind } from './types'
+} from '../feature-ast'
+import { collectAuthorConstants, readAuthor } from './author'
+import type { RegistryFeatureType } from '../src-types'
+import { DocSourceItem } from './types'
 
 const getFeatureId = (root: string, entry: string) => {
   const relative = entry.replace(root, '').replace(/\\/g, '/')
   return relative.replace(/\/[^/]+$/, '')
 }
 
-const readFeatureMetadata = (file: string) => {
+const readFeatureMetadata = (file: string, kind: RegistryFeatureType) => {
   const ast = parseFile(file)
   const constants = collectStringConstants(ast)
-  const objectConstants = collectStaticObjectConstants(ast, constants)
+  const objectConstants = collectAuthorConstants(ast, constants)
   const metadata = findFeatureObject(ast)
   if (!metadata) {
     return undefined
@@ -45,29 +46,37 @@ const readFeatureMetadata = (file: string) => {
     throw new Error(`${file}: failed to resolve static author`)
   }
 
-  return { name, displayName, author }
-}
-
-export const getAuthorMarkdown = (author: Author | Author[] | undefined) => {
-  if (!author) {
-    return ''
+  const tagsProperty = kind === 'component' ? findObjectProperty(metadata, 'tags') : undefined
+  let tags: string[] | undefined
+  if (tagsProperty) {
+    const { value } = tagsProperty
+    if (!t.isArrayExpression(value)) {
+      throw new Error(`${file}: failed to resolve static tags`)
+    }
+    tags = value.elements.map(tag => {
+      if (
+        !t.isMemberExpression(tag, { computed: false }) ||
+        !t.isIdentifier(tag.object, { name: 'componentsTags' }) ||
+        !t.isIdentifier(tag.property)
+      ) {
+        throw new Error(`${file}: expected a componentsTags reference`)
+      }
+      return tag.property.name
+    })
   }
-  if (Array.isArray(author)) {
-    return `by ${author.map(item => `[@${item.name}](${item.link})`).join(', ')}\n\n`
-  }
-  return `by [@${author.name}](${author.link})\n\n`
+  return { name, displayName, author, tags }
 }
 
 const readMarkdownDescription = (file: string) =>
   readFileSync(file, 'utf8').replace(/\r\n?/g, '\n').trim()
 
-export const readFeatureDocs = (kind: FeatureKind): DocSourceItem[] => {
+export const readFeatureDocs = (kind: RegistryFeatureType): DocSourceItem[] => {
   const src = `./registry/lib/${kind}s/`
   const rootPath = `../../registry/dist/${kind}s/`
   return sync(`${src}**/index.ts`, { dotRelative: true, posix: true })
     .sort()
     .map(file => {
-      const metadata = readFeatureMetadata(file)
+      const metadata = readFeatureMetadata(file, kind)
       if (!metadata) {
         return undefined
       }
@@ -81,7 +90,9 @@ export const readFeatureDocs = (kind: FeatureKind): DocSourceItem[] => {
         type: kind,
         name: metadata.name,
         displayName: metadata.displayName,
-        description: getAuthorMarkdown(metadata.author) + readMarkdownDescription(descriptionFile),
+        description: readMarkdownDescription(descriptionFile),
+        author: metadata.author,
+        tags: metadata.tags,
         fullRelativePath,
         fullAbsolutePath,
       } as DocSourceItem

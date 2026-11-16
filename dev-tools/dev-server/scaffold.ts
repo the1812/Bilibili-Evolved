@@ -1,7 +1,7 @@
 import { existsSync, mkdirSync, writeFileSync } from 'fs'
 import path from 'path'
 import lodash from 'lodash'
-import { CreateFeaturePayload, FeatureKind } from './payload'
+import { CreateFeaturePayload } from './payload'
 
 const assertValidId = (id: string) => {
   if (!id || id.startsWith('/') || id.includes('..') || path.isAbsolute(id)) {
@@ -47,7 +47,7 @@ export const plugin: PluginMetadata = {
 
 export const createFeature = (payload: CreateFeaturePayload) => {
   assertValidId(payload.id)
-  const { kind }: { kind: FeatureKind } = payload
+  const { kind } = payload
   const featureDirectory = path.resolve(`registry/lib/${kind}s`, payload.id)
   if (existsSync(featureDirectory)) {
     throw new Error(`功能目录已存在: ${featureDirectory}`)

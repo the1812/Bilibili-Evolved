@@ -80,7 +80,7 @@
           :depth="depth + 1"
           allow-remove
           @input="emitChange"
-          @remove="removeChild(index)"
+          @remove="removeChild(Number(index))"
         />
         <div v-if="showInsertChooser" class="rbvp-condition-insert">
           <button type="button" class="rbvp-condition-choice" @click="addBasicChild">

@@ -33,7 +33,7 @@
     },
     {
       "type": "shell",
-      "command": "pnpm tsc -p tsconfig.type-check.json --noEmit",
+      "command": "pnpm run type",
       "group": "build",
       "problemMatcher": [],
       "label": "生产:类型检查 prod:type"

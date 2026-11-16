@@ -1,13 +1,13 @@
 import { CdnConfig } from './types'
 
-const owner = 'the1812'
+const repo = 'the1812/Bilibili-Evolved'
 const host = 'cdn.jsdelivr.net'
 export const jsDelivr: CdnConfig = {
   name: 'jsDelivr',
-  owner,
+  repo,
   host,
-  stableClient: `https://${host}/gh/${owner}/Bilibili-Evolved@master/dist/bilibili-evolved.user.js`,
-  previewClient: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/dist/bilibili-evolved.preview.user.js`,
+  stableClient: `https://${host}/gh/${repo}@master/dist/bilibili-evolved.user.js`,
+  previewClient: `https://${host}/gh/${repo}@preview/dist/bilibili-evolved.preview.user.js`,
   library: {
     lodash: {
       url: `https://${host}/npm/lodash@4.17.21/lodash.min.js`,
@@ -44,8 +44,7 @@ export const jsDelivr: CdnConfig = {
       },
     },
   },
-  smallLogo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo-small.png`,
-  logo: `https://${host}/gh/${owner}/Bilibili-Evolved@preview/images/logo.png`,
-  root: (branch, ownerOverride) =>
-    `https://${host}/gh/${ownerOverride || owner}/Bilibili-Evolved@${branch}/`,
+  smallLogo: `https://${host}/gh/${repo}@preview/images/logo-small.png`,
+  logo: `https://${host}/gh/${repo}@preview/images/logo.png`,
+  root: (branch, sourceRepo) => `https://${host}/gh/${sourceRepo}@${branch}/`,
 }

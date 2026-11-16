@@ -6,7 +6,7 @@
         <div class="be-live-list-count">({{ items.length }})</div>
       </div>
       <div class="be-live-list-actions">
-        <div v-if="loaded" class="be-live-list-refresh" title="刷新" @click="fetchLiveList">
+        <div v-if="loaded" class="be-live-list-refresh" title="刷新" @click="fetchLiveList()">
           <VIcon icon="mdi-refresh" :size="16" />
         </div>
         <a
@@ -74,6 +74,7 @@ const pinnedUsers = ref<FollowingUserInfo[]>([])
 const hiddenUsers = ref<FollowingUserInfo[]>([])
 const loaded = ref(false)
 const keyword = ref('')
+let fetching = false
 
 const filteredItems = computed(() => {
   if (keyword.value) {
@@ -178,10 +179,16 @@ const fetchFollowingLists = async () => {
   ])
 }
 
-const fetchLiveList = async () => {
+const fetchLiveList = async (silent = false) => {
+  if (fetching) {
+    return
+  }
+  fetching = true
   try {
-    items.value = []
-    loaded.value = false
+    if (!silent) {
+      items.value = []
+      loaded.value = false
+    }
     const [, promise] = responsiveGetPages<LiveInfo>({
       api: page =>
         getJsonWithCredentials(
@@ -212,6 +219,7 @@ const fetchLiveList = async () => {
     items.value = sortedItems
   } finally {
     loaded.value = true
+    fetching = false
   }
 }
 
@@ -219,12 +227,19 @@ const initializeLiveList = async () => {
   await fetchFollowingLists()
   await fetchLiveList()
 }
+const handleVisibilityChange = () => {
+  if (document.visibilityState === 'visible' && loaded.value) {
+    fetchLiveList(true)
+  }
+}
 addComponentListener('extendFeedsLive.pinnedListID', initializeLiveList)
 addComponentListener('extendFeedsLive.hiddenListID', initializeLiveList)
 onMounted(() => {
   initializeLiveList()
+  document.addEventListener('visibilitychange', handleVisibilityChange)
 })
 onBeforeUnmount(() => {
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
   removeComponentListener('extendFeedsLive.pinnedListID', initializeLiveList)
   removeComponentListener('extendFeedsLive.hiddenListID', initializeLiveList)
 })

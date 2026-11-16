@@ -5,6 +5,10 @@ Bilibili Evolved 是一个基于 Web 前端技术构建的油猴脚本, 贡献�
 - 熟悉 Web 前端技术, 编写逻辑时使用 [TypeScript](https://www.typescriptlang.org/), 编写样式时使用 [Scss](https://sass-lang.com/), 创建 UI 时使用 [Vue 2](https://v2.cn.vuejs.org/).
 - 新增的代码能够通过 [ESLint](https://eslint.org/) 和 [TypeScript](https://www.typescriptlang.org/) 检查.
 
+## 关于 AI
+
+你可以使用 AI 辅助开发, 项目中已包含 AGENTS.md. 但请注意你仍然需要保障代码的质量, 保持 UI 设计的美观. 太乱的代码会需要更长的时间去 review, 甚至可能被拒绝合入, 因此也建议尽可能使用先进的 AI 模型 (可参考 [FrontierCode](https://cognition.com/frontiercode) 中 Score 超过 20% 的模型).
+
 ## 功能范围与限制
 
 项目不接受以下功能:
@@ -203,7 +207,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发. 编写 SCSS 时可以使用公共 Sass 文件, 例如通过 `@import "common"` 使用 `ui/_common.scss` 中的 mixin.
 9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可. 如果开发服务已经运行, 也可以用 `pnpm tsx dev-tools/dev-server/command.ts build component <id>` 或 `pnpm tsx dev-tools/dev-server/command.ts build plugin <id>` 单独编译.
 10. 然后运行 `启动开发服务 dev-server`, 组件的 localhost 连接格式为 `http://localhost:23333/registry/dist/components/<id>.js`, 插件则为 `http://localhost:23333/registry/dist/plugins/<id>.js`.
-11. 进入 b 站, 打开脚本的设置面板 - 组件管理, 粘贴组件的链接并安装.
+11. 进入 b 站, 从脚本的设置面板打开 `功能库`, 点击搜索按钮右侧的 `链接添加`. 在弹窗中粘贴上一步的本地链接, 点击 `添加`.
 12. 后续同 [修改](##修改) 中的 2 ~ 3 步.
 
 ### 插件
@@ -249,7 +253,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 - `components/types`: 组件相关接口定义
 - `components/styled-components`: 包含样式的组件 entry 简化包装函数
 - `components/user-component`: 用户组件的安装/卸载 API
-- `components/description`: 获取组件或插件的描述, 会自动匹配语言并插入作者标记, 支持 HTML, Markdown 和纯文本形式
+- `components/description`: 获取当前语言的组件或插件描述, 支持 HTML, Markdown 和纯文本形式
 - `components/feeds/`:
   - `api`: 动态相关 API 封装, 获取动态流, 对每一个动态卡片执行操作等
   - `BangumiCard.vue`: 番剧卡片
@@ -290,7 +294,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 
 对于某种特定时机发生的事件, 可以调用 `getHook` 允许其他地方注入钩子提高扩展性, 其他地方可以调用 `addHook` 进行注入.
 
-例如, 自动更新器在组件管理面板注入了钩子, 在新组件安装时记录安装来源, 实现自动更新. 组件管理面板没有任何更新相关代码.
+例如, 自动更新器通过功能安装钩子记录组件的安装来源, 实现自动更新.
 
 - `plugins/style`: 提供简单的自定义样式增删 API (复杂样式请考虑组件或者 Stylus)
 
@@ -315,8 +319,7 @@ pnpm run check-pr-files
 ```
 
 类型检查:
-> 项目有[计划](https://github.com/the1812/Bilibili-Evolved/discussions/3939)从 Vue 2 迁移到 Vue 3, 因此虽然我们[启用](https://github.com/the1812/Bilibili-Evolved/pull/4337)了 Volar 对 *.vue 文件进行类型检查, 却未完全修复 Volar 报告的类型错误. 因此，开发时你可能看到 VSCode 出现类型报错, 但是 `pnpm run type` 通过, 这是正常现象.
-
+> 使用 `vue-tsc` 检查 TypeScript 源码和 Vue 单文件组件, 包括模板表达式.
 ```powershell
 pnpm run type
 ```

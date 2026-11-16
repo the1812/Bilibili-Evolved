@@ -6,6 +6,7 @@ import ToastCardContainer from './ToastCardContainer.vue'
 export enum ToastType {
   Default = 'default',
   Info = 'info',
+  Warning = 'warning',
   Success = 'success',
   Error = 'error',
 }
@@ -101,6 +102,9 @@ export class Toast {
   }
   static success(message: string, title: string, duration?: number | undefined) {
     return this.internalShow(message, title, duration, ToastType.Success)
+  }
+  static warn(message: string, title: string, duration?: number | undefined) {
+    return this.internalShow(message, title, duration, ToastType.Warning)
   }
   static error(message: string, title: string, duration?: number | undefined) {
     return this.internalShow(message, title, duration, ToastType.Error)

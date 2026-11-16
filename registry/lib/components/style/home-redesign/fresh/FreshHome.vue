@@ -35,6 +35,8 @@ export default Vue.extend({
   @include v-stretch();
   &-header {
     @include h-center();
+    // 分区栏换行后会变高, 各元素靠上对齐
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 16px;
     &-center-area {
@@ -48,7 +50,18 @@ export default Vue.extend({
     &-tabs {
       @include tabs-style();
       .default-tabs {
-        padding: 4px 8px;
+        // tabs 过多时换行, 每项不压缩、文字不换行
+        flex-wrap: wrap;
+        // 拖动排序后视觉顺序与 DOM 顺序不同, margin 的 :last-child 会错位, 统一改用 gap
+        gap: 16px;
+        padding: 4px 8px 8px;
+        .default-tab {
+          flex-shrink: 0;
+          white-space: nowrap;
+          &:not(:last-child) {
+            margin-right: 0;
+          }
+        }
       }
     }
     &-title {

@@ -21,6 +21,9 @@
         "name": "removePromotions",
         "displayName": "删除广告",
         "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等.\n\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `广告卡片选项`\n  - `完全隐藏`: 广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置\n  - `自定义`\n    - `占位文本`: 屏蔽首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n  - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效",
+        "tags": [
+          "utils"
+        ],
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -29,6 +32,10 @@
         "name": "removeLiveWatermark",
         "displayName": "删除直播水印",
         "description": "删除观看直播时角落的水印.",
+        "tags": [
+          "live",
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/live/remove-watermark.js",
         "fullAbsolutePath": "registry/dist/components/live/remove-watermark.js"
       },
@@ -37,6 +44,10 @@
         "name": "removePlayerPopup",
         "displayName": "删除视频弹窗",
         "description": "删除视频播放器中出现的各种弹窗, 类别可在选项中分别选择. 如果之前点了收起弹窗, 则收起后的小弹窗则会直接删除. (不受类别选择影响)",
+        "tags": [
+          "video",
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/video/player/remove-popup.js",
         "fullAbsolutePath": "registry/dist/components/video/player/remove-popup.js"
       },
@@ -45,6 +56,9 @@
         "name": "disableSpecialDanmaku",
         "displayName": "禁用特殊弹幕样式",
         "description": "移除高亮弹幕或 UP 主弹幕的特殊样式, 弹幕内容不会移除.",
+        "tags": [
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/special-danmaku.js",
         "fullAbsolutePath": "registry/dist/components/style/special-danmaku.js"
       },
@@ -53,6 +67,9 @@
         "name": "simplifyComments",
         "displayName": "简化评论区",
         "description": "去除或优化评论区内的元素, 可配置以下选项 (描述的是勾选时的效果):\n\n> 配置项仅对新版评论区有效\n\n- `用户等级`: 隐藏用户等级标识. (隐藏后, 可以通过鼠标停留在头像上, 在弹出的资料卡小窗中查看)\n- `装扮 & 时间`: 隐藏装扮图片, 并把发送时间移动到装扮的位置.\n- `头像框`: 隐藏头像框.\n- `回复换行`:\n  - 楼中楼回复也另起一行显示, 和一级回复保持一致.\n  - `热评`, `UP 主点赞` 等标记和点赞栏放在同一行.\n- `编辑框`: 将提示文本居上, 符合用户实际输入文字的位置, 并将发布按钮的字号略微调小.\n- `粉丝勋章`: 隐藏用户的粉丝勋章.\n- `小喇叭横幅`: 隐藏评论区顶部的小喇叭横幅",
+        "tags": [
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/simplify/comments.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/comments.js"
       },
@@ -61,6 +78,10 @@
         "name": "simplifyLiveroom",
         "displayName": "简化直播间",
         "description": "隐藏直播间中各种不需要的内容.",
+        "tags": [
+          "live",
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/simplify/live.js",
         "fullAbsolutePath": "registry/dist/components/style/simplify/live.js"
       },
@@ -69,6 +90,10 @@
         "name": "collapseLiveSideBar",
         "displayName": "自动收起直播侧栏",
         "description": "自动收起直播间右边偏下的侧栏 (上面有个 \"关注\" 的面板) , 并阻止侧栏面板 (如 \"主播推荐\") 在打开网页时自动弹出.",
+        "tags": [
+          "live",
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/live/side-bar.js",
         "fullAbsolutePath": "registry/dist/components/live/side-bar.js"
       },
@@ -77,6 +102,10 @@
         "name": "hideRelatedVideos",
         "displayName": "隐藏视频推荐",
         "description": "隐藏番剧和视频页面右侧的推荐视频列表. 注意: 如果你想关闭 b 站的自动连播 (自动播放下一个推荐视频) 功能, 需要先取消隐藏视频推荐才能看到开关.",
+        "tags": [
+          "style",
+          "video"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/hide/video/related-videos.js",
         "fullAbsolutePath": "registry/dist/components/style/hide/video/related-videos.js"
       },
@@ -85,6 +114,10 @@
         "name": "hideRecommendedLive",
         "displayName": "隐藏直播推荐",
         "description": "隐藏视频页面右侧下方的直播推荐.",
+        "tags": [
+          "style",
+          "video"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/hide/video/recommended-live.js",
         "fullAbsolutePath": "registry/dist/components/style/hide/video/recommended-live.js"
       },
@@ -93,6 +126,10 @@
         "name": "hideVideoTopMask",
         "displayName": "隐藏视频标题层",
         "description": "隐藏视频里鼠标经过时出现在右上角的覆盖层.",
+        "tags": [
+          "style",
+          "video"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/hide/video/top-mask.js",
         "fullAbsolutePath": "registry/dist/components/style/hide/video/top-mask.js"
       }
@@ -114,7 +151,10 @@
         "type": "component",
         "name": "downloadVideo",
         "displayName": "下载视频",
-        "description": "在功能面板中添加下载视频支持. 请注意:\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n\n在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n\n批量下载时, 批量命名格式中还额外提供视频发布时间变量:\n- `publishYear`\n- `publishMonth`\n- `publishDay`\n- `publishHour`\n- `publishMinute`\n- `publishSecond`\n- `publishMillisecond`",
+        "description": "在功能面板中添加下载视频支持.\n\n### 注意:\n\n- 不能下载超出账号权限的视频, 例如非大会员下载大会员清晰度视频, 或者大陆地区网络下载港澳台地区番剧, 都是不可以的.\n- 请勿短时间进行大量下载, 以免遭到 b 站 IP 封禁.\n- 海外用户建议开启「区分 Akamaized 源」并首选 Akamaized 源.\n\n### 文件命名格式变量:\n\n在视频 (非番剧) 页面中, 文件命名格式 (单文件) 和批量命名格式 (多P/合集) 中都可以使用以下变量:\n\n- `user`: UP 主用户名\n- `userID`: UP 主用户 ID\n\n批量下载时, 批量命名格式中还额外提供视频发布时间变量:\n\n- `publishYear`\n- `publishMonth`\n- `publishDay`\n- `publishHour`\n- `publishMinute`\n- `publishSecond`\n- `publishMillisecond`",
+        "tags": [
+          "video"
+        ],
         "fullRelativePath": "../../registry/dist/components/video/download.js",
         "fullAbsolutePath": "registry/dist/components/video/download.js"
       },
@@ -123,6 +163,9 @@
         "name": "downloadSubtitle",
         "displayName": "下载字幕",
         "description": "启用下载字幕支持, 在视频页面中可从功能面板里下载字幕.",
+        "tags": [
+          "video"
+        ],
         "fullRelativePath": "../../registry/dist/components/video/subtitle/download.js",
         "fullAbsolutePath": "registry/dist/components/video/subtitle/download.js"
       },
@@ -131,6 +174,9 @@
         "name": "downloadDanmaku",
         "displayName": "下载弹幕",
         "description": "启用下载弹幕支持, 在视频和番剧页面中可从功能面板里下载弹幕. 请注意 ASS 弹幕下载不会包含高级弹幕, 字幕弹幕等.",
+        "tags": [
+          "video"
+        ],
         "fullRelativePath": "../../registry/dist/components/video/danmaku/download.js",
         "fullAbsolutePath": "registry/dist/components/video/danmaku/download.js"
       },
@@ -139,6 +185,9 @@
         "name": "downloadAudio",
         "displayName": "下载音频",
         "description": "开启音频下载支持, 音频页面中可以在功能面板中下载当前音频.\n\n> 需要进入音频的详细信息页面才能下载, 在其他页面中此按钮将不可点击.",
+        "tags": [
+          "utils"
+        ],
         "fullRelativePath": "../../registry/dist/components/utils/download-audio.js",
         "fullAbsolutePath": "registry/dist/components/utils/download-audio.js"
       }
@@ -176,6 +225,10 @@
         "name": "elegantScrollbar",
         "displayName": "使用细滚动条",
         "description": "使用浏览器的滚动条风格替代系统的滚动条, 不过 macOS 系统滚动条比浏览器做得好一些, 因此不建议 macOS 使用此功能.",
+        "tags": [
+          "style",
+          "general"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/scrollbar.js",
         "fullAbsolutePath": "registry/dist/components/style/scrollbar.js"
       },
@@ -184,6 +237,10 @@
         "name": "customNavbar",
         "displayName": "自定义顶栏",
         "description": "使用脚本提供的顶栏替换原版的主站顶栏 (非主站不替换).\n\n启用后还可以在反广告插件 (例如 ABP) 中配置禁止原版顶栏的消息 iframe 以提升性能:\n- *://message.bilibili.com/pages/nav/index_new_pc_sync\n- *://message.bilibili.com/pages/nav/index_new_sync\n\n选项说明:\n- `全局固定`: 将顶栏固定显示, 即使页面向下滚动也仍然可见. (除了一部分有 b 站定制顶栏的页面会忽略此选项)\n- `主题色填充`: 使用通用设置中的主题颜色填充顶栏的背景.\n- `透明填充`: 在首页和主站的部分页面中, 当存在顶部横幅图片时, 顶栏背景将变为透明 + 阴影的样式.\n- `背景模糊`: 启用背景模糊效果, 会使背景颜色变得半透明, 注意这个效果非常非常消耗图形性能, 慎用.\n- `投影`: 在顶栏下方增加一小段投影效果.\n- `使用季节 Logo`: 使用 b 站首页的特殊 Logo 图片替换顶栏的 Logo 图, 通常会对应当前季节, 特殊活动期间可能会有变化导致看不清. (比如搞了个全白的 Logo, 而顶栏正好也是白色的)\n- `触摸模式`: 启用后顶栏的一级入口点击时不进行跳转, 方便触屏使用.\n- `新标签页打开`: 控制顶栏内链接是否在新标签页打开.\n- `自动刷新数据`: 启用后, 部分有弹窗的顶栏入口在鼠标经过时会自动刷新数据.\n- `顶栏高度`: 自定义顶栏的高度 (b 站原版的为 64px)\n- `消息提醒样式`: 自定义顶栏入口的消息提醒样式.\n- `搜索栏宽度`: 自定义搜索栏占顶栏的比例.\n- `链接对齐样式`: 自定义纯链接弹窗内链接文字的对齐样式.",
+        "tags": [
+          "style",
+          "general"
+        ],
         "fullRelativePath": "../../registry/dist/components/style/custom-navbar.js",
         "fullAbsolutePath": "registry/dist/components/style/custom-navbar.js"
       },
@@ -192,6 +249,9 @@
         "name": "removePromotions",
         "displayName": "删除广告",
         "description": "删除站内的各种广告. 包括首页的推广模块, 手机 app 推荐, 视频页面右侧的广告等.\n\n- `保留活动横幅`: 保留视频页面的活动横幅.\n- `广告卡片选项`\n  - `完全隐藏`: 广告卡片将完全隐藏，后续的视频卡片会自动补上空缺位置\n  - `自定义`\n    - `占位文本`: 屏蔽首页推广模块的广告后显示\"🚫已屏蔽广告\"来替代空白区域.\n  - `调试模式`: 用于查看是否正确屏蔽广告，启用时将边框高亮广告卡片，同时其他屏蔽选项会失效",
+        "tags": [
+          "utils"
+        ],
         "fullRelativePath": "../../registry/dist/components/utils/remove-promotions.js",
         "fullAbsolutePath": "registry/dist/components/utils/remove-promotions.js"
       },
@@ -200,6 +260,9 @@
         "name": "columnUnlock",
         "displayName": "专栏复制优化",
         "description": "(原名: 专栏文字选择, 现在专栏已经不限制选中文字了)\n\n避免专栏的文字复制后在最后带上出处信息, 更贴近原生的复制行为.",
+        "tags": [
+          "utils"
+        ],
         "fullRelativePath": "../../registry/dist/components/utils/column-unlock.js",
         "fullAbsolutePath": "registry/dist/components/utils/column-unlock.js"
       },
@@ -208,6 +271,9 @@
         "name": "urlParamsClean",
         "displayName": "网址参数清理",
         "description": "自动删除网址中的多余跟踪参数。请注意这会导致浏览器历史记录出现重复的标题（分别是转换前后的网址），并可能导致后退要多退几次。\n\n- `清理页面中的 A 标签`: 清理视频简介、推荐列表、标签、评论中的链接。",
+        "tags": [
+          "utils"
+        ],
         "fullRelativePath": "../../registry/dist/components/utils/url-params-clean.js",
         "fullAbsolutePath": "registry/dist/components/utils/url-params-clean.js"
       },
@@ -216,6 +282,10 @@
         "name": "keymap",
         "displayName": "快捷键扩展",
         "description": "为脚本的功能和 b 站的功能启用快捷键支持，可使用键盘按键、鼠标中键和侧键，快捷键列表可在`快捷键设置`中查看和配置。\n\n`字幕语言偏好`: 可以填写一个标准语言代码 (如 `zh`、`en`、`ja`)，使用快捷键开启字幕时会优先匹配该语言，并优先选择人工字幕；留空则跟随播放器最近使用的语言。如果当前视频没有匹配的语言时会回退到第一个字幕。",
+        "tags": [
+          "video",
+          "utils"
+        ],
         "fullRelativePath": "../../registry/dist/components/utils/keymap.js",
         "fullAbsolutePath": "registry/dist/components/utils/keymap.js"
       },
@@ -224,6 +294,10 @@
         "name": "viewCover",
         "displayName": "查看封面",
         "description": "在视频页面中, 可从功能面板中查看封面.",
+        "tags": [
+          "utils",
+          "video"
+        ],
         "fullRelativePath": "../../registry/dist/components/utils/view-cover.js",
         "fullAbsolutePath": "registry/dist/components/utils/view-cover.js"
       },
@@ -232,6 +306,10 @@
         "name": "bvidConvert",
         "displayName": "BV 号转换",
         "description": "在功能面板中显示视频的 AV 号和 BV 号.",
+        "tags": [
+          "video",
+          "utils"
+        ],
         "fullRelativePath": "../../registry/dist/components/video/bvid-convert.js",
         "fullAbsolutePath": "registry/dist/components/video/bvid-convert.js"
       },
@@ -240,6 +318,10 @@
         "name": "removeLiveWatermark",
         "displayName": "删除直播水印",
         "description": "删除观看直播时角落的水印.",
+        "tags": [
+          "live",
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/live/remove-watermark.js",
         "fullAbsolutePath": "registry/dist/components/live/remove-watermark.js"
       },
@@ -248,6 +330,9 @@
         "name": "liveDanmakuSendbar",
         "displayName": "直播弹幕发送栏",
         "description": "在直播的网页全屏和全屏模式状态下, 在底部显示弹幕栏.",
+        "tags": [
+          "live"
+        ],
         "fullRelativePath": "../../registry/dist/components/live/danmaku-sendbar.js",
         "fullAbsolutePath": "registry/dist/components/live/danmaku-sendbar.js"
       },
@@ -256,6 +341,9 @@
         "name": "liveGiftBox",
         "displayName": "直播全屏包裹",
         "description": "在直播的网页全屏(不能是全屏)模式下往控制栏添加包裹按钮.",
+        "tags": [
+          "live"
+        ],
         "fullRelativePath": "../../registry/dist/components/live/gift-box.js",
         "fullAbsolutePath": "registry/dist/components/live/gift-box.js"
       },
@@ -264,6 +352,10 @@
         "name": "fullFeedsContent",
         "displayName": "展开动态内容",
         "description": "不管内容多长, 总是完全展开动态的内容. (专栏不算)",
+        "tags": [
+          "style",
+          "feeds"
+        ],
         "fullRelativePath": "../../registry/dist/components/feeds/full-content.js",
         "fullAbsolutePath": "registry/dist/components/feeds/full-content.js"
       },
@@ -272,6 +364,9 @@
         "name": "unfoldFeeds",
         "displayName": "动态反折叠",
         "description": "自动展开被折叠的动态.\n\n动态被折叠可能是因为:\n\n- 短时间内大量更新作品\n- 多人转发同一个作品\n- 被审核折叠",
+        "tags": [
+          "feeds"
+        ],
         "fullRelativePath": "../../registry/dist/components/feeds/unfold.js",
         "fullAbsolutePath": "registry/dist/components/feeds/unfold.js"
       },
@@ -280,6 +375,9 @@
         "name": "foldComments",
         "displayName": "快速收起评论",
         "description": "动态里查看评论区时, 在底部添加一个`收起评论`按钮, 这样就不用再回到上面收起了.",
+        "tags": [
+          "feeds"
+        ],
         "fullRelativePath": "../../registry/dist/components/feeds/fold-comments.js",
         "fullAbsolutePath": "registry/dist/components/feeds/fold-comments.js"
       },
@@ -288,6 +386,9 @@
         "name": "disableFeedsDetails",
         "displayName": "禁止跳转动态详情",
         "description": "禁止点击动态正文后跳转详情页, 方便选择其中的文字.\n仅正文区域生效, 点击标题/时间缀等其他区域或按住 <kbd>Ctrl + 点击</kbd> 仍会正常跳转.\n转发动态会在正文末尾追加一个\"详情\"入口用于跳转.",
+        "tags": [
+          "feeds"
+        ],
         "fullRelativePath": "../../registry/dist/components/feeds/disable-details.js",
         "fullAbsolutePath": "registry/dist/components/feeds/disable-details.js"
       },
@@ -296,6 +397,10 @@
         "name": "fullVideoDescription",
         "displayName": "展开视频简介",
         "description": "总是展开完整的视频简介.",
+        "tags": [
+          "video",
+          "style"
+        ],
         "fullRelativePath": "../../registry/dist/components/video/full-description.js",
         "fullAbsolutePath": "registry/dist/components/video/full-description.js"
       },
@@ -303,7 +408,7 @@
         "type": "plugin",
         "name": "settingsPanel.tagFilters.recentComponents",
         "displayName": "设置面板 - \"最近使用\" 类别",
-        "description": "在设置面板中添加 \"最近使用\" 类别, 方便检索最近操作过的组件.",
+        "description": "在设置面板中添加 \"最近使用\" 类别, 方便检索最近操作过的组件、插件和样式.",
         "fullRelativePath": "../../registry/dist/plugins/settings-panel/recent-components.js",
         "fullAbsolutePath": "registry/dist/plugins/settings-panel/recent-components.js"
       }

@@ -36,11 +36,11 @@
 </template>
 <script lang="ts">
 import { ArrayContent } from '@/core/common-types'
-import { Reorder } from '@/core/reorder'
+import { Reorder, ReorderOrientations } from '@/core/reorder'
 import { ascendingSort } from '@/core/utils/sort'
 import { VButton, VIcon } from '@/ui'
 import { freshHomeOptions } from '../../options'
-import { supportedCategories } from './filter'
+import { linkOnlyNames, supportedCategories } from './filter'
 import { getContent } from './content/content'
 
 const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
@@ -49,7 +49,7 @@ const tabs = Object.entries(supportedCategories).map(([name, category]) => ({
   displayName: name,
   category,
   href: category.link,
-  order: 0,
+  linkOnly: linkOnlyNames.includes(name),
 }))
 type TabType = ArrayContent<typeof tabs>
 export default Vue.extend({
@@ -60,17 +60,19 @@ export default Vue.extend({
   data() {
     const orderMap = (freshHomeOptions.categoriesOrder ?? {}) as Record<string, number>
     const orderedTabs = [...tabs].sort(ascendingSort(t => orderMap[t.name]))
+    const firstSelectable = orderedTabs.find(t => !t.linkOnly) ?? orderedTabs[0]
     return {
       tabs: orderedTabs,
       isReordering: false,
       reorder: null,
-      selectedTab: orderedTabs[0],
-      content: getContent(orderedTabs[0].name),
+      selectedTab: firstSelectable,
+      content: getContent(firstSelectable.name),
     }
   },
   mounted() {
     const tabsContainer = this.$refs.tabs as HTMLElement
     const reorder = new Reorder(tabsContainer)
+    reorder.orientation = ReorderOrientations.grid
     reorder.addEventListener('reorder', ({ detail: items }) => {
       const newOrder = Object.fromEntries(
         items.map(it => {
@@ -92,7 +94,8 @@ export default Vue.extend({
       if (this.isReordering) {
         return
       }
-      if (this.selectedTab === tab) {
+      // 无内容流的页面入口直接打开链接
+      if (tab.linkOnly || this.selectedTab === tab) {
         window.open(tab.href, '_blank')
         return
       }

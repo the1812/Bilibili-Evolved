@@ -5,10 +5,13 @@ import { createProxy } from './proxy'
 import { registeredListeners, settingsChangedHandler } from './listener'
 import { initInternalSettings, settingsInternalState as state } from './internal-state'
 import { readSettings } from './read'
+import { migrateUpdateSources } from './migrate'
 
 initInternalSettings()
 export { defaultSettings } from './internal-state'
-state.internalSettings = createProxy(readSettings(state.internalSettings), settingsChangedHandler)
+const loadedSettings = readSettings(state.internalSettings)
+migrateUpdateSources(loadedSettings)
+state.internalSettings = createProxy(loadedSettings, settingsChangedHandler)
 for (const [key, value] of Object.entries(state.internalSettings)) {
   GM_setValue(key, value)
 }

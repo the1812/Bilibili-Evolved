@@ -14,9 +14,9 @@ export const provideActions = () => {
         name: onlineRegistryActionName,
         getActions: async () => [
           {
-            name: '切换在线仓库',
-            description: 'Toggle Online Registry',
-            icon: 'mdi-web',
+            name: '切换功能库',
+            description: 'Toggle Feature Library',
+            icon: 'mdi-package-variant-closed',
             action: async () => {
               const { togglePopup } = await import('./sub-pages/online-registry/vm')
               togglePopup()

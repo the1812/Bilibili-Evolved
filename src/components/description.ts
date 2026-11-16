@@ -3,41 +3,22 @@ import { ComponentMetadata } from './component'
 import { getSelectedLanguage } from './i18n/helpers'
 import { Executable } from '@/core/common-types'
 
-type ItemWithDescription = Pick<ComponentMetadata, 'description' | 'author'>
+type ItemWithDescription = Pick<ComponentMetadata, 'description'>
 
 /**
- * 读取功能的 `description` 和 `author`, 生成描述 (Markdown)
+ * 读取当前语言的功能描述 (Markdown)
  * @param item 功能
  */
 export const getDescriptionMarkdown = async (item: ItemWithDescription) => {
-  const { description, author } = item
-  const authorPrefix = (() => {
-    if (!author) {
-      return ''
-    }
-    if (Array.isArray(author)) {
-      return `by ${author.map(a => `[@${a.name}](${a.link})`).join(',')}\n\n`
-    }
-    return `by [@${author.name}](${author.link})\n\n`
-  })()
-  const descriptionText = await (async () => {
-    if (!description) {
-      return '暂无描述.'
-    }
-    const parseDescriptionInput = async (input: string | Executable<string>) => {
-      if (typeof input === 'string') {
-        return input
-      }
-      return input()
-    }
-    if (typeof description === 'object') {
-      const currentLanguage = getSelectedLanguage()
-      const input = description[currentLanguage] ?? description['zh-CN']
-      return parseDescriptionInput(input)
-    }
-    return parseDescriptionInput(description)
-  })()
-  return authorPrefix + descriptionText
+  const { description } = item
+  if (!description) {
+    return '暂无描述.'
+  }
+  const input: string | Executable<string> =
+    typeof description === 'object'
+      ? description[getSelectedLanguage()] ?? description['zh-CN']
+      : description
+  return typeof input === 'string' ? input : input()
 }
 
 /**

@@ -1,5 +1,6 @@
 export enum DownloadVideoUrlType {
   Mirror = 'mirror',
+  MirrorAkamaized = 'mirror_akamaized',
   UPOS = 'upos',
   BCache = 'bcache',
   MCDN = 'mcdn',
@@ -11,10 +12,16 @@ export const MirrorCdnHostPattern =
   /^upos-([0-9a-z]+?)-mirror([0-9a-z]+)\.(bilivideo\.com|akamaized\.net)$/
 
 /** @see https://github.com/the1812/Bilibili-Evolved/issues/3234#issuecomment-1504764774 */
-export const parseVideoUrlType = (url: string): DownloadVideoUrlType => {
+export const parseVideoUrlType = (
+  url: string,
+  classifyAkamaizedCdn = true,
+): DownloadVideoUrlType => {
   try {
     const { hostname, port, searchParams } = new URL(url)
     if (MirrorCdnHostPattern.test(hostname)) {
+      if (classifyAkamaizedCdn && hostname.endsWith('akamaized.net')) {
+        return DownloadVideoUrlType.MirrorAkamaized
+      }
       return DownloadVideoUrlType.Mirror
     }
     const os = searchParams.get('os')?.toLowerCase()
@@ -34,17 +41,18 @@ export const parseVideoUrlType = (url: string): DownloadVideoUrlType => {
   }
 }
 
-export const sortVideoUrlByType = (urls: string[]) => {
+export const sortVideoUrlByType = (urls: string[], classifyAkamaizedCdn = true) => {
   const sortKeys = {
     [DownloadVideoUrlType.Mirror]: 0,
     [DownloadVideoUrlType.UPOS]: 1,
     [DownloadVideoUrlType.BCache]: 2,
-    [DownloadVideoUrlType.MCDN]: 3,
-    [DownloadVideoUrlType.Other]: 4,
+    [DownloadVideoUrlType.MirrorAkamaized]: classifyAkamaizedCdn ? 0 : 3,
+    [DownloadVideoUrlType.MCDN]: 4,
+    [DownloadVideoUrlType.Other]: 5,
   }
-  return [...urls].sort((a, b) => {
-    const typeA = parseVideoUrlType(a)
-    const typeB = parseVideoUrlType(b)
-    return sortKeys[typeA] - sortKeys[typeB]
-  })
+  return [...urls]
+    .map(x => ({ url: x, type: parseVideoUrlType(x, classifyAkamaizedCdn) }))
+    .sort((a, b) => {
+      return sortKeys[a.type] - sortKeys[b.type]
+    })
 }

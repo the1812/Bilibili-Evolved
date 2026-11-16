@@ -7,18 +7,13 @@
     v-on="$listeners"
   >
     <slot></slot>
-    <div
-      v-if="icon in $options.static.customIcons"
-      class="custom-icon"
-      v-html="$options.static.customIcons[icon]"
-    ></div>
+    <div v-if="icon in icons" class="custom-icon" v-html="icons[icon]"></div>
   </i>
 </template>
 
 <script lang="ts">
 import { customIcons } from '.'
 
-const staticData = { customIcons }
 export default Vue.extend({
   name: 'VIcon',
   props: {
@@ -36,14 +31,16 @@ export default Vue.extend({
     },
   },
   computed: {
+    icons() {
+      return customIcons
+    },
     classes() {
-      const icons = this.$options.static.customIcons
       const icon = this.icon as string
       const base = []
       if (this.colored) {
         base.push('colored')
       }
-      if (icon === '' || icon in icons) {
+      if (icon === '' || icon in customIcons) {
         return base
       }
       if (icon.startsWith('mdi-')) {
@@ -51,9 +48,6 @@ export default Vue.extend({
       }
       return [...base, `be-iconfont-${icon}`]
     },
-  },
-  beforeCreate(this: any) {
-    this.$options.static = staticData
   },
 })
 </script>

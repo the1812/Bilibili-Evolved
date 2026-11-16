@@ -1,3 +1,4 @@
+import { defineComponent } from 'vue'
 import {
   getFeeds,
   FeedsCardType,
@@ -19,14 +20,13 @@ const isUnavailableRawItem = (item: any) => {
  * @param type 动态类型, 使用 `load` 时可以省略
  * @param jsonMapper 解析JSON数据的映射函数
  * @param load 自定义数据源, 用于动态流之外的数据 (例如订阅更新), 返回的 `items` 同样会经过 `jsonMapper`
- * @remarks 返回选项对象而不是 `Vue.extend(...)`: 构造函数形式的 mixin 无法合并进使用方的组件类型, 模板里的 mixin 成员会被推断为 `never`
  */
 export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
   type: FeedsCardType | string | undefined,
   jsonMapper: (obj: RawItem) => MappedItem,
   load?: (cursor: any) => Promise<{ items: any[]; hasMore: boolean; cursor: any }>,
-) => {
-  return {
+) =>
+  defineComponent({
     components: {
       VLoading,
       VEmpty,
@@ -35,7 +35,7 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
     data() {
       return {
         loading: true,
-        cards: [],
+        cards: [] as MappedItem[],
         hasMorePage: true,
         /** 自定义数据源使用的翻页游标 */
         cursor: null as any,
@@ -111,5 +111,4 @@ export const nextPageMixin = <MappedItem extends { id: string }, RawItem>(
         }
       },
     },
-  }
-}
+  })

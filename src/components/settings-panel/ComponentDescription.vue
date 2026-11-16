@@ -2,31 +2,19 @@
   <div class="component-description" v-html="html"></div>
 </template>
 
-<script lang="ts">
-import { getComponentSettings } from '@/core/settings'
+<script setup lang="ts">
+import { onBeforeMount, ref } from 'vue'
 import { getDescriptionHTML } from '../description'
+import type { FeatureBase } from '../types'
 
-export default Vue.extend({
-  props: {
-    componentData: {
-      type: Object,
-      required: true,
-    },
-  },
-  data() {
-    return {
-      settings: getComponentSettings(this.componentData),
-      html: '',
-    }
-  },
-  async created() {
-    this.html = await getDescriptionHTML(this.componentData)
-  },
+const props = defineProps<{ componentData: Pick<FeatureBase, 'description'> }>()
+const html = ref('')
+onBeforeMount(async () => {
+  html.value = await getDescriptionHTML(props.componentData)
 })
 </script>
 
 <style lang="scss">
-@import 'common';
 @import 'markdown';
 
 .component-description {

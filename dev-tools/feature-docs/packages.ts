@@ -1,9 +1,15 @@
 import traverse from '@babel/traverse'
 import * as t from '@babel/types'
 import { sync } from 'glob'
-import { findObjectProperty, parseFile, readStaticString, readStaticStringArray } from './ast'
+import {
+  findObjectProperty,
+  parseFile,
+  readStaticString,
+  readStaticStringArray,
+} from '../feature-ast'
 import { getPackageMarkdown } from './markdown'
-import { DocSourceItem, FeatureKind, PackageDoc, PackItem } from './types'
+import type { RegistryFeatureType } from '../src-types'
+import { DocSourceItem, PackageDoc, PackItem } from './types'
 
 const readPackages = () =>
   sync('registry/lib/docs/packages/**/*.ts', { posix: true })
@@ -64,7 +70,7 @@ const generateDescription = (pack: PackageDoc, containedItems: DocSourceItem[]) 
 
 export const generatePackageDocs = (allItems: DocSourceItem[]) => {
   const packages = readPackages().map(pack => {
-    const getDocSource = (type: FeatureKind, name: string) => {
+    const getDocSource = (type: RegistryFeatureType, name: string) => {
       const docSource = allItems.find(item => item.type === type && item.name === name)
       if (!docSource) {
         throw new Error(`Package ${pack.name}: missing ${type} ${name}`)

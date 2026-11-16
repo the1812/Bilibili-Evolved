@@ -3,6 +3,7 @@ import { installComponent } from '@/components/user-component'
 import { monkey } from '@/core/ajax'
 import { cdnRoots } from '@/core/cdn-types'
 import { Executable } from '@/core/common-types'
+import type { RegistryFeatureType } from '@/core/feature-types'
 import { meta } from '@/core/meta'
 import { getComponentSettings, getGeneralSettings, settings } from '@/core/settings'
 import { Toast } from '@/core/toast'
@@ -26,42 +27,41 @@ export const runMigrate = async (v1Settings: any) => {
     const features: DocSourceItem[] = JSON.parse(featuresDataText)
     console.log('下载功能列表完成')
 
-    const featureMap =
-      (oldKey: string, newKey: string, type: 'component' | 'plugin') => async () => {
-        const oldValue = v1Settings[oldKey]
-        if (!oldValue) {
-          console.log(`跳过了未开启的选项 ${oldKey}`)
+    const featureMap = (oldKey: string, newKey: string, type: RegistryFeatureType) => async () => {
+      const oldValue = v1Settings[oldKey]
+      if (!oldValue) {
+        console.log(`跳过了未开启的选项 ${oldKey}`)
+        return
+      }
+      const map = {
+        component: componentsMap,
+        plugin: pluginsMap,
+      }
+      const installerMap = {
+        component: installComponent,
+        plugin: installPlugin,
+      }
+      if (!(newKey in map[type])) {
+        const featureItem = features.find(it => it.type === type && it.name === newKey)
+        const path = featureItem?.fullAbsolutePath
+        if (!path || !featureItem) {
+          console.log(`没有找到名为 ${newKey} 的功能`)
           return
         }
-        const map = {
-          component: componentsMap,
-          plugin: pluginsMap,
-        }
-        const installerMap = {
-          component: installComponent,
-          plugin: installPlugin,
-        }
-        if (!(newKey in map[type])) {
-          const featureItem = features.find(it => it.type === type && it.name === newKey)
-          const path = featureItem?.fullAbsolutePath
-          if (!path || !featureItem) {
-            console.log(`没有找到名为 ${newKey} 的功能`)
-            return
-          }
-          const url = `${cdnRoots[getGeneralSettings().cdnRoot](
-            meta.compilationInfo.branch,
-            featureItem.owner,
-          )}${path}`
-          const code = await monkey({ url })
-          const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
-          await before()
-          const { metadata, message } = await installerMap[type](code)
-          await after(metadata)
-          console.log(message)
-        } else {
-          console.log(`${newKey} 已经存在, 跳过安装`)
-        }
+        const url = `${cdnRoots[getGeneralSettings().cdnRoot](
+          meta.compilationInfo.branch,
+          featureItem.owner,
+        )}${path}`
+        const code = await monkey({ url })
+        const { before, after } = getHook(`user${lodash.startCase(type)}s.add`, code, url)
+        await before()
+        const { metadata, message } = await installerMap[type](code)
+        await after(metadata)
+        console.log(message)
+      } else {
+        console.log(`${newKey} 已经存在, 跳过安装`)
       }
+    }
     const optionMap = (oldKey: string, newKey: string, mapFunction?: (value: any) => any) => () => {
       const oldValue = v1Settings[oldKey]
       const newValue = mapFunction?.(oldValue) ?? oldValue
