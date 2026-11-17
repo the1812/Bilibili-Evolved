@@ -244,14 +244,14 @@ export default Vue.extend({
       const preserveTotal = this.pendingRemovals.size > 0
       this.refreshState = 'loading'
       try {
-        const { list, count } = await this.getPage(1)
+        const { list, count } = await this.getPage(1, true)
         if (requestId !== this.requestId) {
           return
         }
         const cards = list.map(this.toCard)
-        // 刷新成功后再替换数据。其他页先保留展示，访问时重新请求以校正分页偏移。
+        // 刷新成功后建立新列表，不能将新首页与旧分页拼接。
         this.requestId++
-        this.$set(this.pages, 1, cards)
+        this.pages = { 1: cards }
         this.pageStates = { 1: 'loaded' }
         if (!preserveTotal) {
           this.total = count
@@ -296,14 +296,19 @@ export default Vue.extend({
     loadVisiblePages(retry = false) {
       return Promise.all(this.visiblePages.map(page => this.loadPage(page, retry)))
     },
-    async getPage(page: number) {
-      const { requestId, keyword } = this
+    async getPage(page: number, refresh = false) {
+      const { requestId, keyword, total } = this
       const removedAids = new Set(this.pendingRemovals.keys())
+      const checkCount = total > 0 && (!refresh || removedAids.size > 0)
       for (let attempt = 0; ; attempt++) {
         const result = await getWatchlaterPage({ page, keyword })
-        const stale = result.list.some(
-          item => removedAids.has(item.aid) && watchlaterStatuses[item.aid] !== true,
-        )
+        // 页码偏移后，旧页即使不包含已删除的视频，也会在边界制造重复或遗漏。
+        const differentCount = checkCount && result.count !== total
+        const stale =
+          differentCount ||
+          result.list.some(
+            item => removedAids.has(item.aid) && watchlaterStatuses[item.aid] !== true,
+          )
         if (requestId !== this.requestId) {
           return result
         }
@@ -317,7 +322,11 @@ export default Vue.extend({
         }
         // 删除成功后接口短暂返回旧快照；保留当前卡片，仅重试这一页。
         if (attempt === 2) {
-          throw new Error('稍后再看列表尚未同步删除结果')
+          // 列表若确实发生了其他变化，重试时整体刷新，重新确定分页边界。
+          if (differentCount) {
+            this.refreshState = 'error'
+          }
+          throw new Error('稍后再看列表尚未同步，请刷新重试')
         }
         await delay(300)
         if (requestId !== this.requestId) {
