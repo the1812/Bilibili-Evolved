@@ -1,11 +1,69 @@
-import { defineComponentMetadata } from '@/components/component'
+import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import { contentLoaded } from '@/core/life-cycle'
 import { mutationObserve } from '@/core/observer'
+import {
+  addComponentListener,
+  ComponentSettings,
+  getComponentSettings,
+  isComponentEnabled,
+  settings,
+} from '@/core/settings'
 import { getCookieValue, matchUrlPattern } from '@/core/utils'
+import { Range } from '@/ui/range'
+import { isInTimeRange, millisecondsUntilChange, rangeValidator } from '../schedule-time'
+import { applyOfficialTheme } from './official-theme'
+
+enum DarkModeMode {
+  FollowOfficial = '跟随 b 站',
+  FollowSystem = '跟随系统',
+  Schedule = '计划时段',
+}
 
 const name = 'integratedDarkMode'
 const darkModeClass = 'dark'
 const integratedDarkModeClass = 'integrated-dark'
 const darkMetaColor = '#111'
+const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+const defaultRange: Range<string> = { start: '18:00', end: '6:00' }
+
+type Options = {
+  mode: DarkModeMode
+  range: Range<string>
+}
+type DarkModeSettings = ComponentSettings<Options>
+
+const options = defineOptionsMetadata<Options>({
+  mode: {
+    defaultValue: DarkModeMode.FollowOfficial,
+    displayName: '模式',
+    dropdownEnum: DarkModeMode,
+  },
+  range: {
+    defaultValue: { ...defaultRange },
+    displayName: '时间段',
+    validator: rangeValidator,
+  },
+})
+
+const syncEnabled = (componentSettings: DarkModeSettings) => {
+  const { mode, range } = componentSettings.options
+  let dark: boolean
+  if (mode === DarkModeMode.FollowSystem) {
+    dark = darkMediaQuery.matches
+  } else if (mode === DarkModeMode.Schedule) {
+    dark = isInTimeRange(range ?? defaultRange)
+  } else {
+    return
+  }
+  if (componentSettings.enabled !== dark) {
+    componentSettings.enabled = dark
+  }
+}
+
+const initialSettings = settings.userComponents[name]?.settings as DarkModeSettings | undefined
+if (initialSettings) {
+  syncEnabled(initialSettings)
+}
 
 // 不支持深色模式的页面
 const urlExclude = [
@@ -85,7 +143,10 @@ const disableDarkMode = () => {
 }
 
 const toggleDarkMode = () => {
-  if (isOfficialDarkModeEnabled()) {
+  const { mode } = getComponentSettings<Options>(name).options
+  if (
+    mode === DarkModeMode.FollowOfficial ? isOfficialDarkModeEnabled() : isComponentEnabled(name)
+  ) {
     enableDarkMode()
   } else {
     disableDarkMode()
@@ -119,6 +180,7 @@ export const component = defineComponentMetadata({
   urlExclude,
   entry: () => {
     cookieStore.addEventListener('change', cookieChangeHandler)
+    toggleDarkMode()
     watchHtmlTheme()
   },
   reload: () => {
@@ -130,9 +192,10 @@ export const component = defineComponentMetadata({
     cookieStore.removeEventListener('change', cookieChangeHandler)
     htmlThemeObserver?.disconnect()
     htmlThemeObserver = undefined
-    document.body.classList.remove(darkModeClass, integratedDarkModeClass)
+    disableDarkMode()
   },
   tags: [componentsTags.style, componentsTags.general],
+  options,
   instantStyles: [
     {
       name,
@@ -148,17 +211,31 @@ export const component = defineComponentMetadata({
     description: {
       'zh-CN': '提前注入深色模式的 .dark class 以减少一些组件首屏仍然是白色的问题.',
     },
-    async setup() {
-      if (!isOfficialDarkModeEnabled()) {
-        return
-      }
-      const { contentLoaded } = await import('@/core/life-cycle')
-      const { isComponentEnabled } = await import('@/core/settings')
+    setup: () =>
       contentLoaded(() => {
-        if (isComponentEnabled(name)) {
-          toggleDarkMode()
+        const componentSettings = getComponentSettings<Options>(name)
+        let timer: number | undefined
+        const update = () => {
+          syncEnabled(componentSettings)
+          const { mode, range } = componentSettings.options
+          window.clearTimeout(timer)
+          if (mode === DarkModeMode.Schedule) {
+            timer = window.setTimeout(update, millisecondsUntilChange(range ?? defaultRange))
+          }
+          if (mode !== DarkModeMode.FollowOfficial) {
+            applyOfficialTheme(componentSettings.enabled ? 'dark' : 'light')
+          }
+          if (componentSettings.enabled) {
+            toggleDarkMode()
+          }
         }
-      })
-    },
+        darkMediaQuery.addEventListener('change', update)
+        addComponentListener(`${name}.mode`, update)
+        addComponentListener(`${name}.range`, update)
+        document.addEventListener('global.themeChange', (event: CustomEvent<string>) => {
+          componentSettings.enabled = event.detail === 'dark'
+        })
+        update()
+      }),
   },
 })
