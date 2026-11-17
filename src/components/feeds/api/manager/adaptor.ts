@@ -31,13 +31,19 @@ addData(ListAdaptorKey, (adaptors: FeedsCardsListAdaptor[]) => {
         }
         console.log('live watch')
         let cardListObserver: MutationObserver | null = null
-        childList(feedsContainer, async () => {
-          if (dq('.room-feed-content')) {
-            const cardsList = (await select('.room-feed-content .content')) as HTMLElement
-            cardListObserver?.disconnect()
+        let currentCardsList: HTMLElement | null = null
+        childListSubtree(feedsContainer, async () => {
+          const cardsList = feedsContainer.querySelector<HTMLElement>(
+            '.room-feed-content .bili-dyn-list__items',
+          )
+          if (cardsList === currentCardsList) {
+            return
+          }
+          cardListObserver?.disconnect()
+          currentCardsList = cardsList
+          if (cardsList) {
             ;[cardListObserver] = manager.updateCards(cardsList)
           } else {
-            cardListObserver?.disconnect()
             cardListObserver = null
             await Promise.all(manager.cards.map(c => c.element).map(e => manager.removeCard(e)))
           }

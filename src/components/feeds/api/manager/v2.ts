@@ -105,7 +105,8 @@ export const normalizeFeedsCardModules = (
 
 const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
   const vueData = getVue2Data(element)
-  const { modules: rawModules, id_str, type } = vueData.data
+  const cardData = vueData.$props?.data ?? vueData.data
+  const { modules: rawModules, id_str, type } = cardData
   const keyMapper = (key: string) => {
     if (key === 'module_content') {
       return 'module_dynamic'
@@ -138,8 +139,8 @@ const parseCard = async (element: HTMLElement): Promise<FeedsCard> => {
     const {
       module_author: { name: repostUsername },
       module_dynamic: repostDynamicModule,
-    } = normalizeFeedsCardModules(vueData.data.orig.modules)
-    const repostCardType = getType(vueData.data.orig.type)
+    } = normalizeFeedsCardModules(cardData.orig.modules)
+    const repostCardType = getType(cardData.orig.type)
     card.repostUsername = repostUsername
     card.repostText = getText(repostDynamicModule, repostCardType)
     if (repostUsername === currentUsername) {
