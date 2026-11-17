@@ -14,7 +14,7 @@ import { isInTimeRange, millisecondsUntilChange, rangeValidator } from '../sched
 import { applyOfficialTheme } from './official-theme'
 
 enum DarkModeMode {
-  FollowOfficial = '跟随 b 站',
+  FollowOfficial = '跟随 B 站',
   FollowSystem = '跟随系统',
   Schedule = '计划时段',
 }
