@@ -241,6 +241,7 @@ export default Vue.extend({
         return
       }
       const { requestId } = this
+      const preserveTotal = this.pendingRemovals.size > 0
       this.refreshState = 'loading'
       try {
         const { list, count } = await this.getPage(1)
@@ -252,7 +253,9 @@ export default Vue.extend({
         this.requestId++
         this.$set(this.pages, 1, cards)
         this.pageStates = { 1: 'loaded' }
-        this.total = count
+        if (!preserveTotal) {
+          this.total = count
+        }
         this.refreshState = 'idle'
         await this.$nextTick()
         this.onScroll()
@@ -340,7 +343,10 @@ export default Vue.extend({
           return
         }
         this.$set(this.pages, page, list.map(this.toCard))
-        this.total = count
+        // 后续分页只补充卡片，避免旧 count 覆盖整体刷新或本地删除后的总数。
+        if (page === 1 && this.total === 0) {
+          this.total = count
+        }
         this.$set(this.pageStates, page, 'loaded')
         await this.$nextTick()
         if (requestId === this.requestId) {
