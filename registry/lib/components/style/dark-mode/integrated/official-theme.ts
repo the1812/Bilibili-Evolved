@@ -14,7 +14,6 @@ const themeStyleFilterSelector = '#__css-map-filter__'
 const appContainerSelector = '#app'
 const headerContainerSelector = '#biliMainHeader'
 const officialDarkClass = 'bili_dark'
-const themeStyleBaseUrl = '//s1.hdslb.com/bfs/seed/jinkela/short/bili-theme'
 
 // #__css-map-filter__ (若有) 是深色补丁样式, light 时整体注释
 const updateMapFilter = (theme: OfficialTheme) => {
@@ -50,19 +49,33 @@ const updateHostCookie = (targetMode: OfficialTheme) =>
     domain: 'bilibili.com',
   })
 
-export const applyOfficialTheme = async (theme: OfficialTheme) => {
-  const headerContainer = unsafeWindow.document.querySelector(
-    headerContainerSelector,
-  ) as BiliHeaderContainer | null
+const getHeaderThemeProps = (root = unsafeWindow.document) => {
+  const headerContainer = root.querySelector(headerContainerSelector) as BiliHeaderContainer | null
   // eslint-disable-next-line no-underscore-dangle
-  const headerProps = headerContainer?.__vue_app__?._instance?.props
-  if (headerProps?.theme === 'light') {
+  return headerContainer?.__vue_app__?._instance?.props
+}
+
+export const isOfficialThemeForcedLight = () => {
+  let currentDocument: Document | undefined = unsafeWindow.document
+  while (currentDocument) {
+    if (getHeaderThemeProps(currentDocument)?.theme === 'light') {
+      return true
+    }
+    // 处理嵌套 iframe 的情况, 向上查找父文档
+    currentDocument = currentDocument.defaultView?.frameElement?.ownerDocument
+  }
+  return false
+}
+
+export const applyOfficialTheme = async (theme: OfficialTheme) => {
+  if (isOfficialThemeForcedLight()) {
     return
   }
-  document.documentElement.classList.toggle(officialDarkClass, theme === 'dark')
+  const headerProps = getHeaderThemeProps()
   const themeStyleLink = dq(themeStyleLinkSelector) as HTMLLinkElement | null
+  document.documentElement.classList.toggle(officialDarkClass, theme === 'dark')
   if (themeStyleLink) {
-    themeStyleLink.href = `${themeStyleBaseUrl}/${theme}.css`
+    themeStyleLink.href = new URL(`${theme}.css`, themeStyleLink.href).href
     updateMapFilter(theme)
   }
   await updateHostCookie(theme)

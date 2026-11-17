@@ -5,13 +5,12 @@ import {
   addComponentListener,
   ComponentSettings,
   getComponentSettings,
-  isComponentEnabled,
   settings,
 } from '@/core/settings'
 import { getCookieValue, matchUrlPattern } from '@/core/utils'
 import { Range } from '@/ui/range'
 import { isInTimeRange, millisecondsUntilChange, rangeValidator } from '../schedule-time'
-import { applyOfficialTheme } from './official-theme'
+import { applyOfficialTheme, isOfficialThemeForcedLight } from './official-theme'
 
 enum DarkModeMode {
   FollowOfficial = '跟随 B 站',
@@ -45,26 +44,6 @@ const options = defineOptionsMetadata<Options>({
   },
 })
 
-const syncEnabled = (componentSettings: DarkModeSettings) => {
-  const { mode, range } = componentSettings.options
-  let dark: boolean
-  if (mode === DarkModeMode.FollowSystem) {
-    dark = darkMediaQuery.matches
-  } else if (mode === DarkModeMode.Schedule) {
-    dark = isInTimeRange(range ?? defaultRange)
-  } else {
-    return
-  }
-  if (componentSettings.enabled !== dark) {
-    componentSettings.enabled = dark
-  }
-}
-
-const initialSettings = settings.userComponents[name]?.settings as DarkModeSettings | undefined
-if (initialSettings) {
-  syncEnabled(initialSettings)
-}
-
 // 不支持深色模式的页面
 const urlExclude = [
   /^https:\/\/app\.bilibili\.com\//,
@@ -87,7 +66,9 @@ const themeStyleLinkSelector = '#__css-map__'
 const isBlackboardPage = () => matchUrlPattern(/^https:\/\/www\.bilibili\.com\/blackboard\//)
 
 const isOfficialDarkModeEnabled = () => {
-  const hasDarkCookie = getCookieValue('theme_style') === 'dark'
+  if (isOfficialThemeForcedLight()) {
+    return false
+  }
   if (isLivePage()) {
     return document.documentElement.getAttribute('lab-style') === 'dark'
   }
@@ -97,103 +78,63 @@ const isOfficialDarkModeEnabled = () => {
   if (isMangaPage()) {
     return document.documentElement.classList.contains('theme-dark')
   }
-  return hasDarkCookie
+  return getCookieValue('theme_style') === 'dark'
+}
+
+const syncEnabled = (componentSettings: DarkModeSettings) => {
+  const dark = isOfficialDarkModeEnabled()
+  if (componentSettings.enabled !== dark) {
+    componentSettings.enabled = dark
+  }
+}
+
+const initialSettings = settings.userComponents[name]?.settings as DarkModeSettings | undefined
+if (initialSettings) {
+  syncEnabled(initialSettings)
+}
+
+const toggleMeta = (metaName: string, darkContent?: string) => {
+  const meta = dq(`meta[name="${metaName}"]`) as HTMLMetaElement | null
+  if (darkContent === undefined) {
+    if (meta?.dataset.beCreated === 'true') {
+      meta.remove()
+    } else if (meta?.dataset.light !== undefined) {
+      meta.content = meta.dataset.light
+    }
+    return
+  }
+  if (!meta) {
+    document.head.insertAdjacentHTML(
+      'beforeend',
+      `<meta name="${metaName}" content="${darkContent}" data-be-created="true">`,
+    )
+    return
+  }
+  if (meta.dataset.beCreated !== 'true' && meta.dataset.light === undefined) {
+    meta.dataset.light = meta.content
+  }
+  meta.content = darkContent
 }
 
 const enableDarkMode = () => {
   document.body.classList.add(darkModeClass, integratedDarkModeClass)
-
-  const themeColorMeta = dq('meta[name="theme-color"]') as HTMLMetaElement
-  if (!themeColorMeta) {
-    document.head.insertAdjacentHTML(
-      'beforeend',
-      `<meta name="theme-color" content="${darkMetaColor}" data-be-created="true">`,
-    )
-  } else {
-    // 仅在首次启用时记录页面原始颜色, 避免重复启用时被覆盖
-    if (!themeColorMeta.dataset.light) {
-      themeColorMeta.dataset.light = themeColorMeta.content
-    }
-    themeColorMeta.content = darkMetaColor
-  }
-
-  const colorSchemeMeta = dq('meta[name="color-scheme"]') as HTMLMetaElement
-  if (!colorSchemeMeta) {
-    document.head.insertAdjacentHTML('beforeend', `<meta name="color-scheme" content="dark">`)
-  } else {
-    colorSchemeMeta.content = 'dark'
-  }
+  toggleMeta('theme-color', darkMetaColor)
+  toggleMeta('color-scheme', 'dark')
 }
 
 const disableDarkMode = () => {
   document.body.classList.remove(darkModeClass, integratedDarkModeClass)
-
-  const themeColorMeta = dq('meta[name="theme-color"]') as HTMLMetaElement
-  if (themeColorMeta?.dataset.light) {
-    themeColorMeta.content = themeColorMeta.dataset.light
-  } else if (themeColorMeta?.dataset.beCreated === 'true') {
-    // 只删除组件自建的 meta, 站点原有的 theme-color 保持不变
-    themeColorMeta.remove()
-  }
-
-  const colorSchemeMeta = dq('meta[name="color-scheme"]') as HTMLMetaElement
-  if (colorSchemeMeta) {
-    colorSchemeMeta.content = 'light'
-  }
-}
-
-const toggleDarkMode = () => {
-  const { mode } = getComponentSettings<Options>(name).options
-  if (
-    mode === DarkModeMode.FollowOfficial ? isOfficialDarkModeEnabled() : isComponentEnabled(name)
-  ) {
-    enableDarkMode()
-  } else {
-    disableDarkMode()
-  }
-}
-
-const cookieChangeHandler = (e: CookieChangedEvent) => {
-  if (e.changed.some(cookie => cookie.name === 'theme_style')) {
-    toggleDarkMode()
-  }
-}
-
-let htmlThemeObserver: MutationObserver | undefined
-// 直播页的 lab-style 属性与漫画页的 html class 都可能在组件加载之后才确定, 需要监听变化.
-const watchHtmlTheme = () => {
-  htmlThemeObserver?.disconnect()
-  if (!isLivePage() && !isMangaPage()) {
-    htmlThemeObserver = undefined
-    return
-  }
-  ;[htmlThemeObserver] = mutationObserve(
-    [document.documentElement],
-    { attributes: true, attributeFilter: [isLivePage() ? 'lab-style' : 'class'] },
-    toggleDarkMode,
-  )
+  toggleMeta('theme-color')
+  toggleMeta('color-scheme')
 }
 
 export const component = defineComponentMetadata({
   name,
   displayName: '深色模式',
   urlExclude,
-  entry: () => {
-    cookieStore.addEventListener('change', cookieChangeHandler)
-    toggleDarkMode()
-    watchHtmlTheme()
-  },
-  reload: () => {
-    cookieStore.addEventListener('change', cookieChangeHandler)
-    toggleDarkMode()
-    watchHtmlTheme()
-  },
-  unload: () => {
-    cookieStore.removeEventListener('change', cookieChangeHandler)
-    htmlThemeObserver?.disconnect()
-    htmlThemeObserver = undefined
-    disableDarkMode()
-  },
+  entry: enableDarkMode,
+  reload: enableDarkMode,
+  unload: disableDarkMode,
   tags: [componentsTags.style, componentsTags.general],
   options,
   instantStyles: [
@@ -211,31 +152,53 @@ export const component = defineComponentMetadata({
     description: {
       'zh-CN': '提前注入深色模式的 .dark class 以减少一些组件首屏仍然是白色的问题.',
     },
-    setup: () =>
-      contentLoaded(() => {
-        const componentSettings = getComponentSettings<Options>(name)
-        let timer: number | undefined
-        const update = () => {
-          syncEnabled(componentSettings)
-          const { mode, range } = componentSettings.options
-          window.clearTimeout(timer)
-          if (mode === DarkModeMode.Schedule) {
-            timer = window.setTimeout(update, millisecondsUntilChange(range ?? defaultRange))
-          }
-          if (mode !== DarkModeMode.FollowOfficial) {
-            applyOfficialTheme(componentSettings.enabled ? 'dark' : 'light')
-          }
-          if (componentSettings.enabled) {
-            toggleDarkMode()
-          }
+    setup() {
+      const componentSettings = getComponentSettings<Options>(name)
+      const syncOfficialTheme = () => syncEnabled(componentSettings)
+      let timer: number | undefined
+      const update = () => {
+        const { options: currentOptions } = componentSettings
+        syncOfficialTheme()
+        window.clearTimeout(timer)
+        if (currentOptions.mode === DarkModeMode.Schedule) {
+          timer = window.setTimeout(
+            update,
+            millisecondsUntilChange(currentOptions.range ?? defaultRange),
+          )
         }
-        darkMediaQuery.addEventListener('change', update)
-        addComponentListener(`${name}.mode`, update)
-        addComponentListener(`${name}.range`, update)
-        document.addEventListener('global.themeChange', (event: CustomEvent<string>) => {
-          componentSettings.enabled = event.detail === 'dark'
+        contentLoaded(async () => {
+          const { mode, range } = componentSettings.options
+          if (mode !== DarkModeMode.FollowOfficial) {
+            const dark =
+              mode === DarkModeMode.FollowSystem
+                ? darkMediaQuery.matches
+                : isInTimeRange(range ?? defaultRange)
+            await applyOfficialTheme(dark ? 'dark' : 'light')
+          }
+          syncOfficialTheme()
         })
-        update()
-      }),
+      }
+      cookieStore.addEventListener('change', (event: CookieChangedEvent) => {
+        if (event.changed.some(cookie => cookie.name === 'theme_style')) {
+          syncOfficialTheme()
+        }
+      })
+      if (isLivePage() || isMangaPage()) {
+        mutationObserve(
+          [document.documentElement],
+          { attributes: true, attributeFilter: [isLivePage() ? 'lab-style' : 'class'] },
+          syncOfficialTheme,
+        )
+      }
+      darkMediaQuery.addEventListener('change', () => {
+        if (componentSettings.options.mode === DarkModeMode.FollowSystem) {
+          update()
+        }
+      })
+      addComponentListener(`${name}.mode`, update)
+      addComponentListener(`${name}.range`, update)
+      document.addEventListener('global.themeChange', syncOfficialTheme)
+      update()
+    },
   },
 })
