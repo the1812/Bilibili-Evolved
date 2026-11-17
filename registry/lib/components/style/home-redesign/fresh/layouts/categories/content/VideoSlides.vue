@@ -50,7 +50,7 @@
             v-else-if="currentItem.aid"
             class="fresh-home-video-slides-watchlater-button"
             icon
-            title="稍后再看"
+            :title="watchlaterAdded === undefined ? '查询稍后再看状态' : '稍后再看'"
             @click="toggleWatchlater(currentItem.aid)"
           >
             <VIcon icon="mdi-clock-outline" :size="20" />
@@ -122,7 +122,13 @@
 </template>
 <script lang="ts">
 import UpInfo from '@/components/feeds/UpInfo.vue'
-import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
+import {
+  getWatchlaterStatus,
+  toggleWatchlater,
+  watchlaterStatuses,
+} from '@/components/video/watchlater'
+import { visible } from '@/core/observer'
+import { logError } from '@/core/utils/log'
 import { bilibiliApi, getJson } from '@/core/ajax'
 import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
@@ -163,7 +169,10 @@ export default Vue.extend({
   },
   data() {
     return {
-      watchlaterList,
+      watchlaterStatuses,
+      visibilityObserver: null as IntersectionObserver | null,
+      isVisible: false,
+      togglingWatchlater: false,
       itemLimit: 10,
       // 最近滑动方向, 供回绕封面瞬移
       coverDirection: 'next' as 'next' | 'prev',
@@ -179,14 +188,41 @@ export default Vue.extend({
       return this.currentItem.videoHref
     },
     watchlaterAdded() {
-      return this.watchlaterList.includes(this.currentItem.aid)
+      return this.watchlaterStatuses[this.currentItem.aid]
     },
   },
-  created() {
-    getWatchlaterList()
+  watch: {
+    currentItem() {
+      this.loadWatchlaterStatus()
+    },
+  },
+  mounted() {
+    const [observer] = visible(this.$el, records => {
+      this.isVisible = records.some(record => record.isIntersecting)
+      this.loadWatchlaterStatus()
+    })
+    this.visibilityObserver = observer
+  },
+  beforeDestroy() {
+    this.visibilityObserver?.disconnect()
   },
   methods: {
-    toggleWatchlater,
+    loadWatchlaterStatus() {
+      if (this.isVisible && this.currentItem?.aid) {
+        getWatchlaterStatus(this.currentItem.aid, this.currentItem.title).catch(logError)
+      }
+    },
+    async toggleWatchlater(aid: number) {
+      if (this.togglingWatchlater) {
+        return
+      }
+      this.togglingWatchlater = true
+      try {
+        await toggleWatchlater(aid)
+      } finally {
+        this.togglingWatchlater = false
+      }
+    },
     nextCard() {
       this.coverDirection = 'next'
       this.items.push(this.items.shift())

@@ -2,7 +2,8 @@ import { defineComponentMetadata } from '@/components/define'
 import { videoChange } from '@/core/observer'
 import { videoUrls, watchlaterUrls } from '@/core/utils/urls'
 import { playerAgent } from '@/components/video/player-agent'
-import { getWatchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import { getWatchlaterStatus, toggleWatchlater } from '@/components/video/watchlater'
+import { logError } from '@/core/utils/log'
 
 let listener: (() => Promise<void>) | null = null
 export const component = defineComponentMetadata({
@@ -17,9 +18,12 @@ export const component = defineComponentMetadata({
         videoElement.removeEventListener('ended', listener)
       }
       listener = async () => {
-        const list = await getWatchlaterList()
-        if (list.includes(parseInt(aid))) {
-          await toggleWatchlater(aid)
+        try {
+          if (await getWatchlaterStatus(aid)) {
+            await toggleWatchlater(aid, false)
+          }
+        } catch (error) {
+          logError(error)
         }
       }
       videoElement.addEventListener('ended', listener)

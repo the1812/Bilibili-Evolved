@@ -1,7 +1,6 @@
 import { getUID, pascalCase, raiseEvent } from '@/core/utils'
 import { getJsonWithCredentials } from '@/core/ajax'
 import { formatCount, formatDuration, parseCount, parseDuration } from '@/core/utils/formatters'
-import { watchlaterList } from '@/components/video/watchlater'
 import { getData, registerData } from '@/plugins/data'
 import { descendingStringSort } from '@/core/utils/sort'
 import { VideoCard } from '../video-card'
@@ -144,7 +143,7 @@ export const getVideoFeeds = withContentFilter(
             durationText: formatDuration(parseDuration(archive.duration_text)),
             playCount: formatCount(parseCount(archive.stat.play)),
             danmakuCount: formatCount(parseCount(archive.stat.danmaku)),
-            watchlater: watchlaterList.includes(archive.aid),
+            watchlater: false,
           }
         }),
       )

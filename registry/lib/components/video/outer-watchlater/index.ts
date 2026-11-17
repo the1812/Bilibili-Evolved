@@ -20,8 +20,7 @@ const entry: ComponentEntry<Options> = async ({ settings }) => {
   if (await addVideoActionButton(() => vm.$el)) {
     const { videoChange } = await import('@/core/observer')
     videoChange(({ aid }) => {
-      console.log('videoChange', unsafeWindow.aid, aid)
-      vm.aid = unsafeWindow.aid
+      vm.aid = aid
     })
   }
 }

@@ -13,7 +13,12 @@
 
 <script lang="ts">
 import { VIcon } from '@/ui'
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import {
+  watchlaterStatuses,
+  getWatchlaterStatus,
+  toggleWatchlater,
+} from '@/components/video/watchlater'
+import { logError } from '@/core/utils/log'
 import { DisplayMode, Options } from './options'
 import { addComponentListener, getComponentSettings } from '@/core/settings'
 
@@ -24,7 +29,8 @@ export default Vue.extend({
   data() {
     const { displayMode } = getComponentSettings<Options>('outerWatchlater').options
     return {
-      watchlaterList,
+      watchlaterStatuses,
+      isLoading: false,
       displayMode,
       aid: unsafeWindow.aid,
       tipText: '',
@@ -34,14 +40,23 @@ export default Vue.extend({
   },
   computed: {
     on() {
-      console.log(this.watchlaterList, this.aid, this.watchlaterList.includes(parseInt(this.aid)))
-      return this.watchlaterList.includes(parseInt(this.aid))
+      return this.watchlaterStatuses[Number(this.aid)]
     },
     displayModeClass() {
       return {
         'icon-only': this.displayMode === DisplayMode.Icon,
         'icon-and-text': this.displayMode === DisplayMode.IconAndText,
       }
+    },
+  },
+  watch: {
+    aid: {
+      immediate: true,
+      handler(aid) {
+        if (aid) {
+          getWatchlaterStatus(aid).catch(logError)
+        }
+      },
     },
   },
   created() {
@@ -61,8 +76,22 @@ export default Vue.extend({
       }, 2000)
     },
     async toggle() {
-      await toggleWatchlater(this.aid)
-      this.showTip(this.on ? '已添加至稍后再看' : '已从稍后再看移除')
+      if (this.isLoading) {
+        return
+      }
+      this.isLoading = true
+      try {
+        const { aid } = this
+        if (await toggleWatchlater(aid)) {
+          this.showTip(
+            this.watchlaterStatuses[Number(aid)] ? '已添加至稍后再看' : '已从稍后再看移除',
+          )
+        } else {
+          this.showTip('稍后再看操作失败，请重试')
+        }
+      } finally {
+        this.isLoading = false
+      }
     },
   },
 })

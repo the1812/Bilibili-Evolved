@@ -1,7 +1,7 @@
 <template>
   <div class="watchlater-list">
     <div class="header">
-      <div class="watchlater-list-summary">共 {{ filteredCards.length }} 个</div>
+      <div class="watchlater-list-summary">共 {{ total }} 个</div>
       <div class="search">
         <TextBox v-model="search" linear placeholder="搜索"></TextBox>
       </div>
@@ -20,48 +20,98 @@
         </VButton>
       </a>
     </div>
-    <VLoading v-if="loading"></VLoading>
-    <VEmpty v-else-if="!loading && cards.length === 0"></VEmpty>
-    <transition-group v-else name="cards" tag="div" class="watchlater-list-content">
-      <div v-for="(card, index) of filteredCards" :key="card.aid" class="watchlater-card">
-        <a class="watchlater-cover-container" target="_blank" :href="card.href">
-          <DpiImage
-            class="cover"
-            :src="card.coverUrl"
-            :size="{ width: 130, height: 85 }"
-          ></DpiImage>
-          <div class="floating remove" title="移除" @click.prevent="remove(card.aid, index)">
-            <VIcon icon="mdi-close" :size="16"></VIcon>
-          </div>
-          <div class="floating duration">{{ card.durationText }}</div>
-          <div v-if="card.totalPages > 1" class="floating pages">
-            {{ card.currentPage }}P / {{ card.totalPages }}P
-          </div>
-          <div v-if="card.percent" class="progress" :style="{ width: card.percent * 100 + '%' }" />
-        </a>
-        <a class="title" target="_blank" :href="card.href" :title="card.title">{{ card.title }}</a>
-        <div class="info-row">
-          <a
-            class="up"
-            target="_blank"
-            :href="'https://space.bilibili.com/' + card.upID"
-            :title="card.upName"
+    <div ref="list" class="watchlater-list-content" @scroll.passive="onScroll">
+      <VLoading v-if="loading && total === 0"></VLoading>
+      <VEmpty v-else-if="!loading && !error && total === 0"></VEmpty>
+      <div class="watchlater-list-viewport" :style="{ height: total * rowHeight + 'px' }">
+        <div
+          class="watchlater-list-window"
+          :style="{ transform: `translateY(${startIndex * rowHeight}px)` }"
+        >
+          <div
+            v-for="row of visibleRows"
+            :key="row.index"
+            class="watchlater-card"
+            :class="{ 'watchlater-card-placeholder': !row.card }"
           >
-            <DpiImage class="face" :src="card.upFaceUrl" :size="20"></DpiImage>
-            <div class="name">{{ card.upName }}</div>
-          </a>
-          <div v-if="card.complete" class="viewed">已观看</div>
+            <template v-if="row.card">
+              <a class="watchlater-cover-container" target="_blank" :href="row.card.href">
+                <DpiImage
+                  class="cover"
+                  :lazy="false"
+                  :src="row.card.coverUrl"
+                  :size="{ width: 130, height: 85 }"
+                ></DpiImage>
+                <button
+                  class="floating remove"
+                  title="移除"
+                  :disabled="removing"
+                  @click.prevent="remove(row.card.aid)"
+                >
+                  <VIcon icon="mdi-close" :size="16"></VIcon>
+                </button>
+                <div class="floating duration">{{ row.card.durationText }}</div>
+                <div v-if="row.card.totalPages > 1" class="floating pages">
+                  {{ row.card.currentPage }}P / {{ row.card.totalPages }}P
+                </div>
+                <div
+                  v-if="row.card.percent"
+                  class="progress"
+                  :style="{ width: row.card.percent * 100 + '%' }"
+                />
+              </a>
+              <a class="title" target="_blank" :href="row.card.href" :title="row.card.title">{{
+                row.card.title
+              }}</a>
+              <div class="info-row">
+                <a
+                  class="up"
+                  target="_blank"
+                  :href="'https://space.bilibili.com/' + row.card.upID"
+                  :title="row.card.upName"
+                >
+                  <DpiImage
+                    class="face"
+                    :lazy="false"
+                    :src="row.card.upFaceUrl"
+                    :size="20"
+                  ></DpiImage>
+                  <div class="name">{{ row.card.upName }}</div>
+                </a>
+                <div v-if="row.card.complete" class="viewed">已观看</div>
+              </div>
+            </template>
+            <template v-else>
+              <div class="placeholder-cover"></div>
+              <div class="placeholder-message">
+                {{ pageStates[row.page] === 'error' ? '加载失败' : '加载中...' }}
+              </div>
+            </template>
+          </div>
         </div>
       </div>
-    </transition-group>
+    </div>
+    <div class="list-controls">
+      <VButton title="到顶部" :disabled="total === 0" @click="scrollToEdge(false)">
+        <VIcon icon="mdi-arrow-up" :size="16"></VIcon>
+        到顶部
+      </VButton>
+      <VButton v-if="error" @click="retry()">加载失败，重试</VButton>
+      <VLoading v-else-if="loading && total > 0"></VLoading>
+      <VButton title="到底部" :disabled="total === 0" @click="scrollToEdge(true)">
+        <VIcon icon="mdi-arrow-down" :size="16"></VIcon>
+        到底部
+      </VButton>
+    </div>
   </div>
 </template>
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
 import { formatDuration } from '@/core/utils/formatters'
+import { sizeChange } from '@/core/observer'
 import {
-  watchlaterList,
-  getWatchlaterList,
+  getWatchlaterPage,
+  watchlaterPageSize,
   RawWatchlaterItem,
   toggleWatchlater,
 } from '@/components/video/watchlater'
@@ -96,91 +146,221 @@ export default Vue.extend({
   data() {
     const redirect = getComponentSettings('watchlaterRedirect')
     return {
-      watchlaterList,
-      loading: true,
-      cards: [],
-      filteredCards: [],
+      removing: false,
+      refreshState: 'idle' as 'idle' | 'loading' | 'error',
+      pages: {} as Record<number, WatchlaterCard[]>,
+      pageStates: {} as Record<number, 'loading' | 'loaded' | 'error'>,
+      total: 0,
       search: '',
+      keyword: '',
+      requestId: 0,
+      searchTimer: 0,
+      rowHeight: 97,
+      windowPage: 0,
+      viewportHeight: 0,
+      resizeObserver: null as ResizeObserver | null,
       redirect: redirect.enabled && redirect.options.navbar,
     }
   },
+  computed: {
+    rowsPerViewport(): number {
+      return Math.max(1, Math.ceil(this.viewportHeight / this.rowHeight))
+    },
+    startIndex(): number {
+      return Math.min(this.total, Math.max(0, (this.windowPage - 1) * this.rowsPerViewport))
+    },
+    endIndex(): number {
+      return Math.min(this.total, (this.windowPage + 3) * this.rowsPerViewport)
+    },
+    visibleRows(): { index: number; page: number; card?: WatchlaterCard }[] {
+      return Array.from({ length: this.endIndex - this.startIndex }, (_, offset) => {
+        const index = this.startIndex + offset
+        const page = Math.floor(index / watchlaterPageSize) + 1
+        return { index, page, card: this.pages[page]?.[index % watchlaterPageSize] }
+      })
+    },
+    visiblePages(): number[] {
+      if (this.total === 0) {
+        return [1]
+      }
+      const first = Math.floor(this.startIndex / watchlaterPageSize) + 1
+      const last = Math.ceil(
+        Math.min(this.total, this.endIndex + this.rowsPerViewport) / watchlaterPageSize,
+      )
+      return Array.from({ length: last - first + 1 }, (_, index) => first + index)
+    },
+    loading(): boolean {
+      return (
+        this.refreshState === 'loading' ||
+        this.visiblePages.some(page => this.pageStates[page] === 'loading')
+      )
+    },
+    error(): boolean {
+      return (
+        this.refreshState === 'error' ||
+        this.visiblePages.some(page => this.pageStates[page] === 'error')
+      )
+    },
+  },
   watch: {
     search() {
-      this.updateFilteredCards()
+      clearTimeout(this.searchTimer)
+      this.requestId++
+      this.searchTimer = window.setTimeout(() => this.updateList(), 250)
     },
   },
-  async created() {
-    try {
-      await this.updateList()
-    } finally {
-      this.loading = false
-    }
+  created() {
+    this.updateList()
+  },
+  mounted() {
+    const list = this.$refs.list as HTMLElement
+    const [observer] = sizeChange(list, () => {
+      this.viewportHeight = list.clientHeight
+      this.onScroll()
+    })
+    this.resizeObserver = observer
+  },
+  beforeDestroy() {
+    clearTimeout(this.searchTimer)
+    this.requestId++
+    this.resizeObserver?.disconnect()
   },
   methods: {
-    toggleWatchlater,
     popupRefresh() {
-      this.updateList()
+      const list = this.$refs.list as HTMLElement
+      // 浏览列表时再次悬停保留现场；回到顶部后才自动刷新。
+      if (list.scrollTop === 0 && !this.loading) {
+        this.refreshList()
+      }
     },
-    async updateList() {
-      const rawList = await getWatchlaterList(true)
-      if (!rawList) {
-        this.cards = []
+    async refreshList() {
+      if (this.refreshState === 'loading') {
         return
       }
-      const getLink = (item: RawWatchlaterItem) => {
-        if (this.redirect) {
-          return `https://www.bilibili.com/video/${item.bvid}/`
+      const { requestId, keyword } = this
+      this.refreshState = 'loading'
+      try {
+        const { list, count } = await getWatchlaterPage({ page: 1, keyword })
+        if (requestId !== this.requestId) {
+          return
         }
-        return `https://www.bilibili.com/list/watchlater?bvid=${item.bvid}`
+        const cards = list.map(this.toCard)
+        // 刷新成功后再替换数据。其他页先保留展示，访问时重新请求以校正分页偏移。
+        this.requestId++
+        this.$set(this.pages, 1, cards)
+        this.pageStates = { 1: 'loaded' }
+        this.total = count
+        this.refreshState = 'idle'
+        await this.$nextTick()
+        this.onScroll()
+      } catch {
+        if (requestId === this.requestId) {
+          this.refreshState = 'error'
+        }
       }
-      const cards = rawList.map(item => {
-        const currentPage = item.pages?.find(p => p.cid === item.cid)
-        const duration = currentPage?.duration ?? item.duration
-        const href = (() => {
-          if (!currentPage || !this.redirect) {
-            return getLink(item)
-          }
-          const { page } = currentPage
-          return page <= 1 ? getLink(item) : `${getLink(item)}?p=${page}`
-        })()
-        const percent = Math.round((1000 * item.progress) / duration) / 1000
+    },
+    retry() {
+      return this.refreshState === 'error' ? this.refreshList() : this.loadVisiblePages(true)
+    },
+    updateList() {
+      this.requestId++
+      this.refreshState = 'idle'
+      this.pages = {}
+      this.pageStates = {}
+      this.total = 0
+      this.keyword = this.search.trim()
+      this.windowPage = 0
+      const list = this.$refs.list as HTMLElement
+      if (list) {
+        list.scrollTop = 0
+      }
+      return this.loadPage(1)
+    },
+    scrollToEdge(bottom: boolean) {
+      const list = this.$refs.list as HTMLElement
+      list.scrollTop = bottom ? list.scrollHeight : 0
+      this.onScroll()
+    },
+    onScroll() {
+      const list = this.$refs.list as HTMLElement
+      // 按整屏切换窗口，前后一并保留缓冲，避免每滚过一行就挂载一张卡片。
+      this.windowPage = Math.floor(list.scrollTop / (this.rowHeight * this.rowsPerViewport))
+      this.loadVisiblePages()
+    },
+    loadVisiblePages(retry = false) {
+      return Promise.all(this.visiblePages.map(page => this.loadPage(page, retry)))
+    },
+    async loadPage(page: number, retry = false) {
+      const state = this.pageStates[page]
+      if (
+        state === 'loading' ||
+        state === 'loaded' ||
+        (state === 'error' && !retry) ||
+        this.search.trim() !== this.keyword
+      ) {
+        return
+      }
+      const { requestId } = this
+      this.$set(this.pageStates, page, 'loading')
+      try {
+        const { list, count } = await getWatchlaterPage({ page, keyword: this.keyword })
+        if (requestId !== this.requestId) {
+          return
+        }
+        this.$set(this.pages, page, list.map(this.toCard))
+        this.total = count
+        this.$set(this.pageStates, page, 'loaded')
+        await this.$nextTick()
+        if (requestId === this.requestId) {
+          this.onScroll()
+        }
+      } catch {
+        if (requestId === this.requestId) {
+          this.$set(this.pageStates, page, 'error')
+        }
+      }
+    },
+    toCard(item: RawWatchlaterItem): WatchlaterCard {
+      const currentPage = item.pages?.find(p => p.cid === item.cid)
+      const duration = currentPage?.duration ?? item.duration
+      let href = this.redirect
+        ? `https://www.bilibili.com/video/${item.bvid}/`
+        : `https://www.bilibili.com/list/watchlater?bvid=${item.bvid}`
+      if (this.redirect && currentPage?.page > 1) {
+        href += `?p=${currentPage.page}`
+      }
+      const percent = Math.round((1000 * item.progress) / duration) / 1000
 
-        return {
-          aid: item.aid,
-          href,
-          coverUrl: item.pic.replace('http:', 'https:'),
-          durationText: formatDuration(duration),
-          duration,
-          complete: item.progress < 0 || percent > 0.95, // 进度过95%算看完, -1值表示100%
-          title: item.title,
-          upName: item.owner.name,
-          upFaceUrl: item.owner.face.replace('http:', 'https:'),
-          upID: item.owner.mid,
-          currentPage: currentPage?.page,
-          totalPages: item.videos,
-          percent,
-        } as WatchlaterCard
-      })
-      this.cards = cards
-      if (this.search) {
-        this.updateFilteredCards()
-      } else {
-        this.filteredCards = cards
+      return {
+        aid: item.aid,
+        href,
+        coverUrl: item.pic.replace('http:', 'https:'),
+        durationText: formatDuration(duration),
+        duration,
+        complete: item.progress < 0 || percent > 0.95, // 进度过95%算看完, -1值表示100%
+        title: item.title,
+        upName: item.owner.name,
+        upFaceUrl: item.owner.face.replace('http:', 'https:'),
+        upID: item.owner.mid,
+        currentPage: currentPage?.page,
+        totalPages: item.videos,
+        percent,
       }
     },
-    async remove(aid: number, index: number) {
-      this.cards.splice(index, 1)
-      await this.toggleWatchlater(aid)
+    async remove(aid: number) {
+      if (this.removing) {
+        return
+      }
+      this.removing = true
+      try {
+        if (await toggleWatchlater(aid, false)) {
+          // 页码分页删除后会发生偏移，重新查询避免跳过下一页的条目。
+          await this.updateList()
+        }
+      } finally {
+        this.removing = false
+      }
     },
-    updateFilteredCards: lodash.debounce(function updateFilteredCards() {
-      const search = this.search.toLowerCase()
-      const cardsList = this.$el.querySelector('.watchlater-list-content') as HTMLElement
-      cardsList.scrollTo(0, 0)
-      this.filteredCards = (this.cards as WatchlaterCard[]).filter(
-        card =>
-          card.title.toLowerCase().includes(search) || card.upName.toLowerCase().includes(search),
-      )
-    }, 100),
   },
 })
 </script>
@@ -253,24 +433,55 @@ export default Vue.extend({
   .be-loading {
     flex: 1;
   }
+  .list-controls {
+    display: flex;
+    align-items: center;
+    align-self: stretch;
+    justify-content: space-between;
+    flex-shrink: 0;
+    min-height: 36px;
+    padding: 6px 12px 12px;
+  }
   &-content {
     flex: 1;
+    min-height: 0;
     align-self: stretch;
-    scroll-behavior: smooth;
+    overflow-anchor: none;
     position: relative;
-    @include no-scrollbar();
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
     padding: 0 12px;
     padding-bottom: 12px;
+    .watchlater-list-viewport,
+    .watchlater-list-window {
+      // 窗口位移和占位高度必须同步生效，不能套用全局过渡动画。
+      transition: none;
+    }
+    .watchlater-list-viewport {
+      position: relative;
+    }
+    .watchlater-list-window {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+    }
+    .watchlater-card-placeholder {
+      .placeholder-cover {
+        grid-area: cover;
+        background-color: #8882;
+      }
+      .placeholder-message {
+        grid-area: title / title / info / info;
+        align-self: center;
+        justify-self: center;
+        opacity: 0.6;
+      }
+    }
     .watchlater-card {
-      &.cards-enter,
-      &.cards-leave-to {
-        opacity: 0;
-        transform: translateY(-16px) scale(0.9);
-      }
-      &.cards-leave-active {
-        transition: 0.24s cubic-bezier(0.22, 0.61, 0.36, 1);
-        position: absolute;
-      }
+      box-sizing: border-box;
+      margin-bottom: 12px;
       cursor: pointer;
       flex-shrink: 0;
       border-radius: 8px;
@@ -279,10 +490,6 @@ export default Vue.extend({
       box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
       border: 1px solid #8882;
       display: grid;
-      // grid-template:
-      //   "cover" 120px
-      //   "title" auto
-      //   "info" auto / 200px;
       grid-template:
         'cover title' 2fr
         'cover info' 1fr / 130px 1fr;
@@ -290,9 +497,6 @@ export default Vue.extend({
       body.dark & {
         background-color: var(--be-color-card-bg, #282828);
         color: var(--be-color-text-title, #eee);
-      }
-      &:not(:last-child) {
-        margin-bottom: 12px;
       }
       &:hover .cover {
         transform: scale(1.05);
@@ -309,6 +513,11 @@ export default Vue.extend({
           font-size: 11px;
         }
         .remove {
+          border: 0;
+          padding: 0;
+          &:disabled {
+            cursor: wait;
+          }
           top: $padding;
           left: $padding;
           width: 20px;
