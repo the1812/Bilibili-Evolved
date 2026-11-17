@@ -108,12 +108,14 @@
 <script lang="ts">
 import { getComponentSettings } from '@/core/settings'
 import { formatDuration } from '@/core/utils/formatters'
+import { delay } from '@/core/utils'
 import { sizeChange } from '@/core/observer'
 import {
   getWatchlaterPage,
   watchlaterPageSize,
   RawWatchlaterItem,
   toggleWatchlater,
+  watchlaterStatuses,
 } from '@/components/video/watchlater'
 import { VLoading, VEmpty, TextBox, VButton, VIcon, DpiImage } from '@/ui'
 import { popperMixin } from '../mixins'
@@ -147,6 +149,7 @@ export default Vue.extend({
     const redirect = getComponentSettings('watchlaterRedirect')
     return {
       removing: false,
+      pendingRemovals: new Map<number, number>(),
       refreshState: 'idle' as 'idle' | 'loading' | 'error',
       pages: {} as Record<number, WatchlaterCard[]>,
       pageStates: {} as Record<number, 'loading' | 'loaded' | 'error'>,
@@ -237,10 +240,10 @@ export default Vue.extend({
       if (this.refreshState === 'loading') {
         return
       }
-      const { requestId, keyword } = this
+      const { requestId } = this
       this.refreshState = 'loading'
       try {
-        const { list, count } = await getWatchlaterPage({ page: 1, keyword })
+        const { list, count } = await this.getPage(1)
         if (requestId !== this.requestId) {
           return
         }
@@ -290,6 +293,35 @@ export default Vue.extend({
     loadVisiblePages(retry = false) {
       return Promise.all(this.visiblePages.map(page => this.loadPage(page, retry)))
     },
+    async getPage(page: number) {
+      const { requestId, keyword } = this
+      const removedAids = new Set(this.pendingRemovals.keys())
+      for (let attempt = 0; ; attempt++) {
+        const result = await getWatchlaterPage({ page, keyword })
+        const stale = result.list.some(
+          item => removedAids.has(item.aid) && watchlaterStatuses[item.aid] !== true,
+        )
+        if (requestId !== this.requestId) {
+          return result
+        }
+        if (!stale) {
+          this.pendingRemovals.forEach((removedPage, aid) => {
+            if (removedPage === page || watchlaterStatuses[aid] === true) {
+              this.pendingRemovals.delete(aid)
+            }
+          })
+          return result
+        }
+        // 删除成功后接口短暂返回旧快照；保留当前卡片，仅重试这一页。
+        if (attempt === 2) {
+          throw new Error('稍后再看列表尚未同步删除结果')
+        }
+        await delay(300)
+        if (requestId !== this.requestId) {
+          return result
+        }
+      }
+    },
     async loadPage(page: number, retry = false) {
       const state = this.pageStates[page]
       if (
@@ -303,7 +335,7 @@ export default Vue.extend({
       const { requestId } = this
       this.$set(this.pageStates, page, 'loading')
       try {
-        const { list, count } = await getWatchlaterPage({ page, keyword: this.keyword })
+        const { list, count } = await this.getPage(page)
         if (requestId !== this.requestId) {
           return
         }
@@ -364,6 +396,7 @@ export default Vue.extend({
         if (!sourcePage) {
           return
         }
+        this.pendingRemovals.set(aid, Number(sourcePage))
         const removedIndex =
           (Number(sourcePage) - 1) * watchlaterPageSize +
           previousPages[sourcePage].findIndex(card => card.aid === aid)
