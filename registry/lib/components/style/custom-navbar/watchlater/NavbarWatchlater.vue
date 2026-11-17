@@ -351,12 +351,43 @@ export default Vue.extend({
       if (this.removing) {
         return
       }
+      const { keyword } = this
       this.removing = true
       try {
-        if (await toggleWatchlater(aid, false)) {
-          // 页码分页删除后会发生偏移，重新查询避免跳过下一页的条目。
-          await this.updateList()
+        if (!(await toggleWatchlater(aid, false)) || keyword !== this.search.trim()) {
+          return
         }
+        const previousPages: Record<number, WatchlaterCard[]> = this.pages
+        const sourcePage = Object.keys(previousPages).find(page =>
+          previousPages[page].some(card => card.aid === aid),
+        )
+        if (!sourcePage) {
+          return
+        }
+        const removedIndex =
+          (Number(sourcePage) - 1) * watchlaterPageSize +
+          previousPages[sourcePage].findIndex(card => card.aid === aid)
+        const pages: Record<number, WatchlaterCard[]> = {}
+        Object.entries(previousPages).forEach(([page, cards]) => {
+          cards.forEach((card, offset) => {
+            const index = (Number(page) - 1) * watchlaterPageSize + offset
+            if (index === removedIndex) {
+              return
+            }
+            const nextIndex = index > removedIndex ? index - 1 : index
+            const nextPage = Math.floor(nextIndex / watchlaterPageSize) + 1
+            pages[nextPage] ??= []
+            pages[nextPage][nextIndex % watchlaterPageSize] = card
+          })
+        })
+        // 删除会使后续分页前移。保留已知条目，未填满的位置由对应页补齐。
+        this.requestId++
+        this.refreshState = 'idle'
+        this.pages = pages
+        this.pageStates = {}
+        this.total--
+        await this.$nextTick()
+        this.onScroll()
       } finally {
         this.removing = false
       }

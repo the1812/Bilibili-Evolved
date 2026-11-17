@@ -86,7 +86,7 @@ export const watchlaterList: number[] = []
 /** 未查询或查询失败时为 undefined。 */
 export const watchlaterStatuses = Vue.observable<Record<number, boolean | undefined>>({})
 
-const setWatchlaterStatus = (aid: number, added: boolean) => {
+export const setWatchlaterStatus = (aid: number, added: boolean) => {
   set(watchlaterStatuses, aid, added)
   if (added) {
     if (!watchlaterList.includes(aid)) {
