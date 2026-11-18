@@ -1,5 +1,6 @@
 @import 'common';
 @import 'effects';
+@import './dynamic-feed';
 
 .dashboard-home {
   --dashboard-home-auto-card-column: 1;
@@ -7,6 +8,11 @@
   --card-height: 122px;
   --dashboard-home-grid-gap: 12px;
   --dashboard-home-grid-padding: 8px;
+  --dashboard-home-card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+
+  body.dark & {
+    --dashboard-home-card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  }
 
   @media screen and (min-width: 1440px) {
     --dashboard-home-auto-card-column: 2;
@@ -24,15 +30,28 @@
   display: flex;
   flex-direction: column;
 
+  .dashboard-home-tab-cards>.video-card,
+  .dashboard-home-dynamic-card {
+    @media (prefers-reduced-motion: no-preference) {
+      transition: box-shadow 0.2s ease-out;
+    }
+
+    &:hover,
+    &:focus-within {
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+  }
+
   &-tabs {
     flex-grow: 1;
-    min-width: calc(var(--card-width) * var(--dashboard-home-card-column) + var(--dashboard-home-grid-gap) * (var(--dashboard-home-card-column) - 1) + 2 * var(--dashboard-home-grid-padding));
 
     .default-content {
       overflow: visible;
     }
 
     .dashboard-home-tab {
+      min-width: calc(var(--card-width) * var(--dashboard-home-card-column) + var(--dashboard-home-grid-gap) * (var(--dashboard-home-card-column) - 1) + 2 * var(--dashboard-home-grid-padding));
+
       &-cards {
         display: grid;
         grid-template-columns: repeat(var(--dashboard-home-card-column), var(--card-width));
