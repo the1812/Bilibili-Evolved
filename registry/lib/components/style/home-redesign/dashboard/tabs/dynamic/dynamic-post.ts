@@ -32,6 +32,25 @@ const attachmentTypes = {
 type AttachmentKind = keyof typeof attachmentTypes
 const attachmentKinds = Object.keys(attachmentTypes) as AttachmentKind[]
 
+const dynamicTypeLabels: Partial<Record<string, string>> = {
+  DYNAMIC_TYPE_AV: attachmentTypes.archive.label,
+  DYNAMIC_TYPE_PGC: attachmentTypes.pgc.label,
+  DYNAMIC_TYPE_ARTICLE: attachmentTypes.article.label,
+  DYNAMIC_TYPE_MUSIC: attachmentTypes.music.label,
+  DYNAMIC_TYPE_LIVE: attachmentTypes.live.label,
+  DYNAMIC_TYPE_LIVE_RCMD: attachmentTypes.live.label,
+  DYNAMIC_TYPE_COURSES_SEASON: attachmentTypes.courses.label,
+  DYNAMIC_TYPE_COURSES_BATCH: attachmentTypes.courses.label,
+  DYNAMIC_TYPE_UGC_SEASON: attachmentTypes.ugc_season.label,
+  DYNAMIC_TYPE_MEDIALIST: attachmentTypes.medialist.label,
+  DYNAMIC_TYPE_COMMON_SQUARE: attachmentTypes.common.label,
+  DYNAMIC_TYPE_COMMON_VERTICAL: attachmentTypes.common.label,
+  DYNAMIC_TYPE_OPUS: attachmentTypes.opus.label,
+  DYNAMIC_TYPE_DRAW: '图文',
+  DYNAMIC_TYPE_WORD: '文字',
+  DYNAMIC_TYPE_FORWARD: '转发',
+}
+
 interface RawText {
   text?: string
   rich_text_nodes?: { text?: string; orig_text?: string }[]
@@ -62,6 +81,7 @@ interface RawPostModules {
     paragraphs?: RawParagraph[]
     additional?: { type?: string }
     major?: Partial<Record<AttachmentKind, RawAttachment>> & {
+      type?: string
       draw?: { items?: RawImage[] }
       opus?: RawAttachment & { summary?: RawText; pics?: RawImage[] }
     }
@@ -96,6 +116,7 @@ export interface DynamicPost {
     reposts?: number
   }
   showOriginalLink: boolean
+  originalLinkTypeLabel?: string
 }
 
 export interface DynamicLikeState {
@@ -160,6 +181,19 @@ const getDynamicStats = (module?: RawPostModules['module_stat']): DynamicPost['s
 const getParagraph = (value: RawParagraph) =>
   value.text?.nodes?.map(node => node.word?.words || node.rich?.orig_text || '').join('')
 
+const getMajorTypeLabel = (major?: NonNullable<RawPostModules['module_dynamic']>['major']) => {
+  if (major?.type === 'MAJOR_TYPE_LIVE_RCMD') {
+    return attachmentTypes.live.label
+  }
+  if (major?.draw || major?.type === 'MAJOR_TYPE_DRAW') {
+    return dynamicTypeLabels.DYNAMIC_TYPE_DRAW
+  }
+  const kind = attachmentKinds.find(
+    key => major?.[key] || major?.type === `MAJOR_TYPE_${key.toUpperCase()}`,
+  )
+  return kind ? attachmentTypes[kind].label : undefined
+}
+
 export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
   const modules: RawPostModules = Array.isArray(item.modules)
     ? normalizeFeedsCardModules(item.modules)
@@ -209,6 +243,9 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
     hasAdditionalContent ||
     hasUnrenderedParagraphs ||
     (Boolean(major) && !hasMajorPreview)
+  const originalLinkTypeLabel = showOriginalLink
+    ? attachment?.type.label ?? dynamicTypeLabels[item.type ?? ''] ?? getMajorTypeLabel(major)
+    : undefined
 
   return {
     id: item.id_str,
@@ -220,5 +257,6 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
     attachment,
     stats: getDynamicStats(modules?.module_stat),
     showOriginalLink,
+    originalLinkTypeLabel,
   }
 }
