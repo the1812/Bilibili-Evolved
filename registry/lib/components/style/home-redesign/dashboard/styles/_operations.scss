@@ -1,0 +1,27 @@
+.dashboard-home-operations {
+  @include v-center(12px);
+  position: fixed;
+  bottom: 48px;
+  right: 48px;
+
+  .be-button {
+    padding: 8px !important;
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &-refresh {
+    .mdi {
+      @include rotate();
+    }
+  }
+
+  &-top {
+    .mdi:hover {
+      @include bounce-y(-2);
+    }
+  }
+}

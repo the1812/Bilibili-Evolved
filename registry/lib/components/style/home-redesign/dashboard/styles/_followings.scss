@@ -1,0 +1,27 @@
+.dashboard-home-followings {
+  &-card {
+    @include card(12px);
+    @include v-stretch(12px);
+    padding: 16px;
+  }
+
+  &-header {
+    @include h-center(8px);
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    time {
+      color: var(--be-color-text-placeholder, #666);
+      font-size: 12px;
+    }
+  }
+
+  &-signature {
+    margin: 0;
+    color: var(--be-color-text-content, var(--home-color));
+    font-size: 14px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+}

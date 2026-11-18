@@ -81,10 +81,8 @@
 
   &-panels {
     display: grid;
-    grid-template-columns: repeat(
-      auto-fit,
-      minmax(min(100%, max(280px, calc((100% - 32px) / 3))), 1fr)
-    );
+    grid-template-columns: repeat(auto-fit,
+        minmax(min(100%, max(280px, calc((100% - 32px) / 3))), 1fr));
     align-items: start;
     gap: 16px;
   }
@@ -113,7 +111,7 @@
     padding: 0;
     list-style: none;
 
-    li + li {
+    li+li {
       border-block-start: 1px solid #8882;
     }
   }

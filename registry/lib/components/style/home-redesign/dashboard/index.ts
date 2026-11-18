@@ -71,7 +71,7 @@ export const component = defineComponentMetadata({
     },
     {
       name: 'dashboard-home',
-      style: () => import('./dashboard.scss'),
+      style: () => import('./styles/index.scss'),
     },
   ],
 })
