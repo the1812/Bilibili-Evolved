@@ -36,33 +36,16 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
-import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { getUID } from '@/core/utils'
-import { formatDate } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
 import { VButton, VEmpty, VLoading } from '@/ui'
 import DashboardHomeOperations from '../shared/DashboardHomeOperations.vue'
 import MasonryItem from '../shared/MasonryItem.vue'
 import { useAutoLoad } from '../shared/use-auto-load'
-
-interface RawFollowing {
-  mid: number
-  uname: string
-  face?: string
-  sign?: string
-  mtime?: number
-}
-
-type Following = Omit<RawFollowing, 'mtime'> & { followedOn?: string }
-
-interface FollowingPage {
-  list?: RawFollowing[]
-  total: number
-}
+import { getFollowingsPage, type Following } from './followings-api'
 
 const { error: logFollowingError } = useScopedConsole('仪表盘首页关注')
 const uid = getUID()
-const pageSize = 50
 let nextPage = 1
 const followings = ref<Following[]>([])
 const loading = ref(false)
@@ -76,19 +59,12 @@ const loadNextPage = async () => {
   loading.value = true
   failed.value = false
   try {
-    const params = new URLSearchParams({ vmid: uid, pn: String(nextPage), ps: String(pageSize) })
-    const { list, total } = await bilibiliApi<FollowingPage>(
-      getJsonWithCredentials(`https://api.bilibili.com/x/relation/followings?${params}`),
-      '获取关注列表失败',
-      false,
+    const page = await getFollowingsPage(uid, nextPage)
+    followings.value = lodash.uniqBy(
+      [...followings.value, ...page.entries],
+      following => following.mid,
     )
-    const page = (list ?? []).map(({ mtime, sign, ...following }) => ({
-      ...following,
-      sign: sign?.trim(),
-      followedOn: mtime > 0 ? formatDate(new Date(mtime * 1000)) : undefined,
-    }))
-    followings.value = lodash.uniqBy([...followings.value, ...page], following => following.mid)
-    hasMore.value = page.length > 0 && nextPage * pageSize < total
+    hasMore.value = page.hasMore
     nextPage += 1
   } catch (error) {
     logFollowingError(error)

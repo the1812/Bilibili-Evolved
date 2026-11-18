@@ -1,6 +1,5 @@
-import { getFeeds, normalizeFeedsCardModules } from '@/components/feeds/api'
-import { bilibiliApi, postJsonWithCredentials } from '@/core/ajax'
-import { getCsrf, getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
+import { normalizeFeedsCardModules } from '@/components/feeds/api'
+import { getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
 
 interface RawImage {
   src?: string
@@ -70,17 +69,11 @@ interface RawPostModules {
   module_stat?: { like?: RawStat; comment?: RawStat; forward?: RawStat }
 }
 
-interface RawPost {
+export interface RawDynamicPost {
   id_str: string
   type?: string
   modules?: RawPostModules | Record<string, unknown>[]
-  orig?: RawPost
-}
-
-interface FeedPage {
-  items?: RawPost[]
-  offset?: string
-  has_more: boolean
+  orig?: RawDynamicPost
 }
 
 export interface DynamicPost {
@@ -118,47 +111,6 @@ export interface DynamicFeedCard {
   post: DynamicPost
   original?: DynamicPost
   reposters: Pick<DynamicPost, 'id' | 'url' | 'author'>[]
-}
-
-const genericRepostComments = new Set(['', '转发动态', '分享视频'])
-const isGenericRepost = (entry: DynamicEntry) => {
-  const comments = (entry.text ?? '').replace(/\u200b/g, '').split(/\/\/@[^:：\r\n]+[:：]|\r?\n/)
-  return (
-    comments.every(comment => genericRepostComments.has(comment.trim())) &&
-    entry.images.length === 0 &&
-    !entry.attachment &&
-    !entry.showOriginalLink
-  )
-}
-
-export const mergeDynamicReposts = (entries: DynamicEntry[]): DynamicFeedCard[] => {
-  const cards = new Map<string, DynamicFeedCard>()
-  for (const entry of entries) {
-    const original = entry.original && isGenericRepost(entry) ? entry.original : undefined
-    const post = original ?? entry
-    const card: DynamicFeedCard = cards.get(post.id) ?? { post, reposters: [] }
-
-    if (original) {
-      const { id, url, author } = entry
-      card.reposters.push({ id, url, author })
-      if ((!card.post.text && original.text) || (!card.post.stats && original.stats)) {
-        card.post = {
-          ...card.post,
-          text: card.post.text || original.text,
-          stats: card.post.stats ?? original.stats,
-        }
-      }
-    } else {
-      card.post = {
-        ...entry,
-        text: entry.text || card.post.text,
-        stats: entry.stats ?? card.post.stats,
-      }
-      card.original = entry.original
-    }
-    cards.set(post.id, card)
-  }
-  return [...cards.values()]
 }
 
 const webUrl = (url?: string) => (/^(?:https?:)?\/\//i.test(url ?? '') ? url : undefined)
@@ -212,7 +164,7 @@ const getDynamicStats = (module?: RawPostModules['module_stat']): DynamicPost['s
 const getParagraph = (value: RawParagraph) =>
   value.text?.nodes?.map(node => node.word?.words || node.rich?.orig_text || '').join('')
 
-const toDynamicPost = (item: RawPost): DynamicPost => {
+export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
   const modules: RawPostModules = Array.isArray(item.modules)
     ? normalizeFeedsCardModules(item.modules)
     : item.modules
@@ -273,34 +225,4 @@ const toDynamicPost = (item: RawPost): DynamicPost => {
     stats: getDynamicStats(modules?.module_stat),
     showOriginalLink,
   }
-}
-
-export const getDynamicFeedPage = async (offset?: string) => {
-  const page = await bilibiliApi<FeedPage>(getFeeds('all', offset), '获取动态失败', false)
-  const posts = page.items ?? []
-  const entries: DynamicEntry[] = posts
-    .filter(post => post.id_str)
-    .map(post => ({
-      ...toDynamicPost(post),
-      original: post.orig?.id_str ? toDynamicPost(post.orig) : undefined,
-    }))
-  const nextOffset = page.has_more ? page.offset || posts.at(-1)?.id_str : undefined
-
-  return { entries, nextOffset }
-}
-
-export const setDynamicLike = async (id: string, liked: boolean) => {
-  const csrf = getCsrf()
-  if (!csrf) {
-    throw new Error('请先登录 B 站')
-  }
-  const params = new URLSearchParams({ csrf })
-  const response = postJsonWithCredentials(
-    `https://api.bilibili.com/x/dynamic/feed/dyn/thumb?${params}`,
-    {
-      dyn_id_str: id,
-      up: liked ? 1 : 2,
-    },
-  ).then(JSON.parse)
-  await bilibiliApi(response, liked ? '点赞失败' : '取消点赞失败', false)
 }

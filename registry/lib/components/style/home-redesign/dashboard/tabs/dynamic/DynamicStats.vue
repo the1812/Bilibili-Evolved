@@ -38,7 +38,7 @@
 import { computed } from 'vue'
 import { formatCount } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
-import type { DynamicLikeState, DynamicPost } from './dynamic-feed'
+import type { DynamicLikeState, DynamicPost } from './dynamic-post'
 
 const props = defineProps<{
   stats: NonNullable<DynamicPost['stats']>

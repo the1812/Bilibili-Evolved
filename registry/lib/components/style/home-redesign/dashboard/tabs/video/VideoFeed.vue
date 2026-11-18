@@ -18,80 +18,50 @@
     <DashboardHomeOperations v-if="cards.length > 0" @refresh="refresh" />
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
+import { computed, ref } from 'vue'
 import { getVideoFeeds } from '@/components/feeds/api'
-import { VideoCard } from '@/components/feeds/video-card'
-import VideoCardComponent from '@/components/feeds/VideoCard.vue'
-import { formatDate } from '@/core/utils/formatters'
+import type { VideoCard as VideoCardData } from '@/components/feeds/video-card'
+import VideoCard from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
-import { ascendingStringSort, descendingStringSort } from '@/core/utils/sort'
-import { VEmpty, ScrollTrigger } from '@/ui'
+import { ascendingStringSort } from '@/core/utils/sort'
+import { ScrollTrigger, VEmpty } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import { groupVideoCardsByDate } from './group-video-cards'
 
-export default Vue.extend({
-  components: { ScrollTrigger, VEmpty, VideoCard: VideoCardComponent, DashboardHomeOperations },
-  data() {
-    return {
-      loading: true,
-      cards: [] as VideoCard[],
-      error: false,
+const scrollTrigger = ref<InstanceType<typeof ScrollTrigger>>()
+const loading = ref(true)
+const error = ref(false)
+const cards = ref<VideoCardData[]>([])
+const loaded = computed(() => !loading.value && !error.value)
+const cardGroups = computed(() => groupVideoCardsByDate(cards.value))
+const lastId = computed(
+  () => [...cards.value].sort(ascendingStringSort(card => card.id))[0]?.id ?? null,
+)
+
+const loadCards = async () => {
+  try {
+    error.value = false
+    loading.value = true
+    scrollTrigger.value?.setLoadState('loading')
+    cards.value = lodash.uniqBy(
+      [...cards.value, ...(await getVideoFeeds('video', lastId.value))],
+      card => card.id,
+    )
+  } catch (loadError) {
+    logError(loadError)
+    error.value = true
+    scrollTrigger.value?.setLoadState('error')
+  } finally {
+    loading.value = false
+    if (loaded.value) {
+      scrollTrigger.value?.setLoadState('loaded')
     }
-  },
-  computed: {
-    cardGroups() {
-      const today = new Date()
-      const yesterday = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 1)
-      const dateLabels = {
-        [formatDate(today)]: '今天',
-        [formatDate(yesterday)]: '昨天',
-      }
-      const cardsByDate = lodash.groupBy(this.cards, ({ time }) =>
-        time && Number.isFinite(time.getTime()) ? formatDate(time) : '',
-      )
-      return Object.entries(cardsByDate)
-        .sort(descendingStringSort(([date]) => date))
-        .map(([date, cards]) => ({
-          date,
-          label: dateLabels[date] ?? date.slice(5).replace('-', '/'),
-          cards,
-        }))
-    },
-    loaded() {
-      return !this.loading && !this.error
-    },
-    lastID() {
-      if (!this.cards.length) {
-        return null
-      }
-      const cards = [...this.cards]
-      return cards.sort(ascendingStringSort(c => c.id))[0].id
-    },
-  },
-  methods: {
-    async loadCards() {
-      try {
-        this.error = false
-        this.loading = true
-        this.$refs.scrollTrigger.setLoadState('loading')
-        this.cards = lodash.uniqBy(
-          [...this.cards, ...(await getVideoFeeds('video', this.lastID))],
-          it => it.id,
-        )
-      } catch (error) {
-        logError(error)
-        this.error = true
-        this.$refs.scrollTrigger.setLoadState('error')
-      } finally {
-        this.loading = false
-        if (this.loaded) {
-          this.$refs.scrollTrigger.setLoadState('loaded')
-        }
-      }
-    },
-    async refresh() {
-      this.cards = []
-      this.$refs.scrollTrigger.resetIsFirstLoad()
-    },
-  },
-})
+  }
+}
+
+const refresh = () => {
+  cards.value = []
+  scrollTrigger.value?.resetIsFirstLoad()
+}
 </script>
