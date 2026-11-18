@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
+import { getUID } from '@/core/utils'
 import { TabControl, VEmpty } from '@/ui'
 import type { TabMapping } from '@/ui/tab-mapping'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
@@ -26,6 +27,7 @@ import { dashboardHomeOptions } from './options'
 import { DashboardHomeTabOption } from './types'
 
 type TabVisibilityOption = Exclude<keyof typeof dashboardHomeOptions, 'columnCount' | 'defaultTab'>
+const uid = getUID()
 const tabs: (TabMapping & { visibilityOption: TabVisibilityOption })[] = [
   {
     name: DashboardHomeTabOption.Feeds,
@@ -40,6 +42,15 @@ const tabs: (TabMapping & { visibilityOption: TabVisibilityOption })[] = [
     visibilityOption: 'showDynamic',
     component: () => import('./tabs/DynamicFeed.vue').then(m => m.default),
     activeLink: 'https://t.bilibili.com/',
+  },
+  {
+    name: DashboardHomeTabOption.Followings,
+    displayName: DashboardHomeTabOption.Followings,
+    visibilityOption: 'showFollowings',
+    component: () => import('./tabs/Followings.vue').then(m => m.default),
+    activeLink: uid
+      ? `https://space.bilibili.com/${uid}/fans/follow`
+      : 'https://passport.bilibili.com/login',
   },
   {
     name: DashboardHomeTabOption.Trending,

@@ -1,24 +1,4 @@
 .dashboard-home-dynamic {
-  box-sizing: border-box;
-  inline-size: min(1440px, calc(100vw - 96px));
-  padding-inline: var(--dashboard-home-grid-padding);
-
-  &-grid {
-    --dynamic-row-height: 8px;
-
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-    grid-auto-rows: var(--dynamic-row-height);
-    column-gap: 16px;
-  }
-
-  &-item {
-    grid-row-end: span var(--dynamic-card-rows, 1);
-    align-self: start;
-    min-inline-size: 0;
-    padding-block-end: 16px;
-  }
-
   &-card {
     --dynamic-card-padding: 16px;
     --dynamic-post-padding: var(--dynamic-card-padding);
@@ -215,12 +195,12 @@
   }
 
   @media (hover: hover) and (min-width: 720px) {
-    &-grid {
+    & .dashboard-home-masonry-grid {
       --dynamic-stats-width: 44px;
       --dynamic-stats-gap: 4px;
     }
 
-    &-item {
+    & .dashboard-home-masonry-item {
       &:focus-within {
         position: relative;
         z-index: 2;
@@ -433,12 +413,6 @@
       padding: 56px 24px 24px;
       text-align: center;
     }
-  }
-
-  &-status {
-    @include h-center();
-    justify-content: center;
-    padding-block: 8px;
   }
 }
 

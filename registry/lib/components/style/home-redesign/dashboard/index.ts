@@ -13,6 +13,10 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
     displayName: '显示「动态」',
     defaultValue: true,
   },
+  showFollowings: {
+    displayName: '显示「关注」',
+    defaultValue: true,
+  },
   showTrending: {
     displayName: '显示「热门」',
     defaultValue: true,
