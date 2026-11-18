@@ -1,28 +1,35 @@
 <template>
-  <div v-if="visibleTabs.length" class="dashboard-home-tabs">
-    <div
-      class="default-tabs"
-      role="tablist"
-      aria-label="仪表盘首页"
-      @keydown="moveTabFocus"
-      @focusout="resetTabFocus"
-    >
-      <button
-        v-for="tab in visibleTabs"
-        :id="tabId(tab)"
-        :key="tab.name"
-        type="button"
-        class="default-tab"
-        :class="{ selected: tab === selectedTab }"
-        role="tab"
-        :aria-controls="panelId(tab)"
-        :aria-selected="tab === selectedTab ? 'true' : 'false'"
-        :tabindex="tab.name === tabbableTabName ? 0 : -1"
-        @focus="focusedTabName = tab.name"
-        @click="selectTab(tab)"
+  <div
+    v-if="visibleTabs.length"
+    class="dashboard-home-tabs"
+    :class="{ 'has-floating-tabs': floatingTabs, 'is-scrolling-down': scrollingDown }"
+    :style="{ '--dashboard-home-tab-bar-height': `${tabBarHeight}px` }"
+  >
+    <div ref="tabBar" class="dashboard-home-tab-bar">
+      <div
+        class="default-tabs"
+        role="tablist"
+        aria-label="仪表盘首页"
+        @keydown="moveTabFocus"
+        @focusout="resetTabFocus"
       >
-        <span class="default-tab-name">{{ tab.displayName }}</span>
-      </button>
+        <button
+          v-for="tab in visibleTabs"
+          :id="tabId(tab)"
+          :key="tab.name"
+          type="button"
+          class="default-tab"
+          :class="{ selected: tab === selectedTab }"
+          role="tab"
+          :aria-controls="panelId(tab)"
+          :aria-selected="tab === selectedTab ? 'true' : 'false'"
+          :tabindex="tab.name === tabbableTabName ? 0 : -1"
+          @focus="focusedTabName = tab.name"
+          @click="selectTab(tab)"
+        >
+          <span class="default-tab-name">{{ tab.displayName }}</span>
+        </button>
+      </div>
     </div>
     <div
       v-for="tab in visibleTabs"
@@ -43,12 +50,50 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
+import { sizeChange } from '@/core/observer'
 import { VEmpty } from '@/ui'
 import { getDashboardHomeOptions } from '../options'
 import { type DashboardTab, useDashboardTabs } from './use-dashboard-tabs'
 
 const { visibleTabs, selectedTab, selectTab } = useDashboardTabs(getDashboardHomeOptions())
+const tabBar = ref<HTMLElement>()
+const tabBarHeight = ref(0)
+const floatingTabs = ref(false)
+const scrollingDown = ref(false)
+watch(
+  tabBar,
+  (bar, _, onCleanup) => {
+    if (!bar) {
+      return
+    }
+    let lastScrollY = Math.max(0, window.scrollY)
+    scrollingDown.value = false
+
+    const updateScrollState = () => {
+      const scrollY = Math.max(0, window.scrollY)
+      const stickyTop = parseFloat(getComputedStyle(bar).insetBlockStart)
+      floatingTabs.value = scrollY > 0 && bar.getBoundingClientRect().top <= stickyTop
+      if (scrollY !== lastScrollY) {
+        scrollingDown.value = scrollY > lastScrollY
+        lastScrollY = scrollY
+      }
+    }
+    const measureTabBar = () => {
+      tabBarHeight.value = bar.getBoundingClientRect().height
+      updateScrollState()
+    }
+    measureTabBar()
+    const [observer] = sizeChange(bar, measureTabBar)
+    window.addEventListener('scroll', updateScrollState, { passive: true })
+    onCleanup(() => {
+      window.removeEventListener('scroll', updateScrollState)
+      observer.disconnect()
+    })
+  },
+  { flush: 'post' },
+)
+
 const focusedTabName = ref<string>()
 const tabbableTabName = computed(
   () =>

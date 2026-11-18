@@ -43,16 +43,65 @@ body:not(.home-redesign-off) {
 }
 
 .dashboard-home-tabs {
+  --dashboard-home-sticky-top: 0px;
+  --dashboard-home-feed-date-top: calc(var(--dashboard-home-sticky-top) + 8px);
+
   @include v-stretch();
   @include tabs-style();
   flex-grow: 1;
   min-inline-size: 0;
 
+  body.fixed-navbar & {
+    --dashboard-home-sticky-top: var(--navbar-height, 0px);
+  }
+
+  .dashboard-home-tab-bar {
+    position: sticky;
+    inset-block-start: var(--dashboard-home-sticky-top);
+    z-index: 4;
+    display: flex;
+    justify-content: center;
+    padding-block: 8px;
+    pointer-events: none;
+  }
+
   .default-tabs {
+    justify-content: center;
     flex-wrap: wrap;
     min-inline-size: 0;
-    row-gap: 10px;
-    margin-block-end: 8px;
+    gap: 10px 16px;
+    padding: 8px 14px 12px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    pointer-events: auto;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: opacity 0.16s ease-out, transform 0.16s ease-out;
+    }
+
+    .default-tab:not(:last-child) {
+      margin-inline-end: 0;
+    }
+  }
+
+  &.has-floating-tabs {
+
+    &:not(.is-scrolling-down),
+    &:has(.default-tabs :focus-visible) {
+      --dashboard-home-feed-date-top: calc(var(--dashboard-home-sticky-top) + var(--dashboard-home-tab-bar-height));
+    }
+
+    .default-tabs {
+      background-color: var(--home-background-color);
+      border: var(--home-card-border);
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+
+    &.is-scrolling-down .default-tabs:not(:has(:focus-visible)) {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-8px);
+    }
   }
 
   .default-tab {
@@ -77,6 +126,10 @@ body:not(.home-redesign-off) {
     justify-content: center;
     padding-block: 6px;
     overflow: visible;
+
+    :focus-visible {
+      scroll-margin-block-start: var(--dashboard-home-feed-date-top);
+    }
 
     &[hidden] {
       display: none;
