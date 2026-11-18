@@ -1,0 +1,66 @@
+.dashboard-home {
+  .has-single-photo>.dashboard-home-dynamic-controls a:is(.be-up-info, .dashboard-home-dynamic-post-link) {
+    --dashboard-home-capsule-hover-background: rgba(15, 18, 24, 0.92);
+    --dashboard-home-capsule-hover-border: rgba(255, 255, 255, 0.6);
+    --dashboard-home-capsule-focus: #fff;
+
+    background-color: var(--dashboard-home-photo-control-background);
+    border: 1px solid var(--dashboard-home-photo-control-border);
+    color: #fff;
+    box-shadow: none;
+  }
+
+  a.be-up-info {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+
+    &.fallback {
+      @include round-bar(28);
+      padding: 2px 8px;
+      border: var(--home-card-border);
+    }
+  }
+
+  .dashboard-home-dynamic-post-link {
+    padding: 4px 8px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    color: var(--be-color-text-placeholder, #666);
+    white-space: nowrap;
+
+    &:is(:hover, :focus-visible) {
+      color: var(--theme-color);
+    }
+  }
+
+  a:is(.be-up-info, .dashboard-home-dynamic-post-link, .video-card > .up):any-link {
+    @media (prefers-reduced-motion: no-preference) {
+      transition: background-color 0.18s ease-out, border-color 0.18s ease-out;
+    }
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(--dashboard-home-capsule-hover-background,
+          var(--theme-color-10, #8881));
+      border-color: var(--dashboard-home-capsule-hover-border, var(--theme-color-40, #8886));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--dashboard-home-capsule-focus, var(--home-color));
+      outline-offset: 2px;
+    }
+  }
+
+  .dashboard-home-tab-cards>.video-card,
+  .dashboard-home-dynamic-card,
+  .dashboard-home-followings-card,
+  .dashboard-home-account-card {
+    @media (prefers-reduced-motion: no-preference) {
+      transition: box-shadow 0.2s ease-out;
+    }
+
+    &:hover,
+    &:focus-within {
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+  }
+}

@@ -1,0 +1,120 @@
+.dashboard-home-dynamic {
+  &-stats {
+    align-self: flex-start;
+    pointer-events: auto;
+
+    &-panel {
+      @include card(10px);
+      display: flex;
+      gap: 2px;
+      padding: 2px;
+    }
+
+    &-item {
+      @include h-center(4px);
+      justify-content: center;
+      padding: 4px;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: var(--be-color-text-content, var(--home-color));
+      font-family: inherit;
+      font-size: 11px;
+      line-height: 1;
+      white-space: nowrap;
+
+      &.is-liked {
+        color: var(--theme-color);
+      }
+    }
+
+    button {
+      cursor: pointer;
+
+      &:hover {
+        background: var(--theme-color-10, #8881);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--theme-color);
+        outline-offset: -2px;
+      }
+
+      &[aria-disabled='true'] {
+        cursor: progress;
+        opacity: 0.65;
+      }
+    }
+  }
+
+  @media (hover: hover) and (min-width: 720px) {
+    & .dashboard-home-masonry-grid {
+      --dynamic-stats-width: 44px;
+      --dynamic-stats-gap: 4px;
+    }
+
+    & .dashboard-home-masonry-item {
+      &:focus-within {
+        position: relative;
+        z-index: 2;
+      }
+
+      &:hover {
+        position: relative;
+        z-index: 3;
+      }
+    }
+
+    &-post {
+      position: relative;
+    }
+
+    &-stats {
+      position: absolute;
+      z-index: 2;
+      inset-block-start: 0;
+      inset-inline-start: 100%;
+      box-sizing: content-box;
+      inline-size: var(--dynamic-stats-width);
+      padding-inline-start: calc(var(--dynamic-card-padding) + var(--dynamic-stats-gap));
+      opacity: 0;
+      pointer-events: none;
+
+      @media (prefers-reduced-motion: no-preference) {
+        transition: opacity 140ms ease-out;
+      }
+
+      &-panel {
+        flex-direction: column;
+        transform-origin: left top;
+      }
+
+      &-item {
+        flex-direction: column;
+        gap: 2px;
+      }
+    }
+
+    .dashboard-home-dynamic-card:is(:hover, :focus-within):not( :has(> .is-repost:is(:hover, :focus-within) .dashboard-home-dynamic-stats)) .is-default-stats,
+    .dashboard-home-dynamic-post:is(:hover, :focus-within)>.dashboard-home-dynamic-controls>.dashboard-home-dynamic-stats {
+      opacity: 1;
+      pointer-events: auto;
+
+      @media (prefers-reduced-motion: no-preference) {
+        >.dashboard-home-dynamic-stats-panel {
+          animation: dashboard-home-dynamic-stats-pop 250ms cubic-bezier(0.2, 0.8, 0.3, 1);
+        }
+      }
+    }
+  }
+}
+
+@keyframes dashboard-home-dynamic-stats-pop {
+  from {
+    transform: translateX(-8px) scale(0.9);
+  }
+
+  to {
+    transform: none;
+  }
+}
