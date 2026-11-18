@@ -9,17 +9,17 @@
   </div>
 </template>
 <script lang="ts">
-import { VideoCard } from '@/components/feeds/video-card'
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
-import { ascendingStringSort } from '@/core/utils/sort'
 import { VEmpty, VLoading } from '@/ui'
 import { getTrendingVideos } from '../../trending'
 import DashboardHomeOperations from '../DashboardHomeOperations.vue'
-import { dashboardHomeOptions } from '../options'
 
 export default Vue.extend({
   components: { VLoading, VEmpty, VideoCard: VideoCardComponent, DashboardHomeOperations },
+  props: {
+    personalized: Boolean,
+  },
   data() {
     return {
       loading: true,
@@ -31,13 +31,6 @@ export default Vue.extend({
     loaded() {
       return !this.loading && !this.error
     },
-    lastID() {
-      if (!this.cards.length) {
-        return null
-      }
-      const cards: VideoCard[] = [...this.cards]
-      return cards.sort(ascendingStringSort(c => c.id))[0].id
-    },
   },
   async mounted() {
     this.loadCards()
@@ -48,7 +41,7 @@ export default Vue.extend({
         this.cards = []
         this.error = false
         this.loading = true
-        this.cards = await getTrendingVideos(dashboardHomeOptions.personalized)
+        this.cards = await getTrendingVideos(this.personalized)
       } catch (error) {
         logError(error)
         this.error = true

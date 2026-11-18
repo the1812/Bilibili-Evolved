@@ -5,9 +5,21 @@ import { homeUrls } from '../urls'
 import { DashboardHomeTabOption } from './types'
 
 export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
-  personalized: {
-    displayName: '个性化推荐',
-    defaultValue: false,
+  showFeeds: {
+    displayName: '显示「视频」',
+    defaultValue: true,
+  },
+  showDynamic: {
+    displayName: '显示「动态」',
+    defaultValue: true,
+  },
+  showTrending: {
+    displayName: '显示「热门」',
+    defaultValue: true,
+  },
+  showRecommended: {
+    displayName: '显示「推荐」',
+    defaultValue: true,
   },
   columnCount: {
     displayName: '自定义列数',
