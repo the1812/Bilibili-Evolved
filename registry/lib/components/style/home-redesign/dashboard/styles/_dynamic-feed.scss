@@ -114,6 +114,14 @@
     color: var(--be-color-text-placeholder, #666);
   }
 
+  &-original-link.has-type-label {
+    @include h-center(4px);
+    inline-size: auto;
+    padding-inline: 8px;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
   &-author {
     @include h-center(8px);
     justify-content: space-between;

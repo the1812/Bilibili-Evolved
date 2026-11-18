@@ -29,20 +29,29 @@
                 :up-name="post.author.name"
                 :up-face-url="post.author.avatar"
               />
-              <span v-if="post.attachment" class="dashboard-home-dynamic-attachment-type">
+              <span
+                v-if="post.attachment && !post.originalLinkTypeLabel"
+                class="dashboard-home-dynamic-attachment-type"
+              >
                 <VIcon :icon="post.attachment.type.icon" :size="14" aria-hidden="true" />
                 {{ post.attachment.type.label }}
               </span>
               <a
                 v-if="post.showOriginalLink"
                 class="dashboard-home-dynamic-original-link"
+                :class="{ 'has-type-label': post.originalLinkTypeLabel }"
                 :href="post.url"
                 target="_blank"
                 rel="noopener"
                 title="查看完整动态"
-                aria-label="查看完整动态（在新标签页打开）"
+                :aria-label="
+                  post.originalLinkTypeLabel
+                    ? `${post.originalLinkTypeLabel} · 查看完整动态（在新标签页打开）`
+                    : '查看完整动态（在新标签页打开）'
+                "
               >
                 <VIcon icon="mdi-open-in-new" :size="16" aria-hidden="true" />
+                <span v-if="post.originalLinkTypeLabel">{{ post.originalLinkTypeLabel }}</span>
               </a>
             </div>
             <a

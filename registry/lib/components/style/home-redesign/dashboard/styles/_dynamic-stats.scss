@@ -51,16 +51,27 @@
     & .dashboard-home-masonry-grid {
       --dynamic-stats-width: 44px;
       --dynamic-stats-gap: 4px;
+      --dynamic-stats-fade-duration: 140ms;
     }
 
     & .dashboard-home-masonry-item {
+      position: relative;
+      z-index: 0;
+
+      @media (prefers-reduced-motion: no-preference) {
+        // Keep the flyout above neighboring cards until it finishes fading out.
+        transition: z-index 0s var(--dynamic-stats-fade-duration);
+
+        &:is(:hover, :focus-within) {
+          transition-delay: 0s;
+        }
+      }
+
       &:focus-within {
-        position: relative;
         z-index: 2;
       }
 
       &:hover {
-        position: relative;
         z-index: 3;
       }
     }
@@ -86,19 +97,27 @@
       position: absolute;
       z-index: 2;
       inset-block-start: 0;
-      inset-inline-end: 0;
+      inset-inline-start: var(--dynamic-stats-inset-start, 100%);
+      inset-inline-end: var(--dynamic-stats-inset-end, auto);
+      padding-inline-start: var(--dynamic-stats-padding-start, var(--dynamic-stats-offset));
+      padding-inline-end: var(--dynamic-stats-padding-end, 0px);
       box-sizing: content-box;
       inline-size: var(--dynamic-stats-width);
       opacity: 0;
       pointer-events: none;
 
       @media (prefers-reduced-motion: no-preference) {
-        transition: opacity 140ms ease-out;
+        transition: opacity var(--dynamic-stats-fade-duration) ease-out;
       }
 
       &-panel {
         flex-direction: column;
         transform-origin: var(--dynamic-stats-transform-origin, left top);
+
+        @media (prefers-reduced-motion: no-preference) {
+          transform: translateX(var(--dynamic-stats-pop-offset, -8px)) scale(0.9);
+          transition: transform 250ms cubic-bezier(0.2, 0.8, 0.3, 1);
+        }
       }
 
       &-item {
@@ -109,28 +128,12 @@
 
     .dashboard-home-dynamic-card:is(:hover, :focus-within):not( :has(> .is-repost:is(:hover, :focus-within) .dashboard-home-dynamic-stats)) .is-default-stats,
     .dashboard-home-dynamic-post:is(:hover, :focus-within)>.dashboard-home-dynamic-controls>.dashboard-home-dynamic-stats {
-      inset-inline-start: var(--dynamic-stats-inset-start, 100%);
-      inset-inline-end: var(--dynamic-stats-inset-end, auto);
-      padding-inline-start: var(--dynamic-stats-padding-start, var(--dynamic-stats-offset));
-      padding-inline-end: var(--dynamic-stats-padding-end, 0px);
       opacity: 1;
       pointer-events: auto;
 
-      @media (prefers-reduced-motion: no-preference) {
-        >.dashboard-home-dynamic-stats-panel {
-          animation: dashboard-home-dynamic-stats-pop 250ms cubic-bezier(0.2, 0.8, 0.3, 1);
-        }
+      >.dashboard-home-dynamic-stats-panel {
+        transform: none;
       }
     }
-  }
-}
-
-@keyframes dashboard-home-dynamic-stats-pop {
-  from {
-    transform: translateX(var(--dynamic-stats-pop-offset, -8px)) scale(0.9);
-  }
-
-  to {
-    transform: none;
   }
 }
