@@ -25,6 +25,14 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
     displayName: '显示「推荐」',
     defaultValue: true,
   },
+  showAccount: {
+    displayName: '显示「我的」',
+    defaultValue: true,
+  },
+  enableWatchlater: {
+    displayName: '启用「稍后再看」',
+    defaultValue: true,
+  },
   columnCount: {
     displayName: '自定义列数',
     defaultValue: 0,
