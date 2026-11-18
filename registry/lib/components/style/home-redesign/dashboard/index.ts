@@ -1,49 +1,8 @@
-import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
+import { defineComponentMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
-import { mountVueComponent, getNumberValidator } from '@/core/utils'
+import { mountVueComponent } from '@/core/utils'
 import { homeUrls } from '../urls'
-import { DashboardHomeTabOption } from './types'
-
-export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
-  showFeeds: {
-    displayName: '显示「视频」',
-    defaultValue: true,
-  },
-  showDynamic: {
-    displayName: '显示「动态」',
-    defaultValue: true,
-  },
-  showFollowings: {
-    displayName: '显示「关注」',
-    defaultValue: true,
-  },
-  showTrending: {
-    displayName: '显示「热门」',
-    defaultValue: true,
-  },
-  showRecommended: {
-    displayName: '显示「推荐」',
-    defaultValue: true,
-  },
-  showAccount: {
-    displayName: '显示「我的」',
-    defaultValue: true,
-  },
-  enableWatchlater: {
-    displayName: '启用「稍后再看」',
-    defaultValue: true,
-  },
-  columnCount: {
-    displayName: '自定义列数',
-    defaultValue: 0,
-    validator: getNumberValidator(0, 10),
-  },
-  defaultTab: {
-    displayName: '默认标签页',
-    defaultValue: DashboardHomeTabOption.Feeds,
-    dropdownEnum: DashboardHomeTabOption,
-  },
-})
+import { dashboardHomeOptionsMetadata } from './options'
 
 export const component = defineComponentMetadata({
   name: 'dashboardHome',

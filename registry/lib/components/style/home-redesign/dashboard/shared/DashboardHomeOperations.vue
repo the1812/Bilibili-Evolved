@@ -1,15 +1,6 @@
 <template>
   <div class="dashboard-home-operations">
-    <VButton
-      round
-      icon
-      class="dashboard-home-operations-refresh"
-      title="刷新"
-      @click="
-        backToTop()
-        $emit('refresh')
-      "
-    >
+    <VButton round icon class="dashboard-home-operations-refresh" title="刷新" @click="refresh">
       <VIcon icon="mdi-refresh" :size="size" />
     </VButton>
     <VButton round icon class="dashboard-home-operations-top" title="返回顶部" @click="backToTop">
@@ -17,20 +8,14 @@
     </VButton>
   </div>
 </template>
-<script lang="ts">
+<script setup lang="ts">
 import { VButton, VIcon } from '@/ui'
 
-export default Vue.extend({
-  components: { VButton, VIcon },
-  data() {
-    return {
-      size: 28,
-    }
-  },
-  methods: {
-    backToTop() {
-      window.scrollTo(0, 0)
-    },
-  },
-})
+const emit = defineEmits<{ (event: 'refresh'): void }>()
+const size = 28
+const backToTop = () => window.scrollTo(0, 0)
+const refresh = () => {
+  backToTop()
+  emit('refresh')
+}
 </script>

@@ -16,99 +16,25 @@
     </div>
   </HomeRedesignBase>
 </template>
+
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watch } from 'vue'
-import { addComponentListener, removeComponentListener } from '@/core/settings'
-import { getUID } from '@/core/utils'
+import { onBeforeUnmount, watch } from 'vue'
 import { TabControl, VEmpty } from '@/ui'
-import type { TabMapping } from '@/ui/tab-mapping'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
-import { dashboardHomeOptions, useDashboardWatchlater } from './options'
-import { DashboardHomeTabOption } from './types'
+import { getDashboardHomeOptions, useDashboardOption } from './options'
+import { useDashboardTabs } from './tabs/use-dashboard-tabs'
 
-type TabVisibilityOption = keyof typeof dashboardHomeOptions & `show${string}`
-const uid = getUID()
-const tabs: (TabMapping & { visibilityOption: TabVisibilityOption })[] = [
-  {
-    name: DashboardHomeTabOption.Feeds,
-    displayName: DashboardHomeTabOption.Feeds,
-    visibilityOption: 'showFeeds',
-    component: () => import('./tabs/video/VideoFeed.vue').then(m => m.default),
-    activeLink: 'https://t.bilibili.com/?tab=video',
-  },
-  {
-    name: DashboardHomeTabOption.Dynamic,
-    displayName: DashboardHomeTabOption.Dynamic,
-    visibilityOption: 'showDynamic',
-    component: () => import('./tabs/dynamic/DynamicFeed.vue').then(m => m.default),
-    activeLink: 'https://t.bilibili.com/',
-  },
-  {
-    name: DashboardHomeTabOption.Followings,
-    displayName: DashboardHomeTabOption.Followings,
-    visibilityOption: 'showFollowings',
-    component: () => import('./tabs/Followings.vue').then(m => m.default),
-    activeLink: uid
-      ? `https://space.bilibili.com/${uid}/fans/follow`
-      : 'https://passport.bilibili.com/login',
-  },
-  {
-    name: DashboardHomeTabOption.Trending,
-    displayName: DashboardHomeTabOption.Trending,
-    visibilityOption: 'showTrending',
-    component: () => import('./tabs/video/Trending.vue').then(m => m.default),
-    activeLink: 'https://www.bilibili.com/v/popular/all',
-  },
-  {
-    name: DashboardHomeTabOption.Recommended,
-    displayName: DashboardHomeTabOption.Recommended,
-    visibilityOption: 'showRecommended',
-    component: () => import('./tabs/video/Trending.vue').then(m => m.default),
-    propsData: { personalized: true },
-  },
-  {
-    name: DashboardHomeTabOption.Account,
-    displayName: DashboardHomeTabOption.Account,
-    visibilityOption: 'showAccount',
-    component: () => import('./tabs/account/Account.vue').then(m => m.default),
-    activeLink: 'https://account.bilibili.com/account/home',
-  },
-]
+const dashboardHomeOptions = getDashboardHomeOptions()
+const { visibleTabs, tabControlVersion, rememberSelectedLink } =
+  useDashboardTabs(dashboardHomeOptions)
+const columnCount = useDashboardOption('columnCount')
+const showWatchlater = useDashboardOption('enableWatchlater')
 
-const getVisibleTabs = () => tabs.filter(tab => dashboardHomeOptions[tab.visibilityOption])
-const visibleTabs = ref(getVisibleTabs())
-const tabControlVersion = ref(0)
-let selectedLink: string | null | undefined = null
-const rememberSelectedLink = (link?: string) => {
-  selectedLink = link
-}
-const updateVisibleTabs = () => {
-  visibleTabs.value = getVisibleTabs()
-  if (!visibleTabs.value.some(tab => tab.activeLink === selectedLink)) {
-    tabControlVersion.value += 1
-  }
-}
-
-const columnCount = ref(dashboardHomeOptions.columnCount)
-const showWatchlater = useDashboardWatchlater()
 const watchlaterDisabledClass = 'dashboard-home-watchlater-disabled'
 watch(
   showWatchlater,
   enabled => document.documentElement.classList.toggle(watchlaterDisabledClass, !enabled),
   { immediate: true },
 )
-const updateColumnCount = (value: number) => {
-  columnCount.value = value
-}
-addComponentListener('dashboardHome.columnCount', updateColumnCount)
-for (const { visibilityOption } of tabs) {
-  addComponentListener(`dashboardHome.${visibilityOption}`, updateVisibleTabs)
-}
-onBeforeUnmount(() => {
-  document.documentElement.classList.remove(watchlaterDisabledClass)
-  removeComponentListener('dashboardHome.columnCount', updateColumnCount)
-  for (const { visibilityOption } of tabs) {
-    removeComponentListener(`dashboardHome.${visibilityOption}`, updateVisibleTabs)
-  }
-})
+onBeforeUnmount(() => document.documentElement.classList.remove(watchlaterDisabledClass))
 </script>

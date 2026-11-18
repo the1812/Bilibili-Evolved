@@ -141,7 +141,7 @@ import {
   type DynamicFeedCard,
   type DynamicLikeState,
   type DynamicPost,
-} from './dynamic-feed'
+} from './dynamic-post'
 
 const props = defineProps<{ card: DynamicFeedCard; likeStates: Record<string, DynamicLikeState> }>()
 const emit = defineEmits<{
