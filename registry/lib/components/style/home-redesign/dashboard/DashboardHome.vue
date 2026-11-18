@@ -17,16 +17,16 @@
   </HomeRedesignBase>
 </template>
 <script setup lang="ts">
-import { onBeforeUnmount, ref } from 'vue'
+import { onBeforeUnmount, ref, watch } from 'vue'
 import { addComponentListener, removeComponentListener } from '@/core/settings'
 import { getUID } from '@/core/utils'
 import { TabControl, VEmpty } from '@/ui'
 import type { TabMapping } from '@/ui/tab-mapping'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
-import { dashboardHomeOptions } from './options'
+import { dashboardHomeOptions, useDashboardWatchlater } from './options'
 import { DashboardHomeTabOption } from './types'
 
-type TabVisibilityOption = Exclude<keyof typeof dashboardHomeOptions, 'columnCount' | 'defaultTab'>
+type TabVisibilityOption = keyof typeof dashboardHomeOptions & `show${string}`
 const uid = getUID()
 const tabs: (TabMapping & { visibilityOption: TabVisibilityOption })[] = [
   {
@@ -66,6 +66,13 @@ const tabs: (TabMapping & { visibilityOption: TabVisibilityOption })[] = [
     component: () => import('./tabs/Trending.vue').then(m => m.default),
     propsData: { personalized: true },
   },
+  {
+    name: DashboardHomeTabOption.Account,
+    displayName: DashboardHomeTabOption.Account,
+    visibilityOption: 'showAccount',
+    component: () => import('./tabs/Account.vue').then(m => m.default),
+    activeLink: 'https://account.bilibili.com/account/home',
+  },
 ]
 
 const getVisibleTabs = () => tabs.filter(tab => dashboardHomeOptions[tab.visibilityOption])
@@ -83,6 +90,13 @@ const updateVisibleTabs = () => {
 }
 
 const columnCount = ref(dashboardHomeOptions.columnCount)
+const showWatchlater = useDashboardWatchlater()
+const watchlaterDisabledClass = 'dashboard-home-watchlater-disabled'
+watch(
+  showWatchlater,
+  enabled => document.documentElement.classList.toggle(watchlaterDisabledClass, !enabled),
+  { immediate: true },
+)
 const updateColumnCount = (value: number) => {
   columnCount.value = value
 }
@@ -91,6 +105,7 @@ for (const { visibilityOption } of tabs) {
   addComponentListener(`dashboardHome.${visibilityOption}`, updateVisibleTabs)
 }
 onBeforeUnmount(() => {
+  document.documentElement.classList.remove(watchlaterDisabledClass)
   removeComponentListener('dashboardHome.columnCount', updateColumnCount)
   for (const { visibilityOption } of tabs) {
     removeComponentListener(`dashboardHome.${visibilityOption}`, updateVisibleTabs)
