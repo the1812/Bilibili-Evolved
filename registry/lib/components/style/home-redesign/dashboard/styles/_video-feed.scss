@@ -40,13 +40,21 @@
 }
 
 .dashboard-home-feed-day {
-  position: relative;
+  display: grid;
+  grid-template-columns: 0 minmax(0, 1fr);
+
+  >.dashboard-home-tab-cards {
+    grid-area: 1 / 2;
+  }
 }
 
 .dashboard-home-feed-date {
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline-end: 100%;
+  position: sticky;
+  inset-block-start: var(--dashboard-home-feed-date-top);
+  grid-area: 1 / 1;
+  justify-self: end;
+  align-self: start;
+  z-index: 1;
   padding-block-start: 6px;
   color: var(--be-color-text-content, var(--home-color));
   font-weight: 600;

@@ -2,7 +2,7 @@
   <div class="dashboard-home-tab" :class="{ loading, loaded, error }" :aria-busy="loading">
     <div v-for="group in cardGroups" :key="group.date" class="dashboard-home-feed-day">
       <time
-        v-if="group.date"
+        v-if="group.label !== ''"
         class="dashboard-home-feed-date"
         :datetime="group.date"
         :title="group.date"
