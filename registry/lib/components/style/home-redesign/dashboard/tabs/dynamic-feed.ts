@@ -1,0 +1,306 @@
+import { getFeeds, normalizeFeedsCardModules } from '@/components/feeds/api'
+import { bilibiliApi, postJsonWithCredentials } from '@/core/ajax'
+import { getCsrf, getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
+
+interface RawImage {
+  src?: string
+  url?: string
+  width?: number
+  height?: number
+}
+
+interface RawAttachment {
+  title?: string
+  desc?: string
+  cover?: string
+  covers?: string[]
+  jump_url?: string
+}
+
+const attachmentTypes = {
+  archive: { icon: 'mdi-play-box-outline', label: '视频' },
+  pgc: { icon: 'mdi-television-play', label: '番剧' },
+  article: { icon: 'mdi-file-document-outline', label: '专栏' },
+  music: { icon: 'mdi-music-note', label: '音频' },
+  live: { icon: 'mdi-video-outline', label: '直播' },
+  courses: { icon: 'mdi-school-outline', label: '课程' },
+  ugc_season: { icon: 'mdi-playlist-play', label: '合集' },
+  medialist: { icon: 'mdi-playlist-play', label: '收藏夹' },
+  common: { icon: 'mdi-link-variant', label: '分享' },
+  opus: { icon: 'mdi-text-box-outline', label: '图文' },
+}
+
+type AttachmentKind = keyof typeof attachmentTypes
+const attachmentKinds = Object.keys(attachmentTypes) as AttachmentKind[]
+
+interface RawText {
+  text?: string
+  rich_text_nodes?: { text?: string; orig_text?: string }[]
+}
+
+interface RawParagraph {
+  text?: { nodes?: { word?: { words?: string }; rich?: { orig_text?: string } }[] }
+}
+
+interface RawStat {
+  count?: number
+  status?: boolean
+  hidden?: boolean
+  disabled?: boolean
+  forbidden?: boolean
+  silent?: boolean
+}
+
+interface RawPostModules {
+  module_author?: {
+    mid?: number
+    name?: string
+    face?: string
+    pub_ts?: number
+  }
+  module_dynamic?: {
+    desc?: RawText
+    paragraphs?: RawParagraph[]
+    additional?: { type?: string }
+    major?: Partial<Record<AttachmentKind, RawAttachment>> & {
+      draw?: { items?: RawImage[] }
+      opus?: RawAttachment & { summary?: RawText; pics?: RawImage[] }
+    }
+  }
+  module_stat?: { like?: RawStat; comment?: RawStat; forward?: RawStat }
+}
+
+interface RawPost {
+  id_str: string
+  type?: string
+  modules?: RawPostModules | Record<string, unknown>[]
+  orig?: RawPost
+}
+
+interface FeedPage {
+  items?: RawPost[]
+  offset?: string
+  has_more: boolean
+}
+
+export interface DynamicPost {
+  id: string
+  url: string
+  author: { id?: number; name?: string; avatar?: string }
+  publishedAt?: Date
+  text?: string
+  images: { url: string; width?: number; height?: number }[]
+  attachment?: {
+    type: (typeof attachmentTypes)[AttachmentKind]
+    url: string
+    title: string
+    cover?: string
+    description?: string
+  }
+  stats?: {
+    like?: { count?: number; liked?: boolean; canToggle: boolean }
+    comments?: number
+    reposts?: number
+  }
+  showOriginalLink: boolean
+}
+
+export interface DynamicLikeState {
+  liked?: boolean
+  pending: boolean
+}
+
+export interface DynamicEntry extends DynamicPost {
+  original?: DynamicPost
+}
+
+export interface DynamicFeedCard {
+  post: DynamicPost
+  original?: DynamicPost
+  reposters: Pick<DynamicPost, 'id' | 'url' | 'author'>[]
+}
+
+const genericRepostComments = new Set(['', '转发动态', '分享视频'])
+const isGenericRepost = (entry: DynamicEntry) => {
+  const comments = (entry.text ?? '').replace(/\u200b/g, '').split(/\/\/@[^:：\r\n]+[:：]|\r?\n/)
+  return (
+    comments.every(comment => genericRepostComments.has(comment.trim())) &&
+    entry.images.length === 0 &&
+    !entry.attachment &&
+    !entry.showOriginalLink
+  )
+}
+
+export const mergeDynamicReposts = (entries: DynamicEntry[]): DynamicFeedCard[] => {
+  const cards = new Map<string, DynamicFeedCard>()
+  for (const entry of entries) {
+    const original = entry.original && isGenericRepost(entry) ? entry.original : undefined
+    const post = original ?? entry
+    const card: DynamicFeedCard = cards.get(post.id) ?? { post, reposters: [] }
+
+    if (original) {
+      const { id, url, author } = entry
+      card.reposters.push({ id, url, author })
+      if ((!card.post.text && original.text) || (!card.post.stats && original.stats)) {
+        card.post = {
+          ...card.post,
+          text: card.post.text || original.text,
+          stats: card.post.stats ?? original.stats,
+        }
+      }
+    } else {
+      card.post = {
+        ...entry,
+        text: entry.text || card.post.text,
+        stats: entry.stats ?? card.post.stats,
+      }
+      card.original = entry.original
+    }
+    cards.set(post.id, card)
+  }
+  return [...cards.values()]
+}
+
+const webUrl = (url?: string) => (/^(?:https?:)?\/\//i.test(url ?? '') ? url : undefined)
+
+const bilibiliImageUrl = /^(?:https?:)?\/\/(?:[\w-]+\.)?(?:hdslb|biliimg)\.com\/bfs\/[^?#]+$/i
+const getBilibiliImage = (url: string) =>
+  bilibiliImageUrl.test(url) ? retrieveImageUrl(url) : null
+
+export const getDynamicThumbnailSet = (url: string, width: number) => {
+  const image = getBilibiliImage(url)
+  if (image && /^\.(?:jpe?g|png|webp)$/i.test(image.extension)) {
+    return getDpiSourceSet(image.url, { width }, 'webp')
+  }
+  return undefined
+}
+
+const getText = (value?: RawText) => {
+  return (
+    value?.text?.trim() ||
+    value?.rich_text_nodes?.map(node => node.text || node.orig_text || '').join('')
+  )
+}
+
+const getVisibleCount = (stat?: RawStat) =>
+  stat?.hidden || typeof stat?.count !== 'number' ? undefined : stat.count
+
+const getDynamicStats = (module?: RawPostModules['module_stat']): DynamicPost['stats'] => {
+  if (!module) {
+    return undefined
+  }
+  const { like, comment, forward } = module
+  const likes = getVisibleCount(like)
+  const canToggle =
+    typeof like?.status === 'boolean' &&
+    !like.hidden &&
+    !like.disabled &&
+    !like.forbidden &&
+    !like.silent
+  const comments = getVisibleCount(comment)
+  const reposts = getVisibleCount(forward)
+  return {
+    like:
+      likes !== undefined || canToggle
+        ? { count: likes, liked: like.status, canToggle }
+        : undefined,
+    comments,
+    reposts,
+  }
+}
+
+const getParagraph = (value: RawParagraph) =>
+  value.text?.nodes?.map(node => node.word?.words || node.rich?.orig_text || '').join('')
+
+const toDynamicPost = (item: RawPost): DynamicPost => {
+  const modules: RawPostModules = Array.isArray(item.modules)
+    ? normalizeFeedsCardModules(item.modules)
+    : item.modules
+  const author = modules?.module_author
+  const content = modules?.module_dynamic
+  const major = content?.major
+  const opusText = getText(major?.opus?.summary)
+  const paragraphs = content?.paragraphs
+    ?.map(getParagraph)
+    .filter(paragraph => paragraph?.trim())
+    .join('\n\n')
+  const textBlocks = [getText(content?.desc), opusText, paragraphs].filter(block => block?.trim())
+  const text = lodash.uniqBy(textBlocks, block => block.trim()).join('\n\n')
+  const url = `https://t.bilibili.com/${item.id_str}`
+  const mediaKind = attachmentKinds.find(kind => major?.[kind]?.title)
+  const media = mediaKind ? major[mediaKind] : undefined
+  const attachmentKind =
+    mediaKind === 'opus' && item.type === 'DYNAMIC_TYPE_ARTICLE' ? 'article' : mediaKind
+  const attachment = media && {
+    type: attachmentTypes[attachmentKind],
+    url: webUrl(media.jump_url) ?? url,
+    title: media.title,
+    cover: webUrl(media.cover ?? media.covers?.[0]),
+    description: media.desc,
+  }
+  const images = (major?.opus?.pics ?? major?.draw?.items ?? []).flatMap(image => {
+    const imageUrl = webUrl(image.url ?? image.src)
+    if (!imageUrl) {
+      return []
+    }
+    return [
+      {
+        url: getBilibiliImage(imageUrl)?.url ?? imageUrl,
+        width: image.width,
+        height: image.height,
+      },
+    ]
+  })
+  const additionalType = content?.additional?.type
+  const hasAdditionalContent = Boolean(additionalType && additionalType !== 'ADDITIONAL_TYPE_NONE')
+  const hasUnrenderedParagraphs = content?.paragraphs?.some(paragraph => !paragraph.text)
+  const hasMajorPreview = Boolean(media || images.length || opusText?.trim())
+  const hasPreview = Boolean(text || hasMajorPreview || item.orig?.id_str)
+  const showOriginalLink =
+    !hasPreview ||
+    hasAdditionalContent ||
+    hasUnrenderedParagraphs ||
+    (Boolean(major) && !hasMajorPreview)
+
+  return {
+    id: item.id_str,
+    url,
+    author: { id: author?.mid, name: author?.name, avatar: webUrl(author?.face) },
+    publishedAt: author?.pub_ts > 0 ? new Date(author.pub_ts * 1000) : undefined,
+    text,
+    images,
+    attachment,
+    stats: getDynamicStats(modules?.module_stat),
+    showOriginalLink,
+  }
+}
+
+export const getDynamicFeedPage = async (offset?: string) => {
+  const page = await bilibiliApi<FeedPage>(getFeeds('all', offset), '获取动态失败', false)
+  const posts = page.items ?? []
+  const entries: DynamicEntry[] = posts
+    .filter(post => post.id_str)
+    .map(post => ({
+      ...toDynamicPost(post),
+      original: post.orig?.id_str ? toDynamicPost(post.orig) : undefined,
+    }))
+  const nextOffset = page.has_more ? page.offset || posts.at(-1)?.id_str : undefined
+
+  return { entries, nextOffset }
+}
+
+export const setDynamicLike = async (id: string, liked: boolean) => {
+  const csrf = getCsrf()
+  if (!csrf) {
+    throw new Error('请先登录 B 站')
+  }
+  const params = new URLSearchParams({ csrf })
+  const response = postJsonWithCredentials(
+    `https://api.bilibili.com/x/dynamic/feed/dyn/thumb?${params}`,
+    {
+      dyn_id_str: id,
+      up: liked ? 1 : 2,
+    },
+  ).then(JSON.parse)
+  await bilibiliApi(response, liked ? '点赞失败' : '取消点赞失败', false)
+}

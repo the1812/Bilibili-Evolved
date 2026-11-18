@@ -21,6 +21,12 @@ const tabs: TabMappings = [
     activeLink: 'https://t.bilibili.com/?tab=video',
   },
   {
+    name: DashboardHomeTabOption.Dynamic,
+    displayName: DashboardHomeTabOption.Dynamic,
+    component: () => import('./tabs/DynamicFeed.vue').then(m => m.default),
+    activeLink: 'https://t.bilibili.com/',
+  },
+  {
     name: DashboardHomeTabOption.Trending,
     displayName: dashboardHomeOptions.personalized ? '推荐' : '热门',
     component: () => import('./tabs/Trending.vue').then(m => m.default),
