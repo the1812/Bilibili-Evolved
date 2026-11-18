@@ -46,8 +46,8 @@ import { computed, del, reactive, ref, set } from 'vue'
 import { getUID } from '@/core/utils'
 import { logError, useScopedConsole } from '@/core/utils/log'
 import { VButton, VEmpty, VIcon, VLoading } from '@/ui'
-import DashboardHomeOperations from '../DashboardHomeOperations.vue'
-import { useAutoLoad } from '../use-auto-load'
+import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import { useAutoLoad } from '../../shared/use-auto-load'
 import DynamicCard from './DynamicCard.vue'
 import {
   type DynamicEntry,

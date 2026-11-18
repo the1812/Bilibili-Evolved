@@ -41,9 +41,9 @@ import { getUID } from '@/core/utils'
 import { formatDate } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
 import { VButton, VEmpty, VLoading } from '@/ui'
-import DashboardHomeOperations from '../DashboardHomeOperations.vue'
-import MasonryItem from '../MasonryItem.vue'
-import { useAutoLoad } from '../use-auto-load'
+import DashboardHomeOperations from '../shared/DashboardHomeOperations.vue'
+import MasonryItem from '../shared/MasonryItem.vue'
+import { useAutoLoad } from '../shared/use-auto-load'
 
 interface RawFollowing {
   mid: number

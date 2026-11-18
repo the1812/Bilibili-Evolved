@@ -1,7 +1,7 @@
 import { getWatchlaterList } from '@/components/video/watchlater'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDate } from '@/core/utils/formatters'
-import { getHistoryItems } from '../../../custom-navbar/history/types'
+import { getHistoryItems } from '../../../../custom-navbar/history/types'
 
 export interface AccountProfile {
   isLogin: boolean

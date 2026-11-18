@@ -26,7 +26,7 @@ import { formatDate } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
 import { ascendingStringSort, descendingStringSort } from '@/core/utils/sort'
 import { VEmpty, ScrollTrigger } from '@/ui'
-import DashboardHomeOperations from '../DashboardHomeOperations.vue'
+import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 
 export default Vue.extend({
   components: { ScrollTrigger, VEmpty, VideoCard: VideoCardComponent, DashboardHomeOperations },
