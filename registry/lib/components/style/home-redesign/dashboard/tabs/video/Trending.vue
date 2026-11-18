@@ -12,8 +12,8 @@
 import VideoCardComponent from '@/components/feeds/VideoCard.vue'
 import { logError } from '@/core/utils/log'
 import { VEmpty, VLoading } from '@/ui'
-import { getTrendingVideos } from '../../trending'
-import DashboardHomeOperations from '../DashboardHomeOperations.vue'
+import { getTrendingVideos } from '../../../trending'
+import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 
 export default Vue.extend({
   components: { VLoading, VEmpty, VideoCard: VideoCardComponent, DashboardHomeOperations },

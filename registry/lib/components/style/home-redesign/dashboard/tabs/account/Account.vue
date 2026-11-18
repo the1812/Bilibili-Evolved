@@ -108,8 +108,8 @@ import { getUserInfo } from '@/core/user-info'
 import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
-import DashboardHomeOperations from '../DashboardHomeOperations.vue'
-import { useDashboardWatchlater } from '../options'
+import { useDashboardWatchlater } from '../../options'
+import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import AccountInbox from './AccountInbox.vue'
 import {
   type AccountProfile,

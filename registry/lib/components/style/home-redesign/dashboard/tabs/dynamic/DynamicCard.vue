@@ -134,7 +134,7 @@ import { computed } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatDate, formatDateTime, formatTime } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
-import MasonryItem from '../MasonryItem.vue'
+import MasonryItem from '../../shared/MasonryItem.vue'
 import DynamicStats from './DynamicStats.vue'
 import {
   getDynamicThumbnailSet,
