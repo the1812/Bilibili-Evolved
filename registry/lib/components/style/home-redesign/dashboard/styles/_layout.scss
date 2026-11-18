@@ -43,6 +43,8 @@ body:not(.home-redesign-off) {
 }
 
 .dashboard-home-tabs {
+  @include v-stretch();
+  @include tabs-style();
   flex-grow: 1;
   min-inline-size: 0;
 
@@ -50,13 +52,49 @@ body:not(.home-redesign-off) {
     flex-wrap: wrap;
     min-inline-size: 0;
     row-gap: 10px;
+    margin-block-end: 8px;
+  }
+
+  .default-tab {
+    padding: 0;
+    border: 0;
+    background: none;
+    font-family: inherit;
+    line-height: inherit;
+
+    &:focus-visible {
+      outline: 2px solid var(--home-color);
+      outline-offset: 3px;
+    }
+
+    &-name {
+      display: block;
+    }
   }
 
   .default-content {
+    display: flex;
+    justify-content: center;
+    padding-block: 6px;
     overflow: visible;
+
+    &[hidden] {
+      display: none;
+    }
 
     >* {
       min-inline-size: 0;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .content-transition-enter-active {
+        transition: 0.2s ease-out;
+      }
+
+      .content-transition-enter {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
     }
   }
 }

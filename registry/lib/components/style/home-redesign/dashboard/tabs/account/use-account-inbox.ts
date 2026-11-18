@@ -73,16 +73,39 @@ export const useAccountInbox = () => {
     }
   }
 
-  const selectCategory = (category: InboxCategory) => {
+  const showCategory = (category?: InboxCategory) => {
     listRequest += 1
-    selected.value = selected.value === category ? undefined : category
+    selected.value = category
     page.value = undefined
     loading.value = false
     failed.value = false
     readStatus.value = ''
-    confirmLoad.value = isInteractionCategory(category) && counts.value?.[category] !== 0
-    if (selected.value && !confirmLoad.value) {
+    confirmLoad.value = Boolean(
+      category &&
+        isInteractionCategory(category) &&
+        (countsFailed.value || counts.value?.[category] !== 0),
+    )
+    if (category && !confirmLoad.value) {
       loadSelected()
+    }
+  }
+
+  const selectCategory = (category: InboxCategory) => {
+    showCategory(selected.value === category ? undefined : category)
+  }
+
+  const refreshInbox = async () => {
+    const currentList = listRequest
+    const pendingCounts = refresh()
+    const currentCounts = countsRequest
+    await pendingCounts
+    if (
+      selected.value &&
+      !reading.value &&
+      currentList === listRequest &&
+      currentCounts === countsRequest
+    ) {
+      showCategory(selected.value)
     }
   }
 
@@ -125,6 +148,7 @@ export const useAccountInbox = () => {
     reading,
     readStatus,
     refresh,
+    refreshInbox,
     selectCategory,
     loadSelected,
     markRead,

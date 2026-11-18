@@ -33,6 +33,12 @@
   }
 }
 
+.dashboard-home-tab-status {
+  @include h-center();
+  justify-content: center;
+  padding-block: 8px;
+}
+
 .dashboard-home-feed-day {
   position: relative;
 }

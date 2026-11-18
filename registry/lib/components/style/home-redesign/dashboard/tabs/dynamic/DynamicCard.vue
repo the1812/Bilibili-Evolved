@@ -1,6 +1,12 @@
 <template>
-  <MasonryItem>
-    <article class="dashboard-home-dynamic-card">
+  <MasonryItem @resize="updateStatsSide">
+    <article
+      ref="cardElement"
+      class="dashboard-home-dynamic-card"
+      :class="{ 'stats-on-left': statsOnLeft }"
+      @mouseenter="updateStatsSide"
+      @focusin="updateStatsSide"
+    >
       <div
         v-for="(post, index) in posts"
         :key="post.id"
@@ -36,7 +42,7 @@
                 title="查看完整动态"
                 aria-label="查看完整动态（在新标签页打开）"
               >
-                <VIcon icon="mdi-open-in-new" :size="14" aria-hidden="true" />
+                <VIcon icon="mdi-open-in-new" :size="16" aria-hidden="true" />
               </a>
             </div>
             <a
@@ -130,7 +136,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatDate, formatDateTime, formatTime } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
@@ -148,6 +154,17 @@ const emit = defineEmits<{
   (event: 'preview-image', url: string): void
   (event: 'toggle-like', post: DynamicPost): void
 }>()
+const cardElement = ref<HTMLElement>()
+const statsOnLeft = ref(false)
+const updateStatsSide = () => {
+  const card = cardElement.value
+  const grid = card?.closest('.dashboard-home-masonry-grid')
+  if (grid) {
+    statsOnLeft.value =
+      Math.abs(grid.getBoundingClientRect().right - card.getBoundingClientRect().right) < 1
+  }
+}
+
 const posts = computed(() => {
   const { post, original, reposters } = props.card
   const primary =
@@ -155,7 +172,10 @@ const posts = computed(() => {
   return original ? [primary, original] : [primary]
 })
 const hasStats = ({ stats }: DynamicPost) =>
-  Boolean(stats?.like) || stats?.comments !== undefined || stats?.reposts !== undefined
+  stats?.like?.canToggle ||
+  stats?.like?.count !== undefined ||
+  stats?.comments !== undefined ||
+  stats?.reposts !== undefined
 const defaultStatsPost = computed(() => posts.value.find(hasStats))
 
 const formatDynamicTimestamp = (date: Date) => {

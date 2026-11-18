@@ -44,6 +44,9 @@
       >.dashboard-home-dynamic-controls {
         --dashboard-home-photo-control-background: rgba(15, 18, 24, 0.75);
         --dashboard-home-photo-control-border: rgba(255, 255, 255, 0.25);
+        --dashboard-home-capsule-hover-background: rgba(15, 18, 24, 0.92);
+        --dashboard-home-capsule-hover-border: rgba(255, 255, 255, 0.6);
+        --dashboard-home-capsule-focus: #fff;
 
         z-index: 1;
         align-self: start;
@@ -53,6 +56,8 @@
           pointer-events: auto;
         }
 
+        .be-up-info,
+        .dashboard-home-dynamic-post-link,
         .dashboard-home-dynamic-repost-icon,
         .dashboard-home-dynamic-attachment-type,
         .dashboard-home-dynamic-original-link {
@@ -103,7 +108,9 @@
     box-sizing: border-box;
     inline-size: 28px;
     block-size: 28px;
+    border: var(--home-card-border);
     border-radius: 50%;
+    background-color: var(--theme-color-10, #8881);
     color: var(--be-color-text-placeholder, #666);
   }
 
@@ -216,20 +223,6 @@
 
     &:hover strong {
       color: var(--theme-color);
-    }
-  }
-
-  &-original-link {
-    border: var(--home-card-border);
-    background-color: var(--theme-color-10, #8881);
-
-    &:hover {
-      background-color: var(--theme-color-20, #8882);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--theme-color);
-      outline-offset: 2px;
     }
   }
 

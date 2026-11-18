@@ -9,6 +9,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { sizeChange } from '@/core/observer'
 
 withDefaults(defineProps<{ tag?: 'div' | 'li' }>(), { tag: 'div' })
+const emit = defineEmits<{ (event: 'resize'): void }>()
 
 const item = ref<HTMLElement>()
 let observer: ResizeObserver
@@ -22,6 +23,7 @@ onMounted(() => {
     if (rows > 0) {
       element.style.setProperty('--dashboard-home-masonry-rows', String(rows))
     }
+    emit('resize')
   }
   updateRowSpan()
   const [resizeObserver] = sizeChange(element, updateRowSpan)

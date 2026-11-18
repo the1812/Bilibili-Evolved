@@ -257,7 +257,7 @@ export const markPrivateSessionRead = (
 ) => {
   const csrf = getCsrf()
   if (!csrf) {
-    throw new Error('请先登录 B 站')
+    throw new Error('请先登录')
   }
   const params = new URLSearchParams({
     ...webParams,

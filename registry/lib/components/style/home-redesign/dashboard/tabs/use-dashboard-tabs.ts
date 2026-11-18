@@ -5,10 +5,11 @@ import type { TabMapping } from '@/ui/tab-mapping'
 import { DashboardHomeTabOption, type DashboardHomeOptions } from '../options'
 
 type TabVisibilityOption = keyof DashboardHomeOptions & `show${string}`
+export type DashboardTab = TabMapping & { visibilityOption: TabVisibilityOption }
 
 export const useDashboardTabs = (dashboardHomeOptions: DashboardHomeOptions) => {
   const uid = getUID()
-  const tabs: (TabMapping & { visibilityOption: TabVisibilityOption })[] = [
+  const tabs: DashboardTab[] = [
     {
       name: DashboardHomeTabOption.Feeds,
       displayName: DashboardHomeTabOption.Feeds,
@@ -57,15 +58,22 @@ export const useDashboardTabs = (dashboardHomeOptions: DashboardHomeOptions) => 
 
   const getVisibleTabs = () => tabs.filter(tab => dashboardHomeOptions[tab.visibilityOption])
   const visibleTabs = ref(getVisibleTabs())
-  const tabControlVersion = ref(0)
-  let selectedLink: string | null | undefined = null
-  const rememberSelectedLink = (link?: string) => {
-    selectedLink = link
+  const getDefaultTab = () =>
+    visibleTabs.value.find(tab => tab.name === dashboardHomeOptions.defaultTab) ??
+    visibleTabs.value[0]
+  const selectedTab = ref(getDefaultTab())
+
+  const selectTab = (tab: DashboardTab) => {
+    if (tab.name === selectedTab.value?.name && tab.activeLink) {
+      window.open(tab.activeLink, '_blank', 'noopener')
+    }
+    selectedTab.value = tab
   }
+
   const updateVisibleTabs = () => {
     visibleTabs.value = getVisibleTabs()
-    if (!visibleTabs.value.some(tab => tab.activeLink === selectedLink)) {
-      tabControlVersion.value += 1
+    if (!visibleTabs.value.includes(selectedTab.value)) {
+      selectedTab.value = getDefaultTab()
     }
   }
 
@@ -78,5 +86,5 @@ export const useDashboardTabs = (dashboardHomeOptions: DashboardHomeOptions) => 
     }
   })
 
-  return { visibleTabs, tabControlVersion, rememberSelectedLink }
+  return { visibleTabs, selectedTab, selectTab }
 }
