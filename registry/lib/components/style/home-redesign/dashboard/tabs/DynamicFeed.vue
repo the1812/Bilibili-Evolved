@@ -1,8 +1,8 @@
 <template>
-  <div class="dashboard-home-dynamic" :aria-busy="loading">
+  <div class="dashboard-home-masonry-feed dashboard-home-dynamic" :aria-busy="loading">
     <VEmpty v-if="!loggedIn">登录 B 站后查看关注动态</VEmpty>
     <template v-else>
-      <div class="dashboard-home-dynamic-grid">
+      <div class="dashboard-home-masonry-grid">
         <DynamicCard
           v-for="card in cards"
           :key="card.post.id"
@@ -12,7 +12,7 @@
           @toggle-like="toggleLike"
         />
       </div>
-      <div ref="loadMore" class="dashboard-home-dynamic-status">
+      <div ref="loadMore" class="dashboard-home-masonry-status">
         <VLoading v-if="loading" />
         <VButton v-else-if="failed" @click="loadNextPage">加载失败，点击重试</VButton>
         <VButton v-else-if="hasMore" @click="loadNextPage">加载更多</VButton>
@@ -42,12 +42,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, del, nextTick, onBeforeUnmount, onMounted, reactive, ref, set } from 'vue'
-import { visible } from '@/core/observer'
+import { computed, del, reactive, ref, set } from 'vue'
 import { getUID } from '@/core/utils'
 import { logError, useScopedConsole } from '@/core/utils/log'
 import { VButton, VEmpty, VIcon, VLoading } from '@/ui'
 import DashboardHomeOperations from '../DashboardHomeOperations.vue'
+import { useAutoLoad } from '../use-auto-load'
 import DynamicCard from './DynamicCard.vue'
 import {
   type DynamicEntry,
@@ -65,9 +65,7 @@ const cards = computed(() => mergeDynamicReposts(entries.value))
 const loading = ref(false)
 const failed = ref(false)
 const hasMore = ref(true)
-const loadMore = ref<HTMLElement>()
 let offset: string | undefined
-let observer: IntersectionObserver | undefined
 
 const imagePreview = ref<HTMLDialogElement>()
 const previewUrl = ref('')
@@ -103,7 +101,6 @@ const loadNextPage = async () => {
   }
   loading.value = true
   failed.value = false
-  observer?.unobserve(loadMore.value)
   try {
     const page = await getDynamicFeedPage(offset)
     entries.value = lodash.uniqBy([...entries.value, ...page.entries], entry => entry.id)
@@ -115,13 +112,9 @@ const loadNextPage = async () => {
   } finally {
     loading.value = false
   }
-
-  // 重新观察，保证新增卡片没有填满视口时也会继续加载。
-  if (hasMore.value && !failed.value) {
-    await nextTick()
-    observer?.observe(loadMore.value)
-  }
 }
+
+const loadMore = useAutoLoad(() => hasMore.value && !failed.value && !loading.value, loadNextPage)
 
 const refresh = () => {
   if (loading.value) {
@@ -137,21 +130,4 @@ const refresh = () => {
   hasMore.value = true
   loadNextPage()
 }
-
-onMounted(() => {
-  if (!loggedIn) {
-    return
-  }
-  const [visibilityObserver] = visible(loadMore.value, records => {
-    if (records.some(record => record.isIntersecting) && !failed.value) {
-      loadNextPage()
-    }
-  })
-  observer = visibilityObserver
-})
-
-onBeforeUnmount(() => {
-  observer?.disconnect()
-  observer = undefined
-})
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div ref="cardElement" class="dashboard-home-dynamic-item">
+  <MasonryItem>
     <article class="dashboard-home-dynamic-card">
       <div
         v-for="(post, index) in posts"
@@ -126,15 +126,15 @@
         </a>
       </div>
     </article>
-  </div>
+  </MasonryItem>
 </template>
 
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
-import { sizeChange } from '@/core/observer'
 import { formatDateTime } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
+import MasonryItem from '../MasonryItem.vue'
 import DynamicStats from './DynamicStats.vue'
 import {
   getDynamicThumbnailSet,
@@ -163,21 +163,4 @@ const useOriginalImage = (event: Event) => {
   const image = event.currentTarget as HTMLImageElement
   image.removeAttribute('srcset')
 }
-
-const cardElement = ref<HTMLElement>()
-let observer: ResizeObserver
-onMounted(() => {
-  const element = cardElement.value
-  const rowHeight = parseFloat(getComputedStyle(element).getPropertyValue('--dynamic-row-height'))
-  const updateRowSpan = () => {
-    const rows = Math.ceil(element.offsetHeight / rowHeight)
-    if (rows > 0) {
-      element.style.setProperty('--dynamic-card-rows', rows.toString())
-    }
-  }
-  updateRowSpan()
-  const [resizeObserver] = sizeChange(element, updateRowSpan)
-  observer = resizeObserver
-})
-onBeforeUnmount(() => observer?.disconnect())
 </script>
