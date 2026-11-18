@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-home-masonry-feed dashboard-home-dynamic" :aria-busy="loading">
-    <VEmpty v-if="!loggedIn">登录 B 站后查看关注动态</VEmpty>
+    <VEmpty v-if="!loggedIn">登录后查看关注动态</VEmpty>
     <template v-else>
       <div class="dashboard-home-masonry-grid">
         <DynamicCard

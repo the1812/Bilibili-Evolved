@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-home-masonry-feed dashboard-home-followings" :aria-busy="loading">
-    <VEmpty v-if="!uid">登录 B 站后查看关注列表</VEmpty>
+    <VEmpty v-if="!uid">登录后查看关注列表</VEmpty>
     <template v-else>
       <ul v-if="followings.length" class="dashboard-home-masonry-grid" role="list">
         <MasonryItem v-for="following in followings" :key="following.mid" tag="li">

@@ -2,7 +2,7 @@
   <div class="dashboard-home-account">
     <VLoading v-if="loadingProfile" />
     <VEmpty v-else-if="profileFailed">账号信息加载失败，请刷新页面重试</VEmpty>
-    <VEmpty v-else-if="!profile?.isLogin">登录 B 站后查看账号信息</VEmpty>
+    <VEmpty v-else-if="!profile?.isLogin">登录后查看账号信息</VEmpty>
     <template v-else>
       <section class="dashboard-home-account-card">
         <div class="dashboard-home-account-identity">
@@ -125,6 +125,6 @@ const inbox = ref<InstanceType<typeof AccountInbox>[]>()
 
 const refresh = () => {
   loadPanels()
-  inbox.value?.[0]?.refresh()
+  inbox.value?.[0]?.refreshInbox()
 }
 </script>

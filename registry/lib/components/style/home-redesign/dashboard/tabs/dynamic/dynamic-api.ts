@@ -26,7 +26,7 @@ export const getDynamicFeedPage = async (offset?: string) => {
 export const setDynamicLike = async (id: string, liked: boolean) => {
   const csrf = getCsrf()
   if (!csrf) {
-    throw new Error('请先登录 B 站')
+    throw new Error('请先登录')
   }
   const params = new URLSearchParams({ csrf })
   const response = postJsonWithCredentials(

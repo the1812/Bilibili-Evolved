@@ -69,14 +69,26 @@
       position: relative;
     }
 
+    &-card {
+      --dynamic-stats-offset: calc(var(--dynamic-card-padding) + var(--dynamic-stats-gap));
+
+      &.stats-on-left {
+        --dynamic-stats-inset-start: auto;
+        --dynamic-stats-inset-end: 100%;
+        --dynamic-stats-padding-start: 0px;
+        --dynamic-stats-padding-end: var(--dynamic-stats-offset);
+        --dynamic-stats-transform-origin: right top;
+        --dynamic-stats-pop-offset: 8px;
+      }
+    }
+
     &-stats {
       position: absolute;
       z-index: 2;
       inset-block-start: 0;
-      inset-inline-start: 100%;
+      inset-inline-end: 0;
       box-sizing: content-box;
       inline-size: var(--dynamic-stats-width);
-      padding-inline-start: calc(var(--dynamic-card-padding) + var(--dynamic-stats-gap));
       opacity: 0;
       pointer-events: none;
 
@@ -86,7 +98,7 @@
 
       &-panel {
         flex-direction: column;
-        transform-origin: left top;
+        transform-origin: var(--dynamic-stats-transform-origin, left top);
       }
 
       &-item {
@@ -97,6 +109,10 @@
 
     .dashboard-home-dynamic-card:is(:hover, :focus-within):not( :has(> .is-repost:is(:hover, :focus-within) .dashboard-home-dynamic-stats)) .is-default-stats,
     .dashboard-home-dynamic-post:is(:hover, :focus-within)>.dashboard-home-dynamic-controls>.dashboard-home-dynamic-stats {
+      inset-inline-start: var(--dynamic-stats-inset-start, 100%);
+      inset-inline-end: var(--dynamic-stats-inset-end, auto);
+      padding-inline-start: var(--dynamic-stats-padding-start, var(--dynamic-stats-offset));
+      padding-inline-end: var(--dynamic-stats-padding-end, 0px);
       opacity: 1;
       pointer-events: auto;
 
@@ -111,7 +127,7 @@
 
 @keyframes dashboard-home-dynamic-stats-pop {
   from {
-    transform: translateX(-8px) scale(0.9);
+    transform: translateX(var(--dynamic-stats-pop-offset, -8px)) scale(0.9);
   }
 
   to {

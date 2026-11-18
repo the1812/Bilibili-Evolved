@@ -143,22 +143,18 @@ const getDynamicStats = (module?: RawPostModules['module_stat']): DynamicPost['s
   }
   const { like, comment, forward } = module
   const likes = getVisibleCount(like)
-  const canToggle =
-    typeof like?.status === 'boolean' &&
-    !like.hidden &&
-    !like.disabled &&
-    !like.forbidden &&
-    !like.silent
+  const likeDisabled = like?.hidden || like?.disabled || like?.forbidden || like?.silent
+  const canToggle = typeof like?.status === 'boolean' && !likeDisabled
+  const likeStats =
+    likes !== undefined || canToggle || likeDisabled
+      ? { count: likes, liked: like.status, canToggle }
+      : undefined
   const comments = getVisibleCount(comment)
   const reposts = getVisibleCount(forward)
-  return {
-    like:
-      likes !== undefined || canToggle
-        ? { count: likes, liked: like.status, canToggle }
-        : undefined,
-    comments,
-    reposts,
+  if (likeStats || comments !== undefined || reposts !== undefined) {
+    return { like: likeStats, comments, reposts }
   }
+  return undefined
 }
 
 const getParagraph = (value: RawParagraph) =>

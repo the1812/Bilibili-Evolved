@@ -42,9 +42,10 @@
       <VButton v-else-if="failed" @click="loadSelected">加载失败，点击重试</VButton>
       <ul v-else-if="page?.entries.length" class="dashboard-home-account-list" role="list">
         <li v-for="entry in page.entries" :key="entry.id" class="dashboard-home-inbox-entry">
-          <div class="dashboard-home-account-panel-heading">
+          <div class="dashboard-home-inbox-entry-heading">
             <component
               :is="entry.url ? 'a' : 'strong'"
+              class="dashboard-home-inbox-entry-title"
               :href="entry.url"
               :target="entry.url ? '_blank' : undefined"
               :rel="entry.url ? 'noopener' : undefined"
@@ -100,10 +101,11 @@ const {
   reading,
   readStatus,
   refresh,
+  refreshInbox,
   selectCategory,
   loadSelected,
   markRead,
 } = useAccountInbox()
 
-defineExpose({ refresh })
+defineExpose({ refreshInbox })
 </script>

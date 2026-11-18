@@ -1,3 +1,9 @@
+.dashboard-home-account-panel-heading,
+.dashboard-home-inbox-entry-heading {
+  @include h-center(8px);
+  justify-content: space-between;
+}
+
 .dashboard-home-account {
   @include v-stretch(16px);
   box-sizing: border-box;
@@ -97,9 +103,6 @@
   }
 
   &-panel-heading {
-    @include h-center(8px);
-    justify-content: space-between;
-
     a {
       font-size: 12px;
       color: var(--be-color-text-placeholder, #666);
@@ -176,6 +179,12 @@
     @include v-stretch(4px);
     padding-block: 8px;
     overflow-wrap: anywhere;
+
+    &-title {
+      min-inline-size: 0;
+      color: inherit;
+      font-weight: 600;
+    }
 
     time {
       flex: none;

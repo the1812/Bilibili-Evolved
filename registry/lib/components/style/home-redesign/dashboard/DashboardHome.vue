@@ -4,29 +4,17 @@
       class="dashboard-home"
       :style="{ '--dashboard-home-column-count-override': columnCount > 0 ? columnCount : null }"
     >
-      <TabControl
-        v-if="visibleTabs.length"
-        :key="tabControlVersion"
-        class="dashboard-home-tabs"
-        :default-tab="dashboardHomeOptions.defaultTab"
-        :tabs="visibleTabs"
-        @change="rememberSelectedLink"
-      />
-      <VEmpty v-else>请在仪表盘首页设置中开启标签页</VEmpty>
+      <DashboardTabs />
     </div>
   </HomeRedesignBase>
 </template>
 
 <script setup lang="ts">
 import { onBeforeUnmount, watch } from 'vue'
-import { TabControl, VEmpty } from '@/ui'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
-import { getDashboardHomeOptions, useDashboardOption } from './options'
-import { useDashboardTabs } from './tabs/use-dashboard-tabs'
+import { useDashboardOption } from './options'
+import DashboardTabs from './tabs/DashboardTabs.vue'
 
-const dashboardHomeOptions = getDashboardHomeOptions()
-const { visibleTabs, tabControlVersion, rememberSelectedLink } =
-  useDashboardTabs(dashboardHomeOptions)
 const columnCount = useDashboardOption('columnCount')
 const showWatchlater = useDashboardOption('enableWatchlater')
 

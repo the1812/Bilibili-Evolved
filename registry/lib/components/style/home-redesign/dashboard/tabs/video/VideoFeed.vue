@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-home-tab" :class="{ loading, loaded, error }">
+  <div class="dashboard-home-tab" :class="{ loading, loaded, error }" :aria-busy="loading">
     <div v-for="group in cardGroups" :key="group.date" class="dashboard-home-feed-day">
       <time
         v-if="group.date"
@@ -13,55 +13,70 @@
         <VideoCard v-for="card in group.cards" :key="card.id" :data="card" />
       </div>
     </div>
-    <VEmpty v-if="!loading && cards.length === 0" />
-    <ScrollTrigger v-if="!error" ref="scrollTrigger" detect-viewport @trigger="loadCards" />
+    <div ref="loadMore" class="dashboard-home-tab-status">
+      <VEmpty v-if="!loggedIn">登录后查看关注视频</VEmpty>
+      <VLoading v-else-if="loading" />
+      <VButton v-else-if="error" @click="loadCards">加载失败，点击重试</VButton>
+      <VButton v-else-if="hasMore" @click="loadCards">加载更多</VButton>
+      <VEmpty v-else-if="!cards.length">暂无关注视频</VEmpty>
+    </div>
     <DashboardHomeOperations v-if="cards.length > 0" @refresh="refresh" />
   </div>
 </template>
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { getVideoFeeds } from '@/components/feeds/api'
 import type { VideoCard as VideoCardData } from '@/components/feeds/video-card'
 import VideoCard from '@/components/feeds/VideoCard.vue'
+import { getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
-import { ascendingStringSort } from '@/core/utils/sort'
-import { ScrollTrigger, VEmpty } from '@/ui'
+import { VButton, VEmpty, VLoading } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import { useAutoLoad } from '../../shared/use-auto-load'
 import { groupVideoCardsByDate } from './group-video-cards'
+import { getVideoFeedPage } from './video-feed-api'
 
-const scrollTrigger = ref<InstanceType<typeof ScrollTrigger>>()
-const loading = ref(true)
+const loggedIn = Boolean(getUID())
+const loading = ref(false)
 const error = ref(false)
+const hasMore = ref(loggedIn)
 const cards = ref<VideoCardData[]>([])
 const loaded = computed(() => !loading.value && !error.value)
 const cardGroups = computed(() => groupVideoCardsByDate(cards.value))
-const lastId = computed(
-  () => [...cards.value].sort(ascendingStringSort(card => card.id))[0]?.id ?? null,
-)
+const seenOffsets = new Set<string>()
+let offset: string | undefined
 
 const loadCards = async () => {
+  if (loading.value || !hasMore.value) {
+    return
+  }
+  loading.value = true
+  error.value = false
   try {
-    error.value = false
-    loading.value = true
-    scrollTrigger.value?.setLoadState('loading')
-    cards.value = lodash.uniqBy(
-      [...cards.value, ...(await getVideoFeeds('video', lastId.value))],
-      card => card.id,
-    )
+    const page = await getVideoFeedPage(offset)
+    cards.value = lodash.uniqBy([...cards.value, ...page.cards], card => card.id)
+    offset = page.nextOffset
+    hasMore.value = Boolean(offset && !seenOffsets.has(offset))
+    if (hasMore.value) {
+      seenOffsets.add(offset)
+    }
   } catch (loadError) {
     logError(loadError)
     error.value = true
-    scrollTrigger.value?.setLoadState('error')
   } finally {
     loading.value = false
-    if (loaded.value) {
-      scrollTrigger.value?.setLoadState('loaded')
-    }
   }
 }
 
+const loadMore = useAutoLoad(() => hasMore.value && !loading.value && !error.value, loadCards)
+
 const refresh = () => {
+  if (loading.value) {
+    return
+  }
   cards.value = []
-  scrollTrigger.value?.resetIsFirstLoad()
+  offset = undefined
+  seenOffsets.clear()
+  hasMore.value = true
+  loadCards()
 }
 </script>
