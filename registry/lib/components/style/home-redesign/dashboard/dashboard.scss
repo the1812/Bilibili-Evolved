@@ -7,30 +7,31 @@
   --card-height: 122px;
   --dashboard-home-grid-gap: 12px;
   --dashboard-home-grid-padding: 8px;
+
   @media screen and (min-width: 1440px) {
     --dashboard-home-auto-card-column: 2;
   }
+
   @media screen and (min-width: 2160px) {
     --dashboard-home-auto-card-column: 3;
   }
-  --dashboard-home-card-column: var(
-    --dashboard-home-column-count-override,
-    var(--dashboard-home-auto-card-column)
-  );
+
+  --dashboard-home-card-column: var(--dashboard-home-column-count-override,
+    var(--dashboard-home-auto-card-column));
 
   padding: 24px 32px 0 32px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+
   &-tabs {
     flex-grow: 1;
-    min-width: calc(
-      var(--card-width) * var(--dashboard-home-card-column) + var(--dashboard-home-grid-gap) *
-        (var(--dashboard-home-card-column) - 1) + 2 * var(--dashboard-home-grid-padding)
-    );
+    min-width: calc(var(--card-width) * var(--dashboard-home-card-column) + var(--dashboard-home-grid-gap) * (var(--dashboard-home-card-column) - 1) + 2 * var(--dashboard-home-grid-padding));
+
     .default-content {
       overflow: visible;
     }
+
     .dashboard-home-tab {
       &-cards {
         display: grid;
@@ -38,6 +39,7 @@
         gap: var(--dashboard-home-grid-gap);
         padding: 0 var(--dashboard-home-grid-padding);
         margin-bottom: 16px;
+
         .video-card * {
           transition: 0.2s ease-out;
         }
@@ -51,21 +53,53 @@
   position: fixed;
   bottom: 48px;
   right: 48px;
+
   .be-button {
     padding: 8px !important;
     opacity: 0.5;
+
     &:hover {
       opacity: 1;
     }
   }
+
   &-refresh {
     .mdi {
       @include rotate();
     }
   }
+
   &-top {
     .mdi:hover {
       @include bounce-y(-2);
     }
+  }
+}
+
+.dashboard-home-feed-day {
+  position: relative;
+}
+
+.dashboard-home-feed-date {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 100%;
+  padding-block-start: 6px;
+  color: var(--be-color-text-content, var(--home-color));
+  font-weight: 600;
+  white-space: nowrap;
+
+  &::before,
+  &::after {
+    position: absolute;
+    inset-block-start: 0;
+    block-size: 2px;
+    border-radius: 999px;
+    background-color: var(--theme-color);
+  }
+
+  &::before {
+    content: '';
+    inset-inline: 0;
   }
 }

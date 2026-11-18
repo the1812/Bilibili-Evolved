@@ -16,7 +16,7 @@ import { DashboardHomeTabOption } from './types'
 const tabs: TabMappings = [
   {
     name: DashboardHomeTabOption.Feeds,
-    displayName: '动态',
+    displayName: DashboardHomeTabOption.Feeds,
     component: () => import('./tabs/Feeds.vue').then(m => m.default),
     activeLink: 'https://t.bilibili.com/?tab=video',
   },
