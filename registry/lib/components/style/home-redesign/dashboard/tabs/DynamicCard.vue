@@ -45,10 +45,10 @@
               :href="post.url"
               target="_blank"
               rel="noopener"
-              title="查看动态"
+              :title="post.publishedAt ? formatDateTime(post.publishedAt).slice(0, 16) : '查看动态'"
             >
               <time v-if="post.publishedAt" :datetime="post.publishedAt.toISOString()">
-                {{ formatDateTime(post.publishedAt).slice(0, 16) }}
+                {{ formatDynamicTimestamp(post.publishedAt) }}
               </time>
               <template v-else>查看动态</template>
             </a>
@@ -132,7 +132,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
-import { formatDateTime } from '@/core/utils/formatters'
+import { formatDate, formatDateTime, formatTime } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
 import MasonryItem from '../MasonryItem.vue'
 import DynamicStats from './DynamicStats.vue'
@@ -157,6 +157,18 @@ const posts = computed(() => {
 const hasStats = ({ stats }: DynamicPost) =>
   Boolean(stats?.like) || stats?.comments !== undefined || stats?.reposts !== undefined
 const defaultStatsPost = computed(() => posts.value.find(hasStats))
+
+const formatDynamicTimestamp = (date: Date) => {
+  const now = new Date()
+  const day = formatDate(date)
+  const time = formatTime(date).slice(0, 5)
+  if (day === formatDate(now)) {
+    return time
+  }
+  const dateLabel = date.getFullYear() === now.getFullYear() ? day.slice(5) : day
+  return `${dateLabel} ${time}`
+}
+
 const cardThumbnailWidth = 480
 const thumbnailWidth = (photoCount: number) => cardThumbnailWidth / Math.min(photoCount, 3)
 const useOriginalImage = (event: Event) => {
