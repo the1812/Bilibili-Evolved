@@ -16,7 +16,7 @@ import { useDashboardOption } from './options'
 import DashboardTabs from './tabs/DashboardTabs.vue'
 
 const columnCount = useDashboardOption('columnCount')
-const showWatchlater = useDashboardOption('enableWatchlater')
+const showWatchlater = useDashboardOption('showWatchlater')
 
 const watchlaterDisabledClass = 'dashboard-home-watchlater-disabled'
 watch(

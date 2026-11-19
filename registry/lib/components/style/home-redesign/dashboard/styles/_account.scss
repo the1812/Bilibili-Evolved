@@ -138,12 +138,6 @@
     }
   }
 
-  &-thumbnail {
-    flex: none;
-    border-radius: 6px;
-    object-fit: cover;
-  }
-
   &-muted {
     color: var(--be-color-text-placeholder, #666);
     font-size: 12px;
