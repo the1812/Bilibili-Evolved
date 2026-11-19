@@ -1,7 +1,9 @@
 import { PluginMetadata } from '@/plugins/plugin'
-import { getCookieValue } from '@/core/utils'
 import { CustomNavbarItemInit } from '../../../components/style/custom-navbar/custom-navbar-item'
-import { applyOfficialTheme } from '../../../components/style/dark-mode/integrated/official-theme'
+import {
+  applyOfficialTheme,
+  isPageDarkModeEnabled,
+} from '../../../components/style/dark-mode/integrated/official-theme'
 
 export const plugin: PluginMetadata = {
   name: 'customNavbar.items.integratedDarkMode',
@@ -12,8 +14,7 @@ export const plugin: PluginMetadata = {
         name: 'integratedDarkMode',
         displayName: '深色模式开关',
         content: () => import('./NavbarIntegratedDarkMode.vue'),
-        clickAction: () =>
-          applyOfficialTheme(getCookieValue('theme_style') === 'dark' ? 'light' : 'dark'),
+        clickAction: () => applyOfficialTheme(isPageDarkModeEnabled() ? 'light' : 'dark'),
       })
     })
   },
