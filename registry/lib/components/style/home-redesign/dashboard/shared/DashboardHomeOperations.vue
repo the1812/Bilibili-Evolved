@@ -18,10 +18,10 @@
     <VButton
       round
       icon
-      class="dashboard-home-operations-top"
+      class="dashboard-home-operations-start"
       :title="returnLabel"
       :aria-label="returnLabel"
-      @click="backToTop"
+      @click="scrollToStart"
     >
       <VIcon
         :icon="horizontalScroll ? 'mdi-arrow-right' : 'mdi-arrow-up'"
@@ -43,7 +43,7 @@ const layout = inject(contentCardLayoutKey)
 const operations = ref<HTMLElement>()
 const horizontalScroll = computed(() => layout?.value === 'vertical')
 const returnLabel = computed(() => (horizontalScroll.value ? '返回开头' : '返回顶部'))
-const backToTop = () => {
+const scrollToStart = () => {
   const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
   const collection = operations.value
     ?.closest('[role="tabpanel"]')
@@ -55,7 +55,7 @@ const refresh = () => {
   if (props.refreshDisabled) {
     return
   }
-  backToTop()
+  scrollToStart()
   emit('refresh')
 }
 </script>

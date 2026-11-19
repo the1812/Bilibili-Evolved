@@ -47,7 +47,8 @@ const layoutOption = (tab: TabOption, defaultValue: LayoutOption) => ({
   dropdownEnum: LayoutOption,
 })
 
-const validateTrackCount = getNumberValidator(0, 10)
+export const maxCardTrackCount = 10
+const validateTrackCount = getNumberValidator(0, maxCardTrackCount)
 const trackCountOption = (tab: TabOption, defaultValue: number) => ({
   displayName: `「${tab}」卡片行列数`,
   defaultValue,

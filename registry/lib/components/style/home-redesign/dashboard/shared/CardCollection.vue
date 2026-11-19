@@ -2,11 +2,11 @@
   <div
     ref="collection"
     class="dashboard-home-card-collection"
-    :class="{ 'is-horizontal-scroll': layout === 'vertical' }"
-    :tabindex="layout === 'vertical' ? 0 : null"
-    :role="layout === 'vertical' ? 'region' : null"
-    :aria-label="layout === 'vertical' ? '从右向左浏览卡片' : null"
-    :style="layout === 'vertical' ? scrollLayout : null"
+    :class="{ 'is-horizontal-scroll': horizontalScroll }"
+    :tabindex="horizontalScroll ? 0 : null"
+    :role="horizontalScroll ? 'region' : null"
+    :aria-label="horizontalScroll ? '从右向左浏览卡片' : null"
+    :style="horizontalScroll ? scrollLayout : null"
     @wheel="scrollWithWheel"
   >
     <div class="dashboard-home-card-track">
@@ -16,18 +16,19 @@
 </template>
 
 <script setup lang="ts">
-import { inject, ref, watch } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
 import { sizeChange } from '@/core/observer'
 import { contentCardLayoutKey } from './content-card'
 
 const layout = inject(contentCardLayoutKey)
+const horizontalScroll = computed(() => layout?.value === 'vertical')
 const collection = ref<HTMLElement>()
 const scrollLayout = ref<Record<string, string | number>>()
 const minimumRowHeight = 224
 const preferredRowHeight = 320
 
 watch(
-  () => (layout?.value === 'vertical' ? collection.value : undefined),
+  () => (horizontalScroll.value ? collection.value : undefined),
   (element, _, onCleanup) => {
     if (!element) {
       return
@@ -60,7 +61,8 @@ watch(
       }
     }
     measure()
-    const [observer] = sizeChange(element.parentElement, measure)
+    const tabBar = element.closest('.dashboard-home-tabs')?.querySelector('.dashboard-home-tab-bar')
+    const [observer] = sizeChange([element.parentElement, tabBar].filter(Boolean), measure)
     window.addEventListener('resize', measure)
     onCleanup(() => {
       observer.disconnect()
@@ -72,14 +74,32 @@ watch(
 
 const scrollWithWheel = (event: WheelEvent) => {
   if (
-    layout?.value !== 'vertical' ||
+    !horizontalScroll.value ||
+    event.defaultPrevented ||
     event.ctrlKey ||
     event.shiftKey ||
     Math.abs(event.deltaX) >= Math.abs(event.deltaY)
   ) {
     return
   }
-  const element = collection.value
+  const element = event.currentTarget as HTMLElement
+  // Let a scrollable card consume the wheel until it reaches its edge.
+  for (const target of event.composedPath()) {
+    if (target === element) {
+      break
+    }
+    if (!(target instanceof HTMLElement) || target.scrollHeight <= target.clientHeight) {
+      continue
+    }
+    const { overflowY } = getComputedStyle(target)
+    const canScroll =
+      event.deltaY < 0
+        ? target.scrollTop > 0
+        : target.scrollTop < target.scrollHeight - target.clientHeight - 1
+    if (canScroll && (overflowY === 'auto' || overflowY === 'scroll')) {
+      return
+    }
+  }
   const maxScroll = element.scrollWidth - element.clientWidth
   let distance = event.deltaY
   if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {

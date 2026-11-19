@@ -113,8 +113,8 @@ const focusedTabId = ref<string>()
 const tabbableTabId = computed(
   () => visibleTabs.value.find(tab => tab.id === focusedTabId.value)?.id ?? selectedTab.value?.id,
 )
-const tabId = (tab: DashboardTab) => `dashboard-home-tab-${tab.visibilityOption}`
-const panelId = (tab: DashboardTab) => `dashboard-home-panel-${tab.visibilityOption}`
+const tabId = (tab: DashboardTab) => `dashboard-home-tab-${tab.id}`
+const panelId = (tab: DashboardTab) => `dashboard-home-panel-${tab.id}`
 
 const moveTabFocus = (event: KeyboardEvent) => {
   const tabList = event.currentTarget as HTMLElement

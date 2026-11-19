@@ -27,16 +27,20 @@
     }
   }
 
-  a:is(.be-up-info,
-    .dashboard-home-dynamic-post-link,
-    .dashboard-home-dynamic-original-link):any-link {
+  a:is(
+      .be-up-info,
+      .dashboard-home-dynamic-post-link,
+      .dashboard-home-dynamic-original-link
+    ):any-link {
     @media (prefers-reduced-motion: no-preference) {
       transition: background-color 0.18s ease-out, border-color 0.18s ease-out;
     }
 
     &:is(:hover, :focus-visible) {
-      background-color: var(--dashboard-home-capsule-hover-background,
-          var(--theme-color-10, #8881));
+      background-color: var(
+        --dashboard-home-capsule-hover-background,
+        var(--theme-color-10, #8881)
+      );
       border-color: var(--dashboard-home-capsule-hover-border, var(--theme-color-40, #8886));
     }
 

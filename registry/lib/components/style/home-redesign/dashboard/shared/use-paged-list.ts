@@ -1,6 +1,6 @@
 import { onBeforeUnmount, ref, shallowRef, watch } from 'vue'
+import { visible } from '@/core/observer'
 import { useScopedConsole } from '@/core/utils/log'
-import { useAutoLoad } from './use-auto-load'
 
 export interface ListPage<Item, Cursor> {
   entries: Item[]
@@ -73,9 +73,26 @@ export const usePagedList = <Item, Cursor>({
   onBeforeUnmount(() => {
     generation += 1
   })
-  const loadTarget = useAutoLoad(
-    () => autoLoad() && hasMore.value && !loading.value && !failed.value,
-    loadNext,
+  const loadTarget = ref<HTMLElement>()
+  const canAutoLoad = () => autoLoad() && hasMore.value && !loading.value && !failed.value
+  watch(
+    () => (canAutoLoad() ? loadTarget.value : undefined),
+    (target, _, onCleanup) => {
+      if (!target) {
+        return
+      }
+      const [observer] = visible(target, records => {
+        if (
+          target === loadTarget.value &&
+          canAutoLoad() &&
+          records.some(record => record.isIntersecting)
+        ) {
+          loadNext()
+        }
+      })
+      onCleanup(() => observer.disconnect())
+    },
+    { flush: 'post' },
   )
   return { entries, loading, failed, hasMore, loadTarget, loadNext, refresh }
 }

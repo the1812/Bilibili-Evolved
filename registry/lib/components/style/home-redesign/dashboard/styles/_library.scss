@@ -1,4 +1,4 @@
-.dashboard-home-toolbar {
+.dashboard-home-library-toolbar {
   @include h-center(8px);
   flex-wrap: wrap;
   font-size: 13px;
@@ -7,14 +7,14 @@
     @include h-center(6px);
     max-inline-size: 100%;
 
-    >span {
+    > span {
       flex: none;
     }
   }
 
   input,
   select,
-  .dashboard-home-library-actions> :is(a, button) {
+  .dashboard-home-library-actions > :is(a, button) {
     box-sizing: border-box;
     min-block-size: 34px;
     min-inline-size: 0;
@@ -50,7 +50,6 @@
     }
 
     @supports (appearance: base-select) {
-
       &,
       &::picker(select) {
         appearance: base-select;
@@ -99,7 +98,7 @@
   }
 
   select,
-  .dashboard-home-library-actions> :is(a, button:enabled:not([aria-disabled='true'])) {
+  .dashboard-home-library-actions > :is(a, button:enabled:not([aria-disabled='true'])) {
     cursor: pointer;
   }
 }
@@ -124,7 +123,7 @@
       }
     }
 
-    >button.dashboard-home-history-recording {
+    > button.dashboard-home-history-recording {
       justify-content: center;
       inline-size: 34px;
       padding: 4px;

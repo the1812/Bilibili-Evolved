@@ -17,7 +17,7 @@
     pointer-events: auto;
     font-size: 11px;
 
-    >.dashboard-home-dynamic-stats-items {
+    > .dashboard-home-dynamic-stats-items {
       @include card(10px);
       gap: 2px;
       padding: 2px;
@@ -61,9 +61,10 @@
   }
 }
 
-@media (hover: none),
-(width < 720px) {
-  .dashboard-home-dynamic-post.has-attachment>.dashboard-home-dynamic-controls>.dashboard-home-dynamic-stats.is-flyout {
+@media (hover: none), (width < 720px) {
+  .dashboard-home-dynamic-post.has-attachment
+    > .dashboard-home-dynamic-controls
+    > .dashboard-home-dynamic-stats.is-flyout {
     display: none;
   }
 }
@@ -132,7 +133,7 @@
         transition: opacity var(--dynamic-stats-fade-duration) ease-out;
       }
 
-      >.dashboard-home-dynamic-stats-items {
+      > .dashboard-home-dynamic-stats-items {
         flex-direction: column;
         transform-origin: var(--dynamic-stats-transform-origin, left top);
 
@@ -148,12 +149,15 @@
       }
     }
 
-    .dashboard-home-dynamic-card:is(:hover, :focus-within):not( :has(> .is-repost:is(:hover, :focus-within) .dashboard-home-dynamic-stats.is-flyout)) .is-default-stats,
-    &-post:is(:hover, :focus-within)>.dashboard-home-dynamic-controls>.is-flyout {
+    .dashboard-home-dynamic-card:is(:hover, :focus-within):not(
+        :has(> .is-repost:is(:hover, :focus-within) .dashboard-home-dynamic-stats.is-flyout)
+      )
+      .is-default-stats,
+    &-post:is(:hover, :focus-within) > .dashboard-home-dynamic-controls > .is-flyout {
       opacity: 1;
       pointer-events: auto;
 
-      >.dashboard-home-dynamic-stats-items {
+      > .dashboard-home-dynamic-stats-items {
         transform: none;
       }
     }
