@@ -1,14 +1,3 @@
-.dashboard-home-card-view:has(.dashboard-home-dated-collection) {
-  --dashboard-home-feed-date-gap: 12px;
-}
-
-@media (min-width: 721px) {
-  :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) .dashboard-home-card-view:has(.dashboard-home-dated-collection) {
-    --dashboard-home-card-side-gutter: max(24px,
-        calc(12ch + var(--dashboard-home-feed-date-gap) - var(--dashboard-home-page-padding-inline) - var(--dashboard-home-grid-padding)));
-  }
-}
-
 .dashboard-home-feed-days {
   display: grid;
   gap: var(--dashboard-home-grid-gap);
@@ -32,7 +21,6 @@
   align-self: start;
   z-index: 1;
   inline-size: max-content;
-  margin-inline-end: var(--dashboard-home-feed-date-gap);
   padding-block-start: 6px;
   color: var(--be-color-text-content, var(--home-color));
   font-weight: 600;
@@ -50,6 +38,19 @@
   }
 }
 
+@media (min-width: 721px) {
+  :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) .dashboard-home-feed-date {
+    --dashboard-home-feed-date-gutter: calc(var(--dashboard-home-page-padding-inline) + var(--dashboard-home-card-side-gutter) + var(--dashboard-home-grid-padding));
+
+    // Use the existing gutter and close the gap when a full date needs more room.
+    translate: clamp(-12px, calc(100% - var(--dashboard-home-feed-date-gutter)), 0px) 0;
+
+    &.is-full-date {
+      font-size: 10px;
+    }
+  }
+}
+
 @media (max-width: 720px) {
   .dashboard-home-feed-day {
     grid-template-columns: minmax(0, 1fr);
@@ -63,7 +64,6 @@
   .dashboard-home-feed-date {
     grid-area: auto;
     justify-self: start;
-    margin-inline: 0;
     background: var(--home-background-color);
     text-align: start;
   }
@@ -93,10 +93,9 @@
 
   .dashboard-home-feed-date {
     inset-block-start: auto;
-    right: var(--dashboard-home-card-scroll-padding);
+    right: 0;
     grid-area: 1 / 1;
     justify-self: start;
-    margin: 0;
     padding-block-start: 0;
     padding-inline-end: 6px;
     background: var(--home-background-color);
