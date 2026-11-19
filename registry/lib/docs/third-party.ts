@@ -24,6 +24,15 @@ export const thirdPartyComponents: DocSourceItem[] = [
 export const thirdPartyPlugins: DocSourceItem[] = [
   {
     type: 'plugin',
+    name: 'live.invisibleView',
+    displayName: '直播隐身观看',
+    fullRelativePath: '../../registry/dist/plugins/live/bili-live-invisible.js',
+    fullAbsolutePath: 'registry/dist/plugins/live/bili-live-invisible.js',
+    description: '屏蔽 B 站直播间的统计上报请求 (data.bilivideo / live-trace / rumt 等 10 条实测规则, 遥测 26/26 全拦). 依据贡献范围约定, 身份字段改写的完整版以独立脚本形式发布在作者自己的仓库, 未包含在本插件中.',
+    owner: 'xly2333',
+  },
+  {
+    type: 'plugin',
     name: 'customNavbar.items.localHistory',
     displayName: '自定义顶栏 - 本地历史搜索',
     fullRelativePath: '../../registry/dist/plugins/style/custom-navbar-local-history.js',
