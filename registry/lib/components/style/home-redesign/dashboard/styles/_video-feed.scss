@@ -1,6 +1,6 @@
 .dashboard-home-tabs .dashboard-home-tab {
   box-sizing: border-box;
-  inline-size: calc(var(--card-width) * var(--dashboard-home-card-column) + var(--dashboard-home-grid-gap) * (var(--dashboard-home-card-column) - 1) + 2 * var(--dashboard-home-grid-padding));
+  inline-size: calc(var(--dashboard-home-video-card-width) * var(--dashboard-home-card-column) + var(--dashboard-home-grid-gap) * (var(--dashboard-home-card-column) - 1) + 2 * var(--dashboard-home-grid-padding));
   max-inline-size: 100%;
 
   &-cards {
@@ -15,28 +15,18 @@
 
     .video-card {
       grid-template-columns: min(196px, 36%) minmax(0, 1fr);
-      inline-size: min(100%, var(--card-width));
+      inline-size: min(100%, var(--dashboard-home-video-card-width));
       justify-self: center;
 
       .cover-container {
         inline-size: 100%;
 
-        html.dashboard-home-watchlater-disabled &>.watchlater {
+        .dashboard-home.hide-watchlater &>.watchlater {
           display: none;
         }
       }
-
-      :where(:not(.up)) {
-        transition: 0.2s ease-out;
-      }
     }
   }
-}
-
-.dashboard-home-tab-status {
-  @include h-center();
-  justify-content: center;
-  padding-block: 8px;
 }
 
 .dashboard-home-feed-day {
@@ -50,7 +40,8 @@
 
 .dashboard-home-feed-date {
   position: sticky;
-  inset-block-start: var(--dashboard-home-feed-date-top);
+  inset-block-start: var(--dashboard-home-content-scroll-margin,
+      var(--dashboard-home-feed-date-top));
   grid-area: 1 / 1;
   justify-self: end;
   align-self: start;
@@ -60,17 +51,37 @@
   font-weight: 600;
   white-space: nowrap;
 
-  &::before,
-  &::after {
+  &::before {
+    content: '';
     position: absolute;
     inset-block-start: 0;
+    inset-inline: 0;
     block-size: 2px;
     border-radius: 999px;
     background-color: var(--theme-color);
   }
+}
 
-  &::before {
-    content: '';
-    inset-inline: 0;
+@media (max-width: 720px) {
+  .dashboard-home-feed-day {
+    grid-template-columns: minmax(0, 1fr);
+
+    >.dashboard-home-tab-cards {
+      grid-area: auto;
+    }
+  }
+
+  .dashboard-home-feed-date {
+    grid-area: auto;
+    justify-self: start;
+    margin-inline: var(--dashboard-home-grid-padding);
+    padding: 6px 8px;
+    border: var(--home-card-border);
+    border-radius: 8px;
+    background: var(--home-background-color);
+
+    &::before {
+      display: none;
+    }
   }
 }

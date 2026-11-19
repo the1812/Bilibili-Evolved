@@ -27,8 +27,16 @@ const uid = getUID()
 const channelLinks = shallowRef(readSitemapChannelLinks(document))
 const sections = computed(() => getSitemapSections(uid, channelLinks.value))
 
+const updateChannels = () => {
+  const links = readSitemapChannelLinks(document)
+  if (!lodash.isEqual(channelLinks.value, links)) {
+    channelLinks.value = links
+  }
+}
+
 let headerObserver: MutationObserver
 onMounted(() => {
+  updateChannels()
   const channelBar = document.querySelector(sitemapChannelSelector)
   const header =
     channelBar?.closest('.bili-header') ??
@@ -39,12 +47,7 @@ onMounted(() => {
   const [observer] = mutationObserve(
     [header],
     { childList: true, subtree: true, characterData: true, attributeFilter: ['class', 'href'] },
-    () => {
-      const links = readSitemapChannelLinks(document)
-      if (!lodash.isEqual(channelLinks.value, links)) {
-        channelLinks.value = links
-      }
-    },
+    updateChannels,
   )
   headerObserver = observer
 })

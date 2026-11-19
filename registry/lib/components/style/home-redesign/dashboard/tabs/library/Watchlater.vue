@@ -23,9 +23,7 @@
           </button>
         </template>
       </LibraryToolbar>
-      <p v-if="actionFailed" class="dashboard-home-library-status" role="status">
-        操作失败，请重试
-      </p>
+      <p v-if="actionFailed" class="dashboard-home-list-status" role="status">操作失败，请重试</p>
       <LibraryCards :entries="entries">
         <template #actions="{ item }">
           <VButton :disabled="busy" :aria-label="`移除 ${item.title}`" @click="remove(item.id)">
@@ -33,7 +31,7 @@
           </VButton>
         </template>
       </LibraryCards>
-      <LibraryPageStatus
+      <ListStatus
         :loading="loading"
         :failed="failed"
         :empty="entries.length ? '' : queue.length ? '没有符合条件的视频' : '稍后再看列表为空'"
@@ -58,10 +56,10 @@ import { formatDuration } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
 import { VButton, VEmpty } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import ListStatus from '../../shared/ListStatus.vue'
 import LibraryCards from './LibraryCards.vue'
-import LibraryPageStatus from './LibraryPageStatus.vue'
 import LibraryToolbar from './LibraryToolbar.vue'
-import { filterLibraryEntries, libraryProgress, type LibraryEntry } from './library'
+import { filterLibraryEntries, type LibraryEntry } from './library'
 
 const uid = getUID()
 const { error: logError } = useScopedConsole('仪表盘首页稍后再看')
@@ -79,6 +77,12 @@ const videoUrl = (item: RawWatchlaterItem) =>
   item.bvid ? `${queueUrl}?bvid=${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`
 const playAllUrl = computed(() => (queue.value[0]?.bvid ? videoUrl(queue.value[0]) : queueUrl))
 const isWatched = (item: RawWatchlaterItem) => item.progress < 0
+const getProgress = (item: RawWatchlaterItem, duration: number) => {
+  if (isWatched(item)) {
+    return 1
+  }
+  return duration > 0 && item.progress > 0 ? Math.min(item.progress / duration, 1) : undefined
+}
 const hasWatched = computed(() => queue.value.some(isWatched))
 const entries = computed(() => {
   const cards = queue.value
@@ -92,10 +96,11 @@ const entries = computed(() => {
         url: videoUrl(item),
         cover: item.bangumi?.cover || item.pic,
         badge: duration > 0 ? formatDuration(duration) : undefined,
+        author: item.owner?.name,
         detail: [item.owner?.name, isWatched(item) ? '已看完' : undefined]
           .filter(Boolean)
           .join(' · '),
-        progress: libraryProgress(item.progress, duration),
+        progress: getProgress(item, duration),
       }
     })
   return filterLibraryEntries(cards, keyword.value)
@@ -168,11 +173,12 @@ const clearQueue = async (viewed: boolean) => {
       '更新稍后再看失败',
       false,
     )
-    if (!viewed) {
-      queue.value = []
-      watchlaterList.splice(0)
-    }
-    await loadQueue()
+    const removed = new Set(
+      queue.value.filter(item => !viewed || isWatched(item)).map(item => item.aid),
+    )
+    queue.value = queue.value.filter(item => !removed.has(item.aid))
+    const remaining = viewed ? watchlaterList.filter(aid => !removed.has(aid)) : []
+    watchlaterList.splice(0, watchlaterList.length, ...remaining)
   })
 }
 

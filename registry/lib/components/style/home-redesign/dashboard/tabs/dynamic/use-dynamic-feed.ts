@@ -1,7 +1,7 @@
-import { computed, del, onMounted, reactive, ref, set, shallowRef } from 'vue'
+import { computed, del, onMounted, reactive, set, shallowRef } from 'vue'
 import { getUID } from '@/core/utils'
 import { logError, useScopedConsole } from '@/core/utils/log'
-import { useAutoLoad } from '../../shared/use-auto-load'
+import { usePagedList } from '../../shared/use-paged-list'
 import {
   getDynamicFeedPage,
   getDynamicLiveRooms,
@@ -15,12 +15,21 @@ import { mergeDynamicReposts } from './merge-reposts'
 export const useDynamicFeed = (type: DynamicFeedType) => {
   const { error: logFeedError } = useScopedConsole('仪表盘首页动态')
   const loggedIn = Boolean(getUID())
-  const entries = ref<DynamicEntry[]>([])
+  const {
+    entries,
+    loading,
+    failed,
+    hasMore,
+    loadTarget,
+    loadNext,
+    refresh: refreshPosts,
+  } = usePagedList<DynamicEntry, string>({
+    source: () => (loggedIn ? type : undefined),
+    fetchPage: offset => getDynamicFeedPage(type, offset),
+    getKey: entry => entry.id,
+    logName: '仪表盘首页动态',
+  })
   const cards = computed(() => mergeDynamicReposts(entries.value))
-  const loading = ref(false)
-  const failed = ref(false)
-  const hasMore = ref(true)
-  let offset: string | undefined
 
   const liveRooms = shallowRef<DynamicLiveRoom[]>([])
   let loadingLiveRooms = false
@@ -57,41 +66,14 @@ export const useDynamicFeed = (type: DynamicFeedType) => {
     }
   }
 
-  const loadNextPage = async () => {
-    if (loading.value || !hasMore.value) {
-      return
-    }
-    loading.value = true
-    failed.value = false
-    try {
-      const page = await getDynamicFeedPage(type, offset)
-      entries.value = lodash.uniqBy([...entries.value, ...page.entries], entry => entry.id)
-      hasMore.value = Boolean(page.nextOffset && page.nextOffset !== offset)
-      offset = page.nextOffset
-    } catch (error) {
-      logFeedError(error)
-      failed.value = true
-    } finally {
-      loading.value = false
-    }
-  }
-
-  const loadMore = useAutoLoad(() => hasMore.value && !failed.value && !loading.value, loadNextPage)
-
   const refresh = () => {
-    refreshLiveRooms()
-    if (loading.value) {
-      return
-    }
     for (const [id, state] of Object.entries(likeStates)) {
       if (!state.pending) {
         del(likeStates, id)
       }
     }
-    entries.value = []
-    offset = undefined
-    hasMore.value = true
-    loadNextPage()
+    refreshLiveRooms()
+    return refreshPosts()
   }
 
   return {
@@ -103,8 +85,8 @@ export const useDynamicFeed = (type: DynamicFeedType) => {
     failed,
     hasMore,
     likeStates,
-    loadMore,
-    loadNextPage,
+    loadTarget,
+    loadNext,
     toggleLike,
     refresh,
   }

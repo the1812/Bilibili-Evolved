@@ -34,11 +34,11 @@
         <h2>{{ inboxCategories[selected].label }}</h2>
         <a :href="inboxCategories[selected].url" target="_blank" rel="noopener">查看全部</a>
       </header>
-      <template v-if="confirmLoad">
+      <VLoading v-if="loading" />
+      <template v-else-if="confirmLoad">
         <p class="dashboard-home-inbox-text">B 站可能在加载列表时将消息标为已读。</p>
-        <VButton @click="loadSelected">加载列表</VButton>
+        <VButton @click="loadSelected">{{ failed ? '加载失败，点击重试' : '加载列表' }}</VButton>
       </template>
-      <VLoading v-else-if="loading" />
       <VButton v-else-if="failed" @click="loadSelected">加载失败，点击重试</VButton>
       <ul v-else-if="page?.entries.length" class="dashboard-home-account-list" role="list">
         <li v-for="entry in page.entries" :key="entry.id" class="dashboard-home-inbox-entry">

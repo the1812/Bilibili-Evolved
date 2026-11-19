@@ -87,5 +87,5 @@ export const getVideoFeedPage = async (offset?: string) => {
   const items = page.items ?? []
   const cards = items.map(toVideoCard).filter(Boolean)
   const nextOffset = page.has_more ? page.offset || items.at(-1)?.id_str : undefined
-  return { cards: applyContentFilter(groupVideoFeeds(cards)), nextOffset }
+  return { entries: applyContentFilter(groupVideoFeeds(cards)), next: nextOffset }
 }

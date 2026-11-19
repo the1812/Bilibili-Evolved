@@ -66,7 +66,7 @@ export const getDynamicFeedPage = async (type: DynamicFeedType, offset?: string)
     }))
   const nextOffset = page.has_more ? page.offset || posts.at(-1)?.id_str : undefined
 
-  return { entries, nextOffset }
+  return { entries, next: nextOffset }
 }
 
 export const setDynamicLike = async (id: string, liked: boolean) => {

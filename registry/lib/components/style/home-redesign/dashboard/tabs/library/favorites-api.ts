@@ -1,5 +1,6 @@
+import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDuration } from '@/core/utils/formatters'
-import { getLibraryData, type LibraryEntry } from './library'
+import type { LibraryEntry } from './library'
 
 export const favoriteKinds = {
   folders: '收藏夹',
@@ -49,9 +50,15 @@ interface FollowedShow {
 
 const site = 'https://www.bilibili.com'
 const pageSize = 20
+const getFavoriteData = <T>(path: string, params: URLSearchParams, message: string) =>
+  bilibiliApi<T>(
+    getJsonWithCredentials(`https://api.bilibili.com${path}?${params}`),
+    message,
+    false,
+  )
 
 export const getFavoriteFolders = async (uid: string) => {
-  const { list } = await getLibraryData<{ list?: FavoriteFolder[] }>(
+  const { list } = await getFavoriteData<{ list?: FavoriteFolder[] }>(
     '/x/v3/fav/folder/created/list-all',
     new URLSearchParams({ up_mid: uid, type: '2', rid: '0' }),
     '获取收藏夹列表失败',
@@ -60,7 +67,7 @@ export const getFavoriteFolders = async (uid: string) => {
 }
 
 export const getFavoriteMedia = async (folder: number, page: number) => {
-  const { medias, has_more } = await getLibraryData<{
+  const { medias, has_more } = await getFavoriteData<{
     medias?: FavoriteMedia[]
     has_more?: boolean
   }>(
@@ -94,6 +101,7 @@ export const getFavoriteMedia = async (folder: number, page: number) => {
         url,
         cover: item.cover,
         badge: unavailable ? '已失效' : duration,
+        author: item.upper?.name,
         detail: item.upper?.name,
       }
     }),
@@ -102,7 +110,10 @@ export const getFavoriteMedia = async (folder: number, page: number) => {
 }
 
 export const getCollectedFolders = async (uid: string, page: number) => {
-  const { list, has_more } = await getLibraryData<{ list?: CollectedFolder[]; has_more?: boolean }>(
+  const { list, has_more } = await getFavoriteData<{
+    list?: CollectedFolder[]
+    has_more?: boolean
+  }>(
     '/x/v3/fav/folder/collected/list',
     new URLSearchParams({ up_mid: uid, pn: String(page), ps: String(pageSize), platform: 'web' }),
     '获取订阅合集失败',
@@ -122,6 +133,7 @@ export const getCollectedFolders = async (uid: string, page: number) => {
             ? `https://space.bilibili.com/${item.mid}/lists/${item.id}?type=season`
             : `${site}/list/ml${item.id}`,
           badge: isCollection ? '合集' : '收藏夹',
+          author: item.upper?.name,
           detail: [item.upper?.name, item.media_count && `${item.media_count} 个内容`]
             .filter(Boolean)
             .join(' · '),
@@ -138,7 +150,7 @@ export const getFollowedShows = async (
   status: number,
   page: number,
 ) => {
-  const { list, total } = await getLibraryData<{ list?: FollowedShow[]; total?: number }>(
+  const { list, total } = await getFavoriteData<{ list?: FollowedShow[]; total?: number }>(
     '/x/space/bangumi/follow/list',
     new URLSearchParams({
       vmid: uid,

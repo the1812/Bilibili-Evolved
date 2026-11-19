@@ -24,10 +24,4 @@
     min-inline-size: 0;
     padding-block-end: 16px;
   }
-
-  &-status {
-    @include h-center();
-    justify-content: center;
-    padding-block: 8px;
-  }
 }

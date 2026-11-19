@@ -27,7 +27,7 @@
           @focus="focusedTabName = tab.name"
           @click="selectTab(tab)"
         >
-          <span class="default-tab-name">{{ tab.displayName }}</span>
+          <span class="default-tab-name">{{ tab.name }}</span>
         </button>
       </div>
     </div>
@@ -107,13 +107,19 @@ const moveTabFocus = (event: KeyboardEvent) => {
   const tabList = event.currentTarget as HTMLElement
   const buttons = [...tabList.querySelectorAll<HTMLButtonElement>('button')]
   const index = buttons.indexOf(event.target as HTMLButtonElement)
+  if (index < 0) {
+    return
+  }
+  const rtl = getComputedStyle(tabList).direction === 'rtl'
+  const previous = (index + buttons.length - 1) % buttons.length
+  const next = (index + 1) % buttons.length
   const nextIndex = {
-    ArrowLeft: (index + buttons.length - 1) % buttons.length,
-    ArrowRight: (index + 1) % buttons.length,
+    ArrowLeft: rtl ? next : previous,
+    ArrowRight: rtl ? previous : next,
     Home: 0,
     End: buttons.length - 1,
   }[event.key]
-  if (index >= 0 && nextIndex !== undefined) {
+  if (nextIndex !== undefined) {
     event.preventDefault()
     buttons[nextIndex].focus()
   }
