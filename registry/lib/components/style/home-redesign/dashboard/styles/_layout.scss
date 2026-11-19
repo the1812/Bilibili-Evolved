@@ -140,12 +140,12 @@ body:not(.home-redesign-off):has(.dashboard-home) {
 
     @media (prefers-reduced-motion: no-preference) {
       .content-transition-enter-active {
-        transition: 0.2s ease-out;
+        // A transform on the panel would re-anchor the fixed action buttons.
+        transition: opacity 0.2s ease-out;
       }
 
       .content-transition-enter {
         opacity: 0;
-        transform: translateY(-12px);
       }
     }
   }

@@ -42,20 +42,28 @@
           </article>
         </CardGridItem>
       </ul>
-      <CardCollection>
-        <ul v-if="cards.length" class="dashboard-home-card-grid" role="list">
-          <template v-if="feedType === 'all'">
-            <DynamicCard
-              v-for="card in cards"
-              :key="card.post.id"
-              :card="card"
-              :like-states="likeStates"
-              @preview-image="openImagePreview"
-              @toggle-like="toggleLike"
-            />
-          </template>
-          <template v-else>
-            <CardGridItem v-for="card in contentCards" :key="card.id">
+      <CardCollection :class="{ 'dashboard-home-dated-collection': feedType !== 'all' }">
+        <ul v-if="feedType === 'all' && cards.length" class="dashboard-home-card-grid" role="list">
+          <DynamicCard
+            v-for="card in cards"
+            :key="card.post.id"
+            :card="card"
+            :like-states="likeStates"
+            @preview-image="openImagePreview"
+            @toggle-like="toggleLike"
+          />
+        </ul>
+        <div
+          v-else-if="feedType !== 'all' && contentCardGroups.length"
+          class="dashboard-home-feed-days"
+        >
+          <FeedDateGroup
+            v-for="group in contentCardGroups"
+            :key="group.date"
+            :date="group.date"
+            :label="group.label"
+          >
+            <CardGridItem v-for="card in group.cards" :key="card.id">
               <ContentCard :data="card.data">
                 <template v-if="hasDynamicStats(card.post.stats)" #stats>
                   <DynamicStats
@@ -66,8 +74,8 @@
                 </template>
               </ContentCard>
             </CardGridItem>
-          </template>
-        </ul>
+          </FeedDateGroup>
+        </div>
         <div ref="loadTarget" class="dashboard-home-card-end">
           <ListStatus
             :loading="loading"
@@ -104,7 +112,6 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { formatDateTime } from '@/core/utils/formatters'
 import { DpiImage, VEmpty, VIcon } from '@/ui'
 import { TabOption } from '../../options'
 import CardCollection from '../../shared/CardCollection.vue'
@@ -112,11 +119,13 @@ import CardGridItem from '../../shared/CardGridItem.vue'
 import ContentCard from '../../shared/ContentCard.vue'
 import type { ContentCardData } from '../../shared/content-card'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import FeedDateGroup from '../../shared/FeedDateGroup.vue'
 import ListStatus from '../../shared/ListStatus.vue'
+import { groupFeedCardsByDate } from '../../shared/group-feed-cards'
 import DynamicCard from './DynamicCard.vue'
 import DynamicStats from './DynamicStats.vue'
 import type { DynamicFeedType } from './dynamic-api'
-import { formatDynamicTimestamp, getDynamicThumbnailSet, hasDynamicStats } from './dynamic-post'
+import { getDynamicThumbnailSet, hasDynamicStats } from './dynamic-post'
 import { useDynamicFeed } from './use-dynamic-feed'
 
 const props = withDefaults(defineProps<{ feedType?: DynamicFeedType }>(), { feedType: 'all' })
@@ -139,11 +148,11 @@ const {
   refresh,
 } = useDynamicFeed(props.feedType)
 
-const contentCards = computed(() => {
+const contentCardGroups = computed(() => {
   const kind = props.feedType === 'pgc' ? 'bangumi' : 'article'
-  return cards.value.map(card => {
+  const contentCards = cards.value.map(card => {
     const post = card.original ?? card.post
-    const { attachment, author, publishedAt } = post
+    const { attachment, author } = post
     const coverUrl = attachment?.coverUrl ?? post.images[0]?.url
     const data: ContentCardData = {
       ...attachment,
@@ -157,11 +166,10 @@ const contentCards = computed(() => {
       upName: author.name,
       upFaceUrl: author.avatar,
       upUrl: author.url,
-      pubTime: publishedAt && formatDateTime(publishedAt).slice(0, 16),
-      pubTimeText: publishedAt && formatDynamicTimestamp(publishedAt),
     }
     return { id: card.post.id, data, post }
   })
+  return groupFeedCardsByDate(contentCards, card => card.post.publishedAt)
 })
 
 const imagePreview = ref<HTMLDialogElement>()

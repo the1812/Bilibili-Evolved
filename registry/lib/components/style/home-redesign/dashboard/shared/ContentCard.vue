@@ -21,15 +21,8 @@
         loading="lazy"
       />
       <VIcon v-else :icon="placeholderIcons[data.kind ?? 'video']" :size="28" aria-hidden="true" />
-      <div v-if="data.badge || data.pubTimeText" class="dashboard-home-content-card-cover-labels">
-        <span
-          v-if="data.pubTimeText"
-          class="dashboard-home-content-card-publish-time"
-          :title="data.pubTime"
-        >
-          {{ data.pubTimeText }}
-        </span>
-        <span v-if="data.badge" class="dashboard-home-content-card-badge">{{ data.badge }}</span>
+      <div v-if="data.badge" class="dashboard-home-content-card-cover-labels">
+        <span class="dashboard-home-content-card-badge">{{ data.badge }}</span>
       </div>
       <div
         v-if="data.durationText || canWatchlater"

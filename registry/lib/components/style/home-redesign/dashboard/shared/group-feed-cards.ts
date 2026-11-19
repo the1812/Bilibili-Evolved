@@ -1,9 +1,11 @@
-import type { VideoCard } from '@/components/feeds/video-card'
 import { formatDate } from '@/core/utils/formatters'
 import { descendingStringSort } from '@/core/utils/sort'
-import { omitCurrentYear } from '../../shared/format-date'
+import { omitCurrentYear } from './format-date'
 
-export const groupVideoCardsByDate = <Card extends VideoCard>(videoCards: Card[]) => {
+export const groupFeedCardsByDate = <Card>(
+  feedCards: Card[],
+  getDate: (card: Card) => Date | undefined,
+) => {
   const today = new Date()
   const todayLabel = formatDate(today)
   const dateAt = (daysAgo: number) =>
@@ -16,9 +18,10 @@ export const groupVideoCardsByDate = <Card extends VideoCard>(videoCards: Card[]
     const date = dateAt(daysAgo)
     dateLabels.set(formatDate(date), date.toLocaleDateString('zh-CN', { weekday: 'short' }))
   }
-  const cardsByDate = lodash.groupBy(videoCards, ({ time }) =>
-    time && Number.isFinite(time.getTime()) ? formatDate(time) : '',
-  )
+  const cardsByDate = lodash.groupBy(feedCards, card => {
+    const date = getDate(card)
+    return date && Number.isFinite(date.getTime()) ? formatDate(date) : ''
+  })
   return Object.entries(cardsByDate)
     .sort(descendingStringSort(([date]) => date))
     .map(([date, cards]) => ({
