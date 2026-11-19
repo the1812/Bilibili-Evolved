@@ -108,11 +108,11 @@ html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-and-as
   user-select: none;
   pointer-events: none;
   touch-action: none;
-  height: 100vh;
   width: 0;
   position: absolute;
   left: var(--be-live-player-width);
   top: 0;
+  bottom: 0;
   @include v-stretch();
   .player-full-win:not(.hide-aside-area) & {
     pointer-events: initial;
