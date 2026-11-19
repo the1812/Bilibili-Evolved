@@ -45,7 +45,9 @@
 
   .dashboard-home-tab-cards>.video-card,
   .dashboard-home-dynamic-card,
+  .dashboard-home-dynamic-live-room,
   .dashboard-home-followings-card,
+  .dashboard-home-library-card,
   .dashboard-home-account-card {
     @media (prefers-reduced-motion: no-preference) {
       transition: box-shadow 0.2s ease-out;

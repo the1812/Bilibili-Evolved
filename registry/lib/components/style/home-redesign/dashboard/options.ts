@@ -8,17 +8,32 @@ import {
 import { getNumberValidator } from '@/core/utils'
 
 export enum DashboardHomeTabOption {
-  Feeds = '视频',
+  Video = '视频',
+  Bangumi = '番剧',
+  Article = '专栏',
   Dynamic = '动态',
   Followings = '关注',
   Trending = '热门',
   Recommended = '推荐',
+  Search = '搜索',
+  Favorites = '收藏',
+  History = '历史',
+  Watchlater = '稍后再看',
   Account = '我的',
+  Sitemap = '站点',
 }
 
 export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
-  showFeeds: {
+  showVideo: {
     displayName: '显示「视频」',
+    defaultValue: true,
+  },
+  showBangumi: {
+    displayName: '显示「番剧」',
+    defaultValue: true,
+  },
+  showArticle: {
+    displayName: '显示「专栏」',
     defaultValue: true,
   },
   showDynamic: {
@@ -37,12 +52,28 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
     displayName: '显示「推荐」',
     defaultValue: true,
   },
+  showSearch: {
+    displayName: '显示「搜索」',
+    defaultValue: true,
+  },
+  showFavorites: {
+    displayName: '显示「收藏」',
+    defaultValue: true,
+  },
+  showHistory: {
+    displayName: '显示「历史」',
+    defaultValue: true,
+  },
+  showWatchlater: {
+    displayName: '显示「稍后再看」',
+    defaultValue: true,
+  },
   showAccount: {
     displayName: '显示「我的」',
     defaultValue: true,
   },
-  enableWatchlater: {
-    displayName: '启用「稍后再看」',
+  showSitemap: {
+    displayName: '显示「站点」',
     defaultValue: true,
   },
   columnCount: {
@@ -52,7 +83,7 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
   },
   defaultTab: {
     displayName: '默认标签页',
-    defaultValue: DashboardHomeTabOption.Feeds,
+    defaultValue: DashboardHomeTabOption.Video,
     dropdownEnum: DashboardHomeTabOption,
   },
 })

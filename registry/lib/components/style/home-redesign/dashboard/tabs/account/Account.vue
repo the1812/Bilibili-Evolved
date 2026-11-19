@@ -44,6 +44,10 @@
           class="dashboard-home-account-column"
         >
           <AccountInbox v-if="column.name === 'messages'" ref="inbox" />
+          <section v-if="column.name === 'personal'" class="dashboard-home-account-card">
+            <h2>{{ personalSection.title }}</h2>
+            <SitemapLinkList :links="personalSection.links" />
+          </section>
           <section
             v-for="panel in column.panels"
             :key="panel.title"
@@ -74,13 +78,6 @@
                   :target="item.url ? '_blank' : undefined"
                   :rel="item.url ? 'noopener' : undefined"
                 >
-                  <DpiImage
-                    v-if="item.image"
-                    class="dashboard-home-account-thumbnail"
-                    :src="item.image"
-                    :size="{ width: 80, height: 45 }"
-                    alt=""
-                  />
                   <div class="dashboard-home-account-row-text">
                     <span>{{ item.label }}</span>
                     <small v-if="item.detail" class="dashboard-home-account-muted">{{
@@ -104,8 +101,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { getUID } from '@/core/utils'
 import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import SitemapLinkList from '../SitemapLinkList.vue'
+import { getPersonalSitemapSection } from '../sitemap-links'
 import AccountInbox from './AccountInbox.vue'
 import { useAccount } from './use-account'
 
@@ -122,6 +122,7 @@ const {
   loadPanels,
 } = useAccount()
 const inbox = ref<InstanceType<typeof AccountInbox>[]>()
+const personalSection = getPersonalSitemapSection(getUID())
 
 const refresh = () => {
   loadPanels()

@@ -1,22 +1,18 @@
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref } from 'vue'
 import { getUserInfo } from '@/core/user-info'
 import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
-import { useDashboardOption } from '../../options'
 import {
   type AccountProfile,
   type AccountRow,
   getAccountCounts,
-  getAccountHistory,
   getAccountPrivileges,
-  getAccountWatchlater,
 } from './account-api'
 
 export const useAccount = () => {
   const { error: logAccountError } = useScopedConsole('仪表盘首页账号')
   const uid = getUID()
   const profile = ref<AccountProfile>()
-  const showWatchlater = useDashboardOption('enableWatchlater')
   const loadingProfile = ref(Boolean(uid))
   const profileFailed = ref(false)
   const spaceUrl = computed(() => `https://space.bilibili.com/${profile.value?.mid ?? uid}`)
@@ -85,31 +81,14 @@ export const useAccount = () => {
     getAccountPrivileges,
     'https://account.bilibili.com/account/big',
   )
-  const history = createPanel(
-    '最近观看',
-    '暂无观看记录',
-    getAccountHistory,
-    'https://www.bilibili.com/history',
-  )
-  const watchlater = createPanel(
-    '稍后再看',
-    '稍后再看列表为空',
-    getAccountWatchlater,
-    'https://www.bilibili.com/watchlater/#/list',
-  )
   const panelColumns = computed(() => [
     { name: 'account', panels: annualVip.value ? [counts, privileges] : [counts] },
     { name: 'messages', panels: [] },
-    { name: 'activity', panels: showWatchlater.value ? [watchlater, history] : [history] },
+    { name: 'personal', panels: [] },
   ])
   const loadPanels = () => {
     panelColumns.value.flatMap(column => column.panels).forEach(panel => panel.load())
   }
-  watch(showWatchlater, enabled => {
-    if (enabled && profile.value?.isLogin) {
-      watchlater.load()
-    }
-  })
 
   onMounted(async () => {
     if (!uid) {

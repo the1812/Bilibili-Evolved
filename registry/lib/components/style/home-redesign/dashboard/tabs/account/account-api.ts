@@ -1,7 +1,5 @@
-import { getWatchlaterList } from '@/components/video/watchlater'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDate } from '@/core/utils/formatters'
-import { getHistoryItems } from '../../../../custom-navbar/history/types'
 
 export interface AccountProfile {
   isLogin: boolean
@@ -22,7 +20,6 @@ export interface AccountRow {
   label: string
   value?: number | string
   url?: string
-  image?: string
   detail?: string
 }
 
@@ -76,28 +73,4 @@ export const getAccountPrivileges = async (): Promise<AccountRow[]> => {
       },
     ]
   })
-}
-
-const activitySize = 5
-
-export const getAccountHistory = async (): Promise<AccountRow[]> => {
-  const entries = await getHistoryItems()
-  return entries.slice(0, activitySize).map(entry => ({
-    label: entry.title,
-    url: entry.url,
-    image: entry.cover,
-    detail: [entry.upName, formatDate(entry.time)].filter(Boolean).join(' · '),
-  }))
-}
-
-export const getAccountWatchlater = async (): Promise<AccountRow[]> => {
-  const entries = await getWatchlaterList(true)
-  return entries.slice(0, activitySize).map(entry => ({
-    label: entry.title,
-    url: entry.bvid
-      ? `https://www.bilibili.com/list/watchlater?bvid=${entry.bvid}`
-      : `https://www.bilibili.com/video/av${entry.aid}`,
-    image: entry.bangumi?.cover ?? entry.pic,
-    detail: entry.owner?.name,
-  }))
 }

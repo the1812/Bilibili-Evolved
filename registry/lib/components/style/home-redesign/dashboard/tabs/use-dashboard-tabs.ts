@@ -11,11 +11,27 @@ export const useDashboardTabs = (dashboardHomeOptions: DashboardHomeOptions) => 
   const uid = getUID()
   const tabs: DashboardTab[] = [
     {
-      name: DashboardHomeTabOption.Feeds,
-      displayName: DashboardHomeTabOption.Feeds,
-      visibilityOption: 'showFeeds',
+      name: DashboardHomeTabOption.Video,
+      displayName: DashboardHomeTabOption.Video,
+      visibilityOption: 'showVideo',
       component: () => import('./video/VideoFeed.vue').then(m => m.default),
       activeLink: 'https://t.bilibili.com/?tab=video',
+    },
+    {
+      name: DashboardHomeTabOption.Bangumi,
+      displayName: DashboardHomeTabOption.Bangumi,
+      visibilityOption: 'showBangumi',
+      component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
+      propsData: { feedType: 'pgc' },
+      activeLink: 'https://t.bilibili.com/?tab=pgc',
+    },
+    {
+      name: DashboardHomeTabOption.Article,
+      displayName: DashboardHomeTabOption.Article,
+      visibilityOption: 'showArticle',
+      component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
+      propsData: { feedType: 'article' },
+      activeLink: 'https://t.bilibili.com/?tab=article',
     },
     {
       name: DashboardHomeTabOption.Dynamic,
@@ -48,11 +64,44 @@ export const useDashboardTabs = (dashboardHomeOptions: DashboardHomeOptions) => 
       propsData: { personalized: true },
     },
     {
+      name: DashboardHomeTabOption.Search,
+      displayName: DashboardHomeTabOption.Search,
+      visibilityOption: 'showSearch',
+      component: () => import('./Search.vue').then(m => m.default),
+    },
+    {
+      name: DashboardHomeTabOption.Favorites,
+      displayName: DashboardHomeTabOption.Favorites,
+      visibilityOption: 'showFavorites',
+      component: () => import('./library/Favorites.vue').then(m => m.default),
+      activeLink: uid ? `https://space.bilibili.com/${uid}/favlist` : undefined,
+    },
+    {
+      name: DashboardHomeTabOption.History,
+      displayName: DashboardHomeTabOption.History,
+      visibilityOption: 'showHistory',
+      component: () => import('./library/History.vue').then(m => m.default),
+      activeLink: 'https://www.bilibili.com/history',
+    },
+    {
+      name: DashboardHomeTabOption.Watchlater,
+      displayName: DashboardHomeTabOption.Watchlater,
+      visibilityOption: 'showWatchlater',
+      component: () => import('./library/Watchlater.vue').then(m => m.default),
+      activeLink: 'https://www.bilibili.com/watchlater/#/list',
+    },
+    {
       name: DashboardHomeTabOption.Account,
       displayName: DashboardHomeTabOption.Account,
       visibilityOption: 'showAccount',
       component: () => import('./account/Account.vue').then(m => m.default),
       activeLink: 'https://account.bilibili.com/account/home',
+    },
+    {
+      name: DashboardHomeTabOption.Sitemap,
+      displayName: DashboardHomeTabOption.Sitemap,
+      visibilityOption: 'showSitemap',
+      component: () => import('./Sitemap.vue').then(m => m.default),
     },
   ]
 

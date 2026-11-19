@@ -1,4 +1,46 @@
 .dashboard-home-dynamic {
+  &-live {
+    &-room {
+      @include card(12px);
+      @include h-center(8px);
+      box-sizing: border-box;
+      min-block-size: 54px;
+      padding: 8px 10px;
+
+      img,
+      .be-icon {
+        flex: none;
+      }
+
+      img {
+        border-radius: 50%;
+      }
+
+      &:is(:hover, :focus-visible) strong {
+        color: var(--theme-color);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--theme-color);
+        outline-offset: -2px;
+      }
+    }
+
+    &-details {
+      @include v-stretch(2px);
+      min-inline-size: 0;
+
+      strong,
+      span {
+        @include single-line();
+      }
+
+      span {
+        color: var(--be-color-text-placeholder, #666);
+      }
+    }
+  }
+
   &-card {
     --dynamic-card-padding: 16px;
     --dynamic-post-padding: var(--dynamic-card-padding);

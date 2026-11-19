@@ -88,7 +88,7 @@ body:not(.home-redesign-off) {
 
     &:not(.is-scrolling-down),
     &:has(.default-tabs :focus-visible) {
-      --dashboard-home-feed-date-top: calc(var(--dashboard-home-sticky-top) + var(--dashboard-home-tab-bar-height));
+      --dashboard-home-content-scroll-margin: calc(var(--dashboard-home-sticky-top) + var(--dashboard-home-tab-bar-height));
     }
 
     .default-tabs {
@@ -128,7 +128,7 @@ body:not(.home-redesign-off) {
     overflow: visible;
 
     :focus-visible {
-      scroll-margin-block-start: var(--dashboard-home-feed-date-top);
+      scroll-margin-block-start: var(--dashboard-home-content-scroll-margin, var(--dashboard-home-feed-date-top));
     }
 
     &[hidden] {
