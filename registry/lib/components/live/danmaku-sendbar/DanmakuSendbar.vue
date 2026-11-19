@@ -28,7 +28,7 @@ import {
 const element = ref<HTMLElement>()
 const value = ref('')
 const enabled = ref(false)
-const controls = shallowRef<{ textArea: HTMLTextAreaElement; button: HTMLButtonElement }>()
+const controls = shallowRef<{ textArea: HTMLTextAreaElement; button: HTMLElement }>()
 
 // 重复调用会清掉播放器的自动隐藏定时器
 let locked = false
@@ -52,9 +52,10 @@ const updateValue = (event: Event) => {
   controls.value.textArea.value = (event.currentTarget as HTMLInputElement).value
 }
 const send = () => {
-  if (!controls.value.button.disabled) {
+  const { button } = controls.value
+  if (!(button instanceof HTMLButtonElement) || !button.disabled) {
     value.value = ''
-    controls.value.button.click()
+    button.click()
   }
 }
 onMounted(async () => {
@@ -70,7 +71,7 @@ onMounted(async () => {
   })
   const [textArea, button] = await Promise.all([
     select<HTMLTextAreaElement>(originalTextAreaSelector),
-    select<HTMLButtonElement>(sendButtonSelector),
+    select<HTMLElement>(sendButtonSelector),
   ])
   if (!textArea || !button) {
     throw new Error(
