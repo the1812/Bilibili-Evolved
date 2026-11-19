@@ -109,7 +109,7 @@ html.custom-width-dragging .player-full-win:not(.hide-aside-area) .player-and-as
   pointer-events: none;
   touch-action: none;
   width: 0;
-  position: absolute;
+  position: fixed;
   left: var(--be-live-player-width);
   top: 0;
   bottom: 0;
