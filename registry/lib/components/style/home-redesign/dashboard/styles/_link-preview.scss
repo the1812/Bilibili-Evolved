@@ -39,15 +39,15 @@
     border: var(--home-card-border);
     border-radius: var(--home-card-radius);
     background-color: var(--home-background-color);
-    background-color: color-mix(in srgb, var(--home-background-color) 50%, transparent);
     box-shadow: var(--home-card-shadow);
+    opacity: 0.5;
 
     &:is(:hover, :has(:focus-visible)) {
-      background-color: var(--home-background-color);
+      opacity: 1;
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      transition: background-color 0.15s ease-out;
+      transition: opacity 0.15s ease-out;
     }
 
     h2 {
