@@ -2,13 +2,12 @@ import { mutationObserve } from '@/core/observer'
 import { getCookieValue, getVue2Data, matchUrlPattern } from '@/core/utils'
 
 export const darkModeUrlExclude = [
-  /^https:\/\/(?:app|d|love|member|passport)\.bilibili\.com\//,
+  /^https:\/\/(?:app|d|love|manga|member|passport)\.bilibili\.com\//,
   /^https:\/\/www\.bilibili\.com\/(?:audio|blackroom|festival|protocal|v\/copyright)\//,
 ]
 
 export const isExcludedPage = () => darkModeUrlExclude.some(matchUrlPattern)
 const isBlackboardPage = () => matchUrlPattern(/^https:\/\/www\.bilibili\.com\/blackboard\//)
-const isMangaPage = () => matchUrlPattern(/^https:\/\/manga\.bilibili\.com\//)
 export const usesLiveThemeAttribute = () =>
   matchUrlPattern(/^https:\/\/(?:live|link)\.bilibili\.com\//)
 const liveThemeAttribute = 'lab-style'
@@ -36,9 +35,6 @@ const getThemeStyleLink = () => document.querySelector<HTMLLinkElement>('#__css-
 const isOfficialDarkModeEnabled = () => {
   if (isBlackboardPage()) {
     return getThemeStyleLink()?.href.includes('dark') ?? false
-  }
-  if (isMangaPage()) {
-    return document.documentElement.classList.contains('theme-dark')
   }
   return getCookieValue('theme_style') === 'dark'
 }
@@ -125,9 +121,6 @@ export const observeLiveTheme = (onChange: () => void) =>
   mutationObserve([document.documentElement], { attributeFilter: [liveThemeAttribute] }, onChange)
 
 export const observeOfficialTheme = (onChange: () => void, onApplied: (dark: boolean) => void) => {
-  if (isMangaPage()) {
-    mutationObserve([document.documentElement], { attributeFilter: ['class'] }, onChange)
-  }
   onOfficialThemeChange(onChange)
   document.addEventListener(officialThemeAppliedEvent, (event: CustomEvent<OfficialTheme>) => {
     if (canSyncOfficialTheme()) {
