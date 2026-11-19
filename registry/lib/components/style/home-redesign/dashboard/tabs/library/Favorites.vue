@@ -37,7 +37,7 @@
       </LibraryToolbar>
       <LibraryCards :entries="filteredEntries" />
       <div ref="loadTarget">
-        <LibraryPageStatus
+        <ListStatus
           :loading="busy"
           :failed="failed || (kind === 'folders' && foldersFailed)"
           :has-more="hasMore"
@@ -56,8 +56,9 @@ import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { VEmpty } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import ListStatus from '../../shared/ListStatus.vue'
+import { usePagedList } from '../../shared/use-paged-list'
 import LibraryCards from './LibraryCards.vue'
-import LibraryPageStatus from './LibraryPageStatus.vue'
 import LibraryToolbar from './LibraryToolbar.vue'
 import {
   favoriteKinds,
@@ -68,7 +69,7 @@ import {
   getFollowedShows,
   type FavoriteFolder,
 } from './favorites-api'
-import { filterLibraryEntries, useLibraryPages } from './library'
+import { filterLibraryEntries, type LibraryEntry } from './library'
 
 const uid = getUID()
 const { error: logError } = useScopedConsole('仪表盘首页收藏')
@@ -111,21 +112,25 @@ const source = () => {
   }
   return isFollowing.value ? `${kind.value}:${status.value}` : kind.value
 }
-const { entries, loading, failed, hasMore, loadTarget, loadNext, refresh } =
-  useLibraryPages<number>(
-    source,
-    (page = 1) => {
-      switch (kind.value) {
-        case 'folders':
-          return getFavoriteMedia(folder.value, page)
-        case 'collections':
-          return getCollectedFolders(uid, page)
-        default:
-          return getFollowedShows(uid, kind.value, status.value, page)
-      }
-    },
-    () => !keyword.value.trim(),
-  )
+const { entries, loading, failed, hasMore, loadTarget, loadNext, refresh } = usePagedList<
+  LibraryEntry,
+  number
+>({
+  source,
+  fetchPage: (page = 1) => {
+    switch (kind.value) {
+      case 'folders':
+        return getFavoriteMedia(folder.value, page)
+      case 'collections':
+        return getCollectedFolders(uid, page)
+      default:
+        return getFollowedShows(uid, kind.value, status.value, page)
+    }
+  },
+  getKey: item => item.id,
+  logName: '仪表盘首页收藏',
+  autoLoad: () => !keyword.value.trim(),
+})
 const busy = computed(() => loading.value || (kind.value === 'folders' && foldersLoading.value))
 const filteredEntries = computed(() => filterLibraryEntries(entries.value, keyword.value))
 const emptyMessage = computed(() => {

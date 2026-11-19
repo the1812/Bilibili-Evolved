@@ -81,13 +81,9 @@ export const useAccount = () => {
     getAccountPrivileges,
     'https://account.bilibili.com/account/big',
   )
-  const panelColumns = computed(() => [
-    { name: 'account', panels: annualVip.value ? [counts, privileges] : [counts] },
-    { name: 'messages', panels: [] },
-    { name: 'personal', panels: [] },
-  ])
+  const panels = computed(() => (annualVip.value ? [counts, privileges] : [counts]))
   const loadPanels = () => {
-    panelColumns.value.flatMap(column => column.panels).forEach(panel => panel.load())
+    panels.value.forEach(panel => panel.load())
   }
 
   onMounted(async () => {
@@ -116,7 +112,7 @@ export const useAccount = () => {
     levelLabel,
     accountDetails,
     counts,
-    panelColumns,
+    panels,
     loadPanels,
   }
 }

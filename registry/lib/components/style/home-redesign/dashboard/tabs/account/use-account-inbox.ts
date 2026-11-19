@@ -51,12 +51,12 @@ export const useAccountInbox = () => {
     }
     const request = ++listRequest
     const refreshUnread = confirmLoad.value
-    confirmLoad.value = false
     loading.value = true
     failed.value = false
     try {
       const result = await getInboxPage(category)
       if (request === listRequest) {
+        confirmLoad.value = false
         page.value = result
       }
     } catch {

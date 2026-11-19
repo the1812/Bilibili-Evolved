@@ -208,14 +208,4 @@
   &-card-actions {
     padding: 0 12px 10px;
   }
-
-  &-status {
-    @include h-center(8px);
-    justify-content: center;
-    flex-wrap: wrap;
-
-    &:empty {
-      block-size: 0;
-    }
-  }
 }

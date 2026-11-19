@@ -1,4 +1,4 @@
-body:not(.home-redesign-off) {
+body:not(.home-redesign-off):has(.dashboard-home) {
   min-height: calc(100vh + 1px);
 
   &.smallest-width {
@@ -12,8 +12,7 @@ body:not(.home-redesign-off) {
 
 .dashboard-home {
   --dashboard-home-auto-card-column: 1;
-  --card-width: 600px;
-  --card-height: 122px;
+  --dashboard-home-video-card-width: 600px;
   --dashboard-home-grid-gap: 12px;
   --dashboard-home-grid-padding: 8px;
   --dashboard-home-card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
@@ -105,6 +104,7 @@ body:not(.home-redesign-off) {
   }
 
   .default-tab {
+    min-block-size: 24px;
     padding: 0;
     border: 0;
     background: none;
@@ -128,7 +128,8 @@ body:not(.home-redesign-off) {
     overflow: visible;
 
     :focus-visible {
-      scroll-margin-block-start: var(--dashboard-home-content-scroll-margin, var(--dashboard-home-feed-date-top));
+      scroll-margin-block-start: var(--dashboard-home-content-scroll-margin,
+          var(--dashboard-home-feed-date-top));
     }
 
     &[hidden] {
@@ -149,5 +150,18 @@ body:not(.home-redesign-off) {
         transform: translateY(-12px);
       }
     }
+  }
+}
+
+.dashboard-home-list-status {
+  @include v-center();
+  text-align: center;
+
+  &:has(> [role='status']:not(:empty), > .be-button) {
+    padding-block: 8px;
+  }
+
+  >[role='status']:not(:empty)+.be-button {
+    margin-block-start: 8px;
   }
 }

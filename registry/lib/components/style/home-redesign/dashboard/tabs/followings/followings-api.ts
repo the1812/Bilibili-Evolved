@@ -30,5 +30,5 @@ export const getFollowingsPage = async (uid: string, page: number) => {
     sign: sign?.trim(),
     followedOn: mtime > 0 ? formatDate(new Date(mtime * 1000)) : undefined,
   }))
-  return { entries, hasMore: entries.length > 0 && page * pageSize < total }
+  return { entries, next: entries.length > 0 && page * pageSize < total ? page + 1 : undefined }
 }

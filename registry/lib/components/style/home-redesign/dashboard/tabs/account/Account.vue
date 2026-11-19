@@ -38,18 +38,9 @@
       </section>
 
       <div class="dashboard-home-account-panels">
-        <div
-          v-for="column in panelColumns"
-          :key="column.name"
-          class="dashboard-home-account-column"
-        >
-          <AccountInbox v-if="column.name === 'messages'" ref="inbox" />
-          <section v-if="column.name === 'personal'" class="dashboard-home-account-card">
-            <h2>{{ personalSection.title }}</h2>
-            <SitemapLinkList :links="personalSection.links" />
-          </section>
+        <div class="dashboard-home-account-column">
           <section
-            v-for="panel in column.panels"
+            v-for="panel in panels"
             :key="panel.title"
             class="dashboard-home-account-card"
             :aria-busy="panel.loading"
@@ -93,6 +84,11 @@
             }}</VEmpty>
           </section>
         </div>
+        <AccountInbox ref="inbox" />
+        <section class="dashboard-home-account-card">
+          <h2>{{ personalSection.title }}</h2>
+          <SitemapLinkList :links="personalSection.links" />
+        </section>
       </div>
       <DashboardHomeOperations @refresh="refresh" />
     </template>
@@ -104,8 +100,8 @@ import { ref } from 'vue'
 import { getUID } from '@/core/utils'
 import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
-import SitemapLinkList from '../SitemapLinkList.vue'
-import { getPersonalSitemapSection } from '../sitemap-links'
+import SitemapLinkList from '../sitemap/SitemapLinkList.vue'
+import { getPersonalSitemapSection } from '../sitemap/sitemap-links'
 import AccountInbox from './AccountInbox.vue'
 import { useAccount } from './use-account'
 
@@ -118,14 +114,14 @@ const {
   levelLabel,
   accountDetails,
   counts,
-  panelColumns,
+  panels,
   loadPanels,
 } = useAccount()
-const inbox = ref<InstanceType<typeof AccountInbox>[]>()
+const inbox = ref<InstanceType<typeof AccountInbox>>()
 const personalSection = getPersonalSitemapSection(getUID())
 
 const refresh = () => {
   loadPanels()
-  inbox.value?.[0]?.refreshInbox()
+  inbox.value?.refreshInbox()
 }
 </script>

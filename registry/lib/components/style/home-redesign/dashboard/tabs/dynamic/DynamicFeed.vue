@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-home-masonry-feed dashboard-home-dynamic" :aria-busy="loading">
+  <div class="dashboard-home-masonry-feed dashboard-home-dynamic">
     <VEmpty v-if="!loggedIn">登录后查看关注{{ feedLabel }}</VEmpty>
     <template v-else>
       <ul
@@ -36,13 +36,16 @@
           @toggle-like="toggleLike"
         />
       </div>
-      <div ref="loadMore" class="dashboard-home-masonry-status">
-        <VLoading v-if="loading" />
-        <VButton v-else-if="failed" @click="loadNextPage">加载失败，点击重试</VButton>
-        <VButton v-else-if="hasMore" @click="loadNextPage">加载更多</VButton>
-        <VEmpty v-else-if="entries.length === 0">暂无关注{{ feedLabel }}</VEmpty>
+      <div ref="loadTarget">
+        <ListStatus
+          :loading="loading"
+          :failed="failed"
+          :has-more="hasMore"
+          :empty="!hasMore && !entries.length ? `暂无关注${feedLabel}` : ''"
+          @load="loadNext"
+        />
       </div>
-      <DashboardHomeOperations v-if="entries.length || liveRooms.length" @refresh="refresh" />
+      <DashboardHomeOperations :refresh-disabled="loading" @refresh="refresh" />
     </template>
     <dialog
       ref="imagePreview"
@@ -67,8 +70,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+import { DpiImage, VEmpty, VIcon } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import ListStatus from '../../shared/ListStatus.vue'
 import MasonryItem from '../../shared/MasonryItem.vue'
 import DynamicCard from './DynamicCard.vue'
 import type { DynamicFeedType } from './dynamic-api'
@@ -86,8 +90,8 @@ const {
   failed,
   hasMore,
   likeStates,
-  loadMore,
-  loadNextPage,
+  loadTarget,
+  loadNext,
   toggleLike,
   refresh,
 } = useDynamicFeed(props.feedType)
