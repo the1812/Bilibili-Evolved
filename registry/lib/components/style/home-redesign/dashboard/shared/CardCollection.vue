@@ -33,7 +33,7 @@ watch(
       return
     }
     const measure = () => {
-      // Element offsets exclude the tab's entrance animation.
+      // Measure from the document top so scrolling does not change the row count.
       let top = 0
       for (let ancestor = element; ancestor; ancestor = ancestor.offsetParent as HTMLElement) {
         top += ancestor.offsetTop

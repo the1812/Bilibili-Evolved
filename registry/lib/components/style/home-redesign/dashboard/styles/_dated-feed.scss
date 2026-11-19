@@ -1,3 +1,14 @@
+.dashboard-home-card-view:has(.dashboard-home-dated-collection) {
+  --dashboard-home-feed-date-gap: 12px;
+}
+
+@media (min-width: 721px) {
+  :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) .dashboard-home-card-view:has(.dashboard-home-dated-collection) {
+    --dashboard-home-card-side-gutter: max(24px,
+        calc(12ch + var(--dashboard-home-feed-date-gap) - var(--dashboard-home-page-padding-inline) - var(--dashboard-home-grid-padding)));
+  }
+}
+
 .dashboard-home-feed-days {
   display: grid;
   gap: var(--dashboard-home-grid-gap);
@@ -13,8 +24,6 @@
 }
 
 .dashboard-home-feed-date {
-  --dashboard-home-feed-date-gap: 12px;
-
   position: sticky;
   inset-block-start: var(--dashboard-home-content-scroll-margin,
       var(--dashboard-home-feed-date-top));
@@ -23,12 +32,11 @@
   align-self: start;
   z-index: 1;
   inline-size: max-content;
-  max-inline-size: calc(var(--dashboard-home-page-padding-inline) + var(--dashboard-home-card-side-gutter) + var(--dashboard-home-grid-padding) - var(--dashboard-home-feed-date-gap));
   margin-inline-end: var(--dashboard-home-feed-date-gap);
   padding-block-start: 6px;
   color: var(--be-color-text-content, var(--home-color));
   font-weight: 600;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
   text-align: end;
 
   &::before {
@@ -55,7 +63,6 @@
   .dashboard-home-feed-date {
     grid-area: auto;
     justify-self: start;
-    max-inline-size: none;
     margin-inline: 0;
     background: var(--home-background-color);
     text-align: start;
@@ -63,11 +70,11 @@
 }
 
 [data-content-card-layout='vertical'] {
-  &:has(.dashboard-home-video-collection) {
+  &:has(.dashboard-home-dated-collection) {
     padding-block-start: 0;
   }
 
-  .dashboard-home-video-collection {
+  .dashboard-home-dated-collection {
     --dashboard-home-card-scroll-top-padding: 4px;
     --dashboard-home-card-scroll-header-height: 20px;
   }
@@ -89,14 +96,12 @@
     right: var(--dashboard-home-card-scroll-padding);
     grid-area: 1 / 1;
     justify-self: start;
-    max-inline-size: none;
     margin: 0;
     padding-block-start: 0;
     padding-inline-end: 6px;
     background: var(--home-background-color);
     direction: ltr;
     line-height: 16px;
-    white-space: nowrap;
     text-align: start;
 
     &::before {

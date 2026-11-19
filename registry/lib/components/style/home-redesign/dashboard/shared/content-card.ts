@@ -18,8 +18,6 @@ export type ContentCardData = Pick<VideoCard, 'title'> &
       | 'coverUrl'
       | 'description'
       | 'durationText'
-      | 'pubTime'
-      | 'pubTimeText'
       | 'watchlater'
       | 'upID'
       | 'upName'
