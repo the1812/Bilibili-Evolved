@@ -1,0 +1,90 @@
+.dashboard-home-link-preview {
+  box-sizing: border-box;
+  inline-size: min(var(--dashboard-home-link-preview-width, 1440px), calc(100vw - 24px));
+  block-size: calc(100vh - 24px);
+  max-inline-size: none;
+  max-block-size: none;
+  padding: 0;
+  overflow: hidden;
+  border: var(--home-card-border);
+  border-radius: var(--home-card-radius);
+  background-color: var(--home-background-color);
+  color: var(--home-color);
+  overscroll-behavior: contain;
+
+  &.is-reading-preview {
+    --dashboard-home-link-preview-width: 1080px;
+  }
+
+  &::backdrop {
+    overflow: hidden;
+    background-color: #0009;
+    overscroll-behavior: contain;
+  }
+
+  &-layout {
+    position: relative;
+    block-size: 100%;
+  }
+
+  &-header {
+    @include h-center(12px);
+    position: absolute;
+    inset-block-start: 12px;
+    inset-inline-end: 12px;
+    z-index: 1;
+    box-sizing: border-box;
+    max-inline-size: calc(100% - 24px);
+    padding: 6px 8px 6px 12px;
+    border: var(--home-card-border);
+    border-radius: var(--home-card-radius);
+    background-color: var(--home-background-color);
+    background-color: color-mix(in srgb, var(--home-background-color) 50%, transparent);
+    box-shadow: var(--home-card-shadow);
+
+    &:is(:hover, :has(:focus-visible)) {
+      background-color: var(--home-background-color);
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: background-color 0.15s ease-out;
+    }
+
+    h2 {
+      @include single-line();
+      min-inline-size: 0;
+      margin: 0;
+      font-size: 14px;
+    }
+  }
+
+  &-actions {
+    @include h-center(8px);
+    flex: none;
+    margin: 0;
+
+    a,
+    button {
+      @include h-center();
+      min-block-size: 30px;
+      padding: 4px 8px;
+      border: var(--home-card-border);
+      border-radius: 8px;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+
+      &:is(:hover, :focus-visible) {
+        color: var(--theme-color);
+      }
+    }
+  }
+
+  iframe {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    border: 0;
+  }
+}

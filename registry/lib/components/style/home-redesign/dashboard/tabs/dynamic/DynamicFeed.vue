@@ -1,58 +1,92 @@
 <template>
-  <div class="dashboard-home-masonry-feed dashboard-home-dynamic">
+  <div class="dashboard-home-card-view dashboard-home-dynamic">
     <VEmpty v-if="!loggedIn">登录后查看关注{{ feedLabel }}</VEmpty>
     <template v-else>
       <ul
         v-if="liveRooms.length"
-        class="dashboard-home-masonry-grid"
+        class="dashboard-home-card-grid dashboard-home-live-grid"
         role="list"
         aria-label="正在直播"
       >
-        <MasonryItem v-for="room in liveRooms" :key="room.id" tag="li">
-          <a
-            :href="room.url"
-            target="_blank"
-            rel="noopener"
-            class="dashboard-home-dynamic-live-room"
-          >
-            <DpiImage v-if="room.avatar" :src="room.avatar" :size="36" alt="" loading="lazy" />
-            <VIcon v-else icon="mdi-video-outline" :size="24" aria-hidden="true" />
+        <CardGridItem v-for="room in liveRooms" :key="room.id">
+          <article class="dashboard-home-dynamic-live-room">
+            <div class="dashboard-home-dynamic-live-avatar">
+              <DpiImage v-if="room.avatar" :src="room.avatar" :size="36" alt="" loading="lazy" />
+              <VIcon v-else icon="mdi-video-outline" :size="24" aria-hidden="true" />
+            </div>
             <div class="dashboard-home-dynamic-live-details">
-              <strong :title="room.title">{{ room.title }}</strong>
-              <span v-if="room.name && room.name !== room.title" :title="room.name">
+              <a
+                class="dashboard-home-dynamic-live-title"
+                :href="room.url"
+                :title="room.title"
+                target="_blank"
+                rel="noopener"
+              >
+                <strong>{{ room.title }}</strong>
+              </a>
+              <a
+                v-if="room.name && room.profileUrl"
+                class="dashboard-home-dynamic-live-profile"
+                :href="room.profileUrl"
+                :title="room.name"
+                :aria-label="`${room.name}（个人空间）`"
+                target="_blank"
+                rel="noopener"
+              >
+                {{ room.name }}
+              </a>
+              <span v-else-if="room.name && room.name !== room.title" :title="room.name">
                 {{ room.name }}
               </span>
             </div>
-          </a>
-        </MasonryItem>
+          </article>
+        </CardGridItem>
       </ul>
-      <div class="dashboard-home-masonry-grid">
-        <DynamicCard
-          v-for="card in cards"
-          :key="card.post.id"
-          :card="card"
-          :like-states="likeStates"
-          @preview-image="openImagePreview"
-          @toggle-like="toggleLike"
-        />
-      </div>
-      <div ref="loadTarget">
-        <ListStatus
-          :loading="loading"
-          :failed="failed"
-          :has-more="hasMore"
-          :empty="!hasMore && !entries.length ? `暂无关注${feedLabel}` : ''"
-          @load="loadNext"
-        />
-      </div>
+      <CardCollection>
+        <ul v-if="cards.length" class="dashboard-home-card-grid" role="list">
+          <template v-if="feedType === 'all'">
+            <DynamicCard
+              v-for="card in cards"
+              :key="card.post.id"
+              :card="card"
+              :like-states="likeStates"
+              @preview-image="openImagePreview"
+              @toggle-like="toggleLike"
+            />
+          </template>
+          <template v-else>
+            <CardGridItem v-for="card in contentCards" :key="card.id">
+              <ContentCard :data="card.data">
+                <template v-if="hasDynamicStats(card.post.stats)" #stats>
+                  <DynamicStats
+                    :stats="card.post.stats"
+                    :like-state="likeStates[card.post.id]"
+                    @toggle-like="toggleLike(card.post)"
+                  />
+                </template>
+              </ContentCard>
+            </CardGridItem>
+          </template>
+        </ul>
+        <div ref="loadTarget" class="dashboard-home-card-end">
+          <ListStatus
+            :loading="loading"
+            :failed="failed"
+            :has-more="hasMore"
+            :empty="!hasMore && !entries.length ? `暂无关注${feedLabel}` : ''"
+            @load="loadNext"
+          />
+        </div>
+      </CardCollection>
       <DashboardHomeOperations :refresh-disabled="loading" @refresh="refresh" />
     </template>
     <dialog
+      v-if="feedType === 'all'"
       ref="imagePreview"
       class="dashboard-home-dynamic-image-preview"
       aria-label="图片预览"
       @click.self="closeImagePreview"
-      @close="previewUrl = ''"
+      @close="clearImagePreview"
     >
       <button type="button" aria-label="关闭图片预览" autofocus @click="closeImagePreview">
         <VIcon icon="mdi-close" :size="24" aria-hidden="true" />
@@ -69,17 +103,26 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { formatDateTime } from '@/core/utils/formatters'
 import { DpiImage, VEmpty, VIcon } from '@/ui'
+import { TabOption } from '../../options'
+import CardCollection from '../../shared/CardCollection.vue'
+import CardGridItem from '../../shared/CardGridItem.vue'
+import ContentCard from '../../shared/ContentCard.vue'
+import type { ContentCardData } from '../../shared/content-card'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
-import MasonryItem from '../../shared/MasonryItem.vue'
 import DynamicCard from './DynamicCard.vue'
+import DynamicStats from './DynamicStats.vue'
 import type { DynamicFeedType } from './dynamic-api'
+import { formatDynamicTimestamp, getDynamicThumbnailSet, hasDynamicStats } from './dynamic-post'
 import { useDynamicFeed } from './use-dynamic-feed'
 
 const props = withDefaults(defineProps<{ feedType?: DynamicFeedType }>(), { feedType: 'all' })
-const feedLabel = { all: '动态', pgc: '番剧', article: '专栏' }[props.feedType]
+const feedLabel = { all: TabOption.Dynamic, pgc: TabOption.Bangumi, article: TabOption.Article }[
+  props.feedType
+]
 
 const {
   loggedIn,
@@ -96,13 +139,46 @@ const {
   refresh,
 } = useDynamicFeed(props.feedType)
 
+const contentCards = computed(() => {
+  const kind = props.feedType === 'pgc' ? 'bangumi' : 'article'
+  return cards.value.map(card => {
+    const post = card.original ?? card.post
+    const { attachment, author, publishedAt } = post
+    const coverUrl = attachment?.coverUrl ?? post.images[0]?.url
+    const data: ContentCardData = {
+      ...attachment,
+      kind,
+      title: attachment?.title || post.text || `查看完整${feedLabel}`,
+      url: attachment?.url ?? post.url,
+      description: attachment?.description || (attachment ? post.text : undefined),
+      coverUrl,
+      coverSrcset: attachment?.coverSrcset ?? (coverUrl && getDynamicThumbnailSet(coverUrl, 480)),
+      upID: kind === 'bangumi' ? undefined : author.id,
+      upName: author.name,
+      upFaceUrl: author.avatar,
+      upUrl: author.url,
+      pubTime: publishedAt && formatDateTime(publishedAt).slice(0, 16),
+      pubTimeText: publishedAt && formatDynamicTimestamp(publishedAt),
+    }
+    return { id: card.post.id, data, post }
+  })
+})
+
 const imagePreview = ref<HTMLDialogElement>()
 const previewUrl = ref('')
 const previewFailed = ref(false)
 const openImagePreview = (url: string) => {
   previewUrl.value = url
   previewFailed.value = false
-  imagePreview.value.showModal()
+  const dialog = imagePreview.value
+  if (dialog && !dialog.open) {
+    dialog.showModal()
+  }
 }
-const closeImagePreview = () => imagePreview.value.close()
+const closeImagePreview = () => imagePreview.value?.close()
+const clearImagePreview = () => {
+  if (!imagePreview.value?.open) {
+    previewUrl.value = ''
+  }
+}
 </script>

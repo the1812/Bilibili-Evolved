@@ -1,115 +1,111 @@
-.dashboard-home-library {
-  @include v-stretch(16px);
-  box-sizing: border-box;
-  inline-size: 1440px;
-  max-inline-size: 100%;
-  padding-inline: var(--dashboard-home-grid-padding);
+.dashboard-home-toolbar {
+  @include h-center(8px);
+  flex-wrap: wrap;
+  font-size: 13px;
 
-  &-toolbar {
-    @include h-center(8px);
-    flex-wrap: wrap;
-    font-size: 13px;
+  label {
+    @include h-center(6px);
+    max-inline-size: 100%;
 
-    label {
-      @include h-center(6px);
-      max-inline-size: 100%;
-
-      >span {
-        flex: none;
-      }
-    }
-
-    input,
-    select,
-    .dashboard-home-library-actions> :is(a, button) {
-      box-sizing: border-box;
-      min-block-size: 34px;
-      min-inline-size: 0;
-      padding: 6px 10px;
-      border: 1px solid #8885;
-      border-radius: 8px;
-      background-color: var(--home-background-color);
-      color: inherit;
-      font: inherit;
-
-      &:focus-visible {
-        outline: 2px solid var(--theme-color);
-        outline-offset: 2px;
-      }
-    }
-
-    input,
-    select {
-      max-inline-size: 220px;
-      color-scheme: light;
-
-      body.dark & {
-        color-scheme: dark;
-      }
-    }
-
-    select {
-      appearance: auto;
-      white-space: nowrap;
-
-      &:hover {
-        border-color: var(--theme-color);
-      }
-
-      @supports (appearance: base-select) {
-
-        &,
-        &::picker(select) {
-          appearance: base-select;
-        }
-
-        &::picker(select) {
-          max-inline-size: min(320px, 90vw);
-          margin-block: 4px;
-          padding: 4px;
-          border: var(--home-card-border);
-          border-radius: 8px;
-          background-color: var(--home-background-color);
-          box-shadow: var(--dashboard-home-card-hover-shadow);
-          color: inherit;
-        }
-
-        &::picker-icon {
-          color: var(--theme-color);
-        }
-
-        &:open::picker-icon {
-          rotate: 180deg;
-        }
-
-        option {
-          min-block-size: 32px;
-          gap: 8px;
-          padding: 6px 8px;
-          border-radius: 5px;
-          white-space: normal;
-          overflow-wrap: anywhere;
-
-          &::checkmark {
-            display: none;
-          }
-
-          &:checked {
-            background-color: var(--theme-color-10, #8882);
-          }
-
-          &:is(:hover, :focus-visible) {
-            background-color: #8883;
-          }
-        }
-      }
-    }
-
-    select,
-    .dashboard-home-library-actions> :is(a, button:enabled) {
-      cursor: pointer;
+    >span {
+      flex: none;
     }
   }
+
+  input,
+  select,
+  .dashboard-home-library-actions> :is(a, button) {
+    box-sizing: border-box;
+    min-block-size: 34px;
+    min-inline-size: 0;
+    padding: 6px 10px;
+    border: 1px solid #8885;
+    border-radius: 8px;
+    background-color: var(--home-background-color);
+    color: inherit;
+    font: inherit;
+
+    &:focus-visible {
+      outline: 2px solid var(--theme-color);
+      outline-offset: 2px;
+    }
+  }
+
+  input,
+  select {
+    max-inline-size: 220px;
+    color-scheme: light;
+
+    body.dark & {
+      color-scheme: dark;
+    }
+  }
+
+  select {
+    appearance: auto;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: var(--theme-color);
+    }
+
+    @supports (appearance: base-select) {
+
+      &,
+      &::picker(select) {
+        appearance: base-select;
+      }
+
+      &::picker(select) {
+        max-inline-size: min(320px, 90vw);
+        margin-block: 4px;
+        padding: 4px;
+        border: var(--home-card-border);
+        border-radius: 8px;
+        background-color: var(--home-background-color);
+        box-shadow: var(--dashboard-home-card-hover-shadow);
+        color: inherit;
+      }
+
+      &::picker-icon {
+        color: var(--theme-color);
+      }
+
+      &:open::picker-icon {
+        rotate: 180deg;
+      }
+
+      option {
+        min-block-size: 32px;
+        gap: 8px;
+        padding: 6px 8px;
+        border-radius: 5px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+
+        &::checkmark {
+          display: none;
+        }
+
+        &:checked {
+          background-color: var(--theme-color-10, #8882);
+        }
+
+        &:is(:hover, :focus-visible) {
+          background-color: #8883;
+        }
+      }
+    }
+  }
+
+  select,
+  .dashboard-home-library-actions> :is(a, button:enabled:not([aria-disabled='true'])) {
+    cursor: pointer;
+  }
+}
+
+.dashboard-home-library {
+  @include v-stretch(12px);
 
   &-actions {
     @include h-center(8px);
@@ -118,94 +114,21 @@
     > :is(a, button) {
       @include h-center();
 
-      &:not(:disabled):hover {
+      &:not(:disabled, [aria-disabled='true']):hover {
         border-color: var(--theme-color);
         color: var(--theme-color);
       }
 
-      &:disabled {
+      &:is(:disabled, [aria-disabled='true']) {
         opacity: 0.55;
       }
     }
-  }
 
-  &-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 208px), 1fr));
-    gap: 16px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  &-card {
-    @include card(12px);
-    @include v-stretch();
-    min-inline-size: 0;
-  }
-
-  &-media {
-    @include v-stretch();
-    flex: 1;
-    min-inline-size: 0;
-    border-radius: inherit;
-    color: inherit;
-
-    &:is(a):hover strong {
-      color: var(--theme-color);
+    >button.dashboard-home-history-recording {
+      justify-content: center;
+      inline-size: 34px;
+      padding: 4px;
+      border-radius: 50%;
     }
-  }
-
-  &-cover {
-    position: relative;
-    display: grid;
-    place-items: center;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    border-radius: 12px 12px 0 0;
-    background-color: #8882;
-    color: var(--be-color-text-placeholder, #666);
-
-    img {
-      inline-size: 100%;
-      block-size: 100%;
-      object-fit: cover;
-    }
-
-    progress {
-      position: absolute;
-      inset: auto 0 0;
-      inline-size: 100%;
-      block-size: 4px;
-      accent-color: var(--theme-color);
-    }
-  }
-
-  &-badge {
-    position: absolute;
-    inset-block-end: 8px;
-    inset-inline-end: 8px;
-    padding: 3px 5px;
-    border-radius: 4px;
-    background-color: #000b;
-    color: #fff;
-  }
-
-  &-info {
-    @include v-stretch(5px);
-    padding: 10px 12px;
-    overflow-wrap: anywhere;
-
-    strong {
-      font-size: 14px;
-    }
-
-    span {
-      color: var(--be-color-text-placeholder, #666);
-    }
-  }
-
-  &-card-actions {
-    padding: 0 12px 10px;
   }
 }

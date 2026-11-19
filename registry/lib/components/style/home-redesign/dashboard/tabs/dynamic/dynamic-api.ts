@@ -17,12 +17,14 @@ export interface DynamicLiveRoom {
   name?: string
   avatar?: string
   url: string
+  profileUrl?: string
 }
 
 interface DynamicPortal {
   live_users?: {
     items?: {
       room_id?: number | string
+      mid?: number | string
       title?: string
       uname?: string
       face?: string
@@ -38,17 +40,20 @@ export const getDynamicLiveRooms = async (): Promise<DynamicLiveRoom[]> => {
   )
   const rooms = (portal.live_users?.items ?? []).flatMap(room => {
     const id = String(room.room_id ?? '')
-    const title = room.title?.trim() || room.uname?.trim()
+    const name = room.uname?.trim()
+    const title = room.title?.trim() || name
     if (!/^[1-9]\d*$/.test(id) || !title) {
       return []
     }
+    const mid = String(room.mid ?? '')
     return [
       {
         id,
         title,
-        name: room.uname,
+        name,
         avatar: room.face,
         url: `https://live.bilibili.com/${id}`,
+        profileUrl: /^[1-9]\d*$/.test(mid) ? `https://space.bilibili.com/${mid}` : undefined,
       },
     ]
   })

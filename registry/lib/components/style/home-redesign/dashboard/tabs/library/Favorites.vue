@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-home-library">
+  <div class="dashboard-home-card-view dashboard-home-library">
     <VEmpty v-if="!uid">登录后查看收藏</VEmpty>
     <template v-else>
       <LibraryToolbar :value="keyword" @input="keyword = $event">
@@ -35,16 +35,18 @@
           </a>
         </template>
       </LibraryToolbar>
-      <LibraryCards :entries="filteredEntries" />
-      <div ref="loadTarget">
-        <ListStatus
-          :loading="busy"
-          :failed="failed || (kind === 'folders' && foldersFailed)"
-          :has-more="hasMore"
-          :empty="emptyMessage"
-          @load="retryOrLoad"
-        />
-      </div>
+      <CardCollection>
+        <LibraryCards :entries="filteredEntries" />
+        <div ref="loadTarget" class="dashboard-home-card-end">
+          <ListStatus
+            :loading="busy"
+            :failed="failed || (kind === 'folders' && foldersFailed)"
+            :has-more="hasMore"
+            :empty="emptyMessage"
+            @load="retryOrLoad"
+          />
+        </div>
+      </CardCollection>
       <DashboardHomeOperations :refresh-disabled="busy" @refresh="refreshFavorites" />
     </template>
   </div>
@@ -55,6 +57,7 @@ import { computed, ref, watch } from 'vue'
 import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { VEmpty } from '@/ui'
+import CardCollection from '../../shared/CardCollection.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 import { usePagedList } from '../../shared/use-paged-list'
@@ -69,7 +72,7 @@ import {
   getFollowedShows,
   type FavoriteFolder,
 } from './favorites-api'
-import { filterLibraryEntries, type LibraryEntry } from './library'
+import { filterLibraryEntries, getLibraryEmptyMessage, type LibraryEntry } from './library'
 
 const uid = getUID()
 const { error: logError } = useScopedConsole('仪表盘首页收藏')
@@ -133,18 +136,15 @@ const { entries, loading, failed, hasMore, loadTarget, loadNext, refresh } = use
 })
 const busy = computed(() => loading.value || (kind.value === 'folders' && foldersLoading.value))
 const filteredEntries = computed(() => filterLibraryEntries(entries.value, keyword.value))
-const emptyMessage = computed(() => {
-  if (filteredEntries.value.length) {
-    return ''
-  }
-  if (keyword.value.trim()) {
-    return '已加载内容中没有匹配项'
-  }
-  if (kind.value === 'folders' && !folder.value) {
-    return '暂无收藏夹'
-  }
-  return hasMore.value ? '' : '暂无收藏内容'
-})
+const emptyMessage = computed(() =>
+  getLibraryEmptyMessage({
+    entries: entries.value,
+    matches: filteredEntries.value,
+    filtering: Boolean(keyword.value.trim()),
+    hasMore: hasMore.value,
+    empty: kind.value === 'folders' && !folder.value ? '暂无收藏夹' : '暂无收藏内容',
+  }),
+)
 
 watch(
   kind,

@@ -1,16 +1,16 @@
-import { computed, del, onMounted, reactive, set, shallowRef } from 'vue'
+import { computed, onMounted, shallowRef } from 'vue'
 import { getUID } from '@/core/utils'
-import { logError, useScopedConsole } from '@/core/utils/log'
+import { useScopedConsole } from '@/core/utils/log'
 import { usePagedList } from '../../shared/use-paged-list'
 import {
   getDynamicFeedPage,
   getDynamicLiveRooms,
-  setDynamicLike,
   type DynamicFeedType,
   type DynamicLiveRoom,
 } from './dynamic-api'
-import type { DynamicEntry, DynamicLikeState, DynamicPost } from './dynamic-post'
+import type { DynamicEntry } from './dynamic-post'
 import { mergeDynamicReposts } from './merge-reposts'
+import { useDynamicLike } from './use-dynamic-like'
 
 export const useDynamicFeed = (type: DynamicFeedType) => {
   const { error: logFeedError } = useScopedConsole('仪表盘首页动态')
@@ -48,30 +48,10 @@ export const useDynamicFeed = (type: DynamicFeedType) => {
   }
   onMounted(refreshLiveRooms)
 
-  const likeStates = reactive<Record<string, DynamicLikeState>>({})
-  const toggleLike = async ({ id, stats }: DynamicPost) => {
-    const like = stats?.like
-    if (!like?.canToggle || likeStates[id]?.pending) {
-      return
-    }
-    const current = likeStates[id] ?? { pending: false }
-    const liked = (current.liked ?? like.liked) !== true
-    set(likeStates, id, { ...current, pending: true })
-    try {
-      await setDynamicLike(id, liked)
-      set(likeStates, id, { liked, pending: false })
-    } catch (error) {
-      set(likeStates, id, current)
-      logError(error instanceof Error ? error : '更新点赞失败')
-    }
-  }
+  const { likeStates, toggleLike, resetLikeStates } = useDynamicLike()
 
   const refresh = () => {
-    for (const [id, state] of Object.entries(likeStates)) {
-      if (!state.pending) {
-        del(likeStates, id)
-      }
-    }
+    resetLikeStates()
     refreshLiveRooms()
     return refreshPosts()
   }

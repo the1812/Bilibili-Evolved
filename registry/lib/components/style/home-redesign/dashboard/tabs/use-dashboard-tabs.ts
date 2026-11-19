@@ -1,129 +1,100 @@
-import { onBeforeUnmount, ref } from 'vue'
-import { addComponentListener, removeComponentListener } from '@/core/settings'
+import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
 import { getUID } from '@/core/utils'
-import type { TabMapping } from '@/ui/tab-mapping'
-import { DashboardHomeTabOption, type DashboardHomeOptions } from '../options'
+import { contentCardLayouts, dashboardHomeOptionsMetadata, useDashboardOption } from '../options'
+import type { ContentCardLayout } from '../shared/content-card'
+import { getDashboardTabs, type DashboardTab } from './dashboard-tabs'
 
-type TabVisibilityOption = keyof DashboardHomeOptions & `show${string}`
-export type DashboardTab = Pick<TabMapping, 'component' | 'propsData' | 'activeLink'> & {
-  name: DashboardHomeTabOption
-  visibilityOption: TabVisibilityOption
-}
+const tabQueryParam = 'dashboardTab'
 
-export const useDashboardTabs = (dashboardHomeOptions: DashboardHomeOptions) => {
-  const uid = getUID()
-  const tabs: DashboardTab[] = [
-    {
-      name: DashboardHomeTabOption.Video,
-      visibilityOption: 'showVideo',
-      component: () => import('./video/VideoFeed.vue').then(m => m.default),
-      activeLink: 'https://t.bilibili.com/?tab=video',
-    },
-    {
-      name: DashboardHomeTabOption.Bangumi,
-      visibilityOption: 'showBangumi',
-      component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
-      propsData: { feedType: 'pgc' },
-      activeLink: 'https://t.bilibili.com/?tab=pgc',
-    },
-    {
-      name: DashboardHomeTabOption.Article,
-      visibilityOption: 'showArticle',
-      component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
-      propsData: { feedType: 'article' },
-      activeLink: 'https://t.bilibili.com/?tab=article',
-    },
-    {
-      name: DashboardHomeTabOption.Dynamic,
-      visibilityOption: 'showDynamic',
-      component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
-      activeLink: 'https://t.bilibili.com/',
-    },
-    {
-      name: DashboardHomeTabOption.Followings,
-      visibilityOption: 'showFollowings',
-      component: () => import('./followings/Followings.vue').then(m => m.default),
-      activeLink: uid
-        ? `https://space.bilibili.com/${uid}/fans/follow`
-        : 'https://passport.bilibili.com/login',
-    },
-    {
-      name: DashboardHomeTabOption.Trending,
-      visibilityOption: 'showTrending',
-      component: () => import('./video/Trending.vue').then(m => m.default),
-      activeLink: 'https://www.bilibili.com/v/popular/all',
-    },
-    {
-      name: DashboardHomeTabOption.Recommended,
-      visibilityOption: 'showRecommended',
-      component: () => import('./video/Trending.vue').then(m => m.default),
-      propsData: { personalized: true },
-    },
-    {
-      name: DashboardHomeTabOption.Search,
-      visibilityOption: 'showSearch',
-      component: () => import('./Search.vue').then(m => m.default),
-    },
-    {
-      name: DashboardHomeTabOption.Favorites,
-      visibilityOption: 'showFavorites',
-      component: () => import('./library/Favorites.vue').then(m => m.default),
-      activeLink: uid ? `https://space.bilibili.com/${uid}/favlist` : undefined,
-    },
-    {
-      name: DashboardHomeTabOption.History,
-      visibilityOption: 'showHistory',
-      component: () => import('./library/History.vue').then(m => m.default),
-      activeLink: 'https://www.bilibili.com/history',
-    },
-    {
-      name: DashboardHomeTabOption.Watchlater,
-      visibilityOption: 'showWatchlater',
-      component: () => import('./library/Watchlater.vue').then(m => m.default),
-      activeLink: 'https://www.bilibili.com/watchlater/#/list',
-    },
-    {
-      name: DashboardHomeTabOption.Account,
-      visibilityOption: 'showAccount',
-      component: () => import('./account/Account.vue').then(m => m.default),
-      activeLink: 'https://account.bilibili.com/account/home',
-    },
-    {
-      name: DashboardHomeTabOption.Sitemap,
-      visibilityOption: 'showSitemap',
-      component: () => import('./sitemap/Sitemap.vue').then(m => m.default),
-    },
-  ]
+export const useDashboardTabs = () => {
+  const tabs = getDashboardTabs(getUID())
+  const rememberTabInUrl = useDashboardOption('rememberTabInUrl')
+  const preferredTab = useDashboardOption('defaultTab')
+  const tabVisibility = tabs.map(tab => ({ tab, shown: useDashboardOption(tab.visibilityOption) }))
+  const visibleTabs = computed(() =>
+    tabVisibility.filter(({ shown }) => shown.value).map(({ tab }) => tab),
+  )
+  const defaultTab = computed(
+    () => visibleTabs.value.find(tab => tab.name === preferredTab.value) ?? visibleTabs.value[0],
+  )
+  const selectedTab = shallowRef(defaultTab.value)
 
-  const getVisibleTabs = () => tabs.filter(tab => dashboardHomeOptions[tab.visibilityOption])
-  const visibleTabs = ref(getVisibleTabs())
-  const getDefaultTab = () =>
-    visibleTabs.value.find(tab => tab.name === dashboardHomeOptions.defaultTab) ??
-    visibleTabs.value[0]
-  const selectedTab = ref(getDefaultTab())
-
-  const selectTab = (tab: DashboardTab) => {
-    if (tab.name === selectedTab.value?.name && tab.activeLink) {
-      window.open(tab.activeLink, '_blank', 'noopener')
+  const getTabFromUrl = () => {
+    const id = new URLSearchParams(location.search).get(tabQueryParam)
+    return visibleTabs.value.find(tab => tab.id === id)
+  }
+  const replaceTabInUrl = (tab?: DashboardTab) => {
+    const url = new URL(location.href)
+    const id = tab && tab !== defaultTab.value ? tab.id : null
+    if (url.searchParams.get(tabQueryParam) === id) {
+      return
     }
-    selectedTab.value = tab
-  }
-
-  const updateVisibleTabs = () => {
-    visibleTabs.value = getVisibleTabs()
-    if (!visibleTabs.value.includes(selectedTab.value)) {
-      selectedTab.value = getDefaultTab()
+    if (id) {
+      url.searchParams.set(tabQueryParam, id)
+    } else {
+      url.searchParams.delete(tabQueryParam)
     }
+    history.replaceState(history.state, '', url.href)
   }
+  const restoreTabFromUrl = () => {
+    if (!rememberTabInUrl.value) {
+      return
+    }
+    selectedTab.value = getTabFromUrl() ?? defaultTab.value
+    replaceTabInUrl(selectedTab.value)
+  }
+  restoreTabFromUrl()
 
-  for (const { visibilityOption } of tabs) {
-    addComponentListener(`dashboardHome.${visibilityOption}`, updateVisibleTabs)
-  }
-  onBeforeUnmount(() => {
-    for (const { visibilityOption } of tabs) {
-      removeComponentListener(`dashboardHome.${visibilityOption}`, updateVisibleTabs)
+  watch([selectedTab, defaultTab], () => {
+    if (rememberTabInUrl.value) {
+      replaceTabInUrl(selectedTab.value)
     }
   })
+  watch(rememberTabInUrl, enabled => {
+    if (enabled) {
+      selectedTab.value = getTabFromUrl() ?? selectedTab.value
+      replaceTabInUrl(selectedTab.value)
+    } else {
+      replaceTabInUrl()
+    }
+  })
+  window.addEventListener('popstate', restoreTabFromUrl)
 
-  return { visibleTabs, selectedTab, selectTab }
+  watch(visibleTabs, visible => {
+    if (!visible.includes(selectedTab.value)) {
+      selectedTab.value = defaultTab.value
+    }
+  })
+  onBeforeUnmount(() => window.removeEventListener('popstate', restoreTabFromUrl))
+
+  const layoutOptions = new Map(
+    tabs.flatMap(({ layoutOption }) =>
+      layoutOption ? [[layoutOption, useDashboardOption(layoutOption)] as const] : [],
+    ),
+  )
+  const trackCountOptions = new Map(
+    tabs.flatMap(({ trackCountOption }) =>
+      trackCountOption ? [[trackCountOption, useDashboardOption(trackCountOption)] as const] : [],
+    ),
+  )
+  const getLayoutOption = ({ layoutOption }: DashboardTab) => {
+    if (!layoutOption) {
+      return undefined
+    }
+    const option = layoutOptions.get(layoutOption)?.value
+    return Object.hasOwn(contentCardLayouts, option)
+      ? option
+      : dashboardHomeOptionsMetadata[layoutOption].defaultValue
+  }
+  const getCardLayout = (tab?: DashboardTab): ContentCardLayout | undefined => {
+    if (!tab?.layoutOption) {
+      return tab?.fixedLayout
+    }
+    return contentCardLayouts[getLayoutOption(tab)]
+  }
+  const getTrackCount = ({ trackCountOption }: DashboardTab) => {
+    const count = trackCountOptions.get(trackCountOption)?.value
+    return Number.isInteger(count) && count > 0 && count <= 10 ? count : null
+  }
+  return { visibleTabs, selectedTab, getCardLayout, getTrackCount }
 }

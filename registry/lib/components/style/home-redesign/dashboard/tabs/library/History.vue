@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-home-library">
+  <div class="dashboard-home-card-view dashboard-home-library">
     <VEmpty v-if="!uid">登录后查看历史记录</VEmpty>
     <template v-else>
       <LibraryToolbar :value="keyword" @input="keyword = $event">
@@ -14,20 +14,32 @@
           </label>
         </template>
         <template #actions>
+          <button
+            type="button"
+            class="dashboard-home-history-recording"
+            :title="recordingAction.label"
+            :aria-label="recordingAction.label"
+            :aria-disabled="recordingBusy ? 'true' : 'false'"
+            @click="toggleRecording"
+          >
+            <VIcon :icon="recordingAction.icon" :size="14" aria-hidden="true" />
+          </button>
           <a href="https://www.bilibili.com/history" target="_blank" rel="noopener">查看完整历史</a>
         </template>
       </LibraryToolbar>
-      <LibraryCards :entries="filteredEntries" />
-      <div ref="loadTarget">
-        <ListStatus
-          :loading="loading"
-          :failed="failed"
-          :has-more="hasMore"
-          :empty="emptyMessage"
-          @load="loadNext"
-        />
-      </div>
-      <DashboardHomeOperations :refresh-disabled="loading" @refresh="refresh" />
+      <CardCollection>
+        <LibraryCards :entries="filteredEntries" />
+        <div ref="loadTarget" class="dashboard-home-card-end">
+          <ListStatus
+            :loading="loading"
+            :failed="failed"
+            :has-more="hasMore"
+            :empty="emptyMessage"
+            @load="loadNext"
+          />
+        </div>
+      </CardCollection>
+      <DashboardHomeOperations :refresh-disabled="loading" @refresh="refreshHistory" />
     </template>
   </div>
 </template>
@@ -35,77 +47,49 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { getUID } from '@/core/utils'
-import { VEmpty } from '@/ui'
-import {
-  getHistoryItems,
-  HistoryType,
-  navbarFilterTypes,
-  type HistoryItem,
-} from '../../../../custom-navbar/history/types'
+import { VEmpty, VIcon } from '@/ui'
+import { HistoryType, navbarFilterTypes } from '../../../../custom-navbar/history/types'
+import CardCollection from '../../shared/CardCollection.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 import { usePagedList } from '../../shared/use-paged-list'
+import { getHistoryPage } from './history-api'
 import LibraryCards from './LibraryCards.vue'
 import LibraryToolbar from './LibraryToolbar.vue'
-import { filterLibraryEntries, type LibraryEntry } from './library'
+import { filterLibraryEntries, getLibraryEmptyMessage, type LibraryEntry } from './library'
+import { useHistoryRecording } from './use-history-recording'
 
 const uid = getUID()
 const type = ref(HistoryType.All)
 const keyword = ref('')
-
-const toHistoryEntry = (item: HistoryItem): LibraryEntry => {
-  const kind = navbarFilterTypes.find(filter => filter.name === item.type)?.displayName
-  const progress =
-    item.duration > 0 && Number.isFinite(item.progress) && item.progress > 0
-      ? Math.min(item.progress, 1)
-      : undefined
-  return {
-    id: `${item.type}:${item.id}`,
-    title: item.title,
-    cover: item.cover,
-    url: item.url,
-    badge: kind,
-    author: item.upName,
-    detail: [item.upName, item.timeText, progress === 1 ? '已看完' : undefined]
-      .filter(Boolean)
-      .join(' · '),
-    progress,
-  }
-}
-
+const {
+  action: recordingAction,
+  busy: recordingBusy,
+  refreshRecording,
+  toggleRecording,
+} = useHistoryRecording(uid)
 const { entries, loading, failed, hasMore, loadTarget, loadNext, refresh } = usePagedList<
   LibraryEntry,
   number
 >({
   source: () => (uid ? type.value : undefined),
-  fetchPage: async viewTime => {
-    const selectedType = type.value
-    const filter = navbarFilterTypes.find(item => item.name === selectedType)
-    // Video and bangumi share an API category. Advance using the unfiltered page.
-    const items = await getHistoryItems(viewTime, { ...filter, name: HistoryType.All })
-    const nextViewTime = items.at(-1)?.viewAt
-    return {
-      entries: items
-        .filter(item => selectedType === HistoryType.All || item.type === selectedType)
-        .map(toHistoryEntry),
-      next:
-        nextViewTime && (viewTime === undefined || nextViewTime < viewTime)
-          ? nextViewTime
-          : undefined,
-    }
-  },
+  fetchPage: viewAt => getHistoryPage(type.value, viewAt),
   getKey: item => item.id,
   logName: '仪表盘首页历史',
   autoLoad: () => !keyword.value.trim(),
 })
+const refreshHistory = () => {
+  refresh()
+  refreshRecording()
+}
 const filteredEntries = computed(() => filterLibraryEntries(entries.value, keyword.value))
-const emptyMessage = computed(() => {
-  if (filteredEntries.value.length) {
-    return ''
-  }
-  if (keyword.value.trim()) {
-    return '已加载内容中没有匹配项'
-  }
-  return hasMore.value ? '' : '暂无历史记录'
-})
+const emptyMessage = computed(() =>
+  getLibraryEmptyMessage({
+    entries: entries.value,
+    matches: filteredEntries.value,
+    filtering: Boolean(keyword.value.trim()),
+    hasMore: hasMore.value,
+    empty: '暂无历史记录',
+  }),
+)
 </script>

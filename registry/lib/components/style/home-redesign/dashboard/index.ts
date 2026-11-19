@@ -21,7 +21,13 @@ export const component = defineComponentMetadata({
     })
   },
   options: dashboardHomeOptionsMetadata,
-  unload: () => document.body.classList.add('home-redesign-off'),
+  unload: () => {
+    const previews = document.querySelectorAll<HTMLDialogElement>(
+      '.dashboard-home dialog[open], .dashboard-home-link-preview[open]',
+    )
+    previews.forEach(preview => preview.close())
+    document.body.classList.add('home-redesign-off')
+  },
   reload: () => document.body.classList.remove('home-redesign-off'),
   instantStyles: [
     {

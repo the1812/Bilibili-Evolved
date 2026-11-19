@@ -1,31 +1,34 @@
 import { applyContentFilter, getFeeds, groupVideoFeeds } from '@/components/feeds/api'
 import type { VideoCard } from '@/components/feeds/video-card'
-import { watchlaterList } from '@/components/video/watchlater'
 import { bilibiliApi } from '@/core/ajax'
-import { formatCount, formatDuration, parseCount, parseDuration } from '@/core/utils/formatters'
+import { formatCount, formatDuration, parseDuration } from '@/core/utils/formatters'
+import {
+  getDynamicMediaCounts,
+  getDynamicStats,
+  getDynamicTopics,
+  type DynamicPost,
+  type RawDynamicStats,
+  type RawDynamicTopics,
+  type RawMediaWithStats,
+} from '../dynamic/dynamic-post'
 
 interface RawVideoFeedItem {
   id_str?: string
   modules?: {
     module_author?: { name?: string; face?: string; mid?: number; pub_ts?: number }
-    module_dynamic?: {
-      desc?: {
-        text?: string
-        rich_text_nodes?: { type: string; text?: string; jump_url?: string }[]
-      }
+    module_dynamic?: RawDynamicTopics & {
       major?: {
-        archive?: {
+        archive?: RawMediaWithStats & {
           aid: string | number
           bvid: string
           title: string
           cover: string
           desc?: string
           duration_text?: string
-          stat?: { play?: string | number; danmaku?: string | number }
         }
       }
     }
-    module_stat?: { like?: { count?: number } }
+    module_stat?: RawDynamicStats
   }
 }
 
@@ -35,10 +38,9 @@ interface VideoFeedPage {
   offset?: string
 }
 
-const formatArchiveCount = (count?: string | number) =>
-  count == null ? '' : formatCount(parseCount(count))
+export type VideoFeedCard = VideoCard & { postStats?: DynamicPost['stats'] }
 
-const toVideoCard = ({ id_str: id, modules }: RawVideoFeedItem): VideoCard | undefined => {
+const toVideoCard = ({ id_str: id, modules }: RawVideoFeedItem): VideoFeedCard | undefined => {
   const dynamic = modules?.module_dynamic
   const archive = dynamic?.major?.archive
   const aid = Number(archive?.aid)
@@ -49,12 +51,9 @@ const toVideoCard = ({ id_str: id, modules }: RawVideoFeedItem): VideoCard | und
   const author = modules?.module_author
   const timestamp = author?.pub_ts === undefined ? undefined : author.pub_ts * 1000
   const duration = archive.duration_text ? parseDuration(archive.duration_text) : undefined
-  const likes = modules?.module_stat?.like?.count
-  const topics = (dynamic?.desc?.rich_text_nodes ?? []).flatMap((node, index) =>
-    node.type === 'RICH_TEXT_NODE_TYPE_TOPIC' && node.text
-      ? [{ id: index, name: node.text, url: node.jump_url }]
-      : [],
-  )
+  const postStats = getDynamicStats(modules?.module_stat)
+  const likes = postStats?.like?.count
+  const { playCount, danmakuCount } = getDynamicMediaCounts(archive)
   return {
     id,
     aid,
@@ -67,14 +66,14 @@ const toVideoCard = ({ id_str: id, modules }: RawVideoFeedItem): VideoCard | und
     description: archive.desc ?? '',
     timestamp,
     time: timestamp === undefined ? undefined : new Date(timestamp),
-    topics,
+    topics: getDynamicTopics(dynamic),
     dynamic: dynamic?.desc?.text ?? '',
     like: likes == null ? undefined : formatCount(likes),
+    postStats,
     duration,
     durationText: duration === undefined ? '' : formatDuration(duration),
-    playCount: formatArchiveCount(archive.stat?.play),
-    danmakuCount: formatArchiveCount(archive.stat?.danmaku),
-    watchlater: watchlaterList.includes(aid),
+    playCount: playCount ?? '',
+    danmakuCount: danmakuCount ?? '',
   }
 }
 
@@ -87,5 +86,8 @@ export const getVideoFeedPage = async (offset?: string) => {
   const items = page.items ?? []
   const cards = items.map(toVideoCard).filter(Boolean)
   const nextOffset = page.has_more ? page.offset || items.at(-1)?.id_str : undefined
-  return { entries: applyContentFilter(groupVideoFeeds(cards)), next: nextOffset }
+  return {
+    entries: applyContentFilter(groupVideoFeeds(cards) as VideoFeedCard[]),
+    next: nextOffset,
+  }
 }

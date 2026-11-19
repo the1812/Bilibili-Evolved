@@ -17,6 +17,12 @@ export interface FavoriteFolder {
   media_count: number
 }
 
+interface FavoriteOwner {
+  mid?: number
+  name?: string
+  face?: string
+}
+
 interface FavoriteMedia {
   id: number
   bvid?: string
@@ -25,7 +31,7 @@ interface FavoriteMedia {
   title: string
   cover?: string
   duration?: number
-  upper?: { name?: string }
+  upper?: FavoriteOwner
 }
 
 interface CollectedFolder {
@@ -35,7 +41,7 @@ interface CollectedFolder {
   title: string
   cover?: string
   media_count?: number
-  upper?: { name?: string }
+  upper?: FavoriteOwner
 }
 
 interface FollowedShow {
@@ -97,12 +103,16 @@ export const getFavoriteMedia = async (folder: number, page: number) => {
       }
       return {
         id: `${item.type}:${item.id}`,
+        aid: !unavailable && item.type === 2 ? item.id : undefined,
+        kind: item.type === 2 || item.bvid ? 'video' : 'other',
         title: item.title,
         url,
-        cover: item.cover,
-        badge: unavailable ? '已失效' : duration,
-        author: item.upper?.name,
-        detail: item.upper?.name,
+        coverUrl: item.cover,
+        badge: unavailable ? '已失效' : undefined,
+        durationText: unavailable ? undefined : duration,
+        upName: item.upper?.name,
+        upID: item.upper?.mid,
+        upFaceUrl: item.upper?.face,
       }
     }),
     next: has_more && medias?.length ? page + 1 : undefined,
@@ -127,16 +137,17 @@ export const getCollectedFolders = async (uid: string, page: number) => {
       return [
         {
           id: `${item.type}:${item.id}`,
+          kind: 'other',
           title: item.title,
-          cover: item.cover,
+          coverUrl: item.cover,
           url: isCollection
             ? `https://space.bilibili.com/${item.mid}/lists/${item.id}?type=season`
             : `${site}/list/ml${item.id}`,
           badge: isCollection ? '合集' : '收藏夹',
-          author: item.upper?.name,
-          detail: [item.upper?.name, item.media_count && `${item.media_count} 个内容`]
-            .filter(Boolean)
-            .join(' · '),
+          upName: item.upper?.name,
+          upID: item.upper?.mid || item.mid,
+          upFaceUrl: item.upper?.face,
+          detail: item.media_count ? `${item.media_count} 个内容` : undefined,
         },
       ]
     }),
@@ -165,8 +176,9 @@ export const getFollowedShows = async (
     entries: (list ?? []).map(
       (item): LibraryEntry => ({
         id: item.season_id,
+        kind: 'bangumi',
         title: item.title,
-        cover: item.square_cover || item.cover,
+        coverUrl: item.square_cover || item.cover,
         url: `${site}/bangumi/play/ss${item.season_id}`,
         badge: item.follow_status ? followStatuses[item.follow_status] : undefined,
         detail: [item.progress, item.new_ep?.index_show].filter(Boolean).join(' · '),

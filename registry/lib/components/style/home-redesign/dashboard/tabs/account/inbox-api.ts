@@ -1,25 +1,18 @@
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getCsrf } from '@/core/utils'
+import {
+  inboxCategories,
+  messageCenterUrl,
+  type InboxCategory,
+  type InteractionCategory,
+} from '../../shared/inbox-categories'
 
-const messageCenter = 'https://message.bilibili.com'
 const api = 'https://api.bilibili.com'
 const messageApi = 'https://api.vc.bilibili.com'
 const sessionsApi = `${messageApi}/session_svr/v1/session_svr`
 const webParams = { build: '0', mobi_app: 'web' }
 
-export const inboxCategories = {
-  reply: { label: '回复我的', url: `${messageCenter}/#/reply` },
-  at: { label: '@我的', url: `${messageCenter}/#/at` },
-  like: { label: '收到的赞', url: `${messageCenter}/#/love` },
-  system: { label: '系统通知', url: `${messageCenter}/#/system` },
-  private: { label: '私信', url: `${messageCenter}/#/whisper` },
-}
-
-export type InboxCategory = keyof typeof inboxCategories
 export type UnreadCounts = Partial<Record<InboxCategory, number>>
-type InteractionCategory = 'reply' | 'at' | 'like'
-export const isInteractionCategory = (category: InboxCategory): category is InteractionCategory =>
-  category !== 'system' && category !== 'private'
 
 interface InboxEntry {
   id: string
@@ -140,8 +133,8 @@ interface SystemNotice {
 const getSystemNotices = async (): Promise<InboxPage> => {
   type NoticeList = { system_notify_list?: SystemNotice[] }
   const [unified, user] = await Promise.all([
-    get<NoticeList>(`${messageCenter}/x/sys-msg/query_unified_notify`, { page_size: '10' }),
-    get<NoticeList>(`${messageCenter}/x/sys-msg/query_user_notify`, { page_size: '20' }),
+    get<NoticeList>(`${messageCenterUrl}/x/sys-msg/query_unified_notify`, { page_size: '10' }),
+    get<NoticeList>(`${messageCenterUrl}/x/sys-msg/query_user_notify`, { page_size: '20' }),
   ])
   const notices = [...(unified.system_notify_list ?? []), ...(user.system_notify_list ?? [])]
   let noticeCursor: string | undefined
@@ -227,7 +220,7 @@ const getPrivateSessions = async (): Promise<InboxPage> => {
         session.group_name ||
         (userConversation && talker ? `UID ${talker}` : '会话'),
       text: messagePreview(session.last_msg),
-      timestamp: timestamp > 0 ? timestamp : undefined,
+      timestamp: Number.isFinite(timestamp) && timestamp > 0 ? timestamp : undefined,
       url: userConversation && talker ? `${inboxCategories.private.url}/mid${talker}` : undefined,
       unread: session.unread_count,
       acknowledgement:
@@ -250,7 +243,7 @@ export const getInboxPage = (category: InboxCategory) => {
 }
 
 export const markSystemNoticesRead = (cursor: string) =>
-  get(`${messageCenter}/x/sys-msg/update_cursor`, { cursor, has_up: '0' })
+  get(`${messageCenterUrl}/x/sys-msg/update_cursor`, { cursor, has_up: '0' })
 
 export const markPrivateSessionRead = (
   acknowledgement: NonNullable<InboxEntry['acknowledgement']>,

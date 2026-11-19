@@ -58,9 +58,11 @@
                 <dd>{{ item.value }}</dd>
               </div>
             </dl>
-            <VLoading v-if="panel.loading" />
-            <VButton v-else-if="panel.failed" @click="panel.load">加载失败，点击重试</VButton>
-            <ul v-else-if="panel.rows.length" class="dashboard-home-account-list" role="list">
+            <ul
+              v-if="!panel.loading && !panel.failed && panel.rows.length"
+              class="dashboard-home-account-list"
+              role="list"
+            >
               <li v-for="(item, index) in panel.rows" :key="index">
                 <component
                   :is="item.url ? 'a' : 'div'"
@@ -79,9 +81,13 @@
                 </component>
               </li>
             </ul>
-            <VEmpty v-else-if="panel !== counts || !accountDetails.length">{{
-              panel.empty
-            }}</VEmpty>
+            <ListStatus
+              v-else
+              :loading="panel.loading"
+              :failed="panel.failed"
+              :empty="panel === counts && accountDetails.length ? undefined : panel.empty"
+              @load="panel.load"
+            />
           </section>
         </div>
         <AccountInbox ref="inbox" />
@@ -98,8 +104,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getUID } from '@/core/utils'
-import { DpiImage, VButton, VEmpty, VIcon, VLoading } from '@/ui'
+import { DpiImage, VEmpty, VIcon, VLoading } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import ListStatus from '../../shared/ListStatus.vue'
 import SitemapLinkList from '../sitemap/SitemapLinkList.vue'
 import { getPersonalSitemapSection } from '../sitemap/sitemap-links'
 import AccountInbox from './AccountInbox.vue'
