@@ -120,10 +120,7 @@ export const component = defineComponentMetadata({
         updatePageStyle()
       }
       const syncOfficialTheme = () => {
-        if (
-          componentSettings.options.mode === DarkModeMode.FollowOfficial &&
-          document.readyState !== 'loading'
-        ) {
+        if (document.readyState !== 'loading') {
           const dark = readOfficialDarkMode()
           if (dark !== undefined) {
             setEnabled(dark)
