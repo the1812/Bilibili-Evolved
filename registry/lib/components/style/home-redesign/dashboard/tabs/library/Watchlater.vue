@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-home-library">
+  <div class="dashboard-home-card-view dashboard-home-library">
     <VEmpty v-if="!uid">登录后查看稍后再看</VEmpty>
     <template v-else>
       <LibraryToolbar :value="keyword" @input="keyword = $event">
@@ -24,19 +24,16 @@
         </template>
       </LibraryToolbar>
       <p v-if="actionFailed" class="dashboard-home-list-status" role="status">操作失败，请重试</p>
-      <LibraryCards :entries="entries">
-        <template #actions="{ item }">
-          <VButton :disabled="busy" :aria-label="`移除 ${item.title}`" @click="remove(item.id)">
-            移除
-          </VButton>
-        </template>
-      </LibraryCards>
-      <ListStatus
-        :loading="loading"
-        :failed="failed"
-        :empty="entries.length ? '' : queue.length ? '没有符合条件的视频' : '稍后再看列表为空'"
-        @load="refresh"
-      />
+      <CardCollection>
+        <LibraryCards :entries="entries" :watchlater-disabled="busy" :watchlater-action="remove" />
+        <ListStatus
+          class="dashboard-home-card-end"
+          :loading="loading"
+          :failed="failed"
+          :empty="emptyMessage"
+          @load="refresh"
+        />
+      </CardCollection>
       <DashboardHomeOperations :refresh-disabled="busy" @refresh="refresh" />
     </template>
   </div>
@@ -54,12 +51,18 @@ import { bilibiliApi, postTextWithCredentials } from '@/core/ajax'
 import { getCsrf, getUID } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
-import { VButton, VEmpty } from '@/ui'
+import { VEmpty } from '@/ui'
+import CardCollection from '../../shared/CardCollection.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 import LibraryCards from './LibraryCards.vue'
 import LibraryToolbar from './LibraryToolbar.vue'
-import { filterLibraryEntries, type LibraryEntry } from './library'
+import {
+  filterLibraryEntries,
+  getLibraryEmptyMessage,
+  getPlaybackProgress,
+  type LibraryEntry,
+} from './library'
 
 const uid = getUID()
 const { error: logError } = useScopedConsole('仪表盘首页稍后再看')
@@ -76,13 +79,7 @@ const queueUrl = 'https://www.bilibili.com/list/watchlater'
 const videoUrl = (item: RawWatchlaterItem) =>
   item.bvid ? `${queueUrl}?bvid=${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`
 const playAllUrl = computed(() => (queue.value[0]?.bvid ? videoUrl(queue.value[0]) : queueUrl))
-const isWatched = (item: RawWatchlaterItem) => item.progress < 0
-const getProgress = (item: RawWatchlaterItem, duration: number) => {
-  if (isWatched(item)) {
-    return 1
-  }
-  return duration > 0 && item.progress > 0 ? Math.min(item.progress / duration, 1) : undefined
-}
+const isWatched = (item: RawWatchlaterItem) => item.progress === -1
 const hasWatched = computed(() => queue.value.some(isWatched))
 const entries = computed(() => {
   const cards = queue.value
@@ -92,19 +89,28 @@ const entries = computed(() => {
       const duration = page?.duration ?? item.duration
       return {
         id: item.aid,
+        aid: item.aid,
         title: item.title,
         url: videoUrl(item),
-        cover: item.bangumi?.cover || item.pic,
-        badge: duration > 0 ? formatDuration(duration) : undefined,
-        author: item.owner?.name,
-        detail: [item.owner?.name, isWatched(item) ? '已看完' : undefined]
-          .filter(Boolean)
-          .join(' · '),
-        progress: getProgress(item, duration),
+        coverUrl: item.bangumi?.cover || item.pic,
+        durationText: duration > 0 ? formatDuration(duration) : undefined,
+        upName: item.owner?.name,
+        upID: item.owner?.mid,
+        upFaceUrl: item.owner?.face,
+        detail: isWatched(item) ? '已看完' : undefined,
+        progress: getPlaybackProgress(item.progress, duration),
       }
     })
   return filterLibraryEntries(cards, keyword.value)
 })
+const emptyMessage = computed(() =>
+  getLibraryEmptyMessage({
+    entries: queue.value,
+    matches: entries.value,
+    filtering: filter.value !== 'all' || Boolean(keyword.value.trim()),
+    empty: '稍后再看列表为空',
+  }),
+)
 
 const loadQueue = async () => {
   loading.value = true
@@ -141,9 +147,8 @@ const updateQueue = async (apply: () => Promise<void>) => {
     updating.value = false
   }
 }
-const remove = (id: string | number) =>
+const remove = (aid: number) =>
   updateQueue(async () => {
-    const aid = Number(id)
     await toggleWatchlater(aid, false)
     if (watchlaterList.includes(aid)) {
       actionFailed.value = true

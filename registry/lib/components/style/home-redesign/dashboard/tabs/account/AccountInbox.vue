@@ -3,7 +3,7 @@
     <section class="dashboard-home-account-card" :aria-busy="countsLoading">
       <header class="dashboard-home-account-panel-heading">
         <h2>未读消息</h2>
-        <a href="https://message.bilibili.com/" target="_blank" rel="noopener">查看全部</a>
+        <a :href="messageCenterUrl" target="_blank" rel="noopener">查看全部</a>
       </header>
       <VLoading v-if="countsLoading && !counts" />
       <ul v-else class="dashboard-home-account-list" role="list">
@@ -86,7 +86,7 @@
 <script setup lang="ts">
 import { formatDateTime } from '@/core/utils/formatters'
 import { VButton, VEmpty, VLoading } from '@/ui'
-import { inboxCategories } from './inbox-api'
+import { inboxCategories, messageCenterUrl } from '../../shared/inbox-categories'
 import { useAccountInbox } from './use-account-inbox'
 
 const {

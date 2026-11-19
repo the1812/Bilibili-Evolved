@@ -1,5 +1,5 @@
 <template>
-  <MasonryItem @resize="updateStatsSide">
+  <CardGridItem @resize="updateStatsSide">
     <article
       ref="cardElement"
       class="dashboard-home-dynamic-card"
@@ -15,6 +15,7 @@
           'is-repost': index > 0,
           'has-single-photo': post.images.length === 1,
           'has-only-photo': !post.text && !post.attachment,
+          'has-attachment': !!post.attachment,
         }"
       >
         <div class="dashboard-home-dynamic-controls">
@@ -24,11 +25,13 @@
               class="dashboard-home-dynamic-author-actions"
             >
               <UpInfo
-                v-if="post.author.name"
+                v-if="post.author.name && (post.author.url || post.attachment?.kind !== 'bangumi')"
+                :href="post.author.url"
                 :up-id="post.author.id"
                 :up-name="post.author.name"
                 :up-face-url="post.author.avatar"
               />
+              <span v-else-if="post.author.name">{{ post.author.name }}</span>
               <span
                 v-if="post.attachment && !post.originalLinkTypeLabel"
                 class="dashboard-home-dynamic-attachment-type"
@@ -88,10 +91,11 @@
             </span>
           </div>
           <DynamicStats
-            v-if="hasStats(post)"
+            v-if="hasDynamicStats(post.stats)"
             :class="{ 'is-default-stats': post === defaultStatsPost }"
             :stats="post.stats"
             :like-state="likeStates[post.id]"
+            flyout
             @toggle-like="emit('toggle-like', post)"
           />
         </div>
@@ -115,44 +119,42 @@
               :height="image.height"
               alt="动态图片"
               loading="lazy"
-              @error="useOriginalImage"
+              @error="useOriginalDynamicImage"
             />
           </button>
         </div>
-        <a
+        <ContentCard
           v-if="post.attachment"
           class="dashboard-home-dynamic-attachment"
-          :href="post.attachment.url"
-          target="_blank"
-          rel="noopener"
+          :data="post.attachment"
+          embedded
         >
-          <img
-            v-if="post.attachment.cover"
-            :src="post.attachment.cover"
-            :srcset="getDynamicThumbnailSet(post.attachment.cover, cardThumbnailWidth)"
-            alt=""
-            loading="lazy"
-            @error="useOriginalImage"
-          />
-          <div class="dashboard-home-dynamic-attachment-details">
-            <strong>{{ post.attachment.title }}</strong>
-            <p v-if="post.attachment.description">{{ post.attachment.description }}</p>
-          </div>
-        </a>
+          <template v-if="hasDynamicStats(post.stats)" #stats>
+            <DynamicStats
+              :stats="post.stats"
+              :like-state="likeStates[post.id]"
+              @toggle-like="emit('toggle-like', post)"
+            />
+          </template>
+        </ContentCard>
       </div>
     </article>
-  </MasonryItem>
+  </CardGridItem>
 </template>
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import UpInfo from '@/components/feeds/UpInfo.vue'
-import { formatDate, formatDateTime, formatTime } from '@/core/utils/formatters'
+import { formatDateTime } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
-import MasonryItem from '../../shared/MasonryItem.vue'
+import CardGridItem from '../../shared/CardGridItem.vue'
+import ContentCard from '../../shared/ContentCard.vue'
 import DynamicStats from './DynamicStats.vue'
 import {
+  formatDynamicTimestamp,
   getDynamicThumbnailSet,
+  hasDynamicStats,
+  useOriginalDynamicImage,
   type DynamicFeedCard,
   type DynamicLikeState,
   type DynamicPost,
@@ -167,41 +169,19 @@ const cardElement = ref<HTMLElement>()
 const statsOnLeft = ref(false)
 const updateStatsSide = () => {
   const card = cardElement.value
-  const grid = card?.closest('.dashboard-home-masonry-grid')
+  const grid = card?.closest('.dashboard-home-card-grid')
   if (grid) {
     statsOnLeft.value =
       Math.abs(grid.getBoundingClientRect().right - card.getBoundingClientRect().right) < 1
   }
 }
-
 const posts = computed(() => {
   const { post, original, reposters } = props.card
   const primary =
     reposters.length && !post.stats ? { ...post, stats: { like: { canToggle: true } } } : post
   return original ? [primary, original] : [primary]
 })
-const hasStats = ({ stats }: DynamicPost) =>
-  stats?.like?.canToggle ||
-  stats?.like?.count !== undefined ||
-  stats?.comments !== undefined ||
-  stats?.reposts !== undefined
-const defaultStatsPost = computed(() => posts.value.find(hasStats))
-
-const formatDynamicTimestamp = (date: Date) => {
-  const now = new Date()
-  const day = formatDate(date)
-  const time = formatTime(date).slice(0, 5)
-  if (day === formatDate(now)) {
-    return time
-  }
-  const dateLabel = date.getFullYear() === now.getFullYear() ? day.slice(5) : day
-  return `${dateLabel} ${time}`
-}
-
+const defaultStatsPost = computed(() => posts.value.find(post => hasDynamicStats(post.stats)))
 const cardThumbnailWidth = 480
 const thumbnailWidth = (photoCount: number) => cardThumbnailWidth / Math.min(photoCount, 3)
-const useOriginalImage = (event: Event) => {
-  const image = event.currentTarget as HTMLImageElement
-  image.removeAttribute('srcset')
-}
 </script>

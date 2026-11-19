@@ -1,16 +1,17 @@
 import { onMounted, ref } from 'vue'
+import { useScopedConsole } from '@/core/utils/log'
 import {
-  type InboxCategory,
   type InboxPage,
   type UnreadCounts,
   getInboxPage,
   getInboxUnread,
-  isInteractionCategory,
   markPrivateSessionRead,
   markSystemNoticesRead,
 } from './inbox-api'
+import { isInteractionCategory, type InboxCategory } from '../../shared/inbox-categories'
 
 export const useAccountInbox = () => {
+  const { error: logError } = useScopedConsole('仪表盘首页消息')
   const counts = ref<UnreadCounts>()
   const countsLoading = ref(false)
   const countsFailed = ref(false)
@@ -24,8 +25,9 @@ export const useAccountInbox = () => {
       if (request === countsRequest) {
         counts.value = result
       }
-    } catch {
+    } catch (error) {
       if (request === countsRequest) {
+        logError(error)
         countsFailed.value = true
       }
     } finally {
@@ -59,8 +61,9 @@ export const useAccountInbox = () => {
         confirmLoad.value = false
         page.value = result
       }
-    } catch {
+    } catch (error) {
       if (request === listRequest) {
+        logError(error)
         failed.value = true
       }
     } finally {
@@ -125,9 +128,10 @@ export const useAccountInbox = () => {
         await markSystemNoticesRead(cursor)
         page.value = { ...page.value, noticeCursor: undefined }
       }
-      readStatus.value = '已标为已读'
+      readStatus.value = '已标记为已读'
       await refresh()
-    } catch {
+    } catch (error) {
+      logError(error)
       readStatus.value = '更新已读状态失败，请重试'
     } finally {
       reading.value = false

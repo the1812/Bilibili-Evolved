@@ -1,5 +1,8 @@
 import { normalizeFeedsCardModules } from '@/components/feeds/api'
 import { getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
+import { formatCount, formatDate, formatTime, parseCount } from '@/core/utils/formatters'
+import type { ContentCardData, ContentCardKind } from '../../shared/content-card'
+import { omitCurrentYear } from '../../shared/format-date'
 
 interface RawImage {
   src?: string
@@ -8,12 +11,18 @@ interface RawImage {
   height?: number
 }
 
-interface RawAttachment {
+export interface RawMediaWithStats {
+  stat?: { play?: string | number; danmaku?: string | number }
+  stat_hidden?: boolean | number
+}
+
+interface RawAttachment extends RawMediaWithStats {
   title?: string
   desc?: string
   cover?: string
   covers?: string[]
   jump_url?: string
+  label?: string
 }
 
 const attachmentTypes = {
@@ -31,6 +40,11 @@ const attachmentTypes = {
 
 type AttachmentKind = keyof typeof attachmentTypes
 const attachmentKinds = Object.keys(attachmentTypes) as AttachmentKind[]
+const attachmentContentKinds: Partial<Record<AttachmentKind, ContentCardKind>> = {
+  archive: 'video',
+  article: 'article',
+  pgc: 'bangumi',
+}
 
 const dynamicTypeLabels: Partial<Record<string, string>> = {
   DYNAMIC_TYPE_AV: attachmentTypes.archive.label,
@@ -53,7 +67,12 @@ const dynamicTypeLabels: Partial<Record<string, string>> = {
 
 interface RawText {
   text?: string
-  rich_text_nodes?: { text?: string; orig_text?: string }[]
+  rich_text_nodes?: { type?: string; text?: string; orig_text?: string; jump_url?: string }[]
+}
+
+export interface RawDynamicTopics {
+  desc?: RawText
+  topic?: { name?: string; jump_url?: string } | null
 }
 
 interface RawParagraph {
@@ -69,24 +88,35 @@ interface RawStat {
   silent?: boolean
 }
 
+export interface RawDynamicStats {
+  like?: RawStat | null
+  comment?: RawStat | null
+  forward?: RawStat | null
+  coin?: RawStat | null
+  favorite?: RawStat | null
+}
+
 interface RawPostModules {
   module_author?: {
     mid?: number
     name?: string
     face?: string
     pub_ts?: number
+    jump_url?: string
+    type?: string
   }
-  module_dynamic?: {
-    desc?: RawText
+  module_dynamic?: RawDynamicTopics & {
     paragraphs?: RawParagraph[]
     additional?: { type?: string }
     major?: Partial<Record<AttachmentKind, RawAttachment>> & {
       type?: string
+      archive?: RawAttachment & { aid?: number | string; duration_text?: string }
+      pgc?: RawAttachment & { epid?: number | string; media_id?: number | string }
       draw?: { items?: RawImage[] }
       opus?: RawAttachment & { summary?: RawText; pics?: RawImage[] }
     }
   }
-  module_stat?: { like?: RawStat; comment?: RawStat; forward?: RawStat }
+  module_stat?: RawDynamicStats
 }
 
 export interface RawDynamicPost {
@@ -99,21 +129,20 @@ export interface RawDynamicPost {
 export interface DynamicPost {
   id: string
   url: string
-  author: { id?: number; name?: string; avatar?: string }
+  author: { id?: number; name?: string; avatar?: string; url?: string }
   publishedAt?: Date
   text?: string
   images: { url: string; width?: number; height?: number }[]
-  attachment?: {
+  attachment?: ContentCardData & {
     type: (typeof attachmentTypes)[AttachmentKind]
     url: string
-    title: string
-    cover?: string
-    description?: string
   }
   stats?: {
     like?: { count?: number; liked?: boolean; canToggle: boolean }
     comments?: number
     reposts?: number
+    coins?: number
+    favorites?: number
   }
   showOriginalLink: boolean
   originalLinkTypeLabel?: string
@@ -134,7 +163,56 @@ export interface DynamicFeedCard {
   reposters: Pick<DynamicPost, 'id' | 'url' | 'author'>[]
 }
 
+export const hasDynamicStats = (stats: DynamicPost['stats']) =>
+  stats?.like?.canToggle ||
+  stats?.like?.count !== undefined ||
+  stats?.comments !== undefined ||
+  stats?.reposts !== undefined ||
+  stats?.coins !== undefined ||
+  stats?.favorites !== undefined
+
+export const formatDynamicTimestamp = (date: Date) => {
+  const today = formatDate(new Date())
+  const day = formatDate(date)
+  const time = formatTime(date).slice(0, 5)
+  if (day === today) {
+    return time
+  }
+  return `${omitCurrentYear(day, today)} ${time}`
+}
+
 const webUrl = (url?: string) => (/^(?:https?:)?\/\//i.test(url ?? '') ? url : undefined)
+
+export const getDynamicTopics = (content?: RawDynamicTopics): ContentCardData['topics'] => {
+  const topics = new Map<string, string | undefined>()
+  const addTopic = (text?: string, url?: string) => {
+    const name = text?.trim().replace(/^#|#$/g, '').trim()
+    if (name && !topics.get(name)) {
+      topics.set(name, webUrl(url))
+    }
+  }
+  addTopic(content?.topic?.name, content?.topic?.jump_url)
+  for (const node of content?.desc?.rich_text_nodes ?? []) {
+    if (node.type === 'RICH_TEXT_NODE_TYPE_TOPIC') {
+      addTopic(node.text ?? node.orig_text, node.jump_url)
+    }
+  }
+  return Array.from(topics, ([name, url], id) => ({ id, name, url }))
+}
+
+const getBangumiAuthorUrl = (
+  author?: RawPostModules['module_author'],
+  mediaId?: number | string,
+) => {
+  const linkedMediaId = author?.jump_url?.match(
+    /^(?:https?:)?\/\/(?:www\.)?bilibili\.com\/bangumi\/media\/md(\d+)(?:[/?#]|$)/i,
+  )?.[1]
+  const authorMediaId = !author?.type || author.type === 'AUTHOR_TYPE_PGC' ? author?.mid : undefined
+  const id = [linkedMediaId, mediaId, authorMediaId]
+    .map(Number)
+    .find(value => Number.isSafeInteger(value) && value > 0)
+  return id ? `https://www.bilibili.com/bangumi/media/md${id}` : undefined
+}
 
 const bilibiliImageUrl = /^(?:https?:)?\/\/(?:[\w-]+\.)?(?:hdslb|biliimg)\.com\/bfs\/[^?#]+$/i
 const getBilibiliImage = (url: string) =>
@@ -148,6 +226,11 @@ export const getDynamicThumbnailSet = (url: string, width: number) => {
   return undefined
 }
 
+export const useOriginalDynamicImage = (event: Event) => {
+  const image = event.currentTarget as HTMLImageElement
+  image.removeAttribute('srcset')
+}
+
 const getText = (value?: RawText) => {
   return (
     value?.text?.trim() ||
@@ -155,14 +238,28 @@ const getText = (value?: RawText) => {
   )
 }
 
-const getVisibleCount = (stat?: RawStat) =>
-  stat?.hidden || typeof stat?.count !== 'number' ? undefined : stat.count
+const getVisibleCount = (stat?: RawStat | null) =>
+  !stat?.hidden && Number.isFinite(stat?.count) && stat.count >= 0 ? stat.count : undefined
 
-const getDynamicStats = (module?: RawPostModules['module_stat']): DynamicPost['stats'] => {
+const formatMediaCount = (count?: string | number) => {
+  const value = typeof count === 'string' ? count.trim() : count
+  if (value == null || (typeof value === 'string' && !/^\d+(?:\.\d+)?[万亿]?$/.test(value))) {
+    return undefined
+  }
+  const number = parseCount(value)
+  return Number.isFinite(number) && number >= 0 ? formatCount(number) : undefined
+}
+
+export const getDynamicMediaCounts = ({ stat, stat_hidden: hidden }: RawMediaWithStats) =>
+  hidden
+    ? {}
+    : { playCount: formatMediaCount(stat?.play), danmakuCount: formatMediaCount(stat?.danmaku) }
+
+export const getDynamicStats = (module?: RawDynamicStats): DynamicPost['stats'] => {
   if (!module) {
     return undefined
   }
-  const { like, comment, forward } = module
+  const { like, comment, forward, coin, favorite } = module
   const likes = getVisibleCount(like)
   const likeDisabled = like?.hidden || like?.disabled || like?.forbidden || like?.silent
   const canToggle = typeof like?.status === 'boolean' && !likeDisabled
@@ -170,12 +267,14 @@ const getDynamicStats = (module?: RawPostModules['module_stat']): DynamicPost['s
     likes !== undefined || canToggle || likeDisabled
       ? { count: likes, liked: like.status, canToggle }
       : undefined
-  const comments = getVisibleCount(comment)
-  const reposts = getVisibleCount(forward)
-  if (likeStats || comments !== undefined || reposts !== undefined) {
-    return { like: likeStats, comments, reposts }
+  const stats = {
+    like: likeStats,
+    comments: getVisibleCount(comment),
+    reposts: getVisibleCount(forward),
+    coins: getVisibleCount(coin),
+    favorites: getVisibleCount(favorite),
   }
-  return undefined
+  return likeStats || hasDynamicStats(stats) ? stats : undefined
 }
 
 const getParagraph = (value: RawParagraph) =>
@@ -213,12 +312,35 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
   const media = mediaKind ? major[mediaKind] : undefined
   const attachmentKind =
     mediaKind === 'opus' && item.type === 'DYNAMIC_TYPE_ARTICLE' ? 'article' : mediaKind
-  const attachment = media && {
+  const archive = mediaKind === 'archive' ? major.archive : undefined
+  const aid = Number(archive?.aid)
+  const episodeId = mediaKind === 'pgc' ? Number(major.pgc.epid) : undefined
+  const authorUrl =
+    mediaKind === 'pgc' || item.type === 'DYNAMIC_TYPE_PGC'
+      ? getBangumiAuthorUrl(author, major?.pgc?.media_id)
+      : undefined
+  const coverUrl = webUrl(media?.cover) ?? webUrl(media?.covers?.[0])
+  const reads =
+    attachmentKind === 'article' && !media?.stat_hidden
+      ? media?.label?.trim().match(/^(.+?)\s*阅读$/)?.[1]
+      : undefined
+  const attachment: DynamicPost['attachment'] = media && {
+    kind: attachmentContentKinds[attachmentKind] ?? 'other',
     type: attachmentTypes[attachmentKind],
-    url: webUrl(media.jump_url) ?? url,
+    url:
+      webUrl(media.jump_url) ??
+      (Number.isSafeInteger(episodeId) && episodeId > 0
+        ? `https://www.bilibili.com/bangumi/play/ep${episodeId}`
+        : url),
     title: media.title,
-    cover: webUrl(media.cover ?? media.covers?.[0]),
+    coverUrl,
+    coverSrcset: coverUrl ? getDynamicThumbnailSet(coverUrl, 480) : undefined,
     description: media.desc,
+    topics: getDynamicTopics(content),
+    aid: Number.isSafeInteger(aid) && aid > 0 ? aid : undefined,
+    durationText: archive?.duration_text?.trim(),
+    ...getDynamicMediaCounts(media),
+    readCount: formatMediaCount(reads),
   }
   const images = (major?.opus?.pics ?? major?.draw?.items ?? []).flatMap(image => {
     const imageUrl = webUrl(image.url ?? image.src)
@@ -250,7 +372,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
   return {
     id: item.id_str,
     url,
-    author: { id: author?.mid, name: author?.name, avatar: webUrl(author?.face) },
+    author: { id: author?.mid, name: author?.name, avatar: webUrl(author?.face), url: authorUrl },
     publishedAt: author?.pub_ts > 0 ? new Date(author.pub_ts * 1000) : undefined,
     text,
     images,

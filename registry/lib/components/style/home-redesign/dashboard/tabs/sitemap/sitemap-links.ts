@@ -1,4 +1,5 @@
 import { categories, channelsV2 } from '@/components/utils/categories/data'
+import { inboxCategories, messageCenterUrl } from '../../shared/inbox-categories'
 
 export type SitemapLink = [
   label: string,
@@ -22,7 +23,6 @@ const site = 'https://www.bilibili.com'
 const account = 'https://account.bilibili.com'
 const accountSecurity = 'https://passport.bilibili.com/pc/account-security/security'
 const creator = 'https://member.bilibili.com/platform'
-const messageCenter = 'https://message.bilibili.com/'
 
 export const sitemapChannelSelector = '.bili-header__channel'
 
@@ -187,14 +187,12 @@ export const getSitemapSections = (
       id: 'messages',
       title: '消息',
       links: [
-        ['消息中心', messageCenter, 'mdi-email-outline'],
-        ['回复我的', `${messageCenter}#/reply`, 'mdi-message-reply-text'],
-        ['@我的', `${messageCenter}#/at`, 'mdi-at'],
-        ['收到的赞', `${messageCenter}#/love`, 'mdi-thumb-up-outline'],
-        ['系统通知', `${messageCenter}#/system`, 'mdi-bell-outline'],
-        ['我的消息', `${messageCenter}#/whisper`, 'mdi-chat-outline'],
-        ['私信存档', `${messageCenter}#/archive`, 'mdi-archive-outline'],
-        ['消息设置', `${messageCenter}#/config`, 'mdi-cog-outline'],
+        ['消息中心', messageCenterUrl, 'mdi-email-outline'],
+        ...Object.values(inboxCategories).map(
+          ({ label, url, icon }): SitemapLink => [label, url, icon],
+        ),
+        ['私信存档', `${messageCenterUrl}/#/archive`, 'mdi-archive-outline'],
+        ['消息设置', `${messageCenterUrl}/#/config`, 'mdi-cog-outline'],
       ],
     },
     {

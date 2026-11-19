@@ -16,16 +16,16 @@
         <button
           v-for="tab in visibleTabs"
           :id="tabId(tab)"
-          :key="tab.name"
+          :key="tab.id"
           type="button"
           class="default-tab"
           :class="{ selected: tab === selectedTab }"
           role="tab"
           :aria-controls="panelId(tab)"
           :aria-selected="tab === selectedTab ? 'true' : 'false'"
-          :tabindex="tab.name === tabbableTabName ? 0 : -1"
-          @focus="focusedTabName = tab.name"
-          @click="selectTab(tab)"
+          :tabindex="tab.id === tabbableTabId ? 0 : -1"
+          @focus="focusedTabId = tab.id"
+          @click="selectTab(tab, $event)"
         >
           <span class="default-tab-name">{{ tab.name }}</span>
         </button>
@@ -34,12 +34,15 @@
     <div
       v-for="tab in visibleTabs"
       :id="panelId(tab)"
-      :key="tab.name"
+      :key="tab.id"
       class="default-content"
+      :class="{ 'has-manual-card-count': getTrackCount(tab) !== null }"
+      :data-content-card-layout="getCardLayout(tab)"
+      :style="{ '--dashboard-home-card-track-count': getTrackCount(tab) }"
       role="tabpanel"
       :aria-labelledby="tabId(tab)"
       :hidden="tab !== selectedTab"
-      tabindex="0"
+      :tabindex="tab === selectedTab ? 0 : undefined"
     >
       <transition name="content-transition">
         <component :is="tab.component" v-if="tab === selectedTab" v-bind="tab.propsData" />
@@ -50,13 +53,25 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed, provide, ref, watch } from 'vue'
 import { sizeChange } from '@/core/observer'
 import { VEmpty } from '@/ui'
-import { getDashboardHomeOptions } from '../options'
-import { type DashboardTab, useDashboardTabs } from './use-dashboard-tabs'
+import { contentCardLayoutKey } from '../shared/content-card'
+import type { DashboardTab } from './dashboard-tabs'
+import { useDashboardTabs } from './use-dashboard-tabs'
 
-const { visibleTabs, selectedTab, selectTab } = useDashboardTabs(getDashboardHomeOptions())
+const emit = defineEmits<{ (event: 'open-link', url: string, click: MouseEvent): void }>()
+const { visibleTabs, selectedTab, getCardLayout, getTrackCount } = useDashboardTabs()
+provide(
+  contentCardLayoutKey,
+  computed(() => getCardLayout(selectedTab.value)),
+)
+const selectTab = (tab: DashboardTab, event: MouseEvent) => {
+  if (tab === selectedTab.value && tab.activeLink) {
+    emit('open-link', tab.activeLink, event)
+  }
+  selectedTab.value = tab
+}
 const tabBar = ref<HTMLElement>()
 const tabBarHeight = ref(0)
 const floatingTabs = ref(false)
@@ -94,11 +109,9 @@ watch(
   { flush: 'post' },
 )
 
-const focusedTabName = ref<string>()
-const tabbableTabName = computed(
-  () =>
-    visibleTabs.value.find(tab => tab.name === focusedTabName.value)?.name ??
-    selectedTab.value?.name,
+const focusedTabId = ref<string>()
+const tabbableTabId = computed(
+  () => visibleTabs.value.find(tab => tab.id === focusedTabId.value)?.id ?? selectedTab.value?.id,
 )
 const tabId = (tab: DashboardTab) => `dashboard-home-tab-${tab.visibilityOption}`
 const panelId = (tab: DashboardTab) => `dashboard-home-panel-${tab.visibilityOption}`
@@ -127,7 +140,7 @@ const moveTabFocus = (event: KeyboardEvent) => {
 
 const resetTabFocus = (event: FocusEvent) => {
   if (!(event.currentTarget as HTMLElement).contains(event.relatedTarget as Node)) {
-    focusedTabName.value = undefined
+    focusedTabId.value = undefined
   }
 }
 </script>

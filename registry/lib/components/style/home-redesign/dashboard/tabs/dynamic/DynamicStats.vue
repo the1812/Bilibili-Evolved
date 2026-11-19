@@ -1,6 +1,11 @@
 <template>
-  <div class="dashboard-home-dynamic-stats" role="group" aria-label="动态数据">
-    <div class="dashboard-home-dynamic-stats-panel">
+  <div
+    class="dashboard-home-dynamic-stats"
+    :class="{ 'is-flyout': flyout }"
+    role="group"
+    aria-label="动态数据"
+  >
+    <div class="dashboard-home-dynamic-stats-items">
       <button
         v-if="stats.like?.canToggle"
         type="button"
@@ -14,7 +19,7 @@
       >
         <VIcon
           :icon="liked ? 'mdi-thumb-up' : 'mdi-thumb-up-outline'"
-          :size="15"
+          :size="14"
           aria-hidden="true"
         />
         <template v-if="likeCount !== undefined">{{ formatCount(likeCount) }}</template>
@@ -27,7 +32,7 @@
         :aria-label="`${item.label} ${item.count}`"
         :title="`${item.label} ${item.count}`"
       >
-        <VIcon :icon="item.icon" :size="15" aria-hidden="true" />
+        <VIcon :icon="item.icon" :size="14" aria-hidden="true" />
         {{ formatCount(item.count) }}
       </span>
     </div>
@@ -43,6 +48,7 @@ import type { DynamicLikeState, DynamicPost } from './dynamic-post'
 const props = defineProps<{
   stats: NonNullable<DynamicPost['stats']>
   likeState?: DynamicLikeState
+  flyout?: boolean
 }>()
 const emit = defineEmits<{ (event: 'toggle-like'): void }>()
 const liked = computed(() => props.likeState?.liked ?? props.stats.like?.liked)
@@ -62,6 +68,8 @@ const readOnlyStats = computed(() =>
     },
     { label: '评论', icon: 'mdi-comment-outline', count: props.stats.comments },
     { label: '转发', icon: 'mdi-twitter-retweet', count: props.stats.reposts },
+    { label: '投币', icon: 'coin-outline', count: props.stats.coins },
+    { label: '收藏', icon: 'favorites-outline', count: props.stats.favorites },
   ].filter(item => item.count !== undefined),
 )
 </script>
