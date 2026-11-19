@@ -1,7 +1,12 @@
 <template>
   <div class="dashboard-home-account">
-    <VLoading v-if="loadingProfile" />
-    <VEmpty v-else-if="profileFailed">账号信息加载失败，请刷新页面重试</VEmpty>
+    <ListStatus
+      v-if="loadingProfile || profileFailed"
+      :loading="loadingProfile"
+      :failed="profileFailed"
+      error="账号信息加载失败"
+      @load="loadProfile"
+    />
     <VEmpty v-else-if="!profile?.isLogin">登录后查看账号信息</VEmpty>
     <template v-else>
       <section class="dashboard-home-account-card">
@@ -104,7 +109,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { getUID } from '@/core/utils'
-import { DpiImage, VEmpty, VIcon, VLoading } from '@/ui'
+import { DpiImage, VEmpty, VIcon } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 import SitemapLinkList from '../sitemap/SitemapLinkList.vue'
@@ -122,6 +127,7 @@ const {
   accountDetails,
   counts,
   panels,
+  loadProfile,
   loadPanels,
 } = useAccount()
 const inbox = ref<InstanceType<typeof AccountInbox>>()

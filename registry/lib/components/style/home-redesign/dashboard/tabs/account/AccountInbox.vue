@@ -5,8 +5,7 @@
         <h2>未读消息</h2>
         <a :href="messageCenterUrl" target="_blank" rel="noopener">查看全部</a>
       </header>
-      <VLoading v-if="countsLoading && !counts" />
-      <ul v-else class="dashboard-home-account-list" role="list">
+      <ul v-if="counts || !countsLoading" class="dashboard-home-account-list" role="list">
         <li v-for="(category, key) in inboxCategories" :key="key">
           <button
             type="button"
@@ -21,7 +20,13 @@
           </button>
         </li>
       </ul>
-      <VButton v-if="countsFailed" @click="refresh">未读数加载失败，点击重试</VButton>
+      <ListStatus
+        v-if="(countsLoading && !counts) || countsFailed"
+        :loading="countsLoading"
+        :failed="countsFailed"
+        error="未读数加载失败"
+        @load="refresh"
+      />
     </section>
 
     <section
@@ -34,12 +39,16 @@
         <h2>{{ inboxCategories[selected].label }}</h2>
         <a :href="inboxCategories[selected].url" target="_blank" rel="noopener">查看全部</a>
       </header>
-      <VLoading v-if="loading" />
-      <template v-else-if="confirmLoad">
-        <p class="dashboard-home-inbox-text">B 站可能在加载列表时将消息标为已读。</p>
-        <VButton @click="loadSelected">{{ failed ? '加载失败，点击重试' : '加载列表' }}</VButton>
-      </template>
-      <VButton v-else-if="failed" @click="loadSelected">加载失败，点击重试</VButton>
+      <p v-if="confirmLoad && !loading" class="dashboard-home-inbox-text">
+        B 站可能在加载列表时将消息标为已读。
+      </p>
+      <ListStatus
+        v-if="loading || failed"
+        :loading="loading"
+        :failed="failed"
+        @load="loadSelected"
+      />
+      <VButton v-else-if="confirmLoad" @click="loadSelected">加载列表</VButton>
       <ul v-else-if="page?.entries.length" class="dashboard-home-account-list" role="list">
         <li v-for="entry in page.entries" :key="entry.id" class="dashboard-home-inbox-entry">
           <div class="dashboard-home-inbox-entry-heading">
@@ -85,8 +94,9 @@
 
 <script setup lang="ts">
 import { formatDateTime } from '@/core/utils/formatters'
-import { VButton, VEmpty, VLoading } from '@/ui'
+import { VButton, VEmpty } from '@/ui'
 import { inboxCategories, messageCenterUrl } from '../../shared/inbox-categories'
+import ListStatus from '../../shared/ListStatus.vue'
 import { useAccountInbox } from './use-account-inbox'
 
 const {

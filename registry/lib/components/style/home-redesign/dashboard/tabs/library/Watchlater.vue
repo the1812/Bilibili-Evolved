@@ -25,7 +25,11 @@
       </LibraryToolbar>
       <p v-if="actionFailed" class="dashboard-home-list-status" role="status">操作失败，请重试</p>
       <CardCollection>
-        <LibraryCards :entries="entries" :watchlater-disabled="busy" :watchlater-action="remove" />
+        <LibraryCards
+          :entries="filteredEntries"
+          :watchlater-disabled="busy"
+          :watchlater-action="remove"
+        />
         <ListStatus
           class="dashboard-home-card-end"
           :loading="loading"
@@ -42,13 +46,11 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import {
-  getWatchlaterList,
   toggleWatchlater,
   watchlaterList,
   type RawWatchlaterItem,
 } from '@/components/video/watchlater'
-import { bilibiliApi, postTextWithCredentials } from '@/core/ajax'
-import { getCsrf, getUID } from '@/core/utils'
+import { getUID } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
 import { VEmpty } from '@/ui'
@@ -63,6 +65,7 @@ import {
   getPlaybackProgress,
   type LibraryEntry,
 } from './library'
+import { clearWatchlater, getWatchlaterQueue } from './watchlater-api'
 
 const uid = getUID()
 const { error: logError } = useScopedConsole('仪表盘首页稍后再看')
@@ -81,7 +84,7 @@ const videoUrl = (item: RawWatchlaterItem) =>
 const playAllUrl = computed(() => (queue.value[0]?.bvid ? videoUrl(queue.value[0]) : queueUrl))
 const isWatched = (item: RawWatchlaterItem) => item.progress === -1
 const hasWatched = computed(() => queue.value.some(isWatched))
-const entries = computed(() => {
+const filteredEntries = computed(() => {
   const cards = queue.value
     .filter(item => filter.value === 'all' || (filter.value === 'watched') === isWatched(item))
     .map((item): LibraryEntry => {
@@ -106,7 +109,7 @@ const entries = computed(() => {
 const emptyMessage = computed(() =>
   getLibraryEmptyMessage({
     entries: queue.value,
-    matches: entries.value,
+    matches: filteredEntries.value,
     filtering: filter.value !== 'all' || Boolean(keyword.value.trim()),
     empty: '稍后再看列表为空',
   }),
@@ -116,7 +119,7 @@ const loadQueue = async () => {
   loading.value = true
   failed.value = false
   try {
-    queue.value = await getWatchlaterList(true)
+    queue.value = await getWatchlaterQueue()
   } catch (error) {
     logError(error)
     failed.value = true
@@ -156,33 +159,20 @@ const remove = (aid: number) =>
     }
     queue.value = queue.value.filter(item => item.aid !== aid)
   })
-const clearQueue = async (viewed: boolean) => {
-  if (busy.value || !window.confirm(viewed ? '移除所有已看完的视频？' : '清空整个稍后再看列表？')) {
+const clearQueue = async (watchedOnly: boolean) => {
+  if (
+    busy.value ||
+    !window.confirm(watchedOnly ? '移除所有已看完的视频？' : '清空整个稍后再看列表？')
+  ) {
     return
   }
   await updateQueue(async () => {
-    const csrf = getCsrf()
-    if (!csrf) {
-      throw new Error('登录已失效')
-    }
-    const body = new URLSearchParams({ csrf })
-    if (viewed) {
-      body.set('viewed', 'true')
-    }
-    const action = viewed ? 'del' : 'clear'
-    await bilibiliApi(
-      postTextWithCredentials(
-        `https://api.bilibili.com/x/v2/history/toview/${action}`,
-        body.toString(),
-      ).then(JSON.parse),
-      '更新稍后再看失败',
-      false,
-    )
+    await clearWatchlater(watchedOnly)
     const removed = new Set(
-      queue.value.filter(item => !viewed || isWatched(item)).map(item => item.aid),
+      queue.value.filter(item => !watchedOnly || isWatched(item)).map(item => item.aid),
     )
     queue.value = queue.value.filter(item => !removed.has(item.aid))
-    const remaining = viewed ? watchlaterList.filter(aid => !removed.has(aid)) : []
+    const remaining = watchedOnly ? watchlaterList.filter(aid => !removed.has(aid)) : []
     watchlaterList.splice(0, watchlaterList.length, ...remaining)
   })
 }

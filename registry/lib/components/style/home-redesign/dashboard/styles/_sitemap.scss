@@ -19,7 +19,7 @@
     &.is-wide {
       grid-column: 1 / -1;
 
-      >.dashboard-home-sitemap-links {
+      > .dashboard-home-sitemap-links {
         grid-template-columns: repeat(auto-fill, minmax(min(100%, 132px), 1fr));
       }
     }
@@ -60,7 +60,7 @@
     border-radius: 8px;
     background-color: #8881;
 
-    >.dashboard-home-sitemap-link {
+    > .dashboard-home-sitemap-link {
       flex: 1;
       min-inline-size: 0;
     }

@@ -7,7 +7,7 @@
   display: grid;
   grid-template-columns: 0 minmax(0, 1fr);
 
-  >.dashboard-home-card-grid {
+  > .dashboard-home-card-grid {
     grid-area: 1 / 2;
   }
 }
@@ -38,8 +38,12 @@
 }
 
 @media (min-width: 721px) {
-  :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) .dashboard-home-feed-date {
-    --dashboard-home-feed-date-gutter: calc(var(--dashboard-home-page-padding-inline) + var(--dashboard-home-card-side-gutter) + var(--dashboard-home-grid-padding));
+  :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact'])
+    .dashboard-home-feed-date {
+    --dashboard-home-feed-date-gutter: calc(
+      var(--dashboard-home-page-padding-inline) + var(--dashboard-home-card-side-gutter) +
+        var(--dashboard-home-grid-padding)
+    );
 
     // Use the existing gutter and close the gap when a full date needs more room.
     translate: clamp(-12px, calc(100% - var(--dashboard-home-feed-date-gutter)), 0px) 0;
@@ -55,7 +59,7 @@
     .dashboard-home-feed-day {
       grid-template-columns: minmax(0, 1fr);
 
-      >.dashboard-home-card-grid {
+      > .dashboard-home-card-grid {
         grid-area: 1 / 1;
         isolation: isolate;
       }
@@ -96,7 +100,7 @@
   .dashboard-home-feed-day {
     grid-template: var(--dashboard-home-card-scroll-header-height) minmax(0, 1fr) / minmax(0, 1fr);
 
-    >.dashboard-home-card-grid {
+    > .dashboard-home-card-grid {
       grid-area: 2 / 1;
     }
   }

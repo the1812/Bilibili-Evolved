@@ -5,8 +5,8 @@
   inset-inline-end: clamp(12px, 3vw, 48px);
   z-index: 3;
 
-  .be-button {
-    padding: 8px !important;
+  .be-button.round.icon {
+    padding: 8px;
     opacity: 0.5;
 
     &:is(:hover, :focus-visible) {
@@ -19,11 +19,11 @@
       @include rotate();
     }
 
-    &:not(.is-horizontal-scroll) &-top:hover .mdi {
+    &:not(.is-horizontal-scroll) &-start:hover .mdi {
       @include bounce-y(-2);
     }
 
-    &.is-horizontal-scroll &-top:hover .mdi {
+    &.is-horizontal-scroll &-start:hover .mdi {
       @include bounce-x(2);
     }
   }

@@ -24,29 +24,45 @@
 
   &[data-content-card-layout='horizontal'] {
     --dashboard-home-horizontal-cover-width: 196px;
-    --dashboard-home-card-columns: var(--dashboard-home-card-track-count,
-        var(--dashboard-home-auto-card-columns));
+    --dashboard-home-card-columns: var(
+      --dashboard-home-card-track-count,
+      var(--dashboard-home-auto-card-columns)
+    );
     --dashboard-home-card-min-width: 360px;
-    --dashboard-home-card-view-width: calc(600px * var(--dashboard-home-card-columns) + var(--dashboard-home-grid-gap) * (var(--dashboard-home-card-columns) - 1) + 2 * var(--dashboard-home-grid-padding));
+    --dashboard-home-card-view-width: calc(
+      600px * var(--dashboard-home-card-columns) + var(--dashboard-home-grid-gap) *
+        (var(--dashboard-home-card-columns) - 1) + 2 * var(--dashboard-home-grid-padding)
+    );
   }
 }
 
 .dashboard-home-card-view {
   box-sizing: border-box;
-  inline-size: min(calc(100% - 2 * var(--dashboard-home-card-side-gutter)),
-      var(--dashboard-home-card-view-width));
+  inline-size: min(
+    calc(100% - 2 * var(--dashboard-home-card-side-gutter)),
+    var(--dashboard-home-card-view-width)
+  );
   min-inline-size: 0;
   padding-inline: var(--dashboard-home-grid-padding);
 }
 
 .dashboard-home-card-grid {
-  --dashboard-home-requested-card-width: calc((100% + var(--dashboard-home-grid-gap)) / var(--dashboard-home-card-columns) - var(--dashboard-home-grid-gap));
+  --dashboard-home-requested-card-width: calc(
+    (100% + var(--dashboard-home-grid-gap)) / var(--dashboard-home-card-columns) -
+      var(--dashboard-home-grid-gap)
+  );
 
   display: grid;
-  grid-template-columns: repeat(auto-fill,
-      minmax(min(100%,
-          max(var(--dashboard-home-card-min-width), var(--dashboard-home-requested-card-width))),
-        1fr));
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(
+      min(
+        100%,
+        max(var(--dashboard-home-card-min-width), var(--dashboard-home-requested-card-width))
+      ),
+      1fr
+    )
+  );
   gap: var(--dashboard-home-grid-gap);
   margin: 0;
   padding: 0;
@@ -60,12 +76,14 @@
 }
 
 [data-content-card-layout='horizontal'] .dashboard-home-card-grid {
-  >.dashboard-home-card-grid-item {
+  > .dashboard-home-card-grid-item {
     container-type: inline-size;
     grid-template-rows: minmax(0, 1fr);
 
-    >* {
-      block-size: calc(min(50cqi - 1px, var(--dashboard-home-horizontal-cover-width)) * 9 / 16 + 2px);
+    > * {
+      block-size: calc(
+        min(50cqi - 1px, var(--dashboard-home-horizontal-cover-width)) * 9 / 16 + 2px
+      );
     }
   }
 
@@ -79,7 +97,7 @@
   grid-auto-rows: var(--dashboard-home-masonry-row-height);
   row-gap: 0;
 
-  >.dashboard-home-card-grid-item {
+  > .dashboard-home-card-grid-item {
     grid-row-end: span var(--dashboard-home-masonry-rows, 1);
     align-self: start;
     padding-block-end: var(--dashboard-home-grid-gap);
@@ -91,11 +109,15 @@
   --dashboard-home-card-scroll-top-padding: 12px;
   --dashboard-home-card-scroll-bottom-padding: 28px;
   --dashboard-home-card-scroll-header-height: 0px;
-  --dashboard-home-card-scroll-rows: min(var(--dashboard-home-card-track-count, var(--dashboard-home-card-auto-rows, 1)),
-      var(--dashboard-home-card-available-rows, 1));
+  --dashboard-home-card-scroll-rows: min(
+    var(--dashboard-home-card-track-count, var(--dashboard-home-card-auto-rows, 1)),
+    var(--dashboard-home-card-available-rows, 1)
+  );
 
   block-size: var(--dashboard-home-card-scroll-height, 60dvh);
-  margin-inline: calc(-1 * (var(--dashboard-home-page-padding-inline) + var(--dashboard-home-grid-padding)));
+  margin-inline: calc(
+    -1 * (var(--dashboard-home-page-padding-inline) + var(--dashboard-home-grid-padding))
+  );
   padding-inline: var(--dashboard-home-card-scroll-inline-padding);
   container-type: inline-size;
   overflow-x: auto;
@@ -115,7 +137,8 @@
     inline-size: max-content;
     min-inline-size: 100%;
     block-size: 100%;
-    padding-block: var(--dashboard-home-card-scroll-top-padding) var(--dashboard-home-card-scroll-bottom-padding);
+    padding-block: var(--dashboard-home-card-scroll-top-padding)
+      var(--dashboard-home-card-scroll-bottom-padding);
 
     &:not(:has(.dashboard-home-card-grid)) .dashboard-home-card-end {
       margin-inline: auto;
@@ -133,7 +156,7 @@
     grid-template-rows: minmax(0, 1fr);
     min-block-size: 0;
 
-    >* {
+    > * {
       min-block-size: 0;
     }
   }

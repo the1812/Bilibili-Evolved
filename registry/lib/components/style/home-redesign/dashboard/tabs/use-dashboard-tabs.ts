@@ -1,6 +1,11 @@
 import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
 import { getUID } from '@/core/utils'
-import { contentCardLayouts, dashboardHomeOptionsMetadata, useDashboardOption } from '../options'
+import {
+  contentCardLayouts,
+  dashboardHomeOptionsMetadata,
+  maxCardTrackCount,
+  useDashboardOption,
+} from '../options'
 import type { ContentCardLayout } from '../shared/content-card'
 import { getDashboardTabs, type DashboardTab } from './dashboard-tabs'
 
@@ -77,24 +82,20 @@ export const useDashboardTabs = () => {
       trackCountOption ? [[trackCountOption, useDashboardOption(trackCountOption)] as const] : [],
     ),
   )
-  const getLayoutOption = ({ layoutOption }: DashboardTab) => {
-    if (!layoutOption) {
-      return undefined
-    }
-    const option = layoutOptions.get(layoutOption)?.value
-    return Object.hasOwn(contentCardLayouts, option)
-      ? option
-      : dashboardHomeOptionsMetadata[layoutOption].defaultValue
-  }
   const getCardLayout = (tab?: DashboardTab): ContentCardLayout | undefined => {
-    if (!tab?.layoutOption) {
+    const layoutOption = tab?.layoutOption
+    if (!layoutOption) {
       return tab?.fixedLayout
     }
-    return contentCardLayouts[getLayoutOption(tab)]
+    const option = layoutOptions.get(layoutOption)?.value
+    const layout = Object.hasOwn(contentCardLayouts, option)
+      ? option
+      : dashboardHomeOptionsMetadata[layoutOption].defaultValue
+    return contentCardLayouts[layout]
   }
   const getTrackCount = ({ trackCountOption }: DashboardTab) => {
     const count = trackCountOptions.get(trackCountOption)?.value
-    return Number.isInteger(count) && count > 0 && count <= 10 ? count : null
+    return Number.isInteger(count) && count > 0 && count <= maxCardTrackCount ? count : null
   }
   return { visibleTabs, selectedTab, getCardLayout, getTrackCount }
 }

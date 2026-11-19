@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-home-toolbar">
+  <div class="dashboard-home-library-toolbar">
     <slot name="filters" />
     <label>
       <span>搜索</span>

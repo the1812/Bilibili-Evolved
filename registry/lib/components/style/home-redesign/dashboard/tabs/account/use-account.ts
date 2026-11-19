@@ -13,7 +13,7 @@ export const useAccount = () => {
   const { error: logAccountError } = useScopedConsole('仪表盘首页账号')
   const uid = getUID()
   const profile = ref<AccountProfile>()
-  const loadingProfile = ref(Boolean(uid))
+  const loadingProfile = ref(false)
   const profileFailed = ref(false)
   const spaceUrl = computed(() => `https://space.bilibili.com/${profile.value?.mid ?? uid}`)
   const annualVip = computed(() => profile.value?.vipStatus === 1 && profile.value.vipType === 2)
@@ -86,10 +86,12 @@ export const useAccount = () => {
     panels.value.forEach(panel => panel.load())
   }
 
-  onMounted(async () => {
-    if (!uid) {
+  const loadProfile = async () => {
+    if (!uid || loadingProfile.value) {
       return
     }
+    loadingProfile.value = true
+    profileFailed.value = false
     try {
       profile.value = await getUserInfo()
       if (profile.value?.isLogin) {
@@ -101,7 +103,8 @@ export const useAccount = () => {
     } finally {
       loadingProfile.value = false
     }
-  })
+  }
+  onMounted(loadProfile)
 
   return {
     profile,
@@ -113,6 +116,7 @@ export const useAccount = () => {
     accountDetails,
     counts,
     panels,
+    loadProfile,
     loadPanels,
   }
 }

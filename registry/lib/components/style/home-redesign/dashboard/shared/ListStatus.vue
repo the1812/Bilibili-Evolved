@@ -2,16 +2,27 @@
   <div class="dashboard-home-list-status">
     <div role="status">
       <VLoading v-if="loading" />
-      <VEmpty v-else-if="!failed && empty">{{ empty }}</VEmpty>
+      <span v-else-if="failed">{{ error }}</span>
+      <VEmpty v-else-if="empty">{{ empty }}</VEmpty>
     </div>
-    <VButton v-if="!loading && failed" @click="$emit('load')">加载失败，点击重试</VButton>
-    <VButton v-else-if="!loading && hasMore" @click="$emit('load')">加载更多</VButton>
+    <VButton v-if="!loading && (failed || hasMore)" @click="$emit('load')">
+      {{ failed ? '重试' : '加载更多' }}
+    </VButton>
   </div>
 </template>
 
 <script setup lang="ts">
 import { VButton, VEmpty, VLoading } from '@/ui'
 
-defineProps<{ loading: boolean; failed: boolean; hasMore?: boolean; empty?: string }>()
+withDefaults(
+  defineProps<{
+    loading: boolean
+    failed: boolean
+    hasMore?: boolean
+    empty?: string
+    error?: string
+  }>(),
+  { hasMore: false, empty: '', error: '加载失败' },
+)
 defineEmits<{ (event: 'load'): void }>()
 </script>

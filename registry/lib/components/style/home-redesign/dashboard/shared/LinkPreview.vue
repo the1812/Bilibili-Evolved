@@ -5,7 +5,7 @@
     :class="{ 'is-reading-preview': preview?.reading }"
     aria-labelledby="dashboard-home-link-preview-title"
     closedby="any"
-    @close="clearUrl"
+    @close="clearPreview"
   >
     <div class="dashboard-home-link-preview-layout">
       <header class="dashboard-home-link-preview-header">
@@ -52,7 +52,7 @@ const show = (nextUrl: URL, reading: boolean) => {
   }
   return true
 }
-const clearUrl = () => {
+const clearPreview = () => {
   if (!dialog.value?.open) {
     preview.value = undefined
   }
