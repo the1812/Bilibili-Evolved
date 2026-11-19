@@ -202,7 +202,7 @@
   &-topics a,
   &-uploaders a {
     position: relative;
-    z-index: 1;
+    z-index: 2;
   }
 
   &-topics a {
@@ -308,7 +308,8 @@
   }
 
   .dashboard-home-content-card-footer,
-  .dashboard-home-content-card-footer .dashboard-home-dynamic-stats-items {
+  .dashboard-home-content-card-footer .dashboard-home-content-card-stats,
+  .dashboard-home-content-card-footer .dashboard-home-content-card-stats .dashboard-home-dynamic-stats-items {
     flex-wrap: nowrap;
   }
 }
@@ -338,7 +339,7 @@
 
   .dashboard-home-content-card-footer {
     grid-area: footer;
-    flex-flow: row-reverse nowrap;
+    flex-direction: row-reverse;
     align-items: flex-start;
   }
 
@@ -365,7 +366,7 @@
   .dashboard-home-content-card-stats>span,
   .dashboard-home-dynamic-stats-items,
   .dashboard-home-dynamic-stats-item {
-    flex-flow: column nowrap;
+    flex-direction: column;
     gap: 3px;
   }
 
