@@ -123,7 +123,7 @@
 <script lang="ts">
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import { getWatchlaterList, toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
-import { bilibiliApi, getJson } from '@/core/ajax'
+import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatCount } from '@/core/utils/formatters'
 import { DpiImage, VButton, VIcon, VLoading, VEmpty } from '@/ui'
 import { cssVariableMixin, requestMixin } from '../../../../mixin'
@@ -143,7 +143,8 @@ export default Vue.extend({
   mixins: [
     requestMixin({
       // log = false: 错误信息改在空态中展示
-      requestMethod: url => bilibiliApi(getJson(url), '获取清爽首页分区视频失败', false),
+      requestMethod: url =>
+        bilibiliApi(getJsonWithCredentials(url), '获取清爽首页分区视频失败', false),
     }),
     cssVariableMixin({
       mainCoverHeight: 185,
