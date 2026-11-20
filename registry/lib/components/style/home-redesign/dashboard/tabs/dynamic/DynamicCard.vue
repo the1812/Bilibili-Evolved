@@ -66,7 +66,7 @@
               :title="post.publishedAt ? formatDateTime(post.publishedAt).slice(0, 16) : '查看动态'"
             >
               <time v-if="post.publishedAt" :datetime="post.publishedAt.toISOString()">
-                {{ formatDynamicTimestamp(post.publishedAt) }}
+                {{ formatDateTimeLabel(post.publishedAt) }}
               </time>
               <template v-else>查看动态</template>
             </a>
@@ -149,9 +149,9 @@ import { formatDateTime } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
 import CardGridItem from '../../shared/CardGridItem.vue'
 import ContentCard from '../../shared/ContentCard.vue'
+import { formatDateTimeLabel } from '../../shared/format-date'
 import DynamicStats from './DynamicStats.vue'
 import {
-  formatDynamicTimestamp,
   getDynamicThumbnailSet,
   hasDynamicStats,
   useOriginalDynamicImage,

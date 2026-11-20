@@ -3,7 +3,7 @@
     <section class="dashboard-home-account-card" :aria-busy="countsLoading">
       <header class="dashboard-home-account-panel-heading">
         <h2>未读消息</h2>
-        <a :href="messageCenterUrl" target="_blank" rel="noopener">查看全部</a>
+        <a :href="messageCenter" target="_blank" rel="noopener">查看全部</a>
       </header>
       <ul v-if="counts || !countsLoading" class="dashboard-home-account-list" role="list">
         <li v-for="(category, key) in inboxCategories" :key="key">
@@ -95,7 +95,7 @@
 <script setup lang="ts">
 import { formatDateTime } from '@/core/utils/formatters'
 import { VButton, VEmpty } from '@/ui'
-import { inboxCategories, messageCenterUrl } from '../../shared/inbox-categories'
+import { inboxCategories, messageCenter } from '../../shared/urls'
 import ListStatus from '../../shared/ListStatus.vue'
 import { useAccountInbox } from './use-account-inbox'
 

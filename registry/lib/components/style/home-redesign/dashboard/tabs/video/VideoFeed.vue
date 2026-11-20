@@ -43,7 +43,7 @@ import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ContentCard from '../../shared/ContentCard.vue'
 import FeedDateGroup from '../../shared/FeedDateGroup.vue'
 import ListStatus from '../../shared/ListStatus.vue'
-import { groupFeedCardsByDate } from '../../shared/group-feed-cards'
+import { groupCardsByDate } from '../../shared/group-feed-cards'
 import { usePagedList } from '../../shared/use-paged-list'
 import DynamicStats from '../dynamic/DynamicStats.vue'
 import { hasDynamicStats } from '../dynamic/dynamic-post'
@@ -66,7 +66,7 @@ const {
   getKey: card => card.id,
   logName: '仪表盘首页视频',
 })
-const cardGroups = computed(() => groupFeedCardsByDate(cards.value, card => card.time))
+const cardGroups = computed(() => groupCardsByDate(cards.value, card => card.time))
 const refresh = () => {
   resetLikeStates()
   return refreshCards()

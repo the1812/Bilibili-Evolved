@@ -1,8 +1,7 @@
 import { normalizeFeedsCardModules } from '@/components/feeds/api'
 import { getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
-import { formatCount, formatDate, formatTime, parseCount } from '@/core/utils/formatters'
+import { formatCount, parseCount } from '@/core/utils/formatters'
 import type { ContentCardData, ContentCardKind } from '../../shared/content-card'
-import { omitCurrentYear } from '../../shared/format-date'
 
 interface RawImage {
   src?: string
@@ -28,7 +27,7 @@ interface RawAttachment extends RawMediaWithStats {
 const attachmentTypes = {
   archive: { icon: 'mdi-play-box-outline', label: '视频' },
   pgc: { icon: 'mdi-television-play', label: '番剧' },
-  article: { icon: 'mdi-file-document-outline', label: '专栏' },
+  column: { icon: 'mdi-file-document-outline', label: '专栏' },
   music: { icon: 'mdi-music-note', label: '音频' },
   live: { icon: 'mdi-video-outline', label: '直播' },
   courses: { icon: 'mdi-school-outline', label: '课程' },
@@ -39,17 +38,19 @@ const attachmentTypes = {
 }
 
 type AttachmentKind = keyof typeof attachmentTypes
+const getRawAttachmentKind = (kind: AttachmentKind) => (kind === 'column' ? 'article' : kind)
+type RawAttachmentKind = ReturnType<typeof getRawAttachmentKind>
 const attachmentKinds = Object.keys(attachmentTypes) as AttachmentKind[]
 const attachmentContentKinds: Partial<Record<AttachmentKind, ContentCardKind>> = {
   archive: 'video',
-  article: 'article',
+  column: 'column',
   pgc: 'bangumi',
 }
 
 const dynamicTypeLabels: Partial<Record<string, string>> = {
   DYNAMIC_TYPE_AV: attachmentTypes.archive.label,
   DYNAMIC_TYPE_PGC: attachmentTypes.pgc.label,
-  DYNAMIC_TYPE_ARTICLE: attachmentTypes.article.label,
+  DYNAMIC_TYPE_ARTICLE: attachmentTypes.column.label,
   DYNAMIC_TYPE_MUSIC: attachmentTypes.music.label,
   DYNAMIC_TYPE_LIVE: attachmentTypes.live.label,
   DYNAMIC_TYPE_LIVE_RCMD: attachmentTypes.live.label,
@@ -108,7 +109,7 @@ interface RawPostModules {
   module_dynamic?: RawDynamicTopics & {
     paragraphs?: RawParagraph[]
     additional?: { type?: string }
-    major?: Partial<Record<AttachmentKind, RawAttachment>> & {
+    major?: Partial<Record<RawAttachmentKind, RawAttachment>> & {
       type?: string
       archive?: RawAttachment & { aid?: number | string; duration_text?: string }
       pgc?: RawAttachment & { epid?: number | string; media_id?: number | string }
@@ -170,16 +171,6 @@ export const hasDynamicStats = (stats: DynamicPost['stats']) =>
   stats?.reposts !== undefined ||
   stats?.coins !== undefined ||
   stats?.favorites !== undefined
-
-export const formatDynamicTimestamp = (date: Date) => {
-  const today = formatDate(new Date())
-  const day = formatDate(date)
-  const time = formatTime(date).slice(0, 5)
-  if (day === today) {
-    return time
-  }
-  return `${omitCurrentYear(day, today)} ${time}`
-}
 
 const webUrl = (url?: string) => (/^(?:https?:)?\/\//i.test(url ?? '') ? url : undefined)
 
@@ -287,9 +278,10 @@ const getMajorTypeLabel = (major?: NonNullable<RawPostModules['module_dynamic']>
   if (major?.draw || major?.type === 'MAJOR_TYPE_DRAW') {
     return dynamicTypeLabels.DYNAMIC_TYPE_DRAW
   }
-  const kind = attachmentKinds.find(
-    key => major?.[key] || major?.type === `MAJOR_TYPE_${key.toUpperCase()}`,
-  )
+  const kind = attachmentKinds.find(key => {
+    const rawKey = getRawAttachmentKind(key)
+    return major?.[rawKey] || major?.type === `MAJOR_TYPE_${rawKey.toUpperCase()}`
+  })
   return kind ? attachmentTypes[kind].label : undefined
 }
 
@@ -308,10 +300,10 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
   const textBlocks = [getText(content?.desc), opusText, paragraphs].filter(block => block?.trim())
   const text = lodash.uniqBy(textBlocks, block => block.trim()).join('\n\n')
   const url = `https://t.bilibili.com/${item.id_str}`
-  const mediaKind = attachmentKinds.find(kind => major?.[kind]?.title)
-  const media = mediaKind ? major[mediaKind] : undefined
+  const mediaKind = attachmentKinds.find(kind => major?.[getRawAttachmentKind(kind)]?.title)
+  const media = mediaKind ? major[getRawAttachmentKind(mediaKind)] : undefined
   const attachmentKind =
-    mediaKind === 'opus' && item.type === 'DYNAMIC_TYPE_ARTICLE' ? 'article' : mediaKind
+    mediaKind === 'opus' && item.type === 'DYNAMIC_TYPE_ARTICLE' ? 'column' : mediaKind
   const archive = mediaKind === 'archive' ? major.archive : undefined
   const aid = Number(archive?.aid)
   const episodeId = mediaKind === 'pgc' ? Number(major.pgc.epid) : undefined
@@ -321,7 +313,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
       : undefined
   const coverUrl = webUrl(media?.cover) ?? webUrl(media?.covers?.[0])
   const reads =
-    attachmentKind === 'article' && !media?.stat_hidden
+    attachmentKind === 'column' && !media?.stat_hidden
       ? media?.label?.trim().match(/^(.+?)\s*阅读$/)?.[1]
       : undefined
   const attachment: DynamicPost['attachment'] = media && {

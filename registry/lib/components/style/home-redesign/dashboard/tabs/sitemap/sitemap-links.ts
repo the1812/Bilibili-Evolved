@@ -1,5 +1,12 @@
 import { categories, channelsV2 } from '@/components/utils/categories/data'
-import { inboxCategories, messageCenterUrl } from '../../shared/inbox-categories'
+import {
+  account,
+  accountSecurity,
+  creator,
+  inboxCategories,
+  messageCenter,
+  site,
+} from '../../shared/urls'
 
 export type SitemapLink = [
   label: string,
@@ -18,11 +25,6 @@ interface SitemapSection {
   title: string
   links: SitemapLink[]
 }
-
-const site = 'https://www.bilibili.com'
-const account = 'https://account.bilibili.com'
-const accountSecurity = 'https://passport.bilibili.com/pc/account-security/security'
-const creator = 'https://member.bilibili.com/platform'
 
 export const sitemapChannelSelector = '.bili-header__channel'
 
@@ -187,12 +189,12 @@ export const getSitemapSections = (
       id: 'messages',
       title: '消息',
       links: [
-        ['消息中心', messageCenterUrl, 'mdi-email-outline'],
+        ['消息中心', messageCenter, 'mdi-email-outline'],
         ...Object.values(inboxCategories).map(
           ({ label, url, icon }): SitemapLink => [label, url, icon],
         ),
-        ['私信存档', `${messageCenterUrl}/#/archive`, 'mdi-archive-outline'],
-        ['消息设置', `${messageCenterUrl}/#/config`, 'mdi-cog-outline'],
+        ['私信存档', `${messageCenter}/#/archive`, 'mdi-archive-outline'],
+        ['消息设置', `${messageCenter}/#/config`, 'mdi-cog-outline'],
       ],
     },
     {

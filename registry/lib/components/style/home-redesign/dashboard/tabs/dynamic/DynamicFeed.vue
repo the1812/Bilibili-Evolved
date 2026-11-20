@@ -121,7 +121,7 @@ import type { ContentCardData } from '../../shared/content-card'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import FeedDateGroup from '../../shared/FeedDateGroup.vue'
 import ListStatus from '../../shared/ListStatus.vue'
-import { groupFeedCardsByDate } from '../../shared/group-feed-cards'
+import { groupCardsByDate } from '../../shared/group-feed-cards'
 import DynamicCard from './DynamicCard.vue'
 import DynamicStats from './DynamicStats.vue'
 import type { DynamicFeedType } from './dynamic-api'
@@ -129,7 +129,7 @@ import { getDynamicThumbnailSet, hasDynamicStats } from './dynamic-post'
 import { useDynamicFeed } from './use-dynamic-feed'
 
 const props = withDefaults(defineProps<{ feedType?: DynamicFeedType }>(), { feedType: 'all' })
-const feedLabel = { all: TabOption.Dynamic, pgc: TabOption.Bangumi, article: TabOption.Article }[
+const feedLabel = { all: TabOption.Dynamic, pgc: TabOption.Bangumi, column: TabOption.Column }[
   props.feedType
 ]
 
@@ -149,7 +149,7 @@ const {
 } = useDynamicFeed(props.feedType)
 
 const contentCardGroups = computed(() => {
-  const kind = props.feedType === 'pgc' ? 'bangumi' : 'article'
+  const kind = props.feedType === 'pgc' ? 'bangumi' : 'column'
   const contentCards = cards.value.map(card => {
     const post = card.original ?? card.post
     const { attachment, author } = post
@@ -169,7 +169,7 @@ const contentCardGroups = computed(() => {
     }
     return { id: card.post.id, data, post }
   })
-  return groupFeedCardsByDate(contentCards, card => card.post.publishedAt)
+  return groupCardsByDate(contentCards, card => card.post.publishedAt)
 })
 
 const imagePreview = ref<HTMLDialogElement>()
