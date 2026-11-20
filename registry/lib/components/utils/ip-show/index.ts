@@ -116,6 +116,28 @@ const createSubReplyItem = function subReply(item, i) {
   return dom
 }
 
+// 音频区专用带IP属地显示的渲染器
+const audioCreateRender = function render(original) {
+  return function renderItem(item, ...args) {
+    const html = original.call(this, item, ...args)
+    const ipLocation = item.reply_control?.location
+    if (!ipLocation) {
+      return html
+    }
+    const rendered = document.createElement('template')
+    rendered.innerHTML = html
+    const time = rendered.content.querySelector('span.time')
+    if (!time || time.nextElementSibling?.matches('span.ip-location')) {
+      return html
+    }
+    const location = document.createElement('span')
+    location.className = 'ip-location'
+    location.textContent = ipLocation
+    time.insertAdjacentElement('afterend', location)
+    return rendered.innerHTML
+  }
+}
+
 // 小黑屋专用带IP属地显示的评论创建
 const blackroomCreateListCon = function listCon(e, n, t) {
   const r = this._parentBlacklistDom(e, n, t)
@@ -227,7 +249,12 @@ const observer = new MutationObserver(mutations => {
     if (typeof unsafeWindow.bbComment !== 'undefined') {
       // 评论创建函数替换
       bbComment = unsafeWindow.bbComment
-      if (unsafeWindow.location.href.split('/')[3] === 'blackroom') {
+      if (unsafeWindow.location.href.split('/')[3] === 'audio') {
+        // 音频区特判
+        ;['_createListCon', '_createSubReplyItem'].forEach(method => {
+          bbComment.prototype[method] = audioCreateRender(bbComment.prototype[method])
+        })
+      } else if (unsafeWindow.location.href.split('/')[3] === 'blackroom') {
         // 小黑屋特判
         // 三个谜之函数的polyfill（不知为何无法直接调用，会报错）
         bbComment.prototype._unhtmlFix = function unhtml(e, n) {
