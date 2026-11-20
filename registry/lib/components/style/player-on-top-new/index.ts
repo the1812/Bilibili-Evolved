@@ -95,7 +95,7 @@ export const component = defineComponentMetadata({
     },
   },
   urlInclude: videoUrls,
-  displayName: '播放器置顶（新）',
+  displayName: '播放器置顶',
   instantStyles: [
     {
       name: 'playerOnTopNew',
