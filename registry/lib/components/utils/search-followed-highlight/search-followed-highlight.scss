@@ -1,0 +1,27 @@
+.be-search-followed-author::after {
+  content: '已关注';
+  display: inline-block;
+  align-self: center;
+  margin-inline-start: 6px;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background-color: var(--theme-color-20);
+  color: var(--theme-color);
+  font-size: 12px;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.be-search-followed-highlighted {
+  position: relative;
+
+  &::after {
+    position: absolute;
+    inset: -4px;
+    z-index: 1;
+    border: 1px solid var(--theme-color);
+    border-radius: 10px;
+    pointer-events: none;
+    content: '';
+  }
+}
