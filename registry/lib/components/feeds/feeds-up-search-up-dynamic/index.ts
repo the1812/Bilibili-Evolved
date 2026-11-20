@@ -3,8 +3,9 @@ import { getJsonWithCredentials } from '@/core/ajax'
 import { childListSubtree } from '@/core/observer'
 import { select } from '@/core/spin-query'
 import { Toast } from '@/core/toast'
-import { getUID, getVue2Data, simulateClick } from '@/core/utils'
+import { getUID, getVue2Data, mountVueComponent, simulateClick } from '@/core/utils'
 import { feedsUrlsWithoutDetail } from '@/core/utils/urls'
+import SearchBar from './SearchBar.vue'
 
 const name = 'feedsUpSearchUpDynamic'
 
@@ -242,14 +243,17 @@ const state: {
   results: HTMLElement[]
 } = { list: null, loading: false, results: [] }
 
-let bar: HTMLElement | null = null
+// 搜索条为 Vue 组件, 实例上暴露 keyword / reset
+type SearchBarInstance = Vue & {
+  keyword: string
+  reset: () => void
+}
+
+let bar: SearchBarInstance | null = null
+let row: HTMLElement | null = null
 
 // 前置声明: applyFilter 与 ensureData 互相调用, 先声明以便提前引用
 let ensureData: () => Promise<void>
-
-const inputEl = () => (bar ? (bar.querySelector('input') as HTMLInputElement | null) : null)
-const clearBtnEl = () =>
-  bar ? (bar.querySelector('.bili-upsearch-clear') as HTMLElement | null) : null
 
 const nativeItems = (): HTMLElement[] => {
   const root = document.querySelector(SEL.upList)
@@ -282,14 +286,7 @@ const clearResults = () => {
 
 const clearSearch = () => {
   clearResults()
-  const input = inputEl()
-  if (input) {
-    input.value = ''
-  }
-  const clearBtn = clearBtnEl()
-  if (clearBtn) {
-    clearBtn.classList.remove('show')
-  }
+  bar?.reset()
 }
 
 const pickProto = () => {
@@ -417,9 +414,9 @@ ensureData = async () => {
   state.loading = true
   try {
     state.list = await loadFollowings()
-    const input = inputEl()
-    if (input && input.value.trim()) {
-      applyFilter(input.value)
+    const keyword = bar ? bar.keyword : ''
+    if (keyword.trim()) {
+      applyFilter(keyword)
     }
   } catch (error: any) {
     Toast.error(`加载关注列表失败: ${error.message}`, 'up切换栏搜索框', 5000)
@@ -429,48 +426,24 @@ ensureData = async () => {
 }
 
 const mountBar = (): boolean => {
-  if (bar && bar.isConnected) {
+  if (row && row.isConnected) {
     return true
   }
   const list = document.querySelector(SEL.upList)
   if (!list) {
     return false
   }
-  const row = document.createElement('div')
-  row.id = ROW_ID
-  bar = document.createElement('div')
-  bar.className = 'bili-upsearch-bar'
-  bar.title = '搜索已关注UP（按名称）'
-  bar.innerHTML =
-    '<svg class="bili-upsearch-icon" viewBox="0 0 16 16" aria-hidden="true">' +
-    '<path d="M11.2 10.1l3.1 3.1a.8.8 0 0 1-1.1 1.1l-3.1-3.1a5.2 5.2 0 1 1 1.1-1.1zM6.9 11a4.1 4.1 0 1 0 0-8.2 4.1 4.1 0 0 0 0 8.2z" fill="currentColor"/>' +
-    '</svg>' +
-    '<input class="bili-upsearch-input" type="text" placeholder="搜索已关注UP" autocomplete="off" spellcheck="false">' +
-    '<button class="bili-upsearch-clear" type="button" title="清空" aria-label="清空">×</button>'
-  row.appendChild(bar)
+  if (!bar || !row) {
+    row = document.createElement('div')
+    row.id = ROW_ID
+    bar = mountVueComponent(SearchBar) as SearchBarInstance
+    bar.$on('search', (keyword: string) => applyFilter(keyword))
+    bar.$on('focus', () => {
+      ensureData()
+    })
+    row.appendChild(bar.$el as HTMLElement)
+  }
   list.insertBefore(row, list.firstChild)
-
-  const input = inputEl()
-  const clearBtn = clearBtnEl()
-  if (!input || !clearBtn) {
-    return true
-  }
-  const updateClear = () => {
-    clearBtn.classList.toggle('show', !!input.value)
-  }
-  input.addEventListener('focus', ensureData, { once: true })
-  input.addEventListener('input', () => {
-    updateClear()
-    applyFilter(input.value)
-  })
-  clearBtn.addEventListener('click', event => {
-    event.preventDefault()
-    event.stopPropagation()
-    input.value = ''
-    updateClear()
-    clearResults()
-    input.focus()
-  })
   return true
 }
 
@@ -483,23 +456,11 @@ const entry = async () => {
   if (list) {
     // B站懒加载会不断替换列表内容; 搜索条被替换掉时重新挂载
     childListSubtree(list, () => {
-      if (!bar || !bar.isConnected) {
+      if (!row || !row.isConnected) {
         mountBar()
       }
     })
   }
-}
-
-const unload = () => {
-  clearSearch()
-  const row = document.getElementById(ROW_ID)
-  if (row && row.parentNode) {
-    row.parentNode.removeChild(row)
-  }
-  bar = null
-  state.list = null
-  state.loading = false
-  state.results = []
 }
 
 export const component = defineComponentMetadata({
@@ -512,8 +473,6 @@ export const component = defineComponentMetadata({
   tags: [componentsTags.feeds, componentsTags.utils],
   urlInclude: feedsUrlsWithoutDetail,
   entry,
-  reload: entry,
-  unload,
   instantStyles: [
     {
       name: 'feeds-up-search-up-dynamic',
