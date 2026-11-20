@@ -1,11 +1,18 @@
 import type { InjectionKey, Ref } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
+import { LayoutOption } from '../options'
 
 export type ContentCardLayout = 'horizontal' | 'compact' | 'vertical'
 export const contentCardLayoutKey: InjectionKey<Readonly<Ref<ContentCardLayout | undefined>>> =
   Symbol('dashboardHomeContentCardLayout')
 
-export type ContentCardKind = 'video' | 'article' | 'bangumi' | 'other'
+export const contentCardLayouts: Record<LayoutOption, ContentCardLayout> = {
+  [LayoutOption.Horizontal]: 'horizontal',
+  [LayoutOption.Compact]: 'compact',
+  [LayoutOption.Vertical]: 'vertical',
+}
+
+export type ContentCardKind = 'video' | 'column' | 'bangumi' | 'other'
 
 export type ContentCardData = Pick<VideoCard, 'title'> &
   Partial<

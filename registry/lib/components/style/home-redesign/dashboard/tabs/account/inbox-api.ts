@@ -2,10 +2,10 @@ import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/
 import { getCsrf } from '@/core/utils'
 import {
   inboxCategories,
-  messageCenterUrl,
+  messageCenter,
   type InboxCategory,
   type InteractionCategory,
-} from '../../shared/inbox-categories'
+} from '../../shared/urls'
 
 const api = 'https://api.bilibili.com'
 const messageApi = 'https://api.vc.bilibili.com'
@@ -133,8 +133,8 @@ interface SystemNotice {
 const getSystemNotices = async (): Promise<InboxPage> => {
   type NoticeList = { system_notify_list?: SystemNotice[] }
   const [unified, user] = await Promise.all([
-    get<NoticeList>(`${messageCenterUrl}/x/sys-msg/query_unified_notify`, { page_size: '10' }),
-    get<NoticeList>(`${messageCenterUrl}/x/sys-msg/query_user_notify`, { page_size: '20' }),
+    get<NoticeList>(`${messageCenter}/x/sys-msg/query_unified_notify`, { page_size: '10' }),
+    get<NoticeList>(`${messageCenter}/x/sys-msg/query_user_notify`, { page_size: '20' }),
   ])
   const notices = [...(unified.system_notify_list ?? []), ...(user.system_notify_list ?? [])]
   let noticeCursor: string | undefined
@@ -243,7 +243,7 @@ export const getInboxPage = (category: InboxCategory) => {
 }
 
 export const markSystemNoticesRead = (cursor: string) =>
-  get(`${messageCenterUrl}/x/sys-msg/update_cursor`, { cursor, has_up: '0' })
+  get(`${messageCenter}/x/sys-msg/update_cursor`, { cursor, has_up: '0' })
 
 export const markPrivateSessionRead = (
   acknowledgement: NonNullable<InboxEntry['acknowledgement']>,

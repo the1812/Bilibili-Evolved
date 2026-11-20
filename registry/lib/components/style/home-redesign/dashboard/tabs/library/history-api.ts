@@ -1,7 +1,7 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { formatDate, formatDuration, formatTime } from '@/core/utils/formatters'
+import { formatDuration } from '@/core/utils/formatters'
 import { HistoryType, navbarFilterTypes } from '../../../../custom-navbar/history/types'
-import { omitCurrentYear } from '../../shared/format-date'
+import { formatDateTimeLabel } from '../../shared/format-date'
 import { getPlaybackProgress, type LibraryEntry } from './library'
 
 interface RawHistoryItem {
@@ -59,24 +59,17 @@ const getHistoryContent = (item: RawHistoryItem) => {
   return undefined
 }
 
-const formatHistoryTime = (seconds: number, today: string, yesterday: string) => {
+const formatHistoryTime = (seconds: number) => {
   const date = new Date(seconds * 1000)
   if (!Number.isFinite(date.getTime())) {
     return undefined
   }
-  const day = formatDate(date)
-  let label = omitCurrentYear(day, today)
-  if (day === today) {
-    label = '今天'
-  } else if (day === yesterday) {
-    label = '昨天'
-  }
-  return `${label} ${formatTime(date).slice(0, 5)}`
+  return formatDateTimeLabel(date)
 }
 
 const contentKinds: Partial<Record<HistoryType, LibraryEntry['kind']>> = {
   [HistoryType.Video]: 'video',
-  [HistoryType.Article]: 'article',
+  [HistoryType.Article]: 'column',
   [HistoryType.Bangumi]: 'bangumi',
 }
 
@@ -92,9 +85,6 @@ export const getHistoryPage = async (type: HistoryType, viewAt?: number) => {
     false,
   )
   const items = Array.isArray(list) ? list : []
-  const now = new Date()
-  const today = formatDate(now)
-  const yesterday = formatDate(new Date(now.getFullYear(), now.getMonth(), now.getDate() - 1))
   const entries = items.flatMap((item): LibraryEntry[] => {
     const content = getHistoryContent(item)
     if (!content || (type !== HistoryType.All && type !== content.type)) {
@@ -117,10 +107,7 @@ export const getHistoryPage = async (type: HistoryType, viewAt?: number) => {
         upName: isSeries ? item.title : item.author_name,
         upID: isSeries ? undefined : item.author_mid,
         upFaceUrl: item.author_face,
-        detail: [
-          formatHistoryTime(item.view_at, today, yesterday),
-          progress === 1 ? '已看完' : undefined,
-        ]
+        detail: [formatHistoryTime(item.view_at), progress === 1 ? '已看完' : undefined]
           .filter(Boolean)
           .join(' · '),
         progress,

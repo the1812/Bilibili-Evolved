@@ -8,7 +8,7 @@ import {
   markPrivateSessionRead,
   markSystemNoticesRead,
 } from './inbox-api'
-import { isInteractionCategory, type InboxCategory } from '../../shared/inbox-categories'
+import { isInteractionCategory, type InboxCategory } from '../../shared/urls'
 
 export const useAccountInbox = () => {
   const { error: logError } = useScopedConsole('仪表盘首页消息')

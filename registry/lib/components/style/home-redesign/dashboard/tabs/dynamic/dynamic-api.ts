@@ -1,4 +1,4 @@
-import { getFeeds } from '@/components/feeds/api'
+import { feedsCardTypes, getFeeds } from '@/components/feeds/api'
 import { bilibiliApi, getJsonWithCredentials, postJsonWithCredentials } from '@/core/ajax'
 import { getCsrf } from '@/core/utils'
 import { toDynamicPost, type DynamicEntry, type RawDynamicPost } from './dynamic-post'
@@ -9,7 +9,7 @@ interface FeedPage {
   has_more: boolean
 }
 
-export type DynamicFeedType = 'all' | 'pgc' | 'article'
+export type DynamicFeedType = 'all' | 'pgc' | 'column'
 
 export interface DynamicLiveRoom {
   id: string
@@ -61,7 +61,8 @@ export const getDynamicLiveRooms = async (): Promise<DynamicLiveRoom[]> => {
 }
 
 export const getDynamicFeedPage = async (type: DynamicFeedType, offset?: string) => {
-  const page = await bilibiliApi<FeedPage>(getFeeds(type, offset), '获取动态失败', false)
+  const feedType = type === 'column' ? feedsCardTypes.column : type
+  const page = await bilibiliApi<FeedPage>(getFeeds(feedType, offset), '获取动态失败', false)
   const posts = page.items ?? []
   const entries: DynamicEntry[] = posts
     .filter(post => post.id_str)

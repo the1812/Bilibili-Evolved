@@ -150,7 +150,7 @@ const props = defineProps<{
 const coverSize = { width: 480 }
 const placeholderIcons: Record<ContentCardKind, string> = {
   video: 'mdi-play-box-multiple-outline',
-  article: 'mdi-file-document-outline',
+  column: 'mdi-file-document-outline',
   bangumi: 'mdi-television-play',
   other: 'mdi-image-outline',
 }
