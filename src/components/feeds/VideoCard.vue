@@ -24,7 +24,7 @@
       <div
         v-if="durationText && watchlater !== null && watchlater !== undefined"
         class="watchlater"
-        @click.stop.prevent="toggleWatchlater(aid)"
+        @click.stop.prevent="handleWatchlaterClick()"
       >
         <VIcon :size="15" :icon="watchlater ? 'mdi-check-circle' : 'mdi-clock-outline'"></VIcon>
         {{ watchlater ? '已添加' : '稍后再看' }}
@@ -128,8 +128,14 @@
 import { defineComponent, PropType } from 'vue'
 import { DpiImage, VIcon } from '@/ui'
 import { getUID } from '@/core/utils'
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
 import type { VideoCard } from './video-card'
+import {
+  watchlaterStatuses,
+  getWatchlaterStatus,
+  toggleWatchlater,
+} from '@/components/video/watchlater'
+import { visible } from '@/core/observer'
+import { logError } from '@/core/utils/log'
 
 /*
   ============
@@ -163,7 +169,9 @@ export default defineComponent({
   },
   data() {
     return {
-      watchlaterList,
+      watchlaterStatuses,
+      watchlaterObserver: null as IntersectionObserver | null,
+      togglingWatchlater: false,
       upFaceUrl: '',
       danmakuCount: '',
       like: '',
@@ -185,9 +193,9 @@ export default defineComponent({
     vertical() {
       return this.orientation === 'vertical'
     },
-    watchlater() {
+    watchlater(): boolean | null {
       if (getUID() && this.watchlaterInit !== null) {
-        return this.watchlaterList.includes(this.aid)
+        return this.watchlaterStatuses[this.aid] ?? null
       }
       return null
     },
@@ -195,8 +203,35 @@ export default defineComponent({
       return [...this.cooperation].reverse().slice(0, 3)
     },
   },
+  mounted() {
+    if (!getUID() || this.watchlaterInit === null || !this.aid) {
+      return
+    }
+    const [observer] = visible(this.$el, records => {
+      if (records.some(record => record.isIntersecting)) {
+        getWatchlaterStatus(this.aid, this.title).catch(logError)
+      }
+    })
+    this.watchlaterObserver = observer
+  },
+  beforeDestroy() {
+    this.watchlaterObserver?.disconnect()
+  },
   methods: {
-    toggleWatchlater,
+    async handleWatchlaterClick(this: {
+      aid?: number
+      togglingWatchlater: boolean
+    }): Promise<void> {
+      if (this.togglingWatchlater) {
+        return
+      }
+      this.togglingWatchlater = true
+      try {
+        await toggleWatchlater(this.aid)
+      } finally {
+        this.togglingWatchlater = false
+      }
+    },
   },
 })
 </script>

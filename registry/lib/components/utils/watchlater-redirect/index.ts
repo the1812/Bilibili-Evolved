@@ -39,17 +39,16 @@ const entry: ComponentEntry = async ({ settings }) => {
     return
   }
   const { select } = await import('@/core/spin-query')
-  const { childListSubtree } = await import('@/core/observer')
-  const { getWatchlaterList } = await import('@/components/video/watchlater')
+  const { childListSubtree, visible } = await import('@/core/observer')
+  const { getWatchlaterItem } = await import('@/components/video/watchlater')
   const { useScopedConsole } = await import('@/core/utils/log')
   const console = useScopedConsole('稍后再看重定向')
-  const list: RawWatchlaterItem[] = await getWatchlaterList(true)
   const listContainer = await select('.watch-later-list .list-box > span, .watchlater-list')
   if (!listContainer) {
     return
   }
 
-  const tryRedirect = (element: Element) => {
+  const tryRedirect = async (element: Element) => {
     if (isRedirected(element)) {
       return
     }
@@ -58,7 +57,7 @@ const entry: ComponentEntry = async ({ settings }) => {
       console.warn('bvid not found for', element.outerHTML)
       return
     }
-    const listItem = list.find(it => it.bvid === bvid)
+    const listItem = await getWatchlaterItem(bvid)
     if (listItem === undefined) {
       console.warn('bvid no match for', bvid)
       return
@@ -67,11 +66,23 @@ const entry: ComponentEntry = async ({ settings }) => {
     redirect(element, listItem)
   }
 
+  const observedCards = new WeakSet<Element>()
+  const [observer] = visible([], records => {
+    records.forEach(record => {
+      if (record.isIntersecting) {
+        observer.unobserve(record.target)
+        tryRedirect(record.target).catch(error => console.error(error))
+      }
+    })
+  })
   const runRedirect = lodash.debounce(() => {
     const videoCards = listContainer.querySelectorAll('.av-item, .video-card')
     console.log('run redirect, length =', videoCards.length)
     videoCards.forEach(card => {
-      tryRedirect(card)
+      if (!observedCards.has(card)) {
+        observedCards.add(card)
+        observer.observe(card)
+      }
     })
   }, 200)
 

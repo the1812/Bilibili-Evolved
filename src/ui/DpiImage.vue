@@ -11,6 +11,7 @@
 <script lang="ts">
 import { getDpiSourceSet } from '@/core/utils'
 import { EmptyImageUrl } from '@/core/utils/constants'
+import { intersectionObserve } from '@/core/observer'
 
 const findScrollParent = (element: HTMLElement) => {
   for (let parent = element.parentElement; parent; parent = parent.parentElement) {
@@ -33,6 +34,10 @@ export default Vue.extend({
       type: String,
       required: true,
     },
+    lazy: {
+      type: Boolean,
+      default: true,
+    },
     intersection: {
       type: Object,
       default: () => ({}),
@@ -47,6 +52,7 @@ export default Vue.extend({
       srcset: null,
       actualSrc: EmptyImageUrl,
       isPlaceholderActive: false,
+      intersectionObserver: null as IntersectionObserver | null,
     }
   },
   computed: {
@@ -77,26 +83,37 @@ export default Vue.extend({
       this.sourceChange()
     },
   },
+  created() {
+    if (!this.lazy) {
+      this.calcSrc()
+    }
+  },
   mounted() {
+    if (!this.lazy) {
+      return
+    }
     const scrollParent = this.intersection.root ? null : findScrollParent(this.$el as HTMLElement)
     const options: IntersectionObserverInit = {
       root: scrollParent,
       rootMargin: scrollParent ? '100%' : '200px',
       ...this.intersection,
     }
-    const observer = new IntersectionObserver(entries => {
+    const [observer] = intersectionObserve([this.$el], options, entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           this.calcSrc()
           observer.disconnect()
         }
       })
-    }, options)
-    observer.observe(this.$el)
+    })
+    this.intersectionObserver = observer
+  },
+  beforeDestroy() {
+    this.intersectionObserver?.disconnect()
   },
   methods: {
     sourceChange() {
-      if (this.actualSrc === EmptyImageUrl || this.srcset === null) {
+      if (this.lazy && (this.actualSrc === EmptyImageUrl || this.srcset === null)) {
         return
       }
       this.calcSrc()

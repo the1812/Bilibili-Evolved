@@ -85,6 +85,12 @@ export const init = async () => {
   })
   raiseLifeCycleEvent(LifeCycleEventTypes.ComponentsLoaded)
 
+  const { feedsUrls, matchCurrentPage } = await import('@/core/utils/urls')
+  if (matchCurrentPage(feedsUrls)) {
+    const { initFeedsWatchlater } = await import('@/components/feeds/watchlater')
+    initFeedsWatchlater().catch(coreApis.utils.log.logError)
+  }
+
   await promiseLoadTrace('wind up', async () => {
     const prefetchLink = document.createElement('link')
     prefetchLink.rel = 'dns-prefetch'

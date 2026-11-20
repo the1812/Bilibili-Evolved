@@ -12,31 +12,61 @@
 </template>
 
 <script>
-import { watchlaterList, toggleWatchlater } from '@/components/video/watchlater'
+import {
+  watchlaterStatuses,
+  getWatchlaterStatus,
+  toggleWatchlater,
+} from '@/components/video/watchlater'
 import { BangumiInfo } from '@/components/video/video-info'
 import { getVue2Data } from '@/core/utils'
+import { visible } from '@/core/observer'
+import { logError } from '@/core/utils/log'
 
 export default {
   data() {
     return {
       aid: null,
-      watchlaterList,
-      isActive: false,
+      watchlaterStatuses,
+      visibilityObserver: null,
       isLoading: false,
       feedback: '',
     }
   },
 
   computed: {
+    isActive() {
+      return this.watchlaterStatuses[this.aid]
+    },
     tipText() {
       if (this.feedback) {
         return this.feedback
       }
+      if (this.isActive === undefined) {
+        return '查询稍后再看状态'
+      }
       return this.isActive ? '移除' : '稍后再看'
     },
   },
-
+  mounted() {
+    const [observer] = visible(this.$el, records => {
+      if (records.some(record => record.isIntersecting)) {
+        this.loadStatus().catch(logError)
+      }
+    })
+    this.visibilityObserver = observer
+  },
+  beforeDestroy() {
+    this.visibilityObserver?.disconnect()
+  },
   methods: {
+    async loadStatus() {
+      if (!this.aid) {
+        this.aid = await this.getAidFromCard()
+      }
+      if (this.aid) {
+        await getWatchlaterStatus(this.aid)
+      }
+    },
     async getAidFromCard() {
       try {
         const feedCard = this.$el.closest('.bili-dyn-list__item, .bili-dyn-item')
@@ -66,20 +96,19 @@ export default {
       this.isLoading = true
 
       try {
-        if (!this.aid) {
-          this.aid = await this.getAidFromCard()
-        }
+        await this.loadStatus()
         if (!this.aid) {
           return
         }
 
-        await toggleWatchlater(this.aid, !this.isActive)
-        if (this.isActive === this.watchlaterList.includes(this.aid)) {
-          return
+        if (await toggleWatchlater(this.aid, !this.isActive)) {
+          this.feedback = this.isActive ? '已加稍后再看' : '已从稍后再看列表中移除'
+        } else {
+          this.feedback = '稍后再看操作失败，请重试'
         }
-
-        this.isActive = !this.isActive
-        this.feedback = this.isActive ? '已加稍后再看' : '已从稍后再看列表中移除'
+      } catch (error) {
+        logError(error)
+        this.feedback = '查询失败，请重试'
       } finally {
         this.isLoading = false
       }
