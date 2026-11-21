@@ -13,7 +13,7 @@
     color: #99a2aa;
     cursor: pointer;
     transition: all 0.2s ease-out;
-    z-index: 98;
+    z-index: 1;
     border-radius: 4px;
     &:hover {
       color: black;
@@ -29,6 +29,15 @@
 }
 .space-dynamic__content {
   overflow: visible !important;
+}
+.room-feed.trends {
+  overflow: visible !important;
+  .new-tabs {
+    position: relative !important;
+  }
+  .room-feed-content.trends-content {
+    margin-top: 0 !important;
+  }
 }
 .bili-comment-container {
   display: flex !important;
