@@ -171,9 +171,25 @@ export const matchPattern = (str: string, pattern: string | RegExp) => {
   }
   return pattern.test(str)
 }
-/** 以`document.URL`作为被测字符串, 移除URL查询参数并调用`matchPattern` */
+/**
+ * 去掉 B 站网址路径最前面的语言段, 例如 `https://www.bilibili.com/zh-Hans/video/BV1xx`
+ * 变为 `https://www.bilibili.com/video/BV1xx`, 其他域名的网址原样返回.
+ *
+ * 语言段由 b 站服务端校验 (不存在的语言如 `/xx/video/...` 会 404), 但支持的语言还会增加,
+ * 因此按 BCP 47 主语言标签的形状判断 (2~3 个字母, 可带 `-Hans`, `-BR` 这类子标签), 不逐个列举.
+ * 要求语言段后面还有路径段, 以免误伤 `/tv/` 这类真实的短路由; 语言段后面没有路径段时
+ * (例如 `/en/` 本身) 不剥离, 这类地址目前会被 b 站 302 回根域. 将来若出现
+ * "两三个字母 + 有子路径" 的根路由, 需要在这里加例外.
+ * @param url 完整的网址, 非 `www.bilibili.com` 时不做处理
+ */
+const localeSegmentPattern =
+  /^(https?:\/\/www\.bilibili\.com)\/[a-z]{2,3}(?:-[a-z0-9]{1,8})*(?=\/.+)/i
+
+export const withoutLocaleSegment = (url: string) => url.replace(localeSegmentPattern, '$1')
+
+/** 以`document.URL`作为被测字符串, 移除URL查询参数和语言段后调用`matchPattern` */
 export const matchUrlPattern = (pattern: string | RegExp) =>
-  matchPattern(document.URL.replace(window.location.search, ''), pattern)
+  matchPattern(withoutLocaleSegment(document.URL.replace(window.location.search, '')), pattern)
 /** 创建Vue组件的实例
  * @param module Vue组件模块对象
  * @param target 组件的挂载目标元素, 省略时不挂载直接返回
