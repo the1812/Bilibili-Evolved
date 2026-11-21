@@ -1,25 +1,27 @@
 .dashboard-home-account-panel-heading,
 .dashboard-home-inbox-entry-heading {
-  @include h-center(8px);
+  @include h-center(var(--dashboard-home-space-sm));
   justify-content: space-between;
 }
 
+.dashboard-home-account-panel-heading a {
+  @include dashboard-caption();
+  color: var(--dashboard-home-muted-text-color);
+}
+
 .dashboard-home-account {
-  @include v-stretch(16px);
+  @include v-stretch(var(--dashboard-home-space-lg));
   box-sizing: border-box;
-  inline-size: 1440px;
-  max-inline-size: 100%;
-  padding-inline: var(--dashboard-home-grid-padding);
+  inline-size: min(100%, var(--home-max-width));
+  padding-inline: var(--dashboard-home-grid-padding-inline);
 
   &-card {
-    @include card(12px);
-    @include v-stretch(12px);
-    min-inline-size: 0;
-    padding: 16px;
+    @include card(var(--home-card-radius));
+    @include v-stretch(var(--dashboard-home-space-md));
+    padding: var(--dashboard-home-space-lg);
 
     h2 {
       margin: 0;
-      font-size: 15px;
     }
 
     a:hover,
@@ -29,13 +31,9 @@
   }
 
   &-identity {
-    @include h-center(16px);
+    @include h-center(var(--dashboard-home-space-lg));
     flex-wrap: wrap;
     overflow-wrap: anywhere;
-
-    h2 {
-      font-size: 20px;
-    }
   }
 
   &-avatar {
@@ -43,13 +41,13 @@
     flex: none;
     inline-size: 64px;
     block-size: 64px;
-    margin: 8px;
+    margin: var(--dashboard-home-space-sm);
 
-    .face {
+    &-image {
       border-radius: 50%;
     }
 
-    .pendant {
+    &-pendant {
       position: absolute;
       inset: -16px;
       max-inline-size: none;
@@ -58,57 +56,53 @@
   }
 
   &-status {
-    @include h-center(8px);
+    @include h-center(var(--dashboard-home-space-sm));
   }
 
   &-membership {
-    padding: 4px 8px;
-    border: 1px solid #8883;
-    border-radius: 999px;
-    font-size: 12px;
+    @include dashboard-caption();
+    padding-block: var(--dashboard-home-space-xs);
+    padding-inline: var(--dashboard-home-space-sm);
+    border: var(--home-card-border);
+    border-radius: var(--dashboard-home-pill-radius);
   }
 
   &-details {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 72px), 1fr));
-    gap: 12px;
+    gap: var(--dashboard-home-space-md);
     margin: 0;
 
     dt {
-      font-size: 12px;
-      color: var(--be-color-text-placeholder, #666);
+      @include dashboard-caption();
+      color: var(--dashboard-home-muted-text-color);
     }
 
     dd {
-      margin: 2px 0 0;
-      font-weight: 600;
+      @include semi-bold();
+      margin-block: var(--dashboard-home-space-2xs) 0;
+      margin-inline: 0;
     }
   }
 
   &-panels {
+    --dashboard-home-account-panel-gap: var(--dashboard-home-space-lg);
+
     display: grid;
     grid-template-columns: repeat(
       auto-fit,
-      minmax(min(100%, max(280px, calc((100% - 32px) / 3))), 1fr)
+      minmax(
+        min(100%, max(280px, calc((100% - 2 * var(--dashboard-home-account-panel-gap)) / 3))),
+        1fr
+      )
     );
     align-items: start;
-    gap: 16px;
+    gap: var(--dashboard-home-account-panel-gap);
   }
 
-  &-column {
-    @include v-stretch(16px);
-    min-inline-size: 0;
-  }
-
+  &-column,
   &-inbox {
-    @include v-stretch(16px);
-  }
-
-  &-panel-heading {
-    a {
-      font-size: 12px;
-      color: var(--be-color-text-placeholder, #666);
-    }
+    @include v-stretch(var(--dashboard-home-account-panel-gap));
   }
 
   &-list {
@@ -117,19 +111,19 @@
     list-style: none;
 
     li + li {
-      border-block-start: 1px solid #8882;
+      border-block-start: var(--home-card-border);
     }
   }
 
   &-row {
-    @include h-center(10px);
-    box-sizing: content-box;
-    min-block-size: 32px;
-    padding-block: 6px;
+    @include h-center(var(--dashboard-home-space-sm));
+    box-sizing: border-box;
+    min-block-size: 40px;
+    padding-block: var(--dashboard-home-space-xs);
     color: inherit;
 
     &-text {
-      @include v-stretch(2px);
+      @include v-stretch(var(--dashboard-home-space-2xs));
       flex: 1;
       min-inline-size: 0;
       overflow-wrap: anywhere;
@@ -141,8 +135,8 @@
   }
 
   &-muted {
-    color: var(--be-color-text-placeholder, #666);
-    font-size: 12px;
+    @include dashboard-caption();
+    color: var(--dashboard-home-muted-text-color);
   }
 }
 
@@ -150,30 +144,21 @@
   &-category {
     inline-size: 100%;
     padding-inline: 0;
-    border: 0;
-    background: transparent;
-    font: inherit;
     text-align: start;
-    cursor: pointer;
 
-    &:enabled:hover,
+    &:not([aria-disabled='true']):is(:hover, :focus-visible),
     &[aria-expanded='true'] {
       color: var(--theme-color);
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--home-color, currentColor);
-      outline-offset: -2px;
-    }
-
-    &:disabled {
+    &[aria-disabled='true'] {
       cursor: wait;
     }
   }
 
   &-entry {
-    @include v-stretch(4px);
-    padding-block: 8px;
+    @include v-stretch(var(--dashboard-home-space-xs));
+    padding-block: var(--dashboard-home-space-sm);
     overflow-wrap: anywhere;
 
     &-heading {
@@ -181,13 +166,25 @@
     }
 
     &-title {
+      @include semi-bold();
       min-inline-size: 0;
       color: inherit;
-      font-weight: 600;
     }
 
     time {
       flex: none;
+    }
+  }
+
+  &-result {
+    margin: 0;
+
+    &:empty {
+      position: absolute;
+    }
+
+    &:focus-visible {
+      @include dashboard-focus-ring();
     }
   }
 
@@ -198,7 +195,7 @@
   }
 
   &-actions {
-    @include h-center(8px);
+    @include h-center(var(--dashboard-home-space-sm));
     justify-content: space-between;
   }
 }

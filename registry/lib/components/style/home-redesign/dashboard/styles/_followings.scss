@@ -1,31 +1,23 @@
 .dashboard-home-followings {
   &-card {
-    @include card(12px);
-    gap: 4px;
+    @include card(var(--home-card-radius));
+    gap: var(--dashboard-home-space-xs);
+    padding-block: var(--dashboard-home-card-padding-block);
+    padding-inline: var(--dashboard-home-card-padding-inline);
 
-    [data-content-card-layout='horizontal'] &,
-    [data-content-card-layout='compact'] & {
+    &:where(:not([data-content-card-layout='vertical'] *)) {
       @include v-stretch();
-      padding: 8px 12px;
     }
 
     [data-content-card-layout='vertical'] & {
       display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      grid-template-rows: minmax(0, 1fr);
-      padding: 12px 8px;
-
-      > .dashboard-home-followings-header,
-      > .dashboard-home-followings-signature-area {
-        min-inline-size: 0;
-        writing-mode: vertical-rl;
-        text-orientation: mixed;
-      }
+      grid-template: minmax(0, 1fr) auto / minmax(0, 1fr);
+      writing-mode: vertical-rl;
     }
   }
 
   &-header {
-    @include h-center(8px);
+    @include h-center(var(--dashboard-home-space-sm));
 
     [data-content-card-layout='horizontal'] &,
     [data-content-card-layout='compact'] & {
@@ -37,9 +29,13 @@
       flex: none;
     }
 
+    [data-content-card-layout='vertical'] & {
+      grid-row: 2;
+    }
+
     time {
-      color: var(--be-color-text-placeholder, #666);
-      font-size: 12px;
+      @include dashboard-caption();
+      color: var(--dashboard-home-muted-text-color);
 
       [data-content-card-layout='vertical'] & {
         flex: none;
@@ -52,38 +48,42 @@
     [data-content-card-layout='horizontal'] &,
     [data-content-card-layout='vertical'] & {
       container-type: size;
-      min-block-size: 0;
     }
 
     [data-content-card-layout='horizontal'] & {
       flex: 1;
     }
+
+    [data-content-card-layout='vertical'] & {
+      grid-row: 1;
+    }
   }
 
   &-signature {
     margin: 0;
-    color: var(--be-color-text-content, var(--home-color));
-    font-size: 14px;
-    line-height: 1.55;
+    color: var(--dashboard-home-text-color);
     overflow-wrap: anywhere;
     white-space: pre-wrap;
 
     [data-content-card-layout='horizontal'] &,
     [data-content-card-layout='vertical'] & {
       // Use only complete lines along the block axis, which runs sideways in vertical writing.
-      --dashboard-home-followings-signature-lines: max(1, round(down, 100cqb / 1lh));
+      --dashboard-home-followings-signature-clamp-lines: max(1, round(down, 100cqb / 1lh));
+
+      display: -webkit-box;
+      max-block-size: 100%;
+      overflow: clip;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--dashboard-home-followings-signature-clamp-lines);
+      line-clamp: var(--dashboard-home-followings-signature-clamp-lines);
 
       @supports not (opacity: calc(1px / 1px)) {
         // Convert the two lengths to a ratio on browsers without unit division.
-        --dashboard-home-followings-signature-lines: max(1, round(down, tan(atan2(100cqb, 1lh))));
+        --dashboard-home-followings-signature-clamp-lines: max(
+          1,
+          round(down, tan(atan2(100cqb, 1lh)))
+        );
       }
-
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: var(--dashboard-home-followings-signature-lines);
-      line-clamp: var(--dashboard-home-followings-signature-lines);
-      max-block-size: 100%;
-      overflow: clip;
     }
   }
 }

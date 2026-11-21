@@ -21,32 +21,29 @@
         loading="lazy"
       />
       <VIcon v-else :icon="placeholderIcons[data.kind ?? 'video']" :size="28" aria-hidden="true" />
-      <div v-if="data.badge" class="dashboard-home-content-card-cover-labels">
-        <span class="dashboard-home-content-card-badge">{{ data.badge }}</span>
-      </div>
+      <span v-if="data.badge" class="dashboard-home-content-card-badge">{{ data.badge }}</span>
       <div
-        v-if="data.durationText || canWatchlater"
+        v-if="data.durationText || canToggleWatchlater"
         class="dashboard-home-content-card-cover-controls"
       >
         <span v-if="data.durationText" class="dashboard-home-content-card-duration">
           {{ data.durationText }}
         </span>
         <button
-          v-if="canWatchlater"
+          v-if="canToggleWatchlater"
           type="button"
           class="dashboard-home-content-card-watchlater"
-          aria-label="稍后再看"
-          :title="saved ? '从稍后再看移除' : '添加到稍后再看'"
-          :aria-pressed="saved ? 'true' : 'false'"
-          :aria-disabled="watchlaterUnavailable ? 'true' : 'false'"
-          @click="toggleSaved"
+          :title="isSavedForLater ? '从稍后再看移除' : '添加到稍后再看'"
+          :aria-pressed="isSavedForLater ? 'true' : 'false'"
+          :aria-disabled="watchlaterUnavailable ? 'true' : undefined"
+          @click="toggleWatchlaterStatus"
         >
           <VIcon
-            :icon="saved ? 'mdi-check-circle' : 'mdi-clock-outline'"
+            :icon="isSavedForLater ? 'mdi-check-circle' : 'mdi-clock-outline'"
             :size="15"
             aria-hidden="true"
           />
-          <span>{{ saved ? '已添加' : '稍后再看' }}</span>
+          <span>稍后再看</span>
         </button>
       </div>
       <progress
@@ -60,16 +57,17 @@
     <div class="dashboard-home-content-card-details">
       <div class="dashboard-home-content-card-copy">
         <div class="dashboard-home-content-card-text">
-          <component
-            :is="url ? 'a' : 'span'"
-            class="dashboard-home-content-card-title"
-            :href="url"
-            :target="url ? '_blank' : undefined"
-            :rel="url ? 'noopener' : undefined"
-            :title="data.title"
-          >
-            <span>{{ data.title }}</span>
-          </component>
+          <h2 class="dashboard-home-content-card-title">
+            <component
+              :is="cardUrl ? 'a' : 'span'"
+              :href="cardUrl"
+              :target="cardUrl ? '_blank' : undefined"
+              :rel="cardUrl ? 'noopener' : undefined"
+              :title="data.title"
+            >
+              {{ data.title }}
+            </component>
+          </h2>
           <p
             v-if="data.description"
             class="dashboard-home-content-card-description"
@@ -98,7 +96,7 @@
           </a>
         </div>
       </div>
-      <div
+      <footer
         v-if="uploaders.length || stats.length || $scopedSlots.stats"
         class="dashboard-home-content-card-footer"
       >
@@ -117,17 +115,13 @@
         </div>
         <div v-if="stats.length || $scopedSlots.stats" class="dashboard-home-content-card-stats">
           <slot name="stats" />
-          <span
-            v-for="stat in stats"
-            :key="stat.icon"
-            :aria-label="`${stat.label} ${stat.count}`"
-            :title="`${stat.label} ${stat.count}`"
-          >
+          <span v-for="stat in stats" :key="stat.icon" :title="`${stat.label} ${stat.count}`">
             <VIcon :icon="stat.icon" :size="14" aria-hidden="true" />
+            <span class="dashboard-home-visually-hidden">{{ stat.label }}</span>
             {{ stat.count }}
           </span>
         </div>
-      </div>
+      </footer>
     </div>
   </article>
 </template>
@@ -154,10 +148,14 @@ const placeholderIcons: Record<ContentCardKind, string> = {
   bangumi: 'mdi-television-play',
   other: 'mdi-image-outline',
 }
-const url = computed(() => {
-  const { url: link, epID, bvid, aid } = props.data
-  if (link) {
-    return link
+const signedIn = Boolean(getUID())
+const savedVideos = ref(watchlaterList)
+const watchlaterPending = ref(false)
+
+const cardUrl = computed(() => {
+  const { url, epID, bvid, aid } = props.data
+  if (url) {
+    return url
   }
   if (epID) {
     return `https://www.bilibili.com/bangumi/play/ep${epID}`
@@ -192,26 +190,23 @@ const stats = computed(() => {
   ].filter(stat => stat.count)
 })
 
-const signedIn = Boolean(getUID())
-const savedVideos = ref(watchlaterList)
-const pending = ref(false)
-const watchlaterUnavailable = computed(() => pending.value || props.watchlaterDisabled)
-const canWatchlater = computed(() => {
+const watchlaterUnavailable = computed(() => watchlaterPending.value || props.watchlaterDisabled)
+const canToggleWatchlater = computed(() => {
   const { aid, kind = 'video', watchlater } = props.data
   return kind === 'video' && signedIn && Number.isSafeInteger(aid) && aid > 0 && watchlater !== null
 })
-const saved = computed(() => savedVideos.value.includes(props.data.aid))
-const toggleSaved = async () => {
-  if (!canWatchlater.value || watchlaterUnavailable.value) {
+const isSavedForLater = computed(() => savedVideos.value.includes(props.data.aid))
+const toggleWatchlaterStatus = async () => {
+  if (!canToggleWatchlater.value || watchlaterUnavailable.value) {
     return
   }
-  pending.value = true
+  watchlaterPending.value = true
   try {
     await (props.watchlaterAction ?? toggleWatchlater)(props.data.aid)
   } catch (error) {
     logError(error)
   } finally {
-    pending.value = false
+    watchlaterPending.value = false
   }
 }
 

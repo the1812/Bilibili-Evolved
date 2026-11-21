@@ -1,10 +1,42 @@
+@mixin library-control-size {
+  box-sizing: border-box;
+  min-block-size: var(--dashboard-home-library-control-block-size);
+  min-inline-size: 0;
+  padding-block: var(--dashboard-home-space-xs);
+  padding-inline: var(--dashboard-home-space-sm);
+  border: var(--dashboard-home-control-border);
+  border-radius: var(--dashboard-home-control-radius);
+}
+
+@mixin library-control-colors {
+  background-color: var(--home-background-color);
+  color: inherit;
+}
+
+.dashboard-home-library {
+  @include v-stretch(var(--dashboard-home-space-md));
+
+  &-status {
+    margin: 0;
+    text-align: center;
+
+    &:empty {
+      position: absolute;
+    }
+  }
+}
+
 .dashboard-home-library-toolbar {
-  @include h-center(8px);
-  flex-wrap: wrap;
-  font-size: 13px;
+  --dashboard-home-library-control-block-size: 34px;
+
+  &,
+  .dashboard-home-library-actions {
+    @include h-center(var(--dashboard-home-space-sm));
+    flex-wrap: wrap;
+  }
 
   label {
-    @include h-center(6px);
+    @include h-center(var(--dashboard-home-space-xs));
     max-inline-size: 100%;
 
     > span {
@@ -13,37 +45,16 @@
   }
 
   input,
-  select,
-  .dashboard-home-library-actions > :is(a, button) {
-    box-sizing: border-box;
-    min-block-size: 34px;
-    min-inline-size: 0;
-    padding: 6px 10px;
-    border: 1px solid #8885;
-    border-radius: 8px;
-    background-color: var(--home-background-color);
-    color: inherit;
-    font: inherit;
-
-    &:focus-visible {
-      outline: 2px solid var(--theme-color);
-      outline-offset: 2px;
-    }
-  }
-
-  input,
   select {
+    @include library-control-size();
     max-inline-size: 220px;
-    color-scheme: light;
-
-    body.dark & {
-      color-scheme: dark;
-    }
+    @include library-control-colors();
   }
 
   select {
     appearance: auto;
     white-space: nowrap;
+    cursor: pointer;
 
     &:hover {
       border-color: var(--theme-color);
@@ -57,10 +68,10 @@
 
       &::picker(select) {
         max-inline-size: min(320px, 90vw);
-        margin-block: 4px;
-        padding: 4px;
+        margin-block: var(--dashboard-home-space-xs);
+        padding: var(--dashboard-home-space-xs);
         border: var(--home-card-border);
-        border-radius: 8px;
+        border-radius: var(--home-card-radius);
         background-color: var(--home-background-color);
         box-shadow: var(--dashboard-home-card-hover-shadow);
         color: inherit;
@@ -76,9 +87,9 @@
 
       option {
         min-block-size: 32px;
-        gap: 8px;
-        padding: 6px 8px;
-        border-radius: 5px;
+        padding-block: var(--dashboard-home-space-xs);
+        padding-inline: var(--dashboard-home-space-sm);
+        border-radius: var(--dashboard-home-control-radius);
         white-space: normal;
         overflow-wrap: anywhere;
 
@@ -87,33 +98,22 @@
         }
 
         &:checked {
-          background-color: var(--theme-color-10, #8882);
+          background-color: var(--dashboard-home-highlight-background);
         }
 
         &:is(:hover, :focus-visible) {
-          background-color: #8883;
+          background-color: var(--theme-color-20, #8883);
         }
       }
     }
   }
 
-  select,
-  .dashboard-home-library-actions > :is(a, button:enabled:not([aria-disabled='true'])) {
-    cursor: pointer;
-  }
-}
-
-.dashboard-home-library {
-  @include v-stretch(12px);
-
-  &-actions {
-    @include h-center(8px);
-    flex-wrap: wrap;
-
+  .dashboard-home-library-actions {
     > :is(a, button) {
+      @include library-control-size();
       @include h-center();
 
-      &:not(:disabled, [aria-disabled='true']):hover {
+      &:not(:disabled, [aria-disabled='true']):is(:hover, :focus-visible) {
         border-color: var(--theme-color);
         color: var(--theme-color);
       }
@@ -123,10 +123,18 @@
       }
     }
 
-    > button.dashboard-home-history-recording {
+    > a {
+      @include library-control-colors();
+    }
+
+    > button {
+      --dashboard-home-button-background: var(--home-background-color);
+    }
+
+    > button.dashboard-home-history-recording-toggle {
       justify-content: center;
-      inline-size: 34px;
-      padding: 4px;
+      inline-size: var(--dashboard-home-library-control-block-size);
+      padding: var(--dashboard-home-space-xs);
       border-radius: 50%;
     }
   }

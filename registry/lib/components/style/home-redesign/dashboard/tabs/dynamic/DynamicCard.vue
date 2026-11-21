@@ -1,11 +1,11 @@
 <template>
-  <CardGridItem @resize="updateStatsSide">
+  <CardGridItem @resize="positionStats">
     <article
-      ref="cardElement"
+      ref="postCardElement"
       class="dashboard-home-dynamic-card"
-      :class="{ 'stats-on-left': statsOnLeft }"
-      @mouseenter="updateStatsSide"
-      @focusin="updateStatsSide"
+      :class="{ 'has-left-stats': showStatsOnLeft }"
+      @mouseenter="positionStats"
+      @focusin="positionStats"
     >
       <div
         v-for="(post, index) in posts"
@@ -14,8 +14,7 @@
         :class="{
           'is-repost': index > 0,
           'has-single-photo': post.images.length === 1,
-          'has-only-photo': !post.text && !post.attachment,
-          'has-attachment': !!post.attachment,
+          'is-photo-only': post.images.length === 1 && !post.text && !post.attachment,
         }"
       >
         <div class="dashboard-home-dynamic-controls">
@@ -100,11 +99,7 @@
           />
         </div>
         <p v-if="post.text" class="dashboard-home-dynamic-text">{{ post.text }}</p>
-        <div
-          v-if="post.images.length > 0"
-          class="dashboard-home-dynamic-photos"
-          :class="post.images.length === 1 ? 'is-single' : 'is-gallery'"
-        >
+        <div v-if="post.images.length > 0" class="dashboard-home-dynamic-photos">
           <button
             v-for="(image, imageIndex) in post.images"
             :key="imageIndex"
@@ -114,10 +109,10 @@
           >
             <img
               :src="image.url"
-              :srcset="getDynamicThumbnailSet(image.url, thumbnailWidth(post.images.length))"
+              :srcset="getDynamicThumbnailSet(image.url, getThumbnailWidth(post.images.length))"
               :width="image.width"
               :height="image.height"
-              alt="动态图片"
+              alt=""
               loading="lazy"
               @error="useOriginalDynamicImage"
             />
@@ -165,16 +160,9 @@ const emit = defineEmits<{
   (event: 'preview-image', url: string): void
   (event: 'toggle-like', post: DynamicPost): void
 }>()
-const cardElement = ref<HTMLElement>()
-const statsOnLeft = ref(false)
-const updateStatsSide = () => {
-  const card = cardElement.value
-  const grid = card?.closest('.dashboard-home-card-grid')
-  if (grid) {
-    statsOnLeft.value =
-      Math.abs(grid.getBoundingClientRect().right - card.getBoundingClientRect().right) < 1
-  }
-}
+const postCardElement = ref<HTMLElement>()
+const showStatsOnLeft = ref(false)
+
 const posts = computed(() => {
   const { post, original, reposters } = props.card
   const primary =
@@ -183,5 +171,14 @@ const posts = computed(() => {
 })
 const defaultStatsPost = computed(() => posts.value.find(post => hasDynamicStats(post.stats)))
 const cardThumbnailWidth = 480
-const thumbnailWidth = (photoCount: number) => cardThumbnailWidth / Math.min(photoCount, 3)
+const getThumbnailWidth = (photoCount: number) => cardThumbnailWidth / Math.min(photoCount, 3)
+
+const positionStats = () => {
+  const cardElement = postCardElement.value
+  const grid = cardElement?.closest('.dashboard-home-card-grid')
+  if (grid) {
+    showStatsOnLeft.value =
+      Math.abs(grid.getBoundingClientRect().right - cardElement.getBoundingClientRect().right) < 1
+  }
+}
 </script>

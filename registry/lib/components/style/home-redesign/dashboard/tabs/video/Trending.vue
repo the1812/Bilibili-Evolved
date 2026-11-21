@@ -7,7 +7,7 @@
         </CardGridItem>
       </ul>
       <ListStatus
-        class="dashboard-home-card-end"
+        class="dashboard-home-card-list-end"
         :loading="loading"
         :failed="failed"
         :empty="cards.length ? '' : '暂无视频'"

@@ -94,7 +94,9 @@ export const useAccountInbox = () => {
   }
 
   const selectCategory = (category: InboxCategory) => {
-    showCategory(selected.value === category ? undefined : category)
+    if (!reading.value) {
+      showCategory(selected.value === category ? undefined : category)
+    }
   }
 
   const refreshInbox = async () => {

@@ -13,158 +13,83 @@ body:not(.home-redesign-off):has(.dashboard-home) {
 }
 
 .dashboard-home {
-  --dashboard-home-auto-card-columns: 1;
-  --dashboard-home-grid-gap: 12px;
-  --dashboard-home-grid-padding: 8px;
+  --dashboard-home-grid-gap: var(--dashboard-home-space-md);
+  --dashboard-home-grid-padding-inline: var(--dashboard-home-space-sm);
   --dashboard-home-page-padding-inline: 32px;
-  --dashboard-home-card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+  --dashboard-home-card-grid-inline-inset: calc(
+    var(--dashboard-home-page-padding-inline) + var(--dashboard-home-grid-padding-inline)
+  );
 
-  body.dark & {
-    --dashboard-home-card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
-  }
-
-  @media screen and (min-width: 1440px) {
-    --dashboard-home-auto-card-columns: 2;
-  }
-
-  @media screen and (min-width: 2160px) {
-    --dashboard-home-auto-card-columns: 3;
-  }
-
-  box-sizing: border-box;
-  inline-size: 100%;
-  max-inline-size: 100%;
-  min-inline-size: 0;
-  padding: 24px var(--dashboard-home-page-padding-inline) 0;
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding-block-start: var(--dashboard-home-space-xl);
+  padding-inline: var(--dashboard-home-page-padding-inline);
+  background-color: var(--home-base-color);
 }
 
-.dashboard-home-tabs {
-  --dashboard-home-sticky-top: 0px;
-  --dashboard-home-feed-date-top: calc(var(--dashboard-home-sticky-top) + 8px);
+:where(.dashboard-home, .dashboard-home-link-preview) button {
+  border: 0;
+  background-color: var(--dashboard-home-button-background, transparent);
+  color: inherit;
 
-  @include v-stretch();
-  @include tabs-style();
-  flex-grow: 1;
-  min-inline-size: 0;
+  &:where(:enabled:not([aria-disabled='true'])) {
+    cursor: pointer;
 
-  body.fixed-navbar & {
-    --dashboard-home-sticky-top: var(--navbar-height, 0px);
-  }
-
-  .dashboard-home-tab-bar {
-    position: sticky;
-    inset-block-start: var(--dashboard-home-sticky-top);
-    z-index: 4;
-    display: flex;
-    justify-content: center;
-    padding-block: 8px;
-    pointer-events: none;
-  }
-
-  .default-tabs {
-    justify-content: center;
-    flex-wrap: wrap;
-    min-inline-size: 0;
-    gap: 10px 16px;
-    padding: 8px 14px 12px;
-    border: 1px solid transparent;
-    border-radius: 12px;
-    pointer-events: auto;
-
-    @media (prefers-reduced-motion: no-preference) {
-      transition: opacity 0.16s ease-out, transform 0.16s ease-out;
-    }
-
-    .default-tab:not(:last-child) {
-      margin-inline-end: 0;
-    }
-  }
-
-  &.has-floating-tabs {
-    &:not(.is-scrolling-down),
-    &:has(.default-tabs :focus-visible) {
-      --dashboard-home-content-scroll-margin: calc(
-        var(--dashboard-home-sticky-top) + var(--dashboard-home-tab-bar-height)
+    &:where(:hover, :focus-visible) {
+      background-color: var(
+        --dashboard-home-button-highlight-background,
+        var(--dashboard-home-highlight-background)
       );
     }
-
-    .default-tabs {
-      background-color: var(--home-background-color);
-      border: var(--home-card-border);
-      box-shadow: var(--dashboard-home-card-hover-shadow);
-    }
-
-    &.is-scrolling-down .default-tabs:not(:has(:focus-visible)) {
-      opacity: 0;
-      pointer-events: none;
-      transform: translateY(-8px);
-    }
   }
+}
 
-  .default-tab {
-    min-block-size: 24px;
-    padding: 0;
-    border: 0;
-    background: none;
-    font-family: inherit;
-    line-height: inherit;
+:where(.dashboard-home, .dashboard-home-link-preview)
+  :where(a:any-link, button, input, select, [role='tabpanel']):focus-visible {
+  @include dashboard-focus-ring();
+}
 
-    &:focus-visible {
-      outline: 2px solid var(--home-color);
-      outline-offset: 3px;
-    }
+.dashboard-home .dashboard-home-action {
+  --dashboard-home-button-background: var(--home-background-color);
 
-    &-name {
-      display: block;
-    }
+  @include h-center();
+  justify-content: center;
+  padding-block: var(--dashboard-home-space-xs);
+  padding-inline: var(--dashboard-home-space-sm);
+  border: var(--dashboard-home-control-border);
+  border-radius: var(--dashboard-home-control-radius);
+  font: inherit;
+
+  &[aria-disabled='true'] {
+    cursor: wait;
   }
+}
 
-  .default-content {
-    display: flex;
-    justify-content: center;
-    padding-block: 6px;
-    overflow: visible;
-
-    :focus-visible {
-      scroll-margin-block-start: var(
-        --dashboard-home-content-scroll-margin,
-        var(--dashboard-home-feed-date-top)
-      );
-    }
-
-    &[hidden] {
-      display: none;
-    }
-
-    > * {
-      min-inline-size: 0;
-    }
-
-    @media (prefers-reduced-motion: no-preference) {
-      .content-transition-enter-active {
-        // A transform on the panel would re-anchor the fixed action buttons.
-        transition: opacity 0.2s ease-out;
-      }
-
-      .content-transition-enter {
-        opacity: 0;
-      }
-    }
-  }
+.dashboard-home-visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .dashboard-home-list-status {
   @include v-center();
   text-align: center;
 
-  &:has(> [role='status']:not(:empty), > .be-button) {
-    padding-block: 8px;
+  &:has(> [role='status']:not(:empty)) {
+    gap: var(--dashboard-home-space-sm);
   }
 
-  > [role='status']:not(:empty) + .be-button {
-    margin-block-start: 8px;
+  > [role='status']:focus-visible {
+    @include dashboard-focus-ring();
+  }
+
+  &:has(> [role='status']:not(:empty), > button) {
+    padding-block: var(--dashboard-home-space-sm);
   }
 }

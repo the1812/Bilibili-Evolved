@@ -1,12 +1,12 @@
 <template>
-  <div class="dashboard-home-card-view dashboard-home-followings">
+  <div class="dashboard-home-card-view">
     <VEmpty v-if="!uid">登录后查看关注列表</VEmpty>
     <template v-else>
       <CardCollection>
         <ul v-if="followings.length" class="dashboard-home-card-grid" role="list">
           <CardGridItem v-for="following in followings" :key="following.mid">
             <article class="dashboard-home-followings-card">
-              <div class="dashboard-home-followings-header">
+              <header class="dashboard-home-followings-header">
                 <UpInfo
                   :up-id="following.mid"
                   :up-name="following.uname"
@@ -15,7 +15,7 @@
                 <time v-if="following.followedOn" :datetime="following.followedOn">
                   关注于 {{ following.followedOn }}
                 </time>
-              </div>
+              </header>
               <div v-if="following.sign" class="dashboard-home-followings-signature-area">
                 <p
                   class="dashboard-home-followings-signature"
@@ -26,15 +26,15 @@
             </article>
           </CardGridItem>
         </ul>
-        <div ref="loadTarget" class="dashboard-home-card-end">
-          <ListStatus
-            :loading="loading"
-            :failed="failed"
-            :has-more="hasMore"
-            :empty="!hasMore && !followings.length ? '暂无关注' : ''"
-            @load="loadNext"
-          />
-        </div>
+        <ListStatus
+          ref="loadTarget"
+          class="dashboard-home-card-list-end"
+          :loading="loading"
+          :failed="failed"
+          :has-more="hasMore"
+          :empty="!hasMore && !followings.length ? '暂无关注' : ''"
+          @load="loadNext"
+        />
       </CardCollection>
       <DashboardHomeOperations :refresh-disabled="loading" @refresh="refresh" />
     </template>

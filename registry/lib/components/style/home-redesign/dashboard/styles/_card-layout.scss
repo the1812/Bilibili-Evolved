@@ -1,168 +1,172 @@
-.dashboard-home-tabs .default-content[data-content-card-layout] {
-  --dashboard-home-card-view-width: var(--home-max-width);
-  --dashboard-home-card-min-width: 336px;
-  --dashboard-home-card-columns: var(--dashboard-home-card-track-count, 100);
-  --dashboard-home-card-side-gutter: 0px;
-  --dashboard-home-masonry-row-height: 8px;
+.dashboard-home-tabs > [role='tabpanel'][data-content-card-layout] {
+  --dashboard-home-card-min-inline-size: 336px;
+  --dashboard-home-card-column-min-size: var(--dashboard-home-card-min-inline-size);
+  --dashboard-home-card-inline-gutter: 0px;
 
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
 
-  @media (min-width: 721px) {
-    --dashboard-home-card-side-gutter: 24px;
-  }
+  &:not([data-content-card-layout='vertical']) {
+    --dashboard-home-card-view-max-inline-size: var(--home-max-width);
 
-  &[data-content-card-layout='vertical'] {
-    --dashboard-home-card-view-width: 100%;
-    --dashboard-home-card-side-gutter: 0px;
+    @media (min-width: 721px) {
+      --dashboard-home-card-inline-gutter: var(--dashboard-home-space-xl);
+    }
   }
 
   &[data-content-card-layout='compact'].has-manual-card-count {
-    --dashboard-home-card-min-width: 224px;
+    --dashboard-home-card-min-inline-size: var(--dashboard-home-narrow-card-inline-size);
+  }
+
+  &:is(
+      [data-content-card-layout='horizontal'],
+      [data-content-card-layout='compact'].has-manual-card-count
+    ) {
+    --dashboard-home-card-column-count: var(
+      --dashboard-home-card-track-count,
+      var(--dashboard-home-card-auto-column-count)
+    );
+    --dashboard-home-card-column-min-size: max(
+      var(--dashboard-home-card-min-inline-size),
+      (100% + var(--dashboard-home-grid-gap)) / var(--dashboard-home-card-column-count) -
+        var(--dashboard-home-grid-gap)
+    );
   }
 
   &[data-content-card-layout='horizontal'] {
-    --dashboard-home-horizontal-cover-width: 196px;
-    --dashboard-home-card-columns: var(
-      --dashboard-home-card-track-count,
-      var(--dashboard-home-auto-card-columns)
+    --dashboard-home-card-auto-column-count: 1;
+    --dashboard-home-card-min-inline-size: 360px;
+    --dashboard-home-card-view-max-inline-size: calc(
+      600px * var(--dashboard-home-card-column-count) + var(--dashboard-home-grid-gap) *
+        (var(--dashboard-home-card-column-count) - 1) + 2 *
+        var(--dashboard-home-grid-padding-inline)
     );
-    --dashboard-home-card-min-width: 360px;
-    --dashboard-home-card-view-width: calc(
-      600px * var(--dashboard-home-card-columns) + var(--dashboard-home-grid-gap) *
-        (var(--dashboard-home-card-columns) - 1) + 2 * var(--dashboard-home-grid-padding)
-    );
+
+    @media screen and (min-width: 1440px) {
+      --dashboard-home-card-auto-column-count: 2;
+    }
+
+    @media screen and (min-width: 2160px) {
+      --dashboard-home-card-auto-column-count: 3;
+    }
   }
 }
 
 .dashboard-home-card-view {
   box-sizing: border-box;
-  inline-size: min(
-    calc(100% - 2 * var(--dashboard-home-card-side-gutter)),
-    var(--dashboard-home-card-view-width)
-  );
-  min-inline-size: 0;
-  padding-inline: var(--dashboard-home-grid-padding);
+  inline-size: calc(100% - 2 * var(--dashboard-home-card-inline-gutter));
+  max-inline-size: var(--dashboard-home-card-view-max-inline-size, none);
+  padding-inline: var(--dashboard-home-grid-padding-inline);
 }
 
 .dashboard-home-card-grid {
-  --dashboard-home-requested-card-width: calc(
-    (100% + var(--dashboard-home-grid-gap)) / var(--dashboard-home-card-columns) -
-      var(--dashboard-home-grid-gap)
-  );
-
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(
-      min(
-        100%,
-        max(var(--dashboard-home-card-min-width), var(--dashboard-home-requested-card-width))
-      ),
-      1fr
-    )
-  );
   gap: var(--dashboard-home-grid-gap);
   margin: 0;
   padding: 0;
   list-style: none;
 
+  &:not(.dashboard-home-card-collection-vertical *) {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(min(100%, var(--dashboard-home-card-column-min-size)), 1fr)
+    );
+  }
+
   &-item {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    min-inline-size: 0;
   }
 }
 
-[data-content-card-layout='horizontal'] .dashboard-home-card-grid {
-  > .dashboard-home-card-grid-item {
-    container-type: inline-size;
-    grid-template-rows: minmax(0, 1fr);
+:is([data-content-card-layout='horizontal'], .dashboard-home-card-collection-vertical)
+  .dashboard-home-card-grid-item {
+  grid-template-rows: minmax(0, 1fr);
+}
 
-    > * {
-      block-size: calc(
-        min(50cqi - 1px, var(--dashboard-home-horizontal-cover-width)) * 9 / 16 + 2px
-      );
-    }
+[data-content-card-layout='horizontal'] .dashboard-home-card-grid-item {
+  container-type: inline-size;
+
+  > * {
+    // The cover takes up to half the card's inner width.
+    --dashboard-home-horizontal-cover-inline-size: min(
+      50cqi - var(--dashboard-home-border-width),
+      196px
+    );
+    block-size: calc(
+      var(--dashboard-home-horizontal-cover-inline-size) / var(--dashboard-home-cover-aspect-ratio) +
+        2 * var(--dashboard-home-border-width)
+    );
   }
 }
 
 [data-content-card-layout='compact'] .dashboard-home-card-grid {
-  grid-auto-rows: var(--dashboard-home-masonry-row-height);
+  --dashboard-home-masonry-row-block-size: 8px;
+
+  grid-auto-rows: var(--dashboard-home-masonry-row-block-size);
   row-gap: 0;
 
   > .dashboard-home-card-grid-item {
-    grid-row-end: span var(--dashboard-home-masonry-rows, 1);
+    grid-row-end: span var(--dashboard-home-masonry-row-span, 1);
     align-self: start;
     padding-block-end: var(--dashboard-home-grid-gap);
   }
 }
 
 .dashboard-home-card-collection-vertical {
-  --dashboard-home-card-scroll-inline-padding: 48px;
-  --dashboard-home-card-scroll-top-padding: 12px;
-  --dashboard-home-card-scroll-bottom-padding: 28px;
-  --dashboard-home-card-scroll-header-height: 0px;
-  --dashboard-home-card-scroll-rows: min(
-    var(--dashboard-home-card-track-count, var(--dashboard-home-card-auto-rows, 1)),
-    var(--dashboard-home-card-available-rows, 1)
-  );
+  --dashboard-home-card-scroll-padding-block-start: var(--dashboard-home-space-md);
+  // Leave space for the scrollbar below the cards.
+  --dashboard-home-card-scroll-padding-block-end: 28px;
+  --dashboard-home-card-scroll-header-block-size: 0px;
 
-  block-size: var(--dashboard-home-card-scroll-height, 60dvh);
-  margin-inline: calc(
-    -1 * (var(--dashboard-home-page-padding-inline) + var(--dashboard-home-grid-padding))
+  block-size: var(--dashboard-home-card-scroll-block-size, 60dvh);
+  margin-inline: calc(-1 * var(--dashboard-home-card-grid-inline-inset));
+  padding-inline: calc(
+    var(--dashboard-home-card-grid-inline-inset) + var(--dashboard-home-space-sm)
   );
-  padding-inline: var(--dashboard-home-card-scroll-inline-padding);
   container-type: inline-size;
   overflow-x: auto;
   overflow-y: hidden;
   direction: rtl;
 
   &:focus-visible {
-    outline: 2px solid var(--theme-color);
-    outline-offset: 2px;
+    @include dashboard-focus-ring();
   }
 
-  .dashboard-home-card-track {
-    box-sizing: border-box;
+  .dashboard-home-card-collection-track {
     display: flex;
-    align-items: stretch;
     gap: var(--dashboard-home-grid-gap);
+    box-sizing: border-box;
     inline-size: max-content;
     min-inline-size: 100%;
     block-size: 100%;
-    padding-block: var(--dashboard-home-card-scroll-top-padding)
-      var(--dashboard-home-card-scroll-bottom-padding);
+    padding-block: var(--dashboard-home-card-scroll-padding-block-start)
+      var(--dashboard-home-card-scroll-padding-block-end);
 
-    &:not(:has(.dashboard-home-card-grid)) .dashboard-home-card-end {
+    &:not(:has(.dashboard-home-card-grid)) .dashboard-home-card-list-end {
       margin-inline: auto;
     }
   }
 
   .dashboard-home-card-grid {
-    grid-template-columns: none;
-    grid-template-rows: repeat(var(--dashboard-home-card-scroll-rows), minmax(0, 1fr));
-    grid-auto-columns: min(224px, 100cqi);
+    --dashboard-home-card-row-count: min(
+      var(--dashboard-home-card-track-count, var(--dashboard-home-card-auto-row-count, 1)),
+      var(--dashboard-home-card-max-row-count, 1)
+    );
+
+    grid-template-rows: repeat(var(--dashboard-home-card-row-count), minmax(0, 1fr));
     grid-auto-flow: column;
-  }
-
-  .dashboard-home-card-grid-item {
-    grid-template-rows: minmax(0, 1fr);
-    min-block-size: 0;
-
-    > * {
-      min-block-size: 0;
-    }
+    grid-auto-columns: min(var(--dashboard-home-narrow-card-inline-size), 100cqi);
   }
 
   .dashboard-home-card-grid-item,
-  .dashboard-home-card-end {
+  .dashboard-home-card-list-end {
     direction: ltr;
   }
 
-  .dashboard-home-card-end {
+  .dashboard-home-card-list-end {
     align-self: start;
+    // Keep an intersection target when the status renders no content.
     min-inline-size: 1px;
   }
 }

@@ -26,6 +26,26 @@ export interface AccountRow {
 const getAccountData = <T>(url: string, error: string) =>
   bilibiliApi<T>(getJsonWithCredentials(url), error, false)
 
+export const getAccountProfile = async (): Promise<AccountProfile | undefined> => {
+  const response = getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
+  if ((await response)?.code === -101) {
+    return undefined
+  }
+  const profile = await bilibiliApi<AccountProfile>(response, '获取账号信息失败', false)
+  if (profile.isLogin === false) {
+    return undefined
+  }
+  if (
+    profile.isLogin !== true ||
+    !Number.isSafeInteger(profile.mid) ||
+    profile.mid <= 0 ||
+    typeof profile.uname !== 'string'
+  ) {
+    throw new Error('账号信息响应无效')
+  }
+  return profile
+}
+
 export const getAccountCounts = async (mid: number): Promise<AccountRow[]> => {
   const params = new URLSearchParams({ mid: String(mid) })
   const [account, creator] = await Promise.all([

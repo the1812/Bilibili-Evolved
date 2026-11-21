@@ -10,7 +10,6 @@
         v-if="stats.like?.canToggle"
         type="button"
         class="dashboard-home-dynamic-stats-item"
-        :class="{ 'is-liked': liked }"
         :aria-label="likeCount === undefined ? '点赞' : `点赞 ${likeCount}`"
         :aria-pressed="liked === undefined ? undefined : liked ? 'true' : 'false'"
         :aria-disabled="likeState?.pending ? 'true' : undefined"
@@ -28,12 +27,11 @@
         v-for="item in readOnlyStats"
         :key="item.label"
         class="dashboard-home-dynamic-stats-item"
-        role="img"
-        :aria-label="`${item.label} ${item.count}`"
         :title="`${item.label} ${item.count}`"
       >
         <VIcon :icon="item.icon" :size="14" aria-hidden="true" />
-        {{ formatCount(item.count) }}
+        <span class="dashboard-home-visually-hidden">{{ item.label }} {{ item.count }}</span>
+        <span aria-hidden="true">{{ formatCount(item.count) }}</span>
       </span>
     </div>
   </div>

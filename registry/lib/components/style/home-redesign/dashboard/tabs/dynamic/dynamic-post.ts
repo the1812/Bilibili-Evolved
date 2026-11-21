@@ -2,6 +2,7 @@ import { normalizeFeedsCardModules } from '@/components/feeds/api'
 import { getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
 import { formatCount, parseCount } from '@/core/utils/formatters'
 import type { ContentCardData, ContentCardKind } from '../../shared/content-card'
+import { getWebUrl } from '../../shared/urls'
 
 interface RawImage {
   src?: string
@@ -172,14 +173,12 @@ export const hasDynamicStats = (stats: DynamicPost['stats']) =>
   stats?.coins !== undefined ||
   stats?.favorites !== undefined
 
-const webUrl = (url?: string) => (/^(?:https?:)?\/\//i.test(url ?? '') ? url : undefined)
-
 export const getDynamicTopics = (content?: RawDynamicTopics): ContentCardData['topics'] => {
   const topics = new Map<string, string | undefined>()
   const addTopic = (text?: string, url?: string) => {
     const name = text?.trim().replace(/^#|#$/g, '').trim()
     if (name && !topics.get(name)) {
-      topics.set(name, webUrl(url))
+      topics.set(name, getWebUrl(url))
     }
   }
   addTopic(content?.topic?.name, content?.topic?.jump_url)
@@ -311,7 +310,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
     mediaKind === 'pgc' || item.type === 'DYNAMIC_TYPE_PGC'
       ? getBangumiAuthorUrl(author, major?.pgc?.media_id)
       : undefined
-  const coverUrl = webUrl(media?.cover) ?? webUrl(media?.covers?.[0])
+  const coverUrl = getWebUrl(media?.cover) ?? getWebUrl(media?.covers?.[0])
   const reads =
     attachmentKind === 'column' && !media?.stat_hidden
       ? media?.label?.trim().match(/^(.+?)\s*阅读$/)?.[1]
@@ -320,7 +319,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
     kind: attachmentContentKinds[attachmentKind] ?? 'other',
     type: attachmentTypes[attachmentKind],
     url:
-      webUrl(media.jump_url) ??
+      getWebUrl(media.jump_url) ??
       (Number.isSafeInteger(episodeId) && episodeId > 0
         ? `https://www.bilibili.com/bangumi/play/ep${episodeId}`
         : url),
@@ -335,7 +334,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
     readCount: formatMediaCount(reads),
   }
   const images = (major?.opus?.pics ?? major?.draw?.items ?? []).flatMap(image => {
-    const imageUrl = webUrl(image.url ?? image.src)
+    const imageUrl = getWebUrl(image.url ?? image.src)
     if (!imageUrl) {
       return []
     }
@@ -364,7 +363,12 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
   return {
     id: item.id_str,
     url,
-    author: { id: author?.mid, name: author?.name, avatar: webUrl(author?.face), url: authorUrl },
+    author: {
+      id: author?.mid,
+      name: author?.name,
+      avatar: getWebUrl(author?.face),
+      url: authorUrl,
+    },
     publishedAt: author?.pub_ts > 0 ? new Date(author.pub_ts * 1000) : undefined,
     text,
     images,

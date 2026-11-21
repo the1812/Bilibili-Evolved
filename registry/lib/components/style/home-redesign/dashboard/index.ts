@@ -32,10 +32,7 @@ export const component = defineComponentMetadata({
     })
   },
   unload: () => {
-    const previews = document.querySelectorAll<HTMLDialogElement>(
-      '.dashboard-home dialog[open], .dashboard-home-link-preview[open]',
-    )
-    previews.forEach(preview => preview.close())
+    document.querySelector<HTMLDialogElement>('.dashboard-home-link-preview[open]')?.close()
     document.body.classList.add('home-redesign-off')
   },
   reload: () => {

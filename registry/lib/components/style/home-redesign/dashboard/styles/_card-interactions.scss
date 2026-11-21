@@ -1,16 +1,24 @@
 .dashboard-home {
-  &.hide-watchlater .dashboard-home-content-card-watchlater {
+  &.is-watchlater-hidden .dashboard-home-content-card-watchlater {
     display: none;
   }
 
   a.be-up-info {
+    @include dashboard-caption();
+    block-size: var(--dashboard-home-capsule-block-size);
     min-inline-size: 0;
     max-inline-size: 100%;
 
     &.fallback {
-      @include round-bar(28);
-      padding: 2px 8px;
+      box-sizing: border-box;
+      padding-block: var(--dashboard-home-space-2xs);
+      padding-inline: var(--dashboard-home-space-sm);
       border: var(--home-card-border);
+      border-radius: var(--dashboard-home-pill-radius);
+    }
+
+    .be-up-info-name {
+      @include dashboard-transition(color);
     }
   }
 
@@ -18,10 +26,10 @@
     .dashboard-home-content-card-uploaders,
     .dashboard-home-followings-header {
       .be-up-info {
-        box-sizing: border-box;
-        block-size: 28px;
+        // The shared uploader pill sets a physical height.
         inline-size: auto;
-        padding: 2px 2px 6px;
+        padding-block: var(--dashboard-home-space-2xs);
+        padding-inline: var(--dashboard-home-space-2xs) var(--dashboard-home-space-sm);
       }
 
       .be-up-info-cover,
@@ -34,10 +42,12 @@
 
   .dashboard-home-dynamic-post-link {
     @include h-center();
-    @include round-bar(28);
-    padding-inline: 8px;
-    border: 1px solid transparent;
-    color: var(--be-color-text-placeholder, #666);
+    box-sizing: border-box;
+    block-size: var(--dashboard-home-capsule-block-size);
+    padding-inline: var(--dashboard-home-space-sm);
+    border: var(--dashboard-home-border-width) solid transparent;
+    border-radius: var(--dashboard-home-pill-radius);
+    color: var(--dashboard-home-muted-text-color);
     white-space: nowrap;
 
     &:is(:hover, :focus-visible) {
@@ -50,22 +60,50 @@
       .dashboard-home-dynamic-post-link,
       .dashboard-home-dynamic-original-link
     ):any-link {
-    @media (prefers-reduced-motion: no-preference) {
-      transition: background-color 0.18s ease-out, border-color 0.18s ease-out;
-    }
+    @include dashboard-transition((background-color, border-color));
 
     &:is(:hover, :focus-visible) {
       background-color: var(
-        --dashboard-home-capsule-hover-background,
-        var(--theme-color-10, #8881)
+        --dashboard-home-capsule-highlight-background,
+        var(--dashboard-home-highlight-background)
       );
-      border-color: var(--dashboard-home-capsule-hover-border, var(--theme-color-40, #8886));
+      border-color: var(
+        --dashboard-home-capsule-highlight-border-color,
+        var(--theme-color-40, #8886)
+      );
     }
+  }
 
-    &:focus-visible {
-      outline: 2px solid var(--dashboard-home-capsule-focus, var(--home-color));
-      outline-offset: 2px;
+  .dashboard-home-content-card:has(.dashboard-home-content-card-title > a),
+  .dashboard-home-dynamic-live-room {
+    position: relative;
+  }
+
+  .dashboard-home-content-card:has(.dashboard-home-content-card-title > a:focus-visible),
+  .dashboard-home-dynamic-live-room:has(.dashboard-home-dynamic-live-title > a:focus-visible) {
+    @include dashboard-focus-ring();
+
+    // The card outline marks focus for the full-card link.
+    :is(.dashboard-home-content-card-title, .dashboard-home-dynamic-live-title) > a:focus-visible {
+      outline: none;
     }
+  }
+
+  .dashboard-home-content-card-title > a::after,
+  .dashboard-home-dynamic-live-title > a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  // Keep independent controls above the full-card link.
+  .dashboard-home-content-card-watchlater,
+  .dashboard-home-content-card-topics a,
+  .dashboard-home-content-card-uploaders a,
+  .dashboard-home-content-card-stats button,
+  .dashboard-home-dynamic-live-profile {
+    position: relative;
+    z-index: 1;
   }
 
   .dashboard-home-content-card:not(.is-embedded),
@@ -73,9 +111,7 @@
   .dashboard-home-dynamic-live-room,
   .dashboard-home-followings-card,
   .dashboard-home-account-card {
-    @media (prefers-reduced-motion: no-preference) {
-      transition: box-shadow 0.2s ease-out;
-    }
+    @include dashboard-transition(box-shadow);
 
     &:hover,
     &:focus-within {

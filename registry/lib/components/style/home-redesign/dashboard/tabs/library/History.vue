@@ -6,7 +6,7 @@
         <template #filters>
           <label>
             <span>历史类型</span>
-            <select v-model="type">
+            <select v-model="historyType">
               <option v-for="filter in navbarFilterTypes" :key="filter.name" :value="filter.name">
                 {{ filter.displayName }}
               </option>
@@ -16,10 +16,10 @@
         <template #actions>
           <button
             type="button"
-            class="dashboard-home-history-recording"
+            class="dashboard-home-history-recording-toggle"
             :title="recordingAction.label"
             :aria-label="recordingAction.label"
-            :aria-disabled="recordingBusy ? 'true' : 'false'"
+            :aria-disabled="recordingBusy ? 'true' : undefined"
             @click="toggleRecording"
           >
             <VIcon :icon="recordingAction.icon" :size="14" aria-hidden="true" />
@@ -29,15 +29,15 @@
       </LibraryToolbar>
       <CardCollection>
         <LibraryCards :entries="filteredEntries" />
-        <div ref="loadTarget" class="dashboard-home-card-end">
-          <ListStatus
-            :loading="loading"
-            :failed="failed"
-            :has-more="hasMore"
-            :empty="emptyMessage"
-            @load="loadNext"
-          />
-        </div>
+        <ListStatus
+          ref="loadTarget"
+          class="dashboard-home-card-list-end"
+          :loading="loading"
+          :failed="failed"
+          :has-more="hasMore"
+          :empty="emptyMessage"
+          @load="loadNext"
+        />
       </CardCollection>
       <DashboardHomeOperations :refresh-disabled="loading" @refresh="refreshHistory" />
     </template>
@@ -60,7 +60,7 @@ import { filterLibraryEntries, getLibraryEmptyMessage, type LibraryEntry } from 
 import { useHistoryRecording } from './use-history-recording'
 
 const uid = getUID()
-const type = ref(HistoryType.All)
+const historyType = ref(HistoryType.All)
 const keyword = ref('')
 const {
   action: recordingAction,
@@ -68,20 +68,21 @@ const {
   refreshRecording,
   toggleRecording,
 } = useHistoryRecording(uid)
-const { entries, loading, failed, hasMore, loadTarget, loadNext, refresh } = usePagedList<
-  LibraryEntry,
-  number
->({
-  source: () => (uid ? type.value : undefined),
-  fetchPage: viewAt => getHistoryPage(type.value, viewAt),
+const {
+  entries,
+  loading,
+  failed,
+  hasMore,
+  loadTarget,
+  loadNext,
+  refresh: refreshEntries,
+} = usePagedList<LibraryEntry, string>({
+  source: () => (uid ? historyType.value : undefined),
+  fetchPage: cursor => getHistoryPage(historyType.value, cursor),
   getKey: item => item.id,
   logName: '仪表盘首页历史',
   autoLoad: () => !keyword.value.trim(),
 })
-const refreshHistory = () => {
-  refresh()
-  refreshRecording()
-}
 const filteredEntries = computed(() => filterLibraryEntries(entries.value, keyword.value))
 const emptyMessage = computed(() =>
   getLibraryEmptyMessage({
@@ -92,4 +93,9 @@ const emptyMessage = computed(() =>
     empty: '暂无历史记录',
   }),
 )
+
+const refreshHistory = () => {
+  refreshEntries()
+  refreshRecording()
+}
 </script>

@@ -12,11 +12,17 @@
       <section class="dashboard-home-account-card">
         <div class="dashboard-home-account-identity">
           <div class="dashboard-home-account-avatar">
-            <DpiImage v-if="profile.face" class="face" :src="profile.face" :size="64" alt="" />
+            <DpiImage
+              v-if="profile.face"
+              class="dashboard-home-account-avatar-image"
+              :src="profile.face"
+              :size="64"
+              alt=""
+            />
             <VIcon v-else icon="mdi-account-circle-outline" :size="64" aria-hidden="true" />
             <DpiImage
               v-if="profile.pendant?.image"
-              class="pendant"
+              class="dashboard-home-account-avatar-pendant"
               :src="profile.pendant.image"
               :size="96"
               alt=""
@@ -52,7 +58,15 @@
           >
             <header class="dashboard-home-account-panel-heading">
               <h2>{{ panel.title }}</h2>
-              <a v-if="panel.url" :href="panel.url" target="_blank" rel="noopener">查看全部</a>
+              <a
+                v-if="panel.url"
+                :href="panel.url"
+                :aria-label="'查看全部' + panel.title"
+                target="_blank"
+                rel="noopener"
+              >
+                查看全部
+              </a>
             </header>
             <dl
               v-if="panel === counts && accountDetails.length"
@@ -95,13 +109,13 @@
             />
           </section>
         </div>
-        <AccountInbox ref="inbox" />
+        <AccountInbox ref="inboxPanel" />
         <section class="dashboard-home-account-card">
           <h2>{{ personalSection.title }}</h2>
           <SitemapLinkList :links="personalSection.links" />
         </section>
       </div>
-      <DashboardHomeOperations @refresh="refresh" />
+      <DashboardHomeOperations @refresh="refreshAccount" />
     </template>
   </div>
 </template>
@@ -130,11 +144,11 @@ const {
   loadProfile,
   loadPanels,
 } = useAccount()
-const inbox = ref<InstanceType<typeof AccountInbox>>()
+const inboxPanel = ref<InstanceType<typeof AccountInbox>>()
 const personalSection = getPersonalSitemapSection(getUID())
 
-const refresh = () => {
+const refreshAccount = () => {
   loadPanels()
-  inbox.value?.refreshInbox()
+  inboxPanel.value?.refreshInbox()
 }
 </script>

@@ -73,17 +73,17 @@ export const usePagedList = <Item, Cursor>({
   onBeforeUnmount(() => {
     generation += 1
   })
-  const loadTarget = ref<HTMLElement>()
+  const loadTarget = shallowRef<{ $el: Element }>()
   const canAutoLoad = () => autoLoad() && hasMore.value && !loading.value && !failed.value
   watch(
-    () => (canAutoLoad() ? loadTarget.value : undefined),
+    () => (canAutoLoad() ? loadTarget.value?.$el : undefined),
     (target, _, onCleanup) => {
       if (!target) {
         return
       }
       const [observer] = visible(target, records => {
         if (
-          target === loadTarget.value &&
+          target === loadTarget.value?.$el &&
           canAutoLoad() &&
           records.some(record => record.isIntersecting)
         ) {

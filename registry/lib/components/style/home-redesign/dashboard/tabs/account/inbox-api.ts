@@ -1,6 +1,7 @@
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getCsrf } from '@/core/utils'
 import {
+  getWebUrl,
   inboxCategories,
   messageCenter,
   type InboxCategory,
@@ -30,10 +31,10 @@ export interface InboxPage {
   noticeCursor?: string
 }
 
-const get = <T>(url: string, params?: Record<string, string>) =>
+const get = <T>(url: string, params?: Record<string, string>, error = '获取消息失败') =>
   bilibiliApi<T>(
     getJsonWithCredentials(`${url}?${new URLSearchParams({ ...webParams, ...params })}`),
-    '获取消息失败',
+    error,
     false,
   )
 
@@ -62,7 +63,6 @@ export const getInboxUnread = async (): Promise<UnreadCounts> => {
   }
 }
 
-const webUrl = (url?: string) => (/^(https?:)?\/\//i.test(url ?? '') ? url : undefined)
 const replyPrefix = /^[ \t]*回复[ \t]*@[^:：\r\n]+[:：][ \t]*/
 const decimalId = (value: string | number | undefined) => {
   if (typeof value === 'number' && !Number.isSafeInteger(value)) {
@@ -105,7 +105,7 @@ const getInteractions = async (category: InteractionCategory): Promise<InboxPage
         ? `${names}等 ${entry.counts} 人`
         : names || 'B站用户'
     const date = entry.reply_time ?? entry.at_time ?? entry.like_time
-    const uri = webUrl(entry.item?.uri)
+    const uri = getWebUrl(entry.item?.uri)
     const sourceId = decimalId(category === 'like' ? entry.item?.item_id : entry.item?.source_id)
     return {
       id: decimalId(entry.id) ?? `interaction-${index}`,
@@ -159,7 +159,7 @@ const getSystemNotices = async (): Promise<InboxPage> => {
       title: notice.title || inboxCategories.system.label,
       text: text.replace(/#{([^}]+)}\{"?([^}"]+)"?}/g, '$1'),
       timestamp: Number.isFinite(timestamp) ? timestamp : undefined,
-      url: webUrl(text.match(link)?.[2]),
+      url: getWebUrl(text.match(link)?.[2]),
     }
   })
   entries.sort((a, b) => (b.timestamp ?? 0) - (a.timestamp ?? 0))
@@ -243,7 +243,11 @@ export const getInboxPage = (category: InboxCategory) => {
 }
 
 export const markSystemNoticesRead = (cursor: string) =>
-  get(`${messageCenter}/x/sys-msg/update_cursor`, { cursor, has_up: '0' })
+  get(
+    `${messageCenter}/x/sys-msg/update_cursor`,
+    { cursor, has_up: '0' },
+    '更新系统通知已读状态失败',
+  )
 
 export const markPrivateSessionRead = (
   acknowledgement: NonNullable<InboxEntry['acknowledgement']>,

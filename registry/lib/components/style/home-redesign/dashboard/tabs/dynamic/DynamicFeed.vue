@@ -4,7 +4,7 @@
     <template v-else>
       <ul
         v-if="liveRooms.length"
-        class="dashboard-home-card-grid dashboard-home-live-grid"
+        class="dashboard-home-card-grid"
         role="list"
         aria-label="正在直播"
       >
@@ -15,15 +15,11 @@
               <VIcon v-else icon="mdi-video-outline" :size="24" aria-hidden="true" />
             </div>
             <div class="dashboard-home-dynamic-live-details">
-              <a
-                class="dashboard-home-dynamic-live-title"
-                :href="room.url"
-                :title="room.title"
-                target="_blank"
-                rel="noopener"
-              >
-                <strong>{{ room.title }}</strong>
-              </a>
+              <h2 class="dashboard-home-dynamic-live-title">
+                <a :href="room.url" :title="room.title" target="_blank" rel="noopener">
+                  {{ room.title }}
+                </a>
+              </h2>
               <a
                 v-if="room.name && room.profileUrl"
                 class="dashboard-home-dynamic-live-profile"
@@ -42,10 +38,14 @@
           </article>
         </CardGridItem>
       </ul>
-      <CardCollection :class="{ 'dashboard-home-dated-collection': feedType !== 'all' }">
-        <ul v-if="feedType === 'all' && cards.length" class="dashboard-home-card-grid" role="list">
+      <CardCollection :class="{ 'dashboard-home-card-collection-dated': feedType !== 'all' }">
+        <ul
+          v-if="feedType === 'all' && feedCards.length"
+          class="dashboard-home-card-grid"
+          role="list"
+        >
           <DynamicCard
-            v-for="card in cards"
+            v-for="card in feedCards"
             :key="card.post.id"
             :card="card"
             :like-states="likeStates"
@@ -54,11 +54,11 @@
           />
         </ul>
         <div
-          v-else-if="feedType !== 'all' && contentCardGroups.length"
+          v-else-if="feedType !== 'all' && datedCardGroups.length"
           class="dashboard-home-feed-days"
         >
           <FeedDateGroup
-            v-for="group in contentCardGroups"
+            v-for="group in datedCardGroups"
             :key="group.date"
             :date="group.date"
             :label="group.label"
@@ -76,43 +76,25 @@
             </CardGridItem>
           </FeedDateGroup>
         </div>
-        <div ref="loadTarget" class="dashboard-home-card-end">
-          <ListStatus
-            :loading="loading"
-            :failed="failed"
-            :has-more="hasMore"
-            :empty="!hasMore && !entries.length ? `暂无关注${feedLabel}` : ''"
-            @load="loadNext"
-          />
-        </div>
+        <ListStatus
+          ref="loadTarget"
+          class="dashboard-home-card-list-end"
+          :loading="loading"
+          :failed="failed"
+          :has-more="hasMore"
+          :empty="!hasMore && !loadedEntries.length ? `暂无关注${feedLabel}` : ''"
+          @load="loadNext"
+        />
       </CardCollection>
       <DashboardHomeOperations :refresh-disabled="loading" @refresh="refresh" />
     </template>
-    <dialog
-      v-if="feedType === 'all'"
-      ref="imagePreview"
-      class="dashboard-home-dynamic-image-preview"
-      aria-label="图片预览"
-      @click.self="closeImagePreview"
-      @close="clearImagePreview"
-    >
-      <button type="button" aria-label="关闭图片预览" autofocus @click="closeImagePreview">
-        <VIcon icon="mdi-close" :size="24" aria-hidden="true" />
-      </button>
-      <img
-        v-if="previewUrl && !previewFailed"
-        :src="previewUrl"
-        alt="动态图片"
-        @error="previewFailed = true"
-      />
-      <p v-if="previewFailed" role="status">图片加载失败</p>
-    </dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { DpiImage, VEmpty, VIcon } from '@/ui'
+import { computed } from 'vue'
+import { Toast } from '@/core/toast'
+import { DpiImage, showImage, VEmpty, VIcon } from '@/ui'
 import { TabOption } from '../../options'
 import CardCollection from '../../shared/CardCollection.vue'
 import CardGridItem from '../../shared/CardGridItem.vue'
@@ -135,8 +117,8 @@ const feedLabel = { all: TabOption.Dynamic, pgc: TabOption.Bangumi, column: TabO
 
 const {
   loggedIn,
-  entries,
-  cards,
+  entries: loadedEntries,
+  cards: feedCards,
   liveRooms,
   loading,
   failed,
@@ -148,9 +130,9 @@ const {
   refresh,
 } = useDynamicFeed(props.feedType)
 
-const contentCardGroups = computed(() => {
+const datedCardGroups = computed(() => {
   const kind = props.feedType === 'pgc' ? 'bangumi' : 'column'
-  const contentCards = cards.value.map(card => {
+  const contentCards = feedCards.value.map(card => {
     const post = card.original ?? card.post
     const { attachment, author } = post
     const coverUrl = attachment?.coverUrl ?? post.images[0]?.url
@@ -172,21 +154,18 @@ const contentCardGroups = computed(() => {
   return groupCardsByDate(contentCards, card => card.post.publishedAt)
 })
 
-const imagePreview = ref<HTMLDialogElement>()
-const previewUrl = ref('')
-const previewFailed = ref(false)
-const openImagePreview = (url: string) => {
-  previewUrl.value = url
-  previewFailed.value = false
-  const dialog = imagePreview.value
-  if (dialog && !dialog.open) {
-    dialog.showModal()
+let isOpeningImagePreview = false
+const openImagePreview = async (url: string) => {
+  if (isOpeningImagePreview) {
+    return
   }
-}
-const closeImagePreview = () => imagePreview.value?.close()
-const clearImagePreview = () => {
-  if (!imagePreview.value?.open) {
-    previewUrl.value = ''
+  isOpeningImagePreview = true
+  try {
+    await showImage(url)
+  } catch {
+    Toast.error('图片加载失败', '图片预览')
+  } finally {
+    isOpeningImagePreview = false
   }
 }
 </script>

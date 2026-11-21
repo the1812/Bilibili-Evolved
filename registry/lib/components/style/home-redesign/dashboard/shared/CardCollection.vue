@@ -1,15 +1,14 @@
 <template>
   <div
-    ref="collection"
-    class="dashboard-home-card-collection"
-    :class="`dashboard-home-card-collection-${layout}`"
+    ref="collectionElement"
+    :class="{ 'dashboard-home-card-collection-vertical': isVertical }"
     :tabindex="isVertical ? 0 : null"
     :role="isVertical ? 'region' : null"
     :aria-label="isVertical ? '从右向左浏览卡片' : null"
-    :style="isVertical ? scrollLayout : null"
+    :style="isVertical ? scrollLayoutStyle : null"
     @wheel="scrollWithWheel"
   >
-    <div class="dashboard-home-card-track">
+    <div class="dashboard-home-card-collection-track">
       <slot />
     </div>
   </div>
@@ -20,44 +19,73 @@ import { computed, inject, ref, watch } from 'vue'
 import { sizeChange } from '@/core/observer'
 import { contentCardLayoutKey } from './content-card'
 
+const minimumRowBlockSize = 224
+const preferredRowBlockSize = 320
+
 const layout = inject(contentCardLayoutKey)
+const collectionElement = ref<HTMLElement>()
+const scrollLayoutStyle = ref<Record<string, string | number>>()
 const isVertical = computed(() => layout?.value === 'vertical')
-const collection = ref<HTMLElement>()
-const scrollLayout = ref<Record<string, string | number>>()
-const minimumRowHeight = 224
-const preferredRowHeight = 320
+
+const scrollWithWheel = (event: WheelEvent) => {
+  if (!isVertical.value || event.defaultPrevented || event.ctrlKey || event.shiftKey) {
+    return
+  }
+  const { deltaMode, deltaX, deltaY } = event
+  if (Math.abs(deltaX) >= Math.abs(deltaY)) {
+    return
+  }
+
+  const element = event.currentTarget as HTMLElement
+  const maxScrollLeft = element.scrollWidth - element.clientWidth
+  let distance = deltaY
+  if (deltaMode === WheelEvent.DOM_DELTA_LINE) {
+    distance *= 16
+  } else if (deltaMode === WheelEvent.DOM_DELTA_PAGE) {
+    distance *= element.clientWidth
+  }
+  const nextScrollLeft = Math.min(0, Math.max(-maxScrollLeft, element.scrollLeft - distance))
+  if (nextScrollLeft !== element.scrollLeft) {
+    event.preventDefault()
+    element.scrollLeft = nextScrollLeft
+  }
+}
 
 watch(
-  () => (isVertical.value ? collection.value : undefined),
+  () => (isVertical.value ? collectionElement.value : undefined),
   (element, _, onCleanup) => {
     if (!element) {
       return
     }
     const measure = () => {
       // Measure from the document top so scrolling does not change the row count.
-      let top = 0
-      for (let ancestor = element; ancestor; ancestor = ancestor.offsetParent as HTMLElement) {
-        top += ancestor.offsetTop
+      let documentTop = 0
+      for (
+        let ancestor: Element | null = element;
+        ancestor instanceof HTMLElement;
+        ancestor = ancestor.offsetParent
+      ) {
+        documentTop += ancestor.offsetTop
       }
-      const height = Math.max(minimumRowHeight, window.innerHeight - top - 12)
+      const blockSize = Math.max(minimumRowBlockSize, window.innerHeight - documentTop - 12)
       const style = getComputedStyle(element)
-      const topPadding = parseFloat(
-        style.getPropertyValue('--dashboard-home-card-scroll-top-padding'),
+      const paddingBlockStart = parseFloat(
+        style.getPropertyValue('--dashboard-home-card-scroll-padding-block-start'),
       )
-      const bottomPadding = parseFloat(
-        style.getPropertyValue('--dashboard-home-card-scroll-bottom-padding'),
+      const paddingBlockEnd = parseFloat(
+        style.getPropertyValue('--dashboard-home-card-scroll-padding-block-end'),
       )
-      const headerHeight = parseFloat(
-        style.getPropertyValue('--dashboard-home-card-scroll-header-height'),
+      const headerBlockSize = parseFloat(
+        style.getPropertyValue('--dashboard-home-card-scroll-header-block-size'),
       )
       const rowGap = parseFloat(style.getPropertyValue('--dashboard-home-grid-gap'))
-      const rowsHeight = height - topPadding - bottomPadding - headerHeight
-      const fitRows = (rowHeight: number) =>
-        Math.max(1, Math.floor((rowsHeight + rowGap) / (rowHeight + rowGap)))
-      scrollLayout.value = {
-        '--dashboard-home-card-scroll-height': `${height}px`,
-        '--dashboard-home-card-available-rows': fitRows(minimumRowHeight),
-        '--dashboard-home-card-auto-rows': fitRows(preferredRowHeight),
+      const availableRowSpace = blockSize - paddingBlockStart - paddingBlockEnd - headerBlockSize
+      const countRows = (rowBlockSize: number) =>
+        Math.max(1, Math.floor((availableRowSpace + rowGap) / (rowBlockSize + rowGap)))
+      scrollLayoutStyle.value = {
+        '--dashboard-home-card-scroll-block-size': `${blockSize}px`,
+        '--dashboard-home-card-max-row-count': countRows(minimumRowBlockSize),
+        '--dashboard-home-card-auto-row-count': countRows(preferredRowBlockSize),
       }
     }
     measure()
@@ -71,29 +99,4 @@ watch(
   },
   { flush: 'post' },
 )
-
-const scrollWithWheel = (event: WheelEvent) => {
-  if (
-    !isVertical.value ||
-    event.defaultPrevented ||
-    event.ctrlKey ||
-    event.shiftKey ||
-    Math.abs(event.deltaX) >= Math.abs(event.deltaY)
-  ) {
-    return
-  }
-  const element = event.currentTarget as HTMLElement
-  const maxScroll = element.scrollWidth - element.clientWidth
-  let distance = event.deltaY
-  if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
-    distance *= 16
-  } else if (event.deltaMode === WheelEvent.DOM_DELTA_PAGE) {
-    distance *= element.clientWidth
-  }
-  const next = Math.min(0, Math.max(-maxScroll, element.scrollLeft - distance))
-  if (next !== element.scrollLeft) {
-    event.preventDefault()
-    element.scrollLeft = next
-  }
-}
 </script>

@@ -1,0 +1,87 @@
+.dashboard-home-dynamic-live {
+  &-room {
+    @include card(var(--home-card-radius));
+    @include h-center(var(--dashboard-home-space-sm));
+    padding-block: var(--dashboard-home-card-padding-block);
+    padding-inline: var(--dashboard-home-card-padding-inline);
+  }
+
+  &-avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: 36px;
+    block-size: 36px;
+    border-radius: 50%;
+
+    img {
+      border-radius: inherit;
+    }
+
+    @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+      .dashboard-home-dynamic-live-room:hover & {
+        position: relative;
+        isolation: isolate;
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          border: var(--dashboard-home-accent-stroke-width) solid var(--theme-color);
+          border-radius: inherit;
+          animation: dashboard-home-live-wave 1.1s ease-out both;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+
+  &-details {
+    @include v-stretch(var(--dashboard-home-space-2xs));
+    min-inline-size: 0;
+
+    a,
+    span {
+      @include single-line();
+    }
+
+    .dashboard-home-dynamic-live-profile,
+    span {
+      @include dashboard-caption();
+      color: var(--dashboard-home-muted-text-color);
+    }
+  }
+
+  &-title {
+    margin: 0;
+    font: inherit;
+    @include semi-bold();
+
+    > a {
+      display: block;
+      color: inherit;
+    }
+  }
+
+  &-profile {
+    align-self: flex-start;
+    max-inline-size: 100%;
+  }
+
+  &-details a:is(:hover, :focus-visible) {
+    color: var(--theme-color);
+  }
+}
+
+@keyframes dashboard-home-live-wave {
+  from {
+    opacity: 0.5;
+    scale: 0.95;
+  }
+
+  to {
+    opacity: 0;
+    scale: 1.45;
+  }
+}

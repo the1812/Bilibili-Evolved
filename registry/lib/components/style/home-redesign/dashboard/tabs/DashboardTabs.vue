@@ -3,48 +3,45 @@
     v-if="visibleTabs.length"
     class="dashboard-home-tabs"
     :class="{ 'has-floating-tabs': floatingTabs, 'is-scrolling-down': scrollingDown }"
-    :style="{ '--dashboard-home-tab-bar-height': `${tabBarHeight}px` }"
+    :style="{ '--dashboard-home-tab-bar-block-size': `${tabBarHeight}px` }"
   >
-    <div ref="tabBar" class="dashboard-home-tab-bar">
+    <div ref="tabBarElement" class="dashboard-home-tab-bar">
       <div
-        class="default-tabs"
+        class="dashboard-home-tab-list"
         role="tablist"
         aria-label="仪表盘首页"
-        @keydown="moveTabFocus"
+        @keydown="handleTabKeydown"
         @focusout="resetTabFocus"
       >
         <button
           v-for="tab in visibleTabs"
-          :id="tabId(tab)"
+          :id="getTabId(tab)"
           :key="tab.id"
           type="button"
-          class="default-tab"
-          :class="{ selected: tab === selectedTab }"
           role="tab"
-          :aria-controls="panelId(tab)"
+          :aria-controls="getPanelId(tab)"
           :aria-selected="tab === selectedTab ? 'true' : 'false'"
           :tabindex="tab.id === tabbableTabId ? 0 : -1"
           @focus="focusedTabId = tab.id"
           @click="selectTab(tab, $event)"
         >
-          <span class="default-tab-name">{{ tab.name }}</span>
+          {{ tab.name }}
         </button>
       </div>
     </div>
     <div
       v-for="tab in visibleTabs"
-      :id="panelId(tab)"
+      :id="getPanelId(tab)"
       :key="tab.id"
-      class="default-content"
       :data-content-card-layout="getCardLayout(tab)"
       :class="{ 'has-manual-card-count': getTrackCount(tab) }"
       :style="{ '--dashboard-home-card-track-count': getTrackCount(tab) }"
       role="tabpanel"
-      :aria-labelledby="tabId(tab)"
+      :aria-labelledby="getTabId(tab)"
       :hidden="tab !== selectedTab"
       :tabindex="tab === selectedTab ? 0 : undefined"
     >
-      <transition name="content-transition">
+      <transition name="dashboard-home-panel">
         <component :is="tab.component" v-if="tab === selectedTab" v-bind="tab.propsData" />
       </transition>
     </div>
@@ -60,24 +57,72 @@ import { contentCardLayoutKey } from '../shared/content-card'
 import type { DashboardTab } from './dashboard-tabs'
 import { useDashboardTabs } from './use-dashboard-tabs'
 
-const emit = defineEmits<{ (event: 'open-link', url: string, click: MouseEvent): void }>()
+const emit = defineEmits<{ (event: 'open-link', url: string, clickEvent: MouseEvent): void }>()
 const { visibleTabs, selectedTab, getCardLayout, getTrackCount } = useDashboardTabs()
-provide(
-  contentCardLayoutKey,
-  computed(() => getCardLayout(selectedTab.value)),
+const tabBarElement = ref<HTMLElement>()
+const tabBarHeight = ref(0)
+const floatingTabs = ref(false)
+const scrollingDown = ref(false)
+
+const focusedTabId = ref<string>()
+const tabbableTabId = computed(
+  () => visibleTabs.value.find(tab => tab.id === focusedTabId.value)?.id ?? selectedTab.value?.id,
 )
+const getTabId = (tab: DashboardTab) => `dashboard-home-tab-${tab.id}`
+const getPanelId = (tab: DashboardTab) => `dashboard-home-panel-${tab.id}`
+
 const selectTab = (tab: DashboardTab, event: MouseEvent) => {
   if (tab === selectedTab.value && tab.activeLink) {
     emit('open-link', tab.activeLink, event)
   }
   selectedTab.value = tab
 }
-const tabBar = ref<HTMLElement>()
-const tabBarHeight = ref(0)
-const floatingTabs = ref(false)
-const scrollingDown = ref(false)
+
+const handleTabKeydown = (event: KeyboardEvent) => {
+  if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) {
+    return
+  }
+  // Holding Enter should activate a tab once, even when reselecting it opens a link.
+  if (event.key === 'Enter' && event.repeat) {
+    event.preventDefault()
+    return
+  }
+  if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) {
+    return
+  }
+
+  const tabList = event.currentTarget as HTMLElement
+  const buttons = [...tabList.querySelectorAll<HTMLButtonElement>('[role="tab"]')]
+  const focusedIndex = buttons.indexOf(event.target as HTMLButtonElement)
+  if (focusedIndex < 0) {
+    return
+  }
+  const rtl = getComputedStyle(tabList).direction === 'rtl'
+  const previousIndex = (focusedIndex + buttons.length - 1) % buttons.length
+  const followingIndex = (focusedIndex + 1) % buttons.length
+  const nextIndex = {
+    ArrowLeft: rtl ? followingIndex : previousIndex,
+    ArrowRight: rtl ? previousIndex : followingIndex,
+    Home: 0,
+    End: buttons.length - 1,
+  }[event.key]
+  event.preventDefault()
+  buttons[nextIndex].focus()
+}
+
+const resetTabFocus = (event: FocusEvent) => {
+  if (!(event.currentTarget as HTMLElement).contains(event.relatedTarget as Node)) {
+    focusedTabId.value = undefined
+  }
+}
+
+provide(
+  contentCardLayoutKey,
+  computed(() => getCardLayout(selectedTab.value)),
+)
+
 watch(
-  tabBar,
+  tabBarElement,
   (bar, _, onCleanup) => {
     if (!bar) {
       return
@@ -108,39 +153,4 @@ watch(
   },
   { flush: 'post' },
 )
-
-const focusedTabId = ref<string>()
-const tabbableTabId = computed(
-  () => visibleTabs.value.find(tab => tab.id === focusedTabId.value)?.id ?? selectedTab.value?.id,
-)
-const tabId = (tab: DashboardTab) => `dashboard-home-tab-${tab.id}`
-const panelId = (tab: DashboardTab) => `dashboard-home-panel-${tab.id}`
-
-const moveTabFocus = (event: KeyboardEvent) => {
-  const tabList = event.currentTarget as HTMLElement
-  const buttons = [...tabList.querySelectorAll<HTMLButtonElement>('button')]
-  const index = buttons.indexOf(event.target as HTMLButtonElement)
-  if (index < 0) {
-    return
-  }
-  const rtl = getComputedStyle(tabList).direction === 'rtl'
-  const previous = (index + buttons.length - 1) % buttons.length
-  const next = (index + 1) % buttons.length
-  const nextIndex = {
-    ArrowLeft: rtl ? next : previous,
-    ArrowRight: rtl ? previous : next,
-    Home: 0,
-    End: buttons.length - 1,
-  }[event.key]
-  if (nextIndex !== undefined) {
-    event.preventDefault()
-    buttons[nextIndex].focus()
-  }
-}
-
-const resetTabFocus = (event: FocusEvent) => {
-  if (!(event.currentTarget as HTMLElement).contains(event.relatedTarget as Node)) {
-    focusedTabId.value = undefined
-  }
-}
 </script>

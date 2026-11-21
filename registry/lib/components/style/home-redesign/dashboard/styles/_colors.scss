@@ -1,0 +1,26 @@
+.dashboard-home,
+.dashboard-home-link-preview {
+  --dashboard-home-highlight-background: var(--theme-color-10, #8882);
+
+  color-scheme: light;
+
+  body.dark & {
+    color-scheme: dark;
+  }
+}
+
+.dashboard-home {
+  --dashboard-home-text-color: var(--be-color-text-content, var(--home-color));
+  --dashboard-home-muted-text-color: var(--be-color-text-placeholder, #666);
+  --dashboard-home-muted-surface: #8881;
+  --dashboard-home-card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+
+  --dashboard-home-media-overlay-background: rgba(15, 18, 24, 0.75);
+  --dashboard-home-media-overlay-highlight-background: rgba(15, 18, 24, 0.92);
+  --dashboard-home-media-overlay-color: #fff;
+
+  body.dark & {
+    --dashboard-home-muted-text-color: var(--be-color-text-placeholder, #aaa);
+    --dashboard-home-card-hover-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+  }
+}

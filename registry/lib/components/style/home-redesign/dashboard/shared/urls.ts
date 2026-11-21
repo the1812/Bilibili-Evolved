@@ -30,6 +30,9 @@ export const isInteractionCategory = (category: InboxCategory): category is Inte
 export const isHttp = ({ protocol }: URL | { protocol: string }) =>
   protocol === 'https:' || protocol === 'http:'
 
+export const getWebUrl = (url?: string) =>
+  typeof url === 'string' && /^(?:https?:)?\/\//i.test(url) ? url : undefined
+
 export const isBilibiliHost = ({ hostname }: URL | { hostname: string }) =>
   hostname === 'bilibili.com' || hostname.endsWith('.bilibili.com') || hostname === 'b23.tv'
 

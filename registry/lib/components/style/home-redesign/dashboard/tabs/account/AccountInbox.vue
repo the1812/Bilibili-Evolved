@@ -3,7 +3,9 @@
     <section class="dashboard-home-account-card" :aria-busy="countsLoading">
       <header class="dashboard-home-account-panel-heading">
         <h2>未读消息</h2>
-        <a :href="messageCenter" target="_blank" rel="noopener">查看全部</a>
+        <a :href="messageCenter" aria-label="查看全部未读消息" target="_blank" rel="noopener">
+          查看全部
+        </a>
       </header>
       <ul v-if="counts || !countsLoading" class="dashboard-home-account-list" role="list">
         <li v-for="(category, key) in inboxCategories" :key="key">
@@ -12,7 +14,7 @@
             class="dashboard-home-account-row dashboard-home-inbox-category"
             :aria-expanded="selected === key ? 'true' : 'false'"
             :aria-controls="selected === key ? 'dashboard-home-inbox-details' : undefined"
-            :disabled="reading"
+            :aria-disabled="reading ? 'true' : undefined"
             @click="selectCategory(key)"
           >
             <span class="dashboard-home-account-row-text">{{ category.label }}</span>
@@ -37,19 +39,26 @@
     >
       <header class="dashboard-home-account-panel-heading">
         <h2>{{ inboxCategories[selected].label }}</h2>
-        <a :href="inboxCategories[selected].url" target="_blank" rel="noopener">查看全部</a>
+        <a
+          :href="inboxCategories[selected].url"
+          :aria-label="'查看全部' + inboxCategories[selected].label"
+          target="_blank"
+          rel="noopener"
+        >
+          查看全部
+        </a>
       </header>
       <p v-if="confirmLoad && !loading" class="dashboard-home-inbox-text">
         B 站可能在加载列表时将消息标为已读。
       </p>
       <ListStatus
-        v-if="loading || failed"
         :loading="loading"
         :failed="failed"
+        :has-more="confirmLoad"
+        load-label="加载列表"
         @load="loadSelected"
       />
-      <VButton v-else-if="confirmLoad" @click="loadSelected">加载列表</VButton>
-      <ul v-else-if="page?.entries.length" class="dashboard-home-account-list" role="list">
+      <ul v-if="page?.entries.length" class="dashboard-home-account-list" role="list">
         <li v-for="entry in page.entries" :key="entry.id" class="dashboard-home-inbox-entry">
           <div class="dashboard-home-inbox-entry-heading">
             <component
@@ -77,26 +86,42 @@
           />
           <div v-if="entry.unread > 0" class="dashboard-home-inbox-actions">
             <span>{{ entry.unread }} 条未读</span>
-            <VButton v-if="entry.acknowledgement" :disabled="reading" @click="markRead(entry)">
+            <button
+              v-if="entry.acknowledgement"
+              type="button"
+              class="dashboard-home-action"
+              :aria-disabled="reading ? 'true' : undefined"
+              @click="markEntryRead(entry, $event)"
+            >
               标为已读
-            </VButton>
+            </button>
           </div>
         </li>
       </ul>
-      <VEmpty v-else>暂无消息</VEmpty>
-      <VButton v-if="page?.noticeCursor" :disabled="reading" @click="markRead()">
+      <VEmpty v-else-if="!loading && !failed && !confirmLoad">暂无消息</VEmpty>
+      <button
+        v-if="page?.noticeCursor"
+        type="button"
+        class="dashboard-home-action"
+        :aria-disabled="reading ? 'true' : undefined"
+        @click="markEntryRead(undefined, $event)"
+      >
         将系统通知标为已读
-      </VButton>
-      <p v-if="readStatus" class="dashboard-home-inbox-text" role="status">{{ readStatus }}</p>
+      </button>
+      <p ref="readStatusElement" class="dashboard-home-inbox-result" role="status" tabindex="-1">
+        {{ readStatus }}
+      </p>
     </section>
   </div>
 </template>
 
 <script setup lang="ts">
+import { nextTick, ref } from 'vue'
 import { formatDateTime } from '@/core/utils/formatters'
-import { VButton, VEmpty } from '@/ui'
+import { VEmpty } from '@/ui'
 import { inboxCategories, messageCenter } from '../../shared/urls'
 import ListStatus from '../../shared/ListStatus.vue'
+import type { InboxPage } from './inbox-api'
 import { useAccountInbox } from './use-account-inbox'
 
 const {
@@ -117,5 +142,17 @@ const {
   markRead,
 } = useAccountInbox()
 
+const readStatusElement = ref<HTMLElement>()
+const markEntryRead = async (
+  entry: InboxPage['entries'][number] | undefined,
+  event: MouseEvent,
+) => {
+  const button = event.currentTarget as HTMLButtonElement
+  await markRead(entry)
+  await nextTick()
+  if (event.detail === 0 && !button.isConnected && document.activeElement === document.body) {
+    readStatusElement.value?.focus({ preventScroll: true })
+  }
+}
 defineExpose({ refreshInbox })
 </script>

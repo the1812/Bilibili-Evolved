@@ -6,46 +6,50 @@
         <template #filters>
           <label>
             <span>收藏类型</span>
-            <select v-model="kind">
+            <select v-model="favoriteKind">
               <option v-for="(label, value) in favoriteKinds" :key="value" :value="value">
                 {{ label }}
               </option>
             </select>
           </label>
-          <label v-if="kind === 'folders' && folders.length">
+          <label v-if="favoriteKind === 'folders' && folders.length">
             <span>收藏夹</span>
-            <select v-model="folder">
+            <select v-model="selectedFolderId">
               <option v-for="item in folders" :key="item.id" :value="item.id">
                 {{ item.title }}（{{ item.media_count }}）
               </option>
             </select>
           </label>
-          <label v-if="isFollowing">
+          <label v-if="isFollowedShowKind">
             <span>观看状态</span>
-            <select v-model.number="status">
+            <select v-model.number="followStatus">
               <option v-for="(label, value) in followStatuses" :key="value" :value="value">
                 {{ label }}
               </option>
             </select>
           </label>
         </template>
-        <template v-if="kind === 'folders' && folder" #actions>
-          <a :href="`https://www.bilibili.com/list/ml${folder}`" target="_blank" rel="noopener">
+        <template v-if="favoriteKind === 'folders' && selectedFolderId" #actions>
+          <a
+            :href="`https://www.bilibili.com/list/ml${selectedFolderId}`"
+            target="_blank"
+            rel="noopener"
+          >
             播放全部
           </a>
         </template>
       </LibraryToolbar>
       <CardCollection>
         <LibraryCards :entries="filteredEntries" />
-        <div ref="loadTarget" class="dashboard-home-card-end">
-          <ListStatus
-            :loading="busy"
-            :failed="failed || (kind === 'folders' && foldersFailed)"
-            :has-more="hasMore"
-            :empty="emptyMessage"
-            @load="retryOrLoad"
-          />
-        </div>
+        <ListStatus
+          ref="loadTarget"
+          class="dashboard-home-card-list-end"
+          :loading="busy"
+          :failed="failed || (favoriteKind === 'folders' && foldersFailed)"
+          :has-more="hasMore"
+          :empty="emptyMessage"
+          @load="loadMoreFavorites"
+        />
       </CardCollection>
       <DashboardHomeOperations :refresh-disabled="busy" @refresh="refreshFavorites" />
     </template>
@@ -76,15 +80,65 @@ import { filterLibraryEntries, getLibraryEmptyMessage, type LibraryEntry } from 
 
 const uid = getUID()
 const { error: logError } = useScopedConsole('仪表盘首页收藏')
-const kind = ref<keyof typeof favoriteKinds>('folders')
+const favoriteKind = ref<keyof typeof favoriteKinds>('folders')
 const keyword = ref('')
-const status = ref(0)
-const folder = ref<number>()
+const followStatus = ref(0)
+const selectedFolderId = ref<number>()
 const folders = ref<FavoriteFolder[]>([])
 const foldersLoading = ref(false)
 const foldersFailed = ref(false)
-let foldersLoaded = false
-const isFollowing = computed(() => kind.value === 'bangumi' || kind.value === 'cinema')
+let hasLoadedFolders = false
+const isFollowedShowKind = computed(
+  () => favoriteKind.value === 'bangumi' || favoriteKind.value === 'cinema',
+)
+
+const getSourceKey = () => {
+  if (!uid) {
+    return undefined
+  }
+  const kind = favoriteKind.value
+  if (kind === 'folders') {
+    return selectedFolderId.value ? `folders:${selectedFolderId.value}` : undefined
+  }
+  if (kind === 'collections') {
+    return kind
+  }
+  // The pagination source is watched synchronously, before derived values can update.
+  return `${kind}:${followStatus.value}`
+}
+const { entries, loading, failed, hasMore, loadTarget, loadNext, refresh } = usePagedList<
+  LibraryEntry,
+  number
+>({
+  source: getSourceKey,
+  fetchPage: (page = 1) => {
+    switch (favoriteKind.value) {
+      case 'folders':
+        return getFavoriteMedia(selectedFolderId.value, page)
+      case 'collections':
+        return getCollectedFolders(uid, page)
+      default:
+        return getFollowedShows(uid, favoriteKind.value, followStatus.value, page)
+    }
+  },
+  getKey: item => item.id,
+  logName: '仪表盘首页收藏',
+  autoLoad: () => !keyword.value.trim(),
+})
+const busy = computed(
+  () => loading.value || (favoriteKind.value === 'folders' && foldersLoading.value),
+)
+const filteredEntries = computed(() => filterLibraryEntries(entries.value, keyword.value))
+const emptyMessage = computed(() =>
+  getLibraryEmptyMessage({
+    entries: entries.value,
+    matches: filteredEntries.value,
+    filtering: Boolean(keyword.value.trim()),
+    hasMore: hasMore.value,
+    empty:
+      favoriteKind.value === 'folders' && !selectedFolderId.value ? '暂无收藏夹' : '暂无收藏内容',
+  }),
+)
 
 const loadFolders = async () => {
   if (!uid || foldersLoading.value) {
@@ -94,10 +148,10 @@ const loadFolders = async () => {
   foldersFailed.value = false
   try {
     folders.value = await getFavoriteFolders(uid)
-    if (!folders.value.some(item => item.id === folder.value)) {
-      folder.value = folders.value[0]?.id
+    if (!folders.value.some(item => item.id === selectedFolderId.value)) {
+      selectedFolderId.value = folders.value[0]?.id
     }
-    foldersLoaded = true
+    hasLoadedFolders = true
   } catch (error) {
     logError(error)
     foldersFailed.value = true
@@ -106,71 +160,31 @@ const loadFolders = async () => {
   }
 }
 
-const source = () => {
-  if (!uid) {
-    return undefined
-  }
-  if (kind.value === 'folders') {
-    return folder.value ? `folders:${folder.value}` : undefined
-  }
-  return isFollowing.value ? `${kind.value}:${status.value}` : kind.value
-}
-const { entries, loading, failed, hasMore, loadTarget, loadNext, refresh } = usePagedList<
-  LibraryEntry,
-  number
->({
-  source,
-  fetchPage: (page = 1) => {
-    switch (kind.value) {
-      case 'folders':
-        return getFavoriteMedia(folder.value, page)
-      case 'collections':
-        return getCollectedFolders(uid, page)
-      default:
-        return getFollowedShows(uid, kind.value, status.value, page)
-    }
-  },
-  getKey: item => item.id,
-  logName: '仪表盘首页收藏',
-  autoLoad: () => !keyword.value.trim(),
-})
-const busy = computed(() => loading.value || (kind.value === 'folders' && foldersLoading.value))
-const filteredEntries = computed(() => filterLibraryEntries(entries.value, keyword.value))
-const emptyMessage = computed(() =>
-  getLibraryEmptyMessage({
-    entries: entries.value,
-    matches: filteredEntries.value,
-    filtering: Boolean(keyword.value.trim()),
-    hasMore: hasMore.value,
-    empty: kind.value === 'folders' && !folder.value ? '暂无收藏夹' : '暂无收藏内容',
-  }),
-)
-
-watch(
-  kind,
-  value => {
-    if (value === 'folders' && !foldersLoaded) {
-      loadFolders()
-    }
-  },
-  { immediate: true },
-)
-
-const retryOrLoad = () => {
-  if (kind.value === 'folders' && foldersFailed.value) {
-    return loadFolders()
-  }
-  return loadNext()
-}
-
 const refreshFavorites = async () => {
-  if (kind.value === 'folders') {
-    const previous = folder.value
+  if (favoriteKind.value === 'folders') {
+    const previousFolderId = selectedFolderId.value
     await loadFolders()
-    if (kind.value !== 'folders' || foldersFailed.value || previous !== folder.value) {
+    if (
+      favoriteKind.value !== 'folders' ||
+      foldersFailed.value ||
+      previousFolderId !== selectedFolderId.value
+    ) {
       return
     }
   }
   await refresh()
 }
+
+const loadMoreFavorites = () =>
+  favoriteKind.value === 'folders' && foldersFailed.value ? refreshFavorites() : loadNext()
+
+watch(
+  favoriteKind,
+  value => {
+    if (value === 'folders' && !hasLoadedFolders) {
+      loadFolders()
+    }
+  },
+  { immediate: true },
+)
 </script>

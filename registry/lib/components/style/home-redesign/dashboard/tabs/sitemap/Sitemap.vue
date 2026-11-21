@@ -25,29 +25,29 @@ import {
 
 const uid = getUID()
 const channelLinks = shallowRef(readSitemapChannelLinks(document))
+let headerObserver: MutationObserver | undefined
 const sections = computed(() => getSitemapSections(uid, channelLinks.value))
 
-const updateChannels = () => {
-  const links = readSitemapChannelLinks(document)
-  if (!lodash.isEqual(channelLinks.value, links)) {
-    channelLinks.value = links
+const updateChannelLinks = () => {
+  const nextLinks = readSitemapChannelLinks(document)
+  if (!lodash.isEqual(channelLinks.value, nextLinks)) {
+    channelLinks.value = nextLinks
   }
 }
 
-let headerObserver: MutationObserver
 onMounted(() => {
-  updateChannels()
+  updateChannelLinks()
   const channelBar = document.querySelector(sitemapChannelSelector)
-  const header =
+  const channelContainer =
     channelBar?.closest('.bili-header') ??
     channelBar?.parentElement ??
     document.querySelector('.bili-header') ??
     document.querySelector('#i_cecream') ??
     document.body
   const [observer] = mutationObserve(
-    [header],
+    [channelContainer],
     { childList: true, subtree: true, characterData: true, attributeFilter: ['class', 'href'] },
-    updateChannels,
+    updateChannelLinks,
   )
   headerObserver = observer
 })

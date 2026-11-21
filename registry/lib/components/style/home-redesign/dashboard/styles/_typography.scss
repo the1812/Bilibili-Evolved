@@ -1,0 +1,30 @@
+@mixin dashboard-caption {
+  font-size: var(--dashboard-home-font-size-caption);
+  line-height: var(--dashboard-home-line-height-tight);
+}
+
+.dashboard-home,
+.dashboard-home-link-preview {
+  --dashboard-home-font-size-caption: 0.75rem;
+  --dashboard-home-font-size-body: 0.875rem;
+  --dashboard-home-font-size-title: 1rem;
+  --dashboard-home-line-height-tight: 1.25;
+
+  font-size: var(--dashboard-home-font-size-body);
+  line-height: 1.5;
+}
+
+:where(.dashboard-home, .dashboard-home-link-preview) {
+  :is(button, input, select) {
+    font: inherit;
+  }
+
+  :is(h2, strong) {
+    @include semi-bold();
+  }
+
+  h2 {
+    font-size: var(--dashboard-home-font-size-title);
+    line-height: var(--dashboard-home-line-height-tight);
+  }
+}

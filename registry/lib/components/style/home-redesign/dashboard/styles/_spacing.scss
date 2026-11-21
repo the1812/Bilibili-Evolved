@@ -1,0 +1,30 @@
+@mixin dashboard-focus-ring() {
+  $color: var(--dashboard-home-focus-ring-color, var(--theme-color, currentColor));
+  outline: var(--dashboard-home-accent-stroke-width) solid $color;
+  outline-offset: 2px;
+}
+
+.dashboard-home,
+.dashboard-home-link-preview {
+  --dashboard-home-border-width: 1px;
+  --dashboard-home-accent-stroke-width: 2px;
+  --dashboard-home-control-border: var(--dashboard-home-border-width) solid
+    var(--be-color-button-border, #8885);
+  --dashboard-home-control-radius: 8px;
+  --dashboard-home-pill-radius: 999px;
+
+  --dashboard-home-space-2xs: 2px;
+  --dashboard-home-space-xs: 4px;
+  --dashboard-home-space-sm: 8px;
+  --dashboard-home-space-md: 12px;
+  --dashboard-home-space-lg: 16px;
+  --dashboard-home-space-xl: 24px;
+}
+
+.dashboard-home {
+  --dashboard-home-capsule-block-size: 28px;
+  --dashboard-home-cover-aspect-ratio: calc(16 / 9);
+  --dashboard-home-narrow-card-inline-size: 224px;
+  --dashboard-home-card-padding-block: var(--dashboard-home-space-sm);
+  --dashboard-home-card-padding-inline: var(--dashboard-home-space-md);
+}

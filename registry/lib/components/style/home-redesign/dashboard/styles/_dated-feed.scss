@@ -13,84 +13,96 @@
 }
 
 .dashboard-home-feed-date {
+  --dashboard-home-feed-date-text-offset: calc(
+    var(--dashboard-home-accent-stroke-width) + var(--dashboard-home-space-xs)
+  );
+
+  @include dashboard-caption();
+  @include semi-bold();
   position: sticky;
-  inset-block-start: var(--dashboard-home-feed-date-top);
-  grid-area: 1 / 1;
-  justify-self: end;
-  align-self: start;
   z-index: 1;
-  inline-size: max-content;
-  padding-block-start: 6px;
-  color: var(--be-color-text-content, var(--home-color));
-  font-weight: 600;
+  grid-area: 1 / 1;
+  place-self: start end;
+  padding-block-start: var(--dashboard-home-feed-date-text-offset);
+  color: var(--dashboard-home-text-color);
   white-space: nowrap;
   text-align: end;
 
   &::before {
     content: '';
     position: absolute;
-    inset-block-start: 0;
-    inset-inline: 0;
-    block-size: 2px;
-    border-radius: 999px;
+    border-radius: var(--dashboard-home-pill-radius);
     background-color: var(--theme-color);
   }
 }
 
-@media (min-width: 721px) {
-  :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact'])
-    .dashboard-home-feed-date {
-    --dashboard-home-feed-date-gutter: calc(
-      var(--dashboard-home-page-padding-inline) + var(--dashboard-home-card-side-gutter) +
-        var(--dashboard-home-grid-padding)
-    );
-
-    // Use the existing gutter and close the gap when a full date needs more room.
-    translate: clamp(-12px, calc(100% - var(--dashboard-home-feed-date-gutter)), 0px) 0;
-
-    &.is-full-date {
-      font-size: 10px;
+:is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) {
+  .dashboard-home-feed-day {
+    &:has(> .dashboard-home-feed-date) > .dashboard-home-card-grid {
+      // Keep the sticky date above the grid's card controls.
+      isolation: isolate;
     }
-  }
-}
 
-@media (width < 721px) {
-  :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) {
-    .dashboard-home-feed-day {
+    @media (width < 721px) {
       grid-template-columns: minmax(0, 1fr);
 
       > .dashboard-home-card-grid {
         grid-area: 1 / 1;
-        isolation: isolate;
       }
     }
+  }
 
-    .dashboard-home-feed-date {
+  .dashboard-home-feed-date {
+    inset-block-start: var(--dashboard-home-feed-date-block-start);
+
+    &::before {
+      inset-block-start: 0;
+      inset-inline: 0;
+      block-size: var(--dashboard-home-accent-stroke-width);
+    }
+
+    @media (min-width: 721px) {
+      // Keep the full date readable if it extends past the gutter.
+      translate: max(
+        calc(-1 * var(--dashboard-home-space-md)),
+        calc(
+          100% - var(--dashboard-home-card-grid-inline-inset) -
+            var(--dashboard-home-card-inline-gutter)
+        )
+      );
+      background-color: var(--home-base-color);
+    }
+
+    @media (width < 721px) {
       justify-self: start;
-      margin: 8px;
-      padding: 7px 8px 4px;
+      margin: var(--dashboard-home-space-sm);
+      padding-block: calc(
+          var(--dashboard-home-space-xs) + var(--dashboard-home-feed-date-text-offset)
+        )
+        var(--dashboard-home-space-xs);
+      padding-inline: var(--dashboard-home-space-sm);
       border: var(--home-card-border);
-      border-radius: 8px;
-      background: var(--home-background-color);
+      border-radius: var(--dashboard-home-control-radius);
+      background-color: var(--home-background-color);
       box-shadow: var(--home-card-shadow);
       text-align: start;
 
       &::before {
-        inset-block-start: 3px;
-        inset-inline: 8px;
+        inset-block-start: var(--dashboard-home-space-xs);
+        inset-inline: var(--dashboard-home-space-sm);
       }
     }
   }
 }
 
 [data-content-card-layout='vertical'] {
-  &:has(.dashboard-home-dated-collection) {
+  &:has(.dashboard-home-card-collection-dated) {
     padding-block-start: 0;
   }
 
-  .dashboard-home-dated-collection {
-    --dashboard-home-card-scroll-top-padding: 4px;
-    --dashboard-home-card-scroll-header-height: 20px;
+  .dashboard-home-card-collection-dated {
+    --dashboard-home-card-scroll-padding-block-start: var(--dashboard-home-space-xs);
+    --dashboard-home-card-scroll-header-block-size: 20px;
   }
 
   .dashboard-home-feed-days {
@@ -98,7 +110,10 @@
   }
 
   .dashboard-home-feed-day {
-    grid-template: var(--dashboard-home-card-scroll-header-height) minmax(0, 1fr) / minmax(0, 1fr);
+    grid-template: var(--dashboard-home-card-scroll-header-block-size) minmax(0, 1fr) / minmax(
+        0,
+        1fr
+      );
 
     > .dashboard-home-card-grid {
       grid-area: 2 / 1;
@@ -106,22 +121,18 @@
   }
 
   .dashboard-home-feed-date {
-    inset-block-start: auto;
-    right: 0;
-    grid-area: 1 / 1;
+    inset-inline-end: 0;
     justify-self: start;
     padding-block-start: 0;
-    padding-inline-end: 6px;
-    background: var(--home-background-color);
+    padding-inline-end: var(--dashboard-home-feed-date-text-offset);
+    background-color: var(--home-background-color);
     direction: ltr;
-    line-height: 16px;
     text-align: start;
 
     &::before {
-      inset-block: 1px;
-      inset-inline: auto 0;
-      block-size: auto;
-      inline-size: 2px;
+      inset-block: var(--dashboard-home-border-width);
+      inset-inline-end: 0;
+      inline-size: var(--dashboard-home-accent-stroke-width);
     }
   }
 }

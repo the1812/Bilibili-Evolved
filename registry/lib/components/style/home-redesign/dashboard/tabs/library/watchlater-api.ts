@@ -15,19 +15,26 @@ export const getWatchlaterQueue = async () => {
   return queue
 }
 
-export const clearWatchlater = async (watchedOnly: boolean) => {
+const updateWatchlater = async (action: 'clear' | 'del', params?: Record<string, string>) => {
   const csrf = getCsrf()
   if (!csrf) {
     throw new Error('登录已失效')
   }
-  const body = new URLSearchParams({ csrf })
-  if (watchedOnly) {
-    body.set('viewed', 'true')
-  }
-  const action = watchedOnly ? 'del' : 'clear'
+  const body = new URLSearchParams({ csrf, ...params })
   await bilibiliApi(
     postTextWithCredentials(`${watchlaterApi}/${action}`, body.toString()).then(JSON.parse),
     '更新稍后再看失败',
     false,
   )
 }
+
+export const removeWatchlater = async (aid: number) => {
+  await updateWatchlater('del', { aid: String(aid) })
+  const index = watchlaterList.indexOf(aid)
+  if (index >= 0) {
+    watchlaterList.splice(index, 1)
+  }
+}
+
+export const clearWatchlater = (watchedOnly: boolean) =>
+  watchedOnly ? updateWatchlater('del', { viewed: 'true' }) : updateWatchlater('clear')

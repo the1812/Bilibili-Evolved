@@ -2,6 +2,7 @@ import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDuration } from '@/core/utils/formatters'
 import { HistoryType, navbarFilterTypes } from '../../../../custom-navbar/history/types'
 import { formatDateTimeLabel } from '../../shared/format-date'
+import { getWebUrl } from '../../shared/urls'
 import { getPlaybackProgress, type LibraryEntry } from './library'
 
 interface RawHistoryItem {
@@ -26,12 +27,21 @@ interface RawHistoryItem {
   }
 }
 
+interface HistoryPage {
+  list?: RawHistoryItem[] | null
+  cursor?: {
+    max?: number | string
+    view_at?: number
+    business?: string
+  }
+}
+
 const site = 'https://www.bilibili.com'
 const getHistoryContent = (item: RawHistoryItem) => {
   const { business, oid, bvid, epid, cid, page } = item.history
   const resume = `t=${item.progress > 0 ? item.progress : 0}`
   if (business === HistoryType.Cheese) {
-    return { type: HistoryType.Video, id: oid, url: item.uri, title: item.show_title }
+    return { type: HistoryType.Video, id: oid, url: getWebUrl(item.uri), title: item.show_title }
   }
   if (epid) {
     return {
@@ -73,18 +83,35 @@ const contentKinds: Partial<Record<HistoryType, LibraryEntry['kind']>> = {
   [HistoryType.Bangumi]: 'bangumi',
 }
 
-export const getHistoryPage = async (type: HistoryType, viewAt?: number) => {
-  const filter = navbarFilterTypes.find(item => item.name === type)
-  const params = new URLSearchParams({ type: filter?.apiType ?? '' })
-  if (viewAt !== undefined) {
-    params.set('view_at', String(viewAt))
+const getNextCursor = (cursor: HistoryPage['cursor'], lastViewTime: number) => {
+  const viewAt = cursor?.view_at ?? lastViewTime
+  if (!Number.isSafeInteger(viewAt) || viewAt <= 0) {
+    return undefined
   }
-  const { list } = await bilibiliApi<{ list?: RawHistoryItem[] }>(
+  // Serialize consistently so the paged list can detect a repeated server cursor.
+  const next = new URLSearchParams({ view_at: String(viewAt) })
+  if (typeof cursor?.max === 'string' || Number.isSafeInteger(cursor?.max)) {
+    next.set('max', String(cursor.max))
+  }
+  if (cursor?.business) {
+    next.set('business', cursor.business)
+  }
+  return next.toString()
+}
+
+export const getHistoryPage = async (type: HistoryType, cursor?: string) => {
+  const filter = navbarFilterTypes.find(item => item.name === type)
+  const params = new URLSearchParams(cursor)
+  params.set('type', filter?.apiType ?? '')
+  const { list, cursor: nextCursor } = await bilibiliApi<HistoryPage>(
     getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/history/cursor?${params}`),
     '获取历史记录失败',
     false,
   )
-  const items = Array.isArray(list) ? list : []
+  if (list != null && !Array.isArray(list)) {
+    throw new Error('历史记录响应无效')
+  }
+  const items = list ?? []
   const entries = items.flatMap((item): LibraryEntry[] => {
     const content = getHistoryContent(item)
     if (!content || (type !== HistoryType.All && type !== content.type)) {
@@ -115,6 +142,6 @@ export const getHistoryPage = async (type: HistoryType, viewAt?: number) => {
     ]
   })
   // Videos and bangumi share a server-side filter. Advance using the unfiltered page.
-  const next = items.at(-1)?.view_at
-  return { entries, next: next && (viewAt === undefined || next < viewAt) ? next : undefined }
+  const next = items.length ? getNextCursor(nextCursor, items.at(-1).view_at) : undefined
+  return { entries, next }
 }

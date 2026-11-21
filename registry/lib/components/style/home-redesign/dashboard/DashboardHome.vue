@@ -2,10 +2,10 @@
   <HomeRedesignBase>
     <div
       class="dashboard-home"
-      :class="{ 'hide-watchlater': !watchlaterShow }"
+      :class="{ 'is-watchlater-hidden': !showWatchlater }"
       @click="handleLinkClick"
     >
-      <DashboardTabs @open-link="handleOpenLink" />
+      <DashboardTabs @open-link="handleTabLinkClick" />
     </div>
     <LinkPreview ref="linkPreview" />
   </HomeRedesignBase>
@@ -19,11 +19,9 @@ import LinkPreview from './shared/LinkPreview.vue'
 import { getLinkType, type LinkType } from './shared/urls'
 import DashboardTabs from './tabs/DashboardTabs.vue'
 
-const watchlaterShow = useDashboardOption('watchlaterShow')
-const linkPreview = ref<InstanceType<typeof LinkPreview>>()
+type LinkPreviewOption = keyof DashboardHomeOptions & `open${string}LinksInPlace`
 
-const linkOptions: Record<LinkType, keyof DashboardHomeOptions | undefined> = {
-  home: undefined,
+const linkPreviewOptions: Partial<Record<LinkType, LinkPreviewOption>> = {
   live: 'openLiveLinksInPlace',
   dynamic: 'openDynamicLinksInPlace',
   video: 'openVideoLinksInPlace',
@@ -32,29 +30,26 @@ const linkOptions: Record<LinkType, keyof DashboardHomeOptions | undefined> = {
   external: 'openExternalLinksInPlace',
 }
 
-const openInPlace = (href: string) => {
+const showWatchlater = useDashboardOption('watchlaterShow')
+const linkPreview = ref<InstanceType<typeof LinkPreview>>()
+
+const tryOpenLinkPreview = (href: string): boolean => {
   let url: URL
   try {
     url = new URL(href)
   } catch {
     return false
   }
-  const type = getLinkType(url)
-  if (!type) {
-    return false
-  }
-  const option = linkOptions[type]
-  if (!option) {
-    return false
-  }
-
-  return getDashboardHomeOptions()[option] && linkPreview.value?.show(url, type)
+  const linkType = getLinkType(url)
+  const option = linkType && linkPreviewOptions[linkType]
+  return Boolean(
+    option && getDashboardHomeOptions()[option] && linkPreview.value?.openPreview(url, linkType),
+  )
 }
 
 const isPlainClick = (event: MouseEvent) =>
   event.button === 0 && !event.ctrlKey && !event.metaKey && !event.shiftKey && !event.altKey
 
-/** 负责 `<a>` 的点击事件 */
 const handleLinkClick = (event: MouseEvent) => {
   if (event.defaultPrevented || !isPlainClick(event) || !(event.target instanceof Element)) {
     return
@@ -63,18 +58,17 @@ const handleLinkClick = (event: MouseEvent) => {
   if (
     anchor instanceof HTMLAnchorElement &&
     !anchor.hasAttribute('download') &&
-    openInPlace(anchor.href)
+    tryOpenLinkPreview(anchor.href)
   ) {
     event.preventDefault()
   }
 }
 
-/** 负责组件发出的事件 */
-const handleOpenLink = (url: string, event: MouseEvent) => {
+const handleTabLinkClick = (url: string, event: MouseEvent) => {
   if (event.defaultPrevented) {
     return
   }
-  if (!isPlainClick(event) || !openInPlace(url)) {
+  if (!isPlainClick(event) || !tryOpenLinkPreview(url)) {
     window.open(url, '_blank', 'noopener')
     event.preventDefault()
   }

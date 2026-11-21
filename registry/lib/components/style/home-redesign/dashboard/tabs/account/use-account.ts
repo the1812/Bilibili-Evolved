@@ -1,5 +1,4 @@
 import { computed, onMounted, reactive, ref } from 'vue'
-import { getUserInfo } from '@/core/user-info'
 import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import {
@@ -7,6 +6,7 @@ import {
   type AccountRow,
   getAccountCounts,
   getAccountPrivileges,
+  getAccountProfile,
 } from './account-api'
 
 export const useAccount = () => {
@@ -93,7 +93,7 @@ export const useAccount = () => {
     loadingProfile.value = true
     profileFailed.value = false
     try {
-      profile.value = await getUserInfo()
+      profile.value = await getAccountProfile()
       if (profile.value?.isLogin) {
         loadPanels()
       }

@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard-home-card-view">
-    <CardCollection class="dashboard-home-dated-collection">
-      <div class="dashboard-home-feed-days">
+    <VEmpty v-if="!loggedIn">登录后查看关注视频</VEmpty>
+    <CardCollection v-else class="dashboard-home-card-collection-dated">
+      <div v-if="cardGroups.length" class="dashboard-home-feed-days">
         <FeedDateGroup
           v-for="group in cardGroups"
           :key="group.date"
@@ -21,15 +22,15 @@
           </CardGridItem>
         </FeedDateGroup>
       </div>
-      <div ref="loadTarget" class="dashboard-home-card-end">
-        <ListStatus
-          :loading="loading"
-          :failed="failed"
-          :has-more="hasMore"
-          :empty="emptyMessage"
-          @load="loadNext"
-        />
-      </div>
+      <ListStatus
+        ref="loadTarget"
+        class="dashboard-home-card-list-end"
+        :loading="loading"
+        :failed="failed"
+        :has-more="hasMore"
+        :empty="!hasMore && !cards.length ? '暂无关注视频' : ''"
+        @load="loadNext"
+      />
     </CardCollection>
     <DashboardHomeOperations v-if="loggedIn" :refresh-disabled="loading" @refresh="refresh" />
   </div>
@@ -37,6 +38,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getUID } from '@/core/utils'
+import { VEmpty } from '@/ui'
 import CardCollection from '../../shared/CardCollection.vue'
 import CardGridItem from '../../shared/CardGridItem.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
@@ -71,10 +73,4 @@ const refresh = () => {
   resetLikeStates()
   return refreshCards()
 }
-const emptyMessage = computed(() => {
-  if (!loggedIn) {
-    return '登录后查看关注视频'
-  }
-  return !cards.value.length && !hasMore.value ? '暂无关注视频' : ''
-})
 </script>

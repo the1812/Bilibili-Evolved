@@ -1,20 +1,18 @@
 .dashboard-home-sitemap {
-  box-sizing: border-box;
-  inline-size: 1560px;
-  max-inline-size: 100%;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 16px;
-  padding-inline: var(--dashboard-home-grid-padding);
+  gap: var(--dashboard-home-space-lg);
+  box-sizing: border-box;
+  inline-size: min(100%, var(--home-max-width));
+  padding-inline: var(--dashboard-home-grid-padding-inline);
 
   @media (min-width: 960px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   &-section {
-    @include card(12px);
-    padding: 18px;
-    min-inline-size: 0;
+    @include card(var(--home-card-radius));
+    padding: var(--dashboard-home-space-lg);
 
     &.is-wide {
       grid-column: 1 / -1;
@@ -25,40 +23,38 @@
     }
 
     h2 {
-      margin: 0 0 12px;
-      font-size: 15px;
+      margin-block: 0 var(--dashboard-home-space-md);
+      margin-inline: 0;
     }
   }
 
   &-links,
   &-sublinks {
     display: grid;
-    padding: 0;
     margin: 0;
+    padding: 0;
     list-style: none;
   }
 
   &-links {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 112px), 1fr));
-    align-items: start;
-    gap: 10px;
+    gap: var(--dashboard-home-space-sm);
   }
 
   &-sublinks {
-    gap: 4px;
-    margin-block-start: 4px;
+    gap: var(--dashboard-home-space-xs);
+    margin-block-start: var(--dashboard-home-space-xs);
 
     .dashboard-home-sitemap-link {
-      padding: 8px;
-      background-color: #8881;
+      background-color: var(--dashboard-home-muted-surface);
     }
   }
 
   &-tile {
     display: flex;
     min-block-size: 38px;
-    border-radius: 8px;
-    background-color: #8881;
+    border-radius: var(--dashboard-home-control-radius);
+    background-color: var(--dashboard-home-muted-surface);
 
     > .dashboard-home-sitemap-link {
       flex: 1;
@@ -66,12 +62,29 @@
     }
   }
 
+  &-link,
+  &-toggle {
+    border-radius: var(--dashboard-home-control-radius);
+    @include dashboard-transition((background-color, box-shadow));
+
+    &:is(:hover, :focus-visible) {
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+  }
+
   &-link {
-    @include h-center(8px);
-    padding: 10px;
+    @include h-center(var(--dashboard-home-space-sm));
+    padding: var(--dashboard-home-space-sm);
     color: inherit;
-    font-size: 13px;
     overflow-wrap: anywhere;
+
+    > .dashboard-home-sitemap-icon {
+      flex: none;
+    }
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(--dashboard-home-highlight-background);
+    }
   }
 
   &-toggle {
@@ -80,36 +93,13 @@
     flex: none;
     inline-size: 30px;
     padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
 
     &[aria-expanded='true'] .dashboard-home-sitemap-icon {
-      transform: rotate(180deg);
-    }
-  }
-
-  &-link,
-  &-toggle {
-    border-radius: 8px;
-
-    @media (prefers-reduced-motion: no-preference) {
-      transition: background-color 0.18s ease-out, box-shadow 0.18s ease-out;
-    }
-
-    &:is(:hover, :focus-visible) {
-      background-color: var(--theme-color-10, #8882);
-      box-shadow: var(--dashboard-home-card-hover-shadow);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--theme-color);
-      outline-offset: 2px;
+      rotate: 180deg;
     }
   }
 
   &-icon {
-    flex: none;
     color: var(--theme-color);
   }
 }
