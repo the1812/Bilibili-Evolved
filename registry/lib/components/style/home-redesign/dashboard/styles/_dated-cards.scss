@@ -1,9 +1,16 @@
-.dashboard-home-feed-days {
+.dashboard-home-card-date-groups {
   display: grid;
   gap: var(--dashboard-home-grid-gap);
 }
 
-.dashboard-home-feed-day {
+:not(.dashboard-home-card-collection-dated) > .dashboard-home-card-collection-track {
+  > .dashboard-home-card-date-groups,
+  > .dashboard-home-card-date-groups > .dashboard-home-card-date-group {
+    display: contents;
+  }
+}
+
+.dashboard-home-card-date-group {
   display: grid;
   grid-template-columns: 0 minmax(0, 1fr);
 
@@ -12,8 +19,8 @@
   }
 }
 
-.dashboard-home-feed-date {
-  --dashboard-home-feed-date-text-offset: calc(
+.dashboard-home-card-date {
+  --dashboard-home-card-date-text-offset: calc(
     var(--dashboard-home-accent-stroke-width) + var(--dashboard-home-space-xs)
   );
 
@@ -23,7 +30,7 @@
   z-index: 1;
   grid-area: 1 / 1;
   place-self: start end;
-  padding-block-start: var(--dashboard-home-feed-date-text-offset);
+  padding-block-start: var(--dashboard-home-card-date-text-offset);
   color: var(--dashboard-home-text-color);
   white-space: nowrap;
   text-align: end;
@@ -37,8 +44,8 @@
 }
 
 :is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) {
-  .dashboard-home-feed-day {
-    &:has(> .dashboard-home-feed-date) > .dashboard-home-card-grid {
+  .dashboard-home-card-date-group {
+    &:has(> .dashboard-home-card-date) > .dashboard-home-card-grid {
       // Keep the sticky date above the grid's card controls.
       isolation: isolate;
     }
@@ -52,8 +59,8 @@
     }
   }
 
-  .dashboard-home-feed-date {
-    inset-block-start: var(--dashboard-home-feed-date-block-start);
+  .dashboard-home-card-date {
+    inset-block-start: var(--dashboard-home-card-date-block-start);
 
     &::before {
       inset-block-start: 0;
@@ -77,7 +84,7 @@
       justify-self: start;
       margin: var(--dashboard-home-space-sm);
       padding-block: calc(
-          var(--dashboard-home-space-xs) + var(--dashboard-home-feed-date-text-offset)
+          var(--dashboard-home-space-xs) + var(--dashboard-home-card-date-text-offset)
         )
         var(--dashboard-home-space-xs);
       padding-inline: var(--dashboard-home-space-sm);
@@ -105,11 +112,11 @@
     --dashboard-home-card-scroll-header-block-size: 20px;
   }
 
-  .dashboard-home-feed-days {
+  .dashboard-home-card-date-groups {
     display: flex;
   }
 
-  .dashboard-home-feed-day {
+  .dashboard-home-card-date-group {
     grid-template: var(--dashboard-home-card-scroll-header-block-size) minmax(0, 1fr) / minmax(
         0,
         1fr
@@ -120,11 +127,11 @@
     }
   }
 
-  .dashboard-home-feed-date {
+  .dashboard-home-card-date {
     inset-inline-end: 0;
     justify-self: start;
     padding-block-start: 0;
-    padding-inline-end: var(--dashboard-home-feed-date-text-offset);
+    padding-inline-end: var(--dashboard-home-card-date-text-offset);
     background-color: var(--home-background-color);
     direction: ltr;
     text-align: start;

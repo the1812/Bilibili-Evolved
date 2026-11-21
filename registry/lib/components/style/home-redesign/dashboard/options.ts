@@ -40,6 +40,11 @@ const layoutOption = (tab: TabOption, defaultValue: LayoutOption) => ({
   dropdownEnum: LayoutOption,
 })
 
+const dateGroupingOption = (tab: TabOption, defaultValue: boolean) => ({
+  displayName: `「${tab}」按日期分组`,
+  defaultValue,
+})
+
 export const validateTrackCount = getNumberValidator(0, 10)
 const trackCountOption = (tab: TabOption, defaultValue: number) => ({
   displayName: `「${tab}」卡片行列数`,
@@ -50,18 +55,22 @@ const trackCountOption = (tab: TabOption, defaultValue: number) => ({
 export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
   dynamicShow: tabOption(TabOption.Dynamic, true),
   dynamicTrackCount: trackCountOption(TabOption.Dynamic, 0),
+  dynamicGroupByDate: dateGroupingOption(TabOption.Dynamic, false),
 
   videoShow: tabOption(TabOption.Video, true),
   videoLayout: layoutOption(TabOption.Video, LayoutOption.Horizontal),
   videoTrackCount: trackCountOption(TabOption.Video, 0),
+  videoGroupByDate: dateGroupingOption(TabOption.Video, true),
 
   bangumiShow: tabOption(TabOption.Bangumi, true),
   bangumiLayout: layoutOption(TabOption.Bangumi, LayoutOption.Compact),
   bangumiTrackCount: trackCountOption(TabOption.Bangumi, 0),
+  bangumiGroupByDate: dateGroupingOption(TabOption.Bangumi, true),
 
   columnShow: tabOption(TabOption.Column, true),
   columnLayout: layoutOption(TabOption.Column, LayoutOption.Compact),
   columnTrackCount: trackCountOption(TabOption.Column, 0),
+  columnGroupByDate: dateGroupingOption(TabOption.Column, true),
 
   searchShow: tabOption(TabOption.Search, true),
 
@@ -76,20 +85,24 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
   favoritesShow: tabOption(TabOption.Favorites, true),
   favoritesLayout: layoutOption(TabOption.Favorites, LayoutOption.Compact),
   favoritesTrackCount: trackCountOption(TabOption.Favorites, 0),
+  favoritesGroupByDate: dateGroupingOption(TabOption.Favorites, true),
 
   historyShow: tabOption(TabOption.History, true),
   historyLayout: layoutOption(TabOption.History, LayoutOption.Compact),
   historyTrackCount: trackCountOption(TabOption.History, 0),
+  historyGroupByDate: dateGroupingOption(TabOption.History, true),
 
   watchlaterShow: tabOption(TabOption.Watchlater, true),
   watchlaterLayout: layoutOption(TabOption.Watchlater, LayoutOption.Compact),
   watchlaterTrackCount: trackCountOption(TabOption.Watchlater, 0),
+  watchlaterGroupByDate: dateGroupingOption(TabOption.Watchlater, false),
 
   accountShow: tabOption(TabOption.Account, true),
 
   followingsShow: tabOption(TabOption.Followings, true),
   followingsLayout: layoutOption(TabOption.Followings, LayoutOption.Compact),
   followingsTrackCount: trackCountOption(TabOption.Followings, 0),
+  followingsGroupByDate: dateGroupingOption(TabOption.Followings, false),
 
   sitemapShow: tabOption(TabOption.Sitemap, true),
 

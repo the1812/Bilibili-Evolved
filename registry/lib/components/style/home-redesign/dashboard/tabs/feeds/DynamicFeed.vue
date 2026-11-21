@@ -38,43 +38,36 @@
           </article>
         </CardGridItem>
       </ul>
-      <CardCollection :class="{ 'dashboard-home-card-collection-dated': feedType !== 'all' }">
-        <ul
-          v-if="feedType === 'all' && feedCards.length"
-          class="dashboard-home-card-grid"
-          role="list"
-        >
-          <DynamicCard
-            v-for="card in feedCards"
-            :key="card.post.id"
-            :card="card"
-            :like-states="likeStates"
-            @preview-image="openImagePreview"
-            @toggle-like="toggleLike"
-          />
-        </ul>
-        <div
-          v-else-if="feedType !== 'all' && datedCardGroups.length"
-          class="dashboard-home-feed-days"
-        >
-          <FeedDateGroup
-            v-for="group in datedCardGroups"
+      <CardCollection :dated="cardList.dated">
+        <div v-if="cardList.groups.length" class="dashboard-home-card-date-groups">
+          <CardDateGroup
+            v-for="group in cardList.groups"
             :key="group.date"
             :date="group.date"
             :label="group.label"
           >
-            <CardGridItem v-for="card in group.cards" :key="card.id">
-              <ContentCard :data="card.data">
-                <template v-if="hasDynamicStats(card.post.stats)" #stats>
-                  <DynamicStats
-                    :stats="card.post.stats"
-                    :like-state="likeStates[card.post.id]"
-                    @toggle-like="toggleLike(card.post)"
-                  />
-                </template>
-              </ContentCard>
-            </CardGridItem>
-          </FeedDateGroup>
+            <template v-for="card in group.cards">
+              <DynamicCard
+                v-if="!card.data"
+                :key="card.id"
+                :card="card.dynamic"
+                :like-states="likeStates"
+                @preview-image="openImagePreview"
+                @toggle-like="toggleLike"
+              />
+              <CardGridItem v-else :key="card.id">
+                <ContentCard :data="card.data">
+                  <template v-if="hasDynamicStats(card.post.stats)" #stats>
+                    <DynamicStats
+                      :stats="card.post.stats"
+                      :like-state="likeStates[card.post.id]"
+                      @toggle-like="toggleLike(card.post)"
+                    />
+                  </template>
+                </ContentCard>
+              </CardGridItem>
+            </template>
+          </CardDateGroup>
         </div>
         <ListStatus
           ref="loadTarget"
@@ -95,15 +88,15 @@
 import { computed } from 'vue'
 import { Toast } from '@/core/toast'
 import { DpiImage, showImage, VEmpty, VIcon } from '@/ui'
-import { TabOption } from '../../options'
+import { TabOption, useDashboardOption } from '../../options'
 import CardCollection from '../../shared/cards/CardCollection.vue'
 import CardGridItem from '../../shared/cards/CardGridItem.vue'
 import ContentCard from '../../shared/cards/ContentCard.vue'
 import type { ContentCardData } from '../../shared/cards/content-card'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
-import FeedDateGroup from './FeedDateGroup.vue'
+import CardDateGroup from '../../shared/cards/CardDateGroup.vue'
 import ListStatus from '../../shared/ListStatus.vue'
-import { groupCardsByDate } from './group-feed-cards'
+import { getCardList } from '../../shared/cards/card-list'
 import DynamicCard from './DynamicCard.vue'
 import DynamicStats from './DynamicStats.vue'
 import type { DynamicFeedType } from './dynamic-api'
@@ -114,6 +107,13 @@ const props = withDefaults(defineProps<{ feedType?: DynamicFeedType }>(), { feed
 const feedLabel = { all: TabOption.Dynamic, pgc: TabOption.Bangumi, column: TabOption.Column }[
   props.feedType
 ]
+
+const dateGroupingOptions = {
+  all: 'dynamicGroupByDate',
+  pgc: 'bangumiGroupByDate',
+  column: 'columnGroupByDate',
+} as const
+const groupByDate = useDashboardOption(dateGroupingOptions[props.feedType])
 
 const {
   loggedIn,
@@ -130,10 +130,14 @@ const {
   refresh,
 } = useDynamicFeed(props.feedType)
 
-const datedCardGroups = computed(() => {
-  const kind = props.feedType === 'pgc' ? 'bangumi' : 'column'
-  const contentCards = feedCards.value.map(card => {
-    const post = card.original ?? card.post
+const cards = computed(() =>
+  feedCards.value.map(dynamic => {
+    const { id } = dynamic.post
+    if (props.feedType === 'all') {
+      return { id, dynamic, post: dynamic.post, data: undefined }
+    }
+    const kind = props.feedType === 'pgc' ? 'bangumi' : 'column'
+    const post = dynamic.original ?? dynamic.post
     const { attachment, author } = post
     const coverUrl = attachment?.coverUrl ?? post.images[0]?.url
     const data: ContentCardData = {
@@ -149,10 +153,15 @@ const datedCardGroups = computed(() => {
       upFaceUrl: author.avatar,
       upUrl: author.url,
     }
-    return { id: card.post.id, data, post }
-  })
-  return groupCardsByDate(contentCards, card => card.post.publishedAt)
-})
+    return { id, dynamic, data, post }
+  }),
+)
+const cardList = computed(() =>
+  getCardList(cards.value, {
+    groupByDate: groupByDate.value,
+    getDate: card => card.post.publishedAt,
+  }),
+)
 
 let isOpeningImagePreview = false
 const openImagePreview = async (url: string) => {

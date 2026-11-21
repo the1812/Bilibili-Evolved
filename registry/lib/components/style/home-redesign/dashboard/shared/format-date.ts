@@ -1,5 +1,13 @@
 import { formatDate, formatTime } from '@/core/utils/formatters'
 
+export const getDateFromUnixSeconds = (seconds?: number) => {
+  if (!Number.isSafeInteger(seconds) || seconds <= 0) {
+    return undefined
+  }
+  const date = new Date(seconds * 1000)
+  return Number.isFinite(date.getTime()) ? date : undefined
+}
+
 const yesterday = (date: Date) => {
   date.setDate(date.getDate() - 1)
   return date

@@ -62,7 +62,7 @@
               :href="post.url"
               target="_blank"
               rel="noopener"
-              :title="post.publishedAt ? formatDateTime(post.publishedAt).slice(0, 16) : '查看动态'"
+              :title="post.publishedAt ? formatDateTime(post.publishedAt) : '查看动态'"
             >
               <time v-if="post.publishedAt" :datetime="post.publishedAt.toISOString()">
                 {{ formatDateTimeLabel(post.publishedAt) }}

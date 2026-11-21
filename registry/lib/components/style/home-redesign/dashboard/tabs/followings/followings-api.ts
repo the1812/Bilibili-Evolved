@@ -1,5 +1,5 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { formatDate } from '@/core/utils/formatters'
+import { getDateFromUnixSeconds } from '../../shared/format-date'
 import { dashboardApiUrls } from '../../shared/urls'
 
 interface RawFollowing {
@@ -10,7 +10,7 @@ interface RawFollowing {
   mtime?: number
 }
 
-export type Following = Omit<RawFollowing, 'mtime'> & { followedOn?: string }
+export type Following = Omit<RawFollowing, 'mtime'> & { followedOn?: Date }
 
 interface FollowingPage {
   list?: RawFollowing[]
@@ -29,7 +29,7 @@ export const getFollowingsPage = async (uid: string, page: number) => {
   const entries: Following[] = (list ?? []).map(({ mtime, sign, ...following }) => ({
     ...following,
     sign: sign?.trim(),
-    followedOn: mtime > 0 ? formatDate(new Date(mtime * 1000)) : undefined,
+    followedOn: getDateFromUnixSeconds(mtime),
   }))
   return { entries, next: entries.length > 0 && page * pageSize < total ? page + 1 : undefined }
 }

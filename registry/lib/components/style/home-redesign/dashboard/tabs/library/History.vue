@@ -27,8 +27,7 @@
           <a :href="dashboardUrls.history" target="_blank" rel="noopener">查看完整历史</a>
         </template>
       </LibraryToolbar>
-      <CardCollection>
-        <LibraryCards :entries="filteredEntries" />
+      <LibraryCards :entries="filteredEntries" :group-by-date="groupByDate">
         <ListStatus
           ref="loadTarget"
           class="dashboard-home-card-list-end"
@@ -38,7 +37,7 @@
           :empty="emptyMessage"
           @load="loadNext"
         />
-      </CardCollection>
+      </LibraryCards>
       <DashboardHomeOperations :refresh-disabled="loading" @refresh="refreshHistory" />
     </template>
   </div>
@@ -49,7 +48,7 @@ import { computed, ref } from 'vue'
 import { getUID } from '@/core/utils'
 import { VEmpty, VIcon } from '@/ui'
 import { HistoryType, navbarFilterTypes } from '../../../../custom-navbar/history/types'
-import CardCollection from '../../shared/cards/CardCollection.vue'
+import { useDashboardOption } from '../../options'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 import { dashboardUrls } from '../../shared/urls'
@@ -61,6 +60,7 @@ import { filterLibraryEntries, getLibraryEmptyMessage, type LibraryEntry } from 
 import { useHistoryRecording } from './use-history-recording'
 
 const uid = getUID()
+const groupByDate = useDashboardOption('historyGroupByDate')
 const historyType = ref(HistoryType.All)
 const keyword = ref('')
 const {

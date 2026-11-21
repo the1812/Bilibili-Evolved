@@ -34,12 +34,12 @@
       <p class="dashboard-home-library-status" role="status">
         {{ actionFailed ? '操作失败，请重试' : '' }}
       </p>
-      <CardCollection>
-        <LibraryCards
-          :entries="filteredEntries"
-          :watchlater-disabled="busy"
-          :watchlater-action="removeVideo"
-        />
+      <LibraryCards
+        :entries="filteredEntries"
+        :group-by-date="groupByDate"
+        :watchlater-disabled="busy"
+        :watchlater-action="removeVideo"
+      >
         <ListStatus
           class="dashboard-home-card-list-end"
           :loading="loading"
@@ -47,7 +47,7 @@
           :empty="emptyMessage"
           @load="refreshQueue"
         />
-      </CardCollection>
+      </LibraryCards>
       <DashboardHomeOperations :refresh-disabled="busy" @refresh="refreshQueue" />
     </template>
   </div>
@@ -60,8 +60,9 @@ import { getUID } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
 import { VEmpty } from '@/ui'
-import CardCollection from '../../shared/cards/CardCollection.vue'
+import { useDashboardOption } from '../../options'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
+import { getDateFromUnixSeconds } from '../../shared/format-date'
 import ListStatus from '../../shared/ListStatus.vue'
 import { dashboardUrls, getWatchlaterVideoUrl } from '../../shared/urls'
 import LibraryCards from './LibraryCards.vue'
@@ -75,6 +76,7 @@ import {
 import { clearWatchlater, getWatchlaterQueue, removeWatchlater } from './watchlater-api'
 
 const uid = getUID()
+const groupByDate = useDashboardOption('watchlaterGroupByDate')
 const { error: logError } = useScopedConsole('仪表盘首页稍后再看')
 const queue = ref<RawWatchlaterItem[]>([])
 const loading = ref(false)
@@ -111,6 +113,7 @@ const filteredEntries = computed(() => {
         upID: item.owner?.mid,
         upFaceUrl: item.owner?.face,
         detail: isWatched(item) ? '已看完' : undefined,
+        date: getDateFromUnixSeconds(item.add_at),
         progress: getPlaybackProgress(item.progress, duration),
       }
     })

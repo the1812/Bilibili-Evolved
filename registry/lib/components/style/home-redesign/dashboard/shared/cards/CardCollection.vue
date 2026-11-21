@@ -1,7 +1,10 @@
 <template>
   <div
     ref="collectionElement"
-    :class="{ 'dashboard-home-card-collection-vertical': isVertical }"
+    :class="{
+      'dashboard-home-card-collection-dated': dated,
+      'dashboard-home-card-collection-vertical': isVertical,
+    }"
     :tabindex="isVertical ? 0 : null"
     :role="isVertical ? 'region' : null"
     :aria-label="isVertical ? '从右向左浏览卡片' : null"
@@ -18,6 +21,8 @@
 import { computed, inject, ref, watch } from 'vue'
 import { sizeChange } from '@/core/observer'
 import { contentCardLayoutKey } from './content-card'
+
+const props = defineProps<{ dated?: boolean }>()
 
 const minimumRowBlockSize = 224
 const preferredRowBlockSize = 320
@@ -52,8 +57,8 @@ const scrollWithWheel = (event: WheelEvent) => {
 }
 
 watch(
-  () => (isVertical.value ? collectionElement.value : undefined),
-  (element, _, onCleanup) => {
+  [() => (isVertical.value ? collectionElement.value : undefined), () => props.dated],
+  ([element], _, onCleanup) => {
     if (!element) {
       return
     }

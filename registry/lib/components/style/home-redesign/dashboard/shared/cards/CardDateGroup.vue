@@ -1,6 +1,6 @@
 <template>
-  <div class="dashboard-home-feed-day">
-    <time v-if="label" class="dashboard-home-feed-date" :datetime="date" :title="date">
+  <div class="dashboard-home-card-date-group">
+    <time v-if="label" class="dashboard-home-card-date" :datetime="date" :title="date">
       {{ label }}
     </time>
     <ul class="dashboard-home-card-grid" role="list">

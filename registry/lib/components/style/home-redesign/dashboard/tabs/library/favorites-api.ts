@@ -1,5 +1,6 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDuration } from '@/core/utils/formatters'
+import { getDateFromUnixSeconds } from '../../shared/format-date'
 import {
   dashboardApiUrls,
   getAudioUrl,
@@ -39,6 +40,7 @@ interface FavoriteMedia {
   title: string
   cover?: string
   duration?: number
+  fav_time?: number
   upper?: FavoriteOwner
 }
 
@@ -116,6 +118,7 @@ export const getFavoriteMedia = async (folder: number, page: number) => {
         upName: item.upper?.name,
         upID: item.upper?.mid,
         upFaceUrl: item.upper?.face,
+        date: getDateFromUnixSeconds(item.fav_time),
       }
     }),
     next: has_more && medias?.length ? page + 1 : undefined,

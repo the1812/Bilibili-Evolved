@@ -35,8 +35,7 @@
           </a>
         </template>
       </LibraryToolbar>
-      <CardCollection>
-        <LibraryCards :entries="filteredEntries" />
+      <LibraryCards :entries="filteredEntries" :group-by-date="groupByDate">
         <ListStatus
           ref="loadTarget"
           class="dashboard-home-card-list-end"
@@ -46,7 +45,7 @@
           :empty="emptyMessage"
           @load="loadMoreFavorites"
         />
-      </CardCollection>
+      </LibraryCards>
       <DashboardHomeOperations :refresh-disabled="busy" @refresh="refreshFavorites" />
     </template>
   </div>
@@ -57,7 +56,7 @@ import { computed, ref, watch } from 'vue'
 import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { VEmpty } from '@/ui'
-import CardCollection from '../../shared/cards/CardCollection.vue'
+import { useDashboardOption } from '../../options'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 import { getFavoriteFolderUrl } from '../../shared/urls'
@@ -76,6 +75,7 @@ import {
 import { filterLibraryEntries, getLibraryEmptyMessage, type LibraryEntry } from './library'
 
 const uid = getUID()
+const groupByDate = useDashboardOption('favoritesGroupByDate')
 const { error: logError } = useScopedConsole('仪表盘首页收藏')
 const favoriteKind = ref<keyof typeof favoriteKinds>('folders')
 const keyword = ref('')

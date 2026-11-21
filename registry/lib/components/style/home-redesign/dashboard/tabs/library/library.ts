@@ -2,6 +2,7 @@ import type { ContentCardData } from '../../shared/cards/content-card'
 
 export interface LibraryEntry extends ContentCardData {
   id: string | number
+  date?: Date
 }
 
 export const getPlaybackProgress = (watchedSeconds?: number, duration?: number) => {

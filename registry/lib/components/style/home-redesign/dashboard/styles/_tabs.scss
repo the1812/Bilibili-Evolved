@@ -1,7 +1,7 @@
 .dashboard-home-tabs {
   --dashboard-home-tab-bar-block-start: 0px;
   --dashboard-home-tab-bar-padding-block: var(--dashboard-home-space-sm);
-  --dashboard-home-feed-date-block-start: calc(
+  --dashboard-home-card-date-block-start: calc(
     var(--dashboard-home-tab-bar-block-start) + var(--dashboard-home-tab-bar-padding-block)
   );
 
@@ -90,7 +90,7 @@
     :focus-visible {
       scroll-margin-block-start: var(
         --dashboard-home-tab-panel-scroll-margin-block-start,
-        var(--dashboard-home-feed-date-block-start)
+        var(--dashboard-home-card-date-block-start)
       );
     }
 

@@ -79,8 +79,9 @@
               v-if="entry.timestamp"
               class="dashboard-home-account-muted"
               :datetime="new Date(entry.timestamp).toISOString()"
+              :title="formatDateTime(new Date(entry.timestamp))"
             >
-              {{ formatDateTime(new Date(entry.timestamp)).slice(0, 16) }}
+              {{ formatDateTimeLabel(new Date(entry.timestamp)) }}
             </time>
           </div>
           <p v-if="entry.text" class="dashboard-home-inbox-text" v-text="entry.text" />
@@ -124,6 +125,7 @@
 import { nextTick, ref } from 'vue'
 import { formatDateTime } from '@/core/utils/formatters'
 import { VEmpty } from '@/ui'
+import { formatDateTimeLabel } from '../../shared/format-date'
 import ListStatus from '../../shared/ListStatus.vue'
 import type { InboxPage } from './inbox-api'
 import { dashboardUrls } from '../../shared/urls'

@@ -2,7 +2,7 @@ import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/
 import { getCsrf } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 import { HistoryType, navbarFilterTypes } from '../../../../custom-navbar/history/types'
-import { formatDateTimeLabel } from '../../shared/format-date'
+import { formatDateTimeLabel, getDateFromUnixSeconds } from '../../shared/format-date'
 import {
   dashboardApiUrls,
   getBangumiEpisodeUrl,
@@ -76,14 +76,6 @@ const getHistoryContent = (item: RawHistoryItem) => {
   return undefined
 }
 
-const formatHistoryTime = (seconds: number) => {
-  const date = new Date(seconds * 1000)
-  if (!Number.isFinite(date.getTime())) {
-    return undefined
-  }
-  return formatDateTimeLabel(date)
-}
-
 const contentKinds: Partial<Record<HistoryType, LibraryEntry['kind']>> = {
   [HistoryType.Video]: 'video',
   [HistoryType.Article]: 'column',
@@ -127,6 +119,7 @@ export const getHistoryPage = async (type: HistoryType, cursor?: string) => {
     const kind = contentKinds[content.type] ?? 'other'
     const hasPlayback = kind === 'video' || kind === 'bangumi'
     const progress = hasPlayback ? getPlaybackProgress(item.progress, item.duration) : undefined
+    const date = getDateFromUnixSeconds(item.view_at)
     const isSeries = kind === 'bangumi' || item.history.business === HistoryType.Cheese
     return [
       {
@@ -141,7 +134,8 @@ export const getHistoryPage = async (type: HistoryType, cursor?: string) => {
         upName: isSeries ? item.title : item.author_name,
         upID: isSeries ? undefined : item.author_mid,
         upFaceUrl: item.author_face,
-        detail: [formatHistoryTime(item.view_at), progress === 1 ? '已看完' : undefined]
+        date,
+        detail: [date && formatDateTimeLabel(date), progress === 1 ? '已看完' : undefined]
           .filter(Boolean)
           .join(' · '),
         progress,
