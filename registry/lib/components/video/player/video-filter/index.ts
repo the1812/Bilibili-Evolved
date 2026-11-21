@@ -1,15 +1,17 @@
+import { defineComponent, reactive } from 'vue'
 import { defineComponentMetadata } from '@/components/define'
-import { playerAgent } from '@/components/video/player-agent'
 import { addControlBarButton, removeControlBarButton } from '@/components/video/video-control-bar'
-import { sizeChange, videoChange } from '@/core/observer'
+import { videoChange } from '@/core/observer'
 import {
   addComponentListener,
   getComponentSettings,
   removeComponentListener,
 } from '@/core/settings'
 import { Toast } from '@/core/toast'
+import { mountVueComponent } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { addBpxMenuItem } from './context-menu'
+import VideoFilterPanel from './VideoFilterPanel.vue'
 
 enum FilterMode {
   SmartDarken = '智能暗化',
@@ -41,7 +43,7 @@ const optionNames = ['mode', 'brightness', 'contrast', 'enabledVideos']
 const getOptions = () => getComponentSettings<Options>(componentName).options
 let videoKey: string | undefined
 let videoListener: AbortController | undefined
-let updateMenu: ((selection: FilterMode | false) => void) | undefined
+const panelState = reactive({ selection: false as FilterMode | false, available: false })
 
 const getVideoFilter = (): VideoFilterState => {
   const { mode, enabledVideos } = getOptions()
@@ -81,7 +83,8 @@ const applyFilter = () => {
   const { brightness, contrast } = getOptions()
   const { mode, enabled } = getVideoFilter()
   toggleButton.displayName = enabled ? `关闭视频滤镜（${mode}）` : '开启视频滤镜'
-  updateMenu?.(enabled && mode)
+  panelState.selection = enabled && mode
+  panelState.available = Boolean(videoKey)
   if (!enabled) {
     clearFilter()
     return
@@ -102,122 +105,39 @@ const registerMenu = (signal: AbortSignal) => {
   trigger.setAttribute('aria-haspopup', 'dialog')
   trigger.setAttribute('aria-expanded', 'false')
 
-  const panel = document.createElement('div')
-  panel.popover = 'manual'
-  panel.id = 'be-video-filter-presets'
-  panel.className = 'be-video-filter-menu-presets'
-  panel.setAttribute('role', 'dialog')
-  const header = document.createElement('div')
-  header.className = 'be-video-filter-header'
-  const heading = document.createElement('strong')
-  heading.id = 'be-video-filter-title'
-  heading.textContent = displayName
-  panel.setAttribute('aria-labelledby', heading.id)
-  const dismiss = document.createElement('button')
-  dismiss.type = 'button'
-  dismiss.className = 'be-video-filter-dismiss'
-  dismiss.setAttribute('aria-label', '关闭面板')
-  dismiss.textContent = '×'
-  header.append(heading, dismiss)
-  const presets = document.createElement('div')
-  presets.className = 'be-video-filter-choices'
-  panel.append(header, presets)
-  trigger.setAttribute('aria-controls', panel.id)
-  let playerArea: HTMLElement | undefined
-  let observer: ResizeObserver | undefined
-  const positionPanel = () => {
-    if (!playerArea) {
-      return
-    }
-    const { left, top, width, height } = playerArea.getBoundingClientRect()
-    panel.style.left = `${left + width / 2}px`
-    panel.style.top = `${top + height / 2}px`
-    panel.style.maxWidth = `${Math.max(0, width - 16)}px`
-  }
-  const setExpanded = (expanded: boolean) => {
-    if (panel.matches(':popover-open') === expanded) {
-      return
-    }
-    if (expanded) {
-      playerArea = playerAgent.query.video.wrap.sync()
-      if (!playerArea || !videoKey) {
-        return
-      }
-      positionPanel()
-      panel.showPopover()
-      ;[observer] = sizeChange(playerArea, positionPanel)
-      presets.querySelector<HTMLButtonElement>('[aria-pressed="true"]')?.focus({
-        preventScroll: true,
-      })
-    } else {
-      observer?.disconnect()
-      playerArea = undefined
-      panel.hidePopover()
-    }
-    trigger.setAttribute('aria-expanded', String(expanded))
-  }
-  trigger.addEventListener('click', () => {
-    setExpanded(!panel.matches(':popover-open'))
-  })
+  const panel = mountVueComponent(
+    defineComponent({
+      render: create =>
+        create(VideoFilterPanel, {
+          props: { trigger, modes: Object.values(FilterMode), state: panelState },
+          on: {
+            select: (selection: FilterMode | false) => {
+              setVideoFilter({
+                mode: selection || getVideoFilter().mode,
+                enabled: Boolean(selection),
+              })
+            },
+          },
+        }),
+    }),
+  )
+  trigger.setAttribute('aria-controls', panel.$el.id)
   trigger.addEventListener('keydown', event => {
     if (event.key === 'Enter' || event.key === ' ') {
       event.preventDefault()
       trigger.click()
     }
   })
-  dismiss.addEventListener('click', () => setExpanded(false))
-  panel.addEventListener('click', event => event.stopPropagation())
-  document.addEventListener(
-    'click',
-    event => {
-      const target = event.target as Node
-      if (!panel.contains(target) && !trigger.contains(target)) {
-        setExpanded(false)
-      }
-    },
-    { capture: true, signal },
-  )
-  document.addEventListener(
-    'keydown',
-    event => {
-      if (event.key === 'Escape' && panel.matches(':popover-open')) {
-        setExpanded(false)
-        trigger.focus()
-      }
-    },
-    { signal },
-  )
-  window.addEventListener('resize', positionPanel, { signal })
-  window.addEventListener('scroll', positionPanel, { capture: true, signal })
+  document.body.appendChild(panel.$el)
   signal.addEventListener(
     'abort',
     () => {
-      observer?.disconnect()
-      panel.remove()
+      panel.$destroy()
+      panel.$el.remove()
     },
     { once: true },
   )
 
-  const choices = [false as const, ...Object.values(FilterMode)].map(selection => {
-    const button = document.createElement('button')
-    button.type = 'button'
-    button.textContent = selection || '关闭滤镜'
-    button.addEventListener('click', () => {
-      setVideoFilter({ mode: selection || getVideoFilter().mode, enabled: Boolean(selection) })
-    })
-    presets.appendChild(button)
-    return { button, selection }
-  })
-
-  document.body.appendChild(panel)
-  updateMenu = selection => {
-    trigger.setAttribute('aria-disabled', String(!videoKey))
-    choices.forEach(choice => {
-      choice.button.disabled = !videoKey
-      choice.button.setAttribute('aria-pressed', String(choice.selection === selection))
-    })
-  }
-  updateMenu(false)
   addBpxMenuItem(trigger, signal)
 }
 
@@ -279,7 +199,7 @@ export const component = defineComponentMetadata<Options>({
     videoListener?.abort()
     videoListener = undefined
     videoKey = undefined
-    updateMenu = undefined
+    panelState.available = false
     optionNames.forEach(name => removeComponentListener(`${componentName}.${name}`, applyFilter))
     clearFilter()
     return removeControlBarButton(toggleButton.name)
