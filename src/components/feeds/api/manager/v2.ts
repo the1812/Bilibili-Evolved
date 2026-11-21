@@ -12,6 +12,7 @@ const feedsCardTypeMap = {
   DynamicTypeDraw: feedsCardTypes.textWithImages,
   DynamicTypeWord: feedsCardTypes.text,
   DynamicTypePgc: feedsCardTypes.bangumi,
+  DynamicTypePgcUnion: feedsCardTypes.bangumi,
   DynamicTypeArticle: feedsCardTypes.column,
   DynamicTypeMusic: feedsCardTypes.audio,
   DynamicTypeLiveRcmd: feedsCardTypes.liveRecord,
