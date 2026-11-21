@@ -152,6 +152,7 @@
             overflow-x: auto;
             overflow-y: hidden;
             .guard-daily-record {
+              min-width: max-content;
               gap: 10px;
               > * {
                 flex-shrink: 0;
