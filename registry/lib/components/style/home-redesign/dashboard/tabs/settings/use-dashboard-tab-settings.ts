@@ -101,11 +101,11 @@ export const useDashboardTabSettings = () => {
     }
   }
 
-  const moveTab = (id: string, direction: -1 | 1) => {
+  const moveTab = (id: string, offset: number) => {
     const ids = orderedTabs.value.map(tab => tab.id)
     const current = ids.indexOf(id)
-    const next = current + direction
-    if (current < 0 || next < 0 || next >= ids.length) {
+    const next = current + offset
+    if (current < 0 || next === current || next < 0 || next >= ids.length) {
       return undefined
     }
     ids.splice(current, 1)

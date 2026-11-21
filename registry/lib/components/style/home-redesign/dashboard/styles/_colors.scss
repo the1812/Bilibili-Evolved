@@ -7,6 +7,14 @@
   body.dark & {
     color-scheme: dark;
   }
+
+  strong {
+    color: var(--theme-color);
+  }
+
+  input[type='checkbox'] {
+    accent-color: var(--theme-color);
+  }
 }
 
 .dashboard-home {

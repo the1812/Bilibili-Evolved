@@ -1,26 +1,34 @@
 .dashboard-home-tab-settings {
-  @include card(var(--home-card-radius));
-  @include v-stretch(var(--dashboard-home-space-md));
+  @include v-stretch(var(--dashboard-home-space-lg));
+  box-sizing: border-box;
   inline-size: min(100%, var(--home-max-width));
   min-inline-size: 0;
-  padding: var(--dashboard-home-space-lg);
+  padding-inline: var(--dashboard-home-grid-padding-inline);
 
-  &-header,
+  &-heading,
+  &-actions,
   &-order {
     @include h-center(var(--dashboard-home-space-sm));
   }
 
-  &-header {
-    justify-content: space-between;
-    flex-wrap: wrap;
+  &-heading {
+    margin: 0;
 
-    h2 {
-      margin: 0;
+    > .be-icon {
+      flex: none;
+      color: var(--theme-color);
     }
+  }
+
+  &-actions {
+    justify-content: flex-end;
+    flex-wrap: wrap;
   }
 
   &-scroll {
     overflow-x: auto;
+    border: var(--home-card-border);
+    border-radius: var(--home-card-radius);
 
     &:focus-visible {
       @include dashboard-focus-ring();
@@ -33,12 +41,31 @@
     white-space: nowrap;
   }
 
+  thead {
+    background-color: var(--dashboard-home-highlight-background);
+  }
+
   th,
   td {
     padding-block: var(--dashboard-home-space-xs);
     padding-inline: var(--dashboard-home-space-sm);
-    border-block-end: var(--home-card-border);
     text-align: start;
+
+    @media (min-width: $dashboard-home-card-breakpoint) {
+      padding-inline: var(--dashboard-home-space-md);
+    }
+  }
+
+  tbody tr {
+    border-block-start: var(--home-card-border);
+
+    &:nth-child(even) {
+      background-color: var(--dashboard-home-muted-surface);
+    }
+
+    &.dashboard-home-tab-settings-drag-target {
+      background-color: var(--dashboard-home-highlight-background);
+    }
   }
 
   select,
@@ -51,12 +78,110 @@
     inline-size: 6em;
   }
 
-  input[type='checkbox'] {
-    accent-color: var(--theme-color);
+  &-drag-handle {
+    @include h-center();
+    min-block-size: var(--dashboard-home-control-block-size);
+    padding-inline: var(--dashboard-home-space-xs);
+    color: var(--dashboard-home-muted-text-color);
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+
+    &:active {
+      cursor: grabbing;
+    }
   }
 
-  .dashboard-home-action[aria-disabled='true'] {
-    cursor: default;
-    opacity: 0.5;
+  .dashboard-home-action {
+    gap: var(--dashboard-home-space-xs);
+
+    &[aria-disabled='true'] {
+      cursor: default;
+      opacity: 0.5;
+    }
+  }
+}
+
+.dashboard-home-general-settings {
+  @include v-stretch(var(--dashboard-home-space-lg));
+  position: relative;
+  isolation: isolate;
+  min-inline-size: 0;
+  padding: var(--dashboard-home-space-lg);
+  border: var(--home-card-border);
+  border-radius: var(--home-card-radius);
+  background-color: var(--home-background-color);
+
+  &-decoration {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    overflow: clip;
+    border-radius: inherit;
+    pointer-events: none;
+
+    > .be-icon {
+      position: absolute;
+      inset-block-start: -0.12em;
+      inset-inline-end: -0.12em;
+      inline-size: 1em;
+      block-size: 1em;
+      color: var(--theme-color);
+      font-size: clamp(11rem, 30vw, 18rem);
+      opacity: 0.18;
+    }
+
+    @media (forced-colors: active) {
+      display: none;
+    }
+  }
+
+  &-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+    gap: var(--dashboard-home-space-sm);
+
+    label {
+      @include h-center(var(--dashboard-home-space-sm));
+      padding-block: var(--dashboard-home-space-xs);
+      padding-inline: var(--dashboard-home-space-sm);
+      border: var(--home-card-border);
+      border-radius: var(--dashboard-home-control-radius);
+      background-color: var(--home-background-color);
+
+      &:has(input) {
+        cursor: pointer;
+
+        &:has(:checked) {
+          background-color: var(--dashboard-home-highlight-background);
+        }
+      }
+
+      &:has(select) {
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+    }
+
+    input {
+      flex: none;
+      margin: 0;
+    }
+
+    select {
+      max-inline-size: 100%;
+    }
+  }
+
+  &-preview {
+    min-inline-size: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+
+    legend {
+      padding: 0;
+      margin-block-end: var(--dashboard-home-space-sm);
+    }
   }
 }

@@ -3,9 +3,11 @@ import { defineOptionsMetadata, type OptionsOfMetadata } from '@/components/defi
 import {
   addComponentListener,
   getComponentSettings,
+  metadataToOptions,
   removeComponentListener,
 } from '@/core/settings'
 import { getNumberValidator } from '@/core/utils'
+import type { LinkType } from './shared/urls'
 
 export enum TabOption {
   Dynamic = '动态',
@@ -57,6 +59,22 @@ const trackCountOption = (tab: TabOption, defaultValue: number) => ({
   defaultValue,
   validator: validateTrackCount,
 })
+
+export const dashboardRememberTabLabel = {
+  prefix: '在网址中',
+  keyword: '记住当前标签页',
+}
+
+export const dashboardLinkPreviewLabelPrefix = '在首页内打开'
+export const dashboardLinkPreviewLabels = {
+  openLiveLinksInPlace: '直播链接',
+  openSpaceLinksInPlace: '个人空间链接',
+  openDynamicLinksInPlace: '动态链接',
+  openVideoLinksInPlace: '视频链接',
+  openColumnLinksInPlace: '专栏链接',
+  openBilibiliLinksInPlace: '其他 B 站链接',
+  openExternalLinksInPlace: '外部链接',
+}
 
 export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
   dynamicShow: tabOption(TabOption.Dynamic, true),
@@ -122,41 +140,30 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
     dropdownEnum: TabOption,
   },
   rememberTabInUrl: {
-    displayName: '在网址中记住当前标签页',
+    displayName: dashboardRememberTabLabel.prefix + dashboardRememberTabLabel.keyword,
     defaultValue: false,
   },
 
-  openLiveLinksInPlace: {
-    displayName: '在首页内打开直播链接',
+  ...lodash.mapValues(dashboardLinkPreviewLabels, label => ({
+    displayName: dashboardLinkPreviewLabelPrefix + label,
     defaultValue: false,
-  },
-  openSpaceLinksInPlace: {
-    displayName: '在首页内打开个人空间链接',
-    defaultValue: false,
-  },
-  openDynamicLinksInPlace: {
-    displayName: '在首页内打开动态链接',
-    defaultValue: false,
-  },
-  openVideoLinksInPlace: {
-    displayName: '在首页内打开视频链接',
-    defaultValue: false,
-  },
-  openColumnLinksInPlace: {
-    displayName: '在首页内打开专栏链接',
-    defaultValue: false,
-  },
-  openBilibiliLinksInPlace: {
-    displayName: '在首页内打开其他 B 站链接',
-    defaultValue: false,
-  },
-  openExternalLinksInPlace: {
-    displayName: '在首页内打开外部链接',
-    defaultValue: false,
-  },
+  })),
 })
 
 export type DashboardHomeOptions = OptionsOfMetadata<typeof dashboardHomeOptionsMetadata>
+
+type LinkPreviewOption = keyof DashboardHomeOptions & `open${string}LinksInPlace`
+
+export const dashboardLinkPreviewOptions: Partial<Record<LinkType, LinkPreviewOption>> = {
+  live: 'openLiveLinksInPlace',
+  space: 'openSpaceLinksInPlace',
+  dynamic: 'openDynamicLinksInPlace',
+  video: 'openVideoLinksInPlace',
+  column: 'openColumnLinksInPlace',
+  bilibili: 'openBilibiliLinksInPlace',
+  external: 'openExternalLinksInPlace',
+}
+
 export const getDashboardHomeOptions = () =>
   getComponentSettings<DashboardHomeOptions>('dashboardHome').options
 
@@ -165,6 +172,17 @@ export const setDashboardOption = <K extends keyof DashboardHomeOptions>(
   value: DashboardHomeOptions[K],
 ) => {
   getDashboardHomeOptions()[name] = value
+}
+
+export const resetDashboardOptions = () => {
+  const options = getDashboardHomeOptions()
+  const defaults = metadataToOptions<DashboardHomeOptions>(dashboardHomeOptionsMetadata)
+  for (const name of Object.keys(defaults) as (keyof DashboardHomeOptions)[]) {
+    const value = defaults[name]
+    if (!lodash.isEqual(options[name], value)) {
+      setDashboardOption(name, lodash.cloneDeep(value))
+    }
+  }
 }
 
 export const useDashboardOption = <K extends keyof DashboardHomeOptions>(name: K) => {

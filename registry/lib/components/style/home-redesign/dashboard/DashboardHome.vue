@@ -14,22 +14,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
-import { getDashboardHomeOptions, useDashboardOption, type DashboardHomeOptions } from './options'
+import { dashboardLinkPreviewOptions, getDashboardHomeOptions, useDashboardOption } from './options'
 import LinkPreview from './link-preview/LinkPreview.vue'
-import { getLinkType, type LinkType } from './shared/urls'
+import { getLinkType } from './shared/urls'
 import DashboardTabs from './tabs/DashboardTabs.vue'
-
-type LinkPreviewOption = keyof DashboardHomeOptions & `open${string}LinksInPlace`
-
-const linkPreviewOptions: Partial<Record<LinkType, LinkPreviewOption>> = {
-  live: 'openLiveLinksInPlace',
-  space: 'openSpaceLinksInPlace',
-  dynamic: 'openDynamicLinksInPlace',
-  video: 'openVideoLinksInPlace',
-  column: 'openColumnLinksInPlace',
-  bilibili: 'openBilibiliLinksInPlace',
-  external: 'openExternalLinksInPlace',
-}
 
 const showWatchlater = useDashboardOption('watchlaterShow')
 const linkPreview = ref<InstanceType<typeof LinkPreview>>()
@@ -42,7 +30,7 @@ const tryOpenLinkPreview = (href: string): boolean => {
     return false
   }
   const linkType = getLinkType(url)
-  const option = linkType && linkPreviewOptions[linkType]
+  const option = linkType && dashboardLinkPreviewOptions[linkType]
   return Boolean(
     option && getDashboardHomeOptions()[option] && linkPreview.value?.openPreview(url, linkType),
   )
