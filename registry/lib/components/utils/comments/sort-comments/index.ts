@@ -13,6 +13,7 @@ import {
   commentAreaManager,
 } from '@/components/utils/comment-apis'
 import { mountVueComponent } from '@/core/utils'
+import { videoAndBangumiUrls } from '@/core/utils/urls'
 import { CommentSortMode, SortCommentsOptions, sortCommentsOptions } from './options'
 
 // ============ 辅助函数 ============
@@ -257,8 +258,7 @@ export const component = defineComponentMetadata({
     link: 'https://github.com/ChairKeter',
   },
   urlInclude: [
-    '//www.bilibili.com/video/',
-    '//www.bilibili.com/bangumi/',
+    ...videoAndBangumiUrls,
     '//t.bilibili.com/',
     '//www.bilibili.com/read/',
     '//www.bilibili.com/audio/',
