@@ -46,7 +46,7 @@
       </transition>
     </div>
   </div>
-  <VEmpty v-else>请在仪表盘首页设置中开启标签页</VEmpty>
+  <VEmpty v-else> 所有标签页均已隐藏。<a :href="getSettingsUrl()">打开标签页设置</a> </VEmpty>
 </template>
 
 <script setup lang="ts">
@@ -55,10 +55,19 @@ import { sizeChange } from '@/core/observer'
 import { VEmpty } from '@/ui'
 import { contentCardLayoutKey } from '../shared/cards/content-card'
 import type { DashboardTab } from './dashboard-tabs'
+import { dashboardTabSettingsKey } from './settings/use-dashboard-tab-settings'
 import { useDashboardTabs } from './use-dashboard-tabs'
 
 const emit = defineEmits<{ (event: 'open-link', url: string, clickEvent: MouseEvent): void }>()
-const { visibleTabs, selectedTab, getCardLayout, getTrackCount } = useDashboardTabs()
+const {
+  visibleTabs,
+  selectedTab,
+  selectTab: setSelectedTab,
+  getSettingsUrl,
+  tabSettings,
+} = useDashboardTabs()
+const { getCardLayout, getTrackCount } = tabSettings
+provide(dashboardTabSettingsKey, tabSettings)
 const tabBarElement = ref<HTMLElement>()
 const tabBarHeight = ref(0)
 const floatingTabs = ref(false)
@@ -75,7 +84,7 @@ const selectTab = (tab: DashboardTab, event: MouseEvent) => {
   if (tab === selectedTab.value && tab.activeLink) {
     emit('open-link', tab.activeLink, event)
   }
-  selectedTab.value = tab
+  setSelectedTab(tab)
 }
 
 const handleTabKeydown = (event: KeyboardEvent) => {

@@ -26,6 +26,7 @@ const props = defineProps<{ dated?: boolean }>()
 
 const minimumRowBlockSize = 224
 const preferredRowBlockSize = 320
+const defaultWheelLinePixels = 16
 
 const layout = inject(contentCardLayoutKey)
 const collectionElement = ref<HTMLElement>()
@@ -45,7 +46,7 @@ const scrollWithWheel = (event: WheelEvent) => {
   const maxScrollLeft = element.scrollWidth - element.clientWidth
   let distance = deltaY
   if (deltaMode === WheelEvent.DOM_DELTA_LINE) {
-    distance *= 16
+    distance *= parseFloat(getComputedStyle(element).lineHeight) || defaultWheelLinePixels
   } else if (deltaMode === WheelEvent.DOM_DELTA_PAGE) {
     distance *= element.clientWidth
   }
@@ -72,18 +73,17 @@ watch(
       ) {
         documentTop += ancestor.offsetTop
       }
-      const blockSize = Math.max(minimumRowBlockSize, window.innerHeight - documentTop - 12)
       const style = getComputedStyle(element)
-      const paddingBlockStart = parseFloat(
-        style.getPropertyValue('--dashboard-home-card-scroll-padding-block-start'),
+      const cssPixels = (name: string) => parseFloat(style.getPropertyValue(name))
+      const viewportBottomInset = cssPixels('--dashboard-home-space-md')
+      const blockSize = Math.max(
+        minimumRowBlockSize,
+        window.innerHeight - documentTop - viewportBottomInset,
       )
-      const paddingBlockEnd = parseFloat(
-        style.getPropertyValue('--dashboard-home-card-scroll-padding-block-end'),
-      )
-      const headerBlockSize = parseFloat(
-        style.getPropertyValue('--dashboard-home-card-scroll-header-block-size'),
-      )
-      const rowGap = parseFloat(style.getPropertyValue('--dashboard-home-grid-gap'))
+      const paddingBlockStart = cssPixels('--dashboard-home-card-scroll-padding-block-start')
+      const paddingBlockEnd = cssPixels('--dashboard-home-card-scroll-padding-block-end')
+      const headerBlockSize = cssPixels('--dashboard-home-card-scroll-header-block-size')
+      const rowGap = cssPixels('--dashboard-home-grid-gap')
       const availableRowSpace = blockSize - paddingBlockStart - paddingBlockEnd - headerBlockSize
       const countRows = (rowBlockSize: number) =>
         Math.max(1, Math.floor((availableRowSpace + rowGap) / (rowBlockSize + rowGap)))

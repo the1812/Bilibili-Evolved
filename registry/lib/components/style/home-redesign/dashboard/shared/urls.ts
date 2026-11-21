@@ -13,6 +13,18 @@ const securitySite = 'https://passport.bilibili.com/pc/account-security/security
 const creatorSite = 'https://member.bilibili.com/platform'
 const messageSite = 'https://message.bilibili.com'
 
+export const dashboardTabQueryParam = 'dashboardTab'
+
+export const getDashboardTabUrl = (href: string, tabId?: string) => {
+  const url = new URL(href)
+  if (tabId) {
+    url.searchParams.set(dashboardTabQueryParam, tabId)
+  } else {
+    url.searchParams.delete(dashboardTabQueryParam)
+  }
+  return url.href
+}
+
 export const dashboardUrls = {
   home: `${site}/`,
   dynamics: `${dynamicSite}/`,

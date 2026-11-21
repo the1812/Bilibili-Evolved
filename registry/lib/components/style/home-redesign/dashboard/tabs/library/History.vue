@@ -5,7 +5,7 @@
       <LibraryToolbar :value="keyword" @input="keyword = $event">
         <template #filters>
           <label>
-            <span>历史类型</span>
+            <span>历史记录类型</span>
             <select v-model="historyType">
               <option v-for="filter in navbarFilterTypes" :key="filter.name" :value="filter.name">
                 {{ filter.displayName }}
@@ -24,7 +24,7 @@
           >
             <VIcon :icon="recordingAction.icon" :size="14" aria-hidden="true" />
           </button>
-          <a :href="dashboardUrls.history" target="_blank" rel="noopener">查看完整历史</a>
+          <a :href="dashboardUrls.history" target="_blank" rel="noopener">查看完整历史记录</a>
         </template>
       </LibraryToolbar>
       <LibraryCards :entries="filteredEntries" :group-by-date="groupByDate">

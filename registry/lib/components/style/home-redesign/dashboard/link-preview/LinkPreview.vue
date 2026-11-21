@@ -36,6 +36,8 @@ import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 import { VIcon } from '@/ui'
 import { formatLink, isHttp, type LinkType } from '../shared/urls'
 
+const previewUrlPollIntervalMs = 1000
+
 const dialogElement = ref<HTMLDialogElement>()
 const iframeElement = ref<HTMLIFrameElement>()
 const requestedPage = shallowRef<{ url: URL; type: LinkType }>()
@@ -85,7 +87,7 @@ watch(iframeElement, (element, _, onCleanup) => {
     return
   }
   // Same-document navigations can change the URL without firing load.
-  const timer = window.setInterval(updatePreviewUrl, 1000)
+  const timer = window.setInterval(updatePreviewUrl, previewUrlPollIntervalMs)
   onCleanup(() => window.clearInterval(timer))
 })
 

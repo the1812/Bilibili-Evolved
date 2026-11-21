@@ -40,7 +40,7 @@ export const useAccount = () => {
     [
       { label: '硬币', value: profile.value?.money },
       { label: 'B币', value: profile.value?.wallet?.bcoin_balance },
-      { label: 'EXP', value: profile.value?.level_info?.current_exp },
+      { label: '经验值', value: profile.value?.level_info?.current_exp },
     ].filter(item => Number.isFinite(item.value)),
   )
 

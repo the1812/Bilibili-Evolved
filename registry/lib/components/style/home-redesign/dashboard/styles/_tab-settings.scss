@@ -1,0 +1,62 @@
+.dashboard-home-tab-settings {
+  @include card(var(--home-card-radius));
+  @include v-stretch(var(--dashboard-home-space-md));
+  inline-size: min(100%, var(--home-max-width));
+  min-inline-size: 0;
+  padding: var(--dashboard-home-space-lg);
+
+  &-header,
+  &-order {
+    @include h-center(var(--dashboard-home-space-sm));
+  }
+
+  &-header {
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &-scroll {
+    overflow-x: auto;
+
+    &:focus-visible {
+      @include dashboard-focus-ring();
+    }
+  }
+
+  table {
+    inline-size: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+  }
+
+  th,
+  td {
+    padding-block: var(--dashboard-home-space-xs);
+    padding-inline: var(--dashboard-home-space-sm);
+    border-block-end: var(--home-card-border);
+    text-align: start;
+  }
+
+  select,
+  &-track-count {
+    @include dashboard-control-size();
+    @include dashboard-control-colors();
+  }
+
+  &-track-count {
+    inline-size: 6em;
+  }
+
+  input[type='checkbox'] {
+    accent-color: var(--theme-color);
+  }
+
+  .dashboard-home-action[aria-disabled='true'] {
+    cursor: default;
+    opacity: 0.5;
+  }
+}

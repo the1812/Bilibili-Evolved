@@ -1,5 +1,6 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDate } from '@/core/utils/formatters'
+import { getDateFromUnixSeconds } from '../../shared/format-date'
 import { dashboardApiUrls, getSpaceUrls } from '../../shared/urls'
 
 export interface AccountProfile {
@@ -83,14 +84,12 @@ export const getAccountPrivileges = async (): Promise<AccountRow[]> => {
       return []
     }
     const received = privilege.state === 1
+    const expiresOn = received ? getDateFromUnixSeconds(privilege.expire_time) : undefined
     return [
       {
         label,
         value: received ? '已领取' : '未领取',
-        detail:
-          received && privilege.expire_time > 0
-            ? `有效期至 ${formatDate(new Date(privilege.expire_time * 1000))}`
-            : undefined,
+        detail: expiresOn ? `有效期至 ${formatDate(expiresOn)}` : undefined,
       },
     ]
   })

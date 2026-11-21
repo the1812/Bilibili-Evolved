@@ -33,7 +33,7 @@
           v-if="canToggleWatchlater"
           type="button"
           class="dashboard-home-content-card-watchlater"
-          :title="isSavedForLater ? '从稍后再看移除' : '添加到稍后再看'"
+          :title="isSavedForLater ? '从稍后再看移除' : '加入稍后再看'"
           :aria-pressed="isSavedForLater ? 'true' : 'false'"
           :aria-disabled="watchlaterUnavailable ? 'true' : undefined"
           @click="toggleWatchlaterStatus"
@@ -134,7 +134,7 @@ import { getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { DpiImage, VIcon } from '@/ui'
 import { getBangumiEpisodeUrl, getTopicUrl, getVideoUrl } from '../urls'
-import type { ContentCardData, ContentCardKind } from './content-card'
+import { contentCardCoverWidth, type ContentCardData, type ContentCardKind } from './content-card'
 
 const props = defineProps<{
   data: ContentCardData
@@ -142,7 +142,7 @@ const props = defineProps<{
   watchlaterDisabled?: boolean
   watchlaterAction?: (aid: number) => Promise<void>
 }>()
-const coverSize = { width: 480 }
+const coverSize = { width: contentCardCoverWidth }
 const placeholderIcons: Record<ContentCardKind, string> = {
   video: 'mdi-play-box-multiple-outline',
   column: 'mdi-file-document-outline',

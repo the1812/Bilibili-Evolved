@@ -10,7 +10,8 @@
         class="dashboard-home-card-list-end"
         :loading="loading"
         :failed="failed"
-        :empty="cards.length ? '' : '暂无视频'"
+        :empty="cards.length ? '' : `暂无${feedLabel}视频`"
+        :error="`${feedLabel}视频加载失败`"
         @load="loadCards"
       />
     </CardCollection>
@@ -18,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import type { VideoCard as VideoCardData } from '@/components/feeds/video-card'
 import { logError } from '@/core/utils/log'
 import { getTrendingVideos } from '../../../trending'
@@ -29,6 +30,7 @@ import ContentCard from '../../shared/cards/ContentCard.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 
 const props = defineProps<{ personalized?: boolean }>()
+const feedLabel = computed(() => (props.personalized ? '推荐' : '热门'))
 const loading = ref(false)
 const failed = ref(false)
 const cards = ref<VideoCardData[]>([])

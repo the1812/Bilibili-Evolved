@@ -1,98 +1,75 @@
 import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
-import { getUID } from '@/core/utils'
-import { dashboardHomeOptionsMetadata, useDashboardOption, validateTrackCount } from '../options'
-import { contentCardLayouts, type ContentCardLayout } from '../shared/cards/content-card'
-import { getDashboardTabs, type DashboardTab } from './dashboard-tabs'
-
-const tabQueryParam = 'dashboardTab'
+import { useDashboardOption } from '../options'
+import { dashboardTabQueryParam, getDashboardTabUrl } from '../shared/urls'
+import { dashboardSettingsTabId, type DashboardTab } from './dashboard-tabs'
+import { useDashboardTabSettings } from './settings/use-dashboard-tab-settings'
 
 export const useDashboardTabs = () => {
-  const tabs = getDashboardTabs(getUID())
+  const tabSettings = useDashboardTabSettings()
+  const { orderedTabs, isShown, defaultTab } = tabSettings
   const rememberTabInUrl = useDashboardOption('rememberTabInUrl')
-  const preferredTab = useDashboardOption('defaultTab')
-  const tabVisibility = tabs.map(tab => ({ tab, shown: useDashboardOption(tab.visibilityOption) }))
+  const settingsFromUrl = shallowRef(false)
   const visibleTabs = computed(() =>
-    tabVisibility.filter(({ shown }) => shown.value).map(({ tab }) => tab),
-  )
-  const defaultTab = computed(
-    () => visibleTabs.value.find(tab => tab.name === preferredTab.value) ?? visibleTabs.value[0],
+    orderedTabs.value.filter(
+      tab => isShown(tab) || (settingsFromUrl.value && tab.id === dashboardSettingsTabId),
+    ),
   )
   const selectedTab = shallowRef(defaultTab.value)
 
-  const getTabFromUrl = () => {
-    const id = new URLSearchParams(location.search).get(tabQueryParam)
-    return visibleTabs.value.find(tab => tab.id === id)
-  }
-  const replaceTabInUrl = (tab?: DashboardTab) => {
-    const url = new URL(location.href)
-    const id = tab && tab !== defaultTab.value ? tab.id : null
-    if (url.searchParams.get(tabQueryParam) === id) {
-      return
+  const getTabIdFromUrl = () => new URLSearchParams(location.search).get(dashboardTabQueryParam)
+  const getSettingsUrl = () => getDashboardTabUrl(location.href, dashboardSettingsTabId)
+  const replaceTabInUrl = (id?: string) => {
+    if (getTabIdFromUrl() !== (id ?? null)) {
+      history.replaceState(history.state, '', getDashboardTabUrl(location.href, id))
     }
-    if (id) {
-      url.searchParams.set(tabQueryParam, id)
-    } else {
-      url.searchParams.delete(tabQueryParam)
-    }
-    history.replaceState(history.state, '', url.href)
   }
-  const restoreTabFromUrl = () => {
-    if (!rememberTabInUrl.value) {
-      return
-    }
-    selectedTab.value = getTabFromUrl() ?? defaultTab.value
-    replaceTabInUrl(selectedTab.value)
-  }
-  restoreTabFromUrl()
 
-  watch([selectedTab, defaultTab], () => {
-    if (rememberTabInUrl.value) {
-      replaceTabInUrl(selectedTab.value)
+  const syncSelectedTab = () => {
+    if (rememberTabInUrl.value && !settingsFromUrl.value) {
+      replaceTabInUrl(selectedTab.value === defaultTab.value ? undefined : selectedTab.value?.id)
     }
-  })
+  }
+
+  const restoreTabFromUrl = (fallback = defaultTab.value) => {
+    const id = getTabIdFromUrl()
+    const wasSettingsFromUrl = settingsFromUrl.value
+    settingsFromUrl.value = id === dashboardSettingsTabId
+    if (settingsFromUrl.value || rememberTabInUrl.value) {
+      selectedTab.value = visibleTabs.value.find(tab => tab.id === id) ?? fallback
+      syncSelectedTab()
+    } else if (wasSettingsFromUrl) {
+      selectedTab.value = defaultTab.value
+    }
+  }
+  const restoreOnPopState = () => restoreTabFromUrl()
+  restoreOnPopState()
+
+  const selectTab = (tab: DashboardTab) => {
+    if (settingsFromUrl.value && tab.id !== dashboardSettingsTabId) {
+      settingsFromUrl.value = false
+      if (!rememberTabInUrl.value) {
+        replaceTabInUrl()
+      }
+    }
+    selectedTab.value = tab
+  }
+
+  watch([selectedTab, defaultTab], syncSelectedTab)
   watch(rememberTabInUrl, enabled => {
     if (enabled) {
-      selectedTab.value = getTabFromUrl() ?? selectedTab.value
-      replaceTabInUrl(selectedTab.value)
-    } else {
+      restoreTabFromUrl(selectedTab.value ?? defaultTab.value)
+    } else if (!settingsFromUrl.value) {
       replaceTabInUrl()
     }
   })
-  window.addEventListener('popstate', restoreTabFromUrl)
+  window.addEventListener('popstate', restoreOnPopState)
 
   watch(visibleTabs, visible => {
     if (!visible.includes(selectedTab.value)) {
       selectedTab.value = defaultTab.value
     }
   })
-  onBeforeUnmount(() => window.removeEventListener('popstate', restoreTabFromUrl))
+  onBeforeUnmount(() => window.removeEventListener('popstate', restoreOnPopState))
 
-  const layoutOptions = new Map(
-    tabs.flatMap(({ layoutOption }) =>
-      layoutOption ? [[layoutOption, useDashboardOption(layoutOption)] as const] : [],
-    ),
-  )
-  const trackCountOptions = new Map(
-    tabs.flatMap(({ trackCountOption }) =>
-      trackCountOption ? [[trackCountOption, useDashboardOption(trackCountOption)] as const] : [],
-    ),
-  )
-  const getCardLayout = (tab?: DashboardTab): ContentCardLayout | undefined => {
-    const layoutOption = tab?.layoutOption
-    if (!layoutOption) {
-      return tab?.fixedLayout
-    }
-    const option = layoutOptions.get(layoutOption)?.value
-    const layout = Object.hasOwn(contentCardLayouts, option)
-      ? option
-      : dashboardHomeOptionsMetadata[layoutOption].defaultValue
-    return contentCardLayouts[layout]
-  }
-  const getTrackCount = ({ trackCountOption }: DashboardTab) => {
-    const count = trackCountOptions.get(trackCountOption)?.value
-    return Number.isInteger(count) && count > 0 && count === validateTrackCount(count, 0)
-      ? count
-      : null
-  }
-  return { visibleTabs, selectedTab, getCardLayout, getTrackCount }
+  return { visibleTabs, selectedTab, selectTab, getSettingsUrl, tabSettings }
 }

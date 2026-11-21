@@ -130,11 +130,11 @@ export const useAccountInbox = () => {
         await markSystemNoticesRead(cursor)
         page.value = { ...page.value, noticeCursor: undefined }
       }
-      readStatus.value = '已标记为已读'
+      readStatus.value = '已标为已读'
       await refresh()
     } catch (error) {
       logError(error)
-      readStatus.value = '更新已读状态失败，请重试'
+      readStatus.value = '标为已读失败，请重试'
     } finally {
       reading.value = false
     }

@@ -18,7 +18,7 @@
       grid-column: 1 / -1;
 
       > .dashboard-home-sitemap-links {
-        grid-template-columns: repeat(auto-fill, minmax(min(100%, 132px), 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
       }
     }
 
@@ -46,6 +46,7 @@
     margin-block-start: var(--dashboard-home-space-xs);
 
     .dashboard-home-sitemap-link {
+      overflow-wrap: anywhere;
       background-color: var(--dashboard-home-muted-surface);
     }
   }
@@ -58,6 +59,10 @@
     > .dashboard-home-sitemap-link {
       flex: 1;
       min-inline-size: 0;
+
+      > span {
+        @include single-line();
+      }
     }
   }
 
@@ -75,7 +80,6 @@
     @include h-center(var(--dashboard-home-space-sm));
     padding: var(--dashboard-home-space-sm);
     color: inherit;
-    overflow-wrap: anywhere;
 
     > .dashboard-home-sitemap-icon {
       flex: none;

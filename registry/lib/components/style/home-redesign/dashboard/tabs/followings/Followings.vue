@@ -42,7 +42,7 @@
           :loading="loading"
           :failed="failed"
           :has-more="hasMore"
-          :empty="!hasMore && !followings.length ? '暂无关注' : ''"
+          :empty="!hasMore && !followings.length ? '关注列表为空' : ''"
           @load="loadNext"
         />
       </CardCollection>

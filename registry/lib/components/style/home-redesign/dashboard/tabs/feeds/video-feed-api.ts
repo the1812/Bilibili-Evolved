@@ -2,6 +2,7 @@ import { applyContentFilter, getFeeds, groupVideoFeeds } from '@/components/feed
 import type { VideoCard } from '@/components/feeds/video-card'
 import { bilibiliApi } from '@/core/ajax'
 import { formatCount, formatDuration, parseDuration } from '@/core/utils/formatters'
+import { getDateFromUnixSeconds } from '../../shared/format-date'
 import {
   getDynamicMediaCounts,
   getDynamicStats,
@@ -49,7 +50,7 @@ const toVideoCard = ({ id_str: id, modules }: RawVideoFeedItem): VideoFeedCard |
   }
 
   const author = modules?.module_author
-  const timestamp = author?.pub_ts === undefined ? undefined : author.pub_ts * 1000
+  const time = getDateFromUnixSeconds(author?.pub_ts)
   const duration = archive.duration_text ? parseDuration(archive.duration_text) : undefined
   const postStats = getDynamicStats(modules?.module_stat)
   const likes = postStats?.like?.count
@@ -64,8 +65,8 @@ const toVideoCard = ({ id_str: id, modules }: RawVideoFeedItem): VideoFeedCard |
     upID: author?.mid,
     coverUrl: archive.cover,
     description: archive.desc ?? '',
-    timestamp,
-    time: timestamp === undefined ? undefined : new Date(timestamp),
+    timestamp: time?.getTime(),
+    time,
     topics: getDynamicTopics(dynamic),
     dynamic: dynamic?.desc?.text ?? '',
     like: likes == null ? undefined : formatCount(likes),

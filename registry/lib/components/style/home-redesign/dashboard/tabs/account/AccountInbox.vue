@@ -3,14 +3,7 @@
     <section class="dashboard-home-account-card" :aria-busy="countsLoading">
       <header class="dashboard-home-account-panel-heading">
         <h2>未读消息</h2>
-        <a
-          :href="dashboardUrls.messageCenter"
-          aria-label="查看全部未读消息"
-          target="_blank"
-          rel="noopener"
-        >
-          查看全部
-        </a>
+        <a :href="dashboardUrls.messageCenter" target="_blank" rel="noopener"> 前往消息中心 </a>
       </header>
       <ul v-if="counts || !countsLoading" class="dashboard-home-account-list" role="list">
         <li v-for="(category, key) in inboxCategories" :key="key">
@@ -31,7 +24,7 @@
         v-if="(countsLoading && !counts) || countsFailed"
         :loading="countsLoading"
         :failed="countsFailed"
-        error="未读数加载失败"
+        error="未读消息数加载失败"
         @load="refresh"
       />
     </section>
@@ -46,7 +39,7 @@
         <h2>{{ inboxCategories[selected].label }}</h2>
         <a
           :href="inboxCategories[selected].url"
-          :aria-label="'查看全部' + inboxCategories[selected].label"
+          :aria-label="`查看全部消息（${inboxCategories[selected].label}）`"
           target="_blank"
           rel="noopener"
         >
@@ -54,13 +47,14 @@
         </a>
       </header>
       <p v-if="confirmLoad && !loading" class="dashboard-home-inbox-text">
-        B 站可能在加载列表时将消息标为已读。
+        加载后，B 站可能会将这些消息标为已读。
       </p>
       <ListStatus
         :loading="loading"
         :failed="failed"
         :has-more="confirmLoad"
-        load-label="加载列表"
+        error="消息加载失败"
+        load-label="加载消息"
         @load="loadSelected"
       />
       <ul v-if="page?.entries.length" class="dashboard-home-account-list" role="list">
@@ -97,6 +91,7 @@
               type="button"
               class="dashboard-home-action"
               :aria-disabled="reading ? 'true' : undefined"
+              :aria-label="`标为已读（${entry.title}）`"
               @click="markEntryRead(entry, $event)"
             >
               标为已读

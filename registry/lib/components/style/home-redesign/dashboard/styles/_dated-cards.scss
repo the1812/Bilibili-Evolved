@@ -50,7 +50,7 @@
       isolation: isolate;
     }
 
-    @media (width < 721px) {
+    @media (width < $dashboard-home-card-breakpoint) {
       grid-template-columns: minmax(0, 1fr);
 
       > .dashboard-home-card-grid {
@@ -68,7 +68,7 @@
       block-size: var(--dashboard-home-accent-stroke-width);
     }
 
-    @media (min-width: 721px) {
+    @media (min-width: $dashboard-home-card-breakpoint) {
       // Keep the full date readable if it extends past the gutter.
       translate: max(
         calc(-1 * var(--dashboard-home-space-md)),
@@ -80,7 +80,7 @@
       background-color: var(--home-base-color);
     }
 
-    @media (width < 721px) {
+    @media (width < $dashboard-home-card-breakpoint) {
       justify-self: start;
       margin: var(--dashboard-home-space-sm);
       padding-block: calc(

@@ -11,6 +11,8 @@
   }
 
   &-item {
+    --dashboard-home-dynamic-stats-item-size: 36px;
+
     @include h-center(var(--dashboard-home-space-2xs));
     justify-content: center;
     white-space: nowrap;
@@ -42,7 +44,7 @@
   }
 }
 
-@media (hover: none), (width < 720px) {
+@media (hover: none), (width < $dashboard-home-card-breakpoint) {
   .dashboard-home-dynamic-post:has(> .dashboard-home-dynamic-attachment)
     > .dashboard-home-dynamic-controls
     > .dashboard-home-dynamic-stats.is-flyout {
@@ -50,7 +52,7 @@
   }
 }
 
-@media (hover: hover) and (min-width: 720px) {
+@media (hover: hover) and (min-width: $dashboard-home-card-breakpoint) {
   [data-content-card-layout='compact'] .dashboard-home-dynamic {
     &-attachment .dashboard-home-dynamic-stats {
       display: none;
@@ -125,8 +127,8 @@
 
         > .dashboard-home-dynamic-stats-item {
           flex-direction: column;
-          min-block-size: 36px;
-          min-inline-size: 36px;
+          min-block-size: var(--dashboard-home-dynamic-stats-item-size);
+          min-inline-size: var(--dashboard-home-dynamic-stats-item-size);
         }
       }
     }

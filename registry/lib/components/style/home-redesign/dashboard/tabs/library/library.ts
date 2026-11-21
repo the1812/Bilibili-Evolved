@@ -5,11 +5,18 @@ export interface LibraryEntry extends ContentCardData {
   date?: Date
 }
 
+export const isMarkedWatched = (progress?: number) => progress === -1
+
 export const getPlaybackProgress = (watchedSeconds?: number, duration?: number) => {
-  if (watchedSeconds === -1) {
+  if (isMarkedWatched(watchedSeconds)) {
     return 1
   }
-  if (Number.isFinite(watchedSeconds) && watchedSeconds > 0 && duration > 0) {
+  if (
+    Number.isFinite(watchedSeconds) &&
+    watchedSeconds > 0 &&
+    Number.isFinite(duration) &&
+    duration > 0
+  ) {
     return Math.min(watchedSeconds / duration, 1)
   }
   return undefined
@@ -41,7 +48,7 @@ export const getLibraryEmptyMessage = ({
     return ''
   }
   if (filtering && (entries.length || hasMore)) {
-    return hasMore ? '已加载内容中没有匹配项' : '没有符合条件的内容'
+    return hasMore ? '已加载的内容中没有匹配项' : '没有符合条件的内容'
   }
   return hasMore ? '' : empty
 }

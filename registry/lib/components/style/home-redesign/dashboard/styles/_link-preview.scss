@@ -2,8 +2,8 @@
   --dashboard-home-link-preview-inset: var(--dashboard-home-space-md);
 
   box-sizing: border-box;
-  inline-size: calc(100vw - 2 * var(--dashboard-home-link-preview-inset));
-  block-size: calc(100vh - 2 * var(--dashboard-home-link-preview-inset));
+  inline-size: calc(100dvw - 2 * var(--dashboard-home-link-preview-inset));
+  block-size: calc(100dvh - 2 * var(--dashboard-home-link-preview-inset));
   padding: 0;
   overflow: hidden;
   overscroll-behavior: contain;
@@ -55,7 +55,7 @@
     a,
     button {
       @include h-center();
-      min-block-size: 30px;
+      min-block-size: var(--dashboard-home-control-block-size);
       padding-block: var(--dashboard-home-space-xs);
       padding-inline: var(--dashboard-home-space-sm);
       border: var(--dashboard-home-control-border);

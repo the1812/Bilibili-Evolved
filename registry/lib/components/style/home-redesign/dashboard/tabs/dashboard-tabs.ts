@@ -1,3 +1,5 @@
+import { ref } from 'vue'
+import { registerAndGetData } from '@/plugins/data'
 import type { TabMapping } from '@/ui/tab-mapping'
 import { TabOption, type DashboardHomeOptions } from '../options'
 import type { ContentCardLayout } from '../shared/cards/content-card'
@@ -6,22 +8,35 @@ import { dashboardUrls, getSpaceUrls } from '../shared/urls'
 type TabVisibilityOption = keyof DashboardHomeOptions & `${string}Show`
 type TabLayoutOption = keyof DashboardHomeOptions & `${string}Layout`
 type TabTrackCountOption = keyof DashboardHomeOptions & `${string}TrackCount`
+type TabDateGroupingOption = keyof DashboardHomeOptions & `${string}GroupByDate`
+export const DashboardHomeTabs = 'dashboardHome.tabs'
+export const dashboardSettingsTabId = 'settings'
+
 export type DashboardTab = Pick<TabMapping, 'component' | 'propsData' | 'activeLink'> & {
   id: string
-  name: TabOption
-  visibilityOption: TabVisibilityOption
-  layoutOption?: TabLayoutOption
-  trackCountOption?: TabTrackCountOption
+  name: string
   fixedLayout?: ContentCardLayout
 }
 
-export const getDashboardTabs = (uid: string): DashboardTab[] => [
+type BuiltInDashboardTab = DashboardTab & {
+  name: TabOption
+  visibilityOption?: TabVisibilityOption
+  layoutOption?: TabLayoutOption
+  trackCountOption?: TabTrackCountOption
+  dateGroupingOption?: TabDateGroupingOption
+}
+
+const [registeredTabs] = registerAndGetData(DashboardHomeTabs, [] as DashboardTab[])
+export const dashboardPluginTabs = ref(registeredTabs)
+
+export const getBuiltInDashboardTabs = (uid: string): BuiltInDashboardTab[] => [
   {
     name: TabOption.Dynamic,
     id: 'dynamic',
     visibilityOption: 'dynamicShow',
     fixedLayout: 'compact',
     trackCountOption: 'dynamicTrackCount',
+    dateGroupingOption: 'dynamicGroupByDate',
     component: () => import('./feeds/DynamicFeed.vue').then(m => m.default),
     activeLink: dashboardUrls.dynamics,
   },
@@ -31,6 +46,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'videoShow',
     layoutOption: 'videoLayout',
     trackCountOption: 'videoTrackCount',
+    dateGroupingOption: 'videoGroupByDate',
     component: () => import('./feeds/VideoFeed.vue').then(m => m.default),
     activeLink: dashboardUrls.videoDynamics,
   },
@@ -40,6 +56,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'bangumiShow',
     layoutOption: 'bangumiLayout',
     trackCountOption: 'bangumiTrackCount',
+    dateGroupingOption: 'bangumiGroupByDate',
     component: () => import('./feeds/DynamicFeed.vue').then(m => m.default),
     propsData: { feedType: 'pgc' },
     activeLink: dashboardUrls.bangumiDynamics,
@@ -50,6 +67,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'columnShow',
     layoutOption: 'columnLayout',
     trackCountOption: 'columnTrackCount',
+    dateGroupingOption: 'columnGroupByDate',
     component: () => import('./feeds/DynamicFeed.vue').then(m => m.default),
     propsData: { feedType: 'column' },
     activeLink: dashboardUrls.columnDynamics,
@@ -84,6 +102,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'favoritesShow',
     layoutOption: 'favoritesLayout',
     trackCountOption: 'favoritesTrackCount',
+    dateGroupingOption: 'favoritesGroupByDate',
     component: () => import('./library/Favorites.vue').then(m => m.default),
     activeLink: uid ? getSpaceUrls(uid).favorites : undefined,
   },
@@ -93,6 +112,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'historyShow',
     layoutOption: 'historyLayout',
     trackCountOption: 'historyTrackCount',
+    dateGroupingOption: 'historyGroupByDate',
     component: () => import('./library/History.vue').then(m => m.default),
     activeLink: dashboardUrls.history,
   },
@@ -102,6 +122,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'watchlaterShow',
     layoutOption: 'watchlaterLayout',
     trackCountOption: 'watchlaterTrackCount',
+    dateGroupingOption: 'watchlaterGroupByDate',
     component: () => import('./library/Watchlater.vue').then(m => m.default),
     activeLink: dashboardUrls.watchlater,
   },
@@ -118,6 +139,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'followingsShow',
     layoutOption: 'followingsLayout',
     trackCountOption: 'followingsTrackCount',
+    dateGroupingOption: 'followingsGroupByDate',
     component: () => import('./followings/Followings.vue').then(m => m.default),
     activeLink: uid ? getSpaceUrls(uid).following : dashboardUrls.login,
   },
@@ -126,5 +148,11 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     id: 'sitemap',
     visibilityOption: 'sitemapShow',
     component: () => import('./sitemap/Sitemap.vue').then(m => m.default),
+  },
+  {
+    name: TabOption.Settings,
+    id: dashboardSettingsTabId,
+    visibilityOption: 'settingsShow',
+    component: () => import('./settings/DashboardTabSettings.vue').then(m => m.default),
   },
 ]

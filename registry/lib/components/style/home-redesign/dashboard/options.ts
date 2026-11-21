@@ -21,6 +21,7 @@ export enum TabOption {
   Account = '我的',
   Followings = '关注',
   Sitemap = '站点',
+  Settings = '设置',
 }
 
 export enum LayoutOption {
@@ -45,11 +46,16 @@ const dateGroupingOption = (tab: TabOption, defaultValue: boolean) => ({
   defaultValue,
 })
 
-export const validateTrackCount = getNumberValidator(0, 10)
+export const maxTrackCount = 8
+const clampTrackCount = getNumberValidator(0, maxTrackCount)
+export const validateTrackCount = (value: number, oldValue: number) => {
+  const count = Math.round(value)
+  return Number.isFinite(count) ? clampTrackCount(count, oldValue) : oldValue
+}
 const trackCountOption = (tab: TabOption, defaultValue: number) => ({
   displayName: `「${tab}」卡片行列数`,
   defaultValue,
-  validator: (value: number, oldValue: number) => validateTrackCount(Math.round(value), oldValue),
+  validator: validateTrackCount,
 })
 
 export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
@@ -105,6 +111,10 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
   followingsGroupByDate: dateGroupingOption(TabOption.Followings, false),
 
   sitemapShow: tabOption(TabOption.Sitemap, true),
+  settingsShow: tabOption(TabOption.Settings, true),
+
+  tabOrder: { defaultValue: [] as string[], hidden: true },
+  hiddenPluginTabs: { defaultValue: [] as string[], hidden: true },
 
   defaultTab: {
     displayName: '默认标签页',
@@ -121,7 +131,7 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
     defaultValue: false,
   },
   openSpaceLinksInPlace: {
-    displayName: '在首页内打开用户链接',
+    displayName: '在首页内打开个人空间链接',
     defaultValue: false,
   },
   openDynamicLinksInPlace: {
@@ -149,6 +159,13 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
 export type DashboardHomeOptions = OptionsOfMetadata<typeof dashboardHomeOptionsMetadata>
 export const getDashboardHomeOptions = () =>
   getComponentSettings<DashboardHomeOptions>('dashboardHome').options
+
+export const setDashboardOption = <K extends keyof DashboardHomeOptions>(
+  name: K,
+  value: DashboardHomeOptions[K],
+) => {
+  getDashboardHomeOptions()[name] = value
+}
 
 export const useDashboardOption = <K extends keyof DashboardHomeOptions>(name: K) => {
   const value = shallowRef(getDashboardHomeOptions()[name])

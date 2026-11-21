@@ -32,6 +32,18 @@ interface FavoriteOwner {
   face?: string
 }
 
+enum FavoriteMediaType {
+  Video = 2,
+  Audio = 12,
+}
+
+enum CollectedFolderType {
+  Folder = 11,
+  Collection = 21,
+}
+
+const unavailableMediaAttributes = [1, 9]
+
 interface FavoriteMedia {
   id: number
   bvid?: string
@@ -96,20 +108,20 @@ export const getFavoriteMedia = async (folder: number, page: number) => {
   )
   return {
     entries: (medias ?? []).map((item): LibraryEntry => {
-      const unavailable = item.attr === 1 || item.attr === 9
+      const unavailable = unavailableMediaAttributes.includes(item.attr)
       const duration = item.duration > 0 ? formatDuration(item.duration) : undefined
       let url: string | undefined
       if (!unavailable) {
-        if (item.type === 12) {
+        if (item.type === FavoriteMediaType.Audio) {
           url = getAudioUrl(item.id)
-        } else if (item.bvid || item.type === 2) {
+        } else if (item.bvid || item.type === FavoriteMediaType.Video) {
           url = getVideoUrl(item.bvid || `av${item.id}`)
         }
       }
       return {
         id: `${item.type}:${item.id}`,
-        aid: !unavailable && item.type === 2 ? item.id : undefined,
-        kind: item.type === 2 || item.bvid ? 'video' : 'other',
+        aid: !unavailable && item.type === FavoriteMediaType.Video ? item.id : undefined,
+        kind: item.type === FavoriteMediaType.Video || item.bvid ? 'video' : 'other',
         title: item.title,
         url,
         coverUrl: item.cover,
@@ -132,14 +144,17 @@ export const getCollectedFolders = async (uid: string, page: number) => {
   }>(
     dashboardApiUrls.collectedFolders,
     new URLSearchParams({ up_mid: uid, pn: String(page), ps: String(pageSize), platform: 'web' }),
-    '获取订阅合集失败',
+    '获取订阅的合集和收藏夹失败',
   )
   return {
     entries: (list ?? []).flatMap((item): LibraryEntry[] => {
-      if (item.type !== 11 && item.type !== 21) {
+      if (
+        item.type !== CollectedFolderType.Folder &&
+        item.type !== CollectedFolderType.Collection
+      ) {
         return []
       }
-      const isCollection = item.type === 21
+      const isCollection = item.type === CollectedFolderType.Collection
       return [
         {
           id: `${item.type}:${item.id}`,

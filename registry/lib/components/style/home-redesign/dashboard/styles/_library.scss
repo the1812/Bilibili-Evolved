@@ -1,18 +1,3 @@
-@mixin library-control-size {
-  box-sizing: border-box;
-  min-block-size: var(--dashboard-home-library-control-block-size);
-  min-inline-size: 0;
-  padding-block: var(--dashboard-home-space-xs);
-  padding-inline: var(--dashboard-home-space-sm);
-  border: var(--dashboard-home-control-border);
-  border-radius: var(--dashboard-home-control-radius);
-}
-
-@mixin library-control-colors {
-  background-color: var(--home-background-color);
-  color: inherit;
-}
-
 .dashboard-home-library {
   @include v-stretch(var(--dashboard-home-space-md));
 
@@ -27,8 +12,6 @@
 }
 
 .dashboard-home-library-toolbar {
-  --dashboard-home-library-control-block-size: 34px;
-
   &,
   .dashboard-home-library-actions {
     @include h-center(var(--dashboard-home-space-sm));
@@ -46,9 +29,9 @@
 
   input,
   select {
-    @include library-control-size();
+    @include dashboard-control-size();
     max-inline-size: 220px;
-    @include library-control-colors();
+    @include dashboard-control-colors();
   }
 
   select {
@@ -86,7 +69,7 @@
       }
 
       option {
-        min-block-size: 32px;
+        min-block-size: var(--dashboard-home-control-block-size);
         padding-block: var(--dashboard-home-space-xs);
         padding-inline: var(--dashboard-home-space-sm);
         border-radius: var(--dashboard-home-control-radius);
@@ -110,7 +93,7 @@
 
   .dashboard-home-library-actions {
     > :is(a, button) {
-      @include library-control-size();
+      @include dashboard-control-size();
       @include h-center();
 
       &:not(:disabled, [aria-disabled='true']):is(:hover, :focus-visible) {
@@ -124,7 +107,7 @@
     }
 
     > a {
-      @include library-control-colors();
+      @include dashboard-control-colors();
     }
 
     > button {
@@ -133,7 +116,7 @@
 
     > button.dashboard-home-history-recording-toggle {
       justify-content: center;
-      inline-size: var(--dashboard-home-library-control-block-size);
+      inline-size: var(--dashboard-home-control-block-size);
       padding: var(--dashboard-home-space-xs);
       border-radius: 50%;
     }

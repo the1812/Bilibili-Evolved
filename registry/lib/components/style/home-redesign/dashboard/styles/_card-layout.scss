@@ -9,7 +9,7 @@
   &:not([data-content-card-layout='vertical']) {
     --dashboard-home-card-view-max-inline-size: var(--home-max-width);
 
-    @media (min-width: 721px) {
+    @media (min-width: $dashboard-home-card-breakpoint) {
       --dashboard-home-card-inline-gutter: var(--dashboard-home-space-xl);
     }
   }

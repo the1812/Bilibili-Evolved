@@ -52,7 +52,7 @@
         position: absolute;
         inset-block-start: calc(100% + var(--dashboard-home-space-xs));
         inset-inline: 10%;
-        block-size: 3px;
+        block-size: var(--dashboard-home-accent-stroke-width);
         border-radius: var(--dashboard-home-pill-radius);
         background-color: var(--theme-color);
         scale: 0 1;

@@ -1,3 +1,18 @@
+@mixin dashboard-control-size {
+  box-sizing: border-box;
+  min-block-size: var(--dashboard-home-control-block-size);
+  min-inline-size: 0;
+  padding-block: var(--dashboard-home-space-xs);
+  padding-inline: var(--dashboard-home-space-sm);
+  border: var(--dashboard-home-control-border);
+  border-radius: var(--dashboard-home-control-radius);
+}
+
+@mixin dashboard-control-colors {
+  background-color: var(--home-background-color);
+  color: inherit;
+}
+
 body:not(.home-redesign-off):has(.dashboard-home) {
   // 防止滚动条导致的排版抖动
   min-height: calc(100vh + 1px);

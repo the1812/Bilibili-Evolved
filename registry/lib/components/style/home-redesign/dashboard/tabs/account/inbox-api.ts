@@ -1,9 +1,12 @@
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getCsrf } from '@/core/utils'
+import { getDateFromUnixSeconds } from '../../shared/format-date'
 import { dashboardApiUrls, getPrivateSessionUrl, getWebUrl } from '../../shared/urls'
 import { inboxCategories, type InboxCategory, type InteractionCategory } from './inbox-categories'
 
 const webParams = { build: '0', mobi_app: 'web' }
+const privateSessionType = 1
+const microsecondsPerMillisecond = 1000
 
 export type UnreadCounts = Partial<Record<InboxCategory, number>>
 
@@ -95,8 +98,8 @@ const getInteractions = async (category: InteractionCategory): Promise<InboxPage
     const title =
       names && entry.counts > people.length && category === 'like'
         ? `${names}等 ${entry.counts} 人`
-        : names || 'B站用户'
-    const date = entry.reply_time ?? entry.at_time ?? entry.like_time
+        : names || 'B 站用户'
+    const seconds = entry.reply_time ?? entry.at_time ?? entry.like_time
     const uri = getWebUrl(entry.item?.uri)
     const sourceId = decimalId(category === 'like' ? entry.item?.item_id : entry.item?.source_id)
     return {
@@ -104,7 +107,7 @@ const getInteractions = async (category: InteractionCategory): Promise<InboxPage
       title,
       text: entry.item?.source_content?.replace(replyPrefix, ''),
       context: entry.item?.target_reply_content || entry.item?.title,
-      timestamp: date > 0 ? date * 1000 : undefined,
+      timestamp: getDateFromUnixSeconds(seconds)?.getTime(),
       url:
         uri && sourceId && !uri.includes('#') && !uri.includes('dmid=')
           ? `${uri}#reply${sourceId}`
@@ -185,12 +188,18 @@ const messagePreview = (message?: Session['last_msg']) => {
 const getPrivateSessions = async (): Promise<InboxPage> => {
   const { session_list } = await get<{ session_list?: Session[] | null }>(
     dashboardApiUrls.privateSessions,
-    { session_type: '1', group_fold: '1', unfollow_fold: '0', sort_rule: '2', size: '20' },
+    {
+      session_type: String(privateSessionType),
+      group_fold: '1',
+      unfollow_fold: '0',
+      sort_rule: '2',
+      size: '20',
+    },
   )
   const sessions = session_list ?? []
   const users = lodash.uniq(
     sessions
-      .filter(session => session.session_type === 1 && !session.system_msg_type)
+      .filter(session => session.session_type === privateSessionType && !session.system_msg_type)
       .map(session => decimalId(session.talker_id))
       .filter(Boolean),
   )
@@ -202,8 +211,8 @@ const getPrivateSessions = async (): Promise<InboxPage> => {
   const entries = sessions.map((session, index): InboxEntry => {
     const talker = decimalId(session.talker_id)
     const sequence = decimalId(session.max_seqno)
-    const userConversation = session.session_type === 1 && !session.system_msg_type
-    const timestamp = Number(session.session_ts) / 1000
+    const userConversation = session.session_type === privateSessionType && !session.system_msg_type
+    const timestamp = new Date(Number(session.session_ts) / microsecondsPerMillisecond).getTime()
     return {
       id: talker ? `${session.session_type}-${talker}` : `session-${index}`,
       title:
@@ -212,7 +221,7 @@ const getPrivateSessions = async (): Promise<InboxPage> => {
         session.group_name ||
         (userConversation && talker ? `UID ${talker}` : '会话'),
       text: messagePreview(session.last_msg),
-      timestamp: Number.isFinite(timestamp) && timestamp > 0 ? timestamp : undefined,
+      timestamp: timestamp > 0 ? timestamp : undefined,
       url: userConversation && talker ? getPrivateSessionUrl(talker) : undefined,
       unread: session.unread_count,
       acknowledgement:
@@ -249,7 +258,7 @@ export const markPrivateSessionRead = (
     csrf,
     csrf_token: csrf,
     talker_id: acknowledgement.talker,
-    session_type: '1',
+    session_type: String(privateSessionType),
     ack_seqno: acknowledgement.sequence,
   })
   return bilibiliApi(

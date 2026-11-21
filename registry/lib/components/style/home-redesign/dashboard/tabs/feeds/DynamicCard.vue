@@ -48,8 +48,8 @@
                 title="查看完整动态"
                 :aria-label="
                   post.originalLinkTypeLabel
-                    ? `${post.originalLinkTypeLabel} · 查看完整动态（在新标签页打开）`
-                    : '查看完整动态（在新标签页打开）'
+                    ? `${post.originalLinkTypeLabel} · 查看完整动态`
+                    : '查看完整动态'
                 "
               >
                 <VIcon icon="mdi-open-in-new" :size="16" aria-hidden="true" />
@@ -143,6 +143,7 @@ import UpInfo from '@/components/feeds/UpInfo.vue'
 import { formatDateTime } from '@/core/utils/formatters'
 import { VIcon } from '@/ui'
 import CardGridItem from '../../shared/cards/CardGridItem.vue'
+import { contentCardCoverWidth } from '../../shared/cards/content-card'
 import ContentCard from '../../shared/cards/ContentCard.vue'
 import { formatDateTimeLabel } from '../../shared/format-date'
 import DynamicStats from './DynamicStats.vue'
@@ -170,8 +171,9 @@ const posts = computed(() => {
   return original ? [primary, original] : [primary]
 })
 const defaultStatsPost = computed(() => posts.value.find(post => hasDynamicStats(post.stats)))
-const cardThumbnailWidth = 480
-const getThumbnailWidth = (photoCount: number) => cardThumbnailWidth / Math.min(photoCount, 3)
+const thumbnailColumns = 3
+const getThumbnailWidth = (photoCount: number) =>
+  contentCardCoverWidth / Math.min(photoCount, thumbnailColumns)
 
 const positionStats = () => {
   const cardElement = postCardElement.value

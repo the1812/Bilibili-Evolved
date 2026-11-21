@@ -14,13 +14,13 @@
           </label>
         </template>
         <template #actions>
-          <a v-if="queue.length" :href="playAllUrl" target="_blank" rel="noopener">播放全部</a>
+          <a :href="dashboardUrls.playWatchlater" target="_blank" rel="noopener">播放全部</a>
           <button
             type="button"
             :aria-disabled="busy || !hasWatched ? 'true' : undefined"
             @click="clearQueue(true)"
           >
-            移除已看完
+            移除已看完的视频
           </button>
           <button
             type="button"
@@ -71,6 +71,7 @@ import {
   filterLibraryEntries,
   getLibraryEmptyMessage,
   getPlaybackProgress,
+  isMarkedWatched,
   type LibraryEntry,
 } from './library'
 import { clearWatchlater, getWatchlaterQueue, removeWatchlater } from './watchlater-api'
@@ -88,11 +89,7 @@ const watchStatus = ref<'all' | 'watched' | 'unwatched'>('all')
 const watchStatusSelect = ref<HTMLSelectElement>()
 const busy = computed(() => loading.value || updating.value)
 
-const playAllUrl = computed(() => {
-  const item = queue.value[0]
-  return item?.bvid ? getWatchlaterVideoUrl(item.aid, item.bvid) : dashboardUrls.watchlaterQueue
-})
-const isWatched = (item: RawWatchlaterItem) => item.progress === -1
+const isWatched = (item: RawWatchlaterItem) => isMarkedWatched(item.progress)
 const hasWatched = computed(() => queue.value.some(isWatched))
 const filteredEntries = computed(() => {
   const cards = queue.value
@@ -124,7 +121,7 @@ const emptyMessage = computed(() =>
     entries: queue.value,
     matches: filteredEntries.value,
     filtering: watchStatus.value !== 'all' || Boolean(keyword.value.trim()),
-    empty: '稍后再看列表为空',
+    empty: '暂无稍后再看的视频',
   }),
 )
 

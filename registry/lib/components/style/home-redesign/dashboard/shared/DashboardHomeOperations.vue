@@ -3,8 +3,8 @@
     <button
       type="button"
       class="dashboard-home-action dashboard-home-operations-refresh"
-      title="刷新"
-      aria-label="刷新"
+      title="刷新当前内容"
+      aria-label="刷新当前内容"
       :aria-disabled="refreshDisabled ? 'true' : undefined"
       @click="refresh"
     >

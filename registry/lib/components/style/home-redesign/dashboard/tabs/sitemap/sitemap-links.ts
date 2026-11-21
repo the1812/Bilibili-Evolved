@@ -112,7 +112,6 @@ export const getPersonalSitemapSection = (uid: string): SitemapSection => {
     links: [
       ['历史记录', dashboardUrls.history, 'mdi-history'],
       ['稍后再看', dashboardUrls.watchlater, 'mdi-clock-outline'],
-      ['播放稍后再看', dashboardUrls.playWatchlater, 'mdi-play-circle-outline'],
       ['账号中心', dashboardUrls.account, 'mdi-account-cog-outline'],
       ...spaceLinks,
       ['大会员', dashboardUrls.vip, 'mdi-crown-outline'],
@@ -143,7 +142,7 @@ export const getSitemapSections = (
         ['每周必看', dashboardUrls.weekly, 'mdi-calendar-week'],
         ['入站必刷', dashboardUrls.mustWatch, 'mdi-bookmark-check-outline'],
         ['排行榜', dashboardUrls.ranking, 'mdi-trophy-outline'],
-        ['全站音乐榜', dashboardUrls.musicRanking, 'mdi-playlist-music-outline'],
+        ['音乐榜', dashboardUrls.musicRanking, 'mdi-playlist-music-outline'],
         ['专栏', categories.专栏.link, 'mdi-file-document-outline'],
         ['漫画', dashboardUrls.manga, 'mdi-book-open-variant'],
         ['游戏中心', dashboardUrls.games, 'mdi-gamepad-variant-outline'],

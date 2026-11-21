@@ -1,7 +1,12 @@
 import { normalizeFeedsCardModules } from '@/components/feeds/api'
 import { getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
 import { formatCount, parseCount } from '@/core/utils/formatters'
-import type { ContentCardData, ContentCardKind } from '../../shared/cards/content-card'
+import {
+  contentCardCoverWidth,
+  type ContentCardData,
+  type ContentCardKind,
+} from '../../shared/cards/content-card'
+import { getDateFromUnixSeconds } from '../../shared/format-date'
 import {
   getBangumiEpisodeUrl,
   getBangumiMediaUrl,
@@ -328,7 +333,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
       (Number.isSafeInteger(episodeId) && episodeId > 0 ? getBangumiEpisodeUrl(episodeId) : url),
     title: media.title,
     coverUrl,
-    coverSrcset: coverUrl ? getDynamicThumbnailSet(coverUrl, 480) : undefined,
+    coverSrcset: coverUrl ? getDynamicThumbnailSet(coverUrl, contentCardCoverWidth) : undefined,
     description: media.desc,
     topics: getDynamicTopics(content),
     aid: Number.isSafeInteger(aid) && aid > 0 ? aid : undefined,
@@ -372,7 +377,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
       avatar: getWebUrl(author?.face),
       url: authorUrl,
     },
-    publishedAt: author?.pub_ts > 0 ? new Date(author.pub_ts * 1000) : undefined,
+    publishedAt: getDateFromUnixSeconds(author?.pub_ts),
     text,
     images,
     attachment,

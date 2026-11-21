@@ -1,6 +1,6 @@
 <template>
   <div class="dashboard-home-card-view dashboard-home-dynamic">
-    <VEmpty v-if="!loggedIn">登录后查看关注{{ feedLabel }}</VEmpty>
+    <VEmpty v-if="!loggedIn">登录后查看{{ feedLabel }}</VEmpty>
     <template v-else>
       <ul
         v-if="liveRooms.length"
@@ -75,7 +75,7 @@
           :loading="loading"
           :failed="failed"
           :has-more="hasMore"
-          :empty="!hasMore && !loadedEntries.length ? `暂无关注${feedLabel}` : ''"
+          :empty="!hasMore && !loadedEntries.length ? `暂无${feedLabel}` : ''"
           @load="loadNext"
         />
       </CardCollection>
@@ -88,11 +88,11 @@
 import { computed } from 'vue'
 import { Toast } from '@/core/toast'
 import { DpiImage, showImage, VEmpty, VIcon } from '@/ui'
-import { TabOption, useDashboardOption } from '../../options'
+import { useDashboardOption } from '../../options'
 import CardCollection from '../../shared/cards/CardCollection.vue'
 import CardGridItem from '../../shared/cards/CardGridItem.vue'
 import ContentCard from '../../shared/cards/ContentCard.vue'
-import type { ContentCardData } from '../../shared/cards/content-card'
+import { contentCardCoverWidth, type ContentCardData } from '../../shared/cards/content-card'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import CardDateGroup from '../../shared/cards/CardDateGroup.vue'
 import ListStatus from '../../shared/ListStatus.vue'
@@ -104,9 +104,7 @@ import { getDynamicThumbnailSet, hasDynamicStats } from './dynamic-post'
 import { useDynamicFeed } from './use-dynamic-feed'
 
 const props = withDefaults(defineProps<{ feedType?: DynamicFeedType }>(), { feedType: 'all' })
-const feedLabel = { all: TabOption.Dynamic, pgc: TabOption.Bangumi, column: TabOption.Column }[
-  props.feedType
-]
+const feedLabel = { all: '关注动态', pgc: '番剧动态', column: '专栏动态' }[props.feedType]
 
 const dateGroupingOptions = {
   all: 'dynamicGroupByDate',
@@ -143,11 +141,16 @@ const cards = computed(() =>
     const data: ContentCardData = {
       ...attachment,
       kind,
-      title: attachment?.title || post.text || `查看完整${feedLabel}`,
+      title:
+        attachment?.title ||
+        post.text ||
+        (attachment?.url ? `查看${attachment.type.label}` : '查看动态'),
       url: attachment?.url ?? post.url,
       description: attachment?.description || (attachment ? post.text : undefined),
       coverUrl,
-      coverSrcset: attachment?.coverSrcset ?? (coverUrl && getDynamicThumbnailSet(coverUrl, 480)),
+      coverSrcset:
+        attachment?.coverSrcset ??
+        (coverUrl && getDynamicThumbnailSet(coverUrl, contentCardCoverWidth)),
       upID: kind === 'bangumi' ? undefined : author.id,
       upName: author.name,
       upFaceUrl: author.avatar,

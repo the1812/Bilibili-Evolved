@@ -2,7 +2,11 @@
   <div class="dashboard-home-card-view dashboard-home-library">
     <VEmpty v-if="!uid">登录后查看收藏</VEmpty>
     <template v-else>
-      <LibraryToolbar :value="keyword" @input="keyword = $event">
+      <LibraryToolbar
+        :value="keyword"
+        :search-by-author="!isFollowedShowKind"
+        @input="keyword = $event"
+      >
         <template #filters>
           <label>
             <span>收藏类型</span>
@@ -126,16 +130,24 @@ const busy = computed(
   () => loading.value || (favoriteKind.value === 'folders' && foldersLoading.value),
 )
 const filteredEntries = computed(() => filterLibraryEntries(entries.value, keyword.value))
-const emptyMessage = computed(() =>
-  getLibraryEmptyMessage({
+const emptyMessage = computed(() => {
+  const emptyByKind = {
+    folders: selectedFolderId.value ? '收藏夹为空' : '暂无收藏夹',
+    collections: '暂无订阅的合集或收藏夹',
+    bangumi: '暂无追番',
+    cinema: '暂无追剧',
+  }
+  return getLibraryEmptyMessage({
     entries: entries.value,
     matches: filteredEntries.value,
     filtering: Boolean(keyword.value.trim()),
     hasMore: hasMore.value,
     empty:
-      favoriteKind.value === 'folders' && !selectedFolderId.value ? '暂无收藏夹' : '暂无收藏内容',
-  }),
-)
+      isFollowedShowKind.value && followStatus.value !== 0
+        ? '当前观看状态下暂无内容'
+        : emptyByKind[favoriteKind.value],
+  })
+})
 
 const loadFolders = async () => {
   if (!uid || foldersLoading.value) {

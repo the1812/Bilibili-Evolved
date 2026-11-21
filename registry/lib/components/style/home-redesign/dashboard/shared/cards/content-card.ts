@@ -12,6 +12,8 @@ export const contentCardLayouts: Record<LayoutOption, ContentCardLayout> = {
   [LayoutOption.Vertical]: 'vertical',
 }
 
+export const contentCardCoverWidth = 480
+
 export type ContentCardKind = 'video' | 'column' | 'bangumi' | 'other'
 
 export type ContentCardData = Pick<VideoCard, 'title'> &

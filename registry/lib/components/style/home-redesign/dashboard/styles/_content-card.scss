@@ -342,7 +342,7 @@
   }
 
   .dashboard-home-dynamic-stats-item {
-    min-block-size: 36px;
-    min-inline-size: 36px;
+    min-block-size: var(--dashboard-home-dynamic-stats-item-size);
+    min-inline-size: var(--dashboard-home-dynamic-stats-item-size);
   }
 }
