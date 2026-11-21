@@ -341,7 +341,8 @@
     flex-direction: column;
   }
 
-  .dashboard-home-dynamic-stats-items {
-    row-gap: var(--dashboard-home-space-xs);
+  .dashboard-home-dynamic-stats-item {
+    min-block-size: 36px;
+    min-inline-size: 36px;
   }
 }

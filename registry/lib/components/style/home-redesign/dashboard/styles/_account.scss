@@ -142,6 +142,8 @@
 
 .dashboard-home-inbox {
   &-category {
+    --dashboard-home-button-highlight-background: transparent;
+
     inline-size: 100%;
     padding-inline: 0;
     text-align: start;

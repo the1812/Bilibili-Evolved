@@ -2,9 +2,6 @@
   <dialog
     ref="dialogElement"
     class="dashboard-home-link-preview"
-    :class="{
-      'is-reading-preview': requestedPage?.type === 'dynamic' || requestedPage?.type === 'column',
-    }"
     aria-labelledby="dashboard-home-link-preview-title"
     closedby="any"
     @close="clearPreview"

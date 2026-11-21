@@ -32,8 +32,10 @@ body:not(.home-redesign-off):has(.dashboard-home) {
 
 :where(.dashboard-home, .dashboard-home-link-preview) button {
   border: 0;
+  border-radius: var(--dashboard-home-control-radius);
   background-color: var(--dashboard-home-button-background, transparent);
   color: inherit;
+  @include dashboard-transition(background-color);
 
   &:where(:enabled:not([aria-disabled='true'])) {
     cursor: pointer;

@@ -23,6 +23,7 @@ type LinkPreviewOption = keyof DashboardHomeOptions & `open${string}LinksInPlace
 
 const linkPreviewOptions: Partial<Record<LinkType, LinkPreviewOption>> = {
   live: 'openLiveLinksInPlace',
+  space: 'openSpaceLinksInPlace',
   dynamic: 'openDynamicLinksInPlace',
   video: 'openVideoLinksInPlace',
   column: 'openColumnLinksInPlace',

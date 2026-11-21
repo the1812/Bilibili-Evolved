@@ -11,7 +11,8 @@
   }
 
   &-item {
-    @include h-center(var(--dashboard-home-space-xs));
+    @include h-center(var(--dashboard-home-space-2xs));
+    justify-content: center;
     white-space: nowrap;
 
     &[aria-pressed='true'] {
@@ -20,8 +21,7 @@
   }
 
   button {
-    padding: var(--dashboard-home-space-2xs);
-    border-radius: var(--dashboard-home-control-radius);
+    padding: var(--dashboard-home-space-xs);
 
     &[aria-disabled='true'] {
       cursor: progress;
@@ -125,9 +125,8 @@
 
         > .dashboard-home-dynamic-stats-item {
           flex-direction: column;
-          gap: var(--dashboard-home-space-2xs);
-          min-block-size: 40px;
-          min-inline-size: 40px;
+          min-block-size: 36px;
+          min-inline-size: 36px;
         }
       }
     }

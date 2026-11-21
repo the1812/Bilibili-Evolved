@@ -27,7 +27,7 @@
     justify-content: center;
     flex-wrap: wrap;
     min-inline-size: 0;
-    gap: var(--dashboard-home-space-sm) var(--dashboard-home-space-lg);
+    gap: var(--dashboard-home-space-sm);
     padding-block: var(--dashboard-home-space-sm) var(--dashboard-home-space-md);
     padding-inline: var(--dashboard-home-space-md);
     border: var(--dashboard-home-border-width) solid transparent;
@@ -41,8 +41,8 @@
 
     > [role='tab'] {
       position: relative;
-      min-block-size: 24px;
-      padding: 0;
+      padding-block: var(--dashboard-home-space-2xs);
+      padding-inline: var(--dashboard-home-space-xs);
       color: var(--dashboard-home-muted-text-color);
       font-size: var(--dashboard-home-font-size-body);
       user-select: none;

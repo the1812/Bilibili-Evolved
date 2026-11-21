@@ -2,11 +2,8 @@
   --dashboard-home-link-preview-inset: var(--dashboard-home-space-md);
 
   box-sizing: border-box;
-  inline-size: 1440px;
-  max-inline-size: calc(100vw - 2 * var(--dashboard-home-link-preview-inset));
+  inline-size: calc(100vw - 2 * var(--dashboard-home-link-preview-inset));
   block-size: calc(100vh - 2 * var(--dashboard-home-link-preview-inset));
-  // Override the browser's default modal height cap.
-  max-block-size: none;
   padding: 0;
   overflow: hidden;
   overscroll-behavior: contain;
@@ -14,10 +11,6 @@
   border-radius: var(--home-card-radius);
   background-color: var(--home-background-color);
   color: var(--home-color);
-
-  &.is-reading-preview {
-    inline-size: 1080px;
-  }
 
   &::backdrop {
     overflow: hidden;

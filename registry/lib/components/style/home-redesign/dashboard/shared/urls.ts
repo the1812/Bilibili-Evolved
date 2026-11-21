@@ -149,7 +149,17 @@ export const isHttp = ({ protocol }: URL | { protocol: string }) =>
 export const isBilibiliHost = ({ hostname }: URL | { hostname: string }) =>
   hostname === 'bilibili.com' || hostname.endsWith('.bilibili.com') || hostname === 'b23.tv'
 
-export type LinkType = 'home' | 'live' | 'dynamic' | 'video' | 'column' | 'bilibili' | 'external'
+const spaceUrls = [/^https:\/\/space\.bilibili\.com\/(\d+)(?:\/|$)/]
+
+export type LinkType =
+  | 'home'
+  | 'live'
+  | 'space'
+  | 'dynamic'
+  | 'video'
+  | 'column'
+  | 'bilibili'
+  | 'external'
 export const getLinkType = ({ protocol, href, search, hostname }: URL): LinkType | undefined => {
   if (!isHttp({ protocol })) {
     return undefined
@@ -164,6 +174,9 @@ export const getLinkType = ({ protocol, href, search, hostname }: URL): LinkType
     }
     if (match(liveUrls)) {
       return 'live'
+    }
+    if (match(spaceUrls)) {
+      return 'space'
     }
     if (match(feedsUrls)) {
       return 'dynamic'
@@ -180,10 +193,10 @@ export const getLinkType = ({ protocol, href, search, hostname }: URL): LinkType
 }
 
 const linkIdPaths = [
-  /^\/video\/(av[1-9]\d*|bv[a-z0-9]{10})(?:\/|$)/i,
-  /^\/read\/(cv[1-9]\d*)(?:\/|$)/i,
-  /^\/bangumi\/play\/((?:ep|ss)[1-9]\d*)(?:\/|$)/i,
-  /^\/bangumi\/media\/(md[1-9]\d*)(?:\/|$)/i,
+  /^\/video\/(av\d+|bv[a-z0-9]{10})(?:\/|$)/i,
+  /^\/read\/(cv\d+)(?:\/|$)/i,
+  /^\/bangumi\/play\/((?:ep|ss)\d+)(?:\/|$)/i,
+  /^\/bangumi\/media\/(md\d+)(?:\/|$)/i,
 ]
 
 /** 格式化链接：提取 AV BV CV EP SS MD UID 号，回退到 hostname */

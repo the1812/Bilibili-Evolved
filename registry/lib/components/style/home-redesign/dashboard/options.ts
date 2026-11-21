@@ -107,6 +107,10 @@ export const dashboardHomeOptionsMetadata = defineOptionsMetadata({
     displayName: '在首页内打开直播链接',
     defaultValue: false,
   },
+  openSpaceLinksInPlace: {
+    displayName: '在首页内打开用户链接',
+    defaultValue: false,
+  },
   openDynamicLinksInPlace: {
     displayName: '在首页内打开动态链接',
     defaultValue: false,
