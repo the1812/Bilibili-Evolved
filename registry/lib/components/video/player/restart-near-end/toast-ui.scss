@@ -1,0 +1,177 @@
+// 侧边卡片与播放器边缘的距离; 底部额外避开控制栏区域
+$side-offset: 16px;
+$top-offset: 56px;
+$bottom-offset: 80px;
+
+.be-rne-overlay {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 220px;
+  max-width: min(80%, 360px);
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+  transition: opacity 0.25s ease;
+
+  &.be-rne-pos-right-top {
+    top: $top-offset;
+    right: $side-offset;
+    animation: be-rne-in-right 0.3s ease-out;
+  }
+
+  &.be-rne-pos-left-top {
+    top: $top-offset;
+    left: $side-offset;
+    animation: be-rne-in-left 0.3s ease-out;
+  }
+
+  &.be-rne-pos-right-bottom {
+    bottom: $bottom-offset;
+    right: $side-offset;
+    animation: be-rne-in-right 0.3s ease-out;
+  }
+
+  &.be-rne-pos-left-bottom {
+    bottom: $bottom-offset;
+    left: $side-offset;
+    animation: be-rne-in-left 0.3s ease-out;
+  }
+
+  &.be-rne-pos-center {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: be-rne-in-center 0.3s ease-out;
+  }
+
+  &.be-rne-leave {
+    opacity: 0;
+  }
+
+  .be-rne-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .be-rne-ring {
+    flex: none;
+    width: 20px;
+    height: 20px;
+    transform: rotate(-90deg);
+
+    circle {
+      fill: none;
+      stroke-width: 3.5;
+    }
+
+    .be-rne-ring-track {
+      stroke: rgba(255, 255, 255, 0.25);
+    }
+
+    .be-rne-ring-bar {
+      stroke: #00a1d6;
+      stroke-linecap: round;
+      stroke-dasharray: 100;
+      animation-name: be-rne-countdown;
+      animation-timing-function: linear;
+      animation-fill-mode: forwards;
+    }
+  }
+
+  .be-rne-title {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .be-rne-detail {
+    font-size: 13px;
+    opacity: 0.7;
+  }
+
+  .be-rne-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+  }
+
+  .be-rne-action {
+    cursor: pointer;
+    white-space: nowrap;
+    padding: 5px 14px;
+    border-radius: 6px;
+    font-size: 13px;
+    line-height: 1.5;
+    background: #00a1d6;
+    color: #fff;
+
+    &:hover {
+      background: #00b5e2;
+    }
+
+    &.be-rne-secondary {
+      background: transparent;
+      color: #fff;
+      opacity: 0.65;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+@keyframes be-rne-countdown {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: 100;
+  }
+}
+
+@keyframes be-rne-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes be-rne-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes be-rne-in-center {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
