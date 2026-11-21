@@ -30,6 +30,9 @@ export const fetchAirborneDanmaku = async (cid: number): Promise<AirborneDanmaku
     throw new Error('弹幕接口返回为空')
   }
   const xmlDocument = new DOMParser().parseFromString(xml, 'text/xml')
+  if (xmlDocument.querySelector('parsererror')) {
+    throw new Error('弹幕 XML 解析失败')
+  }
   const items: AirborneDanmakuItem[] = []
   xmlDocument.querySelectorAll('d').forEach(entry => {
     const p = entry.getAttribute('p')

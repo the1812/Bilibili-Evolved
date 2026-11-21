@@ -1,5 +1,6 @@
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import { playerAgent } from '@/components/video/player-agent'
+import { select } from '@/core/spin-query'
 import { mountVueComponent } from '@/core/utils'
 import { playerUrls } from '@/core/utils/urls'
 import { KeyBindingAction } from '../../../utils/keymap/bindings'
@@ -27,8 +28,8 @@ export const component = defineComponentMetadata({
   name: componentName,
   tags: [componentsTags.video],
   author: {
-    name: 'Cosy',
-    link: 'https://space.bilibili.com/180611120',
+    name: 'Thunder-G',
+    link: 'https://github.com/Thunder-G',
   },
   urlInclude: playerUrls,
   options,
@@ -39,13 +40,14 @@ export const component = defineComponentMetadata({
     /// 为播放器添加组件
 
     const videoWrapElement = await playerAgent.query.video.wrap()
+    // 原生投票对话框容器元素 'bpx-player-cmd-dm-inside', 可能晚于播放器容器渲染
+    const dialogContainer = await select(() =>
+      videoWrapElement.querySelector('.bpx-player-cmd-dm-inside'),
+    )
     const selectionDialog = await import('./SelectionDialog.vue')
     const vueIns: SelectionDialogVm = mountVueComponent(selectionDialog)
     selectionDialogVm = vueIns
-    unsafeWindow.selectVue = vueIns
-
-    // 原生投票对话框容器元素 'bpx-player-cmd-dm-inside'
-    videoWrapElement.querySelector('.bpx-player-cmd-dm-inside').appendChild(vueIns.$el)
+    dialogContainer.appendChild(vueIns.$el)
   },
   plugin: {
     displayName: '根据弹幕快捷空降 - 快捷键支持',

@@ -153,7 +153,6 @@ const airborneList = ref<Airborne[]>([]) // 有效空降时间列表（仅真实
 const videoDuration = ref(0) // 当前focus 视频的时长
 const shownAtTime = ref(0) // 弹窗展示时的视频时间点（秒）
 const cancelSecond = ref(0) // 默认"取消空降"项对应的时间点
-const isSwitched = ref(false) // 焦点是否已移出默认项
 const selectedSecond = ref(0)
 const showTimePercentage = ref(1)
 const scaleForFullscreen = ref(1)
@@ -169,7 +168,6 @@ const closeDialog = () => {
   airborneList.value = []
   selectedSecond.value = 0
   cancelSecond.value = 0
-  isSwitched.value = false
   showTimePercentage.value = 1
 }
 
@@ -187,11 +185,6 @@ const togglePause = () => {
 const onSelectAirborne = (airborne: Airborne) => {
   selectedSecond.value = airborne.second
 
-  console.debug(isSwitched.value)
-
-  // 焦点移出默认项，默认项文案改为"取消空降"
-  isSwitched.value = true
-
   // 先以跳转目标时间点重新锚定展示窗口，再 seek，避免跳转期间被旧 currentTime 判定超时
   shownAtTime.value = airborne.second
   showTimePercentage.value = 1
@@ -201,7 +194,6 @@ const onSelectAirborne = (airborne: Airborne) => {
 /** 选中默认项：取消空降，回到弹窗展示时的时间点 */
 const onCancelAirborne = () => {
   selectedSecond.value = cancelSecond.value
-  isSwitched.value = false
 
   // 向后跳转，同样先锚定再 seek，防止回跳完成前的旧 timeupdate 瞬间隐藏组件
   shownAtTime.value = cancelSecond.value
@@ -251,7 +243,6 @@ const createAirborne = (second: number, content: string) => {
   if (airborneList.value.length === 0) {
     cancelSecond.value = currentTime
     selectedSecond.value = currentTime
-    isSwitched.value = false
   }
 
   airborneList.value.push({
@@ -261,6 +252,8 @@ const createAirborne = (second: number, content: string) => {
     percentage: Math.ceil((second / videoDuration.value) * 100),
     offset: second - currentTime,
   })
+  // 同一弹幕可能解析出多个候选, 保持列表按时间升序, 避免选择顺序随解析结果排列
+  airborneList.value.sort((a, b) => a.second - b.second)
 
   // 以候选实际加入时的播放时间作为展示锚点，两种策略保持一致
   shownAtTime.value = playbackTime
@@ -432,6 +425,9 @@ const strategyListener = (newValue: string) => {
 }
 
 onMounted(async () => {
+  // 启用组件时视频可能已在播放, play 事件不会再次触发, 先同步一次时长
+  videoDuration.value = playerAgent.nativeApi.getDuration()
+
   // 视频成功加载后触发回调
   playerAgent.addEventListener('play', () => {
     videoDuration.value = playerAgent.nativeApi.getDuration()
