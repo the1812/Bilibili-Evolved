@@ -5,7 +5,7 @@ import { isEmbeddedPlayer, playerReady } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 import { sq } from '@/core/spin-query'
 import { isInOfficialEnding, tryGetOfficialEnding } from './ending'
-import { waitForHistoryResume } from './history'
+import { parseUrlTimeParam, waitForHistoryResume } from './history'
 import { Options, options, ToastDefaultAction, ToastPosition } from './options'
 import { ManagedPlayerToast, showManagedPlayerToast, ToastMode } from './toast-ui'
 
@@ -14,10 +14,6 @@ export interface RestartSessionState {
   autoEnabled: boolean
   /** 触发重头前记录的原进度 */
   originalTime: number | null
-  /** 最近一次触发模式 */
-  mode: ToastMode | null
-  aid: string | null
-  cid: string | null
 }
 
 let enabled = false
@@ -34,9 +30,6 @@ let latestOptions: Options = { ...defaultOptions }
 const session: RestartSessionState = {
   autoEnabled: true,
   originalTime: null,
-  mode: null,
-  aid: null,
-  cid: null,
 }
 
 const log = (...args: unknown[]) => {
@@ -57,6 +50,7 @@ const normalizeOptions = (raw?: Partial<Options> | Record<string, unknown>): Opt
         : defaultOptions.thresholdPercent,
     enableOfficialEnding: raw?.enableOfficialEnding !== false,
     enableControlButton: raw?.enableControlButton !== false,
+    respectUrlTimeParam: raw?.respectUrlTimeParam !== false,
     minDuration:
       Number.isFinite(minDuration) && minDuration >= 0 ? minDuration : defaultOptions.minDuration,
     historyWaitTimeout:
@@ -83,13 +77,8 @@ const disposeToast = () => {
 
 const resetSessionProgress = () => {
   session.originalTime = null
-  session.mode = null
   session.autoEnabled = true
 }
-
-export const getRestartSession = () => session
-
-export const getRestartOptions = () => latestOptions
 
 /** 组件是否处于启用运行状态（供附带插件判断快捷键是否生效） */
 export const isComponentEnabled = () => enabled
@@ -224,7 +213,6 @@ const restartFromBeginning = async () => {
 }
 
 const applyRestart = async (mode: ToastMode, originalTime: number) => {
-  session.mode = mode
   const manualRestart = latestOptions.defaultAction === ToastDefaultAction.Manual
   if (!manualRestart) {
     session.originalTime = originalTime
@@ -261,9 +249,13 @@ const handleVideo = async (token: number) => {
     return
   }
 
+  // 分享链接自带时间参数 (?t=) 是明确的跳转意图, 不进入续播判定
+  if (latestOptions.respectUrlTimeParam && parseUrlTimeParam(document.URL) !== null) {
+    log('skip: url time param', document.URL)
+    return
+  }
+
   const currentOptions = latestOptions
-  session.aid = String(unsafeWindow.aid ?? '')
-  session.cid = String(unsafeWindow.cid ?? '')
   log('start handle', {
     thresholdPercent: currentOptions.thresholdPercent,
     enableOfficialEnding: currentOptions.enableOfficialEnding,
@@ -477,6 +469,9 @@ const bindOptionListeners = lodash.once(() => {
       unmountControlButton().then(none)
     }
   })
+  addComponentListener('restartNearEnd.respectUrlTimeParam', (value: boolean) => {
+    latestOptions = normalizeOptions({ ...latestOptions, respectUrlTimeParam: value })
+  })
   addComponentListener('restartNearEnd.defaultAction', (value: ToastDefaultAction) => {
     latestOptions = normalizeOptions({ ...latestOptions, defaultAction: value })
   })
@@ -505,7 +500,7 @@ export const startRestartNearEnd = async (settings?: ComponentSettings<Options>)
 export const stopRestartNearEnd = async () => {
   enabled = false
   sessionToken += 1
-  videoChangeBound = false
+  // videoChange 监听按页面只注册一次 (回调内检查 enabled), 停用时不注销
   bindingVideoChange = false
   bindRetryCount = 0
   disposeToast()

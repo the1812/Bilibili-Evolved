@@ -35,6 +35,10 @@ export const options = defineOptionsMetadata({
     defaultValue: true,
     displayName: '在播放器控制栏显示按钮',
   },
+  respectUrlTimeParam: {
+    defaultValue: true,
+    displayName: '忽略带时间参数的链接',
+  },
   defaultAction: {
     defaultValue: ToastDefaultAction.Restart,
     displayName: '默认操作',

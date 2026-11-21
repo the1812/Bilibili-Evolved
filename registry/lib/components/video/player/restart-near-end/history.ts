@@ -14,6 +14,19 @@ export const RESUME_JUMP_SECONDS = 4
 
 const timePattern = /(\d{1,2}:)?\d{1,2}:\d{2}/
 
+/**
+ * 读取 URL 的时间参数 (如分享链接的 ?t=95.6, 单位秒).
+ * 带此参数打开是明确的跳转意图, 不应被当作历史续播处理.
+ */
+export const parseUrlTimeParam = (url: string) => {
+  const match = url.match(/[?&]t=([\d.]+)/)
+  if (!match) {
+    return null
+  }
+  const time = Number.parseFloat(match[1])
+  return Number.isFinite(time) && time > 0 ? time : null
+}
+
 const log = (...args: unknown[]) => {
   console.info('[restartNearEnd]', ...args)
 }
