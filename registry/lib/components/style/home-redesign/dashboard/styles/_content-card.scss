@@ -349,19 +349,6 @@
     writing-mode: vertical-rl;
     flex-wrap: nowrap;
     inline-size: 100%;
-
-    .be-up-info {
-      box-sizing: border-box;
-      block-size: 28px;
-      inline-size: auto;
-      padding: 2px 2px 6px;
-    }
-
-    .be-up-info-cover,
-    .be-up-info-cover-fallback {
-      flex: none;
-      margin: 0;
-    }
   }
 
   .dashboard-home-content-card-stats,

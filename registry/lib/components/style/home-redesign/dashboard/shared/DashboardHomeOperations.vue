@@ -2,7 +2,7 @@
   <div
     ref="operations"
     class="dashboard-home-operations"
-    :class="{ 'is-horizontal-scroll': horizontalScroll }"
+    :class="`dashboard-home-operations-${layout}`"
   >
     <VButton
       round
@@ -13,44 +13,52 @@
       :disabled="refreshDisabled"
       @click="refresh"
     >
-      <VIcon icon="mdi-refresh" :size="size" aria-hidden="true" />
+      <VIcon icon="mdi-refresh" :size="28" aria-hidden="true" />
     </VButton>
     <VButton
       round
       icon
       class="dashboard-home-operations-start"
-      :title="returnLabel"
-      :aria-label="returnLabel"
-      @click="scrollToStart"
+      :title="layout === 'vertical' ? '返回开头' : '返回顶部'"
+      :aria-label="layout === 'vertical' ? '返回开头' : '返回顶部'"
+      :disabled="startDisabled"
+      @click="start"
     >
       <VIcon
-        :icon="horizontalScroll ? 'mdi-arrow-right' : 'mdi-arrow-up'"
-        :size="size"
+        :icon="layout === 'vertical' ? 'mdi-arrow-right' : 'mdi-arrow-up'"
+        :size="28"
         aria-hidden="true"
       />
     </VButton>
   </div>
 </template>
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue'
+import { inject, ref } from 'vue'
 import { VButton, VIcon } from '@/ui'
 import { contentCardLayoutKey } from './content-card'
 
-const emit = defineEmits<{ (event: 'refresh'): void }>()
-const props = defineProps<{ refreshDisabled?: boolean }>()
-const size = 28
+const emit = defineEmits<{ (event: 'refresh'): void; (event: 'start'): void }>()
+const props = defineProps<{ refreshDisabled?: boolean; startDisabled?: boolean }>()
 const layout = inject(contentCardLayoutKey)
 const operations = ref<HTMLElement>()
-const horizontalScroll = computed(() => layout?.value === 'vertical')
-const returnLabel = computed(() => (horizontalScroll.value ? '返回开头' : '返回顶部'))
+
 const scrollToStart = () => {
   const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'
-  const collection = operations.value
+  operations.value
     ?.closest('[role="tabpanel"]')
-    ?.querySelector('.dashboard-home-card-collection.is-horizontal-scroll')
-  collection?.scrollTo({ left: 0, behavior })
+    ?.querySelector('.dashboard-home-card-collection-vertical')
+    ?.scrollTo({ left: 0, behavior })
   window.scrollTo({ top: 0, behavior })
 }
+
+const start = () => {
+  if (props.startDisabled) {
+    return
+  }
+  scrollToStart()
+  emit('start')
+}
+
 const refresh = () => {
   if (props.refreshDisabled) {
     return

@@ -19,11 +19,11 @@
       @include rotate();
     }
 
-    &:not(.is-horizontal-scroll) &-start:hover .mdi {
+    &:not(&-vertical) &-start:hover .mdi {
       @include bounce-y(-2);
     }
 
-    &.is-horizontal-scroll &-start:hover .mdi {
+    &-vertical &-start:hover .mdi {
       @include bounce-x(2);
     }
   }

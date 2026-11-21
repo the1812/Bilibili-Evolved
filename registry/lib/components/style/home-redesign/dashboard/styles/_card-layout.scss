@@ -86,11 +86,6 @@
       );
     }
   }
-
-  .dashboard-home-dynamic-card,
-  .dashboard-home-followings-card {
-    overflow: auto;
-  }
 }
 
 [data-content-card-layout='compact'] .dashboard-home-card-grid {
@@ -104,7 +99,7 @@
   }
 }
 
-.dashboard-home-card-collection.is-horizontal-scroll {
+.dashboard-home-card-collection-vertical {
   --dashboard-home-card-scroll-inline-padding: 48px;
   --dashboard-home-card-scroll-top-padding: 12px;
   --dashboard-home-card-scroll-bottom-padding: 28px;
@@ -159,11 +154,6 @@
     > * {
       min-block-size: 0;
     }
-  }
-
-  .dashboard-home-dynamic-card,
-  .dashboard-home-followings-card {
-    overflow: auto;
   }
 
   .dashboard-home-card-grid-item,

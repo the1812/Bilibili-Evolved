@@ -16,11 +16,13 @@
                   关注于 {{ following.followedOn }}
                 </time>
               </div>
-              <p
-                v-if="following.sign"
-                class="dashboard-home-followings-signature"
-                v-text="following.sign"
-              />
+              <div v-if="following.sign" class="dashboard-home-followings-signature-area">
+                <p
+                  class="dashboard-home-followings-signature"
+                  :title="following.sign"
+                  v-text="following.sign"
+                />
+              </div>
             </article>
           </CardGridItem>
         </ul>
