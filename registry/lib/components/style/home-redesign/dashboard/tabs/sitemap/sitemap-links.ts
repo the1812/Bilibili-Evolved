@@ -1,12 +1,6 @@
 import { categories, channelsV2 } from '@/components/utils/categories/data'
-import {
-  account,
-  accountSecurity,
-  creator,
-  inboxCategories,
-  messageCenter,
-  site,
-} from '../../shared/urls'
+import { dashboardUrls, getSpaceUrls } from '../../shared/urls'
+import { inboxCategories } from '../account/inbox-categories'
 
 export type SitemapLink = [
   label: string,
@@ -77,7 +71,7 @@ export const readSitemapChannelLinks = (root: ParentNode) => {
   const anchors = root.querySelectorAll<HTMLAnchorElement>(`${sitemapChannelSelector} a[href]`)
   for (const anchor of anchors) {
     const { href } = anchor
-    if (!href.startsWith(`${site}/`)) {
+    if (!href.startsWith(dashboardUrls.home)) {
       continue
     }
     const slug = getChannelSlug(href)
@@ -99,16 +93,16 @@ const linkKey = (href: string) => {
 }
 
 export const getPersonalSitemapSection = (uid: string): SitemapSection => {
-  const personalSpace = `https://space.bilibili.com/${uid}`
+  const personalSpace = getSpaceUrls(uid)
   const spaceLinks: SitemapLink[] = uid
     ? [
-        ['我的空间', personalSpace, 'mdi-account-circle-outline'],
-        ['我的关注', `${personalSpace}/fans/follow`, 'mdi-account-multiple-outline'],
-        ['我的粉丝', `${personalSpace}/fans/fans`, 'mdi-account-heart-outline'],
-        ['我的动态', `${personalSpace}/dynamic`, 'mdi-text-box-outline'],
-        ['我的收藏', `${personalSpace}/favlist`, 'mdi-star-box-outline'],
-        ['我的追番', `${personalSpace}/bangumi`, 'mdi-bookmark-multiple-outline'],
-        ['我的追剧', `${personalSpace}/cinema`, 'mdi-television-play'],
+        ['我的空间', personalSpace.home, 'mdi-account-circle-outline'],
+        ['我的关注', personalSpace.following, 'mdi-account-multiple-outline'],
+        ['我的粉丝', personalSpace.followers, 'mdi-account-heart-outline'],
+        ['我的动态', personalSpace.dynamics, 'mdi-text-box-outline'],
+        ['我的收藏', personalSpace.favorites, 'mdi-star-box-outline'],
+        ['我的追番', personalSpace.bangumi, 'mdi-bookmark-multiple-outline'],
+        ['我的追剧', personalSpace.cinema, 'mdi-television-play'],
       ]
     : []
 
@@ -116,19 +110,19 @@ export const getPersonalSitemapSection = (uid: string): SitemapSection => {
     id: 'personal',
     title: '个人入口',
     links: [
-      ['历史记录', `${site}/history`, 'mdi-history'],
-      ['稍后再看', `${site}/watchlater/#/list`, 'mdi-clock-outline'],
-      ['播放稍后再看', `${site}/medialist/play/watchlater`, 'mdi-play-circle-outline'],
-      ['账号中心', `${account}/account/home`, 'mdi-account-cog-outline'],
+      ['历史记录', dashboardUrls.history, 'mdi-history'],
+      ['稍后再看', dashboardUrls.watchlater, 'mdi-clock-outline'],
+      ['播放稍后再看', dashboardUrls.playWatchlater, 'mdi-play-circle-outline'],
+      ['账号中心', dashboardUrls.account, 'mdi-account-cog-outline'],
       ...spaceLinks,
-      ['大会员', `${account}/big`, 'mdi-crown-outline'],
-      ['我的记录', `${account}/account/record`, 'mdi-chart-line'],
-      ['硬币', `${account}/account/coin`, 'mdi-circle-multiple-outline'],
-      ['B币钱包', 'https://pay.bilibili.com/pay-v2-web/bcoin_index', 'mdi-wallet-outline'],
-      ['手机验证', `${accountSecurity}/set-phone/entry`, 'mdi-cellphone-key'],
-      ['邮箱验证', `${accountSecurity}/set-mail/entry`, 'mdi-email-check-outline'],
-      ['订单中心', 'https://show.bilibili.com/orderlist', 'mdi-receipt'],
-      ['我的课程', `${site}/v/cheese/mine`, 'mdi-school-outline'],
+      ['大会员', dashboardUrls.vip, 'mdi-crown-outline'],
+      ['我的记录', dashboardUrls.accountRecord, 'mdi-chart-line'],
+      ['硬币', dashboardUrls.coins, 'mdi-circle-multiple-outline'],
+      ['B币钱包', dashboardUrls.wallet, 'mdi-wallet-outline'],
+      ['手机验证', dashboardUrls.verifyPhone, 'mdi-cellphone-key'],
+      ['邮箱验证', dashboardUrls.verifyEmail, 'mdi-email-check-outline'],
+      ['订单中心', dashboardUrls.orders, 'mdi-receipt'],
+      ['我的课程', dashboardUrls.myCourses, 'mdi-school-outline'],
     ],
   }
 }
@@ -142,42 +136,38 @@ export const getSitemapSections = (
       id: 'discover',
       title: '内容与服务',
       links: [
-        ['首页', `${site}/`, 'mdi-home-outline'],
+        ['首页', dashboardUrls.home, 'mdi-home-outline'],
         ['直播', categories.直播.link, 'mdi-access-point'],
-        ['动态', 'https://t.bilibili.com/', 'mdi-text-box-multiple-outline'],
-        ['综合热门', `${site}/v/popular/all`, 'mdi-fire'],
-        ['每周必看', `${site}/v/popular/weekly`, 'mdi-calendar-week'],
-        ['入站必刷', `${site}/v/popular/history`, 'mdi-bookmark-check-outline'],
-        ['排行榜', `${site}/v/popular/rank/all`, 'mdi-trophy-outline'],
-        ['全站音乐榜', `${site}/v/popular/music`, 'mdi-playlist-music-outline'],
+        ['动态', dashboardUrls.dynamics, 'mdi-text-box-multiple-outline'],
+        ['综合热门', dashboardUrls.popular, 'mdi-fire'],
+        ['每周必看', dashboardUrls.weekly, 'mdi-calendar-week'],
+        ['入站必刷', dashboardUrls.mustWatch, 'mdi-bookmark-check-outline'],
+        ['排行榜', dashboardUrls.ranking, 'mdi-trophy-outline'],
+        ['全站音乐榜', dashboardUrls.musicRanking, 'mdi-playlist-music-outline'],
         ['专栏', categories.专栏.link, 'mdi-file-document-outline'],
-        ['漫画', 'https://manga.bilibili.com/', 'mdi-book-open-variant'],
-        ['游戏中心', 'https://game.bilibili.com/', 'mdi-gamepad-variant-outline'],
-        ['赛事', `${site}/v/game/match/`, 'mdi-tournament'],
-        ['音频', `${site}/audio/home/`, 'mdi-headphones'],
+        ['漫画', dashboardUrls.manga, 'mdi-book-open-variant'],
+        ['游戏中心', dashboardUrls.games, 'mdi-gamepad-variant-outline'],
+        ['赛事', dashboardUrls.esports, 'mdi-tournament'],
+        ['音频', dashboardUrls.audioHome, 'mdi-headphones'],
         ['新歌热榜', categories.新歌热榜.link, 'mdi-music-note-eighth'],
-        ['视频播客', `${site}/blackboard/era/jpyPhRRrMn3fmZ2B.html`, 'mdi-podcast'],
-        ['超高清', `${site}/blackboard/era/Vp41b8bsU9Wkog3X.html`, 'mdi-video-4k-box'],
-        ['会员购', 'https://show.bilibili.com/', 'mdi-shopping-outline'],
+        ['视频播客', dashboardUrls.podcasts, 'mdi-podcast'],
+        ['超高清', dashboardUrls.ultraHd, 'mdi-video-4k-box'],
+        ['会员购', dashboardUrls.shop, 'mdi-shopping-outline'],
       ],
     },
     {
       id: 'community',
       title: '创作与社区',
       links: [
-        ['创作中心', `${creator}/home`, 'mdi-view-dashboard-outline'],
-        ['视频投稿', `${creator}/upload/video/frame`, 'mdi-upload-outline'],
-        ['专栏投稿', `${creator}/upload/text/apply`, 'mdi-file-document-edit-outline'],
-        ['音频投稿', `${creator}/upload/audio/frame`, 'mdi-microphone-outline'],
-        ['贴纸投稿', `${creator}/upload/sticker`, 'mdi-sticker-emoji'],
-        ['投稿管理', `${creator}/upload-manager/article`, 'mdi-file-multiple-outline'],
-        ['直播中心', 'https://link.bilibili.com/p/center/index', 'mdi-access-point'],
+        ['创作中心', dashboardUrls.creator, 'mdi-view-dashboard-outline'],
+        ['视频投稿', dashboardUrls.uploadVideo, 'mdi-upload-outline'],
+        ['专栏投稿', dashboardUrls.uploadColumn, 'mdi-file-document-edit-outline'],
+        ['音频投稿', dashboardUrls.uploadAudio, 'mdi-microphone-outline'],
+        ['贴纸投稿', dashboardUrls.uploadSticker, 'mdi-sticker-emoji'],
+        ['投稿管理', dashboardUrls.manageUploads, 'mdi-file-multiple-outline'],
+        ['直播中心', dashboardUrls.liveCenter, 'mdi-access-point'],
         ['活动', categories.活动.link, 'mdi-calendar-outline'],
-        [
-          '激励活动',
-          `${site}/blackboard/era/reward-activity-list-page.html#/list`,
-          'mdi-calendar-star',
-        ],
+        ['激励活动', dashboardUrls.creatorRewards, 'mdi-calendar-star'],
         ['课堂', categories.课堂.link, 'mdi-school-outline'],
         ['公开课', categories.公开课.link, 'mdi-book-open-page-variant'],
         ['社区中心', categories.社区中心.link, 'mdi-forum-outline'],
@@ -189,12 +179,12 @@ export const getSitemapSections = (
       id: 'messages',
       title: '消息',
       links: [
-        ['消息中心', messageCenter, 'mdi-email-outline'],
+        ['消息中心', dashboardUrls.messageCenter, 'mdi-email-outline'],
         ...Object.values(inboxCategories).map(
           ({ label, url, icon }): SitemapLink => [label, url, icon],
         ),
-        ['私信存档', `${messageCenter}/#/archive`, 'mdi-archive-outline'],
-        ['消息设置', `${messageCenter}/#/config`, 'mdi-cog-outline'],
+        ['私信存档', dashboardUrls.archivedMessages, 'mdi-archive-outline'],
+        ['消息设置', dashboardUrls.messageSettings, 'mdi-cog-outline'],
       ],
     },
     {

@@ -15,7 +15,7 @@
 import { ref } from 'vue'
 import HomeRedesignBase from '../HomeRedesignBase.vue'
 import { getDashboardHomeOptions, useDashboardOption, type DashboardHomeOptions } from './options'
-import LinkPreview from './shared/LinkPreview.vue'
+import LinkPreview from './link-preview/LinkPreview.vue'
 import { getLinkType, type LinkType } from './shared/urls'
 import DashboardTabs from './tabs/DashboardTabs.vue'
 

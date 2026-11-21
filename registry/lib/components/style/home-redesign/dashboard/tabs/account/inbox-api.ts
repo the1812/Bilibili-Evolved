@@ -1,16 +1,8 @@
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getCsrf } from '@/core/utils'
-import {
-  getWebUrl,
-  inboxCategories,
-  messageCenter,
-  type InboxCategory,
-  type InteractionCategory,
-} from '../../shared/urls'
+import { dashboardApiUrls, getPrivateSessionUrl, getWebUrl } from '../../shared/urls'
+import { inboxCategories, type InboxCategory, type InteractionCategory } from './inbox-categories'
 
-const api = 'https://api.bilibili.com'
-const messageApi = 'https://api.vc.bilibili.com'
-const sessionsApi = `${messageApi}/session_svr/v1/session_svr`
 const webParams = { build: '0', mobi_app: 'web' }
 
 export type UnreadCounts = Partial<Record<InboxCategory, number>>
@@ -41,9 +33,9 @@ const get = <T>(url: string, params?: Record<string, string>, error = '获取消
 export const getInboxUnread = async (): Promise<UnreadCounts> => {
   const [notifications, conversations] = await Promise.allSettled([
     get<{ reply?: number; at?: number; like?: number; sys_msg?: number }>(
-      `${messageApi}/x/im/web/msgfeed/unread`,
+      dashboardApiUrls.unreadNotifications,
     ),
-    get<{ follow_unread?: number; unfollow_unread?: number }>(`${sessionsApi}/single_unread`),
+    get<{ follow_unread?: number; unfollow_unread?: number }>(dashboardApiUrls.unreadSessions),
   ])
   if (notifications.status === 'rejected' && conversations.status === 'rejected') {
     throw notifications.reason
@@ -95,7 +87,7 @@ const getInteractions = async (category: InteractionCategory): Promise<InboxPage
     items?: Interaction[]
     latest?: { items?: Interaction[] }
     total?: { items?: Interaction[] }
-  }>(`${api}/x/msgfeed/${category}`, { platform: 'web' })
+  }>(dashboardApiUrls.interactions[category], { platform: 'web' })
   const items = data.items ?? [...(data.latest?.items ?? []), ...(data.total?.items ?? [])]
   const entries = items.map((entry, index): InboxEntry => {
     const people = entry.users?.map(user => user.nickname).filter(Boolean) ?? []
@@ -133,8 +125,8 @@ interface SystemNotice {
 const getSystemNotices = async (): Promise<InboxPage> => {
   type NoticeList = { system_notify_list?: SystemNotice[] }
   const [unified, user] = await Promise.all([
-    get<NoticeList>(`${messageCenter}/x/sys-msg/query_unified_notify`, { page_size: '10' }),
-    get<NoticeList>(`${messageCenter}/x/sys-msg/query_user_notify`, { page_size: '20' }),
+    get<NoticeList>(dashboardApiUrls.unifiedNotices, { page_size: '10' }),
+    get<NoticeList>(dashboardApiUrls.userNotices, { page_size: '20' }),
   ])
   const notices = [...(unified.system_notify_list ?? []), ...(user.system_notify_list ?? [])]
   let noticeCursor: string | undefined
@@ -192,7 +184,7 @@ const messagePreview = (message?: Session['last_msg']) => {
 
 const getPrivateSessions = async (): Promise<InboxPage> => {
   const { session_list } = await get<{ session_list?: Session[] | null }>(
-    `${sessionsApi}/get_sessions`,
+    dashboardApiUrls.privateSessions,
     { session_type: '1', group_fold: '1', unfollow_fold: '0', sort_rule: '2', size: '20' },
   )
   const sessions = session_list ?? []
@@ -203,7 +195,7 @@ const getPrivateSessions = async (): Promise<InboxPage> => {
       .filter(Boolean),
   )
   const profiles = users.length
-    ? await get<Record<string, { name?: string }>>(`${api}/x/polymer/pc-electron/v1/user/cards`, {
+    ? await get<Record<string, { name?: string }>>(dashboardApiUrls.sessionProfiles, {
         uids: users.join(','),
       }).catch(() => ({}))
     : {}
@@ -221,7 +213,7 @@ const getPrivateSessions = async (): Promise<InboxPage> => {
         (userConversation && talker ? `UID ${talker}` : '会话'),
       text: messagePreview(session.last_msg),
       timestamp: Number.isFinite(timestamp) && timestamp > 0 ? timestamp : undefined,
-      url: userConversation && talker ? `${inboxCategories.private.url}/mid${talker}` : undefined,
+      url: userConversation && talker ? getPrivateSessionUrl(talker) : undefined,
       unread: session.unread_count,
       acknowledgement:
         userConversation && talker && sequence && session.unread_count > 0
@@ -243,11 +235,7 @@ export const getInboxPage = (category: InboxCategory) => {
 }
 
 export const markSystemNoticesRead = (cursor: string) =>
-  get(
-    `${messageCenter}/x/sys-msg/update_cursor`,
-    { cursor, has_up: '0' },
-    '更新系统通知已读状态失败',
-  )
+  get(dashboardApiUrls.updateNoticeCursor, { cursor, has_up: '0' }, '更新系统通知已读状态失败')
 
 export const markPrivateSessionRead = (
   acknowledgement: NonNullable<InboxEntry['acknowledgement']>,
@@ -265,7 +253,7 @@ export const markPrivateSessionRead = (
     ack_seqno: acknowledgement.sequence,
   })
   return bilibiliApi(
-    postTextWithCredentials(`${sessionsApi}/update_ack`, params).then(JSON.parse),
+    postTextWithCredentials(dashboardApiUrls.acknowledgeSession, params).then(JSON.parse),
     '更新私信已读状态失败',
     false,
   )

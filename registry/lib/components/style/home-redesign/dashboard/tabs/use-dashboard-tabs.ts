@@ -1,7 +1,7 @@
 import { computed, onBeforeUnmount, shallowRef, watch } from 'vue'
 import { getUID } from '@/core/utils'
 import { dashboardHomeOptionsMetadata, useDashboardOption, validateTrackCount } from '../options'
-import { contentCardLayouts, type ContentCardLayout } from '../shared/content-card'
+import { contentCardLayouts, type ContentCardLayout } from '../shared/cards/content-card'
 import { getDashboardTabs, type DashboardTab } from './dashboard-tabs'
 
 const tabQueryParam = 'dashboardTab'

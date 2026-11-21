@@ -10,7 +10,7 @@ import {
   type RawDynamicStats,
   type RawDynamicTopics,
   type RawMediaWithStats,
-} from '../dynamic/dynamic-post'
+} from './dynamic-post'
 
 interface RawVideoFeedItem {
   id_str?: string

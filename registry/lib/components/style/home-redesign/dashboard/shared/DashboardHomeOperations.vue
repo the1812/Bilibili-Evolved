@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { inject, ref } from 'vue'
 import { VIcon } from '@/ui'
-import { contentCardLayoutKey } from './content-card'
+import { contentCardLayoutKey } from './cards/content-card'
 
 const emit = defineEmits<{ (event: 'refresh'): void }>()
 const props = defineProps<{ refreshDisabled?: boolean }>()

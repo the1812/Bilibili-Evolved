@@ -22,10 +22,10 @@ import { onMounted, ref } from 'vue'
 import type { VideoCard as VideoCardData } from '@/components/feeds/video-card'
 import { logError } from '@/core/utils/log'
 import { getTrendingVideos } from '../../../trending'
-import CardCollection from '../../shared/CardCollection.vue'
-import CardGridItem from '../../shared/CardGridItem.vue'
+import CardCollection from '../../shared/cards/CardCollection.vue'
+import CardGridItem from '../../shared/cards/CardGridItem.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
-import ContentCard from '../../shared/ContentCard.vue'
+import ContentCard from '../../shared/cards/ContentCard.vue'
 import ListStatus from '../../shared/ListStatus.vue'
 
 const props = defineProps<{ personalized?: boolean }>()

@@ -24,7 +24,7 @@
           >
             <VIcon :icon="recordingAction.icon" :size="14" aria-hidden="true" />
           </button>
-          <a href="https://www.bilibili.com/history" target="_blank" rel="noopener">查看完整历史</a>
+          <a :href="dashboardUrls.history" target="_blank" rel="noopener">查看完整历史</a>
         </template>
       </LibraryToolbar>
       <CardCollection>
@@ -49,9 +49,10 @@ import { computed, ref } from 'vue'
 import { getUID } from '@/core/utils'
 import { VEmpty, VIcon } from '@/ui'
 import { HistoryType, navbarFilterTypes } from '../../../../custom-navbar/history/types'
-import CardCollection from '../../shared/CardCollection.vue'
+import CardCollection from '../../shared/cards/CardCollection.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
+import { dashboardUrls } from '../../shared/urls'
 import { usePagedList } from '../../shared/use-paged-list'
 import { getHistoryPage } from './history-api'
 import LibraryCards from './LibraryCards.vue'

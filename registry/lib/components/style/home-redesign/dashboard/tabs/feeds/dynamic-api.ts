@@ -1,6 +1,7 @@
 import { feedsCardTypes, getFeeds } from '@/components/feeds/api'
 import { bilibiliApi, getJsonWithCredentials, postJsonWithCredentials } from '@/core/ajax'
 import { getCsrf } from '@/core/utils'
+import { dashboardApiUrls, getLiveRoomUrl, getSpaceUrls } from '../../shared/urls'
 import { toDynamicPost, type DynamicEntry, type RawDynamicPost } from './dynamic-post'
 
 interface FeedPage {
@@ -34,7 +35,7 @@ interface DynamicPortal {
 
 export const getDynamicLiveRooms = async (): Promise<DynamicLiveRoom[]> => {
   const portal = await bilibiliApi<DynamicPortal>(
-    getJsonWithCredentials('https://api.bilibili.com/x/polymer/web-dynamic/v1/portal'),
+    getJsonWithCredentials(dashboardApiUrls.liveRooms),
     '获取正在直播的房间失败',
     false,
   )
@@ -52,8 +53,8 @@ export const getDynamicLiveRooms = async (): Promise<DynamicLiveRoom[]> => {
         title,
         name,
         avatar: room.face,
-        url: `https://live.bilibili.com/${id}`,
-        profileUrl: /^[1-9]\d*$/.test(mid) ? `https://space.bilibili.com/${mid}` : undefined,
+        url: getLiveRoomUrl(id),
+        profileUrl: /^[1-9]\d*$/.test(mid) ? getSpaceUrls(mid).home : undefined,
       },
     ]
   })
@@ -81,12 +82,9 @@ export const setDynamicLike = async (id: string, liked: boolean) => {
     throw new Error('请先登录')
   }
   const params = new URLSearchParams({ csrf })
-  const response = postJsonWithCredentials(
-    `https://api.bilibili.com/x/dynamic/feed/dyn/thumb?${params}`,
-    {
-      dyn_id_str: id,
-      up: liked ? 1 : 2,
-    },
-  ).then(JSON.parse)
+  const response = postJsonWithCredentials(`${dashboardApiUrls.dynamicLike}?${params}`, {
+    dyn_id_str: id,
+    up: liked ? 1 : 2,
+  }).then(JSON.parse)
   await bilibiliApi(response, liked ? '点赞失败' : '取消点赞失败', false)
 }

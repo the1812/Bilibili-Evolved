@@ -1,6 +1,7 @@
 import { computed, onMounted, reactive, ref } from 'vue'
 import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
+import { dashboardUrls, getSpaceUrls } from '../../shared/urls'
 import {
   type AccountProfile,
   type AccountRow,
@@ -15,7 +16,7 @@ export const useAccount = () => {
   const profile = ref<AccountProfile>()
   const loadingProfile = ref(false)
   const profileFailed = ref(false)
-  const spaceUrl = computed(() => `https://space.bilibili.com/${profile.value?.mid ?? uid}`)
+  const spaceUrl = computed(() => getSpaceUrls(profile.value?.mid ?? uid).home)
   const annualVip = computed(() => profile.value?.vipStatus === 1 && profile.value.vipType === 2)
   const membership = computed(() => {
     if (profile.value?.vipStatus === 1) {
@@ -79,7 +80,7 @@ export const useAccount = () => {
     '大会员权益',
     '暂无可显示的权益',
     getAccountPrivileges,
-    'https://account.bilibili.com/account/big',
+    dashboardUrls.vipAccount,
   )
   const panels = computed(() => (annualVip.value ? [counts, privileges] : [counts]))
   const loadPanels = () => {

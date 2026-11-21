@@ -1,8 +1,16 @@
-import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
+import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
+import { getCsrf } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 import { HistoryType, navbarFilterTypes } from '../../../../custom-navbar/history/types'
 import { formatDateTimeLabel } from '../../shared/format-date'
-import { getWebUrl } from '../../shared/urls'
+import {
+  dashboardApiUrls,
+  getBangumiEpisodeUrl,
+  getColumnUrl,
+  getLiveRoomUrl,
+  getVideoHistoryUrl,
+  getWebUrl,
+} from '../../shared/urls'
 import { getPlaybackProgress, type LibraryEntry } from './library'
 
 interface RawHistoryItem {
@@ -36,10 +44,9 @@ interface HistoryPage {
   }
 }
 
-const site = 'https://www.bilibili.com'
 const getHistoryContent = (item: RawHistoryItem) => {
   const { business, oid, bvid, epid, cid, page } = item.history
-  const resume = `t=${item.progress > 0 ? item.progress : 0}`
+  const resumeTime = item.progress > 0 ? item.progress : 0
   if (business === HistoryType.Cheese) {
     return { type: HistoryType.Video, id: oid, url: getWebUrl(item.uri), title: item.show_title }
   }
@@ -47,7 +54,7 @@ const getHistoryContent = (item: RawHistoryItem) => {
     return {
       type: HistoryType.Bangumi,
       id: epid,
-      url: `${site}/bangumi/play/ep${epid}?${resume}`,
+      url: getBangumiEpisodeUrl(epid, resumeTime),
       title: item.show_title,
     }
   }
@@ -56,15 +63,15 @@ const getHistoryContent = (item: RawHistoryItem) => {
       type: HistoryType.Video,
       id: bvid || oid,
       aid: oid,
-      url: `${site}/video/${bvid || `av${oid}`}?p=${page || 1}&${resume}`,
+      url: getVideoHistoryUrl(bvid || `av${oid}`, page || 1, resumeTime),
     }
   }
   if (business === HistoryType.Article && (oid || cid)) {
     const id = oid || cid
-    return { type: HistoryType.Article, id, url: `${site}/read/cv${id}` }
+    return { type: HistoryType.Article, id, url: getColumnUrl(id) }
   }
   if (business === HistoryType.Live && oid) {
-    return { type: HistoryType.Live, id: oid, url: `https://live.bilibili.com/${oid}` }
+    return { type: HistoryType.Live, id: oid, url: getLiveRoomUrl(oid) }
   }
   return undefined
 }
@@ -104,7 +111,7 @@ export const getHistoryPage = async (type: HistoryType, cursor?: string) => {
   const params = new URLSearchParams(cursor)
   params.set('type', filter?.apiType ?? '')
   const { list, cursor: nextCursor } = await bilibiliApi<HistoryPage>(
-    getJsonWithCredentials(`https://api.bilibili.com/x/web-interface/history/cursor?${params}`),
+    getJsonWithCredentials(`${dashboardApiUrls.history}?${params}`),
     '获取历史记录失败',
     false,
   )
@@ -144,4 +151,28 @@ export const getHistoryPage = async (type: HistoryType, cursor?: string) => {
   // Videos and bangumi share a server-side filter. Advance using the unfiltered page.
   const next = items.length ? getNextCursor(nextCursor, items.at(-1).view_at) : undefined
   return { entries, next }
+}
+
+export const getHistoryRecordingPaused = async () => {
+  const result = await bilibiliApi<unknown>(
+    getJsonWithCredentials(dashboardApiUrls.historyRecording),
+    '读取历史记录状态失败',
+    false,
+  )
+  return result === true
+}
+
+export const setHistoryRecordingPaused = async (paused: boolean) => {
+  const csrf = getCsrf()
+  if (!csrf) {
+    throw new Error('登录已失效')
+  }
+  const params = new URLSearchParams({ csrf, switch: String(paused) })
+  await bilibiliApi(
+    postTextWithCredentials(dashboardApiUrls.setHistoryRecording, params.toString()).then(
+      JSON.parse,
+    ),
+    '更新历史记录状态失败',
+    false,
+  )
 }

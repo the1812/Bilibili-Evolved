@@ -30,11 +30,7 @@
           </label>
         </template>
         <template v-if="favoriteKind === 'folders' && selectedFolderId" #actions>
-          <a
-            :href="`https://www.bilibili.com/list/ml${selectedFolderId}`"
-            target="_blank"
-            rel="noopener"
-          >
+          <a :href="getFavoriteFolderUrl(selectedFolderId)" target="_blank" rel="noopener">
             播放全部
           </a>
         </template>
@@ -61,9 +57,10 @@ import { computed, ref, watch } from 'vue'
 import { getUID } from '@/core/utils'
 import { useScopedConsole } from '@/core/utils/log'
 import { VEmpty } from '@/ui'
-import CardCollection from '../../shared/CardCollection.vue'
+import CardCollection from '../../shared/cards/CardCollection.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
+import { getFavoriteFolderUrl } from '../../shared/urls'
 import { usePagedList } from '../../shared/use-paged-list'
 import LibraryCards from './LibraryCards.vue'
 import LibraryToolbar from './LibraryToolbar.vue'

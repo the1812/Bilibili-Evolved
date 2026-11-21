@@ -1,6 +1,7 @@
 import type { TabMapping } from '@/ui/tab-mapping'
 import { TabOption, type DashboardHomeOptions } from '../options'
-import type { ContentCardLayout } from '../shared/content-card'
+import type { ContentCardLayout } from '../shared/cards/content-card'
+import { dashboardUrls, getSpaceUrls } from '../shared/urls'
 
 type TabVisibilityOption = keyof DashboardHomeOptions & `${string}Show`
 type TabLayoutOption = keyof DashboardHomeOptions & `${string}Layout`
@@ -21,8 +22,8 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'dynamicShow',
     fixedLayout: 'compact',
     trackCountOption: 'dynamicTrackCount',
-    component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
-    activeLink: 'https://t.bilibili.com/',
+    component: () => import('./feeds/DynamicFeed.vue').then(m => m.default),
+    activeLink: dashboardUrls.dynamics,
   },
   {
     name: TabOption.Video,
@@ -30,8 +31,8 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'videoShow',
     layoutOption: 'videoLayout',
     trackCountOption: 'videoTrackCount',
-    component: () => import('./video/VideoFeed.vue').then(m => m.default),
-    activeLink: 'https://t.bilibili.com/?tab=video',
+    component: () => import('./feeds/VideoFeed.vue').then(m => m.default),
+    activeLink: dashboardUrls.videoDynamics,
   },
   {
     name: TabOption.Bangumi,
@@ -39,9 +40,9 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'bangumiShow',
     layoutOption: 'bangumiLayout',
     trackCountOption: 'bangumiTrackCount',
-    component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
+    component: () => import('./feeds/DynamicFeed.vue').then(m => m.default),
     propsData: { feedType: 'pgc' },
-    activeLink: 'https://t.bilibili.com/?tab=pgc',
+    activeLink: dashboardUrls.bangumiDynamics,
   },
   {
     name: TabOption.Column,
@@ -49,9 +50,9 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'columnShow',
     layoutOption: 'columnLayout',
     trackCountOption: 'columnTrackCount',
-    component: () => import('./dynamic/DynamicFeed.vue').then(m => m.default),
+    component: () => import('./feeds/DynamicFeed.vue').then(m => m.default),
     propsData: { feedType: 'column' },
-    activeLink: 'https://t.bilibili.com/?tab=article',
+    activeLink: dashboardUrls.columnDynamics,
   },
   {
     name: TabOption.Search,
@@ -65,8 +66,8 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'trendingShow',
     layoutOption: 'trendingLayout',
     trackCountOption: 'trendingTrackCount',
-    component: () => import('./video/Trending.vue').then(m => m.default),
-    activeLink: 'https://www.bilibili.com/v/popular/all',
+    component: () => import('./feeds/Trending.vue').then(m => m.default),
+    activeLink: dashboardUrls.popular,
   },
   {
     name: TabOption.Recommended,
@@ -74,7 +75,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     visibilityOption: 'recommendedShow',
     layoutOption: 'recommendedLayout',
     trackCountOption: 'recommendedTrackCount',
-    component: () => import('./video/Trending.vue').then(m => m.default),
+    component: () => import('./feeds/Trending.vue').then(m => m.default),
     propsData: { personalized: true },
   },
   {
@@ -84,7 +85,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     layoutOption: 'favoritesLayout',
     trackCountOption: 'favoritesTrackCount',
     component: () => import('./library/Favorites.vue').then(m => m.default),
-    activeLink: uid ? `https://space.bilibili.com/${uid}/favlist` : undefined,
+    activeLink: uid ? getSpaceUrls(uid).favorites : undefined,
   },
   {
     name: TabOption.History,
@@ -93,7 +94,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     layoutOption: 'historyLayout',
     trackCountOption: 'historyTrackCount',
     component: () => import('./library/History.vue').then(m => m.default),
-    activeLink: 'https://www.bilibili.com/history',
+    activeLink: dashboardUrls.history,
   },
   {
     name: TabOption.Watchlater,
@@ -102,14 +103,14 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     layoutOption: 'watchlaterLayout',
     trackCountOption: 'watchlaterTrackCount',
     component: () => import('./library/Watchlater.vue').then(m => m.default),
-    activeLink: 'https://www.bilibili.com/watchlater/#/list',
+    activeLink: dashboardUrls.watchlater,
   },
   {
     name: TabOption.Account,
     id: 'account',
     visibilityOption: 'accountShow',
     component: () => import('./account/Account.vue').then(m => m.default),
-    activeLink: 'https://account.bilibili.com/account/home',
+    activeLink: dashboardUrls.account,
   },
   {
     name: TabOption.Followings,
@@ -118,9 +119,7 @@ export const getDashboardTabs = (uid: string): DashboardTab[] => [
     layoutOption: 'followingsLayout',
     trackCountOption: 'followingsTrackCount',
     component: () => import('./followings/Followings.vue').then(m => m.default),
-    activeLink: uid
-      ? `https://space.bilibili.com/${uid}/fans/follow`
-      : 'https://passport.bilibili.com/login',
+    activeLink: uid ? getSpaceUrls(uid).following : dashboardUrls.login,
   },
   {
     name: TabOption.Sitemap,

@@ -1,6 +1,6 @@
 import type { InjectionKey, Ref } from 'vue'
 import type { VideoCard } from '@/components/feeds/video-card'
-import { LayoutOption } from '../options'
+import { LayoutOption } from '../../options'
 
 export type ContentCardLayout = 'horizontal' | 'compact' | 'vertical'
 export const contentCardLayoutKey: InjectionKey<Readonly<Ref<ContentCardLayout | undefined>>> =

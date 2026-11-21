@@ -1,6 +1,6 @@
 import { formatDate } from '@/core/utils/formatters'
 import { descendingStringSort } from '@/core/utils/sort'
-import { formatDateLabel } from './format-date'
+import { formatDateLabel } from '../../shared/format-date'
 
 export const groupCardsByDate = <Card>(
   cards: Card[],

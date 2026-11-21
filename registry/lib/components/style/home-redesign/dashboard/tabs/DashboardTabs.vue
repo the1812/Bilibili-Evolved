@@ -53,7 +53,7 @@
 import { computed, provide, ref, watch } from 'vue'
 import { sizeChange } from '@/core/observer'
 import { VEmpty } from '@/ui'
-import { contentCardLayoutKey } from '../shared/content-card'
+import { contentCardLayoutKey } from '../shared/cards/content-card'
 import type { DashboardTab } from './dashboard-tabs'
 import { useDashboardTabs } from './use-dashboard-tabs'
 

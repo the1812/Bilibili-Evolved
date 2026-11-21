@@ -1,9 +1,7 @@
 import { computed, onMounted, ref } from 'vue'
-import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
-import { getCsrf } from '@/core/utils'
 import { logError } from '@/core/utils/log'
+import { getHistoryRecordingPaused, setHistoryRecordingPaused } from './history-api'
 
-const historyRecordingUrl = 'https://api.bilibili.com/x/v2/history/shadow'
 // Keep pending updates and the confirmed state across tab switches.
 const paused = ref<boolean>()
 const busy = ref(false)
@@ -37,12 +35,7 @@ export const useHistoryRecording = (uid: string) => {
   const refreshRecording = () =>
     run(async () => {
       paused.value = undefined
-      const result = await bilibiliApi<unknown>(
-        getJsonWithCredentials(historyRecordingUrl),
-        '读取历史记录状态失败',
-        false,
-      )
-      paused.value = result === true
+      paused.value = await getHistoryRecordingPaused()
     })
 
   const toggleRecording = () => {
@@ -50,17 +43,8 @@ export const useHistoryRecording = (uid: string) => {
       return refreshRecording()
     }
     return run(async () => {
-      const csrf = getCsrf()
-      if (!csrf) {
-        throw new Error('登录已失效')
-      }
       const nextPaused = !paused.value
-      const params = new URLSearchParams({ csrf, switch: String(nextPaused) })
-      await bilibiliApi(
-        postTextWithCredentials(`${historyRecordingUrl}/set`, params.toString()).then(JSON.parse),
-        '更新历史记录状态失败',
-        false,
-      )
+      await setHistoryRecordingPaused(nextPaused)
       paused.value = nextPaused
     })
   }

@@ -1,5 +1,6 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDate } from '@/core/utils/formatters'
+import { dashboardApiUrls, getSpaceUrls } from '../../shared/urls'
 
 export interface AccountProfile {
   isLogin: boolean
@@ -27,7 +28,7 @@ const getAccountData = <T>(url: string, error: string) =>
   bilibiliApi<T>(getJsonWithCredentials(url), error, false)
 
 export const getAccountProfile = async (): Promise<AccountProfile | undefined> => {
-  const response = getJsonWithCredentials('https://api.bilibili.com/x/web-interface/nav')
+  const response = getJsonWithCredentials(dashboardApiUrls.accountProfile)
   if ((await response)?.code === -101) {
     return undefined
   }
@@ -50,21 +51,21 @@ export const getAccountCounts = async (mid: number): Promise<AccountRow[]> => {
   const params = new URLSearchParams({ mid: String(mid) })
   const [account, creator] = await Promise.all([
     getAccountData<{ following?: number; follower?: number; dynamic_count?: number }>(
-      'https://api.bilibili.com/x/web-interface/nav/stat',
+      dashboardApiUrls.accountCounts,
       '获取账号数据失败',
     ),
     getAccountData<{ likes?: number; archive?: { view?: number }; article?: { view?: number } }>(
-      `https://api.bilibili.com/x/space/upstat?${params}`,
+      `${dashboardApiUrls.creatorCounts}?${params}`,
       '获取创作数据失败',
     ).catch(() => undefined),
   ])
-  const space = `https://space.bilibili.com/${mid}`
+  const space = getSpaceUrls(mid)
   return [
-    { label: '关注', value: account.following, url: `${space}/fans/follow` },
-    { label: '粉丝', value: account.follower, url: `${space}/fans/fans` },
-    { label: '动态', value: account.dynamic_count, url: `${space}/dynamic` },
+    { label: '关注', value: account.following, url: space.following },
+    { label: '粉丝', value: account.follower, url: space.followers },
+    { label: '动态', value: account.dynamic_count, url: space.dynamics },
     { label: '获赞数', value: creator?.likes },
-    { label: '播放数', value: creator?.archive?.view, url: `${space}/video` },
+    { label: '播放数', value: creator?.archive?.view, url: space.videos },
     { label: '阅读数', value: creator?.article?.view },
   ].filter(item => typeof item.value === 'number')
 }
@@ -72,7 +73,7 @@ export const getAccountCounts = async (mid: number): Promise<AccountRow[]> => {
 export const getAccountPrivileges = async (): Promise<AccountRow[]> => {
   const { list } = await getAccountData<{
     list?: { type: number; state?: number; expire_time?: number }[]
-  }>('https://api.bilibili.com/x/vip/privilege/my', '获取大会员权益失败')
+  }>(dashboardApiUrls.privileges, '获取大会员权益失败')
   return [
     { type: 1, label: 'B币券' },
     { type: 2, label: '优惠券' },

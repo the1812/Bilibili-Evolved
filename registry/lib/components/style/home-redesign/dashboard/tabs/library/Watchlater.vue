@@ -60,9 +60,10 @@ import { getUID } from '@/core/utils'
 import { formatDuration } from '@/core/utils/formatters'
 import { useScopedConsole } from '@/core/utils/log'
 import { VEmpty } from '@/ui'
-import CardCollection from '../../shared/CardCollection.vue'
+import CardCollection from '../../shared/cards/CardCollection.vue'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
+import { dashboardUrls, getWatchlaterVideoUrl } from '../../shared/urls'
 import LibraryCards from './LibraryCards.vue'
 import LibraryToolbar from './LibraryToolbar.vue'
 import {
@@ -85,10 +86,10 @@ const watchStatus = ref<'all' | 'watched' | 'unwatched'>('all')
 const watchStatusSelect = ref<HTMLSelectElement>()
 const busy = computed(() => loading.value || updating.value)
 
-const queueUrl = 'https://www.bilibili.com/list/watchlater'
-const getVideoUrl = (item: RawWatchlaterItem) =>
-  item.bvid ? `${queueUrl}?bvid=${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`
-const playAllUrl = computed(() => (queue.value[0]?.bvid ? getVideoUrl(queue.value[0]) : queueUrl))
+const playAllUrl = computed(() => {
+  const item = queue.value[0]
+  return item?.bvid ? getWatchlaterVideoUrl(item.aid, item.bvid) : dashboardUrls.watchlaterQueue
+})
 const isWatched = (item: RawWatchlaterItem) => item.progress === -1
 const hasWatched = computed(() => queue.value.some(isWatched))
 const filteredEntries = computed(() => {
@@ -103,7 +104,7 @@ const filteredEntries = computed(() => {
         id: item.aid,
         aid: item.aid,
         title: item.title,
-        url: getVideoUrl(item),
+        url: getWatchlaterVideoUrl(item.aid, item.bvid),
         coverUrl: item.bangumi?.cover || item.pic,
         durationText: duration > 0 ? formatDuration(duration) : undefined,
         upName: item.owner?.name,

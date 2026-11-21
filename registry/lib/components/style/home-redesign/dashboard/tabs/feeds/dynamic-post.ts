@@ -1,8 +1,13 @@
 import { normalizeFeedsCardModules } from '@/components/feeds/api'
 import { getDpiSourceSet, retrieveImageUrl } from '@/core/utils'
 import { formatCount, parseCount } from '@/core/utils/formatters'
-import type { ContentCardData, ContentCardKind } from '../../shared/content-card'
-import { getWebUrl } from '../../shared/urls'
+import type { ContentCardData, ContentCardKind } from '../../shared/cards/content-card'
+import {
+  getBangumiEpisodeUrl,
+  getBangumiMediaUrl,
+  getDynamicUrl,
+  getWebUrl,
+} from '../../shared/urls'
 
 interface RawImage {
   src?: string
@@ -201,7 +206,7 @@ const getBangumiAuthorUrl = (
   const id = [linkedMediaId, mediaId, authorMediaId]
     .map(Number)
     .find(value => Number.isSafeInteger(value) && value > 0)
-  return id ? `https://www.bilibili.com/bangumi/media/md${id}` : undefined
+  return id ? getBangumiMediaUrl(id) : undefined
 }
 
 const bilibiliImageUrl = /^(?:https?:)?\/\/(?:[\w-]+\.)?(?:hdslb|biliimg)\.com\/bfs\/[^?#]+$/i
@@ -298,7 +303,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
     .join('\n\n')
   const textBlocks = [getText(content?.desc), opusText, paragraphs].filter(block => block?.trim())
   const text = lodash.uniqBy(textBlocks, block => block.trim()).join('\n\n')
-  const url = `https://t.bilibili.com/${item.id_str}`
+  const url = getDynamicUrl(item.id_str)
   const mediaKind = attachmentKinds.find(kind => major?.[getRawAttachmentKind(kind)]?.title)
   const media = mediaKind ? major[getRawAttachmentKind(mediaKind)] : undefined
   const attachmentKind =
@@ -320,9 +325,7 @@ export const toDynamicPost = (item: RawDynamicPost): DynamicPost => {
     type: attachmentTypes[attachmentKind],
     url:
       getWebUrl(media.jump_url) ??
-      (Number.isSafeInteger(episodeId) && episodeId > 0
-        ? `https://www.bilibili.com/bangumi/play/ep${episodeId}`
-        : url),
+      (Number.isSafeInteger(episodeId) && episodeId > 0 ? getBangumiEpisodeUrl(episodeId) : url),
     title: media.title,
     coverUrl,
     coverSrcset: coverUrl ? getDynamicThumbnailSet(coverUrl, 480) : undefined,

@@ -38,7 +38,7 @@
             <a
               v-if="membership"
               class="dashboard-home-account-membership"
-              href="https://account.bilibili.com/account/big"
+              :href="dashboardUrls.vipAccount"
               target="_blank"
               rel="noopener"
               >{{ membership }}</a
@@ -126,6 +126,7 @@ import { getUID } from '@/core/utils'
 import { DpiImage, VEmpty, VIcon } from '@/ui'
 import DashboardHomeOperations from '../../shared/DashboardHomeOperations.vue'
 import ListStatus from '../../shared/ListStatus.vue'
+import { dashboardUrls } from '../../shared/urls'
 import SitemapLinkList from '../sitemap/SitemapLinkList.vue'
 import { getPersonalSitemapSection } from '../sitemap/sitemap-links'
 import AccountInbox from './AccountInbox.vue'

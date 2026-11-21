@@ -11,8 +11,8 @@
 </template>
 
 <script setup lang="ts">
-import CardGridItem from '../../shared/CardGridItem.vue'
-import ContentCard from '../../shared/ContentCard.vue'
+import CardGridItem from '../../shared/cards/CardGridItem.vue'
+import ContentCard from '../../shared/cards/ContentCard.vue'
 import type { LibraryEntry } from './library'
 
 defineProps<{

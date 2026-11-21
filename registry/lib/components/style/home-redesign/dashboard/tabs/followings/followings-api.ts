@@ -1,5 +1,6 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDate } from '@/core/utils/formatters'
+import { dashboardApiUrls } from '../../shared/urls'
 
 interface RawFollowing {
   mid: number
@@ -21,7 +22,7 @@ const pageSize = 50
 export const getFollowingsPage = async (uid: string, page: number) => {
   const params = new URLSearchParams({ vmid: uid, pn: String(page), ps: String(pageSize) })
   const { list, total } = await bilibiliApi<FollowingPage>(
-    getJsonWithCredentials(`https://api.bilibili.com/x/relation/followings?${params}`),
+    getJsonWithCredentials(`${dashboardApiUrls.followings}?${params}`),
     '获取关注列表失败',
     false,
   )

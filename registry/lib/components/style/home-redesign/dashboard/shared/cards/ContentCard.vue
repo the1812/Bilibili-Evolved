@@ -133,6 +133,7 @@ import { toggleWatchlater, watchlaterList } from '@/components/video/watchlater'
 import { getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { DpiImage, VIcon } from '@/ui'
+import { getBangumiEpisodeUrl, getTopicUrl, getVideoUrl } from '../urls'
 import type { ContentCardData, ContentCardKind } from './content-card'
 
 const props = defineProps<{
@@ -158,17 +159,17 @@ const cardUrl = computed(() => {
     return url
   }
   if (epID) {
-    return `https://www.bilibili.com/bangumi/play/ep${epID}`
+    return getBangumiEpisodeUrl(epID)
   }
   if (bvid || aid) {
-    return `https://www.bilibili.com/video/${bvid || `av${aid}`}/`
+    return getVideoUrl(bvid || `av${aid}`)
   }
   return undefined
 })
 const topics = computed(() =>
   (props.data.topics ?? []).map(topic => ({
     ...topic,
-    url: topic.url || `https://t.bilibili.com/topic/name/${encodeURIComponent(topic.name)}/feed`,
+    url: topic.url || getTopicUrl(topic.name),
   })),
 )
 const uploaders = computed<{ id?: number; name: string; faceUrl?: string; url?: string }[]>(() => {

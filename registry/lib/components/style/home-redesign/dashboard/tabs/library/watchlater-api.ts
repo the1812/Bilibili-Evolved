@@ -1,12 +1,11 @@
 import { watchlaterList, type RawWatchlaterItem } from '@/components/video/watchlater'
 import { bilibiliApi, getJsonWithCredentials, postTextWithCredentials } from '@/core/ajax'
 import { getCsrf } from '@/core/utils'
-
-const watchlaterApi = 'https://api.bilibili.com/x/v2/history/toview'
+import { dashboardApiUrls } from '../../shared/urls'
 
 export const getWatchlaterQueue = async () => {
   const data = await bilibiliApi<{ list?: RawWatchlaterItem[] }>(
-    getJsonWithCredentials(`${watchlaterApi}/web`),
+    getJsonWithCredentials(dashboardApiUrls.watchlaterQueue),
     '获取稍后再看列表失败',
     false,
   )
@@ -15,21 +14,21 @@ export const getWatchlaterQueue = async () => {
   return queue
 }
 
-const updateWatchlater = async (action: 'clear' | 'del', params?: Record<string, string>) => {
+const updateWatchlater = async (url: string, params?: Record<string, string>) => {
   const csrf = getCsrf()
   if (!csrf) {
     throw new Error('登录已失效')
   }
   const body = new URLSearchParams({ csrf, ...params })
   await bilibiliApi(
-    postTextWithCredentials(`${watchlaterApi}/${action}`, body.toString()).then(JSON.parse),
+    postTextWithCredentials(url, body.toString()).then(JSON.parse),
     '更新稍后再看失败',
     false,
   )
 }
 
 export const removeWatchlater = async (aid: number) => {
-  await updateWatchlater('del', { aid: String(aid) })
+  await updateWatchlater(dashboardApiUrls.removeWatchlater, { aid: String(aid) })
   const index = watchlaterList.indexOf(aid)
   if (index >= 0) {
     watchlaterList.splice(index, 1)
@@ -37,4 +36,6 @@ export const removeWatchlater = async (aid: number) => {
 }
 
 export const clearWatchlater = (watchedOnly: boolean) =>
-  watchedOnly ? updateWatchlater('del', { viewed: 'true' }) : updateWatchlater('clear')
+  watchedOnly
+    ? updateWatchlater(dashboardApiUrls.removeWatchlater, { viewed: 'true' })
+    : updateWatchlater(dashboardApiUrls.clearWatchlater)

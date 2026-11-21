@@ -1,5 +1,13 @@
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
 import { formatDuration } from '@/core/utils/formatters'
+import {
+  dashboardApiUrls,
+  getAudioUrl,
+  getBangumiSeasonUrl,
+  getCollectionUrl,
+  getFavoriteFolderUrl,
+  getVideoUrl,
+} from '../../shared/urls'
 import type { LibraryEntry } from './library'
 
 export const favoriteKinds = {
@@ -54,18 +62,13 @@ interface FollowedShow {
   follow_status?: keyof typeof followStatuses
 }
 
-const site = 'https://www.bilibili.com'
 const pageSize = 20
-const getFavoriteData = <T>(path: string, params: URLSearchParams, message: string) =>
-  bilibiliApi<T>(
-    getJsonWithCredentials(`https://api.bilibili.com${path}?${params}`),
-    message,
-    false,
-  )
+const getFavoriteData = <T>(url: string, params: URLSearchParams, message: string) =>
+  bilibiliApi<T>(getJsonWithCredentials(`${url}?${params}`), message, false)
 
 export const getFavoriteFolders = async (uid: string) => {
   const { list } = await getFavoriteData<{ list?: FavoriteFolder[] }>(
-    '/x/v3/fav/folder/created/list-all',
+    dashboardApiUrls.favoriteFolders,
     new URLSearchParams({ up_mid: uid, type: '2', rid: '0' }),
     '获取收藏夹列表失败',
   )
@@ -77,7 +80,7 @@ export const getFavoriteMedia = async (folder: number, page: number) => {
     medias?: FavoriteMedia[]
     has_more?: boolean
   }>(
-    '/x/v3/fav/resource/list',
+    dashboardApiUrls.favoriteMedia,
     new URLSearchParams({
       media_id: String(folder),
       pn: String(page),
@@ -96,9 +99,9 @@ export const getFavoriteMedia = async (folder: number, page: number) => {
       let url: string | undefined
       if (!unavailable) {
         if (item.type === 12) {
-          url = `${site}/audio/au${item.id}/`
+          url = getAudioUrl(item.id)
         } else if (item.bvid || item.type === 2) {
-          url = `${site}/video/${item.bvid || `av${item.id}`}/`
+          url = getVideoUrl(item.bvid || `av${item.id}`)
         }
       }
       return {
@@ -124,7 +127,7 @@ export const getCollectedFolders = async (uid: string, page: number) => {
     list?: CollectedFolder[]
     has_more?: boolean
   }>(
-    '/x/v3/fav/folder/collected/list',
+    dashboardApiUrls.collectedFolders,
     new URLSearchParams({ up_mid: uid, pn: String(page), ps: String(pageSize), platform: 'web' }),
     '获取订阅合集失败',
   )
@@ -140,9 +143,7 @@ export const getCollectedFolders = async (uid: string, page: number) => {
           kind: 'other',
           title: item.title,
           coverUrl: item.cover,
-          url: isCollection
-            ? `https://space.bilibili.com/${item.mid}/lists/${item.id}?type=season`
-            : `${site}/list/ml${item.id}`,
+          url: isCollection ? getCollectionUrl(item.mid, item.id) : getFavoriteFolderUrl(item.id),
           badge: isCollection ? '合集' : '收藏夹',
           upName: item.upper?.name,
           upID: item.upper?.mid || item.mid,
@@ -162,7 +163,7 @@ export const getFollowedShows = async (
   page: number,
 ) => {
   const { list, total } = await getFavoriteData<{ list?: FollowedShow[]; total?: number }>(
-    '/x/space/bangumi/follow/list',
+    dashboardApiUrls.followedShows,
     new URLSearchParams({
       vmid: uid,
       type: kind === 'bangumi' ? '1' : '2',
@@ -179,7 +180,7 @@ export const getFollowedShows = async (
         kind: 'bangumi',
         title: item.title,
         coverUrl: item.square_cover || item.cover,
-        url: `${site}/bangumi/play/ss${item.season_id}`,
+        url: getBangumiSeasonUrl(item.season_id),
         badge: item.follow_status ? followStatuses[item.follow_status] : undefined,
         detail: [item.progress, item.new_ep?.index_show].filter(Boolean).join(' · '),
       }),

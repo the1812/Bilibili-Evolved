@@ -1,4 +1,4 @@
-import type { ContentCardData } from '../../shared/content-card'
+import type { ContentCardData } from '../../shared/cards/content-card'
 
 export interface LibraryEntry extends ContentCardData {
   id: string | number

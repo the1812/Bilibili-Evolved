@@ -37,7 +37,7 @@
 <script setup lang="ts">
 import { computed, nextTick, ref, shallowRef, watch } from 'vue'
 import { VIcon } from '@/ui'
-import { formatLink, isHttp, type LinkType } from './urls'
+import { formatLink, isHttp, type LinkType } from '../shared/urls'
 
 const dialogElement = ref<HTMLDialogElement>()
 const iframeElement = ref<HTMLIFrameElement>()

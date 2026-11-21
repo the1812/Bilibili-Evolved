@@ -3,7 +3,12 @@
     <section class="dashboard-home-account-card" :aria-busy="countsLoading">
       <header class="dashboard-home-account-panel-heading">
         <h2>未读消息</h2>
-        <a :href="messageCenter" aria-label="查看全部未读消息" target="_blank" rel="noopener">
+        <a
+          :href="dashboardUrls.messageCenter"
+          aria-label="查看全部未读消息"
+          target="_blank"
+          rel="noopener"
+        >
           查看全部
         </a>
       </header>
@@ -119,9 +124,10 @@
 import { nextTick, ref } from 'vue'
 import { formatDateTime } from '@/core/utils/formatters'
 import { VEmpty } from '@/ui'
-import { inboxCategories, messageCenter } from '../../shared/urls'
 import ListStatus from '../../shared/ListStatus.vue'
 import type { InboxPage } from './inbox-api'
+import { dashboardUrls } from '../../shared/urls'
+import { inboxCategories } from './inbox-categories'
 import { useAccountInbox } from './use-account-inbox'
 
 const {
