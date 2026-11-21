@@ -2,11 +2,11 @@
   <div
     ref="collection"
     class="dashboard-home-card-collection"
-    :class="{ 'is-horizontal-scroll': horizontalScroll }"
-    :tabindex="horizontalScroll ? 0 : null"
-    :role="horizontalScroll ? 'region' : null"
-    :aria-label="horizontalScroll ? '从右向左浏览卡片' : null"
-    :style="horizontalScroll ? scrollLayout : null"
+    :class="`dashboard-home-card-collection-${layout}`"
+    :tabindex="isVertical ? 0 : null"
+    :role="isVertical ? 'region' : null"
+    :aria-label="isVertical ? '从右向左浏览卡片' : null"
+    :style="isVertical ? scrollLayout : null"
     @wheel="scrollWithWheel"
   >
     <div class="dashboard-home-card-track">
@@ -21,14 +21,14 @@ import { sizeChange } from '@/core/observer'
 import { contentCardLayoutKey } from './content-card'
 
 const layout = inject(contentCardLayoutKey)
-const horizontalScroll = computed(() => layout?.value === 'vertical')
+const isVertical = computed(() => layout?.value === 'vertical')
 const collection = ref<HTMLElement>()
 const scrollLayout = ref<Record<string, string | number>>()
 const minimumRowHeight = 224
 const preferredRowHeight = 320
 
 watch(
-  () => (horizontalScroll.value ? collection.value : undefined),
+  () => (isVertical.value ? collection.value : undefined),
   (element, _, onCleanup) => {
     if (!element) {
       return
@@ -74,7 +74,7 @@ watch(
 
 const scrollWithWheel = (event: WheelEvent) => {
   if (
-    !horizontalScroll.value ||
+    !isVertical.value ||
     event.defaultPrevented ||
     event.ctrlKey ||
     event.shiftKey ||
@@ -83,23 +83,6 @@ const scrollWithWheel = (event: WheelEvent) => {
     return
   }
   const element = event.currentTarget as HTMLElement
-  // Let a scrollable card consume the wheel until it reaches its edge.
-  for (const target of event.composedPath()) {
-    if (target === element) {
-      break
-    }
-    if (!(target instanceof HTMLElement) || target.scrollHeight <= target.clientHeight) {
-      continue
-    }
-    const { overflowY } = getComputedStyle(target)
-    const canScroll =
-      event.deltaY < 0
-        ? target.scrollTop > 0
-        : target.scrollTop < target.scrollHeight - target.clientHeight - 1
-    if (canScroll && (overflowY === 'auto' || overflowY === 'scroll')) {
-      return
-    }
-  }
   const maxScroll = element.scrollWidth - element.clientWidth
   let distance = event.deltaY
   if (event.deltaMode === WheelEvent.DOM_DELTA_LINE) {
