@@ -1,0 +1,64 @@
+/* 全局角标比例与显隐变量默认值 */
+:root {
+  --bili-dm-symbol-scale: 0.55;
+  --bili-dm-num-scale: 0.72;
+  --bili-dm-badge-display: inline-flex;
+  --bili-dm-symbol-display: inline;
+  --bili-dm-num-display: inline;
+}
+
+html.bili-dm-badge-hidden {
+  --bili-dm-badge-display: none;
+}
+
+html.bili-dm-badge-symbol-hidden {
+  --bili-dm-symbol-display: none;
+}
+
+html.bili-dm-badge-num-hidden {
+  --bili-dm-num-display: none;
+}
+
+/* 隐藏被合并的重复弹幕：保持原有布局与 CSS 动画生命周期，不破坏 animationend 回收事件 */
+.danmaku-item-container .bili-dm-merged-hidden,
+.bili-dm-merged-hidden {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+/* 合并自己发出的带边框弹幕时，将边框继承显示到母弹幕上 */
+.bili-dm-self-merged {
+  border: 1px solid var(--bili-dm-self-border-color, #66ffff) !important;
+}
+
+/* 膨胀弹幕样式与平滑过渡：解除表情包固定宽高与 overflow:hidden 裁剪，弹性 z-index 让位 */
+.bili-dm-inflated {
+  z-index: 2;
+  overflow: visible !important;
+  width: auto !important;
+  height: auto !important;
+  transition: font-size 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+
+  /* 表情图片优先按原始 px 尺寸乘以 --bili-dm-scale 等比膨胀，避免大表情首轮合并缩小或宽高比失真 */
+  img:not(.fans-medal-item):not(.guard-icon):not(.admin-icon) {
+    max-width: none !important;
+    max-height: none !important;
+    vertical-align: middle !important;
+    transition: width 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+      height 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+
+    &.bili-dm-img-w-scaled {
+      width: calc(var(--bili-dm-img-base-w) * var(--bili-dm-scale, 1)) !important;
+    }
+
+    &.bili-dm-img-h-scaled {
+      height: calc(var(--bili-dm-img-base-h) * var(--bili-dm-scale, 1)) !important;
+    }
+
+    &:not(.bili-dm-img-w-scaled):not(.bili-dm-img-h-scaled):not(.bili-danmaku-x-dm-emoji) {
+      width: auto !important;
+      height: 1.15em !important;
+    }
+  }
+}
