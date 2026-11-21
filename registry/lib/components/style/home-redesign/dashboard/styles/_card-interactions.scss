@@ -1,0 +1,85 @@
+.dashboard-home {
+  &.hide-watchlater .dashboard-home-content-card-watchlater {
+    display: none;
+  }
+
+  a.be-up-info {
+    min-inline-size: 0;
+    max-inline-size: 100%;
+
+    &.fallback {
+      @include round-bar(28);
+      padding: 2px 8px;
+      border: var(--home-card-border);
+    }
+  }
+
+  [data-content-card-layout='vertical'] {
+    .dashboard-home-content-card-uploaders,
+    .dashboard-home-followings-header {
+      .be-up-info {
+        box-sizing: border-box;
+        block-size: 28px;
+        inline-size: auto;
+        padding: 2px 2px 6px;
+      }
+
+      .be-up-info-cover,
+      .be-up-info-cover-fallback {
+        flex: none;
+        margin: 0;
+      }
+    }
+  }
+
+  .dashboard-home-dynamic-post-link {
+    @include h-center();
+    @include round-bar(28);
+    padding-inline: 8px;
+    border: 1px solid transparent;
+    color: var(--be-color-text-placeholder, #666);
+    white-space: nowrap;
+
+    &:is(:hover, :focus-visible) {
+      color: var(--theme-color);
+    }
+  }
+
+  a:is(
+      .be-up-info,
+      .dashboard-home-dynamic-post-link,
+      .dashboard-home-dynamic-original-link
+    ):any-link {
+    @media (prefers-reduced-motion: no-preference) {
+      transition: background-color 0.18s ease-out, border-color 0.18s ease-out;
+    }
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(
+        --dashboard-home-capsule-hover-background,
+        var(--theme-color-10, #8881)
+      );
+      border-color: var(--dashboard-home-capsule-hover-border, var(--theme-color-40, #8886));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--dashboard-home-capsule-focus, var(--home-color));
+      outline-offset: 2px;
+    }
+  }
+
+  .dashboard-home-content-card:not(.is-embedded),
+  .dashboard-home-dynamic-card,
+  .dashboard-home-dynamic-live-room,
+  .dashboard-home-followings-card,
+  .dashboard-home-account-card {
+    @media (prefers-reduced-motion: no-preference) {
+      transition: box-shadow 0.2s ease-out;
+    }
+
+    &:hover,
+    &:focus-within {
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.dashboard-home-operations {
+  @include v-center(12px);
+  position: fixed;
+  inset-block-end: clamp(16px, 4vh, 48px);
+  inset-inline-end: clamp(12px, 3vw, 48px);
+  z-index: 3;
+
+  .be-button.round.icon {
+    padding: 8px;
+    opacity: 0.5;
+
+    &:is(:hover, :focus-visible) {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &-refresh:hover .mdi {
+      @include rotate();
+    }
+
+    &:not(&-vertical) &-start:hover .mdi {
+      @include bounce-y(-2);
+    }
+
+    &-vertical &-start:hover .mdi {
+      @include bounce-x(2);
+    }
+  }
+}

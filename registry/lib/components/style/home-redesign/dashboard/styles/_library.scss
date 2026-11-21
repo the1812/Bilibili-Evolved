@@ -1,0 +1,133 @@
+.dashboard-home-library-toolbar {
+  @include h-center(8px);
+  flex-wrap: wrap;
+  font-size: 13px;
+
+  label {
+    @include h-center(6px);
+    max-inline-size: 100%;
+
+    > span {
+      flex: none;
+    }
+  }
+
+  input,
+  select,
+  .dashboard-home-library-actions > :is(a, button) {
+    box-sizing: border-box;
+    min-block-size: 34px;
+    min-inline-size: 0;
+    padding: 6px 10px;
+    border: 1px solid #8885;
+    border-radius: 8px;
+    background-color: var(--home-background-color);
+    color: inherit;
+    font: inherit;
+
+    &:focus-visible {
+      outline: 2px solid var(--theme-color);
+      outline-offset: 2px;
+    }
+  }
+
+  input,
+  select {
+    max-inline-size: 220px;
+    color-scheme: light;
+
+    body.dark & {
+      color-scheme: dark;
+    }
+  }
+
+  select {
+    appearance: auto;
+    white-space: nowrap;
+
+    &:hover {
+      border-color: var(--theme-color);
+    }
+
+    @supports (appearance: base-select) {
+      &,
+      &::picker(select) {
+        appearance: base-select;
+      }
+
+      &::picker(select) {
+        max-inline-size: min(320px, 90vw);
+        margin-block: 4px;
+        padding: 4px;
+        border: var(--home-card-border);
+        border-radius: 8px;
+        background-color: var(--home-background-color);
+        box-shadow: var(--dashboard-home-card-hover-shadow);
+        color: inherit;
+      }
+
+      &::picker-icon {
+        color: var(--theme-color);
+      }
+
+      &:open::picker-icon {
+        rotate: 180deg;
+      }
+
+      option {
+        min-block-size: 32px;
+        gap: 8px;
+        padding: 6px 8px;
+        border-radius: 5px;
+        white-space: normal;
+        overflow-wrap: anywhere;
+
+        &::checkmark {
+          display: none;
+        }
+
+        &:checked {
+          background-color: var(--theme-color-10, #8882);
+        }
+
+        &:is(:hover, :focus-visible) {
+          background-color: #8883;
+        }
+      }
+    }
+  }
+
+  select,
+  .dashboard-home-library-actions > :is(a, button:enabled:not([aria-disabled='true'])) {
+    cursor: pointer;
+  }
+}
+
+.dashboard-home-library {
+  @include v-stretch(12px);
+
+  &-actions {
+    @include h-center(8px);
+    flex-wrap: wrap;
+
+    > :is(a, button) {
+      @include h-center();
+
+      &:not(:disabled, [aria-disabled='true']):hover {
+        border-color: var(--theme-color);
+        color: var(--theme-color);
+      }
+
+      &:is(:disabled, [aria-disabled='true']) {
+        opacity: 0.55;
+      }
+    }
+
+    > button.dashboard-home-history-recording {
+      justify-content: center;
+      inline-size: 34px;
+      padding: 4px;
+      border-radius: 50%;
+    }
+  }
+}

@@ -1,0 +1,89 @@
+.dashboard-home-followings {
+  &-card {
+    @include card(12px);
+    gap: 4px;
+
+    [data-content-card-layout='horizontal'] &,
+    [data-content-card-layout='compact'] & {
+      @include v-stretch();
+      padding: 8px 12px;
+    }
+
+    [data-content-card-layout='vertical'] & {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+      padding: 12px 8px;
+
+      > .dashboard-home-followings-header,
+      > .dashboard-home-followings-signature-area {
+        min-inline-size: 0;
+        writing-mode: vertical-rl;
+        text-orientation: mixed;
+      }
+    }
+  }
+
+  &-header {
+    @include h-center(8px);
+
+    [data-content-card-layout='horizontal'] &,
+    [data-content-card-layout='compact'] & {
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    [data-content-card-layout='horizontal'] & {
+      flex: none;
+    }
+
+    time {
+      color: var(--be-color-text-placeholder, #666);
+      font-size: 12px;
+
+      [data-content-card-layout='vertical'] & {
+        flex: none;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &-signature-area {
+    [data-content-card-layout='horizontal'] &,
+    [data-content-card-layout='vertical'] & {
+      container-type: size;
+      min-block-size: 0;
+    }
+
+    [data-content-card-layout='horizontal'] & {
+      flex: 1;
+    }
+  }
+
+  &-signature {
+    margin: 0;
+    color: var(--be-color-text-content, var(--home-color));
+    font-size: 14px;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+
+    [data-content-card-layout='horizontal'] &,
+    [data-content-card-layout='vertical'] & {
+      // Use only complete lines along the block axis, which runs sideways in vertical writing.
+      --dashboard-home-followings-signature-lines: max(1, round(down, 100cqb / 1lh));
+
+      @supports not (opacity: calc(1px / 1px)) {
+        // Convert the two lengths to a ratio on browsers without unit division.
+        --dashboard-home-followings-signature-lines: max(1, round(down, tan(atan2(100cqb, 1lh))));
+      }
+
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--dashboard-home-followings-signature-lines);
+      line-clamp: var(--dashboard-home-followings-signature-lines);
+      max-block-size: 100%;
+      overflow: clip;
+    }
+  }
+}

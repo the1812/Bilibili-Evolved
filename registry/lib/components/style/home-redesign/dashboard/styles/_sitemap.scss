@@ -1,0 +1,115 @@
+.dashboard-home-sitemap {
+  box-sizing: border-box;
+  inline-size: 1560px;
+  max-inline-size: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  padding-inline: var(--dashboard-home-grid-padding);
+
+  @media (min-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  &-section {
+    @include card(12px);
+    padding: 18px;
+    min-inline-size: 0;
+
+    &.is-wide {
+      grid-column: 1 / -1;
+
+      > .dashboard-home-sitemap-links {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 132px), 1fr));
+      }
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 15px;
+    }
+  }
+
+  &-links,
+  &-sublinks {
+    display: grid;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  &-links {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 112px), 1fr));
+    align-items: start;
+    gap: 10px;
+  }
+
+  &-sublinks {
+    gap: 4px;
+    margin-block-start: 4px;
+
+    .dashboard-home-sitemap-link {
+      padding: 8px;
+      background-color: #8881;
+    }
+  }
+
+  &-tile {
+    display: flex;
+    min-block-size: 38px;
+    border-radius: 8px;
+    background-color: #8881;
+
+    > .dashboard-home-sitemap-link {
+      flex: 1;
+      min-inline-size: 0;
+    }
+  }
+
+  &-link {
+    @include h-center(8px);
+    padding: 10px;
+    color: inherit;
+    font-size: 13px;
+    overflow-wrap: anywhere;
+  }
+
+  &-toggle {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 30px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+
+    &[aria-expanded='true'] .dashboard-home-sitemap-icon {
+      transform: rotate(180deg);
+    }
+  }
+
+  &-link,
+  &-toggle {
+    border-radius: 8px;
+
+    @media (prefers-reduced-motion: no-preference) {
+      transition: background-color 0.18s ease-out, box-shadow 0.18s ease-out;
+    }
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(--theme-color-10, #8882);
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--theme-color);
+      outline-offset: 2px;
+    }
+  }
+
+  &-icon {
+    flex: none;
+    color: var(--theme-color);
+  }
+}
