@@ -31,9 +31,7 @@ const tryOpenLinkPreview = (href: string): boolean => {
   }
   const linkType = getLinkType(url)
   const option = linkType && dashboardLinkPreviewOptions[linkType]
-  return Boolean(
-    option && getDashboardHomeOptions()[option] && linkPreview.value?.openPreview(url, linkType),
-  )
+  return Boolean(option && getDashboardHomeOptions()[option] && linkPreview.value?.openPreview(url))
 }
 
 const isPlainClick = (event: MouseEvent) =>
