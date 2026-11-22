@@ -112,12 +112,16 @@ export const getCollectionUrl = (uid: number, id: number) =>
   `${spaceSite}/${uid}/lists/${id}?type=season`
 
 const api = 'https://api.bilibili.com'
+const liveApi = 'https://api.live.bilibili.com'
 const messageApi = 'https://api.vc.bilibili.com'
 const sessionsApi = `${messageApi}/session_svr/v1/session_svr`
 const watchlaterApi = `${api}/x/v2/history/toview`
 const historyRecording = `${api}/x/v2/history/shadow`
 
 export const dashboardApiUrls = {
+  video: `${api}/x/web-interface/view`,
+  bangumiSeason: `${api}/pgc/view/web/season`,
+  liveRoom: `${liveApi}/room/v1/Room/get_info`,
   accountProfile: `${api}/x/web-interface/nav`,
   accountCounts: `${api}/x/web-interface/nav/stat`,
   creatorCounts: `${api}/x/space/upstat`,
