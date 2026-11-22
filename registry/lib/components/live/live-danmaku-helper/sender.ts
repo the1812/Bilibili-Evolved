@@ -7,6 +7,7 @@ import { withControlBar } from '@/components/live/live-control-bar'
 //  live/danmaku-sendbar
 const liveInputSelector = [
   '.control-panel-ctnr .chat-input-ctnr .chat-input',
+  '.control-panel-ctnr-new .chat-input-ctnr-new .textarea-panel',
   '.chat-input-ctnr .chat-input',
   '.chat-input',
   '[class*="chat-input"] textarea',
@@ -15,6 +16,7 @@ const liveInputSelector = [
 
 const liveSendButtonSelector = [
   '.control-panel-ctnr .chat-input-ctnr ~ .bottom-actions .bl-button--primary',
+  '.control-panel-ctnr-new .right-actions .right-action-btn',
   '.bottom-actions .bl-button--primary',
   '.chat-input-ctnr ~ .bottom-actions button',
   '.control-panel-ctnr button[class*="send"]',
