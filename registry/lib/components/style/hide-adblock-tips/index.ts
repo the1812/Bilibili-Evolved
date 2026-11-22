@@ -21,5 +21,5 @@ export const component = defineComponentMetadata({
     },
   ],
   tags: [componentsTags.style],
-  urlInclude: ['//www.bilibili.com/'],
+  urlInclude: [/^https:\/\/www\.bilibili\.com\/$/, /^https:\/\/www\.bilibili\.com\/index\.html$/],
 })
