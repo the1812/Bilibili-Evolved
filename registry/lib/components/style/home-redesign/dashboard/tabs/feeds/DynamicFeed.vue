@@ -46,16 +46,18 @@
             :date="group.date"
             :label="group.label"
           >
-            <template v-for="card in group.cards">
+            <template v-if="props.feedType === 'all'">
               <DynamicCard
-                v-if="!card.data"
+                v-for="card in group.cards"
                 :key="card.id"
                 :card="card.dynamic"
                 :like-states="likeStates"
                 @preview-image="openImagePreview"
                 @toggle-like="toggleLike"
               />
-              <CardGridItem v-else :key="card.id">
+            </template>
+            <template v-else>
+              <CardGridItem v-for="card in group.cards" :key="card.id">
                 <ContentCard :data="card.data">
                   <template v-if="hasDynamicStats(card.post.stats)" #stats>
                     <DynamicStats

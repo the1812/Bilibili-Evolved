@@ -2,9 +2,6 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: var(--dashboard-home-space-lg);
-  box-sizing: border-box;
-  inline-size: min(100%, var(--home-max-width));
-  padding-inline: var(--dashboard-home-grid-padding-inline);
 
   @media (min-width: 960px) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -23,8 +20,7 @@
     }
 
     h2 {
-      margin-block: 0 var(--dashboard-home-space-md);
-      margin-inline: 0;
+      margin-block-end: var(--dashboard-home-space-md);
     }
   }
 

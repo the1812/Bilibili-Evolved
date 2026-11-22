@@ -1,5 +1,5 @@
 <template>
-  <div class="dashboard-home-account">
+  <div class="dashboard-home-tab-content dashboard-home-account">
     <ListStatus
       v-if="loadingProfile || profileFailed"
       :loading="loadingProfile"

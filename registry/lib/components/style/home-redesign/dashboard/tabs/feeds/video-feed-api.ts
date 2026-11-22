@@ -16,7 +16,7 @@ import {
 interface RawVideoFeedItem {
   id_str?: string
   modules?: {
-    module_author?: { name?: string; face?: string; mid?: number; pub_ts?: number }
+    module_author?: { name?: string; face?: string; mid?: number; pub_ts?: number | string }
     module_dynamic?: RawDynamicTopics & {
       major?: {
         archive?: RawMediaWithStats & {

@@ -1,9 +1,6 @@
 .dashboard-home-tab-settings {
   @include v-stretch(var(--dashboard-home-space-lg));
-  box-sizing: border-box;
-  inline-size: min(100%, var(--home-max-width));
   min-inline-size: 0;
-  padding-inline: var(--dashboard-home-grid-padding-inline);
 
   &-heading,
   &-actions,
@@ -11,13 +8,9 @@
     @include h-center(var(--dashboard-home-space-sm));
   }
 
-  &-heading {
-    margin: 0;
-
-    > .be-icon {
-      flex: none;
-      color: var(--theme-color);
-    }
+  &-heading > .be-icon {
+    flex: none;
+    color: var(--theme-color);
   }
 
   &-actions {
@@ -68,12 +61,6 @@
     }
   }
 
-  select,
-  &-track-count {
-    @include dashboard-control-size();
-    @include dashboard-control-colors();
-  }
-
   &-track-count {
     inline-size: 6em;
   }
@@ -92,13 +79,9 @@
     }
   }
 
-  .dashboard-home-action {
-    gap: var(--dashboard-home-space-xs);
-
-    &[aria-disabled='true'] {
-      cursor: default;
-      opacity: 0.5;
-    }
+  .dashboard-home-action[aria-disabled='true'] {
+    cursor: default;
+    opacity: 0.5;
   }
 }
 

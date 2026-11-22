@@ -11,18 +11,11 @@
 
 .dashboard-home-account {
   @include v-stretch(var(--dashboard-home-space-lg));
-  box-sizing: border-box;
-  inline-size: min(100%, var(--home-max-width));
-  padding-inline: var(--dashboard-home-grid-padding-inline);
 
   &-card {
     @include card(var(--home-card-radius));
     @include v-stretch(var(--dashboard-home-space-md));
     padding: var(--dashboard-home-space-lg);
-
-    h2 {
-      margin: 0;
-    }
 
     a:hover,
     a:focus-visible {

@@ -45,6 +45,19 @@ body:not(.home-redesign-off):has(.dashboard-home) {
   background-color: var(--home-base-color);
 }
 
+.dashboard-home-tab-content {
+  box-sizing: border-box;
+  inline-size: min(100%, var(--home-max-width));
+  padding-inline: var(--dashboard-home-grid-padding-inline);
+}
+
+.dashboard-home-library-toolbar :is(input, select),
+.dashboard-home-tab-settings select,
+.dashboard-home-tab-settings-track-count {
+  @include dashboard-control-size();
+  @include dashboard-control-colors();
+}
+
 :where(.dashboard-home, .dashboard-home-link-preview) button {
   border: 0;
   border-radius: var(--dashboard-home-control-radius);
@@ -72,13 +85,12 @@ body:not(.home-redesign-off):has(.dashboard-home) {
 .dashboard-home .dashboard-home-action {
   --dashboard-home-button-background: var(--home-background-color);
 
-  @include h-center();
+  @include h-center(var(--dashboard-home-space-xs));
   justify-content: center;
   padding-block: var(--dashboard-home-space-xs);
   padding-inline: var(--dashboard-home-space-sm);
   border: var(--dashboard-home-control-border);
   border-radius: var(--dashboard-home-control-radius);
-  font: inherit;
 
   &[aria-disabled='true'] {
     cursor: wait;

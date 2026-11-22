@@ -1,10 +1,11 @@
 import { formatDate, formatTime } from '@/core/utils/formatters'
 
-export const getDateFromUnixSeconds = (seconds?: number) => {
-  if (!Number.isSafeInteger(seconds) || seconds <= 0) {
+export const getDateFromUnixSeconds = (seconds?: number | string) => {
+  const timestamp = typeof seconds === 'string' ? Number(seconds) : seconds
+  if (!Number.isSafeInteger(timestamp) || timestamp <= 0) {
     return undefined
   }
-  const date = new Date(seconds * 1000)
+  const date = new Date(timestamp * 1000)
   return Number.isFinite(date.getTime()) ? date : undefined
 }
 

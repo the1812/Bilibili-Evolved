@@ -1,15 +1,18 @@
 .dashboard-home,
 .dashboard-home-link-preview {
   --dashboard-home-highlight-background: var(--theme-color-10, #8882);
+  --dashboard-home-emphasis-color: var(--theme-color-lightness-20, currentColor);
 
   color-scheme: light;
 
   body.dark & {
+    --dashboard-home-emphasis-color: var(--theme-color-lightness-80, currentColor);
+
     color-scheme: dark;
   }
 
   strong {
-    color: var(--theme-color);
+    color: var(--dashboard-home-emphasis-color);
   }
 
   input[type='checkbox'] {

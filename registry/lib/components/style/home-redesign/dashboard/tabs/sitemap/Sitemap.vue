@@ -1,5 +1,5 @@
 <template>
-  <nav class="dashboard-home-sitemap" aria-label="哔哩哔哩站点地图">
+  <nav class="dashboard-home-tab-content dashboard-home-sitemap" aria-label="哔哩哔哩站点地图">
     <section
       v-for="{ id, title, links } in sections"
       :key="id"

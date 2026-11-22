@@ -1,5 +1,5 @@
 <template>
-  <section class="dashboard-home-tab-settings" aria-label="仪表盘设置">
+  <section class="dashboard-home-tab-content dashboard-home-tab-settings" aria-label="仪表盘设置">
     <DashboardGeneralSettings />
     <div
       class="dashboard-home-tab-settings-scroll"

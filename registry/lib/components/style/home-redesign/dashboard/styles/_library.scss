@@ -29,9 +29,7 @@
 
   input,
   select {
-    @include dashboard-control-size();
     max-inline-size: 220px;
-    @include dashboard-control-colors();
   }
 
   select {

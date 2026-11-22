@@ -113,7 +113,7 @@ interface RawPostModules {
     mid?: number
     name?: string
     face?: string
-    pub_ts?: number
+    pub_ts?: number | string
     jump_url?: string
     type?: string
   }
