@@ -3,10 +3,11 @@ import {
   allVideoUrls,
   bangumiUrls,
   cheeseUrls,
+  festivalUrls,
   matchCurrentPage,
   mediaListUrls,
 } from '@/core/utils/urls'
-import { select } from '@/core/spin-query'
+import { delay, waitForForeground } from '@/core/utils'
 
 const commonVideoUrlPattern = '//www.bilibili.com/video/'
 
@@ -20,8 +21,8 @@ export const pageTypeInfos = {
     urls: [...bangumiUrls, ...cheeseUrls],
   },
   bnj: {
-    displayName: '拜年纪视频页',
-    urls: [/\/\/www\.bilibili\.com\/festival\/(\d+)bnj/],
+    displayName: '活动视频页',
+    urls: festivalUrls,
   },
 }
 
@@ -34,71 +35,34 @@ export const getCurrentPageType = lodash.once((): string | null => {
   return null
 })
 
-interface WaitMoment {
-  time: number
-  callback: (time: number) => Promise<void>
-}
+const getScrollableHeight = () =>
+  document.documentElement.scrollHeight - document.documentElement.clientHeight
 
-class WaitResult<R> {
-  constructor(
-    // promise 完成前经过的最后一个 moments 中的时刻，
-    // 如果没有任何一个时刻经过，该值为 0
-    public lastMoment: number,
-    // promise 的返回值
-    public result: R,
-  ) {}
-}
+const pollInterval = 500
+const idleTimeout = 2_000
+const waitTimeout = 30_000
 
-// 等待 promise 执行完成。当经过 moments 所指定的时刻时，调用对应的函数。
-// moments 的时刻必须是递增顺序
-async function waitWithMoments<R>(
-  promise: Promise<R>,
-  moments: Iterable<WaitMoment>,
-): Promise<WaitResult<R>> {
-  let lastMoment = { time: 0, callback: none as unknown } as WaitMoment
-  let timeoutId = null
-
-  const momentIt = moments[Symbol.iterator]()
-  const setNextMoment = () => {
-    const yielded = momentIt.next()
-    if (!yielded.done) {
-      const nextMoment = yielded.value
-      timeoutId = setTimeout(() => {
-        timeoutId = null
-        lastMoment.callback(lastMoment.time)
-        lastMoment = nextMoment
-        setNextMoment()
-      }, nextMoment.time - lastMoment.time)
+// 等页面高度稳定后再滚动, 不够高则等内容加载后继续滚
+const scrollToTarget = async (target: number) => {
+  const deadline = Date.now() + waitTimeout
+  let lastHeight = getScrollableHeight()
+  let lastChange = Date.now()
+  while (Date.now() < deadline && Date.now() - lastChange <= idleTimeout) {
+    await delay(pollInterval)
+    const height = getScrollableHeight()
+    if (height !== lastHeight) {
+      lastHeight = height
+      lastChange = Date.now()
+      continue
+    }
+    window.scrollTo({ top: target, behavior: 'instant' })
+    if (height >= target) {
+      return
     }
   }
-  setNextMoment()
-
-  const result = await promise
-  timeoutId !== null && clearTimeout(timeoutId)
-  return new WaitResult(lastMoment.time, result)
-}
-
-// 等待评论区元素加载，以提供足够的高度
-// 在特定的时刻输出 warn 日志。超时时输出 error 日志。
-// 返回元素是否在超时前加载完成
-const waitComment = async (): Promise<boolean> => {
-  const minute = 60_000
-  const promise = select('.bb-comment', { maxRetry: 50, queryInterval: 600 })
-  const moments = [minute / 2, minute, 3 * minute].map(
-    time =>
-      ({
-        time,
-        callback: (async theTime => {
-          console.warn(`[videoDefaultLocation] waiting more than ${theTime}ms for the page to load`)
-        }) as WaitMoment['callback'],
-      } as WaitMoment),
+  console.warn(
+    `[videoDefaultLocation] 页面高度不足, 无法定位到 ${target} (可滚动高度 ${getScrollableHeight()})`,
   )
-  const res = (await waitWithMoments(promise, moments)).result
-  if (res === null) {
-    console.error('[videoDefaultLocation] waiting for page load timeout')
-    return false
-  }
-  return true
 }
 
 const entry = async ({
@@ -106,17 +70,11 @@ const entry = async ({
     options: { locations },
   },
 }) => {
-  // TODO: 添加“刷新/前进/后退时禁用”选项以支持自定义
-  // 仅在初次进入页面时进行定位，即刷新、回退等操作不会执行定位
-  const navigationArr = window?.performance?.getEntriesByType('navigation')
-  if (navigationArr?.length !== 1) {
-    console.error(
-      `[videoDefaultLocation] 无法处理 PerformanceNavigationTiming 不是一个的情况。url: ${window.location.href}`,
-    )
-    return
-  }
-  const nav = navigationArr[0] as PerformanceNavigationTiming
-  if (nav.type !== 'navigate') {
+  // 前进/后退时由浏览器恢复滚动位置, 不做定位
+  const nav = window.performance?.getEntriesByType('navigation')[0] as
+    | PerformanceNavigationTiming
+    | undefined
+  if (nav?.type === 'back_forward') {
     return
   }
 
@@ -128,20 +86,17 @@ const entry = async ({
     }
   }
 
-  // 获取当前页面类型的默认位置
+  // 后台打开时页面尚未渲染, 定位会被忽略
+  await new Promise<void>(resolve => waitForForeground(() => resolve()))
+
   const pageType = getCurrentPageType()
   if (pageType === null) {
     console.error(`[videoDefaultLocation] unknown page type. url: ${window.location.href}`)
     return
   }
-  const defaultLocation = locations[pageType]
 
   // TODO: 自定义顶栏会改变页面高度，使该组件的定位出现偏差。因此需要在其操作完成后再定位
-  // 滚动到默认位置
-  const html = document.documentElement
-  if (defaultLocation < html.scrollHeight - html.clientHeight || (await waitComment())) {
-    window.scrollTo(0, defaultLocation)
-  }
+  await scrollToTarget(locations[pageType])
 }
 
 export const component = defineComponentMetadata({
