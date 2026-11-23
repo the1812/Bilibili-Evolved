@@ -22,12 +22,12 @@
       </template>
       <div v-if="durationText" class="duration">{{ durationText }}</div>
       <div
-        v-if="durationText && watchlater !== null && watchlater !== undefined"
+        v-if="durationText && canWatchlater"
         class="watchlater"
         @click.stop.prevent="handleWatchlaterClick()"
       >
-        <VIcon :size="15" :icon="watchlater ? 'mdi-check-circle' : 'mdi-clock-outline'"></VIcon>
-        {{ watchlater ? '已添加' : '稍后再看' }}
+        <VIcon :size="15" :icon="watchlaterIcon"></VIcon>
+        {{ watchlaterText }}
       </div>
     </div>
     <h1 class="title" :title="title">{{ title }}</h1>
@@ -128,14 +128,14 @@
 import { defineComponent, PropType } from 'vue'
 import { DpiImage, VIcon } from '@/ui'
 import { getUID } from '@/core/utils'
+import { logError } from '@/core/utils/log'
 import type { VideoCard } from './video-card'
 import {
   watchlaterStatuses,
   getWatchlaterStatus,
   toggleWatchlater,
+  onWatchlaterHover,
 } from '@/components/video/watchlater'
-import { visible } from '@/core/observer'
-import { logError } from '@/core/utils/log'
 
 /*
   ============
@@ -170,7 +170,7 @@ export default defineComponent({
   data() {
     return {
       watchlaterStatuses,
-      watchlaterObserver: null as IntersectionObserver | null,
+      stopWatchlaterHover: null as (() => void) | null,
       togglingWatchlater: false,
       upFaceUrl: '',
       danmakuCount: '',
@@ -193,8 +193,29 @@ export default defineComponent({
     vertical() {
       return this.orientation === 'vertical'
     },
+    canWatchlater(): boolean {
+      return Boolean(getUID() && this.watchlaterInit !== null && this.aid)
+    },
+    watchlaterText(): string {
+      if (this.togglingWatchlater) {
+        return '处理中...'
+      }
+      if (this.watchlater === null) {
+        return '查询状态'
+      }
+      return this.watchlater ? '已添加' : '稍后再看'
+    },
+    watchlaterIcon(): string {
+      if (this.togglingWatchlater) {
+        return 'mdi-loading'
+      }
+      if (this.watchlater === null) {
+        return 'mdi-help-circle-outline'
+      }
+      return this.watchlater ? 'mdi-check-circle' : 'mdi-clock-outline'
+    },
     watchlater(): boolean | null {
-      if (getUID() && this.watchlaterInit !== null) {
+      if (this.canWatchlater) {
         return this.watchlaterStatuses[this.aid] ?? null
       }
       return null
@@ -204,22 +225,20 @@ export default defineComponent({
     },
   },
   mounted() {
-    if (!getUID() || this.watchlaterInit === null || !this.aid) {
+    if (!this.canWatchlater) {
       return
     }
-    const [observer] = visible(this.$el, records => {
-      if (records.some(record => record.isIntersecting)) {
-        getWatchlaterStatus(this.aid, this.title).catch(logError)
-      }
-    })
-    this.watchlaterObserver = observer
+    this.stopWatchlaterHover = onWatchlaterHover(this.$el, signal =>
+      getWatchlaterStatus(this.aid, this.title, signal),
+    )
   },
   beforeDestroy() {
-    this.watchlaterObserver?.disconnect()
+    this.stopWatchlaterHover?.()
   },
   methods: {
     async handleWatchlaterClick(this: {
       aid?: number
+      title?: string
       togglingWatchlater: boolean
     }): Promise<void> {
       if (this.togglingWatchlater) {
@@ -227,7 +246,10 @@ export default defineComponent({
       }
       this.togglingWatchlater = true
       try {
-        await toggleWatchlater(this.aid)
+        const added = await getWatchlaterStatus(this.aid, this.title)
+        await toggleWatchlater(this.aid, !added)
+      } catch (error) {
+        logError(error)
       } finally {
         this.togglingWatchlater = false
       }

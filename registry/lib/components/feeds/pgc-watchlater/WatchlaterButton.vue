@@ -16,10 +16,10 @@ import {
   watchlaterStatuses,
   getWatchlaterStatus,
   toggleWatchlater,
+  onWatchlaterHover,
 } from '@/components/video/watchlater'
 import { BangumiInfo } from '@/components/video/video-info'
 import { getVue2Data } from '@/core/utils'
-import { visible } from '@/core/observer'
 import { logError } from '@/core/utils/log'
 
 export default {
@@ -27,7 +27,8 @@ export default {
     return {
       aid: null,
       watchlaterStatuses,
-      visibilityObserver: null,
+      stopHover: null,
+      aidRequest: null,
       isLoading: false,
       feedback: '',
     }
@@ -38,6 +39,9 @@ export default {
       return this.watchlaterStatuses[this.aid]
     },
     tipText() {
+      if (this.isLoading) {
+        return '处理中...'
+      }
       if (this.feedback) {
         return this.feedback
       }
@@ -48,23 +52,21 @@ export default {
     },
   },
   mounted() {
-    const [observer] = visible(this.$el, records => {
-      if (records.some(record => record.isIntersecting)) {
-        this.loadStatus().catch(logError)
-      }
-    })
-    this.visibilityObserver = observer
+    this.stopHover = onWatchlaterHover(this.$el, signal => this.loadStatus(signal))
   },
   beforeDestroy() {
-    this.visibilityObserver?.disconnect()
+    this.stopHover?.()
   },
   methods: {
-    async loadStatus() {
+    async loadStatus(signal) {
       if (!this.aid) {
-        this.aid = await this.getAidFromCard()
+        this.aidRequest ??= this.getAidFromCard().finally(() => {
+          this.aidRequest = null
+        })
+        this.aid = await this.aidRequest
       }
       if (this.aid) {
-        await getWatchlaterStatus(this.aid)
+        await getWatchlaterStatus(this.aid, undefined, signal)
       }
     },
     async getAidFromCard() {

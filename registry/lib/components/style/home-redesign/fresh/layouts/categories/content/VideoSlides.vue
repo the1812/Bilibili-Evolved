@@ -40,6 +40,7 @@
           <VButton
             v-if="currentItem.aid && watchlaterAdded"
             class="fresh-home-video-slides-watchlater-button"
+            :disabled="togglingWatchlater"
             icon
             title="取消稍后再看"
             @click="toggleWatchlater(currentItem.aid)"
@@ -49,6 +50,7 @@
           <VButton
             v-else-if="currentItem.aid"
             class="fresh-home-video-slides-watchlater-button"
+            :disabled="togglingWatchlater"
             icon
             :title="watchlaterAdded === undefined ? '查询稍后再看状态' : '稍后再看'"
             @click="toggleWatchlater(currentItem.aid)"
@@ -124,10 +126,10 @@
 import UpInfo from '@/components/feeds/UpInfo.vue'
 import {
   getWatchlaterStatus,
+  onWatchlaterHover,
   toggleWatchlater,
   watchlaterStatuses,
 } from '@/components/video/watchlater'
-import { visible } from '@/core/observer'
 import { logError } from '@/core/utils/log'
 import { bilibiliApi, getJson } from '@/core/ajax'
 import { formatCount } from '@/core/utils/formatters'
@@ -170,8 +172,7 @@ export default Vue.extend({
   data() {
     return {
       watchlaterStatuses,
-      visibilityObserver: null as IntersectionObserver | null,
-      isVisible: false,
+      stopWatchlaterHover: null as (() => void) | null,
       togglingWatchlater: false,
       itemLimit: 10,
       // 最近滑动方向, 供回绕封面瞬移
@@ -193,23 +194,23 @@ export default Vue.extend({
   },
   watch: {
     currentItem() {
-      this.loadWatchlaterStatus()
+      this.bindWatchlaterHover()
     },
   },
   mounted() {
-    const [observer] = visible(this.$el, records => {
-      this.isVisible = records.some(record => record.isIntersecting)
-      this.loadWatchlaterStatus()
-    })
-    this.visibilityObserver = observer
+    this.bindWatchlaterHover()
   },
   beforeDestroy() {
-    this.visibilityObserver?.disconnect()
+    this.stopWatchlaterHover?.()
   },
   methods: {
-    loadWatchlaterStatus() {
-      if (this.isVisible && this.currentItem?.aid) {
-        getWatchlaterStatus(this.currentItem.aid, this.currentItem.title).catch(logError)
+    bindWatchlaterHover() {
+      this.stopWatchlaterHover?.()
+      if (this.$el) {
+        this.stopWatchlaterHover = onWatchlaterHover(this.$el, signal => {
+          const item = this.currentItem
+          return item?.aid ? getWatchlaterStatus(item.aid, item.title, signal) : Promise.resolve()
+        })
       }
     },
     async toggleWatchlater(aid: number) {
@@ -218,7 +219,10 @@ export default Vue.extend({
       }
       this.togglingWatchlater = true
       try {
-        await toggleWatchlater(aid)
+        const added = await getWatchlaterStatus(aid, this.currentItem.title)
+        await toggleWatchlater(aid, !added)
+      } catch (error) {
+        logError(error)
       } finally {
         this.togglingWatchlater = false
       }

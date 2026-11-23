@@ -3,7 +3,7 @@
 
 import Vue, { set } from 'vue'
 import { bilibiliApi, getJsonWithCredentials } from '@/core/ajax'
-import { deleteValue, getUID } from '@/core/utils'
+import { delay, deleteValue, getUID } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 
 export interface Rights {
@@ -99,6 +99,76 @@ export const setWatchlaterStatus = (aid: number, added: boolean) => {
 
 export const watchlaterPageSize = 20
 
+let requestQueue: Promise<unknown> = Promise.resolve()
+let nextRequestAt = 0
+let pausedUntil = 0
+
+/** 状态查询共用单并发队列，相邻请求至少间隔 500ms；不阻塞列表分页。 */
+const queueWatchlaterRequest = <T>(
+  request: () => Promise<T>,
+  isNeeded: () => boolean = () => true,
+): Promise<T> => {
+  const result = requestQueue.then(async () => {
+    if (!isNeeded()) {
+      throw new DOMException('查询已取消', 'AbortError')
+    }
+    await delay(Math.max(0, nextRequestAt - Date.now()))
+    if (!isNeeded()) {
+      throw new DOMException('查询已取消', 'AbortError')
+    }
+    if (Date.now() < pausedUntil) {
+      throw new Error('稍后再看状态查询已暂停，请稍后重试')
+    }
+    nextRequestAt = Date.now() + 500
+    return request()
+  })
+  requestQueue = result.catch(() => undefined)
+  return result
+}
+
+const getWatchlaterJson = async <T>(url: string, message: string): Promise<T> => {
+  const response = await getJsonWithCredentials(url)
+  if ([-412, -509, 429].includes(response.code)) {
+    pausedUntil = Date.now() + 60_000
+  }
+  return bilibiliApi<T>(Promise.resolve(response), message)
+}
+
+/** 仅在悬停 200ms 后查询，离开或销毁时撤销尚未发出的请求。 */
+export const onWatchlaterHover = (
+  element: Element,
+  query: (signal: AbortSignal) => Promise<unknown>,
+) => {
+  let timer = 0
+  let controller: AbortController | undefined
+  const cancel = () => {
+    clearTimeout(timer)
+    controller?.abort()
+  }
+  const enter = () => {
+    cancel()
+    controller = new AbortController()
+    const { signal } = controller
+    timer = window.setTimeout(() => {
+      query(signal).catch(error => {
+        if (!signal.aborted) {
+          console.warn('[稍后再看状态]', error)
+        }
+      })
+    }, 200)
+  }
+  element.addEventListener('mouseenter', enter)
+  element.addEventListener('mouseleave', cancel)
+  if (element.matches(':hover')) {
+    enter()
+  }
+  return () => {
+    cancel()
+    element.removeEventListener('mouseenter', enter)
+    element.removeEventListener('mouseleave', cancel)
+  }
+}
+
 /** 分页查询不会将未出现在这一页的视频标记为未加入。 */
 export const getWatchlaterPage = async ({ page = 1, keyword = '' } = {}) => {
   const params = new URLSearchParams({
@@ -108,20 +178,38 @@ export const getWatchlaterPage = async ({ page = 1, keyword = '' } = {}) => {
     need_split: '0',
     key: keyword,
   })
-  const data = await bilibiliApi<{ count: number; list: RawWatchlaterItem[] | null }>(
-    getJsonWithCredentials(`https://api.bilibili.com/x/v2/history/toview/web?${params}`),
+  const data = await getWatchlaterJson<{ count: number; list: RawWatchlaterItem[] | null }>(
+    `https://api.bilibili.com/x/v2/history/toview/web?${params}`,
     '获取稍后再看列表失败',
   )
-  return { count: data.count, list: (data.list ?? []).filter(item => item.aid > 0) }
+  const list = (data.list ?? []).filter(item => item.aid > 0)
+  list.forEach(item => {
+    // 旧分页响应不能覆盖查询期间已经完成的移除操作。
+    if (watchlaterStatuses[item.aid] === undefined) {
+      setWatchlaterStatus(item.aid, true)
+    }
+  })
+  return { count: data.count, list }
 }
 
 /** 按标题缩小查询范围，再用 aid 匹配；不遍历完整稍后再看列表。 */
-export const getWatchlaterItem = async (aid: string | number, title?: string) => {
+export const getWatchlaterItem = async (
+  aid: string | number,
+  title?: string,
+  isNeeded: () => boolean = () => true,
+) => {
   const id = String(aid)
   let videoAid = Number(id)
   if (!title || id.startsWith('BV')) {
-    const { VideoInfo } = await import('./video-info')
-    const info = await new VideoInfo(id, id.startsWith('BV')).fetchInfo()
+    const params = new URLSearchParams({ [id.startsWith('BV') ? 'bvid' : 'aid']: id })
+    const info = await queueWatchlaterRequest(
+      () =>
+        getWatchlaterJson<{ aid: number; title: string }>(
+          `https://api.bilibili.com/x/web-interface/view?${params}`,
+          '获取视频标题失败',
+        ),
+      isNeeded,
+    )
     videoAid = Number(info.aid)
     title = info.title
   }
@@ -130,7 +218,10 @@ export const getWatchlaterItem = async (aid: string | number, title?: string) =>
     throw new Error('无法获取视频标题，未查询稍后再看状态')
   }
   for (let page = 1; ; page++) {
-    const { count, list } = await getWatchlaterPage({ page, keyword })
+    const { count, list } = await queueWatchlaterRequest(
+      () => getWatchlaterPage({ page, keyword }),
+      isNeeded,
+    )
     const item = list.find(it => it.aid === videoAid)
     if (item) {
       return item
@@ -141,10 +232,17 @@ export const getWatchlaterItem = async (aid: string | number, title?: string) =>
   }
 }
 
-const statusRequests = new Map<number, Promise<boolean>>()
+const statusRequests = new Map<
+  number,
+  { promise: Promise<boolean>; signals: (AbortSignal | undefined)[] }
+>()
 
 /** 查询结果在当前页面共享，失败不缓存。 */
-export const getWatchlaterStatus = (aid: string | number, title?: string): Promise<boolean> => {
+export const getWatchlaterStatus = (
+  aid: string | number,
+  title?: string,
+  signal?: AbortSignal,
+): Promise<boolean> => {
   const id = Number(aid)
   if (!getUID() || !Number.isSafeInteger(id) || id <= 0) {
     return Promise.reject(new Error('无法查询稍后再看状态：未登录或视频 aid 无效'))
@@ -153,8 +251,16 @@ export const getWatchlaterStatus = (aid: string | number, title?: string): Promi
   if (knownStatus !== undefined) {
     return Promise.resolve(knownStatus)
   }
+  if (signal?.aborted) {
+    return Promise.reject(new DOMException('查询已取消', 'AbortError'))
+  }
   if (!statusRequests.has(id)) {
-    const request = getWatchlaterItem(id, title)
+    const signals = [signal]
+    const request = getWatchlaterItem(
+      id,
+      title,
+      () => watchlaterStatuses[id] === undefined && signals.some(s => !s?.aborted),
+    )
       .then(item => {
         // 查询期间的添加/删除操作结果优先于旧查询结果。
         if (watchlaterStatuses[id] === undefined) {
@@ -162,10 +268,18 @@ export const getWatchlaterStatus = (aid: string | number, title?: string): Promi
         }
         return watchlaterStatuses[id]
       })
+      .catch(error => {
+        if (watchlaterStatuses[id] !== undefined) {
+          return watchlaterStatuses[id]
+        }
+        throw error
+      })
       .finally(() => statusRequests.delete(id))
-    statusRequests.set(id, request)
+    statusRequests.set(id, { promise: request, signals })
+  } else {
+    statusRequests.get(id).signals.push(signal)
   }
-  return statusRequests.get(id)
+  return statusRequests.get(id).promise
 }
 /**
  * 显式获取完整稍后再看列表。展示列表请用 getWatchlaterPage，判断状态请用 getWatchlaterStatus。
@@ -220,6 +334,9 @@ export const toggleWatchlater = async (aid: string | number, add?: boolean | und
     const response = JSON.parse(responseText) as {
       code: number
       message: string
+    }
+    if ([-412, -509, 429].includes(response.code)) {
+      pausedUntil = Date.now() + 60_000
     }
     if (response.code !== 0) {
       throw new Error(`稍后再看操作失败: ${response.message}`)

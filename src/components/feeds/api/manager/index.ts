@@ -9,7 +9,8 @@ export * from './base'
 export { normalizeFeedsCardModules } from './v2'
 export const isV2Feeds = () => {
   const opusUrlPattern = /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/
-  if (matchUrlPattern(opusUrlPattern)) {
+  const feedsHomeUrlPattern = /^https:\/\/t\.bilibili\.com\/(?:\?|$)/
+  if (matchUrlPattern(opusUrlPattern) || matchUrlPattern(feedsHomeUrlPattern)) {
     return true
   }
   const hasCookieValue = parseInt(getCookieValue('hit-dyn-v2')) > 0
