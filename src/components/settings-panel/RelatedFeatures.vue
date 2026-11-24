@@ -43,6 +43,10 @@ const emit = defineEmits<{ (event: 'open-feature', feature: SettingsFeature): vo
     gap: 12px;
   }
 
+  &:not(.dev-mode) .related-feature {
+    min-height: 24px;
+  }
+
   .related-feature {
     @include h-center(6px);
     justify-content: space-between;
