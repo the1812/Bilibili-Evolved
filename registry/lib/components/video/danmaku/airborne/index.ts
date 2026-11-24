@@ -7,11 +7,14 @@ import { playerUrls } from '@/core/utils/urls'
 const cnChars = '零一二三四五六七八九'.split('')
 // 优先匹配带显式分隔符的时间写法, 兼容冒号/句号/逗号及中文单位.
 const separatedAirborneRegex =
-  /([\d零一二三四五六七八九十]+)\s*(小时|[:：时分.,。，,])\s*([\d零一二三四五六七八九十]+)(?:\s*([:：分.,。，,])\s*([\d零一二三四五六七八九十]+))?/
+  /([\d零一二三四五六七八九十]+)\s*(小时|[:：时分.,。，,、])\s*([\d零一二三四五六七八九十]+)(?:\s*([:：分.,。，,、])\s*([\d零一二三四五六七八九十]+))?/
 // 紧凑数字仅处理 3~4 位, 统一按 分秒 解析, 避免把更长数字串拆出误判.
 const compactAirborneRegex = /\d{3,4}/g
 // B 站常见大笑弹幕, 不应被识别为空降时间.
 const compactAirborneBlacklist = new Set(['233', '2333'])
+// "数字+工程" 是弹幕里常见的时间暗号, 3~4 位按 分秒, 5~6 位按 时分秒 解析,
+// 如 "255工程" 表示 2:55, "1255工程" 表示 12:55, "11234工程" 表示 1:12:34.
+const projectAirborneRegex = /(\d{3,6})工程/g
 const danmakuClassTokens = ['b-danmaku', 'bili-dm', 'bili-danmaku-x-dm']
 const decimalLikeSeparators = new Set(['.', '。', ',', '，'])
 // 候选时间若紧跟数值/计量/金额语境后缀, 大概率不是空降时间.
@@ -130,6 +133,36 @@ const getCompactAirborneTime = (text: string) => {
   }
   return matchedTime ?? NaN
 }
+const getProjectAirborneTime = (text: string) => {
+  projectAirborneRegex.lastIndex = 0
+  let projectMatch = projectAirborneRegex.exec(text)
+  let matchedTime: number | null = null
+  while (projectMatch !== null) {
+    const raw = projectMatch[1]
+    const start = projectMatch.index
+    // 排除处于更长数字串尾部的片段, 如 "1234567工程" 不应截出 "234567".
+    if (/\d/.test(text[start - 1] ?? '')) {
+      projectMatch = projectAirborneRegex.exec(text)
+      continue
+    }
+    const second = parseInt(raw.slice(-2))
+    const minute = parseInt(raw.slice(-4, -2))
+    // 4 位及以下无小时部分, 仍按 分秒 解析 (如 "1000工程" = 10:00).
+    const hour = raw.length > 4 ? parseInt(raw.slice(0, -4)) : 0
+    // 小时段超过 10 小时视为非时间, 跳过当前候选继续寻找下一个.
+    if (hour > 10) {
+      projectMatch = projectAirborneRegex.exec(text)
+      continue
+    }
+    const time = hour * 3600 + minute * 60 + second
+    if (matchedTime !== null) {
+      return NaN
+    }
+    matchedTime = time
+    projectMatch = projectAirborneRegex.exec(text)
+  }
+  return matchedTime ?? NaN
+}
 const getAirborneTime = (text: string | null) => {
   if (!text) {
     return NaN
@@ -137,6 +170,10 @@ const getAirborneTime = (text: string | null) => {
   const separatedTime = getSeparatedAirborneTime(text)
   if (!Number.isNaN(separatedTime)) {
     return separatedTime
+  }
+  const projectTime = getProjectAirborneTime(text)
+  if (!Number.isNaN(projectTime)) {
+    return projectTime
   }
   return getCompactAirborneTime(text)
 }
