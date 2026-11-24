@@ -25,25 +25,23 @@ Bilibili Evolved 是一个基于 Web 前端技术构建的油猴脚本, 贡献�
 
 ## 搭建开发环境
 
-- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 14.0), [Visual Studio Code](https://code.visualstudio.com/) 和 [pnpm](https://pnpm.io/installation) (>= 8.9.0).
+- 需要安装 [Node.js](https://nodejs.org/en/download/) (>= 18.12.0) 和 [pnpm](https://pnpm.io/installation) 10.3.0.
 - 将项目 Fork 至自己账户后, 克隆至本地
 - 分支视情况切换或新建, 新功能以 `preview-features` 为基础分支, 功能修复以 `preview-fixes` 为基础分支.
-- 安装依赖:
+- 在仓库根目录安装依赖:
 
 ```powershell
 pnpm install
-cd registry
-pnpm install
+pnpm --dir registry install
 ```
 
-- [配置 VS Code 插件](https://code.visualstudio.com/docs/editor/extension-marketplace):
+- 如果使用 [Visual Studio Code](https://code.visualstudio.com/), 推荐安装以下扩展:
   - [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint), 用于格式化 TypeScript 和 Vue 文件.
   - [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode), 用于格式化 Scss 和其他文件.
-  - [Vue Language Features (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.volar), 为 *.vue 文件提供支持.
-  - [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin), 让 TS Server 识别 *.vue 文件.(建议启用性能更好的 [Takeover 模式](https://vuejs.org/guide/typescript/overview.html#volar-takeover-mode))
+  - [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar), 为 Vue 单文件组件提供 TypeScript 支持.
 
 ### 本体
-需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发服务会按需编译功能并从内存中返回产物, `registry/dist/` 只会由发布分支上的 CI 构建产生.
+需要说明的是, 脚本本体和功能是分开的两个项目. 本体的代码在 `src/` 下, 开发时产生 `dist/bilibili-evolved.dev.user.js` 文件. 功能的代码位于 `registry/` 下, 开发服务会按需编译功能并从内存中返回产物, 本地 webpack 编译和发布分支上的 CI 构建产物会写入 `registry/dist/`.
 > 如果不使用 Visual Studio Code, 则需要根据 `.vscode/tasks.json` 中各个任务定义的命令手动在终端执行. (npm scripts 仅用于 CI)
 
 配置本地调试环境:
@@ -86,58 +84,63 @@ pnpm tsx dev-tools/dev-server/command.ts shutdown
 
 **如果使用的是基于 Chromium 的浏览器**
 1. 启动开发服务后, 会在项目的 `dist/` 文件夹下生成一个开发用的脚本 `dist/bilibili-evolved.dev.user.js`.
-2. Chrome 插件管理 `chrome://extensions/` > Tampermonkey > 详细信息
+2. Chrome 扩展管理 `chrome://extensions/` > Tampermonkey > 详细信息
 3. 打开 `允许访问文件网址`
-4. 新建脚本
+4. 在 Tampermonkey 中新建脚本
 5. 粘贴内容:
-```js
-// ==UserScript==
-// @name         Bilibili Evolved (Local)
-// @description  Bilibili Evolved (本地)
-// @version      300.0
-// @author       Grant Howard, Coulomb-G
-// @copyright    2024, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
-// @license      MIT
-// @match        *://*.bilibili.com/*
-// @exclude      *://*.bilibili.com/*/mobile.html
-// @exclude      *://*.bilibili.com/api/*
-// @exclude      *://api.bilibili.com/*
-// @exclude      *://api.*.bilibili.com/*
-// @exclude      *://live.bilibili.com/h5/*
-// @exclude      *://live.bilibili.com/*/h5/*
-// @exclude      *://m.bilibili.com/*
-// @exclude      *://mall.bilibili.com/*
-// @exclude      *://member.bilibili.com/studio/bs-editor/*
-// @exclude      *://www.bilibili.com/h5/*
-// @exclude      *://www.bilibili.com/*/h5/*
-// @exclude      *://message.bilibili.com/pages/nav/index_new_sync
-// @exclude      *://message.bilibili.com/pages/nav/index_new_pc_sync
-// @exclude      *://t.bilibili.com/h5/dynamic/specification
-// @exclude      *://bbq.bilibili.com/*
-// @run-at       document-start
-// @grant        unsafeWindow
-// @grant        GM_getValue
-// @grant        GM_setValue
-// @grant        GM_deleteValue
-// @grant        GM_info
-// @grant        GM_xmlhttpRequest
-// @grant        GM_registerMenuCommand
-// @connect      raw.githubusercontent.com
-// @connect      cn.bing.com
-// @connect      www.bing.com
-// @connect      translate.google.cn
-// @connect      translate.google.com
-// @connect      localhost
-// @connect      *
-// @require      https://raw.githubusercontent.com/lodash/lodash/4.17.15/dist/lodash.min.js
-// @require      file://{{ bilibili-evolved.dev.user.js的绝对路径 }}
-// @icon         https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
-// @icon64       https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
-// ==/UserScript==
-```
 
-1. 将里面的 `{{ bilibili-evolved.dev.user.js 的绝对路径 }}` 替换为第一步生成的文件的真实路径.
-> Windows 例子: `@require file://C:/xxx/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
+ ```js
+  // ==UserScript==
+  // @name            Bilibili Evolved (Local)
+  // @description     Bilibili Evolved (本地)
+  // @version         300.0
+  // @author          Grant Howard, Coulomb-G
+  // @copyright       2026, Grant Howard (https://github.com/the1812) & Coulomb-G (https://github.com/Coulomb-G)
+  // @license         MIT
+  // @match           *://*.bilibili.com/*
+  // @exclude         *://api.bilibili.com/*
+  // @exclude         *://api.*.bilibili.com/*
+  // @exclude         *://*.bilibili.com/api/*
+  // @exclude         *://member.bilibili.com/studio/bs-editor/*
+  // @exclude         *://t.bilibili.com/h5/dynamic/specification
+  // @exclude         *://bbq.bilibili.com/*
+  // @exclude         *://message.bilibili.com/pages/nav/header_sync
+  // @exclude         *://s1.hdslb.com/bfs/seed/jinkela/short/cols/iframe.html
+  // @exclude         *://b.bilibili.com/*
+  // @exclude         *://e.bilibili.com/*
+  // @exclude         *://ir.bilibili.com/*
+  // @exclude         *://jobs.bilibili.com/*
+  // @exclude         *://mcn.bilibili.com/*
+  // @exclude         *://open.bilibili.com/*
+  // @exclude         *://open-live.bilibili.com/*
+  // @exclude         *://play-live.bilibili.com/*
+  // @exclude         *://security.bilibili.com/*
+  // @run-at          document-start
+  // @grant           unsafeWindow
+  // @grant           GM_getValue
+  // @grant           GM_setValue
+  // @grant           GM_deleteValue
+  // @grant           GM_info
+  // @grant           GM_xmlhttpRequest
+  // @grant           GM_registerMenuCommand
+  // @grant           GM_unregisterMenuCommand
+  // @connect         raw.githubusercontent.com
+  // @connect         github.com
+  // @connect         cn.bing.com
+  // @connect         www.bing.com
+  // @connect         translate.google.cn
+  // @connect         translate.google.com
+  // @connect         localhost
+  // @connect         *
+  // @require         https://raw.githubusercontent.com/lodash/lodash/4.17.21/dist/lodash.min.js#sha256=a9705dfc47c0763380d851ab1801be6f76019f6b67e40e9b873f8b4a0603f7a9
+  // @require         file://{{ bilibili-evolved.dev.user.js 的绝对路径 }}
+  // @icon            https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo-small.png
+  // @icon64          https://raw.githubusercontent.com/the1812/Bilibili-Evolved/preview/images/logo.png
+  // ==/UserScript==
+  ```
+
+6. 将里面的 `{{ bilibili-evolved.dev.user.js 的绝对路径 }}` 替换为第一步生成的文件的真实路径.
+> Windows 例子: `@require file:///C:/xxx/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
 
 > macOS 例子: `@require file:///Users/xxx/Documents/Bilibili-Evolved/dist/bilibili-evolved.dev.user.js`
 
@@ -157,7 +160,7 @@ pnpm tsx dev-tools/dev-server/command.ts shutdown
 
 ## 修改
 1. 运行 `启动开发服务 dev-server`
-2. 在脚本的设置面板 - 组件详情中, 从右下角的菜单中选择 `开始调试`.
+2. 在脚本设置面板的功能详情中, 从顶部的菜单中选择 `开始调试`.
 3. 找到对应的代码文件修改, 可以搜索组件的 `name` 或 `displayName` 定位文件, 修改后会自动更新.
 
 也可以在开发服务运行时用指令监听单个功能:
@@ -205,15 +208,16 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 6. 填写 `defineComponentMetadata` 中的 `author` 字段, 通常是你的 GitHub 用户名和 Profile 页地址. 如果希望注明使用 AI 辅助开发, 可以再添加 AI 的名称及其官网, `author` 字段可以是一个数组.
 7. 如果组件需要支持无需刷新的实时关闭 / 开启, 应使用 `reload` / `unload`, 不要依赖 `entry` 的返回值来销毁组件. `reload` / `unload` 必须成对使用才会生效.
 8. 根据组件的复杂度, 可以自行在文件夹中创建其他文件来组织代码, 下方还列出了一些可用资源可以帮助你加快开发. 编写 SCSS 时可以使用公共 Sass 文件, 例如通过 `@import "common"` 使用 `ui/_common.scss` 中的 mixin.
-9. 运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的组件是哪个, 从列表中选择即可. 如果开发服务已经运行, 也可以用 `pnpm tsx dev-tools/dev-server/command.ts build component <id>` 或 `pnpm tsx dev-tools/dev-server/command.ts build plugin <id>` 单独编译.
-10. 然后运行 `启动开发服务 dev-server`, 组件的 localhost 连接格式为 `http://localhost:23333/registry/dist/components/<id>.js`, 插件则为 `http://localhost:23333/registry/dist/plugins/<id>.js`.
-11. 进入 b 站, 从脚本的设置面板打开 `功能库`, 点击搜索按钮右侧的 `链接添加`. 在弹窗中粘贴上一步的本地链接, 点击 `添加`.
-12. 后续同 [修改](##修改) 中的 2 ~ 3 步.
+9. 运行 `启动开发服务 dev-server`, 组件的 localhost 链接格式为 `http://localhost:23333/registry/dist/components/<id>.js`, 插件则为 `http://localhost:23333/registry/dist/plugins/<id>.js`.
+10. 进入 b 站, 从脚本的设置面板打开 `功能库`, 点击搜索按钮右侧的 `链接添加`. 在弹窗中粘贴上一步的本地链接, 点击 `添加`.
+11. 后续同 [修改](#修改) 中的 2 ~ 3 步.
+
+如果需要磁盘产物, 可以运行任务 `功能:编译组件 prod:build-components`, (插件运行 `功能:编译插件 prod:build-plugins`), 任务会询问要编译的功能是哪个, 从列表中选择即可. 产物会生成在项目的 `registry/dist/` 文件夹下, 可在功能库中用 `本地浏览` 安装.
 
 ### 插件
-在 `registry/lib/plugins` 中是所有插件的源代码, 步骤和组件基本一致, 只有在第 4 步中, 导出的是 `plugin` 对象, 实现 `PluginMetadata` 接口.
+在 `registry/lib/plugins` 中是所有插件的源代码, 步骤和组件基本一致, 只有在第 5 步中, 导出的是 `plugin` 对象, 实现 `PluginMetadata` 接口.
 
-插件也应使用 `index.md` 作为描述文件, 不要在 `PluginMetadata` 中手写 `description` 字段. 如果插件需要处理关闭 / 重新开启, `reload` 和 `unload` 也应成对出现.
+插件也应使用 `index.md` 作为描述文件, 不要在 `PluginMetadata` 中手写 `description` 字段.
 
 > 关于如何判断要实现的是组件还是插件, 可以想想这个功能能否独立存在, 插件的定位是是增强组件的功能, 如果要开发的功能在没有安装某个组件的情况下毫无作用, 那么它就应该是一个插件; 如果可以独立存在并发挥一些作用, 那么它就应该是一个组件.
 
@@ -229,7 +233,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 > 在 `bwp-video` 出现后, 这两个查询函数还会自动将对 `video` 的查询扩展到 `bwp-video`
 
 - `none`: 什么都不做的空函数
-- `componentTags`: 预置的一些组件标签, 实现 `ComponentMetadata.tags` 时常用
+- `componentsTags`: 预置的一些组件标签, 实现 `ComponentMetadata.tags` 时常用
 
 ### 本体 API
 仅介绍常用 API, 其他可以翻阅源代码了解, `core` 中的代码中均带有文档.
@@ -238,10 +242,11 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 - `core/download`: `DownloadPackage` 类封装了下载文件的逻辑, 可以添加单个或多个文件, 多个文件时自动打包为 `.zip`, 确定是单个文件时也可以直接调用静态方法 `single`
 - `core/file-picker`: 打开系统的文件选择对话框
 - `core/life-cycle`: 控制在网页的不同生命周期执行代码
-- `core/meta`: 获取脚本的自身元数据, 如名称, 版本等/
+- `core/meta`: 获取脚本的自身元数据, 如名称, 版本等
 - `core/observer`: 封装各种监视器, 包括元素增删, 进入/离开视图, 大小变化, 以及当前页面视频的更换
 - `core/spin-query`: 轮询器, 等待页面上异步加载的元素, 也可以自定义查询条件
-- `core/runtime-library`: 运行时代码库, 目前支持导入 protobufjs 和 JSZip 使用
+- `core/style`: 按需添加和移除样式
+- `core/runtime-library`: 运行时代码库, 目前支持导入 protobufjs / fflate / SortableJS / StreamSaver 使用
 - `core/user-info`: 获取当前用户的登录信息
 - `core/version`: 版本比较
 - `core/settings`: 脚本设置 API, 可监听设置变更, 获取组件设置, 判断组件是否开启等
@@ -251,7 +256,6 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
 ### 组件 API
 - `components/define`: 包含定义组件的相关方法
 - `components/types`: 组件相关接口定义
-- `components/styled-components`: 包含样式的组件 entry 简化包装函数
 - `components/user-component`: 用户组件的安装/卸载 API
 - `components/description`: 获取组件或插件的描述, 会自动匹配语言并插入作者标记, 支持 HTML, Markdown 和纯文本形式
 - `components/feeds/`:
@@ -262,6 +266,7 @@ pnpm tsx dev-tools/dev-server/command.ts stop-debug component style/hide/banner
   - `notify`: 获取未读动态数目, 最后阅读的动态 ID 等
 - `components/video/`:
   - `ass-utils`: ASS 字幕工具函数
+  - `player-agent`: 查询和控制播放器
   - `player-light`: 控制播放器开关灯
   - `video-danmaku`: 对每一条视频弹幕执行操作
   - `video-info`: 根据 av 号查询视频信息
@@ -335,7 +340,7 @@ pnpm run lint-check
 
 `doc/features/` 下的功能列表和合集包文档是生成文件, 普通功能或修复 PR 中不要手动修改.
 
-commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式.
+commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式, 但不要在 commit 的正文或作者字段里添加 AI 署名. 新增功能时如需注明使用 AI 辅助开发, 可以参考 [新增组件](#组件-1) 中的第 6 步.
 
 ## 发起 PR (合并请求)
 将你的分支往主仓库的 `preview-features` (新增功能) 或 `preview-fixes` (功能修复) 分支合并就行.
