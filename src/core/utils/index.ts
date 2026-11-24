@@ -171,9 +171,35 @@ export const matchPattern = (str: string, pattern: string | RegExp) => {
   }
   return pattern.test(str)
 }
-/** 以`document.URL`作为被测字符串, 移除URL查询参数并调用`matchPattern` */
-export const matchUrlPattern = (pattern: string | RegExp) =>
-  matchPattern(document.URL.replace(window.location.search, ''), pattern)
+const localeSegmentPattern =
+  /^(https?:\/\/(?:www|t)\.bilibili\.com)\/([a-z]{2,3}(?:-[a-z0-9]{1,8})*)(?=\/|[?#]|$)\/?/i
+const localeNames = new Intl.DisplayNames(['en'], { type: 'language', fallback: 'none' })
+
+/**
+ * 移除 `www.bilibili.com` 或 `t.bilibili.com` 路径开头可识别的语言段，仅用于匹配。
+ * @param url 完整网址。无法识别语言段时原样返回，保留查询参数和片段。
+ */
+export const withoutLocaleSegment = (url: string) =>
+  url.replace(localeSegmentPattern, (prefix: string, origin: string, locale: string) => {
+    try {
+      return localeNames.of(locale) ? `${origin}/` : prefix
+    } catch (error) {
+      if (error instanceof RangeError) {
+        return prefix
+      }
+      throw error
+    }
+  })
+
+/** 忽略查询参数，先匹配原路径，未命中时再尝试去掉语言段。 */
+export const matchUrlPattern = (pattern: string | RegExp) => {
+  const url = document.URL.replace(window.location.search, '')
+  if (matchPattern(url, pattern)) {
+    return true
+  }
+  const normalizedUrl = withoutLocaleSegment(url)
+  return normalizedUrl !== url && matchPattern(normalizedUrl, pattern)
+}
 /** 创建Vue组件的实例
  * @param module Vue组件模块对象
  * @param target 组件的挂载目标元素, 省略时不挂载直接返回
