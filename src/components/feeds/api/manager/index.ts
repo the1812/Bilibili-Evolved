@@ -1,5 +1,5 @@
 import { getCookieValue, matchUrlPattern } from '@/core/utils'
-import { feedsUrls } from '@/core/utils/urls'
+import { feedsUrls, liveUrls } from '@/core/utils/urls'
 import { FeedsCardCallback } from '../types'
 import { feedsCardCallbacks } from './base'
 import { FeedsCardsManagerV1 } from './v1'
@@ -10,6 +10,9 @@ export { normalizeFeedsCardModules } from './v2'
 export const isV2Feeds = () => {
   const opusUrlPattern = /^https:\/\/www\.bilibili\.com\/opus\/[\d]+$/
   if (matchUrlPattern(opusUrlPattern)) {
+    return true
+  }
+  if (liveUrls.some(pattern => matchUrlPattern(pattern))) {
     return true
   }
   const hasCookieValue = parseInt(getCookieValue('hit-dyn-v2')) > 0
