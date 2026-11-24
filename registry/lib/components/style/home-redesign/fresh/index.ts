@@ -2,6 +2,7 @@ import { defineComponentMetadata } from '@/components/define'
 import { contentLoaded } from '@/core/life-cycle'
 import { addComponentListener } from '@/core/settings'
 import { mountVueComponent } from '@/core/utils'
+import { resumeNativeFeedLoading, suspendNativeFeedLoading } from '../suspend-native-feed'
 import { homeUrls } from '../urls'
 import { freshHomeOptionsMetadata } from './types'
 
@@ -18,6 +19,7 @@ export const component = defineComponentMetadata({
       },
       true,
     )
+    suspendNativeFeedLoading()
     contentLoaded(async () => {
       const FreshHome = await import('./FreshHome.vue')
       const freshHome = mountVueComponent(FreshHome)
@@ -26,8 +28,14 @@ export const component = defineComponentMetadata({
   },
   options: freshHomeOptionsMetadata,
   extraOptions: () => import('./ExtraOptions.vue'),
-  unload: () => document.body.classList.add('home-redesign-off'),
-  reload: () => document.body.classList.remove('home-redesign-off'),
+  unload: () => {
+    document.body.classList.add('home-redesign-off')
+    resumeNativeFeedLoading()
+  },
+  reload: () => {
+    document.body.classList.remove('home-redesign-off')
+    suspendNativeFeedLoading()
+  },
   instantStyles: [
     {
       name: 'fresh-home-hide-original',
