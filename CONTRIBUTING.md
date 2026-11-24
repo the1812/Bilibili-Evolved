@@ -340,7 +340,7 @@ pnpm run lint-check
 
 `doc/features/` 下的功能列表和合集包文档是生成文件, 普通功能或修复 PR 中不要手动修改.
 
-commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式.
+commit message 只需写明改动点, 中英文随意, 也不强求类似 [commit-lint](https://github.com/conventional-changelog/commitlint) 的格式, 但不要在 commit 的正文或作者字段里添加 AI 署名. 新增功能时如需注明使用 AI 辅助开发, 可以参考 [新增组件](#组件-1) 中的第 6 步.
 
 ## 发起 PR (合并请求)
 将你的分支往主仓库的 `preview-features` (新增功能) 或 `preview-fixes` (功能修复) 分支合并就行.
