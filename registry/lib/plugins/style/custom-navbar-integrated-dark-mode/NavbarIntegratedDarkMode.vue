@@ -1,5 +1,9 @@
 <template>
-  <div class="navbar-integrated-dark-mode" :title="dark ? '关闭深色模式' : '开启深色模式'">
+  <div
+    class="navbar-integrated-dark-mode"
+    :aria-disabled="blocked ? 'true' : undefined"
+    :title="blocked ? '当前页面不可切换深色模式' : dark ? '关闭深色模式' : '开启深色模式'"
+  >
     <svg
       v-if="dark"
       style="width: 18px"
@@ -32,28 +36,29 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, ref } from 'vue'
-import { getCookieValue } from '@/core/utils'
+import {
+  isPageDarkModeEnabled,
+  isThemePageRestricted,
+  onOfficialThemeChange,
+} from '../../../components/style/dark-mode/integrated/official-theme'
 
-const isOfficialDarkModeEnabled = () => {
-  return getCookieValue('theme_style') === 'dark'
+const blocked = ref(false)
+const dark = ref(false)
+const update = () => {
+  blocked.value = isThemePageRestricted()
+  dark.value = !blocked.value && isPageDarkModeEnabled()
 }
 
-const dark = ref(isOfficialDarkModeEnabled())
-
-const cookieChangeHandler = (e: CookieChangedEvent) => {
-  if (e.changed.some(cookie => cookie.name === 'theme_style')) {
-    dark.value = isOfficialDarkModeEnabled()
-  }
-}
-
-cookieStore.addEventListener('change', cookieChangeHandler)
-onBeforeUnmount(() => {
-  cookieStore.removeEventListener('change', cookieChangeHandler)
-})
+onBeforeUnmount(onOfficialThemeChange(update))
+update()
 </script>
 <style lang="scss">
 .navbar-integrated-dark-mode {
   display: flex;
+  &[aria-disabled='true'] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
   svg {
     height: 18px;
     width: 18px;
