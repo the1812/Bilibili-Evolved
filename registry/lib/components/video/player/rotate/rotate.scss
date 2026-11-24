@@ -1,0 +1,10 @@
+.bpx-player-primary-area.be-video-rotate {
+  .bpx-player-video-wrap {
+    rotate: var(--be-video-rotate-angle, 0deg);
+    scale: var(--be-video-rotate-scale, 1);
+  }
+
+  .be-video-control-bar-extend [data-name='videoRotate'] .be-icon {
+    color: var(--theme-color);
+  }
+}
