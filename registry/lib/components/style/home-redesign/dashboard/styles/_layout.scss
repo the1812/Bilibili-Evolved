@@ -1,0 +1,124 @@
+@mixin dashboard-control-size {
+  box-sizing: border-box;
+  min-block-size: var(--dashboard-home-control-block-size);
+  min-inline-size: 0;
+  padding-block: var(--dashboard-home-space-xs);
+  padding-inline: var(--dashboard-home-space-sm);
+  border: var(--dashboard-home-control-border);
+  border-radius: var(--dashboard-home-control-radius);
+}
+
+@mixin dashboard-control-colors {
+  background-color: var(--home-background-color);
+  color: inherit;
+}
+
+body:not(.home-redesign-off):has(.dashboard-home) {
+  // 防止滚动条导致的排版抖动
+  min-height: calc(100vh + 1px);
+
+  // 使页面宽度可以任意缩放
+  &.smallest-width {
+    min-width: 0;
+  }
+
+  .bili-header {
+    --min-width: 0px;
+  }
+}
+
+.dashboard-home {
+  --dashboard-home-grid-gap: var(--dashboard-home-space-md);
+  --dashboard-home-grid-padding-inline: var(--dashboard-home-space-sm);
+  --dashboard-home-page-padding-inline: 32px;
+  --dashboard-home-card-grid-inline-inset: calc(
+    var(--dashboard-home-page-padding-inline) + var(--dashboard-home-grid-padding-inline)
+  );
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  box-sizing: border-box;
+  inline-size: 100%;
+  padding-block-start: var(--dashboard-home-space-xl);
+  padding-inline: var(--dashboard-home-page-padding-inline);
+  background-color: var(--home-base-color);
+}
+
+.dashboard-home-tab-content {
+  box-sizing: border-box;
+  inline-size: min(100%, var(--home-max-width));
+  padding-inline: var(--dashboard-home-grid-padding-inline);
+}
+
+.dashboard-home-library-toolbar :is(input, select),
+.dashboard-home-tab-settings select,
+.dashboard-home-tab-settings-track-count {
+  @include dashboard-control-size();
+  @include dashboard-control-colors();
+}
+
+:where(.dashboard-home, .dashboard-home-link-preview) button {
+  border: 0;
+  border-radius: var(--dashboard-home-control-radius);
+  background-color: var(--dashboard-home-button-background, transparent);
+  color: inherit;
+  @include dashboard-transition(background-color);
+
+  &:where(:enabled:not([aria-disabled='true'])) {
+    cursor: pointer;
+
+    &:where(:hover, :focus-visible) {
+      background-color: var(
+        --dashboard-home-button-highlight-background,
+        var(--dashboard-home-highlight-background)
+      );
+    }
+  }
+}
+
+:where(.dashboard-home, .dashboard-home-link-preview)
+  :where(a:any-link, button, input, select, [role='tabpanel']):focus-visible {
+  @include dashboard-focus-ring();
+}
+
+.dashboard-home .dashboard-home-action {
+  --dashboard-home-button-background: var(--home-background-color);
+
+  @include h-center(var(--dashboard-home-space-xs));
+  justify-content: center;
+  padding-block: var(--dashboard-home-space-xs);
+  padding-inline: var(--dashboard-home-space-sm);
+  border: var(--dashboard-home-control-border);
+  border-radius: var(--dashboard-home-control-radius);
+
+  &[aria-disabled='true'] {
+    cursor: wait;
+  }
+}
+
+.dashboard-home-visually-hidden {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.dashboard-home-list-status {
+  @include v-center();
+  text-align: center;
+
+  &:has(> [role='status']:not(:empty)) {
+    gap: var(--dashboard-home-space-sm);
+  }
+
+  > [role='status']:focus-visible {
+    @include dashboard-focus-ring();
+  }
+
+  &:has(> [role='status']:not(:empty), > button) {
+    padding-block: var(--dashboard-home-space-sm);
+  }
+}

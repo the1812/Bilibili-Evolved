@@ -1,0 +1,57 @@
+.dashboard-home-operations {
+  --dashboard-home-operations-max-inset: 48px;
+
+  @include v-center(var(--dashboard-home-space-md));
+  position: fixed;
+  inset-block-end: clamp(
+    var(--dashboard-home-space-lg),
+    4vb,
+    var(--dashboard-home-operations-max-inset)
+  );
+  inset-inline-end: clamp(
+    var(--dashboard-home-space-md),
+    3vi,
+    var(--dashboard-home-operations-max-inset)
+  );
+  z-index: 3;
+
+  .dashboard-home-action {
+    padding: var(--dashboard-home-space-sm);
+    border-radius: 50%;
+    opacity: 0.5;
+
+    &:is(:hover, :focus-visible) {
+      opacity: 1;
+    }
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    --dashboard-home-operations-start-icon-translate: 0 calc(-1 * var(--dashboard-home-space-2xs));
+
+    [data-content-card-layout='vertical'] & {
+      --dashboard-home-operations-start-icon-translate: var(--dashboard-home-space-2xs) 0;
+    }
+
+    &-refresh:not([aria-disabled='true']) {
+      .mdi {
+        rotate: 0deg;
+        @include dashboard-transition(rotate);
+      }
+
+      &:hover .mdi {
+        rotate: 0.25turn;
+      }
+    }
+
+    &-scroll-start:not([aria-disabled='true']) {
+      .mdi {
+        translate: 0;
+        @include dashboard-transition(translate);
+      }
+
+      &:hover .mdi {
+        translate: var(--dashboard-home-operations-start-icon-translate);
+      }
+    }
+  }
+}

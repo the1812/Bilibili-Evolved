@@ -1,0 +1,104 @@
+.dashboard-home-sitemap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--dashboard-home-space-lg);
+
+  @media (min-width: 960px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  &-section {
+    @include card(var(--home-card-radius));
+    padding: var(--dashboard-home-space-lg);
+
+    &.is-wide {
+      grid-column: 1 / -1;
+
+      > .dashboard-home-sitemap-links {
+        grid-template-columns: repeat(auto-fill, minmax(min(100%, 160px), 1fr));
+      }
+    }
+
+    h2 {
+      margin-block-end: var(--dashboard-home-space-md);
+    }
+  }
+
+  &-links,
+  &-sublinks {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  &-links {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 112px), 1fr));
+    gap: var(--dashboard-home-space-sm);
+  }
+
+  &-sublinks {
+    gap: var(--dashboard-home-space-xs);
+    margin-block-start: var(--dashboard-home-space-xs);
+
+    .dashboard-home-sitemap-link {
+      overflow-wrap: anywhere;
+      background-color: var(--dashboard-home-muted-surface);
+    }
+  }
+
+  &-tile {
+    display: flex;
+    border-radius: var(--dashboard-home-control-radius);
+    background-color: var(--dashboard-home-muted-surface);
+
+    > .dashboard-home-sitemap-link {
+      flex: 1;
+      min-inline-size: 0;
+
+      > span {
+        @include single-line();
+      }
+    }
+  }
+
+  &-link,
+  &-toggle {
+    border-radius: var(--dashboard-home-control-radius);
+    @include dashboard-transition((background-color, box-shadow));
+
+    &:is(:hover, :focus-visible) {
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+  }
+
+  &-link {
+    @include h-center(var(--dashboard-home-space-sm));
+    padding: var(--dashboard-home-space-sm);
+    color: inherit;
+
+    > .dashboard-home-sitemap-icon {
+      flex: none;
+    }
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(--dashboard-home-highlight-background);
+    }
+  }
+
+  &-toggle {
+    display: grid;
+    place-items: center;
+    flex: none;
+    inline-size: 30px;
+    padding: 0;
+
+    &[aria-expanded='true'] .dashboard-home-sitemap-icon {
+      rotate: 180deg;
+    }
+  }
+
+  &-icon {
+    color: var(--theme-color);
+  }
+}

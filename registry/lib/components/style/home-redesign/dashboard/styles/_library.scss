@@ -1,0 +1,122 @@
+.dashboard-home-library {
+  @include v-stretch(var(--dashboard-home-space-md));
+
+  &-status {
+    margin: 0;
+    text-align: center;
+
+    &:empty {
+      position: absolute;
+    }
+  }
+}
+
+.dashboard-home-library-toolbar {
+  &,
+  .dashboard-home-library-actions {
+    @include h-center(var(--dashboard-home-space-sm));
+    flex-wrap: wrap;
+  }
+
+  label {
+    @include h-center(var(--dashboard-home-space-xs));
+    max-inline-size: 100%;
+
+    > span {
+      flex: none;
+    }
+  }
+
+  input,
+  select {
+    max-inline-size: 220px;
+  }
+
+  select {
+    appearance: auto;
+    white-space: nowrap;
+    cursor: pointer;
+
+    &:hover {
+      border-color: var(--theme-color);
+    }
+
+    @supports (appearance: base-select) {
+      &,
+      &::picker(select) {
+        appearance: base-select;
+      }
+
+      &::picker(select) {
+        max-inline-size: min(320px, 90vw);
+        margin-block: var(--dashboard-home-space-xs);
+        padding: var(--dashboard-home-space-xs);
+        border: var(--home-card-border);
+        border-radius: var(--home-card-radius);
+        background-color: var(--home-background-color);
+        box-shadow: var(--dashboard-home-card-hover-shadow);
+        color: inherit;
+      }
+
+      &::picker-icon {
+        color: var(--theme-color);
+      }
+
+      &:open::picker-icon {
+        rotate: 180deg;
+      }
+
+      option {
+        min-block-size: var(--dashboard-home-control-block-size);
+        padding-block: var(--dashboard-home-space-xs);
+        padding-inline: var(--dashboard-home-space-sm);
+        border-radius: var(--dashboard-home-control-radius);
+        white-space: normal;
+        overflow-wrap: anywhere;
+
+        &::checkmark {
+          display: none;
+        }
+
+        &:checked {
+          background-color: var(--dashboard-home-highlight-background);
+        }
+
+        &:is(:hover, :focus-visible) {
+          background-color: var(--theme-color-20, #8883);
+        }
+      }
+    }
+  }
+
+  .dashboard-home-library-actions {
+    > :is(a, button) {
+      @include dashboard-control-size();
+      @include h-center();
+
+      &:not(:disabled, [aria-disabled='true']):is(:hover, :focus-visible) {
+        border-color: var(--theme-color);
+        color: var(--theme-color);
+      }
+
+      &:is(:disabled, [aria-disabled='true']) {
+        opacity: 0.55;
+      }
+    }
+
+    > a {
+      @include dashboard-control-colors();
+    }
+
+    > button {
+      --dashboard-home-button-background: var(--home-background-color);
+    }
+
+    > button.dashboard-home-history-recording-toggle {
+      justify-content: center;
+      inline-size: var(--dashboard-home-control-block-size);
+      padding: var(--dashboard-home-space-xs);
+      border-radius: 50%;
+    }
+  }
+}

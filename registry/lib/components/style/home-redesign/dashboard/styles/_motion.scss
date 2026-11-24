@@ -1,0 +1,13 @@
+$dashboard-home-transition-duration: 200ms;
+
+@mixin dashboard-transition($properties) {
+  transition-property: $properties;
+  transition-duration: $dashboard-home-transition-duration;
+  transition-timing-function: ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:has(body:not(.home-redesign-off) .dashboard-home) {
+    scroll-behavior: auto;
+  }
+}

@@ -1,0 +1,151 @@
+.dashboard-home-dynamic-stats {
+  min-inline-size: 0;
+  color: var(--dashboard-home-muted-text-color);
+
+  &-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: var(--dashboard-home-space-xs) var(--dashboard-home-space-sm);
+  }
+
+  &-item {
+    --dashboard-home-dynamic-stats-item-size: 36px;
+
+    @include h-center(var(--dashboard-home-space-2xs));
+    justify-content: center;
+    white-space: nowrap;
+
+    &[aria-pressed='true'] {
+      color: var(--theme-color);
+    }
+  }
+
+  button {
+    padding: var(--dashboard-home-space-xs);
+
+    &[aria-disabled='true'] {
+      cursor: progress;
+      opacity: 0.65;
+    }
+  }
+
+  &.is-flyout {
+    align-self: flex-start;
+    max-inline-size: 100%;
+    pointer-events: auto;
+
+    > .dashboard-home-dynamic-stats-items {
+      @include card(var(--home-card-radius));
+      gap: var(--dashboard-home-space-2xs);
+      padding: var(--dashboard-home-space-2xs);
+    }
+  }
+}
+
+@media (hover: none), (width < $dashboard-home-card-breakpoint) {
+  .dashboard-home-dynamic-post:has(> .dashboard-home-dynamic-attachment)
+    > .dashboard-home-dynamic-controls
+    > .dashboard-home-dynamic-stats.is-flyout {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (min-width: $dashboard-home-card-breakpoint) {
+  [data-content-card-layout='compact'] .dashboard-home-dynamic {
+    &-attachment .dashboard-home-dynamic-stats {
+      display: none;
+    }
+
+    &-card {
+      --dashboard-home-dynamic-stats-inline-gap: calc(
+        var(--dashboard-home-card-padding-inline) + var(--dashboard-home-space-xs)
+      );
+      --dashboard-home-dynamic-stats-inset-inline: 100% auto;
+      --dashboard-home-dynamic-stats-padding-inline: var(--dashboard-home-dynamic-stats-inline-gap)
+        0;
+      --dashboard-home-dynamic-stats-transform-origin: left top;
+      --dashboard-home-dynamic-stats-hidden-offset-x: calc(-1 * var(--dashboard-home-space-sm));
+
+      &.has-left-stats {
+        --dashboard-home-dynamic-stats-inset-inline: auto 100%;
+        --dashboard-home-dynamic-stats-padding-inline: 0
+          var(--dashboard-home-dynamic-stats-inline-gap);
+        --dashboard-home-dynamic-stats-transform-origin: right top;
+        --dashboard-home-dynamic-stats-hidden-offset-x: var(--dashboard-home-space-sm);
+      }
+    }
+
+    .dashboard-home-card-grid-item:has(> .dashboard-home-dynamic-card .is-flyout) {
+      z-index: 0;
+
+      @media (prefers-reduced-motion: no-preference) {
+        // Drop to an intermediate layer during the fade so the next hovered card can overlap it.
+        transition: z-index $dashboard-home-transition-duration steps(1, jump-both);
+
+        &:is(:hover, :focus-within) {
+          transition-duration: 0s;
+        }
+      }
+
+      &:hover {
+        z-index: 2;
+      }
+
+      &:has(:focus-visible) {
+        z-index: 3;
+      }
+    }
+
+    &-post:has(> .dashboard-home-dynamic-controls > .is-flyout) {
+      position: relative;
+    }
+
+    &-stats.is-flyout {
+      position: absolute;
+      z-index: 2;
+      inset-block-start: 0;
+      inset-inline: var(--dashboard-home-dynamic-stats-inset-inline);
+      box-sizing: content-box;
+      padding-inline: var(--dashboard-home-dynamic-stats-padding-inline);
+      opacity: 0;
+      pointer-events: none;
+
+      @media (prefers-reduced-motion: no-preference) {
+        @include dashboard-transition(opacity);
+      }
+
+      > .dashboard-home-dynamic-stats-items {
+        flex-direction: column;
+
+        @media (prefers-reduced-motion: no-preference) {
+          transform-origin: var(--dashboard-home-dynamic-stats-transform-origin);
+          transform: translateX(var(--dashboard-home-dynamic-stats-hidden-offset-x)) scale(0.9);
+          @include dashboard-transition(transform);
+        }
+
+        > .dashboard-home-dynamic-stats-item {
+          flex-direction: column;
+          min-block-size: var(--dashboard-home-dynamic-stats-item-size);
+          min-inline-size: var(--dashboard-home-dynamic-stats-item-size);
+        }
+      }
+    }
+
+    .dashboard-home-dynamic-card:is(:hover, :focus-within):not(
+        :has(> .is-repost:is(:hover, :focus-within) .dashboard-home-dynamic-stats.is-flyout)
+      )
+      .is-default-stats,
+    &-post:is(:hover, :focus-within) > .dashboard-home-dynamic-controls > .is-flyout {
+      opacity: 1;
+      pointer-events: auto;
+
+      @media (prefers-reduced-motion: no-preference) {
+        > .dashboard-home-dynamic-stats-items {
+          transform: translateX(0) scale(1);
+        }
+      }
+    }
+  }
+}

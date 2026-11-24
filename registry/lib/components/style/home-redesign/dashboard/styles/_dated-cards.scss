@@ -1,0 +1,145 @@
+.dashboard-home-card-date-groups {
+  display: grid;
+  gap: var(--dashboard-home-grid-gap);
+}
+
+:not(.dashboard-home-card-collection-dated) > .dashboard-home-card-collection-track {
+  > .dashboard-home-card-date-groups,
+  > .dashboard-home-card-date-groups > .dashboard-home-card-date-group {
+    display: contents;
+  }
+}
+
+.dashboard-home-card-date-group {
+  display: grid;
+  grid-template-columns: 0 minmax(0, 1fr);
+
+  > .dashboard-home-card-grid {
+    grid-area: 1 / 2;
+  }
+}
+
+.dashboard-home-card-date {
+  --dashboard-home-card-date-text-offset: calc(
+    var(--dashboard-home-accent-stroke-width) + var(--dashboard-home-space-xs)
+  );
+
+  @include dashboard-caption();
+  @include semi-bold();
+  position: sticky;
+  z-index: 1;
+  grid-area: 1 / 1;
+  place-self: start end;
+  padding-block-start: var(--dashboard-home-card-date-text-offset);
+  color: var(--dashboard-home-text-color);
+  white-space: nowrap;
+  text-align: end;
+
+  &::before {
+    content: '';
+    position: absolute;
+    border-radius: var(--dashboard-home-pill-radius);
+    background-color: var(--theme-color);
+  }
+}
+
+:is([data-content-card-layout='horizontal'], [data-content-card-layout='compact']) {
+  .dashboard-home-card-date-group {
+    &:has(> .dashboard-home-card-date) > .dashboard-home-card-grid {
+      // Keep the sticky date above the grid's card controls.
+      isolation: isolate;
+    }
+
+    @media (width < $dashboard-home-card-breakpoint) {
+      grid-template-columns: minmax(0, 1fr);
+
+      > .dashboard-home-card-grid {
+        grid-area: 1 / 1;
+      }
+    }
+  }
+
+  .dashboard-home-card-date {
+    inset-block-start: var(--dashboard-home-card-date-block-start);
+
+    &::before {
+      inset-block-start: 0;
+      inset-inline: 0;
+      block-size: var(--dashboard-home-accent-stroke-width);
+    }
+
+    @media (min-width: $dashboard-home-card-breakpoint) {
+      // Keep the full date readable if it extends past the gutter.
+      translate: max(
+        calc(-1 * var(--dashboard-home-space-md)),
+        calc(
+          100% - var(--dashboard-home-card-grid-inline-inset) -
+            var(--dashboard-home-card-inline-gutter)
+        )
+      );
+      background-color: var(--home-base-color);
+    }
+
+    @media (width < $dashboard-home-card-breakpoint) {
+      justify-self: start;
+      margin: var(--dashboard-home-space-sm);
+      padding-block: calc(
+          var(--dashboard-home-space-xs) + var(--dashboard-home-card-date-text-offset)
+        )
+        var(--dashboard-home-space-xs);
+      padding-inline: var(--dashboard-home-space-sm);
+      border: var(--home-card-border);
+      border-radius: var(--dashboard-home-control-radius);
+      background-color: var(--home-background-color);
+      box-shadow: var(--home-card-shadow);
+      text-align: start;
+
+      &::before {
+        inset-block-start: var(--dashboard-home-space-xs);
+        inset-inline: var(--dashboard-home-space-sm);
+      }
+    }
+  }
+}
+
+[data-content-card-layout='vertical'] {
+  &:has(.dashboard-home-card-collection-dated) {
+    padding-block-start: 0;
+  }
+
+  .dashboard-home-card-collection-dated {
+    --dashboard-home-card-scroll-padding-block-start: var(--dashboard-home-space-xs);
+    --dashboard-home-card-scroll-header-block-size: 20px;
+  }
+
+  .dashboard-home-card-date-groups {
+    display: flex;
+  }
+
+  .dashboard-home-card-date-group {
+    grid-template: var(--dashboard-home-card-scroll-header-block-size) minmax(0, 1fr) / minmax(
+        0,
+        1fr
+      );
+
+    > .dashboard-home-card-grid {
+      grid-area: 2 / 1;
+    }
+  }
+
+  .dashboard-home-card-date {
+    inset-inline-end: 0;
+    justify-self: start;
+    padding-block-start: 0;
+    padding-inline-end: var(--dashboard-home-card-date-text-offset);
+    background-color: var(--home-background-color);
+    direction: ltr;
+    text-align: start;
+
+    &::before {
+      inset-block: var(--dashboard-home-border-width);
+      inset-inline-end: 0;
+      inline-size: var(--dashboard-home-accent-stroke-width);
+    }
+  }
+}

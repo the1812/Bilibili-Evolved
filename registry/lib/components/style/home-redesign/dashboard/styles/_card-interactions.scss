@@ -1,0 +1,121 @@
+.dashboard-home {
+  &.is-watchlater-hidden .dashboard-home-content-card-watchlater {
+    display: none;
+  }
+
+  a.be-up-info {
+    @include dashboard-caption();
+    block-size: var(--dashboard-home-capsule-block-size);
+    min-inline-size: 0;
+    max-inline-size: 100%;
+
+    &.fallback {
+      box-sizing: border-box;
+      padding-block: var(--dashboard-home-space-2xs);
+      padding-inline: var(--dashboard-home-space-sm);
+      border: var(--home-card-border);
+      border-radius: var(--dashboard-home-pill-radius);
+    }
+
+    .be-up-info-name {
+      @include dashboard-transition(color);
+    }
+  }
+
+  [data-content-card-layout='vertical'] {
+    .dashboard-home-content-card-uploaders,
+    .dashboard-home-followings-header {
+      .be-up-info {
+        // The shared uploader pill sets a physical height.
+        inline-size: auto;
+        padding-block: var(--dashboard-home-space-2xs);
+        padding-inline: var(--dashboard-home-space-2xs) var(--dashboard-home-space-sm);
+      }
+
+      .be-up-info-cover,
+      .be-up-info-cover-fallback {
+        flex: none;
+        margin: 0;
+      }
+    }
+  }
+
+  .dashboard-home-dynamic-post-link {
+    @include h-center();
+    box-sizing: border-box;
+    block-size: var(--dashboard-home-capsule-block-size);
+    padding-inline: var(--dashboard-home-space-sm);
+    border: var(--dashboard-home-border-width) solid transparent;
+    border-radius: var(--dashboard-home-pill-radius);
+    color: var(--dashboard-home-muted-text-color);
+    white-space: nowrap;
+
+    &:is(:hover, :focus-visible) {
+      color: var(--theme-color);
+    }
+  }
+
+  a:is(
+      .be-up-info,
+      .dashboard-home-dynamic-post-link,
+      .dashboard-home-dynamic-original-link
+    ):any-link {
+    @include dashboard-transition((background-color, border-color));
+
+    &:is(:hover, :focus-visible) {
+      background-color: var(
+        --dashboard-home-capsule-highlight-background,
+        var(--dashboard-home-highlight-background)
+      );
+      border-color: var(
+        --dashboard-home-capsule-highlight-border-color,
+        var(--theme-color-40, #8886)
+      );
+    }
+  }
+
+  .dashboard-home-content-card:has(.dashboard-home-content-card-title > a),
+  .dashboard-home-dynamic-live-room {
+    position: relative;
+  }
+
+  .dashboard-home-content-card:has(.dashboard-home-content-card-title > a:focus-visible),
+  .dashboard-home-dynamic-live-room:has(.dashboard-home-dynamic-live-title > a:focus-visible) {
+    @include dashboard-focus-ring();
+
+    // The card outline marks focus for the full-card link.
+    :is(.dashboard-home-content-card-title, .dashboard-home-dynamic-live-title) > a:focus-visible {
+      outline: none;
+    }
+  }
+
+  .dashboard-home-content-card-title > a::after,
+  .dashboard-home-dynamic-live-title > a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  // Keep independent controls above the full-card link.
+  .dashboard-home-content-card-watchlater,
+  .dashboard-home-content-card-topics a,
+  .dashboard-home-content-card-uploaders a,
+  .dashboard-home-content-card-stats button,
+  .dashboard-home-dynamic-live-profile {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dashboard-home-content-card:not(.is-embedded),
+  .dashboard-home-dynamic-card,
+  .dashboard-home-dynamic-live-room,
+  .dashboard-home-followings-card,
+  .dashboard-home-account-card {
+    @include dashboard-transition(box-shadow);
+
+    &:hover,
+    &:focus-within {
+      box-shadow: var(--dashboard-home-card-hover-shadow);
+    }
+  }
+}

@@ -1,0 +1,201 @@
+.dashboard-home-dynamic {
+  &-card {
+    --dashboard-home-dynamic-post-padding-inline: var(--dashboard-home-card-padding-inline);
+
+    @include card(var(--home-card-radius));
+    @include v-stretch(var(--dashboard-home-space-sm));
+    padding-block: var(--dashboard-home-card-padding-block);
+    padding-inline: var(--dashboard-home-dynamic-post-padding-inline);
+    overflow-wrap: anywhere;
+  }
+
+  &-post {
+    --dashboard-home-dynamic-post-radius: var(--home-card-radius);
+    --dashboard-home-dynamic-post-inner-radius: calc(
+      var(--dashboard-home-dynamic-post-radius) - var(--dashboard-home-border-width)
+    );
+
+    gap: var(--dashboard-home-space-sm);
+
+    &:not(.has-single-photo) {
+      @include v-stretch();
+    }
+
+    &.is-repost {
+      --dashboard-home-dynamic-post-padding-inline: var(--dashboard-home-space-sm);
+      --dashboard-home-dynamic-post-radius: var(--dashboard-home-control-radius);
+
+      padding-block: var(--dashboard-home-card-padding-block);
+      padding-inline: var(--dashboard-home-dynamic-post-padding-inline);
+      border: var(--home-card-border);
+      border-radius: var(--dashboard-home-dynamic-post-radius);
+      background-color: var(--dashboard-home-muted-surface);
+    }
+
+    &.has-single-photo {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+
+      > .dashboard-home-dynamic-controls,
+      > .dashboard-home-dynamic-photos {
+        grid-area: 1 / 1;
+      }
+
+      > .dashboard-home-dynamic-photos {
+        margin-block-start: calc(-1 * var(--dashboard-home-card-padding-block));
+        margin-inline: calc(-1 * var(--dashboard-home-dynamic-post-padding-inline));
+
+        img {
+          border-start-start-radius: var(--dashboard-home-dynamic-post-inner-radius);
+          border-start-end-radius: var(--dashboard-home-dynamic-post-inner-radius);
+        }
+      }
+
+      > .dashboard-home-dynamic-controls {
+        --dashboard-home-capsule-highlight-background: var(
+          --dashboard-home-media-overlay-highlight-background
+        );
+        --dashboard-home-capsule-highlight-border-color: rgba(255, 255, 255, 0.6);
+        --dashboard-home-focus-ring-color: var(--dashboard-home-media-overlay-color);
+
+        z-index: 1;
+        align-self: start;
+        pointer-events: none;
+
+        a {
+          pointer-events: auto;
+        }
+
+        .be-up-info,
+        .dashboard-home-dynamic-post-link,
+        .dashboard-home-dynamic-repost-icon,
+        .dashboard-home-dynamic-attachment-type,
+        .dashboard-home-dynamic-original-link {
+          background-color: var(--dashboard-home-media-overlay-background);
+          border: var(--dashboard-home-border-width) solid rgba(255, 255, 255, 0.25);
+          color: var(--dashboard-home-media-overlay-color);
+          box-shadow: none;
+        }
+
+        .be-up-info:hover .be-up-info-name {
+          // Match the shared uploader style's priority to keep the name readable over photos.
+          color: inherit !important;
+        }
+      }
+    }
+
+    &.is-photo-only:last-child > .dashboard-home-dynamic-photos,
+    &:last-child > .dashboard-home-dynamic-attachment:last-child {
+      margin-block-end: calc(-1 * var(--dashboard-home-card-padding-block));
+    }
+
+    &.is-photo-only:last-child > .dashboard-home-dynamic-photos img,
+    &:last-child > .dashboard-home-dynamic-attachment:last-child {
+      border-end-start-radius: var(--dashboard-home-dynamic-post-inner-radius);
+      border-end-end-radius: var(--dashboard-home-dynamic-post-inner-radius);
+    }
+  }
+
+  &-controls {
+    @include v-stretch(var(--dashboard-home-space-sm));
+    @include dashboard-caption();
+  }
+
+  &-author {
+    @include h-center(var(--dashboard-home-space-sm));
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  &-reposters {
+    @include h-center(var(--dashboard-home-space-xs));
+    align-self: flex-start;
+    max-inline-size: 100%;
+  }
+
+  &-repost-users,
+  &-author-actions {
+    @include h-center(var(--dashboard-home-space-xs));
+    flex-wrap: wrap;
+    min-inline-size: 0;
+  }
+
+  &-repost-icon,
+  &-original-link {
+    flex: none;
+    box-sizing: border-box;
+    block-size: var(--dashboard-home-capsule-block-size);
+    border: var(--home-card-border);
+    border-radius: var(--dashboard-home-pill-radius);
+    background-color: var(--dashboard-home-muted-surface);
+    color: var(--dashboard-home-muted-text-color);
+
+    &:not(.has-type-label) {
+      display: grid;
+      place-items: center;
+      inline-size: var(--dashboard-home-capsule-block-size);
+    }
+  }
+
+  &-original-link.has-type-label {
+    @include h-center(var(--dashboard-home-space-xs));
+    padding-inline: var(--dashboard-home-space-sm);
+    white-space: nowrap;
+  }
+
+  &-text {
+    margin: 0;
+    white-space: pre-wrap;
+  }
+
+  &-photos {
+    display: grid;
+
+    button {
+      --dashboard-home-button-highlight-background: transparent;
+
+      min-inline-size: 0;
+      padding: 0;
+      cursor: zoom-in;
+    }
+
+    img {
+      display: block;
+      inline-size: 100%;
+      block-size: auto;
+      object-fit: cover;
+    }
+
+    .dashboard-home-dynamic-post:not(.has-single-photo) > & {
+      gap: var(--dashboard-home-space-sm);
+      grid-template-columns: repeat(auto-fit, minmax(75px, 1fr));
+
+      img {
+        max-block-size: 420px;
+        aspect-ratio: 1;
+        border-radius: var(--dashboard-home-control-radius);
+      }
+    }
+  }
+
+  &-attachment {
+    overflow: hidden;
+    margin-inline: calc(-1 * var(--dashboard-home-dynamic-post-padding-inline));
+
+    .dashboard-home-content-card-details {
+      padding-inline: var(--dashboard-home-dynamic-post-padding-inline);
+    }
+
+    &-type {
+      @include h-center(var(--dashboard-home-space-xs));
+      flex: none;
+      padding-block: var(--dashboard-home-space-xs);
+      padding-inline: var(--dashboard-home-space-sm);
+      border: var(--home-card-border);
+      border-radius: var(--dashboard-home-pill-radius);
+      background-color: var(--dashboard-home-muted-surface);
+      color: var(--dashboard-home-text-color);
+      white-space: nowrap;
+    }
+  }
+}

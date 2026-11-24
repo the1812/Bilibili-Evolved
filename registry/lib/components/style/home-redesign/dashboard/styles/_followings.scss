@@ -1,0 +1,89 @@
+.dashboard-home-followings {
+  &-card {
+    @include card(var(--home-card-radius));
+    gap: var(--dashboard-home-space-xs);
+    padding-block: var(--dashboard-home-card-padding-block);
+    padding-inline: var(--dashboard-home-card-padding-inline);
+
+    &:where(:not([data-content-card-layout='vertical'] *)) {
+      @include v-stretch();
+    }
+
+    [data-content-card-layout='vertical'] & {
+      display: grid;
+      grid-template: minmax(0, 1fr) auto / minmax(0, 1fr);
+      writing-mode: vertical-rl;
+    }
+  }
+
+  &-header {
+    @include h-center(var(--dashboard-home-space-sm));
+
+    [data-content-card-layout='horizontal'] &,
+    [data-content-card-layout='compact'] & {
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    [data-content-card-layout='horizontal'] & {
+      flex: none;
+    }
+
+    [data-content-card-layout='vertical'] & {
+      grid-row: 2;
+    }
+
+    time {
+      @include dashboard-caption();
+      color: var(--dashboard-home-muted-text-color);
+
+      [data-content-card-layout='vertical'] & {
+        flex: none;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  &-signature-area {
+    [data-content-card-layout='horizontal'] &,
+    [data-content-card-layout='vertical'] & {
+      container-type: size;
+    }
+
+    [data-content-card-layout='horizontal'] & {
+      flex: 1;
+    }
+
+    [data-content-card-layout='vertical'] & {
+      grid-row: 1;
+    }
+  }
+
+  &-signature {
+    margin: 0;
+    color: var(--dashboard-home-text-color);
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+
+    [data-content-card-layout='horizontal'] &,
+    [data-content-card-layout='vertical'] & {
+      // Use only complete lines along the block axis, which runs sideways in vertical writing.
+      --dashboard-home-followings-signature-clamp-lines: max(1, round(down, 100cqb / 1lh));
+
+      display: -webkit-box;
+      max-block-size: 100%;
+      overflow: clip;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: var(--dashboard-home-followings-signature-clamp-lines);
+      line-clamp: var(--dashboard-home-followings-signature-clamp-lines);
+
+      @supports not (opacity: calc(1px / 1px)) {
+        // Convert the two lengths to a ratio on browsers without unit division.
+        --dashboard-home-followings-signature-clamp-lines: max(
+          1,
+          round(down, tan(atan2(100cqb, 1lh)))
+        );
+      }
+    }
+  }
+}

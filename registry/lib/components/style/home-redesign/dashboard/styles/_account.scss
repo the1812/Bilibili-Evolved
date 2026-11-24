@@ -1,0 +1,196 @@
+.dashboard-home-account-panel-heading,
+.dashboard-home-inbox-entry-heading {
+  @include h-center(var(--dashboard-home-space-sm));
+  justify-content: space-between;
+}
+
+.dashboard-home-account-panel-heading a {
+  @include dashboard-caption();
+  color: var(--dashboard-home-muted-text-color);
+}
+
+.dashboard-home-account {
+  @include v-stretch(var(--dashboard-home-space-lg));
+
+  &-card {
+    @include card(var(--home-card-radius));
+    @include v-stretch(var(--dashboard-home-space-md));
+    padding: var(--dashboard-home-space-lg);
+
+    a:hover,
+    a:focus-visible {
+      color: var(--theme-color);
+    }
+  }
+
+  &-identity {
+    @include h-center(var(--dashboard-home-space-lg));
+    flex-wrap: wrap;
+    overflow-wrap: anywhere;
+  }
+
+  &-avatar {
+    position: relative;
+    flex: none;
+    inline-size: 64px;
+    block-size: 64px;
+    margin: var(--dashboard-home-space-sm);
+
+    &-image {
+      border-radius: 50%;
+    }
+
+    &-pendant {
+      position: absolute;
+      inset: -16px;
+      max-inline-size: none;
+      pointer-events: none;
+    }
+  }
+
+  &-status {
+    @include h-center(var(--dashboard-home-space-sm));
+  }
+
+  &-membership {
+    @include dashboard-caption();
+    padding-block: var(--dashboard-home-space-xs);
+    padding-inline: var(--dashboard-home-space-sm);
+    border: var(--home-card-border);
+    border-radius: var(--dashboard-home-pill-radius);
+  }
+
+  &-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 72px), 1fr));
+    gap: var(--dashboard-home-space-md);
+    margin: 0;
+
+    dt {
+      @include dashboard-caption();
+      color: var(--dashboard-home-muted-text-color);
+    }
+
+    dd {
+      @include semi-bold();
+      margin-block: var(--dashboard-home-space-2xs) 0;
+      margin-inline: 0;
+    }
+  }
+
+  &-panels {
+    --dashboard-home-account-panel-gap: var(--dashboard-home-space-lg);
+
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(
+        min(100%, max(280px, calc((100% - 2 * var(--dashboard-home-account-panel-gap)) / 3))),
+        1fr
+      )
+    );
+    align-items: start;
+    gap: var(--dashboard-home-account-panel-gap);
+  }
+
+  &-column,
+  &-inbox {
+    @include v-stretch(var(--dashboard-home-account-panel-gap));
+  }
+
+  &-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li + li {
+      border-block-start: var(--home-card-border);
+    }
+  }
+
+  &-row {
+    @include h-center(var(--dashboard-home-space-sm));
+    box-sizing: border-box;
+    min-block-size: 40px;
+    padding-block: var(--dashboard-home-space-xs);
+    color: inherit;
+
+    &-text {
+      @include v-stretch(var(--dashboard-home-space-2xs));
+      flex: 1;
+      min-inline-size: 0;
+      overflow-wrap: anywhere;
+    }
+
+    strong {
+      white-space: nowrap;
+    }
+  }
+
+  &-muted {
+    @include dashboard-caption();
+    color: var(--dashboard-home-muted-text-color);
+  }
+}
+
+.dashboard-home-inbox {
+  &-category {
+    --dashboard-home-button-highlight-background: transparent;
+
+    inline-size: 100%;
+    padding-inline: 0;
+    text-align: start;
+
+    &:not([aria-disabled='true']):is(:hover, :focus-visible),
+    &[aria-expanded='true'] {
+      color: var(--theme-color);
+    }
+
+    &[aria-disabled='true'] {
+      cursor: wait;
+    }
+  }
+
+  &-entry {
+    @include v-stretch(var(--dashboard-home-space-xs));
+    padding-block: var(--dashboard-home-space-sm);
+    overflow-wrap: anywhere;
+
+    &-heading {
+      flex-wrap: wrap;
+    }
+
+    &-title {
+      @include semi-bold();
+      min-inline-size: 0;
+      color: inherit;
+    }
+
+    time {
+      flex: none;
+    }
+  }
+
+  &-result {
+    margin: 0;
+
+    &:empty {
+      position: absolute;
+    }
+
+    &:focus-visible {
+      @include dashboard-focus-ring();
+    }
+  }
+
+  &-text {
+    margin: 0;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  &-actions {
+    @include h-center(var(--dashboard-home-space-sm));
+    justify-content: space-between;
+  }
+}

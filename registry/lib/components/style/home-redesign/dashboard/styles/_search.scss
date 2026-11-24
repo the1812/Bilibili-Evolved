@@ -1,0 +1,34 @@
+.dashboard-home-search {
+  inline-size: min(100%, 600px);
+  padding-block: clamp(var(--dashboard-home-space-xl), 6vh, 56px);
+
+  .launch-bar {
+    --color: var(--home-color);
+
+    padding-block: var(--dashboard-home-space-xs);
+    padding-inline: var(--dashboard-home-space-md);
+    border: var(--dashboard-home-control-border);
+    border-radius: var(--dashboard-home-pill-radius);
+    background-color: var(--home-background-color);
+    box-shadow: var(--home-card-shadow);
+
+    &:focus-within {
+      @include dashboard-focus-ring();
+    }
+
+    .input-area,
+    .launch-bar-form .input {
+      min-inline-size: 0;
+    }
+
+    .launch-bar-suggest-list {
+      box-sizing: border-box;
+      margin-block-start: var(--dashboard-home-space-sm);
+      transition: none;
+
+      @media (prefers-reduced-motion: no-preference) {
+        @include dashboard-transition((opacity, transform));
+      }
+    }
+  }
+}
