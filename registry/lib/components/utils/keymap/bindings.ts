@@ -197,6 +197,20 @@ export const loadKeymap = lodash.once(() => {
   }
 
   const keyboardHandler = (event: KeyboardEvent) => {
+    if (config.enable && (event.key === 'ArrowLeft' || event.key === 'ArrowRight')) {
+      const gallery = document.querySelector<HTMLElement>('.pswp.pswp--open')
+      if (gallery) {
+        // PhotoSwipe moves focus into the viewer after its opening animation.
+        if (!gallery.contains(event.target as Node)) {
+          event.stopImmediatePropagation()
+          event.preventDefault()
+          gallery.focus({ preventScroll: true })
+          const direction = event.key === 'ArrowLeft' ? 'prev' : 'next'
+          gallery.querySelector<HTMLButtonElement>(`.pswp__button--arrow--${direction}`)?.click()
+        }
+        return
+      }
+    }
     handleKeyDown(createKeyEvent(event, event.key, event.code, event.repeat))
     if (
       config.enable &&
