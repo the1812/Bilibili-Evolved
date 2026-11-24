@@ -21,6 +21,8 @@ export interface KeyBindingAction {
   ignoreTyping?: boolean
   /** 默认聚焦在可聚焦元素时不忽略快捷键, 将此属性设置为 true 可以在聚焦时禁止触发快捷键 */
   ignoreFocus?: boolean
+  /** 默认忽略长按重复触发, 将此属性设置为 true 可以允许长按连续触发 */
+  allowRepeat?: boolean | (() => boolean)
 }
 export interface KeyBinding {
   keys: string[]
@@ -50,11 +52,14 @@ const mouseButtonKeys: Record<number, string> = {
   3: 'mouseBack',
   4: 'mouseForward',
 }
+const isRepeatAllowed = (action: KeyBindingAction) =>
+  typeof action.allowRepeat === 'function' ? action.allowRepeat() : Boolean(action.allowRepeat)
 export const loadKeymap = lodash.once(() => {
   const isWatchlater = watchlaterUrls.some(url => matchUrlPattern(url))
   const isMediaList = mediaListUrls.some(url => matchUrlPattern(url))
   const keyReleaseListeners = new Map<string, ((event: KeyReleaseEvent) => void)[]>()
   const consumedMouseButtons = new Set<number>()
+  const suppressedRepeatKeys = new Set<string>()
   const config = {
     enable: true,
     bindings: [] as KeyBinding[],
@@ -89,6 +94,7 @@ export const loadKeymap = lodash.once(() => {
     sourceEvent: KeyboardEvent | MouseEvent | null,
     cancelled = false,
   ) => {
+    suppressedRepeatKeys.delete(code)
     const listeners = keyReleaseListeners.get(code)
     if (!listeners) {
       return
@@ -100,8 +106,17 @@ export const loadKeymap = lodash.once(() => {
     if (!config.enable) {
       return
     }
+    if (e.repeat && suppressedRepeatKeys.has(e.code)) {
+      e.stopImmediatePropagation()
+      e.preventDefault()
+      return
+    }
     config.bindings.forEach(binding => {
       if (binding.keys.length === 0) {
+        return
+      }
+      const allowRepeat = isRepeatAllowed(binding.action)
+      if (e.repeat && !allowRepeat) {
         return
       }
 
@@ -190,6 +205,9 @@ export const loadKeymap = lodash.once(() => {
 
       const actionSuccess = !lodash.isNil(actionResult)
       if (binding.action.prevent ?? actionSuccess) {
+        if (!allowRepeat) {
+          suppressedRepeatKeys.add(e.code)
+        }
         e.stopImmediatePropagation()
         e.preventDefault()
       }
@@ -242,6 +260,7 @@ export const loadKeymap = lodash.once(() => {
   }
   const blurHandler = () => {
     keyReleaseListeners.forEach((_, code) => handleKeyUp(code, null, true))
+    suppressedRepeatKeys.clear()
     consumedMouseButtons.clear()
   }
 

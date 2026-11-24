@@ -6,8 +6,8 @@
     :aria-checked="checked"
     :aria-disabled="disabled"
     tabindex="0"
-    @keydown.space.prevent="toggle()"
-    @keydown.enter.prevent="toggle()"
+    @keydown.space.prevent="toggle"
+    @keydown.enter.prevent="toggle"
   >
     <label>
       <input
@@ -45,8 +45,8 @@ export default Vue.extend({
     handleChange(event: Event) {
       this.$emit('change', (event.currentTarget as HTMLInputElement).checked)
     },
-    toggle() {
-      if (this.disabled) {
+    toggle(event?: KeyboardEvent) {
+      if (this.disabled || event?.repeat) {
         return
       }
       this.$refs.input.checked = !this.$refs.input.checked

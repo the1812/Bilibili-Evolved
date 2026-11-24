@@ -58,6 +58,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   volumeUp: {
     displayName: '增加音量',
     ignoreFocus: false,
+    allowRepeat: true,
     run: () => {
       const speedHint = playerAgent.query.playerArea
         .sync()
@@ -77,6 +78,7 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   volumeDown: {
     displayName: '降低音量',
     ignoreFocus: false,
+    allowRepeat: true,
     run: () => {
       const speedHint = playerAgent.query.playerArea
         .sync()
@@ -188,12 +190,13 @@ export const builtInActions: Record<string, KeyBindingAction> = {
   },
   jumpBackward: {
     displayName: '倒退',
+    allowRepeat: true,
     run: () => playerAgent.changeTime(-5),
   },
   jumpForward: {
     displayName: '前进',
+    allowRepeat: () => !getComponentSettings<Options>('keymap').options.enableLongPressSpeed,
     run: (() => {
-      let activeCode: string = null
       let timer: number = null
       let originalPlaybackRate: number = null
 
@@ -204,19 +207,17 @@ export const builtInActions: Record<string, KeyBindingAction> = {
         if (originalPlaybackRate !== null) {
           playerAgent.nativeApi?.setPlaybackRate(originalPlaybackRate)
         }
-        activeCode = null
         timer = null
         originalPlaybackRate = null
       }
 
       return ({ event }: KeyBindingActionContext) => {
-        if (activeCode !== null) {
-          return true
-        }
         if (!getComponentSettings<Options>('keymap').options.enableLongPressSpeed) {
           return playerAgent.changeTime(5)
         }
-        activeCode = event.code
+        if (timer !== null || originalPlaybackRate !== null) {
+          return true
+        }
         event.onRelease(({ cancelled }) => {
           const isShortPress = timer !== null
           reset()

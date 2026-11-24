@@ -5,7 +5,6 @@ import { dea, des } from '@/core/utils'
 import { logError } from '@/core/utils/log'
 import { ascendingSort } from '@/core/utils/sort'
 import { fromEvent, PublishContext, Subject, TeardownLogic } from '../common/mini-rxjs'
-import { debounceTime } from '../common/mini-rxjs/operators/debounceTime'
 import { filter } from '../common/mini-rxjs/operators/filter'
 import { asapScheduler, observeOn } from '../common/mini-rxjs/operators/observeOn'
 import { loadStyle } from '../common/mini-rxjs/utils/loadStyle'
@@ -194,35 +193,33 @@ export class ExtendSpeedComponent extends EntrySpeedComponent<Options> {
     `)
 
     const destroy = lodash.over(
-      fromEvent(input, 'keydown')
-        .pipe<KeyboardEvent>(debounceTime(200))
-        .subscribe(({ key }) => {
-          if (key !== 'Enter') {
-            return
-          }
+      fromEvent(input, 'keydown').subscribe(({ key, repeat }: KeyboardEvent) => {
+        if (key !== 'Enter' || repeat) {
+          return
+        }
 
-          const value = parseFloat(input.value)
+        const value = parseFloat(input.value)
 
-          try {
-            if (!lodash.isFinite(value)) {
-              throw new Error('无效的倍数值')
-            }
-            if (value < MIN_BROWSER_SPEED_VALUE) {
-              throw new Error('倍数值太小了')
-            }
-            if (value > MAX_BROWSER_SPEED_VALUE) {
-              throw new Error('倍数值太大了')
-            }
-            if (this.speedContext.getAvailableSpeedValues().includes(value)) {
-              throw new Error('不能重复添加已有的倍数值')
-            }
-            this.addSpeedValue(value)
-          } catch (error) {
-            logError(String(error), ERROR_MESSAGE_DURATION)
-            input.focus()
-            input.select()
+        try {
+          if (!lodash.isFinite(value)) {
+            throw new Error('无效的倍数值')
           }
-        }),
+          if (value < MIN_BROWSER_SPEED_VALUE) {
+            throw new Error('倍数值太小了')
+          }
+          if (value > MAX_BROWSER_SPEED_VALUE) {
+            throw new Error('倍数值太大了')
+          }
+          if (this.speedContext.getAvailableSpeedValues().includes(value)) {
+            throw new Error('不能重复添加已有的倍数值')
+          }
+          this.addSpeedValue(value)
+        } catch (error) {
+          logError(String(error), ERROR_MESSAGE_DURATION)
+          input.focus()
+          input.select()
+        }
+      }),
       fromEvent(root, 'mouseenter').subscribe(() => {
         input.style.display = 'inline'
         icon.style.display = 'none'

@@ -6,7 +6,7 @@
       :value="value"
       maxlength="30"
       autocomplete="off"
-      @keydown.enter="send()"
+      @keydown.enter="send"
       @input="updateValue"
       @focus="setControlBarLocked(true)"
       @blur="setControlBarLocked(false)"
@@ -72,11 +72,12 @@ export default Vue.extend({
       this.originalTextArea.value = (event.currentTarget as HTMLInputElement).value
       raiseEvent(this.originalTextArea, 'input')
     },
-    send() {
-      if (!this.sendButton.disabled) {
-        this.value = ''
-        this.sendButton.click()
+    send(event?: KeyboardEvent) {
+      if (event?.repeat || this.sendButton.disabled) {
+        return
       }
+      this.value = ''
+      this.sendButton.click()
     },
     listenChange(e: InputEvent) {
       this.value = (e.target as HTMLTextAreaElement).value

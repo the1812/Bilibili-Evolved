@@ -250,7 +250,7 @@ const handleSelect = () => {
 }
 
 const handleEnter = async (e?: KeyboardEvent | MouseEvent) => {
-  if ((e as KeyboardEvent)?.isComposing) {
+  if (e instanceof KeyboardEvent && (e.isComposing || e.repeat)) {
     return
   }
   if (activeAction.value) {
@@ -315,7 +315,7 @@ const onDeleteItem = async (actionKey: string) => {
 
 const handleDeleteActive = async (event: KeyboardEvent) => {
   const action = activeAction.value
-  if (!action?.deleteAction) {
+  if (event.repeat || !action?.deleteAction) {
     return
   }
   event.preventDefault()

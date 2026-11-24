@@ -72,6 +72,7 @@ export const component = defineComponentMetadata({
       addData('keymap.actions', (actions: Record<string, KeyBindingAction>) => {
         actions.previousFrame = {
           displayName: '上一帧',
+          allowRepeat: true,
           run: context => {
             const { clickElement } = context
             return clickElement('.be-video-control-bar-extend [data-name="seekPrevFrame"]', context)
@@ -79,6 +80,7 @@ export const component = defineComponentMetadata({
         }
         actions.nextFrame = {
           displayName: '下一帧',
+          allowRepeat: true,
           run: context => {
             const { clickElement } = context
             return clickElement('.be-video-control-bar-extend [data-name="seekNextFrame"]', context)

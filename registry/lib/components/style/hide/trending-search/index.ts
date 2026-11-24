@@ -33,7 +33,9 @@ const redirectEmptySearch = (input: HTMLInputElement) => {
     }
     event.preventDefault()
     event.stopPropagation()
-    window.open(searchUrl)
+    if (!(event instanceof KeyboardEvent && event.repeat)) {
+      window.open(searchUrl)
+    }
   }
   form.addEventListener('submit', redirectIfEmpty, true)
   form.addEventListener(
