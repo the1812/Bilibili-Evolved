@@ -2,6 +2,7 @@ import { defineComponentMetadata, defineOptionsMetadata } from '@/components/def
 import { contentLoaded } from '@/core/life-cycle'
 import { addComponentListener } from '@/core/settings'
 import { mountVueComponent, getNumberValidator } from '@/core/utils'
+import { resumeNativeFeedLoading, suspendNativeFeedLoading } from '../suspend-native-feed'
 import { homeUrls } from '../urls'
 import { MinimalHomeTabOption } from './types'
 
@@ -34,6 +35,7 @@ export const component = defineComponentMetadata({
       },
       true,
     )
+    suspendNativeFeedLoading()
     contentLoaded(async () => {
       const MinimalHome = await import('./MinimalHome.vue')
       const minimalHome = mountVueComponent(MinimalHome)
@@ -41,8 +43,14 @@ export const component = defineComponentMetadata({
     })
   },
   options: minimalHomeOptionsMetadata,
-  unload: () => document.body.classList.add('home-redesign-off'),
-  reload: () => document.body.classList.remove('home-redesign-off'),
+  unload: () => {
+    document.body.classList.add('home-redesign-off')
+    resumeNativeFeedLoading()
+  },
+  reload: () => {
+    document.body.classList.remove('home-redesign-off')
+    suspendNativeFeedLoading()
+  },
   instantStyles: [
     {
       name: 'minimal-home-hide-original',
