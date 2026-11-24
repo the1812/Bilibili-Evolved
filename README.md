@@ -48,9 +48,6 @@
 # 设置
 脚本启用后, 在网页左侧中央会有功能面板和设置面板的入口. 功能面板中包含适用于当前页面的一些功能入口, 设置面板中可以管理组件的开启/关闭, 修改组件选项, 以及安装/卸载组件和插件等.
 
-![sidebar](images/v2/side-panel.jpg)
-
-
 <img alt="settings-panel" src="images/v2/settings-panel.jpg" width="600">
 
 全新安装的脚本实际上没有任何功能, 你可以通过多种方式添加功能:
@@ -111,11 +108,6 @@
   <img src="https://contrib.rocks/image?repo=the1812/Bilibili-Evolved" />
 </a>
 
-## 文案翻译贡献者
-- [PleiadeSubaru](https://github.com/Etherrrr)
-- [Lets-Halloween](https://github.com/Lets-Halloween)
-- Joshuaふみひる
-
 ## 参与项目
 欢迎参考[代码贡献指南](CONTRIBUTING.md)来为项目添砖加瓦~
 
@@ -149,13 +141,9 @@
 # 相关推荐
 这些脚本/插件同样能够改善您在B站的体验, 相同的功能将不会整合到 Bilibili Evolved, 但会尽可能地适配
 
-## BewlyBewly
-作者: [Hakadao](https://github.com/hakadao)
-- [GitHub](https://github.com/BewlyBewly/BewlyBewly)
-
-## pakku.js 哔哩哔哩弹幕过滤器
+## pakku：哔哩哔哩弹幕过滤器
 作者: [xmcp](https://github.com/xmcp)
-- [主页](https://s.xmcp.ml/pakkujs/)
+- [主页](https://s.xmcp.ltd/pakkujs/)
 - [GitHub](https://github.com/xmcp/pakku.js)
 
 ## BLTH - Bilibili Live Tasks Helper
@@ -188,13 +176,10 @@
 ## [Touhou Tagger](https://github.com/the1812/Touhou-Tagger)
 ☯ 从 [THBWiki](https://thwiki.cc/) 自动填写东方 Project 同人音乐 CD 曲目信息
 
-## [Malware Patch](https://github.com/the1812/Malware-Patch)
-阻止中国流氓软件的管理员授权
+## [FontsReplace](https://github.com/the1812/FontsReplace)
+Windows 系统替换字体生成
 
 ## [dizzylab auto theme](https://github.com/the1812/dizzylab-auto-theme)
 [dizzylab](https://www.dizzylab.net/) 自适应 Stylus 主题, 跟随系统亮/暗设定
-
-## [Steam CSS](https://github.com/the1812/SteamCSS)
-为 [Steam](https://store.steampowered.com/) 的库和内置浏览器插入一段自定义的 CSS, 用于更换字体等
 
 ----
