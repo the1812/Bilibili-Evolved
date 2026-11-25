@@ -17,6 +17,7 @@ import {
   defaultTemplate,
   findUnknownVariables,
   presetTemplates,
+  renderTemplate,
 } from './templates'
 
 const options = defineOptionsMetadata({
@@ -277,11 +278,6 @@ const buildFields = (info: VideoInfo, settings: ShareSettings, pageNumber: numbe
     cover_image: '',
   }
 }
-
-const renderTemplate = (template: string, fields: ShareFields) =>
-  template.replace(/\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g, (raw, key: string) =>
-    key in fields ? fields[key] : raw,
-  )
 
 /** 稳定版 2.12 还没有 Toast.warn, 这里做一下兼容 */
 const showTemplateWarning = (message: string) => {

@@ -32,7 +32,7 @@ export const presetTemplates: Record<Preset, string> = {
   [Preset.Markdown]: '[{title}]({url}) — {up} · {duration}',
   [Preset.Link]: '{short_url}',
   [Preset.Json]:
-    '{"title":"{title}","up":"{up}","bvid":"{bv}","duration":"{duration}","views":"{views}","likes":"{likes}","url":"{url}"}',
+    '{"title":"{title|json}","up":"{up|json}","bvid":"{bv|json}","duration":"{duration|json}","views":"{views|json}","likes":"{likes|json}","url":"{url|json}"}',
   [Preset.Custom]: '',
 }
 
@@ -66,14 +66,30 @@ export const knownVariables = [
   'cover_image',
 ]
 
-const variablePattern = /\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g
+const variablePattern = /\{([a-zA-Z_][a-zA-Z0-9_]*)(?:\|([a-zA-Z]+))?\}/g
+
+/** 模板变量支持 `{name|json}` 修饰符, 用来把值转义成 JSON 字符串内容 */
+export const knownVariableModifiers = ['json']
+
+const applyModifier = (value: string, modifier?: string) => {
+  if (modifier === 'json') {
+    return JSON.stringify(value).slice(1, -1)
+  }
+  return value
+}
+
+export const renderTemplate = (template: string, fields: Record<string, string>) =>
+  template.replace(variablePattern, (raw, key: string, modifier?: string) =>
+    key in fields ? applyModifier(fields[key], modifier) : raw,
+  )
 
 export const findUnknownVariables = (template: string) => {
   const known = new Set(knownVariables)
+  const modifiers = new Set(knownVariableModifiers)
   const unknown = new Set<string>()
-  template.replace(variablePattern, (raw, name: string) => {
-    if (!known.has(name)) {
-      unknown.add(name)
+  template.replace(variablePattern, (raw, name: string, modifier?: string) => {
+    if (!known.has(name) || (modifier && !modifiers.has(modifier))) {
+      unknown.add(modifier ? `${name}|${modifier}` : name)
     }
     return raw
   })

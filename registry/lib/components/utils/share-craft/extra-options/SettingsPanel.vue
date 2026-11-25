@@ -34,7 +34,8 @@
           <code v-for="name of variableNames" :key="name">{{ name }}</code>
         </div>
         <div class="share-craft-hint">
-          {cover} 是封面链接，{cover_image} 是封面图本身，写上才会附图。
+          {cover} 是封面链接，{cover_image} 是封面图本身，写上才会附图；JSON 模板里的值请用
+          {title|json} 这种写法转义。
         </div>
       </details>
     </section>
