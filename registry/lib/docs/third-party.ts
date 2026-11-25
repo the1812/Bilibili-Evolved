@@ -20,6 +20,16 @@ export const thirdPartyComponents: DocSourceItem[] = [
     description: '在视频播放器右上角显示系统时间.',
     owner: 'FoundTheWOUT',
   },
+  {
+    type: 'component',
+    name: 'levelBlocker',
+    displayName: '等级屏蔽器',
+    fullRelativePath: '../../registry/dist/components/utils/level-blocker.js',
+    fullAbsolutePath: 'registry/dist/components/utils/level-blocker.js',
+    description:
+      '按 B 站账号等级自动屏蔽低等级 UP 主发布的视频与评论区评论/回复，支持首页、分区、搜索、播放页推荐、动态、空间及新版 Shadow DOM 评论区。',
+    owner: 'lyfiiu',
+  },
 ]
 export const thirdPartyPlugins: DocSourceItem[] = [
   {
