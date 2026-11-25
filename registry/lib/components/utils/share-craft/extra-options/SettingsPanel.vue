@@ -111,7 +111,7 @@
         <ul class="share-craft-notes">
           <li>封面和文案一起写进剪贴板，QQ / 微信可以整段粘出图文。</li>
           <li>图片由聊天软件从 B 站 CDN 下载，断网时只剩文字。</li>
-          <li>只对当前页面的视频附带封面；快捷键 Ctrl+C 仍只复制文字。</li>
+          <li>只有点击视频页的分享入口才会附带封面，其他复制行为不受影响。</li>
           <li>写入失败时会自动回退为纯文本。</li>
         </ul>
       </details>
@@ -123,11 +123,8 @@
         <span class="share-craft-label" title="复制成功后弹出提示">复制后提示</span>
         <SwitchBox :checked="draft.showToast" @change="draft.showToast = $event" />
       </div>
-      <div class="share-craft-row share-craft-row--switch">
-        <span class="share-craft-label" title="进入视频页后预加载视频信息，第一次复制更快">
-          预取视频信息
-        </span>
-        <SwitchBox :checked="draft.prefetchInfo" @change="draft.prefetchInfo = $event" />
+      <div class="share-craft-hint">
+        只在视频页点击分享入口时生效，原生分享面板不会弹出，其他复制行为不受影响。
       </div>
     </section>
 
@@ -162,7 +159,6 @@ type ShareOptions = {
   countFormat: CountFormat
   descLength: number
   showToast: boolean
-  prefetchInfo: boolean
   coverWidth: number
 }
 
@@ -183,7 +179,6 @@ const draft = reactive<ShareOptions>({
   countFormat: settings.options.countFormat,
   descLength: settings.options.descLength,
   showToast: settings.options.showToast,
-  prefetchInfo: settings.options.prefetchInfo,
   coverWidth: settings.options.coverWidth,
 })
 
@@ -213,7 +208,6 @@ const dirty = computed(() => {
     draft.countFormat !== o.countFormat ||
     draft.descLength !== o.descLength ||
     draft.showToast !== o.showToast ||
-    draft.prefetchInfo !== o.prefetchInfo ||
     draft.coverWidth !== o.coverWidth
   )
 })
@@ -235,7 +229,6 @@ const save = () => {
   o.countFormat = draft.countFormat
   o.descLength = draft.descLength
   o.showToast = draft.showToast
-  o.prefetchInfo = draft.prefetchInfo
   o.coverWidth = draft.coverWidth
   try {
     const { GM_setValue } = unsafeWindow.bilibiliEvolved.monkeyApis

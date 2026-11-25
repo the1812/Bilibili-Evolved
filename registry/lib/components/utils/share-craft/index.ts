@@ -2,9 +2,11 @@ import type { OptionsOfMetadata } from '@/components/define'
 import { defineComponentMetadata, defineOptionsMetadata } from '@/components/define'
 import type { ComponentEntry } from '@/components/types'
 import { VideoInfo } from '@/components/video/video-info'
+import { urlChange } from '@/core/observer'
 import type { ComponentSettings } from '@/core/settings/types'
 import { Toast } from '@/core/toast'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
+import { videoUrls } from '@/core/utils/urls'
 import { coverImageUrl, getCoverSize } from './cover'
 import type { CoverSize } from './cover'
 import {
@@ -54,13 +56,8 @@ const options = defineOptionsMetadata({
     hidden: true,
   },
   showToast: {
-    defaultValue: false,
-    displayName: '改写后显示提示',
-    hidden: true,
-  },
-  prefetchInfo: {
     defaultValue: true,
-    displayName: '进入视频页后预取信息（首次复制更快）',
+    displayName: '复制后显示提示',
     hidden: true,
   },
   coverWidth: {
@@ -87,18 +84,24 @@ interface SharePayload {
   text: string
   /** 与 text 相同, 但把 {cover_image} 换成了占位符, 供富文本插入图片 */
   html: string
-  /** 只有复制的内容属于当前页面视频时才有值, 避免复制别处链接时也粘出一张封面 */
   coverUrl: string
 }
 
 /** 富文本里标记封面图位置的控制字符, 不会出现在正常文案中 */
 const coverMarker = '\u0001'
 
-const bvidPattern = /(BV[0-9A-Za-z]{10})/
-const aidPattern = /\bav(\d+)\b/i
-const bilibiliLinkPattern = /(?:bilibili\.com\/video\/|b23\.tv\/|bili2233\.cn\/)/i
 const cacheTtl = 10 * 60 * 1000
 const cacheLimit = 50
+
+/**
+ * 视频页的分享入口. 视频下方工具栏的分享按钮点击后直接复制链接,
+ * 旧版工具栏和播放器控制栏使用另外两套类名.
+ */
+const shareEntrySelector = [
+  '.video-share',
+  '.video-toolbar-v1 .share-wrap',
+  '.player-left-components [class*="toolbar_share_info"]',
+].join(', ')
 
 const infoCache = new Map<string, { info: VideoInfo; time: number }>()
 const pendingRequests = new Map<string, Promise<VideoInfo | null>>()
@@ -117,20 +120,15 @@ const getCurrentVideoId = (): VideoId | null => {
   return null
 }
 
-const extractVideoId = (text: string): VideoId | null => {
-  const bvMatch = text.match(bvidPattern)
-  if (bvMatch) {
-    return { bvid: bvMatch[1] }
+const getCurrentPageNumber = (info: VideoInfo) => {
+  const page = Number(new URLSearchParams(location.search).get('p'))
+  if (!Number.isInteger(page) || page < 1) {
+    return 1
   }
-  const avMatch = text.match(aidPattern)
-  if (avMatch) {
-    return { aid: avMatch[1] }
+  if (info.pages?.length && !info.pages.some(it => it.pageNumber === page)) {
+    return 1
   }
-  // 分享面板有时只复制纯 b23.tv 短链, 此时按当前页面视频处理
-  if (bilibiliLinkPattern.test(text)) {
-    return getCurrentVideoId()
-  }
-  return null
+  return page
 }
 
 const getCachedInfo = (id: VideoId) => {
@@ -235,16 +233,6 @@ const formatCountText = (count: number, mode: CountFormat) => {
   return formatCount(count)
 }
 
-const getPageNumber = (id: VideoId, info: VideoInfo) => {
-  const current = getCurrentVideoId()
-  const sameVideo = current?.bvid && info.bvid ? current.bvid === info.bvid : false
-  if (!sameVideo) {
-    return 1
-  }
-  const page = Number(new URLSearchParams(location.search).get('p'))
-  return Number.isInteger(page) && page > 0 ? page : 1
-}
-
 const truncate = (text: string, length: number) => {
   const normalized = text.replace(/\s+/g, ' ').trim()
   if (length <= 0 || normalized.length <= length) {
@@ -257,8 +245,10 @@ const buildFields = (info: VideoInfo, settings: ShareSettings, pageNumber: numbe
   const { options: userOptions } = settings
   const page = info.pages?.find(it => it.pageNumber === pageNumber) ?? info.pages?.[0]
   const duration = page?.duration ?? 0
-  const baseUrl = `https://www.bilibili.com/video/${info.bvid}`
+  const baseUrl = `https://www.bilibili.com/video/${info.bvid || `av${info.aid}`}`
   const url = pageNumber > 1 ? `${baseUrl}?p=${pageNumber}` : baseUrl
+  // b23.tv 在 302 跳转时会丢掉 query, 多 P 只能用带 ?p= 的长链
+  const shortUrl = info.bvid && pageNumber === 1 ? `https://b23.tv/${info.bvid}` : url
   return {
     title: info.title ?? '',
     up: info.up?.name ?? '',
@@ -268,7 +258,7 @@ const buildFields = (info: VideoInfo, settings: ShareSettings, pageNumber: numbe
     av: info.aid ? `av${info.aid}` : '',
     aid: info.aid ?? '',
     url,
-    short_url: info.bvid ? `https://b23.tv/${info.bvid}` : url,
+    short_url: shortUrl,
     date: formatDateText(info.pubdate, userOptions.dateFormat),
     duration: formatDurationText(duration, userOptions.durationFormat),
     views: formatCountText(info.stat?.view, userOptions.countFormat),
@@ -307,83 +297,22 @@ const resolveTemplate = (settings: ShareSettings) => {
   return presetTemplates[preset] ?? defaultTemplate
 }
 
-const createSharePayload = async (
-  text: string,
+const createSharePayload = (
+  info: VideoInfo,
+  template: string,
   settings: ShareSettings,
-): Promise<SharePayload | null> => {
-  const trimmed = text.trim()
-  if (!trimmed || trimmed.length > 500) {
-    return null
-  }
-  const id = extractVideoId(trimmed)
-  if (!id) {
-    return null
-  }
-  const template = resolveTemplate(settings)
-  const unknown = findUnknownVariables(template)
-  if (unknown.length > 0) {
-    showTemplateWarning(
-      `模板包含未知变量: ${unknown.map(name => `{${name}}`).join(', ')}，已复制原文`,
-    )
-    return null
-  }
-  const info = getCachedInfo(id) ?? (await fetchInfo(id))
-  if (!info) {
-    return null
-  }
-  const pageNumber = getPageNumber(id, info)
+  pageNumber: number,
+): SharePayload => {
   const fields = buildFields(info, settings, pageNumber)
   // {cover_image} 独占一行时, 纯文本里不该留下空行
   const textTemplate = template.replace(/^[ \t]*\{cover_image\}[ \t]*\r?\n/gm, '')
   const rendered = renderTemplate(textTemplate, fields).trim()
-  const html = renderTemplate(template, { ...fields, cover_image: coverMarker }).trim()
-  if (!rendered || rendered === text) {
-    return null
+  return {
+    text: rendered || fields.url,
+    html: renderTemplate(template, { ...fields, cover_image: coverMarker }).trim(),
+    coverUrl: info.coverUrl ?? '',
   }
-  const current = getCurrentVideoId()
-  const isCurrentVideo =
-    (!!info.bvid && current?.bvid === info.bvid) ||
-    (!!info.aid && !!current?.aid && String(current.aid) === String(info.aid))
-  return { text: rendered, html, coverUrl: isCurrentVideo ? info.coverUrl : '' }
 }
-
-/** 同步版本, 只使用已有缓存, 用于 `copy` 事件 (execCommand 路径) */
-const createShareTextSync = (text: string, settings: ShareSettings) => {
-  const trimmed = text.trim()
-  if (!trimmed || trimmed.length > 500) {
-    return null
-  }
-  const id = extractVideoId(trimmed)
-  if (!id) {
-    return null
-  }
-  const template = resolveTemplate(settings)
-  const unknown = findUnknownVariables(template)
-  if (unknown.length > 0) {
-    showTemplateWarning(
-      `模板包含未知变量: ${unknown.map(name => `{${name}}`).join(', ')}，已复制原文`,
-    )
-    return null
-  }
-  const info = getCachedInfo(id)
-  if (!info) {
-    return null
-  }
-  const fields = buildFields(info, settings, getPageNumber(id, info))
-  const rendered = renderTemplate(template, fields).trim()
-  return rendered && rendered !== text ? rendered : null
-}
-
-const getSelectedText = () => {
-  const active = document.activeElement
-  if (active instanceof HTMLTextAreaElement || active instanceof HTMLInputElement) {
-    return active.value.slice(active.selectionStart ?? 0, active.selectionEnd ?? 0)
-  }
-  return window.getSelection()?.toString() ?? ''
-}
-
-/** 尺寸拿不到也不影响粘贴, 最多等一小会儿, 超时按 16:9 兜底 */
-const coverWaitTimeout = 1500
 
 const escapeHtml = (text: string) =>
   text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -417,162 +346,126 @@ const buildShareHtml = (source: string, imageUrl: string, size: CoverSize) => {
   return html
 }
 
-const coverSizeWithin = async (imageUrl: string, maxWidth: number) => {
-  const request = getCoverSize(imageUrl, maxWidth).catch(() => null)
-  let timer = 0
-  const timeout = new Promise<null>(resolve => {
-    timer = window.setTimeout(() => resolve(null), coverWaitTimeout)
-  })
-  const size = await Promise.race([request, timeout])
-  window.clearTimeout(timer)
-  return size
-}
-
-const writeShareClipboard = async (
-  clipboard: Clipboard,
-  payload: SharePayload,
-  settings: ShareSettings,
-) => {
-  const Item = typeof ClipboardItem === 'undefined' ? unsafeWindow.ClipboardItem : ClipboardItem
-  if (!Item || !clipboard.write) {
-    return false
-  }
-  const maxWidth = settings.options.coverWidth
-  const imageUrl = coverImageUrl(payload.coverUrl, maxWidth)
-  const size = (await coverSizeWithin(imageUrl, maxWidth)) ?? {
-    width: maxWidth,
-    height: Math.round((maxWidth * 9) / 16),
-  }
-  const html = buildShareHtml(payload.html, imageUrl, size)
-  await clipboard.write([
-    new Item({
-      'text/plain': new Blob([payload.text], { type: 'text/plain' }),
-      'text/html': new Blob([html], { type: 'text/html' }),
-    }),
-  ])
-  return true
-}
-
-const patchClipboard = (
-  clipboard: Clipboard,
-  settings: ShareSettings,
-  cleanups: (() => void)[],
-) => {
-  if (!clipboard?.writeText) {
+const showCopiedToast = (settings: ShareSettings, withCover: boolean) => {
+  if (!settings.options.showToast) {
     return
   }
-  const originalWriteText = clipboard.writeText.bind(clipboard)
-  const originalDescriptor = Object.getOwnPropertyDescriptor(clipboard, 'writeText')
-  const patchedWriteText = async (text: string) => {
-    let payload: SharePayload | null = null
+  Toast.success(withCover ? '已复制分享文案和封面图' : '已复制分享文案', '分享文案定制', 2000)
+}
+
+const fallbackText = (id: VideoId) => {
+  const path = id.bvid || `av${id.aid}`
+  const page = new URLSearchParams(location.search).get('p')
+  return `https://www.bilibili.com/video/${path}${page && page !== '1' ? `?p=${page}` : ''}`
+}
+
+const writeSharePayload = async (payload: SharePayload, settings: ShareSettings) => {
+  const { clipboard } = navigator
+  if (!clipboard) {
+    console.warn('[分享文案定制] 当前环境没有剪贴板接口')
+    return
+  }
+  const Item = typeof ClipboardItem === 'undefined' ? unsafeWindow.ClipboardItem : ClipboardItem
+  const hasCover = payload.coverUrl !== '' && payload.html.includes(coverMarker)
+  if (hasCover && clipboard.write && Item) {
+    const maxWidth = settings.options.coverWidth
+    const imageUrl = coverImageUrl(payload.coverUrl, maxWidth)
+    const size = getCoverSize(imageUrl, maxWidth).then(
+      value => value ?? { width: maxWidth, height: Math.round((maxWidth * 9) / 16) },
+    )
     try {
-      payload = await createSharePayload(text, settings)
+      // ClipboardItem 必须在用户手势里同步构造, 图片尺寸用 promise 延迟解析
+      await clipboard.write([
+        new Item({
+          'text/plain': new Blob([payload.text], { type: 'text/plain' }),
+          'text/html': size.then(
+            value =>
+              new Blob([buildShareHtml(payload.html, imageUrl, value)], {
+                type: 'text/html',
+              }),
+          ),
+        }),
+      ])
+      showCopiedToast(settings, true)
+      return
     } catch (error) {
-      console.warn('[分享文案定制] 改写剪贴板内容失败, 使用原文', error)
-    }
-    const finalText = payload?.text ?? text
-    let writtenWithCover = false
-    if (payload && payload.coverUrl && payload.html.includes(coverMarker)) {
-      try {
-        writtenWithCover = await writeShareClipboard(clipboard, payload, settings)
-      } catch (error) {
-        console.warn('[分享文案定制] 写入封面失败, 回退为纯文本', error)
-      }
-    }
-    if (payload && settings.options.showToast) {
-      Toast.success(
-        writtenWithCover ? '已复制分享文案和封面图' : '已替换为分享模板',
-        '分享文案定制',
-        2000,
-      )
-    }
-    if (!writtenWithCover) {
-      await originalWriteText(finalText)
+      console.warn('[分享文案定制] 写入封面失败, 回退为纯文本', error)
     }
   }
-  try {
-    Object.defineProperty(clipboard, 'writeText', {
-      configurable: true,
-      writable: true,
-      value: patchedWriteText,
-    })
-    cleanups.push(() => {
-      if (clipboard.writeText !== patchedWriteText) {
-        return
-      }
-      if (originalDescriptor) {
-        Object.defineProperty(clipboard, 'writeText', originalDescriptor)
-      } else {
-        delete (clipboard as Partial<Clipboard>).writeText
-      }
-    })
-  } catch (error) {
-    console.warn('[分享文案定制] 无法接管剪贴板写入', error)
+  await clipboard.writeText(payload.text)
+  showCopiedToast(settings, false)
+}
+
+const copyPlainText = async (text: string, settings: ShareSettings) => {
+  await navigator.clipboard.writeText(text)
+  showCopiedToast(settings, false)
+}
+
+const copyCurrentVideo = async (id: VideoId, template: string, settings: ShareSettings) => {
+  const info = getCachedInfo(id) ?? (await fetchInfo(id))
+  if (!info) {
+    await copyPlainText(fallbackText(id), settings)
+    return
   }
+  const payload = createSharePayload(info, template, settings, getCurrentPageNumber(info))
+  await writeSharePayload(payload, settings)
+}
+
+const handleShareClick = (event: MouseEvent, settings: ShareSettings) => {
+  if (event.button !== 0) {
+    return
+  }
+  const { target } = event
+  if (!(target instanceof Element) || !target.closest(shareEntrySelector)) {
+    return
+  }
+  // 分享入口的点击一律由这里接管, 不保留任何回退到原生复制的路径
+  event.preventDefault()
+  event.stopPropagation()
+  const id = getCurrentVideoId()
+  if (!id) {
+    copyPlainText(location.href.replace(location.hash, ''), settings).catch(error => {
+      console.warn('[分享文案定制] 复制页面链接失败', error)
+    })
+    return
+  }
+  const template = resolveTemplate(settings)
+  const unknown = findUnknownVariables(template)
+  if (unknown.length > 0) {
+    showTemplateWarning(`模板包含未知变量: ${unknown.map(name => `{${name}}`).join(', ')}`)
+    copyPlainText(fallbackText(id), settings).catch(error => {
+      console.warn('[分享文案定制] 复制视频链接失败', error)
+    })
+    return
+  }
+  copyCurrentVideo(id, template, settings).catch(error => {
+    console.warn('[分享文案定制] 复制分享文案失败', error)
+  })
+}
+
+const prefetchVideo = (settings: ShareSettings) => {
+  const id = getCurrentVideoId()
+  if (!id) {
+    return
+  }
+  fetchInfo(id).then(info => {
+    if (!info || !resolveTemplate(settings).includes('{cover_image}')) {
+      return
+    }
+    const maxWidth = settings.options.coverWidth
+    getCoverSize(coverImageUrl(info.coverUrl, maxWidth), maxWidth)
+  })
 }
 
 const install = (settings: ShareSettings) => {
-  const cleanups: (() => void)[] = []
-
-  const handleCopyEvent = (event: ClipboardEvent) => {
-    if (!event.clipboardData) {
-      return
-    }
-    const text = event.clipboardData.getData('text/plain') || getSelectedText()
-    const rendered = createShareTextSync(text, settings)
-    if (rendered) {
-      event.preventDefault()
-      event.clipboardData.setData('text/plain', rendered)
-    }
+  const controller = new AbortController()
+  const onClick = (event: MouseEvent) => handleShareClick(event, settings)
+  document.addEventListener('click', onClick, true)
+  urlChange(() => prefetchVideo(settings), { signal: controller.signal })
+  return () => {
+    controller.abort()
+    document.removeEventListener('click', onClick, true)
   }
-  document.addEventListener('copy', handleCopyEvent)
-  cleanups.push(() => document.removeEventListener('copy', handleCopyEvent))
-
-  // 页面代码和脚本可能运行在不同的 JS 环境, 两边的 clipboard 都要接管
-  const clipboards = new Set<Clipboard>()
-  if (navigator.clipboard) {
-    clipboards.add(navigator.clipboard)
-  }
-  try {
-    const pageClipboard = unsafeWindow.navigator?.clipboard
-    if (pageClipboard) {
-      clipboards.add(pageClipboard)
-    }
-  } catch (error) {
-    console.warn('[分享文案定制] 无法访问页面的剪贴板对象', error)
-  }
-  clipboards.forEach(clipboard => patchClipboard(clipboard, settings, cleanups))
-
-  if (settings.options.prefetchInfo) {
-    const timer = setTimeout(() => {
-      const id = getCurrentVideoId()
-      if (id) {
-        fetchInfo(id)
-      }
-    }, 2000)
-    cleanups.push(() => clearTimeout(timer))
-  }
-
-  // 复制时再下载封面会拖过用户手势的有效期, 模板要带封面就进入视频页先备好
-  if (resolveTemplate(settings).includes('{cover_image}')) {
-    const timer = setTimeout(() => {
-      const id = getCurrentVideoId()
-      if (!id) {
-        return
-      }
-      fetchInfo(id).then(info => {
-        if (info) {
-          getCoverSize(
-            coverImageUrl(info.coverUrl, settings.options.coverWidth),
-            settings.options.coverWidth,
-          )
-        }
-      })
-    }, 2500)
-    cleanups.push(() => clearTimeout(timer))
-  }
-
-  return () => cleanups.forEach(cleanup => cleanup())
 }
 
 let uninstall: (() => void) | null = null
@@ -595,6 +488,13 @@ export const component = defineComponentMetadata({
     { name: 'DeepSeek', link: 'https://www.deepseek.com' },
   ],
   tags: [componentsTags.utils],
+  urlInclude: videoUrls,
+  instantStyles: [
+    {
+      name: 'hideSharePanel',
+      style: () => import('./hide-share-panel.scss'),
+    },
+  ],
   options,
   extraOptions,
   entry,
