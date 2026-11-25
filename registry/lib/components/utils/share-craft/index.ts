@@ -416,7 +416,14 @@ const handleShareClick = (event: MouseEvent, settings: ShareSettings) => {
     return
   }
   const { target } = event
-  if (!(target instanceof Element) || !target.closest(shareEntrySelector)) {
+  if (!(target instanceof Element)) {
+    return
+  }
+  // 悬停面板里的按钮保持原生行为, 只有直接点击分享按钮才复制模板文案
+  if (target.closest('.video-share-popover, .video-share-dropdown')) {
+    return
+  }
+  if (!target.closest(shareEntrySelector)) {
     return
   }
   // 分享入口的点击一律由这里接管, 不保留任何回退到原生复制的路径
