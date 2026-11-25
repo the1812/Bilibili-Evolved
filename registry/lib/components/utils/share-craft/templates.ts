@@ -8,6 +8,22 @@ export enum Preset {
   Custom = '自定义',
 }
 
+export enum DateFormat {
+  Iso = 'YYYY-MM-DD',
+  Chinese = 'YYYY年M月D日',
+  Relative = '相对时间',
+}
+
+export enum DurationFormat {
+  Clock = '18:42',
+  Text = '18分42秒',
+}
+
+export enum CountFormat {
+  Short = '缩写',
+  Raw = '原值',
+}
+
 export const presetTemplates: Record<Preset, string> = {
   [Preset.Standard]: '【{up}】{title}\n⏱ {duration} · ▶ {views} · 👍 {likes}\n{short_url}',
   [Preset.Minimal]: '{title} {short_url}',

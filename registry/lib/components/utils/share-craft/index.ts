@@ -5,29 +5,22 @@ import { VideoInfo } from '@/components/video/video-info'
 import type { ComponentSettings } from '@/core/settings/types'
 import { Toast } from '@/core/toast'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
-import { Preset, defaultTemplate, findUnknownVariables, presetTemplates } from './templates'
-
-enum DateFormat {
-  Iso = 'YYYY-MM-DD',
-  Chinese = 'YYYY年M月D日',
-  Relative = '相对时间',
-}
-
-enum DurationFormat {
-  Clock = '18:42',
-  Text = '18分42秒',
-}
-
-enum CountFormat {
-  Short = '缩写',
-  Raw = '原值',
-}
+import {
+  CountFormat,
+  DateFormat,
+  DurationFormat,
+  Preset,
+  defaultTemplate,
+  findUnknownVariables,
+  presetTemplates,
+} from './templates'
 
 const options = defineOptionsMetadata({
   preset: {
     defaultValue: Preset.Standard,
     displayName: '分享模板预设',
     dropdownEnum: Preset,
+    hidden: true,
   },
   customTemplate: {
     defaultValue: defaultTemplate,
@@ -38,29 +31,35 @@ const options = defineOptionsMetadata({
     defaultValue: DateFormat.Iso,
     displayName: '日期格式',
     dropdownEnum: DateFormat,
+    hidden: true,
   },
   durationFormat: {
     defaultValue: DurationFormat.Clock,
     displayName: '时长格式',
     dropdownEnum: DurationFormat,
+    hidden: true,
   },
   countFormat: {
     defaultValue: CountFormat.Short,
     displayName: '播放 / 点赞等数字格式',
     dropdownEnum: CountFormat,
+    hidden: true,
   },
   descLength: {
     defaultValue: 80,
     displayName: '简介最大长度（0 为不截断）',
     slider: { min: 0, max: 200, step: 10 },
+    hidden: true,
   },
   showToast: {
     defaultValue: false,
     displayName: '改写后显示提示',
+    hidden: true,
   },
   prefetchInfo: {
     defaultValue: true,
     displayName: '进入视频页后预取信息（首次复制更快）',
+    hidden: true,
   },
 })
 
@@ -454,7 +453,7 @@ const entry: ComponentEntry<Options> = ({ settings }) => {
 }
 
 const extraOptions = () =>
-  import('./extra-options/TemplateEditor.vue').then(module => module.default)
+  import('./extra-options/SettingsPanel.vue').then(module => module.default)
 
 export const component = defineComponentMetadata({
   name: 'shareCraft',
