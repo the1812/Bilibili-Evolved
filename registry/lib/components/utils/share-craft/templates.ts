@@ -63,6 +63,7 @@ export const knownVariables = [
   'page_count',
   'desc',
   'cover',
+  'cover_image',
 ]
 
 const variablePattern = /\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g
