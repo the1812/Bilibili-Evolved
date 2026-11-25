@@ -2,11 +2,21 @@
   <div class="share-craft-template">
     <template v-if="isCustom">
       <div class="share-craft-template-name">自定义模板（当前使用此模板）</div>
-      <TextArea :text="template" placeholder="使用 {title}、{up} 等变量" @change="onChange" />
+      <TextArea
+        :text="template"
+        change-on-blur
+        spellcheck="false"
+        autocomplete="off"
+        autocorrect="off"
+        placeholder="使用 {title}、{up} 等变量"
+        @change="onChange"
+      />
+      <div v-if="unknownVariables.length" class="share-craft-template-error">
+        未知变量: {{ unknownText }}，复制时会保留原始内容，请检查后再试。
+      </div>
       <div class="share-craft-template-tip">
         可用变量: {title} {up} {uid} {up_url} {bv} {av} {url} {short_url} {date} {duration} {views}
-        {danmaku} {likes} {coins} {favorites} {replies} {tname} {part} {p} {desc}
-        {cover}，不认识的变量会原样保留。
+        {danmaku} {likes} {coins} {favorites} {replies} {tname} {part} {p} {desc} {cover}。
       </div>
     </template>
     <template v-else>
@@ -25,7 +35,7 @@ import {
   removeComponentListener,
 } from '@/core/settings'
 import type { ComponentMetadata } from '@/components/types'
-import { Preset, presetTemplates } from '../templates'
+import { Preset, findUnknownVariables, presetTemplates } from '../templates'
 
 type TemplateOptions = {
   preset: Preset
@@ -40,6 +50,10 @@ const preset = ref(settings.options.preset)
 const template = ref(settings.options.customTemplate ?? '')
 const isCustom = computed(() => preset.value === Preset.Custom)
 const previewText = computed(() => presetTemplates[preset.value] ?? '')
+const unknownVariables = computed(() =>
+  isCustom.value ? findUnknownVariables(template.value) : [],
+)
+const unknownText = computed(() => unknownVariables.value.map(name => `{${name}}`).join('、'))
 
 const presetListener = (value: Preset) => {
   preset.value = value
@@ -80,5 +94,10 @@ const onChange = (value: string) => {
   font-size: 12px;
   line-height: 1.5;
   opacity: 0.7;
+}
+.share-craft-template-error {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #f56c6c;
 }
 </style>

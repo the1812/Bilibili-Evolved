@@ -21,3 +21,44 @@ export const presetTemplates: Record<Preset, string> = {
 }
 
 export const defaultTemplate = presetTemplates[Preset.Standard]
+
+export const knownVariables = [
+  'title',
+  'up',
+  'uid',
+  'up_url',
+  'bv',
+  'av',
+  'aid',
+  'url',
+  'short_url',
+  'date',
+  'duration',
+  'views',
+  'danmaku',
+  'likes',
+  'coins',
+  'favorites',
+  'replies',
+  'shares',
+  'tname',
+  'part',
+  'p',
+  'page_count',
+  'desc',
+  'cover',
+]
+
+const variablePattern = /\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g
+
+export const findUnknownVariables = (template: string) => {
+  const known = new Set(knownVariables)
+  const unknown = new Set<string>()
+  template.replace(variablePattern, (raw, name: string) => {
+    if (!known.has(name)) {
+      unknown.add(name)
+    }
+    return raw
+  })
+  return [...unknown]
+}

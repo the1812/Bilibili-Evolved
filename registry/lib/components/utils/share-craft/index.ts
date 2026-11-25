@@ -5,7 +5,7 @@ import { VideoInfo } from '@/components/video/video-info'
 import type { ComponentSettings } from '@/core/settings/types'
 import { Toast } from '@/core/toast'
 import { formatCount, formatDuration } from '@/core/utils/formatters'
-import { Preset, defaultTemplate, presetTemplates } from './templates'
+import { Preset, defaultTemplate, findUnknownVariables, presetTemplates } from './templates'
 
 enum DateFormat {
   Iso = 'YYYY-MM-DD',
@@ -274,6 +274,12 @@ const renderTemplate = (template: string, fields: ShareFields) =>
     key in fields ? fields[key] : raw,
   )
 
+/** 稳定版 2.12 还没有 Toast.warn, 这里做一下兼容 */
+const showTemplateWarning = (message: string) => {
+  const show = Toast.warn ?? Toast.error ?? Toast.show
+  show.call(Toast, message, '分享文案定制', 3000)
+}
+
 const resolveTemplate = (settings: ShareSettings) => {
   const { preset, customTemplate } = settings.options
   if (preset === Preset.Custom) {
@@ -291,13 +297,21 @@ const createShareText = async (text: string, settings: ShareSettings) => {
   if (!id) {
     return null
   }
+  const template = resolveTemplate(settings)
+  const unknown = findUnknownVariables(template)
+  if (unknown.length > 0) {
+    showTemplateWarning(
+      `模板包含未知变量: ${unknown.map(name => `{${name}}`).join(', ')}，已复制原文`,
+    )
+    return null
+  }
   const info = getCachedInfo(id) ?? (await fetchInfo(id))
   if (!info) {
     return null
   }
   const pageNumber = getPageNumber(id, info)
   const fields = buildFields(info, settings, pageNumber)
-  const rendered = renderTemplate(resolveTemplate(settings), fields).trim()
+  const rendered = renderTemplate(template, fields).trim()
   if (!rendered || rendered === text) {
     return null
   }
@@ -314,12 +328,20 @@ const createShareTextSync = (text: string, settings: ShareSettings) => {
   if (!id) {
     return null
   }
+  const template = resolveTemplate(settings)
+  const unknown = findUnknownVariables(template)
+  if (unknown.length > 0) {
+    showTemplateWarning(
+      `模板包含未知变量: ${unknown.map(name => `{${name}}`).join(', ')}，已复制原文`,
+    )
+    return null
+  }
   const info = getCachedInfo(id)
   if (!info) {
     return null
   }
   const fields = buildFields(info, settings, getPageNumber(id, info))
-  const rendered = renderTemplate(resolveTemplate(settings), fields).trim()
+  const rendered = renderTemplate(template, fields).trim()
   return rendered && rendered !== text ? rendered : null
 }
 
