@@ -2,7 +2,7 @@ import { getJson } from '@/core/ajax'
 import { getGeneralSettings } from '@/core/settings'
 import { formatNumber } from '@/core/utils/formatters'
 import { logError } from '@/core/utils/log'
-import { formatTitle } from '@/core/utils/title'
+import { formatVariables, getTitleVariables } from '@/core/utils/title'
 import { bangumiUrls } from '@/core/utils/urls'
 import { DownloadVideoInput } from '../../types'
 import { createEpisodesPicker, EpisodeItem } from '../episode-item'
@@ -42,6 +42,12 @@ export const bangumiBatchInput: DownloadVideoInput = {
         return (it: any, index: number) => {
           const nText: string = it.long_title ? it.title : (index + 1).toString()
           const title: string = it.long_title ? it.long_title : it.title
+          const variables = getTitleVariables(false, {
+            ep: title,
+            cid: it.cid,
+            aid: it.aid,
+            n: formatNumber(parseFloat(nText), totalLength) ?? nText,
+          })
           return {
             key: it.cid,
             title: `${nText} - ${title}`,
@@ -49,12 +55,8 @@ export const bangumiBatchInput: DownloadVideoInput = {
             inputItem: {
               aid: it.aid,
               cid: it.cid,
-              title: formatTitle(getGeneralSettings().batchFilenameFormat, false, {
-                ep: title,
-                cid: it.cid,
-                aid: it.aid,
-                n: formatNumber(parseFloat(nText), totalLength) ?? nText,
-              }),
+              title: formatVariables(getGeneralSettings().batchFilenameFormat, variables),
+              variables,
               allowQualityDrop: true,
             },
           } as EpisodeItem

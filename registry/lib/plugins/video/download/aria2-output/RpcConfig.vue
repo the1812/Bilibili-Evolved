@@ -46,11 +46,11 @@
       </div>
       <div class="profile-dir">
         <div class="profile-item-name">路径:</div>
-        <TextBox v-model="selectedRpcProfile.dir" change-on-blur />
-      </div>
-      <div class="profile-up-directory">
-        <div class="profile-item-name">创建 UP 名称子目录:</div>
-        <SwitchBox v-model="selectedRpcProfile.createUpDirectory" @change="saveProfileSettings" />
+        <TextBox
+          v-model="selectedRpcProfile.dir"
+          placeholder="支持命名变量, 如 [user]"
+          change-on-blur
+        />
       </div>
       <div class="profile-host">
         <div class="profile-item-name">主机:</div>
